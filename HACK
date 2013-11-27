@@ -6,21 +6,22 @@ Capstone source is organized as followings.
 │   ├── ARM         <- ARM code
 │   ├── Mips        <- Mips code
 │   └── X86         <- X86
-├── bindings        <- all bindings
+├── bindings        <- all bindings are under this dir
 │   ├── csharp      <- C# bindings + test code
 │   ├── java        <- Java bindings + test code
 │   ├── ocaml       <- Ocaml bindings + test code
 │   ├── python      <- Python bindings + test code
 │   └── ruby        <- Ruby bindings + test code
-├── include	        <- API headers in C (*.h)
+├── include         <- API headers in C (*.h)
 ├── release         <- Precompiled binaries
-│   ├── linux
-│   ├── mac
-│   └── windows
+│   ├── linux       <- .deb, .rpm, python packages, etc
+│   ├── mac         <- .dmg
+│   └── windows     <- .msi, .exe, .dll, etc
 ├── tests           <- Test code (in C)
 
 
 Follow COMPILE to see how to compile and run code.
+
 Note: if you find some bugs during compilation, it is recommended to clean
 the code and try again, for example with:
 
