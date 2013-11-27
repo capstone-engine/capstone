@@ -20,6 +20,7 @@ LIBOBJ += MCInst.o
 
 # by default, lib extension is .so
 EXT = so
+PERMS = 0644
 
 # OSX
 UNAME_S := $(shell uname -s)
@@ -33,6 +34,8 @@ ifeq ($(UNAME_S),CYGWIN)
 EXT = dll
 # Cygwin doesn't like -fPIC
 CFLAGS := $(CFLAGS:-fPIC=)
+# On Windows we need the shared library to be executable
+PERMS = 0755
 endif
 
 
@@ -40,7 +43,7 @@ endif
 
 all: lib
 	make -C tests
-	install -m0644 lib$(LIBNAME).$(EXT) tests
+	install -m$(PERMS) lib$(LIBNAME).$(EXT) tests
 
 lib: $(LIBOBJ)
 	$(CC) $(LDFLAGS) $(LIBOBJ) -o lib$(LIBNAME).$(EXT)
@@ -48,7 +51,7 @@ lib: $(LIBOBJ)
 	#strip lib$(LIBNAME).$(EXT)
 
 install: lib
-	install -m0644 lib$(LIBNAME).$(EXT) /usr/lib
+	install -m$(PERMS) lib$(LIBNAME).$(EXT) /usr/lib
 	mkdir -p /usr/include/$(LIBNAME)
 	install -m0644 include/capstone.h /usr/include/$(LIBNAME)
 	install -m0644 include/x86.h /usr/include/$(LIBNAME)
