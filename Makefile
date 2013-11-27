@@ -4,6 +4,8 @@
 # NOTE: at the moment this Makefile is for *nix only.
 
 CC = $(CROSS)gcc
+AR?=ar
+RANLIB?=ranlib
 
 CFLAGS  += -fPIC -O3 -Wall -Iinclude
 LDFLAGS += -shared
@@ -39,8 +41,13 @@ lib: $(LIBOBJ)
 	# MacOS doesn't like strip
 	#strip lib$(LIBNAME).$(EXT)
 
-install: lib
+archive: $(LIBOBJ)
+	$(AR) q lib$(LIBNAME).a $(LIBOBJ)
+	$(RANLIB) lib$(LIBNAME).a
+
+install: archive lib
 	install -m0644 lib$(LIBNAME).$(EXT) /usr/lib
+	install -m0644 lib$(LIBNAME).a /usr/lib
 	mkdir -p /usr/include/$(LIBNAME)
 	install -m0644 include/capstone.h /usr/include/$(LIBNAME)
 	install -m0644 include/x86.h /usr/include/$(LIBNAME)
