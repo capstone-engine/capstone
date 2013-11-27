@@ -1,6 +1,6 @@
 TMPDIR = /tmp/capstone_test
 
-DIFF = diff -u -b
+DIFF = diff -u -w
 
 TEST = $(TMPDIR)/test
 TEST_ARM = $(TMPDIR)/test_arm

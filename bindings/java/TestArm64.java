@@ -49,15 +49,15 @@ public class TestArm64 {
 
     if (op_info.op != null) {
       System.out.printf("\top_count: %d\n", op_info.op.length);
-      for (int c=1; c<op_info.op.length+1; c++) {
-        Arm64.Operand i = (Arm64.Operand) op_info.op[c-1];
+      for (int c=0; c<op_info.op.length; c++) {
+        Arm64.Operand i = (Arm64.Operand) op_info.op[c];
         String imm = hex(i.value.imm);
         if (i.type == Arm64.ARM64_OP_REG)
           System.out.printf("\t\toperands[%d].type: REG = %s\n", c, cs.reg_name(i.value.reg));
         if (i.type == Arm64.ARM64_OP_IMM)
-          System.out.printf("\t\toperands[%d].type: IMM = %s\n", c, imm);
+          System.out.printf("\t\toperands[%d].type: IMM = 0x%x\n", c, i.value.imm);
         if (i.type == Arm64.ARM64_OP_CIMM)
-          System.out.printf("\t\toperands[%d].type: C-IMM = %s\n", c, imm);
+          System.out.printf("\t\toperands[%d].type: C-IMM = %d\n", c, i.value.imm);
         if (i.type == Arm64.ARM64_OP_FP)
           System.out.printf("\t\toperands[%d].type: FP = %f\n", c, i.value.fp);
         if (i.type == Arm64.ARM64_OP_MEM) {
@@ -69,7 +69,7 @@ public class TestArm64 {
           if (index != null)
             System.out.printf("\t\t\toperands[%d].mem.index: REG = %s\n", c, index);
           if (i.value.mem.disp != 0)
-            System.out.printf("\t\t\toperands[%d].mem.disp: %s\n", c, hex(i.value.mem.disp));
+            System.out.printf("\t\t\toperands[%d].mem.disp: 0x%x\n", c, i.value.mem.disp);
         }
         if (i.shift.type != Arm64.ARM64_SFT_INVALID && i.shift.value > 0)
           System.out.printf("\t\t\tShift: type = %d, value = %d\n", i.shift.type, i.shift.value);

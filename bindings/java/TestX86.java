@@ -18,9 +18,9 @@ public class TestX86 {
     return data;
   }
 
-  static final String X86_CODE16 = "8d4c320801d881c6341200000523010000368b84912301000041a113486d3a";
-  static final String X86_CODE32 = "8d4c320801d881c6341200000523010000368b84912301000041a113486d3a8d0534120000";
   static final String X86_CODE64 = "55488b05b8130000";
+  static final String X86_CODE16 = "8d4c320801d881c6341200000523010000368b849123010000418d8439896700008d8789670000b4c6";
+  static final String X86_CODE32 = "8d4c320801d881c6341200000523010000368b849123010000418d8439896700008d8789670000b4c6";
 
   public static Capstone cs;
 
@@ -60,7 +60,7 @@ public class TestX86 {
     System.out.printf("\tmodrm: 0x%x\n", op_info.modrm);
 
     // print displacement value
-    System.out.printf("\tdisp: 0x%s\n", hex(op_info.disp));
+    System.out.printf("\tdisp: 0x%x\n", op_info.disp);
 
     // SIB is not available in 16-bit mode
     if ( (cs.mode & Capstone.CS_MODE_16) == 0)
@@ -72,19 +72,19 @@ public class TestX86 {
       System.out.printf("\timm_count: %d\n", count);
       for (int i=0; i<count; i++) {
         int index = ins.op_index(X86.X86_OP_IMM, i + 1);
-        System.out.printf("\t\timms[%d] = 0x%x\n", i+1, (op_info.op[index].value.imm));
+        System.out.printf("\t\timms[%d]: 0x%x\n", i+1, (op_info.op[index].value.imm));
       }
     }
 
     if (op_info.op != null) {
       System.out.printf("\top_count: %d\n", op_info.op.length);
-      for (int c=1; c<op_info.op.length+1; c++) {
-        X86.Operand i = (X86.Operand) op_info.op[c-1];
+      for (int c=0; c<op_info.op.length; c++) {
+        X86.Operand i = (X86.Operand) op_info.op[c];
         String imm = hex(i.value.imm);
         if (i.type == X86.X86_OP_REG)
           System.out.printf("\t\toperands[%d].type: REG = %s\n", c, cs.reg_name(i.value.reg));
         if (i.type == X86.X86_OP_IMM)
-          System.out.printf("\t\toperands[%d].type: IMM = %s\n", c, imm);
+          System.out.printf("\t\toperands[%d].type: IMM = 0x%x\n", c, i.value.imm);
         if (i.type == X86.X86_OP_FP)
           System.out.printf("\t\toperands[%d].type: FP = %f\n", c, i.value.fp);
         if (i.type == X86.X86_OP_MEM) {
@@ -96,9 +96,9 @@ public class TestX86 {
           if (index != null)
             System.out.printf("\t\t\toperands[%d].mem.index: REG = %s\n", c, index);
           if (i.value.mem.scale != 1)
-            System.out.printf("\t\t\toperands[%d].mem.scale: 0x%s\n", c, hex(i.value.mem.scale));
+            System.out.printf("\t\t\toperands[%d].mem.scale: %d\n", c, i.value.mem.scale);
           if (i.value.mem.disp != 0)
-            System.out.printf("\t\t\toperands[%d].mem.disp: 0x%s\n", c, hex(i.value.mem.disp));
+            System.out.printf("\t\t\toperands[%d].mem.disp: 0x%x\n", c, i.value.mem.disp);
         }
       }
     }
