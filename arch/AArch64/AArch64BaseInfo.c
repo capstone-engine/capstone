@@ -41,7 +41,7 @@ static bool compare_lower_str(char *s1, char *s2)
 {
 	char *lower = strdup(s2), *c;
 	for (c = lower; *c; c++)
-		*c = tolower(*c);
+		*c = tolower((int) *c);
 
 	bool res = (strcmp(s1, lower) == 0);
 	free(lower);
