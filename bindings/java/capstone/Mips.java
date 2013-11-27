@@ -1,6 +1,8 @@
 // Capstone Java binding
 // By Nguyen Anh Quynh & Dang Hoang Vu,  2013
 
+package capstone;
+
 import com.sun.jna.Structure;
 import com.sun.jna.Pointer;
 import com.sun.jna.Union;
@@ -9,7 +11,7 @@ import com.sun.jna.NativeLong;
 import java.util.List;
 import java.util.Arrays;
 
-class Mips {
+public class Mips {
 
   // Operand type
   public static final int MIPS_OP_INVALID = 0;  // Uninitialized.

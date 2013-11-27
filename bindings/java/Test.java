@@ -5,6 +5,8 @@ import com.sun.jna.Native;
 import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
 
+import capstone.Capstone;
+
 public class Test {
   public static class platform {
     public int arch;

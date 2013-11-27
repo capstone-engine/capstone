@@ -5,6 +5,9 @@ import com.sun.jna.Native;
 import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
 
+import capstone.Capstone;
+import capstone.Arm64;
+
 public class TestArm64 {
 
   static byte[] hexString2Byte(String s) {

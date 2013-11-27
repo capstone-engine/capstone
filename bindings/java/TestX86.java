@@ -5,6 +5,9 @@ import com.sun.jna.Native;
 import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
 
+import capstone.Capstone;
+import capstone.X86;
+
 public class TestX86 {
 
   static byte[] hexString2Byte(String s) {

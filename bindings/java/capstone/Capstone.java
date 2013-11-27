@@ -1,6 +1,8 @@
 // Capstone Java binding
 // By Nguyen Anh Quynh & Dang Hoang Vu,  2013
 
+package capstone;
+
 import com.sun.jna.Library;
 import com.sun.jna.Native;
 import com.sun.jna.Structure;
@@ -13,7 +15,7 @@ import java.util.List;
 import java.util.Arrays;
 import java.lang.RuntimeException;
 
-class Capstone {
+public class Capstone {
 
   public int arch;
   public int mode;
@@ -172,7 +174,7 @@ class Capstone {
   private PointerByReference insnRef;
   private CS cs;
 
-  Capstone(int arch, int mode)
+  public Capstone(int arch, int mode)
   {
     this.arch = arch;
     this.mode = mode;
@@ -188,18 +190,15 @@ class Capstone {
     return cs.cs_reg_name(csh, reg);
   }
 
-  protected void finalize()
-  {
+  protected void finalize() {
     cs.cs_close(csh);
   }
 
-  cs_insn[] disasm(byte[] code, long address)
-  {
+  public cs_insn[] disasm(byte[] code, long address) {
     return disasm(code, address, 0);
   }
 
-  cs_insn[] disasm(byte[] code, long address, long count)
-  {
+  public cs_insn[] disasm(byte[] code, long address, long count) {
     insnRef = new PointerByReference();
 
     long c = cs.cs_disasm_dyn(csh, code, code.length, address, count, insnRef);

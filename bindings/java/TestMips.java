@@ -5,6 +5,9 @@ import com.sun.jna.Native;
 import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
 
+import capstone.Capstone;
+import capstone.Mips;
+
 public class TestMips {
 
   static byte[] hexString2Byte(String s) {
