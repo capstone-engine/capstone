@@ -59,7 +59,7 @@ for _lib in _all_libs:
         break
     except OSError:
         pass
-if _found == False:
+if not _found:
     # try loading from default paths
     for _lib in _all_libs:
         try:
@@ -69,7 +69,7 @@ if _found == False:
         except OSError:
             pass
 
-if _found == False:
+if not _found:
     # last try: loading from python lib directory
     _lib_path = distutils.sysconfig.get_python_lib()
     for _lib in _all_libs:
@@ -81,7 +81,7 @@ if _found == False:
             break
         except OSError:
             pass
-    if _found == False:
+    if not _found:
         raise ImportError("ERROR: fail to load the dynamic library.")
 
 
@@ -144,7 +144,7 @@ def cs_disasm_quick(arch, mode, code, offset, count = 0):
 
 
 # Python-style class to disasm code
-class cs_insn:
+class cs_insn(object):
     def __init__(self, csh, all_info, arch):
         def create_list(rawlist):
             fl = []
@@ -159,7 +159,7 @@ class cs_insn:
         self.size = all_info.size
         self.mnemonic = all_info.mnemonic
         self.operands = all_info.operands
-        self.regs_read = create_list(all_info.regs_read)
+        self.regs_read = create_list(all_info.regs_read) # [reg for reg in all_info.regs_read if reg != 0] XXX ?
         self.regs_write = create_list(all_info.regs_write)
         self.groups = create_list(all_info.groups)
 
@@ -203,6 +203,7 @@ class cs_insn:
             raise ValueError("Error: Failed to initialize!")
         return _cs.cs_reg_write(self.csh, self.raw_insn, reg_id)
 
+    # pythonic would be: len(insn.operands) 
     def op_count(self, op_type):
         if self.csh is None:
             raise ValueError("Error: Failed to initialize!")
@@ -214,7 +215,7 @@ class cs_insn:
         return _cs.cs_op_index(self.csh, self.raw_insn, op_type, position)
 
 
-class cs:
+class cs(object):
     def __init__(self, arch, mode):
         self.arch, self.mode = arch, mode
         self.csh = ctypes.c_uint64()
@@ -223,6 +224,7 @@ class cs:
             raise ValueError("Error: Wrong arch or mode")
             self.csh = None
 
+    # this might be a massive memory leak in Python, if '
     def __del__(self):
         if self.csh:
             _cs.cs_close(self.csh)
