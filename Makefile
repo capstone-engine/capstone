@@ -3,7 +3,7 @@
 
 # NOTE: at the moment this Makefile is for *nix only.
 
-CC ?= $(CROSS)gcc
+CC = $(CROSS)gcc
 
 CFLAGS  += -fPIC -O3 -Wall -Iinclude
 LDFLAGS += -shared
