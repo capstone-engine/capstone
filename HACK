@@ -1,0 +1,30 @@
+Capstone source is organized as followings.
+
+.					<- core engine + README + COMPILE etc
+├── arch			<- code handling disasm for each arch
+│   ├── AArch64		<- ARM64 (aka ARMv8)
+│   ├── ARM			<- ARM
+│   ├── Mips		<- Mips
+│   └── X86			<- X86
+├── bindings		<- all bindings
+│   ├── csharp		<- C# bindings + test code
+│   ├── java		<- Java bindings + test code
+│   ├── ocaml		<- Ocaml bindings + test code
+│   ├── python		<- Python bindings + test code
+│   └── ruby		<- Ruby bindings + test code
+├── include			<- API headers in C (*.h)
+├── release			<- Precompiled binaries
+│   ├── linux
+│   ├── mac
+│   └── windows
+├── tests			<- Test code (in C)
+
+
+Follow COMPILE to see how to compile and run code.
+Note: if you find some bugs during compilation, it is recommended to clean
+the code and try again, for example with:
+
+	$ make clean
+	$ make
+
+
