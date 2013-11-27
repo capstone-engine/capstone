@@ -42,9 +42,9 @@ public class TestMips {
         Mips.Operand i = (Mips.Operand) op_info.op[c-1];
         String imm = hex(i.value.imm);
         if (i.type == Mips.MIPS_OP_REG)
-			    System.out.printf("\t\toperands[%d].type: REG = %s\n", c, cs.reg_name(i.value.reg));
+          System.out.printf("\t\toperands[%d].type: REG = %s\n", c, cs.reg_name(i.value.reg));
         if (i.type == Mips.MIPS_OP_IMM)
-			    System.out.printf("\t\toperands[%d].type: IMM = %s\n", c, imm);
+          System.out.printf("\t\toperands[%d].type: IMM = %s\n", c, imm);
         if (i.type == Mips.MIPS_OP_MEM) {
           System.out.printf("\t\toperands[%d].type: MEM\n",c);
           String base = cs.reg_name(i.value.mem.base);

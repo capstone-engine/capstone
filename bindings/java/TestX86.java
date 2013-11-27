@@ -64,8 +64,8 @@ public class TestX86 {
 
     // SIB is not available in 16-bit mode
     if ( (cs.mode & Capstone.CS_MODE_16) == 0)
-        // print SIB byte
-        System.out.printf("\tsib: 0x%s\n", hex(op_info.sib));
+      // print SIB byte
+      System.out.printf("\tsib: 0x%s\n", hex(op_info.sib));
 
     int count = ins.op_count(X86.X86_OP_IMM);
     if (count > 0) {
@@ -82,11 +82,11 @@ public class TestX86 {
         X86.Operand i = (X86.Operand) op_info.op[c-1];
         String imm = hex(i.value.imm);
         if (i.type == X86.X86_OP_REG)
-			    System.out.printf("\t\toperands[%d].type: REG = %s\n", c, cs.reg_name(i.value.reg));
+          System.out.printf("\t\toperands[%d].type: REG = %s\n", c, cs.reg_name(i.value.reg));
         if (i.type == X86.X86_OP_IMM)
-			    System.out.printf("\t\toperands[%d].type: IMM = %s\n", c, imm);
+          System.out.printf("\t\toperands[%d].type: IMM = %s\n", c, imm);
         if (i.type == X86.X86_OP_FP)
-			    System.out.printf("\t\toperands[%d].type: FP = %f\n", c, i.value.fp);
+          System.out.printf("\t\toperands[%d].type: FP = %f\n", c, i.value.fp);
         if (i.type == X86.X86_OP_MEM) {
           System.out.printf("\t\toperands[%d].type: MEM\n",c);
           String base = cs.reg_name(i.value.mem.base);

@@ -53,13 +53,13 @@ public class TestArm64 {
         Arm64.Operand i = (Arm64.Operand) op_info.op[c-1];
         String imm = hex(i.value.imm);
         if (i.type == Arm64.ARM64_OP_REG)
-			    System.out.printf("\t\toperands[%d].type: REG = %s\n", c, cs.reg_name(i.value.reg));
+          System.out.printf("\t\toperands[%d].type: REG = %s\n", c, cs.reg_name(i.value.reg));
         if (i.type == Arm64.ARM64_OP_IMM)
-			    System.out.printf("\t\toperands[%d].type: IMM = %s\n", c, imm);
+          System.out.printf("\t\toperands[%d].type: IMM = %s\n", c, imm);
         if (i.type == Arm64.ARM64_OP_CIMM)
-			    System.out.printf("\t\toperands[%d].type: C-IMM = %s\n", c, imm);
+          System.out.printf("\t\toperands[%d].type: C-IMM = %s\n", c, imm);
         if (i.type == Arm64.ARM64_OP_FP)
-			    System.out.printf("\t\toperands[%d].type: FP = %f\n", c, i.value.fp);
+          System.out.printf("\t\toperands[%d].type: FP = %f\n", c, i.value.fp);
         if (i.type == Arm64.ARM64_OP_MEM) {
           System.out.printf("\t\toperands[%d].type: MEM\n",c);
           String base = cs.reg_name(i.value.mem.base);
@@ -72,7 +72,7 @@ public class TestArm64 {
             System.out.printf("\t\t\toperands[%d].mem.disp: %s\n", c, hex(i.value.mem.disp));
         }
         if (i.shift.type != Arm64.ARM64_SFT_INVALID && i.shift.value > 0)
-		      System.out.printf("\t\t\tShift: type = %d, value = %d\n", i.shift.type, i.shift.value);
+          System.out.printf("\t\t\tShift: type = %d, value = %d\n", i.shift.type, i.shift.value);
         if (i.ext != Arm64.ARM64_EXT_INVALID)
           System.out.printf("\t\t\tExt: %d\n", i.ext);
       }
@@ -82,7 +82,7 @@ public class TestArm64 {
   public static void main(String argv[]) {
 
     final Test.platform[] all_tests = {
-          new Test.platform(Capstone.CS_ARCH_ARM64, Capstone.CS_MODE_ARM, hexString2Byte(ARM64_CODE), "ARM-64"),
+      new Test.platform(Capstone.CS_ARCH_ARM64, Capstone.CS_MODE_ARM, hexString2Byte(ARM64_CODE), "ARM-64"),
     };
 
     for (int i=0; i<all_tests.length; i++) {
