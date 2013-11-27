@@ -21,14 +21,22 @@ LIBOBJ += MCInst.o
 # by default, lib extension is .so
 EXT = so
 
-# OSX is the exception
+# OSX
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
 EXT = dylib
 endif
 
+# Cygwin
+UNAME_S := $(shell uname -s | sed 's|.*\(CYGWIN\).*|CYGWIN|')
+ifeq ($(UNAME_S),CYGWIN)
+EXT = dll
+# Cygwin doesn't like -fPIC
+CFLAGS := $(CFLAGS:-fPIC=)
+endif
 
-.PHONY: all clean lib windows win_lib install uninstall
+
+.PHONY: all clean lib install uninstall
 
 all: lib
 	make -C tests
@@ -52,18 +60,8 @@ uninstall:
 	rm -rf /usr/include/$(LIBNAME)
 	rm -rf /usr/lib/lib$(LIBNAME).$(EXT)
 
-# Mingw32
-windows: win_lib
-	install -m0644 $(LIBNAME).dll tests
-	make -C tests windows
-
-# Mingw32
-win_lib: $(LIBOBJ)
-	$(CC) $(LDFLAGS) $(LIBOBJ) -o $(LIBNAME).dll
-	strip $(LIBNAME).dll
-
 clean:
-	rm -f $(LIBOBJ) lib$(LIBNAME).* $(LIBNAME).dll
+	rm -f $(LIBOBJ) lib$(LIBNAME).*
 	#cd bindings/ruby; make clean; rm -rf Makefile
 	cd bindings/python; make clean
 	cd bindings/csharp; make clean
