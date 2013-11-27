@@ -27,15 +27,10 @@ class Mips {
     }
   }
 
-  public static class OpValue extends Union implements Union.ByReference {
+  public static class OpValue extends Union {
     public int reg;
     public long imm;
     public MemType mem;
-
-    public OpValue(Pointer p) {
-      super(p);
-      read();
-    }
 
     @Override
     public List getFieldOrder() {
@@ -47,9 +42,37 @@ class Mips {
     public int type;
     public OpValue value;
 
+    public void read() {
+      super.read();
+      if (type == MIPS_OP_MEM)
+        value.setType(MemType.class);
+      if (type == MIPS_OP_IMM)
+        value.setType(Long.TYPE);
+      if (type == MIPS_OP_REG)
+        value.setType(Integer.TYPE);
+      if (type == MIPS_OP_INVALID)
+        return;
+      readField("value");
+    }
     @Override
     public List getFieldOrder() {
       return Arrays.asList("type", "value");
+    }
+  }
+
+  public static class UnionOpInfo extends Structure {
+    public short op_count;
+    public Operand [] op = new Operand[8];
+
+    public void read() {
+      readField("op_count");
+      op = new Operand[op_count];
+      readField("op");
+    }
+
+    @Override
+    public List getFieldOrder() {
+      return Arrays.asList("op_count", "op");
     }
   }
 
@@ -57,24 +80,12 @@ class Mips {
 
     public Operand [] op;
 
-    public OpInfo(Pointer p) {
-      int op_count = p.getShort(0);
-      if (op_count == 0) {
+    public OpInfo(UnionOpInfo e) {
+      if (e.op_count == 0) {
         op = null;
         return;
       }
-
-      op = new Operand[op_count];
-      for (int i=0; i<op_count; i++) {
-        Pointer p1 = p.share(i*24);
-        op[i] = new Operand();
-        op[i].type = p1.getInt(8);
-        op[i].value = new OpValue(p1.share(16));
-        if (op[i].type == MIPS_OP_MEM) {
-          op[i].value.setType(MemType.class);
-          op[i].value.read();
-        }
-      }
+      op = e.op;
     }
   }
 

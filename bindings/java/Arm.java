@@ -63,16 +63,11 @@ class Arm {
     }
   }
 
-  public static class OpValue extends Union implements Union.ByReference {
+  public static class OpValue extends Union {
     public int reg;
     public long imm;
     public double fp;
     public MemType mem;
-
-    public OpValue(Pointer p) {
-      super(p);
-      read();
-    }
 
     @Override
     public List getFieldOrder() {
@@ -80,14 +75,9 @@ class Arm {
     }
   }
 
-  public static class OpShift extends Structure implements Structure.ByReference {
+  public static class OpShift extends Structure {
     public int type;
     public int value;
-
-    public OpShift(Pointer p) {
-      super(p);
-      read();
-    }
 
     @Override
     public List getFieldOrder() {
@@ -100,38 +90,53 @@ class Arm {
     public int type;
     public OpValue value;
 
+    public void read() {
+      super.read();
+      if (type == ARM_OP_MEM)
+        value.setType(MemType.class);
+      if (type == ARM_OP_FP)
+        value.setType(Double.TYPE);
+      if (type == ARM_OP_PIMM || type == ARM_OP_IMM || type == ARM_OP_CIMM)
+        value.setType(Long.TYPE);
+      if (type == ARM_OP_REG)
+        value.setType(Integer.TYPE);
+      readField("value");
+    }
+
     @Override
     public List getFieldOrder() {
       return Arrays.asList("shift", "type", "value");
     }
   }
 
+  public static class UnionOpInfo extends Structure {
+    public int cc;
+    public byte _update_flags;
+    public byte _writeback;
+    public byte op_count;
+
+    public Operand [] op = new Operand[32];
+
+    @Override
+    public List getFieldOrder() {
+      return Arrays.asList("cc", "_update_flags", "_writeback", "op_count", "op");
+    }
+  }
+
   public static class OpInfo extends Capstone.OpInfo {
+    public int cc;
+    public boolean update_flags;
+    public boolean writeback;
+    public Operand [] op = null;
 
-    public Operand [] op;
-
-    public OpInfo(Pointer p) {
-      cc = p.getInt(0);
-      update_flags = (boolean) (p.getByte(4) > 0);
-      writeback = (boolean) (p.getByte(5) > 0);
-      int op_count = p.getShort(6);
-      if (op_count == 0) {
-        op = null;
-        return;
-      }
-
-      op = new Operand[op_count];
-      for (int i=0; i<op_count; i++) {
-        Pointer p1 = p.share(8 + i*40);
-        op[i] = new Operand();
-        op[i].shift = new OpShift(p1);
-        op[i].type = p1.getInt(8);
-        op[i].value = new OpValue(p1.share(16));
-        if (op[i].type == ARM_OP_MEM) {
-          op[i].value.setType(MemType.class);
-          op[i].value.read();
-        }
-      }
+    public OpInfo(UnionOpInfo op_info) {
+      cc = op_info.cc;
+      update_flags = (op_info._update_flags > 0);
+      writeback = (op_info._writeback > 0);
+      if (op_info.op_count == 0) return;
+      op = new Operand[op_info.op_count];
+      for (int i=0; i<op_info.op_count; i++)
+        op[i] = op_info.op[i];
     }
   }
 
