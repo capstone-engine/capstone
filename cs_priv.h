@@ -34,7 +34,7 @@ typedef struct cs_struct {
 	GetID_t insn_id;
 	PostPrinter_t post_printer;
 	bool micro_mips;	// for Mips only
-	cs_err errno;
+	cs_err errnum;
 } cs_struct;
 
 #endif

@@ -38,7 +38,7 @@ cs_err cs_errno(csh handle)
 
 	cs_struct *ud = (cs_struct *)(uintptr_t)handle;
 
-	return ud->errno;
+	return ud->errnum;
 }
 
 void cs_version(int *major, int *minor)
@@ -57,7 +57,7 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		return CS_ERR_MEM;
 	}
 
-	ud->errno = CS_ERR_OK;
+	ud->errnum = CS_ERR_OK;
 	ud->arch = arch;
 	ud->mode = mode;
 	ud->big_endian = mode & CS_MODE_BIG_ENDIAN;
@@ -198,11 +198,11 @@ uint64_t cs_disasm(csh ud, char *buffer, uint64_t size, uint64_t offset, uint64_
 
 	if (!handle) {
 		// FIXME: handle this case?
-		// handle->errno = CS_ERR_HANDLE;
+		// handle->errnum = CS_ERR_HANDLE;
 		return 0;
 	}
 
-	handle->errno = CS_ERR_OK;
+	handle->errnum = CS_ERR_OK;
 
 	while (size > 0) {
 		MCInst_Init(&mci);	
@@ -250,11 +250,11 @@ uint64_t cs_disasm_dyn(csh ud, char *buffer, uint64_t size, uint64_t offset, uin
 
 	if (!handle) {
 		// FIXME: how to handle this case:
-		// handle->errno = CS_ERR_HANDLE;
+		// handle->errnum = CS_ERR_HANDLE;
 		return 0;
 	}
 
-	handle->errno = CS_ERR_OK;
+	handle->errnum = CS_ERR_OK;
 
 	while (size > 0) {
 		MCInst_Init(&mci);	
@@ -278,7 +278,7 @@ uint64_t cs_disasm_dyn(csh ud, char *buffer, uint64_t size, uint64_t offset, uin
 				void *tmp = realloc(total, total_size);
 				if (tmp == NULL) {	// insufficient memory
 					free(total);
-					handle->errno = CS_ERR_MEM;
+					handle->errnum = CS_ERR_MEM;
 					return 0;
 				}
 
@@ -304,7 +304,7 @@ uint64_t cs_disasm_dyn(csh ud, char *buffer, uint64_t size, uint64_t offset, uin
 		void *tmp = realloc(total, total_size + f * sizeof(insn_cache[0]));
 		if (tmp == NULL) {	// insufficient memory
 			free(total);
-			handle->errno = CS_ERR_MEM;
+			handle->errnum = CS_ERR_MEM;
 			return 0;
 		}
 
@@ -399,11 +399,11 @@ int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 	unsigned int count = 0, i;
 
-	handle->errno = CS_ERR_OK;
+	handle->errnum = CS_ERR_OK;
 
 	switch (handle->arch) {
 		default:
-			handle->errno = CS_ERR_HANDLE;
+			handle->errnum = CS_ERR_HANDLE;
 			return -1;
 		case CS_ARCH_ARM:
 			for (i = 0; i < insn->arm.op_count; i++)
@@ -439,11 +439,11 @@ int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 	unsigned int count = 0, i;
 
-	handle->errno = CS_ERR_OK;
+	handle->errnum = CS_ERR_OK;
 
 	switch (handle->arch) {
 		default:
-			handle->errno = CS_ERR_HANDLE;
+			handle->errnum = CS_ERR_HANDLE;
 			return -1;
 		case CS_ARCH_ARM:
 			for (i = 0; i < insn->arm.op_count; i++) {
