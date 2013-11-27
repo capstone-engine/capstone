@@ -26,7 +26,7 @@ static enum {
 	X86_REG_BP_DI = 503,
 	X86_REG_sib   = 504,
 	X86_REG_sib64 = 505
-} _dummy;
+} __attribute__((unused)) _dummy;
 
 static x86_reg sib_index_map[] = {
 	X86_REG_INVALID,
