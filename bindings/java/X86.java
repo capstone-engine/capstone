@@ -30,16 +30,11 @@ class X86 {
     }
   }
 
-  public static class OpValue extends Union implements Union.ByReference {
+  public static class OpValue extends Union {
     public int reg;
     public long imm;
     public double fp;
     public MemType mem;
-
-    public OpValue(Pointer p) {
-      super(p);
-      read();
-    }
 
     @Override
     public List getFieldOrder() {
@@ -51,16 +46,31 @@ class X86 {
     public int type;
     public OpValue value;
 
+    public void read() {
+      super.read();
+      if (type == X86_OP_MEM)
+        value.setType(MemType.class);
+      if (type == X86_OP_FP)
+        value.setType(Double.TYPE);
+      if (type == X86_OP_IMM)
+        value.setType(Long.TYPE);
+      if (type == X86_OP_REG)
+        value.setType(Integer.TYPE);
+      if (type == X86_OP_INVALID)
+        return;
+      readField("value");
+    }
+
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("shift", "type", "value");
+      return Arrays.asList("type", "value");
     }
   }
 
-  public static class X86extra extends Structure implements Structure.ByReference {
-    public byte [] prefix;
+  public static class UnionOpInfo extends Structure {
+    public byte [] prefix = new byte[5];
     public int segment;
-    public byte [] opcode;
+    public byte [] opcode = new byte[3];
     public byte op_size;
     public byte addr_size;
     public byte disp_size;
@@ -72,38 +82,18 @@ class X86 {
     public byte sib_scale;
     public int sib_base;
 
-    public X86extra(Pointer p) {
-      super (p);
-      prefix = new byte[5];
-      opcode = new byte[3];
-      read();
-    }
+    public int op_count;
+
+    public Operand [] op = new Operand[8];
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("prefix", "segment", "opcode", "op_size", "addr_size", "disp_size", "imm_size", "modrm", "sib", "disp", "sib_index", "sib_scale", "sib_base");
+      return Arrays.asList("prefix", "segment", "opcode", "op_size", "addr_size", "disp_size",
+          "imm_size", "modrm", "sib", "disp", "sib_index", "sib_scale", "sib_base", "op_count", "op");
     }
-    /* 15 + 4*8
-       ('prefix', ctypes.c_uint8 * 5),
-       ('segment', ctypes.c_uint),
-       ('opcode', ctypes.c_uint8 * 3),
-       ('op_size', ctypes.c_uint8),
-       ('addr_size', ctypes.c_uint8),
-       ('disp_size', ctypes.c_uint8),
-       ('imm_size', ctypes.c_uint8),
-       ('modrm', ctypes.c_uint8),
-       ('sib', ctypes.c_uint8),
-       ('disp', ctypes.c_int32),
-       ('sib_index', ctypes.c_uint),
-       ('sib_scale', ctypes.c_int8),
-       ('sib_base', ctypes.c_uint),
-       */
   }
 
   public static class OpInfo extends Capstone.OpInfo {
-    public X86extra e;
-    public Operand [] op;
-
     public byte [] prefix;
     public int segment;
     public byte [] opcode;
@@ -118,10 +108,9 @@ class X86 {
     public byte sib_scale;
     public int sib_base;
 
+    Operand[] op;
 
-    private void copyextra() {
-      // FIXME: we need to manually copy like this since we want to use JNA constructor
-      // still better than having a fixed offset
+    public OpInfo(UnionOpInfo e) {
       prefix = e.prefix;
       segment = e.segment;
       opcode = e.opcode;
@@ -135,29 +124,13 @@ class X86 {
       sib_index = e.sib_index;
       sib_scale = e.sib_scale;
       sib_base = e.sib_base;
-    }
-
-    public OpInfo(Pointer p) {
-      e = new X86extra(p);
-      copyextra();
-
-      int op_count = p.getByte(e.size());
-      if (op_count == 0) {
+      if (e.op_count == 0) {
         op = null;
         return;
       }
-
-      op = new Operand[op_count];
-      for (int i=0; i<op_count; i++) {
-        Pointer p1 = p.share(48 + i*32);
-        op[i] = new Operand();
-        op[i].type = p1.getInt(0);
-        op[i].value = new OpValue(p1.share(8));
-        if (op[i].type == X86_OP_MEM) {
-          op[i].value.setType(MemType.class);
-          op[i].value.read();
-        }
-      }
+      op = new Operand[e.op_count];
+      for (int i=0; i<e.op_count; i++)
+        op[i] = e.op[i];
     }
   }
   // all Intel reigsters

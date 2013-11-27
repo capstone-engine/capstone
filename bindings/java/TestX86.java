@@ -47,7 +47,7 @@ public class TestX86 {
     System.out.printf("\tPrefix: %s\n", array2hex(op_info.prefix));
 
     if (op_info.segment != X86.X86_REG_INVALID)
-      System.out.println("\tSegment override:" + cs.reg_name(op_info.segment));
+      System.out.println("\tSegment override: " + cs.reg_name(op_info.segment));
 
 
     System.out.printf("\tOpcode: %s\n", array2hex(op_info.opcode));
@@ -65,7 +65,7 @@ public class TestX86 {
     // SIB is not available in 16-bit mode
     if ( (cs.mode & Capstone.CS_MODE_16) == 0)
       // print SIB byte
-      System.out.printf("\tsib: 0x%s\n", hex(op_info.sib));
+      System.out.printf("\tsib: 0x%x\n", op_info.sib);
 
     int count = ins.op_count(X86.X86_OP_IMM);
     if (count > 0) {

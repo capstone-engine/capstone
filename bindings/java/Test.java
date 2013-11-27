@@ -6,7 +6,6 @@ import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
 
 public class Test {
-
   public static class platform {
     public int arch;
     public int mode;
