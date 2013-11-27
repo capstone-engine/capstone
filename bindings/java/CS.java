@@ -28,6 +28,12 @@ class Capstone {
     public Mips.UnionOpInfo mips;
   }
 
+  public static abstract class UnionOpInfo extends Structure implements Structure.ByReference {
+    public UnionOpInfo(Pointer p) {
+      super(p);
+    }
+  }
+
   public static class _cs_insn extends Structure implements Structure.ByReference {
     public int id;
     public long address;
@@ -38,30 +44,28 @@ class Capstone {
     public int[] regs_write = new int[32];
     public int[] groups = new int[8];
 
-    public PrivateOpInfo _op_info;
-
-    public _cs_insn(Pointer p) { super(p); }
+    public _cs_insn(Pointer p) { super(p); read(); }
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("id", "address", "size", "mnemonic", "operands", "regs_read", "regs_write", "groups", "_op_info");
+      return Arrays.asList("id", "address", "size", "mnemonic", "operands", "regs_read", "regs_write", "groups");
     }
   }
 
   public static class cs_insn {
-    OpInfo op_info;
-    Pointer ptr_origin;
-    long csh;
-    CS cs;
+    public OpInfo op_info;
+    public Pointer ptr_origin;
+    public long csh;
+    public CS cs;
 
-    int id;
-    long address;
-    short size;
-    String mnemonic;
-    String operands;
-    int[] regs_read;
-    int[] regs_write;
-    int[] groups;
+    public int id;
+    public long address;
+    public short size;
+    public String mnemonic;
+    public String operands;
+    public int[] regs_read;
+    public int[] regs_write;
+    public int[] groups;
 
     public cs_insn (_cs_insn struct, Pointer _ptr_origin, long _csh, CS _cs, OpInfo _op_info) {
       id = struct.id;
@@ -92,27 +96,24 @@ class Capstone {
   {
     _cs_insn insn = new _cs_insn(pointer);
     OpInfo op_info = null;
+    UnionOpInfo _op_info = null;
 
     switch (this.arch) {
       case CS_ARCH_ARM:
-        insn._op_info.setType(Arm.UnionOpInfo.class);
-        insn.read();
-        op_info = new Arm.OpInfo(insn._op_info.arm);
+        _op_info = new Arm.UnionOpInfo(pointer.share(insn.size()));
+        op_info = new Arm.OpInfo((Arm.UnionOpInfo) _op_info);
         break;
       case CS_ARCH_ARM64:
-        insn._op_info.setType(Arm64.UnionOpInfo.class);
-        insn.read();
-        op_info = new Arm64.OpInfo(insn._op_info.arm64);
+        _op_info = new Arm64.UnionOpInfo(pointer.share(insn.size()));
+        op_info = new Arm64.OpInfo((Arm64.UnionOpInfo) _op_info);
         break;
       case CS_ARCH_MIPS:
-        insn._op_info.setType(Mips.UnionOpInfo.class);
-        insn.read();
-        op_info = new Mips.OpInfo(insn._op_info.mips);
+        _op_info = new Mips.UnionOpInfo(pointer.share(insn.size()));
+        op_info = new Mips.OpInfo((Mips.UnionOpInfo) _op_info);
         break;
       case CS_ARCH_X86:
-        insn._op_info.setType(X86.UnionOpInfo.class);
-        insn.read();
-        op_info = new X86.OpInfo(insn._op_info.x86);
+        _op_info = new X86.UnionOpInfo(pointer.share(insn.size()));
+        op_info = new X86.OpInfo((X86.UnionOpInfo) _op_info);
         break;
       default:
     }
@@ -126,7 +127,7 @@ class Capstone {
 
     for (int i = 0; i < numberResults; i++) {
       arr[i] = fromPointer(pointer.share(offset));
-      offset += 1728;	// sizeof(cs_insn);
+      offset += 1728; // TODO: fix this constant, can have JNA calculated but will be 5x slower
     }
 
     return arr;

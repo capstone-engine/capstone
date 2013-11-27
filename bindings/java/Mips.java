@@ -60,9 +60,14 @@ class Mips {
     }
   }
 
-  public static class UnionOpInfo extends Structure {
+  public static class UnionOpInfo extends Capstone.UnionOpInfo {
     public short op_count;
     public Operand [] op = new Operand[8];
+
+    public UnionOpInfo(Pointer p) {
+      super(p);
+      read();
+    }
 
     public void read() {
       readField("op_count");

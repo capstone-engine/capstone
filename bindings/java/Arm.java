@@ -91,7 +91,7 @@ class Arm {
     public OpValue value;
 
     public void read() {
-      super.read();
+      readField("type");
       if (type == ARM_OP_MEM)
         value.setType(MemType.class);
       if (type == ARM_OP_FP)
@@ -100,7 +100,10 @@ class Arm {
         value.setType(Long.TYPE);
       if (type == ARM_OP_REG)
         value.setType(Integer.TYPE);
+      if (type == ARM_OP_INVALID)
+        return;
       readField("value");
+      readField("shift");
     }
 
     @Override
@@ -109,13 +112,27 @@ class Arm {
     }
   }
 
-  public static class UnionOpInfo extends Structure {
+  public static class UnionOpInfo extends Capstone.UnionOpInfo {
     public int cc;
     public byte _update_flags;
     public byte _writeback;
     public byte op_count;
 
     public Operand [] op = new Operand[32];
+
+    public UnionOpInfo(Pointer p){
+      super(p);
+      read();
+    }
+
+    public void read() {
+      readField("cc");
+      readField("_update_flags");
+      readField("_writeback");
+      readField("op_count");
+      op = new Operand[op_count];
+      readField("op");
+    }
 
     @Override
     public List getFieldOrder() {
@@ -134,9 +151,7 @@ class Arm {
       update_flags = (op_info._update_flags > 0);
       writeback = (op_info._writeback > 0);
       if (op_info.op_count == 0) return;
-      op = new Operand[op_info.op_count];
-      for (int i=0; i<op_info.op_count; i++)
-        op[i] = op_info.op[i];
+      op = op_info.op;
     }
   }
 

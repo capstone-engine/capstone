@@ -67,7 +67,7 @@ class X86 {
     }
   }
 
-  public static class UnionOpInfo extends Structure {
+  public static class UnionOpInfo extends Capstone.UnionOpInfo {
     public byte [] prefix = new byte[5];
     public int segment;
     public byte [] opcode = new byte[3];
@@ -85,6 +85,11 @@ class X86 {
     public int op_count;
 
     public Operand [] op = new Operand[8];
+
+    public UnionOpInfo(Pointer p) {
+      super(p);
+      read();
+    }
 
     @Override
     public List getFieldOrder() {
