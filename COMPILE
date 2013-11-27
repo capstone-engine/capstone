@@ -1,0 +1,64 @@
+How To Compile & Run Capstone for Linux, Mac OSX, *nix and Windows
+                        *-*-*-*-*-*
+
+
+Capstone requires no prerequisite packages, so it is easy to compile & install.
+
+
+(1) On Linux, Mac OSX or *nix:
+
+- To compile for current platform, run either:
+		$ ./compile.sh
+	or:
+		$ make
+
+	Then run "./tests/test*" to see the tests disassembling sample code.
+
+- On 64-bit OS, if you want to cross-compile Capstone for 32-bit binary, run:
+
+	$ ./compile.sh nix32
+
+	Then similarly, run "./tests/test*" to see the tests disassembling sample code.
+
+
+
+(2) To install Capstone, run:
+
+	$ sudo make install
+	
+You are then required to enter root password to copy Capstone into machine
+system directories.
+
+NOTE: The core framework that will be installed by "make install" consist of
+only following files:
+
+	/usr/include/include/capstone.h
+	/usr/include/include/x86.h
+	/usr/include/include/arm.h
+	/usr/include/include/arm64.h
+	/usr/include/include/mips.h
+	/usr/lib/libcapstone.so (for Linux/*nix), or /usr/lib/libcapstone.dylib (OSX)
+
+
+
+(3) To cross-compile for Windows, Linux & gcc-mingw-w64-i686 (and also gcc-mingw-w64-x86-64
+if you want 64-bit binaries) are required.
+
+	- To cross-compile Windows 32-bit binary, simply run
+		$ ./compile.sh win32
+
+	- To cross-compile Windows 64-bit binary, simply run
+		$ ./compile.sh win64
+
+Resulted files "capstone.dll" and "tests/test*.exe" can then be used on Windows machine.
+
+
+
+(4) By default, gcc is used as compiler. If you want to use "clang" instead, compile
+the code with:
+
+	$ ./compile clang
+
+
+(5) So far, Python, Ruby, Ocaml, Java, C# and Go are supported by bindings. Look for the bindings
+under directory bindings/, and refer to README file of corresponding languages.

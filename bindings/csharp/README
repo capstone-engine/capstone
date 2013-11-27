@@ -1,0 +1,8 @@
+This has been tested with Mono on Linux
+
+- On Ubuntu, install Mono with:
+	$ sudo apt-get install mono-complete
+
+- Run test code with:
+	$ make
+	$ ./run.sh

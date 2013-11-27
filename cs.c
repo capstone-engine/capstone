@@ -1,0 +1,483 @@
+/* Capstone Disassembler Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <capstone.h>
+
+#include "cs_priv.h"
+
+#include "MCRegisterInfo.h"
+
+#include "arch/X86/X86Disassembler.h"
+#include "arch/X86/X86InstPrinter.h"
+#include "arch/X86/mapping.h"
+
+#include "arch/ARM/ARMDisassembler.h"
+#include "arch/ARM/ARMInstPrinter.h"
+#include "arch/ARM/mapping.h"
+
+#include "arch/Mips/MipsDisassembler.h"
+#include "arch/Mips/MipsInstPrinter.h"
+#include "arch/Mips/mapping.h"
+
+#include "arch/AArch64/AArch64Disassembler.h"
+#include "arch/AArch64/AArch64InstPrinter.h"
+#include "arch/AArch64/mapping.h"
+
+#include "utils.h"
+
+#define VERSION_MAJOR 1
+#define VERSION_MINOR 2
+
+cs_err cs_errno(csh handle)
+{
+	if (!handle)
+		return CS_ERR_CSH;
+
+	cs_struct *ud = (cs_struct *)(uintptr_t)handle;
+
+	return ud->errno;
+}
+
+void cs_version(int *major, int *minor)
+{
+	*major = VERSION_MAJOR;
+	*minor = VERSION_MINOR;
+}
+
+cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
+{
+	cs_struct *ud;
+
+	ud = calloc(1, sizeof(*ud));
+	if (!ud) {
+		// memory insufficient
+		return CS_ERR_MEM;
+	}
+
+	ud->errno = CS_ERR_OK;
+	ud->arch = arch;
+	ud->mode = mode;
+	ud->big_endian = mode & CS_MODE_BIG_ENDIAN;
+	ud->reg_name = NULL;
+
+	switch (ud->arch) {
+		case CS_ARCH_X86:
+			if (ud->mode & CS_MODE_SYNTAX_ATT)
+				ud->printer = X86_ATT_printInst;
+			else
+				ud->printer = X86_Intel_printInst;
+			ud->printer_info = NULL;
+			ud->disasm = X86_getInstruction;
+			ud->reg_name = X86_reg_name;
+			ud->insn_id = X86_get_insn_id;
+			ud->insn_name = X86_insn_name;
+			break;
+		case CS_ARCH_ARM: {
+					MCRegisterInfo *mri = malloc(sizeof(*mri));
+
+					ARM_init(mri);
+
+					ud->printer = ARM_printInst;
+					ud->printer_info = mri;
+					ud->reg_name = ARM_reg_name;
+					ud->insn_id = ARM_get_insn_id;
+					ud->insn_name = ARM_insn_name;
+					ud->post_printer = ARM_post_printer;
+
+					if (ud->mode & CS_MODE_THUMB)
+						ud->disasm = Thumb_getInstruction;
+					else
+						ud->disasm = ARM_getInstruction;
+					break;
+				}
+		case CS_ARCH_MIPS: {
+				   MCRegisterInfo *mri = malloc(sizeof(*mri));
+
+				   Mips_init(mri);
+				   ud->printer = Mips_printInst;
+				   ud->printer_info = mri;
+				   ud->getinsn_info = mri;
+				   ud->reg_name = Mips_reg_name;
+				   ud->insn_id = Mips_get_insn_id;
+				   ud->insn_name = Mips_insn_name;
+
+				   if (ud->mode & CS_MODE_32)
+					   ud->disasm = Mips_getInstruction;
+				   else
+					   ud->disasm = Mips64_getInstruction;
+
+				   if (ud->mode & CS_MODE_MICRO)
+					   ud->micro_mips = true;
+
+				   break;
+			}
+		case CS_ARCH_ARM64: {
+					MCRegisterInfo *mri = malloc(sizeof(*mri));
+
+					AArch64_init(mri);
+					ud->printer = AArch64_printInst;
+					ud->printer_info = mri;
+					ud->getinsn_info = mri;
+					ud->disasm = AArch64_getInstruction;
+					ud->reg_name = AArch64_reg_name;
+					ud->insn_id = AArch64_get_insn_id;
+					ud->insn_name = AArch64_insn_name;
+					ud->post_printer = AArch64_post_printer;
+					break;
+			}
+		default:	// unsupported architecture
+			free(ud);
+			return CS_ERR_ARCH;
+	}
+
+	*handle = (uintptr_t)ud;
+
+	return CS_ERR_OK;
+}
+
+cs_err cs_close(csh handle)
+{
+	if (!handle)
+		return CS_ERR_CSH;
+
+	cs_struct *ud = (cs_struct *)(uintptr_t)handle;
+
+	switch (ud->arch) {
+		case CS_ARCH_X86:
+			break;
+		case CS_ARCH_ARM:
+		case CS_ARCH_MIPS:
+		case CS_ARCH_ARM64:
+			free(ud->printer_info);
+			break;
+		default:	// unsupported architecture
+			return CS_ERR_HANDLE;
+	}
+
+	memset(ud, 0, sizeof(*ud));
+	free(ud);
+
+	return CS_ERR_OK;
+}
+
+// fill insn with mnemonic & operands info
+static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mci,
+		PostPrinter_t printer)
+{
+	memcpy(insn, &mci->pub_insn, sizeof(*insn));
+
+	// map internal instruction opcode to public insn ID
+	if (handle->insn_id)
+		handle->insn_id(insn, MCInst_getOpcode(mci));
+
+	if (printer)
+		printer(insn->id, insn, buffer);
+
+	// fill in mnemonic & operands
+	char *tab = strchr(buffer, '\t');
+	if (tab) {
+		*tab = '\0';
+		strncpy(insn->op_str, tab + 1, sizeof(insn->op_str) - 1);
+		insn->op_str[sizeof(insn->op_str) - 1] = '\0';
+	} else
+		insn->op_str[0] = '\0';
+
+	strncpy(insn->mnemonic, buffer, sizeof(insn->mnemonic) - 1);
+	insn->mnemonic[sizeof(insn->mnemonic) - 1] = '\0';
+}
+
+uint64_t cs_disasm(csh ud, char *buffer, uint64_t size, uint64_t offset, uint64_t count, cs_insn *insn)
+{
+	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
+	MCInst mci;
+	uint16_t insn_size;
+	uint64_t c = 0;
+
+	if (!handle) {
+		// FIXME: handle this case?
+		// handle->errno = CS_ERR_HANDLE;
+		return 0;
+	}
+
+	handle->errno = CS_ERR_OK;
+
+	while (size > 0) {
+		MCInst_Init(&mci);	
+
+		bool r = handle->disasm(ud, buffer, size, &mci, &insn_size, offset, handle->getinsn_info);
+		if (r) {
+			SStream ss;
+			SStream_Init(&ss);
+
+			mci.pub_insn.size = insn_size;
+			mci.pub_insn.address = offset;
+			mci.mode = handle->mode;
+			handle->printer(&mci, &ss, handle->printer_info);
+
+			fill_insn(handle, insn, ss.buffer, &mci, handle->post_printer);
+
+			c++;
+			insn++;
+			buffer += insn_size;
+			size -= insn_size;
+			offset += insn_size;
+
+			if (count > 0) {
+				if (c == count)
+					return c;
+			}
+		} else	// face a broken instruction?
+			return c;
+	}
+
+	return c;
+}
+
+// dynamicly allocate memory to contain disasm insn
+// NOTE: caller must free() the allocated memory itself to avoid memory leaking
+uint64_t cs_disasm_dyn(csh ud, char *buffer, uint64_t size, uint64_t offset, uint64_t count, cs_insn **insn)
+{
+	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
+	MCInst mci;
+	uint16_t insn_size;
+	uint64_t c = 0, f = 0;
+	cs_insn insn_cache[64];
+	void *total = NULL;
+	uint64_t total_size = 0;
+
+	if (!handle) {
+		// FIXME: how to handle this case:
+		// handle->errno = CS_ERR_HANDLE;
+		return 0;
+	}
+
+	handle->errno = CS_ERR_OK;
+
+	while (size > 0) {
+		MCInst_Init(&mci);	
+
+		bool r = handle->disasm(ud, buffer, size, &mci, &insn_size, offset, handle->getinsn_info);
+		if (r) {
+			SStream ss;
+			SStream_Init(&ss);
+
+			mci.pub_insn.size = insn_size;
+			mci.pub_insn.address = offset;
+			mci.mode = handle->mode;
+			handle->printer(&mci, &ss, handle->printer_info);
+
+			fill_insn(handle, &insn_cache[f], ss.buffer, &mci, handle->post_printer);
+			f++;
+
+			if (f == ARR_SIZE(insn_cache)) {
+				// resize total to contain newly disasm insns
+				total_size += sizeof(insn_cache);
+				void *tmp = realloc(total, total_size);
+				if (tmp == NULL) {	// insufficient memory
+					free(total);
+					handle->errno = CS_ERR_MEM;
+					return 0;
+				}
+
+				total = tmp;
+				memcpy(total + total_size - sizeof(insn_cache), insn_cache, sizeof(insn_cache));
+				// reset f back to 0
+				f = 0;
+			}
+
+			c++;
+			buffer += insn_size;
+			size -= insn_size;
+			offset += insn_size;
+
+			if (count > 0 && c == count)
+				break;
+		} else	// encounter a broken instruction
+			break;
+	}
+
+	if (f) {
+		// resize total to contain newly disasm insns
+		void *tmp = realloc(total, total_size + f * sizeof(insn_cache[0]));
+		if (tmp == NULL) {	// insufficient memory
+			free(total);
+			handle->errno = CS_ERR_MEM;
+			return 0;
+		}
+
+		total = tmp;
+		memcpy(total + total_size, insn_cache, f * sizeof(insn_cache[0]));
+	}
+
+	*insn = total;
+
+	return c;
+}
+
+void cs_free(void *m)
+{
+	free(m);
+}
+
+// return friendly name of regiser in a string
+char *cs_reg_name(csh ud, unsigned int reg)
+{
+	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
+
+	if (!handle || handle->reg_name == NULL) {
+		return NULL;
+	}
+
+	// x86 flags register must be specially handled
+	if ((handle->arch == CS_ARCH_X86) && (reg == X86_REG_FLAGS)) {
+		if (handle->mode & CS_MODE_64)
+			return "rflags";
+		if (handle->mode & CS_MODE_32)
+			return "eflags";
+		if (handle->mode & CS_MODE_16)
+			return "flags";
+	}
+
+	return handle->reg_name(reg);
+}
+
+char *cs_insn_name(csh ud, unsigned int insn)
+{
+	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
+
+	if (!handle || handle->insn_name == NULL) {
+		return NULL;
+	}
+
+	return handle->insn_name(insn);
+}
+
+static bool arr_exist(unsigned int *arr, int max, unsigned int id)
+{
+	int i;
+
+	for (i = 0; i < max; i++) {
+		if (arr[i] == id)
+			return true;
+	}
+
+	return false;
+}
+
+bool cs_insn_group(csh handle, cs_insn *insn, unsigned int group_id)
+{
+	if (!handle)
+		return false;
+
+	return arr_exist(insn->groups, ARR_SIZE(insn->groups), group_id);
+}
+
+bool cs_reg_read(csh handle, cs_insn *insn, unsigned int reg_id)
+{
+	if (!handle)
+		return false;
+
+	return arr_exist(insn->regs_read, ARR_SIZE(insn->regs_read), reg_id);
+}
+
+bool cs_reg_write(csh handle, cs_insn *insn, unsigned int reg_id)
+{
+	if (!handle)
+		return false;
+
+	return arr_exist(insn->regs_write, ARR_SIZE(insn->regs_write), reg_id);
+}
+
+int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
+{
+	if (!ud)
+		return -1;
+
+	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
+	unsigned int count = 0, i;
+
+	handle->errno = CS_ERR_OK;
+
+	switch (handle->arch) {
+		default:
+			handle->errno = CS_ERR_HANDLE;
+			return -1;
+		case CS_ARCH_ARM:
+			for (i = 0; i < insn->arm.op_count; i++)
+				if (insn->arm.operands[i].type == op_type)
+					count++;
+			break;
+		case CS_ARCH_ARM64:
+			for (i = 0; i < insn->arm64.op_count; i++)
+				if (insn->arm64.operands[i].type == op_type)
+					count++;
+			break;
+		case CS_ARCH_X86:
+			for (i = 0; i < insn->x86.op_count; i++)
+				if (insn->x86.operands[i].type == op_type)
+					count++;
+			break;
+		case CS_ARCH_MIPS:
+			for (i = 0; i < insn->mips.op_count; i++)
+				if (insn->mips.operands[i].type == op_type)
+					count++;
+			break;
+	}
+
+	return count;
+}
+
+int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
+		unsigned int post)
+{
+	if (!ud)
+		return -1;
+
+	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
+	unsigned int count = 0, i;
+
+	handle->errno = CS_ERR_OK;
+
+	switch (handle->arch) {
+		default:
+			handle->errno = CS_ERR_HANDLE;
+			return -1;
+		case CS_ARCH_ARM:
+			for (i = 0; i < insn->arm.op_count; i++) {
+				if (insn->arm.operands[i].type == op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+			break;
+		case CS_ARCH_ARM64:
+			for (i = 0; i < insn->arm64.op_count; i++) {
+				if (insn->arm64.operands[i].type == op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+			break;
+		case CS_ARCH_X86:
+			for (i = 0; i < insn->x86.op_count; i++) {
+				if (insn->x86.operands[i].type == op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+			break;
+		case CS_ARCH_MIPS:
+			for (i = 0; i < insn->mips.op_count; i++) {
+				if (insn->mips.operands[i].type == op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+			break;
+	}
+
+	return -1;
+}

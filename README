@@ -1,0 +1,37 @@
+Capstone is a disassembly framework with the target of becoming the ultimate
+disasm engine for binary analysis and reversing in the security community.
+
+Created by Nguyen Anh Quynh, then developed and maintained by a small community,
+Capstone offers some unparalleled features:
+
+- Support multiple hardware architectures: ARM, ARM64 (aka ARMv8), Mips & X86.
+
+- Having clean/simple/lightweight/intuitive architecture-neutral API.
+
+- Provide details on disassembled instruction (called “decomposer” by others).
+
+- Provide semantics of the disassembled instruction, such as list of implicit
+     registers read & written.
+
+- Implemented in pure C language, with lightweight wrappers for C++, Python,
+     Ruby, OCaml, C#, Java and Go available.
+
+- Native support for Windows, MacOSX & Linux platforms.
+
+- Thread-safe by design.
+
+- Distributed under the open source BSD license.
+
+
+[Compile]
+See COMPILE file for how to compile and install Capstone
+
+
+[Binaries]
+
+Binaries for different platforms are put in release/ directory.
+
+
+[Hack]
+
+See HACK file for the structuture of the source code.
