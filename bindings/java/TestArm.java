@@ -56,15 +56,15 @@ public class TestArm {
         Arm.Operand i = (Arm.Operand) op_info.op[c-1];
         String imm = hex(i.value.imm);
         if (i.type == Arm.ARM_OP_REG)
-			    System.out.printf("\t\toperands[%d].type: REG = %s\n", c, cs.reg_name(i.value.reg));
+          System.out.printf("\t\toperands[%d].type: REG = %s\n", c, cs.reg_name(i.value.reg));
         if (i.type == Arm.ARM_OP_IMM)
-			    System.out.printf("\t\toperands[%d].type: IMM = %s\n", c, imm);
+          System.out.printf("\t\toperands[%d].type: IMM = %s\n", c, imm);
         if (i.type == Arm.ARM_OP_PIMM)
-			    System.out.printf("\t\toperands[%d].type: P-IMM = %s\n", c, imm);
+          System.out.printf("\t\toperands[%d].type: P-IMM = %s\n", c, imm);
         if (i.type == Arm.ARM_OP_CIMM)
-			    System.out.printf("\t\toperands[%d].type: C-IMM = %s\n", c, imm);
+          System.out.printf("\t\toperands[%d].type: C-IMM = %s\n", c, imm);
         if (i.type == Arm.ARM_OP_FP)
-			    System.out.printf("\t\toperands[%d].type: FP = %f\n", c, i.value.fp);
+          System.out.printf("\t\toperands[%d].type: FP = %f\n", c, i.value.fp);
         if (i.type == Arm.ARM_OP_MEM) {
           System.out.printf("\t\toperands[%d].type: MEM\n",c);
           String base = cs.reg_name(i.value.mem.base);
@@ -79,7 +79,7 @@ public class TestArm {
             System.out.printf("\t\t\toperands[%d].mem.disp: %s\n", c, hex(i.value.mem.disp));
         }
         if (i.shift.type != Arm.ARM_SFT_INVALID && i.shift.value > 0)
-		      System.out.printf("\t\t\tShift: type = %d, value = %d\n", i.shift.type, i.shift.value);
+          System.out.printf("\t\t\tShift: type = %d, value = %d\n", i.shift.type, i.shift.value);
       }
     }
   }
@@ -87,10 +87,10 @@ public class TestArm {
   public static void main(String argv[]) {
 
     final Test.platform[] all_tests = {
-          new Test.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_ARM, hexString2Byte(ARM_CODE), "ARM"),
-          new Test.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_THUMB, hexString2Byte(THUMB_CODE), "Thumb"),
-          new Test.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_THUMB, hexString2Byte(ARM_CODE2), "Thumb-mixed"),
-          new Test.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_THUMB, hexString2Byte(THUMB_CODE2), "Thumb-2"),
+      new Test.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_ARM, hexString2Byte(ARM_CODE), "ARM"),
+      new Test.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_THUMB, hexString2Byte(THUMB_CODE), "Thumb"),
+      new Test.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_THUMB, hexString2Byte(ARM_CODE2), "Thumb-mixed"),
+      new Test.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_THUMB, hexString2Byte(THUMB_CODE2), "Thumb-2"),
     };
 
     for (int i=0; i<all_tests.length; i++) {
