@@ -1,4 +1,0 @@
-capstone
-========
-
-See README
