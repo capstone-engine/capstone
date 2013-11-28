@@ -10,10 +10,16 @@ CFLAGS += -fPIC -O3 -Wall -I$(INCDIR) -L$(LIBDIR)
 
 LIBNAME = capstone
 
-# Cygwin
+# Cygwin?
 UNAME_S := $(shell uname -s | sed 's|.*\(CYGWIN\).*|CYGWIN|')
 ifeq ($(UNAME_S),CYGWIN)
 CFLAGS := $(CFLAGS:-fPIC=)
+else
+# mingw?
+IS_MINGW := $(shell $(CC) --version | grep -i mingw | wc -l)
+ifeq ($(IS_MINGW),1)
+CFLAGS := $(CFLAGS:-fPIC=)
+endif
 endif
 
 .PHONY: all clean

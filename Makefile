@@ -40,6 +40,8 @@ else
 IS_MINGW := $(shell $(CC) --version | grep -i mingw | wc -l)
 ifeq ($(IS_MINGW),1)
 EXT = dll
+# mingw doesn't like -fPIC either
+CFLAGS := $(CFLAGS:-fPIC=)
 # On Windows we need the shared library to be executable
 PERMS = 0755
 endif
