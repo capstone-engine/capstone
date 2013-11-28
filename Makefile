@@ -37,7 +37,6 @@ CFLAGS := $(CFLAGS:-fPIC=)
 PERMS = 0755
 else
 # mingw?
-x86_64-w64-mingw32-gcc.exe --version | grep -i mingw
 IS_MINGW := $(shell $(CC) --version | grep -i mingw | wc -l)
 ifeq ($(IS_MINGW),1)
 EXT = dll
