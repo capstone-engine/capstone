@@ -22,13 +22,12 @@ LIBOBJ += MCInst.o
 EXT = so
 PERMS = 0644
 
-# OSX
+# OSX?
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
 EXT = dylib
-endif
-
-# Cygwin
+else
+# Cygwin?
 UNAME_S := $(shell uname -s | sed 's|.*\(CYGWIN\).*|CYGWIN|')
 ifeq ($(UNAME_S),CYGWIN)
 EXT = dll
@@ -36,6 +35,16 @@ EXT = dll
 CFLAGS := $(CFLAGS:-fPIC=)
 # On Windows we need the shared library to be executable
 PERMS = 0755
+else
+# mingw?
+x86_64-w64-mingw32-gcc.exe --version | grep -i mingw
+IS_MINGW := $(shell $(CC) --version | grep -i mingw | wc -l)
+ifeq ($(IS_MINGW),1)
+EXT = dll
+# On Windows we need the shared library to be executable
+PERMS = 0755
+endif
+endif
 endif
 
 
