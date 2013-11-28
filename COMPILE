@@ -57,8 +57,8 @@ Resulted files "capstone.dll" and "tests/test*.exe" can then be used on Windows 
 (4) By default, gcc is used as compiler. If you want to use "clang" instead, compile
 the code with:
 
-	$ ./compile clang
+	$ ./compile.sh clang
 
 
-(5) So far, Python, Ruby, Ocaml, Java, C# and Go are supported by bindings. Look for the bindings
+(5) So far Python, Ruby, Ocaml, Java, C# and Go are supported by bindings. Look for the bindings
 under directory bindings/, and refer to README file of corresponding languages.
