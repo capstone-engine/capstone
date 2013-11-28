@@ -10,29 +10,37 @@ CFLAGS += -fPIC -O3 -Wall -I$(INCDIR) -L$(LIBDIR)
 
 LIBNAME = capstone
 
-.PHONY: all clean win_test linux windows
+BIN_EXT =
+
+# Cygwin?
+IS_CYGWIN := $(shell $(CC) -dumpmachine | grep -i cygwin | wc -l)
+ifeq ($(IS_CYGWIN),1)
+CFLAGS := $(CFLAGS:-fPIC=)
+BIN_EXT = .exe
+else
+# mingw?
+IS_MINGW := $(shell $(CC) --version | grep -i mingw | wc -l)
+ifeq ($(IS_MINGW),1)
+CFLAGS := $(CFLAGS:-fPIC=)
+BIN_EXT = .exe
+endif
+endif
+
+.PHONY: all clean
 
 SOURCES = test.c test_detail.c test_x86.c test_arm64.c test_arm.c test_mips.c
 OBJS = $(SOURCES:.c=.o)
-BINARY_LINUX = $(SOURCES:.c=)
-BINARY_WINDOWS = $(SOURCES:.c=.exe)
+BINARY = $(SOURCES:.c=$(BIN_EXT))
 
-all: nix
-
-nix: $(OBJS) $(BINARY_LINUX)
-
-# Mingw32
-windows: $(OBJS) $(BINARY_WINDOWS)
+all: $(BINARY)
 
 clean:
-	rm -rf $(OBJS) $(BINARY_LINUX) $(BINARY_WINDOWS) *.dll *.so
+	rm -rf $(OBJS) $(BINARY) $(SOURCES:.c=.exe) lib$(LIBNAME).*
 
-%.exe: %.o
-	${CC} $(CFLAGS) $^ -O3 -Wall $(LIBNAME).dll -o $@
+$(BINARY): $(OBJS)
 
-%: %.o
-	${CC} $(CFLAGS) $^ -O3 -Wall -l$(LIBNAME) -o $@
+%$(BIN_EXT): %.o
+	${CC} $(CFLAGS) $< -O3 -Wall -l$(LIBNAME) -o $@
 
-.c.o:
+%.o: %.c
 	${CC} ${CFLAGS} -c $< -o $@
-

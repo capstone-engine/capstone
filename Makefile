@@ -4,9 +4,9 @@
 # NOTE: at the moment this Makefile is for *nix only.
 
 CC = $(CROSS)gcc
-AR ?= ar
-RANLIB ?= ranlib
-STRIP ?= strip
+AR ?= $(CROSS)ar
+RANLIB ?= $(CROSS)ranlib
+STRIP ?= $(CROSS)strip
 
 CFLAGS  += -fPIC -O3 -Wall -Iinclude
 LDFLAGS += -shared
@@ -28,17 +28,37 @@ LIBOBJ += arch/ARM/ARMDisassembler.o arch/ARM/ARMInstPrinter.o arch/ARM/mapping.
 LIBOBJ += arch/AArch64/AArch64BaseInfo.o arch/AArch64/AArch64Disassembler.o arch/AArch64/AArch64InstPrinter.o arch/AArch64/mapping.o
 LIBOBJ += MCInst.o
 
-# OSX is the exception
+EXT = so
+AR_EXT = a
+
+# OSX?
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
 EXT = dylib
 else
-# by default, lib extension is .so
-EXT = so
+# Cygwin?
+IS_CYGWIN := $(shell $(CC) -dumpmachine | grep -i cygwin | wc -l)
+ifeq ($(IS_CYGWIN),1)
+EXT = dll
+AR_EXT = dll.a
+# Cygwin doesn't like -fPIC
+CFLAGS := $(CFLAGS:-fPIC=)
+# On Windows we need the shared library to be executable
+else
+# mingw?
+IS_MINGW := $(shell $(CC) --version | grep -i mingw | wc -l)
+ifeq ($(IS_MINGW),1)
+EXT = dll
+AR_EXT = dll.a
+# mingw doesn't like -fPIC either
+CFLAGS := $(CFLAGS:-fPIC=)
+# On Windows we need the shared library to be executable
+endif
+endif
 endif
 
 
-.PHONY: all clean lib archive windows win_lib install uninstall
+.PHONY: all clean lib archive install uninstall
 
 all: lib archive
 	$(MAKE) -C tests
@@ -50,14 +70,14 @@ lib: $(LIBOBJ)
 	#strip lib$(LIBNAME).$(EXT)
 
 archive: $(LIBOBJ)
-	rm -f lib$(LIBNAME).a
-	$(AR) q lib$(LIBNAME).a $(LIBOBJ)
-	$(RANLIB) lib$(LIBNAME).a
+	rm -f lib$(LIBNAME).$(AR_EXT)
+	$(AR) q lib$(LIBNAME).$(AR_EXT) $(LIBOBJ)
+	$(RANLIB) lib$(LIBNAME).$(AR_EXT)
 
 install: archive lib
 	mkdir -p $(LIBDIR)
 	$(INSTALL_LIBRARY) lib$(LIBNAME).$(EXT) $(LIBDIR)
-	$(INSTALL_DATA) lib$(LIBNAME).a $(LIBDIR)
+	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
 	mkdir -p $(INCDIR)/$(LIBNAME)
 	$(INSTALL_DATA) include/capstone.h $(INCDIR)/$(LIBNAME)
 	$(INSTALL_DATA) include/x86.h $(INCDIR)/$(LIBNAME)
@@ -68,20 +88,10 @@ install: archive lib
 uninstall:
 	rm -rf $(INCDIR)/$(LIBNAME)
 	rm -f $(LIBDIR)/lib$(LIBNAME).$(EXT)
-	rm -f $(LIBDIR)/lib$(LIBNAME).a
-
-# Mingw32
-windows: win_lib
-	$(INSTALL_DATA) $(LIBNAME).dll tests
-	$(MAKE) -C tests windows
-
-# Mingw32
-win_lib: $(LIBOBJ)
-	$(CC) $(LDFLAGS) $(LIBOBJ) -o $(LIBNAME).dll
-	$(STRIP) $(LIBNAME).dll
+	rm -f $(LIBDIR)/lib$(LIBNAME).$(AR_EXT)
 
 clean:
-	rm -f $(LIBOBJ) lib$(LIBNAME).* $(LIBNAME).dll
+	rm -f $(LIBOBJ) lib$(LIBNAME).*
 	#cd bindings/ruby; $(MAKE) clean; rm -rf Makefile
 	$(MAKE) -C bindings/python clean
 	$(MAKE) -C bindings/csharp clean
