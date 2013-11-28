@@ -38,18 +38,6 @@ public class TestArm64 {
 
     Arm64.OpInfo op_info = (Arm64.OpInfo) ins.op_info;
 
-    if (op_info.cc != Arm64.ARM64_CC_AL && op_info.cc != Arm64.ARM64_CC_INVALID){
-      System.out.printf("\tCode condition: %d\n",  op_info.cc);
-    }
-
-    if (op_info.update_flags) {
-      System.out.println("\tUpdate-flags: True");
-    }
-
-    if (op_info.writeback) {
-      System.out.println("\tWriteback: True");
-    }
-
     if (op_info.op != null) {
       System.out.printf("\top_count: %d\n", op_info.op.length);
       for (int c=0; c<op_info.op.length; c++) {
@@ -80,6 +68,16 @@ public class TestArm64 {
           System.out.printf("\t\t\tExt: %d\n", i.ext);
       }
     }
+
+    if (op_info.writeback)
+      System.out.println("\tWrite-back: True");
+
+    if (op_info.update_flags)
+      System.out.println("\tUpdate-flags: True");
+
+    if (op_info.cc != Arm64.ARM64_CC_AL && op_info.cc != Arm64.ARM64_CC_INVALID)
+      System.out.printf("\tCode condition: %d\n",  op_info.cc);
+
   }
 
   public static void main(String argv[]) {
@@ -90,17 +88,20 @@ public class TestArm64 {
 
     for (int i=0; i<all_tests.length; i++) {
       Test.platform test = all_tests[i];
-      System.out.println(new String(new char[30]).replace("\0", "*"));
+      System.out.println(new String(new char[16]).replace("\0", "*"));
       System.out.println("Platform: " + test.comment);
+      System.out.println("Code: " + Test.stringToHex(test.code));
       System.out.println("Disasm:");
 
       cs = new Capstone(test.arch, test.mode);
-      Capstone.cs_insn[] all_ins = cs.disasm(test.code, 0x1000);
+      Capstone.cs_insn[] all_ins = cs.disasm(test.code, 0x2c);
 
       for (int j = 0; j < all_ins.length; j++) {
         print_ins_detail(all_ins[j]);
         System.out.println();
       }
+
+      System.out.printf("0x%x: \n\n", all_ins[all_ins.length-1].address + all_ins[all_ins.length-1].size);
     }
   }
 

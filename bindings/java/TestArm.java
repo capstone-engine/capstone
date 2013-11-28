@@ -6,7 +6,6 @@ import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
 
 import capstone.Capstone;
-import capstone.Capstone.*;
 import capstone.Arm;
 
 public class TestArm {
@@ -42,18 +41,6 @@ public class TestArm {
 
     Arm.OpInfo op_info = (Arm.OpInfo) ins.op_info;
 
-    if (op_info.cc != Arm.ARM_CC_AL && op_info.cc != Arm.ARM_CC_INVALID){
-      System.out.printf("\tCode condition: %d\n",  op_info.cc);
-    }
-
-    if (op_info.update_flags) {
-      System.out.println("\tUpdate-flags: True");
-    }
-
-    if (op_info.writeback) {
-      System.out.println("\tWriteback: True");
-    }
-
     if (op_info.op != null) {
       System.out.printf("\top_count: %d\n", op_info.op.length);
       for (int c=0; c<op_info.op.length; c++) {
@@ -85,6 +72,14 @@ public class TestArm {
         if (i.shift.type != Arm.ARM_SFT_INVALID && i.shift.value > 0)
           System.out.printf("\t\t\tShift: type = %d, value = %d\n", i.shift.type, i.shift.value);
       }
+      if (op_info.writeback)
+        System.out.println("\tWrite-back: True");
+
+      if (op_info.update_flags)
+        System.out.println("\tUpdate-flags: True");
+
+      if (op_info.cc != Arm.ARM_CC_AL && op_info.cc != Arm.ARM_CC_INVALID)
+        System.out.printf("\tCode condition: %d\n",  op_info.cc);
     }
   }
 
@@ -99,8 +94,9 @@ public class TestArm {
 
     for (int i=0; i<all_tests.length; i++) {
       Test.platform test = all_tests[i];
-      System.out.println(new String(new char[30]).replace("\0", "*"));
+      System.out.println(new String(new char[16]).replace("\0", "*"));
       System.out.println("Platform: " + test.comment);
+      System.out.println("Code: " + Test.stringToHex(test.code));
       System.out.println("Disasm:");
 
       cs = new Capstone(test.arch, test.mode);

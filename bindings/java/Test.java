@@ -22,7 +22,7 @@ public class Test {
     }
   };
 
-  static String stringToHex(byte[] code) {
+  static public String stringToHex(byte[] code) {
     StringBuilder buf = new StringBuilder(200);
     for (byte ch: code) {
       if (buf.length() > 0)

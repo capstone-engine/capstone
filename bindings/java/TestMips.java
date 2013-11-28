@@ -69,8 +69,9 @@ public class TestMips {
 
     for (int i=0; i<all_tests.length; i++) {
       Test.platform test = all_tests[i];
-      System.out.println(new String(new char[30]).replace("\0", "*"));
+      System.out.println(new String(new char[16]).replace("\0", "*"));
       System.out.println("Platform: " + test.comment);
+      System.out.println("Code: " + Test.stringToHex(test.code));
       System.out.println("Disasm:");
 
       cs = new Capstone(test.arch, test.mode);
@@ -80,6 +81,8 @@ public class TestMips {
         print_ins_detail(all_ins[j]);
         System.out.println();
       }
+
+      System.out.printf("0x%x:\n\n", all_ins[all_ins.length-1].address + all_ins[all_ins.length-1].size);
     }
   }
 

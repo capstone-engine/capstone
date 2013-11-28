@@ -66,9 +66,13 @@ public class TestX86 {
     System.out.printf("\tdisp: 0x%x\n", op_info.disp);
 
     // SIB is not available in 16-bit mode
-    if ( (cs.mode & Capstone.CS_MODE_16) == 0)
+    if ( (cs.mode & Capstone.CS_MODE_16) == 0) {
       // print SIB byte
       System.out.printf("\tsib: 0x%x\n", op_info.sib);
+      if (op_info.sib != 0)
+        System.out.printf("\tsib_index: %s, sib_scale: %d, sib_base: %s\n",
+          cs.reg_name(op_info.sib_index), op_info.sib_scale, cs.reg_name(op_info.sib_base));
+    }
 
     int count = ins.op_count(X86.X86_OP_IMM);
     if (count > 0) {
@@ -111,15 +115,16 @@ public class TestX86 {
 
     final Test.platform[] all_tests = {
       new Test.platform(Capstone.CS_ARCH_X86, Capstone.CS_MODE_16, hexString2Byte(X86_CODE16), "X86 16bit (Intel syntax)"),
-      new Test.platform(Capstone.CS_ARCH_X86, Capstone.CS_MODE_32 + Capstone.CS_MODE_SYNTAX_ATT, hexString2Byte(X86_CODE32), "X86 32bit (ATT syntax)"),
+      new Test.platform(Capstone.CS_ARCH_X86, Capstone.CS_MODE_32 + Capstone.CS_MODE_SYNTAX_ATT, hexString2Byte(X86_CODE32), "X86 32 (AT&T syntax)"),
       new Test.platform(Capstone.CS_ARCH_X86, Capstone.CS_MODE_32, hexString2Byte(X86_CODE32), "X86 32 (Intel syntax)"),
       new Test.platform(Capstone.CS_ARCH_X86, Capstone.CS_MODE_64, hexString2Byte(X86_CODE64), "X86 64 (Intel syntax)"),
     };
 
     for (int i=0; i<all_tests.length; i++) {
       Test.platform test = all_tests[i];
-      System.out.println(new String(new char[30]).replace("\0", "*"));
+      System.out.println(new String(new char[16]).replace("\0", "*"));
       System.out.println("Platform: " + test.comment);
+      System.out.println("Code: " + Test.stringToHex(test.code));
       System.out.println("Disasm:");
 
       cs = new Capstone(test.arch, test.mode);
@@ -129,6 +134,8 @@ public class TestX86 {
         print_ins_detail(all_ins[j]);
         System.out.println();
       }
+
+      System.out.printf("0x%x:\n\n", all_ins[all_ins.length-1].address + all_ins[all_ins.length-1].size);
     }
   }
 
