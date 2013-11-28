@@ -50,6 +50,7 @@ lib: $(LIBOBJ)
 	#strip lib$(LIBNAME).$(EXT)
 
 archive: $(LIBOBJ)
+	rm -f lib$(LIBNAME).a
 	$(AR) q lib$(LIBNAME).a $(LIBOBJ)
 	$(RANLIB) lib$(LIBNAME).a
 
