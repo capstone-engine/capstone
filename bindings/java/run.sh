@@ -2,8 +2,12 @@
 JNA=/usr/share/java/jna.jar
 
 if [ ! -f ${JNA} ]; then
-  echo "JNA @ ${JNA} does not exist, edit this file with the correct path";
-  exit
+  if [ ! -f /usr/share/java/jna/jna.jar ]; then
+    echo "*** Unable to find jna.jar *** ";
+    exit;
+  else
+    JNA=/usr/share/java/jna/jna.jar;
+  fi
 fi
 
 case "$1" in
