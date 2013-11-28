@@ -32,11 +32,11 @@ system directories.
 NOTE: The core framework that will be installed by "make install" consist of
 only following files:
 
-	/usr/include/include/capstone.h
-	/usr/include/include/x86.h
-	/usr/include/include/arm.h
-	/usr/include/include/arm64.h
-	/usr/include/include/mips.h
+	/usr/include/capstone/capstone.h
+	/usr/include/capstone/x86.h
+	/usr/include/capstone/arm.h
+	/usr/include/capstone/arm64.h
+	/usr/include/capstone/mips.h
 	/usr/lib/libcapstone.so (for Linux/*nix), or /usr/lib/libcapstone.dylib (OSX)
 
 
