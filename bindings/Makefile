@@ -8,7 +8,7 @@ TEST_ARM64 = $(TMPDIR)/test_arm64
 TEST_MIPS = $(TMPDIR)/test_mips
 TEST_X86 = $(TMPDIR)/test_x86
 
-all: expected python_test java_test #oclma_test ruby_test
+all: expected python java #oclma ruby
 
 expected:
 	$(MAKE) -C ../tests
@@ -25,6 +25,7 @@ python: FORCE
 	python python/test_arm64.py > $(TEST_ARM64)_o
 	python python/test_mips.py > $(TEST_MIPS)_o
 	python python/test_x86.py > $(TEST_X86)_o
+	$(MAKE) test
 
 java: FORCE
 	$(MAKE) -C java
@@ -33,15 +34,13 @@ java: FORCE
 	cd java; ./run.sh arm64 > $(TEST_ARM64)_o
 	cd java; ./run.sh mips > $(TEST_MIPS)_o
 	cd java; ./run.sh x86 > $(TEST_X86)_o
+	$(MAKE) test
 
-test:
+test: FORCE
 	$(DIFF) $(TEST)_e $(TEST)_o
 	$(DIFF) $(TEST_ARM)_e $(TEST_ARM)_o
 	$(DIFF) $(TEST_ARM64)_e $(TEST_ARM64)_o
 	$(DIFF) $(TEST_MIPS)_e $(TEST_MIPS)_o
 	$(DIFF) $(TEST_X86)_e $(TEST_X86)_o
-
-python_test: python test
-java_test: java test
 
 FORCE:

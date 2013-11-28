@@ -203,7 +203,7 @@ class cs_insn:
         elif arch == CS_ARCH_X86:
             (self.prefix, self.segment, self.opcode, self.op_size, self.addr_size, \
              self.disp_size, self.imm_size, self.modrm, self.sib, self.disp, \
-             self.sib_index, self.sib_scale, self.operands) = x86.get_arch_info(all_info.arch.x86)
+             self.sib_index, self.sib_scale, self.sib_base, self.operands) = x86.get_arch_info(all_info.arch.x86)
         elif arch == CS_ARCH_MIPS:
              self.operands = mips.get_arch_info(all_info.arch.mips)
 

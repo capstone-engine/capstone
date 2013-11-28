@@ -11,6 +11,15 @@ all_tests = (
         (CS_ARCH_ARM64, CS_MODE_ARM, ARM64_CODE, "ARM-64"),
         )
 
+def to_hex(s):
+    return " ".join("0x" + "{0:x}".format(ord(c)).zfill(2) for c in s) # <-- Python 3 is OK
+
+def to_x(s):
+    from struct import pack
+    if not s: return '0'
+    x = pack(">q", s).encode('hex')
+    while x[0] == '0': x = x[1:]
+    return x
 
 ### Test class cs
 def test_class():
@@ -18,24 +27,15 @@ def test_class():
         # print address, mnemonic and operands
         print("0x%x:\t%s\t%s" %(insn.address, insn.mnemonic, insn.op_str))
 
-        if not insn.cc in [ARM64_CC_AL, ARM64_CC_INVALID]:
-            print("\tCode condition: %u" %insn.cc)
-
-        if insn.update_flags:
-            print("\tUpdate-flags: True")
-
-        if insn.writeback:
-            print("\tWrite-back: True")
-
         if len(insn.operands) > 0:
             print("\top_count: %u" %len(insn.operands))
-            c = 0
+            c = -1
             for i in insn.operands:
                 c += 1
                 if i.type == ARM64_OP_REG:
 			        print("\t\toperands[%u].type: REG = %s" %(c, insn.reg_name(i.value.reg)))
                 if i.type == ARM64_OP_IMM:
-			        print("\t\toperands[%u].type: IMM = %x" %(c, i.value.imm))
+			        print("\t\toperands[%u].type: IMM = 0x%s" %(c, to_x(i.value.imm)))
                 if i.type == ARM64_OP_CIMM:
 			        print("\t\toperands[%u].type: C-IMM = %u" %(c, i.value.imm))
                 if i.type == ARM64_OP_FP:
@@ -49,8 +49,8 @@ def test_class():
                         print("\t\t\toperands[%u].mem.index: REG = %s" \
                             %(c, insn.reg_name(i.value.mem.index)))
                     if i.value.mem.disp != 0:
-                        print("\t\t\toperands[%u].mem.disp: %x" \
-                            %(c, i.value.mem.disp))
+                        print("\t\t\toperands[%u].mem.disp: 0x%s" \
+                            %(c, to_x(i.value.mem.disp)))
 
                 if i.shift.type != ARM64_SFT_INVALID and i.shift.value:
 		            print("\t\t\tShift: type = %u, value = %u" \
@@ -59,17 +59,27 @@ def test_class():
                 if i.ext != ARM64_EXT_INVALID:
 		            print("\t\t\tExt: %u" %i.ext)
 
+        if insn.writeback:
+            print("\tWrite-back: True")
+        if not insn.cc in [ARM64_CC_AL, ARM64_CC_INVALID]:
+            print("\tCode condition: %u" %insn.cc)
+        if insn.update_flags:
+            print("\tUpdate-flags: True")
 
     for (arch, mode, code, comment) in all_tests:
-        print("*" * 30)
+        print("*" * 16)
         print("Platform: %s" %comment)
+        print("Code: %s" % to_hex(code))
         print("Disasm:")
-    
+
         try:
             md = cs(arch, mode)
-            for insn in md.disasm(code, 0x1000):
+            last = None
+            for insn in md.disasm(code, 0x2c):
                 print_insn_detail(insn)
+                last = insn
                 print
+            print "0x%x:\n" % (last.address + last.size)
         except:
             print("ERROR: Arch or mode unsupported!")
 
