@@ -17,9 +17,9 @@ OBJS = $(SOURCES:.c=.o)
 BINARY_LINUX = $(SOURCES:.c=)
 BINARY_WINDOWS = $(SOURCES:.c=.exe)
 
-all: linux
+all: nix
 
-linux: $(OBJS) $(BINARY_LINUX)
+nix: $(OBJS) $(BINARY_LINUX)
 
 # Mingw32
 windows: $(OBJS) $(BINARY_WINDOWS)
