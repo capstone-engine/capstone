@@ -16,3 +16,21 @@
 *.exe
 *.out
 *.app
+
+# python
+bindings/python/build/
+*.pyc
+
+# java
+bindings/java/capstone.jar
+
+# test binaries
+tests/test
+tests/test_detail
+tests/test_arm
+tests/test_arm64
+tests/test_mips
+tests/test_x86
+
+# vim tmp file
+*.swp
