@@ -1,0 +1,5 @@
+Name: capstone
+Description: capstone engine disassembler library
+Version: 0.1
+Libs: ../../libcapstone.a
+Cflags: -I../../include
