@@ -204,7 +204,7 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 
 	// first op can be embedded in the asm by llvm.
 	// so we have to handle that case to not miss the first op.
-	char firstop[32];
+	char firstop[128];
 	get_first_op(O->buffer, firstop);
 	char *acc_regs[] = {"rax", "eax", "ax", "al", NULL};
 	if (firstop[0] != 0 && str_in_list(acc_regs, firstop)) {
