@@ -70,9 +70,9 @@ public class X86 {
   }
 
   public static class UnionOpInfo extends Capstone.UnionOpInfo {
-    public byte [] prefix = new byte[5];
+    public byte [] prefix;
     public int segment;
-    public byte [] opcode = new byte[3];
+    public byte [] opcode;
     public byte op_size;
     public byte addr_size;
     public byte disp_size;
@@ -86,11 +86,24 @@ public class X86 {
 
     public int op_count;
 
-    public Operand [] op = new Operand[8];
+    public Operand [] op;
+
+    public UnionOpInfo() {
+      op = new Operand[8];
+      opcode = new byte[3];
+      prefix = new byte[5];
+    }
 
     public UnionOpInfo(Pointer p) {
-      super(p);
+      op = new Operand[8];
+      opcode = new byte[3];
+      prefix = new byte[5];
+      useMemory(p);
       read();
+    }
+
+    public static int getSize() {
+      return (new UnionOpInfo()).size();
     }
 
     @Override

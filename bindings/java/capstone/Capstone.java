@@ -14,6 +14,7 @@ import com.sun.jna.ptr.PointerByReference;
 import java.util.List;
 import java.util.Arrays;
 import java.lang.RuntimeException;
+import java.lang.Math;
 
 public class Capstone {
 
@@ -30,13 +31,14 @@ public class Capstone {
     public Mips.UnionOpInfo mips;
   }
 
-  public static abstract class UnionOpInfo extends Structure implements Structure.ByReference {
-    public UnionOpInfo(Pointer p) {
-      super(p);
-    }
+  public static abstract class UnionOpInfo extends Structure {
   }
 
-  public static class _cs_insn extends Structure implements Structure.ByReference {
+  static int max(int a, int b, int c, int d) {
+    return Math.max(Math.max(Math.max(a,b),c),d);
+  }
+
+  public static class _cs_insn extends Structure {
     public int id;
     public long address;
     public short size;
@@ -46,7 +48,15 @@ public class Capstone {
     public int[] regs_write = new int[32];
     public int[] groups = new int[8];
 
-    public _cs_insn(Pointer p) { super(p); read(); }
+    public _cs_insn(Pointer p) { 
+        mnemonic = new byte[32];
+        operands = new byte[96];
+        regs_read = new int[32];
+        regs_write = new int[32];
+        groups = new int[8];
+        useMemory(p);
+        read();
+    }
 
     @Override
     public List getFieldOrder() {
@@ -83,6 +93,13 @@ public class Capstone {
       op_info = _op_info;
       csh = _csh;
       cs = _cs;
+      _size = struct.size() + max( Arm.UnionOpInfo.getSize(), Arm64.UnionOpInfo.getSize(), Mips.UnionOpInfo.getSize(), X86.UnionOpInfo.getSize() );
+    }
+
+    private int _size;
+
+    protected int size() {
+      return _size;
     }
 
     public int op_count(int type) {
@@ -129,7 +146,7 @@ public class Capstone {
 
     for (int i = 0; i < numberResults; i++) {
       arr[i] = fromPointer(pointer.share(offset));
-      offset += 1728; // TODO: fix this constant, can have JNA calculated but will be 5x slower
+      offset += arr[i].size(); // TODO: fix this constant, can have JNA calculated but will be 5x slower
     }
 
     return arr;

@@ -120,11 +120,21 @@ public class Arm {
     public byte _writeback;
     public byte op_count;
 
-    public Operand [] op = new Operand[32];
+    public Operand [] op;
+
+    public UnionOpInfo(){ 
+      op = new Operand[32];
+    }
 
     public UnionOpInfo(Pointer p){
-      super(p);
+      op = new Operand[32];
+      useMemory(p);
       read();
+    }
+
+    public static int getSize() {
+        UnionOpInfo x = new UnionOpInfo();
+        return x.size();
     }
 
     public void read() {

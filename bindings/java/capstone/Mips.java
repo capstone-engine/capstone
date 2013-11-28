@@ -64,11 +64,20 @@ public class Mips {
 
   public static class UnionOpInfo extends Capstone.UnionOpInfo {
     public short op_count;
-    public Operand [] op = new Operand[8];
+    public Operand [] op;
+
+    public UnionOpInfo() {
+      op = new Operand[8];
+    }
 
     public UnionOpInfo(Pointer p) {
-      super(p);
+      op = new Operand[8];
+      useMemory(p);
       read();
+    }
+
+    public static int getSize() {
+      return (new UnionOpInfo()).size();
     }
 
     public void read() {
