@@ -9,7 +9,6 @@ else
     JNA = /usr/share/java/jna.jar
   else
     JNA =
-    $(error Unable to find jna.jar)
   endif
 endif
 
@@ -20,11 +19,14 @@ all: capstone tests
 capstone: capstone_class
 	jar cf capstone.jar capstone/*.class
 
-capstone_class:
+capstone_class: jna
 	cd capstone; javac -classpath $(JNA) $(CAPSTONE_JAVA)
 
-tests:
+tests: jna
 	javac -classpath "$(JNA):capstone.jar" Test.java TestArm.java TestArm64.java TestMips.java TestX86.java
+
+jna:
+	@if [ ! $(JNA) ]; then echo "*** Unable to find JNA ***"; exit 1; fi
 
 clean:
 	rm -rf *.class *.log *.jar
