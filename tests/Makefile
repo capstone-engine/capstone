@@ -12,12 +12,24 @@ LIBNAME = capstone
 
 .PHONY: all clean win_test
 
-all: test.o test_detail.o test_x86.o test_arm64.o test_arm.o test_mips.o
+all: test test_detail test_x86 test_arm64 test_arm test_mips
+
+test: test.o
 	${CC} $(CFLAGS) test.o -O3 -Wall -l$(LIBNAME) -o test
+
+test_detail: test_detail.o
 	${CC} $(CFLAGS) test_detail.o -O3 -Wall -l$(LIBNAME) -o test_detail
+
+test_x86: test_x86.o
 	${CC} $(CFLAGS) test_x86.o -O3 -Wall -l$(LIBNAME) -o test_x86
+
+test_arm64: test_arm64.o
 	${CC} $(CFLAGS) test_arm64.o -O3 -Wall -l$(LIBNAME) -o test_arm64
+
+test_arm: test_arm.o
 	${CC} $(CFLAGS) test_arm.o -O3 -Wall -l$(LIBNAME) -o test_arm
+
+test_mips: test_mips.o
 	${CC} $(CFLAGS) test_mips.o -O3 -Wall -l$(LIBNAME) -o test_mips
 
 # Mingw32
