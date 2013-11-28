@@ -10,6 +10,7 @@ import com.sun.jna.Union;
 import com.sun.jna.ptr.LongByReference;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;
+import com.sun.jna.ptr.IntByReference;
 
 import java.util.List;
 import java.util.Arrays;
@@ -21,24 +22,14 @@ public class Capstone {
   public int arch;
   public int mode;
 
-  public static abstract class OpInfo {
-  }
+  protected static abstract class OpInfo {}
+  protected static abstract class UnionOpInfo extends Structure {}
 
-  public static class PrivateOpInfo extends Union {
-    public X86.UnionOpInfo x86;
-    public Arm64.UnionOpInfo arm64;
-    public Arm.UnionOpInfo arm;
-    public Mips.UnionOpInfo mips;
-  }
-
-  public static abstract class UnionOpInfo extends Structure {
-  }
-
-  static int max(int a, int b, int c, int d) {
+  protected static int max(int a, int b, int c, int d) {
     return Math.max(Math.max(Math.max(a,b),c),d);
   }
 
-  public static class _cs_insn extends Structure {
+  protected static class _cs_insn extends Structure {
     public int id;
     public long address;
     public short size;
@@ -48,7 +39,7 @@ public class Capstone {
     public int[] regs_write = new int[32];
     public int[] groups = new int[8];
 
-    public _cs_insn(Pointer p) { 
+    public _cs_insn(Pointer p) {
         mnemonic = new byte[32];
         operands = new byte[96];
         regs_read = new int[32];
@@ -68,7 +59,6 @@ public class Capstone {
     public OpInfo op_info;
     public Pointer ptr_origin;
     public long csh;
-    public CS cs;
 
     public int id;
     public long address;
@@ -78,6 +68,9 @@ public class Capstone {
     public int[] regs_read;
     public int[] regs_write;
     public int[] groups;
+
+    private CS cs;
+    private int _size;
 
     public cs_insn (_cs_insn struct, Pointer _ptr_origin, long _csh, CS _cs, OpInfo _op_info) {
       id = struct.id;
@@ -96,8 +89,6 @@ public class Capstone {
       _size = struct.size() + max( Arm.UnionOpInfo.getSize(), Arm64.UnionOpInfo.getSize(), Mips.UnionOpInfo.getSize(), X86.UnionOpInfo.getSize() );
     }
 
-    private int _size;
-
     protected int size() {
       return _size;
     }
@@ -109,6 +100,31 @@ public class Capstone {
     public int op_index(int type, int index) {
       return cs.cs_op_index(csh, ptr_origin, type, index);
     }
+
+    public boolean reg_read(int reg_id) {
+      return cs.cs_reg_read(csh, ptr_origin, reg_id) != 0;
+    }
+
+    public boolean reg_write(int reg_id) {
+      return cs.cs_reg_write(csh, ptr_origin, reg_id) != 0;
+    }
+
+    public int errno() {
+      return cs.cs_errno(csh);
+    }
+
+    public String reg_name(int reg_id) {
+      return cs.cs_reg_name(csh, reg_id);
+    }
+
+    public String insn_name() {
+      return cs.cs_insn_name(csh, id);
+    }
+
+    public boolean group(int gid) {
+      return cs.cs_insn_group(csh, ptr_origin, gid) != 0;
+    }
+
   }
 
   private cs_insn fromPointer(Pointer pointer)
@@ -146,7 +162,7 @@ public class Capstone {
 
     for (int i = 0; i < numberResults; i++) {
       arr[i] = fromPointer(pointer.share(offset));
-      offset += arr[i].size(); // TODO: fix this constant, can have JNA calculated but will be 5x slower
+      offset += arr[i].size();
     }
 
     return arr;
@@ -161,6 +177,13 @@ public class Capstone {
     public String cs_reg_name(long csh, int id);
     public int cs_op_count(long csh, Pointer insn, int type);
     public int cs_op_index(long csh, Pointer insn, int type, int index);
+
+    public String cs_insn_name(long csh, int id);
+    public byte cs_insn_group(long csh, Pointer insn, int id);
+    public byte cs_reg_read(long csh, Pointer insn, int id);
+    public byte cs_reg_write(long csh, Pointer insn, int id);
+    public void cs_version(IntByReference major, IntByReference minor);
+    public int cs_errno(long csh);
   }
 
   public static final int CS_ARCH_ARM = 0;
