@@ -10,46 +10,28 @@ CFLAGS += -fPIC -O3 -Wall -I$(INCDIR) -L$(LIBDIR)
 
 LIBNAME = capstone
 
-.PHONY: all clean win_test
+.PHONY: all clean win_test linux windows
 
-all: test test_detail test_x86 test_arm64 test_arm test_mips
+SOURCES = test.c test_detail.c test_x86.c test_arm64.c test_arm.c test_mips.c
+OBJS = $(SOURCES:.c=.o)
+BINARY_LINUX = $(SOURCES:.c=)
+BINARY_WINDOWS = $(SOURCES:.c=.exe)
 
-test: test.o
-	${CC} $(CFLAGS) test.o -O3 -Wall -l$(LIBNAME) -o test
+all: linux
 
-test_detail: test_detail.o
-	${CC} $(CFLAGS) test_detail.o -O3 -Wall -l$(LIBNAME) -o test_detail
-
-test_x86: test_x86.o
-	${CC} $(CFLAGS) test_x86.o -O3 -Wall -l$(LIBNAME) -o test_x86
-
-test_arm64: test_arm64.o
-	${CC} $(CFLAGS) test_arm64.o -O3 -Wall -l$(LIBNAME) -o test_arm64
-
-test_arm: test_arm.o
-	${CC} $(CFLAGS) test_arm.o -O3 -Wall -l$(LIBNAME) -o test_arm
-
-test_mips: test_mips.o
-	${CC} $(CFLAGS) test_mips.o -O3 -Wall -l$(LIBNAME) -o test_mips
+linux: $(OBJS) $(BINARY_LINUX)
 
 # Mingw32
-windows: test.o test_detail.o test_x86.o test_arm64.o test_arm.o test_mips.o
-	${CC} test.o -O3 -Wall $(LIBNAME).dll -o test.exe
-	${CC} test_detail.o -O3 -Wall $(LIBNAME).dll -o test_detail.exe
-	${CC} test_x86.o -O3 -Wall $(LIBNAME).dll -o test_x86.exe
-	${CC} test_arm64.o -O3 -Wall $(LIBNAME).dll -o test_arm64.exe
-	${CC} test_arm.o -O3 -Wall $(LIBNAME).dll -o test_arm.exe
-	${CC} test_mips.o -O3 -Wall $(LIBNAME).dll -o test_mips.exe
+windows: $(OBJS) $(BINARY_WINDOWS)
 
 clean:
-	rm -rf test_x86 test_x86.exe test_x86.o
-	rm -rf test_arm64 test_arm64.exe test_arm64.o
-	rm -rf test_arm test_arm.exe test_arm.o
-	rm -rf test_mips test_mips.exe test_mips.o
-	rm -rf test test.exe test.o
-	rm -rf test_detail test_detail.exe test_detail.o
-	rm -rf *.dll
-	rm -rf *.so
+	rm -rf $(OBJS) $(BINARY_LINUX) $(BINARY_WINDOWS) *.dll *.so
+
+%.exe: %.o
+	${CC} $(CFLAGS) $^ -O3 -Wall $(LIBNAME).dll -o $@
+
+%: %.o
+	${CC} $(CFLAGS) $^ -O3 -Wall -l$(LIBNAME) -o $@
 
 .c.o:
 	${CC} ${CFLAGS} -c $< -o $@
