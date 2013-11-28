@@ -1,6 +1,8 @@
 // Capstone Java binding
 // By Nguyen Anh Quynh & Dang Hoang Vu,  2013
 
+package capstone;
+
 import com.sun.jna.Library;
 import com.sun.jna.Native;
 import com.sun.jna.Structure;
@@ -8,27 +10,26 @@ import com.sun.jna.Union;
 import com.sun.jna.ptr.LongByReference;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;
+import com.sun.jna.ptr.IntByReference;
 
 import java.util.List;
 import java.util.Arrays;
 import java.lang.RuntimeException;
+import java.lang.Math;
 
-class Capstone {
+public class Capstone {
 
   public int arch;
   public int mode;
 
-  public static abstract class OpInfo {
+  protected static abstract class OpInfo {}
+  protected static abstract class UnionOpInfo extends Structure {}
+
+  protected static int max(int a, int b, int c, int d) {
+    return Math.max(Math.max(Math.max(a,b),c),d);
   }
 
-  public static class PrivateOpInfo extends Union {
-    public X86.UnionOpInfo x86;
-    public Arm64.UnionOpInfo arm64;
-    public Arm.UnionOpInfo arm;
-    public Mips.UnionOpInfo mips;
-  }
-
-  public static class _cs_insn extends Structure implements Structure.ByReference {
+  protected static class _cs_insn extends Structure {
     public int id;
     public long address;
     public short size;
@@ -38,30 +39,38 @@ class Capstone {
     public int[] regs_write = new int[32];
     public int[] groups = new int[8];
 
-    public PrivateOpInfo _op_info;
-
-    public _cs_insn(Pointer p) { super(p); }
+    public _cs_insn(Pointer p) {
+        mnemonic = new byte[32];
+        operands = new byte[96];
+        regs_read = new int[32];
+        regs_write = new int[32];
+        groups = new int[8];
+        useMemory(p);
+        read();
+    }
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("id", "address", "size", "mnemonic", "operands", "regs_read", "regs_write", "groups", "_op_info");
+      return Arrays.asList("id", "address", "size", "mnemonic", "operands", "regs_read", "regs_write", "groups");
     }
   }
 
   public static class cs_insn {
-    OpInfo op_info;
-    Pointer ptr_origin;
-    long csh;
-    CS cs;
+    public OpInfo op_info;
+    public Pointer ptr_origin;
+    public long csh;
 
-    int id;
-    long address;
-    short size;
-    String mnemonic;
-    String operands;
-    int[] regs_read;
-    int[] regs_write;
-    int[] groups;
+    public int id;
+    public long address;
+    public short size;
+    public String mnemonic;
+    public String operands;
+    public int[] regs_read;
+    public int[] regs_write;
+    public int[] groups;
+
+    private CS cs;
+    private int _size;
 
     public cs_insn (_cs_insn struct, Pointer _ptr_origin, long _csh, CS _cs, OpInfo _op_info) {
       id = struct.id;
@@ -77,6 +86,11 @@ class Capstone {
       op_info = _op_info;
       csh = _csh;
       cs = _cs;
+      _size = struct.size() + max( Arm.UnionOpInfo.getSize(), Arm64.UnionOpInfo.getSize(), Mips.UnionOpInfo.getSize(), X86.UnionOpInfo.getSize() );
+    }
+
+    protected int size() {
+      return _size;
     }
 
     public int op_count(int type) {
@@ -86,33 +100,55 @@ class Capstone {
     public int op_index(int type, int index) {
       return cs.cs_op_index(csh, ptr_origin, type, index);
     }
+
+    public boolean reg_read(int reg_id) {
+      return cs.cs_reg_read(csh, ptr_origin, reg_id) != 0;
+    }
+
+    public boolean reg_write(int reg_id) {
+      return cs.cs_reg_write(csh, ptr_origin, reg_id) != 0;
+    }
+
+    public int errno() {
+      return cs.cs_errno(csh);
+    }
+
+    public String reg_name(int reg_id) {
+      return cs.cs_reg_name(csh, reg_id);
+    }
+
+    public String insn_name() {
+      return cs.cs_insn_name(csh, id);
+    }
+
+    public boolean group(int gid) {
+      return cs.cs_insn_group(csh, ptr_origin, gid) != 0;
+    }
+
   }
 
   private cs_insn fromPointer(Pointer pointer)
   {
     _cs_insn insn = new _cs_insn(pointer);
     OpInfo op_info = null;
+    UnionOpInfo _op_info = null;
 
     switch (this.arch) {
       case CS_ARCH_ARM:
-        insn._op_info.setType(Arm.UnionOpInfo.class);
-        insn.read();
-        op_info = new Arm.OpInfo(insn._op_info.arm);
+        _op_info = new Arm.UnionOpInfo(pointer.share(insn.size()));
+        op_info = new Arm.OpInfo((Arm.UnionOpInfo) _op_info);
         break;
       case CS_ARCH_ARM64:
-        insn._op_info.setType(Arm64.UnionOpInfo.class);
-        insn.read();
-        op_info = new Arm64.OpInfo(insn._op_info.arm64);
+        _op_info = new Arm64.UnionOpInfo(pointer.share(insn.size()));
+        op_info = new Arm64.OpInfo((Arm64.UnionOpInfo) _op_info);
         break;
       case CS_ARCH_MIPS:
-        insn._op_info.setType(Mips.UnionOpInfo.class);
-        insn.read();
-        op_info = new Mips.OpInfo(insn._op_info.mips);
+        _op_info = new Mips.UnionOpInfo(pointer.share(insn.size()));
+        op_info = new Mips.OpInfo((Mips.UnionOpInfo) _op_info);
         break;
       case CS_ARCH_X86:
-        insn._op_info.setType(X86.UnionOpInfo.class);
-        insn.read();
-        op_info = new X86.OpInfo(insn._op_info.x86);
+        _op_info = new X86.UnionOpInfo(pointer.share(insn.size()));
+        op_info = new X86.OpInfo((X86.UnionOpInfo) _op_info);
         break;
       default:
     }
@@ -126,7 +162,7 @@ class Capstone {
 
     for (int i = 0; i < numberResults; i++) {
       arr[i] = fromPointer(pointer.share(offset));
-      offset += 1728;	// sizeof(cs_insn);
+      offset += arr[i].size();
     }
 
     return arr;
@@ -141,6 +177,13 @@ class Capstone {
     public String cs_reg_name(long csh, int id);
     public int cs_op_count(long csh, Pointer insn, int type);
     public int cs_op_index(long csh, Pointer insn, int type, int index);
+
+    public String cs_insn_name(long csh, int id);
+    public byte cs_insn_group(long csh, Pointer insn, int id);
+    public byte cs_reg_read(long csh, Pointer insn, int id);
+    public byte cs_reg_write(long csh, Pointer insn, int id);
+    public void cs_version(IntByReference major, IntByReference minor);
+    public int cs_errno(long csh);
   }
 
   public static final int CS_ARCH_ARM = 0;
@@ -171,7 +214,7 @@ class Capstone {
   private PointerByReference insnRef;
   private CS cs;
 
-  Capstone(int arch, int mode)
+  public Capstone(int arch, int mode)
   {
     this.arch = arch;
     this.mode = mode;
@@ -187,18 +230,15 @@ class Capstone {
     return cs.cs_reg_name(csh, reg);
   }
 
-  protected void finalize()
-  {
+  protected void finalize() {
     cs.cs_close(csh);
   }
 
-  cs_insn[] disasm(byte[] code, long address)
-  {
+  public cs_insn[] disasm(byte[] code, long address) {
     return disasm(code, address, 0);
   }
 
-  cs_insn[] disasm(byte[] code, long address, long count)
-  {
+  public cs_insn[] disasm(byte[] code, long address, long count) {
     insnRef = new PointerByReference();
 
     long c = cs.cs_disasm_dyn(csh, code, code.length, address, count, insnRef);

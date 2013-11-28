@@ -1,6 +1,8 @@
 // Capstone Java binding
 // By Nguyen Anh Quynh & Dang Hoang Vu,  2013
 
+package capstone;
+
 import com.sun.jna.Structure;
 import com.sun.jna.Pointer;
 import com.sun.jna.Union;
@@ -9,7 +11,7 @@ import com.sun.jna.NativeLong;
 import java.util.List;
 import java.util.Arrays;
 
-class X86 {
+public class X86 {
 
   // Operand type
   public static final int X86_OP_INVALID = 0;  // Uninitialized.
@@ -67,10 +69,10 @@ class X86 {
     }
   }
 
-  public static class UnionOpInfo extends Structure {
-    public byte [] prefix = new byte[5];
+  public static class UnionOpInfo extends Capstone.UnionOpInfo {
+    public byte [] prefix;
     public int segment;
-    public byte [] opcode = new byte[3];
+    public byte [] opcode;
     public byte op_size;
     public byte addr_size;
     public byte disp_size;
@@ -84,7 +86,25 @@ class X86 {
 
     public int op_count;
 
-    public Operand [] op = new Operand[8];
+    public Operand [] op;
+
+    public UnionOpInfo() {
+      op = new Operand[8];
+      opcode = new byte[3];
+      prefix = new byte[5];
+    }
+
+    public UnionOpInfo(Pointer p) {
+      op = new Operand[8];
+      opcode = new byte[3];
+      prefix = new byte[5];
+      useMemory(p);
+      read();
+    }
+
+    public static int getSize() {
+      return (new UnionOpInfo()).size();
+    }
 
     @Override
     public List getFieldOrder() {
@@ -108,7 +128,7 @@ class X86 {
     public byte sib_scale;
     public int sib_base;
 
-    Operand[] op;
+    public Operand[] op;
 
     public OpInfo(UnionOpInfo e) {
       prefix = e.prefix;

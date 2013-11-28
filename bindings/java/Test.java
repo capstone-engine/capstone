@@ -5,6 +5,8 @@ import com.sun.jna.Native;
 import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
 
+import capstone.Capstone;
+
 public class Test {
   public static class platform {
     public int arch;
@@ -20,7 +22,7 @@ public class Test {
     }
   };
 
-  static String stringToHex(byte[] code) {
+  static public String stringToHex(byte[] code) {
     StringBuilder buf = new StringBuilder(200);
     for (byte ch: code) {
       if (buf.length() > 0)
@@ -48,7 +50,7 @@ public class Test {
           Capstone.CS_ARCH_X86,
           Capstone.CS_MODE_32,
           new byte[] { (byte)0x8d, 0x4c, 0x32, 0x08, 0x01, (byte)0xd8, (byte)0x81, (byte)0xc6, 0x34, 0x12, 0x00, 0x00 },
-          "X86 32bit (Intel syntax)"
+          "X86 32 (Intel syntax)"
           ),
       new platform(
           Capstone.CS_ARCH_X86,
@@ -102,18 +104,20 @@ public class Test {
     };
 
     for (int j = 0; j < platforms.length; j++) {
-      System.out.println("************");
+      System.out.println("****************");
       System.out.println(String.format("Platform: %s", platforms[j].comment));
       System.out.println(String.format("Code: %s", stringToHex(platforms[j].code)));
+      System.out.println("Disasm:");
 
       Capstone cs = new Capstone(platforms[j].arch, platforms[j].mode);
 
       Capstone.cs_insn[] all_insn = cs.disasm(platforms[j].code, 0x1000);
 
       for (int i = 0; i < all_insn.length; i++) {
-        System.out.println(String.format("0x%x\t%s\t%s", all_insn[i].address,
+        System.out.println(String.format("0x%x: \t%s\t%s", all_insn[i].address,
               all_insn[i].mnemonic, all_insn[i].operands));
 
+        /*
         if (all_insn[i].regs_read[0] != 0) {
           System.out.print("\tRegister read: ");
           for(int k = 0; k < all_insn[i].regs_read.length; k++) {
@@ -142,8 +146,9 @@ public class Test {
             System.out.print(String.format("%d ", all_insn[i].groups[k]));
           }
           System.out.println();
-        }
+        }*/
       }
+      System.out.printf("0x%x:\n\n", all_insn[all_insn.length-1].address + all_insn[all_insn.length-1].size);
     }
   }
 }

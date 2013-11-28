@@ -1,6 +1,8 @@
 // Capstone Java binding
 // By Nguyen Anh Quynh & Dang Hoang Vu,  2013
 
+package capstone;
+
 import com.sun.jna.Structure;
 import com.sun.jna.Pointer;
 import com.sun.jna.Union;
@@ -9,7 +11,7 @@ import com.sun.jna.NativeLong;
 import java.util.List;
 import java.util.Arrays;
 
-class Arm64 {
+public class Arm64 {
 
   // ARM64 operand shift type
   public static final int ARM64_SFT_INVALID = 0;
@@ -97,7 +99,7 @@ class Arm64 {
     public OpValue value;
 
     public void read() {
-      super.read();
+      readField("type");
       if (type == ARM64_OP_MEM)
         value.setType(MemType.class);
       if (type == ARM64_OP_FP)
@@ -109,6 +111,8 @@ class Arm64 {
       if (type == ARM64_OP_INVALID)
         return;
       readField("value");
+      readField("ext");
+      readField("shift");
     }
 
     @Override
@@ -117,13 +121,27 @@ class Arm64 {
     }
   }
 
-  public static class UnionOpInfo extends Structure {
+  public static class UnionOpInfo extends Capstone.UnionOpInfo {
     public int cc;
     public byte _update_flags;
     public byte _writeback;
     public byte op_count;
 
-    public Operand [] op = new Operand[32];
+    public Operand [] op;
+
+    public UnionOpInfo() {
+      op = new Operand[32];
+    }
+
+    public UnionOpInfo(Pointer p) {
+      op = new Operand[32];
+      useMemory(p);
+      read();
+    }
+
+    public static int getSize() {
+      return (new UnionOpInfo()).size();
+    }
 
     public void read() {
       readField("cc");

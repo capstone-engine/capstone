@@ -5,6 +5,9 @@ import com.sun.jna.Native;
 import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
 
+import capstone.Capstone;
+import capstone.Mips;
+
 public class TestMips {
 
   static byte[] hexString2Byte(String s) {
@@ -38,13 +41,13 @@ public class TestMips {
 
     if (op_info.op != null) {
       System.out.printf("\top_count: %d\n", op_info.op.length);
-      for (int c=1; c<op_info.op.length+1; c++) {
-        Mips.Operand i = (Mips.Operand) op_info.op[c-1];
+      for (int c=0; c<op_info.op.length; c++) {
+        Mips.Operand i = (Mips.Operand) op_info.op[c];
         String imm = hex(i.value.imm);
         if (i.type == Mips.MIPS_OP_REG)
           System.out.printf("\t\toperands[%d].type: REG = %s\n", c, cs.reg_name(i.value.reg));
         if (i.type == Mips.MIPS_OP_IMM)
-          System.out.printf("\t\toperands[%d].type: IMM = %s\n", c, imm);
+          System.out.printf("\t\toperands[%d].type: IMM = 0x%x\n", c, i.value.imm);
         if (i.type == Mips.MIPS_OP_MEM) {
           System.out.printf("\t\toperands[%d].type: MEM\n",c);
           String base = cs.reg_name(i.value.mem.base);
@@ -66,8 +69,9 @@ public class TestMips {
 
     for (int i=0; i<all_tests.length; i++) {
       Test.platform test = all_tests[i];
-      System.out.println(new String(new char[30]).replace("\0", "*"));
+      System.out.println(new String(new char[16]).replace("\0", "*"));
       System.out.println("Platform: " + test.comment);
+      System.out.println("Code: " + Test.stringToHex(test.code));
       System.out.println("Disasm:");
 
       cs = new Capstone(test.arch, test.mode);
@@ -77,6 +81,8 @@ public class TestMips {
         print_ins_detail(all_ins[j]);
         System.out.println();
       }
+
+      System.out.printf("0x%x:\n\n", all_ins[all_ins.length-1].address + all_ins[all_ins.length-1].size);
     }
   }
 

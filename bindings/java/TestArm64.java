@@ -5,6 +5,9 @@ import com.sun.jna.Native;
 import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
 
+import capstone.Capstone;
+import capstone.Arm64;
+
 public class TestArm64 {
 
   static byte[] hexString2Byte(String s) {
@@ -35,29 +38,17 @@ public class TestArm64 {
 
     Arm64.OpInfo op_info = (Arm64.OpInfo) ins.op_info;
 
-    if (op_info.cc != Arm64.ARM64_CC_AL && op_info.cc != Arm64.ARM64_CC_INVALID){
-      System.out.printf("\tCode condition: %d\n",  op_info.cc);
-    }
-
-    if (op_info.update_flags) {
-      System.out.println("\tUpdate-flags: True");
-    }
-
-    if (op_info.writeback) {
-      System.out.println("\tWriteback: True");
-    }
-
     if (op_info.op != null) {
       System.out.printf("\top_count: %d\n", op_info.op.length);
-      for (int c=1; c<op_info.op.length+1; c++) {
-        Arm64.Operand i = (Arm64.Operand) op_info.op[c-1];
+      for (int c=0; c<op_info.op.length; c++) {
+        Arm64.Operand i = (Arm64.Operand) op_info.op[c];
         String imm = hex(i.value.imm);
         if (i.type == Arm64.ARM64_OP_REG)
           System.out.printf("\t\toperands[%d].type: REG = %s\n", c, cs.reg_name(i.value.reg));
         if (i.type == Arm64.ARM64_OP_IMM)
-          System.out.printf("\t\toperands[%d].type: IMM = %s\n", c, imm);
+          System.out.printf("\t\toperands[%d].type: IMM = 0x%x\n", c, i.value.imm);
         if (i.type == Arm64.ARM64_OP_CIMM)
-          System.out.printf("\t\toperands[%d].type: C-IMM = %s\n", c, imm);
+          System.out.printf("\t\toperands[%d].type: C-IMM = %d\n", c, i.value.imm);
         if (i.type == Arm64.ARM64_OP_FP)
           System.out.printf("\t\toperands[%d].type: FP = %f\n", c, i.value.fp);
         if (i.type == Arm64.ARM64_OP_MEM) {
@@ -69,7 +60,7 @@ public class TestArm64 {
           if (index != null)
             System.out.printf("\t\t\toperands[%d].mem.index: REG = %s\n", c, index);
           if (i.value.mem.disp != 0)
-            System.out.printf("\t\t\toperands[%d].mem.disp: %s\n", c, hex(i.value.mem.disp));
+            System.out.printf("\t\t\toperands[%d].mem.disp: 0x%x\n", c, i.value.mem.disp);
         }
         if (i.shift.type != Arm64.ARM64_SFT_INVALID && i.shift.value > 0)
           System.out.printf("\t\t\tShift: type = %d, value = %d\n", i.shift.type, i.shift.value);
@@ -77,6 +68,16 @@ public class TestArm64 {
           System.out.printf("\t\t\tExt: %d\n", i.ext);
       }
     }
+
+    if (op_info.writeback)
+      System.out.println("\tWrite-back: True");
+
+    if (op_info.update_flags)
+      System.out.println("\tUpdate-flags: True");
+
+    if (op_info.cc != Arm64.ARM64_CC_AL && op_info.cc != Arm64.ARM64_CC_INVALID)
+      System.out.printf("\tCode condition: %d\n",  op_info.cc);
+
   }
 
   public static void main(String argv[]) {
@@ -87,17 +88,20 @@ public class TestArm64 {
 
     for (int i=0; i<all_tests.length; i++) {
       Test.platform test = all_tests[i];
-      System.out.println(new String(new char[30]).replace("\0", "*"));
+      System.out.println(new String(new char[16]).replace("\0", "*"));
       System.out.println("Platform: " + test.comment);
+      System.out.println("Code: " + Test.stringToHex(test.code));
       System.out.println("Disasm:");
 
       cs = new Capstone(test.arch, test.mode);
-      Capstone.cs_insn[] all_ins = cs.disasm(test.code, 0x1000);
+      Capstone.cs_insn[] all_ins = cs.disasm(test.code, 0x2c);
 
       for (int j = 0; j < all_ins.length; j++) {
         print_ins_detail(all_ins[j]);
         System.out.println();
       }
+
+      System.out.printf("0x%x: \n\n", all_ins[all_ins.length-1].address + all_ins[all_ins.length-1].size);
     }
   }
 

@@ -3,8 +3,28 @@
 
 JNA = /usr/share/java/jna/jna.jar
 
-all:
-	javac -classpath $(JNA) CS.java Arm.java Arm64.java Mips.java X86.java Test.java TestArm.java TestArm64.java TestMips.java TestX86.java
+ifneq ($(wildcard $(JNA)),)
+else
+  ifneq ($(wildcard /usr/share/java/jna.jar),)
+    JNA = /usr/share/java/jna.jar
+  else
+    JNA =
+    $(error Unable to find jna.jar)
+  endif
+endif
+
+CAPSTONE_JAVA = Capstone.java Arm.java Arm64.java Mips.java X86.java
+
+all: capstone tests
+
+capstone: capstone_class
+	jar cf capstone.jar capstone/*.class
+
+capstone_class:
+	cd capstone; javac -classpath $(JNA) $(CAPSTONE_JAVA)
+
+tests:
+	javac -classpath "$(JNA):capstone.jar" Test.java TestArm.java TestArm64.java TestMips.java TestX86.java
 
 clean:
-	rm -rf *.class *.log
+	rm -rf *.class *.log *.jar
