@@ -57,7 +57,7 @@ public class Arm {
     public int base;
     public int index;
     public int scale;
-    public long disp;
+    public int disp;
 
     @Override
     public List getFieldOrder() {
@@ -67,7 +67,7 @@ public class Arm {
 
   public static class OpValue extends Union {
     public int reg;
-    public long imm;
+    public int imm;
     public double fp;
     public MemType mem;
 
@@ -99,7 +99,7 @@ public class Arm {
       if (type == ARM_OP_FP)
         value.setType(Double.TYPE);
       if (type == ARM_OP_PIMM || type == ARM_OP_IMM || type == ARM_OP_CIMM)
-        value.setType(Long.TYPE);
+        value.setType(Integer.TYPE);
       if (type == ARM_OP_REG)
         value.setType(Integer.TYPE);
       if (type == ARM_OP_INVALID)
@@ -122,12 +122,12 @@ public class Arm {
 
     public Operand [] op;
 
-    public UnionOpInfo(){ 
-      op = new Operand[32];
+    public UnionOpInfo(){
+      op = new Operand[20];
     }
 
     public UnionOpInfo(Pointer p){
-      op = new Operand[32];
+      op = new Operand[20];
       useMemory(p);
       read();
     }
@@ -142,6 +142,7 @@ public class Arm {
       readField("_update_flags");
       readField("_writeback");
       readField("op_count");
+      if (op_count == 0) return;
       op = new Operand[op_count];
       readField("op");
     }

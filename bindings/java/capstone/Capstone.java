@@ -5,9 +5,10 @@ package capstone;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
+import com.sun.jna.NativeLong;
+import com.sun.jna.ptr.NativeLongByReference;
 import com.sun.jna.Structure;
 import com.sun.jna.Union;
-import com.sun.jna.ptr.LongByReference;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;
 import com.sun.jna.ptr.IntByReference;
@@ -31,7 +32,7 @@ public class Capstone {
 
   protected static class _cs_insn extends Structure {
     public int id;
-    public long address;
+    public NativeLong address;
     public short size;
     public byte[] mnemonic = new byte[32];
     public byte[] operands = new byte[96];
@@ -40,13 +41,13 @@ public class Capstone {
     public int[] groups = new int[8];
 
     public _cs_insn(Pointer p) {
-        mnemonic = new byte[32];
-        operands = new byte[96];
-        regs_read = new int[32];
-        regs_write = new int[32];
-        groups = new int[8];
-        useMemory(p);
-        read();
+      mnemonic = new byte[32];
+      operands = new byte[96];
+      regs_read = new int[32];
+      regs_write = new int[32];
+      groups = new int[8];
+      useMemory(p);
+      read();
     }
 
     @Override
@@ -58,7 +59,7 @@ public class Capstone {
   public static class cs_insn {
     public OpInfo op_info;
     public Pointer ptr_origin;
-    public long csh;
+    public NativeLong csh;
 
     public int id;
     public long address;
@@ -72,9 +73,9 @@ public class Capstone {
     private CS cs;
     private int _size;
 
-    public cs_insn (_cs_insn struct, Pointer _ptr_origin, long _csh, CS _cs, OpInfo _op_info) {
+    public cs_insn (_cs_insn struct, Pointer _ptr_origin, NativeLong _csh, CS _cs, OpInfo _op_info) {
       id = struct.id;
-      address = struct.address;
+      address = struct.address.longValue();
       size = struct.size;
       mnemonic = new String(struct.mnemonic).replace("\u0000","");
       operands = new String(struct.operands).replace("\u0000","");
@@ -169,21 +170,21 @@ public class Capstone {
   }
 
   private interface CS extends Library {
-    public int cs_open(int arch, int mode, LongByReference handle);
-    public long cs_disasm_dyn(long handle, byte[] code, long code_len,
-        long addr, long count, PointerByReference insn);
+    public int cs_open(int arch, int mode, NativeLongByReference handle);
+    public NativeLong cs_disasm_dyn(NativeLong handle, byte[] code, NativeLong code_len,
+        NativeLong addr, NativeLong count, PointerByReference insn);
     public void cs_free(Pointer p);
-    public int cs_close(long handle);
-    public String cs_reg_name(long csh, int id);
-    public int cs_op_count(long csh, Pointer insn, int type);
-    public int cs_op_index(long csh, Pointer insn, int type, int index);
+    public int cs_close(NativeLong handle);
+    public String cs_reg_name(NativeLong csh, int id);
+    public int cs_op_count(NativeLong csh, Pointer insn, int type);
+    public int cs_op_index(NativeLong csh, Pointer insn, int type, int index);
 
-    public String cs_insn_name(long csh, int id);
-    public byte cs_insn_group(long csh, Pointer insn, int id);
-    public byte cs_reg_read(long csh, Pointer insn, int id);
-    public byte cs_reg_write(long csh, Pointer insn, int id);
+    public String cs_insn_name(NativeLong csh, int id);
+    public byte cs_insn_group(NativeLong csh, Pointer insn, int id);
+    public byte cs_reg_read(NativeLong csh, Pointer insn, int id);
+    public byte cs_reg_write(NativeLong csh, Pointer insn, int id);
     public void cs_version(IntByReference major, IntByReference minor);
-    public int cs_errno(long csh);
+    public int cs_errno(NativeLong csh);
   }
 
   public static final int CS_ARCH_ARM = 0;
@@ -210,7 +211,7 @@ public class Capstone {
   public static final int CS_ERR_MODE = 5;	  // Invalid/unsupported mode
 
 
-  private long csh;
+  private NativeLong csh;
   private PointerByReference insnRef;
   private CS cs;
 
@@ -219,7 +220,7 @@ public class Capstone {
     this.arch = arch;
     this.mode = mode;
     cs = (CS)Native.loadLibrary("capstone", CS.class);
-    LongByReference handleref = new LongByReference();
+    NativeLongByReference handleref = new NativeLongByReference();
     if (cs.cs_open(arch, mode, handleref) != CS_ERR_OK) {
       throw new RuntimeException("ERROR: Wrong arch or mode");
     }
@@ -241,10 +242,10 @@ public class Capstone {
   public cs_insn[] disasm(byte[] code, long address, long count) {
     insnRef = new PointerByReference();
 
-    long c = cs.cs_disasm_dyn(csh, code, code.length, address, count, insnRef);
+    NativeLong c = cs.cs_disasm_dyn(csh, code, new NativeLong(code.length), new NativeLong(address), new NativeLong(count), insnRef);
 
     Pointer p = insnRef.getValue();
-    cs_insn[] all_insn = fromArrayPointer(p, (int)c);
+    cs_insn[] all_insn = fromArrayPointer(p, c.intValue());
     return all_insn;
   }
 }

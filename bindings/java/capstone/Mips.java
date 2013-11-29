@@ -63,7 +63,7 @@ public class Mips {
   }
 
   public static class UnionOpInfo extends Capstone.UnionOpInfo {
-    public short op_count;
+    public byte op_count;
     public Operand [] op;
 
     public UnionOpInfo() {
@@ -82,6 +82,7 @@ public class Mips {
 
     public void read() {
       readField("op_count");
+      if (op_count ==0) return;
       op = new Operand[op_count];
       readField("op");
     }

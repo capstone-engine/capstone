@@ -84,7 +84,7 @@ public class X86 {
     public byte sib_scale;
     public int sib_base;
 
-    public int op_count;
+    public char op_count;
 
     public Operand [] op;
 

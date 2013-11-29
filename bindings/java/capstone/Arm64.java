@@ -130,11 +130,11 @@ public class Arm64 {
     public Operand [] op;
 
     public UnionOpInfo() {
-      op = new Operand[32];
+      op = new Operand[8];
     }
 
     public UnionOpInfo(Pointer p) {
-      op = new Operand[32];
+      op = new Operand[8];
       useMemory(p);
       read();
     }
@@ -148,6 +148,7 @@ public class Arm64 {
       readField("_update_flags");
       readField("_writeback");
       readField("op_count");
+      if (op_count == 0) return;
       op = new Operand[op_count];
       readField("op");
     }
