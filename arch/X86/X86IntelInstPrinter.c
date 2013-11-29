@@ -165,8 +165,9 @@ static void printMemOffs64(MCInst *MI, unsigned OpNo, SStream *O)
 }
 
 // get the first op from the asm buffer
+// return False if there is no op. On True, put fist op in @firstop
 // NOTE: make sure firstop is big enough to contain the resulted string
-static void get_first_op(char *buffer, char *firstop)
+static bool get_first_op(char *buffer, char *firstop)
 {
 	char *tab = strchr(buffer, '\t');
 	if (tab) {
@@ -176,8 +177,28 @@ static void get_first_op(char *buffer, char *firstop)
 			firstop[comma - tab - 1] = '\0';
 		} else
 			strcpy(firstop, tab + 1);
+
+		return true;
 	} else	// no op
-		firstop[0] = '\0';
+		return false;
+}
+
+// hacky: get mnem string from buffer if this insn has only 1 operand
+// return mnem if True, or False if above condition was not satisfied
+// NOTE: make sure mnem is big enough to contain the resulted string
+static bool get_mnem1(char *buffer, char *mnem)
+{
+	if (strchr(buffer, ','))
+		return false;
+
+	char *tab = strchr(buffer, '\t');
+	if (!tab)
+		return false;
+
+	memcpy(mnem, buffer, tab - buffer);
+	mnem[tab - buffer + 1] = '\0';
+
+	return true;
 }
 
 static bool printAliasInstr(MCInst *MI, SStream *OS);
@@ -202,23 +223,37 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 	} else
 		printInstruction(MI, O);
 
-	// first op can be embedded in the asm by llvm.
-	// so we have to handle that case to not miss the first op.
-	char firstop[128];
-	get_first_op(O->buffer, firstop);
-	char *acc_regs[] = {"rax", "eax", "ax", "al", NULL};
-	if (firstop[0] != 0 && str_in_list(acc_regs, firstop)) {
-		// firstop is a register
-		if (MI->pub_insn.x86.operands[0].type != X86_OP_INVALID &&
-				MI->pub_insn.x86.operands[0].type != X86_OP_REG) {
-			int i;
-			for (i = MI->pub_insn.x86.op_count; i > 0; i--) {
-				memcpy(&(MI->pub_insn.x86.operands[i]), &(MI->pub_insn.x86.operands[i - 1]),
-						sizeof(MI->pub_insn.x86.operands[0]));
-			}
-			MI->pub_insn.x86.operands[0].type = X86_OP_REG;
-			MI->pub_insn.x86.operands[0].reg = x86_map_regname(firstop);
+	// currently LLVM presents "shr reg, 1" as "shr reg"
+	// until that is fixed, we need this hack
+	char tmp[128];
+	if (get_mnem1(O->buffer, tmp)) {
+		char *mnems[] = {"shr", "shl", "sar", NULL};
+		if (str_in_list(mnems, tmp)) {
+			// this insn needs to have op "1"
+			strcat(O->buffer, ", 1");
+			MI->pub_insn.x86.operands[1].type = X86_OP_IMM;
+			MI->pub_insn.x86.operands[1].imm = 1;
 			MI->pub_insn.x86.op_count++;
+
+			return;
+		}
+	}
+
+	if (get_first_op(O->buffer, tmp)) {
+		char *acc_regs[] = {"rax", "eax", "ax", "al", NULL};
+		if (tmp[0] != 0 && str_in_list(acc_regs, tmp)) {
+			// tmp is a register
+			if (MI->pub_insn.x86.operands[0].type != X86_OP_INVALID &&
+					MI->pub_insn.x86.operands[0].type != X86_OP_REG) {
+				int i;
+				for (i = MI->pub_insn.x86.op_count; i > 0; i--) {
+					memcpy(&(MI->pub_insn.x86.operands[i]), &(MI->pub_insn.x86.operands[i - 1]),
+							sizeof(MI->pub_insn.x86.operands[0]));
+				}
+				MI->pub_insn.x86.operands[0].type = X86_OP_REG;
+				MI->pub_insn.x86.operands[0].reg = x86_map_regname(tmp);
+				MI->pub_insn.x86.op_count++;
+			}
 		}
 	}
 }
