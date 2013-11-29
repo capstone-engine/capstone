@@ -18,7 +18,7 @@ unsigned int AArch64_get_insn_id2(unsigned int id);
 
 char *AArch64_insn_name(unsigned int id);
 
-// map instruction name to instruction ID
+// map instruction name to public instruction ID
 arm64_reg AArch64_map_insn(char *name);
 
 #endif

@@ -35,9 +35,19 @@ void MCInst_setOpcode(MCInst *inst, unsigned Op)
 	inst->Opcode = Op;
 }
 
+void MCInst_setOpcodePub(MCInst *inst, unsigned Op)
+{
+	inst->OpcodePub = Op;
+}
+
 unsigned MCInst_getOpcode(const MCInst *inst)
 {
 	return inst->Opcode;
+}
+
+unsigned MCInst_getOpcodePub(const MCInst *inst)
+{
+	return inst->OpcodePub;
 }
 
 MCOperand *MCInst_getOperand(MCInst *inst, unsigned i)
