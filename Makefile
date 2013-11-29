@@ -1,8 +1,6 @@
 # Capstone Disassembler Engine
 # By Nguyen Anh Quynh <aquynh@gmail.com>, 2013>
 
-# NOTE: at the moment this Makefile is for *nix only.
-
 CC = $(CROSS)gcc
 AR ?= $(CROSS)ar
 RANLIB ?= $(CROSS)ranlib
