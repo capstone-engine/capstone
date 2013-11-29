@@ -85,7 +85,7 @@ class _cs_arm64(ctypes.Structure):
         ('update_flags', ctypes.c_bool),
         ('writeback', ctypes.c_bool),
         ('op_count', ctypes.c_uint8),
-        ('operands', arm64_op * 32),
+        ('operands', arm64_op * 8),
     )
 
 def get_arch_info(a):

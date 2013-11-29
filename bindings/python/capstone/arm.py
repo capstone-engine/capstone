@@ -78,7 +78,7 @@ class _cs_arm(ctypes.Structure):
         ('update_flags', ctypes.c_bool),
         ('writeback', ctypes.c_bool),
         ('op_count', ctypes.c_uint8),
-        ('operands', arm_op * 32),
+        ('operands', arm_op * 20),
     )
 
 def get_arch_info(arch):
