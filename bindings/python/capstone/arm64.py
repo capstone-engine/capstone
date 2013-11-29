@@ -54,7 +54,7 @@ class arm64_op_mem(ctypes.Structure):
     _fields_ = (
         ('base', ctypes.c_uint),
         ('index', ctypes.c_uint),
-        ('disp', ctypes.c_int64),
+        ('disp', ctypes.c_int32),
     )
 
 class arm64_op_shift(ctypes.Structure):
@@ -66,7 +66,7 @@ class arm64_op_shift(ctypes.Structure):
 class arm64_op_value(ctypes.Union):
     _fields_ = (
         ('reg', ctypes.c_uint),
-        ('imm', ctypes.c_int64),
+        ('imm', ctypes.c_int32),
         ('fp', ctypes.c_double),
         ('mem', arm64_op_mem),
     )
