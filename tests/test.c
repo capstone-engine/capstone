@@ -147,12 +147,12 @@ static void test()
 
 			size_t j;
 			for (j = 0; j < count; j++) {
-				printf("0x%zu:\t%s\t\t%s\n",
-						insn[j].address, insn[j].mnemonic, insn[j].op_str);
+				printf("0x%" PRIu64 ":\t%s\t\t%s\n",
+						(uint64_t) insn[j].address, insn[j].mnemonic, insn[j].op_str);
 			}
 
 			// print out the next offset, after the last insn
-			printf("0x%zu:\n", insn[j-1].address + insn[j-1].size);
+			printf("0x%" PRIu64 ":\n", (uint64_t) insn[j-1].address + insn[j-1].size);
 
 			// free memory allocated by cs_disasm_dyn()
 			cs_free(insn);
