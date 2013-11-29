@@ -3,6 +3,8 @@
 # Capstone Disassembler Engine
 # By Nguyen Anh Quynh <aquynh@gmail.com>, 2013>
 
+# Note: to cross-compile "nix32" on Linux, package gcc-multilib is required.
+
 function build {
 	CROSS= make clean
 
