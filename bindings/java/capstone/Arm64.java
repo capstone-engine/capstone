@@ -62,7 +62,7 @@ public class Arm64 {
   public static class MemType extends Structure {
     public int base;
     public int index;
-    public long disp;
+    public int disp;
 
     @Override
     public List getFieldOrder() {
@@ -72,7 +72,7 @@ public class Arm64 {
 
   public static class OpValue extends Union {
     public int reg;
-    public long imm;
+    public int imm;
     public double fp;
     public MemType mem;
 
@@ -104,9 +104,7 @@ public class Arm64 {
         value.setType(MemType.class);
       if (type == ARM64_OP_FP)
         value.setType(Double.TYPE);
-      if (type == ARM64_OP_IMM || type == ARM64_OP_CIMM)
-        value.setType(Long.TYPE);
-      if (type == ARM64_OP_REG)
+      if (type == ARM64_OP_IMM || type == ARM64_OP_CIMM || type == ARM64_OP_REG)
         value.setType(Integer.TYPE);
       if (type == ARM64_OP_INVALID)
         return;
@@ -130,11 +128,11 @@ public class Arm64 {
     public Operand [] op;
 
     public UnionOpInfo() {
-      op = new Operand[32];
+      op = new Operand[8];
     }
 
     public UnionOpInfo(Pointer p) {
-      op = new Operand[32];
+      op = new Operand[8];
       useMemory(p);
       read();
     }
@@ -148,6 +146,7 @@ public class Arm64 {
       readField("_update_flags");
       readField("_writeback");
       readField("op_count");
+      if (op_count == 0) return;
       op = new Operand[op_count];
       readField("op");
     }

@@ -27,6 +27,13 @@ def to_x(s):
     while x[0] == '0': x = x[1:]
     return x
 
+def to_x_32(s):
+    from struct import pack
+    if not s: return '0'
+    x = pack(">i", s).encode('hex')
+    while x[0] == '0': x = x[1:]
+    return x
+
 ### Test class cs
 def test_class():
     def print_insn_detail(insn):
@@ -40,7 +47,7 @@ def test_class():
                 if i.type == ARM_OP_REG:
 			        print("\t\toperands[%u].type: REG = %s" %(c, insn.reg_name(i.value.reg)))
                 if i.type == ARM_OP_IMM:
-			        print("\t\toperands[%u].type: IMM = 0x%s" %(c, to_x(i.value.imm)))
+			        print("\t\toperands[%u].type: IMM = 0x%s" %(c, to_x_32(i.value.imm)))
                 if i.type == ARM_OP_PIMM:
 			        print("\t\toperands[%u].type: P-IMM = %u" %(c, i.value.imm))
                 if i.type == ARM_OP_CIMM:
@@ -60,7 +67,7 @@ def test_class():
                             %(c, i.value.mem.scale))
                     if i.value.mem.disp != 0:
                         print("\t\t\toperands[%u].mem.disp: 0x%s" \
-                            %(c, to_x(i.value.mem.disp)))
+                            %(c, to_x_32(i.value.mem.disp)))
 
                 if i.shift.type != ARM_SFT_INVALID and i.shift.value:
 		            print("\t\t\tShift: type = %u, value = %u\n" \
