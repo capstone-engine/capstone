@@ -131,6 +131,8 @@ static void test()
 //#define ARM64_CODE "\x5f\x3f\x03\xd5"	// clrex
 //#define ARM64_CODE "\x5f\x3e\x03\xd5"	// clrex #14
 //#define ARM64_CODE "\x20\x00\x02\xab"	// adds	 x0, x1, x2 (alias of adds x0, x1, x2, lsl #0)
+//#define ARM64_CODE "\x20\xf4\x18\x9e"	// fcvtzs	x0, s1, #3
+//#define ARM64_CODE "\x20\xfc\x02\x9b"	// mneg	x0, x1, x2
 #define ARM64_CODE "\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9\x20\x04\x81\xda\x20\x08\x02\x8b"
 
 	struct platform platforms[] = {

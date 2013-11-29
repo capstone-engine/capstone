@@ -691,6 +691,10 @@ typedef enum arm64_insn {
 	ARM64_INS_USUBW,
 	ARM64_INS_UXTB,
 	ARM64_INS_UXTH,
+
+	// alias insn
+	ARM64_INS_MNEG,
+
 	ARM64_INS_MAX,
 } arm64_insn;
 
