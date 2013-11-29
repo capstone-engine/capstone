@@ -118,7 +118,7 @@ class _cs_arch(ctypes.Union):
 class _cs_insn(ctypes.Structure):
     _fields_ = (
         ('id', ctypes.c_uint),
-        ('address', ctypes.c_uint64),
+        ('address', ctypes.c_size_t),
         ('size', ctypes.c_uint16),
         ('mnemonic', ctypes.c_char * 32),
         ('op_str', ctypes.c_char * 96),
@@ -134,8 +134,8 @@ def _setup_prototype(lib, fname, restype, *argtypes):
     getattr(lib, fname).argtypes = argtypes
 
 _setup_prototype(_cs, "cs_open", ctypes.c_int, ctypes.c_uint, ctypes.c_uint, ctypes.POINTER(ctypes.c_uint64))
-_setup_prototype(_cs, "cs_disasm_dyn", ctypes.c_uint64, ctypes.c_uint64, ctypes.POINTER(ctypes.c_char), ctypes.c_uint64, \
-        ctypes.c_uint64, ctypes.c_uint64, ctypes.POINTER(ctypes.POINTER(_cs_insn)))
+_setup_prototype(_cs, "cs_disasm_dyn", ctypes.c_size_t, ctypes.c_size_t, ctypes.POINTER(ctypes.c_char), ctypes.c_size_t, \
+        ctypes.c_size_t, ctypes.c_size_t, ctypes.POINTER(ctypes.POINTER(_cs_insn)))
 _setup_prototype(_cs, "cs_free", None, ctypes.c_void_p)
 _setup_prototype(_cs, "cs_close", ctypes.c_int, ctypes.POINTER(ctypes.c_uint64))
 _setup_prototype(_cs, "cs_reg_name", ctypes.c_char_p, ctypes.c_uint64, ctypes.c_uint)
