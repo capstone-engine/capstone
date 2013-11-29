@@ -48,7 +48,7 @@ class arm_op_mem(ctypes.Structure):
         ('base', ctypes.c_uint),
         ('index', ctypes.c_uint),
         ('scale', ctypes.c_int),
-        ('disp', ctypes.c_int64),
+        ('disp', ctypes.c_int),
     )
 
 class arm_op_shift(ctypes.Structure):
@@ -60,7 +60,7 @@ class arm_op_shift(ctypes.Structure):
 class arm_op_value(ctypes.Union):
     _fields_ = (
         ('reg', ctypes.c_uint),
-        ('imm', ctypes.c_int64),
+        ('imm', ctypes.c_int),
         ('fp', ctypes.c_double),
         ('mem', arm_op_mem),
     )
