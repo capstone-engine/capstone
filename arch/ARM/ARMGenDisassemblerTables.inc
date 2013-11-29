@@ -13448,7 +13448,7 @@ DecodeToMCInst(decodeToMCInst_4, fieldFromInstruction_4, uint32_t)
 
 #define DecodeInstruction(fname, fieldname, decoder, InsnType) \
 static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
-                                      InsnType insn, uint64_t Address, \
+                                      InsnType insn, size_t Address, \
                                       int feature) \
 { \
   uint64_t Bits = ARM_getFeatureBits(feature); \

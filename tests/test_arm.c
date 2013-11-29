@@ -12,14 +12,14 @@ static csh handle;
 struct platform {
 	cs_arch arch;
 	cs_mode mode;
-	char *code;
-	int size;
+	unsigned char *code;
+	size_t size;
 	char *comment;
 };
 
-static void print_string_hex(char *comment, char *str, int len)
+static void print_string_hex(char *comment, unsigned char *str, int len)
 {
-	char *c;
+	unsigned char *c;
 
 	printf("%s", comment);
 	for (c = str; c < str + len; c++) {
@@ -46,7 +46,7 @@ static void print_insn_detail(cs_arch mode, cs_insn *ins)
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;
 			case ARM_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%"PRIx64 "\n", i, op->imm);
+				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->imm);
 				break;
 			case ARM_OP_FP:
 				printf("\t\toperands[%u].type: FP = %f\n", i, op->fp);
@@ -62,14 +62,14 @@ static void print_insn_detail(cs_arch mode, cs_insn *ins)
 				if (op->mem.scale != 1)
 					printf("\t\t\toperands[%u].mem.scale: %u\n", i, op->mem.scale);
 				if (op->mem.disp != 0)
-					printf("\t\t\toperands[%u].mem.disp: 0x%" PRIx64 "\n", i, op->mem.disp);
+					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
 
 				break;
 			case ARM_OP_PIMM:
-				printf("\t\toperands[%u].type: P-IMM = %"PRIu64 "\n", i, op->imm);
+				printf("\t\toperands[%u].type: P-IMM = %u\n", i, op->imm);
 				break;
 			case ARM_OP_CIMM:
-				printf("\t\toperands[%u].type: C-IMM = %"PRIu64 "\n", i, op->imm);
+				printf("\t\toperands[%u].type: C-IMM = %u\n", i, op->imm);
 				break;
 		}
 
@@ -152,34 +152,34 @@ static void test()
 		{
 			.arch = CS_ARCH_ARM,
 			.mode = CS_MODE_ARM,
-			.code = ARM_CODE,
+			.code = (unsigned char *)ARM_CODE,
 			.size = sizeof(ARM_CODE) - 1,
 			.comment = "ARM"
 		},
 		{
 			.arch = CS_ARCH_ARM,
 			.mode = CS_MODE_THUMB,
-			.code = THUMB_CODE,
+			.code = (unsigned char *)THUMB_CODE,
 			.size = sizeof(THUMB_CODE) - 1,
 			.comment = "Thumb"
 		},
 		{
 			.arch = CS_ARCH_ARM,
 			.mode = CS_MODE_THUMB,
-			.code = ARM_CODE2,
+			.code = (unsigned char *)ARM_CODE2,
 			.size = sizeof(ARM_CODE2) - 1,
 			.comment = "Thumb-mixed"
 		},
 		{
 			.arch = CS_ARCH_ARM,
 			.mode = CS_MODE_THUMB,
-			.code = THUMB_CODE2,
+			.code = (unsigned char *)THUMB_CODE2,
 			.size = sizeof(THUMB_CODE2) - 1,
 			.comment = "Thumb-2"
 		},
 	};
 
-	uint64_t address = 0x1000;
+	size_t address = 0x1000;
 	cs_insn *insn;
 	int i;
 
@@ -187,19 +187,19 @@ static void test()
 		if (cs_open(platforms[i].arch, platforms[i].mode, &handle))
 			return;
 
-		uint64_t count = cs_disasm_dyn(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
+		size_t count = cs_disasm_dyn(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code:", platforms[i].code, platforms[i].size);
 			printf("Disasm:\n");
 
-			uint64_t j;
+			size_t j;
 			for (j = 0; j < count; j++) {
-				printf("0x%"PRIx64":\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
+				printf("0x%zu:\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
 				print_insn_detail(platforms[i].mode, &insn[j]);
 			}
-			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
+			printf("0x%zu:\n", insn[j-1].address + insn[j-1].size);
 
 			// free memory allocated by cs_disasm_dyn()
 			cs_free(insn);

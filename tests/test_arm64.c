@@ -12,14 +12,14 @@ static csh handle;
 struct platform {
 	cs_arch arch;
 	cs_mode mode;
-	char *code;
-	int size;
+	unsigned char *code;
+	size_t size;
 	char *comment;
 };
 
-static void print_string_hex(char *comment, char *str, int len)
+static void print_string_hex(char *comment, unsigned char *str, int len)
 {
-	char *c;
+	unsigned char *c;
 
 	printf("%s", comment);
 	for (c = str; c < str + len; c++) {
@@ -137,13 +137,13 @@ static void test()
 		{
 			.arch = CS_ARCH_ARM64,
 			.mode = CS_MODE_ARM,
-			.code = ARM64_CODE,
+			.code = (unsigned char *)ARM64_CODE,
 			.size = sizeof(ARM64_CODE) - 1,
 			.comment = "ARM-64"
 		},
 	};
 
-	uint64_t address = 0x2c;
+	size_t address = 0x2c;
 	//cs_insn insn[16];
 	cs_insn *insn;
 	int i;
@@ -152,20 +152,20 @@ static void test()
 		if (cs_open(platforms[i].arch, platforms[i].mode, &handle))
 			return;
 
-		//uint64_t count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, insn);
-		uint64_t count = cs_disasm_dyn(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
+		//size_t count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, insn);
+		size_t count = cs_disasm_dyn(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code:", platforms[i].code, platforms[i].size);
 			printf("Disasm:\n");
 
-			uint64_t j;
+			size_t j;
 			for (j = 0; j < count; j++) {
-				printf("0x%"PRIx64":\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
+				printf("0x%zu:\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
 				print_insn_detail(platforms[i].mode, &insn[j]);
 			}
-			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
+			printf("0x%zu:\n", insn[j-1].address + insn[j-1].size);
 
 			// free memory allocated by cs_disasm_dyn()
 			cs_free(insn);

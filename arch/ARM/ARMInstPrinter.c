@@ -163,7 +163,7 @@ static void printRegImmShift(MCInst *MI, SStream *O, ARM_AM_ShiftOpc ShOpc,
 
 	//assert (!(ShOpc == ARM_AM_ror && !ShImm) && "Cannot have ror #0");
 	SStream_concat(O, ARM_AM_getShiftOpcStr(ShOpc));
-	MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count - 1].shift.type = ShOpc;
+	MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count - 1].shift.type = (arm_shifter)ShOpc;
 
 	if (ShOpc != ARM_AM_rrx) {
 		SStream_concat(O, " ");
@@ -342,7 +342,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 		SStream_concat(O, ", %s", markup("<imm:"));
 		SStream_concat(O, "#0x%x", translateShiftImm(getSORegOffset(MCOperand_getImm(MO2))));
 		SStream_concat(O, markup(">"));
-		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count - 1].shift.type = ARM_AM_getSORegShOp(MCOperand_getImm(MO2));
+		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count - 1].shift.type = (arm_shifter)ARM_AM_getSORegShOp(MCOperand_getImm(MO2));
 		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count - 1].shift.value = translateShiftImm(getSORegOffset(MCOperand_getImm(MO2)));
 		return;
 	}
@@ -622,7 +622,7 @@ static void printAM2PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O)
 		if (getAM2Offset(MCOperand_getImm(MO3))) { // Don't print +0.
 			SStream_concat(O, ", %s", markup("<imm:"));
 			SStream_concat(O, "#%s0x%x", ARM_AM_getAddrOpcStr(getAM2Op(MCOperand_getImm(MO3))), getAM2Offset(MCOperand_getImm(MO3)));
-			MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].shift.type = getAM2Op(MCOperand_getImm(MO3));
+			MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].shift.type = (arm_shifter)getAM2Op(MCOperand_getImm(MO3));
 			MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].shift.value = getAM2Offset(MCOperand_getImm(MO3));
 			SStream_concat(O, markup(">"));
 		}

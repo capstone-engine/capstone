@@ -189,12 +189,12 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 	insn->mnemonic[sizeof(insn->mnemonic) - 1] = '\0';
 }
 
-uint64_t cs_disasm(csh ud, char *buffer, uint64_t size, uint64_t offset, uint64_t count, cs_insn *insn)
+size_t cs_disasm(csh ud, unsigned char *buffer, size_t size, size_t offset, size_t count, cs_insn *insn)
 {
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 	MCInst mci;
 	uint16_t insn_size;
-	uint64_t c = 0;
+	size_t c = 0;
 
 	if (!handle) {
 		// FIXME: handle this case?
@@ -238,15 +238,15 @@ uint64_t cs_disasm(csh ud, char *buffer, uint64_t size, uint64_t offset, uint64_
 
 // dynamicly allocate memory to contain disasm insn
 // NOTE: caller must free() the allocated memory itself to avoid memory leaking
-uint64_t cs_disasm_dyn(csh ud, char *buffer, uint64_t size, uint64_t offset, uint64_t count, cs_insn **insn)
+size_t cs_disasm_dyn(csh ud, unsigned char *buffer, size_t size, size_t offset, size_t count, cs_insn **insn)
 {
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 	MCInst mci;
 	uint16_t insn_size;
-	uint64_t c = 0, f = 0;
+	size_t c = 0, f = 0;
 	cs_insn insn_cache[64];
 	void *total = NULL;
-	uint64_t total_size = 0;
+	size_t total_size = 0;
 
 	if (!handle) {
 		// FIXME: how to handle this case:

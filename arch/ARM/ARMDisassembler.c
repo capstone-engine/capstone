@@ -422,8 +422,8 @@ void ARM_init(MCRegisterInfo *MRI)
 			0);
 }
 
-static DecodeStatus _ARM_getInstruction(MCInst *MI, char *code, uint64_t code_len,
-		uint16_t *Size, uint64_t Address)
+static DecodeStatus _ARM_getInstruction(MCInst *MI, unsigned char *code, size_t code_len,
+		uint16_t *Size, size_t Address)
 {
 	uint8_t bytes[4];
 
@@ -644,8 +644,8 @@ static void UpdateThumbVFPPredicate(MCInst *MI)
 	}
 }
 
-static DecodeStatus _Thumb_getInstruction(MCInst *MI, char *code, uint64_t code_len,
-		uint16_t *Size, uint64_t Address)
+static DecodeStatus _Thumb_getInstruction(MCInst *MI, unsigned char *code, size_t code_len,
+		uint16_t *Size, size_t Address)
 {
 	uint8_t bytes[4];
 
@@ -821,8 +821,8 @@ static DecodeStatus _Thumb_getInstruction(MCInst *MI, char *code, uint64_t code_
 	return MCDisassembler_Fail;
 }
 
-bool Thumb_getInstruction(csh ud, char *code, uint64_t code_len, MCInst *instr,
-		uint16_t *size, uint64_t address, void *info)
+bool Thumb_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *instr,
+		uint16_t *size, size_t address, void *info)
 {
 	//cs_struct *handle = (cs_struct *)ud;
 	DecodeStatus status = _Thumb_getInstruction(instr, code, code_len, size, address);
@@ -830,8 +830,8 @@ bool Thumb_getInstruction(csh ud, char *code, uint64_t code_len, MCInst *instr,
 	return status == MCDisassembler_Success;
 }
 
-bool ARM_getInstruction(csh ud, char *code, uint64_t code_len, MCInst *instr,
-		uint16_t *size, uint64_t address, void *info)
+bool ARM_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *instr,
+		uint16_t *size, size_t address, void *info)
 {
 	//cs_struct *handle = (cs_struct *)ud;
 	DecodeStatus status = _ARM_getInstruction(instr, code, code_len, size, address);

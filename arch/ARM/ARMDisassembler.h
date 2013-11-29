@@ -9,8 +9,8 @@
 
 void ARM_init(MCRegisterInfo *MRI);
 
-bool ARM_getInstruction(csh handle, char *code, uint64_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *info);
+bool ARM_getInstruction(csh handle, unsigned char *code, size_t code_len, MCInst *instr, uint16_t *size, size_t address, void *info);
 
-bool Thumb_getInstruction(csh handle, char *code, uint64_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *info);
+bool Thumb_getInstruction(csh handle, unsigned char *code, size_t code_len, MCInst *instr, uint16_t *size, size_t address, void *info);
 
 #endif
