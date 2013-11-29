@@ -146,13 +146,14 @@ static void test()
 			printf("Disasm:\n");
 
 			size_t j;
+
 			for (j = 0; j < count; j++) {
-				printf("0x%zu:\t%s\t\t%s\n",
-						insn[j].address, insn[j].mnemonic, insn[j].op_str);
+				printf("0x%"PRIx64":\t%s\t\t%s\n",
+						(uint64_t)insn[j].address, insn[j].mnemonic, insn[j].op_str);
 			}
 
 			// print out the next offset, after the last insn
-			printf("0x%zu:\n", insn[j-1].address + insn[j-1].size);
+			printf("0x%"PRIx64":\n", (uint64_t)insn[j-1].address + insn[j-1].size);
 
 			// free memory allocated by cs_disasm_dyn()
 			cs_free(insn);
@@ -175,6 +176,7 @@ int main()
 
 #if 0
 	#define offsetof(type, member) (int)(&((type *)0)->member)
+
 	cs_insn insn;
 	printf("size: %lu\n", sizeof(insn));
 	printf("@id: %u\n", offsetof(cs_insn, id));
