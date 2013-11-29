@@ -46,7 +46,7 @@ static void print_insn_detail(cs_arch mode, cs_insn *ins)
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;
 			case ARM64_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%"PRIx64 "\n", i, op->imm);
+				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->imm);
 				break;
 			case ARM64_OP_FP:
 				printf("\t\toperands[%u].type: FP = %f\n", i, op->fp);
@@ -58,11 +58,11 @@ static void print_insn_detail(cs_arch mode, cs_insn *ins)
 				if (op->mem.index != ARM64_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.index: REG = %s\n", i, cs_reg_name(handle, op->mem.index));
 				if (op->mem.disp != 0)
-					printf("\t\t\toperands[%u].mem.disp: 0x%" PRIx64 "\n", i, op->mem.disp);
+					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
 
 				break;
 			case ARM64_OP_CIMM:
-				printf("\t\toperands[%u].type: C-IMM = %"PRIu64 "\n", i, op->imm);
+				printf("\t\toperands[%u].type: C-IMM = %u\n", i, op->imm);
 				break;
 		}
 
