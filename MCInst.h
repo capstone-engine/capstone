@@ -89,6 +89,7 @@ struct MCInst {
 	unsigned size;	// number of operands
 	cs_insn pub_insn;	// insn to be exposed to public
 	cs_mode mode;	// to be referenced by internal code
+	unsigned OpcodePub;
 };
 
 void MCInst_Init(MCInst *inst);
@@ -100,6 +101,10 @@ void MCInst_insert(MCInst *inst, int index, MCOperand *Op);
 void MCInst_setOpcode(MCInst *inst, unsigned Op);
 
 unsigned MCInst_getOpcode(const MCInst*);
+
+void MCInst_setOpcodePub(MCInst *inst, unsigned Op);
+
+unsigned MCInst_getOpcodePub(const MCInst*);
 
 MCOperand *MCInst_getOperand(MCInst *inst, unsigned i);
 

@@ -1854,6 +1854,7 @@ void AArch64_get_insn_id(cs_insn *insn, unsigned int id)
 	}
 }
 
+// given public insn id, return internal instruction ID
 unsigned int AArch64_get_insn_id2(unsigned int id)
 {
 	return insn_reverse_id(insns, ARR_SIZE(insns), id);
@@ -2224,6 +2225,7 @@ char *AArch64_insn_name(unsigned int id)
 	return insn_name_maps[id].name;
 }
 
+// map instruction name to public instruction ID
 arm64_reg AArch64_map_insn(char *name)
 {
 	// map *S instructions back to original id
@@ -2234,6 +2236,8 @@ arm64_reg AArch64_map_insn(char *name)
 		{ ARM64_INS_BIC, "BICS" },
 		{ ARM64_INS_SBC, "SBCS" },
 		{ ARM64_INS_SUB, "SUBS" },
+		// alias insn
+		{ ARM64_INS_MNEG, "MNEG" },
 	};
 
 	// NOTE: skip first NULL name in insn_name_maps
