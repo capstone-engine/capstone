@@ -12,7 +12,7 @@ extern "C" {
 #include <stdbool.h>
 
 // Handle using with all API
-typedef uint64_t csh;
+typedef size_t csh;
 
 // Architecture type
 typedef enum cs_arch {
@@ -52,7 +52,7 @@ typedef struct cs_insn {
 	unsigned int id;
 
 	// Offset address of this instruction
-	uint64_t address;
+	size_t address;
 
 	// Size of this instruction
 	uint16_t size;	
@@ -144,10 +144,10 @@ cs_err cs_errno(csh handle);
  @return: the number of succesfully disassembled instructions,
  or 0 if this function failed to disassemble the given code
 */
-uint64_t cs_disasm(csh handle,
-		char *code, uint64_t code_size,
-		uint64_t offset,
-		uint64_t count,
+size_t cs_disasm(csh handle,
+		unsigned char *code, size_t code_size,
+		size_t offset,
+		size_t count,
 		cs_insn *insn);
 
 /*
@@ -168,10 +168,10 @@ uint64_t cs_disasm(csh handle,
  @return: the number of succesfully disassembled instructions,
  or 0 if this function failed to disassemble the given code
 */
-uint64_t cs_disasm_dyn(csh handle,
-		char *code, uint64_t code_size,
-		uint64_t offset,
-		uint64_t count,
+size_t cs_disasm_dyn(csh handle,
+		unsigned char *code, size_t code_size,
+		size_t offset,
+		size_t count,
 		cs_insn **insn);
 
 /*

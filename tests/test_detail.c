@@ -10,14 +10,14 @@
 struct platform {
 	cs_arch arch;
 	cs_mode mode;
-	char *code;
-	int size;
+	unsigned char *code;
+	size_t size;
 	char *comment;
 };
 
-static void print_string_hex(char *str, int len)
+static void print_string_hex(unsigned char *str, int len)
 {
-	char *c;
+	unsigned char *c;
 
 	printf("Code: ");
 	for (c = str; c < str + len; c++) {
@@ -50,84 +50,84 @@ static void test()
 		{
 			.arch = CS_ARCH_X86,
 			.mode = CS_MODE_16,
-			.code = X86_CODE16,
+			.code = (unsigned char *)X86_CODE16,
 			.size = sizeof(X86_CODE32) - 1,
 			.comment = "X86 16bit (Intel syntax)"
 		},
 		{
 			.arch = CS_ARCH_X86,
 			.mode = CS_MODE_32 + CS_MODE_SYNTAX_ATT,
-			.code = X86_CODE32,
+			.code = (unsigned char *)X86_CODE32,
 			.size = sizeof(X86_CODE32) - 1,
 			.comment = "X86 32bit (ATT syntax)"
 		},
 		{
 			.arch = CS_ARCH_X86,
 			.mode = CS_MODE_32,
-			.code = X86_CODE32,
+			.code = (unsigned char *)X86_CODE32,
 			.size = sizeof(X86_CODE32) - 1,
 			.comment = "X86 32 (Intel syntax)"
 		},
 		{
 			.arch = CS_ARCH_X86,
 			.mode = CS_MODE_64,
-			.code = X86_CODE64,
+			.code = (unsigned char *)X86_CODE64,
 			.size = sizeof(X86_CODE64) - 1,
 			.comment = "X86 64 (Intel syntax)"
 		},
 		{
 			.arch = CS_ARCH_ARM,
 			.mode = CS_MODE_ARM,
-			.code = ARM_CODE,
+			.code = (unsigned char *)ARM_CODE,
 			.size = sizeof(ARM_CODE) - 1,
 			.comment = "ARM"
 		},
 		{
 			.arch = CS_ARCH_ARM,
 			.mode = CS_MODE_THUMB,
-			.code = THUMB_CODE2,
+			.code = (unsigned char *)THUMB_CODE2,
 			.size = sizeof(THUMB_CODE2) - 1,
 			.comment = "THUMB-2"
 		},
 		{
 			.arch = CS_ARCH_ARM,
 			.mode = CS_MODE_ARM,
-			.code = ARM_CODE2,
+			.code = (unsigned char *)ARM_CODE2,
 			.size = sizeof(ARM_CODE2) - 1,
 			.comment = "ARM: Cortex-A15 + NEON"
 		},
 		{
 			.arch = CS_ARCH_ARM,
 			.mode = CS_MODE_THUMB,
-			.code = THUMB_CODE,
+			.code = (unsigned char *)THUMB_CODE,
 			.size = sizeof(THUMB_CODE) - 1,
 			.comment = "THUMB"
 		},
 		{
 			.arch = CS_ARCH_MIPS,
 			.mode = CS_MODE_32 + CS_MODE_BIG_ENDIAN,
-			.code = MIPS_CODE,
+			.code = (unsigned char *)MIPS_CODE,
 			.size = sizeof(MIPS_CODE) - 1,
 			.comment = "MIPS-32 (Big-endian)"
 		},
 		{
 			.arch = CS_ARCH_MIPS,
 			.mode = CS_MODE_64+ CS_MODE_LITTLE_ENDIAN,
-			.code = MIPS_CODE2,
+			.code = (unsigned char *)MIPS_CODE2,
 			.size = sizeof(MIPS_CODE2) - 1,
 			.comment = "MIPS-64-EL (Little-endian)"
 		},
 		{
 			.arch = CS_ARCH_ARM64,
 			.mode = CS_MODE_ARM,
-			.code = ARM64_CODE,
+			.code = (unsigned char *)ARM64_CODE,
 			.size = sizeof(ARM64_CODE) - 1,
 			.comment = "ARM-64"
 		},
 	};
 
 	csh handle;
-	uint64_t address = 0x1000;
+	size_t address = 0x1000;
 	//cs_insn all_insn[16];
 	cs_insn *all_insn;
 	int i;
@@ -136,19 +136,19 @@ static void test()
 		if (cs_open(platforms[i].arch, platforms[i].mode, &handle))
 			return;
 
-		//uint64_t count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, all_insn);
-		uint64_t count = cs_disasm_dyn(handle, platforms[i].code, platforms[i].size, address, 0, &all_insn);
+		//size_t count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, all_insn);
+		size_t count = cs_disasm_dyn(handle, platforms[i].code, platforms[i].size, address, 0, &all_insn);
 		if (count) {
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex(platforms[i].code, platforms[i].size);
 			printf("Disasm:\n");
 
-			uint64_t j;
+			size_t j;
 			int n;
 			for (j = 0; j < count; j++) {
 				cs_insn *i = &(all_insn[j]);
-				printf("0x%"PRIx64":\t%s\t\t%s // insn-ID: %u, insn-mnem: %s\n",
+				printf("0x%zu:\t%s\t\t%s // insn-ID: %u, insn-mnem: %s\n",
 						i->address, i->mnemonic, i->op_str,
 						i->id, cs_insn_name(handle, i->id));
 
@@ -187,7 +187,7 @@ static void test()
 			}
 
 			// print out the next offset, after the last insn
-			printf("0x%"PRIx64":\n", all_insn[j-1].address + all_insn[j-1].size);
+			printf("0x%zu:\n", all_insn[j-1].address + all_insn[j-1].size);
 
 			// free memory allocated by cs_disasm_dyn()
 			cs_free(all_insn);

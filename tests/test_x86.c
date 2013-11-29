@@ -12,14 +12,14 @@ static csh handle;
 struct platform {
 	cs_arch arch;
 	cs_mode mode;
-	char *code;
-	int size;
+	unsigned char *code;
+	size_t size;
 	char *comment;
 };
 
-static void print_string_hex(char *comment, char *str, int len)
+static void print_string_hex(char *comment, unsigned char *str, int len)
 {
-	char *c;
+	unsigned char *c;
 
 	printf("%s", comment);
 	for (c = str; c < str + len; c++) {
@@ -34,12 +34,12 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 	int i;
 	cs_x86 *x86 = &(ins->x86);
 
-	print_string_hex("\tPrefix:", (char *)x86->prefix, 5);
+	print_string_hex("\tPrefix:", x86->prefix, 5);
 
 	if (x86->segment != X86_REG_INVALID)
 		printf("\tSegment override: %s\n", cs_reg_name(handle, x86->segment));
 
-	print_string_hex("\tOpcode:", (char *)x86->opcode, 3);
+	print_string_hex("\tOpcode:", x86->opcode, 3);
 	printf("\top_size: %u, addr_size: %u, disp_size: %u, imm_size: %u\n", x86->op_size, x86->addr_size, x86->disp_size, x86->imm_size);
 	printf("\tmodrm: 0x%x\n", x86->modrm);
 	printf("\tdisp: 0x%x\n", x86->disp);
@@ -117,34 +117,34 @@ static void test()
 		{
 			.arch = CS_ARCH_X86,
 			.mode = CS_MODE_16,
-			.code = X86_CODE16,
+			.code = (unsigned char *)X86_CODE16,
 			.size = sizeof(X86_CODE16) - 1,
 			.comment = "X86 16bit (Intel syntax)"
 		},
 		{
 			.arch = CS_ARCH_X86,
 			.mode = CS_MODE_32 + CS_MODE_SYNTAX_ATT,
-			.code = X86_CODE32,
+			.code = (unsigned char *)X86_CODE32,
 			.size = sizeof(X86_CODE32) - 1,
 			.comment = "X86 32 (AT&T syntax)"
 		},
 		{
 			.arch = CS_ARCH_X86,
 			.mode = CS_MODE_32,
-			.code = X86_CODE32,
+			.code = (unsigned char *)X86_CODE32,
 			.size = sizeof(X86_CODE32) - 1,
 			.comment = "X86 32 (Intel syntax)"
 		},
 		{
 			.arch = CS_ARCH_X86,
 			.mode = CS_MODE_64,
-			.code = X86_CODE64,
+			.code = (unsigned char *)X86_CODE64,
 			.size = sizeof(X86_CODE64) - 1,
 			.comment = "X86 64 (Intel syntax)"
 		},
 	};
 
-	uint64_t address = 0x1000;
+	size_t address = 0x1000;
 	//cs_insn insn[16];
 	cs_insn *insn;
 	int i;
@@ -153,20 +153,20 @@ static void test()
 		if (cs_open(platforms[i].arch, platforms[i].mode, &handle))
 			return;
 
-		//uint64_t count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, insn);
-		uint64_t count = cs_disasm_dyn(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
+		//size_t count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, insn);
+		size_t count = cs_disasm_dyn(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code:", platforms[i].code, platforms[i].size);
 			printf("Disasm:\n");
 
-			uint64_t j;
+			size_t j;
 			for (j = 0; j < count; j++) {
-				printf("0x%"PRIx64":\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
+				printf("0x%zu:\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
 				print_insn_detail(handle, platforms[i].mode, &insn[j]);
 			}
-			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
+			printf("0x%zu:\n", insn[j-1].address + insn[j-1].size);
 
 			// free memory allocated by cs_disasm_dyn()
 			cs_free(insn);

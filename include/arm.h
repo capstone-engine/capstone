@@ -62,7 +62,7 @@ typedef struct arm_op_mem {
 	unsigned int base;	// base register
 	unsigned int index;	// index register
 	int scale;	// scale for index register (can be 1, or -1)
-	int64_t disp;	// displacement/offset value
+	int disp;	// displacement/offset value
 } arm_op_mem;
 
 // Instruction operand
@@ -74,7 +74,7 @@ typedef struct cs_arm_op {
 	arm_op_type type;	// operand type
 	union {
 		unsigned int reg;	// register value for REG operand
-		int64_t imm;		// immediate value for C-IMM, P-IMM or IMM operand
+		unsigned int imm;		// immediate value for C-IMM, P-IMM or IMM operand
 		double fp;			// floating point value for FP operand
 		arm_op_mem mem;		// base/index/scale/disp value for MEM operand
 	};

@@ -243,9 +243,9 @@ static DecodeStatus readInstruction32(unsigned char *code, uint32_t *insn, bool 
 }
 
 static DecodeStatus MipsDisassembler_getInstruction(int mode, MCInst *instr,
-		char *code, uint64_t code_len,
+		unsigned char *code, size_t code_len,
 		uint16_t *Size,
-		uint64_t Address, bool isBigEndian, MCRegisterInfo *MRI,
+		size_t Address, bool isBigEndian, MCRegisterInfo *MRI,
 		bool isMicroMips)
 {
 	uint32_t Insn;
@@ -279,8 +279,8 @@ static DecodeStatus MipsDisassembler_getInstruction(int mode, MCInst *instr,
 	return MCDisassembler_Fail;
 }
 
-bool Mips_getInstruction(csh ud, char *code, uint64_t code_len, MCInst *instr,
-		uint16_t *size, uint64_t address, void *info)
+bool Mips_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *instr,
+		uint16_t *size, size_t address, void *info)
 {
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 
@@ -294,9 +294,9 @@ bool Mips_getInstruction(csh ud, char *code, uint64_t code_len, MCInst *instr,
 }
 
 static DecodeStatus Mips64Disassembler_getInstruction(int mode, MCInst *instr,
-		char *code, uint64_t code_len,
+		unsigned char *code, size_t code_len,
 		uint16_t *Size,
-		uint64_t Address, bool isBigEndian, MCRegisterInfo *MRI)
+		size_t Address, bool isBigEndian, MCRegisterInfo *MRI)
 {
 	uint32_t Insn;
 
@@ -320,8 +320,8 @@ static DecodeStatus Mips64Disassembler_getInstruction(int mode, MCInst *instr,
 	return MCDisassembler_Fail;
 }
 
-bool Mips64_getInstruction(csh ud, char *code, uint64_t code_len, MCInst *instr,
-		uint16_t *size, uint64_t address, void *info)
+bool Mips64_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *instr,
+		uint16_t *size, size_t address, void *info)
 {
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 
