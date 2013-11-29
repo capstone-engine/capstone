@@ -35,7 +35,7 @@ BINARY = $(SOURCES:.c=$(BIN_EXT))
 all: $(BINARY)
 
 clean:
-	rm -rf $(OBJS) $(BINARY) $(SOURCES:.c=.exe) lib$(LIBNAME).*
+	rm -rf $(OBJS) $(SOURCES:.c=) $(SOURCES:.c=.exe) lib$(LIBNAME).*
 
 $(BINARY): $(OBJS)
 
