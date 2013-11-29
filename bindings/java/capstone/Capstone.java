@@ -27,7 +27,10 @@ public class Capstone {
   protected static abstract class UnionOpInfo extends Structure {}
 
   protected static int max(int a, int b, int c, int d) {
-    return Math.max(Math.max(Math.max(a,b),c),d);
+    if (a<b) a = b;
+    if (c<d) c = d;
+    if (a<c) a = c;
+    return a;
   }
 
   protected static class _cs_insn extends Structure {
@@ -71,7 +74,7 @@ public class Capstone {
     public int[] groups;
 
     private CS cs;
-    private int _size;
+    private static int _size = -1;
 
     public cs_insn (_cs_insn struct, Pointer _ptr_origin, NativeLong _csh, CS _cs, OpInfo _op_info) {
       id = struct.id;
@@ -87,7 +90,12 @@ public class Capstone {
       op_info = _op_info;
       csh = _csh;
       cs = _cs;
-      _size = struct.size() + max( Arm.UnionOpInfo.getSize(), Arm64.UnionOpInfo.getSize(), Mips.UnionOpInfo.getSize(), X86.UnionOpInfo.getSize() );
+
+      // cache the size so we do not need to recompute the offset everytime
+      if (_size == -1)
+        _size = struct.size() + Arm.UnionOpInfo.getSize();
+        // Arm is the max, so we optimized it here, a more generic way is as follows:
+        // = max( Arm.UnionOpInfo.getSize(), Arm64.UnionOpInfo.getSize(), Mips.UnionOpInfo.getSize(), X86.UnionOpInfo.getSize() );
     }
 
     protected int size() {
