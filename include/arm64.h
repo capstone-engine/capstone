@@ -99,7 +99,7 @@ typedef struct cs_arm64 {
 	// or 0 when instruction has no operand.
 	uint8_t op_count;
 
-	cs_arm64_op operands[32]; // operands for this instruction.
+	cs_arm64_op operands[8]; // operands for this instruction.
 } cs_arm64;
 
 // ARM64 registers
