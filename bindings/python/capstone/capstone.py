@@ -47,8 +47,8 @@ CS_MODE_16 = (1 << 1)          # 16-bit mode (for X86, Mips)
 CS_MODE_32 = (1 << 2)          # 32-bit mode (for X86, Mips)
 CS_MODE_64 = (1 << 3)          # 64-bit mode (for X86, Mips)
 CS_MODE_THUMB = (1 << 4)       # ARM's Thumb mode, including Thumb-2
-CS_MODE_MICRO = (1 << 4),      # MicroMips mode (MIPS architecture)
-CS_MODE_N64 = (1 << 5),        # Nintendo-64 mode (MIPS architecture)
+CS_MODE_MICRO = (1 << 4)       # MicroMips mode (MIPS architecture)
+CS_MODE_N64 = (1 << 5)         # Nintendo-64 mode (MIPS architecture)
 CS_MODE_SYNTAX_ATT = (1 << 30) # X86 ATT asm syntax (for CS_ARCH_X86 only)
 CS_MODE_BIG_ENDIAN = (1 << 31) # big-endian mode
 
