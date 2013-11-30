@@ -335,16 +335,6 @@ char *cs_reg_name(csh ud, unsigned int reg)
 		return NULL;
 	}
 
-	// x86 flags register must be specially handled
-	if ((handle->arch == CS_ARCH_X86) && (reg == X86_REG_FLAGS)) {
-		if (handle->mode & CS_MODE_64)
-			return "rflags";
-		if (handle->mode & CS_MODE_32)
-			return "eflags";
-		if (handle->mode & CS_MODE_16)
-			return "flags";
-	}
-
 	return handle->reg_name(reg);
 }
 
