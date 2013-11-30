@@ -1850,7 +1850,7 @@ void AArch64_get_insn_id(cs_insn *insn, unsigned int id)
 		memcpy(insn->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
 		memcpy(insn->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
 		memcpy(insn->groups, insns[i].groups, sizeof(insns[i].groups));
-		insn->arm64.update_flags = cs_reg_write(0, insn, ARM64_REG_NZCV);
+		insn->arm64.update_flags = cs_reg_write(1, insn, ARM64_REG_NZCV);
 	}
 }
 
