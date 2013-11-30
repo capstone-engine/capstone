@@ -2236,8 +2236,24 @@ arm64_reg AArch64_map_insn(char *name)
 		{ ARM64_INS_BIC, "BICS" },
 		{ ARM64_INS_SBC, "SBCS" },
 		{ ARM64_INS_SUB, "SUBS" },
+
 		// alias insn
 		{ ARM64_INS_MNEG, "MNEG" },
+		{ ARM64_INS_UMNEGL, "UMNEGL" },
+		{ ARM64_INS_SMNEGL, "SMNEGL" },
+		{ ARM64_INS_MOV, "MOV" },
+		{ ARM64_INS_NOP, "NOP" },
+		{ ARM64_INS_YIELD, "YIELD" },
+		{ ARM64_INS_WFE, "WFE" },
+		{ ARM64_INS_WFI, "WFI" },
+		{ ARM64_INS_SEV, "SEV" },
+		{ ARM64_INS_SEVL, "SEVL" },
+		{ ARM64_INS_NGC, "NGC" },
+		{ ARM64_INS_NEG, "NEG" },
+
+		// FIXME: map these with flag updated
+		{ ARM64_INS_NEG, "NEGS" },
+		{ ARM64_INS_NGC, "NGCS" },
 	};
 
 	// NOTE: skip first NULL name in insn_name_maps
