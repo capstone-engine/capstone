@@ -588,8 +588,8 @@ static void update_pub_insn(cs_insn *pub, InternalInstruction *inter)
 
 	pub->x86.segment = x86_map_segment(inter->segmentOverride);
 
-	if (inter->vexSize > 0)
-		memcpy(pub->x86.opcode, inter->vexPrefix, sizeof(pub->x86.opcode));
+	if (inter->vexXopType > 0)
+		memcpy(pub->x86.opcode, inter->vexXopPrefix, sizeof(pub->x86.opcode));
 	else {
 		pub->x86.opcode[0] = inter->opcode;
 		pub->x86.opcode[1] = inter->twoByteEscape;
