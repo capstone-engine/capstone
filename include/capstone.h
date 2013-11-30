@@ -185,7 +185,7 @@ void cs_free(void *mem);
  Return friendly name of regiser in a string
  Find the instruction id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
 
- @handle: handle returned by cs_open(), or one of architecture type CS_ARCH_*
+ @handle: handle returned by cs_open()
  @reg: register id
  @return: string name of the register, or NULL if @reg_id is invalid.
 */
@@ -195,7 +195,7 @@ char *cs_reg_name(csh handle, unsigned int reg_id);
  Return friendly name of an instruction in a string
  Find the instruction id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
 
- @handle: handle returned by cs_open(), or one of architecture type CS_ARCH_*
+ @handle: handle returned by cs_open()
  @insn: instruction id
 
  @return: string name of the instruction, or NULL if @insn_id is invalid.
@@ -243,7 +243,7 @@ bool cs_reg_write(csh handle, cs_insn *insn, unsigned int reg_id);
  Count the number of operands of a given type.
  Find the operand type in header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
 
- @handle: handle returned by cs_open(), or one of architecture type CS_ARCH_*
+ @handle: handle returned by cs_open()
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_dyn()
  @op_type: Operand type to be found.
 
@@ -257,7 +257,7 @@ int cs_op_count(csh handle, cs_insn *insn, unsigned int op_type);
  Later, the operand can be accessed using the returned position.
  Find the operand type in header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
 
- @handle: handle returned by cs_open(), or one of architecture type CS_ARCH_*
+ @handle: handle returned by cs_open()
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_dyn()
  @op_type: Operand type to be found.
  @position: position of the operand to be found. This must be in the range
