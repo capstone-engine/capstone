@@ -640,6 +640,7 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 			*tab = '\0';
 		}
 		// reflect the new insn name (alias) in the opcode
+		MCInst_setOpcode(MI, AArch64_get_insn_id2(AArch64_map_insn(mnem)));
 		MCInst_setOpcodePub(MI, AArch64_map_insn(mnem));
 		free(mnem);
 	} else

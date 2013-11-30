@@ -170,12 +170,12 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 	memcpy(insn, &mci->pub_insn, sizeof(*insn));
 
 	// map internal instruction opcode to public insn ID
+	if (handle->insn_id)
+		handle->insn_id(insn, MCInst_getOpcode(mci));
+
+	// alias instruction might have ID saved in OpcodePub
 	if (MCInst_getOpcodePub(mci))
-		MCInst_setOpcode(mci, MCInst_getOpcodePub(mci));
-	else {
-		if (handle->insn_id)
-			handle->insn_id(insn, MCInst_getOpcode(mci));
-	}
+		insn->id = MCInst_getOpcodePub(mci);
 
 	if (printer)
 		printer(insn->id, insn, buffer);

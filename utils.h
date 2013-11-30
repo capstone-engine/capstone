@@ -24,6 +24,7 @@ typedef struct insn_map {
 
 bool str_in_list(char **list, char *s);
 
+// binary searching in @m, given its size in @max, and @id
 int insn_find(insn_map *m, unsigned int max, unsigned int id);
 
 // map id to string

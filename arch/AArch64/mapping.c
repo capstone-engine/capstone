@@ -1842,14 +1842,47 @@ static insn_map insns[] = {
 	{ AArch64_VCVTxu2f_4S, ARM64_INS_UCVTF, { 0 }, { 0 }, { ARM64_GRP_NEON, 0 } },
 };
 
+// some alias instruction only need to be defined locally to satisfy
+// some lookup functions
+// just make sure these IDs never reuse any other IDs ARM_INS_*
+#define ARM64_INS_NEGS -1
+#define ARM64_INS_NGCS -2
+
+// all alias instructions & their semantic infos
+static insn_map alias_insns[] = {
+	{ AArch64_MSUBwwww, ARM64_INS_MNEG, { 0 }, { 0 }, { 0 } },
+	{ AArch64_UMSUBLxwwx, ARM64_INS_UMNEGL, { 0 }, { 0 }, { 0 } },
+	{ AArch64_SMSUBLxwwx, ARM64_INS_SMNEGL, { 0 }, { 0 }, { 0 } },
+	// MOV can be mapped back to ADD or ORR, but its semantic info is always same
+	{ AArch64_ADDwwi_lsl0_s, ARM64_INS_MOV, { 0 }, { 0 }, { 0 } },
+	// { AArch64_ADDxxi_lsl0_s, ARM64_INS_MOV, { 0 }, { 0 }, { 0 } },
+	// { AArch64_ORRwww_lsl, ARM64_INS_MOV, { 0 }, { 0 }, { 0 } },
+	// { AArch64_ORRxxx_lsl, ARM64_INS_MOV, { 0 }, { 0 }, { 0 } },
+	{ AArch64_HINTi, ARM64_INS_NOP, { 0 }, { 0 }, { 0 } },
+	{ AArch64_HINTi, ARM64_INS_YIELD, { 0 }, { 0 }, { 0 } },
+	{ AArch64_HINTi, ARM64_INS_WFE, { 0 }, { 0 }, { 0 } },
+	{ AArch64_HINTi, ARM64_INS_WFI, { 0 }, { 0 }, { 0 } },
+	{ AArch64_HINTi, ARM64_INS_SEV, { 0 }, { 0 }, { 0 } },
+	{ AArch64_HINTi, ARM64_INS_SEVL, { 0 }, { 0 }, { 0 } },
+	{ AArch64_SBCwww, ARM64_INS_NGC, { ARM64_REG_NZCV, 0 }, { 0 }, { 0 } },
+	{ AArch64_SBCSwww, ARM64_INS_NGCS, { ARM64_REG_NZCV, 0 }, { ARM64_REG_NZCV, 0 }, { 0 } },
+	{ AArch64_SUBSwww_lsl, ARM64_INS_NEGS, { 0 }, { ARM64_REG_NZCV, 0 }, { 0 } },
+	// { AArch64_SUBSxxx_lsl, ARM64_INS_NEGS, { 0 }, { ARM64_REG_NZCV, 0 }, { 0 } },
+	{ AArch64_SUBxxx_lsl, ARM64_INS_NEG, { 0 }, { 0 }, { 0 } },
+	// { AArch64_SUBwww_lsl, ARM64_INS_NEG, { 0 }, { 0 }, { 0 } },
+};
+
 void AArch64_get_insn_id(cs_insn *insn, unsigned int id)
 {
+	// try alias insn first
 	int i = insn_find(insns, ARR_SIZE(insns), id);
 	if (i != -1) {
 		insn->id = insns[i].mapid;
 		memcpy(insn->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
 		memcpy(insn->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
 		memcpy(insn->groups, insns[i].groups, sizeof(insns[i].groups));
+		// call cs_reg_write() with handle = 1 to pass handle check
+		// we only need to find if this insn modifies ARM64_REG_NZCV
 		insn->arm64.update_flags = cs_reg_write(1, insn, ARM64_REG_NZCV);
 	}
 }
@@ -1857,7 +1890,11 @@ void AArch64_get_insn_id(cs_insn *insn, unsigned int id)
 // given public insn id, return internal instruction ID
 unsigned int AArch64_get_insn_id2(unsigned int id)
 {
-	return insn_reverse_id(insns, ARR_SIZE(insns), id);
+	unsigned int res = insn_reverse_id(insns, ARR_SIZE(insns), id);
+	if (!res) // is this alias insn?
+		res = insn_reverse_id(alias_insns, ARR_SIZE(alias_insns), id);
+
+	return res;
 }
 
 static name_map insn_name_maps[] = {
@@ -2217,10 +2254,43 @@ static name_map insn_name_maps[] = {
 	{ ARM64_INS_UXTH, "UXTH" },
 };
 
+// map *S & alias instructions back to original id
+static name_map alias_insn_name_maps[] = {
+	{ ARM64_INS_ADC, "ADCS" },
+	{ ARM64_INS_AND, "ANDS" },
+	{ ARM64_INS_ADD, "ADDS" },
+	{ ARM64_INS_BIC, "BICS" },
+	{ ARM64_INS_SBC, "SBCS" },
+	{ ARM64_INS_SUB, "SUBS" },
+
+	// alias insn
+	{ ARM64_INS_MNEG, "MNEG" },
+	{ ARM64_INS_UMNEGL, "UMNEGL" },
+	{ ARM64_INS_SMNEGL, "SMNEGL" },
+	{ ARM64_INS_MOV, "MOV" },
+	{ ARM64_INS_NOP, "NOP" },
+	{ ARM64_INS_YIELD, "YIELD" },
+	{ ARM64_INS_WFE, "WFE" },
+	{ ARM64_INS_WFI, "WFI" },
+	{ ARM64_INS_SEV, "SEV" },
+	{ ARM64_INS_SEVL, "SEVL" },
+	{ ARM64_INS_NGC, "NGC" },
+	{ ARM64_INS_NGCS, "NGCS" },
+	{ ARM64_INS_NEG, "NEG" },
+	{ ARM64_INS_NEGS, "NEGS" },
+};
+
 char *AArch64_insn_name(unsigned int id)
 {
 	if (id >= ARM64_INS_MAX)
 		return NULL;
+
+	// try with alias insn first
+	int i;
+	for (i = 0; i < ARR_SIZE(alias_insn_name_maps); i++) {
+		if (alias_insn_name_maps[i].id == id)
+			return alias_insn_name_maps[i].name;
+	}
 
 	return insn_name_maps[id].name;
 }
@@ -2228,40 +2298,12 @@ char *AArch64_insn_name(unsigned int id)
 // map instruction name to public instruction ID
 arm64_reg AArch64_map_insn(char *name)
 {
-	// map *S instructions back to original id
-	name_map insn_name_maps2[] = {
-		{ ARM64_INS_ADC, "ADCS" },
-		{ ARM64_INS_AND, "ANDS" },
-		{ ARM64_INS_ADD, "ADDS" },
-		{ ARM64_INS_BIC, "BICS" },
-		{ ARM64_INS_SBC, "SBCS" },
-		{ ARM64_INS_SUB, "SUBS" },
-
-		// alias insn
-		{ ARM64_INS_MNEG, "MNEG" },
-		{ ARM64_INS_UMNEGL, "UMNEGL" },
-		{ ARM64_INS_SMNEGL, "SMNEGL" },
-		{ ARM64_INS_MOV, "MOV" },
-		{ ARM64_INS_NOP, "NOP" },
-		{ ARM64_INS_YIELD, "YIELD" },
-		{ ARM64_INS_WFE, "WFE" },
-		{ ARM64_INS_WFI, "WFI" },
-		{ ARM64_INS_SEV, "SEV" },
-		{ ARM64_INS_SEVL, "SEVL" },
-		{ ARM64_INS_NGC, "NGC" },
-		{ ARM64_INS_NEG, "NEG" },
-
-		// FIXME: map these with flag updated
-		{ ARM64_INS_NEG, "NEGS" },
-		{ ARM64_INS_NGC, "NGCS" },
-	};
-
 	// NOTE: skip first NULL name in insn_name_maps
 	int i = name2id(&insn_name_maps[1], ARR_SIZE(insn_name_maps) - 1, name);
 
 	if (i == -1)
 		// try again with 'special' insn that is not available in insn_name_maps
-		i = name2id(insn_name_maps2, ARR_SIZE(insn_name_maps2), name);
+		i = name2id(alias_insn_name_maps, ARR_SIZE(alias_insn_name_maps), name);
 
 	return (i != -1)? i : ARM64_REG_INVALID;
 }
