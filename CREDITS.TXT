@@ -34,3 +34,4 @@ Daniel Godas-Lopez
 Joshua J. Drake
 Edgar Barbosa
 Ralf-Philipp Weinmann
+Hugo Fortier
