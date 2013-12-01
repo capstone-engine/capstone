@@ -8,6 +8,8 @@ import com.sun.jna.Pointer;
 import capstone.Capstone;
 import capstone.Mips;
 
+import static capstone.Mips_const.*;
+
 public class TestMips {
 
   static byte[] hexString2Byte(String s) {
@@ -44,11 +46,11 @@ public class TestMips {
       for (int c=0; c<op_info.op.length; c++) {
         Mips.Operand i = (Mips.Operand) op_info.op[c];
         String imm = hex(i.value.imm);
-        if (i.type == Mips.MIPS_OP_REG)
+        if (i.type == MIPS_OP_REG)
           System.out.printf("\t\toperands[%d].type: REG = %s\n", c, cs.reg_name(i.value.reg));
-        if (i.type == Mips.MIPS_OP_IMM)
+        if (i.type == MIPS_OP_IMM)
           System.out.printf("\t\toperands[%d].type: IMM = 0x%x\n", c, i.value.imm);
-        if (i.type == Mips.MIPS_OP_MEM) {
+        if (i.type == MIPS_OP_MEM) {
           System.out.printf("\t\toperands[%d].type: MEM\n",c);
           String base = cs.reg_name(i.value.mem.base);
           if (base != null)

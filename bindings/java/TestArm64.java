@@ -8,6 +8,8 @@ import com.sun.jna.Pointer;
 import capstone.Capstone;
 import capstone.Arm64;
 
+import static capstone.Arm64_const.*;
+
 public class TestArm64 {
 
   static byte[] hexString2Byte(String s) {
@@ -43,15 +45,15 @@ public class TestArm64 {
       for (int c=0; c<op_info.op.length; c++) {
         Arm64.Operand i = (Arm64.Operand) op_info.op[c];
         String imm = hex(i.value.imm);
-        if (i.type == Arm64.ARM64_OP_REG)
+        if (i.type == ARM64_OP_REG)
           System.out.printf("\t\toperands[%d].type: REG = %s\n", c, cs.reg_name(i.value.reg));
-        if (i.type == Arm64.ARM64_OP_IMM)
+        if (i.type == ARM64_OP_IMM)
           System.out.printf("\t\toperands[%d].type: IMM = 0x%x\n", c, i.value.imm);
-        if (i.type == Arm64.ARM64_OP_CIMM)
+        if (i.type == ARM64_OP_CIMM)
           System.out.printf("\t\toperands[%d].type: C-IMM = %d\n", c, i.value.imm);
-        if (i.type == Arm64.ARM64_OP_FP)
+        if (i.type == ARM64_OP_FP)
           System.out.printf("\t\toperands[%d].type: FP = %f\n", c, i.value.fp);
-        if (i.type == Arm64.ARM64_OP_MEM) {
+        if (i.type == ARM64_OP_MEM) {
           System.out.printf("\t\toperands[%d].type: MEM\n",c);
           String base = cs.reg_name(i.value.mem.base);
           String index = cs.reg_name(i.value.mem.index);
@@ -62,9 +64,9 @@ public class TestArm64 {
           if (i.value.mem.disp != 0)
             System.out.printf("\t\t\toperands[%d].mem.disp: 0x%x\n", c, i.value.mem.disp);
         }
-        if (i.shift.type != Arm64.ARM64_SFT_INVALID && i.shift.value > 0)
+        if (i.shift.type != ARM64_SFT_INVALID && i.shift.value > 0)
           System.out.printf("\t\t\tShift: type = %d, value = %d\n", i.shift.type, i.shift.value);
-        if (i.ext != Arm64.ARM64_EXT_INVALID)
+        if (i.ext != ARM64_EXT_INVALID)
           System.out.printf("\t\t\tExt: %d\n", i.ext);
       }
     }
@@ -75,7 +77,7 @@ public class TestArm64 {
     if (op_info.update_flags)
       System.out.println("\tUpdate-flags: True");
 
-    if (op_info.cc != Arm64.ARM64_CC_AL && op_info.cc != Arm64.ARM64_CC_INVALID)
+    if (op_info.cc != ARM64_CC_AL && op_info.cc != ARM64_CC_INVALID)
       System.out.printf("\tCode condition: %d\n",  op_info.cc);
 
   }

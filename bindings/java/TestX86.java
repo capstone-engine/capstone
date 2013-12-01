@@ -8,6 +8,8 @@ import com.sun.jna.Pointer;
 import capstone.Capstone;
 import capstone.X86;
 
+import static capstone.X86_const.*;
+
 public class TestX86 {
 
   static byte[] hexString2Byte(String s) {
@@ -49,7 +51,7 @@ public class TestX86 {
 
     System.out.printf("\tPrefix: %s\n", array2hex(op_info.prefix));
 
-    if (op_info.segment != X86.X86_REG_INVALID)
+    if (op_info.segment != X86_REG_INVALID)
       System.out.println("\tSegment override: " + cs.reg_name(op_info.segment));
 
 
@@ -74,11 +76,11 @@ public class TestX86 {
           cs.reg_name(op_info.sib_index), op_info.sib_scale, cs.reg_name(op_info.sib_base));
     }
 
-    int count = ins.op_count(X86.X86_OP_IMM);
+    int count = ins.op_count(X86_OP_IMM);
     if (count > 0) {
       System.out.printf("\timm_count: %d\n", count);
       for (int i=0; i<count; i++) {
-        int index = ins.op_index(X86.X86_OP_IMM, i + 1);
+        int index = ins.op_index(X86_OP_IMM, i + 1);
         System.out.printf("\t\timms[%d]: 0x%x\n", i+1, (op_info.op[index].value.imm));
       }
     }
@@ -88,13 +90,13 @@ public class TestX86 {
       for (int c=0; c<op_info.op.length; c++) {
         X86.Operand i = (X86.Operand) op_info.op[c];
         String imm = hex(i.value.imm);
-        if (i.type == X86.X86_OP_REG)
+        if (i.type == X86_OP_REG)
           System.out.printf("\t\toperands[%d].type: REG = %s\n", c, cs.reg_name(i.value.reg));
-        if (i.type == X86.X86_OP_IMM)
+        if (i.type == X86_OP_IMM)
           System.out.printf("\t\toperands[%d].type: IMM = 0x%x\n", c, i.value.imm);
-        if (i.type == X86.X86_OP_FP)
+        if (i.type == X86_OP_FP)
           System.out.printf("\t\toperands[%d].type: FP = %f\n", c, i.value.fp);
-        if (i.type == X86.X86_OP_MEM) {
+        if (i.type == X86_OP_MEM) {
           System.out.printf("\t\toperands[%d].type: MEM\n",c);
           String base = cs.reg_name(i.value.mem.base);
           String index = cs.reg_name(i.value.mem.index);

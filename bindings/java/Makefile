@@ -12,9 +12,9 @@ else
   endif
 endif
 
-CAPSTONE_JAVA = Capstone.java Arm.java Arm64.java Mips.java X86.java
+CAPSTONE_JAVA = Capstone.java Arm_const.java Arm64_const.java Mips_const.java X86_const.java Arm.java Arm64.java Mips.java X86.java
 
-all: capstone tests
+all: gen_const capstone tests
 
 capstone: capstone_class
 	jar cf capstone.jar capstone/*.class
@@ -25,8 +25,12 @@ capstone_class: jna
 tests: jna
 	javac -classpath "$(JNA):capstone.jar" Test.java TestArm.java TestArm64.java TestMips.java TestX86.java
 
+gen_const:
+	cd ../; python const_generator.py java
+
 jna:
 	@if [ ! $(JNA) ]; then echo "*** Unable to find JNA ***"; exit 1; fi
 
 clean:
+	rm -rf capstone/*_const.java capstone/*.class
 	rm -rf *.class *.log *.jar
