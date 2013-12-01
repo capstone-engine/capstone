@@ -61,6 +61,7 @@ static name_map reg_name_maps[] = {
 	{ ARM_REG_FPINST2, "fpinst2"},
 	{ ARM_REG_MVFR0, "mvfr0"},
 	{ ARM_REG_MVFR1, "mvfr1"},
+	{ ARM_REG_MVFR2, "mvfr2"},
 	{ ARM_REG_Q0, "q0"},
 	{ ARM_REG_Q1, "q1"},
 	{ ARM_REG_Q2, "q2"},
@@ -2304,7 +2305,7 @@ void ARM_get_insn_id(cs_insn *insn, unsigned int id)
 		memcpy(insn->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
 		memcpy(insn->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
 		memcpy(insn->groups, insns[i].groups, sizeof(insns[i].groups));
-		insn->arm.update_flags = cs_reg_write(0, insn, ARM_REG_CPSR);
+		insn->arm.update_flags = cs_reg_write(1, insn, ARM_REG_CPSR);
 	}
 }
 
