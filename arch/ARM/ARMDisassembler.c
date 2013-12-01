@@ -407,15 +407,15 @@ static DecodeStatus DecodePredicateOperand(MCInst *Inst, unsigned Val,
 void ARM_init(MCRegisterInfo *MRI)
 {
 	/*
-	   InitMCRegisterInfo(ARMRegDesc, 288,
+	   InitMCRegisterInfo(ARMRegDesc, 289,
 	   RA, PC,
 	   ARMMCRegisterClasses, 100,
-	   ARMRegUnitRoots, 76, ARMRegDiffLists, ARMRegStrings,
+	   ARMRegUnitRoots, 77, ARMRegDiffLists, ARMRegStrings,
 	   ARMSubRegIdxLists, 57,
 	   ARMSubRegIdxRanges, ARMRegEncodingTable);
-	 */
+	*/
 
-	MCRegisterInfo_InitMCRegisterInfo(MRI, ARMRegDesc, 288,
+	MCRegisterInfo_InitMCRegisterInfo(MRI, ARMRegDesc, 289,
 			0, 0, 
 			ARMMCRegisterClasses, 100,
 			0, 0, ARMRegDiffLists, 0, 
@@ -825,20 +825,19 @@ static DecodeStatus _Thumb_getInstruction(MCInst *MI, unsigned char *code, size_
 bool Thumb_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *instr,
 		uint16_t *size, size_t address, void *info)
 {
-	//cs_struct *handle = (cs_struct *)ud;
 	DecodeStatus status = _Thumb_getInstruction(instr, code, code_len, size, address);
 
-	return status == MCDisassembler_Success;
+	//return status == MCDisassembler_Success;
+	return status != MCDisassembler_Fail;
 }
 
 bool ARM_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *instr,
 		uint16_t *size, size_t address, void *info)
 {
-	//cs_struct *handle = (cs_struct *)ud;
 	DecodeStatus status = _ARM_getInstruction(instr, code, code_len, size, address);
 
-	return status == MCDisassembler_Success;
-	//return status != MCDisassembler_Fail;
+	//return status == MCDisassembler_Success;
+	return status != MCDisassembler_Fail;
 }
 
 static const uint16_t GPRDecoderTable[] = {
