@@ -252,229 +252,247 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 
 	unsigned Opcode = MCInst_getOpcode(MI);
 
-	// Check for HINT instructions w/ canonical names.
-	if (Opcode == ARM_HINT || Opcode == ARM_t2HINT) {
-		switch (MCOperand_getImm(MCInst_getOperand(MI, 0))) {
-			case 0: SStream_concat(O, "nop"); break;
-			case 1: SStream_concat(O, "yield"); break;
-			case 2: SStream_concat(O, "wfe"); break;
-			case 3: SStream_concat(O, "wfi"); break;
-			case 4: SStream_concat(O, "sev"); break;
-			case 5:
-					/*
-					   if ((getAvailableFeatures() & ARM_HasV8Ops)) {
-					   O << "\tsevl";
-					   break;
-					   } // Fallthrough for non-v8
-					 */
-					SStream_concat(O, "sevl"); break;
-			default:
-					// Anything else should just print normally.
-					printInstruction(MI, O, MRI);
+	switch(Opcode) {
+		// Check for HINT instructions w/ canonical names.
+		case ARM_HINT:
+		case ARM_tHINT:
+		case ARM_t2HINT:
+			switch (MCOperand_getImm(MCInst_getOperand(MI, 0))) {
+				case 0: SStream_concat(O, "nop"); break;
+				case 1: SStream_concat(O, "yield"); break;
+				case 2: SStream_concat(O, "wfe"); break;
+				case 3: SStream_concat(O, "wfi"); break;
+				case 4: SStream_concat(O, "sev"); break;
+				case 5:
+						/*
+						   if ((getAvailableFeatures() & ARM_HasV8Ops)) {
+						   O << "\tsevl";
+						   break;
+						   } // Fallthrough for non-v8
+						 */
+						SStream_concat(O, "sevl"); break;
+				default:
+						// Anything else should just print normally.
+						printInstruction(MI, O, MRI);
+						return;
+			}
+			printPredicateOperand(MI, 1, O);
+			if (Opcode == ARM_t2HINT)
+				SStream_concat(O, ".w");	// FIXME: expose this in register-size of insn?
+			return;
+
+			// Check for MOVs and print canonical forms, instead.
+		case ARM_MOVsr: {
+							// FIXME: Thumb variants?
+							MCOperand *Dst = MCInst_getOperand(MI, 0);
+							MCOperand *MO1 = MCInst_getOperand(MI, 1);
+							MCOperand *MO2 = MCInst_getOperand(MI, 2);
+							MCOperand *MO3 = MCInst_getOperand(MI, 3);
+
+							SStream_concat(O, ARM_AM_getShiftOpcStr(ARM_AM_getSORegShOp(MCOperand_getImm(MO3))));
+							printSBitModifierOperand(MI, 6, O);
+							printPredicateOperand(MI, 4, O);
+
+							SStream_concat(O, "\t");
+							printRegName(O, MCOperand_getReg(Dst));
+							MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_REG;
+							MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].reg = MCOperand_getReg(Dst);
+							MI->pub_insn.arm.op_count++;
+
+							SStream_concat(O, ", ");
+							printRegName(O, MCOperand_getReg(MO1));
+							MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_REG;
+							MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].reg = MCOperand_getReg(MO1);
+							MI->pub_insn.arm.op_count++;
+
+							SStream_concat(O, ", ");
+							printRegName(O, MCOperand_getReg(MO2));
+							MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_REG;
+							MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].reg = MCOperand_getReg(MO2);
+							MI->pub_insn.arm.op_count++;
+							//assert(ARM_AM_getSORegOffset(MO3.getImm()) == 0);
+							return;
+						}
+
+		case ARM_MOVsi: {
+							// FIXME: Thumb variants?
+							MCOperand *Dst = MCInst_getOperand(MI, 0);
+							MCOperand *MO1 = MCInst_getOperand(MI, 1);
+							MCOperand *MO2 = MCInst_getOperand(MI, 2);
+
+							SStream_concat(O, ARM_AM_getShiftOpcStr(ARM_AM_getSORegShOp(MCOperand_getImm(MO2))));
+							printSBitModifierOperand(MI, 5, O);
+							printPredicateOperand(MI, 3, O);
+
+							SStream_concat(O, "\t");
+							printRegName(O, MCOperand_getReg(Dst));
+							MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_REG;
+							MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].reg = MCOperand_getReg(Dst);
+							MI->pub_insn.arm.op_count++;
+
+							SStream_concat(O, ", ");
+							printRegName(O, MCOperand_getReg(MO1));
+							MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_REG;
+							MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].reg = MCOperand_getReg(MO1);
+							MI->pub_insn.arm.op_count++;
+
+							if (ARM_AM_getSORegShOp(MCOperand_getImm(MO2)) == ARM_AM_rrx) {
+								//printAnnotation(O, Annot);
+								return;
+							}
+
+							SStream_concat(O, ", %s", markup("<imm:"));
+							SStream_concat(O, "#0x%x", translateShiftImm(getSORegOffset(MCOperand_getImm(MO2))));
+							SStream_concat(O, markup(">"));
+							MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count - 1].shift.type = (arm_shifter)ARM_AM_getSORegShOp(MCOperand_getImm(MO2));
+							MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count - 1].shift.value = translateShiftImm(getSORegOffset(MCOperand_getImm(MO2)));
+							return;
+						}
+
+						// A8.6.123 PUSH
+		case ARM_STMDB_UPD:
+		case ARM_t2STMDB_UPD:
+						if (MCOperand_getReg(MCInst_getOperand(MI, 0)) == ARM_SP &&
+								MCInst_getNumOperands(MI) > 5) {
+							// Should only print PUSH if there are at least two registers in the list.
+							SStream_concat(O, "push");
+							printPredicateOperand(MI, 2, O);
+							if (Opcode == ARM_t2STMDB_UPD)
+								SStream_concat(O, ".w");
+							SStream_concat(O, "\t");
+							printRegisterList(MI, 4, O);
+							return;
+						}
+						break;
+
+		case ARM_STR_PRE_IMM:
+						if (MCOperand_getReg(MCInst_getOperand(MI, 2)) == ARM_SP &&
+								MCOperand_getImm(MCInst_getOperand(MI, 3)) == -4) {
+							SStream_concat(O, "push");
+							printPredicateOperand(MI, 4, O);
+							SStream_concat(O, "\t{");
+							printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, 1)));
+							MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_REG;
+							MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, 1));
+							MI->pub_insn.arm.op_count++;
+							SStream_concat(O, "}");
+							return;
+						}
+						break;
+
+						// A8.6.122 POP
+		case ARM_LDMIA_UPD:
+		case ARM_t2LDMIA_UPD:
+						if (MCOperand_getReg(MCInst_getOperand(MI, 0)) == ARM_SP &&
+								MCInst_getNumOperands(MI) > 5) {
+							// Should only print POP if there are at least two registers in the list.
+							SStream_concat(O, "pop");
+							printPredicateOperand(MI, 2, O);
+							if (Opcode == ARM_t2LDMIA_UPD)
+								SStream_concat(O, ".w");
+							SStream_concat(O, "\t");
+							printRegisterList(MI, 4, O);
+							return;
+						}
+						break;
+
+		case ARM_LDR_POST_IMM:
+						if (MCOperand_getReg(MCInst_getOperand(MI, 2)) == ARM_SP &&
+								MCOperand_getImm(MCInst_getOperand(MI, 4)) == 4) {
+							SStream_concat(O, "pop");
+							printPredicateOperand(MI, 5, O);
+							SStream_concat(O, "\t{");
+							printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, 0)));
+							MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_REG;
+							MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, 0));
+							MI->pub_insn.arm.op_count++;
+							SStream_concat(O, "}");
+							return;
+						}
+						break;
+
+						// A8.6.355 VPUSH
+		case ARM_VSTMSDB_UPD:
+		case ARM_VSTMDDB_UPD:
+						if (MCOperand_getReg(MCInst_getOperand(MI, 0)) == ARM_SP) {
+							SStream_concat(O, "vpush");
+							printPredicateOperand(MI, 2, O);
+							SStream_concat(O, "\t");
+							printRegisterList(MI, 4, O);
+							return;
+						}
+						break;
+
+						// A8.6.354 VPOP
+		case ARM_VLDMSIA_UPD:
+		case ARM_VLDMDIA_UPD:
+						if (MCOperand_getReg(MCInst_getOperand(MI, 0)) == ARM_SP) {
+							SStream_concat(O, "vpop");
+							printPredicateOperand(MI, 2, O);
+							SStream_concat(O, "\t");
+							printRegisterList(MI, 4, O);
+							return;
+						}
+						break;
+
+		case ARM_tLDMIA: {
+							 bool Writeback = true;	// FIXME: expose this
+							 unsigned BaseReg = MCOperand_getReg(MCInst_getOperand(MI, 0));
+							 unsigned i;
+							 for (i = 3; i < MCInst_getNumOperands(MI); ++i) {
+								 if (MCOperand_getReg(MCInst_getOperand(MI, i)) == BaseReg)
+									 Writeback = false;
+							 }
+
+							 SStream_concat(O, "ldm");
+
+							 printPredicateOperand(MI, 1, O);
+							 SStream_concat(O, "\t");
+							 printRegName(O, BaseReg);
+							 MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_REG;
+							 MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].reg = BaseReg;
+							 MI->pub_insn.arm.op_count++;
+							 if (Writeback)
+								 SStream_concat(O, "!");
+							 SStream_concat(O, ", ");
+							 printRegisterList(MI, 3, O);
+							 return;
+						 }
+
+						 // Combine 2 GPRs from disassember into a GPRPair to match with instr def.
+						 // ldrexd/strexd require even/odd GPR pair. To enforce this constraint,
+						 // a single GPRPair reg operand is used in the .td file to replace the two
+						 // GPRs. However, when decoding them, the two GRPs cannot be automatically
+						 // expressed as a GPRPair, so we have to manually merge them.
+						 // FIXME: We would really like to be able to tablegen'erate this.
+		case ARM_LDREXD:
+		case ARM_STREXD:
+		case ARM_LDAEXD:
+		case ARM_STLEXD: {
+				MCRegisterClass* MRC = MCRegisterInfo_getRegClass(MRI, ARM_GPRRegClassID);
+				bool isStore = Opcode == ARM_STREXD || Opcode == ARM_STLEXD;
+
+				unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, isStore ? 1 : 0));
+				if (MCRegisterClass_contains(MRC, Reg)) {
+					MCInst NewMI;
+					MCOperand *NewReg;
+					MCInst_setOpcode(&NewMI, Opcode);
+
+					if (isStore)
+						MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, 0));
+					NewReg = MCOperand_CreateReg(MCRegisterInfo_getMatchingSuperReg(MRI, Reg, ARM_gsub_0,
+								MCRegisterInfo_getRegClass(MRI, ARM_GPRPairRegClassID)));
+					MCInst_addOperand2(&NewMI, NewReg);
+					free(NewReg);
+
+					// Copy the rest operands into NewMI.
+					unsigned i;
+					for(i= isStore ? 3 : 2; i < MCInst_getNumOperands(MI); ++i)
+						MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, i));
+					printInstruction(&NewMI, O, MRI);
 					return;
-		}
-		printPredicateOperand(MI, 1, O);
-		if (Opcode == ARM_t2HINT)
-			SStream_concat(O, ".w");	// FIXME: expose this in register-size of insn?
-		return;
-	}
-
-	// Check for MOVs and print canonical forms, instead.
-	if (Opcode == ARM_MOVsr) {
-		// FIXME: Thumb variants?
-		MCOperand *Dst = MCInst_getOperand(MI, 0);
-		MCOperand *MO1 = MCInst_getOperand(MI, 1);
-		MCOperand *MO2 = MCInst_getOperand(MI, 2);
-		MCOperand *MO3 = MCInst_getOperand(MI, 3);
-
-		SStream_concat(O, ARM_AM_getShiftOpcStr(ARM_AM_getSORegShOp(MCOperand_getImm(MO3))));
-		printSBitModifierOperand(MI, 6, O);
-		printPredicateOperand(MI, 4, O);
-
-		SStream_concat(O, "\t");
-		printRegName(O, MCOperand_getReg(Dst));
-		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_REG;
-		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].reg = MCOperand_getReg(Dst);
-		MI->pub_insn.arm.op_count++;
-
-		SStream_concat(O, ", ");
-		printRegName(O, MCOperand_getReg(MO1));
-		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_REG;
-		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].reg = MCOperand_getReg(MO1);
-		MI->pub_insn.arm.op_count++;
-
-		SStream_concat(O, ", ");
-		printRegName(O, MCOperand_getReg(MO2));
-		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_REG;
-		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].reg = MCOperand_getReg(MO2);
-		MI->pub_insn.arm.op_count++;
-		//assert(ARM_AM_getSORegOffset(MO3.getImm()) == 0);
-		return;
-	}
-
-	if (Opcode == ARM_MOVsi) {
-		// FIXME: Thumb variants?
-		MCOperand *Dst = MCInst_getOperand(MI, 0);
-		MCOperand *MO1 = MCInst_getOperand(MI, 1);
-		MCOperand *MO2 = MCInst_getOperand(MI, 2);
-
-		SStream_concat(O, ARM_AM_getShiftOpcStr(ARM_AM_getSORegShOp(MCOperand_getImm(MO2))));
-		printSBitModifierOperand(MI, 5, O);
-		printPredicateOperand(MI, 3, O);
-
-		SStream_concat(O, "\t");
-		printRegName(O, MCOperand_getReg(Dst));
-		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_REG;
-		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].reg = MCOperand_getReg(Dst);
-		MI->pub_insn.arm.op_count++;
-
-		SStream_concat(O, ", ");
-		printRegName(O, MCOperand_getReg(MO1));
-		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_REG;
-		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].reg = MCOperand_getReg(MO1);
-		MI->pub_insn.arm.op_count++;
-
-		if (ARM_AM_getSORegShOp(MCOperand_getImm(MO2)) == ARM_AM_rrx) {
-			//printAnnotation(O, Annot);
-			return;
-		}
-
-		SStream_concat(O, ", %s", markup("<imm:"));
-		SStream_concat(O, "#0x%x", translateShiftImm(getSORegOffset(MCOperand_getImm(MO2))));
-		SStream_concat(O, markup(">"));
-		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count - 1].shift.type = (arm_shifter)ARM_AM_getSORegShOp(MCOperand_getImm(MO2));
-		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count - 1].shift.value = translateShiftImm(getSORegOffset(MCOperand_getImm(MO2)));
-		return;
-	}
-
-	// A8.6.123 PUSH
-	if ((Opcode == ARM_STMDB_UPD || Opcode == ARM_t2STMDB_UPD) &&
-			MCOperand_getReg(MCInst_getOperand(MI, 0)) == ARM_SP &&
-			MCInst_getNumOperands(MI) > 5) {
-		// Should only print PUSH if there are at least two registers in the list.
-		SStream_concat(O, "push");
-		printPredicateOperand(MI, 2, O);
-		if (Opcode == ARM_t2STMDB_UPD)
-			SStream_concat(O, ".w");
-		SStream_concat(O, "\t");
-		printRegisterList(MI, 4, O);
-		return;
-	}
-
-	if (Opcode == ARM_STR_PRE_IMM && MCOperand_getReg(MCInst_getOperand(MI, 2)) == ARM_SP &&
-			MCOperand_getImm(MCInst_getOperand(MI, 3)) == -4) {
-		SStream_concat(O, "push");
-		printPredicateOperand(MI, 4, O);
-		SStream_concat(O, "\t{");
-		printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, 1)));
-		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_REG;
-		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, 1));
-		MI->pub_insn.arm.op_count++;
-		SStream_concat(O, "}");
-		return;
-	}
-
-	// A8.6.122 POP
-	if ((Opcode == ARM_LDMIA_UPD || Opcode == ARM_t2LDMIA_UPD) &&
-			MCOperand_getReg(MCInst_getOperand(MI, 0)) == ARM_SP &&
-			MCInst_getNumOperands(MI) > 5) {
-		// Should only print POP if there are at least two registers in the list.
-		SStream_concat(O, "pop");
-		printPredicateOperand(MI, 2, O);
-		if (Opcode == ARM_t2LDMIA_UPD)
-			SStream_concat(O, ".w");
-		SStream_concat(O, "\t");
-		printRegisterList(MI, 4, O);
-		return;
-	}
-
-	if (Opcode == ARM_LDR_POST_IMM && MCOperand_getReg(MCInst_getOperand(MI, 2)) == ARM_SP &&
-			MCOperand_getImm(MCInst_getOperand(MI, 4)) == 4) {
-		SStream_concat(O, "pop");
-		printPredicateOperand(MI, 5, O);
-		SStream_concat(O, "\t{");
-		printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, 0)));
-		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_REG;
-		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, 0));
-		MI->pub_insn.arm.op_count++;
-		SStream_concat(O, "}");
-		return;
-	}
-
-	// A8.6.355 VPUSH
-	if ((Opcode == ARM_VSTMSDB_UPD || Opcode == ARM_VSTMDDB_UPD) &&
-			MCOperand_getReg(MCInst_getOperand(MI, 0)) == ARM_SP) {
-		SStream_concat(O, "vpush");
-		printPredicateOperand(MI, 2, O);
-		SStream_concat(O, "\t");
-		printRegisterList(MI, 4, O);
-		return;
-	}
-
-	// A8.6.354 VPOP
-	if ((Opcode == ARM_VLDMSIA_UPD || Opcode == ARM_VLDMDIA_UPD) &&
-			MCOperand_getReg(MCInst_getOperand(MI, 0)) == ARM_SP) {
-		SStream_concat(O, "vpop");
-		printPredicateOperand(MI, 2, O);
-		SStream_concat(O, "\t");
-		printRegisterList(MI, 4, O);
-		return;
-	}
-
-	if (Opcode == ARM_tLDMIA) {
-		bool Writeback = true;	// FIXME: expose this
-		unsigned BaseReg = MCOperand_getReg(MCInst_getOperand(MI, 0));
-		unsigned i;
-		for (i = 3; i < MCInst_getNumOperands(MI); ++i) {
-			if (MCOperand_getReg(MCInst_getOperand(MI, i)) == BaseReg)
-				Writeback = false;
-		}
-
-		SStream_concat(O, "ldm");
-
-		printPredicateOperand(MI, 1, O);
-		SStream_concat(O, "\t");
-		printRegName(O, BaseReg);
-		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_REG;
-		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].reg = BaseReg;
-		MI->pub_insn.arm.op_count++;
-		if (Writeback) SStream_concat(O, "!");
-		SStream_concat(O, ", ");
-		printRegisterList(MI, 3, O);
-		return;
-	}
-
-	// Combine 2 GPRs from disassember into a GPRPair to match with instr def.
-	// ldrexd/strexd require even/odd GPR pair. To enforce this constraint,
-	// a single GPRPair reg operand is used in the .td file to replace the two
-	// GPRs. However, when decoding them, the two GRPs cannot be automatically
-	// expressed as a GPRPair, so we have to manually merge them.
-	// FIXME: We would really like to be able to tablegen'erate this.
-	if (Opcode == ARM_LDREXD || Opcode == ARM_STREXD ||
-			Opcode == ARM_LDAEXD || Opcode == ARM_STLEXD) {
-		MCRegisterClass* MRC = MCRegisterInfo_getRegClass(MRI, ARM_GPRRegClassID);
-		bool isStore = Opcode == ARM_STREXD || Opcode == ARM_STLEXD;
-
-		unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, isStore ? 1 : 0));
-		if (MCRegisterClass_contains(MRC, Reg)) {
-			MCInst NewMI;
-			MCOperand *NewReg;
-			MCInst_setOpcode(&NewMI, Opcode);
-
-			if (isStore)
-				MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, 0));
-			NewReg = MCOperand_CreateReg(MCRegisterInfo_getMatchingSuperReg(MRI, Reg, ARM_gsub_0,
-						MCRegisterInfo_getRegClass(MRI, ARM_GPRPairRegClassID)));
-			MCInst_addOperand2(&NewMI, NewReg);
-			free(NewReg);
-
-			// Copy the rest operands into NewMI.
-			unsigned i;
-			for(i= isStore ? 3 : 2; i < MCInst_getNumOperands(MI); ++i)
-				MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, i));
-			printInstruction(&NewMI, O, MRI);
-			return;
-		}
+				}
+			}
 	}
 
 	//if (printAliasInstr(MI, O, MRI))

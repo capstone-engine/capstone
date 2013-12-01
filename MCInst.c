@@ -67,7 +67,6 @@ int MCInst_addOperand(MCInst *inst, MCOperand *Op)
 		return -1;
 
 	inst->Operands[inst->size] = *Op;
-	// FIXME
 	free(Op);
 
 	inst->size++;

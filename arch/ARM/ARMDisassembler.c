@@ -28,6 +28,12 @@
 //#define GET_REGINFO_ENUM
 //#include "X86GenRegisterInfo.inc"
 
+#define GET_SUBTARGETINFO_ENUM
+#include "ARMGenSubtargetInfo.inc"
+
+#define GET_SUBTARGETINFO_MC_DESC
+#include "ARMGenSubtargetInfo.inc"
+
 #define GET_INSTRINFO_MC_DESC
 #include "ARMGenInstrInfo.inc"
 
@@ -363,11 +369,6 @@ static DecodeStatus DecodeLDR(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder);
 static DecodeStatus DecodeMRRC2(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder);
-#define GET_SUBTARGETINFO_ENUM
-#include "ARMGenSubtargetInfo.inc"
-
-#define GET_SUBTARGETINFO_MC_DESC
-#include "ARMGenSubtargetInfo.inc"
 
 // Hacky: enable all features for disassembler
 static uint64_t ARM_getFeatureBits(int mode)
@@ -1176,8 +1177,8 @@ static DecodeStatus DecodeRegListOperand(MCInst *Inst, unsigned Val,
 {
 	DecodeStatus S = MCDisassembler_Success;
 
-	bool writebackLoad = false;
-	unsigned writebackReg = 0;
+	bool NeedDisjointWriteback = false;
+	unsigned WritebackReg = 0;
 	switch (MCInst_getOpcode(Inst)) {
 		default:
 			break;
@@ -1187,8 +1188,10 @@ static DecodeStatus DecodeRegListOperand(MCInst *Inst, unsigned Val,
 		case ARM_LDMDA_UPD:
 		case ARM_t2LDMIA_UPD:
 		case ARM_t2LDMDB_UPD:
-			writebackLoad = true;
-			writebackReg = MCOperand_getReg(MCInst_getOperand(Inst, 0));
+		case ARM_t2STMIA_UPD:
+		case ARM_t2STMDB_UPD:
+			NeedDisjointWriteback = true;
+			WritebackReg = MCOperand_getReg(MCInst_getOperand(Inst, 0));
 			break;
 	}
 
@@ -1200,7 +1203,7 @@ static DecodeStatus DecodeRegListOperand(MCInst *Inst, unsigned Val,
 			if (!Check(&S, DecodeGPRRegisterClass(Inst, i, Address, Decoder)))
 				return MCDisassembler_Fail;
 			// Writeback not allowed if Rn is in the target list.
-			if (writebackLoad && writebackReg == MCOperand_getReg(&(Inst->Operands[Inst->size-1])))
+			if (NeedDisjointWriteback && WritebackReg == MCOperand_getReg(&(Inst->Operands[Inst->size-1])))
 				Check(&S, MCDisassembler_SoftFail);
 		}
 	}
