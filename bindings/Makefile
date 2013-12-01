@@ -44,4 +44,9 @@ test_diff: FORCE
 	$(DIFF) $(TEST_MIPS)_e $(TEST_MIPS)_o
 	$(DIFF) $(TEST_X86)_e $(TEST_X86)_o
 
+clean:
+	rm -rf $(TMPDIR)
+	$(MAKE) clean -C java
+	$(MAKE) clean -C python
+
 FORCE:
