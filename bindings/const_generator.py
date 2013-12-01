@@ -11,10 +11,16 @@ include = [
 
 template = {
     'java': {
-            'header': "// AUTOGENRATED FILE, DO NOT EDIT\npackage capstone;\n\npublic class %sconst {\n",
+            'header': "// AUTO-GENERATED FILE, DO NOT EDIT\npackage capstone;\n\npublic class %sconst {\n",
             'footer': "}",
             'line_format': '\tpublic static final int %s = %s;\n',
-            'out_file': 'java/capstone/%sconst.java',
+            'out_file': './java/capstone/%sconst.java',
+        },
+    'python': {
+            'header': "# AUTO-GENERATED FILE, DO NOT EDIT [%s]\n",
+            'footer': "",
+            'line_format': '%s = %s\n',
+            'out_file': './python/capstone/%sconst.py',
         }
 }
 
@@ -61,10 +67,10 @@ def gen(templ):
         outfile.close()
 
 def main():
-    if (sys.argv[1] == 'java'):
-        gen(template['java'])
-    else:
-        raise RuntimeError("Unsupported binding")
+    try:
+        gen(template[sys.argv[1]])
+    except:
+        raise RuntimeError("Unsupported binding %s" % sys.argv[1])
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:

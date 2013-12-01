@@ -20,6 +20,7 @@ expected:
 	../tests/test_x86 > $(TEST_X86)_e
 
 python: FORCE
+	$(MAKE) -C python
 	python python/test.py > $(TEST)_o
 	python python/test_arm.py > $(TEST_ARM)_o
 	python python/test_arm64.py > $(TEST_ARM64)_o
