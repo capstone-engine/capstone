@@ -145,10 +145,11 @@ static void test()
 #define ARM_CODE2 "\xd1\xe8\x00\xf0\xf0\x24\x04\x07\x1f\x3c\xf2\xc0\x00\x00\x4f\xf0\x00\x01\x46\x6c"
 //#define THUMB_CODE "\x70\x47"	// bl 0x26
 //#define THUMB_CODE "\x07\xdd"	// ble 0x1c
+//#define THUMB_CODE "\x00\x47"	// bx r0
+//#define THUMB_CODE "\x01\x47"	// bx r0
+//#define THUMB_CODE "\x02\x47"	// bx r0
 #define THUMB_CODE "\x70\x47\xeb\x46\x83\xb0\xc9\x68\x1f\xb1"
 #define THUMB_CODE2 "\x4f\xf0\x00\x01\xbd\xe8\x00\x88\xd1\xe8\x00\xf0"
-#define THUMB_CODE "\x00\x47"	// bx r0
-#define THUMB_CODE "\x01\x47"	// bx r0
 
 	struct platform platforms[] = {
 		{
