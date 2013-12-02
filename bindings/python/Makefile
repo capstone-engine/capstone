@@ -1,6 +1,10 @@
+.PHONY: all clean install
+
 all:
 	cd ..; python const_generator.py python
-	# sudo python setup.py install
+
+install:
+	python setup.py install
 
 clean:
 	rm -rf capstone/*.pyc capstone/*_const.py
