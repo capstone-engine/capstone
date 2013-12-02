@@ -204,24 +204,6 @@ static bool get_first_op(char *buffer, char *firstop)
 		return false;
 }
 
-// hacky: get mnem string from buffer if this insn has only 1 operand
-// return mnem if True, or False if above condition was not satisfied
-// NOTE: make sure mnem is big enough to contain the resulted string
-static bool get_mnem1(char *buffer, char *mnem)
-{
-	if (strchr(buffer, ','))
-		return false;
-
-	char *tab = strchr(buffer, '\t');
-	if (!tab)
-		return false;
-
-	memcpy(mnem, buffer, tab - buffer);
-	mnem[tab - buffer + 1] = '\0';
-
-	return true;
-}
-
 static bool printAliasInstr(MCInst *MI, SStream *OS);
 static void printInstruction(MCInst *MI, SStream *O);
 void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
@@ -244,22 +226,7 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 	} else
 		printInstruction(MI, O);
 
-	// currently LLVM presents "shr reg, 1" as "shr reg"
-	// until that is fixed, we need this hack
-	char tmp[128];
-	if (get_mnem1(O->buffer, tmp)) {
-		char *mnems[] = {"shr", "shl", "sar", NULL};
-		if (str_in_list(mnems, tmp)) {
-			// this insn needs to have op "1"
-			strcat(O->buffer, ", 1");
-			MI->pub_insn.x86.operands[1].type = X86_OP_IMM;
-			MI->pub_insn.x86.operands[1].imm = 1;
-			MI->pub_insn.x86.op_count++;
-
-			return;
-		}
-	}
-
+	char tmp[64];
 	if (get_first_op(O->buffer, tmp)) {
 		char *acc_regs[] = {"rax", "eax", "ax", "al", NULL};
 		if (tmp[0] != 0 && str_in_list(acc_regs, tmp)) {
