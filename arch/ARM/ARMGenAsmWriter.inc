@@ -6114,7 +6114,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   uint64_t Bits2 = OpInfo2[MCInst_getOpcode(MI)];
   uint64_t Bits = (Bits2 << 32) | Bits1;
   //assert(Bits != 0 && "Cannot print this instruction.");
-  SStream_concat(O, AsmStrs+(Bits & 4095)-1);
+  SStream_concat(O, "%s", AsmStrs+(Bits & 4095)-1);
 
   //printf("Frag-0: %lu\n", (Bits >> 12) & 31);
   // Fragment 0 encoded into 5 bits for 29 unique commands.

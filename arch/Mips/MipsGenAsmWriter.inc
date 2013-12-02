@@ -3696,7 +3696,7 @@ void printInstruction(MCInst *MI, SStream *O)
   uint64_t Bits2 = OpInfo2[MCInst_getOpcode(MI)];
   uint64_t Bits = (Bits2 << 32) | Bits1;
   //assert(Bits != 0 && "Cannot print this instruction.");
-  SStream_concat(O, AsmStrs+(Bits & 8191)-1);
+  SStream_concat(O, "%s", AsmStrs+(Bits & 8191)-1);
 
   // Fragment 0 encoded into 3 bits for 6 unique commands.
   //printf("\nFrag-0: %llu\n", (Bits >> 13) & 7);
