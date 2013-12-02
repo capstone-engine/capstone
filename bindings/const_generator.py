@@ -14,13 +14,13 @@ include = [
 
 template = {
     'java': {
-            'header': "// AUTO-GENERATED FILE, DO NOT EDIT\npackage capstone;\n\npublic class %sconst {\n",
+            'header': "// For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT\npackage capstone;\n\npublic class %sconst {\n",
             'footer': "}",
             'line_format': '\tpublic static final int %s = %s;\n',
             'out_file': './java/capstone/%sconst.java',
         },
     'python': {
-            'header': "# AUTO-GENERATED FILE, DO NOT EDIT [%s]\n",
+            'header': "# For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [%sconst.py]\n",
             'footer': "",
             'line_format': '%s = %s\n',
             'out_file': './python/capstone/%sconst.py',
