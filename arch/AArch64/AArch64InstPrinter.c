@@ -372,14 +372,15 @@ static void printNamedImmOperand(NamedImmMapper *Mapper,
 static void printSysRegOperand(SysRegMapper *Mapper,
 		MCInst *MI, unsigned OpNum, SStream *O)
 {
+	bool ValidName;
+	char Name[128];
+
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 
-	bool ValidName;
-	char *Name = SysRegMapper_toString(Mapper, MCOperand_getImm(MO), &ValidName);
+	SysRegMapper_toString(Mapper, MCOperand_getImm(MO), &ValidName, Name);
 	if (ValidName) {
 		SStream_concat(O, Name);
 	}
-	free(Name);
 }
 
 #define GET_REGINFO_ENUM

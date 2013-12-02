@@ -14,9 +14,9 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
-#include "../../asprintf.h"
 #include "../../utils.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "AArch64BaseInfo.h"
@@ -568,21 +568,23 @@ static NamedImmMapper_Mapping SysRegPairs[] = {
 	{"ich_lr15_el2", A64SysReg_ICH_LR15_EL2}
 };
 
-// NOTE: caller must free() the result itself
-char *SysRegMapper_toString(SysRegMapper *S, uint32_t Bits, bool *Valid)
+// result must be a big enough buffer: 128 bytes is more than enough
+void SysRegMapper_toString(SysRegMapper *S, uint32_t Bits, bool *Valid, char *result)
 {
 	unsigned i;
 	for (i = 0; i < ARR_SIZE(SysRegPairs); ++i) {
 		if (SysRegPairs[i].Value == Bits) {
 			*Valid = true;
-			return strdup(SysRegPairs[i].Name);
+			strcpy(result, SysRegPairs[i].Name);
+			return;
 		}
 	}
 
 	for (i = 0; i < S->NumInstPairs; ++i) {
 		if (S->InstPairs[i].Value == Bits) {
 			*Valid = true;
-			return strdup(S->InstPairs[i].Name);
+			strcpy(result, S->InstPairs[i].Name);
+			return;
 		}
 	}
 
@@ -596,14 +598,12 @@ char *SysRegMapper_toString(SysRegMapper *S, uint32_t Bits, bool *Valid)
 	// name.
 	if (Op0 != 3 || (CRn != 11 && CRn != 15)) {
 		*Valid = false;
-		return NULL;
+		return;
 	}
 
 	//assert(Op0 == 3 && (CRn == 11 || CRn == 15) && "Invalid generic sysreg");
 
 	*Valid = true;
-
-	//return "s3_" + utostr(Op1) + "_c" + utostr(CRn) + "_c" + utostr(CRm) + "_" + utostr(Op2);
 
 	char *Op1S, *CRnS, *CRmS, *Op2S;
 	Op1S = utostr(Op1, false);
@@ -611,16 +611,14 @@ char *SysRegMapper_toString(SysRegMapper *S, uint32_t Bits, bool *Valid)
 	CRmS = utostr(CRm, false);
 	Op2S = utostr(Op2, false);
 
-	char *result;
-	int dummy = asprintf(&result, "s3_%s_c%s_c%s_%s", Op1S, CRnS, CRmS, Op2S);
+	//printf("Op1S: %s, CRnS: %s, CRmS: %s, Op2S: %s\n", Op1S, CRnS, CRmS, Op2S);
+	int dummy = sprintf(result, "s3_%s_c%s_c%s_%s", Op1S, CRnS, CRmS, Op2S);
 	(void)dummy;
 
 	free(Op1S);
 	free(CRnS);
 	free(CRmS);
 	free(Op2S);
-
-	return result;
 }
 
 static NamedImmMapper_Mapping TLBIPairs[] = {

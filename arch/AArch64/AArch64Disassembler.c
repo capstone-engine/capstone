@@ -772,8 +772,8 @@ static DecodeStatus DecodeSysRegOperand(SysRegMapper *Mapper,
 		void *Decoder)
 {
 	bool ValidNamed;
-	char *str = SysRegMapper_toString(Mapper, Val, &ValidNamed);
-	free(str);
+	char result[128];
+	SysRegMapper_toString(Mapper, Val, &ValidNamed, result);
 
 	MCInst_addOperand(Inst, MCOperand_CreateImm(Val));
 

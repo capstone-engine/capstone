@@ -19,7 +19,7 @@ INSTALL_LIBRARY ?= install -m0755
 
 LIBNAME = capstone
 LIBOBJ =
-LIBOBJ += cs.o asprintf.o utils.o SStream.o MCInstrDesc.o MCRegisterInfo.o
+LIBOBJ += cs.o utils.o SStream.o MCInstrDesc.o MCRegisterInfo.o
 LIBOBJ += arch/ARM/ARMDisassembler.o arch/ARM/ARMInstPrinter.o arch/ARM/mapping.o
 LIBOBJ += arch/X86/X86DisassemblerDecoder.o arch/X86/X86Disassembler.o arch/X86/X86IntelInstPrinter.o arch/X86/X86ATTInstPrinter.o arch/X86/mapping.o
 LIBOBJ += arch/Mips/MipsDisassembler.o arch/Mips/MipsInstPrinter.o arch/Mips/mapping.o

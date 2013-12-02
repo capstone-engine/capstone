@@ -858,6 +858,6 @@ uint32_t NamedImmMapper_fromString(NamedImmMapper *N, char *Name, bool *Valid);
 
 bool NamedImmMapper_validImm(NamedImmMapper *N, uint32_t Value);
 
-char *SysRegMapper_toString(SysRegMapper *S, uint32_t Bits, bool *Valid);
+void SysRegMapper_toString(SysRegMapper *S, uint32_t Bits, bool *Valid, char *result);
 
 #endif
