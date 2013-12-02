@@ -69,5 +69,14 @@ the code with:
 	$ ./compile.sh clang
 
 
-(6) So far, Python, Ruby, Ocaml, Java, C# and Go are supported by bindings. Look for the bindings
-under directory bindings/, and refer to README file of corresponding languages.
+(6) So far, Python, Ruby, Ocaml, Java, C# and Go are supported by bindings. Look for
+the bindings under directory bindings/, and refer to README file of corresponding languages.
+
+For each binding, the common method to compile its code is to run the command below
+from the directory of the binding (such as in ./bindings/python/ for Python and so on)
+
+	$ make
+
+For some bindings (such as Python), you can install the code into your machine with:
+
+	$ sudo make install
