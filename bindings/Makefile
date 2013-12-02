@@ -8,6 +8,10 @@ TEST_ARM64 = $(TMPDIR)/test_arm64
 TEST_MIPS = $(TMPDIR)/test_mips
 TEST_X86 = $(TMPDIR)/test_x86
 
+.PHONY: all expected python java ocaml
+
+all:
+
 tests: expected python java #oclma ruby
 
 expected:
@@ -36,6 +40,8 @@ java: FORCE
 	cd java; ./run.sh mips > $(TEST_MIPS)_o
 	cd java; ./run.sh x86 > $(TEST_X86)_o
 	$(MAKE) test_diff
+
+ocaml: FORCE
 
 test_diff: FORCE
 	$(DIFF) $(TEST)_e $(TEST)_o
