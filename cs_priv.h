@@ -21,6 +21,12 @@ typedef char *(*GetName_t)(unsigned int reg);
 
 typedef void (*GetID_t)(cs_insn *insn, unsigned int id);
 
+// for ARM only
+typedef struct ARM_ITStatus {
+	unsigned char ITStates[128];	// FIXME
+	unsigned int size;
+} ARM_ITStatus;
+
 typedef struct cs_struct {
 	cs_arch arch;
 	cs_mode mode;
@@ -35,6 +41,7 @@ typedef struct cs_struct {
 	PostPrinter_t post_printer;
 	bool micro_mips;	// for Mips only
 	cs_err errnum;
+	ARM_ITStatus ITBlock;	// for Arm only
 } cs_struct;
 
 #endif

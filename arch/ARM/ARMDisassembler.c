@@ -22,6 +22,7 @@
 #include "../../MCRegisterInfo.h"
 #include "../../LEB128.h"
 #include "../../MCDisassembler.h"
+#include "../../cs_priv.h"
 
 #include "ARMDisassembler.h"
 
@@ -40,13 +41,7 @@
 #define GET_INSTRINFO_ENUM
 #include "ARMGenInstrInfo.inc"
 
-typedef struct ITStatus {
-	//std_vector<unsigned char> ITStates;
-	unsigned char ITStates[128];	// FIXME
-	unsigned int size;
-} ITStatus;
-
-static bool ITStatus_push_back(ITStatus *it, char v)
+static bool ITStatus_push_back(ARM_ITStatus *it, char v)
 {
 	it->ITStates[it->size] = v;
 	it->size++;
@@ -55,14 +50,14 @@ static bool ITStatus_push_back(ITStatus *it, char v)
 }
 
 // Returns true if the current instruction is in an IT block
-static bool ITStatus_instrInITBlock(ITStatus *it)
+static bool ITStatus_instrInITBlock(ARM_ITStatus *it)
 {
 	//return !ITStates.empty();
 	return (it->size > 0);
 }
 
 // Returns true if current instruction is the last instruction in an IT block
-static bool ITStatus_instrLastInITBlock(ITStatus *it)
+static bool ITStatus_instrLastInITBlock(ARM_ITStatus *it)
 {
 	return (it->size == 1);
 }
@@ -70,7 +65,7 @@ static bool ITStatus_instrLastInITBlock(ITStatus *it)
 // Handles the condition code status of instructions in IT blocks
 
 // Returns the condition code for instruction in IT block
-static unsigned ITStatus_getITCC(ITStatus *it)
+static unsigned ITStatus_getITCC(ARM_ITStatus *it)
 {
 	unsigned CC = ARMCC_AL;
 	if (ITStatus_instrInITBlock(it))
@@ -80,7 +75,7 @@ static unsigned ITStatus_getITCC(ITStatus *it)
 }
 
 // Advances the IT block state to the next T or E
-static void ITStatus_advanceITState(ITStatus *it)
+static void ITStatus_advanceITState(ARM_ITStatus *it)
 {
 	//ITStates.pop_back();
 	it->size--;
@@ -89,7 +84,7 @@ static void ITStatus_advanceITState(ITStatus *it)
 // Called when decoding an IT instruction. Sets the IT state for the following
 // instructions that for the IT block. Firstcond and Mask correspond to the 
 // fields in the IT instruction encoding.
-static void ITStatus_setITState(ITStatus *it, char Firstcond, char Mask)
+static void ITStatus_setITState(ARM_ITStatus *it, char Firstcond, char Mask)
 {
 	// (3 - the number of trailing zeros) is the number of then / else.
 	unsigned CondBit0 = Firstcond & 1;
@@ -109,9 +104,6 @@ static void ITStatus_setITState(ITStatus *it, char Firstcond, char Mask)
 }
 
 /// ThumbDisassembler - Thumb disassembler for all Thumb platforms.
-
-// FIXME: make this ITBlock private for each Disassembler handle
-static ITStatus ITBlock;
 
 static bool Check(DecodeStatus *Out, DecodeStatus In)
 {
@@ -423,12 +415,12 @@ void ARM_init(MCRegisterInfo *MRI)
 			0);
 }
 
-static DecodeStatus _ARM_getInstruction(MCInst *MI, unsigned char *code, size_t code_len,
+static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, unsigned char *code, size_t code_len,
 		uint16_t *Size, size_t Address)
 {
 	uint8_t bytes[4];
 
-	ITBlock.size = 0;
+	ud->ITBlock.size = 0;
 
 	//assert(!(STI.getFeatureBits() & ARM_ModeThumb) &&
 	//       "Asked to disassemble an ARM instruction but Subtarget is in Thumb mode!");
@@ -547,7 +539,7 @@ static void AddThumb1SBit(MCInst *MI, bool InITBlock)
 // encoding, but rather get their predicates from IT context.  We need
 // to fix up the predicate operands using this context information as a
 // post-pass.
-static DecodeStatus AddThumbPredicate(MCInst *MI)
+static DecodeStatus AddThumbPredicate(cs_struct *ud, MCInst *MI)
 {
 	DecodeStatus S = MCDisassembler_Success;
 
@@ -566,7 +558,7 @@ static DecodeStatus AddThumbPredicate(MCInst *MI)
 		case ARM_tSETEND:
 			// Some instructions (mostly conditional branches) are not
 			// allowed in IT blocks.
-			if (ITStatus_instrInITBlock(&ITBlock))
+			if (ITStatus_instrInITBlock(&(ud->ITBlock)))
 				S = MCDisassembler_SoftFail;
 			else
 				return MCDisassembler_Success;
@@ -578,7 +570,7 @@ static DecodeStatus AddThumbPredicate(MCInst *MI)
 			// Some instructions (mostly unconditional branches) can
 			// only appears at the end of, or outside of, an IT.
 			//if (ITBlock.instrInITBlock() && !ITBlock.instrLastInITBlock())
-			if (ITStatus_instrInITBlock(&ITBlock) && !ITStatus_instrLastInITBlock(&ITBlock))
+			if (ITStatus_instrInITBlock(&(ud->ITBlock)) && !ITStatus_instrLastInITBlock(&(ud->ITBlock)))
 				S = MCDisassembler_SoftFail;
 			break;
 		default:
@@ -588,11 +580,11 @@ static DecodeStatus AddThumbPredicate(MCInst *MI)
 	// If we're in an IT block, base the predicate on that.  Otherwise,
 	// assume a predicate of AL.
 	unsigned CC;
-	CC = ITStatus_getITCC(&ITBlock);
+	CC = ITStatus_getITCC(&(ud->ITBlock));
 	if (CC == 0xF) 
 		CC = ARMCC_AL;
-	if (ITStatus_instrInITBlock(&ITBlock))
-		ITStatus_advanceITState(&ITBlock);
+	if (ITStatus_instrInITBlock(&(ud->ITBlock)))
+		ITStatus_advanceITState(&(ud->ITBlock));
 
 	MCOperandInfo *OpInfo = ARMInsts[MCInst_getOpcode(MI)].OpInfo;
 	unsigned short NumOps = ARMInsts[MCInst_getOpcode(MI)].NumOperands;
@@ -623,12 +615,12 @@ static DecodeStatus AddThumbPredicate(MCInst *MI)
 // mode, the auto-generated decoder will give them an (incorrect)
 // predicate operand.  We need to rewrite these operands based on the IT
 // context as a post-pass.
-static void UpdateThumbVFPPredicate(MCInst *MI)
+static void UpdateThumbVFPPredicate(cs_struct *ud, MCInst *MI)
 {
 	unsigned CC;
-	CC = ITStatus_getITCC(&ITBlock);
-	if (ITStatus_instrInITBlock(&ITBlock))
-		ITStatus_advanceITState(&ITBlock);
+	CC = ITStatus_getITCC(&(ud->ITBlock));
+	if (ITStatus_instrInITBlock(&(ud->ITBlock)))
+		ITStatus_advanceITState(&(ud->ITBlock));
 
 	MCOperandInfo *OpInfo = ARMInsts[MCInst_getOpcode(MI)].OpInfo;
 	unsigned short NumOps = ARMInsts[MCInst_getOpcode(MI)].NumOperands;
@@ -645,12 +637,12 @@ static void UpdateThumbVFPPredicate(MCInst *MI)
 	}
 }
 
-static DecodeStatus _Thumb_getInstruction(MCInst *MI, unsigned char *code, size_t code_len,
+static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, unsigned char *code, size_t code_len,
 		uint16_t *Size, size_t Address)
 {
 	uint8_t bytes[4];
 
-	ITBlock.size = 0;
+	ud->ITBlock.size = 0;
 
 	//assert((STI.getFeatureBits() & ARM_ModeThumb) &&
 	//       "Asked to disassemble in Thumb mode but Subtarget is in ARM mode!");
@@ -665,7 +657,7 @@ static DecodeStatus _Thumb_getInstruction(MCInst *MI, unsigned char *code, size_
 	DecodeStatus result = decodeInstruction_2(DecoderTableThumb16, MI, insn16, Address, 2);
 	if (result != MCDisassembler_Fail) {
 		*Size = 2;
-		Check(&result, AddThumbPredicate(MI));
+		Check(&result, AddThumbPredicate(ud, MI));
 		return result;
 	}
 
@@ -673,8 +665,8 @@ static DecodeStatus _Thumb_getInstruction(MCInst *MI, unsigned char *code, size_
 	result = decodeInstruction_2(DecoderTableThumbSBit16, MI, insn16, Address, 2);
 	if (result) {
 		*Size = 2;
-		bool InITBlock = ITStatus_instrInITBlock(&ITBlock);
-		Check(&result, AddThumbPredicate(MI));
+		bool InITBlock = ITStatus_instrInITBlock(&(ud->ITBlock));
+		Check(&result, AddThumbPredicate(ud, MI));
 		AddThumb1SBit(MI, InITBlock);
 		return result;
 	}
@@ -686,10 +678,10 @@ static DecodeStatus _Thumb_getInstruction(MCInst *MI, unsigned char *code, size_
 
 		// Nested IT blocks are UNPREDICTABLE.  Must be checked before we add
 		// the Thumb predicate.
-		if (MCInst_getOpcode(MI) == ARM_t2IT && ITStatus_instrInITBlock(&ITBlock))
+		if (MCInst_getOpcode(MI) == ARM_t2IT && ITStatus_instrInITBlock(&(ud->ITBlock)))
 			result = MCDisassembler_SoftFail;
 
-		Check(&result, AddThumbPredicate(MI));
+		Check(&result, AddThumbPredicate(ud, MI));
 
 		// If we find an IT instruction, we need to parse its condition
 		// code and mask operands so that we can apply them correctly
@@ -698,7 +690,7 @@ static DecodeStatus _Thumb_getInstruction(MCInst *MI, unsigned char *code, size_
 
 			unsigned Firstcond = MCOperand_getImm(MCInst_getOperand(MI, 0));
 			unsigned Mask = MCOperand_getImm(MCInst_getOperand(MI, 1));
-			ITStatus_setITState(&ITBlock, Firstcond, Mask);
+			ITStatus_setITState(&(ud->ITBlock), Firstcond, Mask);
 		}
 
 		return result;
@@ -720,8 +712,8 @@ static DecodeStatus _Thumb_getInstruction(MCInst *MI, unsigned char *code, size_
 	result = decodeInstruction_4(DecoderTableThumb32, MI, insn32, Address, 2);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
-		bool InITBlock = ITStatus_instrInITBlock(&ITBlock);
-		Check(&result, AddThumbPredicate(MI));
+		bool InITBlock = ITStatus_instrInITBlock(&(ud->ITBlock));
+		Check(&result, AddThumbPredicate(ud, MI));
 		AddThumb1SBit(MI, InITBlock);
 		return result;
 	}
@@ -730,7 +722,7 @@ static DecodeStatus _Thumb_getInstruction(MCInst *MI, unsigned char *code, size_
 	result = decodeInstruction_4(DecoderTableThumb232, MI, insn32, Address, 2);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
-		Check(&result, AddThumbPredicate(MI));
+		Check(&result, AddThumbPredicate(ud, MI));
 		return result;
 	}
 
@@ -738,7 +730,7 @@ static DecodeStatus _Thumb_getInstruction(MCInst *MI, unsigned char *code, size_
 	result = decodeInstruction_4(DecoderTableVFP32, MI, insn32, Address, 2);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
-		UpdateThumbVFPPredicate(MI);
+		UpdateThumbVFPPredicate(ud, MI);
 		return result;
 	}
 
@@ -747,7 +739,7 @@ static DecodeStatus _Thumb_getInstruction(MCInst *MI, unsigned char *code, size_
 		result = decodeInstruction_4(DecoderTableVFP32, MI, insn32, Address, 2);
 		if (result != MCDisassembler_Fail) {
 			*Size = 4;
-			UpdateThumbVFPPredicate(MI);
+			UpdateThumbVFPPredicate(ud, MI);
 			return result;
 		}
 	}
@@ -764,7 +756,7 @@ static DecodeStatus _Thumb_getInstruction(MCInst *MI, unsigned char *code, size_
 		result = decodeInstruction_4(DecoderTableNEONDup32, MI, insn32, Address, 2);
 		if (result != MCDisassembler_Fail) {
 			*Size = 4;
-			Check(&result, AddThumbPredicate(MI));
+			Check(&result, AddThumbPredicate(ud, MI));
 			return result;
 		}
 	}
@@ -777,7 +769,7 @@ static DecodeStatus _Thumb_getInstruction(MCInst *MI, unsigned char *code, size_
 		result = decodeInstruction_4(DecoderTableNEONLoadStore32, MI, NEONLdStInsn, Address, 2);
 		if (result != MCDisassembler_Fail) {
 			*Size = 4;
-			Check(&result, AddThumbPredicate(MI));
+			Check(&result, AddThumbPredicate(ud, MI));
 			return result;
 		}
 	}
@@ -791,7 +783,7 @@ static DecodeStatus _Thumb_getInstruction(MCInst *MI, unsigned char *code, size_
 		result = decodeInstruction_4(DecoderTableNEONData32, MI, NEONDataInsn, Address, 2);
 		if (result != MCDisassembler_Fail) {
 			*Size = 4;
-			Check(&result, AddThumbPredicate(MI));
+			Check(&result, AddThumbPredicate(ud, MI));
 			return result;
 		}
 	}
@@ -825,7 +817,7 @@ static DecodeStatus _Thumb_getInstruction(MCInst *MI, unsigned char *code, size_
 bool Thumb_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *instr,
 		uint16_t *size, size_t address, void *info)
 {
-	DecodeStatus status = _Thumb_getInstruction(instr, code, code_len, size, address);
+	DecodeStatus status = _Thumb_getInstruction((cs_struct *)ud, instr, code, code_len, size, address);
 
 	//return status == MCDisassembler_Success;
 	return status != MCDisassembler_Fail;
@@ -834,7 +826,7 @@ bool Thumb_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *
 bool ARM_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *instr,
 		uint16_t *size, size_t address, void *info)
 {
-	DecodeStatus status = _ARM_getInstruction(instr, code, code_len, size, address);
+	DecodeStatus status = _ARM_getInstruction((cs_struct *)ud, instr, code, code_len, size, address);
 
 	//return status == MCDisassembler_Success;
 	return status != MCDisassembler_Fail;
