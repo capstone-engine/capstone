@@ -142,12 +142,26 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 static void printMemOffs8(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat(O, "byte ptr ");
+
+	// If this has a segment register, print it.
+	// this is a hack. will fix it later
+	if (MI->pub_insn.x86.segment) {
+		SStream_concat(O, "%s:", X86_reg_name(MI->pub_insn.x86.segment));
+	}
+
 	printMemOffset(MI, OpNo, O);
 }
 
 static void printMemOffs16(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat(O, "word ptr ");
+
+	// If this has a segment register, print it.
+	// this is a hack. will fix it later
+	if (MI->pub_insn.x86.segment) {
+		SStream_concat(O, "%s:", X86_reg_name(MI->pub_insn.x86.segment));
+	}
+
 	printMemOffset(MI, OpNo, O);
 
 }
@@ -155,6 +169,13 @@ static void printMemOffs16(MCInst *MI, unsigned OpNo, SStream *O)
 static void printMemOffs32(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat(O, "dword ptr ");
+
+	// If this has a segment register, print it.
+	// this is a hack. will fix it later
+	if (MI->pub_insn.x86.segment) {
+		SStream_concat(O, "%s:", X86_reg_name(MI->pub_insn.x86.segment));
+	}
+
 	printMemOffset(MI, OpNo, O);
 }
 

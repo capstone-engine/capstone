@@ -11837,7 +11837,7 @@ static void printInstruction(MCInst *MI, SStream *O)
   uint64_t Bits2 = OpInfo2[MCInst_getOpcode(MI)];
   uint64_t Bits = (Bits2 << 32) | Bits1;
   //assert(Bits != 0 && "Cannot print this instruction.");
-  SStream_concat(O, AsmStrs+(Bits & 16383)-1);
+  SStream_concat(O, "%s", AsmStrs+(Bits & 16383)-1);
 
 
   //	printf("F0: %lu\n", (Bits >> 14) & 63);
