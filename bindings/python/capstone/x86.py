@@ -1,7 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes, ctypes.util
-from X86_const import *
+from x86_const import *
 
 # define the API
 class x86_op_mem(ctypes.Structure):

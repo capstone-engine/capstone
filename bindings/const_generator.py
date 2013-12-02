@@ -3,45 +3,50 @@
 
 import sys, re
 
-INCL_DIR = '../include'
+INCL_DIR = '../include/'
 
-include = [
-    ('/arm.h', 'ARM_'),
-    ('/arm64.h', 'ARM64_'),
-    ('/x86.h', 'X86_'),
-    ('/mips.h', 'MIPS_'),
-]
+include = [ 'arm.h', 'arm64.h', 'mips.h', 'x86.h' ]
 
 template = {
     'java': {
-            'header': "// For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT\npackage capstone;\n\npublic class %sconst {\n",
+            'header': "// For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT\npackage capstone;\n\npublic class %s_const {\n",
             'footer': "}",
             'line_format': '\tpublic static final int %s = %s;\n',
-            'out_file': './java/capstone/%sconst.java',
+            'out_file': './java/capstone/%s_const.java',
+            # prefixes for constant filenames of all archs - case sensitive
+            'arm.h': 'Arm',
+            'arm64.h': 'Arm64',
+            'mips.h': 'Mips',
+            'x86.h': 'X86',
         },
     'python': {
-            'header': "# For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [%sconst.py]\n",
+            'header': "# For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [%s_const.py]\n",
             'footer': "",
             'line_format': '%s = %s\n',
-            'out_file': './python/capstone/%sconst.py',
+            'out_file': './python/capstone/%s_const.py',
+            # prefixes for constant filenames of all archs - case sensitive
+            'arm.h': 'arm',
+            'arm64.h': 'arm64',
+            'mips.h': 'mips',
+            'x86.h': 'x86',
         }
 }
 
 def gen(templ):
     global include, INCL_DIR
     for target in include:
-        prefix = target[1];
-        outfile = open(templ['out_file'] %(prefix.capitalize()), 'w')
-        outfile.write(templ['header'] % (prefix.capitalize()))
+        prefix = templ[target]
+        outfile = open(templ['out_file'] %(prefix), 'w')
+        outfile.write(templ['header'] % (prefix))
 
-        lines = open(INCL_DIR + target[0]).readlines()
+        lines = open(INCL_DIR + target).readlines()
 
         count = 0
         for line in lines:
             line = line.strip()
             if line == '' or line.startswith('//'):
                 continue
-            if not line.startswith(prefix):
+            if not line.startswith(prefix.upper()):
                 continue
 
             tmp = line.strip().split(',')
@@ -50,7 +55,7 @@ def gen(templ):
                 if not t or t.startswith('//'): continue
                 f = re.split('\s+', t)
 
-                if f[0].startswith(prefix):
+                if f[0].startswith(prefix.upper()):
                     if len(f) > 1 and f[1] not in '//=':
                         print "Error: Unable to convert %s" % f
                         continue
