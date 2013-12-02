@@ -47,6 +47,7 @@ static void test()
 //#define ARM64_CODE "\x20\xfc\x02\x9b"	// mneg	x0, x1, x2
 #define ARM64_CODE "\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9\x10\x20\x21\x1e"
 //#define THUMB_CODE "\x0a\xbf" // itet eq
+//#define X86_CODE32 "\x77\x04"	// ja +6
 
 	struct platform platforms[] = {
 		{

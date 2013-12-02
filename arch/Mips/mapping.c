@@ -1390,6 +1390,17 @@ void Mips_get_insn_id(cs_insn *insn, unsigned int id)
 			memcpy(insn->regs_write, alias_insns[i].regs_mod, sizeof(alias_insns[i].regs_mod));
 			memcpy(insn->groups, alias_insns[i].groups, sizeof(alias_insns[i].groups));
 
+			if (insns[i].branch || insns[i].indirect_branch) {
+				// this insn also belongs to JUMP group
+				int j;
+				for (j = 0; j < ARR_SIZE(insns[i].groups); j++) {
+					if (insn->groups[j] == 0) {
+						insn->groups[j] = MIPS_GRP_JUMP;
+						break;
+					}
+				}
+			}
+
 			return;
 		}
 	}
@@ -1400,6 +1411,17 @@ void Mips_get_insn_id(cs_insn *insn, unsigned int id)
 		memcpy(insn->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
 		memcpy(insn->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
 		memcpy(insn->groups, insns[i].groups, sizeof(insns[i].groups));
+
+		if (insns[i].branch || insns[i].indirect_branch) {
+			// this insn also belongs to JUMP group
+			int j;
+			for (j = 0; j < ARR_SIZE(insns[i].groups); j++) {
+				if (insn->groups[j] == 0) {
+					insn->groups[j] = MIPS_GRP_JUMP;
+					break;
+				}
+			}
+		}
 	}
 }
 

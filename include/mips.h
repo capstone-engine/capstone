@@ -669,6 +669,8 @@ typedef enum mips_insn_group {
 	MIPS_GRP_NONANSFPMATH,
 	MIPS_GRP_NOTFP64BIT,
 	MIPS_GRP_RELOCSTATIC,
+
+	MIPS_GRP_JUMP,	// jump insn (including conditional+direct+indirect jumps)
 	MIPS_GRP_MAX,
 } mips_insn_group;
 

@@ -1884,6 +1884,17 @@ void AArch64_get_insn_id(cs_insn *insn, unsigned int id)
 		// call cs_reg_write() with handle = 1 to pass handle check
 		// we only need to find if this insn modifies ARM64_REG_NZCV
 		insn->arm64.update_flags = cs_reg_write(1, insn, ARM64_REG_NZCV);
+
+		if (insns[i].branch || insns[i].indirect_branch) {
+			// this insn also belongs to JUMP group
+			int j;
+			for (j = 0; j < ARR_SIZE(insns[i].groups); j++) {
+				if (insn->groups[j] == 0) {
+					insn->groups[j] = ARM64_GRP_JUMP;
+					break;
+				}
+			}
+		}
 	}
 }
 
