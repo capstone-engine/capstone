@@ -19,14 +19,14 @@ static x86_reg sib_base_map[] = {
 // Fill-ins to make the compiler happy.  These constants are never actually
 //   assigned; they are just filler to make an automatically-generated switch
 //   statement work.
-static enum {
+enum {
 	X86_REG_BX_SI = 500,
 	X86_REG_BX_DI = 501,
 	X86_REG_BP_SI = 502,
 	X86_REG_BP_DI = 503,
 	X86_REG_sib   = 504,
 	X86_REG_sib64 = 505
-} __attribute__((unused)) _dummy;
+};
 
 static x86_reg sib_index_map[] = {
 	X86_REG_INVALID,

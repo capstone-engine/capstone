@@ -153,6 +153,7 @@ static void test()
 //#define THUMB_CODE "\x01\x47"	// bx r0
 //#define THUMB_CODE "\x02\x47"	// bx r0
 #define THUMB_CODE "\x70\x47\xeb\x46\x83\xb0\xc9\x68\x1f\xb1"
+//#define THUMB_CODE "\x0a\xbf" // itet eq
 #define THUMB_CODE2 "\x4f\xf0\x00\x01\xbd\xe8\x00\x88\xd1\xe8\x00\xf0"
 
 	struct platform platforms[] = {
