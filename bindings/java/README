@@ -8,3 +8,15 @@ This has been tested with OpenJDK 6 on Ubuntu-12.04 and Arch Linux-3.11, 64-bit
 
        $ make
        $ ./run.sh
+
+
+This directory contains some test code to show how to use Capstone API.
+
+- Test.java
+  This code shows the most simple form of API where we only want to get basic
+  information out of disassembled instruction, such as address, mnemonic and
+  operand string.
+
+- Test_<arch>.java
+  These code show how to retrieve architecture-specific information for each
+  architecture.
