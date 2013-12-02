@@ -1,13 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes, ctypes.util
-
-# Operand type
-MIPS_OP_INVALID = 0  # Uninitialized.
-MIPS_OP_REG = 1   # Register operand.
-MIPS_OP_IMM = 2   # Immediate operand.
-MIPS_OP_MEM = 3   # Memory operand
-
+from Mips_const import *
 
 # define the API
 class mips_op_mem(ctypes.Structure):
