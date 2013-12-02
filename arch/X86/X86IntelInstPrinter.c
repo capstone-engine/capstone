@@ -376,10 +376,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		MI->pub_insn.x86.op_count++;
 	} else if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op);
-		if (imm < 0)
-			SStream_concat(O, "-0x%"PRIx64, -imm);
-		else
-			SStream_concat(O, "0x%"PRIx64, imm);
+		SStream_concat(O, "0x%"PRIx64, imm);
 		MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].type = X86_OP_IMM;
 		MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].imm = imm;
 		MI->pub_insn.x86.op_count++;

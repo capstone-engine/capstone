@@ -84,67 +84,7 @@ static void translateRegister(MCInst *mcInst, Reg reg)
 static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 		const OperandSpecifier *operand, InternalInstruction *insn)
 {
-	// Sign-extend the immediate if necessary.
 	OperandType type = (OperandType)operand->type;
-
-	//bool isBranch = false;
-	//uint64_t pcrel = 0;
-	if (type == TYPE_RELv) {
-		//isBranch = true;
-		//pcrel = insn->startLocation + insn->immediateOffset + insn->immediateSize;
-		switch (insn->displacementSize) {
-			case 1:
-				if (immediate & 0x80)
-					immediate |= ~(0xffull);
-				break;
-			case 2:
-				if (immediate & 0x8000)
-					immediate |= ~(0xffffull);
-				break;
-			case 4:
-				if (immediate & 0x80000000)
-					immediate |= ~(0xffffffffull);
-				break;
-			case 8:
-				break;
-			default:
-				break;
-		}
-	}
-	// By default sign-extend all X86 immediates based on their encoding.
-	else if (type == TYPE_IMM8 || type == TYPE_IMM16 || type == TYPE_IMM32 ||
-			type == TYPE_IMM64) {
-		uint32_t Opcode = MCInst_getOpcode(mcInst);
-		switch (operand->encoding) {
-			case ENCODING_IB:
-				// Special case those X86 instructions that use the imm8 as a set of
-				// bits, bit count, etc. and are not sign-extend.
-				if (Opcode != X86_BLENDPSrri && Opcode != X86_BLENDPDrri &&
-						Opcode != X86_PBLENDWrri && Opcode != X86_MPSADBWrri &&
-						Opcode != X86_DPPSrri && Opcode != X86_DPPDrri &&
-						Opcode != X86_INSERTPSrr && Opcode != X86_VBLENDPSYrri &&
-						Opcode != X86_VBLENDPSYrmi && Opcode != X86_VBLENDPDYrri &&
-						Opcode != X86_VBLENDPDYrmi && Opcode != X86_VPBLENDWrri &&
-						Opcode != X86_VMPSADBWrri && Opcode != X86_VDPPSYrri &&
-						Opcode != X86_VDPPSYrmi && Opcode != X86_VDPPDrri &&
-						Opcode != X86_VINSERTPSrr)
-					if (immediate & 0x80)
-						immediate |= ~(0xffull);
-				break;
-			case ENCODING_IW:
-				if (immediate & 0x8000)
-					immediate |= ~(0xffffull);
-				break;
-			case ENCODING_ID:
-				if (immediate & 0x80000000)
-					immediate |= ~(0xffffffffull);
-				break;
-			case ENCODING_IO:
-				break;
-			default:
-				break;
-		}
-	}
 
 	switch (type) {
 		case TYPE_XMM32:
@@ -158,19 +98,6 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 		case TYPE_XMM512:
 			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_ZMM0 + (immediate >> 4)));
 			return;
-		case TYPE_REL8:
-			//isBranch = true;
-			//pcrel = insn->startLocation + insn->immediateOffset + insn->immediateSize;
-			if (immediate & 0x80)
-				immediate |= ~(0xffull);
-			break;
-		case TYPE_REL32:
-		case TYPE_REL64:
-			//isBranch = true;
-			//pcrel = insn->startLocation + insn->immediateOffset + insn->immediateSize;
-			if (immediate & 0x80000000)
-				immediate |= ~(0xffffffffull);
-			break;
 		default:
 			// operand is 64 bits wide.  Do nothing.
 			break;
@@ -242,7 +169,6 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 	MCOperand *indexReg;
 	MCOperand *displacement;
 	MCOperand *segmentReg;
-	//uint64_t pcrel = 0;
 
 	if (insn->eaBase == EA_BASE_sib || insn->eaBase == EA_BASE_sib64) {
 		if (insn->sibBase != SIB_BASE_NONE) {
@@ -318,8 +244,6 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 					return true;
 				}
 				if (insn->mode == MODE_64BIT) {
-					//pcrel = insn->startLocation +
-					//	insn->displacementOffset + insn->displacementSize;
 					baseReg = MCOperand_CreateReg(X86_RIP); // Section 2.2.1.6
 				} else
 					baseReg = MCOperand_CreateReg(0);
