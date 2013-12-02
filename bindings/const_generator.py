@@ -1,3 +1,6 @@
+# Capstone Disassembler Engine
+# By Dang Hoang Vu, 2013
+
 import sys, re
 
 INCL_DIR = '../include'
