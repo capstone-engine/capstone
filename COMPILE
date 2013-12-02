@@ -14,7 +14,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 	Then run "./tests/test*" to see the tests disassembling sample code.
 
-- On 64-bit OS, if you want to cross-compile Capstone for 32-bit binary, run:
+- On 64-bit OS, run command below to cross-compile Capstone for 32-bit binary:
 
 	$ ./compile.sh nix32
 
@@ -26,7 +26,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 	$ sudo make install
 	
-You are then required to enter root password to copy Capstone into machine
+Users are then required to enter root password to copy Capstone into machine
 system directories.
 
 NOTE: The core framework that will be installed by "make install" consist of
@@ -42,7 +42,7 @@ only following files:
 
 
 (3) To cross-compile for Windows, Linux & gcc-mingw-w64-i686 (and also gcc-mingw-w64-x86-64
-if you want 64-bit binaries) are required.
+for 64-bit binaries) are required.
 
 	- To cross-compile Windows 32-bit binary, simply run
 		$ ./compile.sh cross-win32
@@ -63,8 +63,7 @@ Resulted files "capstone.dll" and "tests/test*.exe" can then be used on Windows 
                 $ ./compile.sh cygwin-mingw64
 
 
-(5) By default, gcc is used as compiler. If you want to use "clang" instead, compile
-the code with:
+(5) By default, gcc is used as compiler. To use "clang" compiler instead, run command below:
 
 	$ ./compile.sh clang
 
@@ -77,6 +76,7 @@ from the directory of the binding (such as in ./bindings/python/ for Python and 
 
 	$ make
 
-For some bindings (such as Python), you can install the code into your machine with:
+For some bindings (such as Python), the code can be installed into system with:
 
 	$ sudo make install
+
