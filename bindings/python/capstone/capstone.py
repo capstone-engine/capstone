@@ -14,8 +14,6 @@ __all__ = [
 
     'CS_MODE_LITTLE_ENDIAN',
     'CS_MODE_BIG_ENDIAN',
-    'CS_MODE_SYNTAX_INTEL',
-    'CS_MODE_SYNTAX_ATT',
     'CS_MODE_16',
     'CS_MODE_32',
     'CS_MODE_64',
@@ -23,6 +21,9 @@ __all__ = [
     'CS_MODE_THUMB',
     'CS_MODE_MICRO',
     'CS_MODE_N64',
+
+    'CS_OPT_X86_INTEL',
+    'CS_OPT_X86_ATT',
 
     'CS_ERR_OK',
     'CS_ERR_MEM',
@@ -32,7 +33,7 @@ __all__ = [
     'CS_ERR_MODE',
 ]
 
-# capstone C interface
+# Capstone C interface
 # architectures
 CS_ARCH_ARM = 0
 CS_ARCH_ARM64 = 1
@@ -41,7 +42,6 @@ CS_ARCH_X86 = 3
 
 # disasm mode
 CS_MODE_LITTLE_ENDIAN = 0      # little-endian mode (default mode)
-CS_MODE_SYNTAX_INTEL = 0       # Intel X86 asm syntax (default for CS_ARCH_X86)
 CS_MODE_ARM = 0                # ARM mode
 CS_MODE_16 = (1 << 1)          # 16-bit mode (for X86, Mips)
 CS_MODE_32 = (1 << 2)          # 32-bit mode (for X86, Mips)
@@ -49,10 +49,13 @@ CS_MODE_64 = (1 << 3)          # 64-bit mode (for X86, Mips)
 CS_MODE_THUMB = (1 << 4)       # ARM's Thumb mode, including Thumb-2
 CS_MODE_MICRO = (1 << 4)       # MicroMips mode (MIPS architecture)
 CS_MODE_N64 = (1 << 5)         # Nintendo-64 mode (MIPS architecture)
-CS_MODE_SYNTAX_ATT = (1 << 30) # X86 ATT asm syntax (for CS_ARCH_X86 only)
 CS_MODE_BIG_ENDIAN = (1 << 31) # big-endian mode
 
-# capstone error type
+# Capstone option type
+CS_OPT_X86_INTEL = 1 << 0    # Intel X86 asm syntax (CS_ARCH_X86 arch)
+CS_OPT_X86_ATT = 1 << 1      # ATT asm syntax (CS_ARCH_X86 arch)
+
+# Capstone error type
 CS_ERR_OK = 0      # No error: everything was fine
 CS_ERR_MEM = 1     # Out-Of-Memory error
 CS_ERR_ARCH = 2    # Unsupported architecture
@@ -149,7 +152,8 @@ _setup_prototype(_cs, "cs_reg_write", ctypes.c_bool, ctypes.c_size_t, ctypes.POI
 _setup_prototype(_cs, "cs_op_count", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint)
 _setup_prototype(_cs, "cs_op_index", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint, ctypes.c_uint)
 _setup_prototype(_cs, "cs_version", None, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
-_setup_prototype(_cs, "cs_errno", ctypes.c_int, ctypes.c_int64)
+_setup_prototype(_cs, "cs_errno", ctypes.c_int, ctypes.c_size_t)
+_setup_prototype(_cs, "cs_option", ctypes.c_int, ctypes.c_size_t, ctypes.c_int)
 
 
 def cs_version():
@@ -258,6 +262,9 @@ class cs:
     def __del__(self):
         if self.csh:
             _cs.cs_close(self.csh)
+
+    def option(self, option):
+        return _cs.cs_option(self.csh, option)
 
     def disasm(self, code, offset, count = 0):
         if self.csh is None:
