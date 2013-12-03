@@ -73,13 +73,13 @@ archive: $(LIBOBJ)
 	$(RANLIB) lib$(LIBNAME).$(AR_EXT)
 
 PC=capstone.pc
-VERSION=$(shell echo `grep -e MAJOR -e MINOR cs.c|grep -v =| awk '{print $$3}'` | awk '{print $$1"."$$2}')
+VERSION=$(shell echo `grep -e PKG_MAJOR -e PKG_MINOR cs.c|grep -v =| awk '{print $$3}'` | awk '{print $$1"."$$2}')
 
 capstone.pc: lib$(LIBNAME).$(AR_EXT)
 	echo Name: capstone > $(PC)
 	echo Description: Capstone disassembler engine >> $(PC)
 	echo Version: $(VERSION) >> $(PC)
-	echo Libs: $(PREFIX)/lib/libcapstone.a >> $(PC)
+	echo Libs: -L$(LIBDIR) -lcapstone >> $(PC)
 	echo Cflags: -I$(PREFIX)/include/capstone >> $(PC)
 
 install: capstone.pc archive lib
