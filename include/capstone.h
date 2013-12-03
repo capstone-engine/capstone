@@ -52,7 +52,7 @@ typedef struct cs_insn {
 	unsigned int id;
 
 	// Offset address of this instruction
-	size_t address;
+	uint64_t address;
 
 	// Size of this instruction
 	uint16_t size;	
