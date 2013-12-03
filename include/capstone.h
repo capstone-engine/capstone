@@ -51,7 +51,7 @@ typedef struct cs_insn {
 	// such as arm.h for ARM, x86.h for X86, etc...
 	unsigned int id;
 
-	// Offset address of this instruction
+	// Address of this instruction
 	uint64_t address;
 
 	// Size of this instruction
@@ -142,7 +142,7 @@ cs_err cs_errno(csh handle);
  @handle: handle returned by cs_open()
  @code: buffer containing raw binary code to be disassembled
  @code_size: size of above code
- @offset: offset of the first insn in given raw code buffer
+ @address: address of the first insn in given raw code buffer
  @insn: array of insn filled in by this function
        NOTE: @insn size must be at least @count to avoid buffer overflow
  @count: number of instrutions to be disassembled, or 0 to get all of them
@@ -153,7 +153,7 @@ cs_err cs_errno(csh handle);
 */
 size_t cs_disasm(csh handle,
 		unsigned char *code, size_t code_size,
-		uint64_t offset,
+		uint64_t address,
 		size_t count,
 		cs_insn *insn);
 
@@ -168,7 +168,7 @@ size_t cs_disasm(csh handle,
  @handle: handle returned by cs_open()
  @code: buffer containing raw binary code to be disassembled
  @code_size: size of above code
- @offset: offset of the first insn in given raw code buffer
+ @address: address of the first insn in given raw code buffer
  @insn: array of insn filled in by this function
        NOTE: @insn will be allocated by this function
  @count: number of instrutions to be disassembled, or 0 to get all of them
@@ -179,7 +179,7 @@ size_t cs_disasm(csh handle,
 */
 size_t cs_disasm_dyn(csh handle,
 		unsigned char *code, size_t code_size,
-		uint64_t offset,
+		uint64_t address,
 		size_t count,
 		cs_insn **insn);
 
