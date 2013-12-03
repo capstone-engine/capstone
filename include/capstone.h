@@ -44,8 +44,8 @@ typedef enum cs_opt_type {
 
 // Option value
 typedef enum cs_opt_value {
-	CS_OPT_V_INTEL = 1, // X86 Intel asm syntax (CS_OPT_SYNTAX)
-	CS_OPT_V_ATT,   // X86 ATT asm syntax (CS_OPT_SYNTAX)
+	CS_OPT_SYNTAX_INTEL = 1, // X86 Intel asm syntax (CS_OPT_SYNTAX)
+	CS_OPT_SYNTAX_ATT,   // X86 ATT asm syntax (CS_OPT_SYNTAX)
 } cs_opt_value;
 
 

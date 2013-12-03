@@ -10,10 +10,10 @@ X86_CODE16 = "\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x05\x23\x01\x00\x
 X86_CODE32 = "\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x05\x23\x01\x00\x00\x36\x8b\x84\x91\x23\x01\x00\x00\x41\x8d\x84\x39\x89\x67\x00\x00\x8d\x87\x89\x67\x00\x00\xb4\xc6"
 
 all_tests = (
-        (CS_ARCH_X86, CS_MODE_16, X86_CODE16, "X86 16bit (Intel syntax)", 0),
-        (CS_ARCH_X86, CS_MODE_32, X86_CODE32, "X86 32 (AT&T syntax)", CS_OPT_X86_ATT),
-        (CS_ARCH_X86, CS_MODE_32, X86_CODE32, "X86 32 (Intel syntax)", 0),
-        (CS_ARCH_X86, CS_MODE_64, X86_CODE64, "X86 64 (Intel syntax)", 0),
+        (CS_ARCH_X86, CS_MODE_16, X86_CODE16, "X86 16bit (Intel syntax)", 0, 0),
+        (CS_ARCH_X86, CS_MODE_32, X86_CODE32, "X86 32 (AT&T syntax)", CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT),
+        (CS_ARCH_X86, CS_MODE_32, X86_CODE32, "X86 32 (Intel syntax)", 0, 0),
+        (CS_ARCH_X86, CS_MODE_64, X86_CODE64, "X86 64 (Intel syntax)", 0, 0),
         )
 
 def to_hex(s):
@@ -102,15 +102,16 @@ def test_class():
                         print("\t\t\toperands[%u].mem.disp: 0x%s" %(c, to_x(i.value.mem.disp)))
 
 
-    for (arch, mode, code, comment, option) in all_tests:
+    for (arch, mode, code, comment, opt_type, opt_value) in all_tests:
         print("*" * 16)
         print("Platform: %s" %comment)
         print("Code: %s" % to_hex(code))
         print("Disasm:")
 
         md = cs(arch, mode)
-        if option != 0:
-            md.option(option)
+
+        if opt_type != 0:
+            md.option(opt_type, opt_value)
 
         last = None
         for insn in md.disasm(code, 0x1000):

@@ -22,8 +22,9 @@ __all__ = [
     'CS_MODE_MICRO',
     'CS_MODE_N64',
 
-    'CS_OPT_X86_INTEL',
-    'CS_OPT_X86_ATT',
+    'CS_OPT_SYNTAX',
+    'CS_OPT_SYNTAX_INTEL',
+    'CS_OPT_SYNTAX_ATT',
 
     'CS_ERR_OK',
     'CS_ERR_MEM',
@@ -52,8 +53,11 @@ CS_MODE_N64 = (1 << 5)         # Nintendo-64 mode (MIPS architecture)
 CS_MODE_BIG_ENDIAN = (1 << 31) # big-endian mode
 
 # Capstone option type
-CS_OPT_X86_INTEL = 1 << 0    # Intel X86 asm syntax (CS_ARCH_X86 arch)
-CS_OPT_X86_ATT = 1 << 1      # ATT asm syntax (CS_ARCH_X86 arch)
+CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
+
+# Capstone option value
+CS_OPT_SYNTAX_INTEL = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
+CS_OPT_SYNTAX_ATT = 2      # ATT asm syntax (CS_ARCH_X86 arch)
 
 # Capstone error type
 CS_ERR_OK = 0      # No error: everything was fine
@@ -153,7 +157,7 @@ _setup_prototype(_cs, "cs_op_count", ctypes.c_int, ctypes.c_size_t, ctypes.POINT
 _setup_prototype(_cs, "cs_op_index", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint, ctypes.c_uint)
 _setup_prototype(_cs, "cs_version", None, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
 _setup_prototype(_cs, "cs_errno", ctypes.c_int, ctypes.c_size_t)
-_setup_prototype(_cs, "cs_option", ctypes.c_int, ctypes.c_size_t, ctypes.c_int)
+_setup_prototype(_cs, "cs_option", ctypes.c_int, ctypes.c_size_t, ctypes.c_int, ctypes.c_int)
 
 
 def cs_version():
@@ -263,8 +267,8 @@ class cs:
         if self.csh:
             _cs.cs_close(self.csh)
 
-    def option(self, option):
-        return _cs.cs_option(self.csh, option)
+    def option(self, opt_type, opt_value):
+        return _cs.cs_option(self.csh, opt_type, opt_value)
 
     def disasm(self, code, offset, count = 0):
         if self.csh is None:

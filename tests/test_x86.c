@@ -138,7 +138,7 @@ static void test()
 			.size = sizeof(X86_CODE32) - 1,
 			.comment = "X86 32 (AT&T syntax)",
 			.opt_type = CS_OPT_SYNTAX,
-			.opt_value = CS_OPT_V_ATT,
+			.opt_value = CS_OPT_SYNTAX_ATT,
 		},
 		{
 			.arch = CS_ARCH_X86,

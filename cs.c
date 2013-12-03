@@ -210,10 +210,10 @@ cs_err cs_option(csh ud, cs_opt_type type, cs_opt_value value)
 				switch(value) {
 					default:
 						break;
-					case CS_OPT_V_INTEL:
+					case CS_OPT_SYNTAX_INTEL:
 						handle->printer = X86_Intel_printInst;
 						break;
-					case CS_OPT_V_ATT:
+					case CS_OPT_SYNTAX_ATT:
 						handle->printer = X86_ATT_printInst;
 						break;
 				}
