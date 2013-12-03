@@ -30,13 +30,7 @@ class _cs_mips(ctypes.Structure):
     )
 
 def get_arch_info(a):
-    op_info = []
-    for i in a.operands:
-        if i.type == 0:
-            # no more valid op after this
-            break
-        op_info.append(i)
-    return op_info
+    return a.operands[:a.op_count]
 
 
 # MIPS registers

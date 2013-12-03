@@ -46,10 +46,7 @@ class _cs_x86(ctypes.Structure):
     )
 
 def get_arch_info(a):
-    op_info = []
-    for i in a.operands:
-        if i.type == 0:
-            break
-        op_info.append(i)
-    return (a.prefix, a.segment, a.opcode, a.op_size, a.addr_size, a.disp_size, a.imm_size, a.modrm, a.sib, a.disp, a.sib_index, a.sib_scale, a.sib_base, op_info)
+    return (a.prefix, a.segment, a.opcode, a.op_size, a.addr_size, a.disp_size, \
+            a.imm_size, a.modrm, a.sib, a.disp, a.sib_index, a.sib_scale, \
+            a.sib_base, a.operands[:a.op_count])
 

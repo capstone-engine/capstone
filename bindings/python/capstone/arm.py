@@ -42,11 +42,6 @@ class _cs_arm(ctypes.Structure):
         ('operands', arm_op * 20),
     )
 
-def get_arch_info(arch):
-    op_info = []
-    for i in arch.operands:
-        if i.type == 0:
-            break
-        op_info.append(i)
-    return (arch.cc, arch.update_flags, arch.writeback, op_info)
+def get_arch_info(a):
+    return (a.cc, a.update_flags, a.writeback, a.operands[:a.op_count])
 

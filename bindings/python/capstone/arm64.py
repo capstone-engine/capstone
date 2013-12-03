@@ -43,10 +43,5 @@ class _cs_arm64(ctypes.Structure):
     )
 
 def get_arch_info(a):
-    op_info = []
-    for i in a.operands:
-        if i.type == 0:
-            break
-        op_info.append(i)
-    return (a.cc, a.update_flags, a.writeback, op_info)
+    return (a.cc, a.update_flags, a.writeback, a.operands[:a.op_count])
 

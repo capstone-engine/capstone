@@ -123,8 +123,11 @@ class _cs_insn(ctypes.Structure):
         ('mnemonic', ctypes.c_char * 32),
         ('op_str', ctypes.c_char * 96),
         ('regs_read', ctypes.c_uint * 32),
+        ('regs_read_count', ctypes.c_uint),
         ('regs_write', ctypes.c_uint * 32),
+        ('regs_write_count', ctypes.c_uint),
         ('groups', ctypes.c_uint * 8),
+        ('groups_count', ctypes.c_uint),
         ('arch', _cs_arch),
     )
 
@@ -177,22 +180,14 @@ def cs_disasm_quick(arch, mode, code, offset, count = 0):
 # Python-style class to disasm code
 class cs_insn:
     def __init__(self, csh, all_info, arch):
-        def create_list(rawlist):
-            fl = []
-            for m in rawlist:
-                if m == 0:
-                    break
-                fl.append(m)
-            return fl
-
         self.id = all_info.id
         self.address = all_info.address
         self.size = all_info.size
         self.mnemonic = all_info.mnemonic
         self.op_str = all_info.op_str
-        self.regs_read = create_list(all_info.regs_read)
-        self.regs_write = create_list(all_info.regs_write)
-        self.groups = create_list(all_info.groups)
+        self.regs_read = all_info.regs_read[:all_info.regs_read_count]
+        self.regs_write = all_info.regs_write[:all_info.regs_write_count]
+        self.groups = all_info.groups[:all_info.groups_count]
 
         if arch == CS_ARCH_ARM:
             (self.cc, self.update_flags, self.writeback, self.operands) = \
