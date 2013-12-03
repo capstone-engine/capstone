@@ -153,7 +153,7 @@ cs_err cs_errno(csh handle);
 */
 size_t cs_disasm(csh handle,
 		unsigned char *code, size_t code_size,
-		size_t offset,
+		uint64_t offset,
 		size_t count,
 		cs_insn *insn);
 
@@ -179,7 +179,7 @@ size_t cs_disasm(csh handle,
 */
 size_t cs_disasm_dyn(csh handle,
 		unsigned char *code, size_t code_size,
-		size_t offset,
+		uint64_t offset,
 		size_t count,
 		cs_insn **insn);
 

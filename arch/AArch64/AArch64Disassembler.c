@@ -228,7 +228,7 @@ void AArch64_init(MCRegisterInfo *MRI)
 static DecodeStatus _getInstruction(MCInst *MI,
 		unsigned char *code, size_t code_len,
 		uint16_t *Size,
-		size_t Address, MCRegisterInfo *MRI)
+		uint64_t Address, MCRegisterInfo *MRI)
 {
 	if (code_len < 4) {
 		// not enough data
@@ -254,7 +254,7 @@ static DecodeStatus _getInstruction(MCInst *MI,
 	return MCDisassembler_Fail;
 }
 
-bool AArch64_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *instr, uint16_t *size, size_t address, void *info)
+bool AArch64_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *info)
 {
 	DecodeStatus status = _getInstruction(instr,
 			code, code_len,
