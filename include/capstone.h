@@ -26,7 +26,6 @@ typedef enum cs_arch {
 // Mode type
 typedef enum cs_mode {
 	CS_MODE_LITTLE_ENDIAN = 0,	// little endian mode (default mode)
-	CS_MODE_SYNTAX_INTEL = 0,	// Intel X86 asm syntax (CS_ARCH_X86 architecture)
 	CS_MODE_ARM = 0,	// 32-bit ARM
 	CS_MODE_16 = 1 << 1,	// 16-bit mode
 	CS_MODE_32 = 1 << 2,	// 32-bit mode
@@ -34,10 +33,16 @@ typedef enum cs_mode {
 	CS_MODE_THUMB = 1 << 4,	// ARM's Thumb mode, including Thumb-2
 	CS_MODE_MICRO = 1 << 4, // MicroMips mode (MIPS architecture)
 	CS_MODE_N64 = 1 << 5, // Nintendo-64 mode (MIPS architecture)
-	CS_MODE_SYNTAX_ATT = 1 << 30,	// ATT asm syntax (CS_ARCH_X86 architecture)
 
 	CS_MODE_BIG_ENDIAN = 1 << 31	// big endian mode
 } cs_mode;
+
+// Option type
+typedef enum cs_opt {
+	CS_OPT_X86_INTEL = 1 << 0, // Intel X86 asm syntax (CS_ARCH_X86 arch)
+	CS_OPT_X86_ATT = 1 << 1,   // ATT asm syntax (CS_ARCH_X86 arch)
+} cs_opt;
+
 
 #include "arm.h"
 #include "arm64.h"
@@ -123,6 +128,17 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle);
  for detailed error).
 */
 cs_err cs_close(csh handle);
+
+/*
+ Set option for disassembling
+
+ @handle: handle returned by cs_open()
+ @option: option to be set, which can be OR by several cs_opt enums
+
+ @return CS_ERR_OK on success, or other value on failure (refer to cs_err enum
+ for detailed error).
+*/
+cs_err cs_option(csh handle, unsigned int option);
 
 /*
  Report the last error number when some API function fail.

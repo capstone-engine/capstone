@@ -15,6 +15,7 @@ struct platform {
 	unsigned char *code;
 	size_t size;
 	char *comment;
+	cs_opt option;
 };
 
 static void print_string_hex(char *comment, unsigned char *str, int len)
@@ -131,10 +132,11 @@ static void test()
 		},
 		{
 			.arch = CS_ARCH_X86,
-			.mode = CS_MODE_32 + CS_MODE_SYNTAX_ATT,
+			.mode = CS_MODE_32,
 			.code = (unsigned char *)X86_CODE32,
 			.size = sizeof(X86_CODE32) - 1,
-			.comment = "X86 32 (AT&T syntax)"
+			.comment = "X86 32 (AT&T syntax)",
+			.option = CS_OPT_X86_ATT,
 		},
 		{
 			.arch = CS_ARCH_X86,
@@ -160,6 +162,9 @@ static void test()
 	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
 		if (cs_open(platforms[i].arch, platforms[i].mode, &handle))
 			return;
+
+		if (platforms[i].option)
+			cs_option(handle, platforms[i].option);
 
 		//size_t count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, insn);
 		size_t count = cs_disasm_dyn(handle, platforms[i].code, platforms[i].size, address, 0, &insn);

@@ -70,10 +70,8 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 
 	switch (ud->arch) {
 		case CS_ARCH_X86:
-			if (ud->mode & CS_MODE_SYNTAX_ATT)
-				ud->printer = X86_ATT_printInst;
-			else
-				ud->printer = X86_Intel_printInst;
+			// by default, we use Intel syntax
+			ud->printer = X86_Intel_printInst;
 			ud->printer_info = NULL;
 			ud->disasm = X86_getInstruction;
 			ud->reg_name = X86_reg_name;
@@ -196,6 +194,21 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 
 	strncpy(insn->mnemonic, buffer, sizeof(insn->mnemonic) - 1);
 	insn->mnemonic[sizeof(insn->mnemonic) - 1] = '\0';
+}
+
+cs_err cs_option(csh ud, unsigned int option)
+{
+	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
+	if (!handle)
+		return CS_ERR_CSH;
+
+	if (option & CS_OPT_X86_INTEL)
+		handle->printer = X86_Intel_printInst;
+
+	if (option & CS_OPT_X86_ATT)
+		handle->printer = X86_ATT_printInst;
+
+	return CS_ERR_OK;
 }
 
 size_t cs_disasm(csh ud, unsigned char *buffer, size_t size, uint64_t offset, size_t count, cs_insn *insn)
