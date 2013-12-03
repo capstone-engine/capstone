@@ -2,7 +2,7 @@
 
 from distutils.core import setup
 
-VERSION = '0.9'
+VERSION = '1.0'
 
 setup(
     provides     = ['capstone'],
