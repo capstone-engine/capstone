@@ -213,6 +213,8 @@ public class Capstone {
   public static final int CS_MODE_32 = 1 << 2;
   public static final int CS_MODE_64 = 1 << 3;
   public static final int CS_MODE_THUMB = 1 << 4;	      // ARM's Thumb mode, including Thumb-2
+  public static final int CS_MODE_MICRO = 1 << 4;	      // MicroMips mode (Mips arch)
+  public static final int CS_MODE_N64 = 1 << 5;	      // Nintendo-64 mode (Mips arch)
   public static final int CS_MODE_SYNTAX_ATT = 1 << 30;	// X86 ATT asm syntax (applicable for CS_ARCH_INTEL only)
   public static final int CS_MODE_BIG_ENDIAN = 1 << 31;
 

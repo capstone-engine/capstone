@@ -84,7 +84,7 @@ public class Arm {
 
     public Operand [] op;
 
-    public UnionOpInfo(){
+    public UnionOpInfo() {
       op = new Operand[20];
     }
 
