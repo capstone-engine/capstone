@@ -32,5 +32,5 @@ jna:
 	@if [ ! $(JNA) ]; then echo "*** Unable to find JNA ***"; exit 1; fi
 
 clean:
-	rm -rf capstone/*_const.java capstone/*.class
+	rm -rf capstone/*.class
 	rm -rf *.class *.log *.jar
