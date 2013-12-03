@@ -149,11 +149,11 @@ static void test()
 
 			for (j = 0; j < count; j++) {
 				printf("0x%"PRIx64":\t%s\t\t%s\n",
-						(uint64_t)insn[j].address, insn[j].mnemonic, insn[j].op_str);
+						insn[j].address, insn[j].mnemonic, insn[j].op_str);
 			}
 
 			// print out the next offset, after the last insn
-			printf("0x%"PRIx64":\n", (uint64_t)insn[j-1].address + insn[j-1].size);
+			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
 
 			// free memory allocated by cs_disasm_dyn()
 			cs_free(insn);

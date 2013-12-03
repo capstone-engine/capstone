@@ -152,7 +152,7 @@ static void test()
 			for (j = 0; j < count; j++) {
 				cs_insn *i = &(all_insn[j]);
 				printf("0x%"PRIx64":\t%s\t\t%s // insn-ID: %u, insn-mnem: %s\n",
-						(uint64_t)i->address, i->mnemonic, i->op_str,
+						i->address, i->mnemonic, i->op_str,
 						i->id, cs_insn_name(handle, i->id));
 
 				// print implicit registers used by this instruction
@@ -184,7 +184,7 @@ static void test()
 			}
 
 			// print out the next offset, after the last insn
-			printf("0x%"PRIx64":\n", (uint64_t)all_insn[j-1].address + all_insn[j-1].size);
+			printf("0x%"PRIx64":\n", all_insn[j-1].address + all_insn[j-1].size);
 
 			// free memory allocated by cs_disasm_dyn()
 			cs_free(all_insn);
