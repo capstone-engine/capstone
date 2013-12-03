@@ -202,11 +202,18 @@ cs_err cs_option(csh ud, unsigned int option)
 	if (!handle)
 		return CS_ERR_CSH;
 
-	if (option & CS_OPT_X86_INTEL)
-		handle->printer = X86_Intel_printInst;
+	switch (handle->arch) {
+		default:
+			break;
+		case CS_ARCH_X86:
+			if (option & CS_OPT_X86_INTEL)
+				handle->printer = X86_Intel_printInst;
 
-	if (option & CS_OPT_X86_ATT)
-		handle->printer = X86_ATT_printInst;
+			if (option & CS_OPT_X86_ATT)
+				handle->printer = X86_ATT_printInst;
+
+			break;
+	}
 
 	return CS_ERR_OK;
 }
