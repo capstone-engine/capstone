@@ -72,7 +72,17 @@ archive: $(LIBOBJ)
 	$(AR) q lib$(LIBNAME).$(AR_EXT) $(LIBOBJ)
 	$(RANLIB) lib$(LIBNAME).$(AR_EXT)
 
-install: archive lib
+PC=capstone.pc
+VERSION=$(shell echo `grep -e MAJOR -e MINOR cs.c|grep -v =| awk '{print $$3}'` | awk '{print $$1"."$$2}')
+
+capstone.pc: lib$(LIBNAME).$(AR_EXT)
+	echo Name: capstone > $(PC)
+	echo Description: Capstone disassembler engine >> $(PC)
+	echo Version: $(VERSION) >> $(PC)
+	echo Libs: $(PREFIX)/lib/libcapstone.a >> $(PC)
+	echo Cflags: -I$(PREFIX)/include/capstone >> $(PC)
+
+install: capstone.pc archive lib
 	mkdir -p $(LIBDIR)
 	$(INSTALL_LIBRARY) lib$(LIBNAME).$(EXT) $(LIBDIR)
 	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
@@ -82,11 +92,14 @@ install: archive lib
 	$(INSTALL_DATA) include/arm.h $(INCDIR)/$(LIBNAME)
 	$(INSTALL_DATA) include/arm64.h $(INCDIR)/$(LIBNAME)
 	$(INSTALL_DATA) include/mips.h $(INCDIR)/$(LIBNAME)
+	mkdir -p $(LIBDIR)/pkgconfig
+	$(INSTALL_DATA) $(LIBNAME).pc $(LIBDIR)/pkgconfig/
 
 uninstall:
 	rm -rf $(INCDIR)/$(LIBNAME)
 	rm -f $(LIBDIR)/lib$(LIBNAME).$(EXT)
 	rm -f $(LIBDIR)/lib$(LIBNAME).$(AR_EXT)
+	rm -f $(LIBDIR)/pkgconfig/$(LIBNAME).pc
 
 clean:
 	rm -f $(LIBOBJ) lib$(LIBNAME).*
