@@ -148,6 +148,8 @@ cs_err cs_errno(csh handle);
  @count: number of instrutions to be disassembled, or 0 to get all of them
  @return: the number of succesfully disassembled instructions,
  or 0 if this function failed to disassemble the given code
+
+ On failure, call cs_errno() for error code.
 */
 size_t cs_disasm(csh handle,
 		unsigned char *code, size_t code_size,
@@ -172,6 +174,8 @@ size_t cs_disasm(csh handle,
  @count: number of instrutions to be disassembled, or 0 to get all of them
  @return: the number of succesfully disassembled instructions,
  or 0 if this function failed to disassemble the given code
+
+ On failure, call cs_errno() for error code.
 */
 size_t cs_disasm_dyn(csh handle,
 		unsigned char *code, size_t code_size,
