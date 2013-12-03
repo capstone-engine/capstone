@@ -12,9 +12,9 @@
 void Mips_init(MCRegisterInfo *MRI);
 
 bool Mips_getInstruction(csh handle, unsigned char *code, size_t code_len,
-		MCInst *instr, uint16_t *size, size_t address, void *info);
+		MCInst *instr, uint16_t *size, uint64_t address, void *info);
 
 bool Mips64_getInstruction(csh handle, unsigned char *code, size_t code_len,
-		MCInst *instr, uint16_t *size, size_t address, void *info);
+		MCInst *instr, uint16_t *size, uint64_t address, void *info);
 
 #endif
