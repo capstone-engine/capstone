@@ -116,37 +116,6 @@ public class Test {
       for (int i = 0; i < all_insn.length; i++) {
         System.out.println(String.format("0x%x: \t%s\t%s", all_insn[i].address,
               all_insn[i].mnemonic, all_insn[i].operands));
-
-        /*
-        if (all_insn[i].regs_read[0] != 0) {
-          System.out.print("\tRegister read: ");
-          for(int k = 0; k < all_insn[i].regs_read.length; k++) {
-            if (all_insn[i].regs_read[k] == 0)
-              break;
-            System.out.print(String.format("%d ", all_insn[i].regs_read[k]));
-          }
-          System.out.println();
-        }
-
-        if (all_insn[i].regs_write[0] != 0) {
-          System.out.print("\tRegister written: ");
-          for(int k = 0; k < all_insn[i].regs_write.length; k++) {
-            if (all_insn[i].regs_write[k] == 0)
-              break;
-            System.out.print(String.format("%d ", all_insn[i].regs_write[k]));
-          }
-          System.out.println();
-        }
-
-        if (all_insn[i].groups[0] != 0) {
-          System.out.print("\tThis instruction belongs to group: ");
-          for(int k = 0; k < all_insn[i].groups.length; k++) {
-            if (all_insn[i].groups[k] == 0)
-              break;
-            System.out.print(String.format("%d ", all_insn[i].groups[k]));
-          }
-          System.out.println();
-        }*/
       }
       System.out.printf("0x%x:\n\n", all_insn[all_insn.length-1].address + all_insn[all_insn.length-1].size);
     }
