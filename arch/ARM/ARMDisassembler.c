@@ -416,7 +416,7 @@ void ARM_init(MCRegisterInfo *MRI)
 }
 
 static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, unsigned char *code, size_t code_len,
-		uint16_t *Size, size_t Address)
+		uint16_t *Size, uint64_t Address)
 {
 	uint8_t bytes[4];
 
@@ -638,7 +638,7 @@ static void UpdateThumbVFPPredicate(cs_struct *ud, MCInst *MI)
 }
 
 static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, unsigned char *code, size_t code_len,
-		uint16_t *Size, size_t Address)
+		uint16_t *Size, uint64_t Address)
 {
 	uint8_t bytes[4];
 
@@ -815,7 +815,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, unsigned ch
 }
 
 bool Thumb_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *instr,
-		uint16_t *size, size_t address, void *info)
+		uint16_t *size, uint64_t address, void *info)
 {
 	DecodeStatus status = _Thumb_getInstruction((cs_struct *)ud, instr, code, code_len, size, address);
 
@@ -824,7 +824,7 @@ bool Thumb_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *
 }
 
 bool ARM_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *instr,
-		uint16_t *size, size_t address, void *info)
+		uint16_t *size, uint64_t address, void *info)
 {
 	DecodeStatus status = _ARM_getInstruction((cs_struct *)ud, instr, code, code_len, size, address);
 

@@ -535,7 +535,7 @@ static void update_pub_insn(cs_insn *pub, InternalInstruction *inter)
 }
 
 // Public interface for the disassembler
-bool X86_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *instr, uint16_t *size, size_t address, void *_info)
+bool X86_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *_info)
 {
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 	InternalInstruction insn;
