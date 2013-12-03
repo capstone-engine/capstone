@@ -35,13 +35,16 @@ public class Capstone {
 
   protected static class _cs_insn extends Structure {
     public int id;
-    public NativeLong address;
+    public long address;
     public short size;
     public byte[] mnemonic = new byte[32];
     public byte[] operands = new byte[96];
     public int[] regs_read = new int[32];
+    public int regs_read_count;
     public int[] regs_write = new int[32];
+    public int regs_write_count;
     public int[] groups = new int[8];
+    public int groups_count;
 
     public _cs_insn(Pointer p) {
       mnemonic = new byte[32];
@@ -55,7 +58,10 @@ public class Capstone {
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("id", "address", "size", "mnemonic", "operands", "regs_read", "regs_write", "groups");
+      return Arrays.asList("id", "address", "size", "mnemonic", "operands",
+			  "regs_read", "regs_read_count",
+			  "regs_write", "regs_write_count",
+			  "groups", "groups_count");
     }
   }
 
@@ -78,7 +84,7 @@ public class Capstone {
 
     public cs_insn (_cs_insn struct, Pointer _ptr_origin, NativeLong _csh, CS _cs, OpInfo _op_info) {
       id = struct.id;
-      address = struct.address.longValue();
+      address = struct.address;
       size = struct.size;
       mnemonic = new String(struct.mnemonic).replace("\u0000","");
       operands = new String(struct.operands).replace("\u0000","");
