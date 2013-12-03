@@ -11,6 +11,8 @@ TEST_X86 = $(TMPDIR)/test_x86
 .PHONY: all expected python java ocaml
 
 all:
+	make -C python gen_const
+	make -C java gen_const
 
 tests: expected python java #oclma ruby
 

@@ -1,6 +1,6 @@
 .PHONY: all clean install
 
-all:
+gen_const:
 	cd ..; python const_generator.py python
 
 install:
