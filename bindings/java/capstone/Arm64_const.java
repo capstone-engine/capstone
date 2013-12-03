@@ -641,10 +641,10 @@ public class Arm64_const {
 	public static final int ARM64_INS_SEVL = 363;
 	public static final int ARM64_INS_NGC = 364;
 	public static final int ARM64_INS_NEG = 365;
-	public static final int ARM64_GRP_JUMP = 366;
-	public static final int ARM64_INS_MAX = 367;
+	public static final int ARM64_INS_MAX = 366;
 
 	public static final int ARM64_GRP_INVALID = 0;
 	public static final int ARM64_GRP_NEON = 1;
-	public static final int ARM64_GRP_MAX = 2;
+	public static final int ARM64_GRP_JUMP = 2;
+	public static final int ARM64_GRP_MAX = 3;
 }
