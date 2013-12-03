@@ -38,10 +38,15 @@ typedef enum cs_mode {
 } cs_mode;
 
 // Option type
-typedef enum cs_opt {
-	CS_OPT_X86_INTEL = 1 << 0, // Intel X86 asm syntax (CS_ARCH_X86 arch)
-	CS_OPT_X86_ATT = 1 << 1,   // ATT asm syntax (CS_ARCH_X86 arch)
-} cs_opt;
+typedef enum cs_opt_type {
+	CS_OPT_SYNTAX = 1,	// Asssembly syntax option
+} cs_opt_type;
+
+// Option value
+typedef enum cs_opt_value {
+	CS_OPT_V_INTEL = 1, // X86 Intel asm syntax (CS_OPT_SYNTAX)
+	CS_OPT_V_ATT,   // X86 ATT asm syntax (CS_OPT_SYNTAX)
+} cs_opt_value;
 
 
 #include "arm.h"
@@ -133,12 +138,13 @@ cs_err cs_close(csh handle);
  Set option for disassembling
 
  @handle: handle returned by cs_open()
- @option: option to be set, which can be OR by several cs_opt enums
+ @type: type of option to be set
+ @value: option value for corresponding , which can be OR by several cs_opt enums
 
  @return CS_ERR_OK on success, or other value on failure (refer to cs_err enum
  for detailed error).
 */
-cs_err cs_option(csh handle, unsigned int option);
+cs_err cs_option(csh handle, cs_opt_type type, cs_opt_value value);
 
 /*
  Report the last error number when some API function fail.

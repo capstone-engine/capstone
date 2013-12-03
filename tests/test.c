@@ -13,7 +13,8 @@ struct platform {
 	unsigned char *code;
 	size_t size;
 	char *comment;
-	cs_opt option;
+	cs_opt_type opt_type;
+	cs_opt_value opt_value;
 };
 
 static void print_string_hex(unsigned char *str, int len)
@@ -59,7 +60,8 @@ static void test()
 			.code = (unsigned char*)X86_CODE32,
 			.size = sizeof(X86_CODE32) - 1,
 			.comment = "X86 32bit (ATT syntax)",
-			.option = CS_OPT_X86_ATT,
+			.opt_type = CS_OPT_SYNTAX,
+			.opt_value = CS_OPT_V_ATT,
 		},
 		{
 			.arch = CS_ARCH_X86,
@@ -139,8 +141,8 @@ static void test()
 			return;
 		}
 
-		if (platforms[i].option)
-			cs_option(handle, platforms[i].option);
+		if (platforms[i].opt_type)
+			cs_option(handle, platforms[i].opt_type, platforms[i].opt_value);
 
 		//size_t count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, insn);
 		size_t count = cs_disasm_dyn(handle, platforms[i].code, platforms[i].size, address, 0, &insn);

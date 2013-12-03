@@ -196,7 +196,7 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 	insn->mnemonic[sizeof(insn->mnemonic) - 1] = '\0';
 }
 
-cs_err cs_option(csh ud, unsigned int option)
+cs_err cs_option(csh ud, cs_opt_type type, cs_opt_value value)
 {
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 	if (!handle)
@@ -206,12 +206,18 @@ cs_err cs_option(csh ud, unsigned int option)
 		default:
 			break;
 		case CS_ARCH_X86:
-			if (option & CS_OPT_X86_INTEL)
-				handle->printer = X86_Intel_printInst;
-
-			if (option & CS_OPT_X86_ATT)
-				handle->printer = X86_ATT_printInst;
-
+			if (type & CS_OPT_SYNTAX) {
+				switch(value) {
+					default:
+						break;
+					case CS_OPT_V_INTEL:
+						handle->printer = X86_Intel_printInst;
+						break;
+					case CS_OPT_V_ATT:
+						handle->printer = X86_ATT_printInst;
+						break;
+				}
+			}
 			break;
 	}
 
