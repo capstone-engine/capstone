@@ -108,6 +108,7 @@ static void test()
 //#define X86_CODE32 "\xb4\xc6"	// mov	ah, 0x6c
 //#define X86_CODE32 "\x77\x04"	// ja +6
 #define X86_CODE64 "\x55\x48\x8b\x05\xb8\x13\x00\x00"
+//#define X86_CODE64 "\xe9\x79\xff\xff\xff"	// jmp 0xf7e
 
 #define X86_CODE16 "\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x05\x23\x01\x00\x00\x36\x8b\x84\x91\x23\x01\x00\x00\x41\x8d\x84\x39\x89\x67\x00\x00\x8d\x87\x89\x67\x00\x00\xb4\xc6"
 //#define X86_CODE16 "\x67\x00\x18"
@@ -117,7 +118,6 @@ static void test()
 //#define X86_CODE32 "\xd1\xe1"	// shl ecx, 1
 //#define X86_CODE32 "\xd1\xc8"	// ror eax, 1
 //#define X86_CODE32 "\xcd\x80"		// int 0x80
-//#define X86_CODE32 "\x24\xb8"		// int 0x80
 //#define X86_CODE32 "\x83\xC0\x80"	// add	eax, -x80
 //#define X86_CODE32 "\x24\xb8"		// and    $0xb8,%al
 

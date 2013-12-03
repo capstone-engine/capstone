@@ -86,6 +86,29 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 {
 	OperandType type = (OperandType)operand->type;
 
+	if (type == TYPE_RELv) {
+		//isBranch = true;
+		//pcrel = insn->startLocation + insn->immediateOffset + insn->immediateSize;
+		switch (insn->displacementSize) {
+			case 1:
+				if (immediate & 0x80)
+					immediate |= ~(0xffull);
+				break;
+			case 2:
+				if (immediate & 0x8000)
+					immediate |= ~(0xffffull);
+				break;
+			case 4:
+				if (immediate & 0x80000000)
+					immediate |= ~(0xffffffffull);
+				break;
+			case 8:
+				break;
+			default:
+				break;
+		}
+	}
+
 	switch (type) {
 		case TYPE_XMM32:
 		case TYPE_XMM64:
