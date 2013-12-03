@@ -706,7 +706,6 @@ typedef enum arm64_insn {
 	ARM64_INS_NGC,
 	ARM64_INS_NEG,
 
-	ARM64_GRP_JUMP,	// jump insn (including conditional+direct+indirect jumps)
 	ARM64_INS_MAX,
 } arm64_insn;
 
@@ -714,6 +713,9 @@ typedef enum arm64_insn {
 typedef enum arm64_insn_group {
 	ARM64_GRP_INVALID = 0,
 	ARM64_GRP_NEON,
+
+	ARM64_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
+
 	ARM64_GRP_MAX,
 } arm64_insn_group;
 

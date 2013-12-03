@@ -1431,7 +1431,8 @@ typedef enum  x86_insn_group {
 	X86_GRP_ERI,
 	X86_GRP_TBM,
 
-	X86_GRP_JUMP,	// jump insn (including conditional+direct+indirect jumps)
+	X86_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
+
 	X86_GRP_MAX
 } x86_insn_group;
 

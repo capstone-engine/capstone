@@ -671,7 +671,8 @@ typedef enum arm_insn_group {
 	ARM_GRP_DPVFP,
 	ARM_GRP_V6M,
 
-	ARM_GRP_JUMP,	// jump insn (including conditional+direct+indirect jumps)
+	ARM_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
+
 	ARM_GRP_MAX,
 } arm_insn_group;
 
