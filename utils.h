@@ -41,6 +41,10 @@ int name2id(name_map* map, int max, char *name);
 // return 0 if not found
 unsigned int insn_reverse_id(insn_map *insns, unsigned int max, unsigned int id);
 
+// count number of positive members in a list.
+// NOTE: list must be guaranteed to end in 0
+unsigned int count_positive(unsigned int *list);
+
 #define ARR_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
 #endif

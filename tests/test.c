@@ -185,8 +185,11 @@ int main()
 	printf("@mnemonic: %u\n", offsetof(cs_insn, mnemonic));
 	printf("@op_str: %u\n", offsetof(cs_insn, op_str));
 	printf("@regs_read: %u\n", offsetof(cs_insn, regs_read));
+	printf("@regs_read_count: %u\n", offsetof(cs_insn, regs_read_count));
 	printf("@regs_write: %u\n", offsetof(cs_insn, regs_write));
+	printf("@regs_write_count: %u\n", offsetof(cs_insn, regs_write_count));
 	printf("@groups: %u\n", offsetof(cs_insn, groups));
+	printf("@groups_count: %u\n", offsetof(cs_insn, groups_count));
 	printf("@arch: %u\n", offsetof(cs_insn, x86));
 #endif
 

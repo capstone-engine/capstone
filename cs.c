@@ -29,7 +29,7 @@
 #include "utils.h"
 
 #define VERSION_MAJOR 1
-#define VERSION_MINOR 3
+#define VERSION_MINOR 4
 
 cs_err cs_errno(csh handle)
 {
@@ -366,7 +366,7 @@ bool cs_insn_group(csh handle, cs_insn *insn, unsigned int group_id)
 	if (!handle)
 		return false;
 
-	return arr_exist(insn->groups, ARR_SIZE(insn->groups), group_id);
+	return arr_exist(insn->groups, insn->groups_count, group_id);
 }
 
 bool cs_reg_read(csh handle, cs_insn *insn, unsigned int reg_id)
@@ -374,7 +374,7 @@ bool cs_reg_read(csh handle, cs_insn *insn, unsigned int reg_id)
 	if (!handle)
 		return false;
 
-	return arr_exist(insn->regs_read, ARR_SIZE(insn->regs_read), reg_id);
+	return arr_exist(insn->regs_read, insn->regs_read_count, reg_id);
 }
 
 bool cs_reg_write(csh handle, cs_insn *insn, unsigned int reg_id)
@@ -382,7 +382,7 @@ bool cs_reg_write(csh handle, cs_insn *insn, unsigned int reg_id)
 	if (!handle)
 		return false;
 
-	return arr_exist(insn->regs_write, ARR_SIZE(insn->regs_write), reg_id);
+	return arr_exist(insn->regs_write, insn->regs_write_count, reg_id);
 }
 
 int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)

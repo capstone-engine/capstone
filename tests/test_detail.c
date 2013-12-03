@@ -156,33 +156,27 @@ static void test()
 						i->id, cs_insn_name(handle, i->id));
 
 				// print implicit registers used by this instruction
-				if (i->regs_read[0] != 0) {
+				if (i->regs_read_count > 0) {
 					printf("\tImplicit registers read: ");
-					for (n = 0; n < 32; n++) {
-						if (i->regs_read[n] == 0)
-							break;
+					for (n = 0; n < i->regs_read_count; n++) {
 						printf("%s ", cs_reg_name(handle, i->regs_read[n]));
 					}
 					printf("\n");
 				}
 
 				// print implicit registers modified by this instruction
-				if (i->regs_write[0] != 0) {
+				if (i->regs_write_count > 0) {
 					printf("\tImplicit registers modified: ");
-					for (n = 0; n < 32; n++) {
-						if (i->regs_write[n] == 0)
-							break;
+					for (n = 0; n < i->regs_write_count; n++) {
 						printf("%s ", cs_reg_name(handle, i->regs_write[n]));
 					}
 					printf("\n");
 				}
 
 				// print the groups this instruction belong to
-				if (i->groups[0] != 0) {
+				if (i->groups_count > 0) {
 					printf("\tThis instruction belongs to groups: ");
-					for (n = 0; n < 8; n++) {
-						if (i->groups[n] == 0)
-							break;
+					for (n = 0; n < i->groups_count; n++) {
 						printf("%u ", i->groups[n]);
 					}
 					printf("\n");

@@ -2302,20 +2302,24 @@ void ARM_get_insn_id(cs_insn *insn, unsigned int id)
 	int i = insn_find(insns, ARR_SIZE(insns), id);
 	if (i != -1) {
 		insn->id = insns[i].mapid;
+
 		memcpy(insn->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
+		insn->regs_read_count = count_positive(insns[i].regs_use);
+
 		memcpy(insn->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
+		insn->regs_write_count = count_positive(insns[i].regs_mod);
+
 		memcpy(insn->groups, insns[i].groups, sizeof(insns[i].groups));
+		insn->groups_count = count_positive(insns[i].groups);
+
+		// call cs_reg_write() with handle = 1 to bypass handle check
+		// we only need to find if this insn modifies ARM64_REG_NZCV
 		insn->arm.update_flags = cs_reg_write(1, insn, ARM_REG_CPSR);
 
 		if (insns[i].branch || insns[i].indirect_branch) {
-			// this insn also belongs to JUMP group
-			int j;
-			for (j = 0; j < ARR_SIZE(insns[i].groups); j++) {
-				if (insn->groups[j] == 0) {
-					insn->groups[j] = ARM_GRP_JUMP;
-					break;
-				}
-			}
+			// this insn also belongs to JUMP group. add JUMP group
+			insn->groups[insn->groups_count] = ARM_GRP_JUMP;
+			insn->groups_count++;
 		}
 	}
 }

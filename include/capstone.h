@@ -64,8 +64,13 @@ typedef struct cs_insn {
 	char op_str[96];
 
 	unsigned int regs_read[32]; // list of implicit registers read by this instruction
+	unsigned int regs_read_count; // number of implicit registers read by this insn
+
 	unsigned int regs_write[32]; // list of implicit registers modified by this instruction
+	unsigned int regs_write_count; // number of implicit registers modified by this insn
+
 	unsigned int groups[8]; // list of group this instruction belong to
+	unsigned int groups_count; // number of groups this insn belongs to
 
 	// Architecture-specific instruction info
 	union {
