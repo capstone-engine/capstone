@@ -146,7 +146,7 @@ static void test()
 		},
 	};
 
-	size_t address = 0x2c;
+	uint64_t address = 0x2c;
 	//cs_insn insn[16];
 	cs_insn *insn;
 	int i;

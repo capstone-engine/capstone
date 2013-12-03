@@ -130,7 +130,7 @@ static void test()
 	};
 
 	csh handle;
-	size_t address = 0x1000;
+	uint64_t address = 0x1000;
 	//cs_insn all_insn[16];
 	cs_insn *all_insn;
 	int i;
