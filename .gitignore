@@ -34,3 +34,5 @@ tests/test_x86
 
 # vim tmp file
 *.swp
+
+capstone.pc
