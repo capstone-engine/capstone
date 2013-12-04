@@ -36,3 +36,4 @@ Edgar Barbosa
 Ralf-Philipp Weinmann
 Hugo Fortier
 Joxean Koret
+Bruce Dang
