@@ -11,6 +11,7 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
+//> ARM shift type
 typedef enum arm_shifter {
 	ARM_SFT_INVALID = 0,
 	ARM_SFT_ASR,	// shift with immediate const
@@ -25,7 +26,7 @@ typedef enum arm_shifter {
 	ARM_SFT_RRX_REG,	// shift with register
 } arm_shifter;
 
-// ARM condition code
+//> ARM condition code
 typedef enum arm_cc {
 	ARM_CC_INVALID = 0,
 	ARM_CC_EQ,            // Equal                      Equal
@@ -45,7 +46,7 @@ typedef enum arm_cc {
 	ARM_CC_AL             // Always (unconditional)     Always (unconditional)
 } arm_cc;
 
-// Operand type for instruction's operands
+//> Operand type for instruction's operands
 typedef enum arm_op_type {
 	ARM_OP_INVALID = 0,	// Uninitialized.
 	ARM_OP_REG,	// Register operand.
@@ -93,7 +94,7 @@ typedef struct cs_arm {
 	cs_arm_op operands[20];	// operands for this instruction.
 } cs_arm;
 
-// ARM registers
+//> ARM registers
 typedef enum arm_reg {
 	ARM_REG_INVALID = 0,
 	ARM_REG_APSR,
@@ -215,7 +216,7 @@ typedef enum arm_reg {
 	ARM_REG_R15 = ARM_REG_PC,
 } arm_reg;
 
-// ARM instruction
+//> ARM instruction
 typedef enum arm_insn {
 	ARM_INS_INVALID = 0,
 	ARM_INS_ADC,
@@ -642,7 +643,7 @@ typedef enum arm_insn {
 	ARM_INS_MAX,
 } arm_insn;
 
-// group of ARM instructions
+//> Group of ARM instructions
 typedef enum arm_insn_group {
 	ARM_GRP_INVALID = 0,
 	ARM_GRP_CRYPTO,

@@ -18,6 +18,8 @@ template = {
             'arm64.h': 'Arm64',
             'mips.h': 'Mips',
             'x86.h': 'X86',
+            'comment_open': '\t//',
+            'comment_close': '',
         },
     'python': {
             'header': "# For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [%s_const.py]\n",
@@ -29,8 +31,13 @@ template = {
             'arm64.h': 'arm64',
             'mips.h': 'mips',
             'x86.h': 'x86',
+            'comment_open': '#',
+            'comment_close': '',
         }
 }
+
+# markup for comments to be added to autogen files
+MARKUP = '//>'
 
 def gen(templ):
     global include, INCL_DIR
@@ -44,8 +51,15 @@ def gen(templ):
         count = 0
         for line in lines:
             line = line.strip()
+
+            if line.startswith(MARKUP):  # markup for comments
+                outfile.write("%s%s%s" %(templ['comment_open'], \
+                            line.replace(MARKUP, ''), templ['comment_close']))
+                continue
+
             if line == '' or line.startswith('//'):
                 continue
+
             if not line.startswith(prefix.upper()):
                 continue
 

@@ -11,6 +11,7 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
+//> ARM64 shift type
 typedef enum arm64_shifter {
 	ARM64_SFT_INVALID = 0,
 	ARM64_SFT_LSL = 1,
@@ -20,6 +21,7 @@ typedef enum arm64_shifter {
 	ARM64_SFT_ROR = 5,
 } arm64_shifter;
 
+//> ARM64 extender type
 typedef enum arm64_extender {
 	ARM64_EXT_INVALID = 0,
 	ARM64_EXT_UXTB = 1,
@@ -32,7 +34,7 @@ typedef enum arm64_extender {
 	ARM64_EXT_SXTX = 8,
 } arm64_extender;
 
-// ARM64 condition code
+//> ARM64 condition code
 typedef enum arm64_cc {
 	ARM64_CC_INVALID = 0,
 	ARM64_CC_EQ = 1,     // Equal
@@ -55,7 +57,7 @@ typedef enum arm64_cc {
 	// is "always".
 } arm64_cc;
 
-// Operand type for instruction's operands
+//> Operand type for instruction's operands
 typedef enum arm64_op_type {
 	ARM64_OP_INVALID = 0,	// Uninitialized.
 	ARM64_OP_REG,	// Register operand.
@@ -102,7 +104,7 @@ typedef struct cs_arm64 {
 	cs_arm64_op operands[8]; // operands for this instruction.
 } cs_arm64;
 
-// ARM64 registers
+//> ARM64 registers
 typedef enum arm64_reg {
 	ARM64_REG_INVALID = 0,
 	ARM64_REG_NZCV = 1,
@@ -336,7 +338,7 @@ typedef enum arm64_reg {
 	ARM64_REG_MAX = 228,		// <-- mark the end of the list of registers
 } arm64_reg;
 
-// ARM64 instruction
+//> ARM64 instruction
 typedef enum arm64_insn {
 	ARM64_INS_INVALID = 0,
 	ARM64_INS_ADC,
@@ -710,7 +712,7 @@ typedef enum arm64_insn {
 	ARM64_INS_MAX,
 } arm64_insn;
 
-// group of ARM64 instructions
+//> Group of ARM64 instructions
 typedef enum arm64_insn_group {
 	ARM64_GRP_INVALID = 0,
 	ARM64_GRP_NEON,

@@ -13,6 +13,7 @@ extern "C" {
 // Calculate relative address for X86-64, given cs_insn structure
 #define X86_REL_ADDR(insn) (insn.addr + insn.size + insn.x86.disp)
 
+//> X86 registers
 typedef enum x86_reg {
 	X86_REG_INVALID = 0,
 	X86_REG_AH, X86_REG_AL, X86_REG_AX, X86_REG_BH, X86_REG_BL,
@@ -66,7 +67,7 @@ typedef enum x86_reg {
 	X86_REG_MAX		// <-- mark the end of the list of registers
 } x86_reg;
 
-// Operand type for instruction's operands
+//> Operand type for instruction's operands
 typedef enum x86_op_type {
 	X86_OP_INVALID = 0,	// Uninitialized.
 	X86_OP_REG,	// Register operand.
@@ -147,6 +148,7 @@ typedef struct cs_x86 {
 	cs_x86_op operands[8];	// operands for this instruction.
 } cs_x86;
 
+//> X86 instructions
 typedef enum  x86_insn {
 	X86_INS_INVALID = 0,
 	X86_INS_AAA = 1,
@@ -1397,7 +1399,7 @@ typedef enum  x86_insn {
 	X86_INS_MAX,
 } x86_insn;
 
-// group of X86 instructions
+//> Group of X86 instructions
 typedef enum  x86_insn_group {
 	X86_GRP_INVALID = 0,
 	X86_GRP_3DNOW,

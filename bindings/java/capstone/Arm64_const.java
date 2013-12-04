@@ -2,14 +2,14 @@
 package capstone;
 
 public class Arm64_const {
-
+	// ARM64 shift type
 	public static final int ARM64_SFT_INVALID = 0;
 	public static final int ARM64_SFT_LSL = 1;
 	public static final int ARM64_SFT_MSL = 2;
 	public static final int ARM64_SFT_LSR = 3;
 	public static final int ARM64_SFT_ASR = 4;
 	public static final int ARM64_SFT_ROR = 5;
-
+	// ARM64 extender type
 	public static final int ARM64_EXT_INVALID = 0;
 	public static final int ARM64_EXT_UXTB = 1;
 	public static final int ARM64_EXT_UXTH = 2;
@@ -19,7 +19,7 @@ public class Arm64_const {
 	public static final int ARM64_EXT_SXTH = 6;
 	public static final int ARM64_EXT_SXTW = 7;
 	public static final int ARM64_EXT_SXTX = 8;
-
+	// ARM64 condition code
 	public static final int ARM64_CC_INVALID = 0;
 	public static final int ARM64_CC_EQ = 1;
 	public static final int ARM64_CC_NE = 2;
@@ -37,14 +37,14 @@ public class Arm64_const {
 	public static final int ARM64_CC_LE = 14;
 	public static final int ARM64_CC_AL = 15;
 	public static final int ARM64_CC_NV = 16;
-
+	// Operand type for instruction's operands
 	public static final int ARM64_OP_INVALID = 0;
 	public static final int ARM64_OP_REG = 1;
 	public static final int ARM64_OP_CIMM = 2;
 	public static final int ARM64_OP_IMM = 3;
 	public static final int ARM64_OP_FP = 4;
 	public static final int ARM64_OP_MEM = 5;
-
+	// ARM64 registers
 	public static final int ARM64_REG_INVALID = 0;
 	public static final int ARM64_REG_NZCV = 1;
 	public static final int ARM64_REG_WSP = 2;
@@ -274,7 +274,7 @@ public class Arm64_const {
 	public static final int ARM64_REG_X29 = 226;
 	public static final int ARM64_REG_X30 = 227;
 	public static final int ARM64_REG_MAX = 228;
-
+	// ARM64 instruction
 	public static final int ARM64_INS_INVALID = 0;
 	public static final int ARM64_INS_ADC = 1;
 	public static final int ARM64_INS_ADDHN2 = 2;
@@ -642,7 +642,7 @@ public class Arm64_const {
 	public static final int ARM64_INS_NGC = 364;
 	public static final int ARM64_INS_NEG = 365;
 	public static final int ARM64_INS_MAX = 366;
-
+	// Group of ARM64 instructions
 	public static final int ARM64_GRP_INVALID = 0;
 	public static final int ARM64_GRP_NEON = 1;
 	public static final int ARM64_GRP_JUMP = 2;

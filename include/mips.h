@@ -11,7 +11,7 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
-// Operand type for instruction's operands
+//> Operand type for instruction's operands
 typedef enum mips_op_type {
 	MIPS_OP_INVALID = 0,	// Uninitialized.
 	MIPS_OP_REG,	// Register operand.
@@ -44,7 +44,7 @@ typedef struct cs_mips {
 	cs_mips_op operands[8]; // operands for this instruction.
 } cs_mips;
 
-// MIPS registers
+//> MIPS registers
 typedef enum mips_reg {
 	MIPS_REG_INVALID = 0,
 	// General purpose registers
@@ -224,7 +224,7 @@ typedef enum mips_reg {
 	MIPS_REG_LO3 = MIPS_REG_HI3,
 } mips_reg;
 
-// MIPS instruction
+//> MIPS instruction
 typedef enum mips_insn {
 	MIPS_INS_INVALID = 0,
 	MIPS_INS_ABSQ_S = 1,
@@ -688,7 +688,7 @@ typedef enum mips_insn {
 	MIPS_INS_MAX,
 } mips_insn;
 
-// group of MIPS instructions
+//> Group of MIPS instructions
 typedef enum mips_insn_group {
 	MIPS_GRP_INVALID = 0,
 	MIPS_GRP_BITCOUNT,
