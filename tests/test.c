@@ -179,7 +179,7 @@ static void test()
 
 int main()
 {
-	test();
+  test();
 
 #if 0
 	#define offsetof(type, member) (int)(&((type *)0)->member)
