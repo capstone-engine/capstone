@@ -626,8 +626,8 @@ public class Mips_const {
 	public static final int MIPS_INS_WSBH = 452;
 	public static final int MIPS_INS_XOR = 453;
 	public static final int MIPS_INS_XORI = 454;
-	public static final int MIPS_INS_NOP = 1;
-	public static final int MIPS_INS_MAX = 2;
+	public static final int MIPS_INS_NOP = 455;
+	public static final int MIPS_INS_MAX = 456;
 
 	public static final int MIPS_GRP_INVALID = 0;
 	public static final int MIPS_GRP_BITCOUNT = 1;
