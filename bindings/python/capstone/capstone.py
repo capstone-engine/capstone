@@ -178,10 +178,11 @@ def cs_disasm_quick(arch, mode, code, offset, count = 0):
     if res > 0:
         for i in xrange(res):
             yield all_insn[i]
+
+        _cs.cs_free(all_insn)
     else:
         yield []
 
-        _cs.cs_free(all_insn)
     _cs.cs_close(csh)
 
 
