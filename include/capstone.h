@@ -36,7 +36,6 @@ typedef enum cs_mode {
 	CS_MODE_THUMB = 1 << 4,	// ARM's Thumb mode, including Thumb-2
 	CS_MODE_MICRO = 1 << 4, // MicroMips mode (MIPS architecture)
 	CS_MODE_N64 = 1 << 5, // Nintendo-64 mode (MIPS architecture)
-  CS_MODE_SKIP_ERROR = 1 << 6, // continue disassembling after errors
 	CS_MODE_SYNTAX_ATT = 1 << 30,	// ATT asm syntax (CS_ARCH_X86 architecture)
 
 	CS_MODE_BIG_ENDIAN = 1 << 31	// big endian mode

@@ -266,8 +266,7 @@ class cs:
         res = _cs.cs_disasm_dyn(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
         if res > 0:
             for i in xrange(res):
-                insn = cs_insn(self.csh, all_insn[i], self.arch)
-                yield insn
+                yield cs_insn(self.csh, all_insn[i], self.arch)
             _cs.cs_free(all_insn)
         else:
             yield []
