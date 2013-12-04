@@ -128,6 +128,7 @@ class _cs_insn(ctypes.Structure):
         ('regs_write_count', ctypes.c_uint),
         ('groups', ctypes.c_uint * 8),
         ('groups_count', ctypes.c_uint),
+        ('hex_code', ctypes.c_ubyte * 15), 
         ('arch', _cs_arch),
     )
 
@@ -188,6 +189,7 @@ class cs_insn:
         self.regs_read = all_info.regs_read[:all_info.regs_read_count]
         self.regs_write = all_info.regs_write[:all_info.regs_write_count]
         self.groups = all_info.groups[:all_info.groups_count]
+        self.hex_code = bytearray(all_info.hex_code)[:self.size]
 
         if arch == CS_ARCH_ARM:
             (self.cc, self.update_flags, self.writeback, self.operands) = \
@@ -205,7 +207,6 @@ class cs_insn:
         # save original insn for later use
         self.raw_insn = all_info
         self.csh = csh
-
 
     def errno():
         return _cs.cs_errno(self.csh)
@@ -245,7 +246,6 @@ class cs_insn:
             raise ValueError("Error: Failed to initialize!")
         return _cs.cs_op_index(self.csh, self.raw_insn, op_type, position)
 
-
 class cs:
     def __init__(self, arch, mode):
         self.arch, self.mode = arch, mode
@@ -266,8 +266,8 @@ class cs:
         res = _cs.cs_disasm_dyn(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
         if res > 0:
             for i in xrange(res):
-                yield cs_insn(self.csh, all_insn[i], self.arch)
-
+                insn = cs_insn(self.csh, all_insn[i], self.arch)
+                yield insn
             _cs.cs_free(all_insn)
         else:
             yield []

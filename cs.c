@@ -170,7 +170,7 @@ cs_err cs_close(csh handle)
 
 // fill insn with mnemonic & operands info
 static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mci,
-		PostPrinter_t printer)
+		PostPrinter_t printer, unsigned char *code)
 {
 	memcpy(insn, &mci->pub_insn, sizeof(*insn));
 
@@ -196,6 +196,9 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 
 	strncpy(insn->mnemonic, buffer, sizeof(insn->mnemonic) - 1);
 	insn->mnemonic[sizeof(insn->mnemonic) - 1] = '\0';
+  
+  // fill the instruction bytes
+  memcpy(insn->hex_code, code, MIN(sizeof(insn->hex_code), insn->size));
 }
 
 size_t cs_disasm(csh ud, unsigned char *buffer, size_t size, uint64_t offset, size_t count, cs_insn *insn)
@@ -226,7 +229,7 @@ size_t cs_disasm(csh ud, unsigned char *buffer, size_t size, uint64_t offset, si
 			mci.mode = handle->mode;
 			handle->printer(&mci, &ss, handle->printer_info);
 
-			fill_insn(handle, insn, ss.buffer, &mci, handle->post_printer);
+			fill_insn(handle, insn, ss.buffer, &mci, handle->post_printer, buffer);
 
 			c++;
 			insn++;
@@ -238,8 +241,9 @@ size_t cs_disasm(csh ud, unsigned char *buffer, size_t size, uint64_t offset, si
 				if (c == count)
 					return c;
 			}
-		} else	// face a broken instruction?
+		} else	{ // face a broken instruction?
 			return c;
+    }
 	}
 
 	return c;
@@ -278,7 +282,7 @@ size_t cs_disasm_dyn(csh ud, unsigned char *buffer, size_t size, uint64_t offset
 			mci.mode = handle->mode;
 			handle->printer(&mci, &ss, handle->printer_info);
 
-			fill_insn(handle, &insn_cache[f], ss.buffer, &mci, handle->post_printer);
+			fill_insn(handle, &insn_cache[f], ss.buffer, &mci, handle->post_printer, buffer);
 			f++;
 
 			if (f == ARR_SIZE(insn_cache)) {
@@ -304,8 +308,10 @@ size_t cs_disasm_dyn(csh ud, unsigned char *buffer, size_t size, uint64_t offset
 
 			if (count > 0 && c == count)
 				break;
-		} else	// encounter a broken instruction
-			break;
+		} else	{ // encounter a broken instruction
+      // XXX: TODO: JOXEAN continue here
+      break;
+    }
 	}
 
 	if (f) {

@@ -3,6 +3,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 from capstone import *
+import binascii
 
 X86_CODE16 = "\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00"
 X86_CODE32 = "\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00"
@@ -58,7 +59,8 @@ def test_class():
             md = cs(arch, mode)
             all_ins = list(md.disasm(code, 0x1000))
             for insn in all_ins:
-                print("0x%x:\t%s\t%s" %(insn.address, insn.mnemonic, insn.op_str))
+                hex_code = binascii.hexlify(insn.hex_code)
+                print("0x%x:\t%s\t%s\t%s" %(insn.address, insn.mnemonic, insn.op_str, hex_code))
 
             print("0x%x:" % (all_ins[-1].address + all_ins[-1].size))
             print
