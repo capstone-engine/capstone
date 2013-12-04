@@ -65,9 +65,10 @@ def gen(templ):
                         rhs = str(count)
                         count += 1
 
-                    if rhs == '0':
-                        outfile.write("\n")
-                        count = 1
+                    if rhs.isdigit():
+                        count = int(rhs) + 1
+                        if (count == 1):
+                            outfile.write("\n")
 
                     outfile.write(templ['line_format'] %(f[0].strip(), rhs))
 

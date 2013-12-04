@@ -1490,7 +1490,7 @@ public class X86_const {
 	public static final int X86_INS_XSHA256 = 1243;
 	public static final int X86_INS_XSTORE = 1244;
 	public static final int X86_INS_XTEST = 1245;
-	public static final int X86_INS_MAX = 1;
+	public static final int X86_INS_MAX = 1246;
 
 	public static final int X86_GRP_INVALID = 0;
 	public static final int X86_GRP_3DNOW = 1;
