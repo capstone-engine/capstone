@@ -17,7 +17,7 @@ typedef enum arm64_shifter {
 	ARM64_SFT_MSL = 2,
 	ARM64_SFT_LSR = 3,
 	ARM64_SFT_ASR = 4,
-	ARM64_SFT_ROR = 1,
+	ARM64_SFT_ROR = 5,
 } arm64_shifter;
 
 typedef enum arm64_extender {
