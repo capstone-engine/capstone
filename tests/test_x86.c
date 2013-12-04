@@ -119,8 +119,9 @@ static void test()
 //#define X86_CODE32 "\x64\xa3\x00\x00\x00\x00"	// mov [fs:0x0], eax
 //#define X86_CODE32 "\xd1\xe1"	// shl ecx, 1
 //#define X86_CODE32 "\xd1\xc8"	// ror eax, 1
-//#define X86_CODE32 "\xcd\x80"		// int 0x80
 //#define X86_CODE32 "\x83\xC0\x80"	// add	eax, -x80
+//#define X86_CODE32 "\xe8\x26\xfe\xff\xff"		// call	0xe2b
+//#define X86_CODE32 "\xcd\x80"		// int 0x80
 //#define X86_CODE32 "\x24\xb8"		// and    $0xb8,%al
 
 	struct platform platforms[] = {

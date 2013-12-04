@@ -121,6 +121,15 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 		case TYPE_XMM512:
 			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_ZMM0 + (immediate >> 4)));
 			return;
+		case TYPE_REL8:
+			if(immediate & 0x80)
+				immediate |= ~(0xffull);
+			break;
+		case TYPE_REL32:
+		case TYPE_REL64:
+			if(immediate & 0x80000000)
+				immediate |= ~(0xffffffffull);
+			break;
 		default:
 			// operand is 64 bits wide.  Do nothing.
 			break;
