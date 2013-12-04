@@ -157,7 +157,7 @@ _setup_prototype(_cs, "cs_op_count", ctypes.c_int, ctypes.c_size_t, ctypes.POINT
 _setup_prototype(_cs, "cs_op_index", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint, ctypes.c_uint)
 _setup_prototype(_cs, "cs_version", None, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
 _setup_prototype(_cs, "cs_errno", ctypes.c_int, ctypes.c_size_t)
-_setup_prototype(_cs, "cs_option", ctypes.c_int, ctypes.c_size_t, ctypes.c_int, ctypes.c_int)
+_setup_prototype(_cs, "cs_option", ctypes.c_int, ctypes.c_size_t, ctypes.c_int, ctypes.c_size_t)
 
 
 def cs_version():

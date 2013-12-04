@@ -144,7 +144,7 @@ cs_err cs_close(csh handle);
  @return CS_ERR_OK on success, or other value on failure (refer to cs_err enum
  for detailed error).
 */
-cs_err cs_option(csh handle, cs_opt_type type, cs_opt_value value);
+cs_err cs_option(csh handle, cs_opt_type type, size_t value);
 
 /*
  Report the last error number when some API function fail.

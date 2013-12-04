@@ -196,7 +196,7 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 	insn->mnemonic[sizeof(insn->mnemonic) - 1] = '\0';
 }
 
-cs_err cs_option(csh ud, cs_opt_type type, cs_opt_value value)
+cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 {
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 	if (!handle)
