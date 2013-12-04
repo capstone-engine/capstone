@@ -37,12 +37,12 @@ typedef enum cs_mode {
 	CS_MODE_BIG_ENDIAN = 1 << 31	// big endian mode
 } cs_mode;
 
-// Option type
+// Runtime option for the disassembled engine
 typedef enum cs_opt_type {
 	CS_OPT_SYNTAX = 1,	// Asssembly syntax option
 } cs_opt_type;
 
-// Option value
+// Runtime option value (associated with option type above)
 typedef enum cs_opt_value {
 	CS_OPT_SYNTAX_INTEL = 1, // X86 Intel asm syntax (CS_OPT_SYNTAX)
 	CS_OPT_SYNTAX_ATT,   // X86 ATT asm syntax (CS_OPT_SYNTAX)
@@ -61,12 +61,12 @@ typedef struct cs_insn {
 	// such as arm.h for ARM, x86.h for X86, etc...
 	unsigned int id;
 
-	// Address of this instruction
+	// Address (EIP) of this instruction
 	uint64_t address;
 
-	// size of this instruction
+	// Size of this instruction
 	uint16_t size;
-	// machine bytes of this instruction, with number of bytes indicated by @size above
+	// Machine bytes of this instruction, with number of bytes indicated by @size above
 	unsigned char bytes[16];
 
 	// Ascii text of instruction mnemonic
@@ -75,10 +75,10 @@ typedef struct cs_insn {
 	// Ascii text of instruction operands
 	char op_str[96];
 
-	unsigned int regs_read[32]; // list of implicit registers read by this instruction
+	unsigned int regs_read[32]; // list of implicit registers read by this insn
 	unsigned int regs_read_count; // number of implicit registers read by this insn
 
-	unsigned int regs_write[32]; // list of implicit registers modified by this instruction
+	unsigned int regs_write[32]; // list of implicit registers modified by this insn
 	unsigned int regs_write_count; // number of implicit registers modified by this insn
 
 	unsigned int groups[8]; // list of group this instruction belong to
@@ -103,6 +103,7 @@ typedef enum cs_err {
 	CS_ERR_CSH,	// Invalid csh argument
 	CS_ERR_MODE,	// Invalid/unsupported mode
 } cs_err;
+
 
 /*
  Return API version in major and minor numbers.
@@ -137,14 +138,14 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle);
 cs_err cs_close(csh handle);
 
 /*
- Set option for disassembling
+ Set option for disassembling engine at runtime
 
  @handle: handle returned by cs_open()
  @type: type of option to be set
- @value: option value for corresponding , which can be OR by several cs_opt enums
+ @value: option value corresponding with @type
 
- @return CS_ERR_OK on success, or other value on failure (refer to cs_err enum
- for detailed error).
+ @return CS_ERR_OK on success, or other value on failure.
+ Refer to cs_err enum for detailed error.
 */
 cs_err cs_option(csh handle, cs_opt_type type, size_t value);
 
@@ -194,7 +195,8 @@ size_t cs_disasm(csh handle,
  @code_size: size of above code
  @address: address of the first insn in given raw code buffer
  @insn: array of insn filled in by this function
-       NOTE: @insn will be allocated by this function
+       NOTE: @insn will be allocated by this function, and should be freed
+	   with cs_free() API.
  @count: number of instrutions to be disassembled, or 0 to get all of them
  @return: the number of succesfully disassembled instructions,
  or 0 if this function failed to disassemble the given code
@@ -208,7 +210,7 @@ size_t cs_disasm_dyn(csh handle,
 		cs_insn **insn);
 
 /*
- Free memory allocated in @insn of cs_disasm_dyn()
+ Free memory allocated in @insn by cs_disasm_dyn()
 
  @mem: pointer returned by @insn argument in cs_disasm_dyn()
 */
