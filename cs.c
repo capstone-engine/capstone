@@ -34,7 +34,7 @@
 
 // API version
 #define API_MAJOR 1
-#define API_MINOR 5
+#define API_MINOR 6
 
 cs_err cs_errno(csh handle)
 {
