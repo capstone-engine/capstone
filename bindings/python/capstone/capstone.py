@@ -127,6 +127,7 @@ class _cs_insn(ctypes.Structure):
         ('id', ctypes.c_uint),
         ('address', ctypes.c_uint64),
         ('size', ctypes.c_uint16),
+        ('bytes', ctypes.c_ubyte * 16),
         ('mnemonic', ctypes.c_char * 32),
         ('op_str', ctypes.c_char * 96),
         ('regs_read', ctypes.c_uint * 32),
@@ -135,7 +136,6 @@ class _cs_insn(ctypes.Structure):
         ('regs_write_count', ctypes.c_uint),
         ('groups', ctypes.c_uint * 8),
         ('groups_count', ctypes.c_uint),
-        ('hex_code', ctypes.c_ubyte * 15), 
         ('arch', _cs_arch),
     )
 
@@ -198,7 +198,7 @@ class cs_insn:
         self.regs_read = all_info.regs_read[:all_info.regs_read_count]
         self.regs_write = all_info.regs_write[:all_info.regs_write_count]
         self.groups = all_info.groups[:all_info.groups_count]
-        self.hex_code = bytearray(all_info.hex_code)[:self.size]
+        self.bytes = bytearray(all_info.bytes)[:self.size]
 
         if arch == CS_ARCH_ARM:
             (self.cc, self.update_flags, self.writeback, self.operands) = \

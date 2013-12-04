@@ -179,25 +179,26 @@ static void test()
 
 int main()
 {
-  test();
+	test();
 
 #if 0
-	#define offsetof(type, member) (int)(&((type *)0)->member)
+	#define offsetof(st, m) __builtin_offsetof(st, m)
 
 	cs_insn insn;
 	printf("size: %lu\n", sizeof(insn));
-	printf("@id: %u\n", offsetof(cs_insn, id));
-	printf("@address: %u\n", offsetof(cs_insn, address));
-	printf("@size: %u\n", offsetof(cs_insn, size));
-	printf("@mnemonic: %u\n", offsetof(cs_insn, mnemonic));
-	printf("@op_str: %u\n", offsetof(cs_insn, op_str));
-	printf("@regs_read: %u\n", offsetof(cs_insn, regs_read));
-	printf("@regs_read_count: %u\n", offsetof(cs_insn, regs_read_count));
-	printf("@regs_write: %u\n", offsetof(cs_insn, regs_write));
-	printf("@regs_write_count: %u\n", offsetof(cs_insn, regs_write_count));
-	printf("@groups: %u\n", offsetof(cs_insn, groups));
-	printf("@groups_count: %u\n", offsetof(cs_insn, groups_count));
-	printf("@arch: %u\n", offsetof(cs_insn, x86));
+	printf("@id: %lu\n", offsetof(cs_insn, id));
+	printf("@address: %lu\n", offsetof(cs_insn, address));
+	printf("@size: %lu\n", offsetof(cs_insn, size));
+	printf("@bytes: %lu\n", offsetof(cs_insn, bytes));
+	printf("@mnemonic: %lu\n", offsetof(cs_insn, mnemonic));
+	printf("@op_str: %lu\n", offsetof(cs_insn, op_str));
+	printf("@regs_read: %lu\n", offsetof(cs_insn, regs_read));
+	printf("@regs_read_count: %lu\n", offsetof(cs_insn, regs_read_count));
+	printf("@regs_write: %lu\n", offsetof(cs_insn, regs_write));
+	printf("@regs_write_count: %lu\n", offsetof(cs_insn, regs_write_count));
+	printf("@groups: %lu\n", offsetof(cs_insn, groups));
+	printf("@groups_count: %lu\n", offsetof(cs_insn, groups_count));
+	printf("@arch: %lu\n", offsetof(cs_insn, x86));
 #endif
 
 	return 0;

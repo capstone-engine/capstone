@@ -63,8 +63,8 @@ def test_class():
 
             all_ins = list(md.disasm(code, 0x1000))
             for insn in all_ins:
-                hex_code = binascii.hexlify(insn.hex_code)
-                print("0x%x:\t%s\t%s\t%s" %(insn.address, insn.mnemonic, insn.op_str, hex_code))
+                bytes = binascii.hexlify(insn.bytes)
+                print("0x%x:\t%s\t%s\t// hex-code: %s" %(insn.address, insn.mnemonic, insn.op_str, bytes))
 
             print("0x%x:" % (all_ins[-1].address + all_ins[-1].size))
             print

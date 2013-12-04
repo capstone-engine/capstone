@@ -11,8 +11,6 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
-#define MIN(X,Y) ((X) < (Y) ? (X) : (Y))
-
 // Handle using with all API
 typedef size_t csh;
 
@@ -66,8 +64,10 @@ typedef struct cs_insn {
 	// Address of this instruction
 	uint64_t address;
 
-	// Size of this instruction
-	uint16_t size;	
+	// size of this instruction
+	uint16_t size;
+	// machine bytes of this instruction, with number of bytes indicated by @size above
+	unsigned char bytes[16];
 
 	// Ascii text of instruction mnemonic
 	char mnemonic[32];
@@ -83,8 +83,6 @@ typedef struct cs_insn {
 
 	unsigned int groups[8]; // list of group this instruction belong to
 	unsigned int groups_count; // number of groups this insn belongs to
-
-  unsigned char hex_code[15]; // bytes of the instruction
 
 	// Architecture-specific instruction info
 	union {

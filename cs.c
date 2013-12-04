@@ -166,6 +166,8 @@ cs_err cs_close(csh handle)
 	return CS_ERR_OK;
 }
 
+#define MIN(x, y) ((x) < (y) ? (x) : (y))
+
 // fill insn with mnemonic & operands info
 static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mci,
 		PostPrinter_t printer, unsigned char *code)
@@ -194,9 +196,9 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 
 	strncpy(insn->mnemonic, buffer, sizeof(insn->mnemonic) - 1);
 	insn->mnemonic[sizeof(insn->mnemonic) - 1] = '\0';
-  
-  // fill the instruction bytes
-  memcpy(insn->hex_code, code, MIN(sizeof(insn->hex_code), insn->size));
+
+	// fill the instruction bytes
+	memcpy(insn->bytes, code, MIN(sizeof(insn->bytes), insn->size));
 }
 
 cs_err cs_option(csh ud, cs_opt_type type, size_t value)
@@ -267,9 +269,9 @@ size_t cs_disasm(csh ud, unsigned char *buffer, size_t size, uint64_t offset, si
 				if (c == count)
 					return c;
 			}
-		} else	{ // face a broken instruction?
+		} else
+			// face a broken instruction?
 			return c;
-    }
 	}
 
 	return c;
@@ -334,10 +336,11 @@ size_t cs_disasm_dyn(csh ud, unsigned char *buffer, size_t size, uint64_t offset
 
 			if (count > 0 && c == count)
 				break;
-		} else	{ // encounter a broken instruction
-      // XXX: TODO: JOXEAN continue here
-      break;
-    }
+		} else	{
+			// encounter a broken instruction
+			// XXX: TODO: JOXEAN continue here
+			break;
+		}
 	}
 
 	if (f) {
