@@ -8,7 +8,7 @@ public class Arm64_const {
 	public static final int ARM64_SFT_MSL = 2;
 	public static final int ARM64_SFT_LSR = 3;
 	public static final int ARM64_SFT_ASR = 4;
-	public static final int ARM64_SFT_ROR = 1;
+	public static final int ARM64_SFT_ROR = 5;
 
 	public static final int ARM64_EXT_INVALID = 0;
 	public static final int ARM64_EXT_UXTB = 1;
