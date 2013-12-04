@@ -206,7 +206,12 @@ typedef enum arm_reg {
 	ARM_REG_S29,
 	ARM_REG_S30,
 	ARM_REG_S31,
+
 	ARM_REG_MAX,
+
+	ARM_REG_R13 = ARM_REG_SP,
+	ARM_REG_R14 = ARM_REG_LR,
+	ARM_REG_R15 = ARM_REG_PC,
 } arm_reg;
 
 // ARM instruction
