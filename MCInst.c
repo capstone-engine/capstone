@@ -18,6 +18,7 @@ void MCInst_clear(MCInst *inst)
 	inst->size = 0;
 }
 
+// NOTE: this will free @Op argument
 void MCInst_insert(MCInst *inst, int index, MCOperand *Op)
 {
 	int i;
@@ -28,6 +29,8 @@ void MCInst_insert(MCInst *inst, int index, MCOperand *Op)
 
 	inst->Operands[index] = *Op;
 	inst->size++;
+
+	free(Op);
 }
 
 void MCInst_setOpcode(MCInst *inst, unsigned Op)
@@ -60,6 +63,7 @@ unsigned MCInst_getNumOperands(const MCInst *inst)
 	return inst->size;
 }
 
+// NOTE: this will free @Op argument
 int MCInst_addOperand(MCInst *inst, MCOperand *Op)
 {
 	if (inst->size == ARR_SIZE(inst->Operands))
