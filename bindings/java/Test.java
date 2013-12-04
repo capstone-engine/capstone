@@ -42,7 +42,7 @@ public class Test {
           ),
       new platform(
           Capstone.CS_ARCH_X86,
-          Capstone.CS_MODE_32 + Capstone.CS_MODE_SYNTAX_ATT,
+          Capstone.CS_MODE_32, // + Capstone.CS_MODE_SYNTAX_ATT,
           new byte[] { (byte)0x8d, 0x4c, 0x32, 0x08, 0x01, (byte)0xd8, (byte)0x81, (byte)0xc6, 0x34, 0x12, 0x00, 0x00 },
           "X86 32bit (ATT syntax)"
           ),
