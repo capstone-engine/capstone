@@ -1,4 +1,5 @@
 # For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [arm_const.py]
+
 # ARM shift type
 ARM_SFT_INVALID = 0
 ARM_SFT_ASR = 1
@@ -11,6 +12,7 @@ ARM_SFT_LSL_REG = 7
 ARM_SFT_LSR_REG = 8
 ARM_SFT_ROR_REG = 9
 ARM_SFT_RRX_REG = 10
+
 # ARM condition code
 ARM_CC_INVALID = 0
 ARM_CC_EQ = 1
@@ -28,6 +30,7 @@ ARM_CC_LT = 12
 ARM_CC_GT = 13
 ARM_CC_LE = 14
 ARM_CC_AL = 15
+
 # Operand type for instruction's operands
 ARM_OP_INVALID = 0
 ARM_OP_REG = 1
@@ -36,6 +39,7 @@ ARM_OP_PIMM = 3
 ARM_OP_IMM = 4
 ARM_OP_FP = 5
 ARM_OP_MEM = 6
+
 # ARM registers
 ARM_REG_INVALID = 0
 ARM_REG_APSR = 1
@@ -152,6 +156,7 @@ ARM_REG_MAX = 111
 ARM_REG_R13 = ARM_REG_SP
 ARM_REG_R14 = ARM_REG_LR
 ARM_REG_R15 = ARM_REG_PC
+
 # ARM instruction
 ARM_INS_INVALID = 0
 ARM_INS_ADC = 1
@@ -576,6 +581,7 @@ ARM_INS_MOVS = 419
 ARM_INS_POP = 420
 ARM_INS_PUSH = 421
 ARM_INS_MAX = 422
+
 # Group of ARM instructions
 ARM_GRP_INVALID = 0
 ARM_GRP_CRYPTO = 1

@@ -53,7 +53,7 @@ def gen(templ):
             line = line.strip()
 
             if line.startswith(MARKUP):  # markup for comments
-                outfile.write("%s%s%s" %(templ['comment_open'], \
+                outfile.write("\n%s%s%s" %(templ['comment_open'], \
                             line.replace(MARKUP, ''), templ['comment_close']))
                 continue
 

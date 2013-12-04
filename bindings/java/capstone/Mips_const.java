@@ -2,11 +2,13 @@
 package capstone;
 
 public class Mips_const {
+
 	// Operand type for instruction's operands
 	public static final int MIPS_OP_INVALID = 0;
 	public static final int MIPS_OP_REG = 1;
 	public static final int MIPS_OP_IMM = 2;
 	public static final int MIPS_OP_MEM = 3;
+
 	// MIPS registers
 	public static final int MIPS_REG_INVALID = 0;
 	public static final int MIPS_REG_0 = 1;
@@ -170,6 +172,7 @@ public class Mips_const {
 	public static final int MIPS_REG_LO1 = MIPS_REG_HI1;
 	public static final int MIPS_REG_LO2 = MIPS_REG_HI2;
 	public static final int MIPS_REG_LO3 = MIPS_REG_HI3;
+
 	// MIPS instruction
 	public static final int MIPS_INS_INVALID = 0;
 	public static final int MIPS_INS_ABSQ_S = 1;
@@ -628,6 +631,7 @@ public class Mips_const {
 	public static final int MIPS_INS_XORI = 454;
 	public static final int MIPS_INS_NOP = 455;
 	public static final int MIPS_INS_MAX = 456;
+
 	// Group of MIPS instructions
 	public static final int MIPS_GRP_INVALID = 0;
 	public static final int MIPS_GRP_BITCOUNT = 1;

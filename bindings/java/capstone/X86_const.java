@@ -2,6 +2,7 @@
 package capstone;
 
 public class X86_const {
+
 	// X86 registers
 	public static final int X86_REG_INVALID = 0;
 	public static final int X86_REG_AH = 1;
@@ -237,12 +238,14 @@ public class X86_const {
 	public static final int X86_REG_R14W = 231;
 	public static final int X86_REG_R15W = 232;
 	public static final int X86_REG_MAX = 233;
+
 	// Operand type for instruction's operands
 	public static final int X86_OP_INVALID = 0;
 	public static final int X86_OP_REG = 1;
 	public static final int X86_OP_IMM = 2;
 	public static final int X86_OP_FP = 3;
 	public static final int X86_OP_MEM = 4;
+
 	// X86 instructions
 	public static final int X86_INS_INVALID = 0;
 	public static final int X86_INS_AAA = 1;
@@ -1491,6 +1494,7 @@ public class X86_const {
 	public static final int X86_INS_XSTORE = 1244;
 	public static final int X86_INS_XTEST = 1245;
 	public static final int X86_INS_MAX = 1246;
+
 	// Group of X86 instructions
 	public static final int X86_GRP_INVALID = 0;
 	public static final int X86_GRP_3DNOW = 1;

@@ -1,4 +1,5 @@
 # For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [x86_const.py]
+
 # X86 registers
 X86_REG_INVALID = 0
 X86_REG_AH = 1
@@ -234,12 +235,14 @@ X86_REG_R13W = 230
 X86_REG_R14W = 231
 X86_REG_R15W = 232
 X86_REG_MAX = 233
+
 # Operand type for instruction's operands
 X86_OP_INVALID = 0
 X86_OP_REG = 1
 X86_OP_IMM = 2
 X86_OP_FP = 3
 X86_OP_MEM = 4
+
 # X86 instructions
 X86_INS_INVALID = 0
 X86_INS_AAA = 1
@@ -1488,6 +1491,7 @@ X86_INS_XSHA256 = 1243
 X86_INS_XSTORE = 1244
 X86_INS_XTEST = 1245
 X86_INS_MAX = 1246
+
 # Group of X86 instructions
 X86_GRP_INVALID = 0
 X86_GRP_3DNOW = 1
