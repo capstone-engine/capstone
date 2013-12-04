@@ -119,9 +119,6 @@ public class Arm_const {
 	public static final int ARM_REG_R10 = 76;
 	public static final int ARM_REG_R11 = 77;
 	public static final int ARM_REG_R12 = 78;
-	public static final int ARM_REG_R13 = ARM_REG_SP;
-	public static final int ARM_REG_R14 = ARM_REG_LR;
-	public static final int ARM_REG_R15 = ARM_REG_PC;
 	public static final int ARM_REG_S0 = 79;
 	public static final int ARM_REG_S1 = 80;
 	public static final int ARM_REG_S2 = 81;
@@ -155,6 +152,9 @@ public class Arm_const {
 	public static final int ARM_REG_S30 = 109;
 	public static final int ARM_REG_S31 = 110;
 	public static final int ARM_REG_MAX = 111;
+	public static final int ARM_REG_R13 = ARM_REG_SP;
+	public static final int ARM_REG_R14 = ARM_REG_LR;
+	public static final int ARM_REG_R15 = ARM_REG_PC;
 
 	public static final int ARM_INS_INVALID = 0;
 	public static final int ARM_INS_ADC = 1;

@@ -332,7 +332,8 @@ typedef enum arm64_reg {
 	ARM64_REG_X28 = 225,
 	ARM64_REG_X29 = 226,
 	ARM64_REG_X30 = 227,
-	ARM64_REG_MAX = 228,
+
+	ARM64_REG_MAX = 228,		// <-- mark the end of the list of registers
 } arm64_reg;
 
 // ARM64 instruction
