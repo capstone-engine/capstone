@@ -32,6 +32,7 @@ __all__ = [
     'CS_ERR_HANDLE',
     'CS_ERR_CSH',
     'CS_ERR_MODE',
+    'CS_ERR_OPTION',
 ]
 
 # Capstone C interface
@@ -61,11 +62,12 @@ CS_OPT_SYNTAX_ATT = 2      # ATT asm syntax (CS_ARCH_X86 arch)
 
 # Capstone error type
 CS_ERR_OK = 0      # No error: everything was fine
-CS_ERR_MEM = 1     # Out-Of-Memory error
-CS_ERR_ARCH = 2    # Unsupported architecture
-CS_ERR_HANDLE = 3  # Invalid handle
-CS_ERR_CSH = 4     # Invalid csh argument
-CS_ERR_MODE = 5    # Invalid/unsupported mode
+CS_ERR_MEM = 1     # Out-Of-Memory error: cs_open(), cs_disasm_dyn()
+CS_ERR_ARCH = 2    # Unsupported architecture: cs_open()
+CS_ERR_HANDLE = 3  # Invalid handle: cs_op_count(), cs_op_index()
+CS_ERR_CSH = 4     # Invalid csh argument: cs_close(), cs_errno(), cs_option()
+CS_ERR_MODE = 5    # Invalid/unsupported mode: cs_open()
+CS_ERR_OPTION = 6  # Invalid/unsupported option: cs_option()
 
 
 import ctypes, ctypes.util
@@ -188,7 +190,7 @@ def cs_disasm_quick(arch, mode, code, offset, count = 0):
 
 
 # Python-style class to disasm code
-class cs_insn:
+class cs_insn(object):
     def __init__(self, csh, all_info, arch):
         self.id = all_info.id
         self.address = all_info.address
@@ -255,7 +257,7 @@ class cs_insn:
             raise ValueError("Error: Failed to initialize!")
         return _cs.cs_op_index(self.csh, self.raw_insn, op_type, position)
 
-class cs:
+class cs(object):
     def __init__(self, arch, mode):
         self.arch, self.mode = arch, mode
         self.csh = ctypes.c_size_t()
@@ -264,12 +266,27 @@ class cs:
             raise ValueError("Error: Wrong arch or mode")
             self.csh = None
 
+        if arch == CS_ARCH_X86:
+            # Intel syntax is default for X86
+            self._syntax = CS_OPT_SYNTAX_INTEL
+        else:
+            self._syntax = None
+
     def __del__(self):
         if self.csh:
             _cs.cs_close(self.csh)
 
-    def option(self, opt_type, opt_value):
-        return _cs.cs_option(self.csh, opt_type, opt_value)
+    #def option(self, opt_type, opt_value):
+    #    return _cs.cs_option(self.csh, opt_type, opt_value)
+
+    @property
+    def syntax(self):
+        return self._syntax
+
+    @syntax.setter
+    def syntax(self, style):
+        if _cs.cs_option(self.csh, CS_OPT_SYNTAX, style) == CS_ERR_OK:
+            self._syntax = style
 
     def disasm(self, code, offset, count = 0):
         if self.csh is None:

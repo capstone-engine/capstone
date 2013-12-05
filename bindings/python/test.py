@@ -17,17 +17,17 @@ MIPS_CODE2 = "\x56\x34\x21\x34\xc2\x17\x01\x00"
 ARM64_CODE = "\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9"
 
 all_tests = (
-        (CS_ARCH_X86, CS_MODE_16, X86_CODE16, "X86 16bit (Intel syntax)", 0, 0),
-        (CS_ARCH_X86, CS_MODE_32, X86_CODE32, "X86 32bit (ATT syntax)", CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT),
-        (CS_ARCH_X86, CS_MODE_32, X86_CODE32, "X86 32 (Intel syntax)", 0, 0),
-        (CS_ARCH_X86, CS_MODE_64, X86_CODE64, "X86 64 (Intel syntax)", 0, 0),
-        (CS_ARCH_ARM, CS_MODE_ARM, ARM_CODE, "ARM", 0, 0),
-        (CS_ARCH_ARM, CS_MODE_THUMB, THUMB_CODE2, "THUMB-2", 0, 0),
-        (CS_ARCH_ARM, CS_MODE_ARM, ARM_CODE2, "ARM: Cortex-A15 + NEON", 0, 0),
-        (CS_ARCH_ARM, CS_MODE_THUMB, THUMB_CODE, "THUMB", 0, 0),
-        (CS_ARCH_MIPS, CS_MODE_32 + CS_MODE_BIG_ENDIAN, MIPS_CODE, "MIPS-32 (Big-endian)", 0, 0),
-        (CS_ARCH_MIPS, CS_MODE_64+ CS_MODE_LITTLE_ENDIAN, MIPS_CODE2, "MIPS-64-EL (Little-endian)", 0, 0),
-        (CS_ARCH_ARM64, CS_MODE_ARM, ARM64_CODE, "ARM-64", 0, 0),
+        (CS_ARCH_X86, CS_MODE_16, X86_CODE16, "X86 16bit (Intel syntax)", 0),
+        (CS_ARCH_X86, CS_MODE_32, X86_CODE32, "X86 32bit (ATT syntax)", CS_OPT_SYNTAX_ATT),
+        (CS_ARCH_X86, CS_MODE_32, X86_CODE32, "X86 32 (Intel syntax)", 0),
+        (CS_ARCH_X86, CS_MODE_64, X86_CODE64, "X86 64 (Intel syntax)", 0),
+        (CS_ARCH_ARM, CS_MODE_ARM, ARM_CODE, "ARM", 0),
+        (CS_ARCH_ARM, CS_MODE_THUMB, THUMB_CODE2, "THUMB-2", 0),
+        (CS_ARCH_ARM, CS_MODE_ARM, ARM_CODE2, "ARM: Cortex-A15 + NEON", 0),
+        (CS_ARCH_ARM, CS_MODE_THUMB, THUMB_CODE, "THUMB", 0),
+        (CS_ARCH_MIPS, CS_MODE_32 + CS_MODE_BIG_ENDIAN, MIPS_CODE, "MIPS-32 (Big-endian)", 0),
+        (CS_ARCH_MIPS, CS_MODE_64+ CS_MODE_LITTLE_ENDIAN, MIPS_CODE2, "MIPS-64-EL (Little-endian)", 0),
+        (CS_ARCH_ARM64, CS_MODE_ARM, ARM64_CODE, "ARM-64", 0),
         )
 
 
@@ -49,7 +49,7 @@ def test_cs_disasm_quick():
 
 ### Test class cs
 def test_class():
-    for (arch, mode, code, comment, opt_type, opt_value) in all_tests:
+    for (arch, mode, code, comment, syntax) in all_tests:
         print('*' * 16)
         print("Platform: %s" %comment)
         print("Code: %s" % to_hex(code))
@@ -58,8 +58,8 @@ def test_class():
         try:
             md = cs(arch, mode)
 
-            if opt_type != 0:
-                md.option(opt_type, opt_value)
+            if syntax != 0:
+                md.syntax = syntax
 
             all_ins = list(md.disasm(code, 0x1000))
             for insn in all_ins:
