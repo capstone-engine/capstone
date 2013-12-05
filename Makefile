@@ -1,60 +1,26 @@
 # Capstone Disassembler Engine
 # By Nguyen Anh Quynh <aquynh@gmail.com>, 2013>
 
-CC = $(CROSS)gcc
-AR ?= $(CROSS)ar
-RANLIB ?= $(CROSS)ranlib
-STRIP ?= $(CROSS)strip
+include Makefile.global
 
-CFLAGS  += -fPIC -O3 -Wall -Iinclude
-LDFLAGS += -shared
-
-PREFIX ?= /usr
-DESTDIR ?=
-INCDIR = $(DESTDIR)$(PREFIX)/include
-LIBDIR = $(DESTDIR)$(PREFIX)/lib
-
-INSTALL_DATA ?= install -m0644
-INSTALL_LIBRARY ?= install -m0755
+CFLAGS += -Iinclude
 
 LIBNAME = capstone
 LIBOBJ =
 LIBOBJ += cs.o utils.o SStream.o MCInstrDesc.o MCRegisterInfo.o
+ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))
 LIBOBJ += arch/ARM/ARMDisassembler.o arch/ARM/ARMInstPrinter.o arch/ARM/mapping.o
+endif
+ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
 LIBOBJ += arch/X86/X86DisassemblerDecoder.o arch/X86/X86Disassembler.o arch/X86/X86IntelInstPrinter.o arch/X86/X86ATTInstPrinter.o arch/X86/mapping.o
+endif
+ifneq (,$(findstring mips,$(CAPSTONE_ARCHS)))
 LIBOBJ += arch/Mips/MipsDisassembler.o arch/Mips/MipsInstPrinter.o arch/Mips/mapping.o
+endif
+ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
 LIBOBJ += arch/AArch64/AArch64BaseInfo.o arch/AArch64/AArch64Disassembler.o arch/AArch64/AArch64InstPrinter.o arch/AArch64/mapping.o
+endif
 LIBOBJ += MCInst.o
-
-EXT = so
-AR_EXT = a
-
-# OSX?
-UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S),Darwin)
-EXT = dylib
-else
-# Cygwin?
-IS_CYGWIN := $(shell $(CC) -dumpmachine | grep -i cygwin | wc -l)
-ifeq ($(IS_CYGWIN),1)
-EXT = dll
-AR_EXT = dll.a
-# Cygwin doesn't like -fPIC
-CFLAGS := $(CFLAGS:-fPIC=)
-# On Windows we need the shared library to be executable
-else
-# mingw?
-IS_MINGW := $(shell $(CC) --version | grep -i mingw | wc -l)
-ifeq ($(IS_MINGW),1)
-EXT = dll
-AR_EXT = dll.a
-# mingw doesn't like -fPIC either
-CFLAGS := $(CFLAGS:-fPIC=)
-# On Windows we need the shared library to be executable
-endif
-endif
-endif
-
 
 .PHONY: all clean lib archive install uninstall
 
@@ -88,10 +54,18 @@ install: capstone.pc archive lib
 	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
 	mkdir -p $(INCDIR)/$(LIBNAME)
 	$(INSTALL_DATA) include/capstone.h $(INCDIR)/$(LIBNAME)
+ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
 	$(INSTALL_DATA) include/x86.h $(INCDIR)/$(LIBNAME)
+endif
+ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))
 	$(INSTALL_DATA) include/arm.h $(INCDIR)/$(LIBNAME)
+endif
+ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
 	$(INSTALL_DATA) include/arm64.h $(INCDIR)/$(LIBNAME)
+endif
+ifneq (,$(findstring mips,$(CAPSTONE_ARCHS)))
 	$(INSTALL_DATA) include/mips.h $(INCDIR)/$(LIBNAME)
+endif
 	mkdir -p $(LIBDIR)/pkgconfig
 	$(INSTALL_DATA) $(LIBNAME).pc $(LIBDIR)/pkgconfig/
 

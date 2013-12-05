@@ -47,6 +47,7 @@ static void test()
 #define ARM64_CODE "\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9"
 
 	struct platform platforms[] = {
+#ifdef CS_SUPPORT_X86
 		{ 
 			.arch = CS_ARCH_X86,
 			.mode = CS_MODE_16,
@@ -77,6 +78,8 @@ static void test()
 			.size = sizeof(X86_CODE64) - 1,
 			.comment = "X86 64 (Intel syntax)"
 		},
+#endif /* CS_SUPPORT_X86 */
+#ifdef CS_SUPPORT_ARM
 		{ 
 			.arch = CS_ARCH_ARM,
 			.mode = CS_MODE_ARM,
@@ -105,6 +108,8 @@ static void test()
 			.size = sizeof(THUMB_CODE) - 1,
 			.comment = "THUMB"
 		},
+#endif /* CS_SUPPORT_ARM */
+#ifdef CS_SUPPORT_MIPS
 		{
 			.arch = CS_ARCH_MIPS,
 			.mode = CS_MODE_32 + CS_MODE_BIG_ENDIAN,
@@ -119,6 +124,8 @@ static void test()
 			.size = sizeof(MIPS_CODE2) - 1,
 			.comment = "MIPS-64-EL (Little-endian)"
 		},
+#endif /* CS_SUPPORT_ARM */
+#ifdef CS_SUPPORT_AARCH64
 		{
 			.arch = CS_ARCH_ARM64,
 			.mode = CS_MODE_ARM,
@@ -126,6 +133,7 @@ static void test()
 			.size = sizeof(ARM64_CODE) - 1,
 			.comment = "ARM-64"
 		},
+#endif /* CS_SUPPORT_AARCH64 */
 	};
 
 	csh handle;
