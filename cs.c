@@ -10,21 +10,29 @@
 
 #include "MCRegisterInfo.h"
 
+#ifdef CS_SUPPORT_X86
 #include "arch/X86/X86Disassembler.h"
 #include "arch/X86/X86InstPrinter.h"
 #include "arch/X86/mapping.h"
+#endif /* CS_SUPPORT_X86 */
 
+#ifdef CS_SUPPORT_ARM
 #include "arch/ARM/ARMDisassembler.h"
 #include "arch/ARM/ARMInstPrinter.h"
 #include "arch/ARM/mapping.h"
+#endif /* CS_SUPPORT_ARM */
 
+#ifdef CS_SUPPORT_MIPS
 #include "arch/Mips/MipsDisassembler.h"
 #include "arch/Mips/MipsInstPrinter.h"
 #include "arch/Mips/mapping.h"
+#endif /* CS_SUPPORT_MIPS */
 
+#ifdef CS_SUPPORT_AARCH64
 #include "arch/AArch64/AArch64Disassembler.h"
 #include "arch/AArch64/AArch64InstPrinter.h"
 #include "arch/AArch64/mapping.h"
+#endif /* CS_SUPPORT_AARCH64 */
 
 #include "utils.h"
 
@@ -69,6 +77,7 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 	ud->reg_name = NULL;
 
 	switch (ud->arch) {
+#ifdef CS_SUPPORT_X86
 		case CS_ARCH_X86:
 			// by default, we use Intel syntax
 			ud->printer = X86_Intel_printInst;
@@ -78,6 +87,8 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 			ud->insn_id = X86_get_insn_id;
 			ud->insn_name = X86_insn_name;
 			break;
+#endif /* CS_SUPPORT_X86 */
+#ifdef CS_SUPPORT_ARM
 		case CS_ARCH_ARM: {
 					MCRegisterInfo *mri = malloc(sizeof(*mri));
 
@@ -96,6 +107,8 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 						ud->disasm = ARM_getInstruction;
 					break;
 				}
+#endif /* CS_SUPPORT_ARM */
+#ifdef CS_SUPPORT_MIPS
 		case CS_ARCH_MIPS: {
 				   MCRegisterInfo *mri = malloc(sizeof(*mri));
 
@@ -117,6 +130,8 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 
 				   break;
 			}
+#endif /* CS_SUPPORT_MIPS */
+#ifdef CS_SUPPORT_AARCH64
 		case CS_ARCH_ARM64: {
 					MCRegisterInfo *mri = malloc(sizeof(*mri));
 
@@ -131,6 +146,7 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 					ud->post_printer = AArch64_post_printer;
 					break;
 			}
+#endif /* CS_SUPPORT_AARCH64 */
 		default:	// unsupported architecture
 			free(ud);
 			return CS_ERR_ARCH;
@@ -210,6 +226,7 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 	switch (handle->arch) {
 		default:
 			break;
+#ifdef CS_SUPPORT_X86
 		case CS_ARCH_X86:
 			if (type & CS_OPT_SYNTAX) {
 				switch(value) {
@@ -224,6 +241,7 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 				}
 			}
 			break;
+#endif /* CS_SUPPORT_X86 */
 	}
 
 	return CS_ERR_OK;
@@ -439,26 +457,34 @@ int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
 		default:
 			handle->errnum = CS_ERR_HANDLE;
 			return -1;
+#ifdef CS_SUPPORT_ARM 
 		case CS_ARCH_ARM:
 			for (i = 0; i < insn->arm.op_count; i++)
 				if (insn->arm.operands[i].type == op_type)
 					count++;
 			break;
+#endif /* CS_SUPPORT_ARM */
+#ifdef CS_SUPPORT_AARCH64
 		case CS_ARCH_ARM64:
 			for (i = 0; i < insn->arm64.op_count; i++)
 				if (insn->arm64.operands[i].type == op_type)
 					count++;
 			break;
+#endif /* CS_SUPPORT_AARCH64 */
+#ifdef CS_SUPPORT_X86
 		case CS_ARCH_X86:
 			for (i = 0; i < insn->x86.op_count; i++)
 				if (insn->x86.operands[i].type == op_type)
 					count++;
 			break;
+#endif /* CS_SUPPORT_X86 */
+#ifdef CS_SUPPORT_MIPS
 		case CS_ARCH_MIPS:
 			for (i = 0; i < insn->mips.op_count; i++)
 				if (insn->mips.operands[i].type == op_type)
 					count++;
 			break;
+#endif /* CS_SUPPORT_MIPS */
 	}
 
 	return count;
@@ -479,6 +505,7 @@ int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 		default:
 			handle->errnum = CS_ERR_HANDLE;
 			return -1;
+#ifdef CS_SUPPORT_ARM 
 		case CS_ARCH_ARM:
 			for (i = 0; i < insn->arm.op_count; i++) {
 				if (insn->arm.operands[i].type == op_type)
@@ -487,6 +514,8 @@ int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 					return i;
 			}
 			break;
+#endif /* CS_SUPPORT_ARM */
+#ifdef CS_SUPPORT_AARCH64
 		case CS_ARCH_ARM64:
 			for (i = 0; i < insn->arm64.op_count; i++) {
 				if (insn->arm64.operands[i].type == op_type)
@@ -495,6 +524,8 @@ int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 					return i;
 			}
 			break;
+#endif /* CS_SUPPORT_AARCH64 */
+#ifdef CS_SUPPORT_X86
 		case CS_ARCH_X86:
 			for (i = 0; i < insn->x86.op_count; i++) {
 				if (insn->x86.operands[i].type == op_type)
@@ -503,6 +534,8 @@ int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 					return i;
 			}
 			break;
+#endif /* CS_SUPPORT_X86 */
+#ifdef CS_SUPPORT_MIPS
 		case CS_ARCH_MIPS:
 			for (i = 0; i < insn->mips.op_count; i++) {
 				if (insn->mips.operands[i].type == op_type)
@@ -511,6 +544,7 @@ int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 					return i;
 			}
 			break;
+#endif /* CS_SUPPORT_MIPS */
 	}
 
 	return -1;

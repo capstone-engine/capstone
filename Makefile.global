@@ -1,0 +1,62 @@
+# Capstone Disassembler Engine
+# By Nguyen Anh Quynh <aquynh@gmail.com>, 2013>
+
+CAPSTONE_ARCHS = arm x86 mips aarch64
+
+CC = $(CROSS)gcc
+AR ?= $(CROSS)ar
+RANLIB ?= $(CROSS)ranlib
+STRIP ?= $(CROSS)strip
+
+CFLAGS  += -fPIC -O3 -Wall
+LDFLAGS += -shared
+
+PREFIX ?= /usr
+DESTDIR ?=
+INCDIR = $(DESTDIR)$(PREFIX)/include
+LIBDIR = $(DESTDIR)$(PREFIX)/lib
+
+INSTALL_DATA ?= install -m0644
+INSTALL_LIBRARY ?= install -m0755
+
+EXT = so
+AR_EXT = a
+
+# OSX?
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+EXT = dylib
+else
+# Cygwin?
+IS_CYGWIN := $(shell $(CC) -dumpmachine | grep -i cygwin | wc -l)
+ifeq ($(IS_CYGWIN),1)
+EXT = dll
+AR_EXT = dll.a
+# Cygwin doesn't like -fPIC
+CFLAGS := $(CFLAGS:-fPIC=)
+# On Windows we need the shared library to be executable
+else
+# mingw?
+IS_MINGW := $(shell $(CC) --version | grep -i mingw | wc -l)
+ifeq ($(IS_MINGW),1)
+EXT = dll
+AR_EXT = dll.a
+# mingw doesn't like -fPIC either
+CFLAGS := $(CFLAGS:-fPIC=)
+# On Windows we need the shared library to be executable
+endif
+endif
+endif
+
+ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCS_SUPPORT_ARM
+endif
+ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCS_SUPPORT_X86
+endif
+ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCS_SUPPORT_AARCH64
+endif
+ifneq (,$(findstring mips,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCS_SUPPORT_MIPS
+endif
