@@ -395,9 +395,9 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)	// qqq
 
 	if (MCOperand_getReg(IndexReg)) {
 		if (NeedPlus) SStream_concat(O, " + ");
-		if (ScaleVal != 1)
-			SStream_concat(O, "%u*", ScaleVal);
 		_printOperand(MI, Op+2, O);
+		if (ScaleVal != 1)
+			SStream_concat(O, "*%u", ScaleVal);
 		NeedPlus = true;
 	}
 
