@@ -209,20 +209,24 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 
 	switch (handle->arch) {
 		default:
-			break;
+			return CS_ERR_OPTION;
+
 		case CS_ARCH_X86:
 			if (type & CS_OPT_SYNTAX) {
 				switch(value) {
 					default:
-						break;
+						return CS_ERR_OPTION;
+
 					case CS_OPT_SYNTAX_INTEL:
 						handle->printer = X86_Intel_printInst;
 						break;
+
 					case CS_OPT_SYNTAX_ATT:
 						handle->printer = X86_ATT_printInst;
 						break;
 				}
-			}
+			} else
+				return CS_ERR_OPTION;
 			break;
 	}
 

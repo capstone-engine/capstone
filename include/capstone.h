@@ -104,12 +104,14 @@ typedef struct cs_insn {
 // These are values returned by cs_errno()
 typedef enum cs_err {
 	CS_ERR_OK = 0,	// No error: everything was fine
-	CS_ERR_MEM,	// Out-Of-Memory error
-	CS_ERR_ARCH,	// Unsupported architecture
-	CS_ERR_HANDLE,	// Invalid handle
-	CS_ERR_CSH,	// Invalid csh argument
-	CS_ERR_MODE,	// Invalid/unsupported mode
+	CS_ERR_MEM,		// Out-Of-Memory error: cs_open(), cs_disasm_dyn()
+	CS_ERR_ARCH,	// Unsupported architecture: cs_open()
+	CS_ERR_HANDLE,	// Invalid handle: cs_op_count(), cs_op_index()
+	CS_ERR_CSH,		// Invalid csh argument: cs_close(), cs_errno(), cs_option()
+	CS_ERR_MODE,	// Invalid/unsupported mode: cs_open()
+	CS_ERR_OPTION,	// Invalid/unsupported option: cs_option()
 } cs_err;
+
 
 
 /*
