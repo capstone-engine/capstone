@@ -93,6 +93,12 @@ typedef struct cs_insn {
 	};
 } cs_insn;
 
+
+// Calculate the offset of a disassembled instruction in its buffer, given its position
+// in its array of disassembled insn
+#define CS_INSN_OFFSEET(insns, p) (insns[p-1].address - insns[0].address + insns[p-1].size)
+
+
 // All type of errors encountered by Capstone API.
 // These are values returned by cs_errno()
 typedef enum cs_err {
