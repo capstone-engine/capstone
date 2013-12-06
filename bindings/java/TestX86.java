@@ -117,7 +117,7 @@ public class TestX86 {
 
     final Test.platform[] all_tests = {
       new Test.platform(Capstone.CS_ARCH_X86, Capstone.CS_MODE_16, hexString2Byte(X86_CODE16), "X86 16bit (Intel syntax)"),
-      new Test.platform(Capstone.CS_ARCH_X86, Capstone.CS_MODE_32 /*+ Capstone.CS_MODE_SYNTAX_ATT */, hexString2Byte(X86_CODE32), "X86 32 (AT&T syntax)"),
+      new Test.platform(Capstone.CS_ARCH_X86, Capstone.CS_MODE_32, Capstone.CS_OPT_SYNTAX_ATT, hexString2Byte(X86_CODE32), "X86 32 (AT&T syntax)"),
       new Test.platform(Capstone.CS_ARCH_X86, Capstone.CS_MODE_32, hexString2Byte(X86_CODE32), "X86 32 (Intel syntax)"),
       new Test.platform(Capstone.CS_ARCH_X86, Capstone.CS_MODE_64, hexString2Byte(X86_CODE64), "X86 64 (Intel syntax)"),
     };
@@ -130,6 +130,9 @@ public class TestX86 {
       System.out.println("Disasm:");
 
       cs = new Capstone(test.arch, test.mode);
+      if (test.syntax != 0) {
+        cs.setSyntax(test.syntax);
+      }
       Capstone.cs_insn[] all_ins = cs.disasm(test.code, 0x1000);
 
       for (int j = 0; j < all_ins.length; j++) {

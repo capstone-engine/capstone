@@ -22,6 +22,7 @@ public class Capstone {
 
   public int arch;
   public int mode;
+  private int syntax;
 
   protected static abstract class OpInfo {}
   protected static abstract class UnionOpInfo extends Structure {}
@@ -37,16 +38,18 @@ public class Capstone {
     public int id;
     public long address;
     public short size;
-    public byte[] mnemonic = new byte[32];
-    public byte[] operands = new byte[96];
-    public int[] regs_read = new int[32];
+    public byte[] bytes;
+    public byte[] mnemonic;
+    public byte[] operands;
+    public int[] regs_read;
     public int regs_read_count;
-    public int[] regs_write = new int[32];
+    public int[] regs_write;
     public int regs_write_count;
-    public int[] groups = new int[8];
+    public int[] groups;
     public int groups_count;
 
     public _cs_insn(Pointer p) {
+      bytes = new byte[16];
       mnemonic = new byte[32];
       operands = new byte[96];
       regs_read = new int[32];
@@ -58,7 +61,7 @@ public class Capstone {
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("id", "address", "size", "mnemonic", "operands",
+      return Arrays.asList("id", "address", "size", "bytes", "mnemonic", "operands",
 			  "regs_read", "regs_read_count",
 			  "regs_write", "regs_write_count",
 			  "groups", "groups_count");
@@ -189,6 +192,8 @@ public class Capstone {
         long addr, NativeLong count, PointerByReference insn);
     public void cs_free(Pointer p);
     public int cs_close(NativeLong handle);
+    public int cs_option(NativeLong handle, int option, NativeLong optionValue);
+
     public String cs_reg_name(NativeLong csh, int id);
     public int cs_op_count(NativeLong csh, Pointer insn, int type);
     public int cs_op_index(NativeLong csh, Pointer insn, int type, int index);
@@ -224,6 +229,13 @@ public class Capstone {
   public static final int CS_ERR_CSH = 4;	    // Invalid csh argument
   public static final int CS_ERR_MODE = 5;	  // Invalid/unsupported mode
 
+  // Capstone option type
+  public static final int CS_OPT_SYNTAX = 1;  // Intel X86 asm syntax (CS_ARCH_X86 arch)
+
+  //Capstone option value
+  public static final int CS_OPT_SYNTAX_INTEL = 1;  // Intel X86 asm syntax (CS_ARCH_X86 arch)
+  public static final int CS_OPT_SYNTAX_ATT = 2;    // ATT asm syntax (CS_ARCH_X86 arch)
+
   protected class NativeStruct {
       private NativeLong csh;
       private NativeLongByReference handleRef;
@@ -243,6 +255,14 @@ public class Capstone {
       throw new RuntimeException("ERROR: Wrong arch or mode");
     }
     ns.csh = ns.handleRef.getValue();
+  }
+
+  public void setSyntax(int syntax) {
+    if (cs.cs_option(ns.csh, CS_OPT_SYNTAX, new NativeLong(syntax)) == CS_ERR_OK) {
+      this.syntax = syntax;
+    } else {
+      throw new RuntimeException("ERROR: Unknown syntax");
+    }
   }
 
   public String reg_name(int reg) {
