@@ -1899,8 +1899,13 @@ static name_map insn_name_maps[] = {
 };
 
 // special alias insn
-static name_map insn_name_maps2[] = {
+static name_map alias_insn_names[] = {
 	{ MIPS_INS_NOP, "NOP" },
+	{ MIPS_INS_BEQ, "BEQZ" },
+	{ MIPS_INS_BNE, "BNEZ" },
+	{ MIPS_INS_BGEZAL, "BAL" },
+	{ MIPS_INS_BC1T, "BC1T" },
+	{ MIPS_INS_BC1F, "BC1F" },
 };
 
 char *Mips_insn_name(unsigned int id)
@@ -1910,9 +1915,9 @@ char *Mips_insn_name(unsigned int id)
 
 	// handle special alias first
 	int i;
-	for (i = 0; i < ARR_SIZE(insn_name_maps2); i++) {
-		if (insn_name_maps2[i].id == id)
-			return insn_name_maps2[i].name;
+	for (i = 0; i < ARR_SIZE(alias_insn_names); i++) {
+		if (alias_insn_names[i].id == id)
+			return alias_insn_names[i].name;
 	}
 
 	return insn_name_maps[id].name;
@@ -1923,9 +1928,9 @@ mips_reg Mips_map_insn(char *name)
 	// handle special alias first
 	int i;
 
-	for (i = 0; i < ARR_SIZE(insn_name_maps2); i++) {
-		if (!strcasecmp(insn_name_maps2[i].name, name))
-			return insn_name_maps2[i].id;
+	for (i = 0; i < ARR_SIZE(alias_insn_names); i++) {
+		if (!strcasecmp(alias_insn_names[i].name, name))
+			return alias_insn_names[i].id;
 	}
 
 	// NOTE: skip first NULL name in insn_name_maps

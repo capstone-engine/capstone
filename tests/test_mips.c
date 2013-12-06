@@ -73,6 +73,7 @@ static void test()
 //#define MIPS_CODE "\xc6\x23\xe9\xe4"	// swc1	$f9, 0x23c6($7)
 //#define MIPS_CODE "\x21\x38\x00\x01"	// move $7, $8
 #define MIPS_CODE "\x0C\x10\x00\x97\x00\x00\x00\x00\x24\x02\x00\x0c\x8f\xa2\x00\x00\x34\x21\x34\x56"
+//#define MIPS_CODE "\x04\x11\x00\x01"	// bal	0x8
 #define MIPS_CODE2 "\x56\x34\x21\x34\xc2\x17\x01\x00"
 
 	struct platform platforms[] = {

@@ -153,8 +153,8 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
 		default: break;
 		case Mips_RDHWR:
 		case Mips_RDHWR64:
-			SStream_concat(O, "\t.set\tpush\n");
-			SStream_concat(O, "\t.set\tmips32r2\n");
+			SStream_concat(O, ".set\tpush\n");
+			SStream_concat(O, ".set\tmips32r2\n");
 			break;
 	}
 
@@ -168,7 +168,6 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
 		if (tab)
 			*tab = '\0';
 
-		// printf(">>> mnem = '%s': %u\n", mnem, Mips_map_insn(mnem));
 		// reflect the new insn name (alias) in the opcode
 		MCInst_setOpcode(MI, Mips_get_insn_id2(Mips_map_insn(mnem)));
 		free(mnem);
@@ -178,7 +177,7 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
 		default: break;
 		case Mips_RDHWR:
 		case Mips_RDHWR64:
-			SStream_concat(O, "\n\t.set\tpop");
+			SStream_concat(O, "\n.set\tpop");
 			break;
 	}
 }
@@ -270,7 +269,7 @@ static void printFCCOperand(MCInst *MI, int opNum, SStream *O)
 
 static bool printAlias1(char *Str, MCInst *MI, unsigned OpNo, SStream *OS)
 {
-	SStream_concat(OS, "\t%s\t", Str);
+	SStream_concat(OS, "%s\t", Str);
 	printOperand(MI, OpNo, OS);
 	return true;
 }
