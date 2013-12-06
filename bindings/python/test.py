@@ -47,7 +47,7 @@ def test_cs_disasm_quick():
         print
 
 
-### Test class cs
+### Test class Cs
 def test_class():
     for (arch, mode, code, comment, syntax) in all_tests:
         print('*' * 16)
@@ -56,7 +56,7 @@ def test_class():
         print("Disasm:")
 
         try:
-            md = cs(arch, mode)
+            md = Cs(arch, mode)
 
             if syntax != 0:
                 md.syntax = syntax

@@ -34,7 +34,7 @@ def to_x_32(s):
     while x[0] == '0': x = x[1:]
     return x
 
-### Test class cs
+### Test class Cs
 def test_class():
     def print_insn_detail(insn):
         # print address, mnemonic and operands
@@ -88,7 +88,7 @@ def test_class():
         print("Disasm:")
 
         try:
-            md = cs(arch, mode)
+            md = Cs(arch, mode)
             last = None
             for insn in md.disasm(code, 0x1000):
                 print_insn_detail(insn)

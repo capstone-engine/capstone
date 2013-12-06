@@ -30,7 +30,7 @@ all_tests = (
         )
 
 
-### Test class cs
+### Test class Cs
 def test_class():
     def print_detail(insn):
         if len(insn.regs_read) > 0:
@@ -58,7 +58,7 @@ def test_class():
         print("Disasm:")
     
         try:
-            md = cs(arch, mode)
+            md = Cs(arch, mode)
 
             if syntax != 0:
                 md.syntax = syntax
