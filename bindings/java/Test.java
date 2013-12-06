@@ -11,8 +11,17 @@ public class Test {
   public static class platform {
     public int arch;
     public int mode;
+    public int syntax;
     public byte[] code;
     public String comment;
+
+    public platform(int a, int m, int syt, byte[] c, String s) {
+      arch = a;
+      mode = m;
+      code = c;
+      comment = s;
+      syntax = syt;
+    }
 
     public platform(int a, int m, byte[] c, String s) {
       arch = a;
@@ -37,12 +46,14 @@ public class Test {
       new platform(
           Capstone.CS_ARCH_X86,
           Capstone.CS_MODE_16,
+          Capstone.CS_OPT_SYNTAX_INTEL,
           new byte[] { (byte)0x8d, (byte)0x4c, (byte)0x32, (byte)0x08, (byte)0x01, (byte)0xd8, (byte)0x81, (byte)0xc6, (byte)0x34, (byte)0x12, 0x00, 0x00 },
           "X86 16bit (Intel syntax)"
           ),
       new platform(
           Capstone.CS_ARCH_X86,
-          Capstone.CS_MODE_32, // + Capstone.CS_MODE_SYNTAX_ATT,
+          Capstone.CS_MODE_32,
+          Capstone.CS_OPT_SYNTAX_ATT,
           new byte[] { (byte)0x8d, 0x4c, 0x32, 0x08, 0x01, (byte)0xd8, (byte)0x81, (byte)0xc6, 0x34, 0x12, 0x00, 0x00 },
           "X86 32bit (ATT syntax)"
           ),
@@ -69,7 +80,6 @@ public class Test {
           Capstone.CS_MODE_THUMB,
           new byte[] { 0x4f, (byte)0xf0, 0x00, 0x01, (byte)0xbd, (byte)0xe8, 0x00, (byte)0x88, (byte)0xd1, (byte)0xe8, 0x00, (byte)0xf0 },
           "THUMB-2"
-
           ),
       new platform(
           Capstone.CS_ARCH_ARM,
@@ -110,6 +120,8 @@ public class Test {
       System.out.println("Disasm:");
 
       Capstone cs = new Capstone(platforms[j].arch, platforms[j].mode);
+      if (platforms[j].syntax != 0)
+        cs.setSyntax(platforms[j].syntax);
 
       Capstone.cs_insn[] all_insn = cs.disasm(platforms[j].code, 0x1000);
 

@@ -16,6 +16,9 @@ all:
 
 tests: expected python java #oclma ruby
 
+test_java: expected java
+test_python: expected python
+
 expected:
 	$(MAKE) -C ../tests
 	mkdir -p $(TMPDIR)
