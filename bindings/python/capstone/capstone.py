@@ -3,8 +3,8 @@
 import arm, arm64, mips, x86
 
 __all__ = [
-    'cs',
-    'cs_insn',
+    'Cs',
+    'CsInsn',
     'cs_disasm_quick',
     'cs_version',
     'CS_ARCH_ARM',
@@ -147,7 +147,7 @@ def _setup_prototype(lib, fname, restype, *argtypes):
     getattr(lib, fname).argtypes = argtypes
 
 _setup_prototype(_cs, "cs_open", ctypes.c_int, ctypes.c_uint, ctypes.c_uint, ctypes.POINTER(ctypes.c_size_t))
-_setup_prototype(_cs, "cs_disasm_dyn", ctypes.c_size_t, ctypes.c_size_t, ctypes.c_char_p, ctypes.c_size_t, \
+_setup_prototype(_cs, "cs_disasm_dyn", ctypes.c_size_t, ctypes.c_size_t, ctypes.POINTER(ctypes.c_char), ctypes.c_size_t, \
         ctypes.c_uint64, ctypes.c_size_t, ctypes.POINTER(ctypes.POINTER(_cs_insn)))
 _setup_prototype(_cs, "cs_free", None, ctypes.c_void_p)
 _setup_prototype(_cs, "cs_close", ctypes.c_int, ctypes.c_size_t)
@@ -170,33 +170,46 @@ def cs_version():
     return (major.value, minor.value)
 
 
+# access to error code via @errno of CsError
+class CsError(Exception):
+    def __init__(self, errno):
+        self.errno = errno
+
+
 # quick & dirty Python function to disasm raw binary code
 def cs_disasm_quick(arch, mode, code, offset, count = 0):
     csh = ctypes.c_size_t()
     status = _cs.cs_open(arch, mode, ctypes.byref(csh))
     if status != CS_ERR_OK:
-        return
+        raise CsError(status)
+
+    insns = []
     all_insn = ctypes.POINTER(_cs_insn)()
     res = _cs.cs_disasm_dyn(csh, code, len(code), offset, count, ctypes.byref(all_insn))
     if res > 0:
         for i in xrange(res):
-            yield all_insn[i]
+            insns.append(all_insn[i])
 
         _cs.cs_free(all_insn)
     else:
-        yield []
+        status = _cs.cs_errno(self.csh)
+        if status != CS_ERR_OK:
+            raise CsError(status)
 
-    _cs.cs_close(csh)
+    status = _cs.cs_close(csh)
+    if status != CS_ERR_OK:
+        raise CsError(status)
 
+    return insns
 
 # Python-style class to disasm code
-class cs_insn(object):
+class CsInsn(object):
     def __init__(self, csh, all_info, arch):
         self.id = all_info.id
         self.address = all_info.address
         self.size = all_info.size
-        self.mnemonic = all_info.mnemonic
-        self.op_str = all_info.op_str
+        self.mnemonic = all_info.mnemonic[:]    # copy string
+        self.op_str = all_info.op_str[:]    # copy string
         self.regs_read = all_info.regs_read[:all_info.regs_read_count]
         self.regs_write = all_info.regs_write[:all_info.regs_write_count]
         self.groups = all_info.groups[:all_info.groups_count]
@@ -223,48 +236,41 @@ class cs_insn(object):
         return _cs.cs_errno(self.csh)
 
     def reg_name(self, reg_id):
-        if self.csh is None:
-            raise ValueError("Error: Failed to initialize!")
         return _cs.cs_reg_name(self.csh, reg_id)
 
     def insn_name(self):
-        if self.csh is None:
-            raise ValueError("Error: Failed to initialize!")
         return _cs.cs_insn_name(self.csh, self.id)
 
     def group(self, group_id):
-        if self.csh is None:
-            raise ValueError("Error: Failed to initialize!")
         return _cs.cs_insn_group(self.csh, self.raw_insn, group_id)
 
     def reg_read(self, reg_id):
-        if self.csh is None:
-            raise ValueError("Error: Failed to initialize!")
         return _cs.cs_reg_read(self.csh, self.raw_insn, reg_id)
 
     def reg_write(self, reg_id):
-        if self.csh is None:
-            raise ValueError("Error: Failed to initialize!")
         return _cs.cs_reg_write(self.csh, self.raw_insn, reg_id)
 
+    # return number of operands having same operand type @op_type
     def op_count(self, op_type):
-        if self.csh is None:
-            raise ValueError("Error: Failed to initialize!")
-        return _cs.cs_op_count(self.csh, self.raw_insn, op_type)
+        res = _cs.cs_op_count(self.csh, self.raw_insn, op_type)
+        if res < 0:
+            raise CsError(_cs.cs_errno(self.csh))
+        return res
 
     def op_index(self, op_type, position):
-        if self.csh is None:
-            raise ValueError("Error: Failed to initialize!")
-        return _cs.cs_op_index(self.csh, self.raw_insn, op_type, position)
+        res = _cs.cs_op_index(self.csh, self.raw_insn, op_type, position)
+        if res < 0:
+            raise CsError(_cs.cs_errno(self.csh))
+        return res
 
-class cs(object):
+
+class Cs(object):
     def __init__(self, arch, mode):
         self.arch, self.mode = arch, mode
         self.csh = ctypes.c_size_t()
         status = _cs.cs_open(arch, mode, ctypes.byref(self.csh))
         if status != CS_ERR_OK:
-            raise ValueError("Error: Wrong arch or mode")
-            self.csh = None
+            raise CsError(status)
 
         if arch == CS_ARCH_X86:
             # Intel syntax is default for X86
@@ -273,8 +279,9 @@ class cs(object):
             self._syntax = None
 
     def __del__(self):
-        if self.csh:
-            _cs.cs_close(self.csh)
+        status = _cs.cs_close(self.csh)
+        if status != CS_ERR_OK:
+            raise CsError(status)
 
     #def option(self, opt_type, opt_value):
     #    return _cs.cs_option(self.csh, opt_type, opt_value)
@@ -285,17 +292,24 @@ class cs(object):
 
     @syntax.setter
     def syntax(self, style):
-        if _cs.cs_option(self.csh, CS_OPT_SYNTAX, style) == CS_ERR_OK:
-            self._syntax = style
+        status = _cs.cs_option(self.csh, CS_OPT_SYNTAX, style)
+        if status != CS_ERR_OK:
+            raise CsError(status)
+        # save syntax
+        self._syntax = style
 
     def disasm(self, code, offset, count = 0):
-        if self.csh is None:
-            raise ValueError("Error: Failed to initialize!")
+        insns = []
         all_insn = ctypes.POINTER(_cs_insn)()
         res = _cs.cs_disasm_dyn(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
         if res > 0:
             for i in xrange(res):
-                yield cs_insn(self.csh, all_insn[i], self.arch)
+                insns.append(CsInsn(self.csh, all_insn[i], self.arch))
             _cs.cs_free(all_insn)
         else:
-            yield []
+            status = _cs.cs_errno(self.csh)
+            if status != CS_ERR_OK:
+                raise CsError(status)
+
+        return insns
+

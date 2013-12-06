@@ -34,7 +34,7 @@ def to_x_32(s):
     while x[0] == '0': x = x[1:]
     return x
 
-### Test class cs
+### Test class Cs
 def test_class():
     def print_insn_detail(insn):
         # print address, mnemonic and operands
@@ -88,13 +88,11 @@ def test_class():
         print("Disasm:")
 
         try:
-            md = cs(arch, mode)
-            last = None
+            md = Cs(arch, mode)
             for insn in md.disasm(code, 0x1000):
                 print_insn_detail(insn)
-                last = insn
                 print
-            print "0x%x:\n" % (last.address + last.size)
+            print "0x%x:\n" % (insn.address + insn.size)
         except:
             print("ERROR: Arch or mode unsupported!")
 

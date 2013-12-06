@@ -47,7 +47,7 @@ def test_cs_disasm_quick():
         print
 
 
-### Test class cs
+### Test class Cs
 def test_class():
     for (arch, mode, code, comment, syntax) in all_tests:
         print('*' * 16)
@@ -56,17 +56,16 @@ def test_class():
         print("Disasm:")
 
         try:
-            md = cs(arch, mode)
+            md = Cs(arch, mode)
 
             if syntax != 0:
                 md.syntax = syntax
 
-            all_ins = list(md.disasm(code, 0x1000))
-            for insn in all_ins:
+            for insn in md.disasm(code, 0x1000):
                 bytes = binascii.hexlify(insn.bytes)
                 print("0x%x:\t%s\t%s\t// hex-code: %s" %(insn.address, insn.mnemonic, insn.op_str, bytes))
 
-            print("0x%x:" % (all_ins[-1].address + all_ins[-1].size))
+            print("0x%x:" % (insn.address + insn.size))
             print
         except:
             print("ERROR: Arch or mode unsupported!")

@@ -1,6 +1,6 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
-import ctypes, ctypes.util
+import ctypes, copy
 from arm64_const import *
 
 # define the API
@@ -43,5 +43,5 @@ class _cs_arm64(ctypes.Structure):
     )
 
 def get_arch_info(a):
-    return (a.cc, a.update_flags, a.writeback, a.operands[:a.op_count])
+    return (a.cc, a.update_flags, a.writeback, copy.deepcopy(a.operands[:a.op_count]))
 
