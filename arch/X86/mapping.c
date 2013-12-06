@@ -1575,9 +1575,16 @@ char *X86_insn_name(unsigned int id)
 	return insn_name_maps[id].name;
 }
 
+// return insn id, given insn mnemonic
 x86_reg X86_map_insn(char *name)
 {
 	int i = name2id(&insn_name_maps[1], ARR_SIZE(insn_name_maps) - 1, name);
+
+	if (i == -1) {
+		// xstorerng is a special case
+		if (!strcmp(name, "xstorerng"))
+			i = X86_INS_XSTORE;
+	}
 
 	return (i != -1)? i : X86_REG_INVALID;
 }
@@ -6594,6 +6601,7 @@ void X86_get_insn_id(cs_insn *insn, unsigned int id)
 	}
 }
 
+// given public insn id, return internal insn id
 unsigned int X86_get_insn_id2(unsigned int id)
 {
 	return insn_reverse_id(insns, ARR_SIZE(insns), id);

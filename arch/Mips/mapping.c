@@ -1378,6 +1378,7 @@ static insn_map alias_insns[] = {
 	{ -2, MIPS_INS_NOP, { 0 }, { 0 }, { 0 }, 0, 0 },
 };
 
+// given internal insn id, return public instruction info
 void Mips_get_insn_id(cs_insn *insn, unsigned int id)
 {
 	int i;
