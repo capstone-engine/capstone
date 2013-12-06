@@ -153,9 +153,6 @@ _setup_prototype(_cs, "cs_free", None, ctypes.c_void_p)
 _setup_prototype(_cs, "cs_close", ctypes.c_int, ctypes.c_size_t)
 _setup_prototype(_cs, "cs_reg_name", ctypes.c_char_p, ctypes.c_size_t, ctypes.c_uint)
 _setup_prototype(_cs, "cs_insn_name", ctypes.c_char_p, ctypes.c_size_t, ctypes.c_uint)
-_setup_prototype(_cs, "cs_insn_group", ctypes.c_bool, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint)
-_setup_prototype(_cs, "cs_reg_read", ctypes.c_bool, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint)
-_setup_prototype(_cs, "cs_reg_write", ctypes.c_bool, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint)
 _setup_prototype(_cs, "cs_op_count", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint)
 _setup_prototype(_cs, "cs_op_index", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint, ctypes.c_uint)
 _setup_prototype(_cs, "cs_version", None, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
@@ -228,8 +225,6 @@ class CsInsn(object):
         elif arch == CS_ARCH_MIPS:
              self.operands = mips.get_arch_info(all_info.arch.mips)
 
-        # save original insn for later use
-        self.raw_insn = all_info
         self.csh = csh
 
     def errno():
@@ -242,26 +237,29 @@ class CsInsn(object):
         return _cs.cs_insn_name(self.csh, self.id)
 
     def group(self, group_id):
-        return _cs.cs_insn_group(self.csh, self.raw_insn, group_id)
+        return group_id in self.groups
 
     def reg_read(self, reg_id):
-        return _cs.cs_reg_read(self.csh, self.raw_insn, reg_id)
+        return reg_id in self.regs_read
 
     def reg_write(self, reg_id):
-        return _cs.cs_reg_write(self.csh, self.raw_insn, reg_id)
+        return reg_id in self.regs_write
 
     # return number of operands having same operand type @op_type
     def op_count(self, op_type):
-        res = _cs.cs_op_count(self.csh, self.raw_insn, op_type)
-        if res < 0:
-            raise CsError(_cs.cs_errno(self.csh))
-        return res
+        c = 0
+        for op in self.operands:
+            if op.type == op_type:
+                c += 1
+        return c
 
     def op_index(self, op_type, position):
-        res = _cs.cs_op_index(self.csh, self.raw_insn, op_type, position)
-        if res < 0:
-            raise CsError(_cs.cs_errno(self.csh))
-        return res
+        c = 0
+        for op in self.operands:
+            if op.type == op_type:
+                c += 1
+            if c == position:
+                return self.operands.index(op)
 
 
 class Cs(object):
