@@ -6,7 +6,7 @@ AR ?= $(CROSS)ar
 RANLIB ?= $(CROSS)ranlib
 STRIP ?= $(CROSS)strip
 
-CFLAGS  += -fPIC -O3 -Wall -Iinclude
+CFLAGS += -fPIC -O3 -Wall -Iinclude
 LDFLAGS += -shared
 
 PREFIX ?= /usr
@@ -18,6 +18,7 @@ INSTALL_DATA ?= install -m0644
 INSTALL_LIBRARY ?= install -m0755
 
 LIBNAME = capstone
+
 LIBOBJ =
 LIBOBJ += cs.o utils.o SStream.o MCInstrDesc.o MCRegisterInfo.o
 LIBOBJ += arch/ARM/ARMDisassembler.o arch/ARM/ARMInstPrinter.o arch/ARM/mapping.o
@@ -55,34 +56,34 @@ endif
 endif
 endif
 
+LIBRARY = lib$(LIBNAME).$(EXT)
+ARCHIVE = lib$(LIBNAME).$(AR_EXT)
+PKGCFGF = $(LIBNAME).pc
 
-.PHONY: all clean lib archive install uninstall
+VERSION=$(shell echo `grep -e PKG_MAJOR -e PKG_MINOR cs.c | grep -v = | awk '{print $$3}'` | awk '{print $$1"."$$2}')
 
-all: lib archive
+.PHONY: all clean install uninstall
+
+all: $(LIBRARY) $(ARCHIVE) capstone.pc
 	$(MAKE) -C tests
 	$(INSTALL_DATA) lib$(LIBNAME).$(EXT) tests
 
-lib: $(LIBOBJ)
-	$(CC) $(LDFLAGS) $(LIBOBJ) -o lib$(LIBNAME).$(EXT)
-	# MacOS doesn't like strip
-	#strip lib$(LIBNAME).$(EXT)
+$(LIBRARY): $(LIBOBJ)
+	$(CC) $(LDFLAGS) $(LIBOBJ) -o $(LIBRARY)
 
-archive: $(LIBOBJ)
-	rm -f lib$(LIBNAME).$(AR_EXT)
-	$(AR) q lib$(LIBNAME).$(AR_EXT) $(LIBOBJ)
-	$(RANLIB) lib$(LIBNAME).$(AR_EXT)
+$(ARCHIVE): $(LIBOBJ)
+	rm -f $(ARCHIVE)
+	$(AR) q $(ARCHIVE) $(LIBOBJ)
+	$(RANLIB) $(ARCHIVE)
 
-PC=capstone.pc
-VERSION=$(shell echo `grep -e PKG_MAJOR -e PKG_MINOR cs.c|grep -v =| awk '{print $$3}'` | awk '{print $$1"."$$2}')
+$(PKGCFGF):
+	echo Name: capstone > $(PKGCFGF)
+	echo Description: Capstone disassembler engine >> $(PKGCFGF)
+	echo Version: $(VERSION) >> $(PKGCFGF)
+	echo Libs: -L$(LIBDIR) -lcapstone >> $(PKGCFGF)
+	echo Cflags: -I$(PREFIX)/include/capstone >> $(PKGCFGF)
 
-capstone.pc: lib$(LIBNAME).$(AR_EXT)
-	echo Name: capstone > $(PC)
-	echo Description: Capstone disassembler engine >> $(PC)
-	echo Version: $(VERSION) >> $(PC)
-	echo Libs: -L$(LIBDIR) -lcapstone >> $(PC)
-	echo Cflags: -I$(PREFIX)/include/capstone >> $(PC)
-
-install: capstone.pc archive lib
+install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 	mkdir -p $(LIBDIR)
 	$(INSTALL_LIBRARY) lib$(LIBNAME).$(EXT) $(LIBDIR)
 	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
@@ -93,7 +94,7 @@ install: capstone.pc archive lib
 	$(INSTALL_DATA) include/arm64.h $(INCDIR)/$(LIBNAME)
 	$(INSTALL_DATA) include/mips.h $(INCDIR)/$(LIBNAME)
 	mkdir -p $(LIBDIR)/pkgconfig
-	$(INSTALL_DATA) $(LIBNAME).pc $(LIBDIR)/pkgconfig/
+	$(INSTALL_DATA) $(PKGCFGF) $(LIBDIR)/pkgconfig/
 
 uninstall:
 	rm -rf $(INCDIR)/$(LIBNAME)
@@ -111,4 +112,4 @@ clean:
 	$(MAKE) -C tests clean
 
 .c.o:
-	${CC} ${CFLAGS} -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
