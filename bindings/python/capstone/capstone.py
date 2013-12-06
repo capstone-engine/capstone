@@ -238,21 +238,27 @@ class CsInsn(object):
 
         self.csh = csh
 
+    # get the last error code
     def errno():
         return _cs.cs_errno(self.csh)
 
+    # get the register name, given the register ID
     def reg_name(self, reg_id):
         return _cs.cs_reg_name(self.csh, reg_id)
 
+    # get the instruction string
     def insn_name(self):
         return _cs.cs_insn_name(self.csh, self.id)
 
+    # verify if this insn belong to group with id as @group_id
     def group(self, group_id):
         return group_id in self.groups
 
+    # verify if this instruction implicitly read register @reg_id
     def reg_read(self, reg_id):
         return reg_id in self.regs_read
 
+    # verify if this instruction implicitly modified register @reg_id
     def reg_write(self, reg_id):
         return reg_id in self.regs_write
 
@@ -264,13 +270,14 @@ class CsInsn(object):
                 c += 1
         return c
 
-    def op_index(self, op_type, position):
+    # get the operand at position @position of all operands having the same type @op_type
+    def op_find(self, op_type, position):
         c = 0
         for op in self.operands:
             if op.type == op_type:
                 c += 1
             if c == position:
-                return self.operands.index(op)
+                return op
 
 
 class Cs(object):

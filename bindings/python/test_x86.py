@@ -76,8 +76,8 @@ def test_class():
         if count > 0:
             print("\timm_count: %u" %count)
             for i in xrange(count):
-                index = insn.op_index(X86_OP_IMM, i + 1)
-                print("\t\timms[%u]: 0x%s" %(i+1, to_x(insn.operands[index].value.imm)))
+                op = insn.op_find(X86_OP_IMM, i + 1)
+                print("\t\timms[%u]: 0x%s" %(i+1, to_x(op.value.imm)))
 
         if len(insn.operands) > 0:
             print("\top_count: %u" %len(insn.operands))
