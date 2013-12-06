@@ -63,7 +63,6 @@ def test_class():
             if syntax != 0:
                 md.syntax = syntax
 
-
             for insn in md.disasm(code, 0x1000):
                 print("0x%x:\t%s\t%s  // insn-ID: %u, insn-mnem: %s" \
                     %(insn.address, insn.mnemonic, insn.op_str, insn.id, \
@@ -71,8 +70,8 @@ def test_class():
                 print_detail(insn)
 
             print
-        except:
-            print("ERROR: Arch or mode unsupported!")
+        except CsError as e:
+            print("ERROR: %s" %e)
 
 
 test_class()

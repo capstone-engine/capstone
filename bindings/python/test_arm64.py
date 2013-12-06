@@ -78,8 +78,8 @@ def test_class():
                 print_insn_detail(insn)
                 print
             print "0x%x:\n" % (insn.address + insn.size)
-        except:
-            print("ERROR: Arch or mode unsupported!")
+        except CsError as e:
+            print("ERROR: %s" %e)
 
 
 test_class()

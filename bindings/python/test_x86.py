@@ -108,15 +108,18 @@ def test_class():
         print("Code: %s" % to_hex(code))
         print("Disasm:")
 
-        md = Cs(arch, mode)
+        try:
+            md = Cs(arch, mode)
 
-        if syntax != 0:
-            md.syntax = syntax
+            if syntax != 0:
+                md.syntax = syntax
 
-        for insn in md.disasm(code, 0x1000):
-            print_insn_detail(mode, insn)
-            print
-        print ("0x%x:\n" % (insn.address + insn.size))
+            for insn in md.disasm(code, 0x1000):
+                print_insn_detail(mode, insn)
+                print
+            print ("0x%x:\n" % (insn.address + insn.size))
+        except CsError as e:
+            print("ERROR: %s" %e)
 
 
 test_class()

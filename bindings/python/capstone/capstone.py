@@ -172,6 +172,17 @@ class CsError(Exception):
     def __init__(self, errno):
         self.errno = errno
 
+    def __str__(self):
+        messages = { \
+            CS_ERR_MEM: "Out of memory (CsError)",
+            CS_ERR_ARCH: "Invalid architecture (CsError)",
+            CS_ERR_HANDLE: "Invalid handle (CsError)",
+            CS_ERR_CSH: "Invalid csh (CsError)",
+            CS_ERR_MODE: "Invalid mode (CsError)",
+            CS_ERR_OPTION: "Invalid option (CsError)",
+        }
+        return messages[self.errno]
+
 
 # quick & dirty Python function to disasm raw binary code
 def cs_disasm_quick(arch, mode, code, offset, count = 0):
@@ -268,6 +279,7 @@ class Cs(object):
         self.csh = ctypes.c_size_t()
         status = _cs.cs_open(arch, mode, ctypes.byref(self.csh))
         if status != CS_ERR_OK:
+            self.csh = None
             raise CsError(status)
 
         if arch == CS_ARCH_X86:
@@ -277,9 +289,10 @@ class Cs(object):
             self._syntax = None
 
     def __del__(self):
-        status = _cs.cs_close(self.csh)
-        if status != CS_ERR_OK:
-            raise CsError(status)
+        if self.csh:
+            status = _cs.cs_close(self.csh)
+            if status != CS_ERR_OK:
+                raise CsError(status)
 
     #def option(self, opt_type, opt_value):
     #    return _cs.cs_option(self.csh, opt_type, opt_value)
