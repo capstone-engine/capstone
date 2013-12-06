@@ -147,7 +147,7 @@ def _setup_prototype(lib, fname, restype, *argtypes):
     getattr(lib, fname).argtypes = argtypes
 
 _setup_prototype(_cs, "cs_open", ctypes.c_int, ctypes.c_uint, ctypes.c_uint, ctypes.POINTER(ctypes.c_size_t))
-_setup_prototype(_cs, "cs_disasm_dyn", ctypes.c_size_t, ctypes.c_size_t, ctypes.c_char_p, ctypes.c_size_t, \
+_setup_prototype(_cs, "cs_disasm_dyn", ctypes.c_size_t, ctypes.c_size_t, ctypes.POINTER(ctypes.c_char), ctypes.c_size_t, \
         ctypes.c_uint64, ctypes.c_size_t, ctypes.POINTER(ctypes.POINTER(_cs_insn)))
 _setup_prototype(_cs, "cs_free", None, ctypes.c_void_p)
 _setup_prototype(_cs, "cs_close", ctypes.c_int, ctypes.c_size_t)
@@ -183,20 +183,24 @@ def cs_disasm_quick(arch, mode, code, offset, count = 0):
     if status != CS_ERR_OK:
         raise CsError(status)
 
+    insns = []
     all_insn = ctypes.POINTER(_cs_insn)()
     res = _cs.cs_disasm_dyn(csh, code, len(code), offset, count, ctypes.byref(all_insn))
     if res > 0:
         for i in xrange(res):
-            yield all_insn[i]
+            insns.append(all_insn[i])
 
         _cs.cs_free(all_insn)
     else:
-        yield []
+        status = _cs.cs_errno(self.csh)
+        if status != CS_ERR_OK:
+            raise CsError(status)
 
     status = _cs.cs_close(csh)
     if status != CS_ERR_OK:
         raise CsError(status)
 
+    return insns
 
 # Python-style class to disasm code
 class CsInsn(object):
@@ -204,8 +208,8 @@ class CsInsn(object):
         self.id = all_info.id
         self.address = all_info.address
         self.size = all_info.size
-        self.mnemonic = all_info.mnemonic
-        self.op_str = all_info.op_str
+        self.mnemonic = all_info.mnemonic[:]    # copy string
+        self.op_str = all_info.op_str[:]    # copy string
         self.regs_read = all_info.regs_read[:all_info.regs_read_count]
         self.regs_write = all_info.regs_write[:all_info.regs_write_count]
         self.groups = all_info.groups[:all_info.groups_count]
@@ -295,16 +299,17 @@ class Cs(object):
         self._syntax = style
 
     def disasm(self, code, offset, count = 0):
+        insns = []
         all_insn = ctypes.POINTER(_cs_insn)()
         res = _cs.cs_disasm_dyn(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
         if res > 0:
             for i in xrange(res):
-                yield CsInsn(self.csh, all_insn[i], self.arch)
+                insns.append(CsInsn(self.csh, all_insn[i], self.arch))
             _cs.cs_free(all_insn)
         else:
             status = _cs.cs_errno(self.csh)
             if status != CS_ERR_OK:
                 raise CsError(status)
 
-            yield []
+        return insns
 

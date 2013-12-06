@@ -61,12 +61,11 @@ def test_class():
             if syntax != 0:
                 md.syntax = syntax
 
-            all_ins = list(md.disasm(code, 0x1000))
-            for insn in all_ins:
+            for insn in md.disasm(code, 0x1000):
                 bytes = binascii.hexlify(insn.bytes)
                 print("0x%x:\t%s\t%s\t// hex-code: %s" %(insn.address, insn.mnemonic, insn.op_str, bytes))
 
-            print("0x%x:" % (all_ins[-1].address + all_ins[-1].size))
+            print("0x%x:" % (insn.address + insn.size))
             print
         except:
             print("ERROR: Arch or mode unsupported!")

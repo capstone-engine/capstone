@@ -89,12 +89,10 @@ def test_class():
 
         try:
             md = Cs(arch, mode)
-            last = None
             for insn in md.disasm(code, 0x1000):
                 print_insn_detail(insn)
-                last = insn
                 print
-            print "0x%x:\n" % (last.address + last.size)
+            print "0x%x:\n" % (insn.address + insn.size)
         except:
             print("ERROR: Arch or mode unsupported!")
 
