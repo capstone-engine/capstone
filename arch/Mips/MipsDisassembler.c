@@ -136,6 +136,11 @@ static DecodeStatus DecodeFMem(MCInst *Inst, unsigned Insn,
 static DecodeStatus DecodeSimm16(MCInst *Inst,
 		unsigned Insn, uint64_t Address, MCRegisterInfo *Decoder);
 
+// Decode the immediate field of an LSA instruction which
+// is off by one.
+static DecodeStatus DecodeLSAImm(MCInst *Inst,
+		unsigned Insn, uint64_t Address, MCRegisterInfo *Decoder);
+
 static DecodeStatus DecodeInsSize(MCInst *Inst,
 		unsigned Insn, uint64_t Address, MCRegisterInfo *Decoder);
 
@@ -158,6 +163,7 @@ static uint64_t Mips_getFeatureBits(int mode)
 	}
 
 	// ref: MipsGenDisassemblerTables.inc::checkDecoderPredicate()
+	// some features are mutually execlusive
 	if (mode & CS_MODE_16) {
 		Bits -= Mips_FeatureMips32r2;
 		Bits -= Mips_FeatureMips32;
@@ -166,15 +172,16 @@ static uint64_t Mips_getFeatureBits(int mode)
 		Bits -= Mips_FeatureSwap;
 		Bits -= Mips_FeatureSEInReg;
 		Bits -= Mips_FeatureMips64r2;
-		// Bits -= Mips_FeatureFP64Bit;	// FIXME???
+		Bits -= Mips_FeatureFP64Bit;
 	} else if (mode & CS_MODE_32) {
 		Bits -= Mips_FeatureMips16;
-		Bits -= Mips_FeatureMicroMips;
 		Bits -= Mips_FeatureFP64Bit;
 	} else if (mode & CS_MODE_64) {
 		Bits -= Mips_FeatureMips16;
-		Bits -= Mips_FeatureMicroMips;
 	}
+
+	if (mode & CS_MODE_MICRO)
+		Bits += Mips_FeatureMicroMips;
 
 	return Bits;
 }
@@ -473,7 +480,38 @@ static DecodeStatus DecodeMSA128Mem(MCInst *Inst, unsigned Insn,
 
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Reg));
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Base));
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Offset));
+	// MCInst_addOperand(Inst, MCOperand_CreateImm(Offset));
+
+	// The immediate field of an LD/ST instruction is scaled which means it must
+	// be multiplied (when decoding) by the size (in bytes) of the instructions'
+	// data format.
+	// .b - 1 byte
+	// .h - 2 bytes
+	// .w - 4 bytes
+	// .d - 8 bytes
+	switch(MCInst_getOpcode(Inst))
+	{
+		default:
+			//assert (0 && "Unexpected instruction");
+			return MCDisassembler_Fail;
+			break;
+		case Mips_LD_B:
+		case Mips_ST_B:
+			MCInst_addOperand(Inst, MCOperand_CreateImm(Offset));
+			break;
+		case Mips_LD_H:
+		case Mips_ST_H:
+			MCInst_addOperand(Inst, MCOperand_CreateImm(Offset << 1));
+			break;
+		case Mips_LD_W:
+		case Mips_ST_W:
+			MCInst_addOperand(Inst, MCOperand_CreateImm(Offset << 2));
+			break;
+		case Mips_LD_D:
+		case Mips_ST_D:
+			MCInst_addOperand(Inst, MCOperand_CreateImm(Offset << 3));
+			break;
+	}
 
 	return MCDisassembler_Success;
 }
@@ -682,6 +720,14 @@ static DecodeStatus DecodeSimm16(MCInst *Inst,
 {
 	MCInst_addOperand(Inst, MCOperand_CreateImm(SignExtend32(Insn, 16)));
 	return MCDisassembler_Success;
+}
+
+static DecodeStatus DecodeLSAImm(MCInst *Inst,
+		unsigned Insn, uint64_t Address, MCRegisterInfo *Decoder)
+{
+  // We add one to the immediate field as it was encoded as 'imm - 1'.
+  MCInst_addOperand(Inst, MCOperand_CreateImm(Insn + 1));
+  return MCDisassembler_Success;
 }
 
 static DecodeStatus DecodeInsSize(MCInst *Inst,
