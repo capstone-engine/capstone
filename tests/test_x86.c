@@ -124,6 +124,8 @@ static void test()
 //#define X86_CODE32 "\xe8\x26\xfe\xff\xff"		// call	0xe2b
 //#define X86_CODE32 "\xcd\x80"		// int 0x80
 //#define X86_CODE32 "\x24\xb8"		// and    $0xb8,%al
+//#define X86_CODE32 "\xf0\x01\xd8"   // lock add eax,ebx
+//#define X86_CODE32 "\xf3\xaa"		// rep stosb
 
 	struct platform platforms[] = {
 		{
