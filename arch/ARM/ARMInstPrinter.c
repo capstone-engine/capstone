@@ -739,6 +739,7 @@ static void printAM3PostIndexOp(MCInst *MI, unsigned Op, SStream *O)
 	MCOperand *MO1 = MCInst_getOperand(MI, Op);
 	MCOperand *MO2 = MCInst_getOperand(MI, Op+1);
 	MCOperand *MO3 = MCInst_getOperand(MI, Op+2);
+	ARM_AM_AddrOpc op = getAM3Op(MCOperand_getImm(MO3));
 
 	SStream_concat(O, "%s[", markup("<mem:"));
 	set_mem_access(MI, true);
@@ -748,7 +749,7 @@ static void printAM3PostIndexOp(MCInst *MI, unsigned Op, SStream *O)
 	set_mem_access(MI, false);
 
 	if (MCOperand_getReg(MO2)) {
-		SStream_concat(O, "%c", (char)getAM3Op(MCOperand_getImm(MO3)));
+		SStream_concat(O, "%c", (char)op);
 		printRegName(O, MCOperand_getReg(MO2));
 		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_REG;
 		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].reg = MCOperand_getReg(MO2);
@@ -757,11 +758,17 @@ static void printAM3PostIndexOp(MCInst *MI, unsigned Op, SStream *O)
 	}
 
 	unsigned ImmOffs = getAM3Offset(MCOperand_getImm(MO3));
+
 	SStream_concat(O, "%s#%s0x%x%s", markup("<imm:"),
-			ARM_AM_getAddrOpcStr(getAM3Op(MCOperand_getImm(MO3))), ImmOffs,
+			ARM_AM_getAddrOpcStr(op), ImmOffs,
 			markup(">"));
 	MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_IMM;
-	MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].imm = ImmOffs;
+
+	if (op)
+		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].imm = ImmOffs;
+	else
+		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].imm = -ImmOffs;
+
 	MI->pub_insn.arm.op_count++;
 }
 
@@ -771,6 +778,7 @@ static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 	MCOperand *MO1 = MCInst_getOperand(MI, Op);
 	MCOperand *MO2 = MCInst_getOperand(MI, Op+1);
 	MCOperand *MO3 = MCInst_getOperand(MI, Op+2);
+	ARM_AM_AddrOpc op = getAM3Op(MCOperand_getImm(MO3));
 
 	SStream_concat(O, "%s[", markup("<mem:"));
 	set_mem_access(MI, true);
@@ -778,10 +786,10 @@ static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 	MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].mem.base = MCOperand_getReg(MO1);
 
 	if (MCOperand_getReg(MO2)) {
-		SStream_concat(O, ", %s", ARM_AM_getAddrOpcStr(getAM3Op(MCOperand_getImm(MO3))));
+		SStream_concat(O, ", %s", ARM_AM_getAddrOpcStr(op));
 		printRegName(O, MCOperand_getReg(MO2));
 		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].mem.index = MCOperand_getReg(MO2);
-		if (getAM3Op(MCOperand_getImm(MO3)))
+		if (op)
 			MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].mem.scale = -1;
 		SStream_concat(O, "]%s", markup(">"));
 		set_mem_access(MI, false);
@@ -790,13 +798,17 @@ static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 
 	//If the op is sub we have to print the immediate even if it is 0
 	unsigned ImmOffs = getAM3Offset(MCOperand_getImm(MO3));
-	ARM_AM_AddrOpc op = getAM3Op(MCOperand_getImm(MO3));
 
 	if (AlwaysPrintImm0 || ImmOffs || (op == ARM_AM_sub)) {
 		SStream_concat(O, ", %s#%s0x%x%s", markup("<imm:"), ARM_AM_getAddrOpcStr(op),
 				ImmOffs, markup(">"));
 	}
-	MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].mem.disp = MCOperand_getImm(MO3);
+
+	if (op)
+		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].mem.disp = MCOperand_getImm(MO3);
+	else
+		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].mem.disp = -MCOperand_getImm(MO3);
+
 	SStream_concat(O, "]%s", markup(">"));
 	set_mem_access(MI, false);
 }
@@ -817,6 +829,7 @@ static void printAddrMode3Operand(MCInst *MI, unsigned Op, SStream *O,
 		printAM3PostIndexOp(MI, Op, O);
 		return;
 	}
+
 	printAM3PreOrOffsetIndexOp(MI, Op, O, AlwaysPrintImm0);
 }
 
@@ -824,9 +837,10 @@ static void printAddrMode3OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
+	ARM_AM_AddrOpc op = getAM3Op(MCOperand_getImm(MO2));
 
 	if (MCOperand_getReg(MO1)) {
-		SStream_concat(O, ARM_AM_getAddrOpcStr(getAM3Op(MCOperand_getImm(MO2))));
+		SStream_concat(O, ARM_AM_getAddrOpcStr(op));
 		printRegName(O, MCOperand_getReg(MO1));
 		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_REG;
 		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].imm = MCOperand_getReg(MO1);
@@ -835,11 +849,17 @@ static void printAddrMode3OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	}
 
 	unsigned ImmOffs = getAM3Offset(MCOperand_getImm(MO2));
+
 	SStream_concat(O, "%s#%s0x%x%s", markup("<imm:"),
-			ARM_AM_getAddrOpcStr(getAM3Op(MCOperand_getImm(MO2))), ImmOffs,
+			ARM_AM_getAddrOpcStr(op), ImmOffs,
 			markup(">"));
 	MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_IMM;
-	MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].imm = ImmOffs;
+
+	if (op)
+		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].imm = ImmOffs;
+	else
+		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].imm = -ImmOffs;
+
 	MI->pub_insn.arm.op_count++;
 }
 
