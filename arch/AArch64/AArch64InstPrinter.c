@@ -556,7 +556,7 @@ static void printNeonUImm0Operand(MCInst *MI, unsigned OpNum, SStream *O)
 	MI->pub_insn.arm64.op_count++;
 }
 
-static void printNeonUImm8Operand(MCInst *MI, unsigned OpNum, SStream *O)
+static void printUImmHexOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *MOUImm = MCInst_getOperand(MI, OpNum);
 
@@ -565,13 +565,13 @@ static void printNeonUImm8Operand(MCInst *MI, unsigned OpNum, SStream *O)
 
 	unsigned Imm = MCOperand_getImm(MOUImm);
 
-	SStream_concat(O, "#0x%"PRIx64, Imm);
+	SStream_concat(O, "#0x%x", Imm);
 	MI->pub_insn.arm64.operands[MI->pub_insn.arm64.op_count].type = ARM64_OP_IMM;
 	MI->pub_insn.arm64.operands[MI->pub_insn.arm64.op_count].imm = Imm;
 	MI->pub_insn.arm64.op_count++;
 }
 
-static void printNeonUImm8OperandBare(MCInst *MI, unsigned OpNum, SStream *O)
+static void printUImmBareOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *MOUImm = MCInst_getOperand(MI, OpNum);
 
@@ -621,6 +621,38 @@ static void printMSROperand(MCInst *MI, unsigned OpNum, SStream *O)
 	printSysRegOperand(&AArch64_MSRMapper, MI, OpNum, O);
 }
 
+// If Count > 1, there are two valid kinds of vector list:
+//   (1) {Vn.layout, Vn+1.layout, ... , Vm.layout}
+//   (2) {Vn.layout - Vm.layout}
+// We choose the first kind as output.
+static void printVectorList(MCInst *MI, unsigned OpNum,
+		SStream *O, MCRegisterInfo *MRI, A64Layout_VectorLayout Layout, unsigned Count)
+{
+	//assert(Count >= 1 && Count <= 4 && "Invalid Number of Vectors");
+
+	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
+	const char *LayoutStr = A64VectorLayoutToString(Layout);
+	SStream_concat(O, "{");
+	if (Count > 1) { // Print sub registers separately
+		bool IsVec64 = (Layout < A64Layout_VL_16B);
+		unsigned SubRegIdx = IsVec64 ? AArch64_dsub_0 : AArch64_qsub_0;
+		unsigned I;
+		for (I = 0; I < Count; I++) {
+			char *Name = strdup(getRegisterName(MCRegisterInfo_getSubReg(MRI, Reg, SubRegIdx++)));
+			Name[0] = 'v';
+			SStream_concat(O, "%s%s", Name, LayoutStr);
+			if (I != Count - 1)
+				SStream_concat(O, ", ");
+			free(Name);
+		}
+	} else { // Print the register directly when NumVecs is 1.
+		char *Name = strdup(getRegisterName(Reg));
+		Name[0] = 'v';
+		SStream_concat(O, "%s%s", Name, LayoutStr);
+		free(Name);
+	}
+	SStream_concat(O, "}");
+}
 
 #define PRINT_ALIAS_INSTR
 #include "AArch64GenAsmWriter.inc"
@@ -645,6 +677,6 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 		MCInst_setOpcodePub(MI, AArch64_map_insn(mnem));
 		free(mnem);
 	} else
-		AArch64InstPrinter_printInstruction(MI, O);
+		AArch64InstPrinter_printInstruction(MI, O, Info);
 }
 

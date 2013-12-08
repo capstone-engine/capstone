@@ -217,6 +217,46 @@ typedef enum A64SE_ShiftExtSpecifiers {
 	A64SE_SXTX
 } A64SE_ShiftExtSpecifiers;
 
+typedef enum A64Layout_VectorLayout {
+	A64Layout_Invalid = -1,
+	A64Layout_VL_8B,
+	A64Layout_VL_4H,
+	A64Layout_VL_2S,
+	A64Layout_VL_1D,
+
+	A64Layout_VL_16B,
+	A64Layout_VL_8H,
+	A64Layout_VL_4S,
+	A64Layout_VL_2D,
+
+	// Bare layout for the 128-bit vector
+	// (only show ".b", ".h", ".s", ".d" without vector number)
+	A64Layout_VL_B,
+	A64Layout_VL_H,
+	A64Layout_VL_S,
+	A64Layout_VL_D
+} A64Layout_VectorLayout;
+
+inline static const char *
+A64VectorLayoutToString(A64Layout_VectorLayout Layout)
+{
+	switch (Layout) {
+		case A64Layout_VL_8B:  return ".8b";
+		case A64Layout_VL_4H:  return ".4h";
+		case A64Layout_VL_2S:  return ".2s";
+		case A64Layout_VL_1D:  return ".1d";
+		case A64Layout_VL_16B:  return ".16b";
+		case A64Layout_VL_8H:  return ".8h";
+		case A64Layout_VL_4S:  return ".4s";
+		case A64Layout_VL_2D:  return ".2d";
+		case A64Layout_VL_B:  return ".b";
+		case A64Layout_VL_H:  return ".h";
+		case A64Layout_VL_S:  return ".s";
+		case A64Layout_VL_D:  return ".d";
+		default: return NULL;	// never reach
+	}
+}
+
 enum SysRegROValues {
 	A64SysReg_MDCCSR_EL0        = 0x9808, // 10  011  0000  0001  000
 	A64SysReg_DBGDTRRX_EL0      = 0x9828, // 10  011  0000  0101  000
