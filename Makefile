@@ -64,7 +64,7 @@ VERSION=$(shell echo `grep -e PKG_MAJOR -e PKG_MINOR cs.c | grep -v = | awk '{pr
 
 .PHONY: all clean install uninstall
 
-all: $(LIBRARY) $(ARCHIVE) capstone.pc
+all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF)
 	$(MAKE) -C tests
 	$(INSTALL_DATA) lib$(LIBNAME).$(EXT) tests
 
