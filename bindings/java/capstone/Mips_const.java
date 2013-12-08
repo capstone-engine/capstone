@@ -618,11 +618,11 @@ public class Mips_const {
 	public static final int MIPS_INS_TGEU = 441;
 	public static final int MIPS_INS_TLT = 442;
 	public static final int MIPS_INS_TLTI = 443;
-	public static final int MIPS_INS_TLTU = 444;
-	public static final int MIPS_INS_TNE = 445;
-	public static final int MIPS_INS_TNEI = 446;
-	public static final int MIPS_INS_TRUNC = 447;
-	public static final int MIPS_INS_TLTIU = 448;
+	public static final int MIPS_INS_TLTIU = 444;
+	public static final int MIPS_INS_TLTU = 445;
+	public static final int MIPS_INS_TNE = 446;
+	public static final int MIPS_INS_TNEI = 447;
+	public static final int MIPS_INS_TRUNC = 448;
 	public static final int MIPS_INS_VSHF = 449;
 	public static final int MIPS_INS_WAIT = 450;
 	public static final int MIPS_INS_WRDSP = 451;
@@ -650,7 +650,7 @@ public class Mips_const {
 	public static final int MIPS_GRP_FP64BIT = 14;
 	public static final int MIPS_GRP_NONANSFPMATH = 15;
 	public static final int MIPS_GRP_NOTFP64BIT = 16;
-	public static final int MIPS_GRP_RELOCSTATIC = 17;
+	public static final int MIPS_GRP_NOTINMICROMIPS = 17;
 	public static final int MIPS_GRP_JUMP = 18;
 	public static final int MIPS_GRP_MAX = 19;
 }
