@@ -12,7 +12,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 	or:
 		$ make
 
-	For FreeBSD, use 'gmake' instread of 'make':
+	For FreeBSD/OpenBSD, use 'gmake' instread of 'make':
 
 		$ gmake
 
@@ -30,7 +30,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 	$ sudo make install
 	
-	For FreeBSD, use 'gmake' instead of 'make':
+	For FreeBSD/OpenBSD, use 'gmake' instead of 'make':
 
 	$ sudo gmake install
 
