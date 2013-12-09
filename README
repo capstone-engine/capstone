@@ -16,7 +16,7 @@ Capstone offers some unparalleled features:
 - Implemented in pure C language, with lightweight wrappers for C++, Python,
      Ruby, OCaml, C#, Java and Go available.
 
-- Native support for Windows, MacOSX & Linux platforms.
+- Native support for Windows & *nix platforms (MacOSX, Linux & FreeBSD confirmed).
 
 - Thread-safe by design.
 

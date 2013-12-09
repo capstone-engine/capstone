@@ -5,12 +5,16 @@ How To Compile & Run Capstone for Linux, Mac OSX, *nix and Windows
 Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 
-(1) On Linux, Mac OSX or *nix:
+(1) On *nix (such as MacOSX, Linux & FreeBSD):
 
 - To compile for current platform, run either:
 		$ ./compile.sh
 	or:
 		$ make
+
+	For FreeBSD, use 'gmake' instread of 'make':
+
+		$ gmake
 
 	Then run "./tests/test*" to see the tests disassembling sample code.
 
@@ -26,6 +30,10 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 	$ sudo make install
 	
+	For FreeBSD, use 'gmake' instead of 'make':
+
+	$ sudo gmake install
+
 Users are then required to enter root password to copy Capstone into machine
 system directories.
 
