@@ -173,7 +173,7 @@ static name_map reg_name_maps[] = {
 	{ MIPS_REG_W31, "w31"},
 };
 
-char *Mips_reg_name(unsigned int reg)
+char *Mips_reg_name(csh handle, unsigned int reg)
 {
 	if (reg >= MIPS_REG_MAX)
 		return NULL;
@@ -1916,7 +1916,7 @@ static name_map alias_insn_names[] = {
 	{ MIPS_INS_BC1F, "bc1f" },
 };
 
-char *Mips_insn_name(unsigned int id)
+char *Mips_insn_name(csh handle, unsigned int id)
 {
 	if (id >= MIPS_INS_MAX)
 		return NULL;

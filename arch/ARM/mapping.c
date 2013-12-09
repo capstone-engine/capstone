@@ -125,7 +125,7 @@ static name_map reg_name_maps[] = {
 	{ ARM_REG_S31, "s31"},
 };
 
-char *ARM_reg_name(unsigned int reg)
+char *ARM_reg_name(csh handle, unsigned int reg)
 {
 	if (reg >= ARM_REG_MAX)
 		return NULL;
@@ -2763,7 +2763,7 @@ static name_map insn_name_maps[] = {
 	{ ARM_INS_PUSH, "push" },
 };
 
-char *ARM_insn_name(unsigned int id)
+char *ARM_insn_name(csh handle, unsigned int id)
 {
 	if (id >= ARM_INS_MAX)
 		return NULL;

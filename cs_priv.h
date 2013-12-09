@@ -17,7 +17,7 @@ typedef void (*PostPrinter_t)(unsigned int insn, cs_insn *, char *mnem);
 
 typedef bool (*Disasm_t)(csh handle, unsigned char *code, size_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *info);
 
-typedef char *(*GetName_t)(unsigned int reg);
+typedef char *(*GetName_t)(csh handle, unsigned int reg);
 
 typedef void (*GetID_t)(cs_insn *insn, unsigned int id);
 

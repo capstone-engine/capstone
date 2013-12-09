@@ -436,7 +436,7 @@ static name_map reg_name_maps[] = {
 	{ ARM64_REG_Q31_Q0_Q1_Q2, "q31_q0_q1_q2"},
 };
 
-char *AArch64_reg_name(unsigned int reg)
+char *AArch64_reg_name(csh handle, unsigned int reg)
 {
 	if (reg >= ARM64_REG_MAX)
 		return NULL;
@@ -3684,7 +3684,7 @@ static name_map alias_insn_name_maps[] = {
 	{ ARM64_INS_NEGS, "negs" },
 };
 
-char *AArch64_insn_name(unsigned int id)
+char *AArch64_insn_name(csh handle, unsigned int id)
 {
 	if (id >= ARM64_INS_MAX)
 		return NULL;
