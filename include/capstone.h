@@ -11,6 +11,10 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
+// Capstone API version
+#define CS_API_MAJOR 1
+#define CS_API_MINOR 0
+
 // Handle using with all API
 typedef size_t csh;
 
@@ -112,17 +116,6 @@ typedef enum cs_err {
 	CS_ERR_OPTION,	// Invalid/unsupported option: cs_option()
 } cs_err;
 
-
-
-/*
- Return API version in major and minor numbers.
-
- @major: major number of API version (for ex: 1)
- @minor: minor number of API version (for ex: 0)
-
- For example, first API version would return 1 in @major, and 0 in @minor
-*/
-void cs_version(int *major, int *minor);
 
 /*
  Initialize CS handle: this must be done before any usage of CS.

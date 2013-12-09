@@ -32,10 +32,6 @@
 #define PKG_MAJOR 1
 #define PKG_MINOR 0
 
-// API version
-#define API_MAJOR 1
-#define API_MINOR 7
-
 cs_err cs_errno(csh handle)
 {
 	if (!handle)
@@ -44,12 +40,6 @@ cs_err cs_errno(csh handle)
 	cs_struct *ud = (cs_struct *)(uintptr_t)handle;
 
 	return ud->errnum;
-}
-
-void cs_version(int *major, int *minor)
-{
-	*major = API_MAJOR;
-	*minor = API_MINOR;
 }
 
 cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
