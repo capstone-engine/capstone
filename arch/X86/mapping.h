@@ -20,13 +20,13 @@ x86_reg x86_map_segment(int r);
 x86_reg x86_map_regname(char *reg);
 
 // return name of regiser in friendly string
-char *X86_reg_name(unsigned int reg);
+char *X86_reg_name(csh handle, unsigned int reg);
 
 // given internal insn id, return public instruction info
 void X86_get_insn_id(cs_insn *insn, unsigned int id);
 
 // return insn name, given insn id
-char *X86_insn_name(unsigned int id);
+char *X86_insn_name(csh handle, unsigned int id);
 
 // return insn id, given insn mnemonic
 x86_reg X86_map_insn(char *mnem);

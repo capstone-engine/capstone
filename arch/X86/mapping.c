@@ -7,6 +7,7 @@
 #include "X86DisassemblerDecoder.h"
 
 #include "../../utils.h"
+#include "../../cs_priv.h"
 #include "../../include/x86.h"
 
 static x86_reg sib_base_map[] = {
@@ -65,6 +66,7 @@ x86_reg x86_map_segment(int r)
 
 static name_map reg_name_maps[] = {
 	{ X86_REG_INVALID, NULL },
+
 	{ X86_REG_AH, "ah" },
 	{ X86_REG_AL, "al" },
 	{ X86_REG_AX, "ax" },
@@ -299,10 +301,19 @@ static name_map reg_name_maps[] = {
 	{ X86_REG_R15W, "r15w" },
 };
 
-char *X86_reg_name(unsigned int reg)
+char *X86_reg_name(csh handle, unsigned int reg)
 {
+	cs_struct *ud = (cs_struct *)handle;
+
 	if (reg >= X86_REG_MAX)
 		return NULL;
+
+	if (reg == X86_REG_EFLAGS) {
+		if (ud->mode & CS_MODE_32)
+			return "eflags";
+		if (ud->mode & CS_MODE_64)
+			return "rflags";
+	}
 
 	return reg_name_maps[reg].name;
 }
@@ -1568,7 +1579,7 @@ static name_map insn_name_maps[] = {
 	{ X86_INS_XTEST, "xtest" },
 };
 
-char *X86_insn_name(unsigned int id)
+char *X86_insn_name(csh handle, unsigned int id)
 {
 	if (id >= X86_INS_MAX)
 		return NULL;

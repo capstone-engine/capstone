@@ -383,7 +383,7 @@ char *cs_reg_name(csh ud, unsigned int reg)
 		return NULL;
 	}
 
-	return handle->reg_name(reg);
+	return handle->reg_name(ud, reg);
 }
 
 char *cs_insn_name(csh ud, unsigned int insn)
@@ -394,7 +394,7 @@ char *cs_insn_name(csh ud, unsigned int insn)
 		return NULL;
 	}
 
-	return handle->insn_name(insn);
+	return handle->insn_name(ud, insn);
 }
 
 static bool arr_exist(unsigned int *arr, int max, unsigned int id)
