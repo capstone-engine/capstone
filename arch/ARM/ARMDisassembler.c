@@ -371,8 +371,31 @@ static uint64_t ARM_getFeatureBits(int mode)
 		Bits |= ARMFeatureKV[i].Value;
 	}
 
-	if (mode == 4)
-		Bits -= ARM_ModeThumb;
+	// FIXME: ARM_FeatureVFPOnlySP is conflicting??
+	Bits -= ARM_FeatureVFPOnlySP;
+	// some features are mutually exclusive
+	switch(mode) {
+		case 2:
+			Bits -= ARM_HasV6Ops;
+			Bits -= ARM_HasV8Ops;
+			Bits -= ARM_FeatureCRC;
+			Bits -= ARM_HasV5TEOps;
+			Bits -= ARM_HasV4TOps;
+			Bits -= ARM_FeatureTrustZone;
+			Bits -= ARM_HasV6T2Ops;
+			Bits -= ARM_HasV7Ops;
+			Bits -= ARM_FeatureMP;
+			Bits -= ARM_FeatureDB;
+			Bits -= ARM_FeatureHWDivARM;
+			Bits -= ARM_FeatureNaClTrap;
+			Bits -= ARM_FeatureMClass;
+			break;
+		case 4:
+			Bits -= ARM_ModeThumb;
+			break;
+		default:
+			break;
+	}
 
 	return Bits;
 }
@@ -505,7 +528,6 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, unsigned char
 		*Size = 4;
 		return result;
 	}
-
 
 	MCInst_clear(MI);
 	*Size = 0;
