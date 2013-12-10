@@ -203,6 +203,7 @@ public class Capstone {
     public byte cs_reg_read(NativeLong csh, Pointer insn, int id);
     public byte cs_reg_write(NativeLong csh, Pointer insn, int id);
     public int cs_errno(NativeLong csh);
+    public void cs_version(IntByReference major, IntByReference minor);
   }
 
   // capstone API version
