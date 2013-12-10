@@ -139,10 +139,6 @@ public class X86 {
       sib_index = e.sib_index;
       sib_scale = e.sib_scale;
       sib_base = e.sib_base;
-      if (e.op_count == 0) {
-        op = null;
-        return;
-      }
       op = new Operand[e.op_count];
       for (int i=0; i<e.op_count; i++)
         op[i] = e.op[i];

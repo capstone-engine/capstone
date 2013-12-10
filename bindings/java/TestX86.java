@@ -85,7 +85,7 @@ public class TestX86 {
       }
     }
 
-    if (op_info.op != null) {
+    if (op_info.op.length != 0) {
       System.out.printf("\top_count: %d\n", op_info.op.length);
       for (int c=0; c<op_info.op.length; c++) {
         X86.Operand i = (X86.Operand) op_info.op[c];

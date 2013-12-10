@@ -40,7 +40,7 @@ public class TestArm64 {
 
     Arm64.OpInfo op_info = (Arm64.OpInfo) ins.op_info;
 
-    if (op_info.op != null) {
+    if (op_info.op.length != 0) {
       System.out.printf("\top_count: %d\n", op_info.op.length);
       for (int c=0; c<op_info.op.length; c++) {
         Arm64.Operand i = (Arm64.Operand) op_info.op[c];

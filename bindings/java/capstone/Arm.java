@@ -104,7 +104,6 @@ public class Arm {
       readField("_update_flags");
       readField("_writeback");
       readField("op_count");
-      if (op_count == 0) return;
       op = new Operand[op_count];
       readField("op");
     }
@@ -125,7 +124,6 @@ public class Arm {
       cc = op_info.cc;
       update_flags = (op_info._update_flags > 0);
       writeback = (op_info._writeback > 0);
-      if (op_info.op_count == 0) return;
       op = op_info.op;
     }
   }
