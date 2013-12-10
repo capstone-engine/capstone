@@ -32,6 +32,13 @@
 #define PKG_MAJOR 1
 #define PKG_MINOR 0
 
+
+void cs_version(int *major, int *minor)
+{
+	*major = CS_API_MAJOR;
+	*minor = CS_API_MINOR;
+}
+
 cs_err cs_errno(csh handle)
 {
 	if (!handle)
