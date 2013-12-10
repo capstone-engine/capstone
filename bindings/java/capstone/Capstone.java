@@ -202,9 +202,12 @@ public class Capstone {
     public byte cs_insn_group(NativeLong csh, Pointer insn, int id);
     public byte cs_reg_read(NativeLong csh, Pointer insn, int id);
     public byte cs_reg_write(NativeLong csh, Pointer insn, int id);
-    public void cs_version(IntByReference major, IntByReference minor);
     public int cs_errno(NativeLong csh);
   }
+
+  // capstone API version
+  public static final int CS_API_MAJOR = 1;
+  public static final int CS_API_MINOR = 0;
 
   public static final int CS_ARCH_ARM = 0;
   public static final int CS_ARCH_ARM64 = 1;

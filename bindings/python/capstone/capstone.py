@@ -6,7 +6,10 @@ __all__ = [
     'Cs',
     'CsInsn',
     'cs_disasm_quick',
-    'cs_version',
+
+    'CS_API_MAJOR',
+    'CS_API_MINOR',
+
     'CS_ARCH_ARM',
     'CS_ARCH_ARM64',
     'CS_ARCH_MIPS',
@@ -36,6 +39,11 @@ __all__ = [
 ]
 
 # Capstone C interface
+
+# API version
+CS_API_MAJOR = 1
+CS_API_MINOR = 0
+
 # architectures
 CS_ARCH_ARM = 0
 CS_ARCH_ARM64 = 1
@@ -155,16 +163,8 @@ _setup_prototype(_cs, "cs_reg_name", ctypes.c_char_p, ctypes.c_size_t, ctypes.c_
 _setup_prototype(_cs, "cs_insn_name", ctypes.c_char_p, ctypes.c_size_t, ctypes.c_uint)
 _setup_prototype(_cs, "cs_op_count", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint)
 _setup_prototype(_cs, "cs_op_index", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint, ctypes.c_uint)
-_setup_prototype(_cs, "cs_version", None, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
 _setup_prototype(_cs, "cs_errno", ctypes.c_int, ctypes.c_size_t)
 _setup_prototype(_cs, "cs_option", ctypes.c_int, ctypes.c_size_t, ctypes.c_int, ctypes.c_size_t)
-
-
-def cs_version():
-    major = ctypes.c_int()
-    minor = ctypes.c_int()
-    _cs.cs_version(ctypes.byref(major), ctypes.byref(minor))
-    return (major.value, minor.value)
 
 
 # access to error code via @errno of CsError
