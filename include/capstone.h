@@ -71,7 +71,7 @@ typedef struct cs_insn {
 	// Size of this instruction
 	uint16_t size;
 	// Machine bytes of this instruction, with number of bytes indicated by @size above
-	unsigned char bytes[16];
+	uint8_t bytes[16];
 
 	// Ascii text of instruction mnemonic
 	char mnemonic[32];
@@ -189,7 +189,7 @@ cs_err cs_errno(csh handle);
  On failure, call cs_errno() for error code.
 */
 size_t cs_disasm(csh handle,
-		unsigned char *code, size_t code_size,
+		const uint8_t *code, size_t code_size,
 		uint64_t address,
 		size_t count,
 		cs_insn *insn);
@@ -216,7 +216,7 @@ size_t cs_disasm(csh handle,
  On failure, call cs_errno() for error code.
 */
 size_t cs_disasm_dyn(csh handle,
-		unsigned char *code, size_t code_size,
+		const uint8_t *code, size_t code_size,
 		uint64_t address,
 		size_t count,
 		cs_insn **insn);
@@ -236,7 +236,7 @@ void cs_free(void *mem);
  @reg: register id
  @return: string name of the register, or NULL if @reg_id is invalid.
 */
-char *cs_reg_name(csh handle, unsigned int reg_id);
+const char *cs_reg_name(csh handle, unsigned int reg_id);
 
 /*
  Return friendly name of an instruction in a string
@@ -247,7 +247,7 @@ char *cs_reg_name(csh handle, unsigned int reg_id);
 
  @return: string name of the instruction, or NULL if @insn_id is invalid.
 */
-char *cs_insn_name(csh handle, unsigned int insn_id);
+const char *cs_insn_name(csh handle, unsigned int insn_id);
 
 /*
  Check if a disassembled instruction belong to a particular group.

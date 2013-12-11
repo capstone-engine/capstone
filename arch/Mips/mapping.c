@@ -173,7 +173,7 @@ static name_map reg_name_maps[] = {
 	{ MIPS_REG_W31, "w31"},
 };
 
-char *Mips_reg_name(csh handle, unsigned int reg)
+const char *Mips_reg_name(csh handle, unsigned int reg)
 {
 	if (reg >= MIPS_REG_MAX)
 		return NULL;
@@ -1917,7 +1917,7 @@ static name_map alias_insn_names[] = {
 	{ MIPS_INS_NEGU, "negu" },
 };
 
-char *Mips_insn_name(csh handle, unsigned int id)
+const char *Mips_insn_name(csh handle, unsigned int id)
 {
 	if (id >= MIPS_INS_MAX)
 		return NULL;
@@ -1932,7 +1932,7 @@ char *Mips_insn_name(csh handle, unsigned int id)
 	return insn_name_maps[id].name;
 }
 
-mips_reg Mips_map_insn(char *name)
+mips_reg Mips_map_insn(const char *name)
 {
 	// handle special alias first
 	int i;

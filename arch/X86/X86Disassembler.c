@@ -35,7 +35,7 @@
 #include "X86GenInstrInfo.inc"
 
 struct reader_info {
-	unsigned char *code;
+	const uint8_t *code;
 	uint64_t size;
 	uint64_t offset;
 };
@@ -567,7 +567,7 @@ static void update_pub_insn(cs_insn *pub, InternalInstruction *inter)
 }
 
 // Public interface for the disassembler
-bool X86_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *_info)
+bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *_info)
 {
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 	InternalInstruction insn;

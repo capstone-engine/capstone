@@ -301,7 +301,7 @@ static name_map reg_name_maps[] = {
 	{ X86_REG_R15W, "r15w" },
 };
 
-char *X86_reg_name(csh handle, unsigned int reg)
+const char *X86_reg_name(csh handle, unsigned int reg)
 {
 	cs_struct *ud = (cs_struct *)handle;
 
@@ -318,7 +318,7 @@ char *X86_reg_name(csh handle, unsigned int reg)
 	return reg_name_maps[reg].name;
 }
 
-x86_reg x86_map_regname(char *reg)
+x86_reg x86_map_regname(const char *reg)
 {
 	int i = name2id(&reg_name_maps[1], ARR_SIZE(reg_name_maps) - 1, reg);
 
@@ -1579,7 +1579,7 @@ static name_map insn_name_maps[] = {
 	{ X86_INS_XTEST, "xtest" },
 };
 
-char *X86_insn_name(csh handle, unsigned int id)
+const char *X86_insn_name(csh handle, unsigned int id)
 {
 	if (id >= X86_INS_MAX)
 		return NULL;
@@ -1588,7 +1588,7 @@ char *X86_insn_name(csh handle, unsigned int id)
 }
 
 // return insn id, given insn mnemonic
-x86_reg X86_map_insn(char *name)
+x86_reg X86_map_insn(const char *name)
 {
 	int i = name2id(&insn_name_maps[1], ARR_SIZE(insn_name_maps) - 1, name);
 

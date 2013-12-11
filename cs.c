@@ -164,7 +164,7 @@ cs_err cs_close(csh handle)
 
 // fill insn with mnemonic & operands info
 static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mci,
-		PostPrinter_t printer, unsigned char *code)
+		PostPrinter_t printer, const uint8_t *code)
 {
 	memcpy(insn, &mci->pub_insn, sizeof(*insn));
 
@@ -231,7 +231,7 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 	return CS_ERR_OK;
 }
 
-size_t cs_disasm(csh ud, unsigned char *buffer, size_t size, uint64_t offset, size_t count, cs_insn *insn)
+size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn *insn)
 {
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 	MCInst mci;
@@ -281,7 +281,7 @@ size_t cs_disasm(csh ud, unsigned char *buffer, size_t size, uint64_t offset, si
 
 // dynamicly allocate memory to contain disasm insn
 // NOTE: caller must free() the allocated memory itself to avoid memory leaking
-size_t cs_disasm_dyn(csh ud, unsigned char *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
+size_t cs_disasm_dyn(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
 {
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 	MCInst mci;
@@ -369,7 +369,7 @@ void cs_free(void *m)
 }
 
 // return friendly name of regiser in a string
-char *cs_reg_name(csh ud, unsigned int reg)
+const char *cs_reg_name(csh ud, unsigned int reg)
 {
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 
@@ -380,7 +380,7 @@ char *cs_reg_name(csh ud, unsigned int reg)
 	return handle->reg_name(ud, reg);
 }
 
-char *cs_insn_name(csh ud, unsigned int insn)
+const char *cs_insn_name(csh ud, unsigned int insn)
 {
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 
