@@ -169,7 +169,9 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
 			*tab = '\0';
 
 		// reflect the new insn name (alias) in the opcode
-		MCInst_setOpcode(MI, Mips_get_insn_id2(Mips_map_insn(mnem)));
+		unsigned id = Mips_map_insn(mnem);
+		MCInst_setOpcode(MI, Mips_get_insn_id2(id));
+		MCInst_setOpcodePub(MI, id);
 		free(mnem);
 	}
 

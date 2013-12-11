@@ -1383,6 +1383,7 @@ static insn_map insns[] = {
 
 static insn_map alias_insns[] = {
 	{ -2, MIPS_INS_NOP, { 0 }, { 0 }, { 0 }, 0, 0 },
+	{ Mips_SUBu, MIPS_INS_NEGU, { 0 }, { 0 }, { MIPS_GRP_STDENC, 0 }, 0, 0 },
 };
 
 // given internal insn id, return public instruction info
@@ -1395,16 +1396,16 @@ void Mips_get_insn_id(cs_insn *insn, unsigned int id)
 		if (alias_insns[i].id == id) {
 			insn->id = alias_insns[i].mapid;
 
-			memcpy(insn->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
-			insn->regs_read_count = count_positive(insns[i].regs_use);
+			memcpy(insn->regs_read, alias_insns[i].regs_use, sizeof(alias_insns[i].regs_use));
+			insn->regs_read_count = count_positive(alias_insns[i].regs_use);
 
-			memcpy(insn->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
-			insn->regs_write_count = count_positive(insns[i].regs_mod);
+			memcpy(insn->regs_write, alias_insns[i].regs_mod, sizeof(alias_insns[i].regs_mod));
+			insn->regs_write_count = count_positive(alias_insns[i].regs_mod);
 
-			memcpy(insn->groups, insns[i].groups, sizeof(insns[i].groups));
-			insn->groups_count = count_positive(insns[i].groups);
+			memcpy(insn->groups, alias_insns[i].groups, sizeof(alias_insns[i].groups));
+			insn->groups_count = count_positive(alias_insns[i].groups);
 
-			if (insns[i].branch || insns[i].indirect_branch) {
+			if (alias_insns[i].branch || alias_insns[i].indirect_branch) {
 				// this insn also belongs to JUMP group. add JUMP group
 				insn->groups[insn->groups_count] = MIPS_GRP_JUMP;
 				insn->groups_count++;
@@ -1913,6 +1914,7 @@ static name_map alias_insn_names[] = {
 	{ MIPS_INS_BGEZAL, "bal" },
 	{ MIPS_INS_BC1T, "bc1t" },
 	{ MIPS_INS_BC1F, "bc1f" },
+	{ MIPS_INS_NEGU, "negu" },
 };
 
 char *Mips_insn_name(csh handle, unsigned int id)

@@ -630,7 +630,8 @@ public class Mips_const {
 	public static final int MIPS_INS_XOR = 453;
 	public static final int MIPS_INS_XORI = 454;
 	public static final int MIPS_INS_NOP = 455;
-	public static final int MIPS_INS_MAX = 456;
+	public static final int MIPS_INS_NEGU = 456;
+	public static final int MIPS_INS_MAX = 457;
 
 	// Group of MIPS instructions
 	public static final int MIPS_GRP_INVALID = 0;

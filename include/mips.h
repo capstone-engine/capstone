@@ -685,6 +685,7 @@ typedef enum mips_insn {
 
 	// some alias instructions
 	MIPS_INS_NOP,
+	MIPS_INS_NEGU,
 
 	MIPS_INS_MAX,
 } mips_insn;
