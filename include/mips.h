@@ -177,6 +177,10 @@ typedef enum mips_reg {
 	MIPS_REG_W30,
 	MIPS_REG_W31,
 
+	MIPS_REG_HI,
+	MIPS_REG_LO,
+	MIPS_REG_PC,
+
 	MIPS_REG_MAX,	// <-- mark the end of the list or registers
 
 	// alias registers

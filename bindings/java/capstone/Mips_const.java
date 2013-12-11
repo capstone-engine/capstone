@@ -130,7 +130,10 @@ public class Mips_const {
 	public static final int MIPS_REG_W29 = 117;
 	public static final int MIPS_REG_W30 = 118;
 	public static final int MIPS_REG_W31 = 119;
-	public static final int MIPS_REG_MAX = 120;
+	public static final int MIPS_REG_HI = 120;
+	public static final int MIPS_REG_LO = 121;
+	public static final int MIPS_REG_PC = 122;
+	public static final int MIPS_REG_MAX = 123;
 	public static final int MIPS_REG_ZERO = MIPS_REG_0;
 	public static final int MIPS_REG_AT = MIPS_REG_1;
 	public static final int MIPS_REG_V0 = MIPS_REG_2;
