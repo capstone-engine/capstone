@@ -8,7 +8,7 @@
 #include "../../include/mips.h"
 
 // return name of regiser in friendly string
-char *Mips_reg_name(csh handle, unsigned int reg);
+const char *Mips_reg_name(csh handle, unsigned int reg);
 
 // given internal insn id, return public instruction info
 void Mips_get_insn_id(cs_insn *insn, unsigned int id);
@@ -17,10 +17,10 @@ void Mips_get_insn_id(cs_insn *insn, unsigned int id);
 unsigned int Mips_get_insn_id2(unsigned int id);
 
 // given public insn id, return internal insn id
-char *Mips_insn_name(csh handle, unsigned int id);
+const char *Mips_insn_name(csh handle, unsigned int id);
 
 // map instruction name to instruction ID
-mips_reg Mips_map_insn(char *name);
+mips_reg Mips_map_insn(const char *name);
 
 // map internal raw register to 'public' register
 mips_reg Mips_map_register(unsigned int r);

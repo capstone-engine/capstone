@@ -17,19 +17,19 @@ x86_reg x86_map_sib_index(int r);
 x86_reg x86_map_segment(int r);
 
 // map register name to x86_reg
-x86_reg x86_map_regname(char *reg);
+x86_reg x86_map_regname(const char *reg);
 
 // return name of regiser in friendly string
-char *X86_reg_name(csh handle, unsigned int reg);
+const char *X86_reg_name(csh handle, unsigned int reg);
 
 // given internal insn id, return public instruction info
 void X86_get_insn_id(cs_insn *insn, unsigned int id);
 
 // return insn name, given insn id
-char *X86_insn_name(csh handle, unsigned int id);
+const char *X86_insn_name(csh handle, unsigned int id);
 
 // return insn id, given insn mnemonic
-x86_reg X86_map_insn(char *mnem);
+x86_reg X86_map_insn(const char *mnem);
 
 // given public insn id, return internal insn id
 unsigned int X86_get_insn_id2(unsigned int insn_id);

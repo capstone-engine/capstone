@@ -281,7 +281,7 @@ void AArch64_init(MCRegisterInfo *MRI)
 
 
 static DecodeStatus _getInstruction(MCInst *MI,
-		unsigned char *code, size_t code_len,
+		const uint8_t *code, size_t code_len,
 		uint16_t *Size,
 		uint64_t Address, MCRegisterInfo *MRI)
 {

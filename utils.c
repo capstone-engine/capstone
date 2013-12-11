@@ -39,7 +39,7 @@ int insn_find(insn_map *m, unsigned int max, unsigned int id)
 	return -1;
 }
 
-int name2id(name_map* map, int max, char *name)
+int name2id(name_map* map, int max, const char *name)
 {
 	int i;
 
