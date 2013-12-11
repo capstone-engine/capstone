@@ -245,8 +245,7 @@ static DecodeStatus readInstruction32(unsigned char *code, uint32_t *insn, bool 
 static DecodeStatus MipsDisassembler_getInstruction(int mode, MCInst *instr,
 		unsigned char *code, size_t code_len,
 		uint16_t *Size,
-		uint64_t Address, bool isBigEndian, MCRegisterInfo *MRI,
-		bool isMicroMips)
+		uint64_t Address, bool isBigEndian, MCRegisterInfo *MRI)
 {
 	uint32_t Insn;
 
@@ -255,11 +254,11 @@ static DecodeStatus MipsDisassembler_getInstruction(int mode, MCInst *instr,
 		return MCDisassembler_Fail;
 
 	DecodeStatus Result = readInstruction32((unsigned char*)code, &Insn, isBigEndian,
-			isMicroMips);
+			instr->mode & CS_MODE_MICRO);
 	if (Result == MCDisassembler_Fail)
 		return MCDisassembler_Fail;
 
-	if (isMicroMips) {
+	if (instr->mode & CS_MODE_MICRO) {
 		// Calling the auto-generated decoder function.
 		Result = decodeInstruction(DecoderTableMicroMips32, instr, Insn, Address, MRI, mode);
 		if (Result != MCDisassembler_Fail) {
@@ -287,8 +286,7 @@ bool Mips_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *i
 	DecodeStatus status = MipsDisassembler_getInstruction(handle->mode, instr,
 			code, code_len,
 			size,
-			address, handle->big_endian, (MCRegisterInfo *)info,
-			handle->mode & CS_MODE_MICRO);
+			address, handle->big_endian, (MCRegisterInfo *)info);
 
 	return status == MCDisassembler_Success;
 }
@@ -371,6 +369,9 @@ static DecodeStatus DecodeGPR32RegisterClass(MCInst *Inst,
 static DecodeStatus DecodePtrRegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
+	if (Inst->mode & CS_MODE_N64)
+		return DecodeGPR64RegisterClass(Inst, RegNo, Address, Decoder);
+
 	return DecodeGPR32RegisterClass(Inst, RegNo, Address, Decoder);
 }
 
