@@ -436,7 +436,7 @@ static name_map reg_name_maps[] = {
 	{ ARM64_REG_Q31_Q0_Q1_Q2, "q31_q0_q1_q2"},
 };
 
-char *AArch64_reg_name(csh handle, unsigned int reg)
+const char *AArch64_reg_name(csh handle, unsigned int reg)
 {
 	if (reg >= ARM64_REG_MAX)
 		return NULL;
@@ -3684,7 +3684,7 @@ static name_map alias_insn_name_maps[] = {
 	{ ARM64_INS_NEGS, "negs" },
 };
 
-char *AArch64_insn_name(csh handle, unsigned int id)
+const char *AArch64_insn_name(csh handle, unsigned int id)
 {
 	if (id >= ARM64_INS_MAX)
 		return NULL;
@@ -3700,7 +3700,7 @@ char *AArch64_insn_name(csh handle, unsigned int id)
 }
 
 // map instruction name to public instruction ID
-arm64_reg AArch64_map_insn(char *name)
+arm64_reg AArch64_map_insn(const char *name)
 {
 	// NOTE: skip first NULL name in insn_name_maps
 	int i = name2id(&insn_name_maps[1], ARR_SIZE(insn_name_maps) - 1, name);

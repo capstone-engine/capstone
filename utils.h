@@ -38,7 +38,7 @@ typedef struct name_map {
 
 // map a name to its ID
 // return 0 if not found
-int name2id(name_map* map, int max, char *name);
+int name2id(name_map* map, int max, const char *name);
 
 // reverse mapid to id
 // return 0 if not found
