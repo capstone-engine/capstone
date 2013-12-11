@@ -673,8 +673,9 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 			*tab = '\0';
 		}
 		// reflect the new insn name (alias) in the opcode
-		MCInst_setOpcode(MI, AArch64_get_insn_id2(AArch64_map_insn(mnem)));
-		MCInst_setOpcodePub(MI, AArch64_map_insn(mnem));
+		unsigned int id = AArch64_map_insn(mnem);
+		MCInst_setOpcode(MI, AArch64_get_insn_id2(id));
+		MCInst_setOpcodePub(MI, id);
 		free(mnem);
 	} else
 		AArch64InstPrinter_printInstruction(MI, O, Info);
