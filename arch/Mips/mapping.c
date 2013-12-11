@@ -1910,7 +1910,6 @@ static name_map insn_name_maps[] = {
 static name_map alias_insn_names[] = {
 	{ MIPS_INS_NOP, "nop" },
 	{ MIPS_INS_BEQ, "beqz" },
-	{ MIPS_INS_BNE, "bnez" },
 	{ MIPS_INS_BGEZAL, "bal" },
 	{ MIPS_INS_BC1T, "bc1t" },
 	{ MIPS_INS_BC1F, "bc1f" },
