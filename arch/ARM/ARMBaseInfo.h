@@ -49,7 +49,8 @@ typedef enum ARMCC_CondCodes { // Meaning (integer)          Meaning (floating-p
 	ARMCC_AL             // Always (unconditional)     Always (unconditional)
 } ARMCC_CondCodes;
 
-inline static ARMCC_CondCodes ARMCC_getOppositeCondition(ARMCC_CondCodes CC) {
+inline static ARMCC_CondCodes ARMCC_getOppositeCondition(ARMCC_CondCodes CC)
+{
 	switch (CC) {
 		case ARMCC_EQ: return ARMCC_NE;
 		case ARMCC_NE: return ARMCC_EQ;
@@ -69,7 +70,8 @@ inline static ARMCC_CondCodes ARMCC_getOppositeCondition(ARMCC_CondCodes CC) {
 	}
 }
 
-inline static const char *ARMCC_ARMCondCodeToString(ARMCC_CondCodes CC) {
+inline static const char *ARMCC_ARMCondCodeToString(ARMCC_CondCodes CC)
+{
 	switch (CC) {
 		case ARMCC_EQ:  return "eq";
 		case ARMCC_NE:  return "ne";
@@ -101,7 +103,8 @@ enum ARM_PROC_IFlags {
 	ARM_PROC_A = 4
 };
 
-inline static const char *ARM_PROC_IFlagsToString(unsigned val) {
+inline static const char *ARM_PROC_IFlagsToString(unsigned val)
+{
 	switch (val) {
 		case ARM_PROC_F: return "f";
 		case ARM_PROC_I: return "i";
@@ -110,7 +113,8 @@ inline static const char *ARM_PROC_IFlagsToString(unsigned val) {
 	}
 }
 
-inline static const char *ARM_PROC_IModToString(unsigned val) {
+inline static const char *ARM_PROC_IModToString(unsigned val)
+{
 	switch (val) {
 		case ARM_PROC_IE: return "ie";
 		case ARM_PROC_ID: return "id";
@@ -140,7 +144,8 @@ enum ARM_MB_MemBOpt {
     ARM_MB_SY    = 15
 };
 
-inline static const char *ARM_MB_MemBOptToString(unsigned val, bool HasV8) {
+inline static const char *ARM_MB_MemBOptToString(unsigned val, bool HasV8)
+{
 	switch (val) {
 		default: return "BUGBUG";
 		case ARM_MB_SY:    return "sy";
@@ -181,7 +186,8 @@ enum ARM_ISB_InstSyncBOpt {
     ARM_ISB_SY = 15
 };
 
-inline static const char *ARM_ISB_InstSyncBOptToString(unsigned val) {
+inline static const char *ARM_ISB_InstSyncBOptToString(unsigned val)
+{
 	switch (val) {
 		default: // never reach
 		case ARM_ISB_RESERVED_0:  return "#0x0";
@@ -205,7 +211,8 @@ inline static const char *ARM_ISB_InstSyncBOptToString(unsigned val) {
 
 /// isARMLowRegister - Returns true if the register is a low register (r0-r7).
 ///
-static inline bool isARMLowRegister(unsigned Reg) {
+static inline bool isARMLowRegister(unsigned Reg)
+{
 	//using namespace ARM;
 	switch (Reg) {
 		case ARM_R0:  case ARM_R1:  case ARM_R2:  case ARM_R3:
@@ -248,7 +255,8 @@ typedef enum ARMII_AddrMode {
 	ARMII_AddrMode_i12    = 16
 } ARMII_AddrMode;
 
-inline static const char *ARMII_AddrModeToString(ARMII_AddrMode addrmode) {
+inline static const char *ARMII_AddrModeToString(ARMII_AddrMode addrmode)
+{
 	switch (addrmode) {
 		case ARMII_AddrModeNone:    return "AddrModeNone";
 		case ARMII_AddrMode1:       return "AddrMode1";

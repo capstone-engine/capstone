@@ -39,19 +39,15 @@ typedef struct MCRegisterClass {
 	bool Allocatable;
 } MCRegisterClass;
 
-/// MCRegisterDesc - This record contains all of the information known about
-/// a particular register.  The Overlaps field contains a pointer to a zero
-/// terminated array of registers that this register aliases, starting with
-/// itself. This is needed for architectures like X86 which have AL alias AX
-/// alias EAX. The SubRegs field is a zero terminated array of registers that
-/// are sub-registers of the specific register, e.g. AL, AH are sub-registers of
-/// AX. The SuperRegs field is a zero terminated array of registers that are
-/// super-registers of the specific register, e.g. RAX, EAX, are super-registers
-/// of AX.
+/// MCRegisterDesc - This record contains information about a particular
+/// register.  The SubRegs field is a zero terminated array of registers that
+/// are sub-registers of the specific register, e.g. AL, AH are sub-registers
+/// of AX. The SuperRegs field is a zero terminated array of registers that are
+/// super-registers of the specific register, e.g. RAX, EAX, are
+/// super-registers of AX.
 ///
 typedef struct MCRegisterDesc {
 	uint32_t Name;      // Printable name for the reg (for debugging)
-	uint32_t Overlaps;  // Overlapping registers, described above
 	uint32_t SubRegs;   // Sub-register set, described above
 	uint32_t SuperRegs; // Super-register set, described above
 

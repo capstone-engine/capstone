@@ -6291,7 +6291,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 2:
     // ASRi, ASRr, ITasm, LSLi, LSLr, LSRi, LSRr, RORi, RORr, RRXi, t2LDRBpcr...
-    SStream_concat(O, " ");
+    SStream_concat(O, "\t");
     break;
   case 3:
     // BKPT, BL, BLX, BLXi, BX, CPS1p, HLT, RFEDA, RFEDB, RFEIA, RFEIB, SRSDA...

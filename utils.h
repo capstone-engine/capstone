@@ -6,6 +6,9 @@
 
 #include <stdbool.h>
 
+// threshold number, so above this number will be printed in hexa mode
+#define HEX_THRESHOLD 9
+
 typedef struct Pair {
 	char *str;
 	unsigned num;

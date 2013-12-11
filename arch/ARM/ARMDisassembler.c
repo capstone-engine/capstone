@@ -12,6 +12,8 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <inttypes.h>
 
 #include "ARMAddressingModes.h"
 #include "ARMBaseInfo.h"
@@ -30,9 +32,6 @@
 //#include "X86GenRegisterInfo.inc"
 
 #define GET_SUBTARGETINFO_ENUM
-#include "ARMGenSubtargetInfo.inc"
-
-#define GET_SUBTARGETINFO_MC_DESC
 #include "ARMGenSubtargetInfo.inc"
 
 #define GET_INSTRINFO_MC_DESC
@@ -363,38 +362,40 @@ static DecodeStatus DecodeMRRC2(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder);
 
 // Hacky: enable all features for disassembler
-static uint64_t ARM_getFeatureBits(int mode)
+uint64_t ARM_getFeatureBits(int mode)
 {
-	int i;
-	uint64_t Bits = 0;
-	for (i = 0; i < sizeof(ARMFeatureKV)/sizeof(ARMFeatureKV[0]); i++) {
-		Bits |= ARMFeatureKV[i].Value;
-	}
+	uint64_t Bits = -1;	// everything by default
 
-	// FIXME: ARM_FeatureVFPOnlySP is conflicting??
-	Bits -= ARM_FeatureVFPOnlySP;
+	// FIXME: ARM_FeatureVFPOnlySP is conflicting with everything else??
+	Bits &= (~ARM_FeatureVFPOnlySP);
+
+	// FIXME: no Armv8 support?
+	//Bits -= ARM_HasV7Ops;
+	Bits &= ~ARM_FeatureMP;
+	Bits &= ~ARM_HasV8Ops;
+	//Bits &= ~ARM_HasV6Ops;
+
+	//Bits &= (~ARM_FeatureMClass);
+
 	// some features are mutually exclusive
-	switch(mode) {
-		case 2:
-			Bits -= ARM_HasV6Ops;
-			Bits -= ARM_HasV8Ops;
-			Bits -= ARM_FeatureCRC;
-			Bits -= ARM_HasV5TEOps;
-			Bits -= ARM_HasV4TOps;
-			Bits -= ARM_FeatureTrustZone;
-			Bits -= ARM_HasV6T2Ops;
-			Bits -= ARM_HasV7Ops;
-			Bits -= ARM_FeatureMP;
-			Bits -= ARM_FeatureDB;
-			Bits -= ARM_FeatureHWDivARM;
-			Bits -= ARM_FeatureNaClTrap;
-			Bits -= ARM_FeatureMClass;
-			break;
-		case 4:
-			Bits -= ARM_ModeThumb;
-			break;
-		default:
-			break;
+	if (mode & CS_MODE_THUMB) {
+			Bits &= ~ARM_HasV6Ops;
+			Bits &= ~ARM_FeatureCRC;
+			Bits &= ~ARM_HasV5TEOps;
+			Bits &= ~ARM_HasV4TOps;
+
+			// FIXME: ARM_FeatureTrustZone is available for Thumb2 only, not Thumb?
+			//Bits -= ARM_FeatureTrustZone;
+			Bits &= ~ARM_HasV6T2Ops;
+			Bits &= ~ARM_FeatureDB;
+			Bits &= ~ARM_FeatureHWDivARM;
+			Bits &= ~ARM_FeatureNaClTrap;
+			Bits &= ~ARM_FeatureMClass;
+			// ArmV8
+			//Bits &= ~ARM_HasV7Ops;
+	} else {	// ARM mode
+		Bits &= ~ARM_ModeThumb;
+		Bits &= ~ARM_FeatureThumb2;
 	}
 
 	return Bits;
@@ -460,7 +461,7 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, unsigned char
 		(bytes[0] <<  0);
 
 	// Calling the auto-generated decoder function.
-	DecodeStatus result = decodeInstruction_4(DecoderTableARM32, MI, insn, Address, 4);
+	DecodeStatus result = decodeInstruction_4(DecoderTableARM32, MI, insn, Address, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		return result;
@@ -469,32 +470,21 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, unsigned char
 	// VFP and NEON instructions, similarly, are shared between ARM
 	// and Thumb modes.
 	MCInst_clear(MI);
-	result = decodeInstruction_4(DecoderTableVFP32, MI, insn, Address, 4);
+	result = decodeInstruction_4(DecoderTableVFP32, MI, insn, Address, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		return result;
 	}
 
 	MCInst_clear(MI);
-	result = decodeInstruction_4(DecoderTableVFPV832, MI, insn, Address, 4);
+	result = decodeInstruction_4(DecoderTableVFPV832, MI, insn, Address, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		return result;
 	}
 
 	MCInst_clear(MI);
-	result = decodeInstruction_4(DecoderTableNEONData32, MI, insn, Address, 4);
-	if (result != MCDisassembler_Fail) {
-		*Size = 4;
-		// Add a fake predicate operand, because we share these instruction
-		// definitions with Thumb2 where these instructions are predicable.
-		if (!DecodePredicateOperand(MI, 0xE, Address, NULL))
-			return MCDisassembler_Fail;
-		return result;
-	}
-
-	MCInst_clear(MI);
-	result = decodeInstruction_4(DecoderTableNEONLoadStore32, MI, insn, Address, 4);
+	result = decodeInstruction_4(DecoderTableNEONData32, MI, insn, Address, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		// Add a fake predicate operand, because we share these instruction
@@ -505,7 +495,7 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, unsigned char
 	}
 
 	MCInst_clear(MI);
-	result = decodeInstruction_4(DecoderTableNEONDup32, MI, insn, Address, 4);
+	result = decodeInstruction_4(DecoderTableNEONLoadStore32, MI, insn, Address, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		// Add a fake predicate operand, because we share these instruction
@@ -516,14 +506,25 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, unsigned char
 	}
 
 	MCInst_clear(MI);
-	result = decodeInstruction_4(DecoderTablev8NEON32, MI, insn, Address, 4);
+	result = decodeInstruction_4(DecoderTableNEONDup32, MI, insn, Address, ud->mode);
+	if (result != MCDisassembler_Fail) {
+		*Size = 4;
+		// Add a fake predicate operand, because we share these instruction
+		// definitions with Thumb2 where these instructions are predicable.
+		if (!DecodePredicateOperand(MI, 0xE, Address, NULL))
+			return MCDisassembler_Fail;
+		return result;
+	}
+
+	MCInst_clear(MI);
+	result = decodeInstruction_4(DecoderTablev8NEON32, MI, insn, Address, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		return result;
 	}
 
 	MCInst_clear(MI);
-	result = decodeInstruction_4(DecoderTablev8Crypto32, MI, insn, Address, 4);
+	result = decodeInstruction_4(DecoderTablev8Crypto32, MI, insn, Address, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		return result;
@@ -666,9 +667,6 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, unsigned ch
 
 	ud->ITBlock.size = 0;
 
-	//assert((STI.getFeatureBits() & ARM_ModeThumb) &&
-	//       "Asked to disassemble in Thumb mode but Subtarget is in ARM mode!");
-
 	// We want to read exactly 2 bytes of data.
 	if (code_len < 2)
 		return MCDisassembler_Fail;
@@ -676,7 +674,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, unsigned ch
 	memcpy(bytes, code, 2);
 
 	uint16_t insn16 = (bytes[1] << 8) | bytes[0];
-	DecodeStatus result = decodeInstruction_2(DecoderTableThumb16, MI, insn16, Address, 2);
+	DecodeStatus result = decodeInstruction_2(DecoderTableThumb16, MI, insn16, Address, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 2;
 		Check(&result, AddThumbPredicate(ud, MI));
@@ -684,7 +682,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, unsigned ch
 	}
 
 	MCInst_clear(MI);
-	result = decodeInstruction_2(DecoderTableThumbSBit16, MI, insn16, Address, 2);
+	result = decodeInstruction_2(DecoderTableThumbSBit16, MI, insn16, Address, ud->mode);
 	if (result) {
 		*Size = 2;
 		bool InITBlock = ITStatus_instrInITBlock(&(ud->ITBlock));
@@ -694,7 +692,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, unsigned ch
 	}
 
 	MCInst_clear(MI);
-	result = decodeInstruction_2(DecoderTableThumb216, MI, insn16, Address, 2);
+	result = decodeInstruction_2(DecoderTableThumb216, MI, insn16, Address, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 2;
 
@@ -731,7 +729,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, unsigned ch
 		(bytes[1] << 24) |
 		(bytes[0] << 16);
 	MCInst_clear(MI);
-	result = decodeInstruction_4(DecoderTableThumb32, MI, insn32, Address, 2);
+	result = decodeInstruction_4(DecoderTableThumb32, MI, insn32, Address, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		bool InITBlock = ITStatus_instrInITBlock(&(ud->ITBlock));
@@ -741,7 +739,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, unsigned ch
 	}
 
 	MCInst_clear(MI);
-	result = decodeInstruction_4(DecoderTableThumb232, MI, insn32, Address, 2);
+	result = decodeInstruction_4(DecoderTableThumb232, MI, insn32, Address, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		Check(&result, AddThumbPredicate(ud, MI));
@@ -749,7 +747,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, unsigned ch
 	}
 
 	MCInst_clear(MI);
-	result = decodeInstruction_4(DecoderTableVFP32, MI, insn32, Address, 2);
+	result = decodeInstruction_4(DecoderTableVFP32, MI, insn32, Address, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		UpdateThumbVFPPredicate(ud, MI);
@@ -758,7 +756,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, unsigned ch
 
 	if (fieldFromInstruction_4(insn32, 28, 4) == 0xE) {
 		MCInst_clear(MI);
-		result = decodeInstruction_4(DecoderTableVFP32, MI, insn32, Address, 2);
+		result = decodeInstruction_4(DecoderTableVFP32, MI, insn32, Address, ud->mode);
 		if (result != MCDisassembler_Fail) {
 			*Size = 4;
 			UpdateThumbVFPPredicate(ud, MI);
@@ -767,7 +765,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, unsigned ch
 	}
 
 	MCInst_clear(MI);
-	result = decodeInstruction_4(DecoderTableVFPV832, MI, insn32, Address, 2);
+	result = decodeInstruction_4(DecoderTableVFPV832, MI, insn32, Address, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		return result;
@@ -775,7 +773,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, unsigned ch
 
 	if (fieldFromInstruction_4(insn32, 28, 4) == 0xE) {
 		MCInst_clear(MI);
-		result = decodeInstruction_4(DecoderTableNEONDup32, MI, insn32, Address, 2);
+		result = decodeInstruction_4(DecoderTableNEONDup32, MI, insn32, Address, ud->mode);
 		if (result != MCDisassembler_Fail) {
 			*Size = 4;
 			Check(&result, AddThumbPredicate(ud, MI));
@@ -788,7 +786,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, unsigned ch
 		uint32_t NEONLdStInsn = insn32;
 		NEONLdStInsn &= 0xF0FFFFFF;
 		NEONLdStInsn |= 0x04000000;
-		result = decodeInstruction_4(DecoderTableNEONLoadStore32, MI, NEONLdStInsn, Address, 2);
+		result = decodeInstruction_4(DecoderTableNEONLoadStore32, MI, NEONLdStInsn, Address, ud->mode);
 		if (result != MCDisassembler_Fail) {
 			*Size = 4;
 			Check(&result, AddThumbPredicate(ud, MI));
@@ -802,7 +800,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, unsigned ch
 		NEONDataInsn &= 0xF0FFFFFF; // Clear bits 27-24
 		NEONDataInsn |= (NEONDataInsn & 0x10000000) >> 4; // Move bit 28 to bit 24
 		NEONDataInsn |= 0x12000000; // Set bits 28 and 25
-		result = decodeInstruction_4(DecoderTableNEONData32, MI, NEONDataInsn, Address, 2);
+		result = decodeInstruction_4(DecoderTableNEONData32, MI, NEONDataInsn, Address, ud->mode);
 		if (result != MCDisassembler_Fail) {
 			*Size = 4;
 			Check(&result, AddThumbPredicate(ud, MI));
@@ -816,7 +814,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, unsigned ch
 	NEONCryptoInsn |= (NEONCryptoInsn & 0x10000000) >> 4; // Move bit 28 to bit 24
 	NEONCryptoInsn |= 0x12000000; // Set bits 28 and 25
 	result = decodeInstruction_4(DecoderTablev8Crypto32, MI, NEONCryptoInsn,
-			Address, 2);
+			Address, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		return result;
@@ -825,7 +823,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, unsigned ch
 	MCInst_clear(MI);
 	uint32_t NEONv8Insn = insn32;
 	NEONv8Insn &= 0xF3FFFFFF; // Clear bits 27-26
-	result = decodeInstruction_4(DecoderTablev8NEON32, MI, NEONv8Insn, Address, 2);
+	result = decodeInstruction_4(DecoderTablev8NEON32, MI, NEONv8Insn, Address, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		return result;

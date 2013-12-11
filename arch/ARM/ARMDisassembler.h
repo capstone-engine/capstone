@@ -13,4 +13,6 @@ bool ARM_getInstruction(csh handle, unsigned char *code, size_t code_len, MCInst
 
 bool Thumb_getInstruction(csh handle, unsigned char *code, size_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *info);
 
+uint64_t ARM_getFeatureBits(int mode);
+
 #endif
