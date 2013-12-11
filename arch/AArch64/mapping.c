@@ -3183,7 +3183,6 @@ static insn_map alias_insns[] = {
 
 void AArch64_get_insn_id(cs_insn *insn, unsigned int id)
 {
-	// try alias insn first
 	int i = insn_find(insns, ARR_SIZE(insns), id);
 	if (i != -1) {
 		insn->id = insns[i].mapid;
