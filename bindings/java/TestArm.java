@@ -43,7 +43,7 @@ public class TestArm {
 
     Arm.OpInfo op_info = (Arm.OpInfo) ins.op_info;
 
-    if (op_info.op != null) {
+    if (op_info.op.length != 0) {
       System.out.printf("\top_count: %d\n", op_info.op.length);
       for (int c=0; c<op_info.op.length; c++) {
         Arm.Operand i = (Arm.Operand) op_info.op[c];

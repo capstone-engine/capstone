@@ -118,6 +118,16 @@ typedef enum cs_err {
 
 
 /*
+ Return API version in major and minor numbers.
+
+ @major: major number of API version (for ex: 1)
+ @minor: minor number of API version (for ex: 0)
+
+ For example, first API version would return 1 in @major, and 0 in @minor
+*/
+void cs_version(int *major, int *minor);
+
+/*
  Initialize CS handle: this must be done before any usage of CS.
 
  @arch: architecture type (CS_ARCH_*)

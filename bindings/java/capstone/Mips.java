@@ -78,7 +78,6 @@ public class Mips {
 
     public void read() {
       readField("op_count");
-      if (op_count ==0) return;
       op = new Operand[op_count];
       readField("op");
     }
@@ -94,10 +93,6 @@ public class Mips {
     public Operand [] op;
 
     public OpInfo(UnionOpInfo e) {
-      if (e.op_count == 0) {
-        op = null;
-        return;
-      }
       op = e.op;
     }
   }

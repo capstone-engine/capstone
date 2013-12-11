@@ -5,7 +5,9 @@ import arm, arm64, mips, x86
 __all__ = [
     'Cs',
     'CsInsn',
+
     'cs_disasm_quick',
+    'cs_version',
 
     'CS_API_MAJOR',
     'CS_API_MINOR',
@@ -165,6 +167,7 @@ _setup_prototype(_cs, "cs_op_count", ctypes.c_int, ctypes.c_size_t, ctypes.POINT
 _setup_prototype(_cs, "cs_op_index", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint, ctypes.c_uint)
 _setup_prototype(_cs, "cs_errno", ctypes.c_int, ctypes.c_size_t)
 _setup_prototype(_cs, "cs_option", ctypes.c_int, ctypes.c_size_t, ctypes.c_int, ctypes.c_size_t)
+_setup_prototype(_cs, "cs_version", None, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
 
 
 # access to error code via @errno of CsError
@@ -182,6 +185,13 @@ class CsError(Exception):
             CS_ERR_OPTION: "Invalid option (CsError)",
         }
         return messages[self.errno]
+
+
+def cs_version():
+    major = ctypes.c_int()
+    minor = ctypes.c_int()
+    _cs.cs_version(ctypes.byref(major), ctypes.byref(minor))
+    return (major.value, minor.value)
 
 
 # quick & dirty Python function to disasm raw binary code
