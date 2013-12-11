@@ -17,16 +17,3 @@ enum {
   AArch64_FeatureNEON =  1ULL << 2
 };
 #endif // GET_SUBTARGETINFO_ENUM
-
-
-#ifdef GET_SUBTARGETINFO_MC_DESC
-#undef GET_SUBTARGETINFO_MC_DESC
-
-// Sorted (by key) array of values for CPU features.
-static SubtargetFeatureKV AArch64FeatureKV[] = {
-  { "crypto", "Enable cryptographic instructions", AArch64_FeatureCrypto, 0ULL },
-  { "fp-armv8", "Enable ARMv8 FP", AArch64_FeatureFPARMv8, 0ULL },
-  { "neon", "Enable Advanced SIMD instructions", AArch64_FeatureNEON, AArch64_FeatureFPARMv8 }
-};
-
-#endif // GET_SUBTARGETINFO_MC_DESC

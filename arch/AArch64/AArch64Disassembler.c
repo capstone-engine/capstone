@@ -211,19 +211,11 @@ static bool Check(DecodeStatus *Out, DecodeStatus In);
 #define GET_SUBTARGETINFO_ENUM
 #include "AArch64GenSubtargetInfo.inc"
 
-#define GET_SUBTARGETINFO_MC_DESC
-#include "AArch64GenSubtargetInfo.inc"
-
 // Hacky: enable all features for disassembler
 static uint64_t AArch64_getFeatureBits(void)
 {
-	int i;
-	uint64_t Bits = 0;
-	for (i = 0; i < sizeof(AArch64FeatureKV)/sizeof(AArch64FeatureKV[0]); i++) {
-		Bits |= AArch64FeatureKV[i].Value;
-	}
-
-	return Bits;
+	// enable all features
+	return -1;
 }
 
 #include "AArch64GenDisassemblerTables.inc"
