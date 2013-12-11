@@ -150,38 +150,31 @@ static DecodeStatus DecodeExtSize(MCInst *Inst,
 #define GET_SUBTARGETINFO_ENUM
 #include "MipsGenSubtargetInfo.inc"
 
-#define GET_SUBTARGETINFO_MC_DESC
-#include "MipsGenSubtargetInfo.inc"
-
 // Hacky: enable all features for disassembler
 static uint64_t Mips_getFeatureBits(int mode)
 {
-	int i;
-	uint64_t Bits = 0;
-	for (i = 0; i < ARR_SIZE(MipsFeatureKV); i++) {
-		Bits |= MipsFeatureKV[i].Value;
-	}
+	uint64_t Bits = -1;	// include every features by default
 
 	// ref: MipsGenDisassemblerTables.inc::checkDecoderPredicate()
 	// some features are mutually execlusive
 	if (mode & CS_MODE_16) {
-		Bits -= Mips_FeatureMips32r2;
-		Bits -= Mips_FeatureMips32;
-		Bits -= Mips_FeatureFPIdx;
-		Bits -= Mips_FeatureBitCount;
-		Bits -= Mips_FeatureSwap;
-		Bits -= Mips_FeatureSEInReg;
-		Bits -= Mips_FeatureMips64r2;
-		Bits -= Mips_FeatureFP64Bit;
+		Bits &= ~Mips_FeatureMips32r2;
+		Bits &= ~Mips_FeatureMips32;
+		Bits &= ~Mips_FeatureFPIdx;
+		Bits &= ~Mips_FeatureBitCount;
+		Bits &= ~Mips_FeatureSwap;
+		Bits &= ~Mips_FeatureSEInReg;
+		Bits &= ~Mips_FeatureMips64r2;
+		Bits &= ~Mips_FeatureFP64Bit;
 	} else if (mode & CS_MODE_32) {
-		Bits -= Mips_FeatureMips16;
-		Bits -= Mips_FeatureFP64Bit;
+		Bits &= ~Mips_FeatureMips16;
+		Bits &= ~Mips_FeatureFP64Bit;
 	} else if (mode & CS_MODE_64) {
-		Bits -= Mips_FeatureMips16;
+		Bits &= ~Mips_FeatureMips16;
 	}
 
 	if (mode & CS_MODE_MICRO)
-		Bits += Mips_FeatureMicroMips;
+		Bits |= Mips_FeatureMicroMips;
 
 	return Bits;
 }
