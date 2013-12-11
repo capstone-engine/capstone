@@ -39,7 +39,6 @@ typedef struct cs_struct {
 	GetName_t insn_name;
 	GetID_t insn_id;
 	PostPrinter_t post_printer;
-	bool micro_mips;	// for Mips only
 	cs_err errnum;
 	ARM_ITStatus ITBlock;	// for Arm only
 } cs_struct;

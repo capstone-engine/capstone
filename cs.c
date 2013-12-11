@@ -109,9 +109,6 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 				   else
 					   ud->disasm = Mips64_getInstruction;
 
-				   if (ud->mode & CS_MODE_MICRO)
-					   ud->micro_mips = true;
-
 				   break;
 			}
 		case CS_ARCH_ARM64: {

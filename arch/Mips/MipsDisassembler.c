@@ -288,7 +288,7 @@ bool Mips_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *i
 			code, code_len,
 			size,
 			address, handle->big_endian, (MCRegisterInfo *)info,
-			handle->micro_mips);
+			handle->mode & CS_MODE_MICRO);
 
 	return status == MCDisassembler_Success;
 }
@@ -371,11 +371,6 @@ static DecodeStatus DecodeGPR32RegisterClass(MCInst *Inst,
 static DecodeStatus DecodePtrRegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	/* TODO: N64 support
-	if (static_cast<const MipsDisassembler *>(Decoder)->isN64())
-		return DecodeGPR64RegisterClass(Inst, RegNo, Address, Decoder);
-	 */
-
 	return DecodeGPR32RegisterClass(Inst, RegNo, Address, Decoder);
 }
 
