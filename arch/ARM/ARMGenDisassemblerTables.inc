@@ -12801,7 +12801,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
     return S; \
   case 274: \
-    if (!Check(&S, DecodeT2CPSInstruction(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    if (!Check(&S, DecodeT2CPSInstruction(MI, insn, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
   case 275: \
     tmp = fieldname(insn, 8, 4); \
