@@ -14053,8 +14053,7 @@ static DecodeStatus decodeInstruction(const uint8_t DecodeTable[], MCInst *MI,
       unsigned Len = *++Ptr;
       ++Ptr;
       CurFieldValue = fieldFromInstruction(insn, Start, Len);
-      //DEBUG(dbgs() << Loc << ": OPC_ExtractField(" << Start << ", "
-      //             << Len << "): " << CurFieldValue << "\n");
+
       break;
     }
     case MCD_OPC_FilterValue: {
@@ -14069,9 +14068,6 @@ static DecodeStatus decodeInstruction(const uint8_t DecodeTable[], MCInst *MI,
       // Perform the filter operation.
       if (Val != CurFieldValue)
         Ptr += NumToSkip;
-      //DEBUG(dbgs() << Loc << ": OPC_FilterValue(" << Val << ", " << NumToSkip
-      //             << "): " << ((Val != CurFieldValue) ? "FAIL:" : "PASS:")
-      //             << " continuing at " << (Ptr - DecodeTable) << "\n");
 
       break;
     }
@@ -14089,11 +14085,6 @@ static DecodeStatus decodeInstruction(const uint8_t DecodeTable[], MCInst *MI,
       // If the actual and expected values don't match, skip.
       if (ExpectedValue != FieldValue)
         Ptr += NumToSkip;
-      //DEBUG(dbgs() << Loc << ": OPC_CheckField(" << Start << ", "
-      //             << Len << ", " << ExpectedValue << ", " << NumToSkip
-      //             << "): FieldValue = " << FieldValue << ", ExpectedValue = "
-      //             << ExpectedValue << ": "
-      //             << ((ExpectedValue == FieldValue) ? "PASS\n" : "FAIL\n"));
       break;
     }
     case MCD_OPC_CheckPredicate: {
@@ -14109,9 +14100,6 @@ static DecodeStatus decodeInstruction(const uint8_t DecodeTable[], MCInst *MI,
       if (!(Pred = checkDecoderPredicate(PIdx, Bits)))
         Ptr += NumToSkip;
       (void)Pred;
-      //DEBUG(dbgs() << Loc << ": OPC_CheckPredicate(" << PIdx << "): "
-      //      << (Pred ? "PASS\n" : "FAIL\n"));
-
       break;
     }
     case MCD_OPC_Decode: {
@@ -14120,11 +14108,6 @@ static DecodeStatus decodeInstruction(const uint8_t DecodeTable[], MCInst *MI,
       unsigned Opc = decodeULEB128(++Ptr, &Len);
       Ptr += Len;
       unsigned DecodeIdx = decodeULEB128(Ptr, &Len);
-      Ptr += Len;
-      //DEBUG(dbgs() << Loc << ": OPC_Decode: opcode " << Opc
-      //             << ", using decoder " << DecodeIdx << "\n" );
-      //DEBUG(dbgs() << "----- DECODE SUCCESSFUL -----\n");
-
       MCInst_setOpcode(MI, Opc);
       return decodeToMCInst(S, DecodeIdx, insn, MI, Address, MRI);
     }
@@ -14138,11 +14121,9 @@ static DecodeStatus decodeInstruction(const uint8_t DecodeTable[], MCInst *MI,
       bool Fail = (insn & PositiveMask) || (~insn & NegativeMask);
       if (Fail)
         S = MCDisassembler_SoftFail;
-      //DEBUG(dbgs() << Loc << ": OPC_SoftFail: " << (Fail ? "FAIL\n":"PASS\n"));
       break;
     }
     case MCD_OPC_Fail: {
-      //DEBUG(dbgs() << Loc << ": OPC_Fail\n");
       return MCDisassembler_Fail;
     }
     }

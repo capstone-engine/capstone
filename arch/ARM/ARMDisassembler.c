@@ -371,28 +371,24 @@ uint64_t ARM_getFeatureBits(int mode)
 
 	// FIXME: no Armv8 support?
 	//Bits -= ARM_HasV7Ops;
-	Bits &= ~ARM_FeatureMP;
-	Bits &= ~ARM_HasV8Ops;
+	//Bits &= ~ARM_FeatureMP;
+	//Bits &= ~ARM_HasV8Ops;
 	//Bits &= ~ARM_HasV6Ops;
 
 	//Bits &= (~ARM_FeatureMClass);
 
 	// some features are mutually exclusive
 	if (mode & CS_MODE_THUMB) {
-			Bits &= ~ARM_HasV6Ops;
-			Bits &= ~ARM_FeatureCRC;
-			Bits &= ~ARM_HasV5TEOps;
-			Bits &= ~ARM_HasV4TOps;
-
-			// FIXME: ARM_FeatureTrustZone is available for Thumb2 only, not Thumb?
-			//Bits -= ARM_FeatureTrustZone;
-			Bits &= ~ARM_HasV6T2Ops;
-			Bits &= ~ARM_FeatureDB;
-			Bits &= ~ARM_FeatureHWDivARM;
-			Bits &= ~ARM_FeatureNaClTrap;
-			Bits &= ~ARM_FeatureMClass;
+			//Bits &= ~ARM_HasV6Ops;
+			//Bits &= ~ARM_FeatureCRC;
+			//Bits &= ~ARM_HasV5TEOps;
+			//Bits &= ~ARM_HasV4TOps;
+			//Bits &= ~ARM_HasV6T2Ops;
+			//Bits &= ~ARM_FeatureDB;
+			//Bits &= ~ARM_FeatureHWDivARM;
+			//Bits &= ~ARM_FeatureNaClTrap;
+			//Bits &= ~ARM_FeatureMClass;
 			// ArmV8
-			//Bits &= ~ARM_HasV7Ops;
 	} else {	// ARM mode
 		Bits &= ~ARM_ModeThumb;
 		Bits &= ~ARM_FeatureThumb2;
@@ -2970,15 +2966,13 @@ static DecodeStatus DecodeVLD4DupInstruction(MCInst *Inst, unsigned Insn,
 	if (size == 0x3) {
 		if (align == 0)
 			return MCDisassembler_Fail;
-		size = 4;
 		align = 16;
 	} else {
 		if (size == 2) {
-			size = 1 << size;
 			align *= 8;
 		} else {
 			size = 1 << size;
-			align *= 4*size;
+			align *= 4 * size;
 		}
 	}
 

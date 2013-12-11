@@ -5313,29 +5313,21 @@ static DecodeStatus decodeInstruction(uint8_t DecodeTable[], MCInst *MI,
   uint32_t insn, uint64_t Address, MCRegisterInfo *MRI, int mode)
 {
   uint64_t Bits = Mips_getFeatureBits(mode);
-  //printf(">>>> Bits: %llx\n", Bits);
   uint8_t *Ptr = DecodeTable;
   uint32_t CurFieldValue = 0;
   DecodeStatus S = MCDisassembler_Success;
   for (;;) {
-    //unsigned Loc = Ptr - DecodeTable;
-	//printf(">> Loc: %lu\n", Ptr - DecodeTable);
     switch (*Ptr) {
     default:
-      //errs() << Loc << ": Unexpected decode table opcode!\n";
       return MCDisassembler_Fail;
     case MCD_OPC_ExtractField: {
-	  //printf("::OPC_ExtractField\n");
       unsigned Start = *++Ptr;
       unsigned Len = *++Ptr;
       ++Ptr;
       CurFieldValue = fieldFromInstruction(insn, Start, Len);
-      //DEBUG(dbgs() << Loc << ": OPC_ExtractField(" << Start << ", "
-      //             << Len << "): " << CurFieldValue << "\n");
       break;
     }
     case MCD_OPC_FilterValue: {
-	  //printf("::OPC_FilterValue\n");
       // Decode the field value.
       unsigned Len;
       uint32_t Val = decodeULEB128(++Ptr, &Len);
@@ -5347,14 +5339,10 @@ static DecodeStatus decodeInstruction(uint8_t DecodeTable[], MCInst *MI,
       // Perform the filter operation.
       if (Val != CurFieldValue)
         Ptr += NumToSkip;
-      //DEBUG(dbgs() << Loc << ": OPC_FilterValue(" << Val << ", " << NumToSkip
-      //             << "): " << ((Val != CurFieldValue) ? "FAIL:" : "PASS:")
-      //             << " continuing at " << (Ptr - DecodeTable) << "\n");
 
       break;
     }
     case MCD_OPC_CheckField: {
-	  //printf("::OPC_CheckField\n");
       unsigned Start = *++Ptr;
       unsigned Len = *++Ptr;
       uint32_t FieldValue = fieldFromInstruction(insn, Start, Len);
@@ -5368,52 +5356,35 @@ static DecodeStatus decodeInstruction(uint8_t DecodeTable[], MCInst *MI,
       // If the actual and expected values don't match, skip.
       if (ExpectedValue != FieldValue)
         Ptr += NumToSkip;
-      //DEBUG(dbgs() << Loc << ": OPC_CheckField(" << Start << ", "
-      //             << Len << ", " << ExpectedValue << ", " << NumToSkip
-      //             << "): FieldValue = " << FieldValue << ", ExpectedValue = "
-      //             << ExpectedValue << ": "
-      //             << ((ExpectedValue == FieldValue) ? "PASS\n" : "FAIL\n"));
       break;
     }
     case MCD_OPC_CheckPredicate: {
-	  //printf("::OPC_CheckPredicate\n");
       unsigned Len;
       // Decode the Predicate Index value.
       unsigned PIdx = decodeULEB128(++Ptr, &Len);
       Ptr += Len;
       // NumToSkip is a plain 16-bit integer.
       unsigned NumToSkip = *Ptr++;
-	  //printf(">>> NumToSkip 0: %u, Len: %u\n", NumToSkip, Len);
-	  //printf(">>> Loc 000: %lu\n", Ptr - DecodeTable);
       NumToSkip |= (*Ptr++) << 8;
       // Check the predicate.
       bool Pred;
-	  //printf(">>> NumToSkip: %u, PIdx: %u\n", NumToSkip, PIdx);
       if (!(Pred = checkDecoderPredicate(PIdx, Bits)))
         Ptr += NumToSkip;
       (void)Pred;
-      //DEBUG(dbgs() << Loc << ": OPC_CheckPredicate(" << PIdx << "): "
-      //      << (Pred ? "PASS\n" : "FAIL\n"));
 
       break;
     }
     case MCD_OPC_Decode: {
-	  //printf("::OPC_Decode\n");
       unsigned Len;
       // Decode the Opcode value.
       unsigned Opc = decodeULEB128(++Ptr, &Len);
       Ptr += Len;
       unsigned DecodeIdx = decodeULEB128(Ptr, &Len);
-      Ptr += Len;
-      //printf("opcode: %u, decoder: %u\n", Opc, DecodeIdx);//DEBUG(dbgs() << Loc << ": OPC_Decode: opcode " << Opc
-      //             << ", using decoder " << DecodeIdx << "\n" );
-      //DEBUG(dbgs() << "----- DECODE SUCCESSFUL -----\n");
 
       MCInst_setOpcode(MI, Opc);
       return decodeToMCInst(S, DecodeIdx, insn, MI, Address, MRI);
     }
     case MCD_OPC_SoftFail: {
-	  //printf("::OPC_SoftFail\n");
       // Decode the mask values.
       unsigned Len;
       uint32_t PositiveMask = decodeULEB128(++Ptr, &Len);
@@ -5423,12 +5394,10 @@ static DecodeStatus decodeInstruction(uint8_t DecodeTable[], MCInst *MI,
       bool Fail = (insn & PositiveMask) || (~insn & NegativeMask);
       if (Fail)
         S = MCDisassembler_SoftFail;
-      //DEBUG(dbgs() << Loc << ": OPC_SoftFail: " << (Fail ? "FAIL\n":"PASS\n"));
+
       break;
     }
     case MCD_OPC_Fail: {
-	  //printf("::OPC_Fail\n");
-      //DEBUG(dbgs() << Loc << ": OPC_Fail\n");
       return MCDisassembler_Fail;
     }
     }
