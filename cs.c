@@ -192,7 +192,6 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 		for (; ((*sp == ' ') || (*sp == '\t')); sp++);
 		strncpy(insn->op_str, sp, sizeof(insn->op_str) - 1);
 		insn->op_str[sizeof(insn->op_str) - 1] = '\0';
-		printf(">>>> |%s|\n", insn->op_str);
 	} else
 		insn->op_str[0] = '\0';
 
