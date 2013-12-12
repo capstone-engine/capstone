@@ -6590,6 +6590,21 @@ static insn_map insns[] = {
 	{ X86_XTEST, X86_INS_XTEST, { 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0 },
 };
 
+// post printer for X86. put all the hacky stuff here
+void X86_post_printer(cs_insn *insn, char *insn_asm)
+{
+	// FIXME: hack to fix some broken decoding here. TODO
+	if (insn->id == X86_INS_OUTSD) {
+		if (insn->x86.op_size == 2) {
+			// modify insn id
+			insn->id = X86_INS_OUTSW;
+			// modify instruction buffer, too
+			memcpy(insn_asm, "outsw", strlen("outsw"));
+		}
+	}
+}
+
+// given internal insn id, return public instruction info
 void X86_get_insn_id(cs_insn *insn, unsigned int id)
 {
 	int i = insn_find(insns, ARR_SIZE(insns), id);

@@ -22,6 +22,6 @@
 #include "../../SStream.h"
 
 void ARM_printInst(MCInst *MI, SStream *O, void *Info);
-void ARM_post_printer(unsigned int insn, cs_insn *pub_insn, const char *mnem);
+void ARM_post_printer(cs_insn *pub_insn, char *mnem);
 
 #endif

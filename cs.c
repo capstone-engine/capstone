@@ -74,6 +74,7 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 			ud->reg_name = X86_reg_name;
 			ud->insn_id = X86_get_insn_id;
 			ud->insn_name = X86_insn_name;
+			ud->post_printer = X86_post_printer;
 			break;
 		case CS_ARCH_ARM: {
 					MCRegisterInfo *mri = malloc(sizeof(*mri));
@@ -177,7 +178,7 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 		insn->id = MCInst_getOpcodePub(mci);
 
 	if (printer)
-		printer(insn->id, insn, buffer);
+		printer(insn, buffer);
 
 	// fill in mnemonic & operands
 	// find first space or tab
@@ -192,7 +193,6 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 		for (; ((*sp == ' ') || (*sp == '\t')); sp++);
 		strncpy(insn->op_str, sp, sizeof(insn->op_str) - 1);
 		insn->op_str[sizeof(insn->op_str) - 1] = '\0';
-		printf(">>>> |%s|\n", insn->op_str);
 	} else
 		insn->op_str[0] = '\0';
 

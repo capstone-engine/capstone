@@ -208,10 +208,6 @@ static bool printAliasInstr(MCInst *MI, SStream *OS);
 static void printInstruction(MCInst *MI, SStream *O);
 void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 {
-	//const MCInstrDesc &Desc = MII.get(MI->getOpcode());
-	// FIXME: target-specified flags need to be handled here
-	//uint64_t TSFlags = Desc.TSFlags;
-
 	//if (TSFlags & X86II::LOCK)
 	//  O << "\tlock\n";
 

@@ -34,4 +34,7 @@ x86_reg X86_map_insn(const char *mnem);
 // given public insn id, return internal insn id
 unsigned int X86_get_insn_id2(unsigned int insn_id);
 
+// post printer for X86.
+void X86_post_printer(cs_insn *pub_insn, char *insn_asm);
+
 #endif

@@ -219,7 +219,7 @@ static name_map insn_update_flgs[] = {
 	{ ARM_INS_UMULL, "umulls" },
 };
 
-void ARM_post_printer(unsigned int insn, cs_insn *pub_insn, const char *insn_asm)
+void ARM_post_printer(cs_insn *pub_insn, char *insn_asm)
 {
 	// check if this insn requests write-back
 	if (strrchr(insn_asm, '!') != NULL) {
@@ -232,7 +232,7 @@ void ARM_post_printer(unsigned int insn, cs_insn *pub_insn, const char *insn_asm
 		int i;
 
 		for (i = 0; i < ARR_SIZE(insn_update_flgs); i++) {
-			if (insn == insn_update_flgs[i].id &&
+			if (pub_insn->id == insn_update_flgs[i].id &&
 					!strncmp(insn_asm, insn_update_flgs[i].name,
 						strlen(insn_update_flgs[i].name))) {
 				pub_insn->arm.update_flags = true;
