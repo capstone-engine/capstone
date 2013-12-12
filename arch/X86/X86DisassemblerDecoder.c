@@ -936,6 +936,11 @@ static int getID(struct InternalInstruction* insn)
 			attrMask |= ATTR_XD;
 	}
 
+	// FIXME: hack to fix problem in 16bit mode with data size override
+	if (insn->mode == MODE_16BIT) {
+		attrMask = ATTR_OPSIZE - attrMask;
+	}
+
 	if (insn->rexPrefix & 0x08)
 		attrMask |= ATTR_REXW;
 
@@ -944,7 +949,8 @@ static int getID(struct InternalInstruction* insn)
 
 	/* The following clauses compensate for limitations of the tables. */
 
-	if (insn->prefixPresent[0x66] && !(attrMask & ATTR_OPSIZE)) {
+	// FIXME: dirty hack for 16bit data size override
+	if (insn->mode != MODE_16BIT && insn->prefixPresent[0x66] && !(attrMask & ATTR_OPSIZE)) {
 		/*
 		 * The instruction tables make no distinction between instructions that
 		 * allow OpSize anywhere (i.e., 16-bit operations) and that need it in a
