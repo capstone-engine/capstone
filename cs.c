@@ -180,10 +180,14 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 		printer(insn->id, insn, buffer);
 
 	// fill in mnemonic & operands
-	char *tab = strchr(buffer, '\t');
-	if (tab) {
-		*tab = '\0';
-		strncpy(insn->op_str, tab + 1, sizeof(insn->op_str) - 1);
+	// find first space or tab
+	char *sp = buffer;
+	for (sp = buffer; *sp; sp++)
+		if (*sp == ' '||*sp == '\t')
+			break;
+	if (*sp) {
+		*sp = '\0';
+		strncpy(insn->op_str, sp + 1, sizeof(insn->op_str) - 1);
 		insn->op_str[sizeof(insn->op_str) - 1] = '\0';
 	} else
 		insn->op_str[0] = '\0';
