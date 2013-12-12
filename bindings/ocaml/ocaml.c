@@ -40,7 +40,7 @@ static unsigned int list_count(unsigned int *list, unsigned int max)
 	return max;
 }
 
-static CAMLprim value _cs_disasm(cs_arch arch, csh handle, char *code, uint64_t code_len, uint64_t addr, uint64_t count)
+static CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t *code, size_t code_len, uint64_t addr, uint64_t count)
 {
 	CAMLparam0();
 	CAMLlocal5(list, cons, rec_insn, array, tmp);
@@ -49,7 +49,7 @@ static CAMLprim value _cs_disasm(cs_arch arch, csh handle, char *code, uint64_t 
 
 	list = Val_emptylist;
 
-	uint64_t c = cs_disasm_dyn(handle, code, code_len, addr, count, &insn);
+	size_t c = cs_disasm_dyn(handle, code, code_len, addr, count, &insn);
 	if (c) {
 		//printf("Found %lu insn, addr: %lx\n", c, addr);
 		uint64_t j;
@@ -369,8 +369,9 @@ CAMLprim value ocaml_cs_disasm_quick(value _arch, value _mode, value _code, valu
 	csh handle;
 	cs_arch arch;
 	cs_mode mode = 0;
-	char *code;
-	uint64_t addr, count, code_len;
+	const uint8_t *code;
+	uint64_t addr;
+    size_t count, code_len;
 
 	switch (Int_val(_arch)) {
 		case 0:
@@ -397,7 +398,7 @@ CAMLprim value ocaml_cs_disasm_quick(value _arch, value _mode, value _code, valu
 				mode |= CS_MODE_LITTLE_ENDIAN;
 				break;
 			case 1:
-				mode |= CS_MODE_SYNTAX_INTEL;
+				mode |= CS_OPT_SYNTAX_INTEL;
 				break;
 			case 2:
 				mode |= CS_MODE_ARM;
@@ -421,7 +422,7 @@ CAMLprim value ocaml_cs_disasm_quick(value _arch, value _mode, value _code, valu
 				mode |= CS_MODE_N64;
 				break;
 			case 9:
-				mode |= CS_MODE_SYNTAX_ATT;
+				mode |= CS_OPT_SYNTAX_ATT;
 				break;
 			case 10:
 				mode |= CS_MODE_BIG_ENDIAN;
@@ -498,7 +499,7 @@ CAMLprim value ocaml_cs_open(value _arch, value _mode)
 				mode |= CS_MODE_LITTLE_ENDIAN;
 				break;
 			case 1:
-				mode |= CS_MODE_SYNTAX_INTEL;
+				mode |= CS_OPT_SYNTAX_INTEL;
 				break;
 			case 2:
 				mode |= CS_MODE_ARM;
@@ -522,7 +523,7 @@ CAMLprim value ocaml_cs_open(value _arch, value _mode)
 				mode |= CS_MODE_N64;
 				break;
 			case 9:
-				mode |= CS_MODE_SYNTAX_ATT;
+				mode |= CS_OPT_SYNTAX_ATT;
 				break;
 			case 10:
 				mode |= CS_MODE_BIG_ENDIAN;
@@ -566,12 +567,12 @@ CAMLprim value cs_register_name(value _arch, value _reg)
 			break;
 	}
 
-	char *name = cs_reg_name(arch, Int_val(_reg));
+	const char *name = cs_reg_name(arch, Int_val(_reg));
 	return caml_copy_string(name);
 }
 
 CAMLprim value cs_instruction_name(value _handle, value _insn)
 {
-	char *name = cs_insn_name(Int64_val(_handle), Int_val(_insn));
+	const char *name = cs_insn_name(Int64_val(_handle), Int_val(_insn));
 	return caml_copy_string(name);
 }
