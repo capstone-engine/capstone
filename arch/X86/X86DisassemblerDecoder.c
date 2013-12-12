@@ -938,7 +938,10 @@ static int getID(struct InternalInstruction* insn)
 
 	// FIXME: hack to fix problem in 16bit mode with data size override
 	if (insn->mode == MODE_16BIT) {
-		attrMask = ATTR_OPSIZE - attrMask;
+		if (attrMask & ATTR_OPSIZE)
+			attrMask &= ~ATTR_OPSIZE;
+		else
+			attrMask |= ATTR_OPSIZE;
 	}
 
 	if (insn->rexPrefix & 0x08)
