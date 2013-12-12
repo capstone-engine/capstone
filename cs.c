@@ -187,8 +187,12 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 			break;
 	if (*sp) {
 		*sp = '\0';
-		strncpy(insn->op_str, sp + 1, sizeof(insn->op_str) - 1);
+		// find the next non-space char
+		sp++;
+		for (; ((*sp == ' ') || (*sp == '\t')); sp++);
+		strncpy(insn->op_str, sp, sizeof(insn->op_str) - 1);
 		insn->op_str[sizeof(insn->op_str) - 1] = '\0';
+		printf(">>>> |%s|\n", insn->op_str);
 	} else
 		insn->op_str[0] = '\0';
 
