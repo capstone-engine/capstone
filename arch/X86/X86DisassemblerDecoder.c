@@ -1720,8 +1720,14 @@ static int readOperands(struct InternalInstruction* insn)
 					return -1;
 				break;
 			case ENCODING_ID:
-				if (readImmediate(insn, 4))
-					return -1;
+				// FIXME: dirty hack for 16bit call, which is not properly supported so far.
+				if (insn->mode == MODE_16BIT) {
+					if (readImmediate(insn, 2))
+						return -1;
+				} else {
+					if (readImmediate(insn, 4))
+						return -1;
+				}
 				break;
 			case ENCODING_IO:
 				if (readImmediate(insn, 8))
