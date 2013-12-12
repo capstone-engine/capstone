@@ -6002,6 +6002,7 @@ static void AArch64InstPrinter_printInstruction(MCInst *MI, SStream *O, MCRegist
   SStream_concat(O, "%s",AsmStrs+(Bits & 4095)-1);
 
   // Fragment 0 encoded into 8 bits for 159 unique commands.
+  //printf("Frag-0: %"PRIu64"\n", (Bits >> 12) & 255);
   switch ((Bits >> 12) & 255) {
   default:   // unreachable.
   case 0:
@@ -7510,6 +7511,7 @@ static void AArch64InstPrinter_printInstruction(MCInst *MI, SStream *O, MCRegist
 
 
   // Fragment 1 encoded into 5 bits for 20 unique commands.
+  //printf("Frag-1: %"PRIu64"\n", (Bits >> 20) & 31);
   switch ((Bits >> 20) & 31) {
   default:   // unreachable.
   case 0:
@@ -7633,6 +7635,7 @@ static void AArch64InstPrinter_printInstruction(MCInst *MI, SStream *O, MCRegist
 
 
   // Fragment 2 encoded into 5 bits for 30 unique commands.
+  //printf("Frag-2: %"PRIu64"\n", (Bits >> 25) & 31);
   switch ((Bits >> 25) & 31) {
   default:   // unreachable.
   case 0:
@@ -7805,6 +7808,7 @@ static void AArch64InstPrinter_printInstruction(MCInst *MI, SStream *O, MCRegist
 
 
   // Fragment 3 encoded into 5 bits for 30 unique commands.
+  //printf("Frag-3: %"PRIu64"\n", (Bits >> 30) & 31);
   switch ((Bits >> 30) & 31) {
   default:   // unreachable.
   case 0:
@@ -7960,6 +7964,7 @@ static void AArch64InstPrinter_printInstruction(MCInst *MI, SStream *O, MCRegist
 
 
   // Fragment 4 encoded into 6 bits for 39 unique commands.
+  //printf("Frag-4: %"PRIu64"\n", (Bits >> 35) & 63);
   switch ((Bits >> 35) & 63) {
   default:   // unreachable.
   case 0:
@@ -8189,6 +8194,7 @@ static void AArch64InstPrinter_printInstruction(MCInst *MI, SStream *O, MCRegist
 
 
   // Fragment 5 encoded into 5 bits for 17 unique commands.
+  //printf("Frag-5: %"PRIu64"\n", (Bits >> 41) & 31);
   switch ((Bits >> 41) & 31) {
   default:   // unreachable.
   case 0:
@@ -8285,6 +8291,7 @@ static void AArch64InstPrinter_printInstruction(MCInst *MI, SStream *O, MCRegist
 
 
   // Fragment 6 encoded into 6 bits for 35 unique commands.
+  //printf("Frag-6: %"PRIu64"\n", (Bits >> 46) & 63);
   switch ((Bits >> 46) & 63) {
   default:   // unreachable.
   case 0:
@@ -8493,6 +8500,7 @@ static void AArch64InstPrinter_printInstruction(MCInst *MI, SStream *O, MCRegist
 
 
   // Fragment 7 encoded into 1 bits for 2 unique commands.
+  //printf("Frag-7: %"PRIu64"\n", (Bits >> 52) & 1);
   if ((Bits >> 52) & 1) {
     // LDPSWx_PreInd, LSFPPair128_PreInd_LDR, LSFPPair128_PreInd_STR, LSFPPai...
     SStream_concat(O, "]!");
