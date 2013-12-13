@@ -28,10 +28,6 @@
 
 #include "utils.h"
 
-// Package version
-#define PKG_MAJOR 1
-#define PKG_MINOR 0
-
 
 void cs_version(int *major, int *minor)
 {

@@ -60,7 +60,7 @@ LIBRARY = lib$(LIBNAME).$(EXT)
 ARCHIVE = lib$(LIBNAME).$(AR_EXT)
 PKGCFGF = $(LIBNAME).pc
 
-VERSION=$(shell echo `grep -e PKG_MAJOR -e PKG_MINOR cs.c | grep -v = | awk '{print $$3}'` | awk '{print $$1"."$$2}')
+VERSION=$(shell echo `grep -e PKG_MAJOR -e PKG_MINOR CONFIG | grep -v = | awk '{print $$3}'` | awk '{print $$1"."$$2}')
 
 .PHONY: all clean install uninstall
 
