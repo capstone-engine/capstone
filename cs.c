@@ -60,6 +60,7 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 	ud->mode = mode;
 	ud->big_endian = mode & CS_MODE_BIG_ENDIAN;
 	ud->reg_name = NULL;
+	ud->detail = CS_OPT_ON;	// by default break instruction into details
 
 	switch (ud->arch) {
 		case CS_ARCH_X86:
@@ -163,18 +164,26 @@ cs_err cs_close(csh handle)
 static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mci,
 		PostPrinter_t printer, const uint8_t *code)
 {
-	memcpy(insn, &mci->pub_insn, sizeof(*insn));
+	if (handle->detail) {
+		memcpy(insn, &mci->pub_insn, sizeof(*insn));
 
-	// map internal instruction opcode to public insn ID
-	if (handle->insn_id)
-		handle->insn_id(insn, MCInst_getOpcode(mci));
+		// fill the instruction bytes
+		memcpy(insn->bytes, code, MIN(sizeof(insn->bytes), insn->size));
 
-	// alias instruction might have ID saved in OpcodePub
-	if (MCInst_getOpcodePub(mci))
-		insn->id = MCInst_getOpcodePub(mci);
+		// map internal instruction opcode to public insn ID
+		if (handle->insn_id)
+			handle->insn_id(insn, MCInst_getOpcode(mci));
 
-	if (printer)
-		printer(insn, buffer);
+		// alias instruction might have ID saved in OpcodePub
+		if (MCInst_getOpcodePub(mci))
+			insn->id = MCInst_getOpcodePub(mci);
+
+		if (printer)
+			printer(insn, buffer);
+	} else {
+		insn->address = mci->address;
+		insn->size = mci->insn_size;
+	}
 
 	// fill in mnemonic & operands
 	// find first space or tab
@@ -194,9 +203,6 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 
 	strncpy(insn->mnemonic, buffer, sizeof(insn->mnemonic) - 1);
 	insn->mnemonic[sizeof(insn->mnemonic) - 1] = '\0';
-
-	// fill the instruction bytes
-	memcpy(insn->bytes, code, MIN(sizeof(insn->bytes), insn->size));
 }
 
 cs_err cs_option(csh ud, cs_opt_type type, size_t value)
@@ -205,6 +211,15 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 	if (!handle)
 		return CS_ERR_CSH;
 
+	switch(type) {
+		default:
+			break;
+		case CS_OPT_DETAIL:
+			handle->detail = value;
+			return CS_ERR_OK;
+	}
+
+	// only selected archs care about CS_OPT_SYNTAX
 	switch (handle->arch) {
 		default:
 			handle->errnum = CS_ERR_OPTION;
@@ -258,9 +273,19 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 			SStream ss;
 			SStream_Init(&ss);
 
-			mci.pub_insn.size = insn_size;
+			mci.detail = handle->detail;
+			// relative branches need to know the address & size of current insn
+			mci.insn_size = insn_size;
+			mci.address = offset;
+
+			// save all the information for non-detailed mode
 			mci.pub_insn.address = offset;
-			mci.mode = handle->mode;
+			mci.pub_insn.size = insn_size;
+
+			if (handle->detail == CS_OPT_ON) {
+				mci.mode = handle->mode;
+			}
+
 			handle->printer(&mci, &ss, handle->printer_info);
 
 			fill_insn(handle, insn, ss.buffer, &mci, handle->post_printer, buffer);
@@ -311,12 +336,23 @@ size_t cs_disasm_dyn(csh ud, const uint8_t *buffer, size_t size, uint64_t offset
 			SStream ss;
 			SStream_Init(&ss);
 
-			mci.pub_insn.size = insn_size;
+			mci.detail = handle->detail;
+			// relative branches need to know the address & size of current insn
+			mci.insn_size = insn_size;
+			mci.address = offset;
+
+			// save all the information for non-detailed mode
 			mci.pub_insn.address = offset;
-			mci.mode = handle->mode;
+			mci.pub_insn.size = insn_size;
+
+			if (handle->detail == CS_OPT_ON) {
+				mci.mode = handle->mode;
+			}
+
 			handle->printer(&mci, &ss, handle->printer_info);
 
 			fill_insn(handle, &insn_cache[f], ss.buffer, &mci, handle->post_printer, buffer);
+
 			f++;
 
 			if (f == ARR_SIZE(insn_cache)) {

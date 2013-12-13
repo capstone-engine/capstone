@@ -196,7 +196,7 @@ static bool translateRMRegister(MCInst *mcInst, InternalInstruction *insn)
 				return true;
 #define ENTRY(x)                                                      \
 		case EA_REG_##x:                                                    \
-																			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_##x)); break;
+				MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_##x)); break;
 			ALL_REGS
 #undef ENTRY
 		default:
@@ -240,7 +240,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 			switch (insn->sibBase) {
 #define ENTRY(x)                                          \
 				case SIB_BASE_##x:                                  \
-																	baseReg = MCOperand_CreateReg(X86_##x); break;
+					baseReg = MCOperand_CreateReg(X86_##x); break;
 				ALL_SIB_BASES
 #undef ENTRY
 				default:
@@ -288,7 +288,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 					return true;
 #define ENTRY(x)                                          \
 				case SIB_INDEX_##x:                                 \
-																	indexReg = MCOperand_CreateReg(X86_##x); break;
+						indexReg = MCOperand_CreateReg(X86_##x); break;
 					EA_BASES_32BIT
 					EA_BASES_64BIT
 					REGS_XMM
@@ -343,7 +343,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 						//   placeholders to keep the compiler happy.
 #define ENTRY(x)                                        \
 					case EA_BASE_##x:                                 \
-																	  baseReg = MCOperand_CreateReg(X86_##x); break; 
+							baseReg = MCOperand_CreateReg(X86_##x); break; 
 						ALL_EA_BASES
 #undef ENTRY
 #define ENTRY(x) case EA_REG_##x:
@@ -546,14 +546,6 @@ static int reader(const void* arg, uint8_t* byte, uint64_t address)
 {
 	struct reader_info *info = (void *)arg;
 
-	/*
-	   char *buf = "\x55";
-
-	   buf = "\x55";	// push ebp
-	   buf = "\x01\xd8";	// add eax, ebx
-	   buf = "\x8d\x4c\x32\x08";	// lea ecx, [edx + 8 + esi]
-	 */
-
 	if (address - info->offset >= info->size)
 		// out of buffer range
 		return -1;
@@ -563,7 +555,7 @@ static int reader(const void* arg, uint8_t* byte, uint64_t address)
 	return 0;
 }
 
-// update x86 detail information
+// copy x86 detail information from internal structure to public structure
 static void update_pub_insn(cs_insn *pub, InternalInstruction *inter)
 {
 	int i, c;
@@ -637,8 +629,10 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *in
 	} else {
 		*size = insn.length;
 		result = (!translateInstruction(instr, &insn)) ?  true : false;
-		// update instr->pub_insn
-		update_pub_insn(&instr->pub_insn, &insn);
+		// save segment for printing hack
+		instr->x86_segment = x86_map_segment(insn.segmentOverride);
+		if (handle->detail)
+			update_pub_insn(&instr->pub_insn, &insn);
 		return result;
 	}
 }

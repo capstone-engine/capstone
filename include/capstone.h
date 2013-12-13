@@ -44,12 +44,15 @@ typedef enum cs_mode {
 // Runtime option for the disassembled engine
 typedef enum cs_opt_type {
 	CS_OPT_SYNTAX = 1,	// Asssembly output syntax
+	CS_OPT_DETAIL,	// Break down instruction structure into details
 } cs_opt_type;
 
 // Runtime option value (associated with option type above)
 typedef enum cs_opt_value {
 	CS_OPT_SYNTAX_INTEL = 1, // X86 Intel asm syntax - this is default syntax (CS_OPT_SYNTAX).
 	CS_OPT_SYNTAX_ATT,   // X86 ATT asm syntax (CS_OPT_SYNTAX)
+	CS_OPT_ON = 1, // Turn on an option (CS_OPT_DETAIL)
+	CS_OPT_OFF = 0,  // Turn off an option (CS_OPT_DETAIL)
 } cs_opt_value;
 
 

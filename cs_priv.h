@@ -41,6 +41,7 @@ typedef struct cs_struct {
 	PostPrinter_t post_printer;
 	cs_err errnum;
 	ARM_ITStatus ITBlock;	// for Arm only
+	cs_opt_value detail;
 } cs_struct;
 
 #endif
