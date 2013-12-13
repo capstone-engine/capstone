@@ -5,16 +5,19 @@
 
 #include "utils.h"
 
-// check to see if a string exists in a list of string ...
-bool str_in_list(char **list, char *s)
+// return the position of a string in a list of strings
+// or -1 if given string is not in the list
+int str_in_list(char **list, char *s)
 {
 	char **l;
 
-	for(l = list; *l; l++)
+	int c = 0;
+	for(l = list; *l; c++, l++) {
 		if (!strcasecmp(*l, s))
-			return true;
+			return c;
+	}
 
-	return false;
+	return -1;
 }
 
 // binary searching

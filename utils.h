@@ -25,7 +25,9 @@ typedef struct insn_map {
 	bool indirect_branch;	// indirect branch instruction?
 } insn_map;
 
-bool str_in_list(char **list, char *s);
+// return the position of a string in a list of strings
+// or -1 if given string is not in the list
+int str_in_list(char **list, char *s);
 
 // binary searching in @m, given its size in @max, and @id
 int insn_find(insn_map *m, unsigned int max, unsigned int id);

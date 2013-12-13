@@ -446,8 +446,11 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 	// so we have to handle that case to not miss the first op.
 	char lastop[32];
 	get_last_op(OS->buffer, lastop);
-	char *acc_regs[] = {"rax", "eax", "ax", "al", NULL};
-	if (lastop[0] == '%' && str_in_list(acc_regs, lastop+1)) {
+	char *acc_regs[] = {"al", "ax", "eax", "rax", NULL};
+	int post;
+	if (lastop[0] == '%' && ((post = str_in_list(acc_regs, lastop+1)) != -1)) {
+		// set operand size following register size
+		MI->pub_insn.x86.op_size = 1 << post;
 		// this is one of the registers AL, AX, EAX, RAX
 		// canonicalize the register name first
 		//int i;

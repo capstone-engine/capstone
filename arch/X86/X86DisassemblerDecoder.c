@@ -1676,8 +1676,6 @@ static int readOperands(struct InternalInstruction* insn)
 	int hasVVVV, needVVVV;
 	int sawRegImm = 0;
 
-	//printf(">>> readOperands()\n");
-
 	/* If non-zero vvvv specified, need to make sure one of the operands
 	   uses it. */
 	hasVVVV = !readVVVV(insn);
