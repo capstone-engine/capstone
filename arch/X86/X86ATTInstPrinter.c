@@ -290,7 +290,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	} else if (MCOperand_isImm(Op)) {
 		// Print X86 immediates as signed values.
 		int64_t imm = MCOperand_getImm(Op);
-		if (imm > 0) {
+		if (imm >= 0) {
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "%s$0x%"PRIx64"%s", markup("<imm:"), imm, markup(">"));
 			else

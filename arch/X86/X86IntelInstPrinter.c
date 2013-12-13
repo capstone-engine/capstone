@@ -353,7 +353,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		MI->pub_insn.x86.op_count++;
 	} else if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op);
-		if (imm > 0) {
+		if (imm >= 0) {
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "0x%"PRIx64, imm);
 			else
