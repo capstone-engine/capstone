@@ -107,6 +107,39 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 			default:
 				break;
 		}
+	} // By default sign-extend all X86 immediates based on their encoding.
+	else if (type == TYPE_IMM8 || type == TYPE_IMM16 || type == TYPE_IMM32 ||
+			type == TYPE_IMM64) {
+		uint32_t Opcode = MCInst_getOpcode(mcInst);
+		switch (operand->encoding) {
+			default:
+				break;
+			case ENCODING_IB:
+				// Special case those X86 instructions that use the imm8 as a set of
+				// bits, bit count, etc. and are not sign-extend.
+				if (Opcode != X86_BLENDPSrri && Opcode != X86_BLENDPDrri &&
+						Opcode != X86_PBLENDWrri && Opcode != X86_MPSADBWrri &&
+						Opcode != X86_DPPSrri && Opcode != X86_DPPDrri &&
+						Opcode != X86_INSERTPSrr && Opcode != X86_VBLENDPSYrri &&
+						Opcode != X86_VBLENDPSYrmi && Opcode != X86_VBLENDPDYrri &&
+						Opcode != X86_VBLENDPDYrmi && Opcode != X86_VPBLENDWrri &&
+						Opcode != X86_VMPSADBWrri && Opcode != X86_VDPPSYrri &&
+						Opcode != X86_VDPPSYrmi && Opcode != X86_VDPPDrri &&
+						Opcode != X86_VINSERTPSrr && Opcode != X86_INT)
+					if(immediate & 0x80)
+						immediate |= ~(0xffull);
+				break;
+			case ENCODING_IW:
+				if(immediate & 0x8000)
+					immediate |= ~(0xffffull);
+				break;
+			case ENCODING_ID:
+				if(immediate & 0x80000000)
+					immediate |= ~(0xffffffffull);
+				break;
+			case ENCODING_IO:
+				break;
+		}
 	}
 
 	switch (type) {

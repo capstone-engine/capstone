@@ -128,9 +128,12 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 	if (MCOperand_isImm(DispSpec)) {
 		int64_t imm = MCOperand_getImm(DispSpec);
 		MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].mem.disp = imm;
-		if (imm < 0)
-			SStream_concat(O, "-0x%"PRIx64, -imm);
-		else {
+		if (imm < 0) {
+			if (imm <= -HEX_THRESHOLD)
+				SStream_concat(O, "-0x%"PRIx64, -imm);
+			else
+				SStream_concat(O, "-%"PRIu64, -imm);
+		} else {
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "0x%"PRIx64, imm);
 			else
@@ -317,9 +320,12 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 	MCOperand *Op = MCInst_getOperand(MI, OpNo);
 	if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op) + MI->pub_insn.size + MI->pub_insn.address;
-		if (imm < 0)
-			SStream_concat(O, "-0x%"PRIx64, -imm);
-		else {
+		if (imm < 0) {
+			if (imm <= -HEX_THRESHOLD)
+				SStream_concat(O, "-0x%"PRIx64, -imm);
+			else
+				SStream_concat(O, "-%"PRIu64, -imm);
+		} else {
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "0x%"PRIx64, imm);
 			else
@@ -347,10 +353,18 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		MI->pub_insn.x86.op_count++;
 	} else if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op);
-		if (imm > HEX_THRESHOLD)
-			SStream_concat(O, "0x%"PRIx64, imm);
-		else
-			SStream_concat(O, "%"PRIu64, imm);
+		if (imm > 0) {
+			if (imm > HEX_THRESHOLD)
+				SStream_concat(O, "0x%"PRIx64, imm);
+			else
+				SStream_concat(O, "%"PRIu64, imm);
+		} else {
+			if (imm <= -HEX_THRESHOLD)
+				SStream_concat(O, "-0x%"PRIx64, -imm);
+			else
+				SStream_concat(O, "-%"PRIu64, -imm);
+		}
+
 		MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].type = X86_OP_IMM;
 		MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].imm = imm;
 		MI->pub_insn.x86.op_count++;
@@ -365,9 +379,12 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		printRegName(O, MCOperand_getReg(Op));
 	} else if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op);
-		if (imm < 0)
-			SStream_concat(O, "-0x%"PRIx64, -imm);
-		else {
+		if (imm < 0) {
+			if (imm <= -HEX_THRESHOLD)
+				SStream_concat(O, "-0x%"PRIx64, -imm);
+			else
+				SStream_concat(O, "-%"PRIu64, -imm);
+		} else {
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "0x%"PRIx64, imm);
 			else
@@ -427,9 +444,12 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)	// qqq
 					DispVal = -DispVal;
 				}
 			}
-			if (DispVal < 0)
-				SStream_concat(O, "-0x%"PRIx64, -DispVal);
-			else {
+			if (DispVal < 0) {
+				if (DispVal <= -HEX_THRESHOLD)
+					SStream_concat(O, "-0x%"PRIx64, -DispVal);
+				else
+					SStream_concat(O, "-%"PRIu64, -DispVal);
+			} else {
 				if (DispVal > HEX_THRESHOLD)
 					SStream_concat(O, "0x%"PRIx64, DispVal);
 				else
