@@ -13,13 +13,13 @@ typedef void (*Printer_t)(MCInst *MI, SStream *OS, void *info);
 
 // function to be called after Printer_t
 // this is the best time to gather insn's characteristics
-typedef void (*PostPrinter_t)(cs_insn *, char *mnem);
+typedef void (*PostPrinter_t)(csh handle, cs_insn *, char *mnem);
 
 typedef bool (*Disasm_t)(csh handle, const uint8_t *code, size_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *info);
 
 typedef const char *(*GetName_t)(csh handle, unsigned int reg);
 
-typedef void (*GetID_t)(cs_insn *insn, unsigned int id);
+typedef void (*GetID_t)(cs_insn *insn, unsigned int id, int detail);
 
 // for ARM only
 typedef struct ARM_ITStatus {

@@ -802,7 +802,7 @@ static void printVectorList(MCInst *MI, unsigned OpNum,
 #define PRINT_ALIAS_INSTR
 #include "AArch64GenAsmWriter.inc"
 
-void AArch64_post_printer(cs_insn *pub_insn, char *insn_asm)
+void AArch64_post_printer(csh handle, cs_insn *pub_insn, char *insn_asm)
 {
 	// check if this insn requests write-back
 	if (strrchr(insn_asm, '!') != NULL)

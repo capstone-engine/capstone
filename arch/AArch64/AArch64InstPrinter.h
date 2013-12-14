@@ -23,6 +23,6 @@
 
 void AArch64_printInst(MCInst *MI, SStream *O, void *);
 
-void AArch64_post_printer(cs_insn *pub_insn, char *insn_asm);
+void AArch64_post_printer(csh handle, cs_insn *pub_insn, char *insn_asm);
 
 #endif

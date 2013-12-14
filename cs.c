@@ -170,20 +170,22 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 		// fill the instruction bytes
 		memcpy(insn->bytes, code, MIN(sizeof(insn->bytes), insn->size));
 
-		// map internal instruction opcode to public insn ID
-		if (handle->insn_id)
-			handle->insn_id(insn, MCInst_getOpcode(mci));
-
-		// alias instruction might have ID saved in OpcodePub
-		if (MCInst_getOpcodePub(mci))
-			insn->id = MCInst_getOpcodePub(mci);
-
-		if (printer)
-			printer(insn, buffer);
 	} else {
 		insn->address = mci->address;
 		insn->size = mci->insn_size;
 	}
+
+	// map internal instruction opcode to public insn ID
+	if (handle->insn_id)
+		handle->insn_id(insn, MCInst_getOpcode(mci), handle->detail);
+
+	// alias instruction might have ID saved in OpcodePub
+	if (MCInst_getOpcodePub(mci))
+		insn->id = MCInst_getOpcodePub(mci);
+
+	// post printer handles some corner cases (hacky)
+	if (printer)
+		printer((csh)handle, insn, buffer);
 
 	// fill in mnemonic & operands
 	// find first space or tab
@@ -264,6 +266,7 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 	}
 
 	handle->errnum = CS_ERR_OK;
+	memset(insn, 0, count * sizeof(*insn));
 
 	while (size > 0) {
 		MCInst_Init(&mci);	
@@ -278,12 +281,11 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 			mci.insn_size = insn_size;
 			mci.address = offset;
 
-			// save all the information for non-detailed mode
-			mci.pub_insn.address = offset;
-			mci.pub_insn.size = insn_size;
-
-			if (handle->detail == CS_OPT_ON) {
+			if (handle->detail) {
 				mci.mode = handle->mode;
+				// save all the information for non-detailed mode
+				mci.pub_insn.address = offset;
+				mci.pub_insn.size = insn_size;
 			}
 
 			handle->printer(&mci, &ss, handle->printer_info);
@@ -328,6 +330,8 @@ size_t cs_disasm_dyn(csh ud, const uint8_t *buffer, size_t size, uint64_t offset
 
 	handle->errnum = CS_ERR_OK;
 
+	memset(insn_cache, 0, sizeof(insn_cache));
+
 	while (size > 0) {
 		MCInst_Init(&mci);	
 
@@ -341,12 +345,11 @@ size_t cs_disasm_dyn(csh ud, const uint8_t *buffer, size_t size, uint64_t offset
 			mci.insn_size = insn_size;
 			mci.address = offset;
 
-			// save all the information for non-detailed mode
-			mci.pub_insn.address = offset;
-			mci.pub_insn.size = insn_size;
-
-			if (handle->detail == CS_OPT_ON) {
+			if (handle->detail) {
 				mci.mode = handle->mode;
+				// save all the information for non-detailed mode
+				mci.pub_insn.address = offset;
+				mci.pub_insn.size = insn_size;
 			}
 
 			handle->printer(&mci, &ss, handle->printer_info);

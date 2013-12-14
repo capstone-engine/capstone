@@ -23,7 +23,7 @@ x86_reg x86_map_regname(const char *reg);
 const char *X86_reg_name(csh handle, unsigned int reg);
 
 // given internal insn id, return public instruction info
-void X86_get_insn_id(cs_insn *insn, unsigned int id);
+void X86_get_insn_id(cs_insn *insn, unsigned int id, int detail);
 
 // return insn name, given insn id
 const char *X86_insn_name(csh handle, unsigned int id);
@@ -35,6 +35,6 @@ x86_reg X86_map_insn(const char *mnem);
 unsigned int X86_get_insn_id2(unsigned int insn_id);
 
 // post printer for X86.
-void X86_post_printer(cs_insn *pub_insn, char *insn_asm);
+void X86_post_printer(csh handle, cs_insn *pub_insn, char *insn_asm);
 
 #endif

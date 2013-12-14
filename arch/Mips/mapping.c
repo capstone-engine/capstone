@@ -1387,7 +1387,7 @@ static insn_map alias_insns[] = {
 };
 
 // given internal insn id, return public instruction info
-void Mips_get_insn_id(cs_insn *insn, unsigned int id)
+void Mips_get_insn_id(cs_insn *insn, unsigned int id, int detail)
 {
 	int i;
 
@@ -1396,22 +1396,24 @@ void Mips_get_insn_id(cs_insn *insn, unsigned int id)
 		if (alias_insns[i].id == id) {
 			insn->id = alias_insns[i].mapid;
 
-			memcpy(insn->regs_read, alias_insns[i].regs_use, sizeof(alias_insns[i].regs_use));
-			insn->regs_read_count = count_positive(alias_insns[i].regs_use);
+			if (detail) {
+				memcpy(insn->regs_read, alias_insns[i].regs_use, sizeof(alias_insns[i].regs_use));
+				insn->regs_read_count = count_positive(alias_insns[i].regs_use);
 
-			memcpy(insn->regs_write, alias_insns[i].regs_mod, sizeof(alias_insns[i].regs_mod));
-			insn->regs_write_count = count_positive(alias_insns[i].regs_mod);
+				memcpy(insn->regs_write, alias_insns[i].regs_mod, sizeof(alias_insns[i].regs_mod));
+				insn->regs_write_count = count_positive(alias_insns[i].regs_mod);
 
-			memcpy(insn->groups, alias_insns[i].groups, sizeof(alias_insns[i].groups));
-			insn->groups_count = count_positive(alias_insns[i].groups);
+				memcpy(insn->groups, alias_insns[i].groups, sizeof(alias_insns[i].groups));
+				insn->groups_count = count_positive(alias_insns[i].groups);
 
-			if (alias_insns[i].branch || alias_insns[i].indirect_branch) {
-				// this insn also belongs to JUMP group. add JUMP group
-				insn->groups[insn->groups_count] = MIPS_GRP_JUMP;
-				insn->groups_count++;
+				if (alias_insns[i].branch || alias_insns[i].indirect_branch) {
+					// this insn also belongs to JUMP group. add JUMP group
+					insn->groups[insn->groups_count] = MIPS_GRP_JUMP;
+					insn->groups_count++;
+				}
+
+				return;
 			}
-
-			return;
 		}
 	}
 
@@ -1419,19 +1421,21 @@ void Mips_get_insn_id(cs_insn *insn, unsigned int id)
 	if (i != -1) {
 		insn->id = insns[i].mapid;
 
-		memcpy(insn->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
-		insn->regs_read_count = count_positive(insns[i].regs_use);
+		if (detail) {
+			memcpy(insn->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
+			insn->regs_read_count = count_positive(insns[i].regs_use);
 
-		memcpy(insn->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
-		insn->regs_write_count = count_positive(insns[i].regs_mod);
+			memcpy(insn->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
+			insn->regs_write_count = count_positive(insns[i].regs_mod);
 
-		memcpy(insn->groups, insns[i].groups, sizeof(insns[i].groups));
-		insn->groups_count = count_positive(insns[i].groups);
+			memcpy(insn->groups, insns[i].groups, sizeof(insns[i].groups));
+			insn->groups_count = count_positive(insns[i].groups);
 
-		if (insns[i].branch || insns[i].indirect_branch) {
-			// this insn also belongs to JUMP group. add JUMP group
-			insn->groups[insn->groups_count] = MIPS_GRP_JUMP;
-			insn->groups_count++;
+			if (insns[i].branch || insns[i].indirect_branch) {
+				// this insn also belongs to JUMP group. add JUMP group
+				insn->groups[insn->groups_count] = MIPS_GRP_JUMP;
+				insn->groups_count++;
+			}
 		}
 	}
 }

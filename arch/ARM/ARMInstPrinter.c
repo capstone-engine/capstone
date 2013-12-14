@@ -29,6 +29,7 @@
 #include "../../MCRegisterInfo.h"
 #include "../../utils.h"
 #include "mapping.h"
+#include "../../cs_priv.h"
 
 #define GET_SUBTARGETINFO_ENUM
 #include "ARMGenSubtargetInfo.inc"
@@ -224,12 +225,15 @@ static name_map insn_update_flgs[] = {
 	{ ARM_INS_UMULL, "umulls" },
 };
 
-void ARM_post_printer(cs_insn *pub_insn, char *insn_asm)
+void ARM_post_printer(csh ud, cs_insn *pub_insn, char *insn_asm)
 {
 	// check if this insn requests write-back
 	if (strrchr(insn_asm, '!') != NULL) {
 		pub_insn->arm.writeback = true;
 	}
+
+	if (((cs_struct *)ud)->detail != CS_OPT_ON)
+		return;
 
 	// check if this insn requests update flags
 	if (pub_insn->arm.update_flags == false) {
