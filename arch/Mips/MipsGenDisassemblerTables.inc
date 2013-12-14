@@ -3790,6 +3790,7 @@ static uint8_t DecoderTableMips6432[] = {
 
 static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
 {
+  //printf(">>-- Idx: %u\n", Idx);
   switch (Idx) {
   default: // llvm_unreachable("Invalid index!");
   case 0:
@@ -5317,6 +5318,7 @@ static DecodeStatus decodeInstruction(uint8_t DecodeTable[], MCInst *MI,
   uint32_t CurFieldValue = 0;
   DecodeStatus S = MCDisassembler_Success;
   for (;;) {
+    //printf(">>> Loc: %lx\n", Ptr - DecodeTable);
     switch (*Ptr) {
     default:
       return MCDisassembler_Fail;

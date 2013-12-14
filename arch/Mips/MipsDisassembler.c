@@ -175,6 +175,8 @@ static uint64_t Mips_getFeatureBits(int mode)
 
 	if (mode & CS_MODE_MICRO)
 		Bits |= Mips_FeatureMicroMips;
+	else
+		Bits &= ~Mips_FeatureMicroMips;
 
 	return Bits;
 }
