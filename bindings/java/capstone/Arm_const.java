@@ -4,6 +4,7 @@ package capstone;
 public class Arm_const {
 
 	// ARM shift type
+
 	public static final int ARM_SFT_INVALID = 0;
 	public static final int ARM_SFT_ASR = 1;
 	public static final int ARM_SFT_LSL = 2;
@@ -17,6 +18,7 @@ public class Arm_const {
 	public static final int ARM_SFT_RRX_REG = 10;
 
 	// ARM condition code
+
 	public static final int ARM_CC_INVALID = 0;
 	public static final int ARM_CC_EQ = 1;
 	public static final int ARM_CC_NE = 2;
@@ -35,6 +37,7 @@ public class Arm_const {
 	public static final int ARM_CC_AL = 15;
 
 	// Operand type for instruction's operands
+
 	public static final int ARM_OP_INVALID = 0;
 	public static final int ARM_OP_REG = 1;
 	public static final int ARM_OP_CIMM = 2;
@@ -44,6 +47,7 @@ public class Arm_const {
 	public static final int ARM_OP_MEM = 6;
 
 	// ARM registers
+
 	public static final int ARM_REG_INVALID = 0;
 	public static final int ARM_REG_APSR = 1;
 	public static final int ARM_REG_APSR_NZCV = 2;
@@ -161,6 +165,7 @@ public class Arm_const {
 	public static final int ARM_REG_R15 = ARM_REG_PC;
 
 	// ARM instruction
+
 	public static final int ARM_INS_INVALID = 0;
 	public static final int ARM_INS_ADC = 1;
 	public static final int ARM_INS_ADD = 2;
@@ -586,6 +591,7 @@ public class Arm_const {
 	public static final int ARM_INS_MAX = 422;
 
 	// Group of ARM instructions
+
 	public static final int ARM_GRP_INVALID = 0;
 	public static final int ARM_GRP_CRYPTO = 1;
 	public static final int ARM_GRP_DATABARRIER = 2;

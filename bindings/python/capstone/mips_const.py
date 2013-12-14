@@ -1,12 +1,14 @@
 # For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [mips_const.py]
 
 # Operand type for instruction's operands
+
 MIPS_OP_INVALID = 0
 MIPS_OP_REG = 1
 MIPS_OP_IMM = 2
 MIPS_OP_MEM = 3
 
 # MIPS registers
+
 MIPS_REG_INVALID = 0
 MIPS_REG_0 = 1
 MIPS_REG_1 = 2
@@ -174,6 +176,7 @@ MIPS_REG_LO2 = MIPS_REG_HI2
 MIPS_REG_LO3 = MIPS_REG_HI3
 
 # MIPS instruction
+
 MIPS_INS_INVALID = 0
 MIPS_INS_ABSQ_S = 1
 MIPS_INS_ADD = 2
@@ -634,6 +637,7 @@ MIPS_INS_NEGU = 456
 MIPS_INS_MAX = 457
 
 # Group of MIPS instructions
+
 MIPS_GRP_INVALID = 0
 MIPS_GRP_BITCOUNT = 1
 MIPS_GRP_DSP = 2
