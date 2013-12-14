@@ -23,6 +23,7 @@ public class Capstone {
   public int arch;
   public int mode;
   private int syntax;
+  private int detail;
 
   protected static abstract class OpInfo {}
   protected static abstract class UnionOpInfo extends Structure {}
@@ -235,10 +236,13 @@ public class Capstone {
 
   // Capstone option type
   public static final int CS_OPT_SYNTAX = 1;  // Intel X86 asm syntax (CS_ARCH_X86 arch)
+  public static final int CS_OPT_DETAIL = 2;  // Break down instruction structure into details
 
   //Capstone option value
-  public static final int CS_OPT_SYNTAX_INTEL = 1;  // Intel X86 asm syntax (CS_ARCH_X86 arch)
-  public static final int CS_OPT_SYNTAX_ATT = 2;    // ATT asm syntax (CS_ARCH_X86 arch)
+  public static final int CS_OPT_OFF = 0;  // Turn OFF an option (CS_OPT_DETAIL)
+  public static final int CS_OPT_SYNTAX_INTEL = 1;  // Intel X86 asm syntax - default syntax on X86 (CS_OPT_SYNTAX,  CS_ARCH_X86)
+  public static final int CS_OPT_SYNTAX_ATT = 2;    // ATT asm syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
+  public static final int CS_OPT_ON = 3;  // Turn ON an option - this is default option for CS_OPT_DETAIL
 
   protected class NativeStruct {
       private NativeLong csh;
@@ -266,6 +270,14 @@ public class Capstone {
       this.syntax = syntax;
     } else {
       throw new RuntimeException("ERROR: Unknown syntax");
+    }
+  }
+
+  public void setDetail(int opt) {
+    if (cs.cs_option(ns.csh, CS_OPT_DETAIL, new NativeLong(opt)) == CS_ERR_OK) {
+      this.detail = opt;
+    } else {
+      throw new RuntimeException("ERROR: Unknown detail option");
     }
   }
 

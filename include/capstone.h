@@ -49,10 +49,10 @@ typedef enum cs_opt_type {
 
 // Runtime option value (associated with option type above)
 typedef enum cs_opt_value {
-	CS_OPT_OFF = 0,  // Turn off an option (CS_OPT_DETAIL)
-	CS_OPT_SYNTAX_INTEL = 1, // X86 Intel asm syntax - this is default syntax (CS_OPT_SYNTAX).
+	CS_OPT_OFF = 0,  // Turn OFF an option (CS_OPT_DETAIL)
+	CS_OPT_SYNTAX_INTEL = 1, // X86 Intel asm syntax - default syntax on X86 (CS_OPT_SYNTAX).
 	CS_OPT_SYNTAX_ATT,   // X86 ATT asm syntax (CS_OPT_SYNTAX)
-	CS_OPT_ON, // Turn on an option (CS_OPT_DETAIL)
+	CS_OPT_ON, // Turn ON an option - default option for CS_OPT_DETAIL
 } cs_opt_value;
 
 

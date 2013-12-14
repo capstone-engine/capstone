@@ -31,6 +31,10 @@ __all__ = [
     'CS_OPT_SYNTAX_INTEL',
     'CS_OPT_SYNTAX_ATT',
 
+    'CS_OPT_DETAIL',
+    'CS_OPT_ON',
+    'CS_OPT_OFF',
+
     'CS_ERR_OK',
     'CS_ERR_MEM',
     'CS_ERR_ARCH',
@@ -65,10 +69,13 @@ CS_MODE_BIG_ENDIAN = (1 << 31) # big-endian mode
 
 # Capstone option type
 CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
+CS_OPT_DETAIL = 2   # Break down instruction structure into details
 
 # Capstone option value
-CS_OPT_SYNTAX_INTEL = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
-CS_OPT_SYNTAX_ATT = 2      # ATT asm syntax (CS_ARCH_X86 arch)
+CS_OPT_OFF = 0             # Turn OFF an option (CS_OPT_DETAIL)
+CS_OPT_SYNTAX_INTEL = 1    # Intel X86 asm syntax - default syntax on X86 (CS_OPT_SYNTAX, CS_ARCH_X86)
+CS_OPT_SYNTAX_ATT = 2      # ATT asm syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
+CS_OPT_ON = 3              # Turn ON an option - this is default option for CS_OPT_DETAIL
 
 # Capstone error type
 CS_ERR_OK = 0      # No error: everything was fine
@@ -305,6 +312,8 @@ class Cs(object):
         else:
             self._syntax = None
 
+        self._detail = True    # by default, get instruction details
+
     def __del__(self):
         if self.csh:
             status = _cs.cs_close(self.csh)
@@ -325,6 +334,21 @@ class Cs(object):
             raise CsError(status)
         # save syntax
         self._syntax = style
+
+    @property
+    def detail(self):
+        return self._detail
+
+    @detail.setter
+    def detail(self, opt):  # opt is boolean type, so must be either 'True' or 'False'
+        if opt == False:
+            status = _cs.cs_option(self.csh, CS_OPT_DETAIL, CS_OPT_OFF)
+        else:
+            status = _cs.cs_option(self.csh, CS_OPT_DETAIL, CS_OPT_ON)
+        if status != CS_ERR_OK:
+            raise CsError(status)
+        # save detail
+        self._detail = opt
 
     def disasm(self, code, offset, count = 0):
         insns = []
