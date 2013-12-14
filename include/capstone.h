@@ -66,21 +66,29 @@ typedef struct cs_insn {
 	// Instruction ID
 	// Find the instruction id from header file of corresponding architecture,
 	// such as arm.h for ARM, x86.h for X86, etc...
+	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
 	unsigned int id;
 
 	// Address (EIP) of this instruction
+	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
 	uint64_t address;
 
 	// Size of this instruction
+	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
 	uint16_t size;
 	// Machine bytes of this instruction, with number of bytes indicated by @size above
+	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
 	uint8_t bytes[16];
 
 	// Ascii text of instruction mnemonic
+	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
 	char mnemonic[32];
 
 	// Ascii text of instruction operands
+	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
 	char op_str[96];
+
+	// NOTE: All information below is not available when CS_OPT_DETAIL = CS_OPT_OFF
 
 	unsigned int regs_read[32]; // list of implicit registers read by this insn
 	unsigned int regs_read_count; // number of implicit registers read by this insn
