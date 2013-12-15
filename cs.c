@@ -298,12 +298,10 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 			size -= insn_size;
 			offset += insn_size;
 
-			if (count > 0) {
-				if (c == count)
-					return c;
-			}
+			if (c == count)
+				return c;
 		} else
-			// face a broken instruction?
+			// face a broken instruction? then we stop here
 			return c;
 	}
 
