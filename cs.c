@@ -298,13 +298,11 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 			size -= insn_size;
 			offset += insn_size;
 
-			if (count > 0) {
-				if (c == count)
-					return c;
-			}
+			if (count > 0 && count == c)
+				break;
 		} else
 			// face a broken instruction?
-			return c;
+			break;
 	}
 
 	return c;
@@ -314,96 +312,19 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 // NOTE: caller must free() the allocated memory itself to avoid memory leaking
 size_t cs_disasm_dyn(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
 {
-	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
-	MCInst mci;
-	uint16_t insn_size;
-	size_t c = 0, f = 0;
-	cs_insn insn_cache[64];
-	void *total = NULL;
-	size_t total_size = 0;
-
-	if (!handle) {
-		// FIXME: how to handle this case:
-		// handle->errnum = CS_ERR_HANDLE;
-		return 0;
+	size_t ret;
+	*insn = malloc (sizeof (cs_insn)*count);
+	if (!*insn)
+		return -1;
+	ret = cs_disasm (ud, buffer, size, offset, count, *insn);
+	if (ret<1) {
+		free (*insn);
+		*insn = NULL;
+	} else {
+		cs_insn *insn2 = realloc (*insn, sizeof (cs_insn)*ret);
+		if (insn2) *insn = insn2;
 	}
-
-	handle->errnum = CS_ERR_OK;
-
-	memset(insn_cache, 0, sizeof(insn_cache));
-
-	while (size > 0) {
-		MCInst_Init(&mci);	
-
-		bool r = handle->disasm(ud, buffer, size, &mci, &insn_size, offset, handle->getinsn_info);
-		if (r) {
-			SStream ss;
-			SStream_Init(&ss);
-
-			mci.detail = handle->detail;
-			// relative branches need to know the address & size of current insn
-			mci.insn_size = insn_size;
-			mci.address = offset;
-
-			if (handle->detail) {
-				mci.mode = handle->mode;
-				// save all the information for non-detailed mode
-				mci.pub_insn.address = offset;
-				mci.pub_insn.size = insn_size;
-			}
-
-			handle->printer(&mci, &ss, handle->printer_info);
-
-			fill_insn(handle, &insn_cache[f], ss.buffer, &mci, handle->post_printer, buffer);
-
-			f++;
-
-			if (f == ARR_SIZE(insn_cache)) {
-				// resize total to contain newly disasm insns
-				total_size += sizeof(insn_cache);
-				void *tmp = realloc(total, total_size);
-				if (tmp == NULL) {	// insufficient memory
-					free(total);
-					handle->errnum = CS_ERR_MEM;
-					return 0;
-				}
-
-				total = tmp;
-				memcpy(total + total_size - sizeof(insn_cache), insn_cache, sizeof(insn_cache));
-				// reset f back to 0
-				f = 0;
-			}
-
-			c++;
-			buffer += insn_size;
-			size -= insn_size;
-			offset += insn_size;
-
-			if (count > 0 && c == count)
-				break;
-		} else	{
-			// encounter a broken instruction
-			// XXX: TODO: JOXEAN continue here
-			break;
-		}
-	}
-
-	if (f) {
-		// resize total to contain newly disasm insns
-		void *tmp = realloc(total, total_size + f * sizeof(insn_cache[0]));
-		if (tmp == NULL) {	// insufficient memory
-			free(total);
-			handle->errnum = CS_ERR_MEM;
-			return 0;
-		}
-
-		total = tmp;
-		memcpy(total + total_size, insn_cache, f * sizeof(insn_cache[0]));
-	}
-
-	*insn = total;
-
-	return c;
+	return ret;
 }
 
 void cs_free(void *m)
