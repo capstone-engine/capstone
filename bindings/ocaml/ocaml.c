@@ -40,7 +40,7 @@ static unsigned int list_count(unsigned int *list, unsigned int max)
 	return max;
 }
 
-static CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t *code, size_t code_len, uint64_t addr, uint64_t count)
+static CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t *code, size_t code_len, uint64_t addr, size_t count)
 {
 	CAMLparam0();
 	CAMLlocal5(list, cons, rec_insn, array, tmp);
@@ -450,7 +450,7 @@ CAMLprim value ocaml_cs_disasm_dyn(value _arch, value _handle, value _code, valu
 	CAMLparam5(_arch, _handle, _code, _addr, _count);
 	csh handle;
 	cs_arch arch;
-	char *code;
+	const uint8_t *code;
 	uint64_t addr, count, code_len;
 
 	handle = Int64_val(_handle);
