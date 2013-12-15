@@ -556,7 +556,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	} else if (MCOperand_isImm(Op)) {
 		SStream_concat(O, markup("<imm:"));
 		//O << "#" << formatImm(Op.getImm());
-		int64_t imm = MCOperand_getImm(Op);
+		int32_t imm = MCOperand_getImm(Op);
 
 		// relative branch only has relative offset, so we have to update it
 		// to reflect absolute address. 
@@ -1880,9 +1880,9 @@ static void printNEONModImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	unsigned EltBits;
 	uint64_t Val = ARM_AM_decodeNEONModImm(EncodedImm, &EltBits);
 	if (Val > HEX_THRESHOLD)
-		SStream_concat(O, "%s#0x%x%s", markup("<imm:"), Val, markup(">"));
+		SStream_concat(O, "%s#0x%"PRIx64"%s", markup("<imm:"), Val, markup(">"));
 	else
-		SStream_concat(O, "%s#%u%s", markup("<imm:"), Val, markup(">"));
+		SStream_concat(O, "%s#%"PRIu64"%s", markup("<imm:"), Val, markup(">"));
 	if (MI->detail) {
 		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].type = ARM_OP_IMM;
 		MI->pub_insn.arm.operands[MI->pub_insn.arm.op_count].imm = Val;
