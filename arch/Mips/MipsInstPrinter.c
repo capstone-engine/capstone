@@ -86,10 +86,11 @@ static void printInstruction(MCInst *MI, SStream *O);
 static bool doing_mem = false;
 static void set_mem_access(MCInst *MI, bool status)
 {
+	doing_mem = status;
+
 	if (MI->detail != CS_OPT_ON)
 		return;
 
-	doing_mem = status;
 	if (doing_mem) {
 		MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].type = MIPS_OP_MEM;
 		MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].mem.base = MIPS_REG_INVALID;
