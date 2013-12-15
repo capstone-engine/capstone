@@ -209,18 +209,33 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		int64_t imm = MCOperand_getImm(Op);
 		if (doing_mem) {
 			if (imm) {	// only print Imm offset if it is not 0
-				if (imm > HEX_THRESHOLD)
-					SStream_concat(O, "0x%"PRIx64, imm);
-				else
-					SStream_concat(O, "%"PRIu64, imm);
+				if (imm >= 0) {
+					if (imm > HEX_THRESHOLD)
+						SStream_concat(O, "0x%"PRIx64, imm);
+					else
+						SStream_concat(O, "%"PRIu64, imm);
+				} else {
+					if (imm <= -HEX_THRESHOLD)
+						SStream_concat(O, "-0x%"PRIx64, -imm);
+					else
+						SStream_concat(O, "-%"PRIu64, -imm);
+				}
 			}
 			if (MI->detail)
 				MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].mem.disp = imm;
 		} else {
-			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%"PRIx64, imm);
-			else
-				SStream_concat(O, "%"PRIu64, imm);
+			if (imm >= 0) {
+				if (imm > HEX_THRESHOLD)
+					SStream_concat(O, "0x%"PRIx64, imm);
+				else
+					SStream_concat(O, "%"PRIu64, imm);
+			} else {
+				if (imm <= -HEX_THRESHOLD)
+					SStream_concat(O, "-0x%"PRIx64, -imm);
+				else
+					SStream_concat(O, "-%"PRIu64, -imm);
+			}
+
 			if (MI->detail) {
 				MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].type = MIPS_OP_IMM;
 				MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].imm = imm;
@@ -235,10 +250,17 @@ static void printUnsignedImm(MCInst *MI, int opNum, SStream *O)
 	MCOperand *MO = MCInst_getOperand(MI, opNum);
 	if (MCOperand_isImm(MO)) {
 		int64_t imm = MCOperand_getImm(MO);
-		if (imm > HEX_THRESHOLD)
-			SStream_concat(O, "0x%x", (unsigned short int)imm);
-		else
-			SStream_concat(O, "%u", (unsigned short int)imm);
+		if (imm >= 0) {
+			if (imm > HEX_THRESHOLD)
+				SStream_concat(O, "0x%x", (unsigned short int)imm);
+			else
+				SStream_concat(O, "%u", (unsigned short int)imm);
+		} else {
+			if (imm <= -HEX_THRESHOLD)
+				SStream_concat(O, "-0x%x", (short int)-imm);
+			else
+				SStream_concat(O, "-%u", (short int)-imm);
+		}
 		if (MI->detail) {
 			MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].type = MIPS_OP_IMM;
 			MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].imm = (unsigned short int)imm;
