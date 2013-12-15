@@ -270,19 +270,19 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 
 	while (size > 0) {
 		MCInst_Init(&mci);	
+		mci.detail = handle->detail;
+		mci.mode = handle->mode;
 
 		bool r = handle->disasm(ud, buffer, size, &mci, &insn_size, offset, handle->getinsn_info);
 		if (r) {
 			SStream ss;
 			SStream_Init(&ss);
 
-			mci.detail = handle->detail;
 			// relative branches need to know the address & size of current insn
 			mci.insn_size = insn_size;
 			mci.address = offset;
 
 			if (handle->detail) {
-				mci.mode = handle->mode;
 				// save all the information for non-detailed mode
 				mci.pub_insn.address = offset;
 				mci.pub_insn.size = insn_size;
@@ -334,19 +334,19 @@ size_t cs_disasm_dyn(csh ud, const uint8_t *buffer, size_t size, uint64_t offset
 
 	while (size > 0) {
 		MCInst_Init(&mci);	
+		mci.detail = handle->detail;
+		mci.mode = handle->mode;
 
 		bool r = handle->disasm(ud, buffer, size, &mci, &insn_size, offset, handle->getinsn_info);
 		if (r) {
 			SStream ss;
 			SStream_Init(&ss);
 
-			mci.detail = handle->detail;
 			// relative branches need to know the address & size of current insn
 			mci.insn_size = insn_size;
 			mci.address = offset;
 
 			if (handle->detail) {
-				mci.mode = handle->mode;
 				// save all the information for non-detailed mode
 				mci.pub_insn.address = offset;
 				mci.pub_insn.size = insn_size;

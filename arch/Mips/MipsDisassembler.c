@@ -256,11 +256,11 @@ static DecodeStatus MipsDisassembler_getInstruction(int mode, MCInst *instr,
 		return MCDisassembler_Fail;
 
 	DecodeStatus Result = readInstruction32((unsigned char*)code, &Insn, isBigEndian,
-			instr->mode & CS_MODE_MICRO);
+			mode & CS_MODE_MICRO);
 	if (Result == MCDisassembler_Fail)
 		return MCDisassembler_Fail;
 
-	if (instr->mode & CS_MODE_MICRO) {
+	if (mode & CS_MODE_MICRO) {
 		// Calling the auto-generated decoder function.
 		Result = decodeInstruction(DecoderTableMicroMips32, instr, Insn, Address, MRI, mode);
 		if (Result != MCDisassembler_Fail) {
