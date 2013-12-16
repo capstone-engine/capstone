@@ -29,7 +29,7 @@ static void print_string_hex(char *comment, unsigned char *str, int len)
 	printf("\n");
 }
 
-static void print_insn_detail(cs_arch mode, cs_insn *ins)
+static void print_insn_detail(cs_insn *ins)
 {
 	cs_mips *mips = &(ins->mips);
 
@@ -111,7 +111,7 @@ static void test()
 			size_t j;
 			for (j = 0; j < count; j++) {
 				printf("0x%"PRIx64":\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
-				print_insn_detail(platforms[i].mode, &insn[j]);
+				print_insn_detail(&insn[j]);
 			}
 			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
 
