@@ -4,42 +4,42 @@ import ctypes, copy
 from arm64_const import *
 
 # define the API
-class arm64_op_mem(ctypes.Structure):
+class Arm64OpMem(ctypes.Structure):
     _fields_ = (
         ('base', ctypes.c_uint),
         ('index', ctypes.c_uint),
         ('disp', ctypes.c_int32),
     )
 
-class arm64_op_shift(ctypes.Structure):
+class Arm64OpShift(ctypes.Structure):
     _fields_ = (
         ('type', ctypes.c_uint),
         ('value', ctypes.c_uint),
     )
 
-class arm64_op_value(ctypes.Union):
+class Arm64OpValue(ctypes.Union):
     _fields_ = (
         ('reg', ctypes.c_uint),
         ('imm', ctypes.c_int32),
         ('fp', ctypes.c_double),
-        ('mem', arm64_op_mem),
+        ('mem', Arm64OpMem),
     )
 
-class arm64_op(ctypes.Structure):
+class Arm64Op(ctypes.Structure):
     _fields_ = (
-        ('shift', arm64_op_shift),
+        ('shift', Arm64OpShift),
         ('ext', ctypes.c_uint),
         ('type', ctypes.c_uint),
-        ('value', arm64_op_value),
+        ('value', Arm64OpValue),
     )
 
-class _cs_arm64(ctypes.Structure):
+class CsArm64(ctypes.Structure):
     _fields_ = (
         ('cc', ctypes.c_uint),
         ('update_flags', ctypes.c_bool),
         ('writeback', ctypes.c_bool),
         ('op_count', ctypes.c_uint8),
-        ('operands', arm64_op * 8),
+        ('operands', Arm64Op * 8),
     )
 
 def get_arch_info(a):

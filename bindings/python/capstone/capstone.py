@@ -134,10 +134,10 @@ if _found == False:
 
 class _cs_arch(ctypes.Union):
     _fields_ = (
-        ('arm64', arm64._cs_arm64),
-        ('arm', arm._cs_arm),
-        ('mips', mips._cs_mips),
-        ('x86', x86._cs_x86),
+        ('arm64', arm64.CsArm64),
+        ('arm', arm.CsArm),
+        ('mips', mips.CsMips),
+        ('x86', x86.CsX86),
     )
 
 # low-level structure for C code

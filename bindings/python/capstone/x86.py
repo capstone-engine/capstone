@@ -4,7 +4,7 @@ import ctypes, copy
 from x86_const import *
 
 # define the API
-class x86_op_mem(ctypes.Structure):
+class X86OpMem(ctypes.Structure):
     _fields_ = (
         ('base', ctypes.c_uint),
         ('index', ctypes.c_uint),
@@ -12,21 +12,21 @@ class x86_op_mem(ctypes.Structure):
         ('disp', ctypes.c_int64),
     )
 
-class x86_op_value(ctypes.Union):
+class X86OpValue(ctypes.Union):
     _fields_ = (
         ('reg', ctypes.c_uint),
         ('imm', ctypes.c_int64),
         ('fp', ctypes.c_double),
-        ('mem', x86_op_mem),
+        ('mem', X86OpMem),
     )
 
-class x86_op(ctypes.Structure):
+class X86Op(ctypes.Structure):
     _fields_ = (
         ('type', ctypes.c_uint),
-        ('value', x86_op_value),
+        ('value', X86OpValue),
     )
 
-class _cs_x86(ctypes.Structure):
+class CsX86(ctypes.Structure):
     _fields_ = (
         ('prefix', ctypes.c_uint8 * 5),
         ('segment', ctypes.c_uint),
@@ -42,7 +42,7 @@ class _cs_x86(ctypes.Structure):
         ('sib_scale', ctypes.c_int8),
         ('sib_base', ctypes.c_uint),
         ('op_count', ctypes.c_uint8),
-        ('operands', x86_op * 8),
+        ('operands', X86Op * 8),
     )
 
 def get_arch_info(a):

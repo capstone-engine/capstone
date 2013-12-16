@@ -36,3 +36,6 @@ tests/test_x86
 *.swp
 
 capstone.pc
+
+# local files
+_*

@@ -4,7 +4,7 @@ import ctypes, copy
 from arm_const import *
 
 # define the API
-class arm_op_mem(ctypes.Structure):
+class ArmOpMem(ctypes.Structure):
     _fields_ = (
         ('base', ctypes.c_uint),
         ('index', ctypes.c_uint),
@@ -12,34 +12,34 @@ class arm_op_mem(ctypes.Structure):
         ('disp', ctypes.c_int),
     )
 
-class arm_op_shift(ctypes.Structure):
+class ArmOpShift(ctypes.Structure):
     _fields_ = (
         ('type', ctypes.c_uint),
         ('value', ctypes.c_uint),
     )
 
-class arm_op_value(ctypes.Union):
+class ArmOpValue(ctypes.Union):
     _fields_ = (
         ('reg', ctypes.c_uint),
         ('imm', ctypes.c_int),
         ('fp', ctypes.c_double),
-        ('mem', arm_op_mem),
+        ('mem', ArmOpMem),
     )
 
-class arm_op(ctypes.Structure):
+class ArmOp(ctypes.Structure):
     _fields_ = (
-        ('shift', arm_op_shift),
+        ('shift', ArmOpShift),
         ('type', ctypes.c_uint),
-        ('value', arm_op_value),
+        ('value', ArmOpValue),
     )
 
-class _cs_arm(ctypes.Structure):
+class CsArm(ctypes.Structure):
     _fields_ = (
         ('cc', ctypes.c_uint),
         ('update_flags', ctypes.c_bool),
         ('writeback', ctypes.c_bool),
         ('op_count', ctypes.c_uint8),
-        ('operands', arm_op * 20),
+        ('operands', ArmOp * 20),
     )
 
 def get_arch_info(a):
