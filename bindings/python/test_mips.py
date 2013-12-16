@@ -35,9 +35,9 @@ def test_class():
             for i in insn.operands:
                 c += 1
                 if i.type == MIPS_OP_REG:
-			        print("\t\toperands[%u].type: REG = %s" %(c, insn.reg_name(i.value.reg)))
+                    print("\t\toperands[%u].type: REG = %s" %(c, insn.reg_name(i.value.reg)))
                 if i.type == MIPS_OP_IMM:
-			        print("\t\toperands[%u].type: IMM = 0x%s" %(c, to_x(i.value.imm)))
+                    print("\t\toperands[%u].type: IMM = 0x%s" %(c, to_x(i.value.imm)))
                 if i.type == MIPS_OP_MEM:
                     print("\t\toperands[%u].type: MEM" %c)
                     if i.value.mem.base != 0:

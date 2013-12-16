@@ -45,15 +45,15 @@ def test_class():
             c = 0
             for i in insn.operands:
                 if i.type == ARM_OP_REG:
-			        print("\t\toperands[%u].type: REG = %s" %(c, insn.reg_name(i.value.reg)))
+                    print("\t\toperands[%u].type: REG = %s" %(c, insn.reg_name(i.value.reg)))
                 if i.type == ARM_OP_IMM:
-			        print("\t\toperands[%u].type: IMM = 0x%s" %(c, to_x_32(i.value.imm)))
+                    print("\t\toperands[%u].type: IMM = 0x%s" %(c, to_x_32(i.value.imm)))
                 if i.type == ARM_OP_PIMM:
-			        print("\t\toperands[%u].type: P-IMM = %u" %(c, i.value.imm))
+                    print("\t\toperands[%u].type: P-IMM = %u" %(c, i.value.imm))
                 if i.type == ARM_OP_CIMM:
-			        print("\t\toperands[%u].type: C-IMM = %u" %(c, i.value.imm))
+                    print("\t\toperands[%u].type: C-IMM = %u" %(c, i.value.imm))
                 if i.type == ARM_OP_FP:
-			        print("\t\toperands[%u].type: FP = %f" %(c, i.value.fp))
+                    print("\t\toperands[%u].type: FP = %f" %(c, i.value.fp))
                 if i.type == ARM_OP_MEM:
                     print("\t\toperands[%u].type: MEM" %c)
                     if i.value.mem.base != 0:
