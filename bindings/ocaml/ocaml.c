@@ -437,7 +437,7 @@ CAMLprim value ocaml_cs_disasm_quick(value _arch, value _mode, value _code, valu
 	if (cs_open(arch, mode, &handle) == false)
 		return Val_emptylist;
 
-	code = String_val(_code);
+	code = (uint8_t *)String_val(_code);
 	code_len = caml_string_length(_code);
 	addr = Int64_val(_addr);
 	count = Int64_val(_count);
@@ -456,7 +456,7 @@ CAMLprim value ocaml_cs_disasm_dyn(value _arch, value _handle, value _code, valu
 	handle = Int64_val(_handle);
 	
 	arch = Int_val(_arch);
-	code = String_val(_code);
+	code = (uint8_t *)String_val(_code);
 	code_len = caml_string_length(_code);
 	addr = Int64_val(_addr);
 	count = Int64_val(_count);
@@ -545,29 +545,9 @@ CAMLprim value ocaml_cs_open(value _arch, value _mode)
 	}
 }
 
-CAMLprim value cs_register_name(value _arch, value _reg)
+CAMLprim value cs_register_name(value _handle, value _reg)
 {
-	cs_arch arch;
-
-	switch (Int_val(_arch)) {
-		case 0:
-			arch = CS_ARCH_ARM;
-			break;
-		case 1:
-			arch = CS_ARCH_ARM64;
-			break;
-		case 2:
-			arch = CS_ARCH_MIPS;
-			break;
-		case 3:
-			arch = CS_ARCH_X86;
-			break;
-		default:
-			arch = Int_val(_arch);
-			break;
-	}
-
-	const char *name = cs_reg_name(arch, Int_val(_reg));
+	const char *name = cs_reg_name(Int64_val(_handle), Int_val(_reg));
 	return caml_copy_string(name);
 }
 

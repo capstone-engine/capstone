@@ -51,7 +51,7 @@ type cs_insn0 = {
 external cs_open: arch -> mode list -> Int64.t option = "ocaml_cs_open"
 external cs_disasm_quick: arch -> mode list -> string -> Int64.t -> Int64.t -> cs_insn0 list = "ocaml_cs_disasm_quick"
 external cs_disasm_dyn: arch -> Int64.t -> string -> Int64.t -> Int64.t -> cs_insn0 list = "ocaml_cs_disasm_dyn"
-external cs_reg_name: arch -> int -> string = "cs_register_name"
+external cs_reg_name: Int64.t -> int -> string = "cs_register_name"
 external cs_insn_name: Int64.t -> int -> string = "cs_instruction_name"
 
 class cs_insn c a =
