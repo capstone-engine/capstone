@@ -1,10 +1,6 @@
 // Capstone Java binding
 // By Nguyen Anh Quynh & Dang Hoang Vu,  2013
 
-import com.sun.jna.Native;
-import com.sun.jna.Memory;
-import com.sun.jna.Pointer;
-
 import capstone.Capstone;
 import capstone.Arm;
 

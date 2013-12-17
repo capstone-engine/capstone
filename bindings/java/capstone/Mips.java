@@ -79,7 +79,8 @@ public class Mips {
     public void read() {
       readField("op_count");
       op = new Operand[op_count];
-      readField("op");
+      if (op_count != 0)
+        readField("op");
     }
 
     @Override
