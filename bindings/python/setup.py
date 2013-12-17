@@ -13,7 +13,6 @@ setup(
     author_email = 'aquynh@gmail.com',
     description  = 'Capstone disassembly engine',
     url          = 'http://www.capstone-engine.org',
-    #download_url = 'https://www.capstone-engine.org/files/capstone-1.0.tgz',
     classifiers  = [
                 'License :: OSI Approved :: BSD License',
                 'Programming Language :: Python :: 2',
