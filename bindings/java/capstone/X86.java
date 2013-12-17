@@ -112,16 +112,16 @@ public class X86 {
     public byte [] prefix;
     public int segment;
     public byte [] opcode;
-    public byte op_size;
-    public byte addr_size;
-    public byte disp_size;
-    public byte imm_size;
+    public byte opSize;
+    public byte addrSize;
+    public byte dispSize;
+    public byte immSize;
     public byte modrm;
     public byte sib;
     public int disp;
-    public int sib_index;
-    public byte sib_scale;
-    public int sib_base;
+    public int sibIndex;
+    public byte sibScale;
+    public int sibBase;
 
     public Operand[] op;
 
@@ -129,16 +129,16 @@ public class X86 {
       prefix = e.prefix;
       segment = e.segment;
       opcode = e.opcode;
-      op_size = e.op_size;
-      addr_size = e.addr_size;
-      disp_size = e.disp_size;
-      imm_size = e.imm_size;
+      opSize = e.op_size;
+      addrSize = e.addr_size;
+      dispSize = e.disp_size;
+      immSize = e.imm_size;
       modrm = e.modrm;
       sib = e.sib;
       disp = e.disp;
-      sib_index = e.sib_index;
-      sib_scale = e.sib_scale;
-      sib_base = e.sib_base;
+      sibIndex = e.sib_index;
+      sibScale = e.sib_scale;
+      sibBase = e.sib_base;
       op = new Operand[e.op_count];
       for (int i=0; i<e.op_count; i++)
         op[i] = e.op[i];
