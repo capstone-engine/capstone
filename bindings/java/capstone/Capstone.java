@@ -90,10 +90,18 @@ public class Capstone {
       address = struct.address;
       size = struct.size;
       mnemonic = new String(struct.mnemonic).replace("\u0000","");
-      operands = new String(struct.operands).replace("\u0000","");
-      regs_read = struct.regs_read;
-      regs_write = struct.regs_write;
-      groups = struct.groups;
+      opStr = new String(struct.operands).replace("\u0000","");
+
+      regsRead = new int[struct.regs_read_count];
+      for (int i=0; i<regsRead.length; i++)
+        regsRead[i] = struct.regs_read[i];
+      regsWrite = new int[struct.regs_write_count];
+      for (int i=0; i<regsWrite.length; i++)
+        regsWrite[i] = struct.regs_write[i];
+      groups = new int[struct.groups_count];
+      for (int i=0; i<groups.length; i++)
+        groups[i] = struct.groups[i];
+      operands = _op_info;
 
       ptr_origin = _ptr_origin;
       csh = _csh;
