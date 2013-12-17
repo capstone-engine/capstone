@@ -24,14 +24,29 @@ Capstone offers some unparalleled features:
 
 
 [Compile]
+
 See COMPILE file for how to compile and install Capstone
 
 
-[Binaries]
+[Status]
 
-Binaries for different platforms are put in release/ directory.
+- Capstone can only compile to Windows via Cygwin, or cross-compile using
+MingW. Visual Studio support will be done in the future.
+
+- X86 engine cannot handle many malware tricks yet. Please report all the raw
+binary code that Capstone cannot disassemble, or does that wrongly, so we can
+fix that in the next version
+
+- This package only contains Java & Python bindings. For C#, Go, Ocaml & Ruby,
+refer to the corresponding git repositories.
 
 
 [Hack]
 
 See HACK file for the structuture of the source code.
+
+
+[License]
+
+This project is released under BSD license. If you redistribute the binary or
+source code of Capstone, please attach the LICENSE.TXT file with your products.
