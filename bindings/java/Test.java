@@ -1,10 +1,6 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
-import com.sun.jna.Native;
-import com.sun.jna.Memory;
-import com.sun.jna.Pointer;
-
 import capstone.Capstone;
 
 public class Test {
