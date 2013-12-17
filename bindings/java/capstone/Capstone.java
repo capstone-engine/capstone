@@ -69,35 +69,41 @@ public class Capstone {
     }
   }
 
-  public static class cs_insn {
-    public OpInfo op_info;
-    public Pointer ptr_origin;
-    public NativeLong csh;
+  public static class CsInsn {
+    public OpInfo operands;
+    private Pointer ptr_origin;
+    private NativeLong csh;
+    private CS cs;
+    private static int _size = -1;
 
     public int id;
     public long address;
     public short size;
     public String mnemonic;
-    public String operands;
-    public int[] regs_read;
-    public int[] regs_write;
+    public String opStr;
+    public int[] regsRead;
+    public int[] regsWrite;
     public int[] groups;
 
-    private CS cs;
-    private static int _size = -1;
-
-    public cs_insn (_cs_insn struct, Pointer _ptr_origin, NativeLong _csh, CS _cs, OpInfo _op_info) {
+    public CsInsn (_cs_insn struct, Pointer _ptr_origin, NativeLong _csh, CS _cs, OpInfo _op_info) {
       id = struct.id;
       address = struct.address;
       size = struct.size;
       mnemonic = new String(struct.mnemonic).replace("\u0000","");
-      operands = new String(struct.operands).replace("\u0000","");
-      regs_read = struct.regs_read;
-      regs_write = struct.regs_write;
-      groups = struct.groups;
+      opStr = new String(struct.operands).replace("\u0000","");
+
+      regsRead = new int[struct.regs_read_count];
+      for (int i=0; i<regsRead.length; i++)
+        regsRead[i] = struct.regs_read[i];
+      regsWrite = new int[struct.regs_write_count];
+      for (int i=0; i<regsWrite.length; i++)
+        regsWrite[i] = struct.regs_write[i];
+      groups = new int[struct.groups_count];
+      for (int i=0; i<groups.length; i++)
+        groups[i] = struct.groups[i];
+      operands = _op_info;
 
       ptr_origin = _ptr_origin;
-      op_info = _op_info;
       csh = _csh;
       cs = _cs;
 
@@ -112,19 +118,19 @@ public class Capstone {
       return _size;
     }
 
-    public int op_count(int type) {
+    public int opCount(int type) {
       return cs.cs_op_count(csh, ptr_origin, type);
     }
 
-    public int op_index(int type, int index) {
+    public int opIndex(int type, int index) {
       return cs.cs_op_index(csh, ptr_origin, type, index);
     }
 
-    public boolean reg_read(int reg_id) {
+    public boolean regRead(int reg_id) {
       return cs.cs_reg_read(csh, ptr_origin, reg_id) != 0;
     }
 
-    public boolean reg_write(int reg_id) {
+    public boolean regWrite(int reg_id) {
       return cs.cs_reg_write(csh, ptr_origin, reg_id) != 0;
     }
 
@@ -132,11 +138,11 @@ public class Capstone {
       return cs.cs_errno(csh);
     }
 
-    public String reg_name(int reg_id) {
+    public String regName(int reg_id) {
       return cs.cs_reg_name(csh, reg_id);
     }
 
-    public String insn_name() {
+    public String insnName() {
       return cs.cs_insn_name(csh, id);
     }
 
@@ -146,7 +152,7 @@ public class Capstone {
 
   }
 
-  private cs_insn fromPointer(Pointer pointer)
+  private CsInsn fromPointer(Pointer pointer)
   {
     _cs_insn insn = new _cs_insn(pointer);
     OpInfo op_info = null;
@@ -171,12 +177,12 @@ public class Capstone {
         break;
       default:
     }
-    return new cs_insn(insn, pointer, ns.csh, cs, op_info);
+    return new CsInsn(insn, pointer, ns.csh, cs, op_info);
   }
 
-  private cs_insn[] fromArrayPointer(Pointer pointer, int numberResults)
+  private CsInsn[] fromArrayPointer(Pointer pointer, int numberResults)
   {
-    cs_insn[] arr = new cs_insn[numberResults];
+    CsInsn[] arr = new CsInsn[numberResults];
     int offset = 0;
 
     for (int i = 0; i < numberResults; i++) {
@@ -281,7 +287,7 @@ public class Capstone {
     }
   }
 
-  public String reg_name(int reg) {
+  public String getRegName(int reg) {
     return cs.cs_reg_name(ns.csh, reg);
   }
 
@@ -289,17 +295,17 @@ public class Capstone {
     cs.cs_close(ns.csh);
   }
 
-  public cs_insn[] disasm(byte[] code, long address) {
+  public CsInsn[] disasm(byte[] code, long address) {
     return disasm(code, address, 0);
   }
 
-  public cs_insn[] disasm(byte[] code, long address, long count) {
+  public CsInsn[] disasm(byte[] code, long address, long count) {
     PointerByReference insnRef = new PointerByReference();
 
     NativeLong c = cs.cs_disasm_dyn(ns.csh, code, new NativeLong(code.length), address, new NativeLong(count), insnRef);
 
-    cs_insn[] all_insn = fromArrayPointer(insnRef.getValue(), c.intValue());
-    return all_insn;
+    CsInsn[] allInsn = fromArrayPointer(insnRef.getValue(), c.intValue());
+    return allInsn;
   }
 }
 

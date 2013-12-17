@@ -105,7 +105,8 @@ public class Arm {
       readField("_writeback");
       readField("op_count");
       op = new Operand[op_count];
-      readField("op");
+      if (op_count != 0)
+        readField("op");
     }
 
     @Override
@@ -116,13 +117,13 @@ public class Arm {
 
   public static class OpInfo extends Capstone.OpInfo {
     public int cc;
-    public boolean update_flags;
+    public boolean updateFlags;
     public boolean writeback;
     public Operand [] op = null;
 
     public OpInfo(UnionOpInfo op_info) {
       cc = op_info.cc;
-      update_flags = (op_info._update_flags > 0);
+      updateFlags = (op_info._update_flags > 0);
       writeback = (op_info._writeback > 0);
       op = op_info.op;
     }

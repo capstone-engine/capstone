@@ -1,10 +1,6 @@
 // Capstone Java binding
 // By Nguyen Anh Quynh & Dang Hoang Vu,  2013
 
-import com.sun.jna.Native;
-import com.sun.jna.Memory;
-import com.sun.jna.Pointer;
-
 import capstone.Capstone;
 import capstone.X86;
 
@@ -44,62 +40,62 @@ public class TestX86 {
     return ret;
   }
 
-  public static void print_ins_detail(Capstone.cs_insn ins) {
-    System.out.printf("0x%x:\t%s\t%s\n", ins.address, ins.mnemonic, ins.operands);
+  public static void print_ins_detail(Capstone.CsInsn ins) {
+    System.out.printf("0x%x:\t%s\t%s\n", ins.address, ins.mnemonic, ins.opStr);
 
-    X86.OpInfo op_info = (X86.OpInfo) ins.op_info;
+    X86.OpInfo operands = (X86.OpInfo) ins.operands;
 
-    System.out.printf("\tPrefix: %s\n", array2hex(op_info.prefix));
+    System.out.printf("\tPrefix: %s\n", array2hex(operands.prefix));
 
-    if (op_info.segment != X86_REG_INVALID)
-      System.out.println("\tSegment override: " + cs.reg_name(op_info.segment));
+    if (operands.segment != X86_REG_INVALID)
+      System.out.println("\tSegment override: " + ins.regName(operands.segment));
 
 
-    System.out.printf("\tOpcode: %s\n", array2hex(op_info.opcode));
+    System.out.printf("\tOpcode: %s\n", array2hex(operands.opcode));
 
     // print operand's size, address size, displacement size & immediate size
     System.out.printf("\top_size: %d, addr_size: %d, disp_size: %d, imm_size: %d\n"
-        , op_info.op_size, op_info.addr_size, op_info.disp_size, op_info.imm_size);
+        , operands.opSize, operands.addrSize, operands.dispSize, operands.immSize);
 
     // print modRM byte
-    System.out.printf("\tmodrm: 0x%x\n", op_info.modrm);
+    System.out.printf("\tmodrm: 0x%x\n", operands.modrm);
 
     // print displacement value
-    System.out.printf("\tdisp: 0x%x\n", op_info.disp);
+    System.out.printf("\tdisp: 0x%x\n", operands.disp);
 
     // SIB is not available in 16-bit mode
     if ( (cs.mode & Capstone.CS_MODE_16) == 0) {
       // print SIB byte
-      System.out.printf("\tsib: 0x%x\n", op_info.sib);
-      if (op_info.sib != 0)
+      System.out.printf("\tsib: 0x%x\n", operands.sib);
+      if (operands.sib != 0)
         System.out.printf("\tsib_index: %s, sib_scale: %d, sib_base: %s\n",
-          cs.reg_name(op_info.sib_index), op_info.sib_scale, cs.reg_name(op_info.sib_base));
+          ins.regName(operands.sibIndex), operands.sibScale, ins.regName(operands.sibBase));
     }
 
-    int count = ins.op_count(X86_OP_IMM);
+    int count = ins.opCount(X86_OP_IMM);
     if (count > 0) {
       System.out.printf("\timm_count: %d\n", count);
       for (int i=0; i<count; i++) {
-        int index = ins.op_index(X86_OP_IMM, i + 1);
-        System.out.printf("\t\timms[%d]: 0x%x\n", i+1, (op_info.op[index].value.imm));
+        int index = ins.opIndex(X86_OP_IMM, i + 1);
+        System.out.printf("\t\timms[%d]: 0x%x\n", i+1, (operands.op[index].value.imm));
       }
     }
 
-    if (op_info.op.length != 0) {
-      System.out.printf("\top_count: %d\n", op_info.op.length);
-      for (int c=0; c<op_info.op.length; c++) {
-        X86.Operand i = (X86.Operand) op_info.op[c];
+    if (operands.op.length != 0) {
+      System.out.printf("\top_count: %d\n", operands.op.length);
+      for (int c=0; c<operands.op.length; c++) {
+        X86.Operand i = (X86.Operand) operands.op[c];
         String imm = hex(i.value.imm);
         if (i.type == X86_OP_REG)
-          System.out.printf("\t\toperands[%d].type: REG = %s\n", c, cs.reg_name(i.value.reg));
+          System.out.printf("\t\toperands[%d].type: REG = %s\n", c, ins.regName(i.value.reg));
         if (i.type == X86_OP_IMM)
           System.out.printf("\t\toperands[%d].type: IMM = 0x%x\n", c, i.value.imm);
         if (i.type == X86_OP_FP)
           System.out.printf("\t\toperands[%d].type: FP = %f\n", c, i.value.fp);
         if (i.type == X86_OP_MEM) {
           System.out.printf("\t\toperands[%d].type: MEM\n",c);
-          String base = cs.reg_name(i.value.mem.base);
-          String index = cs.reg_name(i.value.mem.index);
+          String base = ins.regName(i.value.mem.base);
+          String index = ins.regName(i.value.mem.index);
           if (base != null)
             System.out.printf("\t\t\toperands[%d].mem.base: REG = %s\n", c, base);
           if (index != null)
@@ -133,7 +129,7 @@ public class TestX86 {
       if (test.syntax != 0) {
         cs.setSyntax(test.syntax);
       }
-      Capstone.cs_insn[] all_ins = cs.disasm(test.code, 0x1000);
+      Capstone.CsInsn[] all_ins = cs.disasm(test.code, 0x1000);
 
       for (int j = 0; j < all_ins.length; j++) {
         print_ins_detail(all_ins[j]);

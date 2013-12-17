@@ -1,10 +1,6 @@
 // Capstone Java binding
 // By Nguyen Anh Quynh & Dang Hoang Vu,  2013
 
-import com.sun.jna.Native;
-import com.sun.jna.Memory;
-import com.sun.jna.Pointer;
-
 import capstone.Capstone;
 import capstone.Mips;
 
@@ -36,23 +32,23 @@ public class TestMips {
     return Long.toString(i, 16);
   }
 
-  public static void print_ins_detail(Capstone.cs_insn ins) {
-    System.out.printf("0x%x:\t%s\t%s\n", ins.address, ins.mnemonic, ins.operands);
+  public static void print_ins_detail(Capstone.CsInsn ins) {
+    System.out.printf("0x%x:\t%s\t%s\n", ins.address, ins.mnemonic, ins.opStr);
 
-    Mips.OpInfo op_info = (Mips.OpInfo) ins.op_info;
+    Mips.OpInfo operands = (Mips.OpInfo) ins.operands;
 
-    if (op_info.op.length != 0) {
-      System.out.printf("\top_count: %d\n", op_info.op.length);
-      for (int c=0; c<op_info.op.length; c++) {
-        Mips.Operand i = (Mips.Operand) op_info.op[c];
+    if (operands.op.length != 0) {
+      System.out.printf("\top_count: %d\n", operands.op.length);
+      for (int c=0; c<operands.op.length; c++) {
+        Mips.Operand i = (Mips.Operand) operands.op[c];
         String imm = hex(i.value.imm);
         if (i.type == MIPS_OP_REG)
-          System.out.printf("\t\toperands[%d].type: REG = %s\n", c, cs.reg_name(i.value.reg));
+          System.out.printf("\t\toperands[%d].type: REG = %s\n", c, ins.regName(i.value.reg));
         if (i.type == MIPS_OP_IMM)
           System.out.printf("\t\toperands[%d].type: IMM = 0x%x\n", c, i.value.imm);
         if (i.type == MIPS_OP_MEM) {
           System.out.printf("\t\toperands[%d].type: MEM\n",c);
-          String base = cs.reg_name(i.value.mem.base);
+          String base = ins.regName(i.value.mem.base);
           if (base != null)
             System.out.printf("\t\t\toperands[%d].mem.base: REG = %s\n", c, base);
           if (i.value.mem.disp != 0)
@@ -77,7 +73,7 @@ public class TestMips {
       System.out.println("Disasm:");
 
       cs = new Capstone(test.arch, test.mode);
-      Capstone.cs_insn[] all_ins = cs.disasm(test.code, 0x1000);
+      Capstone.CsInsn[] all_ins = cs.disasm(test.code, 0x1000);
 
       for (int j = 0; j < all_ins.length; j++) {
         print_ins_detail(all_ins[j]);
