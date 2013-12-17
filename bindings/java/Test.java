@@ -119,11 +119,11 @@ public class Test {
       if (platforms[j].syntax != 0)
         cs.setSyntax(platforms[j].syntax);
 
-      Capstone.cs_insn[] all_insn = cs.disasm(platforms[j].code, 0x1000);
+      Capstone.CsInsn[] all_insn = cs.disasm(platforms[j].code, 0x1000);
 
       for (int i = 0; i < all_insn.length; i++) {
         System.out.println(String.format("0x%x: \t%s\t%s", all_insn[i].address,
-              all_insn[i].mnemonic, all_insn[i].operands));
+              all_insn[i].mnemonic, all_insn[i].opStr));
       }
       System.out.printf("0x%x:\n\n", all_insn[all_insn.length-1].address + all_insn[all_insn.length-1].size);
     }

@@ -31,18 +31,18 @@ public class TestArm64 {
     return Long.toString(i, 16);
   }
 
-  public static void print_ins_detail(Capstone.cs_insn ins) {
-    System.out.printf("0x%x:\t%s\t%s\n", ins.address, ins.mnemonic, ins.operands);
+  public static void print_ins_detail(Capstone.CsInsn ins) {
+    System.out.printf("0x%x:\t%s\t%s\n", ins.address, ins.mnemonic, ins.opStr);
 
-    Arm64.OpInfo op_info = (Arm64.OpInfo) ins.op_info;
+    Arm64.OpInfo operands = (Arm64.OpInfo) ins.operands;
 
-    if (op_info.op.length != 0) {
-      System.out.printf("\top_count: %d\n", op_info.op.length);
-      for (int c=0; c<op_info.op.length; c++) {
-        Arm64.Operand i = (Arm64.Operand) op_info.op[c];
+    if (operands.op.length != 0) {
+      System.out.printf("\top_count: %d\n", operands.op.length);
+      for (int c=0; c<operands.op.length; c++) {
+        Arm64.Operand i = (Arm64.Operand) operands.op[c];
         String imm = hex(i.value.imm);
         if (i.type == ARM64_OP_REG)
-          System.out.printf("\t\toperands[%d].type: REG = %s\n", c, cs.reg_name(i.value.reg));
+          System.out.printf("\t\toperands[%d].type: REG = %s\n", c, ins.regName(i.value.reg));
         if (i.type == ARM64_OP_IMM)
           System.out.printf("\t\toperands[%d].type: IMM = 0x%x\n", c, i.value.imm);
         if (i.type == ARM64_OP_CIMM)
@@ -51,8 +51,8 @@ public class TestArm64 {
           System.out.printf("\t\toperands[%d].type: FP = %f\n", c, i.value.fp);
         if (i.type == ARM64_OP_MEM) {
           System.out.printf("\t\toperands[%d].type: MEM\n",c);
-          String base = cs.reg_name(i.value.mem.base);
-          String index = cs.reg_name(i.value.mem.index);
+          String base = ins.regName(i.value.mem.base);
+          String index = ins.regName(i.value.mem.index);
           if (base != null)
             System.out.printf("\t\t\toperands[%d].mem.base: REG = %s\n", c, base);
           if (index != null)
@@ -67,14 +67,14 @@ public class TestArm64 {
       }
     }
 
-    if (op_info.writeback)
+    if (operands.writeback)
       System.out.println("\tWrite-back: True");
 
-    if (op_info.update_flags)
+    if (operands.updateFlags)
       System.out.println("\tUpdate-flags: True");
 
-    if (op_info.cc != ARM64_CC_AL && op_info.cc != ARM64_CC_INVALID)
-      System.out.printf("\tCode condition: %d\n",  op_info.cc);
+    if (operands.cc != ARM64_CC_AL && operands.cc != ARM64_CC_INVALID)
+      System.out.printf("\tCode condition: %d\n",  operands.cc);
 
   }
 
@@ -92,7 +92,7 @@ public class TestArm64 {
       System.out.println("Disasm:");
 
       cs = new Capstone(test.arch, test.mode);
-      Capstone.cs_insn[] all_ins = cs.disasm(test.code, 0x2c);
+      Capstone.CsInsn[] all_ins = cs.disasm(test.code, 0x2c);
 
       for (int j = 0; j < all_ins.length; j++) {
         print_ins_detail(all_ins[j]);
