@@ -94,7 +94,7 @@ import distutils.sysconfig
 
 # load all the libs
 _lib_path = split(__file__)[0]
-_all_libs = ['capstone.dll', 'libcapstone.so', 'libcapstone.dylib']
+_all_libs = ['libcapstone.dll', 'libcapstone.so', 'libcapstone.dylib']
 _found = False
 
 for _lib in _all_libs:
