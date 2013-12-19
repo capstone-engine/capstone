@@ -19,12 +19,26 @@ INSTALL_LIBRARY ?= install -m0755
 
 LIBNAME = capstone
 
+CAPSTONE_ARCHS = arm x86 mips aarch64
+
 LIBOBJ =
 LIBOBJ += cs.o utils.o SStream.o MCInstrDesc.o MCRegisterInfo.o
-LIBOBJ += arch/Mips/MipsDisassembler.o arch/Mips/MipsInstPrinter.o arch/Mips/mapping.o
-LIBOBJ += arch/AArch64/AArch64BaseInfo.o arch/AArch64/AArch64Disassembler.o arch/AArch64/AArch64InstPrinter.o arch/AArch64/mapping.o
-LIBOBJ += arch/ARM/ARMDisassembler.o arch/ARM/ARMInstPrinter.o arch/ARM/mapping.o
-LIBOBJ += arch/X86/X86DisassemblerDecoder.o arch/X86/X86Disassembler.o arch/X86/X86IntelInstPrinter.o arch/X86/X86ATTInstPrinter.o arch/X86/mapping.o
+ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))
+	LIBOBJ += arch/ARM/ARMDisassembler.o arch/ARM/ARMInstPrinter.o arch/ARM/mapping.o
+	CFLAGS += -DCS_SUPPORT_ARM
+endif
+ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
+	LIBOBJ += arch/X86/X86DisassemblerDecoder.o arch/X86/X86Disassembler.o arch/X86/X86IntelInstPrinter.o arch/X86/X86ATTInstPrinter.o arch/X86/mapping.o
+	CFLAGS += -DCS_SUPPORT_X86
+endif
+ifneq (,$(findstring mips,$(CAPSTONE_ARCHS)))
+	LIBOBJ += arch/Mips/MipsDisassembler.o arch/Mips/MipsInstPrinter.o arch/Mips/mapping.o
+	CFLAGS += -DCS_SUPPORT_AARCH64
+endif
+ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
+	LIBOBJ += arch/AArch64/AArch64BaseInfo.o arch/AArch64/AArch64Disassembler.o arch/AArch64/AArch64InstPrinter.o arch/AArch64/mapping.o
+	CFLAGS += -DCS_SUPPORT_MIPS
+endif
 LIBOBJ += MCInst.o
 
 EXT = so

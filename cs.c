@@ -10,24 +10,8 @@
 
 #include "MCRegisterInfo.h"
 
-#include "arch/X86/X86Disassembler.h"
-#include "arch/X86/X86InstPrinter.h"
-#include "arch/X86/mapping.h"
-
-#include "arch/ARM/ARMDisassembler.h"
-#include "arch/ARM/ARMInstPrinter.h"
-#include "arch/ARM/mapping.h"
-
-#include "arch/Mips/MipsDisassembler.h"
-#include "arch/Mips/MipsInstPrinter.h"
-#include "arch/Mips/mapping.h"
-
-#include "arch/AArch64/AArch64Disassembler.h"
-#include "arch/AArch64/AArch64InstPrinter.h"
-#include "arch/AArch64/mapping.h"
-
+#include "arch.h"
 #include "utils.h"
-
 
 void cs_version(int *major, int *minor)
 {
@@ -47,90 +31,26 @@ cs_err cs_errno(csh handle)
 
 cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 {
-	cs_struct *ud;
+  cs_struct *ud;
 
-	ud = calloc(1, sizeof(*ud));
-	if (!ud) {
-		// memory insufficient
-		return CS_ERR_MEM;
-	}
+  ud = calloc(1, sizeof(*ud));
+  if (!ud) {
+    // memory insufficient
+    return CS_ERR_MEM;
+  }
 
-	ud->errnum = CS_ERR_OK;
-	ud->arch = arch;
-	ud->mode = mode;
-	ud->big_endian = mode & CS_MODE_BIG_ENDIAN;
-	ud->reg_name = NULL;
-	ud->detail = CS_OPT_ON;	// by default break instruction into details
+  ud->errnum = CS_ERR_OK;
+  ud->arch = arch;
+  ud->mode = mode;
+  ud->big_endian = mode & CS_MODE_BIG_ENDIAN;
+  ud->reg_name = NULL;
+  ud->detail = CS_OPT_ON;	// by default break instruction into details
 
-	switch (ud->arch) {
-		case CS_ARCH_X86:
-			// by default, we use Intel syntax
-			ud->printer = X86_Intel_printInst;
-			ud->printer_info = NULL;
-			ud->disasm = X86_getInstruction;
-			ud->reg_name = X86_reg_name;
-			ud->insn_id = X86_get_insn_id;
-			ud->insn_name = X86_insn_name;
-			ud->post_printer = X86_post_printer;
-			break;
-		case CS_ARCH_ARM: {
-					MCRegisterInfo *mri = malloc(sizeof(*mri));
+  init_arch[ud->arch](ud);
 
-					ARM_init(mri);
+  *handle = (uintptr_t)ud;
 
-					ud->printer = ARM_printInst;
-					ud->printer_info = mri;
-					ud->reg_name = ARM_reg_name;
-					ud->insn_id = ARM_get_insn_id;
-					ud->insn_name = ARM_insn_name;
-					ud->post_printer = ARM_post_printer;
-
-					if (ud->mode & CS_MODE_THUMB)
-						ud->disasm = Thumb_getInstruction;
-					else
-						ud->disasm = ARM_getInstruction;
-					break;
-				}
-		case CS_ARCH_MIPS: {
-				   MCRegisterInfo *mri = malloc(sizeof(*mri));
-
-				   Mips_init(mri);
-				   ud->printer = Mips_printInst;
-				   ud->printer_info = mri;
-				   ud->getinsn_info = mri;
-				   ud->reg_name = Mips_reg_name;
-				   ud->insn_id = Mips_get_insn_id;
-				   ud->insn_name = Mips_insn_name;
-
-				   if (ud->mode & CS_MODE_32)
-					   ud->disasm = Mips_getInstruction;
-				   else
-					   ud->disasm = Mips64_getInstruction;
-
-				   break;
-			}
-		case CS_ARCH_ARM64: {
-					MCRegisterInfo *mri = malloc(sizeof(*mri));
-
-					AArch64_init(mri);
-					ud->printer = AArch64_printInst;
-					ud->printer_info = mri;
-					ud->getinsn_info = mri;
-					ud->disasm = AArch64_getInstruction;
-					ud->reg_name = AArch64_reg_name;
-					ud->insn_id = AArch64_get_insn_id;
-					ud->insn_name = AArch64_insn_name;
-					ud->post_printer = AArch64_post_printer;
-					break;
-			}
-		default:	// unsupported architecture
-			free(ud);
-			return CS_ERR_ARCH;
-	}
-
-	*handle = (uintptr_t)ud;
-
-	return CS_ERR_OK;
+  return CS_ERR_OK;
 }
 
 cs_err cs_close(csh handle)
@@ -209,69 +129,75 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 
 cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 {
-	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
-	if (!handle)
-		return CS_ERR_CSH;
+  cs_struct *handle = (cs_struct *)(uintptr_t)ud;
+  if (!handle)
+    return CS_ERR_CSH;
 
-	switch(type) {
-		default:
-			break;
-		case CS_OPT_DETAIL:
-			handle->detail = value;
-			return CS_ERR_OK;
-		case CS_OPT_SYNTAX:
-			switch (handle->arch) {
-				default:
-					// only selected archs care about CS_OPT_SYNTAX
-					handle->errnum = CS_ERR_OPTION;
-					return CS_ERR_OPTION;
+  switch(type) {
+    default:
+      break;
+    case CS_OPT_DETAIL:
+      handle->detail = value;
+      return CS_ERR_OK;
+    case CS_OPT_SYNTAX:
+      switch (handle->arch) {
+        default:
+          // only selected archs care about CS_OPT_SYNTAX
+          handle->errnum = CS_ERR_OPTION;
+          return CS_ERR_OPTION;
 
-				case CS_ARCH_X86:
-					switch(value) {
-						default:
-							// wrong syntax value
-							handle->errnum = CS_ERR_OPTION;
-							return CS_ERR_OPTION;
+#ifdef CS_SUPPORT_X86
+        case CS_ARCH_X86:
+          switch(value) {
+            default:
+              // wrong syntax value
+              handle->errnum = CS_ERR_OPTION;
+              return CS_ERR_OPTION;
 
-						case CS_OPT_SYNTAX_INTEL:
-							handle->printer = X86_Intel_printInst;
-							break;
+            case CS_OPT_SYNTAX_INTEL:
+              handle->printer = X86_Intel_printInst;
+              break;
 
-						case CS_OPT_SYNTAX_ATT:
-							handle->printer = X86_ATT_printInst;
-							break;
-					}
-					break;
-			}
-			break;
+            case CS_OPT_SYNTAX_ATT:
+              handle->printer = X86_ATT_printInst;
+              break;
+          }
+          break;
+#endif
+      }
+      break;
 
-		case CS_OPT_MODE:	// change engine's mode at run-time
-			handle->mode = value;
-			switch (handle->arch) {
-				default:
-					// only selected archs care about CS_OPT_SYNTAX
-					break;
-				case CS_ARCH_ARM:
-					if (value & CS_MODE_THUMB)
-						handle->disasm = Thumb_getInstruction;
-					else
-						handle->disasm = ARM_getInstruction;
+    case CS_OPT_MODE:	// change engine's mode at run-time
+      handle->mode = value;
+      switch (handle->arch) {
+        default:
+          // only selected archs care about CS_OPT_SYNTAX
+          break;
+#ifdef CS_SUPPORT_ARM
+        case CS_ARCH_ARM:
+          if (value & CS_MODE_THUMB)
+            handle->disasm = Thumb_getInstruction;
+          else
+            handle->disasm = ARM_getInstruction;
 
-					handle->mode = value;
-					break;
-				case CS_ARCH_MIPS:
-					if (value & CS_MODE_32)
-						handle->disasm = Mips_getInstruction;
-					else
-						handle->disasm = Mips64_getInstruction;
+          handle->mode = value;
+          break;
+#endif
+#ifdef CS_SUPPORT_AARCH64
+        case CS_ARCH_MIPS:
+          if (value & CS_MODE_32)
+            handle->disasm = Mips_getInstruction;
+          else
+            handle->disasm = Mips64_getInstruction;
 
-					handle->mode = value;
-					break;
-			}
-			break;
-	}
+          handle->mode = value;
+          break;
+#endif
+      }
+      break;
+  }
 
-	return CS_ERR_OK;
+  return CS_ERR_OK;
 }
 
 size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn *insn)
