@@ -50,8 +50,8 @@ typedef enum arm_cc {
 typedef enum arm_op_type {
 	ARM_OP_INVALID = 0,	// Uninitialized.
 	ARM_OP_REG,	// Register operand.
-	ARM_OP_CIMM, // C-Immediate
-	ARM_OP_PIMM, // P-Immediate
+	ARM_OP_CIMM, // C-Immediate (coprocessor registers)
+	ARM_OP_PIMM, // P-Immediate (coprocessor registers)
 	ARM_OP_IMM,	// Immediate operand.
 	ARM_OP_FP,	// Floating-Point immediate operand.
 	ARM_OP_MEM,	// Memory operand
