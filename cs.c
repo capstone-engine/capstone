@@ -219,32 +219,54 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 		case CS_OPT_DETAIL:
 			handle->detail = value;
 			return CS_ERR_OK;
-	}
+		case CS_OPT_SYNTAX:
+			switch (handle->arch) {
+				default:
+					// only selected archs care about CS_OPT_SYNTAX
+					handle->errnum = CS_ERR_OPTION;
+					return CS_ERR_OPTION;
 
-	// only selected archs care about CS_OPT_SYNTAX
-	switch (handle->arch) {
-		default:
-			handle->errnum = CS_ERR_OPTION;
-			return CS_ERR_OPTION;
+				case CS_ARCH_X86:
+					switch(value) {
+						default:
+							// wrong syntax value
+							handle->errnum = CS_ERR_OPTION;
+							return CS_ERR_OPTION;
 
-		case CS_ARCH_X86:
-			if (type & CS_OPT_SYNTAX) {
-				switch(value) {
-					default:
-						handle->errnum = CS_ERR_OPTION;
-						return CS_ERR_OPTION;
+						case CS_OPT_SYNTAX_INTEL:
+							handle->printer = X86_Intel_printInst;
+							break;
 
-					case CS_OPT_SYNTAX_INTEL:
-						handle->printer = X86_Intel_printInst;
-						break;
+						case CS_OPT_SYNTAX_ATT:
+							handle->printer = X86_ATT_printInst;
+							break;
+					}
+					break;
+			}
+			break;
 
-					case CS_OPT_SYNTAX_ATT:
-						handle->printer = X86_ATT_printInst;
-						break;
-				}
-			} else {
-				handle->errnum = CS_ERR_OPTION;
-				return CS_ERR_OPTION;
+		case CS_OPT_MODE:	// change engine's mode at run-time
+			handle->mode = value;
+			switch (handle->arch) {
+				default:
+					// only selected archs care about CS_OPT_SYNTAX
+					break;
+				case CS_ARCH_ARM:
+					if (value & CS_MODE_THUMB)
+						handle->disasm = Thumb_getInstruction;
+					else
+						handle->disasm = ARM_getInstruction;
+
+					handle->mode = value;
+					break;
+				case CS_ARCH_MIPS:
+					if (value & CS_MODE_32)
+						handle->disasm = Mips_getInstruction;
+					else
+						handle->disasm = Mips64_getInstruction;
+
+					handle->mode = value;
+					break;
 			}
 			break;
 	}

@@ -243,6 +243,7 @@ public class Capstone {
   // Capstone option type
   public static final int CS_OPT_SYNTAX = 1;  // Intel X86 asm syntax (CS_ARCH_X86 arch)
   public static final int CS_OPT_DETAIL = 2;  // Break down instruction structure into details
+  public static final int CS_OPT_MODE = 3;  // Change engine's mode at run-time
 
   //Capstone option value
   public static final int CS_OPT_OFF = 0;  // Turn OFF an option (CS_OPT_DETAIL)
@@ -284,6 +285,14 @@ public class Capstone {
       this.detail = opt;
     } else {
       throw new RuntimeException("ERROR: Unknown detail option");
+    }
+  }
+
+  public void setMode(int opt) {
+    if (cs.cs_option(ns.csh, CS_OPT_MODE, new NativeLong(opt)) == CS_ERR_OK) {
+      this.mode = opt;
+    } else {
+      throw new RuntimeException("ERROR: Unknown mode option");
     }
   }
 

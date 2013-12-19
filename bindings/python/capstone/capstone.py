@@ -32,6 +32,7 @@ __all__ = [
     'CS_OPT_SYNTAX_ATT',
 
     'CS_OPT_DETAIL',
+    'CS_OPT_MODE',
     'CS_OPT_ON',
     'CS_OPT_OFF',
 
@@ -69,7 +70,8 @@ CS_MODE_BIG_ENDIAN = (1 << 31) # big-endian mode
 
 # Capstone option type
 CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
-CS_OPT_DETAIL = 2   # Break down instruction structure into details
+CS_OPT_DETAIL = 2    # Break down instruction structure into details
+CS_OPT_MODE = 3      # Change engine's mode at run-time
 
 # Capstone option value
 CS_OPT_OFF = 0             # Turn OFF an option (CS_OPT_DETAIL)
@@ -299,7 +301,7 @@ class CsInsn(object):
 
 class Cs(object):
     def __init__(self, arch, mode):
-        self.arch, self.mode = arch, mode
+        self.arch, self._mode = arch, mode
         self.csh = ctypes.c_size_t()
         status = _cs.cs_open(arch, mode, ctypes.byref(self.csh))
         if status != CS_ERR_OK:
@@ -349,6 +351,18 @@ class Cs(object):
             raise CsError(status)
         # save detail
         self._detail = opt
+
+    @property
+    def mode(self):
+        return self._mode
+
+    @mode.setter
+    def mode(self, opt):  # opt is new disasm mode, of int type
+        status = _cs.cs_option(self.csh, CS_OPT_MODE, opt)
+        if status != CS_ERR_OK:
+            raise CsError(status)
+        # save mode
+        self._mode = opt
 
     def disasm(self, code, offset, count = 0):
         insns = []

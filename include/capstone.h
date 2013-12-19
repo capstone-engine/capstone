@@ -45,6 +45,7 @@ typedef enum cs_mode {
 typedef enum cs_opt_type {
 	CS_OPT_SYNTAX = 1,	// Asssembly output syntax
 	CS_OPT_DETAIL,	// Break down instruction structure into details
+	CS_OPT_MODE,	// Change engine's mode at run-time
 } cs_opt_type;
 
 // Runtime option value (associated with option type above)
