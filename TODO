@@ -16,6 +16,9 @@ Issues to be solved in next versions
   to port the code over to Visual Studio, so those only have Windows can still
   compile Capstone without needing to have Linux machine for cross-compiling.
 
+- Reduce the binary size of libraries, so Capstone can be embeded into products.
+
+
 [Bindings]
 
 - OCaml & C# bindings are broken due to many API changes. This should be fixed ASAP.
