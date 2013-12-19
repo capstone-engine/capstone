@@ -210,10 +210,15 @@ typedef enum arm_reg {
 
 	ARM_REG_MAX,		// <-- mark the end of the list or registers
 
-	// alias registers
+	//> alias registers
 	ARM_REG_R13 = ARM_REG_SP,
 	ARM_REG_R14 = ARM_REG_LR,
 	ARM_REG_R15 = ARM_REG_PC,
+
+	ARM_REG_SB = ARM_REG_R9,
+	ARM_REG_SL = ARM_REG_R10,
+	ARM_REG_FP = ARM_REG_R11,
+	ARM_REG_IP = ARM_REG_R12,
 } arm_reg;
 
 //> ARM instruction
