@@ -213,7 +213,7 @@ def cs_disasm_quick(arch, mode, code, offset, count = 0):
     res = _cs.cs_disasm_dyn(csh, code, len(code), offset, count, ctypes.byref(all_insn))
     if res > 0:
         for i in xrange(res):
-            insns.append(CsInsn(self.csh, all_insn[i], self.arch))
+            insns.append(CsInsn(csh, all_insn[i], arch))
 
         _cs.cs_free(all_insn)
     else:
