@@ -26,12 +26,16 @@ This directory contains some test code to show how to use Capstone API.
 
 To install Python binding on Windows:
 
-Use the Python module installer for 32/64 bit Windows from http://www.capstone-engine.org/download.html
+Recommended method:
 
-If it fails to locate your Python install, or if you have additional Python installs (e.g. Anaconda / virtualenv)
+	Use the Python module installer for 32/64 bit Windows from http://www.capstone-engine.org/download.html
 
-Run the following command in command prompt:
+Manual method:
+
+	If the module installer fails to locate your Python install, or if you have additional Python installs (e.g. Anaconda / virtualenv)
+
+	Run the following command in command prompt:
 
 		C:\> C:\location_to_python\python.exe setup.py install
 
-Copy libcapstone.dll from the 'Core engine for Windows' package available on the same capstone download page and paste it in \location_to_python\Lib\site-packages\capstone\
+	Copy libcapstone.dll from the 'Core engine for Windows' package available on the same capstone download page and paste it in \location_to_python\Lib\site-packages\capstone\
