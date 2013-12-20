@@ -31,26 +31,26 @@ cs_err cs_errno(csh handle)
 
 cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 {
-  cs_struct *ud;
+	cs_struct *ud;
 
-  ud = calloc(1, sizeof(*ud));
-  if (!ud) {
-    // memory insufficient
-    return CS_ERR_MEM;
-  }
+	ud = calloc(1, sizeof(*ud));
+	if (!ud) {
+		// memory insufficient
+		return CS_ERR_MEM;
+	}
 
-  ud->errnum = CS_ERR_OK;
-  ud->arch = arch;
-  ud->mode = mode;
-  ud->big_endian = mode & CS_MODE_BIG_ENDIAN;
-  ud->reg_name = NULL;
-  ud->detail = CS_OPT_ON;	// by default break instruction into details
+	ud->errnum = CS_ERR_OK;
+	ud->arch = arch;
+	ud->mode = mode;
+	ud->big_endian = mode & CS_MODE_BIG_ENDIAN;
+	ud->reg_name = NULL;
+	ud->detail = CS_OPT_ON;	// by default break instruction into details
 
-  init_arch[ud->arch](ud);
+	init_arch[ud->arch](ud);
 
-  *handle = (uintptr_t)ud;
+	*handle = (uintptr_t)ud;
 
-  return CS_ERR_OK;
+	return CS_ERR_OK;
 }
 
 cs_err cs_close(csh handle)
@@ -129,75 +129,75 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 
 cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 {
-  cs_struct *handle = (cs_struct *)(uintptr_t)ud;
-  if (!handle)
-    return CS_ERR_CSH;
+	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
+	if (!handle)
+		return CS_ERR_CSH;
 
-  switch(type) {
-    default:
-      break;
-    case CS_OPT_DETAIL:
-      handle->detail = value;
-      return CS_ERR_OK;
-    case CS_OPT_SYNTAX:
-      switch (handle->arch) {
-        default:
-          // only selected archs care about CS_OPT_SYNTAX
-          handle->errnum = CS_ERR_OPTION;
-          return CS_ERR_OPTION;
+	switch(type) {
+		default:
+			break;
+		case CS_OPT_DETAIL:
+			handle->detail = value;
+			return CS_ERR_OK;
+		case CS_OPT_SYNTAX:
+			switch (handle->arch) {
+				default:
+					// only selected archs care about CS_OPT_SYNTAX
+					handle->errnum = CS_ERR_OPTION;
+					return CS_ERR_OPTION;
 
 #ifdef CS_SUPPORT_X86
-        case CS_ARCH_X86:
-          switch(value) {
-            default:
-              // wrong syntax value
-              handle->errnum = CS_ERR_OPTION;
-              return CS_ERR_OPTION;
+				case CS_ARCH_X86:
+					switch(value) {
+						default:
+							// wrong syntax value
+							handle->errnum = CS_ERR_OPTION;
+							return CS_ERR_OPTION;
 
-            case CS_OPT_SYNTAX_INTEL:
-              handle->printer = X86_Intel_printInst;
-              break;
+						case CS_OPT_SYNTAX_INTEL:
+							handle->printer = X86_Intel_printInst;
+							break;
 
-            case CS_OPT_SYNTAX_ATT:
-              handle->printer = X86_ATT_printInst;
-              break;
-          }
-          break;
+						case CS_OPT_SYNTAX_ATT:
+							handle->printer = X86_ATT_printInst;
+							break;
+					}
+					break;
 #endif
-      }
-      break;
+			}
+			break;
 
-    case CS_OPT_MODE:	// change engine's mode at run-time
-      handle->mode = value;
-      switch (handle->arch) {
-        default:
-          // only selected archs care about CS_OPT_SYNTAX
-          break;
+		case CS_OPT_MODE:	// change engine's mode at run-time
+			handle->mode = value;
+			switch (handle->arch) {
+				default:
+					// only selected archs care about CS_OPT_SYNTAX
+					break;
 #ifdef CS_SUPPORT_ARM
-        case CS_ARCH_ARM:
-          if (value & CS_MODE_THUMB)
-            handle->disasm = Thumb_getInstruction;
-          else
-            handle->disasm = ARM_getInstruction;
+				case CS_ARCH_ARM:
+					if (value & CS_MODE_THUMB)
+						handle->disasm = Thumb_getInstruction;
+					else
+						handle->disasm = ARM_getInstruction;
 
-          handle->mode = value;
-          break;
+					handle->mode = value;
+					break;
 #endif
-#ifdef CS_SUPPORT_AARCH64
-        case CS_ARCH_MIPS:
-          if (value & CS_MODE_32)
-            handle->disasm = Mips_getInstruction;
-          else
-            handle->disasm = Mips64_getInstruction;
+#ifdef CS_SUPPORT_AARCH64t
+				case CS_ARCH_MIPS:
+					if (value & CS_MODE_32)
+						handle->disasm = Mips_getInstruction;
+					else
+						handle->disasm = Mips64_getInstruction;
 
-          handle->mode = value;
-          break;
+					handle->mode = value;
+					break;
 #endif
-      }
-      break;
-  }
+			}
+			break;
+	}
 
-  return CS_ERR_OK;
+	return CS_ERR_OK;
 }
 
 size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn *insn)
@@ -217,7 +217,7 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 	memset(insn, 0, count * sizeof(*insn));
 
 	while (size > 0) {
-		MCInst_Init(&mci);	
+		MCInst_Init(&mci);
 		mci.detail = handle->detail;
 		mci.mode = handle->mode;
 
@@ -279,7 +279,7 @@ size_t cs_disasm_dyn(csh ud, const uint8_t *buffer, size_t size, uint64_t offset
 	memset(insn_cache, 0, sizeof(insn_cache));
 
 	while (size > 0) {
-		MCInst_Init(&mci);	
+		MCInst_Init(&mci);
 		mci.detail = handle->detail;
 		mci.mode = handle->mode;
 
