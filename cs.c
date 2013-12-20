@@ -10,7 +10,7 @@
 
 #include "MCRegisterInfo.h"
 
-#include "arch.h"
+#include "module.h"
 #include "utils.h"
 
 void cs_version(int *major, int *minor)
