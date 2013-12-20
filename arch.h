@@ -1,5 +1,5 @@
 /* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, Dang Hoang Vu <danghvu@gmail.com> 2013 */
+/* By Dang Hoang Vu <danghvu@gmail.com> 2013 */
 
 #ifndef __ARCH_H__
 #define __ARCH_H__
