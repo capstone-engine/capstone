@@ -5,7 +5,8 @@
 #include "MipsInstPrinter.h"
 #include "mapping.h"
 
-void init_mips(cs_struct *ud) {
+void init_mips(cs_struct *ud)
+{
 	MCRegisterInfo *mri = malloc(sizeof(*mri));
 
 	Mips_init(mri);
@@ -35,7 +36,8 @@ cs_err option_mips(cs_struct *handle, cs_opt_type type, size_t value)
 	return CS_ERR_OK;
 }
 
-void __attribute__ ((constructor)) __init_mips__() {
+void __attribute__ ((constructor)) __init_mips__()
+{
 	init_arch[CS_ARCH_MIPS] = init_mips;
 	option_arch[CS_ARCH_MIPS] = option_mips;
 }
