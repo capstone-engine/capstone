@@ -1,5 +1,7 @@
 # Capstone Disassembler Engine
 # By Nguyen Anh Quynh <aquynh@gmail.com>, 2013>
+#
+include config.mk
 
 CC = $(CROSS)gcc
 AR ?= $(CROSS)ar
@@ -18,8 +20,6 @@ INSTALL_DATA ?= install -m0644
 INSTALL_LIBRARY ?= install -m0755
 
 LIBNAME = capstone
-
-CAPSTONE_ARCHS = arm x86 mips aarch64
 
 LIBOBJ =
 LIBOBJ += cs.o utils.o SStream.o MCInstrDesc.o MCRegisterInfo.o
