@@ -4,6 +4,7 @@
 #define MAX_ARCH 32
 
 void (*init_arch[MAX_ARCH]) (cs_struct *);
+cs_err (*option_arch[MAX_ARCH]) (cs_struct*, cs_opt_type, size_t value);
 
 #ifdef CS_SUPPORT_X86
 #include "arch/X86/include.h"
