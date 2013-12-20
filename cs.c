@@ -454,7 +454,7 @@ const char *cs_insn_name(csh ud, unsigned int insn)
 	return handle->insn_name(ud, insn);
 }
 
-static bool arr_exist(unsigned int *arr, int max, unsigned int id)
+static bool arr_exist(unsigned char *arr, unsigned char max, unsigned int id)
 {
 	int i;
 
