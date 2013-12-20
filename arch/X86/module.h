@@ -1,3 +1,6 @@
+/* Capstone Disassembler Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, Dang Hoang Vu <danghvu@gmail.com> 2013 */
+
 #ifndef __X86_INCLUDE_H__
 #define __X86_INCLUDE_H__
 
