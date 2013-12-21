@@ -215,11 +215,11 @@ def cs_disasm_quick(arch, mode, code, offset, count = 0):
     res = _cs.cs_disasm_dyn(csh, code, len(code), offset, count, ctypes.byref(all_insn))
     if res > 0:
         for i in xrange(res):
-            insns.append(all_insn[i])
+            insns.append(CsInsn(csh, all_insn[i], arch))
 
         _cs.cs_free(all_insn)
     else:
-        status = _cs.cs_errno(self.csh)
+        status = _cs.cs_errno(csh)
         if status != CS_ERR_OK:
             raise CsError(status)
 
