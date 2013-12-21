@@ -8,7 +8,7 @@
 #include "AArch64InstPrinter.h"
 #include "mapping.h"
 
-void init_arm64(cs_struct *ud)
+static void init_arm64(cs_struct *ud)
 {
 	MCRegisterInfo *mri = malloc(sizeof(*mri));
 
@@ -23,7 +23,7 @@ void init_arm64(cs_struct *ud)
 	ud->post_printer = AArch64_post_printer;
 }
 
-void __attribute__ ((constructor)) __init_arm64__()
+static void __attribute__ ((constructor)) __init_arm64__()
 {
 	init_arch[CS_ARCH_ARM64] = init_arm64;
 }

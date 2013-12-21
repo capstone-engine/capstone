@@ -1,8 +1,8 @@
 /* Capstone Disassembler Engine */
 /* By Dang Hoang Vu <danghvu@gmail.com> 2013 */
 
-#ifndef __MODULE_H__
-#define __MODULE_H__
+#ifndef __CS_MODULE_H__
+#define __CS_MODULE_H__
 
 #define MAX_ARCH 32
 

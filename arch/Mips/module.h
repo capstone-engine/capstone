@@ -8,7 +8,7 @@
 #include "MipsInstPrinter.h"
 #include "mapping.h"
 
-void init_mips(cs_struct *ud)
+static void init_mips(cs_struct *ud)
 {
 	MCRegisterInfo *mri = malloc(sizeof(*mri));
 
@@ -26,7 +26,7 @@ void init_mips(cs_struct *ud)
 		ud->disasm = Mips64_getInstruction;
 }
 
-cs_err option_mips(cs_struct *handle, cs_opt_type type, size_t value)
+static cs_err option_mips(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_MODE) {
 		if (value & CS_MODE_32)
@@ -39,7 +39,7 @@ cs_err option_mips(cs_struct *handle, cs_opt_type type, size_t value)
 	return CS_ERR_OK;
 }
 
-void __attribute__ ((constructor)) __init_mips__()
+static void __attribute__ ((constructor)) __init_mips__()
 {
 	init_arch[CS_ARCH_MIPS] = init_mips;
 	option_arch[CS_ARCH_MIPS] = option_mips;

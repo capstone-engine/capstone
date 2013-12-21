@@ -8,7 +8,7 @@
 #include "ARMInstPrinter.h"
 #include "mapping.h"
 
-void init_arm(cs_struct *ud)
+static void init_arm(cs_struct *ud)
 {
 	MCRegisterInfo *mri = malloc(sizeof(*mri));
 
@@ -27,7 +27,7 @@ void init_arm(cs_struct *ud)
 		ud->disasm = ARM_getInstruction;
 }
 
-cs_err option_arm(cs_struct *handle, cs_opt_type type, size_t value)
+static cs_err option_arm(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_MODE) {
 		if (value & CS_MODE_THUMB)
@@ -40,7 +40,7 @@ cs_err option_arm(cs_struct *handle, cs_opt_type type, size_t value)
 	return CS_ERR_OK;
 }
 
-void __attribute__ ((constructor)) __init_arm__()
+static void __attribute__ ((constructor)) __init_arm__()
 {
 	init_arch[CS_ARCH_ARM] = init_arm;
 	option_arch[CS_ARCH_ARM] = option_arm;
