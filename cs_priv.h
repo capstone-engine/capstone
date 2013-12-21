@@ -44,4 +44,10 @@ typedef struct cs_struct {
 	cs_opt_value detail;
 } cs_struct;
 
+#define MAX_ARCH 32
+
+extern void (*init_arch[MAX_ARCH]) (cs_struct *);
+extern cs_err (*option_arch[MAX_ARCH]) (cs_struct*, cs_opt_type, size_t value);
+
+
 #endif
