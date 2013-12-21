@@ -46,10 +46,10 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 	ud->reg_name = NULL;
 	ud->detail = CS_OPT_ON;	// by default break instruction into details
 
-  if (init_arch[ud->arch])
-	  init_arch[ud->arch](ud);
+	if (init_arch[ud->arch])
+		init_arch[ud->arch](ud);
 	else
-	  return CS_ERR_HANDLE;
+		return CS_ERR_HANDLE;
 
 	*handle = (uintptr_t)ud;
 
@@ -137,11 +137,11 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 		return CS_ERR_CSH;
 
 	if (type == CS_OPT_DETAIL) {
-	  handle->detail = value;
-	  return CS_ERR_OK;
-  }
+		handle->detail = value;
+		return CS_ERR_OK;
+	}
 
-  if (option_arch[handle->arch])
+	if (option_arch[handle->arch])
 		return option_arch[handle->arch](handle, type, value);
 
 	return CS_ERR_OK;
