@@ -10,8 +10,11 @@
 
 #include "MCRegisterInfo.h"
 
-#include "module.h"
 #include "utils.h"
+
+void (*init_arch[MAX_ARCH]) (cs_struct *);
+cs_err (*option_arch[MAX_ARCH]) (cs_struct*, cs_opt_type, size_t value);
+
 
 void cs_version(int *major, int *minor)
 {

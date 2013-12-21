@@ -10,6 +10,7 @@ extern "C" {
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 // Capstone API version
 #define CS_API_MAJOR 1
