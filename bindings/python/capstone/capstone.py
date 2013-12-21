@@ -151,12 +151,12 @@ class _cs_insn(ctypes.Structure):
         ('bytes', ctypes.c_ubyte * 16),
         ('mnemonic', ctypes.c_char * 32),
         ('op_str', ctypes.c_char * 96),
-        ('regs_read', ctypes.c_uint * 32),
-        ('regs_read_count', ctypes.c_uint),
-        ('regs_write', ctypes.c_uint * 32),
-        ('regs_write_count', ctypes.c_uint),
-        ('groups', ctypes.c_uint * 8),
-        ('groups_count', ctypes.c_uint),
+        ('regs_read', ctypes.c_ubyte * 12),
+        ('regs_read_count', ctypes.c_ubyte),
+        ('regs_write', ctypes.c_ubyte * 20),
+        ('regs_write_count', ctypes.c_ubyte),
+        ('groups', ctypes.c_ubyte * 8),
+        ('groups_count', ctypes.c_ubyte),
         ('arch', _cs_arch),
     )
 

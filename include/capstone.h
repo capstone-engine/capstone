@@ -91,14 +91,14 @@ typedef struct cs_insn {
 
 	// NOTE: All information below is not available when CS_OPT_DETAIL = CS_OPT_OFF
 
-	unsigned int regs_read[32]; // list of implicit registers read by this insn
-	unsigned int regs_read_count; // number of implicit registers read by this insn
+	uint8_t regs_read[12]; // list of implicit registers read by this insn
+	uint8_t regs_read_count; // number of implicit registers read by this insn
 
-	unsigned int regs_write[32]; // list of implicit registers modified by this insn
-	unsigned int regs_write_count; // number of implicit registers modified by this insn
+	uint8_t regs_write[20]; // list of implicit registers modified by this insn
+	uint8_t regs_write_count; // number of implicit registers modified by this insn
 
-	unsigned int groups[8]; // list of group this instruction belong to
-	unsigned int groups_count; // number of groups this insn belongs to
+	uint8_t groups[8]; // list of group this instruction belong to
+	uint8_t groups_count; // number of groups this insn belongs to
 
 	// Architecture-specific instruction info
 	union {

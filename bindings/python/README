@@ -1,4 +1,4 @@
-To install Python binding, simply run below command:
+1. To install Python binding on *nix, simply run below command:
 
 		$ sudo python setup.py install
 
@@ -21,3 +21,26 @@ This directory contains some test code to show how to use Capstone API.
 - test_<arch>.py
   These code show how to access architecture-specific information for each
   architecture.
+
+
+2. To install Python binding on Windows:
+
+Recommended method:
+
+	Use the Python module installer for 32/64 bit Windows from:
+
+		http://www.capstone-engine.org/download.html
+
+
+Manual method:
+
+	If the module installer fails to locate your Python install, or if you have
+	additional Python installs (e.g. Anaconda / virtualenv), run the following
+	command in command prompt:
+
+		C:\> C:\location_to_python\python.exe setup.py install
+
+	Next, copy libcapstone.dll from the 'Core engine for Windows' package available
+	on the same Capstone download page and paste it in the path:
+
+		C:\location_to_python\Lib\site-packages\capstone\

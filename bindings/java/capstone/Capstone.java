@@ -42,20 +42,20 @@ public class Capstone {
     public byte[] bytes;
     public byte[] mnemonic;
     public byte[] operands;
-    public int[] regs_read;
-    public int regs_read_count;
-    public int[] regs_write;
-    public int regs_write_count;
-    public int[] groups;
-    public int groups_count;
+    public byte[] regs_read;
+    public byte regs_read_count;
+    public byte[] regs_write;
+    public byte regs_write_count;
+    public byte[] groups;
+    public byte groups_count;
 
     public _cs_insn(Pointer p) {
       bytes = new byte[16];
       mnemonic = new byte[32];
       operands = new byte[96];
-      regs_read = new int[32];
-      regs_write = new int[32];
-      groups = new int[8];
+      regs_read = new byte[12];
+      regs_write = new byte[20];
+      groups = new byte[8];
       useMemory(p);
       read();
     }
@@ -81,9 +81,9 @@ public class Capstone {
     public short size;
     public String mnemonic;
     public String opStr;
-    public int[] regsRead;
-    public int[] regsWrite;
-    public int[] groups;
+    public byte[] regsRead;
+    public byte[] regsWrite;
+    public byte[] groups;
 
     public CsInsn (_cs_insn struct, Pointer _ptr_origin, NativeLong _csh, CS _cs, OpInfo _op_info) {
       id = struct.id;
@@ -92,13 +92,13 @@ public class Capstone {
       mnemonic = new String(struct.mnemonic).replace("\u0000","");
       opStr = new String(struct.operands).replace("\u0000","");
 
-      regsRead = new int[struct.regs_read_count];
+      regsRead = new byte[struct.regs_read_count];
       for (int i=0; i<regsRead.length; i++)
         regsRead[i] = struct.regs_read[i];
-      regsWrite = new int[struct.regs_write_count];
+      regsWrite = new byte[struct.regs_write_count];
       for (int i=0; i<regsWrite.length; i++)
         regsWrite[i] = struct.regs_write[i];
-      groups = new int[struct.groups_count];
+      groups = new byte[struct.groups_count];
       for (int i=0; i<groups.length; i++)
         groups[i] = struct.groups[i];
       operands = _op_info;
