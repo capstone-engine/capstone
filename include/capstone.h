@@ -16,6 +16,10 @@ extern "C" {
 #define CS_API_MAJOR 1
 #define CS_API_MINOR 1
 
+// Macro to create combined version which can be compared to
+// result of cs_version_ex() API.
+#define CS_MAKE_VERSION(major, minor) ((major << 8) + minor)
+
 // Handle using with all API
 typedef size_t csh;
 
