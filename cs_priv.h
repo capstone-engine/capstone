@@ -44,7 +44,7 @@ typedef struct cs_struct {
 	cs_opt_value detail;
 } cs_struct;
 
-#define MAX_ARCH 32
+#define MAX_ARCH 8
 
 // constructor initialization for all archs
 extern void (*arch_init[MAX_ARCH]) (cs_struct *);
