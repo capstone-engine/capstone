@@ -23,31 +23,22 @@ LIBNAME = capstone
 
 LIBOBJ =
 LIBOBJ += cs.o utils.o SStream.o MCInstrDesc.o MCRegisterInfo.o
-ifneq (,$(filter $(CAPSTONE_ARCH), arm all))
+ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))
 	LIBOBJ += arch/ARM/ARMDisassembler.o arch/ARM/ARMInstPrinter.o arch/ARM/mapping.o arch/ARM/module.o
 	CFLAGS += -DCS_SUPPORT_ARM
-ifeq ($(CAPSTONE_ARCH), arm)
 endif
-endif
-ifneq (, $(filter $(CAPSTONE_ARCH), x86 all))
+ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
 	LIBOBJ += arch/X86/X86DisassemblerDecoder.o arch/X86/X86Disassembler.o arch/X86/X86IntelInstPrinter.o arch/X86/X86ATTInstPrinter.o arch/X86/mapping.o arch/X86/module.o
 	CFLAGS += -DCS_SUPPORT_X86
-ifeq ($(CAPSTONE_ARCH), x86)
 endif
-endif
-ifneq (, $(filter $(CAPSTONE_ARCH), mips all))
+ifneq (,$(findstring mips,$(CAPSTONE_ARCHS)))
 	LIBOBJ += arch/Mips/MipsDisassembler.o arch/Mips/MipsInstPrinter.o arch/Mips/mapping.o arch/Mips/module.o
-	CFLAGS += -DCS_SUPPORT_MIPS
-ifeq ($(CAPSTONE_ARCH), mips)
-endif
-endif
-ifneq (, $(filter $(CAPSTONE_ARCH), arm64 all))
-	LIBOBJ += arch/AArch64/AArch64BaseInfo.o arch/AArch64/AArch64Disassembler.o arch/AArch64/AArch64InstPrinter.o arch/AArch64/mapping.o arch/AArch64/module.o
 	CFLAGS += -DCS_SUPPORT_AARCH64
-ifeq ($(CAPSTONE_ARCH), arm64)
 endif
+ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
+	LIBOBJ += arch/AArch64/AArch64BaseInfo.o arch/AArch64/AArch64Disassembler.o arch/AArch64/AArch64InstPrinter.o arch/AArch64/mapping.o arch/AArch64/module.o
+	CFLAGS += -DCS_SUPPORT_MIPS
 endif
-
 LIBOBJ += MCInst.o
 
 EXT = so
@@ -100,14 +91,11 @@ $(ARCHIVE): $(LIBOBJ)
 	$(RANLIB) $(ARCHIVE)
 
 $(PKGCFGF):
-	echo 'Name: capstone' > $(PKGCFGF)
-	echo 'Description: Capstone disassembler engine' >> $(PKGCFGF)
-	echo 'Version: $(VERSION)' >> $(PKGCFGF)
-	echo 'libdir=$(LIBDIR)' >> $(PKGCFGF)
-	echo 'includedir=$(PREFIX)/include/capstone' >> $(PKGCFGF)
-	echo 'archive=$${libdir}/libcapstone.a' >> $(PKGCFGF)
-	echo 'Libs: -L$${libdir} -lcapstone' >> $(PKGCFGF)
-	echo 'Cflags: -I$${includedir}' >> $(PKGCFGF)
+	echo Name: capstone > $(PKGCFGF)
+	echo Description: Capstone disassembler engine >> $(PKGCFGF)
+	echo Version: $(VERSION) >> $(PKGCFGF)
+	echo Libs: -L$(LIBDIR) -lcapstone >> $(PKGCFGF)
+	echo Cflags: -I$(PREFIX)/include/capstone >> $(PKGCFGF)
 
 install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 	mkdir -p $(LIBDIR)
