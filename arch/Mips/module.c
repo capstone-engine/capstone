@@ -24,9 +24,6 @@ static void init(cs_struct *ud)
 		ud->disasm = Mips_getInstruction;
 	else
 		ud->disasm = Mips64_getInstruction;
-
-	// support this arch
-	all_arch |= (1 << CS_ARCH_MIPS);
 }
 
 static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
@@ -46,4 +43,7 @@ static void __attribute__ ((constructor)) __init_mips__()
 {
 	arch_init[CS_ARCH_MIPS] = init;
 	arch_option[CS_ARCH_MIPS] = option;
+
+	// support this arch
+	all_arch |= (1 << CS_ARCH_MIPS);
 }

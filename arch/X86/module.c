@@ -17,9 +17,6 @@ static void init(cs_struct *ud)
 	ud->insn_id = X86_get_insn_id;
 	ud->insn_name = X86_insn_name;
 	ud->post_printer = X86_post_printer;
-
-	// support this arch
-	all_arch |= (1 << CS_ARCH_X86);
 }
 
 static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
@@ -47,4 +44,7 @@ static void __attribute__ ((constructor)) __init_x86__()
 {
 	arch_init[CS_ARCH_X86] = init;
 	arch_option[CS_ARCH_X86] = option;
+
+	// support this arch
+	all_arch |= (1 << CS_ARCH_X86);
 }

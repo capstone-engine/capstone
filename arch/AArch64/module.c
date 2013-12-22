@@ -21,9 +21,6 @@ static void init(cs_struct *ud)
 	ud->insn_id = AArch64_get_insn_id;
 	ud->insn_name = AArch64_insn_name;
 	ud->post_printer = AArch64_post_printer;
-
-	// support this arch
-	all_arch |= (1 << CS_ARCH_ARM64);
 }
 
 static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
@@ -35,4 +32,7 @@ static void __attribute__ ((constructor)) __init_arm64__()
 {
 	arch_init[CS_ARCH_ARM64] = init;
 	arch_option[CS_ARCH_ARM] = option;
+
+	// support this arch
+	all_arch |= (1 << CS_ARCH_ARM64);
 }
