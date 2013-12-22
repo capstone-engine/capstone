@@ -130,12 +130,22 @@ typedef enum cs_err {
 	CS_ERR_OPTION,	// Invalid/unsupported option: cs_option()
 } cs_err;
 
+/*
+  Retrieve API version in major and minor numbers.
+
+  @major: major number of API version
+  @minor: minor number of API version
+
+  For example, first API version would return 1 in @major, and 0 in @minor
+*/
+void cs_version(int *major, int *minor);
+
 
 /*
- Return API version in major and minor numbers.
+ Return combined API version & major and minor version numbers.
 
- @major: major number of API version (for ex: 1)
- @minor: minor number of API version (for ex: 0)
+ @major: major number of API version
+ @minor: minor number of API version
 
  @return hexical number encoding both major & minor versions, which is comparisonable.
 
@@ -145,7 +155,7 @@ typedef enum cs_err {
  NOTE: if you only care about returned value, but not major and minor values,
  set both arguments to NULL.
 */
-unsigned int cs_version(int *major, int *minor);
+unsigned int cs_version_ex(int *major, int *minor);
 
 
 /*

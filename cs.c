@@ -17,7 +17,14 @@ cs_err (*arch_option[MAX_ARCH]) (cs_struct*, cs_opt_type, size_t value);
 
 unsigned int all_arch = 0;
 
-unsigned int cs_version(int *major, int *minor)
+
+void cs_version(int *major, int *minor)
+{
+	*major = CS_API_MAJOR;
+	*minor = CS_API_MINOR;
+}
+
+unsigned int cs_version_ex(int *major, int *minor)
 {
 	if (major != NULL && minor != NULL) {
 		*major = CS_API_MAJOR;
