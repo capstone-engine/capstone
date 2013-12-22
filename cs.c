@@ -12,8 +12,8 @@
 
 #include "utils.h"
 
-void (*init_arch[MAX_ARCH]) (cs_struct *);
-cs_err (*option_arch[MAX_ARCH]) (cs_struct*, cs_opt_type, size_t value);
+void (*arch_init[MAX_ARCH]) (cs_struct *);
+cs_err (*arch_option[MAX_ARCH]) (cs_struct*, cs_opt_type, size_t value);
 
 unsigned int all_arch = 0;
 
@@ -61,8 +61,8 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 	ud->reg_name = NULL;
 	ud->detail = CS_OPT_ON;	// by default break instruction into details
 
-	if (init_arch[ud->arch])
-		init_arch[ud->arch](ud);
+	if (arch_init[ud->arch])
+		arch_init[ud->arch](ud);
 	else
 		return CS_ERR_HANDLE;
 
@@ -156,7 +156,7 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 		return CS_ERR_OK;
 	}
 
-	return option_arch[handle->arch](handle, type, value);
+	return arch_option[handle->arch](handle, type, value);
 }
 
 size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn *insn)

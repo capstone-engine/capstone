@@ -46,8 +46,11 @@ typedef struct cs_struct {
 
 #define MAX_ARCH 32
 
-extern void (*init_arch[MAX_ARCH]) (cs_struct *);
-extern cs_err (*option_arch[MAX_ARCH]) (cs_struct*, cs_opt_type, size_t value);
+// constructor initialization for all archs
+extern void (*arch_init[MAX_ARCH]) (cs_struct *);
+
+// support cs_option() for all archs
+extern cs_err (*arch_option[MAX_ARCH]) (cs_struct*, cs_opt_type, size_t value);
 
 extern unsigned int all_arch;
 

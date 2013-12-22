@@ -8,7 +8,7 @@
 #include "mapping.h"
 
 
-static void init_arm(cs_struct *ud)
+static void init(cs_struct *ud)
 {
 	MCRegisterInfo *mri = malloc(sizeof(*mri));
 
@@ -30,7 +30,7 @@ static void init_arm(cs_struct *ud)
 	all_arch |= (1 << CS_ARCH_ARM);
 }
 
-static cs_err option_arm(cs_struct *handle, cs_opt_type type, size_t value)
+static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_MODE) {
 		if (value & CS_MODE_THUMB)
@@ -45,6 +45,6 @@ static cs_err option_arm(cs_struct *handle, cs_opt_type type, size_t value)
 
 static void __attribute__ ((constructor)) __init_arm__()
 {
-	init_arch[CS_ARCH_ARM] = init_arm;
-	option_arch[CS_ARCH_ARM] = option_arm;
+	arch_init[CS_ARCH_ARM] = init;
+	arch_option[CS_ARCH_ARM] = option;
 }

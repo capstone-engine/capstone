@@ -7,7 +7,7 @@
 #include "X86InstPrinter.h"
 #include "mapping.h"
 
-static void init_x86(cs_struct *ud)
+static void init(cs_struct *ud)
 {
 	// by default, we use Intel syntax
 	ud->printer = X86_Intel_printInst;
@@ -22,7 +22,7 @@ static void init_x86(cs_struct *ud)
 	all_arch |= (1 << CS_ARCH_X86);
 }
 
-static cs_err option_x86(cs_struct *handle, cs_opt_type type, size_t value)
+static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_SYNTAX) {
 		switch(value) {
@@ -45,6 +45,6 @@ static cs_err option_x86(cs_struct *handle, cs_opt_type type, size_t value)
 
 static void __attribute__ ((constructor)) __init_x86__()
 {
-	init_arch[CS_ARCH_X86] = init_x86;
-	option_arch[CS_ARCH_X86] = option_x86;
+	arch_init[CS_ARCH_X86] = init;
+	arch_option[CS_ARCH_X86] = option;
 }

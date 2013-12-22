@@ -8,7 +8,7 @@
 #include "mapping.h"
 
 
-static void init_mips(cs_struct *ud)
+static void init(cs_struct *ud)
 {
 	MCRegisterInfo *mri = malloc(sizeof(*mri));
 
@@ -29,7 +29,7 @@ static void init_mips(cs_struct *ud)
 	all_arch |= (1 << CS_ARCH_MIPS);
 }
 
-static cs_err option_mips(cs_struct *handle, cs_opt_type type, size_t value)
+static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_MODE) {
 		if (value & CS_MODE_32)
@@ -44,6 +44,6 @@ static cs_err option_mips(cs_struct *handle, cs_opt_type type, size_t value)
 
 static void __attribute__ ((constructor)) __init_mips__()
 {
-	init_arch[CS_ARCH_MIPS] = init_mips;
-	option_arch[CS_ARCH_MIPS] = option_mips;
+	arch_init[CS_ARCH_MIPS] = init;
+	arch_option[CS_ARCH_MIPS] = option;
 }

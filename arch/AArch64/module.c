@@ -8,7 +8,7 @@
 #include "mapping.h"
 
 
-static void init_arm64(cs_struct *ud)
+static void init(cs_struct *ud)
 {
 	MCRegisterInfo *mri = malloc(sizeof(*mri));
 
@@ -26,7 +26,13 @@ static void init_arm64(cs_struct *ud)
 	all_arch |= (1 << CS_ARCH_ARM64);
 }
 
+static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
+{
+	return CS_ERR_OK;
+}
+
 static void __attribute__ ((constructor)) __init_arm64__()
 {
-	init_arch[CS_ARCH_ARM64] = init_arm64;
+	arch_init[CS_ARCH_ARM64] = init;
+	arch_option[CS_ARCH_ARM] = option;
 }
