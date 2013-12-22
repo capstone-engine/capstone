@@ -8,6 +8,8 @@ __all__ = [
 
     'cs_disasm_quick',
     'cs_version',
+    'cs_version_ex',
+    'cs_support',
 
     'CS_API_MAJOR',
     'CS_API_MINOR',
@@ -16,6 +18,7 @@ __all__ = [
     'CS_ARCH_ARM64',
     'CS_ARCH_MIPS',
     'CS_ARCH_X86',
+    'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
     'CS_MODE_BIG_ENDIAN',
@@ -56,6 +59,7 @@ CS_ARCH_ARM = 0
 CS_ARCH_ARM64 = 1
 CS_ARCH_MIPS = 2
 CS_ARCH_X86 = 3
+CS_ARCH_ALL = 0xFFFF
 
 # disasm mode
 CS_MODE_LITTLE_ENDIAN = 0      # little-endian mode (default mode)
@@ -177,6 +181,8 @@ _setup_prototype(_cs, "cs_op_index", ctypes.c_int, ctypes.c_size_t, ctypes.POINT
 _setup_prototype(_cs, "cs_errno", ctypes.c_int, ctypes.c_size_t)
 _setup_prototype(_cs, "cs_option", ctypes.c_int, ctypes.c_size_t, ctypes.c_int, ctypes.c_size_t)
 _setup_prototype(_cs, "cs_version", None, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
+_setup_prototype(_cs, "cs_version_ex", ctypes.c_int, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
+_setup_prototype(_cs, "cs_support", ctypes.c_bool, ctypes.c_int)
 
 
 # access to error code via @errno of CsError
@@ -201,6 +207,14 @@ def cs_version():
     minor = ctypes.c_int()
     _cs.cs_version(ctypes.byref(major), ctypes.byref(minor))
     return (major.value, minor.value)
+
+
+def cs_version_ex():
+    return _cs.cs_version_ex(None, None)
+
+
+def cs_support(arch):
+    return _cs.cs_support(arch)
 
 
 # quick & dirty Python function to disasm raw binary code
