@@ -54,17 +54,19 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		return CS_ERR_MEM;
 	}
 
-	ud->errnum = CS_ERR_OK;
-	ud->arch = arch;
-	ud->mode = mode;
-	ud->big_endian = mode & CS_MODE_BIG_ENDIAN;
-	ud->reg_name = NULL;
-	ud->detail = CS_OPT_ON;	// by default break instruction into details
+	if (arch < CS_ARCH_MAX && arch_init[ud->arch]) {
+		ud->errnum = CS_ERR_OK;
+		ud->arch = arch;
+		ud->mode = mode;
+		ud->big_endian = mode & CS_MODE_BIG_ENDIAN;
+		ud->reg_name = NULL;
+		ud->detail = CS_OPT_ON;	// by default break instruction into details
 
-	if (arch_init[ud->arch])
 		arch_init[ud->arch](ud);
-	else
-		return CS_ERR_HANDLE;
+	} else {
+		*handle = 0;
+		return CS_ERR_ARCH;
+	}
 
 	*handle = (uintptr_t)ud;
 
