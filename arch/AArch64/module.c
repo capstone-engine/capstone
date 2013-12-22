@@ -21,6 +21,9 @@ static void init_arm64(cs_struct *ud)
 	ud->insn_id = AArch64_get_insn_id;
 	ud->insn_name = AArch64_insn_name;
 	ud->post_printer = AArch64_post_printer;
+
+	// support this arch
+	all_arch |= (1 << CS_ARCH_ARM64);
 }
 
 static void __attribute__ ((constructor)) __init_arm64__()

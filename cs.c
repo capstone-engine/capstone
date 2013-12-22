@@ -15,11 +15,23 @@
 void (*init_arch[MAX_ARCH]) (cs_struct *);
 cs_err (*option_arch[MAX_ARCH]) (cs_struct*, cs_opt_type, size_t value);
 
+unsigned int all_arch = 0;
 
-void cs_version(int *major, int *minor)
+unsigned int cs_version(int *major, int *minor)
 {
 	*major = CS_API_MAJOR;
 	*minor = CS_API_MINOR;
+
+	return (CS_API_MAJOR << 8) + CS_API_MINOR;
+}
+
+bool cs_support(cs_arch arch)
+{
+	if (arch == CS_ARCH_ALL)
+		return all_arch == ((1 << CS_ARCH_ARM) | (1 << CS_ARCH_ARM64) |
+				(1 << CS_ARCH_MIPS) | (1 << CS_ARCH_X86));
+
+	return all_arch & (1 << arch);
 }
 
 cs_err cs_errno(csh handle)
@@ -144,10 +156,7 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 		return CS_ERR_OK;
 	}
 
-	if (option_arch[handle->arch])
-		return option_arch[handle->arch](handle, type, value);
-
-	return CS_ERR_OK;
+	return option_arch[handle->arch](handle, type, value);
 }
 
 size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn *insn)

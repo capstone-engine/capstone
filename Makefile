@@ -27,28 +27,24 @@ ifneq (,$(filter $(CAPSTONE_ARCH), arm all))
 	LIBOBJ += arch/ARM/ARMDisassembler.o arch/ARM/ARMInstPrinter.o arch/ARM/mapping.o arch/ARM/module.o
 	CFLAGS += -DCS_SUPPORT_ARM
 ifeq ($(CAPSTONE_ARCH), arm)
-	LIBNAME = capstone-arm
 endif
 endif
 ifneq (, $(filter $(CAPSTONE_ARCH), x86 all))
 	LIBOBJ += arch/X86/X86DisassemblerDecoder.o arch/X86/X86Disassembler.o arch/X86/X86IntelInstPrinter.o arch/X86/X86ATTInstPrinter.o arch/X86/mapping.o arch/X86/module.o
 	CFLAGS += -DCS_SUPPORT_X86
 ifeq ($(CAPSTONE_ARCH), x86)
-	LIBNAME = capstone-x86
 endif
 endif
 ifneq (, $(filter $(CAPSTONE_ARCH), mips all))
 	LIBOBJ += arch/Mips/MipsDisassembler.o arch/Mips/MipsInstPrinter.o arch/Mips/mapping.o arch/Mips/module.o
 	CFLAGS += -DCS_SUPPORT_MIPS
 ifeq ($(CAPSTONE_ARCH), mips)
-	LIBNAME = capstone-mips
 endif
 endif
 ifneq (, $(filter $(CAPSTONE_ARCH), arm64 all))
 	LIBOBJ += arch/AArch64/AArch64BaseInfo.o arch/AArch64/AArch64Disassembler.o arch/AArch64/AArch64InstPrinter.o arch/AArch64/mapping.o arch/AArch64/module.o
 	CFLAGS += -DCS_SUPPORT_AARCH64
 ifeq ($(CAPSTONE_ARCH), arm64)
-	LIBNAME = capstone-arm64
 endif
 endif
 

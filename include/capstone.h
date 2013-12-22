@@ -14,7 +14,7 @@ extern "C" {
 
 // Capstone API version
 #define CS_API_MAJOR 1
-#define CS_API_MINOR 0
+#define CS_API_MINOR 1
 
 // Handle using with all API
 typedef size_t csh;
@@ -26,6 +26,7 @@ typedef enum cs_arch {
 	CS_ARCH_MIPS,		// Mips architecture
 	CS_ARCH_X86,		// X86 architecture (including x86 & x86-64)
 	CS_ARCH_MAX,
+	CS_ARCH_ALL = 0xFFFF,
 } cs_arch;
 
 // Mode type
@@ -136,9 +137,23 @@ typedef enum cs_err {
  @major: major number of API version (for ex: 1)
  @minor: minor number of API version (for ex: 0)
 
- For example, first API version would return 1 in @major, and 0 in @minor
+ @return hexical number encoding both major & minor versions, which is comparisonable.
+
+ For example, second API version would return 1 in @major, and 1 in @minor
+ The return value would be 0x0101
 */
-void cs_version(int *major, int *minor);
+unsigned int cs_version(int *major, int *minor);
+
+
+/*
+ Check if a particular arch is supported by this library.
+
+ @arch: the architecture to be checked.
+        To verify if this library supports everything, use CS_ARCH_ALL
+
+ @return True if this library supports the given arch.
+*/
+bool cs_support(cs_arch arch);
 
 /*
  Initialize CS handle: this must be done before any usage of CS.

@@ -25,6 +25,9 @@ static void init_arm(cs_struct *ud)
 		ud->disasm = Thumb_getInstruction;
 	else
 		ud->disasm = ARM_getInstruction;
+
+	// support this arch
+	all_arch |= (1 << CS_ARCH_ARM);
 }
 
 static cs_err option_arm(cs_struct *handle, cs_opt_type type, size_t value)

@@ -24,6 +24,9 @@ static void init_mips(cs_struct *ud)
 		ud->disasm = Mips_getInstruction;
 	else
 		ud->disasm = Mips64_getInstruction;
+
+	// support this arch
+	all_arch |= (1 << CS_ARCH_MIPS);
 }
 
 static cs_err option_mips(cs_struct *handle, cs_opt_type type, size_t value)
