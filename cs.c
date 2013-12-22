@@ -12,7 +12,7 @@
 
 #include "utils.h"
 
-void (*arch_init[MAX_ARCH]) (cs_struct *);
+void (*arch_init[MAX_ARCH])(cs_struct *) = { NULL };
 cs_err (*arch_option[MAX_ARCH]) (cs_struct*, cs_opt_type, size_t value);
 
 unsigned int all_arch = 0;
