@@ -141,6 +141,9 @@ typedef enum cs_err {
 
  For example, second API version would return 1 in @major, and 1 in @minor
  The return value would be 0x0101
+
+ NOTE: if you only care about returned value, but not major and minor values,
+ set both arguments to NULL.
 */
 unsigned int cs_version(int *major, int *minor);
 

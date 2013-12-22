@@ -19,8 +19,10 @@ unsigned int all_arch = 0;
 
 unsigned int cs_version(int *major, int *minor)
 {
-	*major = CS_API_MAJOR;
-	*minor = CS_API_MINOR;
+	if (major != NULL && minor != NULL) {
+		*major = CS_API_MAJOR;
+		*minor = CS_API_MINOR;
+	}
 
 	return (CS_API_MAJOR << 8) + CS_API_MINOR;
 }
