@@ -217,6 +217,14 @@ def cs_support(arch):
     return _cs.cs_support(arch)
 
 
+# dummy class resemble Cs, just for cs_disasm_quick()
+# this class only need to be referenced by @csh & @arch
+class _dummy_cs(object):
+    def __init__(self, csh, arch):
+        self.csh = csh
+        self.arch = arch
+
+
 # quick & dirty Python function to disasm raw binary code
 def cs_disasm_quick(arch, mode, code, offset, count = 0):
     csh = ctypes.c_size_t()
@@ -229,7 +237,7 @@ def cs_disasm_quick(arch, mode, code, offset, count = 0):
     res = _cs.cs_disasm_dyn(csh, code, len(code), offset, count, ctypes.byref(all_insn))
     if res > 0:
         for i in xrange(res):
-            insns.append(CsInsn(csh, all_insn[i], arch))
+            insns.append(CsInsn(_dummy_cs(csh, arch), all_insn[i]))
 
         _cs.cs_free(all_insn)
     else:
@@ -245,7 +253,7 @@ def cs_disasm_quick(arch, mode, code, offset, count = 0):
 
 # Python-style class to disasm code
 class CsInsn(object):
-    def __init__(self, csh, all_info, arch):
+    def __init__(self, cs, all_info):
         self.id = all_info.id
         self.address = all_info.address
         self.size = all_info.size
@@ -256,32 +264,32 @@ class CsInsn(object):
         self.groups = all_info.groups[:all_info.groups_count]
         self.bytes = bytearray(all_info.bytes)[:self.size]
 
-        if arch == CS_ARCH_ARM:
+        if cs.arch == CS_ARCH_ARM:
             (self.cc, self.update_flags, self.writeback, self.operands) = \
                 arm.get_arch_info(all_info.arch.arm)
-        elif arch == CS_ARCH_ARM64:
+        elif cs.arch == CS_ARCH_ARM64:
             (self.cc, self.update_flags, self.writeback, self.operands) = \
                 arm64.get_arch_info(all_info.arch.arm64)
-        elif arch == CS_ARCH_X86:
+        elif cs.arch == CS_ARCH_X86:
             (self.prefix, self.segment, self.opcode, self.op_size, self.addr_size, \
              self.disp_size, self.imm_size, self.modrm, self.sib, self.disp, \
              self.sib_index, self.sib_scale, self.sib_base, self.operands) = x86.get_arch_info(all_info.arch.x86)
-        elif arch == CS_ARCH_MIPS:
+        elif cs.arch == CS_ARCH_MIPS:
              self.operands = mips.get_arch_info(all_info.arch.mips)
 
-        self.csh = csh
+        self.cs = cs
 
     # get the last error code
     def errno():
-        return _cs.cs_errno(self.csh)
+        return _cs.cs_errno(self.cs.csh)
 
     # get the register name, given the register ID
     def reg_name(self, reg_id):
-        return _cs.cs_reg_name(self.csh, reg_id)
+        return _cs.cs_reg_name(self.cs.csh, reg_id)
 
     # get the instruction string
     def insn_name(self):
-        return _cs.cs_insn_name(self.csh, self.id)
+        return _cs.cs_insn_name(self.cs.csh, self.id)
 
     # verify if this insn belong to group with id as @group_id
     def group(self, group_id):
@@ -384,7 +392,7 @@ class Cs(object):
         res = _cs.cs_disasm_dyn(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
         if res > 0:
             for i in xrange(res):
-                insns.append(CsInsn(self.csh, all_insn[i], self.arch))
+                insns.append(CsInsn(self, all_insn[i]))
             _cs.cs_free(all_insn)
         else:
             status = _cs.cs_errno(self.csh)
