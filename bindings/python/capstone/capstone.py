@@ -217,8 +217,8 @@ def cs_support(arch):
     return _cs.cs_support(arch)
 
 
-# dummy class resemble Cs, just for cs_disasm_quick()
-# this class only need to be referenced by @csh & @arch
+# dummy class resembling Cs class, just for cs_disasm_quick()
+# this class only need to be referenced to via 2 fields: @csh & @arch
 class _dummy_cs(object):
     def __init__(self, csh, arch):
         self.csh = csh
