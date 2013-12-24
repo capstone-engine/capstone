@@ -68,6 +68,26 @@ typedef enum cs_opt_value {
 #include "mips.h"
 #include "x86.h"
 
+// NOTE: All information in cs_detail is only available when CS_OPT_DETAIL = CS_OPT_ON
+typedef struct cs_detail {
+	uint8_t regs_read[12]; // list of implicit registers read by this insn
+	uint8_t regs_read_count; // number of implicit registers read by this insn
+
+	uint8_t regs_write[20]; // list of implicit registers modified by this insn
+	uint8_t regs_write_count; // number of implicit registers modified by this insn
+
+	uint8_t groups[8]; // list of group this instruction belong to
+	uint8_t groups_count; // number of groups this insn belongs to
+
+	// Architecture-specific instruction info
+	union {
+		cs_x86 x86;	// X86 architecture, including 16-bit, 32-bit & 64-bit mode
+		cs_arm64 arm64;	// ARM64 architecture (aka AArch64)
+		cs_arm arm;		// ARM architecture (including Thumb/Thumb2)
+		cs_mips mips;	// MIPS architecture
+	};
+} cs_detail;
+
 // Detail information of disassembled instruction
 typedef struct cs_insn {
 	// Instruction ID
@@ -95,24 +115,10 @@ typedef struct cs_insn {
 	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
 	char op_str[96];
 
-	// NOTE: All information below is not available when CS_OPT_DETAIL = CS_OPT_OFF
-
-	uint8_t regs_read[12]; // list of implicit registers read by this insn
-	uint8_t regs_read_count; // number of implicit registers read by this insn
-
-	uint8_t regs_write[20]; // list of implicit registers modified by this insn
-	uint8_t regs_write_count; // number of implicit registers modified by this insn
-
-	uint8_t groups[8]; // list of group this instruction belong to
-	uint8_t groups_count; // number of groups this insn belongs to
-
-	// Architecture-specific instruction info
-	union {
-		cs_x86 x86;	// X86 architecture, including 16-bit, 32-bit & 64-bit mode
-		cs_arm64 arm64;	// ARM64 architecture (aka AArch64)
-		cs_arm arm;		// ARM architecture (including Thumb/Thumb2)
-		cs_mips mips;	// MIPS architecture
-	};
+	// Pointer to cs_detail.
+	// NOTE: detail pointer is only valid (not NULL) when CS_OP_DETAIL = CS_OPT_ON
+	// Otherwise, if CS_OPT_DETAIL = CS_OPT_OFF, @detail = NULL
+	cs_detail *detail;
 } cs_insn;
 
 
@@ -132,6 +138,7 @@ typedef enum cs_err {
 	CS_ERR_CSH,		// Invalid csh argument: cs_close(), cs_errno(), cs_option()
 	CS_ERR_MODE,	// Invalid/unsupported mode: cs_open()
 	CS_ERR_OPTION,	// Invalid/unsupported option: cs_option()
+	CS_ERR_DETAIL,	// Information is unavailable because detail option is OFF
 } cs_err;
 
 /*
@@ -231,6 +238,8 @@ cs_err cs_errno(csh handle);
  @return: the number of succesfully disassembled instructions,
  or 0 if this function failed to disassemble the given code
 
+ NOTE: this API does not provide detail information, meaning @detail = NULL
+
  On failure, call cs_errno() for error code.
 */
 size_t cs_disasm(csh handle,
@@ -269,9 +278,10 @@ size_t cs_disasm_dyn(csh handle,
 /*
  Free memory allocated in @insn by cs_disasm_dyn()
 
- @mem: pointer returned by @insn argument in cs_disasm_dyn()
+ @insn: pointer returned by @insn argument in cs_disasm_dyn()
+ @count: number of cs_insn structures returned by cs_disasm_dyn()
 */
-void cs_free(void *mem);
+void cs_free(cs_insn *insn, size_t count);
 
 /*
  Return friendly name of regiser in a string

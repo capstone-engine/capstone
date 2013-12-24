@@ -166,7 +166,7 @@ static void test()
 			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
 
 			// free memory allocated by cs_disasm_dyn()
-			cs_free(insn);
+			cs_free(insn, count);
 		} else {
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);

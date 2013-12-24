@@ -167,28 +167,28 @@ static void test()
 						i->id, cs_insn_name(handle, i->id));
 
 				// print implicit registers used by this instruction
-				if (i->regs_read_count > 0) {
+				if (i->detail->regs_read_count > 0) {
 					printf("\tImplicit registers read: ");
-					for (n = 0; n < i->regs_read_count; n++) {
-						printf("%s ", cs_reg_name(handle, i->regs_read[n]));
+					for (n = 0; n < i->detail->regs_read_count; n++) {
+						printf("%s ", cs_reg_name(handle, i->detail->regs_read[n]));
 					}
 					printf("\n");
 				}
 
 				// print implicit registers modified by this instruction
-				if (i->regs_write_count > 0) {
+				if (i->detail->regs_write_count > 0) {
 					printf("\tImplicit registers modified: ");
-					for (n = 0; n < i->regs_write_count; n++) {
-						printf("%s ", cs_reg_name(handle, i->regs_write[n]));
+					for (n = 0; n < i->detail->regs_write_count; n++) {
+						printf("%s ", cs_reg_name(handle, i->detail->regs_write[n]));
 					}
 					printf("\n");
 				}
 
 				// print the groups this instruction belong to
-				if (i->groups_count > 0) {
+				if (i->detail->groups_count > 0) {
 					printf("\tThis instruction belongs to groups: ");
-					for (n = 0; n < i->groups_count; n++) {
-						printf("%u ", i->groups[n]);
+					for (n = 0; n < i->detail->groups_count; n++) {
+						printf("%u ", i->detail->groups[n]);
 					}
 					printf("\n");
 				}
@@ -198,7 +198,7 @@ static void test()
 			printf("0x%"PRIx64":\n", all_insn[j-1].address + all_insn[j-1].size);
 
 			// free memory allocated by cs_disasm_dyn()
-			cs_free(all_insn);
+			cs_free(all_insn, count);
 		} else {
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);

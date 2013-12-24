@@ -34,7 +34,7 @@ static void print_string_hex(char *comment, unsigned char *str, int len)
 static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 {
 	int i;
-	cs_x86 *x86 = &(ins->x86);
+	cs_x86 *x86 = &(ins->detail->x86);
 
 	print_string_hex("\tPrefix:", x86->prefix, 5);
 
@@ -188,7 +188,7 @@ static void test()
 			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
 
 			// free memory allocated by cs_disasm_dyn()
-			cs_free(insn);
+			cs_free(insn, count);
 		} else {
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);

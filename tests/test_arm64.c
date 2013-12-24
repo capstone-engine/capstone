@@ -31,7 +31,7 @@ static void print_string_hex(char *comment, unsigned char *str, int len)
 
 static void print_insn_detail(cs_insn *ins)
 {
-	cs_arm64 *arm64 = &(ins->arm64);
+	cs_arm64 *arm64 = &(ins->detail->arm64);
 	int i;
 
 	if (arm64->op_count)
@@ -171,7 +171,7 @@ static void test()
 			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
 
 			// free memory allocated by cs_disasm_dyn()
-			cs_free(insn);
+			cs_free(insn, count);
 		} else {
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);

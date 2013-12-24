@@ -556,7 +556,7 @@ static int reader(const void* arg, uint8_t* byte, uint64_t address)
 }
 
 // copy x86 detail information from internal structure to public structure
-static void update_pub_insn(cs_insn *pub, InternalInstruction *inter)
+static void update_pub_insn(cs_insn_flat *pub, InternalInstruction *inter)
 {
 	int i, c;
 
@@ -632,7 +632,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *in
 		// save segment for printing hack
 		instr->x86_segment = x86_map_segment(insn.segmentOverride);
 		if (handle->detail)
-			update_pub_insn(&instr->pub_insn, &insn);
+			update_pub_insn(&instr->flat_insn, &insn);
 		return result;
 	}
 }
