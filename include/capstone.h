@@ -132,7 +132,7 @@ typedef struct cs_insn {
 // These are values returned by cs_errno()
 typedef enum cs_err {
 	CS_ERR_OK = 0,	// No error: everything was fine
-	CS_ERR_MEM,		// Out-Of-Memory error: cs_open(), cs_disasm_dyn()
+	CS_ERR_MEM,	// Out-Of-Memory error: cs_open(), cs_disasm_ex()
 	CS_ERR_ARCH,	// Unsupported architecture: cs_open()
 	CS_ERR_HANDLE,	// Invalid handle: cs_op_count(), cs_op_index()
 	CS_ERR_CSH,		// Invalid csh argument: cs_close(), cs_errno(), cs_option()
@@ -224,31 +224,6 @@ cs_err cs_option(csh handle, cs_opt_type type, size_t value);
 cs_err cs_errno(csh handle);
 
 /*
- Disasm the binary code in @buffer.
- Disassembled instructions will be put into @insn
- NOTE: this API requires the pre-allocated buffer in @insn
-
- @handle: handle returned by cs_open()
- @code: buffer containing raw binary code to be disassembled
- @code_size: size of above code
- @address: address of the first insn in given raw code buffer
- @insn: array of insn filled in by this function
-       NOTE: @insn size must be at least @count to avoid buffer overflow
- @count: number of instrutions to be disassembled, or 0 to get all of them
- @return: the number of succesfully disassembled instructions,
- or 0 if this function failed to disassemble the given code
-
- NOTE: this API does not provide detail information, meaning @detail = NULL
-
- On failure, call cs_errno() for error code.
-*/
-size_t cs_disasm(csh handle,
-		const uint8_t *code, size_t code_size,
-		uint64_t address,
-		size_t count,
-		cs_insn *insn);
-
-/*
  Dynamicly allocate memory to contain disasm insn
  Disassembled instructions will be put into @*insn
 
@@ -269,17 +244,17 @@ size_t cs_disasm(csh handle,
 
  On failure, call cs_errno() for error code.
 */
-size_t cs_disasm_dyn(csh handle,
+size_t cs_disasm_ex(csh handle,
 		const uint8_t *code, size_t code_size,
 		uint64_t address,
 		size_t count,
 		cs_insn **insn);
 
 /*
- Free memory allocated in @insn by cs_disasm_dyn()
+ Free memory allocated in @insn by cs_disasm_ex()
 
- @insn: pointer returned by @insn argument in cs_disasm_dyn()
- @count: number of cs_insn structures returned by cs_disasm_dyn()
+ @insn: pointer returned by @insn argument in cs_disasm_ex()
+ @count: number of cs_insn structures returned by cs_disasm_ex()
 */
 void cs_free(cs_insn *insn, size_t count);
 
@@ -310,7 +285,7 @@ const char *cs_insn_name(csh handle, unsigned int insn_id);
  Internally, this simply verifies if @group_id matches any member of insn->groups array.
 
  @handle: handle returned by cs_open()
- @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_dyn()
+ @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
  @group_id: group that you want to check if this instruction belong to.
 
  @return: true if this instruction indeed belongs to aboved group, or false otherwise.
@@ -322,7 +297,7 @@ bool cs_insn_group(csh handle, cs_insn *insn, unsigned int group_id);
  Find the register id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
  Internally, this simply verifies if @reg_id matches any member of insn->regs_read array.
 
- @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_dyn()
+ @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
  @reg_id: register that you want to check if this instruction used it.
 
  @return: true if this instruction indeed implicitly used aboved register, or false otherwise.
@@ -334,7 +309,7 @@ bool cs_reg_read(csh handle, cs_insn *insn, unsigned int reg_id);
  Find the register id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
  Internally, this simply verifies if @reg_id matches any member of insn->regs_write array.
 
- @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_dyn()
+ @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
  @reg_id: register that you want to check if this instruction modified it.
 
  @return: true if this instruction indeed implicitly modified aboved register, or false otherwise.
@@ -346,7 +321,7 @@ bool cs_reg_write(csh handle, cs_insn *insn, unsigned int reg_id);
  Find the operand type in header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
 
  @handle: handle returned by cs_open()
- @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_dyn()
+ @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
  @op_type: Operand type to be found.
 
  @return: number of operands of given type @op_type in instruction @insn,
@@ -360,7 +335,7 @@ int cs_op_count(csh handle, cs_insn *insn, unsigned int op_type);
  Find the operand type in header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
 
  @handle: handle returned by cs_open()
- @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_dyn()
+ @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
  @op_type: Operand type to be found.
  @position: position of the operand to be found. This must be in the range
 			[1, cs_op_count(handle, insn, op_type)]
