@@ -14,7 +14,13 @@ LDFLAGS += -shared
 PREFIX ?= /usr
 DESTDIR ?=
 INCDIR = $(DESTDIR)$(PREFIX)/include
+
 LIBDIR = $(DESTDIR)$(PREFIX)/lib
+# on x86_64, we might have /usr/lib64 directory instead of /usr/lib
+MACHINE := $(shell uname -m)
+ifeq ($(MACHINE), x86_64)
+if [ ! -d “$(LIBDIR)" ]; then LIBDIR = $(DESTDIR)$(PREFIX)/lib64;  fi
+endif
 
 INSTALL_DATA ?= install -m0644
 INSTALL_LIBRARY ?= install -m0755
