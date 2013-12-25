@@ -47,13 +47,11 @@ ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
 endif
 LIBOBJ += MCInst.o
 
-EXT = so
-AR_EXT = a
-
 # OSX?
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
 EXT = dylib
+AR_EXT = a
 else
 # Cygwin?
 IS_CYGWIN := $(shell $(CC) -dumpmachine | grep -i cygwin | wc -l)
@@ -72,6 +70,11 @@ AR_EXT = dll.a
 # mingw doesn't like -fPIC either
 CFLAGS := $(CFLAGS:-fPIC=)
 # On Windows we need the shared library to be executable
+else
+# Linux, *BSD
+EXT = so
+AR_EXT = a
+LDFLAGS += -Wl,-soname,$(LIBRARY)
 endif
 endif
 endif
