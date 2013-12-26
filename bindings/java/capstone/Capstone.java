@@ -28,17 +28,20 @@ public class Capstone {
   protected static abstract class OpInfo {}
   protected static abstract class UnionOpInfo extends Structure {}
 
-  protected static class _cs_insn extends Structure implements Structure.ByReference {
+  protected static class _cs_insn extends Structure {
     public int id;
     public long address;
     public short size;
-    public byte[] bytes = new byte[16];
-    public byte[] mnemonic = new byte[32];
-    public byte[] operands = new byte[96];
+    public byte[] bytes;
+    public byte[] mnemonic;
+    public byte[] operands;
     public _cs_detail.ByReference cs_detail;
 
     public _cs_insn(Pointer p) {
-      super(p);
+      bytes = new byte[16];
+      mnemonic = new byte[32];
+      operands = new byte[96];
+      useMemory(p);
       read();
     }
 
@@ -62,7 +65,7 @@ public class Capstone {
     public List getFieldOrder() {
       return Arrays.asList("regs_read", "regs_read_count", "regs_write", "regs_write_count", "groups", "groups_count");
     }
-}
+  }
 
   public static class CsInsn {
     public OpInfo operands;
