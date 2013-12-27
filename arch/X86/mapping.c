@@ -6604,10 +6604,16 @@ void X86_post_printer(csh handle, cs_insn *insn, char *insn_asm)
 	}
 }
 
+static int * id2insn = 0;
+
 // given internal insn id, return public instruction info
 void X86_get_insn_id(cs_insn *insn, unsigned int id, int detail)
 {
-	int i = insn_find(insns, ARR_SIZE(insns), id);
+  if (id2insn == 0)
+    id2insn = make_id2insn(insns);
+
+	int i = id2insn[id];
+
 	if (i != -1) {
 		insn->id = insns[i].mapid;
 

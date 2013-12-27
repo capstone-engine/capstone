@@ -2,7 +2,7 @@
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
 #ifndef __CS_UTILS_H__
-#define __CS_UTILS_H__ 
+#define __CS_UTILS_H__
 
 #include <stdbool.h>
 
@@ -31,6 +31,9 @@ int str_in_list(char **list, char *s);
 
 // binary searching in @m, given its size in @max, and @id
 int insn_find(insn_map *m, unsigned int max, unsigned int id);
+
+// reversed the map for faster search
+int *make_id2insn(insn_map *);
 
 // map id to string
 typedef struct name_map {

@@ -2,6 +2,7 @@
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
 #include <string.h>
+#include <stdlib.h>
 
 #include "utils.h"
 
@@ -40,6 +41,21 @@ int insn_find(insn_map *m, unsigned int max, unsigned int id)
 
 	// found nothing
 	return -1;
+}
+
+int* make_id2insn(insn_map *insns) {
+	int max_id = 0;
+	for (int i=0; i<ARR_SIZE(insns); i++)
+		if (max_id < insns[i].id)
+			max_id = insns[i].id;
+
+	int *cached = (int *) malloc( sizeof(int) * max_id );
+	memset(cached, -1, sizeof(int) * max_id);
+
+	for (int i=0; i<ARR_SIZE(insns); i++)
+		cached[insns[i].id] = i;
+
+	return cached;
 }
 
 int name2id(name_map* map, int max, const char *name)
