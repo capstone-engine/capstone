@@ -4,9 +4,7 @@
 package capstone;
 
 import com.sun.jna.Structure;
-import com.sun.jna.Pointer;
 import com.sun.jna.Union;
-import com.sun.jna.NativeLong;
 
 import java.util.List;
 import java.util.Arrays;

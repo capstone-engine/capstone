@@ -16,17 +16,11 @@ import com.sun.jna.ptr.IntByReference;
 import java.util.List;
 import java.util.Arrays;
 import java.lang.RuntimeException;
-import java.lang.Math;
 
 public class Capstone {
 
-  public int arch;
-  public int mode;
-  private int syntax;
-  private int detail;
-
-  protected static abstract class OpInfo {}
-  protected static abstract class UnionOpInfo extends Structure {}
+  protected static abstract class OpInfo {};
+  protected static abstract class UnionOpInfo extends Structure {};
 
   public static class UnionArch extends Union {
     public static class ByValue extends UnionArch implements Union.ByValue {};
@@ -83,11 +77,9 @@ public class Capstone {
   }
 
   public static class CsInsn {
-    public OpInfo operands;
     private NativeLong csh;
     private CS cs;
     private _cs_insn raw;
-    private static int _size = -1;
     private int arch;
 
     public int id;
@@ -98,6 +90,7 @@ public class Capstone {
     public byte[] regsRead;
     public byte[] regsWrite;
     public byte[] groups;
+    public OpInfo operands;
 
     public CsInsn (_cs_insn insn, int _arch, NativeLong _csh, CS _cs) {
       id = insn.id;
@@ -108,6 +101,8 @@ public class Capstone {
 
       arch = _arch;
       raw = insn;
+      csh = _csh;
+      cs = _cs;
 
       if (insn.cs_detail != null) {
         regsRead = new byte[insn.cs_detail.regs_read_count];
@@ -122,22 +117,10 @@ public class Capstone {
 
         operands = getOptInfo(insn.cs_detail);
       }
-
-      csh = _csh;
-      cs = _cs;
-
-      // cache the size so we do not need to recompute the offset everytime
-      if (_size == -1)
-        _size = insn.size();
-    }
-
-    protected int size() {
-      return _size;
     }
 
     private OpInfo getOptInfo(_cs_detail detail) {
       OpInfo op_info = null;
-      UnionOpInfo _op_info = null;
 
       switch (this.arch) {
         case CS_ARCH_ARM:
@@ -200,8 +183,7 @@ public class Capstone {
 
   }
 
-  private CsInsn[] fromArrayRaw(_cs_insn[] arr_raw)
-  {
+  private CsInsn[] fromArrayRaw(_cs_insn[] arr_raw) {
     CsInsn[] arr = new CsInsn[arr_raw.length];
 
     for (int i = 0; i < arr_raw.length; i++) {
@@ -276,9 +258,12 @@ public class Capstone {
 
   protected NativeStruct ns; // for memory retention
   private CS cs;
+  public int arch;
+  public int mode;
+  private int syntax;
+  private int detail;
 
-  public Capstone(int arch, int mode)
-  {
+  public Capstone(int arch, int mode) {
     this.arch = arch;
     this.mode = mode;
     ns = new NativeStruct();
