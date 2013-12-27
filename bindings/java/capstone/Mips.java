@@ -66,16 +66,6 @@ public class Mips {
       op = new Operand[8];
     }
 
-    public UnionOpInfo(Pointer p) {
-      op = new Operand[8];
-      useMemory(p);
-      read();
-    }
-
-    public static int getSize() {
-      return (new UnionOpInfo()).size();
-    }
-
     public void read() {
       readField("op_count");
       op = new Operand[op_count];

@@ -28,6 +28,15 @@ public class Capstone {
   protected static abstract class OpInfo {}
   protected static abstract class UnionOpInfo extends Structure {}
 
+  public static class UnionArch extends Union {
+    public static class ByValue extends UnionArch implements Union.ByValue {};
+
+    public Arm.UnionOpInfo arm;
+    public Arm64.UnionOpInfo arm64;
+    public X86.UnionOpInfo x86;
+    public Mips.UnionOpInfo mips;
+  }
+
   protected static class _cs_insn extends Structure {
     public int id;
     public long address;
@@ -37,10 +46,14 @@ public class Capstone {
     public byte[] operands;
     public _cs_detail.ByReference cs_detail;
 
-    public _cs_insn(Pointer p) {
+    public _cs_insn() {
       bytes = new byte[16];
       mnemonic = new byte[32];
       operands = new byte[96];
+    }
+
+    public _cs_insn(Pointer p) {
+      this();
       useMemory(p);
       read();
     }
@@ -61,9 +74,11 @@ public class Capstone {
     public byte[] groups = new byte[8];
     public byte groups_count;
 
+    public UnionArch arch;
+
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("regs_read", "regs_read_count", "regs_write", "regs_write_count", "groups", "groups_count");
+      return Arrays.asList("regs_read", "regs_read_count", "regs_write", "regs_write_count", "groups", "groups_count", "arch");
     }
   }
 
@@ -92,6 +107,7 @@ public class Capstone {
       opStr = new String(insn.operands).replace("\u0000","");
 
       arch = _arch;
+      raw = insn;
 
       if (insn.cs_detail != null) {
         regsRead = new byte[insn.cs_detail.regs_read_count];
@@ -104,43 +120,45 @@ public class Capstone {
         for (int i=0; i<groups.length; i++)
           groups[i] = insn.cs_detail.groups[i];
 
-        operands = getOptInfo(insn.cs_detail.getPointer());
+        operands = getOptInfo(insn.cs_detail);
       }
 
       csh = _csh;
       cs = _cs;
-      raw = insn;
 
       // cache the size so we do not need to recompute the offset everytime
       if (_size == -1)
-        _size = insn.size(); 
+        _size = insn.size();
     }
 
     protected int size() {
       return _size;
     }
 
-    private OpInfo getOptInfo(Pointer ptrDetail) {
+    private OpInfo getOptInfo(_cs_detail detail) {
       OpInfo op_info = null;
       UnionOpInfo _op_info = null;
-      Pointer p = ptrDetail.share(48);
 
       switch (this.arch) {
         case CS_ARCH_ARM:
-          _op_info = new Arm.UnionOpInfo(p);
-          op_info = new Arm.OpInfo((Arm.UnionOpInfo) _op_info);
+          detail.arch.setType(Arm.UnionOpInfo.class);
+          detail.arch.read();
+          op_info = new Arm.OpInfo((Arm.UnionOpInfo) detail.arch.arm);
           break;
         case CS_ARCH_ARM64:
-          _op_info = new Arm64.UnionOpInfo(p);
-          op_info = new Arm64.OpInfo((Arm64.UnionOpInfo) _op_info);
+          detail.arch.setType(Arm64.UnionOpInfo.class);
+          detail.arch.read();
+          op_info = new Arm64.OpInfo((Arm64.UnionOpInfo) detail.arch.arm64);
           break;
         case CS_ARCH_MIPS:
-          _op_info = new Mips.UnionOpInfo(p);
-          op_info = new Mips.OpInfo((Mips.UnionOpInfo) _op_info);
+          detail.arch.setType(Mips.UnionOpInfo.class);
+          detail.arch.read();
+          op_info = new Mips.OpInfo((Mips.UnionOpInfo) detail.arch.mips);
           break;
         case CS_ARCH_X86:
-          _op_info = new X86.UnionOpInfo(p);
-          op_info = new X86.OpInfo((X86.UnionOpInfo) _op_info);
+          detail.arch.setType(X86.UnionOpInfo.class);
+          detail.arch.read();
+          op_info = new X86.OpInfo((X86.UnionOpInfo) detail.arch.x86);
           break;
         default:
       }
@@ -185,7 +203,7 @@ public class Capstone {
   private CsInsn[] fromArrayRaw(_cs_insn[] arr_raw)
   {
     CsInsn[] arr = new CsInsn[arr_raw.length];
-    
+
     for (int i = 0; i < arr_raw.length; i++) {
       arr[i] = new CsInsn(arr_raw[i], this.arch, ns.csh, cs);
     }

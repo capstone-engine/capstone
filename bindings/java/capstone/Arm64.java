@@ -87,16 +87,6 @@ public class Arm64 {
       op = new Operand[8];
     }
 
-    public UnionOpInfo(Pointer p) {
-      op = new Operand[8];
-      useMemory(p);
-      read();
-    }
-
-    public static int getSize() {
-      return (new UnionOpInfo()).size();
-    }
-
     public void read() {
       readField("cc");
       readField("_update_flags");

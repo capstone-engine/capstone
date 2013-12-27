@@ -89,18 +89,6 @@ public class X86 {
       prefix = new byte[5];
     }
 
-    public UnionOpInfo(Pointer p) {
-      op = new Operand[8];
-      opcode = new byte[3];
-      prefix = new byte[5];
-      useMemory(p);
-      read();
-    }
-
-    public static int getSize() {
-      return (new UnionOpInfo()).size();
-    }
-
     @Override
     public List getFieldOrder() {
       return Arrays.asList("prefix", "segment", "opcode", "op_size", "addr_size", "disp_size",

@@ -88,17 +88,6 @@ public class Arm {
       op = new Operand[20];
     }
 
-    public UnionOpInfo(Pointer p){
-      op = new Operand[20];
-      useMemory(p);
-      read();
-    }
-
-    public static int getSize() {
-        UnionOpInfo x = new UnionOpInfo();
-        return x.size();
-    }
-
     public void read() {
       readField("cc");
       readField("_update_flags");
