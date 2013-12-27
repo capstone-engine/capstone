@@ -31,19 +31,15 @@ LIBOBJ =
 LIBOBJ += cs.o utils.o SStream.o MCInstrDesc.o MCRegisterInfo.o
 ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))
 	LIBOBJ += arch/ARM/ARMDisassembler.o arch/ARM/ARMInstPrinter.o arch/ARM/mapping.o arch/ARM/module.o
-	CFLAGS += -DCS_SUPPORT_ARM
 endif
 ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
 	LIBOBJ += arch/X86/X86DisassemblerDecoder.o arch/X86/X86Disassembler.o arch/X86/X86IntelInstPrinter.o arch/X86/X86ATTInstPrinter.o arch/X86/mapping.o arch/X86/module.o
-	CFLAGS += -DCS_SUPPORT_X86
 endif
 ifneq (,$(findstring mips,$(CAPSTONE_ARCHS)))
 	LIBOBJ += arch/Mips/MipsDisassembler.o arch/Mips/MipsInstPrinter.o arch/Mips/mapping.o arch/Mips/module.o
-	CFLAGS += -DCS_SUPPORT_AARCH64
 endif
 ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
 	LIBOBJ += arch/AArch64/AArch64BaseInfo.o arch/AArch64/AArch64Disassembler.o arch/AArch64/AArch64InstPrinter.o arch/AArch64/mapping.o arch/AArch64/module.o
-	CFLAGS += -DCS_SUPPORT_MIPS
 endif
 LIBOBJ += MCInst.o
 
