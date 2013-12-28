@@ -17,7 +17,7 @@ extern "C" {
 #define CS_API_MINOR 1
 
 // Macro to create combined version which can be compared to
-// result of cs_version_ex() API.
+// result of cs_version() API.
 #define CS_MAKE_VERSION(major, minor) ((major << 8) + minor)
 
 // Handle using with all API
@@ -142,31 +142,23 @@ typedef enum cs_err {
 } cs_err;
 
 /*
-  Retrieve API version in major and minor numbers.
-
-  @major: major number of API version
-  @minor: minor number of API version
-
-  For example, first API version would return 1 in @major, and 0 in @minor
-*/
-void cs_version(int *major, int *minor);
-
-
-/*
  Return combined API version & major and minor version numbers.
 
  @major: major number of API version
  @minor: minor number of API version
 
- @return hexical number encoding both major & minor versions, which is comparisonable.
+ @return hexical number as (major << 8 | minor), which encodes both
+     major & minor versions.
+     NOTE: This returned value can be compared with version number made
+	 with macro CS_MAKE_VERSION
 
  For example, second API version would return 1 in @major, and 1 in @minor
  The return value would be 0x0101
 
  NOTE: if you only care about returned value, but not major and minor values,
- set both arguments to NULL.
+ set both @major & @minor arguments to NULL.
 */
-unsigned int cs_version_ex(int *major, int *minor);
+unsigned int cs_version(int *major, int *minor);
 
 
 /*
