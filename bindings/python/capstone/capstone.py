@@ -8,7 +8,6 @@ __all__ = [
 
     'cs_disasm_quick',
     'cs_version',
-    'cs_version_ex',
     'cs_support',
 
     'CS_API_MAJOR',
@@ -185,8 +184,7 @@ _setup_prototype(_cs, "cs_op_count", ctypes.c_int, ctypes.c_size_t, ctypes.POINT
 _setup_prototype(_cs, "cs_op_index", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint, ctypes.c_uint)
 _setup_prototype(_cs, "cs_errno", ctypes.c_int, ctypes.c_size_t)
 _setup_prototype(_cs, "cs_option", ctypes.c_int, ctypes.c_size_t, ctypes.c_int, ctypes.c_size_t)
-_setup_prototype(_cs, "cs_version", None, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
-_setup_prototype(_cs, "cs_version_ex", ctypes.c_int, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
+_setup_prototype(_cs, "cs_version", ctypes.c_int, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
 _setup_prototype(_cs, "cs_support", ctypes.c_bool, ctypes.c_int)
 
 
@@ -210,12 +208,8 @@ class CsError(Exception):
 def cs_version():
     major = ctypes.c_int()
     minor = ctypes.c_int()
-    _cs.cs_version(ctypes.byref(major), ctypes.byref(minor))
-    return (major.value, minor.value)
-
-
-def cs_version_ex():
-    return _cs.cs_version_ex(None, None)
+    combined = _cs.cs_version(ctypes.byref(major), ctypes.byref(minor))
+    return (major.value, minor.value, combined)
 
 
 def cs_support(arch):
