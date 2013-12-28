@@ -8,7 +8,7 @@
 #include "mapping.h"
 
 
-static void init(cs_struct *ud)
+static cs_err init(cs_struct *ud)
 {
 	MCRegisterInfo *mri = malloc(sizeof(*mri));
 
@@ -21,6 +21,8 @@ static void init(cs_struct *ud)
 	ud->insn_id = AArch64_get_insn_id;
 	ud->insn_name = AArch64_insn_name;
 	ud->post_printer = AArch64_post_printer;
+
+	return CS_ERR_OK;
 }
 
 static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)

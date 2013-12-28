@@ -8,7 +8,7 @@
 #include "mapping.h"
 
 
-static void init(cs_struct *ud)
+static cs_err init(cs_struct *ud)
 {
 	MCRegisterInfo *mri = malloc(sizeof(*mri));
 
@@ -25,6 +25,8 @@ static void init(cs_struct *ud)
 		ud->disasm = Thumb_getInstruction;
 	else
 		ud->disasm = ARM_getInstruction;
+
+	return CS_ERR_OK;
 }
 
 static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
@@ -37,6 +39,7 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 
 		handle->mode = value;
 	}
+
 	return CS_ERR_OK;
 }
 
