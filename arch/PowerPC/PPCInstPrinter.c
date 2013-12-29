@@ -137,7 +137,7 @@ static void printPredicateOperand(MCInst *MI, unsigned OpNo,
 {
 	unsigned Code = MCOperand_getImm(MCInst_getOperand(MI, OpNo));
 
-	MI->flat_insn.ppc.cc = (ppc_cc)Code;
+	MI->flat_insn.ppc.cc = (ppc_bc)Code;
 
 	if (!strcmp(Modifier, "cc")) {
 		switch ((ppc_predicate)Code) {
