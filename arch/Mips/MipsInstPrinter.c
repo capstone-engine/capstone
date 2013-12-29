@@ -21,6 +21,7 @@
 
 #include "MipsInstPrinter.h"
 #include "../../MCInst.h"
+#include "../../cs_priv.h"
 #include "../../SStream.h"
 #include "../../MCRegisterInfo.h"
 #include "../../utils.h"
@@ -88,7 +89,7 @@ static void set_mem_access(MCInst *MI, bool status)
 {
 	doing_mem = status;
 
-	if (MI->detail != CS_OPT_ON)
+	if (MI->csh->detail != CS_OPT_ON)
 		return;
 
 	if (doing_mem) {
@@ -195,7 +196,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		unsigned int reg = MCOperand_getReg(Op);
 		printRegName(O, reg);
 		reg = Mips_map_register(reg);
-		if (MI->detail) {
+		if (MI->csh->detail) {
 			if (doing_mem) {
 				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].mem.base = reg;
 			} else {
@@ -222,7 +223,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 						SStream_concat(O, "-%"PRIu64, -imm);
 				}
 			}
-			if (MI->detail)
+			if (MI->csh->detail)
 				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].mem.disp = imm;
 		} else {
 			if (imm >= 0) {
@@ -237,7 +238,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					SStream_concat(O, "-%"PRIu64, -imm);
 			}
 
-			if (MI->detail) {
+			if (MI->csh->detail) {
 				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_IMM;
 				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].imm = imm;
 				MI->flat_insn.mips.op_count++;
@@ -262,7 +263,7 @@ static void printUnsignedImm(MCInst *MI, int opNum, SStream *O)
 			else
 				SStream_concat(O, "-%u", (short int)-imm);
 		}
-		if (MI->detail) {
+		if (MI->csh->detail) {
 			MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_IMM;
 			MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].imm = (unsigned short int)imm;
 			MI->flat_insn.mips.op_count++;
@@ -280,7 +281,7 @@ static void printUnsignedImm8(MCInst *MI, int opNum, SStream *O)
 			SStream_concat(O, "0x%x", imm);
 		else
 			SStream_concat(O, "%u", imm);
-		if (MI->detail) {
+		if (MI->csh->detail) {
 			MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_IMM;
 			MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].imm = imm;
 			MI->flat_insn.mips.op_count++;

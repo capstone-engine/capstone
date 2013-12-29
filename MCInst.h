@@ -25,6 +25,7 @@
 #include "include/capstone.h"
 
 typedef struct MCInst MCInst;
+typedef struct cs_struct cs_struct;
 typedef struct MCOperand MCOperand;
 
 /// MCOperand - Instances of this class represent operands of the MCInst class.
@@ -126,9 +127,9 @@ typedef struct cs_insn_flat {
 		cs_arm64 arm64;	// ARM64 architecture (aka AArch64)
 		cs_arm arm;		// ARM architecture (including Thumb/Thumb2)
 		cs_mips mips;	// MIPS architecture
+		cs_ppc ppc;	// PowerPC architecture
 	};
 } cs_insn_flat;
-
 
 /// MCInst - Instances of this class represent a single low-level machine
 /// instruction.
@@ -137,12 +138,11 @@ struct MCInst {
 	MCOperand Operands[32];
 	unsigned size;	// number of operands
 	cs_insn_flat flat_insn;	// insn to be exposed to public
-	cs_mode mode;	// to be referenced by internal code
 	unsigned OpcodePub;
-	cs_opt_value detail;
 	int insn_size;	// instruction size
 	int x86_segment;	// remove when segment mem ref hack is redundant.
 	uint64_t address;	// address of this insn
+	cs_struct *csh;	// save the main csh
 };
 
 void MCInst_Init(MCInst *inst);

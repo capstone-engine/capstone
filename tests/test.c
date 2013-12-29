@@ -46,6 +46,7 @@ static void test()
 //#define ARM64_CODE "\x20\x74\x0b\xd5"	// dc	zva, x0
 //#define ARM64_CODE "\xe1\x0b\x40\xb9"	// ldr		w1, [sp, #0x8]
 #define ARM64_CODE "\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9"
+#define PPC64_CODE "\x80\x20\x00\x00\x80\x3f\x00\x00\x10\x43\x23\x0e\xd0\x44\x00\x80"
 
 	struct platform platforms[] = {
 		{ 
@@ -126,6 +127,22 @@ static void test()
 			.code = (unsigned char*)ARM64_CODE,
 			.size = sizeof(ARM64_CODE) - 1,
 			.comment = "ARM-64"
+		},
+		{
+			.arch = CS_ARCH_PPC,
+			.mode = CS_MODE_64 + CS_MODE_BIG_ENDIAN,
+			.code = (unsigned char*)PPC64_CODE,
+			.size = sizeof(PPC64_CODE) - 1,
+			.comment = "PPC-64"
+		},
+		{
+			.arch = CS_ARCH_PPC,
+			.mode = CS_MODE_64 + CS_MODE_BIG_ENDIAN,
+			.code = (unsigned char*)PPC64_CODE,
+			.size = sizeof(PPC64_CODE) - 1,
+			.opt_type = CS_OPT_SYNTAX,
+			.opt_value = CS_OPT_SYNTAX_DARWIN,
+			.comment = "PPC-64, Darwin syntax"
 		},
 	};
 

@@ -30,6 +30,7 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 				handle->errnum = CS_ERR_OPTION;
 				return CS_ERR_OPTION;
 
+			case CS_OPT_SYNTAX_DEFAULT:
 			case CS_OPT_SYNTAX_INTEL:
 				handle->printer = X86_Intel_printInst;
 				break;
@@ -39,6 +40,7 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 				break;
 		}
 	}
+
 	return CS_ERR_OK;
 }
 

@@ -23,6 +23,7 @@
 
 #include "../../utils.h"
 #include "../../MCInst.h"
+#include "../../cs_priv.h"
 #include "../../SStream.h"
 #include "../../MCRegisterInfo.h"
 #include "mapping.h"
@@ -122,7 +123,7 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 
 	SStream_concat(O, "%s", markup("<mem:"));
 
-	if (MI->detail) {
+	if (MI->csh->detail) {
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.base = X86_REG_INVALID;
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.index = X86_REG_INVALID;
@@ -132,7 +133,7 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 
 	if (MCOperand_isImm(DispSpec)) {
 		int64_t imm = MCOperand_getImm(DispSpec);
-		if (MI->detail)
+		if (MI->csh->detail)
 			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.disp = imm;
 		if (imm < 0) {
 			if (imm <= -HEX_THRESHOLD)
@@ -149,7 +150,7 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 
 	SStream_concat(O, "%s", markup(">"));
 
-	if (MI->detail)
+	if (MI->csh->detail)
 		MI->flat_insn.x86.op_count++;
 }
 
@@ -277,7 +278,7 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 			else
 				SStream_concat(O, "%"PRIu64, imm);
 		}
-		if (MI->detail) {
+		if (MI->csh->detail) {
 			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_IMM;
 			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].imm = imm;
 			MI->flat_insn.x86.op_count++;
@@ -290,7 +291,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	MCOperand *Op  = MCInst_getOperand(MI, OpNo);
 	if (MCOperand_isReg(Op)) {
 		printRegName(O, MCOperand_getReg(Op));
-		if (MI->detail) {
+		if (MI->csh->detail) {
 			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_REG;
 			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].reg = MCOperand_getReg(Op);
 			MI->flat_insn.x86.op_count++;
@@ -309,7 +310,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			else
 				SStream_concat(O, "%s$-%"PRIu64"%s", markup("<imm:"), -imm, markup(">"));
 		}
-		if (MI->detail) {
+		if (MI->csh->detail) {
 			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_IMM;
 			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].imm = imm;
 			MI->flat_insn.x86.op_count++;
@@ -347,7 +348,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	MCOperand *DispSpec = MCInst_getOperand(MI, Op+3);
 	MCOperand *SegReg = MCInst_getOperand(MI, Op+4);
 
-	if (MI->detail) {
+	if (MI->csh->detail) {
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.base = MCOperand_getReg(BaseReg);
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.index = MCOperand_getReg(IndexReg);
@@ -365,7 +366,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 
 	if (MCOperand_isImm(DispSpec)) {
 		int64_t DispVal = MCOperand_getImm(DispSpec);
-		if (MI->detail)
+		if (MI->csh->detail)
 			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.disp = DispVal;
 		if (DispVal || (!MCOperand_getReg(IndexReg) && !MCOperand_getReg(BaseReg))) {
 			if (DispVal < 0) {
@@ -392,7 +393,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 			SStream_concat(O, ", ");
 			_printOperand(MI, Op+2, O);
 			unsigned ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op+1));
-			if (MI->detail)
+			if (MI->csh->detail)
 				MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.scale = ScaleVal;
 			if (ScaleVal != 1) {
 				SStream_concat(O, ", %s%u%s", markup("<imm:"), ScaleVal, markup(">"));
@@ -403,7 +404,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 
 	SStream_concat(O, markup(">"));
 
-	if (MI->detail)
+	if (MI->csh->detail)
 		MI->flat_insn.x86.op_count++;
 }
 
@@ -457,7 +458,7 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 	} else
 	   printInstruction(MI, OS);
 
-	if (MI->detail) {
+	if (MI->csh->detail) {
 		// first op can be embedded in the asm by llvm.
 		// so we have to handle that case to not miss the first op.
 		char lastop[32];

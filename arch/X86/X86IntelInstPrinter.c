@@ -23,6 +23,7 @@
 
 #include "../../utils.h"
 #include "../../MCInst.h"
+#include "../../cs_priv.h"
 #include "../../SStream.h"
 
 #include "mapping.h"
@@ -117,7 +118,7 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 {
 	MCOperand *DispSpec = MCInst_getOperand(MI, Op);
 
-	if (MI->detail) {
+	if (MI->csh->detail) {
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.base = X86_REG_INVALID;
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.index = X86_REG_INVALID;
@@ -129,7 +130,7 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 
 	if (MCOperand_isImm(DispSpec)) {
 		int64_t imm = MCOperand_getImm(DispSpec);
-		if (MI->detail)
+		if (MI->csh->detail)
 			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.disp = imm;
 		if (imm < 0) {
 			if (imm <= -HEX_THRESHOLD)
@@ -146,7 +147,7 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 
 	SStream_concat(O, "]");
 
-	if (MI->detail)
+	if (MI->csh->detail)
 		MI->flat_insn.x86.op_count++;
 }
 
@@ -233,7 +234,7 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 	} else
 		printInstruction(MI, O);
 
-	if (MI->detail) {
+	if (MI->csh->detail) {
 		char tmp[64];
 		if (get_first_op(O->buffer, tmp)) {
 			int post;
@@ -342,7 +343,7 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 			else
 				SStream_concat(O, "%"PRIu64, imm);
 		}
-		if (MI->detail) {
+		if (MI->csh->detail) {
 			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_IMM;
 			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].imm = imm;
 			MI->flat_insn.x86.op_count++;
@@ -361,7 +362,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	MCOperand *Op  = MCInst_getOperand(MI, OpNo);
 	if (MCOperand_isReg(Op)) {
 		printRegName(O, MCOperand_getReg(Op));
-		if (MI->detail) {
+		if (MI->csh->detail) {
 			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_REG;
 			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].reg = MCOperand_getReg(Op);
 			MI->flat_insn.x86.op_count++;
@@ -380,7 +381,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				SStream_concat(O, "-%"PRIu64, -imm);
 		}
 
-		if (MI->detail) {
+		if (MI->csh->detail) {
 			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_IMM;
 			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].imm = imm;
 			MI->flat_insn.x86.op_count++;
@@ -418,7 +419,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)	// qqq
 	MCOperand *DispSpec = MCInst_getOperand(MI, Op+3);
 	MCOperand *SegReg = MCInst_getOperand(MI, Op+4);
 
-	if (MI->detail) {
+	if (MI->csh->detail) {
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.base = MCOperand_getReg(BaseReg);
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.index = MCOperand_getReg(IndexReg);
@@ -453,7 +454,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)	// qqq
 		//assert(DispSpec.isExpr() && "non-immediate displacement for LEA?");
 	} else {
 		int64_t DispVal = MCOperand_getImm(DispSpec);
-		if (MI->detail)
+		if (MI->csh->detail)
 			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.disp = DispVal;
 		if (DispVal || (!MCOperand_getReg(IndexReg) && !MCOperand_getReg(BaseReg))) {
 			if (NeedPlus) {
@@ -480,7 +481,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)	// qqq
 
 	SStream_concat(O, "]");
 
-	if (MI->detail)
+	if (MI->csh->detail)
 		MI->flat_insn.x86.op_count++;
 }
 

@@ -27,7 +27,7 @@ typedef struct ARM_ITStatus {
 	unsigned int size;
 } ARM_ITStatus;
 
-typedef struct cs_struct {
+struct cs_struct {
 	cs_arch arch;
 	cs_mode mode;
 	Printer_t printer;	// asm printer
@@ -42,12 +42,13 @@ typedef struct cs_struct {
 	cs_err errnum;
 	ARM_ITStatus ITBlock;	// for Arm only
 	cs_opt_value detail;
-} cs_struct;
+	int syntax;	// asm syntax for simple printer such as PPC
+};
 
 #define MAX_ARCH 8
 
 // constructor initialization for all archs
-extern void (*arch_init[MAX_ARCH]) (cs_struct *);
+extern cs_err (*arch_init[MAX_ARCH]) (cs_struct *);
 
 // support cs_option() for all archs
 extern cs_err (*arch_option[MAX_ARCH]) (cs_struct*, cs_opt_type, size_t value);

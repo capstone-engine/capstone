@@ -29,6 +29,7 @@ typedef enum cs_arch {
 	CS_ARCH_ARM64,		// ARM-64, also called AArch64
 	CS_ARCH_MIPS,		// Mips architecture
 	CS_ARCH_X86,		// X86 architecture (including x86 & x86-64)
+	CS_ARCH_PPC,		// PowerPC architecture
 	CS_ARCH_MAX,
 	CS_ARCH_ALL = 0xFFFF,
 } cs_arch;
@@ -57,9 +58,11 @@ typedef enum cs_opt_type {
 // Runtime option value (associated with option type above)
 typedef enum cs_opt_value {
 	CS_OPT_OFF = 0,  // Turn OFF an option (CS_OPT_DETAIL)
-	CS_OPT_SYNTAX_INTEL = 1, // X86 Intel asm syntax - default syntax on X86 (CS_OPT_SYNTAX).
+	CS_OPT_ON = 3, // Turn ON an option - default option for CS_OPT_DETAIL
+	CS_OPT_SYNTAX_DEFAULT = 0, // Default asm syntax (CS_OPT_SYNTAX).
+	CS_OPT_SYNTAX_INTEL, // X86 Intel asm syntax - default on X86 (CS_OPT_SYNTAX).
 	CS_OPT_SYNTAX_ATT,   // X86 ATT asm syntax (CS_OPT_SYNTAX)
-	CS_OPT_ON, // Turn ON an option - default option for CS_OPT_DETAIL
+	CS_OPT_SYNTAX_DARWIN, // Darwin asm syntax prints register name with only number - PPC arch (CS_OPT_SYNTAX)
 } cs_opt_value;
 
 
@@ -67,6 +70,7 @@ typedef enum cs_opt_value {
 #include "arm64.h"
 #include "mips.h"
 #include "x86.h"
+#include "ppc.h"
 
 // NOTE: All information in cs_detail is only available when CS_OPT_DETAIL = CS_OPT_ON
 typedef struct cs_detail {
@@ -85,6 +89,7 @@ typedef struct cs_detail {
 		cs_arm64 arm64;	// ARM64 architecture (aka AArch64)
 		cs_arm arm;		// ARM architecture (including Thumb/Thumb2)
 		cs_mips mips;	// MIPS architecture
+		cs_ppc ppc;	// PowerPC architecture
 	};
 } cs_detail;
 

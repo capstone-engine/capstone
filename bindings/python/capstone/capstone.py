@@ -17,6 +17,7 @@ __all__ = [
     'CS_ARCH_ARM64',
     'CS_ARCH_MIPS',
     'CS_ARCH_X86',
+    'CS_ARCH_PPC',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
@@ -30,8 +31,10 @@ __all__ = [
     'CS_MODE_N64',
 
     'CS_OPT_SYNTAX',
+    'CS_OPT_SYNTAX_DEFAULT',
     'CS_OPT_SYNTAX_INTEL',
     'CS_OPT_SYNTAX_ATT',
+    'CS_OPT_SYNTAX_DARWIN',
 
     'CS_OPT_DETAIL',
     'CS_OPT_MODE',
@@ -45,6 +48,7 @@ __all__ = [
     'CS_ERR_CSH',
     'CS_ERR_MODE',
     'CS_ERR_OPTION',
+    'CS_ERR_DETAIL',
 ]
 
 # Capstone C interface
@@ -58,6 +62,7 @@ CS_ARCH_ARM = 0
 CS_ARCH_ARM64 = 1
 CS_ARCH_MIPS = 2
 CS_ARCH_X86 = 3
+CS_ARCH_PPC = 4
 CS_ARCH_ALL = 0xFFFF
 
 # disasm mode
@@ -78,9 +83,13 @@ CS_OPT_MODE = 3      # Change engine's mode at run-time
 
 # Capstone option value
 CS_OPT_OFF = 0             # Turn OFF an option (CS_OPT_DETAIL)
+CS_OPT_ON = 3              # Turn ON an option - this is default option for CS_OPT_DETAIL
+
+# Capstone syntax value
+CS_OPT_SYNTAX_DEFAULT = 0    # Default assembly syntax of all platforms (CS_OPT_SYNTAX)
 CS_OPT_SYNTAX_INTEL = 1    # Intel X86 asm syntax - default syntax on X86 (CS_OPT_SYNTAX, CS_ARCH_X86)
 CS_OPT_SYNTAX_ATT = 2      # ATT asm syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
-CS_OPT_ON = 3              # Turn ON an option - this is default option for CS_OPT_DETAIL
+CS_OPT_SYNTAX_DARWIN = 2   # Darwin asm syntax prints register name with only number - (CS_OPT_SYNTAX, CS_ARCH_PPC)
 
 # Capstone error type
 CS_ERR_OK = 0      # No error: everything was fine
@@ -90,6 +99,7 @@ CS_ERR_HANDLE = 3  # Invalid handle: cs_op_count(), cs_op_index()
 CS_ERR_CSH = 4     # Invalid csh argument: cs_close(), cs_errno(), cs_option()
 CS_ERR_MODE = 5    # Invalid/unsupported mode: cs_open()
 CS_ERR_OPTION = 6  # Invalid/unsupported option: cs_option()
+CS_ERR_DETAIL = 7  # Invalid/unsupported option: cs_option()
 
 
 import ctypes, ctypes.util
@@ -201,6 +211,7 @@ class CsError(Exception):
             CS_ERR_CSH: "Invalid csh (CsError)",
             CS_ERR_MODE: "Invalid mode (CsError)",
             CS_ERR_OPTION: "Invalid option (CsError)",
+            CS_ERR_DETAIL: "Details are unavailable (CsError)",
         }
         return messages[self.errno]
 

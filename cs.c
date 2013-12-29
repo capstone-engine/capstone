@@ -13,7 +13,7 @@
 
 #include "utils.h"
 
-void (*arch_init[MAX_ARCH])(cs_struct *) = { NULL };
+cs_err (*arch_init[MAX_ARCH])(cs_struct *) = { NULL };
 cs_err (*arch_option[MAX_ARCH]) (cs_struct*, cs_opt_type, size_t value);
 
 unsigned int all_arch = 0;
@@ -33,7 +33,8 @@ bool cs_support(cs_arch arch)
 {
 	if (arch == CS_ARCH_ALL)
 		return all_arch == ((1 << CS_ARCH_ARM) | (1 << CS_ARCH_ARM64) |
-				(1 << CS_ARCH_MIPS) | (1 << CS_ARCH_X86));
+				(1 << CS_ARCH_MIPS) | (1 << CS_ARCH_X86) |
+				(1 << CS_ARCH_PPC));
 
 	return all_arch & (1 << arch);
 }
@@ -90,6 +91,7 @@ cs_err cs_close(csh handle)
 		case CS_ARCH_ARM:
 		case CS_ARCH_MIPS:
 		case CS_ARCH_ARM64:
+		case CS_ARCH_PPC:
 			free(ud->printer_info);
 			break;
 		default:	// unsupported architecture
@@ -197,8 +199,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 
 	while (size > 0) {
 		MCInst_Init(&mci);
-		mci.detail = handle->detail;
-		mci.mode = handle->mode;
+		mci.csh = handle;
 
 		bool r = handle->disasm(ud, buffer, size, &mci, &insn_size, offset, handle->getinsn_info);
 		if (r) {
@@ -397,6 +398,11 @@ int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
 				if (insn->detail->mips.operands[i].type == op_type)
 					count++;
 			break;
+		case CS_ARCH_PPC:
+			for (i = 0; i < insn->detail->ppc.op_count; i++)
+				if (insn->detail->ppc.operands[i].type == op_type)
+					count++;
+			break;
 	}
 
 	return count;
@@ -444,6 +450,14 @@ int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 		case CS_ARCH_MIPS:
 			for (i = 0; i < insn->detail->mips.op_count; i++) {
 				if (insn->detail->mips.operands[i].type == op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+			break;
+		case CS_ARCH_PPC:
+			for (i = 0; i < insn->detail->ppc.op_count; i++) {
+				if (insn->detail->ppc.operands[i].type == op_type)
 					count++;
 				if (count == post)
 					return i;
