@@ -231,15 +231,15 @@ def cs_disasm_quick(arch, mode, code, offset, count = 0):
     if status != CS_ERR_OK:
         raise CsError(status)
 
-    insns = []
     all_insn = ctypes.POINTER(_cs_insn)()
     res = _cs.cs_disasm_ex(csh, code, len(code), offset, count, ctypes.byref(all_insn))
     if res > 0:
         for i in xrange(res):
-            insns.append(CsInsn(_dummy_cs(csh, arch), all_insn[i]))
+            yield CsInsn(_dummy_cs(csh, arch), all_insn[i])
 
         _cs.cs_free(all_insn, res)
     else:
+        yield []
         status = _cs.cs_errno(csh)
         if status != CS_ERR_OK:
             raise CsError(status)
@@ -248,7 +248,6 @@ def cs_disasm_quick(arch, mode, code, offset, count = 0):
     if status != CS_ERR_OK:
         raise CsError(status)
 
-    return insns
 
 # Python-style class to disasm code
 class CsInsn(object):
@@ -389,17 +388,15 @@ class Cs(object):
         self._mode = opt
 
     def disasm(self, code, offset, count = 0):
-        insns = []
         all_insn = ctypes.POINTER(_cs_insn)()
         res = _cs.cs_disasm_ex(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
         if res > 0:
             for i in xrange(res):
-                insns.append(CsInsn(self, all_insn[i]))
+                yield CsInsn(self, all_insn[i])
             _cs.cs_free(all_insn, res)
         else:
+            yield []
             status = _cs.cs_errno(self.csh)
             if status != CS_ERR_OK:
                 raise CsError(status)
-
-        return insns
 
