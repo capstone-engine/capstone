@@ -16,8 +16,8 @@ typedef struct Pair {
 
 // map instruction to its characteristics
 typedef struct insn_map {
-	unsigned int id;
-	unsigned int mapid;
+	unsigned short id;
+	unsigned short mapid;
 	unsigned char regs_use[12]; // list of implicit registers used by this instruction
 	unsigned char regs_mod[20]; // list of implicit registers modified by this instruction
 	unsigned char groups[8]; // list of group this instruction belong to
