@@ -19,7 +19,7 @@
 
 #include "../../include/ppc.h"
 
-// NOTE: duplicate of ppc_cc in ppc.h to maitain code compatibility with LLVM
+// NOTE: duplicate of ppc_bc in ppc.h to maitain code compatibility with LLVM
 typedef enum ppc_predicate {
   PPC_PRED_LT       = (0 << 5) | 12,
   PPC_PRED_LE       = (1 << 5) |  4,
