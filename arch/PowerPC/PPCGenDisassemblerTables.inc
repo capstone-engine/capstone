@@ -2320,14 +2320,14 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
 }
 
 // DecodeToMCInst(decodeToMCInst_2, fieldFromInstruction_2, uint16_t)
-DecodeToMCInst(decodeToMCInst_4, fieldFromInstruction_4, uint32_t) \
+DecodeToMCInst(decodeToMCInst_4, fieldFromInstruction_4, uint32_t)
 
 #define DecodeInstruction(fname, fieldname, decoder, InsnType) \
 static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
                                       InsnType insn, uint64_t Address, \
                                       int feature) \
 { \
-  uint64_t Bits = PPC_getFeatureBits(feature); \
+  uint64_t Bits = getFeatureBits(feature); \
   const uint8_t *Ptr = DecodeTable; \
   uint32_t CurFieldValue = 0; \
   DecodeStatus S = MCDisassembler_Success; \

@@ -101,7 +101,7 @@ static const unsigned G8Regs[] = {
 	PPC_X28, PPC_X29, PPC_X30, PPC_X31
 };
 
-static uint64_t PPC_getFeatureBits(int feature)
+static uint64_t getFeatureBits(int feature)
 {
 	// enable all features
 	return -1;
