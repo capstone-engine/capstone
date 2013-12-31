@@ -277,11 +277,15 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 				case 3: SStream_concat(O, "wfi"); break;
 				case 4: SStream_concat(O, "sev"); break;
 				case 5:
-						if ((ARM_getFeatureBits(MI->csh->mode) & ARM_HasV8Ops)) {
-							SStream_concat(O, "sevl"); break;
-							break;
-						}
+						// FIXME: HasV80Ops becomes a mode
+						//if ((ARM_getFeatureBits(MI->csh->mode) & ARM_HasV8Ops)) {
+						//	SStream_concat(O, "sevl");
+						//	break;
+						//}
 						// Fallthrough for non-v8
+
+						SStream_concat(O, "sevl");
+						break;
 				default:
 						// Anything else should just print normally.
 						printInstruction(MI, O, MRI);
@@ -1121,8 +1125,10 @@ static void printBitfieldInvMaskImmOperand(MCInst *MI, unsigned OpNum, SStream *
 static void printMemBOption(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	unsigned val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	SStream_concat(O, ARM_MB_MemBOptToString(val,
-				ARM_getFeatureBits(MI->csh->mode) & ARM_HasV8Ops));
+	// FIXME: HasV80Ops becomes a mode
+	// SStream_concat(O, ARM_MB_MemBOptToString(val,
+	//			ARM_getFeatureBits(MI->csh->mode) & ARM_HasV8Ops));
+	SStream_concat(O, ARM_MB_MemBOptToString(val, ARM_HasV8Ops));
 }
 
 void printInstSyncBOption(MCInst *MI, unsigned OpNum, SStream *O)
@@ -1269,7 +1275,9 @@ static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	unsigned SpecRegRBit = MCOperand_getImm(Op) >> 4;
 	unsigned Mask = MCOperand_getImm(Op) & 0xf;
 
-	if (ARM_getFeatureBits(MI->csh->mode) & ARM_FeatureMClass) {
+	// FIXME: FeatureMClass becomes mode??
+	//if (ARM_getFeatureBits(MI->csh->mode) & ARM_FeatureMClass) {
+	if (true) {
 		unsigned SYSm = MCOperand_getImm(Op);
 		unsigned Opcode = MCInst_getOpcode(MI);
 		// For reads of the special registers ignore the "mask encoding" bits

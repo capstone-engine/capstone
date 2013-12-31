@@ -14036,7 +14036,7 @@ static DecodeStatus decodeInstruction(const uint8_t DecodeTable[], MCInst *MI,
                                       MCRegisterInfo *MRI)
 {
   //uint64_t Bits = 0;
-  uint64_t Bits = AArch64_getFeatureBits();
+  uint64_t Bits = getFeatureBits();
 
   const uint8_t *Ptr = DecodeTable;
   uint32_t CurFieldValue = 0;

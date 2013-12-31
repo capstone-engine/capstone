@@ -5313,7 +5313,7 @@ static DecodeStatus decodeToMCInst(DecodeStatus S, unsigned Idx, uint32_t insn, 
 static DecodeStatus decodeInstruction(uint8_t DecodeTable[], MCInst *MI,
   uint32_t insn, uint64_t Address, MCRegisterInfo *MRI, int mode)
 {
-  uint64_t Bits = Mips_getFeatureBits(mode);
+  uint64_t Bits = getFeatureBits(mode);
   uint8_t *Ptr = DecodeTable;
   uint32_t CurFieldValue = 0;
   DecodeStatus S = MCDisassembler_Success;

@@ -151,7 +151,7 @@ static DecodeStatus DecodeExtSize(MCInst *Inst,
 #include "MipsGenSubtargetInfo.inc"
 
 // Hacky: enable all features for disassembler
-static uint64_t Mips_getFeatureBits(int mode)
+static uint64_t getFeatureBits(int mode)
 {
 	uint64_t Bits = -1;	// include every features by default
 
