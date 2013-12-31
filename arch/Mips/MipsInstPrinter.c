@@ -83,16 +83,14 @@ typedef enum Mips_CondCode {
 static char *getRegisterName(unsigned RegNo);
 static void printInstruction(MCInst *MI, SStream *O);
 
-// FIXME: make this status session's specific, not global like this
-static bool doing_mem = false;
 static void set_mem_access(MCInst *MI, bool status)
 {
-	doing_mem = status;
+	MI->csh->doing_mem = status;
 
 	if (MI->csh->detail != CS_OPT_ON)
 		return;
 
-	if (doing_mem) {
+	if (status) {
 		MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_MEM;
 		MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].mem.base = MIPS_REG_INVALID;
 		MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].mem.disp = 0;
@@ -197,7 +195,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		printRegName(O, reg);
 		reg = Mips_map_register(reg);
 		if (MI->csh->detail) {
-			if (doing_mem) {
+			if (MI->csh->doing_mem) {
 				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].mem.base = reg;
 			} else {
 				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_REG;
@@ -209,7 +207,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 	if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op);
-		if (doing_mem) {
+		if (MI->csh->doing_mem) {
 			if (imm) {	// only print Imm offset if it is not 0
 				if (imm >= 0) {
 					if (imm > HEX_THRESHOLD)

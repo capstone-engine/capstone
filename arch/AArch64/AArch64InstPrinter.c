@@ -32,16 +32,14 @@
 static char *getRegisterName(unsigned RegNo);
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 
-// FIXME: make this status session's specific, not global like this
-static bool doing_mem = false;
 static void set_mem_access(MCInst *MI, bool status)
 {
 	if (MI->csh->detail != CS_OPT_ON)
 		return;
 
-	doing_mem = status;
+	MI->csh->doing_mem = status;
 
-	if (doing_mem) {
+	if (status) {
 		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_MEM;
 		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].mem.base = ARM64_REG_INVALID;
 		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].mem.index = ARM64_REG_INVALID;
@@ -120,7 +118,7 @@ static void printAddrRegExtendOperand(MCInst *MI, unsigned OpNum,
 		else
 			SStream_concat(O, " #%u", ShiftAmt);
 			if (MI->csh->detail) {
-				if (doing_mem) {
+				if (MI->csh->doing_mem) {
 					MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].shift.type = ARM64_SFT_LSL;
 					MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].shift.value = ShiftAmt;
 				} else {
@@ -370,7 +368,7 @@ static void printOffsetUImm12Operand(MCInst *MI, unsigned OpNum,
 			SStream_concat(O, "#%u", Imm);
 
 		if (MI->csh->detail) {
-			if (doing_mem) {
+			if (MI->csh->doing_mem) {
 				MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].mem.disp = Imm;
 			} else {
 				MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_IMM;
@@ -557,7 +555,7 @@ static void printSImm7ScaledOperand(MCInst *MI, unsigned OpNum,
 	else
 		SStream_concat(O, "#%u", Imm * MemScale);
 	if (MI->csh->detail) {
-		if (doing_mem) {
+		if (MI->csh->doing_mem) {
 			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].mem.disp = Imm * MemScale;
 		} else {
 			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_IMM;
@@ -589,7 +587,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		unsigned Reg = MCOperand_getReg(Op);
 		SStream_concat(O, getRegisterName(Reg));
 		if (MI->csh->detail) {
-			if (doing_mem) {
+			if (MI->csh->doing_mem) {
 				if (MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].mem.base == ARM64_REG_INVALID) {
 					MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].mem.base = Reg;
 				} else {
@@ -608,7 +606,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		else
 			SStream_concat(O, "#%"PRIu64, imm);
 		if (MI->csh->detail) {
-			if (doing_mem) {
+			if (MI->csh->doing_mem) {
 				MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].mem.disp = imm;
 			} else {
 				MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_IMM;
@@ -721,7 +719,7 @@ static void printUImmBareOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		SStream_concat(O, "%u", Imm);
 
 	if (MI->csh->detail) {
-		if (doing_mem) {
+		if (MI->csh->doing_mem) {
 			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].mem.disp = Imm;
 		} else {
 			// FIXME: never has false branch??

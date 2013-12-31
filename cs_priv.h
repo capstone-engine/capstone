@@ -43,6 +43,7 @@ struct cs_struct {
 	ARM_ITStatus ITBlock;	// for Arm only
 	cs_opt_value detail;
 	int syntax;	// asm syntax for simple printer such as PPC
+	bool doing_mem;	// handling memory operand in InstPrinter code
 };
 
 #define MAX_ARCH 8

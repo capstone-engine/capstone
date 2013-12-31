@@ -34,16 +34,14 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 static void printInstruction(MCInst *MI, SStream *O);
 static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O);
 
-// FIXME: make this status session's specific, not global like this
-static bool doing_mem = false;
 static void set_mem_access(MCInst *MI, bool status)
 {
 	if (MI->csh->detail != CS_OPT_ON)
 		return;
 
-	doing_mem = status;
+	MI->csh->doing_mem = status;
 
-	if (doing_mem) {
+	if (status) {
 		MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].type = PPC_OP_MEM;
 		MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].mem.base = PPC_REG_INVALID;
 		MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].mem.disp = 0;
@@ -327,7 +325,7 @@ static void printS16ImmOperand_Mem(MCInst *MI, unsigned OpNo, SStream *O)
 		}
 
 		if (MI->csh->detail) {
-			if (doing_mem) {
+			if (MI->csh->doing_mem) {
 				MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].mem.disp = Imm;
 			} else {
 				MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].type = PPC_OP_IMM;
@@ -486,7 +484,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		SStream_concat(O, "%s", RegName);
 
 		if (MI->csh->detail) {
-			if (doing_mem) {
+			if (MI->csh->doing_mem) {
 				MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].mem.base = reg;
 			} else {
 				MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].type = PPC_OP_REG;
@@ -513,7 +511,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		}
 
 		if (MI->csh->detail) {
-			if (doing_mem) {
+			if (MI->csh->doing_mem) {
 				MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].mem.disp = imm;
 			} else {
 				MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].type = PPC_OP_IMM;

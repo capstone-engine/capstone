@@ -120,15 +120,13 @@ static void printVectorListFourSpaced(MCInst *MI, unsigned OpNum, SStream *O);
 
 static void printInstSyncBOption(MCInst *MI, unsigned OpNum, SStream *O);
 
-// FIXME: make this status session's specific, not global like this
-static bool doing_mem = false;
 static void set_mem_access(MCInst *MI, bool status)
 {
 	if (MI->csh->detail != CS_OPT_ON)
 		return;
 
-	doing_mem = status;
-	if (doing_mem) {
+	MI->csh->doing_mem = status;
+	if (status) {
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].type = ARM_OP_MEM;
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.base = ARM_REG_INVALID;
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.index = ARM_REG_INVALID;
@@ -546,7 +544,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		unsigned Reg = MCOperand_getReg(Op);
 		printRegName(O, Reg);
 		if (MI->csh->detail) {
-			if (doing_mem) {
+			if (MI->csh->doing_mem) {
 				if (MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.base == ARM_REG_INVALID)
 					MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.base = Reg;
 				else
@@ -587,7 +585,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 		SStream_concat(O, markup(">"));
 		if (MI->csh->detail) {
-			if (doing_mem)
+			if (MI->csh->doing_mem)
 				MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.disp = imm;
 			else {
 				MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].type = ARM_OP_IMM;
@@ -1396,7 +1394,7 @@ static void printNoHashImmediate(MCInst *MI, unsigned OpNum, SStream *O)
 	else
 		SStream_concat(O, "%u", tmp);
 	if (MI->csh->detail) {
-		if (doing_mem) {
+		if (MI->csh->doing_mem) {
 			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.disp = tmp;
 		} else {
 			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].type = ARM_OP_IMM;
