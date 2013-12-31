@@ -6612,19 +6612,19 @@ void X86_get_insn_id(cs_insn *insn, unsigned int id, int detail)
 		insn->id = insns[i].mapid;
 
 		if (detail) {
-			memcpy(insn->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
-			insn->regs_read_count = count_positive(insns[i].regs_use);
+			memcpy(insn->detail->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
+			insn->detail->regs_read_count = count_positive(insns[i].regs_use);
 
-			memcpy(insn->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
-			insn->regs_write_count = count_positive(insns[i].regs_mod);
+			memcpy(insn->detail->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
+			insn->detail->regs_write_count = count_positive(insns[i].regs_mod);
 
-			memcpy(insn->groups, insns[i].groups, sizeof(insns[i].groups));
-			insn->groups_count = count_positive(insns[i].groups);
+			memcpy(insn->detail->groups, insns[i].groups, sizeof(insns[i].groups));
+			insn->detail->groups_count = count_positive(insns[i].groups);
 
 			if (insns[i].branch || insns[i].indirect_branch) {
 				// this insn also belongs to JUMP group. add JUMP group
-				insn->groups[insn->groups_count] = X86_GRP_JUMP;
-				insn->groups_count++;
+				insn->detail->groups[insn->detail->groups_count] = X86_GRP_JUMP;
+				insn->detail->groups_count++;
 			}
 		}
 	}

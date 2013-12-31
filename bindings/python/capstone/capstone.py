@@ -8,7 +8,6 @@ __all__ = [
 
     'cs_disasm_quick',
     'cs_version',
-    'cs_version_ex',
     'cs_support',
 
     'CS_API_MAJOR',
@@ -85,7 +84,7 @@ CS_OPT_ON = 3              # Turn ON an option - this is default option for CS_O
 
 # Capstone error type
 CS_ERR_OK = 0      # No error: everything was fine
-CS_ERR_MEM = 1     # Out-Of-Memory error: cs_open(), cs_disasm_dyn()
+CS_ERR_MEM = 1     # Out-Of-Memory error: cs_open(), cs_disasm_ex()
 CS_ERR_ARCH = 2    # Unsupported architecture: cs_open()
 CS_ERR_HANDLE = 3  # Invalid handle: cs_op_count(), cs_op_index()
 CS_ERR_CSH = 4     # Invalid csh argument: cs_close(), cs_errno(), cs_option()
@@ -138,6 +137,7 @@ if _found == False:
         raise ImportError("ERROR: fail to load the dynamic library.")
 
 
+# low-level structure for C code
 class _cs_arch(ctypes.Union):
     _fields_ = (
         ('arm64', arm64.CsArm64),
@@ -146,15 +146,8 @@ class _cs_arch(ctypes.Union):
         ('x86', x86.CsX86),
     )
 
-# low-level structure for C code
-class _cs_insn(ctypes.Structure):
+class _cs_detail(ctypes.Structure):
     _fields_ = (
-        ('id', ctypes.c_uint),
-        ('address', ctypes.c_uint64),
-        ('size', ctypes.c_uint16),
-        ('bytes', ctypes.c_ubyte * 16),
-        ('mnemonic', ctypes.c_char * 32),
-        ('op_str', ctypes.c_char * 96),
         ('regs_read', ctypes.c_ubyte * 12),
         ('regs_read_count', ctypes.c_ubyte),
         ('regs_write', ctypes.c_ubyte * 20),
@@ -164,15 +157,26 @@ class _cs_insn(ctypes.Structure):
         ('arch', _cs_arch),
     )
 
+class _cs_insn(ctypes.Structure):
+    _fields_ = (
+        ('id', ctypes.c_uint),
+        ('address', ctypes.c_uint64),
+        ('size', ctypes.c_uint16),
+        ('bytes', ctypes.c_ubyte * 16),
+        ('mnemonic', ctypes.c_char * 32),
+        ('op_str', ctypes.c_char * 96),
+        ('detail', ctypes.POINTER(_cs_detail)),
+    )
+
 # setup all the function prototype
 def _setup_prototype(lib, fname, restype, *argtypes):
     getattr(lib, fname).restype = restype
     getattr(lib, fname).argtypes = argtypes
 
 _setup_prototype(_cs, "cs_open", ctypes.c_int, ctypes.c_uint, ctypes.c_uint, ctypes.POINTER(ctypes.c_size_t))
-_setup_prototype(_cs, "cs_disasm_dyn", ctypes.c_size_t, ctypes.c_size_t, ctypes.POINTER(ctypes.c_char), ctypes.c_size_t, \
+_setup_prototype(_cs, "cs_disasm_ex", ctypes.c_size_t, ctypes.c_size_t, ctypes.POINTER(ctypes.c_char), ctypes.c_size_t, \
         ctypes.c_uint64, ctypes.c_size_t, ctypes.POINTER(ctypes.POINTER(_cs_insn)))
-_setup_prototype(_cs, "cs_free", None, ctypes.c_void_p)
+_setup_prototype(_cs, "cs_free", None, ctypes.c_void_p, ctypes.c_size_t)
 _setup_prototype(_cs, "cs_close", ctypes.c_int, ctypes.c_size_t)
 _setup_prototype(_cs, "cs_reg_name", ctypes.c_char_p, ctypes.c_size_t, ctypes.c_uint)
 _setup_prototype(_cs, "cs_insn_name", ctypes.c_char_p, ctypes.c_size_t, ctypes.c_uint)
@@ -180,8 +184,7 @@ _setup_prototype(_cs, "cs_op_count", ctypes.c_int, ctypes.c_size_t, ctypes.POINT
 _setup_prototype(_cs, "cs_op_index", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint, ctypes.c_uint)
 _setup_prototype(_cs, "cs_errno", ctypes.c_int, ctypes.c_size_t)
 _setup_prototype(_cs, "cs_option", ctypes.c_int, ctypes.c_size_t, ctypes.c_int, ctypes.c_size_t)
-_setup_prototype(_cs, "cs_version", None, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
-_setup_prototype(_cs, "cs_version_ex", ctypes.c_int, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
+_setup_prototype(_cs, "cs_version", ctypes.c_int, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
 _setup_prototype(_cs, "cs_support", ctypes.c_bool, ctypes.c_int)
 
 
@@ -205,12 +208,8 @@ class CsError(Exception):
 def cs_version():
     major = ctypes.c_int()
     minor = ctypes.c_int()
-    _cs.cs_version(ctypes.byref(major), ctypes.byref(minor))
-    return (major.value, minor.value)
-
-
-def cs_version_ex():
-    return _cs.cs_version_ex(None, None)
+    combined = _cs.cs_version(ctypes.byref(major), ctypes.byref(minor))
+    return (major.value, minor.value, combined)
 
 
 def cs_support(arch):
@@ -234,12 +233,12 @@ def cs_disasm_quick(arch, mode, code, offset, count = 0):
 
     insns = []
     all_insn = ctypes.POINTER(_cs_insn)()
-    res = _cs.cs_disasm_dyn(csh, code, len(code), offset, count, ctypes.byref(all_insn))
+    res = _cs.cs_disasm_ex(csh, code, len(code), offset, count, ctypes.byref(all_insn))
     if res > 0:
         for i in xrange(res):
             insns.append(CsInsn(_dummy_cs(csh, arch), all_insn[i]))
 
-        _cs.cs_free(all_insn)
+        _cs.cs_free(all_insn, res)
     else:
         status = _cs.cs_errno(csh)
         if status != CS_ERR_OK:
@@ -257,25 +256,28 @@ class CsInsn(object):
         self.id = all_info.id
         self.address = all_info.address
         self.size = all_info.size
+        self.bytes = bytearray(all_info.bytes)[:self.size]
         self.mnemonic = all_info.mnemonic[:]    # copy string
         self.op_str = all_info.op_str[:]    # copy string
-        self.regs_read = all_info.regs_read[:all_info.regs_read_count]
-        self.regs_write = all_info.regs_write[:all_info.regs_write_count]
-        self.groups = all_info.groups[:all_info.groups_count]
-        self.bytes = bytearray(all_info.bytes)[:self.size]
 
-        if cs.arch == CS_ARCH_ARM:
-            (self.cc, self.update_flags, self.writeback, self.operands) = \
-                arm.get_arch_info(all_info.arch.arm)
-        elif cs.arch == CS_ARCH_ARM64:
-            (self.cc, self.update_flags, self.writeback, self.operands) = \
-                arm64.get_arch_info(all_info.arch.arm64)
-        elif cs.arch == CS_ARCH_X86:
-            (self.prefix, self.segment, self.opcode, self.op_size, self.addr_size, \
-             self.disp_size, self.imm_size, self.modrm, self.sib, self.disp, \
-             self.sib_index, self.sib_scale, self.sib_base, self.operands) = x86.get_arch_info(all_info.arch.x86)
-        elif cs.arch == CS_ARCH_MIPS:
-             self.operands = mips.get_arch_info(all_info.arch.mips)
+        if cs._detail:
+            detail = all_info.detail.contents
+            self.regs_read = detail.regs_read[:detail.regs_read_count]
+            self.regs_write = detail.regs_write[:detail.regs_write_count]
+            self.groups = detail.groups[:detail.groups_count]
+
+            if cs.arch == CS_ARCH_ARM:
+                (self.cc, self.update_flags, self.writeback, self.operands) = \
+                    arm.get_arch_info(detail.arch.arm)
+            elif cs.arch == CS_ARCH_ARM64:
+                (self.cc, self.update_flags, self.writeback, self.operands) = \
+                    arm64.get_arch_info(detail.arch.arm64)
+            elif cs.arch == CS_ARCH_X86:
+                (self.prefix, self.segment, self.opcode, self.op_size, self.addr_size, \
+                 self.disp_size, self.imm_size, self.modrm, self.sib, self.disp, \
+                 self.sib_index, self.sib_scale, self.sib_base, self.operands) = x86.get_arch_info(detail.arch.x86)
+            elif cs.arch == CS_ARCH_MIPS:
+                 self.operands = mips.get_arch_info(detail.arch.mips)
 
         self.cs = cs
 
@@ -389,11 +391,11 @@ class Cs(object):
     def disasm(self, code, offset, count = 0):
         insns = []
         all_insn = ctypes.POINTER(_cs_insn)()
-        res = _cs.cs_disasm_dyn(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
+        res = _cs.cs_disasm_ex(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
         if res > 0:
             for i in xrange(res):
                 insns.append(CsInsn(self, all_insn[i]))
-            _cs.cs_free(all_insn)
+            _cs.cs_free(all_insn, res)
         else:
             status = _cs.cs_errno(self.csh)
             if status != CS_ERR_OK:

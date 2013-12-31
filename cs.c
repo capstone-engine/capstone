@@ -1,6 +1,7 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,13 +19,7 @@ cs_err (*arch_option[MAX_ARCH]) (cs_struct*, cs_opt_type, size_t value);
 unsigned int all_arch = 0;
 
 
-void cs_version(int *major, int *minor)
-{
-	*major = CS_API_MAJOR;
-	*minor = CS_API_MINOR;
-}
-
-unsigned int cs_version_ex(int *major, int *minor)
+unsigned int cs_version(int *major, int *minor)
 {
 	if (major != NULL && minor != NULL) {
 		*major = CS_API_MAJOR;
@@ -111,18 +106,26 @@ cs_err cs_close(csh handle)
 
 // fill insn with mnemonic & operands info
 static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mci,
-		PostPrinter_t printer, const uint8_t *code)
+		PostPrinter_t postprinter, const uint8_t *code)
 {
 	if (handle->detail) {
-		memcpy(insn, &mci->pub_insn, sizeof(*insn));
+		// avoiding copy insn->detail
+		memcpy(insn, &mci->flat_insn, sizeof(*insn) - sizeof(insn->detail));
 
-		// fill the instruction bytes
-		memcpy(insn->bytes, code, MIN(sizeof(insn->bytes), insn->size));
-
+		// NOTE: copy details in 2 chunks, since union is always put at address divisible by 8
+		// copy from @regs_read until @arm
+		memcpy(insn->detail, (void *)(&(mci->flat_insn)) + offsetof(cs_insn_flat, regs_read),
+				offsetof(cs_detail, arm) - offsetof(cs_detail, regs_read));
+		// then copy from @arm until end
+		memcpy((void *)(insn->detail) + offsetof(cs_detail, arm), (void *)(&(mci->flat_insn)) + offsetof(cs_insn_flat, arm),
+				sizeof(cs_detail) - offsetof(cs_detail, arm));
 	} else {
 		insn->address = mci->address;
 		insn->size = mci->insn_size;
 	}
+
+	// fill the instruction bytes
+	memcpy(insn->bytes, code, MIN(sizeof(insn->bytes), insn->size));
 
 	// map internal instruction opcode to public insn ID
 	if (handle->insn_id)
@@ -133,8 +136,8 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 		insn->id = MCInst_getOpcodePub(mci);
 
 	// post printer handles some corner cases (hacky)
-	if (printer)
-		printer((csh)handle, insn, buffer);
+	if (postprinter)
+		postprinter((csh)handle, insn, buffer);
 
 	// fill in mnemonic & operands
 	// find first space or tab
@@ -170,65 +173,9 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 	return arch_option[handle->arch](handle, type, value);
 }
 
-size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn *insn)
-{
-	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
-	MCInst mci;
-	uint16_t insn_size;
-	size_t c = 0;
-
-	if (!handle) {
-		// FIXME: handle this case?
-		// handle->errnum = CS_ERR_HANDLE;
-		return 0;
-	}
-
-	handle->errnum = CS_ERR_OK;
-	memset(insn, 0, count * sizeof(*insn));
-
-	while (size > 0) {
-		MCInst_Init(&mci);
-		mci.detail = handle->detail;
-		mci.mode = handle->mode;
-
-		bool r = handle->disasm(ud, buffer, size, &mci, &insn_size, offset, handle->getinsn_info);
-		if (r) {
-			SStream ss;
-			SStream_Init(&ss);
-
-			// relative branches need to know the address & size of current insn
-			mci.insn_size = insn_size;
-			mci.address = offset;
-
-			if (handle->detail) {
-				// save all the information for non-detailed mode
-				mci.pub_insn.address = offset;
-				mci.pub_insn.size = insn_size;
-			}
-
-			handle->printer(&mci, &ss, handle->printer_info);
-
-			fill_insn(handle, insn, ss.buffer, &mci, handle->post_printer, buffer);
-
-			c++;
-			insn++;
-			buffer += insn_size;
-			size -= insn_size;
-			offset += insn_size;
-
-			if (c == count)
-				return c;
-		} else
-			// face a broken instruction? then we stop here
-			return c;
-	}
-
-	return c;
-}
-
 // dynamicly allocate memory to contain disasm insn
 // NOTE: caller must free() the allocated memory itself to avoid memory leaking
-size_t cs_disasm_dyn(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
+size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
 {
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 	MCInst mci;
@@ -264,8 +211,10 @@ size_t cs_disasm_dyn(csh ud, const uint8_t *buffer, size_t size, uint64_t offset
 
 			if (handle->detail) {
 				// save all the information for non-detailed mode
-				mci.pub_insn.address = offset;
-				mci.pub_insn.size = insn_size;
+				mci.flat_insn.address = offset;
+				mci.flat_insn.size = insn_size;
+				// allocate memory for @detail pointer
+				insn_cache[f].detail = calloc(1, sizeof(cs_detail));
 			}
 
 			handle->printer(&mci, &ss, handle->printer_info);
@@ -322,9 +271,16 @@ size_t cs_disasm_dyn(csh ud, const uint8_t *buffer, size_t size, uint64_t offset
 	return c;
 }
 
-void cs_free(void *m)
+void cs_free(cs_insn *insn, size_t count)
 {
-	free(m);
+	size_t i;
+
+	// free all detail pointers
+	for (i = 0; i < count; i++)
+		free(insn[i].detail);
+
+	// then free pointer to cs_insn array
+	free(insn);
 }
 
 // return friendly name of regiser in a string
@@ -362,28 +318,49 @@ static bool arr_exist(unsigned char *arr, unsigned char max, unsigned int id)
 	return false;
 }
 
-bool cs_insn_group(csh handle, cs_insn *insn, unsigned int group_id)
+bool cs_insn_group(csh ud, cs_insn *insn, unsigned int group_id)
 {
-	if (!handle)
+	if (!ud)
 		return false;
 
-	return arr_exist(insn->groups, insn->groups_count, group_id);
+	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
+
+	if (!handle->detail) {
+		handle->errnum = CS_ERR_DETAIL;
+		return false;
+	}
+
+	return arr_exist(insn->detail->groups, insn->detail->groups_count, group_id);
 }
 
-bool cs_reg_read(csh handle, cs_insn *insn, unsigned int reg_id)
+bool cs_reg_read(csh ud, cs_insn *insn, unsigned int reg_id)
 {
-	if (!handle)
+	if (!ud)
 		return false;
 
-	return arr_exist(insn->regs_read, insn->regs_read_count, reg_id);
+	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
+
+	if (!handle->detail) {
+		handle->errnum = CS_ERR_DETAIL;
+		return false;
+	}
+
+	return arr_exist(insn->detail->regs_read, insn->detail->regs_read_count, reg_id);
 }
 
-bool cs_reg_write(csh handle, cs_insn *insn, unsigned int reg_id)
+bool cs_reg_write(csh ud, cs_insn *insn, unsigned int reg_id)
 {
-	if (!handle)
+	if (!ud)
 		return false;
 
-	return arr_exist(insn->regs_write, insn->regs_write_count, reg_id);
+	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
+
+	if (!handle->detail) {
+		handle->errnum = CS_ERR_DETAIL;
+		return false;
+	}
+
+	return arr_exist(insn->detail->regs_write, insn->detail->regs_write_count, reg_id);
 }
 
 int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
@@ -401,23 +378,23 @@ int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
 			handle->errnum = CS_ERR_HANDLE;
 			return -1;
 		case CS_ARCH_ARM:
-			for (i = 0; i < insn->arm.op_count; i++)
-				if (insn->arm.operands[i].type == op_type)
+			for (i = 0; i < insn->detail->arm.op_count; i++)
+				if (insn->detail->arm.operands[i].type == op_type)
 					count++;
 			break;
 		case CS_ARCH_ARM64:
-			for (i = 0; i < insn->arm64.op_count; i++)
-				if (insn->arm64.operands[i].type == op_type)
+			for (i = 0; i < insn->detail->arm64.op_count; i++)
+				if (insn->detail->arm64.operands[i].type == op_type)
 					count++;
 			break;
 		case CS_ARCH_X86:
-			for (i = 0; i < insn->x86.op_count; i++)
-				if (insn->x86.operands[i].type == op_type)
+			for (i = 0; i < insn->detail->x86.op_count; i++)
+				if (insn->detail->x86.operands[i].type == op_type)
 					count++;
 			break;
 		case CS_ARCH_MIPS:
-			for (i = 0; i < insn->mips.op_count; i++)
-				if (insn->mips.operands[i].type == op_type)
+			for (i = 0; i < insn->detail->mips.op_count; i++)
+				if (insn->detail->mips.operands[i].type == op_type)
 					count++;
 			break;
 	}
@@ -441,32 +418,32 @@ int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 			handle->errnum = CS_ERR_HANDLE;
 			return -1;
 		case CS_ARCH_ARM:
-			for (i = 0; i < insn->arm.op_count; i++) {
-				if (insn->arm.operands[i].type == op_type)
+			for (i = 0; i < insn->detail->arm.op_count; i++) {
+				if (insn->detail->arm.operands[i].type == op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_ARM64:
-			for (i = 0; i < insn->arm64.op_count; i++) {
-				if (insn->arm64.operands[i].type == op_type)
+			for (i = 0; i < insn->detail->arm64.op_count; i++) {
+				if (insn->detail->arm64.operands[i].type == op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_X86:
-			for (i = 0; i < insn->x86.op_count; i++) {
-				if (insn->x86.operands[i].type == op_type)
+			for (i = 0; i < insn->detail->x86.op_count; i++) {
+				if (insn->detail->x86.operands[i].type == op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_MIPS:
-			for (i = 0; i < insn->mips.op_count; i++) {
-				if (insn->mips.operands[i].type == op_type)
+			for (i = 0; i < insn->detail->mips.op_count; i++) {
+				if (insn->detail->mips.operands[i].type == op_type)
 					count++;
 				if (count == post)
 					return i;

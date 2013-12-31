@@ -81,13 +81,62 @@ MCOperand *MCOperand_CreateImm(int64_t Val);
 
 MCOperand *MCOperand_CreateFPImm(double Val);
 
+// NOTE: this structure is a flatten version of cs_insn struct
+// Detail information of disassembled instruction
+typedef struct cs_insn_flat {
+	// Instruction ID
+	// Find the instruction id from header file of corresponding architecture,
+	// such as arm.h for ARM, x86.h for X86, etc...
+	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
+	unsigned int id;
+
+	// Address (EIP) of this instruction
+	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
+	uint64_t address;
+
+	// Size of this instruction
+	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
+	uint16_t size;
+	// Machine bytes of this instruction, with number of bytes indicated by @size above
+	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
+	uint8_t bytes[16];
+
+	// Ascii text of instruction mnemonic
+	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
+	char mnemonic[32];
+
+	// Ascii text of instruction operands
+	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
+	char op_str[96];
+
+	// NOTE: All information below is not available when CS_OPT_DETAIL = CS_OPT_OFF
+
+	uint8_t regs_read[12]; // list of implicit registers read by this insn
+	uint8_t regs_read_count; // number of implicit registers read by this insn
+
+	uint8_t regs_write[20]; // list of implicit registers modified by this insn
+	uint8_t regs_write_count; // number of implicit registers modified by this insn
+
+	uint8_t groups[8]; // list of group this instruction belong to
+	uint8_t groups_count; // number of groups this insn belongs to
+
+	// Architecture-specific instruction info
+	union {
+		cs_x86 x86;	// X86 architecture, including 16-bit, 32-bit & 64-bit mode
+		cs_arm64 arm64;	// ARM64 architecture (aka AArch64)
+		cs_arm arm;		// ARM architecture (including Thumb/Thumb2)
+		cs_mips mips;	// MIPS architecture
+	};
+} cs_insn_flat;
+
+
 /// MCInst - Instances of this class represent a single low-level machine
 /// instruction.
 struct MCInst {
 	unsigned Opcode;
 	MCOperand Operands[32];
 	unsigned size;	// number of operands
-	cs_insn pub_insn;	// insn to be exposed to public
+	cs_insn_flat flat_insn;	// insn to be exposed to public
 	cs_mode mode;	// to be referenced by internal code
 	unsigned OpcodePub;
 	cs_opt_value detail;

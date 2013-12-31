@@ -123,17 +123,17 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 	SStream_concat(O, "%s", markup("<mem:"));
 
 	if (MI->detail) {
-		MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].type = X86_OP_MEM;
-		MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].mem.base = X86_REG_INVALID;
-		MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].mem.index = X86_REG_INVALID;
-		MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].mem.scale = 1;
-		MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].mem.disp = 0;
+		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_MEM;
+		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.base = X86_REG_INVALID;
+		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.index = X86_REG_INVALID;
+		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.scale = 1;
+		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.disp = 0;
 	}
 
 	if (MCOperand_isImm(DispSpec)) {
 		int64_t imm = MCOperand_getImm(DispSpec);
 		if (MI->detail)
-			MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].mem.disp = imm;
+			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.disp = imm;
 		if (imm < 0) {
 			if (imm <= -HEX_THRESHOLD)
 				SStream_concat(O, "-0x%"PRIx64, -imm);
@@ -150,7 +150,7 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 	SStream_concat(O, "%s", markup(">"));
 
 	if (MI->detail)
-		MI->pub_insn.x86.op_count++;
+		MI->flat_insn.x86.op_count++;
 }
 
 static void printMemOffs8(MCInst *MI, unsigned OpNo, SStream *O)
@@ -278,9 +278,9 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 				SStream_concat(O, "%"PRIu64, imm);
 		}
 		if (MI->detail) {
-			MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].type = X86_OP_IMM;
-			MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].imm = imm;
-			MI->pub_insn.x86.op_count++;
+			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_IMM;
+			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].imm = imm;
+			MI->flat_insn.x86.op_count++;
 		}
 	}
 }
@@ -291,9 +291,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	if (MCOperand_isReg(Op)) {
 		printRegName(O, MCOperand_getReg(Op));
 		if (MI->detail) {
-			MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].type = X86_OP_REG;
-			MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].reg = MCOperand_getReg(Op);
-			MI->pub_insn.x86.op_count++;
+			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_REG;
+			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].reg = MCOperand_getReg(Op);
+			MI->flat_insn.x86.op_count++;
 		}
 	} else if (MCOperand_isImm(Op)) {
 		// Print X86 immediates as signed values.
@@ -310,9 +310,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				SStream_concat(O, "%s$-%"PRIu64"%s", markup("<imm:"), -imm, markup(">"));
 		}
 		if (MI->detail) {
-			MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].type = X86_OP_IMM;
-			MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].imm = imm;
-			MI->pub_insn.x86.op_count++;
+			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_IMM;
+			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].imm = imm;
+			MI->flat_insn.x86.op_count++;
 		}
 	}
 }
@@ -348,11 +348,11 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	MCOperand *SegReg = MCInst_getOperand(MI, Op+4);
 
 	if (MI->detail) {
-		MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].type = X86_OP_MEM;
-		MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].mem.base = MCOperand_getReg(BaseReg);
-		MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].mem.index = MCOperand_getReg(IndexReg);
-		MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].mem.scale = 1;
-		MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].mem.disp = 0;
+		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_MEM;
+		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.base = MCOperand_getReg(BaseReg);
+		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.index = MCOperand_getReg(IndexReg);
+		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.scale = 1;
+		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.disp = 0;
 	}
 
 	SStream_concat(O, markup("<mem:"));
@@ -366,7 +366,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	if (MCOperand_isImm(DispSpec)) {
 		int64_t DispVal = MCOperand_getImm(DispSpec);
 		if (MI->detail)
-			MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].mem.disp = DispVal;
+			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.disp = DispVal;
 		if (DispVal || (!MCOperand_getReg(IndexReg) && !MCOperand_getReg(BaseReg))) {
 			if (DispVal < 0) {
 				if (DispVal <= -HEX_THRESHOLD)
@@ -393,7 +393,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 			_printOperand(MI, Op+2, O);
 			unsigned ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op+1));
 			if (MI->detail)
-				MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].mem.scale = ScaleVal;
+				MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.scale = ScaleVal;
 			if (ScaleVal != 1) {
 				SStream_concat(O, ", %s%u%s", markup("<imm:"), ScaleVal, markup(">"));
 			}
@@ -404,7 +404,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	SStream_concat(O, markup(">"));
 
 	if (MI->detail)
-		MI->pub_insn.x86.op_count++;
+		MI->flat_insn.x86.op_count++;
 }
 
 #include "X86InstPrinter.h"
@@ -466,16 +466,16 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 		int post;
 		if (lastop[0] == '%' && ((post = str_in_list(acc_regs, lastop+1)) != -1)) {
 			// set operand size following register size
-			MI->pub_insn.x86.op_size = 1 << post;
+			MI->flat_insn.x86.op_size = 1 << post;
 			// this is one of the registers AL, AX, EAX, RAX
 			// canonicalize the register name first
 			//int i;
 			//for (i = 1; lastop[i]; i++)
 			//	lastop[i] = tolower(lastop[i]);
-			if (MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count - 1].type != X86_OP_REG) {
-				MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].type = X86_OP_REG;
-				MI->pub_insn.x86.operands[MI->pub_insn.x86.op_count].reg = x86_map_regname(lastop + 1);
-				MI->pub_insn.x86.op_count++;
+			if (MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count - 1].type != X86_OP_REG) {
+				MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_REG;
+				MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].reg = x86_map_regname(lastop + 1);
+				MI->flat_insn.x86.op_count++;
 			}
 		}
 	}
