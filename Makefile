@@ -1,6 +1,6 @@
 # Capstone Disassembler Engine
 # By Nguyen Anh Quynh <aquynh@gmail.com>, 2013>
-#
+
 include config.mk
 
 CC = $(CROSS)gcc
@@ -65,8 +65,8 @@ endif
 
 LIBOBJ += MCInst.o
 
-# OSX?
 UNAME_S := $(shell uname -s)
+# OSX?
 ifeq ($(UNAME_S),Darwin)
 EXT = dylib
 AR_EXT = a
