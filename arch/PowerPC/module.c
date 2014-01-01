@@ -10,13 +10,6 @@
 
 static cs_err init(cs_struct *ud)
 {
-	// so far we only support ppc64
-	if (ud->mode & CS_MODE_64)
-		ud->disasm = PPC_getInstruction;
-	else
-		// invalid/unsupported mode
-		return CS_ERR_MODE;
-
 	MCRegisterInfo *mri = malloc(sizeof(*mri));
 
 	PPC_init(mri);
