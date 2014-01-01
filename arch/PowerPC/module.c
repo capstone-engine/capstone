@@ -16,6 +16,8 @@ static cs_err init(cs_struct *ud)
 	ud->printer = PPC_printInst;
 	ud->printer_info = mri;
 	ud->getinsn_info = mri;
+	ud->disasm = PPC_getInstruction;
+
 	// ud->reg_name = PPC_reg_name;
 	// ud->insn_id = PPC_get_insn_id;
 	// ud->insn_name = PPC_insn_name;
