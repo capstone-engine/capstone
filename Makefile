@@ -19,7 +19,11 @@ LIBDIR = $(DESTDIR)$(PREFIX)/lib
 # on x86_64, we might have /usr/lib64 directory instead of /usr/lib
 MACHINE := $(shell uname -m)
 ifeq ($(MACHINE), x86_64)
-if [ ! -d “$(LIBDIR)" ]; then LIBDIR = $(DESTDIR)$(PREFIX)/lib64;  fi
+ifeq (,$(wildcard $(LIBDIR)))
+LIBDIR = $(DESTDIR)$(PREFIX)/lib64
+else
+LIBDIR = $(DESTDIR)$(PREFIX)/lib
+endif
 endif
 
 INSTALL_DATA ?= install -m0644
