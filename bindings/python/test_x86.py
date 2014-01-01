@@ -77,7 +77,7 @@ def test_class():
             print("\timm_count: %u" %count)
             for i in xrange(count):
                 op = insn.op_find(X86_OP_IMM, i + 1)
-                print("\t\timms[%u]: 0x%s" %(i+1, to_x(op.value.imm)))
+                print("\t\timms[%u]: 0x%s" %(i+1, to_x(op.imm)))
 
         if len(insn.operands) > 0:
             print("\top_count: %u" %len(insn.operands))
@@ -85,21 +85,21 @@ def test_class():
             for i in insn.operands:
                 c += 1
                 if i.type == X86_OP_REG:
-                    print("\t\toperands[%u].type: REG = %s" %(c, insn.reg_name(i.value.reg)))
+                    print("\t\toperands[%u].type: REG = %s" %(c, insn.reg_name(i.reg)))
                 if i.type == X86_OP_IMM:
-                    print("\t\toperands[%u].type: IMM = 0x%s" %(c, to_x(i.value.imm)))
+                    print("\t\toperands[%u].type: IMM = 0x%s" %(c, to_x(i.imm)))
                 if i.type == X86_OP_FP:
-                    print("\t\toperands[%u].type: FP = %f" %(c, i.value.fp))
+                    print("\t\toperands[%u].type: FP = %f" %(c, i.fp))
                 if i.type == X86_OP_MEM:
                     print("\t\toperands[%u].type: MEM" %c)
-                    if i.value.mem.base != 0:
-                        print("\t\t\toperands[%u].mem.base: REG = %s" %(c, insn.reg_name(i.value.mem.base)))
-                    if i.value.mem.index != 0:
-                        print("\t\t\toperands[%u].mem.index: REG = %s" %(c, insn.reg_name(i.value.mem.index)))
-                    if i.value.mem.scale != 1:
-                        print("\t\t\toperands[%u].mem.scale: %u" %(c, i.value.mem.scale))
-                    if i.value.mem.disp != 0:
-                        print("\t\t\toperands[%u].mem.disp: 0x%s" %(c, to_x(i.value.mem.disp)))
+                    if i.mem.base != 0:
+                        print("\t\t\toperands[%u].mem.base: REG = %s" %(c, insn.reg_name(i.mem.base)))
+                    if i.mem.index != 0:
+                        print("\t\t\toperands[%u].mem.index: REG = %s" %(c, insn.reg_name(i.mem.index)))
+                    if i.mem.scale != 1:
+                        print("\t\t\toperands[%u].mem.scale: %u" %(c, i.mem.scale))
+                    if i.mem.disp != 0:
+                        print("\t\t\toperands[%u].mem.disp: 0x%s" %(c, to_x(i.mem.disp)))
 
 
     for (arch, mode, code, comment, syntax) in all_tests:
