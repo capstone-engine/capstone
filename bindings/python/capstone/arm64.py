@@ -33,6 +33,23 @@ class Arm64Op(ctypes.Structure):
         ('value', Arm64OpValue),
     )
 
+    @property
+    def imm(self):
+        return self.value.imm
+
+    @property
+    def reg(self):
+        return self.value.reg
+
+    @property
+    def fp(self):
+        return self.value.fp
+
+    @property
+    def mem(self):
+        return self.value.mem
+
+
 class CsArm64(ctypes.Structure):
     _fields_ = (
         ('cc', ctypes.c_uint),
