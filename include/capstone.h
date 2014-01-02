@@ -1,5 +1,5 @@
-#ifndef __CS_H__
-#define __CS_H__
+#ifndef CAPSTONE_ENGINE_H_20265237333E4FD3B886BE8BC1BB29EF
+#define CAPSTONE_ENGINE_H_20265237333E4FD3B886BE8BC1BB29EF
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
