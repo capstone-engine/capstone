@@ -362,7 +362,7 @@ static DecodeStatus DecodeMRRC2(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder);
 
 // Hacky: enable all features for disassembler
-uint64_t ARM_getFeatureBits(int mode)
+static uint64_t getFeatureBits(int mode)
 {
 	uint64_t Bits = -1;	// everything by default
 
@@ -441,9 +441,6 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t
 	uint8_t bytes[4];
 
 	ud->ITBlock.size = 0;
-
-	//assert(!(STI.getFeatureBits() & ARM_ModeThumb) &&
-	//       "Asked to disassemble an ARM instruction but Subtarget is in Thumb mode!");
 
 	if (code_len < 4)
 		return MCDisassembler_Fail;

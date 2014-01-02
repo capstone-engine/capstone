@@ -1,3 +1,6 @@
+#ifndef CAPSTONE_LLVM_SUPPORT_MATHEXTRAS_H_BB65B73C50114A719FDC37CC7C81CB01
+#define CAPSTONE_LLVM_SUPPORT_MATHEXTRAS_H_BB65B73C50114A719FDC37CC7C81CB01
+
 //===-- llvm/Support/MathExtras.h - Useful math functions -------*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
@@ -13,9 +16,6 @@
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_LLVM_SUPPORT_MATHEXTRAS_H
-#define CS_LLVM_SUPPORT_MATHEXTRAS_H
 
 #include <stdint.h>
 

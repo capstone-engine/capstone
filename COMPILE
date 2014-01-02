@@ -1,13 +1,26 @@
-How To Compile & Run Capstone for Linux, Mac OSX, *nix and Windows
+How To Compile, install & run Capstone for Linux, Mac OSX, *BSD and Windows
                         *-*-*-*-*-*
-
 
 Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 
-(1) On *nix (such as MacOSX, Linux & FreeBSD):
 
-- To compile for current platform, run either:
+(0) Tailor Capstone to your need.
+
+  Out of 4 archtitectures supported by Capstone (Arm, Arm64, Mips & X86), if
+  you just need several selected archs, you can choose which ones you want
+  to compile in by modifying config.mk before going to next steps.
+
+  By default, all 4 architectures are compiled.
+
+
+
+(1) Compile from source
+
+  On *nix (such as MacOSX, Linux & FreeBSD):
+
+  - To compile for current platform, run either:
+
 		$ ./compile.sh
 	or:
 		$ make
@@ -18,7 +31,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 	Then run "./tests/test*" to see the tests disassembling sample code.
 
-- On 64-bit OS, run command below to cross-compile Capstone for 32-bit binary:
+  - On 64-bit OS, run command below to cross-compile Capstone for 32-bit binary:
 
 	$ ./compile.sh nix32
 
@@ -26,7 +39,9 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 
 
-(2) To install Capstone, run:
+(2) Install Capstone on *nix
+
+  To install Capstone, run:
 
 	$ sudo make install
 	
@@ -34,11 +49,11 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 	$ sudo gmake install
 
-Users are then required to enter root password to copy Capstone into machine
-system directories.
+  Users are then required to enter root password to copy Capstone into machine
+  system directories.
 
-NOTE: The core framework that will be installed by "make install" consist of
-only following files:
+  NOTE: The core framework that will be installed by "make install" consist of
+  only following files:
 
 	/usr/include/capstone/capstone.h
 	/usr/include/capstone/x86.h
@@ -50,8 +65,10 @@ only following files:
 
 
 
-(3) To cross-compile for Windows, Linux & gcc-mingw-w64-i686 (and also gcc-mingw-w64-x86-64
-for 64-bit binaries) are required.
+(3) Cross-compile Windows from *nix
+
+  To cross-compile for Windows, Linux & gcc-mingw-w64-i686 (and also gcc-mingw-w64-x86-64
+  for 64-bit binaries) are required.
 
 	- To cross-compile Windows 32-bit binary, simply run
 		$ ./compile.sh cross-win32
@@ -59,11 +76,13 @@ for 64-bit binaries) are required.
 	- To cross-compile Windows 64-bit binary, simply run
 		$ ./compile.sh cross-win64
 
-Resulted files "capstone.dll" and "tests/test*.exe" can then be used on Windows machine.
+  Resulted files "capstone.dll" and "tests/test*.exe" can then be used on Windows machine.
 
 
 
-(4) To compile under Cygwin gcc-mingw-w64-i686 or x86_64-w64-mingw32 run:
+(4) Compile on Windows with Cygwin
+
+  To compile under Cygwin gcc-mingw-w64-i686 or x86_64-w64-mingw32 run:
 
         - To compile Windows 32-bit binary under Cygwin, simply run
                 $ ./compile.sh cygwin-mingw32
@@ -72,11 +91,17 @@ Resulted files "capstone.dll" and "tests/test*.exe" can then be used on Windows 
                 $ ./compile.sh cygwin-mingw64
 
 
-(5) By default, gcc is used as compiler. To use "clang" compiler instead, run command below:
+
+(5) Compile with clang
+
+  By default, gcc is used as compiler. To use "clang" compiler instead, run command below:
 
 	$ ./compile.sh clang
 
 
-(6) So far, Python, Ruby, Ocaml, Java, C# and Go are supported by bindings. Look for
-the bindings under directory bindings/, and refer to README file of corresponding languages.
 
+(6) Language bindings
+
+  So far, Python, Ruby, Ocaml, Java, C# and Go are supported by bindings. Look for
+  the bindings under directory bindings/, and refer to README file of
+  corresponding languages.

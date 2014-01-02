@@ -46,6 +46,7 @@ static void test()
 //#define ARM64_CODE "\x20\x74\x0b\xd5"	// dc	zva, x0
 //#define ARM64_CODE "\xe1\x0b\x40\xb9"	// ldr		w1, [sp, #0x8]
 #define ARM64_CODE "\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9"
+#define PPC_CODE "\x80\x20\x00\x00\x80\x3f\x00\x00\x10\x43\x23\x0e\xd0\x44\x00\x80"
 
 	struct platform platforms[] = {
 		{ 
@@ -127,11 +128,26 @@ static void test()
 			.size = sizeof(ARM64_CODE) - 1,
 			.comment = "ARM-64"
 		},
+		{
+			.arch = CS_ARCH_PPC,
+			.mode = CS_MODE_BIG_ENDIAN,
+			.code = (unsigned char*)PPC_CODE,
+			.size = sizeof(PPC_CODE) - 1,
+			.comment = "PPC-64"
+		},
+		{
+			.arch = CS_ARCH_PPC,
+			.mode = CS_MODE_BIG_ENDIAN,
+			.code = (unsigned char*)PPC_CODE,
+			.size = sizeof(PPC_CODE) - 1,
+			.opt_type = CS_OPT_SYNTAX,
+			.opt_value = CS_OPT_SYNTAX_DARWIN,
+			.comment = "PPC-64, Darwin syntax"
+		},
 	};
 
 	csh handle;
 	uint64_t address = 0x1000;
-	//cs_insn insn[16];
 	cs_insn *insn;
 	int i;
 
@@ -147,8 +163,7 @@ static void test()
 
 		//cs_option(handle, CS_OPT_DETAIL, CS_OPT_OFF);
 
-		//size_t count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, insn);
-		size_t count = cs_disasm_dyn(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
+		size_t count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
@@ -165,8 +180,8 @@ static void test()
 			// print out the next offset, after the last insn
 			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
 
-			// free memory allocated by cs_disasm_dyn()
-			cs_free(insn);
+			// free memory allocated by cs_disasm_ex()
+			cs_free(insn, count);
 		} else {
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);

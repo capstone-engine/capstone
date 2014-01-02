@@ -212,7 +212,7 @@ static bool Check(DecodeStatus *Out, DecodeStatus In);
 #include "AArch64GenSubtargetInfo.inc"
 
 // Hacky: enable all features for disassembler
-static uint64_t AArch64_getFeatureBits(void)
+static uint64_t getFeatureBits(void)
 {
 	// enable all features
 	return -1;

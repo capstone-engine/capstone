@@ -1,3 +1,6 @@
+#ifndef CAPSTONE_X86_DISASSEMBLER_H_8F7A7254B4654FEB87078DA46EBE7398
+#define CAPSTONE_X86_DISASSEMBLER_H_8F7A7254B4654FEB87078DA46EBE7398
+
 //===-- X86Disassembler.h - Disassembler for x86 and x86_64 -----*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
@@ -73,9 +76,6 @@
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef SB_X86DISASSEMBLER_H
-#define SB_X86DISASSEMBLER_H
 
 #include <stdint.h>
 #include <stdbool.h>

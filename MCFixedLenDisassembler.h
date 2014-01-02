@@ -1,3 +1,6 @@
+#ifndef CAPSTONE_LLVM_MC_FIXEDLENDISASSEMBLER_H_D5CF06B12A5D424AADAB724F5ADE711F
+#define CAPSTONE_LLVM_MC_FIXEDLENDISASSEMBLER_H_D5CF06B12A5D424AADAB724F5ADE711F
+
 //===-- llvm/MC/MCFixedLenDisassembler.h - Decoder driver -------*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
@@ -11,9 +14,6 @@
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_LLVM_MC_MCFIXEDLENDISASSEMBLER_H
-#define CS_LLVM_MC_MCFIXEDLENDISASSEMBLER_H
 
 // Disassembler state machine opcodes.
 enum DecoderOps {

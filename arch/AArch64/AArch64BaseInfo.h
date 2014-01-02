@@ -1,3 +1,6 @@
+#ifndef CAPSTONE_LLVM_AARCH64_BASEINFO_H_9748DC73D9FF403CA0318B491FA3D316
+#define CAPSTONE_LLVM_AARCH64_BASEINFO_H_9748DC73D9FF403CA0318B491FA3D316
+
 //===-- AArch64BaseInfo.h - Top level definitions for AArch64- --*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
@@ -16,9 +19,6 @@
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_LLVM_AARCH64_BASEINFO_H
-#define CS_LLVM_AARCH64_BASEINFO_H
 
 #include <ctype.h>
 #include <stdint.h>

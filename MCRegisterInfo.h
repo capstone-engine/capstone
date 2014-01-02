@@ -1,3 +1,6 @@
+#ifndef CAPSTONE_LLVM_MC_REGISTERINFO_H_CB356CF3A79941D1B3A2E68BF5F158BC
+#define CAPSTONE_LLVM_MC_REGISTERINFO_H_CB356CF3A79941D1B3A2E68BF5F158BC
+
 //=== MC/MCRegisterInfo.h - Target Register Description ---------*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
@@ -15,9 +18,6 @@
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_LLVM_MC_MCREGISTERINFO_H
-#define CS_LLVM_MC_MCREGISTERINFO_H
 
 #include <stdbool.h>
 #include <stdint.h>

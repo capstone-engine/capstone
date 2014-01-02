@@ -1,3 +1,6 @@
+#ifndef CAPSTONE_LLVM_MC_INSTRDESC_H_39C016B436DC4D5A83A9FC62CF09F647
+#define CAPSTONE_LLVM_MC_INSTRDESC_H_39C016B436DC4D5A83A9FC62CF09F647
+
 //===-- llvm/MC/MCInstrDesc.h - Instruction Descriptors -*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
@@ -14,9 +17,6 @@
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_LLVM_MC_MCINSTRDESC_H
-#define CS_LLVM_MC_MCINSTRDESC_H
 
 #include <stdbool.h>
 #include <stdint.h>

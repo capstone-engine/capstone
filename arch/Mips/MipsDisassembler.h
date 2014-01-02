@@ -1,8 +1,8 @@
+#ifndef CAPSTONE_MIPS_DISASSEMBLER_H_C16F38B2CCB946019DD9EB928049FFF1
+#define CAPSTONE_MIPS_DISASSEMBLER_H_C16F38B2CCB946019DD9EB928049FFF1
+
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_MIPSDISASSEMBLER_H
-#define CS_MIPSDISASSEMBLER_H
 
 #include "../../include/capstone.h"
 

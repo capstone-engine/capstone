@@ -21,6 +21,7 @@
 
 #include "MipsInstPrinter.h"
 #include "../../MCInst.h"
+#include "../../cs_priv.h"
 #include "../../SStream.h"
 #include "../../MCRegisterInfo.h"
 #include "../../utils.h"
@@ -82,22 +83,20 @@ typedef enum Mips_CondCode {
 static char *getRegisterName(unsigned RegNo);
 static void printInstruction(MCInst *MI, SStream *O);
 
-// FIXME: make this status session's specific, not global like this
-static bool doing_mem = false;
 static void set_mem_access(MCInst *MI, bool status)
 {
-	doing_mem = status;
+	MI->csh->doing_mem = status;
 
-	if (MI->detail != CS_OPT_ON)
+	if (MI->csh->detail != CS_OPT_ON)
 		return;
 
-	if (doing_mem) {
-		MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].type = MIPS_OP_MEM;
-		MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].mem.base = MIPS_REG_INVALID;
-		MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].mem.disp = 0;
+	if (status) {
+		MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_MEM;
+		MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].mem.base = MIPS_REG_INVALID;
+		MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].mem.disp = 0;
 	} else {
 		// done, create the next operand slot
-		MI->pub_insn.mips.op_count++;
+		MI->flat_insn.mips.op_count++;
 	}
 }
 
@@ -195,20 +194,20 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		unsigned int reg = MCOperand_getReg(Op);
 		printRegName(O, reg);
 		reg = Mips_map_register(reg);
-		if (MI->detail) {
-			if (doing_mem) {
-				MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].mem.base = reg;
+		if (MI->csh->detail) {
+			if (MI->csh->doing_mem) {
+				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].mem.base = reg;
 			} else {
-				MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].type = MIPS_OP_REG;
-				MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].reg = reg;
-				MI->pub_insn.mips.op_count++;
+				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_REG;
+				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].reg = reg;
+				MI->flat_insn.mips.op_count++;
 			}
 		}
 	}
 
 	if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op);
-		if (doing_mem) {
+		if (MI->csh->doing_mem) {
 			if (imm) {	// only print Imm offset if it is not 0
 				if (imm >= 0) {
 					if (imm > HEX_THRESHOLD)
@@ -222,8 +221,8 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 						SStream_concat(O, "-%"PRIu64, -imm);
 				}
 			}
-			if (MI->detail)
-				MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].mem.disp = imm;
+			if (MI->csh->detail)
+				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].mem.disp = imm;
 		} else {
 			if (imm >= 0) {
 				if (imm > HEX_THRESHOLD)
@@ -237,10 +236,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					SStream_concat(O, "-%"PRIu64, -imm);
 			}
 
-			if (MI->detail) {
-				MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].type = MIPS_OP_IMM;
-				MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].imm = imm;
-				MI->pub_insn.mips.op_count++;
+			if (MI->csh->detail) {
+				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_IMM;
+				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].imm = imm;
+				MI->flat_insn.mips.op_count++;
 			}
 		}
 	}
@@ -262,10 +261,10 @@ static void printUnsignedImm(MCInst *MI, int opNum, SStream *O)
 			else
 				SStream_concat(O, "-%u", (short int)-imm);
 		}
-		if (MI->detail) {
-			MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].type = MIPS_OP_IMM;
-			MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].imm = (unsigned short int)imm;
-			MI->pub_insn.mips.op_count++;
+		if (MI->csh->detail) {
+			MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_IMM;
+			MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].imm = (unsigned short int)imm;
+			MI->flat_insn.mips.op_count++;
 		}
 	} else
 		printOperand(MI, opNum, O);
@@ -280,10 +279,10 @@ static void printUnsignedImm8(MCInst *MI, int opNum, SStream *O)
 			SStream_concat(O, "0x%x", imm);
 		else
 			SStream_concat(O, "%u", imm);
-		if (MI->detail) {
-			MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].type = MIPS_OP_IMM;
-			MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].imm = imm;
-			MI->pub_insn.mips.op_count++;
+		if (MI->csh->detail) {
+			MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_IMM;
+			MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].imm = imm;
+			MI->flat_insn.mips.op_count++;
 		}
 	} else
 		printOperand(MI, opNum, O);

@@ -4,9 +4,7 @@
 package capstone;
 
 import com.sun.jna.Structure;
-import com.sun.jna.Pointer;
 import com.sun.jna.Union;
-import com.sun.jna.NativeLong;
 
 import java.util.List;
 import java.util.Arrays;
@@ -86,17 +84,6 @@ public class Arm {
 
     public UnionOpInfo() {
       op = new Operand[20];
-    }
-
-    public UnionOpInfo(Pointer p){
-      op = new Operand[20];
-      useMemory(p);
-      read();
-    }
-
-    public static int getSize() {
-        UnionOpInfo x = new UnionOpInfo();
-        return x.size();
     }
 
     public void read() {

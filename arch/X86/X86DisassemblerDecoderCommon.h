@@ -1,3 +1,6 @@
+#ifndef CAPSTONE_X86_DISASSEMBLERDECODERCOMMON_H_DBC18A4C0E3D4994BCACA300074AF87A
+#define CAPSTONE_X86_DISASSEMBLERDECODERCOMMON_H_DBC18A4C0E3D4994BCACA300074AF87A
+
 /*===-- X86DisassemblerDecoderCommon.h - Disassembler decoder -----*- C -*-===*
  *
  *                     The LLVM Compiler Infrastructure
@@ -21,9 +24,6 @@
  * This header file provides those definitions that need to be shared between
  * the decoder and the table generator in a C-friendly manner.
  */
-
-#ifndef SB_X86DISASSEMBLERDECODERCOMMON_H
-#define SB_X86DISASSEMBLERDECODERCOMMON_H
 
 #include <stdint.h>
 

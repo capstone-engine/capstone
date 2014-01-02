@@ -1,5 +1,5 @@
-#ifndef __CS_ARM_H__
-#define __CS_ARM_H__
+#ifndef CAPSTONE_ARM_H_DE90A09791F5452AAD5D92D7EDDEB4AD
+#define CAPSTONE_ARM_H_DE90A09791F5452AAD5D92D7EDDEB4AD
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
@@ -210,10 +210,15 @@ typedef enum arm_reg {
 
 	ARM_REG_MAX,		// <-- mark the end of the list or registers
 
-	// alias registers
+	//> alias registers
 	ARM_REG_R13 = ARM_REG_SP,
 	ARM_REG_R14 = ARM_REG_LR,
 	ARM_REG_R15 = ARM_REG_PC,
+
+	ARM_REG_SB = ARM_REG_R9,
+	ARM_REG_SL = ARM_REG_R10,
+	ARM_REG_FP = ARM_REG_R11,
+	ARM_REG_IP = ARM_REG_R12,
 } arm_reg;
 
 //> ARM instruction

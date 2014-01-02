@@ -13451,7 +13451,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
                                       InsnType insn, size_t Address, \
                                       int feature) \
 { \
-  uint64_t Bits = ARM_getFeatureBits(feature); \
+  uint64_t Bits = getFeatureBits(feature); \
   const uint8_t *Ptr = DecodeTable; \
   uint32_t CurFieldValue = 0; \
   DecodeStatus S = MCDisassembler_Success; \

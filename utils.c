@@ -71,7 +71,7 @@ unsigned int insn_reverse_id(insn_map *insns, unsigned int max, unsigned int id)
 
 // count number of positive members in a list.
 // NOTE: list must be guaranteed to end in 0
-unsigned int count_positive(unsigned int *list)
+unsigned int count_positive(unsigned char *list)
 {
 	unsigned int c;
 

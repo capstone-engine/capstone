@@ -160,9 +160,15 @@ public class Arm_const {
 	public static final int ARM_REG_S30 = 109;
 	public static final int ARM_REG_S31 = 110;
 	public static final int ARM_REG_MAX = 111;
+
+	// alias registers
 	public static final int ARM_REG_R13 = ARM_REG_SP;
 	public static final int ARM_REG_R14 = ARM_REG_LR;
 	public static final int ARM_REG_R15 = ARM_REG_PC;
+	public static final int ARM_REG_SB = ARM_REG_R9;
+	public static final int ARM_REG_SL = ARM_REG_R10;
+	public static final int ARM_REG_FP = ARM_REG_R11;
+	public static final int ARM_REG_IP = ARM_REG_R12;
 
 	// ARM instruction
 

@@ -1,8 +1,8 @@
+#ifndef CAPSTONE_ARM_DISASSEMBLER_H_4419C527F11548B394B1BC48D6B4BD56
+#define CAPSTONE_ARM_DISASSEMBLER_H_4419C527F11548B394B1BC48D6B4BD56
+
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_ARMDISASSEMBLER_H
-#define CS_ARMDISASSEMBLER_H
 
 #include "../../include/capstone.h"
 #include "../../MCRegisterInfo.h"

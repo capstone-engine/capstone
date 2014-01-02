@@ -17,68 +17,68 @@ static name_map reg_name_maps[] = {
 
 	//{ MIPS_REG_0, "0"},
 	{ MIPS_REG_0, "zero"},
-	//{ MIPS_REG_1, "at"},
-	{ MIPS_REG_1, "1"},
-	//{ MIPS_REG_2, "v0"},
-	{ MIPS_REG_2, "2"},
-	//{ MIPS_REG_3, "v1"},
-	{ MIPS_REG_3, "3"},
-	//{ MIPS_REG_4, "a0"},
-	{ MIPS_REG_4, "4"},
-	//{ MIPS_REG_5, "a1"},
-	{ MIPS_REG_5, "5"},
-	//{ MIPS_REG_6, "a2"},
-	{ MIPS_REG_6, "6"},
-	//{ MIPS_REG_7, "a3"},
-	{ MIPS_REG_7, "7"},
-	//{ MIPS_REG_8, "t0"},
-	{ MIPS_REG_8, "8"},
-	//{ MIPS_REG_9, "t1"},
-	{ MIPS_REG_9, "9"},
-	//{ MIPS_REG_10, "t2"},
-	{ MIPS_REG_10, "10"},
-	//{ MIPS_REG_11, "t3"},
-	{ MIPS_REG_11, "11"},
-	//{ MIPS_REG_12, "t4"},
-	{ MIPS_REG_12, "12"},
-	//{ MIPS_REG_13, "t5"},
-	{ MIPS_REG_13, "13"},
-	//{ MIPS_REG_14, "t6"},
-	{ MIPS_REG_14, "14"},
-	//{ MIPS_REG_15, "t7"},
-	{ MIPS_REG_15, "15"},
-	//{ MIPS_REG_16, "s0"},
-	{ MIPS_REG_16, "16"},
-	//{ MIPS_REG_17, "s1"},
-	{ MIPS_REG_17, "17"},
-	//{ MIPS_REG_18, "s2"},
-	{ MIPS_REG_18, "18"},
-	//{ MIPS_REG_19, "s3"},
-	{ MIPS_REG_19, "19"},
-	//{ MIPS_REG_20, "s4"},
-	{ MIPS_REG_20, "20"},
-	//{ MIPS_REG_21, "s5"},
-	{ MIPS_REG_21, "21"},
-	//{ MIPS_REG_22, "s6"},
-	{ MIPS_REG_22, "22"},
-	//{ MIPS_REG_23, "s7"},
-	{ MIPS_REG_23, "23"},
-	//{ MIPS_REG_24, "t8"},
-	{ MIPS_REG_24, "24"},
-	//{ MIPS_REG_25, "t9"},
-	{ MIPS_REG_25, "25"},
-	//{ MIPS_REG_26, "k0"},
-	{ MIPS_REG_26, "26"},
-	//{ MIPS_REG_27, "k1"},
-	{ MIPS_REG_27, "27"},
-	//{ MIPS_REG_28, "gp"},
-	{ MIPS_REG_28, "28"},
+	{ MIPS_REG_1, "at"},
+	//{ MIPS_REG_1, "1"},
+	{ MIPS_REG_2, "v0"},
+	//{ MIPS_REG_2, "2"},
+	{ MIPS_REG_3, "v1"},
+	//{ MIPS_REG_3, "3"},
+	{ MIPS_REG_4, "a0"},
+	//{ MIPS_REG_4, "4"},
+	{ MIPS_REG_5, "a1"},
+	//{ MIPS_REG_5, "5"},
+	{ MIPS_REG_6, "a2"},
+	//{ MIPS_REG_6, "6"},
+	{ MIPS_REG_7, "a3"},
+	//{ MIPS_REG_7, "7"},
+	{ MIPS_REG_8, "t0"},
+	//{ MIPS_REG_8, "8"},
+	{ MIPS_REG_9, "t1"},
+	//{ MIPS_REG_9, "9"},
+	{ MIPS_REG_10, "t2"},
+	//{ MIPS_REG_10, "10"},
+	{ MIPS_REG_11, "t3"},
+	//{ MIPS_REG_11, "11"},
+	{ MIPS_REG_12, "t4"},
+	//{ MIPS_REG_12, "12"},
+	{ MIPS_REG_13, "t5"},
+	//{ MIPS_REG_13, "13"},
+	{ MIPS_REG_14, "t6"},
+	//{ MIPS_REG_14, "14"},
+	{ MIPS_REG_15, "t7"},
+	//{ MIPS_REG_15, "15"},
+	{ MIPS_REG_16, "s0"},
+	//{ MIPS_REG_16, "16"},
+	{ MIPS_REG_17, "s1"},
+	//{ MIPS_REG_17, "17"},
+	{ MIPS_REG_18, "s2"},
+	//{ MIPS_REG_18, "18"},
+	{ MIPS_REG_19, "s3"},
+	//{ MIPS_REG_19, "19"},
+	{ MIPS_REG_20, "s4"},
+	//{ MIPS_REG_20, "20"},
+	{ MIPS_REG_21, "s5"},
+	//{ MIPS_REG_21, "21"},
+	{ MIPS_REG_22, "s6"},
+	//{ MIPS_REG_22, "22"},
+	{ MIPS_REG_23, "s7"},
+	//{ MIPS_REG_23, "23"},
+	{ MIPS_REG_24, "t8"},
+	//{ MIPS_REG_24, "24"},
+	{ MIPS_REG_25, "t9"},
+	//{ MIPS_REG_25, "25"},
+	{ MIPS_REG_26, "k0"},
+	//{ MIPS_REG_26, "26"},
+	{ MIPS_REG_27, "k1"},
+	//{ MIPS_REG_27, "27"},
+	{ MIPS_REG_28, "gp"},
+	//{ MIPS_REG_28, "28"},
 	{ MIPS_REG_29, "sp"},
 	//{ MIPS_REG_29, "29"},
-	//{ MIPS_REG_30, "fp"},
-	{ MIPS_REG_30, "30"},
-	//{ MIPS_REG_31, "ra"},
-	{ MIPS_REG_31, "31"},
+	{ MIPS_REG_30, "fp"},
+	//{ MIPS_REG_30, "30"},
+	{ MIPS_REG_31, "ra"},
+	//{ MIPS_REG_31, "31"},
 
 	{ MIPS_REG_DSPCCOND, "dspccond"},
 	{ MIPS_REG_DSPCARRY, "dspcarry"},
@@ -1397,19 +1397,19 @@ void Mips_get_insn_id(cs_insn *insn, unsigned int id, int detail)
 			insn->id = alias_insns[i].mapid;
 
 			if (detail) {
-				memcpy(insn->regs_read, alias_insns[i].regs_use, sizeof(alias_insns[i].regs_use));
-				insn->regs_read_count = count_positive(alias_insns[i].regs_use);
+				memcpy(insn->detail->regs_read, alias_insns[i].regs_use, sizeof(alias_insns[i].regs_use));
+				insn->detail->regs_read_count = count_positive(alias_insns[i].regs_use);
 
-				memcpy(insn->regs_write, alias_insns[i].regs_mod, sizeof(alias_insns[i].regs_mod));
-				insn->regs_write_count = count_positive(alias_insns[i].regs_mod);
+				memcpy(insn->detail->regs_write, alias_insns[i].regs_mod, sizeof(alias_insns[i].regs_mod));
+				insn->detail->regs_write_count = count_positive(alias_insns[i].regs_mod);
 
-				memcpy(insn->groups, alias_insns[i].groups, sizeof(alias_insns[i].groups));
-				insn->groups_count = count_positive(alias_insns[i].groups);
+				memcpy(insn->detail->groups, alias_insns[i].groups, sizeof(alias_insns[i].groups));
+				insn->detail->groups_count = count_positive(alias_insns[i].groups);
 
 				if (alias_insns[i].branch || alias_insns[i].indirect_branch) {
 					// this insn also belongs to JUMP group. add JUMP group
-					insn->groups[insn->groups_count] = MIPS_GRP_JUMP;
-					insn->groups_count++;
+					insn->detail->groups[insn->detail->groups_count] = MIPS_GRP_JUMP;
+					insn->detail->groups_count++;
 				}
 
 				return;
@@ -1422,19 +1422,19 @@ void Mips_get_insn_id(cs_insn *insn, unsigned int id, int detail)
 		insn->id = insns[i].mapid;
 
 		if (detail) {
-			memcpy(insn->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
-			insn->regs_read_count = count_positive(insns[i].regs_use);
+			memcpy(insn->detail->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
+			insn->detail->regs_read_count = count_positive(insns[i].regs_use);
 
-			memcpy(insn->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
-			insn->regs_write_count = count_positive(insns[i].regs_mod);
+			memcpy(insn->detail->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
+			insn->detail->regs_write_count = count_positive(insns[i].regs_mod);
 
-			memcpy(insn->groups, insns[i].groups, sizeof(insns[i].groups));
-			insn->groups_count = count_positive(insns[i].groups);
+			memcpy(insn->detail->groups, insns[i].groups, sizeof(insns[i].groups));
+			insn->detail->groups_count = count_positive(insns[i].groups);
 
 			if (insns[i].branch || insns[i].indirect_branch) {
 				// this insn also belongs to JUMP group. add JUMP group
-				insn->groups[insn->groups_count] = MIPS_GRP_JUMP;
-				insn->groups_count++;
+				insn->detail->groups[insn->detail->groups_count] = MIPS_GRP_JUMP;
+				insn->detail->groups_count++;
 			}
 		}
 	}

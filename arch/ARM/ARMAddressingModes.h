@@ -1,3 +1,6 @@
+#ifndef CAPSTONE_LLVM_TARGET_ARM_ADDRESSINGMODES_H_18FDEB0A6CC74AA68411B6457763CBA0
+#define CAPSTONE_LLVM_TARGET_ARM_ADDRESSINGMODES_H_18FDEB0A6CC74AA68411B6457763CBA0
+
 //===-- ARMAddressingModes.h - ARM Addressing Modes -------------*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
@@ -13,9 +16,6 @@
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_LLVM_TARGET_ARM_ARMADDRESSINGMODES_H
-#define CS_LLVM_TARGET_ARM_ARMADDRESSINGMODES_H
 
 #include <stdbool.h>
 

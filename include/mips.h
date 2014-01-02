@@ -1,5 +1,5 @@
-#ifndef __CS_MIPS_H__
-#define __CS_MIPS_H__
+#ifndef CAPSTONE_MIPS_H_FCACB658A0984CECA0FC74388027A066
+#define CAPSTONE_MIPS_H_FCACB658A0984CECA0FC74388027A066
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */

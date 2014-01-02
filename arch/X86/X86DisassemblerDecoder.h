@@ -1,3 +1,6 @@
+#ifndef CAPSTONE_X86_DISASSEMBLERDECODER_H_A0B267827D054EC1B2D41CB2FA7C1A59
+#define CAPSTONE_X86_DISASSEMBLERDECODER_H_A0B267827D054EC1B2D41CB2FA7C1A59
+
 /*===-- X86DisassemblerDecoderInternal.h - Disassembler decoder ---*- C -*-===*
  *
  *                     The LLVM Compiler Infrastructure
@@ -15,9 +18,6 @@
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef SB_X86DISASSEMBLERDECODER_H
-#define SB_X86DISASSEMBLERDECODER_H
 
 #ifdef __cplusplus
 extern "C" {

@@ -6,7 +6,16 @@ LIBDIR = ..
 
 CC = $(CROSS)gcc
 
+COMPILER = $(shell $(CC) -v 2>&1 )
+ifeq ($(findstring clang,$(COMPILER)),clang)
+# clang doesnt like -L option
+CFLAGS += -fPIC -O3 -Wall -I$(INCDIR)
+else
 CFLAGS += -fPIC -O3 -Wall -I$(INCDIR) -L$(LIBDIR)
+endif
+
+# dummy setup to make Gentoo happy
+LDFLAGS =
 
 LIBNAME = capstone
 
