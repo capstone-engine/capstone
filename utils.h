@@ -1,8 +1,8 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
-#ifndef __CS_UTILS_H__
-#define __CS_UTILS_H__ 
+#ifndef CAPSTONE_UTILS_H_0AAE60E1A4B649EAAA69F214F0E262ED
+#define CAPSTONE_UTILS_H_0AAE60E1A4B649EAAA69F214F0E262ED
 
 #include <stdbool.h>
 

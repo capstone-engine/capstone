@@ -1,8 +1,8 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
-#ifndef __CS_MCDISASSEMBLER_H__
-#define __CS_MCDISASSEMBLER_H__ 
+#ifndef CAPSTONE_MCDISASSEMBLER_H_FBBF91BBF43140F7A8D1519B73474438
+#define CAPSTONE_MCDISASSEMBLER_H_FBBF91BBF43140F7A8D1519B73474438
 
 typedef enum DecodeStatus {
 	MCDisassembler_Fail = 0,
