@@ -12,7 +12,7 @@ extern "C" {
 #include <stdbool.h>
 
 
-//> Branch code for some branch instructions
+//> PPC branch codes for some branch instructions
 typedef enum ppc_bc {
   PPC_BC_LT       = (0 << 5) | 12,
   PPC_BC_LE       = (1 << 5) |  4,
@@ -52,7 +52,7 @@ typedef enum ppc_op_type {
 // This is associated with PPC_OP_MEM operand type above
 typedef struct ppc_op_mem {
 	unsigned int base;	// base register
-	int64_t disp;	// displacement/offset value
+	int32_t disp;	// displacement/offset value
 } ppc_op_mem;
 
 // Instruction operand
@@ -60,8 +60,8 @@ typedef struct cs_ppc_op {
 	ppc_op_type type;	// operand type
 	union {
 		unsigned int reg;	// register value for REG operand
-		int64_t imm;		// immediate value for C-IMM or IMM operand
-		ppc_op_mem mem;		// base/index/scale/disp value for MEM operand
+		int32_t imm;		// immediate value for C-IMM or IMM operand
+		ppc_op_mem mem;		// base/disp value for MEM operand
 	};
 } cs_ppc_op;
 
@@ -69,6 +69,9 @@ typedef struct cs_ppc_op {
 typedef struct cs_ppc {
 	// branch code for branch instructions
 	ppc_bc cc;
+
+	// if this is True, then this 'dot' insn updates CR0
+	bool update_cr0;
 
 	// Number of operands of this instruction, 
 	// or 0 when instruction has no operand.
@@ -79,15 +82,17 @@ typedef struct cs_ppc {
 //> PPC registers
 typedef enum ppc_reg {
 	PPC_REG_INVALID = 0,
+
 	// General purpose registers
 
-	PPC_REG_MAX,	// <-- mark the end of the list or registers
+	PPC_REG_MAX,   // <-- mark the end of the list of registers
 } ppc_reg;
 
 //> PPC instruction
 typedef enum ppc_insn {
 	PPC_INS_INVALID = 0,
-	PPC_INS_MAX,
+
+	PPC_INS_MAX,   // <-- mark the end of the list of instructions
 } ppc_insn;
 
 //> Group of PPC instructions
@@ -96,7 +101,7 @@ typedef enum ppc_insn_group {
 
 	PPC_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
-	PPC_GRP_MAX,
+	PPC_GRP_MAX,   // <-- mark the end of the list of groups
 } ppc_insn_group;
 
 #ifdef __cplusplus
