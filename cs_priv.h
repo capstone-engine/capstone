@@ -1,8 +1,8 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
-#ifndef __CS_PRIV_H__
-#define __CS_PRIV_H__
+#ifndef CS_PRIV_H
+#define CS_PRIV_H
 
 #include <capstone.h>
 

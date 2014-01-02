@@ -16,8 +16,8 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
-#ifndef __CS_MC_MCINST_H
-#define __CS_MC_MCINST_H
+#ifndef CS_MCINST_H
+#define CS_MCINST_H
 
 #include <stdint.h>
 #include <stdbool.h>
