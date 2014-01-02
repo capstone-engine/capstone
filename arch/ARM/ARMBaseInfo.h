@@ -1,3 +1,6 @@
+#ifndef CAPSTONE_ARM_BASEINFO_H_9563CAA297FF46F2AD6E42BB1F7E348B
+#define CAPSTONE_ARM_BASEINFO_H_9563CAA297FF46F2AD6E42BB1F7E348B
+
 //===-- ARMBaseInfo.h - Top level definitions for ARM -------- --*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
@@ -16,9 +19,6 @@
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_ARMBASEINFO_H
-#define CS_ARMBASEINFO_H
 
 //#include "ARMMCTargetDesc.h"
 

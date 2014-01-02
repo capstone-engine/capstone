@@ -1,8 +1,8 @@
+#ifndef CAPSTONE_PPC_DISASSEMBLER_H_5E7B0E85AA174450960026C08371F746
+#define CAPSTONE_PPC_DISASSEMBLER_H_5E7B0E85AA174450960026C08371F746
+
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_PPCDISASSEMBLER_H
-#define CS_PPCDISASSEMBLER_H
 
 #include <stdint.h>
 

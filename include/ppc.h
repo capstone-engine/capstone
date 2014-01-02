@@ -1,5 +1,5 @@
-#ifndef CS_PPC_H
-#define CS_PPC_H
+#ifndef CAPSTONE_PPC_H_32CF7DC1BBB2435FBD8380AA1AD9F8F9
+#define CAPSTONE_PPC_H_32CF7DC1BBB2435FBD8380AA1AD9F8F9
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */

@@ -1,5 +1,5 @@
-#ifndef CS_ARM64_H
-#define CS_ARM64_H
+#ifndef CAPSTONE_ARM64_H_70632C016567477790981550F7661265
+#define CAPSTONE_ARM64_H_70632C016567477790981550F7661265
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */

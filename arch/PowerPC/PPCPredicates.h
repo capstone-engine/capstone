@@ -1,3 +1,6 @@
+#ifndef CAPSTONE_PPC_PREDICATES_H_265B6EE8A72F46718D3C3E378D7C415A
+#define CAPSTONE_PPC_PREDICATES_H_265B6EE8A72F46718D3C3E378D7C415A
+
 //===-- PPCPredicates.h - PPC Branch Predicate Information ------*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
@@ -13,9 +16,6 @@
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_POWERPC_PPCPREDICATES_H
-#define CS_POWERPC_PPCPREDICATES_H
 
 #include "../../include/ppc.h"
 

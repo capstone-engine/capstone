@@ -1,3 +1,6 @@
+#ifndef CAPSTONE_X86_INSTPRINTER_H_A5E4EA801A6A4CDC9020D175B449AABD
+#define CAPSTONE_X86_INSTPRINTER_H_A5E4EA801A6A4CDC9020D175B449AABD
+
 //= X86IntelInstPrinter.h - Convert X86 MCInst to assembly syntax -*- C++ -*-=//
 //
 //                     The LLVM Compiler Infrastructure
@@ -13,9 +16,6 @@
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_X86_INSTPRINTER_H
-#define CS_X86_INSTPRINTER_H
 
 #include "../../MCInst.h"
 #include "../../SStream.h"

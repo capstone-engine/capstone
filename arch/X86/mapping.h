@@ -1,8 +1,8 @@
+#ifndef CAPSTONE_X86_MAP_H_BE943004BE154EDF9EC3BF7A7DA2DAE1
+#define CAPSTONE_X86_MAP_H_BE943004BE154EDF9EC3BF7A7DA2DAE1
+
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_X86_MAP_H
-#define CS_X86_MAP_H
 
 #include "../../include/capstone.h"
 #include "../../include/x86.h"

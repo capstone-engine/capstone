@@ -1,8 +1,8 @@
+#ifndef CAPSTONE_MIPS_MAP_H_EE184F80154D4613A2BD8ADA7032EB04
+#define CAPSTONE_MIPS_MAP_H_EE184F80154D4613A2BD8ADA7032EB04
+
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_MIPS_MAP_H
-#define CS_MIPS_MAP_H
 
 #include "../../include/capstone.h"
 #include "../../include/mips.h"

@@ -1,3 +1,6 @@
+#ifndef CAPSTONE_MC_INST_H_6BC4D30FE7154441AAFC67491F88364A
+#define CAPSTONE_MC_INST_H_6BC4D30FE7154441AAFC67491F88364A
+
 //===-- llvm/MC/MCInst.h - MCInst class -------------------------*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
@@ -15,9 +18,6 @@
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_MCINST_H
-#define CS_MCINST_H
 
 #include <stdint.h>
 #include <stdbool.h>

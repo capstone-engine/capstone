@@ -1,3 +1,6 @@
+#ifndef CAPSTONE_LLVM_MC_SUBTARGETFEATURE_H_C0BE2FB74A1340F0B805B4AADDE54CEA
+#define CAPSTONE_LLVM_MC_SUBTARGETFEATURE_H_C0BE2FB74A1340F0B805B4AADDE54CEA
+
 //===-- llvm/MC/SubtargetFeature.h - CPU characteristics --------*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
@@ -17,9 +20,6 @@
 
 /* Second-Best Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_LLVM_MC_SUBTARGETFEATURE_H
-#define CS_LLVM_MC_SUBTARGETFEATURE_H
 
 //===----------------------------------------------------------------------===//
 ///

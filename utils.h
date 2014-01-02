@@ -1,8 +1,8 @@
+#ifndef CAPSTONE_UTILS_H_93EF2AEB30044CF5A935CF92B0FAB9E5
+#define CAPSTONE_UTILS_H_93EF2AEB30044CF5A935CF92B0FAB9E5
+
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_UTILS_H
-#define CS_UTILS_H
 
 #include <stdbool.h>
 

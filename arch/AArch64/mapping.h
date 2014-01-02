@@ -1,8 +1,8 @@
+#ifndef CAPSTONE_ARM64_MAP_H_525038A12C344A16AA6ABBCBF0728735
+#define CAPSTONE_ARM64_MAP_H_525038A12C344A16AA6ABBCBF0728735
+
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_ARM64_MAP_H
-#define CS_ARM64_MAP_H
 
 #include "../../include/capstone.h"
 #include "../../include/arm64.h"

@@ -1,8 +1,8 @@
+#ifndef CAPSTONE_PPC_INSTPRINTER_H_2944CAE7EB5F4ACBB9C48F875CEEFFD0
+#define CAPSTONE_PPC_INSTPRINTER_H_2944CAE7EB5F4ACBB9C48F875CEEFFD0
+
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_PPCINSTPRINTER_H
-#define CS_PPCINSTPRINTER_H
 
 #include "../../MCInst.h"
 #include "../../MCRegisterInfo.h"

@@ -1,8 +1,8 @@
+#ifndef CAPSTONE_PRIV_H_CB1B104E570B477A82CE5CF84602B41C
+#define CAPSTONE_PRIV_H_CB1B104E570B477A82CE5CF84602B41C
+
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_PRIV_H
-#define CS_PRIV_H
 
 #include <capstone.h>
 

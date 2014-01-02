@@ -1,3 +1,6 @@
+#ifndef CAPSTONE_LLVM_SUPPORT_LEB128_H_AD3BBDEEE3864C5690A43521DD72F9E9
+#define CAPSTONE_LLVM_SUPPORT_LEB128_H_AD3BBDEEE3864C5690A43521DD72F9E9
+
 //===- llvm/Support/LEB128.h - [SU]LEB128 utility functions -----*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
@@ -14,9 +17,6 @@
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_LLVM_SUPPORT_LEB128_H
-#define CS_LLVM_SUPPORT_LEB128_H
 
 #include <stdint.h>
 

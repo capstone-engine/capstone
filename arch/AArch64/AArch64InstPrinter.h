@@ -1,3 +1,6 @@
+#ifndef CAPSTONE_LLVM_AARCH64INSTPRINTER_H_F852AF6EA5AD4E9A8BCD6B53F8B11508
+#define CAPSTONE_LLVM_AARCH64INSTPRINTER_H_F852AF6EA5AD4E9A8BCD6B53F8B11508
+
 //===-- AArch64InstPrinter.h - Convert AArch64 MCInst to assembly syntax --===//
 //
 //                     The LLVM Compiler Infrastructure
@@ -13,9 +16,6 @@
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
-
-#ifndef CS_LLVM_AARCH64INSTPRINTER_H
-#define CS_LLVM_AARCH64INSTPRINTER_H
 
 #include "../../MCInst.h"
 #include "../../MCRegisterInfo.h"
