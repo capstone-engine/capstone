@@ -1,8 +1,8 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
-#ifndef __SB_AARCH64DISASSEMBLER_H
-#define __SB_AARCH64DISASSEMBLER_H
+#ifndef CS_AARCH64_DISASSEMBLER_H
+#define CS_AARCH64_DISASSEMBLER_H
 
 #include <stdint.h>
 

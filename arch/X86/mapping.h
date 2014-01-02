@@ -1,8 +1,8 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
-#ifndef SB_X86_MAP_H
-#define SB_X86_MAP_H
+#ifndef CS_X86_MAP_H
+#define CS_X86_MAP_H
 
 #include "../../include/capstone.h"
 #include "../../include/x86.h"
