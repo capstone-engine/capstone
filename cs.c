@@ -14,8 +14,8 @@
 #include "utils.h"
 
 cs_err (*arch_init[MAX_ARCH])(cs_struct *) = { NULL };
-cs_err (*arch_option[MAX_ARCH]) (cs_struct*, cs_opt_type, size_t value);
-void (*arch_destroy[MAX_ARCH]) (cs_struct*);
+cs_err (*arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = { NULL };
+void (*arch_destroy[MAX_ARCH]) (cs_struct *) = { NULL };
 
 unsigned int all_arch = 0;
 
@@ -99,11 +99,11 @@ cs_err cs_close(csh handle)
 			return CS_ERR_HANDLE;
 	}
 
-	memset(ud, 0, sizeof(*ud));
-	free(ud);
-
 	if (arch_destroy[ud->arch])
 		arch_destroy[ud->arch](ud);
+
+	memset(ud, 0, sizeof(*ud));
+	free(ud);
 
 	return CS_ERR_OK;
 }
