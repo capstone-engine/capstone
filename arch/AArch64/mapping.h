@@ -21,4 +21,7 @@ const char *AArch64_insn_name(csh handle, unsigned int id);
 // map instruction name to public instruction ID
 arm64_reg AArch64_map_insn(const char *name);
 
+// free insn cache
+void AArch64_free_cache(void);
+
 #endif

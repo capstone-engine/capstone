@@ -44,10 +44,16 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 	return CS_ERR_OK;
 }
 
+static void destroy(cs_struct *handle)
+{
+	X86_free_cache();
+}
+
 static void __attribute__ ((constructor)) __init_x86__()
 {
 	arch_init[CS_ARCH_X86] = init;
 	arch_option[CS_ARCH_X86] = option;
+	arch_destroy[CS_ARCH_X86] = destroy;
 
 	// support this arch
 	all_arch |= (1 << CS_ARCH_X86);

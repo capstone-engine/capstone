@@ -37,4 +37,7 @@ unsigned int X86_get_insn_id2(unsigned int insn_id);
 // post printer for X86.
 void X86_post_printer(csh handle, cs_insn *pub_insn, char *insn_asm);
 
+// free insn cache
+void X86_free_cache(void);
+
 #endif

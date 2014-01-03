@@ -1,6 +1,7 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
+#include <stdlib.h>
 #include <string.h>
 
 #include "utils.h"
@@ -20,26 +21,32 @@ int str_in_list(char **list, char *s)
 	return -1;
 }
 
-// binary searching
-int insn_find(insn_map *m, unsigned int max, unsigned int id)
+// create a cache for fast id lookup
+static unsigned short *make_id2insn(insn_map *insns, unsigned int size)
 {
-	unsigned int i, begin, end;
+	// NOTE: assume that the max id is always put at the end of insns array
+	unsigned short max_id = insns[size - 1].id;
+	unsigned int i;
 
-	begin = 0;
-	end = max;
+	unsigned short *cache = (unsigned short *)calloc(sizeof(*cache), max_id);
 
-	while(begin <= end) {
-		i = (begin + end) / 2;
-		if (id == m[i].id)
-			return i;
-		else if (id < m[i].id)
-			end = i - 1;
-		else
-			begin = i + 1;
-	}
+	for (i = 1; i < size; i++)
+		cache[insns[i].id] = i;
 
-	// found nothing
-	return -1;
+	return cache;
+}
+
+// look for @id in @insns, given its size in @max. first time call will update @cache.
+// return 0 if not found
+unsigned short insn_find(insn_map *insns, unsigned int max, unsigned int id, unsigned short **cache)
+{
+	if (id > insns[max - 1].id)
+		return 0;
+
+	if (*cache == NULL)
+		*cache = make_id2insn(insns, max);
+
+	return (*cache)[id];
 }
 
 int name2id(name_map* map, int max, const char *name)
@@ -79,3 +86,4 @@ unsigned int count_positive(unsigned char *list)
 
 	return c;
 }
+

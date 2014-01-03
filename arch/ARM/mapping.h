@@ -25,4 +25,7 @@ arm_reg ARM_map_insn(const char *name);
 // check if this insn is relative branch
 bool ARM_rel_branch(unsigned int insn_id);
 
+// free insn cache
+void ARM_free_cache(void);
+
 #endif

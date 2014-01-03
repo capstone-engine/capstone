@@ -25,4 +25,7 @@ mips_reg Mips_map_insn(const char *name);
 // map internal raw register to 'public' register
 mips_reg Mips_map_register(unsigned int r);
 
+// free insn cache
+void Mips_free_cache(void);
+
 #endif
