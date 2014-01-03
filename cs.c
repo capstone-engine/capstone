@@ -50,6 +50,30 @@ cs_err cs_errno(csh handle)
 	return ud->errnum;
 }
 
+const char *cs_strerror(cs_err code)
+{
+	switch(code) {
+		default:
+			return "Unknown error code";
+		case CS_ERR_OK:
+			return "OK (CS_ERR_OK)";
+		case CS_ERR_MEM:
+			return "Out of memory (CS_ERR_MEM)";
+		case CS_ERR_ARCH:
+			return "Invalid architecture (CS_ERR_ARCH)";
+		case CS_ERR_HANDLE:
+			return "Invalid handle (CS_ERR_HANDLE)";
+		case CS_ERR_CSH:
+			return "Invalid csh (CS_ERR_CSH)";
+		case CS_ERR_MODE:
+			return "Invalid mode (CS_ERR_MODE)";
+		case CS_ERR_OPTION:
+			return "Invalid option (CS_ERR_OPTION)";
+		case CS_ERR_DETAIL:
+			return "Details are unavailable (CS_ERR_DETAIL)";
+	}
+}
+
 cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 {
 	cs_struct *ud;

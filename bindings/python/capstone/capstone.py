@@ -196,6 +196,7 @@ _setup_prototype(_cs, "cs_errno", ctypes.c_int, ctypes.c_size_t)
 _setup_prototype(_cs, "cs_option", ctypes.c_int, ctypes.c_size_t, ctypes.c_int, ctypes.c_size_t)
 _setup_prototype(_cs, "cs_version", ctypes.c_int, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
 _setup_prototype(_cs, "cs_support", ctypes.c_bool, ctypes.c_int)
+_setup_prototype(_cs, "cs_strerror", ctypes.c_char_p, ctypes.c_int)
 
 
 # access to error code via @errno of CsError
@@ -204,16 +205,7 @@ class CsError(Exception):
         self.errno = errno
 
     def __str__(self):
-        messages = { \
-            CS_ERR_MEM: "Out of memory (CsError)",
-            CS_ERR_ARCH: "Invalid architecture (CsError)",
-            CS_ERR_HANDLE: "Invalid handle (CsError)",
-            CS_ERR_CSH: "Invalid csh (CsError)",
-            CS_ERR_MODE: "Invalid mode (CsError)",
-            CS_ERR_OPTION: "Invalid option (CsError)",
-            CS_ERR_DETAIL: "Details are unavailable (CsError)",
-        }
-        return messages[self.errno]
+        return _cs.cs_strerror(self.errno)
 
 
 def cs_version():

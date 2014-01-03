@@ -224,6 +224,17 @@ cs_err cs_option(csh handle, cs_opt_type type, size_t value);
 */
 cs_err cs_errno(csh handle);
 
+
+/*
+ Return a string describing given error code.
+
+ @code: error code (see CS_ERR_* above)
+
+ @return: returns a pointer to a string that describes the error code
+    passed in the argument @code
+*/
+const char *cs_strerror(cs_err code);
+
 /*
  Dynamicly allocate memory to contain disasm insn
  Disassembled instructions will be put into @*insn
