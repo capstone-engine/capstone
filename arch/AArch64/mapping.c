@@ -2990,9 +2990,15 @@ static insn_map alias_insns[] = {
 	// { AArch64_SUBSxxx_lsl, ARM64_INS_NEGS, { 0 }, { ARM64_REG_NZCV, 0 }, { 0 } },
 };
 
+static int* id2insn = 0;
+
 void AArch64_get_insn_id(cs_insn *insn, unsigned int id, int detail)
 {
-	int i = insn_find(insns, ARR_SIZE(insns), id);
+	if (id2insn == 0)
+		id2insn = make_id2insn(insns);
+
+	int i = id2insn[id];
+
 	if (i != -1) {
 		insn->id = insns[i].mapid;
 

@@ -1386,6 +1386,8 @@ static insn_map alias_insns[] = {
 	{ Mips_SUBu, MIPS_INS_NEGU, { 0 }, { 0 }, { MIPS_GRP_STDENC, 0 }, 0, 0 },
 };
 
+static int *id2insn = 0;
+
 // given internal insn id, return public instruction info
 void Mips_get_insn_id(cs_insn *insn, unsigned int id, int detail)
 {
@@ -1417,7 +1419,11 @@ void Mips_get_insn_id(cs_insn *insn, unsigned int id, int detail)
 		}
 	}
 
-	i = insn_find(insns, ARR_SIZE(insns), id);
+  if (id2insn == 0)
+    id2insn = make_id2insn(insns);
+
+	i = id2insn[id];
+
 	if (i != -1) {
 		insn->id = insns[i].mapid;
 

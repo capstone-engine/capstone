@@ -2298,9 +2298,15 @@ static insn_map insns[] = {
 	{ ARM_tUXTH, ARM_INS_UXTH, { 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_V6, 0 }, 0, 0 },
 };
 
+static int * id2insn = 0;
+
 void ARM_get_insn_id(cs_insn *insn, unsigned int id, int detail)
 {
-	int i = insn_find(insns, ARR_SIZE(insns), id);
+	if (id2insn == 0)
+		id2insn = make_id2insn(insns);
+
+	int i = id2insn[id];
+
 	if (i != -1) {
 		insn->id = insns[i].mapid;
 
@@ -2787,7 +2793,11 @@ arm_reg ARM_map_insn(const char *name)
 
 bool ARM_rel_branch(unsigned int id)
 {
-	int i = insn_find(insns, ARR_SIZE(insns), id);
+  if (id2insn == 0)
+    id2insn = make_id2insn(insns);
+
+	int i = id2insn[id];
+
 	if (i != -1)
 		return (insns[i].branch && !insns[i].indirect_branch);
 	else {
