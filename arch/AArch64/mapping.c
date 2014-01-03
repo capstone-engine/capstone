@@ -254,6 +254,8 @@ const char *AArch64_reg_name(csh handle, unsigned int reg)
 }
 
 static insn_map insns[] = {
+	{ 0, 0, { 0 }, { 0 }, { 0 }, 0, 0 },	// dummy item
+
 	{ AArch64_ABS16b, ARM64_INS_ABS, { 0 }, { 0 }, { ARM64_GRP_NEON, 0 }, 0, 0 },
 	{ AArch64_ABS2d, ARM64_INS_ABS, { 0 }, { 0 }, { ARM64_GRP_NEON, 0 }, 0, 0 },
 	{ AArch64_ABS2s, ARM64_INS_ABS, { 0 }, { 0 }, { ARM64_GRP_NEON, 0 }, 0, 0 },
@@ -2990,10 +2992,13 @@ static insn_map alias_insns[] = {
 	// { AArch64_SUBSxxx_lsl, ARM64_INS_NEGS, { 0 }, { ARM64_REG_NZCV, 0 }, { 0 } },
 };
 
+static unsigned short *insn_cache = NULL;
+
+// given internal insn id, return public instruction info
 void AArch64_get_insn_id(cs_insn *insn, unsigned int id, int detail)
 {
-	int i = insn_find(insns, ARR_SIZE(insns), id);
-	if (i != -1) {
+	int i = insn_find(insns, ARR_SIZE(insns), id, &insn_cache);
+	if (i != 0) {
 		insn->id = insns[i].mapid;
 
 		if (detail) {
@@ -3523,3 +3528,10 @@ arm64_reg AArch64_map_insn(const char *name)
 	return (i != -1)? i : ARM64_REG_INVALID;
 }
 
+void AArch64_free_cache(void)
+{
+	if (insn_cache)
+		free(insn_cache);
+
+	insn_cache = NULL;
+}

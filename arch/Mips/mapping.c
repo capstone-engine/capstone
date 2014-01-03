@@ -182,6 +182,8 @@ const char *Mips_reg_name(csh handle, unsigned int reg)
 }
 
 static insn_map insns[] = {
+	{ 0, 0, { 0 }, { 0 }, { 0 }, 0, 0 },	// dummy item
+
 	{ Mips_ABSQ_S_PH, MIPS_INS_ABSQ_S, { 0 }, { MIPS_REG_DSPOUTFLAG20, 0 }, { MIPS_GRP_DSP, 0 }, 0, 0 },
 	{ Mips_ABSQ_S_QB, MIPS_INS_ABSQ_S, { 0 }, { MIPS_REG_DSPOUTFLAG20, 0 }, { MIPS_GRP_DSPR2, 0 }, 0, 0 },
 	{ Mips_ABSQ_S_W, MIPS_INS_ABSQ_S, { 0 }, { MIPS_REG_DSPOUTFLAG20, 0 }, { MIPS_GRP_DSP, 0 }, 0, 0 },
@@ -1386,6 +1388,8 @@ static insn_map alias_insns[] = {
 	{ Mips_SUBu, MIPS_INS_NEGU, { 0 }, { 0 }, { MIPS_GRP_STDENC, 0 }, 0, 0 },
 };
 
+static unsigned short *insn_cache = NULL;
+
 // given internal insn id, return public instruction info
 void Mips_get_insn_id(cs_insn *insn, unsigned int id, int detail)
 {
@@ -1417,8 +1421,8 @@ void Mips_get_insn_id(cs_insn *insn, unsigned int id, int detail)
 		}
 	}
 
-	i = insn_find(insns, ARR_SIZE(insns), id);
-	if (i != -1) {
+	i = insn_find(insns, ARR_SIZE(insns), id, &insn_cache);
+	if (i != 0) {
 		insn->id = insns[i].mapid;
 
 		if (detail) {
@@ -2029,4 +2033,12 @@ mips_reg Mips_map_register(unsigned int r)
 
 	// cannot find this register
 	return 0;
+}
+
+void Mips_free_cache(void)
+{
+	if (insn_cache)
+		free(insn_cache);
+
+	insn_cache = NULL;
 }

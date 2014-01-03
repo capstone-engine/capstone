@@ -190,6 +190,10 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle);
 
 /*
  Close CS handle: MUST do to release the handle when it is not used anymore.
+ NOTE: this must be only called when there is no longer usage of Capstone,
+ not even access to cs_insn array. The reason is the this API releases some
+ cached memory, thus access to any Capstone API after cs_close() might crash
+ your application.
 
  @handle: handle returned by cs_open()
 
