@@ -14,9 +14,6 @@ else
 CFLAGS += -fPIC -O3 -Wall -I$(INCDIR) -L$(LIBDIR)
 endif
 
-# dummy setup to make Gentoo happy
-$(LDFLAGS)
-
 LIBNAME = capstone
 
 BIN_EXT =
@@ -49,7 +46,7 @@ clean:
 $(BINARY): $(OBJS)
 
 %$(BIN_EXT): %.o
-	${CC} $(CFLAGS) $< -O3 -Wall -l$(LIBNAME) -o $@
+	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall -l$(LIBNAME) -o $@
 
 %.o: %.c
 	${CC} ${CFLAGS} -c $< -o $@
