@@ -5,7 +5,7 @@ import sys, re
 
 INCL_DIR = '../include/'
 
-include = [ 'arm.h', 'arm64.h', 'mips.h', 'x86.h' ]
+include = [ 'arm.h', 'arm64.h', 'mips.h', 'x86.h', 'ppc.h' ]
 
 template = {
     'java': {
@@ -18,6 +18,7 @@ template = {
             'arm64.h': 'Arm64',
             'mips.h': 'Mips',
             'x86.h': 'X86',
+            'ppc.h': 'Ppc',
             'comment_open': '\t//',
             'comment_close': '',
         },
@@ -31,6 +32,7 @@ template = {
             'arm64.h': 'arm64',
             'mips.h': 'mips',
             'x86.h': 'x86',
+            'ppc.h': 'ppc',
             'comment_open': '#',
             'comment_close': '',
         }
@@ -74,7 +76,7 @@ def gen(templ):
                         print "Error: Unable to convert %s" % f
                         continue
                     elif len(f) > 1 and f[1] == '=':
-                        rhs = f[2]
+                        rhs = ''.join(f[2:])
                     else:
                         rhs = str(count)
                         count += 1
