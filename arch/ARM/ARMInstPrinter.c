@@ -225,13 +225,13 @@ static name_map insn_update_flgs[] = {
 
 void ARM_post_printer(csh ud, cs_insn *insn, char *insn_asm)
 {
+	if (((cs_struct *)ud)->detail != CS_OPT_ON)
+		return;
+
 	// check if this insn requests write-back
 	if (strrchr(insn_asm, '!') != NULL) {
 		insn->detail->arm.writeback = true;
 	}
-
-	if (((cs_struct *)ud)->detail != CS_OPT_ON)
-		return;
 
 	// check if this insn requests update flags
 	if (insn->detail->arm.update_flags == false) {
