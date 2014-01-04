@@ -16,5 +16,6 @@ case "$1" in
   "arm64") java -classpath ${JNA}:. TestArm64 ;;
   "mips") java -classpath ${JNA}:. TestMips ;;
   "x86") java -classpath ${JNA}:. TestX86 ;;
-  * ) echo "Usage: ./run.sh [arm]"; exit 1;;
+  "ppc") java -classpath ${JNA}:. TestPpc ;;
+  * ) echo "Usage: ./run.sh [arm|arm64|mips|x86|ppc]"; exit 1;;
 esac
