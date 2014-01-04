@@ -803,7 +803,7 @@ static void printVectorList(MCInst *MI, unsigned OpNum,
 
 void AArch64_post_printer(csh handle, cs_insn *flat_insn, char *insn_asm)
 {
-	if (((cs_struct *)ud)->detail != CS_OPT_ON)
+	if (((cs_struct *)handle)->detail != CS_OPT_ON)
 		return;
 
 	// check if this insn requests write-back
