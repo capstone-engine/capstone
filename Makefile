@@ -136,11 +136,7 @@ install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 	$(INSTALL_LIBRARY) lib$(LIBNAME).$(EXT) $(LIBDIR)
 	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
 	mkdir -p $(INCDIR)/$(LIBNAME)
-	$(INSTALL_DATA) include/capstone.h $(INCDIR)/$(LIBNAME)
-	$(INSTALL_DATA) include/x86.h $(INCDIR)/$(LIBNAME)
-	$(INSTALL_DATA) include/arm.h $(INCDIR)/$(LIBNAME)
-	$(INSTALL_DATA) include/arm64.h $(INCDIR)/$(LIBNAME)
-	$(INSTALL_DATA) include/mips.h $(INCDIR)/$(LIBNAME)
+	$(INSTALL_DATA) include/*.h $(INCDIR)/$(LIBNAME)
 	mkdir -p $(LIBDIR)/pkgconfig
 	$(INSTALL_DATA) $(PKGCFGF) $(LIBDIR)/pkgconfig/
 
