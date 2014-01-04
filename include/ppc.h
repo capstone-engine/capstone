@@ -40,6 +40,13 @@ typedef enum ppc_bc {
   PPC_BC_NU_PLUS  = (3 << 5) |  7
 } ppc_bc;
 
+//> PPC branch hint for some branch instructions
+typedef enum ppc_bh {
+	PPC_BH_NO = 0,	// no hint
+	PPC_BH_PLUS,	// PLUS hint
+	PPC_BH_MINUS,	// MINUS hint
+} ppc_bh;
+
 //> Operand type for instruction's operands
 typedef enum ppc_op_type {
 	PPC_OP_INVALID = 0,	// Uninitialized.
@@ -70,7 +77,10 @@ typedef struct cs_ppc {
 	// branch code for branch instructions
 	ppc_bc bc;
 
-	// if this is True, then this 'dot' insn updates CR0
+	// branch hint for branch instructions
+	ppc_bh bh;
+
+	// if update_cr0 = True, then this 'dot' insn updates CR0
 	bool update_cr0;
 
 	// Number of operands of this instruction, 
