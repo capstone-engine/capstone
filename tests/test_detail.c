@@ -52,6 +52,7 @@ static void test()
 #define ARM64_CODE "\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9\x10\x20\x21\x1e"
 //#define THUMB_CODE "\x0a\xbf" // itet eq
 //#define X86_CODE32 "\x77\x04"	// ja +6
+#define PPC_CODE "\x80\x20\x00\x00\x80\x3f\x00\x00\x10\x43\x23\x0e\xd0\x44\x00\x80\x4c\x43\x22\x02\x2d\x03\x00\x80\x7c\x43\x20\x14\x7c\x43\x20\x93\x4f\x20\x00\x21\x4c\xc8\x00\x21"
 
 	struct platform platforms[] = {
 		{
@@ -132,6 +133,13 @@ static void test()
 			.code = (unsigned char *)ARM64_CODE,
 			.size = sizeof(ARM64_CODE) - 1,
 			.comment = "ARM-64"
+		},
+		{
+			.arch = CS_ARCH_PPC,
+			.mode = CS_MODE_BIG_ENDIAN,
+			.code = (unsigned char*)PPC_CODE,
+			.size = sizeof(PPC_CODE) - 1,
+			.comment = "PPC-64"
 		},
 	};
 

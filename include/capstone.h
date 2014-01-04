@@ -62,7 +62,7 @@ typedef enum cs_opt_value {
 	CS_OPT_SYNTAX_DEFAULT = 0, // Default asm syntax (CS_OPT_SYNTAX).
 	CS_OPT_SYNTAX_INTEL, // X86 Intel asm syntax - default on X86 (CS_OPT_SYNTAX).
 	CS_OPT_SYNTAX_ATT,   // X86 ATT asm syntax (CS_OPT_SYNTAX)
-	CS_OPT_SYNTAX_DARWIN, // Darwin asm syntax prints register name with only number - PPC arch (CS_OPT_SYNTAX)
+	CS_OPT_SYNTAX_NOREGNAME, // Prints register name with only number - PPC arch (CS_OPT_SYNTAX)
 } cs_opt_value;
 
 

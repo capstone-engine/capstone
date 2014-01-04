@@ -2804,8 +2804,7 @@ bool ARM_rel_branch(unsigned int id)
 
 void ARM_free_cache(void)
 {
-	if (insn_cache)
-		free(insn_cache);
+	free(insn_cache);
 
 	insn_cache = NULL;
 }

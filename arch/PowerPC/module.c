@@ -5,7 +5,7 @@
 #include "../../MCRegisterInfo.h"
 #include "PPCDisassembler.h"
 #include "PPCInstPrinter.h"
-//#include "mapping.h"
+#include "mapping.h"
 
 
 static cs_err init(cs_struct *ud)
@@ -18,9 +18,9 @@ static cs_err init(cs_struct *ud)
 	ud->getinsn_info = mri;
 	ud->disasm = PPC_getInstruction;
 
-	// ud->reg_name = PPC_reg_name;
-	// ud->insn_id = PPC_get_insn_id;
-	// ud->insn_name = PPC_insn_name;
+	ud->reg_name = PPC_reg_name;
+	ud->insn_id = PPC_get_insn_id;
+	ud->insn_name = PPC_insn_name;
 
 	return CS_ERR_OK;
 }
@@ -35,6 +35,7 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 
 static void destroy(cs_struct *handle)
 {
+	PPC_free_cache();
 }
 
 static void __attribute__ ((constructor)) __init_mips__()

@@ -37,7 +37,7 @@ LIBOBJ += cs.o utils.o SStream.o MCInstrDesc.o MCRegisterInfo.o
 ifneq (,$(findstring powerpc,$(CAPSTONE_ARCHS)))
 	LIBOBJ += arch/PowerPC/PPCDisassembler.o
 	LIBOBJ += arch/PowerPC/PPCInstPrinter.o
-#	LIBOBJ += arch/PowerPC/mapping.o
+	LIBOBJ += arch/PowerPC/mapping.o
 	LIBOBJ += arch/PowerPC/module.o
 endif
 ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))

@@ -34,7 +34,7 @@ endif
 
 .PHONY: all clean
 
-SOURCES = test.c test_detail.c test_x86.c test_arm64.c test_arm.c test_mips.c
+SOURCES = test.c test_detail.c test_x86.c test_arm64.c test_arm.c test_mips.c test_ppc.c
 OBJS = $(SOURCES:.c=.o)
 BINARY = $(SOURCES:.c=$(BIN_EXT))
 

@@ -31,6 +31,7 @@ tests/test_arm
 tests/test_arm64
 tests/test_mips
 tests/test_x86
+tests/test_ppc
 
 # vim tmp file
 *.swp

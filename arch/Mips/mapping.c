@@ -2037,8 +2037,7 @@ mips_reg Mips_map_register(unsigned int r)
 
 void Mips_free_cache(void)
 {
-	if (insn_cache)
-		free(insn_cache);
+	free(insn_cache);
 
 	insn_cache = NULL;
 }

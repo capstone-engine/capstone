@@ -86,4 +86,3 @@ unsigned int count_positive(unsigned char *list)
 
 	return c;
 }
-

@@ -26,6 +26,7 @@
 #include "../../MCRegisterInfo.h"
 #include "../../MathExtras.h"
 #include "../../utils.h"
+#include "mapping.h"
 
 //#include "mapping.h"
 
@@ -135,7 +136,7 @@ static void printPredicateOperand(MCInst *MI, unsigned OpNo,
 {
 	unsigned Code = MCOperand_getImm(MCInst_getOperand(MI, OpNo));
 
-	MI->flat_insn.ppc.cc = (ppc_bc)Code;
+	MI->flat_insn.ppc.bc = (ppc_bc)Code;
 
 	if (!strcmp(Modifier, "cc")) {
 		switch ((ppc_predicate)Code) {
@@ -477,8 +478,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	if (MCOperand_isReg(Op)) {
 		unsigned reg = MCOperand_getReg(Op);
 		const char *RegName = getRegisterName(reg);
+		// map to public register
+		reg = PPC_map_register(reg);
 		// The linux and AIX assembler does not take register prefixes.
-		if (MI->csh->syntax == CS_OPT_SYNTAX_DARWIN)
+		if (MI->csh->syntax == CS_OPT_SYNTAX_NOREGNAME)
 			RegName = stripRegisterPrefix(RegName);
 
 		SStream_concat(O, "%s", RegName);
