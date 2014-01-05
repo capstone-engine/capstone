@@ -190,7 +190,7 @@ unsigned int cs_version(int *major, int *minor);
 
  @return True if this library supports the given arch.
 */
-bool cs_support(cs_arch arch);
+bool cs_support(int arch);
 
 /*
  Initialize CS handle: this must be done before any usage of CS.
