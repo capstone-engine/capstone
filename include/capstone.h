@@ -227,6 +227,10 @@ cs_err cs_close(csh handle);
 
  @return CS_ERR_OK on success, or other value on failure.
  Refer to cs_err enum for detailed error.
+
+ NOTE: in the case of CS_OPT_MEM, handle's value can be anything,
+ so that cs_option(handle, CS_OPT_MEM, value) can (i.e must) be called
+ even before cs_open()
 */
 cs_err cs_option(csh handle, cs_opt_type type, size_t value);
 
