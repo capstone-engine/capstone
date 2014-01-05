@@ -7,7 +7,6 @@
 #include "X86DisassemblerDecoder.h"
 
 #include "../../utils.h"
-#include "../../cs_priv.h"
 #include "../../include/x86.h"
 
 static x86_reg sib_base_map[] = {

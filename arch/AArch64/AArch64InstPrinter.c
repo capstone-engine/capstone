@@ -20,12 +20,11 @@
 
 #include "AArch64InstPrinter.h"
 #include "AArch64BaseInfo.h"
+#include "../../utils.h"
 #include "../../MCInst.h"
-#include "../../cs_priv.h"
 #include "../../SStream.h"
 #include "../../MCRegisterInfo.h"
 #include "../../MathExtras.h"
-#include "../../utils.h"
 
 #include "mapping.h"
 

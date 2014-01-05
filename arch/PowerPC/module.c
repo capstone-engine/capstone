@@ -1,7 +1,6 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013 */
 
-#include "../../cs_priv.h"
 #include "../../utils.h"
 #include "../../MCRegisterInfo.h"
 #include "PPCDisassembler.h"

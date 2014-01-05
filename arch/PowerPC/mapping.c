@@ -6,7 +6,6 @@
 
 #include "../../include/ppc.h"
 #include "../../utils.h"
-#include "../../cs_priv.h"
 
 #include "mapping.h"
 

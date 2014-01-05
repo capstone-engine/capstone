@@ -1,7 +1,6 @@
 /* Capstone Disassembler Engine */
 /* By Dang Hoang Vu <danghvu@gmail.com> 2013 */
 
-#include "../../cs_priv.h"
 #include "../../utils.h"
 #include "../../MCRegisterInfo.h"
 #include "AArch64Disassembler.h"

@@ -59,4 +59,9 @@ extern void (*arch_destroy[MAX_ARCH]) (cs_struct*);
 
 extern unsigned int all_arch;
 
+extern malloc_t my_malloc;
+extern calloc_t my_calloc;
+extern realloc_t my_realloc;
+extern free_t my_free;
+
 #endif

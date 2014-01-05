@@ -29,7 +29,6 @@
 #include "../../MCRegisterInfo.h"
 #include "../../utils.h"
 #include "mapping.h"
-#include "../../cs_priv.h"
 
 #define GET_SUBTARGETINFO_ENUM
 #include "ARMGenSubtargetInfo.inc"

@@ -21,7 +21,7 @@
 
 #include <inttypes.h> 
 
-#include "../../cs_priv.h"
+#include "../../utils.h"
 
 #include "../../SubtargetFeature.h"
 #include "../../MCInst.h"
@@ -29,7 +29,6 @@
 #include "../../SStream.h"
 
 #include "../../MathExtras.h"
-#include "../../utils.h"
 
 //#include "Mips.h"
 //#include "MipsRegisterInfo.h"

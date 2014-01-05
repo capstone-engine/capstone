@@ -7,11 +7,8 @@
 #include <string.h>
 #include <capstone.h>
 
-#include "cs_priv.h"
-
-#include "MCRegisterInfo.h"
-
 #include "utils.h"
+#include "MCRegisterInfo.h"
 
 cs_err (*arch_init[MAX_ARCH])(cs_struct *) = { NULL };
 cs_err (*arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = { NULL };

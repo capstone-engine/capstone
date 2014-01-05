@@ -21,11 +21,10 @@
 #include "PPCInstPrinter.h"
 #include "PPCPredicates.h"
 #include "../../MCInst.h"
-#include "../../cs_priv.h"
+#include "../../utils.h"
 #include "../../SStream.h"
 #include "../../MCRegisterInfo.h"
 #include "../../MathExtras.h"
-#include "../../utils.h"
 #include "mapping.h"
 
 //#include "mapping.h"
