@@ -85,7 +85,7 @@ static void print_insn_detail(cs_insn *ins)
 	}
 
 	if (arm->cc != ARM_CC_AL && arm->cc != ARM_CC_INVALID)
-		printf("\tCode condition: %u\n", ins->detail->arm.cc);
+		printf("\tCode condition: %u\n", arm->cc);
 
 	if (arm->update_flags)
 		printf("\tUpdate-flags: True\n");
