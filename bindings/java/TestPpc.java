@@ -57,6 +57,9 @@ public class TestPpc {
     if (operands.bc != 0)
       System.out.printf("\tBranch code: %d\n", operands.bc);
 
+    if (operands.bh != 0)
+      System.out.printf("\tBranch hint: %d\n", operands.bh);
+
     if (operands.updateCr0)
       System.out.printf("\tUpdate-CR0: True\n");
 

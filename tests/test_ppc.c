@@ -62,6 +62,9 @@ static void print_insn_detail(cs_insn *ins)
 	if (ppc->bc != 0)
 		printf("\tBranch code: %u\n", ins->detail->ppc.bc);
 
+	if (ppc->bh != 0)
+		printf("\tBranch hint: %u\n", ins->detail->ppc.bh);
+
 	if (ppc->update_cr0)
 		printf("\tUpdate-CR0: True\n");
 
