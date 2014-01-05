@@ -19,6 +19,10 @@ void (*arch_destroy[MAX_ARCH]) (cs_struct *) = { NULL };
 
 unsigned int all_arch = 0;
 
+malloc_t my_malloc = malloc;
+calloc_t my_calloc = calloc;
+realloc_t my_realloc = realloc;
+free_t my_free = free;
 
 unsigned int cs_version(int *major, int *minor)
 {
@@ -78,7 +82,7 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 {
 	cs_struct *ud;
 
-	ud = calloc(1, sizeof(*ud));
+	ud = my_calloc(1, sizeof(*ud));
 	if (!ud) {
 		// memory insufficient
 		return CS_ERR_MEM;
@@ -117,7 +121,7 @@ cs_err cs_close(csh handle)
 		case CS_ARCH_MIPS:
 		case CS_ARCH_ARM64:
 		case CS_ARCH_PPC:
-			free(ud->printer_info);
+			my_free(ud->printer_info);
 			break;
 		default:	// unsupported architecture
 			return CS_ERR_HANDLE;
@@ -127,7 +131,7 @@ cs_err cs_close(csh handle)
 		arch_destroy[ud->arch](ud);
 
 	memset(ud, 0, sizeof(*ud));
-	free(ud);
+	my_free(ud);
 
 	return CS_ERR_OK;
 }
@@ -191,6 +195,19 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 
 cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 {
+	// cs_option() can be called with NULL handle just for CS_OPT_MEM
+	// This is supposed to be executed before all other APIs (even cs_open())
+	if (type == CS_OPT_MEM) {
+		cs_opt_mem *mem = (cs_opt_mem *)value;
+
+		my_malloc = mem->malloc;
+		my_calloc = mem->calloc;
+		my_realloc = mem->realloc;
+		my_free = mem->free;
+
+		return CS_ERR_OK;
+	}
+
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 	if (!handle)
 		return CS_ERR_CSH;
@@ -243,7 +260,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 				mci.flat_insn.address = offset;
 				mci.flat_insn.size = insn_size;
 				// allocate memory for @detail pointer
-				insn_cache[f].detail = calloc(1, sizeof(cs_detail));
+				insn_cache[f].detail = my_calloc(1, sizeof(cs_detail));
 			}
 
 			handle->printer(&mci, &ss, handle->printer_info);
@@ -255,9 +272,9 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 			if (f == ARR_SIZE(insn_cache)) {
 				// resize total to contain newly disasm insns
 				total_size += sizeof(insn_cache);
-				void *tmp = realloc(total, total_size);
+				void *tmp = my_realloc(total, total_size);
 				if (tmp == NULL) {	// insufficient memory
-					free(total);
+					my_free(total);
 					handle->errnum = CS_ERR_MEM;
 					return 0;
 				}
@@ -284,9 +301,9 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 
 	if (f) {
 		// resize total to contain newly disasm insns
-		void *tmp = realloc(total, total_size + f * sizeof(insn_cache[0]));
+		void *tmp = my_realloc(total, total_size + f * sizeof(insn_cache[0]));
 		if (tmp == NULL) {	// insufficient memory
-			free(total);
+			my_free(total);
 			handle->errnum = CS_ERR_MEM;
 			return 0;
 		}
@@ -306,10 +323,10 @@ void cs_free(cs_insn *insn, size_t count)
 
 	// free all detail pointers
 	for (i = 0; i < count; i++)
-		free(insn[i].detail);
+		my_free(insn[i].detail);
 
 	// then free pointer to cs_insn array
-	free(insn);
+	my_free(insn);
 }
 
 // return friendly name of regiser in a string

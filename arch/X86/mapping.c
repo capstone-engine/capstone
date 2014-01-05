@@ -6642,6 +6642,6 @@ unsigned int X86_get_insn_id2(unsigned int id)
 
 void X86_free_cache(void)
 {
-	free(insn_cache);
+	my_free(insn_cache);
 	insn_cache = NULL;
 }

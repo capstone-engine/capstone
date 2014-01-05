@@ -3530,7 +3530,7 @@ arm64_reg AArch64_map_insn(const char *name)
 
 void AArch64_free_cache(void)
 {
-	free(insn_cache);
+	my_free(insn_cache);
 
 	insn_cache = NULL;
 }

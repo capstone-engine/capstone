@@ -2,6 +2,7 @@
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013 */
 
 #include "../../cs_priv.h"
+#include "../../utils.h"
 #include "../../MCRegisterInfo.h"
 #include "PPCDisassembler.h"
 #include "PPCInstPrinter.h"
@@ -10,7 +11,7 @@
 
 static cs_err init(cs_struct *ud)
 {
-	MCRegisterInfo *mri = malloc(sizeof(*mri));
+	MCRegisterInfo *mri = my_malloc(sizeof(*mri));
 
 	PPC_init(mri);
 	ud->printer = PPC_printInst;

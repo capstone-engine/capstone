@@ -1519,7 +1519,7 @@ ppc_reg PPC_map_register(unsigned int r)
 
 void PPC_free_cache(void)
 {
-	free(insn_cache);
+	my_free(insn_cache);
 
 	insn_cache = NULL;
 }

@@ -10,7 +10,7 @@
 
 static cs_err init(cs_struct *ud)
 {
-	MCRegisterInfo *mri = malloc(sizeof(*mri));
+	MCRegisterInfo *mri = my_malloc(sizeof(*mri));
 
 	ARM_init(mri);
 

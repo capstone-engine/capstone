@@ -13397,7 +13397,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS)
       }
   }
 
-  free(tmp);
+  my_free(tmp);
 
   return true;
 }

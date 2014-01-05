@@ -48,11 +48,27 @@ typedef enum cs_mode {
 	CS_MODE_BIG_ENDIAN = 1 << 31	// big endian mode
 } cs_mode;
 
+// User-defined memory malloc/calloc/realloc/free functions
+// These functions will be used internally to dynamically manage memory.
+// By default, Capstone uses POSIX's malloc(), calloc(), realloc() & free().
+typedef void* (*malloc_t)(size_t size);
+typedef void* (*calloc_t)(size_t nmemb, size_t size);
+typedef void* (*realloc_t)(void *ptr, size_t size);
+typedef void (*free_t)(void *ptr);
+
+typedef struct cs_opt_mem {
+	malloc_t malloc;
+	calloc_t calloc;
+	realloc_t realloc;
+	free_t free;
+} cs_opt_mem;
+
 // Runtime option for the disassembled engine
 typedef enum cs_opt_type {
 	CS_OPT_SYNTAX = 1,	// Asssembly output syntax
 	CS_OPT_DETAIL,	// Break down instruction structure into details
 	CS_OPT_MODE,	// Change engine's mode at run-time
+	CS_OPT_MEM,	// User-defined memory malloc/calloc/free
 } cs_opt_type;
 
 // Runtime option value (associated with option type above)

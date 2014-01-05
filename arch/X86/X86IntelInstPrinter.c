@@ -230,7 +230,7 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 			*tab = '\0';
 		// reflect the new insn name (alias) in the opcode
 		MCInst_setOpcode(MI, X86_get_insn_id2(X86_map_insn(mnem)));
-		free(mnem);
+		my_free(mnem);
 	} else
 		printInstruction(MI, O);
 

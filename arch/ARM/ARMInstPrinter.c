@@ -520,7 +520,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 					NewReg = MCOperand_CreateReg(MCRegisterInfo_getMatchingSuperReg(MRI, Reg, ARM_gsub_0,
 								MCRegisterInfo_getRegClass(MRI, ARM_GPRPairRegClassID)));
 					MCInst_addOperand2(&NewMI, NewReg);
-					free(NewReg);
+					my_free(NewReg);
 
 					// Copy the rest operands into NewMI.
 					unsigned i;

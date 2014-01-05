@@ -2,6 +2,7 @@
 /* By Dang Hoang Vu <danghvu@gmail.com> 2013 */
 
 #include "../../cs_priv.h"
+#include "../../utils.h"
 #include "../../MCRegisterInfo.h"
 #include "MipsDisassembler.h"
 #include "MipsInstPrinter.h"
@@ -10,7 +11,7 @@
 
 static cs_err init(cs_struct *ud)
 {
-	MCRegisterInfo *mri = malloc(sizeof(*mri));
+	MCRegisterInfo *mri = my_malloc(sizeof(*mri));
 
 	Mips_init(mri);
 	ud->printer = Mips_printInst;

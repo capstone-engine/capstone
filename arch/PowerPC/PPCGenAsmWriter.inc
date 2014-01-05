@@ -3479,7 +3479,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
   	  }
   }
 
-  free(tmp);
+  my_free(tmp);
 
   return true;
 }
