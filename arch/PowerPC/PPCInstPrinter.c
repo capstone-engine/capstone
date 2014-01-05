@@ -52,6 +52,19 @@ static void set_mem_access(MCInst *MI, bool status)
 	}
 }
 
+void PPC_post_printer(csh ud, cs_insn *insn, char *insn_asm)
+{
+	if (((cs_struct *)ud)->detail != CS_OPT_ON)
+		return;
+
+	// check if this insn has branch hint
+	if (strrchr(insn_asm, '+') != NULL) {
+		insn->detail->ppc.bh = PPC_BH_PLUS;
+	} else if (strrchr(insn_asm, '-') != NULL) {
+		insn->detail->ppc.bh = PPC_BH_MINUS;
+	}
+}
+
 #define GET_INSTRINFO_ENUM
 #include "PPCGenInstrInfo.inc"
 
