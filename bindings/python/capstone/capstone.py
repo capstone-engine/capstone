@@ -1,6 +1,6 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
-import arm, arm64, mips, x86
+import arm, arm64, mips, x86, ppc
 
 __all__ = [
     'Cs',
@@ -154,6 +154,7 @@ class _cs_arch(ctypes.Union):
         ('arm', arm.CsArm),
         ('mips', mips.CsMips),
         ('x86', x86.CsX86),
+        ('ppc', ppc.CsPpc),
     )
 
 class _cs_detail(ctypes.Structure):
@@ -280,6 +281,9 @@ class CsInsn(object):
                  self.sib_index, self.sib_scale, self.sib_base, self.operands) = x86.get_arch_info(detail.arch.x86)
             elif cs.arch == CS_ARCH_MIPS:
                  self.operands = mips.get_arch_info(detail.arch.mips)
+            if cs.arch == CS_ARCH_PPC:
+                (self.bc, self.bh, self.update_cr0, self.operands) = \
+                    ppc.get_arch_info(detail.arch.ppc)
 
         self.cs = cs
 
