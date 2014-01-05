@@ -16,10 +16,17 @@ void (*arch_destroy[MAX_ARCH]) (cs_struct *) = { NULL };
 
 unsigned int all_arch = 0;
 
+#ifdef USE_SYS_DYN_MEM
 malloc_t my_malloc = malloc;
 calloc_t my_calloc = calloc;
 realloc_t my_realloc = realloc;
 free_t my_free = free;
+#else
+malloc_t my_malloc = NULL;
+calloc_t my_calloc = NULL;
+realloc_t my_realloc = NULL;
+free_t my_free = NULL;
+#endif
 
 unsigned int cs_version(int *major, int *minor)
 {

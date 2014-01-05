@@ -9,6 +9,11 @@ RANLIB ?= $(CROSS)ranlib
 STRIP ?= $(CROSS)strip
 
 CFLAGS += -fPIC -O3 -Wall -Iinclude
+
+ifeq ($(USE_SYS_DYN_MEM),yes)
+CFLAGS += -DUSE_SYS_DYN_MEM
+endif
+
 LDFLAGS += -shared
 
 PREFIX ?= /usr
