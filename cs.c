@@ -138,8 +138,7 @@ cs_err cs_close(csh handle)
 			return CS_ERR_HANDLE;
 	}
 
-	if (arch_destroy[ud->arch])
-		arch_destroy[ud->arch](ud);
+	arch_destroy[ud->arch](ud);
 
 	memset(ud, 0, sizeof(*ud));
 	my_free(ud);
@@ -174,7 +173,7 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 
 	// map internal instruction opcode to public insn ID
 	if (handle->insn_id)
-		handle->insn_id(insn, MCInst_getOpcode(mci), handle->detail);
+		handle->insn_id(handle, insn, MCInst_getOpcode(mci));
 
 	// alias instruction might have ID saved in OpcodePub
 	if (MCInst_getOpcodePub(mci))

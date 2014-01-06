@@ -6,6 +6,7 @@
 
 #include "../../include/capstone.h"
 #include "../../include/x86.h"
+#include "../../cs_priv.h"
 
 // map sib_base to x86_reg
 x86_reg x86_map_sib_base(int r);
@@ -23,7 +24,7 @@ x86_reg x86_map_regname(const char *reg);
 const char *X86_reg_name(csh handle, unsigned int reg);
 
 // given internal insn id, return public instruction info
-void X86_get_insn_id(cs_insn *insn, unsigned int id, int detail);
+void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 
 // return insn name, given insn id
 const char *X86_insn_name(csh handle, unsigned int id);
@@ -38,6 +39,6 @@ unsigned int X86_get_insn_id2(unsigned int insn_id);
 void X86_post_printer(csh handle, cs_insn *pub_insn, char *insn_asm);
 
 // free insn cache
-void X86_free_cache(void);
+void X86_free_cache(cs_struct *h);
 
 #endif

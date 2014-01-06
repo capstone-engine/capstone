@@ -1388,10 +1388,8 @@ static insn_map alias_insns[] = {
 	{ Mips_SUBu, MIPS_INS_NEGU, { 0 }, { 0 }, { MIPS_GRP_STDENC, 0 }, 0, 0 },
 };
 
-static unsigned short *insn_cache = NULL;
-
 // given internal insn id, return public instruction info
-void Mips_get_insn_id(cs_insn *insn, unsigned int id, int detail)
+void Mips_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
 	int i;
 
@@ -1400,7 +1398,7 @@ void Mips_get_insn_id(cs_insn *insn, unsigned int id, int detail)
 		if (alias_insns[i].id == id) {
 			insn->id = alias_insns[i].mapid;
 
-			if (detail) {
+			if (h->detail) {
 				memcpy(insn->detail->regs_read, alias_insns[i].regs_use, sizeof(alias_insns[i].regs_use));
 				insn->detail->regs_read_count = count_positive(alias_insns[i].regs_use);
 
@@ -1421,11 +1419,11 @@ void Mips_get_insn_id(cs_insn *insn, unsigned int id, int detail)
 		}
 	}
 
-	i = insn_find(insns, ARR_SIZE(insns), id, &insn_cache);
+	i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
 	if (i != 0) {
 		insn->id = insns[i].mapid;
 
-		if (detail) {
+		if (h->detail) {
 			memcpy(insn->detail->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
 			insn->detail->regs_read_count = count_positive(insns[i].regs_use);
 
@@ -2035,9 +2033,8 @@ mips_reg Mips_map_register(unsigned int r)
 	return 0;
 }
 
-void Mips_free_cache(void)
+void Mips_free_cache(cs_struct *h)
 {
-	my_free(insn_cache);
-
-	insn_cache = NULL;
+	my_free(h->insn_cache);
+	h->insn_cache = NULL;
 }

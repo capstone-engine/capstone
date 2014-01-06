@@ -11,7 +11,7 @@
 const char *AArch64_reg_name(csh handle, unsigned int reg);
 
 // given internal insn id, return public instruction info
-void AArch64_get_insn_id(cs_insn *insn, unsigned int id, int detail);
+void AArch64_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 
 // given public insn id, return internal instruction ID
 unsigned int AArch64_get_insn_id2(unsigned int id);
@@ -22,6 +22,6 @@ const char *AArch64_insn_name(csh handle, unsigned int id);
 arm64_reg AArch64_map_insn(const char *name);
 
 // free insn cache
-void AArch64_free_cache(void);
+void AArch64_free_cache(cs_struct *h);
 
 #endif

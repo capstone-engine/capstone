@@ -11,7 +11,7 @@
 const char *Mips_reg_name(csh handle, unsigned int reg);
 
 // given internal insn id, return public instruction info
-void Mips_get_insn_id(cs_insn *insn, unsigned int id, int detail);
+void Mips_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 
 // given public insn id, return internal insn id
 unsigned int Mips_get_insn_id2(unsigned int id);
@@ -26,6 +26,6 @@ mips_reg Mips_map_insn(const char *name);
 mips_reg Mips_map_register(unsigned int r);
 
 // free insn cache
-void Mips_free_cache(void);
+void Mips_free_cache(cs_struct *h);
 
 #endif

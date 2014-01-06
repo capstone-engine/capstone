@@ -12,7 +12,7 @@
 const char *ARM_reg_name(csh handle, unsigned int reg);
 
 // given internal insn id, return public instruction ID
-void ARM_get_insn_id(cs_insn *insn, unsigned int id, int detail);
+void ARM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 
 // given public insn id, return internal instruction info
 unsigned int ARM_get_insn_id2(unsigned int id);
@@ -23,9 +23,9 @@ const char *ARM_insn_name(csh handle, unsigned int id);
 arm_reg ARM_map_insn(const char *name);
 
 // check if this insn is relative branch
-bool ARM_rel_branch(unsigned int insn_id);
+bool ARM_rel_branch(cs_struct *h, unsigned int insn_id);
 
 // free insn cache
-void ARM_free_cache(void);
+void ARM_free_cache(cs_struct *h);
 
 #endif

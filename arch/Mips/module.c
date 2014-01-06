@@ -43,7 +43,7 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 
 static void destroy(cs_struct *handle)
 {
-	Mips_free_cache();
+	Mips_free_cache(handle);
 }
 
 static void __attribute__ ((constructor)) __init_mips__()

@@ -19,7 +19,7 @@ typedef bool (*Disasm_t)(csh handle, const uint8_t *code, size_t code_len, MCIns
 
 typedef const char *(*GetName_t)(csh handle, unsigned int reg);
 
-typedef void (*GetID_t)(cs_insn *insn, unsigned int id, int detail);
+typedef void (*GetID_t)(cs_struct *h, cs_insn *insn, unsigned int id);
 
 // for ARM only
 typedef struct ARM_ITStatus {
@@ -44,6 +44,7 @@ struct cs_struct {
 	cs_opt_value detail;
 	int syntax;	// asm syntax for simple printer such as PPC
 	bool doing_mem;	// handling memory operand in InstPrinter code
+	unsigned short *insn_cache;	// index caching for mapping.c
 };
 
 #define MAX_ARCH 8

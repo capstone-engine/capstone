@@ -6605,16 +6605,14 @@ void X86_post_printer(csh handle, cs_insn *insn, char *insn_asm)
 	}
 }
 
-static unsigned short *insn_cache = NULL;
-
 // given internal insn id, return public instruction info
-void X86_get_insn_id(cs_insn *insn, unsigned int id, int detail)
+void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
-	int i = insn_find(insns, ARR_SIZE(insns), id, &insn_cache);
+	int i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
 	if (i != 0) {
 		insn->id = insns[i].mapid;
 
-		if (detail) {
+		if (h->detail) {
 			memcpy(insn->detail->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
 			insn->detail->regs_read_count = count_positive(insns[i].regs_use);
 
@@ -6639,8 +6637,8 @@ unsigned int X86_get_insn_id2(unsigned int id)
 	return insn_reverse_id(insns, ARR_SIZE(insns), id);
 }
 
-void X86_free_cache(void)
+void X86_free_cache(cs_struct *h)
 {
-	my_free(insn_cache);
-	insn_cache = NULL;
+	my_free(h->insn_cache);
+	h->insn_cache = NULL;
 }

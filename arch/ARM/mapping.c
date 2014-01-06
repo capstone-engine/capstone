@@ -2301,17 +2301,15 @@ static insn_map insns[] = {
 };
 
 
-static unsigned short *insn_cache = NULL;
-
-void ARM_get_insn_id(cs_insn *insn, unsigned int id, int detail)
+void ARM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
-	int i = insn_find(insns, ARR_SIZE(insns), id, &insn_cache);
+	int i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
 	if (i != 0) {
 		insn->id = insns[i].mapid;
 
-		if (detail) {
+		if (h->detail) {
 			cs_struct handle;
-			handle.detail = detail;
+			handle.detail = h->detail;
 
 			memcpy(insn->detail->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
 			insn->detail->regs_read_count = count_positive(insns[i].regs_use);
@@ -2791,9 +2789,9 @@ arm_reg ARM_map_insn(const char *name)
 	return (i != -1)? i : ARM_REG_INVALID;
 }
 
-bool ARM_rel_branch(unsigned int id)
+bool ARM_rel_branch(cs_struct *h, unsigned int id)
 {
-	int i = insn_find(insns, ARR_SIZE(insns), id, &insn_cache);
+	int i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
 	if (i != 0)
 		return (insns[i].branch && !insns[i].indirect_branch);
 	else {
@@ -2802,9 +2800,8 @@ bool ARM_rel_branch(unsigned int id)
 	}
 }
 
-void ARM_free_cache(void)
+void ARM_free_cache(cs_struct *h)
 {
-	my_free(insn_cache);
-
-	insn_cache = NULL;
+	my_free(h->insn_cache);
+	h->insn_cache = NULL;
 }

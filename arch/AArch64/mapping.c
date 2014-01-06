@@ -2991,18 +2991,16 @@ static insn_map alias_insns[] = {
 	// { AArch64_SUBSxxx_lsl, ARM64_INS_NEGS, { 0 }, { ARM64_REG_NZCV, 0 }, { 0 } },
 };
 
-static unsigned short *insn_cache = NULL;
-
 // given internal insn id, return public instruction info
-void AArch64_get_insn_id(cs_insn *insn, unsigned int id, int detail)
+void AArch64_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
-	int i = insn_find(insns, ARR_SIZE(insns), id, &insn_cache);
+	int i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
 	if (i != 0) {
 		insn->id = insns[i].mapid;
 
-		if (detail) {
+		if (h->detail) {
 			cs_struct handle;
-			handle.detail = detail;
+			handle.detail = h->detail;
 
 			memcpy(insn->detail->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
 			insn->detail->regs_read_count = count_positive(insns[i].regs_use);
@@ -3527,9 +3525,8 @@ arm64_reg AArch64_map_insn(const char *name)
 	return (i != -1)? i : ARM64_REG_INVALID;
 }
 
-void AArch64_free_cache(void)
+void AArch64_free_cache(cs_struct *h)
 {
-	my_free(insn_cache);
-
-	insn_cache = NULL;
+	my_free(h->insn_cache);
+	h->insn_cache = NULL;
 }
