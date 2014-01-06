@@ -28,7 +28,7 @@ static unsigned short *make_id2insn(insn_map *insns, unsigned int size)
 	unsigned short max_id = insns[size - 1].id;
 	unsigned int i;
 
-	unsigned short *cache = (unsigned short *)my_calloc(sizeof(*cache), max_id);
+	unsigned short *cache = (unsigned short *)my_calloc(sizeof(*cache), max_id + 1);
 
 	for (i = 1; i < size; i++)
 		cache[insns[i].id] = i;
