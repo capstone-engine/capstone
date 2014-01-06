@@ -38,7 +38,7 @@ unsigned int cs_version(int *major, int *minor)
 	return (CS_API_MAJOR << 8) + CS_API_MINOR;
 }
 
-bool cs_support(cs_arch arch)
+bool cs_support(int arch)
 {
 	if (arch == CS_ARCH_ALL)
 		return all_arch == ((1 << CS_ARCH_ARM) | (1 << CS_ARCH_ARM64) |
@@ -79,12 +79,19 @@ const char *cs_strerror(cs_err code)
 			return "Invalid option (CS_ERR_OPTION)";
 		case CS_ERR_DETAIL:
 			return "Details are unavailable (CS_ERR_DETAIL)";
+		case CS_ERR_MEMSETUP:
+			return "Dynamic memory management uninitialized (CS_ERR_MEMSETUP)";
 	}
 }
 
 cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 {
 	cs_struct *ud;
+
+	if (!my_malloc || !my_calloc || !my_realloc || !my_free)
+		// Error: before cs_open(), dynamic memory management must be initialized
+		// with cs_option(CS_OPT_MEM)
+		return CS_ERR_MEMSETUP;
 
 	ud = my_calloc(1, sizeof(*ud));
 	if (!ud) {

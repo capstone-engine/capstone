@@ -131,7 +131,6 @@ typedef struct cs_insn {
 	// Ascii text of instruction mnemonic
 	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
 	char mnemonic[32];
-
 	// Ascii text of instruction operands
 	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
 	char op_str[96];
@@ -160,6 +159,7 @@ typedef enum cs_err {
 	CS_ERR_MODE,	// Invalid/unsupported mode: cs_open()
 	CS_ERR_OPTION,	// Invalid/unsupported option: cs_option()
 	CS_ERR_DETAIL,	// Information is unavailable because detail option is OFF
+	CS_ERR_MEMSETUP, // Dynamic memory management uninitialized (see CS_OPT_MEM)
 } cs_err;
 
 /*
