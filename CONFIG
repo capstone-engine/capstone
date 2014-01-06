@@ -1,6 +1,6 @@
 // Package version
 
-#define PKG_MAJOR 1
+#define PKG_MAJOR 2
 #define PKG_MINOR 0
 
 
