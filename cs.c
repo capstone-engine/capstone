@@ -86,20 +86,20 @@ const char *cs_strerror(cs_err code)
 
 cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 {
-	cs_struct *ud;
-
 	if (!my_malloc || !my_calloc || !my_realloc || !my_free)
 		// Error: before cs_open(), dynamic memory management must be initialized
 		// with cs_option(CS_OPT_MEM)
 		return CS_ERR_MEMSETUP;
 
-	ud = my_calloc(1, sizeof(*ud));
-	if (!ud) {
-		// memory insufficient
-		return CS_ERR_MEM;
-	}
+	if (arch < CS_ARCH_MAX && arch_init[arch]) {
+		cs_struct *ud;
 
-	if (arch < CS_ARCH_MAX && arch_init[ud->arch]) {
+		ud = my_calloc(1, sizeof(*ud));
+		if (!ud) {
+			// memory insufficient
+			return CS_ERR_MEM;
+		}
+
 		ud->errnum = CS_ERR_OK;
 		ud->arch = arch;
 		ud->mode = mode;
@@ -108,14 +108,14 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		ud->detail = CS_OPT_ON;	// by default break instruction into details
 
 		arch_init[ud->arch](ud);
+
+		*handle = (uintptr_t)ud;
+
+		return CS_ERR_OK;
 	} else {
 		*handle = 0;
 		return CS_ERR_ARCH;
 	}
-
-	*handle = (uintptr_t)ud;
-
-	return CS_ERR_OK;
 }
 
 cs_err cs_close(csh handle)
