@@ -1,0 +1,11 @@
+This directory contains some tools used by developers of Capstone project.
+Average users should ignore all the contents here.
+
+
+- benchmark.py
+	This script benchmarks Python binding by disassembling some random code.
+
+- test_*.sh
+	Run all the tests and send the output to external file to be compared later.
+	This is useful when we want to verify if a commit (wrongly) changes
+	the disassemble result.
