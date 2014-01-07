@@ -82,8 +82,8 @@ CS_OPT_DETAIL = 2    # Break down instruction structure into details
 CS_OPT_MODE = 3      # Change engine's mode at run-time
 
 # Capstone option value
-CS_OPT_OFF = 0             # Turn OFF an option (CS_OPT_DETAIL)
-CS_OPT_ON = 3              # Turn ON an option - this is default option for CS_OPT_DETAIL
+CS_OPT_OFF = 0             # Turn OFF an option - default option of CS_OPT_DETAIL
+CS_OPT_ON = 3              # Turn ON an option (CS_OPT_DETAIL)
 
 # Capstone syntax value
 CS_OPT_SYNTAX_DEFAULT = 0    # Default assembly syntax of all platforms (CS_OPT_SYNTAX)
