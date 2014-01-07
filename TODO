@@ -21,6 +21,6 @@ Issues to be solved in next versions
 
 [Bindings]
 
-- OCaml & C# bindings are broken due to many API changes. This should be fixed ASAP.
+- OCaml binding are broken due to many API changes. This should be fixed ASAP.
 
 - Python 3 support is needed.
