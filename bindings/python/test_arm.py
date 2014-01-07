@@ -89,6 +89,7 @@ def test_class():
 
         try:
             md = Cs(arch, mode)
+            md.detail = True
             for insn in md.disasm(code, 0x1000):
                 print_insn_detail(insn)
                 print
