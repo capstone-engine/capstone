@@ -256,48 +256,435 @@ def cs_disasm_quick(arch, mode, code, offset, count = 0):
 # Python-style class to disasm code
 class CsInsn(object):
     def __init__(self, cs, all_info):
-        self.id = all_info.id
-        self.address = all_info.address
-        self.size = all_info.size
-        self.bytes = bytearray(all_info.bytes)[:self.size]
-        self.mnemonic = all_info.mnemonic[:]    # copy string
-        self.op_str = all_info.op_str[:]    # copy string
+        self._raw = all_info
+        self._cs = cs
 
-        if cs._detail:
-            detail = all_info.detail.contents
-            self.regs_read = detail.regs_read[:detail.regs_read_count]
-            self.regs_write = detail.regs_write[:detail.regs_write_count]
-            self.groups = detail.groups[:detail.groups_count]
+    @property
+    def id(self):
+        return self._raw.id
 
-            if cs.arch == CS_ARCH_ARM:
-                (self.cc, self.update_flags, self.writeback, self.operands) = \
+    @property
+    def address(self):
+        return self._raw.address
+
+    @property
+    def size(self):
+        return self._raw.size
+
+    @property
+    def bytes(self):
+        return bytearray(self._raw.bytes)[:self._raw.size]
+
+    @property
+    def mnemonic(self):
+        return self._raw.mnemonic
+
+    @property
+    def op_str(self):
+        return self._raw.op_str
+
+    @property
+    def regs_read(self):
+        if self._cs._detail:
+            detail = self._raw.detail.contents
+            return detail.regs_read[:detail.regs_read_count]
+        return None
+
+    @property
+    def regs_write(self):
+        if self._cs._detail:
+            detail = self._raw.detail.contents
+            return detail.regs_write[:detail.regs_write_count]
+        return None
+
+    @property
+    def groups(self):
+        if self._cs._detail:
+            detail = self._raw.detail.contents
+            return detail.groups[:detail.groups_count]
+        return None
+
+    @property
+    def cc(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        if self._cs.arch == CS_ARCH_ARM:
+            try:
+                return self._cc
+            except:
+                (self._cc, self._update_flags, self._writeback, self._operands) = \
                     arm.get_arch_info(detail.arch.arm)
-            elif cs.arch == CS_ARCH_ARM64:
-                (self.cc, self.update_flags, self.writeback, self.operands) = \
+                return self._cc
+        elif self._cs.arch == CS_ARCH_ARM64:
+            try:
+                return self._cc
+            except:
+                (self._cc, self._update_flags, self._writeback, self._operands) = \
                     arm64.get_arch_info(detail.arch.arm64)
-            elif cs.arch == CS_ARCH_X86:
-                (self.prefix, self.segment, self.opcode, self.op_size, self.addr_size, \
-                 self.disp_size, self.imm_size, self.modrm, self.sib, self.disp, \
-                 self.sib_index, self.sib_scale, self.sib_base, self.operands) = x86.get_arch_info(detail.arch.x86)
-            elif cs.arch == CS_ARCH_MIPS:
-                 self.operands = mips.get_arch_info(detail.arch.mips)
-            if cs.arch == CS_ARCH_PPC:
-                (self.bc, self.bh, self.update_cr0, self.operands) = \
-                    ppc.get_arch_info(detail.arch.ppc)
+                return self._cc
+        else:
+            return None
 
-        self.cs = cs
+    @property
+    def update_flags(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        if self._cs.arch == CS_ARCH_ARM:
+            try:
+                return self._update_flags
+            except:
+                (self._cc, self._update_flags, self._writeback, self._operands) = \
+                    arm.get_arch_info(detail.arch.arm)
+                return self._update_flags
+        elif self._cs.arch == CS_ARCH_ARM64:
+            try:
+                return self._update_flags
+            except:
+                (self._cc, self._update_flags, self._writeback, self._operands) = \
+                    arm64.get_arch_info(detail.arch.arm64)
+                return self._update_flags
+        else:
+            return None
+
+    @property
+    def writeback(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        if self._cs.arch == CS_ARCH_ARM:
+            try:
+                return self._writeback
+            except:
+                (self._cc, self._update_flags, self._writeback, self._operands) = \
+                    arm.get_arch_info(detail.arch.arm)
+                return self._writeback
+        elif self._cs.arch == CS_ARCH_ARM64:
+            try:
+                return self._writeback
+            except:
+                (self._cc, self._update_flags, self._writeback, self._operands) = \
+                    arm64.get_arch_info(detail.arch.arm64)
+                return self._writeback
+        else:
+            return None
+
+    @property
+    def operands(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        try:
+            return self._operands
+        except:
+            if self._cs.arch == CS_ARCH_ARM:
+                (self._cc, self._update_flags, self._writeback, self._operands) = \
+                    arm.get_arch_info(detail.arch.arm)
+                return self._operands
+            elif self._cs.arch == CS_ARCH_ARM64:
+                (self._cc, self._update_flags, self._writeback, self._operands) = \
+                    arm64.get_arch_info(detail.arch.arm64)
+                return self._operands
+            elif self._cs.arch == CS_ARCH_X86:
+                (self._prefix, self._segment, self._opcode, self._op_size, self._addr_size, \
+                    self._disp_size, self._imm_size, self._modrm, self._sib, self._disp, \
+                    self._sib_index, self._sib_scale, self._sib_base, self._operands) = x86.get_arch_info(detail.arch.x86)
+                return self._operands
+            elif self._cs.arch == CS_ARCH_MIPS:
+                self._operands = mips.get_arch_info(detail.arch.mips)
+                return self._operands
+            if self._cs.arch == CS_ARCH_PPC:
+                (self._bc, self._bh, self._update_cr0, self._operands) = \
+                    ppc.get_arch_info(detail.arch.ppc)
+                return self._operands
+            else:
+                return None
+
+    @property
+    def bc(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        if self._cs.arch == CS_ARCH_PPC:
+            try:
+                return self._bc
+            except:
+                (self._bc, self._bh, self._update_cr0, self._operands) = \
+                    ppc.get_arch_info(detail.arch.ppc)
+                return self._bc
+        else:
+            return None
+
+    @property
+    def bh(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        if self._cs.arch == CS_ARCH_PPC:
+            try:
+                return self._bh
+            except:
+                (self._bc, self._bh, self._update_cr0, self._operands) = \
+                    ppc.get_arch_info(detail.arch.ppc)
+                return self._bh
+        else:
+            return None
+
+    @property
+    def update_cr0(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        if self._cs.arch == CS_ARCH_PPC:
+            try:
+                return self._update_cr0
+            except:
+                (self._bc, self._bh, self._update_cr0, self._operands) = \
+                    ppc.get_arch_info(detail.arch.ppc)
+                return self._update_cr0
+        else:
+            return None
+
+    @property
+    def prefix(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        if self._cs.arch == CS_ARCH_X86:
+            try:
+                return self._prefix
+            except:
+                (self._prefix, self._segment, self._opcode, self._op_size, self._addr_size, \
+                    self._disp_size, self._imm_size, self._modrm, self._sib, self._disp, \
+                    self._sib_index, self._sib_scale, self._sib_base, self._operands) = x86.get_arch_info(detail.arch.x86)
+                return self.prefix
+        else:
+            return None
+
+    @property
+    def segment(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        if self._cs.arch == CS_ARCH_X86:
+            try:
+                return self._segment
+            except:
+                (self._prefix, self._segment, self._opcode, self._op_size, self._addr_size, \
+                    self._disp_size, self._imm_size, self._modrm, self._sib, self._disp, \
+                    self._sib_index, self._sib_scale, self._sib_base, self._operands) = x86.get_arch_info(detail.arch.x86)
+                return self._segment
+        else:
+            return None
+
+    @property
+    def opcode(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        if self._cs.arch == CS_ARCH_X86:
+            try:
+                return self._opcode
+            except:
+                (self._prefix, self._segment, self._opcode, self._op_size, self._addr_size, \
+                    self._disp_size, self._imm_size, self._modrm, self._sib, self._disp, \
+                    self._sib_index, self._sib_scale, self._sib_base, self._operands) = x86.get_arch_info(detail.arch.x86)
+                return self.opcode
+        else:
+            return None
+
+    @property
+    def op_size(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        if self._cs.arch == CS_ARCH_X86:
+            try:
+                return self._op_size
+            except:
+                (self._prefix, self._segment, self._opcode, self._op_size, self._addr_size, \
+                    self._disp_size, self._imm_size, self._modrm, self._sib, self._disp, \
+                    self._sib_index, self._sib_scale, self._sib_base, self._operands) = x86.get_arch_info(detail.arch.x86)
+                return self._op_size
+        else:
+            return None
+
+    @property
+    def addr_size(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        if self._cs.arch == CS_ARCH_X86:
+            try:
+                return self._addr_size
+            except:
+                (self._prefix, self._segment, self._opcode, self._op_size, self._addr_size, \
+                    self._disp_size, self._imm_size, self._modrm, self._sib, self._disp, \
+                    self._sib_index, self._sib_scale, self._sib_base, self._operands) = x86.get_arch_info(detail.arch.x86)
+                return self._addr_size
+        else:
+            return None
+
+    @property
+    def disp_size(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        if self._cs.arch == CS_ARCH_X86:
+            try:
+                return self._disp_size
+            except:
+                (self._prefix, self._segment, self._opcode, self._op_size, self._addr_size, \
+                    self._disp_size, self._imm_size, self._modrm, self._sib, self._disp, \
+                    self._sib_index, self._sib_scale, self._sib_base, self._operands) = x86.get_arch_info(detail.arch.x86)
+                return self._disp_size
+        else:
+            return None
+
+    @property
+    def imm_size(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        if self._cs.arch == CS_ARCH_X86:
+            try:
+                return self._imm_size
+            except:
+                (self._prefix, self._segment, self._opcode, self._op_size, self._addr_size, \
+                    self._disp_size, self._imm_size, self._modrm, self._sib, self._disp, \
+                    self._sib_index, self._sib_scale, self._sib_base, self._operands) = x86.get_arch_info(detail.arch.x86)
+                return self._imm_size
+        else:
+            return None
+
+    @property
+    def modrm(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        if self._cs.arch == CS_ARCH_X86:
+            try:
+                return self._modrm
+            except:
+                (self._prefix, self._segment, self._opcode, self._op_size, self._addr_size, \
+                    self._disp_size, self._imm_size, self._modrm, self._sib, self._disp, \
+                    self._sib_index, self._sib_scale, self._sib_base, self._operands) = x86.get_arch_info(detail.arch.x86)
+                return self._modrm
+        else:
+            return None
+
+    @property
+    def sib(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        if self._cs.arch == CS_ARCH_X86:
+            try:
+                return self._sib
+            except:
+                (self._prefix, self._segment, self._opcode, self._op_size, self._addr_size, \
+                    self._disp_size, self._imm_size, self._modrm, self._sib, self._disp, \
+                    self._sib_index, self._sib_scale, self._sib_base, self._operands) = x86.get_arch_info(detail.arch.x86)
+                return self._sib
+        else:
+            return None
+
+    @property
+    def disp(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        if self._cs.arch == CS_ARCH_X86:
+            try:
+                return self._disp
+            except:
+                (self._prefix, self._segment, self._opcode, self._op_size, self._addr_size, \
+                    self._disp_size, self._imm_size, self._modrm, self._sib, self._disp, \
+                    self._sib_index, self._sib_scale, self._sib_base, self._operands) = x86.get_arch_info(detail.arch.x86)
+                return self._disp
+        else:
+            return None
+
+    @property
+    def sib_index(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        if self._cs.arch == CS_ARCH_X86:
+            try:
+                return self._sib_index
+            except:
+                (self._prefix, self._segment, self._opcode, self._op_size, self._addr_size, \
+                    self._disp_size, self._imm_size, self._modrm, self._sib, self._disp, \
+                    self._sib_index, self._sib_scale, self._sib_base, self._operands) = x86.get_arch_info(detail.arch.x86)
+                return self._sib_index
+        else:
+            return None
+
+    @property
+    def sib_scale(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        if self._cs.arch == CS_ARCH_X86:
+            try:
+                return self._sib_scale
+            except:
+                (self._prefix, self._segment, self._opcode, self._op_size, self._addr_size, \
+                    self._disp_size, self._imm_size, self._modrm, self._sib, self._disp, \
+                    self._sib_index, self._sib_scale, self._sib_base, self._operands) = x86.get_arch_info(detail.arch.x86)
+                return self._sib_scale
+        else:
+            return None
+
+    @property
+    def sib_base(self):
+        if not self._cs._detail:
+            return None
+
+        detail = self._raw.detail.contents
+        if self._cs.arch == CS_ARCH_X86:
+            try:
+                return self._sib_base
+            except:
+                (self._prefix, self._segment, self._opcode, self._op_size, self._addr_size, \
+                    self._disp_size, self._imm_size, self._modrm, self._sib, self._disp, \
+                    self._sib_index, self._sib_scale, self._sib_base, self._operands) = x86.get_arch_info(detail.arch.x86)
+                return self._sib_base
+        else:
+            return None
 
     # get the last error code
     def errno():
-        return _cs.cs_errno(self.cs.csh)
+        return _cs.cs_errno(self._cs.csh)
 
     # get the register name, given the register ID
     def reg_name(self, reg_id):
-        return _cs.cs_reg_name(self.cs.csh, reg_id)
+        return _cs.cs_reg_name(self._cs.csh, reg_id)
 
     # get the instruction string
     def insn_name(self):
-        return _cs.cs_insn_name(self.cs.csh, self.id)
+        return _cs.cs_insn_name(self._cs.csh, self.id)
 
     # verify if this insn belong to group with id as @group_id
     def group(self, group_id):
