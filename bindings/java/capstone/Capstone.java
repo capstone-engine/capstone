@@ -253,10 +253,10 @@ public class Capstone {
   public static final int CS_OPT_MODE = 3;  // Change engine's mode at run-time
 
   //Capstone option value
-  public static final int CS_OPT_OFF = 0;  // Turn OFF an option (CS_OPT_DETAIL)
+  public static final int CS_OPT_OFF = 0;  // Turn OFF an option - default option of CS_OPT_DETAIL
   public static final int CS_OPT_SYNTAX_INTEL = 1;  // Intel X86 asm syntax - default syntax on X86 (CS_OPT_SYNTAX,  CS_ARCH_X86)
   public static final int CS_OPT_SYNTAX_ATT = 2;    // ATT asm syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
-  public static final int CS_OPT_ON = 3;  // Turn ON an option - this is default option for CS_OPT_DETAIL
+  public static final int CS_OPT_ON = 3;  // Turn ON an option (CS_OPT_DETAIL)
   public static final int CS_OPT_SYNTAX_NOREGNAME = 3; // PPC asm syntax: Prints register name with only number (CS_OPT_SYNTAX)
 
   protected class NativeStruct {
@@ -281,6 +281,7 @@ public class Capstone {
       throw new RuntimeException("ERROR: Wrong arch or mode");
     }
     ns.csh = ns.handleRef.getValue();
+    this.detail = CS_OPT_OFF;
   }
 
   public void setSyntax(int syntax) {
