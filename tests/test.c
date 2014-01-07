@@ -161,8 +161,6 @@ static void test()
 		if (platforms[i].opt_type)
 			cs_option(handle, platforms[i].opt_type, platforms[i].opt_value);
 
-		//cs_option(handle, CS_OPT_DETAIL, CS_OPT_OFF);
-
 		size_t count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {
 			printf("****************\n");

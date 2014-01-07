@@ -105,7 +105,8 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		ud->mode = mode;
 		ud->big_endian = mode & CS_MODE_BIG_ENDIAN;
 		ud->reg_name = NULL;
-		ud->detail = CS_OPT_ON;	// by default break instruction into details
+		// by default, do not break instruction into details
+		ud->detail = CS_OPT_OFF;
 
 		arch_init[ud->arch](ud);
 

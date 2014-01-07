@@ -93,6 +93,8 @@ static void test()
 		if (cs_open(platforms[i].arch, platforms[i].mode, &handle))
 			return;
 
+		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+
 		size_t count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {
 			printf("****************\n");
