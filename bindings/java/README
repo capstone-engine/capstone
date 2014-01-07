@@ -1,6 +1,8 @@
-This has been tested with OpenJDK 6 on Ubuntu-12.04 and Arch Linux-3.11, 64-bit
+This has been tested with OpenJDK version 6 & 7 on Ubuntu-12.04 and
+Arch Linux-3.11, 64-bit.
 
-- OpenJDK is required to compile and run this test code. Install OpenJDK 6 with:
+- OpenJDK is required to compile and run this test code.
+  For example, install OpenJDK 6 with:
 
        $ sudo apt-get install openjdk-6-jre-headless openjdk-6-jdk libjna-java
 
