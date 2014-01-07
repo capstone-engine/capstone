@@ -18,6 +18,7 @@ Capstone source is organized as followings.
 │   ├── linux       <- .deb, .rpm, python packages, etc
 │   ├── mac         <- .dmg
 │   └── windows     <- .msi, .exe, .dll, etc
+├── suite           <- Development test tools - for Capstone developers only
 ├── tests           <- Test code (in C language)
 
 
