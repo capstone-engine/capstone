@@ -155,7 +155,6 @@ clean:
 	rm -f $(LIBOBJ) lib$(LIBNAME).*
 	#cd bindings/ruby; $(MAKE) clean; rm -rf Makefile
 	$(MAKE) -C bindings/python clean
-	$(MAKE) -C bindings/csharp clean
 	$(MAKE) -C bindings/java clean
 	$(MAKE) -C bindings/ocaml clean
 	$(MAKE) -C tests clean
