@@ -25,8 +25,5 @@ ppc_reg PPC_map_insn(const char *name);
 // map internal raw register to 'public' register
 ppc_reg PPC_map_register(unsigned int r);
 
-// free insn cache
-void PPC_free_cache(cs_struct *);
-
 #endif
 

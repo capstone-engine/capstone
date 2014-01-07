@@ -6636,9 +6636,3 @@ unsigned int X86_get_insn_id2(unsigned int id)
 {
 	return insn_reverse_id(insns, ARR_SIZE(insns), id);
 }
-
-void X86_free_cache(cs_struct *h)
-{
-	my_free(h->insn_cache);
-	h->insn_cache = NULL;
-}

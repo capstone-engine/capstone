@@ -1513,9 +1513,3 @@ ppc_reg PPC_map_register(unsigned int r)
 	// cannot find this register
 	return 0;
 }
-
-void PPC_free_cache(cs_struct *h)
-{
-	my_free(h->insn_cache);
-	h->insn_cache = NULL;
-}

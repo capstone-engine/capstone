@@ -3524,9 +3524,3 @@ arm64_reg AArch64_map_insn(const char *name)
 
 	return (i != -1)? i : ARM64_REG_INVALID;
 }
-
-void AArch64_free_cache(cs_struct *h)
-{
-	my_free(h->insn_cache);
-	h->insn_cache = NULL;
-}

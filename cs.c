@@ -138,8 +138,9 @@ cs_err cs_close(csh handle)
 			return CS_ERR_HANDLE;
 	}
 
-	arch_destroy[ud->arch](ud);
+	// arch_destroy[ud->arch](ud);
 
+	my_free(ud->insn_cache);
 	memset(ud, 0, sizeof(*ud));
 	my_free(ud);
 

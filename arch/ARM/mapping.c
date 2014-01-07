@@ -2799,9 +2799,3 @@ bool ARM_rel_branch(cs_struct *h, unsigned int id)
 		return false;
 	}
 }
-
-void ARM_free_cache(cs_struct *h)
-{
-	my_free(h->insn_cache);
-	h->insn_cache = NULL;
-}
