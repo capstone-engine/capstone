@@ -6,6 +6,11 @@ gen_const:
 install:
 	python setup.py install
 
+install_cython:
+	python setup_cython.py install
+
 clean:
 	rm -rf capstone/*.pyc
-	rm -rf capstone/*.so *.dll *.pyc *.dylib
+	rm -rf capstone/*.so
+	rm -rf capstone/*.c
+	rm -rf *.so *.dll *.pyc *.dylib
