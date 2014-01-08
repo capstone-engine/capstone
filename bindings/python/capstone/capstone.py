@@ -335,7 +335,7 @@ class CsInsn(object):
         return _dict[name]
 
     # get the last error code
-    def errno():
+    def errno(self):
         return _cs.cs_errno(self._cs.csh)
 
     # get the register name, given the register ID
