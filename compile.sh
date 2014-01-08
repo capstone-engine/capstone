@@ -17,6 +17,7 @@ function build {
 
 case "$1" in
   "" ) build;;
+  "default" ) build;;
   "nix32" ) CFLAGS=-m32 LDFLAGS=-m32 build;;
   "clang" ) CC=clang build;;
   "cross-win32" ) CROSS=i686-w64-mingw32- build;;

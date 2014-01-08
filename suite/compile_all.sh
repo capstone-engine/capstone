@@ -3,23 +3,24 @@
 
 export LD_LIBRARY_PATH=.
 
-for x in nix32 clang cross-win32 cross-win64 cygwin-mingw32 cygwin-mingw64; do
+for x in default nix32 clang cross-win32 cross-win64 cygwin-mingw32 cygwin-mingw64; do
+	echo -n "Compiling: $x ... "
 	./compile.sh $x &> /dev/null
 
 	if [ $? == 0 ]; then
-		echo "$x -> compiled"
+		echo "-> PASS"
 	else
-		echo -e "$x -> failed to compile\n"
+		echo -e "-> FAILED\n"
 		continue
 	fi
 
-	for t in test test_arm test_arm64 test_detail test_mips test_x86; do
+	for t in test test_arm test_arm64 test_detail test_mips test_x86 test_ppc; do
 		./tests/$t &> /dev/null
 
 		if [ $? -eq 0 ]; then
-			echo "  $t -> PASS"
+			echo "  Run $t -> PASS"
 		else
-			echo "  $t -> FAIL"
+			echo "  Run $t -> FAIL"
 		fi
 	done
 
