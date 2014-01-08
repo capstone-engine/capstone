@@ -4,17 +4,19 @@ from Cython.Distutils import build_ext
 
 VERSION = '2.0'
 
-ext_modules = [ Extension("capstone.capstone", ["pyx/capstone.pyx"]),
-    Extension("capstone.arm", ["pyx/arm.pyx"]),
-    Extension("capstone.arm_const", ["pyx/arm_const.pyx"]),
-    Extension("capstone.arm64", ["pyx/arm64.pyx"]),
-    Extension("capstone.arm64_const", ["pyx/arm64_const.pyx"]),
-    Extension("capstone.mips", ["pyx/mips.pyx"]),
-    Extension("capstone.mips_const", ["pyx/mips_const.pyx"]),
-    Extension("capstone.ppc", ["pyx/ppc.pyx"]),
-    Extension("capstone.ppc_const", ["pyx/ppc_const.pyx"]),
-    Extension("capstone.x86", ["pyx/x86.pyx"]),
-    Extension("capstone.x86_const", ["pyx/x86_const.pyx"])
+compile_args = ['-O3', '-fomit-frame-pointer']
+
+ext_modules = [ Extension("capstone.capstone", ["pyx/capstone.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.arm", ["pyx/arm.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.arm_const", ["pyx/arm_const.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.arm64", ["pyx/arm64.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.arm64_const", ["pyx/arm64_const.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.mips", ["pyx/mips.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.mips_const", ["pyx/mips_const.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.ppc", ["pyx/ppc.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.ppc_const", ["pyx/ppc_const.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.x86", ["pyx/x86.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.x86_const", ["pyx/x86_const.pyx"], extra_compile_args=compile_args)
 ]
 
 setup(
