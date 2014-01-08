@@ -9,3 +9,7 @@ Average users should ignore all the contents here.
 	Run all the tests and send the output to external file to be compared later.
 	This is useful when we want to verify if a commit (wrongly) changes
 	the disassemble result.
+
+- compile_all.sh
+	Compile Capstone for all platforms (*nix32, clang, cygwin, cross-compile) &
+	report the result as pass or fail.
