@@ -4,23 +4,24 @@ from Cython.Distutils import build_ext
 
 VERSION = '2.0'
 
-ext_modules = [ Extension("capstone.capstone", ["capstone/capstone.py"]),
-    Extension("capstone.arm", ["capstone/arm.py"]),
-    Extension("capstone.arm_const", ["capstone/arm_const.py"]),
-    Extension("capstone.arm64", ["capstone/arm64.py"]),
-    Extension("capstone.arm64_const", ["capstone/arm64_const.py"]),
-    Extension("capstone.mips", ["capstone/mips.py"]),
-    Extension("capstone.mips_const", ["capstone/mips_const.py"]),
-    Extension("capstone.ppc", ["capstone/ppc.py"]),
-    Extension("capstone.ppc_const", ["capstone/ppc_const.py"]),
-    Extension("capstone.x86", ["capstone/x86.py"]),
-    Extension("capstone.x86_const", ["capstone/x86_const.py"])
+ext_modules = [ Extension("capstone.capstone", ["pyx/capstone.pyx"]),
+    Extension("capstone.arm", ["pyx/arm.pyx"]),
+    Extension("capstone.arm_const", ["pyx/arm_const.pyx"]),
+    Extension("capstone.arm64", ["pyx/arm64.pyx"]),
+    Extension("capstone.arm64_const", ["pyx/arm64_const.pyx"]),
+    Extension("capstone.mips", ["pyx/mips.pyx"]),
+    Extension("capstone.mips_const", ["pyx/mips_const.pyx"]),
+    Extension("capstone.ppc", ["pyx/ppc.pyx"]),
+    Extension("capstone.ppc_const", ["pyx/ppc_const.pyx"]),
+    Extension("capstone.x86", ["pyx/x86.pyx"]),
+    Extension("capstone.x86_const", ["pyx/x86_const.pyx"])
 ]
 
 setup(
     provides     = ['capstone'],
+    package_dir  = {'capstone' : 'pyx'},
+    packages     = ['capstone'],
     name         = 'capstone',
-    package_data = {'capstone': ['__init__.py']},
     version      = VERSION,
     cmdclass = {'build_ext': build_ext},
     ext_modules = ext_modules,

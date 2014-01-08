@@ -7,11 +7,14 @@ install:
 	python setup.py install
 
 install_cython:
-#   Newer cython is needed: sudo pip install --upgrade cython
+# NOTE: Newer cython can be installed by: sudo pip install --upgrade cython
 	python setup_cython.py install
 
 clean:
 	rm -rf capstone/*.pyc
 	rm -rf capstone/*.so
 	rm -rf capstone/*.c
+	rm -rf pyx/*.pyc
+	rm -rf pyx/*.so
+	rm -rf pyx/*.c
 	rm -rf *.so *.dll *.pyc *.dylib
