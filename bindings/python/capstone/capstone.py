@@ -102,12 +102,19 @@ CS_ERR_OPTION = 6  # Invalid/unsupported option: cs_option()
 CS_ERR_DETAIL = 7  # Invalid/unsupported option: cs_option()
 
 
-import ctypes, ctypes.util
-from os.path import split, join
+import ctypes, ctypes.util, sys
+from os.path import split, join, dirname
 import distutils.sysconfig
 
 
 # load all the libs
+#if getattr(sys, 'frozen', False):
+#    __file__ = dirname(sys.executable)
+
+import inspect
+if not hasattr(sys.modules[__name__], '__file__'):
+    __file__ = inspect.getfile(inspect.currentframe())
+
 _lib_path = split(__file__)[0]
 _all_libs = ['libcapstone.dll', 'libcapstone.so', 'libcapstone.dylib']
 _found = False
