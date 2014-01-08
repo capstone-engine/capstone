@@ -306,19 +306,22 @@ class CsInsn(object):
 
     def __gen_detail(self):
         arch = self._cs.arch
-        all_info = self._raw.detail.contents
+        detail = self._raw.detail.contents
         if arch == CS_ARCH_ARM:
             (self.cc, self.update_flags, self.writeback, self.operands) = \
-                arm.get_arch_info(all_info.arch.arm)
+                arm.get_arch_info(detail.arch.arm)
         elif arch == CS_ARCH_ARM64:
             (self.cc, self.update_flags, self.writeback, self.operands) = \
-                arm64.get_arch_info(all_info.arch.arm64)
+                arm64.get_arch_info(detail.arch.arm64)
         elif arch == CS_ARCH_X86:
             (self.prefix, self.segment, self.opcode, self.op_size, self.addr_size, \
                 self.disp_size, self.imm_size, self.modrm, self.sib, self.disp, \
-                self.sib_index, self.sib_scale, self.sib_base, self.operands) = x86.get_arch_info(all_info.arch.x86)
+                self.sib_index, self.sib_scale, self.sib_base, self.operands) = x86.get_arch_info(detail.arch.x86)
         elif arch == CS_ARCH_MIPS:
-                self.operands = mips.get_arch_info(all_info.arch.mips)
+                self.operands = mips.get_arch_info(detail.arch.mips)
+        elif arch == CS_ARCH_PPC:
+            (self.bc, self.bh, self.update_cr0, self.operands) = \
+                ppc.get_arch_info(detail.arch.ppc)
 
     def __getattr__(self, name):
         attr = object.__getattribute__
