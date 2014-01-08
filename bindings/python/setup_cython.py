@@ -20,6 +20,7 @@ ext_modules = [ Extension("capstone.capstone", ["capstone/capstone.py"]),
 setup(
     provides     = ['capstone'],
     name         = 'capstone',
+    package_data = {'capstone': ['__init__.py']},
     version      = VERSION,
     cmdclass = {'build_ext': build_ext},
     ext_modules = ext_modules,

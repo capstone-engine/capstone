@@ -7,6 +7,7 @@ install:
 	python setup.py install
 
 install_cython:
+#   Newer cython is needed: sudo pip install --upgrade cython
 	python setup_cython.py install
 
 clean:
