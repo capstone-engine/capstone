@@ -89,7 +89,7 @@ CS_OPT_ON = 3              # Turn ON an option (CS_OPT_DETAIL)
 CS_OPT_SYNTAX_DEFAULT = 0    # Default assembly syntax of all platforms (CS_OPT_SYNTAX)
 CS_OPT_SYNTAX_INTEL = 1    # Intel X86 asm syntax - default syntax on X86 (CS_OPT_SYNTAX, CS_ARCH_X86)
 CS_OPT_SYNTAX_ATT = 2      # ATT asm syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
-CS_OPT_SYNTAX_NOREGNAME = 2   # Asm syntax prints register name with only number - (CS_OPT_SYNTAX, CS_ARCH_PPC)
+CS_OPT_SYNTAX_NOREGNAME = 3   # Asm syntax prints register name with only number - (CS_OPT_SYNTAX, CS_ARCH_PPC)
 
 # Capstone error type
 CS_ERR_OK = 0      # No error: everything was fine
