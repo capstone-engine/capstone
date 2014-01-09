@@ -32,6 +32,7 @@ tests/test_arm64
 tests/test_mips
 tests/test_x86
 tests/test_ppc
+tests/*.static
 
 # vim tmp file
 *.swp
