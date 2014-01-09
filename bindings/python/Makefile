@@ -33,5 +33,7 @@ clean:
 	rm -rf capstone/*.pyc
 	rm -rf capstone/*.so
 	rm -rf capstone/*.c
-	rm -rf pyx/*
+	rm -rf pyx/*.py*
+	rm -rf pyx/*.so
+	rm -rf pyx/*.c
 	rm -rf *.so *.dll *.pyc *.dylib
