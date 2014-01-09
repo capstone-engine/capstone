@@ -4,6 +4,18 @@ from distutils.core import setup
 
 VERSION = '2.0'
 
+# clean package directory first
+import sys, os.path
+import shutil
+for f in sys.path:
+    if f.endswith('packages'):
+        pkgdir = os.path.join(f, 'capstone')
+        #print(pkgdir)
+        try:
+            shutil.rmtree(pkgdir)
+        except:
+            pass
+
 setup(
     provides     = ['capstone'],
     packages     = ['capstone'],

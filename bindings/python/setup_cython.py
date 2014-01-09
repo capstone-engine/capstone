@@ -1,5 +1,6 @@
 from distutils.core import setup
 from distutils.extension import Extension
+from distutils.command.install_lib import install_lib as _install
 from Cython.Distutils import build_ext
 
 VERSION = '2.0'
@@ -18,6 +19,18 @@ ext_modules = [ Extension("capstone.capstone", ["pyx/capstone.pyx"], extra_compi
     Extension("capstone.x86", ["pyx/x86.pyx"], extra_compile_args=compile_args),
     Extension("capstone.x86_const", ["pyx/x86_const.pyx"], extra_compile_args=compile_args)
 ]
+
+# clean package directory first
+import sys, os.path
+import shutil
+for f in sys.path:
+    if f.endswith('packages'):
+        pkgdir = os.path.join(f, 'capstone')
+        #print(pkgdir)
+        try:
+            shutil.rmtree(pkgdir)
+        except:
+            pass
 
 setup(
     provides     = ['capstone'],
