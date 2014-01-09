@@ -91,24 +91,26 @@ const char *cs_strerror(cs_err code)
 }
 
 void enable_construct() {
-  enable_arm();
+#ifdef CAPSTONE_HAS_ARM
+	enable_arm();
+#endif
 #ifdef CAPSTONE_HAS_ARM64
-  enable_arm64();
+	enable_arm64();
 #endif
 #ifdef CAPSTONE_HAS_MIPS
-  enable_mips();
+	enable_mips();
 #endif
 #ifdef CAPSTONE_HAS_X86
-  enable_x86();
+	enable_x86();
 #endif
 #ifdef CAPSTONE_HAS_POWERPC
-  enable_powerpc();
+	enable_powerpc();
 #endif
 }
 
 cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 {
-  enable_construct();
+	enable_construct();
 	if (!my_malloc || !my_calloc || !my_realloc || !my_free)
 		// Error: before cs_open(), dynamic memory management must be initialized
 		// with cs_option(CS_OPT_MEM)
