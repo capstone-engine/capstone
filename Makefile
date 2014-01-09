@@ -153,7 +153,7 @@ uninstall:
 
 clean:
 	rm -f $(LIBOBJ) lib$(LIBNAME).*
-	#cd bindings/ruby; $(MAKE) clean; rm -rf Makefile
+	rm -f $(PKGCFGF)
 	$(MAKE) -C bindings/python clean
 	$(MAKE) -C bindings/java clean
 	$(MAKE) -C bindings/ocaml clean
