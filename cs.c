@@ -14,6 +14,12 @@ cs_err (*arch_init[MAX_ARCH])(cs_struct *) = { NULL };
 cs_err (*arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = { NULL };
 void (*arch_destroy[MAX_ARCH]) (cs_struct *) = { NULL };
 
+extern void enable_arm();
+extern void enable_arm64();
+extern void enable_mips();
+extern void enable_x86();
+extern void enable_powerpc();
+
 unsigned int all_arch = 0;
 
 #ifdef USE_SYS_DYN_MEM
@@ -84,8 +90,25 @@ const char *cs_strerror(cs_err code)
 	}
 }
 
+void enable_construct() {
+  enable_arm();
+#ifdef CAPSTONE_HAS_ARM64
+  enable_arm64();
+#endif
+#ifdef CAPSTONE_HAS_MIPS
+  enable_mips();
+#endif
+#ifdef CAPSTONE_HAS_X86
+  enable_x86();
+#endif
+#ifdef CAPSTONE_HAS_POWERPC
+  enable_powerpc();
+#endif
+}
+
 cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 {
+  enable_construct();
 	if (!my_malloc || !my_calloc || !my_realloc || !my_free)
 		// Error: before cs_open(), dynamic memory management must be initialized
 		// with cs_option(CS_OPT_MEM)

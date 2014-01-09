@@ -7,6 +7,7 @@
 #include "MipsInstPrinter.h"
 #include "mapping.h"
 
+void enable_mips() {};
 
 static cs_err init(cs_struct *ud)
 {

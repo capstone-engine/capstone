@@ -7,6 +7,7 @@
 #include "PPCInstPrinter.h"
 #include "mapping.h"
 
+void enable_powerpc() {};
 
 static cs_err init(cs_struct *ud)
 {
