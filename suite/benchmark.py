@@ -32,7 +32,7 @@ for i in xrange(3):
 c_t = 0
 for i in xrange(10000):
     code = random_str(128)
-    
+
     t1 = time()
     cs(md, code)
     c_t += time() - t1
