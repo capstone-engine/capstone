@@ -14,13 +14,15 @@ cs_err (*arch_init[MAX_ARCH])(cs_struct *) = { NULL };
 cs_err (*arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = { NULL };
 void (*arch_destroy[MAX_ARCH]) (cs_struct *) = { NULL };
 
+// we need this trick to enable module constructors in static lib
 extern void enable_arm();
 extern void enable_arm64();
 extern void enable_mips();
 extern void enable_x86();
 extern void enable_powerpc();
 
-void enable_construct() {
+void enable_construct()
+{
 #ifdef CAPSTONE_HAS_ARM
 	enable_arm();
 #endif
