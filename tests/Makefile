@@ -47,6 +47,7 @@ $(BINARY): $(OBJS)
 
 %$(BIN_EXT): %.o
 	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall -l$(LIBNAME) -o $@
+	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall ../lib$(LIBNAME).a -o $@.static
 
 %.o: %.c
 	${CC} ${CFLAGS} -c $< -o $@
