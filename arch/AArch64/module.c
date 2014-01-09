@@ -7,6 +7,7 @@
 #include "AArch64InstPrinter.h"
 #include "mapping.h"
 
+void enable_arm64() {}
 
 static cs_err init(cs_struct *ud)
 {

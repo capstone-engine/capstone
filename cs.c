@@ -14,6 +14,30 @@ cs_err (*arch_init[MAX_ARCH])(cs_struct *) = { NULL };
 cs_err (*arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = { NULL };
 void (*arch_destroy[MAX_ARCH]) (cs_struct *) = { NULL };
 
+extern void enable_arm();
+extern void enable_arm64();
+extern void enable_mips();
+extern void enable_x86();
+extern void enable_powerpc();
+
+void enable_construct() {
+#ifdef CAPSTONE_HAS_ARM
+	enable_arm();
+#endif
+#ifdef CAPSTONE_HAS_ARM64
+	enable_arm64();
+#endif
+#ifdef CAPSTONE_HAS_MIPS
+	enable_mips();
+#endif
+#ifdef CAPSTONE_HAS_X86
+	enable_x86();
+#endif
+#ifdef CAPSTONE_HAS_POWERPC
+	enable_powerpc();
+#endif
+}
+
 unsigned int all_arch = 0;
 
 #ifdef USE_SYS_DYN_MEM

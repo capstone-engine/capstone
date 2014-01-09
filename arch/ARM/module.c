@@ -7,6 +7,7 @@
 #include "ARMInstPrinter.h"
 #include "mapping.h"
 
+void enable_arm() {};
 
 static cs_err init(cs_struct *ud)
 {

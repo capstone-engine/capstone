@@ -7,6 +7,8 @@
 #include "X86InstPrinter.h"
 #include "mapping.h"
 
+void enable_x86() {};
+
 static cs_err init(cs_struct *ud)
 {
 	// by default, we use Intel syntax
