@@ -21,8 +21,7 @@ ext_modules = [ Extension("capstone.capstone", ["pyx/capstone.pyx"], extra_compi
 ]
 
 # clean package directory first
-import sys, os.path
-import shutil
+import os.path, shutil, sys
 for f in sys.path:
     if f.endswith('packages'):
         pkgdir = os.path.join(f, 'capstone')
