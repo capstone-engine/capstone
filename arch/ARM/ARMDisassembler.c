@@ -447,11 +447,17 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t
 
 	memcpy(bytes, code, 4);
 
-	// Encoded as a small-endian 32-bit word in the stream.
-	uint32_t insn = (bytes[3] << 24) |
-		(bytes[2] << 16) |
-		(bytes[1] <<  8) |
-		(bytes[0] <<  0);
+	uint32_t insn;
+	if (ud->big_endian)
+		insn = (bytes[3] << 0) |
+			(bytes[2] << 8) |
+			(bytes[1] <<  16) |
+			(bytes[0] <<  24);
+	else
+		insn = (bytes[3] << 24) |
+			(bytes[2] << 16) |
+			(bytes[1] <<  8) |
+			(bytes[0] <<  0);
 
 	// Calling the auto-generated decoder function.
 	DecodeStatus result = decodeInstruction_4(DecoderTableARM32, MI, insn, Address, ud->mode);
@@ -666,7 +672,12 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 
 	memcpy(bytes, code, 2);
 
-	uint16_t insn16 = (bytes[1] << 8) | bytes[0];
+	uint16_t insn16;
+	if (ud->big_endian)
+		insn16 = (bytes[0] << 8) | bytes[1];
+	else
+		insn16 = (bytes[1] << 8) | bytes[0];
+
 	DecodeStatus result = decodeInstruction_2(DecoderTableThumb16, MI, insn16, Address, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 2;
@@ -717,10 +728,18 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 
 	memcpy(bytes, code, 4);
 
-	uint32_t insn32 = (bytes[3] <<  8) |
-		(bytes[2] <<  0) |
-		(bytes[1] << 24) |
-		(bytes[0] << 16);
+	uint32_t insn32;
+	if (ud->big_endian)
+		insn32 = (bytes[3] <<  24) |
+			(bytes[2] <<  16) |
+			(bytes[1] << 8) |
+			(bytes[0] << 0);
+	else
+		insn32 = (bytes[3] <<  8) |
+			(bytes[2] <<  0) |
+			(bytes[1] << 24) |
+			(bytes[0] << 16);
+
 	MCInst_clear(MI);
 	result = decodeInstruction_4(DecoderTableThumb32, MI, insn32, Address, ud->mode);
 	if (result != MCDisassembler_Fail) {

@@ -280,7 +280,7 @@ void AArch64_init(MCRegisterInfo *MRI)
 }
 
 
-static DecodeStatus _getInstruction(MCInst *MI,
+static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 		const uint8_t *code, size_t code_len,
 		uint16_t *Size,
 		uint64_t Address, MCRegisterInfo *MRI)
@@ -291,9 +291,13 @@ static DecodeStatus _getInstruction(MCInst *MI,
 		return MCDisassembler_Fail;
 	}
 
-	// Encoded as a small-endian 32-bit word in the stream.
-	uint32_t insn = (code[3] << 24) | (code[2] << 16) |
-		(code[1] <<  8) | (code[0] <<  0);
+	uint32_t insn;
+	if (ud->big_endian)
+		insn = (code[3] << 0) | (code[2] << 8) |
+			(code[1] <<  16) | (code[0] <<  24);
+	else
+		insn = (code[3] << 24) | (code[2] << 16) |
+			(code[1] <<  8) | (code[0] <<  0);
 
 	//printf("insn: %u\n", insn);
 	// Calling the auto-generated decoder function.
@@ -311,7 +315,7 @@ static DecodeStatus _getInstruction(MCInst *MI,
 
 bool AArch64_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *info)
 {
-	DecodeStatus status = _getInstruction(instr,
+	DecodeStatus status = _getInstruction((cs_struct *)ud, instr,
 			code, code_len,
 			size,
 			address, (MCRegisterInfo *)info);
