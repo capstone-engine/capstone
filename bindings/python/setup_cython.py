@@ -7,17 +7,17 @@ VERSION = '2.0'
 
 compile_args = ['-O3', '-fomit-frame-pointer']
 
-ext_modules = [ Extension("capstone.capstone", ["pyx/capstone.pyx"], extra_compile_args=compile_args),
-    Extension("capstone.arm", ["pyx/arm.pyx"], extra_compile_args=compile_args),
-    Extension("capstone.arm_const", ["pyx/arm_const.pyx"], extra_compile_args=compile_args),
-    Extension("capstone.arm64", ["pyx/arm64.pyx"], extra_compile_args=compile_args),
-    Extension("capstone.arm64_const", ["pyx/arm64_const.pyx"], extra_compile_args=compile_args),
-    Extension("capstone.mips", ["pyx/mips.pyx"], extra_compile_args=compile_args),
-    Extension("capstone.mips_const", ["pyx/mips_const.pyx"], extra_compile_args=compile_args),
-    Extension("capstone.ppc", ["pyx/ppc.pyx"], extra_compile_args=compile_args),
-    Extension("capstone.ppc_const", ["pyx/ppc_const.pyx"], extra_compile_args=compile_args),
-    Extension("capstone.x86", ["pyx/x86.pyx"], extra_compile_args=compile_args),
-    Extension("capstone.x86_const", ["pyx/x86_const.pyx"], extra_compile_args=compile_args)
+ext_modules = [ Extension("capstone.capstone", ["cython/capstone.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.arm", ["cython/arm.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.arm_const", ["cython/arm_const.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.arm64", ["cython/arm64.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.arm64_const", ["cython/arm64_const.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.mips", ["cython/mips.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.mips_const", ["cython/mips_const.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.ppc", ["cython/ppc.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.ppc_const", ["cython/ppc_const.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.x86", ["cython/x86.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.x86_const", ["cython/x86_const.pyx"], extra_compile_args=compile_args)
 ]
 
 # clean package directory first
@@ -33,7 +33,7 @@ for f in sys.path:
 
 setup(
     provides     = ['capstone'],
-    package_dir  = {'capstone' : 'pyx'},
+    package_dir  = {'capstone' : 'cython'},
     packages     = ['capstone'],
     name         = 'capstone',
     version      = VERSION,
