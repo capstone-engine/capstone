@@ -2,6 +2,11 @@
 
 		$ sudo make install
 
+	For better performance, install Cython-based binding with:
+	(NOTE: you must have Cython installed in your machine first)
+
+		$ sudo make install_cython
+
 
 This directory contains some test code to show how to use Capstone API.
 
