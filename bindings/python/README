@@ -1,10 +1,7 @@
 1. To install Python binding on *nix, simply run below command:
 
-		$ sudo python setup.py install
-
-	Another way to install Python binding for *nix environment is:
-
 		$ sudo make install
+
 
 This directory contains some test code to show how to use Capstone API.
 

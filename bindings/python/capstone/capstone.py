@@ -107,10 +107,6 @@ from os.path import split, join, dirname
 import distutils.sysconfig
 
 
-# load all the libs
-#if getattr(sys, 'frozen', False):
-#    __file__ = dirname(sys.executable)
-
 import inspect
 if not hasattr(sys.modules[__name__], '__file__'):
     __file__ = inspect.getfile(inspect.currentframe())
