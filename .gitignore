@@ -20,6 +20,7 @@
 # python
 bindings/python/build/
 *.pyc
+bindings/python/pyx/*.c
 
 # java
 bindings/java/capstone.jar
