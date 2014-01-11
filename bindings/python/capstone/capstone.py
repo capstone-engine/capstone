@@ -291,21 +291,24 @@ class CsInsn(object):
         if self._cs._detail:
             detail = self._raw.detail.contents
             return detail.regs_read[:detail.regs_read_count]
-        return None
+
+        raise CsError(CS_ERR_DETAIL)
 
     @property
     def regs_write(self):
         if self._cs._detail:
             detail = self._raw.detail.contents
             return detail.regs_write[:detail.regs_write_count]
-        return None
+
+        raise CsError(CS_ERR_DETAIL)
 
     @property
     def groups(self):
         if self._cs._detail:
             detail = self._raw.detail.contents
             return detail.groups[:detail.groups_count]
-        return None
+
+        raise CsError(CS_ERR_DETAIL)
 
     def __gen_detail(self):
         arch = self._cs.arch
@@ -327,6 +330,9 @@ class CsInsn(object):
                 ppc.get_arch_info(detail.arch.ppc)
 
     def __getattr__(self, name):
+        if not self._cs._detail:
+            raise CsError(CS_ERR_DETAIL)
+
         attr = object.__getattribute__
         if not attr(self, '_cs')._detail:
             return None
@@ -394,7 +400,7 @@ class Cs(object):
         else:
             self._syntax = None
 
-        self._detail = True    # by default, get instruction details
+        self._detail = False    # by default, do not produce instruction details
 
     def __del__(self):
         if self.csh:
