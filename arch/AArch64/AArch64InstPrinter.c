@@ -571,7 +571,7 @@ static void printVPRRegister(MCInst *MI, unsigned OpNo, SStream *O)
 	char *Name = strdup(getRegisterName(Reg));
 	Name[0] = 'v';
 	SStream_concat(O, "%s", Name);
-	my_free(Name);
+	cs_mem_free(Name);
 	if (MI->csh->detail) {
 		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_REG;
 		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].reg = Reg;
@@ -786,13 +786,13 @@ static void printVectorList(MCInst *MI, unsigned OpNum,
 			SStream_concat(O, "%s%s", Name, LayoutStr);
 			if (I != Count - 1)
 				SStream_concat(O, ", ");
-			my_free(Name);
+			cs_mem_free(Name);
 		}
 	} else { // Print the register directly when NumVecs is 1.
 		char *Name = strdup(getRegisterName(Reg));
 		Name[0] = 'v';
 		SStream_concat(O, "%s%s", Name, LayoutStr);
-		my_free(Name);
+		cs_mem_free(Name);
 	}
 	SStream_concat(O, "}");
 }
@@ -822,7 +822,7 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 		unsigned int id = AArch64_map_insn(mnem);
 		MCInst_setOpcode(MI, AArch64_get_insn_id2(id));
 		MCInst_setOpcodePub(MI, id);
-		my_free(mnem);
+		cs_mem_free(mnem);
 	} else
 		AArch64InstPrinter_printInstruction(MI, O, Info);
 }

@@ -174,7 +174,7 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
 		unsigned id = Mips_map_insn(mnem);
 		MCInst_setOpcode(MI, Mips_get_insn_id2(id));
 		MCInst_setOpcodePub(MI, id);
-		my_free(mnem);
+		cs_mem_free(mnem);
 	}
 
 	switch (MCInst_getOpcode(MI)) {

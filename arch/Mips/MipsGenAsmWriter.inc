@@ -4470,7 +4470,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       }
   }
 
-  my_free(tmp);
+  cs_mem_free(tmp);
 
   return true;
 }

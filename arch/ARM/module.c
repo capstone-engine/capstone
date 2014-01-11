@@ -11,7 +11,7 @@ void enable_arm() {};
 
 static cs_err init(cs_struct *ud)
 {
-	MCRegisterInfo *mri = my_malloc(sizeof(*mri));
+	MCRegisterInfo *mri = cs_mem_malloc(sizeof(*mri));
 
 	ARM_init(mri);
 

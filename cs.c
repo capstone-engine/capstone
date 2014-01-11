@@ -43,15 +43,15 @@ void enable_construct()
 unsigned int all_arch = 0;
 
 #ifdef USE_SYS_DYN_MEM
-malloc_t my_malloc = malloc;
-calloc_t my_calloc = calloc;
-realloc_t my_realloc = realloc;
-free_t my_free = free;
+cs_malloc_t cs_mem_malloc = malloc;
+cs_calloc_t cs_mem_calloc = calloc;
+cs_realloc_t cs_mem_realloc = realloc;
+cs_free_t cs_mem_free = free;
 #else
-malloc_t my_malloc = NULL;
-calloc_t my_calloc = NULL;
-realloc_t my_realloc = NULL;
-free_t my_free = NULL;
+cs_malloc_t cs_mem_malloc = NULL;
+cs_calloc_t cs_mem_calloc = NULL;
+cs_realloc_t cs_mem_realloc = NULL;
+cs_free_t cs_mem_free = NULL;
 #endif
 
 unsigned int cs_version(int *major, int *minor)
@@ -112,7 +112,7 @@ const char *cs_strerror(cs_err code)
 
 cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 {
-	if (!my_malloc || !my_calloc || !my_realloc || !my_free)
+	if (!cs_mem_malloc || !cs_mem_calloc || !cs_mem_realloc || !cs_mem_free)
 		// Error: before cs_open(), dynamic memory management must be initialized
 		// with cs_option(CS_OPT_MEM)
 		return CS_ERR_MEMSETUP;
@@ -120,7 +120,7 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 	if (arch < CS_ARCH_MAX && arch_init[arch]) {
 		cs_struct *ud;
 
-		ud = my_calloc(1, sizeof(*ud));
+		ud = cs_mem_calloc(1, sizeof(*ud));
 		if (!ud) {
 			// memory insufficient
 			return CS_ERR_MEM;
@@ -158,7 +158,7 @@ cs_err cs_close(csh handle)
 		case CS_ARCH_MIPS:
 		case CS_ARCH_ARM64:
 		case CS_ARCH_PPC:
-			my_free(ud->printer_info);
+			cs_mem_free(ud->printer_info);
 			break;
 		default:	// unsupported architecture
 			return CS_ERR_HANDLE;
@@ -166,9 +166,9 @@ cs_err cs_close(csh handle)
 
 	// arch_destroy[ud->arch](ud);
 
-	my_free(ud->insn_cache);
+	cs_mem_free(ud->insn_cache);
 	memset(ud, 0, sizeof(*ud));
-	my_free(ud);
+	cs_mem_free(ud);
 
 	return CS_ERR_OK;
 }
@@ -237,10 +237,10 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 	if (type == CS_OPT_MEM) {
 		cs_opt_mem *mem = (cs_opt_mem *)value;
 
-		my_malloc = mem->malloc;
-		my_calloc = mem->calloc;
-		my_realloc = mem->realloc;
-		my_free = mem->free;
+		cs_mem_malloc = mem->malloc;
+		cs_mem_calloc = mem->calloc;
+		cs_mem_realloc = mem->realloc;
+		cs_mem_free = mem->free;
 
 		return CS_ERR_OK;
 	}
@@ -297,7 +297,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 				mci.flat_insn.address = offset;
 				mci.flat_insn.size = insn_size;
 				// allocate memory for @detail pointer
-				insn_cache[f].detail = my_calloc(1, sizeof(cs_detail));
+				insn_cache[f].detail = cs_mem_calloc(1, sizeof(cs_detail));
 			}
 
 			handle->printer(&mci, &ss, handle->printer_info);
@@ -309,9 +309,9 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 			if (f == ARR_SIZE(insn_cache)) {
 				// resize total to contain newly disasm insns
 				total_size += sizeof(insn_cache);
-				void *tmp = my_realloc(total, total_size);
+				void *tmp = cs_mem_realloc(total, total_size);
 				if (tmp == NULL) {	// insufficient memory
-					my_free(total);
+					cs_mem_free(total);
 					handle->errnum = CS_ERR_MEM;
 					return 0;
 				}
@@ -338,9 +338,9 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 
 	if (f) {
 		// resize total to contain newly disasm insns
-		void *tmp = my_realloc(total, total_size + f * sizeof(insn_cache[0]));
+		void *tmp = cs_mem_realloc(total, total_size + f * sizeof(insn_cache[0]));
 		if (tmp == NULL) {	// insufficient memory
-			my_free(total);
+			cs_mem_free(total);
 			handle->errnum = CS_ERR_MEM;
 			return 0;
 		}
@@ -360,10 +360,10 @@ void cs_free(cs_insn *insn, size_t count)
 
 	// free all detail pointers
 	for (i = 0; i < count; i++)
-		my_free(insn[i].detail);
+		cs_mem_free(insn[i].detail);
 
 	// then free pointer to cs_insn array
-	my_free(insn);
+	cs_mem_free(insn);
 }
 
 // return friendly name of regiser in a string

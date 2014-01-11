@@ -11,7 +11,7 @@ void enable_mips() {};
 
 static cs_err init(cs_struct *ud)
 {
-	MCRegisterInfo *mri = my_malloc(sizeof(*mri));
+	MCRegisterInfo *mri = cs_mem_malloc(sizeof(*mri));
 
 	Mips_init(mri);
 	ud->printer = Mips_printInst;

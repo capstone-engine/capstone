@@ -44,7 +44,7 @@ static bool compare_lower_str(char *s1, char *s2)
 		*c = tolower((int) *c);
 
 	bool res = (strcmp(s1, lower) == 0);
-	my_free(lower);
+	cs_mem_free(lower);
 
 	return res;
 }
@@ -615,10 +615,10 @@ void SysRegMapper_toString(SysRegMapper *S, uint32_t Bits, bool *Valid, char *re
 	int dummy = sprintf(result, "s3_%s_c%s_c%s_%s", Op1S, CRnS, CRmS, Op2S);
 	(void)dummy;
 
-	my_free(Op1S);
-	my_free(CRnS);
-	my_free(CRmS);
-	my_free(Op2S);
+	cs_mem_free(Op1S);
+	cs_mem_free(CRnS);
+	cs_mem_free(CRmS);
+	cs_mem_free(Op2S);
 }
 
 static NamedImmMapper_Mapping TLBIPairs[] = {
