@@ -768,7 +768,7 @@ static void printMSROperand(MCInst *MI, unsigned OpNum, SStream *O)
 //   (2) {Vn.layout - Vm.layout}
 // We choose the first kind as output.
 static void printVectorList(MCInst *MI, unsigned OpNum,
-		SStream *O, MCRegisterInfo *MRI, A64Layout_VectorLayout Layout, unsigned Count)
+		SStream *O, A64Layout_VectorLayout Layout, unsigned Count, MCRegisterInfo *MRI)
 {
 	//assert(Count >= 1 && Count <= 4 && "Invalid Number of Vectors");
 
