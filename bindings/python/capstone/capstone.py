@@ -400,7 +400,7 @@ class Cs(object):
         else:
             self._syntax = None
 
-        self._detail = False    # by default, get instruction details
+        self._detail = False    # by default, do not produce instruction details
 
     def __del__(self):
         if self.csh:
