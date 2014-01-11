@@ -12862,11 +12862,11 @@ static DecodeStatus decodeToMCInst(DecodeStatus S, unsigned Idx, uint32_t insn, 
     return S;
   case 224:
     tmp = fieldFromInstruction(insn, 8, 4);
-    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &AArch64_DBarrierMapper))) return MCDisassembler_Fail;
+    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &A64DB_DBarrierMapper))) return MCDisassembler_Fail;
     return S;
   case 225:
     tmp = fieldFromInstruction(insn, 8, 4);
-    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &AArch64_ISBMapper))) return MCDisassembler_Fail;
+    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &A64ISB_ISBMapper))) return MCDisassembler_Fail;
     return S;
   case 226:
     tmp = fieldFromInstruction(insn, 5, 7);
@@ -12876,7 +12876,7 @@ static DecodeStatus decodeToMCInst(DecodeStatus S, unsigned Idx, uint32_t insn, 
     tmp = 0;
     tmp |= (fieldFromInstruction(insn, 5, 3) << 0);
     tmp |= (fieldFromInstruction(insn, 16, 3) << 3);
-    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &AArch64_PStateMapper))) return MCDisassembler_Fail;
+    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &A64PState_PStateMapper))) return MCDisassembler_Fail;
     tmp = fieldFromInstruction(insn, 8, 4);
     MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
     return S;
@@ -13113,7 +13113,7 @@ static DecodeStatus decodeToMCInst(DecodeStatus S, unsigned Idx, uint32_t insn, 
     return S;
   case 254:
     tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &AArch64_PRFMMapper))) return MCDisassembler_Fail;
+    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &A64PRFM_PRFMMapper))) return MCDisassembler_Fail;
     tmp = fieldFromInstruction(insn, 5, 19);
     MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
     return S;
@@ -13125,7 +13125,7 @@ static DecodeStatus decodeToMCInst(DecodeStatus S, unsigned Idx, uint32_t insn, 
     return S;
   case 256:
     tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &AArch64_PRFMMapper))) return MCDisassembler_Fail;
+    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &A64PRFM_PRFMMapper))) return MCDisassembler_Fail;
     tmp = fieldFromInstruction(insn, 5, 5);
     if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
     tmp = fieldFromInstruction(insn, 12, 9);
@@ -13133,7 +13133,7 @@ static DecodeStatus decodeToMCInst(DecodeStatus S, unsigned Idx, uint32_t insn, 
     return S;
   case 257:
     tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &AArch64_PRFMMapper))) return MCDisassembler_Fail;
+    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &A64PRFM_PRFMMapper))) return MCDisassembler_Fail;
     tmp = fieldFromInstruction(insn, 5, 5);
     if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
     tmp = fieldFromInstruction(insn, 16, 5);
@@ -13145,7 +13145,7 @@ static DecodeStatus decodeToMCInst(DecodeStatus S, unsigned Idx, uint32_t insn, 
     return S;
   case 258:
     tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &AArch64_PRFMMapper))) return MCDisassembler_Fail;
+    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &A64PRFM_PRFMMapper))) return MCDisassembler_Fail;
     tmp = fieldFromInstruction(insn, 5, 5);
     if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
     tmp = fieldFromInstruction(insn, 16, 5);
@@ -13157,7 +13157,7 @@ static DecodeStatus decodeToMCInst(DecodeStatus S, unsigned Idx, uint32_t insn, 
     return S;
   case 259:
     tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &AArch64_PRFMMapper))) return MCDisassembler_Fail;
+    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &A64PRFM_PRFMMapper))) return MCDisassembler_Fail;
     tmp = fieldFromInstruction(insn, 5, 5);
     if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
     tmp = fieldFromInstruction(insn, 10, 12);

@@ -439,8 +439,7 @@ static void printMoveWideImmOperand(MCInst *MI,  unsigned OpNum, SStream *O)
 	}
 }
 
-static void printNamedImmOperand(NamedImmMapper *Mapper,
-		MCInst *MI, unsigned OpNum, SStream *O)
+static void printNamedImmOperand(MCInst *MI, unsigned OpNum, SStream *O, NamedImmMapper *Mapper)
 {
 	bool ValidName;
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
@@ -824,6 +823,6 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 		MCInst_setOpcodePub(MI, id);
 		cs_mem_free(mnem);
 	} else
-		AArch64InstPrinter_printInstruction(MI, O, Info);
+		printInstruction(MI, O, Info);
 }
 

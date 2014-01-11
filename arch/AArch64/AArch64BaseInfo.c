@@ -656,7 +656,7 @@ static NamedImmMapper_Mapping TLBIPairs[] = {
 	{"vaale1", A64TLBI_VAALE1}
 };
 
-NamedImmMapper AArch64_TLBIMapper = {
+NamedImmMapper A64TLBI_TLBIMapper = {
 	.Pairs = TLBIPairs,
 	.NumPairs = ARR_SIZE(TLBIPairs),
 	.TooBigImm = 0,
@@ -677,7 +677,7 @@ static NamedImmMapper_Mapping ATPairs[] = {
 	{"s12e0w", A64AT_S12E0W},
 };
 
-NamedImmMapper AArch64_ATMapper = {
+NamedImmMapper A64AT_ATMapper = {
 	.Pairs = ATPairs,
 	.NumPairs = ARR_SIZE(ATPairs),
 	.TooBigImm = 0,
@@ -698,7 +698,7 @@ static NamedImmMapper_Mapping DBarrierPairs[] = {
 	{"sy", A64DB_SY}
 };
 
-NamedImmMapper AArch64_DBarrierMapper = {
+NamedImmMapper A64DB_DBarrierMapper = {
 	.Pairs = DBarrierPairs,
 	.NumPairs = ARR_SIZE(DBarrierPairs),
 	.TooBigImm = 16,
@@ -715,7 +715,7 @@ static NamedImmMapper_Mapping DCPairs[] = {
 	{"cisw", A64DC_CISW}
 };
 
-NamedImmMapper AArch64_DCMapper = {
+NamedImmMapper A64DC_DCMapper = {
 	.Pairs = DCPairs,
 	.NumPairs = ARR_SIZE(DCPairs),
 	.TooBigImm = 0,
@@ -727,7 +727,7 @@ static NamedImmMapper_Mapping ICPairs[] = {
 	{"ivau", A64IC_IVAU}
 };
 
-NamedImmMapper AArch64_ICMapper = {
+NamedImmMapper A64IC_ICMapper = {
 	.Pairs = ICPairs,
 	.NumPairs = ARR_SIZE(ICPairs),
 	.TooBigImm = 0,
@@ -737,7 +737,7 @@ static NamedImmMapper_Mapping ISBPairs[] = {
 	{"sy",  A64DB_SY},
 };
 
-NamedImmMapper AArch64_ISBMapper = {
+NamedImmMapper A64ISB_ISBMapper = {
 	.Pairs = ISBPairs,
 	.NumPairs = ARR_SIZE(ISBPairs),
 	.TooBigImm = 16,
@@ -764,7 +764,7 @@ static NamedImmMapper_Mapping PRFMPairs[] = {
 	{"pstl3strm", A64PRFM_PSTL3STRM}
 };
 
-NamedImmMapper AArch64_PRFMMapper = {
+NamedImmMapper A64PRFM_PRFMMapper = {
 	.Pairs = PRFMPairs,
 	.NumPairs = ARR_SIZE(PRFMPairs),
 	.TooBigImm = 32,
@@ -776,7 +776,7 @@ static NamedImmMapper_Mapping PStatePairs[] = {
 	{"daifclr", A64PState_DAIFClr}
 };
 
-NamedImmMapper AArch64_PStateMapper = {
+NamedImmMapper A64PState_PStateMapper = {
 	.Pairs = PStatePairs,
 	.NumPairs = ARR_SIZE(PStatePairs),
 	.TooBigImm = 0,
