@@ -24,6 +24,7 @@
 #include "../../utils.h"
 #include "../../MCInst.h"
 #include "../../SStream.h"
+#include "../../MCRegisterInfo.h"
 
 #include "mapping.h"
 
@@ -216,7 +217,7 @@ static bool get_first_op(char *buffer, char *firstop)
 }
 
 static bool printAliasInstr(MCInst *MI, SStream *OS);
-static void printInstruction(MCInst *MI, SStream *O);
+static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	//if (TSFlags & X86II::LOCK)
@@ -231,7 +232,7 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 		MCInst_setOpcode(MI, X86_get_insn_id2(X86_map_insn(mnem)));
 		cs_mem_free(mnem);
 	} else
-		printInstruction(MI, O);
+		printInstruction(MI, O, NULL);
 
 	if (MI->csh->detail) {
 		char tmp[64];

@@ -455,7 +455,7 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 		MCInst_setOpcode(MI, X86_get_insn_id2(X86_map_insn(mnem)));
 		cs_mem_free(mnem);
 	} else
-	   printInstruction(MI, OS);
+	   printInstruction(MI, OS, NULL);
 
 	if (MI->csh->detail) {
 		// first op can be embedded in the asm by llvm.

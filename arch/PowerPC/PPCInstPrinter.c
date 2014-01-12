@@ -31,7 +31,7 @@
 
 static const char *getRegisterName(unsigned RegNo);
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
-static void printInstruction(MCInst *MI, SStream *O);
+static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O);
 
 static void set_mem_access(MCInst *MI, bool status)
@@ -139,7 +139,7 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 	//if (MCInst_getOpcode(MI) == TargetOpcode_COPY_TO_REGCLASS)
 	//	return;
 
-	printInstruction(MI, O);
+	printInstruction(MI, O, NULL);
 }
 
 
