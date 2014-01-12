@@ -80,7 +80,7 @@ typedef enum Mips_CondCode {
 #include "MipsGenInstrInfo.inc"
 
 static char *getRegisterName(unsigned RegNo);
-static void printInstruction(MCInst *MI, SStream *O);
+static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 
 static void set_mem_access(MCInst *MI, bool status)
 {
@@ -162,7 +162,7 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
 
 	// Try to print any aliases first.
 	if (!printAliasInstr(MI, O, info) && !printAlias(MI, O))
-		printInstruction(MI, O);
+		printInstruction(MI, O, NULL);
 	else {
 		// fixup instruction id due to the change in alias instruction
 		char *mnem = strdup(O->buffer);
