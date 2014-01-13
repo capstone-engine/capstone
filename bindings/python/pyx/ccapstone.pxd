@@ -22,7 +22,7 @@ cdef extern from "<capstone/capstone.h>":
         uint16_t size
         uint8_t bytes[16]
         char mnemonic[32]
-        char op_str[96]
+        char op_str[136]
         cs_detail *detail
 
     ctypedef enum cs_err:
