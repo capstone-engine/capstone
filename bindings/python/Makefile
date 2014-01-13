@@ -33,7 +33,17 @@ clean:
 	rm -rf capstone/*.pyc
 	rm -rf capstone/*.so
 	rm -rf capstone/*.c
-	rm -rf pyx/*.py*
 	rm -rf pyx/*.so
 	rm -rf pyx/*.c
 	rm -rf *.so *.dll *.pyc *.dylib
+	rm -rf pyx/capstone.pyx
+	rm -rf pyx/arm.pyx
+	rm -rf pyx/arm_const.pyx
+	rm -rf pyx/arm64.pyx
+	rm -rf pyx/arm64_const.pyx
+	rm -rf pyx/mips.pyx
+	rm -rf pyx/mips_const.pyx
+	rm -rf pyx/ppc.pyx
+	rm -rf pyx/ppc_const.pyx
+	rm -rf pyx/x86.pyx
+	rm -rf pyx/x86_const.pyx
