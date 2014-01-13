@@ -91,7 +91,7 @@ typedef struct cs_arm {
 	// or 0 when instruction has no operand.
 	uint8_t op_count;
 
-	cs_arm_op operands[20];	// operands for this instruction.
+	cs_arm_op operands[36];	// operands for this instruction.
 } cs_arm;
 
 //> ARM registers
