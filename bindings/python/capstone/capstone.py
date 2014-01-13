@@ -246,10 +246,11 @@ def cs_disasm_quick(arch, mode, code, offset, count = 0):
 
         _cs.cs_free(all_insn, res)
     else:
-        yield []
         status = _cs.cs_errno(csh)
         if status != CS_ERR_OK:
             raise CsError(status)
+        return
+        yield
 
     status = _cs.cs_close(csh)
     if status != CS_ERR_OK:
@@ -458,8 +459,9 @@ class Cs(object):
                 yield CsInsn(self, all_insn[i])
             _cs.cs_free(all_insn, res)
         else:
-            yield []
             status = _cs.cs_errno(self.csh)
             if status != CS_ERR_OK:
                 raise CsError(status)
+            return
+            yield
 
