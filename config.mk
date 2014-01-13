@@ -5,19 +5,20 @@
 USE_SYS_DYN_MEM = yes
 
 # Specify which archs you want to compile in
+# DO NOT touch the line below.
 CAPSTONE_ARCHS =
 
-# Comment the line below if you don't want to support ARM
+# Comment out the line below if you don't want to support ARM
 CAPSTONE_ARCHS += arm
 
-# Comment the line below if you don't want to support ARM64
+# Comment out the line below if you don't want to support ARM64
 CAPSTONE_ARCHS += aarch64
 
-# Comment the line below if you don't want to support Mips
+# Comment out the line below if you don't want to support Mips
 CAPSTONE_ARCHS += mips
 
-# Comment the line below if you don't want to support X86
+# Comment out the line below if you don't want to support X86
 CAPSTONE_ARCHS += x86
 
-# Comment the line below if you don't want to support PowerPC
+# Comment out the line below if you don't want to support PowerPC
 CAPSTONE_ARCHS += powerpc
