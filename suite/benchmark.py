@@ -42,7 +42,7 @@ for i in xrange(3):
 
 # start real benchmark
 c_t = 0
-for i in xrange(10000):
+for i in xrange(50000):
     code = get_code(cfile, 128)
 
     t1 = time()
