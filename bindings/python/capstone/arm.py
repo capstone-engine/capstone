@@ -56,7 +56,7 @@ class CsArm(ctypes.Structure):
         ('update_flags', ctypes.c_bool),
         ('writeback', ctypes.c_bool),
         ('op_count', ctypes.c_uint8),
-        ('operands', ArmOp * 20),
+        ('operands', ArmOp * 36),
     )
 
 def get_arch_info(a):

@@ -178,7 +178,7 @@ class _cs_insn(ctypes.Structure):
         ('size', ctypes.c_uint16),
         ('bytes', ctypes.c_ubyte * 16),
         ('mnemonic', ctypes.c_char * 32),
-        ('op_str', ctypes.c_char * 96),
+        ('op_str', ctypes.c_char * 136),
         ('detail', ctypes.POINTER(_cs_detail)),
     )
 
