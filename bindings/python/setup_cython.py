@@ -8,6 +8,7 @@ VERSION = '2.0'
 compile_args = ['-O3', '-fomit-frame-pointer']
 
 ext_modules = [ Extension("capstone.capstone", ["pyx/capstone.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.ccapstone", ["pyx/ccapstone.pyx"], libraries=["capstone"], extra_compile_args=compile_args),
     Extension("capstone.arm", ["pyx/arm.pyx"], extra_compile_args=compile_args),
     Extension("capstone.arm_const", ["pyx/arm_const.pyx"], extra_compile_args=compile_args),
     Extension("capstone.arm64", ["pyx/arm64.pyx"], extra_compile_args=compile_args),

@@ -395,6 +395,14 @@ class Cs(object):
             self.csh = None
             raise CsError(status)
 
+        try:
+            from ccapstone import CCs
+            # rewire disasm to use the faster version
+            self.ccs = CCs(self)
+            self.disasm = self.ccs.disasm
+        except:
+            self.ccs = None
+
         if arch == CS_ARCH_X86:
             # Intel syntax is default for X86
             self._syntax = CS_OPT_SYNTAX_INTEL
