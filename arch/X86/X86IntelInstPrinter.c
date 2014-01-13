@@ -241,12 +241,13 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 			char *acc_regs[] = { "al", "ax", "eax", "rax", NULL };
 			int acc_regs_id[] = { X86_REG_AL,  X86_REG_AX, X86_REG_EAX, X86_REG_RAX };
 			if (tmp[0] != 0 && ((post = str_in_list(acc_regs, tmp)) != -1)) {
-				// set operand size following register size
+				// first op is register, so set operand size following register size
 				MI->flat_insn.x86.op_size = 1 << post;
 				// tmp is a register
 				if ((MI->flat_insn.x86.operands[0].type != X86_OP_INVALID) &&
 						((MI->flat_insn.x86.operands[0].type != X86_OP_REG) ||
 						(MI->flat_insn.x86.operands[0].reg != acc_regs_id[post]))) {
+					// first op is register, so insert its detail to position 0
 					int i;
 					for (i = MI->flat_insn.x86.op_count; i > 0; i--) {
 						memcpy(&(MI->flat_insn.x86.operands[i]), &(MI->flat_insn.x86.operands[i - 1]),
