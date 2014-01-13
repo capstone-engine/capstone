@@ -12,7 +12,6 @@ install:
 # NOTE: Newer cython can be installed by: sudo pip install --upgrade cython
 install_cython:
 	# Copy code from capstone/ to pyx/
-	cp capstone/ccapstone.* pyx/
 	cp capstone/__init__.py pyx/__init__.py
 	cp capstone/capstone.py pyx/capstone.pyx
 	cp capstone/arm.py pyx/arm.pyx

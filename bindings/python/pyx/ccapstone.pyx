@@ -1,8 +1,6 @@
-cimport ccapstone as cc
-import ctypes
-from capstone import *
-import capstone
-from capstone import arm, x86, mips, ppc, arm64
+cimport pyx.ccapstone as cc
+import capstone, ctypes
+from capstone import arm, x86, mips, ppc, arm64, CsError
 
 class CsDetail:
 
@@ -31,7 +29,7 @@ class CsDetail:
           (self.bc, self.bh, self.update_cr0, self.operands) = \
               ppc.get_arch_info(detail.arch.ppc)
 
-cdef class CCsInsn(object):
+cdef class CsInsn(object):
 
   cdef cc.cs_insn _raw
   cdef cc.csh _csh
@@ -42,6 +40,8 @@ cdef class CCsInsn(object):
 
   def __getattr__(self, name):
     _detail = self._detail
+    if not _detail:
+      raise CsError(capstone.CS_ERR_DETAIL)
     return getattr(_detail, name)
 
   @property
@@ -78,7 +78,7 @@ cdef class CCsInsn(object):
           detail = self._detail
           return detail.regs_read[:detail.regs_read_count]
 
-      raise CsError(CS_ERR_DETAIL)
+      raise CsError(capstone.CS_ERR_DETAIL)
 
   @property
   def regs_write(self):
@@ -86,7 +86,7 @@ cdef class CCsInsn(object):
           detail = self._detail
           return detail.regs_write[:detail.regs_write_count]
 
-      raise CsError(CS_ERR_DETAIL)
+      raise CsError(capstone.CS_ERR_DETAIL)
 
   @property
   def groups(self):
@@ -94,7 +94,7 @@ cdef class CCsInsn(object):
           detail = self._detail
           return detail.groups[:detail.groups_count]
 
-      raise CsError(CS_ERR_DETAIL)
+      raise CsError(capstone.CS_ERR_DETAIL)
 
   # get the last error code
   def errno(self):
@@ -137,7 +137,7 @@ cdef class CCsInsn(object):
           if c == position:
               return op
 
-cdef class CCs:
+cdef class Cs:
 
   cdef cc.csh csh
   cdef object _cs
@@ -145,9 +145,6 @@ cdef class CCs:
   def __cinit__(self, _cs):
     self.csh = <cc.csh> _cs.csh.value
     self._cs = _cs
-
-  def getcsh(self):
-    return ctypes.c_size_t(<size_t>self.csh)
 
   def disasm(self, code, addr, count=0):
     cdef cc.cs_insn *allinsn
@@ -157,9 +154,9 @@ cdef class CCs:
 
     for i from 0 <= i < res:
       if detail:
-        dummy = CCsInsn(CsDetail(arch, <size_t>allinsn[i].detail))
+        dummy = CsInsn(CsDetail(arch, <size_t>allinsn[i].detail))
       else:
-        dummy = CCsInsn(None)
+        dummy = CsInsn(None)
       dummy._raw = allinsn[i]
       dummy._csh = self.csh
       yield dummy
