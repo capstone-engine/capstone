@@ -28,6 +28,7 @@
 
 #include "MipsInstPrinter.h"
 
+static void printUnsignedImm(MCInst *MI, int opNum, SStream *O);
 static bool printAliasInstr(MCInst *MI, SStream *O, void *info);
 static bool printAlias(MCInst *MI, SStream *OS);
 
@@ -149,6 +150,19 @@ static void printRegName(SStream *OS, unsigned RegNo)
 	SStream_concat(OS, "$%s", getRegisterName(RegNo));
 }
 
+static void printSaveRestore(MCInst *MI, SStream *O)
+{
+	unsigned i, e;
+	for (i = 0, e = MCInst_getNumOperands(MI); i != e; ++i) {
+		if (i != 0)
+			SStream_concat(O, ", ");
+		if (MCOperand_isReg(MCInst_getOperand(MI, i)))
+			printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, i)));
+		else
+			printUnsignedImm(MI, i, O);
+	}
+}
+
 void Mips_printInst(MCInst *MI, SStream *O, void *info)
 {
 	switch (MCInst_getOpcode(MI)) {
@@ -158,6 +172,26 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
 			SStream_concat(O, ".set\tpush\n");
 			SStream_concat(O, ".set\tmips32r2\n");
 			break;
+		case Mips_Save16:
+			SStream_concat(O, "\tsave\t");
+			printSaveRestore(MI, O);
+			SStream_concat(O, " # 16 bit inst\n");
+			return;
+		case Mips_SaveX16:
+			SStream_concat(O, "\tsave\t");
+			printSaveRestore(MI, O);
+			SStream_concat(O, "\n");
+			return;
+		case Mips_Restore16:
+			SStream_concat(O, "\trestore\t");
+			printSaveRestore(MI, O);
+			SStream_concat(O, " # 16 bit inst\n");
+			return;
+		case Mips_RestoreX16:
+			SStream_concat(O, "\trestore\t");
+			printSaveRestore(MI, O);
+			SStream_concat(O, "\n");
+			return;
 	}
 
 	// Try to print any aliases first.

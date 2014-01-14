@@ -593,7 +593,6 @@ typedef enum mips_insn {
 	MIPS_INS_ROTR,
 	MIPS_INS_ROTRV,
 	MIPS_INS_ROUND,
-	MIPS_INS_RESTORE,
 	MIPS_INS_SAT_S,
 	MIPS_INS_SAT_U,
 	MIPS_INS_SB,
@@ -666,7 +665,6 @@ typedef enum mips_insn {
 	MIPS_INS_SWXC1,
 	MIPS_INS_SYNC,
 	MIPS_INS_SYSCALL,
-	MIPS_INS_SAVE,
 	MIPS_INS_TEQ,
 	MIPS_INS_TEQI,
 	MIPS_INS_TGE,
@@ -687,7 +685,7 @@ typedef enum mips_insn {
 	MIPS_INS_XOR,
 	MIPS_INS_XORI,
 
-	// some alias instructions
+	//> some alias instructions
 	MIPS_INS_NOP,
 	MIPS_INS_NEGU,
 
