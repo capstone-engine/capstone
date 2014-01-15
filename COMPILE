@@ -13,7 +13,8 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 		$ make
 
 	For FreeBSD/OpenBSD, use 'gmake' instread of 'make':
-
+		$ ./compile.sh freebsd10
+	or:
 		$ gmake
 
 	Then run "./tests/test*" to see the tests disassembling sample code.
@@ -29,7 +30,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 (2) To install Capstone, run:
 
 	$ sudo make install
-	
+
 	For FreeBSD/OpenBSD, use 'gmake' instead of 'make':
 
 	$ sudo gmake install

@@ -1,7 +1,7 @@
 # Capstone Disassembler Engine
 # By Nguyen Anh Quynh <aquynh@gmail.com>, 2013>
 
-CC = $(CROSS)gcc
+CC ?= $(CROSS)gcc
 AR ?= $(CROSS)ar
 RANLIB ?= $(CROSS)ranlib
 STRIP ?= $(CROSS)strip
