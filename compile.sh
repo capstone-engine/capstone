@@ -36,7 +36,7 @@ case "$1" in
   "cygwin-mingw64" )
 	  CROSS=x86_64-w64-mingw32- build;;
   "freebsd10" )
-	  MAKE=gmake CC=clang PREFIX=/usr/local build;;
+	  MAKE=gmake CC=cc PREFIX=/usr/local build;;
   * ) echo "Usage: compile.sh [nix32|clang|cross-win32|cross-win64|cygwin-mingw32|cygwin-mingw64|freebsd10]"; exit 1;;
 esac
 
