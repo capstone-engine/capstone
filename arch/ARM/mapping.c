@@ -251,6 +251,7 @@ static insn_map insns[] = {
 	{ ARM_LDRBi12, ARM_INS_LDRB, { 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0 },
 	{ ARM_LDRBrs, ARM_INS_LDRB, { 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0 },
 	{ ARM_LDRD, ARM_INS_LDRD, { 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_V5TE, 0 }, 0, 0 },
+	{ ARM_LDRD_PAIR, ARM_INS_LDRD, { 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_V5TE, 0 }, 0, 0 },
 	{ ARM_LDRD_POST, ARM_INS_LDRD, { 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0 },
 	{ ARM_LDRD_PRE, ARM_INS_LDRD, { 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0 },
 	{ ARM_LDREX, ARM_INS_LDREX, { 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0 },
@@ -467,6 +468,7 @@ static insn_map insns[] = {
 	{ ARM_STRBi12, ARM_INS_STRB, { 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0 },
 	{ ARM_STRBrs, ARM_INS_STRB, { 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0 },
 	{ ARM_STRD, ARM_INS_STRD, { 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_V5TE, 0 }, 0, 0 },
+	{ ARM_STRD_PAIR, ARM_INS_STRD, { 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_V5TE, 0 }, 0, 0 },
 	{ ARM_STRD_POST, ARM_INS_STRD, { 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0 },
 	{ ARM_STRD_PRE, ARM_INS_STRD, { 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0 },
 	{ ARM_STREX, ARM_INS_STREX, { 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0 },
@@ -2299,7 +2301,6 @@ static insn_map insns[] = {
 	{ ARM_tUXTB, ARM_INS_UXTB, { 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_V6, 0 }, 0, 0 },
 	{ ARM_tUXTH, ARM_INS_UXTH, { 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_V6, 0 }, 0, 0 },
 };
-
 
 void ARM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
