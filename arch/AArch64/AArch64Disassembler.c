@@ -212,7 +212,7 @@ static bool Check(DecodeStatus *Out, DecodeStatus In);
 #include "AArch64GenSubtargetInfo.inc"
 
 // Hacky: enable all features for disassembler
-static uint64_t getFeatureBits(void)
+static uint64_t getFeatureBits(int feature)
 {
 	// enable all features
 	return -1;
@@ -247,35 +247,13 @@ static bool Check(DecodeStatus *Out, DecodeStatus In)
 #include "AArch64GenRegisterInfo.inc"
 void AArch64_init(MCRegisterInfo *MRI)
 {
-	  /*
-	  RI->InitMCRegisterInfo(AArch64RegDesc, 228,
-	  RA, PC,
-	  AArch64MCRegisterClasses, 15,
-	  AArch64RegUnitRoots, 66,
-	  AArch64RegDiffLists,
-	  AArch64RegStrings,
-	  AArch64SubRegIdxLists, 6,
-	   AArch64SubRegIdxRanges,   AArch64RegEncodingTable);
-	  */
-
-	/*
-	RI->InitMCRegisterInfo(AArch64RegDesc, 420,
-			RA, PC,
-			AArch64MCRegisterClasses, 61,
-			AArch64RegUnitRoots, 66,
-			AArch64RegDiffLists,
-			AArch64RegStrings,
-			AArch64SubRegIdxLists, 53,
-			AArch64SubRegIdxRanges, AArch64RegEncodingTable);
-	*/
-
 	MCRegisterInfo_InitMCRegisterInfo(MRI, AArch64RegDesc, 420,
 			0, 0, 
 			AArch64MCRegisterClasses, 61,
 			0, 0, 
 			AArch64RegDiffLists,
 			0, 
-			AArch64SubRegIdxLists, 53,
+			AArch64SubRegIdxLists, 52,
 			0);
 }
 
@@ -299,10 +277,8 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 		insn = (code[3] << 24) | (code[2] << 16) |
 			(code[1] <<  8) | (code[0] <<  0);
 
-	//printf("insn: %u\n", insn);
 	// Calling the auto-generated decoder function.
-	DecodeStatus result = decodeInstruction(DecoderTableA6432, MI, insn, Address, MRI);
-	//printf("result: %u\n", result);
+	DecodeStatus result = decodeInstruction(DecoderTableA6432, MI, insn, Address, MRI, 0);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		return result;

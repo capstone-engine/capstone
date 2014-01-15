@@ -6,11 +6,13 @@
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
 
-/* Capstone Disassembler Engine */
+/* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+
 
 #ifdef GET_INSTRINFO_ENUM
 #undef GET_INSTRINFO_ENUM
+
 enum {
     AArch64_PHI	= 0,
     AArch64_INLINEASM	= 1,
@@ -2799,3 +2801,4 @@ enum {
 };
 
 #endif // GET_INSTRINFO_ENUM
+
