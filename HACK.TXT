@@ -1,7 +1,7 @@
 Capstone source is organized as followings.
 
 
-.                   <- core engine + README + COMPILE etc
+.                   <- core engine + README + COMPILE.TXT etc
 ├── arch            <- code handling disasm engine for each arch
 │   ├── AArch64     <- ARM64 (aka ARMv8) engine
 │   ├── ARM         <- ARM engine
@@ -17,7 +17,7 @@ Capstone source is organized as followings.
 ├── tests           <- Test code (in C language)
 
 
-Follow COMPILE to see how to compile and run code.
+Follow instructions in COMPILE.TXT to see how to compile and run code.
 
 Note: if you find some strange bugs, it is recommended to firstly clean
 the code and try to recompile/reinstall again. This can be done with:
