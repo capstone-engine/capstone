@@ -199,7 +199,7 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
 		printInstruction(MI, O, NULL);
 	else {
 		// fixup instruction id due to the change in alias instruction
-		char *mnem = strdup(O->buffer);
+		char *mnem = cs_strdup(O->buffer);
 		char *tab = strchr(mnem, '\t');
 		if (tab)
 			*tab = '\0';

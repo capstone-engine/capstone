@@ -567,7 +567,7 @@ static void printSImm7ScaledOperand(MCInst *MI, unsigned OpNum,
 static void printVPRRegister(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNo));
-	char *Name = strdup(getRegisterName(Reg));
+	char *Name = cs_strdup(getRegisterName(Reg));
 	Name[0] = 'v';
 	SStream_concat(O, "%s", Name);
 	cs_mem_free(Name);
@@ -780,7 +780,7 @@ static void printVectorList(MCInst *MI, unsigned OpNum,
 		unsigned SubRegIdx = IsVec64 ? AArch64_dsub_0 : AArch64_qsub_0;
 		unsigned I;
 		for (I = 0; I < Count; I++) {
-			char *Name = strdup(getRegisterName(MCRegisterInfo_getSubReg(MRI, Reg, SubRegIdx++)));
+			char *Name = cs_strdup(getRegisterName(MCRegisterInfo_getSubReg(MRI, Reg, SubRegIdx++)));
 			Name[0] = 'v';
 			SStream_concat(O, "%s%s", Name, LayoutStr);
 			if (I != Count - 1)
@@ -788,7 +788,7 @@ static void printVectorList(MCInst *MI, unsigned OpNum,
 			cs_mem_free(Name);
 		}
 	} else { // Print the register directly when NumVecs is 1.
-		char *Name = strdup(getRegisterName(Reg));
+		char *Name = cs_strdup(getRegisterName(Reg));
 		Name[0] = 'v';
 		SStream_concat(O, "%s%s", Name, LayoutStr);
 		cs_mem_free(Name);
@@ -812,7 +812,7 @@ void AArch64_post_printer(csh handle, cs_insn *flat_insn, char *insn_asm)
 void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	if (printAliasInstr(MI, O, Info)) {
-		char *mnem = strdup(O->buffer);
+		char *mnem = cs_strdup(O->buffer);
 		char *tab = strchr(mnem, '\t');
 		if (tab) {
 			*tab = '\0';

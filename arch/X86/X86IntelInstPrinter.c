@@ -224,7 +224,7 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 	//  O << "\tlock\n";
 
 	if (printAliasInstr(MI, O)) {
-		char *mnem = strdup(O->buffer);
+		char *mnem = cs_strdup(O->buffer);
 		char *tab = strchr(mnem, '\t');
 		if (tab)
 			*tab = '\0';

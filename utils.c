@@ -86,3 +86,14 @@ unsigned int count_positive(unsigned char *list)
 
 	return c;
 }
+
+char *cs_strdup(const char *str)
+{
+	size_t len = strlen(str)+ 1;
+	void *new = cs_mem_malloc(len);
+
+	if (new == NULL)
+		return NULL;
+
+	return (char *)memmove(new, str, len);
+}

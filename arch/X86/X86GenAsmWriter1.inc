@@ -12863,7 +12863,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS)
     return false;
   }
 
-  char *tmp = strdup(AsmString), *AsmMnem, *AsmOps;
+  char *tmp = cs_strdup(AsmString), *AsmMnem, *AsmOps;
   AsmMnem = tmp;
   AsmOps = strchr(tmp, ' ');
   if (AsmOps) {

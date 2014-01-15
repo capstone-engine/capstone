@@ -39,7 +39,7 @@ char *NamedImmMapper_toString(NamedImmMapper *N, uint32_t Value, bool *Valid)
 // return true if s1 == lower(f2), and false otherwise
 static bool compare_lower_str(char *s1, char *s2)
 {
-	char *lower = strdup(s2), *c;
+	char *lower = cs_strdup(s2), *c;
 	for (c = lower; *c; c++)
 		*c = tolower((int) *c);
 
@@ -85,7 +85,7 @@ static char *utostr(uint64_t X, bool isNeg)
 
 	if (isNeg) *--BufPtr = '-';   // Add negative sign...
 
-	char *result = strdup(BufPtr);
+	char *result = cs_strdup(BufPtr);
 	return result;
 }
 
