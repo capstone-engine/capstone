@@ -317,6 +317,8 @@ const char *cs_insn_name(csh handle, unsigned int insn_id);
  Find the group id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
  Internally, this simply verifies if @group_id matches any member of insn->groups array.
 
+ NOTE: this API is only valid when detail option is ON (which is OFF by default)
+
  @handle: handle returned by cs_open()
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
  @group_id: group that you want to check if this instruction belong to.
@@ -330,6 +332,8 @@ bool cs_insn_group(csh handle, cs_insn *insn, unsigned int group_id);
  Find the register id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
  Internally, this simply verifies if @reg_id matches any member of insn->regs_read array.
 
+ NOTE: this API is only valid when detail option is ON (which is OFF by default)
+
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
  @reg_id: register that you want to check if this instruction used it.
 
@@ -342,6 +346,8 @@ bool cs_reg_read(csh handle, cs_insn *insn, unsigned int reg_id);
  Find the register id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
  Internally, this simply verifies if @reg_id matches any member of insn->regs_write array.
 
+ NOTE: this API is only valid when detail option is ON (which is OFF by default)
+
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
  @reg_id: register that you want to check if this instruction modified it.
 
@@ -352,6 +358,8 @@ bool cs_reg_write(csh handle, cs_insn *insn, unsigned int reg_id);
 /*
  Count the number of operands of a given type.
  Find the operand type in header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
+
+ NOTE: this API is only valid when detail option is ON (which is OFF by default)
 
  @handle: handle returned by cs_open()
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
@@ -366,6 +374,8 @@ int cs_op_count(csh handle, cs_insn *insn, unsigned int op_type);
  Retrieve the position of operand of given type in arch.op_info[] array.
  Later, the operand can be accessed using the returned position.
  Find the operand type in header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
+
+ NOTE: this API is only valid when detail option is ON (which is OFF by default)
 
  @handle: handle returned by cs_open()
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
