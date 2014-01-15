@@ -44,7 +44,7 @@ public class Capstone {
     public _cs_insn() {
       bytes = new byte[16];
       mnemonic = new byte[32];
-      operands = new byte[136];
+      operands = new byte[160];
     }
 
     public _cs_insn(Pointer p) {
