@@ -56,9 +56,8 @@ typedef void (*cs_free_t)(void *ptr);
 typedef int (*cs_vsnprintf_t)(char * restrict str, size_t size, const char * restrict format, va_list ap);
 
 
-// User-defined memory malloc/calloc/realloc/free functions
-// These functions will be used internally to dynamically manage memory.
-// By default, Capstone uses system's malloc(), calloc(), realloc() & free().
+// User-defined dynamic memory related functions: malloc/calloc/realloc/free/vsnprintf()
+// By default, Capstone uses system's malloc(), calloc(), realloc(), free() & vsnprintf().
 typedef struct cs_opt_mem {
 	cs_malloc_t malloc;
 	cs_calloc_t calloc;
@@ -72,7 +71,7 @@ typedef enum cs_opt_type {
 	CS_OPT_SYNTAX = 1,	// Asssembly output syntax
 	CS_OPT_DETAIL,	// Break down instruction structure into details
 	CS_OPT_MODE,	// Change engine's mode at run-time
-	CS_OPT_MEM,	// User-defined memory malloc/calloc/free
+	CS_OPT_MEM,	// User-defined dynamic memory related functions
 } cs_opt_type;
 
 // Runtime option value (associated with option type above)
