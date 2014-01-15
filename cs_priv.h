@@ -64,5 +64,6 @@ extern cs_malloc_t cs_mem_malloc;
 extern cs_calloc_t cs_mem_calloc;
 extern cs_realloc_t cs_mem_realloc;
 extern cs_free_t cs_mem_free;
+extern cs_vsnprintf_t cs_vsnprintf;
 
 #endif

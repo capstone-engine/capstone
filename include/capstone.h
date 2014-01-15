@@ -9,6 +9,7 @@ extern "C" {
 #endif
 
 #include <stdint.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
 
@@ -52,6 +53,8 @@ typedef void* (*cs_malloc_t)(size_t size);
 typedef void* (*cs_calloc_t)(size_t nmemb, size_t size);
 typedef void* (*cs_realloc_t)(void *ptr, size_t size);
 typedef void (*cs_free_t)(void *ptr);
+typedef int (*cs_vsnprintf_t)(char * restrict str, size_t size, const char * restrict format, va_list ap);
+
 
 // User-defined memory malloc/calloc/realloc/free functions
 // These functions will be used internally to dynamically manage memory.
@@ -61,6 +64,7 @@ typedef struct cs_opt_mem {
 	cs_calloc_t calloc;
 	cs_realloc_t realloc;
 	cs_free_t free;
+	cs_vsnprintf_t vsnprintf;
 } cs_opt_mem;
 
 // Runtime option for the disassembled engine

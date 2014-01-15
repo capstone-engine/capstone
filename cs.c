@@ -47,11 +47,13 @@ cs_malloc_t cs_mem_malloc = malloc;
 cs_calloc_t cs_mem_calloc = calloc;
 cs_realloc_t cs_mem_realloc = realloc;
 cs_free_t cs_mem_free = free;
+cs_vsnprintf_t cs_vsnprintf = vsnprintf;
 #else
 cs_malloc_t cs_mem_malloc = NULL;
 cs_calloc_t cs_mem_calloc = NULL;
 cs_realloc_t cs_mem_realloc = NULL;
 cs_free_t cs_mem_free = NULL;
+cs_vsnprintf_t cs_vsnprintf = NULL;
 #endif
 
 unsigned int cs_version(int *major, int *minor)
@@ -112,7 +114,7 @@ const char *cs_strerror(cs_err code)
 
 cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 {
-	if (!cs_mem_malloc || !cs_mem_calloc || !cs_mem_realloc || !cs_mem_free)
+	if (!cs_mem_malloc || !cs_mem_calloc || !cs_mem_realloc || !cs_mem_free || !cs_vsnprintf)
 		// Error: before cs_open(), dynamic memory management must be initialized
 		// with cs_option(CS_OPT_MEM)
 		return CS_ERR_MEMSETUP;
@@ -241,6 +243,7 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 		cs_mem_calloc = mem->calloc;
 		cs_mem_realloc = mem->realloc;
 		cs_mem_free = mem->free;
+		cs_vsnprintf = mem->vsnprintf;
 
 		return CS_ERR_OK;
 	}
