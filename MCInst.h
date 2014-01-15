@@ -108,7 +108,7 @@ typedef struct cs_insn_flat {
 
 	// Ascii text of instruction operands
 	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
-	char op_str[136];
+	char op_str[160];
 
 	// NOTE: All information below is not available when CS_OPT_DETAIL = CS_OPT_OFF
 

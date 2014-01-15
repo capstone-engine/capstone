@@ -134,7 +134,7 @@ typedef struct cs_insn {
 
 	// Ascii text of instruction operands
 	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
-	char op_str[136];
+	char op_str[160];
 
 	// Pointer to cs_detail.
 	// NOTE: detail pointer is only valid (not NULL) when CS_OP_DETAIL = CS_OPT_ON
