@@ -4,7 +4,7 @@
 INCDIR = ../include
 LIBDIR = ..
 
-CC = $(CROSS)gcc
+CC ?= $(CROSS)gcc
 
 CFLAGS += -fPIC -O3 -Wall -I$(INCDIR) -L$(LIBDIR)
 
