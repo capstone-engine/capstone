@@ -4,7 +4,8 @@
 INCDIR = ../include
 LIBDIR = ..
 
-CC = $(CROSS)gcc
+CC ?= $(CROSS)cc
+
 CFLAGS += -fPIC -O3 -Wall -I$(INCDIR) -L$(LIBDIR)
 
 LIBNAME = capstone
