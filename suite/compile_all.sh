@@ -3,7 +3,7 @@
 
 export LD_LIBRARY_PATH=.
 
-for x in default nix32 clang cross-win32 cross-win64 cygwin-mingw32 cygwin-mingw64; do
+for x in default nix32 cross-win32 cross-win64 cygwin-mingw32 cygwin-mingw64 bsd clang gcc; do
 	echo -n "Compiling: $x ... "
 	./compile.sh $x &> /dev/null
 

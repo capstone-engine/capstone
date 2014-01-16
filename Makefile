@@ -3,10 +3,17 @@
 
 include config.mk
 
-CC ?= $(CROSS)cc
-AR ?= $(CROSS)ar
-RANLIB ?= $(CROSS)ranlib
-STRIP ?= $(CROSS)strip
+ifeq ($(CROSS),)
+CC ?= cc
+AR ?= ar
+RANLIB ?= ranlib
+STRIP ?= strip
+else
+CC = $(CROSS)gcc
+AR = $(CROSS)ar
+RANLIB = $(CROSS)ranlib
+STRIP = $(CROSS)strip
+endif
 
 CFLAGS += -fPIC -O3 -Wall -Iinclude
 
