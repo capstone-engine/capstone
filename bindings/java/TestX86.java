@@ -126,6 +126,7 @@ public class TestX86 {
       System.out.println("Disasm:");
 
       cs = new Capstone(test.arch, test.mode);
+      cs.setDetail(Capstone.CS_OPT_ON);
       if (test.syntax != 0) {
         cs.setSyntax(test.syntax);
       }

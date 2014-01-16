@@ -1,27 +1,23 @@
 Capstone source is organized as followings.
 
 
-.                   <- core engine + README + COMPILE etc
+.                   <- core engine + README + COMPILE.TXT etc
 ├── arch            <- code handling disasm engine for each arch
 │   ├── AArch64     <- ARM64 (aka ARMv8) engine
 │   ├── ARM         <- ARM engine
 │   ├── Mips        <- Mips engine
+│   ├── PowerPC     <- PowerPC engine
 │   └── X86         <- X86 engine
 ├── bindings        <- all bindings are under this dir
-│   ├── csharp      <- C# bindings + test code
 │   ├── java        <- Java bindings + test code
 │   ├── ocaml       <- Ocaml bindings + test code
 │   ├── python      <- Python bindings + test code
-│   └── ruby        <- Ruby bindings + test code
 ├── include         <- API headers in C language (*.h)
-├── release         <- Precompiled binaries
-│   ├── linux       <- .deb, .rpm, python packages, etc
-│   ├── mac         <- .dmg
-│   └── windows     <- .msi, .exe, .dll, etc
+├── suite           <- Development test tools - for Capstone developers only
 ├── tests           <- Test code (in C language)
 
 
-Follow COMPILE to see how to compile and run code.
+Follow instructions in COMPILE.TXT to see how to compile and run code.
 
 Note: if you find some strange bugs, it is recommended to firstly clean
 the code and try to recompile/reinstall again. This can be done with:

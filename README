@@ -27,7 +27,7 @@ Further information is available at http://www.capstone-engine.org
 
 [Compile]
 
-See COMPILE file for how to compile and install Capstone
+See COMPILE.TXT file for how to compile and install Capstone
 
 
 [Status]
@@ -45,7 +45,7 @@ refer to the corresponding git repositories.
 
 [Hack]
 
-See HACK file for the structuture of the source code.
+See HACK.TXT file for the structuture of the source code.
 
 
 [License]

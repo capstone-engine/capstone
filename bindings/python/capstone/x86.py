@@ -26,6 +26,23 @@ class X86Op(ctypes.Structure):
         ('value', X86OpValue),
     )
 
+    @property
+    def imm(self):
+        return self.value.imm
+
+    @property
+    def reg(self):
+        return self.value.reg
+
+    @property
+    def fp(self):
+        return self.value.fp
+
+    @property
+    def mem(self):
+        return self.value.mem
+
+
 class CsX86(ctypes.Structure):
     _fields_ = (
         ('prefix', ctypes.c_uint8 * 5),

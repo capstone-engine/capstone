@@ -98,6 +98,7 @@ public class TestArm {
       System.out.println("Disasm:");
 
       cs = new Capstone(test.arch, test.mode);
+      cs.setDetail(Capstone.CS_OPT_ON);
       Capstone.CsInsn[] all_ins = cs.disasm(test.code, 0x1000);
 
       for (int j = 0; j < all_ins.length; j++) {

@@ -20,6 +20,19 @@
 # python
 bindings/python/build/
 *.pyc
+bindings/python/pyx/*.c
+bindings/python/pyx/arm.pyx
+bindings/python/pyx/arm64.pyx
+bindings/python/pyx/arm64_const.pyx
+bindings/python/pyx/arm_const.pyx
+bindings/python/pyx/capstone.pyx
+bindings/python/pyx/mips.pyx
+bindings/python/pyx/mips_const.pyx
+bindings/python/pyx/ppc.pyx
+bindings/python/pyx/ppc_const.pyx
+bindings/python/pyx/x86.pyx
+bindings/python/pyx/x86_const.pyx
+
 
 # java
 bindings/java/capstone.jar
@@ -31,6 +44,8 @@ tests/test_arm
 tests/test_arm64
 tests/test_mips
 tests/test_x86
+tests/test_ppc
+tests/*.static
 
 # vim tmp file
 *.swp

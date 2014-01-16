@@ -56,14 +56,14 @@ typedef struct SysRegMapper {
 extern SysRegMapper AArch64_MSRMapper;
 extern SysRegMapper AArch64_MRSMapper;
 
-extern NamedImmMapper AArch64_DBarrierMapper;
-extern NamedImmMapper AArch64_ATMapper;
-extern NamedImmMapper AArch64_DCMapper;
-extern NamedImmMapper AArch64_ICMapper;
-extern NamedImmMapper AArch64_ISBMapper;
-extern NamedImmMapper AArch64_PRFMMapper;
-extern NamedImmMapper AArch64_PStateMapper;
-extern NamedImmMapper AArch64_TLBIMapper;
+extern NamedImmMapper A64DB_DBarrierMapper;
+extern NamedImmMapper A64AT_ATMapper;
+extern NamedImmMapper A64DC_DCMapper;
+extern NamedImmMapper A64IC_ICMapper;
+extern NamedImmMapper A64ISB_ISBMapper;
+extern NamedImmMapper A64PRFM_PRFMMapper;
+extern NamedImmMapper A64PState_PStateMapper;
+extern NamedImmMapper A64TLBI_TLBIMapper;
 
 // // Enums corresponding to AArch64 condition codes
 // The CondCodes constants map directly to the 4-bit encoding of the

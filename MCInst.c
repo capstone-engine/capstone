@@ -30,7 +30,7 @@ void MCInst_insert(MCInst *inst, int index, MCOperand *Op)
 	inst->Operands[index] = *Op;
 	inst->size++;
 
-	free(Op);
+	cs_mem_free(Op);
 }
 
 void MCInst_setOpcode(MCInst *inst, unsigned Op)
@@ -71,7 +71,7 @@ int MCInst_addOperand(MCInst *inst, MCOperand *Op)
 		return -1;
 
 	inst->Operands[inst->size] = *Op;
-	free(Op);
+	cs_mem_free(Op);
 
 	inst->size++;
 
@@ -152,7 +152,7 @@ void MCOperand_setFPImm(MCOperand *op, double Val)
 
 MCOperand *MCOperand_CreateReg(unsigned Reg)
 {
-	MCOperand *op = malloc(sizeof(*op)); 
+	MCOperand *op = cs_mem_malloc(sizeof(*op));
 
 	op->Kind = kRegister;
 	op->RegVal = Reg;
@@ -162,7 +162,7 @@ MCOperand *MCOperand_CreateReg(unsigned Reg)
 
 MCOperand *MCOperand_CreateImm(int64_t Val)
 {
-	MCOperand *op = malloc(sizeof(*op)); 
+	MCOperand *op = cs_mem_malloc(sizeof(*op));
 
 	op->Kind = kImmediate;
 	op->ImmVal = Val;
@@ -172,7 +172,7 @@ MCOperand *MCOperand_CreateImm(int64_t Val)
 
 MCOperand *MCOperand_CreateFPImm(double Val)
 {
-	MCOperand *op = malloc(sizeof(*op)); 
+	MCOperand *op = cs_mem_malloc(sizeof(*op));
 
 	op->Kind = kFPImmediate;
 	op->FPImmVal = Val;

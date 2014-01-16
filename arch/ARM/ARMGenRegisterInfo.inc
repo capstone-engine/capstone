@@ -6,8 +6,9 @@
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
 
-/* Capstone Disassembler Engine */
+/* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+
 
 #ifdef GET_REGINFO_ENUM
 #undef GET_REGINFO_ENUM
@@ -305,6 +306,7 @@ enum {
   ARM_NUM_TARGET_REGS 	// 289
 };
 
+// Register classes
 enum {
   ARM_SPRRegClassID = 0,
   ARM_GPRRegClassID = 1,
@@ -408,6 +410,7 @@ enum {
   ARM_QQQQPR_with_dsub_6_in_DPR_8RegClassID = 99
 };
 
+// Subregister indices
 enum {
   ARM_NoSubRegister,
   ARM_dsub_0,	// 1
@@ -468,6 +471,7 @@ enum {
   ARM_qsub_1_qsub_2,	// 56
   ARM_NUM_TARGET_SUBREGS
 };
+
 #endif // GET_REGINFO_ENUM
 
 /*===- TableGen'erated file -------------------------------------*- C++ -*-===*\
@@ -477,6 +481,9 @@ enum {
 |* Automatically generated file, do not edit!                                 *|
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
+
+/* Capstone Disassembly Engine, http://www.capstone-engine.org */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
 
 #ifdef GET_REGINFO_MC_DESC
@@ -1168,7 +1175,6 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   { 99, 1528, 2382, 104, 2034 },
 };
 
-// Register classes...
   // SPR Register Class...
   static uint16_t SPR[] = {
     ARM_S0, ARM_S2, ARM_S4, ARM_S6, ARM_S8, ARM_S10, ARM_S12, ARM_S14, ARM_S16, ARM_S18, ARM_S20, ARM_S22, ARM_S24, ARM_S26, ARM_S28, ARM_S30, ARM_S1, ARM_S3, ARM_S5, ARM_S7, ARM_S9, ARM_S11, ARM_S13, ARM_S15, ARM_S17, ARM_S19, ARM_S21, ARM_S23, ARM_S25, ARM_S27, ARM_S29, ARM_S31, 

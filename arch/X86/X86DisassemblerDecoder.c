@@ -17,9 +17,10 @@
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
 #include <stdarg.h>   /* for va_*()       */
-#include <stdio.h>    /* for vsnprintf()  */
 #include <stdlib.h>   /* for exit()       */
 #include <string.h>   /* for memset()     */
+
+#include "../../cs_priv.h"
 
 #include "X86DisassemblerDecoder.h"
 
@@ -282,7 +283,7 @@ static void dbgprintf(struct InternalInstruction* insn,
 		return;
 
 	va_start(ap, format);
-	(void)vsnprintf(buffer, sizeof(buffer), format, ap);
+	(void)cs_vsnprintf(buffer, sizeof(buffer), format, ap);
 	va_end(ap);
 
 	insn->dlog(insn->dlogArg, buffer);

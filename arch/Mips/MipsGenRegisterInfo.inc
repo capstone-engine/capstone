@@ -6,8 +6,9 @@
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
 
-/* Capstone Disassembler Engine */
+/* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+
 
 #ifdef GET_REGINFO_ENUM
 #undef GET_REGINFO_ENUM
@@ -387,6 +388,7 @@ enum {
   Mips_sub_32_sub_hi_then_sub_32,	// 11
   Mips_NUM_TARGET_SUBREGS
 };
+
 #endif // GET_REGINFO_ENUM
 
 /*===- TableGen'erated file -------------------------------------*- C++ -*-===*\
@@ -396,6 +398,9 @@ enum {
 |* Automatically generated file, do not edit!                                 *|
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
+
+/* Capstone Disassembly Engine, http://www.capstone-engine.org */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
 
 #ifdef GET_REGINFO_MC_DESC
@@ -821,7 +826,6 @@ static MCRegisterDesc MipsRegDesc[] = { // Descriptors
   { 747, 148, 1, 0, 2209 },
 };
 
-// Register classes...
   // CCR Register Class...
   static uint16_t CCR[] = {
     Mips_FCR0, Mips_FCR1, Mips_FCR2, Mips_FCR3, Mips_FCR4, Mips_FCR5, Mips_FCR6, Mips_FCR7, Mips_FCR8, Mips_FCR9, Mips_FCR10, Mips_FCR11, Mips_FCR12, Mips_FCR13, Mips_FCR14, Mips_FCR15, Mips_FCR16, Mips_FCR17, Mips_FCR18, Mips_FCR19, Mips_FCR20, Mips_FCR21, Mips_FCR22, Mips_FCR23, Mips_FCR24, Mips_FCR25, Mips_FCR26, Mips_FCR27, Mips_FCR28, Mips_FCR29, Mips_FCR30, Mips_FCR31, 

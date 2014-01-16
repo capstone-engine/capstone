@@ -21,13 +21,14 @@
 
 #include "MipsInstPrinter.h"
 #include "../../MCInst.h"
+#include "../../utils.h"
 #include "../../SStream.h"
 #include "../../MCRegisterInfo.h"
-#include "../../utils.h"
 #include "mapping.h"
 
 #include "MipsInstPrinter.h"
 
+static void printUnsignedImm(MCInst *MI, int opNum, SStream *O);
 static bool printAliasInstr(MCInst *MI, SStream *O, void *info);
 static bool printAlias(MCInst *MI, SStream *OS);
 
@@ -80,24 +81,22 @@ typedef enum Mips_CondCode {
 #include "MipsGenInstrInfo.inc"
 
 static char *getRegisterName(unsigned RegNo);
-static void printInstruction(MCInst *MI, SStream *O);
+static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 
-// FIXME: make this status session's specific, not global like this
-static bool doing_mem = false;
 static void set_mem_access(MCInst *MI, bool status)
 {
-	doing_mem = status;
+	MI->csh->doing_mem = status;
 
-	if (MI->detail != CS_OPT_ON)
+	if (MI->csh->detail != CS_OPT_ON)
 		return;
 
-	if (doing_mem) {
-		MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].type = MIPS_OP_MEM;
-		MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].mem.base = MIPS_REG_INVALID;
-		MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].mem.disp = 0;
+	if (status) {
+		MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_MEM;
+		MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].mem.base = MIPS_REG_INVALID;
+		MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].mem.disp = 0;
 	} else {
 		// done, create the next operand slot
-		MI->pub_insn.mips.op_count++;
+		MI->flat_insn.mips.op_count++;
 	}
 }
 
@@ -151,6 +150,19 @@ static void printRegName(SStream *OS, unsigned RegNo)
 	SStream_concat(OS, "$%s", getRegisterName(RegNo));
 }
 
+static void printSaveRestore(MCInst *MI, SStream *O)
+{
+	unsigned i, e;
+	for (i = 0, e = MCInst_getNumOperands(MI); i != e; ++i) {
+		if (i != 0)
+			SStream_concat(O, ", ");
+		if (MCOperand_isReg(MCInst_getOperand(MI, i)))
+			printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, i)));
+		else
+			printUnsignedImm(MI, i, O);
+	}
+}
+
 void Mips_printInst(MCInst *MI, SStream *O, void *info)
 {
 	switch (MCInst_getOpcode(MI)) {
@@ -160,14 +172,34 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
 			SStream_concat(O, ".set\tpush\n");
 			SStream_concat(O, ".set\tmips32r2\n");
 			break;
+		case Mips_Save16:
+			SStream_concat(O, "\tsave\t");
+			printSaveRestore(MI, O);
+			SStream_concat(O, " # 16 bit inst\n");
+			return;
+		case Mips_SaveX16:
+			SStream_concat(O, "\tsave\t");
+			printSaveRestore(MI, O);
+			SStream_concat(O, "\n");
+			return;
+		case Mips_Restore16:
+			SStream_concat(O, "\trestore\t");
+			printSaveRestore(MI, O);
+			SStream_concat(O, " # 16 bit inst\n");
+			return;
+		case Mips_RestoreX16:
+			SStream_concat(O, "\trestore\t");
+			printSaveRestore(MI, O);
+			SStream_concat(O, "\n");
+			return;
 	}
 
 	// Try to print any aliases first.
 	if (!printAliasInstr(MI, O, info) && !printAlias(MI, O))
-		printInstruction(MI, O);
+		printInstruction(MI, O, NULL);
 	else {
 		// fixup instruction id due to the change in alias instruction
-		char *mnem = strdup(O->buffer);
+		char *mnem = cs_strdup(O->buffer);
 		char *tab = strchr(mnem, '\t');
 		if (tab)
 			*tab = '\0';
@@ -176,7 +208,7 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
 		unsigned id = Mips_map_insn(mnem);
 		MCInst_setOpcode(MI, Mips_get_insn_id2(id));
 		MCInst_setOpcodePub(MI, id);
-		free(mnem);
+		cs_mem_free(mnem);
 	}
 
 	switch (MCInst_getOpcode(MI)) {
@@ -195,20 +227,20 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		unsigned int reg = MCOperand_getReg(Op);
 		printRegName(O, reg);
 		reg = Mips_map_register(reg);
-		if (MI->detail) {
-			if (doing_mem) {
-				MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].mem.base = reg;
+		if (MI->csh->detail) {
+			if (MI->csh->doing_mem) {
+				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].mem.base = reg;
 			} else {
-				MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].type = MIPS_OP_REG;
-				MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].reg = reg;
-				MI->pub_insn.mips.op_count++;
+				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_REG;
+				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].reg = reg;
+				MI->flat_insn.mips.op_count++;
 			}
 		}
 	}
 
 	if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op);
-		if (doing_mem) {
+		if (MI->csh->doing_mem) {
 			if (imm) {	// only print Imm offset if it is not 0
 				if (imm >= 0) {
 					if (imm > HEX_THRESHOLD)
@@ -222,8 +254,8 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 						SStream_concat(O, "-%"PRIu64, -imm);
 				}
 			}
-			if (MI->detail)
-				MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].mem.disp = imm;
+			if (MI->csh->detail)
+				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].mem.disp = imm;
 		} else {
 			if (imm >= 0) {
 				if (imm > HEX_THRESHOLD)
@@ -237,10 +269,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					SStream_concat(O, "-%"PRIu64, -imm);
 			}
 
-			if (MI->detail) {
-				MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].type = MIPS_OP_IMM;
-				MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].imm = imm;
-				MI->pub_insn.mips.op_count++;
+			if (MI->csh->detail) {
+				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_IMM;
+				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].imm = imm;
+				MI->flat_insn.mips.op_count++;
 			}
 		}
 	}
@@ -262,10 +294,10 @@ static void printUnsignedImm(MCInst *MI, int opNum, SStream *O)
 			else
 				SStream_concat(O, "-%u", (short int)-imm);
 		}
-		if (MI->detail) {
-			MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].type = MIPS_OP_IMM;
-			MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].imm = (unsigned short int)imm;
-			MI->pub_insn.mips.op_count++;
+		if (MI->csh->detail) {
+			MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_IMM;
+			MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].imm = (unsigned short int)imm;
+			MI->flat_insn.mips.op_count++;
 		}
 	} else
 		printOperand(MI, opNum, O);
@@ -280,10 +312,10 @@ static void printUnsignedImm8(MCInst *MI, int opNum, SStream *O)
 			SStream_concat(O, "0x%x", imm);
 		else
 			SStream_concat(O, "%u", imm);
-		if (MI->detail) {
-			MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].type = MIPS_OP_IMM;
-			MI->pub_insn.mips.operands[MI->pub_insn.mips.op_count].imm = imm;
-			MI->pub_insn.mips.op_count++;
+		if (MI->csh->detail) {
+			MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_IMM;
+			MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].imm = imm;
+			MI->flat_insn.mips.op_count++;
 		}
 	} else
 		printOperand(MI, opNum, O);

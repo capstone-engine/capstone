@@ -31,7 +31,7 @@ static void print_string_hex(char *comment, unsigned char *str, int len)
 
 static void print_insn_detail(cs_insn *ins)
 {
-	cs_arm *arm = &(ins->arm);
+	cs_arm *arm = &(ins->detail->arm);
 
 	if (arm->op_count)
 		printf("\top_count: %u\n", arm->op_count);
@@ -85,7 +85,7 @@ static void print_insn_detail(cs_insn *ins)
 	}
 
 	if (arm->cc != ARM_CC_AL && arm->cc != ARM_CC_INVALID)
-		printf("\tCode condition: %u\n", ins->arm.cc);
+		printf("\tCode condition: %u\n", arm->cc);
 
 	if (arm->update_flags)
 		printf("\tUpdate-flags: True\n");
@@ -196,7 +196,9 @@ static void test()
 		if (cs_open(platforms[i].arch, platforms[i].mode, &handle))
 			return;
 
-		size_t count = cs_disasm_dyn(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
+		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+
+		size_t count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
@@ -210,8 +212,8 @@ static void test()
 			}
 			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
 
-			// free memory allocated by cs_disasm_dyn()
-			cs_free(insn);
+			// free memory allocated by cs_disasm_ex()
+			cs_free(insn, count);
 		} else {
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);

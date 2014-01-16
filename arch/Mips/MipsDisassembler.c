@@ -21,7 +21,7 @@
 
 #include <inttypes.h> 
 
-#include "../../cs_priv.h"
+#include "../../utils.h"
 
 #include "../../SubtargetFeature.h"
 #include "../../MCInst.h"
@@ -29,7 +29,6 @@
 #include "../../SStream.h"
 
 #include "../../MathExtras.h"
-#include "../../utils.h"
 
 //#include "Mips.h"
 //#include "MipsRegisterInfo.h"
@@ -151,7 +150,7 @@ static DecodeStatus DecodeExtSize(MCInst *Inst,
 #include "MipsGenSubtargetInfo.inc"
 
 // Hacky: enable all features for disassembler
-static uint64_t Mips_getFeatureBits(int mode)
+static uint64_t getFeatureBits(int mode)
 {
 	uint64_t Bits = -1;	// include every features by default
 
@@ -371,7 +370,7 @@ static DecodeStatus DecodeGPR32RegisterClass(MCInst *Inst,
 static DecodeStatus DecodePtrRegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	if (Inst->mode & CS_MODE_N64)
+	if (Inst->csh->mode & CS_MODE_N64)
 		return DecodeGPR64RegisterClass(Inst, RegNo, Address, Decoder);
 
 	return DecodeGPR32RegisterClass(Inst, RegNo, Address, Decoder);

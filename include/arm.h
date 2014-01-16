@@ -1,5 +1,5 @@
-#ifndef __CS_ARM_H__
-#define __CS_ARM_H__
+#ifndef CS_ARM_H
+#define CS_ARM_H
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
@@ -91,7 +91,7 @@ typedef struct cs_arm {
 	// or 0 when instruction has no operand.
 	uint8_t op_count;
 
-	cs_arm_op operands[20];	// operands for this instruction.
+	cs_arm_op operands[36];	// operands for this instruction.
 } cs_arm;
 
 //> ARM registers
@@ -210,15 +210,21 @@ typedef enum arm_reg {
 
 	ARM_REG_MAX,		// <-- mark the end of the list or registers
 
-	// alias registers
+	//> alias registers
 	ARM_REG_R13 = ARM_REG_SP,
 	ARM_REG_R14 = ARM_REG_LR,
 	ARM_REG_R15 = ARM_REG_PC,
+
+	ARM_REG_SB = ARM_REG_R9,
+	ARM_REG_SL = ARM_REG_R10,
+	ARM_REG_FP = ARM_REG_R11,
+	ARM_REG_IP = ARM_REG_R12,
 } arm_reg;
 
 //> ARM instruction
 typedef enum arm_insn {
 	ARM_INS_INVALID = 0,
+
 	ARM_INS_ADC,
 	ARM_INS_ADD,
 	ARM_INS_ADR,
@@ -640,6 +646,7 @@ typedef enum arm_insn {
 	ARM_INS_MOVS,
 	ARM_INS_POP,
 	ARM_INS_PUSH,
+
 	ARM_INS_MAX,
 } arm_insn;
 

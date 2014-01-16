@@ -6,11 +6,13 @@
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
 
-/* Capstone Disassembler Engine */
+/* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+
 
 #ifdef GET_SUBTARGETINFO_ENUM
 #undef GET_SUBTARGETINFO_ENUM
+
 enum {
   Mips_FeatureBitCount =  1ULL << 0,
   Mips_FeatureCondMov =  1ULL << 1,
@@ -34,6 +36,7 @@ enum {
   Mips_FeatureSingleFloat =  1ULL << 19,
   Mips_FeatureSwap =  1ULL << 20,
   Mips_FeatureVFPU =  1ULL << 21
-
 };
+
 #endif // GET_SUBTARGETINFO_ENUM
+

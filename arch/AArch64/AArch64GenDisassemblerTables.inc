@@ -6,27 +6,25 @@
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
 
-/* Capstone Disassembler Engine */
+/* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
 #include "../../MCInst.h"
 #include "../../LEB128.h"
 
 // Helper function for extracting fields from encoded instructions.
-static uint32_t fieldFromInstruction(uint32_t insn, unsigned startBit,
-                                     unsigned numBits)
-{
-    //assert(startBit + numBits <= (sizeof(uint32_t)*8) &&
-    //       "Instruction field out of bounds!");
-    uint32_t fieldMask;
-    if (numBits == sizeof(uint32_t)*8)
-      fieldMask = (uint32_t)(-1LL);
-    else
-      fieldMask = (((uint32_t)1 << numBits) - 1) << startBit;
-    return (insn & fieldMask) >> startBit;
+#define FieldFromInstruction(fname, InsnType) \
+static InsnType fname(InsnType insn, unsigned startBit, unsigned numBits) \
+{ \
+  InsnType fieldMask; \
+  if (numBits == sizeof(InsnType)*8) \
+    fieldMask = (InsnType)(-1LL); \
+  else \
+    fieldMask = (((InsnType)1 << numBits) - 1) << startBit; \
+  return (insn & fieldMask) >> startBit; \
 }
 
-static const uint8_t DecoderTableA6432[] = {
+static uint8_t DecoderTableA6432[] = {
 /* 0 */       MCD_OPC_ExtractField, 26, 3,  // Inst{28-26} ...
 /* 3 */       MCD_OPC_FilterValue, 2, 164, 11, // Skip to: 2987
 /* 7 */       MCD_OPC_ExtractField, 22, 4,  // Inst{25-22} ...
@@ -10900,7 +10898,7 @@ static const uint8_t DecoderTableA6432[] = {
 static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
 {
   switch (Idx) {
-  default:
+  default: // llvm_unreachable("Invalid index!");
   case 0:
     return ((Bits & AArch64_FeatureNEON));
   case 1:
@@ -10910,3223 +10908,3208 @@ static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
   }
 }
 
-static DecodeStatus decodeToMCInst(DecodeStatus S, unsigned Idx, uint32_t insn, MCInst *MI,
-                                   uint64_t Address, void *Decoder)
-{
-  uint32_t tmp;
-  switch (Idx) {
-  default: return S;	// never reach
-  case 0:
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 1:
-    if (!Check(&S, DecodeLDSTPairInstruction(MI, insn, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 2:
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 3:
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 4:
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 5:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 6:
-    if (!Check(&S, DecodeLoadPairExclusiveInstruction(MI, insn, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 7:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 8:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 6);
-    if (!Check(&S, Decode32BitShiftOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 9:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 6);
-    if (!Check(&S, Decode32BitShiftOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 10:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 6);
-    if (!Check(&S, Decode32BitShiftOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 11:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 6);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 12:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 6);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 13:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 6);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 14:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32wspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32wspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 3);
-    if (!Check(&S, DecodeRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 15:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32wspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 3);
-    if (!Check(&S, DecodeRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 16:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32wspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 3);
-    if (!Check(&S, DecodeRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 17:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 3);
-    if (!Check(&S, DecodeRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 18:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 3);
-    if (!Check(&S, DecodeRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 19:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 3);
-    if (!Check(&S, DecodeRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 20:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 3);
-    if (!Check(&S, DecodeRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 21:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 3);
-    if (!Check(&S, DecodeRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 22:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 3);
-    if (!Check(&S, DecodeRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 23:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeDQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 24:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeDTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 25:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 26:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeDPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 27:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 28:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 29:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 30:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 31:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeDQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 32:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeDTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 33:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 34:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeDPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 35:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 36:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 37:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 38:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 39:
-    if (!Check(&S, DecodeVLDSTPostInstruction(MI, insn, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 40:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 10, 3) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 41:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 10, 3) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 42:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 2) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 2);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 43:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 2) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 2);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 44:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 45:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 30, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 46:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 47:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 30, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 48:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 10, 3) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 49:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 10, 3) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 50:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 2) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 2);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 51:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 2) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 2);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 52:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 53:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 30, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 54:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 55:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 30, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 56:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 10, 3) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 57:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 10, 3) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 58:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 2) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 2);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 59:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 2) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 2);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 60:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 61:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 30, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 62:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 63:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 30, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 64:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 10, 3) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 65:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 10, 3) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 66:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 2) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 2);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 67:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 2) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 2);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 68:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 69:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 30, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 70:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 30, 1) << 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 71:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 30, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 72:
-    if (!Check(&S, DecodeVLDSTLanePostInstruction(MI, insn, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 73:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 74:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 75:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 19, 2);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 76:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 18, 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 77:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 17, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 78:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 79:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 80:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 81:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 82:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 83:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 84:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 85:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 18, 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 86:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 17, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 87:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 88:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 89:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 90:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 19, 2);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 91:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 92:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 93:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 94:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 95:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 96:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 97:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 98:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 99:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 100:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 11, 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 101:
-    if (!Check(&S, DecodeSHLLInstruction(MI, insn, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 102:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 103:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 20, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 104:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 19, 2);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 105:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 18, 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 106:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 17, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 107:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 108:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 109:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 110:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 111:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 20, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 112:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 19, 2);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 113:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 18, 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 114:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 17, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 115:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 116:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 117:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 19, 2);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 118:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 18, 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 119:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 17, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 120:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 121:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 122:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 20, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 123:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 124:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 125:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 126:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 127:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 128:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 11, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 129:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 130:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 20, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 14, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 131:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 19, 2);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 13, 2);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 132:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 18, 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 12, 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 133:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 17, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 11, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 134:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 135:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 5, 5) << 0);
-    tmp |= (fieldFromInstruction(insn, 16, 3) << 5);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 13, 2);
-    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_LSL, false))) return MCDisassembler_Fail;
-    return S;
-  case 136:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 3);
-    if (!Check(&S, DecodeShiftRightImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 137:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeShiftRightImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 138:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeShiftRightImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 139:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 5, 5) << 0);
-    tmp |= (fieldFromInstruction(insn, 16, 3) << 5);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 13, 2);
-    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_LSL, false))) return MCDisassembler_Fail;
-    return S;
-  case 140:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 3);
-    if (!Check(&S, DecodeShiftRightImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 141:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 3);
-    if (!Check(&S, DecodeShiftLeftImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 142:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeShiftRightImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 143:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeShiftLeftImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 144:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeShiftRightImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 145:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeShiftLeftImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 146:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 5, 5) << 0);
-    tmp |= (fieldFromInstruction(insn, 16, 3) << 5);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 13, 1);
-    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_LSL, true))) return MCDisassembler_Fail;
-    return S;
-  case 147:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 3);
-    if (!Check(&S, DecodeShiftRightImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 148:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 3);
-    if (!Check(&S, DecodeShiftLeftImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 149:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeShiftRightImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 150:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeShiftLeftImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 151:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeShiftRightImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 152:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeShiftLeftImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 153:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 5, 5) << 0);
-    tmp |= (fieldFromInstruction(insn, 16, 3) << 5);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 13, 1);
-    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_LSL, true))) return MCDisassembler_Fail;
-    return S;
-  case 154:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 5, 5) << 0);
-    tmp |= (fieldFromInstruction(insn, 16, 3) << 5);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 12, 1);
-    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_MSL, false))) return MCDisassembler_Fail;
-    return S;
-  case 155:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 5, 5) << 0);
-    tmp |= (fieldFromInstruction(insn, 16, 3) << 5);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 156:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 3);
-    if (!Check(&S, DecodeShiftLeftImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 157:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeShiftLeftImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 158:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeShiftLeftImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 159:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 5, 5) << 0);
-    tmp |= (fieldFromInstruction(insn, 16, 3) << 5);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 13, 2);
-    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_LSL, false))) return MCDisassembler_Fail;
-    return S;
-  case 160:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 3);
-    if (!Check(&S, DecodeShiftRightImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 161:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeShiftRightImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 162:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeShiftRightImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 163:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 5, 5) << 0);
-    tmp |= (fieldFromInstruction(insn, 16, 3) << 5);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 13, 2);
-    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_LSL, false))) return MCDisassembler_Fail;
-    return S;
-  case 164:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 3);
-    if (!Check(&S, DecodeShiftRightImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 165:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 3);
-    if (!Check(&S, DecodeShiftLeftImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 166:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeShiftRightImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 167:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeShiftLeftImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 168:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeShiftRightImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 169:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeShiftLeftImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 170:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 5, 5) << 0);
-    tmp |= (fieldFromInstruction(insn, 16, 3) << 5);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 13, 1);
-    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_LSL, true))) return MCDisassembler_Fail;
-    return S;
-  case 171:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 5, 5) << 0);
-    tmp |= (fieldFromInstruction(insn, 16, 3) << 5);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 13, 1);
-    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_LSL, true))) return MCDisassembler_Fail;
-    return S;
-  case 172:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 5, 5) << 0);
-    tmp |= (fieldFromInstruction(insn, 16, 3) << 5);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 12, 1);
-    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_MSL, false))) return MCDisassembler_Fail;
-    return S;
-  case 173:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 5, 5) << 0);
-    tmp |= (fieldFromInstruction(insn, 16, 3) << 5);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 174:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 3);
-    if (!Check(&S, DecodeShiftLeftImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 175:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeShiftLeftImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 176:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeShiftLeftImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 177:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeFPR128LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 1) << 2);
-    tmp |= (fieldFromInstruction(insn, 20, 2) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 178:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 6);
-    if (!Check(&S, DecodeShiftRightImm64(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 179:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeFPR128LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 1) << 2);
-    tmp |= (fieldFromInstruction(insn, 20, 2) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 180:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 6);
-    if (!Check(&S, DecodeShiftRightImm64(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 181:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeFPR128LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 1) << 2);
-    tmp |= (fieldFromInstruction(insn, 20, 2) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 182:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 6);
-    if (!Check(&S, DecodeShiftLeftImm64(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 183:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 6);
-    if (!Check(&S, DecodeShiftLeftImm64(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 184:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeFPR128LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 1) << 2);
-    tmp |= (fieldFromInstruction(insn, 20, 2) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 185:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeFPR128LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 1) << 2);
-    tmp |= (fieldFromInstruction(insn, 20, 2) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 186:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeFPR128LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 1) << 2);
-    tmp |= (fieldFromInstruction(insn, 20, 2) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 187:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 1) << 1);
-    tmp |= (fieldFromInstruction(insn, 21, 1) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 188:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 1) << 1);
-    tmp |= (fieldFromInstruction(insn, 21, 1) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 189:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 1) << 1);
-    tmp |= (fieldFromInstruction(insn, 21, 1) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 190:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 1) << 1);
-    tmp |= (fieldFromInstruction(insn, 21, 1) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 191:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 1) << 1);
-    tmp |= (fieldFromInstruction(insn, 21, 1) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 192:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 1) << 1);
-    tmp |= (fieldFromInstruction(insn, 21, 1) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 193:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 11, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 194:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 11, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 195:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 5, 19) << 2);
-    tmp |= (fieldFromInstruction(insn, 29, 2) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 196:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32wspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32wspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 12);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 197:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32wspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 12);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 198:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32wspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 12);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 199:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 12);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 200:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 12);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 201:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 12);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 202:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32wspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 13);
-    if (!Check(&S, DecodeLogicalImmOperand(MI, tmp, Address, Decoder, 32))) return MCDisassembler_Fail;
-    return S;
-  case 203:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 18);
-    if (!Check(&S, DecodeMoveWideImmOperand(MI, tmp, Address, Decoder, 32))) return MCDisassembler_Fail;
-    return S;
-  case 204:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 13);
-    if (!Check(&S, DecodeLogicalImmOperand(MI, tmp, Address, Decoder, 32))) return MCDisassembler_Fail;
-    return S;
-  case 205:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 18);
-    if (!Check(&S, DecodeMoveWideImmOperand(MI, tmp, Address, Decoder, 32))) return MCDisassembler_Fail;
-    return S;
-  case 206:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 13);
-    if (!Check(&S, DecodeLogicalImmOperand(MI, tmp, Address, Decoder, 64))) return MCDisassembler_Fail;
-    return S;
-  case 207:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 18);
-    if (!Check(&S, DecodeMoveWideImmOperand(MI, tmp, Address, Decoder, 64))) return MCDisassembler_Fail;
-    return S;
-  case 208:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 13);
-    if (!Check(&S, DecodeLogicalImmOperand(MI, tmp, Address, Decoder, 64))) return MCDisassembler_Fail;
-    return S;
-  case 209:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 18);
-    if (!Check(&S, DecodeMoveWideImmOperand(MI, tmp, Address, Decoder, 64))) return MCDisassembler_Fail;
-    return S;
-  case 210:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 211:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 6);
-    if (!Check(&S, DecodeBitfield32ImmOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 212:
-    if (!Check(&S, DecodeBitfieldInstruction(MI, insn, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 213:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 6);
-    if (!Check(&S, DecodeBitfield32ImmOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 214:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 215:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 6);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 216:
-    tmp = fieldFromInstruction(insn, 0, 26);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 217:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 19);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 218:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 19);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 219:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 19, 5);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 5, 14);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 220:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 19, 5) << 0);
-    tmp |= (fieldFromInstruction(insn, 31, 1) << 5);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 5, 14);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 221:
-    tmp = fieldFromInstruction(insn, 0, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 5, 19);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 222:
-    tmp = fieldFromInstruction(insn, 5, 16);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 223:
-    tmp = fieldFromInstruction(insn, 8, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 224:
-    tmp = fieldFromInstruction(insn, 8, 4);
-    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &AArch64_DBarrierMapper))) return MCDisassembler_Fail;
-    return S;
-  case 225:
-    tmp = fieldFromInstruction(insn, 8, 4);
-    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &AArch64_ISBMapper))) return MCDisassembler_Fail;
-    return S;
-  case 226:
-    tmp = fieldFromInstruction(insn, 5, 7);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 227:
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 5, 3) << 0);
-    tmp |= (fieldFromInstruction(insn, 16, 3) << 3);
-    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &AArch64_PStateMapper))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 8, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 228:
-    tmp = fieldFromInstruction(insn, 16, 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 12, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 8, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 5, 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 229:
-    tmp = fieldFromInstruction(insn, 5, 16);
-    if (!Check(&S, DecodeMSROperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 230:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 12, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 8, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 5, 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 231:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 16);
-    if (!Check(&S, DecodeMRSOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 232:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 233:
-    return S;
-  case 234:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 235:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 12, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 236:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 237:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 12, 9);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 238:
-    if (!Check(&S, DecodeSingleIndexedInstruction(MI, insn, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 239:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 14, 2) << 1);
-    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 240:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 14, 2) << 1);
-    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 241:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 12, 9);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 242:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 14, 2) << 1);
-    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 243:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 14, 2) << 1);
-    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 244:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 12);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 245:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 12, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 246:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 0, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 12, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 247:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 248:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 12, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 249:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 250:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 251:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 252:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 12, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 253:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 0, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 12, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 254:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &AArch64_PRFMMapper))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 19);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 255:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 256:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &AArch64_PRFMMapper))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 12, 9);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 257:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &AArch64_PRFMMapper))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 14, 2) << 1);
-    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 258:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &AArch64_PRFMMapper))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 14, 2) << 1);
-    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 259:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &AArch64_PRFMMapper))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 12);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 260:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 19);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 261:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 6);
-    if (!Check(&S, DecodeCVT32FixedPosOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 262:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 6);
-    if (!Check(&S, DecodeCVT32FixedPosOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 263:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 264:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 265:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 266:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPZeroOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 267:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 268:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 269:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 270:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 13, 8);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 271:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 12, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 272:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 273:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 12, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 274:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 6);
-    if (!Check(&S, DecodeCVT32FixedPosOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 275:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 6);
-    if (!Check(&S, DecodeCVT32FixedPosOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 276:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 277:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 278:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPZeroOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 279:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 13, 8);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 280:
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    tmp = fieldFromInstruction(insn, 12, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 281:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 12, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 282:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 283:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 284:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 285:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 286:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 12, 9);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 287:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 14, 2) << 1);
-    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 288:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 14, 2) << 1);
-    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 289:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 12, 9);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 290:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 14, 2) << 1);
-    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 291:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 14, 2) << 1);
-    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 292:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 12);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 293:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 12);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 294:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 19);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 295:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 296:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 20, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 297:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 19, 2);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 298:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 18, 3);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 299:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 17, 4);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 300:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 301:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 302:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 303:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 304:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 305:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 306:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 307:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 308:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 309:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 310:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 311:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 312:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 6);
-    if (!Check(&S, DecodeShiftRightImm64(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 313:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 6);
-    if (!Check(&S, DecodeShiftRightImm64(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 314:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 1) << 1);
-    tmp |= (fieldFromInstruction(insn, 21, 1) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 315:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 11, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 316:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeFPR64LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 20, 2);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 317:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeFPR128LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 1) << 2);
-    tmp |= (fieldFromInstruction(insn, 20, 2) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 318:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 21, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 319:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 1) << 1);
-    tmp |= (fieldFromInstruction(insn, 21, 1) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 320:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 6);
-    if (!Check(&S, DecodeShiftLeftImm64(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 321:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 3);
-    if (!Check(&S, DecodeShiftLeftImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 322:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeShiftLeftImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 323:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeShiftLeftImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 324:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 3);
-    if (!Check(&S, DecodeShiftRightImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 325:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeShiftRightImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 326:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeShiftRightImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 327:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 1) << 1);
-    tmp |= (fieldFromInstruction(insn, 21, 1) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 328:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 11, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 329:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeFPR64LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 20, 2);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 330:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeFPR128LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 1) << 2);
-    tmp |= (fieldFromInstruction(insn, 20, 2) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 331:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 21, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 332:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 1) << 1);
-    tmp |= (fieldFromInstruction(insn, 21, 1) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 333:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeFPR64LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 20, 2);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 334:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 4);
-    if (!Check(&S, DecodeFPR128LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 11, 1) << 2);
-    tmp |= (fieldFromInstruction(insn, 20, 2) << 0);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 335:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 21, 1);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 336:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeShiftRightImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 337:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 12, 9);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 338:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 14, 2) << 1);
-    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 339:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 14, 2) << 1);
-    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 340:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 12);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 341:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 6);
-    if (!Check(&S, DecodeShiftLeftImm64(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 342:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 19);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 343:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 6);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 344:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 6);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 345:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 346:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 347:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 6);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 348:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 6);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 349:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 350:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 351:
-    if (!Check(&S, DecodeFMOVLaneInstruction(MI, insn, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 352:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 12, 9);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 353:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 14, 2) << 1);
-    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 354:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 14, 2) << 1);
-    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 355:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 12);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 356:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 12, 9);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  case 357:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 14, 2) << 1);
-    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 358:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 16, 5);
-    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = 0;
-    tmp |= (fieldFromInstruction(insn, 12, 1) << 0);
-    tmp |= (fieldFromInstruction(insn, 14, 2) << 1);
-    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    return S;
-  case 359:
-    tmp = fieldFromInstruction(insn, 0, 5);
-    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 5, 5);
-    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail;
-    tmp = fieldFromInstruction(insn, 10, 12);
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp));
-    return S;
-  }
+#define DecodeToMCInst(fname,fieldname, InsnType) \
+static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *MI, \
+                uint64_t Address, void *Decoder) \
+{ \
+  InsnType tmp; \
+  switch (Idx) { \
+  default: \
+  case 0: \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 1: \
+    if (!Check(&S, DecodeLDSTPairInstruction(MI, insn, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 2: \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 3: \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 4: \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 5: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 6: \
+    if (!Check(&S, DecodeLoadPairExclusiveInstruction(MI, insn, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 7: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 8: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 6); \
+    if (!Check(&S, Decode32BitShiftOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 9: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 6); \
+    if (!Check(&S, Decode32BitShiftOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 10: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 6); \
+    if (!Check(&S, Decode32BitShiftOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 11: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 6); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 12: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 6); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 13: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 6); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 14: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32wspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32wspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 3); \
+    if (!Check(&S, DecodeRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 15: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32wspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 3); \
+    if (!Check(&S, DecodeRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 16: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32wspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 3); \
+    if (!Check(&S, DecodeRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 17: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 3); \
+    if (!Check(&S, DecodeRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 18: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 3); \
+    if (!Check(&S, DecodeRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 19: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 3); \
+    if (!Check(&S, DecodeRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 20: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 3); \
+    if (!Check(&S, DecodeRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 21: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 3); \
+    if (!Check(&S, DecodeRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 22: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 3); \
+    if (!Check(&S, DecodeRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 23: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeDQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 24: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeDTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 25: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 26: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeDPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 27: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 28: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 29: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 30: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 31: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeDQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 32: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeDTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 33: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 34: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeDPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 35: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 36: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 37: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 38: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 39: \
+    if (!Check(&S, DecodeVLDSTPostInstruction(MI, insn, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 40: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 10, 3) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 41: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 10, 3) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 42: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 2) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 2); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 43: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 2) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 2); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 44: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 45: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 30, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 46: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 47: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 30, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 48: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 10, 3) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 49: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 10, 3) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 50: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 2) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 2); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 51: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 2) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 2); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 52: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 53: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 30, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 54: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 55: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 30, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 56: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 10, 3) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 57: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 10, 3) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 58: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 2) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 2); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 59: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 2) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 2); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 60: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 61: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 30, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 62: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 63: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 30, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 64: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 10, 3) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 65: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 10, 3) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 66: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 2) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 2); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 67: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 2) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 2); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 68: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 69: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 30, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 70: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 30, 1) << 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 71: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 30, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 72: \
+    if (!Check(&S, DecodeVLDSTLanePostInstruction(MI, insn, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 73: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 74: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 75: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 19, 2); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 76: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 18, 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 77: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 17, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 78: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 79: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 80: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 81: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 82: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 83: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 84: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 85: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 18, 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 86: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 17, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 87: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 88: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 89: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 90: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 19, 2); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 91: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 92: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 93: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 94: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 95: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 96: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 97: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 98: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 99: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 100: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 11, 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 101: \
+    if (!Check(&S, DecodeSHLLInstruction(MI, insn, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 102: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 103: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 20, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 104: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 19, 2); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 105: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 18, 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 106: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 17, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 107: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 108: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 109: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 110: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 111: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 20, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 112: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 19, 2); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 113: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 18, 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 114: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 17, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 115: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 116: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 117: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 19, 2); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 118: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 18, 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 119: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 17, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 120: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeQPairRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 121: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 122: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 20, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 123: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 124: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeQTripleRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 125: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 126: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeQQuadRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 127: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 128: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 11, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 129: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 130: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 20, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 14, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 131: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 19, 2); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 13, 2); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 132: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 18, 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 12, 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 133: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 17, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 11, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 134: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 135: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 5, 5) << 0); \
+    tmp |= (fieldname(insn, 16, 3) << 5); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 13, 2); \
+    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_LSL, false))) return MCDisassembler_Fail; \
+    return S; \
+  case 136: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 3); \
+    if (!Check(&S, DecodeShiftRightImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 137: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeShiftRightImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 138: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeShiftRightImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 139: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 5, 5) << 0); \
+    tmp |= (fieldname(insn, 16, 3) << 5); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 13, 2); \
+    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_LSL, false))) return MCDisassembler_Fail; \
+    return S; \
+  case 140: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 3); \
+    if (!Check(&S, DecodeShiftRightImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 141: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 3); \
+    if (!Check(&S, DecodeShiftLeftImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 142: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeShiftRightImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 143: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeShiftLeftImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 144: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeShiftRightImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 145: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeShiftLeftImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 146: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 5, 5) << 0); \
+    tmp |= (fieldname(insn, 16, 3) << 5); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 13, 1); \
+    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_LSL, true))) return MCDisassembler_Fail; \
+    return S; \
+  case 147: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 3); \
+    if (!Check(&S, DecodeShiftRightImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 148: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 3); \
+    if (!Check(&S, DecodeShiftLeftImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 149: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeShiftRightImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 150: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeShiftLeftImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 151: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeShiftRightImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 152: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeShiftLeftImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 153: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 5, 5) << 0); \
+    tmp |= (fieldname(insn, 16, 3) << 5); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 13, 1); \
+    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_LSL, true))) return MCDisassembler_Fail; \
+    return S; \
+  case 154: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 5, 5) << 0); \
+    tmp |= (fieldname(insn, 16, 3) << 5); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 12, 1); \
+    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_MSL, false))) return MCDisassembler_Fail; \
+    return S; \
+  case 155: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 5, 5) << 0); \
+    tmp |= (fieldname(insn, 16, 3) << 5); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 156: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 3); \
+    if (!Check(&S, DecodeShiftLeftImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 157: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeShiftLeftImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 158: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeShiftLeftImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 159: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 5, 5) << 0); \
+    tmp |= (fieldname(insn, 16, 3) << 5); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 13, 2); \
+    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_LSL, false))) return MCDisassembler_Fail; \
+    return S; \
+  case 160: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 3); \
+    if (!Check(&S, DecodeShiftRightImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 161: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeShiftRightImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 162: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeShiftRightImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 163: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 5, 5) << 0); \
+    tmp |= (fieldname(insn, 16, 3) << 5); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 13, 2); \
+    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_LSL, false))) return MCDisassembler_Fail; \
+    return S; \
+  case 164: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 3); \
+    if (!Check(&S, DecodeShiftRightImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 165: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 3); \
+    if (!Check(&S, DecodeShiftLeftImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 166: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeShiftRightImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 167: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeShiftLeftImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 168: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeShiftRightImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 169: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeShiftLeftImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 170: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 5, 5) << 0); \
+    tmp |= (fieldname(insn, 16, 3) << 5); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 13, 1); \
+    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_LSL, true))) return MCDisassembler_Fail; \
+    return S; \
+  case 171: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 5, 5) << 0); \
+    tmp |= (fieldname(insn, 16, 3) << 5); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 13, 1); \
+    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_LSL, true))) return MCDisassembler_Fail; \
+    return S; \
+  case 172: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 5, 5) << 0); \
+    tmp |= (fieldname(insn, 16, 3) << 5); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 12, 1); \
+    if (!Check(&S, DecodeNeonMovImmShiftOperand(MI, tmp, Address, Decoder, A64SE_MSL, false))) return MCDisassembler_Fail; \
+    return S; \
+  case 173: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 5, 5) << 0); \
+    tmp |= (fieldname(insn, 16, 3) << 5); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 174: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 3); \
+    if (!Check(&S, DecodeShiftLeftImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 175: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeShiftLeftImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 176: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeShiftLeftImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 177: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeFPR128LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 1) << 2); \
+    tmp |= (fieldname(insn, 20, 2) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 178: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 6); \
+    if (!Check(&S, DecodeShiftRightImm64(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 179: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeFPR128LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 1) << 2); \
+    tmp |= (fieldname(insn, 20, 2) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 180: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 6); \
+    if (!Check(&S, DecodeShiftRightImm64(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 181: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeFPR128LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 1) << 2); \
+    tmp |= (fieldname(insn, 20, 2) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 182: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 6); \
+    if (!Check(&S, DecodeShiftLeftImm64(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 183: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 6); \
+    if (!Check(&S, DecodeShiftLeftImm64(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 184: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeFPR128LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 1) << 2); \
+    tmp |= (fieldname(insn, 20, 2) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 185: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeFPR128LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 1) << 2); \
+    tmp |= (fieldname(insn, 20, 2) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 186: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeFPR128LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 1) << 2); \
+    tmp |= (fieldname(insn, 20, 2) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 187: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 1) << 1); \
+    tmp |= (fieldname(insn, 21, 1) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 188: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 1) << 1); \
+    tmp |= (fieldname(insn, 21, 1) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 189: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 1) << 1); \
+    tmp |= (fieldname(insn, 21, 1) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 190: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 1) << 1); \
+    tmp |= (fieldname(insn, 21, 1) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 191: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 1) << 1); \
+    tmp |= (fieldname(insn, 21, 1) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 192: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 1) << 1); \
+    tmp |= (fieldname(insn, 21, 1) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 193: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 11, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 194: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 11, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 195: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 5, 19) << 2); \
+    tmp |= (fieldname(insn, 29, 2) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 196: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32wspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32wspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 12); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 197: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32wspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 12); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 198: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32wspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 12); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 199: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 12); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 200: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 12); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 201: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 12); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 202: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32wspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 13); \
+    if (!Check(&S, DecodeLogicalImmOperand(MI, tmp, Address, Decoder, 32))) return MCDisassembler_Fail; \
+    return S; \
+  case 203: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 18); \
+    if (!Check(&S, DecodeMoveWideImmOperand(MI, tmp, Address, Decoder, 32))) return MCDisassembler_Fail; \
+    return S; \
+  case 204: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 13); \
+    if (!Check(&S, DecodeLogicalImmOperand(MI, tmp, Address, Decoder, 32))) return MCDisassembler_Fail; \
+    return S; \
+  case 205: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 18); \
+    if (!Check(&S, DecodeMoveWideImmOperand(MI, tmp, Address, Decoder, 32))) return MCDisassembler_Fail; \
+    return S; \
+  case 206: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 13); \
+    if (!Check(&S, DecodeLogicalImmOperand(MI, tmp, Address, Decoder, 64))) return MCDisassembler_Fail; \
+    return S; \
+  case 207: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 18); \
+    if (!Check(&S, DecodeMoveWideImmOperand(MI, tmp, Address, Decoder, 64))) return MCDisassembler_Fail; \
+    return S; \
+  case 208: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 13); \
+    if (!Check(&S, DecodeLogicalImmOperand(MI, tmp, Address, Decoder, 64))) return MCDisassembler_Fail; \
+    return S; \
+  case 209: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 18); \
+    if (!Check(&S, DecodeMoveWideImmOperand(MI, tmp, Address, Decoder, 64))) return MCDisassembler_Fail; \
+    return S; \
+  case 210: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 211: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 6); \
+    if (!Check(&S, DecodeBitfield32ImmOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 212: \
+    if (!Check(&S, DecodeBitfieldInstruction(MI, insn, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 213: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 6); \
+    if (!Check(&S, DecodeBitfield32ImmOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 214: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 215: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 6); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 216: \
+    tmp = fieldname(insn, 0, 26); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 217: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 19); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 218: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 19); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 219: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 19, 5); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 5, 14); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 220: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 19, 5) << 0); \
+    tmp |= (fieldname(insn, 31, 1) << 5); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 5, 14); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 221: \
+    tmp = fieldname(insn, 0, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 5, 19); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 222: \
+    tmp = fieldname(insn, 5, 16); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 223: \
+    tmp = fieldname(insn, 8, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 224: \
+    tmp = fieldname(insn, 8, 4); \
+    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &A64DB_DBarrierMapper))) return MCDisassembler_Fail; \
+    return S; \
+  case 225: \
+    tmp = fieldname(insn, 8, 4); \
+    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &A64ISB_ISBMapper))) return MCDisassembler_Fail; \
+    return S; \
+  case 226: \
+    tmp = fieldname(insn, 5, 7); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 227: \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 5, 3) << 0); \
+    tmp |= (fieldname(insn, 16, 3) << 3); \
+    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &A64PState_PStateMapper))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 8, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 228: \
+    tmp = fieldname(insn, 16, 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 12, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 8, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 5, 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 229: \
+    tmp = fieldname(insn, 5, 16); \
+    if (!Check(&S, DecodeMSROperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 230: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 12, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 8, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 5, 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 231: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 16); \
+    if (!Check(&S, DecodeMRSOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 232: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 233: \
+    return S; \
+  case 234: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 235: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 12, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 236: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 237: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 12, 9); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 238: \
+    if (!Check(&S, DecodeSingleIndexedInstruction(MI, insn, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 239: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 14, 2) << 1); \
+    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 240: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 14, 2) << 1); \
+    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 241: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 12, 9); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 242: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 14, 2) << 1); \
+    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 243: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 14, 2) << 1); \
+    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 244: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 12); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 245: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 12, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 246: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 0, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 12, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 247: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 248: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 12, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 249: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 250: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 251: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 252: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 12, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 253: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 0, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 12, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 254: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &A64PRFM_PRFMMapper))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 19); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 255: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 256: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &A64PRFM_PRFMMapper))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 12, 9); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 257: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &A64PRFM_PRFMMapper))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 14, 2) << 1); \
+    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 258: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &A64PRFM_PRFMMapper))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 14, 2) << 1); \
+    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 259: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeNamedImmOperand(MI, tmp, Address, Decoder, &A64PRFM_PRFMMapper))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 12); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 260: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 19); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 261: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 6); \
+    if (!Check(&S, DecodeCVT32FixedPosOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 262: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 6); \
+    if (!Check(&S, DecodeCVT32FixedPosOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 263: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 264: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 265: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 266: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPZeroOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 267: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 268: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 269: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 270: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 13, 8); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 271: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 12, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 272: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 273: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 12, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 274: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 6); \
+    if (!Check(&S, DecodeCVT32FixedPosOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 275: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 6); \
+    if (!Check(&S, DecodeCVT32FixedPosOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 276: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 277: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 278: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPZeroOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 279: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 13, 8); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 280: \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    tmp = fieldname(insn, 12, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 281: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 12, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 282: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 283: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 284: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 285: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 286: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 12, 9); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 287: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 14, 2) << 1); \
+    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 288: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 14, 2) << 1); \
+    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 289: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 12, 9); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 290: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 14, 2) << 1); \
+    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 291: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 14, 2) << 1); \
+    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 292: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 12); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 293: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 12); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 294: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 19); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 295: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 296: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 20, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 297: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 19, 2); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 298: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 18, 3); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 299: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 17, 4); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 300: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 301: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 302: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 303: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 304: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 305: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 306: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 307: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 308: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 309: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 310: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 311: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 312: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 6); \
+    if (!Check(&S, DecodeShiftRightImm64(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 313: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 6); \
+    if (!Check(&S, DecodeShiftRightImm64(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 314: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 1) << 1); \
+    tmp |= (fieldname(insn, 21, 1) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 315: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 11, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 316: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeFPR64LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 20, 2); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 317: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeFPR128LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 1) << 2); \
+    tmp |= (fieldname(insn, 20, 2) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 318: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 21, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 319: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 1) << 1); \
+    tmp |= (fieldname(insn, 21, 1) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 320: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 6); \
+    if (!Check(&S, DecodeShiftLeftImm64(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 321: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 3); \
+    if (!Check(&S, DecodeShiftLeftImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 322: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeShiftLeftImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 323: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeShiftLeftImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 324: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR8RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 3); \
+    if (!Check(&S, DecodeShiftRightImm8(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 325: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeShiftRightImm16(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 326: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeShiftRightImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 327: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 1) << 1); \
+    tmp |= (fieldname(insn, 21, 1) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 328: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 11, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 329: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeFPR64LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 20, 2); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 330: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeFPR128LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 1) << 2); \
+    tmp |= (fieldname(insn, 20, 2) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 331: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 21, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 332: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 1) << 1); \
+    tmp |= (fieldname(insn, 21, 1) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 333: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeFPR64LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 20, 2); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 334: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 4); \
+    if (!Check(&S, DecodeFPR128LoRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 11, 1) << 2); \
+    tmp |= (fieldname(insn, 20, 2) << 0); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 335: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 21, 1); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 336: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeShiftRightImm32(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 337: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 12, 9); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 338: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 14, 2) << 1); \
+    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 339: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 14, 2) << 1); \
+    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 340: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 12); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 341: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 6); \
+    if (!Check(&S, DecodeShiftLeftImm64(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 342: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 19); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 343: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 6); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 344: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 6); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 345: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 346: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 347: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 6); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 348: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 6); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 349: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 350: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 351: \
+    if (!Check(&S, DecodeFMOVLaneInstruction(MI, insn, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 352: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 12, 9); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 353: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 14, 2) << 1); \
+    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 354: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 14, 2) << 1); \
+    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 355: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 12); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 356: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 12, 9); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  case 357: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 14, 2) << 1); \
+    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 358: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 16, 5); \
+    if (!Check(&S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = 0; \
+    tmp |= (fieldname(insn, 12, 1) << 0); \
+    tmp |= (fieldname(insn, 14, 2) << 1); \
+    if (!Check(&S, DecodeAddrRegExtendOperand(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    return S; \
+  case 359: \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 5, 5); \
+    if (!Check(&S, DecodeGPR64xspRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
+    tmp = fieldname(insn, 10, 12); \
+    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    return S; \
+  } \
+} 
+
+#define DecodeInstruction(fname, fieldname, decoder, InsnType) \
+static DecodeStatus fname(uint8_t DecodeTable[], MCInst *MI, \
+           InsnType insn, uint64_t Address, MCRegisterInfo *MRI, int feature) \
+{ \
+  uint64_t Bits = getFeatureBits(feature); \
+  uint8_t *Ptr = DecodeTable; \
+  uint32_t CurFieldValue = 0; \
+  DecodeStatus S = MCDisassembler_Success; \
+  for (;;) { \
+    switch (*Ptr) { \
+    default: \
+      return MCDisassembler_Fail; \
+    case MCD_OPC_ExtractField: { \
+      unsigned Start = *++Ptr; \
+      unsigned Len = *++Ptr; \
+      ++Ptr; \
+      CurFieldValue = fieldname(insn, Start, Len); \
+      break; \
+    } \
+    case MCD_OPC_FilterValue: { \
+      unsigned Len; \
+      InsnType Val = decodeULEB128(++Ptr, &Len); \
+      Ptr += Len; \
+      unsigned NumToSkip = *Ptr++; \
+      NumToSkip |= (*Ptr++) << 8; \
+      if (Val != CurFieldValue) \
+        Ptr += NumToSkip; \
+      break; \
+    } \
+    case MCD_OPC_CheckField: { \
+      unsigned Start = *++Ptr; \
+      unsigned Len = *++Ptr; \
+      InsnType FieldValue = fieldname(insn, Start, Len); \
+      uint32_t ExpectedValue = decodeULEB128(++Ptr, &Len); \
+      Ptr += Len; \
+      unsigned NumToSkip = *Ptr++; \
+      NumToSkip |= (*Ptr++) << 8; \
+      if (ExpectedValue != FieldValue) \
+        Ptr += NumToSkip; \
+      break; \
+    } \
+    case MCD_OPC_CheckPredicate: { \
+      unsigned Len; \
+      unsigned PIdx = decodeULEB128(++Ptr, &Len); \
+      Ptr += Len; \
+      unsigned NumToSkip = *Ptr++; \
+      NumToSkip |= (*Ptr++) << 8; \
+      bool Pred; \
+      if (!(Pred = checkDecoderPredicate(PIdx, Bits))) \
+        Ptr += NumToSkip; \
+      (void)Pred; \
+      break; \
+    } \
+    case MCD_OPC_Decode: { \
+      unsigned Len; \
+      unsigned Opc = decodeULEB128(++Ptr, &Len); \
+      Ptr += Len; \
+      unsigned DecodeIdx = decodeULEB128(Ptr, &Len); \
+      Ptr += Len; \
+      MCInst_setOpcode(MI, Opc); \
+      return decoder(S, DecodeIdx, insn, MI, Address, MRI); \
+    } \
+    case MCD_OPC_SoftFail: { \
+      unsigned Len; \
+      InsnType PositiveMask = decodeULEB128(++Ptr, &Len); \
+      Ptr += Len; \
+      InsnType NegativeMask = decodeULEB128(Ptr, &Len); \
+      Ptr += Len; \
+      bool Fail = (insn & PositiveMask) || (~insn & NegativeMask); \
+      if (Fail) \
+        S = MCDisassembler_SoftFail; \
+      break; \
+    } \
+    case MCD_OPC_Fail: { \
+      return MCDisassembler_Fail; \
+    } \
+    } \
+  } \
 }
 
-static DecodeStatus decodeInstruction(const uint8_t DecodeTable[], MCInst *MI,
-                                      uint32_t insn, uint64_t Address,
-                                      MCRegisterInfo *MRI)
-{
-  //uint64_t Bits = 0;
-  uint64_t Bits = AArch64_getFeatureBits();
-
-  const uint8_t *Ptr = DecodeTable;
-  uint32_t CurFieldValue = 0;
-  DecodeStatus S = MCDisassembler_Success;
-  for (;;) {
-    //ptrdiff_t Loc = Ptr - DecodeTable;
-	// printf(">> Loc: %lu\n", Ptr - DecodeTable);
-    switch (*Ptr) {
-    default:
-      //errs() << Loc << ": Unexpected decode table opcode!\n";
-      return MCDisassembler_Fail;
-    case MCD_OPC_ExtractField: {
-      unsigned Start = *++Ptr;
-      unsigned Len = *++Ptr;
-      ++Ptr;
-      CurFieldValue = fieldFromInstruction(insn, Start, Len);
-
-      break;
-    }
-    case MCD_OPC_FilterValue: {
-      // Decode the field value.
-      unsigned Len;
-      uint32_t Val = decodeULEB128(++Ptr, &Len);
-      Ptr += Len;
-      // NumToSkip is a plain 16-bit integer.
-      unsigned NumToSkip = *Ptr++;
-      NumToSkip |= (*Ptr++) << 8;
-
-      // Perform the filter operation.
-      if (Val != CurFieldValue)
-        Ptr += NumToSkip;
-
-      break;
-    }
-    case MCD_OPC_CheckField: {
-      unsigned Start = *++Ptr;
-      unsigned Len = *++Ptr;
-      uint32_t FieldValue = fieldFromInstruction(insn, Start, Len);
-      // Decode the field value.
-      uint32_t ExpectedValue = decodeULEB128(++Ptr, &Len);
-      Ptr += Len;
-      // NumToSkip is a plain 16-bit integer.
-      unsigned NumToSkip = *Ptr++;
-      NumToSkip |= (*Ptr++) << 8;
-
-      // If the actual and expected values don't match, skip.
-      if (ExpectedValue != FieldValue)
-        Ptr += NumToSkip;
-      break;
-    }
-    case MCD_OPC_CheckPredicate: {
-      unsigned Len;
-      // Decode the Predicate Index value.
-      unsigned PIdx = decodeULEB128(++Ptr, &Len);
-      Ptr += Len;
-      // NumToSkip is a plain 16-bit integer.
-      unsigned NumToSkip = *Ptr++;
-      NumToSkip |= (*Ptr++) << 8;
-      // Check the predicate.
-      bool Pred;
-      if (!(Pred = checkDecoderPredicate(PIdx, Bits)))
-        Ptr += NumToSkip;
-      (void)Pred;
-      break;
-    }
-    case MCD_OPC_Decode: {
-      unsigned Len;
-      // Decode the Opcode value.
-      unsigned Opc = decodeULEB128(++Ptr, &Len);
-      Ptr += Len;
-      unsigned DecodeIdx = decodeULEB128(Ptr, &Len);
-      MCInst_setOpcode(MI, Opc);
-      return decodeToMCInst(S, DecodeIdx, insn, MI, Address, MRI);
-    }
-    case MCD_OPC_SoftFail: {
-      // Decode the mask values.
-      unsigned Len;
-      uint32_t PositiveMask = decodeULEB128(++Ptr, &Len);
-      Ptr += Len;
-      uint32_t NegativeMask = decodeULEB128(Ptr, &Len);
-      Ptr += Len;
-      bool Fail = (insn & PositiveMask) || (~insn & NegativeMask);
-      if (Fail)
-        S = MCDisassembler_SoftFail;
-      break;
-    }
-    case MCD_OPC_Fail: {
-      return MCDisassembler_Fail;
-    }
-    }
-  }
-}
-
+FieldFromInstruction(fieldFromInstruction, uint32_t)
+DecodeToMCInst(decodeToMCInst, fieldFromInstruction, uint32_t)
+DecodeInstruction(decodeInstruction, fieldFromInstruction, decodeToMCInst, uint32_t)

@@ -22,8 +22,8 @@
  * the decoder and the table generator in a C-friendly manner.
  */
 
-#ifndef SB_X86DISASSEMBLERDECODERCOMMON_H
-#define SB_X86DISASSEMBLERDECODERCOMMON_H
+#ifndef CS_X86_DISASSEMBLERDECODERCOMMON_H
+#define CS_X86_DISASSEMBLERDECODERCOMMON_H
 
 #include <stdint.h>
 
