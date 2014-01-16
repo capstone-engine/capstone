@@ -3,7 +3,7 @@
 
 include config.mk
 
-CC = $(CROSS)gcc
+CC ?= $(CROSS)cc
 AR ?= $(CROSS)ar
 RANLIB ?= $(CROSS)ranlib
 STRIP ?= $(CROSS)strip
