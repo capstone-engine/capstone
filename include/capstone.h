@@ -53,7 +53,7 @@ typedef void* (*cs_malloc_t)(size_t size);
 typedef void* (*cs_calloc_t)(size_t nmemb, size_t size);
 typedef void* (*cs_realloc_t)(void *ptr, size_t size);
 typedef void (*cs_free_t)(void *ptr);
-typedef int (*cs_vsnprintf_t)(char * restrict str, size_t size, const char * restrict format, va_list ap);
+typedef int (*cs_vsnprintf_t)(char *str, size_t size, const char *format, va_list ap);
 
 
 // User-defined dynamic memory related functions: malloc/calloc/realloc/free/vsnprintf()
