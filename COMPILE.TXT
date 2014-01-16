@@ -28,6 +28,8 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 	For FreeBSD/OpenBSD, use 'gmake' instread of 'make':
 
 		$ gmake
+	or:
+		$ ./compile.sh bsd
 
 	Then run "./tests/test*" to see the tests disassembling sample code.
 
@@ -91,12 +93,16 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
                 $ ./compile.sh cygwin-mingw64
 
 
+(5) By default, cc (default c compiler on the system) is used as compiler.
 
-(5) Compile with clang
+	- To use "clang" compiler instead, run command below:
 
-  By default, gcc is used as compiler. To use "clang" compiler instead, run command below:
+		$ ./compile.sh clang
 
-	$ ./compile.sh clang
+	- To use "gcc" compiler instead, run this command:
+
+		$ ./compile.sh gcc
+
 
 
 
