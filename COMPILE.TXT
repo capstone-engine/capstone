@@ -19,7 +19,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
   On *nix (such as MacOSX, Linux, *BSD, Solaris):
 
-  - To compile for current platform, run either:
+  - To compile for current platform, run:
 
 		$ ./make.sh
 
@@ -42,11 +42,11 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
   Users are then required to enter root password to copy Capstone into machine
   system directories.
 
-  Then run "./tests/test*" to see the tests disassembling sample code.
+  Afterwards, run "./tests/test*" to see the tests disassembling sample code.
 
 
-  NOTE: The core framework that will be installed by "make install" consist of
-  only following files:
+  NOTE: The core framework installed by "./make.sh install" consist of
+  following files:
 
 	/usr/include/capstone/capstone.h
 	/usr/include/capstone/x86.h
@@ -64,10 +64,10 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
   To cross-compile for Windows, Linux & gcc-mingw-w64-i686 (and also gcc-mingw-w64-x86-64
   for 64-bit binaries) are required.
 
-	- To cross-compile Windows 32-bit binary, simply run
+	- To cross-compile Windows 32-bit binary, simply run:
 		$ ./make.sh cross-win32
 
-	- To cross-compile Windows 64-bit binary, simply run
+	- To cross-compile Windows 64-bit binary, run:
 		$ ./make.sh cross-win64
 
   Resulted files "capstone.dll" and "tests/test*.exe" can then be used on Windows machine.
@@ -81,20 +81,20 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
         - To compile Windows 32-bit binary under Cygwin, simply run
                 $ ./make.sh cygwin-mingw32
 
-        - To compile Windows 64-bit binary under Cygwin, simply run
+        - To compile Windows 64-bit binary under Cygwin, run
                 $ ./make.sh cygwin-mingw64
 
 
-(5) By default, cc (default c compiler on the system) is used as compiler.
+
+(5) By default, "cc" (default C compiler on the system) is used as compiler.
 
 	- To use "clang" compiler instead, run command below:
 
 		$ ./make.sh clang
 
-	- To use "gcc" compiler instead, run this command:
+	- To use "gcc" compiler instead, run:
 
 		$ ./make.sh gcc
-
 
 
 
