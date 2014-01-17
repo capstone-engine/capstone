@@ -38,8 +38,9 @@ LIBDIR = $(DESTDIR)$(PREFIX)/lib
 endif
 endif
 
-INSTALL_DATA ?= install -m0644
-INSTALL_LIBRARY ?= install -m0755
+INSTALL_BIN ?= install
+INSTALL_DATA ?= $(INSTALL_BIN) -m0644
+INSTALL_LIBRARY ?= $(INSTALL_BIN) -m0755
 
 LIBNAME = capstone
 
