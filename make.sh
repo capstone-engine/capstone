@@ -53,5 +53,5 @@ case "$1" in
   "cygwin-mingw64" ) CROSS=x86_64-w64-mingw32- build;;
   "clang" ) CC=clang build;;
   "gcc" ) CC=gcc build;;
-  * ) echo "Usage: compile.sh [nix32|bsd|clang|cross-win32|cross-win64|cygwin-mingw32|cygwin-mingw64|gcc]"; exit 1;;
+  * ) echo "Usage: make [nix32|cross-win32|cross-win64|cygwin-mingw32|cygwin-mingw64|clang|gcc]"; exit 1;;
 esac
