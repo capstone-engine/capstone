@@ -172,28 +172,16 @@ clean:
 	$(MAKE) -C bindings/ocaml clean
 	$(MAKE) -C tests clean
 
-CSVER=capstone-$(VERSION)
+
+TAG ?= HEAD
+ifeq ($(TAG), HEAD)
+DIST_VERSION = latest
+else
+DIST_VERSION = $(TAG)
+endif
+
 dist:
-	rm -rf $(CSVER)
-	git clone . $(CSVER)
-	rm -rf $(CSVER)/.git*
-ifeq (,$(findstring mips,$(CAPSTONE_ARCHS)))
-	rm -rf $(CSVER)/arch/Mips
-endif
-ifeq (,$(findstring arm,$(CAPSTONE_ARCHS)))
-	rm -rf $(CSVER)/arch/ARM
-endif
-ifeq (,$(findstring powerpc,$(CAPSTONE_ARCHS)))
-	rm -rf $(CSVER)/arch/PowerPC
-endif
-ifeq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
-	rm -rf $(CSVER)/arch/AArch64
-endif
-ifeq (,$(findstring x86,$(CAPSTONE_ARCHS)))
-	rm -rf $(CSVER)/arch/X86
-endif
-	tar czvf $(CSVER).tar.gz $(CSVER)
-	rm -rf $(CSVER)
+	git archive --format=tar.gz --prefix=capstone-$(DIST_VERSION)/ $(TAG) > capstone-$(DIST_VERSION).tar.gz
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
