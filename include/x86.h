@@ -1,5 +1,5 @@
-#ifndef CS_X86_H
-#define CS_X86_H
+#ifndef CAPSTONE_X86_H
+#define CAPSTONE_X86_H
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
