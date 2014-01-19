@@ -32,7 +32,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O);
 
 static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat(O, "opaque ptr ");
+	SStream_concat(O, "ptr ");
 	printMemReference(MI, OpNo, O);
 }
 
