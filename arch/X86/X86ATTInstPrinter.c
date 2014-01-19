@@ -446,7 +446,7 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 	//  OS << "\tlock\n";
 
 	// Try to print any aliases first.
-	if (printAliasInstr(MI, OS)) {
+	if (printAliasInstr(MI, OS, NULL)) {
 		char *mnem = cs_strdup(OS->buffer);
 		char *tab = strchr(mnem, '\t');
 		if (tab)

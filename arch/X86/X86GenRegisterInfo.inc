@@ -6,8 +6,9 @@
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
 
-/* Capstone Disassembler Engine */
+/* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+
 
 #ifdef GET_REGINFO_ENUM
 #undef GET_REGINFO_ENUM
@@ -249,6 +250,7 @@ enum {
   X86_NUM_TARGET_REGS 	// 233
 };
 
+// Register classes
 enum {
   X86_GR8RegClassID = 0,
   X86_GR8_NOREXRegClassID = 1,
@@ -322,3 +324,4 @@ enum {
 };
 
 #endif // GET_REGINFO_ENUM
+

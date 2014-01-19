@@ -47,6 +47,14 @@ LIBNAME = capstone
 LIBOBJ =
 LIBOBJ += cs.o utils.o SStream.o MCInstrDesc.o MCRegisterInfo.o
 
+ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
+	CFLAGS += -DCAPSTONE_HAS_X86
+	LIBOBJ += arch/X86/X86DisassemblerDecoder.o
+	LIBOBJ += arch/X86/X86Disassembler.o
+	LIBOBJ += arch/X86/X86IntelInstPrinter.o
+	LIBOBJ += arch/X86/X86ATTInstPrinter.o
+	LIBOBJ += arch/X86/mapping.o arch/X86/module.o
+endif
 ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_ARM
 	LIBOBJ += arch/ARM/ARMDisassembler.o
@@ -67,14 +75,6 @@ ifneq (,$(findstring powerpc,$(CAPSTONE_ARCHS)))
 	LIBOBJ += arch/PowerPC/PPCInstPrinter.o
 	LIBOBJ += arch/PowerPC/mapping.o
 	LIBOBJ += arch/PowerPC/module.o
-endif
-ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
-	CFLAGS += -DCAPSTONE_HAS_X86
-	LIBOBJ += arch/X86/X86DisassemblerDecoder.o
-	LIBOBJ += arch/X86/X86Disassembler.o
-	LIBOBJ += arch/X86/X86IntelInstPrinter.o
-	LIBOBJ += arch/X86/X86ATTInstPrinter.o
-	LIBOBJ += arch/X86/mapping.o arch/X86/module.o
 endif
 ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_ARM64

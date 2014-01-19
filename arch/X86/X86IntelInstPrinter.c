@@ -216,14 +216,14 @@ static bool get_first_op(char *buffer, char *firstop)
 		return false;
 }
 
-static bool printAliasInstr(MCInst *MI, SStream *OS);
+static bool printAliasInstr(MCInst *MI, SStream *OS, void *info);
 static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	//if (TSFlags & X86II::LOCK)
 	//  O << "\tlock\n";
 
-	if (printAliasInstr(MI, O)) {
+	if (printAliasInstr(MI, O, NULL)) {
 		char *mnem = cs_strdup(O->buffer);
 		char *tab = strchr(mnem, '\t');
 		if (tab)
@@ -352,7 +352,7 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
-static const char *getRegisterName(unsigned RegNo);
+static char *getRegisterName(unsigned RegNo);
 static void printRegName(SStream *OS, unsigned RegNo)
 {
 	SStream_concat(OS, getRegisterName(RegNo));
