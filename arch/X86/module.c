@@ -50,7 +50,7 @@ static void destroy(cs_struct *handle)
 {
 }
 
-static void __attribute__ ((constructor)) __init_x86__()
+void X86_enable(void)
 {
 	arch_init[CS_ARCH_X86] = init;
 	arch_option[CS_ARCH_X86] = option;

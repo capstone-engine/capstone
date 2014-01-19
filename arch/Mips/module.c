@@ -46,7 +46,7 @@ static void destroy(cs_struct *handle)
 {
 }
 
-static void __attribute__ ((constructor)) __init_mips__()
+void Mips_enable(void)
 {
 	arch_init[CS_ARCH_MIPS] = init;
 	arch_option[CS_ARCH_MIPS] = option;

@@ -39,7 +39,7 @@ static void destroy(cs_struct *handle)
 {
 }
 
-static void __attribute__ ((constructor)) __init_mips__()
+void PPC_enable(void)
 {
 	arch_init[CS_ARCH_PPC] = init;
 	arch_option[CS_ARCH_PPC] = option;

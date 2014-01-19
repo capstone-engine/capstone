@@ -14,30 +14,36 @@ cs_err (*arch_init[MAX_ARCH])(cs_struct *) = { NULL };
 cs_err (*arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = { NULL };
 void (*arch_destroy[MAX_ARCH]) (cs_struct *) = { NULL };
 
-// we need this trick to enable module constructors in static lib
-extern void enable_arm();
-extern void enable_arm64();
-extern void enable_mips();
-extern void enable_x86();
-extern void enable_powerpc();
+extern void ARM_enable(void);
+extern void AArch64_enable(void);
+extern void Mips_enable(void);
+extern void X86_enable(void);
+extern void PPC_enable(void);
 
-void enable_construct()
+static void archs_enable(void)
 {
+	static bool initialized = false;
+
+	if (initialized)
+		return;
+
 #ifdef CAPSTONE_HAS_ARM
-	enable_arm();
+	ARM_enable();
 #endif
 #ifdef CAPSTONE_HAS_ARM64
-	enable_arm64();
+	AArch64_enable();
 #endif
 #ifdef CAPSTONE_HAS_MIPS
-	enable_mips();
+	Mips_enable();
 #endif
 #ifdef CAPSTONE_HAS_X86
-	enable_x86();
+	X86_enable();
 #endif
 #ifdef CAPSTONE_HAS_POWERPC
-	enable_powerpc();
+	PPC_enable();
 #endif
+
+	initialized = true;
 }
 
 unsigned int all_arch = 0;
@@ -118,6 +124,8 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		// Error: before cs_open(), dynamic memory management must be initialized
 		// with cs_option(CS_OPT_MEM)
 		return CS_ERR_MEMSETUP;
+
+	archs_enable();
 
 	if (arch < CS_ARCH_MAX && arch_init[arch]) {
 		cs_struct *ud;
