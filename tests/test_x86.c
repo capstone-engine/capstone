@@ -165,8 +165,11 @@ static void test()
 	int i;
 
 	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
-		if (cs_open(platforms[i].arch, platforms[i].mode, &handle))
+		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
+		if (err) {
+			printf("Failed on cs_open() with error returned: %u\n", err);
 			return;
+		}
 
 		if (platforms[i].opt_type)
 			cs_option(handle, platforms[i].opt_type, platforms[i].opt_value);
