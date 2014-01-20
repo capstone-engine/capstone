@@ -26,7 +26,7 @@
 #include "../../MCRegisterInfo.h"
 #include "../../MathExtras.h"
 
-#include "mapping.h"
+#include "AArch64Mapping.h"
 
 static char *getRegisterName(unsigned RegNo);
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);

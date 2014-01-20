@@ -7,7 +7,7 @@
 #include "../../include/ppc.h"
 #include "../../utils.h"
 
-#include "mapping.h"
+#include "PPCMapping.h"
 
 #define GET_INSTRINFO_ENUM
 #include "PPCGenInstrInfo.inc"

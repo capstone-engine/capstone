@@ -25,9 +25,9 @@
 #include "../../SStream.h"
 #include "../../MCRegisterInfo.h"
 #include "../../MathExtras.h"
-#include "mapping.h"
+#include "PPCMapping.h"
 
-//#include "mapping.h"
+//#include "PPCMapping.h"
 
 static const char *getRegisterName(unsigned RegNo);
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);

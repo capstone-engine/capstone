@@ -5,7 +5,7 @@
 #include "../../MCRegisterInfo.h"
 #include "AArch64Disassembler.h"
 #include "AArch64InstPrinter.h"
-#include "mapping.h"
+#include "AArch64Mapping.h"
 
 void enable_arm64() {}
 

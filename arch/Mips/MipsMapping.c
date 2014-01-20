@@ -7,7 +7,7 @@
 #include "../../include/mips.h"
 #include "../../utils.h"
 
-#include "mapping.h"
+#include "MipsMapping.h"
 
 #define GET_INSTRINFO_ENUM
 #include "MipsGenInstrInfo.inc"

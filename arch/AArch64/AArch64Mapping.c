@@ -7,7 +7,7 @@
 #include "../../include/arm64.h"
 #include "../../utils.h"
 
-#include "mapping.h"
+#include "AArch64Mapping.h"
 
 #define GET_INSTRINFO_ENUM
 #include "AArch64GenInstrInfo.inc"

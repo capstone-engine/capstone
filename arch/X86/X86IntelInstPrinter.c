@@ -26,7 +26,7 @@
 #include "../../SStream.h"
 #include "../../MCRegisterInfo.h"
 
-#include "mapping.h"
+#include "X86Mapping.h"
 
 static void printMemReference(MCInst *MI, unsigned Op, SStream *O);
 

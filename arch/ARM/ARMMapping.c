@@ -7,7 +7,7 @@
 #include "../../include/arm.h"
 #include "../../cs_priv.h"
 
-#include "mapping.h"
+#include "ARMMapping.h"
 
 #define GET_INSTRINFO_ENUM
 #include "ARMGenInstrInfo.inc"

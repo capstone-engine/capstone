@@ -3,7 +3,7 @@
 
 #include <string.h>
 
-#include "mapping.h"
+#include "X86Mapping.h"
 #include "X86DisassemblerDecoder.h"
 
 #include "../../utils.h"

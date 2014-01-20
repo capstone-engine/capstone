@@ -5,7 +5,7 @@
 #include "../../MCRegisterInfo.h"
 #include "MipsDisassembler.h"
 #include "MipsInstPrinter.h"
-#include "mapping.h"
+#include "MipsMapping.h"
 
 void enable_mips() {};
 

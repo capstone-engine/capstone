@@ -28,7 +28,7 @@
 #include "../../SStream.h"
 #include "../../MCRegisterInfo.h"
 #include "../../utils.h"
-#include "mapping.h"
+#include "ARMMapping.h"
 
 #define GET_SUBTARGETINFO_ENUM
 #include "ARMGenSubtargetInfo.inc"
