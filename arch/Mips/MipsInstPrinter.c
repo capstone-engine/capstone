@@ -24,7 +24,7 @@
 #include "../../utils.h"
 #include "../../SStream.h"
 #include "../../MCRegisterInfo.h"
-#include "mapping.h"
+#include "MipsMapping.h"
 
 #include "MipsInstPrinter.h"
 

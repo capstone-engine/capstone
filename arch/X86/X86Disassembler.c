@@ -26,7 +26,7 @@
 #include "X86DisassemblerDecoderCommon.h"
 #include "X86DisassemblerDecoder.h"
 #include "../../MCInst.h"
-#include "mapping.h"
+#include "X86Mapping.h"
 
 #define GET_REGINFO_ENUM
 #include "X86GenRegisterInfo.inc"

@@ -5,7 +5,7 @@
 #include "../../MCRegisterInfo.h"
 #include "ARMDisassembler.h"
 #include "ARMInstPrinter.h"
-#include "mapping.h"
+#include "ARMMapping.h"
 
 static cs_err init(cs_struct *ud)
 {

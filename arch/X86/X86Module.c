@@ -5,7 +5,7 @@
 #include "../../MCRegisterInfo.h"
 #include "X86Disassembler.h"
 #include "X86InstPrinter.h"
-#include "mapping.h"
+#include "X86Mapping.h"
 
 void enable_x86() {};
 

@@ -5,7 +5,7 @@
 #include "../../MCRegisterInfo.h"
 #include "PPCDisassembler.h"
 #include "PPCInstPrinter.h"
-#include "mapping.h"
+#include "PPCMapping.h"
 
 void enable_powerpc() {};
 

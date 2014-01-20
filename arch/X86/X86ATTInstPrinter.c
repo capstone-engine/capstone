@@ -25,7 +25,7 @@
 #include "../../MCInst.h"
 #include "../../SStream.h"
 #include "../../MCRegisterInfo.h"
-#include "mapping.h"
+#include "X86Mapping.h"
 
 #define markup(x) ""
 
