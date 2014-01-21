@@ -6668,9 +6668,9 @@ void X86_insn_combine(cs_struct *h, cs_insn *insn, cs_insn *prev)
 	prev->id = insn->id;
 	prev->size += insn->size;
 	memmove(prev->bytes+1, insn->bytes, sizeof(insn->bytes) - 1);
-	strlcat(prev->mnemonic, " ", sizeof(insn->mnemonic));
-	strlcat(prev->mnemonic, insn->mnemonic, sizeof(insn->mnemonic));
-	strlcpy(prev->op_str, insn->op_str, sizeof(insn->op_str));
+	strcat(prev->mnemonic, " ");
+	strcat(prev->mnemonic, insn->mnemonic);
+	strcpy(prev->op_str, insn->op_str);
 
 	if (h->detail) {
 		// save old prefix to copy it back later
