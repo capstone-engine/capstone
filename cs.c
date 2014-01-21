@@ -268,6 +268,18 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 	return arch_option[handle->arch](handle, type, value);
 }
 
+// get previous instruction, which can be in the cache, or in total buffer
+static cs_insn *get_prev_insn(cs_insn *cache, unsigned int f, void *total, size_t total_size)
+{
+	if (f == 0) {
+		if (total == NULL)
+			return NULL;
+		// get the trailing insn from total buffer
+		return (cs_insn *)(total + total_size - sizeof(cs_insn));
+	} else
+		return &cache[f - 1];
+}
+
 // dynamicly allocate memory to contain disasm insn
 // NOTE: caller must free() the allocated memory itself to avoid memory leaking
 size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
@@ -275,7 +287,8 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 	MCInst mci;
 	uint16_t insn_size;
-	size_t c = 0, f = 0;
+	size_t c = 0;
+	unsigned int f = 0;
 	cs_insn insn_cache[64];
 	void *total = NULL;
 	size_t total_size = 0;
@@ -315,25 +328,32 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 
 			fill_insn(handle, &insn_cache[f], ss.buffer, &mci, handle->post_printer, buffer);
 
-			f++;
+			if (!handle->check_combine || !handle->check_combine(handle, &insn_cache[f])) {
+				f++;
 
-			if (f == ARR_SIZE(insn_cache)) {
-				// resize total to contain newly disasm insns
-				total_size += sizeof(insn_cache);
-				void *tmp = cs_mem_realloc(total, total_size);
-				if (tmp == NULL) {	// insufficient memory
-					cs_mem_free(total);
-					handle->errnum = CS_ERR_MEM;
-					return 0;
+				if (f == ARR_SIZE(insn_cache)) {
+					// resize total to contain newly disasm insns
+					total_size += sizeof(insn_cache);
+					void *tmp = cs_mem_realloc(total, total_size);
+					if (tmp == NULL) {	// insufficient memory
+						cs_mem_free(total);
+						handle->errnum = CS_ERR_MEM;
+						return 0;
+					}
+
+					total = tmp;
+					memcpy(total + total_size - sizeof(insn_cache), insn_cache, sizeof(insn_cache));
+					// reset f back to 0
+					f = 0;
 				}
 
-				total = tmp;
-				memcpy(total + total_size - sizeof(insn_cache), insn_cache, sizeof(insn_cache));
-				// reset f back to 0
-				f = 0;
+				c++;
+			} else {
+				// combine this instruction with previous prefix instruction
+				cs_insn *prev = get_prev_insn(insn_cache, f, total, total_size);
+				handle->combine(handle, &insn_cache[f], prev);
 			}
 
-			c++;
 			buffer += insn_size;
 			size -= insn_size;
 			offset += insn_size;

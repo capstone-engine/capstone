@@ -38,4 +38,9 @@ unsigned int X86_get_insn_id2(unsigned int insn_id);
 // post printer for X86.
 void X86_post_printer(csh handle, cs_insn *pub_insn, char *insn_asm);
 
+// handle X86 prefixes
+bool X86_insn_check_combine(cs_struct *h, cs_insn *insn);
+
+void X86_insn_combine(cs_struct *h, cs_insn *insn, cs_insn *prev);
+
 #endif

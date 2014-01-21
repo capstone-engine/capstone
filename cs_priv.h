@@ -21,6 +21,10 @@ typedef const char *(*GetName_t)(csh handle, unsigned int reg);
 
 typedef void (*GetID_t)(cs_struct *h, cs_insn *insn, unsigned int id);
 
+typedef bool (*CheckCombineInsn_t)(cs_struct *h, cs_insn *insn);
+
+typedef void (*CombineInsn_t)(cs_struct *h, cs_insn *insn, cs_insn *prev);
+
 // for ARM only
 typedef struct ARM_ITStatus {
 	unsigned char ITStates[128];	// FIXME
@@ -45,6 +49,9 @@ struct cs_struct {
 	int syntax;	// asm syntax for simple printer such as PPC
 	bool doing_mem;	// handling memory operand in InstPrinter code
 	unsigned short *insn_cache;	// index caching for mapping.c
+	CheckCombineInsn_t check_combine;
+	CombineInsn_t combine;
+	uint8_t prev_prefix;	// save previous prefix for combining instructions - X86 only.
 };
 
 #define MAX_ARCH 8
