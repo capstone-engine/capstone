@@ -143,7 +143,12 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		// by default, do not break instruction into details
 		ud->detail = CS_OPT_OFF;
 
-		arch_init[ud->arch](ud);
+		cs_err err = arch_init[ud->arch](ud);
+		if (err) {
+			cs_mem_free(ud);
+			*handle = 0;
+			return err;
+		}
 
 		*handle = (uintptr_t)ud;
 

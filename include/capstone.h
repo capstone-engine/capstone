@@ -160,7 +160,7 @@ typedef enum cs_err {
 	CS_ERR_MEM,	// Out-Of-Memory error: cs_open(), cs_disasm_ex()
 	CS_ERR_ARCH,	// Unsupported architecture: cs_open()
 	CS_ERR_HANDLE,	// Invalid handle: cs_op_count(), cs_op_index()
-	CS_ERR_CSH,		// Invalid csh argument: cs_close(), cs_errno(), cs_option()
+	CS_ERR_CSH,	    // Invalid csh argument: cs_close(), cs_errno(), cs_option()
 	CS_ERR_MODE,	// Invalid/unsupported mode: cs_open()
 	CS_ERR_OPTION,	// Invalid/unsupported option: cs_option()
 	CS_ERR_DETAIL,	// Information is unavailable because detail option is OFF
