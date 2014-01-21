@@ -19,6 +19,8 @@ static cs_err init(cs_struct *ud)
 	ud->insn_id = X86_get_insn_id;
 	ud->insn_name = X86_insn_name;
 	ud->post_printer = X86_post_printer;
+	ud->check_combine = X86_insn_check_combine;
+	ud->combine = X86_insn_combine;
 
 	return CS_ERR_OK;
 }

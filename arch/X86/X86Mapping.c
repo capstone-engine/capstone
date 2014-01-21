@@ -6636,3 +6636,46 @@ unsigned int X86_get_insn_id2(unsigned int id)
 {
 	return insn_reverse_id(insns, ARR_SIZE(insns), id);
 }
+
+// can this instruction combine with prev prefix instruction?
+// this also updates h->pre_prefix if needed
+bool X86_insn_check_combine(cs_struct *h, cs_insn *insn)
+{
+	// is this a prefix instruction?
+	if (insn->id == X86_INS_LOCK || insn->id == X86_INS_REP ||
+		insn->id == X86_INS_REPNE) {
+		// then save this as prev_prefix
+		h->prev_prefix = insn->id;
+		return false;
+	}
+
+	// if the previous instruction is a prefix, then OK to combine with this
+	if (h->prev_prefix) {
+		return true;
+	}
+
+	// cannot combine this with a prefix
+	return false;
+}
+
+// combine this instruction with previous prefix instruction
+void X86_insn_combine(cs_struct *h, cs_insn *insn, cs_insn *prev)
+{
+	// reset prev_prefix
+	h->prev_prefix = 0;
+
+	// copy information from insn to prev
+	prev->id = insn->id;
+	prev->size += insn->size;
+	memmove(prev->bytes+1, insn->bytes, sizeof(insn->bytes) - 1);
+	strlcat(prev->mnemonic, " ", sizeof(insn->mnemonic));
+	strlcat(prev->mnemonic, insn->mnemonic, sizeof(insn->mnemonic));
+	strlcpy(prev->op_str, insn->op_str, sizeof(insn->op_str));
+
+	if (h->detail) {
+		// save old prefix to copy it back later
+		uint8_t prefix = prev->detail->x86.opcode[0];
+		memmove(prev->detail, insn->detail, sizeof(cs_detail));
+		prev->detail->x86.prefix[0] = prefix;
+	}
+}
