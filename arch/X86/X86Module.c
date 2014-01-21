@@ -11,6 +11,10 @@ void enable_x86() {};
 
 static cs_err init(cs_struct *ud)
 {
+	// verify if requested mode is valid
+	if (ud->mode & ~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | CS_MODE_16))
+		return CS_ERR_MODE;
+
 	// by default, we use Intel syntax
 	ud->printer = X86_Intel_printInst;
 	ud->printer_info = NULL;

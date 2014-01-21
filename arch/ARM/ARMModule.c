@@ -9,6 +9,11 @@
 
 static cs_err init(cs_struct *ud)
 {
+	// verify if requested mode is valid
+	if (ud->mode & ~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM |
+				CS_MODE_THUMB | CS_MODE_BIG_ENDIAN))
+		return CS_ERR_MODE;
+
 	MCRegisterInfo *mri = cs_mem_malloc(sizeof(*mri));
 
 	ARM_init(mri);
