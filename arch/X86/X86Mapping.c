@@ -6662,7 +6662,8 @@ bool X86_insn_check_combine(cs_struct *h, cs_insn *insn)
 		return true;
 	}
 
-	// cannot combine this with a prefix
+	// neither prefix instruction nor having previous instruction as prefix,
+	// so we cannot combine this with a prefix
 	return false;
 }
 
