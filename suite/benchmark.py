@@ -55,9 +55,6 @@ def cs(md, code):
             print i
 
 
-md = Cs(CS_ARCH_X86, CS_MODE_32)
-md.detail = False
-
 cfile = open(FILE)
 
 for (arch, mode, comment, syntax) in all_tests:
