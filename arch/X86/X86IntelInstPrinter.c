@@ -239,7 +239,7 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 		if (get_first_op(O->buffer, tmp)) {
 			int post;
 			char *acc_regs[] = { "al", "ax", "eax", "rax", NULL };
-			int acc_regs_id[] = { X86_REG_AL,  X86_REG_AX, X86_REG_EAX, X86_REG_RAX };
+			unsigned int acc_regs_id[] = { X86_REG_AL,  X86_REG_AX, X86_REG_EAX, X86_REG_RAX };
 			if (tmp[0] != 0 && ((post = str_in_list(acc_regs, tmp)) != -1)) {
 				// first op is register, so set operand size following register size
 				MI->flat_insn.x86.op_size = 1 << post;
@@ -290,7 +290,7 @@ static void printAVXCC(MCInst *MI, unsigned Op, SStream *O)
 {
 	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x1f;
 	switch (Imm) {
-		default: printf("Invalid avxcc argument!\n"); break;
+		default: break;//printf("Invalid avxcc argument!\n"); break;
 		case    0: SStream_concat(O, "eq"); break;
 		case    1: SStream_concat(O, "lt"); break;
 		case    2: SStream_concat(O, "le"); break;
@@ -415,7 +415,7 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 static void printMemReference(MCInst *MI, unsigned Op, SStream *O)	// qqq
 {
 	MCOperand *BaseReg  = MCInst_getOperand(MI, Op);
-	unsigned ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op+1));
+	uint64_t ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op+1));
 	MCOperand *IndexReg  = MCInst_getOperand(MI, Op+2);
 	MCOperand *DispSpec = MCInst_getOperand(MI, Op+3);
 	MCOperand *SegReg = MCInst_getOperand(MI, Op+4);
@@ -424,7 +424,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)	// qqq
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.base = MCOperand_getReg(BaseReg);
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.index = MCOperand_getReg(IndexReg);
-		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.scale = ScaleVal;
+		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.scale = (int)ScaleVal;
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.disp = 0;
 	}
 

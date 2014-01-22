@@ -131,7 +131,9 @@ static inline unsigned CountLeadingZeros_64(uint64_t Value) {
 #endif
 	Count = __builtin_clzll(Value);
 #else
-	if (sizeof(long) == sizeof(int64_t)) {
+#ifndef _MSC_VER
+	if (sizeof(long) == sizeof(int64_t))
+    {
 		if (!Value) return 64;
 		Count = 0;
 		// bisection method for count leading zeros
@@ -143,7 +145,10 @@ static inline unsigned CountLeadingZeros_64(uint64_t Value) {
 				Count |= Shift;
 			}
 		}
-	} else {
+	}
+    else
+#endif
+    {
 		// get hi portion
 		uint32_t Hi = Hi_32(Value);
 
@@ -250,7 +255,7 @@ static inline unsigned CountPopulation_64(uint64_t Value) {
 	uint64_t v = Value - ((Value >> 1) & 0x5555555555555555ULL);
 	v = (v & 0x3333333333333333ULL) + ((v >> 2) & 0x3333333333333333ULL);
 	v = (v + (v >> 4)) & 0x0F0F0F0F0F0F0F0FULL;
-	return unsigned((uint64_t)(v * 0x0101010101010101ULL) >> 56);
+	return (uint64_t)((v * 0x0101010101010101ULL) >> 56);
 #endif
 }
 

@@ -11,6 +11,10 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
+#ifdef _MSC_VER
+#pragma warning(disable:4201)
+#endif _MSC_VER
+
 //> Operand type for instruction's operands
 typedef enum mips_op_type {
 	MIPS_OP_INVALID = 0,	// Uninitialized.

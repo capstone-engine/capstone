@@ -11,11 +11,10 @@ Capstone offers some unparalleled features:
 - Provide details on disassembled instruction (called “decomposer” by others).
 
 - Provide semantics of the disassembled instruction, such as list of implicit
-  registers read & written.
+     registers read & written.
 
-- Implemented in pure C language, with lightweight wrappers for C++, C#, Go,
-  Java, Ocaml, Python, Ruby & Vala ready (either available in main code,
-  or provided externally by community).
+- Implemented in pure C language, with lightweight wrappers for C++, Python,
+     Ruby, OCaml, C#, Java and Go available.
 
 - Native support for Windows & *nix platforms (with OSX, Linux, *BSD & Solaris
   have been confirmed).

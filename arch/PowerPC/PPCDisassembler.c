@@ -104,7 +104,7 @@ static const unsigned G8Regs[] = {
 static uint64_t getFeatureBits(int feature)
 {
 	// enable all features
-	return -1;
+	return (uint64_t)-1;
 }
 
 static DecodeStatus decodeRegisterClass(MCInst *Inst, uint64_t RegNo,
@@ -264,6 +264,11 @@ static DecodeStatus decodeCRBitMOperand(MCInst *Inst, uint64_t Imm,
 	return MCDisassembler_Success;
 }
 
+#ifdef _MSC_VER
+#pragma warning(disable:4242)
+#pragma warning(disable:4244)
+#pragma warning(disable:4706)
+#endif
 #include "PPCGenDisassemblerTables.inc"
 
 static DecodeStatus getInstruction(MCInst *MI,

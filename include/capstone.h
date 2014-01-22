@@ -14,6 +14,11 @@ extern "C" {
 #include <stdbool.h>
 #include <stdlib.h>
 
+#ifdef _MSC_VER
+#pragma warning(disable:4201)
+#pragma warning(disable:4100)
+#endif
+
 // Capstone API version
 #define CS_API_MAJOR 2
 #define CS_API_MINOR 0
