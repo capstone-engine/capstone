@@ -1,10 +1,10 @@
 Version 2.0 has a known X86 issue: if you disassemble a buffer of instructions
 that having the first byte as a prefix (LOCK, REP, REPNE), and you only
-get 1 instruction (passing 1 as value for the 'count' argument count),
-then only the prefix will be returned as instruction.
+get 1 instruction (passing 1 as value for the 'count' argument), then only
+the prefix will be returned as instruction.
 
-An work-around is to disassemble the whole buffer, then get out the first
-instruction, then this instruction would properly includes both prefix and
+An work-around is to disassemble the whole buffer & get out the first
+instruction, then this instruction would properly include both prefix and
 the next instruction.
 
 This issue will be fixed in the next version.
