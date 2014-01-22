@@ -10,6 +10,8 @@
 #include "utils.h"
 #include "MCRegisterInfo.h"
 
+#define INSN_CACHE_SIZE 64
+
 cs_err (*arch_init[MAX_ARCH])(cs_struct *) = { NULL };
 cs_err (*arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = { NULL };
 void (*arch_destroy[MAX_ARCH]) (cs_struct *) = { NULL };
@@ -279,8 +281,9 @@ static cs_insn *get_prev_insn(cs_insn *cache, unsigned int f, void *total, size_
 	if (f == 0) {
 		if (total == NULL)
 			return NULL;
-		// get the trailing insn from total buffer
-		return (cs_insn *)(total + total_size - sizeof(cs_insn));
+		// get the trailing insn from total buffer, which is at
+		// the end of the latest cache trunk
+		return (cs_insn *)(total + total_size - (sizeof(cs_insn) * INSN_CACHE_SIZE));
 	} else
 		return &cache[f - 1];
 }
@@ -294,7 +297,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 	uint16_t insn_size;
 	size_t c = 0;
 	unsigned int f = 0;
-	cs_insn insn_cache[64];
+	cs_insn insn_cache[INSN_CACHE_SIZE];
 	void *total = NULL;
 	size_t total_size = 0;
 
@@ -338,7 +341,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 
 				if (f == ARR_SIZE(insn_cache)) {
 					// resize total to contain newly disasm insns
-					total_size += sizeof(insn_cache);
+					total_size += (sizeof(cs_insn) * INSN_CACHE_SIZE);
 					void *tmp = cs_mem_realloc(total, total_size);
 					if (tmp == NULL) {	// insufficient memory
 						cs_mem_free(total);
