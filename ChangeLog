@@ -35,12 +35,12 @@ Release 2.0 deprecates verison 1.0 and brings a lot of crucial changes.
 
 - Arm
      - Support Big-Endian mode (besides Little-Endian mode).
-     - Support friendly register, so instead of output sub r12,r11,0x14,
-	 we have sub ip,fp,0x14.
+     - Support friendly register, so instead of output sub "r12,r11,0x14",
+	 we have "sub ip,fp,0x14".
 - Arm64: support Big-Endian mode (besides Little-Endian mode).
 - PowerPC: newly added.
-- Mips: support friendly register, so instead of output srl $2,$1,0x1f,
-     we have srl $v0,$at,0x1f.
+- Mips: support friendly register, so instead of output "srl $2,$1,0x1f",
+     we have "srl $v0,$at,0x1f".
 - X86: bug fixes.
 
 
