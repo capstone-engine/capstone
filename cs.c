@@ -309,6 +309,9 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 
 	handle->errnum = CS_ERR_OK;
 
+	// reset previous prefix for X86
+	handle->prev_prefix = 0;
+
 	memset(insn_cache, 0, sizeof(insn_cache));
 
 	while (size > 0) {
