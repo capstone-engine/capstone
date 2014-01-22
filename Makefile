@@ -182,7 +182,7 @@ DIST_VERSION = $(TAG)
 endif
 
 dist:
-	git archive --format=tar.gz --prefix=capstone-$(DIST_VERSION)/ $(TAG) > capstone-$(DIST_VERSION).tar.gz
+	git archive --format=tar.gz --prefix=capstone-$(DIST_VERSION)/ $(TAG) > capstone-$(DIST_VERSION).tgz
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
