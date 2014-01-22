@@ -1,4 +1,4 @@
-Version 2.0 has a known issue: if you disassemble a buffer of instructions
+Version 2.0 has a known X86 issue: if you disassemble a buffer of instructions
 that having the first byte as a prefix (LOCK, REP, REPNE), and you only
 get 1 instruction (passing 1 as value for the 'count' argument count),
 then only the prefix will be returned as instruction.
