@@ -1,11 +1,72 @@
 This file details the changelog of Capstone.
 
+---------------------------------
+Version 2.0: January 22nd, 2014
 
-[Version 2.0]: upcoming
+Release 2.0 deprecates verison 1.0 and brings a lot of crucial changes.
 
-- See changelog at https://github.com/aquynh/capstone/wiki/ChangeLog
+[ API changes ]
+
+- API version has been bumped to 2.0 (see cs_version() API)
+- New API cs_strerror(errno) returns a string describing error code given
+  in its only argument.
+- cs_version() now returns combined version encoding both major & minor versions.
+- New option CS_OPT_MODE allows to change engine’s mode at run-time with
+  cs_option().
+- New option CS_OPT_MEM allows to specify user-defined functions for dynamically
+  memory management used internally by Capstone. This is useful to embed Capstone
+  into special environments such as kernel or firware.
+- New API cs_support() can be used to check if this lib supports a particular
+  architecture (this is necessary since we now allow to choose which architectures
+  to compile in).
+- The detail option is OFF by default now. To get detail information, it should be
+  explicitly turned ON. The details then can be accessed using cs_insn.detail
+  pointer (to newly added structure cs_detail)
 
 
+[ Core changes ]
+
+- On memory usage, Capstone uses much less memory, but a lot faster now.
+- User now can choose which architectures to be supported by modifying config.mk
+  before compiling/installing.
+
+
+[ Architectures ]
+
+- Arm
+     - Support Big-Endian mode (besides Little-Endian mode).
+     - Support friendly register, so instead of output sub "r12,r11,0x14",
+	 we have "sub ip,fp,0x14".
+- Arm64: support Big-Endian mode (besides Little-Endian mode).
+- PowerPC: newly added.
+- Mips: support friendly register, so instead of output "srl $2,$1,0x1f",
+     we have "srl $v0,$at,0x1f".
+- X86: bug fixes.
+
+
+[ Python binding ]
+
+- Python binding is vastly improved in performance: around 3 ~ 4 times faster
+  than in 1.0.
+- Cython support has been added, which can further speed up over the default
+  pure Python binding (up to 30% in some cases)
+- Function cs_disasm_quick() & Cs.disasm() now use generator (rather than a list)
+  to return succesfully disassembled instructions. This improves the performance
+  and reduces memory usage.
+
+
+[ Java binding ]
+
+- Better performance & bug fixes.
+
+
+[ Miscellaneous ]
+
+- Fixed some installation issues with Gentoo Linux.
+- Capstone now can easily compile/install on all *nix, including Linux, OSX,
+  {Net, Free, Open}BSD & Solaris.
+
+----------------------------------
 [Version 1.0]: December 18th, 2013
 
 - Initial public release.

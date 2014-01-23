@@ -36,6 +36,10 @@ all_tests = (
         )
 
 
+# for debugging
+def to_hex(s):
+    return " ".join("0x" + "{0:x}".format(ord(c)).zfill(2) for c in s) # <-- Python 3 is OK
+
 def get_code(f, size):
     code = f.read(size)
     if len(code) != size:  # reached end-of-file?
@@ -54,9 +58,6 @@ def cs(md, code):
         if i.address == 0x100000:
             print i
 
-
-md = Cs(CS_ARCH_X86, CS_MODE_32)
-md.detail = False
 
 cfile = open(FILE)
 
@@ -80,12 +81,16 @@ for (arch, mode, comment, syntax) in all_tests:
         cfile.seek(0)
         for i in xrange(3):
             code = get_code(cfile, 128)
+            #print to_hex(code)
+            #print
             cs(md, code)
 
         # start real benchmark
         c_t = 0
         for i in xrange(50000):
             code = get_code(cfile, 128)
+            #print to_hex(code)
+            #print
 
             t1 = time()
             cs(md, code)
