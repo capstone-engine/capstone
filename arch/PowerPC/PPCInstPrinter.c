@@ -370,11 +370,11 @@ static void printU16ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-    if (!MCOperand_isImm(MCInst_getOperand(MI, OpNo)))
-    {
+	if (!MCOperand_isImm(MCInst_getOperand(MI, OpNo)))
+	{
 		printOperand(MI, OpNo, O);
-        return;
-    }
+		return;
+	}
 
 	// Branches can take an immediate operand.  This is used by the branch
 	// selection pass to print .+8, an eight byte displacement from the PC.
@@ -384,11 +384,11 @@ static void printBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-    if (!MCOperand_isImm(MCInst_getOperand(MI, OpNo)))
-    {
+	if (!MCOperand_isImm(MCInst_getOperand(MI, OpNo)))
+	{
 		printOperand(MI, OpNo, O);
-        return;
-    }
+		return;
+	}
 
 	int tmp = (int)MCOperand_getImm(MCInst_getOperand(MI, OpNo)) * 4;
 	if (tmp >= 0) {

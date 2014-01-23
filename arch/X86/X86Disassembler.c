@@ -67,7 +67,7 @@ static void translateRegister(MCInst *mcInst, Reg reg)
 #define ENTRY(x) X86_##x,
 	uint8_t llvmRegnums[] = {
 		ALL_REGS
-		0
+			0
 	};
 #undef ENTRY
 
@@ -149,10 +149,10 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_XMM0 + ((uint32_t)immediate >> 4)));
 			return;
 		case TYPE_XMM256:
-            MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_YMM0 + ((uint32_t)immediate >> 4)));
+			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_YMM0 + ((uint32_t)immediate >> 4)));
 			return;
 		case TYPE_XMM512:
-            MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_ZMM0 + ((uint32_t)immediate >> 4)));
+			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_ZMM0 + ((uint32_t)immediate >> 4)));
 			return;
 		case TYPE_REL8:
 			if(immediate & 0x80)
@@ -196,7 +196,7 @@ static bool translateRMRegister(MCInst *mcInst, InternalInstruction *insn)
 				return true;
 #define ENTRY(x)                                                      \
 		case EA_REG_##x:                                                    \
-				MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_##x)); break;
+																			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_##x)); break;
 			ALL_REGS
 #undef ENTRY
 		default:
@@ -240,7 +240,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 			switch (insn->sibBase) {
 #define ENTRY(x)                                          \
 				case SIB_BASE_##x:                                  \
-					baseReg = MCOperand_CreateReg(X86_##x); break;
+																	baseReg = MCOperand_CreateReg(X86_##x); break;
 				ALL_SIB_BASES
 #undef ENTRY
 				default:
@@ -288,12 +288,12 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 					return true;
 #define ENTRY(x)                                          \
 				case SIB_INDEX_##x:                                 \
-						indexReg = MCOperand_CreateReg(X86_##x); break;
+																	indexReg = MCOperand_CreateReg(X86_##x); break;
 					EA_BASES_32BIT
-					EA_BASES_64BIT
-					REGS_XMM
-					REGS_YMM
-					REGS_ZMM
+						EA_BASES_64BIT
+						REGS_XMM
+						REGS_YMM
+						REGS_ZMM
 #undef ENTRY
 			}
 		} else {
@@ -343,7 +343,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 						//   placeholders to keep the compiler happy.
 #define ENTRY(x)                                        \
 					case EA_BASE_##x:                                 \
-							baseReg = MCOperand_CreateReg(X86_##x); break; 
+																	  baseReg = MCOperand_CreateReg(X86_##x); break; 
 						ALL_EA_BASES
 #undef ENTRY
 #define ENTRY(x) case EA_REG_##x:

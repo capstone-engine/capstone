@@ -193,7 +193,7 @@ static uint64_t getFeatureBits(int mode)
 
 void Mips_init(MCRegisterInfo *MRI)
 {
-  	// InitMCRegisterInfo(MipsRegDesc, 317,
+	// InitMCRegisterInfo(MipsRegDesc, 317,
 	// RA, PC,
 	// MipsMCRegisterClasses, 34,
 	// MipsRegUnitRoots, 196,
@@ -249,7 +249,7 @@ static DecodeStatus MipsDisassembler_getInstruction(int mode, MCInst *instr,
 		uint64_t Address, bool isBigEndian, MCRegisterInfo *MRI)
 {
 	uint32_t Insn;
-    DecodeStatus Result;
+	DecodeStatus Result;
 
 	if (code_len < 4)
 		// not enough data
@@ -716,9 +716,9 @@ static DecodeStatus DecodeSimm16(MCInst *Inst,
 static DecodeStatus DecodeLSAImm(MCInst *Inst,
 		unsigned Insn, uint64_t Address, MCRegisterInfo *Decoder)
 {
-  // We add one to the immediate field as it was encoded as 'imm - 1'.
-  MCInst_addOperand(Inst, MCOperand_CreateImm(Insn + 1));
-  return MCDisassembler_Success;
+	// We add one to the immediate field as it was encoded as 'imm - 1'.
+	MCInst_addOperand(Inst, MCOperand_CreateImm(Insn + 1));
+	return MCDisassembler_Success;
 }
 
 static DecodeStatus DecodeInsSize(MCInst *Inst,

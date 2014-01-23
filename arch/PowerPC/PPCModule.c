@@ -11,7 +11,7 @@ void enable_powerpc() {};
 
 static cs_err init(cs_struct *ud)
 {
-    MCRegisterInfo *mri;
+	MCRegisterInfo *mri;
 
 	// verify if requested mode is valid
 	if (ud->mode & ~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 |

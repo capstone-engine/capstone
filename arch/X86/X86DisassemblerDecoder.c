@@ -1157,7 +1157,7 @@ static int readDisplacement(struct InternalInstruction* insn)
 		return 0;
 
 	insn->consumedDisplacement = TRUE;
-    insn->displacementOffset = (uint8_t)(insn->readerCursor - insn->startLocation);
+	insn->displacementOffset = (uint8_t)(insn->readerCursor - insn->startLocation);
 
 	switch (insn->eaDisplacement) {
 		case EA_DISP_NONE:
