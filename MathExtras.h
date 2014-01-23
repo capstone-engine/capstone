@@ -133,7 +133,7 @@ static inline unsigned CountLeadingZeros_64(uint64_t Value) {
 #else
 #ifndef _MSC_VER
 	if (sizeof(long) == sizeof(int64_t))
-    {
+	{
 		if (!Value) return 64;
 		Count = 0;
 		// bisection method for count leading zeros
@@ -146,9 +146,9 @@ static inline unsigned CountLeadingZeros_64(uint64_t Value) {
 			}
 		}
 	}
-    else
+	else
 #endif
-    {
+	{
 		// get hi portion
 		uint32_t Hi = Hi_32(Value);
 

@@ -63,7 +63,7 @@ static uint16_t DiffListIterator_getVal(DiffListIterator *d)
 
 static bool DiffListIterator_next(DiffListIterator *d)
 {
-    MCPhysReg D;
+	MCPhysReg D;
 
 	if (d->List == 0)
 		return false;

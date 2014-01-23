@@ -116,15 +116,15 @@ static void printAddrRegExtendOperand(MCInst *MI, unsigned OpNum,
 			SStream_concat(O, " #0x%x", ShiftAmt);
 		else
 			SStream_concat(O, " #%u", ShiftAmt);
-			if (MI->csh->detail) {
-				if (MI->csh->doing_mem) {
-					MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].shift.type = ARM64_SFT_LSL;
-					MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].shift.value = ShiftAmt;
-				} else {
-					MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count - 1].shift.type = ARM64_SFT_LSL;
-					MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count - 1].shift.value = ShiftAmt;
-				}
+		if (MI->csh->detail) {
+			if (MI->csh->doing_mem) {
+				MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].shift.type = ARM64_SFT_LSL;
+				MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].shift.value = ShiftAmt;
+			} else {
+				MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count - 1].shift.type = ARM64_SFT_LSL;
+				MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count - 1].shift.value = ShiftAmt;
 			}
+		}
 	} else if (IsLSL) {
 		SStream_concat(O, " #0");
 	}
@@ -490,7 +490,7 @@ static void printRegExtendOperand(MCInst *MI, unsigned OpNum, SStream *O,
 	// easily. We will only accumulate more of these hacks.
 	unsigned Reg0 = MCOperand_getReg(MCInst_getOperand(MI, 0));
 	unsigned Reg1 = MCOperand_getReg(MCInst_getOperand(MI, 1));
-    MCOperand *MO;
+	MCOperand *MO;
 
 	if (isStackReg(Reg0) || isStackReg(Reg1)) {
 		A64SE_ShiftExtSpecifiers LSLEquiv;
