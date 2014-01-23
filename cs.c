@@ -198,7 +198,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 {
 	if (handle->detail) {
 		// avoiding copy insn->detail
-		memcpy(insn, (uintptr_t)&mci->flat_insn, sizeof(*insn) - sizeof(insn->detail));
+		memcpy(insn, &mci->flat_insn, sizeof(*insn) - sizeof(insn->detail));
 
 		// NOTE: copy details in 2 chunks, since union is always put at address divisible by 8
 		// copy from @regs_read until @arm
