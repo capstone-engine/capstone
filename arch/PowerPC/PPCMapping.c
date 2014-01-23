@@ -914,7 +914,9 @@ static insn_map insns[] = {
 	{ PPC_gBCLRL, PPC_INS_BCLRL, { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_LR, PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
 };
 
-static insn_map alias_insns[] = {0, 0, {0}, {0}, {0}, 0, 0};
+static insn_map alias_insns[] = {
+	{ 0, 0, { 0 }, { 0 }, { 0 }, 0, 0 },
+};
 
 // given internal insn id, return public instruction info
 void PPC_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
@@ -1430,7 +1432,9 @@ static name_map insn_name_maps[] = {
 };
 
 // special alias insn
-static name_map alias_insn_names[] = {0, 0};
+static name_map alias_insn_names[] = {
+	{ 0, NULL }
+};
 
 const char *PPC_insn_name(csh handle, unsigned int id)
 {
