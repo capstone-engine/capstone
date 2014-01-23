@@ -218,11 +218,6 @@ static uint64_t getFeatureBits(int feature)
 	return (uint64_t)-1;
 }
 
-#ifdef _MSC_VER
-#pragma warning(disable:4242)
-#pragma warning(disable:4244)
-#pragma warning(disable:4706)
-#endif
 #include "AArch64GenDisassemblerTables.inc"
 
 #define GET_INSTRINFO_ENUM
@@ -318,7 +313,7 @@ static DecodeStatus DecodeGPR64RegisterClass(MCInst *Inst, unsigned RegNo,
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	Register = getReg(Decoder, AArch64_GPR64RegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_GPR64RegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
@@ -332,7 +327,7 @@ DecodeGPR64xspRegisterClass(MCInst *Inst, unsigned RegNo,
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	Register = getReg(Decoder, AArch64_GPR64xspRegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_GPR64xspRegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
@@ -346,7 +341,7 @@ static DecodeStatus DecodeGPR32RegisterClass(MCInst *Inst, unsigned RegNo,
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	Register = getReg(Decoder, AArch64_GPR32RegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_GPR32RegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
@@ -360,7 +355,7 @@ DecodeGPR32wspRegisterClass(MCInst *Inst, unsigned RegNo,
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	Register = getReg(Decoder, AArch64_GPR32wspRegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_GPR32wspRegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
@@ -374,7 +369,7 @@ DecodeFPR8RegisterClass(MCInst *Inst, unsigned RegNo,
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	Register = getReg(Decoder, AArch64_FPR8RegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_FPR8RegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
@@ -388,7 +383,7 @@ DecodeFPR16RegisterClass(MCInst *Inst, unsigned RegNo,
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	Register = getReg(Decoder, AArch64_FPR16RegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_FPR16RegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
@@ -403,7 +398,7 @@ DecodeFPR32RegisterClass(MCInst *Inst, unsigned RegNo,
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	Register = getReg(Decoder, AArch64_FPR32RegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_FPR32RegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
@@ -417,7 +412,7 @@ DecodeFPR64RegisterClass(MCInst *Inst, unsigned RegNo,
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	Register = getReg(Decoder, AArch64_FPR64RegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_FPR64RegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
@@ -441,7 +436,7 @@ DecodeFPR128RegisterClass(MCInst *Inst, unsigned RegNo,
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	Register = getReg(Decoder, AArch64_FPR128RegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_FPR128RegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
@@ -466,7 +461,7 @@ static DecodeStatus DecodeGPR64noxzrRegisterClass(MCInst *Inst,
 	if (RegNo > 30)
 		return MCDisassembler_Fail;
 
-	Register = getReg(Decoder, AArch64_GPR64noxzrRegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_GPR64noxzrRegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
@@ -480,7 +475,7 @@ static DecodeStatus DecodeRegisterClassByID(MCInst *Inst, unsigned RegNo,
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	Register = getReg(Decoder, RegID, RegNo);
+	Register = (uint16_t)getReg(Decoder, RegID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }

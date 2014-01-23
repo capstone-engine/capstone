@@ -180,11 +180,6 @@ static uint64_t getFeatureBits(int mode)
 	return Bits;
 }
 
-#ifdef _MSC_VER
-#pragma warning(disable:4242)
-#pragma warning(disable:4244)
-#pragma warning(disable:4706)
-#endif
 #include "MipsGenDisassemblerTables.inc"
 
 #define GET_REGINFO_ENUM

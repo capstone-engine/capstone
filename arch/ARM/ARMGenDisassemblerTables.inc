@@ -9993,7 +9993,7 @@ static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
   case 13:
     return (!(Bits & ARM_ModeThumb) && (Bits & ARM_FeatureNaClTrap));
   case 14:
-    return ((Bits & ARM_FeatureNEON));
+    return (bool)((Bits & ARM_FeatureNEON));
   case 15:
     return ((Bits & ARM_HasV8Ops) && (Bits & ARM_FeatureCrypto));
   case 16:
@@ -10001,7 +10001,7 @@ static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
   case 17:
     return ((Bits & ARM_FeatureNEON) && (Bits & ARM_FeatureVFP4));
   case 18:
-    return ((Bits & ARM_ModeThumb));
+    return (bool)((Bits & ARM_ModeThumb));
   case 19:
     return ((Bits & ARM_ModeThumb) && (Bits & ARM_HasV6Ops));
   case 20:
@@ -10019,7 +10019,7 @@ static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
   case 26:
     return ((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_HasV7Ops));
   case 27:
-    return ((Bits & ARM_FeatureDB));
+    return (bool)((Bits & ARM_FeatureDB));
   case 28:
     return ((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && !(Bits & ARM_FeatureMClass));
   case 29:
@@ -10037,17 +10037,17 @@ static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
   case 35:
     return ((Bits & ARM_FeatureHWDiv) && (Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2));
   case 36:
-    return ((Bits & ARM_FeatureVFP2));
+    return (bool)((Bits & ARM_FeatureVFP2));
   case 37:
     return ((Bits & ARM_FeatureVFP2) && !(Bits & ARM_FeatureVFPOnlySP));
   case 38:
-    return ((Bits & ARM_FeatureVFP4));
+    return (bool)((Bits & ARM_FeatureVFP4));
   case 39:
     return ((Bits & ARM_FeatureVFP4) && !(Bits & ARM_FeatureVFPOnlySP));
   case 40:
-    return ((Bits & ARM_FeatureVFP3));
+    return (bool)((Bits & ARM_FeatureVFP3));
   case 41:
-    return ((Bits & ARM_FeatureFPARMv8));
+    return (bool)((Bits & ARM_FeatureFPARMv8));
   case 42:
     return ((Bits & ARM_FeatureVFP3) && !(Bits & ARM_FeatureVFPOnlySP));
   case 43:
@@ -12268,7 +12268,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
     return S; \
   case 207: \
-    if (!Check(&S, DecodeThumbAddSPReg(MI, insn, Address, Decoder))) return MCDisassembler_Fail; \
+    if (!Check(&S, DecodeThumbAddSPReg(MI, (uint16_t)insn, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
   case 208: \
     tmp = 0; \
@@ -12319,10 +12319,10 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (!Check(&S, DecodeThumbAddrModeSP(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
   case 215: \
-    if (!Check(&S, DecodeThumbAddSpecialReg(MI, insn, Address, Decoder))) return MCDisassembler_Fail; \
+    if (!Check(&S, DecodeThumbAddSpecialReg(MI, (uint16_t)insn, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
   case 216: \
-    if (!Check(&S, DecodeThumbAddSPImm(MI, insn, Address, Decoder))) return MCDisassembler_Fail; \
+    if (!Check(&S, DecodeThumbAddSPImm(MI, (uint16_t)insn, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
   case 217: \
     tmp = fieldname(insn, 0, 3); \
@@ -12343,7 +12343,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
     return S; \
   case 220: \
-    if (!Check(&S, DecodeThumbCPS(MI, insn, Address, Decoder))) return MCDisassembler_Fail; \
+    if (!Check(&S, DecodeThumbCPS(MI, (uint16_t)insn, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
   case 221: \
     tmp = fieldname(insn, 0, 6); \
@@ -13460,7 +13460,7 @@ static DecodeStatus fname(uint8_t DecodeTable[], MCInst *MI, \
     } \
     case MCD_OPC_FilterValue: { \
       unsigned Len; \
-      InsnType Val = decodeULEB128(++Ptr, &Len); \
+      InsnType Val = (InsnType)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
       unsigned NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
@@ -13472,7 +13472,7 @@ static DecodeStatus fname(uint8_t DecodeTable[], MCInst *MI, \
       unsigned Start = *++Ptr; \
       unsigned Len = *++Ptr; \
       InsnType FieldValue = fieldname(insn, Start, Len); \
-      uint32_t ExpectedValue = decodeULEB128(++Ptr, &Len); \
+      uint32_t ExpectedValue = (uint32_t)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
       unsigned NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
@@ -13482,30 +13482,31 @@ static DecodeStatus fname(uint8_t DecodeTable[], MCInst *MI, \
     } \
     case MCD_OPC_CheckPredicate: { \
       unsigned Len; \
-      unsigned PIdx = decodeULEB128(++Ptr, &Len); \
+      unsigned PIdx = (uint32_t)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
       unsigned NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
       bool Pred; \
-      if (!(Pred = checkDecoderPredicate(PIdx, Bits))) \
+      Pred = checkDecoderPredicate(PIdx, Bits); \
+      if (!Pred) \
         Ptr += NumToSkip; \
       (void)Pred; \
       break; \
     } \
     case MCD_OPC_Decode: { \
       unsigned Len; \
-      unsigned Opc = decodeULEB128(++Ptr, &Len); \
+      unsigned Opc = (uint32_t)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      unsigned DecodeIdx = decodeULEB128(Ptr, &Len); \
+      unsigned DecodeIdx = (uint32_t)decodeULEB128(Ptr, &Len); \
       Ptr += Len; \
       MCInst_setOpcode(MI, Opc); \
       return decoder(S, DecodeIdx, insn, MI, Address, MRI); \
     } \
     case MCD_OPC_SoftFail: { \
       unsigned Len; \
-      InsnType PositiveMask = decodeULEB128(++Ptr, &Len); \
+      InsnType PositiveMask = (InsnType)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      InsnType NegativeMask = decodeULEB128(Ptr, &Len); \
+      InsnType NegativeMask = (InsnType)decodeULEB128(Ptr, &Len); \
       Ptr += Len; \
       bool Fail = (insn & PositiveMask) || (~insn & NegativeMask); \
       if (Fail) \

@@ -397,11 +397,6 @@ static uint64_t getFeatureBits(int mode)
 	return Bits;
 }
 
-#ifdef _MSC_VER
-#pragma warning(disable:4242)
-#pragma warning(disable:4244)
-#pragma warning(disable:4706)
-#endif
 #include "ARMGenDisassemblerTables.inc"
 
 static DecodeStatus DecodePredicateOperand(MCInst *Inst, unsigned Val,
@@ -724,9 +719,9 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 		// to the subsequent instructions.
 		if (MCInst_getOpcode(MI) == ARM_t2IT) {
 
-			unsigned Firstcond = MCOperand_getImm(MCInst_getOperand(MI, 0));
-			unsigned Mask = MCOperand_getImm(MCInst_getOperand(MI, 1));
-			ITStatus_setITState(&(ud->ITBlock), Firstcond, Mask);
+			unsigned Firstcond = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, 0));
+			unsigned Mask = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, 1));
+			ITStatus_setITState(&(ud->ITBlock), (char)Firstcond, (char)Mask);
 		}
 
 		return result;
@@ -1420,7 +1415,7 @@ static DecodeStatus DecodeCopMemInstruction(MCInst *Inst, unsigned Insn,
 		case ARM_STCL_OFFSET:
 		case ARM_STC_PRE:
 		case ARM_STCL_PRE:
-			imm = ARM_AM_getAM5Opc(U ? ARM_AM_add : ARM_AM_sub, imm);
+			imm = ARM_AM_getAM5Opc(U ? ARM_AM_add : ARM_AM_sub, (unsigned char)imm);
 			MCInst_addOperand(Inst, MCOperand_CreateImm(imm));
 			break;
 		case ARM_t2LDC2_POST:
@@ -2170,9 +2165,9 @@ static DecodeStatus DecodeAddrMode5Operand(MCInst *Inst, unsigned Val,
 		return MCDisassembler_Fail;
 
 	if (U)
-		MCInst_addOperand(Inst, MCOperand_CreateImm(ARM_AM_getAM5Opc(ARM_AM_add, imm)));
+		MCInst_addOperand(Inst, MCOperand_CreateImm(ARM_AM_getAM5Opc(ARM_AM_add, (unsigned char)imm)));
 	else
-		MCInst_addOperand(Inst, MCOperand_CreateImm(ARM_AM_getAM5Opc(ARM_AM_sub, imm)));
+		MCInst_addOperand(Inst, MCOperand_CreateImm(ARM_AM_getAM5Opc(ARM_AM_sub, (unsigned char)imm)));
 
 	return S;
 }
