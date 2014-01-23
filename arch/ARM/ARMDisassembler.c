@@ -93,7 +93,7 @@ static void ITStatus_setITState(ARM_ITStatus *it, char Firstcond, char Mask)
 	//assert(NumTZ <= 3 && "Invalid IT mask!");
 	// push condition codes onto the stack the correct order for the pops
 	for (Pos = NumTZ+1; Pos <= 3; ++Pos) {
-		bool T = ((Mask >> Pos) & 1) == CondBit0;
+		bool T = ((Mask >> Pos) & 1) == (int)CondBit0;
 		if (T)
 			ITStatus_push_back(it, CCBits);
 		else
@@ -364,7 +364,7 @@ static DecodeStatus DecodeMRRC2(MCInst *Inst, unsigned Val,
 // Hacky: enable all features for disassembler
 static uint64_t getFeatureBits(int mode)
 {
-	uint64_t Bits = -1;	// everything by default
+	uint64_t Bits = (uint64_t)-1;	// everything by default
 
 	// FIXME: ARM_FeatureVFPOnlySP is conflicting with everything else??
 	Bits &= (~ARM_FeatureVFPOnlySP);
@@ -564,6 +564,9 @@ static void AddThumb1SBit(MCInst *MI, bool InITBlock)
 static DecodeStatus AddThumbPredicate(cs_struct *ud, MCInst *MI)
 {
 	DecodeStatus S = MCDisassembler_Success;
+    MCOperandInfo *OpInfo;
+    unsigned short NumOps;
+    unsigned int i;
 
 	// A few instructions actually have predicates encoded in them.  Don't
 	// try to overwrite it if we're seeing one of those.
@@ -608,9 +611,9 @@ static DecodeStatus AddThumbPredicate(cs_struct *ud, MCInst *MI)
 	if (ITStatus_instrInITBlock(&(ud->ITBlock)))
 		ITStatus_advanceITState(&(ud->ITBlock));
 
-	MCOperandInfo *OpInfo = ARMInsts[MCInst_getOpcode(MI)].OpInfo;
-	unsigned short NumOps = ARMInsts[MCInst_getOpcode(MI)].NumOperands;
-	unsigned i;
+	OpInfo = ARMInsts[MCInst_getOpcode(MI)].OpInfo;
+	NumOps = ARMInsts[MCInst_getOpcode(MI)].NumOperands;
+
 	for (i = 0; i < NumOps; ++i) {
 		if (i == MCInst_getNumOperands(MI)) break;
 		if (MCOperandInfo_isPredicate(&OpInfo[i])) {
@@ -640,13 +643,17 @@ static DecodeStatus AddThumbPredicate(cs_struct *ud, MCInst *MI)
 static void UpdateThumbVFPPredicate(cs_struct *ud, MCInst *MI)
 {
 	unsigned CC;
+    unsigned short NumOps;
+    MCOperandInfo *OpInfo;
+    unsigned i;
+
 	CC = ITStatus_getITCC(&(ud->ITBlock));
 	if (ITStatus_instrInITBlock(&(ud->ITBlock)))
 		ITStatus_advanceITState(&(ud->ITBlock));
 
-	MCOperandInfo *OpInfo = ARMInsts[MCInst_getOpcode(MI)].OpInfo;
-	unsigned short NumOps = ARMInsts[MCInst_getOpcode(MI)].NumOperands;
-	unsigned i;
+	OpInfo = ARMInsts[MCInst_getOpcode(MI)].OpInfo;
+	NumOps = ARMInsts[MCInst_getOpcode(MI)].NumOperands;
+
 	for (i = 0; i < NumOps; ++i) {
 		if (MCOperandInfo_isPredicate(&OpInfo[i])) {
 			MCOperand_setImm(MCInst_getOperand(MI, i), CC);
@@ -712,9 +719,9 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 		// to the subsequent instructions.
 		if (MCInst_getOpcode(MI) == ARM_t2IT) {
 
-			unsigned Firstcond = MCOperand_getImm(MCInst_getOperand(MI, 0));
-			unsigned Mask = MCOperand_getImm(MCInst_getOperand(MI, 1));
-			ITStatus_setITState(&(ud->ITBlock), Firstcond, Mask);
+			unsigned Firstcond = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, 0));
+			unsigned Mask = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, 1));
+			ITStatus_setITState(&(ud->ITBlock), (char)Firstcond, (char)Mask);
 		}
 
 		return result;
@@ -1125,6 +1132,7 @@ static DecodeStatus DecodeSORegImmOperand(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder)
 {
 	DecodeStatus S = MCDisassembler_Success;
+    ARM_AM_ShiftOpc Shift;
 
 	unsigned Rm = fieldFromInstruction_4(Val, 0, 4);
 	unsigned type = fieldFromInstruction_4(Val, 5, 2);
@@ -1134,7 +1142,7 @@ static DecodeStatus DecodeSORegImmOperand(MCInst *Inst, unsigned Val,
 	if (!Check(&S, DecodeGPRRegisterClass(Inst, Rm, Address, Decoder)))
 		return MCDisassembler_Fail;
 
-	ARM_AM_ShiftOpc Shift = ARM_AM_lsl;
+	Shift = ARM_AM_lsl;
 	switch (type) {
 		case 0:
 			Shift = ARM_AM_lsl;
@@ -1163,6 +1171,7 @@ static DecodeStatus DecodeSORegRegOperand(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder)
 {
 	DecodeStatus S = MCDisassembler_Success;
+    ARM_AM_ShiftOpc Shift;
 
 	unsigned Rm = fieldFromInstruction_4(Val, 0, 4);
 	unsigned type = fieldFromInstruction_4(Val, 5, 2);
@@ -1174,7 +1183,7 @@ static DecodeStatus DecodeSORegRegOperand(MCInst *Inst, unsigned Val,
 	if (!Check(&S, DecodeGPRnopcRegisterClass(Inst, Rs, Address, Decoder)))
 		return MCDisassembler_Fail;
 
-	ARM_AM_ShiftOpc Shift = ARM_AM_lsl;
+	Shift = ARM_AM_lsl;
 	switch (type) {
 		case 0:
 			Shift = ARM_AM_lsl;
@@ -1297,6 +1306,7 @@ static DecodeStatus DecodeBitfieldMaskOperand(MCInst *Inst, unsigned Val,
 	// create the final mask.
 	unsigned msb = fieldFromInstruction_4(Val, 5, 5);
 	unsigned lsb = fieldFromInstruction_4(Val, 0, 5);
+    uint32_t lsb_mask;
 
 	DecodeStatus S = MCDisassembler_Success;
 	if (lsb > msb) {
@@ -1309,7 +1319,7 @@ static DecodeStatus DecodeBitfieldMaskOperand(MCInst *Inst, unsigned Val,
 
 	uint32_t msb_mask = 0xFFFFFFFF;
 	if (msb != 31) msb_mask = (1U << (msb+1)) - 1;
-	uint32_t lsb_mask = (1U << lsb) - 1;
+	lsb_mask = (1U << lsb) - 1;
 
 	MCInst_addOperand(Inst, MCOperand_CreateImm(~(msb_mask ^ lsb_mask)));
 	return S;
@@ -1405,7 +1415,7 @@ static DecodeStatus DecodeCopMemInstruction(MCInst *Inst, unsigned Insn,
 		case ARM_STCL_OFFSET:
 		case ARM_STC_PRE:
 		case ARM_STCL_PRE:
-			imm = ARM_AM_getAM5Opc(U ? ARM_AM_add : ARM_AM_sub, imm);
+			imm = ARM_AM_getAM5Opc(U ? ARM_AM_add : ARM_AM_sub, (unsigned char)imm);
 			MCInst_addOperand(Inst, MCOperand_CreateImm(imm));
 			break;
 		case ARM_t2LDC2_POST:
@@ -1464,6 +1474,8 @@ static DecodeStatus DecodeAddrMode2IdxInstruction(MCInst *Inst, unsigned Insn,
 		uint64_t Address, const void *Decoder)
 {
 	DecodeStatus S = MCDisassembler_Success;
+    ARM_AM_AddrOpc Op;
+    ARM_AM_ShiftOpc Opc;
 
 	unsigned Rn = fieldFromInstruction_4(Insn, 16, 4);
 	unsigned Rt = fieldFromInstruction_4(Insn, 12, 4);
@@ -1514,7 +1526,7 @@ static DecodeStatus DecodeAddrMode2IdxInstruction(MCInst *Inst, unsigned Insn,
 	if (!Check(&S, DecodeGPRRegisterClass(Inst, Rn, Address, Decoder)))
 		return MCDisassembler_Fail;
 
-	ARM_AM_AddrOpc Op = ARM_AM_add;
+	Op = ARM_AM_add;
 	if (!fieldFromInstruction_4(Insn, 23, 1))
 		Op = ARM_AM_sub;
 
@@ -1531,7 +1543,7 @@ static DecodeStatus DecodeAddrMode2IdxInstruction(MCInst *Inst, unsigned Insn,
 	if (reg) {
 		if (!Check(&S, DecodeGPRnopcRegisterClass(Inst, Rm, Address, Decoder)))
 			return MCDisassembler_Fail;
-		ARM_AM_ShiftOpc Opc = ARM_AM_lsl;
+		Opc = ARM_AM_lsl;
 		switch( fieldFromInstruction_4(Insn, 5, 2)) {
 			case 0:
 				Opc = ARM_AM_lsl;
@@ -1570,6 +1582,7 @@ static DecodeStatus DecodeSORegMemOperand(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder)
 {
 	DecodeStatus S = MCDisassembler_Success;
+    ARM_AM_ShiftOpc ShOp;
 
 	unsigned Rn = fieldFromInstruction_4(Val, 13, 4);
 	unsigned Rm = fieldFromInstruction_4(Val,  0, 4);
@@ -1577,7 +1590,7 @@ static DecodeStatus DecodeSORegMemOperand(MCInst *Inst, unsigned Val,
 	unsigned imm = fieldFromInstruction_4(Val, 7, 5);
 	unsigned U = fieldFromInstruction_4(Val, 12, 1);
 
-	ARM_AM_ShiftOpc ShOp = ARM_AM_lsl;
+	ShOp = ARM_AM_lsl;
 	switch (type) {
 		case 0:
 			ShOp = ARM_AM_lsl;
@@ -2130,8 +2143,8 @@ static DecodeStatus DecodeAddrModeImm12Operand(MCInst *Inst, unsigned Val,
 	if (!Check(&S, DecodeGPRRegisterClass(Inst, Rn, Address, Decoder)))
 		return MCDisassembler_Fail;
 
-	if (!add) imm *= -1;
-	if (imm == 0 && !add) imm = INT32_MIN;
+	if (!add) imm *= (unsigned int)-1;
+	if (imm == 0 && !add) imm = (unsigned int)INT32_MIN;
 	MCInst_addOperand(Inst, MCOperand_CreateImm(imm));
 	//if (Rn == 15)
 	//  tryAddingPcLoadReferenceComment(Address, Address + imm + 8, Decoder);
@@ -2152,9 +2165,9 @@ static DecodeStatus DecodeAddrMode5Operand(MCInst *Inst, unsigned Val,
 		return MCDisassembler_Fail;
 
 	if (U)
-		MCInst_addOperand(Inst, MCOperand_CreateImm(ARM_AM_getAM5Opc(ARM_AM_add, imm)));
+		MCInst_addOperand(Inst, MCOperand_CreateImm(ARM_AM_getAM5Opc(ARM_AM_add, (unsigned char)imm)));
 	else
-		MCInst_addOperand(Inst, MCOperand_CreateImm(ARM_AM_getAM5Opc(ARM_AM_sub, imm)));
+		MCInst_addOperand(Inst, MCOperand_CreateImm(ARM_AM_getAM5Opc(ARM_AM_sub, (unsigned char)imm)));
 
 	return S;
 }
@@ -4891,6 +4904,8 @@ static DecodeStatus DecodeT2ShifterImmOperand(MCInst *Inst, uint32_t Val,
 static DecodeStatus DecodeSwap(MCInst *Inst, unsigned Insn,
 		uint64_t Address, const void *Decoder)
 {
+    DecodeStatus S;
+
 	unsigned Rt   = fieldFromInstruction_4(Insn, 12, 4);
 	unsigned Rt2  = fieldFromInstruction_4(Insn, 0,  4);
 	unsigned Rn   = fieldFromInstruction_4(Insn, 16, 4);
@@ -4899,7 +4914,7 @@ static DecodeStatus DecodeSwap(MCInst *Inst, unsigned Insn,
 	if (pred == 0xF)
 		return DecodeCPSInstruction(Inst, Insn, Address, Decoder);
 
-	DecodeStatus S = MCDisassembler_Success;
+	S = MCDisassembler_Success;
 
 	if (Rt == Rn || Rn == Rt2)
 		S = MCDisassembler_SoftFail;

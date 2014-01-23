@@ -2966,8 +2966,8 @@ static insn_map insns[] = {
 // some alias instruction only need to be defined locally to satisfy
 // some lookup functions
 // just make sure these IDs never reuse any other IDs ARM_INS_*
-#define ARM64_INS_NEGS -1
-#define ARM64_INS_NGCS -2
+#define ARM64_INS_NEGS (unsigned short)-1
+#define ARM64_INS_NGCS (unsigned short)-2
 
 // all alias instructions & their semantic infos
 static insn_map alias_insns[] = {
@@ -3003,13 +3003,13 @@ void AArch64_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			handle.detail = h->detail;
 
 			memcpy(insn->detail->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
-			insn->detail->regs_read_count = count_positive(insns[i].regs_use);
+			insn->detail->regs_read_count = (uint8_t)count_positive(insns[i].regs_use);
 
 			memcpy(insn->detail->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
-			insn->detail->regs_write_count = count_positive(insns[i].regs_mod);
+			insn->detail->regs_write_count = (uint8_t)count_positive(insns[i].regs_mod);
 
 			memcpy(insn->detail->groups, insns[i].groups, sizeof(insns[i].groups));
-			insn->detail->groups_count = count_positive(insns[i].groups);
+			insn->detail->groups_count = (uint8_t)count_positive(insns[i].groups);
 
 			insn->detail->arm64.update_flags = cs_reg_write((csh)&handle, insn, ARM64_REG_NZCV);
 

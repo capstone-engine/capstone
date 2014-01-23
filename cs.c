@@ -10,8 +10,6 @@
 #include "utils.h"
 #include "MCRegisterInfo.h"
 
-#define INSN_CACHE_SIZE 64
-
 cs_err (*arch_init[MAX_ARCH])(cs_struct *) = { NULL };
 cs_err (*arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = { NULL };
 void (*arch_destroy[MAX_ARCH]) (cs_struct *) = { NULL };
@@ -89,7 +87,7 @@ cs_err cs_errno(csh handle)
 	if (!handle)
 		return CS_ERR_CSH;
 
-	cs_struct *ud = (cs_struct *)(uintptr_t)handle;
+	struct cs_struct *ud = (cs_struct *)(uintptr_t)handle;
 
 	return ud->errnum;
 }
@@ -166,7 +164,7 @@ cs_err cs_close(csh handle)
 	if (!handle)
 		return CS_ERR_CSH;
 
-	cs_struct *ud = (cs_struct *)(uintptr_t)handle;
+	struct cs_struct *ud = (cs_struct *)(uintptr_t)handle;
 
 	switch (ud->arch) {
 		case CS_ARCH_X86:
@@ -202,14 +200,16 @@ static void fill_insn(cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mc
 
 		// NOTE: copy details in 2 chunks, since union is always put at address divisible by 8
 		// copy from @regs_read until @arm
-		memcpy(insn->detail, (void *)(&(mci->flat_insn)) + offsetof(cs_insn_flat, regs_read),
+        memcpy(insn->detail,
+               (void*) ((uintptr_t) &mci->flat_insn + offsetof(cs_insn_flat, regs_read)),
 				offsetof(cs_detail, arm) - offsetof(cs_detail, regs_read));
 		// then copy from @arm until end
-		memcpy((void *)(insn->detail) + offsetof(cs_detail, arm), (void *)(&(mci->flat_insn)) + offsetof(cs_insn_flat, arm),
+        memcpy((void *)((uintptr_t) (insn->detail) + offsetof(cs_detail, arm)),
+               (void *)((uintptr_t) (&(mci->flat_insn)) + offsetof(cs_insn_flat, arm)),
 				sizeof(cs_detail) - offsetof(cs_detail, arm));
 	} else {
 		insn->address = mci->address;
-		insn->size = mci->insn_size;
+		insn->size = (uint16_t)mci->insn_size;
 	}
 
 	// fill the instruction bytes
@@ -281,9 +281,8 @@ static cs_insn *get_prev_insn(cs_insn *cache, unsigned int f, void *total, size_
 	if (f == 0) {
 		if (total == NULL)
 			return NULL;
-		// get the trailing insn from total buffer, which is at
-		// the end of the latest cache trunk
-		return (cs_insn *)(total + total_size - (sizeof(cs_insn) * INSN_CACHE_SIZE));
+		// get the trailing insn from total buffer
+		return (cs_insn *)((void*)((uintptr_t)total + total_size - sizeof(cs_insn)));
 	} else
 		return &cache[f - 1];
 }
@@ -297,7 +296,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 	uint16_t insn_size;
 	size_t c = 0;
 	unsigned int f = 0;
-	cs_insn insn_cache[INSN_CACHE_SIZE];
+	cs_insn insn_cache[64];
 	void *total = NULL;
 	size_t total_size = 0;
 
@@ -308,9 +307,6 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 	}
 
 	handle->errnum = CS_ERR_OK;
-
-	// reset previous prefix for X86
-	handle->prev_prefix = 0;
 
 	memset(insn_cache, 0, sizeof(insn_cache));
 
@@ -344,7 +340,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 
 				if (f == ARR_SIZE(insn_cache)) {
 					// resize total to contain newly disasm insns
-					total_size += (sizeof(cs_insn) * INSN_CACHE_SIZE);
+					total_size += sizeof(insn_cache);
 					void *tmp = cs_mem_realloc(total, total_size);
 					if (tmp == NULL) {	// insufficient memory
 						cs_mem_free(total);
@@ -353,7 +349,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 					}
 
 					total = tmp;
-					memcpy(total + total_size - sizeof(insn_cache), insn_cache, sizeof(insn_cache));
+					memcpy((void*)((uintptr_t)total + total_size - sizeof(insn_cache)), insn_cache, sizeof(insn_cache));
 					// reset f back to 0
 					f = 0;
 				}
@@ -388,7 +384,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 		}
 
 		total = tmp;
-		memcpy(total + total_size, insn_cache, f * sizeof(insn_cache[0]));
+		memcpy((void*)((uintptr_t)total + total_size), insn_cache, f * sizeof(insn_cache[0]));
 	}
 
 	*insn = total;
@@ -448,7 +444,7 @@ bool cs_insn_group(csh ud, cs_insn *insn, unsigned int group_id)
 	if (!ud)
 		return false;
 
-	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
+	struct cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 	if (!handle->detail) {
 		handle->errnum = CS_ERR_DETAIL;
 		return false;
@@ -462,7 +458,7 @@ bool cs_reg_read(csh ud, cs_insn *insn, unsigned int reg_id)
 	if (!ud)
 		return false;
 
-	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
+    struct cs_struct *handle = (cs_struct *) (uintptr_t) ud;
 	if (!handle->detail) {
 		handle->errnum = CS_ERR_DETAIL;
 		return false;
@@ -476,7 +472,7 @@ bool cs_reg_write(csh ud, cs_insn *insn, unsigned int reg_id)
 	if (!ud)
 		return false;
 
-	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
+    struct cs_struct *handle = (cs_struct *) (uintptr_t) ud;
 	if (!handle->detail) {
 		handle->errnum = CS_ERR_DETAIL;
 		return false;
@@ -490,7 +486,7 @@ int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
 	if (!ud)
 		return -1;
 
-	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
+    struct cs_struct *handle = (cs_struct *) (uintptr_t) ud;
 	if (!handle->detail) {
 		handle->errnum = CS_ERR_DETAIL;
 		return -1;
@@ -506,27 +502,27 @@ int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
 			return -1;
 		case CS_ARCH_ARM:
 			for (i = 0; i < insn->detail->arm.op_count; i++)
-				if (insn->detail->arm.operands[i].type == op_type)
+				if (insn->detail->arm.operands[i].type == (arm_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_ARM64:
 			for (i = 0; i < insn->detail->arm64.op_count; i++)
-				if (insn->detail->arm64.operands[i].type == op_type)
+				if (insn->detail->arm64.operands[i].type == (arm64_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_X86:
 			for (i = 0; i < insn->detail->x86.op_count; i++)
-				if (insn->detail->x86.operands[i].type == op_type)
+				if (insn->detail->x86.operands[i].type == (x86_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_MIPS:
 			for (i = 0; i < insn->detail->mips.op_count; i++)
-				if (insn->detail->mips.operands[i].type == op_type)
+				if (insn->detail->mips.operands[i].type == (mips_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_PPC:
 			for (i = 0; i < insn->detail->ppc.op_count; i++)
-				if (insn->detail->ppc.operands[i].type == op_type)
+				if (insn->detail->ppc.operands[i].type == (ppc_op_type)op_type)
 					count++;
 			break;
 	}
@@ -540,7 +536,7 @@ int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 	if (!ud)
 		return -1;
 
-	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
+    struct cs_struct *handle = (cs_struct *) (uintptr_t) ud;
 	if (!handle->detail) {
 		handle->errnum = CS_ERR_DETAIL;
 		return -1;
@@ -556,7 +552,7 @@ int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 			return -1;
 		case CS_ARCH_ARM:
 			for (i = 0; i < insn->detail->arm.op_count; i++) {
-				if (insn->detail->arm.operands[i].type == op_type)
+				if (insn->detail->arm.operands[i].type == (arm_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
@@ -564,7 +560,7 @@ int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 			break;
 		case CS_ARCH_ARM64:
 			for (i = 0; i < insn->detail->arm64.op_count; i++) {
-				if (insn->detail->arm64.operands[i].type == op_type)
+				if (insn->detail->arm64.operands[i].type == (arm64_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
@@ -572,7 +568,7 @@ int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 			break;
 		case CS_ARCH_X86:
 			for (i = 0; i < insn->detail->x86.op_count; i++) {
-				if (insn->detail->x86.operands[i].type == op_type)
+				if (insn->detail->x86.operands[i].type == (x86_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
@@ -580,7 +576,7 @@ int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 			break;
 		case CS_ARCH_MIPS:
 			for (i = 0; i < insn->detail->mips.op_count; i++) {
-				if (insn->detail->mips.operands[i].type == op_type)
+				if (insn->detail->mips.operands[i].type == (mips_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
@@ -588,7 +584,7 @@ int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 			break;
 		case CS_ARCH_PPC:
 			for (i = 0; i < insn->detail->ppc.op_count; i++) {
-				if (insn->detail->ppc.operands[i].type == op_type)
+				if (insn->detail->ppc.operands[i].type == (ppc_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;

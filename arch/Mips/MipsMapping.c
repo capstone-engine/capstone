@@ -1457,7 +1457,7 @@ static insn_map insns[] = {
 };
 
 static insn_map alias_insns[] = {
-	{ -2, MIPS_INS_NOP, { 0 }, { 0 }, { 0 }, 0, 0 },
+	{ (unsigned short)-2, MIPS_INS_NOP, { 0 }, { 0 }, { 0 }, 0, 0 },
 	{ Mips_SUBu, MIPS_INS_NEGU, { 0 }, { 0 }, { MIPS_GRP_STDENC, 0 }, 0, 0 },
 };
 
@@ -1473,13 +1473,13 @@ void Mips_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 
 			if (h->detail) {
 				memcpy(insn->detail->regs_read, alias_insns[i].regs_use, sizeof(alias_insns[i].regs_use));
-				insn->detail->regs_read_count = count_positive(alias_insns[i].regs_use);
+				insn->detail->regs_read_count = (uint8_t)count_positive(alias_insns[i].regs_use);
 
 				memcpy(insn->detail->regs_write, alias_insns[i].regs_mod, sizeof(alias_insns[i].regs_mod));
-				insn->detail->regs_write_count = count_positive(alias_insns[i].regs_mod);
+				insn->detail->regs_write_count = (uint8_t)count_positive(alias_insns[i].regs_mod);
 
 				memcpy(insn->detail->groups, alias_insns[i].groups, sizeof(alias_insns[i].groups));
-				insn->detail->groups_count = count_positive(alias_insns[i].groups);
+				insn->detail->groups_count = (uint8_t)count_positive(alias_insns[i].groups);
 
 				if (alias_insns[i].branch || alias_insns[i].indirect_branch) {
 					// this insn also belongs to JUMP group. add JUMP group
@@ -1498,13 +1498,13 @@ void Mips_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 
 		if (h->detail) {
 			memcpy(insn->detail->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
-			insn->detail->regs_read_count = count_positive(insns[i].regs_use);
+			insn->detail->regs_read_count = (uint8_t)count_positive(insns[i].regs_use);
 
 			memcpy(insn->detail->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
-			insn->detail->regs_write_count = count_positive(insns[i].regs_mod);
+            insn->detail->regs_write_count = (uint8_t)count_positive(insns[i].regs_mod);
 
 			memcpy(insn->detail->groups, insns[i].groups, sizeof(insns[i].groups));
-			insn->detail->groups_count = count_positive(insns[i].groups);
+            insn->detail->groups_count = (uint8_t)count_positive(insns[i].groups);
 
 			if (insns[i].branch || insns[i].indirect_branch) {
 				// this insn also belongs to JUMP group. add JUMP group

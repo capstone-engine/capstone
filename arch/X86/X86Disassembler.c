@@ -146,13 +146,13 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 		case TYPE_XMM32:
 		case TYPE_XMM64:
 		case TYPE_XMM128:
-			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_XMM0 + (immediate >> 4)));
+			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_XMM0 + ((uint32_t)immediate >> 4)));
 			return;
 		case TYPE_XMM256:
-			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_YMM0 + (immediate >> 4)));
+            MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_YMM0 + ((uint32_t)immediate >> 4)));
 			return;
 		case TYPE_XMM512:
-			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_ZMM0 + (immediate >> 4)));
+            MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_ZMM0 + ((uint32_t)immediate >> 4)));
 			return;
 		case TYPE_REL8:
 			if(immediate & 0x80)
@@ -624,10 +624,10 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *in
 				MODE_64BIT);
 
 	if (ret) {
-		*size = insn.readerCursor - address;
+		*size = (uint16_t)(insn.readerCursor - address);
 		return false;
 	} else {
-		*size = insn.length;
+		*size = (uint16_t)insn.length;
 		result = (!translateInstruction(instr, &insn)) ?  true : false;
 		// save segment for printing hack
 		instr->x86_segment = x86_map_segment(insn.segmentOverride);

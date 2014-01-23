@@ -3831,15 +3831,15 @@ static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
   switch (Idx) {
   default: // llvm_unreachable("Invalid index!");
   case 0:
-    return ((Bits & Mips_FeatureMips16));
+    return (bool)((Bits & Mips_FeatureMips16));
   case 1:
-    return ((Bits & Mips_FeatureMicroMips));
+    return (bool)((Bits & Mips_FeatureMicroMips));
   case 2:
     return (!(Bits & Mips_FeatureMips16));
   case 3:
     return ((Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureMips16));
   case 4:
-    return ((Bits & Mips_FeatureMSA));
+    return (bool)((Bits & Mips_FeatureMSA));
   case 5:
     return ((Bits & Mips_FeatureDSP));
   case 6:
@@ -3869,7 +3869,7 @@ static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
   case 18:
     return ((Bits & Mips_FeatureMips64r2) && !(Bits & Mips_FeatureMips16));
   case 19:
-    return ((Bits & Mips_FeatureMips64));
+    return (bool)((Bits & Mips_FeatureMips64));
   case 20:
     return ((Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16));
   case 21:
@@ -5456,7 +5456,7 @@ static DecodeStatus fname(uint8_t DecodeTable[], MCInst *MI, \
     } \
     case MCD_OPC_FilterValue: { \
       unsigned Len; \
-      InsnType Val = decodeULEB128(++Ptr, &Len); \
+      InsnType Val = (InsnType)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
       unsigned NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
@@ -5468,7 +5468,7 @@ static DecodeStatus fname(uint8_t DecodeTable[], MCInst *MI, \
       unsigned Start = *++Ptr; \
       unsigned Len = *++Ptr; \
       InsnType FieldValue = fieldname(insn, Start, Len); \
-      uint32_t ExpectedValue = decodeULEB128(++Ptr, &Len); \
+      uint32_t ExpectedValue = (uint32_t)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
       unsigned NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
@@ -5478,30 +5478,31 @@ static DecodeStatus fname(uint8_t DecodeTable[], MCInst *MI, \
     } \
     case MCD_OPC_CheckPredicate: { \
       unsigned Len; \
-      unsigned PIdx = decodeULEB128(++Ptr, &Len); \
+      unsigned PIdx = (uint32_t)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
       unsigned NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
       bool Pred; \
-      if (!(Pred = checkDecoderPredicate(PIdx, Bits))) \
+      Pred = checkDecoderPredicate(PIdx, Bits); \
+      if (!Pred) \
         Ptr += NumToSkip; \
       (void)Pred; \
       break; \
     } \
     case MCD_OPC_Decode: { \
       unsigned Len; \
-      unsigned Opc = decodeULEB128(++Ptr, &Len); \
+      unsigned Opc = (uint32_t)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      unsigned DecodeIdx = decodeULEB128(Ptr, &Len); \
+      unsigned DecodeIdx = (uint32_t)decodeULEB128(Ptr, &Len); \
       Ptr += Len; \
       MCInst_setOpcode(MI, Opc); \
       return decoder(S, DecodeIdx, insn, MI, Address, MRI); \
     } \
     case MCD_OPC_SoftFail: { \
       unsigned Len; \
-      InsnType PositiveMask = decodeULEB128(++Ptr, &Len); \
+      InsnType PositiveMask = (InsnType)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      InsnType NegativeMask = decodeULEB128(Ptr, &Len); \
+      InsnType NegativeMask = (InsnType)decodeULEB128(Ptr, &Len); \
       Ptr += Len; \
       bool Fail = (insn & PositiveMask) || (~insn & NegativeMask); \
       if (Fail) \
