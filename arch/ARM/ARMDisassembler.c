@@ -379,16 +379,16 @@ static uint64_t getFeatureBits(int mode)
 
 	// some features are mutually exclusive
 	if (mode & CS_MODE_THUMB) {
-			//Bits &= ~ARM_HasV6Ops;
-			//Bits &= ~ARM_FeatureCRC;
-			//Bits &= ~ARM_HasV5TEOps;
-			//Bits &= ~ARM_HasV4TOps;
-			//Bits &= ~ARM_HasV6T2Ops;
-			//Bits &= ~ARM_FeatureDB;
-			//Bits &= ~ARM_FeatureHWDivARM;
-			//Bits &= ~ARM_FeatureNaClTrap;
-			//Bits &= ~ARM_FeatureMClass;
-			// ArmV8
+		//Bits &= ~ARM_HasV6Ops;
+		//Bits &= ~ARM_FeatureCRC;
+		//Bits &= ~ARM_HasV5TEOps;
+		//Bits &= ~ARM_HasV4TOps;
+		//Bits &= ~ARM_HasV6T2Ops;
+		//Bits &= ~ARM_FeatureDB;
+		//Bits &= ~ARM_FeatureHWDivARM;
+		//Bits &= ~ARM_FeatureNaClTrap;
+		//Bits &= ~ARM_FeatureMClass;
+		// ArmV8
 	} else {	// ARM mode
 		Bits &= ~ARM_ModeThumb;
 		Bits &= ~ARM_FeatureThumb2;
@@ -425,7 +425,7 @@ void ARM_init(MCRegisterInfo *MRI)
 	   ARMRegUnitRoots, 77, ARMRegDiffLists, ARMRegStrings,
 	   ARMSubRegIdxLists, 57,
 	   ARMSubRegIdxRanges, ARMRegEncodingTable);
-	*/
+	 */
 
 	MCRegisterInfo_InitMCRegisterInfo(MRI, ARMRegDesc, 289,
 			0, 0, 
@@ -564,9 +564,9 @@ static void AddThumb1SBit(MCInst *MI, bool InITBlock)
 static DecodeStatus AddThumbPredicate(cs_struct *ud, MCInst *MI)
 {
 	DecodeStatus S = MCDisassembler_Success;
-    MCOperandInfo *OpInfo;
-    unsigned short NumOps;
-    unsigned int i;
+	MCOperandInfo *OpInfo;
+	unsigned short NumOps;
+	unsigned int i;
 
 	// A few instructions actually have predicates encoded in them.  Don't
 	// try to overwrite it if we're seeing one of those.
@@ -643,9 +643,9 @@ static DecodeStatus AddThumbPredicate(cs_struct *ud, MCInst *MI)
 static void UpdateThumbVFPPredicate(cs_struct *ud, MCInst *MI)
 {
 	unsigned CC;
-    unsigned short NumOps;
-    MCOperandInfo *OpInfo;
-    unsigned i;
+	unsigned short NumOps;
+	MCOperandInfo *OpInfo;
+	unsigned i;
 
 	CC = ITStatus_getITCC(&(ud->ITBlock));
 	if (ITStatus_instrInITBlock(&(ud->ITBlock)))
@@ -1132,7 +1132,7 @@ static DecodeStatus DecodeSORegImmOperand(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder)
 {
 	DecodeStatus S = MCDisassembler_Success;
-    ARM_AM_ShiftOpc Shift;
+	ARM_AM_ShiftOpc Shift;
 
 	unsigned Rm = fieldFromInstruction_4(Val, 0, 4);
 	unsigned type = fieldFromInstruction_4(Val, 5, 2);
@@ -1171,7 +1171,7 @@ static DecodeStatus DecodeSORegRegOperand(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder)
 {
 	DecodeStatus S = MCDisassembler_Success;
-    ARM_AM_ShiftOpc Shift;
+	ARM_AM_ShiftOpc Shift;
 
 	unsigned Rm = fieldFromInstruction_4(Val, 0, 4);
 	unsigned type = fieldFromInstruction_4(Val, 5, 2);
@@ -1306,7 +1306,7 @@ static DecodeStatus DecodeBitfieldMaskOperand(MCInst *Inst, unsigned Val,
 	// create the final mask.
 	unsigned msb = fieldFromInstruction_4(Val, 5, 5);
 	unsigned lsb = fieldFromInstruction_4(Val, 0, 5);
-    uint32_t lsb_mask;
+	uint32_t lsb_mask;
 
 	DecodeStatus S = MCDisassembler_Success;
 	if (lsb > msb) {
@@ -1474,8 +1474,8 @@ static DecodeStatus DecodeAddrMode2IdxInstruction(MCInst *Inst, unsigned Insn,
 		uint64_t Address, const void *Decoder)
 {
 	DecodeStatus S = MCDisassembler_Success;
-    ARM_AM_AddrOpc Op;
-    ARM_AM_ShiftOpc Opc;
+	ARM_AM_AddrOpc Op;
+	ARM_AM_ShiftOpc Opc;
 
 	unsigned Rn = fieldFromInstruction_4(Insn, 16, 4);
 	unsigned Rt = fieldFromInstruction_4(Insn, 12, 4);
@@ -1582,7 +1582,7 @@ static DecodeStatus DecodeSORegMemOperand(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder)
 {
 	DecodeStatus S = MCDisassembler_Success;
-    ARM_AM_ShiftOpc ShOp;
+	ARM_AM_ShiftOpc ShOp;
 
 	unsigned Rn = fieldFromInstruction_4(Val, 13, 4);
 	unsigned Rm = fieldFromInstruction_4(Val,  0, 4);
@@ -4904,7 +4904,7 @@ static DecodeStatus DecodeT2ShifterImmOperand(MCInst *Inst, uint32_t Val,
 static DecodeStatus DecodeSwap(MCInst *Inst, unsigned Insn,
 		uint64_t Address, const void *Decoder)
 {
-    DecodeStatus S;
+	DecodeStatus S;
 
 	unsigned Rt   = fieldFromInstruction_4(Insn, 12, 4);
 	unsigned Rt2  = fieldFromInstruction_4(Insn, 0,  4);

@@ -505,30 +505,30 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 		case ARM_STREXD:
 		case ARM_LDAEXD:
 		case ARM_STLEXD: {
-				MCRegisterClass* MRC = MCRegisterInfo_getRegClass(MRI, ARM_GPRRegClassID);
-				bool isStore = Opcode == ARM_STREXD || Opcode == ARM_STLEXD;
+				    MCRegisterClass* MRC = MCRegisterInfo_getRegClass(MRI, ARM_GPRRegClassID);
+				    bool isStore = Opcode == ARM_STREXD || Opcode == ARM_STLEXD;
 
-				unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, isStore ? 1 : 0));
-				if (MCRegisterClass_contains(MRC, Reg)) {
-					MCInst NewMI;
-					MCOperand *NewReg;
-					MCInst_setOpcode(&NewMI, Opcode);
+				    unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, isStore ? 1 : 0));
+					if (MCRegisterClass_contains(MRC, Reg)) {
+						MCInst NewMI;
+						MCOperand *NewReg;
+						MCInst_setOpcode(&NewMI, Opcode);
 
-					if (isStore)
-						MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, 0));
-					NewReg = MCOperand_CreateReg(MCRegisterInfo_getMatchingSuperReg(MRI, Reg, ARM_gsub_0,
-								MCRegisterInfo_getRegClass(MRI, ARM_GPRPairRegClassID)));
-					MCInst_addOperand2(&NewMI, NewReg);
-					cs_mem_free(NewReg);
+						if (isStore)
+							MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, 0));
+						NewReg = MCOperand_CreateReg(MCRegisterInfo_getMatchingSuperReg(MRI, Reg, ARM_gsub_0,
+									MCRegisterInfo_getRegClass(MRI, ARM_GPRPairRegClassID)));
+						MCInst_addOperand2(&NewMI, NewReg);
+						cs_mem_free(NewReg);
 
-					// Copy the rest operands into NewMI.
-					unsigned i;
-					for(i= isStore ? 3 : 2; i < MCInst_getNumOperands(MI); ++i)
-						MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, i));
-					printInstruction(&NewMI, O, MRI);
-					return;
+						// Copy the rest operands into NewMI.
+						unsigned i;
+						for(i= isStore ? 3 : 2; i < MCInst_getNumOperands(MI); ++i)
+							MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, i));
+						printInstruction(&NewMI, O, MRI);
+						return;
+					}
 				}
-			}
 	}
 
 	//if (printAliasInstr(MI, O, MRI))
@@ -854,7 +854,7 @@ static void printAM3PostIndexOp(MCInst *MI, unsigned Op, SStream *O)
 		if (op)
 			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = ImmOffs;
 		else
-            MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = -(int)ImmOffs;
+			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = -(int)ImmOffs;
 
 		MI->flat_insn.arm.op_count++;
 	}
@@ -1277,7 +1277,7 @@ static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	// FIXME: FeatureMClass becomes mode??
 	//if (ARM_getFeatureBits(MI->csh->mode) & ARM_FeatureMClass) {
 	//if (true)
-    {
+	{
 		unsigned SYSm = (unsigned int)MCOperand_getImm(Op);
 		unsigned Opcode = MCInst_getOpcode(MI);
 		// For reads of the special registers ignore the "mask encoding" bits
@@ -1422,7 +1422,7 @@ static void printCImmediate(MCInst *MI, unsigned OpNum, SStream *O)
 	SStream_concat(O, "c%u", MCOperand_getImm(MCInst_getOperand(MI, OpNum)));
 	if (MI->csh->detail) {
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].type = ARM_OP_CIMM;
-        MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 		MI->flat_insn.arm.op_count++;
 	}
 }
@@ -1481,11 +1481,11 @@ static void printThumbS4ImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		SStream_concat(O, "%s#0x%x", markup("<imm:"), tmp);
 	else
 		SStream_concat(O, "%s#%u", markup("<imm:"), tmp);
-		if (MI->csh->detail) {
-			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].type = ARM_OP_IMM;
-			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = tmp;
-			MI->flat_insn.arm.op_count++;
-		}
+	if (MI->csh->detail) {
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].type = ARM_OP_IMM;
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = tmp;
+		MI->flat_insn.arm.op_count++;
+	}
 	SStream_concat(O, markup(">"));
 }
 
@@ -1636,8 +1636,8 @@ static void printAddrModeImm12Operand(MCInst *MI, unsigned OpNum,
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
-    int32_t OffImm;
-    bool isSub;
+	int32_t OffImm;
+	bool isSub;
 
 	if (!MCOperand_isReg(MO1)) {   // FIXME: This is for CP entries, but isn't right.
 		printOperand(MI, OpNum, O);
@@ -1676,8 +1676,8 @@ static void printT2AddrModeImm8Operand(MCInst *MI, unsigned OpNum, SStream *O,
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
-    int32_t OffImm;
-    bool isSub;
+	int32_t OffImm;
+	bool isSub;
 
 	SStream_concat(O, "%s[", markup("<mem:"));
 	set_mem_access(MI, true);
@@ -1712,8 +1712,8 @@ static void printT2AddrModeImm8s4Operand(MCInst *MI,
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
-    int32_t OffImm;
-    bool isSub;
+	int32_t OffImm;
+	bool isSub;
 
 	if (!MCOperand_isReg(MO1)) {   //  For label symbolic references.
 		printOperand(MI, OpNum, O);
