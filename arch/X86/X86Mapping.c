@@ -6686,5 +6686,8 @@ void X86_insn_combine(cs_struct *h, cs_insn *insn, cs_insn *prev)
 		uint8_t prefix = prev->detail->x86.opcode[0];
 		memmove(prev->detail, insn->detail, sizeof(cs_detail));
 		prev->detail->x86.prefix[0] = prefix;
+		// then free unused memory
+		cs_mem_free(insn->detail);
+		insn->detail = NULL;
 	}
 }
