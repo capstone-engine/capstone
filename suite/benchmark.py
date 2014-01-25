@@ -73,7 +73,7 @@ for (arch, mode, comment, syntax) in all_tests:
 
     try:
         md = Cs(arch, mode)
-        #md.detail = True
+        md.detail = True
 
         if syntax != 0:
             md.syntax = syntax

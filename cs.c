@@ -360,7 +360,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 
 				c++;
 			} else {
-				// combine this instruction with previous prefix instruction
+				// combine this instruction with previous prefix "instruction"
 				cs_insn *prev = get_prev_insn(insn_cache, f, total, total_size);
 				handle->combine(handle, &insn_cache[f], prev);
 			}
@@ -369,8 +369,17 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 			size -= insn_size;
 			offset += insn_size;
 
-			if (count > 0 && c == count)
-				break;
+			if (count > 0) {
+				// x86 hacky
+				if (!handle->prev_prefix) {
+					if (c == count)
+						break;
+				} else {
+					// only combine 1 prefix with regular instruction
+					if (c == count + 1)
+						break;
+				}
+			}
 		} else	{
 			// encounter a broken instruction
 			// XXX: TODO: JOXEAN continue here
