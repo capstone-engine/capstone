@@ -1,0 +1,52 @@
+--- Makefile.orig	2014-01-22 11:33:35.000000000 +0100
++++ Makefile	2014-01-25 19:13:32.000000000 +0100
+@@ -15,7 +15,7 @@
+ STRIP = $(CROSS)strip
+ endif
+ 
+-CFLAGS += -fPIC -O3 -Wall -Iinclude
++CFLAGS += -fPIC -Wall -Iinclude
+ 
+ ifeq ($(USE_SYS_DYN_MEM),yes)
+ CFLAGS += -DUSE_SYS_DYN_MEM
+@@ -38,6 +38,14 @@
+ endif
+ endif
+ 
++LIBDATADIR = $(LIBDIR)
++UNAME_S := $(shell uname -s)
++ifeq ($(UNAME_S), FreeBSD)
++LIBDATADIR = $(DESTDIR)$(PREFIX)/libdata
++else
++LIBDATADIR = $(LIBDIR)
++endif
++
+ INSTALL_BIN ?= install
+ INSTALL_DATA ?= $(INSTALL_BIN) -m0644
+ INSTALL_LIBRARY ?= $(INSTALL_BIN) -m0755
+@@ -88,7 +96,6 @@
+ 
+ LIBOBJ += MCInst.o
+ 
+-UNAME_S := $(shell uname -s)
+ # OSX?
+ ifeq ($(UNAME_S),Darwin)
+ EXT = dylib
+@@ -156,14 +163,14 @@
+ 	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
+ 	mkdir -p $(INCDIR)/$(LIBNAME)
+ 	$(INSTALL_DATA) include/*.h $(INCDIR)/$(LIBNAME)
+-	mkdir -p $(LIBDIR)/pkgconfig
+-	$(INSTALL_DATA) $(PKGCFGF) $(LIBDIR)/pkgconfig/
++	mkdir -p $(LIBDATADIR)/pkgconfig
++	$(INSTALL_DATA) $(PKGCFGF) $(LIBDATADIR)/pkgconfig/
+ 
+ uninstall:
+ 	rm -rf $(INCDIR)/$(LIBNAME)
+ 	rm -f $(LIBDIR)/lib$(LIBNAME).$(EXT)
+ 	rm -f $(LIBDIR)/lib$(LIBNAME).$(AR_EXT)
+-	rm -f $(LIBDIR)/pkgconfig/$(LIBNAME).pc
++	rm -f $(LIBDATADIR)/pkgconfig/$(LIBNAME).pc
+ 
+ clean:
+ 	rm -f $(LIBOBJ) lib$(LIBNAME).*
