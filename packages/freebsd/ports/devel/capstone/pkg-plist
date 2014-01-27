@@ -1,0 +1,10 @@
+include/capstone/arm.h
+include/capstone/arm64.h
+include/capstone/capstone.h
+include/capstone/mips.h
+include/capstone/ppc.h
+include/capstone/x86.h
+lib/libcapstone.a
+lib/libcapstone.so
+libdata/pkgconfig/capstone.pc
+@dirrmtry include/capstone
