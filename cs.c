@@ -376,8 +376,16 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 						break;
 				} else {
 					// only combine 1 prefix with regular instruction
-					if (c == count + 1)
+					if (c == count + 1) {
+						// the last insn is redundant
+						c--;
+						f--;
+						// free allocated detail pointer of the last redundant instruction
+						if (handle->detail)
+							cs_mem_free(insn_cache[f].detail);
+
 						break;
+					}
 				}
 			}
 		} else	{
