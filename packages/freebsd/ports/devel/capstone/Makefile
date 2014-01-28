@@ -6,17 +6,17 @@ CATEGORIES=	devel
 MASTER_SITES=	http://capstone-engine.org/download/2.0/
 
 MAINTAINER=	oliver.pntr@gmail.com
-COMMENT=	multi-platform, multi-architecture disassembly framework
+COMMENT=	Multi-platform, multi-architecture disassembly framework
 
-LICENSE=	BSD
+LICENSE=	BSD3CLAUSE
 
 USES=		gmake
+USE_LDCONFIG=	yes
 
-MAKE_ENV=	INSTALL_DATA="${INSTALL_DATA}"
-MAKE_ENV+=	INSTALL_LIBRARY="${INSTALL_DATA}"
+MAKE_ENV=	INSTALL_LIBRARY="${INSTALL_LIB}"
 
-pre-install:
-	@${REINPLACE_CMD} -e '/libdir/s|/usr/ports/devel/capstone/work/stage||g' ${WRKSRC}/capstone.pc
+post-build:
+	# The pkgconfig file is generated and points to stagedir
+	${REINPLACE_CMD} -e '/libdir/s|\(libdir=\)\(.*\)\(devel/capstone/work/stage\)|\1|g' ${WRKSRC}/capstone.pc
 
 .include <bsd.port.mk>
-
