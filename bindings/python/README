@@ -1,36 +1,43 @@
-1. To install Python binding on *nix, simply run below command:
+1. To install pure Python binding on *nix, run below command:
 
 		$ sudo make install
 
-	For better performance, install cython-based binding with:
+2. For better Python performance, install cython-based binding with:
 
 		$ sudo make install_cython
 
-	NOTE: To install cython you have to ensure that the header files
-	      and the static library for Python are installed.
+	Note that this requires cython installed in your machine first.
+	To install cython, see section 3 below.
 	
-	E.g. using ubuntu:
-	
+3. To install cython, you have to ensure that the header files
+   and the static library for Python are installed beforehand.
+
+	E.g. on Ubuntu, do:
+
 		$ sudo apt-get install python-dev
 
-	NOTE: Depending on if you already have pip or easy_install
-	      installed, simply do either:
+	Depending on if you already have pip or easy_install
+	installed, install cython with either:
 
 		$ sudo pip install cython
 	or:
 		$ sudo easy_install cython
-		
-	NOTE: Depending on your distribution you might also be able to 
+
+	NOTE: Depending on your distribution you might also be able to
 	      install the required cython version using your repository.
-	
-	E.g. using ubuntu:
+
+	E.g. on Ubuntu, do:
 	
 		$ sudo apt-get install cython
-		
-	NOTE: Verify to use the current version
+
+	However, our cython-based binding requires cython version 0.19 or newer,
+	but sometimes distributions only provide older version. Make sure to
+	verify the current installed version before going into section 2 above.
 	
+	E.g, on Ubuntu, you can verify the current cython version with:
+
 		& apt-cache policy cython
-	
+
 	Which should at least print version 0.19
 
 
