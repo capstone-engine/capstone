@@ -255,7 +255,7 @@ install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 	rm -f $(LIBDIR)/lib$(LIBNAME).*
 	$(INSTALL_LIB) lib$(LIBNAME).$(EXT) $(LIBDIR)
 ifneq ($(VERSION_EXT),)
-	ln -s $(LIBDIR)/lib$(LIBNAME).$(EXT) $(LIBDIR)/lib$(LIBNAME).$(VERSION_EXT)
+	cd $(LIBDIR) ; ln -s lib$(LIBNAME).$(EXT) lib$(LIBNAME).$(VERSION_EXT)
 endif
 	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
 	mkdir -p $(INCDIR)/$(LIBNAME)
