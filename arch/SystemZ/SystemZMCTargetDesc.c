@@ -67,10 +67,11 @@ const unsigned SystemZMC_FP128Regs[16] = {
 unsigned SystemZMC_getFirstReg(unsigned Reg)
 {
 	static unsigned Map[SystemZ_NUM_TARGET_REGS];
-	static bool Initialized = false;
+	static int Initialized = 0;
 	unsigned I;
 
 	if (!Initialized) {
+Initialized = 1;
 		for (I = 0; I < 16; ++I) {
 			Map[SystemZMC_GR32Regs[I]] = I;
 			Map[SystemZMC_GRH32Regs[I]] = I;
