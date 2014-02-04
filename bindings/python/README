@@ -13,7 +13,6 @@
 	
 		$ sudo apt-get install python-dev
 
-
 	NOTE: Depending on if you already have pip or easy_install
 	      installed, simply do either:
 
