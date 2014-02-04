@@ -2,16 +2,36 @@
 
 		$ sudo make install
 
-	For better performance, install Cython-based binding with:
+	For better performance, install cython-based binding with:
 
 		$ sudo make install_cython
 
-	NOTE: to install Cython, depending on if you already have pip or
-	easy_install installed, simply do either:
+	NOTE: To install cython you have to ensure that the header files
+	      and the static library for Python are installed.
+	
+	E.g. using ubuntu:
+	
+		$ sudo apt-get install python-dev
+
+	NOTE: Depending on if you already have pip or easy_install
+	      installed, simply do either:
 
 		$ sudo pip install cython
 	or:
-		$ sudo pip install cython
+		$ sudo easy_install cython
+		
+	NOTE: Depending on your distribution you might also be able to 
+	      install the required cython version using your repository.
+	
+	E.g. using ubuntu:
+	
+		$ sudo apt-get install cython
+		
+	NOTE: Verify to use the current version
+	
+		& apt-cache policy cython
+	
+	Which should at least print version 0.19
 
 
 This directory contains some test code to show how to use Capstone API.
