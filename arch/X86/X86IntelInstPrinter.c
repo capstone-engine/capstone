@@ -29,6 +29,7 @@
 #include "X86Mapping.h"
 
 static void printMemReference(MCInst *MI, unsigned Op, SStream *O);
+static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 
 static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 {
@@ -114,9 +115,83 @@ static void printf512mem(MCInst *MI, unsigned OpNo, SStream *O)
 	printMemReference(MI, OpNo, O);
 }
 
+static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
+{
+	MCOperand *SegReg;
+	
+	SegReg = MCInst_getOperand(MI, Op+1);
+
+	// If this has a segment register, print it.
+	if (MCOperand_getReg(SegReg)) {
+		printOperand(MI, Op+1, O);
+		SStream_concat(O, ":");
+	}
+
+	SStream_concat(O, "[");
+	printOperand(MI, Op, O);
+	SStream_concat(O, "]");
+}
+
+static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
+{
+	// DI accesses are always ES-based.
+	SStream_concat(O, "es:[");
+	printOperand(MI, Op, O);
+	SStream_concat(O, "]");
+}
+
+void printSrcIdx8(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	SStream_concat(O, "byte ptr ");
+	printSrcIdx(MI, OpNo, O);
+}
+
+void printSrcIdx16(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	SStream_concat(O, "word ptr ");
+	printSrcIdx(MI, OpNo, O);
+}
+
+void printSrcIdx32(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	SStream_concat(O, "dword ptr ");
+	printSrcIdx(MI, OpNo, O);
+}
+
+void printSrcIdx64(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	SStream_concat(O, "qword ptr ");
+	printSrcIdx(MI, OpNo, O);
+}
+
+void printDstIdx8(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	SStream_concat(O, "byte ptr ");
+	printDstIdx(MI, OpNo, O);
+}
+
+void printDstIdx16(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	SStream_concat(O, "word ptr ");
+	printDstIdx(MI, OpNo, O);
+}
+
+void printDstIdx32(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	SStream_concat(O, "dword ptr ");
+	printDstIdx(MI, OpNo, O);
+}
+
+void printDstIdx64(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	SStream_concat(O, "qword ptr ");
+	printDstIdx(MI, OpNo, O);
+}
+
 static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 {
 	MCOperand *DispSpec = MCInst_getOperand(MI, Op);
+	MCOperand *SegReg = MCInst_getOperand(MI, Op+1);
 
 	if (MI->csh->detail) {
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_MEM;
@@ -124,6 +199,12 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.index = X86_REG_INVALID;
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.scale = 1;
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.disp = 0;
+	}
+
+	// If this has a segment register, print it.
+	if (MCOperand_getReg(SegReg)) {
+		printOperand(MI, Op+1, O);
+		SStream_concat(O, ":");
 	}
 
 	SStream_concat(O, "[");
@@ -155,24 +236,12 @@ static void printMemOffs8(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat(O, "byte ptr ");
 
-	// If this has a segment register, print it.
-	// this is a hack. will fix it later
-	if (MI->x86_segment) {
-		SStream_concat(O, "%s:", X86_reg_name(1, MI->x86_segment));
-	}
-
 	printMemOffset(MI, OpNo, O);
 }
 
 static void printMemOffs16(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat(O, "word ptr ");
-
-	// If this has a segment register, print it.
-	// this is a hack. will fix it later
-	if (MI->x86_segment) {
-		SStream_concat(O, "%s:", X86_reg_name(1, MI->x86_segment));
-	}
 
 	printMemOffset(MI, OpNo, O);
 
@@ -181,12 +250,6 @@ static void printMemOffs16(MCInst *MI, unsigned OpNo, SStream *O)
 static void printMemOffs32(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat(O, "dword ptr ");
-
-	// If this has a segment register, print it.
-	// this is a hack. will fix it later
-	if (MI->x86_segment) {
-		SStream_concat(O, "%s:", X86_reg_name(1, MI->x86_segment));
-	}
 
 	printMemOffset(MI, OpNo, O);
 }
@@ -323,6 +386,18 @@ static void printAVXCC(MCInst *MI, unsigned Op, SStream *O)
 		case 0x1d: SStream_concat(O, "ge_oq"); break;
 		case 0x1e: SStream_concat(O, "gt_oq"); break;
 		case 0x1f: SStream_concat(O, "true_us"); break;
+	}
+}
+
+static void printRoundingControl(MCInst *MI, unsigned Op, SStream *O)
+{
+	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x3;
+	switch (Imm) {
+		case 0: SStream_concat(O, "{rn-sae}"); break;
+		case 1: SStream_concat(O, "{rd-sae}"); break;
+		case 2: SStream_concat(O, "{ru-sae}"); break;
+		case 3: SStream_concat(O, "{rz-sae}"); break;
+		default: break;	// never reach
 	}
 }
 

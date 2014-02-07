@@ -140,7 +140,6 @@ struct MCInst {
 	cs_insn_flat flat_insn;	// insn to be exposed to public
 	unsigned OpcodePub;
 	int insn_size;	// instruction size
-	int x86_segment;	// remove when segment mem ref hack is redundant.
 	uint64_t address;	// address of this insn
 	cs_struct *csh;	// save the main csh
 };
