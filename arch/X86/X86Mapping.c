@@ -6702,6 +6702,13 @@ bool X86_insn_check_combine(cs_struct *h, cs_insn *insn)
 // combine this instruction with previous prefix instruction
 void X86_insn_combine(cs_struct *h, cs_insn *insn, cs_insn *prev)
 {
+	int i;
+	unsigned int prev_id;
+	uint8_t prefix;
+
+	// save prev's ID
+	prev_id = prev->id;
+
 	// reset prev_prefix
 	h->prev_prefix = 0;
 
@@ -6715,9 +6722,29 @@ void X86_insn_combine(cs_struct *h, cs_insn *insn, cs_insn *prev)
 
 	if (h->detail) {
 		// save old prefix to copy it back later
-		uint8_t prefix = prev->detail->x86.opcode[0];
+		prefix = prev->detail->x86.opcode[0];
 		memmove(prev->detail, insn->detail, sizeof(cs_detail));
 		prev->detail->x86.prefix[0] = prefix;
+
+		// if prev_prefix == REP|REPNE, insert ECX/RCX into detail->regs_read/regs_write
+		if (prev_id == X86_INS_REP || prev_id == X86_INS_REPNE) {
+			memmove(prev->detail->regs_read+1, prev->detail->regs_read,
+					prev->detail->regs_read_count * sizeof(prev->detail->regs_read[0]));
+			memmove(prev->detail->regs_write+1, prev->detail->regs_write,
+					prev->detail->regs_write_count * sizeof(prev->detail->regs_write[0]));
+
+			prev->detail->regs_read_count++;
+			prev->detail->regs_write_count++;
+
+			if (h->mode & CS_MODE_64) {
+				prev->detail->regs_read[0] = X86_REG_RCX;
+				prev->detail->regs_write[0] = X86_REG_RCX;
+			} else {
+				prev->detail->regs_read[0] = X86_REG_ECX;
+				prev->detail->regs_write[0] = X86_REG_ECX;
+			}
+		}
+
 		// then free unused memory
 		cs_mem_free(insn->detail);
 		insn->detail = NULL;
