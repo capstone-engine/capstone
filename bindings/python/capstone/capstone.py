@@ -49,6 +49,7 @@ __all__ = [
     'CS_ERR_MODE',
     'CS_ERR_OPTION',
     'CS_ERR_DETAIL',
+    'CS_ERR_VERSION',
 ]
 
 # Capstone C interface
@@ -100,6 +101,7 @@ CS_ERR_CSH = 4     # Invalid csh argument: cs_close(), cs_errno(), cs_option()
 CS_ERR_MODE = 5    # Invalid/unsupported mode: cs_open()
 CS_ERR_OPTION = 6  # Invalid/unsupported option: cs_option()
 CS_ERR_DETAIL = 7  # Invalid/unsupported option: cs_option()
+CS_ERR_VERSION = 9 # Unsupported version (bindings)
 
 
 import ctypes, ctypes.util, sys
@@ -233,6 +235,12 @@ class _dummy_cs(object):
 
 # quick & dirty Python function to disasm raw binary code
 def cs_disasm_quick(arch, mode, code, offset, count = 0):
+    # verify version compatibility with the core before doing anything
+    (major, minor, _combined) = cs_version()
+    if major != CS_API_MAJOR or minor != CS_API_MINOR:
+        # our binding version is different from the core's API version
+        raise CsError(CS_ERR_VERSION)
+
     csh = ctypes.c_size_t()
     status = _cs.cs_open(arch, mode, ctypes.byref(csh))
     if status != CS_ERR_OK:
@@ -388,6 +396,13 @@ class CsInsn(object):
 
 class Cs(object):
     def __init__(self, arch, mode):
+        # verify version compatibility with the core before doing anything
+        (major, minor, _combined) = cs_version()
+        if major != CS_API_MAJOR or minor != CS_API_MINOR:
+            self.csh = None
+            # our binding version is different from the core's API version
+            raise CsError(CS_ERR_VERSION)
+
         self.arch, self._mode = arch, mode
         self.csh = ctypes.c_size_t()
         status = _cs.cs_open(arch, mode, ctypes.byref(self.csh))
