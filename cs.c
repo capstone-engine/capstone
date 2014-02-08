@@ -117,6 +117,8 @@ const char *cs_strerror(cs_err code)
 			return "Details are unavailable (CS_ERR_DETAIL)";
 		case CS_ERR_MEMSETUP:
 			return "Dynamic memory management uninitialized (CS_ERR_MEMSETUP)";
+		case CS_ERR_VERSION:
+			return "Different API version between core & binding (CS_ERR_VERSION)";
 	}
 }
 
