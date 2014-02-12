@@ -6702,7 +6702,6 @@ bool X86_insn_check_combine(cs_struct *h, cs_insn *insn)
 // combine this instruction with previous prefix instruction
 void X86_insn_combine(cs_struct *h, cs_insn *insn, cs_insn *prev)
 {
-	int i;
 	unsigned int prev_id;
 	uint8_t prefix;
 
