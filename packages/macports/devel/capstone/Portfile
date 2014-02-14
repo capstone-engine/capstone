@@ -1,0 +1,20 @@
+PortSystem       1.0
+name             capstone
+version          2.0
+extract.suffix   .tgz
+revision         1
+categories       devel
+license          BSD
+maintainers      gmail.com:aquynh
+description      Capstone disassembly engine
+long_description Capstone is a multi-arch, multi-platform disassembly framework with advanced features
+homepage         http://www.capstone-engine.org/
+platforms        darwin
+master_sites     http://www.capstone-engine.org/download/2.0/
+checksums        sha256 5d871b1e52047d1b2882bbcc6f049205ba6acc8d55d746937d22af5d0b33fa9e \
+                 rmd160 bb7551404e203fa99240b5e33c3d30ca8555830f
+configure.cmd    ./make.sh
+destroot.args    prefix=${prefix}
+patchfiles       patch-make.sh.diff patch-Makefile.diff
+livecheck.type   none
+
