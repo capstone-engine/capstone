@@ -2332,19 +2332,6 @@ void ARM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 	}
 }
 
-unsigned int ARM_get_insn_id2(unsigned int id)
-{
-	unsigned int i;
-
-	for (i = 0; i < ARR_SIZE(insns); i++) {
-		if (id == insns[i].mapid)
-			return insns[i].id;
-	}
-
-	// found nothing
-	return 0;
-}
-
 static name_map insn_name_maps[] = {
 	{ ARM_INS_INVALID, NULL },
 

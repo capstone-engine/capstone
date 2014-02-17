@@ -14,9 +14,6 @@ const char *ARM_reg_name(csh handle, unsigned int reg);
 // given internal insn id, return public instruction ID
 void ARM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 
-// given public insn id, return internal instruction info
-unsigned int ARM_get_insn_id2(unsigned int id);
-
 const char *ARM_insn_name(csh handle, unsigned int id);
 
 // map instruction name to instruction ID
