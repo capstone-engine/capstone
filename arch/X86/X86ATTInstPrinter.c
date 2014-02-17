@@ -280,7 +280,7 @@ static void printAVXCC(MCInst *MI, unsigned Op, SStream *O)
 {
 	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x1f;
 	switch (Imm) {
-		default: printf("Invalid avxcc argument!\n"); break;
+		default: break;//printf("Invalid avxcc argument!\n"); break;
 		case    0: SStream_concat(O, "eq"); break;
 		case    1: SStream_concat(O, "lt"); break;
 		case    2: SStream_concat(O, "le"); break;
@@ -462,9 +462,9 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 		if (MCOperand_getReg(IndexReg)) {
 			SStream_concat(O, ", ");
 			_printOperand(MI, Op+2, O);
-			unsigned ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op+1));
+			uint64_t ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op+1));
 			if (MI->csh->detail)
-				MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.scale = ScaleVal;
+				MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.scale = (int)ScaleVal;
 			if (ScaleVal != 1) {
 				SStream_concat(O, ", %s%u%s", markup("<imm:"), ScaleVal, markup(">"));
 			}

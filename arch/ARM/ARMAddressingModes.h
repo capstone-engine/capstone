@@ -56,7 +56,7 @@ static inline const char *ARM_AM_getShiftOpcStr(ARM_AM_ShiftOpc Op)
 static inline unsigned ARM_AM_getShiftOpcEncoding(ARM_AM_ShiftOpc Op)
 {
 	switch (Op) {
-		default: return -1;	//llvm_unreachable("Unknown shift opc!");
+		default: return (unsigned int)-1;	//llvm_unreachable("Unknown shift opc!");
 		case ARM_AM_asr: return 2;
 		case ARM_AM_lsl: return 0;
 		case ARM_AM_lsr: return 1;
@@ -391,7 +391,7 @@ static inline unsigned getT2SOImmTwoPartFirst(unsigned Imm)
 	//assert (isT2SOImmTwoPartVal(Imm) &&
 	//        "Immedate cannot be encoded as two part immediate!");
 	// Try a shifter operand as one part
-	unsigned V = rotr32 (~255, getT2SOImmValRotate(Imm)) & Imm;
+	unsigned V = rotr32 (~(unsigned int)255, getT2SOImmValRotate(Imm)) & Imm;
 	// If the rest is encodable as an immediate, then return it.
 	if (getT2SOImmVal(V) != -1) return V;
 

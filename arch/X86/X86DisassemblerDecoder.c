@@ -43,7 +43,7 @@ static const char *x86DisassemblerGetInstrName(unsigned Opcode)
 #ifndef NDEBUG
 #define debug(s) do { x86DisassemblerDebug(__FILE__, __LINE__, s); } while (0)
 #else
-#define debug(s) do { } while (0)
+#define debug(s) ((void) 0)
 #endif
 
 /*
@@ -836,7 +836,7 @@ static int getIDWithAttrMask(uint16_t* instructionID,
 
 	hasModRMExtension = modRMRequired(insn->opcodeType,
 			instructionClass,
-			insn->opcode);
+			insn->opcode) == TRUE;
 
 	if (hasModRMExtension) {
 		if (readModRM(insn))
@@ -865,7 +865,7 @@ static int getIDWithAttrMask(uint16_t* instructionID,
  */
 static BOOL is16BitEquivalent(const char* orig, const char* equiv)
 {
-	off_t i;
+	size_t i;
 
 	for (i = 0;; i++) {
 		if (orig[i] == '\0' && equiv[i] == '\0')
@@ -1231,7 +1231,7 @@ static int readDisplacement(struct InternalInstruction* insn)
 		return 0;
 
 	insn->consumedDisplacement = TRUE;
-	insn->displacementOffset = insn->readerCursor - insn->startLocation;
+	insn->displacementOffset = (uint8_t)(insn->readerCursor - insn->startLocation);
 
 	switch (insn->eaDisplacement) {
 		case EA_DISP_NONE:
@@ -1464,13 +1464,13 @@ static int readModRM(struct InternalInstruction* insn)
 			*valid = 0;                                         \
 			return 0;                                           \
 			case TYPE_Rv:                                         \
-																  return base + index;                                \
+																  return (uint8_t)(base + index);                     \
 			case TYPE_R8:                                         \
 																  if (insn->rexPrefix &&                              \
-																		  index >= 4 && index <= 7) {                      \
-																	  return prefix##_SPL + (index - 4);                \
+																		  index >= 4 && index <= 7) {                 \
+																	  return prefix##_SPL + (index - 4);              \
 																  } else {                                            \
-																	  return prefix##_AL + index;                       \
+																	  return prefix##_AL + index;                     \
 																  }                                                   \
 			case TYPE_R16:                                        \
 																  return prefix##_AX + index;                         \
@@ -1559,7 +1559,7 @@ static int fixupReg(struct InternalInstruction *insn,
 		case ENCODING_REG:
 			insn->reg = (Reg)fixupRegValue(insn,
 					(OperandType)op->type,
-					insn->reg - insn->regBase,
+					(uint8_t)(insn->reg - insn->regBase),
 					&valid);
 			if (!valid)
 				return -1;
@@ -1568,7 +1568,7 @@ static int fixupReg(struct InternalInstruction *insn,
 			if (insn->eaBase >= insn->eaRegBase) {
 				insn->eaBase = (EABase)fixupRMValue(insn,
 						(OperandType)op->type,
-						insn->eaBase - insn->eaRegBase,
+						(uint8_t)(insn->eaBase - insn->eaRegBase),
 						&valid);
 				if (!valid)
 					return -1;
@@ -1658,7 +1658,7 @@ static int readImmediate(struct InternalInstruction* insn, uint8_t size)
 		size = insn->immediateSize;
 	else
 		insn->immediateSize = size;
-	insn->immediateOffset = insn->readerCursor - insn->startLocation;
+	insn->immediateOffset = (uint8_t)(insn->readerCursor - insn->startLocation);
 
 	switch (size) {
 		case 1:
@@ -1910,7 +1910,7 @@ int decodeInstruction(struct InternalInstruction* insn,
 
 	insn->operands = &x86OperandSets[insn->spec->operands][0];
 
-	insn->length = insn->readerCursor - insn->startLocation;
+	insn->length = (size_t)(insn->readerCursor - insn->startLocation);
 
 	// dbgprintf(insn, "Read from 0x%llx to 0x%llx: length %zu",
 	// 		startLoc, insn->readerCursor, insn->length);

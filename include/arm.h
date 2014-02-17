@@ -11,6 +11,10 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
+#ifdef _MSC_VER
+#pragma warning(disable:4201)
+#endif
+
 //> ARM shift type
 typedef enum arm_shifter {
 	ARM_SFT_INVALID = 0,

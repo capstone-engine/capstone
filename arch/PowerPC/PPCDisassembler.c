@@ -104,7 +104,7 @@ static const unsigned G8Regs[] = {
 static uint64_t getFeatureBits(int feature)
 {
 	// enable all features
-	return -1;
+	return (uint64_t)-1;
 }
 
 static DecodeStatus decodeRegisterClass(MCInst *Inst, uint64_t RegNo,

@@ -915,6 +915,7 @@ static insn_map insns[] = {
 };
 
 static insn_map alias_insns[] = {
+	{ 0, 0, { 0 }, { 0 }, { 0 }, 0, 0 },
 };
 
 // given internal insn id, return public instruction info
@@ -932,13 +933,13 @@ void PPC_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 				handle.detail = h->detail;
 
 				memcpy(insn->detail->regs_read, alias_insns[i].regs_use, sizeof(alias_insns[i].regs_use));
-				insn->detail->regs_read_count = count_positive(alias_insns[i].regs_use);
+				insn->detail->regs_read_count = (uint8_t)count_positive(alias_insns[i].regs_use);
 
 				memcpy(insn->detail->regs_write, alias_insns[i].regs_mod, sizeof(alias_insns[i].regs_mod));
-				insn->detail->regs_write_count = count_positive(alias_insns[i].regs_mod);
+				insn->detail->regs_write_count = (uint8_t)count_positive(alias_insns[i].regs_mod);
 
 				memcpy(insn->detail->groups, alias_insns[i].groups, sizeof(alias_insns[i].groups));
-				insn->detail->groups_count = count_positive(alias_insns[i].groups);
+				insn->detail->groups_count = (uint8_t)count_positive(alias_insns[i].groups);
 
 				if (alias_insns[i].branch || alias_insns[i].indirect_branch) {
 					// this insn also belongs to JUMP group. add JUMP group
@@ -961,13 +962,13 @@ void PPC_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			handle.detail = h->detail;
 
 			memcpy(insn->detail->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
-			insn->detail->regs_read_count = count_positive(insns[i].regs_use);
+			insn->detail->regs_read_count = (uint8_t)count_positive(insns[i].regs_use);
 
 			memcpy(insn->detail->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
-			insn->detail->regs_write_count = count_positive(insns[i].regs_mod);
+			insn->detail->regs_write_count = (uint8_t)count_positive(insns[i].regs_mod);
 
 			memcpy(insn->detail->groups, insns[i].groups, sizeof(insns[i].groups));
-			insn->detail->groups_count = count_positive(insns[i].groups);
+			insn->detail->groups_count = (uint8_t)count_positive(insns[i].groups);
 
 			if (insns[i].branch || insns[i].indirect_branch) {
 				// this insn also belongs to JUMP group. add JUMP group
@@ -1432,6 +1433,7 @@ static name_map insn_name_maps[] = {
 
 // special alias insn
 static name_map alias_insn_names[] = {
+	{ 0, NULL }
 };
 
 const char *PPC_insn_name(csh handle, unsigned int id)

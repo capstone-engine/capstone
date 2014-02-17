@@ -41,7 +41,7 @@ static bool compare_lower_str(char *s1, char *s2)
 {
 	char *lower = cs_strdup(s2), *c;
 	for (c = lower; *c; c++)
-		*c = tolower((int) *c);
+		*c = (char)tolower((int) *c);
 
 	bool res = (strcmp(s1, lower) == 0);
 	cs_mem_free(lower);
@@ -60,7 +60,7 @@ uint32_t NamedImmMapper_fromString(NamedImmMapper *N, char *Name, bool *Valid)
 	}
 
 	*Valid = false;
-	return -1;
+	return (uint32_t)-1;
 }
 
 bool NamedImmMapper_validImm(NamedImmMapper *N, uint32_t Value)

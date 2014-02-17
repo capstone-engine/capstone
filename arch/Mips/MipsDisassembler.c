@@ -152,7 +152,7 @@ static DecodeStatus DecodeExtSize(MCInst *Inst,
 // Hacky: enable all features for disassembler
 static uint64_t getFeatureBits(int mode)
 {
-	uint64_t Bits = -1;	// include every features by default
+	uint64_t Bits = (uint64_t)-1;	// include every features by default
 
 	// ref: MipsGenDisassemblerTables.inc::checkDecoderPredicate()
 	// some features are mutually execlusive
@@ -193,7 +193,7 @@ static uint64_t getFeatureBits(int mode)
 
 void Mips_init(MCRegisterInfo *MRI)
 {
-  	// InitMCRegisterInfo(MipsRegDesc, 317,
+	// InitMCRegisterInfo(MipsRegDesc, 317,
 	// RA, PC,
 	// MipsMCRegisterClasses, 34,
 	// MipsRegUnitRoots, 196,
@@ -249,12 +249,13 @@ static DecodeStatus MipsDisassembler_getInstruction(int mode, MCInst *instr,
 		uint64_t Address, bool isBigEndian, MCRegisterInfo *MRI)
 {
 	uint32_t Insn;
+	DecodeStatus Result;
 
 	if (code_len < 4)
 		// not enough data
 		return MCDisassembler_Fail;
 
-	DecodeStatus Result = readInstruction32((unsigned char*)code, &Insn, isBigEndian,
+	Result = readInstruction32((unsigned char*)code, &Insn, isBigEndian,
 			mode & CS_MODE_MICRO);
 	if (Result == MCDisassembler_Fail)
 		return MCDisassembler_Fail;
@@ -715,16 +716,16 @@ static DecodeStatus DecodeSimm16(MCInst *Inst,
 static DecodeStatus DecodeLSAImm(MCInst *Inst,
 		unsigned Insn, uint64_t Address, MCRegisterInfo *Decoder)
 {
-  // We add one to the immediate field as it was encoded as 'imm - 1'.
-  MCInst_addOperand(Inst, MCOperand_CreateImm(Insn + 1));
-  return MCDisassembler_Success;
+	// We add one to the immediate field as it was encoded as 'imm - 1'.
+	MCInst_addOperand(Inst, MCOperand_CreateImm(Insn + 1));
+	return MCDisassembler_Success;
 }
 
 static DecodeStatus DecodeInsSize(MCInst *Inst,
 		unsigned Insn, uint64_t Address, MCRegisterInfo *Decoder)
 {
 	// First we need to grab the pos(lsb) from MCInst.
-	int Pos = MCOperand_getImm(MCInst_getOperand(Inst, 2));
+	int Pos = (int)MCOperand_getImm(MCInst_getOperand(Inst, 2));
 	int Size = (int) Insn - Pos + 1;
 	MCInst_addOperand(Inst, MCOperand_CreateImm(SignExtend32(Size, 16)));
 	return MCDisassembler_Success;

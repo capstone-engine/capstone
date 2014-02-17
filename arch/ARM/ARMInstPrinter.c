@@ -301,7 +301,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 							MCOperand *MO2 = MCInst_getOperand(MI, 2);
 							MCOperand *MO3 = MCInst_getOperand(MI, 3);
 
-							SStream_concat(O, ARM_AM_getShiftOpcStr(ARM_AM_getSORegShOp(MCOperand_getImm(MO3))));
+							SStream_concat(O, ARM_AM_getShiftOpcStr(ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO3))));
 							printSBitModifierOperand(MI, 6, O);
 							printPredicateOperand(MI, 4, O);
 
@@ -339,7 +339,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 							MCOperand *MO1 = MCInst_getOperand(MI, 1);
 							MCOperand *MO2 = MCInst_getOperand(MI, 2);
 
-							SStream_concat(O, ARM_AM_getShiftOpcStr(ARM_AM_getSORegShOp(MCOperand_getImm(MO2))));
+							SStream_concat(O, ARM_AM_getShiftOpcStr(ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO2))));
 							printSBitModifierOperand(MI, 5, O);
 							printPredicateOperand(MI, 3, O);
 
@@ -359,13 +359,13 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 								MI->flat_insn.arm.op_count++;
 							}
 
-							if (ARM_AM_getSORegShOp(MCOperand_getImm(MO2)) == ARM_AM_rrx) {
+							if (ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO2)) == ARM_AM_rrx) {
 								//printAnnotation(O, Annot);
 								return;
 							}
 
 							SStream_concat(O, ", %s", markup("<imm:"));
-							unsigned tmp = translateShiftImm(getSORegOffset(MCOperand_getImm(MO2)));
+							unsigned tmp = translateShiftImm(getSORegOffset((unsigned int)MCOperand_getImm(MO2)));
 							if (tmp > HEX_THRESHOLD)
 								SStream_concat(O, "#0x%x", tmp);
 							else
@@ -373,7 +373,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 							SStream_concat(O, markup(">"));
 							if (MI->csh->detail) {
 								MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count - 1].shift.type =
-									(arm_shifter)ARM_AM_getSORegShOp(MCOperand_getImm(MO2));
+									(arm_shifter)ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO2));
 								MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count - 1].shift.value = tmp;
 							}
 							return;
@@ -505,30 +505,30 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 		case ARM_STREXD:
 		case ARM_LDAEXD:
 		case ARM_STLEXD: {
-				MCRegisterClass* MRC = MCRegisterInfo_getRegClass(MRI, ARM_GPRRegClassID);
-				bool isStore = Opcode == ARM_STREXD || Opcode == ARM_STLEXD;
+				    MCRegisterClass* MRC = MCRegisterInfo_getRegClass(MRI, ARM_GPRRegClassID);
+				    bool isStore = Opcode == ARM_STREXD || Opcode == ARM_STLEXD;
 
-				unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, isStore ? 1 : 0));
-				if (MCRegisterClass_contains(MRC, Reg)) {
-					MCInst NewMI;
-					MCOperand *NewReg;
-					MCInst_setOpcode(&NewMI, Opcode);
+				    unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, isStore ? 1 : 0));
+					if (MCRegisterClass_contains(MRC, Reg)) {
+						MCInst NewMI;
+						MCOperand *NewReg;
+						MCInst_setOpcode(&NewMI, Opcode);
 
-					if (isStore)
-						MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, 0));
-					NewReg = MCOperand_CreateReg(MCRegisterInfo_getMatchingSuperReg(MRI, Reg, ARM_gsub_0,
-								MCRegisterInfo_getRegClass(MRI, ARM_GPRPairRegClassID)));
-					MCInst_addOperand2(&NewMI, NewReg);
-					cs_mem_free(NewReg);
+						if (isStore)
+							MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, 0));
+						NewReg = MCOperand_CreateReg(MCRegisterInfo_getMatchingSuperReg(MRI, Reg, ARM_gsub_0,
+									MCRegisterInfo_getRegClass(MRI, ARM_GPRPairRegClassID)));
+						MCInst_addOperand2(&NewMI, NewReg);
+						cs_mem_free(NewReg);
 
-					// Copy the rest operands into NewMI.
-					unsigned i;
-					for(i= isStore ? 3 : 2; i < MCInst_getNumOperands(MI); ++i)
-						MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, i));
-					printInstruction(&NewMI, O, MRI);
-					return;
+						// Copy the rest operands into NewMI.
+						unsigned i;
+						for(i= isStore ? 3 : 2; i < MCInst_getNumOperands(MI); ++i)
+							MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, i));
+						printInstruction(&NewMI, O, MRI);
+						return;
+					}
 				}
-			}
 	}
 
 	//if (printAliasInstr(MI, O, MRI))
@@ -557,7 +557,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	} else if (MCOperand_isImm(Op)) {
 		SStream_concat(O, markup("<imm:"));
 		//O << "#" << formatImm(Op.getImm());
-		int32_t imm = MCOperand_getImm(Op);
+		int32_t imm = (int32_t)MCOperand_getImm(Op);
 
 		// relative branch only has relative offset, so we have to update it
 		// to reflect absolute address. 
@@ -566,9 +566,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		if (ARM_rel_branch(MI->csh, MCInst_getOpcode(MI))) {
 			// only do this for relative branch
 			if (MI->csh->mode & CS_MODE_THUMB)
-				imm += MI->address + 4;
+				imm += (int32_t)MI->address + 4;
 			else
-				imm += MI->address + 8;
+				imm += (int32_t)MI->address + 8;
 
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "#0x%x", imm);
@@ -641,7 +641,7 @@ static void printSORegRegOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	}
 
 	// Print the shift opc.
-	ARM_AM_ShiftOpc ShOpc = ARM_AM_getSORegShOp(MCOperand_getImm(MO3));
+	ARM_AM_ShiftOpc ShOpc = ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO3));
 	SStream_concat(O, ", ");
 	SStream_concat(O, ARM_AM_getShiftOpcStr(ShOpc));
 	if (ShOpc == ARM_AM_rrx)
@@ -664,13 +664,13 @@ static void printSORegImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].reg = MCOperand_getReg(MO1);
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].shift.type = MCOperand_getImm(MO2) & 7;
-		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].shift.value = MCOperand_getImm(MO2) >> 3;
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].shift.value = (unsigned int)MCOperand_getImm(MO2) >> 3;
 		MI->flat_insn.arm.op_count++;
 	}
 
 	// Print the shift opc.
-	printRegImmShift(MI, O, ARM_AM_getSORegShOp(MCOperand_getImm(MO2)),
-			getSORegOffset(MCOperand_getImm(MO2)), UseMarkup);
+	printRegImmShift(MI, O, ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO2)),
+			getSORegOffset((unsigned int)MCOperand_getImm(MO2)), UseMarkup);
 }
 
 //===--------------------------------------------------------------------===//
@@ -692,15 +692,15 @@ static void printAM2PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O)
 	}
 
 	if (!MCOperand_getReg(MO2)) {
-		unsigned tmp = getAM2Offset(MCOperand_getImm(MO3));
+		unsigned tmp = getAM2Offset((unsigned int)MCOperand_getImm(MO3));
 		if (tmp) { // Don't print +0.
 			SStream_concat(O, ", %s", markup("<imm:"));
 			if (tmp > HEX_THRESHOLD)
-				SStream_concat(O, "#%s0x%x", ARM_AM_getAddrOpcStr(getAM2Op(MCOperand_getImm(MO3))), tmp);
+				SStream_concat(O, "#%s0x%x", ARM_AM_getAddrOpcStr(getAM2Op((unsigned int)MCOperand_getImm(MO3))), tmp);
 			else
-				SStream_concat(O, "#%s%u", ARM_AM_getAddrOpcStr(getAM2Op(MCOperand_getImm(MO3))), tmp);
+				SStream_concat(O, "#%s%u", ARM_AM_getAddrOpcStr(getAM2Op((unsigned int)MCOperand_getImm(MO3))), tmp);
 			if (MI->csh->detail) {
-				MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].shift.type = (arm_shifter)getAM2Op(MCOperand_getImm(MO3));
+				MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].shift.type = (arm_shifter)getAM2Op((unsigned int)MCOperand_getImm(MO3));
 				MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].shift.value = tmp;
 			}
 			SStream_concat(O, markup(">"));
@@ -711,14 +711,14 @@ static void printAM2PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O)
 	}
 
 	SStream_concat(O, ", ");
-	SStream_concat(O, ARM_AM_getAddrOpcStr(getAM2Op(MCOperand_getImm(MO3))));
+	SStream_concat(O, ARM_AM_getAddrOpcStr(getAM2Op((unsigned int)MCOperand_getImm(MO3))));
 	printRegName(O, MCOperand_getReg(MO2));
 	if (MI->csh->detail) {
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.index = MCOperand_getReg(MO2);
 	}
 
-	printRegImmShift(MI, O, getAM2ShiftOpc(MCOperand_getImm(MO3)),
-			getAM2Offset(MCOperand_getImm(MO3)), UseMarkup);
+	printRegImmShift(MI, O, getAM2ShiftOpc((unsigned int)MCOperand_getImm(MO3)),
+			getAM2Offset((unsigned int)MCOperand_getImm(MO3)), UseMarkup);
 	SStream_concat(O, "]%s", markup(">"));
 	set_mem_access(MI, false);
 }
@@ -779,14 +779,14 @@ static void printAddrMode2OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
 
 	if (!MCOperand_getReg(MO1)) {
-		unsigned ImmOffs = getAM2Offset(MCOperand_getImm(MO2));
+		unsigned ImmOffs = getAM2Offset((unsigned int)MCOperand_getImm(MO2));
 		if (ImmOffs > HEX_THRESHOLD)
 			SStream_concat(O, "%s#%s0x%x%s", markup("<imm:"),
-					ARM_AM_getAddrOpcStr(getAM2Op(MCOperand_getImm(MO2))), ImmOffs,
+					ARM_AM_getAddrOpcStr(getAM2Op((unsigned int)MCOperand_getImm(MO2))), ImmOffs,
 					markup(">"));
 		else
 			SStream_concat(O, "%s#%s%u%s", markup("<imm:"),
-					ARM_AM_getAddrOpcStr(getAM2Op(MCOperand_getImm(MO2))), ImmOffs,
+					ARM_AM_getAddrOpcStr(getAM2Op((unsigned int)MCOperand_getImm(MO2))), ImmOffs,
 					markup(">"));
 		if (MI->csh->detail) {
 			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].type = ARM_OP_IMM;
@@ -796,7 +796,7 @@ static void printAddrMode2OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		return;
 	}
 
-	SStream_concat(O, ARM_AM_getAddrOpcStr(getAM2Op(MCOperand_getImm(MO2))));
+	SStream_concat(O, ARM_AM_getAddrOpcStr(getAM2Op((unsigned int)MCOperand_getImm(MO2))));
 	printRegName(O, MCOperand_getReg(MO1));
 	if (MI->csh->detail) {
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].type = ARM_OP_REG;
@@ -804,8 +804,8 @@ static void printAddrMode2OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		MI->flat_insn.arm.op_count++;
 	}
 
-	printRegImmShift(MI, O, getAM2ShiftOpc(MCOperand_getImm(MO2)),
-			getAM2Offset(MCOperand_getImm(MO2)), UseMarkup);
+	printRegImmShift(MI, O, getAM2ShiftOpc((unsigned int)MCOperand_getImm(MO2)),
+			getAM2Offset((unsigned int)MCOperand_getImm(MO2)), UseMarkup);
 }
 
 //===--------------------------------------------------------------------===//
@@ -817,7 +817,7 @@ static void printAM3PostIndexOp(MCInst *MI, unsigned Op, SStream *O)
 	MCOperand *MO1 = MCInst_getOperand(MI, Op);
 	MCOperand *MO2 = MCInst_getOperand(MI, Op+1);
 	MCOperand *MO3 = MCInst_getOperand(MI, Op+2);
-	ARM_AM_AddrOpc op = getAM3Op(MCOperand_getImm(MO3));
+	ARM_AM_AddrOpc op = getAM3Op((unsigned int)MCOperand_getImm(MO3));
 
 	SStream_concat(O, "%s[", markup("<mem:"));
 	set_mem_access(MI, true);
@@ -838,7 +838,7 @@ static void printAM3PostIndexOp(MCInst *MI, unsigned Op, SStream *O)
 		return;
 	}
 
-	unsigned ImmOffs = getAM3Offset(MCOperand_getImm(MO3));
+	unsigned ImmOffs = getAM3Offset((unsigned int)MCOperand_getImm(MO3));
 	if (ImmOffs > HEX_THRESHOLD)
 		SStream_concat(O, "%s#%s0x%x%s", markup("<imm:"),
 				ARM_AM_getAddrOpcStr(op), ImmOffs,
@@ -854,7 +854,7 @@ static void printAM3PostIndexOp(MCInst *MI, unsigned Op, SStream *O)
 		if (op)
 			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = ImmOffs;
 		else
-			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = -ImmOffs;
+			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = -(int)ImmOffs;
 
 		MI->flat_insn.arm.op_count++;
 	}
@@ -866,7 +866,7 @@ static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 	MCOperand *MO1 = MCInst_getOperand(MI, Op);
 	MCOperand *MO2 = MCInst_getOperand(MI, Op+1);
 	MCOperand *MO3 = MCInst_getOperand(MI, Op+2);
-	ARM_AM_AddrOpc op = getAM3Op(MCOperand_getImm(MO3));
+	ARM_AM_AddrOpc op = getAM3Op((unsigned int)MCOperand_getImm(MO3));
 
 	SStream_concat(O, "%s[", markup("<mem:"));
 	set_mem_access(MI, true);
@@ -888,7 +888,7 @@ static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 	}
 
 	//If the op is sub we have to print the immediate even if it is 0
-	unsigned ImmOffs = getAM3Offset(MCOperand_getImm(MO3));
+	unsigned ImmOffs = getAM3Offset((unsigned int)MCOperand_getImm(MO3));
 
 	if (AlwaysPrintImm0 || ImmOffs || (op == ARM_AM_sub)) {
 		if (ImmOffs > HEX_THRESHOLD)
@@ -901,9 +901,9 @@ static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 
 	if (MI->csh->detail) {
 		if (op)
-			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.disp = MCOperand_getImm(MO3);
+			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.disp = (int)MCOperand_getImm(MO3);
 		else
-			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.disp = -MCOperand_getImm(MO3);
+			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.disp = (int)-MCOperand_getImm(MO3);
 	}
 
 	SStream_concat(O, "]%s", markup(">"));
@@ -920,7 +920,7 @@ static void printAddrMode3Operand(MCInst *MI, unsigned Op, SStream *O,
 	}
 
 	MCOperand *MO3 = MCInst_getOperand(MI, Op+2);
-	unsigned IdxMode = getAM3IdxMode(MCOperand_getImm(MO3));
+	unsigned IdxMode = getAM3IdxMode((unsigned int)MCOperand_getImm(MO3));
 
 	if (IdxMode == ARMII_IndexModePost) {
 		printAM3PostIndexOp(MI, Op, O);
@@ -934,7 +934,7 @@ static void printAddrMode3OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
-	ARM_AM_AddrOpc op = getAM3Op(MCOperand_getImm(MO2));
+	ARM_AM_AddrOpc op = getAM3Op((unsigned int)MCOperand_getImm(MO2));
 
 	if (MCOperand_getReg(MO1)) {
 		SStream_concat(O, ARM_AM_getAddrOpcStr(op));
@@ -947,7 +947,7 @@ static void printAddrMode3OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		return;
 	}
 
-	unsigned ImmOffs = getAM3Offset(MCOperand_getImm(MO2));
+	unsigned ImmOffs = getAM3Offset((unsigned int)MCOperand_getImm(MO2));
 	if (ImmOffs > HEX_THRESHOLD)
 		SStream_concat(O, "%s#%s0x%x%s", markup("<imm:"),
 				ARM_AM_getAddrOpcStr(op), ImmOffs,
@@ -962,7 +962,7 @@ static void printAddrMode3OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		if (op)
 			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = ImmOffs;
 		else
-			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = -ImmOffs;
+			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = -(int)ImmOffs;
 
 		MI->flat_insn.arm.op_count++;
 	}
@@ -971,7 +971,7 @@ static void printAddrMode3OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 static void printPostIdxImm8Operand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	unsigned Imm = MCOperand_getImm(MO);
+	unsigned Imm = (unsigned int)MCOperand_getImm(MO);
 	if ((Imm & 0xff) > HEX_THRESHOLD)
 		SStream_concat(O, "%s#%s0x%x%s", markup("<imm:"), ((Imm & 256) ? "" : "-"),
 				(Imm & 0xff), markup(">"));
@@ -1002,7 +1002,7 @@ static void printPostIdxRegOperand(MCInst *MI, unsigned OpNum, SStream *O)
 static void printPostIdxImm8s4Operand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	unsigned Imm = MCOperand_getImm(MO);
+	unsigned Imm = (unsigned int)MCOperand_getImm(MO);
 	if (((Imm & 0xff) << 2) > HEX_THRESHOLD)
 		SStream_concat(O, "%s#%s0x%x%s", markup("<imm:"), ((Imm & 256) ? "" : "-"),
 				((Imm & 0xff) << 2), markup(">"));
@@ -1025,16 +1025,16 @@ static void printAddrMode5Operand(MCInst *MI, unsigned OpNum, SStream *O,
 	SStream_concat(O, "%s[", markup("<mem:"));
 	printRegName(O, MCOperand_getReg(MO1));
 
-	unsigned ImmOffs = ARM_AM_getAM5Offset(MCOperand_getImm(MO2));
-	unsigned Op = ARM_AM_getAM5Op(MCOperand_getImm(MO2));
+	unsigned ImmOffs = ARM_AM_getAM5Offset((unsigned int)MCOperand_getImm(MO2));
+	unsigned Op = ARM_AM_getAM5Op((unsigned int)MCOperand_getImm(MO2));
 	if (AlwaysPrintImm0 || ImmOffs || Op == ARM_AM_sub) {
 		if (ImmOffs * 4 > HEX_THRESHOLD)
 			SStream_concat(O, ", %s#%s0x%x%s", markup("<imm:"),
-					ARM_AM_getAddrOpcStr(ARM_AM_getAM5Op(MCOperand_getImm(MO2))),
+					ARM_AM_getAddrOpcStr(ARM_AM_getAM5Op((unsigned int)MCOperand_getImm(MO2))),
 					ImmOffs * 4, markup(">"));
 		else
 			SStream_concat(O, ", %s#%s%u%s", markup("<imm:"),
-					ARM_AM_getAddrOpcStr(ARM_AM_getAM5Op(MCOperand_getImm(MO2))),
+					ARM_AM_getAddrOpcStr(ARM_AM_getAM5Op((unsigned int)MCOperand_getImm(MO2))),
 					ImmOffs * 4, markup(">"));
 	}
 	SStream_concat(O, "]%s", markup(">"));
@@ -1050,7 +1050,7 @@ static void printAddrMode6Operand(MCInst *MI, unsigned OpNum, SStream *O)
 	printRegName(O, MCOperand_getReg(MO1));
 	if (MI->csh->detail)
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.base = MCOperand_getReg(MO1);
-	unsigned tmp = MCOperand_getImm(MO2);
+	unsigned tmp = (unsigned int)MCOperand_getImm(MO2);
 	if (tmp) {
 		if (tmp << 3 > HEX_THRESHOLD)
 			SStream_concat(O, ":0x%x", (tmp << 3));
@@ -1094,7 +1094,7 @@ static void printAddrMode6OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 static void printBitfieldInvMaskImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	uint32_t v = ~MCOperand_getImm(MO);
+	uint32_t v = ~(uint32_t)MCOperand_getImm(MO);
 	int32_t lsb = CountTrailingZeros_32(v);
 	int32_t width = (32 - CountLeadingZeros_32 (v)) - lsb;
 
@@ -1121,7 +1121,7 @@ static void printBitfieldInvMaskImmOperand(MCInst *MI, unsigned OpNum, SStream *
 
 static void printMemBOption(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	unsigned val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned val = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	// FIXME: HasV80Ops becomes a mode
 	// SStream_concat(O, ARM_MB_MemBOptToString(val,
 	//			ARM_getFeatureBits(MI->csh->mode) & ARM_HasV8Ops));
@@ -1130,13 +1130,13 @@ static void printMemBOption(MCInst *MI, unsigned OpNum, SStream *O)
 
 void printInstSyncBOption(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	unsigned val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned val = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	SStream_concat(O, "%s", ARM_ISB_InstSyncBOptToString(val));
 }
 
 static void printShiftImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	unsigned ShiftOp = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned ShiftOp = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	bool isASR = (ShiftOp & (1 << 5)) != 0;
 	unsigned Amt = ShiftOp & 0x1f;
 	if (isASR) {
@@ -1163,7 +1163,7 @@ static void printShiftImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 
 static void printPKHLSLShiftImm(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned Imm = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	if (Imm == 0)
 		return;
 	//assert(Imm > 0 && Imm < 32 && "Invalid PKH shift immediate value!");
@@ -1179,7 +1179,7 @@ static void printPKHLSLShiftImm(MCInst *MI, unsigned OpNum, SStream *O)
 
 static void printPKHASRShiftImm(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned Imm = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	// A shift amount of 32 is encoded as 0.
 	if (Imm == 0)
 		Imm = 32;
@@ -1243,13 +1243,13 @@ static void printSetendOperand(MCInst *MI, unsigned OpNum, SStream *O)
 static void printCPSIMod(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *Op = MCInst_getOperand(MI, OpNum);
-	SStream_concat(O, "%s", ARM_PROC_IModToString(MCOperand_getImm(Op)));
+	SStream_concat(O, "%s", ARM_PROC_IModToString((unsigned int)MCOperand_getImm(Op)));
 }
 
 static void printCPSIFlag(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *Op = MCInst_getOperand(MI, OpNum);
-	unsigned IFlags = MCOperand_getImm(Op);
+	unsigned IFlags = (unsigned int)MCOperand_getImm(Op);
 	int i;
 	for (i=2; i >= 0; --i)
 		if (IFlags & (1 << i))
@@ -1269,13 +1269,16 @@ static void printCPSIFlag(MCInst *MI, unsigned OpNum, SStream *O)
 static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *Op = MCInst_getOperand(MI, OpNum);
-	unsigned SpecRegRBit = MCOperand_getImm(Op) >> 4;
-	unsigned Mask = MCOperand_getImm(Op) & 0xf;
+#if 0 // TODO once below is fixed
+	unsigned SpecRegRBit = (unsigned int)MCOperand_getImm(Op) >> 4;
+	unsigned Mask = (unsigned int)MCOperand_getImm(Op) & 0xf;
+#endif
 
 	// FIXME: FeatureMClass becomes mode??
 	//if (ARM_getFeatureBits(MI->csh->mode) & ARM_FeatureMClass) {
-	if (true) {
-		unsigned SYSm = MCOperand_getImm(Op);
+	//if (true)
+	{
+		unsigned SYSm = (unsigned int)MCOperand_getImm(Op);
 		unsigned Opcode = MCInst_getOpcode(MI);
 		// For reads of the special registers ignore the "mask encoding" bits
 		// which are only for writes.
@@ -1321,7 +1324,7 @@ static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 			case 0x814: SStream_concat(O, "control"); return;
 		}
 	}
-
+#if 0 // TODO once above is fixed
 	// As special cases, CPSR_f, CPSR_s and CPSR_fs prefer printing as
 	// APSR_nzcvq, APSR_g and APSRnzcvqg, respectively.
 	if (!SpecRegRBit && (Mask == 8 || Mask == 4 || Mask == 12)) {
@@ -1346,6 +1349,7 @@ static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		if (Mask & 2) SStream_concat(O, "x");
 		if (Mask & 1) SStream_concat(O, "c");
 	}
+#endif
 }
 
 static void printPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O)
@@ -1387,7 +1391,7 @@ static void printSBitModifierOperand(MCInst *MI, unsigned OpNum, SStream *O)
 
 static void printNoHashImmediate(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	unsigned tmp = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned tmp = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	if (tmp > HEX_THRESHOLD)
 		SStream_concat(O, "0x%x", tmp);
 	else
@@ -1408,7 +1412,7 @@ static void printPImmediate(MCInst *MI, unsigned OpNum, SStream *O)
 	SStream_concat(O, "p%u", MCOperand_getImm(MCInst_getOperand(MI, OpNum)));
 	if (MI->csh->detail) {
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].type = ARM_OP_PIMM;
-		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 		MI->flat_insn.arm.op_count++;
 	}
 }
@@ -1418,14 +1422,14 @@ static void printCImmediate(MCInst *MI, unsigned OpNum, SStream *O)
 	SStream_concat(O, "c%u", MCOperand_getImm(MCInst_getOperand(MI, OpNum)));
 	if (MI->csh->detail) {
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].type = ARM_OP_CIMM;
-		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 		MI->flat_insn.arm.op_count++;
 	}
 }
 
 static void printCoprocOptionImm(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	unsigned tmp = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned tmp = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	if (tmp > HEX_THRESHOLD)
 		SStream_concat(O, "{0x%x}", tmp);
 	else
@@ -1472,22 +1476,22 @@ static void printAdrLabelOperand(MCInst *MI, unsigned OpNum, SStream *O, unsigne
 static void printThumbS4ImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	//<< "#" << formatImm(MI->getOperand(OpNum).getImm() * 4)
-	unsigned tmp = MCOperand_getImm(MCInst_getOperand(MI, OpNum)) * 4;
+	unsigned tmp = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum)) * 4;
 	if (tmp > HEX_THRESHOLD)
 		SStream_concat(O, "%s#0x%x", markup("<imm:"), tmp);
 	else
 		SStream_concat(O, "%s#%u", markup("<imm:"), tmp);
-		if (MI->csh->detail) {
-			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].type = ARM_OP_IMM;
-			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = tmp;
-			MI->flat_insn.arm.op_count++;
-		}
+	if (MI->csh->detail) {
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].type = ARM_OP_IMM;
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = tmp;
+		MI->flat_insn.arm.op_count++;
+	}
 	SStream_concat(O, markup(">"));
 }
 
 static void printThumbSRImm(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned Imm = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	//  << "#" << formatImm((Imm == 0 ? 32 : Imm))
 	unsigned tmp = Imm == 0 ? 32 : Imm;
 	if (tmp > HEX_THRESHOLD)
@@ -1507,8 +1511,8 @@ static void printThumbSRImm(MCInst *MI, unsigned OpNum, SStream *O)
 static void printThumbITMask(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	// (3 - the number of trailing zeros) is the number of then / else.
-	unsigned Mask = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	unsigned Firstcond = MCOperand_getImm(MCInst_getOperand(MI, OpNum-1));
+	unsigned Mask = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned Firstcond = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum-1));
 	unsigned CondBit0 = Firstcond & 1;
 	unsigned NumTZ = CountTrailingZeros_32(Mask);
 	//assert(NumTZ <= 3 && "Invalid IT mask!");
@@ -1567,7 +1571,7 @@ static void printThumbAddrModeImm5SOperand(MCInst *MI, unsigned Op, SStream *O,
 	printRegName(O, MCOperand_getReg(MO1));
 	if (MI->csh->detail)
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.base = MCOperand_getReg(MO1);
-	unsigned ImmOffs = MCOperand_getImm(MO2);
+	unsigned ImmOffs = (unsigned int)MCOperand_getImm(MO2);
 	if (ImmOffs) {
 		unsigned tmp = ImmOffs * Scale;
 		SStream_concat(O, ", %s", markup("<imm:"));
@@ -1623,8 +1627,8 @@ static void printT2SOOperand(MCInst *MI, unsigned OpNum, SStream *O)
 
 	// Print the shift opc.
 	//assert(MO2.isImm() && "Not a valid t2_so_reg value!");
-	printRegImmShift(MI, O, ARM_AM_getSORegShOp(MCOperand_getImm(MO2)),
-			getSORegOffset(MCOperand_getImm(MO2)), UseMarkup);
+	printRegImmShift(MI, O, ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO2)),
+			getSORegOffset((unsigned int)MCOperand_getImm(MO2)), UseMarkup);
 }
 
 static void printAddrModeImm12Operand(MCInst *MI, unsigned OpNum,
@@ -1632,6 +1636,8 @@ static void printAddrModeImm12Operand(MCInst *MI, unsigned OpNum,
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
+	int32_t OffImm;
+	bool isSub;
 
 	if (!MCOperand_isReg(MO1)) {   // FIXME: This is for CP entries, but isn't right.
 		printOperand(MI, OpNum, O);
@@ -1646,8 +1652,8 @@ static void printAddrModeImm12Operand(MCInst *MI, unsigned OpNum,
 	if (MI->csh->detail)
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.base = MCOperand_getReg(MO1);
 
-	int32_t OffImm = (int32_t)MCOperand_getImm(MO2);
-	bool isSub = OffImm < 0;
+	OffImm = (int32_t)MCOperand_getImm(MO2);
+	isSub = OffImm < 0;
 	// Special value for #-0. All others are normal.
 	if (OffImm == INT32_MIN)
 		OffImm = 0;
@@ -1670,6 +1676,8 @@ static void printT2AddrModeImm8Operand(MCInst *MI, unsigned OpNum, SStream *O,
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
+	int32_t OffImm;
+	bool isSub;
 
 	SStream_concat(O, "%s[", markup("<mem:"));
 	set_mem_access(MI, true);
@@ -1678,8 +1686,8 @@ static void printT2AddrModeImm8Operand(MCInst *MI, unsigned OpNum, SStream *O,
 	if (MI->csh->detail)
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.base = MCOperand_getReg(MO1);
 
-	int32_t OffImm = (int32_t)MCOperand_getImm(MO2);
-	bool isSub = OffImm < 0;
+	OffImm = (int32_t)MCOperand_getImm(MO2);
+	isSub = OffImm < 0;
 	// Don't print +0.
 	if (OffImm == INT32_MIN)
 		OffImm = 0;
@@ -1704,6 +1712,8 @@ static void printT2AddrModeImm8s4Operand(MCInst *MI,
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
+	int32_t OffImm;
+	bool isSub;
 
 	if (!MCOperand_isReg(MO1)) {   //  For label symbolic references.
 		printOperand(MI, OpNum, O);
@@ -1717,8 +1727,8 @@ static void printT2AddrModeImm8s4Operand(MCInst *MI,
 	if (MI->csh->detail)
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.base = MCOperand_getReg(MO1);
 
-	int32_t OffImm = (int32_t)MCOperand_getImm(MO2);
-	bool isSub = OffImm < 0;
+	OffImm = (int32_t)MCOperand_getImm(MO2);
+	isSub = OffImm < 0;
 
 	//assert(((OffImm & 0x3) == 0) && "Not a valid immediate!");
 
@@ -1756,7 +1766,7 @@ static void printT2AddrModeImm0_1020s4Operand(MCInst *MI, unsigned OpNum, SStrea
 		SStream_concat(O, markup("<imm:"));
 		//<< "#" << 
 		// formatImm(MCOperand_getImm(MO2.getImm() * 4)
-		unsigned tmp = MCOperand_getImm(MO2) * 4;
+		unsigned tmp = (unsigned int)MCOperand_getImm(MO2) * 4;
 		if (tmp > HEX_THRESHOLD)
 			SStream_concat(O, "#0x%x", tmp);
 		else
@@ -1851,7 +1861,7 @@ static void printT2AddrModeSoRegOperand(MCInst *MI,
 	if (MI->csh->detail)
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.index = MCOperand_getReg(MO2);
 
-	unsigned ShAmt = MCOperand_getImm(MO3);
+	unsigned ShAmt = (unsigned int)MCOperand_getImm(MO3);
 	if (ShAmt) {
 		//assert(ShAmt <= 3 && "Not a valid Thumb2 addressing mode!");
 		SStream_concat(O, ", lsl ");
@@ -1871,17 +1881,17 @@ static void printT2AddrModeSoRegOperand(MCInst *MI,
 static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	SStream_concat(O, "%s#%f%s", markup("<imm:"), getFPImmFloat(MCOperand_getImm(MO)), markup(">"));
+	SStream_concat(O, "%s#%f%s", markup("<imm:"), getFPImmFloat((unsigned int)MCOperand_getImm(MO)), markup(">"));
 	if (MI->csh->detail) {
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].type = ARM_OP_FP;
-		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].fp = getFPImmFloat(MCOperand_getImm(MO));
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].fp = getFPImmFloat((unsigned int)MCOperand_getImm(MO));
 		MI->flat_insn.arm.op_count++;
 	}
 }
 
 static void printNEONModImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	unsigned EncodedImm = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned EncodedImm = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	unsigned EltBits;
 	uint64_t Val = ARM_AM_decodeNEONModImm(EncodedImm, &EltBits);
 	if (Val > HEX_THRESHOLD)
@@ -1890,14 +1900,14 @@ static void printNEONModImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		SStream_concat(O, "%s#%"PRIu64"%s", markup("<imm:"), Val, markup(">"));
 	if (MI->csh->detail) {
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].type = ARM_OP_IMM;
-		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = Val;
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].imm = (unsigned int)Val;
 		MI->flat_insn.arm.op_count++;
 	}
 }
 
 static void printImmPlusOneOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned Imm = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	if (Imm + 1 > HEX_THRESHOLD)
 		SStream_concat(O, "%s#0x%x%s", markup("<imm:"), Imm + 1, markup(">"));
 	else
@@ -1911,7 +1921,7 @@ static void printImmPlusOneOperand(MCInst *MI, unsigned OpNum, SStream *O)
 
 static void printRotImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned Imm = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	if (Imm == 0)
 		return;
 	SStream_concat(O, ", ror %s#", markup("<imm:"));
@@ -1931,7 +1941,7 @@ static void printRotImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 static void printFBits16(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	SStream_concat(O, markup("<imm:"));
-	unsigned tmp = 16 - MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned tmp = 16 - (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	if (tmp > HEX_THRESHOLD)
 		SStream_concat(O, "#0x%x", tmp);
 	else
@@ -1947,7 +1957,7 @@ static void printFBits16(MCInst *MI, unsigned OpNum, SStream *O)
 static void printFBits32(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	SStream_concat(O, markup("<imm:"));
-	unsigned tmp = 32 - MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned tmp = 32 - (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	if (tmp > HEX_THRESHOLD)
 		SStream_concat(O, "#0x%x", tmp);
 	else
@@ -1962,7 +1972,7 @@ static void printFBits32(MCInst *MI, unsigned OpNum, SStream *O)
 
 static void printVectorIndex(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	unsigned tmp = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned tmp = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	if (tmp > HEX_THRESHOLD)
 		SStream_concat(O, "[0x%x]",tmp);
 	else

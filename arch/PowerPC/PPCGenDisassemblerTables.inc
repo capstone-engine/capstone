@@ -2344,7 +2344,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
     } \
     case MCD_OPC_FilterValue: { \
       unsigned Len; \
-      InsnType Val = decodeULEB128(++Ptr, &Len); \
+      InsnType Val = (InsnType)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
       unsigned NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
@@ -2356,7 +2356,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
       unsigned Start = *++Ptr; \
       unsigned Len = *++Ptr; \
       InsnType FieldValue = fieldname(insn, Start, Len); \
-      uint32_t ExpectedValue = decodeULEB128(++Ptr, &Len); \
+      uint32_t ExpectedValue = (uint32_t)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
       unsigned NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
@@ -2366,30 +2366,31 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
     } \
     case MCD_OPC_CheckPredicate: { \
       unsigned Len; \
-      unsigned PIdx = decodeULEB128(++Ptr, &Len); \
+      unsigned PIdx = (uint32_t)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
       unsigned NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
       bool Pred; \
-      if (!(Pred = checkDecoderPredicate(PIdx, Bits))) \
+      Pred = checkDecoderPredicate(PIdx, Bits); \
+      if (!Pred) \
         Ptr += NumToSkip; \
       (void)Pred; \
       break; \
     } \
     case MCD_OPC_Decode: { \
       unsigned Len; \
-      unsigned Opc = decodeULEB128(++Ptr, &Len); \
+      unsigned Opc = (uint32_t)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      unsigned DecodeIdx = decodeULEB128(Ptr, &Len); \
+      unsigned DecodeIdx = (uint32_t)decodeULEB128(Ptr, &Len); \
       Ptr += Len; \
       MCInst_setOpcode(MI, Opc); \
       return decoder(S, DecodeIdx, insn, MI, Address, 0); \
     } \
     case MCD_OPC_SoftFail: { \
       unsigned Len; \
-      InsnType PositiveMask = decodeULEB128(++Ptr, &Len); \
+      InsnType PositiveMask = (InsnType)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      InsnType NegativeMask = decodeULEB128(Ptr, &Len); \
+      InsnType NegativeMask = (InsnType)decodeULEB128(Ptr, &Len); \
       Ptr += Len; \
       bool Fail = (insn & PositiveMask) || (~insn & NegativeMask); \
       if (Fail) \

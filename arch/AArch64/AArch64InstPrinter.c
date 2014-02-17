@@ -61,7 +61,7 @@ static int64_t unpackSignedImm(int BitWidth, uint64_t Value)
 static void printOffsetSImm9Operand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *MOImm = MCInst_getOperand(MI, OpNum);
-	int32_t Imm = unpackSignedImm(9, MCOperand_getImm(MOImm));
+	int32_t Imm = (int32_t)unpackSignedImm(9, MCOperand_getImm(MOImm));
 
 	if (Imm > HEX_THRESHOLD)
 		SStream_concat(O, "#0x%x", Imm);
@@ -78,7 +78,7 @@ static void printOffsetSImm9Operand(MCInst *MI, unsigned OpNum, SStream *O)
 static void printAddrRegExtendOperand(MCInst *MI, unsigned OpNum,
 		SStream *O, unsigned MemSize, unsigned RmSize)
 {
-	unsigned ExtImm = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned ExtImm = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	unsigned OptionHi = ExtImm >> 1;
 	unsigned S = ExtImm & 1;
 	bool IsLSL = OptionHi == 1 && RmSize == 64;
@@ -116,15 +116,15 @@ static void printAddrRegExtendOperand(MCInst *MI, unsigned OpNum,
 			SStream_concat(O, " #0x%x", ShiftAmt);
 		else
 			SStream_concat(O, " #%u", ShiftAmt);
-			if (MI->csh->detail) {
-				if (MI->csh->doing_mem) {
-					MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].shift.type = ARM64_SFT_LSL;
-					MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].shift.value = ShiftAmt;
-				} else {
-					MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count - 1].shift.type = ARM64_SFT_LSL;
-					MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count - 1].shift.value = ShiftAmt;
-				}
+		if (MI->csh->detail) {
+			if (MI->csh->doing_mem) {
+				MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].shift.type = ARM64_SFT_LSL;
+				MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].shift.value = ShiftAmt;
+			} else {
+				MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count - 1].shift.type = ARM64_SFT_LSL;
+				MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count - 1].shift.value = ShiftAmt;
 			}
+		}
 	} else if (IsLSL) {
 		SStream_concat(O, " #0");
 	}
@@ -143,7 +143,7 @@ static void printAddSubImmLSL0Operand(MCInst *MI, unsigned OpNum, SStream *O)
 			SStream_concat(O, "#%u"PRIu64, Imm12);
 		if (MI->csh->detail) {
 			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = Imm12;
+			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = (int32_t)Imm12;
 			MI->flat_insn.arm64.op_count++;
 		}
 	}
@@ -170,7 +170,7 @@ static void printBareImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		SStream_concat(O, "%"PRIu64, imm);
 	if (MI->csh->detail) {
 		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = imm;
+		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = (int32_t)imm;
 		MI->flat_insn.arm64.op_count++;
 	}
 }
@@ -179,7 +179,7 @@ static void printBFILSBOperand(MCInst *MI, unsigned OpNum,
 		SStream *O, unsigned RegWidth)
 {
 	MCOperand *ImmROp = MCInst_getOperand(MI, OpNum);
-	unsigned LSB = MCOperand_getImm(ImmROp) == 0 ? 0 : RegWidth - MCOperand_getImm(ImmROp);
+	unsigned LSB = MCOperand_getImm(ImmROp) == 0 ? 0 : RegWidth - (unsigned int)MCOperand_getImm(ImmROp);
 
 	if (LSB > HEX_THRESHOLD)
 		SStream_concat(O, "#0x%x", LSB);
@@ -195,7 +195,7 @@ static void printBFILSBOperand(MCInst *MI, unsigned OpNum,
 static void printBFIWidthOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *ImmSOp = MCInst_getOperand(MI, OpNum);
-	unsigned Width = MCOperand_getImm(ImmSOp) + 1;
+	unsigned Width = (unsigned int)MCOperand_getImm(ImmSOp) + 1;
 
 	if (Width > HEX_THRESHOLD)
 		SStream_concat(O, "#0x%x", Width);
@@ -208,8 +208,8 @@ static void printBFXWidthOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	MCOperand *ImmSOp = MCInst_getOperand(MI, OpNum);
 	MCOperand *ImmROp = MCInst_getOperand(MI, OpNum - 1);
 
-	unsigned ImmR = MCOperand_getImm(ImmROp);
-	unsigned ImmS = MCOperand_getImm(ImmSOp);
+	unsigned ImmR = (unsigned int)MCOperand_getImm(ImmROp);
+	unsigned ImmS = (unsigned int)MCOperand_getImm(ImmSOp);
 
 	//assert(ImmS >= ImmR && "Invalid ImmR, ImmS combination for bitfield extract");
 
@@ -232,7 +232,7 @@ static void printCRxOperand(MCInst *MI, unsigned OpNum, SStream *O)
 
 	if (MI->csh->detail) {
 		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_CIMM;
-		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = MCOperand_getImm(CRx);
+		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = (int32_t)MCOperand_getImm(CRx);
 		MI->flat_insn.arm64.op_count++;
 	}
 }
@@ -247,7 +247,7 @@ static void printCVTFixedPosOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		SStream_concat(O, "#%u", 64 - MCOperand_getImm(ScaleOp));
 	if (MI->csh->detail) {
 		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = 64 - MCOperand_getImm(ScaleOp);
+		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = 64 - (int32_t)MCOperand_getImm(ScaleOp);
 		MI->flat_insn.arm64.op_count++;
 	}
 }
@@ -259,7 +259,7 @@ static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	//assert(MOImm8.isImm()
 	//       && "Immediate operand required for floating-point immediate inst");
 
-	uint32_t Imm8 = MCOperand_getImm(MOImm8);
+	uint32_t Imm8 = (uint32_t)MCOperand_getImm(MOImm8);
 	uint32_t Fraction = Imm8 & 0xf;
 	uint32_t Exponent = (Imm8 >> 4) & 0x7;
 	uint32_t Negative = (Imm8 >> 7) & 0x1;
@@ -326,7 +326,7 @@ static void printLabelOperand(MCInst *MI, unsigned OpNum,
 
 	if (MI->csh->detail) {
 		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = SImm;
+		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = (int32_t)SImm;
 		MI->flat_insn.arm64.op_count++;
 	}
 
@@ -341,14 +341,14 @@ static void printLogicalImmOperand(MCInst *MI, unsigned OpNum,
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	uint64_t Val;
-	A64Imms_isLogicalImmBits(RegWidth, MCOperand_getImm(MO), &Val);
+	A64Imms_isLogicalImmBits(RegWidth, (uint32_t)MCOperand_getImm(MO), &Val);
 	if (Val > HEX_THRESHOLD)
 		SStream_concat(O, "#0x%"PRIx64, Val);
 	else
 		SStream_concat(O, "#%"PRIu64, Val);
 	if (MI->csh->detail) {
 		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = Val;
+		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = (int32_t)Val;
 		MI->flat_insn.arm64.op_count++;
 	}
 }
@@ -359,7 +359,7 @@ static void printOffsetUImm12Operand(MCInst *MI, unsigned OpNum,
 	MCOperand *MOImm = MCInst_getOperand(MI, OpNum);
 
 	if (MCOperand_isImm(MOImm)) {
-		uint32_t Imm = MCOperand_getImm(MOImm) * MemSize;
+		uint32_t Imm = (uint32_t)MCOperand_getImm(MOImm) * MemSize;
 
 		if (Imm > HEX_THRESHOLD)
 			SStream_concat(O, "#0x%x", Imm);
@@ -395,7 +395,7 @@ static void printShiftOperand(MCInst *MI,  unsigned OpNum,
 		default: break; // llvm_unreachable("Invalid shift specifier in logical instruction");
 	}
 
-	unsigned int imm = MCOperand_getImm(MO);
+	unsigned int imm = (unsigned int)MCOperand_getImm(MO);
 	if (imm > HEX_THRESHOLD)
 		SStream_concat(O, " #0x%x", imm);
 	else
@@ -419,12 +419,12 @@ static void printMoveWideImmOperand(MCInst *MI,  unsigned OpNum, SStream *O)
 			SStream_concat(O, "#%"PRIu64, imm);
 		if (MI->csh->detail) {
 			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = imm;
+			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = (int32_t)imm;
 			MI->flat_insn.arm64.op_count++;
 		}
 
 		if (MCOperand_getImm(ShiftMO) != 0) {
-			unsigned int shift = MCOperand_getImm(ShiftMO) * 16;
+			unsigned int shift = (unsigned int)MCOperand_getImm(ShiftMO) * 16;
 			if (shift > HEX_THRESHOLD)
 				SStream_concat(O, ", lsl #0x%x", shift);
 			else
@@ -443,7 +443,7 @@ static void printNamedImmOperand(MCInst *MI, unsigned OpNum, SStream *O, NamedIm
 {
 	bool ValidName;
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	char *Name = NamedImmMapper_toString(Mapper, MCOperand_getImm(MO), &ValidName);
+	char *Name = NamedImmMapper_toString(Mapper, (uint32_t)MCOperand_getImm(MO), &ValidName);
 
 	if (ValidName)
 		SStream_concat(O, Name);
@@ -455,7 +455,7 @@ static void printNamedImmOperand(MCInst *MI, unsigned OpNum, SStream *O, NamedIm
 			SStream_concat(O, "#%"PRIu64, imm);
 		if (MI->csh->detail) {
 			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = imm;
+			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = (int32_t)imm;
 			MI->flat_insn.arm64.op_count++;
 		}
 	}
@@ -469,7 +469,7 @@ static void printSysRegOperand(SysRegMapper *Mapper,
 
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 
-	SysRegMapper_toString(Mapper, MCOperand_getImm(MO), &ValidName, Name);
+	SysRegMapper_toString(Mapper, (uint32_t)MCOperand_getImm(MO), &ValidName, Name);
 	if (ValidName) {
 		SStream_concat(O, Name);
 	}
@@ -490,6 +490,7 @@ static void printRegExtendOperand(MCInst *MI, unsigned OpNum, SStream *O,
 	// easily. We will only accumulate more of these hacks.
 	unsigned Reg0 = MCOperand_getReg(MCInst_getOperand(MI, 0));
 	unsigned Reg1 = MCOperand_getReg(MCInst_getOperand(MI, 1));
+	MCOperand *MO;
 
 	if (isStackReg(Reg0) || isStackReg(Reg1)) {
 		A64SE_ShiftExtSpecifiers LSLEquiv;
@@ -500,7 +501,7 @@ static void printRegExtendOperand(MCInst *MI, unsigned OpNum, SStream *O,
 			LSLEquiv = A64SE_UXTW;
 
 		if (Ext == LSLEquiv) {
-			unsigned int shift = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+			unsigned int shift = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 			if (shift > HEX_THRESHOLD)
 				SStream_concat(O, "lsl #0x%x", shift);
 			else
@@ -528,9 +529,9 @@ static void printRegExtendOperand(MCInst *MI, unsigned OpNum, SStream *O,
 
 	if (MI->csh->detail)
 		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count - 1].ext = Ext - 4;
-	MCOperand *MO = MCInst_getOperand(MI, OpNum);
+	MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_getImm(MO) != 0) {
-		unsigned int shift = MCOperand_getImm(MO);
+		unsigned int shift = (unsigned int)MCOperand_getImm(MO);
 		if (shift > HEX_THRESHOLD)
 			SStream_concat(O, " #0x%x", shift);
 		else
@@ -546,7 +547,7 @@ static void printSImm7ScaledOperand(MCInst *MI, unsigned OpNum,
 		SStream *O, int MemScale)
 {
 	MCOperand *MOImm = MCInst_getOperand(MI, OpNum);
-	int32_t Imm = unpackSignedImm(7, MCOperand_getImm(MOImm));
+	int32_t Imm = (int32_t)unpackSignedImm(7, MCOperand_getImm(MOImm));
 
 	if (Imm * MemScale > HEX_THRESHOLD)
 		SStream_concat(O, "#0x%x", Imm * MemScale);
@@ -605,10 +606,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			SStream_concat(O, "#%"PRIu64, imm);
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
-				MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].mem.disp = imm;
+				MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].mem.disp = (int32_t)imm;
 			} else {
 				MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_IMM;
-				MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = imm;
+				MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = (int32_t)imm;
 				MI->flat_insn.arm64.op_count++;
 			}
 		}
@@ -669,7 +670,7 @@ static void printNeonMovImmShiftOperand(MCInst *MI, unsigned OpNum,
 	else
 		SStream_concat(O, " #%"PRIu64, Imm);
 	if (MI->csh->detail)
-		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count - 1].shift.value = Imm;
+		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count - 1].shift.value = (unsigned int)Imm;
 }
 
 static void printNeonUImm0Operand(MCInst *MI, unsigned OpNum, SStream *O)
@@ -690,7 +691,7 @@ static void printUImmHexOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	//assert(MOUImm.isImm() &&
 	//       "Immediate operand required for Neon vector immediate inst.");
 
-	unsigned Imm = MCOperand_getImm(MOUImm);
+	unsigned Imm = (unsigned int)MCOperand_getImm(MOUImm);
 
 	if (Imm > HEX_THRESHOLD)
 		SStream_concat(O, "#0x%x", Imm);
@@ -710,7 +711,7 @@ static void printUImmBareOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	//assert(MOUImm.isImm()
 	//		&& "Immediate operand required for Neon vector immediate inst.");
 
-	unsigned Imm = MCOperand_getImm(MOUImm);
+	unsigned Imm = (unsigned int)MCOperand_getImm(MOUImm);
 	if (Imm > HEX_THRESHOLD)
 		SStream_concat(O, "0x%x", Imm);
 	else
@@ -732,7 +733,7 @@ static void printNeonUImm64MaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	//assert(MOUImm8.isImm() &&
 	//       "Immediate operand required for Neon vector immediate bytemask inst.");
 
-	uint32_t UImm8 = MCOperand_getImm(MOUImm8);
+	uint32_t UImm8 = (uint32_t)MCOperand_getImm(MOUImm8);
 	uint64_t Mask = 0;
 
 	// Replicates 0x00 or 0xff byte in a 64-bit vector
@@ -748,7 +749,7 @@ static void printNeonUImm64MaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		SStream_concat(O, "#%"PRIu64, Mask);
 	if (MI->csh->detail) {
 		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = Mask;
+		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = (int32_t)Mask;
 		MI->flat_insn.arm64.op_count++;
 	}
 }
