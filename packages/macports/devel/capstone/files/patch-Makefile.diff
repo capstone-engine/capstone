@@ -1,0 +1,81 @@
+--- Makefile.orig	2014-01-22 04:33:35.000000000 -0600
++++ Makefile	2014-02-14 18:38:48.000000000 -0600
+@@ -21,20 +21,23 @@
+ CFLAGS += -DUSE_SYS_DYN_MEM
+ endif
+ 
+-LDFLAGS += -shared
+-
+ PREFIX ?= /usr
+ DESTDIR ?=
+-INCDIR = $(DESTDIR)$(PREFIX)/include
++INCDIR = $(PREFIX)/include
++
++UNAME_S := $(shell uname -s)
++ifeq ($(UNAME_S),Darwin)
++LDFLAGS += -dynamiclib -install_name $(LIBDIR)/$(LIBRARY)
++else
++LDFLAGS += -shared
++endif
+ 
+-LIBDIR = $(DESTDIR)$(PREFIX)/lib
++LIBDIR = $(PREFIX)/lib
+ # on x86_64, we might have /usr/lib64 directory instead of /usr/lib
+-MACHINE := $(shell uname -m)
+-ifeq ($(MACHINE), x86_64)
++UNAME_M := $(shell uname -m)
++ifeq ($(UNAME_M),x86_64)
+ ifeq (,$(wildcard $(LIBDIR)))
+-LIBDIR = $(DESTDIR)$(PREFIX)/lib64
+-else
+-LIBDIR = $(DESTDIR)$(PREFIX)/lib
++LIBDIR = $(PREFIX)/lib64
+ endif
+ endif
+ 
+@@ -88,7 +91,6 @@
+ 
+ LIBOBJ += MCInst.o
+ 
+-UNAME_S := $(shell uname -s)
+ # OSX?
+ ifeq ($(UNAME_S),Darwin)
+ EXT = dylib
+@@ -145,25 +147,25 @@
+ 	echo 'Description: Capstone disassembler engine' >> $(PKGCFGF)
+ 	echo 'Version: $(VERSION)' >> $(PKGCFGF)
+ 	echo 'libdir=$(LIBDIR)' >> $(PKGCFGF)
+-	echo 'includedir=$(PREFIX)/include/capstone' >> $(PKGCFGF)
++	echo 'includedir=$(INCDIR)/capstone' >> $(PKGCFGF)
+ 	echo 'archive=$${libdir}/libcapstone.a' >> $(PKGCFGF)
+ 	echo 'Libs: -L$${libdir} -lcapstone' >> $(PKGCFGF)
+ 	echo 'Cflags: -I$${includedir}' >> $(PKGCFGF)
+ 
+ install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
+-	mkdir -p $(LIBDIR)
+-	$(INSTALL_LIBRARY) lib$(LIBNAME).$(EXT) $(LIBDIR)
+-	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
+-	mkdir -p $(INCDIR)/$(LIBNAME)
+-	$(INSTALL_DATA) include/*.h $(INCDIR)/$(LIBNAME)
+-	mkdir -p $(LIBDIR)/pkgconfig
+-	$(INSTALL_DATA) $(PKGCFGF) $(LIBDIR)/pkgconfig/
++	mkdir -p $(DESTDIR)$(LIBDIR)
++	$(INSTALL_LIBRARY) lib$(LIBNAME).$(EXT) $(DESTDIR)$(LIBDIR)
++	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(DESTDIR)$(LIBDIR)
++	mkdir -p $(DESTDIR)$(INCDIR)/$(LIBNAME)
++	$(INSTALL_DATA) include/*.h $(DESTDIR)$(INCDIR)/$(LIBNAME)
++	mkdir -p $(DESTDIR)$(LIBDIR)/pkgconfig
++	$(INSTALL_DATA) $(PKGCFGF) $(DESTDIR)$(LIBDIR)/pkgconfig/
+ 
+ uninstall:
+-	rm -rf $(INCDIR)/$(LIBNAME)
+-	rm -f $(LIBDIR)/lib$(LIBNAME).$(EXT)
+-	rm -f $(LIBDIR)/lib$(LIBNAME).$(AR_EXT)
+-	rm -f $(LIBDIR)/pkgconfig/$(LIBNAME).pc
++	rm -rf $(DESTDIR)$(INCDIR)/$(LIBNAME)
++	rm -f $(DESTDIR)$(LIBDIR)/lib$(LIBNAME).$(EXT)
++	rm -f $(DESTDIR)$(LIBDIR)/lib$(LIBNAME).$(AR_EXT)
++	rm -f $(DESTDIR)$(LIBDIR)/pkgconfig/$(LIBNAME).pc
+ 
+ clean:
+ 	rm -f $(LIBOBJ) lib$(LIBNAME).*

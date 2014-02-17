@@ -1,0 +1,40 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 117078 2014-02-15 00:49:41Z ryandesign@macports.org $
+
+PortSystem          1.0
+
+name                capstone
+version             2.0
+revision            1
+categories          devel
+platforms           darwin
+maintainers         gmail.com:aquynh
+license             BSD
+
+description         Capstone disassembly engine
+
+long_description    Capstone is a multi-arch, multi-platform disassembly framework with advanced features
+
+homepage            http://www.capstone-engine.org/
+master_sites        ${homepage}download/${version}/
+extract.suffix      .tgz
+
+checksums           sha256  5d871b1e52047d1b2882bbcc6f049205ba6acc8d55d746937d22af5d0b33fa9e \
+                    rmd160  bb7551404e203fa99240b5e33c3d30ca8555830f
+
+patchfiles          patch-Makefile.diff
+
+variant universal {}
+
+use_configure       no
+
+build.env           CC=${configure.cc} \
+                    CFLAGS="${configure.cflags} [get_canonical_archflags cc]" \
+                    LDFLAGS="${configure.ldflags} [get_canonical_archflags ld]" \
+                    PREFIX=${prefix}
+
+eval destroot.env   ${build.env}
+
+livecheck.type      regex
+livecheck.url       ${homepage}download.html
+livecheck.regex     ${name}-(\[0-9.\]+)${extract.suffix}
