@@ -6743,3 +6743,104 @@ void X86_insn_combine(cs_struct *h, cs_insn *insn, cs_insn *prev)
 		insn->detail = NULL;
 	}
 }
+
+// map special instructions with accumulate registers.
+// this is needed because LLVM embeds these register names into AsmStrs[],
+// but not separately in operands
+static struct insn_reg {
+	uint16_t insn;
+	x86_reg reg;
+} insn_regs[] = {
+	{ X86_LODSQ, X86_REG_RAX },
+	{ X86_SKINIT, X86_REG_EAX },
+	{ X86_INVLPGA32, X86_REG_EAX },
+	{ X86_VMRUN32, X86_REG_EAX },
+	{ X86_OR32i32, X86_REG_EAX },
+	{ X86_IN16rr, X86_REG_AX },
+	{ X86_VMRUN64, X86_REG_RAX },
+	{ X86_VMLOAD32, X86_REG_EAX },
+	{ X86_SUB32i32, X86_REG_EAX },
+	{ X86_TEST32i32, X86_REG_EAX },
+	{ X86_ADD32i32, X86_REG_EAX },
+	{ X86_XCHG64ar, X86_REG_RAX },
+	{ X86_LODSB, X86_REG_AL },
+	{ X86_FNSTSW16r, X86_REG_AX },
+	{ X86_AND32i32, X86_REG_EAX },
+	{ X86_MOV32o32a_16, X86_REG_EAX },
+	{ X86_IN16ri, X86_REG_AX },
+	{ X86_CMP64i32, X86_REG_RAX },
+	{ X86_XOR32i32, X86_REG_EAX },
+	{ X86_XCHG16ar, X86_REG_AX },
+	{ X86_LODSW, X86_REG_AX },
+	{ X86_AND16i16, X86_REG_AX },
+	{ X86_MOV64o64a, X86_REG_RAX },
+	{ X86_ADC16i16, X86_REG_AX },
+	{ X86_XCHG32ar64, X86_REG_EAX },
+	{ X86_ADC8i8, X86_REG_AL },
+	{ X86_MOV64o16a, X86_REG_AX },
+	{ X86_CMP32i32, X86_REG_EAX },
+	{ X86_AND8i8, X86_REG_AL },
+	{ X86_SCAS16, X86_REG_AX },
+	{ X86_XOR8i8, X86_REG_AL },
+	{ X86_SUB16i16, X86_REG_AX },
+	{ X86_INVLPGA64, X86_REG_RAX },
+	{ X86_MOV8o8a, X86_REG_AL },
+	{ X86_OR16i16, X86_REG_AX },
+	{ X86_XCHG32ar, X86_REG_EAX },
+	{ X86_SBB8i8, X86_REG_AL },
+	{ X86_IN8rr, X86_REG_AL },
+	{ X86_SCAS64, X86_REG_RAX },
+	{ X86_SBB32i32, X86_REG_EAX },
+	{ X86_XOR64i32, X86_REG_RAX },
+	{ X86_SUB64i32, X86_REG_RAX },
+	{ X86_ADD64i32, X86_REG_RAX },
+	{ X86_OR8i8, X86_REG_AL },
+	{ X86_TEST64i32, X86_REG_RAX },
+	{ X86_VMSAVE32, X86_REG_EAX },
+	{ X86_VMSAVE64, X86_REG_RAX },
+	{ X86_SBB16i16, X86_REG_AX },
+	{ X86_VMLOAD64, X86_REG_RAX },
+	{ X86_TEST8i8, X86_REG_AL },
+	{ X86_IN8ri, X86_REG_AL },
+	{ X86_TEST16i16, X86_REG_AX },
+	{ X86_SCAS32, X86_REG_EAX },
+	{ X86_MOV16o16a_16, X86_REG_AX },
+	{ X86_MOV32o32a, X86_REG_EAX },
+	{ X86_MOV8o8a_16, X86_REG_AL },
+	{ X86_SUB8i8, X86_REG_AL },
+	{ X86_IN32rr, X86_REG_EAX },
+	{ X86_ADD8i8, X86_REG_AL },
+	{ X86_OR64i32, X86_REG_RAX },
+	{ X86_SCAS8, X86_REG_AL },
+	{ X86_SBB64i32, X86_REG_RAX },
+	{ X86_ADD16i16, X86_REG_AX },
+	{ X86_XOR16i16, X86_REG_AX },
+	{ X86_MOV64o32a, X86_REG_EAX },
+	{ X86_AND64i32, X86_REG_RAX },
+	{ X86_MOV64o8a, X86_REG_AL },
+	{ X86_MOV16o16a, X86_REG_AX },
+	{ X86_LODSL, X86_REG_EAX },
+	{ X86_CMP8i8, X86_REG_AL },
+	{ X86_ADC64i32, X86_REG_RAX },
+	{ X86_CMP16i16, X86_REG_AX },
+	{ X86_ADC32i32, X86_REG_EAX },
+	{ X86_IN32ri, X86_REG_EAX },
+};
+
+// return register of given instruction id
+// return 0 if not found
+// this is to handle instructions embedding accumulate registers into AsmStrs[]
+x86_reg X86_insn_reg(unsigned int id)
+{
+	int i;
+
+	for (i = 0; i < ARR_SIZE(insn_regs); i++) {
+		if (insn_regs[i].insn == id) {
+			return insn_regs[i].reg;
+		}
+	}
+
+	// not found
+	return 0;
+}
+

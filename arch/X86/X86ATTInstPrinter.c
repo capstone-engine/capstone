@@ -509,7 +509,8 @@ static void get_last_op(char *buffer, char *lastop)
 
 void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 {
-	unsigned int id, alias_id;
+	unsigned int id, i, alias_id;
+	x86_reg reg;
 
 	// save internal ID of this insn
 	id = MCInst_getOpcode(MI);
@@ -523,25 +524,20 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 		printInstruction(MI, OS, NULL);
 
 	if (MI->csh->detail) {
-		// first op can be embedded in the asm by llvm.
-		// so we have to handle that case to not miss the first op.
-		char lastop[32];
-		get_last_op(OS->buffer, lastop);
-		char *acc_regs[] = {"al", "ax", "eax", "rax", NULL};
-		int post;
-		if (lastop[0] == '%' && ((post = str_in_list(acc_regs, lastop+1)) != -1)) {
-			// set operand size following register size
-			MI->flat_insn.x86.op_size = 1 << post;
-			// this is one of the registers AL, AX, EAX, RAX
-			// canonicalize the register name first
-			//int i;
-			//for (i = 1; lastop[i]; i++)
-			//	lastop[i] = tolower(lastop[i]);
-			if (MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count - 1].type != X86_OP_REG) {
-				MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_REG;
-				MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].reg = x86_map_regname(lastop + 1);
-				MI->flat_insn.x86.op_count++;
+		// special instruction needs to supply register op
+		reg = X86_insn_reg(id);
+		if (reg) {
+			// add register operand
+			for (i = 0;; i++) {
+				// find the first empty slot to put it there
+				if (MI->flat_insn.x86.operands[i].type == 0) {
+					MI->flat_insn.x86.operands[i].type = X86_OP_REG;
+					MI->flat_insn.x86.operands[i].reg = reg;
+					MI->flat_insn.x86.op_count++;
+					break;
+				}
 			}
+
 		}
 	}
 }

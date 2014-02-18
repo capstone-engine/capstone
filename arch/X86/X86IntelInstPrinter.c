@@ -260,30 +260,12 @@ static void printMemOffs64(MCInst *MI, unsigned OpNo, SStream *O)
 	printMemOffset(MI, OpNo, O);
 }
 
-// get the first op from the asm buffer
-// return False if there is no op. On True, put fist op in @firstop
-// NOTE: make sure firstop is big enough to contain the resulted string
-static bool get_first_op(char *buffer, char *firstop)
-{
-	char *tab = strchr(buffer, '\t');
-	if (tab) {
-		char *comma = strchr(tab + 1, ',');
-		if (comma) {
-			memcpy(firstop, tab + 1, comma - tab - 1);
-			firstop[comma - tab - 1] = '\0';
-		} else
-			strcpy(firstop, tab + 1);
-
-		return true;
-	} else	// no op
-		return false;
-}
-
 static unsigned int printAliasInstr(MCInst *MI, SStream *OS, void *info);
 static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	unsigned int id, alias_id;
+	x86_reg reg;
 
 	// save internal ID of this insn
 	id = MCInst_getOpcode(MI);
@@ -296,30 +278,18 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 		printInstruction(MI, O, NULL);
 
 	if (MI->csh->detail) {
-		char tmp[64];
-		if (get_first_op(O->buffer, tmp)) {
-			int post;
-			char *acc_regs[] = { "al", "ax", "eax", "rax", NULL };
-			unsigned int acc_regs_id[] = { X86_REG_AL,  X86_REG_AX, X86_REG_EAX, X86_REG_RAX };
-			if (tmp[0] != 0 && ((post = str_in_list(acc_regs, tmp)) != -1)) {
-				// first op is register, so set operand size following register size
-				MI->flat_insn.x86.op_size = 1 << post;
-				// tmp is a register
-				if ((MI->flat_insn.x86.operands[0].type != X86_OP_INVALID) &&
-						((MI->flat_insn.x86.operands[0].type != X86_OP_REG) ||
-						(MI->flat_insn.x86.operands[0].reg != acc_regs_id[post]))) {
-					// first op is register, so insert its detail to position 0
-					int i;
-					for (i = MI->flat_insn.x86.op_count; i > 0; i--) {
-						memcpy(&(MI->flat_insn.x86.operands[i]), &(MI->flat_insn.x86.operands[i - 1]),
-								sizeof(MI->flat_insn.x86.operands[0]));
-					}
-					MI->flat_insn.x86.operands[0].type = X86_OP_REG;
-					MI->flat_insn.x86.operands[0].reg = x86_map_regname(tmp);
-					MI->flat_insn.x86.op_count++;
-				}
-			}
+		// first op can be embedded in the asm by llvm.
+		// so we have to handle that case to not miss the first op.
+		reg = X86_insn_reg(id);
+		if (reg) {
+			// shift all the ops right to leave 1st slot for this new register op
+			memmove(&(MI->flat_insn.x86.operands[1]), &(MI->flat_insn.x86.operands[0]),
+					sizeof(MI->flat_insn.x86.operands[0]) * (ARR_SIZE(MI->flat_insn.x86.operands) - 1));
+			MI->flat_insn.x86.operands[0].type = X86_OP_REG;
+			MI->flat_insn.x86.operands[0].reg = reg;
+			MI->flat_insn.x86.op_count++;
 		}
+
 	}
 }
 
