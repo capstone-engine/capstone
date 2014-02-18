@@ -812,16 +812,11 @@ void AArch64_post_printer(csh handle, cs_insn *flat_insn, char *insn_asm)
 
 void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 {
-	if (printAliasInstr(MI, O, Info)) {
-		char *mnem = cs_strdup(O->buffer);
-		char *tab = strchr(mnem, '\t');
-		if (tab) {
-			*tab = '\0';
-		}
-		// reflect the new insn name (alias) in the opcode
-		unsigned int id = AArch64_map_insn(mnem);
-		MCInst_setOpcode(MI, AArch64_get_insn_id2(id));
-		MCInst_setOpcodePub(MI, id);
+	char *mnem;
+
+	mnem = printAliasInstr(MI, O, Info);
+	if (mnem) {
+		MCInst_setOpcodePub(MI, AArch64_map_insn(mnem));
 		cs_mem_free(mnem);
 	} else
 		printInstruction(MI, O, Info);

@@ -495,18 +495,6 @@ static void printRegName(SStream *OS, unsigned RegNo)
 	SStream_concat(OS, "%s%%%s%s", markup("<reg:"), getRegisterName(RegNo), markup(">"));
 }
 
-// get the first op from the asm buffer
-// NOTE: make sure firstop is big enough to contain the resulted string
-static void get_last_op(char *buffer, char *lastop)
-{
-	char *comma = strrchr(buffer, ',');
-	if (comma) {
-		// skip a space after the comma
-		strcpy(lastop, comma + 2);
-	} else	// no op
-		lastop[0] = '\0';
-}
-
 void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 {
 	unsigned int id, i, alias_id;

@@ -2969,28 +2969,6 @@ static insn_map insns[] = {
 #define ARM64_INS_NEGS (unsigned short)-1
 #define ARM64_INS_NGCS (unsigned short)-2
 
-// all alias instructions & their semantic infos
-static insn_map alias_insns[] = {
-	{ AArch64_MSUBwwww, ARM64_INS_MNEG, { 0 }, { 0 }, { 0 } },
-	{ AArch64_UMSUBLxwwx, ARM64_INS_UMNEGL, { 0 }, { 0 }, { 0 } },
-	{ AArch64_SMSUBLxwwx, ARM64_INS_SMNEGL, { 0 }, { 0 }, { 0 } },
-	// MOV can be mapped back to ADD or ORR, but its semantic info is always same
-	{ AArch64_ADDwwi_lsl0_s, ARM64_INS_MOV, { 0 }, { 0 }, { 0 } },
-	// { AArch64_ADDxxi_lsl0_s, ARM64_INS_MOV, { 0 }, { 0 }, { 0 } },
-	// { AArch64_ORRwww_lsl, ARM64_INS_MOV, { 0 }, { 0 }, { 0 } },
-	// { AArch64_ORRxxx_lsl, ARM64_INS_MOV, { 0 }, { 0 }, { 0 } },
-	{ AArch64_HINTi, ARM64_INS_NOP, { 0 }, { 0 }, { 0 } },
-	{ AArch64_HINTi, ARM64_INS_YIELD, { 0 }, { 0 }, { 0 } },
-	{ AArch64_HINTi, ARM64_INS_WFE, { 0 }, { 0 }, { 0 } },
-	{ AArch64_HINTi, ARM64_INS_WFI, { 0 }, { 0 }, { 0 } },
-	{ AArch64_HINTi, ARM64_INS_SEV, { 0 }, { 0 }, { 0 } },
-	{ AArch64_HINTi, ARM64_INS_SEVL, { 0 }, { 0 }, { 0 } },
-	{ AArch64_SBCwww, ARM64_INS_NGC, { ARM64_REG_NZCV, 0 }, { 0 }, { 0 } },
-	{ AArch64_SBCSwww, ARM64_INS_NGCS, { ARM64_REG_NZCV, 0 }, { ARM64_REG_NZCV, 0 }, { 0 } },
-	{ AArch64_SUBSwww_lsl, ARM64_INS_NEGS, { 0 }, { ARM64_REG_NZCV, 0 }, { 0 } },
-	// { AArch64_SUBSxxx_lsl, ARM64_INS_NEGS, { 0 }, { ARM64_REG_NZCV, 0 }, { 0 } },
-};
-
 // given internal insn id, return public instruction info
 void AArch64_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
@@ -3020,16 +2998,6 @@ void AArch64_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			}
 		}
 	}
-}
-
-// given public insn id, return internal instruction ID
-unsigned int AArch64_get_insn_id2(unsigned int id)
-{
-	unsigned int res = insn_reverse_id(insns, ARR_SIZE(insns), id);
-	if (!res) // is this alias insn?
-		res = insn_reverse_id(alias_insns, ARR_SIZE(alias_insns), id);
-
-	return res;
 }
 
 static name_map insn_name_maps[] = {
