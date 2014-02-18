@@ -4380,13 +4380,13 @@ static char *getRegisterName(unsigned RegNo)
 #ifdef PRINT_ALIAS_INSTR
 #undef PRINT_ALIAS_INSTR
 
-static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
+static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
 {
   #define GETREGCLASS_CONTAIN(_class, _reg) MCRegisterClass_contains(MCRegisterInfo_getRegClass(MRI, _class), MCOperand_getReg(MCInst_getOperand(MI, _reg)))
   const char *AsmString;
   MCRegisterInfo *MRI = (MCRegisterInfo *)info;
   switch (MCInst_getOpcode(MI)) {
-  default: return false;
+  default: return NULL;
   case Mips_ADDu:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -4398,7 +4398,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "move $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case Mips_BREAK:
     if (MCInst_getNumOperands(MI) == 2 &&
         MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
@@ -4409,7 +4409,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "break";
       break;
     }
-    return false;
+    return NULL;
   case Mips_DADDu:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -4421,7 +4421,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "move $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case Mips_DI:
     if (MCInst_getNumOperands(MI) == 1 &&
         MCOperand_getReg(MCInst_getOperand(MI, 0)) == Mips_ZERO) {
@@ -4429,7 +4429,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "di";
       break;
     }
-    return false;
+    return NULL;
   case Mips_EI:
     if (MCInst_getNumOperands(MI) == 1 &&
         MCOperand_getReg(MCInst_getOperand(MI, 0)) == Mips_ZERO) {
@@ -4437,7 +4437,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ei";
       break;
     }
-    return false;
+    return NULL;
   case Mips_SLL:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_getReg(MCInst_getOperand(MI, 0)) == Mips_ZERO &&
@@ -4448,7 +4448,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "nop";
       break;
     }
-    return false;
+    return NULL;
   case Mips_SUB:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -4460,7 +4460,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "neg $\x01, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case Mips_SUBu:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -4472,7 +4472,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "negu $\x01, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case Mips_SYSCALL:
     if (MCInst_getNumOperands(MI) == 1 &&
         MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
@@ -4481,7 +4481,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "syscall";
       break;
     }
-    return false;
+    return NULL;
   case Mips_TEQ:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -4494,7 +4494,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "teq $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case Mips_TGE:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -4507,7 +4507,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "tge $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case Mips_TGEU:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -4520,7 +4520,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "tgeu $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case Mips_TLT:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -4533,7 +4533,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "tlt $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case Mips_TLTU:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -4546,7 +4546,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "tltu $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case Mips_TNE:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -4559,7 +4559,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "tne $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   }
 
   char *tmp = cs_strdup(AsmString), *AsmMnem, *AsmOps;
@@ -4582,8 +4582,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       }
     }
   }
-  cs_mem_free(tmp);
-  return true;
+  return tmp;
 }
 
 #endif // PRINT_ALIAS_INSTR

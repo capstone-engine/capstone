@@ -1515,18 +1515,6 @@ void Mips_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 	}
 }
 
-// given public insn id, return internal insn id
-unsigned int Mips_get_insn_id2(unsigned int id)
-{
-	// consider alias insn first
-	unsigned int res;
-	res = insn_reverse_id(alias_insns, ARR_SIZE(alias_insns), id);
-	if (res)
-		return res;
-
-	return insn_reverse_id(insns, ARR_SIZE(insns), id);
-}
-
 static name_map insn_name_maps[] = {
 	{ MIPS_INS_INVALID, NULL },
 

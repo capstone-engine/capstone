@@ -29,8 +29,8 @@
 #include "MipsInstPrinter.h"
 
 static void printUnsignedImm(MCInst *MI, int opNum, SStream *O);
-static bool printAliasInstr(MCInst *MI, SStream *O, void *info);
-static bool printAlias(MCInst *MI, SStream *OS);
+static char *printAliasInstr(MCInst *MI, SStream *O, void *info);
+static char *printAlias(MCInst *MI, SStream *OS);
 
 // These enumeration declarations were originally in MipsInstrInfo.h but
 // had to be moved here to avoid circular dependencies between
@@ -165,6 +165,8 @@ static void printSaveRestore(MCInst *MI, SStream *O)
 
 void Mips_printInst(MCInst *MI, SStream *O, void *info)
 {
+	char *mnem;
+
 	switch (MCInst_getOpcode(MI)) {
 		default: break;
 		case Mips_RDHWR:
@@ -195,19 +197,16 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
 	}
 
 	// Try to print any aliases first.
-	if (!printAliasInstr(MI, O, info) && !printAlias(MI, O))
-		printInstruction(MI, O, NULL);
-	else {
-		// fixup instruction id due to the change in alias instruction
-		char *mnem = cs_strdup(O->buffer);
-		char *tab = strchr(mnem, '\t');
-		if (tab)
-			*tab = '\0';
+	mnem = printAliasInstr(MI, O, info);
+	if (!mnem) {
+		mnem = printAlias(MI, O);
+		if (!mnem)
+			printInstruction(MI, O, NULL);
+	}
 
-		// reflect the new insn name (alias) in the opcode
-		unsigned id = Mips_map_insn(mnem);
-		MCInst_setOpcode(MI, Mips_get_insn_id2(id));
-		MCInst_setOpcodePub(MI, id);
+	if (mnem) {
+		// fixup instruction id due to the change in alias instruction
+		MCInst_setOpcodePub(MI, Mips_map_insn(mnem));
 		cs_mem_free(mnem);
 	}
 
@@ -351,69 +350,96 @@ static void printFCCOperand(MCInst *MI, int opNum, SStream *O)
 	SStream_concat(O, MipsFCCToString((Mips_CondCode)MCOperand_getImm(MO)));
 }
 
-static bool printAlias1(char *Str, MCInst *MI, unsigned OpNo, SStream *OS)
+static char *printAlias1(char *Str, MCInst *MI, unsigned OpNo, SStream *OS)
 {
 	SStream_concat(OS, "%s\t", Str);
 	printOperand(MI, OpNo, OS);
-	return true;
+	return cs_strdup(Str);
 }
 
-static bool printAlias2(char *Str, MCInst *MI,
+static char *printAlias2(char *Str, MCInst *MI,
 		unsigned OpNo0, unsigned OpNo1, SStream *OS)
 {
-	printAlias1(Str, MI, OpNo0, OS);
+	char *tmp;
+
+	tmp = printAlias1(Str, MI, OpNo0, OS);
 	SStream_concat(OS, ", ");
 	printOperand(MI, OpNo1, OS);
-	return true;
+
+	return tmp;
 }
 
 #define GET_REGINFO_ENUM
 #include "MipsGenRegisterInfo.inc"
 
-static bool printAlias(MCInst *MI, SStream *OS)
+static char *printAlias(MCInst *MI, SStream *OS)
 {
 	switch (MCInst_getOpcode(MI)) {
 		case Mips_BEQ:
 			// beq $zero, $zero, $L2 => b $L2
 			// beq $r0, $zero, $L2 => beqz $r0, $L2
-			return (isReg(MI, 0, Mips_ZERO) && isReg(MI, 1, Mips_ZERO) &&
-					printAlias1("b", MI, 2, OS)) ||
-				(isReg(MI, 1, Mips_ZERO) && printAlias2("beqz", MI, 0, 2, OS));
+			if (isReg(MI, 0, Mips_ZERO) && isReg(MI, 1, Mips_ZERO))
+				return printAlias1("b", MI, 2, OS);
+			if (isReg(MI, 1, Mips_ZERO))
+				return printAlias2("beqz", MI, 0, 2, OS);
+			return NULL;
 		case Mips_BEQ64:
 			// beq $r0, $zero, $L2 => beqz $r0, $L2
-			return isReg(MI, 1, Mips_ZERO_64) && printAlias2("beqz", MI, 0, 2, OS);
+			if (isReg(MI, 1, Mips_ZERO_64))
+				return printAlias2("beqz", MI, 0, 2, OS);
+			return NULL;
 		case Mips_BNE:
 			// bne $r0, $zero, $L2 => bnez $r0, $L2
-			return isReg(MI, 1, Mips_ZERO) && printAlias2("bnez", MI, 0, 2, OS);
+			if (isReg(MI, 1, Mips_ZERO))
+				return printAlias2("bnez", MI, 0, 2, OS);
+			return NULL;
 		case Mips_BNE64:
 			// bne $r0, $zero, $L2 => bnez $r0, $L2
-			return isReg(MI, 1, Mips_ZERO_64) && printAlias2("bnez", MI, 0, 2, OS);
+			if (isReg(MI, 1, Mips_ZERO_64))
+				return printAlias2("bnez", MI, 0, 2, OS);
+			return NULL;
 		case Mips_BGEZAL:
 			// bgezal $zero, $L1 => bal $L1
-			return isReg(MI, 0, Mips_ZERO) && printAlias1("bal", MI, 1, OS);
+			if (isReg(MI, 0, Mips_ZERO))
+				return printAlias1("bal", MI, 1, OS);
+			return NULL;
 		case Mips_BC1T:
 			// bc1t $fcc0, $L1 => bc1t $L1
-			return isReg(MI, 0, Mips_FCC0) && printAlias1("bc1t", MI, 1, OS);
+			if (isReg(MI, 0, Mips_FCC0))
+				return printAlias1("bc1t", MI, 1, OS);
+			return NULL;
 		case Mips_BC1F:
 			// bc1f $fcc0, $L1 => bc1f $L1
-			return isReg(MI, 0, Mips_FCC0) && printAlias1("bc1f", MI, 1, OS);
+			if (isReg(MI, 0, Mips_FCC0))
+				return printAlias1("bc1f", MI, 1, OS);
+			return NULL;
 		case Mips_JALR:
 			// jalr $ra, $r1 => jalr $r1
-			return isReg(MI, 0, Mips_RA) && printAlias1("jalr", MI, 1, OS);
+			if (isReg(MI, 0, Mips_RA))
+				return printAlias1("jalr", MI, 1, OS);
+			return NULL;
 		case Mips_JALR64:
 			// jalr $ra, $r1 => jalr $r1
-			return isReg(MI, 0, Mips_RA_64) && printAlias1("jalr", MI, 1, OS);
+			if (isReg(MI, 0, Mips_RA_64))
+				return printAlias1("jalr", MI, 1, OS);
+			return NULL;
 		case Mips_NOR:
 		case Mips_NOR_MM:
 			// nor $r0, $r1, $zero => not $r0, $r1
-			return isReg(MI, 2, Mips_ZERO) && printAlias2("not", MI, 0, 1, OS);
+			if (isReg(MI, 2, Mips_ZERO))
+				return printAlias2("not", MI, 0, 1, OS);
+			return NULL;
 		case Mips_NOR64:
 			// nor $r0, $r1, $zero => not $r0, $r1
-			return isReg(MI, 2, Mips_ZERO_64) && printAlias2("not", MI, 0, 1, OS);
+			if (isReg(MI, 2, Mips_ZERO_64))
+				return printAlias2("not", MI, 0, 1, OS);
+			return NULL;
 		case Mips_OR:
 			// or $r0, $r1, $zero => move $r0, $r1
-			return isReg(MI, 2, Mips_ZERO) && printAlias2("move", MI, 0, 1, OS);
-		default: return false;
+			if (isReg(MI, 2, Mips_ZERO))
+				return printAlias2("move", MI, 0, 1, OS);
+			return NULL;
+		default: return NULL;
 	}
 }
 
