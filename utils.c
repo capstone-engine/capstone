@@ -63,19 +63,6 @@ int name2id(name_map* map, int max, const char *name)
 	return -1;
 }
 
-unsigned int insn_reverse_id(insn_map *insns, unsigned int max, unsigned int id)
-{
-	unsigned int i;
-
-	for (i = 0; i < max; i++) {
-		if (id == insns[i].mapid)
-			return insns[i].id;
-	}
-
-	// found nothing
-	return 0;
-}
-
 // count number of positive members in a list.
 // NOTE: list must be guaranteed to end in 0
 unsigned int count_positive(unsigned char *list)
