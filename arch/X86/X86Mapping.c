@@ -6671,12 +6671,6 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 	}
 }
 
-// given public insn id, return internal insn id
-unsigned int X86_get_insn_id2(unsigned int id)
-{
-	return insn_reverse_id(insns, ARR_SIZE(insns), id);
-}
-
 // can this instruction combine with prev prefix instruction?
 // this also updates h->pre_prefix if needed
 bool X86_insn_check_combine(cs_struct *h, cs_insn *insn)

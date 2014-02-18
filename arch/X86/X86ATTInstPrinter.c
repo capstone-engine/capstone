@@ -509,24 +509,18 @@ static void get_last_op(char *buffer, char *lastop)
 
 void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 {
-	// FIXME
-	//const MCInstrDesc *Desc = MII.get(MI->getOpcode());
-	//uint64_t TSFlags = Desc.TSFlags;
+	unsigned int id, alias_id;
 
-	//if (TSFlags & X86II::LOCK)
-	//  OS << "\tlock\n";
+	// save internal ID of this insn
+	id = MCInst_getOpcode(MI);
 
 	// Try to print any aliases first.
-	if (printAliasInstr(MI, OS, NULL)) {
-		char *mnem = cs_strdup(OS->buffer);
-		char *tab = strchr(mnem, '\t');
-		if (tab)
-			*tab = '\0';
+	alias_id = printAliasInstr(MI, OS, NULL);
+	if (alias_id) {
 		// reflect the new insn name (alias) in the opcode
-		MCInst_setOpcode(MI, X86_get_insn_id2(X86_map_insn(mnem)));
-		cs_mem_free(mnem);
+		MCInst_setOpcode(MI, alias_id);
 	} else
-	   printInstruction(MI, OS, NULL);
+		printInstruction(MI, OS, NULL);
 
 	if (MI->csh->detail) {
 		// first op can be embedded in the asm by llvm.

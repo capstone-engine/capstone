@@ -279,21 +279,19 @@ static bool get_first_op(char *buffer, char *firstop)
 		return false;
 }
 
-static bool printAliasInstr(MCInst *MI, SStream *OS, void *info);
+static unsigned int printAliasInstr(MCInst *MI, SStream *OS, void *info);
 static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 {
-	//if (TSFlags & X86II::LOCK)
-	//  O << "\tlock\n";
+	unsigned int id, alias_id;
 
-	if (printAliasInstr(MI, O, NULL)) {
-		char *mnem = cs_strdup(O->buffer);
-		char *tab = strchr(mnem, '\t');
-		if (tab)
-			*tab = '\0';
-		// reflect the new insn name (alias) in the opcode
-		MCInst_setOpcode(MI, X86_get_insn_id2(X86_map_insn(mnem)));
-		cs_mem_free(mnem);
+	// save internal ID of this insn
+	id = MCInst_getOpcode(MI);
+
+	// Try to print any aliases first.
+	alias_id = printAliasInstr(MI, O, NULL);
+	if (alias_id) {
+		MCInst_setOpcode(MI, alias_id);
 	} else
 		printInstruction(MI, O, NULL);
 

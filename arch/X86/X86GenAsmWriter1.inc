@@ -13178,13 +13178,15 @@ static char *getRegisterName(unsigned RegNo)
 #ifdef PRINT_ALIAS_INSTR
 #undef PRINT_ALIAS_INSTR
 
-static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
+static unsigned int printAliasInstr(MCInst *MI, SStream *OS, void *info)
 {
+  unsigned int id;
   #define GETREGCLASS_CONTAIN(_class, _reg) MCRegisterClass_contains(MCRegisterInfo_getRegClass(MRI, _class), MCOperand_getReg(MCInst_getOperand(MI, _reg)))
   const char *AsmString;
   // MCRegisterInfo *MRI = (MCRegisterInfo *)info;
-  switch (MCInst_getOpcode(MI)) {
-  default: return false;
+  id = MCInst_getOpcode(MI);
+  switch (id) {
+  default: return 0;
   case X86_AAD8i8:
     if (MCInst_getNumOperands(MI) == 1 &&
         MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
@@ -13193,7 +13195,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "aad";
       break;
     }
-    return false;
+    return 0;
   case X86_AAM8i8:
     if (MCInst_getNumOperands(MI) == 1 &&
         MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
@@ -13202,14 +13204,14 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "aam";
       break;
     }
-    return false;
+    return 0;
   case X86_XSTORE:
     if (MCInst_getNumOperands(MI) == 0) {
       // (XSTORE)
       AsmString = "xstorerng";
       break;
     }
-    return false;
+    return 0;
   }
 
   char *tmp = cs_strdup(AsmString), *AsmMnem, *AsmOps;
@@ -13233,7 +13235,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
     }
   }
   cs_mem_free(tmp);
-  return true;
+  return id;
 }
 
 #endif // PRINT_ALIAS_INSTR
