@@ -260,27 +260,24 @@ static void printMemOffs64(MCInst *MI, unsigned OpNo, SStream *O)
 	printMemOffset(MI, OpNo, O);
 }
 
-static unsigned int printAliasInstr(MCInst *MI, SStream *OS, void *info);
+static char *printAliasInstr(MCInst *MI, SStream *OS, void *info);
 static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 {
-	unsigned int id, alias_id;
+	char *mnem;
 	x86_reg reg;
 
-	// save internal ID of this insn
-	id = MCInst_getOpcode(MI);
-
 	// Try to print any aliases first.
-	alias_id = printAliasInstr(MI, O, NULL);
-	if (alias_id) {
-		MCInst_setOpcode(MI, alias_id);
-	} else
+	mnem = printAliasInstr(MI, O, NULL);
+	if (mnem)
+		cs_mem_free(mnem);
+	else
 		printInstruction(MI, O, NULL);
 
 	if (MI->csh->detail) {
 		// first op can be embedded in the asm by llvm.
 		// so we have to handle that case to not miss the first op.
-		reg = X86_insn_reg(id);
+		reg = X86_insn_reg(MCInst_getOpcode(MI));
 		if (reg) {
 			// shift all the ops right to leave 1st slot for this new register op
 			memmove(&(MI->flat_insn.x86.operands[1]), &(MI->flat_insn.x86.operands[0]),

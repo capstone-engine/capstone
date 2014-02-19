@@ -497,23 +497,20 @@ static void printRegName(SStream *OS, unsigned RegNo)
 
 void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 {
-	unsigned int id, i, alias_id;
+	char *mnem;
+	unsigned int i;
 	x86_reg reg;
 
-	// save internal ID of this insn
-	id = MCInst_getOpcode(MI);
-
 	// Try to print any aliases first.
-	alias_id = printAliasInstr(MI, OS, NULL);
-	if (alias_id) {
-		// reflect the new insn name (alias) in the opcode
-		MCInst_setOpcode(MI, alias_id);
-	} else
+	mnem = printAliasInstr(MI, OS, NULL);
+	if (mnem)
+		cs_mem_free(mnem);
+	else
 		printInstruction(MI, OS, NULL);
 
 	if (MI->csh->detail) {
 		// special instruction needs to supply register op
-		reg = X86_insn_reg(id);
+		reg = X86_insn_reg(MCInst_getOpcode(MI));
 		if (reg) {
 			// add register operand
 			for (i = 0;; i++) {

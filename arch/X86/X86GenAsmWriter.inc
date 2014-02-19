@@ -13667,14 +13667,12 @@ static char *getRegisterName(unsigned RegNo)
 #ifdef PRINT_ALIAS_INSTR
 #undef PRINT_ALIAS_INSTR
 
-static unsigned int printAliasInstr(MCInst *MI, SStream *OS, void *info)
+static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
 {
-  unsigned int id;
   #define GETREGCLASS_CONTAIN(_class, _reg) MCRegisterClass_contains(MCRegisterInfo_getRegClass(MRI, _class), MCOperand_getReg(MCInst_getOperand(MI, _reg)))
   const char *AsmString;
   // MCRegisterInfo *MRI = (MCRegisterInfo *)info;
-  id = MCInst_getOpcode(MI);
-  switch (id) {
+  switch (MCInst_getOpcode(MI)) {
   default: return 0;
   case X86_AAD8i8:
     if (MCInst_getNumOperands(MI) == 1 &&
@@ -13724,7 +13722,7 @@ static unsigned int printAliasInstr(MCInst *MI, SStream *OS, void *info)
     }
   }
   cs_mem_free(tmp);
-  return id;
+  return tmp;
 }
 
 #endif // PRINT_ALIAS_INSTR
