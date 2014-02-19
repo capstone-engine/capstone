@@ -11,7 +11,7 @@ extern "C" {
 #include <stdint.h>
 
 // Calculate relative address for X86-64, given cs_insn structure
-#define X86_REL_ADDR(insn) (insn.addr + insn.size + insn.x86.disp)
+#define X86_REL_ADDR(insn) (insn.address + insn.size + insn.detail->x86.disp)
 
 //> X86 registers
 typedef enum x86_reg {
