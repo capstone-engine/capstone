@@ -221,7 +221,7 @@ public class Capstone {
 
   // capstone API version
   public static final int CS_API_MAJOR = 2;
-  public static final int CS_API_MINOR = 0;
+  public static final int CS_API_MINOR = 1;
 
   public static final int CS_ARCH_ARM = 0;
   public static final int CS_ARCH_ARM64 = 1;
