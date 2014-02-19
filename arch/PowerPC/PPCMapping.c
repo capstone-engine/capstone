@@ -387,6 +387,8 @@ static insn_map insns[] = {
 	{ PPC_FMADDS, PPC_INS_FMADDS, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
 	{ PPC_FMADDSo, PPC_INS_FMADDS, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
 	{ PPC_FMADDo, PPC_INS_FMADD, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
+	{ PPC_FMR, PPC_INS_FMR, { 0 }, { 0 }, { 0 }, 0, 0 },
+	{ PPC_FMRo, PPC_INS_FMR, { 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
 	{ PPC_FMSUB, PPC_INS_FMSUB, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
 	{ PPC_FMSUBS, PPC_INS_FMSUBS, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
 	{ PPC_FMSUBSo, PPC_INS_FMSUBS, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
@@ -541,6 +543,7 @@ static insn_map insns[] = {
 	{ PPC_MFVRSAVE, PPC_INS_MFSPR, { 0 }, { 0 }, { 0 }, 0, 0 },
 	{ PPC_MFVRSAVEv, PPC_INS_MFSPR, { 0 }, { 0 }, { 0 }, 0, 0 },
 	{ PPC_MFVSCR, PPC_INS_MFVSCR, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
+	{ PPC_MSYNC, PPC_INS_MSYNC, { 0 }, { 0 }, { PPC_GRP_BOOKE, 0 }, 0, 0 },
 	{ PPC_MTCRF, PPC_INS_MTCRF, { 0 }, { 0 }, { 0 }, 0, 0 },
 	{ PPC_MTCRF8, PPC_INS_MTCRF, { 0 }, { 0 }, { 0 }, 0, 0 },
 	{ PPC_MTCTR, PPC_INS_MTCTR, { 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
@@ -715,7 +718,7 @@ static insn_map insns[] = {
 	{ PPC_SUBFZE8o, PPC_INS_SUBFZE, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
 	{ PPC_SUBFZEo, PPC_INS_SUBFZE, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
 	{ PPC_SUBFo, PPC_INS_SUBF, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_SYNC, PPC_INS_SYNC, { 0 }, { 0 }, { 0 }, 0, 0 },
+	{ PPC_SYNC, PPC_INS_SYNC, { 0 }, { 0 }, { PPC_GRP_NOTBOOKE, 0 }, 0, 0 },
 	{ PPC_TAILB, PPC_INS_B, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 1, 0 },
 	{ PPC_TAILB8, PPC_INS_B, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 1, 0 },
 	{ PPC_TAILBA, PPC_INS_BA, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 1, 0 },
@@ -914,44 +917,10 @@ static insn_map insns[] = {
 	{ PPC_gBCLRL, PPC_INS_BCLRL, { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_LR, PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
 };
 
-static insn_map alias_insns[] = {
-	{ 0, 0, { 0 }, { 0 }, { 0 }, 0, 0 },
-};
-
 // given internal insn id, return public instruction info
 void PPC_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
 	int i;
-
-	// consider alias insn first
-	for (i = 0; i < ARR_SIZE(alias_insns); i++) {
-		if (alias_insns[i].id == id) {
-			insn->id = alias_insns[i].mapid;
-
-			if (h->detail) {
-				cs_struct handle;
-				handle.detail = h->detail;
-
-				memcpy(insn->detail->regs_read, alias_insns[i].regs_use, sizeof(alias_insns[i].regs_use));
-				insn->detail->regs_read_count = (uint8_t)count_positive(alias_insns[i].regs_use);
-
-				memcpy(insn->detail->regs_write, alias_insns[i].regs_mod, sizeof(alias_insns[i].regs_mod));
-				insn->detail->regs_write_count = (uint8_t)count_positive(alias_insns[i].regs_mod);
-
-				memcpy(insn->detail->groups, alias_insns[i].groups, sizeof(alias_insns[i].groups));
-				insn->detail->groups_count = (uint8_t)count_positive(alias_insns[i].groups);
-
-				if (alias_insns[i].branch || alias_insns[i].indirect_branch) {
-					// this insn also belongs to JUMP group. add JUMP group
-					insn->detail->groups[insn->detail->groups_count] = PPC_GRP_JUMP;
-					insn->detail->groups_count++;
-				}
-
-				insn->detail->ppc.update_cr0 = cs_reg_write((csh)&handle, insn, PPC_REG_CR0);
-				return;
-			}
-		}
-	}
 
 	i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
 	if (i != 0) {
@@ -1077,6 +1046,7 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_FDIVS, "fdivs" },
 	{ PPC_INS_FMADD, "fmadd" },
 	{ PPC_INS_FMADDS, "fmadds" },
+	{ PPC_INS_FMR, "fmr" },
 	{ PPC_INS_FMSUB, "fmsub" },
 	{ PPC_INS_FMSUBS, "fmsubs" },
 	{ PPC_INS_FMUL, "fmul" },
@@ -1163,6 +1133,7 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_MFSPR, "mfspr" },
 	{ PPC_INS_MFTB, "mftb" },
 	{ PPC_INS_MFVSCR, "mfvscr" },
+	{ PPC_INS_MSYNC, "msync" },
 	{ PPC_INS_MTCRF, "mtcrf" },
 	{ PPC_INS_MTCTR, "mtctr" },
 	{ PPC_INS_MTFSB0, "mtfsb0" },

@@ -12,6 +12,7 @@
 
 #ifdef GET_REGINFO_ENUM
 #undef GET_REGINFO_ENUM
+
 enum {
   PPC_NoRegister,
   PPC_BP = 1,

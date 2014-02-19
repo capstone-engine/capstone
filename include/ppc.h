@@ -335,6 +335,7 @@ typedef enum ppc_insn {
 	PPC_INS_FDIVS,
 	PPC_INS_FMADD,
 	PPC_INS_FMADDS,
+	PPC_INS_FMR,
 	PPC_INS_FMSUB,
 	PPC_INS_FMSUBS,
 	PPC_INS_FMUL,
@@ -421,6 +422,7 @@ typedef enum ppc_insn {
 	PPC_INS_MFSPR,
 	PPC_INS_MFTB,
 	PPC_INS_MFVSCR,
+	PPC_INS_MSYNC,
 	PPC_INS_MTCRF,
 	PPC_INS_MTCTR,
 	PPC_INS_MTFSB0,
@@ -686,6 +688,8 @@ typedef enum ppc_insn_group {
 	PPC_GRP_ALTIVEC,
 	PPC_GRP_MODE32,
 	PPC_GRP_MODE64,
+	PPC_GRP_BOOKE,
+	PPC_GRP_NOTBOOKE,
 
 	PPC_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 

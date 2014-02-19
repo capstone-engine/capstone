@@ -134,10 +134,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     1226217U,	// BCLR
     1357289U,	// BCLRL
     155725U,	// BCLalways
-    5697U,	// BCTR
-    5697U,	// BCTR8
-    5659U,	// BCTRL
-    5659U,	// BCTRL8
+    5703U,	// BCTR
+    5703U,	// BCTR8
+    5665U,	// BCTRL
+    5665U,	// BCTRL8
     159972U,	// BDNZ
     159972U,	// BDNZ8
     165245U,	// BDNZA
@@ -147,9 +147,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     165226U,	// BDNZLA
     163950U,	// BDNZLAm
     163865U,	// BDNZLAp
-    5690U,	// BDNZLR
-    5690U,	// BDNZLR8
-    5651U,	// BDNZLRL
+    5696U,	// BDNZLR
+    5696U,	// BDNZLR8
+    5657U,	// BDNZLRL
     4422U,	// BDNZLRLm
     4390U,	// BDNZLRLp
     4438U,	// BDNZLRm
@@ -167,9 +167,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     165219U,	// BDZLA
     163942U,	// BDZLAm
     163857U,	// BDZLAp
-    5684U,	// BDZLR
-    5684U,	// BDZLR8
-    5644U,	// BDZLRL
+    5690U,	// BDZLR
+    5690U,	// BDZLR8
+    5650U,	// BDZLRL
     4414U,	// BDZLRLm
     4382U,	// BDZLRLp
     4431U,	// BDZLRm
@@ -187,8 +187,8 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     165208U,	// BLA
     165208U,	// BLA8
     1475928U,	// BLA8_NOP
-    5680U,	// BLR
-    5639U,	// BLRL
+    5686U,	// BLR
+    5645U,	// BLRL
     1610623186U,	// CLRLSLDI
     1610621433U,	// CLRLSLDIo
     2147494212U,	// CLRLSLWI
@@ -238,7 +238,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     9196U,	// DIVWUo
     9301U,	// DIVWo
     68870U,	// DSS
-    5632U,	// DSSALL
+    5638U,	// DSSALL
     77242U,	// DST
     77242U,	// DST64
     77255U,	// DSTST
@@ -254,7 +254,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     4647U,	// EH_SjLj_SetJmp32
     4827U,	// EH_SjLj_SetJmp64
     155649U,	// EH_SjLj_Setup
-    5665U,	// EIEIO
+    5671U,	// EIEIO
     11872U,	// EQV
     11872U,	// EQV8
     9211U,	// EQV8o
@@ -419,7 +419,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     5482U,	// LDgotTprelL
     4613U,	// LDgotTprelL32
     1585417U,	// LDinto_toc
-    5625U,	// LDtoc
+    5631U,	// LDtoc
     5578U,	// LDtocCPT
     5430U,	// LDtocJTI
     5440U,	// LDtocL
@@ -495,6 +495,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     1846199U,	// MFVRSAVE
     1846199U,	// MFVRSAVEv
     142187U,	// MFVSCR
+    5625U,	// MSYNC
     67119052U,	// MTCRF
     67119052U,	// MTCRF8
     142311U,	// MTCTR
@@ -538,7 +539,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     67119067U,	// NEG8
     67117506U,	// NEG8o
     67117506U,	// NEGo
-    5676U,	// NOP
+    5682U,	// NOP
     4446U,	// NOP_GT_PWR6
     4458U,	// NOP_GT_PWR7
     11156U,	// NOR
@@ -702,8 +703,8 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     157064U,	// TAILB8
     165194U,	// TAILBA
     165194U,	// TAILBA8
-    5697U,	// TAILBCTR
-    5697U,	// TAILBCTR8
+    5703U,	// TAILBCTR
+    5703U,	// TAILBCTR8
     67405115U,	// TCRETURNai
     67405022U,	// TCRETURNai8
     67397304U,	// TCRETURNdi
@@ -715,7 +716,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     2066287U,	// TLBIE
     141730U,	// TLBIEL
     5611U,	// TLBSYNC
-    5671U,	// TRAP
+    5677U,	// TRAP
     85746U,	// TW
     536955269U,	// TWI
     67118344U,	// UPDATE_VRSAVE
@@ -1383,6 +1384,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U,	// MFVRSAVE
     0U,	// MFVRSAVEv
     0U,	// MFVSCR
+    0U,	// MSYNC
     0U,	// MTCRF
     0U,	// MTCRF8
     0U,	// MTCTR
@@ -1792,7 +1794,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U
   };
 
-  const char AsmStrs[] = {
+  static char AsmStrs[] = {
   /* 0 */ '#', 'E', 'H', '_', 'S', 'j', 'L', 'j', '_', 'S', 'e', 't', 'u', 'p', 9, 0,
   /* 16 */ 'b', 'd', 'z', 'l', 'a', '+', 32, 0,
   /* 24 */ 'b', 'd', 'n', 'z', 'l', 'a', '+', 32, 0,
@@ -2437,26 +2439,27 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   /* 5608 */ 'b', 0,
   /* 5610 */ 't', 'l', 'b', 's', 'y', 'n', 'c', 0,
   /* 5618 */ 'i', 's', 'y', 'n', 'c', 0,
-  /* 5624 */ '#', 'L', 'D', 't', 'o', 'c', 0,
-  /* 5631 */ 'd', 's', 's', 'a', 'l', 'l', 0,
-  /* 5638 */ 'b', 'l', 'r', 'l', 0,
-  /* 5643 */ 'b', 'd', 'z', 'l', 'r', 'l', 0,
-  /* 5650 */ 'b', 'd', 'n', 'z', 'l', 'r', 'l', 0,
-  /* 5658 */ 'b', 'c', 't', 'r', 'l', 0,
-  /* 5664 */ 'e', 'i', 'e', 'i', 'o', 0,
-  /* 5670 */ 't', 'r', 'a', 'p', 0,
-  /* 5675 */ 'n', 'o', 'p', 0,
-  /* 5679 */ 'b', 'l', 'r', 0,
-  /* 5683 */ 'b', 'd', 'z', 'l', 'r', 0,
-  /* 5689 */ 'b', 'd', 'n', 'z', 'l', 'r', 0,
-  /* 5696 */ 'b', 'c', 't', 'r', 0,
+  /* 5624 */ 'm', 's', 'y', 'n', 'c', 0,
+  /* 5630 */ '#', 'L', 'D', 't', 'o', 'c', 0,
+  /* 5637 */ 'd', 's', 's', 'a', 'l', 'l', 0,
+  /* 5644 */ 'b', 'l', 'r', 'l', 0,
+  /* 5649 */ 'b', 'd', 'z', 'l', 'r', 'l', 0,
+  /* 5656 */ 'b', 'd', 'n', 'z', 'l', 'r', 'l', 0,
+  /* 5664 */ 'b', 'c', 't', 'r', 'l', 0,
+  /* 5670 */ 'e', 'i', 'e', 'i', 'o', 0,
+  /* 5676 */ 't', 'r', 'a', 'p', 0,
+  /* 5681 */ 'n', 'o', 'p', 0,
+  /* 5685 */ 'b', 'l', 'r', 0,
+  /* 5689 */ 'b', 'd', 'z', 'l', 'r', 0,
+  /* 5695 */ 'b', 'd', 'n', 'z', 'l', 'r', 0,
+  /* 5702 */ 'b', 'c', 't', 'r', 0,
   };
 
   // Emit the opcode for the instruction.
   uint64_t Bits1 = OpInfo[MCInst_getOpcode(MI)];
   uint64_t Bits2 = OpInfo2[MCInst_getOpcode(MI)];
   uint64_t Bits = (Bits2 << 32) | Bits1;
-  //assert(Bits != 0 && "Cannot print this instruction.");
+  // assert(Bits != 0 && "Cannot print this instruction.");
   SStream_concat(O, "%s", AsmStrs+(Bits & 8191)-1);
 
 
@@ -2505,9 +2508,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 9:
     // DST, DST64, DSTST, DSTST64, DSTSTT, DSTSTT64, DSTT, DSTT64
     printOperand(MI, 2, O); 
-    SStream_concat(O, ", "); 
+    SStream_concat(O, "%s", ", "); 
     printOperand(MI, 3, O); 
-    SStream_concat(O, ", "); 
+    SStream_concat(O, "%s", ", "); 
     printU5ImmOperand(MI, 1, O); 
     return;
     break;
@@ -2518,7 +2521,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 11:
     // MTOCRF, MTOCRF8
     printcrbitm(MI, 0, O); 
-    SStream_concat(O, ", "); 
+    SStream_concat(O, "%s", ", "); 
     printOperand(MI, 1, O); 
     return;
     break;
@@ -2535,7 +2538,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   default:   // unreachable.
   case 0:
     // ADD4, ADD4TLS, ADD4o, ADD8, ADD8TLS, ADD8TLS_, ADD8o, ADDC, ADDC8, ADD...
-    SStream_concat(O, ", "); 
+    SStream_concat(O, "%s", ", "); 
     break;
   case 1:
     // ADJCALLSTACKDOWN, B, BA, BCLalways, BDNZ, BDNZ8, BDNZA, BDNZAm, BDNZAp...
@@ -2543,108 +2546,109 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 2:
     // ADJCALLSTACKUP, ATOMIC_CMP_SWAP_I16, ATOMIC_CMP_SWAP_I32, TCRETURNai, ...
-    SStream_concat(O, " "); 
+    SStream_concat(O, "%s", " "); 
     break;
   case 3:
     // BCC
     printPredicateOperand(MI, 0, O, "pm"); 
-    SStream_concat(O, " "); 
+    SStream_concat(O, "%s", " "); 
     printPredicateOperand(MI, 0, O, "reg"); 
-    SStream_concat(O, ", "); 
+    SStream_concat(O, "%s", ", "); 
     printBranchOperand(MI, 2, O); 
     return;
     break;
   case 4:
     // BCCA
-    SStream_concat(O, "a"); 
+    SStream_concat(O, "%s", "a"); 
     printPredicateOperand(MI, 0, O, "pm"); 
-    SStream_concat(O, " "); 
+    SStream_concat(O, "%s", " "); 
     printPredicateOperand(MI, 0, O, "reg"); 
-    SStream_concat(O, ", "); 
+    SStream_concat(O, "%s", ", "); 
     printAbsBranchOperand(MI, 2, O); 
     return;
     break;
   case 5:
     // BCCL
-    SStream_concat(O, "l"); 
+    SStream_concat(O, "%s", "l"); 
     printPredicateOperand(MI, 0, O, "pm"); 
-    SStream_concat(O, " "); 
+    SStream_concat(O, "%s", " "); 
     printPredicateOperand(MI, 0, O, "reg"); 
-    SStream_concat(O, ", "); 
+    SStream_concat(O, "%s", ", "); 
     printBranchOperand(MI, 2, O); 
     return;
     break;
   case 6:
     // BCCLA
-    SStream_concat(O, "la"); 
+    SStream_concat(O, "%s", "la"); 
     printPredicateOperand(MI, 0, O, "pm"); 
-    SStream_concat(O, " "); 
+    SStream_concat(O, "%s", " "); 
     printPredicateOperand(MI, 0, O, "reg"); 
-    SStream_concat(O, ", "); 
+    SStream_concat(O, "%s", ", "); 
     printAbsBranchOperand(MI, 2, O); 
     return;
     break;
   case 7:
     // BCCTR, BCCTR8
-    SStream_concat(O, "ctr"); 
+    SStream_concat(O, "%s", "ctr"); 
     printPredicateOperand(MI, 0, O, "pm"); 
-    SStream_concat(O, " "); 
+    SStream_concat(O, "%s", " "); 
     printPredicateOperand(MI, 0, O, "reg"); 
     return;
     break;
   case 8:
     // BCCTRL, BCCTRL8
-    SStream_concat(O, "ctrl"); 
+    SStream_concat(O, "%s", "ctrl"); 
     printPredicateOperand(MI, 0, O, "pm"); 
-    SStream_concat(O, " "); 
+    SStream_concat(O, "%s", " "); 
     printPredicateOperand(MI, 0, O, "reg"); 
     return;
     break;
   case 9:
     // BCLR
-    SStream_concat(O, "lr"); 
+    SStream_concat(O, "%s", "lr"); 
     printPredicateOperand(MI, 0, O, "pm"); 
-    SStream_concat(O, " "); 
+    SStream_concat(O, "%s", " "); 
     printPredicateOperand(MI, 0, O, "reg"); 
     return;
     break;
   case 10:
     // BCLRL
-    SStream_concat(O, "lrl"); 
+    SStream_concat(O, "%s", "lrl"); 
     printPredicateOperand(MI, 0, O, "pm"); 
-    SStream_concat(O, " "); 
+    SStream_concat(O, "%s", " "); 
     printPredicateOperand(MI, 0, O, "reg"); 
     return;
     break;
   case 11:
     // BL8_NOP, BL8_NOP_TLS, BLA8_NOP
-    SStream_concat(O, "\n\tnop"); 
+    SStream_concat(O, "%s", "\n\tnop"); 
     return;
     break;
   case 12:
     // LDinto_toc
-    SStream_concat(O, ")"); 
+    SStream_concat(O, "%s", ")"); 
+    set_mem_access(MI, false);
     return;
     break;
   case 13:
     // MFTB8
-    SStream_concat(O, ", 268"); 
+    SStream_concat(O, "%s", ", 268"); 
     return;
     break;
   case 14:
     // MFVRSAVE, MFVRSAVEv
-    SStream_concat(O, ", 256"); 
+    SStream_concat(O, "%s", ", 256"); 
     return;
     break;
   case 15:
     // TLBIE
-    SStream_concat(O, ","); 
+    SStream_concat(O, "%s", ","); 
     printOperand(MI, 0, O); 
     return;
     break;
   case 16:
     // V_SETALLONES, V_SETALLONESB, V_SETALLONESH
-    SStream_concat(O, ", -1"); 
+    SStream_concat(O, "%s", ", -1"); 
     return;
     break;
   }
@@ -2670,18 +2674,18 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 3:
     // CRSET, CRUNSET, V_SET0, V_SET0B, V_SET0H
     printOperand(MI, 0, O); 
-    SStream_concat(O, ", "); 
+    SStream_concat(O, "%s", ", "); 
     printOperand(MI, 0, O); 
     return;
     break;
   case 4:
     // LA
     printS16ImmOperand(MI, 2, O); 
-	set_mem_access(MI, true);
-    SStream_concat(O, "("); 
+    SStream_concat(O, "%s", "("); 
+    set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, ")"); 
-	set_mem_access(MI, false);
+    SStream_concat(O, "%s", ")"); 
+    set_mem_access(MI, false);
     return;
     break;
   case 5:
@@ -2712,7 +2716,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 10:
     // RLDIMI, RLDIMIo, RLWIMI, RLWIMIo, VCFSX, VCFUX, VCTSXS, VCTUXS, VSPLTB...
     printOperand(MI, 2, O); 
-    SStream_concat(O, ", "); 
+    SStream_concat(O, "%s", ", "); 
     break;
   case 11:
     // VSPLTISB, VSPLTISH, VSPLTISW
@@ -2728,7 +2732,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   default:   // unreachable.
   case 0:
     // ADD4, ADD4TLS, ADD4o, ADD8, ADD8TLS, ADD8TLS_, ADD8o, ADDC, ADDC8, ADD...
-    SStream_concat(O, ", "); 
+    SStream_concat(O, "%s", ", "); 
     break;
   case 1:
     // ADDME, ADDME8, ADDME8o, ADDMEo, ADDZE, ADDZE8, ADDZE8o, ADDZEo, CNTLZD...
@@ -2736,25 +2740,25 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 2:
     // ATOMIC_CMP_SWAP_I16, ATOMIC_CMP_SWAP_I32
-    SStream_concat(O, " "); 
+    SStream_concat(O, "%s", " "); 
     printOperand(MI, 3, O); 
-    SStream_concat(O, " "); 
+    SStream_concat(O, "%s", " "); 
     printOperand(MI, 4, O); 
     return;
     break;
   case 3:
     // RLDIMI, RLDIMIo
     printU6ImmOperand(MI, 3, O); 
-    SStream_concat(O, ", "); 
+    SStream_concat(O, "%s", ", "); 
     printU6ImmOperand(MI, 4, O); 
     return;
     break;
   case 4:
     // RLWIMI, RLWIMIo
     printU5ImmOperand(MI, 3, O); 
-    SStream_concat(O, ", "); 
+    SStream_concat(O, "%s", ", "); 
     printU5ImmOperand(MI, 4, O); 
-    SStream_concat(O, ", "); 
+    SStream_concat(O, "%s", ", "); 
     printU5ImmOperand(MI, 5, O); 
     return;
     break;
@@ -2765,7 +2769,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 6:
     // VCFSX_0, VCFUX_0, VCTSXS_0, VCTUXS_0
-    SStream_concat(O, ", 0"); 
+    SStream_concat(O, "%s", ", 0"); 
     return;
     break;
   }
@@ -2814,7 +2818,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   //printf("Frag-5: %"PRIu64"\n", (Bits >> 32) & 1);
   if ((Bits >> 32) & 1) {
     // CLRLSLDI, CLRLSLDIo, CLRLSLWI, CLRLSLWIo, EXTLDI, EXTLDIo, EXTLWI, EXT...
-    SStream_concat(O, ", "); 
+    SStream_concat(O, "%s", ", "); 
   } else {
     // ADD4, ADD4TLS, ADD4o, ADD8, ADD8TLS, ADD8TLS_, ADD8o, ADDC, ADDC8, ADD...
     return;
@@ -2846,7 +2850,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   //printf("Frag-7: %"PRIu64"\n", (Bits >> 35) & 1);
   if ((Bits >> 35) & 1) {
     // RLWINM, RLWINM8, RLWINM8o, RLWINMo, RLWNM, RLWNMo
-    SStream_concat(O, ", "); 
+    SStream_concat(O, "%s", ", "); 
     printU5ImmOperand(MI, 4, O); 
     return;
   } else {
