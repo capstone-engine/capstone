@@ -2,7 +2,7 @@
 
 from distutils.core import setup
 
-VERSION = '2.0'
+VERSION = '2.1'
 
 # clean package directory first
 import os.path, shutil, sys
