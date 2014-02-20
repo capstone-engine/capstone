@@ -61,8 +61,6 @@ def cs(md, code):
 
 def cs_lite(md, code):
     insns = md.disasm_lite(code, 0)
-    # uncomment below line to speed up this function 200 times!
-    # return
     for (addr, size, mnem, ops) in insns:
         if addr == 0x100000:
             print i
