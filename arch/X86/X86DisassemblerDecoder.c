@@ -1918,5 +1918,21 @@ int decodeInstruction(struct InternalInstruction* insn,
 	if (insn->length > 15)
 		dbgprintf(insn, "Instruction exceeds 15-byte limit");
 
+#if 0
+	printf("\n>>> x86OperandSets = %lu\n", sizeof(x86OperandSets));
+	printf(">>> x86DisassemblerInstrSpecifiers = %lu\n", sizeof(x86DisassemblerInstrSpecifiers));
+	printf(">>> x86DisassemblerContexts = %lu\n", sizeof(x86DisassemblerContexts));
+	printf(">>> modRMTable = %lu\n", sizeof(modRMTable));
+	printf(">>> x86DisassemblerOneByteOpcodes = %lu\n", sizeof(x86DisassemblerOneByteOpcodes));
+	printf(">>> x86DisassemblerTwoByteOpcodes = %lu\n", sizeof(x86DisassemblerTwoByteOpcodes));
+	printf(">>> x86DisassemblerThreeByte38Opcodes = %lu\n", sizeof(x86DisassemblerThreeByte38Opcodes));
+	printf(">>> x86DisassemblerThreeByte3AOpcodes = %lu\n", sizeof(x86DisassemblerThreeByte3AOpcodes));
+	printf(">>> x86DisassemblerThreeByteA6Opcodes = %lu\n", sizeof(x86DisassemblerThreeByteA6Opcodes));
+	printf(">>> x86DisassemblerThreeByteA7Opcodes= %lu\n", sizeof(x86DisassemblerThreeByteA7Opcodes));
+	printf(">>> x86DisassemblerXOP8Opcodes = %lu\n", sizeof(x86DisassemblerXOP8Opcodes));
+	printf(">>> x86DisassemblerXOP9Opcodes = %lu\n", sizeof(x86DisassemblerXOP9Opcodes));
+	printf(">>> x86DisassemblerXOPAOpcodes = %lu\n\n", sizeof(x86DisassemblerXOPAOpcodes));
+#endif
+
 	return 0;
 }
