@@ -166,6 +166,9 @@ cdef class Cs:
             dummy._csh = self.csh
             yield dummy
 
+        cc.cs_free(allinsn, res)
+
+
     def disasm_lite(self, code, addr, count=0):
         # TODO: dont need detail, so we might turn off detail, then turn on again when done
         cdef cc.cs_insn *allinsn
@@ -174,3 +177,5 @@ cdef class Cs:
         for i from 0 <= i < res:
             insn = allinsn[i]
             yield (insn.address, insn.size, insn.mnemonic, insn.op_str)
+
+        cc.cs_free(allinsn, res)
