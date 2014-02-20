@@ -487,3 +487,18 @@ class Cs(object):
             return
             yield
 
+    def disasm_lite(self, code, offset, count = 0):
+        all_insn = ctypes.POINTER(_cs_insn)()
+        res = _cs.cs_disasm_ex(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
+        if res > 0:
+            for i in xrange(res):
+                insn = all_insn[i]
+                yield (insn.address, insn.size, insn.mnemonic, insn.op_str)
+            _cs.cs_free(all_insn, res)
+        else:
+            status = _cs.cs_errno(self.csh)
+            if status != CS_ERR_OK:
+                raise CsError(status)
+            return
+            yield
+
