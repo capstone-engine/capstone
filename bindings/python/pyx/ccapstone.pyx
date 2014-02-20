@@ -167,7 +167,7 @@ cdef class Cs:
             yield dummy
 
     def disasm_lite(self, code, addr, count=0):
-	    # TODO: dont need detail, so we might turn off detail, then turn on again when done
+        # TODO: dont need detail, so we might turn off detail, then turn on again when done
         cdef cc.cs_insn *allinsn
         cdef res = cc.cs_disasm_ex(self.csh, code, len(code), addr, count, &allinsn)
 
