@@ -203,7 +203,7 @@ public class Capstone {
     public int cs_open(int arch, int mode, NativeLongByReference handle);
     public NativeLong cs_disasm_ex(NativeLong handle, byte[] code, NativeLong code_len,
         long addr, NativeLong count, PointerByReference insn);
-    public void cs_free(Pointer p);
+    public void cs_free(Pointer p, NativeLong count);
     public int cs_close(NativeLong handle);
     public int cs_option(NativeLong handle, int option, NativeLong optionValue);
 
@@ -329,6 +329,10 @@ public class Capstone {
     _cs_insn byref = new _cs_insn(p);
 
     CsInsn[] allInsn = fromArrayRaw((_cs_insn[]) byref.toArray(c.intValue()));
+
+    // free allocated memory
+    cs.cs_free(p, c);
+
     return allInsn;
   }
 }
