@@ -357,17 +357,6 @@ struct OpcodeDecision {
 };
 
 /*
- * ContextDecision - Specifies which opcode->instruction tables to look at given
- *   a particular context (set of attributes).  Since there are many possible
- *   contexts, the decoder first uses CONTEXTS_SYM to determine which context
- *   applies given a specific set of attributes.  Hence there are only IC_max
- *   entries in this table, rather than 2^(ATTR_max).
- */
-struct ContextDecision {
-	struct OpcodeDecision opcodeDecisions[IC_max];
-};
-
-/*
  * Physical encodings of instruction operands.
  */
 

@@ -17,8 +17,8 @@ CAPSTONE_ARCHS += aarch64
 # Comment out the line below if you don't want to support Mips
 CAPSTONE_ARCHS += mips
 
-# Comment out the line below if you don't want to support X86
-CAPSTONE_ARCHS += x86
-
 # Comment out the line below if you don't want to support PowerPC
 CAPSTONE_ARCHS += powerpc
+
+# Comment out the line below if you don't want to support Intel
+CAPSTONE_ARCHS += x86

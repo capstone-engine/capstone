@@ -74,39 +74,49 @@ static int modRMRequired(OpcodeType type,
 		InstructionContext insnContext,
 		uint16_t opcode)
 {
-	const struct ContextDecision* decision = 0;
+	const struct OpcodeDecision* decision = NULL;
+	const uint8_t *indextable = NULL;
 
 	switch (type) {
 		case ONEBYTE:
-			decision = &ONEBYTE_SYM;
+			decision = ONEBYTE_SYM;
+			indextable = index_x86DisassemblerOneByteOpcodes;
 			break;
 		case TWOBYTE:
-			decision = &TWOBYTE_SYM;
+			decision = TWOBYTE_SYM;
+			indextable = index_x86DisassemblerTwoByteOpcodes;
 			break;
 		case THREEBYTE_38:
-			decision = &THREEBYTE38_SYM;
+			decision = THREEBYTE38_SYM;
+			indextable = index_x86DisassemblerThreeByte38Opcodes;
 			break;
 		case THREEBYTE_3A:
-			decision = &THREEBYTE3A_SYM;
+			decision = THREEBYTE3A_SYM;
+			indextable = index_x86DisassemblerThreeByte3AOpcodes;
 			break;
 		case THREEBYTE_A6:
-			decision = &THREEBYTEA6_SYM;
+			decision = THREEBYTEA6_SYM;
+			indextable = index_x86DisassemblerThreeByteA6Opcodes;
 			break;
 		case THREEBYTE_A7:
-			decision = &THREEBYTEA7_SYM;
+			decision = THREEBYTEA7_SYM;
+			indextable = index_x86DisassemblerThreeByteA7Opcodes;
 			break;
 		case XOP8_MAP:
-			decision = &XOP8_MAP_SYM;
+			decision = XOP8_MAP_SYM;
+			indextable = index_x86DisassemblerXOP8Opcodes;
 			break;
 		case XOP9_MAP:
-			decision = &XOP9_MAP_SYM;
+			decision = XOP9_MAP_SYM;
+			indextable = index_x86DisassemblerXOP9Opcodes;
 			break;
 		case XOPA_MAP:
-			decision = &XOPA_MAP_SYM;
+			decision = XOPA_MAP_SYM;
+			indextable = index_x86DisassemblerXOPAOpcodes;
 			break;
 	}
 
-	return decision->opcodeDecisions[insnContext].modRMDecisions[opcode].
+	return decision[indextable[insnContext]].modRMDecisions[opcode].
 		modrm_type != MODRM_ONEENTRY;
 }
 
@@ -126,34 +136,44 @@ static InstrUID decode(OpcodeType type,
 		uint8_t modRM)
 {
 	const struct ModRMDecision* dec = 0;
+	const uint8_t *indextable = NULL;
 
 	switch (type) {
 		case ONEBYTE:
-			dec = &ONEBYTE_SYM.opcodeDecisions[insnContext].modRMDecisions[opcode];
+			indextable = index_x86DisassemblerOneByteOpcodes;
+			dec = &ONEBYTE_SYM[indextable[insnContext]].modRMDecisions[opcode];
 			break;
 		case TWOBYTE:
-			dec = &TWOBYTE_SYM.opcodeDecisions[insnContext].modRMDecisions[opcode];
+			indextable = index_x86DisassemblerTwoByteOpcodes;
+			dec = &TWOBYTE_SYM[indextable[insnContext]].modRMDecisions[opcode];
 			break;
 		case THREEBYTE_38:
-			dec = &THREEBYTE38_SYM.opcodeDecisions[insnContext].modRMDecisions[opcode];
+			indextable = index_x86DisassemblerThreeByte38Opcodes;
+			dec = &THREEBYTE38_SYM[indextable[insnContext]].modRMDecisions[opcode];
 			break;
 		case THREEBYTE_3A:
-			dec = &THREEBYTE3A_SYM.opcodeDecisions[insnContext].modRMDecisions[opcode];
+			indextable = index_x86DisassemblerThreeByte3AOpcodes;
+			dec = &THREEBYTE3A_SYM[indextable[insnContext]].modRMDecisions[opcode];
 			break;
 		case THREEBYTE_A6:
-			dec = &THREEBYTEA6_SYM.opcodeDecisions[insnContext].modRMDecisions[opcode];
+			indextable = index_x86DisassemblerThreeByteA6Opcodes;
+			dec = &THREEBYTEA6_SYM[indextable[insnContext]].modRMDecisions[opcode];
 			break;
 		case THREEBYTE_A7:
-			dec = &THREEBYTEA7_SYM.opcodeDecisions[insnContext].modRMDecisions[opcode];
+			indextable = index_x86DisassemblerThreeByteA7Opcodes;
+			dec = &THREEBYTEA7_SYM[indextable[insnContext]].modRMDecisions[opcode];
 			break;
 		case XOP8_MAP:
-			dec = &XOP8_MAP_SYM.opcodeDecisions[insnContext].modRMDecisions[opcode];
+			indextable = index_x86DisassemblerXOP8Opcodes;
+			dec = &XOP8_MAP_SYM[indextable[insnContext]].modRMDecisions[opcode];
 			break;
 		case XOP9_MAP:
-			dec = &XOP9_MAP_SYM.opcodeDecisions[insnContext].modRMDecisions[opcode];
+			indextable = index_x86DisassemblerXOP9Opcodes;
+			dec = &XOP9_MAP_SYM[indextable[insnContext]].modRMDecisions[opcode];
 			break;
 		case XOPA_MAP:
-			dec = &XOPA_MAP_SYM.opcodeDecisions[insnContext].modRMDecisions[opcode];
+			indextable = index_x86DisassemblerXOPAOpcodes;
+			dec = &XOPA_MAP_SYM[indextable[insnContext]].modRMDecisions[opcode];
 			break;
 	}
 
