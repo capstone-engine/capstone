@@ -473,6 +473,8 @@ class Cs(object):
         # save mode
         self._mode = opt
 
+
+    # Disassemble binary & return disassembled instructions in CsInsn objects
     def disasm(self, code, offset, count = 0):
         all_insn = ctypes.POINTER(_cs_insn)()
         res = _cs.cs_disasm_ex(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
@@ -487,6 +489,9 @@ class Cs(object):
             return
             yield
 
+
+    # Light function to disassemble binary. This is about 20% faster than disasm()
+    # Unlike disasm(), disasm_lite() only return tuples of (address, size, mnemonic, op_str)
     def disasm_lite(self, code, offset, count = 0):
         all_insn = ctypes.POINTER(_cs_insn)()
         res = _cs.cs_disasm_ex(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
