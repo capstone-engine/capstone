@@ -233,7 +233,9 @@ class _dummy_cs(object):
         self.arch = arch
 
 
-# quick & dirty Python function to disasm raw binary code
+# Quick & dirty Python function to disasm raw binary code
+# This function return CsInsn objects
+# NOTE: you might want to use more efficient Cs class & its methods.
 def cs_disasm_quick(arch, mode, code, offset, count = 0):
     # verify version compatibility with the core before doing anything
     (major, minor, _combined) = cs_version()
@@ -251,6 +253,43 @@ def cs_disasm_quick(arch, mode, code, offset, count = 0):
     if res > 0:
         for i in xrange(res):
             yield CsInsn(_dummy_cs(csh, arch), all_insn[i])
+
+        _cs.cs_free(all_insn, res)
+    else:
+        status = _cs.cs_errno(csh)
+        if status != CS_ERR_OK:
+            raise CsError(status)
+        return
+        yield
+
+    status = _cs.cs_close(csh)
+    if status != CS_ERR_OK:
+        raise CsError(status)
+
+
+# Another quick, but lighter function to disasm raw binary code.
+# This function is faster than cs_disasm_quick() around 20% because
+# cs_disasm_lite() only return tuples of (address, size, mnemonic, op_str),
+# rather than CsInsn objects.
+# NOTE: you might want to use more efficient Cs class & its methods.
+def cs_disasm_lite(arch, mode, code, offset, count = 0):
+    # verify version compatibility with the core before doing anything
+    (major, minor, _combined) = cs_version()
+    if major != CS_API_MAJOR or minor != CS_API_MINOR:
+        # our binding version is different from the core's API version
+        raise CsError(CS_ERR_VERSION)
+
+    csh = ctypes.c_size_t()
+    status = _cs.cs_open(arch, mode, ctypes.byref(csh))
+    if status != CS_ERR_OK:
+        raise CsError(status)
+
+    all_insn = ctypes.POINTER(_cs_insn)()
+    res = _cs.cs_disasm_ex(csh, code, len(code), offset, count, ctypes.byref(all_insn))
+    if res > 0:
+        for i in xrange(res):
+            insn = all_insn[i]
+            yield (insn.address, insn.size, insn.mnemonic, insn.op_str)
 
         _cs.cs_free(all_insn, res)
     else:
@@ -490,8 +529,9 @@ class Cs(object):
             yield
 
 
-    # Light function to disassemble binary. This is about 20% faster than disasm()
-    # Unlike disasm(), disasm_lite() only return tuples of (address, size, mnemonic, op_str)
+    # Light function to disassemble binary. This is about 20% faster than disasm() because
+    # unlike disasm(), disasm_lite() only return tuples of (address, size, mnemonic, op_str),
+    # rather than CsInsn objects.
     def disasm_lite(self, code, offset, count = 0):
         all_insn = ctypes.POINTER(_cs_insn)()
         res = _cs.cs_disasm_ex(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
