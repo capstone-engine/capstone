@@ -13721,7 +13721,6 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
       }
     }
   }
-  cs_mem_free(tmp);
   return tmp;
 }
 
