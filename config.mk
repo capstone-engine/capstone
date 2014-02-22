@@ -1,8 +1,8 @@
 ################################################################################
 # Change 'CAPSTONE_DIET = no' to 'CAPSTONE_DIET = yes' to make the library
-# more compact.
+# more compact: use less memory, and smaller in size.
 # This setup will remove all the mnemonic & op_str data, thus reduces the binary
-# size by around 200KB.
+# size by around 40%.
 # NOTE: we still keep @mnemonic & @op_str fields in cs_insn structure regardless,
 # but they will not be updated (i.e blank) at the output of disassemble APIs.
 CAPSTONE_DIET = no
