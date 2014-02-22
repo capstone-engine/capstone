@@ -199,7 +199,8 @@ unsigned int cs_version(int *major, int *minor);
 
 /*
  This API can be used to either ask for archs supported by this library,
- or check to see if the library is in 'diet' mode.
+ or check to see if the library was compile with 'diet' option (or called
+ in 'diet' mode).
 
  To check if a particular arch is supported by this library, set @query to
  arch mode (CS_ARCH_* value).
@@ -312,9 +313,10 @@ void cs_free(cs_insn *insn, size_t count);
 
 /*
  Return friendly name of regiser in a string
- Find the instruction id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
+ Find the instruction id from header file of corresponding architecture (arm.h for ARM,
+ x86.h for X86, ...)
 
- NOTE: when CAPTONE_DIET is defined, this API is irrelevant because engine does not
+ NOTE: when in 'diet' mode, this API is irrelevant because engine does not
  store register name.
 
  @handle: handle returned by cs_open()
@@ -327,7 +329,7 @@ const char *cs_reg_name(csh handle, unsigned int reg_id);
  Return friendly name of an instruction in a string
  Find the instruction id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
 
- NOTE: when CAPTONE_DIET is defined, this API is irrelevant because engine does not
+ NOTE: when in 'diet' mode, this API is irrelevant because engine does not
  store instruction name.
 
  @handle: handle returned by cs_open()
@@ -343,7 +345,7 @@ const char *cs_insn_name(csh handle, unsigned int insn_id);
  Internally, this simply verifies if @group_id matches any member of insn->groups array.
 
  NOTE: this API is only valid when detail option is ON (which is OFF by default)
- Besides, when CAPTONE_DIET is defined, this API is irrelevant because engine does not
+ Besides, when in 'diet' mode, this API is irrelevant because engine does not
  update @groups array.
 
  @handle: handle returned by cs_open()
@@ -360,7 +362,7 @@ bool cs_insn_group(csh handle, cs_insn *insn, unsigned int group_id);
  Internally, this simply verifies if @reg_id matches any member of insn->regs_read array.
 
  NOTE: this API is only valid when detail option is ON (which is OFF by default)
- Besides, when CAPTONE_DIET is defined, this API is irrelevant because engine does not
+ Besides, when in 'diet' mode, this API is irrelevant because engine does not
  update @regs_read array.
 
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
@@ -376,7 +378,7 @@ bool cs_reg_read(csh handle, cs_insn *insn, unsigned int reg_id);
  Internally, this simply verifies if @reg_id matches any member of insn->regs_write array.
 
  NOTE: this API is only valid when detail option is ON (which is OFF by default)
- Besides, when CAPTONE_DIET is defined, this API is irrelevant because engine does not
+ Besides, when in 'diet' mode, this API is irrelevant because engine does not
  update @regs_write array.
 
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
