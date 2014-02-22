@@ -50,6 +50,8 @@ __all__ = [
     'CS_ERR_OPTION',
     'CS_ERR_DETAIL',
     'CS_ERR_VERSION',
+
+    'CS_SUPPORT_DIET',
 ]
 
 # Capstone C interface
@@ -103,6 +105,7 @@ CS_ERR_OPTION = 6  # Invalid/unsupported option: cs_option()
 CS_ERR_DETAIL = 7  # Invalid/unsupported option: cs_option()
 CS_ERR_VERSION = 9 # Unsupported version (bindings)
 
+CS_SUPPORT_DIET = 0xFFFF+1
 
 import ctypes, ctypes.util, sys
 from os.path import split, join, dirname
