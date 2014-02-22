@@ -14,6 +14,8 @@ extern "C" {
 #include <stdbool.h>
 #include <stdlib.h>
 
+#include "diet.h"
+
 #ifdef _MSC_VER
 #pragma warning(disable:4201)
 #pragma warning(disable:4100)
@@ -305,6 +307,9 @@ void cs_free(cs_insn *insn, size_t count);
  Return friendly name of regiser in a string
  Find the instruction id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
 
+ NOTE: when CAPTONE_DIET is defined, this API is irrelevant because engine does not
+ store register name.
+
  @handle: handle returned by cs_open()
  @reg: register id
  @return: string name of the register, or NULL if @reg_id is invalid.
@@ -314,6 +319,9 @@ const char *cs_reg_name(csh handle, unsigned int reg_id);
 /*
  Return friendly name of an instruction in a string
  Find the instruction id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
+
+ NOTE: when CAPTONE_DIET is defined, this API is irrelevant because engine does not
+ store instruction name.
 
  @handle: handle returned by cs_open()
  @insn: instruction id
@@ -328,6 +336,8 @@ const char *cs_insn_name(csh handle, unsigned int insn_id);
  Internally, this simply verifies if @group_id matches any member of insn->groups array.
 
  NOTE: this API is only valid when detail option is ON (which is OFF by default)
+ Besides, when CAPTONE_DIET is defined, this API is irrelevant because engine does not
+ update @groups array.
 
  @handle: handle returned by cs_open()
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
@@ -343,6 +353,8 @@ bool cs_insn_group(csh handle, cs_insn *insn, unsigned int group_id);
  Internally, this simply verifies if @reg_id matches any member of insn->regs_read array.
 
  NOTE: this API is only valid when detail option is ON (which is OFF by default)
+ Besides, when CAPTONE_DIET is defined, this API is irrelevant because engine does not
+ update @regs_read array.
 
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
  @reg_id: register that you want to check if this instruction used it.
@@ -357,6 +369,8 @@ bool cs_reg_read(csh handle, cs_insn *insn, unsigned int reg_id);
  Internally, this simply verifies if @reg_id matches any member of insn->regs_write array.
 
  NOTE: this API is only valid when detail option is ON (which is OFF by default)
+ Besides, when CAPTONE_DIET is defined, this API is irrelevant because engine does not
+ update @regs_write array.
 
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
  @reg_id: register that you want to check if this instruction modified it.

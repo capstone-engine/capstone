@@ -29,9 +29,6 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 // return insn name, given insn id
 const char *X86_insn_name(csh handle, unsigned int id);
 
-// return insn id, given insn mnemonic
-x86_reg X86_map_insn(const char *mnem);
-
 // post printer for X86.
 void X86_post_printer(csh handle, cs_insn *pub_insn, char *insn_asm);
 

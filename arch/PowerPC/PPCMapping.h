@@ -15,9 +15,6 @@ void PPC_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 
 const char *PPC_insn_name(csh handle, unsigned int id);
 
-// map instruction name to instruction ID
-ppc_reg PPC_map_insn(const char *name);
-
 // map internal raw register to 'public' register
 ppc_reg PPC_map_register(unsigned int r);
 

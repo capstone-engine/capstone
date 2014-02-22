@@ -10781,6 +10781,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U
   };
 
+#ifndef CAPSTONE_DIET
   static char AsmStrs[] = {
   /* 0 */ 'v', 'm', 'o', 'v', 'd', 'q', 'u', '3', '2', 32, 9, 0,
   /* 12 */ 'v', 'm', 'o', 'v', 'd', 'q', 'u', '6', '4', 32, 9, 0,
@@ -12051,13 +12052,16 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   /* 12905 */ 'f', 'n', 'c', 'l', 'e', 'x', 0,
   /* 12912 */ 'f', 'l', 'd', 'z', 0,
   };
+#endif
 
   // Emit the opcode for the instruction.
   uint64_t Bits1 = OpInfo[MCInst_getOpcode(MI)];
   uint64_t Bits2 = OpInfo2[MCInst_getOpcode(MI)];
   uint64_t Bits = (Bits2 << 32) | Bits1;
   // assert(Bits != 0 && "Cannot print this instruction.");
+#ifndef CAPSTONE_DIET
   SStream_concat(O, "%s", AsmStrs+(Bits & 16383)-1);
+#endif
 
 
   // Fragment 0 encoded into 6 bits for 45 unique commands.
@@ -12939,6 +12943,7 @@ static char *getRegisterName(unsigned RegNo)
 {
   // assert(RegNo && RegNo < 233 && "Invalid register number!");
 
+#ifndef CAPSTONE_DIET
   static char AsmStrs[] = {
   /* 0 */ 's', 't', '(', '0', ')', 0,
   /* 6 */ 's', 't', '(', '1', ')', 0,
@@ -13173,6 +13178,9 @@ static char *getRegisterName(unsigned RegNo)
   //     printf("%s = %u\n", AsmStrs+RegAsmOffset[i], i + 1);
   //printf("*************************\n");
   return AsmStrs+RegAsmOffset[RegNo-1];
+#else
+  return NULL;
+#endif
 }
 
 #ifdef PRINT_ALIAS_INSTR

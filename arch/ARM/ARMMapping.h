@@ -16,9 +16,6 @@ void ARM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 
 const char *ARM_insn_name(csh handle, unsigned int id);
 
-// map instruction name to instruction ID
-arm_reg ARM_map_insn(const char *name);
-
 // check if this insn is relative branch
 bool ARM_rel_branch(cs_struct *h, unsigned int insn_id);
 

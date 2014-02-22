@@ -230,6 +230,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 	if (postprinter)
 		postprinter((csh)handle, insn, buffer);
 
+#ifndef CAPSTONE_DIET
 	// fill in mnemonic & operands
 	// find first space or tab
 	char *sp = buffer;
@@ -248,6 +249,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 
 	strncpy(insn->mnemonic, buffer, sizeof(insn->mnemonic) - 1);
 	insn->mnemonic[sizeof(insn->mnemonic) - 1] = '\0';
+#endif
 }
 
 cs_err cs_option(csh ud, cs_opt_type type, size_t value)
