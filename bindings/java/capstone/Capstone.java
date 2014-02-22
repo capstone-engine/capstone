@@ -217,6 +217,7 @@ public class Capstone {
     public byte cs_reg_write(NativeLong csh, Pointer insn, int id);
     public int cs_errno(NativeLong csh);
     public int cs_version(IntByReference major, IntByReference minor);
+    public boolean cs_support(int query);
   }
 
   // capstone API version
@@ -258,6 +259,8 @@ public class Capstone {
   public static final int CS_OPT_SYNTAX_ATT = 2;    // ATT asm syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
   public static final int CS_OPT_ON = 3;  // Turn ON an option (CS_OPT_DETAIL)
   public static final int CS_OPT_SYNTAX_NOREGNAME = 3; // PPC asm syntax: Prints register name with only number (CS_OPT_SYNTAX)
+
+  public static final int CS_SUPPORT_DIET = 0xFFFF+1;	  // diet mode
 
   protected class NativeStruct {
       private NativeLong csh;
