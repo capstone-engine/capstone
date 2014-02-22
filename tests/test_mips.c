@@ -101,7 +101,7 @@ static void test()
 		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
 		if (err) {
 			printf("Failed on cs_open() with error returned: %u\n", err);
-			return;
+			continue;
 		}
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
