@@ -74,14 +74,26 @@ unsigned int cs_version(int *major, int *minor)
 	return (CS_API_MAJOR << 8) + CS_API_MINOR;
 }
 
-bool cs_support(int arch)
+bool cs_support(int query)
 {
-	if (arch == CS_ARCH_ALL)
+	if (query == CS_ARCH_ALL)
 		return all_arch == ((1 << CS_ARCH_ARM) | (1 << CS_ARCH_ARM64) |
 				(1 << CS_ARCH_MIPS) | (1 << CS_ARCH_X86) |
 				(1 << CS_ARCH_PPC));
 
-	return all_arch & (1 << arch);
+	if (query < CS_ARCH_MAX)
+		return all_arch & (1 << query);
+
+	if (query == CS_SUPPORT_DIET) {
+#ifdef CAPSTONE_DIET
+		return true;
+#else
+		return false;
+#endif
+	}
+
+	// unsupported query
+	return false;
 }
 
 cs_err cs_errno(csh handle)

@@ -43,6 +43,8 @@ typedef enum cs_arch {
 	CS_ARCH_ALL = 0xFFFF,
 } cs_arch;
 
+#define CS_SUPPORT_DIET (0xFFFF + 1)
+
 // Mode type
 typedef enum cs_mode {
 	CS_MODE_LITTLE_ENDIAN = 0,	// little endian mode (default mode)
@@ -196,14 +198,19 @@ unsigned int cs_version(int *major, int *minor);
 
 
 /*
- Check if a particular arch is supported by this library.
+ This API can be used to either ask for archs supported by this library,
+ or check to see if the library is in 'diet' mode.
 
- @arch: the architecture to be checked.
-        To verify if this library supports everything, use CS_ARCH_ALL
+ To check if a particular arch is supported by this library, set @query to
+ arch mode (CS_ARCH_* value).
+ To verify if this library supports all the archs, use CS_ARCH_ALL.
 
- @return True if this library supports the given arch.
+ To check if this library is in 'diet' mode, set @query to CS_SUPPORT_DIET.
+ This equivalent to the existence of macro CAPSTONE_DIET in include/diet.h
+
+ @return True if this library supports the given arch, or in diet mode.
 */
-bool cs_support(int arch);
+bool cs_support(int query);
 
 /*
  Initialize CS handle: this must be done before any usage of CS.
