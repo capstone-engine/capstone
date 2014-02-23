@@ -277,7 +277,7 @@ public class Capstone {
   public Capstone(int arch, int mode) {
     cs = (CS)Native.loadLibrary("capstone", CS.class);
     int version = cs.cs_version(null, null);
-	if (version != (CS_API_MAJOR << 8) + CS_API_MINOR) {
+    if (version != (CS_API_MAJOR << 8) + CS_API_MINOR) {
       throw new RuntimeException("Different API version between core & binding (CS_ERR_VERSION)");
     }
 
