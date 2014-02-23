@@ -147,11 +147,17 @@ cdef class Cs:
     cdef object _cs
 
     def __cinit__(self, _cs):
+        cdef version = cc.cs_version(NULL, NULL)
+        if (version != (capstone.CS_API_MAJOR << 8) + capstone.CS_API_MINOR):
+            # our binding version is different from the core's API version
+            raise CsError(capstone.CS_ERR_VERSION)
+
         self.csh = <cc.csh> _cs.csh.value
         self._cs = _cs
 
     def disasm(self, code, addr, count=0):
         cdef cc.cs_insn *allinsn
+
         cdef res = cc.cs_disasm_ex(self.csh, code, len(code), addr, count, &allinsn)
         detail = self._cs.detail
         arch = self._cs.arch
@@ -172,6 +178,7 @@ cdef class Cs:
     def disasm_lite(self, code, addr, count=0):
         # TODO: dont need detail, so we might turn off detail, then turn on again when done
         cdef cc.cs_insn *allinsn
+
         cdef res = cc.cs_disasm_ex(self.csh, code, len(code), addr, count, &allinsn)
 
         for i from 0 <= i < res:
