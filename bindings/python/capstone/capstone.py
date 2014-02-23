@@ -477,6 +477,11 @@ class Cs(object):
     #    return _cs.cs_option(self.csh, opt_type, opt_value)
 
     @property
+    def diet(self):
+        return _cs.cs_support(CS_SUPPORT_DIET)
+
+
+    @property
     def syntax(self):
         return self._syntax
 
@@ -491,6 +496,11 @@ class Cs(object):
     @property
     def detail(self):
         return self._detail
+
+
+    def support(self, query):
+        return _cs.cs_support(query)
+
 
     @detail.setter
     def detail(self, opt):  # opt is boolean type, so must be either 'True' or 'False'
