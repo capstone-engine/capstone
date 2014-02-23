@@ -275,9 +275,8 @@ public class Capstone {
   private int detail;
 
   public Capstone(int arch, int mode) {
-    IntByReference major = new IntByReference();
-    IntByReference minor = new IntByReference();
-    int version = cs.cs_version(major, minor);
+    cs = (CS)Native.loadLibrary("capstone", CS.class);
+    int version = cs.cs_version(null, null);
 	if (version != (CS_API_MAJOR << 8) + CS_API_MINOR) {
       throw new RuntimeException("Different API version between core & binding (CS_ERR_VERSION)");
     }
@@ -285,7 +284,6 @@ public class Capstone {
     this.arch = arch;
     this.mode = mode;
     ns = new NativeStruct();
-    cs = (CS)Native.loadLibrary("capstone", CS.class);
     ns.handleRef = new NativeLongByReference();
     if (cs.cs_open(arch, mode, ns.handleRef) != CS_ERR_OK) {
       throw new RuntimeException("ERROR: Wrong arch or mode");
