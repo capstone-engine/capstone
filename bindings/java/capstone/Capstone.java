@@ -275,6 +275,13 @@ public class Capstone {
   private int detail;
 
   public Capstone(int arch, int mode) {
+    IntByReference major = new IntByReference();
+    IntByReference minor = new IntByReference();
+    int version = cs.cs_version(major, minor);
+	if (version != (CS_API_MAJOR << 8) + CS_API_MINOR) {
+      throw new RuntimeException("Different API version between core & binding (CS_ERR_VERSION)");
+    }
+
     this.arch = arch;
     this.mode = mode;
     ns = new NativeStruct();
