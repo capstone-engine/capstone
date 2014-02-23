@@ -224,8 +224,8 @@ def cs_version():
     return (major.value, minor.value, combined)
 
 
-def cs_support(arch):
-    return _cs.cs_support(arch)
+def cs_support(query):
+    return _cs.cs_support(query)
 
 
 # dummy class resembling Cs class, just for cs_disasm_quick()
