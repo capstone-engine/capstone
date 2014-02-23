@@ -14,7 +14,7 @@ extern "C" {
 #include <stdbool.h>
 #include <stdlib.h>
 
-#include "diet.h"
+#include "diet.h"	// CAPSTONE_DIET
 
 #ifdef _MSC_VER
 #pragma warning(disable:4201)
@@ -207,9 +207,8 @@ unsigned int cs_version(int *major, int *minor);
  To verify if this library supports all the archs, use CS_ARCH_ALL.
 
  To check if this library is in 'diet' mode, set @query to CS_SUPPORT_DIET.
- This equivalent to the existence of macro CAPSTONE_DIET in include/diet.h
 
- @return True if this library supports the given arch, or in diet mode.
+ @return True if this library supports the given arch, or in 'diet' mode.
 */
 bool cs_support(int query);
 
@@ -316,7 +315,7 @@ void cs_free(cs_insn *insn, size_t count);
  Find the instruction id from header file of corresponding architecture (arm.h for ARM,
  x86.h for X86, ...)
 
- NOTE: when in 'diet' mode, this API is irrelevant because engine does not
+ WARN: when in 'diet' mode, this API is irrelevant because engine does not
  store register name.
 
  @handle: handle returned by cs_open()
@@ -329,7 +328,7 @@ const char *cs_reg_name(csh handle, unsigned int reg_id);
  Return friendly name of an instruction in a string
  Find the instruction id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
 
- NOTE: when in 'diet' mode, this API is irrelevant because engine does not
+ WARN: when in 'diet' mode, this API is irrelevant because the engine does not
  store instruction name.
 
  @handle: handle returned by cs_open()
@@ -344,8 +343,9 @@ const char *cs_insn_name(csh handle, unsigned int insn_id);
  Find the group id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
  Internally, this simply verifies if @group_id matches any member of insn->groups array.
 
- NOTE: this API is only valid when detail option is ON (which is OFF by default)
- Besides, when in 'diet' mode, this API is irrelevant because engine does not
+ NOTE: this API is only valid when detail option is ON (which is OFF by default).
+
+ WARN: when in 'diet' mode, this API is irrelevant because the engine does not
  update @groups array.
 
  @handle: handle returned by cs_open()
@@ -362,7 +362,8 @@ bool cs_insn_group(csh handle, cs_insn *insn, unsigned int group_id);
  Internally, this simply verifies if @reg_id matches any member of insn->regs_read array.
 
  NOTE: this API is only valid when detail option is ON (which is OFF by default)
- Besides, when in 'diet' mode, this API is irrelevant because engine does not
+
+ WARN: when in 'diet' mode, this API is irrelevant because the engine does not
  update @regs_read array.
 
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
@@ -378,7 +379,8 @@ bool cs_reg_read(csh handle, cs_insn *insn, unsigned int reg_id);
  Internally, this simply verifies if @reg_id matches any member of insn->regs_write array.
 
  NOTE: this API is only valid when detail option is ON (which is OFF by default)
- Besides, when in 'diet' mode, this API is irrelevant because engine does not
+
+ WARN: when in 'diet' mode, this API is irrelevant because the engine does not
  update @regs_write array.
 
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
