@@ -89,10 +89,19 @@ endif
 LIBOBJ += MCInst.o
 
 UNAME_S := $(shell uname -s)
+PKGCFCGDIR = $(LIBDIR)/pkgconfig
+
 # OSX?
 ifeq ($(UNAME_S),Darwin)
 EXT = dylib
 AR_EXT = a
+# By default, suppose that Brew is installed & use Brew path for pkgconfig file
+PKGCFCGDIR = /usr/local/lib/pkgconfig
+# is Macport installed instead?
+ifeq (,$(wildcard /opt/local/bin/port))
+# then correct the path for pkgconfig file
+PKGCFCGDIR = /opt/local/lib/pkgconfig
+endif
 else
 # Cygwin?
 IS_CYGWIN := $(shell $(CC) -dumpmachine | grep -i cygwin | wc -l)
@@ -169,14 +178,14 @@ install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
 	mkdir -p $(INCDIR)/$(LIBNAME)
 	$(INSTALL_DATA) include/*.h $(INCDIR)/$(LIBNAME)
-	mkdir -p $(LIBDIR)/pkgconfig
-	$(INSTALL_DATA) $(PKGCFGF) $(LIBDIR)/pkgconfig/
+	mkdir -p $(PKGCFCGDIR)
+	$(INSTALL_DATA) $(PKGCFGF) $(PKGCFCGDIR)/
 
 uninstall:
 	rm -rf $(INCDIR)/$(LIBNAME)
 	rm -f $(LIBDIR)/lib$(LIBNAME).$(EXT)
 	rm -f $(LIBDIR)/lib$(LIBNAME).$(AR_EXT)
-	rm -f $(LIBDIR)/pkgconfig/$(LIBNAME).pc
+	rm -f $(PKGCFCGDIR)/$(LIBNAME).pc
 
 clean:
 	rm -f $(LIBOBJ) lib$(LIBNAME).*
