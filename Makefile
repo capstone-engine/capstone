@@ -98,7 +98,7 @@ AR_EXT = a
 # By default, suppose that Brew is installed & use Brew path for pkgconfig file
 PKGCFCGDIR = /usr/local/lib/pkgconfig
 # is Macport installed instead?
-ifeq (,$(wildcard /opt/local/bin/port))
+ifneq (,$(wildcard /opt/local/bin/port))
 # then correct the path for pkgconfig file
 PKGCFCGDIR = /opt/local/lib/pkgconfig
 endif
