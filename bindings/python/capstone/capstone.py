@@ -50,6 +50,7 @@ __all__ = [
     'CS_ERR_OPTION',
     'CS_ERR_DETAIL',
     'CS_ERR_VERSION',
+    'CS_ERR_DIET',
 
     'CS_SUPPORT_DIET',
 ]
@@ -104,6 +105,7 @@ CS_ERR_MODE = 5    # Invalid/unsupported mode: cs_open()
 CS_ERR_OPTION = 6  # Invalid/unsupported option: cs_option()
 CS_ERR_DETAIL = 7  # Invalid/unsupported option: cs_option()
 CS_ERR_VERSION = 9 # Unsupported version (bindings)
+CS_ERR_DIET = 10 # Information irrelevant in diet engine
 
 CS_SUPPORT_DIET = 0xFFFF+1
 
@@ -282,6 +284,10 @@ def cs_disasm_lite(arch, mode, code, offset, count = 0):
         # our binding version is different from the core's API version
         raise CsError(CS_ERR_VERSION)
 
+    if cs_support(CS_SUPPORT_DIET):
+        # Diet engine cannot provide mnemonic & op_str
+        raise CsError(CS_ERR_DIET)
+
     csh = ctypes.c_size_t()
     status = _cs.cs_open(arch, mode, ctypes.byref(csh))
     if status != CS_ERR_OK:
@@ -331,14 +337,26 @@ class CsInsn(object):
 
     @property
     def mnemonic(self):
+        if cs_support(CS_SUPPORT_DIET):
+            # Diet engine cannot provide mnemonic & op_str
+            raise CsError(CS_ERR_DIET)
+
         return self._raw.mnemonic
 
     @property
     def op_str(self):
+        if cs_support(CS_SUPPORT_DIET):
+            # Diet engine cannot provide mnemonic & op_str
+            raise CsError(CS_ERR_DIET)
+
         return self._raw.op_str
 
     @property
     def regs_read(self):
+        if cs_support(CS_SUPPORT_DIET):
+            # Diet engine cannot provide mnemonic & op_str
+            raise CsError(CS_ERR_DIET)
+
         if self._cs._detail:
             detail = self._raw.detail.contents
             return detail.regs_read[:detail.regs_read_count]
@@ -347,6 +365,10 @@ class CsInsn(object):
 
     @property
     def regs_write(self):
+        if cs_support(CS_SUPPORT_DIET):
+            # Diet engine cannot provide mnemonic & op_str
+            raise CsError(CS_ERR_DIET)
+
         if self._cs._detail:
             detail = self._raw.detail.contents
             return detail.regs_write[:detail.regs_write_count]
@@ -355,6 +377,10 @@ class CsInsn(object):
 
     @property
     def groups(self):
+        if cs_support(CS_SUPPORT_DIET):
+            # Diet engine cannot provide mnemonic & op_str
+            raise CsError(CS_ERR_DIET)
+
         if self._cs._detail:
             detail = self._raw.detail.contents
             return detail.groups[:detail.groups_count]
