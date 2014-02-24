@@ -131,6 +131,8 @@ const char *cs_strerror(cs_err code)
 			return "Dynamic memory management uninitialized (CS_ERR_MEMSETUP)";
 		case CS_ERR_VERSION:
 			return "Different API version between core & binding (CS_ERR_VERSION)";
+		case CS_ERR_DIET:
+			return "Information irrelevant in diet engine (CS_ERR_DIET)";
 	}
 }
 

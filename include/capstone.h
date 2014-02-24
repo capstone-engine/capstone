@@ -175,6 +175,7 @@ typedef enum cs_err {
 	CS_ERR_DETAIL,	// Information is unavailable because detail option is OFF
 	CS_ERR_MEMSETUP, // Dynamic memory management uninitialized (see CS_OPT_MEM)
 	CS_ERR_VERSION, // Unsupported version (bindings)
+	CS_ERR_DIET,	// Access irrelevant data in "diet" engine
 } cs_err;
 
 /*
