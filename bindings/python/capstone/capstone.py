@@ -288,7 +288,7 @@ def cs_disasm_lite(arch, mode, code, offset, count = 0):
         raise CsError(CS_ERR_VERSION)
 
     if cs_support(CS_SUPPORT_DIET):
-        # Diet engine cannot provide mnemonic & op_str
+        # Diet engine cannot provide @mnemonic & @op_str
         raise CsError(CS_ERR_DIET)
 
     csh = ctypes.c_size_t()
@@ -341,7 +341,7 @@ class CsInsn(object):
     @property
     def mnemonic(self):
         if self._cs._diet:
-            # Diet engine cannot provide mnemonic & op_str
+            # Diet engine cannot provide @mnemonic
             raise CsError(CS_ERR_DIET)
 
         return self._raw.mnemonic
@@ -349,7 +349,7 @@ class CsInsn(object):
     @property
     def op_str(self):
         if self._cs._diet:
-            # Diet engine cannot provide mnemonic & op_str
+            # Diet engine cannot provide @op_str
             raise CsError(CS_ERR_DIET)
 
         return self._raw.op_str
@@ -357,7 +357,7 @@ class CsInsn(object):
     @property
     def regs_read(self):
         if self._cs._diet:
-            # Diet engine cannot provide mnemonic & op_str
+            # Diet engine cannot provide @regs_read
             raise CsError(CS_ERR_DIET)
 
         if self._cs._detail:
@@ -369,7 +369,7 @@ class CsInsn(object):
     @property
     def regs_write(self):
         if self._cs._diet:
-            # Diet engine cannot provide mnemonic & op_str
+            # Diet engine cannot provide @regs_write
             raise CsError(CS_ERR_DIET)
 
         if self._cs._detail:
@@ -381,7 +381,7 @@ class CsInsn(object):
     @property
     def groups(self):
         if self._cs._diet:
-            # Diet engine cannot provide mnemonic & op_str
+            # Diet engine cannot provide @groups
             raise CsError(CS_ERR_DIET)
 
         if self._cs._detail:
@@ -430,7 +430,7 @@ class CsInsn(object):
     # get the register name, given the register ID
     def reg_name(self, reg_id):
         if self._cs._diet:
-            # Diet engine cannot provide mnemonic & op_str
+            # Diet engine cannot provide register name
             raise CsError(CS_ERR_DIET)
 
         return _cs.cs_reg_name(self._cs.csh, reg_id)
@@ -438,7 +438,7 @@ class CsInsn(object):
     # get the instruction string
     def insn_name(self):
         if self._cs._diet:
-            # Diet engine cannot provide mnemonic & op_str
+            # Diet engine cannot provide instruction name
             raise CsError(CS_ERR_DIET)
 
         return _cs.cs_insn_name(self._cs.csh, self.id)
@@ -446,7 +446,7 @@ class CsInsn(object):
     # verify if this insn belong to group with id as @group_id
     def group(self, group_id):
         if self._cs._diet:
-            # Diet engine cannot provide mnemonic & op_str
+            # Diet engine cannot provide group information
             raise CsError(CS_ERR_DIET)
 
         return group_id in self.groups
@@ -454,7 +454,7 @@ class CsInsn(object):
     # verify if this instruction implicitly read register @reg_id
     def reg_read(self, reg_id):
         if self._cs._diet:
-            # Diet engine cannot provide mnemonic & op_str
+            # Diet engine cannot provide regs_read information
             raise CsError(CS_ERR_DIET)
 
         return reg_id in self.regs_read
@@ -462,7 +462,7 @@ class CsInsn(object):
     # verify if this instruction implicitly modified register @reg_id
     def reg_write(self, reg_id):
         if self._cs._diet:
-            # Diet engine cannot provide mnemonic & op_str
+            # Diet engine cannot provide regs_write information
             raise CsError(CS_ERR_DIET)
 
         return reg_id in self.regs_write
@@ -597,7 +597,7 @@ class Cs(object):
     # rather than CsInsn objects.
     def disasm_lite(self, code, offset, count = 0):
         if self._diet:
-            # Diet engine cannot provide mnemonic & op_str
+            # Diet engine cannot provide @mnemonic & @op_str
             raise CsError(CS_ERR_DIET)
 
         all_insn = ctypes.POINTER(_cs_insn)()
