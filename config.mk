@@ -33,7 +33,7 @@ USE_SYS_DYN_MEM = yes
 # more compact: use less memory & smaller in binary size.
 # This setup will remove the mnemonic & op_str data, plus semantic information
 # such as regs_read/write & group. The amount of reduced size in the binary
-# is around 40%.
+# is up to 50% in some cases.
 #
 # NOTE: we still keep all those related fileds @mnemonic, @op_str, @regs_read,
 # @regs_write, @groups in fields in cs_insn structure regardless, but they
