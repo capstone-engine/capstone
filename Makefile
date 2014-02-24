@@ -153,8 +153,10 @@ diet:
 	@echo "" >> include/diet.h
 ifneq (,$(findstring yes,$(CAPSTONE_DIET)))
 	@echo "#define CAPSTONE_DIET" >> include/diet.h
-	@echo "" >> include/diet.h
+else
+	@echo "#undefine CAPSTONE_DIET" >> include/diet.h
 endif
+	@echo "" >> include/diet.h
 	@echo "#endif" >> include/diet.h
 
 $(ARCHIVE): $(LIBOBJ)
