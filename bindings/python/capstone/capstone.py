@@ -50,6 +50,7 @@ __all__ = [
     'CS_ERR_OPTION',
     'CS_ERR_DETAIL',
     'CS_ERR_VERSION',
+    'CS_ERR_MEMSETUP',
     'CS_ERR_DIET',
 
     'CS_SUPPORT_DIET',
@@ -104,6 +105,7 @@ CS_ERR_CSH = 4     # Invalid csh argument: cs_close(), cs_errno(), cs_option()
 CS_ERR_MODE = 5    # Invalid/unsupported mode: cs_open()
 CS_ERR_OPTION = 6  # Invalid/unsupported option: cs_option()
 CS_ERR_DETAIL = 7  # Invalid/unsupported option: cs_option()
+CS_ERR_MEMSETUP = 8
 CS_ERR_VERSION = 9 # Unsupported version (bindings)
 CS_ERR_DIET = 10 # Information irrelevant in diet engine
 
@@ -426,22 +428,42 @@ class CsInsn(object):
 
     # get the register name, given the register ID
     def reg_name(self, reg_id):
+        if cs_support(CS_SUPPORT_DIET):
+            # Diet engine cannot provide mnemonic & op_str
+            raise CsError(CS_ERR_DIET)
+
         return _cs.cs_reg_name(self._cs.csh, reg_id)
 
     # get the instruction string
     def insn_name(self):
+        if cs_support(CS_SUPPORT_DIET):
+            # Diet engine cannot provide mnemonic & op_str
+            raise CsError(CS_ERR_DIET)
+
         return _cs.cs_insn_name(self._cs.csh, self.id)
 
     # verify if this insn belong to group with id as @group_id
     def group(self, group_id):
+        if cs_support(CS_SUPPORT_DIET):
+            # Diet engine cannot provide mnemonic & op_str
+            raise CsError(CS_ERR_DIET)
+
         return group_id in self.groups
 
     # verify if this instruction implicitly read register @reg_id
     def reg_read(self, reg_id):
+        if cs_support(CS_SUPPORT_DIET):
+            # Diet engine cannot provide mnemonic & op_str
+            raise CsError(CS_ERR_DIET)
+
         return reg_id in self.regs_read
 
     # verify if this instruction implicitly modified register @reg_id
     def reg_write(self, reg_id):
+        if cs_support(CS_SUPPORT_DIET):
+            # Diet engine cannot provide mnemonic & op_str
+            raise CsError(CS_ERR_DIET)
+
         return reg_id in self.regs_write
 
     # return number of operands having same operand type @op_type
@@ -504,7 +526,7 @@ class Cs(object):
 
     @property
     def diet(self):
-        return _cs.cs_support(CS_SUPPORT_DIET)
+        return cs_support(CS_SUPPORT_DIET)
 
 
     @property
@@ -525,7 +547,7 @@ class Cs(object):
 
 
     def support(self, query):
-        return _cs.cs_support(query)
+        return cs_support(query)
 
 
     @detail.setter
