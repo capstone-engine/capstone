@@ -95,14 +95,6 @@ static int modRMRequired(OpcodeType type,
 			decision = THREEBYTE3A_SYM;
 			indextable = index_x86DisassemblerThreeByte3AOpcodes;
 			break;
-		case THREEBYTE_A6:
-			decision = THREEBYTEA6_SYM;
-			indextable = index_x86DisassemblerThreeByteA6Opcodes;
-			break;
-		case THREEBYTE_A7:
-			decision = THREEBYTEA7_SYM;
-			indextable = index_x86DisassemblerThreeByteA7Opcodes;
-			break;
 		case XOP8_MAP:
 			decision = XOP8_MAP_SYM;
 			indextable = index_x86DisassemblerXOP8Opcodes;
@@ -174,22 +166,6 @@ static InstrUID decode(OpcodeType type,
 			index = indextable[insnContext];
 			if (index)
 				dec = &THREEBYTE3A_SYM[indextable[insnContext]].modRMDecisions[opcode];
-			else
-				dec = &emptyTable.modRMDecisions[opcode];
-			break;
-		case THREEBYTE_A6:
-			indextable = index_x86DisassemblerThreeByteA6Opcodes;
-			index = indextable[insnContext];
-			if (index)
-				dec = &THREEBYTEA6_SYM[indextable[insnContext]].modRMDecisions[opcode];
-			else
-				dec = &emptyTable.modRMDecisions[opcode];
-			break;
-		case THREEBYTE_A7:
-			indextable = index_x86DisassemblerThreeByteA7Opcodes;
-			index = indextable[insnContext];
-			if (index)
-				dec = &THREEBYTEA7_SYM[indextable[insnContext]].modRMDecisions[opcode];
 			else
 				dec = &emptyTable.modRMDecisions[opcode];
 			break;
@@ -837,24 +813,6 @@ static int readOpcode(struct InternalInstruction* insn)
 				return -1;
 
 			insn->opcodeType = THREEBYTE_3A;
-		} else if (current == 0xa6) {
-			// dbgprintf(insn, "Found a three-byte escape prefix (0x%hhx)", current);
-
-			insn->threeByteEscape = current;
-
-			if (consumeByte(insn, &current))
-				return -1;
-
-			insn->opcodeType = THREEBYTE_A6;
-		} else if (current == 0xa7) {
-			// dbgprintf(insn, "Found a three-byte escape prefix (0x%hhx)", current);
-
-			insn->threeByteEscape = current;
-
-			if (consumeByte(insn, &current))
-				return -1;
-
-			insn->opcodeType = THREEBYTE_A7;
 		} else {
 			// dbgprintf(insn, "Didn't find a three-byte escape prefix");
 
@@ -1245,7 +1203,7 @@ static int readSIB(struct InternalInstruction* insn)
 	base = baseFromSIB(insn->sib) | (bFromREX(insn->rexPrefix) << 3);
 
 	switch (base) {
-		case 0x5:
+		case 0xd:
 			switch (modFromModRM(insn->modRM)) {
 				case 0x0:
 					insn->eaDisplacement = EA_DISP_32;
@@ -1253,13 +1211,11 @@ static int readSIB(struct InternalInstruction* insn)
 					break;
 				case 0x1:
 					insn->eaDisplacement = EA_DISP_8;
-					insn->sibBase = (insn->addressSize == 4 ?
-							SIB_BASE_EBP : SIB_BASE_RBP);
+					insn->sibBase = (SIBBase)(sibBaseBase + base);
 					break;
 				case 0x2:
 					insn->eaDisplacement = EA_DISP_32;
-					insn->sibBase = (insn->addressSize == 4 ?
-							SIB_BASE_EBP : SIB_BASE_RBP);
+					insn->sibBase = (SIBBase)(sibBaseBase + base);
 					break;
 				case 0x3:
 					debug("Cannot have Mod = 0b11 and a SIB byte");
