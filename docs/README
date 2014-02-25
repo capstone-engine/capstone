@@ -4,23 +4,23 @@ Documention of Capstone disassembly framework.
 
 	http://capstone-engine.org/documentation.html
 
-* Programming with C language, see:
+* Programming with C language.
 
 	http://capstone-engine.org/lang_c.html
 
-* Programming with Python language, see:
+* Programming with Python language.
 
 	http://capstone-engine.org/lang_python.html
 
-* Programming with Java language, see:
+* Programming with Java language.
 
 	http://capstone-engine.org/lang_java.html
 
-* Build compact engine with only selected architectures, see:
+* Build compact engine with only selected architectures.
 
 	http://capstone-engine.org/compile.html
 
-* Build "diet" engine for even smaller libraries, see:
+* Build "diet" engine for even smaller libraries.
 
 	http://capstone-engine.org/diet.html
 

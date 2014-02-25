@@ -33,8 +33,6 @@
 #define TWOBYTE_SYM       x86DisassemblerTwoByteOpcodes
 #define THREEBYTE38_SYM   x86DisassemblerThreeByte38Opcodes
 #define THREEBYTE3A_SYM   x86DisassemblerThreeByte3AOpcodes
-#define THREEBYTEA6_SYM   x86DisassemblerThreeByteA6Opcodes
-#define THREEBYTEA7_SYM   x86DisassemblerThreeByteA7Opcodes
 #define XOP8_MAP_SYM      x86DisassemblerXOP8Opcodes
 #define XOP9_MAP_SYM      x86DisassemblerXOP9Opcodes
 #define XOPA_MAP_SYM      x86DisassemblerXOPAOpcodes
@@ -284,11 +282,9 @@ typedef enum {
 	TWOBYTE       = 1,
 	THREEBYTE_38  = 2,
 	THREEBYTE_3A  = 3,
-	THREEBYTE_A6  = 4,
-	THREEBYTE_A7  = 5,
-	XOP8_MAP      = 6,
-	XOP9_MAP      = 7,
-	XOPA_MAP      = 8
+	XOP8_MAP      = 4,
+	XOP9_MAP      = 5,
+	XOPA_MAP      = 6
 } OpcodeType;
 
 /*

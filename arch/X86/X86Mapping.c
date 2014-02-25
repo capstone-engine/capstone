@@ -1554,7 +1554,6 @@ static name_map insn_name_maps[] = {
 	{ X86_INS_VSHUFPD, "vshufpd" },
 	{ X86_INS_VSHUFPS, "vshufps" },
 	{ X86_INS_VSQRTPD, "vsqrtpd" },
-	{ X86_INS_VSQRT, "vsqrt" },
 	{ X86_INS_VSQRTPS, "vsqrtps" },
 	{ X86_INS_VSQRTSD, "vsqrtsd" },
 	{ X86_INS_VSQRTSS, "vsqrtss" },
@@ -9735,6 +9734,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		X86_MOV16ri_alt, X86_INS_MOV,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
 		X86_MOV16rm, X86_INS_MOV,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
@@ -9838,6 +9843,12 @@ static insn_map insns[] = {
 	},
 	{
 		X86_MOV32ri, X86_INS_MOV,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_MOV32ri_alt, X86_INS_MOV,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -10072,6 +10083,12 @@ static insn_map insns[] = {
 	},
 	{
 		X86_MOV8ri, X86_INS_MOV,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_MOV8ri_alt, X86_INS_MOV,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -30585,13 +30602,13 @@ static insn_map insns[] = {
 #endif
 	},
 	{
-		X86_VSQRTPDZrm, X86_INS_VSQRT,
+		X86_VSQRTPDZrm, X86_INS_VSQRTPD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
 	},
 	{
-		X86_VSQRTPDZrr, X86_INS_VSQRT,
+		X86_VSQRTPDZrr, X86_INS_VSQRTPD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
@@ -30633,13 +30650,13 @@ static insn_map insns[] = {
 #endif
 	},
 	{
-		X86_VSQRTPSZrm, X86_INS_VSQRT,
+		X86_VSQRTPSZrm, X86_INS_VSQRTPS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
 	},
 	{
-		X86_VSQRTPSZrr, X86_INS_VSQRT,
+		X86_VSQRTPSZrr, X86_INS_VSQRTPS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
@@ -31932,6 +31949,7 @@ static struct insn_reg {
 	{ X86_ADC32i32, X86_REG_EAX },
 	{ X86_IN32ri, X86_REG_EAX },
 };
+
 
 // return register of given instruction id
 // return 0 if not found
