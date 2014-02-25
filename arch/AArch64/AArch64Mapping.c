@@ -17043,5 +17043,4 @@ arm64_reg AArch64_map_insn(const char *name)
 		i = name2id(alias_insn_name_maps, ARR_SIZE(alias_insn_name_maps), name);
 
 	return (i != -1)? i : ARM64_REG_INVALID;
-	return 0;
 }
