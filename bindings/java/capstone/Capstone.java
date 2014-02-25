@@ -203,7 +203,7 @@ public class Capstone {
     public int cs_open(int arch, int mode, NativeLongByReference handle);
     public NativeLong cs_disasm_ex(NativeLong handle, byte[] code, NativeLong code_len,
         long addr, NativeLong count, PointerByReference insn);
-    public void cs_free(Pointer p);
+    public void cs_free(Pointer p, NativeLong count);
     public int cs_close(NativeLong handle);
     public int cs_option(NativeLong handle, int option, NativeLong optionValue);
 
@@ -217,11 +217,12 @@ public class Capstone {
     public byte cs_reg_write(NativeLong csh, Pointer insn, int id);
     public int cs_errno(NativeLong csh);
     public int cs_version(IntByReference major, IntByReference minor);
+    public boolean cs_support(int query);
   }
 
   // capstone API version
   public static final int CS_API_MAJOR = 2;
-  public static final int CS_API_MINOR = 0;
+  public static final int CS_API_MINOR = 1;
 
   public static final int CS_ARCH_ARM = 0;
   public static final int CS_ARCH_ARM64 = 1;
@@ -259,6 +260,8 @@ public class Capstone {
   public static final int CS_OPT_ON = 3;  // Turn ON an option (CS_OPT_DETAIL)
   public static final int CS_OPT_SYNTAX_NOREGNAME = 3; // PPC asm syntax: Prints register name with only number (CS_OPT_SYNTAX)
 
+  public static final int CS_SUPPORT_DIET = 0xFFFF+1;	  // diet mode
+
   protected class NativeStruct {
       private NativeLong csh;
       private NativeLongByReference handleRef;
@@ -272,10 +275,15 @@ public class Capstone {
   private int detail;
 
   public Capstone(int arch, int mode) {
+    cs = (CS)Native.loadLibrary("capstone", CS.class);
+    int version = cs.cs_version(null, null);
+    if (version != (CS_API_MAJOR << 8) + CS_API_MINOR) {
+      throw new RuntimeException("Different API version between core & binding (CS_ERR_VERSION)");
+    }
+
     this.arch = arch;
     this.mode = mode;
     ns = new NativeStruct();
-    cs = (CS)Native.loadLibrary("capstone", CS.class);
     ns.handleRef = new NativeLongByReference();
     if (cs.cs_open(arch, mode, ns.handleRef) != CS_ERR_OK) {
       throw new RuntimeException("ERROR: Wrong arch or mode");
@@ -329,6 +337,10 @@ public class Capstone {
     _cs_insn byref = new _cs_insn(p);
 
     CsInsn[] allInsn = fromArrayRaw((_cs_insn[]) byref.toArray(c.intValue()));
+
+    // free allocated memory
+    cs.cs_free(p, c);
+
     return allInsn;
   }
 }

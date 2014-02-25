@@ -11,6 +11,10 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
+#ifdef _MSC_VER
+#pragma warning(disable:4201)
+#endif
+
 //> ARM shift type
 typedef enum arm_shifter {
 	ARM_SFT_INVALID = 0,
@@ -647,7 +651,7 @@ typedef enum arm_insn {
 	ARM_INS_POP,
 	ARM_INS_PUSH,
 
-	ARM_INS_MAX,
+	ARM_INS_MAX,	// <-- mark the end of the list of instructions
 } arm_insn;
 
 //> Group of ARM instructions

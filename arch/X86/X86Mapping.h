@@ -29,18 +29,19 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 // return insn name, given insn id
 const char *X86_insn_name(csh handle, unsigned int id);
 
-// return insn id, given insn mnemonic
-x86_reg X86_map_insn(const char *mnem);
-
-// given public insn id, return internal insn id
-unsigned int X86_get_insn_id2(unsigned int insn_id);
-
 // post printer for X86.
 void X86_post_printer(csh handle, cs_insn *pub_insn, char *insn_asm);
 
 // handle X86 prefixes
 bool X86_insn_check_combine(cs_struct *h, cs_insn *insn);
 
+// merge with previous instruction
+// this is to handle some 'prefixed' instructions such as LOCK or REP
 void X86_insn_combine(cs_struct *h, cs_insn *insn, cs_insn *prev);
+
+// return register of given instruction id
+// return 0 if not found
+// this is to handle instructions embedding accumulate registers into AsmStrs[]
+x86_reg X86_insn_reg(unsigned int id);
 
 #endif

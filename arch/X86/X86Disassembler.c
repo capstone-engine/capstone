@@ -63,16 +63,78 @@ enum {
 /// @param reg        - The Reg to append.
 static void translateRegister(MCInst *mcInst, Reg reg)
 {
-	//#define ENTRY(x) X86_x,
+//#define ENTRY(x) X86_x,
 #define ENTRY(x) X86_##x,
 	uint8_t llvmRegnums[] = {
 		ALL_REGS
-		0
+			0
 	};
 #undef ENTRY
 
 	uint8_t llvmRegnum = llvmRegnums[reg];
 	MCInst_addOperand(mcInst, MCOperand_CreateReg(llvmRegnum));
+}
+
+static const uint8_t segmentRegnums[SEG_OVERRIDE_max] = {
+	0,        // SEG_OVERRIDE_NONE
+	X86_CS,
+	X86_SS,
+	X86_DS,
+	X86_ES,
+	X86_FS,
+	X86_GS
+};
+
+/// translateSrcIndex   - Appends a source index operand to an MCInst.
+///
+/// @param mcInst       - The MCInst to append to.
+/// @param insn         - The internal instruction.
+static bool translateSrcIndex(MCInst *mcInst, InternalInstruction *insn)
+{
+	unsigned baseRegNo;
+	MCOperand *segmentReg;
+	MCOperand *baseReg;
+
+	if (insn->mode == MODE_64BIT)
+		baseRegNo = insn->prefixPresent[0x67] ? X86_ESI : X86_RSI;
+	else if (insn->mode == MODE_32BIT)
+		baseRegNo = insn->prefixPresent[0x67] ? X86_SI : X86_ESI;
+	else {
+		// assert(insn->mode == MODE_16BIT);
+		baseRegNo = insn->prefixPresent[0x67] ? X86_ESI : X86_SI;
+	}
+
+	baseReg = MCOperand_CreateReg(baseRegNo);
+	MCInst_addOperand(mcInst, baseReg);
+
+	segmentReg = MCOperand_CreateReg(segmentRegnums[insn->segmentOverride]);
+	MCInst_addOperand(mcInst, segmentReg);
+
+	return false;
+}
+
+/// translateDstIndex   - Appends a destination index operand to an MCInst.
+///
+/// @param mcInst       - The MCInst to append to.
+/// @param insn         - The internal instruction.
+static bool translateDstIndex(MCInst *mcInst, InternalInstruction *insn)
+{
+	unsigned baseRegNo;
+	MCOperand *baseReg;
+
+	if (insn->mode == MODE_64BIT)
+		baseRegNo = insn->prefixPresent[0x67] ? X86_EDI : X86_RDI;
+	else if (insn->mode == MODE_32BIT)
+		baseRegNo = insn->prefixPresent[0x67] ? X86_DI : X86_EDI;
+	else {
+		// assert(insn->mode == MODE_16BIT);
+		baseRegNo = insn->prefixPresent[0x67] ? X86_EDI : X86_DI;
+	}
+
+	baseReg = MCOperand_CreateReg(baseRegNo);
+	MCInst_addOperand(mcInst, baseReg);
+
+	return false;
 }
 
 /// translateImmediate  - Appends an immediate operand to an MCInst.
@@ -84,8 +146,10 @@ static void translateRegister(MCInst *mcInst, Reg reg)
 static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 		const OperandSpecifier *operand, InternalInstruction *insn)
 {
-	OperandType type = (OperandType)operand->type;
+	OperandType type;
+	MCOperand *segmentReg;
 
+	type = (OperandType)operand->type;
 	if (type == TYPE_RELv) {
 		//isBranch = true;
 		//pcrel = insn->startLocation + insn->immediateOffset + insn->immediateSize;
@@ -146,13 +210,13 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 		case TYPE_XMM32:
 		case TYPE_XMM64:
 		case TYPE_XMM128:
-			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_XMM0 + (immediate >> 4)));
+			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_XMM0 + ((uint32_t)immediate >> 4)));
 			return;
 		case TYPE_XMM256:
-			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_YMM0 + (immediate >> 4)));
+			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_YMM0 + ((uint32_t)immediate >> 4)));
 			return;
 		case TYPE_XMM512:
-			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_ZMM0 + (immediate >> 4)));
+			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_ZMM0 + ((uint32_t)immediate >> 4)));
 			return;
 		case TYPE_REL8:
 			if(immediate & 0x80)
@@ -169,6 +233,12 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 	}
 
 	MCInst_addOperand(mcInst, MCOperand_CreateImm(immediate));
+
+	if (type == TYPE_MOFFS8 || type == TYPE_MOFFS16 ||
+			type == TYPE_MOFFS32 || type == TYPE_MOFFS64) {
+		segmentReg = MCOperand_CreateReg(segmentRegnums[insn->segmentOverride]);
+		MCInst_addOperand(mcInst, segmentReg);
+	}
 }
 
 /// translateRMRegister - Translates a register stored in the R/M field of the
@@ -196,7 +266,7 @@ static bool translateRMRegister(MCInst *mcInst, InternalInstruction *insn)
 				return true;
 #define ENTRY(x)                                                      \
 		case EA_REG_##x:                                                    \
-				MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_##x)); break;
+																			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_##x)); break;
 			ALL_REGS
 #undef ENTRY
 		default:
@@ -234,13 +304,14 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 	MCOperand *indexReg;
 	MCOperand *displacement;
 	MCOperand *segmentReg;
+	bool IndexIs512;
 
 	if (insn->eaBase == EA_BASE_sib || insn->eaBase == EA_BASE_sib64) {
 		if (insn->sibBase != SIB_BASE_NONE) {
 			switch (insn->sibBase) {
 #define ENTRY(x)                                          \
 				case SIB_BASE_##x:                                  \
-					baseReg = MCOperand_CreateReg(X86_##x); break;
+																	baseReg = MCOperand_CreateReg(X86_##x); break;
 				ALL_SIB_BASES
 #undef ENTRY
 				default:
@@ -271,13 +342,24 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 		bool IndexIs256 = (Opcode == X86_VGATHERQPDYrm ||
 				Opcode == X86_VGATHERDPSYrm ||
 				Opcode == X86_VGATHERQPSYrm ||
+				Opcode == X86_VGATHERDPDZrm ||
+				Opcode == X86_VPGATHERDQZrm ||
 				Opcode == X86_VPGATHERQQYrm ||
 				Opcode == X86_VPGATHERDDYrm ||
 				Opcode == X86_VPGATHERQDYrm);
-		if (IndexIs128 || IndexIs256) {
+		IndexIs512 = (Opcode == X86_VGATHERQPDZrm ||
+				Opcode == X86_VGATHERDPSZrm ||
+				Opcode == X86_VGATHERQPSZrm ||
+				Opcode == X86_VPGATHERQQZrm ||
+				Opcode == X86_VPGATHERDDZrm ||
+				Opcode == X86_VPGATHERQDZrm);
+
+		if (IndexIs128 || IndexIs256 || IndexIs512) {
 			unsigned IndexOffset = insn->sibIndex -
 				(insn->addressSize == 8 ? SIB_INDEX_RAX:SIB_INDEX_EAX);
-			SIBIndex IndexBase = IndexIs256 ? SIB_INDEX_YMM0 : SIB_INDEX_XMM0;
+			SIBIndex IndexBase = IndexIs512 ? SIB_INDEX_ZMM0 :
+				IndexIs256 ? SIB_INDEX_YMM0 : SIB_INDEX_XMM0;
+
 			insn->sibIndex = (SIBIndex)(IndexBase + (insn->sibIndex == SIB_INDEX_NONE ? 4 : IndexOffset));
 		}
 
@@ -288,12 +370,12 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 					return true;
 #define ENTRY(x)                                          \
 				case SIB_INDEX_##x:                                 \
-						indexReg = MCOperand_CreateReg(X86_##x); break;
+																	indexReg = MCOperand_CreateReg(X86_##x); break;
 					EA_BASES_32BIT
-					EA_BASES_64BIT
-					REGS_XMM
-					REGS_YMM
-					REGS_ZMM
+						EA_BASES_64BIT
+						REGS_XMM
+						REGS_YMM
+						REGS_ZMM
 #undef ENTRY
 			}
 		} else {
@@ -343,7 +425,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 						//   placeholders to keep the compiler happy.
 #define ENTRY(x)                                        \
 					case EA_BASE_##x:                                 \
-							baseReg = MCOperand_CreateReg(X86_##x); break; 
+																	  baseReg = MCOperand_CreateReg(X86_##x); break; 
 						ALL_EA_BASES
 #undef ENTRY
 #define ENTRY(x) case EA_REG_##x:
@@ -359,16 +441,6 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 	}
 
 	displacement = MCOperand_CreateImm(insn->displacement);
-
-	static const uint8_t segmentRegnums[SEG_OVERRIDE_max] = {
-		0,        // SEG_OVERRIDE_NONE
-		X86_CS,
-		X86_SS,
-		X86_DS,
-		X86_ES,
-		X86_FS,
-		X86_GS
-	};
 
 	segmentReg = MCOperand_CreateReg(segmentRegnums[insn->segmentOverride]);
 
@@ -408,6 +480,9 @@ static bool translateRM(MCInst *mcInst, const OperandSpecifier *operand,
 		case TYPE_XMM128:
 		case TYPE_XMM256:
 		case TYPE_XMM512:
+		case TYPE_VK1:
+		case TYPE_VK8:
+		case TYPE_VK16:
 		case TYPE_DEBUGREG:
 		case TYPE_CONTROLREG:
 			return translateRMRegister(mcInst, insn);
@@ -442,15 +517,25 @@ static bool translateRM(MCInst *mcInst, const OperandSpecifier *operand,
 ///
 /// @param mcInst       - The MCInst to append to.
 /// @param stackPos     - The stack position to translate.
-/// @return             - 0 on success; nonzero otherwise.
-static bool translateFPRegister(MCInst *mcInst, uint8_t stackPos)
+static void translateFPRegister(MCInst *mcInst, uint8_t stackPos)
 {
-	if (stackPos >= 8) {
-		//debug("Invalid FP stack position");
+	MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_ST0 + stackPos));
+}
+
+/// translateMaskRegister - Translates a 3-bit mask register number to
+///   LLVM form, and appends it to an MCInst.
+///
+/// @param mcInst       - The MCInst to append to.
+/// @param maskRegNum   - Number of mask register from 0 to 7.
+/// @return             - false on success; true otherwise.
+static bool translateMaskRegister(MCInst *mcInst, uint8_t maskRegNum)
+{
+	if (maskRegNum >= 8) {
+		// debug("Invalid mask register number");
 		return true;
 	}
 
-	MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_ST0 + stackPos));
+	MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_K0 + maskRegNum));
 
 	return false;
 }
@@ -468,6 +553,8 @@ static bool translateOperand(MCInst *mcInst, const OperandSpecifier *operand, In
 		case ENCODING_REG:
 			translateRegister(mcInst, insn->reg);
 			return false;
+		case ENCODING_WRITEMASK:
+			return translateMaskRegister(mcInst, insn->writemask);
 		case ENCODING_RM:
 			return translateRM(mcInst, operand, insn);
 		case ENCODING_CB:
@@ -486,16 +573,19 @@ static bool translateOperand(MCInst *mcInst, const OperandSpecifier *operand, In
 		case ENCODING_Ia:
 			translateImmediate(mcInst, insn->immediates[insn->numImmediatesTranslated++], operand, insn);
 			return false;
+		case ENCODING_SI:
+			return translateSrcIndex(mcInst, insn);
+		case ENCODING_DI:
+			return translateDstIndex(mcInst, insn);
 		case ENCODING_RB:
 		case ENCODING_RW:
 		case ENCODING_RD:
 		case ENCODING_RO:
-			translateRegister(mcInst, insn->opcodeRegister);
-			return false;
-		case ENCODING_I:
-			return translateFPRegister(mcInst, insn->opcodeModifier);
 		case ENCODING_Rv:
 			translateRegister(mcInst, insn->opcodeRegister);
+			return false;
+		case ENCODING_FP:
+			translateFPRegister(mcInst, insn->modRM & 7);
 			return false;
 		case ENCODING_VVVV:
 			translateRegister(mcInst, insn->vvvv);
@@ -570,8 +660,8 @@ static void update_pub_insn(cs_insn_flat *pub, InternalInstruction *inter)
 
 	pub->x86.segment = x86_map_segment(inter->segmentOverride);
 
-	if (inter->vexXopType > 0)
-		memcpy(pub->x86.opcode, inter->vexXopPrefix, sizeof(pub->x86.opcode));
+	if (inter->vectorExtensionType > 0)
+		memcpy(pub->x86.opcode, inter->vectorExtensionPrefix, sizeof(pub->x86.opcode));
 	else {
 		pub->x86.opcode[0] = inter->opcode;
 		pub->x86.opcode[1] = inter->twoByteEscape;
@@ -624,13 +714,11 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *in
 				MODE_64BIT);
 
 	if (ret) {
-		*size = insn.readerCursor - address;
+		*size = (uint16_t)(insn.readerCursor - address);
 		return false;
 	} else {
-		*size = insn.length;
+		*size = (uint16_t)insn.length;
 		result = (!translateInstruction(instr, &insn)) ?  true : false;
-		// save segment for printing hack
-		instr->x86_segment = x86_map_segment(insn.segmentOverride);
 		if (handle->detail)
 			update_pub_insn(&instr->flat_insn, &insn);
 		return result;

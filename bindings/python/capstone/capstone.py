@@ -49,13 +49,18 @@ __all__ = [
     'CS_ERR_MODE',
     'CS_ERR_OPTION',
     'CS_ERR_DETAIL',
+    'CS_ERR_VERSION',
+    'CS_ERR_MEMSETUP',
+    'CS_ERR_DIET',
+
+    'CS_SUPPORT_DIET',
 ]
 
 # Capstone C interface
 
 # API version
 CS_API_MAJOR = 2
-CS_API_MINOR = 0
+CS_API_MINOR = 1
 
 # architectures
 CS_ARCH_ARM = 0
@@ -100,7 +105,12 @@ CS_ERR_CSH = 4     # Invalid csh argument: cs_close(), cs_errno(), cs_option()
 CS_ERR_MODE = 5    # Invalid/unsupported mode: cs_open()
 CS_ERR_OPTION = 6  # Invalid/unsupported option: cs_option()
 CS_ERR_DETAIL = 7  # Invalid/unsupported option: cs_option()
+CS_ERR_MEMSETUP = 8
+CS_ERR_VERSION = 9 # Unsupported version (bindings)
+CS_ERR_DIET = 10 # Information irrelevant in diet engine
 
+# query id for cs_support()
+CS_SUPPORT_DIET = CS_ARCH_ALL+1
 
 import ctypes, ctypes.util, sys
 from os.path import split, join, dirname
@@ -219,8 +229,8 @@ def cs_version():
     return (major.value, minor.value, combined)
 
 
-def cs_support(arch):
-    return _cs.cs_support(arch)
+def cs_support(query):
+    return _cs.cs_support(query)
 
 
 # dummy class resembling Cs class, just for cs_disasm_quick()
@@ -231,8 +241,16 @@ class _dummy_cs(object):
         self.arch = arch
 
 
-# quick & dirty Python function to disasm raw binary code
+# Quick & dirty Python function to disasm raw binary code
+# This function return CsInsn objects
+# NOTE: you might want to use more efficient Cs class & its methods.
 def cs_disasm_quick(arch, mode, code, offset, count = 0):
+    # verify version compatibility with the core before doing anything
+    (major, minor, _combined) = cs_version()
+    if major != CS_API_MAJOR or minor != CS_API_MINOR:
+        # our binding version is different from the core's API version
+        raise CsError(CS_ERR_VERSION)
+
     csh = ctypes.c_size_t()
     status = _cs.cs_open(arch, mode, ctypes.byref(csh))
     if status != CS_ERR_OK:
@@ -243,6 +261,47 @@ def cs_disasm_quick(arch, mode, code, offset, count = 0):
     if res > 0:
         for i in xrange(res):
             yield CsInsn(_dummy_cs(csh, arch), all_insn[i])
+
+        _cs.cs_free(all_insn, res)
+    else:
+        status = _cs.cs_errno(csh)
+        if status != CS_ERR_OK:
+            raise CsError(status)
+        return
+        yield
+
+    status = _cs.cs_close(csh)
+    if status != CS_ERR_OK:
+        raise CsError(status)
+
+
+# Another quick, but lighter function to disasm raw binary code.
+# This function is faster than cs_disasm_quick() around 20% because
+# cs_disasm_lite() only return tuples of (address, size, mnemonic, op_str),
+# rather than CsInsn objects.
+# NOTE: you might want to use more efficient Cs class & its methods.
+def cs_disasm_lite(arch, mode, code, offset, count = 0):
+    # verify version compatibility with the core before doing anything
+    (major, minor, _combined) = cs_version()
+    if major != CS_API_MAJOR or minor != CS_API_MINOR:
+        # our binding version is different from the core's API version
+        raise CsError(CS_ERR_VERSION)
+
+    if cs_support(CS_SUPPORT_DIET):
+        # Diet engine cannot provide @mnemonic & @op_str
+        raise CsError(CS_ERR_DIET)
+
+    csh = ctypes.c_size_t()
+    status = _cs.cs_open(arch, mode, ctypes.byref(csh))
+    if status != CS_ERR_OK:
+        raise CsError(status)
+
+    all_insn = ctypes.POINTER(_cs_insn)()
+    res = _cs.cs_disasm_ex(csh, code, len(code), offset, count, ctypes.byref(all_insn))
+    if res > 0:
+        for i in xrange(res):
+            insn = all_insn[i]
+            yield (insn.address, insn.size, insn.mnemonic, insn.op_str)
 
         _cs.cs_free(all_insn, res)
     else:
@@ -281,14 +340,26 @@ class CsInsn(object):
 
     @property
     def mnemonic(self):
+        if self._cs._diet:
+            # Diet engine cannot provide @mnemonic
+            raise CsError(CS_ERR_DIET)
+
         return self._raw.mnemonic
 
     @property
     def op_str(self):
+        if self._cs._diet:
+            # Diet engine cannot provide @op_str
+            raise CsError(CS_ERR_DIET)
+
         return self._raw.op_str
 
     @property
     def regs_read(self):
+        if self._cs._diet:
+            # Diet engine cannot provide @regs_read
+            raise CsError(CS_ERR_DIET)
+
         if self._cs._detail:
             detail = self._raw.detail.contents
             return detail.regs_read[:detail.regs_read_count]
@@ -297,6 +368,10 @@ class CsInsn(object):
 
     @property
     def regs_write(self):
+        if self._cs._diet:
+            # Diet engine cannot provide @regs_write
+            raise CsError(CS_ERR_DIET)
+
         if self._cs._detail:
             detail = self._raw.detail.contents
             return detail.regs_write[:detail.regs_write_count]
@@ -305,6 +380,10 @@ class CsInsn(object):
 
     @property
     def groups(self):
+        if self._cs._diet:
+            # Diet engine cannot provide @groups
+            raise CsError(CS_ERR_DIET)
+
         if self._cs._detail:
             detail = self._raw.detail.contents
             return detail.groups[:detail.groups_count]
@@ -350,22 +429,42 @@ class CsInsn(object):
 
     # get the register name, given the register ID
     def reg_name(self, reg_id):
+        if self._cs._diet:
+            # Diet engine cannot provide register name
+            raise CsError(CS_ERR_DIET)
+
         return _cs.cs_reg_name(self._cs.csh, reg_id)
 
     # get the instruction string
     def insn_name(self):
+        if self._cs._diet:
+            # Diet engine cannot provide instruction name
+            raise CsError(CS_ERR_DIET)
+
         return _cs.cs_insn_name(self._cs.csh, self.id)
 
     # verify if this insn belong to group with id as @group_id
     def group(self, group_id):
+        if self._cs._diet:
+            # Diet engine cannot provide group information
+            raise CsError(CS_ERR_DIET)
+
         return group_id in self.groups
 
     # verify if this instruction implicitly read register @reg_id
     def reg_read(self, reg_id):
+        if self._cs._diet:
+            # Diet engine cannot provide regs_read information
+            raise CsError(CS_ERR_DIET)
+
         return reg_id in self.regs_read
 
     # verify if this instruction implicitly modified register @reg_id
     def reg_write(self, reg_id):
+        if self._cs._diet:
+            # Diet engine cannot provide regs_write information
+            raise CsError(CS_ERR_DIET)
+
         return reg_id in self.regs_write
 
     # return number of operands having same operand type @op_type
@@ -388,6 +487,13 @@ class CsInsn(object):
 
 class Cs(object):
     def __init__(self, arch, mode):
+        # verify version compatibility with the core before doing anything
+        (major, minor, _combined) = cs_version()
+        if major != CS_API_MAJOR or minor != CS_API_MINOR:
+            self.csh = None
+            # our binding version is different from the core's API version
+            raise CsError(CS_ERR_VERSION)
+
         self.arch, self._mode = arch, mode
         self.csh = ctypes.c_size_t()
         status = _cs.cs_open(arch, mode, ctypes.byref(self.csh))
@@ -409,6 +515,7 @@ class Cs(object):
             self._syntax = None
 
         self._detail = False    # by default, do not produce instruction details
+        self._diet = cs_support(CS_SUPPORT_DIET)
 
     def __del__(self):
         if self.csh:
@@ -418,6 +525,11 @@ class Cs(object):
 
     #def option(self, opt_type, opt_value):
     #    return _cs.cs_option(self.csh, opt_type, opt_value)
+
+    @property
+    def diet(self):
+        return self._diet
+
 
     @property
     def syntax(self):
@@ -434,6 +546,11 @@ class Cs(object):
     @property
     def detail(self):
         return self._detail
+
+
+    def support(self, query):
+        return cs_support(query)
+
 
     @detail.setter
     def detail(self, opt):  # opt is boolean type, so must be either 'True' or 'False'
@@ -458,12 +575,37 @@ class Cs(object):
         # save mode
         self._mode = opt
 
+
+    # Disassemble binary & return disassembled instructions in CsInsn objects
     def disasm(self, code, offset, count = 0):
         all_insn = ctypes.POINTER(_cs_insn)()
         res = _cs.cs_disasm_ex(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
         if res > 0:
             for i in xrange(res):
                 yield CsInsn(self, all_insn[i])
+            _cs.cs_free(all_insn, res)
+        else:
+            status = _cs.cs_errno(self.csh)
+            if status != CS_ERR_OK:
+                raise CsError(status)
+            return
+            yield
+
+
+    # Light function to disassemble binary. This is about 20% faster than disasm() because
+    # unlike disasm(), disasm_lite() only return tuples of (address, size, mnemonic, op_str),
+    # rather than CsInsn objects.
+    def disasm_lite(self, code, offset, count = 0):
+        if self._diet:
+            # Diet engine cannot provide @mnemonic & @op_str
+            raise CsError(CS_ERR_DIET)
+
+        all_insn = ctypes.POINTER(_cs_insn)()
+        res = _cs.cs_disasm_ex(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
+        if res > 0:
+            for i in xrange(res):
+                insn = all_insn[i]
+                yield (insn.address, insn.size, insn.mnemonic, insn.op_str)
             _cs.cs_free(all_insn, res)
         else:
             status = _cs.cs_errno(self.csh)

@@ -14,9 +14,16 @@ extern "C" {
 #include <stdbool.h>
 #include <stdlib.h>
 
+#include "diet.h"	// CAPSTONE_DIET
+
+#ifdef _MSC_VER
+#pragma warning(disable:4201)
+#pragma warning(disable:4100)
+#endif
+
 // Capstone API version
 #define CS_API_MAJOR 2
-#define CS_API_MINOR 0
+#define CS_API_MINOR 1
 
 // Macro to create combined version which can be compared to
 // result of cs_version() API.
@@ -35,6 +42,8 @@ typedef enum cs_arch {
 	CS_ARCH_MAX,
 	CS_ARCH_ALL = 0xFFFF,
 } cs_arch;
+
+#define CS_SUPPORT_DIET (CS_ARCH_ALL + 1)
 
 // Mode type
 typedef enum cs_mode {
@@ -165,6 +174,8 @@ typedef enum cs_err {
 	CS_ERR_OPTION,	// Invalid/unsupported option: cs_option()
 	CS_ERR_DETAIL,	// Information is unavailable because detail option is OFF
 	CS_ERR_MEMSETUP, // Dynamic memory management uninitialized (see CS_OPT_MEM)
+	CS_ERR_VERSION, // Unsupported version (bindings)
+	CS_ERR_DIET,	// Access irrelevant data in "diet" engine
 } cs_err;
 
 /*
@@ -188,14 +199,19 @@ unsigned int cs_version(int *major, int *minor);
 
 
 /*
- Check if a particular arch is supported by this library.
+ This API can be used to either ask for archs supported by this library,
+ or check to see if the library was compile with 'diet' option (or called
+ in 'diet' mode).
 
- @arch: the architecture to be checked.
-        To verify if this library supports everything, use CS_ARCH_ALL
+ To check if a particular arch is supported by this library, set @query to
+ arch mode (CS_ARCH_* value).
+ To verify if this library supports all the archs, use CS_ARCH_ALL.
 
- @return True if this library supports the given arch.
+ To check if this library is in 'diet' mode, set @query to CS_SUPPORT_DIET.
+
+ @return True if this library supports the given arch, or in 'diet' mode.
 */
-bool cs_support(int arch);
+bool cs_support(int query);
 
 /*
  Initialize CS handle: this must be done before any usage of CS.
@@ -297,7 +313,11 @@ void cs_free(cs_insn *insn, size_t count);
 
 /*
  Return friendly name of regiser in a string
- Find the instruction id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
+ Find the instruction id from header file of corresponding architecture (arm.h for ARM,
+ x86.h for X86, ...)
+
+ WARN: when in 'diet' mode, this API is irrelevant because engine does not
+ store register name.
 
  @handle: handle returned by cs_open()
  @reg: register id
@@ -308,6 +328,9 @@ const char *cs_reg_name(csh handle, unsigned int reg_id);
 /*
  Return friendly name of an instruction in a string
  Find the instruction id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
+
+ WARN: when in 'diet' mode, this API is irrelevant because the engine does not
+ store instruction name.
 
  @handle: handle returned by cs_open()
  @insn: instruction id
@@ -321,7 +344,10 @@ const char *cs_insn_name(csh handle, unsigned int insn_id);
  Find the group id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
  Internally, this simply verifies if @group_id matches any member of insn->groups array.
 
- NOTE: this API is only valid when detail option is ON (which is OFF by default)
+ NOTE: this API is only valid when detail option is ON (which is OFF by default).
+
+ WARN: when in 'diet' mode, this API is irrelevant because the engine does not
+ update @groups array.
 
  @handle: handle returned by cs_open()
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
@@ -338,6 +364,9 @@ bool cs_insn_group(csh handle, cs_insn *insn, unsigned int group_id);
 
  NOTE: this API is only valid when detail option is ON (which is OFF by default)
 
+ WARN: when in 'diet' mode, this API is irrelevant because the engine does not
+ update @regs_read array.
+
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
  @reg_id: register that you want to check if this instruction used it.
 
@@ -351,6 +380,9 @@ bool cs_reg_read(csh handle, cs_insn *insn, unsigned int reg_id);
  Internally, this simply verifies if @reg_id matches any member of insn->regs_write array.
 
  NOTE: this API is only valid when detail option is ON (which is OFF by default)
+
+ WARN: when in 'diet' mode, this API is irrelevant because the engine does not
+ update @regs_write array.
 
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
  @reg_id: register that you want to check if this instruction modified it.

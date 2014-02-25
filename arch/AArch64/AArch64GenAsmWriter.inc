@@ -5587,6 +5587,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U
   };
 
+#ifndef CAPSTONE_DIET
   static char AsmStrs[] = {
   /* 0 */ 's', 'h', 'a', '1', 's', 'u', '0', 9, 0,
   /* 9 */ 's', 'h', 'a', '2', '5', '6', 's', 'u', '0', 9, 0,
@@ -5994,13 +5995,16 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   /* 2804 */ 'd', 'r', 'p', 's', 0,
   /* 2809 */ 'e', 'r', 'e', 't', 0,
   };
+#endif
 
   // Emit the opcode for the instruction.
   uint64_t Bits1 = OpInfo[MCInst_getOpcode(MI)];
   uint64_t Bits2 = OpInfo2[MCInst_getOpcode(MI)];
   uint64_t Bits = (Bits2 << 32) | Bits1;
   // assert(Bits != 0 && "Cannot print this instruction.");
+#ifndef CAPSTONE_DIET
   SStream_concat(O, "%s", AsmStrs+(Bits & 4095)-1);
+#endif
 
 
   // Fragment 0 encoded into 8 bits for 159 unique commands.
@@ -8523,6 +8527,7 @@ static char *getRegisterName(unsigned RegNo)
 {
   // assert(RegNo && RegNo < 420 && "Invalid register number!");
 
+#ifndef CAPSTONE_DIET
   static char AsmStrs[] = {
   /* 0 */ 'D', '7', '_', 'D', '8', '_', 'D', '9', '_', 'D', '1', '0', 0,
   /* 13 */ 'Q', '7', '_', 'Q', '8', '_', 'Q', '9', '_', 'Q', '1', '0', 0,
@@ -8854,18 +8859,21 @@ static char *getRegisterName(unsigned RegNo)
   //     printf("%s = %u\n", AsmStrs+RegAsmOffset[i], i + 1);
   //printf("*************************\n");
   return AsmStrs+RegAsmOffset[RegNo-1];
+#else
+  return NULL;
+#endif
 }
 
 #ifdef PRINT_ALIAS_INSTR
 #undef PRINT_ALIAS_INSTR
 
-static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
+static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
 {
   #define GETREGCLASS_CONTAIN(_class, _reg) MCRegisterClass_contains(MCRegisterInfo_getRegClass(MRI, _class), MCOperand_getReg(MCInst_getOperand(MI, _reg)))
   const char *AsmString;
   MCRegisterInfo *MRI = (MCRegisterInfo *)info;
   switch (MCInst_getOpcode(MI)) {
-  default: return false;
+  default: return NULL;
   case AArch64_ADDSwww_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -8880,7 +8888,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "adds $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_ADDSwww_uxtw:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -8895,7 +8903,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "adds $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_ADDSxxx_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -8910,7 +8918,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "adds $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_ADDSxxx_uxtx:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -8925,7 +8933,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "adds $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_ADDwwi_lsl0_s:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -8949,7 +8957,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "mov $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_ADDwww_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -8964,7 +8972,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "add $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_ADDwww_uxtw:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -8992,7 +9000,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "add $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_ADDxxi_lsl0_s:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9016,7 +9024,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "mov $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_ADDxxx_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9031,7 +9039,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "add $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_ADDxxx_uxtx:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9059,7 +9067,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "add $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_ANDSwww_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9074,7 +9082,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ands $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_ANDSxxx_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9089,7 +9097,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ands $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_ANDwww_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9104,7 +9112,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "and $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_ANDxxx_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9119,7 +9127,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "and $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_BICSwww_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9134,7 +9142,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "bics $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_BICSxxx_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9149,7 +9157,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "bics $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_BICwww_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9164,7 +9172,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "bic $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_BICxxx_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9179,7 +9187,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "bic $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_CLREXi:
     if (MCInst_getNumOperands(MI) == 1 &&
         MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
@@ -9188,7 +9196,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "clrex";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_CMNww_lsl:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9201,7 +9209,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "cmn $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_CMNww_uxtw:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9214,7 +9222,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "cmn $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_CMNxx_lsl:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9227,7 +9235,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "cmn $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_CMNxx_uxtx:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9240,7 +9248,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "cmn $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_CMPww_lsl:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9253,7 +9261,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "cmp $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_CMPww_uxtw:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9266,7 +9274,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "cmp $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_CMPxx_lsl:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9279,7 +9287,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "cmp $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_CMPxx_uxtx:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9292,7 +9300,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "cmp $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_DCPS1i:
     if (MCInst_getNumOperands(MI) == 1 &&
         MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
@@ -9301,7 +9309,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "dcps1";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_DCPS2i:
     if (MCInst_getNumOperands(MI) == 1 &&
         MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
@@ -9310,7 +9318,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "dcps2";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_DCPS3i:
     if (MCInst_getNumOperands(MI) == 1 &&
         MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
@@ -9319,7 +9327,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "dcps3";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_EONwww_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9334,7 +9342,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "eon $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_EONxxx_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9349,7 +9357,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "eon $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_EORwww_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9364,7 +9372,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "eor $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_EORxxx_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9379,7 +9387,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "eor $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_HINTi:
     if (MCInst_getNumOperands(MI) == 1 &&
         MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
@@ -9423,7 +9431,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "sevl";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_ISBi:
     if (MCInst_getNumOperands(MI) == 1 &&
         MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
@@ -9432,7 +9440,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "isb";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LDPSWx:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9447,7 +9455,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldpsw $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LDRSBw:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9460,7 +9468,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldrsb $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LDRSBw_Xm_RegOffset:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9475,7 +9483,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldrsb $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LDRSBx:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9488,7 +9496,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldrsb $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LDRSBx_Xm_RegOffset:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9503,7 +9511,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldrsb $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LDRSHw:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9516,7 +9524,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldrsh $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LDRSHw_Xm_RegOffset:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9531,7 +9539,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldrsh $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LDRSHx:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9544,7 +9552,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldrsh $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LDRSHx_Xm_RegOffset:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9559,7 +9567,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldrsh $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LDRSWx:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9572,7 +9580,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldrsw $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LDRSWx_Xm_RegOffset:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9587,7 +9595,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldrsw $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LDTRSBw:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9600,7 +9608,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldtrsb $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LDTRSBx:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9613,7 +9621,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldtrsb $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LDTRSHw:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9626,7 +9634,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldtrsh $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LDTRSHx:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9639,7 +9647,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldtrsh $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LDTRSWx:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9652,7 +9660,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldtrsw $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LDURSWx:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9665,7 +9673,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldursw $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS16_LDR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9678,7 +9686,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldrh $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS16_LDUR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9691,7 +9699,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldurh $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS16_STR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9704,7 +9712,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "strh $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS16_STUR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9717,7 +9725,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "sturh $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS16_UnPriv_LDR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9730,7 +9738,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldtrh $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS16_UnPriv_STR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9743,7 +9751,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "sttrh $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS16_Xm_RegOffset_LDR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9758,7 +9766,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldrh $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS16_Xm_RegOffset_STR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9773,7 +9781,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "strh $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS32_LDR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9786,7 +9794,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldr $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS32_LDUR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9799,7 +9807,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldur $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS32_STR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9812,7 +9820,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "str $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS32_STUR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9825,7 +9833,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "stur $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS32_UnPriv_LDR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9838,7 +9846,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldtr $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS32_UnPriv_STR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9851,7 +9859,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "sttr $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS32_Xm_RegOffset_LDR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9866,7 +9874,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldr $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS32_Xm_RegOffset_STR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9881,7 +9889,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "str $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS64_LDR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9894,7 +9902,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldr $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS64_LDUR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9907,7 +9915,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldur $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS64_STR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9920,7 +9928,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "str $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS64_STUR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9933,7 +9941,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "stur $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS64_UnPriv_LDR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9946,7 +9954,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldtr $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS64_UnPriv_STR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9959,7 +9967,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "sttr $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS64_Xm_RegOffset_LDR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9974,7 +9982,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldr $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS64_Xm_RegOffset_STR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -9989,7 +9997,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "str $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS8_LDR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10002,7 +10010,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldrb $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS8_LDUR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10015,7 +10023,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldurb $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS8_STR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10028,7 +10036,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "strb $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS8_STUR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10041,7 +10049,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "sturb $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS8_UnPriv_LDR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10054,7 +10062,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldtrb $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS8_UnPriv_STR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10067,7 +10075,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "sttrb $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS8_Xm_RegOffset_LDR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10082,7 +10090,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldrb $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LS8_Xm_RegOffset_STR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10097,7 +10105,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "strb $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP128_LDR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10110,7 +10118,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldr $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP128_LDUR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10123,7 +10131,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldur $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP128_STR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10136,7 +10144,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "str $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP128_STUR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10149,7 +10157,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "stur $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP128_Xm_RegOffset_LDR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10164,7 +10172,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldr $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP128_Xm_RegOffset_STR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10179,7 +10187,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "str $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP16_LDR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10192,7 +10200,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldr $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP16_LDUR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10205,7 +10213,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldur $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP16_STR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10218,7 +10226,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "str $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP16_STUR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10231,7 +10239,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "stur $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP16_Xm_RegOffset_LDR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10246,7 +10254,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldr $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP16_Xm_RegOffset_STR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10261,7 +10269,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "str $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP32_LDR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10274,7 +10282,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldr $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP32_LDUR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10287,7 +10295,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldur $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP32_STR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10300,7 +10308,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "str $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP32_STUR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10313,7 +10321,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "stur $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP32_Xm_RegOffset_LDR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10328,7 +10336,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldr $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP32_Xm_RegOffset_STR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10343,7 +10351,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "str $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP64_LDR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10356,7 +10364,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldr $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP64_LDUR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10369,7 +10377,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldur $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP64_STR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10382,7 +10390,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "str $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP64_STUR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10395,7 +10403,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "stur $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP64_Xm_RegOffset_LDR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10410,7 +10418,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldr $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP64_Xm_RegOffset_STR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10425,7 +10433,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "str $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP8_LDR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10438,7 +10446,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldr $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP8_LDUR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10451,7 +10459,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldur $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP8_STR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10464,7 +10472,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "str $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP8_STUR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10477,7 +10485,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "stur $\x01, [$\x02]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP8_Xm_RegOffset_LDR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10492,7 +10500,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldr $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFP8_Xm_RegOffset_STR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10507,7 +10515,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "str $\x01, [$\x02, $\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFPPair128_LDR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10522,7 +10530,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFPPair128_NonTemp_LDR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10537,7 +10545,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldnp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFPPair128_NonTemp_STR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10552,7 +10560,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "stnp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFPPair128_STR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10567,7 +10575,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "stp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFPPair32_LDR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10582,7 +10590,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFPPair32_NonTemp_LDR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10597,7 +10605,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldnp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFPPair32_NonTemp_STR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10612,7 +10620,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "stnp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFPPair32_STR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10627,7 +10635,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "stp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFPPair64_LDR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10642,7 +10650,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFPPair64_NonTemp_LDR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10657,7 +10665,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldnp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFPPair64_NonTemp_STR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10672,7 +10680,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "stnp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSFPPair64_STR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10687,7 +10695,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "stp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSPair32_LDR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10702,7 +10710,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSPair32_NonTemp_LDR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10717,7 +10725,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldnp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSPair32_NonTemp_STR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10732,7 +10740,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "stnp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSPair32_STR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10747,7 +10755,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "stp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSPair64_LDR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10762,7 +10770,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSPair64_NonTemp_LDR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10777,7 +10785,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ldnp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSPair64_NonTemp_STR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10792,7 +10800,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "stnp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_LSPair64_STR:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10807,7 +10815,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "stp $\x01, $\x02, [$\x03]";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_MADDwwww:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10821,7 +10829,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "mul $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_MADDxxxx:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10835,7 +10843,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "mul $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_MSUBwwww:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10849,7 +10857,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "mneg $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_MSUBxxxx:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10863,7 +10871,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "mneg $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_MVNww_lsl:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10876,7 +10884,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "mvn $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_MVNxx_lsl:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10889,7 +10897,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "mvn $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_ORNwww_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10904,7 +10912,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "orn $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_ORNxxx_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10919,7 +10927,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "orn $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_ORRwww_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10946,7 +10954,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "orr $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_ORRxxx_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10973,7 +10981,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "orr $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_RETx:
     if (MCInst_getNumOperands(MI) == 1 &&
         MCOperand_getReg(MCInst_getOperand(MI, 0)) == AArch64_X30) {
@@ -10981,7 +10989,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ret";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_SBCSwww:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -10993,7 +11001,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ngcs $\x01, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_SBCSxxx:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -11005,7 +11013,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ngcs $\x01, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_SBCwww:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -11017,7 +11025,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ngc $\x01, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_SBCxxx:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -11029,7 +11037,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "ngc $\x01, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_SMADDLxwwx:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -11043,7 +11051,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "smull $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_SMSUBLxwwx:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -11057,7 +11065,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "smnegl $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_SUBSwww_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -11084,7 +11092,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "negs $\x01, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_SUBSwww_uxtw:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -11099,7 +11107,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "subs $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_SUBSxxx_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -11126,7 +11134,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "negs $\x01, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_SUBSxxx_uxtx:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -11141,7 +11149,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "subs $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_SUBwww_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -11168,7 +11176,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "neg $\x01, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_SUBwww_uxtw:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -11196,7 +11204,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "sub $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_SUBxxx_lsl:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -11223,7 +11231,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "neg $\x01, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_SUBxxx_uxtx:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -11251,7 +11259,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "sub $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_TSTww_lsl:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -11264,7 +11272,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "tst $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_TSTxx_lsl:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -11277,7 +11285,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "tst $\x01, $\x02";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_UMADDLxwwx:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -11291,7 +11299,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "umull $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   case AArch64_UMSUBLxwwx:
     if (MCInst_getNumOperands(MI) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
@@ -11305,7 +11313,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       AsmString = "umnegl $\x01, $\x02, $\x03";
       break;
     }
-    return false;
+    return NULL;
   }
 
   char *tmp = cs_strdup(AsmString), *AsmMnem, *AsmOps;
@@ -11328,8 +11336,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
       }
     }
   }
-  cs_mem_free(tmp);
-  return true;
+  return tmp;
 }
 
 #endif // PRINT_ALIAS_INSTR

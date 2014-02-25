@@ -12,6 +12,7 @@
 #define GET_INSTRINFO_ENUM
 #include "PPCGenInstrInfo.inc"
 
+#ifndef CAPSTONE_DIET
 static name_map reg_name_maps[] = {
 	{ PPC_REG_INVALID, NULL },
 
@@ -154,767 +155,4523 @@ static name_map reg_name_maps[] = {
 	{ PPC_REG_LR8, "lr8" },
 	{ PPC_REG_CR1EQ, "cr1eq" },
 };
+#endif
 
 const char *PPC_reg_name(csh handle, unsigned int reg)
 {
+#ifndef CAPSTONE_DIET
 	if (reg >= PPC_REG_MAX)
 		return NULL;
 
 	return reg_name_maps[reg].name;
+#else
+	return NULL;
+#endif
 }
 
 static insn_map insns[] = {
-	{ 0, 0, { 0 }, { 0 }, { 0 }, 0, 0 },	// dummy item
+	// dummy item
+	{
+		0, 0,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
 
-	{ PPC_ADD4, PPC_INS_ADD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ADD4TLS, PPC_INS_ADD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ADD4o, PPC_INS_ADD, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADD8, PPC_INS_ADD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ADD8TLS, PPC_INS_ADD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ADD8TLS_, PPC_INS_ADD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ADD8o, PPC_INS_ADD, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDC, PPC_INS_ADDC, { 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDC8, PPC_INS_ADDC, { 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDC8o, PPC_INS_ADDC, { 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDCo, PPC_INS_ADDC, { 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDE, PPC_INS_ADDE, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDE8, PPC_INS_ADDE, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDE8o, PPC_INS_ADDE, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDEo, PPC_INS_ADDE, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDI, PPC_INS_ADDI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDI8, PPC_INS_ADDI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDIC, PPC_INS_ADDIC, { 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDIC8, PPC_INS_ADDIC, { 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDICo, PPC_INS_ADDIC, { 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDIS, PPC_INS_ADDIS, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDIS8, PPC_INS_ADDIS, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDME, PPC_INS_ADDME, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDME8, PPC_INS_ADDME, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDME8o, PPC_INS_ADDME, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDMEo, PPC_INS_ADDME, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDZE, PPC_INS_ADDZE, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDZE8, PPC_INS_ADDZE, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDZE8o, PPC_INS_ADDZE, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ADDZEo, PPC_INS_ADDZE, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_AND, PPC_INS_AND, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_AND8, PPC_INS_AND, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_AND8o, PPC_INS_AND, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ANDC, PPC_INS_ANDC, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ANDC8, PPC_INS_ANDC, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ANDC8o, PPC_INS_ANDC, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ANDCo, PPC_INS_ANDC, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ANDISo, PPC_INS_ANDIS, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ANDISo8, PPC_INS_ANDIS, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ANDIo, PPC_INS_ANDI, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ANDIo8, PPC_INS_ANDI, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ANDo, PPC_INS_AND, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_B, PPC_INS_B, { 0 }, { 0 }, { 0 }, 1, 0 },
-	{ PPC_BA, PPC_INS_BA, { 0 }, { 0 }, { 0 }, 1, 0 },
-	{ PPC_BCC, PPC_INS_B, { 0 }, { 0 }, { 0 }, 1, 0 },
-	{ PPC_BCCA, PPC_INS_B, { 0 }, { 0 }, { 0 }, 1, 0 },
-	{ PPC_BCCL, PPC_INS_B, { PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BCCLA, PPC_INS_B, { PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BCCTR, PPC_INS_B, { PPC_REG_CTR, 0 }, { 0 }, { 0 }, 1, 1 },
-	{ PPC_BCCTR8, PPC_INS_B, { PPC_REG_CTR8, 0 }, { 0 }, { PPC_GRP_MODE64, 0 }, 1, 1 },
-	{ PPC_BCCTRL, PPC_INS_B, { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BCCTRL8, PPC_INS_B, { PPC_REG_CTR8, PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { PPC_GRP_MODE64, 0 }, 0, 0 },
-	{ PPC_BCLR, PPC_INS_B, { PPC_REG_LR, PPC_REG_RM, 0 }, { 0 }, { 0 }, 1, 0 },
-	{ PPC_BCLRL, PPC_INS_B, { PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BCLalways, PPC_INS_BCL, { PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BCTR, PPC_INS_BCTR, { PPC_REG_CTR, 0 }, { 0 }, { 0 }, 1, 1 },
-	{ PPC_BCTR8, PPC_INS_BCTR, { PPC_REG_CTR8, 0 }, { 0 }, { PPC_GRP_MODE64, 0 }, 1, 1 },
-	{ PPC_BCTRL, PPC_INS_BCTRL, { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { PPC_GRP_MODE32, 0 }, 0, 0 },
-	{ PPC_BCTRL8, PPC_INS_BCTRL, { PPC_REG_CTR8, PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { PPC_GRP_MODE64, 0 }, 0, 0 },
-	{ PPC_BDNZ, PPC_INS_BDNZ, { PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDNZ8, PPC_INS_BDNZ, { PPC_REG_CTR8, 0 }, { PPC_REG_CTR8, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDNZA, PPC_INS_BDNZA, { PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDNZAm, PPC_INS_BDNZA, { PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDNZAp, PPC_INS_BDNZA, { PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDNZL, PPC_INS_BDNZL, { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BDNZLA, PPC_INS_BDNZLA, { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BDNZLAm, PPC_INS_BDNZLA, { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BDNZLAp, PPC_INS_BDNZLA, { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BDNZLR, PPC_INS_BDNZLR, { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDNZLR8, PPC_INS_BDNZLR, { PPC_REG_CTR8, PPC_REG_LR8, PPC_REG_RM, 0 }, { PPC_REG_CTR8, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDNZLRL, PPC_INS_BDNZLRL, { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BDNZLRLm, PPC_INS_BDNZLRL, { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BDNZLRLp, PPC_INS_BDNZLRL, { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BDNZLRm, PPC_INS_BDNZLR, { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDNZLRp, PPC_INS_BDNZLR, { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDNZLm, PPC_INS_BDNZL, { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BDNZLp, PPC_INS_BDNZL, { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BDNZm, PPC_INS_BDNZ, { PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDNZp, PPC_INS_BDNZ, { PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDZ, PPC_INS_BDZ, { PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDZ8, PPC_INS_BDZ, { PPC_REG_CTR8, 0 }, { PPC_REG_CTR8, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDZA, PPC_INS_BDZA, { PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDZAm, PPC_INS_BDZA, { PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDZAp, PPC_INS_BDZA, { PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDZL, PPC_INS_BDZL, { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BDZLA, PPC_INS_BDZLA, { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BDZLAm, PPC_INS_BDZLA, { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BDZLAp, PPC_INS_BDZLA, { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BDZLR, PPC_INS_BDZLR, { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDZLR8, PPC_INS_BDZLR, { PPC_REG_CTR8, PPC_REG_LR8, PPC_REG_RM, 0 }, { PPC_REG_CTR8, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDZLRL, PPC_INS_BDZLRL, { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BDZLRLm, PPC_INS_BDZLRL, { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BDZLRLp, PPC_INS_BDZLRL, { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BDZLRm, PPC_INS_BDZLR, { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDZLRp, PPC_INS_BDZLR, { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDZLm, PPC_INS_BDZL, { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BDZLp, PPC_INS_BDZL, { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BDZm, PPC_INS_BDZ, { PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0 },
-	{ PPC_BDZp, PPC_INS_BDZ, { PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0 },
-	{ PPC_BL, PPC_INS_BL, { PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BL8, PPC_INS_BL, { PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0 },
-	{ PPC_BL8_NOP, PPC_INS_BL, { PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0 },
-	{ PPC_BL8_NOP_TLS, PPC_INS_BL, { PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0 },
-	{ PPC_BL8_TLS, PPC_INS_BL, { PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0 },
-	{ PPC_BL8_TLS_, PPC_INS_BL, { PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0 },
-	{ PPC_BLA, PPC_INS_BLA, { PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0 },
-	{ PPC_BLA8, PPC_INS_BLA, { PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0 },
-	{ PPC_BLA8_NOP, PPC_INS_BLA, { PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0 },
-	{ PPC_BLR, PPC_INS_BLR, { PPC_REG_LR, PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_BLRL, PPC_INS_BLRL, { PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0 },
-	{ PPC_CMPD, PPC_INS_CMPD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_CMPDI, PPC_INS_CMPDI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_CMPLD, PPC_INS_CMPLD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_CMPLDI, PPC_INS_CMPLDI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_CMPLW, PPC_INS_CMPLW, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_CMPLWI, PPC_INS_CMPLWI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_CMPW, PPC_INS_CMPW, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_CMPWI, PPC_INS_CMPWI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_CNTLZD, PPC_INS_CNTLZD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_CNTLZDo, PPC_INS_CNTLZD, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_CNTLZW, PPC_INS_CNTLZW, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_CNTLZWo, PPC_INS_CNTLZW, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_CR6SET, PPC_INS_CREQV, { 0 }, { PPC_REG_CR1EQ, 0 }, { 0 }, 0, 0 },
-	{ PPC_CR6UNSET, PPC_INS_CRXOR, { 0 }, { PPC_REG_CR1EQ, 0 }, { 0 }, 0, 0 },
-	{ PPC_CRAND, PPC_INS_CRAND, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_CRANDC, PPC_INS_CRANDC, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_CREQV, PPC_INS_CREQV, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_CRNAND, PPC_INS_CRNAND, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_CRNOR, PPC_INS_CRNOR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_CROR, PPC_INS_CROR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_CRORC, PPC_INS_CRORC, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_CRSET, PPC_INS_CREQV, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_CRUNSET, PPC_INS_CRXOR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_CRXOR, PPC_INS_CRXOR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_DCBA, PPC_INS_DCBA, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_DCBF, PPC_INS_DCBF, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_DCBI, PPC_INS_DCBI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_DCBST, PPC_INS_DCBST, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_DCBT, PPC_INS_DCBT, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_DCBTST, PPC_INS_DCBTST, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_DCBZ, PPC_INS_DCBZ, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_DCBZL, PPC_INS_DCBZL, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_DIVD, PPC_INS_DIVD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_DIVDU, PPC_INS_DIVDU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_DIVDUo, PPC_INS_DIVDU, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_DIVDo, PPC_INS_DIVD, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_DIVW, PPC_INS_DIVW, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_DIVWU, PPC_INS_DIVWU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_DIVWUo, PPC_INS_DIVWU, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_DIVWo, PPC_INS_DIVW, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_DSS, PPC_INS_DSS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_DSSALL, PPC_INS_DSSALL, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_DST, PPC_INS_DST, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_DST64, PPC_INS_DST, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_DSTST, PPC_INS_DSTST, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_DSTST64, PPC_INS_DSTST, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_DSTSTT, PPC_INS_DSTSTT, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_DSTSTT64, PPC_INS_DSTSTT, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_DSTT, PPC_INS_DSTT, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_DSTT64, PPC_INS_DSTT, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_EIEIO, PPC_INS_EIEIO, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_EQV, PPC_INS_EQV, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_EQV8, PPC_INS_EQV, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_EQV8o, PPC_INS_EQV, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_EQVo, PPC_INS_EQV, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_EXTSB, PPC_INS_EXTSB, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_EXTSB8, PPC_INS_EXTSB, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_EXTSB8_32_64, PPC_INS_EXTSB, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_EXTSB8o, PPC_INS_EXTSB, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_EXTSBo, PPC_INS_EXTSB, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_EXTSH, PPC_INS_EXTSH, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_EXTSH8, PPC_INS_EXTSH, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_EXTSH8_32_64, PPC_INS_EXTSH, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_EXTSH8o, PPC_INS_EXTSH, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_EXTSHo, PPC_INS_EXTSH, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_EXTSW, PPC_INS_EXTSW, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_EXTSW_32_64, PPC_INS_EXTSW, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_EXTSW_32_64o, PPC_INS_EXTSW, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_EXTSWo, PPC_INS_EXTSW, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_FABSD, PPC_INS_FABS, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FABSDo, PPC_INS_FABS, { 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FABSS, PPC_INS_FABS, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FABSSo, PPC_INS_FABS, { 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FADD, PPC_INS_FADD, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FADDS, PPC_INS_FADDS, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FADDSo, PPC_INS_FADDS, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FADDo, PPC_INS_FADD, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FCFID, PPC_INS_FCFID, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FCFIDS, PPC_INS_FCFIDS, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FCFIDSo, PPC_INS_FCFIDS, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FCFIDU, PPC_INS_FCFIDU, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FCFIDUS, PPC_INS_FCFIDUS, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FCFIDUSo, PPC_INS_FCFIDUS, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FCFIDUo, PPC_INS_FCFIDU, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FCFIDo, PPC_INS_FCFID, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FCMPUD, PPC_INS_FCMPU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FCMPUS, PPC_INS_FCMPU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FCPSGND, PPC_INS_FCPSGN, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FCPSGNDo, PPC_INS_FCPSGN, { 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FCPSGNS, PPC_INS_FCPSGN, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FCPSGNSo, PPC_INS_FCPSGN, { 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FCTID, PPC_INS_FCTID, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FCTIDUZ, PPC_INS_FCTIDUZ, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FCTIDUZo, PPC_INS_FCTIDUZ, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FCTIDZ, PPC_INS_FCTIDZ, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FCTIDZo, PPC_INS_FCTIDZ, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FCTIDo, PPC_INS_FCTID, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FCTIW, PPC_INS_FCTIW, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FCTIWUZ, PPC_INS_FCTIWUZ, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FCTIWUZo, PPC_INS_FCTIWUZ, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FCTIWZ, PPC_INS_FCTIWZ, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FCTIWZo, PPC_INS_FCTIWZ, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FCTIWo, PPC_INS_FCTIW, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FDIV, PPC_INS_FDIV, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FDIVS, PPC_INS_FDIVS, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FDIVSo, PPC_INS_FDIVS, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FDIVo, PPC_INS_FDIV, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FMADD, PPC_INS_FMADD, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FMADDS, PPC_INS_FMADDS, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FMADDSo, PPC_INS_FMADDS, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FMADDo, PPC_INS_FMADD, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FMSUB, PPC_INS_FMSUB, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FMSUBS, PPC_INS_FMSUBS, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FMSUBSo, PPC_INS_FMSUBS, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FMSUBo, PPC_INS_FMSUB, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FMUL, PPC_INS_FMUL, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FMULS, PPC_INS_FMULS, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FMULSo, PPC_INS_FMULS, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FMULo, PPC_INS_FMUL, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FNABSD, PPC_INS_FNABS, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FNABSDo, PPC_INS_FNABS, { 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FNABSS, PPC_INS_FNABS, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FNABSSo, PPC_INS_FNABS, { 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FNEGD, PPC_INS_FNEG, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FNEGDo, PPC_INS_FNEG, { 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FNEGS, PPC_INS_FNEG, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FNEGSo, PPC_INS_FNEG, { 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FNMADD, PPC_INS_FNMADD, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FNMADDS, PPC_INS_FNMADDS, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FNMADDSo, PPC_INS_FNMADDS, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FNMADDo, PPC_INS_FNMADD, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FNMSUB, PPC_INS_FNMSUB, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FNMSUBS, PPC_INS_FNMSUBS, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FNMSUBSo, PPC_INS_FNMSUBS, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FNMSUBo, PPC_INS_FNMSUB, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FRE, PPC_INS_FRE, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FRES, PPC_INS_FRES, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FRESo, PPC_INS_FRES, { 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FREo, PPC_INS_FRE, { 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FRIMD, PPC_INS_FRIM, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FRIMDo, PPC_INS_FRIM, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FRIMS, PPC_INS_FRIM, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FRIMSo, PPC_INS_FRIM, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FRIND, PPC_INS_FRIN, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FRINDo, PPC_INS_FRIN, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FRINS, PPC_INS_FRIN, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FRINSo, PPC_INS_FRIN, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FRIPD, PPC_INS_FRIP, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FRIPDo, PPC_INS_FRIP, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FRIPS, PPC_INS_FRIP, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FRIPSo, PPC_INS_FRIP, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FRIZD, PPC_INS_FRIZ, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FRIZDo, PPC_INS_FRIZ, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FRIZS, PPC_INS_FRIZ, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FRIZSo, PPC_INS_FRIZ, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FRSP, PPC_INS_FRSP, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FRSPo, PPC_INS_FRSP, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FRSQRTE, PPC_INS_FRSQRTE, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FRSQRTES, PPC_INS_FRSQRTES, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FRSQRTESo, PPC_INS_FRSQRTES, { 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FRSQRTEo, PPC_INS_FRSQRTE, { 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FSELD, PPC_INS_FSEL, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FSELDo, PPC_INS_FSEL, { 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FSELS, PPC_INS_FSEL, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FSELSo, PPC_INS_FSEL, { 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FSQRT, PPC_INS_FSQRT, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FSQRTS, PPC_INS_FSQRTS, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FSQRTSo, PPC_INS_FSQRTS, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FSQRTo, PPC_INS_FSQRT, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FSUB, PPC_INS_FSUB, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FSUBS, PPC_INS_FSUBS, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_FSUBSo, PPC_INS_FSUBS, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_FSUBo, PPC_INS_FSUB, { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0 },
-	{ PPC_ICBI, PPC_INS_ICBI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ISEL, PPC_INS_ISEL, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ISEL8, PPC_INS_ISEL, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ISYNC, PPC_INS_ISYNC, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LA, PPC_INS_LA, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LBZ, PPC_INS_LBZ, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LBZ8, PPC_INS_LBZ, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LBZU, PPC_INS_LBZU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LBZU8, PPC_INS_LBZU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LBZUX, PPC_INS_LBZUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LBZUX8, PPC_INS_LBZUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LBZX, PPC_INS_LBZX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LBZX8, PPC_INS_LBZX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LD, PPC_INS_LD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LDARX, PPC_INS_LDARX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LDBRX, PPC_INS_LDBRX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LDU, PPC_INS_LDU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LDUX, PPC_INS_LDUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LDX, PPC_INS_LDX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LDinto_toc, PPC_INS_LD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LDtoc_restore, PPC_INS_LD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LFD, PPC_INS_LFD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LFDU, PPC_INS_LFDU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LFDUX, PPC_INS_LFDUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LFDX, PPC_INS_LFDX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LFIWAX, PPC_INS_LFIWAX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LFIWZX, PPC_INS_LFIWZX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LFS, PPC_INS_LFS, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LFSU, PPC_INS_LFSU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LFSUX, PPC_INS_LFSUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LFSX, PPC_INS_LFSX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LHA, PPC_INS_LHA, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LHA8, PPC_INS_LHA, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LHAU, PPC_INS_LHAU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LHAU8, PPC_INS_LHAU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LHAUX, PPC_INS_LHAUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LHAUX8, PPC_INS_LHAUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LHAX, PPC_INS_LHAX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LHAX8, PPC_INS_LHAX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LHBRX, PPC_INS_LHBRX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LHZ, PPC_INS_LHZ, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LHZ8, PPC_INS_LHZ, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LHZU, PPC_INS_LHZU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LHZU8, PPC_INS_LHZU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LHZUX, PPC_INS_LHZUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LHZUX8, PPC_INS_LHZUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LHZX, PPC_INS_LHZX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LHZX8, PPC_INS_LHZX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LI, PPC_INS_LI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LI8, PPC_INS_LI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LIS, PPC_INS_LIS, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LIS8, PPC_INS_LIS, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LMW, PPC_INS_LMW, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LVEBX, PPC_INS_LVEBX, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_LVEHX, PPC_INS_LVEHX, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_LVEWX, PPC_INS_LVEWX, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_LVSL, PPC_INS_LVSL, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_LVSR, PPC_INS_LVSR, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_LVX, PPC_INS_LVX, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_LVXL, PPC_INS_LVXL, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_LWA, PPC_INS_LWA, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LWARX, PPC_INS_LWARX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LWAUX, PPC_INS_LWAUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LWAX, PPC_INS_LWAX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LWAX_32, PPC_INS_LWAX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LWA_32, PPC_INS_LWA, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LWBRX, PPC_INS_LWBRX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LWZ, PPC_INS_LWZ, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LWZ8, PPC_INS_LWZ, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LWZU, PPC_INS_LWZU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LWZU8, PPC_INS_LWZU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LWZUX, PPC_INS_LWZUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LWZUX8, PPC_INS_LWZUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LWZX, PPC_INS_LWZX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_LWZX8, PPC_INS_LWZX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MCRF, PPC_INS_MCRF, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MFCR, PPC_INS_MFCR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MFCR8, PPC_INS_MFCR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MFCTR, PPC_INS_MFCTR, { PPC_REG_CTR, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MFCTR8, PPC_INS_MFCTR, { PPC_REG_CTR8, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MFFS, PPC_INS_MFFS, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MFLR, PPC_INS_MFLR, { PPC_REG_LR, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MFLR8, PPC_INS_MFLR, { PPC_REG_LR8, 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MFMSR, PPC_INS_MFMSR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MFOCRF, PPC_INS_MFOCRF, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MFOCRF8, PPC_INS_MFOCRF, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MFSPR, PPC_INS_MFSPR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MFTB, PPC_INS_MFTB, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MFTB8, PPC_INS_MFSPR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MFVRSAVE, PPC_INS_MFSPR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MFVRSAVEv, PPC_INS_MFSPR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MFVSCR, PPC_INS_MFVSCR, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_MTCRF, PPC_INS_MTCRF, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MTCRF8, PPC_INS_MTCRF, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MTCTR, PPC_INS_MTCTR, { 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_MTCTR8, PPC_INS_MTCTR, { 0 }, { PPC_REG_CTR8, 0 }, { 0 }, 0, 0 },
-	{ PPC_MTCTR8loop, PPC_INS_MTCTR, { 0 }, { PPC_REG_CTR8, 0 }, { 0 }, 0, 0 },
-	{ PPC_MTCTRloop, PPC_INS_MTCTR, { 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_MTFSB0, PPC_INS_MTFSB0, { PPC_REG_RM, 0 }, { PPC_REG_RM, 0 }, { 0 }, 0, 0 },
-	{ PPC_MTFSB1, PPC_INS_MTFSB1, { PPC_REG_RM, 0 }, { PPC_REG_RM, 0 }, { 0 }, 0, 0 },
-	{ PPC_MTFSF, PPC_INS_MTFSF, { PPC_REG_RM, 0 }, { PPC_REG_RM, 0 }, { 0 }, 0, 0 },
-	{ PPC_MTLR, PPC_INS_MTLR, { 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0 },
-	{ PPC_MTLR8, PPC_INS_MTLR, { 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0 },
-	{ PPC_MTMSR, PPC_INS_MTMSR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MTMSRD, PPC_INS_MTMSRD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MTOCRF, PPC_INS_MTOCRF, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MTOCRF8, PPC_INS_MTOCRF, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MTSPR, PPC_INS_MTSPR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MTVRSAVE, PPC_INS_MTSPR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MTVRSAVEv, PPC_INS_MTSPR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MTVSCR, PPC_INS_MTVSCR, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_MULHD, PPC_INS_MULHD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MULHDU, PPC_INS_MULHDU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MULHDUo, PPC_INS_MULHDU, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_MULHDo, PPC_INS_MULHD, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_MULHW, PPC_INS_MULHW, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MULHWU, PPC_INS_MULHWU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MULHWUo, PPC_INS_MULHWU, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_MULHWo, PPC_INS_MULHW, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_MULLD, PPC_INS_MULLD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MULLDo, PPC_INS_MULLD, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_MULLI, PPC_INS_MULLI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MULLI8, PPC_INS_MULLI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MULLW, PPC_INS_MULLW, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_MULLWo, PPC_INS_MULLW, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_NAND, PPC_INS_NAND, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_NAND8, PPC_INS_NAND, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_NAND8o, PPC_INS_NAND, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_NANDo, PPC_INS_NAND, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_NEG, PPC_INS_NEG, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_NEG8, PPC_INS_NEG, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_NEG8o, PPC_INS_NEG, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_NEGo, PPC_INS_NEG, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_NOP, PPC_INS_NOP, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_NOP_GT_PWR6, PPC_INS_ORI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_NOP_GT_PWR7, PPC_INS_ORI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_NOR, PPC_INS_NOR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_NOR8, PPC_INS_NOR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_NOR8o, PPC_INS_NOR, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_NORo, PPC_INS_NOR, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_OR, PPC_INS_OR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_OR8, PPC_INS_OR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_OR8o, PPC_INS_OR, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ORC, PPC_INS_ORC, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ORC8, PPC_INS_ORC, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ORC8o, PPC_INS_ORC, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ORCo, PPC_INS_ORC, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_ORI, PPC_INS_ORI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ORI8, PPC_INS_ORI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ORIS, PPC_INS_ORIS, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ORIS8, PPC_INS_ORIS, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_ORo, PPC_INS_OR, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_POPCNTD, PPC_INS_POPCNTD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_POPCNTW, PPC_INS_POPCNTW, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_RLDCL, PPC_INS_RLDCL, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_RLDCLo, PPC_INS_RLDCL, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_RLDCR, PPC_INS_RLDCR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_RLDCRo, PPC_INS_RLDCR, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_RLDIC, PPC_INS_RLDIC, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_RLDICL, PPC_INS_RLDICL, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_RLDICL_32_64, PPC_INS_RLDICL, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_RLDICLo, PPC_INS_RLDICL, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_RLDICR, PPC_INS_RLDICR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_RLDICRo, PPC_INS_RLDICR, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_RLDICo, PPC_INS_RLDIC, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_RLDIMI, PPC_INS_RLDIMI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_RLDIMIo, PPC_INS_RLDIMI, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_RLWIMI, PPC_INS_RLWIMI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_RLWIMIo, PPC_INS_RLWIMI, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_RLWINM, PPC_INS_RLWINM, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_RLWINM8, PPC_INS_RLWINM, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_RLWINM8o, PPC_INS_RLWINM, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_RLWINMo, PPC_INS_RLWINM, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_RLWNM, PPC_INS_RLWNM, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_RLWNMo, PPC_INS_RLWNM, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_SC, PPC_INS_SC, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_SLBIA, PPC_INS_SLBIA, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_SLBIE, PPC_INS_SLBIE, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_SLBMFEE, PPC_INS_SLBMFEE, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_SLBMTE, PPC_INS_SLBMTE, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_SLD, PPC_INS_SLD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_SLDo, PPC_INS_SLD, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_SLW, PPC_INS_SLW, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_SLWo, PPC_INS_SLW, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_SRAD, PPC_INS_SRAD, { 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_SRADI, PPC_INS_SRADI, { 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_SRADIo, PPC_INS_SRADI, { 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_SRADo, PPC_INS_SRAD, { 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_SRAW, PPC_INS_SRAW, { 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_SRAWI, PPC_INS_SRAWI, { 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_SRAWIo, PPC_INS_SRAWI, { 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_SRAWo, PPC_INS_SRAW, { 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_SRD, PPC_INS_SRD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_SRDo, PPC_INS_SRD, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_SRW, PPC_INS_SRW, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_SRWo, PPC_INS_SRW, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_STB, PPC_INS_STB, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STB8, PPC_INS_STB, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STBU, PPC_INS_STBU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STBU8, PPC_INS_STBU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STBUX, PPC_INS_STBUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STBUX8, PPC_INS_STBUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STBX, PPC_INS_STBX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STBX8, PPC_INS_STBX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STD, PPC_INS_STD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STDBRX, PPC_INS_STDBRX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STDCX, PPC_INS_STDCX, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_STDU, PPC_INS_STDU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STDUX, PPC_INS_STDUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STDX, PPC_INS_STDX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STFD, PPC_INS_STFD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STFDU, PPC_INS_STFDU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STFDUX, PPC_INS_STFDUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STFDX, PPC_INS_STFDX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STFIWX, PPC_INS_STFIWX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STFS, PPC_INS_STFS, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STFSU, PPC_INS_STFSU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STFSUX, PPC_INS_STFSUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STFSX, PPC_INS_STFSX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STH, PPC_INS_STH, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STH8, PPC_INS_STH, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STHBRX, PPC_INS_STHBRX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STHU, PPC_INS_STHU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STHU8, PPC_INS_STHU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STHUX, PPC_INS_STHUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STHUX8, PPC_INS_STHUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STHX, PPC_INS_STHX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STHX8, PPC_INS_STHX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STMW, PPC_INS_STMW, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STVEBX, PPC_INS_STVEBX, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_STVEHX, PPC_INS_STVEHX, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_STVEWX, PPC_INS_STVEWX, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_STVX, PPC_INS_STVX, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_STVXL, PPC_INS_STVXL, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_STW, PPC_INS_STW, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STW8, PPC_INS_STW, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STWBRX, PPC_INS_STWBRX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STWCX, PPC_INS_STWCX, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_STWU, PPC_INS_STWU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STWU8, PPC_INS_STWU, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STWUX, PPC_INS_STWUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STWUX8, PPC_INS_STWUX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STWX, PPC_INS_STWX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_STWX8, PPC_INS_STWX, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBF, PPC_INS_SUBF, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBF8, PPC_INS_SUBF, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBF8o, PPC_INS_SUBF, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBFC, PPC_INS_SUBFC, { 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBFC8, PPC_INS_SUBFC, { 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBFC8o, PPC_INS_SUBFC, { 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBFCo, PPC_INS_SUBFC, { 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBFE, PPC_INS_SUBFE, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBFE8, PPC_INS_SUBFE, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBFE8o, PPC_INS_SUBFE, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBFEo, PPC_INS_SUBFE, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBFIC, PPC_INS_SUBFIC, { 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBFIC8, PPC_INS_SUBFIC, { 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBFME, PPC_INS_SUBFME, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBFME8, PPC_INS_SUBFME, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBFME8o, PPC_INS_SUBFME, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBFMEo, PPC_INS_SUBFME, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBFZE, PPC_INS_SUBFZE, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBFZE8, PPC_INS_SUBFZE, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBFZE8o, PPC_INS_SUBFZE, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBFZEo, PPC_INS_SUBFZE, { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_SUBFo, PPC_INS_SUBF, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_SYNC, PPC_INS_SYNC, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_TAILB, PPC_INS_B, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 1, 0 },
-	{ PPC_TAILB8, PPC_INS_B, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 1, 0 },
-	{ PPC_TAILBA, PPC_INS_BA, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 1, 0 },
-	{ PPC_TAILBA8, PPC_INS_BA, { PPC_REG_RM, 0 }, { 0 }, { 0 }, 1, 0 },
-	{ PPC_TAILBCTR, PPC_INS_BCTR, { PPC_REG_CTR, PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_MODE32, 0 }, 1, 1 },
-	{ PPC_TAILBCTR8, PPC_INS_BCTR, { PPC_REG_CTR8, PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_MODE64, 0 }, 1, 1 },
-	{ PPC_TD, PPC_INS_TD, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_TDI, PPC_INS_TDI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_TLBIE, PPC_INS_TLBIE, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_TLBIEL, PPC_INS_TLBIEL, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_TLBSYNC, PPC_INS_TLBSYNC, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_TRAP, PPC_INS_TRAP, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_TW, PPC_INS_TW, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_TWI, PPC_INS_TWI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_VADDCUW, PPC_INS_VADDCUW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VADDFP, PPC_INS_VADDFP, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VADDSBS, PPC_INS_VADDSBS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VADDSHS, PPC_INS_VADDSHS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VADDSWS, PPC_INS_VADDSWS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VADDUBM, PPC_INS_VADDUBM, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VADDUBS, PPC_INS_VADDUBS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VADDUHM, PPC_INS_VADDUHM, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VADDUHS, PPC_INS_VADDUHS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VADDUWM, PPC_INS_VADDUWM, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VADDUWS, PPC_INS_VADDUWS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VAND, PPC_INS_VAND, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VANDC, PPC_INS_VANDC, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VAVGSB, PPC_INS_VAVGSB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VAVGSH, PPC_INS_VAVGSH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VAVGSW, PPC_INS_VAVGSW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VAVGUB, PPC_INS_VAVGUB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VAVGUH, PPC_INS_VAVGUH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VAVGUW, PPC_INS_VAVGUW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCFSX, PPC_INS_VCFSX, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCFSX_0, PPC_INS_VCFSX, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCFUX, PPC_INS_VCFUX, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCFUX_0, PPC_INS_VCFUX, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPBFP, PPC_INS_VCMPBFP, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPBFPo, PPC_INS_VCMPBFP, { 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPEQFP, PPC_INS_VCMPEQFP, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPEQFPo, PPC_INS_VCMPEQFP, { 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPEQUB, PPC_INS_VCMPEQUB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPEQUBo, PPC_INS_VCMPEQUB, { 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPEQUH, PPC_INS_VCMPEQUH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPEQUHo, PPC_INS_VCMPEQUH, { 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPEQUW, PPC_INS_VCMPEQUW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPEQUWo, PPC_INS_VCMPEQUW, { 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPGEFP, PPC_INS_VCMPGEFP, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPGEFPo, PPC_INS_VCMPGEFP, { 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPGTFP, PPC_INS_VCMPGTFP, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPGTFPo, PPC_INS_VCMPGTFP, { 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPGTSB, PPC_INS_VCMPGTSB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPGTSBo, PPC_INS_VCMPGTSB, { 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPGTSH, PPC_INS_VCMPGTSH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPGTSHo, PPC_INS_VCMPGTSH, { 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPGTSW, PPC_INS_VCMPGTSW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPGTSWo, PPC_INS_VCMPGTSW, { 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPGTUB, PPC_INS_VCMPGTUB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPGTUBo, PPC_INS_VCMPGTUB, { 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPGTUH, PPC_INS_VCMPGTUH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPGTUHo, PPC_INS_VCMPGTUH, { 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPGTUW, PPC_INS_VCMPGTUW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCMPGTUWo, PPC_INS_VCMPGTUW, { 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCTSXS, PPC_INS_VCTSXS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCTSXS_0, PPC_INS_VCTSXS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCTUXS, PPC_INS_VCTUXS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VCTUXS_0, PPC_INS_VCTUXS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VEXPTEFP, PPC_INS_VEXPTEFP, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VLOGEFP, PPC_INS_VLOGEFP, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMADDFP, PPC_INS_VMADDFP, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMAXFP, PPC_INS_VMAXFP, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMAXSB, PPC_INS_VMAXSB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMAXSH, PPC_INS_VMAXSH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMAXSW, PPC_INS_VMAXSW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMAXUB, PPC_INS_VMAXUB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMAXUH, PPC_INS_VMAXUH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMAXUW, PPC_INS_VMAXUW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMHADDSHS, PPC_INS_VMHADDSHS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMHRADDSHS, PPC_INS_VMHRADDSHS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMINFP, PPC_INS_VMINFP, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMINSB, PPC_INS_VMINSB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMINSH, PPC_INS_VMINSH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMINSW, PPC_INS_VMINSW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMINUB, PPC_INS_VMINUB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMINUH, PPC_INS_VMINUH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMINUW, PPC_INS_VMINUW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMLADDUHM, PPC_INS_VMLADDUHM, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMRGHB, PPC_INS_VMRGHB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMRGHH, PPC_INS_VMRGHH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMRGHW, PPC_INS_VMRGHW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMRGLB, PPC_INS_VMRGLB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMRGLH, PPC_INS_VMRGLH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMRGLW, PPC_INS_VMRGLW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMSUMMBM, PPC_INS_VMSUMMBM, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMSUMSHM, PPC_INS_VMSUMSHM, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMSUMSHS, PPC_INS_VMSUMSHS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMSUMUBM, PPC_INS_VMSUMUBM, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMSUMUHM, PPC_INS_VMSUMUHM, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMSUMUHS, PPC_INS_VMSUMUHS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMULESB, PPC_INS_VMULESB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMULESH, PPC_INS_VMULESH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMULEUB, PPC_INS_VMULEUB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMULEUH, PPC_INS_VMULEUH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMULOSB, PPC_INS_VMULOSB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMULOSH, PPC_INS_VMULOSH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMULOUB, PPC_INS_VMULOUB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VMULOUH, PPC_INS_VMULOUH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VNMSUBFP, PPC_INS_VNMSUBFP, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VNOR, PPC_INS_VNOR, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VOR, PPC_INS_VOR, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VPERM, PPC_INS_VPERM, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VPKPX, PPC_INS_VPKPX, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VPKSHSS, PPC_INS_VPKSHSS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VPKSHUS, PPC_INS_VPKSHUS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VPKSWSS, PPC_INS_VPKSWSS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VPKSWUS, PPC_INS_VPKSWUS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VPKUHUM, PPC_INS_VPKUHUM, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VPKUHUS, PPC_INS_VPKUHUS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VPKUWUM, PPC_INS_VPKUWUM, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VPKUWUS, PPC_INS_VPKUWUS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VREFP, PPC_INS_VREFP, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VRFIM, PPC_INS_VRFIM, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VRFIN, PPC_INS_VRFIN, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VRFIP, PPC_INS_VRFIP, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VRFIZ, PPC_INS_VRFIZ, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VRLB, PPC_INS_VRLB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VRLH, PPC_INS_VRLH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VRLW, PPC_INS_VRLW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VRSQRTEFP, PPC_INS_VRSQRTEFP, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSEL, PPC_INS_VSEL, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSL, PPC_INS_VSL, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSLB, PPC_INS_VSLB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSLDOI, PPC_INS_VSLDOI, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSLH, PPC_INS_VSLH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSLO, PPC_INS_VSLO, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSLW, PPC_INS_VSLW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSPLTB, PPC_INS_VSPLTB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSPLTH, PPC_INS_VSPLTH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSPLTISB, PPC_INS_VSPLTISB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSPLTISH, PPC_INS_VSPLTISH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSPLTISW, PPC_INS_VSPLTISW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSPLTW, PPC_INS_VSPLTW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSR, PPC_INS_VSR, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSRAB, PPC_INS_VSRAB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSRAH, PPC_INS_VSRAH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSRAW, PPC_INS_VSRAW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSRB, PPC_INS_VSRB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSRH, PPC_INS_VSRH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSRO, PPC_INS_VSRO, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSRW, PPC_INS_VSRW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSUBCUW, PPC_INS_VSUBCUW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSUBFP, PPC_INS_VSUBFP, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSUBSBS, PPC_INS_VSUBSBS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSUBSHS, PPC_INS_VSUBSHS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSUBSWS, PPC_INS_VSUBSWS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSUBUBM, PPC_INS_VSUBUBM, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSUBUBS, PPC_INS_VSUBUBS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSUBUHM, PPC_INS_VSUBUHM, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSUBUHS, PPC_INS_VSUBUHS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSUBUWM, PPC_INS_VSUBUWM, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSUBUWS, PPC_INS_VSUBUWS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSUM2SWS, PPC_INS_VSUM2SWS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSUM4SBS, PPC_INS_VSUM4SBS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSUM4SHS, PPC_INS_VSUM4SHS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSUM4UBS, PPC_INS_VSUM4UBS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VSUMSWS, PPC_INS_VSUMSWS, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VUPKHPX, PPC_INS_VUPKHPX, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VUPKHSB, PPC_INS_VUPKHSB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VUPKHSH, PPC_INS_VUPKHSH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VUPKLPX, PPC_INS_VUPKLPX, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VUPKLSB, PPC_INS_VUPKLSB, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VUPKLSH, PPC_INS_VUPKLSH, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_VXOR, PPC_INS_VXOR, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_V_SET0, PPC_INS_VXOR, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_V_SET0B, PPC_INS_VXOR, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_V_SET0H, PPC_INS_VXOR, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_V_SETALLONES, PPC_INS_VSPLTISW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_V_SETALLONESB, PPC_INS_VSPLTISW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_V_SETALLONESH, PPC_INS_VSPLTISW, { 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0 },
-	{ PPC_WAIT, PPC_INS_WAIT, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_XOR, PPC_INS_XOR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_XOR8, PPC_INS_XOR, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_XOR8o, PPC_INS_XOR, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_XORI, PPC_INS_XORI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_XORI8, PPC_INS_XORI, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_XORIS, PPC_INS_XORIS, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_XORIS8, PPC_INS_XORIS, { 0 }, { 0 }, { 0 }, 0, 0 },
-	{ PPC_XORo, PPC_INS_XOR, { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0 },
-	{ PPC_gBC, PPC_INS_BC, { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_gBCA, PPC_INS_BCA, { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_gBCCTR, PPC_INS_BCCTR, { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_gBCCTRL, PPC_INS_BCCTRL, { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_LR, PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_gBCL, PPC_INS_BCL, { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_LR, PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_gBCLA, PPC_INS_BCLA, { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_LR, PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_gBCLR, PPC_INS_BCLR, { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-	{ PPC_gBCLRL, PPC_INS_BCLRL, { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_LR, PPC_REG_CTR, 0 }, { 0 }, 0, 0 },
-};
-
-static insn_map alias_insns[] = {
+	{
+		PPC_ADD4, PPC_INS_ADD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADD4TLS, PPC_INS_ADD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADD4o, PPC_INS_ADD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADD8, PPC_INS_ADD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADD8TLS, PPC_INS_ADD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADD8TLS_, PPC_INS_ADD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADD8o, PPC_INS_ADD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDC, PPC_INS_ADDC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDC8, PPC_INS_ADDC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDC8o, PPC_INS_ADDC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDCo, PPC_INS_ADDC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDE, PPC_INS_ADDE,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDE8, PPC_INS_ADDE,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDE8o, PPC_INS_ADDE,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDEo, PPC_INS_ADDE,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDI, PPC_INS_ADDI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDI8, PPC_INS_ADDI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDIC, PPC_INS_ADDIC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDIC8, PPC_INS_ADDIC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDICo, PPC_INS_ADDIC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDIS, PPC_INS_ADDIS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDIS8, PPC_INS_ADDIS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDME, PPC_INS_ADDME,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDME8, PPC_INS_ADDME,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDME8o, PPC_INS_ADDME,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDMEo, PPC_INS_ADDME,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDZE, PPC_INS_ADDZE,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDZE8, PPC_INS_ADDZE,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDZE8o, PPC_INS_ADDZE,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ADDZEo, PPC_INS_ADDZE,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_AND, PPC_INS_AND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_AND8, PPC_INS_AND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_AND8o, PPC_INS_AND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ANDC, PPC_INS_ANDC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ANDC8, PPC_INS_ANDC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ANDC8o, PPC_INS_ANDC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ANDCo, PPC_INS_ANDC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ANDISo, PPC_INS_ANDIS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ANDISo8, PPC_INS_ANDIS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ANDIo, PPC_INS_ANDI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ANDIo8, PPC_INS_ANDI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ANDo, PPC_INS_AND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_B, PPC_INS_B,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BA, PPC_INS_BA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BCC, PPC_INS_B,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BCCA, PPC_INS_B,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BCCL, PPC_INS_B,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BCCLA, PPC_INS_B,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BCCTR, PPC_INS_B,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, 0 }, { 0 }, { 0 }, 1, 1
+#endif
+	},
+	{
+		PPC_BCCTR8, PPC_INS_B,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR8, 0 }, { 0 }, { PPC_GRP_MODE64, 0 }, 1, 1
+#endif
+	},
+	{
+		PPC_BCCTRL, PPC_INS_B,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BCCTRL8, PPC_INS_B,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR8, PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { PPC_GRP_MODE64, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BCLR, PPC_INS_B,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_LR, PPC_REG_RM, 0 }, { 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BCLRL, PPC_INS_B,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BCLalways, PPC_INS_BCL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BCTR, PPC_INS_BCTR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, 0 }, { 0 }, { 0 }, 1, 1
+#endif
+	},
+	{
+		PPC_BCTR8, PPC_INS_BCTR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR8, 0 }, { 0 }, { PPC_GRP_MODE64, 0 }, 1, 1
+#endif
+	},
+	{
+		PPC_BCTRL, PPC_INS_BCTRL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { PPC_GRP_MODE32, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BCTRL8, PPC_INS_BCTRL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR8, PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { PPC_GRP_MODE64, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BDNZ, PPC_INS_BDNZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDNZ8, PPC_INS_BDNZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR8, 0 }, { PPC_REG_CTR8, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDNZA, PPC_INS_BDNZA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDNZAm, PPC_INS_BDNZA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDNZAp, PPC_INS_BDNZA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDNZL, PPC_INS_BDNZL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BDNZLA, PPC_INS_BDNZLA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BDNZLAm, PPC_INS_BDNZLA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BDNZLAp, PPC_INS_BDNZLA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BDNZLR, PPC_INS_BDNZLR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDNZLR8, PPC_INS_BDNZLR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR8, PPC_REG_LR8, PPC_REG_RM, 0 }, { PPC_REG_CTR8, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDNZLRL, PPC_INS_BDNZLRL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BDNZLRLm, PPC_INS_BDNZLRL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BDNZLRLp, PPC_INS_BDNZLRL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BDNZLRm, PPC_INS_BDNZLR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDNZLRp, PPC_INS_BDNZLR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDNZLm, PPC_INS_BDNZL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BDNZLp, PPC_INS_BDNZL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BDNZm, PPC_INS_BDNZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDNZp, PPC_INS_BDNZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDZ, PPC_INS_BDZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDZ8, PPC_INS_BDZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR8, 0 }, { PPC_REG_CTR8, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDZA, PPC_INS_BDZA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDZAm, PPC_INS_BDZA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDZAp, PPC_INS_BDZA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDZL, PPC_INS_BDZL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BDZLA, PPC_INS_BDZLA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BDZLAm, PPC_INS_BDZLA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BDZLAp, PPC_INS_BDZLA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BDZLR, PPC_INS_BDZLR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDZLR8, PPC_INS_BDZLR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR8, PPC_REG_LR8, PPC_REG_RM, 0 }, { PPC_REG_CTR8, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDZLRL, PPC_INS_BDZLRL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BDZLRLm, PPC_INS_BDZLRL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BDZLRLp, PPC_INS_BDZLRL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BDZLRm, PPC_INS_BDZLR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDZLRp, PPC_INS_BDZLR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDZLm, PPC_INS_BDZL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BDZLp, PPC_INS_BDZL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BDZm, PPC_INS_BDZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BDZp, PPC_INS_BDZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BL, PPC_INS_BL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BL8, PPC_INS_BL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BL8_NOP, PPC_INS_BL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BL8_NOP_TLS, PPC_INS_BL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BL8_TLS, PPC_INS_BL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BL8_TLS_, PPC_INS_BL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BLA, PPC_INS_BLA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BLA8, PPC_INS_BLA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BLA8_NOP, PPC_INS_BLA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BLR, PPC_INS_BLR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_LR, PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BLRL, PPC_INS_BLRL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CMPD, PPC_INS_CMPD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CMPDI, PPC_INS_CMPDI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CMPLD, PPC_INS_CMPLD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CMPLDI, PPC_INS_CMPLDI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CMPLW, PPC_INS_CMPLW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CMPLWI, PPC_INS_CMPLWI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CMPW, PPC_INS_CMPW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CMPWI, PPC_INS_CMPWI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CNTLZD, PPC_INS_CNTLZD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CNTLZDo, PPC_INS_CNTLZD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CNTLZW, PPC_INS_CNTLZW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CNTLZWo, PPC_INS_CNTLZW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CR6SET, PPC_INS_CREQV,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR1EQ, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CR6UNSET, PPC_INS_CRXOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR1EQ, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CRAND, PPC_INS_CRAND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CRANDC, PPC_INS_CRANDC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CREQV, PPC_INS_CREQV,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CRNAND, PPC_INS_CRNAND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CRNOR, PPC_INS_CRNOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CROR, PPC_INS_CROR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CRORC, PPC_INS_CRORC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CRSET, PPC_INS_CREQV,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CRUNSET, PPC_INS_CRXOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_CRXOR, PPC_INS_CRXOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DCBA, PPC_INS_DCBA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DCBF, PPC_INS_DCBF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DCBI, PPC_INS_DCBI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DCBST, PPC_INS_DCBST,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DCBT, PPC_INS_DCBT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DCBTST, PPC_INS_DCBTST,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DCBZ, PPC_INS_DCBZ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DCBZL, PPC_INS_DCBZL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DIVD, PPC_INS_DIVD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DIVDU, PPC_INS_DIVDU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DIVDUo, PPC_INS_DIVDU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DIVDo, PPC_INS_DIVD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DIVW, PPC_INS_DIVW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DIVWU, PPC_INS_DIVWU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DIVWUo, PPC_INS_DIVWU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DIVWo, PPC_INS_DIVW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DSS, PPC_INS_DSS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DSSALL, PPC_INS_DSSALL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DST, PPC_INS_DST,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DST64, PPC_INS_DST,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DSTST, PPC_INS_DSTST,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DSTST64, PPC_INS_DSTST,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DSTSTT, PPC_INS_DSTSTT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DSTSTT64, PPC_INS_DSTSTT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DSTT, PPC_INS_DSTT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_DSTT64, PPC_INS_DSTT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EIEIO, PPC_INS_EIEIO,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EQV, PPC_INS_EQV,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EQV8, PPC_INS_EQV,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EQV8o, PPC_INS_EQV,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EQVo, PPC_INS_EQV,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EXTSB, PPC_INS_EXTSB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EXTSB8, PPC_INS_EXTSB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EXTSB8_32_64, PPC_INS_EXTSB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EXTSB8o, PPC_INS_EXTSB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EXTSBo, PPC_INS_EXTSB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EXTSH, PPC_INS_EXTSH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EXTSH8, PPC_INS_EXTSH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EXTSH8_32_64, PPC_INS_EXTSH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EXTSH8o, PPC_INS_EXTSH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EXTSHo, PPC_INS_EXTSH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EXTSW, PPC_INS_EXTSW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EXTSW_32_64, PPC_INS_EXTSW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EXTSW_32_64o, PPC_INS_EXTSW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EXTSWo, PPC_INS_EXTSW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FABSD, PPC_INS_FABS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FABSDo, PPC_INS_FABS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FABSS, PPC_INS_FABS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FABSSo, PPC_INS_FABS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FADD, PPC_INS_FADD,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FADDS, PPC_INS_FADDS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FADDSo, PPC_INS_FADDS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FADDo, PPC_INS_FADD,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCFID, PPC_INS_FCFID,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCFIDS, PPC_INS_FCFIDS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCFIDSo, PPC_INS_FCFIDS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCFIDU, PPC_INS_FCFIDU,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCFIDUS, PPC_INS_FCFIDUS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCFIDUSo, PPC_INS_FCFIDUS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCFIDUo, PPC_INS_FCFIDU,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCFIDo, PPC_INS_FCFID,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCMPUD, PPC_INS_FCMPU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCMPUS, PPC_INS_FCMPU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCPSGND, PPC_INS_FCPSGN,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCPSGNDo, PPC_INS_FCPSGN,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCPSGNS, PPC_INS_FCPSGN,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCPSGNSo, PPC_INS_FCPSGN,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCTID, PPC_INS_FCTID,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCTIDUZ, PPC_INS_FCTIDUZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCTIDUZo, PPC_INS_FCTIDUZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCTIDZ, PPC_INS_FCTIDZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCTIDZo, PPC_INS_FCTIDZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCTIDo, PPC_INS_FCTID,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCTIW, PPC_INS_FCTIW,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCTIWUZ, PPC_INS_FCTIWUZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCTIWUZo, PPC_INS_FCTIWUZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCTIWZ, PPC_INS_FCTIWZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCTIWZo, PPC_INS_FCTIWZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FCTIWo, PPC_INS_FCTIW,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FDIV, PPC_INS_FDIV,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FDIVS, PPC_INS_FDIVS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FDIVSo, PPC_INS_FDIVS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FDIVo, PPC_INS_FDIV,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FMADD, PPC_INS_FMADD,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FMADDS, PPC_INS_FMADDS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FMADDSo, PPC_INS_FMADDS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FMADDo, PPC_INS_FMADD,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FMR, PPC_INS_FMR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FMRo, PPC_INS_FMR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FMSUB, PPC_INS_FMSUB,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FMSUBS, PPC_INS_FMSUBS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FMSUBSo, PPC_INS_FMSUBS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FMSUBo, PPC_INS_FMSUB,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FMUL, PPC_INS_FMUL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FMULS, PPC_INS_FMULS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FMULSo, PPC_INS_FMULS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FMULo, PPC_INS_FMUL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FNABSD, PPC_INS_FNABS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FNABSDo, PPC_INS_FNABS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FNABSS, PPC_INS_FNABS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FNABSSo, PPC_INS_FNABS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FNEGD, PPC_INS_FNEG,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FNEGDo, PPC_INS_FNEG,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FNEGS, PPC_INS_FNEG,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FNEGSo, PPC_INS_FNEG,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FNMADD, PPC_INS_FNMADD,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FNMADDS, PPC_INS_FNMADDS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FNMADDSo, PPC_INS_FNMADDS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FNMADDo, PPC_INS_FNMADD,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FNMSUB, PPC_INS_FNMSUB,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FNMSUBS, PPC_INS_FNMSUBS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FNMSUBSo, PPC_INS_FNMSUBS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FNMSUBo, PPC_INS_FNMSUB,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRE, PPC_INS_FRE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRES, PPC_INS_FRES,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRESo, PPC_INS_FRES,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FREo, PPC_INS_FRE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRIMD, PPC_INS_FRIM,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRIMDo, PPC_INS_FRIM,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRIMS, PPC_INS_FRIM,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRIMSo, PPC_INS_FRIM,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRIND, PPC_INS_FRIN,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRINDo, PPC_INS_FRIN,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRINS, PPC_INS_FRIN,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRINSo, PPC_INS_FRIN,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRIPD, PPC_INS_FRIP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRIPDo, PPC_INS_FRIP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRIPS, PPC_INS_FRIP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRIPSo, PPC_INS_FRIP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRIZD, PPC_INS_FRIZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRIZDo, PPC_INS_FRIZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRIZS, PPC_INS_FRIZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRIZSo, PPC_INS_FRIZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRSP, PPC_INS_FRSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRSPo, PPC_INS_FRSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRSQRTE, PPC_INS_FRSQRTE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRSQRTES, PPC_INS_FRSQRTES,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRSQRTESo, PPC_INS_FRSQRTES,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FRSQRTEo, PPC_INS_FRSQRTE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FSELD, PPC_INS_FSEL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FSELDo, PPC_INS_FSEL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FSELS, PPC_INS_FSEL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FSELSo, PPC_INS_FSEL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FSQRT, PPC_INS_FSQRT,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FSQRTS, PPC_INS_FSQRTS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FSQRTSo, PPC_INS_FSQRTS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FSQRTo, PPC_INS_FSQRT,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FSUB, PPC_INS_FSUB,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FSUBS, PPC_INS_FSUBS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FSUBSo, PPC_INS_FSUBS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_FSUBo, PPC_INS_FSUB,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ICBI, PPC_INS_ICBI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ISEL, PPC_INS_ISEL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ISEL8, PPC_INS_ISEL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ISYNC, PPC_INS_ISYNC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LA, PPC_INS_LA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LBZ, PPC_INS_LBZ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LBZ8, PPC_INS_LBZ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LBZU, PPC_INS_LBZU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LBZU8, PPC_INS_LBZU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LBZUX, PPC_INS_LBZUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LBZUX8, PPC_INS_LBZUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LBZX, PPC_INS_LBZX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LBZX8, PPC_INS_LBZX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LD, PPC_INS_LD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LDARX, PPC_INS_LDARX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LDBRX, PPC_INS_LDBRX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LDU, PPC_INS_LDU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LDUX, PPC_INS_LDUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LDX, PPC_INS_LDX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LDinto_toc, PPC_INS_LD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LDtoc_restore, PPC_INS_LD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LFD, PPC_INS_LFD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LFDU, PPC_INS_LFDU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LFDUX, PPC_INS_LFDUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LFDX, PPC_INS_LFDX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LFIWAX, PPC_INS_LFIWAX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LFIWZX, PPC_INS_LFIWZX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LFS, PPC_INS_LFS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LFSU, PPC_INS_LFSU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LFSUX, PPC_INS_LFSUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LFSX, PPC_INS_LFSX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LHA, PPC_INS_LHA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LHA8, PPC_INS_LHA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LHAU, PPC_INS_LHAU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LHAU8, PPC_INS_LHAU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LHAUX, PPC_INS_LHAUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LHAUX8, PPC_INS_LHAUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LHAX, PPC_INS_LHAX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LHAX8, PPC_INS_LHAX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LHBRX, PPC_INS_LHBRX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LHZ, PPC_INS_LHZ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LHZ8, PPC_INS_LHZ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LHZU, PPC_INS_LHZU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LHZU8, PPC_INS_LHZU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LHZUX, PPC_INS_LHZUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LHZUX8, PPC_INS_LHZUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LHZX, PPC_INS_LHZX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LHZX8, PPC_INS_LHZX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LI, PPC_INS_LI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LI8, PPC_INS_LI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LIS, PPC_INS_LIS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LIS8, PPC_INS_LIS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LMW, PPC_INS_LMW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LVEBX, PPC_INS_LVEBX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LVEHX, PPC_INS_LVEHX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LVEWX, PPC_INS_LVEWX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LVSL, PPC_INS_LVSL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LVSR, PPC_INS_LVSR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LVX, PPC_INS_LVX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LVXL, PPC_INS_LVXL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LWA, PPC_INS_LWA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LWARX, PPC_INS_LWARX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LWAUX, PPC_INS_LWAUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LWAX, PPC_INS_LWAX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LWAX_32, PPC_INS_LWAX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LWA_32, PPC_INS_LWA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LWBRX, PPC_INS_LWBRX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LWZ, PPC_INS_LWZ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LWZ8, PPC_INS_LWZ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LWZU, PPC_INS_LWZU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LWZU8, PPC_INS_LWZU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LWZUX, PPC_INS_LWZUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LWZUX8, PPC_INS_LWZUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LWZX, PPC_INS_LWZX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LWZX8, PPC_INS_LWZX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MCRF, PPC_INS_MCRF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MFCR, PPC_INS_MFCR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MFCR8, PPC_INS_MFCR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MFCTR, PPC_INS_MFCTR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MFCTR8, PPC_INS_MFCTR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR8, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MFFS, PPC_INS_MFFS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MFLR, PPC_INS_MFLR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_LR, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MFLR8, PPC_INS_MFLR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_LR8, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MFMSR, PPC_INS_MFMSR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MFOCRF, PPC_INS_MFOCRF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MFOCRF8, PPC_INS_MFOCRF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MFSPR, PPC_INS_MFSPR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MFTB, PPC_INS_MFTB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MFTB8, PPC_INS_MFSPR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MFVRSAVE, PPC_INS_MFSPR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MFVRSAVEv, PPC_INS_MFSPR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MFVSCR, PPC_INS_MFVSCR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MSYNC, PPC_INS_MSYNC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_BOOKE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTCRF, PPC_INS_MTCRF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTCRF8, PPC_INS_MTCRF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTCTR, PPC_INS_MTCTR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTCTR8, PPC_INS_MTCTR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CTR8, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTCTR8loop, PPC_INS_MTCTR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CTR8, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTCTRloop, PPC_INS_MTCTR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTFSB0, PPC_INS_MTFSB0,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_RM, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTFSB1, PPC_INS_MTFSB1,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_RM, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTFSF, PPC_INS_MTFSF,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_RM, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTLR, PPC_INS_MTLR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTLR8, PPC_INS_MTLR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTMSR, PPC_INS_MTMSR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTMSRD, PPC_INS_MTMSRD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTOCRF, PPC_INS_MTOCRF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTOCRF8, PPC_INS_MTOCRF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTSPR, PPC_INS_MTSPR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTVRSAVE, PPC_INS_MTSPR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTVRSAVEv, PPC_INS_MTSPR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTVSCR, PPC_INS_MTVSCR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MULHD, PPC_INS_MULHD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MULHDU, PPC_INS_MULHDU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MULHDUo, PPC_INS_MULHDU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MULHDo, PPC_INS_MULHD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MULHW, PPC_INS_MULHW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MULHWU, PPC_INS_MULHWU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MULHWUo, PPC_INS_MULHWU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MULHWo, PPC_INS_MULHW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MULLD, PPC_INS_MULLD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MULLDo, PPC_INS_MULLD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MULLI, PPC_INS_MULLI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MULLI8, PPC_INS_MULLI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MULLW, PPC_INS_MULLW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MULLWo, PPC_INS_MULLW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_NAND, PPC_INS_NAND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_NAND8, PPC_INS_NAND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_NAND8o, PPC_INS_NAND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_NANDo, PPC_INS_NAND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_NEG, PPC_INS_NEG,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_NEG8, PPC_INS_NEG,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_NEG8o, PPC_INS_NEG,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_NEGo, PPC_INS_NEG,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_NOP, PPC_INS_NOP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_NOP_GT_PWR6, PPC_INS_ORI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_NOP_GT_PWR7, PPC_INS_ORI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_NOR, PPC_INS_NOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_NOR8, PPC_INS_NOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_NOR8o, PPC_INS_NOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_NORo, PPC_INS_NOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_OR, PPC_INS_OR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_OR8, PPC_INS_OR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_OR8o, PPC_INS_OR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ORC, PPC_INS_ORC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ORC8, PPC_INS_ORC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ORC8o, PPC_INS_ORC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ORCo, PPC_INS_ORC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ORI, PPC_INS_ORI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ORI8, PPC_INS_ORI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ORIS, PPC_INS_ORIS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ORIS8, PPC_INS_ORIS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_ORo, PPC_INS_OR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_POPCNTD, PPC_INS_POPCNTD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_POPCNTW, PPC_INS_POPCNTW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLDCL, PPC_INS_RLDCL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLDCLo, PPC_INS_RLDCL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLDCR, PPC_INS_RLDCR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLDCRo, PPC_INS_RLDCR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLDIC, PPC_INS_RLDIC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLDICL, PPC_INS_RLDICL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLDICL_32_64, PPC_INS_RLDICL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLDICLo, PPC_INS_RLDICL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLDICR, PPC_INS_RLDICR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLDICRo, PPC_INS_RLDICR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLDICo, PPC_INS_RLDIC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLDIMI, PPC_INS_RLDIMI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLDIMIo, PPC_INS_RLDIMI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLWIMI, PPC_INS_RLWIMI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLWIMIo, PPC_INS_RLWIMI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLWINM, PPC_INS_RLWINM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLWINM8, PPC_INS_RLWINM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLWINM8o, PPC_INS_RLWINM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLWINMo, PPC_INS_RLWINM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLWNM, PPC_INS_RLWNM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLWNMo, PPC_INS_RLWNM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SC, PPC_INS_SC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SLBIA, PPC_INS_SLBIA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SLBIE, PPC_INS_SLBIE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SLBMFEE, PPC_INS_SLBMFEE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SLBMTE, PPC_INS_SLBMTE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SLD, PPC_INS_SLD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SLDo, PPC_INS_SLD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SLW, PPC_INS_SLW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SLWo, PPC_INS_SLW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SRAD, PPC_INS_SRAD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SRADI, PPC_INS_SRADI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SRADIo, PPC_INS_SRADI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SRADo, PPC_INS_SRAD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SRAW, PPC_INS_SRAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SRAWI, PPC_INS_SRAWI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SRAWIo, PPC_INS_SRAWI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SRAWo, PPC_INS_SRAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SRD, PPC_INS_SRD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SRDo, PPC_INS_SRD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SRW, PPC_INS_SRW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SRWo, PPC_INS_SRW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STB, PPC_INS_STB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STB8, PPC_INS_STB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STBU, PPC_INS_STBU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STBU8, PPC_INS_STBU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STBUX, PPC_INS_STBUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STBUX8, PPC_INS_STBUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STBX, PPC_INS_STBX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STBX8, PPC_INS_STBX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STD, PPC_INS_STD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STDBRX, PPC_INS_STDBRX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STDCX, PPC_INS_STDCX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STDU, PPC_INS_STDU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STDUX, PPC_INS_STDUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STDX, PPC_INS_STDX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STFD, PPC_INS_STFD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STFDU, PPC_INS_STFDU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STFDUX, PPC_INS_STFDUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STFDX, PPC_INS_STFDX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STFIWX, PPC_INS_STFIWX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STFS, PPC_INS_STFS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STFSU, PPC_INS_STFSU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STFSUX, PPC_INS_STFSUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STFSX, PPC_INS_STFSX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STH, PPC_INS_STH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STH8, PPC_INS_STH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STHBRX, PPC_INS_STHBRX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STHU, PPC_INS_STHU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STHU8, PPC_INS_STHU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STHUX, PPC_INS_STHUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STHUX8, PPC_INS_STHUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STHX, PPC_INS_STHX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STHX8, PPC_INS_STHX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STMW, PPC_INS_STMW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STVEBX, PPC_INS_STVEBX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STVEHX, PPC_INS_STVEHX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STVEWX, PPC_INS_STVEWX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STVX, PPC_INS_STVX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STVXL, PPC_INS_STVXL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STW, PPC_INS_STW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STW8, PPC_INS_STW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STWBRX, PPC_INS_STWBRX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STWCX, PPC_INS_STWCX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STWU, PPC_INS_STWU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STWU8, PPC_INS_STWU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STWUX, PPC_INS_STWUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STWUX8, PPC_INS_STWUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STWX, PPC_INS_STWX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STWX8, PPC_INS_STWX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBF, PPC_INS_SUBF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBF8, PPC_INS_SUBF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBF8o, PPC_INS_SUBF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBFC, PPC_INS_SUBFC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBFC8, PPC_INS_SUBFC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBFC8o, PPC_INS_SUBFC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBFCo, PPC_INS_SUBFC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBFE, PPC_INS_SUBFE,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBFE8, PPC_INS_SUBFE,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBFE8o, PPC_INS_SUBFE,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBFEo, PPC_INS_SUBFE,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBFIC, PPC_INS_SUBFIC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBFIC8, PPC_INS_SUBFIC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBFME, PPC_INS_SUBFME,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBFME8, PPC_INS_SUBFME,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBFME8o, PPC_INS_SUBFME,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBFMEo, PPC_INS_SUBFME,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBFZE, PPC_INS_SUBFZE,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBFZE8, PPC_INS_SUBFZE,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBFZE8o, PPC_INS_SUBFZE,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBFZEo, PPC_INS_SUBFZE,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SUBFo, PPC_INS_SUBF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_SYNC, PPC_INS_SYNC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_NOTBOOKE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_TAILB, PPC_INS_B,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_TAILB8, PPC_INS_B,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_TAILBA, PPC_INS_BA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_TAILBA8, PPC_INS_BA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_TAILBCTR, PPC_INS_BCTR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_MODE32, 0 }, 1, 1
+#endif
+	},
+	{
+		PPC_TAILBCTR8, PPC_INS_BCTR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR8, PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_MODE64, 0 }, 1, 1
+#endif
+	},
+	{
+		PPC_TD, PPC_INS_TD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_TDI, PPC_INS_TDI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_TLBIE, PPC_INS_TLBIE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_TLBIEL, PPC_INS_TLBIEL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_TLBSYNC, PPC_INS_TLBSYNC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_TRAP, PPC_INS_TRAP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_TW, PPC_INS_TW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_TWI, PPC_INS_TWI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VADDCUW, PPC_INS_VADDCUW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VADDFP, PPC_INS_VADDFP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VADDSBS, PPC_INS_VADDSBS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VADDSHS, PPC_INS_VADDSHS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VADDSWS, PPC_INS_VADDSWS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VADDUBM, PPC_INS_VADDUBM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VADDUBS, PPC_INS_VADDUBS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VADDUHM, PPC_INS_VADDUHM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VADDUHS, PPC_INS_VADDUHS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VADDUWM, PPC_INS_VADDUWM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VADDUWS, PPC_INS_VADDUWS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VAND, PPC_INS_VAND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VANDC, PPC_INS_VANDC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VAVGSB, PPC_INS_VAVGSB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VAVGSH, PPC_INS_VAVGSH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VAVGSW, PPC_INS_VAVGSW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VAVGUB, PPC_INS_VAVGUB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VAVGUH, PPC_INS_VAVGUH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VAVGUW, PPC_INS_VAVGUW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCFSX, PPC_INS_VCFSX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCFSX_0, PPC_INS_VCFSX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCFUX, PPC_INS_VCFUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCFUX_0, PPC_INS_VCFUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPBFP, PPC_INS_VCMPBFP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPBFPo, PPC_INS_VCMPBFP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPEQFP, PPC_INS_VCMPEQFP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPEQFPo, PPC_INS_VCMPEQFP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPEQUB, PPC_INS_VCMPEQUB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPEQUBo, PPC_INS_VCMPEQUB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPEQUH, PPC_INS_VCMPEQUH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPEQUHo, PPC_INS_VCMPEQUH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPEQUW, PPC_INS_VCMPEQUW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPEQUWo, PPC_INS_VCMPEQUW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPGEFP, PPC_INS_VCMPGEFP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPGEFPo, PPC_INS_VCMPGEFP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPGTFP, PPC_INS_VCMPGTFP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPGTFPo, PPC_INS_VCMPGTFP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPGTSB, PPC_INS_VCMPGTSB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPGTSBo, PPC_INS_VCMPGTSB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPGTSH, PPC_INS_VCMPGTSH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPGTSHo, PPC_INS_VCMPGTSH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPGTSW, PPC_INS_VCMPGTSW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPGTSWo, PPC_INS_VCMPGTSW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPGTUB, PPC_INS_VCMPGTUB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPGTUBo, PPC_INS_VCMPGTUB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPGTUH, PPC_INS_VCMPGTUH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPGTUHo, PPC_INS_VCMPGTUH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPGTUW, PPC_INS_VCMPGTUW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCMPGTUWo, PPC_INS_VCMPGTUW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCTSXS, PPC_INS_VCTSXS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCTSXS_0, PPC_INS_VCTSXS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCTUXS, PPC_INS_VCTUXS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VCTUXS_0, PPC_INS_VCTUXS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VEXPTEFP, PPC_INS_VEXPTEFP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VLOGEFP, PPC_INS_VLOGEFP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMADDFP, PPC_INS_VMADDFP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMAXFP, PPC_INS_VMAXFP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMAXSB, PPC_INS_VMAXSB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMAXSH, PPC_INS_VMAXSH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMAXSW, PPC_INS_VMAXSW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMAXUB, PPC_INS_VMAXUB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMAXUH, PPC_INS_VMAXUH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMAXUW, PPC_INS_VMAXUW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMHADDSHS, PPC_INS_VMHADDSHS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMHRADDSHS, PPC_INS_VMHRADDSHS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMINFP, PPC_INS_VMINFP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMINSB, PPC_INS_VMINSB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMINSH, PPC_INS_VMINSH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMINSW, PPC_INS_VMINSW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMINUB, PPC_INS_VMINUB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMINUH, PPC_INS_VMINUH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMINUW, PPC_INS_VMINUW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMLADDUHM, PPC_INS_VMLADDUHM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMRGHB, PPC_INS_VMRGHB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMRGHH, PPC_INS_VMRGHH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMRGHW, PPC_INS_VMRGHW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMRGLB, PPC_INS_VMRGLB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMRGLH, PPC_INS_VMRGLH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMRGLW, PPC_INS_VMRGLW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMSUMMBM, PPC_INS_VMSUMMBM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMSUMSHM, PPC_INS_VMSUMSHM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMSUMSHS, PPC_INS_VMSUMSHS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMSUMUBM, PPC_INS_VMSUMUBM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMSUMUHM, PPC_INS_VMSUMUHM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMSUMUHS, PPC_INS_VMSUMUHS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMULESB, PPC_INS_VMULESB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMULESH, PPC_INS_VMULESH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMULEUB, PPC_INS_VMULEUB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMULEUH, PPC_INS_VMULEUH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMULOSB, PPC_INS_VMULOSB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMULOSH, PPC_INS_VMULOSH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMULOUB, PPC_INS_VMULOUB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VMULOUH, PPC_INS_VMULOUH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VNMSUBFP, PPC_INS_VNMSUBFP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VNOR, PPC_INS_VNOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VOR, PPC_INS_VOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VPERM, PPC_INS_VPERM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VPKPX, PPC_INS_VPKPX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VPKSHSS, PPC_INS_VPKSHSS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VPKSHUS, PPC_INS_VPKSHUS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VPKSWSS, PPC_INS_VPKSWSS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VPKSWUS, PPC_INS_VPKSWUS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VPKUHUM, PPC_INS_VPKUHUM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VPKUHUS, PPC_INS_VPKUHUS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VPKUWUM, PPC_INS_VPKUWUM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VPKUWUS, PPC_INS_VPKUWUS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VREFP, PPC_INS_VREFP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VRFIM, PPC_INS_VRFIM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VRFIN, PPC_INS_VRFIN,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VRFIP, PPC_INS_VRFIP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VRFIZ, PPC_INS_VRFIZ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VRLB, PPC_INS_VRLB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VRLH, PPC_INS_VRLH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VRLW, PPC_INS_VRLW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VRSQRTEFP, PPC_INS_VRSQRTEFP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSEL, PPC_INS_VSEL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSL, PPC_INS_VSL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSLB, PPC_INS_VSLB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSLDOI, PPC_INS_VSLDOI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSLH, PPC_INS_VSLH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSLO, PPC_INS_VSLO,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSLW, PPC_INS_VSLW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSPLTB, PPC_INS_VSPLTB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSPLTH, PPC_INS_VSPLTH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSPLTISB, PPC_INS_VSPLTISB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSPLTISH, PPC_INS_VSPLTISH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSPLTISW, PPC_INS_VSPLTISW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSPLTW, PPC_INS_VSPLTW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSR, PPC_INS_VSR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSRAB, PPC_INS_VSRAB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSRAH, PPC_INS_VSRAH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSRAW, PPC_INS_VSRAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSRB, PPC_INS_VSRB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSRH, PPC_INS_VSRH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSRO, PPC_INS_VSRO,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSRW, PPC_INS_VSRW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSUBCUW, PPC_INS_VSUBCUW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSUBFP, PPC_INS_VSUBFP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSUBSBS, PPC_INS_VSUBSBS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSUBSHS, PPC_INS_VSUBSHS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSUBSWS, PPC_INS_VSUBSWS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSUBUBM, PPC_INS_VSUBUBM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSUBUBS, PPC_INS_VSUBUBS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSUBUHM, PPC_INS_VSUBUHM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSUBUHS, PPC_INS_VSUBUHS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSUBUWM, PPC_INS_VSUBUWM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSUBUWS, PPC_INS_VSUBUWS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSUM2SWS, PPC_INS_VSUM2SWS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSUM4SBS, PPC_INS_VSUM4SBS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSUM4SHS, PPC_INS_VSUM4SHS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSUM4UBS, PPC_INS_VSUM4UBS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VSUMSWS, PPC_INS_VSUMSWS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VUPKHPX, PPC_INS_VUPKHPX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VUPKHSB, PPC_INS_VUPKHSB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VUPKHSH, PPC_INS_VUPKHSH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VUPKLPX, PPC_INS_VUPKLPX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VUPKLSB, PPC_INS_VUPKLSB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VUPKLSH, PPC_INS_VUPKLSH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_VXOR, PPC_INS_VXOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_V_SET0, PPC_INS_VXOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_V_SET0B, PPC_INS_VXOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_V_SET0H, PPC_INS_VXOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_V_SETALLONES, PPC_INS_VSPLTISW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_V_SETALLONESB, PPC_INS_VSPLTISW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_V_SETALLONESH, PPC_INS_VSPLTISW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_WAIT, PPC_INS_WAIT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XOR, PPC_INS_XOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XOR8, PPC_INS_XOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XOR8o, PPC_INS_XOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XORI, PPC_INS_XORI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XORI8, PPC_INS_XORI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XORIS, PPC_INS_XORIS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XORIS8, PPC_INS_XORIS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XORo, PPC_INS_XOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_gBC, PPC_INS_BC,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_gBCA, PPC_INS_BCA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_gBCCTR, PPC_INS_BCCTR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_gBCCTRL, PPC_INS_BCCTRL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_LR, PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_gBCL, PPC_INS_BCL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_LR, PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_gBCLA, PPC_INS_BCLA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_LR, PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_gBCLR, PPC_INS_BCLR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_gBCLRL, PPC_INS_BCLRL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_LR, PPC_REG_CTR, 0 }, { 0 }, 0, 0
+#endif
+	},
 };
 
 // given internal insn id, return public instruction info
@@ -922,52 +4679,23 @@ void PPC_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
 	int i;
 
-	// consider alias insn first
-	for (i = 0; i < ARR_SIZE(alias_insns); i++) {
-		if (alias_insns[i].id == id) {
-			insn->id = alias_insns[i].mapid;
-
-			if (h->detail) {
-				cs_struct handle;
-				handle.detail = h->detail;
-
-				memcpy(insn->detail->regs_read, alias_insns[i].regs_use, sizeof(alias_insns[i].regs_use));
-				insn->detail->regs_read_count = count_positive(alias_insns[i].regs_use);
-
-				memcpy(insn->detail->regs_write, alias_insns[i].regs_mod, sizeof(alias_insns[i].regs_mod));
-				insn->detail->regs_write_count = count_positive(alias_insns[i].regs_mod);
-
-				memcpy(insn->detail->groups, alias_insns[i].groups, sizeof(alias_insns[i].groups));
-				insn->detail->groups_count = count_positive(alias_insns[i].groups);
-
-				if (alias_insns[i].branch || alias_insns[i].indirect_branch) {
-					// this insn also belongs to JUMP group. add JUMP group
-					insn->detail->groups[insn->detail->groups_count] = PPC_GRP_JUMP;
-					insn->detail->groups_count++;
-				}
-
-				insn->detail->ppc.update_cr0 = cs_reg_write((csh)&handle, insn, PPC_REG_CR0);
-				return;
-			}
-		}
-	}
-
 	i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
 	if (i != 0) {
 		insn->id = insns[i].mapid;
 
 		if (h->detail) {
+#ifndef CAPSTONE_DIET
 			cs_struct handle;
 			handle.detail = h->detail;
 
 			memcpy(insn->detail->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
-			insn->detail->regs_read_count = count_positive(insns[i].regs_use);
+			insn->detail->regs_read_count = (uint8_t)count_positive(insns[i].regs_use);
 
 			memcpy(insn->detail->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
-			insn->detail->regs_write_count = count_positive(insns[i].regs_mod);
+			insn->detail->regs_write_count = (uint8_t)count_positive(insns[i].regs_mod);
 
 			memcpy(insn->detail->groups, insns[i].groups, sizeof(insns[i].groups));
-			insn->detail->groups_count = count_positive(insns[i].groups);
+			insn->detail->groups_count = (uint8_t)count_positive(insns[i].groups);
 
 			if (insns[i].branch || insns[i].indirect_branch) {
 				// this insn also belongs to JUMP group. add JUMP group
@@ -976,22 +4704,12 @@ void PPC_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			}
 
 			insn->detail->ppc.update_cr0 = cs_reg_write((csh)&handle, insn, PPC_REG_CR0);
+#endif
 		}
 	}
 }
 
-// given public insn id, return internal insn id
-unsigned int PPC_get_insn_id2(unsigned int id)
-{
-	// consider alias insn first
-	unsigned int res;
-	res = insn_reverse_id(alias_insns, ARR_SIZE(alias_insns), id);
-	if (res)
-		return res;
-
-	return insn_reverse_id(insns, ARR_SIZE(insns), id);
-}
-
+#ifndef CAPSTONE_DIET
 static name_map insn_name_maps[] = {
 	{ PPC_INS_INVALID, NULL },
 
@@ -1088,6 +4806,7 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_FDIVS, "fdivs" },
 	{ PPC_INS_FMADD, "fmadd" },
 	{ PPC_INS_FMADDS, "fmadds" },
+	{ PPC_INS_FMR, "fmr" },
 	{ PPC_INS_FMSUB, "fmsub" },
 	{ PPC_INS_FMSUBS, "fmsubs" },
 	{ PPC_INS_FMUL, "fmul" },
@@ -1174,6 +4893,7 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_MFSPR, "mfspr" },
 	{ PPC_INS_MFTB, "mftb" },
 	{ PPC_INS_MFVSCR, "mfvscr" },
+	{ PPC_INS_MSYNC, "msync" },
 	{ PPC_INS_MTCRF, "mtcrf" },
 	{ PPC_INS_MTCTR, "mtctr" },
 	{ PPC_INS_MTFSB0, "mtfsb0" },
@@ -1432,10 +5152,13 @@ static name_map insn_name_maps[] = {
 
 // special alias insn
 static name_map alias_insn_names[] = {
+	{ 0, NULL }
 };
+#endif
 
 const char *PPC_insn_name(csh handle, unsigned int id)
 {
+#ifndef CAPSTONE_DIET
 	if (id >= PPC_INS_MAX)
 		return NULL;
 
@@ -1447,22 +5170,9 @@ const char *PPC_insn_name(csh handle, unsigned int id)
 	}
 
 	return insn_name_maps[id].name;
-}
-
-ppc_reg PPC_map_insn(const char *name)
-{
-	// handle special alias first
-	int i;
-
-	for (i = 0; i < ARR_SIZE(alias_insn_names); i++) {
-		if (!strcasecmp(alias_insn_names[i].name, name))
-			return alias_insn_names[i].id;
-	}
-
-	// NOTE: skip first NULL name in insn_name_maps
-	i = name2id(&insn_name_maps[1], ARR_SIZE(insn_name_maps) - 1, name);
-
-	return (i != -1)? i : PPC_REG_INVALID;
+#else
+	return NULL;
+#endif
 }
 
 // map internal raw register to 'public' register

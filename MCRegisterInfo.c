@@ -63,10 +63,12 @@ static uint16_t DiffListIterator_getVal(DiffListIterator *d)
 
 static bool DiffListIterator_next(DiffListIterator *d)
 {
+	MCPhysReg D;
+
 	if (d->List == 0)
 		return false;
 
-	MCPhysReg D = *d->List;
+	D = *d->List;
 	d->List++;
 	d->Val += D;
 
@@ -89,7 +91,7 @@ unsigned MCRegisterInfo_getMatchingSuperReg(MCRegisterInfo *RI, unsigned Reg, un
 		return 0;
 	}
 
-	DiffListIterator_init(&iter, Reg, RI->DiffLists + RI->Desc[Reg].SuperRegs);
+	DiffListIterator_init(&iter, (MCPhysReg)Reg, RI->DiffLists + RI->Desc[Reg].SuperRegs);
 	DiffListIterator_next(&iter);
 
 	while(DiffListIterator_isValid(&iter)) {
@@ -108,7 +110,7 @@ unsigned MCRegisterInfo_getSubReg(MCRegisterInfo *RI, unsigned Reg, unsigned Idx
 	DiffListIterator iter;
 	uint16_t *SRI = RI->SubRegIndices + RI->Desc[Reg].SubRegIndices;
 
-	DiffListIterator_init(&iter, Reg, RI->DiffLists + RI->Desc[Reg].SubRegs);
+	DiffListIterator_init(&iter, (MCPhysReg)Reg, RI->DiffLists + RI->Desc[Reg].SubRegs);
 	DiffListIterator_next(&iter);
 
 	while(DiffListIterator_isValid(&iter)) {

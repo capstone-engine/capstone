@@ -14,11 +14,13 @@
 typedef struct insn_map {
 	unsigned short id;
 	unsigned short mapid;
+#ifndef CAPSTONE_DIET
 	unsigned char regs_use[12]; // list of implicit registers used by this instruction
 	unsigned char regs_mod[20]; // list of implicit registers modified by this instruction
 	unsigned char groups[8]; // list of group this instruction belong to
 	bool branch;	// branch instruction?
 	bool indirect_branch;	// indirect branch instruction?
+#endif
 } insn_map;
 
 // return the position of a string in a list of strings
@@ -38,10 +40,6 @@ typedef struct name_map {
 // map a name to its ID
 // return 0 if not found
 int name2id(name_map* map, int max, const char *name);
-
-// reverse mapid to id
-// return 0 if not found
-unsigned int insn_reverse_id(insn_map *insns, unsigned int max, unsigned int id);
 
 // count number of positive members in a list.
 // NOTE: list must be guaranteed to end in 0

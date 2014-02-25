@@ -16,12 +16,14 @@ void SStream_Init(SStream *ss)
 
 void SStream_concat(SStream *ss, const char *fmt, ...)
 {
+#ifndef CAPSTONE_DIET
 	va_list ap;
 
 	va_start(ap, fmt);
 	int ret = cs_vsnprintf(ss->buffer + ss->index, sizeof(ss->buffer) - (ss->index + 1), fmt, ap);
 	va_end(ap);
 	ss->index += ret;
+#endif
 }
 
 /*

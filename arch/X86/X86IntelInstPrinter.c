@@ -29,6 +29,7 @@
 #include "X86Mapping.h"
 
 static void printMemReference(MCInst *MI, unsigned Op, SStream *O);
+static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 
 static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 {
@@ -114,9 +115,83 @@ static void printf512mem(MCInst *MI, unsigned OpNo, SStream *O)
 	printMemReference(MI, OpNo, O);
 }
 
+static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
+{
+	MCOperand *SegReg;
+	
+	SegReg = MCInst_getOperand(MI, Op+1);
+
+	// If this has a segment register, print it.
+	if (MCOperand_getReg(SegReg)) {
+		printOperand(MI, Op+1, O);
+		SStream_concat(O, ":");
+	}
+
+	SStream_concat(O, "[");
+	printOperand(MI, Op, O);
+	SStream_concat(O, "]");
+}
+
+static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
+{
+	// DI accesses are always ES-based.
+	SStream_concat(O, "es:[");
+	printOperand(MI, Op, O);
+	SStream_concat(O, "]");
+}
+
+void printSrcIdx8(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	SStream_concat(O, "byte ptr ");
+	printSrcIdx(MI, OpNo, O);
+}
+
+void printSrcIdx16(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	SStream_concat(O, "word ptr ");
+	printSrcIdx(MI, OpNo, O);
+}
+
+void printSrcIdx32(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	SStream_concat(O, "dword ptr ");
+	printSrcIdx(MI, OpNo, O);
+}
+
+void printSrcIdx64(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	SStream_concat(O, "qword ptr ");
+	printSrcIdx(MI, OpNo, O);
+}
+
+void printDstIdx8(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	SStream_concat(O, "byte ptr ");
+	printDstIdx(MI, OpNo, O);
+}
+
+void printDstIdx16(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	SStream_concat(O, "word ptr ");
+	printDstIdx(MI, OpNo, O);
+}
+
+void printDstIdx32(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	SStream_concat(O, "dword ptr ");
+	printDstIdx(MI, OpNo, O);
+}
+
+void printDstIdx64(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	SStream_concat(O, "qword ptr ");
+	printDstIdx(MI, OpNo, O);
+}
+
 static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 {
 	MCOperand *DispSpec = MCInst_getOperand(MI, Op);
+	MCOperand *SegReg = MCInst_getOperand(MI, Op+1);
 
 	if (MI->csh->detail) {
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_MEM;
@@ -124,6 +199,12 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.index = X86_REG_INVALID;
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.scale = 1;
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.disp = 0;
+	}
+
+	// If this has a segment register, print it.
+	if (MCOperand_getReg(SegReg)) {
+		printOperand(MI, Op+1, O);
+		SStream_concat(O, ":");
 	}
 
 	SStream_concat(O, "[");
@@ -155,24 +236,12 @@ static void printMemOffs8(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat(O, "byte ptr ");
 
-	// If this has a segment register, print it.
-	// this is a hack. will fix it later
-	if (MI->x86_segment) {
-		SStream_concat(O, "%s:", X86_reg_name(1, MI->x86_segment));
-	}
-
 	printMemOffset(MI, OpNo, O);
 }
 
 static void printMemOffs16(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat(O, "word ptr ");
-
-	// If this has a segment register, print it.
-	// this is a hack. will fix it later
-	if (MI->x86_segment) {
-		SStream_concat(O, "%s:", X86_reg_name(1, MI->x86_segment));
-	}
 
 	printMemOffset(MI, OpNo, O);
 
@@ -181,12 +250,6 @@ static void printMemOffs16(MCInst *MI, unsigned OpNo, SStream *O)
 static void printMemOffs32(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat(O, "dword ptr ");
-
-	// If this has a segment register, print it.
-	// this is a hack. will fix it later
-	if (MI->x86_segment) {
-		SStream_concat(O, "%s:", X86_reg_name(1, MI->x86_segment));
-	}
 
 	printMemOffset(MI, OpNo, O);
 }
@@ -197,68 +260,33 @@ static void printMemOffs64(MCInst *MI, unsigned OpNo, SStream *O)
 	printMemOffset(MI, OpNo, O);
 }
 
-// get the first op from the asm buffer
-// return False if there is no op. On True, put fist op in @firstop
-// NOTE: make sure firstop is big enough to contain the resulted string
-static bool get_first_op(char *buffer, char *firstop)
-{
-	char *tab = strchr(buffer, '\t');
-	if (tab) {
-		char *comma = strchr(tab + 1, ',');
-		if (comma) {
-			memcpy(firstop, tab + 1, comma - tab - 1);
-			firstop[comma - tab - 1] = '\0';
-		} else
-			strcpy(firstop, tab + 1);
-
-		return true;
-	} else	// no op
-		return false;
-}
-
-static bool printAliasInstr(MCInst *MI, SStream *OS);
+static char *printAliasInstr(MCInst *MI, SStream *OS, void *info);
 static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 {
-	//if (TSFlags & X86II::LOCK)
-	//  O << "\tlock\n";
+	char *mnem;
+	x86_reg reg;
 
-	if (printAliasInstr(MI, O)) {
-		char *mnem = cs_strdup(O->buffer);
-		char *tab = strchr(mnem, '\t');
-		if (tab)
-			*tab = '\0';
-		// reflect the new insn name (alias) in the opcode
-		MCInst_setOpcode(MI, X86_get_insn_id2(X86_map_insn(mnem)));
+	// Try to print any aliases first.
+	mnem = printAliasInstr(MI, O, NULL);
+	if (mnem)
 		cs_mem_free(mnem);
-	} else
+	else
 		printInstruction(MI, O, NULL);
 
 	if (MI->csh->detail) {
-		char tmp[64];
-		if (get_first_op(O->buffer, tmp)) {
-			int post;
-			char *acc_regs[] = { "al", "ax", "eax", "rax", NULL };
-			int acc_regs_id[] = { X86_REG_AL,  X86_REG_AX, X86_REG_EAX, X86_REG_RAX };
-			if (tmp[0] != 0 && ((post = str_in_list(acc_regs, tmp)) != -1)) {
-				// first op is register, so set operand size following register size
-				MI->flat_insn.x86.op_size = 1 << post;
-				// tmp is a register
-				if ((MI->flat_insn.x86.operands[0].type != X86_OP_INVALID) &&
-						((MI->flat_insn.x86.operands[0].type != X86_OP_REG) ||
-						(MI->flat_insn.x86.operands[0].reg != acc_regs_id[post]))) {
-					// first op is register, so insert its detail to position 0
-					int i;
-					for (i = MI->flat_insn.x86.op_count; i > 0; i--) {
-						memcpy(&(MI->flat_insn.x86.operands[i]), &(MI->flat_insn.x86.operands[i - 1]),
-								sizeof(MI->flat_insn.x86.operands[0]));
-					}
-					MI->flat_insn.x86.operands[0].type = X86_OP_REG;
-					MI->flat_insn.x86.operands[0].reg = x86_map_regname(tmp);
-					MI->flat_insn.x86.op_count++;
-				}
-			}
+		// first op can be embedded in the asm by llvm.
+		// so we have to handle that case to not miss the first op.
+		reg = X86_insn_reg(MCInst_getOpcode(MI));
+		if (reg) {
+			// shift all the ops right to leave 1st slot for this new register op
+			memmove(&(MI->flat_insn.x86.operands[1]), &(MI->flat_insn.x86.operands[0]),
+					sizeof(MI->flat_insn.x86.operands[0]) * (ARR_SIZE(MI->flat_insn.x86.operands) - 1));
+			MI->flat_insn.x86.operands[0].type = X86_OP_REG;
+			MI->flat_insn.x86.operands[0].reg = reg;
+			MI->flat_insn.x86.op_count++;
 		}
+
 	}
 }
 
@@ -290,7 +318,7 @@ static void printAVXCC(MCInst *MI, unsigned Op, SStream *O)
 {
 	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x1f;
 	switch (Imm) {
-		default: printf("Invalid avxcc argument!\n"); break;
+		default: break;//printf("Invalid avxcc argument!\n"); break;
 		case    0: SStream_concat(O, "eq"); break;
 		case    1: SStream_concat(O, "lt"); break;
 		case    2: SStream_concat(O, "le"); break;
@@ -326,6 +354,18 @@ static void printAVXCC(MCInst *MI, unsigned Op, SStream *O)
 	}
 }
 
+static void printRoundingControl(MCInst *MI, unsigned Op, SStream *O)
+{
+	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x3;
+	switch (Imm) {
+		case 0: SStream_concat(O, "{rn-sae}"); break;
+		case 1: SStream_concat(O, "{rd-sae}"); break;
+		case 2: SStream_concat(O, "{ru-sae}"); break;
+		case 3: SStream_concat(O, "{rz-sae}"); break;
+		default: break;	// never reach
+	}
+}
+
 /// printPCRelImm - This is used to print an immediate value that ends up
 /// being encoded as a pc-relative value.
 static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
@@ -352,7 +392,7 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
-static const char *getRegisterName(unsigned RegNo);
+static char *getRegisterName(unsigned RegNo);
 static void printRegName(SStream *OS, unsigned RegNo)
 {
 	SStream_concat(OS, getRegisterName(RegNo));
@@ -415,7 +455,7 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 static void printMemReference(MCInst *MI, unsigned Op, SStream *O)	// qqq
 {
 	MCOperand *BaseReg  = MCInst_getOperand(MI, Op);
-	unsigned ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op+1));
+	uint64_t ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op+1));
 	MCOperand *IndexReg  = MCInst_getOperand(MI, Op+2);
 	MCOperand *DispSpec = MCInst_getOperand(MI, Op+3);
 	MCOperand *SegReg = MCInst_getOperand(MI, Op+4);
@@ -424,7 +464,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)	// qqq
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.base = MCOperand_getReg(BaseReg);
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.index = MCOperand_getReg(IndexReg);
-		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.scale = ScaleVal;
+		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.scale = (int)ScaleVal;
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.disp = 0;
 	}
 

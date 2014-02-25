@@ -33,6 +33,7 @@
 const char *X86ATT_getRegisterName(unsigned RegNo);
 
 static void printMemReference(MCInst *MI, unsigned Op, SStream *O);
+static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 
 static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 {
@@ -116,11 +117,87 @@ static void printf512mem(MCInst *MI, unsigned OpNo, SStream *O)
 	printMemReference(MI, OpNo, O);
 }
 
+static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
+{
+	MCOperand *SegReg;
+
+	SegReg = MCInst_getOperand(MI, Op+1);
+
+	SStream_concat(O, "%s", markup("<mem:"));
+
+	// If this has a segment register, print it.
+	if (MCOperand_getReg(SegReg)) {
+		printOperand(MI, Op+1, O);
+		SStream_concat(O, ":");
+	}
+
+	SStream_concat(O, "(");
+
+	printOperand(MI, Op, O);
+
+	SStream_concat(O, ")%s", markup(">"));
+}
+
+static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
+{
+	SStream_concat(O, "%s%s", markup("<mem:"), "%es:(");
+	printOperand(MI, Op, O);
+
+	SStream_concat(O, ")%s", markup(">"));
+}
+
+static void printSrcIdx8(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	printSrcIdx(MI, OpNo, O);
+}
+
+static void printSrcIdx16(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	printSrcIdx(MI, OpNo, O);
+}
+
+static void printSrcIdx32(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	printSrcIdx(MI, OpNo, O);
+}
+
+static void printSrcIdx64(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	printSrcIdx(MI, OpNo, O);
+}
+
+static void printDstIdx8(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	printDstIdx(MI, OpNo, O);
+}
+
+static void printDstIdx16(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	printDstIdx(MI, OpNo, O);
+}
+
+static void printDstIdx32(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	printDstIdx(MI, OpNo, O);
+}
+
+static void printDstIdx64(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	printDstIdx(MI, OpNo, O);
+}
+
 static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 {
 	MCOperand *DispSpec = MCInst_getOperand(MI, Op);
+	MCOperand *SegReg = MCInst_getOperand(MI, Op+1);
 
 	SStream_concat(O, "%s", markup("<mem:"));
+
+	// If this has a segment register, print it.
+	if (MCOperand_getReg(SegReg)) {
+		printOperand(MI, Op+1, O);
+		SStream_concat(O, ":");
+	}
 
 	if (MI->csh->detail) {
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_MEM;
@@ -155,34 +232,16 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 
 static void printMemOffs8(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	// If this has a segment register, print it.
-	// this is a hack. will fix it later
-	if (MI->x86_segment) {
-		SStream_concat(O, "%%%s:", X86_reg_name(1, MI->x86_segment));
-	}
-
 	printMemOffset(MI, OpNo, O);
 }
 
 static void printMemOffs16(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	// If this has a segment register, print it.
-	// this is a hack. will fix it later
-	if (MI->x86_segment) {
-		SStream_concat(O, "%%%s:", X86_reg_name(1, MI->x86_segment));
-	}
-
 	printMemOffset(MI, OpNo, O);
 }
 
 static void printMemOffs32(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	// If this has a segment register, print it.
-	// this is a hack. will fix it later
-	if (MI->x86_segment) {
-		SStream_concat(O, "%%%s:", X86_reg_name(1, MI->x86_segment));
-	}
-
 	printMemOffset(MI, OpNo, O);
 }
 
@@ -221,7 +280,7 @@ static void printAVXCC(MCInst *MI, unsigned Op, SStream *O)
 {
 	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x1f;
 	switch (Imm) {
-		default: printf("Invalid avxcc argument!\n"); break;
+		default: break;//printf("Invalid avxcc argument!\n"); break;
 		case    0: SStream_concat(O, "eq"); break;
 		case    1: SStream_concat(O, "lt"); break;
 		case    2: SStream_concat(O, "le"); break;
@@ -254,6 +313,18 @@ static void printAVXCC(MCInst *MI, unsigned Op, SStream *O)
 		case 0x1d: SStream_concat(O, "ge_oq"); break;
 		case 0x1e: SStream_concat(O, "gt_oq"); break;
 		case 0x1f: SStream_concat(O, "true_us"); break;
+	}
+}
+
+static void printRoundingControl(MCInst *MI, unsigned Op, SStream *O)
+{
+	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x3;
+	switch (Imm) {
+		case 0: SStream_concat(O, "{rn-sae}"); break;
+		case 1: SStream_concat(O, "{rd-sae}"); break;
+		case 2: SStream_concat(O, "{ru-sae}"); break;
+		case 3: SStream_concat(O, "{rz-sae}"); break;
+		default: break;	// never reach
 	}
 }
 
@@ -391,9 +462,9 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 		if (MCOperand_getReg(IndexReg)) {
 			SStream_concat(O, ", ");
 			_printOperand(MI, Op+2, O);
-			unsigned ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op+1));
+			uint64_t ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op+1));
 			if (MI->csh->detail)
-				MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.scale = ScaleVal;
+				MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.scale = (int)ScaleVal;
 			if (ScaleVal != 1) {
 				SStream_concat(O, ", %s%u%s", markup("<imm:"), ScaleVal, markup(">"));
 			}
@@ -424,59 +495,34 @@ static void printRegName(SStream *OS, unsigned RegNo)
 	SStream_concat(OS, "%s%%%s%s", markup("<reg:"), getRegisterName(RegNo), markup(">"));
 }
 
-// get the first op from the asm buffer
-// NOTE: make sure firstop is big enough to contain the resulted string
-static void get_last_op(char *buffer, char *lastop)
-{
-	char *comma = strrchr(buffer, ',');
-	if (comma) {
-		// skip a space after the comma
-		strcpy(lastop, comma + 2);
-	} else	// no op
-		lastop[0] = '\0';
-}
-
 void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 {
-	// FIXME
-	//const MCInstrDesc *Desc = MII.get(MI->getOpcode());
-	//uint64_t TSFlags = Desc.TSFlags;
-
-	//if (TSFlags & X86II::LOCK)
-	//  OS << "\tlock\n";
+	char *mnem;
+	unsigned int i;
+	x86_reg reg;
 
 	// Try to print any aliases first.
-	if (printAliasInstr(MI, OS)) {
-		char *mnem = cs_strdup(OS->buffer);
-		char *tab = strchr(mnem, '\t');
-		if (tab)
-			*tab = '\0';
-		// reflect the new insn name (alias) in the opcode
-		MCInst_setOpcode(MI, X86_get_insn_id2(X86_map_insn(mnem)));
+	mnem = printAliasInstr(MI, OS, NULL);
+	if (mnem)
 		cs_mem_free(mnem);
-	} else
-	   printInstruction(MI, OS, NULL);
+	else
+		printInstruction(MI, OS, NULL);
 
 	if (MI->csh->detail) {
-		// first op can be embedded in the asm by llvm.
-		// so we have to handle that case to not miss the first op.
-		char lastop[32];
-		get_last_op(OS->buffer, lastop);
-		char *acc_regs[] = {"al", "ax", "eax", "rax", NULL};
-		int post;
-		if (lastop[0] == '%' && ((post = str_in_list(acc_regs, lastop+1)) != -1)) {
-			// set operand size following register size
-			MI->flat_insn.x86.op_size = 1 << post;
-			// this is one of the registers AL, AX, EAX, RAX
-			// canonicalize the register name first
-			//int i;
-			//for (i = 1; lastop[i]; i++)
-			//	lastop[i] = tolower(lastop[i]);
-			if (MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count - 1].type != X86_OP_REG) {
-				MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_REG;
-				MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].reg = x86_map_regname(lastop + 1);
-				MI->flat_insn.x86.op_count++;
+		// special instruction needs to supply register op
+		reg = X86_insn_reg(MCInst_getOpcode(MI));
+		if (reg) {
+			// add register operand
+			for (i = 0;; i++) {
+				// find the first empty slot to put it there
+				if (MI->flat_insn.x86.operands[i].type == 0) {
+					MI->flat_insn.x86.operands[i].type = X86_OP_REG;
+					MI->flat_insn.x86.operands[i].reg = reg;
+					MI->flat_insn.x86.op_count++;
+					break;
+				}
 			}
+
 		}
 	}
 }

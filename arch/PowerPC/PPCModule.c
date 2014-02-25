@@ -11,12 +11,14 @@ void enable_powerpc() {};
 
 static cs_err init(cs_struct *ud)
 {
+	MCRegisterInfo *mri;
+
 	// verify if requested mode is valid
 	if (ud->mode & ~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 |
 				CS_MODE_BIG_ENDIAN))
 		return CS_ERR_MODE;
 
-	MCRegisterInfo *mri = cs_mem_malloc(sizeof(*mri));
+	mri = cs_mem_malloc(sizeof(*mri));
 
 	PPC_init(mri);
 	ud->printer = PPC_printInst;

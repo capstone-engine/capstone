@@ -26,7 +26,7 @@ static unsigned short *make_id2insn(insn_map *insns, unsigned int size)
 {
 	// NOTE: assume that the max id is always put at the end of insns array
 	unsigned short max_id = insns[size - 1].id;
-	unsigned int i;
+	unsigned short i;
 
 	unsigned short *cache = (unsigned short *)cs_mem_calloc(sizeof(*cache), max_id + 1);
 
@@ -61,19 +61,6 @@ int name2id(name_map* map, int max, const char *name)
 
 	// nothing match
 	return -1;
-}
-
-unsigned int insn_reverse_id(insn_map *insns, unsigned int max, unsigned int id)
-{
-	unsigned int i;
-
-	for (i = 0; i < max; i++) {
-		if (id == insns[i].mapid)
-			return insns[i].id;
-	}
-
-	// found nothing
-	return 0;
 }
 
 // count number of positive members in a list.

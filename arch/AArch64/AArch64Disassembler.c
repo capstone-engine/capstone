@@ -215,7 +215,7 @@ static bool Check(DecodeStatus *Out, DecodeStatus In);
 static uint64_t getFeatureBits(int feature)
 {
 	// enable all features
-	return -1;
+	return (uint64_t)-1;
 }
 
 #include "AArch64GenDisassemblerTables.inc"
@@ -308,22 +308,25 @@ static unsigned getReg(MCRegisterInfo *MRI, unsigned RC, unsigned RegNo)
 static DecodeStatus DecodeGPR64RegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address, void *Decoder)
 {
+	uint16_t Register;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	uint16_t Register = getReg(Decoder, AArch64_GPR64RegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_GPR64RegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus
-DecodeGPR64xspRegisterClass(MCInst *Inst, unsigned RegNo,
+static DecodeStatus DecodeGPR64xspRegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address, void *Decoder)
 {
+	uint16_t Register;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	uint16_t Register = getReg(Decoder, AArch64_GPR64xspRegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_GPR64xspRegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
@@ -332,77 +335,83 @@ static DecodeStatus DecodeGPR32RegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address,
 		void *Decoder)
 {
+	uint16_t Register;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	uint16_t Register = getReg(Decoder, AArch64_GPR32RegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_GPR32RegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus
-DecodeGPR32wspRegisterClass(MCInst *Inst, unsigned RegNo,
+static DecodeStatus DecodeGPR32wspRegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address, void *Decoder)
 {
+	uint16_t Register;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	uint16_t Register = getReg(Decoder, AArch64_GPR32wspRegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_GPR32wspRegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus
-DecodeFPR8RegisterClass(MCInst *Inst, unsigned RegNo,
+static DecodeStatus DecodeFPR8RegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address, void *Decoder)
 {
+	uint16_t Register;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	uint16_t Register = getReg(Decoder, AArch64_FPR8RegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_FPR8RegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus
-DecodeFPR16RegisterClass(MCInst *Inst, unsigned RegNo,
+static DecodeStatus DecodeFPR16RegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address, void *Decoder)
 {
+	uint16_t Register;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	uint16_t Register = getReg(Decoder, AArch64_FPR16RegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_FPR16RegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
 
 
-static DecodeStatus
-DecodeFPR32RegisterClass(MCInst *Inst, unsigned RegNo,
+static DecodeStatus DecodeFPR32RegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address, void *Decoder)
 {
+	uint16_t Register;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	uint16_t Register = getReg(Decoder, AArch64_FPR32RegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_FPR32RegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus
-DecodeFPR64RegisterClass(MCInst *Inst, unsigned RegNo,
+static DecodeStatus DecodeFPR64RegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address, void *Decoder)
 {
+	uint16_t Register;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	uint16_t Register = getReg(Decoder, AArch64_FPR64RegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_FPR64RegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus
-DecodeFPR64LoRegisterClass(MCInst *Inst, unsigned RegNo,
+static DecodeStatus DecodeFPR64LoRegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address, void *Decoder)
 {
 	if (RegNo > 15)
@@ -411,20 +420,20 @@ DecodeFPR64LoRegisterClass(MCInst *Inst, unsigned RegNo,
 	return DecodeFPR64RegisterClass(Inst, RegNo, Address, Decoder);
 }
 
-static DecodeStatus
-DecodeFPR128RegisterClass(MCInst *Inst, unsigned RegNo,
+static DecodeStatus DecodeFPR128RegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address, void *Decoder)
 {
+	uint16_t Register;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	uint16_t Register = getReg(Decoder, AArch64_FPR128RegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_FPR128RegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus
-DecodeFPR128LoRegisterClass(MCInst *Inst, unsigned RegNo,
+static DecodeStatus DecodeFPR128LoRegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address, void *Decoder)
 {
 	if (RegNo > 15)
@@ -438,10 +447,12 @@ static DecodeStatus DecodeGPR64noxzrRegisterClass(MCInst *Inst,
 		uint64_t Address,
 		void *Decoder)
 {
+	uint16_t Register;
+
 	if (RegNo > 30)
 		return MCDisassembler_Fail;
 
-	uint16_t Register = getReg(Decoder, AArch64_GPR64noxzrRegClassID, RegNo);
+	Register = (uint16_t)getReg(Decoder, AArch64_GPR64noxzrRegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
@@ -450,10 +461,12 @@ static DecodeStatus DecodeRegisterClassByID(MCInst *Inst, unsigned RegNo,
 		unsigned RegID,
 		void *Decoder)
 {
+	uint16_t Register;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	uint16_t Register = getReg(Decoder, RegID, RegNo);
+	Register = (uint16_t)getReg(Decoder, RegID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
 	return MCDisassembler_Success;
 }
@@ -1028,8 +1041,7 @@ static DecodeStatus DecodeSingleIndexedInstruction(MCInst *Inst,
 		return MCDisassembler_Success;
 }
 
-static DecodeStatus
-DecodeNeonMovImmShiftOperand(MCInst *Inst, unsigned ShiftAmount,
+static DecodeStatus DecodeNeonMovImmShiftOperand(MCInst *Inst, unsigned ShiftAmount,
 		uint64_t Address, void *Decoder, A64SE_ShiftExtSpecifiers Ext, bool IsHalf)
 {
 	bool IsLSL = false;

@@ -71,9 +71,9 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	// Check for slwi/srwi mnemonics.
 	if (MCInst_getOpcode(MI) == PPC_RLWINM) {
-		unsigned char SH = MCOperand_getImm(MCInst_getOperand(MI, 2));
-		unsigned char MB = MCOperand_getImm(MCInst_getOperand(MI, 3));
-		unsigned char ME = MCOperand_getImm(MCInst_getOperand(MI, 4));
+		unsigned char SH = (unsigned char)MCOperand_getImm(MCInst_getOperand(MI, 2));
+		unsigned char MB = (unsigned char)MCOperand_getImm(MCInst_getOperand(MI, 3));
+		unsigned char ME = (unsigned char)MCOperand_getImm(MCInst_getOperand(MI, 4));
 		bool useSubstituteMnemonic = false;
 
 		if (SH <= 31 && MB == 0 && ME == (31-SH)) {
@@ -110,8 +110,8 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 	}
 
 	if (MCInst_getOpcode(MI) == PPC_RLDICR) {
-		unsigned char SH = MCOperand_getImm(MCInst_getOperand(MI, 2));
-		unsigned char ME = MCOperand_getImm(MCInst_getOperand(MI, 3));
+		unsigned char SH = (unsigned char)MCOperand_getImm(MCInst_getOperand(MI, 2));
+		unsigned char ME = (unsigned char)MCOperand_getImm(MCInst_getOperand(MI, 3));
 		// rldicr RA, RS, SH, 63-SH == sldi RA, RS, SH
 		if (63-SH == ME) {
 			SStream_concat(O, "sldi\t");
@@ -146,7 +146,7 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 static void printPredicateOperand(MCInst *MI, unsigned OpNo,
 		SStream *O, const char *Modifier)
 {
-	unsigned Code = MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+	unsigned Code = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
 
 	MI->flat_insn.ppc.bc = (ppc_bc)Code;
 
@@ -238,7 +238,7 @@ static void printPredicateOperand(MCInst *MI, unsigned OpNo,
 
 static void printS5ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	int Value = MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+	int Value = (int)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
 	Value = SignExtend32(Value, 5);
 
 	if (Value >= 0) {
@@ -262,7 +262,7 @@ static void printS5ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printU5ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	unsigned int Value = MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+	unsigned int Value = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
 	//assert(Value <= 31 && "Invalid u5imm argument!");
 	if (Value > HEX_THRESHOLD)
 		SStream_concat(O, "0x%x", Value);
@@ -278,7 +278,7 @@ static void printU5ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printU6ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	unsigned int Value = MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+	unsigned int Value = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
 	//assert(Value <= 63 && "Invalid u6imm argument!");
 	if (Value > HEX_THRESHOLD)
 		SStream_concat(O, "0x%x", Value);
@@ -371,7 +371,10 @@ static void printU16ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 static void printBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	if (!MCOperand_isImm(MCInst_getOperand(MI, OpNo)))
-		return printOperand(MI, OpNo, O);
+	{
+		printOperand(MI, OpNo, O);
+		return;
+	}
 
 	// Branches can take an immediate operand.  This is used by the branch
 	// selection pass to print .+8, an eight byte displacement from the PC.
@@ -382,7 +385,10 @@ static void printBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	if (!MCOperand_isImm(MCInst_getOperand(MI, OpNo)))
-		return printOperand(MI, OpNo, O);
+	{
+		printOperand(MI, OpNo, O);
+		return;
+	}
 
 	int tmp = (int)MCOperand_getImm(MCInst_getOperand(MI, OpNo)) * 4;
 	if (tmp >= 0) {
@@ -512,7 +518,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 
 	if (MCOperand_isImm(Op)) {
-		int32_t imm = MCOperand_getImm(Op);
+		int32_t imm = (int32_t)MCOperand_getImm(Op);
 		if (imm >= 0) {
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "0x%x", imm);

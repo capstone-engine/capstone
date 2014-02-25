@@ -59,6 +59,13 @@ def cs(md, code):
             print i
 
 
+def cs_lite(md, code):
+    insns = md.disasm_lite(code, 0)
+    for (addr, size, mnem, ops) in insns:
+        if addr == 0x100000:
+            print i
+
+
 cfile = open(FILE)
 
 for (arch, mode, comment, syntax) in all_tests:
@@ -73,6 +80,7 @@ for (arch, mode, comment, syntax) in all_tests:
 
     try:
         md = Cs(arch, mode)
+        #md.detail = True
 
         if syntax != 0:
             md.syntax = syntax
@@ -96,7 +104,21 @@ for (arch, mode, comment, syntax) in all_tests:
             cs(md, code)
             c_t += time() - t1
 
-        print "Benchmark:", c_t, "seconds"
+        print "Benchmark - full obj:", c_t, "seconds"
+        print
+
+        cfile.seek(0)
+        c_t = 0
+        for i in xrange(50000):
+            code = get_code(cfile, 128)
+            #print to_hex(code)
+            #print
+
+            t1 = time()
+            cs_lite(md, code)
+            c_t += time() - t1
+
+        print "Benchmark - lite:", c_t, "seconds"
         print
     except CsError as e:
         print("ERROR: %s" %e)

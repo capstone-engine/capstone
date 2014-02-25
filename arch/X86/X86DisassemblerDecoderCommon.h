@@ -33,8 +33,6 @@
 #define TWOBYTE_SYM       x86DisassemblerTwoByteOpcodes
 #define THREEBYTE38_SYM   x86DisassemblerThreeByte38Opcodes
 #define THREEBYTE3A_SYM   x86DisassemblerThreeByte3AOpcodes
-#define THREEBYTEA6_SYM   x86DisassemblerThreeByteA6Opcodes
-#define THREEBYTEA7_SYM   x86DisassemblerThreeByteA7Opcodes
 #define XOP8_MAP_SYM      x86DisassemblerXOP8Opcodes
 #define XOP9_MAP_SYM      x86DisassemblerXOP9Opcodes
 #define XOPA_MAP_SYM      x86DisassemblerXOPAOpcodes
@@ -44,16 +42,22 @@
  * processed correctly.  Most of these indicate the presence of particular
  * prefixes, but ATTR_64BIT is simply an attribute of the decoding context.
  */
-#define ATTRIBUTE_BITS          \
-	ENUM_ENTRY(ATTR_NONE,   0x00) \
-ENUM_ENTRY(ATTR_64BIT,  0x01) \
-ENUM_ENTRY(ATTR_XS,     0x02) \
-ENUM_ENTRY(ATTR_XD,     0x04) \
-ENUM_ENTRY(ATTR_REXW,   0x08) \
-ENUM_ENTRY(ATTR_OPSIZE, 0x10) \
-ENUM_ENTRY(ATTR_ADSIZE, 0x20) \
-ENUM_ENTRY(ATTR_VEX,    0x40) \
-ENUM_ENTRY(ATTR_VEXL,   0x80)
+#define ATTRIBUTE_BITS                  \
+  ENUM_ENTRY(ATTR_NONE,   0x00)         \
+  ENUM_ENTRY(ATTR_64BIT,  (0x1 << 0))   \
+  ENUM_ENTRY(ATTR_XS,     (0x1 << 1))   \
+  ENUM_ENTRY(ATTR_XD,     (0x1 << 2))   \
+  ENUM_ENTRY(ATTR_REXW,   (0x1 << 3))   \
+  ENUM_ENTRY(ATTR_OPSIZE, (0x1 << 4))   \
+  ENUM_ENTRY(ATTR_ADSIZE, (0x1 << 5))   \
+  ENUM_ENTRY(ATTR_VEX,    (0x1 << 6))   \
+  ENUM_ENTRY(ATTR_VEXL,   (0x1 << 7))   \
+  ENUM_ENTRY(ATTR_EVEX,   (0x1 << 8))   \
+  ENUM_ENTRY(ATTR_EVEXL,  (0x1 << 9))   \
+  ENUM_ENTRY(ATTR_EVEXL2, (0x1 << 10))  \
+  ENUM_ENTRY(ATTR_EVEXK,  (0x1 << 11))  \
+  ENUM_ENTRY(ATTR_EVEXKZ, (0x1 << 12))  \
+  ENUM_ENTRY(ATTR_EVEXB,  (0x1 << 13))
 
 #define ENUM_ENTRY(n, v) n = v,
 enum attributeBits {
@@ -64,7 +68,7 @@ enum attributeBits {
 
 /*
  * Combinations of the above attributes that are relevant to instruction
- * decode.  Although other combinations are possible, they can be reduced to
+ * decode. Although other combinations are possible, they can be reduced to
  * these without affecting the ultimately decoded instruction.
  */
 
@@ -189,38 +193,38 @@ ENUM_ENTRY(IC_EVEX_L2_W_B,        3,  "requires EVEX_B, L2 and W")              
 ENUM_ENTRY(IC_EVEX_L2_W_XS_B,     4,  "requires EVEX_B, L2, W and XS prefix")    \
 ENUM_ENTRY(IC_EVEX_L2_W_XD_B,     4,  "requires EVEX_B, L2, W and XD prefix")    \
 ENUM_ENTRY(IC_EVEX_L2_W_OPSIZE_B, 4,  "requires EVEX_B, L2, W and OpSize")       \
-ENUM_ENTRY(IC_EVEX_K_B,             1,  "requires EVEX_B and EVEX_K prefix")             \
-ENUM_ENTRY(IC_EVEX_XS_K_B,          2,  "requires EVEX_B, EVEX_K and the XS prefix")     \
-ENUM_ENTRY(IC_EVEX_XD_K_B,          2,  "requires EVEX_B, EVEX_K and the XD prefix")     \
-ENUM_ENTRY(IC_EVEX_OPSIZE_K_B,      2,  "requires EVEX_B, EVEX_K and the OpSize prefix") \
-ENUM_ENTRY(IC_EVEX_W_K_B,           3,  "requires EVEX_B, EVEX_K and the W prefix")      \
-ENUM_ENTRY(IC_EVEX_W_XS_K_B,        4,  "requires EVEX_B, EVEX_K, W, and XS prefix")     \
-ENUM_ENTRY(IC_EVEX_W_XD_K_B,        4,  "requires EVEX_B, EVEX_K, W, and XD prefix")     \
-ENUM_ENTRY(IC_EVEX_W_OPSIZE_K_B,    4,  "requires EVEX_B, EVEX_K, W, and OpSize")        \
-ENUM_ENTRY(IC_EVEX_L_K_B,           3,  "requires EVEX_B, EVEX_K and the L prefix")       \
-ENUM_ENTRY(IC_EVEX_L_XS_K_B,        4,  "requires EVEX_B, EVEX_K and the L and XS prefix")\
-ENUM_ENTRY(IC_EVEX_L_XD_K_B,        4,  "requires EVEX_B, EVEX_K and the L and XD prefix")\
-ENUM_ENTRY(IC_EVEX_L_OPSIZE_K_B,    4,  "requires EVEX_B, EVEX_K, L, and OpSize")         \
-ENUM_ENTRY(IC_EVEX_L_W_K_B,         3,  "requires EVEX_B, EVEX_K, L and W")               \
-ENUM_ENTRY(IC_EVEX_L_W_XS_K_B,      4,  "requires EVEX_B, EVEX_K, L, W and XS prefix")    \
-ENUM_ENTRY(IC_EVEX_L_W_XD_K_B,      4,  "requires EVEX_B, EVEX_K, L, W and XD prefix")    \
-ENUM_ENTRY(IC_EVEX_L_W_OPSIZE_K_B,  4,  "requires EVEX_B, EVEX_K, L, W and OpSize")       \
-ENUM_ENTRY(IC_EVEX_L2_K_B,          3,  "requires EVEX_B, EVEX_K and the L2 prefix")       \
-ENUM_ENTRY(IC_EVEX_L2_XS_K_B,       4,  "requires EVEX_B, EVEX_K and the L2 and XS prefix")\
-ENUM_ENTRY(IC_EVEX_L2_XD_K_B,       4,  "requires EVEX_B, EVEX_K and the L2 and XD prefix")\
-ENUM_ENTRY(IC_EVEX_L2_OPSIZE_K_B,   4,  "requires EVEX_B, EVEX_K, L2, and OpSize")         \
-ENUM_ENTRY(IC_EVEX_L2_W_K_B,        3,  "requires EVEX_B, EVEX_K, L2 and W")               \
-ENUM_ENTRY(IC_EVEX_L2_W_XS_K_B,     4,  "requires EVEX_B, EVEX_K, L2, W and XS prefix")    \
-ENUM_ENTRY(IC_EVEX_L2_W_XD_K_B,     4,  "requires EVEX_B, EVEX_K, L2, W and XD prefix")    \
-ENUM_ENTRY(IC_EVEX_L2_W_OPSIZE_K_B, 4,  "requires EVEX_B, EVEX_K, L2, W and OpSize")       \
-ENUM_ENTRY(IC_EVEX_KZ_B,             1,  "requires EVEX_B and EVEX_KZ prefix")             \
-ENUM_ENTRY(IC_EVEX_XS_KZ_B,          2,  "requires EVEX_B, EVEX_KZ and the XS prefix")     \
-ENUM_ENTRY(IC_EVEX_XD_KZ_B,          2,  "requires EVEX_B, EVEX_KZ and the XD prefix")     \
-ENUM_ENTRY(IC_EVEX_OPSIZE_KZ_B,      2,  "requires EVEX_B, EVEX_KZ and the OpSize prefix") \
-ENUM_ENTRY(IC_EVEX_W_KZ_B,           3,  "requires EVEX_B, EVEX_KZ and the W prefix")      \
-ENUM_ENTRY(IC_EVEX_W_XS_KZ_B,        4,  "requires EVEX_B, EVEX_KZ, W, and XS prefix")     \
-ENUM_ENTRY(IC_EVEX_W_XD_KZ_B,        4,  "requires EVEX_B, EVEX_KZ, W, and XD prefix")     \
-ENUM_ENTRY(IC_EVEX_W_OPSIZE_KZ_B,    4,  "requires EVEX_B, EVEX_KZ, W, and OpSize")        \
+ENUM_ENTRY(IC_EVEX_K_B,           1,  "requires EVEX_B and EVEX_K prefix")             \
+ENUM_ENTRY(IC_EVEX_XS_K_B,        2,  "requires EVEX_B, EVEX_K and the XS prefix")     \
+ENUM_ENTRY(IC_EVEX_XD_K_B,        2,  "requires EVEX_B, EVEX_K and the XD prefix")     \
+ENUM_ENTRY(IC_EVEX_OPSIZE_K_B,    2,  "requires EVEX_B, EVEX_K and the OpSize prefix") \
+ENUM_ENTRY(IC_EVEX_W_K_B,         3,  "requires EVEX_B, EVEX_K and the W prefix")      \
+ENUM_ENTRY(IC_EVEX_W_XS_K_B,      4,  "requires EVEX_B, EVEX_K, W, and XS prefix")     \
+ENUM_ENTRY(IC_EVEX_W_XD_K_B,      4,  "requires EVEX_B, EVEX_K, W, and XD prefix")     \
+ENUM_ENTRY(IC_EVEX_W_OPSIZE_K_B,  4,  "requires EVEX_B, EVEX_K, W, and OpSize")        \
+ENUM_ENTRY(IC_EVEX_L_K_B,         3,  "requires EVEX_B, EVEX_K and the L prefix")       \
+ENUM_ENTRY(IC_EVEX_L_XS_K_B,      4,  "requires EVEX_B, EVEX_K and the L and XS prefix")\
+ENUM_ENTRY(IC_EVEX_L_XD_K_B,      4,  "requires EVEX_B, EVEX_K and the L and XD prefix")\
+ENUM_ENTRY(IC_EVEX_L_OPSIZE_K_B,  4,  "requires EVEX_B, EVEX_K, L, and OpSize")         \
+ENUM_ENTRY(IC_EVEX_L_W_K_B,       3,  "requires EVEX_B, EVEX_K, L and W")               \
+ENUM_ENTRY(IC_EVEX_L_W_XS_K_B,    4,  "requires EVEX_B, EVEX_K, L, W and XS prefix")    \
+ENUM_ENTRY(IC_EVEX_L_W_XD_K_B,    4,  "requires EVEX_B, EVEX_K, L, W and XD prefix")    \
+ENUM_ENTRY(IC_EVEX_L_W_OPSIZE_K_B,4,  "requires EVEX_B, EVEX_K, L, W and OpSize")       \
+ENUM_ENTRY(IC_EVEX_L2_K_B,        3,  "requires EVEX_B, EVEX_K and the L2 prefix")       \
+ENUM_ENTRY(IC_EVEX_L2_XS_K_B,     4,  "requires EVEX_B, EVEX_K and the L2 and XS prefix")\
+ENUM_ENTRY(IC_EVEX_L2_XD_K_B,     4,  "requires EVEX_B, EVEX_K and the L2 and XD prefix")\
+ENUM_ENTRY(IC_EVEX_L2_OPSIZE_K_B, 4,  "requires EVEX_B, EVEX_K, L2, and OpSize")         \
+ENUM_ENTRY(IC_EVEX_L2_W_K_B,      3,  "requires EVEX_B, EVEX_K, L2 and W")               \
+ENUM_ENTRY(IC_EVEX_L2_W_XS_K_B,   4,  "requires EVEX_B, EVEX_K, L2, W and XS prefix")    \
+ENUM_ENTRY(IC_EVEX_L2_W_XD_K_B,   4,  "requires EVEX_B, EVEX_K, L2, W and XD prefix")    \
+ENUM_ENTRY(IC_EVEX_L2_W_OPSIZE_K_B,4,  "requires EVEX_B, EVEX_K, L2, W and OpSize")       \
+ENUM_ENTRY(IC_EVEX_KZ_B,           1,  "requires EVEX_B and EVEX_KZ prefix")             \
+ENUM_ENTRY(IC_EVEX_XS_KZ_B,        2,  "requires EVEX_B, EVEX_KZ and the XS prefix")     \
+ENUM_ENTRY(IC_EVEX_XD_KZ_B,        2,  "requires EVEX_B, EVEX_KZ and the XD prefix")     \
+ENUM_ENTRY(IC_EVEX_OPSIZE_KZ_B,    2,  "requires EVEX_B, EVEX_KZ and the OpSize prefix") \
+ENUM_ENTRY(IC_EVEX_W_KZ_B,         3,  "requires EVEX_B, EVEX_KZ and the W prefix")      \
+ENUM_ENTRY(IC_EVEX_W_XS_KZ_B,      4,  "requires EVEX_B, EVEX_KZ, W, and XS prefix")     \
+ENUM_ENTRY(IC_EVEX_W_XD_KZ_B,      4,  "requires EVEX_B, EVEX_KZ, W, and XD prefix")     \
+ENUM_ENTRY(IC_EVEX_W_OPSIZE_KZ_B,  4,  "requires EVEX_B, EVEX_KZ, W, and OpSize")        \
 ENUM_ENTRY(IC_EVEX_L_KZ_B,           3,  "requires EVEX_B, EVEX_KZ and the L prefix")       \
 ENUM_ENTRY(IC_EVEX_L_XS_KZ_B,        4,  "requires EVEX_B, EVEX_KZ and the L and XS prefix")\
 ENUM_ENTRY(IC_EVEX_L_XD_KZ_B,        4,  "requires EVEX_B, EVEX_KZ and the L and XD prefix")\
@@ -278,11 +282,9 @@ typedef enum {
 	TWOBYTE       = 1,
 	THREEBYTE_38  = 2,
 	THREEBYTE_3A  = 3,
-	THREEBYTE_A6  = 4,
-	THREEBYTE_A7  = 5,
-	XOP8_MAP      = 6,
-	XOP9_MAP      = 7,
-	XOPA_MAP      = 8
+	XOP8_MAP      = 4,
+	XOP9_MAP      = 5,
+	XOPA_MAP      = 6
 } OpcodeType;
 
 /*
@@ -351,22 +353,11 @@ struct OpcodeDecision {
 };
 
 /*
- * ContextDecision - Specifies which opcode->instruction tables to look at given
- *   a particular context (set of attributes).  Since there are many possible
- *   contexts, the decoder first uses CONTEXTS_SYM to determine which context
- *   applies given a specific set of attributes.  Hence there are only IC_max
- *   entries in this table, rather than 2^(ATTR_max).
- */
-struct ContextDecision {
-	struct OpcodeDecision opcodeDecisions[IC_max];
-};
-
-/*
  * Physical encodings of instruction operands.
  */
 
-#define ENCODINGS                                                              \
-	ENUM_ENTRY(ENCODING_NONE,   "")                                              \
+#define ENCODINGS                                                            \
+ENUM_ENTRY(ENCODING_NONE,   "")                                              \
 ENUM_ENTRY(ENCODING_REG,    "Register operand in ModR/M byte.")              \
 ENUM_ENTRY(ENCODING_RM,     "R/M operand in ModR/M byte.")                   \
 ENUM_ENTRY(ENCODING_VVVV,   "Register operand in VEX.vvvv byte.")            \
@@ -382,19 +373,20 @@ ENUM_ENTRY(ENCODING_IW,     "2-byte")                                        \
 ENUM_ENTRY(ENCODING_ID,     "4-byte")                                        \
 ENUM_ENTRY(ENCODING_IO,     "8-byte")                                        \
 ENUM_ENTRY(ENCODING_RB,     "(AL..DIL, R8L..R15L) Register code added to "   \
-		"the opcode byte")                               \
+                            "the opcode byte")                               \
 ENUM_ENTRY(ENCODING_RW,     "(AX..DI, R8W..R15W)")                           \
 ENUM_ENTRY(ENCODING_RD,     "(EAX..EDI, R8D..R15D)")                         \
 ENUM_ENTRY(ENCODING_RO,     "(RAX..RDI, R8..R15)")                           \
-ENUM_ENTRY(ENCODING_I,      "Position on floating-point stack added to the " \
-		"opcode byte")                                   \
-\
+ENUM_ENTRY(ENCODING_FP,     "Position on floating-point stack in ModR/M "    \
+                            "byte.")                                         \
 ENUM_ENTRY(ENCODING_Iv,     "Immediate of operand size")                     \
 ENUM_ENTRY(ENCODING_Ia,     "Immediate of address size")                     \
 ENUM_ENTRY(ENCODING_Rv,     "Register code of operand size added to the "    \
-		"opcode byte")                                   \
+                            "opcode byte")                                   \
 ENUM_ENTRY(ENCODING_DUP,    "Duplicate of another operand; ID is encoded "   \
-		"in type")
+                            "in type")                                       \
+ENUM_ENTRY(ENCODING_SI,     "Source index; encoded in OpSize/Adsize prefix") \
+ENUM_ENTRY(ENCODING_DI,     "Destination index; encoded in prefixes")
 
 #define ENUM_ENTRY(n, d) n,
 typedef enum {
@@ -445,8 +437,16 @@ ENUM_ENTRY(TYPE_M16_32,     "2+4-byte two-part memory operand (LIDT, LGDT)") \
 ENUM_ENTRY(TYPE_M16_16,     "2+2-byte (BOUND)")                              \
 ENUM_ENTRY(TYPE_M32_32,     "4+4-byte (BOUND)")                              \
 ENUM_ENTRY(TYPE_M16_64,     "2+8-byte (LIDT, LGDT)")                         \
+ENUM_ENTRY(TYPE_SRCIDX8,    "1-byte memory at source index")                 \
+ENUM_ENTRY(TYPE_SRCIDX16,   "2-byte memory at source index")                 \
+ENUM_ENTRY(TYPE_SRCIDX32,   "4-byte memory at source index")                 \
+ENUM_ENTRY(TYPE_SRCIDX64,   "8-byte memory at source index")                 \
+ENUM_ENTRY(TYPE_DSTIDX8,    "1-byte memory at destination index")            \
+ENUM_ENTRY(TYPE_DSTIDX16,   "2-byte memory at destination index")            \
+ENUM_ENTRY(TYPE_DSTIDX32,   "4-byte memory at destination index")            \
+ENUM_ENTRY(TYPE_DSTIDX64,   "8-byte memory at destination index")            \
 ENUM_ENTRY(TYPE_MOFFS8,     "1-byte memory offset (relative to segment "     \
-		"base)")                                         \
+                            "base)")                                         \
 ENUM_ENTRY(TYPE_MOFFS16,    "2-byte")                                        \
 ENUM_ENTRY(TYPE_MOFFS32,    "4-byte")                                        \
 ENUM_ENTRY(TYPE_MOFFS64,    "8-byte")                                        \
@@ -469,6 +469,7 @@ ENUM_ENTRY(TYPE_XMM64,      "8-byte")                                        \
 ENUM_ENTRY(TYPE_XMM128,     "16-byte")                                       \
 ENUM_ENTRY(TYPE_XMM256,     "32-byte")                                       \
 ENUM_ENTRY(TYPE_XMM512,     "64-byte")                                       \
+ENUM_ENTRY(TYPE_VK1,        "1-bit")                                         \
 ENUM_ENTRY(TYPE_VK8,        "8-bit")                                         \
 ENUM_ENTRY(TYPE_VK16,       "16-bit")                                        \
 ENUM_ENTRY(TYPE_XMM0,       "Implicit use of XMM0")                          \
@@ -509,9 +510,7 @@ typedef struct OperandSpecifier {
  */
 
 #define MODIFIER_TYPES        \
-	ENUM_ENTRY(MODIFIER_NONE)   \
-ENUM_ENTRY(MODIFIER_OPCODE) \
-ENUM_ENTRY(MODIFIER_MODRM)
+	ENUM_ENTRY(MODIFIER_NONE)
 
 #define ENUM_ENTRY(n) n,
 typedef enum {
@@ -527,9 +526,6 @@ typedef enum {
  * its operands.
  */
 struct InstructionSpecifier {
-	uint8_t modifierType;
-	uint8_t modifierBase;
-
 	/* The macro below must be defined wherever this file is included. */
 	INSTRUCTION_SPECIFIER_FIELDS
 };

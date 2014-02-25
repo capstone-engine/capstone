@@ -11,6 +11,10 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
+#ifdef _MSC_VER
+#pragma warning(disable:4201)
+#endif
+
 //> Operand type for instruction's operands
 typedef enum mips_op_type {
 	MIPS_OP_INVALID = 0,	// Uninitialized.
@@ -340,6 +344,7 @@ typedef enum mips_insn {
 	MIPS_INS_DINSU,
 	MIPS_INS_DIV_S,
 	MIPS_INS_DIV_U,
+	MIPS_INS_DLSA,
 	MIPS_INS_DMFC0,
 	MIPS_INS_DMFC1,
 	MIPS_INS_DMFC2,
@@ -502,9 +507,9 @@ typedef enum mips_insn {
 	MIPS_INS_LWC2,
 	MIPS_INS_LWL,
 	MIPS_INS_LWR,
+	MIPS_INS_LWU,
 	MIPS_INS_LWX,
 	MIPS_INS_LWXC1,
-	MIPS_INS_LWU,
 	MIPS_INS_LI,
 	MIPS_INS_MADD,
 	MIPS_INS_MADDR_Q,
@@ -713,6 +718,7 @@ typedef enum mips_insn_group {
 	MIPS_GRP_NONANSFPMATH,
 	MIPS_GRP_NOTFP64BIT,
 	MIPS_GRP_NOTINMICROMIPS,
+	MIPS_GRP_NOTNACL,
 
 	MIPS_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
