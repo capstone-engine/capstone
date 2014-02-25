@@ -4,6 +4,8 @@ cimport pyx.ccapstone as cc
 import capstone, ctypes
 from capstone import arm, x86, mips, ppc, arm64, CsError
 
+_diet = cc.cs_support(capstone.CS_SUPPORT_DIET)
+
 class CsDetail:
 
     def __init__(self, arch, raw_detail = None):
@@ -69,14 +71,26 @@ cdef class CsInsn(object):
 
     @property
     def mnemonic(self):
+        if _diet:
+            # Diet engine cannot provide @mnemonic & @op_str
+            raise CsError(capstone.CS_ERR_DIET)
+
         return self._raw.mnemonic
 
     @property
     def op_str(self):
+        if _diet:
+            # Diet engine cannot provide @mnemonic & @op_str
+            raise CsError(capstone.CS_ERR_DIET)
+
         return self._raw.op_str
 
     @property
     def regs_read(self):
+        if _diet:
+            # Diet engine cannot provide @mnemonic & @op_str
+            raise CsError(capstone.CS_ERR_DIET)
+
         if self._detail:
             detail = self._detail
             return detail.regs_read[:detail.regs_read_count]
@@ -85,6 +99,10 @@ cdef class CsInsn(object):
 
     @property
     def regs_write(self):
+        if _diet:
+            # Diet engine cannot provide @mnemonic & @op_str
+            raise CsError(capstone.CS_ERR_DIET)
+
         if self._detail:
             detail = self._detail
             return detail.regs_write[:detail.regs_write_count]
@@ -93,6 +111,10 @@ cdef class CsInsn(object):
 
     @property
     def groups(self):
+        if _diet:
+            # Diet engine cannot provide @mnemonic & @op_str
+            raise CsError(capstone.CS_ERR_DIET)
+
         if self._detail:
             detail = self._detail
             return detail.groups[:detail.groups_count]
@@ -105,22 +127,42 @@ cdef class CsInsn(object):
 
     # get the register name, given the register ID
     def reg_name(self, reg_id):
+        if _diet:
+            # Diet engine cannot provide @mnemonic & @op_str
+            raise CsError(capstone.CS_ERR_DIET)
+
         return cc.cs_reg_name(self._csh, reg_id)
 
     # get the instruction string
     def insn_name(self):
+        if _diet:
+            # Diet engine cannot provide @mnemonic & @op_str
+            raise CsError(capstone.CS_ERR_DIET)
+
         return cc.cs_insn_name(self._csh, self.id)
 
     # verify if this insn belong to group with id as @group_id
     def group(self, group_id):
+        if _diet:
+            # Diet engine cannot provide @mnemonic & @op_str
+            raise CsError(capstone.CS_ERR_DIET)
+
         return group_id in self._detail.groups
 
     # verify if this instruction implicitly read register @reg_id
     def reg_read(self, reg_id):
+        if _diet:
+            # Diet engine cannot provide @mnemonic & @op_str
+            raise CsError(capstone.CS_ERR_DIET)
+
         return reg_id in self._detail.regs_read
 
     # verify if this instruction implicitly modified register @reg_id
     def reg_write(self, reg_id):
+        if _diet:
+            # Diet engine cannot provide @mnemonic & @op_str
+            raise CsError(capstone.CS_ERR_DIET)
+
         return reg_id in self._detail.regs_write
 
     # return number of operands having same operand type @op_type
@@ -178,6 +220,10 @@ cdef class Cs:
     def disasm_lite(self, code, addr, count=0):
         # TODO: dont need detail, so we might turn off detail, then turn on again when done
         cdef cc.cs_insn *allinsn
+
+        if _diet:
+            # Diet engine cannot provide @mnemonic & @op_str
+            raise CsError(capstone.CS_ERR_DIET)
 
         cdef res = cc.cs_disasm_ex(self.csh, code, len(code), addr, count, &allinsn)
 
