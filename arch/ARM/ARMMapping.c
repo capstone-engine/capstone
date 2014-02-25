@@ -13601,18 +13601,28 @@ const char *ARM_insn_name(csh handle, unsigned int id)
 #endif
 }
 
+// list all relative branch instructions
+// ie: insns[i].branch && !insns[i].indirect_branch
+static unsigned int insn_rel[] = {
+	ARM_Bcc,
+	ARM_t2B,
+	ARM_t2Bcc,
+	ARM_tB,
+	ARM_tBcc,
+	ARM_tCBNZ,
+	ARM_tCBZ,
+	0
+};
+
+// check if this insn is relative branch
 bool ARM_rel_branch(cs_struct *h, unsigned int id)
 {
-#ifndef CAPSTONE_DIET
-	int i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
-	if (i != 0)
-		return (insns[i].branch && !insns[i].indirect_branch);
-	else {
-		printf("ALERT: rel_branch() got incorrect id!\n");
-		return false;
-	}
-#else
-	printf("ALERT: rel_branch() got incorrect id!\n");
+	int i;
+
+	for (i = 0; insn_rel[i]; i++)
+		if (id == insn_rel[i])
+			return true;
+
+	// not found
 	return false;
-#endif
 }

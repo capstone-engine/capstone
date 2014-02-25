@@ -556,7 +556,6 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		}
 	} else if (MCOperand_isImm(Op)) {
 		SStream_concat(O, markup("<imm:"));
-		//O << "#" << formatImm(Op.getImm());
 		int32_t imm = (int32_t)MCOperand_getImm(Op);
 
 		// relative branch only has relative offset, so we have to update it
@@ -1475,7 +1474,6 @@ static void printAdrLabelOperand(MCInst *MI, unsigned OpNum, SStream *O, unsigne
 
 static void printThumbS4ImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	//<< "#" << formatImm(MI->getOperand(OpNum).getImm() * 4)
 	unsigned tmp = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum)) * 4;
 	if (tmp > HEX_THRESHOLD)
 		SStream_concat(O, "%s#0x%x", markup("<imm:"), tmp);
@@ -1492,7 +1490,6 @@ static void printThumbS4ImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 static void printThumbSRImm(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	unsigned Imm = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	//  << "#" << formatImm((Imm == 0 ? 32 : Imm))
 	unsigned tmp = Imm == 0 ? 32 : Imm;
 	if (tmp > HEX_THRESHOLD)
 		SStream_concat(O, "%s#0x%x", markup("<imm:"), tmp);
@@ -1764,8 +1761,6 @@ static void printT2AddrModeImm0_1020s4Operand(MCInst *MI, unsigned OpNum, SStrea
 	if (MCOperand_getImm(MO2)) {
 		SStream_concat(O, ", ");
 		SStream_concat(O, markup("<imm:"));
-		//<< "#" << 
-		// formatImm(MCOperand_getImm(MO2.getImm() * 4)
 		unsigned tmp = (unsigned int)MCOperand_getImm(MO2) * 4;
 		if (tmp > HEX_THRESHOLD)
 			SStream_concat(O, "#0x%x", tmp);
