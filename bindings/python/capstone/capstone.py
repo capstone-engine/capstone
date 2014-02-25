@@ -110,7 +110,7 @@ CS_ERR_VERSION = 9 # Unsupported version (bindings)
 CS_ERR_DIET = 10 # Information irrelevant in diet engine
 
 # query id for cs_support()
-CS_SUPPORT_DIET = 0xFFFF+1
+CS_SUPPORT_DIET = CS_ARCH_ALL+1
 
 import ctypes, ctypes.util, sys
 from os.path import split, join, dirname
