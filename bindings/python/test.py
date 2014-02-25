@@ -40,7 +40,7 @@ def to_hex(s):
 
 ### Test cs_disasm_quick()
 def test_cs_disasm_quick():
-    for (arch, mode, code, comment) in all_tests:
+    for (arch, mode, code, comment, syntax) in all_tests:
         print('*' * 40)
         print("Platform: %s" %comment)
         print("Disasm:"),
