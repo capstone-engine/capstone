@@ -43,7 +43,7 @@ typedef enum cs_arch {
 	CS_ARCH_ALL = 0xFFFF,
 } cs_arch;
 
-#define CS_SUPPORT_DIET (0xFFFF + 1)
+#define CS_SUPPORT_DIET (CS_ARCH_ALL + 1)
 
 // Mode type
 typedef enum cs_mode {
