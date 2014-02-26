@@ -8,6 +8,7 @@ __all__ = [
 
     'cs_disasm_quick',
     'cs_version',
+    'cs_version_bind',
     'cs_support',
 
     'CS_API_MAJOR',
@@ -222,11 +223,17 @@ class CsError(Exception):
         return _cs.cs_strerror(self.errno)
 
 
+# return the core's version
 def cs_version():
     major = ctypes.c_int()
     minor = ctypes.c_int()
     combined = _cs.cs_version(ctypes.byref(major), ctypes.byref(minor))
     return (major.value, minor.value, combined)
+
+
+# return the binding's version
+def cs_version_bind():
+    return (CS_API_MAJOR, CS_API_MINOR, (CS_API_MAJOR << 8) + CS_API_MINOR)
 
 
 def cs_support(query):
