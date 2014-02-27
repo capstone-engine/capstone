@@ -320,7 +320,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 	void *total = NULL;
 	size_t total_size = 0;
 
-	if (!handle || handle->disasm == NULL) {
+	if (!handle) {
 		// FIXME: how to handle this case:
 		// handle->errnum = CS_ERR_HANDLE;
 		return 0;
