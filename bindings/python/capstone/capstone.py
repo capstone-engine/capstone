@@ -318,7 +318,7 @@ def cs_disasm_lite(arch, mode, code, offset, count = 0):
         return
         yield
 
-    status = _cs.cs_close(csh)
+    status = _cs.cs_close(ctypes.byref(csh))
     if status != CS_ERR_OK:
         raise CsError(status)
 
