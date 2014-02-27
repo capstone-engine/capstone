@@ -232,12 +232,12 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle);
  cached memory, thus access to any Capstone API after cs_close() might crash
  your application.
 
- @handle: handle returned by cs_open()
+ @handle: pointer to a handle returned by cs_open()
 
  @return CS_ERR_OK on success, or other value on failure (refer to cs_err enum
  for detailed error).
 */
-cs_err cs_close(csh handle);
+cs_err cs_close(csh *handle);
 
 /*
  Set option for disassembling engine at runtime

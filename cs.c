@@ -177,12 +177,13 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 	}
 }
 
-cs_err cs_close(csh handle)
+cs_err cs_close(csh *handle)
 {
-	if (!handle)
+	if (*handle)
+		// invalid handle
 		return CS_ERR_CSH;
 
-	struct cs_struct *ud = (struct cs_struct *)(uintptr_t)handle;
+	struct cs_struct *ud = (struct cs_struct *)(*handle);
 
 	switch (ud->arch) {
 		case CS_ARCH_X86:
@@ -202,6 +203,9 @@ cs_err cs_close(csh handle)
 	cs_mem_free(ud->insn_cache);
 	memset(ud, 0, sizeof(*ud));
 	cs_mem_free(ud);
+
+	// invalid this handle
+	*handle = 0;
 
 	return CS_ERR_OK;
 }
