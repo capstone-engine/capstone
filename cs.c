@@ -179,7 +179,7 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 
 cs_err cs_close(csh *handle)
 {
-	if (*handle)
+	if (*handle == 0)
 		// invalid handle
 		return CS_ERR_CSH;
 
