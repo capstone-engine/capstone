@@ -202,7 +202,7 @@ _setup_prototype(_cs, "cs_open", ctypes.c_int, ctypes.c_uint, ctypes.c_uint, cty
 _setup_prototype(_cs, "cs_disasm_ex", ctypes.c_size_t, ctypes.c_size_t, ctypes.POINTER(ctypes.c_char), ctypes.c_size_t, \
         ctypes.c_uint64, ctypes.c_size_t, ctypes.POINTER(ctypes.POINTER(_cs_insn)))
 _setup_prototype(_cs, "cs_free", None, ctypes.c_void_p, ctypes.c_size_t)
-_setup_prototype(_cs, "cs_close", ctypes.c_int, ctypes.c_size_t)
+_setup_prototype(_cs, "cs_close", ctypes.c_int, ctypes.POINTER(ctypes.c_size_t))
 _setup_prototype(_cs, "cs_reg_name", ctypes.c_char_p, ctypes.c_size_t, ctypes.c_uint)
 _setup_prototype(_cs, "cs_insn_name", ctypes.c_char_p, ctypes.c_size_t, ctypes.c_uint)
 _setup_prototype(_cs, "cs_op_count", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint)
@@ -277,7 +277,7 @@ def cs_disasm_quick(arch, mode, code, offset, count = 0):
         return
         yield
 
-    status = _cs.cs_close(csh)
+    status = _cs.cs_close(ctypes.byref(csh))
     if status != CS_ERR_OK:
         raise CsError(status)
 
@@ -526,7 +526,7 @@ class Cs(object):
 
     def __del__(self):
         if self.csh:
-            status = _cs.cs_close(self.csh)
+            status = _cs.cs_close(ctypes.byref(self.csh))
             if status != CS_ERR_OK:
                 raise CsError(status)
 
