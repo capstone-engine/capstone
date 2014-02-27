@@ -185,18 +185,8 @@ cs_err cs_close(csh *handle)
 
 	struct cs_struct *ud = (struct cs_struct *)(*handle);
 
-	switch (ud->arch) {
-		case CS_ARCH_X86:
-			break;
-		case CS_ARCH_ARM:
-		case CS_ARCH_MIPS:
-		case CS_ARCH_ARM64:
-		case CS_ARCH_PPC:
-			cs_mem_free(ud->printer_info);
-			break;
-		default:	// unsupported architecture
-			return CS_ERR_HANDLE;
-	}
+	if (ud->printer_info)
+		cs_mem_free(ud->printer_info);
 
 	// arch_destroy[ud->arch](ud);
 
