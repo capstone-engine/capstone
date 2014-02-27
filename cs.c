@@ -81,7 +81,7 @@ bool cs_support(int query)
 				(1 << CS_ARCH_MIPS) | (1 << CS_ARCH_X86) |
 				(1 << CS_ARCH_PPC));
 
-	if (query < CS_ARCH_MAX)
+	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
 
 	if (query == CS_SUPPORT_DIET) {
