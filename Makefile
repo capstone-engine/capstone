@@ -135,7 +135,7 @@ PKGCFGF = $(LIBNAME).pc
 
 VERSION=$(shell echo `grep -e PKG_MAJOR -e PKG_MINOR CONFIG | grep -v = | awk '{print $$3}'` | awk '{print $$1"."$$2}')
 
-.PHONY: all clean install uninstall diet dist
+.PHONY: all clean install uninstall dist
 
 all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF)
 	$(MAKE) -C tests
@@ -144,10 +144,10 @@ all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF)
 $(LIBRARY): $(LIBOBJ)
 	$(CC) $(LDFLAGS) $(LIBOBJ) -o $(LIBRARY)
 
-$(LIBOBJ): diet
+$(LIBOBJ): include/diet.h
 
 # generate include/diet.h
-diet:
+include/diet.h: config.mk
 	@echo "#ifndef CAPSTONE_DIET_H" > include/diet.h
 	@echo "#define CAPSTONE_DIET_H" >> include/diet.h
 	@echo "" >> include/diet.h
