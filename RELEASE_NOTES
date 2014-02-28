@@ -21,11 +21,11 @@ to:
 
 	csh handle;
 	//....
-	cs_close(&handle); // <-- cs_close() now take pointer to handle as argument.
+	cs_close(&handle); // <-- cs_close() now takes pointer to handle as argument.
 
 
-Internally, this change is to invalidate @handle, so make sure it cannot be
-used after that, even on purpose.
+Internally, this change is to invalidate @handle, making sure it cannot be used
+after that, even on purpose.
 
 
 NOTE: this change is on C interface only. All the bindings Python, Java or
