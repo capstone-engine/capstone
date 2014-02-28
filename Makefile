@@ -141,8 +141,10 @@ all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF)
 	$(MAKE) -C tests
 	$(INSTALL_DATA) lib$(LIBNAME).$(EXT) tests
 
-$(LIBRARY): diet $(LIBOBJ)
+$(LIBRARY): $(LIBOBJ)
 	$(CC) $(LDFLAGS) $(LIBOBJ) -o $(LIBRARY)
+
+$(LIBOBJ): diet
 
 # generate include/diet.h
 diet:
