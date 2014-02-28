@@ -194,7 +194,8 @@ cs_err cs_close(csh *handle)
 	memset(ud, 0, sizeof(*ud));
 	cs_mem_free(ud);
 
-	// invalid this handle
+	// invalidate this handle by ZERO out its value.
+	// this is to make sure it is unusable after cs_close()
 	*handle = 0;
 
 	return CS_ERR_OK;
