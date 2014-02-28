@@ -81,7 +81,7 @@ bool cs_support(int query)
 				(1 << CS_ARCH_MIPS) | (1 << CS_ARCH_X86) |
 				(1 << CS_ARCH_PPC));
 
-	if (query < CS_ARCH_MAX)
+	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
 
 	if (query == CS_SUPPORT_DIET) {
@@ -177,31 +177,26 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 	}
 }
 
-cs_err cs_close(csh handle)
+cs_err cs_close(csh *handle)
 {
-	if (!handle)
+	if (*handle == 0)
+		// invalid handle
 		return CS_ERR_CSH;
 
-	struct cs_struct *ud = (struct cs_struct *)(uintptr_t)handle;
+	struct cs_struct *ud = (struct cs_struct *)(*handle);
 
-	switch (ud->arch) {
-		case CS_ARCH_X86:
-			break;
-		case CS_ARCH_ARM:
-		case CS_ARCH_MIPS:
-		case CS_ARCH_ARM64:
-		case CS_ARCH_PPC:
-			cs_mem_free(ud->printer_info);
-			break;
-		default:	// unsupported architecture
-			return CS_ERR_HANDLE;
-	}
+	if (ud->printer_info)
+		cs_mem_free(ud->printer_info);
 
 	// arch_destroy[ud->arch](ud);
 
 	cs_mem_free(ud->insn_cache);
 	memset(ud, 0, sizeof(*ud));
 	cs_mem_free(ud);
+
+	// invalidate this handle by ZERO out its value.
+	// this is to make sure it is unusable after cs_close()
+	*handle = 0;
 
 	return CS_ERR_OK;
 }

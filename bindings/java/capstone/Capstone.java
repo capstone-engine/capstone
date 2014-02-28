@@ -204,7 +204,7 @@ public class Capstone {
     public NativeLong cs_disasm_ex(NativeLong handle, byte[] code, NativeLong code_len,
         long addr, NativeLong count, PointerByReference insn);
     public void cs_free(Pointer p, NativeLong count);
-    public int cs_close(NativeLong handle);
+    public int cs_close(NativeLongByReference handle);
     public int cs_option(NativeLong handle, int option, NativeLong optionValue);
 
     public String cs_reg_name(NativeLong csh, int id);
@@ -321,7 +321,7 @@ public class Capstone {
   }
 
   protected void finalize() {
-    cs.cs_close(ns.csh);
+    cs.cs_close(ns.handleRef);
   }
 
   public CsInsn[] disasm(byte[] code, long address) {

@@ -184,7 +184,7 @@ static void test()
 
 		printf("\n");
 
-		cs_close(handle);
+		cs_close(&handle);
 	}
 }
 
