@@ -1,5 +1,5 @@
 ################################################################################
-# Specify which archs you want to compile in.
+# Specify which archs you want to compile in. By default, we build all archs.
 # DO NOT touch the line below.
 CAPSTONE_ARCHS =
 
