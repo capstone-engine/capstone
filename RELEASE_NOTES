@@ -15,13 +15,13 @@ from something like:
 
 	csh handle;
 	//....
-	cs_close(handle);
+	cs_close(handle); // <-- cs_close() used to take handle as argument.
 
 to:
 
 	csh handle;
 	//....
-	cs_close(&handle);
+	cs_close(&handle); // <-- cs_close() now take pointer to handle as argument.
 
 
 Internally, this change is to invalidate @handle, so make sure it cannot be
@@ -37,12 +37,12 @@ like before and do not need to have any modification.
 2. Upgrade bindings
 
 Version 2.1 makes some changes to Java & Python bindings, like adding some new
-instructions (affeting *_const.py & *_const.java). While this does not break
+instructions (affecting *_const.py & *_const.java). While this does not break
 API compatibility (i.e users do not need to modify their program written with
 prior version 2.0), they must upgrade these bindings and must not use the old
 bindings from prior versions.
 
-We cannot emphasize enough here: When users upgrade to the new engine, always
+We cannot emphasize this enough: When upgrading to the new engine, always
 upgrade to the bindings coming with the same core. If do not follow this
-principle, their applications can silently break without any clear evidence,
+principle, applications can silently break without any clear evidence,
 making it very hard to debug sometimes.
