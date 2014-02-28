@@ -44,49 +44,98 @@ INSTALL_LIBRARY ?= $(INSTALL_BIN) -m0755
 
 LIBNAME = capstone
 
-LIBOBJ =
-LIBOBJ += cs.o utils.o SStream.o MCInstrDesc.o MCRegisterInfo.o
 
-ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
-	CFLAGS += -DCAPSTONE_HAS_X86
-	LIBOBJ += arch/X86/X86DisassemblerDecoder.o
-	LIBOBJ += arch/X86/X86Disassembler.o
-	LIBOBJ += arch/X86/X86IntelInstPrinter.o
-	LIBOBJ += arch/X86/X86ATTInstPrinter.o
-	LIBOBJ += arch/X86/X86Mapping.o
-	LIBOBJ += arch/X86/X86Module.o
-endif
+DEP_ARM =
+DEP_ARM += arch/ARM/ARMGenAsmWriter.inc
+DEP_ARM += arch/ARM/ARMGenDisassemblerTables.inc
+DEP_ARM += arch/ARM/ARMGenInstrInfo.inc
+DEP_ARM += arch/ARM/ARMGenRegisterInfo.inc
+DEP_ARM += arch/ARM/ARMGenSubtargetInfo.inc
+
+LIBOBJ_ARM =
 ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_ARM
-	LIBOBJ += arch/ARM/ARMDisassembler.o
-	LIBOBJ += arch/ARM/ARMInstPrinter.o
-	LIBOBJ += arch/ARM/ARMMapping.o
-	LIBOBJ += arch/ARM/ARMModule.o
-endif
-ifneq (,$(findstring mips,$(CAPSTONE_ARCHS)))
-	CFLAGS += -DCAPSTONE_HAS_MIPS
-	LIBOBJ += arch/Mips/MipsDisassembler.o
-	LIBOBJ += arch/Mips/MipsInstPrinter.o
-	LIBOBJ += arch/Mips/MipsMapping.o
-	LIBOBJ += arch/Mips/MipsModule.o
-endif
-ifneq (,$(findstring powerpc,$(CAPSTONE_ARCHS)))
-	CFLAGS += -DCAPSTONE_HAS_POWERPC
-	LIBOBJ += arch/PowerPC/PPCDisassembler.o
-	LIBOBJ += arch/PowerPC/PPCInstPrinter.o
-	LIBOBJ += arch/PowerPC/PPCMapping.o
-	LIBOBJ += arch/PowerPC/PPCModule.o
-endif
-ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
-	CFLAGS += -DCAPSTONE_HAS_ARM64
-	LIBOBJ += arch/AArch64/AArch64BaseInfo.o
-	LIBOBJ += arch/AArch64/AArch64Disassembler.o
-	LIBOBJ += arch/AArch64/AArch64InstPrinter.o
-	LIBOBJ += arch/AArch64/AArch64Mapping.o
-	LIBOBJ += arch/AArch64/AArch64Module.o
+	LIBOBJ_ARM += arch/ARM/ARMDisassembler.o
+	LIBOBJ_ARM += arch/ARM/ARMInstPrinter.o
+	LIBOBJ_ARM += arch/ARM/ARMMapping.o
+	LIBOBJ_ARM += arch/ARM/ARMModule.o
 endif
 
+DEP_ARM64 =
+DEP_ARM64 += arch/AArch64/AArch64GenAsmWriter.inc
+DEP_ARM64 += arch/AArch64/AArch64GenInstrInfo.inc
+DEP_ARM64 += arch/AArch64/AArch64GenSubtargetInfo.inc
+DEP_ARM64 += arch/AArch64/AArch64GenDisassemblerTables.inc
+DEP_ARM64 += arch/AArch64/AArch64GenRegisterInfo.inc
+
+LIBOBJ_ARM64 =
+ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
+	CFLAGS += -DCAPSTONE_HAS_ARM64
+	LIBOBJ_ARM64 += arch/AArch64/AArch64BaseInfo.o
+	LIBOBJ_ARM64 += arch/AArch64/AArch64Disassembler.o
+	LIBOBJ_ARM64 += arch/AArch64/AArch64InstPrinter.o
+	LIBOBJ_ARM64 += arch/AArch64/AArch64Mapping.o
+	LIBOBJ_ARM64 += arch/AArch64/AArch64Module.o
+endif
+
+
+DEP_MIPS =
+DEP_MIPS += arch/Mips/MipsGenAsmWriter.inc
+DEP_MIPS += arch/Mips/MipsGenDisassemblerTables.inc
+DEP_MIPS += arch/Mips/MipsGenInstrInfo.inc
+DEP_MIPS += arch/Mips/MipsGenRegisterInfo.inc
+DEP_MIPS += arch/Mips/MipsGenSubtargetInfo.inc
+
+LIBOBJ_MIPS =
+ifneq (,$(findstring mips,$(CAPSTONE_ARCHS)))
+	CFLAGS += -DCAPSTONE_HAS_MIPS
+	LIBOBJ_MIPS += arch/Mips/MipsDisassembler.o
+	LIBOBJ_MIPS += arch/Mips/MipsInstPrinter.o
+	LIBOBJ_MIPS += arch/Mips/MipsMapping.o
+	LIBOBJ_MIPS += arch/Mips/MipsModule.o
+endif
+
+
+DEP_PPC =
+DEP_PPC += arch/PowerPC/PPCGenAsmWriter.inc
+DEP_PPC += arch/PowerPC/PPCGenInstrInfo.inc
+DEP_PPC += arch/PowerPC/PPCGenSubtargetInfo.inc
+DEP_PPC += arch/PowerPC/PPCGenDisassemblerTables.inc
+DEP_PPC += arch/PowerPC/PPCGenRegisterInfo.inc
+
+LIBOBJ_PPC =
+ifneq (,$(findstring powerpc,$(CAPSTONE_ARCHS)))
+	CFLAGS += -DCAPSTONE_HAS_POWERPC
+	LIBOBJ_PPC += arch/PowerPC/PPCDisassembler.o
+	LIBOBJ_PPC += arch/PowerPC/PPCInstPrinter.o
+	LIBOBJ_PPC += arch/PowerPC/PPCMapping.o
+	LIBOBJ_PPC += arch/PowerPC/PPCModule.o
+endif
+
+
+DEP_X86 =
+DEP_X86 += arch/X86/X86GenAsmWriter.inc
+DEP_X86 += arch/X86/X86GenAsmWriter1.inc
+DEP_X86 += arch/X86/X86GenDisassemblerTables.inc
+DEP_X86 += arch/X86/X86GenInstrInfo.inc
+DEP_X86 += arch/X86/X86GenRegisterInfo.inc
+
+LIBOBJ_X86 =
+ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
+	CFLAGS += -DCAPSTONE_HAS_X86
+	LIBOBJ_X86 += arch/X86/X86DisassemblerDecoder.o
+	LIBOBJ_X86 += arch/X86/X86Disassembler.o
+	LIBOBJ_X86 += arch/X86/X86IntelInstPrinter.o
+	LIBOBJ_X86 += arch/X86/X86ATTInstPrinter.o
+	LIBOBJ_X86 += arch/X86/X86Mapping.o
+	LIBOBJ_X86 += arch/X86/X86Module.o
+endif
+
+LIBOBJ =
+LIBOBJ += cs.o utils.o SStream.o MCInstrDesc.o MCRegisterInfo.o
+LIBOBJ += $(LIBOBJ_ARM) $(LIBOBJ_ARM64) $(LIBOBJ_MIPS) $(LIBOBJ_PPC) $(LIBOBJ_X86)
 LIBOBJ += MCInst.o
+
 
 UNAME_S := $(shell uname -s)
 PKGCFCGDIR = $(LIBDIR)/pkgconfig
@@ -145,6 +194,12 @@ $(LIBRARY): $(LIBOBJ)
 	$(CC) $(LDFLAGS) $(LIBOBJ) -o $(LIBRARY)
 
 $(LIBOBJ): include/diet.h
+
+$(LIBOBJ_ARM): $(DEP_ARM)
+$(LIBOBJ_ARM64): $(DEP_ARM64)
+$(LIBOBJ_MIPS): $(DEP_MIPS)
+$(LIBOBJ_PPC): $(DEP_PPC)
+$(LIBOBJ_X86): $(DEP_X86)
 
 # auto-generate include/diet.h
 include/diet.h: config.mk
