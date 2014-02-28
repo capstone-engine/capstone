@@ -1,5 +1,9 @@
 Documention of Capstone disassembly framework.
 
+* Switching to 2.1 engine.
+
+	http://capstone-engine.org/version_2.1_API.html
+
 * For instructions to compile & install Capstone, see:
 
 	http://capstone-engine.org/documentation.html
