@@ -1,0 +1,48 @@
+1. API change
+
+Version 2.1 changes the API cs_close() from (prototype):
+
+	cs_err cs_close(csh handle);
+
+to:
+
+	cs_err cs_close(csh *handle);
+
+
+Therefore, all C code written on top of Capstone must be fixed accordingly,
+from something like:
+
+
+	csh handle;
+	//....
+	cs_close(handle);
+
+to:
+
+	csh handle;
+	//....
+	cs_close(&handle);
+
+
+Internally, this change is to invalidate @handle, so make sure it cannot be
+used after that, even on purpose.
+
+
+NOTE: this change is on C interface only. All the bindings Python, Java or
+bindings made by community such as C#, Go, Ruby & Vala should hide this change
+behind their API. For this reason, code using these bindings still work exactly
+like before and do not need to have any modification.
+
+
+2. Upgrade bindings
+
+Version 2.1 makes some changes to Java & Python bindings, like adding some new
+instructions (affeting *_const.py & *_const.java). While this does not break
+API compatibility (i.e users do not need to modify their program written with
+prior version 2.0), they must upgrade these bindings and must not use the old
+bindings from prior versions.
+
+We cannot emphasize enough here: When users upgrade to the new engine, always
+upgrade to the bindings coming with the same core. If do not follow this
+principle, their applications can silently break without any clear evidence,
+making it very hard to debug sometimes.
