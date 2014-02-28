@@ -329,42 +329,49 @@ class CsInsn(object):
         self._raw = all_info
         self._cs = cs
 
+    # return instruction's ID.
     @property
     def id(self):
         return self._raw.id
 
+    # return instruction's address.
     @property
     def address(self):
         return self._raw.address
 
+    # return instruction's size.
     @property
     def size(self):
         return self._raw.size
 
+    # return instruction's machine bytes (which should have @size bytes).
     @property
     def bytes(self):
         return bytearray(self._raw.bytes)[:self._raw.size]
 
+    # return instruction's mnemonic.
     @property
     def mnemonic(self):
         if self._cs._diet:
-            # Diet engine cannot provide @mnemonic
+            # Diet engine cannot provide @mnemonic.
             raise CsError(CS_ERR_DIET)
 
         return self._raw.mnemonic
 
+    # return instruction's operands (in string).
     @property
     def op_str(self):
         if self._cs._diet:
-            # Diet engine cannot provide @op_str
+            # Diet engine cannot provide @op_str.
             raise CsError(CS_ERR_DIET)
 
         return self._raw.op_str
 
+    # return list of all implicit registers being read.
     @property
     def regs_read(self):
         if self._cs._diet:
-            # Diet engine cannot provide @regs_read
+            # Diet engine cannot provide @regs_read.
             raise CsError(CS_ERR_DIET)
 
         if self._cs._detail:
@@ -373,6 +380,7 @@ class CsInsn(object):
 
         raise CsError(CS_ERR_DETAIL)
 
+    # return list of all implicit registers being modified
     @property
     def regs_write(self):
         if self._cs._diet:
@@ -385,6 +393,7 @@ class CsInsn(object):
 
         raise CsError(CS_ERR_DETAIL)
 
+    # return list of semantic groups this instruction belongs to.
     @property
     def groups(self):
         if self._cs._diet:
@@ -524,24 +533,32 @@ class Cs(object):
         self._detail = False    # by default, do not produce instruction details
         self._diet = cs_support(CS_SUPPORT_DIET)
 
+
+    # destructor to be called automatically when object is destroyed.
     def __del__(self):
         if self.csh:
             status = _cs.cs_close(ctypes.byref(self.csh))
             if status != CS_ERR_OK:
                 raise CsError(status)
 
+
     #def option(self, opt_type, opt_value):
     #    return _cs.cs_option(self.csh, opt_type, opt_value)
 
+
+    # is this a diet engine?
     @property
     def diet(self):
         return self._diet
 
 
+    # return assembly syntax.
     @property
     def syntax(self):
         return self._syntax
 
+
+    # setter: modify assembly syntax.
     @syntax.setter
     def syntax(self, style):
         status = _cs.cs_option(self.csh, CS_OPT_SYNTAX, style)
@@ -550,15 +567,20 @@ class Cs(object):
         # save syntax
         self._syntax = style
 
+
+    # is detail mode enable?
     @property
     def detail(self):
         return self._detail
 
 
+    # check to see if this engine supports a particular arch,
+    # or diet mode (depending on @query).
     def support(self, query):
         return cs_support(query)
 
 
+    # modify detail mode.
     @detail.setter
     def detail(self, opt):  # opt is boolean type, so must be either 'True' or 'False'
         if opt == False:
@@ -570,10 +592,14 @@ class Cs(object):
         # save detail
         self._detail = opt
 
+
+    # return disassembly mode of this engine.
     @property
     def mode(self):
         return self._mode
 
+
+    # modify engine's mode at run-time.
     @mode.setter
     def mode(self, opt):  # opt is new disasm mode, of int type
         status = _cs.cs_option(self.csh, CS_OPT_MODE, opt)
