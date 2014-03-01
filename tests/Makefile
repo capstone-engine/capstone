@@ -1,6 +1,8 @@
 # Capstone Disassembler Engine
 # By Nguyen Anh Quynh <aquynh@gmail.com>, 2013>
 
+include ../config.mk
+
 INCDIR = ../include
 LIBDIR = ..
 
@@ -36,7 +38,23 @@ endif
 
 .PHONY: all clean
 
-SOURCES = test.c test_detail.c test_x86.c test_arm64.c test_arm.c test_mips.c test_ppc.c
+SOURCES = test.c test_detail.c
+ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))
+SOURCES += test_arm.c
+endif
+ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
+SOURCES += test_arm64.c
+endif
+ifneq (,$(findstring mips,$(CAPSTONE_ARCHS)))
+SOURCES += test_mips.c
+endif
+ifneq (,$(findstring powerpc,$(CAPSTONE_ARCHS)))
+SOURCES += test_ppc.c
+endif
+ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
+SOURCES += test_x86.c
+endif
+
 OBJS = $(SOURCES:.c=.o)
 BINARY = $(SOURCES:.c=$(BIN_EXT))
 
