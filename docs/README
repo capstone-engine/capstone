@@ -28,4 +28,6 @@ Documention of Capstone disassembly framework.
 
 	http://capstone-engine.org/diet.html
 
+* Build embedded engine for firmware/OS kernel.
 
+	http://capstone-engine.org/embed.html
