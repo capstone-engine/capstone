@@ -20,11 +20,12 @@ CAPSTONE_ARCHS += x86
 
 
 ################################################################################
-# Comment out the line below ('USE_SYS_DYN_MEM = yes') if you do not want to use
-# system's malloc()/calloc()/realloc()/free() for internal dynamic memory management.
+# Comment out the line below ('USE_SYS_DYN_MEM = yes'), or change it to
+# 'USE_SYS_DYN_MEM = no' if do NOT use malloc()/calloc()/realloc()/free()
+# provided by system for internal dynamic memory management.
 #
-# NOTE: in that case, your program must specify your own malloc/calloc/realloc/free
-# functions via API cs_option(), using CS_OPT_MEM option type.
+# NOTE: in that case, you must specify your own malloc/calloc/realloc/free
+# functions in your program via API cs_option(), using CS_OPT_MEM option type.
 USE_SYS_DYN_MEM = yes
 
 
