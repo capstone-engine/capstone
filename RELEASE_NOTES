@@ -24,8 +24,8 @@ to:
 	cs_close(&handle); // <-- cs_close() now takes pointer to handle as argument.
 
 
-Internally, this change is to invalidate @handle, making sure it cannot be used
-after that, even on purpose.
+Internally, this change is to invalidate @handle, making sure it cannot be
+mistakenly used after the handle is closed.
 
 
 NOTE: this change is on C interface only. All the bindings Python, Java or
