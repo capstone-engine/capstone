@@ -31822,19 +31822,48 @@ void X86_insn_combine(cs_struct *h, cs_insn *insn, cs_insn *prev)
 	unsigned int prev_id;
 	uint8_t prefix;
 
-	// save prev's ID
-	prev_id = prev->id;
-
 	// reset prev_prefix
 	h->prev_prefix = 0;
 
+	// save prev's ID
+	prev_id = prev->id;
+
 	// copy information from insn to prev
-	prev->id = insn->id;
 	prev->size += insn->size;
 	memmove(prev->bytes+1, insn->bytes, sizeof(insn->bytes) - 1);
+#ifndef CAPSTONE_DIET
+	strcpy(prev->op_str, insn->op_str);
+#endif
+
+	// rep/repne mulpd are weird cases
+	if ((prev_id == X86_INS_REP || prev_id == X86_INS_REPNE) &&
+			(insn->id == X86_INS_MULPD)) {
+		if (prev_id == X86_INS_REPNE) {
+			prev->id = X86_INS_MULSD;
+#ifndef CAPSTONE_DIET
+			strcpy(prev->mnemonic, "mulsd");
+#endif
+		} else {
+			prev->id = X86_INS_MULSS;
+#ifndef CAPSTONE_DIET
+			strcpy(prev->mnemonic, "mulss");
+#endif
+		}
+
+		if (h->detail) {
+			memmove(prev->detail, insn->detail, sizeof(cs_detail));
+
+			// then free unused memory of current insn
+			cs_mem_free(insn->detail);
+			insn->detail = NULL;
+		}
+
+		return;
+	}
+
+	prev->id = insn->id;
 	strcat(prev->mnemonic, " ");
 	strcat(prev->mnemonic, insn->mnemonic);
-	strcpy(prev->op_str, insn->op_str);
 
 	if (h->detail) {
 		// save old prefix to copy it back later
@@ -31844,6 +31873,7 @@ void X86_insn_combine(cs_struct *h, cs_insn *insn, cs_insn *prev)
 
 		// if prev_prefix == REP|REPNE, insert ECX/RCX into detail->regs_read/regs_write
 		if (prev_id == X86_INS_REP || prev_id == X86_INS_REPNE) {
+#ifndef CAPSTONE_DIET
 			memmove(prev->detail->regs_read+1, prev->detail->regs_read,
 					prev->detail->regs_read_count * sizeof(prev->detail->regs_read[0]));
 			memmove(prev->detail->regs_write+1, prev->detail->regs_write,
@@ -31852,6 +31882,7 @@ void X86_insn_combine(cs_struct *h, cs_insn *insn, cs_insn *prev)
 			prev->detail->regs_read_count++;
 			prev->detail->regs_write_count++;
 
+			// *CX is read/written implicitly
 			if (h->mode & CS_MODE_64) {
 				prev->detail->regs_read[0] = X86_REG_RCX;
 				prev->detail->regs_write[0] = X86_REG_RCX;
@@ -31859,9 +31890,10 @@ void X86_insn_combine(cs_struct *h, cs_insn *insn, cs_insn *prev)
 				prev->detail->regs_read[0] = X86_REG_ECX;
 				prev->detail->regs_write[0] = X86_REG_ECX;
 			}
+#endif
 		}
 
-		// then free unused memory
+		// then free unused memory of current insn
 		cs_mem_free(insn->detail);
 		insn->detail = NULL;
 	}
