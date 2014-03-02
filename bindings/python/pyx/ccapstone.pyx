@@ -6,7 +6,7 @@ from capstone import arm, x86, mips, ppc, arm64, CsError
 
 _diet = cc.cs_support(capstone.CS_SUPPORT_DIET)
 
-class CsDetail:
+class CsDetail(object):
 
     def __init__(self, arch, raw_detail = None):
         if not raw_detail:
@@ -183,7 +183,7 @@ cdef class CsInsn(object):
                 return op
 
 
-cdef class Cs:
+cdef class Cs(object):
 
     cdef cc.csh csh
     cdef object _cs
@@ -196,6 +196,15 @@ cdef class Cs:
 
         self.csh = <cc.csh> _cs.csh.value
         self._cs = _cs
+
+
+    # destructor to be called automatically when object is destroyed.
+    def __dealloc__(self):
+        if self.csh:
+            status = cc.cs_close(&self.csh)
+            if status != capstone.CS_ERR_OK:
+                raise CsError(status)
+
 
     def disasm(self, code, addr, count=0):
         cdef cc.cs_insn *allinsn
