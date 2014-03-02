@@ -1,3 +1,6 @@
+# This file contains all customized compile options for Capstone.
+# Modify it before building step. Consult docs/README for instructions.
+
 ################################################################################
 # Specify which archs you want to compile in. By default, we build all archs.
 # DO NOT touch the line below.
@@ -26,6 +29,7 @@ CAPSTONE_ARCHS += x86
 #
 # NOTE: in that case, specify your own malloc/calloc/realloc/free/vnsprintf()
 # functions in your program via API cs_option(), using CS_OPT_MEM option type.
+
 USE_SYS_DYN_MEM = yes
 
 
@@ -39,4 +43,5 @@ USE_SYS_DYN_MEM = yes
 # NOTE: we still keep all those related fileds @mnemonic, @op_str, @regs_read,
 # @regs_write, @groups, etc in fields in cs_insn structure regardless, but they
 # will not be updated (i.e empty) at the output of related APIs.
+
 CAPSTONE_DIET = no
