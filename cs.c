@@ -405,8 +405,10 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 			}
 		} else	{
 			// encounter a broken instruction
-			// XXX: TODO: JOXEAN continue here
-			break;
+			// skip a byte ahead and continue
+			buffer++;
+			size--;
+			offset++;
 		}
 	}
 
