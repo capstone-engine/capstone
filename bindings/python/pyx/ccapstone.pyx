@@ -6,6 +6,7 @@ from capstone import arm, x86, mips, ppc, arm64, CsError
 
 _diet = cc.cs_support(capstone.CS_SUPPORT_DIET)
 
+
 class CsDetail(object):
 
     def __init__(self, arch, raw_detail = None):
@@ -14,8 +15,11 @@ class CsDetail(object):
         detail = ctypes.cast(raw_detail, ctypes.POINTER(capstone._cs_detail)).contents
 
         self.regs_read = detail.regs_read
+        self.regs_read_count = detail.regs_read_count
         self.regs_write = detail.regs_write
+        self.regs_write_count = detail.regs_write_count
         self.groups = detail.groups
+        self.groups_count = detail.groups_count
 
         if arch == capstone.CS_ARCH_ARM:
             (self.cc, self.update_flags, self.writeback, self.operands) = \
@@ -147,7 +151,7 @@ cdef class CsInsn(object):
             # Diet engine cannot provide @mnemonic & @op_str
             raise CsError(capstone.CS_ERR_DIET)
 
-        return group_id in self._detail.groups
+        return group_id in self.groups
 
     # verify if this instruction implicitly read register @reg_id
     def reg_read(self, reg_id):
@@ -155,7 +159,7 @@ cdef class CsInsn(object):
             # Diet engine cannot provide @mnemonic & @op_str
             raise CsError(capstone.CS_ERR_DIET)
 
-        return reg_id in self._detail.regs_read
+        return reg_id in self.regs_read
 
     # verify if this instruction implicitly modified register @reg_id
     def reg_write(self, reg_id):
@@ -163,7 +167,7 @@ cdef class CsInsn(object):
             # Diet engine cannot provide @mnemonic & @op_str
             raise CsError(capstone.CS_ERR_DIET)
 
-        return reg_id in self._detail.regs_write
+        return reg_id in self.regs_write
 
     # return number of operands having same operand type @op_type
     def op_count(self, op_type):
