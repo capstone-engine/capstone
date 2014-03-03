@@ -47,32 +47,39 @@ cdef class CsInsn(object):
     def __cinit__(self, _detail):
         self._detail = _detail
 
+    # defer to CsDetail structure for everything else.
     def __getattr__(self, name):
         _detail = self._detail
         if not _detail:
             raise CsError(capstone.CS_ERR_DETAIL)
         return getattr(_detail, name)
 
+    # return instruction's operands.
     @property
     def operands(self):
         return self._detail.operands
 
+    # return instruction's ID.
     @property
     def id(self):
         return self._raw.id
 
+    # return instruction's address.
     @property
     def address(self):
         return self._raw.address
 
+    # return instruction's size.
     @property
     def size(self):
         return self._raw.size
 
+    # return instruction's machine bytes (which should have @size bytes).
     @property
     def bytes(self):
         return bytearray(self._raw.bytes)[:self._raw.size]
 
+    # return instruction's mnemonic.
     @property
     def mnemonic(self):
         if _diet:
@@ -81,6 +88,7 @@ cdef class CsInsn(object):
 
         return self._raw.mnemonic
 
+    # return instruction's operands (in string).
     @property
     def op_str(self):
         if _diet:
@@ -89,10 +97,11 @@ cdef class CsInsn(object):
 
         return self._raw.op_str
 
+    # return list of all implicit registers being read.
     @property
     def regs_read(self):
         if _diet:
-            # Diet engine cannot provide @mnemonic & @op_str
+            # Diet engine cannot provide @regs_read
             raise CsError(capstone.CS_ERR_DIET)
 
         if self._detail:
@@ -101,10 +110,11 @@ cdef class CsInsn(object):
 
         raise CsError(capstone.CS_ERR_DETAIL)
 
+    # return list of all implicit registers being modified
     @property
     def regs_write(self):
         if _diet:
-            # Diet engine cannot provide @mnemonic & @op_str
+            # Diet engine cannot provide @regs_write
             raise CsError(capstone.CS_ERR_DIET)
 
         if self._detail:
@@ -113,10 +123,11 @@ cdef class CsInsn(object):
 
         raise CsError(capstone.CS_ERR_DETAIL)
 
+    # return list of semantic groups this instruction belongs to.
     @property
     def groups(self):
         if _diet:
-            # Diet engine cannot provide @mnemonic & @op_str
+            # Diet engine cannot provide @groups
             raise CsError(capstone.CS_ERR_DIET)
 
         if self._detail:
@@ -132,7 +143,7 @@ cdef class CsInsn(object):
     # get the register name, given the register ID
     def reg_name(self, reg_id):
         if _diet:
-            # Diet engine cannot provide @mnemonic & @op_str
+            # Diet engine cannot provide register's name
             raise CsError(capstone.CS_ERR_DIET)
 
         return cc.cs_reg_name(self._csh, reg_id)
@@ -140,7 +151,7 @@ cdef class CsInsn(object):
     # get the instruction string
     def insn_name(self):
         if _diet:
-            # Diet engine cannot provide @mnemonic & @op_str
+            # Diet engine cannot provide instruction's name
             raise CsError(capstone.CS_ERR_DIET)
 
         return cc.cs_insn_name(self._csh, self.id)
@@ -148,7 +159,7 @@ cdef class CsInsn(object):
     # verify if this insn belong to group with id as @group_id
     def group(self, group_id):
         if _diet:
-            # Diet engine cannot provide @mnemonic & @op_str
+            # Diet engine cannot provide @groups
             raise CsError(capstone.CS_ERR_DIET)
 
         return group_id in self.groups
@@ -156,7 +167,7 @@ cdef class CsInsn(object):
     # verify if this instruction implicitly read register @reg_id
     def reg_read(self, reg_id):
         if _diet:
-            # Diet engine cannot provide @mnemonic & @op_str
+            # Diet engine cannot provide @regs_read
             raise CsError(capstone.CS_ERR_DIET)
 
         return reg_id in self.regs_read
@@ -164,7 +175,7 @@ cdef class CsInsn(object):
     # verify if this instruction implicitly modified register @reg_id
     def reg_write(self, reg_id):
         if _diet:
-            # Diet engine cannot provide @mnemonic & @op_str
+            # Diet engine cannot provide @regs_write
             raise CsError(capstone.CS_ERR_DIET)
 
         return reg_id in self.regs_write
@@ -210,6 +221,7 @@ cdef class Cs(object):
                 raise CsError(status)
 
 
+    # Disassemble binary & return disassembled instructions in CsInsn objects
     def disasm(self, code, addr, count=0):
         cdef cc.cs_insn *allinsn
 
@@ -230,6 +242,9 @@ cdef class Cs(object):
         cc.cs_free(allinsn, res)
 
 
+    # Light function to disassemble binary. This is about 20% faster than disasm() because
+    # unlike disasm(), disasm_lite() only return tuples of (address, size, mnemonic, op_str),
+    # rather than CsInsn objects.
     def disasm_lite(self, code, addr, count=0):
         # TODO: dont need detail, so we might turn off detail, then turn on again when done
         cdef cc.cs_insn *allinsn
