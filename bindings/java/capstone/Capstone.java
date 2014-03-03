@@ -33,12 +33,19 @@ public class Capstone {
   }
 
   protected static class _cs_insn extends Structure {
+    // instruction ID.
     public int id;
+    // instruction address.
     public long address;
+    // instruction size.
     public short size;
+    // machine bytes of instruction.
     public byte[] bytes;
+    // instruction mnemonic. NOTE: irrelevant for diet engine.
     public byte[] mnemonic;
+    // instruction operands. NOTE: irrelevant for diet engine.
     public byte[] operands;
+    // detail information of instruction.
     public _cs_detail.ByReference cs_detail;
 
     public _cs_insn() {
@@ -62,10 +69,13 @@ public class Capstone {
   protected static class _cs_detail extends Structure {
     public static class ByReference extends _cs_detail implements Structure.ByReference {};
 
+    // list of all implicit registers being read.
     public byte[] regs_read = new byte[12];
     public byte regs_read_count;
+    // list of all implicit registers being written.
     public byte[] regs_write = new byte[20];
     public byte regs_write_count;
+    // list of semantic groups this instruction belongs to.
     public byte[] groups = new byte[8];
     public byte groups_count;
 
@@ -83,38 +93,51 @@ public class Capstone {
     private _cs_insn raw;
     private int arch;
 
+    // instruction ID.
     public int id;
+    // instruction address.
     public long address;
+    // instruction size.
     public short size;
+    // instruction mnemonic. NOTE: irrelevant for diet engine.
     public String mnemonic;
+    // instruction operands. NOTE: irrelevant for diet engine.
     public String opStr;
+    // list of all implicit registers being read.
     public byte[] regsRead;
+    // list of all implicit registers being written.
     public byte[] regsWrite;
+    // list of semantic groups this instruction belongs to.
     public byte[] groups;
     public OpInfo operands;
 
-    public CsInsn (_cs_insn insn, int _arch, NativeLong _csh, CS _cs) {
+    public CsInsn (_cs_insn insn, int _arch, NativeLong _csh, CS _cs, boolean diet) {
       id = insn.id;
       address = insn.address;
       size = insn.size;
-      mnemonic = new String(insn.mnemonic).replace("\u0000","");
-      opStr = new String(insn.operands).replace("\u0000","");
 
+      if (!diet) {
+        mnemonic = new String(insn.mnemonic).replace("\u0000","");
+        opStr = new String(insn.operands).replace("\u0000","");
+      }
+
+      cs = _cs;
       arch = _arch;
       raw = insn;
       csh = _csh;
-      cs = _cs;
 
       if (insn.cs_detail != null) {
-        regsRead = new byte[insn.cs_detail.regs_read_count];
-        for (int i=0; i<regsRead.length; i++)
-          regsRead[i] = insn.cs_detail.regs_read[i];
-        regsWrite = new byte[insn.cs_detail.regs_write_count];
-        for (int i=0; i<regsWrite.length; i++)
-          regsWrite[i] = insn.cs_detail.regs_write[i];
-        groups = new byte[insn.cs_detail.groups_count];
-        for (int i=0; i<groups.length; i++)
-          groups[i] = insn.cs_detail.groups[i];
+        if (!diet) {
+          regsRead = new byte[insn.cs_detail.regs_read_count];
+          for (int i=0; i<regsRead.length; i++)
+            regsRead[i] = insn.cs_detail.regs_read[i];
+          regsWrite = new byte[insn.cs_detail.regs_write_count];
+          for (int i=0; i<regsWrite.length; i++)
+            regsWrite[i] = insn.cs_detail.regs_write[i];
+          groups = new byte[insn.cs_detail.groups_count];
+          for (int i=0; i<groups.length; i++)
+            groups[i] = insn.cs_detail.groups[i];
+        }
 
         operands = getOptInfo(insn.cs_detail);
       }
@@ -193,7 +216,7 @@ public class Capstone {
     CsInsn[] arr = new CsInsn[arr_raw.length];
 
     for (int i = 0; i < arr_raw.length; i++) {
-      arr[i] = new CsInsn(arr_raw[i], this.arch, ns.csh, cs);
+      arr[i] = new CsInsn(arr_raw[i], this.arch, ns.csh, cs, this.diet);
     }
 
     return arr;
@@ -220,16 +243,19 @@ public class Capstone {
     public boolean cs_support(int query);
   }
 
-  // capstone API version
+  // Capstone API version
   public static final int CS_API_MAJOR = 2;
   public static final int CS_API_MINOR = 1;
 
+  // architectures
   public static final int CS_ARCH_ARM = 0;
   public static final int CS_ARCH_ARM64 = 1;
   public static final int CS_ARCH_MIPS = 2;
   public static final int CS_ARCH_X86 = 3;
   public static final int CS_ARCH_PPC = 4;
+  public static final int CS_ARCH_ALL = 0xFFFF; // query id for cs_support()
 
+  // disasm mode
   public static final int CS_MODE_LITTLE_ENDIAN = 0;  // default mode
   public static final int CS_MODE_ARM = 0;	          // 32-bit ARM
   public static final int CS_MODE_16 = 1 << 1;
@@ -240,27 +266,33 @@ public class Capstone {
   public static final int CS_MODE_N64 = 1 << 5;	      // Nintendo-64 mode (Mips arch)
   public static final int CS_MODE_BIG_ENDIAN = 1 << 31;
 
-  // capstone error
+  // Capstone error
   public static final int CS_ERR_OK = 0;
   public static final int CS_ERR_MEM = 1;	    // Out-Of-Memory error
   public static final int CS_ERR_ARCH = 2;	  // Unsupported architecture
   public static final int CS_ERR_HANDLE = 3;	// Invalid handle
   public static final int CS_ERR_CSH = 4;	    // Invalid csh argument
   public static final int CS_ERR_MODE = 5;	  // Invalid/unsupported mode
+  public static final int CS_ERR_OPTION = 6;  // Invalid/unsupported option: cs_option()
+  public static final int CS_ERR_DETAIL = 7;  // Invalid/unsupported option: cs_option()
+  public static final int CS_ERR_MEMSETUP = 8;
+  public static final int CS_ERR_VERSION = 9;  //Unsupported version (bindings)
+  public static final int CS_ERR_DIET = 10;  //Information irrelevant in diet engine
 
   // Capstone option type
   public static final int CS_OPT_SYNTAX = 1;  // Intel X86 asm syntax (CS_ARCH_X86 arch)
   public static final int CS_OPT_DETAIL = 2;  // Break down instruction structure into details
   public static final int CS_OPT_MODE = 3;  // Change engine's mode at run-time
 
-  //Capstone option value
+  // Capstone option value
   public static final int CS_OPT_OFF = 0;  // Turn OFF an option - default option of CS_OPT_DETAIL
   public static final int CS_OPT_SYNTAX_INTEL = 1;  // Intel X86 asm syntax - default syntax on X86 (CS_OPT_SYNTAX,  CS_ARCH_X86)
   public static final int CS_OPT_SYNTAX_ATT = 2;    // ATT asm syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
   public static final int CS_OPT_ON = 3;  // Turn ON an option (CS_OPT_DETAIL)
   public static final int CS_OPT_SYNTAX_NOREGNAME = 3; // PPC asm syntax: Prints register name with only number (CS_OPT_SYNTAX)
 
-  public static final int CS_SUPPORT_DIET = 0xFFFF+1;	  // diet mode
+  // query id for cs_support()
+  public static final int CS_SUPPORT_DIET = CS_ARCH_ALL+1;	  // diet mode
 
   protected class NativeStruct {
       private NativeLong csh;
@@ -273,6 +305,7 @@ public class Capstone {
   public int mode;
   private int syntax;
   private int detail;
+  private boolean diet;
 
   public Capstone(int arch, int mode) {
     cs = (CS)Native.loadLibrary("capstone", CS.class);
@@ -290,44 +323,52 @@ public class Capstone {
     }
     ns.csh = ns.handleRef.getValue();
     this.detail = CS_OPT_OFF;
+	this.diet = cs.cs_support(CS_SUPPORT_DIET);
   }
 
+  // return combined API version
+  public int version() {
+    return cs.cs_version(null, null);
+  }
+
+  // set Assembly syntax
   public void setSyntax(int syntax) {
     if (cs.cs_option(ns.csh, CS_OPT_SYNTAX, new NativeLong(syntax)) == CS_ERR_OK) {
       this.syntax = syntax;
     } else {
-      throw new RuntimeException("ERROR: Unknown syntax");
+      throw new RuntimeException("ERROR: Failed to set assembly syntax");
     }
   }
 
+  // set detail option at run-time
   public void setDetail(int opt) {
     if (cs.cs_option(ns.csh, CS_OPT_DETAIL, new NativeLong(opt)) == CS_ERR_OK) {
       this.detail = opt;
     } else {
-      throw new RuntimeException("ERROR: Unknown detail option");
+      throw new RuntimeException("ERROR: Failed to set detail option");
     }
   }
 
+  // set mode option at run-time
   public void setMode(int opt) {
     if (cs.cs_option(ns.csh, CS_OPT_MODE, new NativeLong(opt)) == CS_ERR_OK) {
       this.mode = opt;
     } else {
-      throw new RuntimeException("ERROR: Unknown mode option");
+      throw new RuntimeException("ERROR: Failed to set mode option");
     }
   }
 
-  public String getRegName(int reg) {
-    return cs.cs_reg_name(ns.csh, reg);
-  }
-
+  // destructor automatically caled at destroyed time.
   protected void finalize() {
     cs.cs_close(ns.handleRef);
   }
 
+  // disassemble until either no more code, or encounter broken insn.
   public CsInsn[] disasm(byte[] code, long address) {
     return disasm(code, address, 0);
   }
 
+  // disassemble maximum @count instructions, or until encounter broken insn.
   public CsInsn[] disasm(byte[] code, long address, long count) {
     PointerByReference insnRef = new PointerByReference();
 
