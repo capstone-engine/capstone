@@ -1,6 +1,81 @@
 This file details the changelog of Capstone.
 
 ---------------------------------
+Version 2.1
+
+[ API changes ]
+
+- API version has been bumped to 2.1.
+- Change prototype of the API cs_close() to be able to invalidate closed handle.
+  See http://capstone-engine.org/version_2.1_API.html for more information.
+- Extend cs_support() to handle more query types, not only about supported
+  architectures. This change is backward compatible, however, so existent code
+  do not need to be modified to support this.
+- New query type CS_SUPPORT_DIET for cs_support() to ask about diet status of
+  the engine.
+- New error code CS_ERR_DIET to report errors about newly added diet mode.
+- New error code CS_ERR_VERSION to report issue of incompatible versions between
+  bindings & core engine.
+
+
+[ Core changes ]
+
+- On memory usage, Capstone uses about 40% less memory, while still faster
+  than version 2.0.
+- All architectures are much smaller: binaries size reduce at least 30%.
+  Especially, X86-only binary reduces from 1.9MB to just 720KB.
+- Support "diet" mode, in which engine size is further reduced (by around 40%)
+  for embedding purpose. The price to pay is that we have to sacrifice some
+  non-critical data fields. See http://capstone-engine.org/diet.html for more
+  details.
+
+
+[ Architectures ]
+
+- Update all 5 architectures to support more instructions & bug fixes.
+-
+- Arm
+     - Support Big-Endian mode (besides Little-Endian mode).
+     - Support friendly register, so instead of output sub "r12,r11,0x14",
+	 we have "sub ip,fp,0x14".
+- Arm64: support Big-Endian mode (besides Little-Endian mode).
+- PowerPC:
+	- New instructions: FMR & MSYNC.
+- Mips:
+	- New instruction: DLSA
+- X86:
+	- Properly handle AVX-512 instructions.
+	- New instructions: PSETPM, SALC, INT1, GETSEC.
+	- Fix some memory leaking issues in case of prefixed instructions such
+	  as LOCK, REP, REPNE.
+
+
+[ Python binding ]
+
+- Verify the core version at initialization time. Refuse to run if its version
+  is different from the core's version.
+- New API disasm_lite() added to Cs class. This light API only returns tuples of
+  ((address, size, mnemonic, op_str), rather than list of CsInsn objects. This
+  improves performance by around 30% in some benchmarks.
+- Added new API cs_version_bind() returning binding's version, which might
+  differ from the core's API version if binding is out-of-date.
+- Fixed some memory leaking bugs for Cython binding.
+- Fix a bug crashing Cython code when accessing @regs_read/regs_write/groups.
+
+
+[ Java binding ]
+
+- Fix some memory leaking bugs.
+- Added version() API & support diet mode.
+- Better support for detail option.
+
+
+[ Miscellaneous ]
+
+- make.sh now can be used to uninstall the core engine. This is done with:
+	$ sudo ./make.sh uninstall
+
+----------------------------------
 Version 2.0: January 22nd, 2014
 
 Release 2.0 deprecates verison 1.0 and brings a lot of crucial changes.
