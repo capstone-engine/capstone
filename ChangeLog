@@ -6,7 +6,7 @@ Version 2.1
 [ API changes ]
 
 - API version has been bumped to 2.1.
-- Change prototype of the API cs_close() to be able to invalidate closed handle.
+- Change prototype of cs_close() to be able to invalidate closed handle.
   See http://capstone-engine.org/version_2.1_API.html for more information.
 - Extend cs_support() to handle more query types, not only about supported
   architectures. This change is backward compatible, however, so existent code
@@ -32,13 +32,7 @@ Version 2.1
 
 [ Architectures ]
 
-- Update all 5 architectures to support more instructions & bug fixes.
--
-- Arm
-     - Support Big-Endian mode (besides Little-Endian mode).
-     - Support friendly register, so instead of output sub "r12,r11,0x14",
-	 we have "sub ip,fp,0x14".
-- Arm64: support Big-Endian mode (besides Little-Endian mode).
+- Update all 5 architectures to fix bugs.
 - PowerPC:
 	- New instructions: FMR & MSYNC.
 - Mips:
@@ -55,7 +49,7 @@ Version 2.1
 - Verify the core version at initialization time. Refuse to run if its version
   is different from the core's version.
 - New API disasm_lite() added to Cs class. This light API only returns tuples of
-  ((address, size, mnemonic, op_str), rather than list of CsInsn objects. This
+  (address, size, mnemonic, op_str), rather than list of CsInsn objects. This
   improves performance by around 30% in some benchmarks.
 - Added new API cs_version_bind() returning binding's version, which might
   differ from the core's API version if binding is out-of-date.
@@ -72,7 +66,8 @@ Version 2.1
 
 [ Miscellaneous ]
 
-- make.sh now can be used to uninstall the core engine. This is done with:
+- make.sh now can uninstall the core engine. This is done with:
+
 	$ sudo ./make.sh uninstall
 
 ----------------------------------
