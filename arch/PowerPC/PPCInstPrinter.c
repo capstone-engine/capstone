@@ -370,8 +370,7 @@ static void printU16ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	if (!MCOperand_isImm(MCInst_getOperand(MI, OpNo)))
-	{
+	if (!MCOperand_isImm(MCInst_getOperand(MI, OpNo))) {
 		printOperand(MI, OpNo, O);
 		return;
 	}
@@ -384,8 +383,7 @@ static void printBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	if (!MCOperand_isImm(MCInst_getOperand(MI, OpNo)))
-	{
+	if (!MCOperand_isImm(MCInst_getOperand(MI, OpNo))) {
 		printOperand(MI, OpNo, O);
 		return;
 	}
@@ -495,14 +493,18 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	MCOperand *Op = MCInst_getOperand(MI, OpNo);
 	if (MCOperand_isReg(Op)) {
 		unsigned reg = MCOperand_getReg(Op);
+#ifndef CAPSTONE_DIET
 		const char *RegName = getRegisterName(reg);
+#endif
 		// map to public register
 		reg = PPC_map_register(reg);
+#ifndef CAPSTONE_DIET
 		// The linux and AIX assembler does not take register prefixes.
 		if (MI->csh->syntax == CS_OPT_SYNTAX_NOREGNAME)
 			RegName = stripRegisterPrefix(RegName);
 
 		SStream_concat(O, "%s", RegName);
+#endif
 
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
