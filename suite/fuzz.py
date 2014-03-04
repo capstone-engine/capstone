@@ -1,14 +1,16 @@
 #!/usr/bin/python
 
-# Simple benchmark for Capstone by disassembling random code. By Nguyen Anh Quynh, 2014
+# Simple fuzzing tool by disassembling random code. By Nguyen Anh Quynh, 2014
 # Syntax:
-# ./suite/benchmark.py          --> Benchmark all archs
-# ./suite/benchmark.py x86      --> Benchmark all X86 (all 16bit, 32bit, 64bit)
-# ./suite/benchmark.py x86-32   --> Benchmark X86-32 arch only
-# ./suite/benchmark.py arm      --> Benchmark all ARM (arm, thumb)
-# ./suite/benchmark.py aarch64  --> Benchmark ARM-64
-# ./suite/benchmark.py mips     --> Benchmark all Mips (32bit, 64bit)
-# ./suite/benchmark.py ppc      --> Benchmark PPC
+# ./suite/fuzz.py          --> Fuzz all archs
+# ./suite/fuzz.py x86      --> Fuzz all X86 (all 16bit, 32bit, 64bit)
+# ./suite/fuzz.py x86-16   --> Fuzz X86-32 arch only
+# ./suite/fuzz.py x86-32   --> Fuzz X86-32 arch only
+# ./suite/fuzz.py x86-64   --> Fuzz X86-64 arch only
+# ./suite/fuzz.py arm      --> Fuzz all ARM (arm, thumb)
+# ./suite/fuzz.py aarch64  --> Fuzz ARM-64
+# ./suite/fuzz.py mips     --> Fuzz all Mips (32bit, 64bit)
+# ./suite/fuzz.py ppc      --> Fuzz PPC
 
 from capstone import *
 
