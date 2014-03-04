@@ -82,8 +82,6 @@ for (arch, mode, comment, syntax) in all_tests:
     except:
         pass
 
-    print("Fuzzing platform: %s" %comment)
-
     try:
         md = Cs(arch, mode)
         md.detail = True
@@ -92,6 +90,7 @@ for (arch, mode, comment, syntax) in all_tests:
             md.syntax = syntax
 
         # test disasm()
+        print("Fuzzing disasm() @platform: %s" %comment)
         for i in xrange(1, TIMES):
             while (True):
                 code = get_code(cfile, i * 4)
@@ -102,6 +101,7 @@ for (arch, mode, comment, syntax) in all_tests:
                 cs(md, code)
 
         # test disasm_lite()
+        print("Fuzzing disasm_lite() @platform: %s" %comment)
         cfile.seek(0)
         for i in xrange(1, TIMES):
             while (True):
