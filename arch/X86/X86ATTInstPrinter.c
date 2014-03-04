@@ -30,8 +30,6 @@
 #define markup(x) ""
 
 
-const char *X86ATT_getRegisterName(unsigned RegNo);
-
 static void printMemReference(MCInst *MI, unsigned Op, SStream *O);
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 
