@@ -23,6 +23,7 @@ import sys
 FILE = '/usr/bin/python'
 
 TIMES = 64
+INTERVALS = (4, 5, 7, 9, 11, 13)
 
 all_tests = (
         (CS_ARCH_X86, CS_MODE_16, "X86-16bit (Intel syntax)", 0),
@@ -90,27 +91,30 @@ for (arch, mode, comment, syntax) in all_tests:
             md.syntax = syntax
 
         # test disasm()
-        print("Fuzzing disasm() @platform: %s" %comment)
-        for i in xrange(1, TIMES):
-            while (True):
-                code = get_code(cfile, i * 4)
-                if code is None:
-                    # EOF? break
-                    break
-                #print to_hex(code)
-                cs(md, code)
+        print("\nFuzzing disasm() @platform: %s" %comment)
+        for ii in INTERVALS:
+            print("Interval: %u" %ii)
+            for j in xrange(1, TIMES):
+                while (True):
+                    code = get_code(cfile, j * ii)
+                    if code is None:
+                        # EOF? break
+                        break
+                    #print to_hex(code)
+                    cs(md, code)
 
         # test disasm_lite()
         print("Fuzzing disasm_lite() @platform: %s" %comment)
-        cfile.seek(0)
-        for i in xrange(1, TIMES):
-            while (True):
-                code = get_code(cfile, i * 4)
-                if code is None:
-                    # EOF? break
-                    break
-                #print to_hex(code)
-                cs_lite(md, code)
+        for ii in INTERVALS:
+            print("Interval: %u" %ii)
+            for j in xrange(1, TIMES):
+                while (True):
+                    code = get_code(cfile, j * ii)
+                    if code is None:
+                        # EOF? break
+                        break
+                    #print to_hex(code)
+                    cs_lite(md, code)
 
     except CsError as e:
         print("ERROR: %s" %e)
