@@ -1,7 +1,7 @@
 This file details the changelog of Capstone.
 
 ---------------------------------
-Version 2.1
+Version 2.1: March 5th, 2014
 
 [ API changes ]
 
@@ -53,7 +53,7 @@ Version 2.1
   improves performance by around 30% in some benchmarks.
 - New API version_bind() returns binding's version, which might differ from
   the core's API version if the binding is out-of-date.
-- New API debug() returns information on cython support, diet status & archs
+- New API debug() returns information on Cython support, diet status & archs
   compiled in.
 - Fixed some memory leaking bugs for Cython binding.
 - Fix a bug crashing Cython code when accessing @regs_read/regs_write/groups.
