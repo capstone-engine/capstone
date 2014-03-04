@@ -31,7 +31,7 @@ all_tests = (
         (CS_ARCH_X86, CS_MODE_32, "X86-32 (Intel syntax)", 0),
         (CS_ARCH_X86, CS_MODE_32, "X86-32 (ATT syntax)", CS_OPT_SYNTAX_ATT),
         (CS_ARCH_X86, CS_MODE_64, "X86-64 (Intel syntax)", 0),
-        (CS_ARCH_X86, CS_MODE_64, "X86-64 (Intel syntax)", CS_OPT_SYNTAX_ATT),
+        (CS_ARCH_X86, CS_MODE_64, "X86-64 (ATT syntax)", CS_OPT_SYNTAX_ATT),
         (CS_ARCH_ARM, CS_MODE_ARM, "ARM", 0),
         (CS_ARCH_ARM, CS_MODE_THUMB, "THUMB (ARM)", 0),
         (CS_ARCH_MIPS, CS_MODE_32 + CS_MODE_BIG_ENDIAN, "MIPS-32 (Big-endian)", 0),
