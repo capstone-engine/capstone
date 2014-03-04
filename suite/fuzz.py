@@ -45,6 +45,9 @@ all_tests = (
 def to_hex(s):
     return " ".join("0x" + "{0:x}".format(ord(c)).zfill(2) for c in s) # <-- Python 3 is OK
 
+
+# read @size bytes from @f & return data.
+# return None when there is not enough data
 def get_code(f, size):
     code = f.read(size)
     if len(code) != size:  # reached end-of-file?
@@ -93,6 +96,7 @@ for (arch, mode, comment, syntax) in all_tests:
             while (True):
                 code = get_code(cfile, i * 4)
                 if code is None:
+                    # EOF? break
                     break
                 #print to_hex(code)
                 cs(md, code)
@@ -103,6 +107,7 @@ for (arch, mode, comment, syntax) in all_tests:
             while (True):
                 code = get_code(cfile, i * 4)
                 if code is None:
+                    # EOF? break
                     break
                 #print to_hex(code)
                 cs_lite(md, code)
