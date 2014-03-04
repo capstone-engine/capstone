@@ -674,5 +674,7 @@ def debug():
         if cs_support(archs[k]):
             all_archs += "-%s" %k
 
-    return "python-%s%s" %(diet, all_archs)
+    (major, minor, _combined) = cs_version()
+
+    return "python-%s%s-c%u.%u-b%u.%u" %(diet, all_archs, major, minor, CS_API_MAJOR, CS_API_MINOR)
 

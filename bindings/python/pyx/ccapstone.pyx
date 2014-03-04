@@ -280,5 +280,7 @@ def debug():
         if cc.cs_support(archs[k]):
             all_archs += "-%s" %k
 
-    return "CYTHON-%s%s" %(diet, all_archs)
+    (major, minor, _combined) = capstone.cs_version()
+
+    return "Cython-%s%s-c%u.%u-b%u.%u" %(diet, all_archs, major, minor, capstone.CS_API_MAJOR, capstone.CS_API_MINOR)
 
