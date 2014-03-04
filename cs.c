@@ -66,6 +66,8 @@ cs_vsnprintf_t cs_vsnprintf = NULL;
 
 unsigned int cs_version(int *major, int *minor)
 {
+	archs_enable();
+
 	if (major != NULL && minor != NULL) {
 		*major = CS_API_MAJOR;
 		*minor = CS_API_MINOR;
@@ -76,6 +78,8 @@ unsigned int cs_version(int *major, int *minor)
 
 bool cs_support(int query)
 {
+	archs_enable();
+
 	if (query == CS_ARCH_ALL)
 		return all_arch == ((1 << CS_ARCH_ARM) | (1 << CS_ARCH_ARM64) |
 				(1 << CS_ARCH_MIPS) | (1 << CS_ARCH_X86) |
@@ -263,6 +267,8 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 
 cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 {
+	archs_enable();
+
 	// cs_option() can be called with NULL handle just for CS_OPT_MEM
 	// This is supposed to be executed before all other APIs (even cs_open())
 	if (type == CS_OPT_MEM) {
