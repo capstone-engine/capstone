@@ -659,13 +659,6 @@ def debug():
         # no Cython, fallback to Python code below
         pass
 
-    # Tricky: make a dummy call to cs_open() to initialize internal data.
-    # FIXME: core need to be fixed to avoid this.
-    try:
-        md = Cs(CS_ARCH_ALL, 0)
-    except:
-        pass
-
     if cs_support(CS_SUPPORT_DIET):
         diet = "diet"
     else:

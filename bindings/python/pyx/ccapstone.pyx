@@ -264,11 +264,6 @@ cdef class Cs(object):
 
 # print out debugging info
 def debug():
-    # Tricky: make a dummy call to cs_open() to initialize internal data.
-    # FIXME: core need to be fixed to avoid this.
-    cdef cc.csh tmp
-    cc.cs_open(capstone.CS_ARCH_ALL, capstone.CS_MODE_ARM, &tmp)
-
     if cc.cs_support(capstone.CS_SUPPORT_DIET):
         diet = "diet"
     else:
