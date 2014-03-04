@@ -8,8 +8,8 @@ __all__ = [
 
     'cs_disasm_quick',
     'cs_version',
-    'cs_version_bind',
     'cs_support',
+    'version_bind',
     'debug',
 
     'CS_API_MAJOR',
@@ -233,7 +233,7 @@ def cs_version():
 
 
 # return the binding's version
-def cs_version_bind():
+def version_bind():
     return (CS_API_MAJOR, CS_API_MINOR, (CS_API_MAJOR << 8) + CS_API_MINOR)
 
 

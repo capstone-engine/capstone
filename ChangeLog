@@ -51,8 +51,10 @@ Version 2.1
 - New API disasm_lite() added to Cs class. This light API only returns tuples of
   (address, size, mnemonic, op_str), rather than list of CsInsn objects. This
   improves performance by around 30% in some benchmarks.
-- New API cs_version_bind() returns binding's version, which might differ from
+- New API version_bind() returns binding's version, which might differ from
   the core's API version if the binding is out-of-date.
+- New API debug() returns information on cython support, diet status & archs
+  compiled in.
 - Fixed some memory leaking bugs for Cython binding.
 - Fix a bug crashing Cython code when accessing @regs_read/regs_write/groups.
 - Support diet mode.
