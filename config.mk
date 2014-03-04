@@ -1,5 +1,5 @@
 # This file contains all customized compile options for Capstone.
-# Modify it before building step. Consult docs/README for instructions.
+# Modify it before building step. Consult docs/README for details.
 
 ################################################################################
 # Specify which archs you want to compile in. By default, we build all archs.
@@ -37,11 +37,11 @@ USE_SYS_DYN_MEM = yes
 # Change 'CAPSTONE_DIET = no' to 'CAPSTONE_DIET = yes' to make the library
 # more compact: use less memory & smaller in binary size.
 # This setup will remove the @mnemonic & @op_str data, plus semantic information
-# such as @regs_read/write & @group. The amount of reduced size in the binary
-# is up to 50% in some individual archs.
+# such as @regs_read/write & @group. The amount of binary size reduced is
+# up to 50% in some individual archs.
 #
 # NOTE: we still keep all those related fileds @mnemonic, @op_str, @regs_read,
 # @regs_write, @groups, etc in fields in cs_insn structure regardless, but they
-# will not be updated (i.e empty) at the output of related APIs.
+# will not be updated (i.e empty), thus become irrelevant.
 
 CAPSTONE_DIET = no
