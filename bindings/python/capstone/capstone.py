@@ -651,6 +651,14 @@ class Cs(object):
 
 # print out debugging info
 def debug():
+    # is Cython there?
+    try:
+        import ccapstone
+        return ccapstone.debug()
+    except:
+        # no Cython, fallback to Python code below
+        pass
+
     # Tricky: make a dummy call to cs_open() to initialize internal data.
     # FIXME: core need to be fixed to avoid this.
     try:
