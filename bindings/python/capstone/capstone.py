@@ -10,6 +10,7 @@ __all__ = [
     'cs_version',
     'cs_version_bind',
     'cs_support',
+    'debug',
 
     'CS_API_MAJOR',
     'CS_API_MINOR',
@@ -646,4 +647,31 @@ class Cs(object):
                 raise CsError(status)
             return
             yield
+
+
+# print out debugging info
+def debug():
+    # Tricky: make a dummy call to cs_open() to initialize internal data.
+    # FIXME: core need to be fixed to avoid this.
+    try:
+        md = Cs(CS_ARCH_ALL, 0)
+    except:
+        pass
+
+    if cs_support(CS_SUPPORT_DIET):
+        diet = "diet"
+    else:
+        diet = "standard"
+
+    archs = { "arm": CS_ARCH_ARM, "arm64": CS_ARCH_ARM64, \
+        "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "x86": CS_ARCH_X86 }
+
+    all_archs = ""
+    keys = archs.keys()
+    keys.sort()
+    for k in keys:
+        if cs_support(archs[k]):
+            all_archs += "-%s" %k
+
+    return "python-%s%s" %(diet, all_archs)
 

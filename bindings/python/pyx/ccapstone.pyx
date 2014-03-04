@@ -260,3 +260,30 @@ cdef class Cs(object):
             yield (insn.address, insn.size, insn.mnemonic, insn.op_str)
 
         cc.cs_free(allinsn, res)
+
+
+# print out debugging info
+cdef debug():
+    # Tricky: make a dummy call to cs_open() to initialize internal data.
+    # FIXME: core need to be fixed to avoid this.
+    cdef cc.csh tmp
+    cc.cs_open(capstone.CS_ARCH_ALL, capstone.CS_ARM, &tmp)
+
+    if cc.cs_support(capstone.CS_SUPPORT_DIET):
+        diet = "diet"
+    else:
+        diet = "standard"
+
+    archs = { "arm": capstone.CS_ARCH_ARM, "arm64": capstone.CS_ARCH_ARM64, \
+        "mips": capstone.CS_ARCH_MIPS, "ppc": capstone.CS_ARCH_PPC, \
+        "x86": capstone.CS_ARCH_X86 }
+
+    all_archs = ""
+    keys = archs.keys()
+    keys.sort()
+    for k in keys:
+        if cc.cs_support(archs[k]):
+            all_archs += "-%s" %k
+
+    return "CYTHON-%s%s" %(diet, all_archs)
+
