@@ -13,3 +13,7 @@ Average users should ignore all the contents here.
 - compile_all.sh
 	Compile Capstone for all platforms (*nix32, clang, cygwin, cross-compile) &
 	report the result as pass or fail.
+
+- fuzz.py
+	This simple script disassembles random code for all archs (or selected arch)
+	in order to find segfaults.
