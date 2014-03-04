@@ -568,10 +568,12 @@ static void printSImm7ScaledOperand(MCInst *MI, unsigned OpNum,
 static void printVPRRegister(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNo));
+#ifndef CAPSTONE_DIET
 	char *Name = cs_strdup(getRegisterName(Reg));
 	Name[0] = 'v';
 	SStream_concat(O, "%s", Name);
 	cs_mem_free(Name);
+#endif
 	if (MI->csh->detail) {
 		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_REG;
 		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].reg = Reg;
@@ -771,6 +773,7 @@ static void printMSROperand(MCInst *MI, unsigned OpNum, SStream *O)
 static void printVectorList(MCInst *MI, unsigned OpNum,
 		SStream *O, A64Layout_VectorLayout Layout, unsigned Count, MCRegisterInfo *MRI)
 {
+#ifndef CAPSTONE_DIET
 	//assert(Count >= 1 && Count <= 4 && "Invalid Number of Vectors");
 
 	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
@@ -795,6 +798,7 @@ static void printVectorList(MCInst *MI, unsigned OpNum,
 		cs_mem_free(Name);
 	}
 	SStream_concat(O, "}");
+#endif
 }
 
 #define PRINT_ALIAS_INSTR
@@ -818,7 +822,8 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 	if (mnem) {
 		MCInst_setOpcodePub(MI, AArch64_map_insn(mnem));
 		cs_mem_free(mnem);
-	} else
+	} else {
 		printInstruction(MI, O, Info);
+	}
 }
 
