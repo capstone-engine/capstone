@@ -10,7 +10,11 @@
 #include "utils.h"
 #include "MCRegisterInfo.h"
 
+#ifndef CAPSTONE_DIET
 #define INSN_CACHE_SIZE 64
+#else
+#define INSN_CACHE_SIZE 8
+#endif
 
 cs_err (*arch_init[MAX_ARCH])(cs_struct *) = { NULL };
 cs_err (*arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = { NULL };
