@@ -1,6 +1,6 @@
---- Makefile.orig	2014-01-22 04:33:35.000000000 -0600
-+++ Makefile	2014-02-14 18:38:48.000000000 -0600
-@@ -21,20 +21,23 @@
+--- Makefile.org	2014-03-04 18:18:25.000000000 -0800
++++ Makefile	2014-03-04 18:27:48.000000000 -0800
+@@ -21,20 +21,24 @@
  CFLAGS += -DUSE_SYS_DYN_MEM
  endif
  
@@ -10,15 +10,16 @@
  DESTDIR ?=
 -INCDIR = $(DESTDIR)$(PREFIX)/include
 +INCDIR = $(PREFIX)/include
-+
+ 
+-LIBDIR = $(DESTDIR)$(PREFIX)/lib
 +UNAME_S := $(shell uname -s)
 +ifeq ($(UNAME_S),Darwin)
 +LDFLAGS += -dynamiclib -install_name $(LIBDIR)/$(LIBRARY)
 +else
 +LDFLAGS += -shared
 +endif
- 
--LIBDIR = $(DESTDIR)$(PREFIX)/lib
++ 
++
 +LIBDIR = $(PREFIX)/lib
  # on x86_64, we might have /usr/lib64 directory instead of /usr/lib
 -MACHINE := $(shell uname -m)
@@ -33,15 +34,29 @@
  endif
  endif
  
-@@ -88,7 +91,6 @@
- 
+@@ -136,21 +140,10 @@
+ LIBOBJ += $(LIBOBJ_ARM) $(LIBOBJ_ARM64) $(LIBOBJ_MIPS) $(LIBOBJ_PPC) $(LIBOBJ_X86)
  LIBOBJ += MCInst.o
  
+-
 -UNAME_S := $(shell uname -s)
+-PKGCFCGDIR = $(LIBDIR)/pkgconfig
+-
  # OSX?
  ifeq ($(UNAME_S),Darwin)
  EXT = dylib
-@@ -145,25 +147,25 @@
+ AR_EXT = a
+-# By default, suppose that Brew is installed & use Brew path for pkgconfig file
+-PKGCFCGDIR = /usr/local/lib/pkgconfig
+-# is Macport installed instead?
+-ifneq (,$(wildcard /opt/local/bin/port))
+-# then correct the path for pkgconfig file
+-PKGCFCGDIR = /opt/local/lib/pkgconfig
+-endif
+ else
+ # Cygwin?
+ IS_CYGWIN := $(shell $(CC) -dumpmachine | grep -i cygwin | wc -l)
+@@ -228,25 +221,25 @@
  	echo 'Description: Capstone disassembler engine' >> $(PKGCFGF)
  	echo 'Version: $(VERSION)' >> $(PKGCFGF)
  	echo 'libdir=$(LIBDIR)' >> $(PKGCFGF)
@@ -57,8 +72,8 @@
 -	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
 -	mkdir -p $(INCDIR)/$(LIBNAME)
 -	$(INSTALL_DATA) include/*.h $(INCDIR)/$(LIBNAME)
--	mkdir -p $(LIBDIR)/pkgconfig
--	$(INSTALL_DATA) $(PKGCFGF) $(LIBDIR)/pkgconfig/
+-	mkdir -p $(PKGCFCGDIR)
+-	$(INSTALL_DATA) $(PKGCFGF) $(PKGCFCGDIR)/
 +	mkdir -p $(DESTDIR)$(LIBDIR)
 +	$(INSTALL_LIBRARY) lib$(LIBNAME).$(EXT) $(DESTDIR)$(LIBDIR)
 +	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(DESTDIR)$(LIBDIR)
@@ -71,7 +86,7 @@
 -	rm -rf $(INCDIR)/$(LIBNAME)
 -	rm -f $(LIBDIR)/lib$(LIBNAME).$(EXT)
 -	rm -f $(LIBDIR)/lib$(LIBNAME).$(AR_EXT)
--	rm -f $(LIBDIR)/pkgconfig/$(LIBNAME).pc
+-	rm -f $(PKGCFCGDIR)/$(LIBNAME).pc
 +	rm -rf $(DESTDIR)$(INCDIR)/$(LIBNAME)
 +	rm -f $(DESTDIR)$(LIBDIR)/lib$(LIBNAME).$(EXT)
 +	rm -f $(DESTDIR)$(LIBDIR)/lib$(LIBNAME).$(AR_EXT)
