@@ -1,4 +1,4 @@
-# Capstone Disassembler Engine
+# Capstone Disassembly Engine
 # By Nguyen Anh Quynh <aquynh@gmail.com>, 2013>
 
 include config.mk
@@ -225,7 +225,7 @@ $(ARCHIVE): $(LIBOBJ)
 
 $(PKGCFGF):
 	echo 'Name: capstone' > $(PKGCFGF)
-	echo 'Description: Capstone disassembler engine' >> $(PKGCFGF)
+	echo 'Description: Capstone disassembly engine' >> $(PKGCFGF)
 	echo 'Version: $(VERSION)' >> $(PKGCFGF)
 	echo 'libdir=$(LIBDIR)' >> $(PKGCFGF)
 	echo 'includedir=$(PREFIX)/include/capstone' >> $(PKGCFGF)
