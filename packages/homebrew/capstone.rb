@@ -7,7 +7,7 @@ class Capstone < Formula
 
   def patches
     # fix pkgconfig path
-    "https://github.com/aquynh/capstone/blob/next/packages/homebrew/patch-Makefile-2.1"
+    "https://raw.github.com/aquynh/capstone/next/packages/homebrew/patch-Makefile-2.1"
   end
 
   def install
