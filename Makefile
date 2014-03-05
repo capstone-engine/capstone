@@ -29,8 +29,8 @@ INCDIR = $(DESTDIR)$(PREFIX)/include
 
 LIBDIR = $(DESTDIR)$(PREFIX)/lib
 # on x86_64, we might have /usr/lib64 directory instead of /usr/lib
-MACHINE := $(shell uname -m)
-ifeq ($(MACHINE), x86_64)
+UNAME_M := $(shell uname -m)
+ifeq ($(UNAME_M), x86_64)
 ifeq (,$(wildcard $(LIBDIR)))
 LIBDIR = $(DESTDIR)$(PREFIX)/lib64
 else
