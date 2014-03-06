@@ -7,8 +7,6 @@
 #include "PPCInstPrinter.h"
 #include "PPCMapping.h"
 
-void enable_powerpc() {};
-
 static cs_err init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;

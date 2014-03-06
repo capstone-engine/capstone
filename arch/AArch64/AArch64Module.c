@@ -7,8 +7,6 @@
 #include "AArch64InstPrinter.h"
 #include "AArch64Mapping.h"
 
-void enable_arm64() {}
-
 static cs_err init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;

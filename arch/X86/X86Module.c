@@ -7,8 +7,6 @@
 #include "X86InstPrinter.h"
 #include "X86Mapping.h"
 
-void enable_x86() {};
-
 static cs_err init(cs_struct *ud)
 {
 	// verify if requested mode is valid
