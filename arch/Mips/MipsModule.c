@@ -7,8 +7,6 @@
 #include "MipsInstPrinter.h"
 #include "MipsMapping.h"
 
-void enable_mips() {};
-
 static cs_err init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
