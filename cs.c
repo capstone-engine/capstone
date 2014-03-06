@@ -11,7 +11,7 @@
 #include "MCRegisterInfo.h"
 
 #ifndef CAPSTONE_DIET
-#define INSN_CACHE_SIZE 64
+#define INSN_CACHE_SIZE 32
 #else
 #define INSN_CACHE_SIZE 8
 #endif
