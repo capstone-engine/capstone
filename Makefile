@@ -15,6 +15,12 @@ RANLIB = $(CROSS)ranlib
 STRIP = $(CROSS)strip
 endif
 
+ifeq ($(CAPSTONE_DIET),yes)
+# remove string check & stack protector functions
+CFLAGS += -D_FORTIFY_SOURCE=0
+CFLAGS += -fno-stack-protector
+endif
+
 CFLAGS += -fPIC -O3 -Wall -Iinclude
 
 ifeq ($(USE_SYS_DYN_MEM),yes)
