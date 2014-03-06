@@ -443,6 +443,7 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t
 	ud->ITBlock.size = 0;
 
 	if (code_len < 4)
+		// not enough data
 		return MCDisassembler_Fail;
 
 	memcpy(bytes, code, 4);
@@ -675,6 +676,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 
 	// We want to read exactly 2 bytes of data.
 	if (code_len < 2)
+		// not enough data
 		return MCDisassembler_Fail;
 
 	memcpy(bytes, code, 2);
@@ -728,10 +730,9 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 	}
 
 	// We want to read exactly 4 bytes of data.
-	//if (Region.readBytes(Address, 4, (uint8_t*)bytes, NULL) == -1) {
-	//  *Size = 0;
-	//  return MCDisassembler_Fail;
-	//}
+	if (code_len < 4)
+		// not enough data
+		return MCDisassembler_Fail;
 
 	memcpy(bytes, code, 4);
 
