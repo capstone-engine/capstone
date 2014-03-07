@@ -87,7 +87,7 @@ static inline bool isPowerOf2_32(uint32_t Value) {
 /// bit.  Ex. CountLeadingZeros_32(0x00F000FF) == 8.
 /// Returns 32 if the word is zero.
 static inline unsigned CountLeadingZeros_32(uint32_t Value) {
-	unsigned Shift, Count; // result
+	unsigned Count; // result
 #if __GNUC__ >= 4
 	// PowerPC is defined for __builtin_clz(0)
 #if !defined(__ppc__) && !defined(__ppc64__)
@@ -95,6 +95,7 @@ static inline unsigned CountLeadingZeros_32(uint32_t Value) {
 #endif
 	Count = __builtin_clz(Value);
 #else
+	unsigned Shift;
 	if (!Value) return 32;
 	Count = 0;
 	// bisection method for count leading zeros
@@ -123,7 +124,7 @@ static inline unsigned CountLeadingOnes_32(uint32_t Value) {
 /// one bit (64 bit edition.)
 /// Returns 64 if the word is zero.
 static inline unsigned CountLeadingZeros_64(uint64_t Value) {
-	unsigned Shift, Count; // result
+	unsigned Count; // result
 #if __GNUC__ >= 4
 	// PowerPC is defined for __builtin_clzll(0)
 #if !defined(__ppc__) && !defined(__ppc64__)
@@ -132,6 +133,7 @@ static inline unsigned CountLeadingZeros_64(uint64_t Value) {
 	Count = __builtin_clzll(Value);
 #else
 #ifndef _MSC_VER
+	unsigned Shift;
 	if (sizeof(long) == sizeof(int64_t))
 	{
 		if (!Value) return 64;
