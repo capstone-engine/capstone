@@ -2,6 +2,7 @@
 # By Nguyen Anh Quynh <aquynh@gmail.com>, 2013>
 
 include config.mk
+include pkgconfig.mk	# package version
 
 ifeq ($(CROSS),)
 CC ?= cc
@@ -13,12 +14,6 @@ CC = $(CROSS)gcc
 AR = $(CROSS)ar
 RANLIB = $(CROSS)ranlib
 STRIP = $(CROSS)strip
-endif
-
-ifeq ($(CAPSTONE_DIET),yes)
-# remove string check & stack protector functions
-CFLAGS += -D_FORTIFY_SOURCE=0
-CFLAGS += -fno-stack-protector
 endif
 
 CFLAGS += -fPIC -O3 -Wall -Iinclude
@@ -150,6 +145,10 @@ PKGCFCGDIR = $(LIBDIR)/pkgconfig
 ifeq ($(UNAME_S),Darwin)
 EXT = dylib
 AR_EXT = a
+ifneq ($(USE_SYS_DYN_MEM),yes)
+# remove string check because OSX kernel complains about missing symbols
+CFLAGS += -D_FORTIFY_SOURCE=0
+endif
 # By default, suppose that Brew is installed & use Brew path for pkgconfig file
 PKGCFCGDIR = /usr/local/lib/pkgconfig
 # is Macport installed instead?
@@ -187,8 +186,6 @@ endif
 LIBRARY = lib$(LIBNAME).$(EXT)
 ARCHIVE = lib$(LIBNAME).$(AR_EXT)
 PKGCFGF = $(LIBNAME).pc
-
-VERSION=$(shell echo `grep -e PKG_MAJOR -e PKG_MINOR CONFIG | grep -v = | awk '{print $$3}'` | awk '{print $$1"."$$2}')
 
 .PHONY: all clean install uninstall dist
 
@@ -232,7 +229,11 @@ $(ARCHIVE): $(LIBOBJ)
 $(PKGCFGF):
 	echo 'Name: capstone' > $(PKGCFGF)
 	echo 'Description: Capstone disassembly engine' >> $(PKGCFGF)
-	echo 'Version: $(VERSION)' >> $(PKGCFGF)
+ifeq ($(PKG_EXTRA),)
+	echo 'Version: $(PKG_MAJOR).$(PKG_MINOR)' >> $(PKGCFGF)
+else
+	echo 'Version: $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA)' >> $(PKGCFGF)
+endif
 	echo 'libdir=$(LIBDIR)' >> $(PKGCFGF)
 	echo 'includedir=$(PREFIX)/include/capstone' >> $(PKGCFGF)
 	echo 'archive=$${libdir}/libcapstone.a' >> $(PKGCFGF)
