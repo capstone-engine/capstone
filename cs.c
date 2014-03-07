@@ -10,9 +10,10 @@
 #include "utils.h"
 #include "MCRegisterInfo.h"
 
-#ifndef CAPSTONE_DIET
+#ifdef USE_SYS_DYN_MEM
 #define INSN_CACHE_SIZE 32
 #else
+// reduce stack variable size for kernel/firmware
 #define INSN_CACHE_SIZE 8
 #endif
 
