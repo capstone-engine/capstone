@@ -2,6 +2,7 @@
 # By Nguyen Anh Quynh <aquynh@gmail.com>, 2013>
 
 include config.mk
+include pkgconfig.mk	# package version
 
 ifeq ($(CROSS),)
 CC ?= cc
@@ -188,8 +189,6 @@ LIBRARY = lib$(LIBNAME).$(EXT)
 ARCHIVE = lib$(LIBNAME).$(AR_EXT)
 PKGCFGF = $(LIBNAME).pc
 
-VERSION=$(shell echo `grep -e PKG_MAJOR -e PKG_MINOR CONFIG | grep -v = | awk '{print $$3}'` | awk '{print $$1"."$$2}')
-
 .PHONY: all clean install uninstall dist
 
 all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF)
@@ -232,7 +231,11 @@ $(ARCHIVE): $(LIBOBJ)
 $(PKGCFGF):
 	echo 'Name: capstone' > $(PKGCFGF)
 	echo 'Description: Capstone disassembly engine' >> $(PKGCFGF)
-	echo 'Version: $(VERSION)' >> $(PKGCFGF)
+ifeq ($(PKG_EXTRA),)
+	echo 'Version: $(PKG_MAJOR).$(PKG_MINOR)' >> $(PKGCFGF)
+else
+	echo 'Version: $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA)' >> $(PKGCFGF)
+endif
 	echo 'libdir=$(LIBDIR)' >> $(PKGCFGF)
 	echo 'includedir=$(PREFIX)/include/capstone' >> $(PKGCFGF)
 	echo 'archive=$${libdir}/libcapstone.a' >> $(PKGCFGF)
