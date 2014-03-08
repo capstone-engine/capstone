@@ -90,8 +90,8 @@ typedef struct cs_x86_op {
 		x86_op_type type;	// operand type
 		union {
 			unsigned int reg;	// register value for REG operand
-			int64_t imm;		// immediate value for C-IMM, P-IMM or IMM operand
-			double fp;			// floating point value for FP operand
+			int64_t imm;		// immediate value for IMM operand
+			double fp;		// floating point value for FP operand
 			x86_op_mem mem;		// base/index/scale/disp value for MEM operand
 		};
 } cs_x86_op;
