@@ -70,7 +70,7 @@ typedef struct cs_ppc_op {
 	ppc_op_type type;	// operand type
 	union {
 		unsigned int reg;	// register value for REG operand
-		int32_t imm;		// immediate value for C-IMM or IMM operand
+		int32_t imm;		// immediate value for IMM operand
 		ppc_op_mem mem;		// base/disp value for MEM operand
 	};
 } cs_ppc_op;
