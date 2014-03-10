@@ -93,16 +93,16 @@ static bool printSparcAliasInstr(MCInst *MI, SStream *O)
 									MCOperand_getImm(MCInst_getOperand(MI, 2)) == 8) {
 								  switch(MCOperand_getReg(MCInst_getOperand(MI, 1))) {
 									  default: break;
-									  case SP_I7: SStream_concat(O, "\tret"); return true;
-									  case SP_O7: SStream_concat(O, "\tretl"); return true;
+									  case SP_I7: SStream_concat(O, "ret"); return true;
+									  case SP_O7: SStream_concat(O, "retl"); return true;
 								  }
 							  }
 
-							  SStream_concat(O, "\tjmp ");
+							  SStream_concat(O, "jmp\t");
 							  printMemOperand(MI, 1, O, NULL);
 							  return true;
 					 case SP_O7: // call $addr
-							  SStream_concat(O, "\tcall ");
+							  SStream_concat(O, "call ");
 							  printMemOperand(MI, 1, O, NULL);
 							  return true;
 				 }
@@ -119,12 +119,12 @@ static bool printSparcAliasInstr(MCInst *MI, SStream *O)
 				 // if V8, skip printing %fcc0.
 				 switch(MCInst_getOpcode(MI)) {
 					 default:
-					 case SP_V9FCMPS:  SStream_concat(O, "\tfcmps "); break;
-					 case SP_V9FCMPD:  SStream_concat(O, "\tfcmpd "); break;
-					 case SP_V9FCMPQ:  SStream_concat(O, "\tfcmpq "); break;
-					 case SP_V9FCMPES: SStream_concat(O, "\tfcmpes "); break;
-					 case SP_V9FCMPED: SStream_concat(O, "\tfcmped "); break;
-					 case SP_V9FCMPEQ: SStream_concat(O, "\tfcmpeq "); break;
+					 case SP_V9FCMPS:  SStream_concat(O, "fcmps\t"); break;
+					 case SP_V9FCMPD:  SStream_concat(O, "fcmpd\t"); break;
+					 case SP_V9FCMPQ:  SStream_concat(O, "fcmpq\t"); break;
+					 case SP_V9FCMPES: SStream_concat(O, "fcmpes\t"); break;
+					 case SP_V9FCMPED: SStream_concat(O, "fcmped\t"); break;
+					 case SP_V9FCMPEQ: SStream_concat(O, "fcmpeq\t"); break;
 				 }
 				 printOperand(MI, 1, O);
 				 SStream_concat(O, ", ");
