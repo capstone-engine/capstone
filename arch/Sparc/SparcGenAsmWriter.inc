@@ -832,7 +832,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 
   // Fragment 0 encoded into 4 bits for 12 unique commands.
-   printf("Frag-0: %u\n", (Bits >> 12) & 15);
+  // printf("Frag-0: %u\n", (Bits >> 12) & 15);
   switch ((Bits >> 12) & 15) {
   default:   // unreachable.
   case 0:
@@ -903,7 +903,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 
   // Fragment 1 encoded into 4 bits for 16 unique commands.
-   printf("Frag-1: %u\n", (Bits >> 16) & 15);
+  // printf("Frag-1: %u\n", (Bits >> 16) & 15);
   switch ((Bits >> 16) & 15) {
   default:   // unreachable.
   case 0:
@@ -998,7 +998,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 
   // Fragment 2 encoded into 2 bits for 3 unique commands.
-   printf("Frag-2: %u\n", (Bits >> 20) & 3);
+  // printf("Frag-2: %u\n", (Bits >> 20) & 3);
   switch ((Bits >> 20) & 3) {
   default:   // unreachable.
   case 0:
@@ -1019,7 +1019,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 
   // Fragment 3 encoded into 2 bits for 4 unique commands.
-   printf("Frag-3: %u\n", (Bits >> 22) & 3);
+  // printf("Frag-3: %u\n", (Bits >> 22) & 3);
   switch ((Bits >> 22) & 3) {
   default:   // unreachable.
   case 0:
@@ -1045,7 +1045,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 
   // Fragment 4 encoded into 2 bits for 3 unique commands.
-   printf("Frag-4: %u\n", (Bits >> 24) & 3);
+  // printf("Frag-4: %u\n", (Bits >> 24) & 3);
   switch ((Bits >> 24) & 3) {
   default:   // unreachable.
   case 0:

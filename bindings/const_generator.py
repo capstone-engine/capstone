@@ -5,7 +5,7 @@ import sys, re
 
 INCL_DIR = '../include/'
 
-include = [ 'arm.h', 'arm64.h', 'mips.h', 'x86.h', 'ppc.h' ]
+include = [ 'arm.h', 'arm64.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h' ]
 
 template = {
     'java': {
@@ -19,6 +19,7 @@ template = {
             'mips.h': 'Mips',
             'x86.h': 'X86',
             'ppc.h': 'Ppc',
+            'sparc.h': 'Sparc',
             'comment_open': '\t//',
             'comment_close': '',
         },
@@ -33,6 +34,7 @@ template = {
             'mips.h': 'mips',
             'x86.h': 'x86',
             'ppc.h': 'ppc',
+            'sparc.h': 'sparc',
             'comment_open': '#',
             'comment_close': '',
         }

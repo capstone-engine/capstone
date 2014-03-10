@@ -2,7 +2,7 @@
 
 cimport pyx.ccapstone as cc
 import capstone, ctypes
-from capstone import arm, x86, mips, ppc, arm64, CsError
+from capstone import arm, x86, mips, ppc, arm64, sparc, CsError
 
 _diet = cc.cs_support(capstone.CS_SUPPORT_DIET)
 
@@ -36,6 +36,8 @@ class CsDetail(object):
         elif arch == capstone.CS_ARCH_PPC:
             (self.bc, self.bh, self.update_cr0, self.operands) = \
                 ppc.get_arch_info(detail.arch.ppc)
+        elif arch == capstone.CS_ARCH_SPARC:
+            (self.cc, self.hint, self.operands) = sparc.get_arch_info(detail.arch.sparc)
 
 
 cdef class CsInsn(object):
@@ -271,7 +273,7 @@ def debug():
 
     archs = { "arm": capstone.CS_ARCH_ARM, "arm64": capstone.CS_ARCH_ARM64, \
         "mips": capstone.CS_ARCH_MIPS, "ppc": capstone.CS_ARCH_PPC, \
-        "x86": capstone.CS_ARCH_X86 }
+        "sparc": capstone.CS_ARCH_SPARC, "x86": capstone.CS_ARCH_X86 }
 
     all_archs = ""
     keys = archs.keys()
