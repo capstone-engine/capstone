@@ -23,7 +23,7 @@ extern "C" {
 
 // Capstone API version
 #define CS_API_MAJOR 2
-#define CS_API_MINOR 1
+#define CS_API_MINOR 2
 
 // Macro to create combined version which can be compared to
 // result of cs_version() API.

@@ -63,7 +63,7 @@ __all__ = [
 
 # API version
 CS_API_MAJOR = 2
-CS_API_MINOR = 1
+CS_API_MINOR = 2
 
 # architectures
 CS_ARCH_ARM = 0
