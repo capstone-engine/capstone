@@ -9,4 +9,5 @@
 ../tests/test_arm64 >> /tmp/$1
 ../tests/test_mips >> /tmp/$1
 ../tests/test_ppc >> /tmp/$1
+../tests/test_sparc >> /tmp/$1
 ../tests/test_x86 >> /tmp/$1

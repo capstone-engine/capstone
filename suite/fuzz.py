@@ -39,6 +39,7 @@ all_tests = (
         (CS_ARCH_ARM64, CS_MODE_ARM, "ARM-64 (AArch64)", 0),
         (CS_ARCH_PPC, CS_MODE_BIG_ENDIAN, "PPC", 0),
         (CS_ARCH_PPC, CS_MODE_BIG_ENDIAN, "PPC, print register with number only", CS_OPT_SYNTAX_NOREGNAME),
+        (CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN, "Sparc", 0),
         )
 
 
