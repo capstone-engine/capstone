@@ -191,6 +191,9 @@ static DecodeStatus DecodeJMPL(MCInst *Inst, unsigned insn, uint64_t Address,
 		const void *Decoder);
 static DecodeStatus DecodeReturn(MCInst *MI, unsigned insn, uint64_t Address,
 		const void *Decoder);
+static DecodeStatus DecodeSWAP(MCInst *Inst, unsigned insn, uint64_t Address,
+		const void *Decoder);
+
 
 #define GET_SUBTARGETINFO_ENUM
 #include "SparcGenSubtargetInfo.inc"
@@ -433,6 +436,43 @@ static DecodeStatus DecodeReturn(MCInst *MI, unsigned insn, uint64_t Address,
 		return status;
 
 	// Decode RS2 | SIMM13.
+	if (isImm)
+		MCInst_addOperand(MI, MCOperand_CreateImm(simm13));
+	else {
+		status = DecodeIntRegsRegisterClass(MI, rs2, Address, Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
+	}
+
+	return MCDisassembler_Success;
+}
+
+static DecodeStatus DecodeSWAP(MCInst *MI, unsigned insn, uint64_t Address,
+		const void *Decoder)
+{
+	DecodeStatus status;
+	unsigned rd = fieldFromInstruction_4(insn, 25, 5);
+	unsigned rs1 = fieldFromInstruction_4(insn, 14, 5);
+	unsigned isImm = fieldFromInstruction_4(insn, 13, 1);
+	unsigned rs2 = 0;
+	unsigned simm13 = 0;
+
+	if (isImm)
+		simm13 = SignExtend32(fieldFromInstruction_4(insn, 0, 13), 13);
+	else
+		rs2 = fieldFromInstruction_4(insn, 0, 5);
+
+	// Decode RD.
+	status = DecodeIntRegsRegisterClass(MI, rd, Address, Decoder);
+	if (status != MCDisassembler_Success)
+		return status;
+
+	// Decode RS1.
+	status = DecodeIntRegsRegisterClass(MI, rs1, Address, Decoder);
+	if (status != MCDisassembler_Success)
+		return status;
+
+	// Decode RS1 | SIMM13.
 	if (isImm)
 		MCInst_addOperand(MI, MCOperand_CreateImm(simm13));
 	else {

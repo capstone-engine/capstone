@@ -1373,62 +1373,62 @@ static uint8_t DecoderTableSparc32[] = {
 /* 5565 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 5568 */    MCD_OPC_FilterValue, 0, 10, 0, // Skip to: 5582
 /* 5572 */    MCD_OPC_CheckField, 5, 8, 0, 234, 0, // Skip to: 5812
-/* 5578 */    MCD_OPC_Decode, 177, 3, 4, // Opcode: SWAPrr
+/* 5578 */    MCD_OPC_Decode, 177, 3, 61, // Opcode: SWAPrr
 /* 5582 */    MCD_OPC_FilterValue, 1, 226, 0, // Skip to: 5812
-/* 5586 */    MCD_OPC_Decode, 176, 3, 4, // Opcode: SWAPri
+/* 5586 */    MCD_OPC_Decode, 176, 3, 61, // Opcode: SWAPri
 /* 5590 */    MCD_OPC_FilterValue, 32, 25, 0, // Skip to: 5619
 /* 5594 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 5597 */    MCD_OPC_FilterValue, 0, 10, 0, // Skip to: 5611
 /* 5601 */    MCD_OPC_CheckField, 5, 8, 0, 205, 0, // Skip to: 5812
-/* 5607 */    MCD_OPC_Decode, 175, 2, 61, // Opcode: LDFrr
+/* 5607 */    MCD_OPC_Decode, 175, 2, 62, // Opcode: LDFrr
 /* 5611 */    MCD_OPC_FilterValue, 1, 197, 0, // Skip to: 5812
-/* 5615 */    MCD_OPC_Decode, 174, 2, 61, // Opcode: LDFri
+/* 5615 */    MCD_OPC_Decode, 174, 2, 62, // Opcode: LDFri
 /* 5619 */    MCD_OPC_FilterValue, 34, 33, 0, // Skip to: 5656
 /* 5623 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 5626 */    MCD_OPC_FilterValue, 0, 14, 0, // Skip to: 5644
 /* 5630 */    MCD_OPC_CheckPredicate, 0, 178, 0, // Skip to: 5812
 /* 5634 */    MCD_OPC_CheckField, 5, 8, 0, 172, 0, // Skip to: 5812
-/* 5640 */    MCD_OPC_Decode, 177, 2, 62, // Opcode: LDQFrr
+/* 5640 */    MCD_OPC_Decode, 177, 2, 63, // Opcode: LDQFrr
 /* 5644 */    MCD_OPC_FilterValue, 1, 164, 0, // Skip to: 5812
 /* 5648 */    MCD_OPC_CheckPredicate, 0, 160, 0, // Skip to: 5812
-/* 5652 */    MCD_OPC_Decode, 176, 2, 62, // Opcode: LDQFri
+/* 5652 */    MCD_OPC_Decode, 176, 2, 63, // Opcode: LDQFri
 /* 5656 */    MCD_OPC_FilterValue, 35, 25, 0, // Skip to: 5685
 /* 5660 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 5663 */    MCD_OPC_FilterValue, 0, 10, 0, // Skip to: 5677
 /* 5667 */    MCD_OPC_CheckField, 5, 8, 0, 139, 0, // Skip to: 5812
-/* 5673 */    MCD_OPC_Decode, 173, 2, 63, // Opcode: LDDFrr
+/* 5673 */    MCD_OPC_Decode, 173, 2, 64, // Opcode: LDDFrr
 /* 5677 */    MCD_OPC_FilterValue, 1, 131, 0, // Skip to: 5812
-/* 5681 */    MCD_OPC_Decode, 172, 2, 63, // Opcode: LDDFri
+/* 5681 */    MCD_OPC_Decode, 172, 2, 64, // Opcode: LDDFri
 /* 5685 */    MCD_OPC_FilterValue, 36, 25, 0, // Skip to: 5714
 /* 5689 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 5692 */    MCD_OPC_FilterValue, 0, 10, 0, // Skip to: 5706
 /* 5696 */    MCD_OPC_CheckField, 5, 8, 0, 110, 0, // Skip to: 5812
-/* 5702 */    MCD_OPC_Decode, 157, 3, 64, // Opcode: STFrr
+/* 5702 */    MCD_OPC_Decode, 157, 3, 65, // Opcode: STFrr
 /* 5706 */    MCD_OPC_FilterValue, 1, 102, 0, // Skip to: 5812
-/* 5710 */    MCD_OPC_Decode, 156, 3, 64, // Opcode: STFri
+/* 5710 */    MCD_OPC_Decode, 156, 3, 65, // Opcode: STFri
 /* 5714 */    MCD_OPC_FilterValue, 38, 33, 0, // Skip to: 5751
 /* 5718 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 5721 */    MCD_OPC_FilterValue, 0, 14, 0, // Skip to: 5739
 /* 5725 */    MCD_OPC_CheckPredicate, 0, 83, 0, // Skip to: 5812
 /* 5729 */    MCD_OPC_CheckField, 5, 8, 0, 77, 0, // Skip to: 5812
-/* 5735 */    MCD_OPC_Decode, 161, 3, 65, // Opcode: STQFrr
+/* 5735 */    MCD_OPC_Decode, 161, 3, 66, // Opcode: STQFrr
 /* 5739 */    MCD_OPC_FilterValue, 1, 69, 0, // Skip to: 5812
 /* 5743 */    MCD_OPC_CheckPredicate, 0, 65, 0, // Skip to: 5812
-/* 5747 */    MCD_OPC_Decode, 160, 3, 65, // Opcode: STQFri
+/* 5747 */    MCD_OPC_Decode, 160, 3, 66, // Opcode: STQFri
 /* 5751 */    MCD_OPC_FilterValue, 39, 25, 0, // Skip to: 5780
 /* 5755 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 5758 */    MCD_OPC_FilterValue, 0, 10, 0, // Skip to: 5772
 /* 5762 */    MCD_OPC_CheckField, 5, 8, 0, 44, 0, // Skip to: 5812
-/* 5768 */    MCD_OPC_Decode, 155, 3, 66, // Opcode: STDFrr
+/* 5768 */    MCD_OPC_Decode, 155, 3, 67, // Opcode: STDFrr
 /* 5772 */    MCD_OPC_FilterValue, 1, 36, 0, // Skip to: 5812
-/* 5776 */    MCD_OPC_Decode, 154, 3, 66, // Opcode: STDFri
+/* 5776 */    MCD_OPC_Decode, 154, 3, 67, // Opcode: STDFri
 /* 5780 */    MCD_OPC_FilterValue, 60, 14, 0, // Skip to: 5798
 /* 5784 */    MCD_OPC_CheckPredicate, 0, 24, 0, // Skip to: 5812
 /* 5788 */    MCD_OPC_CheckField, 5, 9, 128, 1, 17, 0, // Skip to: 5812
-/* 5795 */    MCD_OPC_Decode, 117, 67, // Opcode: CASrr
+/* 5795 */    MCD_OPC_Decode, 117, 68, // Opcode: CASrr
 /* 5798 */    MCD_OPC_FilterValue, 62, 10, 0, // Skip to: 5812
 /* 5802 */    MCD_OPC_CheckField, 5, 9, 128, 1, 3, 0, // Skip to: 5812
-/* 5809 */    MCD_OPC_Decode, 116, 68, // Opcode: CASXrr
+/* 5809 */    MCD_OPC_Decode, 116, 69, // Opcode: CASXrr
 /* 5812 */    MCD_OPC_Fail,
   0
 };
@@ -1890,24 +1890,27 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (DecodeStoreInt(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
   case 61: \
-    if (DecodeLoadFP(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
+    if (DecodeSWAP(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
   case 62: \
-    if (DecodeLoadQFP(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
+    if (DecodeLoadFP(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
   case 63: \
-    if (DecodeLoadDFP(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
+    if (DecodeLoadQFP(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
   case 64: \
-    if (DecodeStoreFP(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
+    if (DecodeLoadDFP(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
   case 65: \
-    if (DecodeStoreQFP(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
+    if (DecodeStoreFP(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
   case 66: \
-    if (DecodeStoreDFP(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
+    if (DecodeStoreQFP(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
   case 67: \
+    if (DecodeStoreDFP(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
+    return S; \
+  case 68: \
     tmp = fieldname(insn, 25, 5); \
     if (DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 14, 5); \
@@ -1917,7 +1920,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 25, 5); \
     if (DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
-  case 68: \
+  case 69: \
     tmp = fieldname(insn, 25, 5); \
     if (DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 14, 5); \
