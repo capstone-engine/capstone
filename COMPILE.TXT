@@ -7,12 +7,14 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 (0) Tailor Capstone to your need.
 
-  Out of 5 archtitectures supported by Capstone (Arm, Arm64, Mips, PPC & X86),
-  if you just need several selected archs, you can choose which ones you want
-  to compile in by modifying config.mk before going to next steps.
+  Out of 6 archtitectures supported by Capstone (Arm, Arm64, Mips, PPC, Sparc &
+  X86), if you just need several selected archs, you can choose which ones you
+  want to compile in by modifying "config.mk" before going to next steps.
 
-  By default, all 5 architectures are compiled.
+  By default, all 6 architectures are compiled.
 
+  Capstone also supports "diet" engine to minimize the binaries for embedding
+  purpose. See docs/README for further instructions.
 
 
 (1) Compile from source
@@ -54,6 +56,8 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 	/usr/include/capstone/arm64.h
 	/usr/include/capstone/mips.h
 	/usr/include/capstone/ppc.h
+	/usr/include/capstone/sparc.h
+	/usr/include/capstone/diet.h
 	/usr/lib/libcapstone.so (for Linux/*nix), or /usr/lib/libcapstone.dylib (OSX)
 	/usr/lib/libcapstone.a
 
