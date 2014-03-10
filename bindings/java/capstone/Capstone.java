@@ -30,6 +30,7 @@ public class Capstone {
     public X86.UnionOpInfo x86;
     public Mips.UnionOpInfo mips;
     public Ppc.UnionOpInfo ppc;
+    public Sparc.UnionOpInfo sparc;
   }
 
   protected static class _cs_insn extends Structure {
@@ -167,10 +168,10 @@ public class Capstone {
           detail.arch.read();
           op_info = new X86.OpInfo((X86.UnionOpInfo) detail.arch.x86);
           break;
-        case CS_ARCH_PPC:
-          detail.arch.setType(Ppc.UnionOpInfo.class);
+        case CS_ARCH_SPARC:
+          detail.arch.setType(Sparc.UnionOpInfo.class);
           detail.arch.read();
-          op_info = new Ppc.OpInfo((Ppc.UnionOpInfo) detail.arch.ppc);
+          op_info = new Sparc.OpInfo((Sparc.UnionOpInfo) detail.arch.sparc);
           break;
         default:
       }
@@ -253,6 +254,8 @@ public class Capstone {
   public static final int CS_ARCH_MIPS = 2;
   public static final int CS_ARCH_X86 = 3;
   public static final int CS_ARCH_PPC = 4;
+  public static final int CS_ARCH_SPARC = 5;
+  public static final int CS_ARCH_MAX = 6;
   public static final int CS_ARCH_ALL = 0xFFFF; // query id for cs_support()
 
   // disasm mode
@@ -261,10 +264,11 @@ public class Capstone {
   public static final int CS_MODE_16 = 1 << 1;
   public static final int CS_MODE_32 = 1 << 2;
   public static final int CS_MODE_64 = 1 << 3;
-  public static final int CS_MODE_THUMB = 1 << 4;	      // ARM's Thumb mode, including Thumb-2
-  public static final int CS_MODE_MICRO = 1 << 4;	      // MicroMips mode (Mips arch)
+  public static final int CS_MODE_THUMB = 1 << 4;	  // ARM's Thumb mode, including Thumb-2
+  public static final int CS_MODE_MICRO = 1 << 4;	  // MicroMips mode (Mips arch)
   public static final int CS_MODE_N64 = 1 << 5;	      // Nintendo-64 mode (Mips arch)
   public static final int CS_MODE_BIG_ENDIAN = 1 << 31;
+  public static final int CS_MODE_V9 = 1 << 4;	      // SparcV9 mode (Sparc arch)
 
   // Capstone error
   public static final int CS_ERR_OK = 0;

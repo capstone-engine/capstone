@@ -128,6 +128,7 @@ typedef struct cs_insn_flat {
 		cs_arm arm;		// ARM architecture (including Thumb/Thumb2)
 		cs_mips mips;	// MIPS architecture
 		cs_ppc ppc;	// PowerPC architecture
+		cs_sparc sparc;	// PowerPC architecture
 	};
 } cs_insn_flat;
 

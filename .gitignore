@@ -32,6 +32,8 @@ bindings/python/pyx/ppc.pyx
 bindings/python/pyx/ppc_const.pyx
 bindings/python/pyx/x86.pyx
 bindings/python/pyx/x86_const.pyx
+bindings/python/pyx/sparc.pyx
+bindings/python/pyx/sparc_const.pyx
 
 
 # java
@@ -45,6 +47,7 @@ tests/test_arm64
 tests/test_mips
 tests/test_x86
 tests/test_ppc
+tests/test_sparc
 tests/*.static
 
 # vim tmp file

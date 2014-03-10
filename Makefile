@@ -114,6 +114,23 @@ ifneq (,$(findstring powerpc,$(CAPSTONE_ARCHS)))
 endif
 
 
+DEP_SPARC =
+DEP_SPARC += arch/Sparc/SparcGenAsmWriter.inc
+DEP_SPARC += arch/Sparc/SparcGenInstrInfo.inc
+DEP_SPARC += arch/Sparc/SparcGenSubtargetInfo.inc
+DEP_SPARC += arch/Sparc/SparcGenDisassemblerTables.inc
+DEP_SPARC += arch/Sparc/SparcGenRegisterInfo.inc
+
+LIBOBJ_SPARC =
+ifneq (,$(findstring sparc,$(CAPSTONE_ARCHS)))
+	CFLAGS += -DCAPSTONE_HAS_SPARC
+	LIBOBJ_SPARC += arch/Sparc/SparcDisassembler.o
+	LIBOBJ_SPARC += arch/Sparc/SparcInstPrinter.o
+	LIBOBJ_SPARC += arch/Sparc/SparcMapping.o
+	LIBOBJ_SPARC += arch/Sparc/SparcModule.o
+endif
+
+
 DEP_X86 =
 DEP_X86 += arch/X86/X86GenAsmWriter.inc
 DEP_X86 += arch/X86/X86GenAsmWriter1.inc
@@ -134,7 +151,7 @@ endif
 
 LIBOBJ =
 LIBOBJ += cs.o utils.o SStream.o MCInstrDesc.o MCRegisterInfo.o
-LIBOBJ += $(LIBOBJ_ARM) $(LIBOBJ_ARM64) $(LIBOBJ_MIPS) $(LIBOBJ_PPC) $(LIBOBJ_X86)
+LIBOBJ += $(LIBOBJ_ARM) $(LIBOBJ_ARM64) $(LIBOBJ_MIPS) $(LIBOBJ_PPC) $(LIBOBJ_SPARC) $(LIBOBJ_X86)
 LIBOBJ += MCInst.o
 
 
@@ -202,6 +219,7 @@ $(LIBOBJ_ARM): $(DEP_ARM)
 $(LIBOBJ_ARM64): $(DEP_ARM64)
 $(LIBOBJ_MIPS): $(DEP_MIPS)
 $(LIBOBJ_PPC): $(DEP_PPC)
+$(LIBOBJ_SPARC): $(DEP_SPARC)
 $(LIBOBJ_X86): $(DEP_X86)
 
 # auto-generate include/diet.h

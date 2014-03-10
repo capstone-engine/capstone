@@ -1,5 +1,5 @@
 # Capstone Disassembler Engine
-# By Nguyen Anh Quynh <aquynh@gmail.com>, 2013>
+# By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014
 
 include ../config.mk
 
@@ -50,6 +50,9 @@ SOURCES += test_mips.c
 endif
 ifneq (,$(findstring powerpc,$(CAPSTONE_ARCHS)))
 SOURCES += test_ppc.c
+endif
+ifneq (,$(findstring sparc,$(CAPSTONE_ARCHS)))
+SOURCES += test_sparc.c
 endif
 ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
 SOURCES += test_x86.c

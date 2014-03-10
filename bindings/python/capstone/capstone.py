@@ -1,6 +1,6 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
-import arm, arm64, mips, x86, ppc
+import arm, arm64, mips, ppc, sparc, x86
 
 __all__ = [
     'Cs',
@@ -20,6 +20,7 @@ __all__ = [
     'CS_ARCH_MIPS',
     'CS_ARCH_X86',
     'CS_ARCH_PPC',
+    'CS_ARCH_SPARC',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
@@ -70,6 +71,8 @@ CS_ARCH_ARM64 = 1
 CS_ARCH_MIPS = 2
 CS_ARCH_X86 = 3
 CS_ARCH_PPC = 4
+CS_ARCH_SPARC = 5
+CS_ARCH_MAX = 6
 CS_ARCH_ALL = 0xFFFF
 
 # disasm mode
@@ -81,6 +84,7 @@ CS_MODE_64 = (1 << 3)          # 64-bit mode (for X86, Mips)
 CS_MODE_THUMB = (1 << 4)       # ARM's Thumb mode, including Thumb-2
 CS_MODE_MICRO = (1 << 4)       # MicroMips mode (MIPS architecture)
 CS_MODE_N64 = (1 << 5)         # Nintendo-64 mode (MIPS architecture)
+CS_MODE_V9 = (1 << 4)          # Nintendo-64 mode (MIPS architecture)
 CS_MODE_BIG_ENDIAN = (1 << 31) # big-endian mode
 
 # Capstone option type
@@ -170,6 +174,7 @@ class _cs_arch(ctypes.Union):
         ('mips', mips.CsMips),
         ('x86', x86.CsX86),
         ('ppc', ppc.CsPpc),
+        ('sparc', sparc.CsSparc),
     )
 
 class _cs_detail(ctypes.Structure):
@@ -425,6 +430,8 @@ class CsInsn(object):
         elif arch == CS_ARCH_PPC:
             (self.bc, self.bh, self.update_cr0, self.operands) = \
                 ppc.get_arch_info(detail.arch.ppc)
+        elif arch == CS_ARCH_SPARC:
+            (self.cc, self.hint, self.operands) = sparc.get_arch_info(detail.arch.sparc)
 
     def __getattr__(self, name):
         if not self._cs._detail:
@@ -665,7 +672,8 @@ def debug():
         diet = "standard"
 
     archs = { "arm": CS_ARCH_ARM, "arm64": CS_ARCH_ARM64, \
-        "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "x86": CS_ARCH_X86 }
+        "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "sparc": CS_ARCH_SPARC, \
+        "x86": CS_ARCH_X86 }
 
     all_archs = ""
     keys = archs.keys()
