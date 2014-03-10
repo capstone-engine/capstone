@@ -19,6 +19,7 @@ static cs_err init(cs_struct *ud)
 	mri = cs_mem_malloc(sizeof(*mri));
 
 	ARM_init(mri);
+	ARM_getRegName(ud, 0);	// use default get_regname
 
 	ud->printer = ARM_printInst;
 	ud->printer_info = mri;
@@ -37,13 +38,21 @@ static cs_err init(cs_struct *ud)
 
 static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 {
-	if (type == CS_OPT_MODE) {
-		if (value & CS_MODE_THUMB)
-			handle->disasm = Thumb_getInstruction;
-		else
-			handle->disasm = ARM_getInstruction;
+	switch(type) {
+		case CS_OPT_MODE:
+			if (value & CS_MODE_THUMB)
+				handle->disasm = Thumb_getInstruction;
+			else
+				handle->disasm = ARM_getInstruction;
 
-		handle->mode = value;
+			handle->mode = value;
+			break;
+		case CS_OPT_SYNTAX:
+			ARM_getRegName(handle, (int)value);
+			handle->syntax = (int)value;
+			break;
+		default:
+			break;
 	}
 
 	return CS_ERR_OK;

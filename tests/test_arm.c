@@ -15,6 +15,7 @@ struct platform {
 	unsigned char *code;
 	size_t size;
 	char *comment;
+	int syntax;
 };
 
 static void print_string_hex(char *comment, unsigned char *str, int len)
@@ -184,7 +185,8 @@ static void test()
 			.mode = CS_MODE_THUMB,
 			.code = (unsigned char *)THUMB_CODE2,
 			.size = sizeof(THUMB_CODE2) - 1,
-			.comment = "Thumb-2"
+			.comment = "Thumb-2 & register named with numbers",
+			.syntax = CS_OPT_SYNTAX_NOREGNAME
 		},
 	};
 
@@ -200,6 +202,9 @@ static void test()
 		}
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+
+		if (platforms[i].syntax)
+			cs_option(handle, CS_OPT_SYNTAX, platforms[i].syntax);
 
 		size_t count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {

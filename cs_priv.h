@@ -25,6 +25,9 @@ typedef bool (*CheckCombineInsn_t)(cs_struct *h, cs_insn *insn);
 
 typedef void (*CombineInsn_t)(cs_struct *h, cs_insn *insn, cs_insn *prev);
 
+// return register name, given register ID
+typedef char *(*GetRegisterName_t)(unsigned RegNo);
+
 // for ARM only
 typedef struct ARM_ITStatus {
 	unsigned char ITStates[128];	// FIXME
@@ -46,11 +49,12 @@ struct cs_struct {
 	cs_err errnum;
 	ARM_ITStatus ITBlock;	// for Arm only
 	cs_opt_value detail;
-	int syntax;	// asm syntax for simple printer such as PPC
+	int syntax;	// asm syntax for simple printer such as ARM, Mips & PPC
 	bool doing_mem;	// handling memory operand in InstPrinter code
 	unsigned short *insn_cache;	// index caching for mapping.c
 	CheckCombineInsn_t check_combine;
 	CombineInsn_t combine;
+	GetRegisterName_t get_regname;
 	uint8_t prev_prefix;	// save previous prefix for combining instructions - X86 only.
 };
 

@@ -24,4 +24,7 @@
 void ARM_printInst(MCInst *MI, SStream *O, void *Info);
 void ARM_post_printer(csh handle, cs_insn *pub_insn, char *mnem);
 
+// setup handle->get_regname
+void ARM_getRegName(cs_struct *handle, int value);
+
 #endif
