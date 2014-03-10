@@ -17,5 +17,6 @@ case "$1" in
   "mips") java -classpath ${JNA}:. TestMips ;;
   "x86") java -classpath ${JNA}:. TestX86 ;;
   "ppc") java -classpath ${JNA}:. TestPpc ;;
-  * ) echo "Usage: ./run.sh [arm|arm64|mips|x86|ppc]"; exit 1;;
+  "sparc") java -classpath ${JNA}:. TestSparc ;;
+  * ) echo "Usage: ./run.sh [arm|arm64|mips|ppc|sparc|x86]"; exit 1;;
 esac
