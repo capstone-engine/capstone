@@ -6,18 +6,20 @@ class Capstone < Formula
   sha1 '3e5fe91684cfc76d73caa857a268332ac9d40659'
 
   def patches
-    # fix pkgconfig path
+    # Fix pkgconfig path. Fixed upstream:
+    # https://github.com/aquynh/capstone/commit/ae603d
     DATA
   end
 
   def install
+    # Fixed upstream in next version:
+    # https://github.com/aquynh/capstone/commit/dc0d04
     inreplace 'Makefile', 'lib64', 'lib'
     system "./make.sh"
     ENV["PREFIX"] = prefix
     system "./make.sh", "install"
   end
 end
-
 
 __END__
 --- a/Makefile.org	2014-03-05 11:26:42.000000000 +0800
