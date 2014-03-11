@@ -178,7 +178,7 @@ else
 # Linux, *BSD
 EXT = so
 AR_EXT = a
-API_MAJOR=$(shell echo `grep -e CS_API_MAJOR include/capstone.h | grep -v = | awk '{print $$2}'` | awk '{print $$1}')
+API_MAJOR=$(shell echo `grep -e CS_API_MAJOR include/capstone.h | grep -v = | awk '{print $$3}'` | awk '{print $$1}')
 
 LDFLAGS += -Wl,-soname,lib$(LIBNAME)$(API_MAJOR)
 endif
