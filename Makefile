@@ -178,7 +178,7 @@ else
 # Linux, *BSD
 EXT = so
 AR_EXT = a
-LDFLAGS += -Wl,-soname=libcapstone2,$(LIBRARY)
+LDFLAGS += -Wl,-soname,lib$(LIBNAME)$(PKG_MAJOR)
 endif
 endif
 endif
