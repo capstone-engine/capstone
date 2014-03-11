@@ -1,6 +1,22 @@
 This file details the changelog of Capstone.
 
 ---------------------------------
+Version 2.1.1: March 13th, 2014
+
+This is a stable release to fix some bugs deep in the core. There is no update
+to any architectures or bindings, so bindings version 2.1 can be used with this
+version 2.1.1 just fine.
+
+[ Core changes]
+
+- Fix a buffer overflow bug in Thumb mode (ARM). Some special input can
+  trigger this flaw.
+- Fix a crash issue when embedding Capstone into OSX kernel. This should
+  enable Capstone to be embedded into other systems with limited stack
+  memory size such as Linux kernel or some firmwares.
+- Use a proper SONAME for library versioning (Linux).
+
+---------------------------------
 Version 2.1: March 5th, 2014
 
 [ API changes ]
