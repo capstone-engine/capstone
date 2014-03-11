@@ -276,6 +276,7 @@ endif
 
 dist:
 	git archive --format=tar.gz --prefix=capstone-$(DIST_VERSION)/ $(TAG) > capstone-$(DIST_VERSION).tgz
+	git archive --format=zip --prefix=capstone-$(DIST_VERSION)/ $(TAG) > capstone-$(DIST_VERSION).zip
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
