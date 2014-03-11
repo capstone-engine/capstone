@@ -1,0 +1,7 @@
+Version 2.1.1 is a stable release that fixes some bugs deep in the core.
+There is no update to any architectures or bindings, so older bindings
+of release 2.1 can be used with this version 2.1.1 just fine.
+
+For this reason, after upgrading to 2.1.1, users do NOT need to upgrade
+their bindings from release 2.1.
+

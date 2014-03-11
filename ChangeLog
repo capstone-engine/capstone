@@ -12,7 +12,7 @@ version 2.1.1 just fine.
 - Fix a buffer overflow bug in Thumb mode (ARM). Some special input can
   trigger this flaw.
 - Fix a crash issue when embedding Capstone into OSX kernel. This should
-  enable Capstone to be embedded into other systems with limited stack
+  also enable Capstone to be embedded into other systems with limited stack
   memory size such as Linux kernel or some firmwares.
 - Use a proper SONAME for library versioning (Linux).
 
