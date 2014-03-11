@@ -1,11 +1,10 @@
 # -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
-# $Id: Portfile 117078 2014-02-15 00:49:41Z ryandesign@macports.org $
+# $Id: Portfile 117652 2014-03-07 05:09:28Z ryandesign@macports.org $
 
 PortSystem          1.0
 
 name                capstone
 version             2.1
-revision            1
 categories          devel
 platforms           darwin
 maintainers         gmail.com:aquynh
