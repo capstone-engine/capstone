@@ -195,7 +195,8 @@ else
 # Linux, *BSD
 EXT = so
 AR_EXT = a
-LDFLAGS += -Wl,-soname,lib$(LIBNAME)$(PKG_MAJOR)
+API_MAJOR=$(shell echo `grep -e CS_API_MAJOR include/capstone.h | grep -v = | awk '{print $$3}'` | awk '{print $$1}')
+LDFLAGS += -Wl,-soname,lib$(LIBNAME)$(API_MAJOR)
 endif
 endif
 endif
@@ -292,6 +293,7 @@ endif
 
 dist:
 	git archive --format=tar.gz --prefix=capstone-$(DIST_VERSION)/ $(TAG) > capstone-$(DIST_VERSION).tgz
+	git archive --format=zip --prefix=capstone-$(DIST_VERSION)/ $(TAG) > capstone-$(DIST_VERSION).zip
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@

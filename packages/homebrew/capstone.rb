@@ -2,15 +2,18 @@ require 'formula'
 
 class Capstone < Formula
   homepage 'http://capstone-engine.org'
-  url 'http://capstone-engine.org/download/2.1/capstone-2.1.tgz'
-  sha1 '3e5fe91684cfc76d73caa857a268332ac9d40659'
+  url 'http://capstone-engine.org/download/2.1/capstone-2.1.1.tgz'
+  sha1 'f4b114aba2626832f1c217191faaa748245d76a8'
 
   def patches
-    # fix pkgconfig path
+    # Fix pkgconfig path. Fixed upstream:
+    # https://github.com/aquynh/capstone/commit/xxx
     DATA
   end
 
   def install
+    # Fixed upstream in next version:
+    # https://github.com/aquynh/capstone/commit/dc0d04
     inreplace 'Makefile', 'lib64', 'lib'
     system "./make.sh"
     ENV["PREFIX"] = prefix
@@ -18,14 +21,17 @@ class Capstone < Formula
   end
 end
 
-
 __END__
---- a/Makefile.org	2014-03-05 11:26:42.000000000 +0800
-+++ a/Makefile	2014-03-05 11:28:34.000000000 +0800
-@@ -144,13 +144,6 @@
+--- Makefile.org	2014-03-11 16:41:54.000000000 +0800
++++ Makefile	2014-03-11 16:43:12.000000000 +0800
+@@ -145,17 +145,6 @@
  ifeq ($(UNAME_S),Darwin)
  EXT = dylib
  AR_EXT = a
+-ifneq ($(USE_SYS_DYN_MEM),yes)
+-# remove string check because OSX kernel complains about missing symbols
+-CFLAGS += -D_FORTIFY_SOURCE=0
+-endif
 -# By default, suppose that Brew is installed & use Brew path for pkgconfig file
 -PKGCFCGDIR = /usr/local/lib/pkgconfig
 -# is Macport installed instead?
