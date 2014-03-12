@@ -17012,6 +17012,8 @@ static name_map alias_insn_name_maps[] = {
 const char *AArch64_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
+	unsigned int i;
+
 	if (id >= ARM64_INS_MAX)
 		return NULL;
 
@@ -17019,7 +17021,6 @@ const char *AArch64_insn_name(csh handle, unsigned int id)
 		return insn_name_maps[id].name;
 
 	// then find alias insn
-	int i;
 	for (i = 0; i < ARR_SIZE(alias_insn_name_maps); i++) {
 		if (alias_insn_name_maps[i].id == id)
 			return alias_insn_name_maps[i].name;

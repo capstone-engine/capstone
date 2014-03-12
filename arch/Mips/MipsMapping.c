@@ -7872,7 +7872,7 @@ static insn_map alias_insns[] = {
 // given internal insn id, return public instruction info
 void Mips_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
-	int i;
+	unsigned int i;
 
 	// consider alias insn first
 	for (i = 0; i < ARR_SIZE(alias_insns); i++) {
@@ -8398,11 +8398,12 @@ static name_map alias_insn_names[] = {
 const char *Mips_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
+	unsigned int i;
+
 	if (id >= MIPS_INS_MAX)
 		return NULL;
 
 	// handle special alias first
-	int i;
 	for (i = 0; i < ARR_SIZE(alias_insn_names); i++) {
 		if (alias_insn_names[i].id == id)
 			return alias_insn_names[i].name;
@@ -8417,7 +8418,7 @@ const char *Mips_insn_name(csh handle, unsigned int id)
 mips_reg Mips_map_insn(const char *name)
 {
 	// handle special alias first
-	int i;
+	unsigned int i;
 
 	for (i = 0; i < ARR_SIZE(alias_insn_names); i++) {
 		if (!strcasecmp(alias_insn_names[i].name, name))

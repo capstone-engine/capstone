@@ -245,7 +245,7 @@ void ARM_post_printer(csh ud, cs_insn *insn, char *insn_asm)
 	// check if this insn requests update flags
 	if (insn->detail->arm.update_flags == false) {
 		// some insn still update flags, regardless of tabgen info
-		int i;
+		unsigned int i, j;
 
 		for (i = 0; i < ARR_SIZE(insn_update_flgs); i++) {
 			if (insn->id == insn_update_flgs[i].id &&
@@ -253,7 +253,6 @@ void ARM_post_printer(csh ud, cs_insn *insn, char *insn_asm)
 						strlen(insn_update_flgs[i].name))) {
 				insn->detail->arm.update_flags = true;
 				// we have to update regs_write array as well
-				int j;
 				for (j = 0; j < ARR_SIZE(insn->detail->regs_write); j++) {
 					if (insn->detail->regs_write[j] == 0) {
 						insn->detail->regs_write[j] = ARM_REG_CPSR;

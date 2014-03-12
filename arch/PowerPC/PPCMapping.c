@@ -5159,11 +5159,12 @@ static name_map alias_insn_names[] = {
 const char *PPC_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
+	unsigned int i;
+
 	if (id >= PPC_INS_MAX)
 		return NULL;
 
 	// handle special alias first
-	int i;
 	for (i = 0; i < ARR_SIZE(alias_insn_names); i++) {
 		if (alias_insn_names[i].id == id)
 			return alias_insn_names[i].name;

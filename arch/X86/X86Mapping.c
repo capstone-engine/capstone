@@ -31988,7 +31988,7 @@ static struct insn_reg {
 // this is to handle instructions embedding accumulate registers into AsmStrs[]
 x86_reg X86_insn_reg(unsigned int id)
 {
-	int i;
+	unsigned int i;
 
 	for (i = 0; i < ARR_SIZE(insn_regs); i++) {
 		if (insn_regs[i].insn == id) {
