@@ -1,9 +1,9 @@
 # $FreeBSD$
 
 PORTNAME=	capstone
-PORTVERSION=	2.0
+PORTVERSION=	2.1.1
 CATEGORIES=	devel
-MASTER_SITES=	http://capstone-engine.org/download/2.0/
+MASTER_SITES=	http://capstone-engine.org/download/2.1/
 
 MAINTAINER=	oliver.pntr@gmail.com
 COMMENT=	Multi-platform, multi-architecture disassembly framework
@@ -13,7 +13,8 @@ LICENSE=	BSD3CLAUSE
 USES=		gmake
 USE_LDCONFIG=	yes
 
-MAKE_ENV=	INSTALL_LIBRARY="${INSTALL_LIB}"
+MAKE_ENV+=	INSTALL_LIB="${INSTALL_LIB}" \
+		INSTALL_DATA="${INSTALL_DATA}"
 
 post-build:
 	# The pkgconfig file is generated and points to stagedir
