@@ -193,10 +193,10 @@ CFLAGS := $(CFLAGS:-fPIC=)
 # On Windows we need the shared library to be executable
 else
 # Linux, *BSD
-EXT = so
-AR_EXT = a
 API_MAJOR=$(shell echo `grep -e CS_API_MAJOR include/capstone.h | grep -v = | awk '{print $$3}'` | awk '{print $$1}')
-LDFLAGS += -Wl,-soname,lib$(LIBNAME)$(API_MAJOR)
+EXT = so.$(API_MAJOR)
+AR_EXT = a
+LDFLAGS += -Wl,-soname,lib$(LIBNAME).$(EXT)
 endif
 endif
 endif
@@ -270,8 +270,7 @@ install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 
 uninstall:
 	rm -rf $(INCDIR)/$(LIBNAME)
-	rm -f $(LIBDIR)/lib$(LIBNAME).$(EXT)
-	rm -f $(LIBDIR)/lib$(LIBNAME).$(AR_EXT)
+	rm -f $(LIBDIR)/lib$(LIBNAME).*
 	rm -f $(PKGCFCGDIR)/$(LIBNAME).pc
 
 clean:
