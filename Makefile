@@ -157,6 +157,7 @@ LIBOBJ += MCInst.o
 
 UNAME_S := $(shell uname -s)
 PKGCFCGDIR = $(LIBDIR)/pkgconfig
+VERSION_EXT =
 
 # OSX?
 ifeq ($(UNAME_S),Darwin)
@@ -194,9 +195,10 @@ CFLAGS := $(CFLAGS:-fPIC=)
 else
 # Linux, *BSD
 API_MAJOR=$(shell echo `grep -e CS_API_MAJOR include/capstone.h | grep -v = | awk '{print $$3}'` | awk '{print $$1}')
-EXT = so.$(API_MAJOR)
+EXT = so
+VERSION_EXT = $(EXT).$(API_MAJOR)
 AR_EXT = a
-LDFLAGS += -Wl,-soname,lib$(LIBNAME).$(EXT)
+LDFLAGS += -Wl,-soname,lib$(LIBNAME).$(VERSION_EXT)
 endif
 endif
 endif
@@ -262,6 +264,9 @@ endif
 install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 	mkdir -p $(LIBDIR)
 	$(INSTALL_LIBRARY) lib$(LIBNAME).$(EXT) $(LIBDIR)
+ifneq ($(VERSION_EXT),)
+	ln -s $(LIBDIR)/lib$(LIBNAME).$(EXT) $(LIBDIR)/lib$(LIBNAME).$(VERSION_EXT)
+endif
 	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
 	mkdir -p $(INCDIR)/$(LIBNAME)
 	$(INSTALL_DATA) include/*.h $(INCDIR)/$(LIBNAME)
