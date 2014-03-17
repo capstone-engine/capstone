@@ -1,6 +1,7 @@
---- tests/Makefile.orig	2014-01-25 19:14:03.000000000 +0100
-+++ tests/Makefile	2014-01-25 19:14:24.000000000 +0100
-@@ -11,7 +11,7 @@
+diff -ru work.orig/capstone-2.1.1/tests/Makefile work/capstone-2.1.1/tests/Makefile
+--- tests/Makefile	2014-03-14 17:24:44.000000000 +0100
++++ tests/Makefile	2014-03-14 17:52:47.000000000 +0100
+@@ -13,7 +13,7 @@
  endif
  
  
@@ -9,7 +10,7 @@
  
  LIBNAME = capstone
  
-@@ -48,8 +48,8 @@
+@@ -66,8 +66,8 @@
  $(BINARY): $(OBJS)
  
  %$(BIN_EXT): %.o
