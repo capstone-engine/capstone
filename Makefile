@@ -245,6 +245,8 @@ endif
 
 install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 	mkdir -p $(LIBDIR)
+	# remove potential broken old libs
+	rm -f $(LIBDIR)/lib$(LIBNAME).*
 	$(INSTALL_LIBRARY) lib$(LIBNAME).$(EXT) $(LIBDIR)
 ifneq ($(VERSION_EXT),)
 	ln -s $(LIBDIR)/lib$(LIBNAME).$(EXT) $(LIBDIR)/lib$(LIBNAME).$(VERSION_EXT)
