@@ -1160,7 +1160,6 @@ static int readSIB(struct InternalInstruction* insn)
 		case 2:
 			// dbgprintf(insn, "SIB-based addressing doesn't work in 16-bit mode");
 			return -1;
-			break;
 		case 4:
 			sibIndexBase = SIB_INDEX_EAX;
 			sibBaseBase = SIB_BASE_EAX;
@@ -1384,8 +1383,7 @@ static int readModRM(struct InternalInstruction* insn)
 						case 0xc:   /* in case REXW.b is set */
 							insn->eaBase = (insn->addressSize == 4 ?
 									EA_BASE_sib : EA_BASE_sib64);
-							readSIB(insn);
-							if (readDisplacement(insn))
+							if (readSIB(insn) || readDisplacement(insn))
 								return -1;
 							break;
 						case 0x5:
@@ -1410,8 +1408,7 @@ static int readModRM(struct InternalInstruction* insn)
 						case 0x4:
 						case 0xc:   /* in case REXW.b is set */
 							insn->eaBase = EA_BASE_sib;
-							readSIB(insn);
-							if (readDisplacement(insn))
+							if (readSIB(insn) || readDisplacement(insn))
 								return -1;
 							break;
 						default:
