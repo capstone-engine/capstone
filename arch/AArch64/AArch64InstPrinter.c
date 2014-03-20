@@ -69,7 +69,7 @@ static void printOffsetSImm9Operand(MCInst *MI, unsigned OpNum, SStream *O)
 		else
 			SStream_concat(O, "#%u", Imm);
 	} else {
-		if (Imm <= -HEX_THRESHOLD)
+		if (Imm < -HEX_THRESHOLD)
 			SStream_concat(O, "#-0x%x", -Imm);
 		else
 			SStream_concat(O, "#-%u", -Imm);
@@ -343,7 +343,7 @@ static void printLabelOperand(MCInst *MI, unsigned OpNum,
 		else
 			SStream_concat(O, "#%"PRIu64, SImm);
 	} else {
-		if (SImm <= -HEX_THRESHOLD)
+		if (SImm < -HEX_THRESHOLD)
 			SStream_concat(O, "#-0x%"PRIx64, -SImm);
 		else
 			SStream_concat(O, "#-%"PRIu64, -SImm);
