@@ -247,7 +247,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					else
 						SStream_concat(O, "%"PRIu64, imm);
 				} else {
-					if (imm <= -HEX_THRESHOLD)
+					if (imm < -HEX_THRESHOLD)
 						SStream_concat(O, "-0x%"PRIx64, -imm);
 					else
 						SStream_concat(O, "-%"PRIu64, -imm);
@@ -262,7 +262,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				else
 					SStream_concat(O, "%"PRIu64, imm);
 			} else {
-				if (imm <= -HEX_THRESHOLD)
+				if (imm < -HEX_THRESHOLD)
 					SStream_concat(O, "-0x%"PRIx64, -imm);
 				else
 					SStream_concat(O, "-%"PRIu64, -imm);
@@ -288,7 +288,7 @@ static void printUnsignedImm(MCInst *MI, int opNum, SStream *O)
 			else
 				SStream_concat(O, "%u", (unsigned short int)imm);
 		} else {
-			if (imm <= -HEX_THRESHOLD)
+			if (imm < -HEX_THRESHOLD)
 				SStream_concat(O, "-0x%x", (short int)-imm);
 			else
 				SStream_concat(O, "-%u", (short int)-imm);
