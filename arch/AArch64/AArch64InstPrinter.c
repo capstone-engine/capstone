@@ -63,10 +63,17 @@ static void printOffsetSImm9Operand(MCInst *MI, unsigned OpNum, SStream *O)
 	MCOperand *MOImm = MCInst_getOperand(MI, OpNum);
 	int32_t Imm = (int32_t)unpackSignedImm(9, MCOperand_getImm(MOImm));
 
-	if (Imm > HEX_THRESHOLD)
-		SStream_concat(O, "#0x%x", Imm);
-	else
-		SStream_concat(O, "#%u", Imm);
+	if (Imm >=0) {
+		if (Imm > HEX_THRESHOLD)
+			SStream_concat(O, "#0x%x", Imm);
+		else
+			SStream_concat(O, "#%u", Imm);
+	} else {
+		if (Imm <= -HEX_THRESHOLD)
+			SStream_concat(O, "#-0x%x", -Imm);
+		else
+			SStream_concat(O, "#-%u", -Imm);
+	}
 
 	if (MI->csh->detail) {
 		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_IMM;
@@ -330,10 +337,17 @@ static void printLabelOperand(MCInst *MI, unsigned OpNum,
 		MI->flat_insn.arm64.op_count++;
 	}
 
-	if (SImm > HEX_THRESHOLD)
-		SStream_concat(O, "#0x%"PRIx64, SImm);
-	else
-		SStream_concat(O, "#%"PRIu64, SImm);
+	if (SImm >= 0) {
+		if (SImm > HEX_THRESHOLD)
+			SStream_concat(O, "#0x%"PRIx64, SImm);
+		else
+			SStream_concat(O, "#%"PRIu64, SImm);
+	} else {
+		if (SImm <= -HEX_THRESHOLD)
+			SStream_concat(O, "#-0x%"PRIx64, -SImm);
+		else
+			SStream_concat(O, "#-%"PRIu64, -SImm);
+	}
 }
 
 static void printLogicalImmOperand(MCInst *MI, unsigned OpNum,
