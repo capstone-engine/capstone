@@ -343,27 +343,11 @@ static DecodeStatus DecodeStoreQFP(MCInst *Inst, unsigned insn,
 			DecodeQFPRegsRegisterClass);
 }
 
-/*
-static bool tryAddingSymbolicOperand(int64_t Value,  bool isBranch,
-		uint64_t Address, uint64_t Offset,
-		uint64_t Width, MCInst *MI,
-		const void *Decoder)
-{
-	const MCDisassembler *Dis = static_cast<const MCDisassembler*>(Decoder);
-	return Dis->tryAddingSymbolicOperand(MI, Value, Address, isBranch,
-			Offset, Width);
-}
-*/
-
 static DecodeStatus DecodeCall(MCInst *MI, unsigned insn,
 		uint64_t Address, const void *Decoder)
 {
 	unsigned tgt = fieldFromInstruction_4(insn, 0, 30);
 	tgt <<= 2;
-
-	/*
-	   if (!tryAddingSymbolicOperand(tgt+Address, false, Address, 0, 30, MI, Decoder))
-	 */
 
 	MCInst_addOperand(MI, MCOperand_CreateImm(tgt));
 
