@@ -8,6 +8,7 @@ TEST_ARM64 = $(TMPDIR)/test_arm64
 TEST_MIPS = $(TMPDIR)/test_mips
 TEST_PPC = $(TMPDIR)/test_ppc
 TEST_SPARC = $(TMPDIR)/test_sparc
+TEST_SYSZ = $(TMPDIR)/test_systemz
 TEST_X86 = $(TMPDIR)/test_x86
 
 .PHONY: all expected python java ocaml
@@ -30,6 +31,7 @@ expected:
 	../tests/test_mips > $(TEST_MIPS)_e
 	../tests/test_ppc > $(TEST_PPC)_e
 	../tests/test_sparc > $(TEST_SPARC)_e
+	../tests/test_systemz > $(TEST_SYSZ)_e
 	../tests/test_x86 > $(TEST_X86)_e
 
 python: FORCE
@@ -40,6 +42,7 @@ python: FORCE
 	python python/test_mips.py > $(TEST_MIPS)_o
 	python python/test_ppc.py > $(TEST_PPC)_o
 	python python/test_sparc.py > $(TEST_SPARC)_o
+	python python/test_systemz.py > $(TEST_SYSZ)_o
 	python python/test_x86.py > $(TEST_X86)_o
 	$(MAKE) test_diff
 
@@ -51,6 +54,7 @@ java: FORCE
 	cd java; ./run.sh mips > $(TEST_MIPS)_o
 	cd java; ./run.sh ppc > $(TEST_PPC)_o
 	cd java; ./run.sh sparc > $(TEST_SPARC)_o
+	cd java; ./run.sh systemz > $(TEST_SYSZ)_o
 	cd java; ./run.sh x86 > $(TEST_X86)_o
 	$(MAKE) test_diff
 
@@ -63,6 +67,7 @@ test_diff: FORCE
 	$(DIFF) $(TEST_MIPS)_e $(TEST_MIPS)_o
 	$(DIFF) $(TEST_PPC)_e $(TEST_PPC)_o
 	$(DIFF) $(TEST_SPARC)_e $(TEST_SPARC)_o
+	$(DIFF) $(TEST_SYSZ)_e $(TEST_SYSZ)_o
 	$(DIFF) $(TEST_X86)_e $(TEST_X86)_o
 
 clean:

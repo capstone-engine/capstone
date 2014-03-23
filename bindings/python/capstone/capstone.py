@@ -1,6 +1,6 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
-import arm, arm64, mips, ppc, sparc, x86
+import arm, arm64, mips, ppc, sparc, systemz, x86
 
 __all__ = [
     'Cs',
@@ -21,6 +21,7 @@ __all__ = [
     'CS_ARCH_X86',
     'CS_ARCH_PPC',
     'CS_ARCH_SPARC',
+    'CS_ARCH_SYSZ',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
@@ -72,7 +73,8 @@ CS_ARCH_MIPS = 2
 CS_ARCH_X86 = 3
 CS_ARCH_PPC = 4
 CS_ARCH_SPARC = 5
-CS_ARCH_MAX = 6
+CS_ARCH_SYSZ = 6
+CS_ARCH_MAX = 7
 CS_ARCH_ALL = 0xFFFF
 
 # disasm mode
@@ -175,6 +177,7 @@ class _cs_arch(ctypes.Union):
         ('x86', x86.CsX86),
         ('ppc', ppc.CsPpc),
         ('sparc', sparc.CsSparc),
+        ('sysz', systemz.CsSysz),
     )
 
 class _cs_detail(ctypes.Structure):
@@ -432,6 +435,8 @@ class CsInsn(object):
                 ppc.get_arch_info(detail.arch.ppc)
         elif arch == CS_ARCH_SPARC:
             (self.cc, self.hint, self.operands) = sparc.get_arch_info(detail.arch.sparc)
+        elif arch == CS_ARCH_SYSZ:
+            (self.cc, self.operands) = systemz.get_arch_info(detail.arch.sysz)
 
     def __getattr__(self, name):
         if not self._cs._detail:
@@ -673,7 +678,7 @@ def debug():
 
     archs = { "arm": CS_ARCH_ARM, "arm64": CS_ARCH_ARM64, \
         "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "sparc": CS_ARCH_SPARC, \
-        "x86": CS_ARCH_X86 }
+        "sysz": CS_ARCH_SYSZ, "x86": CS_ARCH_X86 }
 
     all_archs = ""
     keys = archs.keys()
