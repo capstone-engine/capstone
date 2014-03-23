@@ -39,6 +39,7 @@ typedef enum sysz_cc {
 typedef enum sysz_op_type {
 	SYSZ_OP_INVALID = 0,	// Uninitialized.
 	SYSZ_OP_REG,	// Register operand.
+	SYSZ_OP_ACREG,	// Access register operand.
 	SYSZ_OP_IMM,	// Immediate operand.
 	SYSZ_OP_MEM,	// Memory operand
 } sysz_op_type;

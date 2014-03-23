@@ -44,6 +44,9 @@ static void print_insn_detail(cs_insn *ins)
 			case SYSZ_OP_REG:
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;
+			case SYSZ_OP_ACREG:
+				printf("\t\toperands[%u].type: ACREG = %u\n", i, op->reg);
+				break;
 			case SYSZ_OP_IMM:
 				printf("\t\toperands[%u].type: IMM = 0x%"PRIx64"\n", i, op->imm);
 				break;
@@ -70,8 +73,7 @@ static void print_insn_detail(cs_insn *ins)
 
 static void test()
 {
-#define SYSZ_CODE "\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x00\x07\xf7\xeb\x2a\xff\xff\x7f\x57\xe3\x01\xff\xff\x7f\x57\xeb\x00\xf0\x00\x00\x24"
-//#define SYSZ_CODE "\xeb\x00\xf0\x00\x00\x24"
+#define SYSZ_CODE "\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x00\x07\xf7\xeb\x2a\xff\xff\x7f\x57\xe3\x01\xff\xff\x7f\x57\xeb\x00\xf0\x00\x00\x24\xb2\x4f\x00\x78"
 
 	struct platform platforms[] = {
 		{

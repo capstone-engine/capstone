@@ -29,23 +29,6 @@
 
 static const char *getRegisterName(unsigned RegNo);
 
-static void set_mem_access(MCInst *MI, bool status)
-{
-	if (MI->csh->detail != CS_OPT_ON)
-		return;
-
-	MI->csh->doing_mem = status;
-
-	if (status) {
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_MEM;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.base = SYSZ_REG_INVALID;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.disp = 0;
-	} else {
-		// done, create the next operand slot
-		MI->flat_insn.sysz.op_count++;
-	}
-}
-
 void SystemZ_post_printer(csh ud, cs_insn *insn, char *insn_asm)
 {
 	/*
@@ -59,7 +42,7 @@ static void printAddress(MCInst *MI, unsigned Base, int64_t Disp, unsigned Index
 	if (Disp >= 0) {
 		if (Disp > HEX_THRESHOLD)
 			SStream_concat(O, "0x%"PRIx64, Disp);
-		else if (Disp)	// do not print Zero offset
+		else
 			SStream_concat(O, "%"PRIu64, Disp);
 	} else {
 		if (Disp < -HEX_THRESHOLD)
@@ -233,13 +216,11 @@ static void printAccessRegOperand(MCInst *MI, int OpNum, SStream *O)
 	// assert(Value < 16 && "Invalid access register number");
 	SStream_concat(O, "%%a%u", (unsigned int)Value);
 
-/*
 	if (MI->csh->detail) {
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = Value;
+		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_ACREG;
+		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].reg = (unsigned int)Value;
 		MI->flat_insn.sysz.op_count++;
 	}
- */
 }
 
 static void printPCRelOperand(MCInst *MI, int OpNum, SStream *O)
