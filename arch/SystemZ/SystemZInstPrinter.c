@@ -76,7 +76,7 @@ static void printAddress(MCInst *MI, unsigned Base, int64_t Disp, unsigned Index
 
 		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_MEM;
 		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.base = (uint8_t)SystemZ_map_register(Base);
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.index = (uint8_t)SystemZ_map_register(Index);
+		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.index = (uint64_t)SystemZ_map_register(Index);
 		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.disp = Disp;
 		MI->flat_insn.sysz.op_count++;
 	} else if (!Index) {
@@ -144,7 +144,7 @@ static void printU6ImmOperand(MCInst *MI, int OpNum, SStream *O)
 
 	if (MI->csh->detail) {
 		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = Value;
+		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = (int64_t)Value;
 		MI->flat_insn.sysz.op_count++;
 	}
 }
@@ -157,7 +157,7 @@ static void printS8ImmOperand(MCInst *MI, int OpNum, SStream *O)
 
 	if (MI->csh->detail) {
 		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = Value;
+		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = (int64_t)Value;
 		MI->flat_insn.sysz.op_count++;
 	}
 }
@@ -170,7 +170,7 @@ static void printU8ImmOperand(MCInst *MI, int OpNum, SStream *O)
 
 	if (MI->csh->detail) {
 		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = Value;
+		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = (int64_t)Value;
 		MI->flat_insn.sysz.op_count++;
 	}
 }
@@ -183,7 +183,7 @@ static void printS16ImmOperand(MCInst *MI, int OpNum, SStream *O)
 
 	if (MI->csh->detail) {
 		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = Value;
+		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = (int64_t)Value;
 		MI->flat_insn.sysz.op_count++;
 	}
 }
@@ -196,7 +196,7 @@ static void printU16ImmOperand(MCInst *MI, int OpNum, SStream *O)
 
 	if (MI->csh->detail) {
 		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = Value;
+		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = (int64_t)Value;
 		MI->flat_insn.sysz.op_count++;
 	}
 }
@@ -209,7 +209,7 @@ static void printS32ImmOperand(MCInst *MI, int OpNum, SStream *O)
 
 	if (MI->csh->detail) {
 		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = Value;
+		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = (int64_t)Value;
 		MI->flat_insn.sysz.op_count++;
 	}
 }
@@ -222,7 +222,7 @@ static void printU32ImmOperand(MCInst *MI, int OpNum, SStream *O)
 
 	if (MI->csh->detail) {
 		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = Value;
+		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = (int64_t)Value;
 		MI->flat_insn.sysz.op_count++;
 	}
 }
@@ -282,7 +282,7 @@ static void printBDLAddrOperand(MCInst *MI, int OpNum, SStream *O)
 	MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_MEM;
 	MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.base = (uint8_t)SystemZ_map_register(Base);
 	MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.index = Length;
-	MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.disp = Disp;
+	MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.disp = (int64_t)Disp;
 	MI->flat_insn.sysz.op_count++;
 }
 

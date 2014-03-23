@@ -15,7 +15,7 @@ extern "C" {
 #pragma warning(disable:4201)
 #endif
 
-//> Enums corresponding to SystemZ condition codes, both icc's and fcc's.
+//> Enums corresponding to SystemZ condition codes
 typedef enum sysz_cc {
 	SYSZ_CC_INVALID = 0,	// invalid CC (default)
 
@@ -56,7 +56,7 @@ typedef struct cs_sysz_op {
 	sysz_op_type type;	// operand type
 	union {
 		unsigned int reg;	// register value for REG operand
-		int32_t imm;		// immediate value for IMM operand
+		int64_t imm;		// immediate value for IMM operand
 		sysz_op_mem mem;		// base/disp value for MEM operand
 	};
 } cs_sysz_op;
