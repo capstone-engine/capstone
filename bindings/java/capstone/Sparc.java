@@ -73,7 +73,7 @@ public class Sparc {
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("bc", "bh", "update_cr0", "op_count", "op");
+      return Arrays.asList("cc", "hint", "op_count", "op");
     }
   }
 
