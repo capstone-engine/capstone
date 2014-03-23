@@ -39,9 +39,17 @@ LIBDIR = $(DESTDIR)$(PREFIX)/lib
 endif
 endif
 
+LIBDATADIR = $(LIBDIR)
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S), FreeBSD)
+LIBDATADIR = $(DESTDIR)$(PREFIX)/libdata
+else
+LIBDATADIR = $(LIBDIR)
+endif
+
 INSTALL_BIN ?= install
 INSTALL_DATA ?= $(INSTALL_BIN) -m0644
-INSTALL_LIBRARY ?= $(INSTALL_BIN) -m0755
+INSTALL_LIB ?= $(INSTALL_BIN) -m0755
 
 LIBNAME = capstone
 
@@ -156,7 +164,7 @@ LIBOBJ += MCInst.o
 
 
 UNAME_S := $(shell uname -s)
-PKGCFCGDIR = $(LIBDIR)/pkgconfig
+PKGCFCGDIR = $(LIBDATADIR)/pkgconfig
 VERSION_EXT =
 
 # OSX?
@@ -265,7 +273,7 @@ install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 	mkdir -p $(LIBDIR)
 	# remove potential broken old libs
 	rm -f $(LIBDIR)/lib$(LIBNAME).*
-	$(INSTALL_LIBRARY) lib$(LIBNAME).$(EXT) $(LIBDIR)
+	$(INSTALL_LIB) lib$(LIBNAME).$(EXT) $(LIBDIR)
 ifneq ($(VERSION_EXT),)
 	ln -s $(LIBDIR)/lib$(LIBNAME).$(EXT) $(LIBDIR)/lib$(LIBNAME).$(VERSION_EXT)
 endif
