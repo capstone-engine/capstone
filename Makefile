@@ -42,6 +42,9 @@ UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), FreeBSD)
 LIBDATADIR = $(DESTDIR)$(PREFIX)/libdata
 endif
+ifeq ($(UNAME_S), DragonFly)
+LIBDATADIR = $(DESTDIR)$(PREFIX)/libdata
+endif
 
 INSTALL_BIN ?= install
 INSTALL_DATA ?= $(INSTALL_BIN) -m0644
