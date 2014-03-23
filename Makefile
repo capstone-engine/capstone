@@ -34,8 +34,6 @@ UNAME_M := $(shell uname -m)
 ifeq ($(UNAME_M), x86_64)
 ifeq (,$(wildcard $(LIBDIR)))
 LIBDIR = $(DESTDIR)$(PREFIX)/lib64
-else
-LIBDIR = $(DESTDIR)$(PREFIX)/lib
 endif
 endif
 
@@ -43,8 +41,6 @@ LIBDATADIR = $(LIBDIR)
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), FreeBSD)
 LIBDATADIR = $(DESTDIR)$(PREFIX)/libdata
-else
-LIBDATADIR = $(LIBDIR)
 endif
 
 INSTALL_BIN ?= install
