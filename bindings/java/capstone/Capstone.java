@@ -31,6 +31,7 @@ public class Capstone {
     public Mips.UnionOpInfo mips;
     public Ppc.UnionOpInfo ppc;
     public Sparc.UnionOpInfo sparc;
+    public Systemz.UnionOpInfo sysz;
   }
 
   protected static class _cs_insn extends Structure {
@@ -173,6 +174,11 @@ public class Capstone {
           detail.arch.read();
           op_info = new Sparc.OpInfo((Sparc.UnionOpInfo) detail.arch.sparc);
           break;
+        case CS_ARCH_SYSZ:
+          detail.arch.setType(Systemz.UnionOpInfo.class);
+          detail.arch.read();
+          op_info = new Systemz.OpInfo((Systemz.UnionOpInfo) detail.arch.sysz);
+          break;
         default:
       }
 
@@ -255,7 +261,8 @@ public class Capstone {
   public static final int CS_ARCH_X86 = 3;
   public static final int CS_ARCH_PPC = 4;
   public static final int CS_ARCH_SPARC = 5;
-  public static final int CS_ARCH_MAX = 6;
+  public static final int CS_ARCH_SYSZ = 6;
+  public static final int CS_ARCH_MAX = 7;
   public static final int CS_ARCH_ALL = 0xFFFF; // query id for cs_support()
 
   // disasm mode

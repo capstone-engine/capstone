@@ -2,11 +2,11 @@
 // By Nguyen Anh Quynh & Dang Hoang Vu,  2013-2014
 
 import capstone.Capstone;
-import capstone.Sparc;
+import capstone.Systemz;
 
-import static capstone.Sparc_const.*;
+import static capstone.Sysz_const.*;
 
-public class TestSparc {
+public class TestSystemz {
 
   static byte[] hexString2Byte(String s) {
     // from http://stackoverflow.com/questions/140131/convert-a-string-representation-of-a-hex-dump-to-a-byte-array-using-java
@@ -19,7 +19,7 @@ public class TestSparc {
     return data;
   }
 
-  static final String SPARC_CODE = "80a0400285c2600885e8200181e8000090102001d5f610162100000a860040020100000012bfffff10bfffffa00200090dbfffffd4206000d44e00162ac28003";
+  static final String SYSZ_CODE = "ed000000001a5a0f1fffc2098000000007f7eb2affff7f57e301ffff7f57eb00f0000024b24f0078"
 
   public static Capstone cs;
 
@@ -34,21 +34,23 @@ public class TestSparc {
   public static void print_ins_detail(Capstone.CsInsn ins) {
     System.out.printf("0x%x:\t%s\t%s\n", ins.address, ins.mnemonic, ins.opStr);
 
-    Sparc.OpInfo operands = (Sparc.OpInfo) ins.operands;
+    Systemz.OpInfo operands = (Systemz.OpInfo) ins.operands;
 
     if (operands.op.length != 0) {
       System.out.printf("\top_count: %d\n", operands.op.length);
       for (int c=0; c<operands.op.length; c++) {
-        Sparc.Operand i = (Sparc.Operand) operands.op[c];
-        if (i.type == SPARC_OP_REG)
+        Systemz.Operand i = (Systemz.Operand) operands.op[c];
+        if (i.type == SYSZ_OP_REG)
             System.out.printf("\t\toperands[%d].type: REG = %s\n", c, ins.regName(i.value.reg));
-        if (i.type == SPARC_OP_IMM)
+        if (i.type == SYSZ_OP_ACREG)
+            System.out.printf("\t\toperands[%d].type: ACREG = %u\n", c, i.value.reg);
+        if (i.type == SYSZ_OP_IMM)
           System.out.printf("\t\toperands[%d].type: IMM = 0x%x\n", c, i.value.imm);
-        if (i.type == SPARC_OP_MEM) {
+        if (i.type == SYSZ_OP_MEM) {
           System.out.printf("\t\toperands[%d].type: MEM\n", c);
-          if (i.value.mem.base != SPARC_REG_INVALID)
+          if (i.value.mem.base != SYSZ_REG_INVALID)
             System.out.printf("\t\t\toperands[%d].mem.base: REG = %s\n", c, ins.regName(i.value.mem.base));
-          if (i.value.mem.index != SPARC_REG_INVALID)
+          if (i.value.mem.index != SYSZ_REG_INVALID)
             System.out.printf("\t\t\toperands[%d].mem.index: REG = %s\n", c, ins.regName(i.value.mem.index));
           if (i.value.mem.disp != 0)
             System.out.printf("\t\t\toperands[%d].mem.disp: 0x%x\n", c, i.value.mem.disp);
@@ -59,16 +61,13 @@ public class TestSparc {
     if (operands.cc != 0)
       System.out.printf("\tConditional code: %d\n", operands.cc);
 
-    if (operands.hint != 0)
-      System.out.printf("\tBranch hint: %d\n", operands.hint);
-
     System.out.printf("\n");
   }
 
   public static void main(String argv[]) {
 
     final Test.platform[] all_tests = {
-      new Test.platform(Capstone.CS_ARCH_SPARC, Capstone.CS_MODE_BIG_ENDIAN, hexString2Byte(SPARC_CODE), "SPARC"),
+      new Test.platform(Capstone.CS_ARCH_SYSZ, 0, hexString2Byte(SYSZ_CODE), "SystemZ"),
     };
 
     for (int i=0; i<all_tests.length; i++) {

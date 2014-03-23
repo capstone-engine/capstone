@@ -18,5 +18,6 @@ case "$1" in
   "x86") java -classpath ${JNA}:. TestX86 ;;
   "ppc") java -classpath ${JNA}:. TestPpc ;;
   "sparc") java -classpath ${JNA}:. TestSparc ;;
-  * ) echo "Usage: ./run.sh [arm|arm64|mips|ppc|sparc|x86]"; exit 1;;
+  "systemz") java -classpath ${JNA}:. TestSystemz ;;
+  * ) echo "Usage: ./run.sh [arm|arm64|mips|ppc|sparc|systemz|x86]"; exit 1;;
 esac

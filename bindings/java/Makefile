@@ -13,8 +13,8 @@ else
 endif
 
 CAPSTONE_JAVA = Capstone.java Arm_const.java Arm64_const.java Mips_const.java \
-				X86_const.java Ppc_const.java Sparc_const.java \
-				Arm.java Arm64.java Mips.java X86.java Ppc.java Sparc.java
+				X86_const.java Ppc_const.java Sparc_const.java Sysz_const.java \
+				Arm.java Arm64.java Mips.java X86.java Ppc.java Sparc.java Systemz.java
 
 all: gen_const capstone tests
 
