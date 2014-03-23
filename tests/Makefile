@@ -54,6 +54,9 @@ endif
 ifneq (,$(findstring sparc,$(CAPSTONE_ARCHS)))
 SOURCES += test_sparc.c
 endif
+ifneq (,$(findstring systemz,$(CAPSTONE_ARCHS)))
+SOURCES += test_systemz.c
+endif
 ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
 SOURCES += test_x86.c
 endif

@@ -54,8 +54,8 @@ static void test()
 //#define X86_CODE32 "\x77\x04"	// ja +6
 #define PPC_CODE "\x80\x20\x00\x00\x80\x3f\x00\x00\x10\x43\x23\x0e\xd0\x44\x00\x80\x4c\x43\x22\x02\x2d\x03\x00\x80\x7c\x43\x20\x14\x7c\x43\x20\x93\x4f\x20\x00\x21\x4c\xc8\x00\x21"
 #define SPARC_CODE "\x80\xa0\x40\x02\x85\xc2\x60\x08\x85\xe8\x20\x01\x81\xe8\x00\x00\x90\x10\x20\x01\xd5\xf6\x10\x16\x21\x00\x00\x0a\x86\x00\x40\x02\x01\x00\x00\x00\x12\xbf\xff\xff\x10\xbf\xff\xff\xa0\x02\x00\x09\x0d\xbf\xff\xff\xd4\x20\x60\x00\xd4\x4e\x00\x16\x2a\xc2\x80\x03"
-
 #define SPARCV9_CODE "\x81\xa8\x0a\x24\x89\xa0\x10\x20\x89\xa0\x1a\x60\x89\xa0\x00\xe0"
+#define SYSZ_CODE "\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x00\x07\xf7\xeb\x2a\xff\xff\x7f\x57\xe3\x01\xff\xff\x7f\x57\xeb\x00\xf0\x00\x00\x24"
 
 	struct platform platforms[] = {
 		{
@@ -158,6 +158,13 @@ static void test()
 			.size = sizeof(SPARCV9_CODE) - 1,
 			.comment = "SparcV9"
 		},
+		{
+			.arch = CS_ARCH_SYSZ,
+			.mode = 0,
+			.code = (unsigned char*)SYSZ_CODE,
+			.size = sizeof(SYSZ_CODE) - 1,
+			.comment = "SystemZ"
+		},
 	};
 
 	csh handle;
@@ -166,6 +173,8 @@ static void test()
 	int i;
 
 	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
+		printf("****************\n");
+		printf("Platform: %s\n", platforms[i].comment);
 		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
 		if (err) {
 			printf("Failed on cs_open() with error returned: %u\n", err);
@@ -179,8 +188,6 @@ static void test()
 
 		size_t count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &all_insn);
 		if (count) {
-			printf("****************\n");
-			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex(platforms[i].code, platforms[i].size);
 			printf("Disasm:\n");
 

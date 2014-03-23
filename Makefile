@@ -131,6 +131,24 @@ ifneq (,$(findstring sparc,$(CAPSTONE_ARCHS)))
 endif
 
 
+DEP_SYSZ =
+DEP_SYSZ += arch/SystemZ/SystemZGenAsmWriter.inc
+DEP_SYSZ += arch/SystemZ/SystemZGenInstrInfo.inc
+DEP_SYSZ += arch/SystemZ/SystemZGenSubtargetInfo.inc
+DEP_SYSZ += arch/SystemZ/SystemZGenDisassemblerTables.inc
+DEP_SYSZ += arch/SystemZ/SystemZGenRegisterInfo.inc
+
+LIBOBJ_SYSZ =
+ifneq (,$(findstring systemz,$(CAPSTONE_ARCHS)))
+	CFLAGS += -DCAPSTONE_HAS_SYSZ
+	LIBOBJ_SYSZ += arch/SystemZ/SystemZDisassembler.o
+	LIBOBJ_SYSZ += arch/SystemZ/SystemZInstPrinter.o
+	LIBOBJ_SYSZ += arch/SystemZ/SystemZMapping.o
+	LIBOBJ_SYSZ += arch/SystemZ/SystemZModule.o
+	LIBOBJ_SYSZ += arch/SystemZ/SystemZMCTargetDesc.o
+endif
+
+
 DEP_X86 =
 DEP_X86 += arch/X86/X86GenAsmWriter.inc
 DEP_X86 += arch/X86/X86GenAsmWriter1.inc
@@ -151,7 +169,7 @@ endif
 
 LIBOBJ =
 LIBOBJ += cs.o utils.o SStream.o MCInstrDesc.o MCRegisterInfo.o
-LIBOBJ += $(LIBOBJ_ARM) $(LIBOBJ_ARM64) $(LIBOBJ_MIPS) $(LIBOBJ_PPC) $(LIBOBJ_SPARC) $(LIBOBJ_X86)
+LIBOBJ += $(LIBOBJ_ARM) $(LIBOBJ_ARM64) $(LIBOBJ_MIPS) $(LIBOBJ_PPC) $(LIBOBJ_SPARC) $(LIBOBJ_SYSZ) $(LIBOBJ_X86)
 LIBOBJ += MCInst.o
 
 
@@ -223,6 +241,7 @@ $(LIBOBJ_ARM64): $(DEP_ARM64)
 $(LIBOBJ_MIPS): $(DEP_MIPS)
 $(LIBOBJ_PPC): $(DEP_PPC)
 $(LIBOBJ_SPARC): $(DEP_SPARC)
+$(LIBOBJ_SYSZ): $(DEP_SYSZ)
 $(LIBOBJ_X86): $(DEP_X86)
 
 # auto-generate include/diet.h

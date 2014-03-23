@@ -27,6 +27,7 @@ extern void Mips_enable(void);
 extern void X86_enable(void);
 extern void PPC_enable(void);
 extern void Sparc_enable(void);
+extern void SystemZ_enable(void);
 
 static void archs_enable(void)
 {
@@ -49,6 +50,9 @@ static void archs_enable(void)
 #endif
 #ifdef CAPSTONE_HAS_SPARC
 	Sparc_enable();
+#endif
+#ifdef CAPSTONE_HAS_SYSZ
+	SystemZ_enable();
 #endif
 #ifdef CAPSTONE_HAS_X86
 	X86_enable();
@@ -92,7 +96,8 @@ bool cs_support(int query)
 	if (query == CS_ARCH_ALL)
 		return all_arch == ((1 << CS_ARCH_ARM) | (1 << CS_ARCH_ARM64) |
 				(1 << CS_ARCH_MIPS) | (1 << CS_ARCH_X86) |
-				(1 << CS_ARCH_PPC) | (1 << CS_ARCH_SPARC));
+				(1 << CS_ARCH_PPC) | (1 << CS_ARCH_SPARC) |
+				(1 << CS_ARCH_SYSZ));
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
@@ -585,6 +590,11 @@ int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
 				if (insn->detail->sparc.operands[i].type == (sparc_op_type)op_type)
 					count++;
 			break;
+		case CS_ARCH_SYSZ:
+			for (i = 0; i < insn->detail->sysz.op_count; i++)
+				if (insn->detail->sysz.operands[i].type == (sysz_op_type)op_type)
+					count++;
+			break;
 	}
 
 	return count;
@@ -653,6 +663,14 @@ int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 		case CS_ARCH_SPARC:
 			for (i = 0; i < insn->detail->sparc.op_count; i++) {
 				if (insn->detail->sparc.operands[i].type == (sparc_op_type)op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+			break;
+		case CS_ARCH_SYSZ:
+			for (i = 0; i < insn->detail->sysz.op_count; i++) {
+				if (insn->detail->sysz.operands[i].type == (sysz_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;

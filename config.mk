@@ -21,6 +21,9 @@ CAPSTONE_ARCHS += powerpc
 # Comment out the line below if you don't want to support Sparc
 CAPSTONE_ARCHS += sparc
 
+# Comment out the line below if you don't want to support SystemZ
+CAPSTONE_ARCHS += systemz
+
 # Comment out the line below if you don't want to support Intel (16/32/64-bit)
 CAPSTONE_ARCHS += x86
 

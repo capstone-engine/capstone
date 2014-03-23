@@ -40,6 +40,7 @@ typedef enum cs_arch {
 	CS_ARCH_X86,		// X86 architecture (including x86 & x86-64)
 	CS_ARCH_PPC,		// PowerPC architecture
 	CS_ARCH_SPARC,		// Sparc architecture
+	CS_ARCH_SYSZ,		// SystemZ architecture
 	CS_ARCH_MAX,
 	CS_ARCH_ALL = 0xFFFF,
 } cs_arch;
@@ -99,9 +100,10 @@ typedef enum cs_opt_value {
 #include "arm.h"
 #include "arm64.h"
 #include "mips.h"
-#include "x86.h"
 #include "ppc.h"
 #include "sparc.h"
+#include "systemz.h"
+#include "x86.h"
 
 // NOTE: All information in cs_detail is only available when CS_OPT_DETAIL = CS_OPT_ON
 typedef struct cs_detail {
@@ -122,6 +124,7 @@ typedef struct cs_detail {
 		cs_mips mips;	// MIPS architecture
 		cs_ppc ppc;	// PowerPC architecture
 		cs_sparc sparc;	// Sparc architecture
+		cs_sysz sysz;	// SystemZ architecture
 	};
 } cs_detail;
 
