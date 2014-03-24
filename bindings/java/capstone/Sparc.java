@@ -59,7 +59,7 @@ public class Sparc {
     public Operand [] op;
 
     public UnionOpInfo() {
-      op = new Operand[8];
+      op = new Operand[4];
     }
 
     public void read() {
