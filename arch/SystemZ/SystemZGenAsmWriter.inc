@@ -927,6 +927,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U
   };
 
+#ifndef CAPSTONE_DIET
   static char AsmStrs[] = {
   /* 0 */ 'l', 'a', 'a', 9, 0,
   /* 5 */ 'l', 'a', 9, 0,
@@ -1535,11 +1536,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   /* 4009 */ 'l', 'o', 'c', 'r', 0,
   /* 4014 */ 'l', 'o', 'c', 'g', 'r', 0,
   };
+#endif
 
   // Emit the opcode for the instruction.
   uint32_t Bits = OpInfo[MCInst_getOpcode(MI)];
   // assert(Bits != 0 && "Cannot print this instruction.");
+#ifndef CAPSTONE_DIET
   SStream_concat(O, "%s", AsmStrs+(Bits & 4095)-1);
+#endif
 
 
   // Fragment 0 encoded into 4 bits for 11 unique commands.
