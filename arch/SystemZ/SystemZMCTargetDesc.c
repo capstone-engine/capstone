@@ -71,7 +71,7 @@ unsigned SystemZMC_getFirstReg(unsigned Reg)
 	unsigned I;
 
 	if (!Initialized) {
-Initialized = 1;
+		Initialized = 1;
 		for (I = 0; I < 16; ++I) {
 			Map[SystemZMC_GR32Regs[I]] = I;
 			Map[SystemZMC_GRH32Regs[I]] = I;
