@@ -48,7 +48,8 @@ typedef enum sysz_op_type {
 // This is associated with SYSZ_OP_MEM operand type above
 typedef struct sysz_op_mem {
 	uint8_t base;	// base register
-	uint64_t index;	// index register
+	uint8_t index;	// index register
+	uint64_t length;	// BDLAddr operand
 	int64_t disp;	// displacement/offset value
 } sysz_op_mem;
 
@@ -68,7 +69,7 @@ typedef struct cs_sysz {
 	// Number of operands of this instruction, 
 	// or 0 when instruction has no operand.
 	uint8_t op_count;
-	cs_sysz_op operands[4]; // operands for this instruction.
+	cs_sysz_op operands[6]; // operands for this instruction.
 } cs_sysz;
 
 //> SystemZ registers
