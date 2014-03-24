@@ -52,6 +52,8 @@ public class TestSystemz {
             System.out.printf("\t\t\toperands[%d].mem.base: REG = %s\n", c, ins.regName(i.value.mem.base));
           if (i.value.mem.index != SYSZ_REG_INVALID)
             System.out.printf("\t\t\toperands[%d].mem.index: REG = %s\n", c, ins.regName(i.value.mem.index));
+          if (i.value.mem.length != 0)
+            System.out.printf("\t\t\toperands[%d].mem.length: 0x%x\n", c, i.value.mem.disp);
           if (i.value.mem.disp != 0)
             System.out.printf("\t\t\toperands[%d].mem.disp: 0x%x\n", c, i.value.mem.disp);
         }

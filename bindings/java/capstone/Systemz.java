@@ -15,12 +15,13 @@ public class Systemz {
 
   public static class MemType extends Structure {
     public byte base;
-    public int index;
+    public byte index;
+    public int length;
     public int disp;
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("base", "index", "disp");
+      return Arrays.asList("base", "index", "length", "disp");
     }
   }
 
@@ -58,7 +59,7 @@ public class Systemz {
     public Operand [] op;
 
     public UnionOpInfo() {
-      op = new Operand[8];
+      op = new Operand[6];
     }
 
     public void read() {
