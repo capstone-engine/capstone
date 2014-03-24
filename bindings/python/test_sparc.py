@@ -16,13 +16,6 @@ all_tests = (
 def to_hex(s):
     return " ".join("0x" + "{0:x}".format(ord(c)).zfill(2) for c in s) # <-- Python 3 is OK
 
-def to_x(s):
-    from struct import pack
-    if not s: return '0'
-    x = pack(">q", s).encode('hex')
-    while x[0] == '0': x = x[1:]
-    return x
-
 def to_x_32(s):
     from struct import pack
     if not s: return '0'
