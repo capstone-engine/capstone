@@ -59,7 +59,7 @@ static void printAddress(MCInst *MI, unsigned Base, int64_t Disp, unsigned Index
 
 		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_MEM;
 		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.base = (uint8_t)SystemZ_map_register(Base);
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.index = (uint64_t)SystemZ_map_register(Index);
+		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.index = (uint8_t)SystemZ_map_register(Index);
 		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.disp = Disp;
 		MI->flat_insn.sysz.op_count++;
 	} else if (!Index) {
@@ -311,17 +311,26 @@ static void printBDXAddrOperand(MCInst *MI, int OpNum, SStream *O)
 static void printBDLAddrOperand(MCInst *MI, int OpNum, SStream *O)
 {
 	unsigned Base = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
-	uint64_t Disp = MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
-	uint64_t Length = MCOperand_getImm(MCInst_getOperand(MI, OpNum + 2));
+	uint64_t Disp = (uint64_t)MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
+	uint64_t Length = (uint64_t)MCOperand_getImm(MCInst_getOperand(MI, OpNum + 2));
 
-	SStream_concat(O, "0x%"PRIx64"(0x%"PRIx64, Disp, Length);
+	if (Disp > HEX_THRESHOLD)
+		SStream_concat(O, "0x%"PRIx64, Disp);
+	else
+		SStream_concat(O, "%"PRIu64, Disp);
+
+	if (Length > HEX_THRESHOLD)
+		SStream_concat(O, "(0x%"PRIx64, Length);
+	else
+		SStream_concat(O, "(%"PRIu64, Length);
+
 	if (Base)
-		SStream_concat(O, ", %s", getRegisterName(Base));
+		SStream_concat(O, ", %%%s", getRegisterName(Base));
 	SStream_concat(O, ")");
 
 	MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_MEM;
 	MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.base = (uint8_t)SystemZ_map_register(Base);
-	MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.index = Length;
+	MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.length = Length;
 	MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.disp = (int64_t)Disp;
 	MI->flat_insn.sysz.op_count++;
 }
