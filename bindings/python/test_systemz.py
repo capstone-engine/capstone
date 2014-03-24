@@ -20,12 +20,6 @@ def to_x(s):
     while x[0] == '0': x = x[1:]
     return x
 
-def to_x_32(s):
-    from struct import pack
-    if not s: return '0'
-    x = pack(">i", s).encode('hex')
-    while x[0] == '0': x = x[1:]
-    return x
 
 ### Test class Cs
 def test_class():
@@ -42,15 +36,21 @@ def test_class():
                 if i.type == SYSZ_OP_ACREG:
                     print("\t\toperands[%u].type: ACREG = %u" %(c, i.reg))
                 if i.type == SYSZ_OP_IMM:
-                    print("\t\toperands[%u].type: IMM = 0x%s" %(c, to_x_32(i.imm)))
+                    print("\t\toperands[%u].type: IMM = 0x%s" %(c, to_x(i.imm)))
                 if i.type == SYSZ_OP_MEM:
                     print("\t\toperands[%u].type: MEM" %c)
                     if i.mem.base != 0:
                         print("\t\t\toperands[%u].mem.base: REG = %s" \
                             %(c, insn.reg_name(i.mem.base)))
+                    if i.mem.index != 0:
+                        print("\t\t\toperands[%u].mem.index: REG = %s" \
+                            %(c, insn.reg_name(i.mem.index)))
+                    if i.mem.length != 0:
+                        print("\t\t\toperands[%u].mem.length: 0x%s" \
+                            %(c, to_x(i.mem.length)))
                     if i.mem.disp != 0:
                         print("\t\t\toperands[%u].mem.disp: 0x%s" \
-                            %(c, to_x_32(i.mem.disp)))
+                            %(c, to_x(i.mem.disp)))
                 c += 1
 
         if insn.cc:

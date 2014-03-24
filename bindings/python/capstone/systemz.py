@@ -7,7 +7,8 @@ from sysz_const import *
 class SyszOpMem(ctypes.Structure):
     _fields_ = (
         ('base', ctypes.c_uint8),
-        ('index', ctypes.c_uint64),
+        ('index', ctypes.c_uint8),
+        ('length', ctypes.c_uint64),
         ('disp', ctypes.c_int64),
     )
 
@@ -41,7 +42,7 @@ class CsSysz(ctypes.Structure):
     _fields_ = (
         ('cc', ctypes.c_uint),
         ('op_count', ctypes.c_uint8),
-        ('operands', SyszOp * 4),
+        ('operands', SyszOp * 6),
     )
 
 def get_arch_info(a):
