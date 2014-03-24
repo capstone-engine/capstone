@@ -186,6 +186,7 @@ VERSION_EXT =
 # OSX?
 ifeq ($(UNAME_S),Darwin)
 EXT = dylib
+VERSION_EXT = $(API_MAJOR).$(EXT)
 AR_EXT = a
 ifneq ($(USE_SYS_DYN_MEM),yes)
 # remove string check because OSX kernel complains about missing symbols
@@ -292,7 +293,9 @@ install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 	rm -f $(LIBDIR)/lib$(LIBNAME).*
 	$(INSTALL_LIB) lib$(LIBNAME).$(EXT) $(LIBDIR)
 ifneq ($(VERSION_EXT),)
-	ln -s $(LIBDIR)/lib$(LIBNAME).$(EXT) $(LIBDIR)/lib$(LIBNAME).$(VERSION_EXT)
+	cd $(LIBDIR) && \
+	mv lib$(LIBNAME).$(EXT) lib$(LIBNAME).$(VERSION_EXT) && \
+	ln -s lib$(LIBNAME).$(VERSION_EXT) lib$(LIBNAME).$(EXT)
 endif
 	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
 	mkdir -p $(INCDIR)/$(LIBNAME)
