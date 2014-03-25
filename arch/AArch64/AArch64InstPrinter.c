@@ -562,17 +562,27 @@ static void printSImm7ScaledOperand(MCInst *MI, unsigned OpNum,
 {
 	MCOperand *MOImm = MCInst_getOperand(MI, OpNum);
 	int32_t Imm = (int32_t)unpackSignedImm(7, MCOperand_getImm(MOImm));
+	int64_t res;
 
-	if (Imm * MemScale > HEX_THRESHOLD)
-		SStream_concat(O, "#0x%x", Imm * MemScale);
-	else
-		SStream_concat(O, "#%u", Imm * MemScale);
+	res = Imm * MemScale;
+	if (res > 0) {
+		if (res > HEX_THRESHOLD)
+			SStream_concat(O, "#0x%"PRIx64, res);
+		else
+			SStream_concat(O, "#%"PRIu64, res);
+	} else {
+		if (res < -HEX_THRESHOLD)
+			SStream_concat(O, "#-0x%"PRIx64, -res);
+		else
+			SStream_concat(O, "#-%"PRIu64, -res);
+	}
+
 	if (MI->csh->detail) {
 		if (MI->csh->doing_mem) {
-			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].mem.disp = Imm * MemScale;
+			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].mem.disp = res;
 		} else {
 			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = Imm * MemScale;
+			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = res;
 			MI->flat_insn.arm64.op_count++;
 		}
 	}
