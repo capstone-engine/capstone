@@ -156,11 +156,18 @@ ifneq (,$(findstring systemz,$(CAPSTONE_ARCHS)))
 endif
 
 
+# by default, we compile full X86 instruction sets
+X86_COMPACT =
+ifneq (,$(findstring yes,$(CAPSTONE_X86_COMPACT)))
+X86_COMPACT = _compact
+CFLAGS += -DCAPSTONE_X86_COMPACT
+endif
+
 DEP_X86 =
-DEP_X86 += arch/X86/X86GenAsmWriter.inc
-DEP_X86 += arch/X86/X86GenAsmWriter1.inc
-DEP_X86 += arch/X86/X86GenDisassemblerTables.inc
-DEP_X86 += arch/X86/X86GenInstrInfo.inc
+DEP_X86 += arch/X86/X86GenAsmWriter$(X86_COMPACT).inc
+DEP_X86 += arch/X86/X86GenAsmWriter1$(X86_COMPACT).inc
+DEP_X86 += arch/X86/X86GenDisassemblerTables$(X86_COMPACT).inc
+DEP_X86 += arch/X86/X86GenInstrInfo$(X86_COMPACT).inc
 DEP_X86 += arch/X86/X86GenRegisterInfo.inc
 
 LIBOBJ_X86 =

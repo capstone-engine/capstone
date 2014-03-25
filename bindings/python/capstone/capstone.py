@@ -58,6 +58,7 @@ __all__ = [
     'CS_ERR_DIET',
 
     'CS_SUPPORT_DIET',
+    'CS_SUPPORT_X86_COMPACT',
 ]
 
 # Capstone C interface
@@ -119,6 +120,7 @@ CS_ERR_DIET = 10 # Information irrelevant in diet engine
 
 # query id for cs_support()
 CS_SUPPORT_DIET = CS_ARCH_ALL+1
+CS_SUPPORT_X86_COMPACT = CS_ARCH_ALL+2
 
 import ctypes, ctypes.util, sys
 from os.path import split, join, dirname
@@ -545,6 +547,7 @@ class Cs(object):
 
         self._detail = False    # by default, do not produce instruction details
         self._diet = cs_support(CS_SUPPORT_DIET)
+        self._x86_compact = cs_support(CS_SUPPORT_X86_COMPACT)
 
 
     # destructor to be called automatically when object is destroyed.
@@ -563,6 +566,12 @@ class Cs(object):
     @property
     def diet(self):
         return self._diet
+
+
+    # is this engine compiled with X86 compact option?
+    @property
+    def x86_compact(self):
+        return self._x86_compact
 
 
     # return assembly syntax.
@@ -678,7 +687,7 @@ def debug():
 
     archs = { "arm": CS_ARCH_ARM, "arm64": CS_ARCH_ARM64, \
         "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "sparc": CS_ARCH_SPARC, \
-        "sysz": CS_ARCH_SYSZ, "x86": CS_ARCH_X86 }
+        "sysz": CS_ARCH_SYSZ }
 
     all_archs = ""
     keys = archs.keys()
@@ -686,6 +695,11 @@ def debug():
     for k in keys:
         if cs_support(archs[k]):
             all_archs += "-%s" %k
+
+    if cs_support(CS_ARCH_X86):
+        all_archs += "-x86"
+        if cs_support(CS_SUPPORT_X86_COMPACT):
+            all_archs += "_compact"
 
     (major, minor, _combined) = cs_version()
 

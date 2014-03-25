@@ -45,7 +45,15 @@ typedef enum cs_arch {
 	CS_ARCH_ALL = 0xFFFF,
 } cs_arch;
 
+// Support value to verify diet mode of the engine.
+// If cs_support(CS_SUPPORT_DIET) return True, the engine was compiled
+// in diet mode.
 #define CS_SUPPORT_DIET (CS_ARCH_ALL + 1)
+
+// Support value to verify X86 compact mode of the engine.
+// If cs_support(CS_SUPPORT_X86_COMPACT) return True, the engine was compiled
+// in X86 compact mode.
+#define CS_SUPPORT_X86_COMPACT (CS_ARCH_ALL + 2)
 
 // Mode type
 typedef enum cs_mode {

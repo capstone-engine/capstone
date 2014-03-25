@@ -110,6 +110,14 @@ bool cs_support(int query)
 #endif
 	}
 
+	if (query == CS_SUPPORT_X86_COMPACT) {
+#if defined(CAPSTONE_HAS_X86) && defined(CAPSTONE_X86_COMPACT)
+		return true;
+#else
+		return false;
+#endif
+	}
+
 	// unsupported query
 	return false;
 }

@@ -69,6 +69,7 @@ static void printi128mem(MCInst *MI, unsigned OpNo, SStream *O)
 	printMemReference(MI, OpNo, O);
 }
 
+#ifndef CAPSTONE_X86_COMPACT
 static void printi256mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat(O, "ymmword ptr ");
@@ -114,6 +115,84 @@ static void printf512mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	printMemReference(MI, OpNo, O);
 }
+
+static void printSSECC(MCInst *MI, unsigned Op, SStream *OS)
+{
+	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0xf;
+	switch (Imm) {
+		default: break;	// never reach
+		case    0: SStream_concat(OS, "eq"); break;
+		case    1: SStream_concat(OS, "lt"); break;
+		case    2: SStream_concat(OS, "le"); break;
+		case    3: SStream_concat(OS, "unord"); break;
+		case    4: SStream_concat(OS, "neq"); break;
+		case    5: SStream_concat(OS, "nlt"); break;
+		case    6: SStream_concat(OS, "nle"); break;
+		case    7: SStream_concat(OS, "ord"); break;
+		case    8: SStream_concat(OS, "eq_uq"); break;
+		case    9: SStream_concat(OS, "nge"); break;
+		case  0xa: SStream_concat(OS, "ngt"); break;
+		case  0xb: SStream_concat(OS, "false"); break;
+		case  0xc: SStream_concat(OS, "neq_oq"); break;
+		case  0xd: SStream_concat(OS, "ge"); break;
+		case  0xe: SStream_concat(OS, "gt"); break;
+		case  0xf: SStream_concat(OS, "true"); break;
+	}
+}
+
+static void printAVXCC(MCInst *MI, unsigned Op, SStream *O)
+{
+	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x1f;
+	switch (Imm) {
+		default: break;//printf("Invalid avxcc argument!\n"); break;
+		case    0: SStream_concat(O, "eq"); break;
+		case    1: SStream_concat(O, "lt"); break;
+		case    2: SStream_concat(O, "le"); break;
+		case    3: SStream_concat(O, "unord"); break;
+		case    4: SStream_concat(O, "neq"); break;
+		case    5: SStream_concat(O, "nlt"); break;
+		case    6: SStream_concat(O, "nle"); break;
+		case    7: SStream_concat(O, "ord"); break;
+		case    8: SStream_concat(O, "eq_uq"); break;
+		case    9: SStream_concat(O, "nge"); break;
+		case  0xa: SStream_concat(O, "ngt"); break;
+		case  0xb: SStream_concat(O, "false"); break;
+		case  0xc: SStream_concat(O, "neq_oq"); break;
+		case  0xd: SStream_concat(O, "ge"); break;
+		case  0xe: SStream_concat(O, "gt"); break;
+		case  0xf: SStream_concat(O, "true"); break;
+		case 0x10: SStream_concat(O, "eq_os"); break;
+		case 0x11: SStream_concat(O, "lt_oq"); break;
+		case 0x12: SStream_concat(O, "le_oq"); break;
+		case 0x13: SStream_concat(O, "unord_s"); break;
+		case 0x14: SStream_concat(O, "neq_us"); break;
+		case 0x15: SStream_concat(O, "nlt_uq"); break;
+		case 0x16: SStream_concat(O, "nle_uq"); break;
+		case 0x17: SStream_concat(O, "ord_s"); break;
+		case 0x18: SStream_concat(O, "eq_us"); break;
+		case 0x19: SStream_concat(O, "nge_uq"); break;
+		case 0x1a: SStream_concat(O, "ngt_uq"); break;
+		case 0x1b: SStream_concat(O, "false_os"); break;
+		case 0x1c: SStream_concat(O, "neq_os"); break;
+		case 0x1d: SStream_concat(O, "ge_oq"); break;
+		case 0x1e: SStream_concat(O, "gt_oq"); break;
+		case 0x1f: SStream_concat(O, "true_us"); break;
+	}
+}
+
+static void printRoundingControl(MCInst *MI, unsigned Op, SStream *O)
+{
+	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x3;
+	switch (Imm) {
+		case 0: SStream_concat(O, "{rn-sae}"); break;
+		case 1: SStream_concat(O, "{rd-sae}"); break;
+		case 2: SStream_concat(O, "{ru-sae}"); break;
+		case 3: SStream_concat(O, "{rz-sae}"); break;
+		default: break;	// never reach
+	}
+}
+
+#endif
 
 static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 {
@@ -249,82 +328,6 @@ static void printMemOffs64(MCInst *MI, unsigned OpNo, SStream *O)
 }
 
 static void printRegName(SStream *OS, unsigned RegNo);
-
-static void printSSECC(MCInst *MI, unsigned Op, SStream *OS)
-{
-	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0xf;
-	switch (Imm) {
-		default: break;	// never reach
-		case    0: SStream_concat(OS, "eq"); break;
-		case    1: SStream_concat(OS, "lt"); break;
-		case    2: SStream_concat(OS, "le"); break;
-		case    3: SStream_concat(OS, "unord"); break;
-		case    4: SStream_concat(OS, "neq"); break;
-		case    5: SStream_concat(OS, "nlt"); break;
-		case    6: SStream_concat(OS, "nle"); break;
-		case    7: SStream_concat(OS, "ord"); break;
-		case    8: SStream_concat(OS, "eq_uq"); break;
-		case    9: SStream_concat(OS, "nge"); break;
-		case  0xa: SStream_concat(OS, "ngt"); break;
-		case  0xb: SStream_concat(OS, "false"); break;
-		case  0xc: SStream_concat(OS, "neq_oq"); break;
-		case  0xd: SStream_concat(OS, "ge"); break;
-		case  0xe: SStream_concat(OS, "gt"); break;
-		case  0xf: SStream_concat(OS, "true"); break;
-	}
-}
-
-static void printAVXCC(MCInst *MI, unsigned Op, SStream *O)
-{
-	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x1f;
-	switch (Imm) {
-		default: break;//printf("Invalid avxcc argument!\n"); break;
-		case    0: SStream_concat(O, "eq"); break;
-		case    1: SStream_concat(O, "lt"); break;
-		case    2: SStream_concat(O, "le"); break;
-		case    3: SStream_concat(O, "unord"); break;
-		case    4: SStream_concat(O, "neq"); break;
-		case    5: SStream_concat(O, "nlt"); break;
-		case    6: SStream_concat(O, "nle"); break;
-		case    7: SStream_concat(O, "ord"); break;
-		case    8: SStream_concat(O, "eq_uq"); break;
-		case    9: SStream_concat(O, "nge"); break;
-		case  0xa: SStream_concat(O, "ngt"); break;
-		case  0xb: SStream_concat(O, "false"); break;
-		case  0xc: SStream_concat(O, "neq_oq"); break;
-		case  0xd: SStream_concat(O, "ge"); break;
-		case  0xe: SStream_concat(O, "gt"); break;
-		case  0xf: SStream_concat(O, "true"); break;
-		case 0x10: SStream_concat(O, "eq_os"); break;
-		case 0x11: SStream_concat(O, "lt_oq"); break;
-		case 0x12: SStream_concat(O, "le_oq"); break;
-		case 0x13: SStream_concat(O, "unord_s"); break;
-		case 0x14: SStream_concat(O, "neq_us"); break;
-		case 0x15: SStream_concat(O, "nlt_uq"); break;
-		case 0x16: SStream_concat(O, "nle_uq"); break;
-		case 0x17: SStream_concat(O, "ord_s"); break;
-		case 0x18: SStream_concat(O, "eq_us"); break;
-		case 0x19: SStream_concat(O, "nge_uq"); break;
-		case 0x1a: SStream_concat(O, "ngt_uq"); break;
-		case 0x1b: SStream_concat(O, "false_os"); break;
-		case 0x1c: SStream_concat(O, "neq_os"); break;
-		case 0x1d: SStream_concat(O, "ge_oq"); break;
-		case 0x1e: SStream_concat(O, "gt_oq"); break;
-		case 0x1f: SStream_concat(O, "true_us"); break;
-	}
-}
-
-static void printRoundingControl(MCInst *MI, unsigned Op, SStream *O)
-{
-	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x3;
-	switch (Imm) {
-		case 0: SStream_concat(O, "{rn-sae}"); break;
-		case 1: SStream_concat(O, "{rd-sae}"); break;
-		case 2: SStream_concat(O, "{ru-sae}"); break;
-		case 3: SStream_concat(O, "{rz-sae}"); break;
-		default: break;	// never reach
-	}
-}
 
 /// printPCRelImm - This is used to print an immediate value that ends up
 /// being encoded as a pc-relative value (e.g. for jumps and calls).  These
@@ -479,14 +482,22 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 #include "X86InstPrinter.h"
 
 #define GET_INSTRINFO_ENUM
+#ifdef CAPSTONE_X86_COMPACT
+#include "X86GenInstrInfo_compact.inc"
+#else
 #include "X86GenInstrInfo.inc"
+#endif
 
 #define GET_REGINFO_ENUM
 #include "X86GenRegisterInfo.inc"
 
 // Include the auto-generated portion of the assembly writer.
 #define PRINT_ALIAS_INSTR
+#ifdef CAPSTONE_X86_COMPACT
+#include "X86GenAsmWriter_compact.inc"
+#else
 #include "X86GenAsmWriter.inc"
+#endif
 
 static void printRegName(SStream *OS, unsigned RegNo)
 {

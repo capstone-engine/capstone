@@ -51,3 +51,22 @@ USE_SYS_DYN_MEM = yes
 # will not be updated (i.e empty), thus become irrelevant.
 
 CAPSTONE_DIET = no
+
+
+################################################################################
+# Change 'CAPSTONE_X86_COMPACT = no' to 'CAPSTONE_X86_COMPACT = yes' to remove
+# non-critical instruction sets of X86, making the binary size smaller by ~50%.
+# This is desired in special cases, such as OS kernel, where these kind of
+# instructions are not used.
+#
+# The list of instruction sets to be removed includes:
+# - FPU
+# - MMX, SSE, SIMD, 3DNow, AVX, FMA, XOP
+# - VMX, SVM
+# - TSX
+#
+# Due to this removal, the related instructions are nolonger supported.
+#
+# By default, Capstone is compiled with 'CAPSTONE_X86_COMPACT = no'
+
+CAPSTONE_X86_COMPACT = no

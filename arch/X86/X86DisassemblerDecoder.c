@@ -24,11 +24,19 @@
 
 #include "X86DisassemblerDecoder.h"
 
+#ifdef CAPSTONE_X86_COMPACT
+#include "X86GenDisassemblerTables_compact.inc"
+#else
 #include "X86GenDisassemblerTables.inc"
+#endif
 
 //#define GET_INSTRINFO_ENUM
 #define GET_INSTRINFO_MC_DESC
+#ifdef CAPSTONE_X86_COMPACT
+#include "X86GenInstrInfo_compact.inc"
+#else
 #include "X86GenInstrInfo.inc"
+#endif
 
 static const char *x86DisassemblerGetInstrName(unsigned Opcode)
 {
@@ -79,6 +87,7 @@ static int modRMRequired(OpcodeType type,
 	uint8_t index;
 
 	switch (type) {
+		default:
 		case ONEBYTE:
 			decision = ONEBYTE_SYM;
 			indextable = index_x86DisassemblerOneByteOpcodes;
@@ -95,6 +104,7 @@ static int modRMRequired(OpcodeType type,
 			decision = THREEBYTE3A_SYM;
 			indextable = index_x86DisassemblerThreeByte3AOpcodes;
 			break;
+#ifndef CAPSTONE_X86_COMPACT
 		case XOP8_MAP:
 			decision = XOP8_MAP_SYM;
 			indextable = index_x86DisassemblerXOP8Opcodes;
@@ -107,6 +117,7 @@ static int modRMRequired(OpcodeType type,
 			decision = XOPA_MAP_SYM;
 			indextable = index_x86DisassemblerXOPAOpcodes;
 			break;
+#endif
 	}
 
 	index = indextable[insnContext];
@@ -137,6 +148,7 @@ static InstrUID decode(OpcodeType type,
 	uint8_t index;
 
 	switch (type) {
+		default:
 		case ONEBYTE:
 			indextable = index_x86DisassemblerOneByteOpcodes;
 			index = indextable[insnContext];
@@ -169,6 +181,7 @@ static InstrUID decode(OpcodeType type,
 			else
 				dec = &emptyTable.modRMDecisions[opcode];
 			break;
+#ifndef CAPSTONE_X86_COMPACT
 		case XOP8_MAP:
 			indextable = index_x86DisassemblerXOP8Opcodes;
 			index = indextable[insnContext];
@@ -193,6 +206,7 @@ static InstrUID decode(OpcodeType type,
 			else
 				dec = &emptyTable.modRMDecisions[opcode];
 			break;
+#endif
 	}
 
 	switch (dec->modrm_type) {

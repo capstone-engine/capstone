@@ -32,7 +32,11 @@
 #include "X86GenRegisterInfo.inc"
 
 #define GET_INSTRINFO_ENUM
+#ifdef CAPSTONE_X86_COMPACT
+#include "X86GenInstrInfo_compact.inc"
+#else
 #include "X86GenInstrInfo.inc"
+#endif
 
 struct reader_info {
 	const uint8_t *code;
@@ -181,15 +185,27 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 			case ENCODING_IB:
 				// Special case those X86 instructions that use the imm8 as a set of
 				// bits, bit count, etc. and are not sign-extend.
-				if (Opcode != X86_BLENDPSrri && Opcode != X86_BLENDPDrri &&
-						Opcode != X86_PBLENDWrri && Opcode != X86_MPSADBWrri &&
-						Opcode != X86_DPPSrri && Opcode != X86_DPPDrri &&
-						Opcode != X86_INSERTPSrr && Opcode != X86_VBLENDPSYrri &&
-						Opcode != X86_VBLENDPSYrmi && Opcode != X86_VBLENDPDYrri &&
-						Opcode != X86_VBLENDPDYrmi && Opcode != X86_VPBLENDWrri &&
-						Opcode != X86_VMPSADBWrri && Opcode != X86_VDPPSYrri &&
-						Opcode != X86_VDPPSYrmi && Opcode != X86_VDPPDrri &&
-						Opcode != X86_VINSERTPSrr && Opcode != X86_INT)
+				if (
+#ifndef CAPSTONE_X86_COMPACT
+						Opcode != X86_BLENDPSrri &&
+						Opcode != X86_BLENDPDrri &&
+						Opcode != X86_PBLENDWrri &&
+						Opcode != X86_MPSADBWrri &&
+						Opcode != X86_DPPSrri &&
+						Opcode != X86_DPPDrri &&
+						Opcode != X86_INSERTPSrr &&
+						Opcode != X86_VBLENDPSYrri &&
+						Opcode != X86_VBLENDPSYrmi &&
+						Opcode != X86_VBLENDPDYrri &&
+						Opcode != X86_VBLENDPDYrmi &&
+						Opcode != X86_VPBLENDWrri &&
+						Opcode != X86_VMPSADBWrri &&
+						Opcode != X86_VDPPSYrri &&
+						Opcode != X86_VDPPSYrmi &&
+						Opcode != X86_VDPPDrri &&
+						Opcode != X86_VINSERTPSrr &&
+#endif
+						Opcode != X86_INT)
 					if(immediate & 0x80)
 						immediate |= ~(0xffull);
 				break;
@@ -305,6 +321,9 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 	MCOperand *displacement;
 	MCOperand *segmentReg;
 	bool IndexIs512;
+#ifndef CAPSTONE_X86_COMPACT
+	uint32_t Opcode;
+#endif
 
 	if (insn->eaBase == EA_BASE_sib || insn->eaBase == EA_BASE_sib64) {
 		if (insn->sibBase != SIB_BASE_NONE) {
@@ -328,8 +347,12 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 		// I don't see a way to get the correct IndexReg in readSIB:
 		//   We can tell whether it is VSIB or SIB after instruction ID is decoded,
 		//   but instruction ID may not be decoded yet when calling readSIB.
-		uint32_t Opcode = MCInst_getOpcode(mcInst);
-		bool IndexIs128 = (Opcode == X86_VGATHERDPDrm ||
+#ifndef CAPSTONE_X86_COMPACT
+		Opcode = MCInst_getOpcode(mcInst);
+#endif
+		bool IndexIs128 = (
+#ifndef CAPSTONE_X86_COMPACT
+				Opcode == X86_VGATHERDPDrm ||
 				Opcode == X86_VGATHERDPDYrm ||
 				Opcode == X86_VGATHERQPDrm ||
 				Opcode == X86_VGATHERDPSrm ||
@@ -338,21 +361,34 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 				Opcode == X86_VPGATHERDQYrm ||
 				Opcode == X86_VPGATHERQQrm ||
 				Opcode == X86_VPGATHERDDrm ||
-				Opcode == X86_VPGATHERQDrm);
-		bool IndexIs256 = (Opcode == X86_VGATHERQPDYrm ||
+				Opcode == X86_VPGATHERQDrm ||
+#endif
+				false
+				);
+		bool IndexIs256 = (
+#ifndef CAPSTONE_X86_COMPACT
+				Opcode == X86_VGATHERQPDYrm ||
 				Opcode == X86_VGATHERDPSYrm ||
 				Opcode == X86_VGATHERQPSYrm ||
 				Opcode == X86_VGATHERDPDZrm ||
 				Opcode == X86_VPGATHERDQZrm ||
 				Opcode == X86_VPGATHERQQYrm ||
 				Opcode == X86_VPGATHERDDYrm ||
-				Opcode == X86_VPGATHERQDYrm);
-		IndexIs512 = (Opcode == X86_VGATHERQPDZrm ||
+				Opcode == X86_VPGATHERQDYrm ||
+#endif
+				false
+				);
+		IndexIs512 = (
+#ifndef CAPSTONE_X86_COMPACT
+				Opcode == X86_VGATHERQPDZrm ||
 				Opcode == X86_VGATHERDPSZrm ||
 				Opcode == X86_VGATHERQPSZrm ||
 				Opcode == X86_VPGATHERQQZrm ||
 				Opcode == X86_VPGATHERDDZrm ||
-				Opcode == X86_VPGATHERQDZrm);
+				Opcode == X86_VPGATHERQDZrm ||
+#endif
+				false
+				);
 
 		if (IndexIs128 || IndexIs256 || IndexIs512) {
 			unsigned IndexOffset = insn->sibIndex -
@@ -612,12 +648,14 @@ static bool translateInstruction(MCInst *mcInst, InternalInstruction *insn)
 	// If when reading the prefix bytes we determined the overlapping 0xf2 or 0xf3
 	// prefix bytes should be disassembled as xrelease and xacquire then set the
 	// opcode to those instead of the rep and repne opcodes.
+#ifndef CAPSTONE_X86_COMPACT
 	if (insn->xAcquireRelease) {
 		if (MCInst_getOpcode(mcInst) == X86_REP_PREFIX)
 			MCInst_setOpcode(mcInst, X86_XRELEASE_PREFIX);
 		else if (MCInst_getOpcode(mcInst) == X86_REPNE_PREFIX)
 			MCInst_setOpcode(mcInst, X86_XACQUIRE_PREFIX);
 	}
+#endif
 
 	insn->numImmediatesTranslated = 0;
 
