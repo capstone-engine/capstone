@@ -60,10 +60,15 @@ CAPSTONE_DIET = no
 # instructions are not used.
 #
 # The list of instruction sets to be removed includes:
-# - FPU
-# - MMX, SSE, SIMD, 3DNow, AVX, FMA, XOP
-# - VMX, SVM
-# - TSX
+# - Floating Point Unit (FPU)
+# - MultiMedia eXtension (MMX)
+# - Streaming SIMD Extensions (SSE)
+# - 3DNow
+# - Advanced Vector Extensions (AVX)
+# - Fused Multiply Add Operations (FMA)
+# - eXtended Operations (XOP)
+# - Virtual-Machine Extensions (VMX) + Secure Virtual Machine (AMD SVM)
+# - Transactional Synchronization Extensions (TSX)
 #
 # Due to this removal, the related instructions are nolonger supported.
 #
