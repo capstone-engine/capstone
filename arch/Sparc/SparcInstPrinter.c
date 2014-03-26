@@ -162,10 +162,17 @@ static void printOperand(MCInst *MI, int opNum, SStream *O)
 
 	if (MCOperand_isImm(MO)) {
 		Imm = (int)MCOperand_getImm(MO);
-		if (Imm > HEX_THRESHOLD)
-			SStream_concat(O, "0x%x", Imm);
-		else
-			SStream_concat(O, "%u", Imm);
+		if (Imm >= 0) {
+			if (Imm > HEX_THRESHOLD)
+				SStream_concat(O, "0x%x", Imm);
+			else
+				SStream_concat(O, "%u", Imm);
+		} else {
+			if (Imm < -HEX_THRESHOLD)
+				SStream_concat(O, "-0x%x", -Imm);
+			else
+				SStream_concat(O, "-%u", -Imm);
+		}
 
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
