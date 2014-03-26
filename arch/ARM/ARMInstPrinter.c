@@ -578,17 +578,28 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			else
 				imm += (int32_t)MI->address + 8;
 
-			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "#0x%x", imm);
-			else
-				SStream_concat(O, "#%u", imm);
+			if (imm >= 0) {
+				if (imm > HEX_THRESHOLD)
+					SStream_concat(O, "#0x%x", imm);
+				else
+					SStream_concat(O, "#%u", imm);
+			} else {
+				if (imm < -HEX_THRESHOLD)
+					SStream_concat(O, "#-0x%x", -imm);
+				else
+					SStream_concat(O, "#-%u", -imm);
+			}
 		} else if (imm >= 0) {
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "#0x%x", imm);
 			else
 				SStream_concat(O, "#%u", imm);
-		} else
-			SStream_concat(O, "#-0x%x", -imm);
+		} else {
+			if (imm < -HEX_THRESHOLD)
+				SStream_concat(O, "#-0x%x", -imm);
+			else
+				SStream_concat(O, "#-%u", -imm);
+		}
 
 		SStream_concat(O, markup(">"));
 		if (MI->csh->detail) {
@@ -1666,10 +1677,17 @@ static void printAddrModeImm12Operand(MCInst *MI, unsigned OpNum,
 	if (isSub) {
 		SStream_concat(O, ", %s#-0x%x%s", markup("<imm:"), -OffImm, markup(">"));
 	} else if (AlwaysPrintImm0 || OffImm > 0) {
-		if (OffImm > HEX_THRESHOLD)
-			SStream_concat(O, ", %s#0x%x%s", markup("<imm:"), OffImm, markup(">"));
-		else
-			SStream_concat(O, ", %s#%u%s", markup("<imm:"), OffImm, markup(">"));
+		if (OffImm >= 0) {
+			if (OffImm > HEX_THRESHOLD)
+				SStream_concat(O, ", %s#0x%x%s", markup("<imm:"), OffImm, markup(">"));
+			else
+				SStream_concat(O, ", %s#%u%s", markup("<imm:"), OffImm, markup(">"));
+		} else {
+			if (OffImm < -HEX_THRESHOLD)
+				SStream_concat(O, ", %s#-0x%x%s", markup("<imm:"), -OffImm, markup(">"));
+			else
+				SStream_concat(O, ", %s#-%u%s", markup("<imm:"), -OffImm, markup(">"));
+		}
 	}
 	if (MI->csh->detail)
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.disp = OffImm;
@@ -1797,9 +1815,12 @@ static void printT2AddrModeImm8OffsetOperand(MCInst *MI,
 			MI->flat_insn.arm.op_count++;
 		}
 	} else {
-		if (OffImm < 0)
-			SStream_concat(O, "#-0x%x%s", -OffImm, markup(">"));
-		else {
+		if (OffImm < 0) {
+			if (OffImm < -HEX_THRESHOLD)
+				SStream_concat(O, "#-0x%x%s", -OffImm, markup(">"));
+			else
+				SStream_concat(O, "#-%u%s", -OffImm, markup(">"));
+		} else {
 			if (OffImm > HEX_THRESHOLD)
 				SStream_concat(O, "#0x%x%s", OffImm, markup(">"));
 			else
@@ -1830,9 +1851,12 @@ static void printT2AddrModeImm8s4OffsetOperand(MCInst *MI,
 			MI->flat_insn.arm.op_count++;
 		}
 	} else {
-		if (OffImm < 0)
-			SStream_concat(O, "#-0x%x%s", -OffImm, markup(">"));
-		else {
+		if (OffImm < 0) {
+			if (OffImm < -HEX_THRESHOLD)
+				SStream_concat(O, "#-0x%x%s", -OffImm, markup(">"));
+			else
+				SStream_concat(O, "#-%u%s", -OffImm, markup(">"));
+		} else {
 			if (OffImm > HEX_THRESHOLD)
 				SStream_concat(O, "#0x%x%s", OffImm, markup(">"));
 			else
