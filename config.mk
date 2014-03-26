@@ -72,6 +72,7 @@ CAPSTONE_DIET = no
 #
 # Due to this removal, the related instructions are nolonger supported.
 #
-# By default, Capstone is compiled with 'CAPSTONE_X86_COMPACT = no'
+# By default, Capstone is compiled with 'CAPSTONE_X86_COMPACT = no',
+# thus supports complete X86 instructions.
 
 CAPSTONE_X86_COMPACT = no
