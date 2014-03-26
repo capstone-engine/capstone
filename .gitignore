@@ -48,6 +48,7 @@ tests/test_mips
 tests/test_x86
 tests/test_ppc
 tests/test_sparc
+tests/test_systemz
 tests/*.static
 
 # vim tmp file
