@@ -565,7 +565,7 @@ static void printSImm7ScaledOperand(MCInst *MI, unsigned OpNum,
 	int64_t res;
 
 	res = Imm * MemScale;
-	if (res > 0) {
+	if (res >= 0) {
 		if (res > HEX_THRESHOLD)
 			SStream_concat(O, "#0x%"PRIx64, res);
 		else
@@ -626,10 +626,18 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		}
 	} else if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op);
-		if (imm > HEX_THRESHOLD)
-			SStream_concat(O, "#0x%"PRIx64, imm);
-		else
-			SStream_concat(O, "#%"PRIu64, imm);
+		if (imm >= 0) {
+			if (imm > HEX_THRESHOLD)
+				SStream_concat(O, "#0x%"PRIx64, imm);
+			else
+				SStream_concat(O, "#%"PRIu64, imm);
+		} else {
+			if (imm < -HEX_THRESHOLD)
+				SStream_concat(O, "#-0x%"PRIx64, -imm);
+			else
+				SStream_concat(O, "#-%"PRIu64, -imm);
+		}
+
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
 				MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].mem.disp = (int32_t)imm;
@@ -691,10 +699,18 @@ static void printNeonMovImmShiftOperand(MCInst *MI, unsigned OpNum,
 			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count - 1].shift.type = ARM64_SFT_MSL;
 	}
 
-	if (Imm > HEX_THRESHOLD)
-		SStream_concat(O, " #0x%"PRIx64, Imm);
-	else
-		SStream_concat(O, " #%"PRIu64, Imm);
+	if (Imm >= 0) {
+		if (Imm > HEX_THRESHOLD)
+			SStream_concat(O, " #0x%"PRIx64, Imm);
+		else
+			SStream_concat(O, " #%"PRIu64, Imm);
+	} else {
+		if (Imm < -HEX_THRESHOLD)
+			SStream_concat(O, " #-0x%"PRIx64, -Imm);
+		else
+			SStream_concat(O, " #-%"PRIu64, -Imm);
+	}
+
 	if (MI->csh->detail)
 		MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count - 1].shift.value = (unsigned int)Imm;
 }
