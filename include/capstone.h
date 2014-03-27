@@ -14,8 +14,6 @@ extern "C" {
 #include <stdbool.h>
 #include <stdlib.h>
 
-#include "diet.h"	// CAPSTONE_DIET
-
 #ifdef _MSC_VER
 #pragma warning(disable:4201)
 #pragma warning(disable:4100)
