@@ -75,4 +75,4 @@ CAPSTONE_DIET = no
 # By default, Capstone is compiled with 'CAPSTONE_X86_REDUCE = no',
 # thus supports complete X86 instructions.
 
-CAPSTONE_X86_REDUCE = yes
+CAPSTONE_X86_REDUCE = no
