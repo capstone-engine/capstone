@@ -67,7 +67,7 @@ static void printi128mem(MCInst *MI, unsigned OpNo, SStream *O)
 	printMemReference(MI, OpNo, O);
 }
 
-#ifndef CAPSTONE_X86_COMPACT
+#ifndef CAPSTONE_X86_REDUCE
 static void printi256mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat(O, "ymmword ptr ");
@@ -530,15 +530,15 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)	// qqq
 }
 
 #define GET_INSTRINFO_ENUM
-#ifdef CAPSTONE_X86_COMPACT
-#include "X86GenInstrInfo_compact.inc"
+#ifdef CAPSTONE_X86_REDUCE
+#include "X86GenInstrInfo_reduce.inc"
 #else
 #include "X86GenInstrInfo.inc"
 #endif
 
 #define PRINT_ALIAS_INSTR
-#ifdef CAPSTONE_X86_COMPACT
-#include "X86GenAsmWriter1_compact.inc"
+#ifdef CAPSTONE_X86_REDUCE
+#include "X86GenAsmWriter1_reduce.inc"
 #else
 #include "X86GenAsmWriter1.inc"
 #endif

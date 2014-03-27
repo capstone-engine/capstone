@@ -110,8 +110,8 @@ bool cs_support(int query)
 #endif
 	}
 
-	if (query == CS_SUPPORT_X86_COMPACT) {
-#if defined(CAPSTONE_HAS_X86) && defined(CAPSTONE_X86_COMPACT)
+	if (query == CS_SUPPORT_X86_REDUCE) {
+#if defined(CAPSTONE_HAS_X86) && defined(CAPSTONE_X86_REDUCE)
 		return true;
 #else
 		return false;

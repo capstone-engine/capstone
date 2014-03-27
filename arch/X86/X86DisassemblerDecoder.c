@@ -24,16 +24,16 @@
 
 #include "X86DisassemblerDecoder.h"
 
-#ifdef CAPSTONE_X86_COMPACT
-#include "X86GenDisassemblerTables_compact.inc"
+#ifdef CAPSTONE_X86_REDUCE
+#include "X86GenDisassemblerTables_reduce.inc"
 #else
 #include "X86GenDisassemblerTables.inc"
 #endif
 
 //#define GET_INSTRINFO_ENUM
 #define GET_INSTRINFO_MC_DESC
-#ifdef CAPSTONE_X86_COMPACT
-#include "X86GenInstrInfo_compact.inc"
+#ifdef CAPSTONE_X86_REDUCE
+#include "X86GenInstrInfo_reduce.inc"
 #else
 #include "X86GenInstrInfo.inc"
 #endif
@@ -104,7 +104,7 @@ static int modRMRequired(OpcodeType type,
 			decision = THREEBYTE3A_SYM;
 			indextable = index_x86DisassemblerThreeByte3AOpcodes;
 			break;
-#ifndef CAPSTONE_X86_COMPACT
+#ifndef CAPSTONE_X86_REDUCE
 		case XOP8_MAP:
 			decision = XOP8_MAP_SYM;
 			indextable = index_x86DisassemblerXOP8Opcodes;
@@ -181,7 +181,7 @@ static InstrUID decode(OpcodeType type,
 			else
 				dec = &emptyTable.modRMDecisions[opcode];
 			break;
-#ifndef CAPSTONE_X86_COMPACT
+#ifndef CAPSTONE_X86_REDUCE
 		case XOP8_MAP:
 			indextable = index_x86DisassemblerXOP8Opcodes;
 			index = indextable[insnContext];

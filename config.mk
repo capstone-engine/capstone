@@ -54,7 +54,7 @@ CAPSTONE_DIET = no
 
 
 ################################################################################
-# Change 'CAPSTONE_X86_COMPACT = no' to 'CAPSTONE_X86_COMPACT = yes' to remove
+# Change 'CAPSTONE_X86_REDUCE = no' to 'CAPSTONE_X86_REDUCE = yes' to remove
 # non-critical instruction sets of X86, making the binary size smaller by ~50%.
 # This is desired in special cases, such as OS kernel, where these kind of
 # instructions are not used.
@@ -72,7 +72,7 @@ CAPSTONE_DIET = no
 #
 # Due to this removal, the related instructions are nolonger supported.
 #
-# By default, Capstone is compiled with 'CAPSTONE_X86_COMPACT = no',
+# By default, Capstone is compiled with 'CAPSTONE_X86_REDUCE = no',
 # thus supports complete X86 instructions.
 
-CAPSTONE_X86_COMPACT = no
+CAPSTONE_X86_REDUCE = yes

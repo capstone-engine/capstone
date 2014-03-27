@@ -69,7 +69,7 @@ static void printi128mem(MCInst *MI, unsigned OpNo, SStream *O)
 	printMemReference(MI, OpNo, O);
 }
 
-#ifndef CAPSTONE_X86_COMPACT
+#ifndef CAPSTONE_X86_REDUCE
 static void printi256mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat(O, "ymmword ptr ");
@@ -482,8 +482,8 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 #include "X86InstPrinter.h"
 
 #define GET_INSTRINFO_ENUM
-#ifdef CAPSTONE_X86_COMPACT
-#include "X86GenInstrInfo_compact.inc"
+#ifdef CAPSTONE_X86_REDUCE
+#include "X86GenInstrInfo_reduce.inc"
 #else
 #include "X86GenInstrInfo.inc"
 #endif
@@ -493,8 +493,8 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 
 // Include the auto-generated portion of the assembly writer.
 #define PRINT_ALIAS_INSTR
-#ifdef CAPSTONE_X86_COMPACT
-#include "X86GenAsmWriter_compact.inc"
+#ifdef CAPSTONE_X86_REDUCE
+#include "X86GenAsmWriter_reduce.inc"
 #else
 #include "X86GenAsmWriter.inc"
 #endif

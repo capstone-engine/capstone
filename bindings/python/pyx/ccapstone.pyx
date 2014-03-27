@@ -286,7 +286,7 @@ def debug():
 
     if cs_support(CS_ARCH_X86):
         all_archs += "-x86"
-        if cs_support(CS_SUPPORT_X86_COMPACT):
+        if cs_support(CS_SUPPORT_X86_REDUCE):
             all_archs += "_compact"
 
     (major, minor, _combined) = capstone.cs_version()

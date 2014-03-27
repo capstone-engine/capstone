@@ -1616,13 +1616,13 @@ const char *X86_insn_name(csh handle, unsigned int id)
 }
 
 #define GET_INSTRINFO_ENUM
-#ifdef CAPSTONE_X86_COMPACT
-#include "X86GenInstrInfo_compact.inc"
+#ifdef CAPSTONE_X86_REDUCE
+#include "X86GenInstrInfo_reduce.inc"
 #else
 #include "X86GenInstrInfo.inc"
 #endif
 
-#ifndef CAPSTONE_X86_COMPACT
+#ifndef CAPSTONE_X86_REDUCE
 static insn_map insns[] = {
 	// dummy item
 	{
@@ -40777,7 +40777,7 @@ static struct insn_reg {
 	{ X86_CMP16i16, X86_REG_AX },
 	{ X86_ADC32i32, X86_REG_EAX },
 	{ X86_IN32ri, X86_REG_EAX },
-#ifndef CAPSTONE_X86_COMPACT
+#ifndef CAPSTONE_X86_REDUCE
 	{ X86_SKINIT, X86_REG_EAX },
 	{ X86_INVLPGA32, X86_REG_EAX },
 	{ X86_VMRUN32, X86_REG_EAX },
