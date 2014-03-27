@@ -31,3 +31,7 @@ Documention of Capstone disassembly framework.
 * Build embedded engine for firmware/OS kernel.
 
 	http://capstone-engine.org/embed.html
+
+* Build X86-reduce engine for firmware/OS kernel.
+
+    http://capstone-engine.org/x86reduce.html
