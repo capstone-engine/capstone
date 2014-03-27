@@ -263,6 +263,7 @@ uninstall:
 clean:
 	rm -f $(LIBOBJ) lib$(LIBNAME).*
 	rm -f $(PKGCFGF)
+	rm -f include/diet.h
 	$(MAKE) -C bindings/python clean
 	$(MAKE) -C bindings/java clean
 	$(MAKE) -C bindings/ocaml clean
