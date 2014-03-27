@@ -419,10 +419,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			else
 				SStream_concat(O, "%"PRIu64, imm);
 		} else {
-			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%"PRIx64, -imm);
-			else
-				SStream_concat(O, "-%"PRIu64, -imm);
+			SStream_concat(O, "0x%"PRIx64, ((1 << 8*MI->x86_imm_size) - 1) & imm);
 		}
 
 		if (MI->csh->detail) {
@@ -442,10 +439,7 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	} else if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op);
 		if (imm < 0) {
-			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%"PRIx64, -imm);
-			else
-				SStream_concat(O, "-%"PRIu64, -imm);
+			SStream_concat(O, "0x%"PRIx64, ((1 << 8*MI->x86_imm_size) - 1) & imm);
 		} else {
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "0x%"PRIx64, imm);
