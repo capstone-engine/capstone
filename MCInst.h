@@ -142,6 +142,7 @@ struct MCInst {
 	int insn_size;	// instruction size
 	uint64_t address;	// address of this insn
 	cs_struct *csh;	// save the main csh
+	uint8_t x86_imm_size;	// save immediate size to print immediate properly
 };
 
 void MCInst_Init(MCInst *inst);

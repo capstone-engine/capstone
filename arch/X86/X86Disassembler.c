@@ -719,8 +719,14 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *in
 	} else {
 		*size = (uint16_t)insn.length;
 		result = (!translateInstruction(instr, &insn)) ?  true : false;
-		if (handle->detail)
-			update_pub_insn(&instr->flat_insn, &insn);
+		if (result) {
+			if (handle->detail)
+				update_pub_insn(&instr->flat_insn, &insn);
+
+			// save immediate size to print immediate properly
+			instr->x86_imm_size = insn.immediateSize;
+		}
+
 		return result;
 	}
 }
