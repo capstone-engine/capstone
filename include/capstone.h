@@ -50,9 +50,9 @@ typedef enum cs_arch {
 // in diet mode.
 #define CS_SUPPORT_DIET (CS_ARCH_ALL + 1)
 
-// Support value to verify X86 compact mode of the engine.
+// Support value to verify X86 reduce mode of the engine.
 // If cs_support(CS_SUPPORT_X86_REDUCE) return True, the engine was compiled
-// in X86 compact mode.
+// in X86 reduce mode.
 #define CS_SUPPORT_X86_REDUCE (CS_ARCH_ALL + 2)
 
 // Mode type

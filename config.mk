@@ -55,7 +55,7 @@ CAPSTONE_DIET = no
 
 ################################################################################
 # Change 'CAPSTONE_X86_REDUCE = no' to 'CAPSTONE_X86_REDUCE = yes' to remove
-# non-critical instruction sets of X86, making the binary size smaller by ~50%.
+# non-critical instruction sets of X86, making the binary size smaller by ~60%.
 # This is desired in special cases, such as OS kernel, where these kind of
 # instructions are not used.
 #
@@ -67,7 +67,6 @@ CAPSTONE_DIET = no
 # - Advanced Vector Extensions (AVX)
 # - Fused Multiply Add Operations (FMA)
 # - eXtended Operations (XOP)
-# - Virtual-Machine Extensions (VMX) + Secure Virtual Machine (AMD SVM)
 # - Transactional Synchronization Extensions (TSX)
 #
 # Due to this removal, the related instructions are nolonger supported.
