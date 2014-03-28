@@ -23,7 +23,7 @@ CFLAGS += -DUSE_SYS_DYN_MEM
 endif
 
 ifneq (,$(findstring yes,$(CAPSTONE_DIET)))
-CFLAGS += -DCAPSTONE_DIET
+CFLAGS += -DCAPSTONE_DIET -Os
 endif
 
 LDFLAGS += -shared
@@ -164,7 +164,7 @@ endif
 X86_REDUCE =
 ifneq (,$(findstring yes,$(CAPSTONE_X86_REDUCE)))
 X86_REDUCE = _reduce
-CFLAGS += -DCAPSTONE_X86_REDUCE
+CFLAGS += -DCAPSTONE_X86_REDUCE -Os
 endif
 
 DEP_X86 =
