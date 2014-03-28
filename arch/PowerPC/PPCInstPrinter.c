@@ -27,7 +27,10 @@
 #include "../../MathExtras.h"
 #include "PPCMapping.h"
 
+#ifndef CAPSTONE_DIET
 static const char *getRegisterName(unsigned RegNo);
+#endif
+
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O);
@@ -459,6 +462,7 @@ static void printTLSCall(MCInst *MI, unsigned OpNo, SStream *O)
 }
 
 
+#ifndef CAPSTONE_DIET
 /// stripRegisterPrefix - This method strips the character prefix from a
 /// register name so that only the number is left.  Used by for linux asm.
 static const char *stripRegisterPrefix(const char *RegName)
@@ -475,6 +479,7 @@ static const char *stripRegisterPrefix(const char *RegName)
 
 	return RegName;
 }
+#endif
 
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
