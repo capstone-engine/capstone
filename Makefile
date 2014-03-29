@@ -35,6 +35,7 @@ INCDIR = $(DESTDIR)$(PREFIX)/include
 LIBDIR = $(DESTDIR)$(PREFIX)/lib
 # on x86_64, we might have /usr/lib64 directory instead of /usr/lib
 UNAME_M := $(shell uname -m)
+UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_M), x86_64)
 ifeq (,$(wildcard $(LIBDIR)))
 ifneq ($(UNAME_S), Darwin)
@@ -44,7 +45,6 @@ endif
 endif
 
 LIBDATADIR = $(LIBDIR)
-UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), FreeBSD)
 LIBDATADIR = $(DESTDIR)$(PREFIX)/libdata
 endif
