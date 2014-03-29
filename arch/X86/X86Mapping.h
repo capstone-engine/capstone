@@ -44,4 +44,6 @@ void X86_insn_combine(cs_struct *h, cs_insn *insn, cs_insn *prev);
 // this is to handle instructions embedding accumulate registers into AsmStrs[]
 x86_reg X86_insn_reg(unsigned int id);
 
+extern uint64_t arch_masks[9];
+
 #endif

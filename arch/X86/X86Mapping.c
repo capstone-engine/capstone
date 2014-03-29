@@ -9,6 +9,16 @@
 #include "../../utils.h"
 #include "../../include/x86.h"
 
+
+uint64_t arch_masks[9] = {
+	0, 0xff,
+	0xffff,
+	0,
+	0xffffffff,
+	0, 0, 0,
+	0xffffffffffffffff
+};
+
 static x86_reg sib_base_map[] = {
 	X86_REG_INVALID,
 #define ENTRY(x) X86_REG_##x,
