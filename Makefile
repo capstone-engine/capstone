@@ -37,7 +37,9 @@ LIBDIR = $(DESTDIR)$(PREFIX)/lib
 UNAME_M := $(shell uname -m)
 ifeq ($(UNAME_M), x86_64)
 ifeq (,$(wildcard $(LIBDIR)))
+ifneq ($(UNAME_S), Darwin)
 LIBDIR = $(DESTDIR)$(PREFIX)/lib64
+endif
 endif
 endif
 
