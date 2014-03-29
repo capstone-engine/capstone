@@ -293,10 +293,7 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 		if (MI->csh->detail)
 			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.disp = imm;
 		if (imm < 0) {
-			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%"PRIx64, -imm);
-			else
-				SStream_concat(O, "-%"PRIu64, -imm);
+			SStream_concat(O, "0x%"PRIx64, arch_masks[MI->csh->mode] & imm);
 		} else {
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "0x%"PRIx64, imm);
@@ -419,10 +416,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			else
 				SStream_concat(O, "%"PRIu64, imm);
 		} else {
-			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%"PRIx64, -imm);
-			else
-				SStream_concat(O, "-%"PRIu64, -imm);
+			SStream_concat(O, "0x%"PRIx64, arch_masks[MI->x86_imm_size] & imm);
 		}
 
 		if (MI->csh->detail) {
@@ -442,10 +436,7 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	} else if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op);
 		if (imm < 0) {
-			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%"PRIx64, -imm);
-			else
-				SStream_concat(O, "-%"PRIu64, -imm);
+			SStream_concat(O, "0x%"PRIx64, arch_masks[MI->x86_imm_size] & imm);
 		} else {
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "0x%"PRIx64, imm);
@@ -455,7 +446,7 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
-static void printMemReference(MCInst *MI, unsigned Op, SStream *O)	// qqq
+static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 {
 	MCOperand *BaseReg  = MCInst_getOperand(MI, Op);
 	uint64_t ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op+1));
@@ -502,18 +493,11 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)	// qqq
 			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.disp = DispVal;
 		if (DispVal || (!MCOperand_getReg(IndexReg) && !MCOperand_getReg(BaseReg))) {
 			if (NeedPlus) {
-				if (DispVal > 0)
-					SStream_concat(O, " + ");
-				else {
-					SStream_concat(O, " - ");
-					DispVal = -DispVal;
-				}
+				SStream_concat(O, " + ");
 			}
+
 			if (DispVal < 0) {
-				if (DispVal < -HEX_THRESHOLD)
-					SStream_concat(O, "-0x%"PRIx64, -DispVal);
-				else
-					SStream_concat(O, "-%"PRIu64, -DispVal);
+				SStream_concat(O, "0x%"PRIx64, arch_masks[MI->csh->mode] & DispVal);
 			} else {
 				if (DispVal > HEX_THRESHOLD)
 					SStream_concat(O, "0x%"PRIx64, DispVal);
