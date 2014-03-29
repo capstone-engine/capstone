@@ -435,10 +435,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.disp = DispVal;
 		if (DispVal || (!MCOperand_getReg(IndexReg) && !MCOperand_getReg(BaseReg))) {
 			if (DispVal < 0) {
-				if (DispVal < -HEX_THRESHOLD)
-					SStream_concat(O, "-0x%"PRIx64, -DispVal);
-				else
-					SStream_concat(O, "-%"PRIu64, -DispVal);
+				SStream_concat(O, "0x%"PRIx64, ((1L << (8*MI->csh->mode)) - 1) & DispVal);
 			} else {
 				if (DispVal > HEX_THRESHOLD)
 					SStream_concat(O, "0x%"PRIx64, DispVal);
