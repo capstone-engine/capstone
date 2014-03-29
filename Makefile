@@ -162,6 +162,7 @@ VERSION_EXT = $(API_MAJOR).$(EXT)
 #LDFLAGS += -install_name lib$(LIBNAME).$(VERSION_EXT) -current_version $(API_MAJOR) -compatibility_version $(API_MAJOR)
 LDFLAGS += -install_name lib$(LIBNAME).$(VERSION_EXT) -current_version $(API_MAJOR).1 -compatibility_version $(API_MAJOR).1
 AR_EXT = a
+ifneq ($(HOMEBREW_CAPSTONE),1)
 ifneq ($(USE_SYS_DYN_MEM),yes)
 # remove string check because OSX kernel complains about missing symbols
 CFLAGS += -D_FORTIFY_SOURCE=0
@@ -172,6 +173,7 @@ PKGCFCGDIR = /usr/local/lib/pkgconfig
 ifneq (,$(wildcard /opt/local/bin/port))
 # then correct the path for pkgconfig file
 PKGCFCGDIR = /opt/local/lib/pkgconfig
+endif
 endif
 else
 # Cygwin?
