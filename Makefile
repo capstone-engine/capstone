@@ -26,8 +26,6 @@ ifneq (,$(findstring yes,$(CAPSTONE_DIET)))
 CFLAGS += -DCAPSTONE_DIET -Os
 endif
 
-LDFLAGS += -shared
-
 PREFIX ?= /usr
 DESTDIR ?=
 INCDIR = $(DESTDIR)$(PREFIX)/include
@@ -42,6 +40,10 @@ ifneq ($(UNAME_S), Darwin)
 LIBDIR = $(DESTDIR)$(PREFIX)/lib64
 endif
 endif
+endif
+
+ifneq ($(UNAME_S),Darwin)
+LDFLAGS += -shared
 endif
 
 LIBDATADIR = $(LIBDIR)
