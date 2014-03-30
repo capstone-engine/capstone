@@ -1,6 +1,22 @@
 This file details the changelog of Capstone.
 
 ---------------------------------
+Version 2.1.2:
+
+This is a stable release to fix some bugs deep in the core. There is no update
+to any architectures or bindings, so bindings version 2.1 can be used with this
+version 2.1.2 just fine.
+
+[ Core changes]
+
+- X86: do not print memory offset in negative form. Also do not use negative
+ form for immediate numbers.
+- Fix a bug in X86 when Capstone cannot handle short instruction.
+- Print negative number above -9 without prefix 0x (arm64, mips, arm).
+- Correct the SONAME setup for library versioning (Linux, *BSD, Solaris).
+- Set library versioning for dylib of OSX.
+
+---------------------------------
 Version 2.1.1: March 13th, 2014
 
 This is a stable release to fix some bugs deep in the core. There is no update
