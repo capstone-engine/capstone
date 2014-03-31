@@ -195,7 +195,7 @@ LIBOBJ += $(LIBOBJ_ARM) $(LIBOBJ_ARM64) $(LIBOBJ_MIPS) $(LIBOBJ_PPC) $(LIBOBJ_SP
 LIBOBJ += MCInst.o
 
 
-PKGCFCGDIR = $(LIBDATADIR)/pkgconfig
+PKGCFGDIR = $(LIBDATADIR)/pkgconfig
 API_MAJOR=$(shell echo `grep -e CS_API_MAJOR include/capstone.h | grep -v = | awk '{print $$3}'` | awk '{print $$1}')
 VERSION_EXT =
 
@@ -209,13 +209,6 @@ ifneq ($(HOMEBREW_CAPSTONE),1)
 ifneq ($(USE_SYS_DYN_MEM),yes)
 # remove string check because OSX kernel complains about missing symbols
 CFLAGS += -D_FORTIFY_SOURCE=0
-endif
-# By default, suppose that Brew is installed & use Brew path for pkgconfig file
-PKGCFCGDIR = /usr/local/lib/pkgconfig
-# is Macport installed instead?
-ifneq (,$(wildcard /opt/local/bin/port))
-# then correct the path for pkgconfig file
-PKGCFCGDIR = /opt/local/lib/pkgconfig
 endif
 endif
 else
@@ -301,13 +294,13 @@ endif
 	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
 	mkdir -p $(INCDIR)/$(LIBNAME)
 	$(INSTALL_DATA) include/*.h $(INCDIR)/$(LIBNAME)
-	mkdir -p $(PKGCFCGDIR)
-	$(INSTALL_DATA) $(PKGCFGF) $(PKGCFCGDIR)/
+	mkdir -p $(PKGCFGDIR)
+	$(INSTALL_DATA) $(PKGCFGF) $(PKGCFGDIR)/
 
 uninstall:
 	rm -rf $(INCDIR)/$(LIBNAME)
 	rm -f $(LIBDIR)/lib$(LIBNAME).*
-	rm -f $(PKGCFCGDIR)/$(LIBNAME).pc
+	rm -f $(PKGCFGDIR)/$(LIBNAME).pc
 
 clean:
 	rm -f $(LIBOBJ) lib$(LIBNAME).*
