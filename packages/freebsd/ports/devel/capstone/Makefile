@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	capstone
-PORTVERSION=	2.1.1
+PORTVERSION=	2.1.2
 CATEGORIES=	devel
 MASTER_SITES=	http://capstone-engine.org/download/2.1/
 
