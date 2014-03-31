@@ -1,11 +1,20 @@
-#! /usr/bin/env bash
+#!/bin/sh
 
 # Capstone Disassembler Engine
 # By Nguyen Anh Quynh <aquynh@gmail.com>, 2013>
 
 # Note: to cross-compile "nix32" on Linux, package gcc-multilib is required.
 
-function build {
+pathfor() {
+	for A in `echo ${PATH} | sed -e 's,:, ,g'` ; do
+		if [ -x "$A/$1" ]; then
+			echo "$A"
+			return;
+		fi
+	done
+}
+
+build() {
 	${MAKE} clean
 
 	if [ ${CC}x != x ]; then
@@ -15,7 +24,7 @@ function build {
 	fi
 }
 
-function install {
+install() {
 	if [ ${CC}x != x ]; then
 		${MAKE} CC=$CC install
 	else
@@ -24,15 +33,28 @@ function install {
 }
 
 MAKE=make
-if [ "$(uname)" == "SunOS" ]; then
-export MAKE=gmake
-export INSTALL_BIN=ginstall
-export CC=gcc
+if [ "$(uname)" = "SunOS" ]; then
+	export MAKE=gmake
+	export INSTALL_BIN=ginstall
+	export CC=gcc
 fi
 
-if [[ "$(uname)" == *BSD* ]]; then
-export MAKE=gmake
-export PREFIX=/usr/local
+if [ -n "`pathfor gmake`" ]; then
+	export MAKE=gmake
+	export PREFIX=/usr/local
+else
+	export PREFIX=/usr
+fi
+
+if [ "$(uname)" = Darwin ]; then
+	for a in brew port ; do
+		SDIR=`pathfor $a`
+		if [ -n "${SDIR}" ]; then
+			PKGCFGDIR="${SDIR}/../lib/pkgconfig"
+			break;
+		fi
+	done
+	export PKGCFGDIR
 fi
 
 case "$1" in
