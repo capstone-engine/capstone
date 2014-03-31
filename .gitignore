@@ -54,3 +54,6 @@ capstone.pc
 
 # local files
 _*
+
+# freebsd ports: generated file with "make makesum" command
+packages/freebsd/ports/devel/capstone/distinfo
