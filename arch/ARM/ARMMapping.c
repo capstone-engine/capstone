@@ -13600,29 +13600,3 @@ const char *ARM_insn_name(csh handle, unsigned int id)
 	return NULL;
 #endif
 }
-
-// list all relative branch instructions
-// ie: insns[i].branch && !insns[i].indirect_branch
-static unsigned int insn_rel[] = {
-	ARM_Bcc,
-	ARM_t2B,
-	ARM_t2Bcc,
-	ARM_tB,
-	ARM_tBcc,
-	ARM_tCBNZ,
-	ARM_tCBZ,
-	0
-};
-
-// check if this insn is relative branch
-bool ARM_rel_branch(cs_struct *h, unsigned int id)
-{
-	int i;
-
-	for (i = 0; insn_rel[i]; i++)
-		if (id == insn_rel[i])
-			return true;
-
-	// not found
-	return false;
-}
