@@ -5,6 +5,22 @@
 
 # Note: to cross-compile "nix32" on Linux, package gcc-multilib is required.
 
+
+# build iOS lib for all iDevices, or only specific device
+function build_iOS {
+	${MAKE} clean
+	SDK=`xcrun --sdk iphoneos --show-sdk-path`
+	GCC_BIN=`xcrun --sdk iphoneos -f gcc`
+	GCC_BASE="$GCC_BIN -Os -Wimplicit -isysroot $SDK"
+	if (( $# == 0 )); then
+		# build for all iDevices
+		GCC="$GCC_BASE -arch armv7 -arch armv7s -arch arm64"
+	else
+		GCC="$GCC_BASE -arch $1"
+	fi
+	${MAKE} CC="$GCC"
+}
+
 function build {
 	${MAKE} clean
 
@@ -47,5 +63,9 @@ case "$1" in
   "cygwin-mingw64" ) CROSS=x86_64-w64-mingw32- build;;
   "clang" ) CC=clang build;;
   "gcc" ) CC=gcc build;;
-  * ) echo "Usage: make.sh [nix32|cross-win32|cross-win64|cygwin-mingw32|cygwin-mingw64|clang|gcc|install|uninstall]"; exit 1;;
+  "ios" ) build_iOS;;
+  "ios_armv7" ) build_iOS armv7;;
+  "ios_armv7s" ) build_iOS armv7s;;
+  "ios_arm64" ) build_iOS arm64;;
+  * ) echo "Usage: make.sh [nix32|cross-win32|cross-win64|cygwin-mingw32|cygwin-mingw64|clang|gcc|ios|ios_armv7|ios_armv7s|ios_arm64|install|uninstall]"; exit 1;;
 esac
