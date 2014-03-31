@@ -7,5 +7,3 @@ PKG_MINOR = 2
 
 # version bugfix level. Example: PKG_EXTRA = 1
 PKG_EXTRA =
-
-

@@ -1,5 +1,5 @@
 # Capstone Disassembly Engine
-# By Nguyen Anh Quynh <aquynh@gmail.com>, 2013>
+# By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014
 
 include config.mk
 include pkgconfig.mk	# package version
