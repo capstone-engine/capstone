@@ -564,32 +564,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			}
 		}
 	} else if (MCOperand_isImm(Op)) {
-		SStream_concat(O, markup("<imm:"));
 		int32_t imm = (int32_t)MCOperand_getImm(Op);
+		SStream_concat(O, markup("<imm:"));
 
-		// relative branch only has relative offset, so we have to update it
-		// to reflect absolute address. 
-		// Note: in ARM, PC is always 2 instructions ahead, so we have to
-		// add 8 in ARM mode, or 4 in Thumb mode
-		if (ARM_rel_branch(MI->csh, MCInst_getOpcode(MI))) {
-			// only do this for relative branch
-			if (MI->csh->mode & CS_MODE_THUMB)
-				imm += (int32_t)MI->address + 4;
-			else
-				imm += (int32_t)MI->address + 8;
-
-			if (imm >= 0) {
-				if (imm > HEX_THRESHOLD)
-					SStream_concat(O, "#0x%x", imm);
-				else
-					SStream_concat(O, "#%u", imm);
-			} else {
-				if (imm < -HEX_THRESHOLD)
-					SStream_concat(O, "#-0x%x", -imm);
-				else
-					SStream_concat(O, "#-%u", -imm);
-			}
-		} else if (imm >= 0) {
+		if (imm >= 0) {
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "#0x%x", imm);
 			else
