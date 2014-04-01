@@ -75,7 +75,28 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 
 
-(4) Compile on Windows with Cygwin
+(4) Cross-compile iOS from Mac OSX.
+
+  To cross-compile for iOS (iPhone/iPad/iPod), Mac OSX with XCode installed is required. 
+
+	- To cross-compile for ArmV7 (iPod 4, iPad 1/2/3, iPhone4, iPhone4S), run:
+		$ ./make.sh ios_armv7
+
+	- To cross-compile for ArmV7s (iPad 4, iPhone 5C, iPad mini), run:
+		$ ./make.sh ios_armv7s
+
+	- To cross-compile for Arm64 (iPhone 5S, iPad mini Retina, iPad Air), run:
+		$ ./make.sh ios_arm64
+
+	- To cross-compile for all iDevices (armv7 + armv7s + arm64), run:
+		$ ./make.sh ios
+
+  Resulted files libcapstone.dylib, libcapstone.a & tests/test* can then
+  be used on iOS devices.
+
+
+
+(5) Compile on Windows with Cygwin
 
   To compile under Cygwin gcc-mingw-w64-i686 or x86_64-w64-mingw32 run:
 
@@ -89,7 +110,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
   be used on Windows machine.
 
 
-(5) By default, "cc" (default C compiler on the system) is used as compiler.
+(6) By default, "cc" (default C compiler on the system) is used as compiler.
 
 	- To use "clang" compiler instead, run command below:
 
@@ -101,7 +122,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 
 
-(6) Language bindings
+(7) Language bindings
 
   So far, Python, Ocaml & Java are supported by bindings in the main code.
   Look for the bindings under directory bindings/, and refer to README file
