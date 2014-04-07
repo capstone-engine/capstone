@@ -1,49 +1,14 @@
---- Makefile.org	2014-03-10 23:12:11.000000000 -0700
-+++ Makefile	2014-03-10 23:33:10.000000000 -0700
-@@ -22,20 +22,24 @@
- CFLAGS += -DUSE_SYS_DYN_MEM
- endif
- 
--LDFLAGS += -shared
--
- PREFIX ?= /usr
- DESTDIR ?=
--INCDIR = $(DESTDIR)$(PREFIX)/include
-+INCDIR = $(PREFIX)/include
- 
--LIBDIR = $(DESTDIR)$(PREFIX)/lib
-+UNAME_S := $(shell uname -s)
-+ifeq ($(UNAME_S),Darwin)
-+LDFLAGS += -dynamiclib -install_name $(LIBDIR)/$(LIBRARY)
-+else
-+LDFLAGS += -shared
-+endif
-+ 
-+
-+LIBDIR = $(PREFIX)/lib
- # on x86_64, we might have /usr/lib64 directory instead of /usr/lib
- UNAME_M := $(shell uname -m)
- ifeq ($(UNAME_M), x86_64)
- ifeq (,$(wildcard $(LIBDIR)))
--LIBDIR = $(DESTDIR)$(PREFIX)/lib64
--else
--LIBDIR = $(DESTDIR)$(PREFIX)/lib
-+LIBDIR = $(PREFIX)/lib64
- endif
- endif
- 
-@@ -138,7 +142,6 @@
- LIBOBJ += MCInst.o
- 
- 
--UNAME_S := $(shell uname -s)
- PKGCFCGDIR = $(LIBDIR)/pkgconfig
- 
- # OSX?
-@@ -149,13 +152,6 @@
- # remove string check because OSX kernel complains about missing symbols
- CFLAGS += -D_FORTIFY_SOURCE=0
- endif
+--- Makefile.org	2014-04-01 06:08:49.000000000 -0700
++++ Makefile	2014-04-01 06:27:43.000000000 -0700
+@@ -163,19 +163,6 @@
+ VERSION_EXT = $(API_MAJOR).$(EXT)
+ LDFLAGS += -dynamiclib -install_name lib$(LIBNAME).$(VERSION_EXT) -current_version $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA) -compatibility_version $(PKG_MAJOR).$(PKG_MINOR)
+ AR_EXT = a
+-ifneq ($(HOMEBREW_CAPSTONE),1)
+-ifneq ($(USE_SYS_DYN_MEM),yes)
+-# remove string check because OSX kernel complains about missing symbols
+-CFLAGS += -D_FORTIFY_SOURCE=0
+-endif
 -# By default, suppose that Brew is installed & use Brew path for pkgconfig file
 -PKGCFCGDIR = /usr/local/lib/pkgconfig
 -# is Macport installed instead?
@@ -51,10 +16,11 @@
 -# then correct the path for pkgconfig file
 -PKGCFCGDIR = /opt/local/lib/pkgconfig
 -endif
+-endif
  else
  # Cygwin?
  IS_CYGWIN := $(shell $(CC) -dumpmachine | grep -i cygwin | wc -l)
-@@ -237,25 +233,25 @@
+@@ -239,15 +226,13 @@
  	echo 'Version: $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA)' >> $(PKGCFGF)
  endif
  	echo 'libdir=$(LIBDIR)' >> $(PKGCFGF)
@@ -65,30 +31,9 @@
  	echo 'Cflags: -I$${includedir}' >> $(PKGCFGF)
  
  install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
--	mkdir -p $(LIBDIR)
--	$(INSTALL_LIBRARY) lib$(LIBNAME).$(EXT) $(LIBDIR)
--	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
--	mkdir -p $(INCDIR)/$(LIBNAME)
--	$(INSTALL_DATA) include/*.h $(INCDIR)/$(LIBNAME)
--	mkdir -p $(PKGCFCGDIR)
--	$(INSTALL_DATA) $(PKGCFGF) $(PKGCFCGDIR)/
-+	mkdir -p $(DESTDIR)$(LIBDIR)
-+	$(INSTALL_LIBRARY) lib$(LIBNAME).$(EXT) $(DESTDIR)$(LIBDIR)
-+	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(DESTDIR)$(LIBDIR)
-+	mkdir -p $(DESTDIR)$(INCDIR)/$(LIBNAME)
-+	$(INSTALL_DATA) include/*.h $(DESTDIR)$(INCDIR)/$(LIBNAME)
-+	mkdir -p $(DESTDIR)$(PKGCFCGDIR)
-+	$(INSTALL_DATA) $(PKGCFGF) $(DESTDIR)$(PKGCFCGDIR)/
- 
- uninstall:
--	rm -rf $(INCDIR)/$(LIBNAME)
--	rm -f $(LIBDIR)/lib$(LIBNAME).$(EXT)
--	rm -f $(LIBDIR)/lib$(LIBNAME).$(AR_EXT)
--	rm -f $(PKGCFCGDIR)/$(LIBNAME).pc
-+	rm -rf $(DESTDIR)$(INCDIR)/$(LIBNAME)
-+	rm -f $(DESTDIR)$(LIBDIR)/lib$(LIBNAME).$(EXT)
-+	rm -f $(DESTDIR)$(LIBDIR)/lib$(LIBNAME).$(AR_EXT)
-+	rm -f $(DESTDIR)$(PKGCFCGDIR)/$(LIBNAME).pc
- 
- clean:
- 	rm -f $(LIBOBJ) lib$(LIBNAME).*
+ 	mkdir -p $(LIBDIR)
+-	# remove potential broken old libs
+-	rm -f $(LIBDIR)/lib$(LIBNAME).*
+ 	$(INSTALL_LIB) lib$(LIBNAME).$(EXT) $(LIBDIR)
+ ifneq ($(VERSION_EXT),)
+ 	cd $(LIBDIR) && \

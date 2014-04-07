@@ -1,10 +1,10 @@
 # -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
-# $Id: Portfile 117652 2014-03-07 05:09:28Z ryandesign@macports.org $
+# $Id: Portfile 118429 2014-04-02 07:44:35Z and.damore@macports.org $
 
 PortSystem          1.0
 
 name                capstone
-version             2.1.1
+version             2.1.2
 categories          devel
 platforms           darwin
 maintainers         gmail.com:aquynh
@@ -18,8 +18,8 @@ homepage            http://www.capstone-engine.org/
 master_sites        ${homepage}download/${version}/
 extract.suffix      .tgz
 
-checksums           sha256  8af3c0a0f439d516277f308938935003d072f34a34fcf2e8dcf07dd415b1ca65 \
-                    rmd160  ae65771d182feef575fd4a19bc597170ba42ebcf
+checksums           sha256  49e41d662c5ed4dcd391ec4cfce75fb31ca4bfd245eba9e8f0cb69d6f6e8d7cc \
+                    rmd160  c4a542752c1ffc6262507a799f96470e076429b9
 
 patchfiles          patch-Makefile.diff
 
