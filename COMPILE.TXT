@@ -17,6 +17,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
   purpose. See docs/README for further instructions.
 
 
+
 (1) Compile from source
 
   On *nix (such as MacOSX, Linux, *BSD, Solaris):
@@ -63,7 +64,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 
 
-(3) Cross-compile Windows from *nix
+(3) Cross-compile for Windows from *nix
 
   To cross-compile for Windows, Linux & gcc-mingw-w64-i686 (and also gcc-mingw-w64-x86-64
   for 64-bit binaries) are required.
@@ -79,7 +80,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 
 
-(4) Cross-compile iOS from Mac OSX.
+(4) Cross-compile for iOS from Mac OSX.
 
   To cross-compile for iOS (iPhone/iPad/iPod), Mac OSX with XCode installed is required. 
 
@@ -100,7 +101,18 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 
 
-(5) Compile on Windows with Cygwin
+(5) Cross-compile for Android
+
+  To cross-compile for Android (smartphone/tablet), Android NDK is required.
+
+	$ ./make.sh cross-android
+
+  Resulted files libcapstone.so, libcapstone.a & tests/test* can then
+  be used on Android devices.
+
+
+
+(6) Compile on Windows with Cygwin
 
   To compile under Cygwin gcc-mingw-w64-i686 or x86_64-w64-mingw32 run:
 
@@ -114,7 +126,8 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
   be used on Windows machine.
 
 
-(6) By default, "cc" (default C compiler on the system) is used as compiler.
+
+(7) By default, "cc" (default C compiler on the system) is used as compiler.
 
 	- To use "clang" compiler instead, run command below:
 
@@ -126,7 +139,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 
 
-(7) Language bindings
+(8) Language bindings
 
   So far, Python, Ocaml & Java are supported by bindings in the main code.
   Look for the bindings under directory bindings/, and refer to README file

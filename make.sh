@@ -61,11 +61,12 @@ case "$1" in
   "cross-win64" ) CROSS=x86_64-w64-mingw32- build;;
   "cygwin-mingw32" ) CROSS=i686-pc-mingw32- build;;
   "cygwin-mingw64" ) CROSS=x86_64-w64-mingw32- build;;
+  "cross-android" ) CROSS=arm-linux-androideabi- build;;
   "clang" ) CC=clang build;;
   "gcc" ) CC=gcc build;;
   "ios" ) build_iOS;;
   "ios_armv7" ) build_iOS armv7;;
   "ios_armv7s" ) build_iOS armv7s;;
   "ios_arm64" ) build_iOS arm64;;
-  * ) echo "Usage: make.sh [nix32|cross-win32|cross-win64|cygwin-mingw32|cygwin-mingw64|clang|gcc|ios|ios_armv7|ios_armv7s|ios_arm64|install|uninstall]"; exit 1;;
+  * ) echo "Usage: make.sh [nix32|cross-win32|cross-win64|cygwin-mingw32|cygwin-mingw64|ios|ios_armv7|ios_armv7s|ios_arm64|cross-android|clang|gcc|install|uninstall]"; exit 1;;
 esac
