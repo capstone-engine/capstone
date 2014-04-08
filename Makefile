@@ -30,14 +30,16 @@ PREFIX ?= /usr
 DESTDIR ?=
 INCDIR = $(DESTDIR)$(PREFIX)/include
 
-LIBDIR = $(DESTDIR)$(PREFIX)/lib
-# on x86_64, we might have /usr/lib64 directory instead of /usr/lib
 UNAME_M := $(shell uname -m)
 UNAME_S := $(shell uname -s)
+
+LIBDIR = $(DESTDIR)$(PREFIX)/lib
+# on x86_64, we might have /usr/lib64 directory instead of /usr/lib
 ifeq ($(UNAME_M), x86_64)
-ifeq (,$(wildcard $(LIBDIR)))
+# ignore Mac OSX
 ifneq ($(UNAME_S), Darwin)
-LIBDIR = $(DESTDIR)$(PREFIX)/lib64
+ifeq (,$(wildcard $(LIBDIR)64))
+LIBDIR = $(LIBDIR)64
 endif
 endif
 endif
