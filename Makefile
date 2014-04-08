@@ -38,8 +38,8 @@ LIBDIR = $(DESTDIR)$(PREFIX)/lib
 ifeq ($(UNAME_M), x86_64)
 # ignore Mac OSX
 ifneq ($(UNAME_S), Darwin)
-ifeq (,$(wildcard $(LIBDIR)64))
-LIBDIR = $(LIBDIR)64
+ifneq (,$(wildcard $(DESTDIR)$(PREFIX)/lib64))
+LIBDIR = $(DESTDIR)$(PREFIX)/lib64
 endif
 endif
 endif
