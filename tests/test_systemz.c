@@ -30,8 +30,13 @@ static void print_string_hex(char *comment, unsigned char *str, int len)
 
 static void print_insn_detail(cs_insn *ins)
 {
-	cs_sysz *sysz = &(ins->detail->sysz);
+	cs_sysz *sysz;
 
+	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
+	if (ins->detail == NULL)
+		return;
+
+	sysz = &(ins->detail->sysz);
 	if (sysz->op_count)
 		printf("\top_count: %u\n", sysz->op_count);
 

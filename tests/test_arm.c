@@ -32,7 +32,13 @@ static void print_string_hex(char *comment, unsigned char *str, int len)
 
 static void print_insn_detail(cs_insn *ins)
 {
-	cs_arm *arm = &(ins->detail->arm);
+	cs_arm *arm;
+
+	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
+	if (ins->detail == NULL)
+		return;
+
+	arm = &(ins->detail->arm);
 
 	if (arm->op_count)
 		printf("\top_count: %u\n", arm->op_count);

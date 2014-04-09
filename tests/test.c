@@ -30,8 +30,8 @@ static void print_string_hex(unsigned char *str, int len)
 
 static void test()
 {
-#define X86_CODE16 "\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00"
-#define X86_CODE32 "\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00"
+#define X86_CODE16 "\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00"
+#define X86_CODE32 "\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x00\x91\x92"
 //#define X86_CODE32 "\x0f\xa7\xc0"	// xstorerng
 #define X86_CODE64 "\x55\x48\x8b\x05\xb8\x13\x00\x00"
 //#define ARM_CODE "\x04\xe0\x2d\xe5"
@@ -186,6 +186,9 @@ static void test()
 
 		if (platforms[i].opt_type)
 			cs_option(handle, platforms[i].opt_type, platforms[i].opt_value);
+
+		// turn on SKIPDATA option, but just use default option to skip 1 byte on data
+		cs_option(handle, CS_OPT_SKIPDATA, CS_OPT_ON);
 
 		size_t count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {

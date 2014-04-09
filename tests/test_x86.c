@@ -34,7 +34,13 @@ static void print_string_hex(char *comment, unsigned char *str, int len)
 static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 {
 	int i;
-	cs_x86 *x86 = &(ins->detail->x86);
+	cs_x86 *x86;
+
+	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
+	if (ins->detail == NULL)
+		return;
+
+	x86 = &(ins->detail->x86);
 
 	print_string_hex("\tPrefix:", x86->prefix, 5);
 

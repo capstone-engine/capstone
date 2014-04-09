@@ -31,9 +31,14 @@ static void print_string_hex(char *comment, unsigned char *str, int len)
 
 static void print_insn_detail(cs_insn *ins)
 {
-	cs_arm64 *arm64 = &(ins->detail->arm64);
+	cs_arm64 *arm64;
 	int i;
 
+	// detail can be NULL if SKIPDATA option is turned ON
+	if (ins->detail == NULL)
+		return;
+
+	arm64 = &(ins->detail->arm64);
 	if (arm64->op_count)
 		printf("\top_count: %u\n", arm64->op_count);
 
