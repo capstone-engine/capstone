@@ -56,6 +56,9 @@ struct cs_struct {
 	CombineInsn_t combine;
 	GetRegisterName_t get_regname;
 	uint8_t prev_prefix;	// save previous prefix for combining instructions - X86 only.
+	bool skipdata;	// set this to True if we skip data when disassembling
+	uint8_t skipdata_size;	// how many bytes to skip
+	cs_opt_skipdata skipdata_setup;	// user-defined skipdata setup
 };
 
 #define MAX_ARCH 8

@@ -17,6 +17,9 @@
 #define INSN_CACHE_SIZE 8
 #endif
 
+// default SKIPDATA mnemonic
+#define SKIPDATA_MNEM ".db"
+
 cs_err (*arch_init[MAX_ARCH])(cs_struct *) = { NULL };
 cs_err (*arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = { NULL };
 void (*arch_destroy[MAX_ARCH]) (cs_struct *) = { NULL };
@@ -187,6 +190,9 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		// by default, do not break instruction into details
 		ud->detail = CS_OPT_OFF;
 
+		// default skipdata setup
+		ud->skipdata_setup.mnemonic = SKIPDATA_MNEM;
+
 		cs_err err = arch_init[ud->arch](ud);
 		if (err) {
 			cs_mem_free(ud);
@@ -287,6 +293,27 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 #endif
 }
 
+// how many bytes will we skip when encountering data (CS_OPT_SKIPDATA)?
+static uint8_t skipdata_size(cs_struct *handle)
+{
+	switch(handle->arch) {
+		default:
+			// should never reach
+			return -1;
+		case CS_ARCH_ARM:
+		case CS_ARCH_ARM64:
+		case CS_ARCH_MIPS:
+		case CS_ARCH_PPC:
+		case CS_ARCH_SPARC:
+		case CS_ARCH_SYSZ:
+			// skip 2 bytes due to instruction alignment
+			return 2;
+		case CS_ARCH_X86:
+			// X86 has no restriction on instruction alignment
+			return 1;
+	}
+}
+
 cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 {
 	archs_enable();
@@ -309,9 +336,25 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 	if (!handle)
 		return CS_ERR_CSH;
 
-	if (type == CS_OPT_DETAIL) {
-		handle->detail = value;
-		return CS_ERR_OK;
+	switch(type) {
+		default:
+			break;
+		case CS_OPT_DETAIL:
+			handle->detail = value;
+			return CS_ERR_OK;
+		case CS_OPT_SKIPDATA:
+			handle->skipdata = (value == CS_OPT_ON);
+			if (handle->skipdata) {
+				if (handle->skipdata_size == 0) {
+					// set the default skipdata size
+					handle->skipdata_size = skipdata_size(handle);
+				}
+			}
+			return CS_ERR_OK;
+		case CS_OPT_SKIPDATA_SETUP:
+			if (value)
+				handle->skipdata_setup = *((cs_opt_skipdata *)value);
+			return CS_ERR_OK;
 	}
 
 	return arch_option[handle->arch](handle, type, value);
@@ -330,6 +373,26 @@ static cs_insn *get_prev_insn(cs_insn *cache, unsigned int f, void *total, size_
 		return &cache[f - 1];
 }
 
+static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
+{
+	char *p = opstr;
+	int len;
+	size_t i;
+
+	if (!size) {
+		opstr[0] = '\0';
+		return;
+	}
+
+	len = sprintf(p, "0x%02x", buffer[0]);
+	p+= len;
+
+	for(i = 1; i < size; i++) {
+		len = sprintf(p, ", 0x%02x", buffer[i]);
+		p+= len;
+	}
+}
+
 // dynamicly allocate memory to contain disasm insn
 // NOTE: caller must free() the allocated memory itself to avoid memory leaking
 size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
@@ -343,6 +406,8 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 	void *total = NULL;
 	size_t total_size = 0;
 	bool r;
+	void *tmp;
+	size_t skipdata_bytes;
 
 	if (!handle) {
 		// FIXME: how to handle this case:
@@ -384,11 +449,8 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 
 			if (!handle->check_combine || !handle->check_combine(handle, &insn_cache[f])) {
 				f++;
-
 				if (f == ARR_SIZE(insn_cache)) {
 					// resize total to contain newly disasm insns
-					void *tmp;
-
 					total_size += (sizeof(cs_insn) * INSN_CACHE_SIZE);
 					tmp = cs_mem_realloc(total, total_size);
 					if (tmp == NULL) {	// insufficient memory
@@ -436,8 +498,57 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 			}
 		} else	{
 			// encounter a broken instruction
-			// XXX: TODO: JOXEAN continue here
-			break;
+			// if there is no request to skip data, or remaining data is too small,
+			// then bail out
+			if (!handle->skipdata || handle->skipdata_size > size)
+				break;
+
+			if (handle->skipdata_setup.callback) {
+				skipdata_bytes = handle->skipdata_setup.callback(offset,
+						handle->skipdata_setup.user_data);
+				if (skipdata_bytes > size)
+					// remaining data is not enough
+					break;
+
+				if (!skipdata_bytes)
+					// user requested not to skip data, so bail out
+					break;
+			} else
+				skipdata_bytes = handle->skipdata_size;
+
+			// we have to skip some amount of data, depending on arch & mode
+			insn_cache[f].id = 0;	// invalid ID for this "data" instruction
+			insn_cache[f].address = offset;
+			insn_cache[f].size = skipdata_bytes;
+			memcpy(insn_cache[f].bytes, buffer, skipdata_bytes);
+			strncpy(insn_cache[f].mnemonic, handle->skipdata_setup.mnemonic,
+					sizeof(insn_cache[f].mnemonic) - 1);
+			skipdata_opstr(insn_cache[f].op_str, buffer, skipdata_bytes);
+			insn_cache[f].detail = NULL;
+
+			f++;
+			if (f == ARR_SIZE(insn_cache)) {
+				// resize total to contain newly disasm insns
+
+				total_size += (sizeof(cs_insn) * INSN_CACHE_SIZE);
+				tmp = cs_mem_realloc(total, total_size);
+				if (tmp == NULL) {	// insufficient memory
+					cs_mem_free(total);
+					handle->errnum = CS_ERR_MEM;
+					return 0;
+				}
+
+				total = tmp;
+				memcpy((void*)((uintptr_t)total + total_size - sizeof(insn_cache)), insn_cache, sizeof(insn_cache));
+
+				// reset f back to 0
+				f = 0;
+			}
+
+			buffer += skipdata_bytes;
+			size -= skipdata_bytes;
+			offset += skipdata_bytes;
+			c++;
 		}
 	}
 

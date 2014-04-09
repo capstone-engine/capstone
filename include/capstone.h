@@ -90,17 +90,44 @@ typedef enum cs_opt_type {
 	CS_OPT_DETAIL,	// Break down instruction structure into details
 	CS_OPT_MODE,	// Change engine's mode at run-time
 	CS_OPT_MEM,	// User-defined dynamic memory related functions
+	CS_OPT_SKIPDATA, // Skip data when disassembling
+	CS_OPT_SKIPDATA_SETUP, // Setup user-defined function for SKIPDATA option
 } cs_opt_type;
 
 // Runtime option value (associated with option type above)
 typedef enum cs_opt_value {
-	CS_OPT_OFF = 0,  // Turn OFF an option - default option for CS_OPT_DETAIL.
-	CS_OPT_ON = 3, // Turn ON an option (CS_OPT_DETAIL).
+	CS_OPT_OFF = 0,  // Turn OFF an option - default option of CS_OPT_DETAIL, CS_OPT_SKIPDATA.
+	CS_OPT_ON = 3, // Turn ON an option (CS_OPT_DETAIL, CS_OPT_SKIPDATA).
 	CS_OPT_SYNTAX_DEFAULT = 0, // Default asm syntax (CS_OPT_SYNTAX).
 	CS_OPT_SYNTAX_INTEL, // X86 Intel asm syntax - default on X86 (CS_OPT_SYNTAX).
 	CS_OPT_SYNTAX_ATT,   // X86 ATT asm syntax (CS_OPT_SYNTAX).
 	CS_OPT_SYNTAX_NOREGNAME, // Prints register name with only number (CS_OPT_SYNTAX)
 } cs_opt_value;
+
+// User-defined callback function for SKIPDATA option
+// @offset: offset of the input buffer passed to cs_disasm_ex().
+//		This indicates the position of data Capstone is examining
+// @user_data: user-data passed to cs_option() via @user_data field in
+//		cs_opt_skipdata struct below.
+// @return: return number of bytes to skip, or 0 to stop disassembling.
+typedef size_t (*cs_skipdata_cb_t)(size_t offset, void* user_data);
+
+// User-defined setup for SKIPDATA option
+typedef struct cs_opt_skipdata {
+	// Capstone considers data to skip as special "instructions".
+	// User can specify the string for this instruction's "mnemonic" here.
+	// By default (if @mnemonic is NULL), Capstone use ".db".
+	const char *mnemonic;
+	// User-defined callback function to be called when Capstone hits data.
+	// If the returned value from this callback is positive (>0), Capstone will skip exactly
+	// that number of bytes & continue. Otherwise, if the callback returns 0, Capstone stops
+	// disassembling and returns immediately from cs_disasm_ex()
+	// NOTE: if this callback pointer is NULL, Capstone skip 1 byte on X86, and 2 bytes on
+	// every other architectures.
+	cs_skipdata_cb_t callback; 	// default value is NULL
+	// User-defined data to be passed to @callback function pointer.
+	void *user_data;
+} cs_opt_skipdata;
 
 
 #include "arm.h"
