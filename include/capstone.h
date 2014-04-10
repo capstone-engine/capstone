@@ -105,8 +105,8 @@ typedef enum cs_opt_value {
 } cs_opt_value;
 
 // User-defined callback function for SKIPDATA option
-// @offset: offset of the input buffer passed to cs_disasm_ex().
-//		This indicates the position of data Capstone is examining
+// @offset: the position of the currently-examining data in the input buffer
+// 		passed to cs_disasm_ex().
 // @user_data: user-data passed to cs_option() via @user_data field in
 //		cs_opt_skipdata struct below.
 // @return: return number of bytes to skip, or 0 to stop disassembling.

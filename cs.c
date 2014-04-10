@@ -382,6 +382,7 @@ static cs_insn *get_prev_insn(cs_insn *cache, unsigned int f, void *total, size_
 		return &cache[f - 1];
 }
 
+// generate @op_str for data instruction of SKIPDATA
 static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
 {
 	char *p = opstr;
@@ -417,6 +418,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 	bool r;
 	void *tmp;
 	size_t skipdata_bytes;
+	uint64_t offset_org;
 
 	if (!handle) {
 		// FIXME: how to handle this case:
@@ -431,6 +433,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 
 	memset(insn_cache, 0, sizeof(insn_cache));
 
+	offset_org = offset;
 	while (size > 0) {
 		MCInst_Init(&mci);
 		mci.csh = handle;
@@ -513,7 +516,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 				break;
 
 			if (handle->skipdata_setup.callback) {
-				skipdata_bytes = handle->skipdata_setup.callback(offset,
+				skipdata_bytes = handle->skipdata_setup.callback(offset - offset_org,
 						handle->skipdata_setup.user_data);
 				if (skipdata_bytes > size)
 					// remaining data is not enough
