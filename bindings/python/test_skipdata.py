@@ -47,7 +47,7 @@ def test_class():
             md.skipdata = True
             # To rename "data" instruction's mnemonic to "db", uncomment the line below
             # This example ignores SKIPDATA's callback (first None) & user_data (second None)
-            md.skipdata_opt = ("db", None, None)
+            # md.skipdata_opt = ("db", None, None)
 
             for insn in md.disasm(code, 0x1000):
                 #bytes = binascii.hexlify(insn.bytes)
