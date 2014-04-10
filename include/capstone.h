@@ -118,13 +118,22 @@ typedef struct cs_opt_skipdata {
 	// User can specify the string for this instruction's "mnemonic" here.
 	// By default (if @mnemonic is NULL), Capstone use ".db".
 	const char *mnemonic;
+
 	// User-defined callback function to be called when Capstone hits data.
-	// If the returned value from this callback is positive (>0), Capstone will skip exactly
-	// that number of bytes & continue. Otherwise, if the callback returns 0, Capstone stops
-	// disassembling and returns immediately from cs_disasm_ex()
-	// NOTE: if this callback pointer is NULL, Capstone skip 1 byte on X86, and 2 bytes on
-	// every other architectures.
+	// If the returned value from this callback is positive (>0), Capstone
+	// will skip exactly that number of bytes & continue. Otherwise, if
+	// the callback returns 0, Capstone stops disassembling and returns
+	// immediately from cs_disasm_ex()
+	// NOTE: if this callback pointer is NULL, Capstone would skip a number
+	// of bytes depending on architectures, as following:
+	// Arm:     2 bytes (Thumb mode) or 4 bytes.
+	// Arm64:   4 bytes.
+	// Mips:    4 bytes.
+	// Sparc:   4 bytes.
+	// SystemZ: 2 bytes.
+	// X86:     1 bytes.
 	cs_skipdata_cb_t callback; 	// default value is NULL
+
 	// User-defined data to be passed to @callback function pointer.
 	void *user_data;
 } cs_opt_skipdata;

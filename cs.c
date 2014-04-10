@@ -294,6 +294,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 }
 
 // how many bytes will we skip when encountering data (CS_OPT_SKIPDATA)?
+// this very much depends on instruction alignment requirement of each arch.
 static uint8_t skipdata_size(cs_struct *handle)
 {
 	switch(handle->arch) {
@@ -301,12 +302,20 @@ static uint8_t skipdata_size(cs_struct *handle)
 			// should never reach
 			return -1;
 		case CS_ARCH_ARM:
+			// skip 2 bytes on Thumb mode.
+			if (handle->mode & CS_MODE_THUMB)
+				return 2;
+			// otherwise, skip 4 bytes
+			return 4;
 		case CS_ARCH_ARM64:
 		case CS_ARCH_MIPS:
 		case CS_ARCH_PPC:
 		case CS_ARCH_SPARC:
+			// skip 4 bytes
+			return 4;
 		case CS_ARCH_SYSZ:
-			// skip 2 bytes due to instruction alignment
+			// SystemZ instruction's length can be 2, 4 or 6 bytes,
+			// so we just skip 2 bytes
 			return 2;
 		case CS_ARCH_X86:
 			// X86 has no restriction on instruction alignment
