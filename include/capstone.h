@@ -90,7 +90,7 @@ typedef enum cs_opt_type {
 	CS_OPT_DETAIL,	// Break down instruction structure into details
 	CS_OPT_MODE,	// Change engine's mode at run-time
 	CS_OPT_MEM,	// User-defined dynamic memory related functions
-	CS_OPT_SKIPDATA, // Skip data when disassembling
+	CS_OPT_SKIPDATA, // Skip data when disassembling. Then engine is in SKIPDATA mode.
 	CS_OPT_SKIPDATA_SETUP, // Setup user-defined function for SKIPDATA option
 } cs_opt_type;
 
@@ -112,7 +112,7 @@ typedef enum cs_opt_value {
 // @return: return number of bytes to skip, or 0 to stop disassembling.
 typedef size_t (*cs_skipdata_cb_t)(size_t offset, void* user_data);
 
-// User-defined setup for SKIPDATA option
+// User-customized setup for SKIPDATA option
 typedef struct cs_opt_skipdata {
 	// Capstone considers data to skip as special "instructions".
 	// User can specify the string for this instruction's "mnemonic" here.
@@ -198,8 +198,10 @@ typedef struct cs_insn {
 	char op_str[160];
 
 	// Pointer to cs_detail.
-	// NOTE: detail pointer is only valid (not NULL) when CS_OP_DETAIL = CS_OPT_ON
-	// Otherwise, if CS_OPT_DETAIL = CS_OPT_OFF, @detail = NULL
+	// NOTE: detail pointer is only valid (not NULL) when both requirements below are met:
+	// (1) CS_OP_DETAIL = CS_OPT_ON
+	// (2) If engine is in Skipdata mode (CS_OP_SKIPDATA option set to CS_OPT_ON), then
+	//   the current instruction is not the "data" instruction (which clearly has no detail).
 	cs_detail *detail;
 } cs_insn;
 
@@ -213,17 +215,18 @@ typedef struct cs_insn {
 // All type of errors encountered by Capstone API.
 // These are values returned by cs_errno()
 typedef enum cs_err {
-	CS_ERR_OK = 0,	// No error: everything was fine
-	CS_ERR_MEM,	// Out-Of-Memory error: cs_open(), cs_disasm_ex()
-	CS_ERR_ARCH,	// Unsupported architecture: cs_open()
-	CS_ERR_HANDLE,	// Invalid handle: cs_op_count(), cs_op_index()
-	CS_ERR_CSH,	    // Invalid csh argument: cs_close(), cs_errno(), cs_option()
-	CS_ERR_MODE,	// Invalid/unsupported mode: cs_open()
-	CS_ERR_OPTION,	// Invalid/unsupported option: cs_option()
-	CS_ERR_DETAIL,	// Information is unavailable because detail option is OFF
+	CS_ERR_OK = 0,   // No error: everything was fine
+	CS_ERR_MEM,      // Out-Of-Memory error: cs_open(), cs_disasm_ex()
+	CS_ERR_ARCH,     // Unsupported architecture: cs_open()
+	CS_ERR_HANDLE,   // Invalid handle: cs_op_count(), cs_op_index()
+	CS_ERR_CSH,	     // Invalid csh argument: cs_close(), cs_errno(), cs_option()
+	CS_ERR_MODE,     // Invalid/unsupported mode: cs_open()
+	CS_ERR_OPTION,   // Invalid/unsupported option: cs_option()
+	CS_ERR_DETAIL,   // Information is unavailable because detail option is OFF
 	CS_ERR_MEMSETUP, // Dynamic memory management uninitialized (see CS_OPT_MEM)
-	CS_ERR_VERSION, // Unsupported version (bindings)
-	CS_ERR_DIET,	// Access irrelevant data in "diet" engine
+	CS_ERR_VERSION,  // Unsupported version (bindings)
+	CS_ERR_DIET,     // Access irrelevant data in "diet" engine
+	CS_ERR_SKIPDATA, // Access irrelevant data for "data" instruction in SKIPDATA mode
 } cs_err;
 
 /*

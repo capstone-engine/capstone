@@ -162,6 +162,8 @@ const char *cs_strerror(cs_err code)
 			return "Different API version between core & binding (CS_ERR_VERSION)";
 		case CS_ERR_DIET:
 			return "Information irrelevant in diet engine (CS_ERR_DIET)";
+		case CS_ERR_SKIPDATA:
+			return "Information irrelevant for 'data' instruction in SKIPDATA mode (CS_ERR_SKIPDATA)";
 	}
 }
 
