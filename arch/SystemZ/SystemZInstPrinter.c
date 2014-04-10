@@ -285,9 +285,28 @@ static void printAccessRegOperand(MCInst *MI, int OpNum, SStream *O)
 static void printPCRelOperand(MCInst *MI, int OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
+	int32_t imm;
 
-	if (MCOperand_isImm(MO))
-		SStream_concat(O, "0x%x", MCOperand_getImm(MO));
+	if (MCOperand_isImm(MO)) {
+		imm = (int32_t)MCOperand_getImm(MO);
+		if (imm >= 0) {
+			if (imm > HEX_THRESHOLD)
+				SStream_concat(O, "0x%x", imm);
+			else
+				SStream_concat(O, "%u", imm);
+		} else {
+			if (imm < -HEX_THRESHOLD)
+				SStream_concat(O, "-0x%x", -imm);
+			else
+				SStream_concat(O, "-%u", -imm);
+		}
+
+		if (MI->csh->detail) {
+			MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
+			MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = (int64_t)imm;
+			MI->flat_insn.sysz.op_count++;
+		}
+	}
 }
 
 static void printOperand(MCInst *MI, int OpNum, SStream *O)

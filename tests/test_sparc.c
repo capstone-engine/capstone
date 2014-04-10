@@ -30,8 +30,13 @@ static void print_string_hex(char *comment, unsigned char *str, int len)
 
 static void print_insn_detail(cs_insn *ins)
 {
-	cs_sparc *sparc = &(ins->detail->sparc);
+	cs_sparc *sparc;
 
+	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
+	if (ins->detail == NULL)
+		return;
+
+	sparc = &(ins->detail->sparc);
 	if (sparc->op_count)
 		printf("\top_count: %u\n", sparc->op_count);
 

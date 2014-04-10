@@ -56,9 +56,12 @@ __all__ = [
     'CS_ERR_VERSION',
     'CS_ERR_MEMSETUP',
     'CS_ERR_DIET',
+    'CS_ERR_SKIPDATA',
 
     'CS_SUPPORT_DIET',
     'CS_SUPPORT_X86_REDUCE',
+
+    'CS_SKIPDATA_CALLBACK'
 ]
 
 # Capstone C interface
@@ -94,6 +97,9 @@ CS_MODE_BIG_ENDIAN = (1 << 31) # big-endian mode
 CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
 CS_OPT_DETAIL = 2    # Break down instruction structure into details
 CS_OPT_MODE = 3      # Change engine's mode at run-time
+CS_OPT_MEM = 4      # Change engine's mode at run-time
+CS_OPT_SKIPDATA = 5  # Skip data when disassembling
+CS_OPT_SKIPDATA_SETUP = 6      # Setup user-defined function for SKIPDATA option
 
 # Capstone option value
 CS_OPT_OFF = 0             # Turn OFF an option - default option of CS_OPT_DETAIL
@@ -117,6 +123,7 @@ CS_ERR_DETAIL = 7  # Invalid/unsupported option: cs_option()
 CS_ERR_MEMSETUP = 8
 CS_ERR_VERSION = 9 # Unsupported version (bindings)
 CS_ERR_DIET = 10 # Information irrelevant in diet engine
+CS_ERR_SKIPDATA = 11 # Access irrelevant data for "data" instruction in SKIPDATA mode
 
 # query id for cs_support()
 CS_SUPPORT_DIET = CS_ARCH_ALL+1
@@ -204,6 +211,16 @@ class _cs_insn(ctypes.Structure):
         ('detail', ctypes.POINTER(_cs_detail)),
     )
 
+# callback for SKIPDATA option
+CS_SKIPDATA_CALLBACK = ctypes.CFUNCTYPE(ctypes.c_size_t, ctypes.c_size_t, ctypes.c_void_p)
+
+class _cs_opt_skipdata(ctypes.Structure):
+    _fields_ = (
+        ('mnemonic', ctypes.c_char_p),
+        ('callback', CS_SKIPDATA_CALLBACK),
+        ('user_data', ctypes.c_void_p),
+    )
+
 # setup all the function prototype
 def _setup_prototype(lib, fname, restype, *argtypes):
     getattr(lib, fname).restype = restype
@@ -219,7 +236,7 @@ _setup_prototype(_cs, "cs_insn_name", ctypes.c_char_p, ctypes.c_size_t, ctypes.c
 _setup_prototype(_cs, "cs_op_count", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint)
 _setup_prototype(_cs, "cs_op_index", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint, ctypes.c_uint)
 _setup_prototype(_cs, "cs_errno", ctypes.c_int, ctypes.c_size_t)
-_setup_prototype(_cs, "cs_option", ctypes.c_int, ctypes.c_size_t, ctypes.c_int, ctypes.c_size_t)
+_setup_prototype(_cs, "cs_option", ctypes.c_int, ctypes.c_size_t, ctypes.c_int, ctypes.c_void_p)
 _setup_prototype(_cs, "cs_version", ctypes.c_int, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
 _setup_prototype(_cs, "cs_support", ctypes.c_bool, ctypes.c_int)
 _setup_prototype(_cs, "cs_strerror", ctypes.c_char_p, ctypes.c_int)
@@ -381,6 +398,9 @@ class CsInsn(object):
     # return list of all implicit registers being read.
     @property
     def regs_read(self):
+        if self._raw.id == 0:
+            raise CsError(CS_ERR_SKIPDATA)
+
         if self._cs._diet:
             # Diet engine cannot provide @regs_read.
             raise CsError(CS_ERR_DIET)
@@ -394,6 +414,9 @@ class CsInsn(object):
     # return list of all implicit registers being modified
     @property
     def regs_write(self):
+        if self._raw.id == 0:
+            raise CsError(CS_ERR_SKIPDATA)
+
         if self._cs._diet:
             # Diet engine cannot provide @regs_write
             raise CsError(CS_ERR_DIET)
@@ -407,6 +430,9 @@ class CsInsn(object):
     # return list of semantic groups this instruction belongs to.
     @property
     def groups(self):
+        if self._raw.id == 0:
+            raise CsError(CS_ERR_SKIPDATA)
+
         if self._cs._diet:
             # Diet engine cannot provide @groups
             raise CsError(CS_ERR_DIET)
@@ -441,6 +467,9 @@ class CsInsn(object):
             (self.cc, self.operands) = systemz.get_arch_info(detail.arch.sysz)
 
     def __getattr__(self, name):
+        if self._raw.id == 0:
+            raise CsError(CS_ERR_SKIPDATA)
+
         if not self._cs._detail:
             raise CsError(CS_ERR_DETAIL)
 
@@ -460,6 +489,9 @@ class CsInsn(object):
 
     # get the register name, given the register ID
     def reg_name(self, reg_id):
+        if self._raw.id == 0:
+            raise CsError(CS_ERR_SKIPDATA)
+
         if self._cs._diet:
             # Diet engine cannot provide register name
             raise CsError(CS_ERR_DIET)
@@ -476,6 +508,9 @@ class CsInsn(object):
 
     # verify if this insn belong to group with id as @group_id
     def group(self, group_id):
+        if self._raw.id == 0:
+            raise CsError(CS_ERR_SKIPDATA)
+
         if self._cs._diet:
             # Diet engine cannot provide group information
             raise CsError(CS_ERR_DIET)
@@ -484,6 +519,9 @@ class CsInsn(object):
 
     # verify if this instruction implicitly read register @reg_id
     def reg_read(self, reg_id):
+        if self._raw.id == 0:
+            raise CsError(CS_ERR_SKIPDATA)
+
         if self._cs._diet:
             # Diet engine cannot provide regs_read information
             raise CsError(CS_ERR_DIET)
@@ -492,6 +530,9 @@ class CsInsn(object):
 
     # verify if this instruction implicitly modified register @reg_id
     def reg_write(self, reg_id):
+        if self._raw.id == 0:
+            raise CsError(CS_ERR_SKIPDATA)
+
         if self._cs._diet:
             # Diet engine cannot provide regs_write information
             raise CsError(CS_ERR_DIET)
@@ -500,6 +541,9 @@ class CsInsn(object):
 
     # return number of operands having same operand type @op_type
     def op_count(self, op_type):
+        if self._raw.id == 0:
+            raise CsError(CS_ERR_SKIPDATA)
+
         c = 0
         for op in self.operands:
             if op.type == op_type:
@@ -508,6 +552,9 @@ class CsInsn(object):
 
     # get the operand at position @position of all operands having the same type @op_type
     def op_find(self, op_type, position):
+        if self._raw.id == 0:
+            raise CsError(CS_ERR_SKIPDATA)
+
         c = 0
         for op in self.operands:
             if op.type == op_type:
@@ -549,6 +596,10 @@ class Cs(object):
         self._diet = cs_support(CS_SUPPORT_DIET)
         self._x86_compact = cs_support(CS_SUPPORT_X86_REDUCE)
 
+        # default mnemonic for SKIPDATA
+        self._skipdata_mnem = ".byte"
+        self._skipdata = False
+
 
     # destructor to be called automatically when object is destroyed.
     def __del__(self):
@@ -588,6 +639,41 @@ class Cs(object):
             raise CsError(status)
         # save syntax
         self._syntax = style
+
+
+    # return current skipdata status
+    @property
+    def skipdata(self):
+        return self._skipdata
+
+
+    # setter: modify skipdata status
+    @syntax.setter
+    def skipdata(self, opt):
+        if opt == False:
+            status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA, CS_OPT_OFF)
+        else:
+            status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA, CS_OPT_ON)
+        if status != CS_ERR_OK:
+            raise CsError(status)
+
+        # save this option
+        self._skipdata = opt
+
+
+    # setter: modify "data" instruction's mnemonic for SKIPDATA
+    @syntax.setter
+    def skipdata_setup(self, opt):
+        _skipdata_opt = _cs_opt_skipdata()
+        _mnem, _cb, _ud = opt
+        _skipdata_opt.mnemonic = _mnem
+        _skipdata_opt.callback = ctypes.cast(_cb, CS_SKIPDATA_CALLBACK)
+        _skipdata_opt.user_data = ctypes.cast(_ud, ctypes.c_void_p)
+        status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA_SETUP, ctypes.cast(ctypes.byref(_skipdata_opt), ctypes.c_void_p))
+        if status != CS_ERR_OK:
+            raise CsError(status)
+
+        self._skipdata_opt = _skipdata_opt
 
 
     # is detail mode enable?

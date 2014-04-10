@@ -104,6 +104,9 @@ cdef class CsInsn(object):
     # return list of all implicit registers being read.
     @property
     def regs_read(self):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
         if _diet:
             # Diet engine cannot provide @regs_read
             raise CsError(capstone.CS_ERR_DIET)
@@ -117,6 +120,9 @@ cdef class CsInsn(object):
     # return list of all implicit registers being modified
     @property
     def regs_write(self):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
         if _diet:
             # Diet engine cannot provide @regs_write
             raise CsError(capstone.CS_ERR_DIET)
@@ -130,6 +136,9 @@ cdef class CsInsn(object):
     # return list of semantic groups this instruction belongs to.
     @property
     def groups(self):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
         if _diet:
             # Diet engine cannot provide @groups
             raise CsError(capstone.CS_ERR_DIET)
@@ -146,6 +155,9 @@ cdef class CsInsn(object):
 
     # get the register name, given the register ID
     def reg_name(self, reg_id):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
         if _diet:
             # Diet engine cannot provide register's name
             raise CsError(capstone.CS_ERR_DIET)
@@ -162,6 +174,9 @@ cdef class CsInsn(object):
 
     # verify if this insn belong to group with id as @group_id
     def group(self, group_id):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
         if _diet:
             # Diet engine cannot provide @groups
             raise CsError(capstone.CS_ERR_DIET)
@@ -170,6 +185,9 @@ cdef class CsInsn(object):
 
     # verify if this instruction implicitly read register @reg_id
     def reg_read(self, reg_id):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
         if _diet:
             # Diet engine cannot provide @regs_read
             raise CsError(capstone.CS_ERR_DIET)
@@ -178,6 +196,9 @@ cdef class CsInsn(object):
 
     # verify if this instruction implicitly modified register @reg_id
     def reg_write(self, reg_id):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
         if _diet:
             # Diet engine cannot provide @regs_write
             raise CsError(capstone.CS_ERR_DIET)
@@ -186,6 +207,9 @@ cdef class CsInsn(object):
 
     # return number of operands having same operand type @op_type
     def op_count(self, op_type):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
         c = 0
         for op in self._detail.operands:
             if op.type == op_type:
@@ -194,6 +218,9 @@ cdef class CsInsn(object):
 
     # get the operand at position @position of all operands having the same type @op_type
     def op_find(self, op_type, position):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
         c = 0
         for op in self._detail.operands:
             if op.type == op_type:

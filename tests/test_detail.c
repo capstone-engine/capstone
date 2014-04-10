@@ -201,6 +201,10 @@ static void test()
 
 				// print implicit registers used by this instruction
 				cs_detail *detail = i->detail;
+				// detail can be NULL on "data" instruction since we turned on SKIPDATA option above.
+				if (!detail)
+					continue;
+
 				if (detail->regs_read_count > 0) {
 					printf("\tImplicit registers read: ");
 					for (n = 0; n < detail->regs_read_count; n++) {

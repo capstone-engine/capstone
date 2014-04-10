@@ -38,7 +38,7 @@ endif
 
 .PHONY: all clean
 
-SOURCES = test.c test_detail.c
+SOURCES = test.c test_detail.c test_skipdata.c
 ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))
 SOURCES += test_arm.c
 endif

@@ -30,8 +30,13 @@ static void print_string_hex(char *comment, unsigned char *str, int len)
 
 static void print_insn_detail(cs_insn *ins)
 {
-	cs_sysz *sysz = &(ins->detail->sysz);
+	cs_sysz *sysz;
 
+	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
+	if (ins->detail == NULL)
+		return;
+
+	sysz = &(ins->detail->sysz);
 	if (sysz->op_count)
 		printf("\top_count: %u\n", sysz->op_count);
 
@@ -52,10 +57,10 @@ static void print_insn_detail(cs_insn *ins)
 				break;
 			case SYSZ_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
-				if (op->mem.base != X86_REG_INVALID)
+				if (op->mem.base != SYSZ_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.base: REG = %s\n",
 							i, cs_reg_name(handle, op->mem.base));
-				if (op->mem.index != X86_REG_INVALID)
+				if (op->mem.index != SYSZ_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.index: REG = %s\n",
 							i, cs_reg_name(handle, op->mem.index));
 				if (op->mem.length != 0)
@@ -75,7 +80,7 @@ static void print_insn_detail(cs_insn *ins)
 
 static void test()
 {
-#define SYSZ_CODE "\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x00\x07\xf7\xeb\x2a\xff\xff\x7f\x57\xe3\x01\xff\xff\x7f\x57\xeb\x00\xf0\x00\x00\x24\xb2\x4f\x00\x78"
+#define SYSZ_CODE "\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x00\x07\xf7\xeb\x2a\xff\xff\x7f\x57\xe3\x01\xff\xff\x7f\x57\xeb\x00\xf0\x00\x00\x24\xb2\x4f\x00\x78\xec\x18\x00\x00\xc1\x7f"
 
 	struct platform platforms[] = {
 		{

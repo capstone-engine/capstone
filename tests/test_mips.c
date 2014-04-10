@@ -31,8 +31,13 @@ static void print_string_hex(char *comment, unsigned char *str, int len)
 
 static void print_insn_detail(cs_insn *ins)
 {
-	cs_mips *mips = &(ins->detail->mips);
+	cs_mips *mips;
 
+	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
+	if (ins->detail == NULL)
+		return;
+
+	mips = &(ins->detail->mips);
 	if (mips->op_count)
 		printf("\top_count: %u\n", mips->op_count);
 
