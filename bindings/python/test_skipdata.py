@@ -10,7 +10,7 @@ RANDOM_CODE = "\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x00\
 
 all_tests = (
         (CS_ARCH_X86, CS_MODE_32, X86_CODE32, "X86 32 (Intel syntax)", 0),
-        (CS_ARCH_ARM, 0, RANDOM_CODE, "Arm", 0),
+        (CS_ARCH_ARM, CS_MODE_ARM, RANDOM_CODE, "Arm", 0),
         )
 
 
