@@ -94,6 +94,9 @@ CS_MODE_BIG_ENDIAN = (1 << 31) # big-endian mode
 CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
 CS_OPT_DETAIL = 2    # Break down instruction structure into details
 CS_OPT_MODE = 3      # Change engine's mode at run-time
+CS_OPT_MEM = 4      # Change engine's mode at run-time
+CS_OPT_SKIPDATA = 5  # Skip data when disassembling
+CS_OPT_SKIPDATA_SETUP = 6      # Setup user-defined function for SKIPDATA option
 
 # Capstone option value
 CS_OPT_OFF = 0             # Turn OFF an option - default option of CS_OPT_DETAIL
@@ -204,6 +207,16 @@ class _cs_insn(ctypes.Structure):
         ('detail', ctypes.POINTER(_cs_detail)),
     )
 
+# callback for SKIPDATA option
+SKIPDATA_CB = ctypes.CFUNCTYPE(ctypes.c_size_t, ctypes.c_size_t, ctypes.c_void_p)
+
+class _cs_opt_skipdata(ctypes.Structure):
+    _fields_ = (
+        ('mnemonic', ctypes.c_char_p),
+        ('callback', SKIPDATA_CB),
+        ('user_data', ctypes.c_void_p),
+    )
+
 # setup all the function prototype
 def _setup_prototype(lib, fname, restype, *argtypes):
     getattr(lib, fname).restype = restype
@@ -219,7 +232,7 @@ _setup_prototype(_cs, "cs_insn_name", ctypes.c_char_p, ctypes.c_size_t, ctypes.c
 _setup_prototype(_cs, "cs_op_count", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint)
 _setup_prototype(_cs, "cs_op_index", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint, ctypes.c_uint)
 _setup_prototype(_cs, "cs_errno", ctypes.c_int, ctypes.c_size_t)
-_setup_prototype(_cs, "cs_option", ctypes.c_int, ctypes.c_size_t, ctypes.c_int, ctypes.c_size_t)
+_setup_prototype(_cs, "cs_option", ctypes.c_int, ctypes.c_size_t, ctypes.c_int, ctypes.c_void_p)
 _setup_prototype(_cs, "cs_version", ctypes.c_int, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
 _setup_prototype(_cs, "cs_support", ctypes.c_bool, ctypes.c_int)
 _setup_prototype(_cs, "cs_strerror", ctypes.c_char_p, ctypes.c_int)
@@ -549,6 +562,10 @@ class Cs(object):
         self._diet = cs_support(CS_SUPPORT_DIET)
         self._x86_compact = cs_support(CS_SUPPORT_X86_REDUCE)
 
+        # default mnemonic for SKIPDATA
+        self._skipdata_mnem = ".byte"
+        self._skipdata = False
+
 
     # destructor to be called automatically when object is destroyed.
     def __del__(self):
@@ -588,6 +605,43 @@ class Cs(object):
             raise CsError(status)
         # save syntax
         self._syntax = style
+
+
+    # return current skipdata status
+    @property
+    def skipdata(self):
+        return self._skipdata
+
+
+    # setter: modify skipdata status
+    @syntax.setter
+    def skipdata(self, opt):
+        if opt == False:
+            status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA, CS_OPT_OFF)
+        else:
+            status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA, CS_OPT_ON)
+        if status != CS_ERR_OK:
+            raise CsError(status)
+
+        # save this option
+        self._skipdata = opt
+
+
+    # setter: modify "data" instruction's mnemonic for SKIPDATA
+    @syntax.setter
+    def skipdata_opt(self, opt):
+        _skipdata_opt = _cs_opt_skipdata()
+        _mnem, _cb, _ud = opt
+        _skipdata_opt.mnemonic = _mnem
+        _skipdata_opt.callback = ctypes.cast(_cb, SKIPDATA_CB)
+        #_skipdata_opt.callback = _cb
+        _skipdata_opt.user_data = _ud
+        status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA_SETUP, ctypes.cast(ctypes.byref(_skipdata_opt), ctypes.c_void_p))
+        if status != CS_ERR_OK:
+            raise CsError(status)
+
+        # save the "data" instruction mnem
+        self._skipdata_opt = _skipdata_opt
 
 
     # is detail mode enable?
