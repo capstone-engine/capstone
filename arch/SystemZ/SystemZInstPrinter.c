@@ -361,7 +361,6 @@ static void printCond4Operand(MCInst *MI, int OpNum, SStream *O)
 		"e", "nlh", "he", "nl", "le", "nh", "no"
 	};
 
-	printf(">>> 1111111\n");
 	uint64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	// assert(Imm > 0 && Imm < 15 && "Invalid condition");
 	SStream_concat(O, CondNames[Imm - 1]);
