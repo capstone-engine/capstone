@@ -60,6 +60,8 @@ __all__ = [
 
     'CS_SUPPORT_DIET',
     'CS_SUPPORT_X86_REDUCE',
+
+    'CS_SKIPDATA_CALLBACK'
 ]
 
 # Capstone C interface
@@ -210,12 +212,12 @@ class _cs_insn(ctypes.Structure):
     )
 
 # callback for SKIPDATA option
-SKIPDATA_CB = ctypes.CFUNCTYPE(ctypes.c_size_t, ctypes.c_size_t, ctypes.c_void_p)
+CS_SKIPDATA_CALLBACK = ctypes.CFUNCTYPE(ctypes.c_size_t, ctypes.c_size_t, ctypes.c_void_p)
 
 class _cs_opt_skipdata(ctypes.Structure):
     _fields_ = (
         ('mnemonic', ctypes.c_char_p),
-        ('callback', SKIPDATA_CB),
+        ('callback', CS_SKIPDATA_CALLBACK),
         ('user_data', ctypes.c_void_p),
     )
 
@@ -661,18 +663,16 @@ class Cs(object):
 
     # setter: modify "data" instruction's mnemonic for SKIPDATA
     @syntax.setter
-    def skipdata_opt(self, opt):
+    def skipdata_setup(self, opt):
         _skipdata_opt = _cs_opt_skipdata()
         _mnem, _cb, _ud = opt
         _skipdata_opt.mnemonic = _mnem
-        _skipdata_opt.callback = ctypes.cast(_cb, SKIPDATA_CB)
-        #_skipdata_opt.callback = _cb
-        _skipdata_opt.user_data = _ud
+        _skipdata_opt.callback = ctypes.cast(_cb, CS_SKIPDATA_CALLBACK)
+        _skipdata_opt.user_data = ctypes.cast(_ud, ctypes.c_void_p)
         status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA_SETUP, ctypes.cast(ctypes.byref(_skipdata_opt), ctypes.c_void_p))
         if status != CS_ERR_OK:
             raise CsError(status)
 
-        # save the "data" instruction mnem
         self._skipdata_opt = _skipdata_opt
 
 

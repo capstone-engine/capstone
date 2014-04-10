@@ -30,6 +30,12 @@ def test_cs_disasm_quick():
         print
 
 
+# Sample callback for SKIPDATA option
+def testcb(offset, userdata):
+    # always skip 2 bytes of data
+    return 2
+
+
 ### Test class Cs
 def test_class():
     for (arch, mode, code, comment, syntax) in all_tests:
@@ -47,7 +53,10 @@ def test_class():
             md.skipdata = True
             # To rename "data" instruction's mnemonic to "db", uncomment the line below
             # This example ignores SKIPDATA's callback (first None) & user_data (second None)
-            # md.skipdata_opt = ("db", None, None)
+            # md.skipdata_setup = ("db", None, None)
+
+            # To customize the callback, uncomment the line below.
+            # md.skipdata_setup = (".db", CS_SKIPDATA_CALLBACK(testcb), None)
 
             for insn in md.disasm(code, 0x1000):
                 #bytes = binascii.hexlify(insn.bytes)
