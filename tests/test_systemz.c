@@ -57,10 +57,10 @@ static void print_insn_detail(cs_insn *ins)
 				break;
 			case SYSZ_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
-				if (op->mem.base != X86_REG_INVALID)
+				if (op->mem.base != SYSZ_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.base: REG = %s\n",
 							i, cs_reg_name(handle, op->mem.base));
-				if (op->mem.index != X86_REG_INVALID)
+				if (op->mem.index != SYSZ_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.index: REG = %s\n",
 							i, cs_reg_name(handle, op->mem.index));
 				if (op->mem.length != 0)
