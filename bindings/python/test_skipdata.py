@@ -51,11 +51,13 @@ def test_class():
                 md.syntax = syntax
 
             md.skipdata = True
-            # To rename "data" instruction's mnemonic to "db", uncomment the line below
-            # This example ignores SKIPDATA's callback (first None) & user_data (second None)
-            # md.skipdata_setup = ("db", None, None)
 
-            # To customize the callback, uncomment the line below.
+            # Default "data" instruction's name is ".byte". To rename it to "db", just uncomment
+            # the code below.
+            # md.skipdata_setup = ("db", None, None)
+            # NOTE: This example ignores SKIPDATA's callback (first None) & user_data (second None)
+
+            # To customize the SKIPDATA callback, uncomment the line below.
             # md.skipdata_setup = (".db", CS_SKIPDATA_CALLBACK(testcb), None)
 
             for insn in md.disasm(code, 0x1000):

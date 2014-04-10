@@ -67,7 +67,7 @@ static void test()
 		if (platforms[i].opt_type)
 			cs_option(handle, platforms[i].opt_type, platforms[i].opt_value);
 
-		// turn on SKIPDATA option, but just use default option to skip 1 byte on data
+		// turn on SKIPDATA option
 		cs_option(handle, CS_OPT_SKIPDATA, CS_OPT_ON);
 
 		size_t count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
