@@ -18,7 +18,7 @@
 #endif
 
 // default SKIPDATA mnemonic
-#define SKIPDATA_MNEM ".db"
+#define SKIPDATA_MNEM ".byte"
 
 cs_err (*arch_init[MAX_ARCH])(cs_struct *) = { NULL };
 cs_err (*arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = { NULL };
