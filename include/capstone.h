@@ -109,7 +109,7 @@ typedef enum cs_opt_value {
 // 		passed to cs_disasm_ex().
 // @user_data: user-data passed to cs_option() via @user_data field in
 //		cs_opt_skipdata struct below.
-// @return: return number of bytes to skip, or 0 to stop disassembling.
+// @return: return number of bytes to skip, or 0 to immediately stop disassembling.
 typedef size_t (*cs_skipdata_cb_t)(size_t offset, void* user_data);
 
 // User-customized setup for SKIPDATA option
@@ -129,6 +129,7 @@ typedef struct cs_opt_skipdata {
 	// Arm:     2 bytes (Thumb mode) or 4 bytes.
 	// Arm64:   4 bytes.
 	// Mips:    4 bytes.
+	// PowerPC: 4 bytes.
 	// Sparc:   4 bytes.
 	// SystemZ: 2 bytes.
 	// X86:     1 bytes.
