@@ -28,6 +28,12 @@ static void print_string_hex(unsigned char *str, int len)
 	printf("\n");
 }
 
+static size_t mycallback(size_t offset, void *p)
+{
+	// always skip 2 bytes when encountering data
+	return 2;
+}
+
 static void test()
 {
 #define X86_CODE32 "\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x00\x91\x92"
@@ -73,11 +79,16 @@ static void test()
 		if (platforms[i].opt_type)
 			cs_option(handle, platforms[i].opt_type, platforms[i].opt_value);
 
-		// turn on SKIPDATA option
+		// turn on SKIPDATA mode
 		cs_option(handle, CS_OPT_SKIPDATA, CS_OPT_ON);
+
 		// Default "data" instruction's name is ".byte". To rename it to "db",
 		// just uncomment the code below.
-		//cs_option(handle, CS_OPT_SKIPDATA_SETUP, (size_t)&skipdata);
+		// cs_option(handle, CS_OPT_SKIPDATA_SETUP, (size_t)&skipdata);
+
+		// Uncomment 2 lines below to customize SKIPDATA mode with our callback
+		// skipdata.callback = &mycallback;
+		// cs_option(handle, CS_OPT_SKIPDATA_SETUP, (size_t)&skipdata);
 
 		count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {
