@@ -172,11 +172,12 @@ static void test()
 	cs_insn *all_insn;
 	int i;
 	size_t count;
+	cs_err err;
 
 	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
 		printf("****************\n");
 		printf("Platform: %s\n", platforms[i].comment);
-		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
+		err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
 		if (err) {
 			printf("Failed on cs_open() with error returned: %u\n", err);
 			continue;
