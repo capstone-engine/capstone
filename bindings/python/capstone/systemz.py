@@ -1,7 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes, copy
-from sysz_const import *
+from .sysz_const import *
 
 # define the API
 class SyszOpMem(ctypes.Structure):
