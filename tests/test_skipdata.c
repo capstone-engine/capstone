@@ -55,6 +55,10 @@ static void test()
 	cs_insn *insn;
 	int i;
 	size_t count;
+	cs_opt_skipdata skipdata = {
+		// rename default "data" instruction from ".byte" to "db"
+		.mnemonic = "db",
+	};
 
 	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
 		printf("****************\n");
@@ -70,6 +74,9 @@ static void test()
 
 		// turn on SKIPDATA option
 		cs_option(handle, CS_OPT_SKIPDATA, CS_OPT_ON);
+		// Default "data" instruction's name is ".byte". To rename it to "db",
+		// just uncomment the code below.
+		//cs_option(handle, CS_OPT_SKIPDATA_SETUP, (size_t)&skipdata);
 
 		count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {
