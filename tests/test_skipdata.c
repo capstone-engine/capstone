@@ -54,6 +54,7 @@ static void test()
 	uint64_t address = 0x1000;
 	cs_insn *insn;
 	int i;
+	size_t count;
 
 	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
 		printf("****************\n");
@@ -70,12 +71,12 @@ static void test()
 		// turn on SKIPDATA option
 		cs_option(handle, CS_OPT_SKIPDATA, CS_OPT_ON);
 
-		size_t count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
+		count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {
+			size_t j;
+
 			print_string_hex(platforms[i].code, platforms[i].size);
 			printf("Disasm:\n");
-
-			size_t j;
 
 			for (j = 0; j < count; j++) {
 				printf("0x%"PRIx64":\t%s\t\t%s\n",

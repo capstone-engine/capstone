@@ -31,6 +31,7 @@ static void print_string_hex(char *comment, unsigned char *str, int len)
 static void print_insn_detail(cs_insn *ins)
 {
 	cs_sparc *sparc;
+	int i;
 
 	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
 	if (ins->detail == NULL)
@@ -40,7 +41,6 @@ static void print_insn_detail(cs_insn *ins)
 	if (sparc->op_count)
 		printf("\top_count: %u\n", sparc->op_count);
 
-	int i;
 	for (i = 0; i < sparc->op_count; i++) {
 		cs_sparc_op *op = &(sparc->operands[i]);
 		switch((int)op->type) {
@@ -102,6 +102,7 @@ static void test()
 	uint64_t address = 0x1000;
 	cs_insn *insn;
 	int i;
+	size_t count;
 
 	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
 		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
@@ -112,14 +113,15 @@ static void test()
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
-		size_t count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
+		count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {
+			size_t j;
+
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code:", platforms[i].code, platforms[i].size);
 			printf("Disasm:\n");
 
-			size_t j;
 			for (j = 0; j < count; j++) {
 				printf("0x%"PRIx64":\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
 				print_insn_detail(&insn[j]);
