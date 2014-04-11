@@ -1653,7 +1653,10 @@ static void printAddrModeImm12Operand(MCInst *MI, unsigned OpNum,
 	if (OffImm == INT32_MIN)
 		OffImm = 0;
 	if (isSub) {
-		SStream_concat(O, ", %s#-0x%x%s", markup("<imm:"), -OffImm, markup(">"));
+		if (OffImm < -HEX_THRESHOLD)
+			SStream_concat(O, ", %s#-0x%x%s", markup("<imm:"), -OffImm, markup(">"));
+		else
+			SStream_concat(O, ", %s#-%u%s", markup("<imm:"), -OffImm, markup(">"));
 	} else if (AlwaysPrintImm0 || OffImm > 0) {
 		if (OffImm >= 0) {
 			if (OffImm > HEX_THRESHOLD)
