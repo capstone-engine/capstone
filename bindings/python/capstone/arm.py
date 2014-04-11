@@ -1,7 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes, copy
-from arm_const import *
+from .arm_const import *
 
 # define the API
 class ArmOpMem(ctypes.Structure):

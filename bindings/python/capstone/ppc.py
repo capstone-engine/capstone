@@ -1,7 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes, copy
-from ppc_const import *
+from .ppc_const import *
 
 # define the API
 class PpcOpMem(ctypes.Structure):

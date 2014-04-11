@@ -1,7 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes, copy
-from sparc_const import *
+from .sparc_const import *
 
 # define the API
 class SparcOpMem(ctypes.Structure):
