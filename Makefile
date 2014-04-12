@@ -153,7 +153,7 @@ LIBOBJ += $(LIBOBJ_ARM) $(LIBOBJ_ARM64) $(LIBOBJ_MIPS) $(LIBOBJ_PPC) $(LIBOBJ_X8
 LIBOBJ += MCInst.o
 
 
-PKGCFGDIR = $(LIBDATADIR)/pkgconfig
+PKGCFGDIR ?= $(LIBDATADIR)/pkgconfig
 API_MAJOR=$(shell echo `grep -e CS_API_MAJOR include/capstone.h | grep -v = | awk '{print $$3}'` | awk '{print $$1}')
 VERSION_EXT =
 
