@@ -153,7 +153,7 @@ LIBOBJ += $(LIBOBJ_ARM) $(LIBOBJ_ARM64) $(LIBOBJ_MIPS) $(LIBOBJ_PPC) $(LIBOBJ_X8
 LIBOBJ += MCInst.o
 
 
-PKGCFCGDIR = $(LIBDATADIR)/pkgconfig
+PKGCFGDIR = $(LIBDATADIR)/pkgconfig
 API_MAJOR=$(shell echo `grep -e CS_API_MAJOR include/capstone.h | grep -v = | awk '{print $$3}'` | awk '{print $$1}')
 VERSION_EXT =
 
@@ -252,13 +252,13 @@ endif
 	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
 	mkdir -p $(INCDIR)/$(LIBNAME)
 	$(INSTALL_DATA) include/*.h $(INCDIR)/$(LIBNAME)
-	mkdir -p $(PKGCFCGDIR)
-	$(INSTALL_DATA) $(PKGCFGF) $(PKGCFCGDIR)/
+	mkdir -p $(PKGCFGDIR)
+	$(INSTALL_DATA) $(PKGCFGF) $(PKGCFGDIR)/
 
 uninstall:
 	rm -rf $(INCDIR)/$(LIBNAME)
 	rm -f $(LIBDIR)/lib$(LIBNAME).*
-	rm -f $(PKGCFCGDIR)/$(LIBNAME).pc
+	rm -f $(PKGCFGDIR)/$(LIBNAME).pc
 
 clean:
 	rm -f $(LIBOBJ) lib$(LIBNAME).*
