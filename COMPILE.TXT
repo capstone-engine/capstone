@@ -139,7 +139,13 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 
 
-(8) Language bindings
+(8) To uninstall Capstone, run command below:
+
+		$ sudo ./make.sh uninstall
+
+
+
+(9) Language bindings
 
   So far, Python, Ocaml & Java are supported by bindings in the main code.
   Look for the bindings under directory bindings/, and refer to README file
