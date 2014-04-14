@@ -28,7 +28,7 @@ static void print_string_hex(unsigned char *str, int len)
 	printf("\n");
 }
 
-static size_t mycallback(size_t offset, void *p)
+static size_t mycallback(const uint8_t *buffer, size_t offset, void *p)
 {
 	// always skip 2 bytes when encountering data
 	return 2;

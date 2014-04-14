@@ -518,7 +518,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 				break;
 
 			if (handle->skipdata_setup.callback) {
-				skipdata_bytes = handle->skipdata_setup.callback(offset - offset_org,
+				skipdata_bytes = handle->skipdata_setup.callback(buffer, offset - offset_org,
 						handle->skipdata_setup.user_data);
 				if (skipdata_bytes > size)
 					// remaining data is not enough
