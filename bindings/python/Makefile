@@ -9,6 +9,12 @@ install:
 	# then install
 	python setup.py install
 
+install3:
+	# clean up first
+	rm -rf build
+	# then install
+	python3 setup.py install
+
 # NOTE: Newer cython can be installed by: sudo pip install --upgrade cython
 install_cython:
 	# Copy code from capstone/ to pyx/

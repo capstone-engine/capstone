@@ -1,6 +1,10 @@
-1. To install pure Python binding on *nix, run below command:
+1. To install pure Python binding on *nix, run the command below:
 
 		$ sudo make install
+
+   To install Python 3 package, run the command below:
+
+		$ sudo make install3
 
 2. For better Python performance, install cython-based binding with:
 
