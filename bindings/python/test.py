@@ -53,7 +53,7 @@ def to_x(s):
     from struct import pack
     if not s: return '0'
     x = pack(">q", s)
-    while x[0] == '\0': x = x[1:]
+    while x[0] in ('\0', 0): x = x[1:]
     if _python3:
         return "".join("{0:02x}".format(c) for c in x)  # <-- Python 3 is OK
     else:
@@ -63,7 +63,7 @@ def to_x_32(s):
     from struct import pack
     if not s: return '0'
     x = pack(">i", s)
-    while x[0] == '\0': x = x[1:]
+    while x[0] in ('\0', 0): x = x[1:]
     if _python3:
         return "".join("{0:02x}".format(c) for c in x)  # <-- Python 3 is OK
     else:
