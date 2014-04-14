@@ -30,17 +30,13 @@ PREFIX ?= /usr
 DESTDIR ?=
 INCDIR = $(DESTDIR)$(PREFIX)/include
 
-LIBDIR = $(DESTDIR)$(PREFIX)/lib
-# on x86_64, we might have /usr/lib64 directory instead of /usr/lib
-UNAME_M := $(shell uname -m)
 UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_M), x86_64)
-ifeq (,$(wildcard $(LIBDIR)))
-ifneq ($(UNAME_S), Darwin)
-LIBDIR = $(DESTDIR)$(PREFIX)/lib64
-endif
-endif
-endif
+
+LIBDIRARCH ?= lib
+# Uncomment the below line to installs x86_64 libs to lib64/ directory.
+# Or better, pass 'LIBDIRARCH=lib64' to 'make install/uninstall' via 'make.sh'.
+#LIBDIRARCH ?= lib64
+LIBDIR = $(DESTDIR)$(PREFIX)/$(LIBDIRARCH)
 
 ifneq ($(UNAME_S),Darwin)
 LDFLAGS += -shared

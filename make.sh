@@ -49,11 +49,19 @@ function install {
 				${MAKE} install
 			fi
 		fi
-	else
-		if [ ${CC}x != x ]; then
-			${MAKE} CC=$CC install
+	else	# not OSX
+		if test -d /usr/lib64; then
+			if [ ${CC}x != x ]; then
+				${MAKE} LIBDIRARCH=lib64 CC=$CC install
+			else
+				${MAKE} LIBDIRARCH=lib64 install
+			fi
 		else
-			${MAKE} install
+			if [ ${CC}x != x ]; then
+				${MAKE} CC=$CC install
+			else
+				${MAKE} install
+			fi
 		fi
 	fi
 }
@@ -68,8 +76,12 @@ function uninstall {
 		else
 			${MAKE} uninstall
 		fi
-	else
-		${MAKE} uninstall
+	else	# not OSX
+		if test -d /usr/lib64; then
+			${MAKE} LIBDIRARCH=lib64 uninstall
+		else
+			${MAKE} uninstall
+		fi
 	fi
 }
 
