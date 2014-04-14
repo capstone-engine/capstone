@@ -32,30 +32,76 @@ function build {
 }
 
 function install {
-	if [ ${CC}x != x ]; then
-		${MAKE} CC=$CC install
-	else
-		${MAKE} install
+	# Mac OSX needs to find the right directory for pkgconfig
+	if [ "$(uname)" == "Darwin" ]; then
+		# find the directory automatically, so we can support both Macport & Brew
+		PKGCFGDIR="$(pkg-config --variable pc_path pkg-config | cut -d ':' -f 1)"
+		if [ ${PKGCFGDIR}x != x ]; then
+			if [ ${CC}x != x ]; then
+				${MAKE} CC=$CC PKGCFGDIR=$PKGCFGDIR install
+			else
+				${MAKE} PKGCFGDIR=$PKGCFGDIR install
+			fi
+		else
+			if [ ${CC}x != x ]; then
+				${MAKE} CC=$CC install
+			else
+				${MAKE} install
+			fi
+		fi
+	else	# not OSX
+		if test -d /usr/lib64; then
+			if [ ${CC}x != x ]; then
+				${MAKE} LIBDIRARCH=lib64 CC=$CC install
+			else
+				${MAKE} LIBDIRARCH=lib64 install
+			fi
+		else
+			if [ ${CC}x != x ]; then
+				${MAKE} CC=$CC install
+			else
+				${MAKE} install
+			fi
+		fi
+	fi
+}
+
+function uninstall {
+	# Mac OSX needs to find the right directory for pkgconfig
+	if [ "$(uname)" == "Darwin" ]; then
+		# find the directory automatically, so we can support both Macport & Brew
+		PKGCFGDIR="$(pkg-config --variable pc_path pkg-config | cut -d ':' -f 1)"
+		if [ ${PKGCFGDIR}x != x ]; then
+			${MAKE} PKGCFGDIR=$PKGCFGDIR uninstall
+		else
+			${MAKE} uninstall
+		fi
+	else	# not OSX
+		if test -d /usr/lib64; then
+			${MAKE} LIBDIRARCH=lib64 uninstall
+		else
+			${MAKE} uninstall
+		fi
 	fi
 }
 
 MAKE=make
 if [ "$(uname)" == "SunOS" ]; then
-export MAKE=gmake
-export INSTALL_BIN=ginstall
-export CC=gcc
+	export MAKE=gmake
+	export INSTALL_BIN=ginstall
+	export CC=gcc
 fi
 
 if [[ "$(uname)" == *BSD* ]]; then
-export MAKE=gmake
-export PREFIX=/usr/local
+	export MAKE=gmake
+	export PREFIX=/usr/local
 fi
 
 case "$1" in
   "" ) build;;
   "default" ) build;;
   "install" ) install;;
-  "uninstall" ) ${MAKE} uninstall;;
+  "uninstall" ) uninstall;;
   "nix32" ) CFLAGS=-m32 LDFLAGS=-m32 build;;
   "cross-win32" ) CROSS=i686-w64-mingw32- build;;
   "cross-win64" ) CROSS=x86_64-w64-mingw32- build;;
