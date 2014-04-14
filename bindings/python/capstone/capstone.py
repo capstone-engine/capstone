@@ -126,6 +126,7 @@ if not hasattr(sys.modules[__name__], '__file__'):
 _lib_path = split(__file__)[0]
 _all_libs = ['libcapstone.dll', 'libcapstone.so', 'libcapstone.dylib']
 _found = False
+_linux_lib_paths = ['/usr/lib/','/usr/lib32/','/usr/lib64/']
 
 for _lib in _all_libs:
     try:
@@ -158,10 +159,21 @@ if _found == False:
             break
         except OSError:
             pass
+
+if _found == False:
+    # last resort for linux to find library from 'canonical' usr library paths
+    for p in _linux_lib_paths:
+        try:
+            _lib_file = join(p, _all_libs[1])
+            # print "Trying to load:", _lib_file
+            _cs = ctypes.cdll.LoadLibrary(_lib_file)
+            _found = True
+            break
+        except OSError:
+            pass
     if _found == False:
         raise ImportError("ERROR: fail to load the dynamic library.")
-
-
+    
 # low-level structure for C code
 class _cs_arch(ctypes.Union):
     _fields_ = (
