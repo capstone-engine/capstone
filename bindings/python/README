@@ -2,7 +2,8 @@
 
 		$ sudo make install
 
-   To install Python 3 package, run the command below:
+   To install Python3 binding package, run the command below:
+   (Note: this requires python3 installed in your machine)
 
 		$ sudo make install3
 
