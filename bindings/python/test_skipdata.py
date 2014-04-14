@@ -30,7 +30,7 @@ def test_cs_disasm_quick():
 
 
 # Sample callback for SKIPDATA option
-def testcb(offset, userdata):
+def testcb(buffer, offset, userdata):
     # always skip 2 bytes of data
     return 2
 
