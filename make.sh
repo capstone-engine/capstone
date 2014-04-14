@@ -36,7 +36,8 @@ function install {
 	if [ "$(uname)" == "Darwin" ]; then
 		# find the directory automatically, so we can support both Macport & Brew
 		PKGCFGDIR="$(pkg-config --variable pc_path pkg-config | cut -d ':' -f 1)"
-		if [ ${PKGCFGDIR}x != x ]; then
+		# set PKGCFGDIR only in non-Brew environment & pkg-config is available
+		if [ "$HOMEBREW_CAPSTONE" != "1" ] && [ ${PKGCFGDIR}x != x ]; then
 			if [ ${CC}x != x ]; then
 				${MAKE} CC=$CC PKGCFGDIR=$PKGCFGDIR install
 			else
