@@ -26,9 +26,9 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 		$ ./make.sh
 
-  - On 64-bit OS, run command below to cross-compile Capstone for 32-bit binary:
+  - On 64-bit OS, run the command below to cross-compile Capstone for 32-bit binary:
 
-	$ ./make.sh nix32
+		$ ./make.sh nix32
 
 
 
@@ -37,10 +37,10 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
   To install Capstone, run:
 
 	$ sudo ./make.sh install
-	
+
 	For FreeBSD/OpenBSD, where sudo is unavailable, run:
 
-	$ su; ./make.sh install
+		$ su; ./make.sh install
 
   Users are then required to enter root password to copy Capstone into machine
   system directories.
@@ -70,9 +70,11 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
   for 64-bit binaries) are required.
 
 	- To cross-compile Windows 32-bit binary, simply run:
+
 		$ ./make.sh cross-win32
 
 	- To cross-compile Windows 64-bit binary, run:
+
 		$ ./make.sh cross-win64
 
   Resulted files libcapstone.dll, libcapstone.dll.a & tests/test*.exe can then
@@ -116,10 +118,12 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
   To compile under Cygwin gcc-mingw-w64-i686 or x86_64-w64-mingw32 run:
 
-        - To compile Windows 32-bit binary under Cygwin, simply run
+        - To compile Windows 32-bit binary under Cygwin, run:
+
                 $ ./make.sh cygwin-mingw32
 
-        - To compile Windows 64-bit binary under Cygwin, run
+        - To compile Windows 64-bit binary under Cygwin, run:
+
                 $ ./make.sh cygwin-mingw64
 
   Resulted files libcapstone.dll, libcapstone.dll.a & tests/test*.exe can then
@@ -129,7 +133,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 (7) By default, "cc" (default C compiler on the system) is used as compiler.
 
-	- To use "clang" compiler instead, run command below:
+	- To use "clang" compiler instead, run the command below:
 
 		$ ./make.sh clang
 
@@ -139,7 +143,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 
 
-(8) To uninstall Capstone, run command below:
+(8) To uninstall Capstone, run the command below:
 
 		$ sudo ./make.sh uninstall
 
