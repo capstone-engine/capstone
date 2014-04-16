@@ -344,7 +344,7 @@ def cs_disasm_lite(arch, mode, code, offset, count=0):
     if res > 0:
         for i in range(res):
             insn = all_insn[i]
-            yield (insn.address, insn.size, insn.mnemonic, insn.op_str)
+            yield (insn.address, insn.size, insn.mnemonic.decode('ascii'), insn.op_str.decode('ascii'))
 
         _cs.cs_free(all_insn, res)
     else:
