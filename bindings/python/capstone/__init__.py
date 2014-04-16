@@ -10,6 +10,7 @@ __all__ = [
     'CsInsn',
 
     'cs_disasm_quick',
+    'cs_disasm_lite',
     'cs_version',
     'cs_support',
     'version_bind',
