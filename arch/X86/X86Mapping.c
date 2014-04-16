@@ -947,6 +947,7 @@ static name_map insn_name_maps[] = {
 	{ X86_INS_RSQRTPS, "rsqrtps" },
 	{ X86_INS_RSQRTSS, "rsqrtss" },
 	{ X86_INS_SAHF, "sahf" },
+	{ X86_INS_SAL, "sal" },
 	{ X86_INS_SALC, "salc" },
 	{ X86_INS_SAR, "sar" },
 	{ X86_INS_SARX, "sarx" },
@@ -14648,6 +14649,150 @@ static insn_map insns[] = {
 		X86_SAHF, X86_INS_SAHF,
 #ifndef CAPSTONE_DIET
 		{ X86_REG_AH, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL16m1, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL16mCL, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_CL, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL16mi, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL16r1, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL16rCL, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_CL, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL16ri, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL32m1, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL32mCL, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_CL, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL32mi, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL32r1, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL32rCL, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_CL, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL32ri, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL64m1, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL64mCL, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_CL, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL64mi, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL64r1, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL64rCL, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_CL, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL64ri, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL8m1, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL8mCL, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_CL, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL8mi, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL8r1, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL8rCL, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_CL, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL8ri, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
@@ -38419,6 +38564,150 @@ static insn_map insns[] = {
 		X86_SAHF, X86_INS_SAHF,
 #ifndef CAPSTONE_DIET
 		{ X86_REG_AH, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL16m1, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL16mCL, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_CL, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL16mi, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL16r1, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL16rCL, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_CL, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL16ri, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL32m1, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL32mCL, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_CL, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL32mi, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL32r1, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL32rCL, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_CL, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL32ri, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL64m1, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL64mCL, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_CL, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL64mi, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL64r1, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL64rCL, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_CL, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL64ri, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL8m1, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL8mCL, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_CL, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL8mi, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL8r1, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL8rCL, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_CL, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SAL8ri, X86_INS_SAL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{

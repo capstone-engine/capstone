@@ -149,7 +149,7 @@ typedef struct cs_x86 {
 } cs_x86;
 
 //> X86 instructions
-typedef enum  x86_insn {
+typedef enum x86_insn {
 	X86_INS_INVALID = 0,
 
 	X86_INS_AAA,
@@ -746,6 +746,7 @@ typedef enum  x86_insn {
 	X86_INS_RSQRTPS,
 	X86_INS_RSQRTSS,
 	X86_INS_SAHF,
+	X86_INS_SAL,
 	X86_INS_SALC,
 	X86_INS_SAR,
 	X86_INS_SARX,
