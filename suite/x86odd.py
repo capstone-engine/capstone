@@ -5,9 +5,9 @@ from __future__ import print_function
 import sys
 from capstone import *
 
-CODE32  = "\xc0\xe0\x02"
-CODE32 += "\xc0\xf0\x02"
-CODE32 += "\xc1\xf6\x00"
+CODE32  = b"\xc0\xe0\x02"
+CODE32 += b"\xc0\xf0\x02"
+CODE32 += b"\xc1\xf6\x00"
 
 _python3 = sys.version_info.major == 3
 
