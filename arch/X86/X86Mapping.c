@@ -2088,6 +2088,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		X86_ADD8ri8, X86_INS_ADD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
 		X86_ADD8rm, X86_INS_ADD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -2521,6 +2527,12 @@ static insn_map insns[] = {
 	},
 	{
 		X86_AND8ri, X86_INS_AND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_AND8ri8, X86_INS_AND,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
@@ -11298,6 +11310,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		X86_OR8ri8, X86_INS_OR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
 		X86_OR8rm, X86_INS_OR,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -16477,6 +16495,12 @@ static insn_map insns[] = {
 	},
 	{
 		X86_SUB8ri, X86_INS_SUB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SUB8ri8, X86_INS_SUB,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
@@ -31806,6 +31830,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		X86_XOR8ri8, X86_INS_XOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
 		X86_XOR8rm, X86_INS_XOR,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -32369,6 +32399,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		X86_ADD8ri8, X86_INS_ADD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
 		X86_ADD8rm, X86_INS_ADD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -32592,6 +32628,12 @@ static insn_map insns[] = {
 	},
 	{
 		X86_AND8ri, X86_INS_AND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_AND8ri8, X86_INS_AND,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
@@ -37247,6 +37289,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		X86_OR8ri8, X86_INS_OR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
 		X86_OR8rm, X86_INS_OR,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -40151,6 +40199,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		X86_SUB8ri8, X86_INS_SUB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
 		X86_SUB8rm, X86_INS_SUB,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -40980,6 +41034,12 @@ static insn_map insns[] = {
 	},
 	{
 		X86_XOR8ri, X86_INS_XOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_XOR8ri8, X86_INS_XOR,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
