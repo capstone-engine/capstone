@@ -25,19 +25,19 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U,	// IMPLICIT_DEF
     0U,	// SUBREG_TO_REG
     0U,	// COPY_TO_REGCLASS
-    13995U,	// DBG_VALUE
+    14038U,	// DBG_VALUE
     0U,	// REG_SEQUENCE
     0U,	// COPY
-    13988U,	// BUNDLE
-    14060U,	// LIFETIME_START
-    13975U,	// LIFETIME_END
+    14031U,	// BUNDLE
+    14103U,	// LIFETIME_START
+    14018U,	// LIFETIME_END
     0U,	// STACKMAP
     0U,	// PATCHPOINT
-    14075U,	// AAA
+    14118U,	// AAA
     20251U,	// AAD8i8
     23388U,	// AAM8i8
-    14785U,	// AAS
-    14793U,	// ABS_F
+    14828U,	// AAS
+    14836U,	// ABS_F
     0U,	// ABS_Fp32
     0U,	// ABS_Fp64
     0U,	// ABS_Fp80
@@ -164,10 +164,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U,	// ADD_FpI32m64
     0U,	// ADD_FpI32m80
     27929U,	// ADD_FrST0
-    14014U,	// ADJCALLSTACKDOWN32
-    14014U,	// ADJCALLSTACKDOWN64
-    14032U,	// ADJCALLSTACKUP32
-    14032U,	// ADJCALLSTACKUP64
+    14057U,	// ADJCALLSTACKDOWN32
+    14057U,	// ADJCALLSTACKDOWN64
+    14075U,	// ADJCALLSTACKUP32
+    14075U,	// ADJCALLSTACKUP64
     551689024U,	// ADOX32rm
     8543040U,	// ADOX32rr
     551723410U,	// ADOX64rm
@@ -403,30 +403,30 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     811653238U,	// BZHI32rr
     835002058U,	// BZHI64rm
     811654858U,	// BZHI64rr
-    275860U,	// CALL16m
-    30100U,	// CALL16r
-    292210U,	// CALL32m
-    30066U,	// CALL32r
-    406915U,	// CALL64m
+    275903U,	// CALL16m
+    30143U,	// CALL16r
+    292253U,	// CALL32m
+    30109U,	// CALL32r
+    406958U,	// CALL64m
     417534U,	// CALL64pcrel32
-    30083U,	// CALL64r
+    30126U,	// CALL64r
     420360U,	// CALLpcrel16
     415943U,	// CALLpcrel32
-    15244U,	// CBW
-    14222U,	// CDQ
-    14730U,	// CDQE
-    15015U,	// CHS_F
+    15287U,	// CBW
+    14265U,	// CDQ
+    14773U,	// CDQE
+    15058U,	// CHS_F
     0U,	// CHS_Fp32
     0U,	// CHS_Fp64
     0U,	// CHS_Fp80
-    14144U,	// CLAC
-    14176U,	// CLC
-    14213U,	// CLD
+    14187U,	// CLAC
+    14219U,	// CLC
+    14256U,	// CLD
     431736U,	// CLFLUSH
-    14356U,	// CLGI
-    14366U,	// CLI
-    15122U,	// CLTS
-    14180U,	// CMC
+    14399U,	// CLGI
+    14409U,	// CLI
+    15165U,	// CLTS
+    14223U,	// CMC
     8464445U,	// CMOVA16rm
     8448061U,	// CMOVA16rr
     551638836U,	// CMOVA32rm
@@ -606,25 +606,25 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     445848U,	// CMP8rm
     8539544U,	// CMP8rr
     8539544U,	// CMP8rr_REV
-    1111963935U,	// CMPPDrmi
+    1111963978U,	// CMPPDrmi
     568676997U,	// CMPPDrmi_alt
-    1380415775U,	// CMPPDrri
+    1380415818U,	// CMPPDrri
     839225989U,	// CMPPDrri_alt
-    1114061087U,	// CMPPSrmi
+    1114061130U,	// CMPPSrmi
     568681710U,	// CMPPSrmi_alt
-    1382512927U,	// CMPPSrri
+    1382512970U,	// CMPPSrri
     839230702U,	// CMPPSrri_alt
     1625795446U,	// CMPS16
     1894242894U,	// CMPS32
     2162696241U,	// CMPS64
     2431143442U,	// CMPS8
-    2726770975U,	// CMPSDrm
+    2726771018U,	// CMPSDrm
     581260362U,	// CMPSDrm_alt
-    1384610079U,	// CMPSDrr
+    1384610122U,	// CMPSDrr
     839226442U,	// CMPSDrr_alt
-    2999400735U,	// CMPSSrm
+    2999400778U,	// CMPSSrm
     585459421U,	// CMPSSrm_alt
-    1388804383U,	// CMPSSrr
+    1388804426U,	// CMPSSrr
     839231197U,	// CMPSSrr_alt
     560340U,	// CMPXCHG16B
     4237731U,	// CMPXCHG16rm
@@ -644,13 +644,13 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     22208U,	// COM_FIPr
     22151U,	// COM_FIr
     23393U,	// COM_FST0r
-    15071U,	// COS_F
+    15114U,	// COS_F
     0U,	// COS_Fp32
     0U,	// COS_Fp64
     0U,	// COS_Fp80
-    14207U,	// CPUID32
-    14207U,	// CPUID64
-    14605U,	// CQO
+    14250U,	// CPUID32
+    14250U,	// CPUID64
+    14648U,	// CQO
     6367263U,	// CRC32r32m16
     283203366U,	// CRC32r32m32
     117964U,	// CRC32r32m8
@@ -661,7 +661,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     117964U,	// CRC32r64m8
     6347874U,	// CRC32r64r64
     6343884U,	// CRC32r64r8
-    14805U,	// CS_PREFIX
+    14848U,	// CS_PREFIX
     551719159U,	// CVTDQ2PDrm
     8540407U,	// CVTDQ2PDrr
     320334U,	// CVTDQ2PSrm
@@ -706,11 +706,11 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     8541953U,	// CVTTSS2SI64rr
     612097U,	// CVTTSS2SIrm
     8541953U,	// CVTTSS2SIrr
-    14231U,	// CWD
-    14520U,	// CWDE
-    14079U,	// DAA
-    14789U,	// DAS
-    13960U,	// DATA16_PREFIX
+    14274U,	// CWD
+    14563U,	// CWDE
+    14122U,	// DAA
+    14832U,	// DAS
+    14003U,	// DATA16_PREFIX
     272609U,	// DEC16m
     26849U,	// DEC16r
     26849U,	// DEC32_16r
@@ -788,58 +788,58 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     839225982U,	// DPPDrri
     568681703U,	// DPPSrmi
     839230695U,	// DPPSrri
-    14825U,	// DS_PREFIX
+    14868U,	// DS_PREFIX
     28797U,	// EH_RETURN
     28797U,	// EH_RETURN64
-    13769U,	// EH_SjLj_LongJmp32
-    13873U,	// EH_SjLj_LongJmp64
-    13788U,	// EH_SjLj_SetJmp32
-    13892U,	// EH_SjLj_SetJmp64
+    13812U,	// EH_SjLj_LongJmp32
+    13916U,	// EH_SjLj_LongJmp64
+    13831U,	// EH_SjLj_SetJmp32
+    13935U,	// EH_SjLj_SetJmp64
     416843U,	// EH_SjLj_Setup
     283140543U,	// ENTER
-    14863U,	// ES_PREFIX
+    14906U,	// ES_PREFIX
     3271894289U,	// EXTRACTPSmr
     811656465U,	// EXTRACTPSrr
     6348789U,	// EXTRQ
     839229429U,	// EXTRQI
-    13750U,	// F2XM1
+    13793U,	// F2XM1
     8546823U,	// FARCALL16i
-    636307U,	// FARCALL16m
+    636350U,	// FARCALL16m
     8542406U,	// FARCALL32i
-    636273U,	// FARCALL32m
-    636290U,	// FARCALL64
+    636316U,	// FARCALL32m
+    636333U,	// FARCALL64
     8546928U,	// FARJMP16i
-    636316U,	// FARJMP16m
+    636359U,	// FARJMP16m
     8542533U,	// FARJMP32i
-    636282U,	// FARJMP32m
-    636299U,	// FARJMP64
+    636325U,	// FARJMP32m
+    636342U,	// FARJMP64
     233432U,	// FBLDm
     236574U,	// FBSTPm
     238170U,	// FCOM32m
     252164U,	// FCOM64m
     238771U,	// FCOMP32m
     252236U,	// FCOMP64m
-    14637U,	// FCOMPP
-    14652U,	// FDECSTP
-    15065U,	// FEMMS
+    14680U,	// FCOMPP
+    14695U,	// FDECSTP
+    15108U,	// FEMMS
     21947U,	// FFREE
     270945U,	// FICOM16m
     284939U,	// FICOM32m
     271547U,	// FICOMP16m
     285012U,	// FICOMP32m
-    14660U,	// FINCSTP
+    14703U,	// FINCSTP
     272602U,	// FLDCW16m
     239622U,	// FLDENVm
-    14243U,	// FLDL2E
-    15127U,	// FLDL2T
-    13854U,	// FLDLG2
-    13861U,	// FLDLN2
-    14370U,	// FLDPI
-    15468U,	// FNCLEX
-    15148U,	// FNINIT
-    14632U,	// FNOP
+    14286U,	// FLDL2E
+    15170U,	// FLDL2T
+    13897U,	// FLDLG2
+    13904U,	// FLDLN2
+    14413U,	// FLDPI
+    15511U,	// FNCLEX
+    15191U,	// FNINIT
+    14675U,	// FNOP
     272627U,	// FNSTCW16m
-    15267U,	// FNSTSW16r
+    15310U,	// FNSTSW16r
     240532U,	// FNSTSWm
     0U,	// FP32_TO_INT16_IN_MEM
     0U,	// FP32_TO_INT32_IN_MEM
@@ -850,26 +850,26 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U,	// FP80_TO_INT16_IN_MEM
     0U,	// FP80_TO_INT32_IN_MEM
     0U,	// FP80_TO_INT64_IN_MEM
-    14555U,	// FPATAN
-    14538U,	// FPREM
-    13743U,	// FPREM1
-    14562U,	// FPTAN
-    15159U,	// FRNDINT
+    14598U,	// FPATAN
+    14581U,	// FPREM
+    13786U,	// FPREM1
+    14605U,	// FPTAN
+    15202U,	// FRNDINT
     238038U,	// FRSTORm
     235036U,	// FSAVEm
-    14271U,	// FSCALE
-    14544U,	// FSETPM
-    15076U,	// FSINCOS
+    14314U,	// FSCALE
+    14587U,	// FSETPM
+    15119U,	// FSINCOS
     239630U,	// FSTENVm
-    14901U,	// FS_PREFIX
-    14533U,	// FXAM
+    14944U,	// FS_PREFIX
+    14576U,	// FXAM
     631262U,	// FXRSTOR
     630722U,	// FXRSTOR64
     628260U,	// FXSAVE
     630420U,	// FXSAVE64
-    15134U,	// FXTRACT
-    15261U,	// FYL2X
-    13756U,	// FYL2XP1
+    15177U,	// FXTRACT
+    15304U,	// FYL2X
+    13799U,	// FYL2XP1
     0U,	// FpPOP_RETVAL
     8573549U,	// FsANDNPDrm
     8442477U,	// FsANDNPDrr
@@ -893,13 +893,13 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     8442528U,	// FsXORPDrr
     8578313U,	// FsXORPSrm
     8447241U,	// FsXORPSrr
-    14164U,	// GETSEC
-    14958U,	// GS_PREFIX
+    14207U,	// GETSEC
+    15001U,	// GS_PREFIX
     8573375U,	// HADDPDrm
     8442303U,	// HADDPDrr
     8578051U,	// HADDPSrm
     8446979U,	// HADDPSrr
-    15155U,	// HLT
+    15198U,	// HLT
     8573324U,	// HSUBPDrm
     8442252U,	// HSUBPDrr
     8578000U,	// HSUBPSrm
@@ -952,13 +952,13 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     19826U,	// IMUL8r
     503759U,	// IN16
     2124372U,	// IN16ri
-    15278U,	// IN16rr
+    15321U,	// IN16rr
     520132U,	// IN32
     10508570U,	// IN32ri
-    15357U,	// IN32rr
+    15400U,	// IN32rr
     552889U,	// IN8
     20991370U,	// IN8ri
-    14400U,	// IN8rr
+    14443U,	// IN8rr
     272615U,	// INC16m
     26855U,	// INC16r
     26855U,	// INC32_16r
@@ -978,22 +978,22 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     6349016U,	// INSERTQ
     839508184U,	// INSERTQI
     26464U,	// INT
-    13764U,	// INT1
-    13868U,	// INT3
-    14600U,	// INTO
-    14238U,	// INVD
+    13807U,	// INT1
+    13911U,	// INT3
+    14643U,	// INTO
+    14281U,	// INVD
     321381U,	// INVEPT32
     321381U,	// INVEPT64
     431672U,	// INVLPG
-    15338U,	// INVLPGA32
-    15406U,	// INVLPGA64
+    15381U,	// INVLPGA32
+    15449U,	// INVLPGA64
     315334U,	// INVPCID32
     315334U,	// INVPCID64
     315343U,	// INVVPID32
     315343U,	// INVVPID64
-    15249U,	// IRET16
-    14491U,	// IRET32
-    14701U,	// IRET64
+    15292U,	// IRET16
+    14534U,	// IRET32
+    14744U,	// IRET64
     271708U,	// ISTT_FP16m
     285063U,	// ISTT_FP32m
     399581U,	// ISTT_FP64m
@@ -1020,10 +1020,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U,	// IST_Fp64m32
     0U,	// IST_Fp64m64
     0U,	// IST_Fp64m80
-    2726770975U,	// Int_CMPSDrm
-    1384610079U,	// Int_CMPSDrr
-    2999400735U,	// Int_CMPSSrm
-    1388804383U,	// Int_CMPSSrr
+    2726771018U,	// Int_CMPSDrm
+    1384610122U,	// Int_CMPSDrr
+    2999400778U,	// Int_CMPSSrm
+    1388804426U,	// Int_CMPSSrr
     578591U,	// Int_COMISDrm
     8541215U,	// Int_COMISDrr
     583347U,	// Int_COMISSrm
@@ -1048,15 +1048,15 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     8541953U,	// Int_CVTTSS2SI64rr
     612097U,	// Int_CVTTSS2SIrm
     8541953U,	// Int_CVTTSS2SIrr
-    14048U,	// Int_MemBarrier
+    14091U,	// Int_MemBarrier
     578590U,	// Int_UCOMISDrm
     8541214U,	// Int_UCOMISDrr
     583346U,	// Int_UCOMISSrm
     8545970U,	// Int_UCOMISSrr
-    2726967587U,	// Int_VCMPSDrm
-    1384806691U,	// Int_VCMPSDrr
-    2999597347U,	// Int_VCMPSSrm
-    1389000995U,	// Int_VCMPSSrr
+    2726967630U,	// Int_VCMPSDrm
+    1384806734U,	// Int_VCMPSDrr
+    2999597390U,	// Int_VCMPSSrm
+    1389001038U,	// Int_VCMPSSrr
     578599U,	// Int_VCOMISDZrm
     8541223U,	// Int_VCOMISDZrr
     578599U,	// Int_VCOMISDrm
@@ -1155,12 +1155,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     415885U,	// JL_1
     415885U,	// JL_2
     415885U,	// JL_4
-    275869U,	// JMP16m
-    30109U,	// JMP16r
-    292219U,	// JMP32m
-    30075U,	// JMP32r
-    406924U,	// JMP64m
-    30092U,	// JMP64r
+    275912U,	// JMP16m
+    30152U,	// JMP16r
+    292262U,	// JMP32m
+    30118U,	// JMP32r
+    406967U,	// JMP64m
+    30135U,	// JMP64r
     416738U,	// JMP_1
     416738U,	// JMP_2
     416738U,	// JMP_4
@@ -1205,7 +1205,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     811649660U,	// KUNPCKBWrr
     811649772U,	// KXNORWrr
     811649781U,	// KXORWrr
-    14337U,	// LAHF
+    14380U,	// LAHF
     387742U,	// LAR16rm
     8546974U,	// LAR16rr
     383407U,	// LAR32rm
@@ -1222,8 +1222,8 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     287221U,	// LDMXCSR
     699205U,	// LDS16rm
     694822U,	// LDS32rm
-    15475U,	// LD_F0
-    13738U,	// LD_F1
+    15518U,	// LD_F0
+    13781U,	// LD_F1
     238138U,	// LD_F32m
     251817U,	// LD_F64m
     714577U,	// LD_F80m
@@ -1244,11 +1244,11 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     551687982U,	// LEA32r
     551687982U,	// LEA64_32r
     551722099U,	// LEA64r
-    14324U,	// LEAVE
-    14324U,	// LEAVE64
+    14367U,	// LEAVE
+    14367U,	// LEAVE64
     699218U,	// LES16rm
     694835U,	// LES32rm
-    14250U,	// LFENCE
+    14293U,	// LFENCE
     699224U,	// LFS16rm
     694841U,	// LFS32rm
     696348U,	// LFS64rm
@@ -1306,7 +1306,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     18915261U,	// LOCK_OR64mr
     23104955U,	// LOCK_OR8mi
     23104955U,	// LOCK_OR8mr
-    14395U,	// LOCK_PREFIX
+    14438U,	// LOCK_PREFIX
     4237472U,	// LOCK_SUB16mi
     4237472U,	// LOCK_SUB16mi8
     4237472U,	// LOCK_SUB16mr
@@ -1339,9 +1339,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     23217U,	// LRETIL
     24717U,	// LRETIQ
     27639U,	// LRETIW
-    14497U,	// LRETL
-    14707U,	// LRETQ
-    15255U,	// LRETW
+    14540U,	// LRETL
+    14750U,	// LRETQ
+    15298U,	// LRETW
     387630U,	// LSL16rm
     8546862U,	// LSL16rr
     551688423U,	// LSL32rm
@@ -1385,7 +1385,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     551773983U,	// MAXSSrm_Int
     8447775U,	// MAXSSrr
     8447775U,	// MAXSSrr_Int
-    14257U,	// MFENCE
+    14300U,	// MFENCE
     8573558U,	// MINCPDrm
     8442486U,	// MINCPDrr
     8578263U,	// MINCPSrm
@@ -1418,7 +1418,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     8541846U,	// MMX_CVTTPD2PIirr
     595627U,	// MMX_CVTTPS2PIirm
     8541867U,	// MMX_CVTTPS2PIirr
-    15066U,	// MMX_EMMS
+    15109U,	// MMX_EMMS
     8544554U,	// MMX_MASKMOVQ
     8544554U,	// MMX_MASKMOVQ64
     8541440U,	// MMX_MOVD64from64rr
@@ -1592,8 +1592,8 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     551657960U,	// MMX_PXORirm
     8446440U,	// MMX_PXORirr
     0U,	// MONITOR
-    14755U,	// MONITORrrr
-    14525U,	// MONTMUL
+    14798U,	// MONITORrrr
+    14568U,	// MONTMUL
     0U,	// MORESTACK_RET
     0U,	// MORESTACK_RET_RESTORE_R10
     798558U,	// MOV16ao16
@@ -1830,7 +1830,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U,	// MUL_FpI32m64
     0U,	// MUL_FpI32m80
     27943U,	// MUL_FrST0
-    15142U,	// MWAITrr
+    15185U,	// MWAITrr
     272797U,	// NEG16m
     27037U,	// NEG16r
     284759U,	// NEG32m
@@ -1839,7 +1839,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     24235U,	// NEG64r
     429361U,	// NEG8m
     19761U,	// NEG8r
-    14633U,	// NOOP
+    14676U,	// NOOP
     285030U,	// NOOPL
     285030U,	// NOOPL_19
     285030U,	// NOOPL_1a
@@ -1903,11 +1903,11 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     8578306U,	// ORPSrm
     8447234U,	// ORPSrr
     28499U,	// OUT16ir
-    15439U,	// OUT16rr
+    15482U,	// OUT16rr
     28549U,	// OUT32ir
-    15453U,	// OUT32rr
+    15496U,	// OUT32rr
     28027U,	// OUT8ir
-    15425U,	// OUT8rr
+    15468U,	// OUT8rr
     76221977U,	// OUTSB
     76241530U,	// OUTSL
     76278684U,	// OUTSW
@@ -1947,7 +1947,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     8444815U,	// PANDNrr
     8687646U,	// PANDrm
     8441886U,	// PANDrr
-    14318U,	// PAUSE
+    14361U,	// PAUSE
     8686914U,	// PAVGBrm
     8441154U,	// PAVGBrr
     551652916U,	// PAVGUSBrm
@@ -2151,29 +2151,29 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     24448U,	// POP64r
     401280U,	// POP64rmm
     24448U,	// POP64rmr
-    15205U,	// POPA16
-    14420U,	// POPA32
+    15248U,	// POPA16
+    14463U,	// POPA32
     388104U,	// POPCNT16rm
     8547336U,	// POPCNT16rr
     551688894U,	// POPCNT32rm
     8542910U,	// POPCNT32rr
     551723166U,	// POPCNT64rm
     8544414U,	// POPCNT64rr
-    14847U,	// POPDS16
-    14828U,	// POPDS32
-    14885U,	// POPES16
-    14866U,	// POPES32
-    15218U,	// POPF16
-    14433U,	// POPF32
-    14675U,	// POPF64
-    14942U,	// POPFS16
-    14904U,	// POPFS32
-    14923U,	// POPFS64
-    14999U,	// POPGS16
-    14961U,	// POPGS32
-    14980U,	// POPGS64
-    15113U,	// POPSS16
-    15094U,	// POPSS32
+    14890U,	// POPDS16
+    14871U,	// POPDS32
+    14928U,	// POPES16
+    14909U,	// POPES32
+    15261U,	// POPF16
+    14476U,	// POPF32
+    14718U,	// POPF64
+    14985U,	// POPFS16
+    14947U,	// POPFS32
+    14966U,	// POPFS64
+    15042U,	// POPGS16
+    15004U,	// POPGS32
+    15023U,	// POPGS64
+    15156U,	// POPSS16
+    15137U,	// POPSS32
     8692177U,	// PORrm
     8446417U,	// PORrr
     431686U,	// PREFETCH
@@ -2274,25 +2274,25 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     24259U,	// PUSH64r
     401091U,	// PUSH64rmm
     24259U,	// PUSH64rmr
-    15198U,	// PUSHA16
-    14413U,	// PUSHA32
-    14808U,	// PUSHCS16
-    14798U,	// PUSHCS32
-    14837U,	// PUSHDS16
-    14818U,	// PUSHDS32
-    14875U,	// PUSHES16
-    14856U,	// PUSHES32
-    15211U,	// PUSHF16
-    14426U,	// PUSHF32
-    14668U,	// PUSHF64
-    14932U,	// PUSHFS16
-    14894U,	// PUSHFS32
-    14913U,	// PUSHFS64
-    14989U,	// PUSHGS16
-    14951U,	// PUSHGS32
-    14970U,	// PUSHGS64
-    15103U,	// PUSHSS16
-    15084U,	// PUSHSS32
+    15241U,	// PUSHA16
+    14456U,	// PUSHA32
+    14851U,	// PUSHCS16
+    14841U,	// PUSHCS32
+    14880U,	// PUSHDS16
+    14861U,	// PUSHDS32
+    14918U,	// PUSHES16
+    14899U,	// PUSHES32
+    15254U,	// PUSHF16
+    14469U,	// PUSHF32
+    14711U,	// PUSHF64
+    14975U,	// PUSHFS16
+    14937U,	// PUSHFS32
+    14956U,	// PUSHFS64
+    15032U,	// PUSHGS16
+    14994U,	// PUSHGS32
+    15013U,	// PUSHGS64
+    15146U,	// PUSHSS16
+    15127U,	// PUSHSS32
     27099U,	// PUSHi16
     22639U,	// PUSHi32
     8692200U,	// PXORrm
@@ -2357,43 +2357,43 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     24158U,	// RDFSBASE64
     22569U,	// RDGSBASE
     24180U,	// RDGSBASE64
-    14763U,	// RDMSR
-    14184U,	// RDPMC
+    14806U,	// RDMSR
+    14227U,	// RDPMC
     26915U,	// RDRAND16r
     22461U,	// RDRAND32r
     23960U,	// RDRAND64r
     26899U,	// RDSEED16r
     22432U,	// RDSEED32r
     23893U,	// RDSEED64r
-    14197U,	// RDTSC
-    14610U,	// RDTSCP
+    14240U,	// RDTSC
+    14653U,	// RDTSCP
     13660U,	// RELEASE_MOV16mr
     13660U,	// RELEASE_MOV32mr
     13660U,	// RELEASE_MOV64mr
     13660U,	// RELEASE_MOV8mr
-    14287U,	// REPNE_PREFIX
-    14128U,	// REP_MOVSB_32
-    14128U,	// REP_MOVSB_64
-    14481U,	// REP_MOVSD_32
-    14481U,	// REP_MOVSD_64
-    14691U,	// REP_MOVSQ_64
-    15234U,	// REP_MOVSW_32
-    15234U,	// REP_MOVSW_64
-    14617U,	// REP_PREFIX
-    14118U,	// REP_STOSB_32
-    14118U,	// REP_STOSB_64
-    14471U,	// REP_STOSD_32
-    14471U,	// REP_STOSD_64
-    14681U,	// REP_STOSQ_64
-    15224U,	// REP_STOSW_32
-    15224U,	// REP_STOSW_64
+    14330U,	// REPNE_PREFIX
+    14171U,	// REP_MOVSB_32
+    14171U,	// REP_MOVSB_64
+    14524U,	// REP_MOVSD_32
+    14524U,	// REP_MOVSD_64
+    14734U,	// REP_MOVSQ_64
+    15277U,	// REP_MOVSW_32
+    15277U,	// REP_MOVSW_64
+    14660U,	// REP_PREFIX
+    14161U,	// REP_STOSB_32
+    14161U,	// REP_STOSB_64
+    14514U,	// REP_STOSD_32
+    14514U,	// REP_STOSD_64
+    14724U,	// REP_STOSQ_64
+    15267U,	// REP_STOSW_32
+    15267U,	// REP_STOSW_64
     23218U,	// RETIL
     24718U,	// RETIQ
     27640U,	// RETIW
-    14492U,	// RETL
-    14702U,	// RETQ
-    15250U,	// RETW
-    13954U,	// REX64_PREFIX
+    14535U,	// RETL
+    14745U,	// RETQ
+    15293U,	// RETW
+    13997U,	// REX64_PREFIX
     272928U,	// ROL16m1
     274178U,	// ROL16mCL
     4237856U,	// ROL16mi
@@ -2456,7 +2456,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     585459368U,	// ROUNDSSm
     839231144U,	// ROUNDSSr
     839231144U,	// ROUNDSSr_Int
-    14551U,	// RSM
+    14594U,	// RSM
     582962U,	// RSQRTPSm
     582962U,	// RSQRTPSm_Int
     8545586U,	// RSQRTPSr
@@ -2465,7 +2465,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     551773934U,	// RSQRTSSm_Int
     8546030U,	// RSQRTSSr
     8447726U,	// RSQRTSSr_Int
-    14342U,	// SAHF
+    14385U,	// SAHF
     272873U,	// SAL16m1
     274145U,	// SAL16mCL
     4237801U,	// SAL16mi
@@ -2490,7 +2490,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     19800U,	// SAL8r1
     28049U,	// SAL8rCL
     8441176U,	// SAL8ri
-    14171U,	// SALC
+    14214U,	// SALC
     273060U,	// SAR16m1
     274189U,	// SAR16mCL
     4237988U,	// SAR16mi
@@ -2557,8 +2557,8 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     11000342U,	// SCAS32
     17309701U,	// SCAS64
     21515736U,	// SCAS8
-    15020U,	// SEG_ALLOCA_32
-    15020U,	// SEG_ALLOCA_64
+    15063U,	// SEG_ALLOCA_32
+    15063U,	// SEG_ALLOCA_64
     431509U,	// SETAEm
     21909U,	// SETAEr
     429241U,	// SETAm
@@ -2595,7 +2595,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     23576U,	// SETPr
     436015U,	// SETSm
     26415U,	// SETSr
-    14264U,	// SFENCE
+    14307U,	// SFENCE
     633812U,	// SGDT16m
     629397U,	// SGDT32m
     630897U,	// SGDT64m
@@ -2700,11 +2700,11 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     633826U,	// SIDT16m
     629411U,	// SIDT32m
     630911U,	// SIDT64m
-    14568U,	// SIN_F
+    14611U,	// SIN_F
     0U,	// SIN_Fp32
     0U,	// SIN_Fp64
     0U,	// SIN_Fp80
-    15326U,	// SKINIT
+    15369U,	// SKINIT
     273392U,	// SLDT16m
     27632U,	// SLDT16r
     23210U,	// SLDT32r
@@ -2726,16 +2726,16 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     616175U,	// SQRTSSm_Int
     8546031U,	// SQRTSSr
     8546031U,	// SQRTSSr_Int
-    15167U,	// SQRT_F
+    15210U,	// SQRT_F
     0U,	// SQRT_Fp32
     0U,	// SQRT_Fp64
     0U,	// SQRT_Fp80
-    15091U,	// SS_PREFIX
-    14149U,	// STAC
-    14203U,	// STC
-    14227U,	// STD
-    14361U,	// STGI
-    14376U,	// STI
+    15134U,	// SS_PREFIX
+    14192U,	// STAC
+    14246U,	// STC
+    14270U,	// STD
+    14404U,	// STGI
+    14419U,	// STI
     287231U,	// STMXCSR
     552303U,	// STOSB
     520056U,	// STOSL
@@ -2750,6 +2750,8 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     238925U,	// ST_FP32m
     252280U,	// ST_FP64m
     714615U,	// ST_FP80m
+    13681U,	// ST_FPNCE
+    13704U,	// ST_FPr0r7
     23589U,	// ST_FPrr
     0U,	// ST_Fp32m
     0U,	// ST_Fp64m
@@ -2849,23 +2851,23 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U,	// SUB_FpI32m64
     0U,	// SUB_FpI32m80
     27957U,	// SUB_FrST0
-    15008U,	// SWAPGS
-    14454U,	// SYSCALL
-    14746U,	// SYSENTER
-    14511U,	// SYSEXIT
-    14721U,	// SYSEXIT64
-    14503U,	// SYSRET
-    14713U,	// SYSRET64
+    15051U,	// SWAPGS
+    14497U,	// SYSCALL
+    14789U,	// SYSENTER
+    14554U,	// SYSEXIT
+    14764U,	// SYSEXIT64
+    14546U,	// SYSRET
+    14756U,	// SYSRET64
     551685889U,	// T1MSKC32rm
     8539905U,	// T1MSKC32rr
     551718657U,	// T1MSKC64rm
     8539905U,	// T1MSKC64rr
     80108514U,	// TAILJMPd
     80108514U,	// TAILJMPd64
-    79983995U,	// TAILJMPm
-    80098700U,	// TAILJMPm64
+    79984038U,	// TAILJMPm
+    80098743U,	// TAILJMPm64
     0U,	// TAILJMPr
-    79721868U,	// TAILJMPr64
+    79721911U,	// TAILJMPr64
     0U,	// TCRETURNdi
     0U,	// TCRETURNdi64
     0U,	// TCRETURNmi
@@ -2874,18 +2876,23 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U,	// TCRETURNri64
     2124861U,	// TEST16i16
     4238397U,	// TEST16mi
+    4238397U,	// TEST16mi_alt
     8547389U,	// TEST16ri
+    8547389U,	// TEST16ri_alt
     388157U,	// TEST16rm
     8547389U,	// TEST16rr
     10509021U,	// TEST32i32
     12622557U,	// TEST32mi
     12622557U,	// TEST32mi_alt
     8542941U,	// TEST32ri
+    8542941U,	// TEST32ri_alt
     551688925U,	// TEST32rm
     8542941U,	// TEST32rr
     16802031U,	// TEST64i32
     18915567U,	// TEST64mi32
+    18915567U,	// TEST64mi32_alt
     8544495U,	// TEST64ri32
+    8544495U,	// TEST64ri32_alt
     551723247U,	// TEST64rm
     8544495U,	// TEST64rr
     20991609U,	// TEST8i8
@@ -2893,16 +2900,17 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     23105145U,	// TEST8mi_alt
     8539769U,	// TEST8ri
     0U,	// TEST8ri_NOREX
+    8539769U,	// TEST8ri_alt
     446073U,	// TEST8rm
     8539769U,	// TEST8rr
-    13806U,	// TLSCall_32
-    13910U,	// TLSCall_64
-    13819U,	// TLS_addr32
-    13923U,	// TLS_addr64
-    13832U,	// TLS_base_addr32
-    13936U,	// TLS_base_addr64
-    13850U,	// TRAP
-    15179U,	// TST_F
+    13849U,	// TLSCall_32
+    13953U,	// TLSCall_64
+    13862U,	// TLS_addr32
+    13966U,	// TLS_addr64
+    13875U,	// TLS_base_addr32
+    13979U,	// TLS_base_addr64
+    13893U,	// TRAP
+    15222U,	// TST_F
     0U,	// TST_Fp32
     0U,	// TST_Fp64
     0U,	// TST_Fp80
@@ -2922,7 +2930,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     8545970U,	// UCOMISSrr
     22216U,	// UCOM_FIPr
     22158U,	// UCOM_FIr
-    14644U,	// UCOM_FPPr
+    14687U,	// UCOM_FPPr
     23534U,	// UCOM_FPr
     0U,	// UCOM_FpIr32
     0U,	// UCOM_FpIr64
@@ -2931,7 +2939,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U,	// UCOM_Fpr64
     0U,	// UCOM_Fpr80
     23399U,	// UCOM_Fr
-    14083U,	// UD2B
+    14126U,	// UD2B
     8573462U,	// UNPCKHPDrm
     8442390U,	// UNPCKHPDrr
     8578138U,	// UNPCKHPSrm
@@ -3040,47 +3048,47 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     8538724U,	// VBROADCASTSSZrr
     616192U,	// VBROADCASTSSrm
     8546048U,	// VBROADCASTSSrr
-    843725091U,	// VCMPPDYrmi
+    843725134U,	// VCMPPDYrmi
     88429188U,	// VCMPPDYrmi_alt
-    1380612387U,	// VCMPPDYrri
+    1380612430U,	// VCMPPDYrri
     839225988U,	// VCMPPDYrri_alt
-    1164589347U,	// VCMPPDZrmi
+    1164589390U,	// VCMPPDZrmi
     92619496U,	// VCMPPDZrmi_alt
-    1433041187U,	// VCMPPDZrri
+    1433041230U,	// VCMPPDZrri
     839221992U,	// VCMPPDZrri_alt
-    95058211U,	// VCMPPDZrrib
-    1112160547U,	// VCMPPDrmi
+    95058254U,	// VCMPPDZrrib
+    1112160590U,	// VCMPPDrmi
     300241540U,	// VCMPPDrmi_alt
-    1380612387U,	// VCMPPDrri
+    1380612430U,	// VCMPPDrri
     839225988U,	// VCMPPDrri_alt
-    845822243U,	// VCMPPSYrmi
+    845822286U,	// VCMPPSYrmi
     88433901U,	// VCMPPSYrmi_alt
-    1382709539U,	// VCMPPSYrri
+    1382709582U,	// VCMPPSYrri
     839230701U,	// VCMPPSYrri_alt
-    1170880803U,	// VCMPPSZrmi
+    1170880846U,	// VCMPPSZrmi
     92621228U,	// VCMPPSZrmi_alt
-    1439332643U,	// VCMPPSZrri
+    1439332686U,	// VCMPPSZrri
     839223724U,	// VCMPPSZrri_alt
-    99252515U,	// VCMPPSZrrib
-    1114257699U,	// VCMPPSrmi
+    99252558U,	// VCMPPSZrrib
+    1114257742U,	// VCMPPSrmi
     300246253U,	// VCMPPSrmi_alt
-    1382709539U,	// VCMPPSrri
+    1382709582U,	// VCMPPSrri
     839230701U,	// VCMPPSrri_alt
-    2726967587U,	// VCMPSDZrm
+    2726967630U,	// VCMPSDZrm
     312824905U,	// VCMPSDZrmi_alt
-    1384806691U,	// VCMPSDZrr
+    1384806734U,	// VCMPSDZrr
     839226441U,	// VCMPSDZrri_alt
-    2726967587U,	// VCMPSDrm
+    2726967630U,	// VCMPSDrm
     312824905U,	// VCMPSDrm_alt
-    1384806691U,	// VCMPSDrr
+    1384806734U,	// VCMPSDrr
     839226441U,	// VCMPSDrr_alt
-    2999597347U,	// VCMPSSZrm
+    2999597390U,	// VCMPSSZrm
     317023964U,	// VCMPSSZrmi_alt
-    1389000995U,	// VCMPSSZrr
+    1389001038U,	// VCMPSSZrr
     839231196U,	// VCMPSSZrri_alt
-    2999597347U,	// VCMPSSrm
+    2999597390U,	// VCMPSSrm
     317023964U,	// VCMPSSrm_alt
-    1389000995U,	// VCMPSSrr
+    1389001038U,	// VCMPSSrr
     839231196U,	// VCMPSSrr_alt
     578599U,	// VCOMISDZrm
     8541223U,	// VCOMISDZrr
@@ -3844,9 +3852,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     283338526U,	// VMAXSSrm_Int
     811656990U,	// VMAXSSrr
     811656990U,	// VMAXSSrr_Int
-    14447U,	// VMCALL
+    14490U,	// VMCALL
     401838U,	// VMCLEARm
-    14190U,	// VMFUNC
+    14233U,	// VMFUNC
     922229U,	// VMINCPDYrm
     811651701U,	// VMINCPDYrr
     811782773U,	// VMINCPDrm
@@ -3885,10 +3893,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     283338444U,	// VMINSSrm_Int
     811656908U,	// VMINSSrr
     811656908U,	// VMINSSrr_Int
-    14347U,	// VMLAUNCH
-    15291U,	// VMLOAD32
-    15371U,	// VMLOAD64
-    14439U,	// VMMCALL
+    14390U,	// VMLAUNCH
+    15334U,	// VMLOAD32
+    15414U,	// VMLOAD64
+    14482U,	// VMMCALL
     8544564U,	// VMOV64toPQIZrr
     8544564U,	// VMOV64toPQIrr
     8544564U,	// VMOV64toSDZrr
@@ -4083,11 +4091,11 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     8542081U,	// VMREAD32rr
     18914601U,	// VMREAD64rm
     8543529U,	// VMREAD64rr
-    14278U,	// VMRESUME
-    15315U,	// VMRUN32
-    15395U,	// VMRUN64
-    15303U,	// VMSAVE32
-    15383U,	// VMSAVE64
+    14321U,	// VMRESUME
+    15358U,	// VMRUN32
+    15438U,	// VMRUN64
+    15346U,	// VMSAVE32
+    15426U,	// VMSAVE64
     922186U,	// VMULPDYrm
     811651658U,	// VMULPDYrr
     934592U,	// VMULPDZrm
@@ -4118,7 +4126,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     8542271U,	// VMWRITE32rr
     551722634U,	// VMWRITE64rm
     8543882U,	// VMWRITE64rr
-    14330U,	// VMXOFF
+    14373U,	// VMXOFF
     400293U,	// VMXON
     922264U,	// VORPDYrm
     811651736U,	// VORPDYrr
@@ -4284,9 +4292,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     1239063U,	// VPCMOVrmY
     839231511U,	// VPCMOVrr
     839231511U,	// VPCMOVrrY
-    3068803357U,	// VPCMPDZrmi
+    3068803400U,	// VPCMPDZrmi
     354767451U,	// VPCMPDZrmi_alt
-    1458207005U,	// VPCMPDZrri
+    1458207048U,	// VPCMPDZrri
     839225947U,	// VPCMPDZrri_alt
     1183134U,	// VPCMPEQBYrm
     811650462U,	// VPCMPEQBYrr
@@ -4344,17 +4352,17 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U,	// VPCMPISTRM128REG
     25500546U,	// VPCMPISTRM128rm
     811654018U,	// VPCMPISTRM128rr
-    3070900509U,	// VPCMPQZrmi
+    3070900552U,	// VPCMPQZrmi
     354770799U,	// VPCMPQZrmi_alt
-    1460304157U,	// VPCMPQZrri
+    1460304200U,	// VPCMPQZrri
     839229295U,	// VPCMPQZrri_alt
-    3072997661U,	// VPCMPUDZrmi
+    3072997704U,	// VPCMPUDZrmi
     354768077U,	// VPCMPUDZrmi_alt
-    1462401309U,	// VPCMPUDZrri
+    1462401352U,	// VPCMPUDZrri
     839226573U,	// VPCMPUDZrri_alt
-    3075094813U,	// VPCMPUQZrmi
+    3075094856U,	// VPCMPUQZrmi
     354771206U,	// VPCMPUQZrmi_alt
-    1464498461U,	// VPCMPUQZrri
+    1464498504U,	// VPCMPUQZrri
     839229702U,	// VPCMPUQZrri_alt
     342183289U,	// VPCOMBmi
     839224697U,	// VPCOMBri
@@ -5341,23 +5349,23 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     811656456U,	// VXORPSYrr
     811787528U,	// VXORPSrm
     811656456U,	// VXORPSrr
-    14462U,	// VZEROALL
-    14735U,	// VZEROUPPER
+    14505U,	// VZEROALL
+    14778U,	// VZEROUPPER
     0U,	// V_SET0
     0U,	// V_SETALLONES
     417534U,	// W64ALLOCA
-    15143U,	// WAIT
-    14236U,	// WBINVD
-    14573U,	// WIN_ALLOCA
-    14380U,	// WIN_FTOL_32
-    14380U,	// WIN_FTOL_64
+    15186U,	// WAIT
+    14279U,	// WBINVD
+    14616U,	// WIN_ALLOCA
+    14423U,	// WIN_FTOL_32
+    14423U,	// WIN_FTOL_64
     22558U,	// WRFSBASE
     24169U,	// WRFSBASE64
     22580U,	// WRGSBASE
     24191U,	// WRGSBASE64
-    14769U,	// WRMSR
+    14812U,	// WRMSR
     26494U,	// XABORT
-    14293U,	// XACQUIRE_PREFIX
+    14336U,	// XACQUIRE_PREFIX
     4237580U,	// XADD16rm
     8546572U,	// XADD16rr
     12621721U,	// XADD32rm
@@ -5366,7 +5374,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     8543556U,	// XADD64rr
     23104795U,	// XADD8rm
     8539419U,	// XADD8rr
-    14005U,	// XBEGIN
+    14048U,	// XBEGIN
     416662U,	// XBEGIN_4
     2124198U,	// XCHG16ar
     54684070U,	// XCHG16rm
@@ -5381,14 +5389,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     60968250U,	// XCHG8rm
     33705274U,	// XCHG8rr
     22096U,	// XCH_F
-    14154U,	// XCRYPTCBC
-    14098U,	// XCRYPTCFB
-    14775U,	// XCRYPTCTR
-    14088U,	// XCRYPTECB
-    14108U,	// XCRYPTOFB
-    14217U,	// XEND
-    15184U,	// XGETBV
-    14138U,	// XLAT
+    14197U,	// XCRYPTCBC
+    14141U,	// XCRYPTCFB
+    14818U,	// XCRYPTCTR
+    14131U,	// XCRYPTECB
+    14151U,	// XCRYPTOFB
+    14260U,	// XEND
+    15227U,	// XGETBV
+    14181U,	// XLAT
     2124491U,	// XOR16i16
     4238027U,	// XOR16mi
     4238027U,	// XOR16mi8
@@ -5428,18 +5436,18 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     8442528U,	// XORPDrr
     8578313U,	// XORPSrm
     8447241U,	// XORPSrr
-    14309U,	// XRELEASE_PREFIX
+    14352U,	// XRELEASE_PREFIX
     631263U,	// XRSTOR
     630723U,	// XRSTOR64
     628261U,	// XSAVE
     630421U,	// XSAVE64
     632685U,	// XSAVEOPT
     630989U,	// XSAVEOPT64
-    15191U,	// XSETBV
-    13732U,	// XSHA1
-    13967U,	// XSHA256
-    14302U,	// XSTORE
-    15173U,	// XTEST
+    15234U,	// XSETBV
+    13775U,	// XSHA1
+    14010U,	// XSHA256
+    14345U,	// XSTORE
+    15216U,	// XTEST
     0U
   };
 
@@ -8180,6 +8188,8 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U,	// ST_FP32m
     0U,	// ST_FP64m
     0U,	// ST_FP80m
+    0U,	// ST_FPNCE
+    0U,	// ST_FPr0r7
     0U,	// ST_FPrr
     0U,	// ST_Fp32m
     0U,	// ST_Fp64m
@@ -8304,18 +8314,23 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U,	// TCRETURNri64
     0U,	// TEST16i16
     0U,	// TEST16mi
+    0U,	// TEST16mi_alt
     0U,	// TEST16ri
+    0U,	// TEST16ri_alt
     0U,	// TEST16rm
     0U,	// TEST16rr
     0U,	// TEST32i32
     0U,	// TEST32mi
     0U,	// TEST32mi_alt
     0U,	// TEST32ri
+    0U,	// TEST32ri_alt
     0U,	// TEST32rm
     0U,	// TEST32rr
     0U,	// TEST64i32
     0U,	// TEST64mi32
+    0U,	// TEST64mi32_alt
     0U,	// TEST64ri32
+    0U,	// TEST64ri32_alt
     0U,	// TEST64rm
     0U,	// TEST64rr
     0U,	// TEST8i8
@@ -8323,6 +8338,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U,	// TEST8mi_alt
     0U,	// TEST8ri
     0U,	// TEST8ri_NOREX
+    0U,	// TEST8ri_alt
     0U,	// TEST8rm
     0U,	// TEST8rr
     0U,	// TLSCall_32
@@ -12227,218 +12243,220 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   /* 13619 */ '#', 'A', 'T', 'O', 'M', 'U', 'M', 'A', 'X', '8', 32, 'P', 'S', 'E', 'U', 'D', 'O', '!', 0,
   /* 13638 */ '#', 'A', 'C', 'Q', 'U', 'I', 'R', 'E', '_', 'M', 'O', 'V', 32, 'P', 'S', 'E', 'U', 'D', 'O', '!', 0,
   /* 13659 */ '#', 'R', 'E', 'L', 'E', 'A', 'S', 'E', '_', 'M', 'O', 'V', 32, 'P', 'S', 'E', 'U', 'D', 'O', '!', 0,
-  /* 13680 */ 'l', 'c', 'a', 'l', 'l', 'l', 9, '*', 0,
-  /* 13689 */ 'l', 'j', 'm', 'p', 'l', 9, '*', 0,
-  /* 13697 */ 'l', 'c', 'a', 'l', 'l', 'q', 9, '*', 0,
-  /* 13706 */ 'l', 'j', 'm', 'p', 'q', 9, '*', 0,
-  /* 13714 */ 'l', 'c', 'a', 'l', 'l', 'w', 9, '*', 0,
-  /* 13723 */ 'l', 'j', 'm', 'p', 'w', 9, '*', 0,
-  /* 13731 */ 'x', 's', 'h', 'a', '1', 0,
-  /* 13737 */ 'f', 'l', 'd', '1', 0,
-  /* 13742 */ 'f', 'p', 'r', 'e', 'm', '1', 0,
-  /* 13749 */ 'f', '2', 'x', 'm', '1', 0,
-  /* 13755 */ 'f', 'y', 'l', '2', 'x', 'p', '1', 0,
-  /* 13763 */ 'i', 'n', 't', '1', 0,
-  /* 13768 */ '#', 'E', 'H', '_', 'S', 'J', 'L', 'J', '_', 'L', 'O', 'N', 'G', 'J', 'M', 'P', '3', '2', 0,
-  /* 13787 */ '#', 'E', 'H', '_', 'S', 'J', 'L', 'J', '_', 'S', 'E', 'T', 'J', 'M', 'P', '3', '2', 0,
-  /* 13805 */ '#', 32, 'T', 'L', 'S', 'C', 'a', 'l', 'l', '_', '3', '2', 0,
-  /* 13818 */ '#', 32, 'T', 'L', 'S', '_', 'a', 'd', 'd', 'r', '3', '2', 0,
-  /* 13831 */ '#', 32, 'T', 'L', 'S', '_', 'b', 'a', 's', 'e', '_', 'a', 'd', 'd', 'r', '3', '2', 0,
-  /* 13849 */ 'u', 'd', '2', 0,
-  /* 13853 */ 'f', 'l', 'd', 'l', 'g', '2', 0,
-  /* 13860 */ 'f', 'l', 'd', 'l', 'n', '2', 0,
-  /* 13867 */ 'i', 'n', 't', '3', 0,
-  /* 13872 */ '#', 'E', 'H', '_', 'S', 'J', 'L', 'J', '_', 'L', 'O', 'N', 'G', 'J', 'M', 'P', '6', '4', 0,
-  /* 13891 */ '#', 'E', 'H', '_', 'S', 'J', 'L', 'J', '_', 'S', 'E', 'T', 'J', 'M', 'P', '6', '4', 0,
-  /* 13909 */ '#', 32, 'T', 'L', 'S', 'C', 'a', 'l', 'l', '_', '6', '4', 0,
-  /* 13922 */ '#', 32, 'T', 'L', 'S', '_', 'a', 'd', 'd', 'r', '6', '4', 0,
-  /* 13935 */ '#', 32, 'T', 'L', 'S', '_', 'b', 'a', 's', 'e', '_', 'a', 'd', 'd', 'r', '6', '4', 0,
-  /* 13953 */ 'r', 'e', 'x', '6', '4', 0,
-  /* 13959 */ 'd', 'a', 't', 'a', '1', '6', 0,
-  /* 13966 */ 'x', 's', 'h', 'a', '2', '5', '6', 0,
-  /* 13974 */ 'L', 'I', 'F', 'E', 'T', 'I', 'M', 'E', '_', 'E', 'N', 'D', 0,
-  /* 13987 */ 'B', 'U', 'N', 'D', 'L', 'E', 0,
-  /* 13994 */ 'D', 'B', 'G', '_', 'V', 'A', 'L', 'U', 'E', 0,
-  /* 14004 */ '#', 32, 'X', 'B', 'E', 'G', 'I', 'N', 0,
-  /* 14013 */ '#', 'A', 'D', 'J', 'C', 'A', 'L', 'L', 'S', 'T', 'A', 'C', 'K', 'D', 'O', 'W', 'N', 0,
-  /* 14031 */ '#', 'A', 'D', 'J', 'C', 'A', 'L', 'L', 'S', 'T', 'A', 'C', 'K', 'U', 'P', 0,
-  /* 14047 */ '#', 'M', 'E', 'M', 'B', 'A', 'R', 'R', 'I', 'E', 'R', 0,
-  /* 14059 */ 'L', 'I', 'F', 'E', 'T', 'I', 'M', 'E', '_', 'S', 'T', 'A', 'R', 'T', 0,
-  /* 14074 */ 'a', 'a', 'a', 0,
-  /* 14078 */ 'd', 'a', 'a', 0,
-  /* 14082 */ 'u', 'd', '2', 'b', 0,
-  /* 14087 */ 'x', 'c', 'r', 'y', 'p', 't', 'e', 'c', 'b', 0,
-  /* 14097 */ 'x', 'c', 'r', 'y', 'p', 't', 'c', 'f', 'b', 0,
-  /* 14107 */ 'x', 'c', 'r', 'y', 'p', 't', 'o', 'f', 'b', 0,
-  /* 14117 */ 'r', 'e', 'p', ';', 's', 't', 'o', 's', 'b', 0,
-  /* 14127 */ 'r', 'e', 'p', ';', 'm', 'o', 'v', 's', 'b', 0,
-  /* 14137 */ 'x', 'l', 'a', 't', 'b', 0,
-  /* 14143 */ 'c', 'l', 'a', 'c', 0,
-  /* 14148 */ 's', 't', 'a', 'c', 0,
-  /* 14153 */ 'x', 'c', 'r', 'y', 'p', 't', 'c', 'b', 'c', 0,
-  /* 14163 */ 'g', 'e', 't', 's', 'e', 'c', 0,
-  /* 14170 */ 's', 'a', 'l', 'c', 0,
-  /* 14175 */ 'c', 'l', 'c', 0,
-  /* 14179 */ 'c', 'm', 'c', 0,
-  /* 14183 */ 'r', 'd', 'p', 'm', 'c', 0,
-  /* 14189 */ 'v', 'm', 'f', 'u', 'n', 'c', 0,
-  /* 14196 */ 'r', 'd', 't', 's', 'c', 0,
-  /* 14202 */ 's', 't', 'c', 0,
-  /* 14206 */ 'c', 'p', 'u', 'i', 'd', 0,
-  /* 14212 */ 'c', 'l', 'd', 0,
-  /* 14216 */ 'x', 'e', 'n', 'd', 0,
-  /* 14221 */ 'c', 'l', 't', 'd', 0,
-  /* 14226 */ 's', 't', 'd', 0,
-  /* 14230 */ 'c', 'w', 't', 'd', 0,
-  /* 14235 */ 'w', 'b', 'i', 'n', 'v', 'd', 0,
-  /* 14242 */ 'f', 'l', 'd', 'l', '2', 'e', 0,
-  /* 14249 */ 'l', 'f', 'e', 'n', 'c', 'e', 0,
-  /* 14256 */ 'm', 'f', 'e', 'n', 'c', 'e', 0,
-  /* 14263 */ 's', 'f', 'e', 'n', 'c', 'e', 0,
-  /* 14270 */ 'f', 's', 'c', 'a', 'l', 'e', 0,
-  /* 14277 */ 'v', 'm', 'r', 'e', 's', 'u', 'm', 'e', 0,
-  /* 14286 */ 'r', 'e', 'p', 'n', 'e', 0,
-  /* 14292 */ 'x', 'a', 'c', 'q', 'u', 'i', 'r', 'e', 0,
-  /* 14301 */ 'x', 's', 't', 'o', 'r', 'e', 0,
-  /* 14308 */ 'x', 'r', 'e', 'l', 'e', 'a', 's', 'e', 0,
-  /* 14317 */ 'p', 'a', 'u', 's', 'e', 0,
-  /* 14323 */ 'l', 'e', 'a', 'v', 'e', 0,
-  /* 14329 */ 'v', 'm', 'x', 'o', 'f', 'f', 0,
-  /* 14336 */ 'l', 'a', 'h', 'f', 0,
-  /* 14341 */ 's', 'a', 'h', 'f', 0,
-  /* 14346 */ 'v', 'm', 'l', 'a', 'u', 'n', 'c', 'h', 0,
-  /* 14355 */ 'c', 'l', 'g', 'i', 0,
-  /* 14360 */ 's', 't', 'g', 'i', 0,
-  /* 14365 */ 'c', 'l', 'i', 0,
-  /* 14369 */ 'f', 'l', 'd', 'p', 'i', 0,
-  /* 14375 */ 's', 't', 'i', 0,
-  /* 14379 */ '#', 32, 'w', 'i', 'n', '3', '2', 32, 'f', 'p', 't', 'o', 'u', 'i', 0,
-  /* 14394 */ 'l', 'o', 'c', 'k', 0,
-  /* 14399 */ 'i', 'n', 'b', 9, '%', 'd', 'x', ',', 32, '%', 'a', 'l', 0,
-  /* 14412 */ 'p', 'u', 's', 'h', 'a', 'l', 0,
-  /* 14419 */ 'p', 'o', 'p', 'a', 'l', 0,
-  /* 14425 */ 'p', 'u', 's', 'h', 'f', 'l', 0,
-  /* 14432 */ 'p', 'o', 'p', 'f', 'l', 0,
-  /* 14438 */ 'v', 'm', 'm', 'c', 'a', 'l', 'l', 0,
-  /* 14446 */ 'v', 'm', 'c', 'a', 'l', 'l', 0,
-  /* 14453 */ 's', 'y', 's', 'c', 'a', 'l', 'l', 0,
-  /* 14461 */ 'v', 'z', 'e', 'r', 'o', 'a', 'l', 'l', 0,
-  /* 14470 */ 'r', 'e', 'p', ';', 's', 't', 'o', 's', 'l', 0,
-  /* 14480 */ 'r', 'e', 'p', ';', 'm', 'o', 'v', 's', 'l', 0,
-  /* 14490 */ 'i', 'r', 'e', 't', 'l', 0,
-  /* 14496 */ 'l', 'r', 'e', 't', 'l', 0,
-  /* 14502 */ 's', 'y', 's', 'r', 'e', 't', 'l', 0,
-  /* 14510 */ 's', 'y', 's', 'e', 'x', 'i', 't', 'l', 0,
-  /* 14519 */ 'c', 'w', 't', 'l', 0,
-  /* 14524 */ 'm', 'o', 'n', 't', 'm', 'u', 'l', 0,
-  /* 14532 */ 'f', 'x', 'a', 'm', 0,
-  /* 14537 */ 'f', 'p', 'r', 'e', 'm', 0,
-  /* 14543 */ 'f', 's', 'e', 't', 'p', 'm', 0,
-  /* 14550 */ 'r', 's', 'm', 0,
-  /* 14554 */ 'f', 'p', 'a', 't', 'a', 'n', 0,
-  /* 14561 */ 'f', 'p', 't', 'a', 'n', 0,
-  /* 14567 */ 'f', 's', 'i', 'n', 0,
-  /* 14572 */ '#', 32, 'd', 'y', 'n', 'a', 'm', 'i', 'c', 32, 's', 't', 'a', 'c', 'k', 32, 'a', 'l', 'l', 'o', 'c', 'a', 't', 'i', 'o', 'n', 0,
-  /* 14599 */ 'i', 'n', 't', 'o', 0,
-  /* 14604 */ 'c', 'q', 't', 'o', 0,
-  /* 14609 */ 'r', 'd', 't', 's', 'c', 'p', 0,
-  /* 14616 */ 'r', 'e', 'p', 0,
-  /* 14620 */ 'v', 'p', 'c', 'm', 'p', 0,
-  /* 14626 */ 'v', 'c', 'm', 'p', 0,
-  /* 14631 */ 'f', 'n', 'o', 'p', 0,
-  /* 14636 */ 'f', 'c', 'o', 'm', 'p', 'p', 0,
-  /* 14643 */ 'f', 'u', 'c', 'o', 'm', 'p', 'p', 0,
-  /* 14651 */ 'f', 'd', 'e', 'c', 's', 't', 'p', 0,
-  /* 14659 */ 'f', 'i', 'n', 'c', 's', 't', 'p', 0,
-  /* 14667 */ 'p', 'u', 's', 'h', 'f', 'q', 0,
-  /* 14674 */ 'p', 'o', 'p', 'f', 'q', 0,
-  /* 14680 */ 'r', 'e', 'p', ';', 's', 't', 'o', 's', 'q', 0,
-  /* 14690 */ 'r', 'e', 'p', ';', 'm', 'o', 'v', 's', 'q', 0,
-  /* 14700 */ 'i', 'r', 'e', 't', 'q', 0,
-  /* 14706 */ 'l', 'r', 'e', 't', 'q', 0,
-  /* 14712 */ 's', 'y', 's', 'r', 'e', 't', 'q', 0,
-  /* 14720 */ 's', 'y', 's', 'e', 'x', 'i', 't', 'q', 0,
-  /* 14729 */ 'c', 'l', 't', 'q', 0,
-  /* 14734 */ 'v', 'z', 'e', 'r', 'o', 'u', 'p', 'p', 'e', 'r', 0,
-  /* 14745 */ 's', 'y', 's', 'e', 'n', 't', 'e', 'r', 0,
-  /* 14754 */ 'm', 'o', 'n', 'i', 't', 'o', 'r', 0,
-  /* 14762 */ 'r', 'd', 'm', 's', 'r', 0,
-  /* 14768 */ 'w', 'r', 'm', 's', 'r', 0,
-  /* 14774 */ 'x', 'c', 'r', 'y', 'p', 't', 'c', 't', 'r', 0,
-  /* 14784 */ 'a', 'a', 's', 0,
-  /* 14788 */ 'd', 'a', 's', 0,
-  /* 14792 */ 'f', 'a', 'b', 's', 0,
-  /* 14797 */ 'p', 'u', 's', 'h', 'l', 9, '%', 'c', 's', 0,
-  /* 14807 */ 'p', 'u', 's', 'h', 'w', 9, '%', 'c', 's', 0,
-  /* 14817 */ 'p', 'u', 's', 'h', 'l', 9, '%', 'd', 's', 0,
-  /* 14827 */ 'p', 'o', 'p', 'l', 9, '%', 'd', 's', 0,
-  /* 14836 */ 'p', 'u', 's', 'h', 'w', 9, '%', 'd', 's', 0,
-  /* 14846 */ 'p', 'o', 'p', 'w', 9, '%', 'd', 's', 0,
-  /* 14855 */ 'p', 'u', 's', 'h', 'l', 9, '%', 'e', 's', 0,
-  /* 14865 */ 'p', 'o', 'p', 'l', 9, '%', 'e', 's', 0,
-  /* 14874 */ 'p', 'u', 's', 'h', 'w', 9, '%', 'e', 's', 0,
-  /* 14884 */ 'p', 'o', 'p', 'w', 9, '%', 'e', 's', 0,
-  /* 14893 */ 'p', 'u', 's', 'h', 'l', 9, '%', 'f', 's', 0,
-  /* 14903 */ 'p', 'o', 'p', 'l', 9, '%', 'f', 's', 0,
-  /* 14912 */ 'p', 'u', 's', 'h', 'q', 9, '%', 'f', 's', 0,
-  /* 14922 */ 'p', 'o', 'p', 'q', 9, '%', 'f', 's', 0,
-  /* 14931 */ 'p', 'u', 's', 'h', 'w', 9, '%', 'f', 's', 0,
-  /* 14941 */ 'p', 'o', 'p', 'w', 9, '%', 'f', 's', 0,
-  /* 14950 */ 'p', 'u', 's', 'h', 'l', 9, '%', 'g', 's', 0,
-  /* 14960 */ 'p', 'o', 'p', 'l', 9, '%', 'g', 's', 0,
-  /* 14969 */ 'p', 'u', 's', 'h', 'q', 9, '%', 'g', 's', 0,
-  /* 14979 */ 'p', 'o', 'p', 'q', 9, '%', 'g', 's', 0,
-  /* 14988 */ 'p', 'u', 's', 'h', 'w', 9, '%', 'g', 's', 0,
-  /* 14998 */ 'p', 'o', 'p', 'w', 9, '%', 'g', 's', 0,
-  /* 15007 */ 's', 'w', 'a', 'p', 'g', 's', 0,
-  /* 15014 */ 'f', 'c', 'h', 's', 0,
-  /* 15019 */ '#', 32, 'v', 'a', 'r', 'i', 'a', 'b', 'l', 'e', 32, 's', 'i', 'z', 'e', 'd', 32, 'a', 'l', 'l', 'o', 'c', 'a', 32, 'f', 'o', 'r', 32, 's', 'e', 'g', 'm', 'e', 'n', 't', 'e', 'd', 32, 's', 't', 'a', 'c', 'k', 's', 0,
-  /* 15064 */ 'f', 'e', 'm', 'm', 's', 0,
-  /* 15070 */ 'f', 'c', 'o', 's', 0,
-  /* 15075 */ 'f', 's', 'i', 'n', 'c', 'o', 's', 0,
-  /* 15083 */ 'p', 'u', 's', 'h', 'l', 9, '%', 's', 's', 0,
-  /* 15093 */ 'p', 'o', 'p', 'l', 9, '%', 's', 's', 0,
-  /* 15102 */ 'p', 'u', 's', 'h', 'w', 9, '%', 's', 's', 0,
-  /* 15112 */ 'p', 'o', 'p', 'w', 9, '%', 's', 's', 0,
-  /* 15121 */ 'c', 'l', 't', 's', 0,
-  /* 15126 */ 'f', 'l', 'd', 'l', '2', 't', 0,
-  /* 15133 */ 'f', 'x', 't', 'r', 'a', 'c', 't', 0,
-  /* 15141 */ 'm', 'w', 'a', 'i', 't', 0,
-  /* 15147 */ 'f', 'n', 'i', 'n', 'i', 't', 0,
-  /* 15154 */ 'h', 'l', 't', 0,
-  /* 15158 */ 'f', 'r', 'n', 'd', 'i', 'n', 't', 0,
-  /* 15166 */ 'f', 's', 'q', 'r', 't', 0,
-  /* 15172 */ 'x', 't', 'e', 's', 't', 0,
-  /* 15178 */ 'f', 't', 's', 't', 0,
-  /* 15183 */ 'x', 'g', 'e', 't', 'b', 'v', 0,
-  /* 15190 */ 'x', 's', 'e', 't', 'b', 'v', 0,
-  /* 15197 */ 'p', 'u', 's', 'h', 'a', 'w', 0,
-  /* 15204 */ 'p', 'o', 'p', 'a', 'w', 0,
-  /* 15210 */ 'p', 'u', 's', 'h', 'f', 'w', 0,
-  /* 15217 */ 'p', 'o', 'p', 'f', 'w', 0,
-  /* 15223 */ 'r', 'e', 'p', ';', 's', 't', 'o', 's', 'w', 0,
-  /* 15233 */ 'r', 'e', 'p', ';', 'm', 'o', 'v', 's', 'w', 0,
-  /* 15243 */ 'c', 'b', 't', 'w', 0,
-  /* 15248 */ 'i', 'r', 'e', 't', 'w', 0,
-  /* 15254 */ 'l', 'r', 'e', 't', 'w', 0,
-  /* 15260 */ 'f', 'y', 'l', '2', 'x', 0,
-  /* 15266 */ 'f', 'n', 's', 't', 's', 'w', 9, '%', 'a', 'x', 0,
-  /* 15277 */ 'i', 'n', 'w', 9, '%', 'd', 'x', ',', 32, '%', 'a', 'x', 0,
-  /* 15290 */ 'v', 'm', 'l', 'o', 'a', 'd', 9, '%', 'e', 'a', 'x', 0,
-  /* 15302 */ 'v', 'm', 's', 'a', 'v', 'e', 9, '%', 'e', 'a', 'x', 0,
-  /* 15314 */ 'v', 'm', 'r', 'u', 'n', 9, '%', 'e', 'a', 'x', 0,
-  /* 15325 */ 's', 'k', 'i', 'n', 'i', 't', 9, '%', 'e', 'a', 'x', 0,
-  /* 15337 */ 'i', 'n', 'v', 'l', 'p', 'g', 'a', 9, '%', 'e', 'c', 'x', ',', 32, '%', 'e', 'a', 'x', 0,
-  /* 15356 */ 'i', 'n', 'l', 9, '%', 'd', 'x', ',', 32, '%', 'e', 'a', 'x', 0,
-  /* 15370 */ 'v', 'm', 'l', 'o', 'a', 'd', 9, '%', 'r', 'a', 'x', 0,
-  /* 15382 */ 'v', 'm', 's', 'a', 'v', 'e', 9, '%', 'r', 'a', 'x', 0,
-  /* 15394 */ 'v', 'm', 'r', 'u', 'n', 9, '%', 'r', 'a', 'x', 0,
-  /* 15405 */ 'i', 'n', 'v', 'l', 'p', 'g', 'a', 9, '%', 'e', 'c', 'x', ',', 32, '%', 'r', 'a', 'x', 0,
-  /* 15424 */ 'o', 'u', 't', 'b', 9, '%', 'a', 'l', ',', 32, '%', 'd', 'x', 0,
-  /* 15438 */ 'o', 'u', 't', 'w', 9, '%', 'a', 'x', ',', 32, '%', 'd', 'x', 0,
-  /* 15452 */ 'o', 'u', 't', 'l', 9, '%', 'e', 'a', 'x', ',', 32, '%', 'd', 'x', 0,
-  /* 15467 */ 'f', 'n', 'c', 'l', 'e', 'x', 0,
-  /* 15474 */ 'f', 'l', 'd', 'z', 0,
+  /* 13680 */ 'f', 's', 't', 'p', 'n', 'c', 'e', 9, '%', 's', 't', '(', '0', ')', ',', 32, '%', 's', 't', '(', '0', ')', 0,
+  /* 13703 */ 'f', 's', 't', 'p', 9, '%', 's', 't', '(', '0', ')', ',', 32, '%', 's', 't', '(', '7', ')', 0,
+  /* 13723 */ 'l', 'c', 'a', 'l', 'l', 'l', 9, '*', 0,
+  /* 13732 */ 'l', 'j', 'm', 'p', 'l', 9, '*', 0,
+  /* 13740 */ 'l', 'c', 'a', 'l', 'l', 'q', 9, '*', 0,
+  /* 13749 */ 'l', 'j', 'm', 'p', 'q', 9, '*', 0,
+  /* 13757 */ 'l', 'c', 'a', 'l', 'l', 'w', 9, '*', 0,
+  /* 13766 */ 'l', 'j', 'm', 'p', 'w', 9, '*', 0,
+  /* 13774 */ 'x', 's', 'h', 'a', '1', 0,
+  /* 13780 */ 'f', 'l', 'd', '1', 0,
+  /* 13785 */ 'f', 'p', 'r', 'e', 'm', '1', 0,
+  /* 13792 */ 'f', '2', 'x', 'm', '1', 0,
+  /* 13798 */ 'f', 'y', 'l', '2', 'x', 'p', '1', 0,
+  /* 13806 */ 'i', 'n', 't', '1', 0,
+  /* 13811 */ '#', 'E', 'H', '_', 'S', 'J', 'L', 'J', '_', 'L', 'O', 'N', 'G', 'J', 'M', 'P', '3', '2', 0,
+  /* 13830 */ '#', 'E', 'H', '_', 'S', 'J', 'L', 'J', '_', 'S', 'E', 'T', 'J', 'M', 'P', '3', '2', 0,
+  /* 13848 */ '#', 32, 'T', 'L', 'S', 'C', 'a', 'l', 'l', '_', '3', '2', 0,
+  /* 13861 */ '#', 32, 'T', 'L', 'S', '_', 'a', 'd', 'd', 'r', '3', '2', 0,
+  /* 13874 */ '#', 32, 'T', 'L', 'S', '_', 'b', 'a', 's', 'e', '_', 'a', 'd', 'd', 'r', '3', '2', 0,
+  /* 13892 */ 'u', 'd', '2', 0,
+  /* 13896 */ 'f', 'l', 'd', 'l', 'g', '2', 0,
+  /* 13903 */ 'f', 'l', 'd', 'l', 'n', '2', 0,
+  /* 13910 */ 'i', 'n', 't', '3', 0,
+  /* 13915 */ '#', 'E', 'H', '_', 'S', 'J', 'L', 'J', '_', 'L', 'O', 'N', 'G', 'J', 'M', 'P', '6', '4', 0,
+  /* 13934 */ '#', 'E', 'H', '_', 'S', 'J', 'L', 'J', '_', 'S', 'E', 'T', 'J', 'M', 'P', '6', '4', 0,
+  /* 13952 */ '#', 32, 'T', 'L', 'S', 'C', 'a', 'l', 'l', '_', '6', '4', 0,
+  /* 13965 */ '#', 32, 'T', 'L', 'S', '_', 'a', 'd', 'd', 'r', '6', '4', 0,
+  /* 13978 */ '#', 32, 'T', 'L', 'S', '_', 'b', 'a', 's', 'e', '_', 'a', 'd', 'd', 'r', '6', '4', 0,
+  /* 13996 */ 'r', 'e', 'x', '6', '4', 0,
+  /* 14002 */ 'd', 'a', 't', 'a', '1', '6', 0,
+  /* 14009 */ 'x', 's', 'h', 'a', '2', '5', '6', 0,
+  /* 14017 */ 'L', 'I', 'F', 'E', 'T', 'I', 'M', 'E', '_', 'E', 'N', 'D', 0,
+  /* 14030 */ 'B', 'U', 'N', 'D', 'L', 'E', 0,
+  /* 14037 */ 'D', 'B', 'G', '_', 'V', 'A', 'L', 'U', 'E', 0,
+  /* 14047 */ '#', 32, 'X', 'B', 'E', 'G', 'I', 'N', 0,
+  /* 14056 */ '#', 'A', 'D', 'J', 'C', 'A', 'L', 'L', 'S', 'T', 'A', 'C', 'K', 'D', 'O', 'W', 'N', 0,
+  /* 14074 */ '#', 'A', 'D', 'J', 'C', 'A', 'L', 'L', 'S', 'T', 'A', 'C', 'K', 'U', 'P', 0,
+  /* 14090 */ '#', 'M', 'E', 'M', 'B', 'A', 'R', 'R', 'I', 'E', 'R', 0,
+  /* 14102 */ 'L', 'I', 'F', 'E', 'T', 'I', 'M', 'E', '_', 'S', 'T', 'A', 'R', 'T', 0,
+  /* 14117 */ 'a', 'a', 'a', 0,
+  /* 14121 */ 'd', 'a', 'a', 0,
+  /* 14125 */ 'u', 'd', '2', 'b', 0,
+  /* 14130 */ 'x', 'c', 'r', 'y', 'p', 't', 'e', 'c', 'b', 0,
+  /* 14140 */ 'x', 'c', 'r', 'y', 'p', 't', 'c', 'f', 'b', 0,
+  /* 14150 */ 'x', 'c', 'r', 'y', 'p', 't', 'o', 'f', 'b', 0,
+  /* 14160 */ 'r', 'e', 'p', ';', 's', 't', 'o', 's', 'b', 0,
+  /* 14170 */ 'r', 'e', 'p', ';', 'm', 'o', 'v', 's', 'b', 0,
+  /* 14180 */ 'x', 'l', 'a', 't', 'b', 0,
+  /* 14186 */ 'c', 'l', 'a', 'c', 0,
+  /* 14191 */ 's', 't', 'a', 'c', 0,
+  /* 14196 */ 'x', 'c', 'r', 'y', 'p', 't', 'c', 'b', 'c', 0,
+  /* 14206 */ 'g', 'e', 't', 's', 'e', 'c', 0,
+  /* 14213 */ 's', 'a', 'l', 'c', 0,
+  /* 14218 */ 'c', 'l', 'c', 0,
+  /* 14222 */ 'c', 'm', 'c', 0,
+  /* 14226 */ 'r', 'd', 'p', 'm', 'c', 0,
+  /* 14232 */ 'v', 'm', 'f', 'u', 'n', 'c', 0,
+  /* 14239 */ 'r', 'd', 't', 's', 'c', 0,
+  /* 14245 */ 's', 't', 'c', 0,
+  /* 14249 */ 'c', 'p', 'u', 'i', 'd', 0,
+  /* 14255 */ 'c', 'l', 'd', 0,
+  /* 14259 */ 'x', 'e', 'n', 'd', 0,
+  /* 14264 */ 'c', 'l', 't', 'd', 0,
+  /* 14269 */ 's', 't', 'd', 0,
+  /* 14273 */ 'c', 'w', 't', 'd', 0,
+  /* 14278 */ 'w', 'b', 'i', 'n', 'v', 'd', 0,
+  /* 14285 */ 'f', 'l', 'd', 'l', '2', 'e', 0,
+  /* 14292 */ 'l', 'f', 'e', 'n', 'c', 'e', 0,
+  /* 14299 */ 'm', 'f', 'e', 'n', 'c', 'e', 0,
+  /* 14306 */ 's', 'f', 'e', 'n', 'c', 'e', 0,
+  /* 14313 */ 'f', 's', 'c', 'a', 'l', 'e', 0,
+  /* 14320 */ 'v', 'm', 'r', 'e', 's', 'u', 'm', 'e', 0,
+  /* 14329 */ 'r', 'e', 'p', 'n', 'e', 0,
+  /* 14335 */ 'x', 'a', 'c', 'q', 'u', 'i', 'r', 'e', 0,
+  /* 14344 */ 'x', 's', 't', 'o', 'r', 'e', 0,
+  /* 14351 */ 'x', 'r', 'e', 'l', 'e', 'a', 's', 'e', 0,
+  /* 14360 */ 'p', 'a', 'u', 's', 'e', 0,
+  /* 14366 */ 'l', 'e', 'a', 'v', 'e', 0,
+  /* 14372 */ 'v', 'm', 'x', 'o', 'f', 'f', 0,
+  /* 14379 */ 'l', 'a', 'h', 'f', 0,
+  /* 14384 */ 's', 'a', 'h', 'f', 0,
+  /* 14389 */ 'v', 'm', 'l', 'a', 'u', 'n', 'c', 'h', 0,
+  /* 14398 */ 'c', 'l', 'g', 'i', 0,
+  /* 14403 */ 's', 't', 'g', 'i', 0,
+  /* 14408 */ 'c', 'l', 'i', 0,
+  /* 14412 */ 'f', 'l', 'd', 'p', 'i', 0,
+  /* 14418 */ 's', 't', 'i', 0,
+  /* 14422 */ '#', 32, 'w', 'i', 'n', '3', '2', 32, 'f', 'p', 't', 'o', 'u', 'i', 0,
+  /* 14437 */ 'l', 'o', 'c', 'k', 0,
+  /* 14442 */ 'i', 'n', 'b', 9, '%', 'd', 'x', ',', 32, '%', 'a', 'l', 0,
+  /* 14455 */ 'p', 'u', 's', 'h', 'a', 'l', 0,
+  /* 14462 */ 'p', 'o', 'p', 'a', 'l', 0,
+  /* 14468 */ 'p', 'u', 's', 'h', 'f', 'l', 0,
+  /* 14475 */ 'p', 'o', 'p', 'f', 'l', 0,
+  /* 14481 */ 'v', 'm', 'm', 'c', 'a', 'l', 'l', 0,
+  /* 14489 */ 'v', 'm', 'c', 'a', 'l', 'l', 0,
+  /* 14496 */ 's', 'y', 's', 'c', 'a', 'l', 'l', 0,
+  /* 14504 */ 'v', 'z', 'e', 'r', 'o', 'a', 'l', 'l', 0,
+  /* 14513 */ 'r', 'e', 'p', ';', 's', 't', 'o', 's', 'l', 0,
+  /* 14523 */ 'r', 'e', 'p', ';', 'm', 'o', 'v', 's', 'l', 0,
+  /* 14533 */ 'i', 'r', 'e', 't', 'l', 0,
+  /* 14539 */ 'l', 'r', 'e', 't', 'l', 0,
+  /* 14545 */ 's', 'y', 's', 'r', 'e', 't', 'l', 0,
+  /* 14553 */ 's', 'y', 's', 'e', 'x', 'i', 't', 'l', 0,
+  /* 14562 */ 'c', 'w', 't', 'l', 0,
+  /* 14567 */ 'm', 'o', 'n', 't', 'm', 'u', 'l', 0,
+  /* 14575 */ 'f', 'x', 'a', 'm', 0,
+  /* 14580 */ 'f', 'p', 'r', 'e', 'm', 0,
+  /* 14586 */ 'f', 's', 'e', 't', 'p', 'm', 0,
+  /* 14593 */ 'r', 's', 'm', 0,
+  /* 14597 */ 'f', 'p', 'a', 't', 'a', 'n', 0,
+  /* 14604 */ 'f', 'p', 't', 'a', 'n', 0,
+  /* 14610 */ 'f', 's', 'i', 'n', 0,
+  /* 14615 */ '#', 32, 'd', 'y', 'n', 'a', 'm', 'i', 'c', 32, 's', 't', 'a', 'c', 'k', 32, 'a', 'l', 'l', 'o', 'c', 'a', 't', 'i', 'o', 'n', 0,
+  /* 14642 */ 'i', 'n', 't', 'o', 0,
+  /* 14647 */ 'c', 'q', 't', 'o', 0,
+  /* 14652 */ 'r', 'd', 't', 's', 'c', 'p', 0,
+  /* 14659 */ 'r', 'e', 'p', 0,
+  /* 14663 */ 'v', 'p', 'c', 'm', 'p', 0,
+  /* 14669 */ 'v', 'c', 'm', 'p', 0,
+  /* 14674 */ 'f', 'n', 'o', 'p', 0,
+  /* 14679 */ 'f', 'c', 'o', 'm', 'p', 'p', 0,
+  /* 14686 */ 'f', 'u', 'c', 'o', 'm', 'p', 'p', 0,
+  /* 14694 */ 'f', 'd', 'e', 'c', 's', 't', 'p', 0,
+  /* 14702 */ 'f', 'i', 'n', 'c', 's', 't', 'p', 0,
+  /* 14710 */ 'p', 'u', 's', 'h', 'f', 'q', 0,
+  /* 14717 */ 'p', 'o', 'p', 'f', 'q', 0,
+  /* 14723 */ 'r', 'e', 'p', ';', 's', 't', 'o', 's', 'q', 0,
+  /* 14733 */ 'r', 'e', 'p', ';', 'm', 'o', 'v', 's', 'q', 0,
+  /* 14743 */ 'i', 'r', 'e', 't', 'q', 0,
+  /* 14749 */ 'l', 'r', 'e', 't', 'q', 0,
+  /* 14755 */ 's', 'y', 's', 'r', 'e', 't', 'q', 0,
+  /* 14763 */ 's', 'y', 's', 'e', 'x', 'i', 't', 'q', 0,
+  /* 14772 */ 'c', 'l', 't', 'q', 0,
+  /* 14777 */ 'v', 'z', 'e', 'r', 'o', 'u', 'p', 'p', 'e', 'r', 0,
+  /* 14788 */ 's', 'y', 's', 'e', 'n', 't', 'e', 'r', 0,
+  /* 14797 */ 'm', 'o', 'n', 'i', 't', 'o', 'r', 0,
+  /* 14805 */ 'r', 'd', 'm', 's', 'r', 0,
+  /* 14811 */ 'w', 'r', 'm', 's', 'r', 0,
+  /* 14817 */ 'x', 'c', 'r', 'y', 'p', 't', 'c', 't', 'r', 0,
+  /* 14827 */ 'a', 'a', 's', 0,
+  /* 14831 */ 'd', 'a', 's', 0,
+  /* 14835 */ 'f', 'a', 'b', 's', 0,
+  /* 14840 */ 'p', 'u', 's', 'h', 'l', 9, '%', 'c', 's', 0,
+  /* 14850 */ 'p', 'u', 's', 'h', 'w', 9, '%', 'c', 's', 0,
+  /* 14860 */ 'p', 'u', 's', 'h', 'l', 9, '%', 'd', 's', 0,
+  /* 14870 */ 'p', 'o', 'p', 'l', 9, '%', 'd', 's', 0,
+  /* 14879 */ 'p', 'u', 's', 'h', 'w', 9, '%', 'd', 's', 0,
+  /* 14889 */ 'p', 'o', 'p', 'w', 9, '%', 'd', 's', 0,
+  /* 14898 */ 'p', 'u', 's', 'h', 'l', 9, '%', 'e', 's', 0,
+  /* 14908 */ 'p', 'o', 'p', 'l', 9, '%', 'e', 's', 0,
+  /* 14917 */ 'p', 'u', 's', 'h', 'w', 9, '%', 'e', 's', 0,
+  /* 14927 */ 'p', 'o', 'p', 'w', 9, '%', 'e', 's', 0,
+  /* 14936 */ 'p', 'u', 's', 'h', 'l', 9, '%', 'f', 's', 0,
+  /* 14946 */ 'p', 'o', 'p', 'l', 9, '%', 'f', 's', 0,
+  /* 14955 */ 'p', 'u', 's', 'h', 'q', 9, '%', 'f', 's', 0,
+  /* 14965 */ 'p', 'o', 'p', 'q', 9, '%', 'f', 's', 0,
+  /* 14974 */ 'p', 'u', 's', 'h', 'w', 9, '%', 'f', 's', 0,
+  /* 14984 */ 'p', 'o', 'p', 'w', 9, '%', 'f', 's', 0,
+  /* 14993 */ 'p', 'u', 's', 'h', 'l', 9, '%', 'g', 's', 0,
+  /* 15003 */ 'p', 'o', 'p', 'l', 9, '%', 'g', 's', 0,
+  /* 15012 */ 'p', 'u', 's', 'h', 'q', 9, '%', 'g', 's', 0,
+  /* 15022 */ 'p', 'o', 'p', 'q', 9, '%', 'g', 's', 0,
+  /* 15031 */ 'p', 'u', 's', 'h', 'w', 9, '%', 'g', 's', 0,
+  /* 15041 */ 'p', 'o', 'p', 'w', 9, '%', 'g', 's', 0,
+  /* 15050 */ 's', 'w', 'a', 'p', 'g', 's', 0,
+  /* 15057 */ 'f', 'c', 'h', 's', 0,
+  /* 15062 */ '#', 32, 'v', 'a', 'r', 'i', 'a', 'b', 'l', 'e', 32, 's', 'i', 'z', 'e', 'd', 32, 'a', 'l', 'l', 'o', 'c', 'a', 32, 'f', 'o', 'r', 32, 's', 'e', 'g', 'm', 'e', 'n', 't', 'e', 'd', 32, 's', 't', 'a', 'c', 'k', 's', 0,
+  /* 15107 */ 'f', 'e', 'm', 'm', 's', 0,
+  /* 15113 */ 'f', 'c', 'o', 's', 0,
+  /* 15118 */ 'f', 's', 'i', 'n', 'c', 'o', 's', 0,
+  /* 15126 */ 'p', 'u', 's', 'h', 'l', 9, '%', 's', 's', 0,
+  /* 15136 */ 'p', 'o', 'p', 'l', 9, '%', 's', 's', 0,
+  /* 15145 */ 'p', 'u', 's', 'h', 'w', 9, '%', 's', 's', 0,
+  /* 15155 */ 'p', 'o', 'p', 'w', 9, '%', 's', 's', 0,
+  /* 15164 */ 'c', 'l', 't', 's', 0,
+  /* 15169 */ 'f', 'l', 'd', 'l', '2', 't', 0,
+  /* 15176 */ 'f', 'x', 't', 'r', 'a', 'c', 't', 0,
+  /* 15184 */ 'm', 'w', 'a', 'i', 't', 0,
+  /* 15190 */ 'f', 'n', 'i', 'n', 'i', 't', 0,
+  /* 15197 */ 'h', 'l', 't', 0,
+  /* 15201 */ 'f', 'r', 'n', 'd', 'i', 'n', 't', 0,
+  /* 15209 */ 'f', 's', 'q', 'r', 't', 0,
+  /* 15215 */ 'x', 't', 'e', 's', 't', 0,
+  /* 15221 */ 'f', 't', 's', 't', 0,
+  /* 15226 */ 'x', 'g', 'e', 't', 'b', 'v', 0,
+  /* 15233 */ 'x', 's', 'e', 't', 'b', 'v', 0,
+  /* 15240 */ 'p', 'u', 's', 'h', 'a', 'w', 0,
+  /* 15247 */ 'p', 'o', 'p', 'a', 'w', 0,
+  /* 15253 */ 'p', 'u', 's', 'h', 'f', 'w', 0,
+  /* 15260 */ 'p', 'o', 'p', 'f', 'w', 0,
+  /* 15266 */ 'r', 'e', 'p', ';', 's', 't', 'o', 's', 'w', 0,
+  /* 15276 */ 'r', 'e', 'p', ';', 'm', 'o', 'v', 's', 'w', 0,
+  /* 15286 */ 'c', 'b', 't', 'w', 0,
+  /* 15291 */ 'i', 'r', 'e', 't', 'w', 0,
+  /* 15297 */ 'l', 'r', 'e', 't', 'w', 0,
+  /* 15303 */ 'f', 'y', 'l', '2', 'x', 0,
+  /* 15309 */ 'f', 'n', 's', 't', 's', 'w', 9, '%', 'a', 'x', 0,
+  /* 15320 */ 'i', 'n', 'w', 9, '%', 'd', 'x', ',', 32, '%', 'a', 'x', 0,
+  /* 15333 */ 'v', 'm', 'l', 'o', 'a', 'd', 9, '%', 'e', 'a', 'x', 0,
+  /* 15345 */ 'v', 'm', 's', 'a', 'v', 'e', 9, '%', 'e', 'a', 'x', 0,
+  /* 15357 */ 'v', 'm', 'r', 'u', 'n', 9, '%', 'e', 'a', 'x', 0,
+  /* 15368 */ 's', 'k', 'i', 'n', 'i', 't', 9, '%', 'e', 'a', 'x', 0,
+  /* 15380 */ 'i', 'n', 'v', 'l', 'p', 'g', 'a', 9, '%', 'e', 'c', 'x', ',', 32, '%', 'e', 'a', 'x', 0,
+  /* 15399 */ 'i', 'n', 'l', 9, '%', 'd', 'x', ',', 32, '%', 'e', 'a', 'x', 0,
+  /* 15413 */ 'v', 'm', 'l', 'o', 'a', 'd', 9, '%', 'r', 'a', 'x', 0,
+  /* 15425 */ 'v', 'm', 's', 'a', 'v', 'e', 9, '%', 'r', 'a', 'x', 0,
+  /* 15437 */ 'v', 'm', 'r', 'u', 'n', 9, '%', 'r', 'a', 'x', 0,
+  /* 15448 */ 'i', 'n', 'v', 'l', 'p', 'g', 'a', 9, '%', 'e', 'c', 'x', ',', 32, '%', 'r', 'a', 'x', 0,
+  /* 15467 */ 'o', 'u', 't', 'b', 9, '%', 'a', 'l', ',', 32, '%', 'd', 'x', 0,
+  /* 15481 */ 'o', 'u', 't', 'w', 9, '%', 'a', 'x', ',', 32, '%', 'd', 'x', 0,
+  /* 15495 */ 'o', 'u', 't', 'l', 9, '%', 'e', 'a', 'x', ',', 32, '%', 'd', 'x', 0,
+  /* 15510 */ 'f', 'n', 'c', 'l', 'e', 'x', 0,
+  /* 15517 */ 'f', 'l', 'd', 'z', 0,
   };
 #endif
 

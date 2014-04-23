@@ -10,6 +10,1291 @@
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 
+static const struct OpcodeDecision emptyTable = {
+  {
+   /* 0x00 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x01 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x02 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x03 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x04 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x05 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x06 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x07 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x08 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x09 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x10 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x11 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x12 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x13 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x14 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x15 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x16 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x17 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x18 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x19 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x20 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x21 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x22 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x23 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x24 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x25 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x26 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x27 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x28 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x29 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x30 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x31 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x32 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x33 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x34 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x35 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x36 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x37 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x38 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x39 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x40 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x41 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x42 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x43 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x44 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x45 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x46 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x47 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x48 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x49 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x50 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x51 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x52 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x53 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x54 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x55 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x56 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x57 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x58 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x59 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x60 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x61 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x62 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x63 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x64 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x65 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x66 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x67 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x68 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x69 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x70 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x71 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x72 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x73 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x74 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x75 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x76 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x77 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x78 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x79 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x80 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x81 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x82 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x83 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x84 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x85 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x86 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x87 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x88 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x89 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x90 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x91 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x92 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x93 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x94 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x95 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x96 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x97 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x98 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x99 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xaa */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xab */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xac */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xad */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xae */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xaf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xba */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbe */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xca */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xcb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xcc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xcd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xce */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xcf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xda */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xde */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xea */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xeb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xec */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xed */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xee */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xef */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfa */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfe */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xff */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   }
+  }
+};
+
 static const struct OperandSpecifier x86OperandSets[][5] = {
   { /* 0 */
     { ENCODING_NONE, TYPE_NONE },
@@ -1147,7 +2432,7 @@ static const struct OperandSpecifier x86OperandSets[][5] = {
   },
 };
 
-static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1687] = {
+static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1693] = {
   { /* 0 */
     0,
     /*  */
@@ -7293,606 +8578,630 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1687] = 
     /* TEST16mi */
   },
   { /* 1536 */
+    3,
+    /* TEST16mi_alt */
+  },
+  { /* 1537 */
     65,
     /* TEST16ri */
   },
-  { /* 1537 */
+  { /* 1538 */
+    65,
+    /* TEST16ri_alt */
+  },
+  { /* 1539 */
     50,
     /* TEST16rm */
   },
-  { /* 1538 */
+  { /* 1540 */
     51,
     /* TEST16rr */
   },
-  { /* 1539 */
+  { /* 1541 */
     2,
     /* TEST32i32 */
   },
-  { /* 1540 */
+  { /* 1542 */
     3,
     /* TEST32mi */
   },
-  { /* 1541 */
+  { /* 1543 */
     3,
     /* TEST32mi_alt */
   },
-  { /* 1542 */
+  { /* 1544 */
     65,
     /* TEST32ri */
   },
-  { /* 1543 */
+  { /* 1545 */
+    65,
+    /* TEST32ri_alt */
+  },
+  { /* 1546 */
     50,
     /* TEST32rm */
   },
-  { /* 1544 */
+  { /* 1547 */
     51,
     /* TEST32rr */
   },
-  { /* 1545 */
+  { /* 1548 */
     13,
     /* TEST64i32 */
   },
-  { /* 1546 */
+  { /* 1549 */
     14,
     /* TEST64mi32 */
   },
-  { /* 1547 */
+  { /* 1550 */
+    14,
+    /* TEST64mi32_alt */
+  },
+  { /* 1551 */
     66,
     /* TEST64ri32 */
   },
-  { /* 1548 */
+  { /* 1552 */
+    66,
+    /* TEST64ri32_alt */
+  },
+  { /* 1553 */
     30,
     /* TEST64rm */
   },
-  { /* 1549 */
+  { /* 1554 */
     31,
     /* TEST64rr */
   },
-  { /* 1550 */
+  { /* 1555 */
     1,
     /* TEST8i8 */
   },
-  { /* 1551 */
+  { /* 1556 */
     22,
     /* TEST8mi */
   },
-  { /* 1552 */
+  { /* 1557 */
     22,
     /* TEST8mi_alt */
   },
-  { /* 1553 */
+  { /* 1558 */
     67,
     /* TEST8ri */
-  },
-  { /* 1554 */
-    0,
-    /*  */
-  },
-  { /* 1555 */
-    68,
-    /* TEST8rm */
-  },
-  { /* 1556 */
-    70,
-    /* TEST8rr */
-  },
-  { /* 1557 */
-    0,
-    /*  */
-  },
-  { /* 1558 */
-    0,
-    /*  */
   },
   { /* 1559 */
     0,
     /*  */
   },
   { /* 1560 */
-    0,
-    /*  */
+    67,
+    /* TEST8ri_alt */
   },
   { /* 1561 */
-    0,
-    /*  */
+    68,
+    /* TEST8rm */
   },
   { /* 1562 */
-    0,
-    /*  */
+    70,
+    /* TEST8rr */
   },
   { /* 1563 */
     0,
-    /* TRAP */
+    /*  */
   },
   { /* 1564 */
+    0,
+    /*  */
+  },
+  { /* 1565 */
+    0,
+    /*  */
+  },
+  { /* 1566 */
+    0,
+    /*  */
+  },
+  { /* 1567 */
+    0,
+    /*  */
+  },
+  { /* 1568 */
+    0,
+    /*  */
+  },
+  { /* 1569 */
+    0,
+    /* TRAP */
+  },
+  { /* 1570 */
     50,
     /* TZCNT16rm */
   },
-  { /* 1565 */
+  { /* 1571 */
     51,
     /* TZCNT16rr */
   },
-  { /* 1566 */
+  { /* 1572 */
     50,
     /* TZCNT32rm */
   },
-  { /* 1567 */
+  { /* 1573 */
     51,
     /* TZCNT32rr */
   },
-  { /* 1568 */
+  { /* 1574 */
     30,
     /* TZCNT64rm */
   },
-  { /* 1569 */
+  { /* 1575 */
     31,
     /* TZCNT64rr */
   },
-  { /* 1570 */
+  { /* 1576 */
     46,
     /* TZMSK32rm */
   },
-  { /* 1571 */
+  { /* 1577 */
     47,
     /* TZMSK32rr */
   },
-  { /* 1572 */
+  { /* 1578 */
     48,
     /* TZMSK64rm */
   },
-  { /* 1573 */
+  { /* 1579 */
     49,
     /* TZMSK64rr */
   },
-  { /* 1574 */
+  { /* 1580 */
     0,
     /* UD2B */
   },
-  { /* 1575 */
+  { /* 1581 */
     0,
     /*  */
   },
-  { /* 1576 */
+  { /* 1582 */
     0,
     /*  */
   },
-  { /* 1577 */
+  { /* 1583 */
     59,
     /* VERRm */
   },
-  { /* 1578 */
+  { /* 1584 */
     108,
     /* VERRr */
   },
-  { /* 1579 */
+  { /* 1585 */
     59,
     /* VERWm */
   },
-  { /* 1580 */
+  { /* 1586 */
     108,
     /* VERWr */
   },
-  { /* 1581 */
+  { /* 1587 */
     0,
     /* VMCALL */
   },
-  { /* 1582 */
+  { /* 1588 */
     59,
     /* VMCLEARm */
   },
-  { /* 1583 */
+  { /* 1589 */
     0,
     /* VMFUNC */
   },
-  { /* 1584 */
+  { /* 1590 */
     0,
     /* VMLAUNCH */
   },
-  { /* 1585 */
+  { /* 1591 */
     0,
     /* VMLOAD32 */
   },
-  { /* 1586 */
+  { /* 1592 */
     0,
     /* VMLOAD64 */
   },
-  { /* 1587 */
+  { /* 1593 */
     0,
     /* VMMCALL */
   },
-  { /* 1588 */
+  { /* 1594 */
     59,
     /* VMPTRLDm */
   },
-  { /* 1589 */
+  { /* 1595 */
     59,
     /* VMPTRSTm */
   },
-  { /* 1590 */
+  { /* 1596 */
     159,
     /* VMREAD32rm */
   },
-  { /* 1591 */
+  { /* 1597 */
     160,
     /* VMREAD32rr */
   },
-  { /* 1592 */
+  { /* 1598 */
     16,
     /* VMREAD64rm */
   },
-  { /* 1593 */
+  { /* 1599 */
     58,
     /* VMREAD64rr */
   },
-  { /* 1594 */
+  { /* 1600 */
     0,
     /* VMRESUME */
   },
-  { /* 1595 */
+  { /* 1601 */
     0,
     /* VMRUN32 */
   },
-  { /* 1596 */
+  { /* 1602 */
     0,
     /* VMRUN64 */
   },
-  { /* 1597 */
+  { /* 1603 */
     0,
     /* VMSAVE32 */
   },
-  { /* 1598 */
+  { /* 1604 */
     0,
     /* VMSAVE64 */
   },
-  { /* 1599 */
+  { /* 1605 */
     28,
     /* VMWRITE32rm */
   },
-  { /* 1600 */
+  { /* 1606 */
     29,
     /* VMWRITE32rr */
   },
-  { /* 1601 */
+  { /* 1607 */
     30,
     /* VMWRITE64rm */
   },
-  { /* 1602 */
+  { /* 1608 */
     31,
     /* VMWRITE64rr */
   },
-  { /* 1603 */
+  { /* 1609 */
     0,
     /* VMXOFF */
   },
-  { /* 1604 */
+  { /* 1610 */
     59,
     /* VMXON */
   },
-  { /* 1605 */
+  { /* 1611 */
     0,
     /*  */
   },
-  { /* 1606 */
+  { /* 1612 */
     0,
     /* WBINVD */
   },
-  { /* 1607 */
-    0,
-    /*  */
-  },
-  { /* 1608 */
-    0,
-    /*  */
-  },
-  { /* 1609 */
-    0,
-    /*  */
-  },
-  { /* 1610 */
-    149,
-    /* WRFSBASE */
-  },
-  { /* 1611 */
-    62,
-    /* WRFSBASE64 */
-  },
-  { /* 1612 */
-    149,
-    /* WRGSBASE */
-  },
   { /* 1613 */
-    62,
-    /* WRGSBASE64 */
+    0,
+    /*  */
   },
   { /* 1614 */
     0,
-    /* WRMSR */
+    /*  */
   },
   { /* 1615 */
+    0,
+    /*  */
+  },
+  { /* 1616 */
+    149,
+    /* WRFSBASE */
+  },
+  { /* 1617 */
+    62,
+    /* WRFSBASE64 */
+  },
+  { /* 1618 */
+    149,
+    /* WRGSBASE */
+  },
+  { /* 1619 */
+    62,
+    /* WRGSBASE64 */
+  },
+  { /* 1620 */
+    0,
+    /* WRMSR */
+  },
+  { /* 1621 */
     5,
     /* XADD16rm */
   },
-  { /* 1616 */
+  { /* 1622 */
     55,
     /* XADD16rr */
   },
-  { /* 1617 */
+  { /* 1623 */
     5,
     /* XADD32rm */
   },
-  { /* 1618 */
+  { /* 1624 */
     55,
     /* XADD32rr */
   },
-  { /* 1619 */
+  { /* 1625 */
     16,
     /* XADD64rm */
   },
-  { /* 1620 */
+  { /* 1626 */
     58,
     /* XADD64rr */
   },
-  { /* 1621 */
+  { /* 1627 */
     23,
     /* XADD8rm */
   },
-  { /* 1622 */
+  { /* 1628 */
     69,
     /* XADD8rr */
   },
-  { /* 1623 */
+  { /* 1629 */
     141,
     /* XCHG16ar */
   },
-  { /* 1624 */
+  { /* 1630 */
     8,
     /* XCHG16rm */
   },
-  { /* 1625 */
+  { /* 1631 */
     10,
     /* XCHG16rr */
   },
-  { /* 1626 */
+  { /* 1632 */
     141,
     /* XCHG32ar */
   },
-  { /* 1627 */
+  { /* 1633 */
     141,
     /* XCHG32ar64 */
   },
-  { /* 1628 */
+  { /* 1634 */
     8,
     /* XCHG32rm */
   },
-  { /* 1629 */
+  { /* 1635 */
     10,
     /* XCHG32rr */
   },
-  { /* 1630 */
+  { /* 1636 */
     142,
     /* XCHG64ar */
   },
-  { /* 1631 */
+  { /* 1637 */
     19,
     /* XCHG64rm */
   },
-  { /* 1632 */
+  { /* 1638 */
     21,
     /* XCHG64rr */
   },
-  { /* 1633 */
+  { /* 1639 */
     25,
     /* XCHG8rm */
   },
-  { /* 1634 */
+  { /* 1640 */
     27,
     /* XCHG8rr */
   },
-  { /* 1635 */
+  { /* 1641 */
     0,
     /* XCRYPTCBC */
   },
-  { /* 1636 */
+  { /* 1642 */
     0,
     /* XCRYPTCFB */
   },
-  { /* 1637 */
+  { /* 1643 */
     0,
     /* XCRYPTCTR */
   },
-  { /* 1638 */
+  { /* 1644 */
     0,
     /* XCRYPTECB */
   },
-  { /* 1639 */
+  { /* 1645 */
     0,
     /* XCRYPTOFB */
   },
-  { /* 1640 */
+  { /* 1646 */
     0,
     /* XGETBV */
   },
-  { /* 1641 */
+  { /* 1647 */
     0,
     /* XLAT */
   },
-  { /* 1642 */
+  { /* 1648 */
     2,
     /* XOR16i16 */
   },
-  { /* 1643 */
+  { /* 1649 */
     3,
     /* XOR16mi */
   },
-  { /* 1644 */
+  { /* 1650 */
     4,
     /* XOR16mi8 */
   },
-  { /* 1645 */
+  { /* 1651 */
     5,
     /* XOR16mr */
   },
-  { /* 1646 */
+  { /* 1652 */
     6,
     /* XOR16ri */
   },
-  { /* 1647 */
+  { /* 1653 */
     7,
     /* XOR16ri8 */
   },
-  { /* 1648 */
+  { /* 1654 */
     8,
     /* XOR16rm */
   },
-  { /* 1649 */
+  { /* 1655 */
     9,
     /* XOR16rr */
   },
-  { /* 1650 */
+  { /* 1656 */
     10,
     /* XOR16rr_REV */
   },
-  { /* 1651 */
+  { /* 1657 */
     2,
     /* XOR32i32 */
   },
-  { /* 1652 */
+  { /* 1658 */
     3,
     /* XOR32mi */
   },
-  { /* 1653 */
+  { /* 1659 */
     11,
     /* XOR32mi8 */
   },
-  { /* 1654 */
+  { /* 1660 */
     5,
     /* XOR32mr */
   },
-  { /* 1655 */
+  { /* 1661 */
     6,
     /* XOR32ri */
   },
-  { /* 1656 */
+  { /* 1662 */
     12,
     /* XOR32ri8 */
   },
-  { /* 1657 */
+  { /* 1663 */
     8,
     /* XOR32rm */
   },
-  { /* 1658 */
+  { /* 1664 */
     9,
     /* XOR32rr */
   },
-  { /* 1659 */
+  { /* 1665 */
     10,
     /* XOR32rr_REV */
   },
-  { /* 1660 */
+  { /* 1666 */
     13,
     /* XOR64i32 */
   },
-  { /* 1661 */
+  { /* 1667 */
     14,
     /* XOR64mi32 */
   },
-  { /* 1662 */
+  { /* 1668 */
     15,
     /* XOR64mi8 */
   },
-  { /* 1663 */
+  { /* 1669 */
     16,
     /* XOR64mr */
   },
-  { /* 1664 */
+  { /* 1670 */
     17,
     /* XOR64ri32 */
   },
-  { /* 1665 */
+  { /* 1671 */
     18,
     /* XOR64ri8 */
   },
-  { /* 1666 */
+  { /* 1672 */
     19,
     /* XOR64rm */
   },
-  { /* 1667 */
+  { /* 1673 */
     20,
     /* XOR64rr */
   },
-  { /* 1668 */
+  { /* 1674 */
     21,
     /* XOR64rr_REV */
   },
-  { /* 1669 */
+  { /* 1675 */
     1,
     /* XOR8i8 */
   },
-  { /* 1670 */
+  { /* 1676 */
     22,
     /* XOR8mi */
   },
-  { /* 1671 */
+  { /* 1677 */
     23,
     /* XOR8mr */
   },
-  { /* 1672 */
+  { /* 1678 */
     24,
     /* XOR8ri */
   },
-  { /* 1673 */
+  { /* 1679 */
     24,
     /* XOR8ri8 */
   },
-  { /* 1674 */
+  { /* 1680 */
     25,
     /* XOR8rm */
   },
-  { /* 1675 */
+  { /* 1681 */
     26,
     /* XOR8rr */
   },
-  { /* 1676 */
+  { /* 1682 */
     27,
     /* XOR8rr_REV */
   },
-  { /* 1677 */
+  { /* 1683 */
     161,
     /* XRSTOR */
   },
-  { /* 1678 */
+  { /* 1684 */
     161,
     /* XRSTOR64 */
   },
-  { /* 1679 */
+  { /* 1685 */
     161,
     /* XSAVE */
   },
-  { /* 1680 */
+  { /* 1686 */
     161,
     /* XSAVE64 */
   },
-  { /* 1681 */
+  { /* 1687 */
     161,
     /* XSAVEOPT */
   },
-  { /* 1682 */
+  { /* 1688 */
     161,
     /* XSAVEOPT64 */
   },
-  { /* 1683 */
+  { /* 1689 */
     0,
     /* XSETBV */
   },
-  { /* 1684 */
+  { /* 1690 */
     0,
     /* XSHA1 */
   },
-  { /* 1685 */
+  { /* 1691 */
     0,
     /* XSHA256 */
   },
-  { /* 1686 */
+  { /* 1692 */
     0,
     /* XSTORE */
   }
@@ -24407,21 +25716,21 @@ static const InstrUID modRMTable[] = {
 /* Table71 */
   0x1f8, /* DAS */
 /* Table72 */
-  0x687, /* XOR8mr */
-  0x68b, /* XOR8rr */
+  0x68d, /* XOR8mr */
+  0x691, /* XOR8rr */
 /* Table74 */
-  0x676, /* XOR32mr */
-  0x67a, /* XOR32rr */
+  0x67c, /* XOR32mr */
+  0x680, /* XOR32rr */
 /* Table76 */
-  0x68a, /* XOR8rm */
-  0x68c, /* XOR8rr_REV */
+  0x690, /* XOR8rm */
+  0x692, /* XOR8rr_REV */
 /* Table78 */
-  0x679, /* XOR32rm */
-  0x67b, /* XOR32rr_REV */
+  0x67f, /* XOR32rm */
+  0x681, /* XOR32rr_REV */
 /* Table80 */
-  0x685, /* XOR8i8 */
+  0x68b, /* XOR8i8 */
 /* Table81 */
-  0x673, /* XOR32i32 */
+  0x679, /* XOR32i32 */
 /* Table82 */
   0x5b6, /* SS_PREFIX */
 /* Table83 */
@@ -24527,7 +25836,7 @@ static const InstrUID modRMTable[] = {
   0x526, /* SBB8mi */
   0x91, /* AND8mi */
   0x5e0, /* SUB8mi */
-  0x686, /* XOR8mi */
+  0x68c, /* XOR8mi */
   0x1dd, /* CMP8mi */
   0x68, /* ADD8ri */
   0x3f3, /* OR8ri */
@@ -24535,7 +25844,7 @@ static const InstrUID modRMTable[] = {
   0x528, /* SBB8ri */
   0x93, /* AND8ri */
   0x5e2, /* SUB8ri */
-  0x688, /* XOR8ri */
+  0x68e, /* XOR8ri */
   0x1df, /* CMP8ri */
 /* Table151 */
   0x4e, /* ADD32mi */
@@ -24544,7 +25853,7 @@ static const InstrUID modRMTable[] = {
   0x514, /* SBB32mi */
   0x7f, /* AND32mi */
   0x5ce, /* SUB32mi */
-  0x674, /* XOR32mi */
+  0x67a, /* XOR32mi */
   0x1cb, /* CMP32mi */
   0x51, /* ADD32ri */
   0x3e2, /* OR32ri */
@@ -24552,7 +25861,7 @@ static const InstrUID modRMTable[] = {
   0x517, /* SBB32ri */
   0x82, /* AND32ri */
   0x5d1, /* SUB32ri */
-  0x677, /* XOR32ri */
+  0x67d, /* XOR32ri */
   0x1ce, /* CMP32ri */
 /* Table167 */
   0x0, /*  */
@@ -24569,7 +25878,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x94, /* AND8ri8 */
   0x5e3, /* SUB8ri8 */
-  0x689, /* XOR8ri8 */
+  0x68f, /* XOR8ri8 */
   0x0, /*  */
 /* Table183 */
   0x4f, /* ADD32mi8 */
@@ -24578,7 +25887,7 @@ static const InstrUID modRMTable[] = {
   0x515, /* SBB32mi8 */
   0x80, /* AND32mi8 */
   0x5cf, /* SUB32mi8 */
-  0x675, /* XOR32mi8 */
+  0x67b, /* XOR32mi8 */
   0x1cc, /* CMP32mi8 */
   0x52, /* ADD32ri8 */
   0x3e3, /* OR32ri8 */
@@ -24586,20 +25895,20 @@ static const InstrUID modRMTable[] = {
   0x518, /* SBB32ri8 */
   0x83, /* AND32ri8 */
   0x5d2, /* SUB32ri8 */
-  0x678, /* XOR32ri8 */
+  0x67e, /* XOR32ri8 */
   0x1cf, /* CMP32ri8 */
 /* Table199 */
-  0x613, /* TEST8rm */
-  0x614, /* TEST8rr */
+  0x619, /* TEST8rm */
+  0x61a, /* TEST8rr */
 /* Table201 */
-  0x607, /* TEST32rm */
-  0x608, /* TEST32rr */
+  0x60a, /* TEST32rm */
+  0x60b, /* TEST32rr */
 /* Table203 */
-  0x661, /* XCHG8rm */
-  0x662, /* XCHG8rr */
+  0x667, /* XCHG8rm */
+  0x668, /* XCHG8rr */
 /* Table205 */
-  0x65c, /* XCHG32rm */
-  0x65d, /* XCHG32rr */
+  0x662, /* XCHG32rm */
+  0x663, /* XCHG32rr */
 /* Table207 */
   0x37b, /* MOV8mr */
   0x383, /* MOV8rr */
@@ -24641,7 +25950,7 @@ static const InstrUID modRMTable[] = {
 /* Table237 */
   0x3bd, /* NOOP */
 /* Table238 */
-  0x65a, /* XCHG32ar */
+  0x660, /* XCHG32ar */
 /* Table239 */
   0x1f6, /* CWDE */
 /* Table240 */
@@ -24673,9 +25982,9 @@ static const InstrUID modRMTable[] = {
 /* Table253 */
   0x1e4, /* CMPS32 */
 /* Table254 */
-  0x60e, /* TEST8i8 */
+  0x613, /* TEST8i8 */
 /* Table255 */
-  0x603, /* TEST32i32 */
+  0x605, /* TEST32i32 */
 /* Table256 */
   0x5bc, /* STOSB */
 /* Table257 */
@@ -24861,7 +26170,7 @@ static const InstrUID modRMTable[] = {
 /* Table408 */
   0x4ed, /* SALC */
 /* Table409 */
-  0x669, /* XLAT */
+  0x66f, /* XLAT */
 /* Table410 */
   0x0, /*  */
   0x0, /*  */
@@ -24980,16 +26289,16 @@ static const InstrUID modRMTable[] = {
 /* Table503 */
   0x14f, /* CMC */
 /* Table504 */
-  0x60f, /* TEST8mi */
-  0x610, /* TEST8mi_alt */
+  0x614, /* TEST8mi */
+  0x615, /* TEST8mi_alt */
   0x3d2, /* NOT8m */
   0x3bb, /* NEG8m */
   0x3af, /* MUL8m */
   0x249, /* IMUL8m */
   0x20e, /* DIV8m */
   0x22f, /* IDIV8m */
-  0x611, /* TEST8ri */
-  0x0, /*  */
+  0x616, /* TEST8ri */
+  0x618, /* TEST8ri_alt */
   0x3d3, /* NOT8r */
   0x3bc, /* NEG8r */
   0x3b0, /* MUL8r */
@@ -24997,16 +26306,16 @@ static const InstrUID modRMTable[] = {
   0x20f, /* DIV8r */
   0x230, /* IDIV8r */
 /* Table520 */
-  0x604, /* TEST32mi */
-  0x605, /* TEST32mi_alt */
+  0x606, /* TEST32mi */
+  0x607, /* TEST32mi_alt */
   0x3ce, /* NOT32m */
   0x3b7, /* NEG32m */
   0x3ab, /* MUL32m */
   0x239, /* IMUL32m */
   0x20a, /* DIV32m */
   0x22b, /* IDIV32m */
-  0x606, /* TEST32ri */
-  0x0, /*  */
+  0x608, /* TEST32ri */
+  0x609, /* TEST32ri_alt */
   0x3cf, /* NOT32r */
   0x3b8, /* NEG32r */
   0x3ac, /* MUL32r */
@@ -25090,7 +26399,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table597 */
-  0x65b, /* XCHG32ar64 */
+  0x661, /* XCHG32ar64 */
 /* Table598 */
   0x43b, /* PUSHF64 */
 /* Table599 */
@@ -25193,13 +26502,13 @@ static const InstrUID modRMTable[] = {
 /* Table661 */
   0x5c4, /* SUB16i16 */
 /* Table662 */
-  0x66d, /* XOR16mr */
-  0x671, /* XOR16rr */
+  0x673, /* XOR16mr */
+  0x677, /* XOR16rr */
 /* Table664 */
-  0x670, /* XOR16rm */
-  0x672, /* XOR16rr_REV */
+  0x676, /* XOR16rm */
+  0x678, /* XOR16rr_REV */
 /* Table666 */
-  0x66a, /* XOR16i16 */
+  0x670, /* XOR16i16 */
 /* Table667 */
   0x1c4, /* CMP16mr */
   0x1c8, /* CMP16rr */
@@ -25244,7 +26553,7 @@ static const InstrUID modRMTable[] = {
   0x50b, /* SBB16mi */
   0x76, /* AND16mi */
   0x5c5, /* SUB16mi */
-  0x66b, /* XOR16mi */
+  0x671, /* XOR16mi */
   0x1c2, /* CMP16mi */
   0x45, /* ADD16ri */
   0x3d8, /* OR16ri */
@@ -25252,7 +26561,7 @@ static const InstrUID modRMTable[] = {
   0x50e, /* SBB16ri */
   0x79, /* AND16ri */
   0x5c8, /* SUB16ri */
-  0x66e, /* XOR16ri */
+  0x674, /* XOR16ri */
   0x1c5, /* CMP16ri */
 /* Table704 */
   0x43, /* ADD16mi8 */
@@ -25261,7 +26570,7 @@ static const InstrUID modRMTable[] = {
   0x50c, /* SBB16mi8 */
   0x77, /* AND16mi8 */
   0x5c6, /* SUB16mi8 */
-  0x66c, /* XOR16mi8 */
+  0x672, /* XOR16mi8 */
   0x1c3, /* CMP16mi8 */
   0x46, /* ADD16ri8 */
   0x3d9, /* OR16ri8 */
@@ -25269,14 +26578,14 @@ static const InstrUID modRMTable[] = {
   0x50f, /* SBB16ri8 */
   0x7a, /* AND16ri8 */
   0x5c9, /* SUB16ri8 */
-  0x66f, /* XOR16ri8 */
+  0x675, /* XOR16ri8 */
   0x1c6, /* CMP16ri8 */
 /* Table720 */
-  0x601, /* TEST16rm */
-  0x602, /* TEST16rr */
+  0x603, /* TEST16rm */
+  0x604, /* TEST16rr */
 /* Table722 */
-  0x658, /* XCHG16rm */
-  0x659, /* XCHG16rr */
+  0x65e, /* XCHG16rm */
+  0x65f, /* XCHG16rr */
 /* Table724 */
   0x340, /* MOV16mr */
   0x347, /* MOV16rr */
@@ -25310,7 +26619,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table750 */
-  0x657, /* XCHG16ar */
+  0x65d, /* XCHG16ar */
 /* Table751 */
   0x146, /* CBW */
 /* Table752 */
@@ -25439,15 +26748,15 @@ static const InstrUID modRMTable[] = {
   0x3f9, /* OUT16rr */
 /* Table845 */
   0x5ff, /* TEST16mi */
-  0x605, /* TEST32mi_alt */
+  0x600, /* TEST16mi_alt */
   0x3cc, /* NOT16m */
   0x3b5, /* NEG16m */
   0x3a9, /* MUL16m */
   0x231, /* IMUL16m */
   0x208, /* DIV16m */
   0x229, /* IDIV16m */
-  0x600, /* TEST16ri */
-  0x0, /*  */
+  0x601, /* TEST16ri */
+  0x602, /* TEST16ri_alt */
   0x3cd, /* NOT16r */
   0x3b6, /* NEG16r */
   0x3aa, /* MUL16r */
@@ -25522,13 +26831,13 @@ static const InstrUID modRMTable[] = {
 /* Table907 */
   0x5d6, /* SUB64i32 */
 /* Table908 */
-  0x67f, /* XOR64mr */
-  0x683, /* XOR64rr */
+  0x685, /* XOR64mr */
+  0x689, /* XOR64rr */
 /* Table910 */
-  0x682, /* XOR64rm */
-  0x684, /* XOR64rr_REV */
+  0x688, /* XOR64rm */
+  0x68a, /* XOR64rr_REV */
 /* Table912 */
-  0x67c, /* XOR64i32 */
+  0x682, /* XOR64i32 */
 /* Table913 */
   0x1d6, /* CMP64mr */
   0x1da, /* CMP64rr */
@@ -25553,7 +26862,7 @@ static const InstrUID modRMTable[] = {
   0x51d, /* SBB64mi32 */
   0x88, /* AND64mi32 */
   0x5d7, /* SUB64mi32 */
-  0x67d, /* XOR64mi32 */
+  0x683, /* XOR64mi32 */
   0x1d4, /* CMP64mi32 */
   0x5d, /* ADD64ri32 */
   0x3eb, /* OR64ri32 */
@@ -25561,7 +26870,7 @@ static const InstrUID modRMTable[] = {
   0x520, /* SBB64ri32 */
   0x8b, /* AND64ri32 */
   0x5da, /* SUB64ri32 */
-  0x680, /* XOR64ri32 */
+  0x686, /* XOR64ri32 */
   0x1d7, /* CMP64ri32 */
 /* Table940 */
   0x5b, /* ADD64mi8 */
@@ -25570,7 +26879,7 @@ static const InstrUID modRMTable[] = {
   0x51e, /* SBB64mi8 */
   0x89, /* AND64mi8 */
   0x5d8, /* SUB64mi8 */
-  0x67e, /* XOR64mi8 */
+  0x684, /* XOR64mi8 */
   0x1d5, /* CMP64mi8 */
   0x5f, /* ADD64ri8 */
   0x3ec, /* OR64ri8 */
@@ -25578,14 +26887,14 @@ static const InstrUID modRMTable[] = {
   0x521, /* SBB64ri8 */
   0x8c, /* AND64ri8 */
   0x5db, /* SUB64ri8 */
-  0x681, /* XOR64ri8 */
+  0x687, /* XOR64ri8 */
   0x1d8, /* CMP64ri8 */
 /* Table956 */
-  0x60c, /* TEST64rm */
-  0x60d, /* TEST64rr */
+  0x611, /* TEST64rm */
+  0x612, /* TEST64rr */
 /* Table958 */
-  0x65f, /* XCHG64rm */
-  0x660, /* XCHG64rr */
+  0x665, /* XCHG64rm */
+  0x666, /* XCHG64rr */
 /* Table960 */
   0x368, /* MOV64mr */
   0x373, /* MOV64rr */
@@ -25602,7 +26911,7 @@ static const InstrUID modRMTable[] = {
   0x376, /* MOV64sm */
   0x377, /* MOV64sr */
 /* Table970 */
-  0x65e, /* XCHG64ar */
+  0x664, /* XCHG64ar */
 /* Table971 */
   0x148, /* CDQE */
 /* Table972 */
@@ -25616,7 +26925,7 @@ static const InstrUID modRMTable[] = {
 /* Table976 */
   0x1e5, /* CMPS64 */
 /* Table977 */
-  0x609, /* TEST64i32 */
+  0x60c, /* TEST64i32 */
 /* Table978 */
   0x5be, /* STOSQ */
 /* Table979 */
@@ -25700,16 +27009,16 @@ static const InstrUID modRMTable[] = {
   0x4e5, /* SAL64rCL */
   0x4fe, /* SAR64rCL */
 /* Table1049 */
-  0x60a, /* TEST64mi32 */
-  0x605, /* TEST32mi_alt */
+  0x60d, /* TEST64mi32 */
+  0x60e, /* TEST64mi32_alt */
   0x3d0, /* NOT64m */
   0x3b9, /* NEG64m */
   0x3ad, /* MUL64m */
   0x241, /* IMUL64m */
   0x20c, /* DIV64m */
   0x22d, /* IDIV64m */
-  0x60b, /* TEST64ri32 */
-  0x0, /*  */
+  0x60f, /* TEST64ri32 */
+  0x610, /* TEST64ri32_alt */
   0x3d1, /* NOT64r */
   0x3ba, /* NEG64r */
   0x3ae, /* MUL64r */
@@ -25780,16 +27089,16 @@ static const InstrUID modRMTable[] = {
   0x5c3, /* STRm */
   0x2d4, /* LLDT16m */
   0x32e, /* LTRm */
-  0x629, /* VERRm */
-  0x62b, /* VERWm */
+  0x62f, /* VERRm */
+  0x631, /* VERWm */
   0x0, /*  */
   0x0, /*  */
   0x5af, /* SLDT32r */
   0x5c1, /* STR32r */
   0x2d5, /* LLDT16r */
   0x32f, /* LTRr */
-  0x62a, /* VERRr */
-  0x62c, /* VERWr */
+  0x630, /* VERRr */
+  0x632, /* VERWr */
   0x0, /*  */
   0x0, /*  */
 /* Table1133 */
@@ -25802,10 +27111,10 @@ static const InstrUID modRMTable[] = {
   0x2d6, /* LMSW16m */
   0x269, /* INVLPG */
   0x0, /*  */
-  0x62d, /* VMCALL */
-  0x630, /* VMLAUNCH */
-  0x63a, /* VMRESUME */
-  0x643, /* VMXOFF */
+  0x633, /* VMCALL */
+  0x636, /* VMLAUNCH */
+  0x640, /* VMRESUME */
+  0x649, /* VMXOFF */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -25817,18 +27126,18 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x668, /* XGETBV */
-  0x693, /* XSETBV */
+  0x66e, /* XGETBV */
+  0x699, /* XSETBV */
   0x0, /*  */
   0x0, /*  */
-  0x62f, /* VMFUNC */
+  0x635, /* VMFUNC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x63b, /* VMRUN32 */
-  0x633, /* VMMCALL */
-  0x631, /* VMLOAD32 */
-  0x63d, /* VMSAVE32 */
+  0x641, /* VMRUN32 */
+  0x639, /* VMMCALL */
+  0x637, /* VMLOAD32 */
+  0x643, /* VMSAVE32 */
   0x5ba, /* STGI */
   0x14c, /* CLGI */
   0x5ac, /* SKINIT */
@@ -25880,9 +27189,9 @@ static const InstrUID modRMTable[] = {
 /* Table1212 */
   0x266, /* INVD */
 /* Table1213 */
-  0x646, /* WBINVD */
+  0x64c, /* WBINVD */
 /* Table1214 */
-  0x61b, /* TRAP */
+  0x621, /* TRAP */
 /* Table1215 */
   0x3bf, /* NOOPL_19 */
   0x0, /*  */
@@ -25917,7 +27226,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x34f, /* MOV32dr */
 /* Table1237 */
-  0x64e, /* WRMSR */
+  0x654, /* WRMSR */
 /* Table1238 */
   0x482, /* RDTSC */
 /* Table1239 */
@@ -25979,11 +27288,11 @@ static const InstrUID modRMTable[] = {
   0x170, /* CMOVG32rm */
   0x171, /* CMOVG32rr */
 /* Table1276 */
-  0x636, /* VMREAD32rm */
-  0x637, /* VMREAD32rr */
+  0x63c, /* VMREAD32rm */
+  0x63d, /* VMREAD32rr */
 /* Table1278 */
-  0x63f, /* VMWRITE32rm */
-  0x640, /* VMWRITE32rr */
+  0x645, /* VMWRITE32rm */
+  0x646, /* VMWRITE32rr */
 /* Table1280 */
   0x2a9, /* JO_4 */
 /* Table1281 */
@@ -26096,7 +27405,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x694, /* XSHA1 */
+  0x69a, /* XSHA1 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26104,7 +27413,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x695, /* XSHA256 */
+  0x69b, /* XSHA256 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26161,7 +27470,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x696, /* XSTORE */
+  0x69c, /* XSTORE */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26169,7 +27478,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x666, /* XCRYPTECB */
+  0x66c, /* XCRYPTECB */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26177,7 +27486,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x663, /* XCRYPTCBC */
+  0x669, /* XCRYPTCBC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26185,7 +27494,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x665, /* XCRYPTCTR */
+  0x66b, /* XCRYPTCTR */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26193,7 +27502,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x664, /* XCRYPTCFB */
+  0x66a, /* XCRYPTCFB */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26201,7 +27510,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x667, /* XCRYPTOFB */
+  0x66d, /* XCRYPTOFB */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26245,9 +27554,9 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x68f, /* XSAVE */
-  0x68d, /* XRSTOR */
-  0x691, /* XSAVEOPT */
+  0x695, /* XSAVE */
+  0x693, /* XRSTOR */
+  0x697, /* XSAVEOPT */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26285,7 +27594,7 @@ static const InstrUID modRMTable[] = {
   0x3a1, /* MOVZX32rm16 */
   0x3a3, /* MOVZX32rr16 */
 /* Table1524 */
-  0x626, /* UD2B */
+  0x62c, /* UD2B */
 /* Table1525 */
   0x0, /*  */
   0x0, /*  */
@@ -26319,11 +27628,11 @@ static const InstrUID modRMTable[] = {
   0x393, /* MOVSX32rm16 */
   0x395, /* MOVSX32rr16 */
 /* Table1551 */
-  0x655, /* XADD8rm */
-  0x656, /* XADD8rr */
+  0x65b, /* XADD8rm */
+  0x65c, /* XADD8rr */
 /* Table1553 */
-  0x651, /* XADD32rm */
-  0x652, /* XADD32rr */
+  0x657, /* XADD32rm */
+  0x658, /* XADD32rr */
 /* Table1555 */
   0x0, /*  */
   0x1ee, /* CMPXCHG8B */
@@ -26331,8 +27640,8 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x634, /* VMPTRLDm */
-  0x635, /* VMPTRSTm */
+  0x63a, /* VMPTRLDm */
+  0x63b, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26353,10 +27662,10 @@ static const InstrUID modRMTable[] = {
   0x2d6, /* LMSW16m */
   0x269, /* INVLPG */
   0x0, /*  */
-  0x62d, /* VMCALL */
-  0x630, /* VMLAUNCH */
-  0x63a, /* VMRESUME */
-  0x643, /* VMXOFF */
+  0x633, /* VMCALL */
+  0x636, /* VMLAUNCH */
+  0x640, /* VMRESUME */
+  0x649, /* VMXOFF */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26368,18 +27677,18 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x668, /* XGETBV */
-  0x693, /* XSETBV */
+  0x66e, /* XGETBV */
+  0x699, /* XSETBV */
   0x0, /*  */
   0x0, /*  */
-  0x62f, /* VMFUNC */
+  0x635, /* VMFUNC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x63c, /* VMRUN64 */
-  0x633, /* VMMCALL */
-  0x632, /* VMLOAD64 */
-  0x63e, /* VMSAVE64 */
+  0x642, /* VMRUN64 */
+  0x639, /* VMMCALL */
+  0x638, /* VMLOAD64 */
+  0x644, /* VMSAVE64 */
   0x5ba, /* STGI */
   0x14c, /* CLGI */
   0x5ac, /* SKINIT */
@@ -26429,11 +27738,11 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x366, /* MOV64dr */
 /* Table1652 */
-  0x638, /* VMREAD64rm */
-  0x639, /* VMREAD64rr */
+  0x63e, /* VMREAD64rm */
+  0x63f, /* VMREAD64rr */
 /* Table1654 */
-  0x641, /* VMWRITE64rm */
-  0x642, /* VMWRITE64rr */
+  0x647, /* VMWRITE64rm */
+  0x648, /* VMWRITE64rr */
 /* Table1656 */
   0x43e, /* PUSHFS64 */
 /* Table1657 */
@@ -26449,16 +27758,16 @@ static const InstrUID modRMTable[] = {
   0x5c3, /* STRm */
   0x2d4, /* LLDT16m */
   0x32e, /* LTRm */
-  0x629, /* VERRm */
-  0x62b, /* VERWm */
+  0x62f, /* VERRm */
+  0x631, /* VERWm */
   0x0, /*  */
   0x0, /*  */
   0x5ae, /* SLDT16r */
   0x5c0, /* STR16r */
   0x2d5, /* LLDT16r */
   0x32f, /* LTRr */
-  0x62a, /* VERRr */
-  0x62c, /* VERWr */
+  0x630, /* VERRr */
+  0x632, /* VERWr */
   0x0, /*  */
   0x0, /*  */
 /* Table1677 */
@@ -26471,10 +27780,10 @@ static const InstrUID modRMTable[] = {
   0x2d6, /* LMSW16m */
   0x269, /* INVLPG */
   0x0, /*  */
-  0x62d, /* VMCALL */
-  0x630, /* VMLAUNCH */
-  0x63a, /* VMRESUME */
-  0x643, /* VMXOFF */
+  0x633, /* VMCALL */
+  0x636, /* VMLAUNCH */
+  0x640, /* VMRESUME */
+  0x649, /* VMXOFF */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26486,18 +27795,18 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x668, /* XGETBV */
-  0x693, /* XSETBV */
+  0x66e, /* XGETBV */
+  0x699, /* XSETBV */
   0x0, /*  */
   0x0, /*  */
-  0x62f, /* VMFUNC */
+  0x635, /* VMFUNC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x63b, /* VMRUN32 */
-  0x633, /* VMMCALL */
-  0x631, /* VMLOAD32 */
-  0x63d, /* VMSAVE32 */
+  0x641, /* VMRUN32 */
+  0x639, /* VMMCALL */
+  0x637, /* VMLOAD32 */
+  0x643, /* VMSAVE32 */
   0x5ba, /* STGI */
   0x14c, /* CLGI */
   0x5ac, /* SKINIT */
@@ -26718,8 +28027,8 @@ static const InstrUID modRMTable[] = {
   0x391, /* MOVSX16rm8 */
   0x392, /* MOVSX16rr8 */
 /* Table1869 */
-  0x64f, /* XADD16rm */
-  0x650, /* XADD16rr */
+  0x655, /* XADD16rm */
+  0x656, /* XADD16rr */
 /* Table1871 */
   0x0, /*  */
   0x1ee, /* CMPXCHG8B */
@@ -26727,8 +28036,8 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x62e, /* VMCLEARm */
-  0x635, /* VMPTRSTm */
+  0x634, /* VMCLEARm */
+  0x63b, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26738,8 +28047,8 @@ static const InstrUID modRMTable[] = {
   0x47c, /* RDRAND16r */
   0x47f, /* RDSEED16r */
 /* Table1887 */
-  0x61e, /* TZCNT32rm */
-  0x61f, /* TZCNT32rr */
+  0x624, /* TZCNT32rm */
+  0x625, /* TZCNT32rr */
 /* Table1889 */
   0x336, /* LZCNT32rm */
   0x337, /* LZCNT32rr */
@@ -26750,8 +28059,8 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x644, /* VMXON */
-  0x635, /* VMPTRSTm */
+  0x64a, /* VMXON */
+  0x63b, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26761,8 +28070,8 @@ static const InstrUID modRMTable[] = {
   0x47d, /* RDRAND32r */
   0x480, /* RDSEED32r */
 /* Table1907 */
-  0x61c, /* TZCNT16rm */
-  0x61d, /* TZCNT16rr */
+  0x622, /* TZCNT16rm */
+  0x623, /* TZCNT16rr */
 /* Table1909 */
   0x334, /* LZCNT16rm */
   0x335, /* LZCNT16rr */
@@ -26771,16 +28080,16 @@ static const InstrUID modRMTable[] = {
   0x5c3, /* STRm */
   0x2d4, /* LLDT16m */
   0x32e, /* LTRm */
-  0x629, /* VERRm */
-  0x62b, /* VERWm */
+  0x62f, /* VERRm */
+  0x631, /* VERWm */
   0x0, /*  */
   0x0, /*  */
   0x5b1, /* SLDT64r */
   0x5c2, /* STR64r */
   0x2d5, /* LLDT16r */
   0x32f, /* LTRr */
-  0x62a, /* VERRr */
-  0x62c, /* VERWr */
+  0x630, /* VERRr */
+  0x632, /* VERWr */
   0x0, /*  */
   0x0, /*  */
 /* Table1927 */
@@ -26793,10 +28102,10 @@ static const InstrUID modRMTable[] = {
   0x2d6, /* LMSW16m */
   0x269, /* INVLPG */
   0x0, /*  */
-  0x62d, /* VMCALL */
-  0x630, /* VMLAUNCH */
-  0x63a, /* VMRESUME */
-  0x643, /* VMXOFF */
+  0x633, /* VMCALL */
+  0x636, /* VMLAUNCH */
+  0x640, /* VMRESUME */
+  0x649, /* VMXOFF */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26808,18 +28117,18 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x668, /* XGETBV */
-  0x693, /* XSETBV */
+  0x66e, /* XGETBV */
+  0x699, /* XSETBV */
   0x0, /*  */
   0x0, /*  */
-  0x62f, /* VMFUNC */
+  0x635, /* VMFUNC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x63c, /* VMRUN64 */
-  0x633, /* VMMCALL */
-  0x632, /* VMLOAD64 */
-  0x63e, /* VMSAVE64 */
+  0x642, /* VMRUN64 */
+  0x639, /* VMMCALL */
+  0x638, /* VMLOAD64 */
+  0x644, /* VMSAVE64 */
   0x5ba, /* STGI */
   0x14c, /* CLGI */
   0x5ac, /* SKINIT */
@@ -26937,9 +28246,9 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x690, /* XSAVE64 */
-  0x68e, /* XRSTOR64 */
-  0x692, /* XSAVEOPT64 */
+  0x696, /* XSAVE64 */
+  0x694, /* XRSTOR64 */
+  0x698, /* XSAVEOPT64 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27006,8 +28315,8 @@ static const InstrUID modRMTable[] = {
   0x397, /* MOVSX64rm16 */
   0x39a, /* MOVSX64rr16 */
 /* Table2107 */
-  0x653, /* XADD64rm */
-  0x654, /* XADD64rr */
+  0x659, /* XADD64rm */
+  0x65a, /* XADD64rr */
 /* Table2109 */
   0x0, /*  */
   0x1e7, /* CMPXCHG16B */
@@ -27015,8 +28324,8 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x634, /* VMPTRLDm */
-  0x635, /* VMPTRSTm */
+  0x63a, /* VMPTRLDm */
+  0x63b, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27037,10 +28346,10 @@ static const InstrUID modRMTable[] = {
   0x2d6, /* LMSW16m */
   0x269, /* INVLPG */
   0x0, /*  */
-  0x62d, /* VMCALL */
-  0x630, /* VMLAUNCH */
-  0x63a, /* VMRESUME */
-  0x643, /* VMXOFF */
+  0x633, /* VMCALL */
+  0x636, /* VMLAUNCH */
+  0x640, /* VMRESUME */
+  0x649, /* VMXOFF */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27052,18 +28361,18 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x668, /* XGETBV */
-  0x693, /* XSETBV */
+  0x66e, /* XGETBV */
+  0x699, /* XSETBV */
   0x0, /*  */
   0x0, /*  */
-  0x62f, /* VMFUNC */
+  0x635, /* VMFUNC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x63c, /* VMRUN64 */
-  0x633, /* VMMCALL */
-  0x632, /* VMLOAD64 */
-  0x63e, /* VMSAVE64 */
+  0x642, /* VMRUN64 */
+  0x639, /* VMMCALL */
+  0x638, /* VMLOAD64 */
+  0x644, /* VMSAVE64 */
   0x5ba, /* STGI */
   0x14c, /* CLGI */
   0x5ac, /* SKINIT */
@@ -27105,14 +28414,14 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x68f, /* XSAVE */
-  0x68d, /* XRSTOR */
-  0x691, /* XSAVEOPT */
+  0x695, /* XSAVE */
+  0x693, /* XRSTOR */
+  0x697, /* XSAVEOPT */
   0x0, /*  */
   0x476, /* RDFSBASE */
   0x478, /* RDGSBASE */
-  0x64a, /* WRFSBASE */
-  0x64c, /* WRGSBASE */
+  0x650, /* WRFSBASE */
+  0x652, /* WRGSBASE */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27122,21 +28431,21 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x690, /* XSAVE64 */
-  0x68e, /* XRSTOR64 */
-  0x692, /* XSAVEOPT64 */
+  0x696, /* XSAVE64 */
+  0x694, /* XRSTOR64 */
+  0x698, /* XSAVEOPT64 */
   0x0, /*  */
   0x477, /* RDFSBASE64 */
   0x479, /* RDGSBASE64 */
-  0x64b, /* WRFSBASE64 */
-  0x64d, /* WRGSBASE64 */
+  0x651, /* WRFSBASE64 */
+  0x653, /* WRGSBASE64 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
 /* Table2230 */
-  0x620, /* TZCNT64rm */
-  0x621, /* TZCNT64rr */
+  0x626, /* TZCNT64rm */
+  0x627, /* TZCNT64rr */
 /* Table2232 */
   0x338, /* LZCNT64rm */
   0x339, /* LZCNT64rr */
@@ -27147,8 +28456,8 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x644, /* VMXON */
-  0x635, /* VMPTRSTm */
+  0x64a, /* VMXON */
+  0x63b, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27164,8 +28473,8 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x62e, /* VMCLEARm */
-  0x635, /* VMPTRSTm */
+  0x634, /* VMCLEARm */
+  0x63b, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27321,7 +28630,7 @@ static const InstrUID modRMTable[] = {
   0xd1, /* BLCFILL32rm */
   0xe5, /* BLSFILL32rm */
   0xe1, /* BLCS32rm */
-  0x622, /* TZMSK32rm */
+  0x628, /* TZMSK32rm */
   0xd9, /* BLCIC32rm */
   0xed, /* BLSIC32rm */
   0x5ee, /* T1MSKC32rm */
@@ -27329,7 +28638,7 @@ static const InstrUID modRMTable[] = {
   0xd2, /* BLCFILL32rr */
   0xe6, /* BLSFILL32rr */
   0xe2, /* BLCS32rr */
-  0x623, /* TZMSK32rr */
+  0x629, /* TZMSK32rr */
   0xda, /* BLCIC32rr */
   0xee, /* BLSIC32rr */
   0x5ef, /* T1MSKC32rr */
@@ -27355,7 +28664,7 @@ static const InstrUID modRMTable[] = {
   0xd3, /* BLCFILL64rm */
   0xe7, /* BLSFILL64rm */
   0xe3, /* BLCS64rm */
-  0x624, /* TZMSK64rm */
+  0x62a, /* TZMSK64rm */
   0xdb, /* BLCIC64rm */
   0xef, /* BLSIC64rm */
   0x5f0, /* T1MSKC64rm */
@@ -27363,7 +28672,7 @@ static const InstrUID modRMTable[] = {
   0xd4, /* BLCFILL64rr */
   0xe8, /* BLSFILL64rr */
   0xe4, /* BLCS64rr */
-  0x625, /* TZMSK64rr */
+  0x62b, /* TZMSK64rr */
   0xdc, /* BLCIC64rr */
   0xf0, /* BLSIC64rr */
   0x5f1, /* T1MSKC64rr */
@@ -46672,7 +47981,6 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
 , };
 static const uint8_t index_x86DisassemblerOneByteOpcodes[] = {
 1, 2, 3, 4, 5, 6, 0, 0, 7, 8, 9, 10, 11, 0, 0, 12, 13, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
-
 static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
  /* IC */
  { /* struct OpcodeDecision */
@@ -68522,7 +69830,6 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
 , };
 static const uint8_t index_x86DisassemblerTwoByteOpcodes[] = {
 1, 2, 3, 4, 5, 6, 0, 7, 8, 9, 10, 11, 12, 0, 13, 14, 15, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
-
 static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
  /* IC */
  { /* struct OpcodeDecision */
@@ -98082,7 +99389,6 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
 , };
 static const uint8_t index_x86DisassemblerThreeByte38Opcodes[] = {
 1, 2, 3, 4, 5, 6, 0, 0, 7, 8, 9, 10, 11, 0, 0, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
-
 static const struct OpcodeDecision x86DisassemblerThreeByte3AOpcodes[] = {
  /* IC_VEX_XD */
  { /* struct OpcodeDecision */
@@ -101942,1289 +103248,4 @@ static const struct OpcodeDecision x86DisassemblerThreeByte3AOpcodes[] = {
 , };
 static const uint8_t index_x86DisassemblerThreeByte3AOpcodes[] = {
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
-
-static const struct OpcodeDecision emptyTable = {
-  {
-   /* 0x00 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x01 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x02 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x03 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x04 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x05 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x06 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x07 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x08 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x09 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x0a */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x0b */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x0c */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x0d */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x0e */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x0f */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x10 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x11 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x12 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x13 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x14 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x15 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x16 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x17 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x18 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x19 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x1a */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x1b */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x1c */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x1d */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x1e */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x1f */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x20 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x21 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x22 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x23 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x24 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x25 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x26 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x27 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x28 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x29 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x2a */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x2b */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x2c */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x2d */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x2e */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x2f */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x30 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x31 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x32 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x33 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x34 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x35 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x36 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x37 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x38 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x39 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x3a */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x3b */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x3c */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x3d */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x3e */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x3f */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x40 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x41 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x42 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x43 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x44 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x45 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x46 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x47 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x48 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x49 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x4a */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x4b */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x4c */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x4d */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x4e */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x4f */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x50 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x51 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x52 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x53 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x54 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x55 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x56 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x57 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x58 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x59 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x5a */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x5b */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x5c */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x5d */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x5e */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x5f */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x60 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x61 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x62 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x63 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x64 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x65 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x66 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x67 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x68 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x69 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x6a */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x6b */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x6c */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x6d */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x6e */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x6f */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x70 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x71 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x72 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x73 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x74 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x75 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x76 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x77 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x78 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x79 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x7a */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x7b */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x7c */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x7d */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x7e */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x7f */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x80 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x81 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x82 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x83 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x84 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x85 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x86 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x87 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x88 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x89 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x8a */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x8b */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x8c */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x8d */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x8e */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x8f */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x90 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x91 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x92 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x93 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x94 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x95 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x96 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x97 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x98 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x99 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x9a */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x9b */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x9c */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x9d */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x9e */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0x9f */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xa0 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xa1 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xa2 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xa3 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xa4 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xa5 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xa6 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xa7 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xa8 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xa9 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xaa */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xab */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xac */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xad */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xae */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xaf */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xb0 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xb1 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xb2 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xb3 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xb4 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xb5 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xb6 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xb7 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xb8 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xb9 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xba */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xbb */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xbc */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xbd */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xbe */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xbf */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xc0 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xc1 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xc2 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xc3 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xc4 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xc5 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xc6 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xc7 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xc8 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xc9 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xca */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xcb */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xcc */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xcd */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xce */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xcf */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xd0 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xd1 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xd2 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xd3 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xd4 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xd5 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xd6 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xd7 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xd8 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xd9 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xda */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xdb */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xdc */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xdd */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xde */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xdf */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xe0 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xe1 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xe2 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xe3 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xe4 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xe5 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xe6 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xe7 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xe8 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xe9 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xea */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xeb */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xec */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xed */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xee */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xef */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xf0 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xf1 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xf2 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xf3 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xf4 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xf5 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xf6 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xf7 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xf8 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xf9 */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xfa */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xfb */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xfc */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xfd */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xfe */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   },
-   /* 0xff */
-   { /* ModRMDecision */
-    MODRM_ONEENTRY,
-    0 /* EmptyTable */
-   }
-  }
- };
 
