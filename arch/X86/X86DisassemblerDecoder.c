@@ -1319,7 +1319,7 @@ static int readModRM(struct InternalInstruction* insn)
 	insn->consumedModRM = TRUE;
 	insn->orgModRM = insn->modRM;
 	// handle MOV32cr, MOV32dr, MOV32rc, MOV32rd by pretending they have MRM.mod = 0xC
-	if ((insn->firstByte == 0x0f && insn->mode == MODE_32BIT && insn->opcodeType == TWOBYTE) &&
+	if ((insn->firstByte == 0x0f && insn->opcodeType == TWOBYTE) &&
 			(insn->opcode >= 0x20 && insn->opcode <= 0x23 ))
 		insn->modRM |= 0xC0;
 
