@@ -631,6 +631,10 @@ typedef struct InternalInstruction {
   BOOL                          consumedModRM;
   uint8_t                       modRM;
 
+  // special data to handle MOV32cr, MOV32dr, MOV32rc, MOV32rd
+  uint8_t                       firstByte;     // save the first byte in stream
+  uint8_t                       orgModRM;  // save original modRM because we will modify modRM
+
   /* The SIB byte, used for more complex 32- or 64-bit memory operands */
   BOOL                          consumedSIB;
   uint8_t                       sib;

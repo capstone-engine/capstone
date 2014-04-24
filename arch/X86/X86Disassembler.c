@@ -711,7 +711,7 @@ static void update_pub_insn(cs_insn_flat *pub, InternalInstruction *inter)
 	pub->x86.disp_size = inter->displacementSize;
 	pub->x86.imm_size = inter->immediateSize;
 
-	pub->x86.modrm = inter->modRM;
+	pub->x86.modrm = inter->orgModRM;
 	pub->x86.sib = inter->sib;
 	pub->x86.disp = inter->displacement;
 
