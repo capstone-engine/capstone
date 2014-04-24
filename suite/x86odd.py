@@ -15,8 +15,25 @@ CODE32 += b"\xf7\xc8\x11\x22\x33\x44"  # test eax, 0x44332211
 CODE32 += b"\xf7\x88\x00\x00\x00\x00\x00\x00\x00\x00"  # test dword ptr [eax], 0
 CODE32 += b"\xf6\x88\x00\x00\x00\x00\x00"              # test byte ptr [eax], 0
 
-CODE32 += b"\xd9\xd8"
-CODE32 += b"\xdf\xdf"
+CODE32 += b"\xd9\xd8"       # fstpnce st(0), st(0)
+CODE32 += b"\xdf\xdf"       # fstp    st(7), st(0)
+
+CODE32 += b"\x0f\x20\x00"       # mov eax, cr0
+CODE32 += b"\x0f\x20\x40"       # mov eax, cr0
+CODE32 += b"\x0f\x20\x80"       # mov eax, cr0
+
+CODE32 += b"\x0f\x22\x00"       # mov cr0, eax
+CODE32 += b"\x0f\x22\x40"       # mov cr0, eax
+CODE32 += b"\x0f\x22\x80"       # mov cr0, eax
+
+CODE32 += b"\x0f\x21\x00"       # mov eax, dr0
+CODE32 += b"\x0f\x21\x40"       # mov eax, dr0
+CODE32 += b"\x0f\x21\x80"       # mov eax, dr0
+
+CODE32 += b"\x0f\x23\x00"       # mov dr0, eax
+CODE32 += b"\x0f\x23\x40"       # mov dr0, eax
+CODE32 += b"\x0f\x23\x80"       # mov dr0, eax
+
 
 _python3 = sys.version_info.major == 3
 
