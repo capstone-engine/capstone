@@ -1312,14 +1312,20 @@ static int readModRM(struct InternalInstruction* insn)
 
 	// dbgprintf(insn, "readModRM()");
 
+	// already got ModRM byte?
 	if (insn->consumedModRM)
 		return 0;
 
 	if (consumeByte(insn, &insn->modRM))
 		return -1;
+
+	// mark that we already got ModRM
 	insn->consumedModRM = TRUE;
+
+	// save original ModRM for later reference
 	insn->orgModRM = insn->modRM;
-	// handle MOVcr, MOVdr, MOVrc, MOVrd by pretending they have MRM.mod = 0xC
+
+	// handle MOVcr, MOVdr, MOVrc, MOVrd by pretending they have MRM.mod = 3
 	if ((insn->firstByte == 0x0f && insn->opcodeType == TWOBYTE) &&
 			(insn->opcode >= 0x20 && insn->opcode <= 0x23 ))
 		insn->modRM |= 0xC0;
