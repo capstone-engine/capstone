@@ -28,6 +28,13 @@
 
 #include "X86Mapping.h"
 
+#define GET_INSTRINFO_ENUM
+#ifdef CAPSTONE_X86_REDUCE
+#include "X86GenInstrInfo_reduce.inc"
+#else
+#include "X86GenInstrInfo.inc"
+#endif
+
 static void printMemReference(MCInst *MI, unsigned Op, SStream *O);
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 
@@ -45,13 +52,19 @@ static void printi8mem(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printi16mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat(O, "word ptr ");
+	if (MI->Opcode == X86_BOUNDS16rm)
+		SStream_concat(O, "dword ptr ");
+	else
+		SStream_concat(O, "word ptr ");
 	printMemReference(MI, OpNo, O);
 }
 
 static void printi32mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat(O, "dword ptr ");
+	if (MI->Opcode == X86_BOUNDS32rm)
+		SStream_concat(O, "qword ptr ");
+	else
+		SStream_concat(O, "dword ptr ");
 	printMemReference(MI, OpNo, O);
 }
 
@@ -519,13 +532,6 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	if (MI->csh->detail)
 		MI->flat_insn.x86.op_count++;
 }
-
-#define GET_INSTRINFO_ENUM
-#ifdef CAPSTONE_X86_REDUCE
-#include "X86GenInstrInfo_reduce.inc"
-#else
-#include "X86GenInstrInfo.inc"
-#endif
 
 #define PRINT_ALIAS_INSTR
 #ifdef CAPSTONE_X86_REDUCE
