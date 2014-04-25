@@ -811,7 +811,7 @@ static int readOpcode(struct InternalInstruction* insn)
 	if (consumeByte(insn, &current))
 		return -1;
 
-	// save this first byte for MOV32cr, MOV32dr, MOV32rc, MOV32rd
+	// save this first byte for MOVcr, MOVdr, MOVrc, MOVrd
 	insn->firstByte = current;
 
 	if (current == 0x0f) {
@@ -1319,7 +1319,7 @@ static int readModRM(struct InternalInstruction* insn)
 		return -1;
 	insn->consumedModRM = TRUE;
 	insn->orgModRM = insn->modRM;
-	// handle MOV32cr, MOV32dr, MOV32rc, MOV32rd by pretending they have MRM.mod = 0xC
+	// handle MOVcr, MOVdr, MOVrc, MOVrd by pretending they have MRM.mod = 0xC
 	if ((insn->firstByte == 0x0f && insn->opcodeType == TWOBYTE) &&
 			(insn->opcode >= 0x20 && insn->opcode <= 0x23 ))
 		insn->modRM |= 0xC0;
