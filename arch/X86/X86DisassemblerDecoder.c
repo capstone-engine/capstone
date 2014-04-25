@@ -526,45 +526,50 @@ static int readPrefixes(struct InternalInstruction* insn)
 			return -1;
 		}
 
-		if (lookAtByte(insn, &byte2)) {
-			dbgprintf(insn, "Couldn't read third byte of EVEX prefix");
-			return -1;
-		}
-
 		if ((insn->mode == MODE_64BIT || (byte1 & 0xc0) == 0xc0) &&
-				((~byte1 & 0xc) == 0xc) && ((byte2 & 0x4) == 0x4)) {
-			insn->vectorExtensionType = TYPE_EVEX;
-		}
-		else {
-			unconsumeByte(insn); /* unconsume byte1 */
-			unconsumeByte(insn); /* unconsume byte  */
-			insn->necessaryPrefixLocation = insn->readerCursor - 2;
-		}
-
-		if (insn->vectorExtensionType == TYPE_EVEX) {
-			insn->vectorExtensionPrefix[0] = byte;
-			insn->vectorExtensionPrefix[1] = byte1;
-			if (consumeByte(insn, &insn->vectorExtensionPrefix[2])) {
+				((~byte1 & 0xc) == 0xc)) {
+			if (lookAtByte(insn, &byte2)) {
 				dbgprintf(insn, "Couldn't read third byte of EVEX prefix");
 				return -1;
 			}
-			if (consumeByte(insn, &insn->vectorExtensionPrefix[3])) {
-				dbgprintf(insn, "Couldn't read fourth byte of EVEX prefix");
-				return -1;
+
+			if ((byte2 & 0x4) == 0x4) {
+				insn->vectorExtensionType = TYPE_EVEX;
+			} else {
+				unconsumeByte(insn); /* unconsume byte1 */
+				unconsumeByte(insn); /* unconsume byte  */
+				insn->necessaryPrefixLocation = insn->readerCursor - 2;
 			}
 
-			/* We simulate the REX prefix for simplicity's sake */
-			if (insn->mode == MODE_64BIT) {
-				insn->rexPrefix = 0x40
-					| (wFromEVEX3of4(insn->vectorExtensionPrefix[2]) << 3)
-					| (rFromEVEX2of4(insn->vectorExtensionPrefix[1]) << 2)
-					| (xFromEVEX2of4(insn->vectorExtensionPrefix[1]) << 1)
-					| (bFromEVEX2of4(insn->vectorExtensionPrefix[1]) << 0);
-			}
+			if (insn->vectorExtensionType == TYPE_EVEX) {
+				insn->vectorExtensionPrefix[0] = byte;
+				insn->vectorExtensionPrefix[1] = byte1;
+				if (consumeByte(insn, &insn->vectorExtensionPrefix[2])) {
+					dbgprintf(insn, "Couldn't read third byte of EVEX prefix");
+					return -1;
+				}
+				if (consumeByte(insn, &insn->vectorExtensionPrefix[3])) {
+					dbgprintf(insn, "Couldn't read fourth byte of EVEX prefix");
+					return -1;
+				}
 
-			dbgprintf(insn, "Found EVEX prefix 0x%hhx 0x%hhx 0x%hhx 0x%hhx",
-					insn->vectorExtensionPrefix[0], insn->vectorExtensionPrefix[1],
-					insn->vectorExtensionPrefix[2], insn->vectorExtensionPrefix[3]);
+				/* We simulate the REX prefix for simplicity's sake */
+				if (insn->mode == MODE_64BIT) {
+					insn->rexPrefix = 0x40
+						| (wFromEVEX3of4(insn->vectorExtensionPrefix[2]) << 3)
+						| (rFromEVEX2of4(insn->vectorExtensionPrefix[1]) << 2)
+						| (xFromEVEX2of4(insn->vectorExtensionPrefix[1]) << 1)
+						| (bFromEVEX2of4(insn->vectorExtensionPrefix[1]) << 0);
+				}
+
+				dbgprintf(insn, "Found EVEX prefix 0x%hhx 0x%hhx 0x%hhx 0x%hhx",
+						insn->vectorExtensionPrefix[0], insn->vectorExtensionPrefix[1],
+						insn->vectorExtensionPrefix[2], insn->vectorExtensionPrefix[3]);
+			}
+		} else {
+			// BOUND instruction
+			unconsumeByte(insn); /* unconsume byte1 */
+			unconsumeByte(insn); /* unconsume byte */
 		}
 	} else if (byte == 0xc4) {
 		uint8_t byte1;
@@ -994,7 +999,6 @@ static int getID(struct InternalInstruction* insn)
 				attrMask |= ATTR_VEXL;
 		} else if (insn->vectorExtensionType == TYPE_VEX_2B) {
 			switch (ppFromVEX2of2(insn->vectorExtensionPrefix[1])) {
-
 				case VEX_PREFIX_66:
 					attrMask |= ATTR_OPSIZE;
 					break;
@@ -1008,8 +1012,7 @@ static int getID(struct InternalInstruction* insn)
 
 			if (lFromVEX2of2(insn->vectorExtensionPrefix[1]))
 				attrMask |= ATTR_VEXL;
-		}
-		else if (insn->vectorExtensionType == TYPE_XOP) {
+		} else if (insn->vectorExtensionType == TYPE_XOP) {
 			switch (ppFromXOP3of3(insn->vectorExtensionPrefix[2])) {
 
 				case VEX_PREFIX_66:
@@ -1025,12 +1028,10 @@ static int getID(struct InternalInstruction* insn)
 
 			if (lFromXOP3of3(insn->vectorExtensionPrefix[2]))
 				attrMask |= ATTR_VEXL;
-		}
-		else {
+		} else {
 			return -1;
 		}
-	}
-	else {
+	} else {
 		if (insn->mode != MODE_16BIT && isPrefixAtLocation(insn, 0x66, insn->necessaryPrefixLocation))
 			attrMask |= ATTR_OPSIZE;
 		else if (isPrefixAtLocation(insn, 0x67, insn->necessaryPrefixLocation))
