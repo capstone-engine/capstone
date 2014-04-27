@@ -49,5 +49,7 @@ unsigned int count_positive(unsigned char *list);
 
 char *cs_strdup(const char *str);
 
+#define MIN(x, y) ((x) < (y) ? (x) : (y))
+
 #endif
 

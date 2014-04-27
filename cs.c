@@ -235,8 +235,6 @@ cs_err cs_close(csh *handle)
 	return CS_ERR_OK;
 }
 
-#define MIN(x, y) ((x) < (y) ? (x) : (y))
-
 // fill insn with mnemonic & operands info
 static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mci,
 		PostPrinter_t postprinter, const uint8_t *code)
