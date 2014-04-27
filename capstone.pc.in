@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+archive=${libdir}/libcapstone.a
+
+Name: capstone
+Description: Capstone disassembly engine
+Version: @VERSION@
+Libs: -L${libdir} -lcapstone
+Cflags: -I${includedir}/capstone
