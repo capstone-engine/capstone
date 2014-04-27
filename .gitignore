@@ -1,6 +1,28 @@
-# Object files
+# Autotools
+*~
+/INSTALL
+/Makefile.in
+/aclocal.m4
+/autom4te.cache
+/build-aux
+/config.h.in
+/configure
+/m4/libtool.m4
+/m4/lt*.m4
+
+# Autotools in-tree builds
+*.la
+*.lo
 *.o
-*.ko
+.deps/
+.dirstamp
+.libs/
+/Makefile
+/config.h
+/config.log
+/config.status
+/libtool
+/stamp-h1
 
 # Libraries
 *.lib
