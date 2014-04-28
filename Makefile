@@ -16,14 +16,17 @@ RANLIB = $(CROSS)ranlib
 STRIP = $(CROSS)strip
 endif
 
-CFLAGS += -fPIC -O3 -Wall -Iinclude
+ifneq (,$(findstring yes,$(CAPSTONE_DIET)))
+CFLAGS ?= -Os
+CFLAGS += -DCAPSTONE_DIET
+else
+CFLAGS ?= -O3
+endif
+
+CFLAGS += -fPIC -Wall -Iinclude
 
 ifeq ($(USE_SYS_DYN_MEM),yes)
 CFLAGS += -DUSE_SYS_DYN_MEM
-endif
-
-ifneq (,$(findstring yes,$(CAPSTONE_DIET)))
-CFLAGS += -DCAPSTONE_DIET -Os
 endif
 
 PREFIX ?= /usr
