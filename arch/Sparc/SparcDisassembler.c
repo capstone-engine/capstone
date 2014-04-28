@@ -200,7 +200,7 @@ static DecodeStatus DecodeSWAP(MCInst *Inst, unsigned insn, uint64_t Address,
 #include "SparcGenDisassemblerTables.inc"
 
 /// readInstruction - read four bytes and return 32 bit word.
-static DecodeStatus readInstruction32(unsigned char *code, size_t len, uint32_t *Insn)
+static DecodeStatus readInstruction32(const uint8_t *code, size_t len, uint32_t *Insn)
 {
 	uint8_t Bytes[4];
 
@@ -219,7 +219,7 @@ static DecodeStatus readInstruction32(unsigned char *code, size_t len, uint32_t 
 	return MCDisassembler_Success;
 }
 
-bool Sparc_getInstruction(csh ud, unsigned char *code, size_t code_len, MCInst *MI,
+bool Sparc_getInstruction(csh ud, const uint8_t *code, uint8_t **modcode, size_t code_len, MCInst *MI,
 		uint16_t *size, uint64_t address, void *info)
 {
 	uint32_t Insn;

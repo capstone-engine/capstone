@@ -854,7 +854,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 	return MCDisassembler_Fail;
 }
 
-bool Thumb_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *instr,
+bool Thumb_getInstruction(csh ud, const uint8_t *code, uint8_t **modcode, size_t code_len, MCInst *instr,
 		uint16_t *size, uint64_t address, void *info)
 {
 	DecodeStatus status = _Thumb_getInstruction((cs_struct *)ud, instr, code, code_len, size, address);
@@ -863,7 +863,7 @@ bool Thumb_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *
 	return status != MCDisassembler_Fail;
 }
 
-bool ARM_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *instr,
+bool ARM_getInstruction(csh ud, const uint8_t *code, uint8_t **modcode, size_t code_len, MCInst *instr,
 		uint16_t *size, uint64_t address, void *info)
 {
 	DecodeStatus status = _ARM_getInstruction((cs_struct *)ud, instr, code, code_len, size, address);

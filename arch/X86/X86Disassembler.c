@@ -720,16 +720,104 @@ static void update_pub_insn(cs_insn_flat *pub, InternalInstruction *inter)
 	pub->x86.sib_base = x86_map_sib_base(inter->sibBase);
 }
 
+// classify a byte intn prefix group (or 0 if it is not a prefix)
+static uint8_t prefix_group(uint8_t c)
+{
+	switch (c) {
+		default:
+			return 0;
+		case 0xf0:	// lock
+		case 0xf2:	// repne
+		case 0xf3:	// rep
+			return 1;
+		case 0x2e:	// CS segment override, or branch not taken (Jcc)
+		case 0x36:	// SS segment override
+		case 0x3e:	// DS segment override, or branch taken (Jcc)
+		case 0x26:	// ES segment override
+		case 0x64:	// FS segment override
+		case 0x65:	// GS segment override
+			return 2;
+		case 0x66:	// operand-size override
+			return 3;
+		case 0x67:	// address-size override
+			return 4;
+	}
+}
+
 // Public interface for the disassembler
-bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *_info)
+bool X86_getInstruction(csh ud, const uint8_t *code, uint8_t **modcode, size_t code_len,
+		MCInst *instr, uint16_t *size, uint64_t address, void *_info)
 {
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 	InternalInstruction insn;
 	struct reader_info info;
 	int ret;
 	bool result;
+	size_t i;
+	int count = 0;
+	uint8_t p;
+	uint8_t *buffer;
 
-	info.code = code;
+	// hack: shuffle LOCK/REP/REPNE prefixes to the front.
+	// this is because LLVM make a cut at these prefixes to create a new insn.
+	if (*modcode != NULL)
+		// so we actually work on the modified buffer
+		buffer = *modcode;
+	else
+		buffer = (uint8_t *)code;
+
+	// find the first non-prefix byte
+	for (i = 0; i < code_len; i++) {
+		p = prefix_group(buffer[i]);
+		if (p == 1)
+			count++;
+		else if (p == 0) {
+			// the first ever non-prefix byte
+			// ignore if there is no prefix from Group 1 (LOCK/REP/REPNE)
+			if (i == 0 || count == 0)
+				break;
+			else {
+				// x86 instruction has no more than 16 bytes
+				uint8_t b1, b2;
+				size_t j;
+				uint8_t *prefixes;
+
+				// create @modcode for modifying if we didnt do that before
+				if (*modcode == NULL) {
+					uint8_t *tmpbuf = cs_mem_malloc(code_len);
+					// copy @code to @modcode
+					memcpy(tmpbuf, code, code_len);
+					buffer = tmpbuf;
+					*modcode = tmpbuf;
+				}
+
+				// save all prefix bytes in original code
+				prefixes = cs_mem_malloc(i);
+				memcpy(prefixes, buffer, i);
+
+				b1 = 0;
+				b2 = count;
+				for (j = 0; j < i; j++) {
+					if (prefix_group(prefixes[j]) == 1) {
+						// this is one of LOCK/REP/REPNE, so put it at the front
+						buffer[b1] = prefixes[j];
+						b1++;
+					} else {
+						// put this prefix at the back, after LOCK/REP/REPNE
+						buffer[b2] = prefixes[j];
+						b2++;
+					}
+				}
+
+				cs_mem_free(prefixes);
+
+				// done, break out of this loop
+				break;
+			}
+		}
+	}
+
+	info.code = buffer;
 	info.size = code_len;
 	info.offset = address;
 
@@ -753,6 +841,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *in
 
 	if (ret) {
 		*size = (uint16_t)(insn.readerCursor - address);
+
 		return false;
 	} else {
 		*size = (uint16_t)insn.length;

@@ -419,6 +419,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 	void *tmp;
 	size_t skipdata_bytes;
 	uint64_t offset_org;
+	uint8_t *tmpbuf = NULL, *org_tmpbuf = NULL;
 
 	if (!handle) {
 		// FIXME: how to handle this case:
@@ -433,12 +434,14 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 
 	memset(insn_cache, 0, sizeof(insn_cache));
 
+	// save the original offset for SKIPDATA
 	offset_org = offset;
+
 	while (size > 0) {
 		MCInst_Init(&mci);
 		mci.csh = handle;
 
-		r = handle->disasm(ud, buffer, size, &mci, &insn_size, offset, handle->getinsn_info);
+		r = handle->disasm(ud, buffer, &tmpbuf, size, &mci, &insn_size, offset, handle->getinsn_info);
 		if (r) {
 			SStream ss;
 			SStream_Init(&ss);
@@ -486,6 +489,14 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 			}
 
 			buffer += insn_size;
+			if (tmpbuf != NULL) {
+				// save the original tmpbuf to free it later
+				if (org_tmpbuf == NULL)
+					org_tmpbuf = tmpbuf;
+
+				tmpbuf += insn_size;
+			}
+
 			size -= insn_size;
 			offset += insn_size;
 
@@ -563,6 +574,10 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 			c++;
 		}
 	}
+
+	// free tmpbuf if it was allocated in @disasm
+	if (org_tmpbuf)
+		cs_mem_free(org_tmpbuf);
 
 	if (f) {
 		// resize total to contain newly disasm insns

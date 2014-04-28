@@ -15,7 +15,7 @@ typedef void (*Printer_t)(MCInst *MI, SStream *OS, void *info);
 // this is the best time to gather insn's characteristics
 typedef void (*PostPrinter_t)(csh handle, cs_insn *, char *mnem);
 
-typedef bool (*Disasm_t)(csh handle, const uint8_t *code, size_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *info);
+typedef bool (*Disasm_t)(csh handle, const uint8_t *code, uint8_t **modcode, size_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *info);
 
 typedef const char *(*GetName_t)(csh handle, unsigned int reg);
 
