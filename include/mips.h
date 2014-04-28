@@ -1,8 +1,8 @@
 #ifndef CAPSTONE_MIPS_H
 #define CAPSTONE_MIPS_H
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #ifdef __cplusplus
 extern "C" {

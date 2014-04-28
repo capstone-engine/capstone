@@ -2,7 +2,7 @@
 #define CAPSTONE_SPARC_H
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2014> */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2014 */
 
 #ifdef __cplusplus
 extern "C" {
