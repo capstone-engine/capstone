@@ -3,29 +3,8 @@
 
 ################################################################################
 # Specify which archs you want to compile in. By default, we build all archs.
-# DO NOT touch the line below.
-CAPSTONE_ARCHS =
 
-# Comment out the line below if you don't want to support ARM
-CAPSTONE_ARCHS += arm
-
-# Comment out the line below if you don't want to support ARM64
-CAPSTONE_ARCHS += aarch64
-
-# Comment out the line below if you don't want to support Mips
-CAPSTONE_ARCHS += mips
-
-# Comment out the line below if you don't want to support PowerPC
-CAPSTONE_ARCHS += powerpc
-
-# Comment out the line below if you don't want to support Sparc
-CAPSTONE_ARCHS += sparc
-
-# Comment out the line below if you don't want to support SystemZ
-CAPSTONE_ARCHS += systemz
-
-# Comment out the line below if you don't want to support Intel (16/32/64-bit)
-CAPSTONE_ARCHS += x86
+CAPSTONE_ARCHS ?= arm aarch64 mips powerpc sparc systemz x86
 
 
 ################################################################################
