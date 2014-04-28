@@ -13,8 +13,8 @@
  *
  *===----------------------------------------------------------------------===*/
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #include <stdarg.h>   /* for va_*()       */
 #include <stdlib.h>   /* for exit()       */
@@ -372,6 +372,10 @@ static BOOL isPrefixAtLocation(struct InternalInstruction* insn,
 		uint8_t prefix,
 		uint64_t location)
 {
+	// allow 0x66 & 0x67 to be put anywhere
+	if (prefix == 0x66 || prefix == 0x67)
+		return insn->prefixPresent[prefix] == 1;
+
 	if (insn->prefixPresent[prefix] == 1 &&
 			insn->prefixLocations[prefix] == location)
 		return TRUE;
@@ -685,7 +689,6 @@ static int readPrefixes(struct InternalInstruction* insn)
 
 				insn->rexPrefix = byte;
 				insn->necessaryPrefixLocation = insn->readerCursor - 2;
-
 				// dbgprintf(insn, "Found REX prefix 0x%hhx", byte);
 			} else {
 				unconsumeByte(insn);
@@ -762,8 +765,7 @@ static int readOpcode(struct InternalInstruction* insn)
 				return consumeByte(insn, &insn->opcode);
 		}
 	} else if (insn->vectorExtensionType == TYPE_VEX_3B) {
-					switch (mmmmmFromVEX2of3(insn->vectorExtensionPrefix[1])) {
-
+		switch (mmmmmFromVEX2of3(insn->vectorExtensionPrefix[1])) {
 			default:
 				// dbgprintf(insn, "Unhandled m-mmmm field for instruction (0x%hhx)",
 				//		mmmmmFromVEX2of3(insn->vectorExtensionPrefix[1]));
@@ -946,7 +948,7 @@ static int getID(struct InternalInstruction* insn)
 	uint16_t instructionID;
 	const struct InstructionSpecifier *spec;
 
-	//printf(">>> getID()\n");
+	// printf(">>> getID()\n");
 
 	attrMask = ATTR_NONE;
 
@@ -979,10 +981,8 @@ static int getID(struct InternalInstruction* insn)
 				attrMask |= ATTR_EVEXL;
 			if (l2FromEVEX4of4(insn->vectorExtensionPrefix[3]))
 				attrMask |= ATTR_EVEXL2;
-		}
-		else if (insn->vectorExtensionType == TYPE_VEX_3B) {
+		} else if (insn->vectorExtensionType == TYPE_VEX_3B) {
 			switch (ppFromVEX3of3(insn->vectorExtensionPrefix[2])) {
-
 				case VEX_PREFIX_66:
 					attrMask |= ATTR_OPSIZE;
 					break;
@@ -995,7 +995,6 @@ static int getID(struct InternalInstruction* insn)
 			}
 
 			if (lFromVEX3of3(insn->vectorExtensionPrefix[2]))
-
 				attrMask |= ATTR_VEXL;
 		} else if (insn->vectorExtensionType == TYPE_VEX_2B) {
 			switch (ppFromVEX2of2(insn->vectorExtensionPrefix[1])) {
@@ -1014,7 +1013,6 @@ static int getID(struct InternalInstruction* insn)
 				attrMask |= ATTR_VEXL;
 		} else if (insn->vectorExtensionType == TYPE_XOP) {
 			switch (ppFromXOP3of3(insn->vectorExtensionPrefix[2])) {
-
 				case VEX_PREFIX_66:
 					attrMask |= ATTR_OPSIZE;
 					break;
@@ -1084,8 +1082,7 @@ static int getID(struct InternalInstruction* insn)
 		spec = specifierForUID(instructionID);
 
 		if (getIDWithAttrMask(&instructionIDWithOpsize,
-					insn,
-					attrMask | ATTR_OPSIZE)) {
+					insn, attrMask | ATTR_OPSIZE)) {
 			/*
 			 * ModRM required with OpSize but not present; give up and return version
 			 * without OpSize set
