@@ -4,7 +4,13 @@
 include ../config.mk
 
 INCDIR = ../include
-LIBDIR = ..
+ifndef BUILDDIR
+BUILDDIR = ..
+OBJDIR = .
+else
+OBJDIR = $(BUILDDIR)/obj/tests
+endif
+LIBDIR = $(BUILDDIR)
 
 ifeq ($(CROSS),)
 CC ?= cc
@@ -13,7 +19,8 @@ CC = $(CROSS)gcc
 endif
 
 
-CFLAGS += -fPIC -O3 -Wall -I$(INCDIR) -L$(LIBDIR)
+CFLAGS += -fPIC -O3 -Wall -I$(INCDIR)
+LDFLAGS += -L$(LIBDIR)
 
 LIBNAME = capstone
 
@@ -61,19 +68,21 @@ ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
 SOURCES += test_x86.c
 endif
 
-OBJS = $(SOURCES:.c=.o)
-BINARY = $(SOURCES:.c=$(BIN_EXT))
+OBJS = $(addprefix $(OBJDIR)/,$(SOURCES:.c=.o))
+BINARY = $(addprefix $(BUILDDIR)/tests/,$(SOURCES:.c=$(BIN_EXT)))
 
 all: $(BINARY)
 
 clean:
-	rm -rf $(OBJS) $(SOURCES:.c=) *.exe *.static lib$(LIBNAME).*
+	rm -rf $(OBJS) $(SOURCES:.c=) $(OBJDIR)/*.exe $(OBJDIR)/*.static $(OBJDIR)/lib$(LIBNAME).*
 
 $(BINARY): $(OBJS)
 
-%$(BIN_EXT): %.o
+$(BUILDDIR)/tests/%$(BIN_EXT): %.o
+	@mkdir -p $(@D)
 	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall -l$(LIBNAME) -o $@
-	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall ../lib$(LIBNAME).$(AR_EXT) -o $(subst $(BIN_EXT),,$@).static$(BIN_EXT)
+	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall $(LIBDIR)/lib$(LIBNAME).$(AR_EXT) -o $(subst $(BIN_EXT),,$@).static$(BIN_EXT)
 
-%.o: %.c
+$(OBJDIR)/%.o: %.c
+	@mkdir -p $(@D)
 	${CC} ${CFLAGS} -c $< -o $@
