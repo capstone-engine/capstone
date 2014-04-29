@@ -310,12 +310,15 @@ uninstall:
 	rm -f $(PKGCFGDIR)/$(LIBNAME).pc
 
 clean:
-	rm -f $(LIBOBJ) lib$(LIBNAME).*
+	rm -f $(LIBOBJ)
+	rm -f $(LIBRARY) $(ARCHIVE)
 	rm -f $(PKGCFGF)
+	$(MAKE) -C tests clean
+	rm -f $(BUILDDIR)/tests/lib$(LIBNAME).$(EXT)
+
 	$(MAKE) -C bindings/python clean
 	$(MAKE) -C bindings/java clean
 	$(MAKE) -C bindings/ocaml clean
-	$(MAKE) -C tests clean
 
 
 TAG ?= HEAD

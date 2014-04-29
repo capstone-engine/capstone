@@ -5,12 +5,14 @@ include ../config.mk
 
 INCDIR = ../include
 ifndef BUILDDIR
-BUILDDIR = ..
+TESTDIR = .
 OBJDIR = .
+LIBDIR = ..
 else
-OBJDIR = $(BUILDDIR)/obj/tests
+TESTDIR = ../$(BUILDDIR)/tests
+OBJDIR = ../$(BUILDDIR)/obj
+LIBDIR = ../$(BUILDDIR)
 endif
-LIBDIR = $(BUILDDIR)
 
 ifeq ($(CROSS),)
 CC ?= cc
@@ -69,16 +71,16 @@ SOURCES += test_x86.c
 endif
 
 OBJS = $(addprefix $(OBJDIR)/,$(SOURCES:.c=.o))
-BINARY = $(addprefix $(BUILDDIR)/tests/,$(SOURCES:.c=$(BIN_EXT)))
+BINARY = $(addprefix $(TESTDIR)/,$(SOURCES:.c=$(BIN_EXT)))
 
 all: $(BINARY)
 
 clean:
-	rm -rf $(OBJS) $(SOURCES:.c=) $(OBJDIR)/*.exe $(OBJDIR)/*.static $(OBJDIR)/lib$(LIBNAME).*
+	rm -rf $(OBJS) $(BINARY) $(TESTDIR)/*.exe $(TESTDIR)/*.static $(OBJDIR)/lib$(LIBNAME).*
 
 $(BINARY): $(OBJS)
 
-$(BUILDDIR)/tests/%$(BIN_EXT): %.o
+$(TESTDIR)/%$(BIN_EXT): %.o
 	@mkdir -p $(@D)
 	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall -l$(LIBNAME) -o $@
 	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall $(LIBDIR)/lib$(LIBNAME).$(AR_EXT) -o $(subst $(BIN_EXT),,$@).static$(BIN_EXT)
