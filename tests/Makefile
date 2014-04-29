@@ -9,9 +9,9 @@ TESTDIR = .
 OBJDIR = .
 LIBDIR = ..
 else
-TESTDIR = ../$(BUILDDIR)/tests
-OBJDIR = ../$(BUILDDIR)/obj
-LIBDIR = ../$(BUILDDIR)
+TESTDIR = $(BUILDDIR)/tests
+OBJDIR = $(BUILDDIR)/obj
+LIBDIR = $(BUILDDIR)
 endif
 
 ifeq ($(CROSS),)
