@@ -80,7 +80,7 @@ clean:
 
 $(BINARY): $(OBJS)
 
-$(TESTDIR)/%$(BIN_EXT): %.o
+$(TESTDIR)/%$(BIN_EXT): $(OBJDIR)/%.o
 	@mkdir -p $(@D)
 	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall -l$(LIBNAME) -o $@
 	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall $(LIBDIR)/lib$(LIBNAME).$(AR_EXT) -o $(subst $(BIN_EXT),,$@).static$(BIN_EXT)
