@@ -35,7 +35,7 @@ ifndef BUILDDIR
 BLDIR = .
 OBJDIR = .
 else
-BLDIR = $(BUILDDIR)
+BLDIR = $(abspath $(BUILDDIR))
 OBJDIR = $(BLDIR)/obj
 endif
 INCDIR = $(DESTDIR)$(PREFIX)/include
@@ -254,7 +254,7 @@ PKGCFGF = $(BLDIR)/$(LIBNAME).pc
 .PHONY: all clean install uninstall dist
 
 all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF)
-	$(MAKE) -C tests
+	$(MAKE) -C tests BUILDDIR=$(BLDIR)
 	$(INSTALL_DATA) $(BLDIR)/lib$(LIBNAME).$(EXT) $(BLDIR)/tests/
 
 $(LIBRARY): $(LIBOBJ)
