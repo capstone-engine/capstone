@@ -8,13 +8,29 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 (0) Tailor Capstone to your need.
 
   Out of 7 archtitectures supported by Capstone (Arm, Arm64, Mips, PPC, Sparc,
-  SystemZ & X86), if you just need several selected archs, you can choose which ones you
-  want to compile in by modifying "config.mk" before going to next steps.
+  SystemZ & X86), if you just need several selected archs, choose which ones you
+  want to compile in by editing "config.mk" before going to next steps.
 
   By default, all 7 architectures are compiled.
 
-  Capstone also supports "diet" engine to minimize the binaries for embedding
-  purpose. See docs/README for further instructions.
+  The other way of customize Capstone without having to edit config.mk is to
+  pass the desired options on the commandline to ./make.sh. Currently,
+  Capstone supports 4 options, as followings.
+
+  - CAPSTONE_ARCHS: specify list of architectures to compiled in.
+  - USE_SYS_DYN_MEM: change this if you have your own dynamic memory management.
+  - CAPSTONE_DIET: use this to make the output binaries more compact.
+  - CAPSTONE_X86_REDUCE: another option to make X86 binary smaller.
+
+  To avoid editing config.mk for these customization, can pass their values to
+  make.sh, as followings.
+
+  $ CAPSTONE_ARCH="arm aarch64 x86" CAPSTONE_DIET=yes CAPSTONE_X86_REDUCE=yes ./make.sh
+
+  NOTE: on commandline, put these values in front of ./make.sh, not after it.
+
+  See default values of above options in config.mk
+  For each option, refer to docs/README for more details.
 
 
 
