@@ -25,7 +25,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
   To avoid editing config.mk for these customization, can pass their values to
   make.sh, as followings.
 
-  $ CAPSTONE_ARCH="arm aarch64 x86" CAPSTONE_DIET=yes CAPSTONE_X86_REDUCE=yes ./make.sh
+  $ CAPSTONE_ARCHS="arm aarch64 x86" USE_SYS_DYN_MEM=no CAPSTONE_DIET=yes CAPSTONE_X86_REDUCE=yes ./make.sh
 
   NOTE: on commandline, put these values in front of ./make.sh, not after it.
 
