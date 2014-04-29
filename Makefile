@@ -32,10 +32,11 @@ endif
 PREFIX ?= /usr
 DESTDIR ?=
 ifndef BUILDDIR
-BUILDDIR = .
+BLDIR = .
 OBJDIR = .
 else
-OBJDIR = $(BUILDDIR)/obj
+BLDIR = $(BUILDDIR)
+OBJDIR = $(BLDIR)/obj
 endif
 INCDIR = $(DESTDIR)$(PREFIX)/include
 
@@ -246,15 +247,15 @@ endif
 endif
 endif
 
-LIBRARY = $(BUILDDIR)/lib$(LIBNAME).$(EXT)
-ARCHIVE = $(BUILDDIR)/lib$(LIBNAME).$(AR_EXT)
-PKGCFGF = $(BUILDDIR)/$(LIBNAME).pc
+LIBRARY = $(BLDIR)/lib$(LIBNAME).$(EXT)
+ARCHIVE = $(BLDIR)/lib$(LIBNAME).$(AR_EXT)
+PKGCFGF = $(BLDIR)/$(LIBNAME).pc
 
 .PHONY: all clean install uninstall dist
 
 all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF)
 	$(MAKE) -C tests
-	$(INSTALL_DATA) $(BUILDDIR)/lib$(LIBNAME).$(EXT) $(BUILDDIR)/tests/
+	$(INSTALL_DATA) $(BLDIR)/lib$(LIBNAME).$(EXT) $(BLDIR)/tests/
 
 $(LIBRARY): $(LIBOBJ)
 	$(CC) $(LDFLAGS) $(LIBOBJ) -o $(LIBRARY)
@@ -314,7 +315,11 @@ clean:
 	rm -f $(LIBRARY) $(ARCHIVE)
 	rm -f $(PKGCFGF)
 	$(MAKE) -C tests clean
-	rm -f $(BUILDDIR)/tests/lib$(LIBNAME).$(EXT)
+	rm -f $(BLDIR)/tests/lib$(LIBNAME).$(EXT)
+
+ifdef BUILDDIR
+	rm -rf $(BUILDDIR)
+endif
 
 	$(MAKE) -C bindings/python clean
 	$(MAKE) -C bindings/java clean
