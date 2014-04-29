@@ -10,7 +10,7 @@ OBJDIR = .
 LIBDIR = ..
 else
 TESTDIR = $(BUILDDIR)/tests
-OBJDIR = $(BUILDDIR)/obj
+OBJDIR = $(BUILDDIR)/obj/tests
 LIBDIR = $(BUILDDIR)
 endif
 
