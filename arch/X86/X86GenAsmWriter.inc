@@ -1840,6 +1840,22 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     429361U,	// NEG8m
     19761U,	// NEG8r
     14676U,	// NOOP
+    273024U,	// NOOP18_16m4
+    273024U,	// NOOP18_16m5
+    273024U,	// NOOP18_16m6
+    273024U,	// NOOP18_16m7
+    27264U,	// NOOP18_16r4
+    27264U,	// NOOP18_16r5
+    27264U,	// NOOP18_16r6
+    27264U,	// NOOP18_16r7
+    285030U,	// NOOP18_m4
+    285030U,	// NOOP18_m5
+    285030U,	// NOOP18_m6
+    285030U,	// NOOP18_m7
+    22886U,	// NOOP18_r4
+    22886U,	// NOOP18_r5
+    22886U,	// NOOP18_r6
+    22886U,	// NOOP18_r7
     285030U,	// NOOPL
     285030U,	// NOOPL_19
     285030U,	// NOOPL_1a
@@ -7278,6 +7294,22 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U,	// NEG8m
     0U,	// NEG8r
     0U,	// NOOP
+    0U,	// NOOP18_16m4
+    0U,	// NOOP18_16m5
+    0U,	// NOOP18_16m6
+    0U,	// NOOP18_16m7
+    0U,	// NOOP18_16r4
+    0U,	// NOOP18_16r5
+    0U,	// NOOP18_16r6
+    0U,	// NOOP18_16r7
+    0U,	// NOOP18_m4
+    0U,	// NOOP18_m5
+    0U,	// NOOP18_m6
+    0U,	// NOOP18_m7
+    0U,	// NOOP18_r4
+    0U,	// NOOP18_r5
+    0U,	// NOOP18_r6
+    0U,	// NOOP18_r7
     0U,	// NOOPL
     0U,	// NOOPL_19
     0U,	// NOOPL_1a

@@ -972,6 +972,22 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     49640U,	// NEG8m
     8680U,	// NEG8r
     3816U,	// NOOP
+    17140U,	// NOOP18_16m4
+    17140U,	// NOOP18_16m5
+    17140U,	// NOOP18_16m6
+    17140U,	// NOOP18_16m7
+    8948U,	// NOOP18_16r4
+    8948U,	// NOOP18_16r5
+    8948U,	// NOOP18_16r6
+    8948U,	// NOOP18_16r7
+    33524U,	// NOOP18_m4
+    33524U,	// NOOP18_m5
+    33524U,	// NOOP18_m6
+    33524U,	// NOOP18_m7
+    8948U,	// NOOP18_r4
+    8948U,	// NOOP18_r5
+    8948U,	// NOOP18_r6
+    8948U,	// NOOP18_r7
     33524U,	// NOOPL
     33524U,	// NOOPL_19
     33524U,	// NOOPL_1a
