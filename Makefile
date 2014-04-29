@@ -254,7 +254,11 @@ PKGCFGF = $(BLDIR)/$(LIBNAME).pc
 .PHONY: all clean install uninstall dist
 
 all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF)
+ifndef BUILDDIR
+	$(MAKE) -C tests
+else
 	$(MAKE) -C tests BUILDDIR=$(BLDIR)
+endif
 	$(INSTALL_DATA) $(BLDIR)/lib$(LIBNAME).$(EXT) $(BLDIR)/tests/
 
 $(LIBRARY): $(LIBOBJ)
