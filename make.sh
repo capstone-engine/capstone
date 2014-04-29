@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# Capstone Disassembler Engine
-# By Nguyen Anh Quynh <aquynh@gmail.com>, 2013>
+# Capstone Disassembly Engine
+# By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014
 
 # Note: to cross-compile "nix32" on Linux, package gcc-multilib is required.
 
