@@ -25,7 +25,7 @@ endif
 
 CFLAGS += -fPIC -Wall -Iinclude
 
-ifeq ($(USE_SYS_DYN_MEM),yes)
+ifeq ($(CAPSTONE_USE_SYS_DYN_MEM),yes)
 CFLAGS += -DUSE_SYS_DYN_MEM
 endif
 
@@ -205,9 +205,9 @@ VERSION_EXT = $(API_MAJOR).$(EXT)
 LDFLAGS += -dynamiclib -install_name lib$(LIBNAME).$(VERSION_EXT) -current_version $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA) -compatibility_version $(PKG_MAJOR).$(PKG_MINOR)
 AR_EXT = a
 # Homebrew wants to make sure its formula does not disable FORTIFY_SOURCE
-# However, this is not really necessary because 'USE_SYS_DYN_MEM=yes' by default
+# However, this is not really necessary because 'CAPSTONE_USE_SYS_DYN_MEM=yes' by default
 ifneq ($(HOMEBREW_CAPSTONE),1)
-ifneq ($(USE_SYS_DYN_MEM),yes)
+ifneq ($(CAPSTONE_USE_SYS_DYN_MEM),yes)
 # remove string check because OSX kernel complains about missing symbols
 CFLAGS += -D_FORTIFY_SOURCE=0
 endif

@@ -18,14 +18,14 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
   Capstone supports 4 options, as followings.
 
   - CAPSTONE_ARCHS: specify list of architectures to compiled in.
-  - USE_SYS_DYN_MEM: change this if you have your own dynamic memory management.
+  - CAPSTONE_USE_SYS_DYN_MEM: change this if you have your own dynamic memory management.
   - CAPSTONE_DIET: use this to make the output binaries more compact.
   - CAPSTONE_X86_REDUCE: another option to make X86 binary smaller.
 
   To avoid editing config.mk for these customization, can pass their values to
   make.sh, as followings.
 
-  $ CAPSTONE_ARCHS="arm aarch64 x86" USE_SYS_DYN_MEM=no CAPSTONE_DIET=yes CAPSTONE_X86_REDUCE=yes ./make.sh
+  $ CAPSTONE_ARCHS="arm aarch64 x86" CAPSTONE_USE_SYS_DYN_MEM=no CAPSTONE_DIET=yes CAPSTONE_X86_REDUCE=yes ./make.sh
 
   NOTE: on commandline, put these values in front of ./make.sh, not after it.
 

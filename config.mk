@@ -8,14 +8,14 @@ CAPSTONE_ARCHS ?= arm aarch64 mips powerpc sparc systemz x86
 
 
 ################################################################################
-# Comment out the line below ('USE_SYS_DYN_MEM = yes'), or change it to
-# 'USE_SYS_DYN_MEM = no' if do NOT use malloc/calloc/realloc/free/vsnprintf()
-# provided by system for internal dynamic memory management.
+# Comment out the line below ('CAPSTONE_USE_SYS_DYN_MEM = yes'), or change it to
+# 'CAPSTONE_USE_SYS_DYN_MEM = no' if do NOT use malloc/calloc/realloc/free/
+# vsnprintf() provided by system for internal dynamic memory management.
 #
 # NOTE: in that case, specify your own malloc/calloc/realloc/free/vsnprintf()
 # functions in your program via API cs_option(), using CS_OPT_MEM option type.
 
-USE_SYS_DYN_MEM ?= yes
+CAPSTONE_USE_SYS_DYN_MEM ?= yes
 
 
 ################################################################################
