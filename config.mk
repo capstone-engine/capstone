@@ -15,7 +15,7 @@ CAPSTONE_ARCHS ?= arm aarch64 mips powerpc sparc systemz x86
 # NOTE: in that case, specify your own malloc/calloc/realloc/free/vsnprintf()
 # functions in your program via API cs_option(), using CS_OPT_MEM option type.
 
-USE_SYS_DYN_MEM = yes
+USE_SYS_DYN_MEM ?= yes
 
 
 ################################################################################
@@ -29,7 +29,7 @@ USE_SYS_DYN_MEM = yes
 # @regs_write, @groups, etc in fields in cs_insn structure regardless, but they
 # will not be updated (i.e empty), thus become irrelevant.
 
-CAPSTONE_DIET = no
+CAPSTONE_DIET ?= no
 
 
 ################################################################################
@@ -53,4 +53,4 @@ CAPSTONE_DIET = no
 # By default, Capstone is compiled with 'CAPSTONE_X86_REDUCE = no',
 # thus supports complete X86 instructions.
 
-CAPSTONE_X86_REDUCE = no
+CAPSTONE_X86_REDUCE ?= no
