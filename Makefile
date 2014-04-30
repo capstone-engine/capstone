@@ -31,6 +31,13 @@ endif
 
 PREFIX ?= /usr
 DESTDIR ?=
+ifndef BUILDDIR
+BLDIR = .
+OBJDIR = .
+else
+BLDIR = $(abspath $(BUILDDIR))
+OBJDIR = $(BLDIR)/obj
+endif
 INCDIR = $(DESTDIR)$(PREFIX)/include
 
 UNAME_S := $(shell uname -s)
@@ -70,10 +77,10 @@ DEP_ARM += arch/ARM/ARMGenSubtargetInfo.inc
 LIBOBJ_ARM =
 ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_ARM
-	LIBOBJ_ARM += arch/ARM/ARMDisassembler.o
-	LIBOBJ_ARM += arch/ARM/ARMInstPrinter.o
-	LIBOBJ_ARM += arch/ARM/ARMMapping.o
-	LIBOBJ_ARM += arch/ARM/ARMModule.o
+	LIBOBJ_ARM += $(OBJDIR)/arch/ARM/ARMDisassembler.o
+	LIBOBJ_ARM += $(OBJDIR)/arch/ARM/ARMInstPrinter.o
+	LIBOBJ_ARM += $(OBJDIR)/arch/ARM/ARMMapping.o
+	LIBOBJ_ARM += $(OBJDIR)/arch/ARM/ARMModule.o
 endif
 
 DEP_ARM64 =
@@ -86,11 +93,11 @@ DEP_ARM64 += arch/AArch64/AArch64GenRegisterInfo.inc
 LIBOBJ_ARM64 =
 ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_ARM64
-	LIBOBJ_ARM64 += arch/AArch64/AArch64BaseInfo.o
-	LIBOBJ_ARM64 += arch/AArch64/AArch64Disassembler.o
-	LIBOBJ_ARM64 += arch/AArch64/AArch64InstPrinter.o
-	LIBOBJ_ARM64 += arch/AArch64/AArch64Mapping.o
-	LIBOBJ_ARM64 += arch/AArch64/AArch64Module.o
+	LIBOBJ_ARM64 += $(OBJDIR)/arch/AArch64/AArch64BaseInfo.o
+	LIBOBJ_ARM64 += $(OBJDIR)/arch/AArch64/AArch64Disassembler.o
+	LIBOBJ_ARM64 += $(OBJDIR)/arch/AArch64/AArch64InstPrinter.o
+	LIBOBJ_ARM64 += $(OBJDIR)/arch/AArch64/AArch64Mapping.o
+	LIBOBJ_ARM64 += $(OBJDIR)/arch/AArch64/AArch64Module.o
 endif
 
 
@@ -104,10 +111,10 @@ DEP_MIPS += arch/Mips/MipsGenSubtargetInfo.inc
 LIBOBJ_MIPS =
 ifneq (,$(findstring mips,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_MIPS
-	LIBOBJ_MIPS += arch/Mips/MipsDisassembler.o
-	LIBOBJ_MIPS += arch/Mips/MipsInstPrinter.o
-	LIBOBJ_MIPS += arch/Mips/MipsMapping.o
-	LIBOBJ_MIPS += arch/Mips/MipsModule.o
+	LIBOBJ_MIPS += $(OBJDIR)/arch/Mips/MipsDisassembler.o
+	LIBOBJ_MIPS += $(OBJDIR)/arch/Mips/MipsInstPrinter.o
+	LIBOBJ_MIPS += $(OBJDIR)/arch/Mips/MipsMapping.o
+	LIBOBJ_MIPS += $(OBJDIR)/arch/Mips/MipsModule.o
 endif
 
 
@@ -121,10 +128,10 @@ DEP_PPC += arch/PowerPC/PPCGenRegisterInfo.inc
 LIBOBJ_PPC =
 ifneq (,$(findstring powerpc,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_POWERPC
-	LIBOBJ_PPC += arch/PowerPC/PPCDisassembler.o
-	LIBOBJ_PPC += arch/PowerPC/PPCInstPrinter.o
-	LIBOBJ_PPC += arch/PowerPC/PPCMapping.o
-	LIBOBJ_PPC += arch/PowerPC/PPCModule.o
+	LIBOBJ_PPC += $(OBJDIR)/arch/PowerPC/PPCDisassembler.o
+	LIBOBJ_PPC += $(OBJDIR)/arch/PowerPC/PPCInstPrinter.o
+	LIBOBJ_PPC += $(OBJDIR)/arch/PowerPC/PPCMapping.o
+	LIBOBJ_PPC += $(OBJDIR)/arch/PowerPC/PPCModule.o
 endif
 
 
@@ -138,10 +145,10 @@ DEP_SPARC += arch/Sparc/SparcGenRegisterInfo.inc
 LIBOBJ_SPARC =
 ifneq (,$(findstring sparc,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_SPARC
-	LIBOBJ_SPARC += arch/Sparc/SparcDisassembler.o
-	LIBOBJ_SPARC += arch/Sparc/SparcInstPrinter.o
-	LIBOBJ_SPARC += arch/Sparc/SparcMapping.o
-	LIBOBJ_SPARC += arch/Sparc/SparcModule.o
+	LIBOBJ_SPARC += $(OBJDIR)/arch/Sparc/SparcDisassembler.o
+	LIBOBJ_SPARC += $(OBJDIR)/arch/Sparc/SparcInstPrinter.o
+	LIBOBJ_SPARC += $(OBJDIR)/arch/Sparc/SparcMapping.o
+	LIBOBJ_SPARC += $(OBJDIR)/arch/Sparc/SparcModule.o
 endif
 
 
@@ -155,11 +162,11 @@ DEP_SYSZ += arch/SystemZ/SystemZGenRegisterInfo.inc
 LIBOBJ_SYSZ =
 ifneq (,$(findstring systemz,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_SYSZ
-	LIBOBJ_SYSZ += arch/SystemZ/SystemZDisassembler.o
-	LIBOBJ_SYSZ += arch/SystemZ/SystemZInstPrinter.o
-	LIBOBJ_SYSZ += arch/SystemZ/SystemZMapping.o
-	LIBOBJ_SYSZ += arch/SystemZ/SystemZModule.o
-	LIBOBJ_SYSZ += arch/SystemZ/SystemZMCTargetDesc.o
+	LIBOBJ_SYSZ += $(OBJDIR)/arch/SystemZ/SystemZDisassembler.o
+	LIBOBJ_SYSZ += $(OBJDIR)/arch/SystemZ/SystemZInstPrinter.o
+	LIBOBJ_SYSZ += $(OBJDIR)/arch/SystemZ/SystemZMapping.o
+	LIBOBJ_SYSZ += $(OBJDIR)/arch/SystemZ/SystemZModule.o
+	LIBOBJ_SYSZ += $(OBJDIR)/arch/SystemZ/SystemZMCTargetDesc.o
 endif
 
 
@@ -180,18 +187,18 @@ DEP_X86 += arch/X86/X86GenRegisterInfo.inc
 LIBOBJ_X86 =
 ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_X86
-	LIBOBJ_X86 += arch/X86/X86DisassemblerDecoder.o
-	LIBOBJ_X86 += arch/X86/X86Disassembler.o
-	LIBOBJ_X86 += arch/X86/X86IntelInstPrinter.o
-	LIBOBJ_X86 += arch/X86/X86ATTInstPrinter.o
-	LIBOBJ_X86 += arch/X86/X86Mapping.o
-	LIBOBJ_X86 += arch/X86/X86Module.o
+	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86DisassemblerDecoder.o
+	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86Disassembler.o
+	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86IntelInstPrinter.o
+	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86ATTInstPrinter.o
+	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86Mapping.o
+	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86Module.o
 endif
 
 LIBOBJ =
-LIBOBJ += cs.o utils.o SStream.o MCInstrDesc.o MCRegisterInfo.o
+LIBOBJ += $(OBJDIR)/cs.o $(OBJDIR)/utils.o $(OBJDIR)/SStream.o $(OBJDIR)/MCInstrDesc.o $(OBJDIR)/MCRegisterInfo.o
 LIBOBJ += $(LIBOBJ_ARM) $(LIBOBJ_ARM64) $(LIBOBJ_MIPS) $(LIBOBJ_PPC) $(LIBOBJ_SPARC) $(LIBOBJ_SYSZ) $(LIBOBJ_X86)
-LIBOBJ += MCInst.o
+LIBOBJ += $(OBJDIR)/MCInst.o
 
 
 PKGCFGDIR ?= $(LIBDATADIR)/pkgconfig
@@ -240,15 +247,19 @@ endif
 endif
 endif
 
-LIBRARY = lib$(LIBNAME).$(EXT)
-ARCHIVE = lib$(LIBNAME).$(AR_EXT)
-PKGCFGF = $(LIBNAME).pc
+LIBRARY = $(BLDIR)/lib$(LIBNAME).$(EXT)
+ARCHIVE = $(BLDIR)/lib$(LIBNAME).$(AR_EXT)
+PKGCFGF = $(BLDIR)/$(LIBNAME).pc
 
 .PHONY: all clean install uninstall dist
 
 all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF)
+ifndef BUILDDIR
 	$(MAKE) -C tests
-	$(INSTALL_DATA) lib$(LIBNAME).$(EXT) tests
+else
+	$(MAKE) -C tests BUILDDIR=$(BLDIR)
+endif
+	$(INSTALL_DATA) $(BLDIR)/lib$(LIBNAME).$(EXT) $(BLDIR)/tests/
 
 $(LIBRARY): $(LIBOBJ)
 	$(CC) $(LDFLAGS) $(LIBOBJ) -o $(LIBRARY)
@@ -304,12 +315,19 @@ uninstall:
 	rm -f $(PKGCFGDIR)/$(LIBNAME).pc
 
 clean:
-	rm -f $(LIBOBJ) lib$(LIBNAME).*
+	rm -f $(LIBOBJ)
+	rm -f $(LIBRARY) $(ARCHIVE)
 	rm -f $(PKGCFGF)
+	$(MAKE) -C tests clean
+	rm -f $(BLDIR)/tests/lib$(LIBNAME).$(EXT)
+
+ifdef BUILDDIR
+	rm -rf $(BUILDDIR)
+endif
+
 	$(MAKE) -C bindings/python clean
 	$(MAKE) -C bindings/java clean
 	$(MAKE) -C bindings/ocaml clean
-	$(MAKE) -C tests clean
 
 
 TAG ?= HEAD
@@ -323,5 +341,6 @@ dist:
 	git archive --format=tar.gz --prefix=capstone-$(DIST_VERSION)/ $(TAG) > capstone-$(DIST_VERSION).tgz
 	git archive --format=zip --prefix=capstone-$(DIST_VERSION)/ $(TAG) > capstone-$(DIST_VERSION).zip
 
-.c.o:
+$(OBJDIR)/%.o: %.c
+	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c $< -o $@
