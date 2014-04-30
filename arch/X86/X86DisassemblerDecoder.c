@@ -122,8 +122,7 @@ static int modRMRequired(OpcodeType type,
 
 	index = indextable[insnContext];
 	if (index)
-		return decision[index - 1].modRMDecisions[opcode].
-			modrm_type != MODRM_ONEENTRY;
+		return decision[index - 1].modRMDecisions[opcode].modrm_type != MODRM_ONEENTRY;
 	else
 		return false;
 }
@@ -548,10 +547,12 @@ static int readPrefixes(struct InternalInstruction* insn)
 			if (insn->vectorExtensionType == TYPE_EVEX) {
 				insn->vectorExtensionPrefix[0] = byte;
 				insn->vectorExtensionPrefix[1] = byte1;
+
 				if (consumeByte(insn, &insn->vectorExtensionPrefix[2])) {
 					dbgprintf(insn, "Couldn't read third byte of EVEX prefix");
 					return -1;
 				}
+
 				if (consumeByte(insn, &insn->vectorExtensionPrefix[3])) {
 					dbgprintf(insn, "Couldn't read fourth byte of EVEX prefix");
 					return -1;
@@ -586,8 +587,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 		if (insn->mode == MODE_64BIT || (byte1 & 0xc0) == 0xc0) {
 			insn->vectorExtensionType = TYPE_VEX_3B;
 			insn->necessaryPrefixLocation = insn->readerCursor - 1;
-		}
-		else {
+		} else {
 			unconsumeByte(insn);
 			insn->necessaryPrefixLocation = insn->readerCursor - 1;
 		}
@@ -1506,57 +1506,57 @@ static int readModRM(struct InternalInstruction* insn)
 				break; \
 			default: break; \
 		} \
-		switch (type) {                                       \
+		switch (type) {                                           \
 			default:                                              \
-																  debug("Unhandled register type");                   \
-			*valid = 0;                                         \
-			return 0;                                           \
+				debug("Unhandled register type");                 \
+				*valid = 0;                                           \
+				return 0;                                             \
 			case TYPE_Rv:                                         \
-																  return (uint8_t)(base + index);                     \
+				return (uint8_t)(base + index);                   \
 			case TYPE_R8:                                         \
-																  if (insn->rexPrefix &&                              \
-																		  index >= 4 && index <= 7) {                 \
-																	  return prefix##_SPL + (index - 4);              \
-																  } else {                                            \
-																	  return prefix##_AL + index;                     \
-																  }                                                   \
+				if (insn->rexPrefix &&                            \
+					index >= 4 && index <= 7) { \
+					return prefix##_SPL + (index - 4);        \
+				} else {                                      \
+					return prefix##_AL + index;               \
+				}                                             \
 			case TYPE_R16:                                        \
-																  return prefix##_AX + index;                         \
+				return prefix##_AX + index;                       \
 			case TYPE_R32:                                        \
-																  return prefix##_EAX + index;                        \
+				return prefix##_EAX + index;                      \
 			case TYPE_R64:                                        \
-																  return prefix##_RAX + index;                        \
+				return prefix##_RAX + index;                      \
 			case TYPE_XMM512:                                     \
-																  return prefix##_ZMM0 + index;                       \
+				return prefix##_ZMM0 + index;                     \
 			case TYPE_XMM256:                                     \
-																  return prefix##_YMM0 + index;                       \
+				return prefix##_YMM0 + index;                     \
 			case TYPE_XMM128:                                     \
 			case TYPE_XMM64:                                      \
 			case TYPE_XMM32:                                      \
 			case TYPE_XMM:                                        \
-																  return prefix##_XMM0 + index;                       \
+				return prefix##_XMM0 + index;                     \
 			case TYPE_VK1:                                        \
 			case TYPE_VK8:                                        \
 			case TYPE_VK16:                                       \
-																  return prefix##_K0 + index;                         \
+				return prefix##_K0 + index;                       \
 			case TYPE_MM64:                                       \
 			case TYPE_MM32:                                       \
 			case TYPE_MM:                                         \
-																  if (index > 7)                                      \
-			*valid = 0;                                       \
-			return prefix##_MM0 + index;                        \
+				if (index > 7)                                    \
+					*valid = 0;                                   \
+				return prefix##_MM0 + index;                      \
 			case TYPE_SEGMENTREG:                                 \
-																  if (index > 5)                                      \
-			*valid = 0;                                       \
-			return prefix##_ES + index;                         \
+				if (index > 5)                                    \
+					*valid = 0;                                   \
+				return prefix##_ES + index;                       \
 			case TYPE_DEBUGREG:                                   \
-																  if (index > 7)                                      \
-			*valid = 0;                                       \
-			return prefix##_DR0 + index;                        \
+				if (index > 7)                                    \
+					*valid = 0;                                   \
+				return prefix##_DR0 + index;                      \
 			case TYPE_CONTROLREG:                                 \
-																  if (index > 8)                                      \
-			*valid = 0;                                       \
-			return prefix##_CR0 + index;                        \
+				if (index > 8)                                    \
+					*valid = 0;                                   \
+				return prefix##_CR0 + index;                      \
 		}                                                     \
 	}
 
