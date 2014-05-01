@@ -86,13 +86,21 @@ $(BINARY): $(OBJS)
 $(TESTDIR)/%$(BIN_EXT): $(OBJDIR)/%.o
 	@mkdir -p $(@D)
 ifeq ($(V),0)
+ifeq ($(CAPSTONE_SHARED),yes)
 	$(call log,CCLD,$(notdir $@))
 	@$(link-dynamic)
+endif
+ifeq ($(CAPSTONE_STATIC),yes)
 	$(call log,CCLD,$(notdir $(call staticname,$@)))
 	@$(link-static)
+endif
 else
+ifeq ($(CAPSTONE_SHARED),yes)
 	$(link-dynamic)
+endif
+ifeq ($(CAPSTONE_STATIC),yes)
 	$(link-static)
+endif
 endif
 
 $(OBJDIR)/%.o: %.c

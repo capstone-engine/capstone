@@ -253,8 +253,12 @@ endif
 endif
 endif
 
+ifeq ($(CAPSTONE_SHARED),yes)
 LIBRARY = $(BLDIR)/lib$(LIBNAME).$(EXT)
+endif
+ifeq ($(CAPSTONE_STATIC),yes)
 ARCHIVE = $(BLDIR)/lib$(LIBNAME).$(AR_EXT)
+endif
 PKGCFGF = $(BLDIR)/$(LIBNAME).pc
 
 .PHONY: all clean install uninstall dist
@@ -265,14 +269,18 @@ ifndef BUILDDIR
 else
 	$(MAKE) -C tests BUILDDIR=$(BLDIR)
 endif
+ifeq ($(CAPSTONE_SHARED),yes)
 	$(INSTALL_DATA) $(BLDIR)/lib$(LIBNAME).$(EXT) $(BLDIR)/tests/
+endif
 
+ifeq ($(CAPSTONE_SHARED),yes)
 $(LIBRARY): $(LIBOBJ)
 ifeq ($(V),0)
 	$(call log,CCLD,$(@:$(BLDIR)/%=%))
 	@$(create-library)
 else
 	$(create-library)
+endif
 endif
 
 $(LIBOBJ): config.mk
@@ -285,6 +293,7 @@ $(LIBOBJ_SPARC): $(DEP_SPARC)
 $(LIBOBJ_SYSZ): $(DEP_SYSZ)
 $(LIBOBJ_X86): $(DEP_X86)
 
+ifeq ($(CAPSTONE_STATIC),yes)
 $(ARCHIVE): $(LIBOBJ)
 	@rm -f $(ARCHIVE)
 ifeq ($(V),0)
@@ -292,6 +301,7 @@ ifeq ($(V),0)
 	@$(create-archive)
 else
 	$(create-archive)
+endif
 endif
 
 $(PKGCFGF):
@@ -304,6 +314,7 @@ endif
 
 install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 	mkdir -p $(LIBDIR)
+ifeq ($(CAPSTONE_SHARED),yes)
 	# remove potential broken old libs
 	rm -f $(LIBDIR)/lib$(LIBNAME).*
 	$(INSTALL_LIB) $(BLDIR)/lib$(LIBNAME).$(EXT) $(LIBDIR)
@@ -312,7 +323,10 @@ ifneq ($(VERSION_EXT),)
 	mv lib$(LIBNAME).$(EXT) lib$(LIBNAME).$(VERSION_EXT) && \
 	ln -s lib$(LIBNAME).$(VERSION_EXT) lib$(LIBNAME).$(EXT)
 endif
+endif
+ifeq ($(CAPSTONE_STATIC),yes)
 	$(INSTALL_DATA) $(BLDIR)/lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
+endif
 	mkdir -p $(INCDIR)/$(LIBNAME)
 	$(INSTALL_DATA) include/*.h $(INCDIR)/$(LIBNAME)
 	mkdir -p $(PKGCFGDIR)
