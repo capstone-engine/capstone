@@ -1,6 +1,14 @@
 # Capstone Disassembler Engine
 # By Nguyen Anh Quynh <aquynh@gmail.com>, 2013>
 
+ifndef BUILDDIR
+BLDIR = .
+OBJDIR = .
+else
+BLDIR = $(abspath $(BUILDDIR))/bindings/java
+OBJDIR = $(abspath $(BUILDDIR))/obj/bindings/java
+endif
+
 JNA = /usr/share/java/jna/jna.jar
 
 ifneq ($(wildcard $(JNA)),)
@@ -19,13 +27,20 @@ CAPSTONE_JAVA = Capstone.java Arm_const.java Arm64_const.java Mips_const.java \
 all: gen_const capstone tests
 
 capstone: capstone_class
-	jar cf capstone.jar capstone/*.class
+	@mkdir -p $(BLDIR)
+	cd $(OBJDIR); jar cf $(BLDIR)/capstone.jar capstone/*.class
 
 capstone_class: jna
+ifdef BUILDDIR
+	@mkdir -p $(OBJDIR)
+	cd capstone; javac -d $(OBJDIR) -classpath $(JNA) $(CAPSTONE_JAVA)
+else
 	cd capstone; javac -classpath $(JNA) $(CAPSTONE_JAVA)
+endif
 
 tests: jna
-	javac -classpath "$(JNA):capstone.jar" Test.java TestArm.java TestArm64.java TestMips.java TestX86.java TestPpc.java TestSparc.java
+	@mkdir -p $(OBJDIR)
+	javac -d $(OBJDIR) -classpath "$(JNA):$(BLDIR)/capstone.jar" Test.java TestArm.java TestArm64.java TestMips.java TestX86.java TestPpc.java TestSparc.java
 
 gen_const:
 	cd ../; python const_generator.py java
@@ -34,5 +49,5 @@ jna:
 	@if [ ! $(JNA) ]; then echo "*** Unable to find JNA ***"; exit 1; fi
 
 clean:
-	rm -rf capstone/*.class
-	rm -rf *.class *.log *.jar
+	rm -rf $(OBJDIR)/capstone/*.class
+	rm -rf $(OBJDIR)/*.class $(OBJDIR)/*.log $(BLDIR)/*.jar
