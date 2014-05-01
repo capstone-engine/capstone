@@ -48,10 +48,6 @@ LIBDIRARCH ?= lib
 #LIBDIRARCH ?= lib64
 LIBDIR = $(DESTDIR)$(PREFIX)/$(LIBDIRARCH)
 
-ifneq ($(UNAME_S),Darwin)
-LDFLAGS += -shared
-endif
-
 LIBDATADIR = $(LIBDIR)
 ifeq ($(UNAME_S), FreeBSD)
 LIBDATADIR = $(DESTDIR)$(PREFIX)/libdata
@@ -205,8 +201,8 @@ PKGCFGDIR ?= $(LIBDATADIR)/pkgconfig
 API_MAJOR=$(shell echo `grep -e CS_API_MAJOR include/capstone.h | grep -v = | awk '{print $$3}'` | awk '{print $$1}')
 VERSION_EXT =
 
-# OSX?
-ifeq ($(UNAME_S),Darwin)
+IS_APPLE := $(shell $(CC) -dM -E - < /dev/null | grep __apple_build_version__ | wc -l | tr -d " ")
+ifeq ($(IS_APPLE),1)
 EXT = dylib
 VERSION_EXT = $(API_MAJOR).$(EXT)
 LDFLAGS += -dynamiclib -install_name lib$(LIBNAME).$(VERSION_EXT) -current_version $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA) -compatibility_version $(PKG_MAJOR).$(PKG_MINOR)
@@ -220,6 +216,7 @@ CFLAGS += -D_FORTIFY_SOURCE=0
 endif
 endif
 else
+LDFLAGS += -shared
 # Cygwin?
 IS_CYGWIN := $(shell $(CC) -dumpmachine | grep -i cygwin | wc -l)
 ifeq ($(IS_CYGWIN),1)
