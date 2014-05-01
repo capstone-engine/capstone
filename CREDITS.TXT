@@ -38,3 +38,10 @@ Hugo Fortier
 Joxean Koret
 Bruce Dang
 Andrew Dunham
+
+
+Contributors (in no particular order)
+=====================================
+(Please let us know if you want to have your name here)
+
+Ole André Vadla Ravnås (author of the 100th Pull-Request in our Github repo, thanks!)
