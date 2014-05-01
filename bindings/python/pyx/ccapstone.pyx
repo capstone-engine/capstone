@@ -302,7 +302,7 @@ def debug():
 
     archs = { "arm": capstone.CS_ARCH_ARM, "arm64": capstone.CS_ARCH_ARM64, \
         "mips": capstone.CS_ARCH_MIPS, "ppc": capstone.CS_ARCH_PPC, \
-        "sparc": capstone.CS_ARCH_SPARC, "sysz": capstone.CS_ARCH_SYSZ)
+        "sparc": capstone.CS_ARCH_SPARC, "sysz": capstone.CS_ARCH_SYSZ }
 
     all_archs = ""
     keys = archs.keys()
@@ -311,10 +311,10 @@ def debug():
         if cc.cs_support(archs[k]):
             all_archs += "-%s" %k
 
-    if cs_support(CS_ARCH_X86):
+    if cc.cs_support(capstone.CS_ARCH_X86):
         all_archs += "-x86"
-        if cs_support(CS_SUPPORT_X86_REDUCE):
-            all_archs += "_compact"
+        if cc.cs_support(capstone.CS_SUPPORT_X86_REDUCE):
+            all_archs += "_reduce"
 
     (major, minor, _combined) = capstone.cs_version()
 
