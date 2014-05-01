@@ -3,6 +3,9 @@
 
 include ../config.mk
 
+# Verbose output?
+V ?= 0
+
 INCDIR = ../include
 ifndef BUILDDIR
 TESTDIR = .
@@ -82,9 +85,39 @@ $(BINARY): $(OBJS)
 
 $(TESTDIR)/%$(BIN_EXT): $(OBJDIR)/%.o
 	@mkdir -p $(@D)
-	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall -l$(LIBNAME) -o $@
-	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall $(LIBDIR)/lib$(LIBNAME).$(AR_EXT) -o $(subst $(BIN_EXT),,$@).static$(BIN_EXT)
+ifeq ($(V),0)
+	$(call log,CCLD,$(notdir $@))
+	@$(link-dynamic)
+	$(call log,CCLD,$(notdir $(call staticname,$@)))
+	@$(link-static)
+else
+	$(link-dynamic)
+	$(link-static)
+endif
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(@D)
+ifeq ($(V),0)
+	$(call log,CC,$(@:$(OBJDIR)/%=%))
+	@$(compile)
+else
+	$(compile)
+endif
+
+define compile
 	${CC} ${CFLAGS} -c $< -o $@
+endef
+
+define link-dynamic
+	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall -l$(LIBNAME) -o $@
+endef
+
+define link-static
+	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall $(LIBDIR)/lib$(LIBNAME).$(AR_EXT) -o $(call staticname,$@)
+endef
+
+define log
+	@printf "  %-7s %s\n" "$(1)" "$(2)"
+endef
+
+staticname = $(subst $(BIN_EXT),,$(1)).static$(BIN_EXT)

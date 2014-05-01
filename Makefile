@@ -4,6 +4,15 @@
 include config.mk
 include pkgconfig.mk	# package version
 
+# Verbose output?
+V ?= 0
+
+ifeq ($(PKG_EXTRA),)
+PKG_VERSION = $(PKG_MAJOR).$(PKG_MINOR)
+else
+PKG_VERSION = $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA)
+endif
+
 ifeq ($(CROSS),)
 CC ?= cc
 AR ?= ar
@@ -259,7 +268,12 @@ endif
 	$(INSTALL_DATA) $(BLDIR)/lib$(LIBNAME).$(EXT) $(BLDIR)/tests/
 
 $(LIBRARY): $(LIBOBJ)
-	$(CC) $(LDFLAGS) $(LIBOBJ) -o $(LIBRARY)
+ifeq ($(V),0)
+	$(call log,CCLD,$(@:$(BLDIR)/%=%))
+	@$(create-library)
+else
+	$(create-library)
+endif
 
 $(LIBOBJ): config.mk
 
@@ -272,23 +286,21 @@ $(LIBOBJ_SYSZ): $(DEP_SYSZ)
 $(LIBOBJ_X86): $(DEP_X86)
 
 $(ARCHIVE): $(LIBOBJ)
-	rm -f $(ARCHIVE)
-	$(AR) q $(ARCHIVE) $(LIBOBJ)
-	$(RANLIB) $(ARCHIVE)
+	@rm -f $(ARCHIVE)
+ifeq ($(V),0)
+	$(call log,AR,$(@:$(BLDIR)/%=%))
+	@$(create-archive)
+else
+	$(create-archive)
+endif
 
 $(PKGCFGF):
-	echo 'Name: capstone' > $(PKGCFGF)
-	echo 'Description: Capstone disassembly engine' >> $(PKGCFGF)
-ifeq ($(PKG_EXTRA),)
-	echo 'Version: $(PKG_MAJOR).$(PKG_MINOR)' >> $(PKGCFGF)
+ifeq ($(V),0)
+	$(call log,GEN,$(@:$(BLDIR)/%=%))
+	@$(generate-pkgcfg)
 else
-	echo 'Version: $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA)' >> $(PKGCFGF)
+	$(generate-pkgcfg)
 endif
-	echo 'libdir=$(LIBDIR)' >> $(PKGCFGF)
-	echo 'includedir=$(PREFIX)/include/capstone' >> $(PKGCFGF)
-	echo 'archive=$${libdir}/libcapstone.a' >> $(PKGCFGF)
-	echo 'Libs: -L$${libdir} -lcapstone' >> $(PKGCFGF)
-	echo 'Cflags: -I$${includedir}' >> $(PKGCFGF)
 
 install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 	mkdir -p $(LIBDIR)
@@ -340,4 +352,37 @@ dist:
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(@D)
+ifeq ($(V),0)
+	$(call log,CC,$(@:$(OBJDIR)/%=%))
+	@$(compile)
+else
+	$(compile)
+endif
+
+define compile
 	$(CC) $(CFLAGS) -c $< -o $@
+endef
+
+define create-archive
+	$(AR) q $(ARCHIVE) $(LIBOBJ)
+	$(RANLIB) $(ARCHIVE)
+endef
+
+define create-library
+	$(CC) $(LDFLAGS) $(LIBOBJ) -o $(LIBRARY)
+endef
+
+define generate-pkgcfg
+	echo 'Name: capstone' > $(PKGCFGF)
+	echo 'Description: Capstone disassembly engine' >> $(PKGCFGF)
+	echo 'Version: $(PKG_VERSION)' >> $(PKGCFGF)
+	echo 'libdir=$(LIBDIR)' >> $(PKGCFGF)
+	echo 'includedir=$(PREFIX)/include/capstone' >> $(PKGCFGF)
+	echo 'archive=$${libdir}/libcapstone.a' >> $(PKGCFGF)
+	echo 'Libs: -L$${libdir} -lcapstone' >> $(PKGCFGF)
+	echo 'Cflags: -I$${includedir}' >> $(PKGCFGF)
+endef
+
+define log
+	@printf "  %-7s %s\n" "$(1)" "$(2)"
+endef
