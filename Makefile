@@ -297,13 +297,13 @@ install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 	mkdir -p $(LIBDIR)
 	# remove potential broken old libs
 	rm -f $(LIBDIR)/lib$(LIBNAME).*
-	$(INSTALL_LIB) lib$(LIBNAME).$(EXT) $(LIBDIR)
+	$(INSTALL_LIB) $(BLDIR)/lib$(LIBNAME).$(EXT) $(LIBDIR)
 ifneq ($(VERSION_EXT),)
 	cd $(LIBDIR) && \
 	mv lib$(LIBNAME).$(EXT) lib$(LIBNAME).$(VERSION_EXT) && \
 	ln -s lib$(LIBNAME).$(VERSION_EXT) lib$(LIBNAME).$(EXT)
 endif
-	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
+	$(INSTALL_DATA) $(BLDIR)/lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
 	mkdir -p $(INCDIR)/$(LIBNAME)
 	$(INSTALL_DATA) include/*.h $(INCDIR)/$(LIBNAME)
 	mkdir -p $(PKGCFGDIR)
