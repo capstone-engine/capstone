@@ -3,6 +3,7 @@
 
 include config.mk
 include pkgconfig.mk	# package version
+include functions.mk
 
 # Verbose output?
 V ?= 0
@@ -373,18 +374,17 @@ else
 	$(compile)
 endif
 
-define compile
-	$(CC) $(CFLAGS) -c $< -o $@
-endef
 
 define create-archive
 	$(AR) q $(ARCHIVE) $(LIBOBJ)
 	$(RANLIB) $(ARCHIVE)
 endef
 
+
 define create-library
 	$(CC) $(LDFLAGS) $(LIBOBJ) -o $(LIBRARY)
 endef
+
 
 define generate-pkgcfg
 	echo 'Name: capstone' > $(PKGCFGF)
@@ -397,6 +397,3 @@ define generate-pkgcfg
 	echo 'Cflags: -I$${includedir}' >> $(PKGCFGF)
 endef
 
-define log
-	@printf "  %-7s %s\n" "$(1)" "$(2)"
-endef

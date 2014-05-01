@@ -2,6 +2,7 @@
 # By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014
 
 include ../config.mk
+include ../functions.mk
 
 # Verbose output?
 V ?= 0
@@ -112,20 +113,15 @@ else
 	$(compile)
 endif
 
-define compile
-	${CC} ${CFLAGS} -c $< -o $@
-endef
 
 define link-dynamic
 	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall -l$(LIBNAME) -o $@
 endef
 
+
 define link-static
 	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall $(LIBDIR)/lib$(LIBNAME).$(AR_EXT) -o $(call staticname,$@)
 endef
 
-define log
-	@printf "  %-7s %s\n" "$(1)" "$(2)"
-endef
 
 staticname = $(subst $(BIN_EXT),,$(1)).static$(BIN_EXT)
