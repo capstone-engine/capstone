@@ -4,6 +4,15 @@
 include config.mk
 include pkgconfig.mk	# package version
 
+# Verbose output?
+V ?= 0
+
+ifeq ($(PKG_EXTRA),)
+PKG_VERSION = $(PKG_MAJOR).$(PKG_MINOR)
+else
+PKG_VERSION = $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA)
+endif
+
 ifeq ($(CROSS),)
 CC ?= cc
 AR ?= ar
@@ -47,10 +56,6 @@ LIBDIRARCH ?= lib
 # Or better, pass 'LIBDIRARCH=lib64' to 'make install/uninstall' via 'make.sh'.
 #LIBDIRARCH ?= lib64
 LIBDIR = $(DESTDIR)$(PREFIX)/$(LIBDIRARCH)
-
-ifneq ($(UNAME_S),Darwin)
-LDFLAGS += -shared
-endif
 
 LIBDATADIR = $(LIBDIR)
 ifeq ($(UNAME_S), FreeBSD)
@@ -205,8 +210,8 @@ PKGCFGDIR ?= $(LIBDATADIR)/pkgconfig
 API_MAJOR=$(shell echo `grep -e CS_API_MAJOR include/capstone.h | grep -v = | awk '{print $$3}'` | awk '{print $$1}')
 VERSION_EXT =
 
-# OSX?
-ifeq ($(UNAME_S),Darwin)
+IS_APPLE := $(shell $(CC) -dM -E - < /dev/null | grep __apple_build_version__ | wc -l | tr -d " ")
+ifeq ($(IS_APPLE),1)
 EXT = dylib
 VERSION_EXT = $(API_MAJOR).$(EXT)
 LDFLAGS += -dynamiclib -install_name lib$(LIBNAME).$(VERSION_EXT) -current_version $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA) -compatibility_version $(PKG_MAJOR).$(PKG_MINOR)
@@ -220,6 +225,7 @@ CFLAGS += -D_FORTIFY_SOURCE=0
 endif
 endif
 else
+LDFLAGS += -shared
 # Cygwin?
 IS_CYGWIN := $(shell $(CC) -dumpmachine | grep -i cygwin | wc -l)
 ifeq ($(IS_CYGWIN),1)
@@ -247,8 +253,12 @@ endif
 endif
 endif
 
+ifeq ($(CAPSTONE_SHARED),yes)
 LIBRARY = $(BLDIR)/lib$(LIBNAME).$(EXT)
+endif
+ifeq ($(CAPSTONE_STATIC),yes)
 ARCHIVE = $(BLDIR)/lib$(LIBNAME).$(AR_EXT)
+endif
 PKGCFGF = $(BLDIR)/$(LIBNAME).pc
 
 .PHONY: all clean install uninstall dist
@@ -259,10 +269,19 @@ ifndef BUILDDIR
 else
 	$(MAKE) -C tests BUILDDIR=$(BLDIR)
 endif
+ifeq ($(CAPSTONE_SHARED),yes)
 	$(INSTALL_DATA) $(BLDIR)/lib$(LIBNAME).$(EXT) $(BLDIR)/tests/
+endif
 
+ifeq ($(CAPSTONE_SHARED),yes)
 $(LIBRARY): $(LIBOBJ)
-	$(CC) $(LDFLAGS) $(LIBOBJ) -o $(LIBRARY)
+ifeq ($(V),0)
+	$(call log,CCLD,$(@:$(BLDIR)/%=%))
+	@$(create-library)
+else
+	$(create-library)
+endif
+endif
 
 $(LIBOBJ): config.mk
 
@@ -274,36 +293,40 @@ $(LIBOBJ_SPARC): $(DEP_SPARC)
 $(LIBOBJ_SYSZ): $(DEP_SYSZ)
 $(LIBOBJ_X86): $(DEP_X86)
 
+ifeq ($(CAPSTONE_STATIC),yes)
 $(ARCHIVE): $(LIBOBJ)
-	rm -f $(ARCHIVE)
-	$(AR) q $(ARCHIVE) $(LIBOBJ)
-	$(RANLIB) $(ARCHIVE)
+	@rm -f $(ARCHIVE)
+ifeq ($(V),0)
+	$(call log,AR,$(@:$(BLDIR)/%=%))
+	@$(create-archive)
+else
+	$(create-archive)
+endif
+endif
 
 $(PKGCFGF):
-	echo 'Name: capstone' > $(PKGCFGF)
-	echo 'Description: Capstone disassembly engine' >> $(PKGCFGF)
-ifeq ($(PKG_EXTRA),)
-	echo 'Version: $(PKG_MAJOR).$(PKG_MINOR)' >> $(PKGCFGF)
+ifeq ($(V),0)
+	$(call log,GEN,$(@:$(BLDIR)/%=%))
+	@$(generate-pkgcfg)
 else
-	echo 'Version: $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA)' >> $(PKGCFGF)
+	$(generate-pkgcfg)
 endif
-	echo 'libdir=$(LIBDIR)' >> $(PKGCFGF)
-	echo 'includedir=$(PREFIX)/include/capstone' >> $(PKGCFGF)
-	echo 'archive=$${libdir}/libcapstone.a' >> $(PKGCFGF)
-	echo 'Libs: -L$${libdir} -lcapstone' >> $(PKGCFGF)
-	echo 'Cflags: -I$${includedir}' >> $(PKGCFGF)
 
 install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 	mkdir -p $(LIBDIR)
+ifeq ($(CAPSTONE_SHARED),yes)
 	# remove potential broken old libs
 	rm -f $(LIBDIR)/lib$(LIBNAME).*
-	$(INSTALL_LIB) lib$(LIBNAME).$(EXT) $(LIBDIR)
+	$(INSTALL_LIB) $(BLDIR)/lib$(LIBNAME).$(EXT) $(LIBDIR)
 ifneq ($(VERSION_EXT),)
 	cd $(LIBDIR) && \
 	mv lib$(LIBNAME).$(EXT) lib$(LIBNAME).$(VERSION_EXT) && \
 	ln -s lib$(LIBNAME).$(VERSION_EXT) lib$(LIBNAME).$(EXT)
 endif
-	$(INSTALL_DATA) lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
+endif
+ifeq ($(CAPSTONE_STATIC),yes)
+	$(INSTALL_DATA) $(BLDIR)/lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
+endif
 	mkdir -p $(INCDIR)/$(LIBNAME)
 	$(INSTALL_DATA) include/*.h $(INCDIR)/$(LIBNAME)
 	mkdir -p $(PKGCFGDIR)
@@ -343,4 +366,37 @@ dist:
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(@D)
+ifeq ($(V),0)
+	$(call log,CC,$(@:$(OBJDIR)/%=%))
+	@$(compile)
+else
+	$(compile)
+endif
+
+define compile
 	$(CC) $(CFLAGS) -c $< -o $@
+endef
+
+define create-archive
+	$(AR) q $(ARCHIVE) $(LIBOBJ)
+	$(RANLIB) $(ARCHIVE)
+endef
+
+define create-library
+	$(CC) $(LDFLAGS) $(LIBOBJ) -o $(LIBRARY)
+endef
+
+define generate-pkgcfg
+	echo 'Name: capstone' > $(PKGCFGF)
+	echo 'Description: Capstone disassembly engine' >> $(PKGCFGF)
+	echo 'Version: $(PKG_VERSION)' >> $(PKGCFGF)
+	echo 'libdir=$(LIBDIR)' >> $(PKGCFGF)
+	echo 'includedir=$(PREFIX)/include/capstone' >> $(PKGCFGF)
+	echo 'archive=$${libdir}/libcapstone.a' >> $(PKGCFGF)
+	echo 'Libs: -L$${libdir} -lcapstone' >> $(PKGCFGF)
+	echo 'Cflags: -I$${includedir}' >> $(PKGCFGF)
+endef
+
+define log
+	@printf "  %-7s %s\n" "$(1)" "$(2)"
+endef

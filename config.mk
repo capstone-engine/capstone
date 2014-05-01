@@ -54,3 +54,17 @@ CAPSTONE_DIET ?= no
 # thus supports complete X86 instructions.
 
 CAPSTONE_X86_REDUCE ?= no
+
+
+################################################################################
+# Change 'CAPSTONE_STATIC = yes' to 'CAPSTONE_STATIC = no' to avoid building
+# a static library.
+
+CAPSTONE_STATIC ?= yes
+
+
+################################################################################
+# Change 'CAPSTONE_SHARED = yes' to 'CAPSTONE_SHARED = no' to avoid building
+# a shared library.
+
+CAPSTONE_SHARED ?= yes
