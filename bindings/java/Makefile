@@ -51,3 +51,7 @@ jna:
 clean:
 	rm -rf $(OBJDIR)/capstone/*.class
 	rm -rf $(OBJDIR)/*.class $(OBJDIR)/*.log $(BLDIR)/*.jar
+ifdef BUILDDIR
+	rm -rf $(BLDIR)
+	rm -rf $(OBJDIR)
+endif
