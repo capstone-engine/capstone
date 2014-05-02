@@ -165,7 +165,7 @@ static DecodeStatus DecodeLDSTPairInstruction(MCInst *Inst,
 		void *Decoder);
 
 static DecodeStatus DecodeLoadPairExclusiveInstruction(MCInst *Inst,
-		unsigned Val,
+		uint32_t Val,
 		uint64_t Address,
 		void *Decoder);
 

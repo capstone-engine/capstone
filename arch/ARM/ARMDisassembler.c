@@ -349,11 +349,11 @@ static DecodeStatus DecodeT2LDRDPreInstruction(MCInst *Inst,unsigned Insn,
 		uint64_t Address, const void *Decoder);
 static DecodeStatus DecodeT2STRDPreInstruction(MCInst *Inst,unsigned Insn,
 		uint64_t Address, const void *Decoder);
-static DecodeStatus DecodeT2Adr(MCInst *Inst, unsigned Val,
+static DecodeStatus DecodeT2Adr(MCInst *Inst, uint32_t Val,
 		uint64_t Address, const void *Decoder);
 static DecodeStatus DecodeT2LdStPre(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder);
-static DecodeStatus DecodeT2ShifterImmOperand(MCInst *Inst, unsigned Val,
+static DecodeStatus DecodeT2ShifterImmOperand(MCInst *Inst, uint32_t Val,
 		uint64_t Address, const void *Decoder);
 
 static DecodeStatus DecodeLDR(MCInst *Inst, unsigned Val,
