@@ -117,6 +117,9 @@ static int modRMRequired(OpcodeType type,
 			decision = XOPA_MAP_SYM;
 			indextable = index_x86DisassemblerXOPAOpcodes;
 			break;
+		case T3DNOW_MAP:
+			// 3DNow instructions always have ModRM byte
+			return true;
 #endif
 	}
 
@@ -202,6 +205,14 @@ static InstrUID decode(OpcodeType type,
 			index = indextable[insnContext];
 			if (index)
 				dec = &XOPA_MAP_SYM[index - 1].modRMDecisions[opcode];
+			else
+				dec = &emptyTable.modRMDecisions[opcode];
+			break;
+		case T3DNOW_MAP:
+			indextable = index_x86DisassemblerT3DNOWOpcodes;
+			index = indextable[insnContext];
+			if (index)
+				dec = &T3DNOW_MAP_SYM[index - 1].modRMDecisions[opcode];
 			else
 				dec = &emptyTable.modRMDecisions[opcode];
 			break;
@@ -732,6 +743,8 @@ static int readPrefixes(struct InternalInstruction* insn)
 	return 0;
 }
 
+static int readModRM(struct InternalInstruction* insn);
+
 /*
  * readOpcode - Reads the opcode (excepting the ModR/M byte in the case of
  *   extended or escape opcodes).
@@ -842,6 +855,14 @@ static int readOpcode(struct InternalInstruction* insn)
 				return -1;
 
 			insn->opcodeType = THREEBYTE_3A;
+		} else if (current == 0x0f) {
+			// 3DNow instruction has weird format: ModRM/SIB/displacement + opcode
+			if (readModRM(insn))
+				return -1;
+			// next is 3DNow opcode
+			if (consumeByte(insn, &current))
+				return -1;
+			insn->opcodeType = T3DNOW_MAP;
 		} else {
 			// dbgprintf(insn, "Didn't find a three-byte escape prefix");
 
@@ -858,8 +879,6 @@ static int readOpcode(struct InternalInstruction* insn)
 
 	return 0;
 }
-
-static int readModRM(struct InternalInstruction* insn);
 
 /*
  * getIDWithAttrMask - Determines the ID of an instruction, consuming
@@ -881,7 +900,10 @@ static int getIDWithAttrMask(uint16_t* instructionID,
 
 	uint16_t instructionClass;
 
-	instructionClass = contextForAttrs(attrMask);
+	if (insn->opcodeType == T3DNOW_MAP)
+		instructionClass = IC_OF;
+	else
+		instructionClass = contextForAttrs(attrMask);
 
 	hasModRMExtension = modRMRequired(insn->opcodeType,
 			instructionClass,

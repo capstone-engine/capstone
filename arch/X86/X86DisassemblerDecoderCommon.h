@@ -36,6 +36,8 @@
 #define XOP8_MAP_SYM      x86DisassemblerXOP8Opcodes
 #define XOP9_MAP_SYM      x86DisassemblerXOP9Opcodes
 #define XOPA_MAP_SYM      x86DisassemblerXOPAOpcodes
+#define T3DNOW_MAP_SYM    x86DisassemblerT3DNOWOpcodes
+
 
 /*
  * Attributes of an instruction that must be known before the opcode can be
@@ -81,6 +83,7 @@ ENUM_ENTRY(IC_OPSIZE,             3,  "requires an OPSIZE prefix, so "       \
 		"operands change width")               \
 ENUM_ENTRY(IC_ADSIZE,             3,  "requires an ADSIZE prefix, so "       \
 		"operands change width")               \
+ENUM_ENTRY(IC_OF,                 2,  "requires 0x0F prefix")                 \
 ENUM_ENTRY(IC_XD,                 2,  "may say something about the opcode "  \
 		"but not the operands")                \
 ENUM_ENTRY(IC_XS,                 2,  "may say something about the opcode "  \
@@ -284,7 +287,8 @@ typedef enum {
 	THREEBYTE_3A  = 3,
 	XOP8_MAP      = 4,
 	XOP9_MAP      = 5,
-	XOPA_MAP      = 6
+	XOPA_MAP      = 6,
+	T3DNOW_MAP    = 7
 } OpcodeType;
 
 /*
