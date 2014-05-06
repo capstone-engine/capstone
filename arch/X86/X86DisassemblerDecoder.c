@@ -855,18 +855,20 @@ static int readOpcode(struct InternalInstruction* insn)
 				return -1;
 
 			insn->opcodeType = THREEBYTE_3A;
-		} else if (current == 0x0f) {
-			// 3DNow instruction has weird format: ModRM/SIB/displacement + opcode
-			if (readModRM(insn))
-				return -1;
-			// next is 3DNow opcode
-			if (consumeByte(insn, &current))
-				return -1;
-			insn->opcodeType = T3DNOW_MAP;
 		} else {
-			// dbgprintf(insn, "Didn't find a three-byte escape prefix");
-
-			insn->opcodeType = TWOBYTE;
+#ifndef CAPSTONE_X86_REDUCE
+			if (current == 0x0f) {
+				// 3DNow instruction has weird format: ModRM/SIB/displacement + opcode
+				if (readModRM(insn))
+					return -1;
+				// next is 3DNow opcode
+				if (consumeByte(insn, &current))
+					return -1;
+				insn->opcodeType = T3DNOW_MAP;
+			} else
+#endif
+				// dbgprintf(insn, "Didn't find a three-byte escape prefix");
+				insn->opcodeType = TWOBYTE;
 		}
 	}
 
