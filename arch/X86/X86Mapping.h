@@ -39,10 +39,8 @@ x86_reg X86_insn_reg(unsigned int id);
 
 extern uint64_t arch_masks[9];
 
-#ifndef CAPSTONE_DIET
 // handle LOCK/REP/REPNE prefixes
 // return True if we patch mnemonic, like in MULPD case
 bool X86_lockrep(MCInst *MI, SStream *O);
-#endif
 
 #endif

@@ -41706,7 +41706,6 @@ x86_reg X86_insn_reg(unsigned int id)
 	return 0;
 }
 
-#ifndef CAPSTONE_DIET
 // return true if we patch the mnemonic
 bool X86_lockrep(MCInst *MI, SStream *O)
 {
@@ -41718,27 +41717,39 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 				default:
 					break;
 				case 0xf0:
+#ifndef CAPSTONE_DIET
 					SStream_concat(O, "lock|");
+#endif
 					break;
 				case 0xf2:
 					if (MI->Opcode == X86_MULPDrr) {
 						MI->Opcode = X86_MULSDrr;
+#ifndef CAPSTONE_DIET
 						SStream_concat(O, "mulsd\t");
+#endif
 						MI->x86_prefix[i] = 0;
 						// notify that we already patched mnemonic
 						return true;
-					} else
+					}
+#ifndef CAPSTONE_DIET
+					else
 						SStream_concat(O, "repne|");
+#endif
 					break;
 				case 0xf3:
 					if (MI->Opcode == X86_MULPDrr) {
 						MI->Opcode = X86_MULSSrr;
+#ifndef CAPSTONE_DIET
 						SStream_concat(O, "mulss\t");
+#endif
 						MI->x86_prefix[i] = 0;
 						// notify that we already patched mnemonic
 						return true;
-					} else
+					}
+#ifndef CAPSTONE_DIET
+					else
 						SStream_concat(O, "rep|");
+#endif
 					break;
 			}
 		}
@@ -41746,4 +41757,3 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 
 	return false;
 }
-#endif
