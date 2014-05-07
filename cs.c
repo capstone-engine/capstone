@@ -603,7 +603,18 @@ bool cs_insn_group(csh ud, cs_insn *insn, unsigned int group_id)
 		return false;
 
 	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
+
 	if (!handle->detail) {
+		handle->errnum = CS_ERR_DETAIL;
+		return false;
+	}
+
+	if(!insn->id) {
+		handle->errnum = CS_ERR_SKIPDATA;
+		return false;
+	}
+
+	if(!insn->detail) {
 		handle->errnum = CS_ERR_DETAIL;
 		return false;
 	}
@@ -617,7 +628,18 @@ bool cs_reg_read(csh ud, cs_insn *insn, unsigned int reg_id)
 		return false;
 
 	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
+
 	if (!handle->detail) {
+		handle->errnum = CS_ERR_DETAIL;
+		return false;
+	}
+
+	if(!insn->id) {
+		handle->errnum = CS_ERR_SKIPDATA;
+		return false;
+	}
+
+	if(!insn->detail) {
 		handle->errnum = CS_ERR_DETAIL;
 		return false;
 	}
@@ -631,7 +653,18 @@ bool cs_reg_write(csh ud, cs_insn *insn, unsigned int reg_id)
 		return false;
 
 	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
+
 	if (!handle->detail) {
+		handle->errnum = CS_ERR_DETAIL;
+		return false;
+	}
+
+	if(!insn->id) {
+		handle->errnum = CS_ERR_SKIPDATA;
+		return false;
+	}
+
+	if(!insn->detail) {
 		handle->errnum = CS_ERR_DETAIL;
 		return false;
 	}
@@ -645,7 +678,18 @@ int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
 		return -1;
 
 	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
+
 	if (!handle->detail) {
+		handle->errnum = CS_ERR_DETAIL;
+		return -1;
+	}
+
+	if(!insn->id) {
+		handle->errnum = CS_ERR_SKIPDATA;
+		return -1;
+	}
+
+	if(!insn->detail) {
 		handle->errnum = CS_ERR_DETAIL;
 		return -1;
 	}
@@ -705,7 +749,18 @@ int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 		return -1;
 
 	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
+
 	if (!handle->detail) {
+		handle->errnum = CS_ERR_DETAIL;
+		return -1;
+	}
+
+	if(!insn->id) {
+		handle->errnum = CS_ERR_SKIPDATA;
+		return -1;
+	}
+
+	if(!insn->detail) {
 		handle->errnum = CS_ERR_DETAIL;
 		return -1;
 	}
