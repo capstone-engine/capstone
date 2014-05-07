@@ -635,6 +635,9 @@ typedef struct InternalInstruction {
   uint8_t                       firstByte;     // save the first byte in stream
   uint8_t                       orgModRM;  // save original modRM because we will modify modRM
 
+  // does this instruction contain LOC/REP/REPNE prefix?
+  bool x86_lock_rep;
+
   /* The SIB byte, used for more complex 32- or 64-bit memory operands */
   BOOL                          consumedSIB;
   uint8_t                       sib;

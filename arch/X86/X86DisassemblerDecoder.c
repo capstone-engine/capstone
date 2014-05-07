@@ -531,6 +531,8 @@ static int readPrefixes(struct InternalInstruction* insn)
 			dbgprintf(insn, "Found prefix 0x%hhx", byte);
 	}
 
+	insn->x86_lock_rep = prefixGroups[0];
+
 	insn->vectorExtensionType = TYPE_NO_VEX_XOP;
 
 	if (byte == 0x62) {
