@@ -41722,6 +41722,7 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 #endif
 					break;
 				case 0xf2:
+#ifndef CAPSTONE_X86_REDUCE
 					if (MI->Opcode == X86_MULPDrr) {
 						MI->Opcode = X86_MULSDrr;
 #ifndef CAPSTONE_DIET
@@ -41735,8 +41736,12 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 					else
 						SStream_concat(O, "repne|");
 #endif
+#else
+					SStream_concat(O, "repne|");
+#endif
 					break;
 				case 0xf3:
+#ifndef CAPSTONE_X86_REDUCE
 					if (MI->Opcode == X86_MULPDrr) {
 						MI->Opcode = X86_MULSSrr;
 #ifndef CAPSTONE_DIET
@@ -41749,6 +41754,9 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 #ifndef CAPSTONE_DIET
 					else
 						SStream_concat(O, "rep|");
+#endif
+#else
+					SStream_concat(O, "rep|");
 #endif
 					break;
 			}
