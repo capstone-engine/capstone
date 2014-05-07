@@ -24,8 +24,7 @@ Follow instructions in COMPILE.TXT to see how to compile and run code.
 Note: if you find some strange bugs, it is recommended to firstly clean
 the code and try to recompile/reinstall again. This can be done with:
 
-	$ make clean
-	$ make
-	$ sudo make install
+	$ ./make.sh
+	$ sudo ./make.sh install
 
 
