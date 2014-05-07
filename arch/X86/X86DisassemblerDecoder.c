@@ -421,13 +421,6 @@ static int readPrefixes(struct InternalInstruction* insn)
 		if (consumeByte(insn, &byte))
 			break;
 
-		/*
-		 * If the byte is a LOCK/REP/REPNE prefix and not a part of the opcode, then
-		 * break and let it be disassembled as a normal "instruction".
-		 */
-		//if (insn->readerCursor - 1 == insn->startLocation && byte == 0xf0)
-		//	break;
-
 		if (insn->readerCursor - 1 == insn->startLocation
 				&& (byte == 0xf2 || byte == 0xf3)
 				&& !lookAtByte(insn, &nextByte)) {
@@ -460,14 +453,15 @@ static int readPrefixes(struct InternalInstruction* insn)
 					return -1;
 				unconsumeByte(insn);
 			}
-			//if (nextByte != 0x0f && nextByte != 0x90)
-			//	break;
 		}
 
 		switch (byte) {
-			case 0xf0:  /* LOCK */
 			case 0xf2:  /* REPNE/REPNZ */
 			case 0xf3:  /* REP or REPE/REPZ */
+				// only accept the last prefix
+				insn->prefixPresent[0xf2] = 0;
+				insn->prefixPresent[0xf3] = 0;
+			case 0xf0:  /* LOCK */
 				if (prefixGroups[0])
 					dbgprintf(insn, "Redundant Group 1 prefix");
 				prefixGroups[0] = TRUE;
@@ -505,6 +499,13 @@ static int readPrefixes(struct InternalInstruction* insn)
 				if (prefixGroups[1])
 					dbgprintf(insn, "Redundant Group 2 prefix");
 				prefixGroups[1] = TRUE;
+				// only accept the last prefix
+				insn->prefixPresent[0x2e] = 0;
+				insn->prefixPresent[0x36] = 0;
+				insn->prefixPresent[0x3e] = 0;
+				insn->prefixPresent[0x26] = 0;
+				insn->prefixPresent[0x64] = 0;
+				insn->prefixPresent[0x65] = 0;
 				setPrefixPresent(insn, byte, prefixLocation);
 				break;
 			case 0x66:  /* Operand-size override */
