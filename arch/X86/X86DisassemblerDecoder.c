@@ -425,8 +425,8 @@ static int readPrefixes(struct InternalInstruction* insn)
 		 * If the byte is a LOCK/REP/REPNE prefix and not a part of the opcode, then
 		 * break and let it be disassembled as a normal "instruction".
 		 */
-		if (insn->readerCursor - 1 == insn->startLocation && byte == 0xf0)
-			break;
+		//if (insn->readerCursor - 1 == insn->startLocation && byte == 0xf0)
+		//	break;
 
 		if (insn->readerCursor - 1 == insn->startLocation
 				&& (byte == 0xf2 || byte == 0xf3)
@@ -460,8 +460,8 @@ static int readPrefixes(struct InternalInstruction* insn)
 					return -1;
 				unconsumeByte(insn);
 			}
-			if (nextByte != 0x0f && nextByte != 0x90)
-				break;
+			//if (nextByte != 0x0f && nextByte != 0x90)
+			//	break;
 		}
 
 		switch (byte) {

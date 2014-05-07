@@ -145,6 +145,11 @@ struct MCInst {
 	uint64_t address;	// address of this insn
 	cs_struct *csh;	// save the main csh
 	uint8_t x86_imm_size;	// save immediate size to print immediate properly
+
+	// (Optional) instruction prefix, which can be up to 5 bytes.
+	// A prefix byte gets value 0 when irrelevant.
+	// This is copied from cs_x86 struct
+	uint8_t x86_prefix[5];
 };
 
 void MCInst_Init(MCInst *inst);

@@ -32,13 +32,6 @@ const char *X86_insn_name(csh handle, unsigned int id);
 // post printer for X86.
 void X86_post_printer(csh handle, cs_insn *pub_insn, char *insn_asm);
 
-// handle X86 prefixes
-bool X86_insn_check_combine(cs_struct *h, cs_insn *insn);
-
-// merge with previous instruction
-// this is to handle some 'prefixed' instructions such as LOCK or REP
-void X86_insn_combine(cs_struct *h, cs_insn *insn, cs_insn *prev);
-
 // return register of given instruction id
 // return 0 if not found
 // this is to handle instructions embedding accumulate registers into AsmStrs[]

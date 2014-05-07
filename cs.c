@@ -275,9 +275,13 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 	// fill in mnemonic & operands
 	// find first space or tab
 	char *sp = buffer;
-	for (sp = buffer; *sp; sp++)
+	for (sp = buffer; *sp; sp++) {
 		if (*sp == ' '||*sp == '\t')
 			break;
+		if (*sp == '|')
+			*sp = ' ';
+	}
+
 	if (*sp) {
 		*sp = '\0';
 		// find the next non-space char
@@ -288,7 +292,8 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 	} else
 		insn->op_str[0] = '\0';
 
-	strncpy(insn->mnemonic, buffer, sizeof(insn->mnemonic) - 1);
+	//strncpy(insn->mnemonic, buffer, sizeof(insn->mnemonic) - 1);
+	strcat(insn->mnemonic, buffer);
 	insn->mnemonic[sizeof(insn->mnemonic) - 1] = '\0';
 #endif
 }
@@ -369,19 +374,6 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 	return arch_option[handle->arch](handle, type, value);
 }
 
-// get previous instruction, which can be in the cache, or in total buffer
-static cs_insn *get_prev_insn(cs_insn *cache, unsigned int f, void *total, size_t total_size)
-{
-	if (f == 0) {
-		if (total == NULL)
-			return NULL;
-		// get the trailing insn from total buffer, which is at
-		// the end of the latest cache trunk
-		return (cs_insn *)((void*)((uintptr_t)total + total_size - sizeof(cs_insn)));
-	} else
-		return &cache[f - 1];
-}
-
 // generate @op_str for data instruction of SKIPDATA
 static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
 {
@@ -419,7 +411,6 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 	void *tmp;
 	size_t skipdata_bytes;
 	uint64_t offset_org;
-	uint8_t *tmpbuf = NULL, *org_tmpbuf = NULL;
 
 	if (!handle) {
 		// FIXME: how to handle this case:
@@ -428,9 +419,6 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 	}
 
 	handle->errnum = CS_ERR_OK;
-
-	// reset previous prefix for X86
-	handle->prev_prefix = 0;
 
 	memset(insn_cache, 0, sizeof(insn_cache));
 
@@ -441,7 +429,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 		MCInst_Init(&mci);
 		mci.csh = handle;
 
-		r = handle->disasm(ud, buffer, &tmpbuf, size, &mci, &insn_size, offset, handle->getinsn_info);
+		r = handle->disasm(ud, buffer, size, &mci, &insn_size, offset, handle->getinsn_info);
 		if (r) {
 			SStream ss;
 			SStream_Init(&ss);
@@ -462,63 +450,32 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 
 			fill_insn(handle, &insn_cache[f], ss.buffer, &mci, handle->post_printer, buffer);
 
-			if (!handle->check_combine || !handle->check_combine(handle, &insn_cache[f])) {
-				f++;
-				if (f == ARR_SIZE(insn_cache)) {
-					// resize total to contain newly disasm insns
-					total_size += (sizeof(cs_insn) * INSN_CACHE_SIZE);
-					tmp = cs_mem_realloc(total, total_size);
-					if (tmp == NULL) {	// insufficient memory
-						cs_mem_free(total);
-						handle->errnum = CS_ERR_MEM;
-						return 0;
-					}
-
-					total = tmp;
-					memcpy((void*)((uintptr_t)total + total_size - sizeof(insn_cache)), insn_cache, sizeof(insn_cache));
-
-					// reset f back to 0
-					f = 0;
+			f++;
+			if (f == ARR_SIZE(insn_cache)) {
+				// resize total to contain newly disasm insns
+				total_size += (sizeof(cs_insn) * INSN_CACHE_SIZE);
+				tmp = cs_mem_realloc(total, total_size);
+				if (tmp == NULL) {	// insufficient memory
+					cs_mem_free(total);
+					handle->errnum = CS_ERR_MEM;
+					return 0;
 				}
 
-				c++;
-			} else {
-				// combine this instruction with previous prefix "instruction"
-				cs_insn *prev = get_prev_insn(insn_cache, f, total, total_size);
-				handle->combine(handle, &insn_cache[f], prev);
+				total = tmp;
+				memcpy((void*)((uintptr_t)total + total_size - sizeof(insn_cache)), insn_cache, sizeof(insn_cache));
+
+				// reset f back to 0
+				f = 0;
 			}
 
+			c++;
 			buffer += insn_size;
-			if (tmpbuf != NULL) {
-				// save the original tmpbuf to free it later
-				if (org_tmpbuf == NULL)
-					org_tmpbuf = tmpbuf;
-
-				tmpbuf += insn_size;
-			}
 
 			size -= insn_size;
 			offset += insn_size;
 
-			if (count > 0) {
-				// x86 hacky
-				if (!handle->prev_prefix) {
-					if (c == count)
-						break;
-				} else {
-					// only combine 1 prefix with regular instruction
-					if (c == count + 1) {
-						// the last insn is redundant
-						c--;
-						f--;
-						// free allocated detail pointer of the last redundant instruction
-						if (handle->detail)
-							cs_mem_free(insn_cache[f].detail);
-
-						break;
-					}
-				}
-			}
+			if (count > 0 && c == count)
+				break;
 		} else	{
 			// encounter a broken instruction
 			// if there is no request to skip data, or remaining data is too small,
@@ -574,10 +531,6 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 			c++;
 		}
 	}
-
-	// free tmpbuf if it was allocated in @disasm
-	if (org_tmpbuf)
-		cs_mem_free(org_tmpbuf);
 
 	if (f) {
 		// resize total to contain newly disasm insns

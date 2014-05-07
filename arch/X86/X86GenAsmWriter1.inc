@@ -12202,6 +12202,23 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   uint64_t Bits = (Bits2 << 32) | Bits1;
   // assert(Bits != 0 && "Cannot print this instruction.");
 #ifndef CAPSTONE_DIET
+  int i;
+  for(i = 0; i < ARR_SIZE(MI->x86_prefix); i++) {
+    switch(MI->x86_prefix[i]) {
+      default:
+        break;
+      case 0xf0:
+        SStream_concat(O, "lock|");
+        break;
+      case 0xf2:
+        SStream_concat(O, "repne|");
+        break;
+      case 0xf3:
+        SStream_concat(O, "rep|");
+        break;
+    }
+  }
+
   SStream_concat(O, "%s", AsmStrs+(Bits & 16383)-1);
 #endif
 

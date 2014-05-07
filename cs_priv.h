@@ -15,15 +15,11 @@ typedef void (*Printer_t)(MCInst *MI, SStream *OS, void *info);
 // this is the best time to gather insn's characteristics
 typedef void (*PostPrinter_t)(csh handle, cs_insn *, char *mnem);
 
-typedef bool (*Disasm_t)(csh handle, const uint8_t *code, uint8_t **modcode, size_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *info);
+typedef bool (*Disasm_t)(csh handle, const uint8_t *code, size_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *info);
 
 typedef const char *(*GetName_t)(csh handle, unsigned int reg);
 
 typedef void (*GetID_t)(cs_struct *h, cs_insn *insn, unsigned int id);
-
-typedef bool (*CheckCombineInsn_t)(cs_struct *h, cs_insn *insn);
-
-typedef void (*CombineInsn_t)(cs_struct *h, cs_insn *insn, cs_insn *prev);
 
 // return register name, given register ID
 typedef char *(*GetRegisterName_t)(unsigned RegNo);
@@ -52,10 +48,7 @@ struct cs_struct {
 	int syntax;	// asm syntax for simple printer such as ARM, Mips & PPC
 	bool doing_mem;	// handling memory operand in InstPrinter code
 	unsigned short *insn_cache;	// index caching for mapping.c
-	CheckCombineInsn_t check_combine;
-	CombineInsn_t combine;
 	GetRegisterName_t get_regname;
-	uint8_t prev_prefix;	// save previous prefix for combining instructions - X86 only.
 	bool skipdata;	// set this to True if we skip data when disassembling
 	uint8_t skipdata_size;	// how many bytes to skip
 	cs_opt_skipdata skipdata_setup;	// user-defined skipdata setup

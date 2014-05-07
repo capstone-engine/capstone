@@ -295,7 +295,7 @@ static DecodeStatus decodeBDLAddr64Disp12Len8Operand(MCInst *Inst, uint64_t Fiel
 #define GET_SUBTARGETINFO_ENUM
 #include "SystemZGenSubtargetInfo.inc"
 #include "SystemZGenDisassemblerTables.inc"
-bool SystemZ_getInstruction(csh ud, const uint8_t *code, uint8_t **modcode, size_t code_len, MCInst *MI,
+bool SystemZ_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *MI,
 		uint16_t *size, uint64_t address, void *info)
 {
 	uint64_t Inst;

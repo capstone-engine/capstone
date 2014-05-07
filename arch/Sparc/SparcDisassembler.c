@@ -219,7 +219,7 @@ static DecodeStatus readInstruction32(const uint8_t *code, size_t len, uint32_t 
 	return MCDisassembler_Success;
 }
 
-bool Sparc_getInstruction(csh ud, const uint8_t *code, uint8_t **modcode, size_t code_len, MCInst *MI,
+bool Sparc_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *MI,
 		uint16_t *size, uint64_t address, void *info)
 {
 	uint32_t Insn;

@@ -691,7 +691,7 @@ static void update_pub_insn(cs_insn_flat *pub, InternalInstruction *inter)
 	c = 0;
 	for(i = 0; i < 0x100; i++) {
 		if (inter->prefixPresent[i] > 0) {
-			pub->x86.prefix[c] = inter->prefixPresent[i];
+			pub->x86.prefix[c] = i;
 			c++;
 		}
 	}
@@ -720,6 +720,7 @@ static void update_pub_insn(cs_insn_flat *pub, InternalInstruction *inter)
 	pub->x86.sib_base = x86_map_sib_base(inter->sibBase);
 }
 
+#if 0
 // classify a byte intn prefix group (or 0 if it is not a prefix)
 static uint8_t prefix_group(uint8_t c)
 {
@@ -743,9 +744,10 @@ static uint8_t prefix_group(uint8_t c)
 			return 4;
 	}
 }
+#endif
 
 // Public interface for the disassembler
-bool X86_getInstruction(csh ud, const uint8_t *code, uint8_t **modcode, size_t code_len,
+bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		MCInst *instr, uint16_t *size, uint64_t address, void *_info)
 {
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
@@ -753,71 +755,8 @@ bool X86_getInstruction(csh ud, const uint8_t *code, uint8_t **modcode, size_t c
 	struct reader_info info;
 	int ret;
 	bool result;
-	size_t i;
-	int count = 0;
-	uint8_t p;
-	uint8_t *buffer;
 
-	// hack: shuffle LOCK/REP/REPNE prefixes to the front.
-	// this is because LLVM make a cut at these prefixes to create a new insn.
-	if (*modcode != NULL)
-		// so we actually work on the modified buffer
-		buffer = *modcode;
-	else
-		buffer = (uint8_t *)code;
-
-	// find the first non-prefix byte
-	for (i = 0; i < code_len; i++) {
-		p = prefix_group(buffer[i]);
-		if (p == 1)
-			count++;
-		else if (p == 0) {
-			// the first ever non-prefix byte
-			// ignore if there is no prefix from Group 1 (LOCK/REP/REPNE)
-			if (i == 0 || count == 0)
-				break;
-			else {
-				// x86 instruction has no more than 16 bytes
-				uint8_t b1, b2;
-				size_t j;
-				uint8_t *prefixes;
-
-				// create @modcode for modifying if we didnt do that before
-				if (*modcode == NULL) {
-					uint8_t *tmpbuf = cs_mem_malloc(code_len);
-					// copy @code to @modcode
-					memcpy(tmpbuf, code, code_len);
-					buffer = tmpbuf;
-					*modcode = tmpbuf;
-				}
-
-				// save all prefix bytes in original code
-				prefixes = cs_mem_malloc(i);
-				memcpy(prefixes, buffer, i);
-
-				b1 = 0;
-				b2 = count;
-				for (j = 0; j < i; j++) {
-					if (prefix_group(prefixes[j]) == 1) {
-						// this is one of LOCK/REP/REPNE, so put it at the front
-						buffer[b1] = prefixes[j];
-						b1++;
-					} else {
-						// put this prefix at the back, after LOCK/REP/REPNE
-						buffer[b2] = prefixes[j];
-						b2++;
-					}
-				}
-
-				cs_mem_free(prefixes);
-
-				// done, break out of this loop
-				break;
-			}
-		}
-	}
-
-	info.code = buffer;
+	info.code = code;
 	info.size = code_len;
 	info.offset = address;
 
@@ -844,11 +783,22 @@ bool X86_getInstruction(csh ud, const uint8_t *code, uint8_t **modcode, size_t c
 
 		return false;
 	} else {
+		int i, c;
+
 		*size = (uint16_t)insn.length;
 		result = (!translateInstruction(instr, &insn)) ?  true : false;
 		if (result) {
 			if (handle->detail)
 				update_pub_insn(&instr->flat_insn, &insn);
+
+			// copy all prefixes
+			c = 0;
+			for(i = 0; i < 0x100; i++) {
+				if (insn.prefixPresent[i] > 0) {
+					instr->x86_prefix[c] = i;
+					c++;
+				}
+			}
 
 			// save immediate size to print immediate properly
 			instr->x86_imm_size = insn.immediateSize;

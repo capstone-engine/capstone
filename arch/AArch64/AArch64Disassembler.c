@@ -289,7 +289,7 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 	return MCDisassembler_Fail;
 }
 
-bool AArch64_getInstruction(csh ud, const uint8_t *code, uint8_t **modcode, size_t code_len,
+bool AArch64_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		MCInst *instr, uint16_t *size, uint64_t address, void *info)
 {
 	DecodeStatus status = _getInstruction((cs_struct *)ud, instr,
