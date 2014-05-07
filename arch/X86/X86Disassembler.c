@@ -800,6 +800,10 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 				}
 			}
 
+			if (insn.prefixPresent[0xf0] || insn.prefixPresent[0xf2] ||
+					insn.prefixPresent[0xf3])
+				instr->x86_lock_rep = true;
+
 			// save immediate size to print immediate properly
 			instr->x86_imm_size = insn.immediateSize;
 		}
