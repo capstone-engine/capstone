@@ -15,7 +15,6 @@
 
 #include "../../cs_priv.h"
 
-#include "../../SubtargetFeature.h"
 #include "../../MCInst.h"
 #include "../../MCInstrDesc.h"
 #include "../../MCFixedLenDisassembler.h"

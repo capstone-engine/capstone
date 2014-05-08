@@ -17,7 +17,6 @@
 
 #include "ARMAddressingModes.h"
 #include "ARMBaseInfo.h"
-#include "../../SubtargetFeature.h"
 #include "../../MCFixedLenDisassembler.h"
 #include "../../MCInst.h"
 #include "../../MCInstrDesc.h"

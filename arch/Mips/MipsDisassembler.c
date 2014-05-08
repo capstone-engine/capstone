@@ -23,7 +23,6 @@
 
 #include "../../utils.h"
 
-#include "../../SubtargetFeature.h"
 #include "../../MCInst.h"
 #include "../../MCRegisterInfo.h"
 #include "../../SStream.h"
