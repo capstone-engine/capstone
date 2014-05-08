@@ -1,7 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes, copy
-from mips_const import *
+from .mips_const import *
 
 # define the API
 class MipsOpMem(ctypes.Structure):

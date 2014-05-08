@@ -1,6 +1,6 @@
 # Capstone Disassembler Engine
 # By Dang Hoang Vu, 2013
-
+from __future__ import print_function
 import sys, re
 
 INCL_DIR = '../include/'
@@ -73,7 +73,7 @@ def gen(templ):
 
                 if f[0].startswith(prefix.upper()):
                     if len(f) > 1 and f[1] not in '//=':
-                        print "Error: Unable to convert %s" % f
+                        print("Error: Unable to convert %s" % f)
                         continue
                     elif len(f) > 1 and f[1] == '=':
                         rhs = ''.join(f[2:])
@@ -101,6 +101,6 @@ def main():
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print "Usage:", sys.argv[0], " <bindings: java|python>"
+        print("Usage:", sys.argv[0], " <bindings: java|python>")
         sys.exit(1)
     main()
