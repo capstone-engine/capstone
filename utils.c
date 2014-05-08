@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "utils.h"
+#include "platform.h"
 
 // return the position of a string in a list of strings
 // or -1 if given string is not in the list

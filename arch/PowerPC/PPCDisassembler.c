@@ -270,6 +270,8 @@ static DecodeStatus getInstruction(MCInst *MI,
 		uint16_t *Size,
 		uint64_t Address, MCRegisterInfo *MRI)
 {
+    uint32_t insn;
+    DecodeStatus result;
 	// Get the four bytes of the instruction.
 	if (code_len < 4) {
 		// not enough data
@@ -278,7 +280,6 @@ static DecodeStatus getInstruction(MCInst *MI,
 	}
 
 	// The instruction is big-endian encoded.
-	uint32_t insn;
 	if (MI->csh->mode & CS_MODE_BIG_ENDIAN)
 		insn = (code[0] << 24) | (code[1] << 16) |
 			(code[2] <<  8) | (code[3] <<  0);
@@ -286,7 +287,7 @@ static DecodeStatus getInstruction(MCInst *MI,
 		insn = (code[3] << 24) | (code[2] << 16) |
 			(code[1] <<  8) | (code[0] <<  0);
 
-	DecodeStatus result = decodeInstruction_4(DecoderTable32, MI, insn, Address, 4);
+	result = decodeInstruction_4(DecoderTable32, MI, insn, Address, 4);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		return result;

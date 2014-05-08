@@ -90,6 +90,11 @@ typedef enum A64CC_CondCodes {   // Meaning (integer)          Meaning (floating
 	A64CC_Invalid
 } A64CC_CondCodes;
 
+#ifndef __cplusplus
+#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
+#define inline /* inline */
+#endif
+#endif
 inline static const char *A64CondCodeToString(A64CC_CondCodes CC)
 {
 	switch (CC) {
