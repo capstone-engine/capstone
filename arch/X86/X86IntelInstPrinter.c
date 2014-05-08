@@ -211,7 +211,7 @@ static void printRoundingControl(MCInst *MI, unsigned Op, SStream *O)
 static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 {
 	MCOperand *SegReg;
-	
+
 	SegReg = MCInst_getOperand(MI, Op+1);
 
 	// If this has a segment register, print it.
@@ -469,7 +469,7 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 {
-    bool NeedPlus = false;
+	bool NeedPlus = false;
 	MCOperand *BaseReg  = MCInst_getOperand(MI, Op);
 	uint64_t ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op+1));
 	MCOperand *IndexReg  = MCInst_getOperand(MI, Op+2);

@@ -18,7 +18,7 @@ void SStream_concat(SStream *ss, const char *fmt, ...)
 {
 #ifndef CAPSTONE_DIET
 	va_list ap;
-    int ret = 0;
+	int ret = 0;
 	va_start(ap, fmt);
 	ret = cs_vsnprintf(ss->buffer + ss->index, sizeof(ss->buffer) - (ss->index + 1), fmt, ap);
 	va_end(ap);

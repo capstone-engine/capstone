@@ -50,15 +50,15 @@ static void test()
 #define SPARC_CODE "\x80\xa0\x40\x02\x85\xc2\x60\x08\x85\xe8\x20\x01\x81\xe8\x00\x00\x90\x10\x20\x01\xd5\xf6\x10\x16\x21\x00\x00\x0a\x86\x00\x40\x02\x01\x00\x00\x00\x12\xbf\xff\xff\x10\xbf\xff\xff\xa0\x02\x00\x09\x0d\xbf\xff\xff\xd4\x20\x60\x00\xd4\x4e\x00\x16\x2a\xc2\x80\x03"
 #define SPARCV9_CODE "\x81\xa8\x0a\x24\x89\xa0\x10\x20\x89\xa0\x1a\x60\x89\xa0\x00\xe0"
 #define SYSZ_CODE "\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x00\x07\xf7\xeb\x2a\xff\xff\x7f\x57\xe3\x01\xff\xff\x7f\x57\xeb\x00\xf0\x00\x00\x24\xb2\x4f\x00\x78"
-struct platform {
-	cs_arch arch;
-	cs_mode mode;
-	unsigned char *code;
-	size_t size;
-	char *comment;
-	cs_opt_type opt_type;
-	cs_opt_value opt_value;
-};
+	struct platform {
+		cs_arch arch;
+		cs_mode mode;
+		unsigned char *code;
+		size_t size;
+		char *comment;
+		cs_opt_type opt_type;
+		cs_opt_value opt_value;
+	};
 	struct platform platforms[] = {
 		{ 
 			CS_ARCH_X86,
@@ -144,14 +144,14 @@ struct platform {
 			CS_MODE_BIG_ENDIAN,
 			(unsigned char*)PPC_CODE,
 			sizeof(PPC_CODE) - 1,
-		    "PPC-64"
+			"PPC-64"
 		},
 		{
 			CS_ARCH_PPC,
 			CS_MODE_BIG_ENDIAN,
 			(unsigned char*)PPC_CODE,
 			sizeof(PPC_CODE) - 1,
-            "PPC-64, print register with number only",
+			"PPC-64, print register with number only",
 			CS_OPT_SYNTAX,
 			CS_OPT_SYNTAX_NOREGNAME
 		},
@@ -232,7 +232,7 @@ int main()
 	test();
 
 #if 0
-	#define offsetof(st, m) __builtin_offsetof(st, m)
+#define offsetof(st, m) __builtin_offsetof(st, m)
 
 	cs_insn insn;
 	printf("size: %lu\n", sizeof(insn));

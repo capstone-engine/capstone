@@ -428,7 +428,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	MCOperand *IndexReg  = MCInst_getOperand(MI, Op+2);
 	MCOperand *DispSpec = MCInst_getOperand(MI, Op+3);
 	MCOperand *SegReg = MCInst_getOperand(MI, Op+4);
-    uint64_t ScaleVal = 0;
+	uint64_t ScaleVal = 0;
 
 	if (MI->csh->detail) {
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_MEM;

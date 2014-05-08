@@ -270,8 +270,8 @@ static DecodeStatus getInstruction(MCInst *MI,
 		uint16_t *Size,
 		uint64_t Address, MCRegisterInfo *MRI)
 {
-    uint32_t insn;
-    DecodeStatus result;
+	uint32_t insn;
+	DecodeStatus result;
 	// Get the four bytes of the instruction.
 	if (code_len < 4) {
 		// not enough data
@@ -316,16 +316,16 @@ void PPC_init(MCRegisterInfo *MRI)
 {
 	/*
 	   InitMCRegisterInfo( PPCRegDesc, 182, RA, PC,
-	   		PPCMCRegisterClasses, 15,
-	   		PPCRegUnitRoots,
-	   		138,
-	   		PPCRegDiffLists,
-	   		PPCRegStrings,
-	   		PPCSubRegIdxLists,
-	   		6,
-	   		PPCSubRegIdxRanges,
-	   		PPCRegEncodingTable);
-	*/
+	   PPCMCRegisterClasses, 15,
+	   PPCRegUnitRoots,
+	   138,
+	   PPCRegDiffLists,
+	   PPCRegStrings,
+	   PPCSubRegIdxLists,
+	   6,
+	   PPCSubRegIdxRanges,
+	   PPCRegEncodingTable);
+	 */
 
 	MCRegisterInfo_InitMCRegisterInfo(MRI, PPCRegDesc, 182,
 			0, 0,

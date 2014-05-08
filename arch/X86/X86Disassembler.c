@@ -67,7 +67,6 @@ enum {
 /// @param reg        - The Reg to append.
 static void translateRegister(MCInst *mcInst, Reg reg)
 {
-//#define ENTRY(x) X86_x,
 #define ENTRY(x) X86_##x,
 	uint8_t llvmRegnums[] = {
 		ALL_REGS
@@ -206,8 +205,8 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 						Opcode != X86_VINSERTPSrr &&
 #endif
 						Opcode != X86_INT)
-					if(immediate & 0x80)
-						immediate |= ~(0xffull);
+						if(immediate & 0x80)
+							immediate |= ~(0xffull);
 				break;
 			case ENCODING_IW:
 				if(immediate & 0x8000)

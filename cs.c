@@ -137,7 +137,7 @@ bool cs_support(int query)
 
 cs_err cs_errno(csh handle)
 {
-    struct cs_struct *ud = NULL;
+	struct cs_struct *ud = NULL;
 	if (!handle)
 		return CS_ERR_CSH;
 
@@ -180,8 +180,8 @@ const char *cs_strerror(cs_err code)
 
 cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 {
-    cs_err err;
-    struct cs_struct *ud = NULL;
+	cs_err err;
+	struct cs_struct *ud = NULL;
 	if (!cs_mem_malloc || !cs_mem_calloc || !cs_mem_realloc || !cs_mem_free || !cs_vsnprintf)
 		// Error: before cs_open(), dynamic memory management must be initialized
 		// with cs_option(CS_OPT_MEM)
@@ -224,7 +224,7 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 
 cs_err cs_close(csh *handle)
 {
-    struct cs_struct *ud = NULL;
+	struct cs_struct *ud = NULL;
 	if (*handle == 0)
 		// invalid handle
 		return CS_ERR_CSH;
@@ -251,7 +251,7 @@ cs_err cs_close(csh *handle)
 static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mci,
 		PostPrinter_t postprinter, const uint8_t *code)
 {
-    char *sp = NULL;
+	char *sp = NULL;
 	if (handle->detail) {
 		// avoiding copy insn->detail
 		memcpy(insn, &mci->flat_insn, sizeof(*insn) - sizeof(insn->detail));
@@ -342,7 +342,7 @@ static uint8_t skipdata_size(cs_struct *handle)
 
 cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 {
-    struct cs_struct *handle = NULL;
+	struct cs_struct *handle = NULL;
 	archs_enable();
 
 	// cs_option() can be called with NULL handle just for CS_OPT_MEM
@@ -613,7 +613,7 @@ static bool arr_exist(unsigned char *arr, unsigned char max, unsigned int id)
 
 bool cs_insn_group(csh ud, cs_insn *insn, unsigned int group_id)
 {
-    struct cs_struct *handle = NULL;
+	struct cs_struct *handle = NULL;
 	if (!ud)
 		return false;
 
@@ -639,7 +639,7 @@ bool cs_insn_group(csh ud, cs_insn *insn, unsigned int group_id)
 
 bool cs_reg_read(csh ud, cs_insn *insn, unsigned int reg_id)
 {
-    struct cs_struct *handle = NULL;
+	struct cs_struct *handle = NULL;
 	if (!ud)
 		return false;
 
@@ -665,7 +665,7 @@ bool cs_reg_read(csh ud, cs_insn *insn, unsigned int reg_id)
 
 bool cs_reg_write(csh ud, cs_insn *insn, unsigned int reg_id)
 {
-    struct cs_struct *handle = NULL;
+	struct cs_struct *handle = NULL;
 	if (!ud)
 		return false;
 
@@ -691,8 +691,8 @@ bool cs_reg_write(csh ud, cs_insn *insn, unsigned int reg_id)
 
 int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
 {
-    struct cs_struct *handle = NULL;
-    unsigned int count = 0, i = 0;
+	struct cs_struct *handle = NULL;
+	unsigned int count = 0, i = 0;
 	if (!ud)
 		return -1;
 
@@ -762,8 +762,8 @@ int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
 int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 		unsigned int post)
 {
-    struct cs_struct *handle = NULL;
-    unsigned int count = 0, i = 0;
+	struct cs_struct *handle = NULL;
+	unsigned int count = 0, i = 0;
 	if (!ud)
 		return -1;
 

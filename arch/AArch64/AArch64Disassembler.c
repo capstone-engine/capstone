@@ -32,14 +32,12 @@
 // Forward-declarations used in the auto-generated files.
 static DecodeStatus DecodeGPR64RegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address, void *Decoder);
-static DecodeStatus
-DecodeGPR64xspRegisterClass(MCInst *Inst, unsigned RegNo,
+static DecodeStatus DecodeGPR64xspRegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeGPR32RegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address, void *Decoder);
-static DecodeStatus
-DecodeGPR32wspRegisterClass(MCInst *Inst, unsigned RegNo,
+static DecodeStatus DecodeGPR32wspRegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeFPR8RegisterClass(MCInst *Inst, unsigned RegNo,
@@ -262,8 +260,9 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 		uint16_t *Size,
 		uint64_t Address, MCRegisterInfo *MRI)
 {
-    uint32_t insn = 0;
-    DecodeStatus result;
+	uint32_t insn = 0;
+	DecodeStatus result;
+
 	if (code_len < 4) {
 		// not enough data
 		*Size = 0;
@@ -701,7 +700,7 @@ static DecodeStatus DecodeBitfieldInstruction(MCInst *Inst, unsigned Insn,
 		uint64_t Address,
 		void *Decoder)
 {
-    unsigned ExtractOp = 0, InsertOp = 0;
+	unsigned ExtractOp = 0, InsertOp = 0;
 	unsigned Rd = fieldFromInstruction(Insn, 0, 5);
 	unsigned Rn = fieldFromInstruction(Insn, 5, 5);
 	unsigned ImmS = fieldFromInstruction(Insn, 10, 6);
@@ -1167,7 +1166,7 @@ static DecodeStatus DecodeVLDSTLanePostInstruction(MCInst *Inst, unsigned Insn,
 	// TransferBytes = NumVecs * OneLaneBytes
 	unsigned TransferBytes = 0;
 	unsigned NumVecs = 0;
-    unsigned Rt = 0, Rn = 0, Rm = 0, Q = 0, S = 0, lane = 0, NumLanes = 0;
+	unsigned Rt = 0, Rn = 0, Rm = 0, Q = 0, S = 0, lane = 0, NumLanes = 0;
 	unsigned Opc = MCInst_getOpcode(Inst);
 	switch (Opc) {
 		case AArch64_LD1R_WB_8B_fixed: case AArch64_LD1R_WB_8B_register:

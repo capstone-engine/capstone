@@ -315,8 +315,8 @@ static void printLabelOperand(MCInst *MI, unsigned OpNum,
 		SStream *O, unsigned field_width, unsigned scale)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-    uint64_t UImm = 0, Sign = 0, SImm = 0;
-    int64_t tmp = 0;
+	uint64_t UImm = 0, Sign = 0, SImm = 0;
+	int64_t tmp = 0;
 	if (!MCOperand_isImm(MO)) {
 		printOperand(MI, OpNum, O);
 		return;
@@ -344,7 +344,7 @@ static void printLabelOperand(MCInst *MI, unsigned OpNum,
 		else
 			SStream_concat(O, "#%"PRIu64, SImm);
 	} else {
-        tmp = -(int64_t)SImm;
+		tmp = -(int64_t)SImm;
 		if (SImm < -HEX_THRESHOLD)
 			SStream_concat(O, "#-0x%"PRIx64, tmp);
 		else
@@ -398,7 +398,7 @@ static void printShiftOperand(MCInst *MI,  unsigned OpNum,
 		SStream *O, A64SE_ShiftExtSpecifiers Shift)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-    unsigned int imm = 0;
+	unsigned int imm = 0;
 	// LSL #0 is not printed
 	if (Shift == A64SE_LSL && MCOperand_isImm(MO) && MCOperand_getImm(MO) == 0)
 		return;
@@ -659,7 +659,7 @@ static void printNeonMovImmShiftOperand(MCInst *MI, unsigned OpNum,
 		SStream *O, A64SE_ShiftExtSpecifiers Ext, bool isHalf)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-    int64_t Imm = 0;
+	int64_t Imm = 0;
 	//assert(MO.isImm() &&
 	//       "Immediate operand required for Neon vector immediate inst.");
 

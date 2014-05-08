@@ -13,6 +13,7 @@
 
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+
 #define _CRT_SECURE_NO_WARNINGS
 #include "../../utils.h"
 
@@ -39,7 +40,7 @@ char *NamedImmMapper_toString(NamedImmMapper *N, uint32_t Value, bool *Valid)
 // return true if s1 == lower(f2), and false otherwise
 static bool compare_lower_str(char *s1, char *s2)
 {
-    bool res;
+	bool res;
 	char *lower = cs_strdup(s2), *c;
 	for (c = lower; *c; c++)
 		*c = (char)tolower((int) *c);
@@ -75,7 +76,7 @@ static char *utostr(uint64_t X, bool isNeg)
 {
 	char Buffer[22];
 	char *BufPtr = Buffer+21;
-    char *result = NULL;
+	char *result = NULL;
 
 	Buffer[21] = '\0';
 	if (X == 0) *--BufPtr = '0';  // Handle special case...
@@ -573,10 +574,11 @@ static NamedImmMapper_Mapping SysRegPairs[] = {
 // result must be a big enough buffer: 128 bytes is more than enough
 void SysRegMapper_toString(SysRegMapper *S, uint32_t Bits, bool *Valid, char *result)
 {
-    int dummy = 0;
-    uint32_t Op0 = 0, Op1 = 0, CRn = 0, CRm = 0, Op2 = 0;
-    char *Op1S = NULL, *CRnS = NULL, *CRmS = NULL, *Op2S = NULL;
+	int dummy = 0;
+	uint32_t Op0 = 0, Op1 = 0, CRn = 0, CRm = 0, Op2 = 0;
+	char *Op1S = NULL, *CRnS = NULL, *CRmS = NULL, *Op2S = NULL;
 	unsigned i;
+
 	for (i = 0; i < ARR_SIZE(SysRegPairs); ++i) {
 		if (SysRegPairs[i].Value == Bits) {
 			*Valid = true;
@@ -886,7 +888,7 @@ static NamedImmMapper_Mapping MRSPairs[] = {
 };
 
 SysRegMapper AArch64_MRSMapper = {
-    NULL,
+	NULL,
 	MRSPairs,
 	ARR_SIZE(MRSPairs),
 };
@@ -911,7 +913,7 @@ static NamedImmMapper_Mapping MSRPairs[] = {
 
 SysRegMapper AArch64_MSRMapper = {
 	NULL,
-    MSRPairs,
+	MSRPairs,
 	ARR_SIZE(MSRPairs),
 };
 
@@ -941,8 +943,8 @@ bool A64Imms_isLogicalImmBits(unsigned RegWidth, uint32_t Bits, uint64_t *Imm)
 	uint32_t N = Bits >> 12;
 	uint32_t ImmR = (Bits >> 6) & 0x3f;
 	uint32_t ImmS = Bits & 0x3f;
-    uint64_t Mask = 0, WidthMask = 0;
-    unsigned i = 0;
+	uint64_t Mask = 0, WidthMask = 0;
+	unsigned i = 0;
 	int Width = 0, Num1s = 0, Rotation = 0;
 
 	// N=1 encodes a 64-bit replication and is invalid for the 32-bit

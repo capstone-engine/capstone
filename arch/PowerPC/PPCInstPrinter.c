@@ -374,7 +374,7 @@ static void printBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-    int tmp = 0;
+	int tmp = 0;
 	if (!MCOperand_isImm(MCInst_getOperand(MI, OpNo))) {
 		printOperand(MI, OpNo, O);
 		return;
