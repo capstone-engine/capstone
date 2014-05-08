@@ -23,7 +23,7 @@ Van Hauser
 FX of Phenoelit
 The Grugq, The Grugq   <-- our hero for submitting the first ever patch!
 Isaac Dawson, Veracode Inc
-Patroklos Argyroudis, Census Inc. (http://census-labs.com)
+Patroklos (argp) Argyroudis, Census Inc
 Attila Suszter
 Le Dinh Long
 Nicolas Ruff
