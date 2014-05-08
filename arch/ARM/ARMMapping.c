@@ -13613,6 +13613,7 @@ static unsigned int insn_rel[] = {
 	ARM_tCBZ,
 	ARM_BL_pred,
 	ARM_BL,
+	ARM_BLXi,
 	0
 };
 
