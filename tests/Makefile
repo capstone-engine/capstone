@@ -25,7 +25,7 @@ CC = $(CROSS)gcc
 endif
 
 
-CFLAGS = -fPIC -O3 -Wall -I$(INCDIR)
+CFLAGS = -O3 -Wall -I$(INCDIR)
 LDFLAGS = -L$(LIBDIR)
 
 LIBNAME = capstone
