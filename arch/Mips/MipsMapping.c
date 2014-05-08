@@ -6,7 +6,7 @@
 
 #include "../../include/mips.h"
 #include "../../utils.h"
-
+#include "platform.h"
 #include "MipsMapping.h"
 
 #define GET_INSTRINFO_ENUM

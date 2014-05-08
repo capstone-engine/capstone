@@ -17,6 +17,7 @@
 
 #include <ctype.h>
 #include <inttypes.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -468,6 +469,7 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 {
+    bool NeedPlus = false;
 	MCOperand *BaseReg  = MCInst_getOperand(MI, Op);
 	uint64_t ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op+1));
 	MCOperand *IndexReg  = MCInst_getOperand(MI, Op+2);
@@ -490,7 +492,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 
 	SStream_concat(O, "[");
 
-	bool NeedPlus = false;
+	NeedPlus = false;
 	if (MCOperand_getReg(BaseReg)) {
 		_printOperand(MI, Op, O);
 		NeedPlus = true;

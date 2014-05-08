@@ -148,16 +148,17 @@ static inline unsigned getSOImmValRot(unsigned Imm)
 /// take a maximal chunk of bits out of the immediate.
 static inline unsigned getSOImmValRotate(unsigned Imm)
 {
+    unsigned TZ = 0, RotAmt = 0;
 	// 8-bit (or less) immediates are trivially shifter_operands with a rotate
 	// of zero.
 	if ((Imm & ~255U) == 0) return 0;
 
 	// Use CTZ to compute the rotate amount.
-	unsigned TZ = CountTrailingZeros_32(Imm);
+	TZ = CountTrailingZeros_32(Imm);
 
 	// Rotate amount must be even.  Something like 0x200 must be rotated 8 bits,
 	// not 9.
-	unsigned RotAmt = TZ & ~1;
+	RotAmt = TZ & ~1;
 
 	// If we can handle this spread, return it.
 	if ((rotr32(Imm, RotAmt) & ~255U) == 0)
@@ -183,11 +184,12 @@ static inline unsigned getSOImmValRotate(unsigned Imm)
 /// it.  If not, return -1.
 static inline int getSOImmVal(unsigned Arg)
 {
+    unsigned RotAmt = 0;
 	// 8-bit (or less) immediates are trivially shifter_operands with a rotate
 	// of zero.
 	if ((Arg & ~255U) == 0) return Arg;
 
-	unsigned RotAmt = getSOImmValRotate(Arg);
+	RotAmt = getSOImmValRotate(Arg);
 
 	// If this cannot be handled with a single shifter_op, bail out.
 	if (rotr32(~255U, RotAmt) & Arg)
@@ -337,13 +339,14 @@ static inline int getT2SOImmValRotateVal(unsigned V)
 /// See ARM Reference Manual A6.3.2.
 static inline int getT2SOImmVal(unsigned Arg)
 {
+    int Rot = 0;
 	// If 'Arg' is an 8-bit splat, then get the encoded value.
 	int Splat = getT2SOImmValSplatVal(Arg);
 	if (Splat != -1)
 		return Splat;
 
 	// If 'Arg' can be handled with a single shifter_op return the value.
-	int Rot = getT2SOImmValRotateVal(Arg);
+	Rot = getT2SOImmValRotateVal(Arg);
 	if (Rot != -1)
 		return Rot;
 
@@ -352,9 +355,10 @@ static inline int getT2SOImmVal(unsigned Arg)
 
 static inline unsigned getT2SOImmValRotate(unsigned V)
 {
+    unsigned RotAmt = 0;
 	if ((V & ~255U) == 0) return 0;
 	// Use CTZ to compute the rotate amount.
-	unsigned RotAmt = CountTrailingZeros_32(V);
+	RotAmt = CountTrailingZeros_32(V);
 	return (32 - RotAmt) & 31;
 }
 

@@ -320,7 +320,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 	MCOperand *indexReg;
 	MCOperand *displacement;
 	MCOperand *segmentReg;
-	bool IndexIs512;
+	bool IndexIs512, IndexIs128, IndexIs256;
 #ifndef CAPSTONE_X86_REDUCE
 	uint32_t Opcode;
 #endif
@@ -350,7 +350,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 #ifndef CAPSTONE_X86_REDUCE
 		Opcode = MCInst_getOpcode(mcInst);
 #endif
-		bool IndexIs128 = (
+		IndexIs128 = (
 #ifndef CAPSTONE_X86_REDUCE
 				Opcode == X86_VGATHERDPDrm ||
 				Opcode == X86_VGATHERDPDYrm ||
@@ -365,7 +365,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 #endif
 				false
 				);
-		bool IndexIs256 = (
+		IndexIs256 = (
 #ifndef CAPSTONE_X86_REDUCE
 				Opcode == X86_VGATHERQPDYrm ||
 				Opcode == X86_VGATHERDPSYrm ||
