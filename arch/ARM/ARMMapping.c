@@ -13614,6 +13614,9 @@ static unsigned int insn_rel[] = {
 	ARM_BL_pred,
 	ARM_BL,
 	ARM_BLXi,
+	ARM_tBL,
+	ARM_tB,
+	ARM_tBLXi,
 	0
 };
 

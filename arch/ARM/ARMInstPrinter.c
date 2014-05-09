@@ -571,6 +571,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		// to reflect absolute address. 
 		// Note: in ARM, PC is always 2 instructions ahead, so we have to
 		// add 8 in ARM mode, or 4 in Thumb mode
+		// printf(">> opcode: %u\n", MCInst_getOpcode(MI));
 		if (ARM_rel_branch(MI->csh, MCInst_getOpcode(MI))) {
 			// only do this for relative branch
 			if (MI->csh->mode & CS_MODE_THUMB)
