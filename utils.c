@@ -5,7 +5,9 @@
 #include <string.h>
 
 #include "utils.h"
+#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
 #include "platform.h"
+#endif
 
 // return the position of a string in a list of strings
 // or -1 if given string is not in the list
