@@ -143,11 +143,11 @@ static void test()
 
 	struct platform platforms[] = {
 		{
-			.arch = CS_ARCH_ARM64,
-			.mode = CS_MODE_ARM,
-			.code = (unsigned char *)ARM64_CODE,
-			.size = sizeof(ARM64_CODE) - 1,
-			.comment = "ARM-64"
+			CS_ARCH_ARM64,
+			CS_MODE_ARM,
+			(unsigned char *)ARM64_CODE,
+			sizeof(ARM64_CODE) - 1,
+			"ARM-64"
 		},
 	};
 

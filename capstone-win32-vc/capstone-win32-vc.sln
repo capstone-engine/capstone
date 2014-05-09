@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "capstone-test-x86", "capsto
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "capstone-test-arm", "capstone-test-arm\capstone-test-arm.vcxproj", "{349B99E4-2E79-44FE-96F9-02D9B4EC0584}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "capstone-test-arm64", "capstone-test-arm64\capstone-test-arm64.vcxproj", "{CBE31473-7D0E-41F5-AFCB-8C8422ED8908}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,6 +33,10 @@ Global
 		{349B99E4-2E79-44FE-96F9-02D9B4EC0584}.Debug|Win32.Build.0 = Debug|Win32
 		{349B99E4-2E79-44FE-96F9-02D9B4EC0584}.Release|Win32.ActiveCfg = Release|Win32
 		{349B99E4-2E79-44FE-96F9-02D9B4EC0584}.Release|Win32.Build.0 = Release|Win32
+		{CBE31473-7D0E-41F5-AFCB-8C8422ED8908}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CBE31473-7D0E-41F5-AFCB-8C8422ED8908}.Debug|Win32.Build.0 = Debug|Win32
+		{CBE31473-7D0E-41F5-AFCB-8C8422ED8908}.Release|Win32.ActiveCfg = Release|Win32
+		{CBE31473-7D0E-41F5-AFCB-8C8422ED8908}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
