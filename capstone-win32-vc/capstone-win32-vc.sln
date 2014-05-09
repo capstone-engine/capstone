@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "capstone-test-systemz", "ca
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "capstone-test-detail", "capstone-test-detail\capstone-test-detail.vcxproj", "{A510F308-3094-4FF6-9DFC-539CC5260BA4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "capstone-test-skipdata", "capstone-test-skipdata\capstone-test-skipdata.vcxproj", "{B09819BB-7EF1-4B04-945D-58117E6940A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -67,6 +69,10 @@ Global
 		{A510F308-3094-4FF6-9DFC-539CC5260BA4}.Debug|Win32.Build.0 = Debug|Win32
 		{A510F308-3094-4FF6-9DFC-539CC5260BA4}.Release|Win32.ActiveCfg = Release|Win32
 		{A510F308-3094-4FF6-9DFC-539CC5260BA4}.Release|Win32.Build.0 = Release|Win32
+		{B09819BB-7EF1-4B04-945D-58117E6940A1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B09819BB-7EF1-4B04-945D-58117E6940A1}.Debug|Win32.Build.0 = Debug|Win32
+		{B09819BB-7EF1-4B04-945D-58117E6940A1}.Release|Win32.ActiveCfg = Release|Win32
+		{B09819BB-7EF1-4B04-945D-58117E6940A1}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
