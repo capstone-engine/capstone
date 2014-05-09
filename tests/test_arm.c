@@ -166,33 +166,33 @@ static void test()
 
 	struct platform platforms[] = {
 		{
-			.arch = CS_ARCH_ARM,
-			.mode = CS_MODE_ARM,
-			.code = (unsigned char *)ARM_CODE,
-			.size = sizeof(ARM_CODE) - 1,
-			.comment = "ARM"
+			CS_ARCH_ARM,
+			CS_MODE_ARM,
+			(unsigned char *)ARM_CODE,
+			sizeof(ARM_CODE) - 1,
+			"ARM"
 		},
 		{
-			.arch = CS_ARCH_ARM,
-			.mode = CS_MODE_THUMB,
-			.code = (unsigned char *)THUMB_CODE,
-			.size = sizeof(THUMB_CODE) - 1,
-			.comment = "Thumb"
+			CS_ARCH_ARM,
+			CS_MODE_THUMB,
+			(unsigned char *)THUMB_CODE,
+			sizeof(THUMB_CODE) - 1,
+			"Thumb"
 		},
 		{
-			.arch = CS_ARCH_ARM,
-			.mode = CS_MODE_THUMB,
-			.code = (unsigned char *)ARM_CODE2,
-			.size = sizeof(ARM_CODE2) - 1,
-			.comment = "Thumb-mixed"
+			CS_ARCH_ARM,
+			CS_MODE_THUMB,
+			(unsigned char *)ARM_CODE2,
+			sizeof(ARM_CODE2) - 1,
+			"Thumb-mixed"
 		},
 		{
-			.arch = CS_ARCH_ARM,
-			.mode = CS_MODE_THUMB,
-			.code = (unsigned char *)THUMB_CODE2,
-			.size = sizeof(THUMB_CODE2) - 1,
-			.comment = "Thumb-2 & register named with numbers",
-			.syntax = CS_OPT_SYNTAX_NOREGNAME
+			CS_ARCH_ARM,
+			CS_MODE_THUMB,
+			(unsigned char *)THUMB_CODE2,
+			sizeof(THUMB_CODE2) - 1,
+			"Thumb-2 & register named with numbers",
+			CS_OPT_SYNTAX_NOREGNAME
 		},
 	};
 
