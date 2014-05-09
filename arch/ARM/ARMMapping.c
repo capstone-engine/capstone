@@ -13604,6 +13604,8 @@ const char *ARM_insn_name(csh handle, unsigned int id)
 // list all relative branch instructions
 // ie: insns[i].branch && !insns[i].indirect_branch
 static unsigned int insn_rel[] = {
+	ARM_BL,
+	ARM_BLX_pred,
 	ARM_Bcc,
 	ARM_t2B,
 	ARM_t2Bcc,
@@ -13612,8 +13614,10 @@ static unsigned int insn_rel[] = {
 	ARM_tCBNZ,
 	ARM_tCBZ,
 	ARM_BL_pred,
-	ARM_BL,
 	ARM_BLXi,
+	ARM_tBL,
+	ARM_tB,
+	ARM_tBLXi,
 	0
 };
 
