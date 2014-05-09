@@ -1,16 +1,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
-#define _CRT_SECURE_NO_WARNINGS
-
-#define CAPSTONE_HAS_ARM
-#define CAPSTONE_HAS_ARM64
-#define CAPSTONE_HAS_MIPS
-#define CAPSTONE_HAS_POWERPC
-#define CAPSTONE_HAS_SPARC
-#define CAPSTONE_HAS_SYSZ
-#define CAPSTONE_HAS_X86
-#define USE_SYS_DYN_MEM
-
+#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
+#pragma warning(disable:4996)
+#endif
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>

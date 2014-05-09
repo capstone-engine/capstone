@@ -6,7 +6,9 @@
 
 #include "../../include/mips.h"
 #include "../../utils.h"
+#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
 #include "platform.h"
+#endif
 #include "MipsMapping.h"
 
 #define GET_INSTRINFO_ENUM

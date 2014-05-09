@@ -41,18 +41,18 @@ static void test()
 
 	struct platform platforms[] = {
 		{
-			.arch = CS_ARCH_X86,
-			.mode = CS_MODE_32,
-			.code = (unsigned char*)X86_CODE32,
-			.size = sizeof(X86_CODE32) - 1,
-			.comment = "X86 32 (Intel syntax)"
+			CS_ARCH_X86,
+			CS_MODE_32,
+			(unsigned char*)X86_CODE32,
+			sizeof(X86_CODE32) - 1,
+			"X86 32 (Intel syntax)"
 		},
 		{ 
-			.arch = CS_ARCH_ARM,
-			.mode = CS_MODE_ARM,
-			.code = (unsigned char*)RANDOM_CODE,
-			.size = sizeof(RANDOM_CODE) - 1,
-			.comment = "Arm"
+			CS_ARCH_ARM,
+			CS_MODE_ARM,
+			(unsigned char*)RANDOM_CODE,
+			sizeof(RANDOM_CODE) - 1,
+			"Arm"
 		},
 	};
 
@@ -63,7 +63,7 @@ static void test()
 	size_t count;
 	cs_opt_skipdata skipdata = {
 		// rename default "data" instruction from ".byte" to "db"
-		.mnemonic = "db",
+		"db",
 	};
 	cs_err err;
 

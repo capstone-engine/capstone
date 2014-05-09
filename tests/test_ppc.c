@@ -82,11 +82,11 @@ static void test()
 
 	struct platform platforms[] = {
 		{
-			.arch = CS_ARCH_PPC,
-			.mode = CS_MODE_BIG_ENDIAN,
-			.code = (unsigned char*)PPC_CODE,
-			.size = sizeof(PPC_CODE) - 1,
-			.comment = "PPC-64",
+			CS_ARCH_PPC,
+			CS_MODE_BIG_ENDIAN,
+			(unsigned char*)PPC_CODE,
+			sizeof(PPC_CODE) - 1,
+			"PPC-64",
 		}
 	};
 
