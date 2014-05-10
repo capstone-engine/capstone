@@ -8,8 +8,8 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
   Out of 7 archtitectures supported by Capstone (Arm, Arm64, Mips, PPC, Sparc,
   SystemZ & X86), if you just need several selected archs, choose which ones you
-  want to compile in directly editing the project "capstone-lib" from the Visual Studio solution "capstone-msvc.sln"
-  before going to next steps.
+  want to compile in by directly editing the project "capstone-lib" from the
+  Visual Studio solution "capstone-msvc.sln" before going to next steps.
 
   By default, all 7 architectures are compiled.
 
@@ -28,4 +28,5 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
   - Choose the configuration and the platform you want: Release/Debug and Win32/Win64
   - Build only the capstone-lib project, or the library along with all the tests
 
-(2) You can make sure the prior steps successfully worked by launching one of the testing binary
+(2) You can make sure the prior steps successfully worked by launching one of the
+  testing binary
