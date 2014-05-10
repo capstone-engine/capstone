@@ -2,6 +2,9 @@
 *.o
 *.ko
 
+# Gcc dependency-tracking files
+*.d
+
 # Libraries
 *.lib
 *.a
@@ -32,6 +35,7 @@ tests/test_arm64
 tests/test_mips
 tests/test_x86
 tests/test_ppc
+tests/test_skipdata
 tests/test_sparc
 tests/test_systemz
 tests/*.static
