@@ -12,7 +12,7 @@
 #include "utils.h"
 #include "MCRegisterInfo.h"
 
-#ifdef USE_SYS_DYN_MEM
+#ifdef CAPSTONE_USE_SYS_DYN_MEM
 #define INSN_CACHE_SIZE 32
 #else
 // reduce stack variable size for kernel/firmware
@@ -68,7 +68,7 @@ static void archs_enable(void)
 
 unsigned int all_arch = 0;
 
-#ifdef USE_SYS_DYN_MEM
+#ifdef CAPSTONE_USE_SYS_DYN_MEM
 cs_malloc_t cs_mem_malloc = malloc;
 cs_calloc_t cs_mem_calloc = calloc;
 cs_realloc_t cs_mem_realloc = realloc;
