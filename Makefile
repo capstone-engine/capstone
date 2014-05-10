@@ -266,9 +266,9 @@ PKGCFGF = $(BLDIR)/$(LIBNAME).pc
 
 all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF)
 ifndef BUILDDIR
-	$(MAKE) -C tests LDFLAGS=
+	$(MAKE) -C tests
 else
-	$(MAKE) -C tests BUILDDIR=$(BLDIR) LDFLAGS=
+	$(MAKE) -C tests BUILDDIR=$(BLDIR)
 endif
 ifeq ($(CAPSTONE_SHARED),yes)
 	$(INSTALL_DATA) $(BLDIR)/lib$(LIBNAME).$(EXT) $(BLDIR)/tests/
