@@ -36,7 +36,7 @@ endif
 CFLAGS += -fPIC -Wall -Iinclude
 
 ifeq ($(CAPSTONE_USE_SYS_DYN_MEM),yes)
-CFLAGS += -DUSE_SYS_DYN_MEM
+CFLAGS += -DCAPSTONE_USE_SYS_DYN_MEM
 endif
 
 PREFIX ?= /usr
