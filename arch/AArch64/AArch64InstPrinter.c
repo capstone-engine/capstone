@@ -315,8 +315,9 @@ static void printLabelOperand(MCInst *MI, unsigned OpNum,
 		SStream *O, unsigned field_width, unsigned scale)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	uint64_t UImm = 0, Sign = 0, SImm = 0;
-	int64_t tmp = 0;
+	uint64_t UImm, Sign;
+	int64_t SImm, tmp;
+
 	if (!MCOperand_isImm(MO)) {
 		printOperand(MI, OpNum, O);
 		return;
