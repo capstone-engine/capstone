@@ -1,0 +1,31 @@
+How To Compile & run Capstone for Windows
+                        *-*-*-*-*-*
+
+Capstone requires no prerequisite packages, so it is easy to compile & install.
+
+
+(0) Tailor Capstone to your need.
+
+  Out of 7 archtitectures supported by Capstone (Arm, Arm64, Mips, PPC, Sparc,
+  SystemZ & X86), if you just need several selected archs, choose which ones you
+  want to compile in directly editing the project "capstone-lib" from the Visual Studio solution "capstone-msvc.sln"
+  before going to next steps.
+
+  By default, all 7 architectures are compiled.
+
+  Currently, Capstone supports 4 options, as followings.
+
+  - CAPSTONE_ARCHS: specify list of architectures to compiled in.
+  - CAPSTONE_USE_SYS_DYN_MEM: change this if you have your own dynamic memory management.
+  - CAPSTONE_DIET: use this to make the output binaries more compact.
+  - CAPSTONE_X86_REDUCE: another option to make X86 binary smaller.
+
+  For each option, refer to docs/README for more details.
+
+(1) Compile from source on Windows with Visual Studio
+
+  - Open the Visual Studio solution called "capstone-msvc.sln"
+  - Choose the configuration and the platform you want: Release/Debug and Win32/Win64
+  - Build only the capstone-lib project, or the library along with all the tests
+
+(2) You can make sure the prior steps successfully worked by launching one of the testing binary

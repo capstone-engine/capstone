@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "capstone-win32-static", "capstone-win32\capstone-win32.vcxproj", "{5B01D900-2359-44CA-9914-6B0C6AFB7BE7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "capstone-static", "capstone-static\capstone-static.vcxproj", "{5B01D900-2359-44CA-9914-6B0C6AFB7BE7}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "capstone-test", "capstone-test\capstone-test.vcxproj", "{B291E0D9-4B39-4AF8-971D-A015B78D54A1}"
 EndProject
