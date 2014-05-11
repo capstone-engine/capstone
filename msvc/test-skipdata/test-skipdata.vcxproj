@@ -19,9 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{349B99E4-2E79-44FE-96F9-02D9B4EC0584}</ProjectGuid>
+    <ProjectGuid>{B09819BB-7EF1-4B04-945D-58117E6940A1}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>capstonetestarm</RootNamespace>
+    <RootNamespace>capstonetestskipdata</RootNamespace>
+    <ProjectName>test-skipdata</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -155,7 +156,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\tests\test_arm.c" />
+    <ClCompile Include="..\..\tests\test_skipdata.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -18,13 +18,11 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\tests\test_ppc.c" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0B78E956-F897-4149-BFB2-BE87DA3A6F0D}</ProjectGuid>
+    <ProjectGuid>{CBE31473-7D0E-41F5-AFCB-8C8422ED8908}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>capstonetestppc</RootNamespace>
+    <RootNamespace>capstonetestarm64</RootNamespace>
+    <ProjectName>test-arm64</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -157,6 +155,9 @@
       <AdditionalDependencies>capstone-static.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\tests\test_arm64.c" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
