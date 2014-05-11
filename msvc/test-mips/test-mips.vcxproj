@@ -19,9 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{9E735ABA-00D9-4114-A9E7-0568D8DFF94B}</ProjectGuid>
+    <ProjectGuid>{28B2D82F-3E95-4ECE-8118-0E891BD453E0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>capstonetestsparc</RootNamespace>
+    <RootNamespace>capstonetestmips</RootNamespace>
+    <ProjectName>test-mips</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -155,7 +156,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\tests\test_sparc.c" />
+    <ClCompile Include="..\..\tests\test_mips.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
