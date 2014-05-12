@@ -7,7 +7,7 @@ endif
 .PHONY: gen_const install install3 install_cython clean
 
 gen_const:
-	cd ..; python const_generator.py python
+	cd .. && python const_generator.py python
 
 install:
 	rm -rf $(OBJDIR)
