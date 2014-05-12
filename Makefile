@@ -266,9 +266,9 @@ PKGCFGF = $(BLDIR)/$(LIBNAME).pc
 
 all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF)
 ifndef BUILDDIR
-	$(MAKE) -C tests
+	cd tests && $(MAKE)
 else
-	$(MAKE) -C tests BUILDDIR=$(BLDIR)
+	cd tests && $(MAKE) BUILDDIR=$(BLDIR)
 endif
 ifeq ($(CAPSTONE_SHARED),yes)
 	$(INSTALL_DATA) $(BLDIR)/lib$(LIBNAME).$(EXT) $(BLDIR)/tests/
@@ -342,16 +342,16 @@ clean:
 	rm -f $(LIBOBJ)
 	rm -f $(LIBRARY) $(ARCHIVE)
 	rm -f $(PKGCFGF)
-	$(MAKE) -C tests clean
+	cd tests && $(MAKE) clean
 	rm -f $(BLDIR)/tests/lib$(LIBNAME).$(EXT)
 
 ifdef BUILDDIR
 	rm -rf $(BUILDDIR)
 endif
 
-	$(MAKE) -C bindings/python clean
-	$(MAKE) -C bindings/java clean
-	$(MAKE) -C bindings/ocaml clean
+	cd bindings/python && $(MAKE) clean
+	cd bindings/java && $(MAKE) clean
+	cd bindings/ocaml && $(MAKE) clean
 
 
 TAG ?= HEAD
