@@ -11,8 +11,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #ifndef CS_LLVM_TARGET_ARM_ARMADDRESSINGMODES_H
 #define CS_LLVM_TARGET_ARM_ARMADDRESSINGMODES_H
@@ -148,7 +148,7 @@ static inline unsigned getSOImmValRot(unsigned Imm)
 /// take a maximal chunk of bits out of the immediate.
 static inline unsigned getSOImmValRotate(unsigned Imm)
 {
-	unsigned TZ = 0, RotAmt = 0;
+	unsigned TZ, RotAmt;
 	// 8-bit (or less) immediates are trivially shifter_operands with a rotate
 	// of zero.
 	if ((Imm & ~255U) == 0) return 0;
@@ -184,7 +184,7 @@ static inline unsigned getSOImmValRotate(unsigned Imm)
 /// it.  If not, return -1.
 static inline int getSOImmVal(unsigned Arg)
 {
-	unsigned RotAmt = 0;
+	unsigned RotAmt;
 	// 8-bit (or less) immediates are trivially shifter_operands with a rotate
 	// of zero.
 	if ((Arg & ~255U) == 0) return Arg;
@@ -339,7 +339,7 @@ static inline int getT2SOImmValRotateVal(unsigned V)
 /// See ARM Reference Manual A6.3.2.
 static inline int getT2SOImmVal(unsigned Arg)
 {
-	int Rot = 0;
+	int Rot;
 	// If 'Arg' is an 8-bit splat, then get the encoded value.
 	int Splat = getT2SOImmValSplatVal(Arg);
 	if (Splat != -1)
@@ -355,8 +355,11 @@ static inline int getT2SOImmVal(unsigned Arg)
 
 static inline unsigned getT2SOImmValRotate(unsigned V)
 {
-	unsigned RotAmt = 0;
-	if ((V & ~255U) == 0) return 0;
+	unsigned RotAmt;
+
+	if ((V & ~255U) == 0)
+		return 0;
+
 	// Use CTZ to compute the rotate amount.
 	RotAmt = CountTrailingZeros_32(V);
 	return (32 - RotAmt) & 31;

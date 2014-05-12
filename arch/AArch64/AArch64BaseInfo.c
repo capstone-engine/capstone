@@ -11,8 +11,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
 #pragma warning(disable:4996)
@@ -79,7 +79,7 @@ static char *utostr(uint64_t X, bool isNeg)
 {
 	char Buffer[22];
 	char *BufPtr = Buffer+21;
-	char *result = NULL;
+	char *result;
 
 	Buffer[21] = '\0';
 	if (X == 0) *--BufPtr = '0';  // Handle special case...
@@ -577,9 +577,9 @@ static NamedImmMapper_Mapping SysRegPairs[] = {
 // result must be a big enough buffer: 128 bytes is more than enough
 void SysRegMapper_toString(SysRegMapper *S, uint32_t Bits, bool *Valid, char *result)
 {
-	int dummy = 0;
-	uint32_t Op0 = 0, Op1 = 0, CRn = 0, CRm = 0, Op2 = 0;
-	char *Op1S = NULL, *CRnS = NULL, *CRmS = NULL, *Op2S = NULL;
+	int dummy;
+	uint32_t Op0, Op1, CRn, CRm, Op2;
+	char *Op1S, *CRnS, *CRmS, *Op2S;
 	unsigned i;
 
 	for (i = 0; i < ARR_SIZE(SysRegPairs); ++i) {
@@ -946,9 +946,9 @@ bool A64Imms_isLogicalImmBits(unsigned RegWidth, uint32_t Bits, uint64_t *Imm)
 	uint32_t N = Bits >> 12;
 	uint32_t ImmR = (Bits >> 6) & 0x3f;
 	uint32_t ImmS = Bits & 0x3f;
-	uint64_t Mask = 0, WidthMask = 0;
-	unsigned i = 0;
-	int Width = 0, Num1s = 0, Rotation = 0;
+	uint64_t Mask, WidthMask;
+	unsigned i;
+	int Width = 0, Num1s, Rotation;
 
 	// N=1 encodes a 64-bit replication and is invalid for the 32-bit
 	// instructions.
@@ -974,7 +974,8 @@ bool A64Imms_isLogicalImmBits(unsigned RegWidth, uint32_t Bits, uint64_t *Imm)
 	Num1s = (ImmS & (Width - 1)) + 1;
 
 	// All encodings which would map to -1 (signed) are RESERVED.
-	if (Num1s == Width) return false;
+	if (Num1s == Width)
+		return false;
 
 	Rotation = (ImmR & (Width - 1));
 	Mask = (1ULL << Num1s) - 1;

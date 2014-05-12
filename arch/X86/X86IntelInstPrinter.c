@@ -12,8 +12,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #include <ctype.h>
 #include <inttypes.h>
@@ -492,7 +492,6 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 
 	SStream_concat(O, "[");
 
-	NeedPlus = false;
 	if (MCOperand_getReg(BaseReg)) {
 		_printOperand(MI, Op, O);
 		NeedPlus = true;

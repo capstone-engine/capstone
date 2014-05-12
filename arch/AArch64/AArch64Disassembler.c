@@ -260,7 +260,7 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 		uint16_t *Size,
 		uint64_t Address, MCRegisterInfo *MRI)
 {
-	uint32_t insn = 0;
+	uint32_t insn;
 	DecodeStatus result;
 
 	if (code_len < 4) {
@@ -1166,7 +1166,7 @@ static DecodeStatus DecodeVLDSTLanePostInstruction(MCInst *Inst, unsigned Insn,
 	// TransferBytes = NumVecs * OneLaneBytes
 	unsigned TransferBytes = 0;
 	unsigned NumVecs = 0;
-	unsigned Rt = 0, Rn = 0, Rm = 0, Q = 0, S = 0, lane = 0, NumLanes = 0;
+	unsigned Rt, Rn, Rm, Q, S, lane, NumLanes;
 	unsigned Opc = MCInst_getOpcode(Inst);
 	switch (Opc) {
 		case AArch64_LD1R_WB_8B_fixed: case AArch64_LD1R_WB_8B_register:

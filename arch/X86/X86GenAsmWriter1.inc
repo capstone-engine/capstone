@@ -13334,8 +13334,7 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
 {
   #define GETREGCLASS_CONTAIN(_class, _reg) MCRegisterClass_contains(MCRegisterInfo_getRegClass(MRI, _class), MCOperand_getReg(MCInst_getOperand(MI, _reg)))
   const char *AsmString;
-  char *c = NULL;
-  char *tmp = NULL, *AsmMnem = NULL, *AsmOps = NULL;
+  char *tmp, *AsmMnem, *AsmOps, *c;
   // MCRegisterInfo *MRI = (MCRegisterInfo *)info;
   switch (MCInst_getOpcode(MI)) {
   default: return 0;

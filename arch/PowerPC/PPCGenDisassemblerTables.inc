@@ -6,8 +6,8 @@
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #include "../../MCInst.h"
 #include "../../LEB128.h"
@@ -2329,9 +2329,9 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
 { \
   uint64_t Bits = getFeatureBits(feature); \
   const uint8_t *Ptr = DecodeTable; \
-  uint32_t CurFieldValue = 0, ExpectedValue = 0; \
+  uint32_t CurFieldValue = 0, ExpectedValue; \
   DecodeStatus S = MCDisassembler_Success; \
-  unsigned Start = 0, Len = 0, NumToSkip = 0, PIdx = 0, Opc = 0, DecodeIdx = 0; \
+  unsigned Start, Len, NumToSkip, PIdx, Opc, DecodeIdx; \
   InsnType Val, FieldValue, PositiveMask, NegativeMask; \
   bool Pred, Fail; \
   for (;;) { \

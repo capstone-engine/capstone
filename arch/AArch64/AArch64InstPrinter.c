@@ -11,8 +11,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #include <inttypes.h>
 #include <stdio.h>
@@ -399,7 +399,8 @@ static void printShiftOperand(MCInst *MI,  unsigned OpNum,
 		SStream *O, A64SE_ShiftExtSpecifiers Shift)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	unsigned int imm = 0;
+	unsigned int imm;
+
 	// LSL #0 is not printed
 	if (Shift == A64SE_LSL && MCOperand_isImm(MO) && MCOperand_getImm(MO) == 0)
 		return;
@@ -660,7 +661,7 @@ static void printNeonMovImmShiftOperand(MCInst *MI, unsigned OpNum,
 		SStream *O, A64SE_ShiftExtSpecifiers Ext, bool isHalf)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	int64_t Imm = 0;
+	int64_t Imm;
 	//assert(MO.isImm() &&
 	//       "Immediate operand required for Neon vector immediate inst.");
 

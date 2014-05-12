@@ -11,8 +11,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #include <stdio.h>
 #include <string.h>
@@ -349,7 +349,8 @@ static DecodeStatus DecodeCPU16RegsRegisterClass(MCInst *Inst,
 static DecodeStatus DecodeGPR64RegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	unsigned Reg = 0;
+	unsigned Reg;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
@@ -361,9 +362,11 @@ static DecodeStatus DecodeGPR64RegisterClass(MCInst *Inst,
 static DecodeStatus DecodeGPR32RegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	unsigned Reg = 0;
+	unsigned Reg;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
+
 	Reg = getReg(Decoder, Mips_GPR32RegClassID, RegNo);
 	MCInst_addOperand(Inst, MCOperand_CreateReg(Reg));
 	return MCDisassembler_Success;
@@ -387,7 +390,8 @@ static DecodeStatus DecodeDSPRRegisterClass(MCInst *Inst,
 static DecodeStatus DecodeFGR64RegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	unsigned Reg = 0;
+	unsigned Reg;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
@@ -399,7 +403,8 @@ static DecodeStatus DecodeFGR64RegisterClass(MCInst *Inst,
 static DecodeStatus DecodeFGR32RegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	unsigned Reg = 0;
+	unsigned Reg;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
@@ -411,7 +416,8 @@ static DecodeStatus DecodeFGR32RegisterClass(MCInst *Inst,
 static DecodeStatus DecodeFGRH32RegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	unsigned Reg = 0;
+	unsigned Reg;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
@@ -423,7 +429,8 @@ static DecodeStatus DecodeFGRH32RegisterClass(MCInst *Inst,
 static DecodeStatus DecodeCCRRegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	unsigned Reg = 0;
+	unsigned Reg;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
@@ -435,7 +442,8 @@ static DecodeStatus DecodeCCRRegisterClass(MCInst *Inst,
 static DecodeStatus DecodeFCCRegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	unsigned Reg = 0;
+	unsigned Reg;
+
 	if (RegNo > 7)
 		return MCDisassembler_Fail;
 
@@ -577,8 +585,9 @@ static DecodeStatus DecodeHWRegsRegisterClass(MCInst *Inst,
 static DecodeStatus DecodeAFGR64RegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	unsigned Reg = 0;
-	if (RegNo > 30 || RegNo %2)
+	unsigned Reg;
+
+	if (RegNo > 30 || RegNo % 2)
 		return MCDisassembler_Fail;
 
 	Reg = getReg(Decoder, Mips_AFGR64RegClassID, RegNo /2);
@@ -589,7 +598,8 @@ static DecodeStatus DecodeAFGR64RegisterClass(MCInst *Inst,
 static DecodeStatus DecodeACC64DSPRegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	unsigned Reg = 0;
+	unsigned Reg;
+
 	if (RegNo >= 4)
 		return MCDisassembler_Fail;
 
@@ -601,7 +611,8 @@ static DecodeStatus DecodeACC64DSPRegisterClass(MCInst *Inst,
 static DecodeStatus DecodeHI32DSPRegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	unsigned Reg = 0;
+	unsigned Reg;
+
 	if (RegNo >= 4)
 		return MCDisassembler_Fail;
 
@@ -613,7 +624,8 @@ static DecodeStatus DecodeHI32DSPRegisterClass(MCInst *Inst,
 static DecodeStatus DecodeLO32DSPRegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	unsigned Reg = 0;
+	unsigned Reg;
+
 	if (RegNo >= 4)
 		return MCDisassembler_Fail;
 
@@ -625,7 +637,8 @@ static DecodeStatus DecodeLO32DSPRegisterClass(MCInst *Inst,
 static DecodeStatus DecodeMSA128BRegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	unsigned Reg = 0;
+	unsigned Reg;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
@@ -638,7 +651,8 @@ static DecodeStatus DecodeMSA128BRegisterClass(MCInst *Inst,
 static DecodeStatus DecodeMSA128HRegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	unsigned Reg = 0;
+	unsigned Reg;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
@@ -651,7 +665,8 @@ static DecodeStatus DecodeMSA128HRegisterClass(MCInst *Inst,
 static DecodeStatus DecodeMSA128WRegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	unsigned Reg = 0;
+	unsigned Reg;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
@@ -664,7 +679,8 @@ static DecodeStatus DecodeMSA128WRegisterClass(MCInst *Inst,
 static DecodeStatus DecodeMSA128DRegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	unsigned Reg = 0;
+	unsigned Reg;
+
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
@@ -677,7 +693,8 @@ static DecodeStatus DecodeMSA128DRegisterClass(MCInst *Inst,
 static DecodeStatus DecodeMSACtrlRegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	unsigned Reg = 0;
+	unsigned Reg;
+
 	if (RegNo > 7)
 		return MCDisassembler_Fail;
 

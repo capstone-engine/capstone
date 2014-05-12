@@ -1942,9 +1942,9 @@ static DecodeStatus decodeInstruction_4(uint8_t DecodeTable[], MCInst *MI,
 { 
   uint64_t Bits = getFeatureBits(feature); 
   uint8_t *Ptr = DecodeTable; 
-  uint32_t CurFieldValue = 0, ExpectedValue = 0; 
+  uint32_t CurFieldValue = 0, ExpectedValue;
   DecodeStatus S = MCDisassembler_Success; 
-  unsigned Start = 0, Len = 0, NumToSkip = 0, PIdx = 0, Opc = 0, DecodeIdx = 0; 
+  unsigned Start, Len, NumToSkip, PIdx, Opc, DecodeIdx; 
   uint32_t Val, FieldValue, PositiveMask, NegativeMask; 
   bool Pred, Fail; 
   for (;;) { 

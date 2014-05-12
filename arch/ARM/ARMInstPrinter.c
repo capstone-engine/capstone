@@ -269,7 +269,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	MCRegisterInfo *MRI = (MCRegisterInfo *)Info;
 
-	unsigned Opcode = MCInst_getOpcode(MI), tmp = 0, i = 0;
+	unsigned Opcode = MCInst_getOpcode(MI), tmp, i;
 
 	switch(Opcode) {
 		// Check for HINT instructions w/ canonical names.
@@ -546,7 +546,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	int32_t imm = 0;
+	int32_t imm;
 	MCOperand *Op = MCInst_getOperand(MI, OpNo);
 	if (MCOperand_isReg(Op)) {
 		unsigned Reg = MCOperand_getReg(Op);
@@ -618,7 +618,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 static void printThumbLdrLabelOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
-	int32_t OffImm = 0;
+	int32_t OffImm;
 	bool isSub;
 	SStream_concat(O, "%s[pc, ", markup("<mem:"));
 
@@ -840,7 +840,7 @@ static void printAM3PostIndexOp(MCInst *MI, unsigned Op, SStream *O)
 	MCOperand *MO2 = MCInst_getOperand(MI, Op+1);
 	MCOperand *MO3 = MCInst_getOperand(MI, Op+2);
 	ARM_AM_AddrOpc op = getAM3Op((unsigned int)MCOperand_getImm(MO3));
-	unsigned ImmOffs = 0;
+	unsigned ImmOffs;
 
 	SStream_concat(O, "%s[", markup("<mem:"));
 	set_mem_access(MI, true);
@@ -890,7 +890,7 @@ static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 	MCOperand *MO2 = MCInst_getOperand(MI, Op+1);
 	MCOperand *MO3 = MCInst_getOperand(MI, Op+2);
 	ARM_AM_AddrOpc op = getAM3Op((unsigned int)MCOperand_getImm(MO3));
-	unsigned ImmOffs = 0;
+	unsigned ImmOffs;
 
 	SStream_concat(O, "%s[", markup("<mem:"));
 	set_mem_access(MI, true);
@@ -937,8 +937,8 @@ static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 static void printAddrMode3Operand(MCInst *MI, unsigned Op, SStream *O,
 		bool AlwaysPrintImm0)
 {
-	unsigned IdxMode = 0;
-	MCOperand *MO3 = NULL;
+	unsigned IdxMode;
+	MCOperand *MO3;
 	MCOperand *MO1 = MCInst_getOperand(MI, Op);
 	if (!MCOperand_isReg(MO1)) {   //  For label symbolic references.
 		printOperand(MI, Op, O);
@@ -961,7 +961,7 @@ static void printAddrMode3OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
 	ARM_AM_AddrOpc op = getAM3Op((unsigned int)MCOperand_getImm(MO2));
-	unsigned ImmOffs = 0;
+	unsigned ImmOffs;
 
 	if (MCOperand_getReg(MO1)) {
 		SStream_concat(O, ARM_AM_getAddrOpcStr(op));
@@ -1043,7 +1043,7 @@ static void printAddrMode5Operand(MCInst *MI, unsigned OpNum, SStream *O,
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
-	unsigned ImmOffs = 0, Op = 0;
+	unsigned ImmOffs, Op;
 	if (!MCOperand_isReg(MO1)) {   // FIXME: This is for CP entries, but isn't right.
 		printOperand(MI, OpNum, O);
 		return;
@@ -1071,7 +1071,7 @@ static void printAddrMode6Operand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
-	unsigned tmp = 0;
+	unsigned tmp;
 
 	SStream_concat(O, "%s[", markup("<mem:"));
 	set_mem_access(MI, true);
@@ -1556,7 +1556,7 @@ static void printThumbAddrModeRROperand(MCInst *MI, unsigned Op, SStream *O)
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, Op);
 	MCOperand *MO2 = MCInst_getOperand(MI, Op + 1);
-	unsigned RegNum = 0;
+	unsigned RegNum;
 
 	if (!MCOperand_isReg(MO1)) {   // FIXME: This is for CP entries, but isn't right.
 		printOperand(MI, Op, O);
@@ -1586,7 +1586,7 @@ static void printThumbAddrModeImm5SOperand(MCInst *MI, unsigned Op, SStream *O,
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, Op);
 	MCOperand *MO2 = MCInst_getOperand(MI, Op + 1);
-	unsigned ImmOffs = 0, tmp = 0;
+	unsigned ImmOffs, tmp;
 
 	if (!MCOperand_isReg(MO1)) {   // FIXME: This is for CP entries, but isn't right.
 		printOperand(MI, Op, O);
@@ -1792,7 +1792,7 @@ static void printT2AddrModeImm0_1020s4Operand(MCInst *MI, unsigned OpNum, SStrea
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
-	unsigned tmp = 0;
+	unsigned tmp;
 
 	SStream_concat(O, markup("<mem:"));
 	SStream_concat(O, "[");
@@ -1891,7 +1891,7 @@ static void printT2AddrModeSoRegOperand(MCInst *MI,
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
 	MCOperand *MO3 = MCInst_getOperand(MI, OpNum+2);
-	unsigned ShAmt = 0;
+	unsigned ShAmt;
 
 	SStream_concat(O, "%s[", markup("<mem:"));
 	set_mem_access(MI, true);
@@ -1984,7 +1984,8 @@ static void printRotImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 
 static void printFBits16(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	unsigned tmp = 0;
+	unsigned tmp;
+
 	SStream_concat(O, markup("<imm:"));
 	tmp = 16 - (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	if (tmp > HEX_THRESHOLD)
@@ -2001,7 +2002,8 @@ static void printFBits16(MCInst *MI, unsigned OpNum, SStream *O)
 
 static void printFBits32(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	unsigned tmp = 0;
+	unsigned tmp;
+
 	SStream_concat(O, markup("<imm:"));
 	tmp = 32 - (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	if (tmp > HEX_THRESHOLD)
