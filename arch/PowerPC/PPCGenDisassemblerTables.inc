@@ -2342,7 +2342,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
       Start = *++Ptr; \
       Len = *++Ptr; \
       ++Ptr; \
-      CurFieldValue = fieldname(insn, Start, Len); \
+      CurFieldValue = (uint32_t)fieldname(insn, Start, Len); \
       break; \
     } \
     case MCD_OPC_FilterValue: { \
