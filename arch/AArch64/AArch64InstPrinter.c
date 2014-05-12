@@ -583,10 +583,10 @@ static void printSImm7ScaledOperand(MCInst *MI, unsigned OpNum,
 
 	if (MI->csh->detail) {
 		if (MI->csh->doing_mem) {
-			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].mem.disp = res;
+			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].mem.disp = (int32_t)res;
 		} else {
 			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = res;
+			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = (int32_t)res;
 			MI->flat_insn.arm64.op_count++;
 		}
 	}

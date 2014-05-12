@@ -1152,8 +1152,8 @@ static void printMemBOption(MCInst *MI, unsigned OpNum, SStream *O)
 	unsigned val = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	// FIXME: HasV80Ops becomes a mode
 	// SStream_concat(O, ARM_MB_MemBOptToString(val,
-	//			ARM_getFeatureBits(MI->csh->mode) & ARM_HasV8Ops));
-	SStream_concat(O, ARM_MB_MemBOptToString(val, ARM_HasV8Ops));
+	// 			ARM_getFeatureBits(MI->csh->mode) & ARM_HasV8Ops));
+	SStream_concat(O, ARM_MB_MemBOptToString(val, true));
 }
 
 void printInstSyncBOption(MCInst *MI, unsigned OpNum, SStream *O)

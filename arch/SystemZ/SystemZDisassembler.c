@@ -38,7 +38,7 @@ static DecodeStatus decodeRegisterClass(MCInst *Inst, uint64_t RegNo, const unsi
 	if (RegNo == 0)
 		return MCDisassembler_Fail;
 
-	MCInst_addOperand(Inst, MCOperand_CreateReg(RegNo));
+	MCInst_addOperand(Inst, MCOperand_CreateReg((unsigned)RegNo));
 	return MCDisassembler_Success;
 }
 
