@@ -1667,20 +1667,25 @@ static uint8_t DecoderTable48[] = {
   0
 };
 
+static bool getbool(uint64_t b)
+{
+	return b != 0;
+}
+
 static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
 {
   switch (Idx) {
   default: // llvm_unreachable("Invalid index!");
   case 0:
-    return (bool)((Bits & SystemZ_FeatureFPExtension));
+    return getbool(Bits & SystemZ_FeatureFPExtension);
   case 1:
-    return (bool)((Bits & SystemZ_FeatureLoadStoreOnCond));
+    return getbool(Bits & SystemZ_FeatureLoadStoreOnCond);
   case 2:
-    return (bool)((Bits & SystemZ_FeatureDistinctOps));
+    return getbool(Bits & SystemZ_FeatureDistinctOps);
   case 3:
-    return (bool)((Bits & SystemZ_FeatureHighWord));
+    return getbool(Bits & SystemZ_FeatureHighWord);
   case 4:
-    return (bool)((Bits & SystemZ_FeatureInterlockedAccess1));
+    return getbool(Bits & SystemZ_FeatureInterlockedAccess1);
   }
 }
 

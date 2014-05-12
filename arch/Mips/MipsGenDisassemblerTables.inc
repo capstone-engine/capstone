@@ -3850,56 +3850,61 @@ static uint8_t DecoderTableMips6432[] = {
   0
 };
 
+static bool getbool(uint64_t b)
+{
+	return b != 0;
+}
+
 static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
 {
   switch (Idx) {
   default: // llvm_unreachable("Invalid index!");
   case 0:
-    return (bool)((Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureMips16));
   case 1:
-    return (bool)((Bits & Mips_FeatureMicroMips));
+    return getbool((Bits & Mips_FeatureMicroMips));
   case 2:
-    return (bool)(!(Bits & Mips_FeatureMips16));
+    return getbool(!(Bits & Mips_FeatureMips16));
   case 3:
-    return (bool)((Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureMips16));
   case 4:
-    return (bool)((Bits & Mips_FeatureMSA));
+    return getbool((Bits & Mips_FeatureMSA));
   case 5:
-    return (bool)((Bits & Mips_FeatureDSP));
+    return getbool((Bits & Mips_FeatureDSP));
   case 6:
-    return (bool)((Bits & Mips_FeatureMSA) && (Bits & Mips_FeatureMips64));
+    return getbool((Bits & Mips_FeatureMSA) && (Bits & Mips_FeatureMips64));
   case 7:
-    return (bool)((Bits & Mips_FeatureMips32) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureMips32) && !(Bits & Mips_FeatureMips16));
   case 8:
-    return (bool)(!(Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16));
+    return getbool(!(Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16));
   case 9:
-    return (bool)((Bits & Mips_FeatureFPIdx) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureFPIdx) && !(Bits & Mips_FeatureMips16));
   case 10:
-    return (bool)((Bits & Mips_FeatureFPIdx) && !(Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureMicroMips));
+    return getbool((Bits & Mips_FeatureFPIdx) && !(Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureMicroMips));
   case 11:
-    return (bool)((Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16));
   case 12:
-    return (bool)((Bits & Mips_FeatureMips32r2) && (Bits & Mips_FeatureMips32) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureMips32r2) && (Bits & Mips_FeatureMips32) && !(Bits & Mips_FeatureMips16));
   case 13:
-    return (bool)((Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips32) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips32) && !(Bits & Mips_FeatureMips16));
   case 14:
-    return (bool)((Bits & Mips_FeatureBitCount) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureBitCount) && !(Bits & Mips_FeatureMips16));
   case 15:
-    return (bool)((Bits & Mips_FeatureDSPR2));
+    return getbool((Bits & Mips_FeatureDSPR2));
   case 16:
-    return (bool)((Bits & Mips_FeatureSwap) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureSwap) && !(Bits & Mips_FeatureMips16));
   case 17:
-    return (bool)((Bits & Mips_FeatureSEInReg) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureSEInReg) && !(Bits & Mips_FeatureMips16));
   case 18:
-    return (bool)(!(Bits & Mips_FeatureMicroMips));
+    return getbool(!(Bits & Mips_FeatureMicroMips));
   case 19:
-    return (bool)((Bits & Mips_FeatureMips64r2) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureMips64r2) && !(Bits & Mips_FeatureMips16));
   case 20:
-    return (bool)((Bits & Mips_FeatureMips64));
+    return getbool((Bits & Mips_FeatureMips64));
   case 21:
-    return (bool)((Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16));
   case 22:
-    return (bool)((Bits & Mips_FeatureFPIdx) && (Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureFPIdx) && (Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16));
   }
 }
 

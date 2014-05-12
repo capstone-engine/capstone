@@ -10895,16 +10895,21 @@ static uint8_t DecoderTableA6432[] = {
   0
 };
 
+static bool getbool(uint64_t b)
+{
+	return b != 0;
+}
+
 static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
 {
   switch (Idx) {
   default: // llvm_unreachable("Invalid index!");
   case 0:
-    return ((Bits & AArch64_FeatureNEON));
+    return getbool(Bits & AArch64_FeatureNEON);
   case 1:
-    return ((Bits & AArch64_FeatureFPARMv8));
+    return getbool(Bits & AArch64_FeatureFPARMv8);
   case 2:
-    return ((Bits & AArch64_FeatureNEON) && (Bits & AArch64_FeatureCrypto));
+    return getbool((Bits & AArch64_FeatureNEON) && (Bits & AArch64_FeatureCrypto));
   }
 }
 

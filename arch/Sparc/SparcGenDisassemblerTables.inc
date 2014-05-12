@@ -1434,18 +1434,23 @@ static uint8_t DecoderTableSparc32[] = {
   0
 };
 
+static bool getbool(uint64_t b)
+{
+	return b != 0;
+}
+
 static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
 {
   switch (Idx) {
   default: // llvm_unreachable("Invalid index!");
   case 0:
-    return (bool)((Bits & Sparc_FeatureV9));
+    return getbool(Bits & Sparc_FeatureV9);
   case 1:
-    return (bool)((Bits & Sparc_FeatureVIS3));
+    return getbool(Bits & Sparc_FeatureVIS3);
   case 2:
-    return (bool)((Bits & Sparc_FeatureVIS));
+    return getbool(Bits & Sparc_FeatureVIS);
   case 3:
-    return (bool)((Bits & Sparc_FeatureVIS2));
+    return getbool(Bits & Sparc_FeatureVIS2);
   }
 }
 
