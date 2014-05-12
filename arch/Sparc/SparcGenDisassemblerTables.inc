@@ -1978,7 +1978,7 @@ static DecodeStatus fname(uint8_t DecodeTable[], MCInst *MI, \
       break; \
     } \
     case MCD_OPC_CheckPredicate: { \
-      PIdx = decodeULEB128(++Ptr, &Len); \
+      PIdx = (uint32_t)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
       NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
