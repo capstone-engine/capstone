@@ -3099,6 +3099,7 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
 {
   #define GETREGCLASS_CONTAIN(_class, _reg) MCRegisterClass_contains(MCRegisterInfo_getRegClass(MRI, _class), MCOperand_getReg(MCInst_getOperand(MI, _reg)))
   const char *AsmString;
+  char *tmp, *AsmMnem, *AsmOps, *c;
   // MCRegisterInfo *MRI = (MCRegisterInfo *)info;
   switch (MCInst_getOpcode(MI)) {
   default: return 0;
@@ -3129,7 +3130,7 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
     return 0;
   }
 
-  char *tmp = cs_strdup(AsmString), *AsmMnem, *AsmOps;
+  tmp = cs_strdup(AsmString);
   AsmMnem = tmp;
   AsmOps = strchr(tmp, ' ');
   if (AsmOps) {
@@ -3139,7 +3140,6 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
   SStream_concat(OS, "%s", AsmMnem);
   if (AsmOps) {
     SStream_concat(OS, "\t");
-    char *c;
     for (c = AsmOps; *c; c++) {
       if (*c == '$') {
         c += 1;
