@@ -9960,104 +9960,109 @@ static uint8_t DecoderTablev8NEON32[] = {
   0
 };
 
+static bool getbool(uint64_t b)
+{
+	return b != 0;
+}
+
 static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
 {
   switch (Idx) {
   default: // llvm_unreachable("Invalid index!");
   case 0:
-    return ((!(Bits & ARM_ModeThumb)) != 0);
+    return getbool(!(Bits & ARM_ModeThumb));
   case 1:
-    return ((!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV6Ops)) != 0);
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV6Ops));
   case 2:
-    return ((!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV8Ops) && (Bits & ARM_FeatureCRC)) != 0);
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV8Ops) && (Bits & ARM_FeatureCRC));
   case 3:
-    return ((!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV5TEOps)) != 0);
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV5TEOps));
   case 4:
-    return ((!(Bits & ARM_HasV8Ops)) != 0);
+    return getbool(!(Bits & ARM_HasV8Ops));
   case 5:
-    return ((!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV8Ops)) != 0);
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV8Ops));
   case 6:
-    return ((!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV4TOps)) != 0);
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV4TOps));
   case 7:
-    return ((!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV5TOps)) != 0);
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV5TOps));
   case 8:
-    return ((!(Bits & ARM_ModeThumb) && (Bits & ARM_FeatureTrustZone)) != 0);
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_FeatureTrustZone));
   case 9:
-    return ((!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV6T2Ops)) != 0);
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV6T2Ops));
   case 10:
-    return ((!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV7Ops)) != 0);
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV7Ops));
   case 11:
-    return ((!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV7Ops) && (Bits & ARM_FeatureMP)) != 0);
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV7Ops) && (Bits & ARM_FeatureMP));
   case 12:
-    return ((!(Bits & ARM_ModeThumb) && (Bits & ARM_FeatureDB)) != 0);
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_FeatureDB));
   case 13:
-    return ((!(Bits & ARM_ModeThumb) && (Bits & ARM_FeatureHWDivARM)) != 0);
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_FeatureHWDivARM));
   case 14:
-    return ((!(Bits & ARM_ModeThumb) && (Bits & ARM_FeatureNaClTrap)) != 0);
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_FeatureNaClTrap));
   case 15:
-    return (((Bits & ARM_FeatureNEON)) != 0);
+    return getbool((Bits & ARM_FeatureNEON));
   case 16:
-    return (((Bits & ARM_HasV8Ops) && (Bits & ARM_FeatureCrypto)) != 0);
+    return getbool((Bits & ARM_HasV8Ops) && (Bits & ARM_FeatureCrypto));
   case 17:
-    return (((Bits & ARM_FeatureNEON) && (Bits & ARM_FeatureFP16)) != 0);
+    return getbool((Bits & ARM_FeatureNEON) && (Bits & ARM_FeatureFP16));
   case 18:
-    return (((Bits & ARM_FeatureNEON) && (Bits & ARM_FeatureVFP4)) != 0);
+    return getbool((Bits & ARM_FeatureNEON) && (Bits & ARM_FeatureVFP4));
   case 19:
-    return (((Bits & ARM_ModeThumb)) != 0);
+    return getbool((Bits & ARM_ModeThumb));
   case 20:
-    return (((Bits & ARM_ModeThumb) && (Bits & ARM_HasV5TOps)) != 0);
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_HasV5TOps));
   case 21:
-    return (((Bits & ARM_ModeThumb) && (Bits & ARM_HasV6Ops)) != 0);
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_HasV6Ops));
   case 22:
-    return (((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2)) != 0);
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2));
   case 23:
-    return (((Bits & ARM_ModeThumb) && (Bits & ARM_HasV8Ops)) != 0);
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_HasV8Ops));
   case 24:
-    return (((Bits & ARM_ModeThumb) && (Bits & ARM_HasV6MOps)) != 0);
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_HasV6MOps));
   case 25:
-    return (((Bits & ARM_FeatureT2XtPk) && (Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2)) != 0);
+    return getbool((Bits & ARM_FeatureT2XtPk) && (Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2));
   case 26:
-    return (((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && !(Bits & ARM_HasV8Ops)) != 0);
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && !(Bits & ARM_HasV8Ops));
   case 27:
-    return (((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_FeatureDSPThumb2)) != 0);
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_FeatureDSPThumb2));
   case 28:
-    return (((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_HasV7Ops)) != 0);
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_HasV7Ops));
   case 29:
-    return (((Bits & ARM_FeatureDB)) != 0);
+    return getbool((Bits & ARM_FeatureDB));
   case 30:
-    return (((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && !(Bits & ARM_FeatureMClass)) != 0);
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && !(Bits & ARM_FeatureMClass));
   case 31:
-    return (((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureMClass)) != 0);
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureMClass));
   case 32:
-    return (((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_HasV8Ops)) != 0);
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_HasV8Ops));
   case 33:
-    return (((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_FeatureTrustZone)) != 0);
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_FeatureTrustZone));
   case 34:
-    return (((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_HasV7Ops) && (Bits & ARM_FeatureMP)) != 0);
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_HasV7Ops) && (Bits & ARM_FeatureMP));
   case 35:
-    return (((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_FeatureT2XtPk)) != 0);
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_FeatureT2XtPk));
   case 36:
-    return (((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_HasV8Ops) && (Bits & ARM_FeatureCRC)) != 0);
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_HasV8Ops) && (Bits & ARM_FeatureCRC));
   case 37:
-    return (((Bits & ARM_FeatureHWDiv) && (Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2)) != 0);
+    return getbool((Bits & ARM_FeatureHWDiv) && (Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2));
   case 38:
-    return (((Bits & ARM_FeatureVFP2)) != 0);
+    return getbool((Bits & ARM_FeatureVFP2));
   case 39:
-    return (((Bits & ARM_FeatureVFP2) && !(Bits & ARM_FeatureVFPOnlySP)) != 0);
+    return getbool((Bits & ARM_FeatureVFP2) && !(Bits & ARM_FeatureVFPOnlySP));
   case 40:
-    return (((Bits & ARM_FeatureVFP4)) != 0);
+    return getbool((Bits & ARM_FeatureVFP4));
   case 41:
-    return (((Bits & ARM_FeatureVFP4) && !(Bits & ARM_FeatureVFPOnlySP)) != 0);
+    return getbool((Bits & ARM_FeatureVFP4) && !(Bits & ARM_FeatureVFPOnlySP));
   case 42:
-    return (((Bits & ARM_FeatureVFP3)) != 0);
+    return getbool((Bits & ARM_FeatureVFP3));
   case 43:
-    return (((Bits & ARM_FeatureFPARMv8)) != 0);
+    return getbool((Bits & ARM_FeatureFPARMv8));
   case 44:
-    return (((Bits & ARM_FeatureVFP3) && !(Bits & ARM_FeatureVFPOnlySP)) != 0);
+    return getbool((Bits & ARM_FeatureVFP3) && !(Bits & ARM_FeatureVFPOnlySP));
   case 45:
-    return (((Bits & ARM_FeatureFPARMv8) && !(Bits & ARM_FeatureVFPOnlySP)) != 0);
+    return getbool((Bits & ARM_FeatureFPARMv8) && !(Bits & ARM_FeatureVFPOnlySP));
   case 46:
-    return (((Bits & ARM_HasV8Ops) && (Bits & ARM_FeatureNEON)) != 0);
+    return getbool((Bits & ARM_HasV8Ops) && (Bits & ARM_FeatureNEON));
   }
 }
 
