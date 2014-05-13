@@ -244,7 +244,9 @@ cs_err cs_close(csh *handle)
 static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mci,
 		PostPrinter_t postprinter, const uint8_t *code)
 {
+#ifndef CAPSTONE_DIET
 	char *sp;
+#endif
 
 	if (handle->detail) {
 		// avoiding copy insn->detail
