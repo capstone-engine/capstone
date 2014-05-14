@@ -395,6 +395,10 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 			else
 				SStream_concat(O, "-%"PRIu64, -imm);
 		} else {
+			// handle 16bit segment bound
+			if (MI->csh->mode == CS_MODE_16 && imm > 0x100000)
+				imm -= 0x10000;
+
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "0x%"PRIx64, imm);
 			else
