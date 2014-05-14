@@ -196,7 +196,10 @@ ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86DisassemblerDecoder.o
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86Disassembler.o
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86IntelInstPrinter.o
+# assembly syntax is irrelevant in Diet mode, when this info is suppressed
+ifeq (,$(findstring yes,$(CAPSTONE_DIET)))
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86ATTInstPrinter.o
+endif
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86Mapping.o
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86Module.o
 endif
