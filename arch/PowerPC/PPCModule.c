@@ -1,5 +1,7 @@
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013 */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+
+#ifdef CAPSTONE_HAS_POWERPC
 
 #include "../../utils.h"
 #include "../../MCRegisterInfo.h"
@@ -53,3 +55,5 @@ void PPC_enable(void)
 	// support this arch
 	all_arch |= (1 << CS_ARCH_PPC);
 }
+
+#endif

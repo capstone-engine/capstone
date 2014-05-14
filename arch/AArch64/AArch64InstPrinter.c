@@ -14,6 +14,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_ARM64
+
 #include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -871,3 +873,4 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 	}
 }
 
+#endif

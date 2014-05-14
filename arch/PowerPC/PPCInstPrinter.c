@@ -14,6 +14,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_POWERPC
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -542,3 +544,4 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 //#define PRINT_ALIAS_INSTR
 #include "PPCGenAsmWriter.inc"
 
+#endif

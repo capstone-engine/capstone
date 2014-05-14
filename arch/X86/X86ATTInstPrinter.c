@@ -12,8 +12,10 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+
+#ifdef CAPSTONE_HAS_X86
 
 #include <ctype.h>
 #include <inttypes.h>
@@ -537,3 +539,4 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 	}
 }
 
+#endif

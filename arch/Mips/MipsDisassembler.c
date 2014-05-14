@@ -14,6 +14,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_MIPS
+
 #include <stdio.h>
 #include <string.h>
 
@@ -770,3 +772,5 @@ static DecodeStatus DecodeExtSize(MCInst *Inst,
 	MCInst_addOperand(Inst, MCOperand_CreateImm(SignExtend32(Size, 16)));
 	return MCDisassembler_Success;
 }
+
+#endif

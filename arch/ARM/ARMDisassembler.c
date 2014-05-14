@@ -10,6 +10,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_ARM
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -5042,3 +5044,4 @@ static DecodeStatus DecodeMRRC2(MCInst *Inst, unsigned Val,
 	return S;
 }
 
+#endif

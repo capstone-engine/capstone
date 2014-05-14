@@ -17,6 +17,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_X86
+
 #include <inttypes.h>	// debug
 #include <string.h>
 
@@ -810,3 +812,5 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		return result;
 	}
 }
+
+#endif

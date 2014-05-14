@@ -1,5 +1,7 @@
-/* Capstone Unified Disassembly Engine */
+/* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+
+#ifdef CAPSTONE_HAS_SPARC
 
 #include <stdio.h>	// debug
 #include <string.h>
@@ -3175,3 +3177,5 @@ sparc_reg Sparc_map_register(unsigned int r)
 	// cannot find this register
 	return 0;
 }
+
+#endif

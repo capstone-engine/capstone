@@ -1,5 +1,7 @@
-/* Capstone Unified Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+
+#ifdef CAPSTONE_HAS_ARM64
 
 #include <stdio.h>	// debug
 #include <string.h>
@@ -17045,3 +17047,5 @@ arm64_reg AArch64_map_insn(const char *name)
 
 	return (i != -1)? i : ARM64_REG_INVALID;
 }
+
+#endif

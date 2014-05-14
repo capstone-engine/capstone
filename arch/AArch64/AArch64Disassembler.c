@@ -16,6 +16,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_ARM64
+
 #include <stdio.h>	// DEBUG
 #include <stdlib.h>
 
@@ -1629,3 +1631,4 @@ static DecodeStatus DecodeSHLLInstruction(MCInst *Inst, unsigned Insn,
 	return MCDisassembler_Success;
 }
 
+#endif

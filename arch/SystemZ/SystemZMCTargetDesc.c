@@ -10,6 +10,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_SYSZ
+
 #include "SystemZMCTargetDesc.h"
 
 #define GET_REGINFO_ENUM
@@ -87,3 +89,4 @@ unsigned SystemZMC_getFirstReg(unsigned Reg)
 	return Map[Reg];
 }
 
+#endif

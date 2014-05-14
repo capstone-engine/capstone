@@ -16,6 +16,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_X86
+
 #include <stdarg.h>   /* for va_*()       */
 #include <stdlib.h>   /* for exit()       */
 #include <string.h>   /* for memset()     */
@@ -2002,3 +2004,5 @@ int decodeInstruction(struct InternalInstruction* insn,
 
 	return 0;
 }
+
+#endif

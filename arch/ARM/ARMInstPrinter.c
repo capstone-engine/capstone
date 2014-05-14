@@ -11,8 +11,10 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+
+#ifdef CAPSTONE_HAS_ARM
 
 #include <stdio.h>	// DEBUG
 #include <stdbool.h>
@@ -2409,3 +2411,5 @@ static void printVectorListFourSpaced(MCInst *MI, unsigned OpNum, SStream *O)
 	}
 	SStream_concat(O, "}");
 }
+
+#endif

@@ -10,6 +10,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_POWERPC
+
 #include <stdio.h>	// DEBUG
 #include <stdlib.h>
 
@@ -336,3 +338,5 @@ void PPC_init(MCRegisterInfo *MRI)
 			PPCSubRegIdxLists, 6,
 			0);
 }
+
+#endif

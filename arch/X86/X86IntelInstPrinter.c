@@ -15,6 +15,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_X86
+
 #include <ctype.h>
 #include <inttypes.h>
 #include <stdbool.h>
@@ -541,3 +543,4 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 #include "X86GenAsmWriter1.inc"
 #endif
 
+#endif

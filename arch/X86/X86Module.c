@@ -1,5 +1,7 @@
-/* Capstone Disassembler Engine */
+/* Capstone Disassembly Engine */
 /* By Dang Hoang Vu <danghvu@gmail.com> 2013 */
+
+#ifdef CAPSTONE_HAS_X86
 
 #include "../../cs_priv.h"
 #include "../../MCRegisterInfo.h"
@@ -61,3 +63,5 @@ void X86_enable(void)
 	// support this arch
 	all_arch |= (1 << CS_ARCH_X86);
 }
+
+#endif

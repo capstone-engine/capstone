@@ -1,6 +1,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_MIPS
+
 #include <stdio.h>	// debug
 #include <string.h>
 
@@ -8511,3 +8513,5 @@ mips_reg Mips_map_register(unsigned int r)
 	// cannot find this register
 	return 0;
 }
+
+#endif
