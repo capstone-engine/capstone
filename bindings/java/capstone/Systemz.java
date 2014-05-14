@@ -16,8 +16,8 @@ public class Systemz {
   public static class MemType extends Structure {
     public byte base;
     public byte index;
-    public int length;
-    public int disp;
+    public long length;
+    public long disp;
 
     @Override
     public List getFieldOrder() {
@@ -27,7 +27,7 @@ public class Systemz {
 
   public static class OpValue extends Union {
     public int reg;
-    public int imm;
+    public long imm;
     public MemType mem;
   }
 
@@ -39,7 +39,9 @@ public class Systemz {
       readField("type");
       if (type == SYSZ_OP_MEM)
         value.setType(MemType.class);
-      if (type == SYSZ_OP_IMM || type == SYSZ_OP_REG)
+      if (type == SYSZ_OP_IMM)
+        value.setType(Long.TYPE);
+      if (type == SYSZ_OP_REG || type == SYSZ_OP_ACREG)
         value.setType(Integer.TYPE);
       if (type == SYSZ_OP_INVALID)
         return;

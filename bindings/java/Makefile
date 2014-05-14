@@ -40,7 +40,7 @@ endif
 
 tests: jna
 	@mkdir -p $(OBJDIR)
-	javac -d $(OBJDIR) -classpath "$(JNA):$(BLDIR)/capstone.jar" Test.java TestArm.java TestArm64.java TestMips.java TestX86.java TestPpc.java TestSparc.java
+	javac -d $(OBJDIR) -classpath "$(JNA):$(BLDIR)/capstone.jar" Test.java TestArm.java TestArm64.java TestMips.java TestX86.java TestPpc.java TestSparc.java TestSystemz.java
 
 gen_const:
 	cd ../ && python const_generator.py java

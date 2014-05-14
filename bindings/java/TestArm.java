@@ -87,7 +87,7 @@ public class TestArm {
       new Test.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_ARM, hexString2Byte(ARM_CODE), "ARM"),
       new Test.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_THUMB, hexString2Byte(THUMB_CODE), "Thumb"),
       new Test.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_THUMB, hexString2Byte(ARM_CODE2), "Thumb-mixed"),
-      new Test.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_THUMB, hexString2Byte(THUMB_CODE2), "Thumb-2"),
+      new Test.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_THUMB, Capstone.CS_OPT_SYNTAX_NOREGNAME, hexString2Byte(THUMB_CODE2), "Thumb-2 & register named with numbers"),
     };
 
     for (int i=0; i<all_tests.length; i++) {
@@ -99,6 +99,8 @@ public class TestArm {
 
       cs = new Capstone(test.arch, test.mode);
       cs.setDetail(Capstone.CS_OPT_ON);
+      if (test.syntax != 0)
+        cs.setSyntax(test.syntax);
       Capstone.CsInsn[] all_ins = cs.disasm(test.code, 0x1000);
 
       for (int j = 0; j < all_ins.length; j++) {
