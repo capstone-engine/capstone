@@ -215,7 +215,7 @@ IS_APPLE := $(shell $(CC) -dM -E - < /dev/null | grep __apple_build_version__ | 
 ifeq ($(IS_APPLE),1)
 EXT = dylib
 VERSION_EXT = $(API_MAJOR).$(EXT)
-LDFLAGS += -dynamiclib -install_name lib$(LIBNAME).$(VERSION_EXT) -current_version $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA) -compatibility_version $(PKG_MAJOR).$(PKG_MINOR)
+$(LIBNAME)_LDFLAGS += -dynamiclib -install_name lib$(LIBNAME).$(VERSION_EXT) -current_version $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA) -compatibility_version $(PKG_MAJOR).$(PKG_MINOR)
 AR_EXT = a
 # Homebrew wants to make sure its formula does not disable FORTIFY_SOURCE
 # However, this is not really necessary because 'CAPSTONE_USE_SYS_DYN_MEM=yes' by default
@@ -226,7 +226,7 @@ CFLAGS += -D_FORTIFY_SOURCE=0
 endif
 endif
 else
-LDFLAGS += -shared
+$(LIBNAME)_LDFLAGS += -shared
 # Cygwin?
 IS_CYGWIN := $(shell $(CC) -dumpmachine | grep -i cygwin | wc -l)
 ifeq ($(IS_CYGWIN),1)
@@ -249,7 +249,7 @@ else
 EXT = so
 VERSION_EXT = $(EXT).$(API_MAJOR)
 AR_EXT = a
-LDFLAGS += -Wl,-soname,lib$(LIBNAME).$(VERSION_EXT)
+$(LIBNAME)_LDFLAGS += -Wl,-soname,lib$(LIBNAME).$(VERSION_EXT)
 endif
 endif
 endif
@@ -266,9 +266,9 @@ PKGCFGF = $(BLDIR)/$(LIBNAME).pc
 
 all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF)
 ifndef BUILDDIR
-	$(MAKE) -C tests
+	cd tests && $(MAKE)
 else
-	$(MAKE) -C tests BUILDDIR=$(BLDIR)
+	cd tests && $(MAKE) BUILDDIR=$(BLDIR)
 endif
 ifeq ($(CAPSTONE_SHARED),yes)
 	$(INSTALL_DATA) $(BLDIR)/lib$(LIBNAME).$(EXT) $(BLDIR)/tests/
@@ -342,16 +342,16 @@ clean:
 	rm -f $(LIBOBJ)
 	rm -f $(LIBRARY) $(ARCHIVE)
 	rm -f $(PKGCFGF)
-	$(MAKE) -C tests clean
+	cd tests && $(MAKE) clean
 	rm -f $(BLDIR)/tests/lib$(LIBNAME).$(EXT)
 
 ifdef BUILDDIR
 	rm -rf $(BUILDDIR)
 endif
 
-	$(MAKE) -C bindings/python clean
-	$(MAKE) -C bindings/java clean
-	$(MAKE) -C bindings/ocaml clean
+	cd bindings/python && $(MAKE) clean
+	cd bindings/java && $(MAKE) clean
+	cd bindings/ocaml && $(MAKE) clean
 
 
 TAG ?= HEAD
@@ -382,7 +382,7 @@ endef
 
 
 define create-library
-	$(CC) $(LDFLAGS) $(LIBOBJ) -o $(LIBRARY)
+	$(CC) $(LDFLAGS) $($(LIBNAME)_LDFLAGS) $(LIBOBJ) -o $(LIBRARY)
 endef
 
 

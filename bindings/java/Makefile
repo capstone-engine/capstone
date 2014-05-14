@@ -28,14 +28,14 @@ all: gen_const capstone tests
 
 capstone: capstone_class
 	@mkdir -p $(BLDIR)
-	cd $(OBJDIR); jar cf $(BLDIR)/capstone.jar capstone/*.class
+	cd $(OBJDIR) && jar cf $(BLDIR)/capstone.jar capstone/*.class
 
 capstone_class: jna
 ifdef BUILDDIR
 	@mkdir -p $(OBJDIR)
-	cd capstone; javac -d $(OBJDIR) -classpath $(JNA) $(CAPSTONE_JAVA)
+	cd capstone && javac -d $(OBJDIR) -classpath $(JNA) $(CAPSTONE_JAVA)
 else
-	cd capstone; javac -classpath $(JNA) $(CAPSTONE_JAVA)
+	cd capstone && javac -classpath $(JNA) $(CAPSTONE_JAVA)
 endif
 
 tests: jna
@@ -43,7 +43,7 @@ tests: jna
 	javac -d $(OBJDIR) -classpath "$(JNA):$(BLDIR)/capstone.jar" Test.java TestArm.java TestArm64.java TestMips.java TestX86.java TestPpc.java TestSparc.java
 
 gen_const:
-	cd ../; python const_generator.py java
+	cd ../ && python const_generator.py java
 
 jna:
 	@if [ ! $(JNA) ]; then echo "*** Unable to find JNA ***"; exit 1; fi

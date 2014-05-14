@@ -14,8 +14,8 @@ TEST_X86 = $(TMPDIR)/test_x86
 .PHONY: all expected python java ocaml
 
 all:
-	make -C python gen_const
-	make -C java gen_const
+	cd python && $(MAKE) gen_const
+	cd java && $(MAKE) gen_const
 
 tests: expected python java #oclma ruby
 
@@ -23,7 +23,7 @@ test_java: expected java
 test_python: expected python
 
 expected:
-	$(MAKE) -C ../tests
+	cd ../tests && $(MAKE)
 	mkdir -p $(TMPDIR)
 	../tests/test > $(TEST)_e
 	../tests/test_arm > $(TEST_ARM)_e
@@ -35,7 +35,7 @@ expected:
 	../tests/test_x86 > $(TEST_X86)_e
 
 python: FORCE
-	$(MAKE) -C python
+	cd python && $(MAKE)
 	python python/test.py > $(TEST)_o
 	python python/test_arm.py > $(TEST_ARM)_o
 	python python/test_arm64.py > $(TEST_ARM64)_o
@@ -47,15 +47,15 @@ python: FORCE
 	$(MAKE) test_diff
 
 java: FORCE
-	$(MAKE) -C java
-	cd java; ./run.sh > $(TEST)_o
-	cd java; ./run.sh arm > $(TEST_ARM)_o
-	cd java; ./run.sh arm64 > $(TEST_ARM64)_o
-	cd java; ./run.sh mips > $(TEST_MIPS)_o
-	cd java; ./run.sh ppc > $(TEST_PPC)_o
-	cd java; ./run.sh sparc > $(TEST_SPARC)_o
-	cd java; ./run.sh systemz > $(TEST_SYSZ)_o
-	cd java; ./run.sh x86 > $(TEST_X86)_o
+	cd java && $(MAKE)
+	cd java && ./run.sh > $(TEST)_o
+	cd java && ./run.sh arm > $(TEST_ARM)_o
+	cd java && ./run.sh arm64 > $(TEST_ARM64)_o
+	cd java && ./run.sh mips > $(TEST_MIPS)_o
+	cd java && ./run.sh ppc > $(TEST_PPC)_o
+	cd java && ./run.sh sparc > $(TEST_SPARC)_o
+	cd java && ./run.sh systemz > $(TEST_SYSZ)_o
+	cd java && ./run.sh x86 > $(TEST_X86)_o
 	$(MAKE) test_diff
 
 ocaml: FORCE
@@ -72,7 +72,7 @@ test_diff: FORCE
 
 clean:
 	rm -rf $(TMPDIR)
-	$(MAKE) clean -C java
-	$(MAKE) clean -C python
+	cd java && $(MAKE) clean
+	cd python && $(MAKE) clean
 
 FORCE:
