@@ -15,7 +15,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
-#ifdef CAPSTONE_HAS_X86
+// this code is only relevant when DIET mode is disable
+#if defined(CAPSTONE_HAS_X86) && !defined(CAPSTONE_DIET)
 
 #include <ctype.h>
 #include <inttypes.h>
