@@ -13,10 +13,10 @@ THUMB_CODE2 = b"\x4f\xf0\x00\x01\xbd\xe8\x00\x88\xd1\xe8\x00\xf0"
 THUMB_CODE = b"\x70\x47\xeb\x46\x83\xb0\xc9\x68\x1f\xb1"
 
 all_tests = (
-        (CS_ARCH_ARM, CS_MODE_ARM, ARM_CODE, "ARM"),
-        (CS_ARCH_ARM, CS_MODE_THUMB, THUMB_CODE, "Thumb"),
-        (CS_ARCH_ARM, CS_MODE_THUMB, ARM_CODE2, "Thumb-mixed"),
-        (CS_ARCH_ARM, CS_MODE_THUMB, THUMB_CODE2, "Thumb-2"),
+        (CS_ARCH_ARM, CS_MODE_ARM, ARM_CODE, "ARM", None),
+        (CS_ARCH_ARM, CS_MODE_THUMB, THUMB_CODE, "Thumb", None),
+        (CS_ARCH_ARM, CS_MODE_THUMB, ARM_CODE2, "Thumb-mixed", None),
+        (CS_ARCH_ARM, CS_MODE_THUMB, THUMB_CODE2, "Thumb-2 & register named with numbers", CS_OPT_SYNTAX_NOREGNAME),
         )
 
 # ## Test class Cs
@@ -70,7 +70,7 @@ def test_class():
         if not insn.cc in [ARM_CC_AL, ARM_CC_INVALID]:
             print("\tCode condition: %u" % insn.cc)
 
-    for (arch, mode, code, comment) in all_tests:
+    for (arch, mode, code, comment, syntax) in all_tests:
         print("*" * 16)
         print("Platform: %s" % comment)
         print("Code: %s" % to_hex(code))
@@ -78,10 +78,12 @@ def test_class():
 
         try:
             md = Cs(arch, mode)
+            if syntax:
+                md.syntax = syntax
             md.detail = True
             for insn in md.disasm(code, 0x1000):
                 print_insn_detail(insn)
-                print
+                print ()
             print ("0x%x:\n" % (insn.address + insn.size))
         except CsError as e:
             print("ERROR: %s" % e)

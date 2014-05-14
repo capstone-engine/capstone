@@ -8,7 +8,7 @@ from capstone.systemz import *
 
 from test import to_x, to_hex, to_x_32
 
-SYSZ_CODE = b"\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x00\x07\xf7\xeb\x2a\xff\xff\x7f\x57\xe3\x01\xff\xff\x7f\x57\xeb\x00\xf0\x00\x00\x24\xb2\x4f\x00\x78"
+SYSZ_CODE = b"\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x00\x07\xf7\xeb\x2a\xff\xff\x7f\x57\xe3\x01\xff\xff\x7f\x57\xeb\x00\xf0\x00\x00\x24\xb2\x4f\x00\x78\xec\x18\x00\x00\xc1\x7f"
 
 all_tests = (
         (CS_ARCH_SYSZ, 0, SYSZ_CODE, "SystemZ"),
@@ -64,7 +64,7 @@ def test_class():
             md.detail = True
             for insn in md.disasm(code, 0x1000):
                 print_insn_detail(insn)
-                print
+                print ()
             print("0x%x:\n" % (insn.address + insn.size))
         except CsError as e:
             print("ERROR: %s" %e)

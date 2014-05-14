@@ -179,6 +179,11 @@ public class Capstone {
           detail.arch.read();
           op_info = new Systemz.OpInfo((Systemz.UnionOpInfo) detail.arch.sysz);
           break;
+        case CS_ARCH_PPC:
+          detail.arch.setType(Ppc.UnionOpInfo.class);
+          detail.arch.read();
+          op_info = new Ppc.OpInfo((Ppc.UnionOpInfo) detail.arch.ppc);
+          break;
         default:
       }
 

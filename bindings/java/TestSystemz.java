@@ -19,7 +19,7 @@ public class TestSystemz {
     return data;
   }
 
-  static final String SYSZ_CODE = "ed000000001a5a0f1fffc2098000000007f7eb2affff7f57e301ffff7f57eb00f0000024b24f0078"
+  static final String SYSZ_CODE = "ed000000001a5a0f1fffc2098000000007f7eb2affff7f57e301ffff7f57eb00f0000024b24f0078ec180000c17f";
 
   public static Capstone cs;
 
@@ -43,7 +43,7 @@ public class TestSystemz {
         if (i.type == SYSZ_OP_REG)
             System.out.printf("\t\toperands[%d].type: REG = %s\n", c, ins.regName(i.value.reg));
         if (i.type == SYSZ_OP_ACREG)
-            System.out.printf("\t\toperands[%d].type: ACREG = %u\n", c, i.value.reg);
+            System.out.printf("\t\toperands[%d].type: ACREG = %s\n", c, i.value.reg);
         if (i.type == SYSZ_OP_IMM)
           System.out.printf("\t\toperands[%d].type: IMM = 0x%x\n", c, i.value.imm);
         if (i.type == SYSZ_OP_MEM) {
@@ -63,7 +63,6 @@ public class TestSystemz {
     if (operands.cc != 0)
       System.out.printf("\tConditional code: %d\n", operands.cc);
 
-    System.out.printf("\n");
   }
 
   public static void main(String argv[]) {

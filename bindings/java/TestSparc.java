@@ -20,6 +20,7 @@ public class TestSparc {
   }
 
   static final String SPARC_CODE = "80a0400285c2600885e8200181e8000090102001d5f610162100000a860040020100000012bfffff10bfffffa00200090dbfffffd4206000d44e00162ac28003";
+  static final String SPARCV9_CODE = "81a80a2489a0102089a01a6089a000e0";
 
   public static Capstone cs;
 
@@ -57,18 +58,18 @@ public class TestSparc {
     }
 
     if (operands.cc != 0)
-      System.out.printf("\tConditional code: %d\n", operands.cc);
+      System.out.printf("\tCode condition: %d\n", operands.cc);
 
     if (operands.hint != 0)
-      System.out.printf("\tBranch hint: %d\n", operands.hint);
+      System.out.printf("\tHint code: %d\n", operands.hint);
 
-    System.out.printf("\n");
   }
 
   public static void main(String argv[]) {
 
     final Test.platform[] all_tests = {
-      new Test.platform(Capstone.CS_ARCH_SPARC, Capstone.CS_MODE_BIG_ENDIAN, hexString2Byte(SPARC_CODE), "SPARC"),
+      new Test.platform(Capstone.CS_ARCH_SPARC, Capstone.CS_MODE_BIG_ENDIAN, hexString2Byte(SPARC_CODE), "Sparc"),
+      new Test.platform(Capstone.CS_ARCH_SPARC, Capstone.CS_MODE_BIG_ENDIAN + Capstone.CS_MODE_V9, hexString2Byte(SPARCV9_CODE), "SparcV9"),
     };
 
     for (int i=0; i<all_tests.length; i++) {

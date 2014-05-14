@@ -63,7 +63,6 @@ public class TestPpc {
     if (operands.updateCr0)
       System.out.printf("\tUpdate-CR0: True\n");
 
-    System.out.printf("\n");
   }
 
   public static void main(String argv[]) {
