@@ -343,7 +343,7 @@ uninstall:
 
 clean:
 	rm -f $(LIBOBJ)
-	rm -f $(LIBRARY) $(ARCHIVE)
+	rm -f $(BLDIR)/lib$(LIBNAME).*
 	rm -f $(PKGCFGF)
 	$(MAKE) -C tests clean
 	rm -f $(BLDIR)/tests/lib$(LIBNAME).$(EXT)
