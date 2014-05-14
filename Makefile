@@ -234,7 +234,7 @@ LDFLAGS += -shared
 IS_CYGWIN := $(shell $(CC) -dumpmachine | grep -i cygwin | wc -l)
 ifeq ($(IS_CYGWIN),1)
 EXT = dll
-AR_EXT = dll.a
+AR_EXT = lib
 # Cygwin doesn't like -fPIC
 CFLAGS := $(CFLAGS:-fPIC=)
 # On Windows we need the shared library to be executable
@@ -243,7 +243,7 @@ else
 IS_MINGW := $(shell $(CC) --version | grep -i mingw | wc -l)
 ifeq ($(IS_MINGW),1)
 EXT = dll
-AR_EXT = dll.a
+AR_EXT = lib
 # mingw doesn't like -fPIC either
 CFLAGS := $(CFLAGS:-fPIC=)
 # On Windows we need the shared library to be executable
