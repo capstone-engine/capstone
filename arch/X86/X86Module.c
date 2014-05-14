@@ -41,11 +41,14 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 				handle->printer = X86_Intel_printInst;
 				break;
 
-#ifndef CAPSTONE_DIET
-			// this is irrelevant in CAPSTONE_DIET mode
 			case CS_OPT_SYNTAX_ATT:
+#ifndef CAPSTONE_DIET
 				handle->printer = X86_ATT_printInst;
 				break;
+#else
+				// this is irrelevant in CAPSTONE_DIET mode
+				handle->errnum = CS_ERR_DIET;
+				return CS_ERR_DIET;
 #endif
 		}
 	}
