@@ -2,6 +2,7 @@ How To Compile & run Capstone for Windows
                         *-*-*-*-*-*
 
 Capstone requires no prerequisite packages, so it is easy to compile & install.
+Open the Visual Studio solution msvc/capstone.sln and see the instructions below.
 
 
 (0) Tailor Capstone to your need.
@@ -37,11 +38,14 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
   For each option, refer to docs/README for more details.
 
+
+
 (1) Compile from source on Windows with Visual Studio
 
-  - Open the Visual Studio solution called "capstone.sln"
-  - Choose the configuration and the platform you want: Release/Debug and Win32/Win64
-  - Build only the capstone-lib project, or the library along with all the tests
+  - Choose the configuration and the platform you want: Release/Debug & Win32/Win64.
+  - Build only the libraries, or the libraries along with all the tests.
+
+
 
 (2) You can make sure the prior steps successfully worked by launching one of the
-  testing binary (test*.exe)
+  testing binary (test*.exe).
