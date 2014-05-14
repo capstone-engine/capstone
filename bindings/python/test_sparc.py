@@ -39,15 +39,18 @@ def test_class():
                     if i.mem.base != 0:
                         print("\t\t\toperands[%u].mem.base: REG = %s" \
                             % (c, insn.reg_name(i.mem.base)))
+                    if i.mem.index != 0:
+                        print("\t\t\toperands[%u].mem.index: REG = %s" \
+                            % (c, insn.reg_name(i.mem.index)))
                     if i.mem.disp != 0:
                         print("\t\t\toperands[%u].mem.disp: 0x%s" \
                             % (c, to_x_32(i.mem.disp)))
                 c += 1
 
         if insn.cc:
-            print("\tConditional code: %u" % insn.cc)
+            print("\tCode condition: %u" % insn.cc)
         if insn.hint:
-            print("\tBranch hint: %u" % insn.hint)
+            print("\tHint code: %u" % insn.hint)
 
     for (arch, mode, code, comment) in all_tests:
         print("*" * 16)
@@ -60,7 +63,7 @@ def test_class():
             md.detail = True
             for insn in md.disasm(code, 0x1000):
                 print_insn_detail(insn)
-                print
+                print ()
             print("0x%x:\n" % (insn.address + insn.size))
         except CsError as e:
             print("ERROR: %s" %e)

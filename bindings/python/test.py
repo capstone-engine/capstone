@@ -55,9 +55,12 @@ def to_x(s):
     x = pack(">q", s)
     while x[0] in ('\0', 0): x = x[1:]
     if _python3:
-        return "".join("{0:02x}".format(c) for c in x)  # <-- Python 3 is OK
+        ret = "".join("{0:02x}".format(c) for c in x)  # <-- Python 3 is OK
     else:
-        return "".join("{0:02x}".format(ord(c)) for c in x)
+        ret = "".join("{0:02x}".format(ord(c)) for c in x)
+    if len(ret) > 1 and ret[0] == '0': # 01234 -> 1234
+        ret = ret[1:]
+    return ret
 
 def to_x_32(s):
     from struct import pack
@@ -65,9 +68,12 @@ def to_x_32(s):
     x = pack(">i", s)
     while x[0] in ('\0', 0): x = x[1:]
     if _python3:
-        return "".join("{0:02x}".format(c) for c in x)  # <-- Python 3 is OK
+        ret = "".join("{0:02x}".format(c) for c in x)  # <-- Python 3 is OK
     else:
-        return "".join("{0:02x}".format(ord(c)) for c in x)
+        ret = "".join("{0:02x}".format(ord(c)) for c in x)
+    if len(ret) > 1 and ret[0] == '0':
+        ret = ret[1:]
+    return ret
 
 # ## Test cs_disasm_quick()
 def test_cs_disasm_quick():
