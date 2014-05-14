@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "capstone-static", "capstone-static\capstone-static.vcxproj", "{5B01D900-2359-44CA-9914-6B0C6AFB7BE7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "capstone_static", "capstone_static\capstone_static.vcxproj", "{5B01D900-2359-44CA-9914-6B0C6AFB7BE7}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\test.vcxproj", "{B291E0D9-4B39-4AF8-971D-A015B78D54A1}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -53,7 +53,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_skipdata", "test_skipd
 		{5B01D900-2359-44CA-9914-6B0C6AFB7BE7} = {5B01D900-2359-44CA-9914-6B0C6AFB7BE7}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "capstone-dll", "capstone-dll\capstone-dll.vcxproj", "{2171C0E8-4915-49B9-AC23-A484FA08C126}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "capstone_dll", "capstone_dll\capstone_dll.vcxproj", "{2171C0E8-4915-49B9-AC23-A484FA08C126}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

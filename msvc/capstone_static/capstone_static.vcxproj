@@ -62,7 +62,7 @@
     <ProjectGuid>{5B01D900-2359-44CA-9914-6B0C6AFB7BE7}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>capstonewin32</RootNamespace>
-    <ProjectName>capstone-static</ProjectName>
+    <ProjectName>capstone_static</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
