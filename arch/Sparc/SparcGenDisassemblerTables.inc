@@ -9,7 +9,6 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
-#include <stdbool.h>
 #include "../../MCInst.h"
 #include "../../LEB128.h"
 

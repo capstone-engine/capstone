@@ -22,7 +22,6 @@
 
 #include <ctype.h>
 #include <stdint.h>
-#include <stdbool.h>
 #include <string.h>
 
 /// Instances of this class can perform bidirectional mapping from random

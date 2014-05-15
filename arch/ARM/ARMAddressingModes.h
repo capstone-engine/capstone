@@ -17,8 +17,7 @@
 #ifndef CS_LLVM_TARGET_ARM_ARMADDRESSINGMODES_H
 #define CS_LLVM_TARGET_ARM_ARMADDRESSINGMODES_H
 
-#include <stdbool.h>
-
+#include "../../include/platform.h"
 #include "../../MathExtras.h"
 
 /// ARM_AM - ARM Addressing Mode Stuff

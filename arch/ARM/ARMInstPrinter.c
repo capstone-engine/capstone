@@ -17,7 +17,6 @@
 #ifdef CAPSTONE_HAS_ARM
 
 #include <stdio.h>	// DEBUG
-#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <inttypes.h> 
