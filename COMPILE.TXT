@@ -22,6 +22,9 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
   - CAPSTONE_DIET: use this to make the output binaries more compact.
   - CAPSTONE_X86_REDUCE: another option to make X86 binary smaller.
 
+  By default, Capstone use system dynamic memory management, and both DIET and X86_REDUCE
+  modes are disable.
+
   To avoid editing config.mk for these customization, can pass their values to
   make.sh, as followings.
 
@@ -29,7 +32,6 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
   NOTE: on commandline, put these values in front of ./make.sh, not after it.
 
-  See default values of above options in config.mk
   For each option, refer to docs/README for more details.
 
 
