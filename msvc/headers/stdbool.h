@@ -1,7 +1,7 @@
 #pragma once
 
 #ifndef __cplusplus
-    typedef unsigned int bool;
+    typedef unsigned char bool;
 
     #define false 0
     #define true 1
