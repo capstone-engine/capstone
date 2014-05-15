@@ -28,11 +28,16 @@ static void print_string_hex(unsigned char *str, int len)
 	printf("\n");
 }
 
-static size_t mycallback(const uint8_t *buffer, size_t offset, void *p)
+size_t mycallback(const uint8_t *buffer, size_t offset, void *p)
 {
 	// always skip 2 bytes when encountering data
 	return 2;
 }
+
+cs_opt_skipdata skipdata = {
+	// rename default "data" instruction from ".byte" to "db"
+	"db",
+};
 
 static void test()
 {
@@ -61,10 +66,6 @@ static void test()
 	cs_insn *insn;
 	int i;
 	size_t count;
-	cs_opt_skipdata skipdata = {
-		// rename default "data" instruction from ".byte" to "db"
-		"db",
-	};
 	cs_err err;
 
 	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
