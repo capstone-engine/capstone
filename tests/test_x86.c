@@ -55,11 +55,12 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 	// SIB is not available in 16-bit mode
 	if ((mode & CS_MODE_16) == 0) {
 		printf("\tsib: 0x%x\n", x86->sib);
+		if (x86->sib_base != X86_REG_INVALID)
+			printf("\t\tsib_base: %s\n", cs_reg_name(handle, x86->sib_base));
 		if (x86->sib_index != X86_REG_INVALID)
-			printf("\tsib_index: %s, sib_scale: %u, sib_base: %s\n",
-					cs_reg_name(handle, x86->sib_index),
-					x86->sib_scale,
-					cs_reg_name(handle, x86->sib_base));
+			printf("\t\tsib_index: %s\n", cs_reg_name(handle, x86->sib_index));
+		if (x86->sib_scale != 0)
+			printf("\t\tsib_scale: %d\n", x86->sib_scale);
 	}
 
 	count = cs_op_count(ud, ins, X86_OP_IMM);
