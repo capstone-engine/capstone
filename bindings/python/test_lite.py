@@ -4,7 +4,8 @@
 from __future__ import print_function
 from capstone import *
 import binascii
-from test import to_hex
+from xprint import to_hex
+
 
 X86_CODE16 = b"\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00"
 X86_CODE32 = b"\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00"

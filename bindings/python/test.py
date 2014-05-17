@@ -1,10 +1,13 @@
 #!/usr/bin/env python
-from __future__ import print_function
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
+from __future__ import print_function
 from capstone import *
 import binascii
 import sys
+
+from xprint import to_hex, to_x, to_x_32
+
 _python3 = sys.version_info.major == 3
 
 
@@ -42,32 +45,6 @@ all_tests = (
         (CS_ARCH_SYSZ, 0, SYSZ_CODE, "SystemZ", 0),
 )
 
-
-def to_hex(s):
-    if _python3:
-        return " ".join("0x{0:02x}".format(c) for c in s)  # <-- Python 3 is OK
-    else:
-        return " ".join("0x{0:02x}".format(ord(c)) for c in s)
-
-def to_x(s):
-    from struct import pack
-    if not s: return '0'
-    x = pack(">q", s)
-    while x[0] in ('\0', 0): x = x[1:]
-    if _python3:
-        return "".join("{0:02x}".format(c) for c in x)  # <-- Python 3 is OK
-    else:
-        return "".join("{0:02x}".format(ord(c)) for c in x)
-
-def to_x_32(s):
-    from struct import pack
-    if not s: return '0'
-    x = pack(">i", s)
-    while x[0] in ('\0', 0): x = x[1:]
-    if _python3:
-        return "".join("{0:02x}".format(c) for c in x)  # <-- Python 3 is OK
-    else:
-        return "".join("{0:02x}".format(ord(c)) for c in x)
 
 # ## Test cs_disasm_quick()
 def test_cs_disasm_quick():
