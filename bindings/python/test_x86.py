@@ -58,7 +58,12 @@ def print_insn_detail(mode, insn):
         # print SIB byte
         print("\tsib: 0x%x" % (insn.sib))
         if (insn.sib):
-            print("\tsib_index: %s, sib_scale: %d, sib_base: %s" % (insn.reg_name(insn.sib_index), insn.sib_scale, insn.reg_name(insn.sib_base)))
+            if insn.sib_base != 0:
+                print("\tsib_base: %s" % (insn.reg_name(insn.sib_base)))
+            if insn.sib_index != 0:
+                print("\tsib_index: %s" % (insn.reg_name(insn.sib_index)))
+            if insn.sib_scale != 0:
+                print("\tsib_scale: %d" % (insn.sib_scale))
 
     count = insn.op_count(X86_OP_IMM)
     if count > 0:
