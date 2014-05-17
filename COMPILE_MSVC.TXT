@@ -1,8 +1,12 @@
-How To Compile & run Capstone for Windows
+How To compile Capstone on Windows using Microsoft Visual Studio.
+
                         *-*-*-*-*-*
 
 Capstone requires no prerequisite packages, so it is easy to compile & install.
-Open the Visual Studio solution msvc/capstone.sln and see the instructions below.
+Open the Visual Studio solution "msvc/capstone.sln" and follow the instructions
+below.
+
+NOTE: This requires Visual Studio 2010 or newer versions.
 
 
 (0) Tailor Capstone to your need.

@@ -1,4 +1,8 @@
-How To Compile, install & run Capstone for Linux, Mac OSX, *BSD and Windows
+This documentation explains how to compile, install & run Capstone on MacOSX,
+Linux, *BSD & Solaris. We also show steps to cross-compile for Microsoft Windows.
+
+To natively compile for Windows using Microsoft Visual Studio, see COMPILE_MSVC.TXT.
+
                         *-*-*-*-*-*
 
 Capstone requires no prerequisite packages, so it is easy to compile & install.
