@@ -20,9 +20,9 @@ static name_map reg_name_maps[] = {
 	//=========
 	{ ARM64_REG_NZCV, "nzcv"},
 	{ ARM64_REG_WSP, "wsp"},
-	{ ARM64_REG_WZR, "wzr"},	// dummy data for array mapping order only
+	{ ARM64_REG_WZR, "wzr"},
 	{ ARM64_REG_SP, "sp"},
-	{ ARM64_REG_XZR, "xzr"},	// dummy data for array mapping order only
+	{ ARM64_REG_XZR, "xzr"},
 	{ ARM64_REG_B0, "b0"},
 	{ ARM64_REG_B1, "b1"},
 	{ ARM64_REG_B2, "b2"},
