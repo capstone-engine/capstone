@@ -850,7 +850,7 @@ static void printVectorList(MCInst *MI, unsigned OpNum,
 #define PRINT_ALIAS_INSTR
 #include "AArch64GenAsmWriter.inc"
 
-void AArch64_post_printer(csh handle, cs_insn *flat_insn, char *insn_asm)
+void AArch64_post_printer(csh handle, cs_insn *flat_insn, char *insn_asm, MCInst *mci)
 {
 	if (((cs_struct *)handle)->detail != CS_OPT_ON)
 		return;

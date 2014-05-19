@@ -41573,8 +41573,79 @@ static insn_map insns[] = {	// reduce x86 instructions
 #endif
 
 // post printer for X86. put all the hacky stuff here
-void X86_post_printer(csh handle, cs_insn *insn, char *insn_asm)
+void X86_post_printer(csh handle, cs_insn *insn, char *insn_asm, MCInst *mci)
 {
+#ifndef CAPSTONE_DIET
+	cs_struct *ud = (cs_struct *)handle;
+
+	if (ud->detail) {
+		if (ud->syntax != CS_OPT_SYNTAX_ATT) { // default syntax is Intel
+			// AT&T print this instruction without immediate 1?
+			switch (mci->Opcode) {
+				default:
+					break;
+				case X86_SAL8r1:
+				case X86_SAL16r1:
+				case X86_SAL32r1:
+				case X86_SAL64r1:
+				case X86_SAL8m1:
+				case X86_SAL16m1:
+				case X86_SAL32m1:
+				case X86_SAL64m1:
+
+				case X86_SHL8r1:
+				case X86_SHL16r1:
+				case X86_SHL32r1:
+				case X86_SHL64r1:
+				case X86_SHL8m1:
+				case X86_SHL16m1:
+				case X86_SHL32m1:
+				case X86_SHL64m1:
+
+				case X86_SHR8r1:
+				case X86_SHR16r1:
+				case X86_SHR32r1:
+				case X86_SHR64r1:
+				case X86_SHR8m1:
+				case X86_SHR16m1:
+				case X86_SHR32m1:
+				case X86_SHR64m1:
+
+				case X86_SAR8r1:
+				case X86_SAR16r1:
+				case X86_SAR32r1:
+				case X86_SAR64r1:
+				case X86_SAR8m1:
+				case X86_SAR16m1:
+				case X86_SAR32m1:
+				case X86_SAR64m1:
+
+				case X86_ROR8r1:
+				case X86_ROR16r1:
+				case X86_ROR32r1:
+				case X86_ROR64r1:
+				case X86_ROR8m1:
+				case X86_ROR16m1:
+				case X86_ROR32m1:
+				case X86_ROR64m1:
+
+				case X86_ROL8r1:
+				case X86_ROL16r1:
+				case X86_ROL32r1:
+				case X86_ROL64r1:
+				case X86_ROL8m1:
+				case X86_ROL16m1:
+				case X86_ROL32m1:
+				case X86_ROL64m1:
+
+					insn->detail->x86.operands[insn->detail->x86.op_count].type = X86_OP_IMM;
+					insn->detail->x86.operands[insn->detail->x86.op_count].imm = 1;
+					insn->detail->x86.op_count++;
+					break;
+			}
+		}
+	}
+#endif
 }
 
 // given internal insn id, return public instruction info

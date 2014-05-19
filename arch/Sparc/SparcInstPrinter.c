@@ -52,7 +52,7 @@ static void set_mem_access(MCInst *MI, bool status)
 	}
 }
 
-void Sparc_post_printer(csh ud, cs_insn *insn, char *insn_asm)
+void Sparc_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 {
 	if (((cs_struct *)ud)->detail != CS_OPT_ON)
 		return;

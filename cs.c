@@ -278,7 +278,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 
 	// post printer handles some corner cases (hacky)
 	if (postprinter)
-		postprinter((csh)handle, insn, buffer);
+		postprinter((csh)handle, insn, buffer, mci);
 
 #ifndef CAPSTONE_DIET
 	// fill in mnemonic & operands

@@ -30,7 +30,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 const char *X86_insn_name(csh handle, unsigned int id);
 
 // post printer for X86.
-void X86_post_printer(csh handle, cs_insn *pub_insn, char *insn_asm);
+void X86_post_printer(csh handle, cs_insn *pub_insn, char *insn_asm, MCInst *mci);
 
 // return register of given instruction id
 // return 0 if not found

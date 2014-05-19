@@ -31,7 +31,7 @@
 
 static const char *getRegisterName(unsigned RegNo);
 
-void SystemZ_post_printer(csh ud, cs_insn *insn, char *insn_asm)
+void SystemZ_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 {
 	/*
 	   if (((cs_struct *)ud)->detail != CS_OPT_ON)

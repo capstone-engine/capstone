@@ -233,7 +233,7 @@ static name_map insn_update_flgs[] = {
 	{ ARM_INS_UMULL, "umulls" },
 };
 
-void ARM_post_printer(csh ud, cs_insn *insn, char *insn_asm)
+void ARM_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 {
 	if (((cs_struct *)ud)->detail != CS_OPT_ON)
 		return;
