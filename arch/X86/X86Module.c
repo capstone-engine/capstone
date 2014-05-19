@@ -17,6 +17,7 @@ static cs_err init(cs_struct *ud)
 
 	// by default, we use Intel syntax
 	ud->printer = X86_Intel_printInst;
+	ud->syntax = CS_OPT_SYNTAX_INTEL;
 	ud->printer_info = NULL;
 	ud->disasm = X86_getInstruction;
 	ud->reg_name = X86_reg_name;
@@ -39,11 +40,13 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 			case CS_OPT_SYNTAX_DEFAULT:
 			case CS_OPT_SYNTAX_INTEL:
 				handle->printer = X86_Intel_printInst;
+				handle->syntax = CS_OPT_SYNTAX_INTEL;
 				break;
 
 			case CS_OPT_SYNTAX_ATT:
 #ifndef CAPSTONE_DIET
 				handle->printer = X86_ATT_printInst;
+				handle->syntax = CS_OPT_SYNTAX_ATT;
 				break;
 #else
 				// this is irrelevant in CAPSTONE_DIET mode
