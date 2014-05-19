@@ -1,5 +1,7 @@
-/* Capstone Disassembler Engine */
+/* Capstone Disassembly Engine */
 /* By Dang Hoang Vu <danghvu@gmail.com> 2013 */
+
+#ifdef CAPSTONE_HAS_MIPS
 
 #include "../../utils.h"
 #include "../../MCRegisterInfo.h"
@@ -60,3 +62,5 @@ void Mips_enable(void)
 	// support this arch
 	all_arch |= (1 << CS_ARCH_MIPS);
 }
+
+#endif

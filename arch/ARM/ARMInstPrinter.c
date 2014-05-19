@@ -11,11 +11,12 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+
+#ifdef CAPSTONE_HAS_ARM
 
 #include <stdio.h>	// DEBUG
-#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <inttypes.h> 
@@ -269,7 +270,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	MCRegisterInfo *MRI = (MCRegisterInfo *)Info;
 
-	unsigned Opcode = MCInst_getOpcode(MI);
+	unsigned Opcode = MCInst_getOpcode(MI), tmp, i;
 
 	switch(Opcode) {
 		// Check for HINT instructions w/ canonical names.
@@ -374,7 +375,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 							}
 
 							SStream_concat(O, ", %s", markup("<imm:"));
-							unsigned tmp = translateShiftImm(getSORegOffset((unsigned int)MCOperand_getImm(MO2)));
+							tmp = translateShiftImm(getSORegOffset((unsigned int)MCOperand_getImm(MO2)));
 							if (tmp > HEX_THRESHOLD)
 								SStream_concat(O, "#0x%x", tmp);
 							else
@@ -518,25 +519,24 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 				    bool isStore = Opcode == ARM_STREXD || Opcode == ARM_STLEXD;
 
 				    unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, isStore ? 1 : 0));
-					if (MCRegisterClass_contains(MRC, Reg)) {
-						MCInst NewMI;
-						MCOperand *NewReg;
-						MCInst_setOpcode(&NewMI, Opcode);
+				    if (MCRegisterClass_contains(MRC, Reg)) {
+				   	 MCInst NewMI;
+				   	 MCOperand *NewReg;
+				   	 MCInst_setOpcode(&NewMI, Opcode);
 
-						if (isStore)
-							MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, 0));
-						NewReg = MCOperand_CreateReg(MCRegisterInfo_getMatchingSuperReg(MRI, Reg, ARM_gsub_0,
-									MCRegisterInfo_getRegClass(MRI, ARM_GPRPairRegClassID)));
-						MCInst_addOperand2(&NewMI, NewReg);
-						cs_mem_free(NewReg);
+				   	 if (isStore)
+				   		 MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, 0));
+				   	 NewReg = MCOperand_CreateReg(MCRegisterInfo_getMatchingSuperReg(MRI, Reg, ARM_gsub_0,
+				   				 MCRegisterInfo_getRegClass(MRI, ARM_GPRPairRegClassID)));
+				   	 MCInst_addOperand2(&NewMI, NewReg);
+				   	 cs_mem_free(NewReg);
 
-						// Copy the rest operands into NewMI.
-						unsigned i;
-						for(i= isStore ? 3 : 2; i < MCInst_getNumOperands(MI); ++i)
-							MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, i));
-						printInstruction(&NewMI, O, MRI);
-						return;
-					}
+				   	 // Copy the rest operands into NewMI.
+				   	 for(i= isStore ? 3 : 2; i < MCInst_getNumOperands(MI); ++i)
+				   		 MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, i));
+				   	 printInstruction(&NewMI, O, MRI);
+				   	 return;
+				    }
 				}
 	}
 
@@ -547,6 +547,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
+	int32_t imm;
 	MCOperand *Op = MCInst_getOperand(MI, OpNo);
 	if (MCOperand_isReg(Op)) {
 		unsigned Reg = MCOperand_getReg(Op);
@@ -565,7 +566,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		}
 	} else if (MCOperand_isImm(Op)) {
 		SStream_concat(O, markup("<imm:"));
-		int32_t imm = (int32_t)MCOperand_getImm(Op);
+		imm = (int32_t)MCOperand_getImm(Op);
 
 		// relative branch only has relative offset, so we have to update it
 		// to reflect absolute address. 
@@ -618,11 +619,12 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 static void printThumbLdrLabelOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
-
+	int32_t OffImm;
+	bool isSub;
 	SStream_concat(O, "%s[pc, ", markup("<mem:"));
 
-	int32_t OffImm = (int32_t)MCOperand_getImm(MO1);
-	bool isSub = OffImm < 0;
+	OffImm = (int32_t)MCOperand_getImm(MO1);
+	isSub = OffImm < 0;
 
 	// Special value for #-0. All others are normal.
 	if (OffImm == INT32_MIN)
@@ -649,6 +651,7 @@ static void printSORegRegOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
 	MCOperand *MO3 = MCInst_getOperand(MI, OpNum+2);
+	ARM_AM_ShiftOpc ShOpc;
 
 	printRegName(MI->csh, O, MCOperand_getReg(MO1));
 
@@ -661,7 +664,7 @@ static void printSORegRegOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	}
 
 	// Print the shift opc.
-	ARM_AM_ShiftOpc ShOpc = ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO3));
+	ShOpc = ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO3));
 	SStream_concat(O, ", ");
 	SStream_concat(O, ARM_AM_getShiftOpcStr(ShOpc));
 	if (ShOpc == ARM_AM_rrx)
@@ -838,6 +841,7 @@ static void printAM3PostIndexOp(MCInst *MI, unsigned Op, SStream *O)
 	MCOperand *MO2 = MCInst_getOperand(MI, Op+1);
 	MCOperand *MO3 = MCInst_getOperand(MI, Op+2);
 	ARM_AM_AddrOpc op = getAM3Op((unsigned int)MCOperand_getImm(MO3));
+	unsigned ImmOffs;
 
 	SStream_concat(O, "%s[", markup("<mem:"));
 	set_mem_access(MI, true);
@@ -858,7 +862,7 @@ static void printAM3PostIndexOp(MCInst *MI, unsigned Op, SStream *O)
 		return;
 	}
 
-	unsigned ImmOffs = getAM3Offset((unsigned int)MCOperand_getImm(MO3));
+	ImmOffs = getAM3Offset((unsigned int)MCOperand_getImm(MO3));
 	if (ImmOffs > HEX_THRESHOLD)
 		SStream_concat(O, "%s#%s0x%x%s", markup("<imm:"),
 				ARM_AM_getAddrOpcStr(op), ImmOffs,
@@ -887,6 +891,7 @@ static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 	MCOperand *MO2 = MCInst_getOperand(MI, Op+1);
 	MCOperand *MO3 = MCInst_getOperand(MI, Op+2);
 	ARM_AM_AddrOpc op = getAM3Op((unsigned int)MCOperand_getImm(MO3));
+	unsigned ImmOffs;
 
 	SStream_concat(O, "%s[", markup("<mem:"));
 	set_mem_access(MI, true);
@@ -908,7 +913,7 @@ static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 	}
 
 	//If the op is sub we have to print the immediate even if it is 0
-	unsigned ImmOffs = getAM3Offset((unsigned int)MCOperand_getImm(MO3));
+	ImmOffs = getAM3Offset((unsigned int)MCOperand_getImm(MO3));
 
 	if (AlwaysPrintImm0 || ImmOffs || (op == ARM_AM_sub)) {
 		if (ImmOffs > HEX_THRESHOLD)
@@ -933,14 +938,16 @@ static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 static void printAddrMode3Operand(MCInst *MI, unsigned Op, SStream *O,
 		bool AlwaysPrintImm0)
 {
+	unsigned IdxMode;
+	MCOperand *MO3;
 	MCOperand *MO1 = MCInst_getOperand(MI, Op);
 	if (!MCOperand_isReg(MO1)) {   //  For label symbolic references.
 		printOperand(MI, Op, O);
 		return;
 	}
 
-	MCOperand *MO3 = MCInst_getOperand(MI, Op+2);
-	unsigned IdxMode = getAM3IdxMode((unsigned int)MCOperand_getImm(MO3));
+	MO3 = MCInst_getOperand(MI, Op+2);
+	IdxMode = getAM3IdxMode((unsigned int)MCOperand_getImm(MO3));
 
 	if (IdxMode == ARMII_IndexModePost) {
 		printAM3PostIndexOp(MI, Op, O);
@@ -955,6 +962,7 @@ static void printAddrMode3OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
 	ARM_AM_AddrOpc op = getAM3Op((unsigned int)MCOperand_getImm(MO2));
+	unsigned ImmOffs;
 
 	if (MCOperand_getReg(MO1)) {
 		SStream_concat(O, ARM_AM_getAddrOpcStr(op));
@@ -967,7 +975,7 @@ static void printAddrMode3OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		return;
 	}
 
-	unsigned ImmOffs = getAM3Offset((unsigned int)MCOperand_getImm(MO2));
+	ImmOffs = getAM3Offset((unsigned int)MCOperand_getImm(MO2));
 	if (ImmOffs > HEX_THRESHOLD)
 		SStream_concat(O, "%s#%s0x%x%s", markup("<imm:"),
 				ARM_AM_getAddrOpcStr(op), ImmOffs,
@@ -1036,7 +1044,7 @@ static void printAddrMode5Operand(MCInst *MI, unsigned OpNum, SStream *O,
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
-
+	unsigned ImmOffs, Op;
 	if (!MCOperand_isReg(MO1)) {   // FIXME: This is for CP entries, but isn't right.
 		printOperand(MI, OpNum, O);
 		return;
@@ -1045,8 +1053,8 @@ static void printAddrMode5Operand(MCInst *MI, unsigned OpNum, SStream *O,
 	SStream_concat(O, "%s[", markup("<mem:"));
 	printRegName(MI->csh, O, MCOperand_getReg(MO1));
 
-	unsigned ImmOffs = ARM_AM_getAM5Offset((unsigned int)MCOperand_getImm(MO2));
-	unsigned Op = ARM_AM_getAM5Op((unsigned int)MCOperand_getImm(MO2));
+	ImmOffs = ARM_AM_getAM5Offset((unsigned int)MCOperand_getImm(MO2));
+	Op = ARM_AM_getAM5Op((unsigned int)MCOperand_getImm(MO2));
 	if (AlwaysPrintImm0 || ImmOffs || Op == ARM_AM_sub) {
 		if (ImmOffs * 4 > HEX_THRESHOLD)
 			SStream_concat(O, ", %s#%s0x%x%s", markup("<imm:"),
@@ -1064,13 +1072,14 @@ static void printAddrMode6Operand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
+	unsigned tmp;
 
 	SStream_concat(O, "%s[", markup("<mem:"));
 	set_mem_access(MI, true);
 	printRegName(MI->csh, O, MCOperand_getReg(MO1));
 	if (MI->csh->detail)
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.base = MCOperand_getReg(MO1);
-	unsigned tmp = (unsigned int)MCOperand_getImm(MO2);
+	tmp = (unsigned int)MCOperand_getImm(MO2);
 	if (tmp) {
 		if (tmp << 3 > HEX_THRESHOLD)
 			SStream_concat(O, ":0x%x", (tmp << 3));
@@ -1144,8 +1153,8 @@ static void printMemBOption(MCInst *MI, unsigned OpNum, SStream *O)
 	unsigned val = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	// FIXME: HasV80Ops becomes a mode
 	// SStream_concat(O, ARM_MB_MemBOptToString(val,
-	//			ARM_getFeatureBits(MI->csh->mode) & ARM_HasV8Ops));
-	SStream_concat(O, ARM_MB_MemBOptToString(val, ARM_HasV8Ops));
+	// 			ARM_getFeatureBits(MI->csh->mode) & ARM_HasV8Ops));
+	SStream_concat(O, ARM_MB_MemBOptToString(val, true));
 }
 
 void printInstSyncBOption(MCInst *MI, unsigned OpNum, SStream *O)
@@ -1217,8 +1226,8 @@ static void printPKHASRShiftImm(MCInst *MI, unsigned OpNum, SStream *O)
 // FIXME: push {r1, r2, r3, ...} can exceed the number of operands in MCInst struct
 static void printRegisterList(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	SStream_concat(O, "{");
 	unsigned i, e;
+	SStream_concat(O, "{");
 	for (i = OpNum, e = MCInst_getNumOperands(MI); i != e; ++i) {
 		if (i != OpNum) SStream_concat(O, ", ");
 		printRegName(MI->csh, O, MCOperand_getReg(MCInst_getOperand(MI, i)));
@@ -1548,6 +1557,7 @@ static void printThumbAddrModeRROperand(MCInst *MI, unsigned Op, SStream *O)
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, Op);
 	MCOperand *MO2 = MCInst_getOperand(MI, Op + 1);
+	unsigned RegNum;
 
 	if (!MCOperand_isReg(MO1)) {   // FIXME: This is for CP entries, but isn't right.
 		printOperand(MI, Op, O);
@@ -1560,7 +1570,7 @@ static void printThumbAddrModeRROperand(MCInst *MI, unsigned Op, SStream *O)
 	printRegName(MI->csh, O, MCOperand_getReg(MO1));
 	if (MI->csh->detail)
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.base = MCOperand_getReg(MO1);
-	unsigned RegNum = MCOperand_getReg(MO2);
+	RegNum = MCOperand_getReg(MO2);
 	if (RegNum) {
 		SStream_concat(O, ", ");
 		printRegName(MI->csh, O, RegNum);
@@ -1577,6 +1587,7 @@ static void printThumbAddrModeImm5SOperand(MCInst *MI, unsigned Op, SStream *O,
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, Op);
 	MCOperand *MO2 = MCInst_getOperand(MI, Op + 1);
+	unsigned ImmOffs, tmp;
 
 	if (!MCOperand_isReg(MO1)) {   // FIXME: This is for CP entries, but isn't right.
 		printOperand(MI, Op, O);
@@ -1589,9 +1600,9 @@ static void printThumbAddrModeImm5SOperand(MCInst *MI, unsigned Op, SStream *O,
 	printRegName(MI->csh, O, MCOperand_getReg(MO1));
 	if (MI->csh->detail)
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.base = MCOperand_getReg(MO1);
-	unsigned ImmOffs = (unsigned int)MCOperand_getImm(MO2);
+	ImmOffs = (unsigned int)MCOperand_getImm(MO2);
 	if (ImmOffs) {
-		unsigned tmp = ImmOffs * Scale;
+		tmp = ImmOffs * Scale;
 		SStream_concat(O, ", %s", markup("<imm:"));
 		if (tmp > HEX_THRESHOLD)
 			SStream_concat(O, "#0x%x", tmp);
@@ -1782,6 +1793,7 @@ static void printT2AddrModeImm0_1020s4Operand(MCInst *MI, unsigned OpNum, SStrea
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
+	unsigned tmp;
 
 	SStream_concat(O, markup("<mem:"));
 	SStream_concat(O, "[");
@@ -1792,7 +1804,7 @@ static void printT2AddrModeImm0_1020s4Operand(MCInst *MI, unsigned OpNum, SStrea
 	if (MCOperand_getImm(MO2)) {
 		SStream_concat(O, ", ");
 		SStream_concat(O, markup("<imm:"));
-		unsigned tmp = (unsigned int)MCOperand_getImm(MO2) * 4;
+		tmp = (unsigned int)MCOperand_getImm(MO2) * 4;
 		if (tmp > HEX_THRESHOLD)
 			SStream_concat(O, "#0x%x", tmp);
 		else
@@ -1880,6 +1892,7 @@ static void printT2AddrModeSoRegOperand(MCInst *MI,
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
 	MCOperand *MO3 = MCInst_getOperand(MI, OpNum+2);
+	unsigned ShAmt;
 
 	SStream_concat(O, "%s[", markup("<mem:"));
 	set_mem_access(MI, true);
@@ -1893,7 +1906,7 @@ static void printT2AddrModeSoRegOperand(MCInst *MI,
 	if (MI->csh->detail)
 		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.index = MCOperand_getReg(MO2);
 
-	unsigned ShAmt = (unsigned int)MCOperand_getImm(MO3);
+	ShAmt = (unsigned int)MCOperand_getImm(MO3);
 	if (ShAmt) {
 		//assert(ShAmt <= 3 && "Not a valid Thumb2 addressing mode!");
 		SStream_concat(O, ", lsl ");
@@ -1972,8 +1985,10 @@ static void printRotImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 
 static void printFBits16(MCInst *MI, unsigned OpNum, SStream *O)
 {
+	unsigned tmp;
+
 	SStream_concat(O, markup("<imm:"));
-	unsigned tmp = 16 - (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	tmp = 16 - (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	if (tmp > HEX_THRESHOLD)
 		SStream_concat(O, "#0x%x", tmp);
 	else
@@ -1988,8 +2003,10 @@ static void printFBits16(MCInst *MI, unsigned OpNum, SStream *O)
 
 static void printFBits32(MCInst *MI, unsigned OpNum, SStream *O)
 {
+	unsigned tmp;
+
 	SStream_concat(O, markup("<imm:"));
-	unsigned tmp = 32 - (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	tmp = 32 - (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	if (tmp > HEX_THRESHOLD)
 		SStream_concat(O, "#0x%x", tmp);
 	else
@@ -2393,3 +2410,5 @@ static void printVectorListFourSpaced(MCInst *MI, unsigned OpNum, SStream *O)
 	}
 	SStream_concat(O, "}");
 }
+
+#endif

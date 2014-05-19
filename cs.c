@@ -1,6 +1,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
-
+#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
+#pragma warning(disable:4996)
+#endif
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,7 +12,7 @@
 #include "utils.h"
 #include "MCRegisterInfo.h"
 
-#ifdef USE_SYS_DYN_MEM
+#ifdef CAPSTONE_USE_SYS_DYN_MEM
 #define INSN_CACHE_SIZE 32
 #else
 // reduce stack variable size for kernel/firmware
@@ -66,7 +68,7 @@ static void archs_enable(void)
 
 unsigned int all_arch = 0;
 
-#ifdef USE_SYS_DYN_MEM
+#ifdef CAPSTONE_USE_SYS_DYN_MEM
 cs_malloc_t cs_mem_malloc = malloc;
 cs_calloc_t cs_mem_calloc = calloc;
 cs_realloc_t cs_mem_realloc = realloc;
@@ -127,10 +129,11 @@ bool cs_support(int query)
 
 cs_err cs_errno(csh handle)
 {
+	struct cs_struct *ud;
 	if (!handle)
 		return CS_ERR_CSH;
 
-	struct cs_struct *ud = (struct cs_struct *)(uintptr_t)handle;
+	ud = (struct cs_struct *)(uintptr_t)handle;
 
 	return ud->errnum;
 }
@@ -169,6 +172,8 @@ const char *cs_strerror(cs_err code)
 
 cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 {
+	cs_err err;
+	struct cs_struct *ud;
 	if (!cs_mem_malloc || !cs_mem_calloc || !cs_mem_realloc || !cs_mem_free || !cs_vsnprintf)
 		// Error: before cs_open(), dynamic memory management must be initialized
 		// with cs_option(CS_OPT_MEM)
@@ -177,8 +182,6 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 	archs_enable();
 
 	if (arch < CS_ARCH_MAX && arch_init[arch]) {
-		struct cs_struct *ud;
-
 		ud = cs_mem_calloc(1, sizeof(*ud));
 		if (!ud) {
 			// memory insufficient
@@ -195,7 +198,7 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		// default skipdata setup
 		ud->skipdata_setup.mnemonic = SKIPDATA_MNEM;
 
-		cs_err err = arch_init[ud->arch](ud);
+		err = arch_init[ud->arch](ud);
 		if (err) {
 			cs_mem_free(ud);
 			*handle = 0;
@@ -213,11 +216,13 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 
 cs_err cs_close(csh *handle)
 {
+	struct cs_struct *ud;
+
 	if (*handle == 0)
 		// invalid handle
 		return CS_ERR_CSH;
 
-	struct cs_struct *ud = (struct cs_struct *)(*handle);
+	ud = (struct cs_struct *)(*handle);
 
 	if (ud->printer_info)
 		cs_mem_free(ud->printer_info);
@@ -239,13 +244,17 @@ cs_err cs_close(csh *handle)
 static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mci,
 		PostPrinter_t postprinter, const uint8_t *code)
 {
+#ifndef CAPSTONE_DIET
+	char *sp;
+#endif
+
 	if (handle->detail) {
 		// avoiding copy insn->detail
 		memcpy(insn, &mci->flat_insn, sizeof(*insn) - sizeof(insn->detail));
 
 		// NOTE: copy details in 2 chunks, since union is always put at address divisible by 8
 		// copy from @regs_read until @arm
-		memcpy(insn->detail, (void *)(&(mci->flat_insn)) + offsetof(cs_insn_flat, regs_read),
+		memcpy(insn->detail, (void *)((uintptr_t)(&(mci->flat_insn)) + offsetof(cs_insn_flat, regs_read)),
 				offsetof(cs_detail, arm) - offsetof(cs_detail, regs_read));
 		// then copy from @arm until end
 		memcpy((void *)((uintptr_t)(insn->detail) + offsetof(cs_detail, arm)),
@@ -274,7 +283,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 #ifndef CAPSTONE_DIET
 	// fill in mnemonic & operands
 	// find first space or tab
-	char *sp = buffer;
+	sp = buffer;
 	for (sp = buffer; *sp; sp++) {
 		if (*sp == ' '||*sp == '\t')
 			break;
@@ -329,6 +338,7 @@ static uint8_t skipdata_size(cs_struct *handle)
 
 cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 {
+	struct cs_struct *handle;
 	archs_enable();
 
 	// cs_option() can be called with NULL handle just for CS_OPT_MEM
@@ -345,7 +355,7 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 		return CS_ERR_OK;
 	}
 
-	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
+	handle = (struct cs_struct *)(uintptr_t)ud;
 	if (!handle)
 		return CS_ERR_CSH;
 
@@ -599,10 +609,11 @@ static bool arr_exist(unsigned char *arr, unsigned char max, unsigned int id)
 
 bool cs_insn_group(csh ud, cs_insn *insn, unsigned int group_id)
 {
+	struct cs_struct *handle;
 	if (!ud)
 		return false;
 
-	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
+	handle = (struct cs_struct *)(uintptr_t)ud;
 
 	if (!handle->detail) {
 		handle->errnum = CS_ERR_DETAIL;
@@ -624,10 +635,11 @@ bool cs_insn_group(csh ud, cs_insn *insn, unsigned int group_id)
 
 bool cs_reg_read(csh ud, cs_insn *insn, unsigned int reg_id)
 {
+	struct cs_struct *handle;
 	if (!ud)
 		return false;
 
-	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
+	handle = (struct cs_struct *)(uintptr_t)ud;
 
 	if (!handle->detail) {
 		handle->errnum = CS_ERR_DETAIL;
@@ -649,10 +661,11 @@ bool cs_reg_read(csh ud, cs_insn *insn, unsigned int reg_id)
 
 bool cs_reg_write(csh ud, cs_insn *insn, unsigned int reg_id)
 {
+	struct cs_struct *handle;
 	if (!ud)
 		return false;
 
-	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
+	handle = (struct cs_struct *)(uintptr_t)ud;
 
 	if (!handle->detail) {
 		handle->errnum = CS_ERR_DETAIL;
@@ -674,10 +687,12 @@ bool cs_reg_write(csh ud, cs_insn *insn, unsigned int reg_id)
 
 int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
 {
+	struct cs_struct *handle;
+	unsigned int count = 0, i;
 	if (!ud)
 		return -1;
 
-	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
+	handle = (struct cs_struct *)(uintptr_t)ud;
 
 	if (!handle->detail) {
 		handle->errnum = CS_ERR_DETAIL;
@@ -693,8 +708,6 @@ int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
 		handle->errnum = CS_ERR_DETAIL;
 		return -1;
 	}
-
-	unsigned int count = 0, i;
 
 	handle->errnum = CS_ERR_OK;
 
@@ -745,10 +758,12 @@ int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
 int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 		unsigned int post)
 {
+	struct cs_struct *handle;
+	unsigned int count = 0, i;
 	if (!ud)
 		return -1;
 
-	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
+	handle = (struct cs_struct *)(uintptr_t)ud;
 
 	if (!handle->detail) {
 		handle->errnum = CS_ERR_DETAIL;
@@ -764,8 +779,6 @@ int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 		handle->errnum = CS_ERR_DETAIL;
 		return -1;
 	}
-
-	unsigned int count = 0, i;
 
 	handle->errnum = CS_ERR_OK;
 

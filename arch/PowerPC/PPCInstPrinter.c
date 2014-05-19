@@ -14,6 +14,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_POWERPC
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -374,12 +376,13 @@ static void printBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
+	int tmp;
 	if (!MCOperand_isImm(MCInst_getOperand(MI, OpNo))) {
 		printOperand(MI, OpNo, O);
 		return;
 	}
 
-	int tmp = (int)MCOperand_getImm(MCInst_getOperand(MI, OpNo)) * 4;
+	tmp = (int)MCOperand_getImm(MCInst_getOperand(MI, OpNo)) * 4;
 	if (tmp >= 0) {
 		if (tmp > HEX_THRESHOLD)
 			SStream_concat(O, "0x%x", tmp);
@@ -400,7 +403,7 @@ static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 static void printcrbitm(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	unsigned CCReg = MCOperand_getReg(MCInst_getOperand(MI, OpNo));
-	unsigned RegNo;
+	unsigned RegNo, tmp;
 	switch (CCReg) {
 		default: // llvm_unreachable("Unknown CR register");
 		case PPC_CR0: RegNo = 0; break;
@@ -413,7 +416,7 @@ static void printcrbitm(MCInst *MI, unsigned OpNo, SStream *O)
 		case PPC_CR7: RegNo = 7; break;
 	}
 
-	unsigned tmp= 0x80 >> RegNo;
+	tmp = 0x80 >> RegNo;
 	if (tmp > HEX_THRESHOLD)
 		SStream_concat(O, "0x%x", tmp);
 	else
@@ -541,3 +544,4 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 //#define PRINT_ALIAS_INSTR
 #include "PPCGenAsmWriter.inc"
 
+#endif

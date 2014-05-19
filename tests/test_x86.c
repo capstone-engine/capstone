@@ -55,11 +55,12 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 	// SIB is not available in 16-bit mode
 	if ((mode & CS_MODE_16) == 0) {
 		printf("\tsib: 0x%x\n", x86->sib);
+		if (x86->sib_base != X86_REG_INVALID)
+			printf("\t\tsib_base: %s\n", cs_reg_name(handle, x86->sib_base));
 		if (x86->sib_index != X86_REG_INVALID)
-			printf("\tsib_index: %s, sib_scale: %u, sib_base: %s\n",
-					cs_reg_name(handle, x86->sib_index),
-					x86->sib_scale,
-					cs_reg_name(handle, x86->sib_base));
+			printf("\t\tsib_index: %s\n", cs_reg_name(handle, x86->sib_index));
+		if (x86->sib_scale != 0)
+			printf("\t\tsib_scale: %d\n", x86->sib_scale);
 	}
 
 	count = cs_op_count(ud, ins, X86_OP_IMM);
@@ -135,34 +136,34 @@ static void test()
 
 	struct platform platforms[] = {
 		{
-			.arch = CS_ARCH_X86,
-			.mode = CS_MODE_16,
-			.code = (unsigned char *)X86_CODE16,
-			.size = sizeof(X86_CODE16) - 1,
-			.comment = "X86 16bit (Intel syntax)"
+			CS_ARCH_X86,
+			CS_MODE_16,
+			(unsigned char *)X86_CODE16,
+			sizeof(X86_CODE16) - 1,
+			"X86 16bit (Intel syntax)"
 		},
 		{
-			.arch = CS_ARCH_X86,
-			.mode = CS_MODE_32,
-			.code = (unsigned char *)X86_CODE32,
-			.size = sizeof(X86_CODE32) - 1,
-			.comment = "X86 32 (AT&T syntax)",
-			.opt_type = CS_OPT_SYNTAX,
-			.opt_value = CS_OPT_SYNTAX_ATT,
+			CS_ARCH_X86,
+			CS_MODE_32,
+			(unsigned char *)X86_CODE32,
+			sizeof(X86_CODE32) - 1,
+			"X86 32 (AT&T syntax)",
+			CS_OPT_SYNTAX,
+			CS_OPT_SYNTAX_ATT,
 		},
 		{
-			.arch = CS_ARCH_X86,
-			.mode = CS_MODE_32,
-			.code = (unsigned char *)X86_CODE32,
-			.size = sizeof(X86_CODE32) - 1,
-			.comment = "X86 32 (Intel syntax)"
+			CS_ARCH_X86,
+			CS_MODE_32,
+			(unsigned char *)X86_CODE32,
+			sizeof(X86_CODE32) - 1,
+			"X86 32 (Intel syntax)"
 		},
 		{
-			.arch = CS_ARCH_X86,
-			.mode = CS_MODE_64,
-			.code = (unsigned char *)X86_CODE64,
-			.size = sizeof(X86_CODE64) - 1,
-			.comment = "X86 64 (Intel syntax)"
+			CS_ARCH_X86,
+			CS_MODE_64,
+			(unsigned char *)X86_CODE64,
+			sizeof(X86_CODE64) - 1,
+			"X86 64 (Intel syntax)"
 		},
 	};
 

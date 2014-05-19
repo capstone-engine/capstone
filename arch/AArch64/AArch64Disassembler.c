@@ -16,6 +16,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_ARM64
+
 #include <stdio.h>	// DEBUG
 #include <stdlib.h>
 
@@ -32,14 +34,12 @@
 // Forward-declarations used in the auto-generated files.
 static DecodeStatus DecodeGPR64RegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address, void *Decoder);
-static DecodeStatus
-DecodeGPR64xspRegisterClass(MCInst *Inst, unsigned RegNo,
+static DecodeStatus DecodeGPR64xspRegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeGPR32RegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address, void *Decoder);
-static DecodeStatus
-DecodeGPR32wspRegisterClass(MCInst *Inst, unsigned RegNo,
+static DecodeStatus DecodeGPR32wspRegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeFPR8RegisterClass(MCInst *Inst, unsigned RegNo,
@@ -262,13 +262,15 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 		uint16_t *Size,
 		uint64_t Address, MCRegisterInfo *MRI)
 {
+	uint32_t insn;
+	DecodeStatus result;
+
 	if (code_len < 4) {
 		// not enough data
 		*Size = 0;
 		return MCDisassembler_Fail;
 	}
 
-	uint32_t insn;
 	if (ud->big_endian)
 		insn = (code[3] << 0) | (code[2] << 8) |
 			(code[1] <<  16) | (code[0] <<  24);
@@ -277,7 +279,7 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 			(code[1] <<  8) | (code[0] <<  0);
 
 	// Calling the auto-generated decoder function.
-	DecodeStatus result = decodeInstruction(DecoderTableA6432, MI, insn, Address, MRI, 0);
+	result = decodeInstruction(DecoderTableA6432, MI, insn, Address, MRI, 0);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		return result;
@@ -700,6 +702,7 @@ static DecodeStatus DecodeBitfieldInstruction(MCInst *Inst, unsigned Insn,
 		uint64_t Address,
 		void *Decoder)
 {
+	unsigned ExtractOp = 0, InsertOp = 0;
 	unsigned Rd = fieldFromInstruction(Insn, 0, 5);
 	unsigned Rn = fieldFromInstruction(Insn, 5, 5);
 	unsigned ImmS = fieldFromInstruction(Insn, 10, 6);
@@ -759,7 +762,6 @@ static DecodeStatus DecodeBitfieldInstruction(MCInst *Inst, unsigned Insn,
 
 	// Otherwise it's definitely either an extract or an insert depending on which
 	// of ImmR or ImmS is larger.
-	unsigned ExtractOp = 0, InsertOp = 0;
 	switch (Opc) {
 		default: break;	// never reach
 		case SBFM:
@@ -1166,6 +1168,7 @@ static DecodeStatus DecodeVLDSTLanePostInstruction(MCInst *Inst, unsigned Insn,
 	// TransferBytes = NumVecs * OneLaneBytes
 	unsigned TransferBytes = 0;
 	unsigned NumVecs = 0;
+	unsigned Rt, Rn, Rm, Q, S, lane, NumLanes;
 	unsigned Opc = MCInst_getOpcode(Inst);
 	switch (Opc) {
 		case AArch64_LD1R_WB_8B_fixed: case AArch64_LD1R_WB_8B_register:
@@ -1492,9 +1495,9 @@ static DecodeStatus DecodeVLDSTLanePostInstruction(MCInst *Inst, unsigned Insn,
 			return MCDisassembler_Fail;
 	} // End of switch (Opc)
 
-	unsigned Rt = fieldFromInstruction(Insn, 0, 5);
-	unsigned Rn = fieldFromInstruction(Insn, 5, 5);
-	unsigned Rm = fieldFromInstruction(Insn, 16, 5);
+	Rt = fieldFromInstruction(Insn, 0, 5);
+	Rn = fieldFromInstruction(Insn, 5, 5);
+	Rm = fieldFromInstruction(Insn, 16, 5);
 
 	// Decode post-index of load duplicate lane
 	if (IsLoadDup) {
@@ -1571,12 +1574,12 @@ static DecodeStatus DecodeVLDSTLanePostInstruction(MCInst *Inst, unsigned Insn,
 	}
 
 	// Decode lane
-	unsigned Q = fieldFromInstruction(Insn, 30, 1);
-	unsigned S = fieldFromInstruction(Insn, 10, 3);
-	unsigned lane = 0;
+	Q = fieldFromInstruction(Insn, 30, 1);
+	S = fieldFromInstruction(Insn, 10, 3);
+	lane = 0;
 	// Calculate the number of lanes by number of vectors and transfered bytes.
 	// NumLanes = 16 bytes / bytes of each lane
-	unsigned NumLanes = 16 / (TransferBytes / NumVecs);
+	NumLanes = 16 / (TransferBytes / NumVecs);
 	switch (NumLanes) {
 		case 16: // A vector has 16 lanes, each lane is 1 bytes.
 			lane = (Q << 3) | S;
@@ -1628,3 +1631,4 @@ static DecodeStatus DecodeSHLLInstruction(MCInst *Inst, unsigned Insn,
 	return MCDisassembler_Success;
 }
 
+#endif

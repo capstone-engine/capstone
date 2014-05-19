@@ -9,7 +9,7 @@ extern "C" {
 #endif
 
 #include <stdint.h>
-#include <stdbool.h>
+#include "platform.h"
 
 #ifdef _MSC_VER
 #pragma warning(disable:4201)
@@ -114,7 +114,9 @@ typedef enum arm64_reg {
 
 	ARM64_REG_NZCV,
 	ARM64_REG_WSP,
+	ARM64_REG_WZR,
 	ARM64_REG_SP,
+	ARM64_REG_XZR,
 	ARM64_REG_B0,
 	ARM64_REG_B1,
 	ARM64_REG_B2,
@@ -346,8 +348,6 @@ typedef enum arm64_reg {
 	ARM64_REG_IP0 = ARM64_REG_X17,
 	ARM64_REG_FP = ARM64_REG_X29,
 	ARM64_REG_LR = ARM64_REG_X30,
-	ARM64_REG_XZR = ARM64_REG_SP,
-	ARM64_REG_WZR = ARM64_REG_WSP,
 } arm64_reg;
 
 //> ARM64 instruction

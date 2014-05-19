@@ -1,5 +1,7 @@
-/* Capstone Disassembler Engine */
+/* Capstone Disassembly Engine */
 /* By Dang Hoang Vu <danghvu@gmail.com> 2013 */
+
+#ifdef CAPSTONE_HAS_X86
 
 #include "../../cs_priv.h"
 #include "../../MCRegisterInfo.h"
@@ -40,8 +42,14 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 				break;
 
 			case CS_OPT_SYNTAX_ATT:
+#ifndef CAPSTONE_DIET
 				handle->printer = X86_ATT_printInst;
 				break;
+#else
+				// this is irrelevant in CAPSTONE_DIET mode
+				handle->errnum = CS_ERR_DIET;
+				return CS_ERR_DIET;
+#endif
 		}
 	}
 
@@ -61,3 +69,5 @@ void X86_enable(void)
 	// support this arch
 	all_arch |= (1 << CS_ARCH_X86);
 }
+
+#endif

@@ -36,7 +36,7 @@ endif
 CFLAGS += -fPIC -Wall -Iinclude
 
 ifeq ($(CAPSTONE_USE_SYS_DYN_MEM),yes)
-CFLAGS += -DUSE_SYS_DYN_MEM
+CFLAGS += -DCAPSTONE_USE_SYS_DYN_MEM
 endif
 
 PREFIX ?= /usr
@@ -196,7 +196,10 @@ ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86DisassemblerDecoder.o
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86Disassembler.o
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86IntelInstPrinter.o
+# assembly syntax is irrelevant in Diet mode, when this info is suppressed
+ifeq (,$(findstring yes,$(CAPSTONE_DIET)))
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86ATTInstPrinter.o
+endif
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86Mapping.o
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86Module.o
 endif
@@ -231,7 +234,7 @@ $(LIBNAME)_LDFLAGS += -shared
 IS_CYGWIN := $(shell $(CC) -dumpmachine | grep -i cygwin | wc -l)
 ifeq ($(IS_CYGWIN),1)
 EXT = dll
-AR_EXT = dll.a
+AR_EXT = lib
 # Cygwin doesn't like -fPIC
 CFLAGS := $(CFLAGS:-fPIC=)
 # On Windows we need the shared library to be executable
@@ -240,7 +243,7 @@ else
 IS_MINGW := $(shell $(CC) --version | grep -i mingw | wc -l)
 ifeq ($(IS_MINGW),1)
 EXT = dll
-AR_EXT = dll.a
+AR_EXT = lib
 # mingw doesn't like -fPIC either
 CFLAGS := $(CFLAGS:-fPIC=)
 # On Windows we need the shared library to be executable
@@ -340,7 +343,7 @@ uninstall:
 
 clean:
 	rm -f $(LIBOBJ)
-	rm -f $(LIBRARY) $(ARCHIVE)
+	rm -f $(BLDIR)/lib$(LIBNAME).*
 	rm -f $(PKGCFGF)
 	cd tests && $(MAKE) clean
 	rm -f $(BLDIR)/tests/lib$(LIBNAME).$(EXT)

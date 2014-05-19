@@ -502,6 +502,9 @@ class CsInsn(object):
             # Diet engine cannot provide register name
             raise CsError(CS_ERR_DIET)
 
+        if reg_id == 0:
+            return "(invalid)"
+
         return _cs.cs_reg_name(self._cs.csh, reg_id).decode('ascii')
 
     # get the instruction string
@@ -509,6 +512,9 @@ class CsInsn(object):
         if self._cs._diet:
             # Diet engine cannot provide instruction name
             raise CsError(CS_ERR_DIET)
+
+        if self._raw.id == 0:
+            return "(invalid)"
 
         return _cs.cs_insn_name(self._cs.csh, self.id).decode('ascii')
 

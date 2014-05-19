@@ -1,5 +1,7 @@
-/* Capstone Unified Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+
+#ifdef CAPSTONE_HAS_POWERPC
 
 #include <stdio.h>	// debug
 #include <string.h>
@@ -5224,3 +5226,5 @@ ppc_reg PPC_map_register(unsigned int r)
 	// cannot find this register
 	return 0;
 }
+
+#endif

@@ -84,18 +84,18 @@ static void test()
 
 	struct platform platforms[] = {
 		{
-			.arch = CS_ARCH_SPARC,
-			.mode = CS_MODE_BIG_ENDIAN,
-			.code = (unsigned char*)SPARC_CODE,
-			.size = sizeof(SPARC_CODE) - 1,
-			.comment = "Sparc",
+			CS_ARCH_SPARC,
+			CS_MODE_BIG_ENDIAN,
+			(unsigned char*)SPARC_CODE,
+			sizeof(SPARC_CODE) - 1,
+			"Sparc",
 		},
 		{
-			.arch = CS_ARCH_SPARC,
-			.mode = CS_MODE_BIG_ENDIAN + CS_MODE_V9,
-			.code = (unsigned char*)SPARCV9_CODE,
-			.size = sizeof(SPARCV9_CODE) - 1,
-			.comment = "SparcV9"
+			CS_ARCH_SPARC,
+			(cs_mode)(CS_MODE_BIG_ENDIAN + CS_MODE_V9),
+			(unsigned char*)SPARCV9_CODE,
+			sizeof(SPARCV9_CODE) - 1,
+			"SparcV9"
 		},
 	};
 

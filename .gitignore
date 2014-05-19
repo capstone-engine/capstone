@@ -42,6 +42,7 @@ tests/*.static
 
 # vim tmp file
 *.swp
+*~
 
 capstone.pc
 
@@ -50,3 +51,11 @@ _*
 
 # freebsd ports: generated file with "make makesum" command
 packages/freebsd/ports/devel/capstone/distinfo
+
+# VisualStudio
+Debug
+Release
+*.sdf
+*.opensdf
+*.suo
+*.user

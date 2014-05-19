@@ -59,117 +59,118 @@ static void test()
 
 	struct platform platforms[] = {
 		{
-			.arch = CS_ARCH_X86,
-			.mode = CS_MODE_16,
-			.code = (unsigned char *)X86_CODE16,
-			.size = sizeof(X86_CODE32) - 1,
-			.comment = "X86 16bit (Intel syntax)"
+			CS_ARCH_X86,
+			CS_MODE_16,
+			(unsigned char *)X86_CODE16,
+			sizeof(X86_CODE32) - 1,
+			"X86 16bit (Intel syntax)"
 		},
 		{
-			.arch = CS_ARCH_X86,
-			.mode = CS_MODE_32,
-			.code = (unsigned char *)X86_CODE32,
-			.size = sizeof(X86_CODE32) - 1,
-			.comment = "X86 32bit (ATT syntax)",
-			.opt_type = CS_OPT_SYNTAX,
-			.opt_value = CS_OPT_SYNTAX_ATT,
+			CS_ARCH_X86,
+			CS_MODE_32,
+			(unsigned char *)X86_CODE32,
+			sizeof(X86_CODE32) - 1,
+			"X86 32bit (ATT syntax)",
+			CS_OPT_SYNTAX,
+			CS_OPT_SYNTAX_ATT,
 		},
 		{
-			.arch = CS_ARCH_X86,
-			.mode = CS_MODE_32,
-			.code = (unsigned char *)X86_CODE32,
-			.size = sizeof(X86_CODE32) - 1,
-			.comment = "X86 32 (Intel syntax)"
+			CS_ARCH_X86,
+			CS_MODE_32,
+			(unsigned char *)X86_CODE32,
+			sizeof(X86_CODE32) - 1,
+			"X86 32 (Intel syntax)"
 		},
 		{
-			.arch = CS_ARCH_X86,
-			.mode = CS_MODE_64,
-			.code = (unsigned char *)X86_CODE64,
-			.size = sizeof(X86_CODE64) - 1,
-			.comment = "X86 64 (Intel syntax)"
+			CS_ARCH_X86,
+			CS_MODE_64,
+			(unsigned char *)X86_CODE64,
+			sizeof(X86_CODE64) - 1,
+			"X86 64 (Intel syntax)"
 		},
 		{
-			.arch = CS_ARCH_ARM,
-			.mode = CS_MODE_ARM,
-			.code = (unsigned char *)ARM_CODE,
-			.size = sizeof(ARM_CODE) - 1,
-			.comment = "ARM"
+			CS_ARCH_ARM,
+			CS_MODE_ARM,
+			(unsigned char *)ARM_CODE,
+			sizeof(ARM_CODE) - 1,
+			"ARM"
 		},
 		{
-			.arch = CS_ARCH_ARM,
-			.mode = CS_MODE_THUMB,
-			.code = (unsigned char *)THUMB_CODE2,
-			.size = sizeof(THUMB_CODE2) - 1,
-			.comment = "THUMB-2"
+			CS_ARCH_ARM,
+			CS_MODE_THUMB,
+			(unsigned char *)THUMB_CODE2,
+			sizeof(THUMB_CODE2) - 1,
+			"THUMB-2"
 		},
 		{
-			.arch = CS_ARCH_ARM,
-			.mode = CS_MODE_ARM,
-			.code = (unsigned char *)ARM_CODE2,
-			.size = sizeof(ARM_CODE2) - 1,
-			.comment = "ARM: Cortex-A15 + NEON"
+			CS_ARCH_ARM,
+			CS_MODE_ARM,
+			(unsigned char *)ARM_CODE2,
+			sizeof(ARM_CODE2) - 1,
+			"ARM: Cortex-A15 + NEON"
 		},
 		{
-			.arch = CS_ARCH_ARM,
-			.mode = CS_MODE_THUMB,
-			.code = (unsigned char *)THUMB_CODE,
-			.size = sizeof(THUMB_CODE) - 1,
-			.comment = "THUMB"
+			CS_ARCH_ARM,
+			CS_MODE_THUMB,
+			(unsigned char *)THUMB_CODE,
+			sizeof(THUMB_CODE) - 1,
+			"THUMB"
 		},
 		{
-			.arch = CS_ARCH_MIPS,
-			.mode = CS_MODE_32 + CS_MODE_BIG_ENDIAN,
-			.code = (unsigned char *)MIPS_CODE,
-			.size = sizeof(MIPS_CODE) - 1,
-			.comment = "MIPS-32 (Big-endian)"
+			CS_ARCH_MIPS,
+			(cs_mode)(CS_MODE_32 + CS_MODE_BIG_ENDIAN),
+			(unsigned char *)MIPS_CODE,
+			sizeof(MIPS_CODE) - 1,
+			"MIPS-32 (Big-endian)"
 		},
 		{
-			.arch = CS_ARCH_MIPS,
-			.mode = CS_MODE_64+ CS_MODE_LITTLE_ENDIAN,
-			.code = (unsigned char *)MIPS_CODE2,
-			.size = sizeof(MIPS_CODE2) - 1,
-			.comment = "MIPS-64-EL (Little-endian)"
+			CS_ARCH_MIPS,
+			(cs_mode)(CS_MODE_64 + CS_MODE_LITTLE_ENDIAN),
+			(unsigned char *)MIPS_CODE2,
+			sizeof(MIPS_CODE2) - 1,
+			"MIPS-64-EL (Little-endian)"
 		},
 		{
-			.arch = CS_ARCH_ARM64,
-			.mode = CS_MODE_ARM,
-			.code = (unsigned char *)ARM64_CODE,
-			.size = sizeof(ARM64_CODE) - 1,
-			.comment = "ARM-64"
+			CS_ARCH_ARM64,
+			CS_MODE_ARM,
+			(unsigned char *)ARM64_CODE,
+			sizeof(ARM64_CODE) - 1,
+			"ARM-64"
 		},
 		{
-			.arch = CS_ARCH_PPC,
-			.mode = CS_MODE_BIG_ENDIAN,
-			.code = (unsigned char*)PPC_CODE,
-			.size = sizeof(PPC_CODE) - 1,
-			.comment = "PPC-64"
+			CS_ARCH_PPC,
+			CS_MODE_BIG_ENDIAN,
+			(unsigned char*)PPC_CODE,
+			sizeof(PPC_CODE) - 1,
+			"PPC-64"
 		},
 		{
-			.arch = CS_ARCH_SPARC,
-			.mode = CS_MODE_BIG_ENDIAN,
-			.code = (unsigned char*)SPARC_CODE,
-			.size = sizeof(SPARC_CODE) - 1,
-			.comment = "Sparc"
+			CS_ARCH_SPARC,
+			CS_MODE_BIG_ENDIAN,
+			(unsigned char*)SPARC_CODE,
+			sizeof(SPARC_CODE) - 1,
+			"Sparc"
 		},
 		{
-			.arch = CS_ARCH_SPARC,
-			.mode = CS_MODE_BIG_ENDIAN + CS_MODE_V9,
-			.code = (unsigned char*)SPARCV9_CODE,
-			.size = sizeof(SPARCV9_CODE) - 1,
-			.comment = "SparcV9"
+			CS_ARCH_SPARC,
+			(cs_mode)(CS_MODE_BIG_ENDIAN + CS_MODE_V9),
+			(unsigned char*)SPARCV9_CODE,
+			sizeof(SPARCV9_CODE) - 1,
+			"SparcV9"
 		},
 		{
-			.arch = CS_ARCH_SYSZ,
-			.mode = 0,
-			.code = (unsigned char*)SYSZ_CODE,
-			.size = sizeof(SYSZ_CODE) - 1,
-			.comment = "SystemZ"
+			CS_ARCH_SYSZ,
+			(cs_mode)0,
+			(unsigned char*)SYSZ_CODE,
+			sizeof(SYSZ_CODE) - 1,
+			"SystemZ"
 		},
 	};
 
 	csh handle;
 	uint64_t address = 0x1000;
 	cs_insn *all_insn;
+	cs_detail *detail;
 	int i;
 	size_t count;
 	cs_err err;
@@ -203,7 +204,7 @@ static void test()
 						i->id, cs_insn_name(handle, i->id));
 
 				// print implicit registers used by this instruction
-				cs_detail *detail = i->detail;
+				detail = i->detail;
 				// detail can be NULL on "data" instruction since we turned on SKIPDATA option above.
 				if (!detail)
 					continue;

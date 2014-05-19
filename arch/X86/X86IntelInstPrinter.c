@@ -15,6 +15,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_X86
+
 #include <ctype.h>
 #include <inttypes.h>
 #include <stdio.h>
@@ -210,7 +212,7 @@ static void printRoundingControl(MCInst *MI, unsigned Op, SStream *O)
 static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 {
 	MCOperand *SegReg;
-	
+
 	SegReg = MCInst_getOperand(MI, Op+1);
 
 	// If this has a segment register, print it.
@@ -472,6 +474,7 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 {
+	bool NeedPlus = false;
 	MCOperand *BaseReg  = MCInst_getOperand(MI, Op);
 	uint64_t ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op+1));
 	MCOperand *IndexReg  = MCInst_getOperand(MI, Op+2);
@@ -494,7 +497,6 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 
 	SStream_concat(O, "[");
 
-	bool NeedPlus = false;
 	if (MCOperand_getReg(BaseReg)) {
 		_printOperand(MI, Op, O);
 		NeedPlus = true;
@@ -544,3 +546,4 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 #include "X86GenAsmWriter1.inc"
 #endif
 
+#endif

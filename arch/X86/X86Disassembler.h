@@ -78,7 +78,6 @@
 #define CS_X86_DISASSEMBLER_H
 
 #include <stdint.h>
-#include <stdbool.h>
 
 #include "../../include/capstone.h"
 

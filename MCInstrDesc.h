@@ -18,8 +18,8 @@
 #ifndef CS_LLVM_MC_MCINSTRDESC_H
 #define CS_LLVM_MC_MCINSTRDESC_H
 
-#include <stdbool.h>
 #include <stdint.h>
+#include "include/platform.h"
 
 //===----------------------------------------------------------------------===//
 // Machine Operand Flags and Description

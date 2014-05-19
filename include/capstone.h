@@ -11,8 +11,9 @@ extern "C" {
 #include <stdint.h>
 #include <stdio.h>
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stdlib.h>
+
+#include "platform.h"
 
 #ifdef _MSC_VER
 #pragma warning(disable:4201)
@@ -112,7 +113,7 @@ typedef enum cs_opt_value {
 // @user_data: user-data passed to cs_option() via @user_data field in
 //      cs_opt_skipdata struct below.
 // @return: return number of bytes to skip, or 0 to immediately stop disassembling.
-typedef size_t (*cs_skipdata_cb_t)(const uint8_t *code, size_t offset, void* user_data);
+typedef size_t (*cs_skipdata_cb_t)(const uint8_t *code, uint64_t offset, void* user_data);
 
 // User-customized setup for SKIPDATA option
 typedef struct cs_opt_skipdata {

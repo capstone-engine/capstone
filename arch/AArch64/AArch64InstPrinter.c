@@ -11,8 +11,10 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+
+#ifdef CAPSTONE_HAS_ARM64
 
 #include <inttypes.h>
 #include <stdio.h>
@@ -315,6 +317,8 @@ static void printLabelOperand(MCInst *MI, unsigned OpNum,
 		SStream *O, unsigned field_width, unsigned scale)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
+	uint64_t UImm, Sign;
+	int64_t SImm, tmp;
 
 	if (!MCOperand_isImm(MO)) {
 		printOperand(MI, OpNum, O);
@@ -323,9 +327,9 @@ static void printLabelOperand(MCInst *MI, unsigned OpNum,
 
 	// The immediate of LDR (lit) instructions is a signed 19-bit immediate, which
 	// is multiplied by 4 (because all A64 instructions are 32-bits wide).
-	uint64_t UImm = MCOperand_getImm(MO);
-	uint64_t Sign = UImm & (1LL << (field_width - 1));
-	int64_t SImm = scale * ((UImm & ~Sign) - Sign);
+	UImm = MCOperand_getImm(MO);
+	Sign = UImm & (1LL << (field_width - 1));
+	SImm = scale * ((UImm & ~Sign) - Sign);
 
 	// this is a relative address, so add with the address
 	// of current instruction
@@ -343,10 +347,11 @@ static void printLabelOperand(MCInst *MI, unsigned OpNum,
 		else
 			SStream_concat(O, "#%"PRIu64, SImm);
 	} else {
+		tmp = -(int64_t)SImm;
 		if (SImm < -HEX_THRESHOLD)
-			SStream_concat(O, "#-0x%"PRIx64, -SImm);
+			SStream_concat(O, "#-0x%"PRIx64, tmp);
 		else
-			SStream_concat(O, "#-%"PRIu64, -SImm);
+			SStream_concat(O, "#-%"PRIu64, tmp);
 	}
 }
 
@@ -396,6 +401,7 @@ static void printShiftOperand(MCInst *MI,  unsigned OpNum,
 		SStream *O, A64SE_ShiftExtSpecifiers Shift)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
+	unsigned int imm;
 
 	// LSL #0 is not printed
 	if (Shift == A64SE_LSL && MCOperand_isImm(MO) && MCOperand_getImm(MO) == 0)
@@ -409,7 +415,7 @@ static void printShiftOperand(MCInst *MI,  unsigned OpNum,
 		default: break; // llvm_unreachable("Invalid shift specifier in logical instruction");
 	}
 
-	unsigned int imm = (unsigned int)MCOperand_getImm(MO);
+	imm = (unsigned int)MCOperand_getImm(MO);
 	if (imm > HEX_THRESHOLD)
 		SStream_concat(O, " #0x%x", imm);
 	else
@@ -579,10 +585,10 @@ static void printSImm7ScaledOperand(MCInst *MI, unsigned OpNum,
 
 	if (MI->csh->detail) {
 		if (MI->csh->doing_mem) {
-			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].mem.disp = res;
+			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].mem.disp = (int32_t)res;
 		} else {
 			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = res;
+			MI->flat_insn.arm64.operands[MI->flat_insn.arm64.op_count].imm = (int32_t)res;
 			MI->flat_insn.arm64.op_count++;
 		}
 	}
@@ -657,7 +663,7 @@ static void printNeonMovImmShiftOperand(MCInst *MI, unsigned OpNum,
 		SStream *O, A64SE_ShiftExtSpecifiers Ext, bool isHalf)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-
+	int64_t Imm;
 	//assert(MO.isImm() &&
 	//       "Immediate operand required for Neon vector immediate inst.");
 
@@ -668,7 +674,7 @@ static void printNeonMovImmShiftOperand(MCInst *MI, unsigned OpNum,
 		//llvm_unreachable("Invalid shift specifier in movi instruction");
 	}
 
-	int64_t Imm = MCOperand_getImm(MO);
+	Imm = MCOperand_getImm(MO);
 
 	// MSL and LSLH accepts encoded shift amount 0 or 1.
 	if ((!IsLSL || (IsLSL && isHalf)) && Imm != 0 && Imm != 1) {
@@ -867,3 +873,4 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 	}
 }
 
+#endif

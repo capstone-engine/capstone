@@ -1,6 +1,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_X86
+
 #include <string.h>
 
 #include "X86Mapping.h"
@@ -41765,3 +41767,5 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 
 	return false;
 }
+
+#endif

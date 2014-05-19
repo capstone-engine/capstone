@@ -1,5 +1,7 @@
-/* Capstone Unified Disassembly Engine */
+/* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+
+#ifdef CAPSTONE_HAS_SYSZ
 
 #include <stdio.h>	// debug
 #include <string.h>
@@ -5065,3 +5067,5 @@ sysz_reg SystemZ_map_register(unsigned int r)
 	// cannot find this register
 	return 0;
 }
+
+#endif
