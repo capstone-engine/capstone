@@ -84,11 +84,11 @@ static void test()
 
 	struct platform platforms[] = {
 		{
-			.arch = CS_ARCH_SYSZ,
-			.mode = CS_MODE_BIG_ENDIAN,
-			.code = (unsigned char*)SYSZ_CODE,
-			.size = sizeof(SYSZ_CODE) - 1,
-			.comment = "SystemZ",
+			CS_ARCH_SYSZ,
+			CS_MODE_BIG_ENDIAN,
+			(unsigned char*)SYSZ_CODE,
+			sizeof(SYSZ_CODE) - 1,
+			"SystemZ",
 		},
 	};
 

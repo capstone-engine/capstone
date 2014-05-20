@@ -38,14 +38,14 @@ IS_CYGWIN := $(shell $(CC) -dumpmachine | grep -i cygwin | wc -l)
 ifeq ($(IS_CYGWIN),1)
 CFLAGS := $(CFLAGS:-fPIC=)
 BIN_EXT = .exe
-AR_EXT = dll.a
+AR_EXT = lib
 else
 # mingw?
 IS_MINGW := $(shell $(CC) --version | grep -i mingw | wc -l)
 ifeq ($(IS_MINGW),1)
 CFLAGS := $(CFLAGS:-fPIC=)
 BIN_EXT = .exe
-AR_EXT = dll.a
+AR_EXT = lib
 endif
 endif
 

@@ -83,18 +83,18 @@ static void test()
 
 	struct platform platforms[] = {
 		{
-			.arch = CS_ARCH_MIPS,
-			.mode = CS_MODE_32 + CS_MODE_BIG_ENDIAN,
-			.code = (unsigned char *)MIPS_CODE,
-			.size = sizeof(MIPS_CODE) - 1,
-			.comment = "MIPS-32 (Big-endian)"
+			CS_ARCH_MIPS,
+			(cs_mode)(CS_MODE_32 + CS_MODE_BIG_ENDIAN),
+			(unsigned char *)MIPS_CODE,
+			sizeof(MIPS_CODE) - 1,
+			"MIPS-32 (Big-endian)"
 		},
 		{
-			.arch = CS_ARCH_MIPS,
-			.mode = CS_MODE_64+ CS_MODE_LITTLE_ENDIAN,
-			.code = (unsigned char *)MIPS_CODE2,
-			.size = sizeof(MIPS_CODE2) - 1,
-			.comment = "MIPS-64-EL (Little-endian)"
+			CS_ARCH_MIPS,
+			(cs_mode)(CS_MODE_64 + CS_MODE_LITTLE_ENDIAN),
+			(unsigned char *)MIPS_CODE2,
+			sizeof(MIPS_CODE2) - 1,
+			"MIPS-64-EL (Little-endian)"
 		},
 	};
 

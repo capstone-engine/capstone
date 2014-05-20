@@ -7,7 +7,7 @@
 \*===----------------------------------------------------------------------===*/
 
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #include "../../MCInst.h"
 #include "../../LEB128.h"
@@ -3850,56 +3850,61 @@ static uint8_t DecoderTableMips6432[] = {
   0
 };
 
+static bool getbool(uint64_t b)
+{
+	return b != 0;
+}
+
 static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
 {
   switch (Idx) {
   default: // llvm_unreachable("Invalid index!");
   case 0:
-    return (bool)((Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureMips16));
   case 1:
-    return (bool)((Bits & Mips_FeatureMicroMips));
+    return getbool((Bits & Mips_FeatureMicroMips));
   case 2:
-    return (bool)(!(Bits & Mips_FeatureMips16));
+    return getbool(!(Bits & Mips_FeatureMips16));
   case 3:
-    return (bool)((Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureMips16));
   case 4:
-    return (bool)((Bits & Mips_FeatureMSA));
+    return getbool((Bits & Mips_FeatureMSA));
   case 5:
-    return (bool)((Bits & Mips_FeatureDSP));
+    return getbool((Bits & Mips_FeatureDSP));
   case 6:
-    return (bool)((Bits & Mips_FeatureMSA) && (Bits & Mips_FeatureMips64));
+    return getbool((Bits & Mips_FeatureMSA) && (Bits & Mips_FeatureMips64));
   case 7:
-    return (bool)((Bits & Mips_FeatureMips32) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureMips32) && !(Bits & Mips_FeatureMips16));
   case 8:
-    return (bool)(!(Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16));
+    return getbool(!(Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16));
   case 9:
-    return (bool)((Bits & Mips_FeatureFPIdx) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureFPIdx) && !(Bits & Mips_FeatureMips16));
   case 10:
-    return (bool)((Bits & Mips_FeatureFPIdx) && !(Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureMicroMips));
+    return getbool((Bits & Mips_FeatureFPIdx) && !(Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureMicroMips));
   case 11:
-    return (bool)((Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16));
   case 12:
-    return (bool)((Bits & Mips_FeatureMips32r2) && (Bits & Mips_FeatureMips32) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureMips32r2) && (Bits & Mips_FeatureMips32) && !(Bits & Mips_FeatureMips16));
   case 13:
-    return (bool)((Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips32) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips32) && !(Bits & Mips_FeatureMips16));
   case 14:
-    return (bool)((Bits & Mips_FeatureBitCount) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureBitCount) && !(Bits & Mips_FeatureMips16));
   case 15:
-    return (bool)((Bits & Mips_FeatureDSPR2));
+    return getbool((Bits & Mips_FeatureDSPR2));
   case 16:
-    return (bool)((Bits & Mips_FeatureSwap) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureSwap) && !(Bits & Mips_FeatureMips16));
   case 17:
-    return (bool)((Bits & Mips_FeatureSEInReg) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureSEInReg) && !(Bits & Mips_FeatureMips16));
   case 18:
-    return (bool)(!(Bits & Mips_FeatureMicroMips));
+    return getbool(!(Bits & Mips_FeatureMicroMips));
   case 19:
-    return (bool)((Bits & Mips_FeatureMips64r2) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureMips64r2) && !(Bits & Mips_FeatureMips16));
   case 20:
-    return (bool)((Bits & Mips_FeatureMips64));
+    return getbool((Bits & Mips_FeatureMips64));
   case 21:
-    return (bool)((Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16));
   case 22:
-    return (bool)((Bits & Mips_FeatureFPIdx) && (Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16));
+    return getbool((Bits & Mips_FeatureFPIdx) && (Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips16));
   }
 }
 
@@ -5501,48 +5506,48 @@ static DecodeStatus fname(uint8_t DecodeTable[], MCInst *MI, \
 { \
   uint64_t Bits = getFeatureBits(feature); \
   uint8_t *Ptr = DecodeTable; \
-  uint32_t CurFieldValue = 0; \
+  uint32_t CurFieldValue = 0, ExpectedValue; \
   DecodeStatus S = MCDisassembler_Success; \
+  unsigned Start, Len, NumToSkip, PIdx, Opc, DecodeIdx; \
+  InsnType Val, FieldValue, PositiveMask, NegativeMask; \
+  bool Pred, Fail; \
   for (;;) { \
     switch (*Ptr) { \
     default: \
       return MCDisassembler_Fail; \
     case MCD_OPC_ExtractField: { \
-      unsigned Start = *++Ptr; \
-      unsigned Len = *++Ptr; \
+      Start = *++Ptr; \
+      Len = *++Ptr; \
       ++Ptr; \
-      CurFieldValue = fieldname(insn, Start, Len); \
+      CurFieldValue = (uint32_t)fieldname(insn, Start, Len); \
       break; \
     } \
     case MCD_OPC_FilterValue: { \
-      unsigned Len; \
-      InsnType Val = (InsnType)decodeULEB128(++Ptr, &Len); \
+      Val = (InsnType)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      unsigned NumToSkip = *Ptr++; \
+      NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
       if (Val != CurFieldValue) \
         Ptr += NumToSkip; \
       break; \
     } \
     case MCD_OPC_CheckField: { \
-      unsigned Start = *++Ptr; \
-      unsigned Len = *++Ptr; \
-      InsnType FieldValue = fieldname(insn, Start, Len); \
-      uint32_t ExpectedValue = (uint32_t)decodeULEB128(++Ptr, &Len); \
+      Start = *++Ptr; \
+      Len = *++Ptr; \
+      FieldValue = fieldname(insn, Start, Len); \
+      ExpectedValue = (uint32_t)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      unsigned NumToSkip = *Ptr++; \
+      NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
       if (ExpectedValue != FieldValue) \
         Ptr += NumToSkip; \
       break; \
     } \
     case MCD_OPC_CheckPredicate: { \
-      unsigned Len; \
-      unsigned PIdx = (uint32_t)decodeULEB128(++Ptr, &Len); \
+      PIdx = (uint32_t)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      unsigned NumToSkip = *Ptr++; \
+      NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
-      bool Pred; \
       Pred = checkDecoderPredicate(PIdx, Bits); \
       if (!Pred) \
         Ptr += NumToSkip; \
@@ -5550,21 +5555,19 @@ static DecodeStatus fname(uint8_t DecodeTable[], MCInst *MI, \
       break; \
     } \
     case MCD_OPC_Decode: { \
-      unsigned Len; \
-      unsigned Opc = (uint32_t)decodeULEB128(++Ptr, &Len); \
+      Opc = (uint32_t)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      unsigned DecodeIdx = (uint32_t)decodeULEB128(Ptr, &Len); \
+      DecodeIdx = (uint32_t)decodeULEB128(Ptr, &Len); \
       Ptr += Len; \
       MCInst_setOpcode(MI, Opc); \
       return decoder(S, DecodeIdx, insn, MI, Address, MRI); \
     } \
     case MCD_OPC_SoftFail: { \
-      unsigned Len; \
-      InsnType PositiveMask = (InsnType)decodeULEB128(++Ptr, &Len); \
+      PositiveMask = (InsnType)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      InsnType NegativeMask = (InsnType)decodeULEB128(Ptr, &Len); \
+      NegativeMask = (InsnType)decodeULEB128(Ptr, &Len); \
       Ptr += Len; \
-      bool Fail = (insn & PositiveMask) || (~insn & NegativeMask); \
+      Fail = (insn & PositiveMask) || (~insn & NegativeMask); \
       if (Fail) \
         S = MCDisassembler_SoftFail; \
       break; \

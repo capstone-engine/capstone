@@ -1,6 +1,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_SPARC
+
 #include "../../utils.h"
 #include "../../MCRegisterInfo.h"
 #include "SparcDisassembler.h"
@@ -52,3 +54,5 @@ void Sparc_enable(void)
 	// support this arch
 	all_arch |= (1 << CS_ARCH_SPARC);
 }
+
+#endif

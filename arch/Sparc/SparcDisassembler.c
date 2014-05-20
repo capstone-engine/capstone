@@ -10,6 +10,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_SPARC
+
 #include <stdio.h>	// DEBUG
 #include <stdlib.h>
 #include <string.h>
@@ -492,3 +494,4 @@ void Sparc_init(MCRegisterInfo *MRI)
 			0);
 }
 
+#endif

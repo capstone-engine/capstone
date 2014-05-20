@@ -1,5 +1,7 @@
-/* Capstone Unified Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+
+#ifdef CAPSTONE_HAS_ARM
 
 #include <stdio.h>	// debug
 #include <string.h>
@@ -13633,3 +13635,5 @@ bool ARM_rel_branch(cs_struct *h, unsigned int id)
 	// not found
 	return false;
 }
+
+#endif

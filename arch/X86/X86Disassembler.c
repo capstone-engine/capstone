@@ -17,6 +17,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_X86
+
 #include <inttypes.h>	// debug
 #include <string.h>
 
@@ -67,7 +69,6 @@ enum {
 /// @param reg        - The Reg to append.
 static void translateRegister(MCInst *mcInst, Reg reg)
 {
-//#define ENTRY(x) X86_x,
 #define ENTRY(x) X86_##x,
 	uint8_t llvmRegnums[] = {
 		ALL_REGS
@@ -206,8 +207,8 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 						Opcode != X86_VINSERTPSrr &&
 #endif
 						Opcode != X86_INT)
-					if(immediate & 0x80)
-						immediate |= ~(0xffull);
+						if(immediate & 0x80)
+							immediate |= ~(0xffull);
 				break;
 			case ENCODING_IW:
 				if(immediate & 0x8000)
@@ -320,7 +321,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 	MCOperand *indexReg;
 	MCOperand *displacement;
 	MCOperand *segmentReg;
-	bool IndexIs512;
+	bool IndexIs512, IndexIs128, IndexIs256;
 #ifndef CAPSTONE_X86_REDUCE
 	uint32_t Opcode;
 #endif
@@ -350,7 +351,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 #ifndef CAPSTONE_X86_REDUCE
 		Opcode = MCInst_getOpcode(mcInst);
 #endif
-		bool IndexIs128 = (
+		IndexIs128 = (
 #ifndef CAPSTONE_X86_REDUCE
 				Opcode == X86_VGATHERDPDrm ||
 				Opcode == X86_VGATHERDPDYrm ||
@@ -365,7 +366,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 #endif
 				false
 				);
-		bool IndexIs256 = (
+		IndexIs256 = (
 #ifndef CAPSTONE_X86_REDUCE
 				Opcode == X86_VGATHERQPDYrm ||
 				Opcode == X86_VGATHERDPSYrm ||
@@ -811,3 +812,5 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		return result;
 	}
 }
+
+#endif

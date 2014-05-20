@@ -11,8 +11,14 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+
+#ifdef CAPSTONE_HAS_ARM64
+
+#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
+#pragma warning(disable:4996)
+#endif
 
 #include "../../utils.h"
 
@@ -39,11 +45,12 @@ char *NamedImmMapper_toString(NamedImmMapper *N, uint32_t Value, bool *Valid)
 // return true if s1 == lower(f2), and false otherwise
 static bool compare_lower_str(char *s1, char *s2)
 {
+	bool res;
 	char *lower = cs_strdup(s2), *c;
 	for (c = lower; *c; c++)
 		*c = (char)tolower((int) *c);
 
-	bool res = (strcmp(s1, lower) == 0);
+	res = (strcmp(s1, lower) == 0);
 	cs_mem_free(lower);
 
 	return res;
@@ -74,6 +81,7 @@ static char *utostr(uint64_t X, bool isNeg)
 {
 	char Buffer[22];
 	char *BufPtr = Buffer+21;
+	char *result;
 
 	Buffer[21] = '\0';
 	if (X == 0) *--BufPtr = '0';  // Handle special case...
@@ -85,7 +93,7 @@ static char *utostr(uint64_t X, bool isNeg)
 
 	if (isNeg) *--BufPtr = '-';   // Add negative sign...
 
-	char *result = cs_strdup(BufPtr);
+	result = cs_strdup(BufPtr);
 	return result;
 }
 
@@ -571,7 +579,11 @@ static NamedImmMapper_Mapping SysRegPairs[] = {
 // result must be a big enough buffer: 128 bytes is more than enough
 void SysRegMapper_toString(SysRegMapper *S, uint32_t Bits, bool *Valid, char *result)
 {
+	int dummy;
+	uint32_t Op0, Op1, CRn, CRm, Op2;
+	char *Op1S, *CRnS, *CRmS, *Op2S;
 	unsigned i;
+
 	for (i = 0; i < ARR_SIZE(SysRegPairs); ++i) {
 		if (SysRegPairs[i].Value == Bits) {
 			*Valid = true;
@@ -588,11 +600,11 @@ void SysRegMapper_toString(SysRegMapper *S, uint32_t Bits, bool *Valid, char *re
 		}
 	}
 
-	uint32_t Op0 = (Bits >> 14) & 0x3;
-	uint32_t Op1 = (Bits >> 11) & 0x7;
-	uint32_t CRn = (Bits >> 7) & 0xf;
-	uint32_t CRm = (Bits >> 3) & 0xf;
-	uint32_t Op2 = Bits & 0x7;
+	Op0 = (Bits >> 14) & 0x3;
+	Op1 = (Bits >> 11) & 0x7;
+	CRn = (Bits >> 7) & 0xf;
+	CRm = (Bits >> 3) & 0xf;
+	Op2 = Bits & 0x7;
 
 	// Only combinations matching: 11 xxx 1x11 xxxx xxx are valid for a generic
 	// name.
@@ -605,14 +617,13 @@ void SysRegMapper_toString(SysRegMapper *S, uint32_t Bits, bool *Valid, char *re
 
 	*Valid = true;
 
-	char *Op1S, *CRnS, *CRmS, *Op2S;
 	Op1S = utostr(Op1, false);
 	CRnS = utostr(CRn, false);
 	CRmS = utostr(CRm, false);
 	Op2S = utostr(Op2, false);
 
 	//printf("Op1S: %s, CRnS: %s, CRmS: %s, Op2S: %s\n", Op1S, CRnS, CRmS, Op2S);
-	int dummy = sprintf(result, "s3_%s_c%s_c%s_%s", Op1S, CRnS, CRmS, Op2S);
+	dummy = sprintf(result, "s3_%s_c%s_c%s_%s", Op1S, CRnS, CRmS, Op2S);
 	(void)dummy;
 
 	cs_mem_free(Op1S);
@@ -657,9 +668,9 @@ static NamedImmMapper_Mapping TLBIPairs[] = {
 };
 
 NamedImmMapper A64TLBI_TLBIMapper = {
-	.Pairs = TLBIPairs,
-	.NumPairs = ARR_SIZE(TLBIPairs),
-	.TooBigImm = 0,
+	TLBIPairs,
+	ARR_SIZE(TLBIPairs),
+	0,
 };
 
 static NamedImmMapper_Mapping ATPairs[] = {
@@ -678,9 +689,9 @@ static NamedImmMapper_Mapping ATPairs[] = {
 };
 
 NamedImmMapper A64AT_ATMapper = {
-	.Pairs = ATPairs,
-	.NumPairs = ARR_SIZE(ATPairs),
-	.TooBigImm = 0,
+	ATPairs,
+	ARR_SIZE(ATPairs),
+	0,
 };
 
 static NamedImmMapper_Mapping DBarrierPairs[] = {
@@ -699,9 +710,9 @@ static NamedImmMapper_Mapping DBarrierPairs[] = {
 };
 
 NamedImmMapper A64DB_DBarrierMapper = {
-	.Pairs = DBarrierPairs,
-	.NumPairs = ARR_SIZE(DBarrierPairs),
-	.TooBigImm = 16,
+	DBarrierPairs,
+	ARR_SIZE(DBarrierPairs),
+	16,
 };
 
 static NamedImmMapper_Mapping DCPairs[] = {
@@ -716,9 +727,9 @@ static NamedImmMapper_Mapping DCPairs[] = {
 };
 
 NamedImmMapper A64DC_DCMapper = {
-	.Pairs = DCPairs,
-	.NumPairs = ARR_SIZE(DCPairs),
-	.TooBigImm = 0,
+	DCPairs,
+	ARR_SIZE(DCPairs),
+	0,
 };
 
 static NamedImmMapper_Mapping ICPairs[] = {
@@ -728,9 +739,9 @@ static NamedImmMapper_Mapping ICPairs[] = {
 };
 
 NamedImmMapper A64IC_ICMapper = {
-	.Pairs = ICPairs,
-	.NumPairs = ARR_SIZE(ICPairs),
-	.TooBigImm = 0,
+	ICPairs,
+	ARR_SIZE(ICPairs),
+	0,
 };
 
 static NamedImmMapper_Mapping ISBPairs[] = {
@@ -738,9 +749,9 @@ static NamedImmMapper_Mapping ISBPairs[] = {
 };
 
 NamedImmMapper A64ISB_ISBMapper = {
-	.Pairs = ISBPairs,
-	.NumPairs = ARR_SIZE(ISBPairs),
-	.TooBigImm = 16,
+	ISBPairs,
+	ARR_SIZE(ISBPairs),
+	16,
 };
 
 static NamedImmMapper_Mapping PRFMPairs[] = {
@@ -765,9 +776,9 @@ static NamedImmMapper_Mapping PRFMPairs[] = {
 };
 
 NamedImmMapper A64PRFM_PRFMMapper = {
-	.Pairs = PRFMPairs,
-	.NumPairs = ARR_SIZE(PRFMPairs),
-	.TooBigImm = 32,
+	PRFMPairs,
+	ARR_SIZE(PRFMPairs),
+	32,
 };
 
 static NamedImmMapper_Mapping PStatePairs[] = {
@@ -777,9 +788,9 @@ static NamedImmMapper_Mapping PStatePairs[] = {
 };
 
 NamedImmMapper A64PState_PStateMapper = {
-	.Pairs = PStatePairs,
-	.NumPairs = ARR_SIZE(PStatePairs),
-	.TooBigImm = 0,
+	PStatePairs,
+	ARR_SIZE(PStatePairs),
+	0,
 };
 
 static NamedImmMapper_Mapping MRSPairs[] = {
@@ -882,8 +893,9 @@ static NamedImmMapper_Mapping MRSPairs[] = {
 };
 
 SysRegMapper AArch64_MRSMapper = {
-	.InstPairs = MRSPairs,
-	.NumInstPairs = ARR_SIZE(MRSPairs),
+	NULL,
+	MRSPairs,
+	ARR_SIZE(MRSPairs),
 };
 
 static NamedImmMapper_Mapping MSRPairs[] = {
@@ -905,8 +917,9 @@ static NamedImmMapper_Mapping MSRPairs[] = {
 };
 
 SysRegMapper AArch64_MSRMapper = {
-	.InstPairs = MSRPairs,
-	.NumInstPairs = ARR_SIZE(MSRPairs),
+	NULL,
+	MSRPairs,
+	ARR_SIZE(MSRPairs),
 };
 
 // Encoding of the immediate for logical (immediate) instructions:
@@ -935,12 +948,14 @@ bool A64Imms_isLogicalImmBits(unsigned RegWidth, uint32_t Bits, uint64_t *Imm)
 	uint32_t N = Bits >> 12;
 	uint32_t ImmR = (Bits >> 6) & 0x3f;
 	uint32_t ImmS = Bits & 0x3f;
+	uint64_t Mask, WidthMask;
+	unsigned i;
+	int Width = 0, Num1s, Rotation;
 
 	// N=1 encodes a 64-bit replication and is invalid for the 32-bit
 	// instructions.
 	if (RegWidth == 32 && N != 0) return false;
 
-	int Width = 0;
 	if (N == 1)
 		Width = 64;
 	else if ((ImmS & 0x20) == 0)
@@ -958,20 +973,20 @@ bool A64Imms_isLogicalImmBits(unsigned RegWidth, uint32_t Bits, uint64_t *Imm)
 		return false;
 	}
 
-	int Num1s = (ImmS & (Width - 1)) + 1;
+	Num1s = (ImmS & (Width - 1)) + 1;
 
 	// All encodings which would map to -1 (signed) are RESERVED.
-	if (Num1s == Width) return false;
+	if (Num1s == Width)
+		return false;
 
-	int Rotation = (ImmR & (Width - 1));
-	uint64_t Mask = (1ULL << Num1s) - 1;
-	uint64_t WidthMask = Width == 64 ? -1 : (1ULL << Width) - 1;
+	Rotation = (ImmR & (Width - 1));
+	Mask = (1ULL << Num1s) - 1;
+	WidthMask = Width == 64 ? -1 : (1ULL << Width) - 1;
 	if (Rotation != 0 && Rotation != 64)
 		Mask = (Mask >> Rotation)
 			| ((Mask << (Width - Rotation)) & WidthMask);
 
 	*Imm = Mask;
-	unsigned i;
 	for (i = 1; i < RegWidth / Width; ++i) {
 		Mask <<= Width;
 		*Imm |= Mask;
@@ -980,3 +995,4 @@ bool A64Imms_isLogicalImmBits(unsigned RegWidth, uint32_t Bits, uint64_t *Imm)
 	return true;
 }
 
+#endif

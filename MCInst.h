@@ -20,7 +20,6 @@
 #define CS_MCINST_H
 
 #include <stdint.h>
-#include <stdbool.h>
 
 #include "include/capstone.h"
 

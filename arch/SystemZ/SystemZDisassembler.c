@@ -10,6 +10,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_SYSZ
+
 #include <stdio.h>	// DEBUG
 #include <stdlib.h>
 #include <string.h>
@@ -38,7 +40,7 @@ static DecodeStatus decodeRegisterClass(MCInst *Inst, uint64_t RegNo, const unsi
 	if (RegNo == 0)
 		return MCDisassembler_Fail;
 
-	MCInst_addOperand(Inst, MCOperand_CreateReg(RegNo));
+	MCInst_addOperand(Inst, MCOperand_CreateReg((unsigned)RegNo));
 	return MCDisassembler_Success;
 }
 
@@ -356,3 +358,4 @@ void SystemZ_init(MCRegisterInfo *MRI)
 			0);
 }
 
+#endif

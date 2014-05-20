@@ -30,11 +30,16 @@ static void print_string_hex(unsigned char *str, int len)
 	printf("\n");
 }
 
-static size_t mycallback(const uint8_t *buffer, size_t offset, void *p)
+size_t mycallback(const uint8_t *buffer, size_t offset, void *p)
 {
 	// always skip 2 bytes when encountering data
 	return 2;
 }
+
+cs_opt_skipdata skipdata = {
+	// rename default "data" instruction from ".byte" to "db"
+	"db",
+};
 
 static void test()
 {
@@ -43,46 +48,48 @@ static void test()
 
 	cs_opt_skipdata skipdata = {
 		// rename default "data" instruction from ".byte" to "db"
-		.mnemonic = "db",
+		"db",
 	};
 
 	cs_opt_skipdata skipdata_callback = {
-		.mnemonic = "db",
-		.callback = &mycallback,
+		"db",
+		(size_t) &mycallback,
 	};
 
 	struct platform platforms[] = {
 		{
-			.arch = CS_ARCH_X86,
-			.mode = CS_MODE_32,
-			.code = (unsigned char*)X86_CODE32,
-			.size = sizeof(X86_CODE32) - 1,
-			.comment = "X86 32 (Intel syntax) - Skip data",
+			CS_ARCH_X86,
+			CS_MODE_32,
+			(unsigned char*)X86_CODE32,
+			sizeof(X86_CODE32) - 1,
+			"X86 32 (Intel syntax) - Skip data",
 		},
 		{
-			.arch = CS_ARCH_ARM,
-			.mode = CS_MODE_ARM,
-			.code = (unsigned char*)RANDOM_CODE,
-			.size = sizeof(RANDOM_CODE) - 1,
-			.comment = "Arm - Skip data",
+			CS_ARCH_ARM,
+			CS_MODE_ARM,
+			(unsigned char*)RANDOM_CODE,
+			sizeof(RANDOM_CODE) - 1,
+			"Arm - Skip data",
 		},
 		{
-			.arch = CS_ARCH_X86,
-			.mode = CS_MODE_32,
-			.code = (unsigned char*)X86_CODE32,
-			.size = sizeof(X86_CODE32) - 1,
-			.comment = "X86 32 (Intel syntax) - Skip data custom mnemonic",
-			.opt_skipdata = CS_OPT_SKIPDATA_SETUP,
-			.skipdata = (size_t) &skipdata,
+			CS_ARCH_X86,
+			CS_MODE_32,
+			(unsigned char*)X86_CODE32,
+			sizeof(X86_CODE32) - 1,
+			"X86 32 (Intel syntax) - Skip data custom mnemonic",
+			0, 0,
+			CS_OPT_SKIPDATA_SETUP,
+			(size_t) &skipdata,
 		},
 		{
-			.arch = CS_ARCH_ARM,
-			.mode = CS_MODE_ARM,
-			.code = (unsigned char*)RANDOM_CODE,
-			.size = sizeof(RANDOM_CODE) - 1,
-			.comment = "Arm - Skip data callback",
-			.opt_skipdata = CS_OPT_SKIPDATA_SETUP,
-			.skipdata = (size_t) &skipdata_callback,
+			CS_ARCH_ARM,
+			CS_MODE_ARM,
+			(unsigned char*)RANDOM_CODE,
+			sizeof(RANDOM_CODE) - 1,
+			"Arm - Skip data callback",
+			0, 0,
+			CS_OPT_SKIPDATA_SETUP,
+			(size_t) &skipdata_callback,
 		},
 	};
 
@@ -92,6 +99,7 @@ static void test()
 	cs_err err;
 	int i;
 	size_t count;
+
 	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
 		printf("****************\n");
 		printf("Platform: %s\n", platforms[i].comment);

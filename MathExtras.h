@@ -23,6 +23,12 @@
 # include <intrin.h>
 #endif
 
+#ifndef __cplusplus
+#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
+#define inline /* inline */
+#endif
+#endif
+
 // NOTE: The following support functions use the _32/_64 extensions instead of
 // type overloading so that signed and unsigned integers can be used without
 // ambiguity.

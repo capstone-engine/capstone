@@ -14,6 +14,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_SYSZ
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -29,7 +31,7 @@
 
 static const char *getRegisterName(unsigned RegNo);
 
-void SystemZ_post_printer(csh ud, cs_insn *insn, char *insn_asm)
+void SystemZ_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 {
 	/*
 	   if (((cs_struct *)ud)->detail != CS_OPT_ON)
@@ -376,3 +378,5 @@ void SystemZ_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	printInstruction(MI, O, Info);
 }
+
+#endif

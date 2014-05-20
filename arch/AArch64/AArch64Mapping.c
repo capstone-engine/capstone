@@ -1,5 +1,7 @@
-/* Capstone Unified Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+
+#ifdef CAPSTONE_HAS_ARM64
 
 #include <stdio.h>	// debug
 #include <string.h>
@@ -18,9 +20,9 @@ static name_map reg_name_maps[] = {
 	//=========
 	{ ARM64_REG_NZCV, "nzcv"},
 	{ ARM64_REG_WSP, "wsp"},
-	{ ARM64_REG_WZR, "wzr"},	// dummy data for array mapping order only
+	{ ARM64_REG_WZR, "wzr"},
 	{ ARM64_REG_SP, "sp"},
-	{ ARM64_REG_XZR, "xzr"},	// dummy data for array mapping order only
+	{ ARM64_REG_XZR, "xzr"},
 	{ ARM64_REG_B0, "b0"},
 	{ ARM64_REG_B1, "b1"},
 	{ ARM64_REG_B2, "b2"},
@@ -17045,3 +17047,5 @@ arm64_reg AArch64_map_insn(const char *name)
 
 	return (i != -1)? i : ARM64_REG_INVALID;
 }
+
+#endif

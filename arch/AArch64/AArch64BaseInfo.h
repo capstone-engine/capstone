@@ -14,15 +14,14 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #ifndef CS_LLVM_AARCH64_BASEINFO_H
 #define CS_LLVM_AARCH64_BASEINFO_H
 
 #include <ctype.h>
 #include <stdint.h>
-#include <stdbool.h>
 #include <string.h>
 
 /// Instances of this class can perform bidirectional mapping from random
@@ -90,6 +89,11 @@ typedef enum A64CC_CondCodes {   // Meaning (integer)          Meaning (floating
 	A64CC_Invalid
 } A64CC_CondCodes;
 
+#ifndef __cplusplus
+#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
+#define inline /* inline */
+#endif
+#endif
 inline static const char *A64CondCodeToString(A64CC_CondCodes CC)
 {
 	switch (CC) {

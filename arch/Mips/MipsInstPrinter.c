@@ -11,8 +11,10 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+
+#ifdef CAPSTONE_HAS_MIPS
 
 #include <inttypes.h>
 #include <stdlib.h>
@@ -446,3 +448,4 @@ static char *printAlias(MCInst *MI, SStream *OS)
 #define PRINT_ALIAS_INSTR
 #include "MipsGenAsmWriter.inc"
 
+#endif

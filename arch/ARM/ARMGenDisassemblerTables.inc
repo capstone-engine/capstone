@@ -9960,104 +9960,109 @@ static uint8_t DecoderTablev8NEON32[] = {
   0
 };
 
+static bool getbool(uint64_t b)
+{
+	return b != 0;
+}
+
 static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
 {
   switch (Idx) {
   default: // llvm_unreachable("Invalid index!");
   case 0:
-    return (bool)(!(Bits & ARM_ModeThumb));
+    return getbool(!(Bits & ARM_ModeThumb));
   case 1:
-    return (bool)(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV6Ops));
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV6Ops));
   case 2:
-    return (bool)(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV8Ops) && (Bits & ARM_FeatureCRC));
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV8Ops) && (Bits & ARM_FeatureCRC));
   case 3:
-    return (bool)(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV5TEOps));
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV5TEOps));
   case 4:
-    return (bool)(!(Bits & ARM_HasV8Ops));
+    return getbool(!(Bits & ARM_HasV8Ops));
   case 5:
-    return (bool)(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV8Ops));
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV8Ops));
   case 6:
-    return (bool)(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV4TOps));
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV4TOps));
   case 7:
-    return (bool)(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV5TOps));
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV5TOps));
   case 8:
-    return (bool)(!(Bits & ARM_ModeThumb) && (Bits & ARM_FeatureTrustZone));
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_FeatureTrustZone));
   case 9:
-    return (bool)(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV6T2Ops));
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV6T2Ops));
   case 10:
-    return (bool)(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV7Ops));
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV7Ops));
   case 11:
-    return (bool)(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV7Ops) && (Bits & ARM_FeatureMP));
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_HasV7Ops) && (Bits & ARM_FeatureMP));
   case 12:
-    return (bool)(!(Bits & ARM_ModeThumb) && (Bits & ARM_FeatureDB));
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_FeatureDB));
   case 13:
-    return (bool)(!(Bits & ARM_ModeThumb) && (Bits & ARM_FeatureHWDivARM));
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_FeatureHWDivARM));
   case 14:
-    return (bool)(!(Bits & ARM_ModeThumb) && (Bits & ARM_FeatureNaClTrap));
+    return getbool(!(Bits & ARM_ModeThumb) && (Bits & ARM_FeatureNaClTrap));
   case 15:
-    return (bool)((Bits & ARM_FeatureNEON));
+    return getbool((Bits & ARM_FeatureNEON));
   case 16:
-    return (bool)((Bits & ARM_HasV8Ops) && (Bits & ARM_FeatureCrypto));
+    return getbool((Bits & ARM_HasV8Ops) && (Bits & ARM_FeatureCrypto));
   case 17:
-    return (bool)((Bits & ARM_FeatureNEON) && (Bits & ARM_FeatureFP16));
+    return getbool((Bits & ARM_FeatureNEON) && (Bits & ARM_FeatureFP16));
   case 18:
-    return (bool)((Bits & ARM_FeatureNEON) && (Bits & ARM_FeatureVFP4));
+    return getbool((Bits & ARM_FeatureNEON) && (Bits & ARM_FeatureVFP4));
   case 19:
-    return (bool)((Bits & ARM_ModeThumb));
+    return getbool((Bits & ARM_ModeThumb));
   case 20:
-    return (bool)((Bits & ARM_ModeThumb) && (Bits & ARM_HasV5TOps));
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_HasV5TOps));
   case 21:
-    return (bool)((Bits & ARM_ModeThumb) && (Bits & ARM_HasV6Ops));
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_HasV6Ops));
   case 22:
-    return (bool)((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2));
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2));
   case 23:
-    return (bool)((Bits & ARM_ModeThumb) && (Bits & ARM_HasV8Ops));
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_HasV8Ops));
   case 24:
-    return (bool)((Bits & ARM_ModeThumb) && (Bits & ARM_HasV6MOps));
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_HasV6MOps));
   case 25:
-    return (bool)((Bits & ARM_FeatureT2XtPk) && (Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2));
+    return getbool((Bits & ARM_FeatureT2XtPk) && (Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2));
   case 26:
-    return (bool)((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && !(Bits & ARM_HasV8Ops));
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && !(Bits & ARM_HasV8Ops));
   case 27:
-    return (bool)((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_FeatureDSPThumb2));
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_FeatureDSPThumb2));
   case 28:
-    return (bool)((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_HasV7Ops));
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_HasV7Ops));
   case 29:
-    return (bool)((Bits & ARM_FeatureDB));
+    return getbool((Bits & ARM_FeatureDB));
   case 30:
-    return (bool)((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && !(Bits & ARM_FeatureMClass));
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && !(Bits & ARM_FeatureMClass));
   case 31:
-    return (bool)((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureMClass));
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureMClass));
   case 32:
-    return (bool)((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_HasV8Ops));
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_HasV8Ops));
   case 33:
-    return (bool)((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_FeatureTrustZone));
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_FeatureTrustZone));
   case 34:
-    return (bool)((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_HasV7Ops) && (Bits & ARM_FeatureMP));
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_HasV7Ops) && (Bits & ARM_FeatureMP));
   case 35:
-    return (bool)((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_FeatureT2XtPk));
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_FeatureT2XtPk));
   case 36:
-    return (bool)((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_HasV8Ops) && (Bits & ARM_FeatureCRC));
+    return getbool((Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2) && (Bits & ARM_HasV8Ops) && (Bits & ARM_FeatureCRC));
   case 37:
-    return (bool)((Bits & ARM_FeatureHWDiv) && (Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2));
+    return getbool((Bits & ARM_FeatureHWDiv) && (Bits & ARM_ModeThumb) && (Bits & ARM_FeatureThumb2));
   case 38:
-    return (bool)((Bits & ARM_FeatureVFP2));
+    return getbool((Bits & ARM_FeatureVFP2));
   case 39:
-    return (bool)((Bits & ARM_FeatureVFP2) && !(Bits & ARM_FeatureVFPOnlySP));
+    return getbool((Bits & ARM_FeatureVFP2) && !(Bits & ARM_FeatureVFPOnlySP));
   case 40:
-    return (bool)((Bits & ARM_FeatureVFP4));
+    return getbool((Bits & ARM_FeatureVFP4));
   case 41:
-    return (bool)((Bits & ARM_FeatureVFP4) && !(Bits & ARM_FeatureVFPOnlySP));
+    return getbool((Bits & ARM_FeatureVFP4) && !(Bits & ARM_FeatureVFPOnlySP));
   case 42:
-    return (bool)((Bits & ARM_FeatureVFP3));
+    return getbool((Bits & ARM_FeatureVFP3));
   case 43:
-    return (bool)((Bits & ARM_FeatureFPARMv8));
+    return getbool((Bits & ARM_FeatureFPARMv8));
   case 44:
-    return (bool)((Bits & ARM_FeatureVFP3) && !(Bits & ARM_FeatureVFPOnlySP));
+    return getbool((Bits & ARM_FeatureVFP3) && !(Bits & ARM_FeatureVFPOnlySP));
   case 45:
-    return (bool)((Bits & ARM_FeatureFPARMv8) && !(Bits & ARM_FeatureVFPOnlySP));
+    return getbool((Bits & ARM_FeatureFPARMv8) && !(Bits & ARM_FeatureVFPOnlySP));
   case 46:
-    return (bool)((Bits & ARM_HasV8Ops) && (Bits & ARM_FeatureNEON));
+    return getbool((Bits & ARM_HasV8Ops) && (Bits & ARM_FeatureNEON));
   }
 }
 
@@ -13449,48 +13454,48 @@ static DecodeStatus fname(uint8_t DecodeTable[], MCInst *MI, \
 { \
   uint64_t Bits = getFeatureBits(feature); \
   uint8_t *Ptr = DecodeTable; \
-  uint32_t CurFieldValue = 0; \
+  uint32_t CurFieldValue = 0, ExpectedValue; \
   DecodeStatus S = MCDisassembler_Success; \
+  unsigned Start, Len, NumToSkip, PIdx, Opc, DecodeIdx; \
+  InsnType Val, FieldValue, PositiveMask, NegativeMask; \
+  bool Pred, Fail; \
   for (;;) { \
     switch (*Ptr) { \
     default: \
       return MCDisassembler_Fail; \
     case MCD_OPC_ExtractField: { \
-      unsigned Start = *++Ptr; \
-      unsigned Len = *++Ptr; \
+      Start = *++Ptr; \
+      Len = *++Ptr; \
       ++Ptr; \
-      CurFieldValue = fieldname(insn, Start, Len); \
+      CurFieldValue = (uint32_t)fieldname(insn, Start, Len); \
       break; \
     } \
     case MCD_OPC_FilterValue: { \
-      unsigned Len; \
-      InsnType Val = (InsnType)decodeULEB128(++Ptr, &Len); \
+      Val = (InsnType)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      unsigned NumToSkip = *Ptr++; \
+      NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
       if (Val != CurFieldValue) \
         Ptr += NumToSkip; \
       break; \
     } \
     case MCD_OPC_CheckField: { \
-      unsigned Start = *++Ptr; \
-      unsigned Len = *++Ptr; \
-      InsnType FieldValue = fieldname(insn, Start, Len); \
-      uint32_t ExpectedValue = (uint32_t)decodeULEB128(++Ptr, &Len); \
+      Start = *++Ptr; \
+      Len = *++Ptr; \
+      FieldValue = fieldname(insn, Start, Len); \
+      ExpectedValue = (uint32_t)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      unsigned NumToSkip = *Ptr++; \
+      NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
       if (ExpectedValue != FieldValue) \
         Ptr += NumToSkip; \
       break; \
     } \
     case MCD_OPC_CheckPredicate: { \
-      unsigned Len; \
-      unsigned PIdx = (uint32_t)decodeULEB128(++Ptr, &Len); \
+      PIdx = (uint32_t)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      unsigned NumToSkip = *Ptr++; \
+      NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
-      bool Pred; \
       Pred = checkDecoderPredicate(PIdx, Bits); \
       if (!Pred) \
         Ptr += NumToSkip; \
@@ -13498,21 +13503,19 @@ static DecodeStatus fname(uint8_t DecodeTable[], MCInst *MI, \
       break; \
     } \
     case MCD_OPC_Decode: { \
-      unsigned Len; \
-      unsigned Opc = (uint32_t)decodeULEB128(++Ptr, &Len); \
+      Opc = (uint32_t)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      unsigned DecodeIdx = (uint32_t)decodeULEB128(Ptr, &Len); \
+      DecodeIdx = (uint32_t)decodeULEB128(Ptr, &Len); \
       Ptr += Len; \
       MCInst_setOpcode(MI, Opc); \
       return decoder(S, DecodeIdx, insn, MI, Address, MRI); \
     } \
     case MCD_OPC_SoftFail: { \
-      unsigned Len; \
-      InsnType PositiveMask = (InsnType)decodeULEB128(++Ptr, &Len); \
+      PositiveMask = (InsnType)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      InsnType NegativeMask = (InsnType)decodeULEB128(Ptr, &Len); \
+      NegativeMask = (InsnType)decodeULEB128(Ptr, &Len); \
       Ptr += Len; \
-      bool Fail = (insn & PositiveMask) || (~insn & NegativeMask); \
+      Fail = (insn & PositiveMask) || (~insn & NegativeMask); \
       if (Fail) \
         S = MCDisassembler_SoftFail; \
       break; \

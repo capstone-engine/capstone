@@ -15,6 +15,9 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+// this code is only relevant when DIET mode is disable
+#if defined(CAPSTONE_HAS_X86) && !defined(CAPSTONE_DIET)
+
 #include <ctype.h>
 #include <inttypes.h>
 #include <stdio.h>
@@ -432,6 +435,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	MCOperand *IndexReg  = MCInst_getOperand(MI, Op+2);
 	MCOperand *DispSpec = MCInst_getOperand(MI, Op+3);
 	MCOperand *SegReg = MCInst_getOperand(MI, Op+4);
+	uint64_t ScaleVal;
 
 	if (MI->csh->detail) {
 		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_MEM;
@@ -474,7 +478,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 		if (MCOperand_getReg(IndexReg)) {
 			SStream_concat(O, ", ");
 			_printOperand(MI, Op+2, O);
-			uint64_t ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op+1));
+			ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op+1));
 			if (MI->csh->detail)
 				MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.scale = (int)ScaleVal;
 			if (ScaleVal != 1) {
@@ -540,3 +544,4 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 	}
 }
 
+#endif

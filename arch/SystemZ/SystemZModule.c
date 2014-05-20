@@ -1,6 +1,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_SYSZ
+
 #include "../../utils.h"
 #include "../../MCRegisterInfo.h"
 #include "SystemZDisassembler.h"
@@ -48,3 +50,5 @@ void SystemZ_enable(void)
 	// support this arch
 	all_arch |= (1 << CS_ARCH_SYSZ);
 }
+
+#endif

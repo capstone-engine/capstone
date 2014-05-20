@@ -19,8 +19,8 @@
 #ifndef CS_LLVM_MC_MCREGISTERINFO_H
 #define CS_LLVM_MC_MCREGISTERINFO_H
 
-#include <stdbool.h>
 #include <stdint.h>
+#include "include/platform.h"
 
 /// An unsigned integer type large enough to represent all physical registers,
 /// but not necessarily virtual registers.

@@ -16,6 +16,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_X86
+
 #include <stdarg.h>   /* for va_*()       */
 #include <stdlib.h>   /* for exit()       */
 #include <string.h>   /* for memset()     */
@@ -45,14 +47,6 @@ static const char *x86DisassemblerGetInstrName(unsigned Opcode)
 
 #define TRUE  1
 #define FALSE 0
-
-#define NDEBUG
-
-#ifndef NDEBUG
-#define debug(s) do { x86DisassemblerDebug(__FILE__, __LINE__, s); } while (0)
-#else
-#define debug(s) ((void) 0)
-#endif
 
 /*
  * contextForAttrs - Client for the instruction context table.  Takes a set of
@@ -221,7 +215,7 @@ static InstrUID decode(OpcodeType type,
 
 	switch (dec->modrm_type) {
 		default:
-			debug("Corrupt table!  Unknown modrm_type");
+			//debug("Corrupt table!  Unknown modrm_type");
 			return 0;
 		case MODRM_ONEENTRY:
 			return modRMTable[dec->instructionIDs];
@@ -493,7 +487,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 						insn->segmentOverride = SEG_OVERRIDE_GS;
 						break;
 					default:
-						debug("Unhandled override");
+						//debug("Unhandled override");
 						return -1;
 				}
 				if (prefixGroups[1])
@@ -1265,7 +1259,7 @@ static int readSIB(struct InternalInstruction* insn)
 					insn->sibBase = (SIBBase)(sibBaseBase + base);
 					break;
 				case 0x3:
-					debug("Cannot have Mod = 0b11 and a SIB byte");
+					//debug("Cannot have Mod = 0b11 and a SIB byte");
 					return -1;
 			}
 			break;
@@ -1535,7 +1529,6 @@ static int readModRM(struct InternalInstruction* insn)
 		} \
 		switch (type) {                                           \
 			default:                                              \
-				debug("Unhandled register type");                 \
 				*valid = 0;                                           \
 				return 0;                                             \
 			case TYPE_Rv:                                         \
@@ -1621,7 +1614,7 @@ static int fixupReg(struct InternalInstruction *insn,
 
 	switch ((OperandEncoding)op->encoding) {
 		default:
-			debug("Expected a REG or R/M encoding in fixupReg");
+			//debug("Expected a REG or R/M encoding in fixupReg");
 			return -1;
 		case ENCODING_VVVV:
 			insn->vvvv = (Reg)fixupRegValue(insn,
@@ -1725,7 +1718,7 @@ static int readImmediate(struct InternalInstruction* insn, uint8_t size)
 	// dbgprintf(insn, "readImmediate()");
 
 	if (insn->numImmediatesConsumed == 2) {
-		debug("Already consumed two immediates");
+		//debug("Already consumed two immediates");
 		return -1;
 	}
 
@@ -2011,3 +2004,5 @@ int decodeInstruction(struct InternalInstruction* insn,
 
 	return 0;
 }
+
+#endif

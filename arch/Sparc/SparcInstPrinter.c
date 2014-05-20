@@ -14,6 +14,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#ifdef CAPSTONE_HAS_SPARC
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -50,7 +52,7 @@ static void set_mem_access(MCInst *MI, bool status)
 	}
 }
 
-void Sparc_post_printer(csh ud, cs_insn *insn, char *insn_asm)
+void Sparc_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 {
 	if (((cs_struct *)ud)->detail != CS_OPT_ON)
 		return;
@@ -271,3 +273,5 @@ void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
 			printInstruction(MI, O, NULL);
 	}
 }
+
+#endif
