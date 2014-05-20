@@ -30,7 +30,7 @@ static void print_string_hex(unsigned char *str, int len)
 	printf("\n");
 }
 
-size_t mycallback(const uint8_t *buffer, size_t offset, void *p)
+size_t mycallback(const uint8_t *buffer, uint64_t offset, void *p)
 {
 	// always skip 2 bytes when encountering data
 	return 2;
@@ -53,7 +53,7 @@ static void test()
 
 	cs_opt_skipdata skipdata_callback = {
 		"db",
-		(size_t) &mycallback,
+		&mycallback,
 	};
 
 	struct platform platforms[] = {
@@ -76,7 +76,7 @@ static void test()
 			CS_MODE_32,
 			(unsigned char*)X86_CODE32,
 			sizeof(X86_CODE32) - 1,
-			"X86 32 (Intel syntax) - Skip data custom mnemonic",
+			"X86 32 (Intel syntax) - Skip data with custom mnemonic",
 			0, 0,
 			CS_OPT_SKIPDATA_SETUP,
 			(size_t) &skipdata,
@@ -86,7 +86,7 @@ static void test()
 			CS_MODE_ARM,
 			(unsigned char*)RANDOM_CODE,
 			sizeof(RANDOM_CODE) - 1,
-			"Arm - Skip data callback",
+			"Arm - Skip data with callback",
 			0, 0,
 			CS_OPT_SKIPDATA_SETUP,
 			(size_t) &skipdata_callback,
