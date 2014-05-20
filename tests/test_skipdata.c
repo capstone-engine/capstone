@@ -15,6 +15,8 @@ struct platform {
 	char *comment;
 	cs_opt_type opt_type;
 	cs_opt_value opt_value;
+	cs_opt_type opt_skipdata;
+	size_t skipdata;
 };
 
 static void print_string_hex(unsigned char *str, int len)
@@ -39,34 +41,57 @@ static void test()
 #define X86_CODE32 "\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x00\x91\x92"
 #define RANDOM_CODE "\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x00\x07\xf7\xeb\x2a\xff\xff\x7f\x57\xe3\x01\xff\xff\x7f\x57\xeb\x00\xf0\x00\x00\x24\xb2\x4f\x00\x78"
 
+	cs_opt_skipdata skipdata = {
+		// rename default "data" instruction from ".byte" to "db"
+		.mnemonic = "db",
+	};
+
+	cs_opt_skipdata skipdata_callback = {
+		.mnemonic = "db",
+		.callback = &mycallback,
+	};
+
 	struct platform platforms[] = {
 		{
 			.arch = CS_ARCH_X86,
 			.mode = CS_MODE_32,
 			.code = (unsigned char*)X86_CODE32,
 			.size = sizeof(X86_CODE32) - 1,
-			.comment = "X86 32 (Intel syntax)"
+			.comment = "X86 32 (Intel syntax) - Skip data",
 		},
-		{ 
+		{
 			.arch = CS_ARCH_ARM,
 			.mode = CS_MODE_ARM,
 			.code = (unsigned char*)RANDOM_CODE,
 			.size = sizeof(RANDOM_CODE) - 1,
-			.comment = "Arm"
+			.comment = "Arm - Skip data",
+		},
+		{
+			.arch = CS_ARCH_X86,
+			.mode = CS_MODE_32,
+			.code = (unsigned char*)X86_CODE32,
+			.size = sizeof(X86_CODE32) - 1,
+			.comment = "X86 32 (Intel syntax) - Skip data custom mnemonic",
+			.opt_skipdata = CS_OPT_SKIPDATA_SETUP,
+			.skipdata = (size_t) &skipdata,
+		},
+		{
+			.arch = CS_ARCH_ARM,
+			.mode = CS_MODE_ARM,
+			.code = (unsigned char*)RANDOM_CODE,
+			.size = sizeof(RANDOM_CODE) - 1,
+			.comment = "Arm - Skip data callback",
+			.opt_skipdata = CS_OPT_SKIPDATA_SETUP,
+			.skipdata = (size_t) &skipdata_callback,
 		},
 	};
 
 	csh handle;
 	uint64_t address = 0x1000;
 	cs_insn *insn;
+	cs_err err;
 	int i;
 	size_t count;
-	cs_opt_skipdata skipdata = {
-		// rename default "data" instruction from ".byte" to "db"
-		.mnemonic = "db",
-	};
-	cs_err err;
-
 	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
 		printf("****************\n");
 		printf("Platform: %s\n", platforms[i].comment);
@@ -81,14 +106,7 @@ static void test()
 
 		// turn on SKIPDATA mode
 		cs_option(handle, CS_OPT_SKIPDATA, CS_OPT_ON);
-
-		// Default "data" instruction's name is ".byte". To rename it to "db",
-		// just uncomment the code below.
-		// cs_option(handle, CS_OPT_SKIPDATA_SETUP, (size_t)&skipdata);
-
-		// Uncomment 2 lines below to customize SKIPDATA mode with our callback
-		// skipdata.callback = &mycallback;
-		// cs_option(handle, CS_OPT_SKIPDATA_SETUP, (size_t)&skipdata);
+		cs_option(handle, platforms[i].opt_skipdata, platforms[i].skipdata);
 
 		count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {
