@@ -174,6 +174,10 @@ static name_map reg_name_maps[] = {
 	{ MIPS_REG_W29, "w29"},
 	{ MIPS_REG_W30, "w30"},
 	{ MIPS_REG_W31, "w31"},
+
+	{ MIPS_REG_HI, "hi"},
+	{ MIPS_REG_LO, "lo"},
+	{ MIPS_REG_PC, "pc"},
 };
 #endif
 
