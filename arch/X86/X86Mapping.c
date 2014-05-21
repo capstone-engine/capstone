@@ -41779,10 +41779,69 @@ x86_reg X86_insn_reg(unsigned int id)
 	return 0;
 }
 
+// given MCInst's id, find out if this insn is valid for REP/REPNE prefix
+static bool valid_rep(cs_struct *h, unsigned int opcode)
+{
+	unsigned int id;
+	int i = insn_find(insns, ARR_SIZE(insns), opcode, &h->insn_cache);
+	if (i != 0) {
+		id = insns[i].mapid;
+		switch(id) {
+			default:
+				return false;
+			case X86_REP_MOVSB_32:
+			case X86_REP_MOVSW_32:
+			case X86_REP_MOVSD_32:
+			case X86_REP_MOVSB_64:
+			case X86_REP_MOVSD_64:
+			case X86_REP_MOVSQ_64:
+			case X86_REP_MOVSW_64:
+
+			case X86_INS_CMPSB:
+			case X86_INS_CMPSW:
+			case X86_INS_CMPSD:
+			case X86_INS_CMPSQ:
+
+			case X86_INS_SCASB:
+			case X86_INS_SCASW:
+			case X86_INS_SCASD:
+			case X86_INS_SCASQ:
+
+			case X86_INS_LODSB:
+			case X86_INS_LODSW:
+			case X86_INS_LODSD:
+			case X86_INS_LODSQ:
+
+			case X86_REP_STOSB_32:
+			case X86_REP_STOSD_32:
+			case X86_REP_STOSW_32:
+			case X86_REP_STOSB_64:
+			case X86_REP_STOSD_64:
+			case X86_REP_STOSQ_64:
+			case X86_REP_STOSW_64:
+
+			case X86_INS_INSB:
+			case X86_INS_INSW:
+			case X86_INS_INSD:
+
+			case X86_INS_OUTSB:
+			case X86_INS_OUTSW:
+			case X86_INS_OUTSD:
+				return true;
+		}
+	}
+
+	// not found
+	return false;
+}
+
 // return true if we patch the mnemonic
 bool X86_lockrep(MCInst *MI, SStream *O)
 {
 	int i;
+#ifndef CAPSTONE_X86_REDUCE
+	unsigned int opcode;
+#endif
 
 	if (MI->x86_lock_rep) {
 		for(i = 0; i < ARR_SIZE(MI->x86_prefix); i++) {
@@ -41794,42 +41853,65 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 					SStream_concat(O, "lock|");
 #endif
 					break;
-				case 0xf2:
-#ifndef CAPSTONE_X86_REDUCE
-					if (MCInst_getOpcode(MI) == X86_MULPDrr) {
-						MCInst_setOpcode(MI, X86_MULSDrr);
-#ifndef CAPSTONE_DIET
-						SStream_concat(O, "mulsd\t");
-#endif
-						MI->x86_prefix[i] = 0;
-						// notify that we already patched mnemonic
-						return true;
-					}
-#ifndef CAPSTONE_DIET
-					else
+				case 0xf2:	// repne
+#ifndef CAPSTONE_DIET	// only care about memonic in standard (non-diet) mode
+					opcode = MCInst_getOpcode(MI);
+					if (valid_rep(MI->csh, opcode)) {
 						SStream_concat(O, "repne|");
+					} else {
+						// invalid prefix
+						MI->x86_prefix[i] = 0;
+
+						// handle special cases
+#ifndef CAPSTONE_X86_REDUCE
+						if (opcode == X86_MULPDrr) {
+							MCInst_setOpcode(MI, X86_MULSDrr);
+							SStream_concat(O, "mulsd\t");
+							return true;
+						}
 #endif
-#else
-					SStream_concat(O, "repne|");
+					}
+#else	// diet mode -> only patch opcode in special cases
+					if (!valid_rep(MI->csh, opcode)) {
+						MI->x86_prefix[i] = 0;
+					}
+#ifndef CAPSTONE_X86_REDUCE
+					// handle special cases
+					if (opcode == X86_MULPDrr) {
+						MCInst_setOpcode(MI, X86_MULSDrr);
+					}
+#endif
 #endif
 					break;
+
 				case 0xf3:
-#ifndef CAPSTONE_X86_REDUCE
-					if (MCInst_getOpcode(MI) == X86_MULPDrr) {
-						MCInst_setOpcode(MI, X86_MULSSrr);
-#ifndef CAPSTONE_DIET
-						SStream_concat(O, "mulss\t");
-#endif
-						MI->x86_prefix[i] = 0;
-						// notify that we already patched mnemonic
-						return true;
-					}
-#ifndef CAPSTONE_DIET
-					else
+#ifndef CAPSTONE_DIET	// only care about memonic in standard (non-diet) mode
+					opcode = MCInst_getOpcode(MI);
+					if (valid_rep(MI->csh, opcode)) {
 						SStream_concat(O, "rep|");
+					} else {
+						// invalid prefix
+						MI->x86_prefix[i] = 0;
+
+						// handle special cases
+#ifndef CAPSTONE_X86_REDUCE
+						if (opcode == X86_MULPDrr) {
+							MCInst_setOpcode(MI, X86_MULSSrr);
+							SStream_concat(O, "mulss\t");
+							return true;
+						}
 #endif
-#else
-					SStream_concat(O, "rep|");
+					}
+#else	// diet mode -> only patch opcode in special cases
+					if (!valid_rep(MI->csh, opcode)) {
+						MI->x86_prefix[i] = 0;
+					}
+#ifndef CAPSTONE_X86_REDUCE
+					// handle special cases
+					if (opcode == X86_MULPDrr) {
+						MCInst_setOpcode(MI, X86_MULSSrr);
+					}
+#endif
 #endif
 					break;
 			}
