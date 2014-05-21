@@ -41791,27 +41791,22 @@ static bool valid_rep(cs_struct *h, unsigned int opcode)
 				return false;
 			case X86_INS_MOVSB:
 			case X86_INS_MOVSW:
-			//case X86_INS_MOVSD:
 			case X86_INS_MOVSQ:
 
 			case X86_INS_CMPSB:
 			case X86_INS_CMPSW:
-			//case X86_INS_CMPSD:
 			case X86_INS_CMPSQ:
 
 			case X86_INS_SCASB:
 			case X86_INS_SCASW:
-			//case X86_INS_SCASD:
 			case X86_INS_SCASQ:
 
 			case X86_INS_LODSB:
 			case X86_INS_LODSW:
-			//case X86_INS_LODSD:
 			case X86_INS_LODSQ:
 
 			case X86_INS_STOSB:
 			case X86_INS_STOSW:
-			//case X86_INS_STOSD:
 			case X86_INS_STOSQ:
 
 			case X86_INS_INSB:
@@ -41822,6 +41817,33 @@ static bool valid_rep(cs_struct *h, unsigned int opcode)
 			case X86_INS_OUTSW:
 			case X86_INS_OUTSD:
 				return true;
+
+			// following are some confused instructions, which have the same
+			// mnemonics in 128bit media instructions. Intel is horribly crazy!
+			case X86_INS_MOVSD:
+				if (opcode == X86_MOVSL) // REP MOVSD
+					return true;
+				return false;
+
+			case X86_INS_CMPSD:
+				if (opcode == X86_CMPS32) // REP CMPSD
+					return true;
+				return false;
+
+			case X86_INS_SCASD:
+				if (opcode == X86_SCAS32) // REP SCASD
+					return true;
+				return false;
+
+			case X86_INS_LODSD:
+				if (opcode == X86_LODSL) // REP LODSD
+					return true;
+				return false;
+
+			case X86_INS_STOSD:
+				if (opcode == X86_STOSL) // REP STOSD
+					return true;
+				return false;
 		}
 	}
 
