@@ -511,8 +511,8 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	}
 
 	if (!MCOperand_isImm(DispSpec)) {
-		if (NeedPlus) SStream_concat(O, " + ");
-		//assert(DispSpec.isExpr() && "non-immediate displacement for LEA?");
+		if (NeedPlus)
+			SStream_concat(O, " + ");
 	} else {
 		int64_t DispVal = MCOperand_getImm(DispSpec);
 		if (MI->csh->detail)
