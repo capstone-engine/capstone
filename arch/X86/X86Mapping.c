@@ -41789,36 +41789,30 @@ static bool valid_rep(cs_struct *h, unsigned int opcode)
 		switch(id) {
 			default:
 				return false;
-			case X86_REP_MOVSB_32:
-			case X86_REP_MOVSW_32:
-			case X86_REP_MOVSD_32:
-			case X86_REP_MOVSB_64:
-			case X86_REP_MOVSD_64:
-			case X86_REP_MOVSQ_64:
-			case X86_REP_MOVSW_64:
+			case X86_INS_MOVSB:
+			case X86_INS_MOVSW:
+			//case X86_INS_MOVSD:
+			case X86_INS_MOVSQ:
 
 			case X86_INS_CMPSB:
 			case X86_INS_CMPSW:
-			case X86_INS_CMPSD:
+			//case X86_INS_CMPSD:
 			case X86_INS_CMPSQ:
 
 			case X86_INS_SCASB:
 			case X86_INS_SCASW:
-			case X86_INS_SCASD:
+			//case X86_INS_SCASD:
 			case X86_INS_SCASQ:
 
 			case X86_INS_LODSB:
 			case X86_INS_LODSW:
-			case X86_INS_LODSD:
+			//case X86_INS_LODSD:
 			case X86_INS_LODSQ:
 
-			case X86_REP_STOSB_32:
-			case X86_REP_STOSD_32:
-			case X86_REP_STOSW_32:
-			case X86_REP_STOSB_64:
-			case X86_REP_STOSD_64:
-			case X86_REP_STOSQ_64:
-			case X86_REP_STOSW_64:
+			case X86_INS_STOSB:
+			case X86_INS_STOSW:
+			//case X86_INS_STOSD:
+			case X86_INS_STOSQ:
 
 			case X86_INS_INSB:
 			case X86_INS_INSW:
