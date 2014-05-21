@@ -41610,6 +41610,31 @@ void X86_post_printer(csh handle, cs_insn *insn, char *insn_asm, MCInst *mci)
 					insn->detail->x86.op_count++;
 				}
 				break;
+
+			case X86_SHL16rCL:
+			case X86_SHL32rCL:
+			case X86_SHL64rCL:
+			case X86_SHL8rCL:
+			case X86_SHLD16mrCL:
+			case X86_SHLD16rrCL:
+			case X86_SHLD32mrCL:
+			case X86_SHLD32rrCL:
+			case X86_SHLD64mrCL:
+			case X86_SHLD64rrCL:
+				if (ud->syntax != CS_OPT_SYNTAX_ATT) { // default syntax is Intel
+					// shl al, cl
+					insn->detail->x86.operands[1].type = X86_OP_REG;
+					insn->detail->x86.operands[1].reg = X86_REG_CL;
+					insn->detail->x86.op_count = 2;
+				} else {
+					// shl %cl, %al
+					memcpy(&(insn->detail->x86.operands[1]), &(insn->detail->x86.operands[0]), sizeof(insn->detail->x86.operands[0]));
+					insn->detail->x86.operands[0].type = X86_OP_REG;
+					insn->detail->x86.operands[0].reg = X86_REG_CL;
+					insn->detail->x86.op_count = 2;
+				}
+
+				break;
 			case X86_SAL8r1:
 			case X86_SAL16r1:
 			case X86_SAL32r1:
