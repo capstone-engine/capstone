@@ -722,32 +722,6 @@ static void update_pub_insn(cs_insn_flat *pub, InternalInstruction *inter, uint8
 	pub->x86.sib_base = x86_map_sib_base(inter->sibBase);
 }
 
-#if 0
-// classify a byte intn prefix group (or 0 if it is not a prefix)
-static uint8_t prefix_group(uint8_t c)
-{
-	switch (c) {
-		default:
-			return 0;
-		case 0xf0:	// lock
-		case 0xf2:	// repne
-		case 0xf3:	// rep
-			return 1;
-		case 0x2e:	// CS segment override, or branch not taken (Jcc)
-		case 0x36:	// SS segment override
-		case 0x3e:	// DS segment override, or branch taken (Jcc)
-		case 0x26:	// ES segment override
-		case 0x64:	// FS segment override
-		case 0x65:	// GS segment override
-			return 2;
-		case 0x66:	// operand-size override
-			return 3;
-		case 0x67:	// address-size override
-			return 4;
-	}
-}
-#endif
-
 // Public interface for the disassembler
 bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		MCInst *instr, uint16_t *size, uint64_t address, void *_info)
