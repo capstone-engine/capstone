@@ -23,7 +23,7 @@ def print_insn_detail(mode, insn):
     def print_string_hex(comment, str):
         print(comment, end=' '),
         for c in str:
-            print("0x%02x" % c, end=''),
+            print("0x%02x " % c, end=''),
         print()
 
     # print address, mnemonic and operands
