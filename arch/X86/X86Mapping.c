@@ -41911,11 +41911,19 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 #ifndef CAPSTONE_X86_REDUCE
 	unsigned int opcode;
 #endif
+	uint8_t prefix[8] = { 0 };
+	unsigned int c = 0;
 
 	if (MI->x86_lock_rep) {
 		for(i = 0; i < ARR_SIZE(MI->x86_prefix); i++) {
 			switch(MI->x86_prefix[i]) {
 				default:
+					// non-zero prefix, so copy it
+					prefix[c] = MI->x86_prefix[i];
+					c++;
+					break;
+				case 0:
+					// ignore
 					break;
 				case 0xf0:
 #ifndef CAPSTONE_DIET
@@ -41926,6 +41934,8 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 #ifndef CAPSTONE_DIET	// only care about memonic in standard (non-diet) mode
 					opcode = MCInst_getOpcode(MI);
 					if (valid_rep(MI->csh, opcode)) {
+						prefix[c] = MI->x86_prefix[i];
+						c++;
 						SStream_concat(O, "repne|");
 					} else {
 						// invalid prefix
@@ -41943,6 +41953,9 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 #else	// diet mode -> only patch opcode in special cases
 					if (!valid_rep(MI->csh, opcode)) {
 						MI->x86_prefix[i] = 0;
+					} else {
+						prefix[c] = MI->x86_prefix[i];
+						c++;
 					}
 #ifndef CAPSTONE_X86_REDUCE
 					// handle special cases
@@ -41957,6 +41970,8 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 #ifndef CAPSTONE_DIET	// only care about memonic in standard (non-diet) mode
 					opcode = MCInst_getOpcode(MI);
 					if (valid_rep(MI->csh, opcode)) {
+						prefix[c] = MI->x86_prefix[i];
+						c++;
 						SStream_concat(O, "rep|");
 					} else {
 						// invalid prefix
@@ -41974,6 +41989,9 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 #else	// diet mode -> only patch opcode in special cases
 					if (!valid_rep(MI->csh, opcode)) {
 						MI->x86_prefix[i] = 0;
+					} else {
+						prefix[c] = MI->x86_prefix[i];
+						c++;
 					}
 #ifndef CAPSTONE_X86_REDUCE
 					// handle special cases
@@ -41985,6 +42003,9 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 					break;
 			}
 		}
+
+		// copy normalized prefix[] back to x86.prefix[]
+		memcpy(MI->flat_insn.x86.prefix, prefix, ARR_SIZE(MI->flat_insn.x86.prefix));
 	}
 
 	return false;
