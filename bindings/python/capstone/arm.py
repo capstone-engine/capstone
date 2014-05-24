@@ -21,7 +21,7 @@ class ArmOpShift(ctypes.Structure):
 class ArmOpValue(ctypes.Union):
     _fields_ = (
         ('reg', ctypes.c_uint),
-        ('imm', ctypes.c_int),
+        ('imm', ctypes.c_int32),
         ('fp', ctypes.c_double),
         ('mem', ArmOpMem),
     )
