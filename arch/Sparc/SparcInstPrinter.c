@@ -225,7 +225,7 @@ static void printMemOperand(MCInst *MI, int opNum, SStream *O, const char *Modif
 
 static void printCCOperand(MCInst *MI, int opNum, SStream *O)
 {
-	int CC = (int)MCOperand_getImm(MCInst_getOperand(MI, opNum));
+	int CC = (int)MCOperand_getImm(MCInst_getOperand(MI, opNum)) + 256;
 
 	switch (MCInst_getOpcode(MI)) {
 		default: break;
@@ -241,7 +241,7 @@ static void printCCOperand(MCInst *MI, int opNum, SStream *O)
 		case SP_FMOVD_FCC: case SP_V9FMOVD_FCC:
 		case SP_FMOVQ_FCC: case SP_V9FMOVQ_FCC:
 				 // Make sure CC is a fp conditional flag.
-				 CC = (CC < 16) ? (CC + 16) : CC;
+				 CC = (CC < 16+256) ? (CC + 16) : CC;
 				 break;
 	}
 
