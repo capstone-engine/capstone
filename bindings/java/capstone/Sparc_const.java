@@ -8,41 +8,40 @@ public class Sparc_const {
 	public static final int SPARC_CC_INVALID = 0;
 
 	// Integer condition codes
-	public static final int SPARC_CC_ICC_A = 8;
-
-	public static final int SPARC_CC_ICC_N = 0;
-	public static final int SPARC_CC_ICC_NE = 9;
-	public static final int SPARC_CC_ICC_E = 1;
-	public static final int SPARC_CC_ICC_G = 10;
-	public static final int SPARC_CC_ICC_LE = 2;
-	public static final int SPARC_CC_ICC_GE = 11;
-	public static final int SPARC_CC_ICC_L = 3;
-	public static final int SPARC_CC_ICC_GU = 12;
-	public static final int SPARC_CC_ICC_LEU = 4;
-	public static final int SPARC_CC_ICC_CC = 13;
-	public static final int SPARC_CC_ICC_CS = 5;
-	public static final int SPARC_CC_ICC_POS = 14;
-	public static final int SPARC_CC_ICC_NEG = 6;
-	public static final int SPARC_CC_ICC_VC = 15;
-	public static final int SPARC_CC_ICC_VS = 7;
+	public static final int SPARC_CC_ICC_A = 8+256;
+	public static final int SPARC_CC_ICC_N = 0+256;
+	public static final int SPARC_CC_ICC_NE = 9+256;
+	public static final int SPARC_CC_ICC_E = 1+256;
+	public static final int SPARC_CC_ICC_G = 10+256;
+	public static final int SPARC_CC_ICC_LE = 2+256;
+	public static final int SPARC_CC_ICC_GE = 11+256;
+	public static final int SPARC_CC_ICC_L = 3+256;
+	public static final int SPARC_CC_ICC_GU = 12+256;
+	public static final int SPARC_CC_ICC_LEU = 4+256;
+	public static final int SPARC_CC_ICC_CC = 13+256;
+	public static final int SPARC_CC_ICC_CS = 5+256;
+	public static final int SPARC_CC_ICC_POS = 14+256;
+	public static final int SPARC_CC_ICC_NEG = 6+256;
+	public static final int SPARC_CC_ICC_VC = 15+256;
+	public static final int SPARC_CC_ICC_VS = 7+256;
 
 	// Floating condition codes
-	public static final int SPARC_CC_FCC_A = 8+16;
-	public static final int SPARC_CC_FCC_N = 0+16;
-	public static final int SPARC_CC_FCC_U = 7+16;
-	public static final int SPARC_CC_FCC_G = 6+16;
-	public static final int SPARC_CC_FCC_UG = 5+16;
-	public static final int SPARC_CC_FCC_L = 4+16;
-	public static final int SPARC_CC_FCC_UL = 3+16;
-	public static final int SPARC_CC_FCC_LG = 2+16;
-	public static final int SPARC_CC_FCC_NE = 1+16;
-	public static final int SPARC_CC_FCC_E = 9+16;
-	public static final int SPARC_CC_FCC_UE = 10+16;
-	public static final int SPARC_CC_FCC_GE = 11+16;
-	public static final int SPARC_CC_FCC_UGE = 12+16;
-	public static final int SPARC_CC_FCC_LE = 13+16;
-	public static final int SPARC_CC_FCC_ULE = 14+16;
-	public static final int SPARC_CC_FCC_O = 15+16;
+	public static final int SPARC_CC_FCC_A = 8+16+256;
+	public static final int SPARC_CC_FCC_N = 0+16+256;
+	public static final int SPARC_CC_FCC_U = 7+16+256;
+	public static final int SPARC_CC_FCC_G = 6+16+256;
+	public static final int SPARC_CC_FCC_UG = 5+16+256;
+	public static final int SPARC_CC_FCC_L = 4+16+256;
+	public static final int SPARC_CC_FCC_UL = 3+16+256;
+	public static final int SPARC_CC_FCC_LG = 2+16+256;
+	public static final int SPARC_CC_FCC_NE = 1+16+256;
+	public static final int SPARC_CC_FCC_E = 9+16+256;
+	public static final int SPARC_CC_FCC_UE = 10+16+256;
+	public static final int SPARC_CC_FCC_GE = 11+16+256;
+	public static final int SPARC_CC_FCC_UGE = 12+16+256;
+	public static final int SPARC_CC_FCC_LE = 13+16+256;
+	public static final int SPARC_CC_FCC_ULE = 14+16+256;
+	public static final int SPARC_CC_FCC_O = 15+16+256;
 
 	// Branch hint
 
