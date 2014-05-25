@@ -51,6 +51,7 @@ static name_map reg_name_maps[] = {
 	{ SYSZ_REG_F13, "f13"},
 	{ SYSZ_REG_F14, "f14"},
 	{ SYSZ_REG_F15, "f15"},
+	{ SYSZ_REG_R0L, "r0l"},
 };
 #endif
 
