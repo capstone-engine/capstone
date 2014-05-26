@@ -477,7 +477,7 @@ class CsInsn(object):
         elif arch == CS_ARCH_SYSZ:
             (self.cc, self.operands) = systemz.get_arch_info(detail.arch.sysz)
         elif arch == CS_ARCH_XCORE:
-            self.operands = xcore.get_arch_info(detail.arch.xcore)
+            (self.operands) = xcore.get_arch_info(detail.arch.xcore)
 
 
     def __getattr__(self, name):
