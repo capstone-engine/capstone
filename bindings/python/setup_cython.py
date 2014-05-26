@@ -19,6 +19,8 @@ ext_modules = [ Extension("capstone.capstone", ["pyx/capstone.pyx"], extra_compi
     Extension("capstone.ppc_const", ["pyx/ppc_const.pyx"], extra_compile_args=compile_args),
     Extension("capstone.x86", ["pyx/x86.pyx"], extra_compile_args=compile_args),
     Extension("capstone.x86_const", ["pyx/x86_const.pyx"], extra_compile_args=compile_args)
+    Extension("capstone.xcore", ["pyx/xcore.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.xcore_const", ["pyx/xcore_const.pyx"], extra_compile_args=compile_args)
 ]
 
 # clean package directory first

@@ -55,7 +55,7 @@ static void set_mem_access(MCInst *MI, bool status, int reg)
 			}
 			MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].mem.index = XCORE_REG_INVALID;
 			MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].mem.disp = 0;
-			MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].mem.sign = 1;
+			MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].mem.direct = 1;
 		} else {
 			// the last op should be the memory base
 			MI->flat_insn.xcore.op_count--;
@@ -64,9 +64,9 @@ static void set_mem_access(MCInst *MI, bool status, int reg)
 			MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].mem.index = XCORE_REG_INVALID;
 			MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].mem.disp = 0;
 			if (reg > 0)
-				MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].mem.sign = 1;
+				MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].mem.direct = 1;
 			else
-				MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].mem.sign = -1;
+				MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].mem.direct = -1;
 		}
 	} else {
 		// done, create the next operand slot

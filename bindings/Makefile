@@ -10,6 +10,7 @@ TEST_PPC = $(TMPDIR)/test_ppc
 TEST_SPARC = $(TMPDIR)/test_sparc
 TEST_SYSZ = $(TMPDIR)/test_systemz
 TEST_X86 = $(TMPDIR)/test_x86
+TEST_XCORE = $(TMPDIR)/test_xcore
 
 .PHONY: all expected python java ocaml
 
@@ -33,6 +34,7 @@ expected:
 	../tests/test_sparc > $(TEST_SPARC)_e
 	../tests/test_systemz > $(TEST_SYSZ)_e
 	../tests/test_x86 > $(TEST_X86)_e
+	../tests/test_xcore > $(TEST_XCORE)_e
 
 python: FORCE
 	cd python && $(MAKE)
@@ -44,6 +46,7 @@ python: FORCE
 	python python/test_sparc.py > $(TEST_SPARC)_o
 	python python/test_systemz.py > $(TEST_SYSZ)_o
 	python python/test_x86.py > $(TEST_X86)_o
+	python python/test_xcore.py > $(TEST_XCORE)_o
 	$(MAKE) test_diff
 
 java: FORCE
@@ -56,6 +59,7 @@ java: FORCE
 	cd java && ./run.sh sparc > $(TEST_SPARC)_o
 	cd java && ./run.sh systemz > $(TEST_SYSZ)_o
 	cd java && ./run.sh x86 > $(TEST_X86)_o
+	cd java && ./run.sh xcore > $(TEST_XCORE)_o
 	$(MAKE) test_diff
 
 ocaml: FORCE
@@ -69,6 +73,7 @@ test_diff: FORCE
 	$(DIFF) $(TEST_SPARC)_e $(TEST_SPARC)_o
 	$(DIFF) $(TEST_SYSZ)_e $(TEST_SYSZ)_o
 	$(DIFF) $(TEST_X86)_e $(TEST_X86)_o
+	$(DIFF) $(TEST_XCORE)_e $(TEST_XCORE)_o
 
 clean:
 	rm -rf $(TMPDIR)

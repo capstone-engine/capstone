@@ -39,6 +39,8 @@ install_cython:
 	cp capstone/sysz_const.py $(OBJDIR)/pyx/sysz_const.pyx
 	cp capstone/x86.py $(OBJDIR)/pyx/x86.pyx
 	cp capstone/x86_const.py $(OBJDIR)/pyx/x86_const.pyx
+	cp capstone/xcore.py $(OBJDIR)/pyx/xcore.pyx
+	cp capstone/xcore_const.py $(OBJDIR)/pyx/xcore_const.pyx
 	cd $(OBJDIR) && python setup_cython.py build -b ./tmp install
 
 clean:

@@ -3,7 +3,7 @@ import sys
 _python2 = sys.version_info.major < 3
 if _python2:
     range = xrange
-from capstone import arm, arm64, mips, ppc, sparc, systemz, x86
+from capstone import arm, arm64, mips, ppc, sparc, systemz, x86, xcore
 
 __all__ = [
     'Cs',
@@ -26,6 +26,7 @@ __all__ = [
     'CS_ARCH_PPC',
     'CS_ARCH_SPARC',
     'CS_ARCH_SYSZ',
+    'CS_ARCH_XCORE',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
@@ -84,7 +85,8 @@ CS_ARCH_X86 = 3
 CS_ARCH_PPC = 4
 CS_ARCH_SPARC = 5
 CS_ARCH_SYSZ = 6
-CS_ARCH_MAX = 7
+CS_ARCH_XCORE = 7
+CS_ARCH_MAX = 8
 CS_ARCH_ALL = 0xFFFF
 
 # disasm mode
@@ -194,6 +196,7 @@ class _cs_arch(ctypes.Union):
         ('ppc', ppc.CsPpc),
         ('sparc', sparc.CsSparc),
         ('sysz', systemz.CsSysz),
+        ('xcore', xcore.CsXcore),
     )
 
 class _cs_detail(ctypes.Structure):
@@ -473,6 +476,8 @@ class CsInsn(object):
             (self.cc, self.hint, self.operands) = sparc.get_arch_info(detail.arch.sparc)
         elif arch == CS_ARCH_SYSZ:
             (self.cc, self.operands) = systemz.get_arch_info(detail.arch.sysz)
+        elif arch == CS_ARCH_XCORE:
+            self.operands = xcore.get_arch_info(detail.arch.xcore)
 
 
     def __getattr__(self, name):
@@ -790,7 +795,7 @@ def debug():
 
     archs = { "arm": CS_ARCH_ARM, "arm64": CS_ARCH_ARM64, \
         "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "sparc": CS_ARCH_SPARC, \
-        "sysz": CS_ARCH_SYSZ }
+        "sysz": CS_ARCH_SYSZ, 'xcore': CS_ARCH_XCORE }
 
     all_archs = ""
     keys = archs.keys()
