@@ -204,9 +204,26 @@ endif
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86Module.o
 endif
 
+
+DEP_XCORE =
+DEP_XCORE += arch/XCore/XCoreGenAsmWriter.inc
+DEP_XCORE += arch/XCore/XCoreGenInstrInfo.inc
+DEP_XCORE += arch/XCore/XCoreGenDisassemblerTables.inc
+DEP_XCORE += arch/XCore/XCoreGenRegisterInfo.inc
+
+LIBOBJ_XCORE =
+ifneq (,$(findstring xcore,$(CAPSTONE_ARCHS)))
+	CFLAGS += -DCAPSTONE_HAS_XCORE
+	LIBOBJ_XCORE += $(OBJDIR)/arch/XCore/XCoreDisassembler.o
+	LIBOBJ_XCORE += $(OBJDIR)/arch/XCore/XCoreInstPrinter.o
+	LIBOBJ_XCORE += $(OBJDIR)/arch/XCore/XCoreMapping.o
+	LIBOBJ_XCORE += $(OBJDIR)/arch/XCore/XCoreModule.o
+endif
+
+
 LIBOBJ =
 LIBOBJ += $(OBJDIR)/cs.o $(OBJDIR)/utils.o $(OBJDIR)/SStream.o $(OBJDIR)/MCInstrDesc.o $(OBJDIR)/MCRegisterInfo.o
-LIBOBJ += $(LIBOBJ_ARM) $(LIBOBJ_ARM64) $(LIBOBJ_MIPS) $(LIBOBJ_PPC) $(LIBOBJ_SPARC) $(LIBOBJ_SYSZ) $(LIBOBJ_X86)
+LIBOBJ += $(LIBOBJ_ARM) $(LIBOBJ_ARM64) $(LIBOBJ_MIPS) $(LIBOBJ_PPC) $(LIBOBJ_SPARC) $(LIBOBJ_SYSZ) $(LIBOBJ_X86) $(LIBOBJ_XCORE)
 LIBOBJ += $(OBJDIR)/MCInst.o
 
 
@@ -296,6 +313,7 @@ $(LIBOBJ_PPC): $(DEP_PPC)
 $(LIBOBJ_SPARC): $(DEP_SPARC)
 $(LIBOBJ_SYSZ): $(DEP_SYSZ)
 $(LIBOBJ_X86): $(DEP_X86)
+$(LIBOBJ_XCORE): $(DEP_XCORE)
 
 ifeq ($(CAPSTONE_STATIC),yes)
 $(ARCHIVE): $(LIBOBJ)

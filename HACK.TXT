@@ -9,7 +9,8 @@ Capstone source is organized as followings.
 │   ├── PowerPC     <- PowerPC engine
 │   ├── Sparc       <- Sparc engine
 │   ├── SystemZ     <- SystemZ engine
-│   └── X86         <- X86 engine
+│   ├── X86         <- X86 engine
+│   └── XCore       <- XCore engine
 ├── bindings        <- all bindings are under this dir
 │   ├── java        <- Java bindings + test code
 │   ├── ocaml       <- Ocaml bindings + test code

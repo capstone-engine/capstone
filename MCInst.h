@@ -129,6 +129,7 @@ typedef struct cs_insn_flat {
 		cs_ppc ppc;	// PowerPC architecture
 		cs_sparc sparc;	// Sparc architecture
 		cs_sysz sysz;	// SystemZ architecture
+		cs_xcore xcore;	// XCore architecture
 	};
 } cs_insn_flat;
 

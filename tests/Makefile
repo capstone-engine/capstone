@@ -73,6 +73,9 @@ endif
 ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
 SOURCES += test_x86.c
 endif
+ifneq (,$(findstring xcore,$(CAPSTONE_ARCHS)))
+SOURCES += test_xcore.c
+endif
 
 OBJS = $(addprefix $(OBJDIR)/,$(SOURCES:.c=.o))
 BINARY = $(addprefix $(TESTDIR)/,$(SOURCES:.c=$(BIN_EXT)))

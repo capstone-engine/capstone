@@ -33,6 +33,7 @@ extern void X86_enable(void);
 extern void PPC_enable(void);
 extern void Sparc_enable(void);
 extern void SystemZ_enable(void);
+extern void XCore_enable(void);
 
 static void archs_enable(void)
 {
@@ -62,6 +63,10 @@ static void archs_enable(void)
 #ifdef CAPSTONE_HAS_X86
 	X86_enable();
 #endif
+#ifdef CAPSTONE_HAS_XCORE
+	XCore_enable();
+#endif
+
 
 	initialized = true;
 }
@@ -102,7 +107,7 @@ bool cs_support(int query)
 		return all_arch == ((1 << CS_ARCH_ARM) | (1 << CS_ARCH_ARM64) |
 				(1 << CS_ARCH_MIPS) | (1 << CS_ARCH_X86) |
 				(1 << CS_ARCH_PPC) | (1 << CS_ARCH_SPARC) |
-				(1 << CS_ARCH_SYSZ));
+				(1 << CS_ARCH_SYSZ) | (1 << CS_ARCH_XCORE));
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
@@ -333,6 +338,10 @@ static uint8_t skipdata_size(cs_struct *handle)
 		case CS_ARCH_X86:
 			// X86 has no restriction on instruction alignment
 			return 1;
+		case CS_ARCH_XCORE:
+			// XCore instruction's length can be 2 or 4 bytes,
+			// so we just skip 2 bytes
+			return 2;
 	}
 }
 
@@ -750,6 +759,11 @@ int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
 				if (insn->detail->sysz.operands[i].type == (sysz_op_type)op_type)
 					count++;
 			break;
+		case CS_ARCH_XCORE:
+			for (i = 0; i < insn->detail->xcore.op_count; i++)
+				if (insn->detail->xcore.operands[i].type == (xcore_op_type)op_type)
+					count++;
+			break;
 	}
 
 	return count;
@@ -837,6 +851,14 @@ int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 		case CS_ARCH_SYSZ:
 			for (i = 0; i < insn->detail->sysz.op_count; i++) {
 				if (insn->detail->sysz.operands[i].type == (sysz_op_type)op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+			break;
+		case CS_ARCH_XCORE:
+			for (i = 0; i < insn->detail->xcore.op_count; i++) {
+				if (insn->detail->xcore.operands[i].type == (xcore_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
