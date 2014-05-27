@@ -17,5 +17,8 @@ const char *XCore_insn_name(csh handle, unsigned int id);
 // map internal raw register to 'public' register
 xcore_reg XCore_map_register(unsigned int r);
 
+// map register name to register ID
+xcore_reg XCore_reg_id(char *name);
+
 #endif
 

@@ -434,6 +434,8 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   default:   // unreachable.
   case 0:
     // DBG_VALUE, BUNDLE, LIFETIME_START, LIFETIME_END, CLRE_0R, DCALL_0R, DE...
+    // already done. this means we have to extract details out ourself.
+    XCore_insn_extract(MI, AsmStrs+(Bits & 2047)-1);
     return;
     break;
   case 1:
@@ -495,35 +497,35 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 7:
     // INITCP_2r
     SStream_concat(O, "%s", "]:cp, "); 
-    set_mem_access(MI, false, 0);
+    set_mem_access(MI, false, XCORE_REG_CP);
     printOperand(MI, 0, O); 
     return;
     break;
   case 8:
     // INITDP_2r
     SStream_concat(O, "%s", "]:dp, "); 
-    set_mem_access(MI, false, 0);
+    set_mem_access(MI, false, XCORE_REG_DP);
     printOperand(MI, 0, O); 
     return;
     break;
   case 9:
     // INITLR_l2r
     SStream_concat(O, "%s", "]:lr, "); 
-    set_mem_access(MI, false, 0);
+    set_mem_access(MI, false, XCORE_REG_LR);
     printOperand(MI, 0, O); 
     return;
     break;
   case 10:
     // INITPC_2r
     SStream_concat(O, "%s", "]:pc, "); 
-    set_mem_access(MI, false, 0);
+    set_mem_access(MI, false, XCORE_REG_PC);
     printOperand(MI, 0, O); 
     return;
     break;
   case 11:
     // INITSP_2r
     SStream_concat(O, "%s", "]:sp, "); 
-    set_mem_access(MI, false, 0);
+    set_mem_access(MI, false, XCORE_REG_SP);
     printOperand(MI, 0, O); 
     return;
     break;

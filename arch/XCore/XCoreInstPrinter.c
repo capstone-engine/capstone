@@ -39,6 +39,94 @@ void XCore_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 	 */
 }
 
+// stw sed, sp[3]
+void XCore_insn_extract(MCInst *MI, char *code)
+{
+	int id;
+	char *p, *p2;
+	char tmp[128];
+
+	// find the first space
+	strcpy(tmp, code);
+	p = strchr(tmp, ' ');
+	if (p) {
+		p++;
+		// find the next ','
+		p2 = strchr(p, ',');
+		if (p2) {
+			*p2 = '\0';
+			id = XCore_reg_id(p);
+			if (id) {
+				// register
+				MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].type = XCORE_OP_REG;
+				MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].reg = id;
+				MI->flat_insn.xcore.op_count++;
+			}
+			// next should be register, or memory?
+			// skip space
+			p2++;
+			while(*p2 && *p2 == ' ')
+				p2++;
+			if (*p2) {
+				// find '['
+				p = p2;
+				while(*p && *p != '[')
+					p++;
+				if (*p) {
+					// this is '['
+					*p = '\0';
+					id = XCore_reg_id(p2);
+					if (id) {
+						// base register
+						MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].type = XCORE_OP_MEM;
+						MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].mem.base = id;
+						MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].mem.index = XCORE_REG_INVALID;
+						MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].mem.disp = 0;
+						MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].mem.direct = 1;
+
+						p++;
+						p2 = p;
+						// until ']'
+						while(*p && *p != ']')
+							p++;
+						if (*p) {
+							*p = '\0';
+							// p2 is either index, or disp
+							id = XCore_reg_id(p2);
+							if (id) {
+								// index register
+								MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].mem.index = id;
+							} else {
+								// a number means disp
+								MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].mem.disp = atoi(p2);
+							}
+						}
+
+						MI->flat_insn.xcore.op_count++;
+					}
+				} else {
+					// a register?
+					id = XCore_reg_id(p2);
+					if (id) {
+						// register
+						MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].type = XCORE_OP_REG;
+						MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].reg = id;
+						MI->flat_insn.xcore.op_count++;
+					}
+				}
+			}
+		} else {
+			id = XCore_reg_id(p);
+			if (id) {
+				// register
+				MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].type = XCORE_OP_REG;
+				MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].reg = id;
+				MI->flat_insn.xcore.op_count++;
+			}
+		}
+	}
+}
+
 static void set_mem_access(MCInst *MI, bool status, int reg)
 {
 	if (MI->csh->detail != CS_OPT_ON)
@@ -69,6 +157,9 @@ static void set_mem_access(MCInst *MI, bool status, int reg)
 				MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].mem.direct = -1;
 		}
 	} else {
+		if (reg) {
+			MI->flat_insn.xcore.operands[MI->flat_insn.xcore.op_count].mem.index = reg;
+		}
 		// done, create the next operand slot
 		MI->flat_insn.xcore.op_count++;
 	}
