@@ -784,7 +784,7 @@ static DecodeStatus fname(uint8_t DecodeTable[], MCInst *MI, \
       Start = *++Ptr; \
       Len = *++Ptr; \
       ++Ptr; \
-      CurFieldValue = fieldname(insn, Start, Len); \
+      CurFieldValue = (uint32_t)fieldname(insn, Start, Len); \
       break; \
     } \
     case MCD_OPC_FilterValue: { \
@@ -809,7 +809,7 @@ static DecodeStatus fname(uint8_t DecodeTable[], MCInst *MI, \
       break; \
     } \
     case MCD_OPC_CheckPredicate: { \
-      PIdx = decodeULEB128(++Ptr, &Len); \
+      PIdx = (uint32_t)decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
       NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
