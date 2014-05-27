@@ -14,8 +14,8 @@
  *
  *===----------------------------------------------------------------------===*/
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 /*
  * This header file provides those definitions that need to be shared between
