@@ -5,7 +5,6 @@
 #define CS_XCORE_MAP_H
 
 #include "../../include/capstone.h"
-#include "../../include/xcore.h"
 
 // return name of regiser in friendly string
 const char *XCore_reg_name(csh handle, unsigned int reg);

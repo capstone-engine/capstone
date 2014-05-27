@@ -9,7 +9,6 @@
 #include "X86DisassemblerDecoder.h"
 
 #include "../../utils.h"
-#include "../../include/x86.h"
 
 
 uint64_t arch_masks[9] = {

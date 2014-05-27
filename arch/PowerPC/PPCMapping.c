@@ -6,7 +6,6 @@
 #include <stdio.h>	// debug
 #include <string.h>
 
-#include "../../include/ppc.h"
 #include "../../utils.h"
 
 #include "PPCMapping.h"

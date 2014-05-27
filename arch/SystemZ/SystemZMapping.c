@@ -6,7 +6,6 @@
 #include <stdio.h>	// debug
 #include <string.h>
 
-#include "../../include/systemz.h"
 #include "../../utils.h"
 
 #include "SystemZMapping.h"

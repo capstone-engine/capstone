@@ -6,7 +6,6 @@
 #include <stdio.h>	// debug
 #include <string.h>
 
-#include "../../include/mips.h"
 #include "../../utils.h"
 
 #include "MipsMapping.h"

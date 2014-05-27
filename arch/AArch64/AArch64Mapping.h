@@ -5,7 +5,6 @@
 #define CS_ARM64_MAP_H
 
 #include "../../include/capstone.h"
-#include "../../include/arm64.h"
 
 // return name of regiser in friendly string
 const char *AArch64_reg_name(csh handle, unsigned int reg);

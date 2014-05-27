@@ -6,7 +6,6 @@
 #include <stdio.h>	// debug
 #include <string.h>
 
-#include "../../include/xcore.h"
 #include "../../utils.h"
 
 #include "XCoreMapping.h"

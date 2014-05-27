@@ -5,7 +5,6 @@
 #define CS_ARM_MAP_H
 
 #include "../../include/capstone.h"
-#include "../../include/arm.h"
 #include "../../utils.h"
 
 // return name of regiser in friendly string

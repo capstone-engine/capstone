@@ -6,7 +6,6 @@
 #include <stdio.h>	// debug
 #include <string.h>
 
-#include "../../include/sparc.h"
 #include "../../utils.h"
 
 #include "SparcMapping.h"
