@@ -29,7 +29,18 @@ public class Xcore_const {
 	public static final int XCORE_REG_R9 = 14;
 	public static final int XCORE_REG_R10 = 15;
 	public static final int XCORE_REG_R11 = 16;
-	public static final int XCORE_REG_MAX = 17;
+
+	// pseudo registers
+	public static final int XCORE_REG_PC = 17;
+	public static final int XCORE_REG_SCP = 18;
+	public static final int XCORE_REG_SSR = 19;
+	public static final int XCORE_REG_ET = 20;
+	public static final int XCORE_REG_ED = 21;
+	public static final int XCORE_REG_SED = 22;
+	public static final int XCORE_REG_KEP = 23;
+	public static final int XCORE_REG_KSP = 24;
+	public static final int XCORE_REG_ID = 25;
+	public static final int XCORE_REG_MAX = 26;
 
 	// XCore instruction
 
