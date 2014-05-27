@@ -10030,7 +10030,7 @@ static insn_map insns[] = {	// full x86 instructions
 	{
 		X86_MOV64rr, X86_INS_MOV,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 0, 0
+		{ 0 }, { 0 }, { X86_GRP_MODE64, 0 }, 0, 0
 #endif
 	},
 	{
