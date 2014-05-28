@@ -6,7 +6,7 @@ project(capstone)
 
 option(BUILD_DIET "Build diet library" OFF)
 option(BUILD_TESTS "Build tests" ON)
-option(USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
+option(USE_SYS_DYN_MEM "Use default memory allocation functions" ON)
 
 option(ARM_SUPPORT "ARM support" ON)
 option(ARM64_SUPPORT "ARM64 support" ON)
@@ -24,7 +24,7 @@ set(VERSION_MAJOR 2)
 set(VERSION_MINOR 1)
 set(VERSION_PATCH 2)
 
-if (USE_DEFAULT_ALLOC)
+if (USE_SYS_DYN_MEM)
     add_definitions(-DCAPSTONE_USE_SYS_DYN_MEM)
 endif ()
 
