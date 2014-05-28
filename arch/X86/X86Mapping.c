@@ -41566,6 +41566,7 @@ void X86_post_printer(csh handle, cs_insn *insn, char *insn_asm, MCInst *mci)
 		switch(mci->Opcode) {
 			default:
 				break;
+#ifndef CAPSTONE_X86_REDUCE
 			case X86_ST_FPNCE:
 				// fstpnce	st(0), st(0)
 				insn->detail->x86.operands[insn->detail->x86.op_count].type = X86_OP_REG;
@@ -41593,6 +41594,7 @@ void X86_post_printer(csh handle, cs_insn *insn, char *insn_asm, MCInst *mci)
 					insn->detail->x86.op_count++;
 				}
 				break;
+#endif
 
 			case X86_SHL16rCL:
 			case X86_SHL32rCL:
@@ -41891,9 +41893,7 @@ static bool valid_rep(cs_struct *h, unsigned int opcode)
 bool X86_lockrep(MCInst *MI, SStream *O)
 {
 	int i;
-#ifndef CAPSTONE_X86_REDUCE
 	unsigned int opcode;
-#endif
 	uint8_t prefix[8] = { 0 };
 	unsigned int c = 0;
 
