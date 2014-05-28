@@ -14,6 +14,7 @@ option(ARM64_SUPPORT "ARM64 support" ON)
 option(MIPS_SUPPORT "MIPS support" ON)
 option(PPC_SUPPORT "PowerPC support" ON)
 option(X86_SUPPORT "X86 support" ON)
+option(X86_REDUCE "X86 with reduce instruction sets to minimize library" ON)
 option(SPARC_SUPPORT "Sparc support" ON)
 option(SYSZ_SUPPORT "SystemZ support" ON)
 option(XCORE_SUPPORT "XCore support" ON)
@@ -137,6 +138,10 @@ include_directories("${PROJECT_SOURCE_DIR}/include")
 
 if (BUILD_DIET)
     add_definitions(-DCAPSTONE_DIET)
+endif ()
+
+if (X86_REDUCE)
+    add_definitions(-DCAPSTONE_X86_REDUCE)
 endif ()
 
 if (BUILD_STATIC)
