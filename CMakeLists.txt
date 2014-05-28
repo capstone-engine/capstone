@@ -1,24 +1,29 @@
 cmake_minimum_required(VERSION 2.6)
 project(capstone)
 
-set(VERSION_MAJOR 2)
-set(VERSION_MINOR 1)
-set(VERSION_PATCH 2)
-
+# Compile-time options
+# Modify the following options to customize Capstone engine
 option(BUILD_STATIC "Build static library" ON)
 
 option(BUILD_DIET "Build diet library" OFF)
 option(BUILD_TESTS "Build tests" ON)
 option(USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
+
 option(ARM_SUPPORT "ARM support" ON)
 option(ARM64_SUPPORT "ARM64 support" ON)
 option(MIPS_SUPPORT "MIPS support" ON)
 option(PPC_SUPPORT "PowerPC support" ON)
-option(X86_SUPPORT "X86 support" ON)
-option(X86_REDUCE "X86 with reduce instruction sets to minimize library" OFF)
 option(SPARC_SUPPORT "Sparc support" ON)
 option(SYSZ_SUPPORT "SystemZ support" ON)
 option(XCORE_SUPPORT "XCore support" ON)
+option(X86_SUPPORT "X86 support" ON)
+option(X86_REDUCE "X86 with reduce instruction sets to minimize library" OFF)
+# End of compile-time option
+# DO NOT modify anything below
+
+set(VERSION_MAJOR 2)
+set(VERSION_MINOR 1)
+set(VERSION_PATCH 2)
 
 if (USE_DEFAULT_ALLOC)
     add_definitions(-DCAPSTONE_USE_SYS_DYN_MEM)
@@ -86,6 +91,16 @@ endif ()
 
 if (X86_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_X86)
+if (BUILD_DIET)
+    set(SOURCES
+        ${SOURCES}
+        arch/X86/X86Disassembler.c
+        arch/X86/X86DisassemblerDecoder.c
+        arch/X86/X86IntelInstPrinter.c
+        arch/X86/X86Mapping.c
+        arch/X86/X86Module.c
+        )
+else ()
     set(SOURCES
         ${SOURCES}
         arch/X86/X86ATTInstPrinter.c
@@ -95,6 +110,7 @@ if (X86_SUPPORT)
         arch/X86/X86Mapping.c
         arch/X86/X86Module.c
         )
+endif ()
     set(TEST_SOURCES ${TEST_SOURCES} test_x86.c)
 endif ()
 
