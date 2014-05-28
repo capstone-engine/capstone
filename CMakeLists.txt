@@ -26,9 +26,9 @@ set(SOURCES
     SStream.c
     utils.c
     )
-    
+
 set(TEST_SOURCES test.c test_detail.c)
-    
+
 if (ARM_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_ARM)
     set(SOURCES
@@ -40,7 +40,7 @@ if (ARM_SUPPORT)
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_arm.c)
 endif ()
-    
+
 if (ARM64_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_ARM64)
     set(SOURCES
@@ -59,7 +59,7 @@ if (MIPS_SUPPORT)
     set(SOURCES
         ${SOURCES}
         arch/Mips/MipsDisassembler.c
-        arch/Mips/MipsInstPrinter.c 
+        arch/Mips/MipsInstPrinter.c
         arch/Mips/MipsMapping.c
         arch/Mips/MipsModule.c
         )
@@ -91,15 +91,15 @@ if (X86_SUPPORT)
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_x86.c)
 endif ()
-    
+
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
 if (BUILD_STATIC)
-    add_library(capstone STATIC ${SOURCES})
+    add_library(libcapstone STATIC ${SOURCES})
 else ()
-    add_library(capstone SHARED ${SOURCES})
+    add_library(libcapstone SHARED ${SOURCES})
 endif ()
-set_target_properties(capstone PROPERTIES
+set_target_properties(libcapstone PROPERTIES
                       VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
                       SOVERSION ${VERSION_MAJOR})
 
@@ -107,7 +107,7 @@ if (BUILD_TESTS)
     foreach (TSRC ${TEST_SOURCES})
         STRING(REGEX REPLACE ".c$" "" TBIN ${TSRC})
         add_executable(${TBIN} "tests/${TSRC}")
-        target_link_libraries(${TBIN} capstone)
+        target_link_libraries(${TBIN} libcapstone)
     endforeach ()
 endif ()
 
@@ -115,7 +115,7 @@ set(INCLUDES arm64.h  arm.h  capstone.h  mips.h  ppc.h  x86.h)
 foreach (INC ${INCLUDES})
     install(FILES "include/${INC}" DESTINATION include/capstone)
 endforeach ()
-install(TARGETS capstone 
+install(TARGETS libcapstone
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib)
