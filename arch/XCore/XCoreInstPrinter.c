@@ -40,7 +40,7 @@ void XCore_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 }
 
 // stw sed, sp[3]
-void XCore_insn_extract(MCInst *MI, char *code)
+void XCore_insn_extract(MCInst *MI, const char *code)
 {
 	int id;
 	char *p, *p2;

@@ -265,8 +265,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U
   };
 
-#ifndef CAPSTONE_DIET
-  static char AsmStrs[] = {
+  static const char AsmStrs[] = {
   /* 0 */ 'l', 'd', 'a', 'p', 32, 'r', '1', '1', ',', 32, 0,
   /* 11 */ 'g', 'e', 't', 's', 'r', 32, 'r', '1', '1', ',', 32, 0,
   /* 23 */ 's', 'e', 't', 32, 'c', 'p', ',', 32, 0,
@@ -413,7 +412,6 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   /* 1246 */ 'k', 'r', 'e', 't', 0,
   /* 1251 */ 'w', 'a', 'i', 't', 'e', 'u', 0,
   };
-#endif
 
   // Emit the opcode for the instruction.
   uint32_t Bits = OpInfo[MCInst_getOpcode(MI)];
@@ -423,7 +421,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 #endif
 
 
-  if (strchr(AsmStrs+(Bits & 2047)-1, '[')) {
+  if (strchr((const char *)AsmStrs+(Bits & 2047)-1, '[')) {
     set_mem_access(MI, true, 0);
   }
 
@@ -435,7 +433,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 0:
     // DBG_VALUE, BUNDLE, LIFETIME_START, LIFETIME_END, CLRE_0R, DCALL_0R, DE...
     // already done. this means we have to extract details out ourself.
-    XCore_insn_extract(MI, AsmStrs+(Bits & 2047)-1);
+    XCore_insn_extract(MI, (const char *)AsmStrs+(Bits & 2047)-1);
     return;
     break;
   case 1:
