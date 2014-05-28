@@ -6,21 +6,6 @@
 
 #include "utils.h"
 
-// return the position of a string in a list of strings
-// or -1 if given string is not in the list
-int str_in_list(char **list, char *s)
-{
-	char **l;
-
-	int c = 0;
-	for(l = list; *l; c++, l++) {
-		if (!strcmp(*l, s))
-			return c;
-	}
-
-	return -1;
-}
-
 // create a cache for fast id lookup
 static unsigned short *make_id2insn(insn_map *insns, unsigned int size)
 {

@@ -23,10 +23,6 @@ typedef struct insn_map {
 #endif
 } insn_map;
 
-// return the position of a string in a list of strings
-// or -1 if given string is not in the list
-int str_in_list(char **list, char *s);
-
 // look for @id in @m, given its size in @max. first time call will update @cache.
 // return 0 if not found
 unsigned short insn_find(insn_map *m, unsigned int max, unsigned int id, unsigned short **cache);
