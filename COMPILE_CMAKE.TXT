@@ -17,21 +17,17 @@ Get CMake for free from http://www.cmake.org.
 (0) Tailor Capstone to your need.
 
   Out of 8 archtitectures supported by Capstone (Arm, Arm64, Mips, PPC, Sparc,
-  SystemZ, X86 & XCore), if you just need several selected archs, choose the ones
-  you want to compile in by opening CMakeLists.txt, then directly editing
-  the options there. This must be done before going to the
-  next steps.
+  SystemZ, X86 & XCore), if you just need several selected archs, run "cmake"
+  with the unwanted archs disabled (set to 0) as followings.
 
-  Capstone has following compile-time options.
-
-  - ARM_SUPPORT: support ARM. Change this to OFF to remove ARM support.
-  - ARM64_SUPPORT: support ARM64. Change this to OFF to remove ARM64 support.
-  - MIPS_SUPPORT: support Mips. Change this to OFF to remove Mips support.
-  - PPC_SUPPORT: support PPC. Change this to OFF to remove PPC support.
-  - SPARC_SUPPORT: support Sparc. Change this to OFF to remove Sparc support.
-  - SYSZ_SUPPORT: support SystemZ. Change this to OFF to remove SystemZ support.
-  - XCORE_SUPPORT: support XCore. Change this to OFF to remove XCore support.
-  - X86_SUPPORT: support X86. Change this to OFF to remove X86 support.
+  - ARM_SUPPORT: support ARM. Run cmake with -DARM_SUPPORT=0 to remove ARM.
+  - ARM64_SUPPORT: support ARM64. Run cmake with -DARM64_SUPPORT=0 to remove ARM64.
+  - MIPS_SUPPORT: support Mips. Run cmake with -DMIPS_SUPPORT=0 to remove Mips.
+  - PPC_SUPPORT: support PPC. Run cmake with -DPPC_SUPPORT=0 to remove PPC.
+  - SPARC_SUPPORT: support Sparc. Run cmake with -DSPARC_SUPPORT=0 to remove Sparc.
+  - SYSZ_SUPPORT: support SystemZ. Run cmake with -DSYSZ_SUPPORT=0 to remove SystemZ.
+  - XCORE_SUPPORT: support XCore. Run cmake with -DXCORE_SUPPORT=0 to remove XCore.
+  - X86_SUPPORT: support X86. Run cmake with -DX86_SUPPORT=0 to remove X86.
 
   By default, all 8 architectures are compiled in.
 
@@ -43,7 +39,8 @@ Get CMake for free from http://www.cmake.org.
   - X86_REDUCE: change this to ON to make X86 binary smaller.
 
   By default, Capstone use system dynamic memory management, and both DIET and X86_REDUCE
-  modes are disable.
+  modes are disable. To use your own memory allocations, turn ON both DIET &
+  X86_REDUCE, run "cmake" with: -DUSE_SYS_DYN_MEM=0 -DBUILD_DIET=1 -DX86_REDUCE=1
 
 
   For each option, refer to docs/README for more details.
