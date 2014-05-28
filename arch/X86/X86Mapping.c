@@ -334,22 +334,6 @@ const char *X86_reg_name(csh handle, unsigned int reg)
 #endif
 }
 
-// map register string to register ID
-x86_reg x86_map_regname(const char *reg)
-{
-#ifndef CAPSTONE_DIET
-	int i = name2id(&reg_name_maps[1], ARR_SIZE(reg_name_maps) - 1, reg);
-
-	if (i != -1)
-		return i;
-
-	// nothing match
-	return (i != -1)? i : X86_REG_INVALID;
-#else
-	return 0;
-#endif
-}
-
 #ifndef CAPSTONE_DIET
 static name_map insn_name_maps[] = {
 	{ X86_INS_INVALID, NULL },

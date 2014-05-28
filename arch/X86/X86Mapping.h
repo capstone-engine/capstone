@@ -16,9 +16,6 @@ x86_reg x86_map_sib_index(int r);
 // map seg_override to x86_reg
 x86_reg x86_map_segment(int r);
 
-// map register name to x86_reg
-x86_reg x86_map_regname(const char *reg);
-
 // return name of regiser in friendly string
 const char *X86_reg_name(csh handle, unsigned int reg);
 
