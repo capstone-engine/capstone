@@ -3,7 +3,6 @@ project(capstone)
 
 # Compile-time options
 # Modify the following options to customize Capstone engine
-option(BUILD_STATIC "Build static library" ON)
 
 option(BUILD_DIET "Build diet library" OFF)
 option(BUILD_TESTS "Build tests" ON)
@@ -161,11 +160,8 @@ if (X86_REDUCE)
     add_definitions(-DCAPSTONE_X86_REDUCE)
 endif ()
 
-if (BUILD_STATIC)
-    add_library(libcapstone STATIC ${SOURCES})
-else ()
-    add_library(libcapstone SHARED ${SOURCES})
-endif ()
+add_library(libcapstone_static STATIC ${SOURCES})
+add_library(libcapstone SHARED ${SOURCES})
 
 set_target_properties(libcapstone PROPERTIES
                       VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
@@ -175,7 +171,7 @@ if (BUILD_TESTS)
     foreach (TSRC ${TEST_SOURCES})
         STRING(REGEX REPLACE ".c$" "" TBIN ${TSRC})
         add_executable(${TBIN} "tests/${TSRC}")
-        target_link_libraries(${TBIN} libcapstone)
+        target_link_libraries(${TBIN} libcapstone_static)
     endforeach ()
 endif ()
 
@@ -183,6 +179,7 @@ set(INCLUDES arm64.h  arm.h  capstone.h  mips.h  ppc.h  x86.h sparc.h systemz.h 
 foreach (INC ${INCLUDES})
     install(FILES "include/${INC}" DESTINATION include/capstone)
 endforeach ()
+
 install(TARGETS libcapstone
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
