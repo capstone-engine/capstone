@@ -46,3 +46,5 @@ Contributors (in no particular order)
 
 Ole André Vadla Ravnås (author of the 100th Pull-Request in our Github repo, thanks!)
 Axel "0vercl0k" Souchet (@0vercl0k) & Alex Ionescu: port to MSVC.
+Daniel Pistelli: Cmake support.
+
