@@ -46,12 +46,12 @@ void XCore_insn_extract(MCInst *MI, char *code)
 	char *p, *p2;
 	char tmp[128];
 
-// make MSVC shutup on strncpy()
+// make MSVC shut up on strcpy()
 #ifdef _MSC_VER
 #pragma warning(push)
 #pragma warning(disable : 4996)
 #endif
-	strncpy(tmp, code, strlen(code)); // safe because code is way shorter than 128 bytes
+	strcpy(tmp, code); // safe because code is way shorter than 128 bytes
 #ifdef _MSC_VER
 #pragma warning(pop)
 #endif
