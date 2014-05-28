@@ -15,7 +15,7 @@ option(PPC_SUPPORT "PowerPC support" ON)
 option(X86_SUPPORT "x86 support" ON)
 
 if (USE_DEFAULT_ALLOC)
-    add_definitions(-DUSE_SYS_DYN_MEM)
+    add_definitions(-DCAPSTONE_USE_SYS_DYN_MEM)
 endif ()
 
 set(SOURCES
