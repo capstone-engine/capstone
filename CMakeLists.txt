@@ -5,7 +5,7 @@ set(VERSION_MAJOR 2)
 set(VERSION_MINOR 1)
 set(VERSION_PATCH 2)
 
-option(BUILD_DIET "Build diet library" ON)
+option(BUILD_DIET "Build diet library" OFF)
 option(BUILD_STATIC "Build static library" ON)
 option(BUILD_TESTS "Build tests" ON)
 option(USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
