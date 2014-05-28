@@ -41914,8 +41914,8 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 #endif
 					break;
 				case 0xf2:	// repne
-#ifndef CAPSTONE_DIET	// only care about memonic in standard (non-diet) mode
 					opcode = MCInst_getOpcode(MI);
+#ifndef CAPSTONE_DIET	// only care about memonic in standard (non-diet) mode
 					if (valid_rep(MI->csh, opcode)) {
 						prefix[c] = MI->x86_prefix[i];
 						c++;
