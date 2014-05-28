@@ -1,0 +1,83 @@
+This documentation explains how to compile Capstone with CMake, focus on
+using Microsoft Visual C as the compiler.
+
+To compile Capstone on *nix, see COMPILE.TXT.
+
+To compile Capstone on Windows using Visual Studio, see COMPILE_MSVC.TXT.
+
+                        *-*-*-*-*-*
+
+This documentation requires CMake & Windows SDK or MS Visual Studio installed on
+your machine.
+
+Get CMake for free from http://www.cmake.org.
+
+
+
+(0) Tailor Capstone to your need.
+
+  Out of 8 archtitectures supported by Capstone (Arm, Arm64, Mips, PPC, Sparc,
+  SystemZ, X86 & XCore), if you just need several selected archs, choose the ones
+  you want to compile in by opening CMakeLists.txt, then directly editing
+  the options there. This must be done before going to the
+  next steps.
+
+  Capstone has following compile-time options.
+
+  - ARM_SUPPORT: support ARM. Change this to OFF to remove ARM support.
+  - ARM64_SUPPORT: support ARM64. Change this to OFF to remove ARM64 support.
+  - MIPS_SUPPORT: support Mips. Change this to OFF to remove Mips support.
+  - PPC_SUPPORT: support PPC. Change this to OFF to remove PPC support.
+  - SPARC_SUPPORT: support Sparc. Change this to OFF to remove Sparc support.
+  - SYSZ_SUPPORT: support SystemZ. Change this to OFF to remove SystemZ support.
+  - XCORE_SUPPORT: support XCore. Change this to OFF to remove XCore support.
+  - X86_SUPPORT: support X86. Change this to OFF to remove X86 support.
+
+  By default, all 8 architectures are compiled in.
+
+
+  Besides, Capstone also allows some more customization via following macros.
+
+  - USE_SYS_DYN_MEM: change this to OFF to use your own dynamic memory management.
+  - BUILD_DIET: change this to ON to make the binaries more compact.
+  - X86_REDUCE: change this to ON to make X86 binary smaller.
+
+  By default, Capstone use system dynamic memory management, and both DIET and X86_REDUCE
+  modes are disable.
+
+
+  For each option, refer to docs/README for more details.
+
+
+
+(1) CMake allows you to generate different generators to build Capstone. Below is
+    some examples on how to build Capstone on Windows with CMake.
+
+
+  - To build Capstone using Nmake of Windows SDK, do f:
+
+      mkdir build
+      cd build
+      cmake -G "NMake Makefiles" ..
+      nmake
+
+  After this, find the samples test*.exe, libcapstone_static.lib & libcapstone.dll
+  in the same directory.
+
+
+
+  - To build Capstone using Visual Studio, choose the generator accordingly to the
+  version of Visual Studio on your machine. For example, with Visual Studio 2013, do:
+
+      mkdir build
+      cd build
+      cmake -G "Visual Studio 12" ..
+
+  After this, find libcapstone.sln in the same directory. Open it with Visual Studio
+  and build the solution as usual.
+
+
+
+(2) You can make sure the prior steps successfully worked by launching one of the
+  testing binary (test*.exe).
+

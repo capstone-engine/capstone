@@ -1,6 +1,10 @@
 This documentation explains how to compile Capstone on Windows using
 Microsoft Visual Studio version 2010 or newer.
 
+To compile Capstone on *nix, see COMPILE.TXT
+
+To compile Capstone with CMake, see COMPILE_CMAKE.TXT
+
                         *-*-*-*-*-*
 
 Capstone requires no prerequisite packages, so it is easy to compile & install.
