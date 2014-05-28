@@ -32,7 +32,7 @@ set(SOURCES
     utils.c
     )
 
-set(TEST_SOURCES test.c test_detail.c)
+set(TEST_SOURCES test.c test_detail.c test_skipdata.c)
 
 if (ARM_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_ARM)
