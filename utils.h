@@ -7,16 +7,6 @@
 #include "include/capstone.h"
 #include "cs_priv.h"
 
-// strcasecmp() for MSVC
-#if !defined(__MINGW32__) && !defined(__MINGW64__)  // this is not MingW
-#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
-
-// string.h
-#define strcasecmp _stricmp
-
-#endif	// MSVC
-#endif	// not MingW
-
 // threshold number, so above this number will be printed in hexa mode
 #define HEX_THRESHOLD 9
 

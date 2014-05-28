@@ -14,7 +14,7 @@ int str_in_list(char **list, char *s)
 
 	int c = 0;
 	for(l = list; *l; c++, l++) {
-		if (!strcasecmp(*l, s))
+		if (!strcmp(*l, s))
 			return c;
 	}
 
@@ -54,7 +54,7 @@ int name2id(name_map* map, int max, const char *name)
 	int i;
 
 	for (i = 0; i < max; i++) {
-		if (!strcasecmp(map[i].name, name)) {
+		if (!strcmp(map[i].name, name)) {
 			return map[i].id;
 		}
 	}
