@@ -8426,7 +8426,7 @@ mips_reg Mips_map_insn(const char *name)
 	unsigned int i;
 
 	for (i = 0; i < ARR_SIZE(alias_insn_names); i++) {
-		if (!strcasecmp(alias_insn_names[i].name, name))
+		if (!strcmp(alias_insn_names[i].name, name))
 			return alias_insn_names[i].id;
 	}
 
