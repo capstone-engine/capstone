@@ -5,6 +5,7 @@ set(VERSION_MAJOR 2)
 set(VERSION_MINOR 1)
 set(VERSION_PATCH 2)
 
+option(BUILD_DIET "Build diet library" ON)
 option(BUILD_STATIC "Build static library" ON)
 option(BUILD_TESTS "Build tests" ON)
 option(USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
@@ -12,7 +13,10 @@ option(ARM_SUPPORT "ARM support" ON)
 option(ARM64_SUPPORT "ARM64 support" ON)
 option(MIPS_SUPPORT "MIPS support" ON)
 option(PPC_SUPPORT "PowerPC support" ON)
-option(X86_SUPPORT "x86 support" ON)
+option(X86_SUPPORT "X86 support" ON)
+option(SPARC_SUPPORT "Sparc support" ON)
+option(SYSZ_SUPPORT "SystemZ support" ON)
+option(XCORE_SUPPORT "XCore support" ON)
 
 if (USE_DEFAULT_ALLOC)
     add_definitions(-DCAPSTONE_USE_SYS_DYN_MEM)
@@ -92,13 +96,55 @@ if (X86_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_x86.c)
 endif ()
 
+if (SPARC_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_SPARC)
+    set(SOURCES
+        ${SOURCES}
+	arch/Sparc/SparcDisassembler.c
+	arch/Sparc/SparcInstPrinter.c
+	arch/Sparc/SparcMapping.c
+	arch/Sparc/SparcModule.c
+        )
+    set(TEST_SOURCES ${TEST_SOURCES} test_sparc.c)
+endif ()
+
+if (SYSZ_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_SYSZ)
+    set(SOURCES
+        ${SOURCES}
+	arch/SystemZ/SystemZDisassembler.c
+	arch/SystemZ/SystemZInstPrinter.c
+	arch/SystemZ/SystemZMapping.c
+	arch/SystemZ/SystemZModule.c
+	arch/SystemZ/SystemZMCTargetDesc.c
+        )
+    set(TEST_SOURCES ${TEST_SOURCES} test_systemz.c)
+endif ()
+
+if (XCORE_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_XCORE)
+    set(SOURCES
+        ${SOURCES}
+	arch/XCore/XCoreDisassembler.c
+	arch/XCore/XCoreInstPrinter.c
+	arch/XCore/XCoreMapping.c
+	arch/XCore/XCoreModule.c
+        )
+    set(TEST_SOURCES ${TEST_SOURCES} test_xcore.c)
+endif ()
+
 include_directories("${PROJECT_SOURCE_DIR}/include")
+
+if (BUILD_DIET)
+    add_definitions(-DCAPSTONE_DIET)
+endif ()
 
 if (BUILD_STATIC)
     add_library(libcapstone STATIC ${SOURCES})
 else ()
     add_library(libcapstone SHARED ${SOURCES})
 endif ()
+
 set_target_properties(libcapstone PROPERTIES
                       VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
                       SOVERSION ${VERSION_MAJOR})
@@ -111,7 +157,7 @@ if (BUILD_TESTS)
     endforeach ()
 endif ()
 
-set(INCLUDES arm64.h  arm.h  capstone.h  mips.h  ppc.h  x86.h)
+set(INCLUDES arm64.h  arm.h  capstone.h  mips.h  ppc.h  x86.h sparc.h systemz.h xcore.h)
 foreach (INC ${INCLUDES})
     install(FILES "include/${INC}" DESTINATION include/capstone)
 endforeach ()
