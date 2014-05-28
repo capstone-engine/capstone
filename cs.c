@@ -259,11 +259,11 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 
 		// NOTE: copy details in 2 chunks, since union is always put at address divisible by 8
 		// copy from @regs_read until @arm
-		memcpy(insn->detail, (void *)((uintptr_t)(&(mci->flat_insn)) + offsetof(cs_insn_flat, regs_read)),
+		memcpy(insn->detail, (char *)((uintptr_t)(&(mci->flat_insn)) + offsetof(cs_insn_flat, regs_read)),
 				offsetof(cs_detail, arm) - offsetof(cs_detail, regs_read));
 		// then copy from @arm until end
 		memcpy((void *)((uintptr_t)(insn->detail) + offsetof(cs_detail, arm)),
-				(void *)((uintptr_t)(&(mci->flat_insn)) + offsetof(cs_insn_flat, arm)),
+				(char *)((uintptr_t)(&(mci->flat_insn)) + offsetof(cs_insn_flat, arm)),
 				sizeof(cs_detail) - offsetof(cs_detail, arm));
 	} else {
 		insn->address = mci->address;
