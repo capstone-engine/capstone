@@ -51,7 +51,7 @@ Get CMake for free from http://www.cmake.org.
     some examples on how to build Capstone on Windows with CMake.
 
 
-  - To build Capstone using Nmake of Windows SDK, do f:
+  (*) To build Capstone using Nmake of Windows SDK, do:
 
       mkdir build
       cd build
@@ -63,15 +63,15 @@ Get CMake for free from http://www.cmake.org.
 
 
 
-  - To build Capstone using Visual Studio, choose the generator accordingly to the
+  (*) To build Capstone using Visual Studio, choose the generator accordingly to the
   version of Visual Studio on your machine. For example, with Visual Studio 2013, do:
 
       mkdir build
       cd build
       cmake -G "Visual Studio 12" ..
 
-  After this, find libcapstone.sln in the same directory. Open it with Visual Studio
-  and build the solution as usual.
+  After this, find capstone.sln in the same directory. Open it with Visual Studio
+  and build the solution including libraries & all test as usual.
 
 
 
