@@ -601,6 +601,7 @@ static inline uint64_t ARM_AM_decodeNEONModImm(unsigned ModImm, unsigned *EltBit
 	unsigned OpCmode = getNEONModImmOpCmode(ModImm);
 	unsigned Imm8 = getNEONModImmVal(ModImm);
 	uint64_t Val = 0;
+	unsigned ByteNum;
 
 	if (OpCmode == 0xe) {
 		// 8-bit vector elements
@@ -608,22 +609,21 @@ static inline uint64_t ARM_AM_decodeNEONModImm(unsigned ModImm, unsigned *EltBit
 		*EltBits = 8;
 	} else if ((OpCmode & 0xc) == 0x8) {
 		// 16-bit vector elements
-		unsigned ByteNum = (OpCmode & 0x6) >> 1;
-		Val = Imm8 << (8 * ByteNum);
+		ByteNum = (OpCmode & 0x6) >> 1;
+		Val = (uint64_t)Imm8 << (8 * ByteNum);
 		*EltBits = 16;
 	} else if ((OpCmode & 0x8) == 0) {
 		// 32-bit vector elements, zero with one byte set
-		unsigned ByteNum = (OpCmode & 0x6) >> 1;
-		Val = Imm8 << (8 * ByteNum);
+		ByteNum = (OpCmode & 0x6) >> 1;
+		Val = (uint64_t)Imm8 << (8 * ByteNum);
 		*EltBits = 32;
 	} else if ((OpCmode & 0xe) == 0xc) {
 		// 32-bit vector elements, one byte with low bits set
-		unsigned ByteNum = 1 + (OpCmode & 0x1);
+		ByteNum = 1 + (OpCmode & 0x1);
 		Val = (Imm8 << (8 * ByteNum)) | (0xffff >> (8 * (2 - ByteNum)));
 		*EltBits = 32;
 	} else if (OpCmode == 0x1e) {
 		// 64-bit vector elements
-		unsigned ByteNum;
 		for (ByteNum = 0; ByteNum < 8; ++ByteNum) {
 			if ((ModImm >> ByteNum) & 1)
 				Val |= (uint64_t)0xff << (8 * ByteNum);

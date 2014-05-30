@@ -570,7 +570,7 @@ static void printSImm7ScaledOperand(MCInst *MI, unsigned OpNum,
 	int32_t Imm = (int32_t)unpackSignedImm(7, MCOperand_getImm(MOImm));
 	int64_t res;
 
-	res = Imm * MemScale;
+	res = (int64_t)Imm * MemScale;
 	if (res >= 0) {
 		if (res > HEX_THRESHOLD)
 			SStream_concat(O, "#0x%"PRIx64, res);

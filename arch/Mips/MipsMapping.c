@@ -8388,6 +8388,8 @@ static name_map insn_name_maps[] = {
 	{ MIPS_INS_WSBH, "wsbh" },
 	{ MIPS_INS_XOR, "xor" },
 	{ MIPS_INS_XORI, "xori" },
+	{ MIPS_INS_NOP, "nop" },
+	{ MIPS_INS_NEGU, "negu" },
 };
 
 // special alias insn
