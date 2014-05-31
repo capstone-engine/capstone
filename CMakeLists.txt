@@ -1,9 +1,13 @@
 cmake_minimum_required(VERSION 2.6)
 project(capstone)
 
-# Compile-time options
-# Modify the following options to customize Capstone engine
+set(VERSION_MAJOR 2)
+set(VERSION_MINOR 1)
+set(VERSION_PATCH 2)
 
+# to configure the options specify them in in the command line or change them in the cmake UI.
+# Don't edit the makefile!
+option(BUILD_STATIC "Build static library" ON)
 option(BUILD_DIET "Build diet library" OFF)
 option(BUILD_TESTS "Build tests" ON)
 option(USE_SYS_DYN_MEM "Use default memory allocation functions" ON)
@@ -15,17 +19,19 @@ option(PPC_SUPPORT "PowerPC support" ON)
 option(SPARC_SUPPORT "Sparc support" ON)
 option(SYSZ_SUPPORT "SystemZ support" ON)
 option(XCORE_SUPPORT "XCore support" ON)
-option(X86_SUPPORT "X86 support" ON)
-option(X86_REDUCE "X86 with reduce instruction sets to minimize library" OFF)
-# End of compile-time option
-# DO NOT modify anything below
+option(X86_SUPPORT "x86 support" ON)
+option(X86_REDUCE "x86 with reduce instruction sets to minimize library" OFF)
 
-set(VERSION_MAJOR 2)
-set(VERSION_MINOR 1)
-set(VERSION_PATCH 2)
+if (BUILD_DIET)
+    add_definitions(-DCAPSTONE_DIET)
+endif ()
 
-if (USE_SYS_DYN_MEM)
-    add_definitions(-DCAPSTONE_USE_SYS_DYN_MEM)
+if (USE_DEFAULT_ALLOC)
+    add_definitions(-DUSE_SYS_DYN_MEM)
+endif ()
+
+if (X86_REDUCE)
+    add_definitions(-DCAPSTONE_X86_REDUCE)
 endif ()
 
 set(SOURCES
@@ -90,7 +96,6 @@ endif ()
 
 if (X86_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_X86)
-if (BUILD_DIET)
     set(SOURCES
         ${SOURCES}
         arch/X86/X86Disassembler.c
@@ -99,17 +104,9 @@ if (BUILD_DIET)
         arch/X86/X86Mapping.c
         arch/X86/X86Module.c
         )
-else ()
-    set(SOURCES
-        ${SOURCES}
-        arch/X86/X86ATTInstPrinter.c
-        arch/X86/X86Disassembler.c
-        arch/X86/X86DisassemblerDecoder.c
-        arch/X86/X86IntelInstPrinter.c
-        arch/X86/X86Mapping.c
-        arch/X86/X86Module.c
-        )
-endif ()
+    if (NOT BUILD_DIET)
+        set(SOURCES ${SOURCES} arch/X86/X86ATTInstPrinter.c)
+    endif ()
     set(TEST_SOURCES ${TEST_SOURCES} test_x86.c)
 endif ()
 
@@ -152,18 +149,13 @@ endif ()
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
-if (BUILD_DIET)
-    add_definitions(-DCAPSTONE_DIET)
+if (BUILD_STATIC)
+    add_library(capstone STATIC ${SOURCES})
+else ()
+    add_library(capstone SHARED ${SOURCES})
 endif ()
 
-if (X86_REDUCE)
-    add_definitions(-DCAPSTONE_X86_REDUCE)
-endif ()
-
-add_library(libcapstone_static STATIC ${SOURCES})
-add_library(libcapstone SHARED ${SOURCES})
-
-set_target_properties(libcapstone PROPERTIES
+set_target_properties(capstone PROPERTIES
                       VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
                       SOVERSION ${VERSION_MAJOR})
 
@@ -171,7 +163,7 @@ if (BUILD_TESTS)
     foreach (TSRC ${TEST_SOURCES})
         STRING(REGEX REPLACE ".c$" "" TBIN ${TSRC})
         add_executable(${TBIN} "tests/${TSRC}")
-        target_link_libraries(${TBIN} libcapstone_static)
+        target_link_libraries(${TBIN} capstone)
     endforeach ()
 endif ()
 
@@ -180,7 +172,7 @@ foreach (INC ${INCLUDES})
     install(FILES "include/${INC}" DESTINATION include/capstone)
 endforeach ()
 
-install(TARGETS libcapstone
+install(TARGETS capstone
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib)
