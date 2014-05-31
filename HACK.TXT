@@ -18,6 +18,7 @@ Capstone source is organized as followings.
 ├── include         <- API headers in C language (*.h)
 ├── suite           <- Development test tools - for Capstone developers only
 ├── tests           <- Test code (in C language)
+├── contrib         <- Code contributed by community to help Capstone integration
 
 
 Follow instructions in COMPILE.TXT to see how to compile and run code.
