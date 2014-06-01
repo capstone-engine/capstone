@@ -177,8 +177,12 @@ static void printRegImmShift(MCInst *MI, SStream *O, ARM_AM_ShiftOpc ShOpc,
 
 	//assert (!(ShOpc == ARM_AM_ror && !ShImm) && "Cannot have ror #0");
 	SStream_concat(O, ARM_AM_getShiftOpcStr(ShOpc));
-	if (MI->csh->detail)
-		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count - 1].shift.type = (arm_shifter)ShOpc;
+	if (MI->csh->detail) {
+			if (MI->csh->doing_mem)
+				MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].shift.type = (arm_shifter)ShOpc;
+			else
+				MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count - 1].shift.type = (arm_shifter)ShOpc;
+	}
 
 	if (ShOpc != ARM_AM_rrx) {
 		SStream_concat(O, " ");
@@ -187,8 +191,12 @@ static void printRegImmShift(MCInst *MI, SStream *O, ARM_AM_ShiftOpc ShOpc,
 		SStream_concat(O, "#%u", translateShiftImm(ShImm));
 		if (_UseMarkup)
 			SStream_concat(O, ">");
-		if (MI->csh->detail)
-			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count - 1].shift.value = translateShiftImm(ShImm);
+		if (MI->csh->detail) {
+			if (MI->csh->doing_mem)
+				MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].shift.value = translateShiftImm(ShImm);
+			else
+				MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count - 1].shift.value = translateShiftImm(ShImm);
+		}
 	}
 }
 
