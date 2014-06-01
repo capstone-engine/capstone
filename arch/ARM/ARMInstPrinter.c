@@ -264,6 +264,12 @@ void ARM_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 			}
 		}
 	}
+
+	// instruction should not have invalid CC
+	if (insn->detail->arm.cc == ARM_CC_INVALID) {
+		insn->detail->arm.cc = ARM_CC_AL;
+	}
+
 }
 
 void ARM_printInst(MCInst *MI, SStream *O, void *Info)
