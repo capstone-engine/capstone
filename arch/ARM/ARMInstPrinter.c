@@ -1102,7 +1102,9 @@ static void printAddrMode5Operand(MCInst *MI, unsigned OpNum, SStream *O,
 			SStream_concat(O, ", %s#%s%u%s", markup("<imm:"),
 					ARM_AM_getAddrOpcStr(ARM_AM_getAM5Op((unsigned int)MCOperand_getImm(MO2))),
 					ImmOffs * 4, markup(">"));
-		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.disp = ImmOffs * 4;
+		if (MI->csh->detail) {
+			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.disp = ImmOffs * 4;
+		}
 	}
 	SStream_concat(O, "]%s", markup(">"));
 
