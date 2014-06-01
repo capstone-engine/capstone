@@ -660,6 +660,15 @@ static void printThumbLdrLabelOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	}
 
 	SStream_concat(O, "]%s", markup(">"));
+
+	if (MI->csh->detail) {
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].type = ARM_OP_MEM;
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.base = ARM_REG_PC;
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.index = ARM_REG_INVALID;
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.scale = 1;
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.disp = OffImm;
+		MI->flat_insn.arm.op_count++;
+	}
 }
 
 // so_reg is a 4-operand unit corresponding to register forms of the A5.1
