@@ -62,7 +62,7 @@ typedef enum x86_reg {
 	X86_REG_R12B, X86_REG_R13B, X86_REG_R14B, X86_REG_R15B, X86_REG_R8D,
 	X86_REG_R9D, X86_REG_R10D, X86_REG_R11D, X86_REG_R12D, X86_REG_R13D,
 	X86_REG_R14D, X86_REG_R15D, X86_REG_R8W, X86_REG_R9W, X86_REG_R10W,
-	X86_REG_R11W, X86_REG_R12W, X86_REG_R13W, X86_REG_R14W, X86_REG_R15W, 
+	X86_REG_R11W, X86_REG_R12W, X86_REG_R13W, X86_REG_R14W, X86_REG_R15W,
 
 	X86_REG_MAX		// <-- mark the end of the list of registers
 } x86_reg;
@@ -141,7 +141,7 @@ typedef struct cs_x86 {
 	// SIB base register, or X86_REG_INVALID when irrelevant.
 	x86_reg sib_base;
 
-	// Number of operands of this instruction, 
+	// Number of operands of this instruction,
 	// or 0 when instruction has no operand.
 	uint8_t op_count;
 
@@ -1454,6 +1454,8 @@ typedef enum  x86_insn_group {
 	X86_GRP_NOT64BITMODE,
 
 	X86_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
+	X86_GRP_INT,	 // all interrupt instructions (int+syscall+vm, etc)
+	X86_GRP_CALL,	// all call instructions
 
 	X86_GRP_MAX
 } x86_insn_group;
