@@ -129,6 +129,6 @@ __cdecl vsnprintf(
 	const char *format,
 	va_list argptr
 )
-{
-	return static_cast<int>(DbgPrint(format, argptr));
+{	
+	return vsprintf_s(buffer, count, format, argptr);
 }
