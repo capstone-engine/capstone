@@ -45,50 +45,37 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 
 static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat(O, "ptr ");
 	printMemReference(MI, OpNo, O);
 }
 
 static void printi8mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat(O, "byte ptr ");
 	printMemReference(MI, OpNo, O);
 }
 
 static void printi16mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	if (MI->Opcode == X86_BOUNDS16rm)
-		SStream_concat(O, "dword ptr ");
-	else
-		SStream_concat(O, "word ptr ");
 	printMemReference(MI, OpNo, O);
 }
 
 static void printi32mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	if (MI->Opcode == X86_BOUNDS32rm)
-		SStream_concat(O, "qword ptr ");
-	else
-		SStream_concat(O, "dword ptr ");
 	printMemReference(MI, OpNo, O);
 }
 
 static void printi64mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat(O, "qword ptr ");
 	printMemReference(MI, OpNo, O);
 }
 
 static void printi128mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat(O, "xmmword ptr ");
 	printMemReference(MI, OpNo, O);
 }
 
 #ifndef CAPSTONE_X86_REDUCE
 static void printi256mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat(O, "ymmword ptr ");
 	printMemReference(MI, OpNo, O);
 }
 
@@ -99,31 +86,26 @@ static void printi512mem(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printf32mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat(O, "dword ptr ");
 	printMemReference(MI, OpNo, O);
 }
 
 static void printf64mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat(O, "qword ptr ");
 	printMemReference(MI, OpNo, O);
 }
 
 static void printf80mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat(O, "xword ptr ");
 	printMemReference(MI, OpNo, O);
 }
 
 static void printf128mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat(O, "xmmword ptr ");
 	printMemReference(MI, OpNo, O);
 }
 
 static void printf256mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat(O, "ymmword ptr ");
 	printMemReference(MI, OpNo, O);
 }
 
