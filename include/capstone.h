@@ -20,8 +20,10 @@ extern "C" {
 #pragma warning(disable:4100)
 #ifdef CAPSTONE_SHARED	// compiling DLL file
 #define CAPSTONE_EXPORT __declspec(dllexport)
-#else
+#elif defined(CAPSTONE_STATIC)
 #define CAPSTONE_EXPORT
+#else	// code uses our DLL
+#define CAPSTONE_EXPORT __declspec(dllimport)
 #endif
 #else	// not MSVC
 #define CAPSTONE_EXPORT
