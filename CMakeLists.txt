@@ -152,6 +152,7 @@ include_directories("${PROJECT_SOURCE_DIR}/include")
 if (BUILD_STATIC)
     add_library(capstone STATIC ${SOURCES})
 else ()
+    add_definitions(-DCAPSTONE_SHARED)
     add_library(capstone SHARED ${SOURCES})
 endif ()
 
