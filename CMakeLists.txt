@@ -10,7 +10,7 @@ set(VERSION_PATCH 0)
 option(BUILD_STATIC "Build static library" ON)
 option(BUILD_DIET "Build diet library" OFF)
 option(BUILD_TESTS "Build tests" ON)
-option(USE_SYS_DYN_MEM "Use default memory allocation functions" ON)
+option(USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 
 option(ARM_SUPPORT "ARM support" ON)
 option(ARM64_SUPPORT "ARM64 support" ON)
@@ -27,7 +27,7 @@ if (BUILD_DIET)
 endif ()
 
 if (USE_DEFAULT_ALLOC)
-    add_definitions(-DUSE_SYS_DYN_MEM)
+    add_definitions(-DCAPSTONE_USE_SYS_DYN_MEM)
 endif ()
 
 if (X86_REDUCE)
