@@ -311,7 +311,7 @@ endif
 ifeq ($(CAPSTONE_SHARED),yes)
 $(LIBRARY): $(LIBOBJ)
 ifeq ($(V),0)
-	$(call log,CCLD,$(@:$(BLDIR)/%=%))
+	$(call log,LINK,$(@:$(BLDIR)/%=%))
 	@$(create-library)
 else
 	$(create-library)

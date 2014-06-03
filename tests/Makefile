@@ -101,11 +101,11 @@ $(TESTDIR)/%$(BIN_EXT): $(OBJDIR)/%.o
 	@mkdir -p $(@D)
 ifeq ($(V),0)
 ifeq ($(CAPSTONE_SHARED),yes)
-	$(call log,CCLD,$(notdir $@))
+	$(call log,LINK,$(notdir $@))
 	@$(link-dynamic)
 endif
 ifeq ($(CAPSTONE_STATIC),yes)
-	$(call log,CCLD,$(notdir $(call staticname,$@)))
+	$(call log,LINK,$(notdir $(call staticname,$@)))
 	@$(link-static)
 endif
 else
