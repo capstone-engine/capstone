@@ -21,7 +21,7 @@ extern "C" {
 #ifdef CAPSTONE_SHARED	// compiling DLL file
 #define CAPSTONE_EXPORT __declspec(dllexport)
 #else
-#define CAPSTONE_EXPORT __declspec(dllimport)
+#define CAPSTONE_EXPORT
 #endif
 #else	// not MSVC
 #define CAPSTONE_EXPORT
