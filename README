@@ -44,8 +44,8 @@ MingW. Visual Studio support will be done in the future.
 binary code that Capstone cannot disassemble, or does that wrongly, so we can
 fix that in the next version
 
-- This package only contains Java & Python bindings. For C#, Go, Ocaml & Ruby,
-refer to the corresponding git repositories.
+- This package only contains Java & Python bindings. For more bindings created
+and maintained by the community, see bindings/README.
 
 
 [Hack]
