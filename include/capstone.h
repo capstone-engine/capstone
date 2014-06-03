@@ -468,7 +468,7 @@ bool cs_reg_write(csh handle, cs_insn *insn, unsigned int reg_id);
 int cs_op_count(csh handle, cs_insn *insn, unsigned int op_type);
 
 /*
- Retrieve the position of operand of given type in arch.op_info[] array.
+ Retrieve the position of operand of given type in <arch>.operands[] array.
  Later, the operand can be accessed using the returned position.
  Find the operand type in header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
 
@@ -480,7 +480,7 @@ int cs_op_count(csh handle, cs_insn *insn, unsigned int op_type);
  @position: position of the operand to be found. This must be in the range
 			[1, cs_op_count(handle, insn, op_type)]
 
- @return: index of operand of given type @op_type in arch.op_info[] array
+ @return: index of operand of given type @op_type in <arch>.operands[] array
  in instruction @insn, or -1 on failure.
 */
 int cs_op_index(csh handle, cs_insn *insn, unsigned int op_type,
