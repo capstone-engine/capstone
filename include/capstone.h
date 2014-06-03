@@ -16,17 +16,15 @@ extern "C" {
 #include "platform.h"
 
 #ifdef _MSC_VER
-#pragma warning(disable:4201)
-#pragma warning(disable:4100)
-#ifdef CAPSTONE_SHARED	// compiling DLL file
-#define CAPSTONE_EXPORT __declspec(dllexport)
-#elif defined(CAPSTONE_STATIC)
-#define CAPSTONE_EXPORT
-#else	// code uses our DLL
-#define CAPSTONE_EXPORT __declspec(dllimport)
-#endif
-#else	// not MSVC
-#define CAPSTONE_EXPORT
+    #pragma warning(disable:4201)
+    #pragma warning(disable:4100)
+    #ifdef CAPSTONE_SHARED
+        #define CAPSTONE_EXPORT __declspec(dllexport)
+    #else    // defined(CAPSTONE_STATIC)
+        #define CAPSTONE_EXPORT
+    #endif
+#else
+    #define CAPSTONE_EXPORT
 #endif
 
 // Capstone API version
