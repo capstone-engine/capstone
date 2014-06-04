@@ -177,8 +177,12 @@ static void printRegImmShift(MCInst *MI, SStream *O, ARM_AM_ShiftOpc ShOpc,
 
 	//assert (!(ShOpc == ARM_AM_ror && !ShImm) && "Cannot have ror #0");
 	SStream_concat(O, ARM_AM_getShiftOpcStr(ShOpc));
-	if (MI->csh->detail)
-		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count - 1].shift.type = (arm_shifter)ShOpc;
+	if (MI->csh->detail) {
+			if (MI->csh->doing_mem)
+				MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].shift.type = (arm_shifter)ShOpc;
+			else
+				MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count - 1].shift.type = (arm_shifter)ShOpc;
+	}
 
 	if (ShOpc != ARM_AM_rrx) {
 		SStream_concat(O, " ");
@@ -187,8 +191,12 @@ static void printRegImmShift(MCInst *MI, SStream *O, ARM_AM_ShiftOpc ShOpc,
 		SStream_concat(O, "#%u", translateShiftImm(ShImm));
 		if (_UseMarkup)
 			SStream_concat(O, ">");
-		if (MI->csh->detail)
-			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count - 1].shift.value = translateShiftImm(ShImm);
+		if (MI->csh->detail) {
+			if (MI->csh->doing_mem)
+				MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].shift.value = translateShiftImm(ShImm);
+			else
+				MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count - 1].shift.value = translateShiftImm(ShImm);
+		}
 	}
 }
 
@@ -263,6 +271,25 @@ void ARM_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 				break;
 			}
 		}
+	}
+
+	// instruction should not have invalid CC
+	if (insn->detail->arm.cc == ARM_CC_INVALID) {
+		insn->detail->arm.cc = ARM_CC_AL;
+	}
+
+	// manual fix for some special instructions
+	// printf(">>> id: %u, mcid: %u\n", insn->id, mci->Opcode);
+	switch(mci->Opcode) {
+		default:
+			break;
+		case ARM_MOVPCLR:
+			insn->detail->arm.operands[0].type = ARM_OP_REG;
+			insn->detail->arm.operands[0].reg = ARM_REG_PC;
+			insn->detail->arm.operands[1].type = ARM_OP_REG;
+			insn->detail->arm.operands[1].reg = ARM_REG_LR;
+			insn->detail->arm.op_count = 2;
+			break;
 	}
 }
 
@@ -641,6 +668,15 @@ static void printThumbLdrLabelOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	}
 
 	SStream_concat(O, "]%s", markup(">"));
+
+	if (MI->csh->detail) {
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].type = ARM_OP_MEM;
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.base = ARM_REG_PC;
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.index = ARM_REG_INVALID;
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.scale = 1;
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.disp = OffImm;
+		MI->flat_insn.arm.op_count++;
+	}
 }
 
 // so_reg is a 4-operand unit corresponding to register forms of the A5.1
@@ -1055,6 +1091,14 @@ static void printAddrMode5Operand(MCInst *MI, unsigned OpNum, SStream *O,
 	SStream_concat(O, "%s[", markup("<mem:"));
 	printRegName(MI->csh, O, MCOperand_getReg(MO1));
 
+	if (MI->csh->detail) {
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].type = ARM_OP_MEM;
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.base = MCOperand_getReg(MO1);
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.index = ARM_REG_INVALID;
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.scale = 1;
+		MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.disp = 0;
+	}
+
 	ImmOffs = ARM_AM_getAM5Offset((unsigned int)MCOperand_getImm(MO2));
 	Op = ARM_AM_getAM5Op((unsigned int)MCOperand_getImm(MO2));
 	if (AlwaysPrintImm0 || ImmOffs || Op == ARM_AM_sub) {
@@ -1066,8 +1110,15 @@ static void printAddrMode5Operand(MCInst *MI, unsigned OpNum, SStream *O,
 			SStream_concat(O, ", %s#%s%u%s", markup("<imm:"),
 					ARM_AM_getAddrOpcStr(ARM_AM_getAM5Op((unsigned int)MCOperand_getImm(MO2))),
 					ImmOffs * 4, markup(">"));
+		if (MI->csh->detail) {
+			MI->flat_insn.arm.operands[MI->flat_insn.arm.op_count].mem.disp = ImmOffs * 4;
+		}
 	}
 	SStream_concat(O, "]%s", markup(">"));
+
+	if (MI->csh->detail) {
+		MI->flat_insn.arm.op_count++;
+	}
 }
 
 static void printAddrMode6Operand(MCInst *MI, unsigned OpNum, SStream *O)

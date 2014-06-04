@@ -1549,5 +1549,10 @@ public class X86_const {
 	public static final int X86_GRP_16BITMODE = 32;
 	public static final int X86_GRP_NOT64BITMODE = 33;
 	public static final int X86_GRP_JUMP = 34;
-	public static final int X86_GRP_MAX = 35;
+	public static final int X86_GRP_VM = 35;
+	public static final int X86_GRP_INT = 36;
+	public static final int X86_GRP_IRET = 37;
+	public static final int X86_GRP_CALL = 38;
+	public static final int X86_GRP_RET = 39;
+	public static final int X86_GRP_MAX = 40;
 }
