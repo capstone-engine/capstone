@@ -2187,7 +2187,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   uint32_t Bits = OpInfo[MCInst_getOpcode(MI)];
   // assert(Bits != 0 && "Cannot print this instruction.");
 #ifndef CAPSTONE_DIET
-  SStream_concat(O, "%s", AsmStrs+(Bits & 8191)-1);
+  SStream_concat0(O, AsmStrs+(Bits & 8191)-1);
 #endif
 
 
@@ -2210,7 +2210,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 3:
     // ADC16ri, ADC16ri8, ADC16rm, ADC16rr, ADC32ri, ADC32ri8, ADC32rm, ADC32...
     printOperand(MI, 1, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 4:
     // ADC32mi, ADC32mi8, ADC32mr, ADD32mi, ADD32mi8, ADD32mr, AND32mi, AND32...
@@ -2231,28 +2231,28 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 8:
     // CMPS16
     printSrcIdx16(MI, 1, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printDstIdx16(MI, 0, O); 
     return;
     break;
   case 9:
     // CMPS32
     printSrcIdx32(MI, 1, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printDstIdx32(MI, 0, O); 
     return;
     break;
   case 10:
     // CMPS64
     printSrcIdx64(MI, 1, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printDstIdx64(MI, 0, O); 
     return;
     break;
   case 11:
     // CMPS8
     printSrcIdx8(MI, 1, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printDstIdx8(MI, 0, O); 
     return;
     break;
@@ -2301,28 +2301,28 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 21:
     // LXADD16, XCHG16rm
     printi16mem(MI, 2, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 1, O); 
     return;
     break;
   case 22:
     // LXADD32, XCHG32rm
     printi32mem(MI, 2, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 1, O); 
     return;
     break;
   case 23:
     // LXADD64, XCHG64rm
     printi64mem(MI, 2, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 1, O); 
     return;
     break;
   case 24:
     // LXADD8, XCHG8rm
     printi8mem(MI, 2, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 1, O); 
     return;
     break;
@@ -2349,7 +2349,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 30:
     // XCHG16rr, XCHG32rr, XCHG64rr, XCHG8rr
     printOperand(MI, 2, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 1, O); 
     return;
     break;
@@ -2366,7 +2366,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 1:
     // ADC16mi, ADC16mi8, ADC16mr, ADC16rr_REV, ADC32mi, ADC32mi8, ADC32mr, A...
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 2:
     // ADC16ri, ADC16ri8, ADC16rr, ADC32ri, ADC32ri8, ADC32rr, ADC64ri32, ADC...
@@ -2395,42 +2395,42 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 7:
     // IN16, IN32, IN8
-    SStream_concat(O, "%s", ", dx"); 
+    SStream_concat0(O, ", dx"); 
     return;
     break;
   case 8:
     // MOV16ao16, MOV16ao16_16, MOV64ao16, OUT16ir, STOSW
-    SStream_concat(O, "%s", ", ax"); 
+    SStream_concat0(O, ", ax"); 
     return;
     break;
   case 9:
     // MOV32ao32, MOV32ao32_16, MOV64ao32, OUT32ir, STOSL
-    SStream_concat(O, "%s", ", eax"); 
+    SStream_concat0(O, ", eax"); 
     return;
     break;
   case 10:
     // MOV64ao64, STOSQ
-    SStream_concat(O, "%s", ", rax"); 
+    SStream_concat0(O, ", rax"); 
     return;
     break;
   case 11:
     // MOV64ao8, MOV8ao8, MOV8ao8_16, OUT8ir, STOSB
-    SStream_concat(O, "%s", ", al"); 
+    SStream_concat0(O, ", al"); 
     return;
     break;
   case 12:
     // RCL16mCL, RCL16rCL, RCL32mCL, RCL32rCL, RCL64mCL, RCL64rCL, RCL8mCL, R...
-    SStream_concat(O, "%s", ", cl"); 
+    SStream_concat0(O, ", cl"); 
     return;
     break;
   case 13:
     // ROL16m1, ROL16r1, ROL32m1, ROL32r1, ROL64m1, ROL64r1, ROL8m1, ROL8r1, ...
-    SStream_concat(O, "%s", ", 1"); 
+    SStream_concat0(O, ", 1"); 
     return;
     break;
   case 14:
     // TAILJMPd, TAILJMPd64, TAILJMPm, TAILJMPm64, TAILJMPr64
-    SStream_concat(O, "%s", "  # TAILCALL"); 
+    SStream_concat0(O, "  # TAILCALL"); 
     return;
     break;
   }
@@ -2526,16 +2526,16 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 1:
     // ANDN32rm, ANDN32rr, ANDN64rm, ANDN64rr, BEXTR32rm, BEXTR32rr, BEXTR64r...
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 2:
     // MOV8mr_NOREX, MOV8rm_NOREX, MOV8rr_NOREX
-    SStream_concat(O, "%s", "  # NOREX"); 
+    SStream_concat0(O, "  # NOREX"); 
     return;
     break;
   case 3:
     // SHLD16mrCL, SHLD16rrCL, SHLD32mrCL, SHLD32rrCL, SHLD64mrCL, SHLD64rrCL...
-    SStream_concat(O, "%s", ", cl"); 
+    SStream_concat0(O, ", cl"); 
     return;
     break;
   }
@@ -2576,9 +2576,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   //printf("Frag-5: %"PRIu64"\n", (Bits >> 31) & 1);
   if ((Bits >> 31) & 1) {
     // VAARG_64
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 7, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 8, O); 
     return;
   } else {
@@ -2880,9 +2880,9 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
     *AsmOps = '\0';
     AsmOps += 1;
   }
-  SStream_concat(OS, "%s", AsmMnem);
+  SStream_concat0(OS, AsmMnem);
   if (AsmOps) {
-    SStream_concat(OS, "\t");
+    SStream_concat0(OS, "\t");
     for (c = AsmOps; *c; c++) {
       if (*c == '$') {
         c += 1;
