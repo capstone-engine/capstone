@@ -8,6 +8,7 @@ set(VERSION_PATCH 0)
 # to configure the options specify them in in the command line or change them in the cmake UI.
 # Don't edit the makefile!
 option(BUILD_STATIC "Build static library" ON)
+option(BUILD_SHARED "Build shared library" ON)
 option(BUILD_DIET "Build diet library" OFF)
 option(BUILD_TESTS "Build tests" ON)
 option(USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
@@ -34,6 +35,7 @@ if (X86_REDUCE)
     add_definitions(-DCAPSTONE_X86_REDUCE)
 endif ()
 
+## sources
 set(SOURCES
     cs.c
     MCInst.c
@@ -45,6 +47,7 @@ set(SOURCES
 
 set(TEST_SOURCES test.c test_detail.c test_skipdata.c)
 
+## architecture support
 if (ARM_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_ARM)
     set(SOURCES
@@ -149,32 +152,54 @@ endif ()
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
+## properties
+# version info
+set_property(GLOBAL PROPERTY VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
+set_property(GLOBAL PROPERTY SOVERSION SOVERSION ${VERSION_MAJOR})
+
+## targets
 if (BUILD_STATIC)
-    add_definitions(-DCAPSTONE_STATIC)
-    add_library(capstone STATIC ${SOURCES})
-else ()
-    add_definitions(-DCAPSTONE_SHARED)
-    add_library(capstone SHARED ${SOURCES})
+    add_library(capstone-static STATIC ${SOURCES})
+    set_property(TARGET capstone-static PROPERTY OUTPUT_NAME capstone)
+    set_property(TARGET capstone-static PROPERTY PREFIX lib)
+    set(default-target capstone-static)
 endif ()
 
-set_target_properties(capstone PROPERTIES
-                      VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
-                      SOVERSION ${VERSION_MAJOR})
+if (BUILD_SHARED)
+    add_library(capstone-shared SHARED ${SOURCES})
+    set_property(TARGET capstone-shared PROPERTY OUTPUT_NAME capstone)
+    set_property(TARGET capstone-shared PROPERTY COMPILE_FLAGS -DCAPSTONE_SHARED)
+
+    if(NOT DEFINED default-target)      # honor `capstone-static` for tests first.
+	set(default-target capstone-shared)
+	add_definitions(-DCAPSTONE_SHARED)
+    endif ()
+endif ()
 
 if (BUILD_TESTS)
     foreach (TSRC ${TEST_SOURCES})
-        STRING(REGEX REPLACE ".c$" "" TBIN ${TSRC})
-        add_executable(${TBIN} "tests/${TSRC}")
-        target_link_libraries(${TBIN} capstone)
+	STRING(REGEX REPLACE ".c$" "" TBIN ${TSRC})
+	add_executable(${TBIN} "tests/${TSRC}")
+	target_link_libraries(${TBIN} ${default-target})
     endforeach ()
 endif ()
 
+## installation
 set(INCLUDES arm64.h  arm.h  capstone.h  mips.h  ppc.h  x86.h sparc.h systemz.h xcore.h)
 foreach (INC ${INCLUDES})
     install(FILES "include/${INC}" DESTINATION include/capstone)
 endforeach ()
 
-install(TARGETS capstone
-        RUNTIME DESTINATION bin
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib)
+if (BUILD_STATIC)
+    install(TARGETS capstone-static
+            RUNTIME DESTINATION bin
+            LIBRARY DESTINATION lib
+            ARCHIVE DESTINATION lib)
+endif ()
+
+if (BUILD_SHARED)
+    install(TARGETS capstone-shared
+            RUNTIME DESTINATION bin
+            LIBRARY DESTINATION lib
+            ARCHIVE DESTINATION lib)
+endif ()
