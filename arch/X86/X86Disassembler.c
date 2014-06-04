@@ -77,7 +77,7 @@ static void translateRegister(MCInst *mcInst, Reg reg)
 #undef ENTRY
 
 	uint8_t llvmRegnum = llvmRegnums[reg];
-	MCInst_addOperand(mcInst, MCOperand_CreateReg(llvmRegnum));
+	MCInst_addOperand0(mcInst, MCOperand_CreateReg0(mcInst, llvmRegnum));
 }
 
 static const uint8_t segmentRegnums[SEG_OVERRIDE_max] = {
@@ -109,11 +109,11 @@ static bool translateSrcIndex(MCInst *mcInst, InternalInstruction *insn)
 		baseRegNo = insn->prefixPresent[0x67] ? X86_ESI : X86_SI;
 	}
 
-	baseReg = MCOperand_CreateReg(baseRegNo);
-	MCInst_addOperand(mcInst, baseReg);
+	baseReg = MCOperand_CreateReg0(mcInst, baseRegNo);
+	MCInst_addOperand0(mcInst, baseReg);
 
-	segmentReg = MCOperand_CreateReg(segmentRegnums[insn->segmentOverride]);
-	MCInst_addOperand(mcInst, segmentReg);
+	segmentReg = MCOperand_CreateReg0(mcInst, segmentRegnums[insn->segmentOverride]);
+	MCInst_addOperand0(mcInst, segmentReg);
 
 	return false;
 }
@@ -136,8 +136,8 @@ static bool translateDstIndex(MCInst *mcInst, InternalInstruction *insn)
 		baseRegNo = insn->prefixPresent[0x67] ? X86_EDI : X86_DI;
 	}
 
-	baseReg = MCOperand_CreateReg(baseRegNo);
-	MCInst_addOperand(mcInst, baseReg);
+	baseReg = MCOperand_CreateReg0(mcInst, baseRegNo);
+	MCInst_addOperand0(mcInst, baseReg);
 
 	return false;
 }
@@ -227,13 +227,13 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 		case TYPE_XMM32:
 		case TYPE_XMM64:
 		case TYPE_XMM128:
-			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_XMM0 + ((uint32_t)immediate >> 4)));
+			MCInst_addOperand0(mcInst, MCOperand_CreateReg0(mcInst, X86_XMM0 + ((uint32_t)immediate >> 4)));
 			return;
 		case TYPE_XMM256:
-			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_YMM0 + ((uint32_t)immediate >> 4)));
+			MCInst_addOperand0(mcInst, MCOperand_CreateReg0(mcInst, X86_YMM0 + ((uint32_t)immediate >> 4)));
 			return;
 		case TYPE_XMM512:
-			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_ZMM0 + ((uint32_t)immediate >> 4)));
+			MCInst_addOperand0(mcInst, MCOperand_CreateReg0(mcInst, X86_ZMM0 + ((uint32_t)immediate >> 4)));
 			return;
 		case TYPE_REL8:
 			if(immediate & 0x80)
@@ -249,12 +249,12 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 			break;
 	}
 
-	MCInst_addOperand(mcInst, MCOperand_CreateImm(immediate));
+	MCInst_addOperand0(mcInst, MCOperand_CreateImm0(mcInst, immediate));
 
 	if (type == TYPE_MOFFS8 || type == TYPE_MOFFS16 ||
 			type == TYPE_MOFFS32 || type == TYPE_MOFFS64) {
-		segmentReg = MCOperand_CreateReg(segmentRegnums[insn->segmentOverride]);
-		MCInst_addOperand(mcInst, segmentReg);
+		segmentReg = MCOperand_CreateReg0(mcInst, segmentRegnums[insn->segmentOverride]);
+		MCInst_addOperand0(mcInst, segmentReg);
 	}
 }
 
@@ -283,7 +283,7 @@ static bool translateRMRegister(MCInst *mcInst, InternalInstruction *insn)
 				return true;
 #define ENTRY(x)                                                      \
 		case EA_REG_##x:                                                    \
-																			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_##x)); break;
+																			MCInst_addOperand0(mcInst, MCOperand_CreateReg0(mcInst, X86_##x)); break;
 			ALL_REGS
 #undef ENTRY
 		default:
@@ -331,7 +331,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 			switch (insn->sibBase) {
 #define ENTRY(x)                                          \
 				case SIB_BASE_##x:                                  \
-																	baseReg = MCOperand_CreateReg(X86_##x); break;
+																	baseReg = MCOperand_CreateReg0(mcInst, X86_##x); break;
 				ALL_SIB_BASES
 #undef ENTRY
 				default:
@@ -339,7 +339,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 					return true;
 			}
 		} else {
-			baseReg = MCOperand_CreateReg(0);
+			baseReg = MCOperand_CreateReg0(mcInst, 0);
 		}
 
 		// Check whether we are handling VSIB addressing mode for GATHER.
@@ -407,7 +407,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 					return true;
 #define ENTRY(x)                                          \
 				case SIB_INDEX_##x:                                 \
-																	indexReg = MCOperand_CreateReg(X86_##x); break;
+																	indexReg = MCOperand_CreateReg0(mcInst, X86_##x); break;
 					EA_BASES_32BIT
 						EA_BASES_64BIT
 						REGS_XMM
@@ -416,10 +416,10 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 #undef ENTRY
 			}
 		} else {
-			indexReg = MCOperand_CreateReg(0);
+			indexReg = MCOperand_CreateReg0(mcInst, 0);
 		}
 
-		scaleAmount = MCOperand_CreateImm(insn->sibScale);
+		scaleAmount = MCOperand_CreateImm0(mcInst, insn->sibScale);
 	} else {
 		switch (insn->eaBase) {
 			case EA_BASE_NONE:
@@ -428,30 +428,30 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 					return true;
 				}
 				if (insn->mode == MODE_64BIT) {
-					baseReg = MCOperand_CreateReg(X86_RIP); // Section 2.2.1.6
+					baseReg = MCOperand_CreateReg0(mcInst, X86_RIP); // Section 2.2.1.6
 				} else
-					baseReg = MCOperand_CreateReg(0);
+					baseReg = MCOperand_CreateReg0(mcInst, 0);
 
-				indexReg = MCOperand_CreateReg(0);
+				indexReg = MCOperand_CreateReg0(mcInst, 0);
 				break;
 			case EA_BASE_BX_SI:
-				baseReg = MCOperand_CreateReg(X86_BX);
-				indexReg = MCOperand_CreateReg(X86_SI);
+				baseReg = MCOperand_CreateReg0(mcInst, X86_BX);
+				indexReg = MCOperand_CreateReg0(mcInst, X86_SI);
 				break;
 			case EA_BASE_BX_DI:
-				baseReg = MCOperand_CreateReg(X86_BX);
-				indexReg = MCOperand_CreateReg(X86_DI);
+				baseReg = MCOperand_CreateReg0(mcInst, X86_BX);
+				indexReg = MCOperand_CreateReg0(mcInst, X86_DI);
 				break;
 			case EA_BASE_BP_SI:
-				baseReg = MCOperand_CreateReg(X86_BP);
-				indexReg = MCOperand_CreateReg(X86_SI);
+				baseReg = MCOperand_CreateReg0(mcInst, X86_BP);
+				indexReg = MCOperand_CreateReg0(mcInst, X86_SI);
 				break;
 			case EA_BASE_BP_DI:
-				baseReg = MCOperand_CreateReg(X86_BP);
-				indexReg = MCOperand_CreateReg(X86_DI);
+				baseReg = MCOperand_CreateReg0(mcInst, X86_BP);
+				indexReg = MCOperand_CreateReg0(mcInst, X86_DI);
 				break;
 			default:
-				indexReg = MCOperand_CreateReg(0);
+				indexReg = MCOperand_CreateReg0(mcInst, 0);
 				switch (insn->eaBase) {
 					default:
 						//debug("Unexpected eaBase");
@@ -462,7 +462,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 						//   placeholders to keep the compiler happy.
 #define ENTRY(x)                                        \
 					case EA_BASE_##x:                                 \
-																	  baseReg = MCOperand_CreateReg(X86_##x); break; 
+																	  baseReg = MCOperand_CreateReg0(mcInst, X86_##x); break; 
 						ALL_EA_BASES
 #undef ENTRY
 #define ENTRY(x) case EA_REG_##x:
@@ -474,19 +474,19 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 				}
 		}
 
-		scaleAmount = MCOperand_CreateImm(1);
+		scaleAmount = MCOperand_CreateImm0(mcInst, 1);
 	}
 
-	displacement = MCOperand_CreateImm(insn->displacement);
+	displacement = MCOperand_CreateImm0(mcInst, insn->displacement);
 
-	segmentReg = MCOperand_CreateReg(segmentRegnums[insn->segmentOverride]);
+	segmentReg = MCOperand_CreateReg0(mcInst, segmentRegnums[insn->segmentOverride]);
 
-	MCInst_addOperand(mcInst, baseReg);
-	MCInst_addOperand(mcInst, scaleAmount);
-	MCInst_addOperand(mcInst, indexReg);
+	MCInst_addOperand0(mcInst, baseReg);
+	MCInst_addOperand0(mcInst, scaleAmount);
+	MCInst_addOperand0(mcInst, indexReg);
 
-	MCInst_addOperand(mcInst, displacement);
-	MCInst_addOperand(mcInst, segmentReg);
+	MCInst_addOperand0(mcInst, displacement);
+	MCInst_addOperand0(mcInst, segmentReg);
 
 	return false;
 }
@@ -556,7 +556,7 @@ static bool translateRM(MCInst *mcInst, const OperandSpecifier *operand,
 /// @param stackPos     - The stack position to translate.
 static void translateFPRegister(MCInst *mcInst, uint8_t stackPos)
 {
-	MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_ST0 + stackPos));
+	MCInst_addOperand0(mcInst, MCOperand_CreateReg0(mcInst, X86_ST0 + stackPos));
 }
 
 /// translateMaskRegister - Translates a 3-bit mask register number to
@@ -572,7 +572,7 @@ static bool translateMaskRegister(MCInst *mcInst, uint8_t maskRegNum)
 		return true;
 	}
 
-	MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_K0 + maskRegNum));
+	MCInst_addOperand0(mcInst, MCOperand_CreateReg0(mcInst, X86_K0 + maskRegNum));
 
 	return false;
 }

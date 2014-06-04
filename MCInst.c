@@ -8,6 +8,8 @@
 #include "MCInst.h"
 #include "utils.h"
 
+#define MCINST_CACHE (ARR_SIZE(mcInst->Operands) - 1)
+
 void MCInst_Init(MCInst *inst)
 {
 	memset(inst, 0, sizeof(*inst));
@@ -31,6 +33,18 @@ void MCInst_insert(MCInst *inst, int index, MCOperand *Op)
 	inst->size++;
 
 	cs_mem_free(Op);
+}
+
+void MCInst_insert0(MCInst *inst, int index, MCOperand *Op)
+{
+	int i;
+
+	for(i = inst->size; i > index; i--)
+		//memcpy(&(inst->Operands[i]), &(inst->Operands[i-1]), sizeof(MCOperand));
+		inst->Operands[i] = inst->Operands[i-1];
+
+	inst->Operands[index] = *Op;
+	inst->size++;
 }
 
 void MCInst_setOpcode(MCInst *inst, unsigned Op)
@@ -72,6 +86,19 @@ int MCInst_addOperand(MCInst *inst, MCOperand *Op)
 
 	inst->Operands[inst->size] = *Op;
 	cs_mem_free(Op);
+
+	inst->size++;
+
+	return 0;
+}
+
+int MCInst_addOperand0(MCInst *inst, MCOperand *Op)
+{
+	if (inst->size == ARR_SIZE(inst->Operands))
+		// full
+		return -1;
+
+	inst->Operands[inst->size] = *Op;
 
 	inst->size++;
 
@@ -160,9 +187,29 @@ MCOperand *MCOperand_CreateReg(unsigned Reg)
 	return op;
 }
 
+MCOperand *MCOperand_CreateReg0(MCInst *mcInst, unsigned Reg)
+{
+	MCOperand *op = &(mcInst->Operands[MCINST_CACHE]);
+
+	op->Kind = kRegister;
+	op->RegVal = Reg;
+
+	return op;
+}
+
 MCOperand *MCOperand_CreateImm(int64_t Val)
 {
 	MCOperand *op = cs_mem_malloc(sizeof(*op));
+
+	op->Kind = kImmediate;
+	op->ImmVal = Val;
+
+	return op;
+}
+
+MCOperand *MCOperand_CreateImm0(MCInst *mcInst, int64_t Val)
+{
+	MCOperand *op = &(mcInst->Operands[MCINST_CACHE]);
 
 	op->Kind = kImmediate;
 	op->ImmVal = Val;
