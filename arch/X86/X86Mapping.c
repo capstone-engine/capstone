@@ -6300,19 +6300,19 @@ static insn_map insns[] = {	// full x86 instructions
 	{
 		X86_IRET16, X86_INS_IRET,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { X86_GRP_RET, 0 }, 0, 0
+		{ 0 }, { 0 }, { X86_GRP_IRET, 0 }, 0, 0
 #endif
 	},
 	{
 		X86_IRET32, X86_INS_IRETD,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { X86_GRP_RET, 0 }, 0, 0
+		{ 0 }, { 0 }, { X86_GRP_IRET, 0 }, 0, 0
 #endif
 	},
 	{
 		X86_IRET64, X86_INS_IRETQ,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { X86_GRP_MODE64, X86_GRP_RET, 0 }, 0, 0
+		{ 0 }, { 0 }, { X86_GRP_MODE64, X86_GRP_IRET, 0 }, 0, 0
 #endif
 	},
 	{
@@ -35303,19 +35303,19 @@ static insn_map insns[] = {	// reduce x86 instructions
 	{
 		X86_IRET16, X86_INS_IRET,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { X86_GRP_RET, 0 }, 0, 0
+		{ 0 }, { 0 }, { X86_GRP_IRET, 0 }, 0, 0
 #endif
 	},
 	{
 		X86_IRET32, X86_INS_IRETD,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { X86_GRP_RET, 0 }, 0, 0
+		{ 0 }, { 0 }, { X86_GRP_IRET, 0 }, 0, 0
 #endif
 	},
 	{
 		X86_IRET64, X86_INS_IRETQ,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { X86_GRP_MODE64, X86_GRP_RET, 0 }, 0, 0
+		{ 0 }, { 0 }, { X86_GRP_MODE64, X86_GRP_IRET, 0 }, 0, 0
 #endif
 	},
 	{
