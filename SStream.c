@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "SStream.h"
 #include "cs_priv.h"
@@ -12,6 +13,14 @@ void SStream_Init(SStream *ss)
 {
 	ss->index = 0;
 	ss->buffer[0] = '\0';
+}
+
+void SStream_concat0(SStream *ss, char *s)
+{
+#ifndef CAPSTONE_DIET
+	strcpy(ss->buffer + ss->index, s);
+	ss->index += strlen(s);
+#endif
 }
 
 void SStream_concat(SStream *ss, const char *fmt, ...)
