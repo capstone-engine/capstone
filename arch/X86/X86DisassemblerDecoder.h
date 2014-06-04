@@ -570,6 +570,7 @@ typedef struct InternalInstruction {
 
   /* 1 if the prefix byte corresponding to the entry is present; 0 if not */
   uint8_t prefixPresent[0x100];
+  uint8_t prefix0, prefix1, prefix2, prefix3;
   /* contains the location (for use with the reader) of the prefix byte */
   uint64_t prefixLocations[0x100];
   /* The value of the vector extension prefix(EVEX/VEX/XOP), if present */

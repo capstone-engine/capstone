@@ -460,6 +460,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 					dbgprintf(insn, "Redundant Group 1 prefix");
 				prefixGroups[0] = TRUE;
 				setPrefixPresent(insn, byte, prefixLocation);
+				insn->prefix0 = byte;
 				break;
 			case 0x2e:  /* CS segment override -OR- Branch not taken */
 			case 0x36:  /* SS segment override -OR- Branch taken */
@@ -501,6 +502,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 				insn->prefixPresent[0x64] = 0;
 				insn->prefixPresent[0x65] = 0;
 				setPrefixPresent(insn, byte, prefixLocation);
+				insn->prefix1 = byte;
 				break;
 			case 0x66:  /* Operand-size override */
 				if (prefixGroups[2])
@@ -508,6 +510,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 				prefixGroups[2] = TRUE;
 				hasOpSize = TRUE;
 				setPrefixPresent(insn, byte, prefixLocation);
+				insn->prefix2 = byte;
 				break;
 			case 0x67:  /* Address-size override */
 				if (prefixGroups[3])
@@ -515,6 +518,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 				prefixGroups[3] = TRUE;
 				hasAdSize = TRUE;
 				setPrefixPresent(insn, byte, prefixLocation);
+				insn->prefix3 = byte;
 				break;
 			default:    /* Not a prefix byte */
 				isPrefix = FALSE;

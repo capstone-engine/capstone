@@ -698,6 +698,11 @@ static void update_pub_insn(cs_insn_flat *pub, InternalInstruction *inter, uint8
 		}
 	}
 
+	prefixes[0] = inter->prefix0;
+	prefixes[1] = inter->prefix1;
+	prefixes[2] = inter->prefix2;
+	prefixes[3] = inter->prefix3;
+
 	pub->x86.segment = x86_map_segment(inter->segmentOverride);
 
 	if (inter->vectorExtensionType > 0)
@@ -759,8 +764,6 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 
 		return false;
 	} else {
-		int i, c;
-
 		*size = (uint16_t)insn.length;
 		result = (!translateInstruction(instr, &insn)) ?  true : false;
 		if (result) {
@@ -768,13 +771,10 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 				update_pub_insn(&instr->flat_insn, &insn, instr->x86_prefix);
 			else {
 				// copy all prefixes
-				c = 0;
-				for(i = 0; i < 0x100; i++) {
-					if (insn.prefixPresent[i] > 0) {
-						instr->x86_prefix[c] = i;
-						c++;
-					}
-				}
+				instr->x86_prefix[0] = insn.prefix0;
+				instr->x86_prefix[1] = insn.prefix1;
+				instr->x86_prefix[2] = insn.prefix2;
+				instr->x86_prefix[3] = insn.prefix3;
 			}
 
 			instr->x86_lock_rep = insn.x86_lock_rep;
