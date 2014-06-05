@@ -399,7 +399,6 @@ static BOOL isPrefixAtLocation(struct InternalInstruction* insn,
 static int readPrefixes(struct InternalInstruction* insn)
 {
 	BOOL isPrefix = TRUE;
-	BOOL prefixGroups[4] = { FALSE };
 	uint64_t prefixLocation;
 	uint8_t byte = 0, nextByte;
 
@@ -456,9 +455,6 @@ static int readPrefixes(struct InternalInstruction* insn)
 				insn->prefixPresent[0xf2] = 0;
 				insn->prefixPresent[0xf3] = 0;
 			case 0xf0:  /* LOCK */
-				if (prefixGroups[0])
-					dbgprintf(insn, "Redundant Group 1 prefix");
-				prefixGroups[0] = TRUE;
 				setPrefixPresent(insn, byte, prefixLocation);
 				insn->prefix0 = byte;
 				break;
@@ -491,9 +487,6 @@ static int readPrefixes(struct InternalInstruction* insn)
 						//debug("Unhandled override");
 						return -1;
 				}
-				if (prefixGroups[1])
-					dbgprintf(insn, "Redundant Group 2 prefix");
-				prefixGroups[1] = TRUE;
 				// only accept the last prefix
 				insn->prefixPresent[0x2e] = 0;
 				insn->prefixPresent[0x36] = 0;
@@ -505,17 +498,11 @@ static int readPrefixes(struct InternalInstruction* insn)
 				insn->prefix1 = byte;
 				break;
 			case 0x66:  /* Operand-size override */
-				if (prefixGroups[2])
-					dbgprintf(insn, "Redundant Group 3 prefix");
-				prefixGroups[2] = TRUE;
 				hasOpSize = TRUE;
 				setPrefixPresent(insn, byte, prefixLocation);
 				insn->prefix2 = byte;
 				break;
 			case 0x67:  /* Address-size override */
-				if (prefixGroups[3])
-					dbgprintf(insn, "Redundant Group 4 prefix");
-				prefixGroups[3] = TRUE;
 				hasAdSize = TRUE;
 				setPrefixPresent(insn, byte, prefixLocation);
 				insn->prefix3 = byte;
@@ -528,8 +515,6 @@ static int readPrefixes(struct InternalInstruction* insn)
 		if (isPrefix)
 			dbgprintf(insn, "Found prefix 0x%hhx", byte);
 	}
-
-	insn->x86_lock_rep = prefixGroups[0];
 
 	insn->vectorExtensionType = TYPE_NO_VEX_XOP;
 
@@ -1961,8 +1946,6 @@ int decodeInstruction(struct InternalInstruction* insn,
 		uint64_t startLoc,
 		DisassemblerMode mode)
 {
-	memset(insn, 0, sizeof(*insn));
-
 	insn->reader = reader;
 	insn->readerArg = readerArg;
 	insn->startLocation = startLoc;

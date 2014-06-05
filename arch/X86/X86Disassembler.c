@@ -687,17 +687,6 @@ static int reader(const void* arg, uint8_t* byte, uint64_t address)
 // copy x86 detail information from internal structure to public structure
 static void update_pub_insn(cs_insn_flat *pub, InternalInstruction *inter, uint8_t *prefixes)
 {
-	int i, c;
-
-	c = 0;
-	for(i = 0; i < 0x100; i++) {
-		if (inter->prefixPresent[i] > 0) {
-			pub->x86.prefix[c] = i;
-			prefixes[c] = i;
-			c++;
-		}
-	}
-
 	prefixes[0] = inter->prefix0;
 	prefixes[1] = inter->prefix1;
 	prefixes[2] = inter->prefix2;
@@ -776,8 +765,6 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 				instr->x86_prefix[2] = insn.prefix2;
 				instr->x86_prefix[3] = insn.prefix3;
 			}
-
-			instr->x86_lock_rep = insn.x86_lock_rep;
 
 			// save immediate size to print immediate properly
 			instr->x86_imm_size = insn.immediateSize;

@@ -41908,104 +41908,82 @@ static bool valid_rep(cs_struct *h, unsigned int opcode)
 // return true if we patch the mnemonic
 bool X86_lockrep(MCInst *MI, SStream *O)
 {
-	int i;
 	unsigned int opcode;
-	uint8_t prefix[8] = { 0 };
-	unsigned int c = 0;
 
-	if (MI->x86_lock_rep) {
-		for(i = 0; i < ARR_SIZE(MI->x86_prefix); i++) {
-			switch(MI->x86_prefix[i]) {
-				default:
-					// non-zero prefix, so copy it
-					prefix[c] = MI->x86_prefix[i];
-					c++;
-					break;
-				case 0:
-					// ignore
-					break;
-				case 0xf0:
+	switch(MI->x86_prefix[0]) {
+		default:
+			break;
+		case 0xf0:
 #ifndef CAPSTONE_DIET
-					SStream_concat(O, "lock|");
+			SStream_concat(O, "lock|");
 #endif
-					break;
-				case 0xf2:	// repne
-					opcode = MCInst_getOpcode(MI);
+			break;
+		case 0xf2:	// repne
+			opcode = MCInst_getOpcode(MI);
 #ifndef CAPSTONE_DIET	// only care about memonic in standard (non-diet) mode
-					if (valid_rep(MI->csh, opcode)) {
-						prefix[c] = MI->x86_prefix[i];
-						c++;
-						SStream_concat(O, "repne|");
-					} else {
-						// invalid prefix
-						MI->x86_prefix[i] = 0;
+			if (valid_rep(MI->csh, opcode)) {
+				SStream_concat(O, "repne|");
+			} else {
+				// invalid prefix
+				MI->x86_prefix[0] = 0;
 
-						// handle special cases
+				// handle special cases
 #ifndef CAPSTONE_X86_REDUCE
-						if (opcode == X86_MULPDrr) {
-							MCInst_setOpcode(MI, X86_MULSDrr);
-							SStream_concat(O, "mulsd\t");
-							return true;
-						}
+				if (opcode == X86_MULPDrr) {
+					MCInst_setOpcode(MI, X86_MULSDrr);
+					SStream_concat(O, "mulsd\t");
+					return true;
+				}
 #endif
-					}
-#else	// diet mode -> only patch opcode in special cases
-					if (!valid_rep(MI->csh, opcode)) {
-						MI->x86_prefix[i] = 0;
-					} else {
-						prefix[c] = MI->x86_prefix[i];
-						c++;
-					}
-#ifndef CAPSTONE_X86_REDUCE
-					// handle special cases
-					if (opcode == X86_MULPDrr) {
-						MCInst_setOpcode(MI, X86_MULSDrr);
-					}
-#endif
-#endif
-					break;
-
-				case 0xf3:
-#ifndef CAPSTONE_DIET	// only care about memonic in standard (non-diet) mode
-					opcode = MCInst_getOpcode(MI);
-					if (valid_rep(MI->csh, opcode)) {
-						prefix[c] = MI->x86_prefix[i];
-						c++;
-						SStream_concat(O, "rep|");
-					} else {
-						// invalid prefix
-						MI->x86_prefix[i] = 0;
-
-						// handle special cases
-#ifndef CAPSTONE_X86_REDUCE
-						if (opcode == X86_MULPDrr) {
-							MCInst_setOpcode(MI, X86_MULSSrr);
-							SStream_concat(O, "mulss\t");
-							return true;
-						}
-#endif
-					}
-#else	// diet mode -> only patch opcode in special cases
-					if (!valid_rep(MI->csh, opcode)) {
-						MI->x86_prefix[i] = 0;
-					} else {
-						prefix[c] = MI->x86_prefix[i];
-						c++;
-					}
-#ifndef CAPSTONE_X86_REDUCE
-					// handle special cases
-					if (opcode == X86_MULPDrr) {
-						MCInst_setOpcode(MI, X86_MULSSrr);
-					}
-#endif
-#endif
-					break;
 			}
-		}
+#else	// diet mode -> only patch opcode in special cases
+			if (!valid_rep(MI->csh, opcode)) {
+				MI->x86_prefix[0] = 0;
+			}
+#ifndef CAPSTONE_X86_REDUCE
+			// handle special cases
+			if (opcode == X86_MULPDrr) {
+				MCInst_setOpcode(MI, X86_MULSDrr);
+			}
+#endif
+#endif
+			break;
 
-		// copy normalized prefix[] back to x86.prefix[]
-		memcpy(MI->flat_insn.x86.prefix, prefix, ARR_SIZE(MI->flat_insn.x86.prefix));
+		case 0xf3:
+#ifndef CAPSTONE_DIET	// only care about memonic in standard (non-diet) mode
+			opcode = MCInst_getOpcode(MI);
+			if (valid_rep(MI->csh, opcode)) {
+				SStream_concat(O, "rep|");
+			} else {
+				// invalid prefix
+				MI->x86_prefix[0] = 0;
+
+				// handle special cases
+#ifndef CAPSTONE_X86_REDUCE
+				if (opcode == X86_MULPDrr) {
+					MCInst_setOpcode(MI, X86_MULSSrr);
+					SStream_concat(O, "mulss\t");
+					return true;
+				}
+#endif
+			}
+#else	// diet mode -> only patch opcode in special cases
+			if (!valid_rep(MI->csh, opcode)) {
+				MI->x86_prefix[0] = 0;
+			}
+#ifndef CAPSTONE_X86_REDUCE
+			// handle special cases
+			if (opcode == X86_MULPDrr) {
+				MCInst_setOpcode(MI, X86_MULSSrr);
+			}
+#endif
+#endif
+			break;
 	}
+
+	// copy normalized prefix[] back to x86.prefix[]
+	if (MI->csh->detail)
+		memcpy(MI->flat_insn.x86.prefix, MI->x86_prefix, ARR_SIZE(MI->x86_prefix));
 
 	return false;
 }
