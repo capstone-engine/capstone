@@ -49,6 +49,16 @@ AR_EXT = lib
 endif
 endif
 
+ifeq ($(CAPSTONE_STATIC),yes)
+ifeq ($(IS_MINGW),1)
+ARCHIVE = $(LIBDIR)/$(LIBNAME).$(AR_EXT)
+else ifeq ($(IS_CYGWIN),1)
+ARCHIVE = $(LIBDIR)/$(LIBNAME).$(AR_EXT)
+else
+ARCHIVE = $(LIBDIR)/lib$(LIBNAME).$(AR_EXT)
+endif
+endif
+
 .PHONY: all clean
 
 SOURCES = test.c test_detail.c test_skipdata.c
@@ -83,7 +93,7 @@ BINARY = $(addprefix $(TESTDIR)/,$(SOURCES:.c=$(BIN_EXT)))
 all: $(BINARY)
 
 clean:
-	rm -rf $(OBJS) $(BINARY) $(TESTDIR)/*.exe $(TESTDIR)/*.static $(OBJDIR)/lib$(LIBNAME).*
+	rm -rf $(OBJS) $(BINARY) $(TESTDIR)/*.exe $(TESTDIR)/*.static $(OBJDIR)/lib$(LIBNAME).* $(OBJDIR)/$(LIBNAME).*
 
 $(BINARY): $(OBJS)
 
@@ -91,11 +101,11 @@ $(TESTDIR)/%$(BIN_EXT): $(OBJDIR)/%.o
 	@mkdir -p $(@D)
 ifeq ($(V),0)
 ifeq ($(CAPSTONE_SHARED),yes)
-	$(call log,CCLD,$(notdir $@))
+	$(call log,LINK,$(notdir $@))
 	@$(link-dynamic)
 endif
 ifeq ($(CAPSTONE_STATIC),yes)
-	$(call log,CCLD,$(notdir $(call staticname,$@)))
+	$(call log,LINK,$(notdir $(call staticname,$@)))
 	@$(link-static)
 endif
 else
@@ -123,7 +133,7 @@ endef
 
 
 define link-static
-	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall $(LIBDIR)/lib$(LIBNAME).$(AR_EXT) -o $(call staticname,$@)
+	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall $(ARCHIVE) -o $(call staticname,$@)
 endef
 
 

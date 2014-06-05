@@ -16,8 +16,15 @@ extern "C" {
 #include "platform.h"
 
 #ifdef _MSC_VER
-#pragma warning(disable:4201)
-#pragma warning(disable:4100)
+    #pragma warning(disable:4201)
+    #pragma warning(disable:4100)
+    #ifdef CAPSTONE_SHARED
+        #define CAPSTONE_EXPORT __declspec(dllexport)
+    #else    // defined(CAPSTONE_STATIC)
+        #define CAPSTONE_EXPORT
+    #endif
+#else
+    #define CAPSTONE_EXPORT
 #endif
 
 // Capstone API version
@@ -254,6 +261,7 @@ typedef enum cs_err {
  NOTE: if you only care about returned value, but not major and minor values,
  set both @major & @minor arguments to NULL.
 */
+CAPSTONE_EXPORT
 unsigned int cs_version(int *major, int *minor);
 
 
@@ -270,6 +278,7 @@ unsigned int cs_version(int *major, int *minor);
 
  @return True if this library supports the given arch, or in 'diet' mode.
 */
+CAPSTONE_EXPORT
 bool cs_support(int query);
 
 /*
@@ -282,6 +291,7 @@ bool cs_support(int query);
  @return CS_ERR_OK on success, or other value on failure (refer to cs_err enum
  for detailed error).
 */
+CAPSTONE_EXPORT
 cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle);
 
 /*
@@ -298,6 +308,7 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle);
  @return CS_ERR_OK on success, or other value on failure (refer to cs_err enum
  for detailed error).
 */
+CAPSTONE_EXPORT
 cs_err cs_close(csh *handle);
 
 /*
@@ -314,6 +325,7 @@ cs_err cs_close(csh *handle);
  so that cs_option(handle, CS_OPT_MEM, value) can (i.e must) be called
  even before cs_open()
 */
+CAPSTONE_EXPORT
 cs_err cs_option(csh handle, cs_opt_type type, size_t value);
 
 /*
@@ -324,6 +336,7 @@ cs_err cs_option(csh handle, cs_opt_type type, size_t value);
 
  @return: error code of cs_err enum type (CS_ERR_*, see above)
 */
+CAPSTONE_EXPORT
 cs_err cs_errno(csh handle);
 
 
@@ -335,6 +348,7 @@ cs_err cs_errno(csh handle);
  @return: returns a pointer to a string that describes the error code
     passed in the argument @code
 */
+CAPSTONE_EXPORT
 const char *cs_strerror(cs_err code);
 
 /*
@@ -358,6 +372,7 @@ const char *cs_strerror(cs_err code);
 
  On failure, call cs_errno() for error code.
 */
+CAPSTONE_EXPORT
 size_t cs_disasm_ex(csh handle,
 		const uint8_t *code, size_t code_size,
 		uint64_t address,
@@ -370,6 +385,7 @@ size_t cs_disasm_ex(csh handle,
  @insn: pointer returned by @insn argument in cs_disasm_ex()
  @count: number of cs_insn structures returned by cs_disasm_ex()
 */
+CAPSTONE_EXPORT
 void cs_free(cs_insn *insn, size_t count);
 
 /*
@@ -384,6 +400,7 @@ void cs_free(cs_insn *insn, size_t count);
  @reg: register id
  @return: string name of the register, or NULL if @reg_id is invalid.
 */
+CAPSTONE_EXPORT
 const char *cs_reg_name(csh handle, unsigned int reg_id);
 
 /*
@@ -398,6 +415,7 @@ const char *cs_reg_name(csh handle, unsigned int reg_id);
 
  @return: string name of the instruction, or NULL if @insn_id is invalid.
 */
+CAPSTONE_EXPORT
 const char *cs_insn_name(csh handle, unsigned int insn_id);
 
 /*
@@ -416,6 +434,7 @@ const char *cs_insn_name(csh handle, unsigned int insn_id);
 
  @return: true if this instruction indeed belongs to aboved group, or false otherwise.
 */
+CAPSTONE_EXPORT
 bool cs_insn_group(csh handle, cs_insn *insn, unsigned int group_id);
 
 /*
@@ -433,6 +452,7 @@ bool cs_insn_group(csh handle, cs_insn *insn, unsigned int group_id);
 
  @return: true if this instruction indeed implicitly used aboved register, or false otherwise.
 */
+CAPSTONE_EXPORT
 bool cs_reg_read(csh handle, cs_insn *insn, unsigned int reg_id);
 
 /*
@@ -450,6 +470,7 @@ bool cs_reg_read(csh handle, cs_insn *insn, unsigned int reg_id);
 
  @return: true if this instruction indeed implicitly modified aboved register, or false otherwise.
 */
+CAPSTONE_EXPORT
 bool cs_reg_write(csh handle, cs_insn *insn, unsigned int reg_id);
 
 /*
@@ -465,6 +486,7 @@ bool cs_reg_write(csh handle, cs_insn *insn, unsigned int reg_id);
  @return: number of operands of given type @op_type in instruction @insn,
  or -1 on failure.
 */
+CAPSTONE_EXPORT
 int cs_op_count(csh handle, cs_insn *insn, unsigned int op_type);
 
 /*
@@ -483,6 +505,7 @@ int cs_op_count(csh handle, cs_insn *insn, unsigned int op_type);
  @return: index of operand of given type @op_type in <arch>.operands[] array
  in instruction @insn, or -1 on failure.
 */
+CAPSTONE_EXPORT
 int cs_op_index(csh handle, cs_insn *insn, unsigned int op_type,
 		unsigned int position);
 

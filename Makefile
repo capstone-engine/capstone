@@ -275,11 +275,25 @@ endif
 endif
 
 ifeq ($(CAPSTONE_SHARED),yes)
+ifeq ($(IS_MINGW),1)
+LIBRARY = $(BLDIR)/$(LIBNAME).$(EXT)
+else ifeq ($(IS_CYGWIN),1)
+LIBRARY = $(BLDIR)/$(LIBNAME).$(EXT)
+else	# *nix
 LIBRARY = $(BLDIR)/lib$(LIBNAME).$(EXT)
 endif
+endif
+
 ifeq ($(CAPSTONE_STATIC),yes)
+ifeq ($(IS_MINGW),1)
+ARCHIVE = $(BLDIR)/$(LIBNAME).$(AR_EXT)
+else ifeq ($(IS_CYGWIN),1)
+ARCHIVE = $(BLDIR)/$(LIBNAME).$(AR_EXT)
+else
 ARCHIVE = $(BLDIR)/lib$(LIBNAME).$(AR_EXT)
 endif
+endif
+
 PKGCFGF = $(BLDIR)/$(LIBNAME).pc
 
 .PHONY: all clean install uninstall dist
@@ -291,13 +305,13 @@ else
 	cd tests && $(MAKE) BUILDDIR=$(BLDIR)
 endif
 ifeq ($(CAPSTONE_SHARED),yes)
-	$(INSTALL_DATA) $(BLDIR)/lib$(LIBNAME).$(EXT) $(BLDIR)/tests/
+	$(INSTALL_DATA) $(LIBRARY) $(BLDIR)/tests/
 endif
 
 ifeq ($(CAPSTONE_SHARED),yes)
 $(LIBRARY): $(LIBOBJ)
 ifeq ($(V),0)
-	$(call log,CCLD,$(@:$(BLDIR)/%=%))
+	$(call log,LINK,$(@:$(BLDIR)/%=%))
 	@$(create-library)
 else
 	$(create-library)
@@ -339,7 +353,7 @@ install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 ifeq ($(CAPSTONE_SHARED),yes)
 	# remove potential broken old libs
 	rm -f $(LIBDIR)/lib$(LIBNAME).*
-	$(INSTALL_LIB) $(BLDIR)/lib$(LIBNAME).$(EXT) $(LIBDIR)
+	$(INSTALL_LIB) $(LIBRARY) $(LIBDIR)
 ifneq ($(VERSION_EXT),)
 	cd $(LIBDIR) && \
 	mv lib$(LIBNAME).$(EXT) lib$(LIBNAME).$(VERSION_EXT) && \
@@ -347,7 +361,7 @@ ifneq ($(VERSION_EXT),)
 endif
 endif
 ifeq ($(CAPSTONE_STATIC),yes)
-	$(INSTALL_DATA) $(BLDIR)/lib$(LIBNAME).$(AR_EXT) $(LIBDIR)
+	$(INSTALL_DATA) $(ARCHIVE) $(LIBDIR)
 endif
 	mkdir -p $(INCDIR)/$(LIBNAME)
 	$(INSTALL_DATA) include/*.h $(INCDIR)/$(LIBNAME)
@@ -361,7 +375,7 @@ uninstall:
 
 clean:
 	rm -f $(LIBOBJ)
-	rm -f $(BLDIR)/lib$(LIBNAME).*
+	rm -f $(BLDIR)/lib$(LIBNAME).* $(BLDIR)/$(LIBNAME).*
 	rm -f $(PKGCFGF)
 	cd tests && $(MAKE) clean
 	rm -f $(BLDIR)/tests/lib$(LIBNAME).$(EXT)

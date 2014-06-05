@@ -228,8 +228,11 @@ static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 
 static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 {
-	// DI accesses are always ES-based.
-	SStream_concat0(O, "es:[");
+	// DI accesses are always ES-based on non-64bit mode
+	if (MI->csh->mode != CS_MODE_64)
+		SStream_concat(O, "es:[");
+	else
+		SStream_concat(O, "[");
 	printOperand(MI, Op, O);
 	SStream_concat0(O, "]");
 }

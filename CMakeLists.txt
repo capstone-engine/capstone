@@ -1,12 +1,17 @@
 cmake_minimum_required(VERSION 2.6)
 project(capstone)
 
-# Compile-time options
-# Modify the following options to customize Capstone engine
+set(VERSION_MAJOR 2)
+set(VERSION_MINOR 2)
+set(VERSION_PATCH 0)
 
+# to configure the options specify them in in the command line or change them in the cmake UI.
+# Don't edit the makefile!
+option(BUILD_STATIC "Build static library" ON)
+option(BUILD_SHARED "Build shared library" ON)
 option(BUILD_DIET "Build diet library" OFF)
 option(BUILD_TESTS "Build tests" ON)
-option(USE_SYS_DYN_MEM "Use default memory allocation functions" ON)
+option(USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 
 option(ARM_SUPPORT "ARM support" ON)
 option(ARM64_SUPPORT "ARM64 support" ON)
@@ -15,19 +20,22 @@ option(PPC_SUPPORT "PowerPC support" ON)
 option(SPARC_SUPPORT "Sparc support" ON)
 option(SYSZ_SUPPORT "SystemZ support" ON)
 option(XCORE_SUPPORT "XCore support" ON)
-option(X86_SUPPORT "X86 support" ON)
-option(X86_REDUCE "X86 with reduce instruction sets to minimize library" OFF)
-# End of compile-time option
-# DO NOT modify anything below
+option(X86_SUPPORT "x86 support" ON)
+option(X86_REDUCE "x86 with reduce instruction sets to minimize library" OFF)
 
-set(VERSION_MAJOR 2)
-set(VERSION_MINOR 1)
-set(VERSION_PATCH 2)
+if (BUILD_DIET)
+    add_definitions(-DCAPSTONE_DIET)
+endif ()
 
-if (USE_SYS_DYN_MEM)
+if (USE_DEFAULT_ALLOC)
     add_definitions(-DCAPSTONE_USE_SYS_DYN_MEM)
 endif ()
 
+if (X86_REDUCE)
+    add_definitions(-DCAPSTONE_X86_REDUCE)
+endif ()
+
+## sources
 set(SOURCES
     cs.c
     MCInst.c
@@ -39,6 +47,7 @@ set(SOURCES
 
 set(TEST_SOURCES test.c test_detail.c test_skipdata.c)
 
+## architecture support
 if (ARM_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_ARM)
     set(SOURCES
@@ -90,7 +99,6 @@ endif ()
 
 if (X86_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_X86)
-if (BUILD_DIET)
     set(SOURCES
         ${SOURCES}
         arch/X86/X86Disassembler.c
@@ -99,17 +107,9 @@ if (BUILD_DIET)
         arch/X86/X86Mapping.c
         arch/X86/X86Module.c
         )
-else ()
-    set(SOURCES
-        ${SOURCES}
-        arch/X86/X86ATTInstPrinter.c
-        arch/X86/X86Disassembler.c
-        arch/X86/X86DisassemblerDecoder.c
-        arch/X86/X86IntelInstPrinter.c
-        arch/X86/X86Mapping.c
-        arch/X86/X86Module.c
-        )
-endif ()
+    if (NOT BUILD_DIET)
+        set(SOURCES ${SOURCES} arch/X86/X86ATTInstPrinter.c)
+    endif ()
     set(TEST_SOURCES ${TEST_SOURCES} test_x86.c)
 endif ()
 
@@ -152,35 +152,54 @@ endif ()
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
-if (BUILD_DIET)
-    add_definitions(-DCAPSTONE_DIET)
+## properties
+# version info
+set_property(GLOBAL PROPERTY VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
+set_property(GLOBAL PROPERTY SOVERSION SOVERSION ${VERSION_MAJOR})
+
+## targets
+if (BUILD_STATIC)
+    add_library(capstone-static STATIC ${SOURCES})
+    set_property(TARGET capstone-static PROPERTY OUTPUT_NAME capstone)
+    set_property(TARGET capstone-static PROPERTY PREFIX lib)
+    set(default-target capstone-static)
 endif ()
 
-if (X86_REDUCE)
-    add_definitions(-DCAPSTONE_X86_REDUCE)
+if (BUILD_SHARED)
+    add_library(capstone-shared SHARED ${SOURCES})
+    set_property(TARGET capstone-shared PROPERTY OUTPUT_NAME capstone)
+    set_property(TARGET capstone-shared PROPERTY COMPILE_FLAGS -DCAPSTONE_SHARED)
+
+    if(NOT DEFINED default-target)      # honor `capstone-static` for tests first.
+	set(default-target capstone-shared)
+	add_definitions(-DCAPSTONE_SHARED)
+    endif ()
 endif ()
-
-add_library(libcapstone_static STATIC ${SOURCES})
-add_library(libcapstone SHARED ${SOURCES})
-
-set_target_properties(libcapstone PROPERTIES
-                      VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
-                      SOVERSION ${VERSION_MAJOR})
 
 if (BUILD_TESTS)
     foreach (TSRC ${TEST_SOURCES})
-        STRING(REGEX REPLACE ".c$" "" TBIN ${TSRC})
-        add_executable(${TBIN} "tests/${TSRC}")
-        target_link_libraries(${TBIN} libcapstone_static)
+	STRING(REGEX REPLACE ".c$" "" TBIN ${TSRC})
+	add_executable(${TBIN} "tests/${TSRC}")
+	target_link_libraries(${TBIN} ${default-target})
     endforeach ()
 endif ()
 
+## installation
 set(INCLUDES arm64.h  arm.h  capstone.h  mips.h  ppc.h  x86.h sparc.h systemz.h xcore.h)
 foreach (INC ${INCLUDES})
     install(FILES "include/${INC}" DESTINATION include/capstone)
 endforeach ()
 
-install(TARGETS libcapstone
-        RUNTIME DESTINATION bin
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib)
+if (BUILD_STATIC)
+    install(TARGETS capstone-static
+            RUNTIME DESTINATION bin
+            LIBRARY DESTINATION lib
+            ARCHIVE DESTINATION lib)
+endif ()
+
+if (BUILD_SHARED)
+    install(TARGETS capstone-shared
+            RUNTIME DESTINATION bin
+            LIBRARY DESTINATION lib
+            ARCHIVE DESTINATION lib)
+endif ()

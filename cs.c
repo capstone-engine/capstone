@@ -87,6 +87,7 @@ cs_free_t cs_mem_free = NULL;
 cs_vsnprintf_t cs_vsnprintf = NULL;
 #endif
 
+CAPSTONE_EXPORT
 unsigned int cs_version(int *major, int *minor)
 {
 	archs_enable();
@@ -99,6 +100,7 @@ unsigned int cs_version(int *major, int *minor)
 	return (CS_API_MAJOR << 8) + CS_API_MINOR;
 }
 
+CAPSTONE_EXPORT
 bool cs_support(int query)
 {
 	archs_enable();
@@ -132,6 +134,7 @@ bool cs_support(int query)
 	return false;
 }
 
+CAPSTONE_EXPORT
 cs_err cs_errno(csh handle)
 {
 	struct cs_struct *ud;
@@ -143,6 +146,7 @@ cs_err cs_errno(csh handle)
 	return ud->errnum;
 }
 
+CAPSTONE_EXPORT
 const char *cs_strerror(cs_err code)
 {
 	switch(code) {
@@ -175,6 +179,7 @@ const char *cs_strerror(cs_err code)
 	}
 }
 
+CAPSTONE_EXPORT
 cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 {
 	cs_err err;
@@ -219,6 +224,7 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 	}
 }
 
+CAPSTONE_EXPORT
 cs_err cs_close(csh *handle)
 {
 	struct cs_struct *ud;
@@ -345,6 +351,7 @@ static uint8_t skipdata_size(cs_struct *handle)
 	}
 }
 
+CAPSTONE_EXPORT
 cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 {
 	struct cs_struct *handle;
@@ -415,6 +422,7 @@ static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
 
 // dynamicly allocate memory to contain disasm insn
 // NOTE: caller must free() the allocated memory itself to avoid memory leaking
+CAPSTONE_EXPORT
 size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
 {
 	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
@@ -569,6 +577,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 	return c;
 }
 
+CAPSTONE_EXPORT
 void cs_free(cs_insn *insn, size_t count)
 {
 	size_t i;
@@ -582,6 +591,7 @@ void cs_free(cs_insn *insn, size_t count)
 }
 
 // return friendly name of regiser in a string
+CAPSTONE_EXPORT
 const char *cs_reg_name(csh ud, unsigned int reg)
 {
 	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
@@ -593,6 +603,7 @@ const char *cs_reg_name(csh ud, unsigned int reg)
 	return handle->reg_name(ud, reg);
 }
 
+CAPSTONE_EXPORT
 const char *cs_insn_name(csh ud, unsigned int insn)
 {
 	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
@@ -616,6 +627,7 @@ static bool arr_exist(unsigned char *arr, unsigned char max, unsigned int id)
 	return false;
 }
 
+CAPSTONE_EXPORT
 bool cs_insn_group(csh ud, cs_insn *insn, unsigned int group_id)
 {
 	struct cs_struct *handle;
@@ -642,6 +654,7 @@ bool cs_insn_group(csh ud, cs_insn *insn, unsigned int group_id)
 	return arr_exist(insn->detail->groups, insn->detail->groups_count, group_id);
 }
 
+CAPSTONE_EXPORT
 bool cs_reg_read(csh ud, cs_insn *insn, unsigned int reg_id)
 {
 	struct cs_struct *handle;
@@ -668,6 +681,7 @@ bool cs_reg_read(csh ud, cs_insn *insn, unsigned int reg_id)
 	return arr_exist(insn->detail->regs_read, insn->detail->regs_read_count, reg_id);
 }
 
+CAPSTONE_EXPORT
 bool cs_reg_write(csh ud, cs_insn *insn, unsigned int reg_id)
 {
 	struct cs_struct *handle;
@@ -694,6 +708,7 @@ bool cs_reg_write(csh ud, cs_insn *insn, unsigned int reg_id)
 	return arr_exist(insn->detail->regs_write, insn->detail->regs_write_count, reg_id);
 }
 
+CAPSTONE_EXPORT
 int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
 {
 	struct cs_struct *handle;
@@ -769,6 +784,7 @@ int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
 	return count;
 }
 
+CAPSTONE_EXPORT
 int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
 		unsigned int post)
 {
