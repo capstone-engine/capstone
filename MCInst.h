@@ -81,9 +81,9 @@ MCOperand *MCOperand_CreateImm(int64_t Val);
 
 MCOperand *MCOperand_CreateFPImm(double Val);
 
-MCOperand *MCOperand_CreateReg0(MCInst *inst, unsigned Reg);
+void MCOperand_CreateReg0(MCInst *inst, unsigned Reg);
 
-MCOperand *MCOperand_CreateImm0(MCInst *inst, int64_t Val);
+void MCOperand_CreateImm0(MCInst *inst, int64_t Val);
 
 // NOTE: this structure is a flatten version of cs_insn struct
 // Detail information of disassembled instruction
@@ -141,7 +141,7 @@ typedef struct cs_insn_flat {
 /// instruction.
 struct MCInst {
 	unsigned Opcode;
-	MCOperand Operands[32];
+	MCOperand Operands[34];
 	unsigned size;	// number of operands
 	cs_insn_flat flat_insn;	// insn to be exposed to public
 	unsigned OpcodePub;
@@ -176,8 +176,6 @@ MCOperand *MCInst_getOperand(MCInst *inst, unsigned i);
 unsigned MCInst_getNumOperands(const MCInst *inst);
 
 int MCInst_addOperand(MCInst *inst, MCOperand *Op);
-
-int MCInst_addOperand0(MCInst *inst, MCOperand *Op);
 
 // This addOperand2 function doesnt free Op
 int MCInst_addOperand2(MCInst *inst, MCOperand *Op);

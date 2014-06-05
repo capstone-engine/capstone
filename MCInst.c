@@ -80,25 +80,8 @@ unsigned MCInst_getNumOperands(const MCInst *inst)
 // NOTE: this will free @Op argument
 int MCInst_addOperand(MCInst *inst, MCOperand *Op)
 {
-	if (inst->size == ARR_SIZE(inst->Operands))
-		// full
-		return -1;
-
 	inst->Operands[inst->size] = *Op;
 	cs_mem_free(Op);
-
-	inst->size++;
-
-	return 0;
-}
-
-int MCInst_addOperand0(MCInst *inst, MCOperand *Op)
-{
-	if (inst->size == ARR_SIZE(inst->Operands))
-		// full
-		return -1;
-
-	inst->Operands[inst->size] = *Op;
 
 	inst->size++;
 
@@ -108,10 +91,6 @@ int MCInst_addOperand0(MCInst *inst, MCOperand *Op)
 // This addOperand2 function doesnt free Op
 int MCInst_addOperand2(MCInst *inst, MCOperand *Op)
 {
-	if (inst->size == ARR_SIZE(inst->Operands))
-		// full
-		return -1;
-
 	inst->Operands[inst->size] = *Op;
 
 	inst->size++;
@@ -187,6 +166,7 @@ MCOperand *MCOperand_CreateReg(unsigned Reg)
 	return op;
 }
 
+/*
 MCOperand *MCOperand_CreateReg0(MCInst *mcInst, unsigned Reg)
 {
 	MCOperand *op = &(mcInst->Operands[MCINST_CACHE]);
@@ -195,6 +175,16 @@ MCOperand *MCOperand_CreateReg0(MCInst *mcInst, unsigned Reg)
 	op->RegVal = Reg;
 
 	return op;
+}
+*/
+
+void MCOperand_CreateReg0(MCInst *mcInst, unsigned Reg)
+{
+	MCOperand *op = &(mcInst->Operands[mcInst->size]);
+	mcInst->size++;
+
+	op->Kind = kRegister;
+	op->RegVal = Reg;
 }
 
 MCOperand *MCOperand_CreateImm(int64_t Val)
@@ -207,6 +197,7 @@ MCOperand *MCOperand_CreateImm(int64_t Val)
 	return op;
 }
 
+/*
 MCOperand *MCOperand_CreateImm0(MCInst *mcInst, int64_t Val)
 {
 	MCOperand *op = &(mcInst->Operands[MCINST_CACHE]);
@@ -215,6 +206,16 @@ MCOperand *MCOperand_CreateImm0(MCInst *mcInst, int64_t Val)
 	op->ImmVal = Val;
 
 	return op;
+}
+*/
+
+void MCOperand_CreateImm0(MCInst *mcInst, int64_t Val)
+{
+	MCOperand *op = &(mcInst->Operands[mcInst->size]);
+	mcInst->size++;
+
+	op->Kind = kImmediate;
+	op->ImmVal = Val;
 }
 
 MCOperand *MCOperand_CreateFPImm(double Val)
