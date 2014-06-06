@@ -446,8 +446,6 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 
 	handle->errnum = CS_ERR_OK;
 
-	memset(insn_cache, 0, sizeof(insn_cache));
-
 	// save the original offset for SKIPDATA
 	offset_org = offset;
 

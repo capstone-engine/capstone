@@ -154,7 +154,6 @@ struct MCInst {
 	// A prefix byte gets value 0 when irrelevant.
 	// This is copied from cs_x86 struct
 	uint8_t x86_prefix[4];
-	bool x86_lock_rep;	// does this X86 insn contain LOCK/REP prefix?
 };
 
 void MCInst_Init(MCInst *inst);
