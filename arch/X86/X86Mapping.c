@@ -41909,6 +41909,7 @@ static bool valid_rep(cs_struct *h, unsigned int opcode)
 bool X86_lockrep(MCInst *MI, SStream *O)
 {
 	unsigned int opcode;
+	bool res = false;
 
 	switch(MI->x86_prefix[0]) {
 		default:
@@ -41932,7 +41933,7 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 				if (opcode == X86_MULPDrr) {
 					MCInst_setOpcode(MI, X86_MULSDrr);
 					SStream_concat(O, "mulsd\t");
-					return true;
+					res = true;
 				}
 #endif
 			}
@@ -41963,7 +41964,7 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 				if (opcode == X86_MULPDrr) {
 					MCInst_setOpcode(MI, X86_MULSSrr);
 					SStream_concat(O, "mulss\t");
-					return true;
+					res = true;
 				}
 #endif
 			}
@@ -41985,7 +41986,7 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 	if (MI->csh->detail)
 		memcpy(MI->flat_insn.x86.prefix, MI->x86_prefix, ARR_SIZE(MI->x86_prefix));
 
-	return false;
+	return res;
 }
 
 #endif
