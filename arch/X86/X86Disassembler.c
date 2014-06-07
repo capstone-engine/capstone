@@ -40,12 +40,6 @@
 #include "X86GenInstrInfo.inc"
 #endif
 
-struct reader_info {
-	const uint8_t *code;
-	uint64_t size;
-	uint64_t offset;
-};
-
 // Fill-ins to make the compiler happy.  These constants are never actually
 //   assigned; they are just filler to make an automatically-generated switch
 //   statement work.
@@ -654,10 +648,8 @@ static bool translateInstruction(MCInst *mcInst, InternalInstruction *insn)
 	return false;
 }
 
-static int reader(const void* arg, uint8_t* byte, uint64_t address)
+static int reader(const struct reader_info *info, uint8_t *byte, uint64_t address)
 {
-	struct reader_info *info = (void *)arg;
-
 	if (address - info->offset >= info->size)
 		// out of buffer range
 		return -1;

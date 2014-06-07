@@ -517,6 +517,12 @@ typedef enum {
 
 typedef uint8_t BOOL;
 
+struct reader_info {
+	const uint8_t *code;
+	uint64_t size;
+	uint64_t offset;
+};
+
 /*
  * byteReader_t - Type for the byte reader that the consumer must provide to
  *   the decoder.  Reads a single byte from the instruction's address space.
@@ -528,7 +534,7 @@ typedef uint8_t BOOL;
  *                  be read from.
  * @return        - -1 if the byte cannot be read for any reason; 0 otherwise.
  */
-typedef int (*byteReader_t)(const void* arg, uint8_t* byte, uint64_t address);
+typedef int (*byteReader_t)(const struct reader_info *arg, uint8_t* byte, uint64_t address);
 
 /*
  * dlog_t - Type for the logging function that the consumer can provide to
@@ -544,6 +550,7 @@ typedef void (*dlog_t)(void* arg, const char *log);
  * The x86 internal instruction, which is produced by the decoder.
  */
 typedef struct InternalInstruction {
+  // from here, all members must be initialized to ZERO to work properly
   uint8_t operandSize;
   /* 1 if the prefix byte corresponding to the entry is present; 0 if not */
   uint8_t prefixPresent[0x100];
@@ -568,6 +575,9 @@ typedef struct InternalInstruction {
   SIBIndex                      sibIndex;
   uint8_t                       sibScale;
   SIBBase                       sibBase;
+  uint8_t                       numImmediatesConsumed;
+
+  // end-of-zero-members
 
   /* Reader interface (C) */
   byteReader_t reader;
@@ -648,7 +658,6 @@ typedef struct InternalInstruction {
   uint8_t                       firstByte;     // save the first byte in stream
 
   /* Immediates.  There can be two in some cases */
-  uint8_t                       numImmediatesConsumed;
   uint8_t                       numImmediatesTranslated;
   uint64_t                      immediates[2];
 

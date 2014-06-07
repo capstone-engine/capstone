@@ -312,8 +312,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 	} else
 		insn->op_str[0] = '\0';
 
-	strncpy(insn->mnemonic, buffer, sizeof(insn->mnemonic) - 1);
-	insn->mnemonic[sizeof(insn->mnemonic) - 1] = '\0';
+	strcpy(insn->mnemonic, buffer);
 #endif
 }
 

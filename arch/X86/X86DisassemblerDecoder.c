@@ -276,7 +276,7 @@ static int consumeByte(struct InternalInstruction* insn, uint8_t* byte)
  * @param byte  - See consumeByte().
  * @return      - See consumeByte().
  */
-static int lookAtByte(struct InternalInstruction* insn, uint8_t* byte)
+static int lookAtByte(struct InternalInstruction *insn, uint8_t *byte)
 {
 	return insn->reader(insn->readerArg, byte, insn->readerCursor);
 }
@@ -868,7 +868,7 @@ static int getIDWithAttrMask(uint16_t* instructionID,
 
 	hasModRMExtension = modRMRequired(insn->opcodeType,
 			instructionClass,
-			insn->opcode) == TRUE;
+			insn->opcode);
 
 	if (hasModRMExtension) {
 		if (readModRM(insn))
@@ -1924,7 +1924,6 @@ int decodeInstruction(struct InternalInstruction* insn,
 	insn->startLocation = startLoc;
 	insn->readerCursor = startLoc;
 	insn->mode = mode;
-	insn->numImmediatesConsumed = 0;
 
 	if (readPrefixes(insn)       ||
 			readOpcode(insn)         ||
