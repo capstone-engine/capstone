@@ -468,6 +468,8 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 				mci.flat_insn.size = insn_size;
 				// allocate memory for @detail pointer
 				insn_cache[f].detail = cs_mem_calloc(1, sizeof(cs_detail));
+			} else {
+				insn_cache[f].detail = NULL;
 			}
 
 			handle->printer(&mci, &ss, handle->printer_info);
