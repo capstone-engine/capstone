@@ -322,32 +322,6 @@ CONSUME_FUNC(consumeUInt32, uint32_t)
 CONSUME_FUNC(consumeUInt64, uint64_t)
 
 /*
- * dbgprintf - Uses the logging function provided by the user to log a single
- *   message, typically without a carriage-return.
- *
- * @param insn    - The instruction containing the logging function.
- * @param format  - See printf().
- * @param ...     - See printf().
- */
-static void dbgprintf(struct InternalInstruction* insn,
-		const char* format, ...)
-{
-	char buffer[256];
-	va_list ap;
-
-	if (!insn->dlog)
-		return;
-
-	va_start(ap, format);
-	(void)cs_vsnprintf(buffer, sizeof(buffer), format, ap);
-	va_end(ap);
-
-	insn->dlog(insn->dlogArg, buffer);
-
-	return;
-}
-
-/*
  * setPrefixPresent - Marks that a particular prefix is present at a particular
  *   location.
  *
@@ -404,8 +378,6 @@ static int readPrefixes(struct InternalInstruction* insn)
 
 	BOOL hasAdSize = FALSE;
 	BOOL hasOpSize = FALSE;
-
-	dbgprintf(insn, "readPrefixes()");
 
 	while (isPrefix) {
 		prefixLocation = insn->readerCursor;
@@ -494,6 +466,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 				insn->prefixPresent[0x26] = 0;
 				insn->prefixPresent[0x64] = 0;
 				insn->prefixPresent[0x65] = 0;
+
 				setPrefixPresent(insn, byte, prefixLocation);
 				insn->prefix1 = byte;
 				break;
@@ -512,8 +485,8 @@ static int readPrefixes(struct InternalInstruction* insn)
 				break;
 		}
 
-		if (isPrefix)
-			dbgprintf(insn, "Found prefix 0x%hhx", byte);
+		//if (isPrefix)
+		//	dbgprintf(insn, "Found prefix 0x%hhx", byte);
 	}
 
 	insn->vectorExtensionType = TYPE_NO_VEX_XOP;
@@ -522,14 +495,14 @@ static int readPrefixes(struct InternalInstruction* insn)
 		uint8_t byte1, byte2;
 
 		if (consumeByte(insn, &byte1)) {
-			dbgprintf(insn, "Couldn't read second byte of EVEX prefix");
+			//dbgprintf(insn, "Couldn't read second byte of EVEX prefix");
 			return -1;
 		}
 
 		if ((insn->mode == MODE_64BIT || (byte1 & 0xc0) == 0xc0) &&
 				((~byte1 & 0xc) == 0xc)) {
 			if (lookAtByte(insn, &byte2)) {
-				dbgprintf(insn, "Couldn't read third byte of EVEX prefix");
+				//dbgprintf(insn, "Couldn't read third byte of EVEX prefix");
 				return -1;
 			}
 
@@ -546,12 +519,12 @@ static int readPrefixes(struct InternalInstruction* insn)
 				insn->vectorExtensionPrefix[1] = byte1;
 
 				if (consumeByte(insn, &insn->vectorExtensionPrefix[2])) {
-					dbgprintf(insn, "Couldn't read third byte of EVEX prefix");
+					//dbgprintf(insn, "Couldn't read third byte of EVEX prefix");
 					return -1;
 				}
 
 				if (consumeByte(insn, &insn->vectorExtensionPrefix[3])) {
-					dbgprintf(insn, "Couldn't read fourth byte of EVEX prefix");
+					//dbgprintf(insn, "Couldn't read fourth byte of EVEX prefix");
 					return -1;
 				}
 
@@ -564,9 +537,9 @@ static int readPrefixes(struct InternalInstruction* insn)
 						| (bFromEVEX2of4(insn->vectorExtensionPrefix[1]) << 0);
 				}
 
-				dbgprintf(insn, "Found EVEX prefix 0x%hhx 0x%hhx 0x%hhx 0x%hhx",
-						insn->vectorExtensionPrefix[0], insn->vectorExtensionPrefix[1],
-						insn->vectorExtensionPrefix[2], insn->vectorExtensionPrefix[3]);
+				//dbgprintf(insn, "Found EVEX prefix 0x%hhx 0x%hhx 0x%hhx 0x%hhx",
+				//		insn->vectorExtensionPrefix[0], insn->vectorExtensionPrefix[1],
+				//		insn->vectorExtensionPrefix[2], insn->vectorExtensionPrefix[3]);
 			}
 		} else {
 			// BOUND instruction
@@ -577,7 +550,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 		uint8_t byte1;
 
 		if (lookAtByte(insn, &byte1)) {
-			dbgprintf(insn, "Couldn't read second byte of VEX");
+			//dbgprintf(insn, "Couldn't read second byte of VEX");
 			return -1;
 		}
 
@@ -608,7 +581,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 		uint8_t byte1;
 
 		if (lookAtByte(insn, &byte1)) {
-			dbgprintf(insn, "Couldn't read second byte of VEX");
+			//dbgprintf(insn, "Couldn't read second byte of VEX");
 			return -1;
 		}
 
@@ -1970,8 +1943,8 @@ int decodeInstruction(struct InternalInstruction* insn,
 	// dbgprintf(insn, "Read from 0x%llx to 0x%llx: length %zu",
 	// 		startLoc, insn->readerCursor, insn->length);
 
-	if (insn->length > 15)
-		dbgprintf(insn, "Instruction exceeds 15-byte limit");
+	//if (insn->length > 15)
+	//	dbgprintf(insn, "Instruction exceeds 15-byte limit");
 
 #if 0
 	printf("\n>>> x86OperandSets = %lu\n", sizeof(x86OperandSets));

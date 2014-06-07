@@ -699,6 +699,8 @@ static void update_pub_insn(cs_insn_flat *pub, InternalInstruction *inter, uint8
 	pub->x86.sib_base = x86_map_sib_base(inter->sibBase);
 }
 
+#define offsetof(st, member) __builtin_offsetof(st, member)
+
 // Public interface for the disassembler
 bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		MCInst *instr, uint16_t *size, uint64_t address, void *_info)
@@ -713,7 +715,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	info.size = code_len;
 	info.offset = address;
 
-	memset(&insn, 0, sizeof(insn));
+	memset(&insn, 0, offsetof(InternalInstruction, reader));
 
 	if (handle->mode & CS_MODE_16)
 		ret = decodeInstruction(&insn,
