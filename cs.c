@@ -295,20 +295,34 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 	// fill in mnemonic & operands
 	// find first space or tab
 	sp = buffer;
-	for (sp = buffer; *sp; sp++) {
-		if (*sp == ' '||*sp == '\t')
-			break;
-		if (*sp == '|')
-			*sp = ' ';
+	if (mci->x86_prefix[0]) {
+		for (sp = buffer; *sp; sp++) {
+			//if (*sp == ' '||*sp == '\t')
+			if (*sp == ' ')
+				break;
+			if (*sp == '|')	// lock|rep prefix for x86
+				*sp = ' ';
+		}
+	} else {
+		for (sp = buffer; *sp; sp++) {
+			//if (*sp == ' '||*sp == '\t')
+			if (*sp == ' ')
+				break;
+		}
 	}
 
 	if (*sp) {
 		*sp = '\0';
+		//strcpy(insn->op_str, sp+1);
+		strncpy(insn->op_str, sp, sizeof(insn->op_str) - 1);
+		insn->op_str[sizeof(insn->op_str) - 1] = '\0';
+		/*
 		// find the next non-space char
 		sp++;
 		for (; ((*sp == ' ') || (*sp == '\t')); sp++);
 		strncpy(insn->op_str, sp, sizeof(insn->op_str) - 1);
 		insn->op_str[sizeof(insn->op_str) - 1] = '\0';
+		*/
 	} else
 		insn->op_str[0] = '\0';
 
