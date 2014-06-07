@@ -156,7 +156,7 @@ struct MCInst {
 	uint8_t x86_prefix[4];
 };
 
-void MCInst_Init(MCInst *inst);
+void MCInst_Init(cs_struct *handle, MCInst *inst);
 
 void MCInst_clear(MCInst *inst);
 

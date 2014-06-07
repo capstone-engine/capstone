@@ -550,7 +550,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 				   	 MCInst NewMI;
 				   	 MCOperand *NewReg;
 
-					 MCInst_Init(&NewMI);
+					 MCInst_Init(MI->csh, &NewMI);
 				   	 MCInst_setOpcode(&NewMI, Opcode);
 
 				   	 if (isStore)

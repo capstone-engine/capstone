@@ -450,7 +450,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 	offset_org = offset;
 
 	while (size > 0) {
-		MCInst_Init(&mci);
+		MCInst_Init(handle, &mci);
 		mci.csh = handle;
 
 		r = handle->disasm(ud, buffer, size, &mci, &insn_size, offset, handle->getinsn_info);

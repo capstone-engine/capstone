@@ -10,9 +10,21 @@
 
 #define MCINST_CACHE (ARR_SIZE(mcInst->Operands) - 1)
 
-void MCInst_Init(MCInst *inst)
+void MCInst_Init(cs_struct *handle, MCInst *inst)
 {
-	memset(inst, 0, sizeof(*inst));
+	switch(handle->arch) {
+		default:
+			memset(inst, 0, sizeof(*inst));
+			break;
+		case CS_ARCH_X86:
+			inst->size = 0;
+			inst->flat_insn.x86.op_count = 0;
+			if (handle->detail) {
+				memset(inst->flat_insn.x86.prefix, 0, sizeof(inst->flat_insn.x86.prefix));
+				memset(inst->flat_insn.x86.operands, 0, sizeof(inst->flat_insn.x86.operands));
+			}
+			break;
+	}
 }
 
 void MCInst_clear(MCInst *inst)
