@@ -492,10 +492,12 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 				}
 
 				total = tmp;
+				insn_cache = total + total_size - (sizeof(cs_insn) * INSN_CACHE_SIZE);
 
 				// reset f back to 0
 				f = 0;
-			}
+			} else
+				insn_cache++;
 
 			c++;
 			if (count > 0 && c == count)
@@ -504,7 +506,6 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 			buffer += insn_size;
 			size -= insn_size;
 			offset += insn_size;
-			insn_cache++;
 		} else	{
 			// encounter a broken instruction
 			// if there is no request to skip data, or remaining data is too small,
