@@ -291,11 +291,11 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 	MCOperand *SegReg = MCInst_getOperand(MI, Op+1);
 
 	if (MI->csh->detail) {
-		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_MEM;
-		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.base = X86_REG_INVALID;
-		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.index = X86_REG_INVALID;
-		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.scale = 1;
-		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.disp = 0;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.base = X86_REG_INVALID;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = X86_REG_INVALID;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = 1;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
 	}
 
 	// If this has a segment register, print it.
@@ -309,7 +309,7 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 	if (MCOperand_isImm(DispSpec)) {
 		int64_t imm = MCOperand_getImm(DispSpec);
 		if (MI->csh->detail)
-			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.disp = imm;
+			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = imm;
 		if (imm < 0) {
 			SStream_concat(O, "0x%"PRIx64, arch_masks[MI->csh->mode] & imm);
 		} else {
@@ -323,7 +323,7 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 	SStream_concat0(O, "]");
 
 	if (MI->csh->detail)
-		MI->flat_insn.x86.op_count++;
+		MI->flat_insn->detail->x86.op_count++;
 }
 
 static void printMemOffs8(MCInst *MI, unsigned OpNo, SStream *O)
@@ -374,11 +374,11 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 		reg = X86_insn_reg(MCInst_getOpcode(MI));
 		if (reg) {
 			// shift all the ops right to leave 1st slot for this new register op
-			memmove(&(MI->flat_insn.x86.operands[1]), &(MI->flat_insn.x86.operands[0]),
-					sizeof(MI->flat_insn.x86.operands[0]) * (ARR_SIZE(MI->flat_insn.x86.operands) - 1));
-			MI->flat_insn.x86.operands[0].type = X86_OP_REG;
-			MI->flat_insn.x86.operands[0].reg = reg;
-			MI->flat_insn.x86.op_count++;
+			memmove(&(MI->flat_insn->detail->x86.operands[1]), &(MI->flat_insn->detail->x86.operands[0]),
+					sizeof(MI->flat_insn->detail->x86.operands[0]) * (ARR_SIZE(MI->flat_insn->detail->x86.operands) - 1));
+			MI->flat_insn->detail->x86.operands[0].type = X86_OP_REG;
+			MI->flat_insn->detail->x86.operands[0].reg = reg;
+			MI->flat_insn->detail->x86.op_count++;
 		}
 
 	}
@@ -390,7 +390,7 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	MCOperand *Op = MCInst_getOperand(MI, OpNo);
 	if (MCOperand_isImm(Op)) {
-		int64_t imm = MCOperand_getImm(Op) + MI->insn_size + MI->address;
+		int64_t imm = MCOperand_getImm(Op) + MI->flat_insn->size + MI->address;
 		if (imm < 0) {
 			if (imm < -HEX_THRESHOLD)
 				SStream_concat(O, "-0x%"PRIx64, -imm);
@@ -407,9 +407,9 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 				SStream_concat(O, "%"PRIu64, imm);
 		}
 		if (MI->csh->detail) {
-			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_IMM;
-			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].imm = imm;
-			MI->flat_insn.x86.op_count++;
+			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
+			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = imm;
+			MI->flat_insn->detail->x86.op_count++;
 		}
 	}
 }
@@ -426,9 +426,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	if (MCOperand_isReg(Op)) {
 		printRegName(O, MCOperand_getReg(Op));
 		if (MI->csh->detail) {
-			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_REG;
-			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].reg = MCOperand_getReg(Op);
-			MI->flat_insn.x86.op_count++;
+			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_REG;
+			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].reg = MCOperand_getReg(Op);
+			MI->flat_insn->detail->x86.op_count++;
 		}
 	} else if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op);
@@ -445,9 +445,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		}
 
 		if (MI->csh->detail) {
-			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_IMM;
-			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].imm = imm;
-			MI->flat_insn.x86.op_count++;
+			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
+			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = imm;
+			MI->flat_insn->detail->x86.op_count++;
 		}
 	}
 }
@@ -485,11 +485,11 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	MCOperand *SegReg = MCInst_getOperand(MI, Op+4);
 
 	if (MI->csh->detail) {
-		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].type = X86_OP_MEM;
-		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.base = MCOperand_getReg(BaseReg);
-		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.index = MCOperand_getReg(IndexReg);
-		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.scale = (int)ScaleVal;
-		MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.disp = 0;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.base = MCOperand_getReg(BaseReg);
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = MCOperand_getReg(IndexReg);
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = (int)ScaleVal;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
 	}
 
 	// If this has a segment register, print it.
@@ -519,7 +519,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	} else {
 		int64_t DispVal = MCOperand_getImm(DispSpec);
 		if (MI->csh->detail)
-			MI->flat_insn.x86.operands[MI->flat_insn.x86.op_count].mem.disp = DispVal;
+			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = DispVal;
 		if (DispVal || (!MCOperand_getReg(IndexReg) && !MCOperand_getReg(BaseReg))) {
 			if (NeedPlus) {
 				SStream_concat0(O, " + ");
@@ -539,7 +539,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	SStream_concat0(O, "]");
 
 	if (MI->csh->detail)
-		MI->flat_insn.x86.op_count++;
+		MI->flat_insn->detail->x86.op_count++;
 }
 
 #define PRINT_ALIAS_INSTR

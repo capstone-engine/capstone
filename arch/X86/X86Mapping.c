@@ -41984,7 +41984,7 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 
 	// copy normalized prefix[] back to x86.prefix[]
 	if (MI->csh->detail)
-		memcpy(MI->flat_insn.x86.prefix, MI->x86_prefix, ARR_SIZE(MI->x86_prefix));
+		memcpy(MI->flat_insn->detail->x86.prefix, MI->x86_prefix, ARR_SIZE(MI->x86_prefix));
 
 	return res;
 }

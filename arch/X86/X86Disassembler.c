@@ -660,35 +660,35 @@ static int reader(const struct reader_info *info, uint8_t *byte, uint64_t addres
 }
 
 // copy x86 detail information from internal structure to public structure
-static void update_pub_insn(cs_insn_flat *pub, InternalInstruction *inter, uint8_t *prefixes)
+static void update_pub_insn(cs_insn *pub, InternalInstruction *inter, uint8_t *prefixes)
 {
 	prefixes[0] = inter->prefix0;
 	prefixes[1] = inter->prefix1;
 	prefixes[2] = inter->prefix2;
 	prefixes[3] = inter->prefix3;
 
-	pub->x86.segment = x86_map_segment(inter->segmentOverride);
+	pub->detail->x86.segment = x86_map_segment(inter->segmentOverride);
 
 	if (inter->vectorExtensionType > 0)
-		memcpy(pub->x86.opcode, inter->vectorExtensionPrefix, sizeof(pub->x86.opcode));
+		memcpy(pub->detail->x86.opcode, inter->vectorExtensionPrefix, sizeof(pub->detail->x86.opcode));
 	else {
-		pub->x86.opcode[0] = inter->opcode;
-		pub->x86.opcode[1] = inter->twoByteEscape;
-		pub->x86.opcode[2] = inter->threeByteEscape;
+		pub->detail->x86.opcode[0] = inter->opcode;
+		pub->detail->x86.opcode[1] = inter->twoByteEscape;
+		pub->detail->x86.opcode[2] = inter->threeByteEscape;
 	}
 
-	pub->x86.op_size = inter->operandSize;
-	pub->x86.addr_size = inter->addressSize;
-	pub->x86.disp_size = inter->displacementSize;
-	pub->x86.imm_size = inter->immediateSize;
+	pub->detail->x86.op_size = inter->operandSize;
+	pub->detail->x86.addr_size = inter->addressSize;
+	pub->detail->x86.disp_size = inter->displacementSize;
+	pub->detail->x86.imm_size = inter->immediateSize;
 
-	pub->x86.modrm = inter->orgModRM;
-	pub->x86.sib = inter->sib;
-	pub->x86.disp = inter->displacement;
+	pub->detail->x86.modrm = inter->orgModRM;
+	pub->detail->x86.sib = inter->sib;
+	pub->detail->x86.disp = inter->displacement;
 
-	pub->x86.sib_index = x86_map_sib_index(inter->sibIndex);
-	pub->x86.sib_scale = inter->sibScale;
-	pub->x86.sib_base = x86_map_sib_base(inter->sibBase);
+	pub->detail->x86.sib_index = x86_map_sib_index(inter->sibIndex);
+	pub->detail->x86.sib_scale = inter->sibScale;
+	pub->detail->x86.sib_base = x86_map_sib_base(inter->sibBase);
 }
 
 #define offsetof(st, member) __builtin_offsetof(st, member)
@@ -734,7 +734,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		result = (!translateInstruction(instr, &insn)) ?  true : false;
 		if (result) {
 			if (handle->detail)
-				update_pub_insn(&instr->flat_insn, &insn, instr->x86_prefix);
+				update_pub_insn(instr->flat_insn, &insn, instr->x86_prefix);
 			else {
 				// copy all prefixes
 				instr->x86_prefix[0] = insn.prefix0;

@@ -256,26 +256,8 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 		PostPrinter_t postprinter, const uint8_t *code)
 {
 #ifndef CAPSTONE_DIET
-	char *sp;
+	char *sp, *mnem;
 #endif
-	char *mnem;
-
-	if (handle->detail) {
-		// avoiding copy insn->detail
-		memcpy(insn, &mci->flat_insn, sizeof(*insn) - sizeof(insn->detail));
-
-		// NOTE: copy details in 2 chunks, since union is always put at address divisible by 8
-		// copy from @regs_read until @arm
-		memcpy(insn->detail, (char *)((uintptr_t)(&(mci->flat_insn)) + offsetof(cs_insn_flat, regs_read)),
-				offsetof(cs_detail, arm) - offsetof(cs_detail, regs_read));
-		// then copy from @arm until end
-		memcpy((void *)((uintptr_t)(insn->detail) + offsetof(cs_detail, arm)),
-				(char *)((uintptr_t)(&(mci->flat_insn)) + offsetof(cs_insn_flat, arm)),
-				sizeof(cs_detail) - offsetof(cs_detail, arm));
-	} else {
-		insn->address = mci->address;
-		insn->size = (uint16_t)mci->insn_size;
-	}
 
 	// fill the instruction bytes
 	memcpy(insn->bytes, code, MIN(sizeof(insn->bytes), insn->size));
@@ -468,25 +450,29 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 		MCInst_Init(handle, &mci);
 		mci.csh = handle;
 
+		// relative branches need to know the address & size of current insn
+		mci.address = offset;
+
+		if (handle->detail) {
+			// allocate memory for @detail pointer
+			insn_cache[f].detail = cs_mem_malloc(sizeof(cs_detail));
+			insn_cache[f].detail->x86.op_count = 0;
+			memset(insn_cache[f].detail->x86.prefix, 0, sizeof(insn_cache[f].detail->x86.prefix));
+			memset(insn_cache[f].detail->x86.operands, 0, sizeof(insn_cache[f].detail->x86.operands));
+		} else {
+			insn_cache[f].detail = NULL;
+		}
+
+		// save all the information for non-detailed mode
+		mci.flat_insn = &insn_cache[f];
+		mci.flat_insn->address = offset;
+
 		r = handle->disasm(ud, buffer, size, &mci, &insn_size, offset, handle->getinsn_info);
 		if (r) {
 			SStream ss;
 			SStream_Init(&ss);
 
-			// relative branches need to know the address & size of current insn
-			mci.insn_size = insn_size;
-			mci.address = offset;
-
-			if (handle->detail) {
-				// save all the information for non-detailed mode
-				mci.flat_insn.address = offset;
-				mci.flat_insn.size = insn_size;
-				// allocate memory for @detail pointer
-				insn_cache[f].detail = cs_mem_calloc(1, sizeof(cs_detail));
-			} else {
-				insn_cache[f].detail = NULL;
-			}
-
+			mci.flat_insn->size = insn_size;
 			handle->printer(&mci, &ss, handle->printer_info);
 
 			fill_insn(handle, &insn_cache[f], ss.buffer, &mci, handle->post_printer, buffer);

@@ -143,9 +143,8 @@ struct MCInst {
 	unsigned Opcode;
 	MCOperand Operands[34];
 	unsigned size;	// number of operands
-	cs_insn_flat flat_insn;	// insn to be exposed to public
+	cs_insn *flat_insn;	// insn to be exposed to public
 	unsigned OpcodePub;
-	int insn_size;	// instruction size
 	uint64_t address;	// address of this insn
 	cs_struct *csh;	// save the main csh
 	uint8_t x86_imm_size;	// save immediate size to print immediate properly
