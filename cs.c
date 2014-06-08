@@ -280,8 +280,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 	memcpy(insn->bytes, code, MIN(sizeof(insn->bytes), insn->size));
 
 	// map internal instruction opcode to public insn ID
-	if (handle->insn_id)
-		handle->insn_id(handle, insn, MCInst_getOpcode(mci));
+	handle->insn_id(handle, insn, MCInst_getOpcode(mci));
 
 	// alias instruction might have ID saved in OpcodePub
 	if (MCInst_getOpcodePub(mci))
