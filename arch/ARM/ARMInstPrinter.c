@@ -152,9 +152,6 @@ void ARM_getRegName(cs_struct *handle, int value)
 		handle->get_regname = getRegisterName;
 }
 
-#define UseMarkup false
-#define markup(x) (UseMarkup? (x) : "")
-
 /// translateShiftImm - Convert shift immediate from 0-31 to 1-32 for printing.
 ///
 /// getSORegOffset returns an integer from 0-31, representing '32' as 0.
@@ -168,8 +165,7 @@ static unsigned translateShiftImm(unsigned imm)
 }
 
 /// Prints the shift value with an immediate value.
-static void printRegImmShift(MCInst *MI, SStream *O, ARM_AM_ShiftOpc ShOpc,
-		unsigned ShImm, bool _UseMarkup)
+static void printRegImmShift(MCInst *MI, SStream *O, ARM_AM_ShiftOpc ShOpc, unsigned ShImm)
 {
 	if (ShOpc == ARM_AM_no_shift || (ShOpc == ARM_AM_lsl && !ShImm))
 		return;
@@ -722,7 +718,7 @@ static void printSORegImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 
 	// Print the shift opc.
 	printRegImmShift(MI, O, ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO2)),
-			getSORegOffset((unsigned int)MCOperand_getImm(MO2)), UseMarkup);
+			getSORegOffset((unsigned int)MCOperand_getImm(MO2)));
 }
 
 //===--------------------------------------------------------------------===//
@@ -769,7 +765,7 @@ static void printAM2PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O)
 	}
 
 	printRegImmShift(MI, O, getAM2ShiftOpc((unsigned int)MCOperand_getImm(MO3)),
-			getAM2Offset((unsigned int)MCOperand_getImm(MO3)), UseMarkup);
+			getAM2Offset((unsigned int)MCOperand_getImm(MO3)));
 	SStream_concat0(O, "]");
 	set_mem_access(MI, false);
 }
@@ -854,7 +850,7 @@ static void printAddrMode2OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	}
 
 	printRegImmShift(MI, O, getAM2ShiftOpc((unsigned int)MCOperand_getImm(MO2)),
-			getAM2Offset((unsigned int)MCOperand_getImm(MO2)), UseMarkup);
+			getAM2Offset((unsigned int)MCOperand_getImm(MO2)));
 }
 
 //===--------------------------------------------------------------------===//
@@ -1676,7 +1672,7 @@ static void printT2SOOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	// Print the shift opc.
 	//assert(MO2.isImm() && "Not a valid t2_so_reg value!");
 	printRegImmShift(MI, O, ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO2)),
-			getSORegOffset((unsigned int)MCOperand_getImm(MO2)), UseMarkup);
+			getSORegOffset((unsigned int)MCOperand_getImm(MO2)));
 }
 
 static void printAddrModeImm12Operand(MCInst *MI, unsigned OpNum,
