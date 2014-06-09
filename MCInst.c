@@ -42,6 +42,7 @@ void MCInst_insert(MCInst *inst, int index, MCOperand *Op)
 	cs_mem_free(Op);
 }
 
+// do not free @Op
 void MCInst_insert0(MCInst *inst, int index, MCOperand *Op)
 {
 	int i;
@@ -173,8 +174,7 @@ MCOperand *MCOperand_CreateReg(unsigned Reg)
 	return op;
 }
 
-/*
-MCOperand *MCOperand_CreateReg0(MCInst *mcInst, unsigned Reg)
+MCOperand *MCOperand_CreateReg1(MCInst *mcInst, unsigned Reg)
 {
 	MCOperand *op = &(mcInst->Operands[MCINST_CACHE]);
 
@@ -183,7 +183,6 @@ MCOperand *MCOperand_CreateReg0(MCInst *mcInst, unsigned Reg)
 
 	return op;
 }
-*/
 
 void MCOperand_CreateReg0(MCInst *mcInst, unsigned Reg)
 {
@@ -204,8 +203,7 @@ MCOperand *MCOperand_CreateImm(int64_t Val)
 	return op;
 }
 
-/*
-MCOperand *MCOperand_CreateImm0(MCInst *mcInst, int64_t Val)
+MCOperand *MCOperand_CreateImm1(MCInst *mcInst, int64_t Val)
 {
 	MCOperand *op = &(mcInst->Operands[MCINST_CACHE]);
 
@@ -214,7 +212,6 @@ MCOperand *MCOperand_CreateImm0(MCInst *mcInst, int64_t Val)
 
 	return op;
 }
-*/
 
 void MCOperand_CreateImm0(MCInst *mcInst, int64_t Val)
 {

@@ -81,9 +81,17 @@ MCOperand *MCOperand_CreateImm(int64_t Val);
 
 MCOperand *MCOperand_CreateFPImm(double Val);
 
+// create Reg operand in the next slot
 void MCOperand_CreateReg0(MCInst *inst, unsigned Reg);
 
+// create Reg operand use the last-unused slot
+MCOperand *MCOperand_CreateReg1(MCInst *inst, unsigned Reg);
+
+// create Imm operand in the next slot
 void MCOperand_CreateImm0(MCInst *inst, int64_t Val);
+
+// create Imm operand in the last-unused slot
+MCOperand *MCOperand_CreateImm1(MCInst *inst, int64_t Val);
 
 /// MCInst - Instances of this class represent a single low-level machine
 /// instruction.
@@ -107,7 +115,11 @@ void MCInst_Init(cs_struct *handle, MCInst *inst);
 
 void MCInst_clear(MCInst *inst);
 
+// free operand after inserting
 void MCInst_insert(MCInst *inst, int index, MCOperand *Op);
+
+// do not free operand after inserting
+void MCInst_insert0(MCInst *inst, int index, MCOperand *Op);
 
 void MCInst_setOpcode(MCInst *inst, unsigned Op);
 
