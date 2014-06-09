@@ -59,15 +59,19 @@ static void printAddress(MCInst *MI, unsigned Base, int64_t Disp, unsigned Index
 			SStream_concat(O, "%%%s, ", getRegisterName(Index));
 		SStream_concat(O, "%%%s)", getRegisterName(Base));
 
-		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_MEM;
-		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.base = (uint8_t)SystemZ_map_register(Base);
-		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.index = (uint8_t)SystemZ_map_register(Index);
-		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.disp = Disp;
-		MI->flat_insn->detail->sysz.op_count++;
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_MEM;
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.base = (uint8_t)SystemZ_map_register(Base);
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.index = (uint8_t)SystemZ_map_register(Index);
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.disp = Disp;
+			MI->flat_insn->detail->sysz.op_count++;
+		}
 	} else if (!Index) {
-		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
-		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = Disp;
-		MI->flat_insn->detail->sysz.op_count++;
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = Disp;
+			MI->flat_insn->detail->sysz.op_count++;
+		}
 	}
 }
 
@@ -349,11 +353,13 @@ static void printBDLAddrOperand(MCInst *MI, int OpNum, SStream *O)
 		SStream_concat(O, ", %%%s", getRegisterName(Base));
 	SStream_concat(O, ")");
 
-	MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_MEM;
-	MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.base = (uint8_t)SystemZ_map_register(Base);
-	MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.length = Length;
-	MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.disp = (int64_t)Disp;
-	MI->flat_insn->detail->sysz.op_count++;
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_MEM;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.base = (uint8_t)SystemZ_map_register(Base);
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.length = Length;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.disp = (int64_t)Disp;
+		MI->flat_insn->detail->sysz.op_count++;
+	}
 }
 
 static void printCond4Operand(MCInst *MI, int OpNum, SStream *O)
