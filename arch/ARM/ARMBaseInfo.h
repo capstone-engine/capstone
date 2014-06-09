@@ -70,7 +70,7 @@ inline static ARMCC_CondCodes ARMCC_getOppositeCondition(ARMCC_CondCodes CC)
 	}
 }
 
-inline static const char *ARMCC_ARMCondCodeToString(ARMCC_CondCodes CC)
+inline static char *ARMCC_ARMCondCodeToString(ARMCC_CondCodes CC)
 {
 	switch (CC) {
 		case ARMCC_EQ:  return "eq";
@@ -103,7 +103,7 @@ enum ARM_PROC_IFlags {
 	ARM_PROC_A = 4
 };
 
-inline static const char *ARM_PROC_IFlagsToString(unsigned val)
+inline static char *ARM_PROC_IFlagsToString(unsigned val)
 {
 	switch (val) {
 		case ARM_PROC_F: return "f";
@@ -113,7 +113,7 @@ inline static const char *ARM_PROC_IFlagsToString(unsigned val)
 	}
 }
 
-inline static const char *ARM_PROC_IModToString(unsigned val)
+inline static char *ARM_PROC_IModToString(unsigned val)
 {
 	switch (val) {
 		case ARM_PROC_IE: return "ie";
@@ -144,7 +144,7 @@ enum ARM_MB_MemBOpt {
     ARM_MB_SY    = 15
 };
 
-inline static const char *ARM_MB_MemBOptToString(unsigned val, bool HasV8)
+inline static char *ARM_MB_MemBOptToString(unsigned val, bool HasV8)
 {
 	switch (val) {
 		default: return "BUGBUG";
@@ -186,7 +186,7 @@ enum ARM_ISB_InstSyncBOpt {
     ARM_ISB_SY = 15
 };
 
-inline static const char *ARM_ISB_InstSyncBOptToString(unsigned val)
+inline static char *ARM_ISB_InstSyncBOptToString(unsigned val)
 {
 	switch (val) {
 		default: // never reach
@@ -255,7 +255,7 @@ typedef enum ARMII_AddrMode {
 	ARMII_AddrMode_i12    = 16
 } ARMII_AddrMode;
 
-inline static const char *ARMII_AddrModeToString(ARMII_AddrMode addrmode)
+inline static char *ARMII_AddrModeToString(ARMII_AddrMode addrmode)
 {
 	switch (addrmode) {
 		case ARMII_AddrModeNone:    return "AddrModeNone";
