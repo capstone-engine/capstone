@@ -11,6 +11,10 @@ extern "C" {
 #include <stdint.h>
 #include "platform.h"
 
+// GCC MIPS toolchain has a default macro called "mips" which breaks
+// compilation
+#undef mips
+
 #ifdef _MSC_VER
 #pragma warning(disable:4201)
 #endif
