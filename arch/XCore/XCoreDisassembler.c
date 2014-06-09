@@ -17,6 +17,7 @@
 #include <string.h>
 
 #include "../../cs_priv.h"
+#include "../../utils.h"
 
 #include "../../MCInst.h"
 #include "../../MCInstrDesc.h"
@@ -734,6 +735,10 @@ bool XCore_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *
 
 	if (!readInstruction16(code, code_len, &insn16)) {
 		return MCDisassembler_Fail;
+	}
+
+	if (MI->flat_insn->detail) {
+		memset(&MI->flat_insn->detail->xcore, 0, offset_of(cs_xcore, operands));
 	}
 
 	// Calling the auto-generated decoder function.

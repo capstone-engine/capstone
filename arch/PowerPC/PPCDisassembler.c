@@ -14,8 +14,10 @@
 
 #include <stdio.h>	// DEBUG
 #include <stdlib.h>
+#include <string.h>
 
 #include "../../cs_priv.h"
+#include "../../utils.h"
 
 #include "../../MCInst.h"
 #include "../../MCInstrDesc.h"
@@ -288,6 +290,10 @@ static DecodeStatus getInstruction(MCInst *MI,
 	else
 		insn = (code[3] << 24) | (code[2] << 16) |
 			(code[1] <<  8) | (code[0] <<  0);
+
+	if (MI->flat_insn->detail) {
+		memset(&MI->flat_insn->detail->ppc, 0, offset_of(cs_ppc, operands));
+	}
 
 	result = decodeInstruction_4(DecoderTable32, MI, insn, Address, 4);
 	if (result != MCDisassembler_Fail) {

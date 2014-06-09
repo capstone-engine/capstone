@@ -459,9 +459,6 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 		if (handle->detail) {
 			// allocate memory for @detail pointer
 			insn_cache->detail = cs_mem_malloc(sizeof(cs_detail));
-			insn_cache->detail->x86.op_count = 0;
-			memset(insn_cache->detail->x86.prefix, 0, sizeof(insn_cache->detail->x86.prefix));
-			memset(insn_cache->detail->x86.operands, 0, sizeof(insn_cache->detail->x86.operands));
 		} else {
 			insn_cache->detail = NULL;
 		}

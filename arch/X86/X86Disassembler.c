@@ -28,6 +28,7 @@
 #include "X86DisassemblerDecoderCommon.h"
 #include "X86DisassemblerDecoder.h"
 #include "../../MCInst.h"
+#include "../../utils.h"
 #include "X86Mapping.h"
 
 #define GET_REGINFO_ENUM
@@ -691,8 +692,6 @@ static void update_pub_insn(cs_insn *pub, InternalInstruction *inter, uint8_t *p
 	pub->detail->x86.sib_base = x86_map_sib_base(inter->sibBase);
 }
 
-#define offsetof(st, member) __builtin_offsetof(st, member)
-
 // Public interface for the disassembler
 bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		MCInst *instr, uint16_t *size, uint64_t address, void *_info)
@@ -707,7 +706,13 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	info.size = code_len;
 	info.offset = address;
 
-	memset(&insn, 0, offsetof(InternalInstruction, reader));
+	memset(&insn, 0, offset_of(InternalInstruction, reader));
+
+	if (instr->flat_insn->detail) {
+		instr->flat_insn->detail->x86.op_count = 0;
+		memset(instr->flat_insn->detail->x86.prefix, 0, sizeof(instr->flat_insn->detail->x86.prefix));
+		memset(instr->flat_insn->detail->x86.operands, 0, 4 * sizeof(instr->flat_insn->detail->x86.operands[0]));
+	}
 
 	if (handle->mode & CS_MODE_16)
 		ret = decodeInstruction(&insn,

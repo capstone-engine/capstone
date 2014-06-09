@@ -254,6 +254,9 @@ static DecodeStatus MipsDisassembler_getInstruction(int mode, MCInst *instr,
 		// not enough data
 		return MCDisassembler_Fail;
 
+	if (instr->flat_insn->detail)
+		instr->flat_insn->detail->mips.op_count = 0;
+
 	Result = readInstruction32((unsigned char*)code, &Insn, isBigEndian,
 			mode & CS_MODE_MICRO);
 	if (Result == MCDisassembler_Fail)
@@ -302,6 +305,9 @@ static DecodeStatus Mips64Disassembler_getInstruction(int mode, MCInst *instr,
 	DecodeStatus Result = readInstruction32((unsigned char*)code, &Insn, isBigEndian, false);
 	if (Result == MCDisassembler_Fail)
 		return MCDisassembler_Fail;
+
+	if (instr->flat_insn->detail)
+		instr->flat_insn->detail->mips.op_count = 0;
 
 	// Calling the auto-generated decoder function.
 	Result = decodeInstruction(DecoderTableMips6432, instr, Insn, Address, MRI, mode);

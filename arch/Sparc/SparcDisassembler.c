@@ -17,6 +17,7 @@
 #include <string.h>
 
 #include "../../cs_priv.h"
+#include "../../utils.h"
 
 #include "../../MCInst.h"
 #include "../../MCInstrDesc.h"
@@ -229,6 +230,10 @@ bool Sparc_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *
 	Result = readInstruction32(code, code_len, &Insn);
 	if (Result == MCDisassembler_Fail)
 		return MCDisassembler_Fail;
+
+	if (MI->flat_insn->detail) {
+		memset(&MI->flat_insn->detail->sparc, 0, offset_of(cs_sparc, operands));
+	}
 
 	Result = decodeInstruction_4(DecoderTableSparc32, MI, Insn, address,
 			(MCRegisterInfo *)info, 0);

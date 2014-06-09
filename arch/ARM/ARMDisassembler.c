@@ -26,6 +26,7 @@
 #include "../../LEB128.h"
 #include "../../MCDisassembler.h"
 #include "../../cs_priv.h"
+#include "../../utils.h"
 
 #include "ARMDisassembler.h"
 
@@ -443,11 +444,15 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t
 	uint8_t bytes[4];
 	DecodeStatus result;
 
-	ud->ITBlock.size = 0;
-
 	if (code_len < 4)
 		// not enough data
 		return MCDisassembler_Fail;
+
+	ud->ITBlock.size = 0;
+
+	if (MI->flat_insn->detail) {
+		memset(&MI->flat_insn->detail->arm, 0, offset_of(cs_arm, operands));
+	}
 
 	memcpy(bytes, code, 4);
 
@@ -679,12 +684,17 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 	unsigned Firstcond, Mask; 
 	uint32_t NEONLdStInsn, insn32, NEONDataInsn, NEONCryptoInsn, NEONv8Insn;
 
-	ud->ITBlock.size = 0;
-
 	// We want to read exactly 2 bytes of data.
 	if (code_len < 2)
 		// not enough data
 		return MCDisassembler_Fail;
+
+	ud->ITBlock.size = 0;
+
+	if (MI->flat_insn->detail) {
+		memset(&MI->flat_insn->detail->arm, 0, offset_of(cs_arm, operands));
+		//MI->flat_insn->detail->arm.op_count = 0;
+	}
 
 	memcpy(bytes, code, 2);
 

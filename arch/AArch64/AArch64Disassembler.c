@@ -22,6 +22,7 @@
 #include <stdlib.h>
 
 #include "../../cs_priv.h"
+#include "../../utils.h"
 
 #include "../../MCInst.h"
 #include "../../MCInstrDesc.h"
@@ -269,6 +270,10 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 		// not enough data
 		*Size = 0;
 		return MCDisassembler_Fail;
+	}
+
+	if (MI->flat_insn->detail) {
+		memset(&MI->flat_insn->detail->arm64, 0, offset_of(cs_arm64, operands));
 	}
 
 	if (ud->big_endian)
