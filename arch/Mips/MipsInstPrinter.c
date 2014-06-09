@@ -93,12 +93,12 @@ static void set_mem_access(MCInst *MI, bool status)
 		return;
 
 	if (status) {
-		MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_MEM;
-		MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].mem.base = MIPS_REG_INVALID;
-		MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].mem.disp = 0;
+		MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].type = MIPS_OP_MEM;
+		MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].mem.base = MIPS_REG_INVALID;
+		MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].mem.disp = 0;
 	} else {
 		// done, create the next operand slot
-		MI->flat_insn.mips.op_count++;
+		MI->flat_insn->detail->mips.op_count++;
 	}
 }
 
@@ -230,11 +230,11 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		reg = Mips_map_register(reg);
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
-				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].mem.base = reg;
+				MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].mem.base = reg;
 			} else {
-				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_REG;
-				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].reg = reg;
-				MI->flat_insn.mips.op_count++;
+				MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].type = MIPS_OP_REG;
+				MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].reg = reg;
+				MI->flat_insn->detail->mips.op_count++;
 			}
 		}
 	}
@@ -256,7 +256,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				}
 			}
 			if (MI->csh->detail)
-				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].mem.disp = imm;
+				MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].mem.disp = imm;
 		} else {
 			if (imm >= 0) {
 				if (imm > HEX_THRESHOLD)
@@ -271,9 +271,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			}
 
 			if (MI->csh->detail) {
-				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_IMM;
-				MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].imm = imm;
-				MI->flat_insn.mips.op_count++;
+				MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].type = MIPS_OP_IMM;
+				MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].imm = imm;
+				MI->flat_insn->detail->mips.op_count++;
 			}
 		}
 	}
@@ -296,9 +296,9 @@ static void printUnsignedImm(MCInst *MI, int opNum, SStream *O)
 				SStream_concat(O, "-%u", (short int)-imm);
 		}
 		if (MI->csh->detail) {
-			MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_IMM;
-			MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].imm = (unsigned short int)imm;
-			MI->flat_insn.mips.op_count++;
+			MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].type = MIPS_OP_IMM;
+			MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].imm = (unsigned short int)imm;
+			MI->flat_insn->detail->mips.op_count++;
 		}
 	} else
 		printOperand(MI, opNum, O);
@@ -314,9 +314,9 @@ static void printUnsignedImm8(MCInst *MI, int opNum, SStream *O)
 		else
 			SStream_concat(O, "%u", imm);
 		if (MI->csh->detail) {
-			MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].type = MIPS_OP_IMM;
-			MI->flat_insn.mips.operands[MI->flat_insn.mips.op_count].imm = imm;
-			MI->flat_insn.mips.op_count++;
+			MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].type = MIPS_OP_IMM;
+			MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].imm = imm;
+			MI->flat_insn->detail->mips.op_count++;
 		}
 	} else
 		printOperand(MI, opNum, O);

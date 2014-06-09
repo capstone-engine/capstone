@@ -43,12 +43,12 @@ static void set_mem_access(MCInst *MI, bool status)
 	MI->csh->doing_mem = status;
 
 	if (status) {
-		MI->flat_insn.sparc.operands[MI->flat_insn.sparc.op_count].type = SPARC_OP_MEM;
-		MI->flat_insn.sparc.operands[MI->flat_insn.sparc.op_count].mem.base = SPARC_REG_INVALID;
-		MI->flat_insn.sparc.operands[MI->flat_insn.sparc.op_count].mem.disp = 0;
+		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].type = SPARC_OP_MEM;
+		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.base = SPARC_REG_INVALID;
+		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.disp = 0;
 	} else {
 		// done, create the next operand slot
-		MI->flat_insn.sparc.op_count++;
+		MI->flat_insn->detail->sparc.op_count++;
 	}
 }
 
@@ -148,14 +148,14 @@ static void printOperand(MCInst *MI, int opNum, SStream *O)
 
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
-				if (MI->flat_insn.sparc.operands[MI->flat_insn.sparc.op_count].mem.base)
-					MI->flat_insn.sparc.operands[MI->flat_insn.sparc.op_count].mem.index = reg;
+				if (MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.base)
+					MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.index = reg;
 				else
-					MI->flat_insn.sparc.operands[MI->flat_insn.sparc.op_count].mem.base = reg;
+					MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.base = reg;
 			} else {
-				MI->flat_insn.sparc.operands[MI->flat_insn.sparc.op_count].type = SPARC_OP_REG;
-				MI->flat_insn.sparc.operands[MI->flat_insn.sparc.op_count].reg = reg;
-				MI->flat_insn.sparc.op_count++;
+				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].type = SPARC_OP_REG;
+				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].reg = reg;
+				MI->flat_insn->detail->sparc.op_count++;
 			}
 		}
 
@@ -178,11 +178,11 @@ static void printOperand(MCInst *MI, int opNum, SStream *O)
 
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
-				MI->flat_insn.sparc.operands[MI->flat_insn.sparc.op_count].mem.disp = Imm;
+				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.disp = Imm;
 			} else {
-				MI->flat_insn.sparc.operands[MI->flat_insn.sparc.op_count].type = SPARC_OP_IMM;
-				MI->flat_insn.sparc.operands[MI->flat_insn.sparc.op_count].imm = Imm;
-				MI->flat_insn.sparc.op_count++;
+				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].type = SPARC_OP_IMM;
+				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].imm = Imm;
+				MI->flat_insn->detail->sparc.op_count++;
 			}
 		}
 	}
@@ -248,7 +248,7 @@ static void printCCOperand(MCInst *MI, int opNum, SStream *O)
 	SStream_concat(O, "%s", SPARCCondCodeToString((sparc_cc)CC));
 
 	if (MI->csh->detail)
-		MI->flat_insn.sparc.cc = (sparc_cc)CC;
+		MI->flat_insn->detail->sparc.cc = (sparc_cc)CC;
 }
 
 

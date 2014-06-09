@@ -45,12 +45,12 @@ static void set_mem_access(MCInst *MI, bool status)
 	MI->csh->doing_mem = status;
 
 	if (status) {
-		MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].type = PPC_OP_MEM;
-		MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].mem.base = PPC_REG_INVALID;
-		MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].mem.disp = 0;
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_MEM;
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].mem.base = PPC_REG_INVALID;
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].mem.disp = 0;
 	} else {
 		// done, create the next operand slot
-		MI->flat_insn.ppc.op_count++;
+		MI->flat_insn->detail->ppc.op_count++;
 	}
 }
 
@@ -139,7 +139,7 @@ static void printPredicateOperand(MCInst *MI, unsigned OpNo,
 {
 	unsigned Code = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
 
-	MI->flat_insn.ppc.bc = (ppc_bc)Code;
+	MI->flat_insn->detail->ppc.bc = (ppc_bc)Code;
 
 	if (!strcmp(Modifier, "cc")) {
 		switch ((ppc_predicate)Code) {
@@ -247,9 +247,9 @@ static void printS5ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 
 	if (MI->csh->detail) {
-		MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].type = PPC_OP_IMM;
-		MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].imm = Value;
-		MI->flat_insn.ppc.op_count++;
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].imm = Value;
+		MI->flat_insn->detail->ppc.op_count++;
 	}
 }
 
@@ -263,9 +263,9 @@ static void printU5ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		SStream_concat(O, "%u", Value);
 
 	if (MI->csh->detail) {
-		MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].type = PPC_OP_IMM;
-		MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].imm = Value;
-		MI->flat_insn.ppc.op_count++;
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].imm = Value;
+		MI->flat_insn->detail->ppc.op_count++;
 	}
 }
 
@@ -279,9 +279,9 @@ static void printU6ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		SStream_concat(O, "%u", Value);
 
 	if (MI->csh->detail) {
-		MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].type = PPC_OP_IMM;
-		MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].imm = Value;
-		MI->flat_insn.ppc.op_count++;
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].imm = Value;
+		MI->flat_insn->detail->ppc.op_count++;
 	}
 }
 
@@ -302,9 +302,9 @@ static void printS16ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		}
 
 		if (MI->csh->detail) {
-			MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].type = PPC_OP_IMM;
-			MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].imm = Imm;
-			MI->flat_insn.ppc.op_count++;
+			MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
+			MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].imm = Imm;
+			MI->flat_insn->detail->ppc.op_count++;
 		}
 	} else
 		printOperand(MI, OpNo, O);
@@ -332,11 +332,11 @@ static void printS16ImmOperand_Mem(MCInst *MI, unsigned OpNo, SStream *O)
 
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
-				MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].mem.disp = Imm;
+				MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].mem.disp = Imm;
 			} else {
-				MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].type = PPC_OP_IMM;
-				MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].imm = Imm;
-				MI->flat_insn.ppc.op_count++;
+				MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
+				MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].imm = Imm;
+				MI->flat_insn->detail->ppc.op_count++;
 			}
 		}
 	} else
@@ -353,9 +353,9 @@ static void printU16ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			SStream_concat(O, "%u", Imm);
 
 		if (MI->csh->detail) {
-			MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].type = PPC_OP_IMM;
-			MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].imm = Imm;
-			MI->flat_insn.ppc.op_count++;
+			MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
+			MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].imm = Imm;
+			MI->flat_insn->detail->ppc.op_count++;
 		}
 	} else
 		printOperand(MI, OpNo, O);
@@ -504,11 +504,11 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
-				MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].mem.base = reg;
+				MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].mem.base = reg;
 			} else {
-				MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].type = PPC_OP_REG;
-				MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].reg = reg;
-				MI->flat_insn.ppc.op_count++;
+				MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_REG;
+				MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].reg = reg;
+				MI->flat_insn->detail->ppc.op_count++;
 			}
 		}
 
@@ -531,11 +531,11 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
-				MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].mem.disp = imm;
+				MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].mem.disp = imm;
 			} else {
-				MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].type = PPC_OP_IMM;
-				MI->flat_insn.ppc.operands[MI->flat_insn.ppc.op_count].imm = imm;
-				MI->flat_insn.ppc.op_count++;
+				MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
+				MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].imm = imm;
+				MI->flat_insn->detail->ppc.op_count++;
 			}
 		}
 	}
