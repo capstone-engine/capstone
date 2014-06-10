@@ -536,23 +536,22 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 
 				    unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, isStore ? 1 : 0));
 				    if (MCRegisterClass_contains(MRC, Reg)) {
-				   	 MCInst NewMI;
-				   	 MCOperand *NewReg;
+						MCInst NewMI;
 
-					 MCInst_Init(MI->csh, &NewMI);
-				   	 MCInst_setOpcode(&NewMI, Opcode);
+						MCInst_Init(MI->csh, &NewMI);
+						MCInst_setOpcode(&NewMI, Opcode);
 
-				   	 if (isStore)
-				   		 MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, 0));
-				   	 NewReg = MCOperand_CreateReg(MCRegisterInfo_getMatchingSuperReg(MRI, Reg, ARM_gsub_0,
-				   				 MCRegisterInfo_getRegClass(MRI, ARM_GPRPairRegClassID)));
-				   	 MCInst_addOperand2(&NewMI, NewReg);
-				   	 cs_mem_free(NewReg);
+						if (isStore)
+							MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, 0));
 
-				   	 // Copy the rest operands into NewMI.
-				   	 for(i= isStore ? 3 : 2; i < MCInst_getNumOperands(MI); ++i)
-				   		 MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, i));
-				   	 printInstruction(&NewMI, O, MRI);
+						MCOperand_CreateReg0(&NewMI, MCRegisterInfo_getMatchingSuperReg(MRI, Reg, ARM_gsub_0,
+									MCRegisterInfo_getRegClass(MRI, ARM_GPRPairRegClassID)));
+
+						// Copy the rest operands into NewMI.
+						for(i = isStore ? 3 : 2; i < MCInst_getNumOperands(MI); ++i)
+							MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, i));
+
+						printInstruction(&NewMI, O, MRI);
 				   	 return;
 				    }
 				}
