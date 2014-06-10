@@ -11,6 +11,10 @@ extern "C" {
 #include <stdint.h>
 #include "platform.h"
 
+// GCC SPARC toolchain has a default macro called "sparc" which breaks
+// compilation
+#undef sparc
+
 #ifdef _MSC_VER
 #pragma warning(disable:4201)
 #endif
