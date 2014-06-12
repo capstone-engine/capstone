@@ -362,11 +362,22 @@ def cs_disasm_lite(arch, mode, code, offset, count=0):
         raise CsError(status)
 
 
+# alternately
+def copy_ctypes(src):
+    """Returns a new ctypes object which is a bitwise copy of an existing one"""
+    dst = type(src)()
+    ctypes.pointer(dst)[0] = src
+    return dst
+
+
 # Python-style class to disasm code
 class CsInsn(object):
     def __init__(self, cs, all_info):
-        self._raw = all_info
+        self._raw = copy_ctypes(all_info)
         self._cs = cs
+        if self._cs._detail:
+            # save detail
+            self._detail = copy_ctypes(self._raw.detail.contents)
 
     # return instruction's ID.
     @property
@@ -417,8 +428,7 @@ class CsInsn(object):
             raise CsError(CS_ERR_DIET)
 
         if self._cs._detail:
-            detail = self._raw.detail.contents
-            return detail.regs_read[:detail.regs_read_count]
+            return self._detail.regs_read[:self._detail.regs_read_count]
 
         raise CsError(CS_ERR_DETAIL)
 
@@ -433,8 +443,7 @@ class CsInsn(object):
             raise CsError(CS_ERR_DIET)
 
         if self._cs._detail:
-            detail = self._raw.detail.contents
-            return detail.regs_write[:detail.regs_write_count]
+            return self._detail.regs_write[:self._detail.regs_write_count]
 
         raise CsError(CS_ERR_DETAIL)
 
@@ -449,35 +458,33 @@ class CsInsn(object):
             raise CsError(CS_ERR_DIET)
 
         if self._cs._detail:
-            detail = self._raw.detail.contents
-            return detail.groups[:detail.groups_count]
+            return self._detail.groups[:self._detail.groups_count]
 
         raise CsError(CS_ERR_DETAIL)
 
     def __gen_detail(self):
         arch = self._cs.arch
-        detail = self._raw.detail.contents
         if arch == CS_ARCH_ARM:
             (self.cc, self.update_flags, self.writeback, self.operands) = \
-                arm.get_arch_info(detail.arch.arm)
+                arm.get_arch_info(self._detail.arch.arm)
         elif arch == CS_ARCH_ARM64:
             (self.cc, self.update_flags, self.writeback, self.operands) = \
-                arm64.get_arch_info(detail.arch.arm64)
+                arm64.get_arch_info(self._detail.arch.arm64)
         elif arch == CS_ARCH_X86:
             (self.prefix, self.segment, self.opcode, self.op_size, self.addr_size, \
                 self.disp_size, self.imm_size, self.modrm, self.sib, self.disp, \
-                self.sib_index, self.sib_scale, self.sib_base, self.operands) = x86.get_arch_info(detail.arch.x86)
+                self.sib_index, self.sib_scale, self.sib_base, self.operands) = x86.get_arch_info(self._detail.arch.x86)
         elif arch == CS_ARCH_MIPS:
-                self.operands = mips.get_arch_info(detail.arch.mips)
+                self.operands = mips.get_arch_info(self._detail.arch.mips)
         elif arch == CS_ARCH_PPC:
             (self.bc, self.bh, self.update_cr0, self.operands) = \
-                ppc.get_arch_info(detail.arch.ppc)
+                ppc.get_arch_info(self._detail.arch.ppc)
         elif arch == CS_ARCH_SPARC:
-            (self.cc, self.hint, self.operands) = sparc.get_arch_info(detail.arch.sparc)
+            (self.cc, self.hint, self.operands) = sparc.get_arch_info(self._detail.arch.sparc)
         elif arch == CS_ARCH_SYSZ:
-            (self.cc, self.operands) = systemz.get_arch_info(detail.arch.sysz)
+            (self.cc, self.operands) = systemz.get_arch_info(self._detail.arch.sysz)
         elif arch == CS_ARCH_XCORE:
-            (self.operands) = xcore.get_arch_info(detail.arch.xcore)
+            (self.operands) = xcore.get_arch_info(self._detail.arch.xcore)
 
 
     def __getattr__(self, name):
