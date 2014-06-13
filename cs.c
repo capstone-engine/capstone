@@ -280,8 +280,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 	mnem = insn->mnemonic;
 	if (mci->x86_prefix[0]) {
 		for (sp = buffer; *sp; sp++) {
-			//if (*sp == ' '||*sp == '\t')
-			if (*sp == ' ')
+			if (*sp == ' '|| *sp == '\t')
 				break;
 			if (*sp == '|')	// lock|rep prefix for x86
 				*sp = ' ';
@@ -291,7 +290,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 		}
 	} else {
 		for (sp = buffer; *sp; sp++) {
-			if (*sp == ' '||*sp == '\t')
+			if (*sp == ' '|| *sp == '\t')
 				break;
 			// copy to @mnemonic
 			*mnem = *sp;
