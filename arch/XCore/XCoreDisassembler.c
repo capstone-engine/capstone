@@ -150,7 +150,7 @@ static DecodeStatus DecodeGRRegsRegisterClass(MCInst *Inst, unsigned RegNo,
 		return MCDisassembler_Fail;
 
 	Reg = getReg(Decoder, XCore_GRRegsRegClassID, RegNo);
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Reg));
+	MCOperand_CreateReg0(Inst, Reg);
 
 	return MCDisassembler_Success;
 }
@@ -163,7 +163,7 @@ static DecodeStatus DecodeRRegsRegisterClass(MCInst *Inst, unsigned RegNo,
 		return MCDisassembler_Fail;
 
 	Reg = getReg(Decoder, XCore_RRegsRegClassID, RegNo);
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Reg));
+	MCOperand_CreateReg0(Inst, Reg);
 
 	return MCDisassembler_Success;
 }
@@ -178,14 +178,14 @@ static DecodeStatus DecodeBitpOperand(MCInst *Inst, unsigned Val,
 	if (Val > 11)
 		return MCDisassembler_Fail;
 
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Values[Val]));
+	MCOperand_CreateImm0(Inst, Values[Val]);
 	return MCDisassembler_Success;
 }
 
 static DecodeStatus DecodeNegImmOperand(MCInst *Inst, unsigned Val,
 		uint64_t Address, void *Decoder)
 {
-	MCInst_addOperand(Inst, MCOperand_CreateImm(-(int64_t)Val));
+	MCOperand_CreateImm0(Inst, -(int64_t)Val);
 	return MCDisassembler_Success;
 }
 
@@ -325,7 +325,7 @@ static DecodeStatus Decode2RImmInstruction(MCInst *Inst, unsigned Insn, uint64_t
 	if (S != MCDisassembler_Success)
 		return Decode2OpInstructionFail(Inst, Insn, Address, Decoder);
 
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Op1));
+	MCOperand_CreateImm0(Inst, Op1);
 	DecodeGRRegsRegisterClass(Inst, Op2, Address, Decoder);
 
 	return S;
@@ -369,7 +369,7 @@ static DecodeStatus DecodeRUSInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 		return Decode2OpInstructionFail(Inst, Insn, Address, Decoder);
 
 	DecodeGRRegsRegisterClass(Inst, Op1, Address, Decoder);
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Op2));
+	MCOperand_CreateImm0(Inst, Op2);
 
 	return S;
 }
@@ -523,7 +523,7 @@ static DecodeStatus Decode3RImmInstruction(MCInst *Inst, unsigned Insn, uint64_t
 	unsigned Op1, Op2, Op3;
 	DecodeStatus S = Decode3OpInstruction(Insn, &Op1, &Op2, &Op3);
 	if (S == MCDisassembler_Success) {
-		MCInst_addOperand(Inst, MCOperand_CreateImm(Op1));
+		MCOperand_CreateImm0(Inst, Op1);
 		DecodeGRRegsRegisterClass(Inst, Op2, Address, Decoder);
 		DecodeGRRegsRegisterClass(Inst, Op3, Address, Decoder);
 	}
@@ -539,7 +539,7 @@ static DecodeStatus Decode2RUSInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 	if (S == MCDisassembler_Success) {
 		DecodeGRRegsRegisterClass(Inst, Op1, Address, Decoder);
 		DecodeGRRegsRegisterClass(Inst, Op2, Address, Decoder);
-		MCInst_addOperand(Inst, MCOperand_CreateImm(Op3));
+		MCOperand_CreateImm0(Inst, Op3);
 	}
 
 	return S;
@@ -599,7 +599,7 @@ static DecodeStatus DecodeL2RUSInstruction(MCInst *Inst, unsigned Insn, uint64_t
 	if (S == MCDisassembler_Success) {
 		DecodeGRRegsRegisterClass(Inst, Op1, Address, Decoder);
 		DecodeGRRegsRegisterClass(Inst, Op2, Address, Decoder);
-		MCInst_addOperand(Inst, MCOperand_CreateImm(Op3));
+		MCOperand_CreateImm0(Inst, Op3);
 	}
 
 	return S;
