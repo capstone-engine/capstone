@@ -54,7 +54,7 @@ static void printAddress(MCInst *MI, unsigned Base, int64_t Disp, unsigned Index
 	}
 
 	if (Base) {
-		SStream_concat(O, "(");
+		SStream_concat0(O, "(");
 		if (Index)
 			SStream_concat(O, "%%%s, ", getRegisterName(Index));
 		SStream_concat(O, "%%%s)", getRegisterName(Base));
@@ -351,7 +351,7 @@ static void printBDLAddrOperand(MCInst *MI, int OpNum, SStream *O)
 
 	if (Base)
 		SStream_concat(O, ", %%%s", getRegisterName(Base));
-	SStream_concat(O, ")");
+	SStream_concat0(O, ")");
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_MEM;
@@ -364,14 +364,14 @@ static void printBDLAddrOperand(MCInst *MI, int OpNum, SStream *O)
 
 static void printCond4Operand(MCInst *MI, int OpNum, SStream *O)
 {
-	static const char *const CondNames[] = {
+	static char *const CondNames[] = {
 		"o", "h", "nle", "l", "nhe", "lh", "ne",
 		"e", "nlh", "he", "nl", "le", "nh", "no"
 	};
 
 	uint64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	// assert(Imm > 0 && Imm < 15 && "Invalid condition");
-	SStream_concat(O, CondNames[Imm - 1]);
+	SStream_concat0(O, CondNames[Imm - 1]);
 
 	if (MI->csh->detail)
 		MI->flat_insn->detail->sysz.cc = (sysz_cc)Imm;
