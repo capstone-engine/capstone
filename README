@@ -35,12 +35,6 @@ Further information is available at http://www.capstone-engine.org
 See COMPILE.TXT file for how to compile and install Capstone
 
 
-[Status]
-
-- This package only contains Java & Python bindings. For more bindings created
-and maintained by the community, see bindings/README.
-
-
 [Hack]
 
 See HACK.TXT file for the structuture of the source code.
