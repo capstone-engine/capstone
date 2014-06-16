@@ -576,6 +576,8 @@ typedef struct InternalInstruction {
   uint8_t                       sibScale;
   SIBBase                       sibBase;
   uint8_t                       numImmediatesConsumed;
+  /* 1 if the prefix byte, 0xf2 or 0xf3 is xacquire or xrelease */
+  BOOL xAcquireRelease;
 
   // end-of-zero-members
 
@@ -611,8 +613,6 @@ typedef struct InternalInstruction {
   /* The location where a mandatory prefix would have to be (i.e., right before
      the opcode, or right before the REX prefix if one is present) */
   uint64_t necessaryPrefixLocation;
-  /* 1 if the prefix byte, 0xf2 or 0xf3 is xacquire or xrelease */
-  BOOL xAcquireRelease;
 
   /* Sizes of various critical pieces of data, in bytes */
   uint8_t registerSize;

@@ -736,6 +736,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		return false;
 	} else {
 		*size = (uint16_t)insn.length;
+
 		result = (!translateInstruction(instr, &insn)) ?  true : false;
 		if (result) {
 			if (handle->detail)

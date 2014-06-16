@@ -931,8 +931,6 @@ static int getID(struct InternalInstruction* insn)
 	uint16_t instructionID;
 	const struct InstructionSpecifier *spec;
 
-	// printf(">>> getID()\n");
-
 	attrMask = ATTR_NONE;
 
 	if (insn->mode == MODE_64BIT)
