@@ -538,7 +538,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 				    if (MCRegisterClass_contains(MRC, Reg)) {
 						MCInst NewMI;
 
-						MCInst_Init(MI->csh, &NewMI);
+						MCInst_Init(&NewMI);
 						MCInst_setOpcode(&NewMI, Opcode);
 
 						if (isStore)

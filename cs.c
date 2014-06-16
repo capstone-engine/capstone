@@ -449,7 +449,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 	insn_cache = total;
 
 	while (size > 0) {
-		MCInst_Init(handle, &mci);
+		MCInst_Init(&mci);
 		mci.csh = handle;
 
 		// relative branches need to know the address & size of current insn

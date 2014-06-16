@@ -92,9 +92,9 @@ MCOperand *MCOperand_CreateImm1(MCInst *inst, int64_t Val);
 struct MCInst {
 	unsigned Opcode;
 	MCOperand Operands[34];
+	unsigned OpcodePub;
 	unsigned size;	// number of operands
 	cs_insn *flat_insn;	// insn to be exposed to public
-	unsigned OpcodePub;
 	uint64_t address;	// address of this insn
 	cs_struct *csh;	// save the main csh
 	uint8_t x86_imm_size;	// save immediate size to print immediate properly
@@ -105,7 +105,7 @@ struct MCInst {
 	uint8_t x86_prefix[4];
 };
 
-void MCInst_Init(cs_struct *handle, MCInst *inst);
+void MCInst_Init(MCInst *inst);
 
 void MCInst_clear(MCInst *inst);
 
