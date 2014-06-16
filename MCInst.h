@@ -115,9 +115,6 @@ void MCInst_Init(cs_struct *handle, MCInst *inst);
 
 void MCInst_clear(MCInst *inst);
 
-// free operand after inserting
-void MCInst_insert(MCInst *inst, int index, MCOperand *Op);
-
 // do not free operand after inserting
 void MCInst_insert0(MCInst *inst, int index, MCOperand *Op);
 

@@ -27,21 +27,6 @@ void MCInst_clear(MCInst *inst)
 	inst->size = 0;
 }
 
-// NOTE: this will free @Op argument
-void MCInst_insert(MCInst *inst, int index, MCOperand *Op)
-{
-	int i;
-
-	for(i = inst->size; i > index; i--)
-		//memcpy(&(inst->Operands[i]), &(inst->Operands[i-1]), sizeof(MCOperand));
-		inst->Operands[i] = inst->Operands[i-1];
-
-	inst->Operands[index] = *Op;
-	inst->size++;
-
-	cs_mem_free(Op);
-}
-
 // do not free @Op
 void MCInst_insert0(MCInst *inst, int index, MCOperand *Op)
 {

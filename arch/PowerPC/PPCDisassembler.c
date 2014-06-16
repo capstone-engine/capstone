@@ -224,7 +224,7 @@ static DecodeStatus decodeMemRIOperands(MCInst *Inst, uint64_t Imm,
 		case PPC_STWU:
 		case PPC_STFSU:
 		case PPC_STFDU:
-				 MCInst_insert(Inst, 0, MCOperand_CreateReg(GP0Regs[Base]));
+				 MCInst_insert0(Inst, 0, MCOperand_CreateReg1(Inst, GP0Regs[Base]));
 				 break;
 	}
 
@@ -248,7 +248,7 @@ static DecodeStatus decodeMemRIXOperands(MCInst *Inst, uint64_t Imm,
 		// Add the tied output operand.
 		MCOperand_CreateReg0(Inst, GP0Regs[Base]);
 	else if (MCInst_getOpcode(Inst) == PPC_STDU)
-		MCInst_insert(Inst, 0, MCOperand_CreateReg(GP0Regs[Base]));
+		MCInst_insert0(Inst, 0, MCOperand_CreateReg1(Inst, GP0Regs[Base]));
 
 	MCOperand_CreateImm0(Inst, SignExtend64(Disp << 2, 16));
 	MCOperand_CreateReg0(Inst, GP0Regs[Base]);
