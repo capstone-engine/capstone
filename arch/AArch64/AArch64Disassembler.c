@@ -321,7 +321,7 @@ static DecodeStatus DecodeGPR64RegisterClass(MCInst *Inst, unsigned RegNo,
 		return MCDisassembler_Fail;
 
 	Register = (uint16_t)getReg(Decoder, AArch64_GPR64RegClassID, RegNo);
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
+	MCOperand_CreateReg0(Inst, Register);
 	return MCDisassembler_Success;
 }
 
@@ -334,7 +334,7 @@ static DecodeStatus DecodeGPR64xspRegisterClass(MCInst *Inst, unsigned RegNo,
 		return MCDisassembler_Fail;
 
 	Register = (uint16_t)getReg(Decoder, AArch64_GPR64xspRegClassID, RegNo);
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
+	MCOperand_CreateReg0(Inst, Register);
 	return MCDisassembler_Success;
 }
 
@@ -348,7 +348,7 @@ static DecodeStatus DecodeGPR32RegisterClass(MCInst *Inst, unsigned RegNo,
 		return MCDisassembler_Fail;
 
 	Register = (uint16_t)getReg(Decoder, AArch64_GPR32RegClassID, RegNo);
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
+	MCOperand_CreateReg0(Inst, Register);
 	return MCDisassembler_Success;
 }
 
@@ -361,7 +361,7 @@ static DecodeStatus DecodeGPR32wspRegisterClass(MCInst *Inst, unsigned RegNo,
 		return MCDisassembler_Fail;
 
 	Register = (uint16_t)getReg(Decoder, AArch64_GPR32wspRegClassID, RegNo);
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
+	MCOperand_CreateReg0(Inst, Register);
 	return MCDisassembler_Success;
 }
 
@@ -374,7 +374,7 @@ static DecodeStatus DecodeFPR8RegisterClass(MCInst *Inst, unsigned RegNo,
 		return MCDisassembler_Fail;
 
 	Register = (uint16_t)getReg(Decoder, AArch64_FPR8RegClassID, RegNo);
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
+	MCOperand_CreateReg0(Inst, Register);
 	return MCDisassembler_Success;
 }
 
@@ -387,7 +387,7 @@ static DecodeStatus DecodeFPR16RegisterClass(MCInst *Inst, unsigned RegNo,
 		return MCDisassembler_Fail;
 
 	Register = (uint16_t)getReg(Decoder, AArch64_FPR16RegClassID, RegNo);
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
+	MCOperand_CreateReg0(Inst, Register);
 	return MCDisassembler_Success;
 }
 
@@ -401,7 +401,7 @@ static DecodeStatus DecodeFPR32RegisterClass(MCInst *Inst, unsigned RegNo,
 		return MCDisassembler_Fail;
 
 	Register = (uint16_t)getReg(Decoder, AArch64_FPR32RegClassID, RegNo);
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
+	MCOperand_CreateReg0(Inst, Register);
 	return MCDisassembler_Success;
 }
 
@@ -414,7 +414,7 @@ static DecodeStatus DecodeFPR64RegisterClass(MCInst *Inst, unsigned RegNo,
 		return MCDisassembler_Fail;
 
 	Register = (uint16_t)getReg(Decoder, AArch64_FPR64RegClassID, RegNo);
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
+	MCOperand_CreateReg0(Inst, Register);
 	return MCDisassembler_Success;
 }
 
@@ -436,7 +436,7 @@ static DecodeStatus DecodeFPR128RegisterClass(MCInst *Inst, unsigned RegNo,
 		return MCDisassembler_Fail;
 
 	Register = (uint16_t)getReg(Decoder, AArch64_FPR128RegClassID, RegNo);
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
+	MCOperand_CreateReg0(Inst, Register);
 	return MCDisassembler_Success;
 }
 
@@ -460,7 +460,7 @@ static DecodeStatus DecodeGPR64noxzrRegisterClass(MCInst *Inst,
 		return MCDisassembler_Fail;
 
 	Register = (uint16_t)getReg(Decoder, AArch64_GPR64noxzrRegClassID, RegNo);
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
+	MCOperand_CreateReg0(Inst, Register);
 	return MCDisassembler_Success;
 }
 
@@ -474,7 +474,7 @@ static DecodeStatus DecodeRegisterClassByID(MCInst *Inst, unsigned RegNo,
 		return MCDisassembler_Fail;
 
 	Register = (uint16_t)getReg(Decoder, RegID, RegNo);
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Register));
+	MCOperand_CreateReg0(Inst, Register);
 	return MCDisassembler_Success;
 }
 
@@ -536,7 +536,7 @@ static DecodeStatus DecodeAddrRegExtendOperand(MCInst *Inst,
 	if (!(OptionHiS & 2))
 		return MCDisassembler_Fail;
 
-	MCInst_addOperand(Inst, MCOperand_CreateImm(OptionHiS));
+	MCOperand_CreateImm0(Inst, OptionHiS);
 	return MCDisassembler_Success;
 }
 
@@ -550,7 +550,7 @@ static DecodeStatus DecodeBitfield32ImmOperand(MCInst *Inst,
 	if (Imm6Bits > 31)
 		return MCDisassembler_Fail;
 
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Imm6Bits));
+	MCOperand_CreateImm0(Inst, Imm6Bits);
 	return MCDisassembler_Success;
 }
 
@@ -563,7 +563,7 @@ static DecodeStatus DecodeCVT32FixedPosOperand(MCInst *Inst,
 	if (Imm6Bits < 32)
 		return MCDisassembler_Fail;
 
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Imm6Bits));
+	MCOperand_CreateImm0(Inst, Imm6Bits);
 	return MCDisassembler_Success;
 }
 
@@ -572,35 +572,35 @@ static DecodeStatus DecodeFPZeroOperand(MCInst *Inst,
 {
 	// Any bits are valid in the instruction (they're architecturally ignored),
 	// but a code generator should insert 0.
-	MCInst_addOperand(Inst, MCOperand_CreateImm(0));
+	MCOperand_CreateImm0(Inst, 0);
 	return MCDisassembler_Success;
 }
 
 static DecodeStatus DecodeShiftRightImm8(MCInst *Inst,
 		unsigned Val, uint64_t Address, void *Decoder)
 {
-	MCInst_addOperand(Inst, MCOperand_CreateImm(8 - Val));
+	MCOperand_CreateImm0(Inst, 8 - Val);
 	return MCDisassembler_Success;
 }
 
 static DecodeStatus DecodeShiftRightImm16(MCInst *Inst,
 		unsigned Val, uint64_t Address, void *Decoder)
 {
-	MCInst_addOperand(Inst, MCOperand_CreateImm(16 - Val));
+	MCOperand_CreateImm0(Inst, 16 - Val);
 	return MCDisassembler_Success;
 }
 
 static DecodeStatus DecodeShiftRightImm32(MCInst *Inst,
 		unsigned Val, uint64_t Address, void *Decoder)
 {
-	MCInst_addOperand(Inst, MCOperand_CreateImm(32 - Val));
+	MCOperand_CreateImm0(Inst, 32 - Val);
 	return MCDisassembler_Success;
 }
 
 static DecodeStatus DecodeShiftRightImm64(MCInst *Inst,
 		unsigned Val, uint64_t Address, void *Decoder)
 {
-	MCInst_addOperand(Inst, MCOperand_CreateImm(64 - Val));
+	MCOperand_CreateImm0(Inst, 64 - Val);
 	return MCDisassembler_Success;
 }
 
@@ -611,7 +611,7 @@ static DecodeStatus DecodeShiftLeftImm8(MCInst *Inst, unsigned Val,
 	if (Val > 7)
 		return MCDisassembler_Fail;
 
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Val));
+	MCOperand_CreateImm0(Inst, Val);
 	return MCDisassembler_Success;
 }
 
@@ -622,7 +622,7 @@ static DecodeStatus DecodeShiftLeftImm16(MCInst *Inst, unsigned Val,
 	if (Val > 15)
 		return MCDisassembler_Fail;
 
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Val));
+	MCOperand_CreateImm0(Inst, Val);
 	return MCDisassembler_Success;
 }
 
@@ -633,7 +633,7 @@ static DecodeStatus DecodeShiftLeftImm32(MCInst *Inst, unsigned Val,
 	if (Val > 31)
 		return MCDisassembler_Fail;
 
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Val));
+	MCOperand_CreateImm0(Inst, Val);
 	return MCDisassembler_Success;
 }
 
@@ -644,7 +644,7 @@ static DecodeStatus DecodeShiftLeftImm64(MCInst *Inst, unsigned Val,
 	if (Val > 63)
 		return MCDisassembler_Fail;
 
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Val));
+	MCOperand_CreateImm0(Inst, Val);
 	return MCDisassembler_Success;
 }
 
@@ -658,8 +658,8 @@ static DecodeStatus DecodeMoveWideImmOperand(MCInst *Inst,
 
 	if (RegWidth == 32 && Shift > 1) return MCDisassembler_Fail;
 
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Imm16));
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Shift));
+	MCOperand_CreateImm0(Inst, Imm16);
+	MCOperand_CreateImm0(Inst, Shift);
 	return MCDisassembler_Success;
 }
 
@@ -672,7 +672,7 @@ static DecodeStatus DecodeLogicalImmOperand(MCInst *Inst,
 	if (!A64Imms_isLogicalImmBits(RegWidth, Bits, &Imm))
 		return MCDisassembler_Fail;
 
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Bits));
+	MCOperand_CreateImm0(Inst, Bits);
 	return MCDisassembler_Success;
 }
 
@@ -686,7 +686,7 @@ static DecodeStatus DecodeRegExtendOperand(MCInst *Inst,
 	if (ShiftAmount > 4)
 		return MCDisassembler_Fail;
 
-	MCInst_addOperand(Inst, MCOperand_CreateImm(ShiftAmount));
+	MCOperand_CreateImm0(Inst, ShiftAmount);
 	return MCDisassembler_Success;
 }
 
@@ -699,7 +699,7 @@ static DecodeStatus Decode32BitShiftOperand(MCInst *Inst,
 	if (ShiftAmount > 31)
 		return MCDisassembler_Fail;
 
-	MCInst_addOperand(Inst, MCOperand_CreateImm(ShiftAmount));
+	MCOperand_CreateImm0(Inst, ShiftAmount);
 	return MCDisassembler_Success;
 }
 
@@ -756,11 +756,11 @@ static DecodeStatus DecodeBitfieldInstruction(MCInst *Inst, unsigned Insn,
 		// itself as an MCInst operand.
 		if (SF && (ImmS + 1) % 64 == ImmR) {
 			MCInst_setOpcode(Inst, AArch64_LSLxxi);
-			MCInst_addOperand(Inst, MCOperand_CreateImm(63 - ImmS));
+			MCOperand_CreateImm0(Inst, 63 - ImmS);
 			return MCDisassembler_Success;
 		} else if (!SF && (ImmS + 1) % 32 == ImmR) {
 			MCInst_setOpcode(Inst, AArch64_LSLwwi);
-			MCInst_addOperand(Inst, MCOperand_CreateImm(31 - ImmS));
+			MCOperand_CreateImm0(Inst, 31 - ImmS);
 			return MCDisassembler_Success;
 		}
 	}
@@ -784,8 +784,8 @@ static DecodeStatus DecodeBitfieldInstruction(MCInst *Inst, unsigned Insn,
 	}
 
 	// Otherwise it's a boring insert or extract
-	MCInst_addOperand(Inst, MCOperand_CreateImm(ImmR));
-	MCInst_addOperand(Inst, MCOperand_CreateImm(ImmS));
+	MCOperand_CreateImm0(Inst, ImmR);
+	MCOperand_CreateImm0(Inst, ImmS);
 
 
 	if (ImmS < ImmR)
@@ -815,7 +815,7 @@ static DecodeStatus DecodeFMOVLaneInstruction(MCInst *Inst, unsigned Insn,
 	}
 
 	// Add the lane
-	MCInst_addOperand(Inst, MCOperand_CreateImm(1));
+	MCOperand_CreateImm0(Inst, 1);
 
 	return MCDisassembler_Success;
 }
@@ -900,7 +900,7 @@ static DecodeStatus DecodeLDSTPairInstruction(MCInst *Inst,
 
 
 	DecodeGPR64xspRegisterClass(Inst, Rn, Address, Decoder);
-	MCInst_addOperand(Inst, MCOperand_CreateImm(SImm7));
+	MCOperand_CreateImm0(Inst, SImm7);
 
 	return Result;
 }
@@ -950,7 +950,7 @@ static DecodeStatus DecodeNamedImmOperand(MCInst *Inst,
 
 	NamedImmMapper_toString(N, Val, &ValidNamed);
 	if (ValidNamed || NamedImmMapper_validImm(N, Val)) {
-		MCInst_addOperand(Inst, MCOperand_CreateImm(Val));
+		MCOperand_CreateImm0(Inst, Val);
 		return MCDisassembler_Success;
 	}
 
@@ -967,7 +967,7 @@ static DecodeStatus DecodeSysRegOperand(SysRegMapper *Mapper,
 	char result[128];
 	SysRegMapper_toString(Mapper, Val, &ValidNamed, result);
 
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Val));
+	MCOperand_CreateImm0(Inst, Val);
 
 	return ValidNamed ? MCDisassembler_Success : MCDisassembler_Fail;
 }
@@ -1036,7 +1036,7 @@ static DecodeStatus DecodeSingleIndexedInstruction(MCInst *Inst,
 
 	DecodeGPR64xspRegisterClass(Inst, Rn, Address, Decoder);
 
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Imm9));
+	MCOperand_CreateImm0(Inst, Imm9);
 
 	// N.b. The official documentation says undpredictable if Rt == Rn, but this
 	// takes place at the architectural rather than encoding level:
@@ -1065,7 +1065,7 @@ static DecodeStatus DecodeNeonMovImmShiftOperand(MCInst *Inst, unsigned ShiftAmo
 	if (IsLSL && ShiftAmount > 3)
 		return MCDisassembler_Fail;
 
-	MCInst_addOperand(Inst, MCOperand_CreateImm(ShiftAmount));
+	MCOperand_CreateImm0(Inst, ShiftAmount);
 	return MCDisassembler_Success;
 }
 
@@ -1129,7 +1129,7 @@ static DecodeStatus DecodeVLDSTPostInstruction(MCInst *Inst, unsigned Insn,
 	DecodeGPR64xspRegisterClass(Inst, Rn, Address, Decoder);
 
 	if (Rm == 31) // If Rm is 0x11111, add the vector list length in byte
-		MCInst_addOperand(Inst, MCOperand_CreateImm(NumVecs * (Is128BitVec ? 16 : 8)));
+		MCOperand_CreateImm0(Inst, NumVecs * (Is128BitVec ? 16 : 8));
 	else // Decode Rm
 		DecodeGPR64noxzrRegisterClass(Inst, Rm, Address, Decoder);
 
@@ -1529,7 +1529,7 @@ static DecodeStatus DecodeVLDSTLanePostInstruction(MCInst *Inst, unsigned Insn,
 		DecodeGPR64xspRegisterClass(Inst, Rn, Address, Decoder);
 
 		if (Rm == 31) // If Rm is 0x11111, add the number of transferred bytes
-			MCInst_addOperand(Inst, MCOperand_CreateImm(TransferBytes));
+			MCOperand_CreateImm0(Inst, TransferBytes);
 		else // Decode Rm
 			DecodeGPR64noxzrRegisterClass(Inst, Rm, Address, Decoder);
 
@@ -1559,7 +1559,7 @@ static DecodeStatus DecodeVLDSTLanePostInstruction(MCInst *Inst, unsigned Insn,
 	DecodeGPR64xspRegisterClass(Inst, Rn, Address, Decoder);
 
 	if (Rm == 31) // If Rm is 0x11111, add the number of transferred bytes
-		MCInst_addOperand(Inst, MCOperand_CreateImm(TransferBytes));
+		MCOperand_CreateImm0(Inst, TransferBytes);
 	else // Decode Rm
 		DecodeGPR64noxzrRegisterClass(Inst, Rm, Address, Decoder);
 
@@ -1599,7 +1599,7 @@ static DecodeStatus DecodeVLDSTLanePostInstruction(MCInst *Inst, unsigned Insn,
 			lane = Q;
 			break;
 	}
-	MCInst_addOperand(Inst, MCOperand_CreateImm(lane));
+	MCOperand_CreateImm0(Inst, lane);
 
 	return MCDisassembler_Success;
 }
@@ -1622,13 +1622,13 @@ static DecodeStatus DecodeSHLLInstruction(MCInst *Inst, unsigned Insn,
 
 	switch (size) {
 		case 0:
-			MCInst_addOperand(Inst, MCOperand_CreateImm(8));
+			MCOperand_CreateImm0(Inst, 8);
 			break;
 		case 1:
-			MCInst_addOperand(Inst, MCOperand_CreateImm(16));
+			MCOperand_CreateImm0(Inst, 16);
 			break;
 		case 2:
-			MCInst_addOperand(Inst, MCOperand_CreateImm(32));
+			MCOperand_CreateImm0(Inst, 32);
 			break;
 		default :
 			return MCDisassembler_Fail;
