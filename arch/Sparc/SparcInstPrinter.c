@@ -30,7 +30,7 @@
 
 #include "Sparc.h"
 
-static const char *getRegisterName(unsigned RegNo);
+static char *getRegisterName(unsigned RegNo);
 static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 static void printMemOperand(MCInst *MI, int opNum, SStream *O, const char *Modifier);
 static void printOperand(MCInst *MI, int opNum, SStream *O);
@@ -68,7 +68,8 @@ void Sparc_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 
 static void printRegName(SStream *OS, unsigned RegNo)
 {
-	SStream_concat(OS, "%%%s", getRegisterName(RegNo));
+	SStream_concat0(OS, "%");
+	SStream_concat0(OS, getRegisterName(RegNo));
 }
 
 #define GET_INSTRINFO_ENUM
@@ -95,16 +96,16 @@ static bool printSparcAliasInstr(MCInst *MI, SStream *O)
 									MCOperand_getImm(MCInst_getOperand(MI, 2)) == 8) {
 								  switch(MCOperand_getReg(MCInst_getOperand(MI, 1))) {
 									  default: break;
-									  case SP_I7: SStream_concat(O, "ret"); return true;
-									  case SP_O7: SStream_concat(O, "retl"); return true;
+									  case SP_I7: SStream_concat0(O, "ret"); return true;
+									  case SP_O7: SStream_concat0(O, "retl"); return true;
 								  }
 							  }
 
-							  SStream_concat(O, "jmp\t");
+							  SStream_concat0(O, "jmp\t");
 							  printMemOperand(MI, 1, O, NULL);
 							  return true;
 					 case SP_O7: // call $addr
-							  SStream_concat(O, "call ");
+							  SStream_concat0(O, "call ");
 							  printMemOperand(MI, 1, O, NULL);
 							  return true;
 				 }
@@ -121,15 +122,15 @@ static bool printSparcAliasInstr(MCInst *MI, SStream *O)
 				 // if V8, skip printing %fcc0.
 				 switch(MCInst_getOpcode(MI)) {
 					 default:
-					 case SP_V9FCMPS:  SStream_concat(O, "fcmps\t"); break;
-					 case SP_V9FCMPD:  SStream_concat(O, "fcmpd\t"); break;
-					 case SP_V9FCMPQ:  SStream_concat(O, "fcmpq\t"); break;
-					 case SP_V9FCMPES: SStream_concat(O, "fcmpes\t"); break;
-					 case SP_V9FCMPED: SStream_concat(O, "fcmped\t"); break;
-					 case SP_V9FCMPEQ: SStream_concat(O, "fcmpeq\t"); break;
+					 case SP_V9FCMPS:  SStream_concat0(O, "fcmps\t"); break;
+					 case SP_V9FCMPD:  SStream_concat0(O, "fcmpd\t"); break;
+					 case SP_V9FCMPQ:  SStream_concat0(O, "fcmpq\t"); break;
+					 case SP_V9FCMPES: SStream_concat0(O, "fcmpes\t"); break;
+					 case SP_V9FCMPED: SStream_concat0(O, "fcmped\t"); break;
+					 case SP_V9FCMPEQ: SStream_concat0(O, "fcmpeq\t"); break;
 				 }
 				 printOperand(MI, 1, O);
-				 SStream_concat(O, ", ");
+				 SStream_concat0(O, ", ");
 				 printOperand(MI, 2, O);
 				 return true;
 	}
@@ -199,7 +200,7 @@ static void printMemOperand(MCInst *MI, int opNum, SStream *O, const char *Modif
 
 	// If this is an ADD operand, emit it like normal operands.
 	if (Modifier && !strcmp(Modifier, "arith")) {
-		SStream_concat(O, ", ");
+		SStream_concat0(O, ", ");
 		printOperand(MI, opNum + 1, O);
 		set_mem_access(MI, false);
 		return;
@@ -217,7 +218,7 @@ static void printMemOperand(MCInst *MI, int opNum, SStream *O, const char *Modif
 		return;   // don't print "+0"
 	}
 
-	SStream_concat(O, "+");
+	SStream_concat0(O, "+");
 
 	printOperand(MI, opNum + 1, O);
 	set_mem_access(MI, false);
@@ -245,7 +246,7 @@ static void printCCOperand(MCInst *MI, int opNum, SStream *O)
 				 break;
 	}
 
-	SStream_concat(O, "%s", SPARCCondCodeToString((sparc_cc)CC));
+	SStream_concat0(O, SPARCCondCodeToString((sparc_cc)CC));
 
 	if (MI->csh->detail)
 		MI->flat_insn->detail->sparc.cc = (sparc_cc)CC;
