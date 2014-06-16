@@ -265,7 +265,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U
   };
 
-  static const char AsmStrs[] = {
+  static char AsmStrs[] = {
   /* 0 */ 'l', 'd', 'a', 'p', 32, 'r', '1', '1', ',', 32, 0,
   /* 11 */ 'g', 'e', 't', 's', 'r', 32, 'r', '1', '1', ',', 32, 0,
   /* 23 */ 's', 'e', 't', 32, 'c', 'p', ',', 32, 0,
@@ -417,7 +417,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   uint32_t Bits = OpInfo[MCInst_getOpcode(MI)];
   // assert(Bits != 0 && "Cannot print this instruction.");
 #ifndef CAPSTONE_DIET
-  SStream_concat(O, "%s", AsmStrs+(Bits & 2047)-1);
+  SStream_concat0(O, AsmStrs+(Bits & 2047)-1);
 #endif
 
 
@@ -457,7 +457,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   default:   // unreachable.
   case 0:
     // ADD_2rus, ADD_3r, ANDNOT_2r, AND_3r, ASHR_l2rus, ASHR_l3r, BITREV_l2r,...
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 1:
     // ADJCALLSTACKDOWN, ADJCALLSTACKUP, BAU_1r, BLAT_lu6, BLAT_u6, BLA_1r, B...
@@ -465,107 +465,107 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 2:
     // BLACP_lu10, BLACP_u10, CLRPT_1R, EDU_1r, EEU_1r, FREER_1r, LDAWCP_lu6,...
-    SStream_concat(O, "%s", "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false, 0);
     return;
     break;
   case 3:
     // BR_JT, BR_JT32
-    SStream_concat(O, "%s", "\n"); 
+    SStream_concat0(O, "\n"); 
     break;
   case 4:
     // CHKCT_2r, CHKCT_rus, OUTCT_2r, OUTCT_rus, OUTPW_l2rus, OUTSHR_2r, OUTT...
-    SStream_concat(O, "%s", "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false, 0);
     break;
   case 5:
     // EEF_2r, EET_2r, ENDIN_2r, GETD_l2r, GETN_l2r, GETST_2r, GETTS_2r, INCT...
-    SStream_concat(O, "%s", ", res["); 
+    SStream_concat0(O, ", res["); 
     set_mem_access(MI, true, 0);
     break;
   case 6:
     // GETPS_l2r
-    SStream_concat(O, "%s", ", ps["); 
+    SStream_concat0(O, ", ps["); 
     set_mem_access(MI, true, 0);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "%s", "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false, 0);
     return;
     break;
   case 7:
     // INITCP_2r
-    SStream_concat(O, "%s", "]:cp, "); 
+    SStream_concat0(O, "]:cp, "); 
     set_mem_access(MI, false, XCORE_REG_CP);
     printOperand(MI, 0, O); 
     return;
     break;
   case 8:
     // INITDP_2r
-    SStream_concat(O, "%s", "]:dp, "); 
+    SStream_concat0(O, "]:dp, "); 
     set_mem_access(MI, false, XCORE_REG_DP);
     printOperand(MI, 0, O); 
     return;
     break;
   case 9:
     // INITLR_l2r
-    SStream_concat(O, "%s", "]:lr, "); 
+    SStream_concat0(O, "]:lr, "); 
     set_mem_access(MI, false, XCORE_REG_LR);
     printOperand(MI, 0, O); 
     return;
     break;
   case 10:
     // INITPC_2r
-    SStream_concat(O, "%s", "]:pc, "); 
+    SStream_concat0(O, "]:pc, "); 
     set_mem_access(MI, false, XCORE_REG_PC);
     printOperand(MI, 0, O); 
     return;
     break;
   case 11:
     // INITSP_2r
-    SStream_concat(O, "%s", "]:sp, "); 
+    SStream_concat0(O, "]:sp, "); 
     set_mem_access(MI, false, XCORE_REG_SP);
     printOperand(MI, 0, O); 
     return;
     break;
   case 12:
     // LDAWDP_lru6, LDAWDP_ru6, LDWDP_lru6, LDWDP_ru6, STWDP_lru6, STWDP_ru6
-    SStream_concat(O, "%s", ", dp["); 
+    SStream_concat0(O, ", dp["); 
     set_mem_access(MI, true, XCORE_REG_DP);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "%s", "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false, 0);
     return;
     break;
   case 13:
     // LDAWSP_lru6, LDAWSP_ru6, LDWSP_lru6, LDWSP_ru6, STWSP_lru6, STWSP_ru6
-    SStream_concat(O, "%s", ", sp["); 
+    SStream_concat0(O, ", sp["); 
     set_mem_access(MI, true, XCORE_REG_SP);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "%s", "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false, 0);
     return;
     break;
   case 14:
     // LDWCP_lru6, LDWCP_ru6
-    SStream_concat(O, "%s", ", cp["); 
+    SStream_concat0(O, ", cp["); 
     set_mem_access(MI, true, XCORE_REG_CP);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "%s", "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false, 0);
     return;
     break;
   case 15:
     // SETEV_1r, SETV_1r
-    SStream_concat(O, "%s", "], r11"); 
+    SStream_concat0(O, "], r11"); 
     set_mem_access(MI, false, 0);
     return;
     break;
   case 16:
     // TSETR_3r
-    SStream_concat(O, "%s", "]:r"); 
+    SStream_concat0(O, "]:r"); 
     set_mem_access(MI, false, 0);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 1, O); 
     return;
     break;
@@ -597,7 +597,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 4:
     // CRC8_l4r, LADD_l5r, LSUB_l5r, OUTPW_l2rus
     printOperand(MI, 0, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   }
 
@@ -608,7 +608,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   default:   // unreachable.
   case 0:
     // ADD_2rus, ADD_3r, AND_3r, ASHR_l2rus, ASHR_l3r, CRC_l3r, DIVS_l3r, DIV...
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 1:
     // ANDNOT_2r, BITREV_l2r, BRBF_lru6, BRBF_ru6, BRBT_lru6, BRBT_ru6, BRFF_...
@@ -617,19 +617,19 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 2:
     // CRC8_l4r
     printOperand(MI, 3, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 4, O); 
     return;
     break;
   case 3:
     // EEF_2r, EET_2r, ENDIN_2r, GETD_l2r, GETN_l2r, GETST_2r, GETTS_2r, INCT...
-    SStream_concat(O, "%s", "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false, 0);
     return;
     break;
   case 4:
     // INPW_l2rus
-    SStream_concat(O, "%s", "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false, 0);
     printOperand(MI, 2, O); 
     return;
@@ -640,19 +640,19 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 6:
     // LD16S_3r, LD8U_3r, LDA16F_l3r, LDAWF_l2rus, LDAWF_l3r, LDW_2rus, LDW_3...
-    SStream_concat(O, "%s", "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true, 0xffff);
     printOperand(MI, 2, O); 
-    SStream_concat(O, "%s", "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false, 0);
     return;
     break;
   case 7:
     // LDA16B_l3r, LDAWB_l2rus, LDAWB_l3r
-    SStream_concat(O, "%s", "[-"); 
+    SStream_concat0(O, "[-"); 
     set_mem_access(MI, true, -0xffff);
     printOperand(MI, 2, O); 
-    SStream_concat(O, "%s", "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false, 0);
     return;
     break;
@@ -674,16 +674,16 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 2:
     // LADD_l5r, LSUB_l5r
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 3, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 4, O); 
     return;
     break;
   case 3:
     // LDIVU_l5r, MACCS_l4r, MACCU_l4r
     printOperand(MI, 4, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 4:
     // OUTPW_l2rus
@@ -703,17 +703,17 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 1:
     // LDIVU_l5r
     printOperand(MI, 2, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 3, O); 
     return;
     break;
   case 2:
     // LMUL_l6r
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 3, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 4, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 5, O); 
     return;
     break;
@@ -729,12 +729,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 /// getRegisterName - This method is automatically generated by tblgen
 /// from the register set description.  This returns the assembler name
 /// for the specified register.
-static const char *getRegisterName(unsigned RegNo)
+static char *getRegisterName(unsigned RegNo)
 {
   // assert(RegNo && RegNo < 17 && "Invalid register number!");
 
 #ifndef CAPSTONE_DIET
-  static const char AsmStrs[] = {
+  static char AsmStrs[] = {
   /* 0 */ 'r', '1', '0', 0,
   /* 4 */ 'r', '0', 0,
   /* 7 */ 'r', '1', '1', 0,

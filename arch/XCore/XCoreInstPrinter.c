@@ -29,7 +29,7 @@
 #include "../../MathExtras.h"
 #include "XCoreMapping.h"
 
-static const char *getRegisterName(unsigned RegNo);
+static char *getRegisterName(unsigned RegNo);
 
 void XCore_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 {
@@ -194,7 +194,7 @@ static void _printOperand(MCInst *MI, MCOperand *MO, SStream *O)
 		unsigned reg;
 
 		reg = MCOperand_getReg(MO);
-		SStream_concat(O, "%s", getRegisterName(reg));
+		SStream_concat0(O, getRegisterName(reg));
 
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
