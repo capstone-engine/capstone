@@ -75,12 +75,6 @@ const MCInst *MCOperand_getInst(const MCOperand *op);
 
 void MCOperand_setInst(MCOperand *op, const MCInst *Val);
 
-MCOperand *MCOperand_CreateReg(unsigned Reg);
-
-MCOperand *MCOperand_CreateImm(int64_t Val);
-
-MCOperand *MCOperand_CreateFPImm(double Val);
-
 // create Reg operand in the next slot
 void MCOperand_CreateReg0(MCInst *inst, unsigned Reg);
 
@@ -129,8 +123,6 @@ unsigned MCInst_getOpcodePub(const MCInst*);
 MCOperand *MCInst_getOperand(MCInst *inst, unsigned i);
 
 unsigned MCInst_getNumOperands(const MCInst *inst);
-
-int MCInst_addOperand(MCInst *inst, MCOperand *Op);
 
 // This addOperand2 function doesnt free Op
 void MCInst_addOperand2(MCInst *inst, MCOperand *Op);
