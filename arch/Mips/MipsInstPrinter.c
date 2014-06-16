@@ -157,7 +157,7 @@ static void printSaveRestore(MCInst *MI, SStream *O)
 	unsigned i, e;
 	for (i = 0, e = MCInst_getNumOperands(MI); i != e; ++i) {
 		if (i != 0)
-			SStream_concat(O, ", ");
+			SStream_concat0(O, ", ");
 		if (MCOperand_isReg(MCInst_getOperand(MI, i)))
 			printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, i)));
 		else
@@ -173,28 +173,28 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
 		default: break;
 		case Mips_RDHWR:
 		case Mips_RDHWR64:
-			SStream_concat(O, ".set\tpush\n");
-			SStream_concat(O, ".set\tmips32r2\n");
+			SStream_concat0(O, ".set\tpush\n");
+			SStream_concat0(O, ".set\tmips32r2\n");
 			break;
 		case Mips_Save16:
-			SStream_concat(O, "\tsave\t");
+			SStream_concat0(O, "\tsave\t");
 			printSaveRestore(MI, O);
-			SStream_concat(O, " # 16 bit inst\n");
+			SStream_concat0(O, " # 16 bit inst\n");
 			return;
 		case Mips_SaveX16:
-			SStream_concat(O, "\tsave\t");
+			SStream_concat0(O, "\tsave\t");
 			printSaveRestore(MI, O);
-			SStream_concat(O, "\n");
+			SStream_concat0(O, "\n");
 			return;
 		case Mips_Restore16:
-			SStream_concat(O, "\trestore\t");
+			SStream_concat0(O, "\trestore\t");
 			printSaveRestore(MI, O);
-			SStream_concat(O, " # 16 bit inst\n");
+			SStream_concat0(O, " # 16 bit inst\n");
 			return;
 		case Mips_RestoreX16:
-			SStream_concat(O, "\trestore\t");
+			SStream_concat0(O, "\trestore\t");
 			printSaveRestore(MI, O);
-			SStream_concat(O, "\n");
+			SStream_concat0(O, "\n");
 			return;
 	}
 
@@ -216,7 +216,7 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
 		default: break;
 		case Mips_RDHWR:
 		case Mips_RDHWR64:
-			SStream_concat(O, "\n.set\tpop");
+			SStream_concat0(O, "\n.set\tpop");
 			break;
 	}
 }
@@ -329,9 +329,9 @@ static void printMemOperand(MCInst *MI, int opNum, SStream *O)
 	// pattern lw $25,%call16($28)
 	set_mem_access(MI, true);
 	printOperand(MI, opNum + 1, O);
-	SStream_concat(O, "(");
+	SStream_concat0(O, "(");
 	printOperand(MI, opNum, O);
-	SStream_concat(O, ")");
+	SStream_concat0(O, ")");
 	set_mem_access(MI, false);
 }
 
@@ -341,7 +341,7 @@ static void printMemOperandEA(MCInst *MI, int opNum, SStream *O)
 	// when using stack locations for not load/store instructions
 	// print the same way as all normal 3 operand instructions.
 	printOperand(MI, opNum, O);
-	SStream_concat(O, ", ");
+	SStream_concat0(O, ", ");
 	printOperand(MI, opNum + 1, O);
 	return;
 }
@@ -349,7 +349,7 @@ static void printMemOperandEA(MCInst *MI, int opNum, SStream *O)
 static void printFCCOperand(MCInst *MI, int opNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, opNum);
-	SStream_concat(O, MipsFCCToString((Mips_CondCode)MCOperand_getImm(MO)));
+	SStream_concat0(O, MipsFCCToString((Mips_CondCode)MCOperand_getImm(MO)));
 }
 
 static char *printAlias1(char *Str, MCInst *MI, unsigned OpNo, SStream *OS)
@@ -365,7 +365,7 @@ static char *printAlias2(char *Str, MCInst *MI,
 	char *tmp;
 
 	tmp = printAlias1(Str, MI, OpNo0, OS);
-	SStream_concat(OS, ", ");
+	SStream_concat0(OS, ", ");
 	printOperand(MI, OpNo1, OS);
 
 	return tmp;
