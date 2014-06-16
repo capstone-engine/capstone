@@ -557,7 +557,6 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 		}
 	}
 
-/*
 	if (f) {
 		// resize total to contain newly disasm insns
 		void *tmp = cs_mem_realloc(total, total_size - (INSN_CACHE_SIZE - f) * sizeof(*insn_cache));
@@ -569,7 +568,6 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 
 		total = tmp;
 	}
-	*/
 
 	*insn = total;
 
