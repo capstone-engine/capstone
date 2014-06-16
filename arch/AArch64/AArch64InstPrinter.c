@@ -117,7 +117,7 @@ static void printAddrRegExtendOperand(MCInst *MI, unsigned OpNum,
 		default:
 			break; //llvm_unreachable("Incorrect Option on load/store (reg offset)");
 	}
-	SStream_concat(O, Ext);
+	SStream_concat0(O, Ext);
 
 	if (S) {
 		unsigned ShiftAmt = Log2_32(MemSize);
@@ -135,7 +135,7 @@ static void printAddrRegExtendOperand(MCInst *MI, unsigned OpNum,
 			}
 		}
 	} else if (IsLSL) {
-		SStream_concat(O, " #0");
+		SStream_concat0(O, " #0");
 	}
 }
 
@@ -162,7 +162,7 @@ static void printAddSubImmLSL12Operand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	printAddSubImmLSL0Operand(MI, OpNum, O);
 
-	SStream_concat(O, ", lsl #12");
+	SStream_concat0(O, ", lsl #12");
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.type = ARM64_SFT_LSL;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.value = 12;
@@ -297,7 +297,7 @@ static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 
 static void printFPZeroOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	SStream_concat(O, "#0.0");
+	SStream_concat0(O, "#0.0");
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_FP;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].fp = 0;
@@ -308,7 +308,7 @@ static void printFPZeroOperand(MCInst *MI, unsigned OpNum, SStream *O)
 static void printCondCodeOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	SStream_concat(O, A64CondCodeToString((A64CC_CondCodes)(MCOperand_getImm(MO))));
+	SStream_concat0(O, A64CondCodeToString((A64CC_CondCodes)(MCOperand_getImm(MO))));
 	if (MI->csh->detail)
 		MI->flat_insn->detail->arm64.cc = MCOperand_getImm(MO) + 1;
 }
@@ -408,10 +408,10 @@ static void printShiftOperand(MCInst *MI,  unsigned OpNum,
 		return;
 
 	switch (Shift) {
-		case A64SE_LSL: SStream_concat(O, "lsl"); break;
-		case A64SE_LSR: SStream_concat(O, "lsr"); break;
-		case A64SE_ASR: SStream_concat(O, "asr"); break;
-		case A64SE_ROR: SStream_concat(O, "ror"); break;
+		case A64SE_LSL: SStream_concat0(O, "lsl"); break;
+		case A64SE_LSR: SStream_concat0(O, "lsr"); break;
+		case A64SE_ASR: SStream_concat0(O, "asr"); break;
+		case A64SE_ROR: SStream_concat0(O, "ror"); break;
 		default: break; // llvm_unreachable("Invalid shift specifier in logical instruction");
 	}
 
@@ -466,7 +466,7 @@ static void printNamedImmOperand(MCInst *MI, unsigned OpNum, SStream *O, NamedIm
 	char *Name = NamedImmMapper_toString(Mapper, (uint32_t)MCOperand_getImm(MO), &ValidName);
 
 	if (ValidName)
-		SStream_concat(O, Name);
+		SStream_concat0(O, Name);
 	else {
 		uint64_t imm = MCOperand_getImm(MO);
 		if (imm > HEX_THRESHOLD)
@@ -491,7 +491,7 @@ static void printSysRegOperand(SysRegMapper *Mapper,
 
 	SysRegMapper_toString(Mapper, (uint32_t)MCOperand_getImm(MO), &ValidName, Name);
 	if (ValidName) {
-		SStream_concat(O, Name);
+		SStream_concat0(O, Name);
 	}
 }
 
@@ -536,14 +536,14 @@ static void printRegExtendOperand(MCInst *MI, unsigned OpNum, SStream *O,
 	}
 
 	switch (Ext) {
-		case A64SE_UXTB: SStream_concat(O, "uxtb"); break;
-		case A64SE_UXTH: SStream_concat(O, "uxth"); break;
-		case A64SE_UXTW: SStream_concat(O, "uxtw"); break;
-		case A64SE_UXTX: SStream_concat(O, "uxtx"); break;
-		case A64SE_SXTB: SStream_concat(O, "sxtb"); break;
-		case A64SE_SXTH: SStream_concat(O, "sxth"); break;
-		case A64SE_SXTW: SStream_concat(O, "sxtw"); break;
-		case A64SE_SXTX: SStream_concat(O, "sxtx"); break;
+		case A64SE_UXTB: SStream_concat0(O, "uxtb"); break;
+		case A64SE_UXTH: SStream_concat0(O, "uxth"); break;
+		case A64SE_UXTW: SStream_concat0(O, "uxtw"); break;
+		case A64SE_UXTX: SStream_concat0(O, "uxtx"); break;
+		case A64SE_SXTB: SStream_concat0(O, "sxtb"); break;
+		case A64SE_SXTH: SStream_concat0(O, "sxth"); break;
+		case A64SE_SXTW: SStream_concat0(O, "sxtw"); break;
+		case A64SE_SXTX: SStream_concat0(O, "sxtx"); break;
 		default: break; //llvm_unreachable("Unexpected shift type for printing");
 	}
 
@@ -601,7 +601,7 @@ static void printVPRRegister(MCInst *MI, unsigned OpNo, SStream *O)
 #ifndef CAPSTONE_DIET
 	char *Name = cs_strdup(getRegisterName(Reg));
 	Name[0] = 'v';
-	SStream_concat(O, "%s", Name);
+	SStream_concat0(O, Name);
 	cs_mem_free(Name);
 #endif
 	if (MI->csh->detail) {
@@ -616,7 +616,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	MCOperand *Op = MCInst_getOperand(MI, OpNo);
 	if (MCOperand_isReg(Op)) {
 		unsigned Reg = MCOperand_getReg(Op);
-		SStream_concat(O, getRegisterName(Reg));
+		SStream_concat0(O, getRegisterName(Reg));
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
 				if (MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.base == ARM64_REG_INVALID) {
@@ -696,11 +696,11 @@ static void printNeonMovImmShiftOperand(MCInst *MI, unsigned OpNum,
 	if (IsLSL) {
 		if (Imm == 0)
 			return;
-		SStream_concat(O, ", lsl");
+		SStream_concat0(O, ", lsl");
 		if (MI->csh->detail)
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.type = ARM64_SFT_LSL;
 	} else {
-		SStream_concat(O, ", msl");
+		SStream_concat0(O, ", msl");
 		if (MI->csh->detail)
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.type = ARM64_SFT_MSL;
 	}
@@ -723,7 +723,7 @@ static void printNeonMovImmShiftOperand(MCInst *MI, unsigned OpNum,
 
 static void printNeonUImm0Operand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	SStream_concat(O, "#0");
+	SStream_concat0(O, "#0");
 	// FIXME: vector ZERO
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
@@ -824,7 +824,7 @@ static void printVectorList(MCInst *MI, unsigned OpNum,
 
 	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
 	const char *LayoutStr = A64VectorLayoutToString(Layout);
-	SStream_concat(O, "{");
+	SStream_concat0(O, "{");
 	if (Count > 1) { // Print sub registers separately
 		bool IsVec64 = (Layout < A64Layout_VL_16B);
 		unsigned SubRegIdx = IsVec64 ? AArch64_dsub_0 : AArch64_qsub_0;
@@ -834,7 +834,7 @@ static void printVectorList(MCInst *MI, unsigned OpNum,
 			Name[0] = 'v';
 			SStream_concat(O, "%s%s", Name, LayoutStr);
 			if (I != Count - 1)
-				SStream_concat(O, ", ");
+				SStream_concat0(O, ", ");
 			cs_mem_free(Name);
 		}
 	} else { // Print the register directly when NumVecs is 1.
@@ -843,7 +843,7 @@ static void printVectorList(MCInst *MI, unsigned OpNum,
 		SStream_concat(O, "%s%s", Name, LayoutStr);
 		cs_mem_free(Name);
 	}
-	SStream_concat(O, "}");
+	SStream_concat0(O, "}");
 #endif
 }
 
