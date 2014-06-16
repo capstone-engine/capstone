@@ -30,7 +30,7 @@
 #include "PPCMapping.h"
 
 #ifndef CAPSTONE_DIET
-static const char *getRegisterName(unsigned RegNo);
+static char *getRegisterName(unsigned RegNo);
 #endif
 
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
@@ -80,19 +80,19 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 		bool useSubstituteMnemonic = false;
 
 		if (SH <= 31 && MB == 0 && ME == (31-SH)) {
-			SStream_concat(O, "slwi\t");
+			SStream_concat0(O, "slwi\t");
 			useSubstituteMnemonic = true;
 		}
 
 		if (SH <= 31 && MB == (32-SH) && ME == 31) {
-			SStream_concat(O, "srwi\t");
+			SStream_concat0(O, "srwi\t");
 			useSubstituteMnemonic = true;
 			SH = 32-SH;
 		}
 
 		if (useSubstituteMnemonic) {
 			printOperand(MI, 0, O);
-			SStream_concat(O, ", ");
+			SStream_concat0(O, ", ");
 			printOperand(MI, 1, O);
 			if (SH > HEX_THRESHOLD)
 				SStream_concat(O, ", 0x%x", (unsigned int)SH);
@@ -105,9 +105,9 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 
 	if ((MCInst_getOpcode(MI) == PPC_OR || MCInst_getOpcode(MI) == PPC_OR8) &&
 			MCOperand_getReg(MCInst_getOperand(MI, 1)) == MCOperand_getReg(MCInst_getOperand(MI, 1))) {
-		SStream_concat(O, "mr\t");
+		SStream_concat0(O, "mr\t");
 		printOperand(MI, 0, O);
-		SStream_concat(O, ", ");
+		SStream_concat0(O, ", ");
 		printOperand(MI, 1, O);
 		return;
 	}
@@ -117,9 +117,9 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 		unsigned char ME = (unsigned char)MCOperand_getImm(MCInst_getOperand(MI, 3));
 		// rldicr RA, RS, SH, 63-SH == sldi RA, RS, SH
 		if (63-SH == ME) {
-			SStream_concat(O, "sldi\t");
+			SStream_concat0(O, "sldi\t");
 			printOperand(MI, 0, O);
-			SStream_concat(O, ", ");
+			SStream_concat0(O, ", ");
 			printOperand(MI, 1, O);
 			if (SH > HEX_THRESHOLD)
 				SStream_concat(O, ", 0x%x", (unsigned int)SH);
@@ -147,42 +147,42 @@ static void printPredicateOperand(MCInst *MI, unsigned OpNo,
 			case PPC_PRED_LT_MINUS:
 			case PPC_PRED_LT_PLUS:
 			case PPC_PRED_LT:
-				SStream_concat(O, "lt");
+				SStream_concat0(O, "lt");
 				return;
 			case PPC_PRED_LE_MINUS:
 			case PPC_PRED_LE_PLUS:
 			case PPC_PRED_LE:
-				SStream_concat(O, "le");
+				SStream_concat0(O, "le");
 				return;
 			case PPC_PRED_EQ_MINUS:
 			case PPC_PRED_EQ_PLUS:
 			case PPC_PRED_EQ:
-				SStream_concat(O, "eq");
+				SStream_concat0(O, "eq");
 				return;
 			case PPC_PRED_GE_MINUS:
 			case PPC_PRED_GE_PLUS:
 			case PPC_PRED_GE:
-				SStream_concat(O, "ge");
+				SStream_concat0(O, "ge");
 				return;
 			case PPC_PRED_GT_MINUS:
 			case PPC_PRED_GT_PLUS:
 			case PPC_PRED_GT:
-				SStream_concat(O, "gt");
+				SStream_concat0(O, "gt");
 				return;
 			case PPC_PRED_NE_MINUS:
 			case PPC_PRED_NE_PLUS:
 			case PPC_PRED_NE:
-				SStream_concat(O, "ne");
+				SStream_concat0(O, "ne");
 				return;
 			case PPC_PRED_UN_MINUS:
 			case PPC_PRED_UN_PLUS:
 			case PPC_PRED_UN:
-				SStream_concat(O, "un");
+				SStream_concat0(O, "un");
 				return;
 			case PPC_PRED_NU_MINUS:
 			case PPC_PRED_NU_PLUS:
 			case PPC_PRED_NU:
-				SStream_concat(O, "nu");
+				SStream_concat0(O, "nu");
 				return;
 		}
 	}
@@ -206,7 +206,7 @@ static void printPredicateOperand(MCInst *MI, unsigned OpNo,
 			case PPC_PRED_NE_MINUS:
 			case PPC_PRED_UN_MINUS:
 			case PPC_PRED_NU_MINUS:
-				SStream_concat(O, "-");
+				SStream_concat0(O, "-");
 				return;
 			case PPC_PRED_LT_PLUS:
 			case PPC_PRED_LE_PLUS:
@@ -216,7 +216,7 @@ static void printPredicateOperand(MCInst *MI, unsigned OpNo,
 			case PPC_PRED_NE_PLUS:
 			case PPC_PRED_UN_PLUS:
 			case PPC_PRED_NU_PLUS:
-				SStream_concat(O, "+");
+				SStream_concat0(O, "+");
 				return;
 			default:	// unreachable
 				return;
@@ -370,7 +370,7 @@ static void printBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 	// Branches can take an immediate operand.  This is used by the branch
 	// selection pass to print .+8, an eight byte displacement from the PC.
-	SStream_concat(O, ".+");
+	SStream_concat0(O, ".+");
 	printAbsBranchOperand(MI, OpNo, O);
 }
 
@@ -429,14 +429,14 @@ static void printMemRegImm(MCInst *MI, unsigned OpNo, SStream *O)
 
 	printS16ImmOperand_Mem(MI, OpNo, O);
 
-	SStream_concat(O, "(");
+	SStream_concat0(O, "(");
 
 	if (MCOperand_getReg(MCInst_getOperand(MI, OpNo + 1)) == PPC_R0)
-		SStream_concat(O, "0");
+		SStream_concat0(O, "0");
 	else
 		printOperand(MI, OpNo + 1, O);
 
-	SStream_concat(O, ")");
+	SStream_concat0(O, ")");
 	set_mem_access(MI, false);
 }
 
@@ -446,10 +446,10 @@ static void printMemRegReg(MCInst *MI, unsigned OpNo, SStream *O)
 	// the value contained in the register.  For this reason, the darwin
 	// assembler requires that we print r0 as 0 (no r) when used as the base.
 	if (MCOperand_getReg(MCInst_getOperand(MI, OpNo)) == PPC_R0)
-		SStream_concat(O, "0");
+		SStream_concat0(O, "0");
 	else
 		printOperand(MI, OpNo, O);
-	SStream_concat(O, ", ");
+	SStream_concat0(O, ", ");
 
 	printOperand(MI, OpNo + 1, O);
 }
@@ -458,9 +458,9 @@ static void printTLSCall(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	set_mem_access(MI, true);
 	printBranchOperand(MI, OpNo, O);
-	SStream_concat(O, "(");
+	SStream_concat0(O, "(");
 	printOperand(MI, OpNo + 1, O);
-	SStream_concat(O, ")");
+	SStream_concat0(O, ")");
 	set_mem_access(MI, false);
 }
 
@@ -468,7 +468,7 @@ static void printTLSCall(MCInst *MI, unsigned OpNo, SStream *O)
 #ifndef CAPSTONE_DIET
 /// stripRegisterPrefix - This method strips the character prefix from a
 /// register name so that only the number is left.  Used by for linux asm.
-static const char *stripRegisterPrefix(const char *RegName)
+static char *stripRegisterPrefix(char *RegName)
 {
 	switch (RegName[0]) {
 		case 'r':
@@ -490,7 +490,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	if (MCOperand_isReg(Op)) {
 		unsigned reg = MCOperand_getReg(Op);
 #ifndef CAPSTONE_DIET
-		const char *RegName = getRegisterName(reg);
+		char *RegName = getRegisterName(reg);
 #endif
 		// map to public register
 		reg = PPC_map_register(reg);
@@ -499,7 +499,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		if (MI->csh->syntax == CS_OPT_SYNTAX_NOREGNAME)
 			RegName = stripRegisterPrefix(RegName);
 
-		SStream_concat(O, "%s", RegName);
+		SStream_concat0(O, RegName);
 #endif
 
 		if (MI->csh->detail) {
