@@ -94,10 +94,10 @@ typedef enum A64CC_CondCodes {   // Meaning (integer)          Meaning (floating
 #define inline /* inline */
 #endif
 #endif
-inline static const char *A64CondCodeToString(A64CC_CondCodes CC)
+inline static char *A64CondCodeToString(A64CC_CondCodes CC)
 {
 	switch (CC) {
-		default: return 0;	// never reach
+		default: return NULL;	// never reach
 		case A64CC_EQ:  return "eq";
 		case A64CC_NE:  return "ne";
 		case A64CC_HS:  return "hs";

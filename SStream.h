@@ -13,4 +13,6 @@ void SStream_Init(SStream *ss);
 
 void SStream_concat(SStream *ss, const char *fmt, ...);
 
+void SStream_concat0(SStream *ss, char *s);
+
 #endif

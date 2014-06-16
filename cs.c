@@ -256,32 +256,14 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 		PostPrinter_t postprinter, const uint8_t *code)
 {
 #ifndef CAPSTONE_DIET
-	char *sp;
+	char *sp, *mnem;
 #endif
-
-	if (handle->detail) {
-		// avoiding copy insn->detail
-		memcpy(insn, &mci->flat_insn, sizeof(*insn) - sizeof(insn->detail));
-
-		// NOTE: copy details in 2 chunks, since union is always put at address divisible by 8
-		// copy from @regs_read until @arm
-		memcpy(insn->detail, (char *)((uintptr_t)(&(mci->flat_insn)) + offsetof(cs_insn_flat, regs_read)),
-				offsetof(cs_detail, arm) - offsetof(cs_detail, regs_read));
-		// then copy from @arm until end
-		memcpy((void *)((uintptr_t)(insn->detail) + offsetof(cs_detail, arm)),
-				(char *)((uintptr_t)(&(mci->flat_insn)) + offsetof(cs_insn_flat, arm)),
-				sizeof(cs_detail) - offsetof(cs_detail, arm));
-	} else {
-		insn->address = mci->address;
-		insn->size = (uint16_t)mci->insn_size;
-	}
 
 	// fill the instruction bytes
 	memcpy(insn->bytes, code, MIN(sizeof(insn->bytes), insn->size));
 
 	// map internal instruction opcode to public insn ID
-	if (handle->insn_id)
-		handle->insn_id(handle, insn, MCInst_getOpcode(mci));
+	handle->insn_id(handle, insn, MCInst_getOpcode(mci));
 
 	// alias instruction might have ID saved in OpcodePub
 	if (MCInst_getOpcodePub(mci))
@@ -295,13 +277,30 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 	// fill in mnemonic & operands
 	// find first space or tab
 	sp = buffer;
-	for (sp = buffer; *sp; sp++) {
-		if (*sp == ' '||*sp == '\t')
-			break;
-		if (*sp == '|')
-			*sp = ' ';
+	mnem = insn->mnemonic;
+	if (mci->x86_prefix[0]) {
+		for (sp = buffer; *sp; sp++) {
+			if (*sp == ' '|| *sp == '\t')
+				break;
+			if (*sp == '|')	// lock|rep prefix for x86
+				*sp = ' ';
+			// copy to @mnemonic
+			*mnem = *sp;
+			mnem++;
+		}
+	} else {
+		for (sp = buffer; *sp; sp++) {
+			if (*sp == ' '|| *sp == '\t')
+				break;
+			// copy to @mnemonic
+			*mnem = *sp;
+			mnem++;
+		}
 	}
 
+	*mnem = '\0';
+
+	// copy @op_str
 	if (*sp) {
 		*sp = '\0';
 		// find the next non-space char
@@ -311,9 +310,6 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 		insn->op_str[sizeof(insn->op_str) - 1] = '\0';
 	} else
 		insn->op_str[0] = '\0';
-
-	strncpy(insn->mnemonic, buffer, sizeof(insn->mnemonic) - 1);
-	insn->mnemonic[sizeof(insn->mnemonic) - 1] = '\0';
 #endif
 }
 
@@ -430,7 +426,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 	uint16_t insn_size;
 	size_t c = 0;
 	unsigned int f = 0;
-	cs_insn insn_cache[INSN_CACHE_SIZE];
+	cs_insn *insn_cache;
 	void *total = NULL;
 	size_t total_size = 0;
 	bool r;
@@ -446,38 +442,42 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 
 	handle->errnum = CS_ERR_OK;
 
-	memset(insn_cache, 0, sizeof(insn_cache));
-
 	// save the original offset for SKIPDATA
 	offset_org = offset;
+	total_size = (sizeof(cs_insn) * INSN_CACHE_SIZE);
+	total = cs_mem_malloc(total_size);
+	insn_cache = total;
 
 	while (size > 0) {
 		MCInst_Init(&mci);
 		mci.csh = handle;
+
+		// relative branches need to know the address & size of current insn
+		mci.address = offset;
+
+		if (handle->detail) {
+			// allocate memory for @detail pointer
+			insn_cache->detail = cs_mem_malloc(sizeof(cs_detail));
+		} else {
+			insn_cache->detail = NULL;
+		}
+
+		// save all the information for non-detailed mode
+		mci.flat_insn = insn_cache;
+		mci.flat_insn->address = offset;
 
 		r = handle->disasm(ud, buffer, size, &mci, &insn_size, offset, handle->getinsn_info);
 		if (r) {
 			SStream ss;
 			SStream_Init(&ss);
 
-			// relative branches need to know the address & size of current insn
-			mci.insn_size = insn_size;
-			mci.address = offset;
-
-			if (handle->detail) {
-				// save all the information for non-detailed mode
-				mci.flat_insn.address = offset;
-				mci.flat_insn.size = insn_size;
-				// allocate memory for @detail pointer
-				insn_cache[f].detail = cs_mem_calloc(1, sizeof(cs_detail));
-			}
-
+			mci.flat_insn->size = insn_size;
 			handle->printer(&mci, &ss, handle->printer_info);
 
-			fill_insn(handle, &insn_cache[f], ss.buffer, &mci, handle->post_printer, buffer);
+			fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, buffer);
 
 			f++;
-			if (f == ARR_SIZE(insn_cache)) {
+			if (f == INSN_CACHE_SIZE) {
 				// resize total to contain newly disasm insns
 				total_size += (sizeof(cs_insn) * INSN_CACHE_SIZE);
 				tmp = cs_mem_realloc(total, total_size);
@@ -488,20 +488,20 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 				}
 
 				total = tmp;
-				memcpy((void*)((uintptr_t)total + total_size - sizeof(insn_cache)), insn_cache, sizeof(insn_cache));
+				insn_cache = total + total_size - (sizeof(cs_insn) * INSN_CACHE_SIZE);
 
 				// reset f back to 0
 				f = 0;
-			}
+			} else
+				insn_cache++;
 
 			c++;
-			buffer += insn_size;
-
-			size -= insn_size;
-			offset += insn_size;
-
 			if (count > 0 && c == count)
 				break;
+
+			buffer += insn_size;
+			size -= insn_size;
+			offset += insn_size;
 		} else	{
 			// encounter a broken instruction
 			// if there is no request to skip data, or remaining data is too small,
@@ -523,17 +523,17 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 				skipdata_bytes = handle->skipdata_size;
 
 			// we have to skip some amount of data, depending on arch & mode
-			insn_cache[f].id = 0;	// invalid ID for this "data" instruction
-			insn_cache[f].address = offset;
-			insn_cache[f].size = skipdata_bytes;
-			memcpy(insn_cache[f].bytes, buffer, skipdata_bytes);
-			strncpy(insn_cache[f].mnemonic, handle->skipdata_setup.mnemonic,
-					sizeof(insn_cache[f].mnemonic) - 1);
-			skipdata_opstr(insn_cache[f].op_str, buffer, skipdata_bytes);
-			insn_cache[f].detail = NULL;
+			insn_cache->id = 0;	// invalid ID for this "data" instruction
+			insn_cache->address = offset;
+			insn_cache->size = skipdata_bytes;
+			memcpy(insn_cache->bytes, buffer, skipdata_bytes);
+			strncpy(insn_cache->mnemonic, handle->skipdata_setup.mnemonic,
+					sizeof(insn_cache->mnemonic) - 1);
+			skipdata_opstr(insn_cache->op_str, buffer, skipdata_bytes);
+			insn_cache->detail = NULL;
 
 			f++;
-			if (f == ARR_SIZE(insn_cache)) {
+			if (f == INSN_CACHE_SIZE) {
 				// resize total to contain newly disasm insns
 
 				total_size += (sizeof(cs_insn) * INSN_CACHE_SIZE);
@@ -545,7 +545,6 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 				}
 
 				total = tmp;
-				memcpy((void*)((uintptr_t)total + total_size - sizeof(insn_cache)), insn_cache, sizeof(insn_cache));
 
 				// reset f back to 0
 				f = 0;
@@ -560,7 +559,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 
 	if (f) {
 		// resize total to contain newly disasm insns
-		void *tmp = cs_mem_realloc(total, total_size + f * sizeof(insn_cache[0]));
+		void *tmp = cs_mem_realloc(total, total_size - (INSN_CACHE_SIZE - f) * sizeof(*insn_cache));
 		if (tmp == NULL) {	// insufficient memory
 			cs_mem_free(total);
 			handle->errnum = CS_ERR_MEM;
@@ -568,8 +567,6 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 		}
 
 		total = tmp;
-		memcpy((void*)((uintptr_t)total + total_size), insn_cache, f * sizeof(insn_cache[0]));
-
 	}
 
 	*insn = total;

@@ -17,6 +17,7 @@
 #include <string.h>
 
 #include "../../cs_priv.h"
+#include "../../utils.h"
 
 #include "../../MCInst.h"
 #include "../../MCInstrDesc.h"
@@ -40,7 +41,7 @@ static DecodeStatus decodeRegisterClass(MCInst *Inst, uint64_t RegNo, const unsi
 	if (RegNo == 0)
 		return MCDisassembler_Fail;
 
-	MCInst_addOperand(Inst, MCOperand_CreateReg((unsigned)RegNo));
+	MCOperand_CreateReg0(Inst, (unsigned)RegNo);
 	return MCDisassembler_Success;
 }
 
@@ -95,14 +96,14 @@ static DecodeStatus DecodeFP128BitRegisterClass(MCInst *Inst, uint64_t RegNo,
 static DecodeStatus decodeUImmOperand(MCInst *Inst, uint64_t Imm)
 {
 	//assert(isUInt<N>(Imm) && "Invalid immediate");
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Imm));
+	MCOperand_CreateImm0(Inst, Imm);
 	return MCDisassembler_Success;
 }
 
 static DecodeStatus decodeSImmOperand(MCInst *Inst, uint64_t Imm, unsigned N)
 {
 	//assert(isUInt<N>(Imm) && "Invalid immediate");
-	MCInst_addOperand(Inst, MCOperand_CreateImm(SignExtend64(Imm, N)));
+	MCOperand_CreateImm0(Inst, SignExtend64(Imm, N));
 	return MCDisassembler_Success;
 }
 
@@ -164,7 +165,7 @@ static DecodeStatus decodePCDBLOperand(MCInst *Inst, uint64_t Imm,
 		uint64_t Address, unsigned N)
 {
 	//assert(isUInt<N>(Imm) && "Invalid PC-relative offset");
-	MCInst_addOperand(Inst, MCOperand_CreateImm(SignExtend64(Imm, N) * 2 + Address));
+	MCOperand_CreateImm0(Inst, SignExtend64(Imm, N) * 2 + Address);
 	return MCDisassembler_Success;
 }
 
@@ -188,8 +189,8 @@ static DecodeStatus decodeBDAddr12Operand(MCInst *Inst, uint64_t Field,
 	uint64_t Disp = Field & 0xfff;
 	//assert(Base < 16 && "Invalid BDAddr12");
 
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Base == 0 ? 0 : Regs[Base]));
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Disp));
+	MCOperand_CreateReg0(Inst, Base == 0 ? 0 : Regs[Base]);
+	MCOperand_CreateImm0(Inst, Disp);
 
 	return MCDisassembler_Success;
 }
@@ -201,8 +202,8 @@ static DecodeStatus decodeBDAddr20Operand(MCInst *Inst, uint64_t Field,
 	uint64_t Disp = ((Field << 12) & 0xff000) | ((Field >> 8) & 0xfff);
 	//assert(Base < 16 && "Invalid BDAddr20");
 
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Base == 0 ? 0 : Regs[Base]));
-	MCInst_addOperand(Inst, MCOperand_CreateImm(SignExtend64(Disp, 20)));
+	MCOperand_CreateReg0(Inst, Base == 0 ? 0 : Regs[Base]);
+	MCOperand_CreateImm0(Inst, SignExtend64(Disp, 20));
 	return MCDisassembler_Success;
 }
 
@@ -214,9 +215,9 @@ static DecodeStatus decodeBDXAddr12Operand(MCInst *Inst, uint64_t Field,
 	uint64_t Disp = Field & 0xfff;
 
 	//assert(Index < 16 && "Invalid BDXAddr12");
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Base == 0 ? 0 : Regs[Base]));
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Disp));
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Index == 0 ? 0 : Regs[Index]));
+	MCOperand_CreateReg0(Inst, Base == 0 ? 0 : Regs[Base]);
+	MCOperand_CreateImm0(Inst, Disp);
+	MCOperand_CreateReg0(Inst, Index == 0 ? 0 : Regs[Index]);
 
 	return MCDisassembler_Success;
 }
@@ -229,9 +230,9 @@ static DecodeStatus decodeBDXAddr20Operand(MCInst *Inst, uint64_t Field,
 	uint64_t Disp = ((Field & 0xfff00) >> 8) | ((Field & 0xff) << 12);
 
 	//assert(Index < 16 && "Invalid BDXAddr20");
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Base == 0 ? 0 : Regs[Base]));
-	MCInst_addOperand(Inst, MCOperand_CreateImm(SignExtend64(Disp, 20)));
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Index == 0 ? 0 : Regs[Index]));
+	MCOperand_CreateReg0(Inst, Base == 0 ? 0 : Regs[Base]);
+	MCOperand_CreateImm0(Inst, SignExtend64(Disp, 20));
+	MCOperand_CreateReg0(Inst, Index == 0 ? 0 : Regs[Index]);
 
 	return MCDisassembler_Success;
 }
@@ -244,9 +245,9 @@ static DecodeStatus decodeBDLAddr12Len8Operand(MCInst *Inst, uint64_t Field,
 	uint64_t Disp = Field & 0xfff;
 	//assert(Length < 256 && "Invalid BDLAddr12Len8");
 
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Base == 0 ? 0 : Regs[Base]));
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Disp));
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Length + 1));
+	MCOperand_CreateReg0(Inst, Base == 0 ? 0 : Regs[Base]);
+	MCOperand_CreateImm0(Inst, Disp);
+	MCOperand_CreateImm0(Inst, Length + 1);
 
 	return MCDisassembler_Success;
 }
@@ -319,6 +320,10 @@ bool SystemZ_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst
 	if (code_len < *size)
 		// short of input data
 		return MCDisassembler_Fail;
+
+	if (MI->flat_insn->detail) {
+		memset(&MI->flat_insn->detail->sysz, 0, offset_of(cs_sysz, operands));
+	}
 
 	memcpy(Bytes, code, *size);
 

@@ -3978,13 +3978,13 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 11, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 11: \
     tmp = fieldname(insn, 16, 10); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     tmp = fieldname(insn, 6, 10); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 12: \
     tmp = fieldname(insn, 21, 5); \
@@ -3992,7 +3992,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 6, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     tmp = fieldname(insn, 11, 5); \
     if (DecodeInsSize(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 21, 5); \
@@ -4030,7 +4030,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 6, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     tmp = fieldname(insn, 11, 5); \
     if (DecodeExtSize(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
@@ -4040,7 +4040,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 21, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 12, 4); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 18: \
     tmp = fieldname(insn, 16, 5); \
@@ -4048,7 +4048,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     return S; \
   case 19: \
     tmp = fieldname(insn, 16, 10); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 20: \
     tmp = fieldname(insn, 21, 5); \
@@ -4064,7 +4064,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     return S; \
   case 22: \
     tmp = fieldname(insn, 16, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 23: \
     tmp = fieldname(insn, 21, 5); \
@@ -4087,7 +4087,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 0, 16); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 27: \
     tmp = fieldname(insn, 21, 5); \
@@ -4095,7 +4095,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 0, 16); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 28: \
     tmp = fieldname(insn, 21, 5); \
@@ -4127,7 +4127,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 6, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 33: \
     tmp = fieldname(insn, 11, 5); \
@@ -4171,11 +4171,11 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     return S; \
   case 38: \
     tmp = fieldname(insn, 6, 20); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 39: \
     tmp = fieldname(insn, 6, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 40: \
     tmp = fieldname(insn, 11, 5); \
@@ -4223,7 +4223,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 6, 10); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 47: \
     tmp = fieldname(insn, 21, 5); \
@@ -4235,7 +4235,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 21, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 0, 16); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 49: \
     tmp = fieldname(insn, 0, 16); \
@@ -4266,7 +4266,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 21, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 0, 16); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 54: \
     tmp = fieldname(insn, 16, 5); \
@@ -4274,7 +4274,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 0, 3); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 55: \
     tmp = fieldname(insn, 16, 5); \
@@ -4534,7 +4534,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 8); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 91: \
     tmp = fieldname(insn, 6, 5); \
@@ -4544,7 +4544,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 8); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 92: \
     tmp = fieldname(insn, 6, 5); \
@@ -4552,7 +4552,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 8); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 93: \
     tmp = fieldname(insn, 6, 5); \
@@ -4560,7 +4560,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 8); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 94: \
     tmp = fieldname(insn, 6, 5); \
@@ -4568,7 +4568,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 95: \
     tmp = fieldname(insn, 6, 5); \
@@ -4576,7 +4576,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 96: \
     tmp = fieldname(insn, 6, 5); \
@@ -4584,7 +4584,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 97: \
     tmp = fieldname(insn, 6, 5); \
@@ -4592,31 +4592,31 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 98: \
     tmp = fieldname(insn, 6, 5); \
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 11, 10); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 99: \
     tmp = fieldname(insn, 6, 5); \
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 11, 10); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 100: \
     tmp = fieldname(insn, 6, 5); \
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 11, 10); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 101: \
     tmp = fieldname(insn, 6, 5); \
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 11, 10); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 102: \
     tmp = fieldname(insn, 6, 5); \
@@ -4624,7 +4624,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 6); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 103: \
     tmp = fieldname(insn, 6, 5); \
@@ -4632,7 +4632,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 4); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 104: \
     tmp = fieldname(insn, 6, 5); \
@@ -4640,7 +4640,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 3); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 105: \
     tmp = fieldname(insn, 6, 5); \
@@ -4650,7 +4650,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 6); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 106: \
     tmp = fieldname(insn, 6, 5); \
@@ -4660,7 +4660,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 107: \
     tmp = fieldname(insn, 6, 5); \
@@ -4670,7 +4670,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 4); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 108: \
     tmp = fieldname(insn, 6, 5); \
@@ -4680,7 +4680,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 3); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 109: \
     tmp = fieldname(insn, 6, 5); \
@@ -4888,7 +4888,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 4); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 132: \
     tmp = fieldname(insn, 6, 5); \
@@ -4898,7 +4898,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 3); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 133: \
     tmp = fieldname(insn, 6, 5); \
@@ -4908,7 +4908,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 2); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 134: \
     tmp = fieldname(insn, 6, 5); \
@@ -4918,7 +4918,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 1); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 135: \
     tmp = fieldname(insn, 6, 5); \
@@ -4932,7 +4932,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 4); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 137: \
     tmp = fieldname(insn, 6, 5); \
@@ -4940,7 +4940,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 3); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 138: \
     tmp = fieldname(insn, 6, 5); \
@@ -4948,7 +4948,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 2); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 139: \
     tmp = fieldname(insn, 6, 5); \
@@ -4956,7 +4956,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 1); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 140: \
     tmp = fieldname(insn, 6, 5); \
@@ -4970,7 +4970,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 4); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 142: \
     tmp = fieldname(insn, 6, 5); \
@@ -4978,7 +4978,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 3); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 143: \
     tmp = fieldname(insn, 6, 5); \
@@ -4986,7 +4986,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 2); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 144: \
     tmp = fieldname(insn, 6, 5); \
@@ -4994,7 +4994,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 1); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 145: \
     tmp = fieldname(insn, 6, 5); \
@@ -5010,7 +5010,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 4); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 147: \
     tmp = fieldname(insn, 6, 5); \
@@ -5020,7 +5020,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 3); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 148: \
     tmp = fieldname(insn, 6, 5); \
@@ -5030,7 +5030,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 2); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 149: \
     tmp = fieldname(insn, 6, 5); \
@@ -5040,7 +5040,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 1); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 150: \
     tmp = fieldname(insn, 6, 5); \
@@ -5048,7 +5048,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 6, 5); \
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 4); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
@@ -5058,7 +5058,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 6, 5); \
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 3); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
@@ -5068,7 +5068,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 6, 5); \
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 2); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
@@ -5078,7 +5078,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 6, 5); \
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 1); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     tmp = fieldname(insn, 11, 5); \
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
@@ -5161,7 +5161,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 21, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 6, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     tmp = fieldname(insn, 11, 5); \
     if (DecodeExtSize(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
@@ -5171,7 +5171,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 21, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 6, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     tmp = fieldname(insn, 11, 5); \
     if (DecodeInsSize(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -5235,7 +5235,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 21, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 11, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     tmp = fieldname(insn, 16, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
@@ -5249,7 +5249,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 10); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 178: \
     tmp = fieldname(insn, 11, 5); \
@@ -5275,7 +5275,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 21, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 182: \
     tmp = fieldname(insn, 11, 5); \
@@ -5291,7 +5291,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 21, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 184: \
     tmp = fieldname(insn, 16, 5); \
@@ -5299,7 +5299,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 21, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 11, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     tmp = fieldname(insn, 16, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
@@ -5309,7 +5309,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 2); \
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 21, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 186: \
     tmp = fieldname(insn, 16, 5); \
@@ -5323,13 +5323,13 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 10); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 188: \
     tmp = fieldname(insn, 21, 5); \
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 11, 10); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 189: \
     tmp = fieldname(insn, 11, 2); \
@@ -5387,7 +5387,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 6, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 198: \
     tmp = fieldname(insn, 16, 5); \
@@ -5395,7 +5395,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 11, 5); \
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 0, 3); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 199: \
     tmp = fieldname(insn, 6, 5); \
@@ -5475,7 +5475,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 21, 5); \
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 6, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     tmp = fieldname(insn, 11, 5); \
     if (DecodeExtSize(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
@@ -5485,7 +5485,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 21, 5); \
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 6, 5); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     tmp = fieldname(insn, 11, 5); \
     if (DecodeInsSize(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \

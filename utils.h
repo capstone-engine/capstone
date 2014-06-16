@@ -47,5 +47,7 @@ char *cs_strdup(const char *str);
 
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 
+#define offset_of(st, member) __builtin_offsetof(st, member)
+
 #endif
 

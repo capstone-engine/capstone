@@ -3891,7 +3891,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   uint64_t Bits = (Bits2 << 32) | Bits1;
   // assert(Bits != 0 && "Cannot print this instruction.");
 #ifndef CAPSTONE_DIET
-  SStream_concat(O, "%s", AsmStrs+(Bits & 8191)-1);
+  SStream_concat0(O, AsmStrs+(Bits & 8191)-1);
 #endif
 
 
@@ -3910,7 +3910,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 2:
     // CTC1, CTC1_MM, DMTC1, MTC1, MTC1_MM, MTHC1, MTHC1_MM, MTHI_DSP, MTHLIP...
     printOperand(MI, 1, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 3:
     // FCMP_D32, FCMP_D32_MM, FCMP_D64, FCMP_S32, FCMP_S32_MM
@@ -3929,17 +3929,17 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   default:   // unreachable.
   case 0:
     // ABSQ_S_PH, ABSQ_S_QB, ABSQ_S_W, ADD, ADDQH_PH, ADDQH_R_PH, ADDQH_R_W, ...
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 1:
     // AddiuRxPcImmX16
-    SStream_concat(O, "%s", ", $pc, "); 
+    SStream_concat0(O, ", $pc, "); 
     printOperand(MI, 1, O); 
     return;
     break;
   case 2:
     // AddiuSpImm16, Bimm16
-    SStream_concat(O, "%s", " # 16 bit inst"); 
+    SStream_concat0(O, " # 16 bit inst"); 
     return;
     break;
   case 3:
@@ -3948,7 +3948,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 4:
     // Bteqz16, Btnez16
-    SStream_concat(O, "%s", "  # 16 bit inst"); 
+    SStream_concat0(O, "  # 16 bit inst"); 
     return;
     break;
   case 5:
@@ -3958,39 +3958,39 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 6:
     // FCMP_D32, FCMP_D32_MM, FCMP_D64
-    SStream_concat(O, "%s", ".d\t"); 
+    SStream_concat0(O, ".d\t"); 
     printOperand(MI, 0, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 1, O); 
     return;
     break;
   case 7:
     // FCMP_S32, FCMP_S32_MM
-    SStream_concat(O, "%s", ".s\t"); 
+    SStream_concat0(O, ".s\t"); 
     printOperand(MI, 0, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 1, O); 
     return;
     break;
   case 8:
     // INSERT_B, INSERT_D, INSERT_H, INSERT_W, INSVE_B, INSVE_D, INSVE_H, INS...
-    SStream_concat(O, "%s", "["); 
+    SStream_concat0(O, "["); 
     break;
   case 9:
     // Jal16
-    SStream_concat(O, "%s", "\n\tnop"); 
+    SStream_concat0(O, "\n\tnop"); 
     return;
     break;
   case 10:
     // JalB16
-    SStream_concat(O, "%s", "\t# branch\n\tnop"); 
+    SStream_concat0(O, "\t# branch\n\tnop"); 
     return;
     break;
   case 11:
     // LwConstant32
-    SStream_concat(O, "%s", ", 1f\n\tb\t2f\n\t.align\t2\n1: \t.word\t"); 
+    SStream_concat0(O, ", 1f\n\tb\t2f\n\t.align\t2\n1: \t.word\t"); 
     printOperand(MI, 1, O); 
-    SStream_concat(O, "%s", "\n2:"); 
+    SStream_concat0(O, "\n2:"); 
     return;
     break;
   case 12:
@@ -4004,9 +4004,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 14:
     // SelBeqZ, SelBneZ
-    SStream_concat(O, "%s", ", .+4\n\t\n\tmove "); 
+    SStream_concat0(O, ", .+4\n\t\n\tmove "); 
     printOperand(MI, 1, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 2, O); 
     return;
     break;
@@ -4033,16 +4033,16 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 3:
     // INSERT_B, INSERT_D, INSERT_H, INSERT_W
     printUnsignedImm(MI, 3, O); 
-    SStream_concat(O, "%s", "], "); 
+    SStream_concat0(O, "], "); 
     printOperand(MI, 2, O); 
     return;
     break;
   case 4:
     // INSVE_B, INSVE_D, INSVE_H, INSVE_W
     printUnsignedImm(MI, 2, O); 
-    SStream_concat(O, "%s", "], "); 
+    SStream_concat0(O, "], "); 
     printOperand(MI, 3, O); 
-    SStream_concat(O, "%s", "[0]"); 
+    SStream_concat0(O, "[0]"); 
     return;
     break;
   case 5:
@@ -4057,7 +4057,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 7:
     // MultRxRyRz16, MultuRxRyRz16
-    SStream_concat(O, "%s", "\n\tmflo\t"); 
+    SStream_concat0(O, "\n\tmflo\t"); 
     printOperand(MI, 0, O); 
     return;
     break;
@@ -4067,9 +4067,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 9:
     // SltCCRxRy16, SltiCCRxImmX16, SltiuCCRxImmX16, SltuCCRxRy16, SltuRxRyRz...
-    SStream_concat(O, "%s", "\n\tmove\t"); 
+    SStream_concat0(O, "\n\tmove\t"); 
     printOperand(MI, 0, O); 
-    SStream_concat(O, "%s", ", $t8"); 
+    SStream_concat0(O, ", $t8"); 
     return;
     break;
   }
@@ -4085,85 +4085,85 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 1:
     // ADD, ADDQH_PH, ADDQH_R_PH, ADDQH_R_W, ADDQH_W, ADDQ_PH, ADDQ_S_PH, ADD...
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 2:
     // AddiuRxRxImm16, LwRxPcTcp16
-    SStream_concat(O, "%s", "\t# 16 bit inst"); 
+    SStream_concat0(O, "\t# 16 bit inst"); 
     return;
     break;
   case 3:
     // BeqzRxImm16, BnezRxImm16
-    SStream_concat(O, "%s", "  # 16 bit inst"); 
+    SStream_concat0(O, "  # 16 bit inst"); 
     return;
     break;
   case 4:
     // BteqzT8CmpX16, BteqzT8CmpiX16, BteqzT8SltX16, BteqzT8SltiX16, BteqzT8S...
-    SStream_concat(O, "%s", "\n\tbteqz\t"); 
+    SStream_concat0(O, "\n\tbteqz\t"); 
     printOperand(MI, 2, O); 
     return;
     break;
   case 5:
     // BtnezT8CmpX16, BtnezT8CmpiX16, BtnezT8SltX16, BtnezT8SltiX16, BtnezT8S...
-    SStream_concat(O, "%s", "\n\tbtnez\t"); 
+    SStream_concat0(O, "\n\tbtnez\t"); 
     printOperand(MI, 2, O); 
     return;
     break;
   case 6:
     // COPY_S_B, COPY_S_D, COPY_S_H, COPY_S_W, COPY_U_B, COPY_U_D, COPY_U_H, ...
-    SStream_concat(O, "%s", "["); 
+    SStream_concat0(O, "["); 
     break;
   case 7:
     // CmpiRxImm16, LiRxImm16, SltiRxImm16, SltiuRxImm16
-    SStream_concat(O, "%s", " \t# 16 bit inst"); 
+    SStream_concat0(O, " \t# 16 bit inst"); 
     return;
     break;
   case 8:
     // DSLL64_32
-    SStream_concat(O, "%s", ", 32"); 
+    SStream_concat0(O, ", 32"); 
     return;
     break;
   case 9:
     // GotPrologue16
-    SStream_concat(O, "%s", "\n\taddiu\t"); 
+    SStream_concat0(O, "\n\taddiu\t"); 
     printOperand(MI, 1, O); 
-    SStream_concat(O, "%s", ", $pc, "); 
+    SStream_concat0(O, ", $pc, "); 
     printOperand(MI, 3, O); 
-    SStream_concat(O, "%s", "\n "); 
+    SStream_concat0(O, "\n "); 
     return;
     break;
   case 10:
     // LBUX, LDXC1, LDXC164, LHX, LUXC1, LUXC164, LUXC1_MM, LWX, LWXC1, LWXC1...
-    SStream_concat(O, "%s", "("); 
+    SStream_concat0(O, "("); 
     printOperand(MI, 1, O); 
-    SStream_concat(O, "%s", ")"); 
+    SStream_concat0(O, ")"); 
     return;
     break;
   case 11:
     // LwRxSpImmX16, SwRxSpImmX16
-    SStream_concat(O, "%s", " ( "); 
+    SStream_concat0(O, " ( "); 
     printOperand(MI, 1, O); 
-    SStream_concat(O, "%s", " ); "); 
+    SStream_concat0(O, " ); "); 
     return;
     break;
   case 12:
     // SLL64_32, SLL64_64
-    SStream_concat(O, "%s", ", 0"); 
+    SStream_concat0(O, ", 0"); 
     return;
     break;
   case 13:
     // SelTBteqZCmp, SelTBteqZCmpi, SelTBteqZSlt, SelTBteqZSlti, SelTBteqZSlt...
-    SStream_concat(O, "%s", "\n\tbteqz\t.+4\n\tmove "); 
+    SStream_concat0(O, "\n\tbteqz\t.+4\n\tmove "); 
     printOperand(MI, 1, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 2, O); 
     return;
     break;
   case 14:
     // SelTBtneZCmp, SelTBtneZCmpi, SelTBtneZSlt, SelTBtneZSlti, SelTBtneZSlt...
-    SStream_concat(O, "%s", "\n\tbtnez\t.+4\n\tmove "); 
+    SStream_concat0(O, "\n\tbtnez\t.+4\n\tmove "); 
     printOperand(MI, 1, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 2, O); 
     return;
     break;
@@ -4207,12 +4207,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 1:
     // COPY_S_B, COPY_S_D, COPY_S_H, COPY_S_W, COPY_U_B, COPY_U_D, COPY_U_H, ...
-    SStream_concat(O, "%s", "]"); 
+    SStream_concat0(O, "]"); 
     return;
     break;
   case 2:
     // DEXT, DEXTM, DEXTU, DINS, DINSM, DINSU, DLSA, EXT, EXT_MM, INS, INS_MM...
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   }
 
@@ -4594,9 +4594,9 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
     *AsmOps = '\0';
     AsmOps += 1;
   }
-  SStream_concat(OS, "%s", AsmMnem);
+  SStream_concat0(OS, AsmMnem);
   if (AsmOps) {
-    SStream_concat(OS, "\t");
+    SStream_concat0(OS, "\t");
     for (c = AsmOps; *c; c++) {
       if (*c == '$') {
         c += 1;

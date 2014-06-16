@@ -827,7 +827,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   uint32_t Bits = OpInfo[MCInst_getOpcode(MI)];
 #ifndef CAPSTONE_DIET
   // assert(Bits != 0 && "Cannot print this instruction.");
-  SStream_concat(O, "%s", AsmStrs+(Bits & 4095)-1);
+  SStream_concat0(O, AsmStrs+(Bits & 4095)-1);
 #endif
 
 
@@ -872,16 +872,16 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 8:
     // LEAX_ADDri, LEA_ADDri
     printMemOperand(MI, 1, O, "arith"); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 0, O); 
     return;
     break;
   case 9:
     // STBri, STBrr, STDFri, STDFrr, STFri, STFrr, STHri, STHrr, STQFri, STQF...
     printOperand(MI, 2, O); 
-    SStream_concat(O, "%s", ", ["); 
+    SStream_concat0(O, ", ["); 
     printMemOperand(MI, 0, O, NULL); 
-    SStream_concat(O, "%s", "]"); 
+    SStream_concat0(O, "]"); 
     return;
     break;
   case 10:
@@ -891,11 +891,11 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 11:
     // V9FMOVD_FCC, V9FMOVQ_FCC, V9FMOVS_FCC, V9MOVFCCri, V9MOVFCCrr
     printCCOperand(MI, 4, O); 
-    SStream_concat(O, "%s", " "); 
+    SStream_concat0(O, " "); 
     printOperand(MI, 1, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 2, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 0, O); 
     return;
     break;
@@ -908,7 +908,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   default:   // unreachable.
   case 0:
     // ADDCCri, ADDCCrr, ADDCri, ADDCrr, ADDEri, ADDErr, ADDXC, ADDXCCC, ADDX...
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 1:
     // ADJCALLSTACKDOWN, ADJCALLSTACKUP, BA, CALL, CMASK16, CMASK32, CMASK8, ...
@@ -916,81 +916,81 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 2:
     // BCOND, BPFCC, FBCOND
-    SStream_concat(O, "%s", " "); 
+    SStream_concat0(O, " "); 
     break;
   case 3:
     // BCONDA, BPFCCA, FBCONDA
-    SStream_concat(O, "%s", ",a "); 
+    SStream_concat0(O, ",a "); 
     break;
   case 4:
     // BPFCCANT
-    SStream_concat(O, "%s", ",a,pn "); 
+    SStream_concat0(O, ",a,pn "); 
     printOperand(MI, 2, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 0, O); 
     return;
     break;
   case 5:
     // BPFCCNT
-    SStream_concat(O, "%s", ",pn "); 
+    SStream_concat0(O, ",pn "); 
     printOperand(MI, 2, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 0, O); 
     return;
     break;
   case 6:
     // BPICC, FMOVD_ICC, FMOVQ_ICC, FMOVS_ICC, MOVICCri, MOVICCrr, TICCri, TI...
-    SStream_concat(O, "%s", " %icc, "); 
+    SStream_concat0(O, " %icc, "); 
     break;
   case 7:
     // BPICCA
-    SStream_concat(O, "%s", ",a %icc, "); 
+    SStream_concat0(O, ",a %icc, "); 
     printOperand(MI, 0, O); 
     return;
     break;
   case 8:
     // BPICCANT
-    SStream_concat(O, "%s", ",a,pn %icc, "); 
+    SStream_concat0(O, ",a,pn %icc, "); 
     printOperand(MI, 0, O); 
     return;
     break;
   case 9:
     // BPICCNT
-    SStream_concat(O, "%s", ",pn %icc, "); 
+    SStream_concat0(O, ",pn %icc, "); 
     printOperand(MI, 0, O); 
     return;
     break;
   case 10:
     // BPXCC, FMOVD_XCC, FMOVQ_XCC, FMOVS_XCC, MOVXCCri, MOVXCCrr, TXCCri, TX...
-    SStream_concat(O, "%s", " %xcc, "); 
+    SStream_concat0(O, " %xcc, "); 
     break;
   case 11:
     // BPXCCA
-    SStream_concat(O, "%s", ",a %xcc, "); 
+    SStream_concat0(O, ",a %xcc, "); 
     printOperand(MI, 0, O); 
     return;
     break;
   case 12:
     // BPXCCANT
-    SStream_concat(O, "%s", ",a,pn %xcc, "); 
+    SStream_concat0(O, ",a,pn %xcc, "); 
     printOperand(MI, 0, O); 
     return;
     break;
   case 13:
     // BPXCCNT
-    SStream_concat(O, "%s", ",pn %xcc, "); 
+    SStream_concat0(O, ",pn %xcc, "); 
     printOperand(MI, 0, O); 
     return;
     break;
   case 14:
     // CASXrr, CASrr, LDDFri, LDDFrr, LDFri, LDFrr, LDQFri, LDQFrr, LDSBri, L...
-    SStream_concat(O, "%s", "], "); 
+    SStream_concat0(O, "], "); 
     break;
   case 15:
     // FMOVD_FCC, FMOVQ_FCC, FMOVS_FCC, MOVFCCri, MOVFCCrr
-    SStream_concat(O, "%s", " %fcc0, "); 
+    SStream_concat0(O, " %fcc0, "); 
     printOperand(MI, 1, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 0, O); 
     return;
     break;
@@ -1004,7 +1004,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 0:
     // ADDCCri, ADDCCrr, ADDCri, ADDCrr, ADDEri, ADDErr, ADDXC, ADDXCCC, ADDX...
     printOperand(MI, 2, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 0, O); 
     break;
   case 1:
@@ -1028,17 +1028,17 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 1:
     // FLCMPD, FLCMPS, FMOVD_ICC, FMOVD_XCC, FMOVQ_ICC, FMOVQ_XCC, FMOVS_ICC,...
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 2:
     // TICCri, TICCrr, TXCCri, TXCCrr
-    SStream_concat(O, "%s", " + "); 
+    SStream_concat0(O, " + "); 
     printOperand(MI, 1, O); 
     return;
     break;
   case 3:
     // WRYri, WRYrr
-    SStream_concat(O, "%s", ", %y"); 
+    SStream_concat0(O, ", %y"); 
     return;
     break;
   }
@@ -1070,12 +1070,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 /// getRegisterName - This method is automatically generated by tblgen
 /// from the register set description.  This returns the assembler name
 /// for the specified register.
-static const char *getRegisterName(unsigned RegNo)
+static char *getRegisterName(unsigned RegNo)
 {
   // assert(RegNo && RegNo < 119 && "Invalid register number!");
 
 #ifndef CAPSTONE_DIET
-  static const char AsmStrs[] = {
+  static char AsmStrs[] = {
   /* 0 */ 'f', '1', '0', 0,
   /* 4 */ 'f', '2', '0', 0,
   /* 8 */ 'f', '3', '0', 0,
@@ -1233,9 +1233,9 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
     *AsmOps = '\0';
     AsmOps += 1;
   }
-  SStream_concat(OS, "%s", AsmMnem);
+  SStream_concat0(OS, AsmMnem);
   if (AsmOps) {
-    SStream_concat(OS, "\t");
+    SStream_concat0(OS, "\t");
     for (c = AsmOps; *c; c++) {
       if (*c == '$') {
         c += 1;

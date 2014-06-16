@@ -645,17 +645,17 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 6, 4); \
     if (DecodeRRegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 0, 6); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 11: \
     tmp = fieldname(insn, 0, 6); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 12: \
     tmp = fieldname(insn, 6, 4); \
     if (DecodeGRRegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 0, 6); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 13: \
     tmp = fieldname(insn, 0, 6); \
@@ -678,7 +678,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     return S; \
   case 18: \
     tmp = fieldname(insn, 0, 10); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 19: \
     tmp = fieldname(insn, 0, 10); \
@@ -711,13 +711,13 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= (fieldname(insn, 0, 10) << 6); \
     tmp |= (fieldname(insn, 16, 6) << 0); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 28: \
     tmp = 0; \
     tmp |= (fieldname(insn, 0, 10) << 6); \
     tmp |= (fieldname(insn, 16, 6) << 0); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 29: \
     tmp = fieldname(insn, 22, 4); \
@@ -725,7 +725,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= (fieldname(insn, 0, 10) << 6); \
     tmp |= (fieldname(insn, 16, 6) << 0); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 30: \
     tmp = 0; \
@@ -754,7 +754,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= (fieldname(insn, 0, 10) << 10); \
     tmp |= (fieldname(insn, 16, 10) << 0); \
-    MCInst_addOperand(MI, MCOperand_CreateImm(tmp)); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 36: \
     tmp = 0; \

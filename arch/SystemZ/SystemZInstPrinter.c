@@ -54,20 +54,24 @@ static void printAddress(MCInst *MI, unsigned Base, int64_t Disp, unsigned Index
 	}
 
 	if (Base) {
-		SStream_concat(O, "(");
+		SStream_concat0(O, "(");
 		if (Index)
 			SStream_concat(O, "%%%s, ", getRegisterName(Index));
 		SStream_concat(O, "%%%s)", getRegisterName(Base));
 
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_MEM;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.base = (uint8_t)SystemZ_map_register(Base);
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.index = (uint8_t)SystemZ_map_register(Index);
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.disp = Disp;
-		MI->flat_insn.sysz.op_count++;
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_MEM;
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.base = (uint8_t)SystemZ_map_register(Base);
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.index = (uint8_t)SystemZ_map_register(Index);
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.disp = Disp;
+			MI->flat_insn->detail->sysz.op_count++;
+		}
 	} else if (!Index) {
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = Disp;
-		MI->flat_insn.sysz.op_count++;
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = Disp;
+			MI->flat_insn->detail->sysz.op_count++;
+		}
 	}
 }
 
@@ -81,9 +85,9 @@ static void _printOperand(MCInst *MI, MCOperand *MO, SStream *O)
 		reg = SystemZ_map_register(reg);
 
 		if (MI->csh->detail) {
-			MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_REG;
-			MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].reg = reg;
-			MI->flat_insn.sysz.op_count++;
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_REG;
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].reg = reg;
+			MI->flat_insn->detail->sysz.op_count++;
 		}
 	} else if (MCOperand_isImm(MO)) {
 		int64_t Imm = MCOperand_getImm(MO);
@@ -101,9 +105,9 @@ static void _printOperand(MCInst *MI, MCOperand *MO, SStream *O)
 		}
 
 		if (MI->csh->detail) {
-			MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
-			MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = Imm;
-			MI->flat_insn.sysz.op_count++;
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = Imm;
+			MI->flat_insn->detail->sysz.op_count++;
 		}
 	}
 }
@@ -125,9 +129,9 @@ static void printU4ImmOperand(MCInst *MI, int OpNum, SStream *O)
 	}
 
 	if (MI->csh->detail) {
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = Value;
-		MI->flat_insn.sysz.op_count++;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = Value;
+		MI->flat_insn->detail->sysz.op_count++;
 	}
 }
 
@@ -142,9 +146,9 @@ static void printU6ImmOperand(MCInst *MI, int OpNum, SStream *O)
 		SStream_concat(O, "%u", Value);
 
 	if (MI->csh->detail) {
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = (int64_t)Value;
-		MI->flat_insn.sysz.op_count++;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = (int64_t)Value;
+		MI->flat_insn->detail->sysz.op_count++;
 	}
 }
 
@@ -166,9 +170,9 @@ static void printS8ImmOperand(MCInst *MI, int OpNum, SStream *O)
 	}
 
 	if (MI->csh->detail) {
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = (int64_t)Value;
-		MI->flat_insn.sysz.op_count++;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = (int64_t)Value;
+		MI->flat_insn->detail->sysz.op_count++;
 	}
 }
 
@@ -183,9 +187,9 @@ static void printU8ImmOperand(MCInst *MI, int OpNum, SStream *O)
 		SStream_concat(O, "%u", Value);
 
 	if (MI->csh->detail) {
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = (int64_t)Value;
-		MI->flat_insn.sysz.op_count++;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = (int64_t)Value;
+		MI->flat_insn->detail->sysz.op_count++;
 	}
 }
 
@@ -207,9 +211,9 @@ static void printS16ImmOperand(MCInst *MI, int OpNum, SStream *O)
 	}
 
 	if (MI->csh->detail) {
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = (int64_t)Value;
-		MI->flat_insn.sysz.op_count++;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = (int64_t)Value;
+		MI->flat_insn->detail->sysz.op_count++;
 	}
 }
 
@@ -224,9 +228,9 @@ static void printU16ImmOperand(MCInst *MI, int OpNum, SStream *O)
 		SStream_concat(O, "%u", Value);
 
 	if (MI->csh->detail) {
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = (int64_t)Value;
-		MI->flat_insn.sysz.op_count++;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = (int64_t)Value;
+		MI->flat_insn->detail->sysz.op_count++;
 	}
 }
 
@@ -248,9 +252,9 @@ static void printS32ImmOperand(MCInst *MI, int OpNum, SStream *O)
 	}
 
 	if (MI->csh->detail) {
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = (int64_t)Value;
-		MI->flat_insn.sysz.op_count++;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = (int64_t)Value;
+		MI->flat_insn->detail->sysz.op_count++;
 	}
 }
 
@@ -265,9 +269,9 @@ static void printU32ImmOperand(MCInst *MI, int OpNum, SStream *O)
 		SStream_concat(O, "%u", Value);
 
 	if (MI->csh->detail) {
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = (int64_t)Value;
-		MI->flat_insn.sysz.op_count++;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = (int64_t)Value;
+		MI->flat_insn->detail->sysz.op_count++;
 	}
 }
 
@@ -278,9 +282,9 @@ static void printAccessRegOperand(MCInst *MI, int OpNum, SStream *O)
 	SStream_concat(O, "%%a%u", (unsigned int)Value);
 
 	if (MI->csh->detail) {
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_ACREG;
-		MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].reg = (unsigned int)Value;
-		MI->flat_insn.sysz.op_count++;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_ACREG;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].reg = (unsigned int)Value;
+		MI->flat_insn->detail->sysz.op_count++;
 	}
 }
 
@@ -304,9 +308,9 @@ static void printPCRelOperand(MCInst *MI, int OpNum, SStream *O)
 		}
 
 		if (MI->csh->detail) {
-			MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_IMM;
-			MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].imm = (int64_t)imm;
-			MI->flat_insn.sysz.op_count++;
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = (int64_t)imm;
+			MI->flat_insn->detail->sysz.op_count++;
 		}
 	}
 }
@@ -347,28 +351,30 @@ static void printBDLAddrOperand(MCInst *MI, int OpNum, SStream *O)
 
 	if (Base)
 		SStream_concat(O, ", %%%s", getRegisterName(Base));
-	SStream_concat(O, ")");
+	SStream_concat0(O, ")");
 
-	MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].type = SYSZ_OP_MEM;
-	MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.base = (uint8_t)SystemZ_map_register(Base);
-	MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.length = Length;
-	MI->flat_insn.sysz.operands[MI->flat_insn.sysz.op_count].mem.disp = (int64_t)Disp;
-	MI->flat_insn.sysz.op_count++;
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_MEM;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.base = (uint8_t)SystemZ_map_register(Base);
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.length = Length;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.disp = (int64_t)Disp;
+		MI->flat_insn->detail->sysz.op_count++;
+	}
 }
 
 static void printCond4Operand(MCInst *MI, int OpNum, SStream *O)
 {
-	static const char *const CondNames[] = {
+	static char *const CondNames[] = {
 		"o", "h", "nle", "l", "nhe", "lh", "ne",
 		"e", "nlh", "he", "nl", "le", "nh", "no"
 	};
 
 	uint64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	// assert(Imm > 0 && Imm < 15 && "Invalid condition");
-	SStream_concat(O, CondNames[Imm - 1]);
+	SStream_concat0(O, CondNames[Imm - 1]);
 
 	if (MI->csh->detail)
-		MI->flat_insn.sysz.cc = (sysz_cc)Imm;
+		MI->flat_insn->detail->sysz.cc = (sysz_cc)Imm;
 }
 
 #define PRINT_ALIAS_INSTR

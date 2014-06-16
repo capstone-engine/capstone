@@ -517,6 +517,12 @@ typedef enum {
 
 typedef uint8_t BOOL;
 
+struct reader_info {
+	const uint8_t *code;
+	uint64_t size;
+	uint64_t offset;
+};
+
 /*
  * byteReader_t - Type for the byte reader that the consumer must provide to
  *   the decoder.  Reads a single byte from the instruction's address space.
@@ -528,7 +534,7 @@ typedef uint8_t BOOL;
  *                  be read from.
  * @return        - -1 if the byte cannot be read for any reason; 0 otherwise.
  */
-typedef int (*byteReader_t)(const void* arg, uint8_t* byte, uint64_t address);
+typedef int (*byteReader_t)(const struct reader_info *arg, uint8_t* byte, uint64_t address);
 
 /*
  * dlog_t - Type for the logging function that the consumer can provide to
@@ -544,7 +550,37 @@ typedef void (*dlog_t)(void* arg, const char *log);
  * The x86 internal instruction, which is produced by the decoder.
  */
 typedef struct InternalInstruction {
+  // from here, all members must be initialized to ZERO to work properly
   uint8_t operandSize;
+  /* 1 if the prefix byte corresponding to the entry is present; 0 if not */
+  uint8_t prefixPresent[0x100];
+  uint8_t prefix0, prefix1, prefix2, prefix3;
+  /* The value of the REX prefix, if present */
+  uint8_t rexPrefix;
+  /* The segment override type */
+  SegmentOverride segmentOverride;
+  BOOL                          consumedModRM;
+  uint8_t                       orgModRM;  // save original modRM because we will modify modRM
+  /* The SIB byte, used for more complex 32- or 64-bit memory operands */
+  BOOL                          consumedSIB;
+  uint8_t                       sib;
+  /* The displacement, used for memory operands */
+  BOOL                          consumedDisplacement;
+  int32_t                       displacement;
+  /* The value of the two-byte escape prefix (usually 0x0f) */
+  uint8_t twoByteEscape;
+  /* The value of the three-byte escape prefix (usually 0x38 or 0x3a) */
+  uint8_t threeByteEscape;
+  /* SIB state */
+  SIBIndex                      sibIndex;
+  uint8_t                       sibScale;
+  SIBBase                       sibBase;
+  uint8_t                       numImmediatesConsumed;
+  /* 1 if the prefix byte, 0xf2 or 0xf3 is xacquire or xrelease */
+  BOOL xAcquireRelease;
+
+  // end-of-zero-members
+
   /* Reader interface (C) */
   byteReader_t reader;
   /* Opaque value passed to the reader */
@@ -568,23 +604,15 @@ typedef struct InternalInstruction {
 
   /* Prefix state */
 
-  /* 1 if the prefix byte corresponding to the entry is present; 0 if not */
-  uint8_t prefixPresent[0x100];
   /* contains the location (for use with the reader) of the prefix byte */
   uint64_t prefixLocations[0x100];
   /* The value of the vector extension prefix(EVEX/VEX/XOP), if present */
   uint8_t vectorExtensionPrefix[4];
   /* The type of the vector extension prefix */
   VectorExtensionType vectorExtensionType;
-  /* The value of the REX prefix, if present */
-  uint8_t rexPrefix;
   /* The location where a mandatory prefix would have to be (i.e., right before
      the opcode, or right before the REX prefix if one is present) */
   uint64_t necessaryPrefixLocation;
-  /* The segment override type */
-  SegmentOverride segmentOverride;
-  /* 1 if the prefix byte, 0xf2 or 0xf3 is xacquire or xrelease */
-  BOOL xAcquireRelease;
 
   /* Sizes of various critical pieces of data, in bytes */
   uint8_t registerSize;
@@ -599,10 +627,6 @@ typedef struct InternalInstruction {
 
   /* opcode state */
 
-  /* The value of the two-byte escape prefix (usually 0x0f) */
-  uint8_t twoByteEscape;
-  /* The value of the three-byte escape prefix (usually 0x38 or 0x3a) */
-  uint8_t threeByteEscape;
   /* The last byte of the opcode, not counting any ModR/M extension */
   uint8_t opcode;
 
@@ -628,26 +652,12 @@ typedef struct InternalInstruction {
 
   /* The ModR/M byte, which contains most register operands and some portion of
      all memory operands */
-  BOOL                          consumedModRM;
   uint8_t                       modRM;
 
   // special data to handle MOVcr, MOVdr, MOVrc, MOVrd
   uint8_t                       firstByte;     // save the first byte in stream
-  uint8_t                       orgModRM;  // save original modRM because we will modify modRM
-
-  // does this instruction contain LOC/REP/REPNE prefix?
-  bool x86_lock_rep;
-
-  /* The SIB byte, used for more complex 32- or 64-bit memory operands */
-  BOOL                          consumedSIB;
-  uint8_t                       sib;
-
-  /* The displacement, used for memory operands */
-  BOOL                          consumedDisplacement;
-  int32_t                       displacement;
 
   /* Immediates.  There can be two in some cases */
-  uint8_t                       numImmediatesConsumed;
   uint8_t                       numImmediatesTranslated;
   uint64_t                      immediates[2];
 
@@ -668,11 +678,6 @@ typedef struct InternalInstruction {
   EADisplacement                eaDisplacement;
   /* The reg field always encodes a register */
   Reg                           reg;
-
-  /* SIB state */
-  SIBIndex                      sibIndex;
-  uint8_t                       sibScale;
-  SIBBase                       sibBase;
 
   const struct OperandSpecifier *operands;
 } InternalInstruction;

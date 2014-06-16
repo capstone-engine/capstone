@@ -1542,7 +1542,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   uint32_t Bits = OpInfo[MCInst_getOpcode(MI)];
   // assert(Bits != 0 && "Cannot print this instruction.");
 #ifndef CAPSTONE_DIET
-  SStream_concat(O, "%s", AsmStrs+(Bits & 4095)-1);
+  SStream_concat0(O, AsmStrs+(Bits & 4095)-1);
 #endif
 
 
@@ -1561,12 +1561,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 2:
     // AGSI, ASI, CGHSI, CHHSI, CHSI, CLFHSI, CLGHSI, CLHHSI, CLI, CLIY, MVGH...
     printBDAddrOperand(MI, 0, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 3:
     // AsmBCR, AsmBRC, AsmBRCL, PFD, PFDRL
     printU4ImmOperand(MI, 0, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 4:
     // AsmEJ, AsmEJG, AsmHEJ, AsmHEJG, AsmHJ, AsmHJG, AsmLEJ, AsmLEJG, AsmLHJ...
@@ -1576,48 +1576,48 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 5:
     // BRC, BRCL
     printCond4Operand(MI, 1, O); 
-    SStream_concat(O, "%s", "\t"); 
+    SStream_concat0(O, "\t"); 
     printPCRelOperand(MI, 2, O); 
     return;
     break;
   case 6:
     // CGIJ, CGRJ, CIJ, CLGIJ, CLGRJ, CLIJ, CLRJ, CRJ
     printCond4Operand(MI, 2, O); 
-    SStream_concat(O, "%s", "\t"); 
+    SStream_concat0(O, "\t"); 
     printOperand(MI, 0, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 7:
     // CLC, MVC, NC, OC, XC
     printBDLAddrOperand(MI, 0, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printBDAddrOperand(MI, 3, O); 
     return;
     break;
   case 8:
     // LOC, LOCG
     printCond4Operand(MI, 5, O); 
-    SStream_concat(O, "%s", "\t"); 
+    SStream_concat0(O, "\t"); 
     printOperand(MI, 0, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printBDAddrOperand(MI, 2, O); 
     return;
     break;
   case 9:
     // LOCGR, LOCR
     printCond4Operand(MI, 3, O); 
-    SStream_concat(O, "%s", "\t"); 
+    SStream_concat0(O, "\t"); 
     printOperand(MI, 0, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 1, O); 
     return;
     break;
   case 10:
     // STOC, STOCG
     printCond4Operand(MI, 4, O); 
-    SStream_concat(O, "%s", "\t"); 
+    SStream_concat0(O, "\t"); 
     printOperand(MI, 0, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printBDAddrOperand(MI, 1, O); 
     return;
     break;
@@ -1630,7 +1630,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   default:   // unreachable.
   case 0:
     // A, ADB, ADBR, AEB, AEBR, AFI, AG, AGF, AGFI, AGFR, AGHI, AGHIK, AGR, A...
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 1:
     // AGSI, ASI
@@ -1658,7 +1658,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 6:
     // CGIJ, CIJ
     printS8ImmOperand(MI, 1, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printPCRelOperand(MI, 3, O); 
     return;
     break;
@@ -1670,7 +1670,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 8:
     // CLGIJ, CLIJ
     printU8ImmOperand(MI, 1, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printPCRelOperand(MI, 3, O); 
     return;
     break;
@@ -1726,12 +1726,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 7:
     // AsmCGIJ, AsmCIJ, AsmJEAltCGI, AsmJEAltCI, AsmJECGI, AsmJECI, AsmJHAltC...
     printS8ImmOperand(MI, 1, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 8:
     // AsmCLGIJ, AsmCLIJ, AsmJEAltCLGI, AsmJEAltCLI, AsmJECLGI, AsmJECLI, Asm...
     printU8ImmOperand(MI, 1, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 9:
     // AsmELOC, AsmELOCG, AsmHELOC, AsmHELOCG, AsmHLOC, AsmHLOCG, AsmLELOC, A...
@@ -1759,7 +1759,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 14:
     // CDLFBR, CDLGBR, CELFBR, CELGBR, CFDBR, CFEBR, CFXBR, CGDBR, CGEBR, CGX...
     printU4ImmOperand(MI, 1, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 2, O); 
     break;
   case 15:
@@ -1774,7 +1774,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 17:
     // CGRJ, CLGRJ, CLRJ, CRJ
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printPCRelOperand(MI, 3, O); 
     return;
     break;
@@ -1811,12 +1811,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 1:
     // AGHIK, AGRK, AHIK, ALGHSIK, ALGRK, ALHSIK, ALRK, ARK, AsmCGRJ, AsmCLGR...
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 2:
     // AsmCGIJ, AsmCIJ, AsmCLGIJ, AsmCLIJ
     printU4ImmOperand(MI, 2, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printPCRelOperand(MI, 3, O); 
     return;
     break;
@@ -1845,7 +1845,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 2:
     // AsmCGRJ, AsmCLGRJ, AsmCLRJ, AsmCRJ
     printU4ImmOperand(MI, 2, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printPCRelOperand(MI, 3, O); 
     return;
     break;
@@ -1887,9 +1887,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 10:
     // RISBG, RISBG32, RISBHG, RISBLG, RNSBG, ROSBG, RXSBG
     printU8ImmOperand(MI, 3, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printU8ImmOperand(MI, 4, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printU6ImmOperand(MI, 5, O); 
     return;
     break;

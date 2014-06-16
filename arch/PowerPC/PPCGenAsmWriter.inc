@@ -2463,7 +2463,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   uint64_t Bits = (Bits2 << 32) | Bits1;
   // assert(Bits != 0 && "Cannot print this instruction.");
 #ifndef CAPSTONE_DIET
-  SStream_concat(O, "%s", AsmStrs+(Bits & 8191)-1);
+  SStream_concat0(O, AsmStrs+(Bits & 8191)-1);
 #endif
 
 
@@ -2512,9 +2512,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 9:
     // DST, DST64, DSTST, DSTST64, DSTSTT, DSTSTT64, DSTT, DSTT64
     printOperand(MI, 2, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 3, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printU5ImmOperand(MI, 1, O); 
     return;
     break;
@@ -2525,7 +2525,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 11:
     // MTOCRF, MTOCRF8
     printcrbitm(MI, 0, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 1, O); 
     return;
     break;
@@ -2542,7 +2542,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   default:   // unreachable.
   case 0:
     // ADD4, ADD4TLS, ADD4o, ADD8, ADD8TLS, ADD8TLS_, ADD8o, ADDC, ADDC8, ADD...
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 1:
     // ADJCALLSTACKDOWN, B, BA, BCLalways, BDNZ, BDNZ8, BDNZA, BDNZAm, BDNZAp...
@@ -2550,109 +2550,109 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 2:
     // ADJCALLSTACKUP, ATOMIC_CMP_SWAP_I16, ATOMIC_CMP_SWAP_I32, TCRETURNai, ...
-    SStream_concat(O, "%s", " "); 
+    SStream_concat0(O, " "); 
     break;
   case 3:
     // BCC
     printPredicateOperand(MI, 0, O, "pm"); 
-    SStream_concat(O, "%s", " "); 
+    SStream_concat0(O, " "); 
     printPredicateOperand(MI, 0, O, "reg"); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printBranchOperand(MI, 2, O); 
     return;
     break;
   case 4:
     // BCCA
-    SStream_concat(O, "%s", "a"); 
+    SStream_concat0(O, "a"); 
     printPredicateOperand(MI, 0, O, "pm"); 
-    SStream_concat(O, "%s", " "); 
+    SStream_concat0(O, " "); 
     printPredicateOperand(MI, 0, O, "reg"); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printAbsBranchOperand(MI, 2, O); 
     return;
     break;
   case 5:
     // BCCL
-    SStream_concat(O, "%s", "l"); 
+    SStream_concat0(O, "l"); 
     printPredicateOperand(MI, 0, O, "pm"); 
-    SStream_concat(O, "%s", " "); 
+    SStream_concat0(O, " "); 
     printPredicateOperand(MI, 0, O, "reg"); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printBranchOperand(MI, 2, O); 
     return;
     break;
   case 6:
     // BCCLA
-    SStream_concat(O, "%s", "la"); 
+    SStream_concat0(O, "la"); 
     printPredicateOperand(MI, 0, O, "pm"); 
-    SStream_concat(O, "%s", " "); 
+    SStream_concat0(O, " "); 
     printPredicateOperand(MI, 0, O, "reg"); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printAbsBranchOperand(MI, 2, O); 
     return;
     break;
   case 7:
     // BCCTR, BCCTR8
-    SStream_concat(O, "%s", "ctr"); 
+    SStream_concat0(O, "ctr"); 
     printPredicateOperand(MI, 0, O, "pm"); 
-    SStream_concat(O, "%s", " "); 
+    SStream_concat0(O, " "); 
     printPredicateOperand(MI, 0, O, "reg"); 
     return;
     break;
   case 8:
     // BCCTRL, BCCTRL8
-    SStream_concat(O, "%s", "ctrl"); 
+    SStream_concat0(O, "ctrl"); 
     printPredicateOperand(MI, 0, O, "pm"); 
-    SStream_concat(O, "%s", " "); 
+    SStream_concat0(O, " "); 
     printPredicateOperand(MI, 0, O, "reg"); 
     return;
     break;
   case 9:
     // BCLR
-    SStream_concat(O, "%s", "lr"); 
+    SStream_concat0(O, "lr"); 
     printPredicateOperand(MI, 0, O, "pm"); 
-    SStream_concat(O, "%s", " "); 
+    SStream_concat0(O, " "); 
     printPredicateOperand(MI, 0, O, "reg"); 
     return;
     break;
   case 10:
     // BCLRL
-    SStream_concat(O, "%s", "lrl"); 
+    SStream_concat0(O, "lrl"); 
     printPredicateOperand(MI, 0, O, "pm"); 
-    SStream_concat(O, "%s", " "); 
+    SStream_concat0(O, " "); 
     printPredicateOperand(MI, 0, O, "reg"); 
     return;
     break;
   case 11:
     // BL8_NOP, BL8_NOP_TLS, BLA8_NOP
-    SStream_concat(O, "%s", "\n\tnop"); 
+    SStream_concat0(O, "\n\tnop"); 
     return;
     break;
   case 12:
     // LDinto_toc
-    SStream_concat(O, "%s", ")"); 
+    SStream_concat0(O, ")"); 
     set_mem_access(MI, false);
     return;
     break;
   case 13:
     // MFTB8
-    SStream_concat(O, "%s", ", 268"); 
+    SStream_concat0(O, ", 268"); 
     return;
     break;
   case 14:
     // MFVRSAVE, MFVRSAVEv
-    SStream_concat(O, "%s", ", 256"); 
+    SStream_concat0(O, ", 256"); 
     return;
     break;
   case 15:
     // TLBIE
-    SStream_concat(O, "%s", ","); 
+    SStream_concat0(O, ","); 
     printOperand(MI, 0, O); 
     return;
     break;
   case 16:
     // V_SETALLONES, V_SETALLONESB, V_SETALLONESH
-    SStream_concat(O, "%s", ", -1"); 
+    SStream_concat0(O, ", -1"); 
     return;
     break;
   }
@@ -2678,17 +2678,17 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 3:
     // CRSET, CRUNSET, V_SET0, V_SET0B, V_SET0H
     printOperand(MI, 0, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 0, O); 
     return;
     break;
   case 4:
     // LA
     printS16ImmOperand(MI, 2, O); 
-    SStream_concat(O, "%s", "("); 
+    SStream_concat0(O, "("); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "%s", ")"); 
+    SStream_concat0(O, ")"); 
     set_mem_access(MI, false);
     return;
     break;
@@ -2720,7 +2720,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 10:
     // RLDIMI, RLDIMIo, RLWIMI, RLWIMIo, VCFSX, VCFUX, VCTSXS, VCTUXS, VSPLTB...
     printOperand(MI, 2, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 11:
     // VSPLTISB, VSPLTISH, VSPLTISW
@@ -2736,7 +2736,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   default:   // unreachable.
   case 0:
     // ADD4, ADD4TLS, ADD4o, ADD8, ADD8TLS, ADD8TLS_, ADD8o, ADDC, ADDC8, ADD...
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 1:
     // ADDME, ADDME8, ADDME8o, ADDMEo, ADDZE, ADDZE8, ADDZE8o, ADDZEo, CNTLZD...
@@ -2744,25 +2744,25 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 2:
     // ATOMIC_CMP_SWAP_I16, ATOMIC_CMP_SWAP_I32
-    SStream_concat(O, "%s", " "); 
+    SStream_concat0(O, " "); 
     printOperand(MI, 3, O); 
-    SStream_concat(O, "%s", " "); 
+    SStream_concat0(O, " "); 
     printOperand(MI, 4, O); 
     return;
     break;
   case 3:
     // RLDIMI, RLDIMIo
     printU6ImmOperand(MI, 3, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printU6ImmOperand(MI, 4, O); 
     return;
     break;
   case 4:
     // RLWIMI, RLWIMIo
     printU5ImmOperand(MI, 3, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printU5ImmOperand(MI, 4, O); 
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printU5ImmOperand(MI, 5, O); 
     return;
     break;
@@ -2773,7 +2773,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 6:
     // VCFSX_0, VCFUX_0, VCTSXS_0, VCTUXS_0
-    SStream_concat(O, "%s", ", 0"); 
+    SStream_concat0(O, ", 0"); 
     return;
     break;
   }
@@ -2822,7 +2822,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   //printf("Frag-5: %"PRIu64"\n", (Bits >> 32) & 1);
   if ((Bits >> 32) & 1) {
     // CLRLSLDI, CLRLSLDIo, CLRLSLWI, CLRLSLWIo, EXTLDI, EXTLDIo, EXTLWI, EXT...
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
   } else {
     // ADD4, ADD4TLS, ADD4o, ADD8, ADD8TLS, ADD8TLS_, ADD8o, ADDC, ADDC8, ADD...
     return;
@@ -2854,7 +2854,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   //printf("Frag-7: %"PRIu64"\n", (Bits >> 35) & 1);
   if ((Bits >> 35) & 1) {
     // RLWINM, RLWINM8, RLWINM8o, RLWINMo, RLWNM, RLWNMo
-    SStream_concat(O, "%s", ", "); 
+    SStream_concat0(O, ", "); 
     printU5ImmOperand(MI, 4, O); 
     return;
   } else {
@@ -2869,11 +2869,11 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 /// getRegisterName - This method is automatically generated by tblgen
 /// from the register set description.  This returns the assembler name
 /// for the specified register.
-static const char *getRegisterName(unsigned RegNo)
+static char *getRegisterName(unsigned RegNo)
 {
   //assert(RegNo && RegNo < 182 && "Invalid register number!");
 
-  static const char AsmStrs[] = {
+  static char AsmStrs[] = {
   /* 0 */ '*', '*', 'R', 'O', 'U', 'N', 'D', 'I', 'N', 'G', 32, 'M', 'O', 'D', 'E', '*', '*', 0,
   /* 18 */ '*', '*', 'F', 'R', 'A', 'M', 'E', 32, 'P', 'O', 'I', 'N', 'T', 'E', 'R', '*', '*', 0,
   /* 36 */ '*', '*', 'B', 'A', 'S', 'E', 32, 'P', 'O', 'I', 'N', 'T', 'E', 'R', '*', '*', 0,
@@ -3474,9 +3474,9 @@ static bool printAliasInstr(MCInst *MI, SStream *OS, void *info)
 	  AsmOps += 1;
   }
 
-  SStream_concat(OS, "%s", AsmMnem);
+  SStream_concat0(OS, AsmMnem);
   if (AsmOps) {
-	  SStream_concat(OS, "\t");
+	  SStream_concat0(OS, "\t");
 
       char *c;
   	  for (c = AsmOps; *c; c++) {

@@ -17,6 +17,7 @@
 #include <string.h>
 
 #include "../../cs_priv.h"
+#include "../../utils.h"
 
 #include "../../MCInst.h"
 #include "../../MCInstrDesc.h"
@@ -92,7 +93,7 @@ static DecodeStatus DecodeIntRegsRegisterClass(MCInst *Inst, unsigned RegNo,
 		return MCDisassembler_Fail;
 
 	Reg = IntRegDecoderTable[RegNo];
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Reg));
+	MCOperand_CreateReg0(Inst, Reg);
 
 	return MCDisassembler_Success;
 }
@@ -106,7 +107,7 @@ static DecodeStatus DecodeI64RegsRegisterClass(MCInst *Inst, unsigned RegNo,
 		return MCDisassembler_Fail;
 
 	Reg = IntRegDecoderTable[RegNo];
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Reg));
+	MCOperand_CreateReg0(Inst, Reg);
 
 	return MCDisassembler_Success;
 }
@@ -120,7 +121,7 @@ static DecodeStatus DecodeFPRegsRegisterClass(MCInst *Inst, unsigned RegNo,
 		return MCDisassembler_Fail;
 
 	Reg = FPRegDecoderTable[RegNo];
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Reg));
+	MCOperand_CreateReg0(Inst, Reg);
 
 	return MCDisassembler_Success;
 }
@@ -134,7 +135,7 @@ static DecodeStatus DecodeDFPRegsRegisterClass(MCInst *Inst, unsigned RegNo,
 		return MCDisassembler_Fail;
 
 	Reg = DFPRegDecoderTable[RegNo];
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Reg));
+	MCOperand_CreateReg0(Inst, Reg);
 
 	return MCDisassembler_Success;
 }
@@ -151,7 +152,7 @@ static DecodeStatus DecodeQFPRegsRegisterClass(MCInst *Inst, unsigned RegNo,
 	if (Reg == ~0U)
 		return MCDisassembler_Fail;
 
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Reg));
+	MCOperand_CreateReg0(Inst, Reg);
 
 	return MCDisassembler_Success;
 }
@@ -162,7 +163,7 @@ static DecodeStatus DecodeFCCRegsRegisterClass(MCInst *Inst, unsigned RegNo,
 	if (RegNo > 3)
 		return MCDisassembler_Fail;
 
-	MCInst_addOperand(Inst, MCOperand_CreateReg(FCCRegDecoderTable[RegNo]));
+	MCOperand_CreateReg0(Inst, FCCRegDecoderTable[RegNo]);
 
 	return MCDisassembler_Success;
 }
@@ -230,6 +231,10 @@ bool Sparc_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *
 	if (Result == MCDisassembler_Fail)
 		return MCDisassembler_Fail;
 
+	if (MI->flat_insn->detail) {
+		memset(&MI->flat_insn->detail->sparc, 0, offset_of(cs_sparc, operands));
+	}
+
 	Result = decodeInstruction_4(DecoderTableSparc32, MI, Insn, address,
 			(MCRegisterInfo *)info, 0);
 	if (Result != MCDisassembler_Fail) {
@@ -272,7 +277,7 @@ static DecodeStatus DecodeMem(MCInst *MI, unsigned insn, uint64_t Address,
 
 	// Decode imm|rs2.
 	if (isImm)
-		MCInst_addOperand(MI, MCOperand_CreateImm(simm13));
+		MCOperand_CreateImm0(MI, simm13);
 	else {
 		status = DecodeIntRegsRegisterClass(MI, rs2, Address, Decoder);
 		if (status != MCDisassembler_Success)
@@ -350,7 +355,7 @@ static DecodeStatus DecodeCall(MCInst *MI, unsigned insn,
 	unsigned tgt = fieldFromInstruction_4(insn, 0, 30);
 	tgt <<= 2;
 
-	MCInst_addOperand(MI, MCOperand_CreateImm(tgt));
+	MCOperand_CreateImm0(MI, tgt);
 
 	return MCDisassembler_Success;
 }
@@ -360,7 +365,7 @@ static DecodeStatus DecodeSIMM13(MCInst *MI, unsigned insn,
 {
 	unsigned tgt = SignExtend32(fieldFromInstruction_4(insn, 0, 13), 13);
 
-	MCInst_addOperand(MI, MCOperand_CreateImm(tgt));
+	MCOperand_CreateImm0(MI, tgt);
 
 	return MCDisassembler_Success;
 }
@@ -392,7 +397,7 @@ static DecodeStatus DecodeJMPL(MCInst *MI, unsigned insn, uint64_t Address,
 
 	// Decode RS1 | SIMM13.
 	if (isImm)
-		MCInst_addOperand(MI, MCOperand_CreateImm(simm13));
+		MCOperand_CreateImm0(MI, simm13);
 	else {
 		status = DecodeIntRegsRegisterClass(MI, rs2, Address, Decoder);
 		if (status != MCDisassembler_Success)
@@ -422,7 +427,7 @@ static DecodeStatus DecodeReturn(MCInst *MI, unsigned insn, uint64_t Address,
 
 	// Decode RS2 | SIMM13.
 	if (isImm)
-		MCInst_addOperand(MI, MCOperand_CreateImm(simm13));
+		MCOperand_CreateImm0(MI, simm13);
 	else {
 		status = DecodeIntRegsRegisterClass(MI, rs2, Address, Decoder);
 		if (status != MCDisassembler_Success)
@@ -459,7 +464,7 @@ static DecodeStatus DecodeSWAP(MCInst *MI, unsigned insn, uint64_t Address,
 
 	// Decode RS1 | SIMM13.
 	if (isImm)
-		MCInst_addOperand(MI, MCOperand_CreateImm(simm13));
+		MCOperand_CreateImm0(MI, simm13);
 	else {
 		status = DecodeIntRegsRegisterClass(MI, rs2, Address, Decoder);
 		if (status != MCDisassembler_Success)

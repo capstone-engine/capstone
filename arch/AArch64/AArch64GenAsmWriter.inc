@@ -6003,7 +6003,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   uint64_t Bits = (Bits2 << 32) | Bits1;
   // assert(Bits != 0 && "Cannot print this instruction.");
 #ifndef CAPSTONE_DIET
-  SStream_concat(O, "%s", AsmStrs+(Bits & 4095)-1);
+  SStream_concat0(O, AsmStrs+(Bits & 4095)-1);
 #endif
 
 
@@ -6026,7 +6026,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 3:
     // ATix
     printNamedImmOperand(MI, 0, O, &A64AT_ATMapper); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 1, O); 
     return;
     break;
@@ -6038,14 +6038,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 5:
     // Bcc
     printCondCodeOperand(MI, 0, O); 
-    SStream_concat(O, " "); 
+    SStream_concat0(O, " "); 
     printLabelOperand(MI, 1, O, 19, 4); 
     return;
     break;
   case 6:
     // DCix
     printNamedImmOperand(MI, 0, O, &A64DC_DCMapper); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 1, O); 
     return;
     break;
@@ -6066,289 +6066,289 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 10:
     // LD1LN_B, LD1LN_WB_B_fixed, LD1LN_WB_B_register
     printVectorList(MI, 0, O, A64Layout_VL_B, 1, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     break;
   case 11:
     // LD1LN_D, LD1LN_WB_D_fixed, LD1LN_WB_D_register
     printVectorList(MI, 0, O, A64Layout_VL_D, 1, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     break;
   case 12:
     // LD1LN_H, LD1LN_WB_H_fixed, LD1LN_WB_H_register
     printVectorList(MI, 0, O, A64Layout_VL_H, 1, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     break;
   case 13:
     // LD1LN_S, LD1LN_WB_S_fixed, LD1LN_WB_S_register
     printVectorList(MI, 0, O, A64Layout_VL_S, 1, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     break;
   case 14:
     // LD1R_16B, LD1R_WB_16B_fixed, LD1R_WB_16B_register, LD1WB_16B_fixed, LD...
     printVectorList(MI, 0, O, A64Layout_VL_16B, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 15:
     // LD1R_1D, LD1R_WB_1D_fixed, LD1R_WB_1D_register, LD1WB_1D_fixed, LD1WB_...
     printVectorList(MI, 0, O, A64Layout_VL_1D, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 16:
     // LD1R_2D, LD1R_WB_2D_fixed, LD1R_WB_2D_register, LD1WB_2D_fixed, LD1WB_...
     printVectorList(MI, 0, O, A64Layout_VL_2D, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 17:
     // LD1R_2S, LD1R_WB_2S_fixed, LD1R_WB_2S_register, LD1WB_2S_fixed, LD1WB_...
     printVectorList(MI, 0, O, A64Layout_VL_2S, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 18:
     // LD1R_4H, LD1R_WB_4H_fixed, LD1R_WB_4H_register, LD1WB_4H_fixed, LD1WB_...
     printVectorList(MI, 0, O, A64Layout_VL_4H, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 19:
     // LD1R_4S, LD1R_WB_4S_fixed, LD1R_WB_4S_register, LD1WB_4S_fixed, LD1WB_...
     printVectorList(MI, 0, O, A64Layout_VL_4S, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 20:
     // LD1R_8B, LD1R_WB_8B_fixed, LD1R_WB_8B_register, LD1WB_8B_fixed, LD1WB_...
     printVectorList(MI, 0, O, A64Layout_VL_8B, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 21:
     // LD1R_8H, LD1R_WB_8H_fixed, LD1R_WB_8H_register, LD1WB_8H_fixed, LD1WB_...
     printVectorList(MI, 0, O, A64Layout_VL_8H, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 22:
     // LD1x2WB_16B_fixed, LD1x2WB_16B_register, LD1x2_16B, LD2R_16B, LD2R_WB_...
     printVectorList(MI, 0, O, A64Layout_VL_16B, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 23:
     // LD1x2WB_1D_fixed, LD1x2WB_1D_register, LD1x2_1D, LD2R_1D, LD2R_WB_1D_f...
     printVectorList(MI, 0, O, A64Layout_VL_1D, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 24:
     // LD1x2WB_2D_fixed, LD1x2WB_2D_register, LD1x2_2D, LD2R_2D, LD2R_WB_2D_f...
     printVectorList(MI, 0, O, A64Layout_VL_2D, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 25:
     // LD1x2WB_2S_fixed, LD1x2WB_2S_register, LD1x2_2S, LD2R_2S, LD2R_WB_2S_f...
     printVectorList(MI, 0, O, A64Layout_VL_2S, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 26:
     // LD1x2WB_4H_fixed, LD1x2WB_4H_register, LD1x2_4H, LD2R_4H, LD2R_WB_4H_f...
     printVectorList(MI, 0, O, A64Layout_VL_4H, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 27:
     // LD1x2WB_4S_fixed, LD1x2WB_4S_register, LD1x2_4S, LD2R_4S, LD2R_WB_4S_f...
     printVectorList(MI, 0, O, A64Layout_VL_4S, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 28:
     // LD1x2WB_8B_fixed, LD1x2WB_8B_register, LD1x2_8B, LD2R_8B, LD2R_WB_8B_f...
     printVectorList(MI, 0, O, A64Layout_VL_8B, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 29:
     // LD1x2WB_8H_fixed, LD1x2WB_8H_register, LD1x2_8H, LD2R_8H, LD2R_WB_8H_f...
     printVectorList(MI, 0, O, A64Layout_VL_8H, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 30:
     // LD1x3WB_16B_fixed, LD1x3WB_16B_register, LD1x3_16B, LD3R_16B, LD3R_WB_...
     printVectorList(MI, 0, O, A64Layout_VL_16B, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 31:
     // LD1x3WB_1D_fixed, LD1x3WB_1D_register, LD1x3_1D, LD3R_1D, LD3R_WB_1D_f...
     printVectorList(MI, 0, O, A64Layout_VL_1D, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 32:
     // LD1x3WB_2D_fixed, LD1x3WB_2D_register, LD1x3_2D, LD3R_2D, LD3R_WB_2D_f...
     printVectorList(MI, 0, O, A64Layout_VL_2D, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 33:
     // LD1x3WB_2S_fixed, LD1x3WB_2S_register, LD1x3_2S, LD3R_2S, LD3R_WB_2S_f...
     printVectorList(MI, 0, O, A64Layout_VL_2S, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 34:
     // LD1x3WB_4H_fixed, LD1x3WB_4H_register, LD1x3_4H, LD3R_4H, LD3R_WB_4H_f...
     printVectorList(MI, 0, O, A64Layout_VL_4H, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 35:
     // LD1x3WB_4S_fixed, LD1x3WB_4S_register, LD1x3_4S, LD3R_4S, LD3R_WB_4S_f...
     printVectorList(MI, 0, O, A64Layout_VL_4S, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 36:
     // LD1x3WB_8B_fixed, LD1x3WB_8B_register, LD1x3_8B, LD3R_8B, LD3R_WB_8B_f...
     printVectorList(MI, 0, O, A64Layout_VL_8B, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 37:
     // LD1x3WB_8H_fixed, LD1x3WB_8H_register, LD1x3_8H, LD3R_8H, LD3R_WB_8H_f...
     printVectorList(MI, 0, O, A64Layout_VL_8H, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 38:
     // LD1x4WB_16B_fixed, LD1x4WB_16B_register, LD1x4_16B, LD4R_16B, LD4R_WB_...
     printVectorList(MI, 0, O, A64Layout_VL_16B, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 39:
     // LD1x4WB_1D_fixed, LD1x4WB_1D_register, LD1x4_1D, LD4R_1D, LD4R_WB_1D_f...
     printVectorList(MI, 0, O, A64Layout_VL_1D, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 40:
     // LD1x4WB_2D_fixed, LD1x4WB_2D_register, LD1x4_2D, LD4R_2D, LD4R_WB_2D_f...
     printVectorList(MI, 0, O, A64Layout_VL_2D, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 41:
     // LD1x4WB_2S_fixed, LD1x4WB_2S_register, LD1x4_2S, LD4R_2S, LD4R_WB_2S_f...
     printVectorList(MI, 0, O, A64Layout_VL_2S, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 42:
     // LD1x4WB_4H_fixed, LD1x4WB_4H_register, LD1x4_4H, LD4R_4H, LD4R_WB_4H_f...
     printVectorList(MI, 0, O, A64Layout_VL_4H, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 43:
     // LD1x4WB_4S_fixed, LD1x4WB_4S_register, LD1x4_4S, LD4R_4S, LD4R_WB_4S_f...
     printVectorList(MI, 0, O, A64Layout_VL_4S, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 44:
     // LD1x4WB_8B_fixed, LD1x4WB_8B_register, LD1x4_8B, LD4R_8B, LD4R_WB_8B_f...
     printVectorList(MI, 0, O, A64Layout_VL_8B, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 45:
     // LD1x4WB_8H_fixed, LD1x4WB_8H_register, LD1x4_8H, LD4R_8H, LD4R_WB_8H_f...
     printVectorList(MI, 0, O, A64Layout_VL_8H, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 46:
     // LD2LN_B, LD2LN_WB_B_fixed, LD2LN_WB_B_register
     printVectorList(MI, 0, O, A64Layout_VL_B, 2, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     break;
   case 47:
     // LD2LN_D, LD2LN_WB_D_fixed, LD2LN_WB_D_register
     printVectorList(MI, 0, O, A64Layout_VL_D, 2, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     break;
   case 48:
     // LD2LN_H, LD2LN_WB_H_fixed, LD2LN_WB_H_register
     printVectorList(MI, 0, O, A64Layout_VL_H, 2, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     break;
   case 49:
     // LD2LN_S, LD2LN_WB_S_fixed, LD2LN_WB_S_register
     printVectorList(MI, 0, O, A64Layout_VL_S, 2, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     break;
   case 50:
     // LD3LN_B, LD3LN_WB_B_fixed, LD3LN_WB_B_register
     printVectorList(MI, 0, O, A64Layout_VL_B, 3, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     break;
   case 51:
     // LD3LN_D, LD3LN_WB_D_fixed, LD3LN_WB_D_register
     printVectorList(MI, 0, O, A64Layout_VL_D, 3, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     break;
   case 52:
     // LD3LN_H, LD3LN_WB_H_fixed, LD3LN_WB_H_register
     printVectorList(MI, 0, O, A64Layout_VL_H, 3, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     break;
   case 53:
     // LD3LN_S, LD3LN_WB_S_fixed, LD3LN_WB_S_register
     printVectorList(MI, 0, O, A64Layout_VL_S, 3, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     break;
   case 54:
     // LD4LN_B, LD4LN_WB_B_fixed, LD4LN_WB_B_register
     printVectorList(MI, 0, O, A64Layout_VL_B, 4, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     break;
   case 55:
     // LD4LN_D, LD4LN_WB_D_fixed, LD4LN_WB_D_register
     printVectorList(MI, 0, O, A64Layout_VL_D, 4, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     break;
   case 56:
     // LD4LN_H, LD4LN_WB_H_fixed, LD4LN_WB_H_register
     printVectorList(MI, 0, O, A64Layout_VL_H, 4, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     break;
   case 57:
     // LD4LN_S, LD4LN_WB_S_fixed, LD4LN_WB_S_register
     printVectorList(MI, 0, O, A64Layout_VL_S, 4, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     break;
   case 58:
@@ -6358,14 +6358,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 59:
     // MSRii
     printNamedImmOperand(MI, 0, O, &A64PState_PStateMapper); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 1, O); 
     return;
     break;
   case 60:
     // MSRix
     printMSROperand(MI, 0, O); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 1, O); 
     return;
     break;
@@ -6376,70 +6376,70 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 62:
     // ST1LN_B
     printVectorList(MI, 1, O, A64Layout_VL_B, 1, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 2, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 63:
     // ST1LN_D
     printVectorList(MI, 1, O, A64Layout_VL_D, 1, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 2, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 64:
     // ST1LN_H
     printVectorList(MI, 1, O, A64Layout_VL_H, 1, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 2, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 65:
     // ST1LN_S
     printVectorList(MI, 1, O, A64Layout_VL_S, 1, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 2, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 66:
     // ST1LN_WB_B_fixed, ST1LN_WB_B_register
     printVectorList(MI, 3, O, A64Layout_VL_B, 1, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 4, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6447,14 +6447,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 67:
     // ST1LN_WB_D_fixed, ST1LN_WB_D_register
     printVectorList(MI, 3, O, A64Layout_VL_D, 1, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 4, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6462,14 +6462,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 68:
     // ST1LN_WB_H_fixed, ST1LN_WB_H_register
     printVectorList(MI, 3, O, A64Layout_VL_H, 1, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 4, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6477,14 +6477,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 69:
     // ST1LN_WB_S_fixed, ST1LN_WB_S_register
     printVectorList(MI, 3, O, A64Layout_VL_S, 1, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 4, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6492,10 +6492,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 70:
     // ST1WB_16B_fixed, ST1WB_16B_register
     printVectorList(MI, 3, O, A64Layout_VL_16B, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6503,10 +6503,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 71:
     // ST1WB_1D_fixed, ST1WB_1D_register
     printVectorList(MI, 3, O, A64Layout_VL_1D, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6514,10 +6514,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 72:
     // ST1WB_2D_fixed, ST1WB_2D_register
     printVectorList(MI, 3, O, A64Layout_VL_2D, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6525,10 +6525,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 73:
     // ST1WB_2S_fixed, ST1WB_2S_register
     printVectorList(MI, 3, O, A64Layout_VL_2S, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6536,10 +6536,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 74:
     // ST1WB_4H_fixed, ST1WB_4H_register
     printVectorList(MI, 3, O, A64Layout_VL_4H, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6547,10 +6547,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 75:
     // ST1WB_4S_fixed, ST1WB_4S_register
     printVectorList(MI, 3, O, A64Layout_VL_4S, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6558,10 +6558,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 76:
     // ST1WB_8B_fixed, ST1WB_8B_register
     printVectorList(MI, 3, O, A64Layout_VL_8B, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6569,10 +6569,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 77:
     // ST1WB_8H_fixed, ST1WB_8H_register
     printVectorList(MI, 3, O, A64Layout_VL_8H, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6580,90 +6580,90 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 78:
     // ST1_16B
     printVectorList(MI, 1, O, A64Layout_VL_16B, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 79:
     // ST1_1D
     printVectorList(MI, 1, O, A64Layout_VL_1D, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 80:
     // ST1_2D
     printVectorList(MI, 1, O, A64Layout_VL_2D, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 81:
     // ST1_2S
     printVectorList(MI, 1, O, A64Layout_VL_2S, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 82:
     // ST1_4H
     printVectorList(MI, 1, O, A64Layout_VL_4H, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 83:
     // ST1_4S
     printVectorList(MI, 1, O, A64Layout_VL_4S, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 84:
     // ST1_8B
     printVectorList(MI, 1, O, A64Layout_VL_8B, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 85:
     // ST1_8H
     printVectorList(MI, 1, O, A64Layout_VL_8H, 1, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 86:
     // ST1x2WB_16B_fixed, ST1x2WB_16B_register, ST2WB_16B_fixed, ST2WB_16B_re...
     printVectorList(MI, 3, O, A64Layout_VL_16B, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6671,10 +6671,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 87:
     // ST1x2WB_1D_fixed, ST1x2WB_1D_register
     printVectorList(MI, 3, O, A64Layout_VL_1D, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6682,10 +6682,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 88:
     // ST1x2WB_2D_fixed, ST1x2WB_2D_register, ST2WB_2D_fixed, ST2WB_2D_regist...
     printVectorList(MI, 3, O, A64Layout_VL_2D, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6693,10 +6693,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 89:
     // ST1x2WB_2S_fixed, ST1x2WB_2S_register, ST2WB_2S_fixed, ST2WB_2S_regist...
     printVectorList(MI, 3, O, A64Layout_VL_2S, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6704,10 +6704,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 90:
     // ST1x2WB_4H_fixed, ST1x2WB_4H_register, ST2WB_4H_fixed, ST2WB_4H_regist...
     printVectorList(MI, 3, O, A64Layout_VL_4H, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6715,10 +6715,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 91:
     // ST1x2WB_4S_fixed, ST1x2WB_4S_register, ST2WB_4S_fixed, ST2WB_4S_regist...
     printVectorList(MI, 3, O, A64Layout_VL_4S, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6726,10 +6726,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 92:
     // ST1x2WB_8B_fixed, ST1x2WB_8B_register, ST2WB_8B_fixed, ST2WB_8B_regist...
     printVectorList(MI, 3, O, A64Layout_VL_8B, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6737,10 +6737,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 93:
     // ST1x2WB_8H_fixed, ST1x2WB_8H_register, ST2WB_8H_fixed, ST2WB_8H_regist...
     printVectorList(MI, 3, O, A64Layout_VL_8H, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6748,90 +6748,90 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 94:
     // ST1x2_16B, ST2_16B
     printVectorList(MI, 1, O, A64Layout_VL_16B, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 95:
     // ST1x2_1D
     printVectorList(MI, 1, O, A64Layout_VL_1D, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 96:
     // ST1x2_2D, ST2_2D
     printVectorList(MI, 1, O, A64Layout_VL_2D, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 97:
     // ST1x2_2S, ST2_2S
     printVectorList(MI, 1, O, A64Layout_VL_2S, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 98:
     // ST1x2_4H, ST2_4H
     printVectorList(MI, 1, O, A64Layout_VL_4H, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 99:
     // ST1x2_4S, ST2_4S
     printVectorList(MI, 1, O, A64Layout_VL_4S, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 100:
     // ST1x2_8B, ST2_8B
     printVectorList(MI, 1, O, A64Layout_VL_8B, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 101:
     // ST1x2_8H, ST2_8H
     printVectorList(MI, 1, O, A64Layout_VL_8H, 2, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 102:
     // ST1x3WB_16B_fixed, ST1x3WB_16B_register, ST3WB_16B_fixed, ST3WB_16B_re...
     printVectorList(MI, 3, O, A64Layout_VL_16B, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6839,10 +6839,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 103:
     // ST1x3WB_1D_fixed, ST1x3WB_1D_register
     printVectorList(MI, 3, O, A64Layout_VL_1D, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6850,10 +6850,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 104:
     // ST1x3WB_2D_fixed, ST1x3WB_2D_register, ST3WB_2D_fixed, ST3WB_2D_regist...
     printVectorList(MI, 3, O, A64Layout_VL_2D, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6861,10 +6861,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 105:
     // ST1x3WB_2S_fixed, ST1x3WB_2S_register, ST3WB_2S_fixed, ST3WB_2S_regist...
     printVectorList(MI, 3, O, A64Layout_VL_2S, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6872,10 +6872,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 106:
     // ST1x3WB_4H_fixed, ST1x3WB_4H_register, ST3WB_4H_fixed, ST3WB_4H_regist...
     printVectorList(MI, 3, O, A64Layout_VL_4H, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6883,10 +6883,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 107:
     // ST1x3WB_4S_fixed, ST1x3WB_4S_register, ST3WB_4S_fixed, ST3WB_4S_regist...
     printVectorList(MI, 3, O, A64Layout_VL_4S, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6894,10 +6894,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 108:
     // ST1x3WB_8B_fixed, ST1x3WB_8B_register, ST3WB_8B_fixed, ST3WB_8B_regist...
     printVectorList(MI, 3, O, A64Layout_VL_8B, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6905,10 +6905,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 109:
     // ST1x3WB_8H_fixed, ST1x3WB_8H_register, ST3WB_8H_fixed, ST3WB_8H_regist...
     printVectorList(MI, 3, O, A64Layout_VL_8H, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -6916,90 +6916,90 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 110:
     // ST1x3_16B, ST3_16B
     printVectorList(MI, 1, O, A64Layout_VL_16B, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 111:
     // ST1x3_1D
     printVectorList(MI, 1, O, A64Layout_VL_1D, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 112:
     // ST1x3_2D, ST3_2D
     printVectorList(MI, 1, O, A64Layout_VL_2D, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 113:
     // ST1x3_2S, ST3_2S
     printVectorList(MI, 1, O, A64Layout_VL_2S, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 114:
     // ST1x3_4H, ST3_4H
     printVectorList(MI, 1, O, A64Layout_VL_4H, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 115:
     // ST1x3_4S, ST3_4S
     printVectorList(MI, 1, O, A64Layout_VL_4S, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 116:
     // ST1x3_8B, ST3_8B
     printVectorList(MI, 1, O, A64Layout_VL_8B, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 117:
     // ST1x3_8H, ST3_8H
     printVectorList(MI, 1, O, A64Layout_VL_8H, 3, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 118:
     // ST1x4WB_16B_fixed, ST1x4WB_16B_register, ST4WB_16B_fixed, ST4WB_16B_re...
     printVectorList(MI, 3, O, A64Layout_VL_16B, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7007,10 +7007,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 119:
     // ST1x4WB_1D_fixed, ST1x4WB_1D_register
     printVectorList(MI, 3, O, A64Layout_VL_1D, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7018,10 +7018,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 120:
     // ST1x4WB_2D_fixed, ST1x4WB_2D_register, ST4WB_2D_fixed, ST4WB_2D_regist...
     printVectorList(MI, 3, O, A64Layout_VL_2D, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7029,10 +7029,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 121:
     // ST1x4WB_2S_fixed, ST1x4WB_2S_register, ST4WB_2S_fixed, ST4WB_2S_regist...
     printVectorList(MI, 3, O, A64Layout_VL_2S, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7040,10 +7040,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 122:
     // ST1x4WB_4H_fixed, ST1x4WB_4H_register, ST4WB_4H_fixed, ST4WB_4H_regist...
     printVectorList(MI, 3, O, A64Layout_VL_4H, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7051,10 +7051,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 123:
     // ST1x4WB_4S_fixed, ST1x4WB_4S_register, ST4WB_4S_fixed, ST4WB_4S_regist...
     printVectorList(MI, 3, O, A64Layout_VL_4S, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7062,10 +7062,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 124:
     // ST1x4WB_8B_fixed, ST1x4WB_8B_register, ST4WB_8B_fixed, ST4WB_8B_regist...
     printVectorList(MI, 3, O, A64Layout_VL_8B, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7073,10 +7073,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 125:
     // ST1x4WB_8H_fixed, ST1x4WB_8H_register, ST4WB_8H_fixed, ST4WB_8H_regist...
     printVectorList(MI, 3, O, A64Layout_VL_8H, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7084,150 +7084,150 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 126:
     // ST1x4_16B, ST4_16B
     printVectorList(MI, 1, O, A64Layout_VL_16B, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 127:
     // ST1x4_1D
     printVectorList(MI, 1, O, A64Layout_VL_1D, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 128:
     // ST1x4_2D, ST4_2D
     printVectorList(MI, 1, O, A64Layout_VL_2D, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 129:
     // ST1x4_2S, ST4_2S
     printVectorList(MI, 1, O, A64Layout_VL_2S, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 130:
     // ST1x4_4H, ST4_4H
     printVectorList(MI, 1, O, A64Layout_VL_4H, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 131:
     // ST1x4_4S, ST4_4S
     printVectorList(MI, 1, O, A64Layout_VL_4S, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 132:
     // ST1x4_8B, ST4_8B
     printVectorList(MI, 1, O, A64Layout_VL_8B, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 133:
     // ST1x4_8H, ST4_8H
     printVectorList(MI, 1, O, A64Layout_VL_8H, 4, MRI); 
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 134:
     // ST2LN_B
     printVectorList(MI, 1, O, A64Layout_VL_B, 2, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 2, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 135:
     // ST2LN_D
     printVectorList(MI, 1, O, A64Layout_VL_D, 2, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 2, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 136:
     // ST2LN_H
     printVectorList(MI, 1, O, A64Layout_VL_H, 2, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 2, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 137:
     // ST2LN_S
     printVectorList(MI, 1, O, A64Layout_VL_S, 2, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 2, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 138:
     // ST2LN_WB_B_fixed, ST2LN_WB_B_register
     printVectorList(MI, 3, O, A64Layout_VL_B, 2, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 4, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7235,14 +7235,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 139:
     // ST2LN_WB_D_fixed, ST2LN_WB_D_register
     printVectorList(MI, 3, O, A64Layout_VL_D, 2, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 4, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7250,14 +7250,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 140:
     // ST2LN_WB_H_fixed, ST2LN_WB_H_register
     printVectorList(MI, 3, O, A64Layout_VL_H, 2, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 4, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7265,14 +7265,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 141:
     // ST2LN_WB_S_fixed, ST2LN_WB_S_register
     printVectorList(MI, 3, O, A64Layout_VL_S, 2, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 4, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7280,70 +7280,70 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 142:
     // ST3LN_B
     printVectorList(MI, 1, O, A64Layout_VL_B, 3, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 2, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 143:
     // ST3LN_D
     printVectorList(MI, 1, O, A64Layout_VL_D, 3, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 2, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 144:
     // ST3LN_H
     printVectorList(MI, 1, O, A64Layout_VL_H, 3, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 2, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 145:
     // ST3LN_S
     printVectorList(MI, 1, O, A64Layout_VL_S, 3, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 2, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 146:
     // ST3LN_WB_B_fixed, ST3LN_WB_B_register
     printVectorList(MI, 3, O, A64Layout_VL_B, 3, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 4, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7351,14 +7351,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 147:
     // ST3LN_WB_D_fixed, ST3LN_WB_D_register
     printVectorList(MI, 3, O, A64Layout_VL_D, 3, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 4, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7366,14 +7366,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 148:
     // ST3LN_WB_H_fixed, ST3LN_WB_H_register
     printVectorList(MI, 3, O, A64Layout_VL_H, 3, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 4, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7381,14 +7381,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 149:
     // ST3LN_WB_S_fixed, ST3LN_WB_S_register
     printVectorList(MI, 3, O, A64Layout_VL_S, 3, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 4, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7396,70 +7396,70 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 150:
     // ST4LN_B
     printVectorList(MI, 1, O, A64Layout_VL_B, 4, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 2, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 151:
     // ST4LN_D
     printVectorList(MI, 1, O, A64Layout_VL_D, 4, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 2, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 152:
     // ST4LN_H
     printVectorList(MI, 1, O, A64Layout_VL_H, 4, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 2, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 153:
     // ST4LN_S
     printVectorList(MI, 1, O, A64Layout_VL_S, 4, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 2, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 0, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 154:
     // ST4LN_WB_B_fixed, ST4LN_WB_B_register
     printVectorList(MI, 3, O, A64Layout_VL_B, 4, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 4, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7467,14 +7467,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 155:
     // ST4LN_WB_D_fixed, ST4LN_WB_D_register
     printVectorList(MI, 3, O, A64Layout_VL_D, 4, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 4, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7482,14 +7482,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 156:
     // ST4LN_WB_H_fixed, ST4LN_WB_H_register
     printVectorList(MI, 3, O, A64Layout_VL_H, 4, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 4, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7497,14 +7497,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 157:
     // ST4LN_WB_S_fixed, ST4LN_WB_S_register
     printVectorList(MI, 3, O, A64Layout_VL_S, 4, MRI); 
-    SStream_concat(O, "["); 
+    SStream_concat0(O, "["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 4, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 2, O); 
     return;
@@ -7522,35 +7522,35 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   default:   // unreachable.
   case 0:
     // ABS16b, ADDHN2vvv_16b8h, ADDP_16B, ADDvvv_16B, AESD, AESE, AESIMC, AES...
-    SStream_concat(O, ".16b, "); 
+    SStream_concat0(O, ".16b, "); 
     break;
   case 1:
     // ABS2d, ADDP_2D, ADDvvv_2D, CMEQvvi_2D, CMEQvvv_2D, CMGEvvi_2D, CMGEvvv...
-    SStream_concat(O, ".2d, "); 
+    SStream_concat0(O, ".2d, "); 
     break;
   case 2:
     // ABS2s, ADDHNvvv_2s2d, ADDP_2S, ADDvvv_2S, BICvi_lsl_2S, CLS2s, CLZ2s, ...
-    SStream_concat(O, ".2s, "); 
+    SStream_concat0(O, ".2s, "); 
     break;
   case 3:
     // ABS4h, ADDHNvvv_4h4s, ADDP_4H, ADDvvv_4H, BICvi_lsl_4H, CLS4h, CLZ4h, ...
-    SStream_concat(O, ".4h, "); 
+    SStream_concat0(O, ".4h, "); 
     break;
   case 4:
     // ABS4s, ADDHN2vvv_4s2d, ADDP_4S, ADDvvv_4S, BICvi_lsl_4S, CLS4s, CLZ4s,...
-    SStream_concat(O, ".4s, "); 
+    SStream_concat0(O, ".4s, "); 
     break;
   case 5:
     // ABS8b, ADDHNvvv_8b8h, ADDP_8B, ADDvvv_8B, ANDvvv_8B, BICvvv_8B, BIFvvv...
-    SStream_concat(O, ".8b, "); 
+    SStream_concat0(O, ".8b, "); 
     break;
   case 6:
     // ABS8h, ADDHN2vvv_8h4s, ADDP_8H, ADDvvv_8H, BICvi_lsl_8H, CLS8h, CLZ8h,...
-    SStream_concat(O, ".8h, "); 
+    SStream_concat0(O, ".8h, "); 
     break;
   case 7:
     // ABSdd, ADCSwww, ADCSxxx, ADCwww, ADCxxx, ADDPvv_D_2D, ADDSwww_asr, ADD...
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 8:
     // BLRx, BRKi, BRx, CLREXi, DCPS1i, DCPS2i, DCPS3i, HINTi, HLTi, HVCi, IC...
@@ -7558,41 +7558,41 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 9:
     // FMOVvx, INSELd, INSdx
-    SStream_concat(O, ".d["); 
+    SStream_concat0(O, ".d["); 
     set_mem_access(MI, true);
     break;
   case 10:
     // INSELb, INSbw
-    SStream_concat(O, ".b["); 
+    SStream_concat0(O, ".b["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 3, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     break;
   case 11:
     // INSELh, INShw
-    SStream_concat(O, ".h["); 
+    SStream_concat0(O, ".h["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 3, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     break;
   case 12:
     // INSELs, INSsw
-    SStream_concat(O, ".s["); 
+    SStream_concat0(O, ".s["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 3, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     break;
   case 13:
     // LD1LN_B, LD1LN_D, LD1LN_H, LD1LN_S, LD2LN_B, LD2LN_D, LD2LN_H, LD2LN_S...
     printUImmBareOperand(MI, 3, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 1, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
@@ -7600,10 +7600,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     // LD1LN_WB_B_fixed, LD1LN_WB_B_register, LD1LN_WB_D_fixed, LD1LN_WB_D_re...
     printUImmBareOperand(MI, 5, O); 
     set_mem_access(MI, false);
-    SStream_concat(O, "], ["); 
+    SStream_concat0(O, "], ["); 
     set_mem_access(MI, true);
     printOperand(MI, 2, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 3, O); 
     return;
@@ -7611,31 +7611,31 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 15:
     // LD1R_16B, LD1R_1D, LD1R_2D, LD1R_2S, LD1R_4H, LD1R_4S, LD1R_8B, LD1R_8...
     printOperand(MI, 1, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 16:
     // LD1R_WB_16B_fixed, LD1R_WB_16B_register, LD1R_WB_1D_fixed, LD1R_WB_1D_...
     printOperand(MI, 2, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 3, O); 
     return;
     break;
   case 17:
     // LDAR_byte, LDAR_dword, LDAR_hword, LDAR_word, LDAXR_byte, LDAXR_dword,...
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 18:
     // PMULL2vvv_1q2d, PMULLvvv_1q1d
-    SStream_concat(O, ".1q, "); 
+    SStream_concat0(O, ".1q, "); 
     printVPRRegister(MI, 1, O); 
     break;
   case 19:
     // SADALP2s1d, SADDLP2s1d, UADALP2s1d, UADDLP2s1d
-    SStream_concat(O, ".1d, "); 
+    SStream_concat0(O, ".1d, "); 
     break;
   }
 
@@ -7702,7 +7702,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 12:
     // FMOVvx
     printBareImmOperand(MI, 2, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOperand(MI, 1, O); 
     return;
@@ -7710,7 +7710,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 13:
     // INSELd, INSdx
     printUImmBareOperand(MI, 3, O); 
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     break;
   case 14:
@@ -7739,75 +7739,75 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 19:
     // PMULL2vvv_1q2d
-    SStream_concat(O, ".2d, "); 
+    SStream_concat0(O, ".2d, "); 
     printVPRRegister(MI, 2, O); 
-    SStream_concat(O, ".2d"); 
+    SStream_concat0(O, ".2d"); 
     return;
     break;
   case 20:
     // PMULLvvv_1q1d
-    SStream_concat(O, ".1d, "); 
+    SStream_concat0(O, ".1d, "); 
     printVPRRegister(MI, 2, O); 
-    SStream_concat(O, ".1d"); 
+    SStream_concat0(O, ".1d"); 
     return;
     break;
   case 21:
     // SYSiccix
     printCRxOperand(MI, 1, O); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printCRxOperand(MI, 2, O); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 3, O); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 4, O); 
     return;
     break;
   case 22:
     // TBL1_16b, TBL1_8b
     printVectorList(MI, 1, O, A64Layout_VL_16B, 1, MRI); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printVPRRegister(MI, 2, O); 
     break;
   case 23:
     // TBL2_16b, TBL2_8b
     printVectorList(MI, 1, O, A64Layout_VL_16B, 2, MRI); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printVPRRegister(MI, 2, O); 
     break;
   case 24:
     // TBL3_16b, TBL3_8b
     printVectorList(MI, 1, O, A64Layout_VL_16B, 3, MRI); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printVPRRegister(MI, 2, O); 
     break;
   case 25:
     // TBL4_16b, TBL4_8b
     printVectorList(MI, 1, O, A64Layout_VL_16B, 4, MRI); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printVPRRegister(MI, 2, O); 
     break;
   case 26:
     // TBX1_16b, TBX1_8b
     printVectorList(MI, 2, O, A64Layout_VL_16B, 1, MRI); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printVPRRegister(MI, 3, O); 
     break;
   case 27:
     // TBX2_16b, TBX2_8b
     printVectorList(MI, 2, O, A64Layout_VL_16B, 2, MRI); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printVPRRegister(MI, 3, O); 
     break;
   case 28:
     // TBX3_16b, TBX3_8b
     printVectorList(MI, 2, O, A64Layout_VL_16B, 3, MRI); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printVPRRegister(MI, 3, O); 
     break;
   case 29:
     // TBX4_16b, TBX4_8b
     printVectorList(MI, 2, O, A64Layout_VL_16B, 4, MRI); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printVPRRegister(MI, 3, O); 
     break;
   }
@@ -7819,37 +7819,37 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   default:   // unreachable.
   case 0:
     // ABS16b, ADDV_1b16b, AESD, AESE, AESIMC, AESMC, CLS16b, CLZ16b, CNT16b,...
-    SStream_concat(O, ".16b"); 
+    SStream_concat0(O, ".16b"); 
     return;
     break;
   case 1:
     // ABS2d, ADDPvv_D_2D, FABS2d, FADDPvv_D_2D, FCVTAS_2d, FCVTAU_2d, FCVTMS...
-    SStream_concat(O, ".2d"); 
+    SStream_concat0(O, ".2d"); 
     return;
     break;
   case 2:
     // ABS2s, CLS2s, CLZ2s, FABS2s, FADDPvv_S_2S, FCVTAS_2s, FCVTAU_2s, FCVTL...
-    SStream_concat(O, ".2s"); 
+    SStream_concat0(O, ".2s"); 
     return;
     break;
   case 3:
     // ABS4h, ADDV_1h4h, CLS4h, CLZ4h, FCVTL4h4s, NEG4h, REV32_4h, REV64_4h, ...
-    SStream_concat(O, ".4h"); 
+    SStream_concat0(O, ".4h"); 
     return;
     break;
   case 4:
     // ABS4s, ADDV_1s4s, CLS4s, CLZ4s, FABS4s, FCVTAS_4s, FCVTAU_4s, FCVTL4s2...
-    SStream_concat(O, ".4s"); 
+    SStream_concat0(O, ".4s"); 
     return;
     break;
   case 5:
     // ABS8b, ADDV_1b8b, CLS8b, CLZ8b, CNT8b, NEG8b, NOT8b, RBIT8b, REV16_8b,...
-    SStream_concat(O, ".8b"); 
+    SStream_concat0(O, ".8b"); 
     return;
     break;
   case 6:
     // ABS8h, ADDV_1h8h, CLS8h, CLZ8h, FCVTL8h4s, NEG8h, REV32_8h, REV64_8h, ...
-    SStream_concat(O, ".8h"); 
+    SStream_concat0(O, ".8h"); 
     return;
     break;
   case 7:
@@ -7858,35 +7858,35 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 8:
     // ADCSwww, ADCSxxx, ADCwww, ADCxxx, ADDSwww_asr, ADDSwww_lsl, ADDSwww_ls...
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 9:
     // ADDHN2vvv_16b8h, ADDHNvvv_8b8h, ADDP_8H, ADDvvv_8H, CMEQvvi_8H, CMEQvv...
-    SStream_concat(O, ".8h, "); 
+    SStream_concat0(O, ".8h, "); 
     break;
   case 10:
     // ADDHN2vvv_4s2d, ADDHNvvv_2s2d, ADDP_2D, ADDvvv_2D, CMEQvvi_2D, CMEQvvv...
-    SStream_concat(O, ".2d, "); 
+    SStream_concat0(O, ".2d, "); 
     break;
   case 11:
     // ADDHN2vvv_8h4s, ADDHNvvv_4h4s, ADDP_4S, ADDvvv_4S, CMEQvvi_4S, CMEQvvv...
-    SStream_concat(O, ".4s, "); 
+    SStream_concat0(O, ".4s, "); 
     break;
   case 12:
     // ADDP_16B, ADDvvv_16B, ANDvvv_16B, BICvvv_16B, BIFvvv_16B, BITvvv_16B, ...
-    SStream_concat(O, ".16b, "); 
+    SStream_concat0(O, ".16b, "); 
     break;
   case 13:
     // ADDP_2S, ADDvvv_2S, CMEQvvi_2S, CMEQvvv_2S, CMGEvvi_2S, CMGEvvv_2S, CM...
-    SStream_concat(O, ".2s, "); 
+    SStream_concat0(O, ".2s, "); 
     break;
   case 14:
     // ADDP_4H, ADDvvv_4H, CMEQvvi_4H, CMEQvvv_4H, CMGEvvi_4H, CMGEvvv_4H, CM...
-    SStream_concat(O, ".4h, "); 
+    SStream_concat0(O, ".4h, "); 
     break;
   case 15:
     // ADDP_8B, ADDvvv_8B, ANDvvv_8B, BICvvv_8B, BIFvvv_8B, BITvvv_8B, BSLvvv...
-    SStream_concat(O, ".8b, "); 
+    SStream_concat0(O, ".8b, "); 
     break;
   case 16:
     // BICvi_lsl_2S, BICvi_lsl_4S, ORRvi_lsl_2S, ORRvi_lsl_4S
@@ -7900,31 +7900,31 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 18:
     // DUPELT16b, DUPELT8b, DUPbv_B, INSELb, SMOVwb, SMOVxb, UMOVwb
-    SStream_concat(O, ".b["); 
+    SStream_concat0(O, ".b["); 
     set_mem_access(MI, true);
     break;
   case 19:
     // DUPELT2d, DUPdv_D, FMOVxv, UMOVxd
-    SStream_concat(O, ".d["); 
+    SStream_concat0(O, ".d["); 
     set_mem_access(MI, true);
     break;
   case 20:
     // DUPELT2s, DUPELT4s, DUPsv_S, INSELs, SMOVxs, UMOVws
-    SStream_concat(O, ".s["); 
+    SStream_concat0(O, ".s["); 
     set_mem_access(MI, true);
     break;
   case 21:
     // DUPELT4h, DUPELT8h, DUPhv_H, INSELh, SMOVwh, SMOVxh, UMOVwh
-    SStream_concat(O, ".h["); 
+    SStream_concat0(O, ".h["); 
     set_mem_access(MI, true);
     break;
   case 22:
     // INSELd
     printVPRRegister(MI, 2, O); 
-    SStream_concat(O, ".d["); 
+    SStream_concat0(O, ".d["); 
     set_mem_access(MI, true);
     printUImmBareOperand(MI, 4, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
@@ -7935,18 +7935,18 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 24:
     // LDAR_byte, LDAR_dword, LDAR_hword, LDAR_word, LDAXR_byte, LDAXR_dword,...
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 25:
     // LDAXP_dword, LDAXP_word, LDPSWx, LDPSWx_PostInd, LDPSWx_PreInd, LDXP_d...
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     break;
   case 26:
     // LDRSBw_PostInd, LDRSBx_PostInd, LDRSHw_PostInd, LDRSHx_PostInd, LDRSWx...
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     printOffsetSImm9Operand(MI, 3, O); 
     return;
@@ -8008,14 +8008,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 7:
     // BFIwwii
     printBFILSBOperand(MI, 3, O, 32); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printBFIWidthOperand(MI, 4, O); 
     return;
     break;
   case 8:
     // BFIxxii
     printBFILSBOperand(MI, 3, O, 64); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printBFIWidthOperand(MI, 4, O); 
     return;
     break;
@@ -8086,7 +8086,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 22:
     // DUPELT16b, DUPELT2d, DUPELT2s, DUPELT4h, DUPELT4s, DUPELT8b, DUPELT8h,...
     printUImmBareOperand(MI, 2, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
@@ -8103,63 +8103,63 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 25:
     // FMOVxv
     printBareImmOperand(MI, 2, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 26:
     // INSELb, INSELh, INSELs
     printUImmBareOperand(MI, 4, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 27:
     // LDRSBw, LDRSBx, LS8_LDR, LS8_STR, LSFP8_LDR, LSFP8_STR
     printOffsetUImm12Operand(MI, 2, O, 1); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 28:
     // LDRSBw_PreInd, LDRSBx_PreInd, LDRSHw_PreInd, LDRSHx_PreInd, LDRSWx_Pre...
     printOffsetSImm9Operand(MI, 3, O); 
-    SStream_concat(O, "]!"); 
+    SStream_concat0(O, "]!"); 
     set_mem_access(MI, false);
     return;
     break;
   case 29:
     // LDRSBw_U, LDRSBx_U, LDRSHw_U, LDRSHx_U, LDTRSBw, LDTRSBx, LDTRSHw, LDT...
     printOffsetSImm9Operand(MI, 2, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 30:
     // LDRSHw, LDRSHx, LS16_LDR, LS16_STR, LSFP16_LDR, LSFP16_STR
     printOffsetUImm12Operand(MI, 2, O, 2); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 31:
     // LDRSWx, LS32_LDR, LS32_STR, LSFP32_LDR, LSFP32_STR
     printOffsetUImm12Operand(MI, 2, O, 4); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 32:
     // LS64_LDR, LS64_STR, LSFP64_LDR, LSFP64_STR, PRFM
     printOffsetUImm12Operand(MI, 2, O, 8); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 33:
     // LSFP128_LDR, LSFP128_STR
     printOffsetUImm12Operand(MI, 2, O, 16); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
@@ -8171,23 +8171,23 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 35:
     // SBFIZwwii, UBFIZwwii
     printBFILSBOperand(MI, 2, O, 32); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printBFIWidthOperand(MI, 3, O); 
     return;
     break;
   case 36:
     // SBFIZxxii, UBFIZxxii
     printBFILSBOperand(MI, 2, O, 64); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printBFIWidthOperand(MI, 3, O); 
     return;
     break;
   case 37:
     // SYSLxicci
     printCRxOperand(MI, 2, O); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printCRxOperand(MI, 3, O); 
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     printOperand(MI, 4, O); 
     return;
     break;
@@ -8209,87 +8209,87 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 1:
     // ADDHN2vvv_16b8h, ADDHNvvv_8b8h, ADDP_8H, ADDvvv_8H, CMEQvvv_8H, CMGEvv...
-    SStream_concat(O, ".8h"); 
+    SStream_concat0(O, ".8h"); 
     return;
     break;
   case 2:
     // ADDHN2vvv_4s2d, ADDHNvvv_2s2d, ADDP_2D, ADDvvv_2D, CMEQvvv_2D, CMGEvvv...
-    SStream_concat(O, ".2d"); 
+    SStream_concat0(O, ".2d"); 
     return;
     break;
   case 3:
     // ADDHN2vvv_8h4s, ADDHNvvv_4h4s, ADDP_4S, ADDvvv_4S, CMEQvvv_4S, CMGEvvv...
-    SStream_concat(O, ".4s"); 
+    SStream_concat0(O, ".4s"); 
     return;
     break;
   case 4:
     // ADDP_16B, ADDvvv_16B, ANDvvv_16B, BICvvv_16B, BIFvvv_16B, BITvvv_16B, ...
-    SStream_concat(O, ".16b"); 
+    SStream_concat0(O, ".16b"); 
     return;
     break;
   case 5:
     // ADDP_2S, ADDvvv_2S, CMEQvvv_2S, CMGEvvv_2S, CMGTvvv_2S, CMHIvvv_2S, CM...
-    SStream_concat(O, ".2s"); 
+    SStream_concat0(O, ".2s"); 
     return;
     break;
   case 6:
     // ADDP_4H, ADDvvv_4H, CMEQvvv_4H, CMGEvvv_4H, CMGTvvv_4H, CMHIvvv_4H, CM...
-    SStream_concat(O, ".4h"); 
+    SStream_concat0(O, ".4h"); 
     return;
     break;
   case 7:
     // ADDP_8B, ADDvvv_8B, ANDvvv_8B, BICvvv_8B, BIFvvv_8B, BITvvv_8B, BSLvvv...
-    SStream_concat(O, ".8b"); 
+    SStream_concat0(O, ".8b"); 
     return;
     break;
   case 8:
     // ADDSwww_asr, ADDSwww_lsl, ADDSwww_lsr, ADDSwww_sxtb, ADDSwww_sxth, ADD...
-    SStream_concat(O, ", "); 
+    SStream_concat0(O, ", "); 
     break;
   case 9:
     // EXTvvvi_16b
-    SStream_concat(O, ".16b, "); 
+    SStream_concat0(O, ".16b, "); 
     printUImmHexOperand(MI, 3, O); 
     return;
     break;
   case 10:
     // EXTvvvi_8b
-    SStream_concat(O, ".8b, "); 
+    SStream_concat0(O, ".8b, "); 
     printUImmHexOperand(MI, 3, O); 
     return;
     break;
   case 11:
     // FMLAddv_2D, FMLAvve_2d2d, FMLSddv_2D, FMLSvve_2d2d, FMULXddv_2D, FMULX...
-    SStream_concat(O, ".d["); 
+    SStream_concat0(O, ".d["); 
     set_mem_access(MI, true);
     break;
   case 12:
     // FMLAssv_4S, FMLAvve_2s4s, FMLAvve_4s4s, FMLSssv_4S, FMLSvve_2s4s, FMLS...
-    SStream_concat(O, ".s["); 
+    SStream_concat0(O, ".s["); 
     set_mem_access(MI, true);
     break;
   case 13:
     // LDAXP_dword, LDAXP_word, LDXP_dword, LDXP_word, STLXR_byte, STLXR_dwor...
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 14:
     // LDPSWx_PostInd, LSFPPair128_PostInd_LDR, LSFPPair128_PostInd_STR, LSFP...
-    SStream_concat(O, "], "); 
+    SStream_concat0(O, "], "); 
     set_mem_access(MI, false);
     break;
   case 15:
     // MLAvve_4h8h, MLAvve_8h8h, MLSvve_4h8h, MLSvve_8h8h, MULve_4h8h, MULve_...
-    SStream_concat(O, ".h["); 
+    SStream_concat0(O, ".h["); 
     set_mem_access(MI, true);
     break;
   case 16:
     // STLXP_dword, STLXP_word, STXP_dword, STXP_word
-    SStream_concat(O, ", ["); 
+    SStream_concat0(O, ", ["); 
     set_mem_access(MI, true);
     printOperand(MI, 3, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
@@ -8383,21 +8383,21 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 16:
     // FMLAddv_2D, FMLAssv_4S, FMLAvve_2d2d, FMLAvve_2s4s, FMLAvve_4s4s, FMLS...
     printUImmBareOperand(MI, 4, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 17:
     // FMULXddv_2D, FMULXssv_4S, FMULXve_2d2d, FMULXve_2s4s, FMULXve_4s4s, FM...
     printUImmBareOperand(MI, 3, O); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 18:
     // LDPSWx, LSFPPair32_LDR, LSFPPair32_NonTemp_LDR, LSFPPair32_NonTemp_STR...
     printSImm7ScaledOperand(MI, 3, O, 4); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
@@ -8408,77 +8408,77 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 20:
     // LDRSBw_Wm_RegOffset, LDRSBx_Wm_RegOffset, LS8_Wm_RegOffset_LDR, LS8_Wm...
     printAddrRegExtendOperand(MI, 3, O, 1, 32); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 21:
     // LDRSBw_Xm_RegOffset, LDRSBx_Xm_RegOffset, LS8_Xm_RegOffset_LDR, LS8_Xm...
     printAddrRegExtendOperand(MI, 3, O, 1, 64); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 22:
     // LDRSHw_Wm_RegOffset, LDRSHx_Wm_RegOffset, LS16_Wm_RegOffset_LDR, LS16_...
     printAddrRegExtendOperand(MI, 3, O, 2, 32); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 23:
     // LDRSHw_Xm_RegOffset, LDRSHx_Xm_RegOffset, LS16_Xm_RegOffset_LDR, LS16_...
     printAddrRegExtendOperand(MI, 3, O, 2, 64); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 24:
     // LDRSWx_Wm_RegOffset, LS32_Wm_RegOffset_LDR, LS32_Wm_RegOffset_STR, LSF...
     printAddrRegExtendOperand(MI, 3, O, 4, 32); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 25:
     // LDRSWx_Xm_RegOffset, LS32_Xm_RegOffset_LDR, LS32_Xm_RegOffset_STR, LSF...
     printAddrRegExtendOperand(MI, 3, O, 4, 64); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 26:
     // LS64_Wm_RegOffset_LDR, LS64_Wm_RegOffset_STR, LSFP64_Wm_RegOffset_LDR,...
     printAddrRegExtendOperand(MI, 3, O, 8, 32); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 27:
     // LS64_Xm_RegOffset_LDR, LS64_Xm_RegOffset_STR, LSFP64_Xm_RegOffset_LDR,...
     printAddrRegExtendOperand(MI, 3, O, 8, 64); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 28:
     // LSFP128_Wm_RegOffset_LDR, LSFP128_Wm_RegOffset_STR
     printAddrRegExtendOperand(MI, 3, O, 16, 32); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 29:
     // LSFP128_Xm_RegOffset_LDR, LSFP128_Xm_RegOffset_STR
     printAddrRegExtendOperand(MI, 3, O, 16, 64); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
   case 30:
     // LSFPPair128_LDR, LSFPPair128_NonTemp_LDR, LSFPPair128_NonTemp_STR, LSF...
     printSImm7ScaledOperand(MI, 3, O, 16); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
@@ -8489,7 +8489,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 32:
     // LSFPPair64_LDR, LSFPPair64_NonTemp_LDR, LSFPPair64_NonTemp_STR, LSFPPa...
     printSImm7ScaledOperand(MI, 3, O, 8); 
-    SStream_concat(O, "]"); 
+    SStream_concat0(O, "]"); 
     set_mem_access(MI, false);
     return;
     break;
@@ -8509,7 +8509,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   //printf("Frag-7: %"PRIu64"\n", (Bits >> 52) & 1);
   if ((Bits >> 52) & 1) {
     // LDPSWx_PreInd, LSFPPair128_PreInd_LDR, LSFPPair128_PreInd_STR, LSFPPai...
-    SStream_concat(O, "]!"); 
+    SStream_concat0(O, "]!"); 
     set_mem_access(MI, false);
     return;
   } else {
@@ -11324,9 +11324,9 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
     *AsmOps = '\0';
     AsmOps += 1;
   }
-  SStream_concat(OS, "%s", AsmMnem);
+  SStream_concat0(OS, AsmMnem);
   if (AsmOps) {
-    SStream_concat(OS, "\t");
+    SStream_concat0(OS, "\t");
     for (c = AsmOps; *c; c++) {
       if (*c == '$') {
         c += 1;
