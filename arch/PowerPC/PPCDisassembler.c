@@ -114,7 +114,7 @@ static DecodeStatus decodeRegisterClass(MCInst *Inst, uint64_t RegNo,
 		const unsigned *Regs)
 {
 	// assert(RegNo < N && "Invalid register number");
-	MCInst_addOperand(Inst, MCOperand_CreateReg(Regs[RegNo]));
+	MCOperand_CreateReg0(Inst, Regs[RegNo]);
 	return MCDisassembler_Success;
 }
 
@@ -181,7 +181,7 @@ static DecodeStatus decodeUImmOperand(MCInst *Inst, uint64_t Imm,
 		int64_t Address, const void *Decoder, unsigned N)
 {
 	//assert(isUInt<N>(Imm) && "Invalid immediate");
-	MCInst_addOperand(Inst, MCOperand_CreateImm(Imm));
+	MCOperand_CreateImm0(Inst, Imm);
 	return MCDisassembler_Success;
 }
 
@@ -189,7 +189,7 @@ static DecodeStatus decodeSImmOperand(MCInst *Inst, uint64_t Imm,
 		int64_t Address, const void *Decoder, unsigned N)
 {
 	// assert(isUInt<N>(Imm) && "Invalid immediate");
-	MCInst_addOperand(Inst, MCOperand_CreateImm(SignExtend64(Imm, N)));
+	MCOperand_CreateImm0(Inst, SignExtend64(Imm, N));
 	return MCDisassembler_Success;
 }
 
@@ -217,7 +217,7 @@ static DecodeStatus decodeMemRIOperands(MCInst *Inst, uint64_t Imm,
 		case PPC_LFSU:
 		case PPC_LFDU:
 				 // Add the tied output operand.
-				 MCInst_addOperand(Inst, MCOperand_CreateReg(GP0Regs[Base]));
+				 MCOperand_CreateReg0(Inst, GP0Regs[Base]);
 				 break;
 		case PPC_STBU:
 		case PPC_STHU:
@@ -228,8 +228,8 @@ static DecodeStatus decodeMemRIOperands(MCInst *Inst, uint64_t Imm,
 				 break;
 	}
 
-	MCInst_addOperand(Inst, MCOperand_CreateImm(SignExtend64(Disp, 16)));
-	MCInst_addOperand(Inst, MCOperand_CreateReg(GP0Regs[Base]));
+	MCOperand_CreateImm0(Inst, SignExtend64(Disp, 16));
+	MCOperand_CreateReg0(Inst, GP0Regs[Base]);
 	return MCDisassembler_Success;
 }
 
@@ -246,12 +246,12 @@ static DecodeStatus decodeMemRIXOperands(MCInst *Inst, uint64_t Imm,
 
 	if (MCInst_getOpcode(Inst) == PPC_LDU)
 		// Add the tied output operand.
-		MCInst_addOperand(Inst, MCOperand_CreateReg(GP0Regs[Base]));
+		MCOperand_CreateReg0(Inst, GP0Regs[Base]);
 	else if (MCInst_getOpcode(Inst) == PPC_STDU)
 		MCInst_insert(Inst, 0, MCOperand_CreateReg(GP0Regs[Base]));
 
-	MCInst_addOperand(Inst, MCOperand_CreateImm(SignExtend64(Disp << 2, 16)));
-	MCInst_addOperand(Inst, MCOperand_CreateReg(GP0Regs[Base]));
+	MCOperand_CreateImm0(Inst, SignExtend64(Disp << 2, 16));
+	MCOperand_CreateReg0(Inst, GP0Regs[Base]);
 	return MCDisassembler_Success;
 }
 
@@ -263,7 +263,7 @@ static DecodeStatus decodeCRBitMOperand(MCInst *Inst, uint64_t Imm,
 	unsigned Zeros = CountTrailingZeros_64(Imm);
 	// assert(Zeros < 8 && "Invalid CR bit value");
 
-	MCInst_addOperand(Inst, MCOperand_CreateReg(CRRegs[7 - Zeros]));
+	MCOperand_CreateReg0(Inst, CRRegs[7 - Zeros]);
 	return MCDisassembler_Success;
 }
 
