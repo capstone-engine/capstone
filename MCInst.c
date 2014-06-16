@@ -70,25 +70,12 @@ unsigned MCInst_getNumOperands(const MCInst *inst)
 	return inst->size;
 }
 
-// NOTE: this will free @Op argument
-int MCInst_addOperand(MCInst *inst, MCOperand *Op)
-{
-	inst->Operands[inst->size] = *Op;
-	cs_mem_free(Op);
-
-	inst->size++;
-
-	return 0;
-}
-
 // This addOperand2 function doesnt free Op
-int MCInst_addOperand2(MCInst *inst, MCOperand *Op)
+void MCInst_addOperand2(MCInst *inst, MCOperand *Op)
 {
 	inst->Operands[inst->size] = *Op;
 
 	inst->size++;
-
-	return 0;
 }
 
 void MCOperand_Init(MCOperand *op)

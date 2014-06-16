@@ -133,6 +133,6 @@ unsigned MCInst_getNumOperands(const MCInst *inst);
 int MCInst_addOperand(MCInst *inst, MCOperand *Op);
 
 // This addOperand2 function doesnt free Op
-int MCInst_addOperand2(MCInst *inst, MCOperand *Op);
+void MCInst_addOperand2(MCInst *inst, MCOperand *Op);
 
 #endif
