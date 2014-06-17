@@ -4,6 +4,7 @@
 #ifndef CS_UTILS_H
 #define CS_UTILS_H
 
+#include <stddef.h>
 #include "include/capstone.h"
 #include "cs_priv.h"
 
@@ -46,8 +47,6 @@ unsigned int count_positive(unsigned char *list);
 char *cs_strdup(const char *str);
 
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
-
-#define offset_of(st, member) __builtin_offsetof(st, member)
 
 #endif
 

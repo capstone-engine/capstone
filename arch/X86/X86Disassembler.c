@@ -706,7 +706,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	info.size = code_len;
 	info.offset = address;
 
-	memset(&insn, 0, offset_of(InternalInstruction, reader));
+	memset(&insn, 0, offsetof(InternalInstruction, reader));
 
 	if (instr->flat_insn->detail) {
 		instr->flat_insn->detail->x86.op_count = 0;

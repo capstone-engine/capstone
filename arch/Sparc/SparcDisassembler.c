@@ -232,7 +232,7 @@ bool Sparc_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *
 		return MCDisassembler_Fail;
 
 	if (MI->flat_insn->detail) {
-		memset(&MI->flat_insn->detail->sparc, 0, offset_of(cs_sparc, operands));
+		memset(&MI->flat_insn->detail->sparc, 0, offsetof(cs_sparc, operands));
 	}
 
 	Result = decodeInstruction_4(DecoderTableSparc32, MI, Insn, address,

@@ -488,7 +488,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 				}
 
 				total = tmp;
-				insn_cache = total + total_size - (sizeof(cs_insn) * INSN_CACHE_SIZE);
+				insn_cache = (cs_insn *)((char *)total + total_size - (sizeof(cs_insn) * INSN_CACHE_SIZE));
 
 				// reset f back to 0
 				f = 0;
