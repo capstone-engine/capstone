@@ -985,7 +985,7 @@ static void printAddrMode3OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		printRegName(MI->csh, O, MCOperand_getReg(MO1));
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
-			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = MCOperand_getReg(MO1);
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MO1);
 			MI->flat_insn->detail->arm.op_count++;
 		}
 		return;
