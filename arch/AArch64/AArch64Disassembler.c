@@ -273,7 +273,7 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 	}
 
 	if (MI->flat_insn->detail) {
-		memset(&MI->flat_insn->detail->arm64, 0, offset_of(cs_arm64, operands));
+		memset(&MI->flat_insn->detail->arm64, 0, sizeof(cs_arm64));
 	}
 
 	if (ud->big_endian)
