@@ -451,7 +451,7 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t
 	ud->ITBlock.size = 0;
 
 	if (MI->flat_insn->detail) {
-		memset(&MI->flat_insn->detail->arm, 0, offset_of(cs_arm, operands));
+		memset(&MI->flat_insn->detail->arm, 0, sizeof(cs_arm));
 	}
 
 	memcpy(bytes, code, 4);
@@ -692,8 +692,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 	ud->ITBlock.size = 0;
 
 	if (MI->flat_insn->detail) {
-		memset(&MI->flat_insn->detail->arm, 0, offset_of(cs_arm, operands));
-		//MI->flat_insn->detail->arm.op_count = 0;
+		memset(&MI->flat_insn->detail->arm, 0, sizeof(cs_arm));
 	}
 
 	memcpy(bytes, code, 2);
