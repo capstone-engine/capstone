@@ -59,9 +59,9 @@ def print_detail(insn):
         print()
 
     if len(insn.groups) > 0:
-        print("\tThis instruction belongs to groups:", end=''),
+        print("\tThis instruction belongs to groups: ", end=''),
         for m in insn.groups:
-            print("%u" % m, end=''),
+            print("%u " % m, end=''),
         print()
 
 
