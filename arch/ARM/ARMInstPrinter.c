@@ -138,6 +138,13 @@ static void set_mem_access(MCInst *MI, bool status)
 	}
 }
 
+static void op_addImm(MCInst *MI, int v)
+{
+	MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_IMM;
+	MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = v;
+	MI->flat_insn->detail->arm.op_count++;
+}
+
 #define GET_INSTRINFO_ENUM
 #include "ARMGenInstrInfo.inc"
 

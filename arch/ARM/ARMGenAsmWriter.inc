@@ -6825,7 +6825,8 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 15:
     // VCMPEZD, VCMPEZS, VCMPZD, VCMPZS, tRSB
-    SStream_concat0(O, ", #0"); 
+    SStream_concat0(O, ", #0");
+    op_addImm(MI, 0);
     return;
     break;
   case 16:
@@ -7148,7 +7149,8 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 12:
     // VCEQzv16i8, VCEQzv2i32, VCEQzv4i16, VCEQzv4i32, VCEQzv8i16, VCEQzv8i8,...
-    SStream_concat0(O, ", #0"); 
+    SStream_concat0(O, ", #0");
+    op_addImm(MI, 0);
     return;
     break;
   case 13:
@@ -7365,7 +7367,8 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 23:
     // VCEQzv2f32, VCEQzv4f32, VCGEzv2f32, VCGEzv4f32, VCGTzv2f32, VCGTzv4f32...
-    SStream_concat0(O, ", #0"); 
+    SStream_concat0(O, ", #0");
+    op_addImm(MI, 0);
     return;
     break;
   case 24:
@@ -7769,7 +7772,8 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 22:
     // t2MOVsra_flag, t2MOVsrl_flag
-    SStream_concat0(O, ", #1"); 
+    SStream_concat0(O, ", #1");
+    op_addImm(MI, 1);
     return;
     break;
   }
