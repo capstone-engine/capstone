@@ -9,6 +9,10 @@
 #include "SStream.h"
 #include "cs_priv.h"
 
+#ifdef _MSC_VER
+#pragma warning(disable: 4996) // disable MSVC's warning on strcpy()
+#endif
+
 void SStream_Init(SStream *ss)
 {
 	ss->index = 0;
