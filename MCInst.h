@@ -91,7 +91,7 @@ MCOperand *MCOperand_CreateImm1(MCInst *inst, int64_t Val);
 /// instruction.
 struct MCInst {
 	unsigned Opcode;
-	MCOperand Operands[34];
+	MCOperand Operands[48];
 	unsigned OpcodePub;
 	unsigned size;	// number of operands
 	cs_insn *flat_insn;	// insn to be exposed to public
