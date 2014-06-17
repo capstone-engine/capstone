@@ -3199,6 +3199,54 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		ARM_VCEQzv16i8, ARM_INS_VCEQ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCEQzv2f32, ARM_INS_VCEQ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCEQzv2i32, ARM_INS_VCEQ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCEQzv4f32, ARM_INS_VCEQ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCEQzv4i16, ARM_INS_VCEQ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCEQzv4i32, ARM_INS_VCEQ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCEQzv8i16, ARM_INS_VCEQ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCEQzv8i8, ARM_INS_VCEQ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
 		ARM_VCGEfd, ARM_INS_VCGE,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
@@ -3278,6 +3326,54 @@ static insn_map insns[] = {
 	},
 	{
 		ARM_VCGEuv8i8, ARM_INS_VCGE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCGEzv16i8, ARM_INS_VCGE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCGEzv2f32, ARM_INS_VCGE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCGEzv2i32, ARM_INS_VCGE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCGEzv4f32, ARM_INS_VCGE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCGEzv4i16, ARM_INS_VCGE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCGEzv4i32, ARM_INS_VCGE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCGEzv8i16, ARM_INS_VCGE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCGEzv8i8, ARM_INS_VCGE,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
 #endif
@@ -3367,6 +3463,102 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		ARM_VCGTzv16i8, ARM_INS_VCGT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCGTzv2f32, ARM_INS_VCGT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCGTzv2i32, ARM_INS_VCGT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCGTzv4f32, ARM_INS_VCGT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCGTzv4i16, ARM_INS_VCGT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCGTzv4i32, ARM_INS_VCGT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCGTzv8i16, ARM_INS_VCGT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCGTzv8i8, ARM_INS_VCGT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCLEzv16i8, ARM_INS_VCLE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCLEzv2f32, ARM_INS_VCLE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCLEzv2i32, ARM_INS_VCLE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCLEzv4f32, ARM_INS_VCLE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCLEzv4i16, ARM_INS_VCLE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCLEzv4i32, ARM_INS_VCLE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCLEzv8i16, ARM_INS_VCLE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCLEzv8i8, ARM_INS_VCLE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
 		ARM_VCLSv16i8, ARM_INS_VCLS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
@@ -3398,6 +3590,54 @@ static insn_map insns[] = {
 	},
 	{
 		ARM_VCLSv8i8, ARM_INS_VCLS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCLTzv16i8, ARM_INS_VCLT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCLTzv2f32, ARM_INS_VCLT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCLTzv2i32, ARM_INS_VCLT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCLTzv4f32, ARM_INS_VCLT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCLTzv4i16, ARM_INS_VCLT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCLTzv4i32, ARM_INS_VCLT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCLTzv8i16, ARM_INS_VCLT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCLTzv8i8, ARM_INS_VCLT,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
 #endif
@@ -3457,7 +3697,31 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		ARM_VCMPEZD, ARM_INS_VCMPE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCMPEZS, ARM_INS_VCMPE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+#endif
+	},
+	{
 		ARM_VCMPS, ARM_INS_VCMP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCMPZD, ARM_INS_VCMP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_VCMPZS, ARM_INS_VCMP,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
 #endif
@@ -11329,6 +11593,18 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		ARM_t2MOVsra_flag, ARM_INS_ASRS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { ARM_REG_CPSR, 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_t2MOVsrl_flag, ARM_INS_LSRS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { ARM_REG_CPSR, 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+#endif
+	},
+	{
 		ARM_t2MRC, ARM_INS_MRC,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
@@ -13003,6 +13279,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		ARM_tRSB, ARM_INS_RSB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+#endif
+	},
+	{
 		ARM_tSBC, ARM_INS_SBC,
 #ifndef CAPSTONE_DIET
 		{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
@@ -13443,7 +13725,9 @@ static name_map insn_name_maps[] = {
 	{ ARM_INS_VCEQ, "vceq" },
 	{ ARM_INS_VCGE, "vcge" },
 	{ ARM_INS_VCGT, "vcgt" },
+	{ ARM_INS_VCLE, "vcle" },
 	{ ARM_INS_VCLS, "vcls" },
+	{ ARM_INS_VCLT, "vclt" },
 	{ ARM_INS_VCLZ, "vclz" },
 	{ ARM_INS_VCMP, "vcmp" },
 	{ ARM_INS_VCMPE, "vcmpe" },
@@ -13575,6 +13859,8 @@ static name_map insn_name_maps[] = {
 	{ ARM_INS_IT, "it" },
 	{ ARM_INS_LSL, "lsl" },
 	{ ARM_INS_LSR, "lsr" },
+	{ ARM_INS_ASRS, "asrs" },
+	{ ARM_INS_LSRS, "lsrs" },
 	{ ARM_INS_ORN, "orn" },
 	{ ARM_INS_ROR, "ror" },
 	{ ARM_INS_RRX, "rrx" },
