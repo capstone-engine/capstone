@@ -678,10 +678,7 @@ static void update_pub_insn(cs_insn *pub, InternalInstruction *inter, uint8_t *p
 		pub->detail->x86.opcode[2] = inter->threeByteEscape;
 	}
 
-	pub->detail->x86.op_size = inter->operandSize;
 	pub->detail->x86.addr_size = inter->addressSize;
-	pub->detail->x86.disp_size = inter->displacementSize;
-	pub->detail->x86.imm_size = inter->immediateSize;
 
 	pub->detail->x86.modrm = inter->orgModRM;
 	pub->detail->x86.sib = inter->sib;
@@ -748,9 +745,6 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 				instr->x86_prefix[2] = insn.prefix2;
 				instr->x86_prefix[3] = insn.prefix3;
 			}
-
-			// save immediate size to print immediate properly
-			instr->x86_imm_size = insn.immediateSize;
 		}
 
 		return result;

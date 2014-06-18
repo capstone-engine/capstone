@@ -94,6 +94,10 @@ typedef struct cs_x86_op {
 			double fp;		// floating point value for FP operand
 			x86_op_mem mem;		// base/index/scale/disp value for MEM operand
 		};
+
+		// size of this operand (in bytes).
+		// NOTE: this is irrelevant for operand type X86_OP_IMM
+		uint8_t size;
 } cs_x86_op;
 
 // Instruction structure
@@ -111,18 +115,8 @@ typedef struct cs_x86 {
 	// An opcode byte gets value 0 when irrelevant.
 	uint8_t opcode[3];
 
-	// Operand size, which can be overrided with above prefix[5].
-	uint8_t op_size;
-
 	// Address size, which can be overrided with above prefix[5].
 	uint8_t addr_size;
-
-	// Size of (optional) displacement.
-	// This field get value 0 when irrelevant.
-	uint8_t disp_size;
-
-	// Size of immediate operand
-	uint8_t imm_size;
 
 	// ModR/M byte
 	uint8_t modrm;

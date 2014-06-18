@@ -39,4 +39,8 @@ extern uint64_t arch_masks[9];
 // return True if we patch mnemonic, like in MULPD case
 bool X86_lockrep(MCInst *MI, SStream *O);
 
+// map registers to sizes
+extern uint8_t regsize_map_32[];
+extern uint8_t regsize_map_64[];
+
 #endif

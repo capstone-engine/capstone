@@ -48,7 +48,7 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 		printf("\tSegment override: %s\n", cs_reg_name(handle, x86->segment));
 
 	print_string_hex("\tOpcode:", x86->opcode, 3);
-	printf("\top_size: %u, addr_size: %u, disp_size: %u, imm_size: %u\n", x86->op_size, x86->addr_size, x86->disp_size, x86->imm_size);
+	printf("\taddr_size: %u\n", x86->addr_size);
 	printf("\tmodrm: 0x%x\n", x86->modrm);
 	printf("\tdisp: 0x%x\n", x86->disp);
 
@@ -101,6 +101,10 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 			default:
 				break;
 		}
+
+		// the size is irrelevant for X86_OP_IMM
+		if (op->type != X86_OP_IMM)
+			printf("\t\toperands[%u].size: %u\n", i, op->size);
 	}
 
 	printf("\n");
