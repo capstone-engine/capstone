@@ -44,8 +44,7 @@ def print_insn_detail(mode, insn):
     print_string_hex("\tOpcode:", insn.opcode)
 
     # print operand's size, address size, displacement size & immediate size
-    print("\top_size: %u, addr_size: %u, disp_size: %u, imm_size: %u" \
-        % (insn.op_size, insn.addr_size, insn.disp_size, insn.imm_size))
+    print("\taddr_size: %u" % (insn.addr_size))
 
     # print modRM byte
     print("\tmodrm: 0x%x" % (insn.modrm))
@@ -93,6 +92,8 @@ def print_insn_detail(mode, insn):
                     print("\t\t\toperands[%u].mem.scale: %u" % (c, i.mem.scale))
                 if i.mem.disp != 0:
                     print("\t\t\toperands[%u].mem.disp: 0x%s" % (c, to_x(i.mem.disp)))
+            if i.type != X86_OP_IMM:
+                print("\t\toperands[%u].size: %u" % (c, i.size))
 
 
 # ## Test class Cs

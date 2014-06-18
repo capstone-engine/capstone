@@ -24,6 +24,7 @@ class X86Op(ctypes.Structure):
     _fields_ = (
         ('type', ctypes.c_uint),
         ('value', X86OpValue),
+        ('size', ctypes.c_uint8),
     )
 
     @property
@@ -48,10 +49,7 @@ class CsX86(ctypes.Structure):
         ('prefix', ctypes.c_uint8 * 5),
         ('segment', ctypes.c_uint),
         ('opcode', ctypes.c_uint8 * 3),
-        ('op_size', ctypes.c_uint8),
         ('addr_size', ctypes.c_uint8),
-        ('disp_size', ctypes.c_uint8),
-        ('imm_size', ctypes.c_uint8),
         ('modrm', ctypes.c_uint8),
         ('sib', ctypes.c_uint8),
         ('disp', ctypes.c_int32),
@@ -63,7 +61,7 @@ class CsX86(ctypes.Structure):
     )
 
 def get_arch_info(a):
-    return (a.prefix[:], a.segment, a.opcode[:], a.op_size, a.addr_size, a.disp_size, \
-            a.imm_size, a.modrm, a.sib, a.disp, a.sib_index, a.sib_scale, \
+    return (a.prefix[:], a.segment, a.opcode[:], a.addr_size, \
+            a.modrm, a.sib, a.disp, a.sib_index, a.sib_scale, \
             a.sib_base, copy.deepcopy(a.operands[:a.op_count]))
 
