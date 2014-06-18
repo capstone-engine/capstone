@@ -35,30 +35,42 @@ static cs_err init(cs_struct *ud)
 
 static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 {
-	if (type == CS_OPT_SYNTAX) {
-		switch(value) {
-			default:
-				// wrong syntax value
-				handle->errnum = CS_ERR_OPTION;
-				return CS_ERR_OPTION;
+	switch(type) {
+		default:
+			break;
+		case CS_OPT_MODE:
+			if (value == CS_MODE_64)
+				handle->regsize_map = regsize_map_64;
+			else
+				handle->regsize_map = regsize_map_32;
 
-			case CS_OPT_SYNTAX_DEFAULT:
-			case CS_OPT_SYNTAX_INTEL:
-				handle->printer = X86_Intel_printInst;
-				handle->syntax = CS_OPT_SYNTAX_INTEL;
-				break;
+			handle->mode = value;
+			break;
+		case CS_OPT_SYNTAX:
+			switch(value) {
+				default:
+					// wrong syntax value
+					handle->errnum = CS_ERR_OPTION;
+					return CS_ERR_OPTION;
 
-			case CS_OPT_SYNTAX_ATT:
+				case CS_OPT_SYNTAX_DEFAULT:
+				case CS_OPT_SYNTAX_INTEL:
+					handle->printer = X86_Intel_printInst;
+					handle->syntax = CS_OPT_SYNTAX_INTEL;
+					break;
+
+				case CS_OPT_SYNTAX_ATT:
 #ifndef CAPSTONE_DIET
-				handle->printer = X86_ATT_printInst;
-				handle->syntax = CS_OPT_SYNTAX_ATT;
-				break;
+					handle->printer = X86_ATT_printInst;
+					handle->syntax = CS_OPT_SYNTAX_ATT;
+					break;
 #else
-				// this is irrelevant in CAPSTONE_DIET mode
-				handle->errnum = CS_ERR_DIET;
-				return CS_ERR_DIET;
+					// this is irrelevant in CAPSTONE_DIET mode
+					handle->errnum = CS_ERR_DIET;
+					return CS_ERR_DIET;
 #endif
-		}
+			}
+			break;
 	}
 
 	return CS_ERR_OK;
