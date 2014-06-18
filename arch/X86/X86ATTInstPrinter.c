@@ -30,8 +30,6 @@
 #include "../../MCRegisterInfo.h"
 #include "X86Mapping.h"
 
-#define markup(x) ""
-
 
 #define GET_INSTRINFO_ENUM
 #ifdef CAPSTONE_X86_REDUCE
@@ -228,8 +226,6 @@ static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 
 	SegReg = MCInst_getOperand(MI, Op+1);
 
-	SStream_concat0(O, markup("<mem:"));
-
 	// If this has a segment register, print it.
 	if (MCOperand_getReg(SegReg)) {
 		printOperand(MI, Op+1, O);
@@ -241,7 +237,7 @@ static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 
 	printOperand(MI, Op, O);
 
-	SStream_concat(O, ")%s", markup(">"));
+	SStream_concat0(O, ")");
 	set_mem_access(MI, false);
 }
 
@@ -249,14 +245,14 @@ static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 {
 	// DI accesses are always ES-based on non-64bit mode
 	if (MI->csh->mode != CS_MODE_64)
-		SStream_concat(O, "%s%s", markup("<mem:"), "%es:(");
+		SStream_concat0(O, "%es:(");
 	else
-		SStream_concat(O, "%s%s", markup("<mem:"), "(");
+		SStream_concat0(O, "(");
 	set_mem_access(MI, true);
 
 	printOperand(MI, Op, O);
 
-	SStream_concat(O, ")%s", markup(">"));
+	SStream_concat0(O, ")");
 	set_mem_access(MI, false);
 }
 
@@ -313,8 +309,6 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 	MCOperand *DispSpec = MCInst_getOperand(MI, Op);
 	MCOperand *SegReg = MCInst_getOperand(MI, Op+1);
 
-	SStream_concat0(O, markup("<mem:"));
-
 	// If this has a segment register, print it.
 	if (MCOperand_getReg(SegReg)) {
 		printOperand(MI, Op+1, O);
@@ -343,8 +337,6 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 				SStream_concat(O, "%"PRIu64, imm);
 		}
 	}
-
-	SStream_concat0(O, markup(">"));
 
 	if (MI->csh->detail)
 		MI->flat_insn->detail->x86.op_count++;
@@ -435,14 +427,14 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		int64_t imm = MCOperand_getImm(Op);
 		if (imm >= 0) {
 			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "%s$0x%"PRIx64"%s", markup("<imm:"), imm, markup(">"));
+				SStream_concat(O, "$0x%"PRIx64, imm);
 			else
-				SStream_concat(O, "%s$%"PRIu64"%s", markup("<imm:"), imm, markup(">"));
+				SStream_concat(O, "$%"PRIu64, imm);
 		} else {
 			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "%s$-0x%"PRIx64"%s", markup("<imm:"), -imm, markup(">"));
+				SStream_concat(O, "$-0x%"PRIx64, -imm);
 			else
-				SStream_concat(O, "%s$-%"PRIu64"%s", markup("<imm:"), -imm, markup(">"));
+				SStream_concat(O, "$-%"PRIu64, -imm);
 		}
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
@@ -473,14 +465,14 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		int64_t imm = MCOperand_getImm(Op);
 		if (imm < 0) {
 			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "%s$-0x%"PRIx64"%s", markup("<imm:"), -imm, markup(">"));
+				SStream_concat(O, "$-0x%"PRIx64, -imm);
 			else
-				SStream_concat(O, "%s$-%"PRIu64"%s", markup("<imm:"), -imm, markup(">"));
+				SStream_concat(O, "$-%"PRIu64, -imm);
 		} else {
 			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "%s$0x%"PRIx64"%s", markup("<imm:"), imm, markup(">"));
+				SStream_concat(O, "$0x%"PRIx64, imm);
 			else
-				SStream_concat(O, "%s$%"PRIu64"%s", markup("<imm:"), imm, markup(">"));
+				SStream_concat(O, "$%"PRIu64, imm);
 		}
 	}
 }
@@ -501,8 +493,6 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = 1;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
 	}
-
-	SStream_concat0(O, markup("<mem:"));
 
 	// If this has a segment register, print it.
 	if (MCOperand_getReg(SegReg)) {
@@ -539,13 +529,11 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 			if (MI->csh->detail)
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = (int)ScaleVal;
 			if (ScaleVal != 1) {
-				SStream_concat(O, ", %s%u%s", markup("<imm:"), ScaleVal, markup(">"));
+				SStream_concat(O, ", %u", ScaleVal);
 			}
 		}
 		SStream_concat0(O, ")");
 	}
-
-	SStream_concat0(O, markup(">"));
 
 	if (MI->csh->detail)
 		MI->flat_insn->detail->x86.op_count++;
@@ -566,7 +554,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 
 static void printRegName(SStream *OS, unsigned RegNo)
 {
-	SStream_concat(OS, "%s%%%s%s", markup("<reg:"), getRegisterName(RegNo), markup(">"));
+	SStream_concat(OS, "%%%s", getRegisterName(RegNo));
 }
 
 void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
