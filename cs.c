@@ -424,7 +424,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
 	MCInst mci;
 	uint16_t insn_size;
-	size_t c = 0;
+	size_t c = 0, i;
 	unsigned int f = 0;
 	cs_insn *insn_cache;
 	void *total = NULL;
@@ -482,6 +482,12 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 				total_size += (sizeof(cs_insn) * INSN_CACHE_SIZE);
 				tmp = cs_mem_realloc(total, total_size);
 				if (tmp == NULL) {	// insufficient memory
+					if (handle->detail) {
+						insn_cache = (cs_insn *)total;
+						for (i = 0; i < c; i++, insn_cache++)
+							cs_mem_free(insn_cache->detail);
+					}
+
 					cs_mem_free(total);
 					handle->errnum = CS_ERR_MEM;
 					return 0;
@@ -503,6 +509,11 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 			size -= insn_size;
 			offset += insn_size;
 		} else	{
+			if (handle->detail) {
+				// free memory of @detail pointer
+				cs_mem_free(insn_cache->detail);
+			}
+
 			// encounter a broken instruction
 			// if there is no request to skip data, or remaining data is too small,
 			// then bail out
@@ -539,16 +550,24 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 				total_size += (sizeof(cs_insn) * INSN_CACHE_SIZE);
 				tmp = cs_mem_realloc(total, total_size);
 				if (tmp == NULL) {	// insufficient memory
+					if (handle->detail) {
+						insn_cache = (cs_insn *)total;
+						for (i = 0; i < c; i++, insn_cache++)
+							cs_mem_free(insn_cache->detail);
+					}
+
 					cs_mem_free(total);
 					handle->errnum = CS_ERR_MEM;
 					return 0;
 				}
 
 				total = tmp;
+				insn_cache = (cs_insn *)((char *)total + total_size - (sizeof(cs_insn) * INSN_CACHE_SIZE));
 
 				// reset f back to 0
 				f = 0;
-			}
+			} else
+				insn_cache++;
 
 			buffer += skipdata_bytes;
 			size -= skipdata_bytes;
@@ -561,12 +580,23 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 		// resize total to contain newly disasm insns
 		void *tmp = cs_mem_realloc(total, total_size - (INSN_CACHE_SIZE - f) * sizeof(*insn_cache));
 		if (tmp == NULL) {	// insufficient memory
+			// free all detail pointers
+			if (handle->detail) {
+				insn_cache = (cs_insn *)total;
+				for (i = 0; i < c; i++, insn_cache++)
+					cs_mem_free(insn_cache->detail);
+			}
+
 			cs_mem_free(total);
+
 			handle->errnum = CS_ERR_MEM;
 			return 0;
 		}
 
 		total = tmp;
+	} else if (!c) {
+		cs_mem_free(total);
+		total = NULL;
 	}
 
 	*insn = total;
