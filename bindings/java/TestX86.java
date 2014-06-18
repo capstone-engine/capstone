@@ -104,6 +104,8 @@ public class TestX86 {
           if (i.value.mem.disp != 0)
             System.out.printf("\t\t\toperands[%d].mem.disp: 0x%x\n", c, i.value.mem.disp);
         }
+
+        // Operand size is irrlevant for X86_OP_IMM operand
         if (i.type != X86_OP_IMM) {
           System.out.printf("\t\toperands[%d].size: %d\n",c, i.size);
         }

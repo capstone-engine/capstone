@@ -92,6 +92,8 @@ def print_insn_detail(mode, insn):
                     print("\t\t\toperands[%u].mem.scale: %u" % (c, i.mem.scale))
                 if i.mem.disp != 0:
                     print("\t\t\toperands[%u].mem.disp: 0x%s" % (c, to_x(i.mem.disp)))
+
+            # Operand size is irrlevant for X86_OP_IMM operand
             if i.type != X86_OP_IMM:
                 print("\t\toperands[%u].size: %u" % (c, i.size))
 
