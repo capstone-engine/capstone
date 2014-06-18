@@ -53,9 +53,8 @@ public class TestX86 {
 
     System.out.printf("\tOpcode: %s\n", array2hex(operands.opcode));
 
-    // print operand's size, address size, displacement size & immediate size
-    System.out.printf("\top_size: %d, addr_size: %d, disp_size: %d, imm_size: %d\n"
-        , operands.opSize, operands.addrSize, operands.dispSize, operands.immSize);
+    // print address size
+    System.out.printf("\taddr_size: %d\n", operands.addrSize);
 
     // print modRM byte
     System.out.printf("\tmodrm: 0x%x\n", operands.modrm);
@@ -104,6 +103,9 @@ public class TestX86 {
             System.out.printf("\t\t\toperands[%d].mem.scale: %d\n", c, i.value.mem.scale);
           if (i.value.mem.disp != 0)
             System.out.printf("\t\t\toperands[%d].mem.disp: 0x%x\n", c, i.value.mem.disp);
+        }
+        if (i.type != X86_OP_IMM) {
+          System.out.printf("\t\toperands[%d].size: %d\n",c, i.size);
         }
       }
     }

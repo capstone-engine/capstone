@@ -40,6 +40,7 @@ public class X86 {
   public static class Operand extends Structure {
     public int type;
     public OpValue value;
+    public int size;
 
     public void read() {
       super.read();
@@ -58,7 +59,7 @@ public class X86 {
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("type", "value");
+      return Arrays.asList("type", "value", "size");
     }
   }
 
@@ -66,10 +67,7 @@ public class X86 {
     public byte [] prefix;
     public int segment;
     public byte [] opcode;
-    public byte op_size;
     public byte addr_size;
-    public byte disp_size;
-    public byte imm_size;
     public byte modrm;
     public byte sib;
     public int disp;
@@ -89,8 +87,8 @@ public class X86 {
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("prefix", "segment", "opcode", "op_size", "addr_size", "disp_size",
-          "imm_size", "modrm", "sib", "disp", "sib_index", "sib_scale", "sib_base", "op_count", "op");
+      return Arrays.asList("prefix", "segment", "opcode", "addr_size",
+          "modrm", "sib", "disp", "sib_index", "sib_scale", "sib_base", "op_count", "op");
     }
   }
 
@@ -115,10 +113,7 @@ public class X86 {
       prefix = e.prefix;
       segment = e.segment;
       opcode = e.opcode;
-      opSize = e.op_size;
       addrSize = e.addr_size;
-      dispSize = e.disp_size;
-      immSize = e.imm_size;
       modrm = e.modrm;
       sib = e.sib;
       disp = e.disp;
