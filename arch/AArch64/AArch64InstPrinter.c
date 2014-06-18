@@ -92,7 +92,7 @@ static void printAddrRegExtendOperand(MCInst *MI, unsigned OpNum,
 	unsigned S = ExtImm & 1;
 	bool IsLSL = OptionHi == 1 && RmSize == 64;
 
-	char *Ext = 0;
+	char *Ext = NULL;
 	switch (OptionHi) {
 		case 1:
 			if (RmSize == 32) {
