@@ -489,6 +489,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 					}
 
 					cs_mem_free(total);
+					*insn = NULL;
 					handle->errnum = CS_ERR_MEM;
 					return 0;
 				}
@@ -557,6 +558,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 					}
 
 					cs_mem_free(total);
+					*insn = NULL;
 					handle->errnum = CS_ERR_MEM;
 					return 0;
 				}
@@ -588,6 +590,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 			}
 
 			cs_mem_free(total);
+			*insn = NULL;
 
 			handle->errnum = CS_ERR_MEM;
 			return 0;
