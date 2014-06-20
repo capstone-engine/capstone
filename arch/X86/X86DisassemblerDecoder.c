@@ -423,42 +423,81 @@ static int readPrefixes(struct InternalInstruction* insn)
 		switch (byte) {
 			case 0xf2:  /* REPNE/REPNZ */
 			case 0xf3:  /* REP or REPE/REPZ */
+			case 0xf0:  /* LOCK */
 				// only accept the last prefix
 				insn->prefixPresent[0xf2] = 0;
 				insn->prefixPresent[0xf3] = 0;
-			case 0xf0:  /* LOCK */
+				insn->prefixPresent[0xf0] = 0;
 				setPrefixPresent(insn, byte, prefixLocation);
 				insn->prefix0 = byte;
 				break;
 			case 0x2e:  /* CS segment override -OR- Branch not taken */
+				insn->segmentOverride = SEG_OVERRIDE_CS;
+				// only accept the last prefix
+				insn->prefixPresent[0x2e] = 0;
+				insn->prefixPresent[0x36] = 0;
+				insn->prefixPresent[0x3e] = 0;
+				insn->prefixPresent[0x26] = 0;
+				insn->prefixPresent[0x64] = 0;
+				insn->prefixPresent[0x65] = 0;
+
+				setPrefixPresent(insn, byte, prefixLocation);
+				insn->prefix1 = byte;
+				break;
 			case 0x36:  /* SS segment override -OR- Branch taken */
+				insn->segmentOverride = SEG_OVERRIDE_SS;
+				// only accept the last prefix
+				insn->prefixPresent[0x2e] = 0;
+				insn->prefixPresent[0x36] = 0;
+				insn->prefixPresent[0x3e] = 0;
+				insn->prefixPresent[0x26] = 0;
+				insn->prefixPresent[0x64] = 0;
+				insn->prefixPresent[0x65] = 0;
+
+				setPrefixPresent(insn, byte, prefixLocation);
+				insn->prefix1 = byte;
+				break;
 			case 0x3e:  /* DS segment override */
+				insn->segmentOverride = SEG_OVERRIDE_DS;
+				// only accept the last prefix
+				insn->prefixPresent[0x2e] = 0;
+				insn->prefixPresent[0x36] = 0;
+				insn->prefixPresent[0x3e] = 0;
+				insn->prefixPresent[0x26] = 0;
+				insn->prefixPresent[0x64] = 0;
+				insn->prefixPresent[0x65] = 0;
+
+				setPrefixPresent(insn, byte, prefixLocation);
+				insn->prefix1 = byte;
+				break;
 			case 0x26:  /* ES segment override */
+				insn->segmentOverride = SEG_OVERRIDE_ES;
+				// only accept the last prefix
+				insn->prefixPresent[0x2e] = 0;
+				insn->prefixPresent[0x36] = 0;
+				insn->prefixPresent[0x3e] = 0;
+				insn->prefixPresent[0x26] = 0;
+				insn->prefixPresent[0x64] = 0;
+				insn->prefixPresent[0x65] = 0;
+
+				setPrefixPresent(insn, byte, prefixLocation);
+				insn->prefix1 = byte;
+				break;
 			case 0x64:  /* FS segment override */
+				insn->segmentOverride = SEG_OVERRIDE_FS;
+				// only accept the last prefix
+				insn->prefixPresent[0x2e] = 0;
+				insn->prefixPresent[0x36] = 0;
+				insn->prefixPresent[0x3e] = 0;
+				insn->prefixPresent[0x26] = 0;
+				insn->prefixPresent[0x64] = 0;
+				insn->prefixPresent[0x65] = 0;
+
+				setPrefixPresent(insn, byte, prefixLocation);
+				insn->prefix1 = byte;
+				break;
 			case 0x65:  /* GS segment override */
-				switch (byte) {
-					case 0x2e:
-						insn->segmentOverride = SEG_OVERRIDE_CS;
-						break;
-					case 0x36:
-						insn->segmentOverride = SEG_OVERRIDE_SS;
-						break;
-					case 0x3e:
-						insn->segmentOverride = SEG_OVERRIDE_DS;
-						break;
-					case 0x26:
-						insn->segmentOverride = SEG_OVERRIDE_ES;
-						break;
-					case 0x64:
-						insn->segmentOverride = SEG_OVERRIDE_FS;
-						break;
-					case 0x65:
-						insn->segmentOverride = SEG_OVERRIDE_GS;
-						break;
-					default:
-						//debug("Unhandled override");
-						return -1;
-				}
+				insn->segmentOverride = SEG_OVERRIDE_GS;
 				// only accept the last prefix
 				insn->prefixPresent[0x2e] = 0;
 				insn->prefixPresent[0x36] = 0;
