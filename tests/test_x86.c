@@ -42,7 +42,7 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 
 	x86 = &(ins->detail->x86);
 
-	print_string_hex("\tPrefix:", x86->prefix, 5);
+	print_string_hex("\tPrefix:", x86->prefix, 4);
 
 	if (x86->segment != X86_REG_INVALID)
 		printf("\tSegment override: %s\n", cs_reg_name(handle, x86->segment));
