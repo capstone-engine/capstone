@@ -104,7 +104,7 @@ typedef struct cs_x86_op {
 typedef struct cs_x86 {
 	// (Optional) instruction prefix, which can be up to 5 bytes.
 	// A prefix byte gets value 0 when irrelevant.
-	uint8_t prefix[5];
+	uint8_t prefix[4];
 
 	// (Optional) segment override, which can be among CS, DS, SS, ES, FS, GS.
 	// This field get value 0 when irrelevant.
