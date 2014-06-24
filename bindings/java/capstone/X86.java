@@ -81,7 +81,7 @@ public class X86 {
 
     public UnionOpInfo() {
       op = new Operand[8];
-      opcode = new byte[3];
+      opcode = new byte[4];
       prefix = new byte[4];
     }
 
