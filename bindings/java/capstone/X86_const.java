@@ -254,6 +254,62 @@ public class X86_const {
 	public static final int X86_AVX_BCAST_8 = 1;
 	public static final int X86_AVX_BCAST_16 = 2;
 
+	// SSE Code Condition type
+
+	public static final int X86_SSE_CC_INVALID = 0;
+	public static final int X86_SSE_CC_EQ = 1;
+	public static final int X86_SSE_CC_LT = 2;
+	public static final int X86_SSE_CC_LE = 3;
+	public static final int X86_SSE_CC_UNORD = 4;
+	public static final int X86_SSE_CC_NEQ = 5;
+	public static final int X86_SSE_CC_NLT = 6;
+	public static final int X86_SSE_CC_NLE = 7;
+	public static final int X86_SSE_CC_ORD = 8;
+	public static final int X86_SSE_CC_EQ_UQ = 9;
+	public static final int X86_SSE_CC_NGE = 10;
+	public static final int X86_SSE_CC_NGT = 11;
+	public static final int X86_SSE_CC_FALSE = 12;
+	public static final int X86_SSE_CC_NEQ_OQ = 13;
+	public static final int X86_SSE_CC_GE = 14;
+	public static final int X86_SSE_CC_GT = 15;
+	public static final int X86_SSE_CC_TRUE = 16;
+
+	// AVX Code Condition type
+
+	public static final int X86_AVX_CC_INVALID = 0;
+	public static final int X86_AVX_CC_EQ = 1;
+	public static final int X86_AVX_CC_LT = 2;
+	public static final int X86_AVX_CC_LE = 3;
+	public static final int X86_AVX_CC_UNORD = 4;
+	public static final int X86_AVX_CC_NEQ = 5;
+	public static final int X86_AVX_CC_NLT = 6;
+	public static final int X86_AVX_CC_NLE = 7;
+	public static final int X86_AVX_CC_ORD = 8;
+	public static final int X86_AVX_CC_EQ_UQ = 9;
+	public static final int X86_AVX_CC_NGE = 10;
+	public static final int X86_AVX_CC_NGT = 11;
+	public static final int X86_AVX_CC_FALSE = 12;
+	public static final int X86_AVX_CC_NEQ_OQ = 13;
+	public static final int X86_AVX_CC_GE = 14;
+	public static final int X86_AVX_CC_GT = 15;
+	public static final int X86_AVX_CC_TRUE = 16;
+	public static final int X86_AVX_CC_EQ_OS = 17;
+	public static final int X86_AVX_CC_LT_OQ = 18;
+	public static final int X86_AVX_CC_LE_OQ = 19;
+	public static final int X86_AVX_CC_UNORD_S = 20;
+	public static final int X86_AVX_CC_NEQ_US = 21;
+	public static final int X86_AVX_CC_NLT_UQ = 22;
+	public static final int X86_AVX_CC_NLE_UQ = 23;
+	public static final int X86_AVX_CC_ORD_S = 24;
+	public static final int X86_AVX_CC_EQ_US = 25;
+	public static final int X86_AVX_CC_NGE_UQ = 26;
+	public static final int X86_AVX_CC_NGT_UQ = 27;
+	public static final int X86_AVX_CC_FALSE_OS = 28;
+	public static final int X86_AVX_CC_NEQ_OS = 29;
+	public static final int X86_AVX_CC_GE_OQ = 30;
+	public static final int X86_AVX_CC_GT_OQ = 31;
+	public static final int X86_AVX_CC_TRUE_US = 32;
+
 	// X86 instructions
 
 	public static final int X86_INS_INVALID = 0;

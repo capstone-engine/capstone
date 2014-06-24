@@ -60,6 +60,14 @@ def print_insn_detail(mode, insn):
             if insn.sib_scale != 0:
                 print("\t\tsib_scale: %d" % (insn.sib_scale))
 
+    # SSE CC type
+    if insn.sse_cc != X86_SSE_CC_INVALID:
+        print("\tsse_cc: %u" % (insn.sse_cc))
+
+    # AVX CC type
+    if insn.avx_cc != X86_AVX_CC_INVALID:
+        print("\tavx_cc: %u" % (insn.avx_cc))
+
     count = insn.op_count(X86_OP_IMM)
     if count > 0:
         print("\timm_count: %u" % count)

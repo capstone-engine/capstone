@@ -166,22 +166,22 @@ static void printSSECC(MCInst *MI, unsigned Op, SStream *OS)
 	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0xf;
 	switch (Imm) {
 		default: break;	// never reach
-		case    0: SStream_concat0(OS, "eq"); break;
-		case    1: SStream_concat0(OS, "lt"); break;
-		case    2: SStream_concat0(OS, "le"); break;
-		case    3: SStream_concat0(OS, "unord"); break;
-		case    4: SStream_concat0(OS, "neq"); break;
-		case    5: SStream_concat0(OS, "nlt"); break;
-		case    6: SStream_concat0(OS, "nle"); break;
-		case    7: SStream_concat0(OS, "ord"); break;
-		case    8: SStream_concat0(OS, "eq_uq"); break;
-		case    9: SStream_concat0(OS, "nge"); break;
-		case  0xa: SStream_concat0(OS, "ngt"); break;
-		case  0xb: SStream_concat0(OS, "false"); break;
-		case  0xc: SStream_concat0(OS, "neq_oq"); break;
-		case  0xd: SStream_concat0(OS, "ge"); break;
-		case  0xe: SStream_concat0(OS, "gt"); break;
-		case  0xf: SStream_concat0(OS, "true"); break;
+		case    0: SStream_concat0(OS, "eq"); op_addSseCC(MI, X86_SSE_CC_EQ); break;
+		case    1: SStream_concat0(OS, "lt"); op_addSseCC(MI, X86_SSE_CC_LT); break;
+		case    2: SStream_concat0(OS, "le"); op_addSseCC(MI, X86_SSE_CC_LE); break;
+		case    3: SStream_concat0(OS, "unord"); op_addSseCC(MI, X86_SSE_CC_UNORD); break;
+		case    4: SStream_concat0(OS, "neq"); op_addSseCC(MI, X86_SSE_CC_NEQ); break;
+		case    5: SStream_concat0(OS, "nlt"); op_addSseCC(MI, X86_SSE_CC_NLT); break;
+		case    6: SStream_concat0(OS, "nle"); op_addSseCC(MI, X86_SSE_CC_NLE); break;
+		case    7: SStream_concat0(OS, "ord"); op_addSseCC(MI, X86_SSE_CC_ORD); break;
+		case    8: SStream_concat0(OS, "eq_uq"); op_addSseCC(MI, X86_SSE_CC_EQ_UQ); break;
+		case    9: SStream_concat0(OS, "nge"); op_addSseCC(MI, X86_SSE_CC_NGE); break;
+		case  0xa: SStream_concat0(OS, "ngt"); op_addSseCC(MI, X86_SSE_CC_NGT); break;
+		case  0xb: SStream_concat0(OS, "false"); op_addSseCC(MI, X86_SSE_CC_FALSE); break;
+		case  0xc: SStream_concat0(OS, "neq_oq"); op_addSseCC(MI, X86_SSE_CC_NEQ_OQ); break;
+		case  0xd: SStream_concat0(OS, "ge"); op_addSseCC(MI, X86_SSE_CC_GE); break;
+		case  0xe: SStream_concat0(OS, "gt"); op_addSseCC(MI, X86_SSE_CC_GT); break;
+		case  0xf: SStream_concat0(OS, "true"); op_addSseCC(MI, X86_SSE_CC_TRUE); break;
 	}
 }
 
@@ -190,38 +190,38 @@ static void printAVXCC(MCInst *MI, unsigned Op, SStream *O)
 	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x1f;
 	switch (Imm) {
 		default: break;//printf("Invalid avxcc argument!\n"); break;
-		case    0: SStream_concat0(O, "eq"); break;
-		case    1: SStream_concat0(O, "lt"); break;
-		case    2: SStream_concat0(O, "le"); break;
-		case    3: SStream_concat0(O, "unord"); break;
-		case    4: SStream_concat0(O, "neq"); break;
-		case    5: SStream_concat0(O, "nlt"); break;
-		case    6: SStream_concat0(O, "nle"); break;
-		case    7: SStream_concat0(O, "ord"); break;
-		case    8: SStream_concat0(O, "eq_uq"); break;
-		case    9: SStream_concat0(O, "nge"); break;
-		case  0xa: SStream_concat0(O, "ngt"); break;
-		case  0xb: SStream_concat0(O, "false"); break;
-		case  0xc: SStream_concat0(O, "neq_oq"); break;
-		case  0xd: SStream_concat0(O, "ge"); break;
-		case  0xe: SStream_concat0(O, "gt"); break;
-		case  0xf: SStream_concat0(O, "true"); break;
-		case 0x10: SStream_concat0(O, "eq_os"); break;
-		case 0x11: SStream_concat0(O, "lt_oq"); break;
-		case 0x12: SStream_concat0(O, "le_oq"); break;
-		case 0x13: SStream_concat0(O, "unord_s"); break;
-		case 0x14: SStream_concat0(O, "neq_us"); break;
-		case 0x15: SStream_concat0(O, "nlt_uq"); break;
-		case 0x16: SStream_concat0(O, "nle_uq"); break;
-		case 0x17: SStream_concat0(O, "ord_s"); break;
-		case 0x18: SStream_concat0(O, "eq_us"); break;
-		case 0x19: SStream_concat0(O, "nge_uq"); break;
-		case 0x1a: SStream_concat0(O, "ngt_uq"); break;
-		case 0x1b: SStream_concat0(O, "false_os"); break;
-		case 0x1c: SStream_concat0(O, "neq_os"); break;
-		case 0x1d: SStream_concat0(O, "ge_oq"); break;
-		case 0x1e: SStream_concat0(O, "gt_oq"); break;
-		case 0x1f: SStream_concat0(O, "true_us"); break;
+		case    0: SStream_concat0(O, "eq"); op_addAvxCC(MI, X86_AVX_CC_EQ); break;
+		case    1: SStream_concat0(O, "lt"); op_addAvxCC(MI, X86_AVX_CC_LT); break;
+		case    2: SStream_concat0(O, "le"); op_addAvxCC(MI, X86_AVX_CC_LE); break;
+		case    3: SStream_concat0(O, "unord"); op_addAvxCC(MI, X86_AVX_CC_UNORD); break;
+		case    4: SStream_concat0(O, "neq"); op_addAvxCC(MI, X86_AVX_CC_NEQ); break;
+		case    5: SStream_concat0(O, "nlt"); op_addAvxCC(MI, X86_AVX_CC_NLT); break;
+		case    6: SStream_concat0(O, "nle"); op_addAvxCC(MI, X86_AVX_CC_NLE); break;
+		case    7: SStream_concat0(O, "ord"); op_addAvxCC(MI, X86_AVX_CC_ORD); break;
+		case    8: SStream_concat0(O, "eq_uq"); op_addAvxCC(MI, X86_AVX_CC_EQ_UQ); break;
+		case    9: SStream_concat0(O, "nge"); op_addAvxCC(MI, X86_AVX_CC_NGE); break;
+		case  0xa: SStream_concat0(O, "ngt"); op_addAvxCC(MI, X86_AVX_CC_NGT); break;
+		case  0xb: SStream_concat0(O, "false"); op_addAvxCC(MI, X86_AVX_CC_FALSE); break;
+		case  0xc: SStream_concat0(O, "neq_oq"); op_addAvxCC(MI, X86_AVX_CC_NEQ_OQ); break;
+		case  0xd: SStream_concat0(O, "ge"); op_addAvxCC(MI, X86_AVX_CC_GE); break;
+		case  0xe: SStream_concat0(O, "gt"); op_addAvxCC(MI, X86_AVX_CC_GT); break;
+		case  0xf: SStream_concat0(O, "true"); op_addAvxCC(MI, X86_AVX_CC_TRUE); break;
+		case 0x10: SStream_concat0(O, "eq_os"); op_addAvxCC(MI, X86_AVX_CC_EQ_OS); break;
+		case 0x11: SStream_concat0(O, "lt_oq"); op_addAvxCC(MI, X86_AVX_CC_LT_OQ); break;
+		case 0x12: SStream_concat0(O, "le_oq"); op_addAvxCC(MI, X86_AVX_CC_LE_OQ); break;
+		case 0x13: SStream_concat0(O, "unord_s"); op_addAvxCC(MI, X86_AVX_CC_UNORD_S); break;
+		case 0x14: SStream_concat0(O, "neq_us"); op_addAvxCC(MI, X86_AVX_CC_NEQ_US); break;
+		case 0x15: SStream_concat0(O, "nlt_uq"); op_addAvxCC(MI, X86_AVX_CC_NLT_UQ); break;
+		case 0x16: SStream_concat0(O, "nle_uq"); op_addAvxCC(MI, X86_AVX_CC_NLE_UQ); break;
+		case 0x17: SStream_concat0(O, "ord_s"); op_addAvxCC(MI, X86_AVX_CC_ORD_S); break;
+		case 0x18: SStream_concat0(O, "eq_us"); op_addAvxCC(MI, X86_AVX_CC_EQ_US); break;
+		case 0x19: SStream_concat0(O, "nge_uq"); op_addAvxCC(MI, X86_AVX_CC_NGE_UQ); break;
+		case 0x1a: SStream_concat0(O, "ngt_uq"); op_addAvxCC(MI, X86_AVX_CC_NGT_UQ); break;
+		case 0x1b: SStream_concat0(O, "false_os"); op_addAvxCC(MI, X86_AVX_CC_FALSE_OS); break;
+		case 0x1c: SStream_concat0(O, "neq_os"); op_addAvxCC(MI, X86_AVX_CC_NEQ_OS); break;
+		case 0x1d: SStream_concat0(O, "ge_oq"); op_addAvxCC(MI, X86_AVX_CC_GE_OQ); break;
+		case 0x1e: SStream_concat0(O, "gt_oq"); op_addAvxCC(MI, X86_AVX_CC_GT_OQ); break;
+		case 0x1f: SStream_concat0(O, "true_us"); op_addAvxCC(MI, X86_AVX_CC_TRUE_US); break;
 	}
 }
 

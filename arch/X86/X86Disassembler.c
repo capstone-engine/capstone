@@ -714,6 +714,8 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 
 	if (instr->flat_insn->detail) {
 		instr->flat_insn->detail->x86.op_count = 0;
+		instr->flat_insn->detail->x86.sse_cc = X86_SSE_CC_INVALID;
+		instr->flat_insn->detail->x86.avx_cc = X86_AVX_CC_INVALID;
 		memset(instr->flat_insn->detail->x86.prefix, 0, sizeof(instr->flat_insn->detail->x86.prefix));
 		memset(instr->flat_insn->detail->x86.opcode, 0, sizeof(instr->flat_insn->detail->x86.opcode));
 		memset(instr->flat_insn->detail->x86.operands, 0, 4 * sizeof(instr->flat_insn->detail->x86.operands[0]));

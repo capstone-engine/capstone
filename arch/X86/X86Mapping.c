@@ -42581,7 +42581,22 @@ void op_addImm(MCInst *MI, int v)
 void op_addAvxBroadcast(MCInst *MI, x86_avx_bcast v)
 {
 	if (MI->csh->detail) {
+		// link with the previous operand
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count - 1].avx_bcast = v;
+	}
+}
+
+void op_addSseCC(MCInst *MI, int v)
+{
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->x86.sse_cc = v;
+	}
+}
+
+void op_addAvxCC(MCInst *MI, int v)
+{
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->x86.avx_cc = v;
 	}
 }
 

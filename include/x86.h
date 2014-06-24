@@ -83,6 +83,64 @@ typedef enum x86_avx_bcast {
 	X86_AVX_BCAST_16,	// AVX512 broadcast type 1to16
 } x86_avx_bcast;
 
+//> SSE Code Condition type
+typedef enum x86_sse_cc {
+	X86_SSE_CC_INVALID = 0,	// Uninitialized.
+	X86_SSE_CC_EQ,
+	X86_SSE_CC_LT,
+	X86_SSE_CC_LE,
+	X86_SSE_CC_UNORD,
+	X86_SSE_CC_NEQ,
+	X86_SSE_CC_NLT,
+	X86_SSE_CC_NLE,
+	X86_SSE_CC_ORD,
+	X86_SSE_CC_EQ_UQ,
+	X86_SSE_CC_NGE,
+	X86_SSE_CC_NGT,
+	X86_SSE_CC_FALSE,
+	X86_SSE_CC_NEQ_OQ,
+	X86_SSE_CC_GE,
+	X86_SSE_CC_GT,
+	X86_SSE_CC_TRUE,
+} x86_sse_cc;
+
+//> AVX Code Condition type
+typedef enum x86_avx_cc {
+	X86_AVX_CC_INVALID = 0,	// Uninitialized.
+	X86_AVX_CC_EQ,
+	X86_AVX_CC_LT,
+	X86_AVX_CC_LE,
+	X86_AVX_CC_UNORD,
+	X86_AVX_CC_NEQ,
+	X86_AVX_CC_NLT,
+	X86_AVX_CC_NLE,
+	X86_AVX_CC_ORD,
+	X86_AVX_CC_EQ_UQ,
+	X86_AVX_CC_NGE,
+	X86_AVX_CC_NGT,
+	X86_AVX_CC_FALSE,
+	X86_AVX_CC_NEQ_OQ,
+	X86_AVX_CC_GE,
+	X86_AVX_CC_GT,
+	X86_AVX_CC_TRUE,
+	X86_AVX_CC_EQ_OS,
+	X86_AVX_CC_LT_OQ,
+	X86_AVX_CC_LE_OQ,
+	X86_AVX_CC_UNORD_S,
+	X86_AVX_CC_NEQ_US,
+	X86_AVX_CC_NLT_UQ,
+	X86_AVX_CC_NLE_UQ,
+	X86_AVX_CC_ORD_S,
+	X86_AVX_CC_EQ_US,
+	X86_AVX_CC_NGE_UQ,
+	X86_AVX_CC_NGT_UQ,
+	X86_AVX_CC_FALSE_OS,
+	X86_AVX_CC_NEQ_OS,
+	X86_AVX_CC_GE_OQ,
+	X86_AVX_CC_GT_OQ,
+	X86_AVX_CC_TRUE_US,
+} x86_avx_cc;
+
 // Instruction's operand referring to memory
 // This is associated with X86_OP_MEM operand type above
 typedef struct x86_op_mem {
@@ -141,6 +199,12 @@ typedef struct cs_x86 {
 	int8_t sib_scale;
 	// SIB base register, or X86_REG_INVALID when irrelevant.
 	x86_reg sib_base;
+
+	// SSE Code Condition
+	x86_sse_cc sse_cc;
+
+	// AVX Code Condition
+	x86_avx_cc avx_cc;
 
 	// Number of operands of this instruction,
 	// or 0 when instruction has no operand.

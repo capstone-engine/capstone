@@ -49,4 +49,7 @@ void op_addImm(MCInst *MI, int v);
 
 void op_addAvxBroadcast(MCInst *MI, x86_avx_bcast v);
 
+void op_addSseCC(MCInst *MI, int v);
+void op_addAvxCC(MCInst *MI, int v);
+
 #endif

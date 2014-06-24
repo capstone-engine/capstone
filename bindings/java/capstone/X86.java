@@ -75,6 +75,8 @@ public class X86 {
     public int sib_index;
     public byte sib_scale;
     public int sib_base;
+    public int sse_cc;
+    public int avx_cc;
 
     public char op_count;
 
@@ -89,7 +91,7 @@ public class X86 {
     @Override
     public List getFieldOrder() {
       return Arrays.asList("prefix", "opcode", "addr_size",
-          "modrm", "sib", "disp", "sib_index", "sib_scale", "sib_base", "op_count", "op");
+          "modrm", "sib", "disp", "sib_index", "sib_scale", "sib_base", "sse_cc", "avx_cc", "op_count", "op");
     }
   }
 
@@ -106,6 +108,8 @@ public class X86 {
     public int sibIndex;
     public byte sibScale;
     public int sibBase;
+    public int sseCC;
+    public int avxCC;
 
     public Operand[] op;
 
@@ -119,6 +123,8 @@ public class X86 {
       sibIndex = e.sib_index;
       sibScale = e.sib_scale;
       sibBase = e.sib_base;
+      sseCC = e.sse_cc;
+      avxCC = e.avx_cc;
       op = new Operand[e.op_count];
       for (int i=0; i<e.op_count; i++)
         op[i] = e.op[i];

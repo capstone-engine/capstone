@@ -60,6 +60,14 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 			printf("\t\tsib_scale: %d\n", x86->sib_scale);
 	}
 
+	if (x86->sse_cc != X86_SSE_CC_INVALID) {
+		printf("\tsse_cc: %u\n", x86->sse_cc);
+	}
+
+	if (x86->avx_cc != X86_AVX_CC_INVALID) {
+		printf("\tavx_cc: %u\n", x86->avx_cc);
+	}
+
 	count = cs_op_count(ud, ins, X86_OP_IMM);
 	if (count) {
 		printf("\timm_count: %u\n", count);

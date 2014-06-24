@@ -67,6 +67,12 @@ public class TestX86 {
           ins.regName(operands.sibIndex), operands.sibScale, ins.regName(operands.sibBase));
     }
 
+    if (operands.sseCC != 0)
+        System.out.printf("\tsse_cc: %u\n", operands.sseCC);
+
+    if (operands.avxCC != 0)
+        System.out.printf("\tavx_cc: %u\n", operands.avxCC);
+
     int count = ins.opCount(X86_OP_IMM);
     if (count > 0) {
       System.out.printf("\timm_count: %d\n", count);
