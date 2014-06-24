@@ -2569,6 +2569,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     // LODSQ
     printSrcIdx64(MI, 0, O); 
     SStream_concat0(O, ", %rax"); 
+	op_addReg(MI, X86_REG_RAX);
     return;
     break;
   case 30:
@@ -2642,6 +2643,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 1:
     // ADC16i16, ADD16i16, AND16i16, CMP16i16, IN16ri, LODSW, MOV16o16a, MOV1...
     SStream_concat0(O, ", %ax"); 
+	op_addReg(MI, X86_REG_AX);
     return;
     break;
   case 2:
@@ -2660,6 +2662,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 5:
     // ADC32i32, ADD32i32, AND32i32, CMP32i32, IN32ri, LODSL, MOV32o32a, MOV3...
     SStream_concat0(O, ", %eax"); 
+	op_addReg(MI, X86_REG_EAX);
     return;
     break;
   case 6:
@@ -2670,6 +2673,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 7:
     // ADC64i32, ADD64i32, AND64i32, CMP64i32, MOV64o64a, OR64i32, SBB64i32, ...
     SStream_concat0(O, ", %rax"); 
+	op_addReg(MI, X86_REG_RAX);
     return;
     break;
   case 8:
@@ -2680,6 +2684,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 9:
     // ADC8i8, ADD8i8, AND8i8, CMP8i8, IN8ri, LODSB, MOV64o8a, MOV8o8a, MOV8o...
     SStream_concat0(O, ", %al"); 
+	op_addReg(MI, X86_REG_AL);
     return;
     break;
   case 10:
@@ -2739,6 +2744,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 20:
     // OUTSB, OUTSL, OUTSW
     SStream_concat0(O, ", %dx"); 
+	op_addReg(MI, X86_REG_DX);
     return;
     break;
   case 21:

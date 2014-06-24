@@ -36,10 +36,6 @@ def print_insn_detail(mode, insn):
     # print instruction prefix
     print_string_hex("\tPrefix:", insn.prefix)
 
-    # print segment override (if applicable)
-    if insn.segment != X86_REG_INVALID:
-        print("\tSegment override: %s" % insn.reg_name(insn.segment))
-
     # print instruction's opcode
     print_string_hex("\tOpcode:", insn.opcode)
 
@@ -84,6 +80,8 @@ def print_insn_detail(mode, insn):
                 print("\t\toperands[%u].type: FP = %f" % (c, i.fp))
             if i.type == X86_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
+                if i.mem.segment != 0:
+                    print("\t\t\toperands[%u].mem.segment: REG = %s" % (c, insn.reg_name(i.mem.segment)))
                 if i.mem.base != 0:
                     print("\t\t\toperands[%u].mem.base: REG = %s" % (c, insn.reg_name(i.mem.base)))
                 if i.mem.index != 0:

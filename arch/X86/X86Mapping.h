@@ -31,7 +31,8 @@ void X86_post_printer(csh handle, cs_insn *pub_insn, char *insn_asm, MCInst *mci
 // return register of given instruction id
 // return 0 if not found
 // this is to handle instructions embedding accumulate registers into AsmStrs[]
-x86_reg X86_insn_reg(unsigned int id);
+x86_reg X86_insn_reg_intel(unsigned int id);
+x86_reg X86_insn_reg_att(unsigned int id);
 
 extern uint64_t arch_masks[9];
 
@@ -42,5 +43,8 @@ bool X86_lockrep(MCInst *MI, SStream *O);
 // map registers to sizes
 extern uint8_t regsize_map_32[];
 extern uint8_t regsize_map_64[];
+
+void op_addReg(MCInst *MI, int reg);
+void op_addImm(MCInst *MI, int v);
 
 #endif

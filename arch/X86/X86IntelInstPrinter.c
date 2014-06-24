@@ -47,6 +47,10 @@ static void set_mem_access(MCInst *MI, bool status)
 		return;
 
 	MI->csh->doing_mem = status;
+	if (!status)
+		// done, create the next operand slot
+		MI->flat_insn->detail->x86.op_count++;
+
 }
 
 static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
@@ -235,15 +239,59 @@ static void printRoundingControl(MCInst *MI, unsigned Op, SStream *O)
 
 #endif
 
+static char *getRegisterName(unsigned RegNo);
+static void printRegName(SStream *OS, unsigned RegNo)
+{
+	SStream_concat0(OS, getRegisterName(RegNo));
+}
+
+// local printOperand, without updating public operands
+static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	MCOperand *Op  = MCInst_getOperand(MI, OpNo);
+	if (MCOperand_isReg(Op)) {
+		printRegName(O, MCOperand_getReg(Op));
+	} else if (MCOperand_isImm(Op)) {
+		int64_t imm = MCOperand_getImm(Op);
+		if (imm < 0) {
+			if (imm < -HEX_THRESHOLD)
+				SStream_concat(O, "-0x%"PRIx64, -imm);
+			else
+				SStream_concat(O, "-%"PRIu64, -imm);
+
+		} else {
+			if (imm > HEX_THRESHOLD)
+				SStream_concat(O, "0x%"PRIx64, imm);
+			else
+				SStream_concat(O, "%"PRIu64, imm);
+		}
+	}
+}
+
 static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 {
 	MCOperand *SegReg;
+	int reg;
+
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_INVALID;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.base = X86_REG_INVALID;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = X86_REG_INVALID;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = 1;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
+	}
 
 	SegReg = MCInst_getOperand(MI, Op+1);
+	reg = MCOperand_getReg(SegReg);
 
 	// If this has a segment register, print it.
-	if (MCOperand_getReg(SegReg)) {
-		printOperand(MI, Op+1, O);
+	if (reg) {
+		_printOperand(MI, Op+1, O);
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = reg;
+		}
 		SStream_concat0(O, ":");
 	}
 
@@ -256,11 +304,25 @@ static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 
 static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 {
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_INVALID;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.base = X86_REG_INVALID;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = X86_REG_INVALID;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = 1;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
+	}
+
 	// DI accesses are always ES-based on non-64bit mode
-	if (MI->csh->mode != CS_MODE_64)
+	if (MI->csh->mode != CS_MODE_64) {
 		SStream_concat(O, "es:[");
-	else
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_ES;
+		}
+	} else
 		SStream_concat(O, "[");
+
 	set_mem_access(MI, true);
 	printOperand(MI, Op, O);
 	SStream_concat0(O, "]");
@@ -326,11 +388,13 @@ void printDstIdx64(MCInst *MI, unsigned OpNo, SStream *O)
 static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 {
 	MCOperand *DispSpec = MCInst_getOperand(MI, Op);
-	MCOperand *SegReg = MCInst_getOperand(MI, Op+1);
+	MCOperand *SegReg = MCInst_getOperand(MI, Op + 1);
+	int reg;
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_INVALID;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.base = X86_REG_INVALID;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = X86_REG_INVALID;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = 1;
@@ -338,9 +402,13 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 	}
 
 	// If this has a segment register, print it.
-	if (MCOperand_getReg(SegReg)) {
-		printOperand(MI, Op+1, O);
+	reg = MCOperand_getReg(SegReg);
+	if (reg) {
+		_printOperand(MI, Op + 1, O);
 		SStream_concat0(O, ":");
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = reg;
+		}
 	}
 
 	SStream_concat0(O, "[");
@@ -409,8 +477,8 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 
 	if (MI->csh->detail) {
 		// first op can be embedded in the asm by llvm.
-		// so we have to handle that case to not miss the first op.
-		reg = X86_insn_reg(MCInst_getOpcode(MI));
+		// so we have to add the missing register as the first operand
+		reg = X86_insn_reg_intel(MCInst_getOpcode(MI));
 		if (reg) {
 			// shift all the ops right to leave 1st slot for this new register op
 			memmove(&(MI->flat_insn->detail->x86.operands[1]), &(MI->flat_insn->detail->x86.operands[0]),
@@ -454,12 +522,6 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
-static char *getRegisterName(unsigned RegNo);
-static void printRegName(SStream *OS, unsigned RegNo)
-{
-	SStream_concat0(OS, getRegisterName(RegNo));
-}
-
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	MCOperand *Op  = MCInst_getOperand(MI, OpNo);
@@ -468,13 +530,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		if (MI->csh->detail) {
 			unsigned int reg = MCOperand_getReg(Op);
 			if (MI->csh->doing_mem) {
-				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
-				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.base = reg;
-				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = 0;
-				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = 1;
-				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
-				MI->flat_insn->detail->x86.op_count++;
 			} else {
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_REG;
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].reg = reg;
@@ -498,41 +554,12 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
-				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
-				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
-				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.base = 0;
-				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = 0;
-				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = 1;
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = imm;
-				MI->flat_insn->detail->x86.op_count++;
 			} else {
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = imm;
 				MI->flat_insn->detail->x86.op_count++;
 			}
-		}
-	}
-}
-
-// local printOperand, without updating public operands
-static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
-{
-	MCOperand *Op  = MCInst_getOperand(MI, OpNo);
-	if (MCOperand_isReg(Op)) {
-		printRegName(O, MCOperand_getReg(Op));
-	} else if (MCOperand_isImm(Op)) {
-		int64_t imm = MCOperand_getImm(Op);
-		if (imm < 0) {
-			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%"PRIx64, -imm);
-			else
-				SStream_concat(O, "-%"PRIu64, -imm);
-
-		} else {
-			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%"PRIx64, imm);
-			else
-				SStream_concat(O, "%"PRIu64, imm);
 		}
 	}
 }
@@ -545,10 +572,12 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	MCOperand *IndexReg  = MCInst_getOperand(MI, Op+2);
 	MCOperand *DispSpec = MCInst_getOperand(MI, Op+3);
 	MCOperand *SegReg = MCInst_getOperand(MI, Op+4);
+	int reg;
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_INVALID;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.base = MCOperand_getReg(BaseReg);
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = MCOperand_getReg(IndexReg);
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = (int)ScaleVal;
@@ -556,8 +585,12 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	}
 
 	// If this has a segment register, print it.
-	if (MCOperand_getReg(SegReg)) {
-		_printOperand(MI, Op+4, O);
+	reg = MCOperand_getReg(SegReg);
+	if (reg) {
+		_printOperand(MI, Op + 4, O);
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = reg;
+		}
 		SStream_concat0(O, ":");
 	}
 

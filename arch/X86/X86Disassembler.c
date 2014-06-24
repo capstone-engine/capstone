@@ -668,8 +668,6 @@ static void update_pub_insn(cs_insn *pub, InternalInstruction *inter, uint8_t *p
 	prefixes[2] = inter->prefix2;
 	prefixes[3] = inter->prefix3;
 
-	pub->detail->x86.segment = x86_map_segment(inter->segmentOverride);
-
 	if (inter->vectorExtensionType > 0)
 		memcpy(pub->detail->x86.opcode, inter->vectorExtensionPrefix, sizeof(pub->detail->x86.opcode));
 	else {

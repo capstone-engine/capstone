@@ -44,9 +44,6 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 
 	print_string_hex("\tPrefix:", x86->prefix, 4);
 
-	if (x86->segment != X86_REG_INVALID)
-		printf("\tSegment override: %s\n", cs_reg_name(handle, x86->segment));
-
 	print_string_hex("\tOpcode:", x86->opcode, 3);
 	printf("\taddr_size: %u\n", x86->addr_size);
 	printf("\tmodrm: 0x%x\n", x86->modrm);
@@ -89,9 +86,11 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 				break;
 			case X86_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
-				if (op->mem.base != 0)
+				if (op->mem.segment != X86_REG_INVALID)
+					printf("\t\t\toperands[%u].mem.segment: REG = %s\n", i, cs_reg_name(handle, op->mem.segment));
+				if (op->mem.base != X86_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.base: REG = %s\n", i, cs_reg_name(handle, op->mem.base));
-				if (op->mem.index != 0)
+				if (op->mem.index != X86_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.index: REG = %s\n", i, cs_reg_name(handle, op->mem.index));
 				if (op->mem.scale != 1)
 					printf("\t\t\toperands[%u].mem.scale: %u\n", i, op->mem.scale);

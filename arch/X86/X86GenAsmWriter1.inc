@@ -12208,7 +12208,6 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 	;
 #endif
 
-
   // Fragment 0 encoded into 6 bits for 45 unique commands.
   //printf("Frag-0: %"PRIu64"\n", (Bits >> 14) & 63);
   switch ((Bits >> 14) & 63) {
@@ -12490,7 +12489,8 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 7:
     // ADD_FrST0, DIVR_FrST0, DIV_FrST0, MUL_FrST0, SUBR_FrST0, SUB_FrST0
-    SStream_concat0(O, ", st(0)"); 
+    SStream_concat0(O, ", st(0)");
+	op_addReg(MI, X86_REG_ST0);
     return;
     break;
   case 8:
@@ -12519,37 +12519,44 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 12:
     // IN16, IN32, IN8
-    SStream_concat0(O, ", dx"); 	// qq
+    SStream_concat0(O, ", dx");
+	op_addReg(MI, X86_REG_DX);
     return;
     break;
   case 13:
     // MOV16ao16, MOV16ao16_16, MOV64ao16, OUT16ir, STOSW
-    SStream_concat0(O, ", ax"); 
+    SStream_concat0(O, ", ax");
+	op_addReg(MI, X86_REG_AX);
     return;
     break;
   case 14:
     // MOV32ao32, MOV32ao32_16, MOV64ao32, OUT32ir, STOSL
-    SStream_concat0(O, ", eax"); 	// qq
+    SStream_concat0(O, ", eax");
+	op_addReg(MI, X86_REG_EAX);
     return;
     break;
   case 15:
     // MOV64ao64, STOSQ
-    SStream_concat0(O, ", rax"); 	// qq
+    SStream_concat0(O, ", rax");
+	op_addReg(MI, X86_REG_RAX);
     return;
     break;
   case 16:
     // MOV64ao8, MOV8ao8, MOV8ao8_16, OUT8ir, STOSB
-    SStream_concat0(O, ", al"); 	// qq
+    SStream_concat0(O, ", al");
+	op_addReg(MI, X86_REG_AL);
     return;
     break;
   case 17:
     // RCL16mCL, RCL16rCL, RCL32mCL, RCL32rCL, RCL64mCL, RCL64rCL, RCL8mCL, R...
-    SStream_concat0(O, ", cl"); 	// qq
+    SStream_concat0(O, ", cl");
+	op_addReg(MI, X86_REG_CL);
     return;
     break;
   case 18:
     // ROL16m1, ROL16r1, ROL32m1, ROL32r1, ROL64m1, ROL64r1, ROL8m1, ROL8r1, ...
-    SStream_concat0(O, ", 1"); 	// qq
+    SStream_concat0(O, ", 1");
+	op_addImm(MI, 1);
     return;
     break;
   case 19:
@@ -12805,7 +12812,8 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 3:
     // SHLD16mrCL, SHLD16rrCL, SHLD32mrCL, SHLD32rrCL, SHLD64mrCL, SHLD64rrCL...
-    SStream_concat0(O, ", cl"); 
+    SStream_concat0(O, ", cl");
+	op_addReg(MI, X86_REG_CL);
     return;
     break;
   case 4:

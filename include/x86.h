@@ -79,8 +79,9 @@ typedef enum x86_op_type {
 // Instruction's operand referring to memory
 // This is associated with X86_OP_MEM operand type above
 typedef struct x86_op_mem {
-	unsigned int base;	// base register
-	unsigned int index;	// index register
+	unsigned int segment; // segment register (or X86_REG_INVALID if irrelevant)
+	unsigned int base;	// base register (or X86_REG_INVALID if irrelevant)
+	unsigned int index;	// index register (or X86_REG_INVALID if irrelevant)
 	int scale;	// scale for index register (can be 1, or -1)
 	int64_t disp;	// displacement value
 } x86_op_mem;
@@ -105,10 +106,6 @@ typedef struct cs_x86 {
 	// (Optional) instruction prefix, which can be up to 5 bytes.
 	// A prefix byte gets value 0 when irrelevant.
 	uint8_t prefix[4];
-
-	// (Optional) segment override, which can be among CS, DS, SS, ES, FS, GS.
-	// This field get value 0 when irrelevant.
-	x86_reg segment;
 
 	// Instruction opcode, wich can be from 1 to 3 bytes in size.
 	// This contains VEX opcode as well.

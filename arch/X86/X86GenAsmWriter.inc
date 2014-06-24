@@ -12504,7 +12504,6 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 	;
 #endif
 
-
   // Fragment 0 encoded into 7 bits for 78 unique commands.
   //printf("Frag-0: %"PRIu64"\n", (Bits >> 14) & 127);
   switch ((Bits >> 14) & 127) {
@@ -12739,6 +12738,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     // LODSQ
     printSrcIdx64(MI, 0, O); 
     SStream_concat0(O, ", %rax"); 
+	op_addReg(MI, X86_REG_RAX);
     return;
     break;
   case 47:
@@ -12967,6 +12967,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 1:
     // ADC16i16, ADD16i16, AND16i16, CMP16i16, IN16ri, LODSW, MOV16o16a, MOV1...
     SStream_concat0(O, ", %ax"); 
+	op_addReg(MI, X86_REG_AX);
     return;
     break;
   case 2:
@@ -12985,6 +12986,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 5:
     // ADC32i32, ADD32i32, AND32i32, CMP32i32, IN32ri, LODSL, MOV32o32a, MOV3...
     SStream_concat0(O, ", %eax"); 
+	op_addReg(MI, X86_REG_EAX);
     return;
     break;
   case 6:
@@ -12999,6 +13001,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 8:
     // ADC64i32, ADD64i32, AND64i32, CMP64i32, MOV64o64a, OR64i32, SBB64i32, ...
     SStream_concat0(O, ", %rax"); 
+	op_addReg(MI, X86_REG_RAX);
     return;
     break;
   case 9:
@@ -13009,6 +13012,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 10:
     // ADC8i8, ADD8i8, AND8i8, CMP8i8, IN8ri, LODSB, MOV64o8a, MOV8o8a, MOV8o...
     SStream_concat0(O, ", %al"); 
+	op_addReg(MI, X86_REG_AL);
     return;
     break;
   case 11:
@@ -13042,6 +13046,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 17:
     // CMOVBE_F, CMOVB_F, CMOVE_F, CMOVNBE_F, CMOVNB_F, CMOVNE_F, CMOVNP_F, C...
     SStream_concat0(O, ", %st(0)"); 
+	op_addReg(MI, X86_REG_ST0);
     return;
     break;
   case 18:
@@ -13131,6 +13136,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 36:
     // OUTSB, OUTSL, OUTSW
     SStream_concat0(O, ", %dx"); 
+	op_addReg(MI, X86_REG_DX);
     return;
     break;
   case 37:

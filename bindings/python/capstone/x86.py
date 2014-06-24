@@ -6,6 +6,7 @@ from .x86_const import *
 # define the API
 class X86OpMem(ctypes.Structure):
     _fields_ = (
+        ('segment', ctypes.c_uint),
         ('base', ctypes.c_uint),
         ('index', ctypes.c_uint),
         ('scale', ctypes.c_int),
@@ -47,7 +48,6 @@ class X86Op(ctypes.Structure):
 class CsX86(ctypes.Structure):
     _fields_ = (
         ('prefix', ctypes.c_uint8 * 4),
-        ('segment', ctypes.c_uint),
         ('opcode', ctypes.c_uint8 * 3),
         ('addr_size', ctypes.c_uint8),
         ('modrm', ctypes.c_uint8),
@@ -61,7 +61,7 @@ class CsX86(ctypes.Structure):
     )
 
 def get_arch_info(a):
-    return (a.prefix[:], a.segment, a.opcode[:], a.addr_size, \
+    return (a.prefix[:], a.opcode[:], a.addr_size, \
             a.modrm, a.sib, a.disp, a.sib_index, a.sib_scale, \
             a.sib_base, copy.deepcopy(a.operands[:a.op_count]))
 
