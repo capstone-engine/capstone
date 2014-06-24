@@ -44,7 +44,7 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 
 	print_string_hex("\tPrefix:", x86->prefix, 4);
 
-	print_string_hex("\tOpcode:", x86->opcode, 3);
+	print_string_hex("\tOpcode:", x86->opcode, 4);
 	printf("\taddr_size: %u\n", x86->addr_size);
 	printf("\tmodrm: 0x%x\n", x86->modrm);
 	printf("\tdisp: 0x%x\n", x86->disp);

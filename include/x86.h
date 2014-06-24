@@ -110,7 +110,7 @@ typedef struct cs_x86 {
 	// Instruction opcode, wich can be from 1 to 3 bytes in size.
 	// This contains VEX opcode as well.
 	// An opcode byte gets value 0 when irrelevant.
-	uint8_t opcode[3];
+	uint8_t opcode[4];
 
 	// Address size, which can be overrided with above prefix[5].
 	uint8_t addr_size;

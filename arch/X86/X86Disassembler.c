@@ -668,12 +668,21 @@ static void update_pub_insn(cs_insn *pub, InternalInstruction *inter, uint8_t *p
 	prefixes[2] = inter->prefix2;
 	prefixes[3] = inter->prefix3;
 
-	if (inter->vectorExtensionType > 0)
+	if (inter->vectorExtensionType != 0)
 		memcpy(pub->detail->x86.opcode, inter->vectorExtensionPrefix, sizeof(pub->detail->x86.opcode));
 	else {
-		pub->detail->x86.opcode[0] = inter->opcode;
-		pub->detail->x86.opcode[1] = inter->twoByteEscape;
-		pub->detail->x86.opcode[2] = inter->threeByteEscape;
+		if (inter->twoByteEscape) {
+			if (inter->threeByteEscape) {
+				pub->detail->x86.opcode[0] = inter->twoByteEscape;
+				pub->detail->x86.opcode[1] = inter->threeByteEscape;
+				pub->detail->x86.opcode[2] = inter->opcode;
+			} else {
+				pub->detail->x86.opcode[0] = inter->twoByteEscape;
+				pub->detail->x86.opcode[1] = inter->opcode;
+			}
+		} else {
+				pub->detail->x86.opcode[0] = inter->opcode;
+		}
 	}
 
 	pub->detail->x86.addr_size = inter->addressSize;
@@ -706,6 +715,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	if (instr->flat_insn->detail) {
 		instr->flat_insn->detail->x86.op_count = 0;
 		memset(instr->flat_insn->detail->x86.prefix, 0, sizeof(instr->flat_insn->detail->x86.prefix));
+		memset(instr->flat_insn->detail->x86.opcode, 0, sizeof(instr->flat_insn->detail->x86.opcode));
 		memset(instr->flat_insn->detail->x86.operands, 0, 4 * sizeof(instr->flat_insn->detail->x86.operands[0]));
 	}
 

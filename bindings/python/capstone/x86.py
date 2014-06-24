@@ -48,7 +48,7 @@ class X86Op(ctypes.Structure):
 class CsX86(ctypes.Structure):
     _fields_ = (
         ('prefix', ctypes.c_uint8 * 4),
-        ('opcode', ctypes.c_uint8 * 3),
+        ('opcode', ctypes.c_uint8 * 4),
         ('addr_size', ctypes.c_uint8),
         ('modrm', ctypes.c_uint8),
         ('sib', ctypes.c_uint8),
