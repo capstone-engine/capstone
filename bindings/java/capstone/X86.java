@@ -14,6 +14,7 @@ import static capstone.X86_const.*;
 public class X86 {
 
   public static class MemType extends Structure {
+    public int segment;
     public int base;
     public int index;
     public int scale;
@@ -21,7 +22,7 @@ public class X86 {
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("base", "index", "scale", "disp");
+      return Arrays.asList("segment", "base", "index", "scale", "disp");
     }
   }
 
@@ -65,7 +66,6 @@ public class X86 {
 
   public static class UnionOpInfo extends Capstone.UnionOpInfo {
     public byte [] prefix;
-    public int segment;
     public byte [] opcode;
     public byte addr_size;
     public byte modrm;
@@ -87,14 +87,13 @@ public class X86 {
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("prefix", "segment", "opcode", "addr_size",
+      return Arrays.asList("prefix", "opcode", "addr_size",
           "modrm", "sib", "disp", "sib_index", "sib_scale", "sib_base", "op_count", "op");
     }
   }
 
   public static class OpInfo extends Capstone.OpInfo {
     public byte [] prefix;
-    public int segment;
     public byte [] opcode;
     public byte opSize;
     public byte addrSize;
@@ -111,7 +110,6 @@ public class X86 {
 
     public OpInfo(UnionOpInfo e) {
       prefix = e.prefix;
-      segment = e.segment;
       opcode = e.opcode;
       addrSize = e.addr_size;
       modrm = e.modrm;

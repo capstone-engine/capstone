@@ -47,10 +47,6 @@ public class TestX86 {
 
     System.out.printf("\tPrefix: %s\n", array2hex(operands.prefix));
 
-    if (operands.segment != X86_REG_INVALID)
-      System.out.println("\tSegment override: " + ins.regName(operands.segment));
-
-
     System.out.printf("\tOpcode: %s\n", array2hex(operands.opcode));
 
     // print address size
@@ -93,8 +89,11 @@ public class TestX86 {
           System.out.printf("\t\toperands[%d].type: FP = %f\n", c, i.value.fp);
         if (i.type == X86_OP_MEM) {
           System.out.printf("\t\toperands[%d].type: MEM\n",c);
+          String segment = ins.regName(i.value.mem.segment);
           String base = ins.regName(i.value.mem.base);
           String index = ins.regName(i.value.mem.index);
+          if (segment != null)
+            System.out.printf("\t\t\toperands[%d].mem.segment: REG = %s\n", c, segment);
           if (base != null)
             System.out.printf("\t\t\toperands[%d].mem.base: REG = %s\n", c, base);
           if (index != null)
