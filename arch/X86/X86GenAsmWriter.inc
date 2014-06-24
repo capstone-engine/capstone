@@ -1240,7 +1240,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     0U,	// LD_Fp64m80
     0U,	// LD_Fp80m
     20446U,	// LD_Frr
-    551692327U,	// LEA16r
+    387111U,	// LEA16r
     551687982U,	// LEA32r
     551687982U,	// LEA64_32r
     551722099U,	// LEA64r
