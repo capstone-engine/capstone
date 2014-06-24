@@ -488,7 +488,6 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 			MI->flat_insn->detail->x86.operands[0].size = MI->csh->regsize_map[reg];
 			MI->flat_insn->detail->x86.op_count++;
 		}
-
 	}
 }
 

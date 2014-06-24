@@ -42561,17 +42561,21 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 
 void op_addReg(MCInst *MI, int reg)
 {
-	MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_REG;
-	MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].reg = reg;
-	MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->csh->regsize_map[reg];
-	MI->flat_insn->detail->x86.op_count++;
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_REG;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].reg = reg;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->csh->regsize_map[reg];
+		MI->flat_insn->detail->x86.op_count++;
+	}
 }
 
 void op_addImm(MCInst *MI, int v)
 {
-	MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
-	MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = v;
-	MI->flat_insn->detail->x86.op_count++;
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = v;
+		MI->flat_insn->detail->x86.op_count++;
+	}
 }
 
 #endif
