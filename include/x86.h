@@ -82,7 +82,7 @@ typedef struct x86_op_mem {
 	unsigned int segment; // segment register (or X86_REG_INVALID if irrelevant)
 	unsigned int base;	// base register (or X86_REG_INVALID if irrelevant)
 	unsigned int index;	// index register (or X86_REG_INVALID if irrelevant)
-	int scale;	// scale for index register (can be 1, or -1)
+	int scale;	// scale for index register
 	int64_t disp;	// displacement value
 } x86_op_mem;
 
