@@ -102,6 +102,10 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 		}
 
 		// the size is irrelevant for X86_OP_IMM
+		if (op->avx_bcast != X86_AVX_BCAST_INVALID)
+			printf("\t\toperands[%u].avx_bcast: %u\n", i, op->avx_bcast);
+
+		// the size is irrelevant for X86_OP_IMM
 		if (op->type != X86_OP_IMM)
 			printf("\t\toperands[%u].size: %u\n", i, op->size);
 	}

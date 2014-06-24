@@ -47,4 +47,6 @@ extern uint8_t regsize_map_64[];
 void op_addReg(MCInst *MI, int reg);
 void op_addImm(MCInst *MI, int v);
 
+void op_addAvxBroadcast(MCInst *MI, x86_avx_bcast v);
+
 #endif

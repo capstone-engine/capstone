@@ -104,9 +104,14 @@ public class TestX86 {
             System.out.printf("\t\t\toperands[%d].mem.disp: 0x%x\n", c, i.value.mem.disp);
         }
 
+        // AVX broadcast type
+        if (i.avx_bcast != X86_AVX_BCAST_INVALID) {
+          System.out.printf("\t\toperands[%d].avx_bcast: %d\n", c, i.avx_bcast);
+        }
+
         // Operand size is irrlevant for X86_OP_IMM operand
         if (i.type != X86_OP_IMM) {
-          System.out.printf("\t\toperands[%d].size: %d\n",c, i.size);
+          System.out.printf("\t\toperands[%d].size: %d\n", c, i.size);
         }
       }
     }

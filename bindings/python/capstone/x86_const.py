@@ -245,6 +245,12 @@ X86_OP_IMM = 2
 X86_OP_FP = 3
 X86_OP_MEM = 4
 
+# AVX broadcast type
+
+X86_AVX_BCAST_INVALID = 0
+X86_AVX_BCAST_8 = 1
+X86_AVX_BCAST_16 = 2
+
 # X86 instructions
 
 X86_INS_INVALID = 0

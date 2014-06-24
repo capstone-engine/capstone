@@ -248,6 +248,12 @@ public class X86_const {
 	public static final int X86_OP_FP = 3;
 	public static final int X86_OP_MEM = 4;
 
+	// AVX broadcast type
+
+	public static final int X86_AVX_BCAST_INVALID = 0;
+	public static final int X86_AVX_BCAST_8 = 1;
+	public static final int X86_AVX_BCAST_16 = 2;
+
 	// X86 instructions
 
 	public static final int X86_INS_INVALID = 0;

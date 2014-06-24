@@ -91,6 +91,10 @@ def print_insn_detail(mode, insn):
                 if i.mem.disp != 0:
                     print("\t\t\toperands[%u].mem.disp: 0x%s" % (c, to_x(i.mem.disp)))
 
+            # AVX broadcast type
+            if i.avx_bcast != X86_AVX_BCAST_INVALID:
+                print("\t\toperands[%u].avx_bcast: %u" % (c, i.avx_bcast))
+
             # Operand size is irrlevant for X86_OP_IMM operand
             if i.type != X86_OP_IMM:
                 print("\t\toperands[%u].size: %u" % (c, i.size))

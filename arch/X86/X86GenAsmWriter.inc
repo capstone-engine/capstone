@@ -12937,6 +12937,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     // VPCONFLICTDrmbk
     printi32mem(MI, 3, O); 
     SStream_concat0(O, "{1to16}, "); 
+	op_addAvxBroadcast(MI, X86_AVX_BCAST_16);
     printOperand(MI, 0, O); 
     SStream_concat0(O, " {"); 
     printOperand(MI, 2, O); 
@@ -12947,6 +12948,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     // VPCONFLICTQrmbk
     printi64mem(MI, 3, O); 
     SStream_concat0(O, "{1to8}, "); 
+	op_addAvxBroadcast(MI, X86_AVX_BCAST_8);
     printOperand(MI, 0, O); 
     SStream_concat0(O, " {"); 
     printOperand(MI, 2, O); 
@@ -13154,10 +13156,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 39:
     // VADDPDZrmb, VDIVPDZrmb, VFMADD132PDZmb, VFMADD213PDZmb, VFMADDSUB132PD...
     SStream_concat0(O, "{1to8}, "); 
+	op_addAvxBroadcast(MI, X86_AVX_BCAST_8);
     break;
   case 40:
     // VADDPSZrmb, VDIVPSZrmb, VFMADD132PSZmb, VFMADD213PSZmb, VFMADDSUB132PS...
     SStream_concat0(O, "{1to16}, "); 
+	op_addAvxBroadcast(MI, X86_AVX_BCAST_16);
     break;
   case 41:
     // VALIGNDrmi, VALIGNQrmi, VPCMPDZrmi_alt, VPCMPQZrmi_alt, VPCMPUDZrmi_al...
