@@ -115,6 +115,11 @@ public class TestX86 {
           System.out.printf("\t\toperands[%d].avx_bcast: %d\n", c, i.avx_bcast);
         }
 
+        // AVX zero opmask {z}
+        if (i.zero_opmask) {
+          System.out.printf("\t\toperands[%d].zero_opmask: TRUE\n", c);
+        }
+
         System.out.printf("\t\toperands[%d].size: %d\n", c, i.size);
       }
     }

@@ -12838,6 +12838,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 8:
     // VMOVDQU32rrkz, VMOVDQU64rrkz, VPBROADCASTDZkrm, VPBROADCASTDZkrr, VPBR...
     SStream_concat0(O, "} {z}, "); 
+	op_addZeroOpmask(MI);
     break;
   case 9:
     // VPCONFLICTDrmb

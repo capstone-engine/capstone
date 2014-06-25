@@ -43,6 +43,7 @@ public class X86 {
     public OpValue value;
     public int size;
     public int avx_bcast;
+    public boolean zero_opmask;
 
     public void read() {
       super.read();
@@ -61,7 +62,7 @@ public class X86 {
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("type", "value", "size", "avx_bcast");
+      return Arrays.asList("type", "value", "size", "avx_bcast", "zero_opmask");
     }
   }
 

@@ -13570,11 +13570,13 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 5:
     // VMOVDQU32rrkz, VMOVDQU64rrkz
     SStream_concat0(O, "}  {z}"); 
+	op_addZeroOpmask(MI);
     return;
     break;
   case 6:
     // VPBROADCASTDZkrm, VPBROADCASTDZkrr, VPBROADCASTDrZkrr, VPBROADCASTQZkr...
     SStream_concat0(O, "} {z}"); 
+	op_addZeroOpmask(MI);
     return;
     break;
   case 7:

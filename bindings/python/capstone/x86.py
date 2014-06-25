@@ -27,6 +27,7 @@ class X86Op(ctypes.Structure):
         ('value', X86OpValue),
         ('size', ctypes.c_uint8),
         ('avx_bcast', ctypes.c_uint),
+        ('zero_opmask', ctypes.c_uint8),
     )
 
     @property

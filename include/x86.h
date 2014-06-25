@@ -167,6 +167,9 @@ typedef struct cs_x86_op {
 
 		// AVX broadcast type, or 0 if irrelevant
 		x86_avx_bcast avx_bcast;
+
+		// AVX zero opmask {z}
+		bool zero_opmask;
 } cs_x86_op;
 
 // Instruction structure

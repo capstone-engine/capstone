@@ -109,9 +109,13 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 				break;
 		}
 
-		// the size is irrelevant for X86_OP_IMM
+		// AVX broadcast type
 		if (op->avx_bcast != X86_AVX_BCAST_INVALID)
 			printf("\t\toperands[%u].avx_bcast: %u\n", i, op->avx_bcast);
+
+		// AVX zero opmask {z}
+		if (op->zero_opmask != false)
+			printf("\t\toperands[%u].zero_opmask: TRUE\n", i);
 
 		printf("\t\toperands[%u].size: %u\n", i, op->size);
 	}

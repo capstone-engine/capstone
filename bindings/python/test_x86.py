@@ -103,6 +103,10 @@ def print_insn_detail(mode, insn):
             if i.avx_bcast != X86_AVX_BCAST_INVALID:
                 print("\t\toperands[%u].avx_bcast: %u" % (c, i.avx_bcast))
 
+            # AVX zero opmask {z}
+            if i.zero_opmask:
+                print("\t\toperands[%u].zero_opmask: TRUE" % (c))
+
             print("\t\toperands[%u].size: %u" % (c, i.size))
 
 
