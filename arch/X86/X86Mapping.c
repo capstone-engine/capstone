@@ -4798,7 +4798,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_CMPPDrmi, X86_INS_CMP,
+		X86_CMPPDrmi, X86_INS_CMPPD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_SSE2, 0 }, 0, 0
 #endif
@@ -4810,7 +4810,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_CMPPDrri, X86_INS_CMP,
+		X86_CMPPDrri, X86_INS_CMPPD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_SSE2, 0 }, 0, 0
 #endif
@@ -4822,7 +4822,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_CMPPSrmi, X86_INS_CMP,
+		X86_CMPPSrmi, X86_INS_CMPPS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_SSE1, 0 }, 0, 0
 #endif
@@ -4834,7 +4834,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_CMPPSrri, X86_INS_CMP,
+		X86_CMPPSrri, X86_INS_CMPPS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_SSE1, 0 }, 0, 0
 #endif
@@ -4870,7 +4870,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_CMPSDrm, X86_INS_CMP,
+		X86_CMPSDrm, X86_INS_CMPSD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_SSE2, 0 }, 0, 0
 #endif
@@ -4882,7 +4882,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_CMPSDrr, X86_INS_CMP,
+		X86_CMPSDrr, X86_INS_CMPSD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_SSE2, 0 }, 0, 0
 #endif
@@ -4894,7 +4894,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_CMPSSrm, X86_INS_CMP,
+		X86_CMPSSrm, X86_INS_CMPSS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_SSE1, 0 }, 0, 0
 #endif
@@ -4906,7 +4906,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_CMPSSrr, X86_INS_CMP,
+		X86_CMPSSrr, X86_INS_CMPSS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_SSE1, 0 }, 0, 0
 #endif
@@ -6838,25 +6838,25 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_Int_CMPSDrm, X86_INS_CMP,
+		X86_Int_CMPSDrm, X86_INS_CMPSD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_SSE2, 0 }, 0, 0
 #endif
 	},
 	{
-		X86_Int_CMPSDrr, X86_INS_CMP,
+		X86_Int_CMPSDrr, X86_INS_CMPSD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_SSE2, 0 }, 0, 0
 #endif
 	},
 	{
-		X86_Int_CMPSSrm, X86_INS_CMP,
+		X86_Int_CMPSSrm, X86_INS_CMPSS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_SSE1, 0 }, 0, 0
 #endif
 	},
 	{
-		X86_Int_CMPSSrr, X86_INS_CMP,
+		X86_Int_CMPSSrr, X86_INS_CMPSS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_SSE1, 0 }, 0, 0
 #endif
@@ -7030,25 +7030,25 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_Int_VCMPSDrm, X86_INS_VCMP,
+		X86_Int_VCMPSDrm, X86_INS_VCMPSD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX, 0 }, 0, 0
 #endif
 	},
 	{
-		X86_Int_VCMPSDrr, X86_INS_VCMP,
+		X86_Int_VCMPSDrr, X86_INS_VCMPSD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX, 0 }, 0, 0
 #endif
 	},
 	{
-		X86_Int_VCMPSSrm, X86_INS_VCMP,
+		X86_Int_VCMPSSrm, X86_INS_VCMPSS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX, 0 }, 0, 0
 #endif
 	},
 	{
-		X86_Int_VCMPSSrr, X86_INS_VCMP,
+		X86_Int_VCMPSSrr, X86_INS_VCMPSS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX, 0 }, 0, 0
 #endif
@@ -18322,7 +18322,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPPDYrmi, X86_INS_VCMP,
+		X86_VCMPPDYrmi, X86_INS_VCMPPD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX, 0 }, 0, 0
 #endif
@@ -18334,7 +18334,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPPDYrri, X86_INS_VCMP,
+		X86_VCMPPDYrri, X86_INS_VCMPPD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX, 0 }, 0, 0
 #endif
@@ -18346,7 +18346,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPPDZrmi, X86_INS_VCMP,
+		X86_VCMPPDZrmi, X86_INS_VCMPPD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
@@ -18358,7 +18358,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPPDZrri, X86_INS_VCMP,
+		X86_VCMPPDZrri, X86_INS_VCMPPD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
@@ -18370,13 +18370,13 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPPDZrrib, X86_INS_VCMP,
+		X86_VCMPPDZrrib, X86_INS_VCMPPD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
 	},
 	{
-		X86_VCMPPDrmi, X86_INS_VCMP,
+		X86_VCMPPDrmi, X86_INS_VCMPPD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX, 0 }, 0, 0
 #endif
@@ -18388,7 +18388,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPPDrri, X86_INS_VCMP,
+		X86_VCMPPDrri, X86_INS_VCMPPD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX, 0 }, 0, 0
 #endif
@@ -18400,7 +18400,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPPSYrmi, X86_INS_VCMP,
+		X86_VCMPPSYrmi, X86_INS_VCMPPS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX, 0 }, 0, 0
 #endif
@@ -18412,7 +18412,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPPSYrri, X86_INS_VCMP,
+		X86_VCMPPSYrri, X86_INS_VCMPPS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX, 0 }, 0, 0
 #endif
@@ -18424,7 +18424,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPPSZrmi, X86_INS_VCMP,
+		X86_VCMPPSZrmi, X86_INS_VCMPPS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
@@ -18436,7 +18436,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPPSZrri, X86_INS_VCMP,
+		X86_VCMPPSZrri, X86_INS_VCMPPS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
@@ -18448,13 +18448,13 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPPSZrrib, X86_INS_VCMP,
+		X86_VCMPPSZrrib, X86_INS_VCMPPS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
 	},
 	{
-		X86_VCMPPSrmi, X86_INS_VCMP,
+		X86_VCMPPSrmi, X86_INS_VCMPPS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX, 0 }, 0, 0
 #endif
@@ -18466,7 +18466,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPPSrri, X86_INS_VCMP,
+		X86_VCMPPSrri, X86_INS_VCMPPS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX, 0 }, 0, 0
 #endif
@@ -18478,7 +18478,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPSDZrm, X86_INS_VCMP,
+		X86_VCMPSDZrm, X86_INS_VCMPSD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
@@ -18490,7 +18490,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPSDZrr, X86_INS_VCMP,
+		X86_VCMPSDZrr, X86_INS_VCMPSD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
@@ -18502,7 +18502,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPSDrm, X86_INS_VCMP,
+		X86_VCMPSDrm, X86_INS_VCMPSD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX, 0 }, 0, 0
 #endif
@@ -18514,7 +18514,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPSDrr, X86_INS_VCMP,
+		X86_VCMPSDrr, X86_INS_VCMPSD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX, 0 }, 0, 0
 #endif
@@ -18526,7 +18526,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPSSZrm, X86_INS_VCMP,
+		X86_VCMPSSZrm, X86_INS_VCMPSS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
@@ -18538,7 +18538,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPSSZrr, X86_INS_VCMP,
+		X86_VCMPSSZrr, X86_INS_VCMPSS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
@@ -18550,7 +18550,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPSSrm, X86_INS_VCMP,
+		X86_VCMPSSrm, X86_INS_VCMPSS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX, 0 }, 0, 0
 #endif
@@ -18562,7 +18562,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPSSrr, X86_INS_VCMP,
+		X86_VCMPSSrr, X86_INS_VCMPSS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX, 0 }, 0, 0
 #endif
@@ -25786,7 +25786,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCMPDZrmi, X86_INS_VPCMP,
+		X86_VPCMPDZrmi, X86_INS_VPCMPD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
@@ -25798,7 +25798,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCMPDZrri, X86_INS_VPCMP,
+		X86_VPCMPDZrri, X86_INS_VPCMPD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
@@ -26098,7 +26098,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCMPQZrmi, X86_INS_VPCMP,
+		X86_VPCMPQZrmi, X86_INS_VPCMPQ,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
@@ -26110,7 +26110,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCMPQZrri, X86_INS_VPCMP,
+		X86_VPCMPQZrri, X86_INS_VPCMPQ,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
@@ -26122,7 +26122,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCMPUDZrmi, X86_INS_VPCMP,
+		X86_VPCMPUDZrmi, X86_INS_VPCMPUD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
@@ -26134,7 +26134,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCMPUDZrri, X86_INS_VPCMP,
+		X86_VPCMPUDZrri, X86_INS_VPCMPUD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
@@ -26146,7 +26146,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCMPUQZrmi, X86_INS_VPCMP,
+		X86_VPCMPUQZrmi, X86_INS_VPCMPUQ,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
@@ -26158,7 +26158,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCMPUQZrri, X86_INS_VPCMP,
+		X86_VPCMPUQZrri, X86_INS_VPCMPUQ,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
