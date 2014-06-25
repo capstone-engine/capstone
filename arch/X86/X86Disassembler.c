@@ -746,10 +746,11 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 
 		result = (!translateInstruction(instr, &insn)) ?  true : false;
 		if (result) {
-			if (handle->detail)
+			if (handle->detail) {
 				update_pub_insn(instr->flat_insn, &insn, instr->x86_prefix);
-			else {
-				// copy all prefixes
+				instr->imm_size = insn.immSize;
+			} else {
+				// still copy all prefixes
 				instr->x86_prefix[0] = insn.prefix0;
 				instr->x86_prefix[1] = insn.prefix1;
 				instr->x86_prefix[2] = insn.prefix2;

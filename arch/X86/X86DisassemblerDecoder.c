@@ -714,27 +714,32 @@ static int readPrefixes(struct InternalInstruction* insn)
 		insn->addressSize        = (hasAdSize ? 4 : 2);
 		insn->displacementSize   = (hasAdSize ? 4 : 2);
 		insn->immediateSize      = (hasOpSize ? 4 : 2);
+		insn->immSize = (hasOpSize ? 4 : 2);
 	} else if (insn->mode == MODE_32BIT) {
 		insn->registerSize       = (hasOpSize ? 2 : 4);
 		insn->addressSize        = (hasAdSize ? 2 : 4);
 		insn->displacementSize   = (hasAdSize ? 2 : 4);
 		insn->immediateSize      = (hasOpSize ? 2 : 4);
+		insn->immSize = (hasOpSize ? 2 : 4);
 	} else if (insn->mode == MODE_64BIT) {
 		if (insn->rexPrefix && wFromREX(insn->rexPrefix)) {
 			insn->registerSize       = 8;
 			insn->addressSize        = (hasAdSize ? 4 : 8);
 			insn->displacementSize   = 4;
 			insn->immediateSize      = 4;
+			insn->immSize      = 4;
 		} else if (insn->rexPrefix) {
 			insn->registerSize       = (hasOpSize ? 2 : 4);
 			insn->addressSize        = (hasAdSize ? 4 : 8);
 			insn->displacementSize   = (hasOpSize ? 2 : 4);
 			insn->immediateSize      = (hasOpSize ? 2 : 4);
+			insn->immSize      = (hasOpSize ? 2 : 4);
 		} else {
 			insn->registerSize       = (hasOpSize ? 2 : 4);
 			insn->addressSize        = (hasAdSize ? 4 : 8);
 			insn->displacementSize   = (hasOpSize ? 2 : 4);
 			insn->immediateSize      = (hasOpSize ? 2 : 4);
+			insn->immSize      = (hasOpSize ? 4 : 8);
 		}
 	}
 

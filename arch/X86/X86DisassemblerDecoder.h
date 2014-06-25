@@ -621,6 +621,8 @@ typedef struct InternalInstruction {
   uint8_t displacementSize;
   uint8_t immediateSize;
 
+  uint8_t immSize;	// immediate size for X86_OP_IMM operand
+
   /* Offsets from the start of the instruction to the pieces of data, which is
      needed to find relocation entries for adding symbolic operands */
   uint8_t displacementOffset;

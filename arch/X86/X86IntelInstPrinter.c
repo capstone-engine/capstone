@@ -515,6 +515,11 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 		}
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
+			// if op_count > 0, then this operand's size is taken from the destination op
+			if (MI->flat_insn->detail->x86.op_count > 0)
+				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->flat_insn->detail->x86.operands[0].size;
+			else
+				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->imm_size;
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = imm;
 			MI->flat_insn->detail->x86.op_count++;
 		}
@@ -556,6 +561,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = imm;
 			} else {
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
+				if (MI->flat_insn->detail->x86.op_count > 0)
+					MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->flat_insn->detail->x86.operands[0].size;
+				else
+					MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->imm_size;
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = imm;
 				MI->flat_insn->detail->x86.op_count++;
 			}

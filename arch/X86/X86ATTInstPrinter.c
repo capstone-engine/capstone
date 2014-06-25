@@ -456,6 +456,7 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 		}
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
+			MI->has_imm = 1;
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = imm;
 			MI->flat_insn->detail->x86.op_count++;
 		}
@@ -498,6 +499,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = imm;
 			} else {
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
+				MI->has_imm = 1;
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = imm;
 				MI->flat_insn->detail->x86.op_count++;
 			}
@@ -596,6 +598,7 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 {
 	char *mnem;
 	x86_reg reg;
+	int i;
 
 	// Try to print any aliases first.
 	mnem = printAliasInstr(MI, OS, NULL);
@@ -603,6 +606,17 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 		cs_mem_free(mnem);
 	else
 		printInstruction(MI, OS, NULL);
+
+	if (MI->has_imm) {
+		// if op_count > 1, then this operand's size is taken from the destination op
+		if (MI->flat_insn->detail->x86.op_count > 1) {
+			for (i = 0; i < MI->flat_insn->detail->x86.op_count; i++) {
+				if (MI->flat_insn->detail->x86.operands[i].type == X86_OP_IMM)
+					MI->flat_insn->detail->x86.operands[i].size = MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count - 1].size;
+			}
+		} else
+			MI->flat_insn->detail->x86.operands[0].size = MI->imm_size;
+	}
 
 	if (MI->csh->detail) {
 		// special instruction needs to supply register op

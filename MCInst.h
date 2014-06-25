@@ -90,10 +90,11 @@ MCOperand *MCOperand_CreateImm1(MCInst *inst, int64_t Val);
 /// MCInst - Instances of this class represent a single low-level machine
 /// instruction.
 struct MCInst {
-	unsigned Opcode;
-	MCOperand Operands[48];
 	unsigned OpcodePub;
 	unsigned size;	// number of operands
+	int has_imm;	// indicate this instruction has an X86_OP_IMM operand - used for ATT syntax
+	unsigned Opcode;
+	MCOperand Operands[48];
 	cs_insn *flat_insn;	// insn to be exposed to public
 	uint64_t address;	// address of this insn
 	cs_struct *csh;	// save the main csh
@@ -103,6 +104,7 @@ struct MCInst {
 	// A prefix byte gets value 0 when irrelevant.
 	// This is copied from cs_x86 struct
 	uint8_t x86_prefix[4];
+	uint8_t imm_size;	// immediate size for X86_OP_IMM operand
 };
 
 void MCInst_Init(MCInst *inst);
