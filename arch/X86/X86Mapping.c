@@ -42604,7 +42604,7 @@ void op_addZeroOpmask(MCInst *MI)
 {
 	if (MI->csh->detail) {
 		// link with the previous operand
-		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count - 1].zero_opmask = true;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count - 1].avx_zero_opmask = true;
 	}
 }
 
