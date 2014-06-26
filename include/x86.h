@@ -79,8 +79,8 @@ typedef enum x86_op_type {
 //> AVX broadcast type
 typedef enum x86_avx_bcast {
 	X86_AVX_BCAST_INVALID = 0,	// Uninitialized.
-	X86_AVX_BCAST_8,	// AVX512 broadcast type 1to8
-	X86_AVX_BCAST_16,	// AVX512 broadcast type 1to16
+	X86_AVX_BCAST_8,	// AVX512 broadcast type {1to8}
+	X86_AVX_BCAST_16,	// AVX512 broadcast type {1to16}
 } x86_avx_bcast;
 
 //> SSE Code Condition type
@@ -162,7 +162,6 @@ typedef struct cs_x86_op {
 		};
 
 		// size of this operand (in bytes).
-		// NOTE: this is irrelevant for operand type X86_OP_IMM
 		uint8_t size;
 
 		// AVX broadcast type, or 0 if irrelevant
