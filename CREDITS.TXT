@@ -48,4 +48,4 @@ Ole André Vadla Ravnås (author of the 100th Pull-Request in our Github repo, t
 Axel "0vercl0k" Souchet (@0vercl0k) & Alex Ionescu: port to MSVC.
 Daniel Pistelli: Cmake support.
 Peter Hlavaty: integrate Capstone for Windows kernel drivers.
-
+Guillaume Jeanne: Ocaml binding.
