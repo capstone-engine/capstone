@@ -27,6 +27,18 @@ bindings/python/build/
 # java
 bindings/java/capstone.jar
 
+# ocaml
+bindings/ocaml/*.cmi
+bindings/ocaml/*.cmx
+bindings/ocaml/*.cmxa
+bindings/ocaml/*.mli
+bindings/ocaml/test
+bindings/ocaml/test_arm
+bindings/ocaml/test_arm64
+bindings/ocaml/test_mips
+bindings/ocaml/test_x86
+bindings/ocaml/test_detail
+
 # test binaries
 tests/test
 tests/test_detail
