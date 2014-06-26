@@ -20,18 +20,18 @@ let all_tests = [
         (CS_ARCH_ARM64, [CS_MODE_ARM], _ARM64_CODE, "ARM-64");
 ];;
 
-let print_op i op =
+let print_op csh i op =
 	( match op.value with
 	| ARM64_OP_INVALID _ -> ();	(* this would never happens *)
-	| ARM64_OP_REG reg -> printf "\t\top[%d]: REG = %s\n" i (cs_reg_name CS_ARCH_ARM64 reg);
+	| ARM64_OP_REG reg -> printf "\t\top[%d]: REG = %s\n" i (cs_reg_name csh reg);
 	| ARM64_OP_CIMM imm -> printf "\t\top[%d]: C-IMM = %u\n" i imm;
 	| ARM64_OP_IMM imm -> printf "\t\top[%d]: IMM = 0x%x\n" i imm;
 	| ARM64_OP_FP fp -> printf "\t\top[%d]: FP = %f\n" i fp;
 	| ARM64_OP_MEM mem -> ( printf "\t\top[%d]: MEM\n" i;
 		if mem.base != 0 then
-			printf "\t\t\toperands[%u].mem.base: REG = %s\n" i (cs_reg_name CS_ARCH_ARM64 mem.base);
+			printf "\t\t\toperands[%u].mem.base: REG = %s\n" i (cs_reg_name csh mem.base);
 		if mem.index != 0 then
-			printf "\t\t\toperands[%u].mem.index: REG = %s\n" i (cs_reg_name CS_ARCH_ARM64 mem.index);
+			printf "\t\t\toperands[%u].mem.index: REG = %s\n" i (cs_reg_name csh mem.index);
 		if mem.displ != 0 then
 			printf "\t\t\toperands[%u].mem.disp: 0x%x\n" i mem.displ;
 		);
@@ -46,7 +46,7 @@ let print_op i op =
 	();;
 
 
-let print_detail arch =
+let print_detail csh arch =
 	match arch with
 	| CS_INFO_ARM _ -> ();
 	| CS_INFO_MIPS _ -> ();
@@ -64,14 +64,17 @@ let print_detail arch =
 	(* print all operands info (type & value) *)
 	if (Array.length arm64.operands) > 0 then (
 		printf "\top_count: %d\n" (Array.length arm64.operands);
-		Array.iteri print_op arm64.operands;
+		Array.iteri (print_op csh) arm64.operands;
 	);
 	printf "\n";;
 
 
-let print_insn insn =
+let print_insn mode insn =
 	printf "0x%x\t%s\t%s\n" insn.address insn.mnemonic insn.op_str;
-	print_detail insn.arch;;
+	let csh = cs_open CS_ARCH_ARM64 mode in
+	match csh with
+	| None -> ()
+	| Some v -> print_detail v insn.arch
 
 
 let print_arch x =
@@ -79,18 +82,18 @@ let print_arch x =
 		let insns = cs_disasm_quick arch mode code 0x1000L 0L in
 			printf "*************\n";
 			printf "Platform: %s\n" comment;
-			List.iter print_insn insns;;
+			List.iter (print_insn mode) insns;;
 
 
-(*
+
 List.iter print_arch all_tests;;
-*)
+
 
 
 (* all below code use OO class of Capstone *)
-let print_insn_cls insn =
+let print_insn_cls csh insn =
 	printf "0x%x\t%s\t%s\n" insn#address insn#mnemonic insn#op_str;
-	print_detail insn#arch;;
+	print_detail csh insn#arch;;
 
 
 let print_arch_cls x =
@@ -99,7 +102,7 @@ let print_arch_cls x =
 			let insns = d#disasm code 0x1000L 0L in
 				printf "*************\n";
 				printf "Platform: %s\n" comment;
-				List.iter print_insn_cls insns;
+				List.iter (print_insn_cls d#get_csh) insns;
 	);;
 
 List.iter print_arch_cls all_tests;;

@@ -41,9 +41,9 @@ let print_arch x =
 			printf "Platform: %s\n" comment;
 			List.iter print_insn insns;;
 
-(*
+
 List.iter print_arch all_tests;;
-*)
+
 
 let print_insn_cls insn =
 	printf "0x%x\t%s\t%s\n" insn#address insn#mnemonic insn#op_str;;
@@ -58,3 +58,4 @@ let print_arch_cls x =
 	);;
 
 List.iter print_arch_cls all_tests;;
+
