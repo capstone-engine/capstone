@@ -31,17 +31,17 @@ let all_tests = [
 ];;
 
 
-let print_detail arch insn =
+let print_detail csh insn =
 	(* print immediate operands *)
 	if (Array.length insn.regs_read) > 0 then begin
 		printf "\tImplicit registers read: ";
-		Array.iter (fun x -> printf "%s "(cs_reg_name arch x)) insn.regs_read;
+		Array.iter (fun x -> printf "%s "(cs_reg_name csh x)) insn.regs_read;
 		printf "\n";
 	end;
 
 	if (Array.length insn.regs_write) > 0 then begin
 		printf "\tImplicit registers written: ";
-		Array.iter (fun x -> printf "%s "(cs_reg_name arch x)) insn.regs_write;
+		Array.iter (fun x -> printf "%s "(cs_reg_name csh x)) insn.regs_write;
 		printf "\n";
 	end;
 
@@ -53,9 +53,12 @@ let print_detail arch insn =
 	printf "\n";;
 
 
-let print_insn arch insn =
+let print_insn mode arch insn =
 	printf "0x%x\t%s\t%s\n" insn.address insn.mnemonic insn.op_str;
-	print_detail arch insn;;
+	let csh = cs_open arch mode in
+	match csh with
+	| None -> ()
+	| Some v -> print_detail v insn
 
 
 let print_arch x =
@@ -63,24 +66,24 @@ let print_arch x =
 		let insns = cs_disasm_quick arch mode code 0x1000L 0L in
 			printf "*************\n";
 			printf "Platform: %s\n" comment;
-			List.iter (print_insn arch) insns;;
+			List.iter (print_insn mode arch) insns;;
 
-(*
+
 List.iter print_arch all_tests;;
-*)
+
 
 (* all below code use OO class of Capstone *)
-let print_detail_cls arch insn =
+let print_detail_cls arch csh insn =
 	(* print immediate operands *)
 	if (Array.length insn#regs_read) > 0 then begin
 		printf "\tImplicit registers read: ";
-		Array.iter (fun x -> printf "%s "(cs_reg_name arch x)) insn#regs_read;
+		Array.iter (fun x -> printf "%s "(cs_reg_name csh x)) insn#regs_read;
 		printf "\n";
 	end;
 
 	if (Array.length insn#regs_write) > 0 then begin
 		printf "\tImplicit registers written: ";
-		Array.iter (fun x -> printf "%s "(cs_reg_name arch x)) insn#regs_write;
+		Array.iter (fun x -> printf "%s "(cs_reg_name csh x)) insn#regs_write;
 		printf "\n";
 	end;
 
@@ -92,9 +95,9 @@ let print_detail_cls arch insn =
 	printf "\n";;
 
 
-let print_insn_cls arch insn =
+let print_insn_cls arch csh insn =
 	printf "0x%x\t%s\t%s\n" insn#address insn#mnemonic insn#op_str;
-	print_detail_cls arch insn;;
+	print_detail_cls arch csh insn;;
 
 
 let print_arch_cls x =
@@ -103,7 +106,8 @@ let print_arch_cls x =
 			let insns = d#disasm code 0x1000L 0L in
 				printf "*************\n";
 				printf "Platform: %s\n" comment;
-				List.iter (print_insn_cls arch) insns;
+				List.iter (print_insn_cls arch (d#get_csh)) insns;
 	();;
 
 List.iter print_arch_cls all_tests;;
+
