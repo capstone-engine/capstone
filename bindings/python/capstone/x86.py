@@ -60,6 +60,8 @@ class CsX86(ctypes.Structure):
         ('sib_base', ctypes.c_uint),
         ('sse_cc', ctypes.c_uint),
         ('avx_cc', ctypes.c_uint),
+        ('avx_sae', ctypes.c_bool),
+        ('avx_rm', ctypes.c_uint),
         ('op_count', ctypes.c_uint8),
         ('operands', X86Op * 8),
     )
@@ -67,5 +69,6 @@ class CsX86(ctypes.Structure):
 def get_arch_info(a):
     return (a.prefix[:], a.opcode[:], a.addr_size, \
             a.modrm, a.sib, a.disp, a.sib_index, a.sib_scale, \
-            a.sib_base, a.sse_cc, a.avx_cc, copy.deepcopy(a.operands[:a.op_count]))
+            a.sib_base, a.sse_cc, a.avx_cc, a.avx_sae, a.avx_rm, \
+            copy.deepcopy(a.operands[:a.op_count]))
 

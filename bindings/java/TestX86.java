@@ -73,6 +73,12 @@ public class TestX86 {
     if (operands.avxCC != 0)
         System.out.printf("\tavx_cc: %u\n", operands.avxCC);
 
+    if (operands.avxSae)
+        System.out.printf("\tavx_sae: TRUE\n");
+
+    if (operands.avxRm != 0)
+        System.out.printf("\tavx_rm: %u\n", operands.avxRm);
+
     int count = ins.opCount(X86_OP_IMM);
     if (count > 0) {
       System.out.printf("\timm_count: %d\n", count);

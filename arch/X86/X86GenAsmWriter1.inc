@@ -12823,6 +12823,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 5:
     // VCMPPDZrrib, VCMPPSZrrib, VRCP28PDZrb, VRCP28PSZrb, VRSQRT28PDZrb, VRS...
     SStream_concat0(O, ", {sae}"); 
+	op_addAvxSae(MI);
     return;
     break;
   case 6:
@@ -12838,7 +12839,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 8:
     // VMOVDQU32rrkz, VMOVDQU64rrkz, VPBROADCASTDZkrm, VPBROADCASTDZkrr, VPBR...
     SStream_concat0(O, "} {z}, "); 
-	op_addZeroOpmask(MI);
+	op_addAvxZeroOpmask(MI);
     break;
   case 9:
     // VPCONFLICTDrmb
@@ -13012,6 +13013,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 4:
     // VRCP28SDrrb, VRCP28SSrrb, VRSQRT28SDrrb, VRSQRT28SSrrb
     SStream_concat0(O, ", {sae}"); 
+	op_addAvxSae(MI);
     return;
     break;
   }

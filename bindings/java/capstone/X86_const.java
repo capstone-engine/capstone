@@ -310,6 +310,14 @@ public class X86_const {
 	public static final int X86_AVX_CC_GT_OQ = 31;
 	public static final int X86_AVX_CC_TRUE_US = 32;
 
+	// AVX static rounding mode type
+
+	public static final int X86_AVX_RM_INVALID = 0;
+	public static final int X86_AVX_RM_RN = 1;
+	public static final int X86_AVX_RM_RD = 2;
+	public static final int X86_AVX_RM_RU = 3;
+	public static final int X86_AVX_RM_RZ = 4;
+
 	// X86 instructions
 
 	public static final int X86_INS_INVALID = 0;

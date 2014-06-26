@@ -13193,6 +13193,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 45:
     // VCMPPDZrrib
     SStream_concat0(O, "pd \t{sae}, "); 
+	op_addAvxSae(MI);
     printOperand(MI, 2, O); 
     SStream_concat0(O, ", "); 
     printOperand(MI, 1, O); 
@@ -13207,6 +13208,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 47:
     // VCMPPSZrrib
     SStream_concat0(O, "ps \t{sae}, "); 
+	op_addAvxSae(MI);
     printOperand(MI, 2, O); 
     SStream_concat0(O, ", "); 
     printOperand(MI, 1, O); 
@@ -13570,13 +13572,13 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 5:
     // VMOVDQU32rrkz, VMOVDQU64rrkz
     SStream_concat0(O, "}  {z}"); 
-	op_addZeroOpmask(MI);
+	op_addAvxZeroOpmask(MI);
     return;
     break;
   case 6:
     // VPBROADCASTDZkrm, VPBROADCASTDZkrr, VPBROADCASTDrZkrr, VPBROADCASTQZkr...
     SStream_concat0(O, "} {z}"); 
-	op_addZeroOpmask(MI);
+	op_addAvxZeroOpmask(MI);
     return;
     break;
   case 7:

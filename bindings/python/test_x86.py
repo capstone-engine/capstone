@@ -68,6 +68,14 @@ def print_insn_detail(mode, insn):
     if insn.avx_cc != X86_AVX_CC_INVALID:
         print("\tavx_cc: %u" % (insn.avx_cc))
 
+    # AVX Suppress All Exception
+    if insn.avx_sae:
+        print("\tavx_sae: TRUE")
+
+    # AVX Rounding Mode type
+    if insn.avx_rm != X86_AVX_RM_INVALID:
+        print("\tavx_rm: %u" % (insn.avx_rm))
+
     count = insn.op_count(X86_OP_IMM)
     if count > 0:
         print("\timm_count: %u" % count)

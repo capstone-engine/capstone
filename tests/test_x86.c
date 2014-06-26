@@ -60,12 +60,24 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 			printf("\t\tsib_scale: %d\n", x86->sib_scale);
 	}
 
+	// SSE code condition
 	if (x86->sse_cc != X86_SSE_CC_INVALID) {
 		printf("\tsse_cc: %u\n", x86->sse_cc);
 	}
 
+	// AVX code condition
 	if (x86->avx_cc != X86_AVX_CC_INVALID) {
 		printf("\tavx_cc: %u\n", x86->avx_cc);
+	}
+
+	// AVX Suppress All Exception
+	if (x86->avx_sae) {
+		printf("\tavx_sae: %u\n", x86->avx_sae);
+	}
+
+	// AVX Rounding Mode
+	if (x86->avx_rm != X86_AVX_RM_INVALID) {
+		printf("\tavx_rm: %u\n", x86->avx_rm);
 	}
 
 	count = cs_op_count(ud, ins, X86_OP_IMM);
@@ -114,8 +126,8 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 			printf("\t\toperands[%u].avx_bcast: %u\n", i, op->avx_bcast);
 
 		// AVX zero opmask {z}
-		if (op->zero_opmask != false)
-			printf("\t\toperands[%u].zero_opmask: TRUE\n", i);
+		if (op->avx_zero_opmask != false)
+			printf("\t\toperands[%u].avx_zero_opmask: TRUE\n", i);
 
 		printf("\t\toperands[%u].size: %u\n", i, op->size);
 	}

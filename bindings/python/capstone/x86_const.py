@@ -307,6 +307,14 @@ X86_AVX_CC_GE_OQ = 30
 X86_AVX_CC_GT_OQ = 31
 X86_AVX_CC_TRUE_US = 32
 
+# AVX static rounding mode type
+
+X86_AVX_RM_INVALID = 0
+X86_AVX_RM_RN = 1
+X86_AVX_RM_RD = 2
+X86_AVX_RM_RU = 3
+X86_AVX_RM_RZ = 4
+
 # X86 instructions
 
 X86_INS_INVALID = 0

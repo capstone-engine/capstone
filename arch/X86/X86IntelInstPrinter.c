@@ -229,10 +229,10 @@ static void printRoundingControl(MCInst *MI, unsigned Op, SStream *O)
 {
 	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x3;
 	switch (Imm) {
-		case 0: SStream_concat0(O, "{rn-sae}"); break;
-		case 1: SStream_concat0(O, "{rd-sae}"); break;
-		case 2: SStream_concat0(O, "{ru-sae}"); break;
-		case 3: SStream_concat0(O, "{rz-sae}"); break;
+		case 0: SStream_concat0(O, "{rn-sae}"); op_addAvxSae(MI); op_addAvxRoundingMode(MI, X86_AVX_RM_RN); break;
+		case 1: SStream_concat0(O, "{rd-sae}"); op_addAvxSae(MI); op_addAvxRoundingMode(MI, X86_AVX_RM_RD); break;
+		case 2: SStream_concat0(O, "{ru-sae}"); op_addAvxSae(MI); op_addAvxRoundingMode(MI, X86_AVX_RM_RU); break;
+		case 3: SStream_concat0(O, "{rz-sae}"); op_addAvxSae(MI); op_addAvxRoundingMode(MI, X86_AVX_RM_RZ); break;
 		default: break;	// never reach
 	}
 }

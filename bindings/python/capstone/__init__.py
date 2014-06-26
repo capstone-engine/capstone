@@ -473,7 +473,8 @@ class CsInsn(object):
         elif arch == CS_ARCH_X86:
             (self.prefix, self.opcode, self.addr_size, \
                 self.modrm, self.sib, self.disp, \
-                self.sib_index, self.sib_scale, self.sib_base, self.sse_cc, self.avx_cc, self.operands) = x86.get_arch_info(self._detail.arch.x86)
+                self.sib_index, self.sib_scale, self.sib_base, self.sse_cc, \
+                self.avx_cc, self.avx_sae, self.avx_rm, self.operands) = x86.get_arch_info(self._detail.arch.x86)
         elif arch == CS_ARCH_MIPS:
                 self.operands = mips.get_arch_info(self._detail.arch.mips)
         elif arch == CS_ARCH_PPC:

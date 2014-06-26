@@ -52,6 +52,10 @@ void op_addAvxBroadcast(MCInst *MI, x86_avx_bcast v);
 void op_addSseCC(MCInst *MI, int v);
 void op_addAvxCC(MCInst *MI, int v);
 
-void op_addZeroOpmask(MCInst *MI);
+void op_addAvxZeroOpmask(MCInst *MI);
+
+void op_addAvxSae(MCInst *MI);
+
+void op_addAvxRoundingMode(MCInst *MI, int v);
 
 #endif

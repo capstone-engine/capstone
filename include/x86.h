@@ -141,6 +141,15 @@ typedef enum x86_avx_cc {
 	X86_AVX_CC_TRUE_US,
 } x86_avx_cc;
 
+//> AVX static rounding mode type
+typedef enum x86_avx_rm {
+	X86_AVX_RM_INVALID = 0,	// Uninitialized.
+	X86_AVX_RM_RN,	// Round to nearest
+	X86_AVX_RM_RD,	// Round down
+	X86_AVX_RM_RU,	// Round up
+	X86_AVX_RM_RZ,	// Round toward zero
+} x86_avx_rm;
+
 // Instruction's operand referring to memory
 // This is associated with X86_OP_MEM operand type above
 typedef struct x86_op_mem {
@@ -207,6 +216,12 @@ typedef struct cs_x86 {
 
 	// AVX Code Condition
 	x86_avx_cc avx_cc;
+
+	// AVX Suppress all Exception
+	bool avx_sae;
+
+	// AVX static rounding mode
+	x86_avx_rm avx_rm;
 
 	// Number of operands of this instruction,
 	// or 0 when instruction has no operand.
