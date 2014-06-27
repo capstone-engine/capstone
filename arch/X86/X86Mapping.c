@@ -42032,132 +42032,6 @@ static insn_map insns[] = {	// reduce x86 instructions
 // post printer for X86. put all the hacky stuff here
 void X86_post_printer(csh handle, cs_insn *insn, char *insn_asm, MCInst *mci)
 {
-#ifndef CAPSTONE_DIET
-	cs_struct *ud = (cs_struct *)handle;
-
-	if (ud->detail) {
-		// printf(">>> post_printer: opcode = %u\n", mci->Opcode);
-		switch(mci->Opcode) {
-			default:
-				break;
-#ifndef CAPSTONE_X86_REDUCE
-			case X86_ST_FPNCE:
-				// fstpnce	st(0), st(0)
-				insn->detail->x86.operands[insn->detail->x86.op_count].type = X86_OP_REG;
-				insn->detail->x86.operands[insn->detail->x86.op_count].reg = X86_REG_ST0;
-				insn->detail->x86.op_count++;
-				insn->detail->x86.operands[insn->detail->x86.op_count].type = X86_OP_REG;
-				insn->detail->x86.operands[insn->detail->x86.op_count].reg = X86_REG_ST0;
-				insn->detail->x86.op_count++;
-				break;
-			case X86_ST_FPr0r7:
-				// fstp	st(7), st(0)
-				if (ud->syntax != CS_OPT_SYNTAX_ATT) { // default syntax is Intel
-					insn->detail->x86.operands[insn->detail->x86.op_count].type = X86_OP_REG;
-					insn->detail->x86.operands[insn->detail->x86.op_count].reg = X86_REG_ST7;
-					insn->detail->x86.op_count++;
-					insn->detail->x86.operands[insn->detail->x86.op_count].type = X86_OP_REG;
-					insn->detail->x86.operands[insn->detail->x86.op_count].reg = X86_REG_ST0;
-					insn->detail->x86.op_count++;
-				} else {
-					insn->detail->x86.operands[insn->detail->x86.op_count].type = X86_OP_REG;
-					insn->detail->x86.operands[insn->detail->x86.op_count].reg = X86_REG_ST0;
-					insn->detail->x86.op_count++;
-					insn->detail->x86.operands[insn->detail->x86.op_count].type = X86_OP_REG;
-					insn->detail->x86.operands[insn->detail->x86.op_count].reg = X86_REG_ST7;
-					insn->detail->x86.op_count++;
-				}
-				break;
-#endif
-
-			case X86_SHL16rCL:
-			case X86_SHL32rCL:
-			case X86_SHL64rCL:
-			case X86_SHL8rCL:
-			case X86_SHLD16mrCL:
-			case X86_SHLD16rrCL:
-			case X86_SHLD32mrCL:
-			case X86_SHLD32rrCL:
-			case X86_SHLD64mrCL:
-			case X86_SHLD64rrCL:
-				if (ud->syntax != CS_OPT_SYNTAX_ATT) { // default syntax is Intel
-					// shl al, cl
-					insn->detail->x86.operands[1].type = X86_OP_REG;
-					insn->detail->x86.operands[1].reg = X86_REG_CL;
-					insn->detail->x86.op_count = 2;
-				} else {
-					// shl %cl, %al
-					memcpy(&(insn->detail->x86.operands[1]), &(insn->detail->x86.operands[0]), sizeof(insn->detail->x86.operands[0]));
-					insn->detail->x86.operands[0].type = X86_OP_REG;
-					insn->detail->x86.operands[0].reg = X86_REG_CL;
-					insn->detail->x86.op_count = 2;
-				}
-
-				break;
-			case X86_SAL8r1:
-			case X86_SAL16r1:
-			case X86_SAL32r1:
-			case X86_SAL64r1:
-			case X86_SAL8m1:
-			case X86_SAL16m1:
-			case X86_SAL32m1:
-			case X86_SAL64m1:
-
-			case X86_SHL8r1:
-			case X86_SHL16r1:
-			case X86_SHL32r1:
-			case X86_SHL64r1:
-			case X86_SHL8m1:
-			case X86_SHL16m1:
-			case X86_SHL32m1:
-			case X86_SHL64m1:
-
-			case X86_SHR8r1:
-			case X86_SHR16r1:
-			case X86_SHR32r1:
-			case X86_SHR64r1:
-			case X86_SHR8m1:
-			case X86_SHR16m1:
-			case X86_SHR32m1:
-			case X86_SHR64m1:
-
-			case X86_SAR8r1:
-			case X86_SAR16r1:
-			case X86_SAR32r1:
-			case X86_SAR64r1:
-			case X86_SAR8m1:
-			case X86_SAR16m1:
-			case X86_SAR32m1:
-			case X86_SAR64m1:
-
-			case X86_ROR8r1:
-			case X86_ROR16r1:
-			case X86_ROR32r1:
-			case X86_ROR64r1:
-			case X86_ROR8m1:
-			case X86_ROR16m1:
-			case X86_ROR32m1:
-			case X86_ROR64m1:
-
-			case X86_ROL8r1:
-			case X86_ROL16r1:
-			case X86_ROL32r1:
-			case X86_ROL64r1:
-			case X86_ROL8m1:
-			case X86_ROL16m1:
-			case X86_ROL32m1:
-			case X86_ROL64m1:
-				if (ud->syntax != CS_OPT_SYNTAX_ATT) { // default syntax is Intel
-					// AT&T print this instruction without immediate 1?
-					insn->detail->x86.operands[insn->detail->x86.op_count].type = X86_OP_IMM;
-					insn->detail->x86.operands[insn->detail->x86.op_count].imm = 1;
-					insn->detail->x86.op_count++;
-				}
-
-				break;
-		}
-	}
-#endif
 }
 
 // given internal insn id, return public instruction info
@@ -42574,6 +42448,14 @@ void op_addImm(MCInst *MI, int v)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = v;
+		// if op_count > 0, then this operand's size is taken from the destination op
+		if (MI->csh->syntax == CS_OPT_SYNTAX_INTEL) {
+			if (MI->flat_insn->detail->x86.op_count > 0)
+				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->flat_insn->detail->x86.operands[0].size;
+			else
+				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->imm_size;
+		} else
+			MI->has_imm = 1;
 		MI->flat_insn->detail->x86.op_count++;
 	}
 }
