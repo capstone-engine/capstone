@@ -1394,6 +1394,7 @@ static int readModRM(struct InternalInstruction* insn)
 								return -1;
 							break;
 						case 0x5:
+						case 0xd:
 							insn->eaBase = EA_BASE_NONE;
 							insn->eaDisplacement = EA_DISP_32;
 							if (readDisplacement(insn))
