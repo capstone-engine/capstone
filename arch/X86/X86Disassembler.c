@@ -270,7 +270,7 @@ static bool translateRMRegister(MCInst *mcInst, InternalInstruction *insn)
 				return true;
 #define ENTRY(x)                                                      \
 		case EA_REG_##x:                                                    \
-																			MCOperand_CreateReg0(mcInst, X86_##x); break;
+			MCOperand_CreateReg0(mcInst, X86_##x); break;
 			ALL_REGS
 #undef ENTRY
 		default:
@@ -314,7 +314,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 			switch (insn->sibBase) {
 #define ENTRY(x)                                          \
 				case SIB_BASE_##x:                                  \
-																	MCOperand_CreateReg0(mcInst, X86_##x); break;
+				MCOperand_CreateReg0(mcInst, X86_##x); break;
 				ALL_SIB_BASES
 #undef ENTRY
 				default:
@@ -390,7 +390,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 					return true;
 #define ENTRY(x)                                          \
 				case SIB_INDEX_##x:                                 \
-										indexReg = X86_##x; break;
+					indexReg = X86_##x; break;
 					EA_BASES_32BIT
 						EA_BASES_64BIT
 						REGS_XMM
@@ -411,9 +411,13 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 					return true;
 				}
 				if (insn->mode == MODE_64BIT) {
-					MCOperand_CreateReg0(mcInst, X86_RIP); // Section 2.2.1.6
-				} else
+					if (insn->prefix3 == 0x67)	// address-size prefix overrides RIP relative addressing
+						MCOperand_CreateReg0(mcInst, X86_EIP);
+					else
+						MCOperand_CreateReg0(mcInst, X86_RIP); // Section 2.2.1.6
+				} else {
 					MCOperand_CreateReg0(mcInst, 0);
+				}
 
 				indexReg = 0;
 				break;
@@ -445,7 +449,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 						//   placeholders to keep the compiler happy.
 #define ENTRY(x)                                        \
 					case EA_BASE_##x:                                 \
-																	  MCOperand_CreateReg0(mcInst, X86_##x); break; 
+						  MCOperand_CreateReg0(mcInst, X86_##x); break; 
 						ALL_EA_BASES
 #undef ENTRY
 #define ENTRY(x) case EA_REG_##x:
