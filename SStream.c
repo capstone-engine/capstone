@@ -23,7 +23,7 @@ void SStream_concat0(SStream *ss, char *s)
 {
 #ifndef CAPSTONE_DIET
 	strcpy(ss->buffer + ss->index, s);
-	ss->index += strlen(s);
+	ss->index += (int) strlen(s);
 #endif
 }
 
