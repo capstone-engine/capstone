@@ -591,6 +591,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			}
 		}
 	} else if (MCOperand_isImm(Op)) {
+        unsigned int opc = 0;
+        opc = MCInst_getOpcode(MI);
+
 		imm = (int32_t)MCOperand_getImm(Op);
 
 		// relative branch only has relative offset, so we have to update it
@@ -598,12 +601,20 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		// Note: in ARM, PC is always 2 instructions ahead, so we have to
 		// add 8 in ARM mode, or 4 in Thumb mode
 		// printf(">> opcode: %u\n", MCInst_getOpcode(MI));
-		if (ARM_rel_branch(MI->csh, MCInst_getOpcode(MI))) {
+		if (ARM_rel_branch(MI->csh, opc)) {
 			// only do this for relative branch
-			if (MI->csh->mode & CS_MODE_THUMB)
+			if (MI->csh->mode & CS_MODE_THUMB) {
 				imm += (int32_t)MI->address + 4;
-			else
+                if (ARM_blx_to_arm_mode(MI->csh, opc)) {
+                    // here need to align down to the nearest 4-byte
+                    // address
+#define _ALIGN_DOWN(v, align_width) ((v/align_width)*align_width)
+                    imm = _ALIGN_DOWN(imm, 4);
+#undef _ALIGN_DOWN
+                }
+            } else {
 				imm += (int32_t)MI->address + 8;
+            }
 
 			if (imm >= 0) {
 				if (imm > HEX_THRESHOLD)
