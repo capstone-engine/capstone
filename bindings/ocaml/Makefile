@@ -4,13 +4,14 @@
 LIB = capstone
 FLAGS = '-Wall -Wextra -Wwrite-strings'
 
-all: arm.cmxa arm64.cmxa mips.cmxa x86.cmxa capstone.cmxa test.cmx test_detail.cmx test_x86.cmx test_arm.cmx test_arm64.cmx test_mips.cmx ocaml.o
+all: arm.cmxa arm64.cmxa mips.cmxa ppc.cmxa x86.cmxa capstone.cmxa test.cmx test_detail.cmx test_x86.cmx test_arm.cmx test_arm64.cmx test_mips.cmx test_ppc.cmx ocaml.o
 	ocamlopt -o test -ccopt $(FLAGS) ocaml.o capstone.cmx test.cmx -cclib -l$(LIB)
 	ocamlopt -o test_detail -ccopt $(FLAGS) capstone.cmx ocaml.o test_detail.cmx -cclib -l$(LIB)
 	ocamlopt -o test_x86 -ccopt $(FLAGS) capstone.cmx ocaml.o x86.cmx test_x86.cmx -cclib -l$(LIB)
 	ocamlopt -o test_arm -ccopt $(FLAGS) capstone.cmx ocaml.o arm.cmx test_arm.cmx -cclib -l$(LIB)
 	ocamlopt -o test_arm64 -ccopt $(FLAGS) capstone.cmx ocaml.o arm64.cmx test_arm64.cmx -cclib -l$(LIB)
 	ocamlopt -o test_mips -ccopt $(FLAGS) capstone.cmx ocaml.o mips.cmx test_mips.cmx -cclib -l$(LIB)
+	ocamlopt -o test_ppc -ccopt $(FLAGS) capstone.cmx ocaml.o ppc.cmx test_ppc.cmx -cclib -l$(LIB)
 
 test.cmx: test.ml
 	ocamlopt -ccopt $(FLAGS) -c $< -cclib -l$(LIB)
@@ -28,6 +29,9 @@ test_arm64.cmx: test_arm64.ml
 	ocamlopt -ccopt $(FLAGS) -c $< -cclib -l$(LIB)
 
 test_mips.cmx: test_mips.ml
+	ocamlopt -ccopt $(FLAGS) -c $< -cclib -l$(LIB)
+
+test_ppc.cmx: test_ppc.ml
 	ocamlopt -ccopt $(FLAGS) -c $< -cclib -l$(LIB)
 
 ocaml.o: ocaml.c
@@ -91,6 +95,18 @@ mips.cmx: mips.ml mips.cmi
 	ocamlopt -ccopt $(FLAGS) -c $<
 
 mips.cmxa: mips.cmx
+	ocamlopt -ccopt $(FLAGS) -a -o $@ $<
+
+ppc.mli: ppc.ml
+	ocamlc -ccopt $(FLAGS) -i $< > $@
+
+ppc.cmi: ppc.mli
+	ocamlc -ccopt $(FLAGS) -c $<
+
+ppc.cmx: ppc.ml ppc.cmi
+	ocamlopt -ccopt $(FLAGS) -c $<
+
+ppc.cmxa: ppc.cmx
 	ocamlopt -ccopt $(FLAGS) -a -o $@ $<
 
 clean:

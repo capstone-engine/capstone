@@ -50,6 +50,7 @@ let print_detail csh arch =
 	match arch with
 	| CS_INFO_ARM _ -> ();
 	| CS_INFO_MIPS _ -> ();
+	| CS_INFO_PPC _ -> ();
 	| CS_INFO_X86 _ -> ();
 	| CS_INFO_ARM64 arm64 ->
 	if arm64.cc != _ARM64_CC_AL && arm64.cc != _ARM64_CC_INVALID then

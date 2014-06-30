@@ -51,6 +51,7 @@ let print_detail mode csh arch =
 	| CS_INFO_ARM64 _ -> ();
 	| CS_INFO_ARM _ -> ();
 	| CS_INFO_MIPS _ -> ();
+	| CS_INFO_PPC _ -> ();
 	| CS_INFO_X86 x86 ->
 	print_string_hex "\tPrefix: " x86.prefix;
 

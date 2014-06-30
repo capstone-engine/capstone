@@ -4,7 +4,7 @@
 
 type ppc_op_mem = {
 	base: int;
-	disp: int;
+	displ: int;
 }
 
 type ppc_op = 

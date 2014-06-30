@@ -59,6 +59,7 @@ let print_detail csh arch =
 	| CS_INFO_ARM64 _ -> ();
 	| CS_INFO_X86 _ -> ();
 	| CS_INFO_MIPS _ -> ();
+	| CS_INFO_PPC _ -> ();
 	| CS_INFO_ARM arm ->
 	if arm.cc != _ARM_CC_AL && arm.cc != _ARM_CC_INVALID then
 		printf "\tCode condition: %u\n" arm.cc;
