@@ -23,30 +23,30 @@ type cs_ppc = {
 
 
 (*  PPC branch codes for some branch instructions *)
-let _PPC_BC_LT = (0<<5)|12;;
-let _PPC_BC_LE = (1<<5)|4;;
-let _PPC_BC_EQ = (2<<5)|12;;
-let _PPC_BC_GE = (0<<5)|4;;
-let _PPC_BC_GT = (1<<5)|12;;
-let _PPC_BC_NE = (2<<5)|4;;
-let _PPC_BC_UN = (3<<5)|12;;
-let _PPC_BC_NU = (3<<5)|4;;
-let _PPC_BC_LT_MINUS = (0<<5)|14;;
-let _PPC_BC_LE_MINUS = (1<<5)|6;;
-let _PPC_BC_EQ_MINUS = (2<<5)|14;;
-let _PPC_BC_GE_MINUS = (0<<5)|6;;
-let _PPC_BC_GT_MINUS = (1<<5)|14;;
-let _PPC_BC_NE_MINUS = (2<<5)|6;;
-let _PPC_BC_UN_MINUS = (3<<5)|14;;
-let _PPC_BC_NU_MINUS = (3<<5)|6;;
-let _PPC_BC_LT_PLUS = (0<<5)|15;;
-let _PPC_BC_LE_PLUS = (1<<5)|7;;
-let _PPC_BC_EQ_PLUS = (2<<5)|15;;
-let _PPC_BC_GE_PLUS = (0<<5)|7;;
-let _PPC_BC_GT_PLUS = (1<<5)|15;;
-let _PPC_BC_NE_PLUS = (2<<5)|7;;
-let _PPC_BC_UN_PLUS = (3<<5)|15;;
-let _PPC_BC_NU_PLUS = (3<<5)|7;;
+let _PPC_BC_LT = (0 lsl 5) lor 12;;
+let _PPC_BC_LE = (1 lsl 5) lor 4;;
+let _PPC_BC_EQ = (2 lsl 5) lor 12;;
+let _PPC_BC_GE = (0 lsl 5) lor 4;;
+let _PPC_BC_GT = (1 lsl 5) lor 12;;
+let _PPC_BC_NE = (2 lsl 5) lor 4;;
+let _PPC_BC_UN = (3 lsl 5) lor 12;;
+let _PPC_BC_NU = (3 lsl 5) lor 4;;
+let _PPC_BC_LT_MINUS = (0 lsl 5) lor 14;;
+let _PPC_BC_LE_MINUS = (1 lsl 5) lor 6;;
+let _PPC_BC_EQ_MINUS = (2 lsl 5) lor 14;;
+let _PPC_BC_GE_MINUS = (0 lsl 5) lor 6;;
+let _PPC_BC_GT_MINUS = (1 lsl 5) lor 14;;
+let _PPC_BC_NE_MINUS = (2 lsl 5) lor 6;;
+let _PPC_BC_UN_MINUS = (3 lsl 5) lor 14;;
+let _PPC_BC_NU_MINUS = (3 lsl 5) lor 6;;
+let _PPC_BC_LT_PLUS = (0 lsl 5) lor 15;;
+let _PPC_BC_LE_PLUS = (1 lsl 5) lor 7;;
+let _PPC_BC_EQ_PLUS = (2 lsl 5) lor 15;;
+let _PPC_BC_GE_PLUS = (0 lsl 5) lor 7;;
+let _PPC_BC_GT_PLUS = (1 lsl 5) lor 15;;
+let _PPC_BC_NE_PLUS = (2 lsl 5) lor 7;;
+let _PPC_BC_UN_PLUS = (3 lsl 5) lor 15;;
+let _PPC_BC_NU_PLUS = (3 lsl 5) lor 7;;
 
 (*  PPC branch hint for some branch instructions *)
 

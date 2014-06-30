@@ -4,6 +4,7 @@
 open Arm
 open Arm64
 open Mips
+open Ppc
 open X86
 open Printf	(* debug *)
 
@@ -11,6 +12,7 @@ type arch =
   | CS_ARCH_ARM
   | CS_ARCH_ARM64
   | CS_ARCH_MIPS
+  | CS_ARCH_PPC
   | CS_ARCH_X86
 
 type mode =
@@ -30,6 +32,7 @@ type cs_arch =
 	| CS_INFO_ARM of cs_arm
 	| CS_INFO_ARM64 of cs_arm64
 	| CS_INFO_MIPS of cs_mips
+	| CS_INFO_PPC of cs_ppc
 	| CS_INFO_X86 of cs_x86
 
 type cs_insn0 = {
