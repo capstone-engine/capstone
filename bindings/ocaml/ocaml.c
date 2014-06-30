@@ -12,22 +12,6 @@
 
 #define ARR_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
-// count the number of positive members in @oplist
-#define ARCH_LIST_COUNT(_arch, _optype) \
-static unsigned int _arch ## _list_count(_optype *list, unsigned int max) \
-{ \
-	unsigned int i; \
-	for(i = 0; i < max; i++) \
-		if (list[i].type == 0) \
-			return i; \
-	return max; \
-}
-
-ARCH_LIST_COUNT(arm, cs_arm_op)
-ARCH_LIST_COUNT(arm64, cs_arm64_op)
-ARCH_LIST_COUNT(mips, cs_mips_op)
-ARCH_LIST_COUNT(x86, cs_x86_op)
-
 
 // count the number of positive members in @list
 static unsigned int list_count(uint8_t *list, unsigned int max)
@@ -125,8 +109,10 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 					Store_field(op_info_val, 0, Val_int(insn[j-1].detail->arm.cc));
 					Store_field(op_info_val, 1, Val_bool(insn[j-1].detail->arm.update_flags));
 					Store_field(op_info_val, 2, Val_bool(insn[j-1].detail->arm.writeback));
-					Store_field(op_info_val, 3, Val_int(insn[j-1].detail->arm.op_count));
-					lcount = arm_list_count(insn[j - 1].detail->arm.operands, ARR_SIZE(insn[j - 1].detail->arm.operands));
+
+					lcount = insn[j-1].detail->arm.op_count;
+
+					Store_field(op_info_val, 3, Val_int(lcount));
 					if (lcount > 0) {
 						array = caml_alloc(lcount, 0);
 						for (i = 0; i < lcount; i++) {
@@ -188,9 +174,10 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						 Store_field(op_info_val, 0, Val_int(insn[j-1].detail->arm64.cc));
 						 Store_field(op_info_val, 1, Val_bool(insn[j-1].detail->arm64.update_flags));
 						 Store_field(op_info_val, 2, Val_bool(insn[j-1].detail->arm64.writeback));
-						 Store_field(op_info_val, 3, Val_int(insn[j-1].detail->arm64.op_count));
+						 lcount = insn[j-1].detail->arm64.op_count;
 
-						 lcount = arm64_list_count(insn[j - 1].detail->arm64.operands, ARR_SIZE(insn[j - 1].detail->arm64.operands));
+						 Store_field(op_info_val, 3, Val_int(lcount));
+
 						 if (lcount > 0) {
 							 array = caml_alloc(lcount, 0);
 							 for (i = 0; i < lcount; i++) {
@@ -246,9 +233,11 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						 arch_info = caml_alloc(1, 2);
 
 						 op_info_val = caml_alloc(2, 0);
-						 Store_field(op_info_val, 0, Val_int(insn[j-1].detail->mips.op_count));
 
-						 lcount = mips_list_count(insn[j - 1].detail->mips.operands, ARR_SIZE(insn[j - 1].detail->mips.operands));
+						 lcount = insn[j-1].detail->mips.op_count;
+
+						 Store_field(op_info_val, 0, Val_int(lcount));
+
 						 if (lcount > 0) {
 							 array = caml_alloc(lcount, 0);
 							 for (i = 0; i < lcount; i++) {
@@ -385,8 +374,10 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 
 					Store_field(op_info_val, 12, Val_int(insn[j-1].detail->x86.sib_base));
 
-					Store_field(op_info_val, 13, Val_int(insn[j-1].detail->x86.op_count));
-					lcount = x86_list_count(insn[j - 1].detail->x86.operands, ARR_SIZE(insn[j - 1].detail->x86.operands));
+					lcount = insn[j-1].detail->x86.op_count;
+
+					Store_field(op_info_val, 13, Val_int(lcount));
+
 					if (lcount > 0) {
 						array = caml_alloc(lcount, 0);
 						for (i = 0; i < lcount; i++) {
