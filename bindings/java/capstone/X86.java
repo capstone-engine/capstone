@@ -69,6 +69,7 @@ public class X86 {
   public static class UnionOpInfo extends Capstone.UnionOpInfo {
     public byte [] prefix;
     public byte [] opcode;
+    public byte rex;
     public byte addr_size;
     public byte modrm;
     public byte sib;
@@ -93,7 +94,7 @@ public class X86 {
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("prefix", "opcode", "addr_size",
+      return Arrays.asList("prefix", "opcode", "rex", "addr_size",
           "modrm", "sib", "disp", "sib_index", "sib_scale", "sib_base", "sse_cc", "avx_cc", "avx_sae", "avx_rm", "op_count", "op");
     }
   }
@@ -119,6 +120,7 @@ public class X86 {
     public OpInfo(UnionOpInfo e) {
       prefix = e.prefix;
       opcode = e.opcode;
+      rex = e.rex;
       addrSize = e.addr_size;
       modrm = e.modrm;
       sib = e.sib;

@@ -39,7 +39,10 @@ def print_insn_detail(mode, insn):
     # print instruction's opcode
     print_string_hex("\tOpcode:", insn.opcode)
 
-    # print operand's size, address size, displacement size & immediate size
+    # print operand's REX prefix (non-zero value is relavant for x86_64 instructions)
+    print("\trex: 0x%x" % (insn.rex))
+
+    # print operand's address size
     print("\taddr_size: %u" % (insn.addr_size))
 
     # print modRM byte

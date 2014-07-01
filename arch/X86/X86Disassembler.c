@@ -689,6 +689,8 @@ static void update_pub_insn(cs_insn *pub, InternalInstruction *inter, uint8_t *p
 		}
 	}
 
+	pub->detail->x86.rex = inter->rexPrefix;
+
 	pub->detail->x86.addr_size = inter->addressSize;
 
 	pub->detail->x86.modrm = inter->orgModRM;

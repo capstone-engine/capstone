@@ -51,6 +51,7 @@ class CsX86(ctypes.Structure):
     _fields_ = (
         ('prefix', ctypes.c_uint8 * 4),
         ('opcode', ctypes.c_uint8 * 4),
+        ('rex', ctypes.c_uint8),
         ('addr_size', ctypes.c_uint8),
         ('modrm', ctypes.c_uint8),
         ('sib', ctypes.c_uint8),
@@ -67,7 +68,7 @@ class CsX86(ctypes.Structure):
     )
 
 def get_arch_info(a):
-    return (a.prefix[:], a.opcode[:], a.addr_size, \
+    return (a.prefix[:], a.opcode[:], a.rex, a.addr_size, \
             a.modrm, a.sib, a.disp, a.sib_index, a.sib_scale, \
             a.sib_base, a.sse_cc, a.avx_cc, a.avx_sae, a.avx_rm, \
             copy.deepcopy(a.operands[:a.op_count]))
