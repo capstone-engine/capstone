@@ -42046,8 +42046,34 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			memcpy(insn->detail->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
 			insn->detail->regs_read_count = (uint8_t)count_positive(insns[i].regs_use);
 
-			memcpy(insn->detail->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
-			insn->detail->regs_write_count = (uint8_t)count_positive(insns[i].regs_mod);
+			// special cases when regs_write[] depends on arch
+			switch(id) {
+				default:
+					memcpy(insn->detail->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
+					insn->detail->regs_write_count = (uint8_t)count_positive(insns[i].regs_mod);
+					break;
+				case X86_RDTSC:
+					if (h->mode == CS_MODE_64) {
+						memcpy(insn->detail->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
+						insn->detail->regs_write_count = (uint8_t)count_positive(insns[i].regs_mod);
+					} else {
+						insn->detail->regs_write[0] = X86_REG_EAX;
+						insn->detail->regs_write[1] = X86_REG_EDX;
+						insn->detail->regs_write_count = 2;
+					}
+					break;
+				case X86_RDTSCP:
+					if (h->mode == CS_MODE_64) {
+						memcpy(insn->detail->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
+						insn->detail->regs_write_count = (uint8_t)count_positive(insns[i].regs_mod);
+					} else {
+						insn->detail->regs_write[0] = X86_REG_EAX;
+						insn->detail->regs_write[1] = X86_REG_ECX;
+						insn->detail->regs_write[2] = X86_REG_EDX;
+						insn->detail->regs_write_count = 3;
+					}
+					break;
+			}
 
 			memcpy(insn->detail->groups, insns[i].groups, sizeof(insns[i].groups));
 			insn->detail->groups_count = (uint8_t)count_positive(insns[i].groups);
