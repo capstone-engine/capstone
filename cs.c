@@ -278,7 +278,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 	// find first space or tab
 	sp = buffer;
 	mnem = insn->mnemonic;
-	if (mci->x86_prefix[0]) {
+	if (mci->csh->arch == CS_ARCH_X86 && mci->x86_prefix[0]) {
 		for (sp = buffer; *sp; sp++) {
 			if (*sp == ' '|| *sp == '\t')
 				break;
