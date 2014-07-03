@@ -233,10 +233,16 @@ VERSION_EXT =
 
 IS_APPLE := $(shell $(CC) -dM -E - < /dev/null | grep __apple_build_version__ | wc -l | tr -d " ")
 ifeq ($(IS_APPLE),1)
+# must be installed to /usr/local/lib, if installed to /usr/lib it will not work with latest Xcode versions
+# this is because xcode looks up stuff in the SDK root dir passed to -syslibroot
+LIBDIR = /usr/local/lib
+INCDIR = /usr/local/include
 EXT = dylib
 VERSION_EXT = $(API_MAJOR).$(EXT)
-$(LIBNAME)_LDFLAGS += -dynamiclib -install_name lib$(LIBNAME).$(VERSION_EXT) -current_version $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA) -compatibility_version $(PKG_MAJOR).$(PKG_MINOR)
+# the install_name must be fixed to the install path
+$(LIBNAME)_LDFLAGS += -dynamiclib -install_name $(LIBDIR)/lib$(LIBNAME).2.dylib -current_version $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA) -compatibility_version $(PKG_MAJOR).$(PKG_MINOR)
 AR_EXT = a
+# compile fat arch for x86
 CFLAGS += -arch i386 -arch x86_64
 # Homebrew wants to make sure its formula does not disable FORTIFY_SOURCE
 # However, this is not really necessary because 'CAPSTONE_USE_SYS_DYN_MEM=yes' by default
