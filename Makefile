@@ -237,6 +237,7 @@ EXT = dylib
 VERSION_EXT = $(API_MAJOR).$(EXT)
 $(LIBNAME)_LDFLAGS += -dynamiclib -install_name lib$(LIBNAME).$(VERSION_EXT) -current_version $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA) -compatibility_version $(PKG_MAJOR).$(PKG_MINOR)
 AR_EXT = a
+CFLAGS += -arch i386 -arch x86_64
 # Homebrew wants to make sure its formula does not disable FORTIFY_SOURCE
 # However, this is not really necessary because 'CAPSTONE_USE_SYS_DYN_MEM=yes' by default
 ifneq ($(HOMEBREW_CAPSTONE),1)
@@ -312,9 +313,17 @@ ifeq ($(CAPSTONE_SHARED),yes)
 $(LIBRARY): $(LIBOBJ)
 ifeq ($(V),0)
 	$(call log,LINK,$(@:$(BLDIR)/%=%))
+ifeq ($(IS_APPLE),1)
+	@$(create-library-mac)
+else
 	@$(create-library)
+endif
+else
+ifeq ($(IS_APPLE),1)
+	$(create-library-mac)
 else
 	$(create-library)
+endif
 endif
 endif
 
@@ -418,6 +427,12 @@ endef
 
 define create-library
 	$(CC) $(LDFLAGS) $($(LIBNAME)_LDFLAGS) $(LIBOBJ) -o $(LIBRARY)
+endef
+
+define create-library-mac
+        $(CC) -arch i386 $(LDFLAGS) $($(LIBNAME)_LDFLAGS) $(LIBOBJ) -o $(LIBRARY).i386
+        $(CC) -arch x86_64 $(LDFLAGS) $($(LIBNAME)_LDFLAGS) $(LIBOBJ) -o $(LIBRARY).x86_64
+        lipo -create $(LIBRARY).i386 $(LIBRARY).x86_64 -output $(LIBRARY)	
 endef
 
 
