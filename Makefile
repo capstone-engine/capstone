@@ -39,6 +39,8 @@ ifeq ($(CAPSTONE_USE_SYS_DYN_MEM),yes)
 CFLAGS += -DCAPSTONE_USE_SYS_DYN_MEM
 endif
 
+CFLAGS += $(foreach arch,$(LIBARCHS),-arch $(arch))
+
 PREFIX ?= /usr
 DESTDIR ?=
 ifndef BUILDDIR
@@ -416,9 +418,23 @@ define create-archive
 endef
 
 
+ifeq ($(LIBARCHS),)
 define create-library
 	$(CC) $(LDFLAGS) $($(LIBNAME)_LDFLAGS) $(LIBOBJ) -o $(LIBRARY)
 endef
+else
+ifeq ($(call words,$(LIBARCHS)),1)
+define create-library
+	$(CC) -arch $(LIBARCHS) $(LDFLAGS) $($(LIBNAME)_LDFLAGS) $(LIBOBJ) -o $(LIBRARY)
+endef
+else
+define create-library
+	$(foreach arch,$(LIBARCHS),$(CC) -arch $(arch) $(LDFLAGS) $($(LIBNAME)_LDFLAGS) $(LIBOBJ) -o $(LIBRARY).$(arch);)
+	lipo -create $(foreach arch,$(LIBARCHS),$(LIBRARY).$(arch)) -output $(LIBRARY)
+	rm $(foreach arch,$(LIBARCHS),$(LIBRARY).$(arch))
+endef
+endif
+endif
 
 
 define generate-pkgcfg

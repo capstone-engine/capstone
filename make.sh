@@ -9,16 +9,17 @@
 # build iOS lib for all iDevices, or only specific device
 function build_iOS {
 	${MAKE} clean
-	SDK=`xcrun --sdk iphoneos --show-sdk-path`
-	GCC_BIN=`xcrun --sdk iphoneos -f gcc`
-	GCC_BASE="$GCC_BIN -Os -Wimplicit -isysroot $SDK"
+	IOS_SDK=`xcrun --sdk iphoneos --show-sdk-path`
+	IOS_CC=`xcrun --sdk iphoneos -f clang`
+	IOS_CFLAGS="-Os -Wimplicit -isysroot $IOS_SDK"
+	IOS_LDFLAGS="-isysroot $IOS_SDK"
 	if (( $# == 0 )); then
 		# build for all iDevices
-		GCC="$GCC_BASE -arch armv7 -arch armv7s -arch arm64"
+		IOS_ARCHS="armv7 armv7s arm64"
 	else
-		GCC="$GCC_BASE -arch $1"
+		IOS_ARCHS="$1"
 	fi
-	${MAKE} CC="$GCC"
+	CC="$IOS_CC" CFLAGS="$IOS_CFLAGS" LDFLAGS="$IOS_LDFLAGS" LIBARCHS="$IOS_ARCHS" ${MAKE} V=1
 }
 
 function build {

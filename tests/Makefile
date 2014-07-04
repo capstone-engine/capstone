@@ -26,6 +26,7 @@ endif
 
 
 CFLAGS += -O3 -Wall -I$(INCDIR)
+CFLAGS += $(foreach arch,$(LIBARCHS),-arch $(arch))
 LDFLAGS += -L$(LIBDIR)
 
 LIBNAME = capstone
@@ -127,13 +128,27 @@ else
 endif
 
 
+ifeq ($(LIBARCHS),)
 define link-dynamic
-	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall -l$(LIBNAME) -o $@
+	$(CC) $(LDFLAGS) $< -l$(LIBNAME) -o $@
 endef
+else
+ifeq ($(call words,$(LIBARCHS)),1)
+define link-dynamic
+	$(CC) -arch $(LIBARCHS) $(LDFLAGS) $< -l$(LIBNAME) -o $@
+endef
+else
+define link-dynamic
+	$(foreach arch,$(LIBARCHS),$(CC) -arch $(arch) $(LDFLAGS) $< -l$(LIBNAME) -o $(@).$(arch);)
+	lipo -create $(foreach arch,$(LIBARCHS),$(@).$(arch)) -output $@
+	rm $(foreach arch,$(LIBARCHS),$(@).$(arch))
+endef
+endif
+endif
 
 
 define link-static
-	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall $(ARCHIVE) -o $(call staticname,$@)
+	${CC} $(LDFLAGS) $< $(ARCHIVE) -o $(call staticname,$@)
 endef
 
 
