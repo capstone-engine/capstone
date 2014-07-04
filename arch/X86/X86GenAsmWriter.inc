@@ -2895,21 +2895,21 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     4238397U,	// TEST16mi_alt
     8547389U,	// TEST16ri
     8547389U,	// TEST16ri_alt
-    388157U,	// TEST16rm
+	4238397U,	// TEST16rm
     8547389U,	// TEST16rr
     10509021U,	// TEST32i32
     12622557U,	// TEST32mi
     12622557U,	// TEST32mi_alt
     8542941U,	// TEST32ri
     8542941U,	// TEST32ri_alt
-    551688925U,	// TEST32rm
+	12622557U,	// TEST32rm
     8542941U,	// TEST32rr
     16802031U,	// TEST64i32
     18915567U,	// TEST64mi32
     18915567U,	// TEST64mi32_alt
     8544495U,	// TEST64ri32
     8544495U,	// TEST64ri32_alt
-    551723247U,	// TEST64rm
+	18915567U,	// TEST64rm
     8544495U,	// TEST64rr
     20991609U,	// TEST8i8
     23105145U,	// TEST8mi
@@ -2917,7 +2917,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     8539769U,	// TEST8ri
     0U,	// TEST8ri_NOREX
     8539769U,	// TEST8ri_alt
-    446073U,	// TEST8rm
+	23105145U,	// TEST8rm
     8539769U,	// TEST8rr
     13849U,	// TLSCall_32
     13953U,	// TLSCall_64
