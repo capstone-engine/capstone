@@ -136,7 +136,7 @@ endef
 
 
 define link-static
-	${CC} $(LDFLAGS) $< $(ARCHIVE) -o $(call staticname,$@)
+	$(CC) $(LDFLAGS) $< $(ARCHIVE) -o $(call staticname,$@)
 endef
 
 
