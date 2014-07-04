@@ -182,11 +182,16 @@ typedef struct cs_x86_op {
 
 // Instruction structure
 typedef struct cs_x86 {
-	// (Optional) instruction prefix, which can be up to 5 bytes.
+	// Instruction prefix, which can be up to 4 bytes.
 	// A prefix byte gets value 0 when irrelevant.
+	// prefix[0] indicates REP/REPNE/LOCK prefix (0xf3/0xf2/0xf0 respectively)
+	// prefix[1] indicates segment override (irrelevant for x86_64):
+	//	0x2e = CS, 0x36 = SS, 0x3e = DS, 0x26 = ES, 0x64 = FS, 0x65 = GS
+	// prefix[2] indicates operand-size override (0x66)
+	// prefix[3] indicates address-size override (0x67)
 	uint8_t prefix[4];
 
-	// Instruction opcode, wich can be from 1 to 3 bytes in size.
+	// Instruction opcode, wich can be from 1 to 4 bytes in size.
 	// This contains VEX opcode as well.
 	// An trailing opcode byte gets value 0 when irrelevant.
 	uint8_t opcode[4];
