@@ -19,7 +19,7 @@ function build_iOS {
 	else
 		IOS_ARCHS="$1"
 	fi
-	CC="$IOS_CC" CFLAGS="$IOS_CFLAGS" LDFLAGS="$IOS_LDFLAGS" LIBARCHS="$IOS_ARCHS" ${MAKE} V=1
+	CC="$IOS_CC" CFLAGS="$IOS_CFLAGS" LDFLAGS="$IOS_LDFLAGS" LIBARCHS="$IOS_ARCHS" ${MAKE}
 }
 
 function build {
