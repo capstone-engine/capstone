@@ -23,6 +23,10 @@ function build_iOS {
 }
 
 function build {
+	if [ $(uname -s) = Darwin ]; then
+		export LIBARCHS="i386 x86_64"
+	fi
+
 	${MAKE} clean
 
 	if [ ${CC}x != x ]; then
