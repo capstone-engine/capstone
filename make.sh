@@ -39,6 +39,11 @@ function build {
 function install {
 	# Mac OSX needs to find the right directory for pkgconfig
 	if [ "$(uname)" == "Darwin" ]; then
+		# we are going to install into /usr/local, so remove old installs under /usr
+		rm -rf /usr/lib/libcapstone.*
+		rm -rf /usr/include/capstone
+		# install into /usr/local
+		export PREFIX=/usr/local
 		# find the directory automatically, so we can support both Macport & Brew
 		PKGCFGDIR="$(pkg-config --variable pc_path pkg-config | cut -d ':' -f 1)"
 		# set PKGCFGDIR only in non-Brew environment & pkg-config is available
