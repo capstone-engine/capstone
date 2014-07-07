@@ -21,3 +21,7 @@ More bindings created & maintained by the community are available as followings.
 - NodeJS binding (by Jason Oster).
 
 	https://github.com/parasyte/node-capstone
+
+- C++ binding (by Peter Hlavaty)
+
+	https://github.com/zer0mem/cccapstone

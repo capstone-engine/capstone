@@ -28,6 +28,9 @@ endif
 CFLAGS += -O3 -Wall -I$(INCDIR)
 LDFLAGS += -L$(LIBDIR)
 
+CFLAGS += $(foreach arch,$(LIBARCHS),-arch $(arch))
+LDFLAGS += $(foreach arch,$(LIBARCHS),-arch $(arch))
+
 LIBNAME = capstone
 
 BIN_EXT =
@@ -128,12 +131,12 @@ endif
 
 
 define link-dynamic
-	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall -l$(LIBNAME) -o $@
+	$(CC) $(LDFLAGS) $< -l$(LIBNAME) -o $@
 endef
 
 
 define link-static
-	${CC} $(CFLAGS) $(LDFLAGS) $< -O3 -Wall $(ARCHIVE) -o $(call staticname,$@)
+	$(CC) $(LDFLAGS) $< $(ARCHIVE) -o $(call staticname,$@)
 endef
 
 

@@ -9,19 +9,24 @@
 # build iOS lib for all iDevices, or only specific device
 function build_iOS {
 	${MAKE} clean
-	SDK=`xcrun --sdk iphoneos --show-sdk-path`
-	GCC_BIN=`xcrun --sdk iphoneos -f gcc`
-	GCC_BASE="$GCC_BIN -Os -Wimplicit -isysroot $SDK"
+	IOS_SDK=`xcrun --sdk iphoneos --show-sdk-path`
+	IOS_CC=`xcrun --sdk iphoneos -f clang`
+	IOS_CFLAGS="-Os -Wimplicit -isysroot $IOS_SDK"
+	IOS_LDFLAGS="-isysroot $IOS_SDK"
 	if (( $# == 0 )); then
 		# build for all iDevices
-		GCC="$GCC_BASE -arch armv7 -arch armv7s -arch arm64"
+		IOS_ARCHS="armv7 armv7s arm64"
 	else
-		GCC="$GCC_BASE -arch $1"
+		IOS_ARCHS="$1"
 	fi
-	${MAKE} CC="$GCC"
+	CC="$IOS_CC" CFLAGS="$IOS_CFLAGS" LDFLAGS="$IOS_LDFLAGS" LIBARCHS="$IOS_ARCHS" ${MAKE}
 }
 
 function build {
+	if [ $(uname -s) = Darwin ]; then
+		export LIBARCHS="i386 x86_64"
+	fi
+
 	${MAKE} clean
 
 	if [ ${CC}x != x ]; then
@@ -34,6 +39,11 @@ function build {
 function install {
 	# Mac OSX needs to find the right directory for pkgconfig
 	if [ "$(uname)" == "Darwin" ]; then
+		# we are going to install into /usr/local, so remove old installs under /usr
+		rm -rf /usr/lib/libcapstone.*
+		rm -rf /usr/include/capstone
+		# install into /usr/local
+		export PREFIX=/usr/local
 		# find the directory automatically, so we can support both Macport & Brew
 		PKGCFGDIR="$(pkg-config --variable pc_path pkg-config | cut -d ':' -f 1)"
 		# set PKGCFGDIR only in non-Brew environment & pkg-config is available

@@ -1,9 +1,9 @@
 (* Capstone Disassembler Engine
-* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> *)
+* By Guillaume Jeanne <guillaume.jeanne@ensimag.fr>, 2014> *)
 
 open Printf
 open Capstone
-open Mips
+open Ppc
 
 
 let print_string_hex comment str =
@@ -14,20 +14,18 @@ let print_string_hex comment str =
 	printf "\n"
 
 
-let _MIPS_CODE  = "\x0C\x10\x00\x97\x00\x00\x00\x00\x24\x02\x00\x0c\x8f\xa2\x00\x00\x34\x21\x34\x56";;
-let _MIPS_CODE2 = "\x56\x34\x21\x34\xc2\x17\x01\x00";;
+let _PPC_CODE = "\x80\x20\x00\x00\x80\x3f\x00\x00\x10\x43\x23\x0e\xd0\x44\x00\x80\x4c\x43\x22\x02\x2d\x03\x00\x80\x7c\x43\x20\x14\x7c\x43\x20\x93\x4f\x20\x00\x21\x4c\xc8\x00\x21";;
 
 let all_tests = [
-	(CS_ARCH_MIPS, [CS_MODE_32; CS_MODE_BIG_ENDIAN], _MIPS_CODE, "MIPS-32 (Big-endian)");
-	(CS_ARCH_MIPS, [CS_MODE_64; CS_MODE_LITTLE_ENDIAN], _MIPS_CODE2, "MIPS-64-EL (Little-endian)");
+	(CS_ARCH_PPC, [CS_MODE_32; CS_MODE_BIG_ENDIAN], _PPC_CODE, "PPC-64");
 ];;
 
 let print_op csh i op =
-	( match op.value with
-	| MIPS_OP_INVALID _ -> ();	(* this would never happens *)
-	| MIPS_OP_REG reg -> printf "\t\top[%d]: REG = %s\n" i (cs_reg_name csh reg);
-	| MIPS_OP_IMM imm -> printf "\t\top[%d]: IMM = 0x%x\n" i imm;
-	| MIPS_OP_MEM mem -> ( printf "\t\top[%d]: MEM\n" i;
+	( match op with
+	| PPC_OP_INVALID _ -> ();	(* this would never happens *)
+	| PPC_OP_REG reg -> printf "\t\top[%d]: REG = %s\n" i (cs_reg_name csh reg);
+	| PPC_OP_IMM imm -> printf "\t\top[%d]: IMM = 0x%x\n" i imm;
+	| PPC_OP_MEM mem -> ( printf "\t\top[%d]: MEM\n" i;
 		if mem.base != 0 then
 			printf "\t\t\toperands[%u].mem.base: REG = %s\n" i (cs_reg_name csh mem.base);
 		if mem.displ != 0 then
@@ -42,14 +40,14 @@ let print_detail csh arch =
 	match arch with
 	| CS_INFO_ARM _ -> ();
 	| CS_INFO_ARM64 _ -> ();
-	| CS_INFO_PPC _ -> ();
+	| CS_INFO_MIPS _ -> ();
 	| CS_INFO_X86 _ -> ();
-	| CS_INFO_MIPS mips ->
+	| CS_INFO_PPC ppc ->
 
 	(* print all operands info (type & value) *)
-	if (Array.length mips.operands) > 0 then (
-		printf "\top_count: %d\n" (Array.length mips.operands);
-		Array.iteri (print_op csh) mips.operands;
+	if (Array.length ppc.operands) > 0 then (
+		printf "\top_count: %d\n" (Array.length ppc.operands);
+		Array.iteri (print_op csh) ppc.operands;
 	);
 	printf "\n";;
 

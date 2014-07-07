@@ -39,6 +39,9 @@ ifeq ($(CAPSTONE_USE_SYS_DYN_MEM),yes)
 CFLAGS += -DCAPSTONE_USE_SYS_DYN_MEM
 endif
 
+CFLAGS += $(foreach arch,$(LIBARCHS),-arch $(arch))
+LDFLAGS += $(foreach arch,$(LIBARCHS),-arch $(arch))
+
 PREFIX ?= /usr
 DESTDIR ?=
 ifndef BUILDDIR
