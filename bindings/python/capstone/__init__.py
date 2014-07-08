@@ -244,6 +244,7 @@ _setup_prototype(_cs, "cs_free", None, ctypes.c_void_p, ctypes.c_size_t)
 _setup_prototype(_cs, "cs_close", ctypes.c_int, ctypes.POINTER(ctypes.c_size_t))
 _setup_prototype(_cs, "cs_reg_name", ctypes.c_char_p, ctypes.c_size_t, ctypes.c_uint)
 _setup_prototype(_cs, "cs_insn_name", ctypes.c_char_p, ctypes.c_size_t, ctypes.c_uint)
+_setup_prototype(_cs, "cs_group_name", ctypes.c_char_p, ctypes.c_size_t, ctypes.c_uint)
 _setup_prototype(_cs, "cs_op_count", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint)
 _setup_prototype(_cs, "cs_op_index", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint, ctypes.c_uint)
 _setup_prototype(_cs, "cs_errno", ctypes.c_int, ctypes.c_size_t)
@@ -520,7 +521,7 @@ class CsInsn(object):
 
         return _cs.cs_reg_name(self._cs.csh, reg_id).decode('ascii')
 
-    # get the instruction string
+    # get the instruction name
     def insn_name(self):
         if self._cs._diet:
             # Diet engine cannot provide instruction name
@@ -530,6 +531,21 @@ class CsInsn(object):
             return "(invalid)"
 
         return _cs.cs_insn_name(self._cs.csh, self.id).decode('ascii')
+
+    # get the group name
+    def group_name(self, group_id):
+        if self._raw.id == 0:
+            raise CsError(CS_ERR_SKIPDATA)
+
+        if self._cs._diet:
+            # Diet engine cannot provide register name
+            raise CsError(CS_ERR_DIET)
+
+        if group_id == 0:
+            return "(invalid)"
+
+        return _cs.cs_group_name(self._cs.csh, group_id).decode('ascii')
+
 
     # verify if this insn belong to group with id as @group_id
     def group(self, group_id):
