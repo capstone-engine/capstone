@@ -389,7 +389,7 @@ CAPSTONE_EXPORT
 void cs_free(cs_insn *insn, size_t count);
 
 /*
- Return friendly name of regiser in a string
+ Return friendly name of regiser in a string.
  Find the instruction id from header file of corresponding architecture (arm.h for ARM,
  x86.h for X86, ...)
 
@@ -397,26 +397,41 @@ void cs_free(cs_insn *insn, size_t count);
  store register name.
 
  @handle: handle returned by cs_open()
- @reg: register id
+ @reg_id: register id
  @return: string name of the register, or NULL if @reg_id is invalid.
 */
 CAPSTONE_EXPORT
 const char *cs_reg_name(csh handle, unsigned int reg_id);
 
 /*
- Return friendly name of an instruction in a string
+ Return friendly name of an instruction in a string.
  Find the instruction id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
 
  WARN: when in 'diet' mode, this API is irrelevant because the engine does not
  store instruction name.
 
  @handle: handle returned by cs_open()
- @insn: instruction id
+ @insn_id: instruction id
 
  @return: string name of the instruction, or NULL if @insn_id is invalid.
 */
 CAPSTONE_EXPORT
 const char *cs_insn_name(csh handle, unsigned int insn_id);
+
+/*
+ Return friendly name of a group id (that an instruction can belong to)
+ Find the group id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
+
+ WARN: when in 'diet' mode, this API is irrelevant because the engine does not
+ store group name.
+
+ @handle: handle returned by cs_open()
+ @group_id: group id
+
+ @return: string name of the group, or NULL if @group_id is invalid.
+*/
+CAPSTONE_EXPORT
+const char *cs_group_name(csh handle, unsigned int insn_id);
 
 /*
  Check if a disassembled instruction belong to a particular group.

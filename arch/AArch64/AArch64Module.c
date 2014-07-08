@@ -27,6 +27,7 @@ static cs_err init(cs_struct *ud)
 	ud->reg_name = AArch64_reg_name;
 	ud->insn_id = AArch64_get_insn_id;
 	ud->insn_name = AArch64_insn_name;
+	ud->group_name = AArch64_group_name;
 	ud->post_printer = AArch64_post_printer;
 
 	return CS_ERR_OK;

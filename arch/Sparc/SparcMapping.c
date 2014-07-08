@@ -3140,6 +3140,33 @@ const char *Sparc_insn_name(csh handle, unsigned int id)
 #endif
 }
 
+#ifndef CAPSTONE_DIET
+static name_map group_name_maps[] = {
+	{ SPARC_GRP_INVALID, NULL },
+	{ SPARC_GRP_HARDQUAD, "hardquad" },
+	{ SPARC_GRP_V9, "v9" },
+	{ SPARC_GRP_VIS, "vis" },
+	{ SPARC_GRP_VIS2, "vis2" },
+	{ SPARC_GRP_VIS3,  "vis3" },
+	{ SPARC_GRP_32BIT, "32bit" },
+	{ SPARC_GRP_64BIT, "64bit" },
+
+	{ SPARC_GRP_JUMP, "jump" },
+};
+#endif
+
+const char *Sparc_group_name(csh handle, unsigned int id)
+{
+#ifndef CAPSTONE_DIET
+	if (id >= SPARC_GRP_MAX)
+		return NULL;
+
+	return group_name_maps[id].name;
+#else
+	return NULL;
+#endif
+}
+
 // map internal raw register to 'public' register
 sparc_reg Sparc_map_register(unsigned int r)
 {

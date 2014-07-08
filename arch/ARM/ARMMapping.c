@@ -13888,6 +13888,57 @@ const char *ARM_insn_name(csh handle, unsigned int id)
 #endif
 }
 
+#ifndef CAPSTONE_DIET
+static name_map group_name_maps[] = {
+	{ ARM_GRP_INVALID, NULL },
+	{ ARM_GRP_CRYPTO, "crypto" },
+	{ ARM_GRP_DATABARRIER, "databarrier" },
+	{ ARM_GRP_DIVIDE, "divide" },
+	{ ARM_GRP_FPARMV8, "fparmv8" },
+	{ ARM_GRP_MULTPRO, "multpro" },
+	{ ARM_GRP_NEON, "neon" },
+	{ ARM_GRP_T2EXTRACTPACK, "T2EXTRACTPACK" },
+	{ ARM_GRP_THUMB2DSP, "THUMB2DSP" },
+	{ ARM_GRP_TRUSTZONE, "TRUSTZONE" },
+	{ ARM_GRP_V4T, "v4t" },
+	{ ARM_GRP_V5T, "v5t" },
+	{ ARM_GRP_V5TE, "v5te" },
+	{ ARM_GRP_V6, "v6" },
+	{ ARM_GRP_V6T2, "v6t2" },
+	{ ARM_GRP_V7, "v7" },
+	{ ARM_GRP_V8, "v8" },
+	{ ARM_GRP_VFP2, "vfp2" },
+	{ ARM_GRP_VFP3, "vfp3" },
+	{ ARM_GRP_VFP4, "vfp4" },
+	{ ARM_GRP_ARM, "arm" },
+	{ ARM_GRP_MCLASS, "mclass" },
+	{ ARM_GRP_NOTMCLASS, "notmclass" },
+	{ ARM_GRP_THUMB, "thumb" },
+	{ ARM_GRP_THUMB1ONLY, "thumb1only" },
+	{ ARM_GRP_THUMB2, "thumb2" },
+	{ ARM_GRP_PREV8, "prev8" },
+	{ ARM_GRP_FPVMLX, "fpvmlx" },
+	{ ARM_GRP_MULOPS, "mulops" },
+	{ ARM_GRP_CRC, "crc" },
+	{ ARM_GRP_DPVFP, "dpvfp" },
+	{ ARM_GRP_V6M, "v6m" },
+
+	{ ARM_GRP_JUMP,	"jump" }
+};
+#endif
+
+const char *ARM_group_name(csh handle, unsigned int id)
+{
+#ifndef CAPSTONE_DIET
+	if (id >= ARM_GRP_MAX)
+		return NULL;
+
+	return group_name_maps[id].name;
+#else
+	return NULL;
+#endif
+}
+
 // list all relative branch instructions
 // ie: insns[i].branch && !insns[i].indirect_branch
 static unsigned int insn_rel[] = {

@@ -2086,6 +2086,64 @@ const char *X86_insn_name(csh handle, unsigned int id)
 #endif
 }
 
+#ifndef CAPSTONE_DIET
+static name_map group_name_maps[] = {
+	{ X86_GRP_INVALID, NULL },
+	{ X86_GRP_3DNOW, "3dnow" },
+	{ X86_GRP_AES, "aes" },
+	{ X86_GRP_ADX, "adx" },
+	{ X86_GRP_AVX, "avx" },
+	{ X86_GRP_AVX2, "avx2" },
+	{ X86_GRP_AVX512, "avx512" },
+	{ X86_GRP_BMI, "bmi" },
+	{ X86_GRP_BMI2, "bmi2" },
+	{ X86_GRP_CMOV, "cmov" },
+	{ X86_GRP_F16C, "fc16" },
+	{ X86_GRP_FMA, "fma" },
+	{ X86_GRP_FMA4, "fma4" },
+	{ X86_GRP_FSGSBASE, "fsgsbase" },
+	{ X86_GRP_HLE, "hle" },
+	{ X86_GRP_MMX, "mmx" },
+	{ X86_GRP_MODE32, "mode32" },
+	{ X86_GRP_MODE64, "mode64" },
+	{ X86_GRP_RTM, "rtm" },
+	{ X86_GRP_SHA, "sha" },
+	{ X86_GRP_SSE1, "sse1" },
+	{ X86_GRP_SSE2, "sse2" },
+	{ X86_GRP_SSE3, "sse3" },
+	{ X86_GRP_SSE41, "sse41" },
+	{ X86_GRP_SSE42, "sse42" },
+	{ X86_GRP_SSE4A, "sse4a" },
+	{ X86_GRP_SSSE3, "ssse3" },
+	{ X86_GRP_PCLMUL, "pclmul" },
+	{ X86_GRP_XOP, "xop" },
+	{ X86_GRP_CDI, "cdi" },
+	{ X86_GRP_ERI, "eri" },
+	{ X86_GRP_TBM, "tbm" },
+	{ X86_GRP_16BITMODE, "16bitmode" },
+	{ X86_GRP_NOT64BITMODE, "not64bitmode" },
+
+	{ X86_GRP_JUMP,	"jump" },
+	{ X86_GRP_VM, "vm" },
+	{ X86_GRP_INT, "int" },
+	{ X86_GRP_IRET,	"iret" },
+	{ X86_GRP_CALL,	"call" },
+	{ X86_GRP_RET, "ret" },
+};
+#endif
+
+const char *X86_group_name(csh handle, unsigned int id)
+{
+#ifndef CAPSTONE_DIET
+	if (id >= X86_GRP_MAX)
+		return NULL;
+
+	return group_name_maps[id].name;
+#else
+	return NULL;
+#endif
+}
+
 #define GET_INSTRINFO_ENUM
 #ifdef CAPSTONE_X86_REDUCE
 #include "X86GenInstrInfo_reduce.inc"

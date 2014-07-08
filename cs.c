@@ -635,6 +635,18 @@ const char *cs_insn_name(csh ud, unsigned int insn)
 	return handle->insn_name(ud, insn);
 }
 
+CAPSTONE_EXPORT
+const char *cs_group_name(csh ud, unsigned int group)
+{
+	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
+
+	if (!handle || handle->group_name == NULL) {
+		return NULL;
+	}
+
+	return handle->group_name(ud, group);
+}
+
 static bool arr_exist(unsigned char *arr, unsigned char max, unsigned int id)
 {
 	int i;

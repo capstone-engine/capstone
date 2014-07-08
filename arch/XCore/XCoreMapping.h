@@ -14,6 +14,8 @@ void XCore_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 
 const char *XCore_insn_name(csh handle, unsigned int id);
 
+const char *XCore_group_name(csh handle, unsigned int id);
+
 // map internal raw register to 'public' register
 xcore_reg XCore_map_register(unsigned int r);
 

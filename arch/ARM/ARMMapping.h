@@ -15,6 +15,8 @@ void ARM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 
 const char *ARM_insn_name(csh handle, unsigned int id);
 
+const char *ARM_group_name(csh handle, unsigned int id);
+
 // check if this insn is relative branch
 bool ARM_rel_branch(cs_struct *h, unsigned int insn_id);
 

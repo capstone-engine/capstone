@@ -5177,6 +5177,31 @@ const char *PPC_insn_name(csh handle, unsigned int id)
 #endif
 }
 
+#ifndef CAPSTONE_DIET
+static name_map group_name_maps[] = {
+	{ PPC_GRP_INVALID, NULL },
+	{ PPC_GRP_ALTIVEC, "altivec" },
+	{ PPC_GRP_MODE32, "mode32" },
+	{ PPC_GRP_MODE64, "mode64" },
+	{ PPC_GRP_BOOKE, "booke" },
+	{ PPC_GRP_NOTBOOKE, "notbooke" },
+
+	{ PPC_GRP_JUMP,	"jump" },
+};
+#endif
+
+const char *PPC_group_name(csh handle, unsigned int id)
+{
+#ifndef CAPSTONE_DIET
+	if (id >= PPC_GRP_MAX)
+		return NULL;
+
+	return group_name_maps[id].name;
+#else
+	return NULL;
+#endif
+}
+
 // map internal raw register to 'public' register
 ppc_reg PPC_map_register(unsigned int r)
 {

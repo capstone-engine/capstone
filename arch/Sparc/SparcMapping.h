@@ -14,6 +14,8 @@ void Sparc_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 
 const char *Sparc_insn_name(csh handle, unsigned int id);
 
+const char *Sparc_group_name(csh handle, unsigned int id);
+
 // map internal raw register to 'public' register
 sparc_reg Sparc_map_register(unsigned int r);
 

@@ -27,6 +27,7 @@ static cs_err init(cs_struct *ud)
 	ud->reg_name = Mips_reg_name;
 	ud->insn_id = Mips_get_insn_id;
 	ud->insn_name = Mips_insn_name;
+	ud->group_name = Mips_group_name;
 
 	if (ud->mode & CS_MODE_32)
 		ud->disasm = Mips_getInstruction;

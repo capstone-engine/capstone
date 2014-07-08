@@ -8422,6 +8422,44 @@ const char *Mips_insn_name(csh handle, unsigned int id)
 #endif
 }
 
+#ifndef CAPSTONE_DIET
+static name_map group_name_maps[] = {
+	{ MIPS_GRP_INVALID, NULL },
+	{ MIPS_GRP_BITCOUNT, "bitcount" },
+	{ MIPS_GRP_DSP, "dsp" },
+	{ MIPS_GRP_DSPR2, "dspr2" },
+	{ MIPS_GRP_FPIDX, "fpidx" },
+	{ MIPS_GRP_MSA, "msa" },
+	{ MIPS_GRP_MIPS32R2, "mips32r2" },
+	{ MIPS_GRP_MIPS64, "mips64" },
+	{ MIPS_GRP_MIPS64R2, "mips64r2" },
+	{ MIPS_GRP_SEINREG, "seinreg" },
+	{ MIPS_GRP_STDENC, "stdenc" },
+	{ MIPS_GRP_SWAP, "swap" },
+	{ MIPS_GRP_MICROMIPS, "micromips" },
+	{ MIPS_GRP_MIPS16MODE, "mips16mode" },
+	{ MIPS_GRP_FP64BIT, "fp64bit" },
+	{ MIPS_GRP_NONANSFPMATH, "nonansfpmath" },
+	{ MIPS_GRP_NOTFP64BIT, "notfp64bit" },
+	{ MIPS_GRP_NOTINMICROMIPS, "notinmicromips" },
+	{ MIPS_GRP_NOTNACL, "notnacl" },
+
+	{ MIPS_GRP_JUMP, "jump" }
+};
+#endif
+
+const char *Mips_group_name(csh handle, unsigned int id)
+{
+#ifndef CAPSTONE_DIET
+	if (id >= MIPS_GRP_MAX)
+		return NULL;
+
+	return group_name_maps[id].name;
+#else
+	return NULL;
+#endif
+}
+
 mips_reg Mips_map_insn(const char *name)
 {
 	// handle special alias first

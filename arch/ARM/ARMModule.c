@@ -28,6 +28,7 @@ static cs_err init(cs_struct *ud)
 	ud->reg_name = ARM_reg_name;
 	ud->insn_id = ARM_get_insn_id;
 	ud->insn_name = ARM_insn_name;
+	ud->group_name = ARM_group_name;
 	ud->post_printer = ARM_post_printer;
 
 	if (ud->mode & CS_MODE_THUMB)

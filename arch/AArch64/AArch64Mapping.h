@@ -14,6 +14,8 @@ void AArch64_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 
 const char *AArch64_insn_name(csh handle, unsigned int id);
 
+const char *AArch64_group_name(csh handle, unsigned int id);
+
 // map instruction name to public instruction ID
 arm64_reg AArch64_map_insn(const char *name);
 

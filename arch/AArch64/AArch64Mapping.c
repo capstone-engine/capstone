@@ -17034,6 +17034,29 @@ const char *AArch64_insn_name(csh handle, unsigned int id)
 #endif
 }
 
+#ifndef CAPSTONE_DIET
+static name_map group_name_maps[] = {
+	{ ARM64_GRP_INVALID, NULL },
+	{ ARM64_GRP_CRYPTO, "crypto" },
+	{ ARM64_GRP_FPARMV8, "fparmv8" },
+	{ ARM64_GRP_NEON, "neon" },
+
+	{ ARM64_GRP_JUMP, "jump" },
+};
+#endif
+
+const char *AArch64_group_name(csh handle, unsigned int id)
+{
+#ifndef CAPSTONE_DIET
+	if (id >= ARM64_GRP_MAX)
+		return NULL;
+
+	return group_name_maps[id].name;
+#else
+	return NULL;
+#endif
+}
+
 // map instruction name to public instruction ID
 arm64_reg AArch64_map_insn(const char *name)
 {

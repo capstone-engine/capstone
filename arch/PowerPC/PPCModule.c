@@ -30,6 +30,7 @@ static cs_err init(cs_struct *ud)
 	ud->reg_name = PPC_reg_name;
 	ud->insn_id = PPC_get_insn_id;
 	ud->insn_name = PPC_insn_name;
+	ud->group_name = PPC_group_name;
 
 	return CS_ERR_OK;
 }

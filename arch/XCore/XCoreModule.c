@@ -25,6 +25,7 @@ static cs_err init(cs_struct *ud)
 	ud->reg_name = XCore_reg_name;
 	ud->insn_id = XCore_get_insn_id;
 	ud->insn_name = XCore_insn_name;
+	ud->group_name = XCore_group_name;
 
 	return CS_ERR_OK;
 }

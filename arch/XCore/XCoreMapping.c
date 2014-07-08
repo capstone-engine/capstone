@@ -1548,6 +1548,23 @@ const char *XCore_insn_name(csh handle, unsigned int id)
 #endif
 }
 
+static name_map group_name_maps[] = {
+	{ XCORE_GRP_INVALID, NULL },
+	{ XCORE_GRP_JUMP, "jump" },
+};
+
+const char *XCore_group_name(csh handle, unsigned int id)
+{
+#ifndef CAPSTONE_DIET
+	if (id >= XCORE_GRP_MAX)
+		return NULL;
+
+	return group_name_maps[id].name;
+#else
+	return NULL;
+#endif
+}
+
 // map internal raw register to 'public' register
 xcore_reg XCore_map_register(unsigned int r)
 {
