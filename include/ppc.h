@@ -17,6 +17,7 @@ extern "C" {
 
 //> PPC branch codes for some branch instructions
 typedef enum ppc_bc {
+	PPC_BC_INVALID  = 0,
 	PPC_BC_LT       = (0 << 5) | 12,
 	PPC_BC_LE       = (1 << 5) |  4,
 	PPC_BC_EQ       = (2 << 5) | 12,
