@@ -30,7 +30,7 @@ PPC_BC_NU_PLUS = (3<<5)|7
 
 # PPC branch hint for some branch instructions
 
-PPC_BH_NO = 0
+PPC_BH_INVALID = 0
 PPC_BH_PLUS = 1
 PPC_BH_MINUS = 2
 

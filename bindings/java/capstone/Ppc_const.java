@@ -33,7 +33,7 @@ public class Ppc_const {
 
 	// PPC branch hint for some branch instructions
 
-	public static final int PPC_BH_NO = 0;
+	public static final int PPC_BH_INVALID = 0;
 	public static final int PPC_BH_PLUS = 1;
 	public static final int PPC_BH_MINUS = 2;
 
