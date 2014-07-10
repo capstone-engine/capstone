@@ -46,7 +46,7 @@ typedef enum ppc_bc {
 
 //> PPC branch hint for some branch instructions
 typedef enum ppc_bh {
-	PPC_BH_NO = 0,	// no hint
+	PPC_BH_INVALID = 0,	// no hint
 	PPC_BH_PLUS,	// PLUS hint
 	PPC_BH_MINUS,	// MINUS hint
 } ppc_bh;
