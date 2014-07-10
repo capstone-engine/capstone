@@ -4,6 +4,8 @@ package capstone;
 public class Ppc_const {
 
 	// PPC branch codes for some branch instructions
+
+	public static final int PPC_BC_INVALID = 0;
 	public static final int PPC_BC_LT = (0<<5)|12;
 	public static final int PPC_BC_LE = (1<<5)|4;
 	public static final int PPC_BC_EQ = (2<<5)|12;

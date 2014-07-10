@@ -754,11 +754,11 @@ public class Sysz_const {
 	// Group of SystemZ instructions
 
 	public static final int SYSZ_GRP_INVALID = 0;
-	public static final int SYSZ_GRP_FEATUREDISTINCTOPS = 1;
-	public static final int SYSZ_GRP_FEATUREFPEXTENSION = 2;
-	public static final int SYSZ_GRP_FEATUREHIGHWORD = 3;
-	public static final int SYSZ_GRP_FEATUREINTERLOCKEDACCESS1 = 4;
-	public static final int SYSZ_GRP_FEATURELOADSTOREONCOND = 5;
+	public static final int SYSZ_GRP_DISTINCTOPS = 1;
+	public static final int SYSZ_GRP_FPEXTENSION = 2;
+	public static final int SYSZ_GRP_HIGHWORD = 3;
+	public static final int SYSZ_GRP_INTERLOCKEDACCESS1 = 4;
+	public static final int SYSZ_GRP_LOADSTOREONCOND = 5;
 	public static final int SYSZ_GRP_JUMP = 6;
 	public static final int SYSZ_GRP_MAX = 7;
 }
