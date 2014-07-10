@@ -30,16 +30,11 @@ static void print_string_hex(unsigned char *str, int len)
 	printf("\n");
 }
 
-size_t mycallback(const uint8_t *buffer, uint64_t offset, void *p)
+static size_t mycallback(const uint8_t *buffer, size_t buffer_size, size_t offset, void *p)
 {
 	// always skip 2 bytes when encountering data
 	return 2;
 }
-
-cs_opt_skipdata skipdata = {
-	// rename default "data" instruction from ".byte" to "db"
-	"db",
-};
 
 static void test()
 {

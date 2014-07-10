@@ -116,12 +116,13 @@ typedef enum cs_opt_value {
 // User-defined callback function for SKIPDATA option
 // @code: the input buffer containing code to be disassembled. This is the 
 //      same buffer passed to cs_disasm_ex().
+// @code_size: size (in bytes) of the above @code buffer.
 // @offset: the position of the currently-examining byte in the input
 //      buffer @code mentioned above.
 // @user_data: user-data passed to cs_option() via @user_data field in
 //      cs_opt_skipdata struct below.
 // @return: return number of bytes to skip, or 0 to immediately stop disassembling.
-typedef size_t (*cs_skipdata_cb_t)(const uint8_t *code, uint64_t offset, void* user_data);
+typedef size_t (*cs_skipdata_cb_t)(const uint8_t *code, size_t code_size, size_t offset, void* user_data);
 
 // User-customized setup for SKIPDATA option
 typedef struct cs_opt_skipdata {
