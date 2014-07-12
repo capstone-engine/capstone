@@ -1,9 +1,17 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
+// the following must precede stdio (woo, thanks msft)
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#define snprintf _snprintf
+#endif
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <inttypes.h>
+
+
 
 #include <capstone.h>
 
@@ -30,8 +38,19 @@ static void print_string_hex(char *comment, unsigned char *str, int len)
 	printf("\n");
 }
 
-static void print_insn_detail(cs_insn *ins)
-{
+static void snprint_insn_detail(
+    char * buf, size_t * cur, size_t * left, cs_insn *ins
+) {
+    size_t used = 0;
+
+#define _this_printf(...) \
+    { \
+        size_t used = 0; \
+        used = snprintf(buf + *cur, *left, __VA_ARGS__); \
+        *left -= used; \
+        *cur += used; \
+    }
+
 	cs_arm *arm;
 	int i;
 
@@ -42,7 +61,7 @@ static void print_insn_detail(cs_insn *ins)
 	arm = &(ins->detail->arm);
 
 	if (arm->op_count)
-		printf("\top_count: %u\n", arm->op_count);
+		_this_printf("\top_count: %u\n", arm->op_count);
 
 	for (i = 0; i < arm->op_count; i++) {
 		cs_arm_op *op = &(arm->operands[i]);
@@ -50,60 +69,73 @@ static void print_insn_detail(cs_insn *ins)
 			default:
 				break;
 			case ARM_OP_REG:
-				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
+				_this_printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;
 			case ARM_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->imm);
+				_this_printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->imm);
 				break;
 			case ARM_OP_FP:
-				printf("\t\toperands[%u].type: FP = %f\n", i, op->fp);
+				_this_printf("\t\toperands[%u].type: FP = %f\n", i, op->fp);
 				break;
 			case ARM_OP_MEM:
-				printf("\t\toperands[%u].type: MEM\n", i);
+				_this_printf("\t\toperands[%u].type: MEM\n", i);
 				if (op->mem.base != X86_REG_INVALID)
-					printf("\t\t\toperands[%u].mem.base: REG = %s\n",
+					_this_printf("\t\t\toperands[%u].mem.base: REG = %s\n",
 							i, cs_reg_name(handle, op->mem.base));
 				if (op->mem.index != X86_REG_INVALID)
-					printf("\t\t\toperands[%u].mem.index: REG = %s\n",
+					_this_printf("\t\t\toperands[%u].mem.index: REG = %s\n",
 							i, cs_reg_name(handle, op->mem.index));
 				if (op->mem.scale != 1)
-					printf("\t\t\toperands[%u].mem.scale: %u\n", i, op->mem.scale);
+					_this_printf("\t\t\toperands[%u].mem.scale: %u\n", i, op->mem.scale);
 				if (op->mem.disp != 0)
-					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
+					_this_printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
 
 				break;
 			case ARM_OP_PIMM:
-				printf("\t\toperands[%u].type: P-IMM = %u\n", i, op->imm);
+				_this_printf("\t\toperands[%u].type: P-IMM = %u\n", i, op->imm);
 				break;
 			case ARM_OP_CIMM:
-				printf("\t\toperands[%u].type: C-IMM = %u\n", i, op->imm);
+				_this_printf("\t\toperands[%u].type: C-IMM = %u\n", i, op->imm);
 				break;
 		}
 
 		if (op->shift.type != ARM_SFT_INVALID && op->shift.value) {
-			if (op->shift.type < ARM_SFT_ASR_REG)
+			if (op->shift.type < ARM_SFT_ASR_REG) {
 				// shift with constant value
-				printf("\t\t\tShift: %u = %u\n", op->shift.type, op->shift.value);
-			else
+				_this_printf("\t\t\tShift: %u = %u\n", op->shift.type, op->shift.value);
+            } else {
 				// shift with register
-				printf("\t\t\tShift: %u = %s\n", op->shift.type,
+				_this_printf("\t\t\tShift: %u = %s\n", op->shift.type,
 						cs_reg_name(handle, op->shift.value));
+            }
 		}
 	}
 
-	if (arm->cc != ARM_CC_AL && arm->cc != ARM_CC_INVALID)
-		printf("\tCode condition: %u\n", arm->cc);
+	if (arm->cc != ARM_CC_AL && arm->cc != ARM_CC_INVALID) {
+		_this_printf("\tCode condition: %u\n", arm->cc);
+    }
 
-	if (arm->update_flags)
-		printf("\tUpdate-flags: True\n");
+	if (arm->update_flags) {
+		_this_printf("\tUpdate-flags: True\n");
+    }
 
-	if (arm->writeback)
-		printf("\tWrite-back: True\n");
+	if (arm->writeback) {
+		_this_printf("\tWrite-back: True\n");
+    }
 
-	printf("\n");
+#undef _this_printf
+
 }
 
-static void test()
+static void print_insn_detail(cs_insn *ins)
+{
+    char a_buf[2048];
+    size_t cur=0, left=2048;
+    snprint_insn_detail(a_buf, &cur, &left, ins);
+    printf("%s\n", a_buf);
+}
+
+static void test_printonly()
 {
 //#define ARM_CODE "\x04\xe0\x2d\xe5"	// str	lr, [sp, #-0x4]!
 //#define ARM_CODE "\xe0\x83\x22\xe5"	// str	r8, [r2, #-0x3e0]!
@@ -242,9 +274,235 @@ static void test()
 	}
 }
 
+struct invalid_code {
+    unsigned char *code;
+    size_t size;
+    char *comment;
+};
+
+#define MAX_INVALID_CODES 16
+
+struct invalid_instructions {
+    cs_arch arch;
+    cs_mode mode;
+    char *platform_comment;
+    int num_invalid_codes;
+    struct invalid_code invalid_codes[MAX_INVALID_CODES]; 
+};
+
+static void test_invalids() {
+	struct invalid_instructions invalids[] = {{
+        CS_ARCH_ARM,
+        CS_MODE_THUMB,
+        "Thumb",
+        1,
+        {{
+            "\xbd\xe8\x1e\xff",
+            4,
+            "invalid thumb2 pop because sp used and because both pc and lr are "
+            "present at the same time"
+        }},
+    }};
+
+    struct invalid_instructions * invalid = NULL;
+
+	uint64_t address = 0x1000;
+	cs_insn *insn;
+	int i;
+    int j;
+	size_t count;
+
+	for (i = 0; i < sizeof(invalids)/sizeof(invalids[0]); i++) {
+        cs_err err;
+
+        invalid = invalids + i;
+		err = cs_open(invalid->arch, invalid->mode, &handle);
+
+		if (err) {
+			printf("Failed on cs_open() with error returned: %u\n", err);
+			continue;
+		}
+
+		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+
+        for (j = 0; j < invalid->num_invalid_codes; ++j) {
+            struct invalid_code * invalid_code = NULL;
+            invalid_code = invalid->invalid_codes + j;
+
+            printf("Platform: %s\n", invalid->platform_comment);
+            print_string_hex("Should be invalid code:", 
+                invalid_code->code, invalid_code->size);
+
+            count = cs_disasm_ex(handle,
+                invalid_code->code, invalid_code->size, address, 0, &insn
+            );
+
+            if (count) {
+                size_t k;
+                printf("ERROR:\n");
+                printf("Shoud have been invalid Disasm:\n");
+
+                for (k = 0; k < count; k++) {
+                    printf("0x%"PRIx64":\t%s\t%s\n", 
+                        insn[k].address, insn[k].mnemonic, insn[k].op_str);
+                    print_insn_detail(&insn[k]);
+                }
+                printf("0x%"PRIx64":\n", insn[k-1].address + insn[k-1].size);
+                cs_free(insn, count);
+
+            } else {
+                printf("SUCCESS: invalid\n");
+            }
+        }
+
+		printf("\n");
+
+		cs_close(&handle);
+	}
+}
+
+struct valid_code {
+    unsigned char *code;
+    size_t size;
+    uint32_t start_addr;
+    char* expected_out;
+    char *comment;
+};
+
+#define MAX_VALID_CODES 16
+struct valid_instructions {
+    cs_arch arch;
+    cs_mode mode;
+    char *platform_comment;
+    int num_valid_codes;
+    struct valid_code valid_codes[MAX_VALID_CODES]; 
+};
+
+static void test_valids() {
+	struct valid_instructions valids[] = {{
+        CS_ARCH_ARM,
+        CS_MODE_THUMB,
+        "Thumb",
+        2,
+        {{ "\x00\xf0\x26\xe8", 4, 0x352,
+
+            "0x352:\tblx\t#0x3a0\n"
+            "\top_count: 1\n"
+            "\t\toperands[0].type: IMM = 0x3a0\n",
+
+            "thumb2 blx with misaligned immediate"
+
+        }, { "\x05\xdd", 2, 0x1f0,
+
+            "0x1f0:\tble\t#0x1fe\n"
+            "\top_count: 1\n"
+            "\t\toperands[0].type: IMM = 0x1fe\n"
+            "\tCode condition: 14\n",
+
+            "thumb b cc with thumb-aligned target"
+        }}
+    }};
+
+    struct valid_instructions * valid = NULL;
+
+	uint64_t address = 0x1000;
+	cs_insn *insn;
+	int i;
+    int j;
+	size_t count;
+
+
+	for (i = 0; i < sizeof(valids)/sizeof(valids[0]); i++) {
+        cs_err err;
+
+        valid = valids + i;
+		err = cs_open(valid->arch, valid->mode, &handle);
+
+		if (err) {
+			printf("Failed on cs_open() with error returned: %u\n", err);
+			continue;
+		}
+
+		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+
+#define _this_printf(...) \
+    { \
+        size_t used = 0; \
+        used = snprintf(tmp_buf + cur, left, __VA_ARGS__); \
+        left -= used; \
+        cur += used; \
+    }
+
+        for (j = 0; j < valid->num_valid_codes; ++j) {
+            char tmp_buf[2048];
+            size_t left = 2048;
+            size_t cur = 0;
+            size_t used = 0;
+
+            struct valid_code * valid_code = NULL;
+            valid_code = valid->valid_codes + j;
+
+            printf("Platform: %s\n", valid->platform_comment);
+            print_string_hex("Should be valid code:", 
+                valid_code->code, valid_code->size);
+
+            count = cs_disasm_ex(handle,
+                valid_code->code, valid_code->size, 
+                valid_code->start_addr, 0, &insn
+            );
+
+            if (count) {
+                size_t k;
+                size_t max_len = 0;
+                size_t tmp_len = 0;
+
+                for (k = 0; k < count; k++) {
+                    _this_printf(
+                        "0x%"PRIx64":\t%s\t%s\n", 
+                        insn[k].address, insn[k].mnemonic, 
+                        insn[k].op_str
+                    );
+
+                    snprint_insn_detail(tmp_buf, &cur, &left, &insn[k]);
+                }
+
+                max_len = strlen(tmp_buf);
+                tmp_len = strlen(valid_code->expected_out);
+                if (tmp_len > max_len) {
+                    max_len = tmp_len;
+                }
+
+                if (memcmp(tmp_buf, valid_code->expected_out, max_len)) {
+                    printf(
+                        "ERROR: '''\n%s''' does not match"
+                        " expected '''\n%s'''\n", 
+                        tmp_buf, valid_code->expected_out
+                    );
+                } else {
+                    printf("SUCCESS\n");
+                }
+
+                //printf("char_count: %d, buf: '''\n%s'''\n", cur,
+                //    tmp_buf);
+
+                cs_free(insn, count);
+
+            } else {
+                printf("ERROR: invalid\n");
+            }
+        }
+
+		cs_close(&handle);
+	}
+
+#undef _this_prinf
+}
+
 int main()
 {
-	test();
+	test_printonly();
+    test_invalids();
+    test_valids();
 
 	return 0;
 }
