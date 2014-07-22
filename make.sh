@@ -82,6 +82,7 @@ function uninstall {
 	if [ "$(uname)" == "Darwin" ]; then
 		# find the directory automatically, so we can support both Macport & Brew
 		PKGCFGDIR="$(pkg-config --variable pc_path pkg-config | cut -d ':' -f 1)"
+		export PREFIX=/usr/local
 		if [ ${PKGCFGDIR}x != x ]; then
 			${MAKE} PKGCFGDIR=$PKGCFGDIR uninstall
 		else
