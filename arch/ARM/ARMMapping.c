@@ -13960,8 +13960,8 @@ static unsigned int insn_rel[] = {
 };
 
 static unsigned int insn_blx_rel_to_arm[] = {
-    ARM_tBLXi,
-    0
+	ARM_tBLXi,
+	0
 };
 
 // check if this insn is relative branch
@@ -13972,8 +13972,8 @@ bool ARM_rel_branch(cs_struct *h, unsigned int id)
 	for (i = 0; insn_rel[i]; i++) {
 		if (id == insn_rel[i]) {
 			return true;
-        }
-    }
+		}
+	}
 
 	// not found
 	return false;

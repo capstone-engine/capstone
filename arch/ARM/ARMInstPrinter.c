@@ -183,10 +183,10 @@ static void printRegImmShift(MCInst *MI, SStream *O, ARM_AM_ShiftOpc ShOpc, unsi
 	//assert (!(ShOpc == ARM_AM_ror && !ShImm) && "Cannot have ror #0");
 	SStream_concat0(O, ARM_AM_getShiftOpcStr(ShOpc));
 	if (MI->csh->detail) {
-			if (MI->csh->doing_mem)
-				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].shift.type = (arm_shifter)ShOpc;
-			else
-				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count - 1].shift.type = (arm_shifter)ShOpc;
+		if (MI->csh->doing_mem)
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].shift.type = (arm_shifter)ShOpc;
+		else
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count - 1].shift.type = (arm_shifter)ShOpc;
 	}
 
 	if (ShOpc != ARM_AM_rrx) {
@@ -540,30 +540,30 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 		case ARM_STREXD:
 		case ARM_LDAEXD:
 		case ARM_STLEXD: {
-				    MCRegisterClass* MRC = MCRegisterInfo_getRegClass(MRI, ARM_GPRRegClassID);
-				    bool isStore = Opcode == ARM_STREXD || Opcode == ARM_STLEXD;
+				MCRegisterClass* MRC = MCRegisterInfo_getRegClass(MRI, ARM_GPRRegClassID);
+				bool isStore = Opcode == ARM_STREXD || Opcode == ARM_STLEXD;
 
-				    unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, isStore ? 1 : 0));
-				    if (MCRegisterClass_contains(MRC, Reg)) {
-						MCInst NewMI;
+				unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, isStore ? 1 : 0));
+				if (MCRegisterClass_contains(MRC, Reg)) {
+				    MCInst NewMI;
 
-						MCInst_Init(&NewMI);
-						MCInst_setOpcode(&NewMI, Opcode);
+				    MCInst_Init(&NewMI);
+				    MCInst_setOpcode(&NewMI, Opcode);
 
-						if (isStore)
-							MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, 0));
+				    if (isStore)
+						MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, 0));
 
-						MCOperand_CreateReg0(&NewMI, MCRegisterInfo_getMatchingSuperReg(MRI, Reg, ARM_gsub_0,
-									MCRegisterInfo_getRegClass(MRI, ARM_GPRPairRegClassID)));
+				    MCOperand_CreateReg0(&NewMI, MCRegisterInfo_getMatchingSuperReg(MRI, Reg, ARM_gsub_0,
+								MCRegisterInfo_getRegClass(MRI, ARM_GPRPairRegClassID)));
 
-						// Copy the rest operands into NewMI.
-						for(i = isStore ? 3 : 2; i < MCInst_getNumOperands(MI); ++i)
-							MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, i));
+				    // Copy the rest operands into NewMI.
+				    for(i = isStore ? 3 : 2; i < MCInst_getNumOperands(MI); ++i)
+						MCInst_addOperand2(&NewMI, MCInst_getOperand(MI, i));
 
-						printInstruction(&NewMI, O, MRI);
-				   	 return;
-				    }
+				    printInstruction(&NewMI, O, MRI);
+				    return;
 				}
+		 }
 	}
 
 	//if (printAliasInstr(MI, O, MRI))
@@ -591,8 +591,8 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			}
 		}
 	} else if (MCOperand_isImm(Op)) {
-        unsigned int opc = 0;
-        opc = MCInst_getOpcode(MI);
+		unsigned int opc = 0;
+		opc = MCInst_getOpcode(MI);
 
 		imm = (int32_t)MCOperand_getImm(Op);
 
@@ -605,16 +605,16 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			// only do this for relative branch
 			if (MI->csh->mode & CS_MODE_THUMB) {
 				imm += (int32_t)MI->address + 4;
-                if (ARM_blx_to_arm_mode(MI->csh, opc)) {
-                    // here need to align down to the nearest 4-byte
-                    // address
+				if (ARM_blx_to_arm_mode(MI->csh, opc)) {
+					// here need to align down to the nearest 4-byte
+					// address
 #define _ALIGN_DOWN(v, align_width) ((v/align_width)*align_width)
-                    imm = _ALIGN_DOWN(imm, 4);
+					imm = _ALIGN_DOWN(imm, 4);
 #undef _ALIGN_DOWN
-                }
-            } else {
+				}
+			} else {
 				imm += (int32_t)MI->address + 8;
-            }
+			}
 
 			if (imm >= 0) {
 				if (imm > HEX_THRESHOLD)

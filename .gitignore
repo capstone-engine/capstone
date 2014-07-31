@@ -72,3 +72,7 @@ Release
 *.opensdf
 *.suo
 *.user
+
+# suite/
+test_arm_regression
+test_arm_regression.o

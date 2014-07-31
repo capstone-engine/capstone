@@ -1232,7 +1232,7 @@ static DecodeStatus DecodeRegListOperand(MCInst *Inst, unsigned Val,
 	unsigned i;
 	DecodeStatus S = MCDisassembler_Success;
 	unsigned opcode = 0;
-	
+
 	bool NeedDisjointWriteback = false;
 	unsigned WritebackReg = 0;
 
@@ -1265,15 +1265,14 @@ static DecodeStatus DecodeRegListOperand(MCInst *Inst, unsigned Val,
 		}
 	}
 
-    if (opcode == ARM_t2LDMIA_UPD && WritebackReg == ARM_SP) {
-        if (
-            Val & (1 << ARM_SP) 
-            || ((Val & (1 << ARM_PC)) && (Val & (1 << ARM_LR)))) {
-            // invalid thumb2 pop
-            // needs no sp in reglist and not both pc and lr set at the same time
-            return MCDisassembler_Fail;
-        }
-    }
+	if (opcode == ARM_t2LDMIA_UPD && WritebackReg == ARM_SP) {
+		if (Val & (1 << ARM_SP)
+				|| ((Val & (1 << ARM_PC)) && (Val & (1 << ARM_LR)))) {
+			// invalid thumb2 pop
+			// needs no sp in reglist and not both pc and lr set at the same time
+			return MCDisassembler_Fail;
+		}
+	}
 
 	return S;
 }
