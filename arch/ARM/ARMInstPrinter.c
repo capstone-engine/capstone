@@ -591,8 +591,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			}
 		}
 	} else if (MCOperand_isImm(Op)) {
-		unsigned int opc = 0;
-		opc = MCInst_getOpcode(MI);
+		unsigned int opc = MCInst_getOpcode(MI);
 
 		imm = (int32_t)MCOperand_getImm(Op);
 
@@ -606,8 +605,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			if (MI->csh->mode & CS_MODE_THUMB) {
 				imm += (int32_t)MI->address + 4;
 				if (ARM_blx_to_arm_mode(MI->csh, opc)) {
-					// here need to align down to the nearest 4-byte
-					// address
+					// here need to align down to the nearest 4-byte address
 #define _ALIGN_DOWN(v, align_width) ((v/align_width)*align_width)
 					imm = _ALIGN_DOWN(imm, 4);
 #undef _ALIGN_DOWN
