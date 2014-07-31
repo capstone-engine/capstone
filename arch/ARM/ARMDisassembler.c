@@ -1231,7 +1231,7 @@ static DecodeStatus DecodeRegListOperand(MCInst *Inst, unsigned Val,
 {
 	unsigned i;
 	DecodeStatus S = MCDisassembler_Success;
-	unsigned opcode = 0;
+	unsigned opcode;
 
 	bool NeedDisjointWriteback = false;
 	unsigned WritebackReg = 0;
