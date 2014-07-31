@@ -13959,17 +13959,36 @@ static unsigned int insn_rel[] = {
 	0
 };
 
+static unsigned int insn_blx_rel_to_arm[] = {
+    ARM_tBLXi,
+    0
+};
+
 // check if this insn is relative branch
 bool ARM_rel_branch(cs_struct *h, unsigned int id)
 {
 	int i;
 
-	for (i = 0; insn_rel[i]; i++)
-		if (id == insn_rel[i])
+	for (i = 0; insn_rel[i]; i++) {
+		if (id == insn_rel[i]) {
+			return true;
+        }
+    }
+
+	// not found
+	return false;
+}
+
+bool ARM_blx_to_arm_mode(cs_struct *h, unsigned int id) {
+	int i;
+
+	for (i = 0; insn_blx_rel_to_arm[i]; i++)
+		if (id == insn_blx_rel_to_arm[i])
 			return true;
 
 	// not found
 	return false;
+
 }
 
 #endif

@@ -532,7 +532,7 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 			// we have to skip some amount of data, depending on arch & mode
 			insn_cache->id = 0;	// invalid ID for this "data" instruction
 			insn_cache->address = offset;
-			insn_cache->size = skipdata_bytes;
+			insn_cache->size = (uint16_t) skipdata_bytes;
 			memcpy(insn_cache->bytes, buffer, skipdata_bytes);
 			strncpy(insn_cache->mnemonic, handle->skipdata_setup.mnemonic,
 					sizeof(insn_cache->mnemonic) - 1);

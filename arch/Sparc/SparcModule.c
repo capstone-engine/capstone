@@ -37,7 +37,7 @@ static cs_err init(cs_struct *ud)
 static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_SYNTAX)
-		handle->syntax = value;
+		handle->syntax = (int) value;
 
 	return CS_ERR_OK;
 }
