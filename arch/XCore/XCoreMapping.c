@@ -1548,10 +1548,12 @@ const char *XCore_insn_name(csh handle, unsigned int id)
 #endif
 }
 
+#ifndef CAPSTONE_DIET
 static name_map group_name_maps[] = {
 	{ XCORE_GRP_INVALID, NULL },
 	{ XCORE_GRP_JUMP, "jump" },
 };
+#endif
 
 const char *XCore_group_name(csh handle, unsigned int id)
 {
