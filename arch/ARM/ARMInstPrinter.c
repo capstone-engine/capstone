@@ -1335,27 +1335,21 @@ static void printCPSIFlag(MCInst *MI, unsigned OpNum, SStream *O)
 	}
 }
 
-// TODO
 static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *Op = MCInst_getOperand(MI, OpNum);
-#if 0 // TODO once below is fixed
-	unsigned SpecRegRBit = (unsigned int)MCOperand_getImm(Op) >> 4;
-	unsigned Mask = (unsigned int)MCOperand_getImm(Op) & 0xf;
-#endif
+	unsigned SpecRegRBit = MCOperand_getImm(Op) >> 4;
+	unsigned Mask = MCOperand_getImm(Op) & 0xf;
 
-	// FIXME: FeatureMClass becomes mode??
-	//if (ARM_getFeatureBits(MI->csh->mode) & ARM_FeatureMClass) {
-	//if (true)
-	{
-		unsigned SYSm = (unsigned int)MCOperand_getImm(Op);
+	if (ARM_getFeatureBits(MI->csh->mode) & ARM_FeatureMClass) {
+		unsigned SYSm = MCOperand_getImm(Op);
 		unsigned Opcode = MCInst_getOpcode(MI);
 		// For reads of the special registers ignore the "mask encoding" bits
 		// which are only for writes.
 		if (Opcode == ARM_t2MRS_M)
 			SYSm &= 0xff;
 		switch (SYSm) {
-			default: return; //llvm_unreachable("Unexpected mask value!");
+			default: //llvm_unreachable("Unexpected mask value!");
 			case     0:
 			case 0x800: SStream_concat0(O, "apsr"); return; // with _nzcvq bits is an alias for aspr
 			case 0x400: SStream_concat0(O, "apsr_g"); return;
@@ -1394,13 +1388,13 @@ static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 			case 0x814: SStream_concat0(O, "control"); return;
 		}
 	}
-#if 0 // TODO once above is fixed
+
 	// As special cases, CPSR_f, CPSR_s and CPSR_fs prefer printing as
 	// APSR_nzcvq, APSR_g and APSRnzcvqg, respectively.
 	if (!SpecRegRBit && (Mask == 8 || Mask == 4 || Mask == 12)) {
-		SStream_concat0(O, "apsr_");
+		SStream_concat0(O, "APSR_");
 		switch (Mask) {
-			default: return; //llvm_unreachable("Unexpected mask value!");
+			default: // llvm_unreachable("Unexpected mask value!");
 			case 4:  SStream_concat0(O, "g"); return;
 			case 8:  SStream_concat0(O, "nzcvq"); return;
 			case 12: SStream_concat0(O, "nzcvqg"); return;
@@ -1408,9 +1402,9 @@ static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	}
 
 	if (SpecRegRBit)
-		SStream_concat0(O, "spsr");
+		SStream_concat0(O, "SPSR");
 	else
-		SStream_concat0(O, "cpsr");
+		SStream_concat0(O, "CPSR");
 
 	if (Mask) {
 		SStream_concat0(O, "_");
@@ -1419,7 +1413,6 @@ static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		if (Mask & 2) SStream_concat0(O, "x");
 		if (Mask & 1) SStream_concat0(O, "c");
 	}
-#endif
 }
 
 static void printPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O)

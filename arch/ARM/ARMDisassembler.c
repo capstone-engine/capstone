@@ -364,7 +364,7 @@ static DecodeStatus DecodeMRRC2(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder);
 
 // Hacky: enable all features for disassembler
-static uint64_t getFeatureBits(int mode)
+uint64_t ARM_getFeatureBits(int mode)
 {
 	uint64_t Bits = (uint64_t)-1;	// everything by default
 
@@ -377,7 +377,7 @@ static uint64_t getFeatureBits(int mode)
 	//Bits &= ~ARM_HasV8Ops;
 	//Bits &= ~ARM_HasV6Ops;
 
-	//Bits &= (~ARM_FeatureMClass);
+	Bits &= (~ARM_FeatureMClass);
 
 	// some features are mutually exclusive
 	if (mode & CS_MODE_THUMB) {
@@ -4047,7 +4047,53 @@ static DecodeStatus DecodeInstSyncBarrierOption(MCInst *Inst, unsigned Val,
 static DecodeStatus DecodeMSRMask(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder)
 {
-	if (!Val) return MCDisassembler_Fail;
+	uint64_t FeatureBits = ARM_getFeatureBits(Inst->csh->mode);
+	if (FeatureBits & ARM_FeatureMClass) {
+		unsigned ValLow = Val & 0xff;
+
+		// Validate the SYSm value first.
+		switch (ValLow) {
+			case  0: // apsr
+			case  1: // iapsr
+			case  2: // eapsr
+			case  3: // xpsr
+			case  5: // ipsr
+			case  6: // epsr
+			case  7: // iepsr
+			case  8: // msp
+			case  9: // psp
+			case 16: // primask
+			case 20: // control
+				break;
+			case 17: // basepri
+			case 18: // basepri_max
+			case 19: // faultmask
+				if (!(FeatureBits & ARM_HasV7Ops))
+					// Values basepri, basepri_max and faultmask are only valid for v7m.
+					return MCDisassembler_Fail;
+				break;
+			default:
+				return MCDisassembler_Fail;
+		}
+
+		// The ARMv7-M architecture has an additional 2-bit mask value in the MSR
+		// instruction (bits {11,10}). The mask is used only with apsr, iapsr,
+		// eapsr and xpsr, it has to be 0b10 in other cases. Bit mask{1} indicates
+		// if the NZCVQ bits should be moved by the instruction. Bit mask{0}
+		// indicates the move for the GE{3:0} bits, the mask{0} bit can be set
+		// only if the processor includes the DSP extension.
+		if ((FeatureBits & ARM_HasV7Ops) && MCInst_getOpcode(Inst) == ARM_t2MSR_M) {
+			unsigned Mask = (Val >> 10) & 3;
+			if (Mask == 0 || (Mask != 2 && ValLow > 3) ||
+					(!(FeatureBits & ARM_FeatureDSPThumb2) && Mask == 1))
+				return MCDisassembler_Fail;
+		}
+	} else {
+		// A/R class
+		if (Val == 0)
+			return MCDisassembler_Fail;
+	}
+
 	MCOperand_CreateImm0(Inst, Val);
 	return MCDisassembler_Success;
 }

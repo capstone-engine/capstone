@@ -109,7 +109,8 @@ enum {
 	MCID_Rematerializable,
 	MCID_CheapAsAMove,
 	MCID_ExtraSrcRegAllocReq,
-	MCID_ExtraDefRegAllocReq
+	MCID_ExtraDefRegAllocReq,
+	MCID_RegSequence,
 };
 
 /// MCInstrDesc - Describe properties that are true of each instruction in the
