@@ -70,6 +70,7 @@ typedef enum cs_mode {
 	CS_MODE_32 = 1 << 2,	// 32-bit mode
 	CS_MODE_64 = 1 << 3,	// 64-bit mode
 	CS_MODE_THUMB = 1 << 4,	// ARM's Thumb mode, including Thumb-2
+	CS_MODE_MCLASS = 1 << 5,	// ARM's Cortex-M series
 	CS_MODE_MICRO = 1 << 4, // MicroMips mode (MIPS architecture)
 	CS_MODE_N64 = 1 << 5, // Nintendo-64 mode (MIPS architecture)
 	CS_MODE_V9 = 1 << 4, // SparcV9 mode (Sparc architecture)

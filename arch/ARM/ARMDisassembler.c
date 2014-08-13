@@ -364,7 +364,7 @@ static DecodeStatus DecodeMRRC2(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder);
 
 // Hacky: enable all features for disassembler
-uint64_t ARM_getFeatureBits(int mode)
+uint64_t ARM_getFeatureBits(unsigned int mode)
 {
 	uint64_t Bits = (uint64_t)-1;	// everything by default
 
@@ -377,7 +377,8 @@ uint64_t ARM_getFeatureBits(int mode)
 	//Bits &= ~ARM_HasV8Ops;
 	//Bits &= ~ARM_HasV6Ops;
 
-	Bits &= (~ARM_FeatureMClass);
+	if ((mode & CS_MODE_MCLASS) == 0)
+		Bits &= (~ARM_FeatureMClass);
 
 	// some features are mutually exclusive
 	if (mode & CS_MODE_THUMB) {
