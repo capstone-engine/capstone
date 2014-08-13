@@ -29,6 +29,7 @@
 #include "../../SStream.h"
 #include "../../MCRegisterInfo.h"
 #include "X86Mapping.h"
+#include "X86BaseInfo.h"
 
 
 #define GET_INSTRINFO_ENUM
@@ -509,10 +510,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 {
-	MCOperand *BaseReg  = MCInst_getOperand(MI, Op);
-	MCOperand *IndexReg  = MCInst_getOperand(MI, Op+2);
-	MCOperand *DispSpec = MCInst_getOperand(MI, Op+3);
-	MCOperand *SegReg = MCInst_getOperand(MI, Op+4);
+	MCOperand *BaseReg  = MCInst_getOperand(MI, Op + X86_AddrBaseReg);
+	MCOperand *IndexReg  = MCInst_getOperand(MI, Op + X86_AddrIndexReg);
+	MCOperand *DispSpec = MCInst_getOperand(MI, Op + X86_AddrDisp);
+	MCOperand *SegReg = MCInst_getOperand(MI, Op + X86_AddrSegmentReg);
 	uint64_t ScaleVal;
 	int reg;
 
@@ -529,7 +530,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	// If this has a segment register, print it.
 	reg = MCOperand_getReg(SegReg);
 	if (reg) {
-		_printOperand(MI, Op+4, O);
+		_printOperand(MI, Op + X86_AddrSegmentReg, O);
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = reg;
 		}
@@ -557,12 +558,12 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 		SStream_concat0(O, "(");
 
 		if (MCOperand_getReg(BaseReg))
-			_printOperand(MI, Op, O);
+			_printOperand(MI, Op + X86_AddrBaseReg, O);
 
 		if (MCOperand_getReg(IndexReg)) {
 			SStream_concat0(O, ", ");
-			_printOperand(MI, Op+2, O);
-			ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op+1));
+			_printOperand(MI, Op + X86_AddrIndexReg, O);
+			ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op + X86_AddrScaleAmt));
 			if (MI->csh->detail)
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = (int)ScaleVal;
 			if (ScaleVal != 1) {
@@ -601,11 +602,11 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 	int i;
 
 	// Try to print any aliases first.
-	mnem = printAliasInstr(MI, OS, NULL);
+	mnem = printAliasInstr(MI, OS, info);
 	if (mnem)
 		cs_mem_free(mnem);
 	else
-		printInstruction(MI, OS, NULL);
+		printInstruction(MI, OS, info);
 
 	if (MI->has_imm) {
 		// if op_count > 1, then this operand's size is taken from the destination op

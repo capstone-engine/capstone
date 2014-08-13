@@ -32,6 +32,7 @@
 #include "X86Mapping.h"
 
 #define GET_REGINFO_ENUM
+#define GET_REGINFO_MC_DESC
 #include "X86GenRegisterInfo.inc"
 
 #define GET_INSTRINFO_ENUM
@@ -574,7 +575,7 @@ static bool translateOperand(MCInst *mcInst, const OperandSpecifier *operand, In
 			return false;
 		case ENCODING_WRITEMASK:
 			return translateMaskRegister(mcInst, insn->writemask);
-		case ENCODING_RM:
+		CASE_ENCODING_RM:
 			return translateRM(mcInst, operand, insn);
 		case ENCODING_CB:
 		case ENCODING_CW:
@@ -700,6 +701,25 @@ static void update_pub_insn(cs_insn *pub, InternalInstruction *inter, uint8_t *p
 	pub->detail->x86.sib_index = x86_map_sib_index(inter->sibIndex);
 	pub->detail->x86.sib_scale = inter->sibScale;
 	pub->detail->x86.sib_base = x86_map_sib_base(inter->sibBase);
+}
+
+void X86_init(MCRegisterInfo *MRI)
+{
+	/*
+	   InitMCRegisterInfo(X86RegDesc, 234,
+	   RA, PC,
+	   X86MCRegisterClasses, 79,
+	   X86RegUnitRoots, 119, X86RegDiffLists, X86RegStrings,
+	   X86SubRegIdxLists, 7,
+	   X86SubRegIdxRanges, X86RegEncodingTable);
+	*/
+
+	MCRegisterInfo_InitMCRegisterInfo(MRI, X86RegDesc, 234,
+			0, 0,
+			X86MCRegisterClasses, 79,
+			0, 0, X86RegDiffLists, 0,
+			X86SubRegIdxLists, 7,
+			0);
 }
 
 // Public interface for the disassembler

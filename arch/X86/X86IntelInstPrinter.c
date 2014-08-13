@@ -37,6 +37,8 @@
 #include "X86GenInstrInfo.inc"
 #endif
 
+#include "X86BaseInfo.h"
+
 static void printMemReference(MCInst *MI, unsigned Op, SStream *O);
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 
@@ -469,11 +471,11 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 	x86_reg reg;
 
 	// Try to print any aliases first.
-	mnem = printAliasInstr(MI, O, NULL);
+	mnem = printAliasInstr(MI, O, Info);
 	if (mnem)
 		cs_mem_free(mnem);
 	else
-		printInstruction(MI, O, NULL);
+		printInstruction(MI, O, Info);
 
 	if (MI->csh->detail) {
 		// first op can be embedded in the asm by llvm.
@@ -575,11 +577,11 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 {
 	bool NeedPlus = false;
-	MCOperand *BaseReg  = MCInst_getOperand(MI, Op);
-	uint64_t ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op+1));
-	MCOperand *IndexReg  = MCInst_getOperand(MI, Op+2);
-	MCOperand *DispSpec = MCInst_getOperand(MI, Op+3);
-	MCOperand *SegReg = MCInst_getOperand(MI, Op+4);
+	MCOperand *BaseReg  = MCInst_getOperand(MI, Op + X86_AddrBaseReg);
+	uint64_t ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op + X86_AddrScaleAmt));
+	MCOperand *IndexReg  = MCInst_getOperand(MI, Op + X86_AddrIndexReg);
+	MCOperand *DispSpec = MCInst_getOperand(MI, Op + X86_AddrDisp);
+	MCOperand *SegReg = MCInst_getOperand(MI, Op + X86_AddrSegmentReg);
 	int reg;
 
 	if (MI->csh->detail) {
@@ -595,7 +597,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	// If this has a segment register, print it.
 	reg = MCOperand_getReg(SegReg);
 	if (reg) {
-		_printOperand(MI, Op + 4, O);
+		_printOperand(MI, Op + X86_AddrSegmentReg, O);
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = reg;
 		}
@@ -605,13 +607,13 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	SStream_concat0(O, "[");
 
 	if (MCOperand_getReg(BaseReg)) {
-		_printOperand(MI, Op, O);
+		_printOperand(MI, Op + X86_AddrBaseReg, O);
 		NeedPlus = true;
 	}
 
 	if (MCOperand_getReg(IndexReg)) {
 		if (NeedPlus) SStream_concat0(O, " + ");
-		_printOperand(MI, Op+2, O);
+		_printOperand(MI, Op + X86_AddrIndexReg, O);
 		if (ScaleVal != 1)
 			SStream_concat(O, "*%u", ScaleVal);
 		NeedPlus = true;
@@ -645,6 +647,9 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	if (MI->csh->detail)
 		MI->flat_insn->detail->x86.op_count++;
 }
+
+#define GET_REGINFO_ENUM
+#include "X86GenRegisterInfo.inc"
 
 #define PRINT_ALIAS_INSTR
 #ifdef CAPSTONE_X86_REDUCE

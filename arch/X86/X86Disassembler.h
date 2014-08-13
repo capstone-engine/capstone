@@ -83,18 +83,12 @@
 
 #include "../../MCInst.h"
 
-#define INSTRUCTION_SPECIFIER_FIELDS \
-  uint16_t operands;
-
-#define INSTRUCTION_IDS               \
-  uint16_t instructionIDs;
-
+#include "../../MCRegisterInfo.h"
 #include "X86DisassemblerDecoderCommon.h"
-
-#undef INSTRUCTION_SPECIFIER_FIELDS
-#undef INSTRUCTION_IDS
 
 bool X86_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 		MCInst *instr, uint16_t *size, uint64_t address, void *info);
+
+void X86_init(MCRegisterInfo *MRI);
 
 #endif

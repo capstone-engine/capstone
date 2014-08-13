@@ -468,7 +468,6 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 
 			mci.flat_insn->size = insn_size;
 			handle->printer(&mci, &ss, handle->printer_info);
-
 			fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, buffer);
 
 			f++;

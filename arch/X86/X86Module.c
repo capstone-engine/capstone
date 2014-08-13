@@ -11,14 +11,20 @@
 
 static cs_err init(cs_struct *ud)
 {
+	MCRegisterInfo *mri;
+
 	// verify if requested mode is valid
 	if (ud->mode & ~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | CS_MODE_16))
 		return CS_ERR_MODE;
 
+	mri = cs_mem_malloc(sizeof(*mri));
+
+	X86_init(mri);
+
 	// by default, we use Intel syntax
 	ud->printer = X86_Intel_printInst;
 	ud->syntax = CS_OPT_SYNTAX_INTEL;
-	ud->printer_info = NULL;
+	ud->printer_info = mri;
 	ud->disasm = X86_getInstruction;
 	ud->reg_name = X86_reg_name;
 	ud->insn_id = X86_get_insn_id;
