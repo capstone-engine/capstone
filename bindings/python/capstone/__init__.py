@@ -74,8 +74,8 @@ __all__ = [
 # Capstone C interface
 
 # API version
-CS_API_MAJOR = 2
-CS_API_MINOR = 2
+CS_API_MAJOR = 3
+CS_API_MINOR = 0
 
 # architectures
 CS_ARCH_ARM = 0
