@@ -287,6 +287,9 @@ public class Capstone {
   public static final int CS_MODE_MCLASS = 1 << 5;	  // ARM's Cortex-M series
   public static final int CS_MODE_MICRO = 1 << 4;	  // MicroMips mode (Mips arch)
   public static final int CS_MODE_N64 = 1 << 5;	      // Nintendo-64 mode (Mips arch)
+  public static final int CS_MODE_MIPS3 = 1 << 6;     // Mips III ISA
+  public static final int CS_MODE_MIPS32R6 = 1 << 7;  // Mips32r6 ISA
+  public static final int CS_MODE_MIPSGP64 = 1 << 8;  // General Purpose Registers are 64-bit wide (MIPS arch)
   public static final int CS_MODE_BIG_ENDIAN = 1 << 31;
   public static final int CS_MODE_V9 = 1 << 4;	      // SparcV9 mode (Sparc arch)
 

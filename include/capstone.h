@@ -73,6 +73,9 @@ typedef enum cs_mode {
 	CS_MODE_MCLASS = 1 << 5,	// ARM's Cortex-M series
 	CS_MODE_MICRO = 1 << 4, // MicroMips mode (MIPS architecture)
 	CS_MODE_N64 = 1 << 5, // Nintendo-64 mode (MIPS architecture)
+	CS_MODE_MIPS3 = 1 << 6, // Mips III ISA
+	CS_MODE_MIPS32R6 = 1 << 7, // Mips32r6 ISA
+	CS_MODE_MIPSGP64 = 1 << 8, // General Purpose Registers are 64-bit wide (MIPS arch)
 	CS_MODE_V9 = 1 << 4, // SparcV9 mode (Sparc architecture)
 	CS_MODE_BIG_ENDIAN = 1 << 31	// big endian mode
 } cs_mode;
