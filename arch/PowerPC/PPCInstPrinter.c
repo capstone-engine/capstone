@@ -184,6 +184,11 @@ static void printPredicateOperand(MCInst *MI, unsigned OpNo,
 			case PPC_PRED_NU:
 				SStream_concat0(O, "nu");
 				return;
+			case PPC_PRED_BIT_SET:
+			case PPC_PRED_BIT_UNSET:
+				// llvm_unreachable("Invalid use of bit predicate code");
+				SStream_concat0(O, "invalid-predicate");
+				return;
 		}
 	}
 
@@ -218,6 +223,11 @@ static void printPredicateOperand(MCInst *MI, unsigned OpNo,
 			case PPC_PRED_NU_PLUS:
 				SStream_concat0(O, "+");
 				return;
+			case PPC_PRED_BIT_SET:
+			case PPC_PRED_BIT_UNSET:
+				// llvm_unreachable("Invalid use of bit predicate code");
+				SStream_concat0(O, "invalid-predicate");
+				return;
 			default:	// unreachable
 				return;
 		}
@@ -227,6 +237,40 @@ static void printPredicateOperand(MCInst *MI, unsigned OpNo,
 	//assert(StringRef(Modifier) == "reg" &&
 	//		"Need to specify 'cc', 'pm' or 'reg' as predicate op modifier!");
 	printOperand(MI, OpNo + 1, O);
+}
+
+static void printU2ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	unsigned int Value = (int)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+	//assert(Value <= 3 && "Invalid u2imm argument!");
+
+	if (Value > HEX_THRESHOLD)
+		SStream_concat(O, "0x%x", Value);
+	else
+		SStream_concat(O, "%u", Value);
+
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].imm = Value;
+		MI->flat_insn->detail->ppc.op_count++;
+	}
+}
+
+static void printU4ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	unsigned int Value = (int)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+	//assert(Value <= 15 && "Invalid u4imm argument!");
+
+	if (Value > HEX_THRESHOLD)
+		SStream_concat(O, "0x%x", Value);
+	else
+		SStream_concat(O, "%u", Value);
+
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].imm = Value;
+		MI->flat_insn->detail->ppc.op_count++;
+	}
 }
 
 static void printS5ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
@@ -456,14 +500,25 @@ static void printMemRegReg(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printTLSCall(MCInst *MI, unsigned OpNo, SStream *O)
 {
+	MCOperand *Op;
+
 	set_mem_access(MI, true);
-	printBranchOperand(MI, OpNo, O);
+	//printBranchOperand(MI, OpNo, O);
+
+	// On PPC64, VariantKind is VK_None, but on PPC32, it's VK_PLT, and it must
+	// come at the _end_ of the expression.
+	Op = MCInst_getOperand(MI, OpNo);
+	//const MCSymbolRefExpr &refExp = cast<MCSymbolRefExpr>(*Op.getExpr());
+	//O << refExp.getSymbol().getName();
+
 	SStream_concat0(O, "(");
 	printOperand(MI, OpNo + 1, O);
 	SStream_concat0(O, ")");
 	set_mem_access(MI, false);
-}
 
+	//if (refExp.getKind() != MCSymbolRefExpr::VK_None)
+	//	O << '@' << MCSymbolRefExpr::getVariantKindName(refExp.getKind());
+}
 
 #ifndef CAPSTONE_DIET
 /// stripRegisterPrefix - This method strips the character prefix from a
@@ -474,6 +529,8 @@ static char *stripRegisterPrefix(char *RegName)
 		case 'r':
 		case 'f':
 		case 'v':
+			if (RegName[1] == 's')
+				return RegName + 2;
 			return RegName + 1;
 		case 'c':
 			if (RegName[1] == 'r')
