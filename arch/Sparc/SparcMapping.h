@@ -19,5 +19,9 @@ const char *Sparc_group_name(csh handle, unsigned int id);
 // map internal raw register to 'public' register
 sparc_reg Sparc_map_register(unsigned int r);
 
+// map instruction name to instruction ID (public)
+// this is for alias instructions only
+sparc_reg Sparc_map_insn(const char *name);
+
 #endif
 

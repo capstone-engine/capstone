@@ -7731,6 +7731,11 @@ static name_map group_name_maps[] = {
 	{ PPC_GRP_MODE64, "mode64" },
 	{ PPC_GRP_BOOKE, "booke" },
 	{ PPC_GRP_NOTBOOKE, "notbooke" },
+	{ PPC_GRP_SPE, "spe" },
+	{ PPC_GRP_VSX, "vsx" },
+	{ PPC_GRP_E500, "e500" },
+	{ PPC_GRP_PPC4XX, "ppc4xx" },
+	{ PPC_GRP_PPC6XX, "ppc6xx" },
 
 	{ PPC_GRP_JUMP,	"jump" },
 };

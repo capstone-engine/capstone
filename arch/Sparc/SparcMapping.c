@@ -3204,4 +3204,53 @@ sparc_reg Sparc_map_register(unsigned int r)
 	return 0;
 }
 
+// map instruction name to instruction ID (public)
+sparc_reg Sparc_map_insn(const char *name)
+{
+	unsigned int i;
+
+	// NOTE: skip first NULL name in insn_name_maps
+	i = name2id(&insn_name_maps[1], ARR_SIZE(insn_name_maps) - 1, name);
+
+	return (i != -1)? i : SPARC_REG_INVALID;
+}
+
+static name_map alias_icc_maps[] = {
+	{ SPARC_CC_ICC_A, "a" },
+	{ SPARC_CC_ICC_N, "n" },
+	{ SPARC_CC_ICC_NE, "ne" },
+	{ SPARC_CC_ICC_E, "e" },
+	{ SPARC_CC_ICC_G, "g" },
+	{ SPARC_CC_ICC_LE, "le" },
+	{ SPARC_CC_ICC_GE, "ge" },
+	{ SPARC_CC_ICC_L, "l" },
+	{ SPARC_CC_ICC_GU, "gu" },
+	{ SPARC_CC_ICC_LEU, "leu" },
+	{ SPARC_CC_ICC_CC, "cc" },
+	{ SPARC_CC_ICC_CS, "cs" },
+	{ SPARC_CC_ICC_POS, "pos" },
+	{ SPARC_CC_ICC_NEG, "neg" },
+	{ SPARC_CC_ICC_VC, "vc" },
+	{ SPARC_CC_ICC_VS, "vs" },
+};
+
+static name_map alias_fcc_maps[] = {
+	{ SPARC_CC_FCC_A, "a" },
+	{ SPARC_CC_FCC_N, "n" },
+	{ SPARC_CC_FCC_U, "u" },
+	{ SPARC_CC_FCC_G, "g" },
+	{ SPARC_CC_FCC_UG, "ug" },
+	{ SPARC_CC_FCC_L, "l" },
+	{ SPARC_CC_FCC_UL, "ul" },
+	{ SPARC_CC_FCC_LG, "lg" },
+	{ SPARC_CC_FCC_NE, "ne" },
+	{ SPARC_CC_FCC_E, "e" },
+	{ SPARC_CC_FCC_UE, "ue" },
+	{ SPARC_CC_FCC_GE, "ge" },
+	{ SPARC_CC_FCC_UGE, "uge" },
+	{ SPARC_CC_FCC_LE, "le" },
+	{ SPARC_CC_FCC_ULE, "ule" },
+	{ SPARC_CC_FCC_O, "o" },
+};
+
 #endif

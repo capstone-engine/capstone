@@ -267,9 +267,11 @@ void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
 	char *mnem;
 
 	mnem = printAliasInstr(MI, O, Info);
-	if (mnem)
+	if (mnem) {
+		// fixup instruction id due to the change in alias instruction
+		MCInst_setOpcodePub(MI, Sparc_map_insn(mnem));
 		cs_mem_free(mnem);
-	else {
+	} else {
 		if (!printSparcAliasInstr(MI, O))
 			printInstruction(MI, O, NULL);
 	}
