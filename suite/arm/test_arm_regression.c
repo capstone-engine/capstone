@@ -1,5 +1,5 @@
 /* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* By David Hogarty, 2014 */
 
 // the following must precede stdio (woo, thanks msft)
 #ifdef _MSC_VER
