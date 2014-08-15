@@ -9687,25 +9687,25 @@ static name_map group_name_maps[] = {
 	{ MIPS_GRP_NOTINMICROMIPS, "notinmicromips" },
 	{ MIPS_GRP_NOTNACL, "notnacl" },
 
-    { MIPS_GRP_NOTMIPS32R6, "notmips32r6" },
-    { MIPS_GRP_NOTMIPS64R6, "notmips64r6" },
-    { MIPS_GRP_CNMIPS, "cnmips" },
+	{ MIPS_GRP_NOTMIPS32R6, "notmips32r6" },
+	{ MIPS_GRP_NOTMIPS64R6, "notmips64r6" },
+	{ MIPS_GRP_CNMIPS, "cnmips" },
 
-    { MIPS_GRP_MIPS32, "mips32" },
-    { MIPS_GRP_MIPS32R6, "mips32r6" },
-    { MIPS_GRP_MIPS64R6, "mips64r6" },
+	{ MIPS_GRP_MIPS32, "mips32" },
+	{ MIPS_GRP_MIPS32R6, "mips32r6" },
+	{ MIPS_GRP_MIPS64R6, "mips64r6" },
 
-    { MIPS_GRP_MIPS2, "mips2" },
-    { MIPS_GRP_MIPS3, "mips3" },
-     { MIPS_GRP_MIPS3_32, "mips3_32"},
-    { MIPS_GRP_MIPS3_32R2, "mips3_32r2" },
+	{ MIPS_GRP_MIPS2, "mips2" },
+	{ MIPS_GRP_MIPS3, "mips3" },
+	{ MIPS_GRP_MIPS3_32, "mips3_32"},
+	{ MIPS_GRP_MIPS3_32R2, "mips3_32r2" },
 
-    { MIPS_GRP_MIPS4_32, "mips4_32" },
-    { MIPS_GRP_MIPS4_32R2, "mips4_32r2" },
-    { MIPS_GRP_MIPS5_32R2, "mips5_32r2" },
+	{ MIPS_GRP_MIPS4_32, "mips4_32" },
+	{ MIPS_GRP_MIPS4_32R2, "mips4_32r2" },
+	{ MIPS_GRP_MIPS5_32R2, "mips5_32r2" },
 
-    { MIPS_GRP_GP32BIT, "gp32bit" },
-    { MIPS_GRP_GP64BIT, "gp64bit" },
+	{ MIPS_GRP_GP32BIT, "gp32bit" },
+	{ MIPS_GRP_GP64BIT, "gp64bit" },
 
 	{ MIPS_GRP_JUMP, "jump" }
 };
