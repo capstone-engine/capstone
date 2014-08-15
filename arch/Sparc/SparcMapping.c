@@ -296,7 +296,7 @@ static insn_map insns[] = {
 #endif
 	},
 	{
-		SP_BA, SPARC_INS_BA,
+		SP_BA, SPARC_INS_B,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 1, 0
 #endif
@@ -2426,13 +2426,13 @@ static insn_map insns[] = {
 #endif
 	},
 	{
-		SP_TA3, SPARC_INS_TA,
+		SP_TA3, SPARC_INS_T,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		SP_TA5, SPARC_INS_TA,
+		SP_TA5, SPARC_INS_T,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -2849,7 +2849,6 @@ static name_map insn_name_maps[] = {
 	{ SPARC_INS_ARRAY16, "array16" },
 	{ SPARC_INS_ARRAY32, "array32" },
 	{ SPARC_INS_ARRAY8, "array8" },
-	{ SPARC_INS_BA, "ba" },
 	{ SPARC_INS_B, "b" },
 	{ SPARC_INS_JMP, "jmp" },
 	{ SPARC_INS_BMASK, "bmask" },
@@ -3089,7 +3088,6 @@ static name_map insn_name_maps[] = {
 	{ SPARC_INS_SUBXCC, "subxcc" },
 	{ SPARC_INS_SUB, "sub" },
 	{ SPARC_INS_SWAP, "swap" },
-	{ SPARC_INS_TA, "ta" },
 	{ SPARC_INS_TADDCCTV, "taddcctv" },
 	{ SPARC_INS_TADDCC, "taddcc" },
 	{ SPARC_INS_T, "t" },
@@ -3215,42 +3213,86 @@ sparc_reg Sparc_map_insn(const char *name)
 	return (i != -1)? i : SPARC_REG_INVALID;
 }
 
+// NOTE: put strings in the order of string length since
+// we are going to compare with mnemonic to find out CC
 static name_map alias_icc_maps[] = {
-	{ SPARC_CC_ICC_A, "a" },
-	{ SPARC_CC_ICC_N, "n" },
-	{ SPARC_CC_ICC_NE, "ne" },
-	{ SPARC_CC_ICC_E, "e" },
-	{ SPARC_CC_ICC_G, "g" },
-	{ SPARC_CC_ICC_LE, "le" },
-	{ SPARC_CC_ICC_GE, "ge" },
-	{ SPARC_CC_ICC_L, "l" },
-	{ SPARC_CC_ICC_GU, "gu" },
 	{ SPARC_CC_ICC_LEU, "leu" },
-	{ SPARC_CC_ICC_CC, "cc" },
-	{ SPARC_CC_ICC_CS, "cs" },
 	{ SPARC_CC_ICC_POS, "pos" },
 	{ SPARC_CC_ICC_NEG, "neg" },
+	{ SPARC_CC_ICC_NE, "ne" },
+	{ SPARC_CC_ICC_LE, "le" },
+	{ SPARC_CC_ICC_GE, "ge" },
+	{ SPARC_CC_ICC_GU, "gu" },
+	{ SPARC_CC_ICC_CC, "cc" },
+	{ SPARC_CC_ICC_CS, "cs" },
 	{ SPARC_CC_ICC_VC, "vc" },
 	{ SPARC_CC_ICC_VS, "vs" },
+	{ SPARC_CC_ICC_A, "a" },
+	{ SPARC_CC_ICC_N, "n" },
+	{ SPARC_CC_ICC_E, "e" },
+	{ SPARC_CC_ICC_G, "g" },
+	{ SPARC_CC_ICC_L, "l" },
 };
 
 static name_map alias_fcc_maps[] = {
+	{ SPARC_CC_FCC_UGE, "uge" },
+	{ SPARC_CC_FCC_ULE, "ule" },
+	{ SPARC_CC_FCC_UG, "ug" },
+	{ SPARC_CC_FCC_UL, "ul" },
+	{ SPARC_CC_FCC_LG, "lg" },
+	{ SPARC_CC_FCC_NE, "ne" },
+	{ SPARC_CC_FCC_UE, "ue" },
+	{ SPARC_CC_FCC_GE, "ge" },
+	{ SPARC_CC_FCC_LE, "le" },
 	{ SPARC_CC_FCC_A, "a" },
 	{ SPARC_CC_FCC_N, "n" },
 	{ SPARC_CC_FCC_U, "u" },
 	{ SPARC_CC_FCC_G, "g" },
-	{ SPARC_CC_FCC_UG, "ug" },
 	{ SPARC_CC_FCC_L, "l" },
-	{ SPARC_CC_FCC_UL, "ul" },
-	{ SPARC_CC_FCC_LG, "lg" },
-	{ SPARC_CC_FCC_NE, "ne" },
 	{ SPARC_CC_FCC_E, "e" },
-	{ SPARC_CC_FCC_UE, "ue" },
-	{ SPARC_CC_FCC_GE, "ge" },
-	{ SPARC_CC_FCC_UGE, "uge" },
-	{ SPARC_CC_FCC_LE, "le" },
-	{ SPARC_CC_FCC_ULE, "ule" },
 	{ SPARC_CC_FCC_O, "o" },
 };
+
+// map CC string to CC id
+sparc_cc Sparc_map_ICC(const char *name)
+{
+	unsigned int i;
+
+	i = name2id(alias_icc_maps, ARR_SIZE(alias_icc_maps), name);
+
+	return (i != -1)? i : SPARC_CC_INVALID;
+}
+
+sparc_cc Sparc_map_FCC(const char *name)
+{
+	unsigned int i;
+
+	i = name2id(alias_fcc_maps, ARR_SIZE(alias_fcc_maps), name);
+
+	return (i != -1)? i : SPARC_CC_INVALID;
+}
+
+static name_map hint_maps[] = {
+	{ SPARC_HINT_A, ",a" },
+	{ SPARC_HINT_A | SPARC_HINT_PN, ",a,pn" },
+	{ SPARC_HINT_PN, ",pn" },
+};
+
+sparc_hint Sparc_map_hint(const char *name)
+{
+	unsigned int i, l1, l2;
+
+	l1 = strlen(name);
+	for(i = 0; i < ARR_SIZE(hint_maps); i++) {
+		l2 = strlen(hint_maps[i].name);
+		if (l1 > l2) {
+			// compare the last part of @name with this hint string
+			if (!strcmp(hint_maps[i].name, name + (l1 - l2)))
+				return hint_maps[i].id;
+		}
+	}
+
+	return SPARC_HINT_INVALID;
+}
 
 #endif

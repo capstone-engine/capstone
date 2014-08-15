@@ -264,12 +264,84 @@ static bool printGetPCX(MCInst *MI, unsigned opNum, SStream *O)
 
 void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
 {
-	char *mnem;
+	char *mnem, *p;
+	char instr[64];	// Sparc has no instruction this long
 
 	mnem = printAliasInstr(MI, O, Info);
 	if (mnem) {
 		// fixup instruction id due to the change in alias instruction
-		MCInst_setOpcodePub(MI, Sparc_map_insn(mnem));
+		strncpy(instr, mnem, strlen(mnem));
+		instr[strlen(mnem)] = '\0';
+		// does this contains hint with a coma?
+		p = strchr(instr, ',');
+		if (p)
+			*p = '\0';	// now instr only has instruction mnemonic
+		MCInst_setOpcodePub(MI, Sparc_map_insn(instr));
+		switch(MCInst_getOpcode(MI)) {
+			case SP_BCOND:
+			case SP_BCONDA:
+			case SP_BPICCANT:
+			case SP_BPICCNT:
+			case SP_BPXCCANT:
+			case SP_BPXCCNT:
+			case SP_TXCCri:
+			case SP_TXCCrr:
+				if (MI->csh->detail) {
+					// skip 'b', 't'
+					MI->flat_insn->detail->sparc.cc = Sparc_map_ICC(instr + 1);
+					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
+				}
+				break;
+			case SP_BPFCCANT:
+			case SP_BPFCCNT:
+				if (MI->csh->detail) {
+					// skip 'fb'
+					MI->flat_insn->detail->sparc.cc = Sparc_map_FCC(instr + 2);
+					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
+				}
+				break;
+			case SP_FMOVD_ICC:
+			case SP_FMOVD_XCC:
+			case SP_FMOVQ_ICC:
+			case SP_FMOVQ_XCC:
+			case SP_FMOVS_ICC:
+			case SP_FMOVS_XCC:
+				if (MI->csh->detail) {
+					// skip 'fmovd', 'fmovq', 'fmovs'
+					MI->flat_insn->detail->sparc.cc = Sparc_map_ICC(instr + 5);
+					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
+				}
+				break;
+			case SP_MOVICCri:
+			case SP_MOVICCrr:
+			case SP_MOVXCCri:
+			case SP_MOVXCCrr:
+				if (MI->csh->detail) {
+					// skip 'mov'
+					MI->flat_insn->detail->sparc.cc = Sparc_map_ICC(instr + 3);
+					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
+				}
+				break;
+			case SP_V9FMOVD_FCC:
+			case SP_V9FMOVQ_FCC:
+			case SP_V9FMOVS_FCC:
+				if (MI->csh->detail) {
+					// skip 'fmovd', 'fmovq', 'fmovs'
+					MI->flat_insn->detail->sparc.cc = Sparc_map_FCC(instr + 5);
+					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
+				}
+				break;
+			case SP_V9MOVFCCri:
+			case SP_V9MOVFCCrr:
+				if (MI->csh->detail) {
+					// skip 'mov'
+					MI->flat_insn->detail->sparc.cc = Sparc_map_FCC(instr + 3);
+					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
+				}
+				break;
+			default:
+				break;
+		}
 		cs_mem_free(mnem);
 	} else {
 		if (!printSparcAliasInstr(MI, O))

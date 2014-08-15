@@ -23,5 +23,12 @@ sparc_reg Sparc_map_register(unsigned int r);
 // this is for alias instructions only
 sparc_reg Sparc_map_insn(const char *name);
 
+// map CC string to CC id
+sparc_cc Sparc_map_ICC(const char *name);
+
+sparc_cc Sparc_map_FCC(const char *name);
+
+sparc_hint Sparc_map_hint(const char *name);
+
 #endif
 
