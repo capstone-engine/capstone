@@ -22,6 +22,7 @@ option(SYSZ_SUPPORT "SystemZ support" ON)
 option(XCORE_SUPPORT "XCore support" ON)
 option(X86_SUPPORT "x86 support" ON)
 option(X86_REDUCE "x86 with reduce instruction sets to minimize library" OFF)
+option(X86_ATT_DISABLE, "Disable x86 AT&T syntax" OFF)
 
 if (BUILD_DIET)
     add_definitions(-DCAPSTONE_DIET)
@@ -33,6 +34,10 @@ endif ()
 
 if (X86_REDUCE)
     add_definitions(-DCAPSTONE_X86_REDUCE)
+endif ()
+
+if (X86_ATT_DISABLE)
+    add_definitions(-DCAPSTONE_X86_ATT_DISABLE)
 endif ()
 
 ## sources
