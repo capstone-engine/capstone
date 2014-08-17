@@ -44,6 +44,8 @@ NOTE: This requires Visual Studio 2010 or newer versions.
   - CAPSTONE_USE_SYS_DYN_MEM: delete this to use your own dynamic memory management.
   - CAPSTONE_DIET_NO: rename this to "CAPSTONE_DIET" to make the binaries more compact.
   - CAPSTONE_X86_REDUCE_NO: rename this to "CAPSTONE_X86_REDUCE" to make X86 binary smaller.
+  - CAPSTONE_X86_ATT_DISABLE_NO: rename this to "CAPSTONE_X86_ATT_DISABLE" to disable
+    AT&T syntax on x86.
 
   By default, Capstone use system dynamic memory management, and both DIET and X86_REDUCE
   modes are disable.

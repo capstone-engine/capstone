@@ -37,9 +37,10 @@ Get CMake for free from http://www.cmake.org.
   - USE_SYS_DYN_MEM: change this to OFF to use your own dynamic memory management.
   - BUILD_DIET: change this to ON to make the binaries more compact.
   - X86_REDUCE: change this to ON to make X86 binary smaller.
+  - X86_ATT_DISABLE: change this to ON to disable AT&T syntax on x86
 
   By default, Capstone use system dynamic memory management, and both DIET and X86_REDUCE
-  modes are disable. To use your own memory allocations, turn ON both DIET &
+  modes are disabled. To use your own memory allocations, turn ON both DIET &
   X86_REDUCE, run "cmake" with: -DUSE_SYS_DYN_MEM=0 -DBUILD_DIET=1 -DX86_REDUCE=1
 
 
