@@ -23,6 +23,7 @@
 #include <string.h>   /* for memset()     */
 
 #include "../../cs_priv.h"
+#include "../../utils.h"
 
 #include "X86DisassemblerDecoder.h"
 
@@ -62,11 +63,6 @@ struct ContextDecision {
 #else
 #include "X86GenInstrInfo.inc"
 #endif
-
-static const char *x86DisassemblerGetInstrName(unsigned Opcode)
-{
-	return &X86InstrNameData[X86InstrNameIndices[Opcode]];
-}
 
 /*
  * contextForAttrs - Client for the instruction context table.  Takes a set of
@@ -956,28 +952,23 @@ static int getIDWithAttrMask(uint16_t* instructionID,
  * is16BitEquivalent - Determines whether two instruction names refer to
  * equivalent instructions but one is 16-bit whereas the other is not.
  *
- * @param orig  - The instruction that is not 16-bit
- * @param equiv - The instruction that is 16-bit
+ * @param orig  - The instruction ID that is not 16-bit
+ * @param equiv - The instruction ID that is 16-bit
  */
-static bool is16BitEquivalent(const char* orig, const char* equiv)
+static bool is16BitEquivalent(unsigned orig, unsigned equiv)
 {
 	size_t i;
+	uint16_t idx;
 
-	for (i = 0;; i++) {
-		if (orig[i] == '\0' && equiv[i] == '\0')
-			return true;
-		if (orig[i] == '\0' || equiv[i] == '\0')
-			return false;
-		if (orig[i] != equiv[i]) {
-			if ((orig[i] == 'Q' || orig[i] == 'L') && equiv[i] == 'W')
-				continue;
-			if ((orig[i] == '6' || orig[i] == '3') && equiv[i] == '1')
-				continue;
-			if ((orig[i] == '4' || orig[i] == '2') && equiv[i] == '6')
-				continue;
-			return false;
+	if ((idx = x86_16_bit_eq_lookup[orig]) != 0)
+	{
+		for (i = idx - 1; x86_16_bit_eq_tbl[i].first == orig && i < ARR_SIZE(x86_16_bit_eq_tbl); ++i)
+		{
+			if (x86_16_bit_eq_tbl[i].second == equiv)
+				return true;
 		}
 	}
+	return false;
 }
 
 /*
@@ -1122,7 +1113,6 @@ static int getID(struct InternalInstruction* insn)
 
 		const struct InstructionSpecifier *spec;
 		uint16_t instructionIDWithOpsize;
-		const char *specName, *specWithOpSizeName;
 
 		spec = specifierForUID(instructionID);
 
@@ -1138,11 +1128,7 @@ static int getID(struct InternalInstruction* insn)
 			return 0;
 		}
 
-		specName = x86DisassemblerGetInstrName(instructionID);
-		specWithOpSizeName =
-			x86DisassemblerGetInstrName(instructionIDWithOpsize);
-
-		if (is16BitEquivalent(specName, specWithOpSizeName) &&
+		if (is16BitEquivalent(instructionID, instructionIDWithOpsize) &&
 				(insn->mode == MODE_16BIT) ^ insn->prefixPresent[0x66]) {
 			insn->instructionID = instructionIDWithOpsize;
 			insn->spec = specifierForUID(instructionIDWithOpsize);
