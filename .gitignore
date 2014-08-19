@@ -38,6 +38,11 @@ bindings/ocaml/test_arm64
 bindings/ocaml/test_mips
 bindings/ocaml/test_x86
 bindings/ocaml/test_detail
+bindings/ocaml/test_ppc
+bindings/ocaml/test_sparc
+bindings/ocaml/test_systemz
+bindings/ocaml/test_xcore
+
 
 # test binaries
 tests/test
