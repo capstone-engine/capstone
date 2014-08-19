@@ -313,7 +313,8 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 								 Store_field(tmp2, 0, tmp);
 								 Store_field(array, i, tmp2);
 							 }
-						 } else		// empty array
+						 } else		
+							// empty array
 							 array = Atom(0);
 
 						 Store_field(op_info_val, 4, array);
@@ -419,6 +420,161 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 					Store_field(rec_insn, 12, arch_info);
 					break;
 
+				case CS_ARCH_SPARC:
+
+						 arch_info = caml_alloc(1, 3);
+
+						 op_info_val = caml_alloc(4, 0);
+
+						 Store_field(op_info_val, 0, Val_int(insn[j-1].detail->sparc.cc));
+						 Store_field(op_info_val, 1, Val_int(insn[j-1].detail->sparc.hint));
+
+						 lcount = insn[j-1].detail->sparc.op_count;
+
+						 Store_field(op_info_val, 2, Val_int(lcount));
+
+						 if (lcount > 0) {
+							 array = caml_alloc(lcount, 0);
+							 for (i = 0; i < lcount; i++) {
+								 tmp2 = caml_alloc(1, 0);
+								 switch(insn[j-1].detail->sparc.operands[i].type) {
+									 case SPARC_OP_REG:
+										 tmp = caml_alloc(1, 1);
+										 Store_field(tmp, 0, Val_int(insn[j-1].detail->sparc.operands[i].reg));
+										 break;
+									 case SPARC_OP_IMM:
+										 tmp = caml_alloc(1, 2);
+										 Store_field(tmp, 0, Val_int(insn[j-1].detail->sparc.operands[i].imm));
+										 break;
+									 case SPARC_OP_MEM:
+										 tmp = caml_alloc(1, 3);
+										 tmp3 = caml_alloc(3, 0);
+										 Store_field(tmp3, 0, Val_int(insn[j-1].detail->sparc.operands[i].mem.base));
+										 Store_field(tmp3, 1, Val_int(insn[j-1].detail->sparc.operands[i].mem.index));
+										 Store_field(tmp3, 2, Val_int(insn[j-1].detail->sparc.operands[i].mem.disp));
+										 Store_field(tmp, 0, tmp3);
+										 break;
+									 default: break;
+								 }
+								 Store_field(tmp2, 0, tmp);
+								 Store_field(array, i, tmp2);
+							 }
+						 } else		// empty array
+							 array = Atom(0);
+
+						 Store_field(op_info_val, 3, array);
+
+						 // finally, insert this into arch_info
+						 Store_field(arch_info, 0, op_info_val);
+
+						 Store_field(rec_insn, 12, arch_info);
+
+						 break;
+
+				case CS_ARCH_SYSZ:
+
+						 arch_info = caml_alloc(1, 3);
+
+						 op_info_val = caml_alloc(3, 0);
+
+						 Store_field(op_info_val, 0, Val_int(insn[j-1].detail->sysz.cc));
+						 lcount = insn[j-1].detail->sysz.op_count;
+
+						 Store_field(op_info_val, 1, Val_int(lcount));
+
+						 if (lcount > 0) {
+							 array = caml_alloc(lcount, 0);
+							 for (i = 0; i < lcount; i++) {
+								 tmp2 = caml_alloc(1, 0);
+								 switch(insn[j-1].detail->sysz.operands[i].type) {
+									 case SYSZ_OP_REG:
+										 tmp = caml_alloc(1, 1);
+										 Store_field(tmp, 0, Val_int(insn[j-1].detail->sysz.operands[i].reg));
+										 break;
+									 case SYSZ_OP_IMM:
+										 tmp = caml_alloc(1, 2);
+										 Store_field(tmp, 0, Val_int(insn[j-1].detail->sysz.operands[i].imm));
+										 break;
+									 case SYSZ_OP_ACREG:
+										 tmp = caml_alloc(1, 2);
+										 Store_field(tmp, 0, Val_int(0)); /* XXX */
+										 break;
+									 case SYSZ_OP_MEM:
+										 tmp = caml_alloc(1, 3);
+										 tmp3 = caml_alloc(4, 0);
+										 Store_field(tmp3, 0, Val_int(insn[j-1].detail->sysz.operands[i].mem.base));
+										 Store_field(tmp3, 1, Val_int(insn[j-1].detail->sysz.operands[i].mem.index));
+										 Store_field(tmp3, 2, caml_copy_int64(insn[j-1].detail->sysz.operands[i].mem.length));
+										 Store_field(tmp3, 3, caml_copy_int64(insn[j-1].detail->sysz.operands[i].mem.disp));
+										 Store_field(tmp, 0, tmp3);
+										 break;
+									 default: break;
+								 }
+								 Store_field(tmp2, 0, tmp);
+								 Store_field(array, i, tmp2);
+							 }
+						 } else		// empty array
+							 array = Atom(0);
+
+						 Store_field(op_info_val, 3, array);
+
+						 // finally, insert this into arch_info
+						 Store_field(arch_info, 0, op_info_val);
+
+						 Store_field(rec_insn, 12, arch_info);
+
+						 break;
+
+				case CS_ARCH_XCORE:
+
+						 arch_info = caml_alloc(1, 3);
+
+						 op_info_val = caml_alloc(2, 0);
+
+						 lcount = insn[j-1].detail->xcore.op_count;
+
+						 Store_field(op_info_val, 0, Val_int(lcount));
+
+						 if (lcount > 0) {
+							 array = caml_alloc(lcount, 0);
+							 for (i = 0; i < lcount; i++) {
+								 tmp2 = caml_alloc(1, 0);
+								 switch(insn[j-1].detail->xcore.operands[i].type) {
+									 case XCORE_OP_REG:
+										 tmp = caml_alloc(1, 1);
+										 Store_field(tmp, 0, Val_int(insn[j-1].detail->xcore.operands[i].reg));
+										 break;
+									 case XCORE_OP_IMM:
+										 tmp = caml_alloc(1, 2);
+										 Store_field(tmp, 0, Val_int(insn[j-1].detail->xcore.operands[i].imm));
+										 break;
+									 case XCORE_OP_MEM:
+										 tmp = caml_alloc(1, 3);
+										 tmp3 = caml_alloc(4, 0);
+										 Store_field(tmp3, 0, Val_int(insn[j-1].detail->xcore.operands[i].mem.base));
+										 Store_field(tmp3, 1, Val_int(insn[j-1].detail->xcore.operands[i].mem.index));
+										 Store_field(tmp3, 2, caml_copy_int64(insn[j-1].detail->xcore.operands[i].mem.disp));
+										 Store_field(tmp3, 3, caml_copy_int64(insn[j-1].detail->xcore.operands[i].mem.direct));
+										 Store_field(tmp, 0, tmp3);
+										 break;
+									 default: break;
+								 }
+								 Store_field(tmp2, 0, tmp);
+								 Store_field(array, i, tmp2);
+							 }
+						 } else		
+							// empty array
+							 array = Atom(0);
+
+						 Store_field(op_info_val, 2, array);
+
+						 // finally, insert this into arch_info
+						 Store_field(arch_info, 0, op_info_val);
+
+						 Store_field(rec_insn, 12, arch_info);
+
+						 break;
+
 				default: break;
 			}
 
@@ -455,10 +611,25 @@ CAMLprim value ocaml_cs_disasm_quick(value _arch, value _mode, value _code, valu
 			arch = CS_ARCH_MIPS;
 			break;
 		case 3:
-			arch = CS_ARCH_PPC;
+			arch = CS_ARCH_X86;
 			break;
 		case 4:
-			arch = CS_ARCH_X86;
+			arch = CS_ARCH_PPC;
+			break;
+		case 5:
+			arch = CS_ARCH_SPARC;
+			break;
+		case 6:
+			arch = CS_ARCH_SYSZ;
+			break;
+		case 7:
+			arch = CS_ARCH_XCORE;
+			break;
+		case 8:
+			arch = CS_ARCH_MAX;
+			break;
+		case 9:
+			arch = CS_ARCH_ALL;
 			break;
 		default:
 			caml_invalid_argument("Error message");
@@ -472,33 +643,30 @@ CAMLprim value ocaml_cs_disasm_quick(value _arch, value _mode, value _code, valu
 				mode |= CS_MODE_LITTLE_ENDIAN;
 				break;
 			case 1:
-				mode |= CS_OPT_SYNTAX_INTEL;
-				break;
-			case 2:
 				mode |= CS_MODE_ARM;
 				break;
-			case 3:
+			case 2:
 				mode |= CS_MODE_16;
 				break;
-			case 4:
+			case 3:
 				mode |= CS_MODE_32;
 				break;
-			case 5:
+			case 4:
 				mode |= CS_MODE_64;
 				break;
-			case 6:
+			case 5:
 				mode |= CS_MODE_THUMB;
 				break;
-			case 7:
+			case 6:
 				mode |= CS_MODE_MICRO;
 				break;
-			case 8:
+			case 7:
 				mode |= CS_MODE_N64;
 				break;
-			case 9:
-				mode |= CS_OPT_SYNTAX_ATT;
+			case 8:
+				mode |= CS_MODE_V9;
 				break;
-			case 10:
+			case 9:
 				mode |= CS_MODE_BIG_ENDIAN;
 				break;
 			default:
@@ -507,12 +675,12 @@ CAMLprim value ocaml_cs_disasm_quick(value _arch, value _mode, value _code, valu
 		}
 		_mode = Field(_mode, 1);  /* point to the tail for next loop */
 	}
-
-	//CS_ERR_OK = 0,	// No error: everything was fine
-	if (cs_open(arch, mode, &handle) != 0)
+	cs_err ret = cs_open(arch, mode, &handle);
+	if (ret != CS_ERR_OK) {
 		return Val_emptylist;
+	}
 
-	if (cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON) != 0)
+	if (cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON) != CS_ERR_OK)
 		CAMLreturn(Val_int(0));
 
 	code = (uint8_t *)String_val(_code);
@@ -563,10 +731,25 @@ CAMLprim value ocaml_cs_open(value _arch, value _mode)
 			arch = CS_ARCH_MIPS;
 			break;
 		case 3:
-			arch = CS_ARCH_PPC;
+			arch = CS_ARCH_X86;
 			break;
 		case 4:
-			arch = CS_ARCH_X86;
+			arch = CS_ARCH_PPC;
+			break;
+		case 5:
+			arch = CS_ARCH_SPARC;
+			break;
+		case 6:
+			arch = CS_ARCH_SYSZ;
+			break;
+		case 7:
+			arch = CS_ARCH_XCORE;
+			break;
+		case 8:
+			arch = CS_ARCH_MAX;
+			break;
+		case 9:
+			arch = CS_ARCH_ALL;
 			break;
 		default:
 			caml_invalid_argument("Error message");
@@ -581,33 +764,30 @@ CAMLprim value ocaml_cs_open(value _arch, value _mode)
 				mode |= CS_MODE_LITTLE_ENDIAN;
 				break;
 			case 1:
-				mode |= CS_OPT_SYNTAX_INTEL;
-				break;
-			case 2:
 				mode |= CS_MODE_ARM;
 				break;
-			case 3:
+			case 2:
 				mode |= CS_MODE_16;
 				break;
-			case 4:
+			case 3:
 				mode |= CS_MODE_32;
 				break;
-			case 5:
+			case 4:
 				mode |= CS_MODE_64;
 				break;
-			case 6:
+			case 5:
 				mode |= CS_MODE_THUMB;
 				break;
-			case 7:
+			case 6:
 				mode |= CS_MODE_MICRO;
 				break;
-			case 8:
+			case 7:
 				mode |= CS_MODE_N64;
 				break;
-			case 9:
-				mode |= CS_OPT_SYNTAX_ATT;
+			case 8:
+				mode |= CS_MODE_V9;
 				break;
-			case 10:
+			case 9:
 				mode |= CS_MODE_BIG_ENDIAN;
 				break;
 			default:

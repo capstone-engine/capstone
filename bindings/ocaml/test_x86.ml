@@ -20,10 +20,10 @@ let _X86_CODE64 = "\x55\x48\x8b\x05\xb8\x13\x00\x00";;
 
 
 let all_tests = [
-	(CS_ARCH_X86, [CS_MODE_16], _X86_CODE16, "X86 16bit (Intel syntax)");
-	(CS_ARCH_X86, [CS_MODE_32; CS_MODE_SYNTAX_ATT], _X86_CODE32, "X86 32bit (ATT syntax)");
-	(CS_ARCH_X86, [CS_MODE_32], _X86_CODE32, "X86 32 (Intel syntax)");
-	(CS_ARCH_X86, [CS_MODE_64], _X86_CODE64, "X86 64 (Intel syntax)");
+	(CS_ARCH_X86, [CS_MODE_16], _X86_CODE16, "X86 16bit (Intel syntax)", 0);
+	(CS_ARCH_X86, [CS_MODE_32], _X86_CODE32, "X86 32bit (ATT syntax)", 0);
+	(CS_ARCH_X86, [CS_MODE_32], _X86_CODE32, "X86 32 (Intel syntax)", 0);
+	(CS_ARCH_X86, [CS_MODE_64], _X86_CODE64, "X86 64 (Intel syntax)", 0);
 ];;
 
 let print_op csh i op =
@@ -52,6 +52,9 @@ let print_detail mode csh arch =
 	| CS_INFO_ARM _ -> ();
 	| CS_INFO_MIPS _ -> ();
 	| CS_INFO_PPC _ -> ();
+	| CS_INFO_SPARC _ -> ();
+	| CS_INFO_SYSZ _ -> ();
+	| CS_INFO_XCORE _ -> ();
 	| CS_INFO_X86 x86 ->
 	print_string_hex "\tPrefix: " x86.prefix;
 
@@ -105,7 +108,7 @@ let print_insn mode insn =
 
 
 let print_arch x =
-	let (arch, mode, code, comment) = x in
+	let (arch, mode, code, comment, syntax) = x in
 		let insns = cs_disasm_quick arch mode code 0x1000L 0L in
 			printf "*************\n";
 			printf "Platform: %s\n" comment;
@@ -124,7 +127,7 @@ let print_insn_cls mode csh insn =
 
 
 let print_arch_cls x =
-	let (arch, mode, code, comment) = x in (
+	let (arch, mode, code, comment, syntax) = x in (
 		let d = new cs arch mode in
 			let insns = d#disasm code 0x1000L 0L in
 				printf "*************\n";
