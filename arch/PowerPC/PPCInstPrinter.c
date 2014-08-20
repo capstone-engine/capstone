@@ -500,14 +500,13 @@ static void printMemRegReg(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printTLSCall(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	MCOperand *Op;
-
 	set_mem_access(MI, true);
 	//printBranchOperand(MI, OpNo, O);
 
 	// On PPC64, VariantKind is VK_None, but on PPC32, it's VK_PLT, and it must
 	// come at the _end_ of the expression.
-	Op = MCInst_getOperand(MI, OpNo);
+	// MCOperand *Op;
+	// Op = MCInst_getOperand(MI, OpNo);
 	//const MCSymbolRefExpr &refExp = cast<MCSymbolRefExpr>(*Op.getExpr());
 	//O << refExp.getSymbol().getName();
 
