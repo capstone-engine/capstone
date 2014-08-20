@@ -55,6 +55,11 @@ CAPSTONE_DIET ?= no
 
 CAPSTONE_X86_REDUCE ?= no
 
+################################################################################
+# Change 'CAPSTONE_X86_ATT_DISABLE = no' to 'CAPSTONE_X86_ATT_DISABLE = yes' to
+# disable AT&T syntax on x86 to reduce library size.
+
+CAPSTONE_X86_ATT_DISABLE ?= no
 
 ################################################################################
 # Change 'CAPSTONE_STATIC = yes' to 'CAPSTONE_STATIC = no' to avoid building

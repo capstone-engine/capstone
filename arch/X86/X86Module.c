@@ -44,7 +44,7 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 				break;
 
 			case CS_OPT_SYNTAX_ATT:
-#ifndef CAPSTONE_DIET
+#if !defined(CAPSTONE_DIET) && !defined(CAPSTONE_X86_ATT_DISABLE)
 				handle->printer = X86_ATT_printInst;
 				handle->syntax = CS_OPT_SYNTAX_ATT;
 				break;
