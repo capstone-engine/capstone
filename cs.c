@@ -653,7 +653,7 @@ static bool arr_exist(unsigned char *arr, unsigned char max, unsigned int id)
 }
 
 CAPSTONE_EXPORT
-bool cs_insn_group(csh ud, cs_insn *insn, unsigned int group_id)
+bool cs_insn_group(csh ud, const cs_insn *insn, unsigned int group_id)
 {
 	struct cs_struct *handle;
 	if (!ud)
@@ -680,7 +680,7 @@ bool cs_insn_group(csh ud, cs_insn *insn, unsigned int group_id)
 }
 
 CAPSTONE_EXPORT
-bool cs_reg_read(csh ud, cs_insn *insn, unsigned int reg_id)
+bool cs_reg_read(csh ud, const cs_insn *insn, unsigned int reg_id)
 {
 	struct cs_struct *handle;
 	if (!ud)
@@ -707,7 +707,7 @@ bool cs_reg_read(csh ud, cs_insn *insn, unsigned int reg_id)
 }
 
 CAPSTONE_EXPORT
-bool cs_reg_write(csh ud, cs_insn *insn, unsigned int reg_id)
+bool cs_reg_write(csh ud, const cs_insn *insn, unsigned int reg_id)
 {
 	struct cs_struct *handle;
 	if (!ud)
@@ -734,7 +734,7 @@ bool cs_reg_write(csh ud, cs_insn *insn, unsigned int reg_id)
 }
 
 CAPSTONE_EXPORT
-int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
+int cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 {
 	struct cs_struct *handle;
 	unsigned int count = 0, i;
@@ -810,7 +810,7 @@ int cs_op_count(csh ud, cs_insn *insn, unsigned int op_type)
 }
 
 CAPSTONE_EXPORT
-int cs_op_index(csh ud, cs_insn *insn, unsigned int op_type,
+int cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 		unsigned int post)
 {
 	struct cs_struct *handle;

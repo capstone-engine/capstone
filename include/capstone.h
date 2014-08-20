@@ -436,7 +436,7 @@ const char *cs_insn_name(csh handle, unsigned int insn_id);
  @return: true if this instruction indeed belongs to aboved group, or false otherwise.
 */
 CAPSTONE_EXPORT
-bool cs_insn_group(csh handle, cs_insn *insn, unsigned int group_id);
+bool cs_insn_group(csh handle, const cs_insn *insn, unsigned int group_id);
 
 /*
  Check if a disassembled instruction IMPLICITLY used a particular register.
@@ -454,7 +454,7 @@ bool cs_insn_group(csh handle, cs_insn *insn, unsigned int group_id);
  @return: true if this instruction indeed implicitly used aboved register, or false otherwise.
 */
 CAPSTONE_EXPORT
-bool cs_reg_read(csh handle, cs_insn *insn, unsigned int reg_id);
+bool cs_reg_read(csh handle, const cs_insn *insn, unsigned int reg_id);
 
 /*
  Check if a disassembled instruction IMPLICITLY modified a particular register.
@@ -472,7 +472,7 @@ bool cs_reg_read(csh handle, cs_insn *insn, unsigned int reg_id);
  @return: true if this instruction indeed implicitly modified aboved register, or false otherwise.
 */
 CAPSTONE_EXPORT
-bool cs_reg_write(csh handle, cs_insn *insn, unsigned int reg_id);
+bool cs_reg_write(csh handle, const cs_insn *insn, unsigned int reg_id);
 
 /*
  Count the number of operands of a given type.
@@ -488,7 +488,7 @@ bool cs_reg_write(csh handle, cs_insn *insn, unsigned int reg_id);
  or -1 on failure.
 */
 CAPSTONE_EXPORT
-int cs_op_count(csh handle, cs_insn *insn, unsigned int op_type);
+int cs_op_count(csh handle, const cs_insn *insn, unsigned int op_type);
 
 /*
  Retrieve the position of operand of given type in <arch>.operands[] array.
@@ -507,7 +507,7 @@ int cs_op_count(csh handle, cs_insn *insn, unsigned int op_type);
  in instruction @insn, or -1 on failure.
 */
 CAPSTONE_EXPORT
-int cs_op_index(csh handle, cs_insn *insn, unsigned int op_type,
+int cs_op_index(csh handle, const cs_insn *insn, unsigned int op_type,
 		unsigned int position);
 
 #ifdef __cplusplus
