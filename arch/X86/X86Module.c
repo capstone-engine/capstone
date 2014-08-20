@@ -48,6 +48,10 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 				handle->printer = X86_ATT_printInst;
 				handle->syntax = CS_OPT_SYNTAX_ATT;
 				break;
+#elif !defined(CAPSTONE_DIET) && defined(CAPSTONE_X86_ATT_DISABLE)
+				// ATT syntax is unsupported
+				handle->errnum = CS_ERR_X86_ATT;
+				return CS_ERR_X86_ATT;
 #else
 				// this is irrelevant in CAPSTONE_DIET mode
 				handle->errnum = CS_ERR_DIET;

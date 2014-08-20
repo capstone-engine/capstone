@@ -27,7 +27,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
   - CAPSTONE_USE_SYS_DYN_MEM: change this if you have your own dynamic memory management.
   - CAPSTONE_DIET: use this to make the output binaries more compact.
   - CAPSTONE_X86_REDUCE: another option to make X86 binary smaller.
-  - CAPSTONE_X86_ATT_DISABLE: disables AT&T syntax on x86
+  - CAPSTONE_X86_ATT_DISABLE: disables AT&T syntax on x86.
 
   By default, Capstone use system dynamic memory management, and both DIET and X86_REDUCE
   modes are disable.
