@@ -63,6 +63,8 @@ __all__ = [
     'CS_ERR_MEMSETUP',
     'CS_ERR_DIET',
     'CS_ERR_SKIPDATA',
+    'CS_ERR_X86_ATT',
+    'CS_ERR_X86_INTEL',
 
     'CS_SUPPORT_DIET',
     'CS_SUPPORT_X86_REDUCE',
@@ -132,6 +134,8 @@ CS_ERR_MEMSETUP = 8
 CS_ERR_VERSION = 9 # Unsupported version (bindings)
 CS_ERR_DIET = 10   # Information irrelevant in diet engine
 CS_ERR_SKIPDATA = 11 # Access irrelevant data for "data" instruction in SKIPDATA mode
+CS_ERR_X86_ATT = 12 # X86 AT&T syntax is unsupported (opt-out at compile time)
+CS_ERR_X86_INTEL = 13 # X86 Intel syntax is unsupported (opt-out at compile time)
 
 # query id for cs_support()
 CS_SUPPORT_DIET = CS_ARCH_ALL + 1
