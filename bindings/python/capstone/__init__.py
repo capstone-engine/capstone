@@ -660,6 +660,16 @@ class Cs(object):
         return self._syntax
 
 
+    # syntax setter: modify assembly syntax.
+    @syntax.setter
+    def syntax(self, style):
+        status = _cs.cs_option(self.csh, CS_OPT_SYNTAX, style)
+        if status != CS_ERR_OK:
+            raise CsError(status)
+        # save syntax
+        self._syntax = style
+
+
     # return current skipdata status
     @property
     def skipdata(self):
@@ -667,7 +677,7 @@ class Cs(object):
 
 
     # setter: modify skipdata status
-    @syntax.setter
+    @skipdata.setter
     def skipdata(self, opt):
         if opt == False:
             status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA, CS_OPT_OFF)
@@ -680,8 +690,6 @@ class Cs(object):
         self._skipdata = opt
 
 
-    # setter: modify "data" instruction's mnemonic for SKIPDATA
-    @syntax.setter
     def skipdata_setup(self, opt):
         _skipdata_opt = _cs_opt_skipdata()
         _mnem, _cb, _ud = opt
@@ -695,26 +703,16 @@ class Cs(object):
         self._skipdata_opt = _skipdata_opt
 
 
-    # setter: modify assembly syntax.
-    @syntax.setter
-    def syntax(self, style):
-        status = _cs.cs_option(self.csh, CS_OPT_SYNTAX, style)
-        if status != CS_ERR_OK:
-            raise CsError(status)
-        # save syntax
-        self._syntax = style
+    # check to see if this engine supports a particular arch,
+    # or diet mode (depending on @query).
+    def support(self, query):
+        return cs_support(query)
 
 
     # is detail mode enable?
     @property
     def detail(self):
         return self._detail
-
-
-    # check to see if this engine supports a particular arch,
-    # or diet mode (depending on @query).
-    def support(self, query):
-        return cs_support(query)
 
 
     # modify detail mode.
