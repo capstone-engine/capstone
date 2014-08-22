@@ -4034,7 +4034,7 @@ static insn_map insns[] = {	// full x86 instructions
 	{
 		X86_CLAC, X86_INS_CLAC,
 #ifndef CAPSTONE_DIET
-		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_SMAP, 0 }, 0, 0
 #endif
 	},
 	{
@@ -17138,7 +17138,7 @@ static insn_map insns[] = {	// full x86 instructions
 	{
 		X86_STAC, X86_INS_STAC,
 #ifndef CAPSTONE_DIET
-		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_SMAP, 0 }, 0, 0
 #endif
 	},
 	{
@@ -38485,7 +38485,7 @@ static insn_map insns[] = {	// reduce x86 instructions
 	{
 		X86_CLAC, X86_INS_CLAC,
 #ifndef CAPSTONE_DIET
-		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_SMAP, 0 }, 0, 0
 #endif
 	},
 	{
@@ -45133,7 +45133,7 @@ static insn_map insns[] = {	// reduce x86 instructions
 	{
 		X86_STAC, X86_INS_STAC,
 #ifndef CAPSTONE_DIET
-		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_SMAP, 0 }, 0, 0
 #endif
 	},
 	{
