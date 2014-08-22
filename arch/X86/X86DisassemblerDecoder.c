@@ -1478,6 +1478,8 @@ static int readModRM(struct InternalInstruction *insn)
 	if (insn->consumedModRM)
 		return 0;
 
+	insn->modRMLocation = insn->readerCursor;
+
 	if (consumeByte(insn, &insn->modRM))
 		return -1;
 

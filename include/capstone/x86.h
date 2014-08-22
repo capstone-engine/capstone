@@ -284,6 +284,8 @@ typedef struct cs_x86 {
 
 	// ModR/M byte
 	uint8_t modrm;
+	// ModR/M offset, or 0 when irrelevant.
+	uint8_t modrm_offset;
 
 	// SIB value, or 0 when irrelevant.
 	uint8_t sib;
