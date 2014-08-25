@@ -15372,7 +15372,7 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
     }
   }
   SStream_concat0(OS, AsmMnem);
-  if (AsmOps) {
+  if (*AsmOps) {
     SStream_concat0(OS, "\t");
     for (c = AsmOps; *c; c++) {
       if (*c == '$') {
@@ -15381,7 +15381,7 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
           c += 1;
           OpIdx = *c - 1;
           c += 1;
-          PrintMethodIdx = *c -1;
+          PrintMethodIdx = *c - 1;
           printCustomAliasOperand(MI, OpIdx, PrintMethodIdx, OS);
         } else
           printOperand(MI, *c - 1, OS);

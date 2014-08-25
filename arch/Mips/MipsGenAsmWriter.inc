@@ -5245,7 +5245,7 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
     }
   }
   SStream_concat0(OS, AsmMnem);
-  if (AsmOps) {
+  if (*AsmOps) {
     SStream_concat0(OS, "\t");
     for (c = AsmOps; *c; c++) {
       if (*c == '$') {
