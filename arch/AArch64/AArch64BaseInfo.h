@@ -24,50 +24,58 @@
 #include <stdint.h>
 #include <string.h>
 
-/// Instances of this class can perform bidirectional mapping from random
-/// identifier strings to operand encodings. For example "MSR" takes a named
-/// system-register which must be encoded somehow and decoded for printing. This
-/// central location means that the information for those transformations is not
-/// duplicated and remains in sync.
-///
-/// FIXME: currently the algorithm is a completely unoptimised linear
-/// search. Obviously this could be improved, but we would probably want to work
-/// out just how often these instructions are emitted before working on it. It
-/// might even be optimal to just reorder the tables for the common instructions
-/// rather than changing the algorithm.
-typedef struct NamedImmMapper_Mapping {
-	char *Name;
-	uint32_t Value;
-} NamedImmMapper_Mapping;
+#ifndef __cplusplus
+#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
+#define inline /* inline */
+#endif
+#endif
 
-typedef struct NamedImmMapper {
-	NamedImmMapper_Mapping *Pairs;
-	size_t NumPairs;
-	uint32_t TooBigImm;
-} NamedImmMapper;
+inline static unsigned getWRegFromXReg(unsigned Reg)
+{
+	switch (Reg) {
+		case ARM64_REG_X0: return ARM64_REG_W0;
+		case ARM64_REG_X1: return ARM64_REG_W1;
+		case ARM64_REG_X2: return ARM64_REG_W2;
+		case ARM64_REG_X3: return ARM64_REG_W3;
+		case ARM64_REG_X4: return ARM64_REG_W4;
+		case ARM64_REG_X5: return ARM64_REG_W5;
+		case ARM64_REG_X6: return ARM64_REG_W6;
+		case ARM64_REG_X7: return ARM64_REG_W7;
+		case ARM64_REG_X8: return ARM64_REG_W8;
+		case ARM64_REG_X9: return ARM64_REG_W9;
+		case ARM64_REG_X10: return ARM64_REG_W10;
+		case ARM64_REG_X11: return ARM64_REG_W11;
+		case ARM64_REG_X12: return ARM64_REG_W12;
+		case ARM64_REG_X13: return ARM64_REG_W13;
+		case ARM64_REG_X14: return ARM64_REG_W14;
+		case ARM64_REG_X15: return ARM64_REG_W15;
+		case ARM64_REG_X16: return ARM64_REG_W16;
+		case ARM64_REG_X17: return ARM64_REG_W17;
+		case ARM64_REG_X18: return ARM64_REG_W18;
+		case ARM64_REG_X19: return ARM64_REG_W19;
+		case ARM64_REG_X20: return ARM64_REG_W20;
+		case ARM64_REG_X21: return ARM64_REG_W21;
+		case ARM64_REG_X22: return ARM64_REG_W22;
+		case ARM64_REG_X23: return ARM64_REG_W23;
+		case ARM64_REG_X24: return ARM64_REG_W24;
+		case ARM64_REG_X25: return ARM64_REG_W25;
+		case ARM64_REG_X26: return ARM64_REG_W26;
+		case ARM64_REG_X27: return ARM64_REG_W27;
+		case ARM64_REG_X28: return ARM64_REG_W28;
+		case ARM64_REG_FP: return ARM64_REG_W29;
+		case ARM64_REG_LR: return ARM64_REG_W30;
+		case ARM64_REG_SP: return ARM64_REG_WSP;
+		case ARM64_REG_XZR: return ARM64_REG_WZR;
+	}
 
-typedef struct SysRegMapper {
-	NamedImmMapper_Mapping *SysRegPairs;
-	NamedImmMapper_Mapping *InstPairs;
-	size_t NumInstPairs;
-} SysRegMapper;
-
-extern SysRegMapper AArch64_MSRMapper;
-extern SysRegMapper AArch64_MRSMapper;
-
-extern NamedImmMapper A64DB_DBarrierMapper;
-extern NamedImmMapper A64AT_ATMapper;
-extern NamedImmMapper A64DC_DCMapper;
-extern NamedImmMapper A64IC_ICMapper;
-extern NamedImmMapper A64ISB_ISBMapper;
-extern NamedImmMapper A64PRFM_PRFMMapper;
-extern NamedImmMapper A64PState_PStateMapper;
-extern NamedImmMapper A64TLBI_TLBIMapper;
+	// For anything else, return it unchanged.
+	return Reg;
+}
 
 // // Enums corresponding to AArch64 condition codes
 // The CondCodes constants map directly to the 4-bit encoding of the
 // condition field for predicated instructions.
-typedef enum A64CC_CondCodes {   // Meaning (integer)          Meaning (floating-point)
+typedef enum A64CC_CondCode { // Meaning (integer)     Meaning (floating-point)
 	A64CC_EQ = 0,        // Equal                      Equal
 	A64CC_NE,            // Not equal                  Not equal, or unordered
 	A64CC_HS,            // Unsigned higher or same    >, ==, or unordered
@@ -84,17 +92,11 @@ typedef enum A64CC_CondCodes {   // Meaning (integer)          Meaning (floating
 	A64CC_LE,            // Signed less than or equal  <, ==, or unordered
 	A64CC_AL,            // Always (unconditional)     Always (unconditional)
 	A64CC_NV,             // Always (unconditional)     Always (unconditional)
-	// Note the NV exists purely to disassemble 0b1111. Execution
-	// is "always".
+	// Note the NV exists purely to disassemble 0b1111. Execution is "always".
 	A64CC_Invalid
-} A64CC_CondCodes;
+} A64CC_CondCode;
 
-#ifndef __cplusplus
-#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
-#define inline /* inline */
-#endif
-#endif
-inline static char *A64CondCodeToString(A64CC_CondCodes CC)
+inline static char *getCondCodeName(A64CC_CondCode CC)
 {
 	switch (CC) {
 		default: return NULL;	// never reach
@@ -117,6 +119,52 @@ inline static char *A64CondCodeToString(A64CC_CondCodes CC)
 	}
 }
 
+inline static A64CC_CondCode getInvertedCondCode(A64CC_CondCode Code)
+{
+	// To reverse a condition it's necessary to only invert the low bit:
+	return (A64CC_CondCode)((unsigned)Code ^ 0x1);
+}
+
+/// Instances of this class can perform bidirectional mapping from random
+/// identifier strings to operand encodings. For example "MSR" takes a named
+/// system-register which must be encoded somehow and decoded for printing. This
+/// central location means that the information for those transformations is not
+/// duplicated and remains in sync.
+///
+/// FIXME: currently the algorithm is a completely unoptimised linear
+/// search. Obviously this could be improved, but we would probably want to work
+/// out just how often these instructions are emitted before working on it. It
+/// might even be optimal to just reorder the tables for the common instructions
+/// rather than changing the algorithm.
+typedef struct A64NamedImmMapper_Mapping {
+	char *Name;
+	uint32_t Value;
+} A64NamedImmMapper_Mapping;
+
+typedef struct A64NamedImmMapper {
+	A64NamedImmMapper_Mapping *Pairs;
+	size_t NumPairs;
+	uint32_t TooBigImm;
+} A64NamedImmMapper;
+
+typedef struct A64SysRegMapper {
+	A64NamedImmMapper_Mapping *SysRegPairs;
+	A64NamedImmMapper_Mapping *InstPairs;
+	size_t NumInstPairs;
+} A64SysRegMapper;
+
+extern A64SysRegMapper AArch64_MSRMapper;
+extern A64SysRegMapper AArch64_MRSMapper;
+
+extern A64NamedImmMapper A64DB_DBarrierMapper;
+extern A64NamedImmMapper A64AT_ATMapper;
+extern A64NamedImmMapper A64DC_DCMapper;
+extern A64NamedImmMapper A64IC_ICMapper;
+extern A64NamedImmMapper A64ISB_ISBMapper;
+extern A64NamedImmMapper A64PRFM_PRFMMapper;
+extern A64NamedImmMapper A64PState_PStateMapper;
+extern A64NamedImmMapper A64TLBI_TLBIMapper;
+
 enum {
 	A64AT_Invalid = -1,    // Op0 Op1  CRn   CRm   Op2
 	A64AT_S1E1R = 0x43c0,  // 01  000  0111  1000  000
@@ -133,7 +181,7 @@ enum {
 	A64AT_S12E0W = 0x63c7  // 01  100  0111  1000  111
 };
 
-enum DBValues {
+enum A64DBValues {
 	A64DB_Invalid = -1,
 	A64DB_OSHLD = 0x1,
 	A64DB_OSHST = 0x2,
@@ -149,7 +197,7 @@ enum DBValues {
 	A64DB_SY =    0xf
 };
 
-enum DCValues {
+enum A64DCValues {
 	A64DC_Invalid = -1,   // Op1  CRn   CRm   Op2
 	A64DC_ZVA   = 0x5ba1, // 01  011  0111  0100  001
 	A64DC_IVAC  = 0x43b1, // 01  000  0111  0110  001
@@ -161,19 +209,19 @@ enum DCValues {
 	A64DC_CISW  = 0x43f2  // 01  000  0111  1110  010
 };
 
-enum ICValues {
+enum A64ICValues {
 	A64IC_Invalid = -1,     // Op1  CRn   CRm   Op2
 	A64IC_IALLUIS = 0x0388, // 000  0111  0001  000
 	A64IC_IALLU = 0x03a8,   // 000  0111  0101  000
 	A64IC_IVAU = 0x1ba9     // 011  0111  0101  001
 };
 
-enum ISBValues {
+enum A64ISBValues {
 	A64ISB_Invalid = -1,
 	A64ISB_SY = 0xf
 };
 
-enum PRFMValues {
+enum A64PRFMValues {
 	A64PRFM_Invalid = -1,
 	A64PRFM_PLDL1KEEP = 0x00,
 	A64PRFM_PLDL1STRM = 0x01,
@@ -195,7 +243,7 @@ enum PRFMValues {
 	A64PRFM_PSTL3STRM = 0x15
 };
 
-enum PStateValues {
+enum A64PStateValues {
 	A64PState_Invalid = -1,
 	A64PState_SPSel = 0x05,
 	A64PState_DAIFSet = 0x1e,
@@ -241,8 +289,7 @@ typedef enum A64Layout_VectorLayout {
 	A64Layout_VL_D
 } A64Layout_VectorLayout;
 
-inline static const char *
-A64VectorLayoutToString(A64Layout_VectorLayout Layout)
+inline static char *A64VectorLayoutToString(A64Layout_VectorLayout Layout)
 {
 	switch (Layout) {
 		case A64Layout_VL_8B:  return ".8b";
@@ -261,7 +308,7 @@ A64VectorLayoutToString(A64Layout_VectorLayout Layout)
 	}
 }
 
-enum SysRegROValues {
+enum A64SysRegROValues {
 	A64SysReg_MDCCSR_EL0        = 0x9808, // 10  011  0000  0001  000
 	A64SysReg_DBGDTRRX_EL0      = 0x9828, // 10  011  0000  0101  000
 	A64SysReg_MDRAR_EL1         = 0x8080, // 10  000  0001  0000  000
@@ -291,16 +338,16 @@ enum SysRegROValues {
 	A64SysReg_ID_ISAR3_EL1      = 0xc013, // 11  000  0000  0010  011
 	A64SysReg_ID_ISAR4_EL1      = 0xc014, // 11  000  0000  0010  100
 	A64SysReg_ID_ISAR5_EL1      = 0xc015, // 11  000  0000  0010  101
-	A64SysReg_ID_AA64PFR0_EL1   = 0xc020, // 11  000  0000  0100  000
-	A64SysReg_ID_AA64PFR1_EL1   = 0xc021, // 11  000  0000  0100  001
-	A64SysReg_ID_AA64DFR0_EL1   = 0xc028, // 11  000  0000  0101  000
-	A64SysReg_ID_AA64DFR1_EL1   = 0xc029, // 11  000  0000  0101  001
-	A64SysReg_ID_AA64AFR0_EL1   = 0xc02c, // 11  000  0000  0101  100
-	A64SysReg_ID_AA64AFR1_EL1   = 0xc02d, // 11  000  0000  0101  101
-	A64SysReg_ID_AA64ISAR0_EL1  = 0xc030, // 11  000  0000  0110  000
-	A64SysReg_ID_AA64ISAR1_EL1  = 0xc031, // 11  000  0000  0110  001
-	A64SysReg_ID_AA64MMFR0_EL1  = 0xc038, // 11  000  0000  0111  000
-	A64SysReg_ID_AA64MMFR1_EL1  = 0xc039, // 11  000  0000  0111  001
+	A64SysReg_ID_A64PFR0_EL1   = 0xc020, // 11  000  0000  0100  000
+	A64SysReg_ID_A64PFR1_EL1   = 0xc021, // 11  000  0000  0100  001
+	A64SysReg_ID_A64DFR0_EL1   = 0xc028, // 11  000  0000  0101  000
+	A64SysReg_ID_A64DFR1_EL1   = 0xc029, // 11  000  0000  0101  001
+	A64SysReg_ID_A64AFR0_EL1   = 0xc02c, // 11  000  0000  0101  100
+	A64SysReg_ID_A64AFR1_EL1   = 0xc02d, // 11  000  0000  0101  101
+	A64SysReg_ID_A64ISAR0_EL1  = 0xc030, // 11  000  0000  0110  000
+	A64SysReg_ID_A64ISAR1_EL1  = 0xc031, // 11  000  0000  0110  001
+	A64SysReg_ID_A64MMFR0_EL1  = 0xc038, // 11  000  0000  0111  000
+	A64SysReg_ID_A64MMFR1_EL1  = 0xc039, // 11  000  0000  0111  001
 	A64SysReg_MVFR0_EL1         = 0xc018, // 11  000  0000  0011  000
 	A64SysReg_MVFR1_EL1         = 0xc019, // 11  000  0000  0011  001
 	A64SysReg_MVFR2_EL1         = 0xc01a, // 11  000  0000  0011  010
@@ -360,7 +407,7 @@ enum SysRegROValues {
 	A64SysReg_ICH_ELSR_EL2      = 0xe65d  // 11  100  1100  1011  101
 };
 
-enum SysRegWOValues {
+enum A64SysRegWOValues {
 	A64SysReg_DBGDTRTX_EL0      = 0x9828, // 10  011  0000  0101  000
 	A64SysReg_OSLAR_EL1         = 0x8084, // 10  000  0001  0000  100
 	A64SysReg_PMSWINC_EL0       = 0xdce4,  // 11  011  1001  1100  100
@@ -378,7 +425,7 @@ enum SysRegWOValues {
 	A64SysReg_ICC_SGI0R_EL1     = 0xc65f  // 11  000  1100  1011  111
 };
 
-enum SysRegValues {
+enum A64SysRegValues {
 	A64SysReg_Invalid = -1,               // Op0 Op1  CRn   CRm   Op2
 	A64SysReg_OSDTRRX_EL1       = 0x8002, // 10  000  0000  0000  010
 	A64SysReg_OSDTRTX_EL1       = 0x801a, // 10  000  0000  0011  010
@@ -858,7 +905,12 @@ enum SysRegValues {
 	A64SysReg_ICH_LR15_EL2      = 0xe66f  // 11  100  1100  1101  111
 };
 
-enum TLBIValues {
+// Cyclone specific system registers
+enum A64CycloneSysRegValues {
+	A64SysReg_CPM_IOACC_CTL_EL3 = 0xff90
+};
+
+enum A64TLBIValues {
 	A64TLBI_Invalid = -1,          // Op0 Op1  CRn   CRm   Op2
 	A64TLBI_IPAS2E1IS    = 0x6401, // 01  100  1000  0000  001
 	A64TLBI_IPAS2LE1IS   = 0x6405, // 01  100  1000  0000  101
@@ -896,12 +948,12 @@ enum TLBIValues {
 
 bool A64Imms_isLogicalImmBits(unsigned RegWidth, uint32_t Bits, uint64_t *Imm);
 
-char *NamedImmMapper_toString(NamedImmMapper *N, uint32_t Value, bool *Valid);
+char *A64NamedImmMapper_toString(A64NamedImmMapper *N, uint32_t Value, bool *Valid);
 
-uint32_t NamedImmMapper_fromString(NamedImmMapper *N, char *Name, bool *Valid);
+uint32_t A64NamedImmMapper_fromString(A64NamedImmMapper *N, char *Name, bool *Valid);
 
-bool NamedImmMapper_validImm(NamedImmMapper *N, uint32_t Value);
+bool A64NamedImmMapper_validImm(A64NamedImmMapper *N, uint32_t Value);
 
-void SysRegMapper_toString(SysRegMapper *S, uint32_t Bits, bool *Valid, char *result);
+void A64SysRegMapper_toString(A64SysRegMapper *S, uint32_t Bits, bool *Valid, char *result);
 
 #endif

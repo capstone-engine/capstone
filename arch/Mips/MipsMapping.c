@@ -9723,6 +9723,7 @@ const char *Mips_group_name(csh handle, unsigned int id)
 #endif
 }
 
+// map instruction name to public instruction ID
 mips_reg Mips_map_insn(const char *name)
 {
 	// handle special alias first
