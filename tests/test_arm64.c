@@ -101,7 +101,7 @@ static void print_insn_detail(cs_insn *ins)
 			printf("\t\t\tVector Arrangement Specifier: 0x%x\n", op->vas);
 
 		if (op->vess != ARM64_VESS_INVALID)
-			printf("\t\t\tVector Element Size: %u\n", op->vess);
+			printf("\t\t\tVector Element Size Specifier: %u\n", op->vess);
 
 		if (op->vector_index != 0)
 			printf("\t\t\tVector Index: %u\n", op->vector_index);
