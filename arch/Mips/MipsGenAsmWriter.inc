@@ -5237,10 +5237,12 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
 
   tmp = cs_strdup(AsmString);
   AsmMnem = tmp;
-  AsmOps = strchr(tmp, ' ');
-  if (AsmOps) {
-    *AsmOps = '\0';
-    AsmOps += 1;
+  for(AsmOps = tmp; *AsmOps; AsmOps++) {
+    if (*AsmOps == ' ' || *AsmOps == '\t') {
+      *AsmOps = '\0';
+      AsmOps++;
+      break;
+    }
   }
   SStream_concat0(OS, AsmMnem);
   if (AsmOps) {
