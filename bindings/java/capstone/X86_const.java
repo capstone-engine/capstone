@@ -1668,11 +1668,12 @@ public class X86_const {
 	public static final int X86_GRP_BWI = 36;
 	public static final int X86_GRP_PFI = 37;
 	public static final int X86_GRP_VLX = 38;
-	public static final int X86_GRP_JUMP = 39;
-	public static final int X86_GRP_VM = 40;
-	public static final int X86_GRP_INT = 41;
-	public static final int X86_GRP_IRET = 42;
-	public static final int X86_GRP_CALL = 43;
-	public static final int X86_GRP_RET = 44;
-	public static final int X86_GRP_MAX = 45;
+	public static final int X86_GRP_SMAP = 39;
+	public static final int X86_GRP_JUMP = 40;
+	public static final int X86_GRP_VM = 41;
+	public static final int X86_GRP_INT = 42;
+	public static final int X86_GRP_IRET = 43;
+	public static final int X86_GRP_CALL = 44;
+	public static final int X86_GRP_RET = 45;
+	public static final int X86_GRP_MAX = 46;
 }
