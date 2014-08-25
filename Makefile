@@ -33,6 +33,10 @@ else
 CFLAGS ?= -O3
 endif
 
+ifneq (,$(findstring yes,$(CAPSTONE_X86_ATT_DISABLE)))
+CFLAGS += -DCAPSTONE_X86_ATT_DISABLE
+endif
+
 CFLAGS += -fPIC -Wall -Iinclude
 
 ifeq ($(CAPSTONE_USE_SYS_DYN_MEM),yes)
@@ -201,7 +205,9 @@ ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86IntelInstPrinter.o
 # assembly syntax is irrelevant in Diet mode, when this info is suppressed
 ifeq (,$(findstring yes,$(CAPSTONE_DIET)))
+ifeq (,$(findstring yes,$(CAPSTONE_X86_ATT_DISABLE)))
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86ATTInstPrinter.o
+endif
 endif
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86Mapping.o
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86Module.o

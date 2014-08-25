@@ -3,7 +3,7 @@
 
 open Printf
 open Capstone
-open Ppc
+open Systemz
 
 
 let print_string_hex comment str =
@@ -14,24 +14,32 @@ let print_string_hex comment str =
 	printf "\n"
 
 
-let _PPC_CODE = "\x80\x20\x00\x00\x80\x3f\x00\x00\x10\x43\x23\x0e\xd0\x44\x00\x80\x4c\x43\x22\x02\x2d\x03\x00\x80\x7c\x43\x20\x14\x7c\x43\x20\x93\x4f\x20\x00\x21\x4c\xc8\x00\x21";;
+let _SYSZ_CODE = "\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x00\x07\xf7\xeb\x2a\xff\xff\x7f\x57\xe3\x01\xff\xff\x7f\x57\xeb\x00\xf0\x00\x00\x24\xb2\x4f\x00\x78";;
+
+
 
 let all_tests = [
-	(CS_ARCH_PPC, [CS_MODE_32; CS_MODE_BIG_ENDIAN], _PPC_CODE, "PPC-64");
+	(CS_ARCH_SYSZ, [CS_MODE_LITTLE_ENDIAN], _SYSZ_CODE, "SystemZ");
 ];;
 
 let print_op csh i op =
 	( match op with
-	| PPC_OP_INVALID _ -> ();	(* this would never happens *)
-	| PPC_OP_REG reg -> printf "\t\top[%d]: REG = %s\n" i (cs_reg_name csh reg);
-	| PPC_OP_IMM imm -> printf "\t\top[%d]: IMM = 0x%x\n" i imm;
-	| PPC_OP_MEM mem -> ( printf "\t\top[%d]: MEM\n" i;
+	| SYSZ_OP_INVALID _ -> ();	(* this would never happens *)
+	| SYSZ_OP_REG reg -> printf "\t\top[%d]: REG = %s\n" i (cs_reg_name csh reg);
+	| SYSZ_OP_ACREG reg -> (); (* XXX *)
+	| SYSZ_OP_IMM imm -> printf "\t\top[%d]: IMM = 0x%x\n" i imm;
+	| SYSZ_OP_MEM mem -> ( printf "\t\top[%d]: MEM\n" i;
 		if mem.base != 0 then
 			printf "\t\t\toperands[%u].mem.base: REG = %s\n" i (cs_reg_name csh mem.base);
-		if mem.displ != 0 then
-			printf "\t\t\toperands[%u].mem.disp: 0x%x\n" i mem.displ;
+		if mem.index != 0 then
+			printf "\t\t\toperands[%u].mem.index: 0x%x\n" i mem.index;
+		if mem.length != 0L then
+			printf "\t\t\toperands[%u].mem.length: 0x%Lx\n" i mem.length;
+		if mem.displ != 0L then
+			printf "\t\t\toperands[%u].mem.disp: 0x%Lx\n" i mem.displ;
 		);
 	);
+
 	();;
 
 
@@ -41,22 +49,22 @@ let print_detail csh arch =
 	| CS_INFO_ARM64 _ -> ();
 	| CS_INFO_MIPS _ -> ();
 	| CS_INFO_X86 _ -> ();
+	| CS_INFO_PPC _ -> ();
 	| CS_INFO_SPARC _ -> ();
-	| CS_INFO_SYSZ _ -> ();
 	| CS_INFO_XCORE _ -> ();
-	| CS_INFO_PPC ppc ->
+	| CS_INFO_SYSZ sysz ->
 
 	(* print all operands info (type & value) *)
-	if (Array.length ppc.operands) > 0 then (
-		printf "\top_count: %d\n" (Array.length ppc.operands);
-		Array.iteri (print_op csh) ppc.operands;
+	if (Array.length sysz.operands) > 0 then (
+		printf "\top_count: %d\n" (Array.length sysz.operands);
+		Array.iteri (print_op csh) sysz.operands;
 	);
 	printf "\n";;
 
 
 let print_insn mode insn =
 	printf "0x%x\t%s\t%s\n" insn.address insn.mnemonic insn.op_str;
-	let csh = cs_open CS_ARCH_PPC mode in
+	let csh = cs_open CS_ARCH_SYSZ mode in
 	match csh with
 	| None -> ()
 	| Some v -> print_detail v insn.arch

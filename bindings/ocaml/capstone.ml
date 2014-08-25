@@ -6,18 +6,25 @@ open Arm64
 open Mips
 open Ppc
 open X86
+open Sparc
+open Systemz
+open Xcore
 open Printf	(* debug *)
 
 type arch =
   | CS_ARCH_ARM
   | CS_ARCH_ARM64
   | CS_ARCH_MIPS
-  | CS_ARCH_PPC
   | CS_ARCH_X86
+  | CS_ARCH_PPC
+  | CS_ARCH_SPARC
+  | CS_ARCH_SYSZ
+  | CS_ARCH_XCORE
+  | CS_ARCH_MAX
+  | CS_ARCH_ALL
 
 type mode =
   |	CS_MODE_LITTLE_ENDIAN	(* little-endian mode (default mode) *)
-  |	CS_MODE_SYNTAX_INTEL	(* Intel X86 asm syntax (default for CS_ARCH_X86) *)
   |	CS_MODE_ARM			(* ARM mode *)
   |	CS_MODE_16			(* 16-bit mode (for X86, Mips) *)
   |	CS_MODE_32			(* 32-bit mode (for X86, Mips) *)
@@ -25,15 +32,37 @@ type mode =
   |	CS_MODE_THUMB		(* ARM's Thumb mode, including Thumb-2 *)
   |	CS_MODE_MICRO		(* MicroMips mode (MIPS architecture) *)
   |	CS_MODE_N64			(* Nintendo-64 mode (MIPS architecture) *)
-  |	CS_MODE_SYNTAX_ATT	(* X86 ATT asm syntax (for CS_ARCH_X86 only) *)
+  |	CS_MODE_V9		(* SparcV9 mode (Sparc architecture) *)
   |	CS_MODE_BIG_ENDIAN	(* big-endian mode *)
+
+
+type opt_type =
+  |	CS_OPT_SYNTAX		(*  Asssembly output syntax *)
+  |	CS_OPT_DETAIL		(* Break down instruction structure into details *)
+  |	CS_OPT_MODE		(* Change engine's mode at run-time *)
+  |	CS_OPT_MEM		(* User-defined dynamic memory related functions *)
+  |	CS_OPT_SKIPDATA		(* Skip data when disassembling. Then engine is in SKIPDATA mode. *)
+  |	CS_OPT_SKIPDATA_SETUP 	(* Setup user-defined function for SKIPDATA option *)
+
+
+type opt_value = 
+  |	CS_OPT_OFF 		(* Turn OFF an option - default option of CS_OPT_DETAIL, CS_OPT_SKIPDATA. *)
+  |	CS_OPT_ON  		(* Turn ON an option (CS_OPT_DETAIL, CS_OPT_SKIPDATA). *)
+  |	CS_OPT_SYNTAX_DEFAULT 	(* Default asm syntax (CS_OPT_SYNTAX). *)
+  |	CS_OPT_SYNTAX_INTEL 	(* X86 Intel asm syntax - default on X86 (CS_OPT_SYNTAX). *)
+  |	CS_OPT_SYNTAX_ATT 	(* X86 ATT asm syntax (CS_OPT_SYNTAX). *)
+  |	CS_OPT_SYNTAX_NOREGNAME	(* Prints register name with only number (CS_OPT_SYNTAX) *)
 
 type cs_arch = 
 	| CS_INFO_ARM of cs_arm
 	| CS_INFO_ARM64 of cs_arm64
 	| CS_INFO_MIPS of cs_mips
-	| CS_INFO_PPC of cs_ppc
 	| CS_INFO_X86 of cs_x86
+	| CS_INFO_PPC of cs_ppc
+	| CS_INFO_SPARC of cs_sparc
+	| CS_INFO_SYSZ of cs_sysz
+	| CS_INFO_XCORE of cs_xcore
+
 
 type cs_insn0 = {
 	id: int;
@@ -96,7 +125,7 @@ class cs a m =
 	let csh = cs_open arch mode in
 	object
 		val handle = match csh with
-			| None -> failwith "impossible to open an handle\n"
+			| None -> failwith "impossible to open an handle"
 			| Some v -> v
 
 		method get_csh = handle
