@@ -1159,7 +1159,7 @@ static void printLogicalImm32(MCInst *MI, unsigned OpNum, SStream *O)
 	uint64_t Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 
 	Val = AArch64_AM_decodeLogicalImmediate(Val, 32);
-	printInt32Bang(O, (int)Val);
+	printUInt32Bang(O, (int)Val);
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
@@ -1526,7 +1526,7 @@ static void printVectorList(MCInst *MI, unsigned OpNum, SStream *O, char *Layout
 	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
 	unsigned NumRegs = 1, FirstReg, i;
 
-	SStream_concat0(O, "{ ");
+	SStream_concat0(O, "{");
 
 	// Work out how many registers there are in the list (if there is an actual
 	// list).
@@ -1566,7 +1566,7 @@ static void printVectorList(MCInst *MI, unsigned OpNum, SStream *O, char *Layout
 		}
 	}
 
-	SStream_concat0(O, " }");
+	SStream_concat0(O, "}");
 }
 
 static void printTypedVectorList(MCInst *MI, unsigned OpNum, SStream *O, unsigned NumLanes, char LaneKind, MCRegisterInfo *MRI)
