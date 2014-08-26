@@ -156,17 +156,20 @@ static inline uint64_t AArch64_AM_decodeLogicalImmediate(uint64_t val, unsigned 
 /// is a valid encoding for an integer value with regSize bits.
 static inline bool AArch64_AM_isValidDecodeLogicalImmediate(uint64_t val, unsigned regSize)
 {
+	unsigned size;
+	unsigned S;
+	int len;
 	// Extract the N and imms fields needed for checking.
 	unsigned N = (val >> 12) & 1;
 	unsigned imms = val & 0x3f;
 
 	if (regSize == 32 && N != 0) // undefined logical immediate encoding
 		return false;
-	int len = 31 - countLeadingZeros((N << 6) | (~imms & 0x3f));
+	len = 31 - countLeadingZeros((N << 6) | (~imms & 0x3f));
 	if (len < 0) // undefined logical immediate encoding
 		return false;
-	unsigned size = (1 << len);
-	unsigned S = imms & (size - 1);
+	size = (1 << len);
+	S = imms & (size - 1);
 	if (S == size - 1) // undefined logical immediate encoding
 		return false;
 
