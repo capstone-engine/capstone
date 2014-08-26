@@ -2734,6 +2734,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		SystemZ_LDXBRA, SYSZ_INS_LDXBRA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
+#endif
+	},
+	{
 		SystemZ_LDY, SYSZ_INS_LDY,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
@@ -2752,6 +2758,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		SystemZ_LEDBRA, SYSZ_INS_LEDBRA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
+#endif
+	},
+	{
 		SystemZ_LER, SYSZ_INS_LER,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
@@ -2761,6 +2773,12 @@ static insn_map insns[] = {
 		SystemZ_LEXBR, SYSZ_INS_LEXBR,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		SystemZ_LEXBRA, SYSZ_INS_LEXBRA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
 #endif
 	},
 	{
@@ -4757,11 +4775,14 @@ static name_map insn_name_maps[] = {
 	{ SYSZ_INS_LDGR, "ldgr" },
 	{ SYSZ_INS_LDR, "ldr" },
 	{ SYSZ_INS_LDXBR, "ldxbr" },
+	{ SYSZ_INS_LDXBRA, "ldxbra" },
 	{ SYSZ_INS_LDY, "ldy" },
 	{ SYSZ_INS_LE, "le" },
 	{ SYSZ_INS_LEDBR, "ledbr" },
+	{ SYSZ_INS_LEDBRA, "ledbra" },
 	{ SYSZ_INS_LER, "ler" },
 	{ SYSZ_INS_LEXBR, "lexbr" },
+	{ SYSZ_INS_LEXBRA, "lexbra" },
 	{ SYSZ_INS_LEY, "ley" },
 	{ SYSZ_INS_LFH, "lfh" },
 	{ SYSZ_INS_LG, "lg" },
