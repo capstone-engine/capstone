@@ -17,7 +17,7 @@ struct platform {
 	cs_opt_value opt_value;
 };
 
-static void print_string_hex(unsigned char *str, int len)
+static void print_string_hex(unsigned char *str, size_t len)
 {
 	unsigned char *c;
 
