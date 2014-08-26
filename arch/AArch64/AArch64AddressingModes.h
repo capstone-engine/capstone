@@ -130,6 +130,7 @@ static inline uint64_t AArch64_AM_decodeLogicalImmediate(uint64_t val, unsigned 
 	unsigned N = (val >> 12) & 1;
 	unsigned immr = (val >> 6) & 0x3f;
 	unsigned imms = val & 0x3f;
+	unsigned i;
 
 	// assert((regSize == 64 || N == 0) && "undefined logical immediate encoding");
 	int len = 31 - countLeadingZeros((N << 6) | (~imms & 0x3f));
@@ -139,7 +140,7 @@ static inline uint64_t AArch64_AM_decodeLogicalImmediate(uint64_t val, unsigned 
 	unsigned S = imms & (size - 1);
 	// assert(S != size - 1 && "undefined logical immediate encoding");
 	uint64_t pattern = (1ULL << (S + 1)) - 1;
-	for (unsigned i = 0; i < R; ++i)
+	for (i = 0; i < R; ++i)
 		pattern = ror(pattern, size);
 
 	// Replicate the pattern to fill the regSize.
