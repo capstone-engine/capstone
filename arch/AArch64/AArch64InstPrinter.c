@@ -1576,7 +1576,7 @@ static void printTypedVectorList(MCInst *MI, unsigned OpNum, SStream *O, unsigne
 	arm64_vess vess = 0;
 
 	if (NumLanes) {
-		snprintf(Suffix, sizeof(Suffix), ".%u%c", NumLanes, LaneKind);
+		cs_snprintf(Suffix, sizeof(Suffix), ".%u%c", NumLanes, LaneKind);
 		switch(LaneKind) {
 			default: break;
 			case 'b':
@@ -1633,7 +1633,7 @@ static void printTypedVectorList(MCInst *MI, unsigned OpNum, SStream *O, unsigne
 				break;
 		}
 	} else {
-		snprintf(Suffix, sizeof(Suffix), ".%c", LaneKind);
+		cs_snprintf(Suffix, sizeof(Suffix), ".%c", LaneKind);
 		switch(LaneKind) {
 			default: break;
 			case 'b':

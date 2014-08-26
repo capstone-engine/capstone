@@ -14959,7 +14959,7 @@ void arm64_op_addImm(MCInst *MI, int64_t imm)
 {
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = imm;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)imm;
 		MI->flat_insn->detail->arm64.op_count++;
 	}
 }
