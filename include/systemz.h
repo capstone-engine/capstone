@@ -547,11 +547,14 @@ typedef enum sysz_insn {
 	SYSZ_INS_LDGR,
 	SYSZ_INS_LDR,
 	SYSZ_INS_LDXBR,
+	SYSZ_INS_LDXBRA,
 	SYSZ_INS_LDY,
 	SYSZ_INS_LE,
 	SYSZ_INS_LEDBR,
+	SYSZ_INS_LEDBRA,
 	SYSZ_INS_LER,
 	SYSZ_INS_LEXBR,
+	SYSZ_INS_LEXBRA,
 	SYSZ_INS_LEY,
 	SYSZ_INS_LFH,
 	SYSZ_INS_LG,
@@ -797,6 +800,7 @@ typedef enum sysz_insn {
 	SYSZ_INS_XR,
 	SYSZ_INS_XRK,
 	SYSZ_INS_XY,
+
 	SYSZ_INS_MAX,   // <-- mark the end of the list of instructions
 } sysz_insn;
 

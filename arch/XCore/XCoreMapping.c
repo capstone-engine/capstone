@@ -797,7 +797,7 @@ static insn_map insns[] = {
 	{
 		XCore_LDET_0R, XCORE_INS_LDW,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 0, 0
+		{ XCORE_REG_SP, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{

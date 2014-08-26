@@ -4,7 +4,7 @@
 LIB = capstone
 FLAGS = '-Wall -Wextra -Wwrite-strings'
 
-all: arm.cmxa arm64.cmxa mips.cmxa ppc.cmxa x86.cmxa capstone.cmxa test.cmx test_detail.cmx test_x86.cmx test_arm.cmx test_arm64.cmx test_mips.cmx test_ppc.cmx ocaml.o
+all: arm.cmxa arm64.cmxa mips.cmxa ppc.cmxa x86.cmxa sparc.cmxa systemz.cmxa xcore.cmxa capstone.cmxa test.cmx test_detail.cmx test_x86.cmx test_arm.cmx test_arm64.cmx test_mips.cmx test_ppc.cmx test_sparc.cmx test_systemz.cmx test_xcore.cmx ocaml.o
 	ocamlopt -o test -ccopt $(FLAGS) ocaml.o capstone.cmx test.cmx -cclib -l$(LIB)
 	ocamlopt -o test_detail -ccopt $(FLAGS) capstone.cmx ocaml.o test_detail.cmx -cclib -l$(LIB)
 	ocamlopt -o test_x86 -ccopt $(FLAGS) capstone.cmx ocaml.o x86.cmx test_x86.cmx -cclib -l$(LIB)
@@ -12,6 +12,10 @@ all: arm.cmxa arm64.cmxa mips.cmxa ppc.cmxa x86.cmxa capstone.cmxa test.cmx test
 	ocamlopt -o test_arm64 -ccopt $(FLAGS) capstone.cmx ocaml.o arm64.cmx test_arm64.cmx -cclib -l$(LIB)
 	ocamlopt -o test_mips -ccopt $(FLAGS) capstone.cmx ocaml.o mips.cmx test_mips.cmx -cclib -l$(LIB)
 	ocamlopt -o test_ppc -ccopt $(FLAGS) capstone.cmx ocaml.o ppc.cmx test_ppc.cmx -cclib -l$(LIB)
+	ocamlopt -o test_sparc -ccopt $(FLAGS) capstone.cmx ocaml.o sparc.cmx test_sparc.cmx -cclib -l$(LIB)
+	ocamlopt -o test_systemz -ccopt $(FLAGS) capstone.cmx ocaml.o systemz.cmx test_systemz.cmx -cclib -l$(LIB)
+	ocamlopt -o test_xcore -ccopt $(FLAGS) capstone.cmx ocaml.o xcore.cmx test_xcore.cmx -cclib -l$(LIB)
+
 
 test.cmx: test.ml
 	ocamlopt -ccopt $(FLAGS) -c $< -cclib -l$(LIB)
@@ -32,6 +36,15 @@ test_mips.cmx: test_mips.ml
 	ocamlopt -ccopt $(FLAGS) -c $< -cclib -l$(LIB)
 
 test_ppc.cmx: test_ppc.ml
+	ocamlopt -ccopt $(FLAGS) -c $< -cclib -l$(LIB)
+
+test_sparc.cmx: test_sparc.ml
+	ocamlopt -ccopt $(FLAGS) -c $< -cclib -l$(LIB)
+
+test_systemz.cmx: test_systemz.ml
+	ocamlopt -ccopt $(FLAGS) -c $< -cclib -l$(LIB)
+
+test_xcore.cmx: test_xcore.ml
 	ocamlopt -ccopt $(FLAGS) -c $< -cclib -l$(LIB)
 
 ocaml.o: ocaml.c
@@ -109,6 +122,42 @@ ppc.cmx: ppc.ml ppc.cmi
 ppc.cmxa: ppc.cmx
 	ocamlopt -ccopt $(FLAGS) -a -o $@ $<
 
+sparc.mli: sparc.ml
+	ocamlc -ccopt $(FLAGS) -i $< > $@
+
+sparc.cmi: sparc.mli
+	ocamlc -ccopt $(FLAGS) -c $<
+
+sparc.cmx: sparc.ml sparc.cmi
+	ocamlopt -ccopt $(FLAGS) -c $<
+
+sparc.cmxa: sparc.cmx
+	ocamlopt -ccopt $(FLAGS) -a -o $@ $<
+
+systemz.mli: systemz.ml
+	ocamlc -ccopt $(FLAGS) -i $< > $@
+
+systemz.cmi: systemz.mli
+	ocamlc -ccopt $(FLAGS) -c $<
+
+systemz.cmx: systemz.ml systemz.cmi
+	ocamlopt -ccopt $(FLAGS) -c $<
+
+systemz.cmxa: systemz.cmx
+	ocamlopt -ccopt $(FLAGS) -a -o $@ $<
+
+xcore.mli: xcore.ml
+	ocamlc -ccopt $(FLAGS) -i $< > $@
+
+xcore.cmi: xcore.mli
+	ocamlc -ccopt $(FLAGS) -c $<
+
+xcore.cmx: xcore.ml xcore.cmi
+	ocamlopt -ccopt $(FLAGS) -c $<
+
+xcore.cmxa: xcore.cmx
+	ocamlopt -ccopt $(FLAGS) -a -o $@ $<
+
 clean:
-	rm -f *.[oa] *.so *.cm[ixoa] *.cmxa *.mli test test_detail test_x86 test_arm test_arm64 test_mips
+	rm -f *.[oa] *.so *.cm[ixoa] *.cmxa *.mli test test_detail test_x86 test_arm test_arm64 test_mips test_ppc test_sparc test_systemz test_xcore
 

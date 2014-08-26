@@ -496,7 +496,7 @@ static DecodeStatus DecodeAddiGroupBranch_4(MCInst *MI, uint32_t insn,
 
 	uint32_t Rs = fieldFromInstruction(insn, 21, 5);
 	uint32_t Rt = fieldFromInstruction(insn, 16, 5);
-	uint32_t Imm = SignExtend64(fieldFromInstruction(insn, 0, 16), 16) << 2;
+	uint32_t Imm = (uint32_t)SignExtend64(fieldFromInstruction(insn, 0, 16), 16) << 2;
 	bool HasRs = false;
 
 	if (Rs >= Rt) {
@@ -532,7 +532,7 @@ static DecodeStatus DecodeDaddiGroupBranch_4(MCInst *MI, uint32_t insn,
 
 	uint32_t Rs = fieldFromInstruction(insn, 21, 5);
 	uint32_t Rt = fieldFromInstruction(insn, 16, 5);
-	uint32_t Imm = SignExtend64(fieldFromInstruction(insn, 0, 16), 16) << 2;
+	uint32_t Imm = (uint32_t)SignExtend64(fieldFromInstruction(insn, 0, 16), 16) << 2;
 	bool HasRs = false;
 
 	if (Rs >= Rt) {
@@ -569,7 +569,7 @@ static DecodeStatus DecodeBlezlGroupBranch_4(MCInst *MI, uint32_t insn,
 
 	uint32_t Rs = fieldFromInstruction(insn, 21, 5);
 	uint32_t Rt = fieldFromInstruction(insn, 16, 5);
-	uint32_t Imm = SignExtend64(fieldFromInstruction(insn, 0, 16), 16) << 2;
+	uint32_t Imm = (uint32_t)SignExtend64(fieldFromInstruction(insn, 0, 16), 16) << 2;
 	bool HasRs = false;
 
 	if (Rt == 0)
@@ -611,7 +611,7 @@ static DecodeStatus DecodeBgtzlGroupBranch_4(MCInst *MI, uint32_t insn,
 
 	uint32_t Rs = fieldFromInstruction(insn, 21, 5);
 	uint32_t Rt = fieldFromInstruction(insn, 16, 5);
-	uint32_t Imm = SignExtend64(fieldFromInstruction(insn, 0, 16), 16) << 2;
+	uint32_t Imm = (uint32_t)SignExtend64(fieldFromInstruction(insn, 0, 16), 16) << 2;
 
 	if (Rt == 0)
 		return MCDisassembler_Fail;
@@ -649,7 +649,7 @@ static DecodeStatus DecodeBgtzGroupBranch_4(MCInst *MI, uint32_t insn,
 
 	uint32_t Rs = fieldFromInstruction(insn, 21, 5);
 	uint32_t Rt = fieldFromInstruction(insn, 16, 5);
-	uint32_t Imm = SignExtend64(fieldFromInstruction(insn, 0, 16), 16) << 2;
+	uint32_t Imm = (uint32_t)SignExtend64(fieldFromInstruction(insn, 0, 16), 16) << 2;
 	bool HasRs = false;
 	bool HasRt = false;
 
@@ -695,7 +695,7 @@ static DecodeStatus DecodeBlezGroupBranch_4(MCInst *MI, uint32_t insn,
 
 	uint32_t Rs = fieldFromInstruction(insn, 21, 5);
 	uint32_t Rt = fieldFromInstruction(insn, 16, 5);
-	uint32_t Imm = SignExtend64(fieldFromInstruction(insn, 0, 16), 16) << 2;
+	uint32_t Imm = (uint32_t)SignExtend64(fieldFromInstruction(insn, 0, 16), 16) << 2;
 	bool HasRs = false;
 
 	if (Rt == 0)

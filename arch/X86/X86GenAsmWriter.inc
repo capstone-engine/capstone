@@ -15364,13 +15364,15 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
 
   tmp = cs_strdup(AsmString);
   AsmMnem = tmp;
-  AsmOps = strchr(tmp, ' ');
-  if (AsmOps) {
-    *AsmOps = '\0';
-    AsmOps += 1;
+  for(AsmOps = tmp; *AsmOps; AsmOps++) {
+    if (*AsmOps == ' ' || *AsmOps == '\t') {
+      *AsmOps = '\0';
+      AsmOps++;
+      break;
+    }
   }
   SStream_concat0(OS, AsmMnem);
-  if (AsmOps) {
+  if (*AsmOps) {
     SStream_concat0(OS, "\t");
     for (c = AsmOps; *c; c++) {
       if (*c == '$') {
@@ -15379,7 +15381,7 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
           c += 1;
           OpIdx = *c - 1;
           c += 1;
-          PrintMethodIdx = *c -1;
+          PrintMethodIdx = *c - 1;
           printCustomAliasOperand(MI, OpIdx, PrintMethodIdx, OS);
         } else
           printOperand(MI, *c - 1, OS);

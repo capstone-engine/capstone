@@ -414,4 +414,26 @@ static inline int64_t SignExtend64(uint64_t X, unsigned B) {
 	return (int64_t)(X << (64 - B)) >> (64 - B);
 }
 
+/// \brief Count number of 0's from the most significant bit to the least
+///   stopping at the first 1.
+///
+/// Only unsigned integral types are allowed.
+///
+/// \param ZB the behavior on an input of 0. Only ZB_Width and ZB_Undefined are
+///   valid arguments.
+static inline unsigned int countLeadingZeros(int x)
+{
+	unsigned count = 0;
+	int i;
+	const unsigned bits = sizeof(x) * 8;
+
+	for (i = bits; --i; ) {
+		if (x < 0) break;
+		count++;
+		x <<= 1;
+	}
+
+	return count;
+}
+
 #endif

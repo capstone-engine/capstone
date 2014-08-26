@@ -1591,6 +1591,7 @@ typedef enum  x86_insn_group {
 	X86_GRP_BWI,
 	X86_GRP_PFI,
 	X86_GRP_VLX,
+	X86_GRP_SMAP,
 
 	X86_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 	X86_GRP_VM,	// all virtualization instructions (VT-x + AMD-V)

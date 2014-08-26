@@ -48,5 +48,8 @@ char *cs_strdup(const char *str);
 
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 
+// we need this since Windows doesnt have snprintf()
+int cs_snprintf(char *buffer, size_t size, const char *fmt, ...);
+
 #endif
 

@@ -305,6 +305,9 @@ public class Capstone {
   public static final int CS_ERR_MEMSETUP = 8;
   public static final int CS_ERR_VERSION = 9;  //Unsupported version (bindings)
   public static final int CS_ERR_DIET = 10;  //Information irrelevant in diet engine
+  public static final int CS_ERR_SKIPDATA = 11;  //Access irrelevant data for "data" instruction in SKIPDATA mode
+  public static final int CS_ERR_X86_ATT = 12;  //X86 AT&T syntax is unsupported (opt-out at compile time)
+  public static final int CS_ERR_X86_INTEL = 13;  //X86 Intel syntax is unsupported (opt-out at compile time)
 
   // Capstone option type
   public static final int CS_OPT_SYNTAX = 1;  // Intel X86 asm syntax (CS_ARCH_X86 arch)

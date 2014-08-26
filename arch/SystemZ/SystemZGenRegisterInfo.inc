@@ -313,7 +313,7 @@ static MCRegisterDesc SystemZRegDesc[] = { // Descriptors
 };
 
   // GRX32Bit Register Class...
-  static uint16_t GRX32Bit[] = {
+  static MCPhysReg GRX32Bit[] = {
     SystemZ_R0L, SystemZ_R1L, SystemZ_R2L, SystemZ_R3L, SystemZ_R4L, SystemZ_R5L, SystemZ_R0H, SystemZ_R1H, SystemZ_R2H, SystemZ_R3H, SystemZ_R4H, SystemZ_R5H, SystemZ_R15L, SystemZ_R15H, SystemZ_R14L, SystemZ_R14H, SystemZ_R13L, SystemZ_R13H, SystemZ_R12L, SystemZ_R12H, SystemZ_R11L, SystemZ_R11H, SystemZ_R10L, SystemZ_R10H, SystemZ_R9L, SystemZ_R9H, SystemZ_R8L, SystemZ_R8H, SystemZ_R7L, SystemZ_R7H, SystemZ_R6L, SystemZ_R6H, 
   };
 
@@ -323,7 +323,7 @@ static MCRegisterDesc SystemZRegDesc[] = { // Descriptors
   };
 
   // FP32Bit Register Class...
-  static uint16_t FP32Bit[] = {
+  static MCPhysReg FP32Bit[] = {
     SystemZ_F0S, SystemZ_F1S, SystemZ_F2S, SystemZ_F3S, SystemZ_F4S, SystemZ_F5S, SystemZ_F6S, SystemZ_F7S, SystemZ_F8S, SystemZ_F9S, SystemZ_F10S, SystemZ_F11S, SystemZ_F12S, SystemZ_F13S, SystemZ_F14S, SystemZ_F15S, 
   };
 
@@ -333,7 +333,7 @@ static MCRegisterDesc SystemZRegDesc[] = { // Descriptors
   };
 
   // GR32Bit Register Class...
-  static uint16_t GR32Bit[] = {
+  static MCPhysReg GR32Bit[] = {
     SystemZ_R0L, SystemZ_R1L, SystemZ_R2L, SystemZ_R3L, SystemZ_R4L, SystemZ_R5L, SystemZ_R15L, SystemZ_R14L, SystemZ_R13L, SystemZ_R12L, SystemZ_R11L, SystemZ_R10L, SystemZ_R9L, SystemZ_R8L, SystemZ_R7L, SystemZ_R6L, 
   };
 
@@ -343,7 +343,7 @@ static MCRegisterDesc SystemZRegDesc[] = { // Descriptors
   };
 
   // GRH32Bit Register Class...
-  static uint16_t GRH32Bit[] = {
+  static MCPhysReg GRH32Bit[] = {
     SystemZ_R0H, SystemZ_R1H, SystemZ_R2H, SystemZ_R3H, SystemZ_R4H, SystemZ_R5H, SystemZ_R15H, SystemZ_R14H, SystemZ_R13H, SystemZ_R12H, SystemZ_R11H, SystemZ_R10H, SystemZ_R9H, SystemZ_R8H, SystemZ_R7H, SystemZ_R6H, 
   };
 
@@ -353,7 +353,7 @@ static MCRegisterDesc SystemZRegDesc[] = { // Descriptors
   };
 
   // ADDR32Bit Register Class...
-  static uint16_t ADDR32Bit[] = {
+  static MCPhysReg ADDR32Bit[] = {
     SystemZ_R1L, SystemZ_R2L, SystemZ_R3L, SystemZ_R4L, SystemZ_R5L, SystemZ_R15L, SystemZ_R14L, SystemZ_R13L, SystemZ_R12L, SystemZ_R11L, SystemZ_R10L, SystemZ_R9L, SystemZ_R8L, SystemZ_R7L, SystemZ_R6L, 
   };
 
@@ -363,7 +363,7 @@ static MCRegisterDesc SystemZRegDesc[] = { // Descriptors
   };
 
   // CCRegs Register Class...
-  static uint16_t CCRegs[] = {
+  static MCPhysReg CCRegs[] = {
     SystemZ_CC, 
   };
 
@@ -373,7 +373,7 @@ static MCRegisterDesc SystemZRegDesc[] = { // Descriptors
   };
 
   // FP64Bit Register Class...
-  static uint16_t FP64Bit[] = {
+  static MCPhysReg FP64Bit[] = {
     SystemZ_F0D, SystemZ_F1D, SystemZ_F2D, SystemZ_F3D, SystemZ_F4D, SystemZ_F5D, SystemZ_F6D, SystemZ_F7D, SystemZ_F8D, SystemZ_F9D, SystemZ_F10D, SystemZ_F11D, SystemZ_F12D, SystemZ_F13D, SystemZ_F14D, SystemZ_F15D, 
   };
 
@@ -383,7 +383,7 @@ static MCRegisterDesc SystemZRegDesc[] = { // Descriptors
   };
 
   // GR64Bit Register Class...
-  static uint16_t GR64Bit[] = {
+  static MCPhysReg GR64Bit[] = {
     SystemZ_R0D, SystemZ_R1D, SystemZ_R2D, SystemZ_R3D, SystemZ_R4D, SystemZ_R5D, SystemZ_R15D, SystemZ_R14D, SystemZ_R13D, SystemZ_R12D, SystemZ_R11D, SystemZ_R10D, SystemZ_R9D, SystemZ_R8D, SystemZ_R7D, SystemZ_R6D, 
   };
 
@@ -393,7 +393,7 @@ static MCRegisterDesc SystemZRegDesc[] = { // Descriptors
   };
 
   // ADDR64Bit Register Class...
-  static uint16_t ADDR64Bit[] = {
+  static MCPhysReg ADDR64Bit[] = {
     SystemZ_R1D, SystemZ_R2D, SystemZ_R3D, SystemZ_R4D, SystemZ_R5D, SystemZ_R15D, SystemZ_R14D, SystemZ_R13D, SystemZ_R12D, SystemZ_R11D, SystemZ_R10D, SystemZ_R9D, SystemZ_R8D, SystemZ_R7D, SystemZ_R6D, 
   };
 
@@ -403,7 +403,7 @@ static MCRegisterDesc SystemZRegDesc[] = { // Descriptors
   };
 
   // FP128Bit Register Class...
-  static uint16_t FP128Bit[] = {
+  static MCPhysReg FP128Bit[] = {
     SystemZ_F0Q, SystemZ_F1Q, SystemZ_F4Q, SystemZ_F5Q, SystemZ_F8Q, SystemZ_F9Q, SystemZ_F12Q, SystemZ_F13Q, 
   };
 
@@ -413,7 +413,7 @@ static MCRegisterDesc SystemZRegDesc[] = { // Descriptors
   };
 
   // GR128Bit Register Class...
-  static uint16_t GR128Bit[] = {
+  static MCPhysReg GR128Bit[] = {
     SystemZ_R0Q, SystemZ_R2Q, SystemZ_R4Q, SystemZ_R12Q, SystemZ_R10Q, SystemZ_R8Q, SystemZ_R6Q, SystemZ_R14Q, 
   };
 
@@ -423,7 +423,7 @@ static MCRegisterDesc SystemZRegDesc[] = { // Descriptors
   };
 
   // ADDR128Bit Register Class...
-  static uint16_t ADDR128Bit[] = {
+  static MCPhysReg ADDR128Bit[] = {
     SystemZ_R2Q, SystemZ_R4Q, SystemZ_R12Q, SystemZ_R10Q, SystemZ_R8Q, SystemZ_R6Q, SystemZ_R14Q, 
   };
 

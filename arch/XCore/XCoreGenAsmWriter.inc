@@ -37,6 +37,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     645U,	// LIFETIME_END
     0U,	// STACKMAP
     0U,	// PATCHPOINT
+    0U,	// LOAD_STACK_GUARD
     2250U,	// ADD_2rus
     2250U,	// ADD_3r
     10363U,	// ADJCALLSTACKDOWN

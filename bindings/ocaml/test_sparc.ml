@@ -1,9 +1,9 @@
 (* Capstone Disassembler Engine
-* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> *)
+* By Guillaume Jeanne <guillaume.jeanne@ensimag.fr>, 2014> *)
 
 open Printf
 open Capstone
-open Arm64
+open Sparc
 
 
 let print_string_hex comment str =
@@ -14,34 +14,29 @@ let print_string_hex comment str =
 	printf "\n"
 
 
-let _ARM64_CODE = "\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9\x20\x04\x81\xda\x20\x08\x02\x8b";;
+let _SPARC_CODE = "\x80\xa0\x40\x02\x85\xc2\x60\x08\x85\xe8\x20\x01\x81\xe8\x00\x00\x90\x10\x20\x01\xd5\xf6\x10\x16\x21\x00\x00\x0a\x86\x00\x40\x02\x01\x00\x00\x00\x12\xbf\xff\xff\x10\xbf\xff\xff\xa0\x02\x00\x09\x0d\xbf\xff\xff\xd4\x20\x60\x00\xd4\x4e\x00\x16\x2a\xc2\x80\x03";;
+let _SPARCV9_CODE = "\x81\xa8\x0a\x24\x89\xa0\x10\x20\x89\xa0\x1a\x60\x89\xa0\x00\xe0";;
+
 
 let all_tests = [
-        (CS_ARCH_ARM64, [CS_MODE_ARM], _ARM64_CODE, "ARM-64");
+        (CS_ARCH_SPARC, [CS_MODE_BIG_ENDIAN], _SPARC_CODE, "Sparc");
+        (CS_ARCH_SPARC, [CS_MODE_BIG_ENDIAN; CS_MODE_V9], _SPARCV9_CODE, "SparcV9");
 ];;
 
 let print_op csh i op =
-	( match op.value with
-	| ARM64_OP_INVALID _ -> ();	(* this would never happens *)
-	| ARM64_OP_REG reg -> printf "\t\top[%d]: REG = %s\n" i (cs_reg_name csh reg);
-	| ARM64_OP_CIMM imm -> printf "\t\top[%d]: C-IMM = %u\n" i imm;
-	| ARM64_OP_IMM imm -> printf "\t\top[%d]: IMM = 0x%x\n" i imm;
-	| ARM64_OP_FP fp -> printf "\t\top[%d]: FP = %f\n" i fp;
-	| ARM64_OP_MEM mem -> ( printf "\t\top[%d]: MEM\n" i;
+	( match op with
+	| SPARC_OP_INVALID _ -> ();	(* this would never happens *)
+	| SPARC_OP_REG reg -> printf "\t\top[%d]: REG = %s\n" i (cs_reg_name csh reg);
+	| SPARC_OP_IMM imm -> printf "\t\top[%d]: IMM = 0x%x\n" i imm;
+	| SPARC_OP_MEM mem -> ( printf "\t\top[%d]: MEM\n" i;
 		if mem.base != 0 then
 			printf "\t\t\toperands[%u].mem.base: REG = %s\n" i (cs_reg_name csh mem.base);
 		if mem.index != 0 then
-			printf "\t\t\toperands[%u].mem.index: REG = %s\n" i (cs_reg_name csh mem.index);
+			printf "\t\t\toperands[%u].mem.index: 0x%x\n" i mem.index;
 		if mem.displ != 0 then
 			printf "\t\t\toperands[%u].mem.disp: 0x%x\n" i mem.displ;
 		);
 	);
-
-	if op.shift.shift_type != _ARM64_SFT_INVALID && op.shift.shift_value > 0 then
-		printf "\t\t\tShift: type = %u, value = %u\n"
-                op.shift.shift_type op.shift.shift_value;
-	if op.ext != _ARM64_EXT_INVALID then
-		printf "\t\t\tExt: %u\n" op.ext;
 
 	();;
 
@@ -49,33 +44,25 @@ let print_op csh i op =
 let print_detail csh arch =
 	match arch with
 	| CS_INFO_ARM _ -> ();
+	| CS_INFO_ARM64 _ -> ();
 	| CS_INFO_MIPS _ -> ();
-	| CS_INFO_PPC _ -> ();
 	| CS_INFO_X86 _ -> ();
-	| CS_INFO_SPARC _ -> ();
+	| CS_INFO_PPC _ -> ();
 	| CS_INFO_SYSZ _ -> ();
 	| CS_INFO_XCORE _ -> ();
-	| CS_INFO_ARM64 arm64 ->
-	if arm64.cc != _ARM64_CC_AL && arm64.cc != _ARM64_CC_INVALID then
-		printf "\tCode condition: %u\n" arm64.cc;
-
-	if arm64.update_flags then
-		printf "\tUpdate-flags: True\n";
-
-	if arm64.writeback then
-		printf "\tWriteback: True\n";
+	| CS_INFO_SPARC sparc ->
 
 	(* print all operands info (type & value) *)
-	if (Array.length arm64.operands) > 0 then (
-		printf "\top_count: %d\n" (Array.length arm64.operands);
-		Array.iteri (print_op csh) arm64.operands;
+	if (Array.length sparc.operands) > 0 then (
+		printf "\top_count: %d\n" (Array.length sparc.operands);
+		Array.iteri (print_op csh) sparc.operands;
 	);
 	printf "\n";;
 
 
 let print_insn mode insn =
 	printf "0x%x\t%s\t%s\n" insn.address insn.mnemonic insn.op_str;
-	let csh = cs_open CS_ARCH_ARM64 mode in
+	let csh = cs_open CS_ARCH_SPARC mode in
 	match csh with
 	| None -> ()
 	| Some v -> print_detail v insn.arch

@@ -1338,11 +1338,11 @@ static void printCPSIFlag(MCInst *MI, unsigned OpNum, SStream *O)
 static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *Op = MCInst_getOperand(MI, OpNum);
-	unsigned SpecRegRBit = MCOperand_getImm(Op) >> 4;
+	unsigned SpecRegRBit = (unsigned)MCOperand_getImm(Op) >> 4;
 	unsigned Mask = MCOperand_getImm(Op) & 0xf;
 
 	if (ARM_getFeatureBits(MI->csh->mode) & ARM_FeatureMClass) {
-		unsigned SYSm = MCOperand_getImm(Op);
+		unsigned SYSm = (unsigned)MCOperand_getImm(Op);
 		unsigned Opcode = MCInst_getOpcode(MI);
 		// For reads of the special registers ignore the "mask encoding" bits
 		// which are only for writes.
