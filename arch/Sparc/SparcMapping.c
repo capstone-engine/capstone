@@ -3280,7 +3280,7 @@ static name_map hint_maps[] = {
 
 sparc_hint Sparc_map_hint(const char *name)
 {
-	unsigned int i, l1, l2;
+	size_t i, l1, l2;
 
 	l1 = strlen(name);
 	for(i = 0; i < ARR_SIZE(hint_maps); i++) {

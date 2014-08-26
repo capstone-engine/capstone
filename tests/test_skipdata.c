@@ -19,7 +19,7 @@ struct platform {
 	size_t skipdata;
 };
 
-static void print_string_hex(unsigned char *str, int len)
+static void print_string_hex(unsigned char *str, size_t len)
 {
 	unsigned char *c;
 
