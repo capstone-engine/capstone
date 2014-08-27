@@ -77,9 +77,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     274563U,	// ADC8rr
     2232451U,	// ADC8rr_REV
     4330644U,	// ADCX32rm
-    6427796U,	// ADCX32rr
-    8524948U,	// ADCX64rm
-    6427796U,	// ADCX64rr
+    2233492U,	// ADCX32rr
+    6427796U,	// ADCX64rm
+    2233492U,	// ADCX64rr
     5495U,	// ADD16i16
     139451U,	// ADD16mi
     139451U,	// ADD16mi8
@@ -128,10 +128,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     2576U,	// ADJCALLSTACKDOWN64
     2594U,	// ADJCALLSTACKUP32
     2594U,	// ADJCALLSTACKUP64
-    4330662U,	// ADOX32rm
-    6427814U,	// ADOX32rr
-    8524966U,	// ADOX64rm
-    6427814U,	// ADOX64rr
+    8524966U,	// ADOX32rm
+    10622118U,	// ADOX32rr
+    12719270U,	// ADOX64rm
+    10622118U,	// ADOX64rr
     5504U,	// AND16i16
     139500U,	// AND16mi
     139500U,	// AND16mi8
@@ -167,128 +167,128 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     798956U,	// AND8rm
     274668U,	// AND8rr
     2232556U,	// AND8rr_REV
-    39981714U,	// ANDN32rm
-    174199442U,	// ANDN32rr
-    308417170U,	// ANDN64rm
-    174199442U,	// ANDN64rr
+    44176018U,	// ANDN32rm
+    178393746U,	// ANDN32rr
+    312611474U,	// ANDN64rm
+    178393746U,	// ANDN64rr
     139887U,	// ARPL16mr
-    6427247U,	// ARPL16rr
-    440538003U,	// BEXTR32rm
-    174199699U,	// BEXTR32rr
-    444732307U,	// BEXTR64rm
-    174199699U,	// BEXTR64rr
-    440538003U,	// BEXTRI32mi
-    174199699U,	// BEXTRI32ri
-    444732307U,	// BEXTRI64mi
-    174199699U,	// BEXTRI64ri
-    4330072U,	// BLCFILL32rm
-    6427224U,	// BLCFILL32rr
-    8524376U,	// BLCFILL64rm
-    6427224U,	// BLCFILL64rr
-    4330005U,	// BLCI32rm
-    6427157U,	// BLCI32rr
-    8524309U,	// BLCI64rm
-    6427157U,	// BLCI64rr
-    4329613U,	// BLCIC32rm
-    6426765U,	// BLCIC32rr
-    8523917U,	// BLCIC64rm
-    6426765U,	// BLCIC64rr
-    4330023U,	// BLCMSK32rm
-    6427175U,	// BLCMSK32rr
-    8524327U,	// BLCMSK64rm
-    6427175U,	// BLCMSK64rr
-    4330402U,	// BLCS32rm
-    6427554U,	// BLCS32rr
-    8524706U,	// BLCS64rm
-    6427554U,	// BLCS64rr
-    4330081U,	// BLSFILL32rm
-    6427233U,	// BLSFILL32rr
-    8524385U,	// BLSFILL64rm
-    6427233U,	// BLSFILL64rr
-    4330017U,	// BLSI32rm
-    6427169U,	// BLSI32rr
-    8524321U,	// BLSI64rm
-    6427169U,	// BLSI64rr
-    4329620U,	// BLSIC32rm
-    6426772U,	// BLSIC32rr
-    8523924U,	// BLSIC64rm
-    6426772U,	// BLSIC64rr
-    4330031U,	// BLSMSK32rm
-    6427183U,	// BLSMSK32rr
-    8524335U,	// BLSMSK64rm
-    6427183U,	// BLSMSK64rr
-    4330366U,	// BLSR32rm
-    6427518U,	// BLSR32rr
-    8524670U,	// BLSR64rm
-    6427518U,	// BLSR64rr
-    10621169U,	// BOUNDS16rm
-    4329713U,	// BOUNDS32rm
-    10621405U,	// BSF16rm
-    6427101U,	// BSF16rr
-    4329949U,	// BSF32rm
-    6427101U,	// BSF32rr
-    8524253U,	// BSF64rm
-    6427101U,	// BSF64rr
-    10621817U,	// BSR16rm
-    6427513U,	// BSR16rr
-    4330361U,	// BSR32rm
-    6427513U,	// BSR32rr
-    8524665U,	// BSR64rm
-    6427513U,	// BSR64rr
+    10621551U,	// ARPL16rr
+    444732307U,	// BEXTR32rm
+    178394003U,	// BEXTR32rr
+    448926611U,	// BEXTR64rm
+    178394003U,	// BEXTR64rr
+    444732307U,	// BEXTRI32mi
+    178394003U,	// BEXTRI32ri
+    448926611U,	// BEXTRI64mi
+    178394003U,	// BEXTRI64ri
+    8524376U,	// BLCFILL32rm
+    10621528U,	// BLCFILL32rr
+    12718680U,	// BLCFILL64rm
+    10621528U,	// BLCFILL64rr
+    8524309U,	// BLCI32rm
+    10621461U,	// BLCI32rr
+    12718613U,	// BLCI64rm
+    10621461U,	// BLCI64rr
+    8523917U,	// BLCIC32rm
+    10621069U,	// BLCIC32rr
+    12718221U,	// BLCIC64rm
+    10621069U,	// BLCIC64rr
+    8524327U,	// BLCMSK32rm
+    10621479U,	// BLCMSK32rr
+    12718631U,	// BLCMSK64rm
+    10621479U,	// BLCMSK64rr
+    8524706U,	// BLCS32rm
+    10621858U,	// BLCS32rr
+    12719010U,	// BLCS64rm
+    10621858U,	// BLCS64rr
+    8524385U,	// BLSFILL32rm
+    10621537U,	// BLSFILL32rr
+    12718689U,	// BLSFILL64rm
+    10621537U,	// BLSFILL64rr
+    8524321U,	// BLSI32rm
+    10621473U,	// BLSI32rr
+    12718625U,	// BLSI64rm
+    10621473U,	// BLSI64rr
+    8523924U,	// BLSIC32rm
+    10621076U,	// BLSIC32rr
+    12718228U,	// BLSIC64rm
+    10621076U,	// BLSIC64rr
+    8524335U,	// BLSMSK32rm
+    10621487U,	// BLSMSK32rr
+    12718639U,	// BLSMSK64rm
+    10621487U,	// BLSMSK64rr
+    8524670U,	// BLSR32rm
+    10621822U,	// BLSR32rr
+    12718974U,	// BLSR64rm
+    10621822U,	// BLSR64rr
+    14815473U,	// BOUNDS16rm
+    8524017U,	// BOUNDS32rm
+    14815709U,	// BSF16rm
+    10621405U,	// BSF16rr
+    8524253U,	// BSF32rm
+    10621405U,	// BSF32rr
+    12718557U,	// BSF64rm
+    10621405U,	// BSF64rr
+    14816121U,	// BSR16rm
+    10621817U,	// BSR16rr
+    8524665U,	// BSR32rm
+    10621817U,	// BSR32rr
+    12718969U,	// BSR64rm
+    10621817U,	// BSR64rr
     4804U,	// BSWAP32r
     4804U,	// BSWAP64r
     140267U,	// BT16mi8
     140267U,	// BT16mr
-    6427627U,	// BT16ri8
-    6427627U,	// BT16rr
+    10621931U,	// BT16ri8
+    10621931U,	// BT16rr
     148459U,	// BT32mi8
     148459U,	// BT32mr
-    6427627U,	// BT32ri8
-    6427627U,	// BT32rr
+    10621931U,	// BT32ri8
+    10621931U,	// BT32rr
     152555U,	// BT64mi8
     152555U,	// BT64mr
-    6427627U,	// BT64ri8
-    6427627U,	// BT64rr
+    10621931U,	// BT64ri8
+    10621931U,	// BT64rr
     139432U,	// BTC16mi8
     139432U,	// BTC16mr
-    6426792U,	// BTC16ri8
-    6426792U,	// BTC16rr
+    10621096U,	// BTC16ri8
+    10621096U,	// BTC16rr
     147624U,	// BTC32mi8
     147624U,	// BTC32mr
-    6426792U,	// BTC32ri8
-    6426792U,	// BTC32rr
+    10621096U,	// BTC32ri8
+    10621096U,	// BTC32rr
     151720U,	// BTC64mi8
     151720U,	// BTC64mr
-    6426792U,	// BTC64ri8
-    6426792U,	// BTC64rr
+    10621096U,	// BTC64ri8
+    10621096U,	// BTC64rr
     140164U,	// BTR16mi8
     140164U,	// BTR16mr
-    6427524U,	// BTR16ri8
-    6427524U,	// BTR16rr
+    10621828U,	// BTR16ri8
+    10621828U,	// BTR16rr
     148356U,	// BTR32mi8
     148356U,	// BTR32mr
-    6427524U,	// BTR32ri8
-    6427524U,	// BTR32rr
+    10621828U,	// BTR32ri8
+    10621828U,	// BTR32rr
     152452U,	// BTR64mi8
     152452U,	// BTR64mr
-    6427524U,	// BTR64ri8
-    6427524U,	// BTR64rr
+    10621828U,	// BTR64ri8
+    10621828U,	// BTR64rr
     140249U,	// BTS16mi8
     140249U,	// BTS16mr
-    6427609U,	// BTS16ri8
-    6427609U,	// BTS16rr
+    10621913U,	// BTS16ri8
+    10621913U,	// BTS16rr
     148441U,	// BTS32mi8
     148441U,	// BTS32mr
-    6427609U,	// BTS32ri8
-    6427609U,	// BTS32rr
+    10621913U,	// BTS32ri8
+    10621913U,	// BTS32rr
     152537U,	// BTS64mi8
     152537U,	// BTS64mr
-    6427609U,	// BTS64ri8
-    6427609U,	// BTS64rr
-    440537627U,	// BZHI32rm
-    174199323U,	// BZHI32rr
-    444731931U,	// BZHI64rm
-    174199323U,	// BZHI64rr
+    10621913U,	// BTS64ri8
+    10621913U,	// BTS64rr
+    444731931U,	// BZHI32rm
+    178393627U,	// BZHI32rr
+    448926235U,	// BZHI64rm
+    178393627U,	// BZHI64rr
     8786U,	// CALL16m
     4690U,	// CALL16r
     16978U,	// CALL32m
@@ -308,101 +308,101 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     2954U,	// CLI
     3322U,	// CLTS
     2742U,	// CMC
-    12718127U,	// CMOVA16rm
+    16912431U,	// CMOVA16rm
     2232367U,	// CMOVA16rr
-    14815279U,	// CMOVA32rm
+    4329519U,	// CMOVA32rm
     2232367U,	// CMOVA32rr
-    16912431U,	// CMOVA64rm
+    6426671U,	// CMOVA64rm
     2232367U,	// CMOVA64rr
-    12718381U,	// CMOVAE16rm
+    16912685U,	// CMOVAE16rm
     2232621U,	// CMOVAE16rr
-    14815533U,	// CMOVAE32rm
+    4329773U,	// CMOVAE32rm
     2232621U,	// CMOVAE32rr
-    16912685U,	// CMOVAE64rm
+    6426925U,	// CMOVAE64rm
     2232621U,	// CMOVAE64rr
-    12718204U,	// CMOVB16rm
+    16912508U,	// CMOVB16rm
     2232444U,	// CMOVB16rr
-    14815356U,	// CMOVB32rm
+    4329596U,	// CMOVB32rm
     2232444U,	// CMOVB32rr
-    16912508U,	// CMOVB64rm
+    6426748U,	// CMOVB64rm
     2232444U,	// CMOVB64rr
-    12718401U,	// CMOVBE16rm
+    16912705U,	// CMOVBE16rm
     2232641U,	// CMOVBE16rr
-    14815553U,	// CMOVBE32rm
+    4329793U,	// CMOVBE32rm
     2232641U,	// CMOVBE32rr
-    16912705U,	// CMOVBE64rm
+    6426945U,	// CMOVBE64rm
     2232641U,	// CMOVBE64rr
-    12718550U,	// CMOVE16rm
+    16912854U,	// CMOVE16rm
     2232790U,	// CMOVE16rr
-    14815702U,	// CMOVE32rm
+    4329942U,	// CMOVE32rm
     2232790U,	// CMOVE32rr
-    16912854U,	// CMOVE64rm
+    6427094U,	// CMOVE64rm
     2232790U,	// CMOVE64rr
-    12718600U,	// CMOVG16rm
+    16912904U,	// CMOVG16rm
     2232840U,	// CMOVG16rr
-    14815752U,	// CMOVG32rm
+    4329992U,	// CMOVG32rm
     2232840U,	// CMOVG32rr
-    16912904U,	// CMOVG64rm
+    6427144U,	// CMOVG64rm
     2232840U,	// CMOVG64rr
-    12718421U,	// CMOVGE16rm
+    16912725U,	// CMOVGE16rm
     2232661U,	// CMOVGE16rr
-    14815573U,	// CMOVGE32rm
+    4329813U,	// CMOVGE32rm
     2232661U,	// CMOVGE32rr
-    16912725U,	// CMOVGE64rm
+    6426965U,	// CMOVGE64rm
     2232661U,	// CMOVGE64rr
-    12718726U,	// CMOVL16rm
+    16913030U,	// CMOVL16rm
     2232966U,	// CMOVL16rr
-    14815878U,	// CMOVL32rm
+    4330118U,	// CMOVL32rm
     2232966U,	// CMOVL32rr
-    16913030U,	// CMOVL64rm
+    6427270U,	// CMOVL64rm
     2232966U,	// CMOVL64rr
-    12718445U,	// CMOVLE16rm
+    16912749U,	// CMOVLE16rm
     2232685U,	// CMOVLE16rr
-    14815597U,	// CMOVLE32rm
+    4329837U,	// CMOVLE32rm
     2232685U,	// CMOVLE32rr
-    16912749U,	// CMOVLE64rm
+    6426989U,	// CMOVLE64rm
     2232685U,	// CMOVLE64rr
-    12718473U,	// CMOVNE16rm
+    16912777U,	// CMOVNE16rm
     2232713U,	// CMOVNE16rr
-    14815625U,	// CMOVNE32rm
+    4329865U,	// CMOVNE32rm
     2232713U,	// CMOVNE32rr
-    16912777U,	// CMOVNE64rm
+    6427017U,	// CMOVNE64rm
     2232713U,	// CMOVNE64rr
-    12718767U,	// CMOVNO16rm
+    16913071U,	// CMOVNO16rm
     2233007U,	// CMOVNO16rr
-    14815919U,	// CMOVNO32rm
+    4330159U,	// CMOVNO32rm
     2233007U,	// CMOVNO32rr
-    16913071U,	// CMOVNO64rm
+    6427311U,	// CMOVNO64rm
     2233007U,	// CMOVNO64rr
-    12718828U,	// CMOVNP16rm
+    16913132U,	// CMOVNP16rm
     2233068U,	// CMOVNP16rr
-    14815980U,	// CMOVNP32rm
+    4330220U,	// CMOVNP32rm
     2233068U,	// CMOVNP32rr
-    16913132U,	// CMOVNP64rm
+    6427372U,	// CMOVNP64rm
     2233068U,	// CMOVNP64rr
-    12719052U,	// CMOVNS16rm
+    16913356U,	// CMOVNS16rm
     2233292U,	// CMOVNS16rr
-    14816204U,	// CMOVNS32rm
+    4330444U,	// CMOVNS32rm
     2233292U,	// CMOVNS32rr
-    16913356U,	// CMOVNS64rm
+    6427596U,	// CMOVNS64rm
     2233292U,	// CMOVNS64rr
-    12718781U,	// CMOVO16rm
+    16913085U,	// CMOVO16rm
     2233021U,	// CMOVO16rr
-    14815933U,	// CMOVO32rm
+    4330173U,	// CMOVO32rm
     2233021U,	// CMOVO32rr
-    16913085U,	// CMOVO64rm
+    6427325U,	// CMOVO64rm
     2233021U,	// CMOVO64rr
-    12718874U,	// CMOVP16rm
+    16913178U,	// CMOVP16rm
     2233114U,	// CMOVP16rr
-    14816026U,	// CMOVP32rm
+    4330266U,	// CMOVP32rm
     2233114U,	// CMOVP32rr
-    16913178U,	// CMOVP64rm
+    6427418U,	// CMOVP64rm
     2233114U,	// CMOVP64rr
-    12719076U,	// CMOVS16rm
+    16913380U,	// CMOVS16rm
     2233316U,	// CMOVS16rr
-    14816228U,	// CMOVS32rm
+    4330468U,	// CMOVS32rm
     2233316U,	// CMOVS32rr
-    16913380U,	// CMOVS64rm
+    6427620U,	// CMOVS64rm
     2233316U,	// CMOVS64rr
     2105U,	// CMOV_FR32
     2264U,	// CMOV_FR64
@@ -425,54 +425,53 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     139989U,	// CMP16mi
     139989U,	// CMP16mi8
     139989U,	// CMP16mr
-    6427349U,	// CMP16ri
-    6427349U,	// CMP16ri8
-    10621653U,	// CMP16rm
-    6427349U,	// CMP16rr
-    6427349U,	// CMP16rr_REV
+    10621653U,	// CMP16ri
+    10621653U,	// CMP16ri8
+    14815957U,	// CMP16rm
+    10621653U,	// CMP16rr
+    10621653U,	// CMP16rr_REV
     5696U,	// CMP32i32
     148181U,	// CMP32mi
     148181U,	// CMP32mi8
     148181U,	// CMP32mr
-    6427349U,	// CMP32ri
-    6427349U,	// CMP32ri8
-    4330197U,	// CMP32rm
-    6427349U,	// CMP32rr
-    6427349U,	// CMP32rr_REV
+    10621653U,	// CMP32ri
+    10621653U,	// CMP32ri8
+    8524501U,	// CMP32rm
+    10621653U,	// CMP32rr
+    10621653U,	// CMP32rr_REV
     5811U,	// CMP64i32
     152277U,	// CMP64mi32
     152277U,	// CMP64mi8
     152277U,	// CMP64mr
-    6427349U,	// CMP64ri32
-    6427349U,	// CMP64ri8
-    8524501U,	// CMP64rm
-    6427349U,	// CMP64rr
-    6427349U,	// CMP64rr_REV
+    10621653U,	// CMP64ri32
+    10621653U,	// CMP64ri8
+    12718805U,	// CMP64rm
+    10621653U,	// CMP64rr
+    10621653U,	// CMP64rr_REV
     5419U,	// CMP8i8
     156373U,	// CMP8mi
     156373U,	// CMP8mr
-    6427349U,	// CMP8ri
+    10621653U,	// CMP8ri
     19010261U,	// CMP8rm
-    6427349U,	// CMP8rr
-    6427349U,	// CMP8rr_REV
+    10621653U,	// CMP8rr
+    10621653U,	// CMP8rr_REV
     32867U,	// CMPSB
     37131U,	// CMPSL
     41775U,	// CMPSQ
     46214U,	// CMPSW
     49206U,	// CMPXCHG16B
     139757U,	// CMPXCHG16rm
-    6427117U,	// CMPXCHG16rr
+    10621421U,	// CMPXCHG16rr
     147949U,	// CMPXCHG32rm
-    6427117U,	// CMPXCHG32rr
+    10621421U,	// CMPXCHG32rr
     152045U,	// CMPXCHG64rm
-    6427117U,	// CMPXCHG64rr
+    10621421U,	// CMPXCHG64rr
     20546U,	// CMPXCHG8B
     156141U,	// CMPXCHG8rm
-    6427117U,	// CMPXCHG8rr
+    10621421U,	// CMPXCHG8rr
     2782U,	// CPUID32
     2782U,	// CPUID64
     3075U,	// CQO
-    3192U,	// CS_PREFIX
     2829U,	// CWD
     2833U,	// CWDE
     2641U,	// DAA
@@ -500,7 +499,6 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     5213U,	// DIV64r
     25693U,	// DIV8m
     5213U,	// DIV8r
-    3200U,	// DS_PREFIX
     5923U,	// EH_RETURN
     5923U,	// EH_RETURN64
     2354U,	// EH_SjLj_LongJmp32
@@ -508,22 +506,19 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     2373U,	// EH_SjLj_SetJmp32
     2463U,	// EH_SjLj_SetJmp64
     29450U,	// EH_SjLj_Setup
-    6427477U,	// ENTER
-    3215U,	// ES_PREFIX
-    6427217U,	// FARCALL16i
+    10621781U,	// ENTER
+    10621521U,	// FARCALL16i
     53841U,	// FARCALL16m
-    6427217U,	// FARCALL32i
+    10621521U,	// FARCALL32i
     53841U,	// FARCALL32m
     53841U,	// FARCALL64
-    6427354U,	// FARJMP16i
+    10621658U,	// FARJMP16i
     53978U,	// FARJMP16m
-    6427354U,	// FARJMP32i
+    10621658U,	// FARJMP32i
     53978U,	// FARJMP32m
     53978U,	// FARJMP64
     3037U,	// FSETPM
-    3230U,	// FS_PREFIX
     2726U,	// GETSEC
-    3245U,	// GS_PREFIX
     3347U,	// HLT
     9308U,	// IDIV16m
     5212U,	// IDIV16r
@@ -535,28 +530,28 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     5212U,	// IDIV8r
     8832U,	// IMUL16m
     4736U,	// IMUL16r
-    12718720U,	// IMUL16rm
-    446829184U,	// IMUL16rmi
-    446829184U,	// IMUL16rmi8
+    16913024U,	// IMUL16rm
+    451023488U,	// IMUL16rmi
+    451023488U,	// IMUL16rmi8
     2232960U,	// IMUL16rr
-    174199424U,	// IMUL16rri
-    174199424U,	// IMUL16rri8
+    178393728U,	// IMUL16rri
+    178393728U,	// IMUL16rri8
     17024U,	// IMUL32m
     4736U,	// IMUL32r
-    14815872U,	// IMUL32rm
-    440537728U,	// IMUL32rmi
-    440537728U,	// IMUL32rmi8
+    4330112U,	// IMUL32rm
+    444732032U,	// IMUL32rmi
+    444732032U,	// IMUL32rmi8
     2232960U,	// IMUL32rr
-    174199424U,	// IMUL32rri
-    174199424U,	// IMUL32rri8
+    178393728U,	// IMUL32rri
+    178393728U,	// IMUL32rri8
     21120U,	// IMUL64m
     4736U,	// IMUL64r
-    16913024U,	// IMUL64rm
-    444732032U,	// IMUL64rmi32
-    444732032U,	// IMUL64rmi8
+    6427264U,	// IMUL64rm
+    448926336U,	// IMUL64rmi32
+    448926336U,	// IMUL64rmi8
     2232960U,	// IMUL64rr
-    174199424U,	// IMUL64rri32
-    174199424U,	// IMUL64rri8
+    178393728U,	// IMUL64rri32
+    178393728U,	// IMUL64rri8
     25216U,	// IMUL8m
     4736U,	// IMUL8r
     5523U,	// IN16ri
@@ -662,12 +657,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     29628U,	// JS_2
     29628U,	// JS_4
     2909U,	// LAHF
-    10621766U,	// LAR16rm
-    6427462U,	// LAR16rr
-    10621766U,	// LAR32rm
-    6427462U,	// LAR32rr
-    10621766U,	// LAR64rm
-    6427462U,	// LAR64rr
+    14816070U,	// LAR16rm
+    10621766U,	// LAR16rr
+    14816070U,	// LAR32rm
+    10621766U,	// LAR32rr
+    14816070U,	// LAR64rm
+    10621766U,	// LAR64rr
     139757U,	// LCMPXCHG16
     49206U,	// LCMPXCHG16B
     147949U,	// LCMPXCHG32
@@ -676,10 +671,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     20546U,	// LCMPXCHG8B
     23204776U,	// LDS16rm
     23204776U,	// LDS32rm
-    10620960U,	// LEA16r
-    4329504U,	// LEA32r
-    4329504U,	// LEA64_32r
-    8523808U,	// LEA64r
+    14815264U,	// LEA16r
+    8523808U,	// LEA32r
+    8523808U,	// LEA64_32r
+    12718112U,	// LEA64r
     2896U,	// LEAVE
     2896U,	// LEAVE64
     23204781U,	// LES16rm
@@ -777,12 +772,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     2930U,	// LRETL
     3116U,	// LRETQ
     2930U,	// LRETW
-    10621557U,	// LSL16rm
-    6427253U,	// LSL16rr
-    4330101U,	// LSL32rm
-    6427253U,	// LSL32rr
-    8524405U,	// LSL64rm
-    6427253U,	// LSL64rr
+    14815861U,	// LSL16rm
+    10621557U,	// LSL16rr
+    8524405U,	// LSL32rm
+    10621557U,	// LSL32rr
+    12718709U,	// LSL64rm
+    10621557U,	// LSL64rr
     23204820U,	// LSS16rm
     23204820U,	// LSS32rm
     23204820U,	// LSS64rm
@@ -792,12 +787,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     90298U,	// LXADD32
     94394U,	// LXADD64
     98490U,	// LXADD8
-    10621976U,	// LZCNT16rm
-    6427672U,	// LZCNT16rr
-    4330520U,	// LZCNT32rm
-    6427672U,	// LZCNT32rr
-    8524824U,	// LZCNT64rm
-    6427672U,	// LZCNT64rr
+    14816280U,	// LZCNT16rm
+    10621976U,	// LZCNT16rr
+    8524824U,	// LZCNT32rm
+    10621976U,	// LZCNT32rr
+    12719128U,	// LZCNT64rm
+    10621976U,	// LZCNT64rr
     3029U,	// MONTMUL
     0U,	// MORESTACK_RET
     0U,	// MORESTACK_RET_RESTORE_R10
@@ -808,41 +803,41 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     140386U,	// MOV16ms
     103875U,	// MOV16o16a
     103875U,	// MOV16o16a_16
-    6427746U,	// MOV16ri
-    6427746U,	// MOV16ri_alt
-    10622050U,	// MOV16rm
-    6427746U,	// MOV16rr
-    6427746U,	// MOV16rr_REV
-    6427746U,	// MOV16rs
-    10622050U,	// MOV16sm
-    6427746U,	// MOV16sr
+    10622050U,	// MOV16ri
+    10622050U,	// MOV16ri_alt
+    14816354U,	// MOV16rm
+    10622050U,	// MOV16rr
+    10622050U,	// MOV16rr_REV
+    10622050U,	// MOV16rs
+    14816354U,	// MOV16sm
+    10622050U,	// MOV16sr
     1287266U,	// MOV32ao32
     1287266U,	// MOV32ao32_16
-    6427746U,	// MOV32cr
-    6427746U,	// MOV32dr
+    10622050U,	// MOV32cr
+    10622050U,	// MOV32dr
     148578U,	// MOV32mi
     148578U,	// MOV32mr
     148578U,	// MOV32ms
     108140U,	// MOV32o32a
     108140U,	// MOV32o32a_16
     0U,	// MOV32r0
-    6427746U,	// MOV32rc
-    6427746U,	// MOV32rd
-    6427746U,	// MOV32ri
+    10622050U,	// MOV32rc
+    10622050U,	// MOV32rd
+    10622050U,	// MOV32ri
     0U,	// MOV32ri64
-    6427746U,	// MOV32ri_alt
-    4330594U,	// MOV32rm
-    6427746U,	// MOV32rr
-    6427746U,	// MOV32rr_REV
-    6427746U,	// MOV32rs
-    4330594U,	// MOV32sm
-    6427746U,	// MOV32sr
+    10622050U,	// MOV32ri_alt
+    8524898U,	// MOV32rm
+    10622050U,	// MOV32rr
+    10622050U,	// MOV32rr_REV
+    10622050U,	// MOV32rs
+    8524898U,	// MOV32sm
+    10622050U,	// MOV32sr
     1151898U,	// MOV64ao16
     1287066U,	// MOV64ao32
     1422234U,	// MOV64ao64
     1557402U,	// MOV64ao8
-    6427746U,	// MOV64cr
-    6427746U,	// MOV64dr
+    10622050U,	// MOV64cr
+    10622050U,	// MOV64dr
     152674U,	// MOV64mi32
     152674U,	// MOV64mr
     152674U,	// MOV64ms
@@ -850,16 +845,16 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     108116U,	// MOV64o32a
     112351U,	// MOV64o64a
     116029U,	// MOV64o8a
-    6427746U,	// MOV64rc
-    6427746U,	// MOV64rd
-    6427546U,	// MOV64ri
-    6427746U,	// MOV64ri32
-    8524898U,	// MOV64rm
-    6427746U,	// MOV64rr
-    6427746U,	// MOV64rr_REV
-    6427746U,	// MOV64rs
-    8524898U,	// MOV64sm
-    6427746U,	// MOV64sr
+    10622050U,	// MOV64rc
+    10622050U,	// MOV64rd
+    10621850U,	// MOV64ri
+    10622050U,	// MOV64ri32
+    12719202U,	// MOV64rm
+    10622050U,	// MOV64rr
+    10622050U,	// MOV64rr_REV
+    10622050U,	// MOV64rs
+    12719202U,	// MOV64sm
+    10622050U,	// MOV64sr
     1557602U,	// MOV8ao8
     1557602U,	// MOV8ao8_16
     156770U,	// MOV8mi
@@ -867,48 +862,48 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     67265634U,	// MOV8mr_NOREX
     116051U,	// MOV8o8a
     116051U,	// MOV8o8a_16
-    6427746U,	// MOV8ri
-    6427746U,	// MOV8ri_alt
+    10622050U,	// MOV8ri
+    10622050U,	// MOV8ri_alt
     19010658U,	// MOV8rm
     86119522U,	// MOV8rm_NOREX
-    6427746U,	// MOV8rr
-    73536610U,	// MOV8rr_NOREX
-    6427746U,	// MOV8rr_REV
+    10622050U,	// MOV8rr
+    77730914U,	// MOV8rr_NOREX
+    10622050U,	// MOV8rr_REV
     139586U,	// MOVBE16mr
-    10621250U,	// MOVBE16rm
+    14815554U,	// MOVBE16rm
     147778U,	// MOVBE32mr
-    4329794U,	// MOVBE32rm
+    8524098U,	// MOVBE32rm
     151874U,	// MOVBE64mr
-    8524098U,	// MOVBE64rm
+    12718402U,	// MOVBE64rm
     0U,	// MOVPC32r
     25354346U,	// MOVSB
     27455762U,	// MOVSL
     29610806U,	// MOVSQ
     31655053U,	// MOVSW
     19010750U,	// MOVSX16rm8
-    6427838U,	// MOVSX16rr8
-    10622142U,	// MOVSX32rm16
+    10622142U,	// MOVSX16rr8
+    14816446U,	// MOVSX32rm16
     19010750U,	// MOVSX32rm8
-    6427838U,	// MOVSX32rr16
-    6427838U,	// MOVSX32rr8
-    10622142U,	// MOVSX64rm16
-    4329753U,	// MOVSX64rm32
+    10622142U,	// MOVSX32rr16
+    10622142U,	// MOVSX32rr8
+    14816446U,	// MOVSX64rm16
+    8524057U,	// MOVSX64rm32
     19010750U,	// MOVSX64rm8
-    6427838U,	// MOVSX64rr16
-    6426905U,	// MOVSX64rr32
-    6427838U,	// MOVSX64rr8
+    10622142U,	// MOVSX64rr16
+    10621209U,	// MOVSX64rr32
+    10622142U,	// MOVSX64rr8
     19010757U,	// MOVZX16rm8
-    6427845U,	// MOVZX16rr8
+    10622149U,	// MOVZX16rr8
     19010757U,	// MOVZX32_NOREXrm8
-    6427845U,	// MOVZX32_NOREXrr8
-    10622149U,	// MOVZX32rm16
+    10622149U,	// MOVZX32_NOREXrr8
+    14816453U,	// MOVZX32rm16
     19010757U,	// MOVZX32rm8
-    6427845U,	// MOVZX32rr16
-    6427845U,	// MOVZX32rr8
-    10622149U,	// MOVZX64rm16_Q
+    10622149U,	// MOVZX32rr16
+    10622149U,	// MOVZX32rr8
+    14816453U,	// MOVZX64rm16_Q
     19010757U,	// MOVZX64rm8_Q
-    6427845U,	// MOVZX64rr16_Q
-    6427845U,	// MOVZX64rr8_Q
+    10622149U,	// MOVZX64rr16_Q
+    10622149U,	// MOVZX64rr8_Q
     8833U,	// MUL16m
     4737U,	// MUL16r
     17025U,	// MUL32m
@@ -917,10 +912,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     4737U,	// MUL64r
     25217U,	// MUL8m
     4737U,	// MUL8r
-    39982240U,	// MULX32rm
-    174199968U,	// MULX32rr
-    308417696U,	// MULX64rm
-    174199968U,	// MULX64rr
+    44176544U,	// MULX32rm
+    178394272U,	// MULX32rr
+    312612000U,	// MULX64rm
+    178394272U,	// MULX64rr
     8680U,	// NEG16m
     4584U,	// NEG16r
     16872U,	// NEG32m
@@ -1013,14 +1008,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     71415U,	// OUTSB
     75522U,	// OUTSL
     83725U,	// OUTSW
-    39981771U,	// PDEP32rm
-    174199499U,	// PDEP32rr
-    308417227U,	// PDEP64rm
-    174199499U,	// PDEP64rr
-    39982166U,	// PEXT32rm
-    174199894U,	// PEXT32rr
-    308417622U,	// PEXT64rm
-    174199894U,	// PEXT64rr
+    44176075U,	// PDEP32rm
+    178393803U,	// PDEP32rr
+    312611531U,	// PDEP64rm
+    178393803U,	// PDEP64rr
+    44176470U,	// PEXT32rm
+    178394198U,	// PEXT32rr
+    312611926U,	// PEXT64rm
+    178394198U,	// PEXT64rr
     4863U,	// POP16r
     8959U,	// POP16rmm
     4863U,	// POP16rmr
@@ -1219,10 +1214,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     1708897U,	// ROR8r1
     1577825U,	// ROR8rCL
     2233185U,	// ROR8ri
-    440538296U,	// RORX32mi
-    174199992U,	// RORX32ri
-    444732600U,	// RORX64mi
-    174199992U,	// RORX64ri
+    444732600U,	// RORX32mi
+    178394296U,	// RORX32ri
+    448926904U,	// RORX64mi
+    178394296U,	// RORX64ri
     3044U,	// RSM
     2914U,	// SAHF
     1712702U,	// SAL16m1
@@ -1274,10 +1269,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     1708875U,	// SAR8r1
     1577803U,	// SAR8rCL
     2233163U,	// SAR8ri
-    440538284U,	// SARX32rm
-    174199980U,	// SARX32rr
-    444732588U,	// SARX64rm
-    174199980U,	// SARX64rr
+    444732588U,	// SARX32rm
+    178394284U,	// SARX32rr
+    448926892U,	// SARX64rm
+    178394284U,	// SARX64rr
     5468U,	// SBB16i16
     139341U,	// SBB16mi
     139341U,	// SBB16mi8
@@ -1322,9 +1317,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     2865U,	// SEH_Epilogue
     6001U,	// SEH_PushFrame
     6046U,	// SEH_PushReg
-    6428560U,	// SEH_SaveReg
-    6428474U,	// SEH_SaveXMM
-    6428545U,	// SEH_SetFrame
+    10622864U,	// SEH_SaveReg
+    10622778U,	// SEH_SaveXMM
+    10622849U,	// SEH_SetFrame
     5984U,	// SEH_StackAlloc
     24870U,	// SETAEm
     4390U,	// SETAEr
@@ -1401,10 +1396,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     436359386U,	// SHLD64mri8
     102895834U,	// SHLD64rrCL
     572657882U,	// SHLD64rri8
-    440538266U,	// SHLX32rm
-    174199962U,	// SHLX32rr
-    444732570U,	// SHLX64rm
-    174199962U,	// SHLX64rr
+    444732570U,	// SHLX32rm
+    178394266U,	// SHLX32rr
+    448926874U,	// SHLX64rm
+    178394266U,	// SHLX64rr
     1712988U,	// SHR16m1
     1581916U,	// SHR16mCL
     140124U,	// SHR16mi
@@ -1441,10 +1436,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     436359416U,	// SHRD64mri8
     102895864U,	// SHRD64rrCL
     572657912U,	// SHRD64rri8
-    440538290U,	// SHRX32rm
-    174199986U,	// SHRX32rr
-    444732594U,	// SHRX64rm
-    174199986U,	// SHRX64rr
+    444732594U,	// SHRX32rm
+    178394290U,	// SHRX32rr
+    448926898U,	// SHRX64rm
+    178394290U,	// SHRX64rr
     54273U,	// SIDT16m
     54273U,	// SIDT32m
     54273U,	// SIDT64m
@@ -1458,7 +1453,6 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     5235U,	// SMSW16r
     5235U,	// SMSW32r
     5235U,	// SMSW64r
-    3312U,	// SS_PREFIX
     2711U,	// STAC
     2765U,	// STC
     2818U,	// STD
@@ -1514,10 +1508,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     3339U,	// SYSEXIT64
     3332U,	// SYSRET
     3332U,	// SYSRET64
-    4329627U,	// T1MSKC32rm
-    6426779U,	// T1MSKC32rr
-    8523931U,	// T1MSKC64rm
-    6426779U,	// T1MSKC64rr
+    8523931U,	// T1MSKC32rm
+    10621083U,	// T1MSKC32rr
+    12718235U,	// T1MSKC64rm
+    10621083U,	// T1MSKC64rr
     1864411U,	// TAILJMPd
     1864411U,	// TAILJMPd64
     1852123U,	// TAILJMPm
@@ -1533,32 +1527,32 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     5561U,	// TEST16i16
     140354U,	// TEST16mi
     140354U,	// TEST16mi_alt
-    6427714U,	// TEST16ri
-    6427714U,	// TEST16ri_alt
+    10622018U,	// TEST16ri
+    10622018U,	// TEST16ri_alt
     140354U,	// TEST16rm
-    6427714U,	// TEST16rr
+    10622018U,	// TEST16rr
     5729U,	// TEST32i32
     148546U,	// TEST32mi
     148546U,	// TEST32mi_alt
-    6427714U,	// TEST32ri
-    6427714U,	// TEST32ri_alt
+    10622018U,	// TEST32ri
+    10622018U,	// TEST32ri_alt
     148546U,	// TEST32rm
-    6427714U,	// TEST32rr
+    10622018U,	// TEST32rr
     5868U,	// TEST64i32
     152642U,	// TEST64mi32
     152642U,	// TEST64mi32_alt
-    6427714U,	// TEST64ri32
-    6427714U,	// TEST64ri32_alt
+    10622018U,	// TEST64ri32
+    10622018U,	// TEST64ri32_alt
     152642U,	// TEST64rm
-    6427714U,	// TEST64rr
+    10622018U,	// TEST64rr
     5449U,	// TEST8i8
     156738U,	// TEST8mi
     156738U,	// TEST8mi_alt
-    6427714U,	// TEST8ri
+    10622018U,	// TEST8ri
     0U,	// TEST8ri_NOREX
-    6427714U,	// TEST8ri_alt
+    10622018U,	// TEST8ri_alt
     156738U,	// TEST8rm
-    6427714U,	// TEST8rr
+    10622018U,	// TEST8rr
     2391U,	// TLSCall_32
     2481U,	// TLSCall_64
     2404U,	// TLS_addr32
@@ -1566,19 +1560,19 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     2417U,	// TLS_base_addr32
     2507U,	// TLS_base_addr64
     2435U,	// TRAP
-    10621983U,	// TZCNT16rm
-    6427679U,	// TZCNT16rr
-    4330527U,	// TZCNT32rm
-    6427679U,	// TZCNT32rr
-    8524831U,	// TZCNT64rm
-    6427679U,	// TZCNT64rr
-    4330039U,	// TZMSK32rm
-    6427191U,	// TZMSK32rr
-    8524343U,	// TZMSK64rm
-    6427191U,	// TZMSK64rr
+    14816287U,	// TZCNT16rm
+    10621983U,	// TZCNT16rr
+    8524831U,	// TZCNT32rm
+    10621983U,	// TZCNT32rr
+    12719135U,	// TZCNT64rm
+    10621983U,	// TZCNT64rr
+    8524343U,	// TZMSK32rm
+    10621495U,	// TZMSK32rr
+    12718647U,	// TZMSK64rm
+    10621495U,	// TZMSK64rr
     2645U,	// UD2B
     1528960792U,	// VAARG_64
-    174200648U,	// VASTART_SAVE_XMM_REGS
+    178394952U,	// VASTART_SAVE_XMM_REGS
     9075U,	// VERRm
     4979U,	// VERRr
     9319U,	// VERWm
@@ -1593,18 +1587,18 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     20704U,	// VMPTRLDm
     21576U,	// VMPTRSTm
     147634U,	// VMREAD32rm
-    6426802U,	// VMREAD32rr
+    10621106U,	// VMREAD32rr
     151730U,	// VMREAD64rm
-    6426802U,	// VMREAD64rr
+    10621106U,	// VMREAD64rr
     2838U,	// VMRESUME
     3435U,	// VMRUN32
     3490U,	// VMRUN64
     3424U,	// VMSAVE32
     3479U,	// VMSAVE64
-    4329926U,	// VMWRITE32rm
-    6427078U,	// VMWRITE32rr
-    8524230U,	// VMWRITE64rm
-    6427078U,	// VMWRITE64rr
+    8524230U,	// VMWRITE32rm
+    10621382U,	// VMWRITE32rr
+    12718534U,	// VMWRITE64rm
+    10621382U,	// VMWRITE64rr
     2902U,	// VMXOFF
     21144U,	// VMXON
     29266U,	// W64ALLOCA
@@ -1618,13 +1612,13 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     4534U,	// WRGSBASE64
     3163U,	// WRMSR
     139450U,	// XADD16rm
-    6426810U,	// XADD16rr
+    10621114U,	// XADD16rr
     147642U,	// XADD32rm
-    6426810U,	// XADD32rr
+    10621114U,	// XADD32rr
     151738U,	// XADD64rm
-    6426810U,	// XADD64rr
+    10621114U,	// XADD64rr
     155834U,	// XADD8rm
-    6426810U,	// XADD8rr
+    10621114U,	// XADD8rr
     5513U,	// XCHG16ar
     86512U,	// XCHG16rm
     123376U,	// XCHG16rr
@@ -2382,38 +2376,36 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     printOperand(MI, 5, O); 
     break;
   case 1:
-    // ADC16rr_REV, ADC32rr_REV, ADC64rr_REV, ADC8rr_REV, ADD16rr_REV, ADD32r...
+    // ADC16rr_REV, ADC32rr_REV, ADC64rr_REV, ADC8rr_REV, ADCX32rr, ADCX64rr,...
     printOperand(MI, 2, O); 
     break;
   case 2:
-    // ADCX32rm, ADOX32rm, BEXTR32rm, BEXTRI32mi, BLCFILL32rm, BLCI32rm, BLCI...
-    printi32mem(MI, 1, O); 
+    // ADCX32rm, CMOVA32rm, CMOVAE32rm, CMOVB32rm, CMOVBE32rm, CMOVE32rm, CMO...
+    printi32mem(MI, 2, O); 
     break;
   case 3:
-    // ADCX32rr, ADCX64rr, ADOX32rr, ADOX64rr, ANDN32rm, ANDN32rr, ANDN64rm, ...
-    printOperand(MI, 1, O); 
+    // ADCX64rm, CMOVA64rm, CMOVAE64rm, CMOVB64rm, CMOVBE64rm, CMOVE64rm, CMO...
+    printi64mem(MI, 2, O); 
     break;
   case 4:
-    // ADCX64rm, ADOX64rm, BEXTR64rm, BEXTRI64mi, BLCFILL64rm, BLCI64rm, BLCI...
-    printi64mem(MI, 1, O); 
+    // ADOX32rm, BEXTR32rm, BEXTRI32mi, BLCFILL32rm, BLCI32rm, BLCIC32rm, BLC...
+    printi32mem(MI, 1, O); 
     break;
   case 5:
+    // ADOX32rr, ADOX64rr, ANDN32rm, ANDN32rr, ANDN64rm, ANDN64rr, ARPL16rr, ...
+    printOperand(MI, 1, O); 
+    break;
+  case 6:
+    // ADOX64rm, BEXTR64rm, BEXTRI64mi, BLCFILL64rm, BLCI64rm, BLCIC64rm, BLC...
+    printi64mem(MI, 1, O); 
+    break;
+  case 7:
     // BOUNDS16rm, BSF16rm, BSR16rm, CMP16rm, IMUL16rmi, IMUL16rmi8, LAR16rm,...
     printi16mem(MI, 1, O); 
     break;
-  case 6:
+  case 8:
     // CMOVA16rm, CMOVAE16rm, CMOVB16rm, CMOVBE16rm, CMOVE16rm, CMOVG16rm, CM...
     printi16mem(MI, 2, O); 
-    return;
-    break;
-  case 7:
-    // CMOVA32rm, CMOVAE32rm, CMOVB32rm, CMOVBE32rm, CMOVE32rm, CMOVG32rm, CM...
-    printi32mem(MI, 2, O); 
-    return;
-    break;
-  case 8:
-    // CMOVA64rm, CMOVAE64rm, CMOVB64rm, CMOVBE64rm, CMOVE64rm, CMOVG64rm, CM...
-    printi64mem(MI, 2, O); 
     return;
     break;
   case 9:

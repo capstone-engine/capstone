@@ -76,10 +76,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     57390U,	// ADC8rm
     1597486U,	// ADC8rr
     2121774U,	// ADC8rr_REV
-    66713U,	// ADCX32rm
-    2172057U,	// ADCX32rr
-    83933U,	// ADCX64rm
-    2172893U,	// ADCX64rr
+    2139289U,	// ADCX32rm
+    2122905U,	// ADCX32rr
+    2148317U,	// ADCX64rm
+    2123741U,	// ADCX64rr
     534714U,	// ADD16i16
     1067194U,	// ADD16mi
     1067194U,	// ADD16mi8
@@ -472,7 +472,6 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     4402U,	// CPUID32
     4402U,	// CPUID64
     4723U,	// CQO
-    4856U,	// CS_PREFIX
     4421U,	// CWD
     4667U,	// CWDE
     4274U,	// DAA
@@ -500,7 +499,6 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     10170U,	// DIV64r
     188649U,	// DIV8m
     8425U,	// DIV8r
-    4876U,	// DS_PREFIX
     11601U,	// EH_RETURN
     11601U,	// EH_RETURN64
     3987U,	// EH_SjLj_LongJmp32
@@ -509,7 +507,6 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     4096U,	// EH_SjLj_SetJmp64
     132365U,	// EH_SjLj_Setup
     107489303U,	// ENTER
-    4914U,	// ES_PREFIX
     2173260U,	// FARCALL16i
     200567U,	// FARCALL16m
     2171646U,	// FARCALL32i
@@ -521,9 +518,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     200542U,	// FARJMP32m
     200559U,	// FARJMP64
     4680U,	// FSETPM
-    4952U,	// FS_PREFIX
     4359U,	// GETSEC
-    5009U,	// GS_PREFIX
     5154U,	// HLT
     109214U,	// IDIV16m
     10910U,	// IDIV16r
@@ -1458,7 +1453,6 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     10930U,	// SMSW16r
     9346U,	// SMSW32r
     10182U,	// SMSW64r
-    5118U,	// SS_PREFIX
     4344U,	// STAC
     4398U,	// STC
     4417U,	// STD
@@ -2373,12 +2367,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     SStream_concat0(O, ", "); 
     break;
   case 5:
-    // ADC32rm, ADD32rm, AND32rm, ANDN32rm, CMOVA32rm, CMOVAE32rm, CMOVB32rm,...
+    // ADC32rm, ADCX32rm, ADD32rm, AND32rm, ANDN32rm, CMOVA32rm, CMOVAE32rm, ...
     printi32mem(MI, 2, O); 
     SStream_concat0(O, ", "); 
     break;
   case 6:
-    // ADC64rm, ADD64rm, AND64rm, ANDN64rm, CMOVA64rm, CMOVAE64rm, CMOVB64rm,...
+    // ADC64rm, ADCX64rm, ADD64rm, AND64rm, ANDN64rm, CMOVA64rm, CMOVAE64rm, ...
     printi64mem(MI, 2, O); 
     SStream_concat0(O, ", "); 
     break;
@@ -2390,19 +2384,19 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     return;
     break;
   case 8:
-    // ADCX32rm, ADOX32rm, BLCFILL32rm, BLCI32rm, BLCIC32rm, BLCMSK32rm, BLCS...
+    // ADOX32rm, BLCFILL32rm, BLCI32rm, BLCIC32rm, BLCMSK32rm, BLCS32rm, BLSF...
     printi32mem(MI, 1, O); 
     SStream_concat0(O, ", "); 
     printOperand(MI, 0, O); 
     return;
     break;
   case 9:
-    // ADCX32rr, ADCX64rr, ADOX32rr, ADOX64rr, ARPL16rr, BLCFILL32rr, BLCFILL...
+    // ADOX32rr, ADOX64rr, ARPL16rr, BLCFILL32rr, BLCFILL64rr, BLCI32rr, BLCI...
     printOperand(MI, 1, O); 
     SStream_concat0(O, ", "); 
     break;
   case 10:
-    // ADCX64rm, ADOX64rm, BLCFILL64rm, BLCI64rm, BLCIC64rm, BLCMSK64rm, BLCS...
+    // ADOX64rm, BLCFILL64rm, BLCI64rm, BLCIC64rm, BLCMSK64rm, BLCS64rm, BLSF...
     printi64mem(MI, 1, O); 
     SStream_concat0(O, ", "); 
     printOperand(MI, 0, O); 
@@ -2587,7 +2581,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     printOperand(MI, 1, O); 
     break;
   case 4:
-    // ADC16rr_REV, ADC32rr_REV, ADC64rr_REV, ADC8rr_REV, ADCX32rr, ADCX64rr,...
+    // ADC16rr_REV, ADC32rr_REV, ADC64rr_REV, ADC8rr_REV, ADCX32rm, ADCX32rr,...
     printOperand(MI, 0, O); 
     break;
   case 5:

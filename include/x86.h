@@ -79,6 +79,8 @@ typedef enum x86_op_type {
 //> AVX broadcast type
 typedef enum x86_avx_bcast {
 	X86_AVX_BCAST_INVALID = 0,	// Uninitialized.
+	X86_AVX_BCAST_2,	// AVX512 broadcast type {1to2}
+	X86_AVX_BCAST_4,	// AVX512 broadcast type {1to4}
 	X86_AVX_BCAST_8,	// AVX512 broadcast type {1to8}
 	X86_AVX_BCAST_16,	// AVX512 broadcast type {1to16}
 } x86_avx_bcast;
@@ -355,7 +357,6 @@ typedef enum x86_insn {
 	X86_INS_CPUID,
 	X86_INS_CQO,
 	X86_INS_CRC32,
-	X86_INS_CS,
 	X86_INS_CVTDQ2PD,
 	X86_INS_CVTDQ2PS,
 	X86_INS_CVTPD2DQ,
@@ -391,12 +392,10 @@ typedef enum x86_insn {
 	X86_INS_FDIVP,
 	X86_INS_DPPD,
 	X86_INS_DPPS,
-	X86_INS_DS,
 	X86_INS_RET,
 	X86_INS_ENCLS,
 	X86_INS_ENCLU,
 	X86_INS_ENTER,
-	X86_INS_ES,
 	X86_INS_EXTRACTPS,
 	X86_INS_EXTRQ,
 	X86_INS_F2XM1,
@@ -434,7 +433,6 @@ typedef enum x86_insn {
 	X86_INS_FSETPM,
 	X86_INS_FSINCOS,
 	X86_INS_FNSTENV,
-	X86_INS_FS,
 	X86_INS_FXAM,
 	X86_INS_FXRSTOR,
 	X86_INS_FXRSTOR64,
@@ -452,7 +450,6 @@ typedef enum x86_insn {
 	X86_INS_XORPD,
 	X86_INS_XORPS,
 	X86_INS_GETSEC,
-	X86_INS_GS,
 	X86_INS_HADDPD,
 	X86_INS_HADDPS,
 	X86_INS_HLT,
@@ -910,7 +907,6 @@ typedef enum x86_insn {
 	X86_INS_SQRTSD,
 	X86_INS_SQRTSS,
 	X86_INS_FSQRT,
-	X86_INS_SS,
 	X86_INS_STAC,
 	X86_INS_STC,
 	X86_INS_STD,
@@ -1592,6 +1588,7 @@ typedef enum  x86_insn_group {
 	X86_GRP_PFI,
 	X86_GRP_VLX,
 	X86_GRP_SMAP,
+	X86_GRP_NOVLX,
 
 	X86_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 	X86_GRP_VM,	// all virtualization instructions (VT-x + AMD-V)
