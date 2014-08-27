@@ -738,7 +738,7 @@ bool XCore_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *
 	}
 
 	if (MI->flat_insn->detail) {
-		memset(&MI->flat_insn->detail->xcore, 0, offsetof(cs_xcore, operands));
+		memset(MI->flat_insn->detail, 0, sizeof(cs_detail));
 	}
 
 	// Calling the auto-generated decoder function.

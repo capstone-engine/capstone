@@ -232,7 +232,7 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 	}
 
 	if (MI->flat_insn->detail) {
-		memset(&MI->flat_insn->detail->arm64, 0, sizeof(cs_arm64));
+		memset(MI->flat_insn->detail, 0, sizeof(cs_detail));
 	}
 
 	if (ud->big_endian)
