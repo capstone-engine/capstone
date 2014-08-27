@@ -2830,7 +2830,6 @@ void Sparc_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 	}
 }
 
-#ifndef CAPSTONE_DIET
 static name_map insn_name_maps[] = {
 	{ SPARC_INS_INVALID, NULL },
 
@@ -3112,6 +3111,7 @@ static name_map insn_name_maps[] = {
 	{ SPARC_INS_XOR, "xor" },
 };
 
+#ifndef CAPSTONE_DIET
 // special alias insn
 static name_map alias_insn_names[] = {
 	{ 0, NULL }
