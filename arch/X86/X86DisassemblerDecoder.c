@@ -20,7 +20,6 @@
 
 #include <stdarg.h>   /* for va_*()       */
 #include <stdlib.h>   /* for exit()       */
-#include <string.h>   /* for memset()     */
 
 #include "../../cs_priv.h"
 
