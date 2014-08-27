@@ -131,7 +131,7 @@ CS_OPT_SYNTAX_NOREGNAME = 3   # Asm syntax prints register name with only number
 
 # Capstone error type
 CS_ERR_OK = 0      # No error: everything was fine
-CS_ERR_MEM = 1     # Out-Of-Memory error: cs_open(), cs_disasm_ex()
+CS_ERR_MEM = 1     # Out-Of-Memory error: cs_open(), cs_disasm()
 CS_ERR_ARCH = 2    # Unsupported architecture: cs_open()
 CS_ERR_HANDLE = 3  # Invalid handle: cs_op_count(), cs_op_index()
 CS_ERR_CSH = 4     # Invalid csh argument: cs_close(), cs_errno(), cs_option()
@@ -250,7 +250,7 @@ def _setup_prototype(lib, fname, restype, *argtypes):
     getattr(lib, fname).argtypes = argtypes
 
 _setup_prototype(_cs, "cs_open", ctypes.c_int, ctypes.c_uint, ctypes.c_uint, ctypes.POINTER(ctypes.c_size_t))
-_setup_prototype(_cs, "cs_disasm_ex", ctypes.c_size_t, ctypes.c_size_t, ctypes.POINTER(ctypes.c_char), ctypes.c_size_t, \
+_setup_prototype(_cs, "cs_disasm", ctypes.c_size_t, ctypes.c_size_t, ctypes.POINTER(ctypes.c_char), ctypes.c_size_t, \
         ctypes.c_uint64, ctypes.c_size_t, ctypes.POINTER(ctypes.POINTER(_cs_insn)))
 _setup_prototype(_cs, "cs_free", None, ctypes.c_void_p, ctypes.c_size_t)
 _setup_prototype(_cs, "cs_close", ctypes.c_int, ctypes.POINTER(ctypes.c_size_t))
@@ -316,7 +316,7 @@ def cs_disasm_quick(arch, mode, code, offset, count=0):
         raise CsError(status)
 
     all_insn = ctypes.POINTER(_cs_insn)()
-    res = _cs.cs_disasm_ex(csh, code, len(code), offset, count, ctypes.byref(all_insn))
+    res = _cs.cs_disasm(csh, code, len(code), offset, count, ctypes.byref(all_insn))
     if res > 0:
         for i in range(res):
             yield CsInsn(_dummy_cs(csh, arch), all_insn[i])
@@ -356,7 +356,7 @@ def cs_disasm_lite(arch, mode, code, offset, count=0):
         raise CsError(status)
 
     all_insn = ctypes.POINTER(_cs_insn)()
-    res = _cs.cs_disasm_ex(csh, code, len(code), offset, count, ctypes.byref(all_insn))
+    res = _cs.cs_disasm(csh, code, len(code), offset, count, ctypes.byref(all_insn))
     if res > 0:
         for i in range(res):
             insn = all_insn[i]
@@ -776,7 +776,7 @@ class Cs(object):
             print(code)
             code = code.encode()
             print(code)'''
-        res = _cs.cs_disasm_ex(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
+        res = _cs.cs_disasm(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
         if res > 0:
             for i in range(res):
                 yield CsInsn(self, all_insn[i])
@@ -798,7 +798,7 @@ class Cs(object):
             raise CsError(CS_ERR_DIET)
 
         all_insn = ctypes.POINTER(_cs_insn)()
-        res = _cs.cs_disasm_ex(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
+        res = _cs.cs_disasm(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
         if res > 0:
             for i in range(res):
                 insn = all_insn[i]

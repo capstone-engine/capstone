@@ -41,7 +41,7 @@ cdef extern from "<capstone/capstone.h>":
 
     cs_err cs_errno(csh handle)
 
-    size_t cs_disasm_ex(csh handle,
+    size_t cs_disasm(csh handle,
         const uint8_t *code, size_t code_size,
         uint64_t address,
         size_t count,

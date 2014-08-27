@@ -199,7 +199,7 @@ static void test()
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
-		count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &all_insn);
+		count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, &all_insn);
 		if (count) {
 			size_t j;
 			int n;
@@ -249,7 +249,7 @@ static void test()
 			// print out the next offset, after the last insn
 			printf("0x%"PRIx64":\n", all_insn[j-1].address + all_insn[j-1].size);
 
-			// free memory allocated by cs_disasm_ex()
+			// free memory allocated by cs_disasm()
 			cs_free(all_insn, count);
 		} else {
 			printf("****************\n");

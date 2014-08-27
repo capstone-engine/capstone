@@ -409,7 +409,7 @@ static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
 // dynamicly allocate memory to contain disasm insn
 // NOTE: caller must free() the allocated memory itself to avoid memory leaking
 CAPSTONE_EXPORT
-size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
+size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
 {
 	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
 	MCInst mci;
@@ -604,6 +604,13 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 	*insn = total;
 
 	return c;
+}
+
+CAPSTONE_EXPORT
+CAPSTONE_DEPRECATED
+size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
+{
+	return cs_disasm(ud, buffer, size, offset, count, insn);
 }
 
 CAPSTONE_EXPORT

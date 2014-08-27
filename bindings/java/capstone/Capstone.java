@@ -242,7 +242,7 @@ public class Capstone {
 
   private interface CS extends Library {
     public int cs_open(int arch, int mode, NativeLongByReference handle);
-    public NativeLong cs_disasm_ex(NativeLong handle, byte[] code, NativeLong code_len,
+    public NativeLong cs_disasm(NativeLong handle, byte[] code, NativeLong code_len,
         long addr, NativeLong count, PointerByReference insn);
     public void cs_free(Pointer p, NativeLong count);
     public int cs_close(NativeLongByReference handle);
@@ -402,7 +402,7 @@ public class Capstone {
   public CsInsn[] disasm(byte[] code, long address, long count) {
     PointerByReference insnRef = new PointerByReference();
 
-    NativeLong c = cs.cs_disasm_ex(ns.csh, code, new NativeLong(code.length), address, new NativeLong(count), insnRef);
+    NativeLong c = cs.cs_disasm(ns.csh, code, new NativeLong(code.length), address, new NativeLong(count), insnRef);
 
     Pointer p = insnRef.getValue();
     _cs_insn byref = new _cs_insn(p);

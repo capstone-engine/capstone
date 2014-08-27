@@ -34,7 +34,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 
 	list = Val_emptylist;
 
-	size_t c = cs_disasm_ex(handle, code, code_len, addr, count, &insn);
+	size_t c = cs_disasm(handle, code, code_len, addr, count, &insn);
 
 	if (c) {
 		//printf("Found %lu insn, addr: %lx\n", c, addr);

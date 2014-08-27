@@ -256,7 +256,7 @@ cdef class Cs(object):
     def disasm(self, code, addr, count=0):
         cdef cc.cs_insn *allinsn
 
-        cdef res = cc.cs_disasm_ex(self.csh, code, len(code), addr, count, &allinsn)
+        cdef res = cc.cs_disasm(self.csh, code, len(code), addr, count, &allinsn)
         detail = self._cs.detail
         arch = self._cs.arch
 
@@ -284,7 +284,7 @@ cdef class Cs(object):
             # Diet engine cannot provide @mnemonic & @op_str
             raise CsError(capstone.CS_ERR_DIET)
 
-        cdef res = cc.cs_disasm_ex(self.csh, code, len(code), addr, count, &allinsn)
+        cdef res = cc.cs_disasm(self.csh, code, len(code), addr, count, &allinsn)
 
         for i from 0 <= i < res:
             insn = allinsn[i]

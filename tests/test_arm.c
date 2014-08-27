@@ -213,7 +213,7 @@ static void test()
 		if (platforms[i].syntax)
 			cs_option(handle, CS_OPT_SYNTAX, platforms[i].syntax);
 
-		count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
+		count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {
 			size_t j;
 			printf("****************\n");
@@ -227,7 +227,7 @@ static void test()
 			}
 			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
 
-			// free memory allocated by cs_disasm_ex()
+			// free memory allocated by cs_disasm()
 			cs_free(insn, count);
 		} else {
 			printf("****************\n");
