@@ -166,7 +166,6 @@ set_property(GLOBAL PROPERTY SOVERSION SOVERSION ${VERSION_MAJOR})
 if (BUILD_STATIC)
     add_library(capstone-static STATIC ${SOURCES})
     set_property(TARGET capstone-static PROPERTY OUTPUT_NAME capstone)
-    set_property(TARGET capstone-static PROPERTY PREFIX lib)
     set(default-target capstone-static)
 endif ()
 
