@@ -221,6 +221,24 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
 	}
 }
 
+// check to see if @id is opcode of a relative branch instruction
+static bool relativeBranch(unsigned int id)
+{
+	static unsigned int branchIns[] = {
+		Mips_BEQ, Mips_BC1F, Mips_BGEZ, Mips_BGEZAL, Mips_BGTZ,
+		Mips_BLEZ, Mips_BLTZ, Mips_BNE,
+	};
+	int i;
+
+	for(i = 0; i < ARR_SIZE(branchIns); i++) {
+		if (id == branchIns[i])
+			return true;
+	}
+
+	// not found
+	return false;
+}
+
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	MCOperand *Op = MCInst_getOperand(MI, OpNo);
@@ -237,9 +255,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				MI->flat_insn->detail->mips.op_count++;
 			}
 		}
-	}
-
-	if (MCOperand_isImm(Op)) {
+	} else if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op);
 		if (MI->csh->doing_mem) {
 			if (imm) {	// only print Imm offset if it is not 0
@@ -258,6 +274,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			if (MI->csh->detail)
 				MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].mem.disp = imm;
 		} else {
+			if (relativeBranch(MI->Opcode)) {
+				imm += MI->address;
+			}
+
 			if (imm >= 0) {
 				if (imm > HEX_THRESHOLD)
 					SStream_concat(O, "0x%"PRIx64, imm);
