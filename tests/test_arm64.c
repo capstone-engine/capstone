@@ -103,7 +103,7 @@ static void print_insn_detail(cs_insn *ins)
 		if (op->vess != ARM64_VESS_INVALID)
 			printf("\t\t\tVector Element Size Specifier: %u\n", op->vess);
 
-		if (op->vector_index != 0)
+		if (op->vector_index != -1)
 			printf("\t\t\tVector Index: %u\n", op->vector_index);
 	}
 

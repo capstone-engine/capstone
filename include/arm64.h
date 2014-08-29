@@ -353,7 +353,7 @@ typedef struct arm64_op_mem {
 
 // Instruction operand
 typedef struct cs_arm64_op {
-	int vector_index;	// Vector Index for some vector operands (or 0 if irrelevant)
+	int vector_index;	// Vector Index for some vector operands (or -1 if irrelevant)
 	arm64_vas vas;		// Vector Arrangement Specifier
 	arm64_vess vess;	// Vector Element Size Specifier
 	struct {

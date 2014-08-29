@@ -72,7 +72,7 @@ def print_insn_detail(insn):
             if i.vess != ARM64_VESS_INVALID:
                 print("\t\t\tVector Element Size Specifier: %u" % i.vess)
 
-            if i.vector_index != 0:
+            if i.vector_index != -1:
                 print("\t\t\tVector Index: %u" % i.vector_index)
 
     if insn.writeback:
