@@ -226,7 +226,7 @@ static bool relativeBranch(unsigned int id)
 {
 	static unsigned int branchIns[] = {
 		Mips_BEQ, Mips_BC1F, Mips_BGEZ, Mips_BGEZAL, Mips_BGTZ,
-		Mips_BLEZ, Mips_BLTZ, Mips_BNE,
+		Mips_BLEZ, Mips_BLTZ, Mips_BLTZAL, Mips_BNE, Mips_BC1T,
 	};
 	int i;
 
