@@ -9638,8 +9638,8 @@ static name_map insn_name_maps[] = {
 // special alias insn
 static name_map alias_insn_names[] = {
 	{ MIPS_INS_NOP, "nop" },
-	{ MIPS_INS_BEQ, "beqz" },
-	{ MIPS_INS_BGEZAL, "bal" },
+	{ MIPS_INS_BEQZ, "beqz" },
+	{ MIPS_INS_BAL, "bal" },
 	{ MIPS_INS_BC1T, "bc1t" },
 	{ MIPS_INS_BC1F, "bc1f" },
 	{ MIPS_INS_NEGU, "negu" },
