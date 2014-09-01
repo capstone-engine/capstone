@@ -20,7 +20,7 @@
 #ifndef CS_ARMBASEINFO_H
 #define CS_ARMBASEINFO_H
 
-//#include "ARMMCTargetDesc.h"
+#include "../../include/arm.h"
 
 // Defines symbolic names for ARM registers.  This defines a mapping from
 // register name to register number.
@@ -92,23 +92,12 @@ inline static char *ARMCC_ARMCondCodeToString(ARMCC_CondCodes CC)
 	}
 }
 
-enum ARM_PROC_IMod {
-	ARM_PROC_IE = 2,
-	ARM_PROC_ID = 3
-};
-
-enum ARM_PROC_IFlags {
-	ARM_PROC_F = 1,
-	ARM_PROC_I = 2,
-	ARM_PROC_A = 4
-};
-
 inline static char *ARM_PROC_IFlagsToString(unsigned val)
 {
 	switch (val) {
-		case ARM_PROC_F: return "f";
-		case ARM_PROC_I: return "i";
-		case ARM_PROC_A: return "a";
+		case ARM_CPSFLAG_F: return "f";
+		case ARM_CPSFLAG_I: return "i";
+		case ARM_CPSFLAG_A: return "a";
 		default: return "";
 	}
 }
@@ -116,10 +105,9 @@ inline static char *ARM_PROC_IFlagsToString(unsigned val)
 inline static char *ARM_PROC_IModToString(unsigned val)
 {
 	switch (val) {
-		case ARM_PROC_IE: return "ie";
-		case ARM_PROC_ID: return "id";
-		default:
-						  return "";
+		case ARM_CPSMODE_IE: return "ie";
+		case ARM_CPSMODE_ID: return "id";
+		default: return "";
 	}
 }
 

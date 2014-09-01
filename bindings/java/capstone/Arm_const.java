@@ -36,6 +36,41 @@ public class Arm_const {
 	public static final int ARM_CC_LE = 14;
 	public static final int ARM_CC_AL = 15;
 
+	// Special registers for MSR
+
+	public static final int ARM_SYSREG_INVALID = 0;
+	public static final int ARM_SYSREG_SPSR_C = 1;
+	public static final int ARM_SYSREG_SPSR_X = 2;
+	public static final int ARM_SYSREG_SPSR_S = 4;
+	public static final int ARM_SYSREG_SPSR_F = 8;
+	public static final int ARM_SYSREG_CPSR_C = 16;
+	public static final int ARM_SYSREG_CPSR_X = 32;
+	public static final int ARM_SYSREG_CPSR_S = 64;
+	public static final int ARM_SYSREG_CPSR_F = 128;
+	public static final int ARM_SYSREG_APSR = 256;
+	public static final int ARM_SYSREG_APSR_G = 257;
+	public static final int ARM_SYSREG_APSR_NZCVQ = 258;
+	public static final int ARM_SYSREG_APSR_NZCVQG = 259;
+	public static final int ARM_SYSREG_IAPSR = 260;
+	public static final int ARM_SYSREG_IAPSR_G = 261;
+	public static final int ARM_SYSREG_IAPSR_NZCVQG = 262;
+	public static final int ARM_SYSREG_EAPSR = 263;
+	public static final int ARM_SYSREG_EAPSR_G = 264;
+	public static final int ARM_SYSREG_EAPSR_NZCVQG = 265;
+	public static final int ARM_SYSREG_XPSR = 266;
+	public static final int ARM_SYSREG_XPSR_G = 267;
+	public static final int ARM_SYSREG_XPSR_NZCVQG = 268;
+	public static final int ARM_SYSREG_IPSR = 269;
+	public static final int ARM_SYSREG_EPSR = 270;
+	public static final int ARM_SYSREG_IEPSR = 271;
+	public static final int ARM_SYSREG_MSP = 272;
+	public static final int ARM_SYSREG_PSP = 273;
+	public static final int ARM_SYSREG_PRIMASK = 274;
+	public static final int ARM_SYSREG_BASEPRI = 275;
+	public static final int ARM_SYSREG_BASEPRI_MAX = 276;
+	public static final int ARM_SYSREG_FAULTMASK = 277;
+	public static final int ARM_SYSREG_CONTROL = 278;
+
 	// Operand type for instruction's operands
 
 	public static final int ARM_OP_INVALID = 0;
@@ -45,6 +80,67 @@ public class Arm_const {
 	public static final int ARM_OP_IMM = 4;
 	public static final int ARM_OP_FP = 5;
 	public static final int ARM_OP_MEM = 6;
+	public static final int ARM_OP_SETEND = 7;
+	public static final int ARM_OP_SYSREG = 8;
+
+	// Operand type for SETEND instruction
+
+	public static final int ARM_SETEND_INVALID = 0;
+	public static final int ARM_SETEND_BE = 1;
+	public static final int ARM_SETEND_LE = 2;
+
+	public static final int ARM_CPSMODE_INVALID = 0;
+	public static final int ARM_CPSMODE_IE = 2;
+	public static final int ARM_CPSMODE_ID = 3;
+
+	// Operand type for SETEND instruction
+
+	public static final int ARM_CPSFLAG_INVALID = 0;
+	public static final int ARM_CPSFLAG_F = 1;
+	public static final int ARM_CPSFLAG_I = 2;
+	public static final int ARM_CPSFLAG_A = 4;
+	public static final int ARM_CPSFLAG_NONE = 16;
+
+	// Data type for elements of vector instructions.
+
+	public static final int ARM_VECTORDATA_INVALID = 0;
+	public static final int ARM_VECTORDATA_I8 = 1;
+	public static final int ARM_VECTORDATA_I16 = 2;
+	public static final int ARM_VECTORDATA_I32 = 3;
+	public static final int ARM_VECTORDATA_I64 = 4;
+	public static final int ARM_VECTORDATA_S8 = 5;
+	public static final int ARM_VECTORDATA_S16 = 6;
+	public static final int ARM_VECTORDATA_S32 = 7;
+	public static final int ARM_VECTORDATA_S64 = 8;
+	public static final int ARM_VECTORDATA_U8 = 9;
+	public static final int ARM_VECTORDATA_U16 = 10;
+	public static final int ARM_VECTORDATA_U32 = 11;
+	public static final int ARM_VECTORDATA_U64 = 12;
+	public static final int ARM_VECTORDATA_P8 = 13;
+	public static final int ARM_VECTORDATA_F32 = 14;
+	public static final int ARM_VECTORDATA_F64 = 15;
+	public static final int ARM_VECTORDATA_F16F64 = 16;
+	public static final int ARM_VECTORDATA_F64F16 = 17;
+	public static final int ARM_VECTORDATA_F32F16 = 18;
+	public static final int ARM_VECTORDATA_F16F32 = 19;
+	public static final int ARM_VECTORDATA_F64F32 = 20;
+	public static final int ARM_VECTORDATA_F32F64 = 21;
+	public static final int ARM_VECTORDATA_S32F32 = 22;
+	public static final int ARM_VECTORDATA_U32F32 = 23;
+	public static final int ARM_VECTORDATA_F32S32 = 24;
+	public static final int ARM_VECTORDATA_F32U32 = 25;
+	public static final int ARM_VECTORDATA_F64S16 = 26;
+	public static final int ARM_VECTORDATA_F32S16 = 27;
+	public static final int ARM_VECTORDATA_F64S32 = 28;
+	public static final int ARM_VECTORDATA_S16F64 = 29;
+	public static final int ARM_VECTORDATA_S16F32 = 30;
+	public static final int ARM_VECTORDATA_S32F64 = 31;
+	public static final int ARM_VECTORDATA_U16F64 = 32;
+	public static final int ARM_VECTORDATA_U16F32 = 33;
+	public static final int ARM_VECTORDATA_U32F64 = 34;
+	public static final int ARM_VECTORDATA_F64U16 = 35;
+	public static final int ARM_VECTORDATA_F32U16 = 36;
+	public static final int ARM_VECTORDATA_F64U32 = 37;
 
 	// ARM registers
 
@@ -599,7 +695,15 @@ public class Arm_const {
 	public static final int ARM_INS_MOVS = 424;
 	public static final int ARM_INS_POP = 425;
 	public static final int ARM_INS_PUSH = 426;
-	public static final int ARM_INS_MAX = 427;
+	public static final int ARM_INS_NOP = 427;
+	public static final int ARM_INS_YIELD = 428;
+	public static final int ARM_INS_WFE = 429;
+	public static final int ARM_INS_WFI = 430;
+	public static final int ARM_INS_SEV = 431;
+	public static final int ARM_INS_SEVL = 432;
+	public static final int ARM_INS_VPUSH = 433;
+	public static final int ARM_INS_VPOP = 434;
+	public static final int ARM_INS_MAX = 435;
 
 	// Group of ARM instructions
 

@@ -478,7 +478,7 @@ class CsInsn(object):
     def __gen_detail(self):
         arch = self._cs.arch
         if arch == CS_ARCH_ARM:
-            (self.cc, self.update_flags, self.writeback, self.operands) = \
+            (self.usermode, self.vector_size, self.vector_data, self.cps_mode, self.cps_flag, self.cc, self.update_flags, self.writeback, self.operands) = \
                 arm.get_arch_info(self._detail.arch.arm)
         elif arch == CS_ARCH_ARM64:
             (self.cc, self.update_flags, self.writeback, self.operands) = \
