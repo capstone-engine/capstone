@@ -43,6 +43,8 @@ def print_insn_detail(insn):
                 print("\t\toperands[%u].type: C-IMM = %u" % (c, i.imm))
             if i.type == ARM_OP_FP:
                 print("\t\toperands[%u].type: FP = %f" % (c, i.fp))
+            if i.type == ARM_OP_SYSREG:
+                print("\t\toperands[%u].type: SYSREG = %u" % (c, i.reg))
             if i.type == ARM_OP_SETEND:
                 if i.setend == ARM_SETEND_BE:
                     print("\t\toperands[%u].type: SETEND = be")
