@@ -491,61 +491,61 @@ static insn_map insns[] = {
 #endif
 	},
 	{
-		PPC_BCC, PPC_INS_B,
+		PPC_BCC, PPC_INS_B_CC,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 1, 0
 #endif
 	},
 	{
-		PPC_BCCA, PPC_INS_B,
+		PPC_BCCA, PPC_INS_BA_CC,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 1, 0
 #endif
 	},
 	{
-		PPC_BCCCTR, PPC_INS_B,
+		PPC_BCCCTR, PPC_INS_BCTR_CC,
 #ifndef CAPSTONE_DIET
 		{ PPC_REG_CTR, 0 }, { 0 }, { 0 }, 1, 1
 #endif
 	},
 	{
-		PPC_BCCCTR8, PPC_INS_B,
+		PPC_BCCCTR8, PPC_INS_BCTR_CC,
 #ifndef CAPSTONE_DIET
 		{ PPC_REG_CTR8, 0 }, { 0 }, { PPC_GRP_MODE64, 0 }, 1, 1
 #endif
 	},
 	{
-		PPC_BCCCTRL, PPC_INS_B,
+		PPC_BCCCTRL, PPC_INS_BCTRL_CC,
 #ifndef CAPSTONE_DIET
 		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		PPC_BCCCTRL8, PPC_INS_B,
+		PPC_BCCCTRL8, PPC_INS_BCTRL_CC,
 #ifndef CAPSTONE_DIET
 		{ PPC_REG_CTR8, PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { PPC_GRP_MODE64, 0 }, 0, 0
 #endif
 	},
 	{
-		PPC_BCCL, PPC_INS_B,
+		PPC_BCCL, PPC_INS_BL_CC,
 #ifndef CAPSTONE_DIET
 		{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		PPC_BCCLA, PPC_INS_B,
+		PPC_BCCLA, PPC_INS_BLA_CC,
 #ifndef CAPSTONE_DIET
 		{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		PPC_BCCLR, PPC_INS_B,
+		PPC_BCCLR, PPC_INS_BLR_CC,
 #ifndef CAPSTONE_DIET
 		{ PPC_REG_LR, PPC_REG_RM, 0 }, { 0 }, { 0 }, 1, 0
 #endif
 	},
 	{
-		PPC_BCCLRL, PPC_INS_B,
+		PPC_BCCLRL, PPC_INS_BLRL_CC,
 #ifndef CAPSTONE_DIET
 		{ PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
 #endif
@@ -7695,6 +7695,183 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_XXSPLTW, "xxspltw" },
 	{ PPC_INS_BCA, "bca" },
 	{ PPC_INS_BCLA, "bcla" },
+
+	// extra & alias instructions
+	{ PPC_INS_SLWI, "slwi" },
+	{ PPC_INS_SRWI, "srwi" },
+	{ PPC_INS_SLDI, "sldi" },
+	{ PPC_INS_BTA, "bta" },
+	{ PPC_INS_CRSET, "crset" },
+	{ PPC_INS_CRNOT, "crnot" },
+	{ PPC_INS_CRMOVE, "crmove" },
+	{ PPC_INS_CRCLR, "crclr" },
+	{ PPC_INS_MFBR0, "mfbr0" },
+	{ PPC_INS_MFBR1, "mfbr1" },
+	{ PPC_INS_MFBR2, "mfbr2" },
+	{ PPC_INS_MFBR3, "mfbr3" },
+	{ PPC_INS_MFBR4, "mfbr4" },
+	{ PPC_INS_MFBR5, "mfbr5" },
+	{ PPC_INS_MFBR6, "mfbr6" },
+	{ PPC_INS_MFBR7, "mfbr7" },
+	{ PPC_INS_MFXER, "mfxer" },
+	{ PPC_INS_MFRTCU, "mfrtcu" },
+	{ PPC_INS_MFRTCL, "mfrtcl" },
+	{ PPC_INS_MFDSCR, "mfdscr" },
+	{ PPC_INS_MFDSISR, "mfdsisr" },
+	{ PPC_INS_MFDAR, "mfdar" },
+	{ PPC_INS_MFSRR2, "mfsrr2" },
+	{ PPC_INS_MFSRR3, "mfsrr3" },
+	{ PPC_INS_MFCFAR, "mfcfar" },
+	{ PPC_INS_MFAMR, "mfamr" },
+	{ PPC_INS_MFPID, "mfpid" },
+	{ PPC_INS_MFTBLO, "mftblo" },
+	{ PPC_INS_MFTBHI, "mftbhi" },
+	{ PPC_INS_MFDBATU, "mfdbatu" },
+	{ PPC_INS_MFDBATL, "mfdbatl" },
+	{ PPC_INS_MFIBATU, "mfibatu" },
+	{ PPC_INS_MFIBATL, "mfibatl" },
+	{ PPC_INS_MFDCCR, "mfdccr" },
+	{ PPC_INS_MFICCR, "mficcr" },
+	{ PPC_INS_MFDEAR, "mfdear" },
+	{ PPC_INS_MFESR, "mfesr" },
+	{ PPC_INS_MFSPEFSCR, "mfspefscr" },
+	{ PPC_INS_MFTCR, "mftcr" },
+	{ PPC_INS_MFASR, "mfasr" },
+	{ PPC_INS_MFPVR, "mfpvr" },
+	{ PPC_INS_MFTBU, "mftbu" },
+	{ PPC_INS_MTCR, "mtcr" },
+	{ PPC_INS_MTBR0, "mtbr0" },
+	{ PPC_INS_MTBR1, "mtbr1" },
+	{ PPC_INS_MTBR2, "mtbr2" },
+	{ PPC_INS_MTBR3, "mtbr3" },
+	{ PPC_INS_MTBR4, "mtbr4" },
+	{ PPC_INS_MTBR5, "mtbr5" },
+	{ PPC_INS_MTBR6, "mtbr6" },
+	{ PPC_INS_MTBR7, "mtbr7" },
+	{ PPC_INS_MTXER, "mtxer" },
+	{ PPC_INS_MTDSCR, "mtdscr" },
+	{ PPC_INS_MTDSISR, "mtdsisr" },
+	{ PPC_INS_MTDAR, "mtdar" },
+	{ PPC_INS_MTSRR2, "mtsrr2" },
+	{ PPC_INS_MTSRR3, "mtsrr3" },
+	{ PPC_INS_MTCFAR, "mtcfar" },
+	{ PPC_INS_MTAMR, "mtamr" },
+	{ PPC_INS_MTPID, "mtpid" },
+	{ PPC_INS_MTTBL, "mttbl" },
+	{ PPC_INS_MTTBU, "mttbu" },
+	{ PPC_INS_MTTBLO, "mttblo" },
+	{ PPC_INS_MTTBHI, "mttbhi" },
+	{ PPC_INS_MTDBATU, "mtdbatu" },
+	{ PPC_INS_MTDBATL, "mtdbatl" },
+	{ PPC_INS_MTIBATU, "mtibatu" },
+	{ PPC_INS_MTIBATL, "mtibatl" },
+	{ PPC_INS_MTDCCR, "mtdccr" },
+	{ PPC_INS_MTICCR, "mticcr" },
+	{ PPC_INS_MTDEAR, "mtdear" },
+	{ PPC_INS_MTESR, "mtesr" },
+	{ PPC_INS_MTSPEFSCR, "mtspefscr" },
+	{ PPC_INS_MTTCR, "mttcr" },
+	{ PPC_INS_NOT, "not" },
+	{ PPC_INS_MR, "mr" },
+	{ PPC_INS_ROTLD, "rotld" },
+	{ PPC_INS_ROTLDI, "rotldi" },
+	{ PPC_INS_CLRLDI, "clrldi" },
+	{ PPC_INS_ROTLWI, "rotlwi" },
+	{ PPC_INS_CLRLWI, "clrlwi" },
+	{ PPC_INS_ROTLW, "rotlw" },
+	{ PPC_INS_SUB, "sub" },
+	{ PPC_INS_SUBC, "subc" },
+	{ PPC_INS_LWSYNC, "lwsync" },
+	{ PPC_INS_PTESYNC, "ptesync" },
+	{ PPC_INS_TDLT, "tdlt" },
+	{ PPC_INS_TDEQ, "tdeq" },
+	{ PPC_INS_TDGT, "tdgt" },
+	{ PPC_INS_TDNE, "tdne" },
+	{ PPC_INS_TDLLT, "tdllt" },
+	{ PPC_INS_TDLGT, "tdlgt" },
+	{ PPC_INS_TDU, "tdu" },
+	{ PPC_INS_TDLTI, "tdlti" },
+	{ PPC_INS_TDEQI, "tdeqi" },
+	{ PPC_INS_TDGTI, "tdgti" },
+	{ PPC_INS_TDNEI, "tdnei" },
+	{ PPC_INS_TDLLTI, "tdllti" },
+	{ PPC_INS_TDLGTI, "tdlgti" },
+	{ PPC_INS_TDUI, "tdui" },
+	{ PPC_INS_TLBREHI, "tlbrehi" },
+	{ PPC_INS_TLBRELO, "tlbrelo" },
+	{ PPC_INS_TLBWEHI, "tlbwehi" },
+	{ PPC_INS_TLBWELO, "tlbwelo" },
+	{ PPC_INS_TWLT, "twlt" },
+	{ PPC_INS_TWEQ, "tweq" },
+	{ PPC_INS_TWGT, "twgt" },
+	{ PPC_INS_TWNE, "twne" },
+	{ PPC_INS_TWLLT, "twllt" },
+	{ PPC_INS_TWLGT, "twlgt" },
+	{ PPC_INS_TWU, "twu" },
+	{ PPC_INS_TWLTI, "twlti" },
+	{ PPC_INS_TWEQI, "tweqi" },
+	{ PPC_INS_TWGTI, "twgti" },
+	{ PPC_INS_TWNEI, "twnei" },
+	{ PPC_INS_TWLLTI, "twllti" },
+	{ PPC_INS_TWLGTI, "twlgti" },
+	{ PPC_INS_TWUI, "twui" },
+	{ PPC_INS_WAITRSV, "waitrsv" },
+	{ PPC_INS_WAITIMPL, "waitimpl" },
+	{ PPC_INS_XNOP, "xnop" },
+	{ PPC_INS_XVMOVDP, "xvmovdp" },
+	{ PPC_INS_XVMOVSP, "xvmovsp" },
+	{ PPC_INS_XXSPLTD, "xxspltd" },
+	{ PPC_INS_XXMRGHD, "xxmrghd" },
+	{ PPC_INS_XXMRGLD, "xxmrgld" },
+	{ PPC_INS_XXSWAPD, "xxswapd" },
+	{ PPC_INS_BT, "bt" },
+	{ PPC_INS_BF, "bf" },
+	{ PPC_INS_BDNZT, "bdnzt" },
+	{ PPC_INS_BDNZF, "bdnzf" },
+	{ PPC_INS_BDZF, "bdzf" },
+	{ PPC_INS_BDZT, "bdzt" },
+	{ PPC_INS_BFA, "bfa" },
+	{ PPC_INS_BDNZTA, "bdnzta" },
+	{ PPC_INS_BDNZFA, "bdnzfa" },
+	{ PPC_INS_BDZTA, "bdzta" },
+	{ PPC_INS_BDZFA, "bdzfa" },
+	{ PPC_INS_BTCTR, "btctr" },
+	{ PPC_INS_BFCTR, "bfctr" },
+	{ PPC_INS_BTCTRL, "btctrl" },
+	{ PPC_INS_BFCTRL, "bfctrl" },
+	{ PPC_INS_BTL, "btl" },
+	{ PPC_INS_BFL, "bfl" },
+	{ PPC_INS_BDNZTL, "bdnztl" },
+	{ PPC_INS_BDNZFL, "bdnzfl" },
+	{ PPC_INS_BDZTL, "bdztl" },
+	{ PPC_INS_BDZFL, "bdzfl" },
+	{ PPC_INS_BTLA, "btla" },
+	{ PPC_INS_BFLA, "bfla" },
+	{ PPC_INS_BDNZTLA, "bdnztla" },
+	{ PPC_INS_BDNZFLA, "bdnzfla" },
+	{ PPC_INS_BDZTLA, "bdztla" },
+	{ PPC_INS_BDZFLA, "bdzfla" },
+	{ PPC_INS_BTLR, "btlr" },
+	{ PPC_INS_BFLR, "bflr" },
+	{ PPC_INS_BDNZTLR, "bdnztlr" },
+	{ PPC_INS_BDZTLR, "bdztlr" },
+	{ PPC_INS_BDZFLR, "bdzflr" },
+	{ PPC_INS_BTLRL, "btlrl" },
+	{ PPC_INS_BFLRL, "bflrl" },
+	{ PPC_INS_BDNZTLRL, "bdnztlrl" },
+	{ PPC_INS_BDNZFLRL, "bdnzflrl" },
+	{ PPC_INS_BDZTLRL, "bdztlrl" },
+	{ PPC_INS_BDZFLRL, "bdzflrl" },
+
+	// BccX
+	{ PPC_INS_B_CC, "b_cc" },
+	{ PPC_INS_BL_CC, "bl_cc" },
+	{ PPC_INS_BLA_CC, "bla_cc" },
+	{ PPC_INS_BLR_CC, "blr_cc" },
+	{ PPC_INS_BLRL_CC, "blrl_cc" },
+	{ PPC_INS_BA_CC, "ba_cc" },
+	{ PPC_INS_BCTR_CC, "bctr_cc" },
+	{ PPC_INS_BCTRL_CC, "bctrl_cc" },
 };
 
 // special alias insn
@@ -7821,4 +7998,58 @@ ppc_reg PPC_map_register(unsigned int r)
 	return 0;
 }
 
+static name_map alias_insn_name_maps[] = {
+	{ PPC_INS_BTA, "bta" },
+	{ PPC_INS_B, "blt" },
+	{ PPC_INS_B, "bgt" },
+	{ PPC_INS_B, "beq" },
+	{ PPC_INS_B, "bne" },
+
+	{ PPC_INS_BA_CC, "blta" },
+	{ PPC_INS_BA_CC, "bgta" },
+	{ PPC_INS_BA_CC, "beqa" },
+	{ PPC_INS_BA_CC, "bnea" },
+
+	{ PPC_INS_BCTR_CC, "bltctr" },
+	{ PPC_INS_BCTR_CC, "bgtctr" },
+	{ PPC_INS_BCTR_CC, "beqctr" },
+	{ PPC_INS_BCTR_CC, "bnectr" },
+
+	{ PPC_INS_BCTRL_CC, "bltctrl" },
+	{ PPC_INS_BCTRL_CC, "bgtctrl" },
+	{ PPC_INS_BCTRL_CC, "beqctrl" },
+	{ PPC_INS_BCTRL_CC, "bnectrl" },
+
+	{ PPC_INS_BL_CC, "bltl" },
+	{ PPC_INS_BL_CC, "bgtl" },
+	{ PPC_INS_BL_CC, "beql" },
+	{ PPC_INS_BL_CC, "bnel" },
+
+	{ PPC_INS_BLA_CC, "bltla" },
+	{ PPC_INS_BLA_CC, "bgtla" },
+	{ PPC_INS_BLA_CC, "beqla" },
+	{ PPC_INS_BLA_CC, "bnela" },
+
+	{ PPC_INS_BLR_CC, "bltlr" },
+	{ PPC_INS_BLR_CC, "bgtlr" },
+	{ PPC_INS_BLR_CC, "beqlr" },
+	{ PPC_INS_BLR_CC, "bnelr" },
+
+	{ PPC_INS_BLRL_CC, "bltlrl" },
+	{ PPC_INS_BLRL_CC, "bgtlrl" },
+	{ PPC_INS_BLRL_CC, "beqlrl" },
+	{ PPC_INS_BLRL_CC, "bnelrl" },
+};
+// map instruction name to public instruction ID
+ppc_reg PPC_map_insn(const char *name)
+{
+	// NOTE: skip first NULL name in insn_name_maps
+	int i = name2id(&insn_name_maps[1], ARR_SIZE(insn_name_maps) - 1, name);
+
+	if (i == -1)
+		// try again with 'special' insn that is not available in insn_name_maps
+		i = name2id(alias_insn_name_maps, ARR_SIZE(alias_insn_name_maps), name);
+
+	return (i != -1)? i : PPC_REG_INVALID;
+}
 #endif

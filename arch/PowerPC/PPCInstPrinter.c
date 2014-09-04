@@ -36,6 +36,7 @@ static char *getRegisterName(unsigned RegNo);
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O);
+static char *printAliasInstr(MCInst *MI, SStream *OS, void *info);
 
 static void set_mem_access(MCInst *MI, bool status)
 {
@@ -60,7 +61,7 @@ void PPC_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 		return;
 
 	// check if this insn has branch hint
-	if (strrchr(insn_asm, '+') != NULL) {
+	if (strrchr(insn_asm, '+') != NULL && !strstr(insn_asm, ".+")) {
 		insn->detail->ppc.bh = PPC_BH_PLUS;
 	} else if (strrchr(insn_asm, '-') != NULL) {
 		insn->detail->ppc.bh = PPC_BH_MINUS;
@@ -72,6 +73,8 @@ void PPC_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 
 void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 {
+	char *mnem;
+
 	// Check for slwi/srwi mnemonics.
 	if (MCInst_getOpcode(MI) == PPC_RLWINM) {
 		unsigned char SH = (unsigned char)MCOperand_getImm(MCInst_getOperand(MI, 2));
@@ -81,11 +84,13 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 
 		if (SH <= 31 && MB == 0 && ME == (31-SH)) {
 			SStream_concat0(O, "slwi\t");
+			MCInst_setOpcodePub(MI, PPC_INS_SLWI);
 			useSubstituteMnemonic = true;
 		}
 
 		if (SH <= 31 && MB == (32-SH) && ME == 31) {
 			SStream_concat0(O, "srwi\t");
+			MCInst_setOpcodePub(MI, PPC_INS_SRWI);
 			useSubstituteMnemonic = true;
 			SH = 32-SH;
 		}
@@ -106,6 +111,7 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 	if ((MCInst_getOpcode(MI) == PPC_OR || MCInst_getOpcode(MI) == PPC_OR8) &&
 			MCOperand_getReg(MCInst_getOperand(MI, 1)) == MCOperand_getReg(MCInst_getOperand(MI, 1))) {
 		SStream_concat0(O, "mr\t");
+		MCInst_setOpcodePub(MI, PPC_INS_MR);
 		printOperand(MI, 0, O);
 		SStream_concat0(O, ", ");
 		printOperand(MI, 1, O);
@@ -118,6 +124,7 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 		// rldicr RA, RS, SH, 63-SH == sldi RA, RS, SH
 		if (63-SH == ME) {
 			SStream_concat0(O, "sldi\t");
+			MCInst_setOpcodePub(MI, PPC_INS_SLDI);
 			printOperand(MI, 0, O);
 			SStream_concat0(O, ", ");
 			printOperand(MI, 1, O);
@@ -130,7 +137,16 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 		}
 	}
 
-	printInstruction(MI, O, NULL);
+	mnem = printAliasInstr(MI, O, Info);
+	if (mnem) {
+		// check to remove the last letter of ('.', '-', '+')
+		if (mnem[strlen(mnem) - 1] == '-' || mnem[strlen(mnem) - 1] == '+' || mnem[strlen(mnem) - 1] == '.')
+			mnem[strlen(mnem) - 1] = '\0';
+
+		MCInst_setOpcodePub(MI, PPC_map_insn(mnem));
+		cs_mem_free(mnem);
+	} else
+		printInstruction(MI, O, NULL);
 }
 
 
@@ -420,23 +436,28 @@ static void printBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	int tmp;
+	int imm;
 	if (!MCOperand_isImm(MCInst_getOperand(MI, OpNo))) {
 		printOperand(MI, OpNo, O);
 		return;
 	}
 
-	tmp = (int)MCOperand_getImm(MCInst_getOperand(MI, OpNo)) * 4;
-	if (tmp >= 0) {
-		if (tmp > HEX_THRESHOLD)
-			SStream_concat(O, "0x%x", tmp);
+	imm = (int)MCOperand_getImm(MCInst_getOperand(MI, OpNo)) * 4;
+	if (imm >= 0) {
+		if (imm > HEX_THRESHOLD)
+			SStream_concat(O, "0x%x", imm);
 		else
-			SStream_concat(O, "%u", tmp);
+			SStream_concat(O, "%u", imm);
 	} else {
-		if (tmp < -HEX_THRESHOLD)
-			SStream_concat(O, "-0x%x", -tmp);
+		if (imm < -HEX_THRESHOLD)
+			SStream_concat(O, "-0x%x", -imm);
 		else
-			SStream_concat(O, "-%u", -tmp);
+			SStream_concat(O, "-%u", -imm);
+	}
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].imm = imm;
+		MI->flat_insn->detail->ppc.op_count++;
 	}
 }
 
@@ -597,7 +618,16 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
-//#define PRINT_ALIAS_INSTR
+static void op_addImm(MCInst *MI, int v)
+{
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_IMM;
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = v;
+		MI->flat_insn->detail->arm.op_count++;
+	}
+}
+
+#define PRINT_ALIAS_INSTR
 #include "PPCGenAsmWriter.inc"
 
 #endif

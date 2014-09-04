@@ -3683,73 +3683,73 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 3:
     // BCC
-    printPredicateOperand(MI, 0, O, "pm"); 
+    printPredicateOperand(MI, 0, O, "pm");
     SStream_concat0(O, " "); 
-    printPredicateOperand(MI, 0, O, "reg"); 
+    printPredicateOperand(MI, 0, O, "reg");
     SStream_concat0(O, ", "); 
     printBranchOperand(MI, 2, O); 
     return;
     break;
   case 4:
     // BCCA
-    SStream_concat0(O, "a"); 
-    printPredicateOperand(MI, 0, O, "pm"); 
+    SStream_concat0(O, "a");
+    printPredicateOperand(MI, 0, O, "pm");
     SStream_concat0(O, " "); 
-    printPredicateOperand(MI, 0, O, "reg"); 
+    printPredicateOperand(MI, 0, O, "reg");
     SStream_concat0(O, ", "); 
     printAbsBranchOperand(MI, 2, O); 
     return;
     break;
   case 5:
     // BCCCTR, BCCCTR8
-    SStream_concat0(O, "ctr"); 
-    printPredicateOperand(MI, 0, O, "pm"); 
+    SStream_concat0(O, "ctr");
+    printPredicateOperand(MI, 0, O, "pm");
     SStream_concat0(O, " "); 
-    printPredicateOperand(MI, 0, O, "reg"); 
+    printPredicateOperand(MI, 0, O, "reg");
     return;
     break;
   case 6:
     // BCCCTRL, BCCCTRL8
-    SStream_concat0(O, "ctrl"); 
-    printPredicateOperand(MI, 0, O, "pm"); 
+    SStream_concat0(O, "ctrl");
+    printPredicateOperand(MI, 0, O, "pm");
     SStream_concat0(O, " "); 
-    printPredicateOperand(MI, 0, O, "reg"); 
+    printPredicateOperand(MI, 0, O, "reg");
     return;
     break;
   case 7:
     // BCCL
-    SStream_concat0(O, "l"); 
-    printPredicateOperand(MI, 0, O, "pm"); 
+    SStream_concat0(O, "l");
+    printPredicateOperand(MI, 0, O, "pm");
     SStream_concat0(O, " "); 
-    printPredicateOperand(MI, 0, O, "reg"); 
+    printPredicateOperand(MI, 0, O, "reg");
     SStream_concat0(O, ", "); 
     printBranchOperand(MI, 2, O); 
     return;
     break;
   case 8:
     // BCCLA
-    SStream_concat0(O, "la"); 
-    printPredicateOperand(MI, 0, O, "pm"); 
+    SStream_concat0(O, "la");
+    printPredicateOperand(MI, 0, O, "pm");
     SStream_concat0(O, " "); 
-    printPredicateOperand(MI, 0, O, "reg"); 
+    printPredicateOperand(MI, 0, O, "reg");
     SStream_concat0(O, ", "); 
     printAbsBranchOperand(MI, 2, O); 
     return;
     break;
   case 9:
     // BCCLR
-    SStream_concat0(O, "lr"); 
-    printPredicateOperand(MI, 0, O, "pm"); 
+    SStream_concat0(O, "lr");
+    printPredicateOperand(MI, 0, O, "pm");
     SStream_concat0(O, " "); 
-    printPredicateOperand(MI, 0, O, "reg"); 
+    printPredicateOperand(MI, 0, O, "reg");
     return;
     break;
   case 10:
     // BCCLRL
-    SStream_concat0(O, "lrl"); 
-    printPredicateOperand(MI, 0, O, "pm"); 
+    SStream_concat0(O, "lrl");
+    printPredicateOperand(MI, 0, O, "pm");
     SStream_concat0(O, " "); 
-    printPredicateOperand(MI, 0, O, "reg"); 
+    printPredicateOperand(MI, 0, O, "reg");
     return;
     break;
   case 11:
@@ -3759,17 +3759,19 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 12:
     // BL8_NOP, BL8_NOP_TLS, BLA8_NOP
-    SStream_concat0(O, "\n\tnop"); 
+    // SStream_concat0(O, "\n\tnop"); 	// qq
     return;
     break;
   case 13:
     // MFTB8
-    SStream_concat0(O, ", 268"); 
+    SStream_concat0(O, ", 268");
+	op_addImm(MI, 268);
     return;
     break;
   case 14:
     // MFVRSAVE, MFVRSAVEv
-    SStream_concat0(O, ", 256"); 
+    SStream_concat0(O, ", 256");
+	op_addImm(MI, 256);
     return;
     break;
   case 15:
@@ -3780,7 +3782,8 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 16:
     // V_SETALLONES, V_SETALLONESB, V_SETALLONESH
-    SStream_concat0(O, ", -1"); 
+    SStream_concat0(O, ", -1");
+	op_addImm(MI, -1);
     return;
     break;
   }
