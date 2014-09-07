@@ -141,7 +141,7 @@ typedef size_t (*cs_skipdata_cb_t)(const uint8_t *code, size_t code_size, size_t
 typedef struct cs_opt_skipdata {
 	// Capstone considers data to skip as special "instructions".
 	// User can specify the string for this instruction's "mnemonic" here.
-	// By default (if @mnemonic is NULL), Capstone use ".db".
+	// By default (if @mnemonic is NULL), Capstone use ".byte".
 	const char *mnemonic;
 
 	// User-defined callback function to be called when Capstone hits data.
