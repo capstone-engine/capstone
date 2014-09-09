@@ -601,6 +601,19 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 	x86_reg reg;
 	int i;
 
+	// Output CALLpcrel32 as "callq" in 64-bit mode.
+	// In Intel annotation it's always emitted as "call".
+	//
+	// TODO: Probably this hack should be redesigned via InstAlias in
+	// InstrInfo.td as soon as Requires clause is supported properly
+	// for InstAlias.
+	if (MI->csh->mode == CS_MODE_64 && MCInst_getOpcode(MI) == X86_CALLpcrel32) {
+		SStream_concat0(OS, "callq\t");
+		MCInst_setOpcodePub(MI, X86_INS_CALL);
+		printPCRelImm(MI, 0, OS);
+		return;
+	}
+
 	// Try to print any aliases first.
 	mnem = printAliasInstr(MI, OS, info);
 	if (mnem)
