@@ -208,6 +208,9 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		// default skipdata setup
 		ud->skipdata_setup.mnemonic = SKIPDATA_MNEM;
 
+		// defaulted to INSN_CACHE_SIZE
+		ud->insn_cache_size = INSN_CACHE_SIZE;
+
 		err = arch_init[ud->arch](ud);
 		if (err) {
 			cs_mem_free(ud);
@@ -380,6 +383,16 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 			if (value)
 				handle->skipdata_setup = *((cs_opt_skipdata *)value);
 			return CS_ERR_OK;
+		case CS_OPT_INSN_CACHE_SIZE:
+			handle->insn_cache_size = (value ? value : INSN_CACHE_SIZE);
+			return CS_ERR_OK;
+		case CS_OPT_CHECKINSN:
+			handle->checkinsn = (value == CS_OPT_ON);
+			return CS_ERR_OK;
+		case CS_OPT_CHECKINSN_SETUP:
+			if (value)
+				handle->checkinsn_setup = *((cs_opt_checkinsn *)value);
+			return CS_ERR_OK;
 	}
 
 	return arch_option[handle->arch](handle, type, value);
@@ -406,7 +419,7 @@ static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
 	}
 }
 
-// dynamicly allocate memory to contain disasm insn
+// dynamically allocate memory to contain disasm insn
 // NOTE: caller must free() the allocated memory itself to avoid memory leaking
 CAPSTONE_EXPORT
 size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
@@ -439,7 +452,7 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 	buffer_org = buffer;
 	offset_org = offset;
 	size_org = size;
-	total_size = (sizeof(cs_insn) * INSN_CACHE_SIZE);
+	total_size = (sizeof(cs_insn) * handle->insn_cache_size);
 	total = cs_mem_malloc(total_size);
 	insn_cache = total;
 
@@ -475,10 +488,19 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 			handle->printer(&mci, &ss, handle->printer_info);
 			fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, buffer);
 
+			c++;
+
+			if (handle->checkinsn && !handle->checkinsn_setup.callback(insn_cache, handle->checkinsn_setup.user_data))
+				break;
+
+			if (count > 0 && c == count)
+				break;
+
 			f++;
-			if (f == INSN_CACHE_SIZE) {
+			if (f == handle->insn_cache_size) {
 				// resize total to contain newly disasm insns
-				total_size += (sizeof(cs_insn) * INSN_CACHE_SIZE);
+				i = total_size;
+				total_size += (sizeof(cs_insn) * handle->insn_cache_size);
 				tmp = cs_mem_realloc(total, total_size);
 				if (tmp == NULL) {	// insufficient memory
 					if (handle->detail) {
@@ -494,16 +516,12 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 				}
 
 				total = tmp;
-				insn_cache = (cs_insn *)((char *)total + total_size - (sizeof(cs_insn) * INSN_CACHE_SIZE));
+				insn_cache = (cs_insn *)((char *)total + i);
 
 				// reset f back to 0
 				f = 0;
 			} else
 				insn_cache++;
-
-			c++;
-			if (count > 0 && c == count)
-				break;
 
 			buffer += insn_size;
 			size -= insn_size;
@@ -544,10 +562,10 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 			insn_cache->detail = NULL;
 
 			f++;
-			if (f == INSN_CACHE_SIZE) {
+			if (f == handle->insn_cache_size) {
 				// resize total to contain newly disasm insns
-
-				total_size += (sizeof(cs_insn) * INSN_CACHE_SIZE);
+				i = total_size;
+				total_size += (sizeof(cs_insn) * handle->insn_cache_size);
 				tmp = cs_mem_realloc(total, total_size);
 				if (tmp == NULL) {	// insufficient memory
 					if (handle->detail) {
@@ -563,7 +581,7 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 				}
 
 				total = tmp;
-				insn_cache = (cs_insn *)((char *)total + total_size - (sizeof(cs_insn) * INSN_CACHE_SIZE));
+				insn_cache = (cs_insn *)((char *)total + i);
 
 				// reset f back to 0
 				f = 0;
@@ -577,9 +595,10 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 		}
 	}
 
-	if (f) {
+	i = c * sizeof(*insn_cache);
+	if (total_size != i) {
 		// resize total to contain newly disasm insns
-		void *tmp = cs_mem_realloc(total, total_size - (INSN_CACHE_SIZE - f) * sizeof(*insn_cache));
+		void *tmp = cs_mem_realloc(total, i);
 		if (tmp == NULL) {	// insufficient memory
 			// free all detail pointers
 			if (handle->detail) {
