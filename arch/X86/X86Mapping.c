@@ -5146,7 +5146,7 @@ static insn_map insns[] = {	// full x86 instructions
 	{
 		X86_CPUID64, X86_INS_CPUID,
 #ifndef CAPSTONE_DIET
-		{ X86_REG_RAX, X86_REG_RCX, 0 }, { X86_REG_RAX, X86_REG_RBX, X86_REG_RCX, X86_REG_RDX, 0 }, { X86_GRP_MODE64, 0 }, 0, 0
+		{ X86_REG_EAX, X86_REG_ECX, 0 }, { X86_REG_EAX, X86_REG_EBX, X86_REG_ECX, X86_REG_EDX, 0 }, { X86_GRP_MODE64, 0 }, 0, 0
 #endif
 	},
 	{
@@ -37486,7 +37486,7 @@ static insn_map insns[] = {	// full x86 instructions
 	{
 		X86_XGETBV, X86_INS_XGETBV,
 #ifndef CAPSTONE_DIET
-		{ X86_REG_RCX, 0 }, { X86_REG_RDX, X86_REG_RAX, 0 }, { 0 }, 0, 0
+		{ X86_REG_ECX, 0 }, { X86_REG_EDX, X86_REG_EAX, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
@@ -37774,7 +37774,7 @@ static insn_map insns[] = {	// full x86 instructions
 	{
 		X86_XSETBV, X86_INS_XSETBV,
 #ifndef CAPSTONE_DIET
-		{ X86_REG_RDX, X86_REG_RAX, X86_REG_RCX, 0 }, { 0 }, { 0 }, 0, 0
+		{ X86_REG_EDX, X86_REG_EAX, X86_REG_ECX, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
@@ -46881,7 +46881,7 @@ static insn_map insns[] = {	// reduce x86 instructions
 	{
 		X86_XGETBV, X86_INS_XGETBV,
 #ifndef CAPSTONE_DIET
-		{ X86_REG_RCX, 0 }, { X86_REG_RDX, X86_REG_RAX, 0 }, { 0 }, 0, 0
+		{ X86_REG_ECX, 0 }, { X86_REG_EDX, X86_REG_EAX, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
@@ -47139,7 +47139,7 @@ static insn_map insns[] = {	// reduce x86 instructions
 	{
 		X86_XSETBV, X86_INS_XSETBV,
 #ifndef CAPSTONE_DIET
-		{ X86_REG_RDX, X86_REG_RAX, X86_REG_RCX, 0 }, { 0 }, { 0 }, 0, 0
+		{ X86_REG_EDX, X86_REG_EAX, X86_REG_ECX, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
