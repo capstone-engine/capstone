@@ -4419,7 +4419,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 
   // Fragment 0 encoded into 3 bits for 7 unique commands.
-  printf("Frag-0: %"PRIu64"\n", (Bits >> 14) & 7);
+  //printf("Frag-0: %"PRIu64"\n", (Bits >> 14) & 7);
   switch ((Bits >> 14) & 7) {
   default:   // unreachable.
   case 0:
@@ -4461,7 +4461,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 
   // Fragment 1 encoded into 4 bits for 15 unique commands.
-  printf("Frag-1: %"PRIu64"\n", (Bits >> 17) & 15);
+  //printf("Frag-1: %"PRIu64"\n", (Bits >> 17) & 15);
   switch ((Bits >> 17) & 15) {
   default:   // unreachable.
   case 0:
@@ -4551,7 +4551,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 
   // Fragment 2 encoded into 4 bits for 11 unique commands.
-  printf("Frag-2: %"PRIu64"\n", (Bits >> 21) & 15);
+  //printf("Frag-2: %"PRIu64"\n", (Bits >> 21) & 15);
   switch ((Bits >> 21) & 15) {
   default:   // unreachable.
   case 0:
@@ -4619,7 +4619,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 
   // Fragment 3 encoded into 4 bits for 15 unique commands.
-  printf("Frag-3: %"PRIu64"\n", (Bits >> 25) & 15);
+  //printf("Frag-3: %"PRIu64"\n", (Bits >> 25) & 15);
   switch ((Bits >> 25) & 15) {
   default:   // unreachable.
   case 0:
@@ -4714,7 +4714,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 
   // Fragment 4 encoded into 3 bits for 5 unique commands.
-  printf("Frag-4: %"PRIu64"\n", (Bits >> 29) & 7);
+  //printf("Frag-4: %"PRIu64"\n", (Bits >> 29) & 7);
   switch ((Bits >> 29) & 7) {
   default:   // unreachable.
   case 0:
@@ -4741,7 +4741,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 
   // Fragment 5 encoded into 2 bits for 3 unique commands.
-  printf("Frag-5: %"PRIu64"\n", (Bits >> 32) & 3);
+  //printf("Frag-5: %"PRIu64"\n", (Bits >> 32) & 3);
   switch ((Bits >> 32) & 3) {
   default:   // unreachable.
   case 0:
@@ -4761,7 +4761,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 
   // Fragment 6 encoded into 1 bits for 2 unique commands.
-  printf("Frag-6: %"PRIu64"\n", (Bits >> 34) & 1);
+  //printf("Frag-6: %"PRIu64"\n", (Bits >> 34) & 1);
   if ((Bits >> 34) & 1) {
     // DEXT, DEXTM, DEXTU, DINS, DINSM, DINSU, EXT, EXT_MM, INS, INS_MM, MADD...
     printOperand(MI, 3, O); 
