@@ -7717,6 +7717,16 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
         MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
         MCOperand_getImm(MCInst_getOperand(MI, 0)) == 4 &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+        PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1))) == PPC_REG_R2 &&
+        GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+      // (gBC 4, crbitrc:$bi, condbrtarget:$dst)
+      AsmString = "bne $\xFF\x03\x02";
+      break;
+    }
+    if (MCInst_getNumOperands(MI) == 3 &&
+        MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 0)) == 4 &&
+        MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
       // (gBC 4, crbitrc:$bi, condbrtarget:$dst)
       AsmString = "bf $\x02, $\xFF\x03\x01";

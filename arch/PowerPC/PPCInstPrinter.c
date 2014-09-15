@@ -454,6 +454,7 @@ static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		else
 			SStream_concat(O, "-%u", -imm);
 	}
+
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
 		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].imm = imm;
