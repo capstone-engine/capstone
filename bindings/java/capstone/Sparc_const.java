@@ -146,7 +146,8 @@ public class Sparc_const {
 	public static final int SPARC_REG_O7 = 84;
 	public static final int SPARC_REG_SP = 85;
 	public static final int SPARC_REG_Y = 86;
-	public static final int SPARC_REG_MAX = 87;
+	public static final int SPARC_REG_XCC = 87;
+	public static final int SPARC_REG_MAX = 88;
 	public static final int SPARC_REG_O6 = SPARC_REG_SP;
 	public static final int SPARC_REG_I6 = SPARC_REG_FP;
 
@@ -429,7 +430,9 @@ public class Sparc_const {
 	public static final int SPARC_INS_XNOR = 274;
 	public static final int SPARC_INS_XORCC = 275;
 	public static final int SPARC_INS_XOR = 276;
-	public static final int SPARC_INS_MAX = 277;
+	public static final int SPARC_INS_RET = 277;
+	public static final int SPARC_INS_RETL = 278;
+	public static final int SPARC_INS_MAX = 279;
 
 	// Group of SPARC instructions
 

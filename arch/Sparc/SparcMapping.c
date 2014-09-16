@@ -103,6 +103,9 @@ static name_map reg_name_maps[] = {
 	{ SPARC_REG_O7, "o7"},
 	{ SPARC_REG_SP, "sp"},
 	{ SPARC_REG_Y, "y"},
+
+	// special registers
+	{ SPARC_REG_XCC, "xcc"},
 };
 #endif
 
@@ -3109,6 +3112,10 @@ static name_map insn_name_maps[] = {
 	{ SPARC_INS_XNOR, "xnor" },
 	{ SPARC_INS_XORCC, "xorcc" },
 	{ SPARC_INS_XOR, "xor" },
+
+	// alias instructions
+	{ SPARC_INS_RET, "ret" },
+	{ SPARC_INS_RETL, "retl" },
 };
 
 #ifndef CAPSTONE_DIET
