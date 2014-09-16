@@ -1170,7 +1170,8 @@ public class Ppc_const {
 	public static final int PPC_INS_BA_CC = 939;
 	public static final int PPC_INS_BCTR_CC = 940;
 	public static final int PPC_INS_BCTRL_CC = 941;
-	public static final int PPC_INS_MAX = 942;
+	public static final int PPC_INS_BNE = 942;
+	public static final int PPC_INS_MAX = 943;
 
 	// Group of PPC instructions
 
