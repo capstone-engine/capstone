@@ -1231,6 +1231,9 @@ typedef enum ppc_insn {
 	PPC_INS_BCTR_CC,	// BccCTR
 	PPC_INS_BCTRL_CC,	// BccCTRL
 
+	// alias instructions
+	PPC_INS_BNE,
+
 	PPC_INS_MAX,   // <-- mark the end of the list of instructions
 } ppc_insn;
 

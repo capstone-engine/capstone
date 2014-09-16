@@ -7872,6 +7872,9 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_BA_CC, "ba_cc" },
 	{ PPC_INS_BCTR_CC, "bctr_cc" },
 	{ PPC_INS_BCTRL_CC, "bctrl_cc" },
+
+	// alias instructions
+	{ PPC_INS_BNE, "bne" },
 };
 
 // special alias insn
