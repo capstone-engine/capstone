@@ -7,36 +7,36 @@ set(VERSION_PATCH 0)
 
 # to configure the options specify them in in the command line or change them in the cmake UI.
 # Don't edit the makefile!
-option(BUILD_STATIC "Build static library" ON)
-option(BUILD_SHARED "Build shared library" ON)
-option(BUILD_DIET "Build diet library" OFF)
-option(BUILD_TESTS "Build tests" ON)
-option(USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
+option(CAPSTONE_BUILD_STATIC "Build static library" ON)
+option(CAPSTONE_BUILD_SHARED "Build shared library" ON)
+option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
+option(CAPSTONE_BUILD_TESTS "Build tests" ON)
+option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 
-option(ARM_SUPPORT "ARM support" ON)
-option(ARM64_SUPPORT "ARM64 support" ON)
-option(MIPS_SUPPORT "MIPS support" ON)
-option(PPC_SUPPORT "PowerPC support" ON)
-option(SPARC_SUPPORT "Sparc support" ON)
-option(SYSZ_SUPPORT "SystemZ support" ON)
-option(XCORE_SUPPORT "XCore support" ON)
-option(X86_SUPPORT "x86 support" ON)
-option(X86_REDUCE "x86 with reduce instruction sets to minimize library" OFF)
-option(X86_ATT_DISABLE, "Disable x86 AT&T syntax" OFF)
+option(CAPSTONE_ARM_SUPPORT "ARM support" ON)
+option(CAPSTONE_ARM64_SUPPORT "ARM64 support" ON)
+option(CAPSTONE_MIPS_SUPPORT "MIPS support" ON)
+option(CAPSTONE_PPC_SUPPORT "PowerPC support" ON)
+option(CASPTONE_SPARC_SUPPORT "Sparc support" ON)
+option(CAPSTONE_SYSZ_SUPPORT "SystemZ support" ON)
+option(CAPSTONE_XCORE_SUPPORT "XCore support" ON)
+option(CAPSTONE_X86_SUPPORT "x86 support" ON)
+option(CAPSTONE_X86_REDUCE "x86 with reduce instruction sets to minimize library" OFF)
+option(CAPSTONE_X86_ATT_DISABLE, "Disable x86 AT&T syntax" OFF)
 
-if (BUILD_DIET)
+if (CAPSTONE_BUILD_DIET)
     add_definitions(-DCAPSTONE_DIET)
 endif ()
 
-if (USE_DEFAULT_ALLOC)
+if (CAPSTONE_USE_DEFAULT_ALLOC)
     add_definitions(-DCAPSTONE_USE_SYS_DYN_MEM)
 endif ()
 
-if (X86_REDUCE)
+if (CAPSTONE_X86_REDUCE)
     add_definitions(-DCAPSTONE_X86_REDUCE)
 endif ()
 
-if (X86_ATT_DISABLE)
+if (CAPSTONE_X86_ATT_DISABLE)
     add_definitions(-DCAPSTONE_X86_ATT_DISABLE)
 endif ()
 
@@ -53,7 +53,7 @@ set(SOURCES
 set(TEST_SOURCES test.c test_detail.c test_skipdata.c)
 
 ## architecture support
-if (ARM_SUPPORT)
+if (CAPSTONE_ARM_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_ARM)
     set(SOURCES
         ${SOURCES}
@@ -65,7 +65,7 @@ if (ARM_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_arm.c)
 endif ()
 
-if (ARM64_SUPPORT)
+if (CAPSTONE_ARM64_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_ARM64)
     set(SOURCES
         ${SOURCES}
@@ -78,7 +78,7 @@ if (ARM64_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_arm64.c)
 endif ()
 
-if (MIPS_SUPPORT)
+if (CAPSTONE_MIPS_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_MIPS)
     set(SOURCES
         ${SOURCES}
@@ -90,7 +90,7 @@ if (MIPS_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_mips.c)
 endif ()
 
-if (PPC_SUPPORT)
+if (CAPSTONE_PPC_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_POWERPC)
     set(SOURCES
         ${SOURCES}
@@ -102,7 +102,7 @@ if (PPC_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_ppc.c)
 endif ()
 
-if (X86_SUPPORT)
+if (CAPSTONE_X86_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_X86)
     set(SOURCES
         ${SOURCES}
@@ -112,13 +112,13 @@ if (X86_SUPPORT)
         arch/X86/X86Mapping.c
         arch/X86/X86Module.c
         )
-    if (NOT BUILD_DIET)
+    if (NOT CAPSTONE_BUILD_DIET)
         set(SOURCES ${SOURCES} arch/X86/X86ATTInstPrinter.c)
     endif ()
     set(TEST_SOURCES ${TEST_SOURCES} test_x86.c)
 endif ()
 
-if (SPARC_SUPPORT)
+if (CASPTONE_SPARC_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_SPARC)
     set(SOURCES
         ${SOURCES}
@@ -130,7 +130,7 @@ if (SPARC_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_sparc.c)
 endif ()
 
-if (SYSZ_SUPPORT)
+if (CAPSTONE_SYSZ_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_SYSZ)
     set(SOURCES
         ${SOURCES}
@@ -143,7 +143,7 @@ if (SYSZ_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_systemz.c)
 endif ()
 
-if (XCORE_SUPPORT)
+if (CAPSTONE_XCORE_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_XCORE)
     set(SOURCES
         ${SOURCES}
@@ -163,14 +163,14 @@ set_property(GLOBAL PROPERTY VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION
 set_property(GLOBAL PROPERTY SOVERSION SOVERSION ${VERSION_MAJOR})
 
 ## targets
-if (BUILD_STATIC)
+if (CAPSTONE_BUILD_STATIC)
     add_library(capstone-static STATIC ${SOURCES})
     set_property(TARGET capstone-static PROPERTY OUTPUT_NAME capstone)
     set_property(TARGET capstone-static PROPERTY PREFIX lib)
     set(default-target capstone-static)
 endif ()
 
-if (BUILD_SHARED)
+if (CAPSTONE_BUILD_SHARED)
     add_library(capstone-shared SHARED ${SOURCES})
     set_property(TARGET capstone-shared PROPERTY OUTPUT_NAME capstone)
     set_property(TARGET capstone-shared PROPERTY COMPILE_FLAGS -DCAPSTONE_SHARED)
@@ -181,7 +181,7 @@ if (BUILD_SHARED)
     endif ()
 endif ()
 
-if (BUILD_TESTS)
+if (CAPSTONE_BUILD_TESTS)
     foreach (TSRC ${TEST_SOURCES})
 	STRING(REGEX REPLACE ".c$" "" TBIN ${TSRC})
 	add_executable(${TBIN} "tests/${TSRC}")
@@ -195,14 +195,14 @@ foreach (INC ${INCLUDES})
     install(FILES "include/${INC}" DESTINATION include/capstone)
 endforeach ()
 
-if (BUILD_STATIC)
+if (CAPSTONE_BUILD_STATIC)
     install(TARGETS capstone-static
             RUNTIME DESTINATION bin
             LIBRARY DESTINATION lib
             ARCHIVE DESTINATION lib)
 endif ()
 
-if (BUILD_SHARED)
+if (CAPSTONE_BUILD_SHARED)
     install(TARGETS capstone-shared
             RUNTIME DESTINATION bin
             LIBRARY DESTINATION lib
