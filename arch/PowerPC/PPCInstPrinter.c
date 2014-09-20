@@ -37,6 +37,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O);
 static char *printAliasInstr(MCInst *MI, SStream *OS, void *info);
+static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info);
+static void printCustomAliasOperand(MCInst *MI, unsigned OpIdx,
+		unsigned PrintMethodIdx, SStream *OS);
 
 static void set_mem_access(MCInst *MI, bool status)
 {
@@ -137,7 +140,11 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 		}
 	}
 
-	mnem = printAliasInstr(MI, O, Info);
+	// consider our own alias instructions first
+	mnem = printAliasInstrEx(MI, O, Info);
+	if (!mnem)
+		mnem = printAliasInstr(MI, O, Info);
+
 	if (mnem) {
 		// check to remove the last letter of ('.', '-', '+')
 		if (mnem[strlen(mnem) - 1] == '-' || mnem[strlen(mnem) - 1] == '+' || mnem[strlen(mnem) - 1] == '.')
@@ -626,6 +633,1312 @@ static void op_addImm(MCInst *MI, int v)
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = v;
 		MI->flat_insn->detail->arm.op_count++;
 	}
+}
+
+static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
+{
+#define GETREGCLASS_CONTAIN(_class, _reg) MCRegisterClass_contains(MCRegisterInfo_getRegClass(MRI, _class), MCOperand_getReg(MCInst_getOperand(MI, _reg)))
+	const char *AsmString;
+	char *tmp, *AsmMnem, *AsmOps, *c;
+	int OpIdx, PrintMethodIdx;
+	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
+	switch (MCInst_getOpcode(MI)) {
+		default: return NULL;
+		case PPC_gBC:
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 12 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBC 12, crbitrc:$bi, condbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "blt $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgt $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beq $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bso $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "bt $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 4 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBC 4, crbitrc:$bi, condbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bge $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "ble $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bne $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bns $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "bf $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 14 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBC 14, crbitrc:$bi, condbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "blt- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgt- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beq- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bso- $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "bt- $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 6 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBC 6, crbitrc:$bi, condbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bge- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "ble- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bne- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bns- $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "bf- $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 15 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBC 15, crbitrc:$bi, condbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "blt+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgt+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beq+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bso+ $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "bt+ $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 7 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBC 7, crbitrc:$bi, condbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bge+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "ble+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bne+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bns+ $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "bf+ $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 return NULL;
+		case PPC_gBCA:
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 12 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBCA 12, crbitrc:$bi, abscondbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "blta $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgta $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beqa $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsoa $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "bta $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 4 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBCA 4, crbitrc:$bi, abscondbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgea $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blea $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnea $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnsa $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "bfa $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 14 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBCA 14, crbitrc:$bi, abscondbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "blta- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgta- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beqa- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsoa- $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "bta- $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 6 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBCA 6, crbitrc:$bi, abscondbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgea- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blea- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnea- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnsa- $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "bfa- $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 15 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBCA 15, crbitrc:$bi, abscondbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "blta+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgta+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beqa+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsoa+ $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "bta+ $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 7 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBCA 7, crbitrc:$bi, abscondbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgea+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blea+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnea+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnsa+ $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "bfa+ $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 return NULL;
+		case PPC_gBCCTR:
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 12 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCCTR 12, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bltctr";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgtctr";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beqctr";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsoctr";
+							 break;
+						 default:
+							 AsmString = "btctr $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 4 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCCTR 4, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgectr";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blectr";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnectr";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnsctr";
+							 break;
+						 default:
+							 AsmString = "bfctr $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 14 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCCTR 14, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bltctr-";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgtctr-";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beqctr-";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsoctr-";
+							 break;
+						 default:
+							 AsmString = "btctr- $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 6 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCCTR 6, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgectr-";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blectr-";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnectr-";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnsctr-";
+							 break;
+						 default:
+							 AsmString = "bfctr- $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 15 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCCTR 15, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bltctr+";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgtctr+";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beqctr+";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsoctr+";
+							 break;
+						 default:
+							 AsmString = "btctr+ $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 7 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCCTR 7, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgectr+";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blectr+";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnectr+";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnsctr+";
+							 break;
+						 default:
+							 AsmString = "bfctr+ $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 return NULL;
+		case PPC_gBCCTRL:
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 12 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCCTRL 12, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bltctrl";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgtctrl";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beqctrl";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsoctrl";
+							 break;
+						 default:
+							 AsmString = "btctrl $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 4 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCCTRL 4, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgectrl";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blectrl";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnectrl";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnsctrl";
+							 break;
+						 default:
+							 AsmString = "bfctrl $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 14 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCCTRL 14, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bltctrl-";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgtctrl-";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beqctrl-";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsoctrl-";
+							 break;
+						 default:
+							 AsmString = "btctrl- $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 6 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCCTRL 6, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgectrl-";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blectrl-";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnectrl-";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnsctrl-";
+							 break;
+						 default:
+							 AsmString = "bfctrl- $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 15 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCCTRL 15, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bltctrl+";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgtctrl+";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beqctrl+";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsoctrl+";
+							 break;
+						 default:
+							 AsmString = "btctrl+ $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 7 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCCTRL 7, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgectrl+";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blectrl+";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnectrl+";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnsctrl+";
+							 break;
+						 default:
+							 AsmString = "bfctrl+ $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 return NULL;
+		case PPC_gBCL:
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 12 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBCL 12, crbitrc:$bi, condbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bltl $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgtl $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beql $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsol $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "btl $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 4 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBCL 4, crbitrc:$bi, condbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgel $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blel $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnel $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnsl $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "bfl $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 14 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBCL 14, crbitrc:$bi, condbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bltl- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgtl- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beql- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsol- $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "btl- $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 6 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBCL 6, crbitrc:$bi, condbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgel- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blel- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnel- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnsl- $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "bfl- $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 15 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBCL 15, crbitrc:$bi, condbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bltl+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgtl+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beql+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsol+ $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "btl+ $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 7 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBCL 7, crbitrc:$bi, condbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgel+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blel+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnel+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnsl+ $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "bfl+ $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 return NULL;
+		case PPC_gBCLA:
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 12 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBCLA 12, crbitrc:$bi, abscondbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bltla $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgtla $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beqla $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsola $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "btla $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 4 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBCLA 4, crbitrc:$bi, abscondbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgela $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blela $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnela $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnsla $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "bfla $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 14 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBCLA 14, crbitrc:$bi, abscondbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bltla- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgtla- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beqla- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsola- $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "btla- $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 6 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBCLA 6, crbitrc:$bi, abscondbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgela- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blela- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnela- $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnsla- $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "bfla- $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 15 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBCLA 15, crbitrc:$bi, abscondbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bltla+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgtla+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beqla+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsola+ $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "btla+ $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 7 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1)) {
+					 // (gBCLA 7, crbitrc:$bi, abscondbrtarget:$dst)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgela+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blela+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnela+ $\xFF\x03\x01";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnsla+ $\xFF\x03\x01";
+							 break;
+						 default:
+							 AsmString = "bfla+ $\x02, $\xFF\x03\x01";
+							 break;
+					 }
+					 break;
+				 }
+		case PPC_gBCLR:
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 12 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCLR 12, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bltlr";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgtlr";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beqlr";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsolr";
+							 break;
+						 default:
+							 AsmString = "btlr $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 4 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCLR 4, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgelr";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blelr";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnelr";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnslr";
+							 break;
+						 default:
+							 AsmString = "bflr $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 14 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCLR 14, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bltlr-";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgtlr-";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beqlr-";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsolr-";
+							 break;
+						 default:
+							 AsmString = "btlr- $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 6 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCLR 6, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgelr-";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blelr-";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnelr-";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnslr-";
+							 break;
+						 default:
+							 AsmString = "bflr- $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 15 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCLR 15, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bltlr+";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgtlr+";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beqlr+";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsolr+";
+							 break;
+						 default:
+							 AsmString = "btlr+ $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 7 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCLR 7, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgelr+";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blelr+";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnelr+";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnslr+";
+							 break;
+						 default:
+							 AsmString = "bflr+ $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 return NULL;
+		case PPC_gBCLRL:
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 12 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCLRL 12, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bltlrl";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgtlrl";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beqlrl";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsolrl";
+							 break;
+						 default:
+							 AsmString = "btlrl $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 4 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCLRL 4, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgelrl";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blelrl";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnelrl";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnslrl";
+							 break;
+						 default:
+							 AsmString = "bflrl $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 14 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCLRL 14, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bltlrl-";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgtlrl-";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beqlrl-";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsolrl-";
+							 break;
+						 default:
+							 AsmString = "btlrl- $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 6 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCLRL 6, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgelrl-";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blelrl-";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnelrl-";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnslrl-";
+							 break;
+						 default:
+							 AsmString = "bflrl- $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 15 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCLRL 15, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bltlrl+";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "bgtlrl+";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "beqlrl+";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bsolrl+";
+							 break;
+						 default:
+							 AsmString = "btlrl+ $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 if (MCInst_getNumOperands(MI) == 3 &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 0)) == 7 &&
+						 MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+						 GETREGCLASS_CONTAIN(PPC_CRBITRCRegClassID, 1) &&
+						 MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+						 MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0) {
+					 // (gBCLRL 7, crbitrc:$bi, 0)
+					 switch(PPC_map_register(MCOperand_getReg(MCInst_getOperand(MI, 1)))) {
+						 case PPC_REG_R0:
+							 AsmString = "bgelrl+";
+							 break;
+						 case PPC_REG_R1:
+							 AsmString = "blelrl+";
+							 break;
+						 case PPC_REG_R2:
+							 AsmString = "bnelrl+";
+							 break;
+						 case PPC_REG_R3:
+							 AsmString = "bnslrl+";
+							 break;
+						 default:
+							 AsmString = "bflrl+ $\x02";
+							 break;
+					 }
+					 break;
+				 }
+				 return NULL;
+	}
+
+	tmp = cs_strdup(AsmString);
+	AsmMnem = tmp;
+	for(AsmOps = tmp; *AsmOps; AsmOps++) {
+		if (*AsmOps == ' ' || *AsmOps == '\t') {
+			*AsmOps = '\0';
+			AsmOps++;
+			break;
+		}
+	}
+	SStream_concat0(OS, AsmMnem);
+	if (*AsmOps) {
+		SStream_concat0(OS, "\t");
+		for (c = AsmOps; *c; c++) {
+			if (*c == '$') {
+				c += 1;
+				if (*c == (char)0xff) {
+					c += 1;
+					OpIdx = *c - 1;
+					c += 1;
+					PrintMethodIdx = *c - 1;
+					printCustomAliasOperand(MI, OpIdx, PrintMethodIdx, OS);
+				} else
+					printOperand(MI, *c - 1, OS);
+			} else {
+				SStream_concat(OS, "%c", *c);
+			}
+		}
+	}
+	return tmp;
 }
 
 #define PRINT_ALIAS_INSTR
