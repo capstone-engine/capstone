@@ -430,7 +430,7 @@ static void printBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 	// Branches can take an immediate operand.  This is used by the branch
 	// selection pass to print .+8, an eight byte displacement from the PC.
-	SStream_concat0(O, ".+");
+	//SStream_concat0(O, ".+");
 	printAbsBranchOperand(MI, OpNo, O);
 }
 
@@ -442,17 +442,17 @@ static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		return;
 	}
 
-	imm = (int)MCOperand_getImm(MCInst_getOperand(MI, OpNo)) * 4;
+	imm = ((int)MCOperand_getImm(MCInst_getOperand(MI, OpNo)) << 18) >> 16;
 	if (imm >= 0) {
 		if (imm > HEX_THRESHOLD)
-			SStream_concat(O, "0x%x", imm);
+			SStream_concat(O, ".+0x%x", imm);
 		else
-			SStream_concat(O, "%u", imm);
+			SStream_concat(O, ".+%u", imm);
 	} else {
 		if (imm < -HEX_THRESHOLD)
-			SStream_concat(O, "-0x%x", -imm);
+			SStream_concat(O, ".-0x%x", -imm);
 		else
-			SStream_concat(O, "-%u", -imm);
+			SStream_concat(O, ".-%u", -imm);
 	}
 
 	if (MI->csh->detail) {
