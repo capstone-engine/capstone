@@ -1509,7 +1509,7 @@ let _X86_INS_XSTORE = 1258;;
 let _X86_INS_XTEST = 1259;;
 let _X86_INS_MAX = 1260;;
 
-(* Group of X86 instructions*)
+(* Group of X86 instructions *)
 
 let _X86_GRP_INVALID = 0;;
 let _X86_GRP_3DNOW = 1;;

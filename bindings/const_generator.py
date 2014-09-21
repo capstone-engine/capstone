@@ -64,7 +64,8 @@ template = {
 # markup for comments to be added to autogen files
 MARKUP = '//>'
 
-def gen(templ):
+def gen(lang):
+    templ = template[lang]
     global include, INCL_DIR
     for target in include:
         prefix = templ[target]
@@ -109,7 +110,12 @@ def gen(templ):
                         if (count == 1):
                             outfile.write("\n")
                     except ValueError:
-                        pass
+                        # ocaml variable has _ as prefix
+                        if lang == 'ocaml':
+                            rhs = rhs.replace('<<', ' lsl ')
+                            rhs = rhs.replace('|', ' lor ')
+                            if rhs[0].isalpha():
+                                rhs = '_' + rhs
 
                     outfile.write(templ['line_format'] %(f[0].strip(), rhs))
 
@@ -118,7 +124,7 @@ def gen(templ):
 
 def main():
     try:
-        gen(template[sys.argv[1]])
+        gen(sys.argv[1])
     except:
         raise RuntimeError("Unsupported binding %s" % sys.argv[1])
 
