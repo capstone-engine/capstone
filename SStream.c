@@ -2,13 +2,13 @@
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #include <stdint.h>
-#include <inttypes.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
 
 #include "SStream.h"
 #include "cs_priv.h"
+#include "inttypes.h"
 #include "utils.h"
 
 #ifdef _MSC_VER
