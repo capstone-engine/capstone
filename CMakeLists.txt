@@ -189,7 +189,7 @@ if (CAPSTONE_BUILD_TESTS)
 endif ()
 
 ## installation
-set(INCLUDES arm64.h  arm.h  capstone.h  mips.h  ppc.h  x86.h sparc.h systemz.h xcore.h)
+set(INCLUDES arm64.h  arm.h  capstone.h  mips.h  ppc.h  x86.h sparc.h systemz.h xcore.h platform.h)
 foreach (INC ${INCLUDES})
     install(FILES "include/${INC}" DESTINATION include/capstone)
 endforeach ()
