@@ -19,7 +19,7 @@
 #if defined(CAPSTONE_HAS_X86) && !defined(CAPSTONE_DIET) && !defined(CAPSTONE_X86_ATT_DISABLE)
 
 #include <ctype.h>
-#include <inttypes.h>
+#include "../../inttypes.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
