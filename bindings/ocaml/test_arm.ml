@@ -4,6 +4,7 @@
 open Printf
 open Capstone
 open Arm
+open Arm_const
 
 
 let print_string_hex comment str =
