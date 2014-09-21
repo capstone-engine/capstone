@@ -14,22 +14,8 @@ public class Ppc_const {
 	public static final int PPC_BC_NE = (2<<5)|4;
 	public static final int PPC_BC_UN = (3<<5)|12;
 	public static final int PPC_BC_NU = (3<<5)|4;
-	public static final int PPC_BC_LT_MINUS = (0<<5)|14;
-	public static final int PPC_BC_LE_MINUS = (1<<5)|6;
-	public static final int PPC_BC_EQ_MINUS = (2<<5)|14;
-	public static final int PPC_BC_GE_MINUS = (0<<5)|6;
-	public static final int PPC_BC_GT_MINUS = (1<<5)|14;
-	public static final int PPC_BC_NE_MINUS = (2<<5)|6;
-	public static final int PPC_BC_UN_MINUS = (3<<5)|14;
-	public static final int PPC_BC_NU_MINUS = (3<<5)|6;
-	public static final int PPC_BC_LT_PLUS = (0<<5)|15;
-	public static final int PPC_BC_LE_PLUS = (1<<5)|7;
-	public static final int PPC_BC_EQ_PLUS = (2<<5)|15;
-	public static final int PPC_BC_GE_PLUS = (0<<5)|7;
-	public static final int PPC_BC_GT_PLUS = (1<<5)|15;
-	public static final int PPC_BC_NE_PLUS = (2<<5)|7;
-	public static final int PPC_BC_UN_PLUS = (3<<5)|15;
-	public static final int PPC_BC_NU_PLUS = (3<<5)|7;
+	public static final int PPC_BC_SO = 4<<5;
+	public static final int PPC_BC_NS = 4<<5;
 
 	// PPC branch hint for some branch instructions
 
@@ -1162,16 +1148,7 @@ public class Ppc_const {
 	public static final int PPC_INS_BDNZFLRL = 931;
 	public static final int PPC_INS_BDZTLRL = 932;
 	public static final int PPC_INS_BDZFLRL = 933;
-	public static final int PPC_INS_B_CC = 934;
-	public static final int PPC_INS_BL_CC = 935;
-	public static final int PPC_INS_BLA_CC = 936;
-	public static final int PPC_INS_BLR_CC = 937;
-	public static final int PPC_INS_BLRL_CC = 938;
-	public static final int PPC_INS_BA_CC = 939;
-	public static final int PPC_INS_BCTR_CC = 940;
-	public static final int PPC_INS_BCTRL_CC = 941;
-	public static final int PPC_INS_BNE = 942;
-	public static final int PPC_INS_MAX = 943;
+	public static final int PPC_INS_MAX = 934;
 
 	// Group of PPC instructions
 

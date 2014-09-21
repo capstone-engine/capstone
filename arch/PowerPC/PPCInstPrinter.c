@@ -146,23 +146,72 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 		mnem = printAliasInstr(MI, O, Info);
 
 	if (mnem) {
+		struct ppc_alias alias;
 		// check to remove the last letter of ('.', '-', '+')
 		if (mnem[strlen(mnem) - 1] == '-' || mnem[strlen(mnem) - 1] == '+' || mnem[strlen(mnem) - 1] == '.')
 			mnem[strlen(mnem) - 1] = '\0';
 
-		MCInst_setOpcodePub(MI, PPC_map_insn(mnem));
+		if (PPC_alias_insn(mnem, &alias)) {
+			MCInst_setOpcodePub(MI, alias.id);
+			if (MI->csh->detail) {
+				MI->flat_insn->detail->ppc.bc = (ppc_bc)alias.cc;
+			}
+		}
+
 		cs_mem_free(mnem);
 	} else
 		printInstruction(MI, O, NULL);
 }
 
+enum ppc_bc_hint {
+	PPC_BC_LT_MINUS = (0 << 5) | 14,
+	PPC_BC_LE_MINUS = (1 << 5) |  6,
+	PPC_BC_EQ_MINUS = (2 << 5) | 14,
+	PPC_BC_GE_MINUS = (0 << 5) |  6,
+	PPC_BC_GT_MINUS = (1 << 5) | 14,
+	PPC_BC_NE_MINUS = (2 << 5) |  6,
+	PPC_BC_UN_MINUS = (3 << 5) | 14,
+	PPC_BC_NU_MINUS = (3 << 5) |  6,
+	PPC_BC_LT_PLUS  = (0 << 5) | 15,
+	PPC_BC_LE_PLUS  = (1 << 5) |  7,
+	PPC_BC_EQ_PLUS  = (2 << 5) | 15,
+	PPC_BC_GE_PLUS  = (0 << 5) |  7,
+	PPC_BC_GT_PLUS  = (1 << 5) | 15,
+	PPC_BC_NE_PLUS  = (2 << 5) |  7,
+	PPC_BC_UN_PLUS  = (3 << 5) | 15,
+	PPC_BC_NU_PLUS  = (3 << 5) |  7,
+};
+
+// normalize CC to remove _MINUS & _PLUS
+static int cc_normalize(int cc)
+{
+	switch(cc) {
+		default: return cc;
+		case PPC_BC_LT_MINUS: return PPC_BC_LT;
+		case PPC_BC_LE_MINUS: return PPC_BC_LE;
+		case PPC_BC_EQ_MINUS: return PPC_BC_EQ;
+		case PPC_BC_GE_MINUS: return PPC_BC_GE;
+		case PPC_BC_GT_MINUS: return PPC_BC_GT;
+		case PPC_BC_NE_MINUS: return PPC_BC_NE;
+		case PPC_BC_UN_MINUS: return PPC_BC_UN;
+		case PPC_BC_NU_MINUS: return PPC_BC_NU;
+		case PPC_BC_LT_PLUS : return PPC_BC_LT;
+		case PPC_BC_LE_PLUS : return PPC_BC_LE;
+		case PPC_BC_EQ_PLUS : return PPC_BC_EQ;
+		case PPC_BC_GE_PLUS : return PPC_BC_GE;
+		case PPC_BC_GT_PLUS : return PPC_BC_GT;
+		case PPC_BC_NE_PLUS : return PPC_BC_NE;
+		case PPC_BC_UN_PLUS : return PPC_BC_UN;
+		case PPC_BC_NU_PLUS : return PPC_BC_NU;
+	}
+}
 
 static void printPredicateOperand(MCInst *MI, unsigned OpNo,
 		SStream *O, const char *Modifier)
 {
 	unsigned Code = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
 
-	MI->flat_insn->detail->ppc.bc = (ppc_bc)Code;
+	MI->flat_insn->detail->ppc.bc = (ppc_bc)cc_normalize(Code);
 
 	if (!strcmp(Modifier, "cc")) {
 		switch ((ppc_predicate)Code) {
