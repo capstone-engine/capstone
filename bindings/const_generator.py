@@ -65,8 +65,8 @@ template = {
 MARKUP = '//>'
 
 def gen(lang):
-    templ = template[lang]
     global include, INCL_DIR
+    templ = template[lang]
     for target in include:
         prefix = templ[target]
         outfile = open(templ['out_file'] %(prefix), 'w')
@@ -110,10 +110,11 @@ def gen(lang):
                         if (count == 1):
                             outfile.write("\n")
                     except ValueError:
-                        # ocaml variable has _ as prefix
                         if lang == 'ocaml':
+                            # ocaml uses lsl for '<<', lor for '|'
                             rhs = rhs.replace('<<', ' lsl ')
                             rhs = rhs.replace('|', ' lor ')
+                            # ocaml variable has _ as prefix
                             if rhs[0].isalpha():
                                 rhs = '_' + rhs
 
