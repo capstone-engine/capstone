@@ -41,7 +41,24 @@ template = {
             'xcore.h': 'xcore',
             'comment_open': '#',
             'comment_close': '',
-        }
+        },
+    'ocaml': {
+            'header': "(* For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [%s_const.ml] *)\n",
+            'footer': "",
+            'line_format': 'let _%s = %s;;\n',
+            'out_file': './ocaml/%s_const.ml',
+            # prefixes for constant filenames of all archs - case sensitive
+            'arm.h': 'arm',
+            'arm64.h': 'arm64',
+            'mips.h': 'mips',
+            'x86.h': 'x86',
+            'ppc.h': 'ppc',
+            'sparc.h': 'sparc',
+            'systemz.h': 'sysz',
+            'xcore.h': 'xcore',
+            'comment_open': '(*',
+            'comment_close': ' *)',
+        },
 }
 
 # markup for comments to be added to autogen files
@@ -107,6 +124,6 @@ def main():
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage:", sys.argv[0], " <bindings: java|python>")
+        print("Usage:", sys.argv[0], " <bindings: java|python|ocaml>")
         sys.exit(1)
     main()

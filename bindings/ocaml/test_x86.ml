@@ -4,6 +4,7 @@
 open Printf
 open Capstone
 open X86
+open X86_const
 
 
 let print_string_hex comment str =
