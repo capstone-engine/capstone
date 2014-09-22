@@ -17,7 +17,7 @@ option(CAPSTONE_ARM_SUPPORT "ARM support" ON)
 option(CAPSTONE_ARM64_SUPPORT "ARM64 support" ON)
 option(CAPSTONE_MIPS_SUPPORT "MIPS support" ON)
 option(CAPSTONE_PPC_SUPPORT "PowerPC support" ON)
-option(CASPTONE_SPARC_SUPPORT "Sparc support" ON)
+option(CAPSTONE_SPARC_SUPPORT "Sparc support" ON)
 option(CAPSTONE_SYSZ_SUPPORT "SystemZ support" ON)
 option(CAPSTONE_XCORE_SUPPORT "XCore support" ON)
 option(CAPSTONE_X86_SUPPORT "x86 support" ON)
@@ -118,7 +118,7 @@ if (CAPSTONE_X86_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_x86.c)
 endif ()
 
-if (CASPTONE_SPARC_SUPPORT)
+if (CAPSTONE_SPARC_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_SPARC)
     set(SOURCES
         ${SOURCES}
