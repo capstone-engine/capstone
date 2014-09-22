@@ -2394,7 +2394,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (DecodeCRBITRCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 2, 14); \
-    MCOperand_CreateImm0(MI, tmp); \
+    if (decodeSImmOperand(MI, tmp, Address, Decoder, 14) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
   case 20: \
     tmp = fieldname(insn, 5, 7); \
@@ -2402,7 +2402,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     return S; \
   case 21: \
     tmp = fieldname(insn, 2, 24); \
-    MCOperand_CreateImm0(MI, tmp); \
+    if (decodeSImmOperand(MI, tmp, Address, Decoder, 24) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
   case 22: \
     tmp = fieldname(insn, 23, 3); \

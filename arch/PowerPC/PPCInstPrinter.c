@@ -442,7 +442,7 @@ static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		return;
 	}
 
-	imm = ((int)MCOperand_getImm(MCInst_getOperand(MI, OpNo)) << 18) >> 16;
+	imm = ((int)MCOperand_getImm(MCInst_getOperand(MI, OpNo)) << 2);
 	if (imm >= 0) {
 		if (imm > HEX_THRESHOLD)
 			SStream_concat(O, ".+0x%x", imm);
