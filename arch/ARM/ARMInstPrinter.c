@@ -634,10 +634,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				else
 					SStream_concat(O, "#%u", imm);
 			} else {
-				if (imm < -HEX_THRESHOLD)
-					SStream_concat(O, "#-0x%x", -imm);
-				else
-					SStream_concat(O, "#-%u", -imm);
+				SStream_concat(O, "#0x%x", imm);
 			}
 		} else if (imm >= 0) {
 			if (imm > HEX_THRESHOLD)
