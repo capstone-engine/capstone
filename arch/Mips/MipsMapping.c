@@ -4843,7 +4843,7 @@ static insn_map insns[] = {
 #endif
 	},
 	{
-		Mips_JALR_HB, MIPS_INS_JALR,
+		Mips_JALR_HB, MIPS_INS_JALR_HB,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { MIPS_GRP_STDENC, MIPS_GRP_MIPS32, 0 }, 0, 1
 #endif
@@ -4903,13 +4903,13 @@ static insn_map insns[] = {
 #endif
 	},
 	{
-		Mips_JR_HB, MIPS_INS_JR,
+		Mips_JR_HB, MIPS_INS_JR_HB,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { MIPS_GRP_STDENC, MIPS_GRP_MIPS32, MIPS_GRP_NOTMIPS32R6, MIPS_GRP_NOTMIPS64R6, 0 }, 1, 1
 #endif
 	},
 	{
-		Mips_JR_HB_R6, MIPS_INS_JR,
+		Mips_JR_HB_R6, MIPS_INS_JR_HB,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { MIPS_GRP_STDENC, MIPS_GRP_MIPS32R6, 0 }, 1, 1
 #endif
@@ -9867,31 +9867,16 @@ static name_map insn_name_maps[] = {
 	// alias instructions
 	{ MIPS_INS_NOP, "nop" },
 	{ MIPS_INS_NEGU, "negu" },
-};
 
-// special alias insn
-static name_map alias_insn_names[] = {
-	{ MIPS_INS_NOP, "nop" },
-	{ MIPS_INS_BEQZ, "beqz" },
-	{ MIPS_INS_BAL, "bal" },
-	{ MIPS_INS_BC1T, "bc1t" },
-	{ MIPS_INS_BC1F, "bc1f" },
-	{ MIPS_INS_NEGU, "negu" },
+	{ MIPS_INS_JALR_HB, "jalr.hb" },
+	{ MIPS_INS_JR_HB, "jr.hb" },
 };
 
 const char *Mips_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	unsigned int i;
-
 	if (id >= MIPS_INS_MAXIMUM)
 		return NULL;
-
-	// handle special alias first
-	for (i = 0; i < ARR_SIZE(alias_insn_names); i++) {
-		if (alias_insn_names[i].id == id)
-			return alias_insn_names[i].name;
-	}
 
 	return insn_name_maps[id].name;
 #else
@@ -9962,11 +9947,6 @@ mips_reg Mips_map_insn(const char *name)
 {
 	// handle special alias first
 	unsigned int i;
-
-	for (i = 0; i < ARR_SIZE(alias_insn_names); i++) {
-		if (!strcmp(alias_insn_names[i].name, name))
-			return alias_insn_names[i].id;
-	}
 
 	// NOTE: skip first NULL name in insn_name_maps
 	i = name2id(&insn_name_maps[1], ARR_SIZE(insn_name_maps) - 1, name);

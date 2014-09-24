@@ -789,7 +789,11 @@ let _MIPS_INS_XORI = 581;;
 (* some alias instructions *)
 let _MIPS_INS_NOP = 582;;
 let _MIPS_INS_NEGU = 583;;
-let _MIPS_INS_MAXIMUM = 584;;
+
+(* special instructions *)
+let _MIPS_INS_JALR_HB = 584;;
+let _MIPS_INS_JR_HB = 585;;
+let _MIPS_INS_MAXIMUM = 586;;
 
 (* Group of MIPS instructions *)
 

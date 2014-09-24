@@ -789,7 +789,11 @@ MIPS_INS_XORI = 581
 # some alias instructions
 MIPS_INS_NOP = 582
 MIPS_INS_NEGU = 583
-MIPS_INS_MAXIMUM = 584
+
+# special instructions
+MIPS_INS_JALR_HB = 584
+MIPS_INS_JR_HB = 585
+MIPS_INS_MAXIMUM = 586
 
 # Group of MIPS instructions
 

@@ -792,7 +792,11 @@ public class Mips_const {
 	// some alias instructions
 	public static final int MIPS_INS_NOP = 582;
 	public static final int MIPS_INS_NEGU = 583;
-	public static final int MIPS_INS_MAXIMUM = 584;
+
+	// special instructions
+	public static final int MIPS_INS_JALR_HB = 584;
+	public static final int MIPS_INS_JR_HB = 585;
+	public static final int MIPS_INS_MAXIMUM = 586;
 
 	// Group of MIPS instructions
 

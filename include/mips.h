@@ -844,6 +844,10 @@ typedef enum mips_insn {
 	MIPS_INS_NOP,
 	MIPS_INS_NEGU,
 
+	//> special instructions
+	MIPS_INS_JALR_HB,	// jump and link with Hazard Barrier
+	MIPS_INS_JR_HB,		// jump register with Hazard Barrier
+
 	MIPS_INS_MAXIMUM,
 } mips_insn;
 
