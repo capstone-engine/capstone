@@ -227,6 +227,9 @@ static bool relativeBranch(unsigned int id)
 	static unsigned int branchIns[] = {
 		Mips_BEQ, Mips_BC1F, Mips_BGEZ, Mips_BGEZAL, Mips_BGTZ,
 		Mips_BLEZ, Mips_BLTZ, Mips_BLTZAL, Mips_BNE, Mips_BC1T,
+		Mips_BEQL, Mips_BGEZALL, Mips_BGEZL, Mips_BGTZL, Mips_BLEZL,
+		Mips_BLTZALL, Mips_BLTZL, Mips_BNEL, Mips_BC1F, Mips_BC1FL,
+		Mips_BC1TL,
 	};
 	int i;
 
@@ -405,6 +408,11 @@ static char *printAlias(MCInst *MI, SStream *OS)
 			if (isReg(MI, 1, Mips_ZERO))
 				return printAlias2("beqz", MI, 0, 2, OS);
 			return NULL;
+		case Mips_BEQL:
+			// beql $r0, $zero, $L2 => beqzl $r0, $L2
+			if (isReg(MI, 0, Mips_ZERO) && isReg(MI, 1, Mips_ZERO))
+				printAlias2("beqzl", MI, 0, 2, OS);
+			return NULL;
 		case Mips_BEQ64:
 			// beq $r0, $zero, $L2 => beqz $r0, $L2
 			if (isReg(MI, 1, Mips_ZERO_64))
@@ -414,6 +422,11 @@ static char *printAlias(MCInst *MI, SStream *OS)
 			// bne $r0, $zero, $L2 => bnez $r0, $L2
 			if (isReg(MI, 1, Mips_ZERO))
 				return printAlias2("bnez", MI, 0, 2, OS);
+			return NULL;
+		case Mips_BNEL:
+			// bnel $r0, $zero, $L2 => bnezl $r0, $L2
+			if (isReg(MI, 1, Mips_ZERO))
+				return printAlias2("bnezl", MI, 0, 2, OS);
 			return NULL;
 		case Mips_BNE64:
 			// bne $r0, $zero, $L2 => bnez $r0, $L2
