@@ -152,49 +152,16 @@ static void printRegName(SStream *OS, unsigned RegNo)
 	SStream_concat(OS, "$%s", getRegisterName(RegNo));
 }
 
-static void printSaveRestore(MCInst *MI, SStream *O)
-{
-	unsigned i, e;
-	for (i = 0, e = MCInst_getNumOperands(MI); i != e; ++i) {
-		if (i != 0)
-			SStream_concat0(O, ", ");
-		if (MCOperand_isReg(MCInst_getOperand(MI, i)))
-			printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, i)));
-		else
-			printUnsignedImm(MI, i, O);
-	}
-}
-
 void Mips_printInst(MCInst *MI, SStream *O, void *info)
 {
 	char *mnem;
 
 	switch (MCInst_getOpcode(MI)) {
 		default: break;
-		case Mips_RDHWR:
-		case Mips_RDHWR64:
-			SStream_concat0(O, ".set\tpush\n");
-			SStream_concat0(O, ".set\tmips32r2\n");
-			break;
 		case Mips_Save16:
-			SStream_concat0(O, "\tsave\t");
-			printSaveRestore(MI, O);
-			SStream_concat0(O, " # 16 bit inst\n");
-			return;
 		case Mips_SaveX16:
-			SStream_concat0(O, "\tsave\t");
-			printSaveRestore(MI, O);
-			SStream_concat0(O, "\n");
-			return;
 		case Mips_Restore16:
-			SStream_concat0(O, "\trestore\t");
-			printSaveRestore(MI, O);
-			SStream_concat0(O, " # 16 bit inst\n");
-			return;
 		case Mips_RestoreX16:
-			SStream_concat0(O, "\trestore\t");
-			printSaveRestore(MI, O);
-			SStream_concat0(O, "\n");
 			return;
 	}
 
@@ -210,14 +177,6 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
 		// fixup instruction id due to the change in alias instruction
 		MCInst_setOpcodePub(MI, Mips_map_insn(mnem));
 		cs_mem_free(mnem);
-	}
-
-	switch (MCInst_getOpcode(MI)) {
-		default: break;
-		case Mips_RDHWR:
-		case Mips_RDHWR64:
-			SStream_concat0(O, "\n.set\tpop");
-			break;
 	}
 }
 
@@ -411,7 +370,7 @@ static char *printAlias(MCInst *MI, SStream *OS)
 		case Mips_BEQL:
 			// beql $r0, $zero, $L2 => beqzl $r0, $L2
 			if (isReg(MI, 0, Mips_ZERO) && isReg(MI, 1, Mips_ZERO))
-				printAlias2("beqzl", MI, 0, 2, OS);
+				return printAlias2("beqzl", MI, 0, 2, OS);
 			return NULL;
 		case Mips_BEQ64:
 			// beq $r0, $zero, $L2 => beqz $r0, $L2
