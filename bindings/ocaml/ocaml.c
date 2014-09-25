@@ -48,9 +48,6 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 			Store_field(rec_insn, 1, Val_int(insn[j-1].address));
 			Store_field(rec_insn, 2, Val_int(insn[j-1].size));
 			
-			Store_field(rec_insn, 4, caml_copy_string(insn[j-1].mnemonic));
-			Store_field(rec_insn, 5, caml_copy_string(insn[j-1].op_str));
-
 			// copy raw bytes of instruction
 			lcount = insn[j-1].size;
 			if (lcount) {
@@ -62,6 +59,8 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 				array = Atom(0);	// empty list
 			Store_field(rec_insn, 3, array);
 
+			Store_field(rec_insn, 4, caml_copy_string(insn[j-1].mnemonic));
+			Store_field(rec_insn, 5, caml_copy_string(insn[j-1].op_str));
 
 			// copy read registers
 			lcount = (insn[j-1]).detail->regs_read_count;
