@@ -137,6 +137,21 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 		}
 	}
 
+	if (MCInst_getOpcode(MI) == PPC_gBC)
+	{
+		int64_t bd = MCOperand_getImm(MCInst_getOperand(MI, 2));
+		bd = SignExtend64(bd, 14);
+		MCOperand_setImm(MCInst_getOperand(MI, 2),bd);
+	}
+
+	if ((MCInst_getOpcode(MI) == PPC_B)||(MCInst_getOpcode(MI) == PPC_BA)||
+			(MCInst_getOpcode(MI) == PPC_BL)||(MCInst_getOpcode(MI) == PPC_BLA))
+	{
+		int64_t bd = MCOperand_getImm(MCInst_getOperand(MI, 0));
+		bd = SignExtend64(bd, 24);
+		MCOperand_setImm(MCInst_getOperand(MI, 0),bd);
+	}
+
 	mnem = printAliasInstr(MI, O, Info);
 	if (mnem) {
 		// check to remove the last letter of ('.', '-', '+')
