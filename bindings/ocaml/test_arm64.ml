@@ -36,6 +36,12 @@ let print_op csh i op =
 		if mem.disp != 0 then
 			printf "\t\t\toperands[%u].mem.disp: 0x%x\n" i mem.disp;
 		);
+	| ARM64_OP_REG_MRS reg -> printf "\t\top[%d]: REG_MRS = %u\n" i reg;
+	| ARM64_OP_REG_MSR reg -> printf "\t\top[%d]: REG_MSR = %u\n" i reg;
+	| ARM64_OP_PSTATE v -> printf "\t\top[%d]: PSTATE = %u\n" i v;
+	| ARM64_OP_SYS v -> printf "\t\top[%d]: SYS = %u\n" i v;
+	| ARM64_OP_PREFETCH v -> printf "\t\top[%d]: PREFETCH = %u\n" i v;
+	| ARM64_OP_BARRIER v -> printf "\t\top[%d]: BARRIER = %u\n" i v;
 	);
 
 	if op.shift.shift_type != _ARM64_SFT_INVALID && op.shift.shift_value > 0 then
