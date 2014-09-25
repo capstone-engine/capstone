@@ -160,7 +160,7 @@ typedef enum arm64_mrs_reg {
 	ARM64_SYSREG_ICC_RPR_EL1       = 0xc65b, // 11  000  1100  1011  011
 	ARM64_SYSREG_ICH_VTR_EL2       = 0xe659, // 11  100  1100  1011  001
 	ARM64_SYSREG_ICH_EISR_EL2      = 0xe65b, // 11  100  1100  1011  011
-	ARM64_SYSREG_ICH_ELSR_EL2      = 0xe65d  // 11  100  1100  1011  101
+	ARM64_SYSREG_ICH_ELSR_EL2      = 0xe65d, // 11  100  1100  1011  101
 } arm64_sysreg;
 
 typedef enum arm64_msr_reg {
@@ -179,7 +179,7 @@ typedef enum arm64_msr_reg {
 	ARM64_SYSREG_ICC_DIR_EL1       = 0xc659, // 11  000  1100  1011  001
 	ARM64_SYSREG_ICC_SGI1R_EL1     = 0xc65d, // 11  000  1100  1011  101
 	ARM64_SYSREG_ICC_ASGI1R_EL1    = 0xc65e, // 11  000  1100  1011  110
-	ARM64_SYSREG_ICC_SGI0R_EL1     = 0xc65f  // 11  000  1100  1011  111
+	ARM64_SYSREG_ICC_SGI0R_EL1     = 0xc65f, // 11  000  1100  1011  111
 } arm64_msr_reg;
 
 //> System PState Field (MSR instruction)
