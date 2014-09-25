@@ -28,7 +28,7 @@ let all_tests = [
 ];;
 
 let print_op csh i op =
-	( match op with
+	( match op.value with
 	| X86_OP_INVALID _ -> ();	(* this would never happens *)
 	| X86_OP_REG reg -> printf "\t\top[%d]: REG = %s\n" i (cs_reg_name csh reg);
 	| X86_OP_IMM imm -> printf "\t\top[%d]: IMM = 0x%x\n" i imm;
@@ -40,8 +40,8 @@ let print_op csh i op =
 			printf "\t\t\toperands[%u].mem.index: REG = %s\n" i (cs_reg_name csh mem.index);
 		if mem.scale != 1 then
 			printf "\t\t\toperands[%u].mem.scale: %d\n" i mem.scale;
-		if mem.displ != 0 then
-			printf "\t\t\toperands[%u].mem.disp: 0x%x\n" i mem.displ;
+		if mem.disp != 0 then
+			printf "\t\t\toperands[%u].mem.disp: 0x%x\n" i mem.disp;
 		);
 	);
 	();;
@@ -59,18 +59,11 @@ let print_detail mode csh arch =
 	| CS_INFO_X86 x86 ->
 	print_string_hex "\tPrefix: " x86.prefix;
 
-	(* print segment override (if applicable) *)
-	if x86.segment != _X86_REG_INVALID then
-		printf "\tsegment = %s\n" (cs_reg_name csh x86.segment);
-
-
 	(* print instruction's opcode *)
 	print_string_hex "\tOpcode: " x86.opcode;
 
 	(* print operand's size, address size, displacement size & immediate size *)
-	printf "\top_size: %u, addr_size: %u, disp_size: %u, imm_size: %u\n" 
-		x86.op_size x86.addr_size
-		x86.disp_size x86.imm_size;
+	printf "\taddr_size: %u\n" x86.addr_size;
 
 	(* print modRM byte *)
 	printf "\tmodrm: 0x%x\n" x86.modrm;
@@ -110,7 +103,7 @@ let print_insn mode insn =
 
 let print_arch x =
 	let (arch, mode, code, comment, syntax) = x in
-		let insns = cs_disasm_quick arch mode code 0x1000L 0L in
+		let insns = cs_disasm arch mode code 0x1000L 0L in
 			printf "*************\n";
 			printf "Platform: %s\n" comment;
 			List.iter (print_insn mode) insns;;

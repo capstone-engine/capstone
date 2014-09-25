@@ -7,7 +7,7 @@ type sysz_op_mem = {
 	base: int;
 	index: int;
 	length: int64;
-	displ: int64;
+	disp: int64;
 }
 
 type sysz_op = 

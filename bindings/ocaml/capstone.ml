@@ -20,8 +20,6 @@ type arch =
   | CS_ARCH_SPARC
   | CS_ARCH_SYSZ
   | CS_ARCH_XCORE
-  | CS_ARCH_MAX
-  | CS_ARCH_ALL
 
 type mode =
   |	CS_MODE_LITTLE_ENDIAN	(* little-endian mode (default mode) *)
@@ -30,9 +28,13 @@ type mode =
   |	CS_MODE_32			(* 32-bit mode (for X86, Mips) *)
   |	CS_MODE_64			(* 64-bit mode (for X86, Mips) *)
   |	CS_MODE_THUMB		(* ARM's Thumb mode, including Thumb-2 *)
+  |	CS_MODE_MCLASS		(* ARM's MClass mode *)
   |	CS_MODE_MICRO		(* MicroMips mode (MIPS architecture) *)
   |	CS_MODE_N64			(* Nintendo-64 mode (MIPS architecture) *)
-  |	CS_MODE_V9		(* SparcV9 mode (Sparc architecture) *)
+  |	CS_MODE_MIPS3		(* Mips3 mode (MIPS architecture) *)
+  |	CS_MODE_MIPS32R6	(* Mips32-R6 mode (MIPS architecture) *)
+  |	CS_MODE_MIPSGP64	(* MipsGP64 mode (MIPS architecture) *)
+  |	CS_MODE_V9			(* SparcV9 mode (Sparc architecture) *)
   |	CS_MODE_BIG_ENDIAN	(* big-endian mode *)
 
 
@@ -81,10 +83,12 @@ type cs_insn0 = {
 }
 
 external cs_open: arch -> mode list -> Int64.t option = "ocaml_cs_open"
-external cs_disasm_quick: arch -> mode list -> string -> Int64.t -> Int64.t -> cs_insn0 list = "ocaml_cs_disasm_quick"
-external cs_disasm_dyn: arch -> Int64.t -> string -> Int64.t -> Int64.t -> cs_insn0 list = "ocaml_cs_disasm_dyn"
-external cs_reg_name: Int64.t -> int -> string = "cs_register_name"
-external cs_insn_name: Int64.t -> int -> string = "cs_instruction_name"
+external cs_disasm: arch -> mode list -> string -> Int64.t -> Int64.t -> cs_insn0 list = "ocaml_cs_disasm"
+external _cs_disasm_internal: arch -> Int64.t -> string -> Int64.t -> Int64.t -> cs_insn0 list = "ocaml_cs_disasm_internal"
+external cs_reg_name: Int64.t -> int -> string = "ocaml_register_name"
+external cs_insn_name: Int64.t -> int -> string = "ocaml_instruction_name"
+external cs_group_name: Int64.t -> int -> string = "ocaml_group_name"
+external cs_version: unit -> int = "ocaml_version"
 
 class cs_insn c a =
 	let csh = c in
@@ -131,7 +135,7 @@ class cs a m =
 		method get_csh = handle
 
 		method disasm code offset count =
-			let insns = (cs_disasm_dyn arch handle code offset count) in
+			let insns = (_cs_disasm_internal arch handle code offset count) in
 			List.map (fun x -> new cs_insn handle x) insns;
 
 	end;;

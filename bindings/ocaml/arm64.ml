@@ -5,14 +5,14 @@ open Arm64_const
 
 (* architecture specific info of instruction *)
 type arm64_op_shift = {
-	shift_type: int;	(* TODO: covert this to pattern like arm_op_value? *)
+	shift_type: int;
 	shift_value: int;
 }
 
 type arm64_op_mem = {
 	base: int;
 	index: int;
-	displ: int
+	disp: int
 }
 
 type arm64_op_value =
@@ -22,8 +22,17 @@ type arm64_op_value =
 	| ARM64_OP_IMM of int
 	| ARM64_OP_FP of float
 	| ARM64_OP_MEM of arm64_op_mem
+	| ARM64_OP_REG_MRS of int
+	| ARM64_OP_REG_MSR of int
+	| ARM64_OP_PSTATE of int
+	| ARM64_OP_SYS of int
+	| ARM64_OP_PREFETCH of int
+	| ARM64_OP_BARRIER of int
 
 type arm64_op = {
+	vector_index: int;
+	vas: int;
+	vess: int;
 	shift: arm64_op_shift;
 	ext: int;
 	value: arm64_op_value;

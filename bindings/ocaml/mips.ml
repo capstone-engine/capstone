@@ -6,7 +6,7 @@ open Mips_const
 (* architecture specific info of instruction *)
 type mips_op_mem = {
 	base: int;
-	displ: int
+	disp: int
 }
 
 type mips_op_value =

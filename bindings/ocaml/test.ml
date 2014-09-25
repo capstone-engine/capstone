@@ -47,7 +47,7 @@ let print_insn insn =
 
 let print_arch x =
 	let (arch, mode, code, comment, syntax) = x in
-		let insns = cs_disasm_quick arch mode code 0x1000L 0L in
+		let insns = cs_disasm arch mode code 0x1000L 0L in
 			printf "*************\n";
 			printf "Platform: %s\n" comment;
 			List.iter print_insn insns;;

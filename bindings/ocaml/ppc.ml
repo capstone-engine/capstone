@@ -5,7 +5,7 @@ open Ppc_const
 
 type ppc_op_mem = {
 	base: int;
-	displ: int;
+	disp: int;
 }
 
 type ppc_op = 

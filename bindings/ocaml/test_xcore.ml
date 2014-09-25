@@ -21,7 +21,7 @@ let all_tests = [
 ];;
 
 let print_op csh i op =
-	( match op with
+	( match op.value with
 	| XCORE_OP_INVALID _ -> ();	(* this would never happens *)
 	| XCORE_OP_REG reg -> printf "\t\top[%d]: REG = %s\n" i (cs_reg_name csh reg);
 	| XCORE_OP_IMM imm -> printf "\t\top[%d]: IMM = 0x%x\n" i imm;
@@ -30,8 +30,8 @@ let print_op csh i op =
 			printf "\t\t\toperands[%u].mem.base: REG = %s\n" i (cs_reg_name csh mem.base);
 		if mem.index != 0 then
 			printf "\t\t\toperands[%u].mem.index: 0x%x\n" i mem.index;
-		if mem.displ != 0 then
-			printf "\t\t\toperands[%u].mem.disp: 0x%x\n" i mem.displ;
+		if mem.disp != 0 then
+			printf "\t\t\toperands[%u].mem.disp: 0x%x\n" i mem.disp;
 		if mem.direct != 0 then
 			printf "\t\t\toperands[%u].mem.direct: 0x%x\n" i mem.direct;
 		);
@@ -69,7 +69,7 @@ let print_insn mode insn =
 
 let print_arch x =
 	let (arch, mode, code, comment) = x in
-		let insns = cs_disasm_quick arch mode code 0x1000L 0L in
+		let insns = cs_disasm arch mode code 0x1000L 0L in
 			printf "*************\n";
 			printf "Platform: %s\n" comment;
 			List.iter (print_insn mode) insns;;

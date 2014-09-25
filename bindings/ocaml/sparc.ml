@@ -6,7 +6,7 @@ open Sparc_const
 type sparc_op_mem = {
 	base: int;
 	index: int;
-	displ: int;
+	disp: int;
 }
 
 type sparc_op = 
