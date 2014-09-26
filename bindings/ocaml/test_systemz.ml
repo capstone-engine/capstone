@@ -1,4 +1,4 @@
-(* Capstone Disassembler Engine
+(* Capstone Disassembly Engine
 * By Guillaume Jeanne <guillaume.jeanne@ensimag.fr>, 2014> *)
 
 open Printf
@@ -23,10 +23,10 @@ let all_tests = [
 ];;
 
 let print_op csh i op =
-	( match op with
+	( match op.value with
 	| SYSZ_OP_INVALID _ -> ();	(* this would never happens *)
 	| SYSZ_OP_REG reg -> printf "\t\top[%d]: REG = %s\n" i (cs_reg_name csh reg);
-	| SYSZ_OP_ACREG reg -> (); (* XXX *)
+	| SYSZ_OP_ACREG reg -> printf "\t\top[%d]: ACREG = %u\n" i reg;
 	| SYSZ_OP_IMM imm -> printf "\t\top[%d]: IMM = 0x%x\n" i imm;
 	| SYSZ_OP_MEM mem -> ( printf "\t\top[%d]: MEM\n" i;
 		if mem.base != 0 then

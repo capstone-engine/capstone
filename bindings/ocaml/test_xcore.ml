@@ -1,4 +1,4 @@
-(* Capstone Disassembler Engine
+(* Capstone Disassembly Engine
 * By Guillaume Jeanne <guillaume.jeanne@ensimag.fr>, 2014> *)
 
 open Printf
@@ -49,14 +49,16 @@ let print_detail csh arch =
 	| CS_INFO_PPC _ -> ();
 	| CS_INFO_SPARC _ -> ();
 	| CS_INFO_SYSZ _ -> ();
-	| CS_INFO_XCORE xcore ->
+	| CS_INFO_XCORE xcore -> (
 
+	printf "\top_count: %d\n" (Array.length xcore.operands);
 	(* print all operands info (type & value) *)
 	if (Array.length xcore.operands) > 0 then (
 		printf "\top_count: %d\n" (Array.length xcore.operands);
 		Array.iteri (print_op csh) xcore.operands;
 	);
-	printf "\n";;
+	printf "\n";
+	);;
 
 
 let print_insn mode insn =
@@ -75,8 +77,7 @@ let print_arch x =
 			List.iter (print_insn mode) insns;;
 
 
-
-List.iter print_arch all_tests;;
+(* List.iter print_arch all_tests;; *)
 
 
 

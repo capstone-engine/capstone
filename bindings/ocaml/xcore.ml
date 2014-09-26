@@ -1,4 +1,4 @@
-(* Capstone Disassembler Engine
+(* Capstone Disassembly Engine
  * By Guillaume Jeanne <guillaume.jeanne@ensimag.fr>, 2014> *)
 
 open Xcore_const
@@ -21,7 +21,6 @@ type xcore_op = {
 }
 
 type cs_xcore = { 
-	op_count: int;
 	operands: xcore_op array;
 }
 

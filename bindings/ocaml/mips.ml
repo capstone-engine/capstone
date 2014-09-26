@@ -1,5 +1,5 @@
-(* Capstone Disassembler Engine
- * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> *)
+(* Capstone Disassembly Engine
+ * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 *)
 
 open Mips_const
 
@@ -20,6 +20,5 @@ type mips_op = {
 }
 
 type cs_mips = {
-	op_count: int;
 	operands: mips_op array;
 }

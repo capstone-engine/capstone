@@ -1,5 +1,5 @@
-(* Capstone Disassembler Engine
- * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> *)
+(* Capstone Disassembly Engine
+ * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 *)
 
 open Arm_const
 
@@ -46,6 +46,5 @@ type cs_arm = {
 	cc: int;
 	update_flags: bool;
 	writeback: bool;
-	op_count: int;
 	operands: arm_op array;
 }

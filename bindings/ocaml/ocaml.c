@@ -102,7 +102,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 					case CS_ARCH_ARM:
 						arch_info = caml_alloc(1, 0);
 
-						op_info_val = caml_alloc(10, 0);
+						op_info_val = caml_alloc(9, 0);
 						Store_field(op_info_val, 0, Val_bool(insn[j-1].detail->arm.usermode));
 						Store_field(op_info_val, 1, Val_int(insn[j-1].detail->arm.vector_size));
 						Store_field(op_info_val, 2, Val_int(insn[j-1].detail->arm.vector_data));
@@ -113,7 +113,6 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						Store_field(op_info_val, 7, Val_bool(insn[j-1].detail->arm.writeback));
 
 						lcount = insn[j-1].detail->arm.op_count;
-						Store_field(op_info_val, 8, Val_int(lcount));
 						if (lcount > 0) {
 							array = caml_alloc(lcount, 0);
 							for (i = 0; i < lcount; i++) {
@@ -166,7 +165,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						} else	// empty list
 							array = Atom(0);
 
-						Store_field(op_info_val, 9, array);
+						Store_field(op_info_val, 8, array);
 
 						// finally, insert this into arch_info
 						Store_field(arch_info, 0, op_info_val);
@@ -177,14 +176,12 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 					case CS_ARCH_ARM64:
 						arch_info = caml_alloc(1, 1);
 
-						op_info_val = caml_alloc(5, 0);
+						op_info_val = caml_alloc(4, 0);
 						Store_field(op_info_val, 0, Val_int(insn[j-1].detail->arm64.cc));
 						Store_field(op_info_val, 1, Val_bool(insn[j-1].detail->arm64.update_flags));
 						Store_field(op_info_val, 2, Val_bool(insn[j-1].detail->arm64.writeback));
+
 						lcount = insn[j-1].detail->arm64.op_count;
-
-						Store_field(op_info_val, 3, Val_int(lcount));
-
 						if (lcount > 0) {
 							array = caml_alloc(lcount, 0);
 							for (i = 0; i < lcount; i++) {
@@ -256,7 +253,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						} else	// empty array
 							array = Atom(0);
 
-						Store_field(op_info_val, 4, array);
+						Store_field(op_info_val, 3, array);
 
 						// finally, insert this into arch_info
 						Store_field(arch_info, 0, op_info_val);
@@ -267,12 +264,9 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 					case CS_ARCH_MIPS:
 						arch_info = caml_alloc(1, 2);
 
-						op_info_val = caml_alloc(2, 0);
+						op_info_val = caml_alloc(1, 0);
 
 						lcount = insn[j-1].detail->mips.op_count;
-
-						Store_field(op_info_val, 0, Val_int(lcount));
-
 						if (lcount > 0) {
 							array = caml_alloc(lcount, 0);
 							for (i = 0; i < lcount; i++) {
@@ -301,7 +295,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						} else	// empty array
 							array = Atom(0);
 
-						Store_field(op_info_val, 1, array);
+						Store_field(op_info_val, 0, array);
 
 						// finally, insert this into arch_info
 						Store_field(arch_info, 0, op_info_val);
@@ -309,66 +303,14 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						Store_field(rec_insn, 12, arch_info);
 
 						break;
-					case CS_ARCH_PPC:
-
+					case CS_ARCH_X86:
 						arch_info = caml_alloc(1, 3);
 
-						op_info_val = caml_alloc(5, 0);
-
-						Store_field(op_info_val, 0, Val_int(insn[j-1].detail->ppc.bc));
-						Store_field(op_info_val, 1, Val_int(insn[j-1].detail->ppc.bh));
-						Store_field(op_info_val, 2, Val_bool(insn[j-1].detail->ppc.update_cr0));
-
-						lcount = insn[j-1].detail->ppc.op_count;
-
-						Store_field(op_info_val, 3, Val_int(lcount));
-
-						if (lcount > 0) {
-							array = caml_alloc(lcount, 0);
-							for (i = 0; i < lcount; i++) {
-								tmp2 = caml_alloc(1, 0);
-								switch(insn[j-1].detail->ppc.operands[i].type) {
-									case PPC_OP_REG:
-										tmp = caml_alloc(1, 1);
-										Store_field(tmp, 0, Val_int(insn[j-1].detail->ppc.operands[i].reg));
-										break;
-									case PPC_OP_IMM:
-										tmp = caml_alloc(1, 2);
-										Store_field(tmp, 0, Val_int(insn[j-1].detail->ppc.operands[i].imm));
-										break;
-									case PPC_OP_MEM:
-										tmp = caml_alloc(1, 3);
-										tmp3 = caml_alloc(2, 0);
-										Store_field(tmp3, 0, Val_int(insn[j-1].detail->ppc.operands[i].mem.base));
-										Store_field(tmp3, 1, Val_int(insn[j-1].detail->ppc.operands[i].mem.disp));
-										Store_field(tmp, 0, tmp3);
-										break;
-									default: break;
-								}
-								Store_field(tmp2, 0, tmp);
-								Store_field(array, i, tmp2);
-							}
-						} else	// empty array
-							array = Atom(0);
-
-						Store_field(op_info_val, 4, array);
-
-						// finally, insert this into arch_info
-						Store_field(arch_info, 0, op_info_val);
-
-						Store_field(rec_insn, 12, arch_info);
-
-						break;
-
-					case CS_ARCH_X86:
-
-						arch_info = caml_alloc(1, 4);
-
-						op_info_val = caml_alloc(16, 0);
+						op_info_val = caml_alloc(15, 0);
 
 						// fill prefix
 						lcount = list_count(insn[j-1].detail->x86.prefix, ARR_SIZE(insn[j-1].detail->x86.prefix));
-						if(lcount) {
+						if (lcount) {
 							array = caml_alloc(lcount, 0);
 							for (i = 0; i < lcount; i++) {
 								Store_field(array, i, Val_int(insn[j-1].detail->x86.prefix[i]));
@@ -410,9 +352,6 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						Store_field(op_info_val, 13, Val_int(insn[j-1].detail->x86.avx_rm));
 
 						lcount = insn[j-1].detail->x86.op_count;
-
-						Store_field(op_info_val, 14, Val_int(lcount));
-
 						if (lcount > 0) {
 							array = caml_alloc(lcount, 0);
 							for (i = 0; i < lcount; i++) {
@@ -437,6 +376,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 										Store_field(tmp2, 2, Val_int(insn[j-1].detail->x86.operands[i].mem.index));
 										Store_field(tmp2, 3, Val_int(insn[j-1].detail->x86.operands[i].mem.scale));
 										Store_field(tmp2, 4, Val_int(insn[j-1].detail->x86.operands[i].mem.disp));
+
 										Store_field(tmp, 0, tmp2);
 										break;
 									default:
@@ -445,11 +385,13 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 								Store_field(tmp, 1, Val_int(insn[j-1].detail->x86.operands[i].size));
 								Store_field(tmp, 2, Val_int(insn[j-1].detail->x86.operands[i].avx_bcast));
 								Store_field(tmp, 3, Val_int(insn[j-1].detail->x86.operands[i].avx_zero_opmask));
-								Store_field(array, i, tmp);
+								tmp2 = caml_alloc(1, 0);
+								Store_field(tmp2, 0, tmp);
+								Store_field(array, i, tmp2);
 							}
 						} else	// empty array
 							array = Atom(0);
-						Store_field(op_info_val, 15, array);
+						Store_field(op_info_val, 14, array);
 
 						// finally, insert this into arch_info
 						Store_field(arch_info, 0, op_info_val);
@@ -457,18 +399,62 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						Store_field(rec_insn, 12, arch_info);
 						break;
 
-					case CS_ARCH_SPARC:
-						arch_info = caml_alloc(1, 3);
+					case CS_ARCH_PPC:
+						arch_info = caml_alloc(1, 4);
 
 						op_info_val = caml_alloc(4, 0);
+
+						Store_field(op_info_val, 0, Val_int(insn[j-1].detail->ppc.bc));
+						Store_field(op_info_val, 1, Val_int(insn[j-1].detail->ppc.bh));
+						Store_field(op_info_val, 2, Val_bool(insn[j-1].detail->ppc.update_cr0));
+
+						lcount = insn[j-1].detail->ppc.op_count;
+						if (lcount > 0) {
+							array = caml_alloc(lcount, 0);
+							for (i = 0; i < lcount; i++) {
+								tmp2 = caml_alloc(1, 0);
+								switch(insn[j-1].detail->ppc.operands[i].type) {
+									case PPC_OP_REG:
+										tmp = caml_alloc(1, 1);
+										Store_field(tmp, 0, Val_int(insn[j-1].detail->ppc.operands[i].reg));
+										break;
+									case PPC_OP_IMM:
+										tmp = caml_alloc(1, 2);
+										Store_field(tmp, 0, Val_int(insn[j-1].detail->ppc.operands[i].imm));
+										break;
+									case PPC_OP_MEM:
+										tmp = caml_alloc(1, 3);
+										tmp3 = caml_alloc(2, 0);
+										Store_field(tmp3, 0, Val_int(insn[j-1].detail->ppc.operands[i].mem.base));
+										Store_field(tmp3, 1, Val_int(insn[j-1].detail->ppc.operands[i].mem.disp));
+										Store_field(tmp, 0, tmp3);
+										break;
+									default: break;
+								}
+								Store_field(tmp2, 0, tmp);
+								Store_field(array, i, tmp2);
+							}
+						} else	// empty array
+							array = Atom(0);
+
+						Store_field(op_info_val, 3, array);
+
+						// finally, insert this into arch_info
+						Store_field(arch_info, 0, op_info_val);
+
+						Store_field(rec_insn, 12, arch_info);
+
+						break;
+
+					case CS_ARCH_SPARC:
+						arch_info = caml_alloc(1, 5);
+
+						op_info_val = caml_alloc(3, 0);
 
 						Store_field(op_info_val, 0, Val_int(insn[j-1].detail->sparc.cc));
 						Store_field(op_info_val, 1, Val_int(insn[j-1].detail->sparc.hint));
 
 						lcount = insn[j-1].detail->sparc.op_count;
-
-						Store_field(op_info_val, 2, Val_int(lcount));
-
 						if (lcount > 0) {
 							array = caml_alloc(lcount, 0);
 							for (i = 0; i < lcount; i++) {
@@ -498,7 +484,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						} else	// empty array
 							array = Atom(0);
 
-						Store_field(op_info_val, 3, array);
+						Store_field(op_info_val, 2, array);
 
 						// finally, insert this into arch_info
 						Store_field(arch_info, 0, op_info_val);
@@ -508,15 +494,13 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						break;
 
 					case CS_ARCH_SYSZ:
-						arch_info = caml_alloc(1, 3);
+						arch_info = caml_alloc(1, 6);
 
-						op_info_val = caml_alloc(3, 0);
+						op_info_val = caml_alloc(2, 0);
 
 						Store_field(op_info_val, 0, Val_int(insn[j-1].detail->sysz.cc));
+
 						lcount = insn[j-1].detail->sysz.op_count;
-
-						Store_field(op_info_val, 1, Val_int(lcount));
-
 						if (lcount > 0) {
 							array = caml_alloc(lcount, 0);
 							for (i = 0; i < lcount; i++) {
@@ -526,16 +510,16 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 										tmp = caml_alloc(1, 1);
 										Store_field(tmp, 0, Val_int(insn[j-1].detail->sysz.operands[i].reg));
 										break;
-									case SYSZ_OP_IMM:
-										tmp = caml_alloc(1, 2);
-										Store_field(tmp, 0, Val_int(insn[j-1].detail->sysz.operands[i].imm));
-										break;
 									case SYSZ_OP_ACREG:
 										tmp = caml_alloc(1, 2);
-										Store_field(tmp, 0, Val_int(0)); /* XXX */
+										Store_field(tmp, 0, Val_int(insn[j-1].detail->sysz.operands[i].reg));
+										break;
+									case SYSZ_OP_IMM:
+										tmp = caml_alloc(1, 3);
+										Store_field(tmp, 0, Val_int(insn[j-1].detail->sysz.operands[i].imm));
 										break;
 									case SYSZ_OP_MEM:
-										tmp = caml_alloc(1, 3);
+										tmp = caml_alloc(1, 4);
 										tmp3 = caml_alloc(4, 0);
 										Store_field(tmp3, 0, Val_int(insn[j-1].detail->sysz.operands[i].mem.base));
 										Store_field(tmp3, 1, Val_int(insn[j-1].detail->sysz.operands[i].mem.index));
@@ -551,7 +535,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						} else	// empty array
 							array = Atom(0);
 
-						Store_field(op_info_val, 3, array);
+						Store_field(op_info_val, 1, array);
 
 						// finally, insert this into arch_info
 						Store_field(arch_info, 0, op_info_val);
@@ -561,14 +545,11 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						break;
 
 					case CS_ARCH_XCORE:
-						arch_info = caml_alloc(1, 2);
+						arch_info = caml_alloc(1, 7);
 
-						op_info_val = caml_alloc(2, 0);
+						op_info_val = caml_alloc(1, 0);
 
 						lcount = insn[j-1].detail->xcore.op_count;
-
-						Store_field(op_info_val, 0, Val_int(lcount));
-
 						if (lcount > 0) {
 							array = caml_alloc(lcount, 0);
 							for (i = 0; i < lcount; i++) {
@@ -599,7 +580,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						} else	// empty array
 							array = Atom(0);
 
-						Store_field(op_info_val, 1, array);
+						Store_field(op_info_val, 0, array);
 
 						// finally, insert this into arch_info
 						Store_field(arch_info, 0, op_info_val);
