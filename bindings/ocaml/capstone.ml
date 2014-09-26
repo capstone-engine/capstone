@@ -74,11 +74,8 @@ type cs_insn0 = {
 	mnemonic: string;
 	op_str: string;
 	regs_read: int array;
-	regs_read_count: int;
 	regs_write: int array;
-	regs_write_count: int;
 	groups: int array;
-	groups_count: int;
 	arch: cs_arch;
 }
 
@@ -92,11 +89,10 @@ external cs_version: unit -> int = "ocaml_version"
 
 class cs_insn c a =
 	let csh = c in
-	let (id, address, size, bytes, mnemonic, op_str, regs_read, regs_read_count,
-        regs_write, regs_write_count, groups, groups_count, arch) =
+	let (id, address, size, bytes, mnemonic, op_str, regs_read,
+        regs_write, groups, arch) =
         (a.id, a.address, a.size, a.bytes, a.mnemonic, a.op_str,
-        a.regs_read, a.regs_read_count, a.regs_write, a.regs_write_count,
-		a.groups, a.groups_count, a.arch) in
+        a.regs_read, a.regs_write, a.groups, a.arch) in
 	object
 		method id = id;
 		method address = address;
@@ -105,11 +101,8 @@ class cs_insn c a =
 		method mnemonic = mnemonic;
 		method op_str = op_str;
 		method regs_read = regs_read;
-	        method regs_read_count = regs_read_count;
 		method regs_write = regs_write;
-	        method regs_write_count = regs_write_count;
 		method groups = groups;
-	        method groups_count = groups_count;
 		method arch = arch;
 		method insn_name = cs_insn_name csh id;
 	end;;

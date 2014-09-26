@@ -43,7 +43,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 			unsigned int lcount, i;
 			cons = caml_alloc(2, 0);
 
-			rec_insn = caml_alloc(13, 0);
+			rec_insn = caml_alloc(10, 0);
 			Store_field(rec_insn, 0, Val_int(insn[j-1].id));
 			Store_field(rec_insn, 1, Val_int(insn[j-1].address));
 			Store_field(rec_insn, 2, Val_int(insn[j-1].size));
@@ -72,7 +72,6 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 			} else
 				array = Atom(0);	// empty list
 			Store_field(rec_insn, 6, array);
-			Store_field(rec_insn, 7, Val_int(lcount));
 
 			lcount = (insn[j-1]).detail->regs_write_count;
 			if (lcount) {
@@ -82,8 +81,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 				}
 			} else
 				array = Atom(0);	// empty list
-			Store_field(rec_insn, 8, array);
-			Store_field(rec_insn, 9, Val_int(lcount));
+			Store_field(rec_insn, 7, array);
 
 
 			lcount = (insn[j-1]).detail->groups_count;
@@ -94,8 +92,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 				}
 			} else
 				array = Atom(0);	// empty list
-			Store_field(rec_insn, 10, array);
-			Store_field(rec_insn, 11, Val_int(lcount));
+			Store_field(rec_insn, 8, array);
 
 			if(insn[j-1].detail) {
 				switch(arch) {
@@ -170,7 +167,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						// finally, insert this into arch_info
 						Store_field(arch_info, 0, op_info_val);
 
-						Store_field(rec_insn, 12, arch_info);
+						Store_field(rec_insn, 9, arch_info);
 
 						break;
 					case CS_ARCH_ARM64:
@@ -258,7 +255,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						// finally, insert this into arch_info
 						Store_field(arch_info, 0, op_info_val);
 
-						Store_field(rec_insn, 12, arch_info);
+						Store_field(rec_insn, 9, arch_info);
 
 						break;
 					case CS_ARCH_MIPS:
@@ -300,7 +297,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						// finally, insert this into arch_info
 						Store_field(arch_info, 0, op_info_val);
 
-						Store_field(rec_insn, 12, arch_info);
+						Store_field(rec_insn, 9, arch_info);
 
 						break;
 					case CS_ARCH_X86:
@@ -396,7 +393,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						// finally, insert this into arch_info
 						Store_field(arch_info, 0, op_info_val);
 
-						Store_field(rec_insn, 12, arch_info);
+						Store_field(rec_insn, 9, arch_info);
 						break;
 
 					case CS_ARCH_PPC:
@@ -442,7 +439,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						// finally, insert this into arch_info
 						Store_field(arch_info, 0, op_info_val);
 
-						Store_field(rec_insn, 12, arch_info);
+						Store_field(rec_insn, 9, arch_info);
 
 						break;
 
@@ -489,7 +486,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						// finally, insert this into arch_info
 						Store_field(arch_info, 0, op_info_val);
 
-						Store_field(rec_insn, 12, arch_info);
+						Store_field(rec_insn, 9, arch_info);
 
 						break;
 
@@ -540,7 +537,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						// finally, insert this into arch_info
 						Store_field(arch_info, 0, op_info_val);
 
-						Store_field(rec_insn, 12, arch_info);
+						Store_field(rec_insn, 9, arch_info);
 
 						break;
 
@@ -585,7 +582,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						// finally, insert this into arch_info
 						Store_field(arch_info, 0, op_info_val);
 
-						Store_field(rec_insn, 12, arch_info);
+						Store_field(rec_insn, 9, arch_info);
 
 						break;
 

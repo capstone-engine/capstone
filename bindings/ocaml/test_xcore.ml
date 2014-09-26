@@ -51,7 +51,6 @@ let print_detail csh arch =
 	| CS_INFO_SYSZ _ -> ();
 	| CS_INFO_XCORE xcore -> (
 
-	printf "\top_count: %d\n" (Array.length xcore.operands);
 	(* print all operands info (type & value) *)
 	if (Array.length xcore.operands) > 0 then (
 		printf "\top_count: %d\n" (Array.length xcore.operands);
