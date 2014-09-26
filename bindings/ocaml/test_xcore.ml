@@ -77,7 +77,7 @@ let print_arch x =
 			List.iter (print_insn mode) insns;;
 
 
-(* List.iter print_arch all_tests;; *)
+List.iter print_arch all_tests;;
 
 
 
