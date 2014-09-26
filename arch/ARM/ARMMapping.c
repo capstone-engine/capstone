@@ -11018,7 +11018,7 @@ static insn_map insns[] = {
 	{
 		ARM_t2BXJ, ARM_INS_BXJ,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, ARM_GRP_PREV8, 0 }, 0, 0
 #endif
 	},
 	{
