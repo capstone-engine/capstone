@@ -39,6 +39,22 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 static void printMemOperand(MCInst *MI, int opNum, SStream *O, const char *Modifier);
 static void printOperand(MCInst *MI, int opNum, SStream *O);
 
+static void Sparc_add_hint(MCInst *MI, unsigned int hint)
+{
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->sparc.hint = hint;
+	}
+}
+
+static void Sparc_add_reg(MCInst *MI, unsigned int reg)
+{
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].type = SPARC_OP_REG;
+		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].reg = reg;
+		MI->flat_insn->detail->sparc.op_count++;
+	}
+}
+
 static void set_mem_access(MCInst *MI, bool status)
 {
 	if (MI->csh->detail != CS_OPT_ON)
@@ -100,16 +116,18 @@ static bool printSparcAliasInstr(MCInst *MI, SStream *O)
 									MCOperand_getImm(MCInst_getOperand(MI, 2)) == 8) {
 								  switch(MCOperand_getReg(MCInst_getOperand(MI, 1))) {
 									  default: break;
-									  case SP_I7: SStream_concat0(O, "ret"); return true;
-									  case SP_O7: SStream_concat0(O, "retl"); return true;
+									  case SP_I7: SStream_concat0(O, "ret"); MCInst_setOpcodePub(MI, SPARC_INS_RET); return true;
+									  case SP_O7: SStream_concat0(O, "retl"); MCInst_setOpcodePub(MI, SPARC_INS_RETL); return true;
 								  }
 							  }
 
 							  SStream_concat0(O, "jmp\t");
+							  MCInst_setOpcodePub(MI, SPARC_INS_JMP);
 							  printMemOperand(MI, 1, O, NULL);
 							  return true;
 					 case SP_O7: // call $addr
 							  SStream_concat0(O, "call ");
+							  MCInst_setOpcodePub(MI, SPARC_INS_CALL);
 							  printMemOperand(MI, 1, O, NULL);
 							  return true;
 				 }
@@ -126,12 +144,12 @@ static bool printSparcAliasInstr(MCInst *MI, SStream *O)
 				 // if V8, skip printing %fcc0.
 				 switch(MCInst_getOpcode(MI)) {
 					 default:
-					 case SP_V9FCMPS:  SStream_concat0(O, "fcmps\t"); break;
-					 case SP_V9FCMPD:  SStream_concat0(O, "fcmpd\t"); break;
-					 case SP_V9FCMPQ:  SStream_concat0(O, "fcmpq\t"); break;
-					 case SP_V9FCMPES: SStream_concat0(O, "fcmpes\t"); break;
-					 case SP_V9FCMPED: SStream_concat0(O, "fcmped\t"); break;
-					 case SP_V9FCMPEQ: SStream_concat0(O, "fcmpeq\t"); break;
+					 case SP_V9FCMPS:  SStream_concat0(O, "fcmps\t"); MCInst_setOpcodePub(MI, SPARC_INS_FCMPS); break;
+					 case SP_V9FCMPD:  SStream_concat0(O, "fcmpd\t"); MCInst_setOpcodePub(MI, SPARC_INS_FCMPD); break;
+					 case SP_V9FCMPQ:  SStream_concat0(O, "fcmpq\t"); MCInst_setOpcodePub(MI, SPARC_INS_FCMPQ); break;
+					 case SP_V9FCMPES: SStream_concat0(O, "fcmpes\t"); MCInst_setOpcodePub(MI, SPARC_INS_FCMPES); break;
+					 case SP_V9FCMPED: SStream_concat0(O, "fcmped\t"); MCInst_setOpcodePub(MI, SPARC_INS_FCMPED); break;
+					 case SP_V9FCMPEQ: SStream_concat0(O, "fcmpeq\t"); MCInst_setOpcodePub(MI, SPARC_INS_FCMPEQ); break;
 				 }
 				 printOperand(MI, 1, O);
 				 SStream_concat0(O, ", ");
@@ -222,7 +240,7 @@ static void printMemOperand(MCInst *MI, int opNum, SStream *O, const char *Modif
 		return;   // don't print "+0"
 	}
 
-	SStream_concat0(O, "+");
+	SStream_concat0(O, "+");	// qq
 
 	printOperand(MI, opNum + 1, O);
 	set_mem_access(MI, false);

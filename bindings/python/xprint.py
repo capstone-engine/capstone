@@ -3,7 +3,7 @@
 
 from __future__ import print_function
 import sys
-_python3 = sys.version_info.major == 3
+_python3 = 0 #sys.version_info.major == 3
 
 
 def to_hex(s):

@@ -26,22 +26,10 @@ typedef enum ppc_bc {
 	PPC_BC_NE       = (2 << 5) |  4,
 	PPC_BC_UN       = (3 << 5) | 12,
 	PPC_BC_NU       = (3 << 5) |  4,
-	PPC_BC_LT_MINUS = (0 << 5) | 14,
-	PPC_BC_LE_MINUS = (1 << 5) |  6,
-	PPC_BC_EQ_MINUS = (2 << 5) | 14,
-	PPC_BC_GE_MINUS = (0 << 5) |  6,
-	PPC_BC_GT_MINUS = (1 << 5) | 14,
-	PPC_BC_NE_MINUS = (2 << 5) |  6,
-	PPC_BC_UN_MINUS = (3 << 5) | 14,
-	PPC_BC_NU_MINUS = (3 << 5) |  6,
-	PPC_BC_LT_PLUS  = (0 << 5) | 15,
-	PPC_BC_LE_PLUS  = (1 << 5) |  7,
-	PPC_BC_EQ_PLUS  = (2 << 5) | 15,
-	PPC_BC_GE_PLUS  = (0 << 5) |  7,
-	PPC_BC_GT_PLUS  = (1 << 5) | 15,
-	PPC_BC_NE_PLUS  = (2 << 5) |  7,
-	PPC_BC_UN_PLUS  = (3 << 5) | 15,
-	PPC_BC_NU_PLUS  = (3 << 5) |  7
+
+	// extra conditions
+	PPC_BC_SO = 4 << 5,	// summary overflow
+	PPC_BC_NS = 4 << 5,	// not summary overflow
 } ppc_bc;
 
 //> PPC branch hint for some branch instructions
@@ -1220,16 +1208,6 @@ typedef enum ppc_insn {
 	PPC_INS_BDNZFLRL,
 	PPC_INS_BDZTLRL,
 	PPC_INS_BDZFLRL,
-
-	// branch CC instruction
-	PPC_INS_B_CC,	// Bcc
-	PPC_INS_BL_CC,	// BccL
-	PPC_INS_BLA_CC,	// BccLA
-	PPC_INS_BLR_CC,	// BccLR
-	PPC_INS_BLRL_CC,	// BccLRL
-	PPC_INS_BA_CC,	// BccA
-	PPC_INS_BCTR_CC,	// BccCTR
-	PPC_INS_BCTRL_CC,	// BccCTRL
 
 	PPC_INS_MAX,   // <-- mark the end of the list of instructions
 } ppc_insn;

@@ -41,14 +41,32 @@ template = {
             'xcore.h': 'xcore',
             'comment_open': '#',
             'comment_close': '',
-        }
+        },
+    'ocaml': {
+            'header': "(* For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [%s_const.ml] *)\n",
+            'footer': "",
+            'line_format': 'let _%s = %s;;\n',
+            'out_file': './ocaml/%s_const.ml',
+            # prefixes for constant filenames of all archs - case sensitive
+            'arm.h': 'arm',
+            'arm64.h': 'arm64',
+            'mips.h': 'mips',
+            'x86.h': 'x86',
+            'ppc.h': 'ppc',
+            'sparc.h': 'sparc',
+            'systemz.h': 'sysz',
+            'xcore.h': 'xcore',
+            'comment_open': '(*',
+            'comment_close': ' *)',
+        },
 }
 
 # markup for comments to be added to autogen files
 MARKUP = '//>'
 
-def gen(templ):
+def gen(lang):
     global include, INCL_DIR
+    templ = template[lang]
     for target in include:
         prefix = templ[target]
         outfile = open(templ['out_file'] %(prefix), 'w')
@@ -92,7 +110,13 @@ def gen(templ):
                         if (count == 1):
                             outfile.write("\n")
                     except ValueError:
-                        pass
+                        if lang == 'ocaml':
+                            # ocaml uses lsl for '<<', lor for '|'
+                            rhs = rhs.replace('<<', ' lsl ')
+                            rhs = rhs.replace('|', ' lor ')
+                            # ocaml variable has _ as prefix
+                            if rhs[0].isalpha():
+                                rhs = '_' + rhs
 
                     outfile.write(templ['line_format'] %(f[0].strip(), rhs))
 
@@ -101,12 +125,12 @@ def gen(templ):
 
 def main():
     try:
-        gen(template[sys.argv[1]])
+        gen(sys.argv[1])
     except:
         raise RuntimeError("Unsupported binding %s" % sys.argv[1])
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage:", sys.argv[0], " <bindings: java|python>")
+        print("Usage:", sys.argv[0], " <bindings: java|python|ocaml>")
         sys.exit(1)
     main()
