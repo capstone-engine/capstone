@@ -1,5 +1,5 @@
-(* Capstone Disassembler Engine
- * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> *)
+(* Capstone Disassembly Engine
+ * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 *)
 
 open Arm_const
 
@@ -18,7 +18,7 @@ type arm_op_mem = {
 	base: int;
 	index: int;
 	scale: int;
-	displ: int
+	disp: int
 }
 
 type arm_op_value =
@@ -29,16 +29,22 @@ type arm_op_value =
 	| ARM_OP_IMM of int
 	| ARM_OP_FP of float
 	| ARM_OP_MEM of arm_op_mem
+	| ARM_OP_SETEND of int
 
 type arm_op = {
+	vector_index: int;
 	shift: arm_op_shift;
 	value: arm_op_value;
 }
 
 type cs_arm = {
+	usermode: bool;
+	vector_size: int;
+	vector_data: int;
+	cps_mode: int;
+	cps_flag: int;
 	cc: int;
 	update_flags: bool;
 	writeback: bool;
-	op_count: int;
 	operands: arm_op array;
 }

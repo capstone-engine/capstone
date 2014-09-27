@@ -224,6 +224,10 @@ public class Capstone {
       return cs.cs_insn_name(csh, id);
     }
 
+    public String groupName(int id) {
+      return cs.cs_group_name(csh, id);
+    }
+
     public boolean group(int gid) {
       return cs.cs_insn_group(csh, raw.getPointer(), gid) != 0;
     }
@@ -253,6 +257,7 @@ public class Capstone {
     public int cs_op_index(NativeLong csh, Pointer insn, int type, int index);
 
     public String cs_insn_name(NativeLong csh, int id);
+    public String cs_group_name(NativeLong csh, int id);
     public byte cs_insn_group(NativeLong csh, Pointer insn, int id);
     public byte cs_reg_read(NativeLong csh, Pointer insn, int id);
     public byte cs_reg_write(NativeLong csh, Pointer insn, int id);

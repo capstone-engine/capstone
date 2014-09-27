@@ -1,5 +1,5 @@
-(* Capstone Disassembler Engine
- * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> *)
+(* Capstone Disassembly Engine
+ * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 *)
 
 open Arm
 open Arm64
@@ -20,8 +20,6 @@ type arch =
   | CS_ARCH_SPARC
   | CS_ARCH_SYSZ
   | CS_ARCH_XCORE
-  | CS_ARCH_MAX
-  | CS_ARCH_ALL
 
 type mode =
   |	CS_MODE_LITTLE_ENDIAN	(* little-endian mode (default mode) *)
@@ -30,9 +28,13 @@ type mode =
   |	CS_MODE_32			(* 32-bit mode (for X86, Mips) *)
   |	CS_MODE_64			(* 64-bit mode (for X86, Mips) *)
   |	CS_MODE_THUMB		(* ARM's Thumb mode, including Thumb-2 *)
+  |	CS_MODE_MCLASS		(* ARM's MClass mode *)
   |	CS_MODE_MICRO		(* MicroMips mode (MIPS architecture) *)
   |	CS_MODE_N64			(* Nintendo-64 mode (MIPS architecture) *)
-  |	CS_MODE_V9		(* SparcV9 mode (Sparc architecture) *)
+  |	CS_MODE_MIPS3		(* Mips3 mode (MIPS architecture) *)
+  |	CS_MODE_MIPS32R6	(* Mips32-R6 mode (MIPS architecture) *)
+  |	CS_MODE_MIPSGP64	(* MipsGP64 mode (MIPS architecture) *)
+  |	CS_MODE_V9			(* SparcV9 mode (Sparc architecture) *)
   |	CS_MODE_BIG_ENDIAN	(* big-endian mode *)
 
 
@@ -72,27 +74,25 @@ type cs_insn0 = {
 	mnemonic: string;
 	op_str: string;
 	regs_read: int array;
-	regs_read_count: int;
 	regs_write: int array;
-	regs_write_count: int;
 	groups: int array;
-	groups_count: int;
 	arch: cs_arch;
 }
 
 external cs_open: arch -> mode list -> Int64.t option = "ocaml_cs_open"
-external cs_disasm_quick: arch -> mode list -> string -> Int64.t -> Int64.t -> cs_insn0 list = "ocaml_cs_disasm_quick"
-external cs_disasm_dyn: arch -> Int64.t -> string -> Int64.t -> Int64.t -> cs_insn0 list = "ocaml_cs_disasm_dyn"
-external cs_reg_name: Int64.t -> int -> string = "cs_register_name"
-external cs_insn_name: Int64.t -> int -> string = "cs_instruction_name"
+external cs_disasm: arch -> mode list -> string -> Int64.t -> Int64.t -> cs_insn0 list = "ocaml_cs_disasm"
+external _cs_disasm_internal: arch -> Int64.t -> string -> Int64.t -> Int64.t -> cs_insn0 list = "ocaml_cs_disasm_internal"
+external cs_reg_name: Int64.t -> int -> string = "ocaml_register_name"
+external cs_insn_name: Int64.t -> int -> string = "ocaml_instruction_name"
+external cs_group_name: Int64.t -> int -> string = "ocaml_group_name"
+external cs_version: unit -> int = "ocaml_version"
 
 class cs_insn c a =
 	let csh = c in
-	let (id, address, size, bytes, mnemonic, op_str, regs_read, regs_read_count,
-        regs_write, regs_write_count, groups, groups_count, arch) =
+	let (id, address, size, bytes, mnemonic, op_str, regs_read,
+        regs_write, groups, arch) =
         (a.id, a.address, a.size, a.bytes, a.mnemonic, a.op_str,
-        a.regs_read, a.regs_read_count, a.regs_write, a.regs_write_count,
-		a.groups, a.groups_count, a.arch) in
+        a.regs_read, a.regs_write, a.groups, a.arch) in
 	object
 		method id = id;
 		method address = address;
@@ -101,11 +101,8 @@ class cs_insn c a =
 		method mnemonic = mnemonic;
 		method op_str = op_str;
 		method regs_read = regs_read;
-	        method regs_read_count = regs_read_count;
 		method regs_write = regs_write;
-	        method regs_write_count = regs_write_count;
 		method groups = groups;
-	        method groups_count = groups_count;
 		method arch = arch;
 		method insn_name = cs_insn_name csh id;
 	end;;
@@ -131,7 +128,7 @@ class cs a m =
 		method get_csh = handle
 
 		method disasm code offset count =
-			let insns = (cs_disasm_dyn arch handle code offset count) in
+			let insns = (_cs_disasm_internal arch handle code offset count) in
 			List.map (fun x -> new cs_insn handle x) insns;
 
 	end;;

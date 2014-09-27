@@ -55,6 +55,8 @@ cdef extern from "<capstone/capstone.h>":
 
     const char *cs_insn_name(csh handle, unsigned int insn_id)
 
+    const char *cs_group_name(csh handle, unsigned int group_id)
+
     bool cs_insn_group(csh handle, cs_insn *insn, unsigned int group_id)
 
     bool cs_reg_read(csh handle, cs_insn *insn, unsigned int reg_id)

@@ -1,5 +1,5 @@
-(* Capstone Disassembler Engine
-* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> *)
+(* Capstone Disassembly Engine
+* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 *)
 
 open Printf
 open Capstone
@@ -30,8 +30,8 @@ let print_op csh i op =
 	| MIPS_OP_MEM mem -> ( printf "\t\top[%d]: MEM\n" i;
 		if mem.base != 0 then
 			printf "\t\t\toperands[%u].mem.base: REG = %s\n" i (cs_reg_name csh mem.base);
-		if mem.displ != 0 then
-			printf "\t\t\toperands[%u].mem.disp: 0x%x\n" i mem.displ;
+		if mem.disp != 0 then
+			printf "\t\t\toperands[%u].mem.disp: 0x%x\n" i mem.disp;
 		);
 	);
 
@@ -67,7 +67,7 @@ let print_insn mode insn =
 
 let print_arch x =
 	let (arch, mode, code, comment) = x in
-		let insns = cs_disasm_quick arch mode code 0x1000L 0L in
+		let insns = cs_disasm arch mode code 0x1000L 0L in
 			printf "*************\n";
 			printf "Platform: %s\n" comment;
 			List.iter (print_insn mode) insns;;

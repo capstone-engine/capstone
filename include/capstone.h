@@ -395,7 +395,8 @@ size_t cs_disasm(csh handle,
 		size_t count,
 		cs_insn **insn);
 
-/* Deprecated function - to be retired in the next version!
+/*
+  Deprecated function - to be retired in the next version!
   Use cs_disasm() instead of cs_disasm_ex()
 */
 CAPSTONE_EXPORT
@@ -405,6 +406,7 @@ size_t cs_disasm_ex(csh handle,
 		uint64_t address,
 		size_t count,
 		cs_insn **insn);
+
 /*
  Free memory allocated in @insn by cs_disasm()
 
@@ -457,7 +459,7 @@ const char *cs_insn_name(csh handle, unsigned int insn_id);
  @return: string name of the group, or NULL if @group_id is invalid.
 */
 CAPSTONE_EXPORT
-const char *cs_group_name(csh handle, unsigned int insn_id);
+const char *cs_group_name(csh handle, unsigned int group_id);
 
 /*
  Check if a disassembled instruction belong to a particular group.
