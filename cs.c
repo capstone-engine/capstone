@@ -488,10 +488,18 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 			handle->printer(&mci, &ss, handle->printer_info);
 			fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, buffer);
 
-			c++;
+			if (handle->checkinsn) {
+				if (!handle->checkinsn_setup.callback(buffer, size, offset, insn_cache, handle->checkinsn_setup.user_data))
+				{
+					if (insn_cache->detail)
+						cs_mem_free(insn_cache->detail);
+					break;
+				} else {
+					insn_size = insn_cache->size;
+				}
+			}
 
-			if (handle->checkinsn && !handle->checkinsn_setup.callback(insn_cache, handle->checkinsn_setup.user_data))
-				break;
+			c++;
 
 			if (count > 0 && c == count)
 				break;
@@ -530,36 +538,44 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 			if (handle->detail) {
 				// free memory of @detail pointer
 				cs_mem_free(insn_cache->detail);
+				insn_cache->detail = NULL;
 			}
 
-			// encounter a broken instruction
-			// if there is no request to skip data, or remaining data is too small,
-			// then bail out
-			if (!handle->skipdata || handle->skipdata_size > size)
-				break;
-
-			if (handle->skipdata_setup.callback) {
-				skipdata_bytes = handle->skipdata_setup.callback(buffer_org, size_org,
-						(size_t)(offset - offset_org), handle->skipdata_setup.user_data);
-				if (skipdata_bytes > size)
-					// remaining data is not enough
+			if (handle->checkinsn) {
+				insn_cache->id = 0;	// invalid ID for this "data" instruction
+				if (!handle->checkinsn_setup.callback(buffer, size, offset, insn_cache, handle->checkinsn_setup.user_data))
+					break;
+				skipdata_bytes = insn_cache->size;
+			} else {
+				// encounter a broken instruction
+				// if there is no request to skip data, or remaining data is too small,
+				// then bail out
+				if (!handle->skipdata || handle->skipdata_size > size)
 					break;
 
-				if (!skipdata_bytes)
-					// user requested not to skip data, so bail out
-					break;
-			} else
-				skipdata_bytes = handle->skipdata_size;
+				if (handle->skipdata_setup.callback) {
+					skipdata_bytes = handle->skipdata_setup.callback(buffer_org, size_org,
+							(size_t)(offset - offset_org), handle->skipdata_setup.user_data);
+					if (skipdata_bytes > size)
+						// remaining data is not enough
+						break;
 
-			// we have to skip some amount of data, depending on arch & mode
-			insn_cache->id = 0;	// invalid ID for this "data" instruction
-			insn_cache->address = offset;
-			insn_cache->size = (uint16_t) skipdata_bytes;
-			memcpy(insn_cache->bytes, buffer, skipdata_bytes);
-			strncpy(insn_cache->mnemonic, handle->skipdata_setup.mnemonic,
-					sizeof(insn_cache->mnemonic) - 1);
-			skipdata_opstr(insn_cache->op_str, buffer, skipdata_bytes);
-			insn_cache->detail = NULL;
+					if (!skipdata_bytes)
+						// user requested not to skip data, so bail out
+						break;
+				} else
+					skipdata_bytes = handle->skipdata_size;
+
+				// we have to skip some amount of data, depending on arch & mode
+				insn_cache->id = 0;	// invalid ID for this "data" instruction
+				insn_cache->address = offset;
+				insn_cache->size = (uint16_t) skipdata_bytes;
+				memcpy(insn_cache->bytes, buffer, skipdata_bytes);
+				strncpy(insn_cache->mnemonic, handle->skipdata_setup.mnemonic,
+						sizeof(insn_cache->mnemonic) - 1);
+				skipdata_opstr(insn_cache->op_str, buffer, skipdata_bytes);
+				insn_cache->detail = NULL;
+			}
 
 			f++;
 			if (f == handle->insn_cache_size) {

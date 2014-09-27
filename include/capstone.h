@@ -173,7 +173,7 @@ typedef struct cs_opt_skipdata {
 // @user_data: user-data passed to cs_option() via @user_data field in
 //      cs_opt_checkinsn struct below.
 // @return: return true to continue, or false to immediately stop disassembling.
-typedef bool(*cs_checkinsn_cb_t)(struct cs_insn *insn, void* user_data);
+typedef bool(*cs_checkinsn_cb_t)(const uint8_t *code, size_t code_size, size_t offset, struct cs_insn *insn, void* user_data);
 
 // User-customized setup for CHECKINSN option
 typedef struct cs_opt_checkinsn
