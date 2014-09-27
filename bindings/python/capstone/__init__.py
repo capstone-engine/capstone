@@ -1,6 +1,6 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 import sys
-_python2 = 1 # sys.version_info.major < 3
+_python2 = sys.version_info.major < 3
 if _python2:
     range = xrange
 from capstone import arm, arm64, mips, ppc, sparc, systemz, x86, xcore
