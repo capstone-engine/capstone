@@ -47,14 +47,16 @@ public class Capstone {
     // instruction mnemonic. NOTE: irrelevant for diet engine.
     public byte[] mnemonic;
     // instruction operands. NOTE: irrelevant for diet engine.
-    public byte[] operands;
+    public byte[] op_str;
     // detail information of instruction.
     public _cs_detail.ByReference cs_detail;
 
     public _cs_insn() {
       bytes = new byte[16];
       mnemonic = new byte[32];
-      operands = new byte[160];
+      op_str = new byte[160];
+      java.util.Arrays.fill(mnemonic, (byte) 0);
+      java.util.Arrays.fill(op_str, (byte) 0);
     }
 
     public _cs_insn(Pointer p) {
@@ -65,7 +67,7 @@ public class Capstone {
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("id", "address", "size", "bytes", "mnemonic", "operands", "cs_detail");
+      return Arrays.asList("id", "address", "size", "bytes", "mnemonic", "op_str", "cs_detail");
     }
   }
 
@@ -120,8 +122,12 @@ public class Capstone {
       size = insn.size;
 
       if (!diet) {
-        mnemonic = new String(insn.mnemonic).replace("\u0000","");
-        opStr = new String(insn.operands).replace("\u0000","");
+        int lm = 0;
+        while (insn.mnemonic[lm++] != 0);
+        int lo = 0;
+        while (insn.op_str[lo++] != 0);
+        mnemonic = new String(insn.mnemonic, 0, lm-1);
+        opStr = new String(insn.op_str, 0, lo-1);
       }
 
       cs = _cs;
