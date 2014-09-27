@@ -8,7 +8,7 @@ import sys
 
 from xprint import to_hex, to_x, to_x_32
 
-_python3 = 0 # sys.version_info.major == 3
+_python3 = sys.version_info.major == 3
 
 
 X86_CODE16 = b"\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00"
