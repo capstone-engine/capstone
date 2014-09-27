@@ -415,7 +415,8 @@ public class Capstone {
     CsInsn[] allInsn = fromArrayRaw((_cs_insn[]) byref.toArray(c.intValue()));
 
     // free allocated memory
-    cs.cs_free(p, c);
+    // cs.cs_free(p, c);
+    // FIXME(danghvu): Can't free because memory is still inside CsInsn
 
     return allInsn;
   }

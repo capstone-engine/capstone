@@ -66,8 +66,8 @@ public class TestX86 {
       // print SIB byte
       System.out.printf("\tsib: 0x%x\n", operands.sib);
       if (operands.sib != 0)
-        System.out.printf("\tsib_index: %s, sib_scale: %d, sib_base: %s\n",
-          ins.regName(operands.sibIndex), operands.sibScale, ins.regName(operands.sibBase));
+        System.out.printf("\t\tsib_base: %s\n\t\tsib_index: %s\n\t\tsib_scale: %d\n",
+          ins.regName(operands.sibBase), ins.regName(operands.sibIndex), operands.sibScale);
     }
 
     if (operands.sseCC != 0)
