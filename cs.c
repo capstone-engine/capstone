@@ -531,9 +531,9 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 			} else
 				insn_cache++;
 
-			buffer += insn_size;
-			size -= insn_size;
-			offset += insn_size;
+			buffer += (intptr_t)(int16_t)insn_size;
+			size -= (intptr_t)(int16_t)insn_size;
+			offset += (intptr_t)(int16_t)insn_size;
 		} else	{
 			if (handle->detail) {
 				// free memory of @detail pointer
@@ -545,7 +545,7 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 				insn_cache->id = 0;	// invalid ID for this "data" instruction
 				if (!handle->checkinsn_setup.callback(buffer, size, offset, insn_cache, handle->checkinsn_setup.user_data))
 					break;
-				skipdata_bytes = insn_cache->size;
+				skipdata_bytes = (size_t)(intptr_t)(int16_t)insn_cache->size;
 			} else {
 				// encounter a broken instruction
 				// if there is no request to skip data, or remaining data is too small,
