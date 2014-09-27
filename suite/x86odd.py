@@ -35,7 +35,7 @@ CODE32 += b"\x0f\x23\x40"       # mov dr0, eax
 CODE32 += b"\x0f\x23\x80"       # mov dr0, eax
 
 
-_python3 = 0 #sys.version_info.major == 3
+_python3 = sys.version_info.major == 3
 
 all_tests = (
         (CS_ARCH_X86, CS_MODE_32, CODE32, "X86 32 (Intel syntax)", 0),
