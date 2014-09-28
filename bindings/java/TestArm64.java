@@ -19,7 +19,7 @@ public class TestArm64 {
     return data;
   }
 
-  static final String ARM64_CODE = "217c029b217c00530040214be10b40b9200481da2008028b";
+  static final String ARM64_CODE = "090038d5bf4000d50c0513d52050020e20e43d0f0018a05fa200ae9e9f3703d5bf3303d5df3f03d5217c029b217c00530040214be10b40b9200481da2008028b105be83c";
 
   public static Capstone cs;
 
@@ -43,6 +43,15 @@ public class TestArm64 {
         String imm = hex(i.value.imm);
         if (i.type == ARM64_OP_REG)
           System.out.printf("\t\toperands[%d].type: REG = %s\n", c, ins.regName(i.value.reg));
+        if (i.type == ARM64_OP_REG_MRS)
+          System.out.printf("\t\toperands[%d].type: REG_MRS = 0x%x\n", c, i.value.reg);
+        if (i.type == ARM64_OP_REG_MSR)
+          System.out.printf("\t\toperands[%d].type: REG_MSR = 0x%x\n", c, i.value.reg);
+        if (i.type == ARM64_OP_PSTATE)
+          System.out.printf("\t\toperands[%d].type: PSTATE = 0x%x\n", c, i.value.imm);
+			  if (i.type == ARM64_OP_BARRIER)
+  				System.out.printf("\t\toperands[%d].type: BARRIER = 0x%x\n", c, i.value.imm);
+
         if (i.type == ARM64_OP_IMM)
           System.out.printf("\t\toperands[%d].type: IMM = 0x%x\n", c, i.value.imm);
         if (i.type == ARM64_OP_CIMM)
@@ -64,6 +73,13 @@ public class TestArm64 {
           System.out.printf("\t\t\tShift: type = %d, value = %d\n", i.shift.type, i.shift.value);
         if (i.ext != ARM64_EXT_INVALID)
           System.out.printf("\t\t\tExt: %d\n", i.ext);
+        if (i.vas != ARM64_VAS_INVALID)
+          System.out.printf("\t\t\tVector Arrangement Specifier: 0x%x\n", i.vas);
+        if (i.vess != ARM64_VESS_INVALID)
+          System.out.printf("\t\t\tVector Element Size Specifier: %d\n", i.vess);
+        if (i.vector_index != -1)
+          System.out.printf("\t\t\tVector Index: %d\n", i.vector_index);
+
       }
     }
 
@@ -74,7 +90,7 @@ public class TestArm64 {
       System.out.println("\tUpdate-flags: True");
 
     if (operands.cc != ARM64_CC_AL && operands.cc != ARM64_CC_INVALID)
-      System.out.printf("\tCode condition: %d\n",  operands.cc);
+      System.out.printf("\tCode-condition: %d\n",  operands.cc);
 
   }
 

@@ -41,7 +41,7 @@ public class X86 {
   public static class Operand extends Structure {
     public int type;
     public OpValue value;
-    public int size;
+    public byte size;
     public int avx_bcast;
     public boolean avx_zero_opmask;
 
@@ -79,10 +79,10 @@ public class X86 {
     public int sib_base;
     public int sse_cc;
     public int avx_cc;
-    public boolean avx_sae;
+    public byte avx_sae;
     public int avx_rm;
 
-    public char op_count;
+    public byte op_count;
 
     public Operand [] op;
 
@@ -103,6 +103,7 @@ public class X86 {
     public byte [] prefix;
     public byte [] opcode;
     public byte opSize;
+    public byte rex;
     public byte addrSize;
     public byte dispSize;
     public byte immSize;
@@ -114,6 +115,8 @@ public class X86 {
     public int sibBase;
     public int sseCC;
     public int avxCC;
+    public boolean avxSae;
+    public int avxRm;
 
     public Operand[] op;
 
@@ -130,7 +133,7 @@ public class X86 {
       sibBase = e.sib_base;
       sseCC = e.sse_cc;
       avxCC = e.avx_cc;
-      avxSae = e.avx_sae;
+      avxSae = e.avx_sae > 0;
       avxRm = e.avx_rm;
       op = new Operand[e.op_count];
       for (int i=0; i<e.op_count; i++)
