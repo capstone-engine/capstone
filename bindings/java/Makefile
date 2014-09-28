@@ -40,7 +40,7 @@ else
 	cd capstone && javac -classpath $(JNA) $(CAPSTONE_JAVA)
 endif
 
-tests: jna
+tests: capstone_class jna
 	@mkdir -p $(OBJDIR)
 	javac -d $(OBJDIR) -classpath "$(JNA):$(BLDIR)/capstone.jar" Test.java\
 		TestArm.java TestArm64.java TestMips.java TestX86.java TestXcore.java\
