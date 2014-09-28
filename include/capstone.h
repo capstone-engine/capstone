@@ -387,7 +387,7 @@ CAPSTONE_EXPORT
 const char *cs_strerror(cs_err code);
 
 /*
- Dynamicly allocate memory to contain disasm insn
+ Dynamically allocate memory to contain disasm insn
  Disassembled instructions will be put into @*insn
 
  NOTE 1: this API will automatically determine memory needed to contain
@@ -401,8 +401,8 @@ const char *cs_strerror(cs_err code);
  @insn: array of insn filled in by this function
 	   NOTE: @insn will be allocated by this function, and should be freed
 	   with cs_free() API.
- @count: number of instrutions to be disassembled, or 0 to get all of them
- @return: the number of succesfully disassembled instructions,
+ @count: number of instructions to be disassembled, or 0 to get all of them
+ @return: the number of successfully disassembled instructions,
  or 0 if this function failed to disassemble the given code
 
  On failure, call cs_errno() for error code.
@@ -424,6 +424,30 @@ size_t cs_disasm_ex(csh handle,
 		uint64_t address,
 		size_t count,
 		cs_insn **insn);
+
+/*
+Disassembled instructions will be put into @*insn
+
+@handle: handle returned by cs_open()
+@code: buffer containing raw binary code to be disassembled
+@code_size: size of above code
+@address: address of the insn in given raw code buffer
+@insn: array of insn filled in by this function
+NOTE: @insn will be allocated by this function if null, and should be freed
+with cs_free() API.
+@return: false if this function failed otherwise true
+
+insn->id == 0 means invalid instruction
+
+On failure, call cs_errno() for error code if handle is valid.
+*/
+CAPSTONE_EXPORT
+bool cs_disasm_single(csh handle,
+		const uint8_t *code, size_t code_size,
+		uint64_t address,
+		cs_insn **insn);
+
+
 /*
  Free memory allocated in @insn by cs_disasm()
 

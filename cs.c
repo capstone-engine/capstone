@@ -620,13 +620,89 @@ size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset,
 }
 
 CAPSTONE_EXPORT
+bool cs_disasm_single(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, cs_insn **insn)
+{
+	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
+	MCInst mci;
+	uint16_t insn_size;
+	size_t c = 0, i;
+	cs_insn *insn_cache;
+	bool r;
+	void *tmp;
+	if (!handle) {
+		// FIXME: how to handle this case:
+		// handle->errnum = CS_ERR_HANDLE;
+		return false;
+	}
+
+	handle->errnum = CS_ERR_OK;
+
+	if (!insn) {
+		handle->errnum = CS_ERR_MEM;
+		return false;
+	}
+	if (*insn) {
+		insn_cache = *insn;
+	} else {
+		insn_cache = cs_mem_malloc(sizeof(cs_insn));
+		if (!insn_cache) {
+			handle->errnum = CS_ERR_MEM;
+			return false;
+		} else {
+			*insn = insn_cache;
+			if (handle->detail) {
+				// allocate memory for @detail pointer
+				insn_cache->detail = cs_mem_malloc(sizeof(cs_detail));
+				if (insn_cache->detail == NULL) {	// insufficient memory
+					cs_mem_free(insn_cache);
+					handle->errnum = CS_ERR_MEM;
+					return false;
+				}
+			} else
+				insn_cache->detail = NULL;
+		}
+	}
+
+	if (size > 0) {
+		MCInst_Init(&mci);
+		mci.csh = handle;
+
+		// relative branches need to know the address & size of current insn
+		mci.address = offset;
+
+		// save all the information for non-detailed mode
+		mci.flat_insn = insn_cache;
+		mci.flat_insn->address = offset;
+#ifdef CAPSTONE_DIET
+		// zero out mnemonic & op_str
+		mci.flat_insn->mnemonic[0] = '\0';
+		mci.flat_insn->op_str[0] = '\0';
+#endif
+
+		r = handle->disasm(ud, buffer, size, &mci, &insn_size, offset, handle->getinsn_info);
+		if (r) {
+			SStream ss;
+			SStream_Init(&ss);
+
+			mci.flat_insn->size = insn_size;
+			handle->printer(&mci, &ss, handle->printer_info);
+			fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, buffer);
+		} else {
+			insn_cache->id = 0;	// invalid ID for this "data" instruction
+		}
+	}
+
+	return true;
+}
+
+CAPSTONE_EXPORT
 void cs_free(cs_insn *insn, size_t count)
 {
 	size_t i;
 
 	// free all detail pointers
 	for (i = 0; i < count; i++)
-		cs_mem_free(insn[i].detail);
+		if (insn[i].detail) cs_mem_free(insn[i].detail);
 
 	// then free pointer to cs_insn array
 	cs_mem_free(insn);
