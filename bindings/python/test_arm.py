@@ -47,9 +47,9 @@ def print_insn_detail(insn):
                 print("\t\toperands[%u].type: SYSREG = %u" % (c, i.reg))
             if i.type == ARM_OP_SETEND:
                 if i.setend == ARM_SETEND_BE:
-                    print("\t\toperands[%u].type: SETEND = be")
+                    print("\t\toperands[%u].type: SETEND = be" % c)
                 else:
-                    print("\t\toperands[%u].type: SETEND = le")
+                    print("\t\toperands[%u].type: SETEND = le" % c)
             if i.type == ARM_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
                 if i.mem.base != 0:
@@ -66,7 +66,7 @@ def print_insn_detail(insn):
                         % (c, to_x_32(i.mem.disp)))
 
             if i.shift.type != ARM_SFT_INVALID and i.shift.value:
-                print("\t\t\tShift: type = %u, value = %u\n" \
+                print("\t\t\tShift: %u = %u" \
                     % (i.shift.type, i.shift.value))
             if i.vector_index != -1:
                 print("\t\t\toperands[%u].vector_index = %u" %(c, i.vector_index))

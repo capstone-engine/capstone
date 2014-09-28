@@ -38,6 +38,9 @@ def print_insn_detail(insn):
                 if i.mem.base != 0:
                     print("\t\t\toperands[%u].mem.base: REG = %s" \
                         % (c, insn.reg_name(i.mem.base)))
+                if i.mem.index != 0:
+                    print("\t\t\toperands[%u].mem.index: REG = %s" \
+                        % (c, insn.reg_name(i.mem.index)))
                 if i.mem.disp != 0:
                     print("\t\t\toperands[%u].mem.disp: 0x%s" \
                         % (c, to_x_32(i.mem.disp)))
@@ -46,7 +49,7 @@ def print_insn_detail(insn):
     if insn.cc:
         print("\tCode condition: %u" % insn.cc)
     if insn.hint:
-        print("\tBranch hint: %u" % insn.hint)
+        print("\tHint code: %u" % insn.hint)
 
 
 # ## Test class Cs

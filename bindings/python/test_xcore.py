@@ -43,7 +43,7 @@ def print_insn_detail(insn):
                     print("\t\t\toperands[%u].mem.disp: 0x%s" \
                         % (c, to_x(i.mem.disp)))
                 if i.mem.direct != 1:
-                    print("\t\t\toperands[%u].mem.direct: -1")
+                    print("\t\t\toperands[%u].mem.direct: -1" % c)
             c += 1
 
 
