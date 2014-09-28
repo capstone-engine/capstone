@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-# Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
+# Capstone by Nguyen Anh Quynnh <aquynh@gmail.com>
+# PPC Branch testing suite by kratolp
 from __future__ import print_function
 import sys
 from capstone import *
@@ -14,6 +15,7 @@ CODE32 += b"\x41\x84\x01\x6c" # blt cr1, .+0x16c
 CODE32 += b"\x41\x82\x00\x10" # beq .+0x10
 CODE32 += b"\x40\x82\x00\x08" # bne .+0x8
 CODE32 += b"\x40\x95\x00\x94" # ble cr5,.+0x94
+CODE32 += b"\x40\x9f\x10\x30" # bns cr5,.+0x94
 CODE32 += b"\x42\x00\xff\xd8" # bdnz .-0x28
 CODE32 += b"\x4d\x82\x00\x20" # beqlr
 CODE32 += b"\x4e\x80\x00\x20" # blr
