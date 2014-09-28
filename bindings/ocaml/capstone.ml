@@ -55,6 +55,7 @@ type opt_value =
   |	CS_OPT_SYNTAX_ATT 	(* X86 ATT asm syntax (CS_OPT_SYNTAX). *)
   |	CS_OPT_SYNTAX_NOREGNAME	(* Prints register name with only number (CS_OPT_SYNTAX) *)
 
+
 type cs_arch = 
 	| CS_INFO_ARM of cs_arm
 	| CS_INFO_ARM64 of cs_arm64
@@ -80,7 +81,7 @@ type cs_insn0 = {
 }
 
 external cs_open: arch -> mode list -> Int64.t option = "ocaml_cs_open"
-external cs_disasm: arch -> mode list -> string -> Int64.t -> Int64.t -> cs_insn0 list = "ocaml_cs_disasm"
+external cs_disasm_quick: arch -> mode list -> string -> Int64.t -> Int64.t -> cs_insn0 list = "ocaml_cs_disasm"
 external _cs_disasm_internal: arch -> Int64.t -> string -> Int64.t -> Int64.t -> cs_insn0 list = "ocaml_cs_disasm_internal"
 external cs_reg_name: Int64.t -> int -> string = "ocaml_register_name"
 external cs_insn_name: Int64.t -> int -> string = "ocaml_instruction_name"
