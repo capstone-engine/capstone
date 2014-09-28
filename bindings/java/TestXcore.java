@@ -61,7 +61,7 @@ public class TestXcore {
   public static void main(String argv[]) {
 
     final Test.platform[] all_tests = {
-      new Test.platform(Capstone.CS_ARCH_XCORE, Capstone.CS_MODE_BIG_ENDIAN, hexString2Byte(XCORE_CODE), "Xcore"),
+      new Test.platform(Capstone.CS_ARCH_XCORE, Capstone.CS_MODE_BIG_ENDIAN, hexString2Byte(XCORE_CODE), "XCore"),
     };
 
     for (int i=0; i<all_tests.length; i++) {

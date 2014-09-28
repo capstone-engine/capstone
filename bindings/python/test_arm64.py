@@ -78,7 +78,7 @@ def print_insn_detail(insn):
     if insn.writeback:
         print("\tWrite-back: True")
     if not insn.cc in [ARM64_CC_AL, ARM64_CC_INVALID]:
-        print("\tCode condition: %u" % insn.cc)
+        print("\tCode-condition: %u" % insn.cc)
     if insn.update_flags:
         print("\tUpdate-flags: True")
 
