@@ -11450,7 +11450,7 @@ static insn_map insns[] = {
 	{
 		ARM_t2LDREXD, ARM_INS_LDREXD,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -12656,7 +12656,7 @@ static insn_map insns[] = {
 	{
 		ARM_t2STREXD, ARM_INS_STREXD,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, 0 }, 0, 0
 #endif
 	},
 	{
