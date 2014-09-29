@@ -3,7 +3,7 @@ import sys
 _python2 = sys.version_info.major < 3
 if _python2:
     range = xrange
-from capstone import arm, arm64, mips, ppc, sparc, systemz, x86, xcore
+from . import arm, arm64, mips, ppc, sparc, systemz, x86, xcore
 
 __all__ = [
     'Cs',
@@ -648,7 +648,7 @@ class Cs(object):
         self._detail = False  # by default, do not produce instruction details
         self._diet = cs_support(CS_SUPPORT_DIET)
         self._x86reduce = cs_support(CS_SUPPORT_X86_REDUCE)
-        
+
         # default mnemonic for SKIPDATA
         self._skipdata_mnem = ".byte"
         self._skipdata = False
@@ -816,7 +816,7 @@ class Cs(object):
 def debug():
     # is Cython there?
     try:
-        import ccapstone
+        from . import ccapstone
         return ccapstone.debug()
     except:
         # no Cython, fallback to Python code below
