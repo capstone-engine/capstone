@@ -346,7 +346,7 @@ typedef enum arm_reg {
 	ARM_REG_S30,
 	ARM_REG_S31,
 
-	ARM_REG_MAX,		// <-- mark the end of the list or registers
+	ARM_REG_ENDING,		// <-- mark the end of the list or registers
 
 	//> alias registers
 	ARM_REG_R13 = ARM_REG_SP,
@@ -800,7 +800,7 @@ typedef enum arm_insn {
 	ARM_INS_VPUSH,
 	ARM_INS_VPOP,
 
-	ARM_INS_MAX,	// <-- mark the end of the list of instructions
+	ARM_INS_ENDING,	// <-- mark the end of the list of instructions
 } arm_insn;
 
 //> Group of ARM instructions
@@ -840,7 +840,7 @@ typedef enum arm_insn_group {
 
 	ARM_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
-	ARM_GRP_MAX,
+	ARM_GRP_ENDING,
 } arm_insn_group;
 
 #ifdef __cplusplus

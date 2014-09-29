@@ -236,7 +236,7 @@ let _X86_REG_R12W = 230;;
 let _X86_REG_R13W = 231;;
 let _X86_REG_R14W = 232;;
 let _X86_REG_R15W = 233;;
-let _X86_REG_MAX = 234;;
+let _X86_REG_ENDING = 234;;
 
 (* Operand type for instruction's operands *)
 
@@ -1618,7 +1618,7 @@ let _X86_INS_XSHA1 = 1294;;
 let _X86_INS_XSHA256 = 1295;;
 let _X86_INS_XSTORE = 1296;;
 let _X86_INS_XTEST = 1297;;
-let _X86_INS_MAX = 1298;;
+let _X86_INS_ENDING = 1298;;
 
 (* Group of X86 instructions *)
 
@@ -1669,4 +1669,4 @@ let _X86_GRP_INT = 43;;
 let _X86_GRP_IRET = 44;;
 let _X86_GRP_CALL = 45;;
 let _X86_GRP_RET = 46;;
-let _X86_GRP_MAX = 47;;
+let _X86_GRP_ENDING = 47;;

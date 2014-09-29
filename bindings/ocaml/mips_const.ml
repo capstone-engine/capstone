@@ -158,7 +158,7 @@ let _MIPS_REG_P2 = 133;;
 let _MIPS_REG_MPL0 = 134;;
 let _MIPS_REG_MPL1 = 135;;
 let _MIPS_REG_MPL2 = 136;;
-let _MIPS_REG_MAX = 137;;
+let _MIPS_REG_ENDING = 137;;
 let _MIPS_REG_ZERO = _MIPS_REG_0;;
 let _MIPS_REG_AT = _MIPS_REG_1;;
 let _MIPS_REG_V0 = _MIPS_REG_2;;
@@ -793,7 +793,7 @@ let _MIPS_INS_NEGU = 583;;
 (* special instructions *)
 let _MIPS_INS_JALR_HB = 584;;
 let _MIPS_INS_JR_HB = 585;;
-let _MIPS_INS_MAXIMUM = 586;;
+let _MIPS_INS_ENDING = 586;;
 
 (* Group of MIPS instructions *)
 
@@ -832,4 +832,4 @@ let _MIPS_GRP_MIPS5_32R2 = 31;;
 let _MIPS_GRP_GP32BIT = 32;;
 let _MIPS_GRP_GP64BIT = 33;;
 let _MIPS_GRP_JUMP = 34;;
-let _MIPS_GRP_MAX = 35;;
+let _MIPS_GRP_ENDING = 35;;

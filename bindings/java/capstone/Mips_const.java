@@ -161,7 +161,7 @@ public class Mips_const {
 	public static final int MIPS_REG_MPL0 = 134;
 	public static final int MIPS_REG_MPL1 = 135;
 	public static final int MIPS_REG_MPL2 = 136;
-	public static final int MIPS_REG_MAX = 137;
+	public static final int MIPS_REG_ENDING = 137;
 	public static final int MIPS_REG_ZERO = MIPS_REG_0;
 	public static final int MIPS_REG_AT = MIPS_REG_1;
 	public static final int MIPS_REG_V0 = MIPS_REG_2;
@@ -796,7 +796,7 @@ public class Mips_const {
 	// special instructions
 	public static final int MIPS_INS_JALR_HB = 584;
 	public static final int MIPS_INS_JR_HB = 585;
-	public static final int MIPS_INS_MAXIMUM = 586;
+	public static final int MIPS_INS_ENDING = 586;
 
 	// Group of MIPS instructions
 
@@ -835,5 +835,5 @@ public class Mips_const {
 	public static final int MIPS_GRP_GP32BIT = 32;
 	public static final int MIPS_GRP_GP64BIT = 33;
 	public static final int MIPS_GRP_JUMP = 34;
-	public static final int MIPS_GRP_MAX = 35;
+	public static final int MIPS_GRP_ENDING = 35;
 }

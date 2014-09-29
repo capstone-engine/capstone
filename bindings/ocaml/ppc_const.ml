@@ -207,7 +207,7 @@ let _PPC_REG_RM = 174;;
 let _PPC_REG_CTR8 = 175;;
 let _PPC_REG_LR8 = 176;;
 let _PPC_REG_CR1EQ = 177;;
-let _PPC_REG_MAX = 178;;
+let _PPC_REG_ENDING = 178;;
 
 (* PPC instruction *)
 
@@ -1145,7 +1145,7 @@ let _PPC_INS_BDNZTLRL = 930;;
 let _PPC_INS_BDNZFLRL = 931;;
 let _PPC_INS_BDZTLRL = 932;;
 let _PPC_INS_BDZFLRL = 933;;
-let _PPC_INS_MAX = 934;;
+let _PPC_INS_ENDING = 934;;
 
 (* Group of PPC instructions *)
 
@@ -1161,4 +1161,4 @@ let _PPC_GRP_E500 = 8;;
 let _PPC_GRP_PPC4XX = 9;;
 let _PPC_GRP_PPC6XX = 10;;
 let _PPC_GRP_JUMP = 11;;
-let _PPC_GRP_MAX = 12;;
+let _PPC_GRP_ENDING = 12;;

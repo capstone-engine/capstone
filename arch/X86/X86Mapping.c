@@ -795,7 +795,7 @@ const char *X86_reg_name(csh handle, unsigned int reg)
 #ifndef CAPSTONE_DIET
 	cs_struct *ud = (cs_struct *)handle;
 
-	if (reg >= X86_REG_MAX)
+	if (reg >= X86_REG_ENDING)
 		return NULL;
 
 	if (reg == X86_REG_EFLAGS) {
@@ -2118,7 +2118,7 @@ static name_map insn_name_maps[] = {
 const char *X86_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	if (id >= X86_INS_MAX)
+	if (id >= X86_INS_ENDING)
 		return NULL;
 
 	return insn_name_maps[id].name;
@@ -2183,7 +2183,7 @@ static name_map group_name_maps[] = {
 const char *X86_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	if (id >= X86_GRP_MAX)
+	if (id >= X86_GRP_ENDING)
 		return NULL;
 
 	return group_name_maps[id].name;

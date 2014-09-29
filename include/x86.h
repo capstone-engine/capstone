@@ -64,7 +64,7 @@ typedef enum x86_reg {
 	X86_REG_R14D, X86_REG_R15D, X86_REG_R8W, X86_REG_R9W, X86_REG_R10W,
 	X86_REG_R11W, X86_REG_R12W, X86_REG_R13W, X86_REG_R14W, X86_REG_R15W,
 
-	X86_REG_MAX		// <-- mark the end of the list of registers
+	X86_REG_ENDING		// <-- mark the end of the list of registers
 } x86_reg;
 
 //> Operand type for instruction's operands
@@ -1542,7 +1542,7 @@ typedef enum x86_insn {
 	X86_INS_XSTORE,
 	X86_INS_XTEST,
 
-	X86_INS_MAX,	// mark the end of the list of insn
+	X86_INS_ENDING,	// mark the end of the list of insn
 } x86_insn;
 
 //> Group of X86 instructions
@@ -1597,7 +1597,7 @@ typedef enum  x86_insn_group {
 	X86_GRP_CALL,	// all call instructions
 	X86_GRP_RET,	// all call return instructions
 
-	X86_GRP_MAX
+	X86_GRP_ENDING
 } x86_insn_group;
 
 #ifdef __cplusplus

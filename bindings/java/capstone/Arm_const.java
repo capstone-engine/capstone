@@ -255,7 +255,7 @@ public class Arm_const {
 	public static final int ARM_REG_S29 = 108;
 	public static final int ARM_REG_S30 = 109;
 	public static final int ARM_REG_S31 = 110;
-	public static final int ARM_REG_MAX = 111;
+	public static final int ARM_REG_ENDING = 111;
 
 	// alias registers
 	public static final int ARM_REG_R13 = ARM_REG_SP;
@@ -703,7 +703,7 @@ public class Arm_const {
 	public static final int ARM_INS_SEVL = 432;
 	public static final int ARM_INS_VPUSH = 433;
 	public static final int ARM_INS_VPOP = 434;
-	public static final int ARM_INS_MAX = 435;
+	public static final int ARM_INS_ENDING = 435;
 
 	// Group of ARM instructions
 
@@ -740,5 +740,5 @@ public class Arm_const {
 	public static final int ARM_GRP_DPVFP = 30;
 	public static final int ARM_GRP_V6M = 31;
 	public static final int ARM_GRP_JUMP = 32;
-	public static final int ARM_GRP_MAX = 33;
+	public static final int ARM_GRP_ENDING = 33;
 }

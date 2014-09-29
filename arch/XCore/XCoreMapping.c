@@ -49,7 +49,7 @@ static name_map reg_name_maps[] = {
 const char *XCore_reg_name(csh handle, unsigned int reg)
 {
 #ifndef CAPSTONE_DIET
-	if (reg >= XCORE_REG_MAX)
+	if (reg >= XCORE_REG_ENDING)
 		return NULL;
 
 	return reg_name_maps[reg].name;
@@ -1533,7 +1533,7 @@ const char *XCore_insn_name(csh handle, unsigned int id)
 #ifndef CAPSTONE_DIET
 	unsigned int i;
 
-	if (id >= XCORE_INS_MAX)
+	if (id >= XCORE_INS_ENDING)
 		return NULL;
 
 	// handle special alias first
@@ -1558,7 +1558,7 @@ static name_map group_name_maps[] = {
 const char *XCore_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	if (id >= XCORE_GRP_MAX)
+	if (id >= XCORE_GRP_ENDING)
 		return NULL;
 
 	return group_name_maps[id].name;

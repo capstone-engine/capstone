@@ -265,7 +265,7 @@ typedef enum ppc_reg {
 	PPC_REG_LR8,
 	PPC_REG_CR1EQ,
 
-	PPC_REG_MAX,   // <-- mark the end of the list of registers
+	PPC_REG_ENDING,   // <-- mark the end of the list of registers
 } ppc_reg;
 
 //> PPC instruction
@@ -1209,7 +1209,7 @@ typedef enum ppc_insn {
 	PPC_INS_BDZTLRL,
 	PPC_INS_BDZFLRL,
 
-	PPC_INS_MAX,   // <-- mark the end of the list of instructions
+	PPC_INS_ENDING,   // <-- mark the end of the list of instructions
 } ppc_insn;
 
 //> Group of PPC instructions
@@ -1229,7 +1229,7 @@ typedef enum ppc_insn_group {
 
 	PPC_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
-	PPC_GRP_MAX,   // <-- mark the end of the list of groups
+	PPC_GRP_ENDING,   // <-- mark the end of the list of groups
 } ppc_insn_group;
 
 #ifdef __cplusplus

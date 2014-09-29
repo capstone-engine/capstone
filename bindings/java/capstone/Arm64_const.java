@@ -567,7 +567,7 @@ public class Arm64_const {
 	public static final int ARM64_REG_V29 = 257;
 	public static final int ARM64_REG_V30 = 258;
 	public static final int ARM64_REG_V31 = 259;
-	public static final int ARM64_REG_MAX = 260;
+	public static final int ARM64_REG_ENDING = 260;
 
 	// alias registers
 	public static final int ARM64_REG_IP1 = ARM64_REG_X16;
@@ -1029,7 +1029,7 @@ public class Arm64_const {
 	public static final int ARM64_INS_DC = 449;
 	public static final int ARM64_INS_AT = 450;
 	public static final int ARM64_INS_TLBI = 451;
-	public static final int ARM64_INS_MAX = 452;
+	public static final int ARM64_INS_ENDING = 452;
 
 	// Group of ARM64 instructions
 
@@ -1039,5 +1039,5 @@ public class Arm64_const {
 	public static final int ARM64_GRP_NEON = 3;
 	public static final int ARM64_GRP_CRC = 4;
 	public static final int ARM64_GRP_JUMP = 5;
-	public static final int ARM64_GRP_MAX = 6;
+	public static final int ARM64_GRP_ENDING = 6;
 }

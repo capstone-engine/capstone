@@ -245,7 +245,7 @@ static name_map reg_name_maps2[] = {
 const char *ARM_reg_name(csh handle, unsigned int reg)
 {
 #ifndef CAPSTONE_DIET
-	if (reg >= ARM_REG_MAX)
+	if (reg >= ARM_REG_ENDING)
 		return NULL;
 
 	return reg_name_maps[reg].name;
@@ -257,7 +257,7 @@ const char *ARM_reg_name(csh handle, unsigned int reg)
 const char *ARM_reg_name2(csh handle, unsigned int reg)
 {
 #ifndef CAPSTONE_DIET
-	if (reg >= ARM_REG_MAX)
+	if (reg >= ARM_REG_ENDING)
 		return NULL;
 
 	return reg_name_maps2[reg].name;
@@ -14021,7 +14021,7 @@ static name_map insn_name_maps[] = {
 const char *ARM_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	if (id >= ARM_INS_MAX)
+	if (id >= ARM_INS_ENDING)
 		return NULL;
 
 	return insn_name_maps[id].name;
@@ -14072,7 +14072,7 @@ static name_map group_name_maps[] = {
 const char *ARM_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	if (id >= ARM_GRP_MAX)
+	if (id >= ARM_GRP_ENDING)
 		return NULL;
 
 	return group_name_maps[id].name;

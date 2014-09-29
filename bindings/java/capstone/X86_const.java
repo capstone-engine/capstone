@@ -239,7 +239,7 @@ public class X86_const {
 	public static final int X86_REG_R13W = 231;
 	public static final int X86_REG_R14W = 232;
 	public static final int X86_REG_R15W = 233;
-	public static final int X86_REG_MAX = 234;
+	public static final int X86_REG_ENDING = 234;
 
 	// Operand type for instruction's operands
 
@@ -1621,7 +1621,7 @@ public class X86_const {
 	public static final int X86_INS_XSHA256 = 1295;
 	public static final int X86_INS_XSTORE = 1296;
 	public static final int X86_INS_XTEST = 1297;
-	public static final int X86_INS_MAX = 1298;
+	public static final int X86_INS_ENDING = 1298;
 
 	// Group of X86 instructions
 
@@ -1672,5 +1672,5 @@ public class X86_const {
 	public static final int X86_GRP_IRET = 44;
 	public static final int X86_GRP_CALL = 45;
 	public static final int X86_GRP_RET = 46;
-	public static final int X86_GRP_MAX = 47;
+	public static final int X86_GRP_ENDING = 47;
 }

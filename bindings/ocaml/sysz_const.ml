@@ -63,7 +63,7 @@ let _SYSZ_REG_F13 = 31;;
 let _SYSZ_REG_F14 = 32;;
 let _SYSZ_REG_F15 = 33;;
 let _SYSZ_REG_R0L = 34;;
-let _SYSZ_REG_MAX = 35;;
+let _SYSZ_REG_ENDING = 35;;
 
 (* SystemZ instruction *)
 
@@ -749,7 +749,7 @@ let _SYSZ_INS_XIY = 678;;
 let _SYSZ_INS_XR = 679;;
 let _SYSZ_INS_XRK = 680;;
 let _SYSZ_INS_XY = 681;;
-let _SYSZ_INS_MAX = 682;;
+let _SYSZ_INS_ENDING = 682;;
 
 (* Group of SystemZ instructions *)
 
@@ -760,4 +760,4 @@ let _SYSZ_GRP_HIGHWORD = 3;;
 let _SYSZ_GRP_INTERLOCKEDACCESS1 = 4;;
 let _SYSZ_GRP_LOADSTOREONCOND = 5;;
 let _SYSZ_GRP_JUMP = 6;;
-let _SYSZ_GRP_MAX = 7;;
+let _SYSZ_GRP_ENDING = 7;;

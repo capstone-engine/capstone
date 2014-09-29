@@ -652,7 +652,7 @@ typedef enum arm64_reg {
 	ARM64_REG_V30,
 	ARM64_REG_V31,
 
-	ARM64_REG_MAX,		// <-- mark the end of the list of registers
+	ARM64_REG_ENDING,		// <-- mark the end of the list of registers
 
 	//> alias registers
 
@@ -1124,7 +1124,7 @@ typedef enum arm64_insn {
 	ARM64_INS_AT,
 	ARM64_INS_TLBI,
 
-	ARM64_INS_MAX,  // <-- mark the end of the list of insn
+	ARM64_INS_ENDING,  // <-- mark the end of the list of insn
 } arm64_insn;
 
 //> Group of ARM64 instructions
@@ -1138,7 +1138,7 @@ typedef enum arm64_insn_group {
 
 	ARM64_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
-	ARM64_GRP_MAX,  // <-- mark the end of the list of groups
+	ARM64_GRP_ENDING,  // <-- mark the end of the list of groups
 } arm64_insn_group;
 
 #ifdef __cplusplus

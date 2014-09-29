@@ -144,7 +144,7 @@ let _SPARC_REG_O7 = 84;;
 let _SPARC_REG_SP = 85;;
 let _SPARC_REG_Y = 86;;
 let _SPARC_REG_XCC = 87;;
-let _SPARC_REG_MAX = 88;;
+let _SPARC_REG_ENDING = 88;;
 let _SPARC_REG_O6 = _SPARC_REG_SP;;
 let _SPARC_REG_I6 = _SPARC_REG_FP;;
 
@@ -429,7 +429,7 @@ let _SPARC_INS_XORCC = 275;;
 let _SPARC_INS_XOR = 276;;
 let _SPARC_INS_RET = 277;;
 let _SPARC_INS_RETL = 278;;
-let _SPARC_INS_MAX = 279;;
+let _SPARC_INS_ENDING = 279;;
 
 (* Group of SPARC instructions *)
 
@@ -442,4 +442,4 @@ let _SPARC_GRP_VIS3 = 5;;
 let _SPARC_GRP_32BIT = 6;;
 let _SPARC_GRP_64BIT = 7;;
 let _SPARC_GRP_JUMP = 8;;
-let _SPARC_GRP_MAX = 9;;
+let _SPARC_GRP_ENDING = 9;;

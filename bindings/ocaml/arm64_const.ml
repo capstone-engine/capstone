@@ -564,7 +564,7 @@ let _ARM64_REG_V28 = 256;;
 let _ARM64_REG_V29 = 257;;
 let _ARM64_REG_V30 = 258;;
 let _ARM64_REG_V31 = 259;;
-let _ARM64_REG_MAX = 260;;
+let _ARM64_REG_ENDING = 260;;
 
 (* alias registers *)
 let _ARM64_REG_IP1 = _ARM64_REG_X16;;
@@ -1026,7 +1026,7 @@ let _ARM64_INS_IC = 448;;
 let _ARM64_INS_DC = 449;;
 let _ARM64_INS_AT = 450;;
 let _ARM64_INS_TLBI = 451;;
-let _ARM64_INS_MAX = 452;;
+let _ARM64_INS_ENDING = 452;;
 
 (* Group of ARM64 instructions *)
 
@@ -1036,4 +1036,4 @@ let _ARM64_GRP_FPARMV8 = 2;;
 let _ARM64_GRP_NEON = 3;;
 let _ARM64_GRP_CRC = 4;;
 let _ARM64_GRP_JUMP = 5;;
-let _ARM64_GRP_MAX = 6;;
+let _ARM64_GRP_ENDING = 6;;

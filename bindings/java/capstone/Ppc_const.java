@@ -210,7 +210,7 @@ public class Ppc_const {
 	public static final int PPC_REG_CTR8 = 175;
 	public static final int PPC_REG_LR8 = 176;
 	public static final int PPC_REG_CR1EQ = 177;
-	public static final int PPC_REG_MAX = 178;
+	public static final int PPC_REG_ENDING = 178;
 
 	// PPC instruction
 
@@ -1148,7 +1148,7 @@ public class Ppc_const {
 	public static final int PPC_INS_BDNZFLRL = 931;
 	public static final int PPC_INS_BDZTLRL = 932;
 	public static final int PPC_INS_BDZFLRL = 933;
-	public static final int PPC_INS_MAX = 934;
+	public static final int PPC_INS_ENDING = 934;
 
 	// Group of PPC instructions
 
@@ -1164,5 +1164,5 @@ public class Ppc_const {
 	public static final int PPC_GRP_PPC4XX = 9;
 	public static final int PPC_GRP_PPC6XX = 10;
 	public static final int PPC_GRP_JUMP = 11;
-	public static final int PPC_GRP_MAX = 12;
+	public static final int PPC_GRP_ENDING = 12;
 }

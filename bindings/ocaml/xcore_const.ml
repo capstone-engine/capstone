@@ -37,7 +37,7 @@ let _XCORE_REG_SED = 22;;
 let _XCORE_REG_KEP = 23;;
 let _XCORE_REG_KSP = 24;;
 let _XCORE_REG_ID = 25;;
-let _XCORE_REG_MAX = 26;;
+let _XCORE_REG_ENDING = 26;;
 
 (* XCore instruction *)
 
@@ -162,10 +162,10 @@ let _XCORE_INS_WAITET = 117;;
 let _XCORE_INS_WAITEU = 118;;
 let _XCORE_INS_XOR = 119;;
 let _XCORE_INS_ZEXT = 120;;
-let _XCORE_INS_MAX = 121;;
+let _XCORE_INS_ENDING = 121;;
 
 (* Group of XCore instructions *)
 
 let _XCORE_GRP_INVALID = 0;;
 let _XCORE_GRP_JUMP = 1;;
-let _XCORE_GRP_MAX = 2;;
+let _XCORE_GRP_ENDING = 2;;

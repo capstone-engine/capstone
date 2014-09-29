@@ -207,7 +207,7 @@ typedef enum mips_reg {
 	MIPS_REG_MPL1,
 	MIPS_REG_MPL2,
 
-	MIPS_REG_MAX,	// <-- mark the end of the list or registers
+	MIPS_REG_ENDING,	// <-- mark the end of the list or registers
 
 	// alias registers
 	MIPS_REG_ZERO = MIPS_REG_0,
@@ -848,7 +848,7 @@ typedef enum mips_insn {
 	MIPS_INS_JALR_HB,	// jump and link with Hazard Barrier
 	MIPS_INS_JR_HB,		// jump register with Hazard Barrier
 
-	MIPS_INS_MAXIMUM,
+	MIPS_INS_ENDING,
 } mips_insn;
 
 //> Group of MIPS instructions
@@ -891,7 +891,7 @@ typedef enum mips_insn_group {
 
 	MIPS_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
-	MIPS_GRP_MAX,
+	MIPS_GRP_ENDING,
 } mips_insn_group;
 
 #ifdef __cplusplus

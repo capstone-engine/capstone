@@ -66,7 +66,7 @@ public class Sysz_const {
 	public static final int SYSZ_REG_F14 = 32;
 	public static final int SYSZ_REG_F15 = 33;
 	public static final int SYSZ_REG_R0L = 34;
-	public static final int SYSZ_REG_MAX = 35;
+	public static final int SYSZ_REG_ENDING = 35;
 
 	// SystemZ instruction
 
@@ -752,7 +752,7 @@ public class Sysz_const {
 	public static final int SYSZ_INS_XR = 679;
 	public static final int SYSZ_INS_XRK = 680;
 	public static final int SYSZ_INS_XY = 681;
-	public static final int SYSZ_INS_MAX = 682;
+	public static final int SYSZ_INS_ENDING = 682;
 
 	// Group of SystemZ instructions
 
@@ -763,5 +763,5 @@ public class Sysz_const {
 	public static final int SYSZ_GRP_INTERLOCKEDACCESS1 = 4;
 	public static final int SYSZ_GRP_LOADSTOREONCOND = 5;
 	public static final int SYSZ_GRP_JUMP = 6;
-	public static final int SYSZ_GRP_MAX = 7;
+	public static final int SYSZ_GRP_ENDING = 7;
 }

@@ -252,7 +252,7 @@ let _ARM_REG_S28 = 107;;
 let _ARM_REG_S29 = 108;;
 let _ARM_REG_S30 = 109;;
 let _ARM_REG_S31 = 110;;
-let _ARM_REG_MAX = 111;;
+let _ARM_REG_ENDING = 111;;
 
 (* alias registers *)
 let _ARM_REG_R13 = _ARM_REG_SP;;
@@ -700,7 +700,7 @@ let _ARM_INS_SEV = 431;;
 let _ARM_INS_SEVL = 432;;
 let _ARM_INS_VPUSH = 433;;
 let _ARM_INS_VPOP = 434;;
-let _ARM_INS_MAX = 435;;
+let _ARM_INS_ENDING = 435;;
 
 (* Group of ARM instructions *)
 
@@ -737,4 +737,4 @@ let _ARM_GRP_CRC = 29;;
 let _ARM_GRP_DPVFP = 30;;
 let _ARM_GRP_V6M = 31;;
 let _ARM_GRP_JUMP = 32;;
-let _ARM_GRP_MAX = 33;;
+let _ARM_GRP_ENDING = 33;;

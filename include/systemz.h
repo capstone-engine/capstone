@@ -112,7 +112,7 @@ typedef enum sysz_reg {
 
 	SYSZ_REG_R0L,
 
-	SYSZ_REG_MAX,
+	SYSZ_REG_ENDING,
 } sysz_reg;
 
 //> SystemZ instruction
@@ -801,7 +801,7 @@ typedef enum sysz_insn {
 	SYSZ_INS_XRK,
 	SYSZ_INS_XY,
 
-	SYSZ_INS_MAX,   // <-- mark the end of the list of instructions
+	SYSZ_INS_ENDING,   // <-- mark the end of the list of instructions
 } sysz_insn;
 
 //> Group of SystemZ instructions
@@ -815,7 +815,7 @@ typedef enum sysz_insn_group {
 
 	SYSZ_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
-	SYSZ_GRP_MAX,   // <-- mark the end of the list of groups
+	SYSZ_GRP_ENDING,   // <-- mark the end of the list of groups
 } sysz_insn_group;
 
 #ifdef __cplusplus

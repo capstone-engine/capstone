@@ -197,7 +197,7 @@ typedef enum sparc_reg {
 	// special register
 	SPARC_REG_XCC,
 
-	SPARC_REG_MAX,   // <-- mark the end of the list of registers
+	SPARC_REG_ENDING,   // <-- mark the end of the list of registers
 
 	// extras
 	SPARC_REG_O6 = SPARC_REG_SP,
@@ -489,7 +489,7 @@ typedef enum sparc_insn {
 	SPARC_INS_RET,
 	SPARC_INS_RETL,
 
-	SPARC_INS_MAX,   // <-- mark the end of the list of instructions
+	SPARC_INS_ENDING,   // <-- mark the end of the list of instructions
 } sparc_insn;
 
 //> Group of SPARC instructions
@@ -506,7 +506,7 @@ typedef enum sparc_insn_group {
 
 	SPARC_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
-	SPARC_GRP_MAX,   // <-- mark the end of the list of groups
+	SPARC_GRP_ENDING,   // <-- mark the end of the list of groups
 } sparc_insn_group;
 
 #ifdef __cplusplus

@@ -283,7 +283,7 @@ static name_map reg_name_maps[] = {
 const char *AArch64_reg_name(csh handle, unsigned int reg)
 {
 #ifndef CAPSTONE_DIET
-	if (reg >= ARM64_REG_MAX)
+	if (reg >= ARM64_REG_ENDING)
 		return NULL;
 
 	return reg_name_maps[reg].name;
@@ -14781,7 +14781,7 @@ const char *AArch64_insn_name(csh handle, unsigned int id)
 #ifndef CAPSTONE_DIET
 	unsigned int i;
 
-	if (id >= ARM64_INS_MAX)
+	if (id >= ARM64_INS_ENDING)
 		return NULL;
 
 	if (id < ARR_SIZE(insn_name_maps))
@@ -14815,7 +14815,7 @@ static name_map group_name_maps[] = {
 const char *AArch64_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	if (id >= ARM64_GRP_MAX)
+	if (id >= ARM64_GRP_ENDING)
 		return NULL;
 
 	return group_name_maps[id].name;

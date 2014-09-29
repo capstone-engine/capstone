@@ -85,7 +85,7 @@ typedef enum xcore_reg {
 	XCORE_REG_KSP,	// kernel stack pointer
 	XCORE_REG_ID,	// thread ID
 
-	XCORE_REG_MAX,	// <-- mark the end of the list of registers
+	XCORE_REG_ENDING,	// <-- mark the end of the list of registers
 } xcore_reg;
 
 //> XCore instruction
@@ -213,7 +213,7 @@ typedef enum xcore_insn {
 	XCORE_INS_XOR,
 	XCORE_INS_ZEXT,
 
-	XCORE_INS_MAX,   // <-- mark the end of the list of instructions
+	XCORE_INS_ENDING,   // <-- mark the end of the list of instructions
 } xcore_insn;
 
 //> Group of XCore instructions
@@ -222,7 +222,7 @@ typedef enum xcore_insn_group {
 
 	XCORE_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
-	XCORE_GRP_MAX,   // <-- mark the end of the list of groups
+	XCORE_GRP_ENDING,   // <-- mark the end of the list of groups
 } xcore_insn_group;
 
 #ifdef __cplusplus
