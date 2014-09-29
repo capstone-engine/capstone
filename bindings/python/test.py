@@ -47,7 +47,6 @@ all_tests = (
         (CS_ARCH_XCORE, 0, XCORE_CODE, "XCore", 0),
 )
 
-
 # ## Test cs_disasm_quick()
 def test_cs_disasm_quick():
     for arch, mode, code, comment, syntax in all_tests:

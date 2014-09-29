@@ -2,7 +2,7 @@
 
 cimport pyx.ccapstone as cc
 import capstone, ctypes
-from capstone import arm, x86, mips, ppc, arm64, sparc, systemz, xcore, CsError
+from . import arm, x86, mips, ppc, arm64, sparc, systemz, xcore, CsError
 
 _diet = cc.cs_support(capstone.CS_SUPPORT_DIET)
 
