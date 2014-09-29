@@ -705,9 +705,18 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 static void op_addImm(MCInst *MI, int v)
 {
 	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_IMM;
-		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = v;
-		MI->flat_insn->detail->arm.op_count++;
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].imm = v;
+		MI->flat_insn->detail->ppc.op_count++;
+	}
+}
+
+static void op_addReg(MCInst *MI, unsigned int reg)
+{
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_REG;
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].reg = reg;
+		MI->flat_insn->detail->ppc.op_count++;
 	}
 }
 
@@ -824,30 +833,37 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 		switch(cr) {
 			case PPC_CR1:
 				SStream_concat0(&ss, " cr1");
+				op_addReg(MI, PPC_REG_CR1);
 				needComma = 1;
 				break;
 			case PPC_CR2:
 				SStream_concat0(&ss, " cr2");
+				op_addReg(MI, PPC_REG_CR2);
 				needComma = 1;
 				break;
 			case PPC_CR3:
 				SStream_concat0(&ss, " cr3");
+				op_addReg(MI, PPC_REG_CR3);
 				needComma = 1;
 				break;
 			case PPC_CR4:
 				SStream_concat0(&ss, " cr4");
+				op_addReg(MI, PPC_REG_CR4);
 				needComma = 1;
 				break;
 			case PPC_CR5:
 				SStream_concat0(&ss, " cr5");
+				op_addReg(MI, PPC_REG_CR5);
 				needComma = 1;
 				break;
 			case PPC_CR6:
 				SStream_concat0(&ss, " cr6");
+				op_addReg(MI, PPC_REG_CR6);
 				needComma = 1;
 				break;
 			case PPC_CR7:
 				SStream_concat0(&ss, " cr7");
+				op_addReg(MI, PPC_REG_CR7);
 				needComma = 1;
 				break;
 			default:
