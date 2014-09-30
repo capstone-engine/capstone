@@ -8104,4 +8104,41 @@ bool PPC_alias_insn(const char *name, struct ppc_alias *alias)
 	return false;
 }
 
+// list all relative branch instructions
+static unsigned int insn_abs[] = {
+	PPC_BA,
+	PPC_BCCA,
+	PPC_BCCLA,
+	PPC_BDNZA,
+	PPC_BDNZAm,
+	PPC_BDNZAp,
+	PPC_BDNZLA,
+	PPC_BDNZLAm,
+	PPC_BDNZLAp,
+	PPC_BDZA,
+	PPC_BDZAm,
+	PPC_BDZAp,
+	PPC_BDZLAm,
+	PPC_BDZLAp,
+	PPC_BLA,
+	PPC_gBCA,
+	PPC_gBCLA,
+	0
+};
+
+// check if this insn is relative branch
+bool PPC_abs_branch(cs_struct *h, unsigned int id)
+{
+	int i;
+
+	for (i = 0; insn_abs[i]; i++) {
+		if (id == insn_abs[i]) {
+			return true;
+		}
+	}
+
+	// not found
+	return false;
+}
+
 #endif
