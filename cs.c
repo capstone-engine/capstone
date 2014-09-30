@@ -436,8 +436,10 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 
 	handle->errnum = CS_ERR_OK;
 
+#ifdef CAPSTONE_USE_SYS_DYN_MEM
 	if (count > 0)
 		cache_size = count;
+#endif
 
 	// save the original offset for SKIPDATA
 	buffer_org = buffer;
