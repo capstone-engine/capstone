@@ -151,7 +151,7 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 		MCOperand_setImm(MCInst_getOperand(MI, 2),bd);
 	}
 
-	if (isBOCTRBranch(MCInst_getOpcode(MI))) {
+	if ((isBOCTRBranch(MCInst_getOpcode(MI)) && (!PPC_abs_branch(MI->csh, MCInst_getOpcode(MI))))) {
 		if (MCOperand_isImm(MCInst_getOperand(MI,0)))
 		{
 			int64_t bd = MCOperand_getImm(MCInst_getOperand(MI, 0));
@@ -526,17 +526,12 @@ static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 
 	imm = ((int)MCOperand_getImm(MCInst_getOperand(MI, OpNo)) << 2);
-	if (imm >= 0) {
-		if (imm > HEX_THRESHOLD)
-			SStream_concat(O, ".+0x%x", imm);
-		else
-			SStream_concat(O, ".+%u", imm);
-	} else {
-		if (imm < -HEX_THRESHOLD)
-			SStream_concat(O, ".-0x%x", -imm);
-		else
-			SStream_concat(O, ".-%u", -imm);
+
+	if (!PPC_abs_branch(MI->csh, MCInst_getOpcode(MI))) {
+		imm = (int)MI->address + imm;
 	}
+
+	SStream_concat(O, ".0x%x", imm);
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
