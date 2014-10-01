@@ -240,7 +240,7 @@ static void test()
 				if (detail->groups_count > 0) {
 					printf("\tThis instruction belongs to groups: ");
 					for (n = 0; n < detail->groups_count; n++) {
-						printf("%u ", detail->groups[n]);
+						printf("%s ", cs_group_name(handle, detail->groups[n]));
 					}
 					printf("\n");
 				}
