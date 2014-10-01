@@ -188,7 +188,7 @@ static bool relativeBranch(unsigned int id)
 		Mips_BLEZ, Mips_BLTZ, Mips_BLTZAL, Mips_BNE, Mips_BC1T,
 		Mips_BEQL, Mips_BGEZALL, Mips_BGEZL, Mips_BGTZL, Mips_BLEZL,
 		Mips_BLTZALL, Mips_BLTZL, Mips_BNEL, Mips_BC1F, Mips_BC1FL,
-		Mips_BC1TL,
+		Mips_BC1TL, Mips_BC0F,
 	};
 	int i;
 
