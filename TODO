@@ -18,4 +18,4 @@ Issues to be solved in next versions
 
 [Bindings]
 
-- OCaml binding are broken due to many API changes. This should be fixed ASAP.
+- OCaml binding is working, but still support the core API better.
