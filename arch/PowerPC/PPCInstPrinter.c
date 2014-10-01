@@ -521,6 +521,7 @@ static void printBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	int imm;
+
 	if (!MCOperand_isImm(MCInst_getOperand(MI, OpNo))) {
 		printOperand(MI, OpNo, O);
 		return;
@@ -807,9 +808,10 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 				break;
 		}
 
-		if(MCOperand_getImm(MCInst_getOperand(MI, 0)) == 6)
+		if (MCOperand_getImm(MCInst_getOperand(MI, 0)) == 6)
 			SStream_concat0(&ss, "-");
-		if(MCOperand_getImm(MCInst_getOperand(MI, 0)) == 7)
+
+		if (MCOperand_getImm(MCInst_getOperand(MI, 0)) == 7)
 			SStream_concat0(&ss, "+");
 
 		decCtr = false;
@@ -853,9 +855,10 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 				break;
 		}
 
-		if(MCOperand_getImm(MCInst_getOperand(MI, 0)) == 14)
+		if (MCOperand_getImm(MCInst_getOperand(MI, 0)) == 14)
 			SStream_concat0(&ss, "-");
-		if(MCOperand_getImm(MCInst_getOperand(MI, 0)) == 15)
+
+		if (MCOperand_getImm(MCInst_getOperand(MI, 0)) == 15)
 			SStream_concat0(&ss, "+");
 
 		decCtr = false;
@@ -866,9 +869,10 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 			((MCOperand_getImm(MCInst_getOperand(MI, 0)) & 0x12)== 16)) {
 		SStream_concat(&ss, opCode, "dnz");
 
-		if(MCOperand_getImm(MCInst_getOperand(MI, 0)) == 24)
+		if (MCOperand_getImm(MCInst_getOperand(MI, 0)) == 24)
 			SStream_concat0(&ss, "-");
-		if(MCOperand_getImm(MCInst_getOperand(MI, 0)) == 25)
+
+		if (MCOperand_getImm(MCInst_getOperand(MI, 0)) == 25)
 			SStream_concat0(&ss, "+");
 
 		needComma = false;
@@ -879,9 +883,10 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 			((MCOperand_getImm(MCInst_getOperand(MI, 0)) & 0x12)== 18)) {
 		SStream_concat(&ss, opCode, "dz");
 
-		if(MCOperand_getImm(MCInst_getOperand(MI, 0)) == 26)
+		if (MCOperand_getImm(MCInst_getOperand(MI, 0)) == 26)
 			SStream_concat0(&ss, "-");
-		if(MCOperand_getImm(MCInst_getOperand(MI, 0)) == 27)
+
+		if (MCOperand_getImm(MCInst_getOperand(MI, 0)) == 27)
 			SStream_concat0(&ss, "+");
 
 		needComma = false;
@@ -893,10 +898,10 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 			(MCOperand_getImm(MCInst_getOperand(MI, 0)) < 16)) {
 		int cr = getBICR(MCOperand_getReg(MCInst_getOperand(MI, 1)));
 		op_addReg(MI, PPC_REG_CR0+cr-PPC_CR0);
-		if(decCtr) {
+		if (decCtr) {
 			needComma = true;
 			SStream_concat0(&ss, " ");
-			if(cr > PPC_CR0) {
+			if (cr > PPC_CR0) {
 				SStream_concat(&ss, "4*cr%d+", cr-PPC_CR0);
 			}
 			cr = getBICRCond(MCOperand_getReg(MCInst_getOperand(MI, 1)));
@@ -915,7 +920,7 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 					break;
 			}
 		} else {
-			if(cr > PPC_CR0) {
+			if (cr > PPC_CR0) {
 				needComma = true;
 				SStream_concat(&ss, " cr%d", cr-PPC_CR0);
 			}
