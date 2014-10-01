@@ -740,7 +740,7 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 #define GETREGCLASS_CONTAIN(_class, _reg) MCRegisterClass_contains(MCRegisterInfo_getRegClass(MRI, _class), MCOperand_getReg(MCInst_getOperand(MI, _reg)))
 	SStream ss;
 	const char* opCode;
-	int needComma;
+	bool needComma = false;
 	char *tmp, *AsmMnem, *AsmOps, *c;
 	int OpIdx, PrintMethodIdx;
 	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
@@ -794,9 +794,9 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 				break;
 		}
 
-		if(MCOperand_getImm(MCInst_getOperand(MI, 0)) == 14)
+		if (MCOperand_getImm(MCInst_getOperand(MI, 0)) == 14)
 			SStream_concat0(&ss, "-");
-		if(MCOperand_getImm(MCInst_getOperand(MI, 0)) == 15)
+		if (MCOperand_getImm(MCInst_getOperand(MI, 0)) == 15)
 			SStream_concat0(&ss, "+");
 	}
 
@@ -821,9 +821,10 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 				break;
 		}
 
-		if(MCOperand_getImm(MCInst_getOperand(MI, 0)) == 6)
+		if (MCOperand_getImm(MCInst_getOperand(MI, 0)) == 6)
 			SStream_concat0(&ss, "-");
-		if(MCOperand_getImm(MCInst_getOperand(MI, 0)) == 7)
+
+		if (MCOperand_getImm(MCInst_getOperand(MI, 0)) == 7)
 			SStream_concat0(&ss, "+");
 	}
 
@@ -834,47 +835,46 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 			case PPC_CR1:
 				SStream_concat0(&ss, " cr1");
 				op_addReg(MI, PPC_REG_CR1);
-				needComma = 1;
+				needComma = true;
 				break;
 			case PPC_CR2:
 				SStream_concat0(&ss, " cr2");
 				op_addReg(MI, PPC_REG_CR2);
-				needComma = 1;
+				needComma = true;
 				break;
 			case PPC_CR3:
 				SStream_concat0(&ss, " cr3");
 				op_addReg(MI, PPC_REG_CR3);
-				needComma = 1;
+				needComma = true;
 				break;
 			case PPC_CR4:
 				SStream_concat0(&ss, " cr4");
 				op_addReg(MI, PPC_REG_CR4);
-				needComma = 1;
+				needComma = true;
 				break;
 			case PPC_CR5:
 				SStream_concat0(&ss, " cr5");
 				op_addReg(MI, PPC_REG_CR5);
-				needComma = 1;
+				needComma = true;
 				break;
 			case PPC_CR6:
 				SStream_concat0(&ss, " cr6");
 				op_addReg(MI, PPC_REG_CR6);
-				needComma = 1;
+				needComma = true;
 				break;
 			case PPC_CR7:
 				SStream_concat0(&ss, " cr7");
 				op_addReg(MI, PPC_REG_CR7);
-				needComma = 1;
+				needComma = true;
 				break;
 			default:
-				needComma = 0;
 				break;
 		}
 	}
 
 	if (MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
 			MCOperand_getImm(MCInst_getOperand(MI, 2)) != 0) {
-		if(needComma)
+		if (needComma)
 			SStream_concat0(&ss, ",");
 		SStream_concat0(&ss, " $\xFF\x03\x01");
 	}
