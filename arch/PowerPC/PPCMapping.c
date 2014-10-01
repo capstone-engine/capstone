@@ -8094,7 +8094,7 @@ bool PPC_alias_insn(const char *name, struct ppc_alias *alias)
 
 	// not really an alias insn
 	i = name2id(&insn_name_maps[1], ARR_SIZE(insn_name_maps) - 1, name);
-	if (i) {
+	if (i != -1) {
 		alias->id = insn_name_maps[i].id;
 		alias->cc = PPC_BC_INVALID;
 		return true;
