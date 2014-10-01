@@ -59,3 +59,11 @@ ifdef BUILDDIR
 	rm -rf $(BLDIR)
 	rm -rf $(OBJDIR)
 endif
+
+TESTS = test arm arm64 mips ppc sparc systemz x86 xcore
+check:
+	@for t in $(TESTS); do \
+		echo Check $$t ... ; \
+		./run.sh $$t > /dev/null && echo OK || echo FAILED; \
+	done
+
