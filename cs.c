@@ -422,8 +422,7 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 	bool r;
 	void *tmp;
 	size_t skipdata_bytes;
-	// save all the original info of the buffer
-	uint64_t offset_org;
+	uint64_t offset_org; // save all the original info of the buffer
 	size_t size_org;
 	const uint8_t *buffer_org;
 	unsigned int cache_size = INSN_CACHE_SIZE;
@@ -437,7 +436,7 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 	handle->errnum = CS_ERR_OK;
 
 #ifdef CAPSTONE_USE_SYS_DYN_MEM
-	if (count > 0)
+	if (count > 0 && count < INSN_CACHE_SIZE)
 		cache_size = count;
 #endif
 
@@ -445,7 +444,8 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 	buffer_org = buffer;
 	offset_org = offset;
 	size_org = size;
-	total_size = (sizeof(cs_insn) * cache_size);
+
+	total_size = sizeof(cs_insn) * cache_size;
 	total = cs_mem_malloc(total_size);
 	insn_cache = total;
 
