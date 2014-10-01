@@ -548,8 +548,9 @@ static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printcrbitm(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	unsigned CCReg = MCOperand_getReg(MCInst_getOperand(MI, OpNo));
 	unsigned RegNo, tmp;
+	unsigned CCReg = MCOperand_getReg(MCInst_getOperand(MI, OpNo));
+
 	switch (CCReg) {
 		default: // llvm_unreachable("Unknown CR register");
 		case PPC_CR0: RegNo = 0; break;
@@ -736,11 +737,12 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 {
 #define GETREGCLASS_CONTAIN(_class, _reg) MCRegisterClass_contains(MCRegisterInfo_getRegClass(MRI, _class), MCOperand_getReg(MCInst_getOperand(MI, _reg)))
 	SStream ss;
-	const char* opCode;
-	int decCtr = false, needComma = false;
+	const char *opCode;
 	char *tmp, *AsmMnem, *AsmOps, *c;
 	int OpIdx, PrintMethodIdx;
+	int decCtr = false, needComma = false;
 	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
+
 	SStream_Init(&ss);
 	switch (MCInst_getOpcode(MI)) {
 		default: return NULL;
