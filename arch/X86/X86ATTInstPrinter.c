@@ -443,21 +443,19 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 		if (imm < 0) {
 			unsigned int id = MCInst_getOpcode(MI);
 			if (id != X86_CALL64pcrel32 && id != X86_CALLpcrel16 && id != X86_CALLpcrel32) {
-				if (imm < -HEX_THRESHOLD)
-					SStream_concat(O, "-0x%"PRIx64, -imm);
-				else
-					SStream_concat(O, "-%"PRIu64, -imm);
+				SStream_concat(O, "0x%"PRIx64, imm);
 			} else {
+				// relative CALL. now caculate the absolute address
 				switch(MI->csh->mode) {
 					default: break;	// never reach
 					case CS_MODE_16:
-							 imm = 0x10000 + imm + 1 - MI->address;;
+							 imm = 0x10000 + imm + 1;
 							 break;
 					case CS_MODE_32:
-							 imm = 0x100000000 + imm + 1 - MI->address;;
+							 imm = 0x100000000 + imm + 1;
 							 break;
 					case CS_MODE_64:
-							 imm = 0xffffffffffffffff + imm + 1 - MI->address;
+							 imm = 0xffffffffffffffff + imm + 1;
 							 break;
 				}
 				SStream_concat(O, "0x%"PRIx64, imm);
