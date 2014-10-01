@@ -19,6 +19,11 @@ CODE32 += b"\x40\x9f\x10\x30" # bns cr5,.+0x94
 CODE32 += b"\x42\x00\xff\xd8" # bdnz .-0x28
 CODE32 += b"\x4d\x82\x00\x20" # beqlr
 CODE32 += b"\x4e\x80\x00\x20" # blr
+CODE32 += b"\x4a\x00\x00\x02" # ba .0xfe000000
+CODE32 += b"\x41\x80\xff\xda" # blta .0xffffffd8
+CODE32 += b"\x41\x4f\xff\x17" # bdztla 4*cr3+so, .0xffffff14
+CODE32 += b"\x43\x20\x0c\x07" # bdnzla+ .0xc04
+CODE32 += b"\x4c\x00\x04\x20" # bdnzfctr lt
 
 _python3 = sys.version_info.major == 3
 
