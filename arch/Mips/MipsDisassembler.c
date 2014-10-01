@@ -468,7 +468,7 @@ static DecodeStatus DecodeINSVE_DF_4(MCInst *MI, uint32_t insn,
 	//assert(NSize != 0 && RegDecoder != nullptr);
 
 	if (RegDecoder == NULL)
-		return;
+		return MCDisassembler_Fail;
 
 	// $wd
 	tmp = fieldFromInstruction(insn, 6, 5);
