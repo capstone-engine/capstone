@@ -441,8 +441,6 @@ static unsigned getReg(MCRegisterInfo *MRI, unsigned RC, unsigned RegNo)
 	return rc->RegsBegin[RegNo];
 }
 
-#define nullptr NULL
-
 static DecodeStatus DecodeINSVE_DF_4(MCInst *MI, uint32_t insn,
 		uint64_t Address, MCRegisterInfo *Decoder)
 {
@@ -451,7 +449,8 @@ static DecodeStatus DecodeINSVE_DF_4(MCInst *MI, uint32_t insn,
 	// The register class also depends on this.
 	uint32_t tmp = fieldFromInstruction(insn, 17, 5);
 	unsigned NSize = 0;
-	DecodeFN RegDecoder = nullptr;
+	DecodeFN RegDecoder = NULL;
+
 	if ((tmp & 0x18) == 0x00) { // INSVE_B
 		NSize = 4;
 		RegDecoder = DecodeMSA128BRegisterClass;
@@ -468,20 +467,27 @@ static DecodeStatus DecodeINSVE_DF_4(MCInst *MI, uint32_t insn,
 
 	//assert(NSize != 0 && RegDecoder != nullptr);
 
+	if (RegDecoder == NULL)
+		return;
+
 	// $wd
 	tmp = fieldFromInstruction(insn, 6, 5);
 	if (RegDecoder(MI, tmp, Address, Decoder) == MCDisassembler_Fail)
 		return MCDisassembler_Fail;
+
 	// $wd_in
 	if (RegDecoder(MI, tmp, Address, Decoder) == MCDisassembler_Fail)
 		return MCDisassembler_Fail;
+
 	// $n
 	tmp = fieldFromInstruction(insn, 16, NSize);
 	MCOperand_CreateImm0(MI, tmp);
+
 	// $ws
 	tmp = fieldFromInstruction(insn, 11, 5);
 	if (RegDecoder(MI, tmp, Address, Decoder) == MCDisassembler_Fail)
 		return MCDisassembler_Fail;
+
 	// $n2
 	MCOperand_CreateImm0(MI, 0);
 
