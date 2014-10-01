@@ -718,6 +718,13 @@ static void op_addReg(MCInst *MI, unsigned int reg)
 	}
 }
 
+static void op_addBC(MCInst *MI, unsigned int bc)
+{
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->ppc.bc = (ppc_bc)bc;
+	}
+}
+
 #define CREQ (0)
 #define CRGT (1)
 #define CRLT (2)
@@ -903,28 +910,36 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 		if (decCtr) {
 			needComma = true;
 			SStream_concat0(&ss, " ");
+
 			if (cr > PPC_CR0) {
-				SStream_concat(&ss, "4*cr%d+", cr-PPC_CR0);
+				SStream_concat(&ss, "4*cr%d+", cr - PPC_CR0);
+				op_addReg(MI, PPC_REG_CR0 + cr - PPC_CR0);	// FIXME: handle 4*
 			}
+
 			cr = getBICRCond(MCOperand_getReg(MCInst_getOperand(MI, 1)));
 			switch(cr) {
 				case CREQ:
 					SStream_concat0(&ss, "eq");
+					op_addBC(MI, PPC_BC_EQ);
 					break;
 				case CRGT:
 					SStream_concat0(&ss, "gt");
+					op_addBC(MI, PPC_BC_GT);
 					break;
 				case CRLT:
 					SStream_concat0(&ss, "lt");
+					op_addBC(MI, PPC_BC_LT);
 					break;
 				case CRUN:
 					SStream_concat0(&ss, "so");
+					op_addBC(MI, PPC_BC_SO);
 					break;
 			}
 		} else {
 			if (cr > PPC_CR0) {
 				needComma = true;
-				SStream_concat(&ss, " cr%d", cr-PPC_CR0);
+				SStream_concat(&ss, " cr%d", cr - PPC_CR0);
+				op_addReg(MI, PPC_REG_CR0 + cr - PPC_CR0);
 			}
 		}
 	}
@@ -933,6 +948,7 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 			MCOperand_getImm(MCInst_getOperand(MI, 2)) != 0) {
 		if (needComma)
 			SStream_concat0(&ss, ",");
+
 		SStream_concat0(&ss, " $\xFF\x03\x01");
 	}
 
