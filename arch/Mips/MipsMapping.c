@@ -186,6 +186,14 @@ static name_map reg_name_maps[] = {
 	{ MIPS_REG_HI, "hi"},
 	{ MIPS_REG_LO, "lo"},
 	{ MIPS_REG_PC, "pc"},
+
+	{ MIPS_REG_P0, "p0"},
+	{ MIPS_REG_P1, "p1"},
+	{ MIPS_REG_P2, "p2"},
+
+	{ MIPS_REG_MPL0, "mpl0"},
+	{ MIPS_REG_MPL1, "mpl1"},
+	{ MIPS_REG_MPL2, "mpl2"},
 };
 #endif
 

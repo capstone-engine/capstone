@@ -260,3 +260,11 @@ clean:
 gen_const:
 	cd .. && python const_generator.py ocaml
 
+TESTS = test test_detail test_arm test_arm64 test_mips test_ppc
+TESTS += test_sparc test_systemz test_x86 test_xcore
+check:
+	@for t in $(TESTS); do \
+		echo Check $$t ... ; \
+		./$$t > /dev/null && echo OK || echo FAILED; \
+	done
+

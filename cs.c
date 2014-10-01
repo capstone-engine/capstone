@@ -422,10 +422,10 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 	bool r;
 	void *tmp;
 	size_t skipdata_bytes;
-	// save all the original info of the buffer
-	uint64_t offset_org;
+	uint64_t offset_org; // save all the original info of the buffer
 	size_t size_org;
 	const uint8_t *buffer_org;
+	unsigned int cache_size = INSN_CACHE_SIZE;
 
 	if (!handle) {
 		// FIXME: how to handle this case:
@@ -435,11 +435,17 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 
 	handle->errnum = CS_ERR_OK;
 
+#ifdef CAPSTONE_USE_SYS_DYN_MEM
+	if (count > 0 && count < INSN_CACHE_SIZE)
+		cache_size = count;
+#endif
+
 	// save the original offset for SKIPDATA
 	buffer_org = buffer;
 	offset_org = offset;
 	size_org = size;
-	total_size = (sizeof(cs_insn) * INSN_CACHE_SIZE);
+
+	total_size = sizeof(cs_insn) * cache_size;
 	total = cs_mem_malloc(total_size);
 	insn_cache = total;
 
@@ -475,10 +481,15 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 			handle->printer(&mci, &ss, handle->printer_info);
 			fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, buffer);
 
+			c++;
+			if (count > 0 && c == count)
+				// disasm requested number of instructions
+				break;
+
 			f++;
-			if (f == INSN_CACHE_SIZE) {
+			if (f == cache_size) {
 				// resize total to contain newly disasm insns
-				total_size += (sizeof(cs_insn) * INSN_CACHE_SIZE);
+				total_size += (sizeof(cs_insn) * cache_size);
 				tmp = cs_mem_realloc(total, total_size);
 				if (tmp == NULL) {	// insufficient memory
 					if (handle->detail) {
@@ -494,16 +505,12 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 				}
 
 				total = tmp;
-				insn_cache = (cs_insn *)((char *)total + total_size - (sizeof(cs_insn) * INSN_CACHE_SIZE));
+				insn_cache = (cs_insn *)((char *)total + total_size - (sizeof(cs_insn) * cache_size));
 
 				// reset f back to 0
 				f = 0;
 			} else
 				insn_cache++;
-
-			c++;
-			if (count > 0 && c == count)
-				break;
 
 			buffer += insn_size;
 			size -= insn_size;
@@ -544,10 +551,10 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 			insn_cache->detail = NULL;
 
 			f++;
-			if (f == INSN_CACHE_SIZE) {
+			if (f == cache_size) {
 				// resize total to contain newly disasm insns
 
-				total_size += (sizeof(cs_insn) * INSN_CACHE_SIZE);
+				total_size += (sizeof(cs_insn) * cache_size);
 				tmp = cs_mem_realloc(total, total_size);
 				if (tmp == NULL) {	// insufficient memory
 					if (handle->detail) {
@@ -563,7 +570,7 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 				}
 
 				total = tmp;
-				insn_cache = (cs_insn *)((char *)total + total_size - (sizeof(cs_insn) * INSN_CACHE_SIZE));
+				insn_cache = (cs_insn *)((char *)total + total_size - (sizeof(cs_insn) * cache_size));
 
 				// reset f back to 0
 				f = 0;
@@ -579,7 +586,7 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 
 	if (f) {
 		// resize total to contain newly disasm insns
-		void *tmp = cs_mem_realloc(total, total_size - (INSN_CACHE_SIZE - f) * sizeof(*insn_cache));
+		void *tmp = cs_mem_realloc(total, total_size - (cache_size - f) * sizeof(*insn_cache));
 		if (tmp == NULL) {	// insufficient memory
 			// free all detail pointers
 			if (handle->detail) {

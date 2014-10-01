@@ -736,7 +736,7 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 #define GETREGCLASS_CONTAIN(_class, _reg) MCRegisterClass_contains(MCRegisterInfo_getRegClass(MRI, _class), MCOperand_getReg(MCInst_getOperand(MI, _reg)))
 	SStream ss;
 	const char* opCode;
-	int decCtr, needComma;
+	int decCtr = false, needComma = false;
 	char *tmp, *AsmMnem, *AsmOps, *c;
 	int OpIdx, PrintMethodIdx;
 	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
@@ -774,7 +774,7 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 			(MCOperand_getImm(MCInst_getOperand(MI, 0)) >= 0) &&
 			(MCOperand_getImm(MCInst_getOperand(MI, 0)) <= 1)) {
 		SStream_concat(&ss, opCode, "dnzf");
-		decCtr = 1;
+		decCtr = true;
 	}
 
 	if (MCInst_getNumOperands(MI) == 3 &&
@@ -782,7 +782,7 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 			(MCOperand_getImm(MCInst_getOperand(MI, 0)) >= 2) &&
 			(MCOperand_getImm(MCInst_getOperand(MI, 0)) <= 3)) {
 		SStream_concat(&ss, opCode, "dzf");
-		decCtr = 1;
+		decCtr = true;
 	}
 
 	if (MCInst_getNumOperands(MI) == 3 &&
@@ -812,7 +812,7 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 		if(MCOperand_getImm(MCInst_getOperand(MI, 0)) == 7)
 			SStream_concat0(&ss, "+");
 
-		decCtr = 0;
+		decCtr = false;
 	}
 
 	if (MCInst_getNumOperands(MI) == 3 &&
@@ -820,7 +820,7 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 			(MCOperand_getImm(MCInst_getOperand(MI, 0)) >= 8) &&
 			(MCOperand_getImm(MCInst_getOperand(MI, 0)) <= 9)) {
 		SStream_concat(&ss, opCode, "dnzt");
-		decCtr = 1;
+		decCtr = true;
 	}
 
 	if (MCInst_getNumOperands(MI) == 3 &&
@@ -828,7 +828,7 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 			(MCOperand_getImm(MCInst_getOperand(MI, 0)) >= 10) &&
 			(MCOperand_getImm(MCInst_getOperand(MI, 0)) <= 11)) {
 		SStream_concat(&ss, opCode, "dzt");
-		decCtr = 1;
+		decCtr = true;
 	}
 
 	if (MCInst_getNumOperands(MI) == 3 &&
@@ -858,7 +858,7 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 		if(MCOperand_getImm(MCInst_getOperand(MI, 0)) == 15)
 			SStream_concat0(&ss, "+");
 
-		decCtr = 0;
+		decCtr = false;
 	}
 
 	if (MCInst_getNumOperands(MI) == 3 &&
@@ -871,7 +871,7 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 		if(MCOperand_getImm(MCInst_getOperand(MI, 0)) == 25)
 			SStream_concat0(&ss, "+");
 
-		needComma = 0;
+		needComma = false;
 	}
 
 	if (MCInst_getNumOperands(MI) == 3 &&
@@ -884,7 +884,7 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 		if(MCOperand_getImm(MCInst_getOperand(MI, 0)) == 27)
 			SStream_concat0(&ss, "+");
 
-		needComma = 0;
+		needComma = false;
 	}
 
 	if (MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
@@ -892,8 +892,9 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 			MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
 			(MCOperand_getImm(MCInst_getOperand(MI, 0)) < 16)) {
 		int cr = getBICR(MCOperand_getReg(MCInst_getOperand(MI, 1)));
+		op_addReg(MI, PPC_REG_CR0+cr-PPC_CR0);
 		if(decCtr) {
-			needComma = 1;
+			needComma = true;
 			SStream_concat0(&ss, " ");
 			if(cr > PPC_CR0) {
 				SStream_concat(&ss, "4*cr%d+", cr-PPC_CR0);
@@ -915,17 +916,15 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 			}
 		} else {
 			if(cr > PPC_CR0) {
-				needComma = 1;
+				needComma = true;
 				SStream_concat(&ss, " cr%d", cr-PPC_CR0);
-			} else {
-				needComma = 0;
 			}
 		}
 	}
 
 	if (MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
 			MCOperand_getImm(MCInst_getOperand(MI, 2)) != 0) {
-		if(needComma)
+		if (needComma)
 			SStream_concat0(&ss, ",");
 		SStream_concat0(&ss, " $\xFF\x03\x01");
 	}

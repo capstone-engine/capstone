@@ -1342,9 +1342,6 @@ static void printMemExtend(MCInst *MI, unsigned OpNum, SStream *O, char SrcRegKi
 					case 'w':
 							 MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].ext = ARM64_EXT_UXTW;
 							 break;
-					case 'x':
-							 MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].ext = ARM64_EXT_UXTX;
-							 break;
 				}
 			} else {
 					switch(SrcRegKind) {

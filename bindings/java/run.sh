@@ -12,6 +12,7 @@ fi
 
 case "$1" in
   "") java -classpath ${JNA}:. Test ;;
+  "test") java -classpath ${JNA}:. Test ;;
   "arm") java -classpath ${JNA}:. TestArm ;;
   "arm64") java -classpath ${JNA}:. TestArm64 ;;
   "mips") java -classpath ${JNA}:. TestMips ;;

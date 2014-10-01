@@ -959,14 +959,13 @@ static bool is16BitEquivalent(unsigned orig, unsigned equiv)
 	size_t i;
 	uint16_t idx;
 
-	if ((idx = x86_16_bit_eq_lookup[orig]) != 0)
-	{
-		for (i = idx - 1; x86_16_bit_eq_tbl[i].first == orig && i < ARR_SIZE(x86_16_bit_eq_tbl); ++i)
-		{
+	if ((idx = x86_16_bit_eq_lookup[orig]) != 0) {
+		for (i = idx - 1; i < ARR_SIZE(x86_16_bit_eq_tbl) && x86_16_bit_eq_tbl[i].first == orig; i++) {
 			if (x86_16_bit_eq_tbl[i].second == equiv)
 				return true;
 		}
 	}
+
 	return false;
 }
 

@@ -82,4 +82,9 @@ clean:
 	cd python && $(MAKE) clean
 	cd ocaml && $(MAKE) clean
 
+check:
+	make -C ocaml check
+	make -C python check
+	make -C java check
+
 FORCE:
