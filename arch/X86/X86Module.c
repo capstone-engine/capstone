@@ -30,7 +30,7 @@ static cs_err init(cs_struct *ud)
 	ud->insn_id = X86_get_insn_id;
 	ud->insn_name = X86_insn_name;
 	ud->group_name = X86_group_name;
-	ud->post_printer = X86_post_printer;
+	ud->post_printer = NULL;;
 
 	if (ud->mode == CS_MODE_64)
 		ud->regsize_map = regsize_map_64;

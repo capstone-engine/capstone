@@ -4,7 +4,7 @@
 PortSystem          1.0
 
 name                capstone
-version             2.1.2
+version             3.0
 categories          devel
 platforms           darwin
 maintainers         gmail.com:aquynh

@@ -28,9 +28,6 @@ const char *X86_insn_name(csh handle, unsigned int id);
 // return group name, given group id
 const char *X86_group_name(csh handle, unsigned int id);
 
-// post printer for X86.
-void X86_post_printer(csh handle, cs_insn *pub_insn, char *insn_asm, MCInst *mci);
-
 // return register of given instruction id
 // return 0 if not found
 // this is to handle instructions embedding accumulate registers into AsmStrs[]
