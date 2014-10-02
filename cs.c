@@ -532,7 +532,7 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 
 		if (f == cache_size) {
 			// full cache, so resize total to contain next disasm insns
-			cache_size = cache_size << 2 / 5; // * 1.6 ~ golden ratio
+			cache_size = cache_size * 8 / 5; // * 1.6 ~ golden ratio
 			total_size += (sizeof(cs_insn) * cache_size);
 			tmp = cs_mem_realloc(total, total_size);
 			if (tmp == NULL) {	// insufficient memory
