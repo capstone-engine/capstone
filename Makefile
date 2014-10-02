@@ -446,7 +446,7 @@ define generate-pkgcfg
 	echo 'Description: Capstone disassembly engine' >> $(PKGCFGF)
 	echo 'Version: $(PKG_VERSION)' >> $(PKGCFGF)
 	echo 'libdir=$(LIBDIR)' >> $(PKGCFGF)
-	echo 'includedir=$(PREFIX)/include/capstone' >> $(PKGCFGF)
+	echo 'includedir=$(INCDIR)/capstone' >> $(PKGCFGF)
 	echo 'archive=$${libdir}/libcapstone.a' >> $(PKGCFGF)
 	echo 'Libs: -L$${libdir} -lcapstone' >> $(PKGCFGF)
 	echo 'Cflags: -I$${includedir}' >> $(PKGCFGF)
