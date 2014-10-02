@@ -906,14 +906,15 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 			MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
 			(MCOperand_getImm(MCInst_getOperand(MI, 0)) < 16)) {
 		int cr = getBICR(MCOperand_getReg(MCInst_getOperand(MI, 1)));
-		op_addReg(MI, PPC_REG_CR0+cr-PPC_CR0);
+
+		op_addReg(MI, PPC_REG_CR0 + cr - PPC_CR0);
+
 		if (decCtr) {
 			needComma = true;
 			SStream_concat0(&ss, " ");
 
 			if (cr > PPC_CR0) {
 				SStream_concat(&ss, "4*cr%d+", cr - PPC_CR0);
-				op_addReg(MI, PPC_REG_CR0 + cr - PPC_CR0);	// FIXME: handle 4*
 			}
 
 			cr = getBICRCond(MCOperand_getReg(MCInst_getOperand(MI, 1)));
@@ -939,7 +940,6 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 			if (cr > PPC_CR0) {
 				needComma = true;
 				SStream_concat(&ss, " cr%d", cr - PPC_CR0);
-				op_addReg(MI, PPC_REG_CR0 + cr - PPC_CR0);
 			}
 		}
 	}
