@@ -1,39 +1,17 @@
---- Makefile.org	2014-04-01 06:08:49.000000000 -0700
-+++ Makefile	2014-04-01 06:27:43.000000000 -0700
-@@ -163,19 +163,6 @@
+--- Makefile
++++ Makefile
+@@ -246,14 +246,6 @@ EXT = dylib
  VERSION_EXT = $(API_MAJOR).$(EXT)
- LDFLAGS += -dynamiclib -install_name lib$(LIBNAME).$(VERSION_EXT) -current_version $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA) -compatibility_version $(PKG_MAJOR).$(PKG_MINOR)
+ $(LIBNAME)_LDFLAGS += -dynamiclib -install_name lib$(LIBNAME).$(VERSION_EXT) -current_version $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA) -compatibility_version $(PKG_MAJOR).$(PKG_MINOR)
  AR_EXT = a
+-# Homebrew wants to make sure its formula does not disable FORTIFY_SOURCE
+-# However, this is not really necessary because 'CAPSTONE_USE_SYS_DYN_MEM=yes' by default
 -ifneq ($(HOMEBREW_CAPSTONE),1)
--ifneq ($(USE_SYS_DYN_MEM),yes)
+-ifneq ($(CAPSTONE_USE_SYS_DYN_MEM),yes)
 -# remove string check because OSX kernel complains about missing symbols
 -CFLAGS += -D_FORTIFY_SOURCE=0
 -endif
--# By default, suppose that Brew is installed & use Brew path for pkgconfig file
--PKGCFCGDIR = /usr/local/lib/pkgconfig
--# is Macport installed instead?
--ifneq (,$(wildcard /opt/local/bin/port))
--# then correct the path for pkgconfig file
--PKGCFCGDIR = /opt/local/lib/pkgconfig
--endif
 -endif
  else
+ $(LIBNAME)_LDFLAGS += -shared
  # Cygwin?
- IS_CYGWIN := $(shell $(CC) -dumpmachine | grep -i cygwin | wc -l)
-@@ -239,15 +226,13 @@
- 	echo 'Version: $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA)' >> $(PKGCFGF)
- endif
- 	echo 'libdir=$(LIBDIR)' >> $(PKGCFGF)
--	echo 'includedir=$(PREFIX)/include/capstone' >> $(PKGCFGF)
-+	echo 'includedir=$(INCDIR)/capstone' >> $(PKGCFGF)
- 	echo 'archive=$${libdir}/libcapstone.a' >> $(PKGCFGF)
- 	echo 'Libs: -L$${libdir} -lcapstone' >> $(PKGCFGF)
- 	echo 'Cflags: -I$${includedir}' >> $(PKGCFGF)
- 
- install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
- 	mkdir -p $(LIBDIR)
--	# remove potential broken old libs
--	rm -f $(LIBDIR)/lib$(LIBNAME).*
- 	$(INSTALL_LIB) lib$(LIBNAME).$(EXT) $(LIBDIR)
- ifneq ($(VERSION_EXT),)
- 	cd $(LIBDIR) && \
