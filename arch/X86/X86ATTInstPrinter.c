@@ -485,9 +485,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	MCOperand *Op  = MCInst_getOperand(MI, OpNo);
 	if (MCOperand_isReg(Op)) {
-		printRegName(O, MCOperand_getReg(Op));
+		unsigned int reg = MCOperand_getReg(Op);
+		printRegName(O, reg);
 		if (MI->csh->detail) {
-			unsigned int reg = MCOperand_getReg(Op);
 			if (MI->csh->doing_mem) {
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.base = reg;
 			} else {

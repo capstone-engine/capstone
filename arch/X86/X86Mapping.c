@@ -47163,11 +47163,6 @@ static insn_map insns[] = {	// reduce x86 instructions
 };
 #endif
 
-// post printer for X86. put all the hacky stuff here
-void X86_post_printer(csh handle, cs_insn *insn, char *insn_asm, MCInst *mci)
-{
-}
-
 // given internal insn id, return public instruction info
 void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {

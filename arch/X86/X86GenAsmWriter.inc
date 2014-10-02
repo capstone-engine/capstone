@@ -14113,8 +14113,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 #endif
 
   // Emit the opcode for the instruction.
-  uint64_t Bits1 = OpInfo[MCInst_getOpcode(MI)];
-  uint64_t Bits2 = OpInfo2[MCInst_getOpcode(MI)];
+  unsigned int opcode = MCInst_getOpcode(MI);
+  uint64_t Bits1 = OpInfo[opcode];
+  uint64_t Bits2 = OpInfo2[opcode];
   uint64_t Bits = (Bits2 << 32) | Bits1;
   // assert(Bits != 0 && "Cannot print this instruction.");
   if (!X86_lockrep(MI, O))

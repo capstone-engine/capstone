@@ -260,7 +260,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 #endif
 
 	// fill the instruction bytes
-	memcpy(insn->bytes, code, MIN(sizeof(insn->bytes), insn->size));
+	memcpy(insn->bytes, code, insn->size);
 
 	// map internal instruction opcode to public insn ID
 	handle->insn_id(handle, insn, MCInst_getOpcode(mci));
@@ -292,7 +292,6 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 
 	// copy @op_str
 	if (*sp) {
-		*sp = '\0';
 		// find the next non-space char
 		sp++;
 		for (; ((*sp == ' ') || (*sp == '\t')); sp++);
