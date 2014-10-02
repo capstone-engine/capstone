@@ -586,8 +586,11 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 		}
 	}
 
-	// no need to resize the cache if f == cache_size
-	if (f != cache_size) {
+	if (!c) {
+		cs_mem_free(total);
+		total = NULL;
+	} else if (f != cache_size) {
+		// no need to resize the cache if f == cache_size
 		// resize total to contain newly disasm insns
 		void *tmp = cs_mem_realloc(total, total_size - (cache_size - f) * sizeof(*insn_cache));
 		if (tmp == NULL) {	// insufficient memory
@@ -606,9 +609,6 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 		}
 
 		total = tmp;
-	} else if (!c) {
-		cs_mem_free(total);
-		total = NULL;
 	}
 
 	*insn = total;
