@@ -501,25 +501,7 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 	if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op) + MI->flat_insn->size + MI->address;
 		if (imm < 0) {
-			unsigned int id = MCInst_getOpcode(MI);
-			if (id != X86_CALL64pcrel32 && id != X86_CALLpcrel16 && id != X86_CALLpcrel32) {
-				SStream_concat(O, "0x%"PRIx64, imm);
-			} else {
-				// relative CALL. now caculate the absolute address
-				switch(MI->csh->mode) {
-					default: break;	// never reach
-					case CS_MODE_16:
-						imm = 0x10000 + imm + 1;
-						break;
-					case CS_MODE_32:
-						imm = 0x100000000 + imm + 1;
-						break;
-					case CS_MODE_64:
-						imm = 0xffffffffffffffff + imm + 1;
-						break;
-				}
-				SStream_concat(O, "0x%"PRIx64, imm);
-			}
+			SStream_concat(O, "0x%"PRIx64, imm);
 		} else {
 			// handle 16bit segment bound
 			if (MI->csh->mode == CS_MODE_16 && imm > 0x100000)
