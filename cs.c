@@ -436,7 +436,7 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 	handle->errnum = CS_ERR_OK;
 
 #ifdef CAPSTONE_USE_SYS_DYN_MEM
-	if (count > 0 && count < INSN_CACHE_SIZE)
+	if (count > 0 && count <= INSN_CACHE_SIZE)
 		cache_size = count;
 #endif
 
@@ -481,14 +481,17 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 			handle->printer(&mci, &ss, handle->printer_info);
 			fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, buffer);
 
+			// one more instruction entering the cache
+			f++;
+
+			// one more instruction disassembled
 			c++;
 			if (count > 0 && c == count)
 				// disasm requested number of instructions
 				break;
 
-			f++;
 			if (f == cache_size) {
-				// resize total to contain newly disasm insns
+				// full cache, so resize total to contain next disasm insns
 				total_size += (sizeof(cs_insn) * cache_size);
 				tmp = cs_mem_realloc(total, total_size);
 				if (tmp == NULL) {	// insufficient memory
@@ -584,7 +587,8 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 		}
 	}
 
-	if (f) {
+	// no need to resize the cache if f == cache_size
+	if (f != cache_size) {
 		// resize total to contain newly disasm insns
 		void *tmp = cs_mem_realloc(total, total_size - (cache_size - f) * sizeof(*insn_cache));
 		if (tmp == NULL) {	// insufficient memory
