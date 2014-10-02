@@ -907,7 +907,9 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 			(MCOperand_getImm(MCInst_getOperand(MI, 0)) < 16)) {
 		int cr = getBICR(MCOperand_getReg(MCInst_getOperand(MI, 1)));
 
-		op_addReg(MI, PPC_REG_CR0 + cr - PPC_CR0);
+		if (cr != PPC_CR0) {
+			op_addReg(MI, PPC_REG_CR0 + cr - PPC_CR0);
+		}
 
 		if (decCtr) {
 			needComma = true;
