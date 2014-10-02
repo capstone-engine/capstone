@@ -425,6 +425,7 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 	size_t size_org;
 	const uint8_t *buffer_org;
 	unsigned int cache_size = INSN_CACHE_SIZE;
+	size_t next_offset;
 
 	if (!handle) {
 		// FIXME: how to handle this case:
@@ -480,43 +481,7 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 			handle->printer(&mci, &ss, handle->printer_info);
 			fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, buffer);
 
-			// one more instruction entering the cache
-			f++;
-
-			// one more instruction disassembled
-			c++;
-			if (count > 0 && c == count)
-				// disasm requested number of instructions
-				break;
-
-			if (f == cache_size) {
-				// full cache, so resize total to contain next disasm insns
-				total_size += (sizeof(cs_insn) * cache_size);
-				tmp = cs_mem_realloc(total, total_size);
-				if (tmp == NULL) {	// insufficient memory
-					if (handle->detail) {
-						insn_cache = (cs_insn *)total;
-						for (i = 0; i < c; i++, insn_cache++)
-							cs_mem_free(insn_cache->detail);
-					}
-
-					cs_mem_free(total);
-					*insn = NULL;
-					handle->errnum = CS_ERR_MEM;
-					return 0;
-				}
-
-				total = tmp;
-				insn_cache = (cs_insn *)((char *)total + total_size - (sizeof(cs_insn) * cache_size));
-
-				// reset f back to 0
-				f = 0;
-			} else
-				insn_cache++;
-
-			buffer += insn_size;
-			size -= insn_size;
-			offset += insn_size;
+			next_offset = insn_size;
 		} else	{
 			if (handle->detail) {
 				// free memory of @detail pointer
@@ -552,38 +517,44 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 			skipdata_opstr(insn_cache->op_str, buffer, skipdata_bytes);
 			insn_cache->detail = NULL;
 
-			f++;
-			if (f == cache_size) {
-				// resize total to contain newly disasm insns
-
-				total_size += (sizeof(cs_insn) * cache_size);
-				tmp = cs_mem_realloc(total, total_size);
-				if (tmp == NULL) {	// insufficient memory
-					if (handle->detail) {
-						insn_cache = (cs_insn *)total;
-						for (i = 0; i < c; i++, insn_cache++)
-							cs_mem_free(insn_cache->detail);
-					}
-
-					cs_mem_free(total);
-					*insn = NULL;
-					handle->errnum = CS_ERR_MEM;
-					return 0;
+			next_offset = skipdata_bytes;
+		}
+		// one more instruction entering the cache
+		f++;
+		// one more instruction disassembled
+		c++;
+		if (count > 0 && c == count)
+			// disasm requested number of instructions
+			break;
+		if (f == cache_size) {
+			// full cache, so resize total to contain next disasm insns
+			cache_size = cache_size << 2 / 5; // * 1.6 ~ golden ratio
+			total_size += (sizeof(cs_insn) * cache_size);
+			tmp = cs_mem_realloc(total, total_size);
+			if (tmp == NULL) {	// insufficient memory
+				if (handle->detail) {
+					insn_cache = (cs_insn *)total;
+					for (i = 0; i < c; i++, insn_cache++)
+						cs_mem_free(insn_cache->detail);
 				}
 
-				total = tmp;
-				insn_cache = (cs_insn *)((char *)total + total_size - (sizeof(cs_insn) * cache_size));
+				cs_mem_free(total);
+				*insn = NULL;
+				handle->errnum = CS_ERR_MEM;
+				return 0;
+			}
 
-				// reset f back to 0
-				f = 0;
-			} else
-				insn_cache++;
+			total = tmp;
+			insn_cache = (cs_insn *)((char *)total + total_size - (sizeof(cs_insn) * cache_size));
 
-			buffer += skipdata_bytes;
-			size -= skipdata_bytes;
-			offset += skipdata_bytes;
-			c++;
-		}
+			// reset f back to 0
+			f = 0;
+		} else
+			insn_cache++;
+
+		buffer += next_offset;
+		size -= next_offset;
+		offset += next_offset;
 	}
 
 	if (!c) {
