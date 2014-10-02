@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DCFE23CC19DDCC9500EF8EA9"
-               BuildableName = "libCapstoneDynamic.dylib"
+               BuildableName = "libcapstone.dylib"
                BlueprintName = "CapstoneDynamic"
                ReferencedContainer = "container:Capstone.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DCFE23CC19DDCC9500EF8EA9"
-            BuildableName = "libCapstoneDynamic.dylib"
+            BuildableName = "libcapstone.dylib"
             BlueprintName = "CapstoneDynamic"
             ReferencedContainer = "container:Capstone.xcodeproj">
          </BuildableReference>
@@ -61,7 +61,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DCFE23CC19DDCC9500EF8EA9"
-            BuildableName = "libCapstoneDynamic.dylib"
+            BuildableName = "libcapstone.dylib"
             BlueprintName = "CapstoneDynamic"
             ReferencedContainer = "container:Capstone.xcodeproj">
          </BuildableReference>

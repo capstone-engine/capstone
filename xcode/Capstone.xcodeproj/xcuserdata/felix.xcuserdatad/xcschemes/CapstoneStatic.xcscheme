@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DCFE23BC19DDCC2D00EF8EA9"
-               BuildableName = "libCapstone.a"
+               BuildableName = "libcapstone.a"
                BlueprintName = "CapstoneStatic"
                ReferencedContainer = "container:Capstone.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DCFE23BC19DDCC2D00EF8EA9"
-            BuildableName = "libCapstone.a"
+            BuildableName = "libcapstone.a"
             BlueprintName = "CapstoneStatic"
             ReferencedContainer = "container:Capstone.xcodeproj">
          </BuildableReference>
@@ -61,7 +61,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DCFE23BC19DDCC2D00EF8EA9"
-            BuildableName = "libCapstone.a"
+            BuildableName = "libcapstone.a"
             BlueprintName = "CapstoneStatic"
             ReferencedContainer = "container:Capstone.xcodeproj">
          </BuildableReference>

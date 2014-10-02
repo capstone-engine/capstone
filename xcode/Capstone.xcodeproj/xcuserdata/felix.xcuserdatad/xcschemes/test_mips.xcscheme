@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DCFE250819DDD55E00EF8EA9"
+               BlueprintIdentifier = "DC474E9B19DDEAAC00BCA449"
                BuildableName = "test_mips"
                BlueprintName = "test_mips"
                ReferencedContainer = "container:Capstone.xcodeproj">
@@ -32,7 +32,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DCFE250819DDD55E00EF8EA9"
+            BlueprintIdentifier = "DC474E9B19DDEAAC00BCA449"
             BuildableName = "test_mips"
             BlueprintName = "test_mips"
             ReferencedContainer = "container:Capstone.xcodeproj">
@@ -51,7 +51,7 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DCFE250819DDD55E00EF8EA9"
+            BlueprintIdentifier = "DC474E9B19DDEAAC00BCA449"
             BuildableName = "test_mips"
             BlueprintName = "test_mips"
             ReferencedContainer = "container:Capstone.xcodeproj">
@@ -69,7 +69,7 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DCFE250819DDD55E00EF8EA9"
+            BlueprintIdentifier = "DC474E9B19DDEAAC00BCA449"
             BuildableName = "test_mips"
             BlueprintName = "test_mips"
             ReferencedContainer = "container:Capstone.xcodeproj">
