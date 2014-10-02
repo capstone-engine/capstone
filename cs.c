@@ -414,10 +414,10 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 	MCInst mci;
 	uint16_t insn_size;
 	size_t c = 0, i;
-	unsigned int f = 0;
-	cs_insn *insn_cache;
+	unsigned int f = 0;	// index of the next instruction in the cache
+	cs_insn *insn_cache;	// cache contains disassembled instructions
 	void *total = NULL;
-	size_t total_size = 0;
+	size_t total_size = 0;	// total size of output buffer containing all insns
 	bool r;
 	void *tmp;
 	size_t skipdata_bytes;
@@ -527,11 +527,11 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 		// one more instruction disassembled
 		c++;
 		if (count > 0 && c == count)
-			// disasm requested number of instructions
+			// already got requested number of instructions
 			break;
 
 		if (f == cache_size) {
-			// full cache, so resize total to contain next disasm insns
+			// full cache, so expand the cache to contain incoming insns
 			cache_size = cache_size * 8 / 5; // * 1.6 ~ golden ratio
 			total_size += (sizeof(cs_insn) * cache_size);
 			tmp = cs_mem_realloc(total, total_size);
@@ -549,9 +549,10 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 			}
 
 			total = tmp;
-			insn_cache = (cs_insn *)((char *)total + total_size - (sizeof(cs_insn) * cache_size));
+			// continue to fill in the cache after the last instruction
+			insn_cache = (cs_insn *)((char *)total + sizeof(cs_insn) * c);
 
-			// reset f back to 0
+			// reset f back to 0, so we fill in the cache from begining
 			f = 0;
 		} else
 			insn_cache++;
