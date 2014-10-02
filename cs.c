@@ -483,12 +483,13 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 
 			next_offset = insn_size;
 		} else	{
+			// encounter a broken instruction
+
+			// free memory of @detail pointer
 			if (handle->detail) {
-				// free memory of @detail pointer
 				cs_mem_free(insn_cache->detail);
 			}
 
-			// encounter a broken instruction
 			// if there is no request to skip data, or remaining data is too small,
 			// then bail out
 			if (!handle->skipdata || handle->skipdata_size > size)
@@ -519,13 +520,16 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 
 			next_offset = skipdata_bytes;
 		}
+
 		// one more instruction entering the cache
 		f++;
+
 		// one more instruction disassembled
 		c++;
 		if (count > 0 && c == count)
 			// disasm requested number of instructions
 			break;
+
 		if (f == cache_size) {
 			// full cache, so resize total to contain next disasm insns
 			cache_size = cache_size << 2 / 5; // * 1.6 ~ golden ratio
@@ -558,11 +562,11 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 	}
 
 	if (!c) {
+		// we did not disassemble any instruction
 		cs_mem_free(total);
 		total = NULL;
 	} else if (f != cache_size) {
-		// no need to resize the cache if f == cache_size
-		// resize total to contain newly disasm insns
+		// total did not fully use the last cache, so downsize it
 		void *tmp = cs_mem_realloc(total, total_size - (cache_size - f) * sizeof(*insn_cache));
 		if (tmp == NULL) {	// insufficient memory
 			// free all detail pointers
