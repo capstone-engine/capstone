@@ -360,8 +360,6 @@ endif
 install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 	mkdir -p $(LIBDIR)
 ifeq ($(CAPSTONE_SHARED),yes)
-	# remove potential broken old libs
-	rm -f $(LIBDIR)/lib$(LIBNAME).*
 	$(INSTALL_LIB) $(LIBRARY) $(LIBDIR)
 ifneq ($(VERSION_EXT),)
 	cd $(LIBDIR) && \
