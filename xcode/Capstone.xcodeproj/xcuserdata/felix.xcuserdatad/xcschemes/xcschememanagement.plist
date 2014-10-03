@@ -7,7 +7,12 @@
 		<key>CapstoneDynamic.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>2</integer>
+		</dict>
+		<key>CapstoneFramework.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>26</integer>
 		</dict>
 		<key>CapstoneStatic.xcscheme</key>
 		<dict>
@@ -17,57 +22,57 @@
 		<key>test.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>5</integer>
 		</dict>
 		<key>test_arm.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>3</integer>
+			<integer>7</integer>
 		</dict>
 		<key>test_arm64.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>12</integer>
+			<integer>25</integer>
 		</dict>
 		<key>test_detail.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>4</integer>
+			<integer>9</integer>
 		</dict>
 		<key>test_mips.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>5</integer>
+			<integer>11</integer>
 		</dict>
 		<key>test_ppc.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>6</integer>
+			<integer>13</integer>
 		</dict>
 		<key>test_skipdata.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>7</integer>
+			<integer>15</integer>
 		</dict>
 		<key>test_sparc.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>8</integer>
+			<integer>17</integer>
 		</dict>
 		<key>test_systemz.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>9</integer>
+			<integer>19</integer>
 		</dict>
 		<key>test_x86.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>10</integer>
+			<integer>21</integer>
 		</dict>
 		<key>test_xcore.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>11</integer>
+			<integer>23</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -123,6 +128,26 @@
 			<true/>
 		</dict>
 		<key>DC474EE919DDEAE400BCA449</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DC474F0A19DDF07300BCA449</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DC474F1419DDF07300BCA449</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DC474F6719DE6F3B00BCA449</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DC474F7119DE6F3B00BCA449</key>
 		<dict>
 			<key>primary</key>
 			<true/>
