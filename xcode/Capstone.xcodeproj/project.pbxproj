@@ -2347,6 +2347,7 @@
 				DC474E6919DDEA5F00BCA449 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DC474E8A19DDEAA200BCA449 /* Build configuration list for PBXNativeTarget "test_arm" */ = {
 			isa = XCConfigurationList;
@@ -2355,6 +2356,7 @@
 				DC474E8C19DDEAA200BCA449 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DC474E9519DDEAA700BCA449 /* Build configuration list for PBXNativeTarget "test_detail" */ = {
 			isa = XCConfigurationList;
@@ -2363,6 +2365,7 @@
 				DC474E9719DDEAA700BCA449 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DC474EA019DDEAAC00BCA449 /* Build configuration list for PBXNativeTarget "test_mips" */ = {
 			isa = XCConfigurationList;
@@ -2371,6 +2374,7 @@
 				DC474EA219DDEAAC00BCA449 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DC474EAB19DDEAB000BCA449 /* Build configuration list for PBXNativeTarget "test_ppc" */ = {
 			isa = XCConfigurationList;
@@ -2379,6 +2383,7 @@
 				DC474EAD19DDEAB000BCA449 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DC474EB619DDEAB700BCA449 /* Build configuration list for PBXNativeTarget "test_skipdata" */ = {
 			isa = XCConfigurationList;
@@ -2387,6 +2392,7 @@
 				DC474EB819DDEAB700BCA449 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DC474EC119DDEABC00BCA449 /* Build configuration list for PBXNativeTarget "test_sparc" */ = {
 			isa = XCConfigurationList;
@@ -2395,6 +2401,7 @@
 				DC474EC319DDEABC00BCA449 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DC474ECC19DDEAC100BCA449 /* Build configuration list for PBXNativeTarget "test_systemz" */ = {
 			isa = XCConfigurationList;
@@ -2403,6 +2410,7 @@
 				DC474ECE19DDEAC100BCA449 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DC474ED719DDEAC600BCA449 /* Build configuration list for PBXNativeTarget "test_x86" */ = {
 			isa = XCConfigurationList;
@@ -2411,6 +2419,7 @@
 				DC474ED919DDEAC600BCA449 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DC474EE219DDEACC00BCA449 /* Build configuration list for PBXNativeTarget "test_xcore" */ = {
 			isa = XCConfigurationList;
@@ -2419,6 +2428,7 @@
 				DC474EE419DDEACC00BCA449 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DC474EEE19DDEAE400BCA449 /* Build configuration list for PBXNativeTarget "test_arm64" */ = {
 			isa = XCConfigurationList;
@@ -2427,6 +2437,7 @@
 				DC474EF019DDEAE400BCA449 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DCFE239D19DDCB4900EF8EA9 /* Build configuration list for PBXProject "Capstone" */ = {
 			isa = XCConfigurationList;
