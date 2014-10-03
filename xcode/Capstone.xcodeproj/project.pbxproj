@@ -2316,6 +2316,7 @@
 					"CAPSTONE_HAS_X86=1",
 					"CAPSTONE_HAS_XCORE=1",
 					"CAPSTONE_USE_SYS_DYN_MEM=1",
+					"CAPSTONE_SHARED=1",
 					"DEBUG=1",
 					"$(inherited)",
 				);
@@ -2379,6 +2380,7 @@
 					"CAPSTONE_HAS_X86=1",
 					"CAPSTONE_HAS_XCORE=1",
 					"CAPSTONE_USE_SYS_DYN_MEM=1",
+					"CAPSTONE_SHARED=1",
 					"$(inherited)",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -2556,6 +2558,7 @@
 					"CAPSTONE_HAS_X86=1",
 					"CAPSTONE_HAS_XCORE=1",
 					"CAPSTONE_USE_SYS_DYN_MEM=1",
+					"CAPSTONE_SHARED=1",
 					"DEBUG=1",
 					"$(inherited)",
 				);
@@ -2614,6 +2617,7 @@
 					"CAPSTONE_HAS_X86=1",
 					"CAPSTONE_HAS_XCORE=1",
 					"CAPSTONE_USE_SYS_DYN_MEM=1",
+					"CAPSTONE_SHARED=1",
 					"$(inherited)",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
