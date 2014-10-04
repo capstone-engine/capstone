@@ -63,38 +63,46 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 			Store_field(rec_insn, 5, caml_copy_string(insn[j-1].op_str));
 
 			// copy read registers
-			lcount = (insn[j-1]).detail->regs_read_count;
-			if (lcount) {
-				array = caml_alloc(lcount, 0);
-				for (i = 0; i < lcount; i++) {
-					Store_field(array, i, Val_int(insn[j-1].detail->regs_read[i]));
-				}
+			if (insn[0].detail) {
+				lcount = (insn[j-1]).detail->regs_read_count;
+				if (lcount) {
+					array = caml_alloc(lcount, 0);
+					for (i = 0; i < lcount; i++) {
+						Store_field(array, i, Val_int(insn[j-1].detail->regs_read[i]));
+					}
+				} else
+					array = Atom(0);	// empty list
 			} else
 				array = Atom(0);	// empty list
 			Store_field(rec_insn, 6, array);
 
-			lcount = (insn[j-1]).detail->regs_write_count;
-			if (lcount) {
-				array = caml_alloc(lcount, 0);
-				for (i = 0; i < lcount; i++) {
-					Store_field(array, i, Val_int(insn[j-1].detail->regs_write[i]));
-				}
+			if (insn[0].detail) {
+				lcount = (insn[j-1]).detail->regs_write_count;
+				if (lcount) {
+					array = caml_alloc(lcount, 0);
+					for (i = 0; i < lcount; i++) {
+						Store_field(array, i, Val_int(insn[j-1].detail->regs_write[i]));
+					}
+				} else
+					array = Atom(0);	// empty list
 			} else
 				array = Atom(0);	// empty list
 			Store_field(rec_insn, 7, array);
 
-
-			lcount = (insn[j-1]).detail->groups_count;
-			if (lcount) {
-				array = caml_alloc(lcount, 0);
-				for (i = 0; i < lcount; i++) {
-					Store_field(array, i, Val_int(insn[j-1].detail->groups[i]));
-				}
+			if (insn[0].detail) {
+				lcount = (insn[j-1]).detail->groups_count;
+				if (lcount) {
+					array = caml_alloc(lcount, 0);
+					for (i = 0; i < lcount; i++) {
+						Store_field(array, i, Val_int(insn[j-1].detail->groups[i]));
+					}
+				} else
+					array = Atom(0);	// empty list
 			} else
 				array = Atom(0);	// empty list
 			Store_field(rec_insn, 8, array);
 
-			if(insn[j-1].detail) {
+			if (insn[j-1].detail) {
 				switch(arch) {
 					case CS_ARCH_ARM:
 						arch_info = caml_alloc(1, 0);
@@ -318,7 +326,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 
 						// fill opcode
 						lcount = list_count(insn[j-1].detail->x86.opcode, ARR_SIZE(insn[j-1].detail->x86.opcode));
-						if(lcount) {
+						if (lcount) {
 							array = caml_alloc(lcount, 0);
 							for (i = 0; i < lcount; i++) {
 								Store_field(array, i, Val_int(insn[j-1].detail->x86.opcode[i]));
@@ -700,9 +708,6 @@ CAMLprim value ocaml_cs_disasm(value _arch, value _mode, value _code, value _add
 		return Val_emptylist;
 	}
 
-	if (cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON) != CS_ERR_OK)
-		CAMLreturn(Val_int(0));
-
 	code = (uint8_t *)String_val(_code);
 	code_len = caml_string_length(_code);
 	addr = Int64_val(_addr);
@@ -730,7 +735,7 @@ CAMLprim value ocaml_cs_disasm_internal(value _arch, value _handle, value _code,
     CAMLreturn(_cs_disasm(arch, handle, code, code_len, addr, count));
 }
 
-CAMLprim value ocaml_cs_open(value _arch, value _mode)
+CAMLprim value ocaml_open(value _arch, value _mode)
 {
 	CAMLparam2(_arch, _mode);
 	CAMLlocal2(list, head);
@@ -826,42 +831,77 @@ CAMLprim value ocaml_cs_open(value _arch, value _mode)
 	if (cs_open(arch, mode, &handle) != 0) 
 		CAMLreturn(Val_int(0));
 
-	if (cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON) != 0)
-		CAMLreturn(Val_int(0));
-
 	CAMLlocal1(result);
 	result = caml_alloc(1, 0);
 	Store_field(result, 0, caml_copy_int64(handle));
 	CAMLreturn(result);
 }
 
+CAMLprim value ocaml_option(value _handle, value _opt, value _value)
+{
+	CAMLparam3(_handle, _opt, _value);
+	cs_opt_type opt;
+	int err;
+
+	switch (Int_val(_opt)) {
+		case 0:
+			opt = CS_OPT_SYNTAX;
+			break;
+		case 1:
+			opt = CS_OPT_DETAIL;
+			break;
+		case 2:
+			opt = CS_OPT_MODE;
+			break;
+		case 3:
+			opt = CS_OPT_MEM;
+			break;
+		case 4:
+			opt = CS_OPT_SKIPDATA;
+			break;
+		case 5:
+			opt = CS_OPT_SKIPDATA_SETUP;
+			break;
+		default:
+			caml_invalid_argument("Invalid option");
+			CAMLreturn(Val_int(CS_ERR_OPTION));
+	}
+
+	err = cs_option(Int64_val(_handle), opt, Int64_val(_value));
+
+	CAMLreturn(Val_int(err));
+}
+
 CAMLprim value ocaml_register_name(value _handle, value _reg)
 {
 	const char *name = cs_reg_name(Int64_val(_handle), Int_val(_reg));
-	if(!name) {
+	if (!name) {
 		caml_invalid_argument("invalid reg_id");
 		name = "invalid";
 	}
+
 	return caml_copy_string(name);
 }
 
 CAMLprim value ocaml_instruction_name(value _handle, value _insn)
 {
 	const char *name = cs_insn_name(Int64_val(_handle), Int_val(_insn));
-	if(!name) {
+	if (!name) {
 		caml_invalid_argument("invalid insn_id");
 		name = "invalid";
 	}
+
 	return caml_copy_string(name);
 }
 
 CAMLprim value ocaml_group_name(value _handle, value _insn)
 {
 	const char *name = cs_group_name(Int64_val(_handle), Int_val(_insn));
-	if(!name) {
+	if (!name) {
 		caml_invalid_argument("invalid insn_id");
 		name = "invalid";
 	}
+
 	return caml_copy_string(name);
 }
 
@@ -869,4 +909,14 @@ CAMLprim value ocaml_version(void)
 {
 	int version = cs_version(NULL, NULL);
 	return Val_int(version);
+}
+
+CAMLprim value ocaml_close(value _handle)
+{
+	CAMLparam1(_handle);
+	csh h;
+
+	h = Int64_val(_handle);
+
+	CAMLreturn(Val_int(cs_close(&h)));
 }
