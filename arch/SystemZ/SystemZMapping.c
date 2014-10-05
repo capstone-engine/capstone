@@ -57,7 +57,7 @@ static name_map reg_name_maps[] = {
 const char *SystemZ_reg_name(csh handle, unsigned int reg)
 {
 #ifndef CAPSTONE_DIET
-	if (reg >= SYSZ_REG_MAX)
+	if (reg >= SYSZ_REG_ENDING)
 		return NULL;
 
 	return reg_name_maps[reg].name;
@@ -144,7 +144,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_AGHIK, SYSZ_INS_AGHIK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -156,7 +156,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_AGRK, SYSZ_INS_AGRK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -180,7 +180,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_AHIK, SYSZ_INS_AHIK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -192,7 +192,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_AIH, SYSZ_INS_AIH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREHIGHWORD, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_HIGHWORD, 0 }, 0, 0
 #endif
 	},
 	{
@@ -258,7 +258,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_ALGHSIK, SYSZ_INS_ALGHSIK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -270,13 +270,13 @@ static insn_map insns[] = {
 	{
 		SystemZ_ALGRK, SYSZ_INS_ALGRK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_ALHSIK, SYSZ_INS_ALHSIK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -288,7 +288,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_ALRK, SYSZ_INS_ALRK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -306,7 +306,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_ARK, SYSZ_INS_ARK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -414,37 +414,37 @@ static insn_map insns[] = {
 	{
 		SystemZ_AsmELOC, SYSZ_INS_LOCE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmELOCG, SYSZ_INS_LOCGE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmELOCGR, SYSZ_INS_LOCGRE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmELOCR, SYSZ_INS_LOCRE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmESTOC, SYSZ_INS_STOCE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmESTOCG, SYSZ_INS_STOCGE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
@@ -474,37 +474,37 @@ static insn_map insns[] = {
 	{
 		SystemZ_AsmHELOC, SYSZ_INS_LOCHE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmHELOCG, SYSZ_INS_LOCGHE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmHELOCGR, SYSZ_INS_LOCGRHE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmHELOCR, SYSZ_INS_LOCRHE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmHESTOC, SYSZ_INS_STOCHE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmHESTOCG, SYSZ_INS_STOCGHE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
@@ -522,37 +522,37 @@ static insn_map insns[] = {
 	{
 		SystemZ_AsmHLOC, SYSZ_INS_LOCH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmHLOCG, SYSZ_INS_LOCGH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmHLOCGR, SYSZ_INS_LOCGRH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmHLOCR, SYSZ_INS_LOCRH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmHSTOC, SYSZ_INS_STOCH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmHSTOCG, SYSZ_INS_STOCGH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
@@ -1158,37 +1158,37 @@ static insn_map insns[] = {
 	{
 		SystemZ_AsmLELOC, SYSZ_INS_LOCLE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmLELOCG, SYSZ_INS_LOCGLE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmLELOCGR, SYSZ_INS_LOCGRLE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmLELOCR, SYSZ_INS_LOCRLE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmLESTOC, SYSZ_INS_STOCLE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmLESTOCG, SYSZ_INS_STOCGLE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
@@ -1212,37 +1212,37 @@ static insn_map insns[] = {
 	{
 		SystemZ_AsmLHLOC, SYSZ_INS_LOCLH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmLHLOCG, SYSZ_INS_LOCGLH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmLHLOCGR, SYSZ_INS_LOCGRLH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmLHLOCR, SYSZ_INS_LOCRLH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmLHSTOC, SYSZ_INS_STOCLH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmLHSTOCG, SYSZ_INS_STOCGLH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
@@ -1260,61 +1260,61 @@ static insn_map insns[] = {
 	{
 		SystemZ_AsmLLOC, SYSZ_INS_LOCL,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmLLOCG, SYSZ_INS_LOCGL,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmLLOCGR, SYSZ_INS_LOCGRL,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmLLOCR, SYSZ_INS_LOCRL,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmLOC, SYSZ_INS_LOC,
 #ifndef CAPSTONE_DIET
-		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmLOCG, SYSZ_INS_LOCG,
 #ifndef CAPSTONE_DIET
-		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmLOCGR, SYSZ_INS_LOCGR,
 #ifndef CAPSTONE_DIET
-		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmLOCR, SYSZ_INS_LOCR,
 #ifndef CAPSTONE_DIET
-		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmLSTOC, SYSZ_INS_STOCL,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmLSTOCG, SYSZ_INS_STOCGL,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
@@ -1338,37 +1338,37 @@ static insn_map insns[] = {
 	{
 		SystemZ_AsmNELOC, SYSZ_INS_LOCNE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNELOCG, SYSZ_INS_LOCGNE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNELOCGR, SYSZ_INS_LOCGRNE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNELOCR, SYSZ_INS_LOCRNE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNESTOC, SYSZ_INS_STOCNE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNESTOCG, SYSZ_INS_STOCGNE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
@@ -1398,37 +1398,37 @@ static insn_map insns[] = {
 	{
 		SystemZ_AsmNHELOC, SYSZ_INS_LOCNHE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNHELOCG, SYSZ_INS_LOCGNHE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNHELOCGR, SYSZ_INS_LOCGRNHE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNHELOCR, SYSZ_INS_LOCRNHE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNHESTOC, SYSZ_INS_STOCNHE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNHESTOCG, SYSZ_INS_STOCGNHE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
@@ -1446,37 +1446,37 @@ static insn_map insns[] = {
 	{
 		SystemZ_AsmNHLOC, SYSZ_INS_LOCNH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNHLOCG, SYSZ_INS_LOCGNH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNHLOCGR, SYSZ_INS_LOCGRNH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNHLOCR, SYSZ_INS_LOCRNH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNHSTOC, SYSZ_INS_STOCNH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNHSTOCG, SYSZ_INS_STOCGNH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
@@ -1506,37 +1506,37 @@ static insn_map insns[] = {
 	{
 		SystemZ_AsmNLELOC, SYSZ_INS_LOCNLE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNLELOCG, SYSZ_INS_LOCGNLE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNLELOCGR, SYSZ_INS_LOCGRNLE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNLELOCR, SYSZ_INS_LOCRNLE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNLESTOC, SYSZ_INS_STOCNLE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNLESTOCG, SYSZ_INS_STOCGNLE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
@@ -1560,37 +1560,37 @@ static insn_map insns[] = {
 	{
 		SystemZ_AsmNLHLOC, SYSZ_INS_LOCNLH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNLHLOCG, SYSZ_INS_LOCGNLH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNLHLOCGR, SYSZ_INS_LOCGRNLH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNLHLOCR, SYSZ_INS_LOCRNLH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNLHSTOC, SYSZ_INS_STOCNLH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNLHSTOCG, SYSZ_INS_STOCGNLH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
@@ -1608,37 +1608,37 @@ static insn_map insns[] = {
 	{
 		SystemZ_AsmNLLOC, SYSZ_INS_LOCNL,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNLLOCG, SYSZ_INS_LOCGNL,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNLLOCGR, SYSZ_INS_LOCGRNL,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNLLOCR, SYSZ_INS_LOCRNL,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNLSTOC, SYSZ_INS_STOCNL,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNLSTOCG, SYSZ_INS_STOCGNL,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
@@ -1662,37 +1662,37 @@ static insn_map insns[] = {
 	{
 		SystemZ_AsmNOLOC, SYSZ_INS_LOCNO,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNOLOCG, SYSZ_INS_LOCGNO,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNOLOCGR, SYSZ_INS_LOCGRNO,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNOLOCR, SYSZ_INS_LOCRNO,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNOSTOC, SYSZ_INS_STOCNO,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmNOSTOCG, SYSZ_INS_STOCGNO,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
@@ -1716,49 +1716,49 @@ static insn_map insns[] = {
 	{
 		SystemZ_AsmOLOC, SYSZ_INS_LOCO,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmOLOCG, SYSZ_INS_LOCGO,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmOLOCGR, SYSZ_INS_LOCGRO,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmOLOCR, SYSZ_INS_LOCRO,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmOSTOC, SYSZ_INS_STOCO,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmOSTOCG, SYSZ_INS_STOCGO,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmSTOC, SYSZ_INS_STOC,
 #ifndef CAPSTONE_DIET
-		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_AsmSTOCG, SYSZ_INS_STOCG,
 #ifndef CAPSTONE_DIET
-		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
@@ -1842,13 +1842,13 @@ static insn_map insns[] = {
 	{
 		SystemZ_CDLFBR, SYSZ_INS_CDLFBR,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREFPEXTENSION, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_CDLGBR, SYSZ_INS_CDLGBR,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREFPEXTENSION, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
 #endif
 	},
 	{
@@ -1878,13 +1878,13 @@ static insn_map insns[] = {
 	{
 		SystemZ_CELFBR, SYSZ_INS_CELFBR,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREFPEXTENSION, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_CELGBR, SYSZ_INS_CELGBR,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREFPEXTENSION, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2016,7 +2016,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_CHF, SYSZ_INS_CHF,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREHIGHWORD, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_HIGHWORD, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2052,7 +2052,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_CIH, SYSZ_INS_CIH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREHIGHWORD, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_HIGHWORD, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2076,13 +2076,13 @@ static insn_map insns[] = {
 	{
 		SystemZ_CLFDBR, SYSZ_INS_CLFDBR,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREFPEXTENSION, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_CLFEBR, SYSZ_INS_CLFEBR,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREFPEXTENSION, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2100,7 +2100,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_CLFXBR, SYSZ_INS_CLFXBR,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREFPEXTENSION, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2112,13 +2112,13 @@ static insn_map insns[] = {
 	{
 		SystemZ_CLGDBR, SYSZ_INS_CLGDBR,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREFPEXTENSION, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_CLGEBR, SYSZ_INS_CLGEBR,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREFPEXTENSION, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2184,13 +2184,13 @@ static insn_map insns[] = {
 	{
 		SystemZ_CLGXBR, SYSZ_INS_CLGXBR,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREFPEXTENSION, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_CLHF, SYSZ_INS_CLHF,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREHIGHWORD, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_HIGHWORD, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2214,7 +2214,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_CLIH, SYSZ_INS_CLIH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREHIGHWORD, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_HIGHWORD, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2340,13 +2340,13 @@ static insn_map insns[] = {
 	{
 		SystemZ_CXLFBR, SYSZ_INS_CXLFBR,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREFPEXTENSION, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_CXLGBR, SYSZ_INS_CXLGBR,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREFPEXTENSION, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2448,7 +2448,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_FIDBRA, SYSZ_INS_FIDBRA,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREFPEXTENSION, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2460,7 +2460,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_FIEBRA, SYSZ_INS_FIEBRA,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREFPEXTENSION, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2472,7 +2472,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_FIXBRA, SYSZ_INS_FIXBRA,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREFPEXTENSION, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2574,49 +2574,49 @@ static insn_map insns[] = {
 	{
 		SystemZ_LAA, SYSZ_INS_LAA,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREINTERLOCKEDACCESS1, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_INTERLOCKEDACCESS1, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_LAAG, SYSZ_INS_LAAG,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREINTERLOCKEDACCESS1, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_INTERLOCKEDACCESS1, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_LAAL, SYSZ_INS_LAAL,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREINTERLOCKEDACCESS1, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_INTERLOCKEDACCESS1, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_LAALG, SYSZ_INS_LAALG,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREINTERLOCKEDACCESS1, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_INTERLOCKEDACCESS1, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_LAN, SYSZ_INS_LAN,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREINTERLOCKEDACCESS1, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_INTERLOCKEDACCESS1, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_LANG, SYSZ_INS_LANG,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREINTERLOCKEDACCESS1, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_INTERLOCKEDACCESS1, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_LAO, SYSZ_INS_LAO,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREINTERLOCKEDACCESS1, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_INTERLOCKEDACCESS1, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_LAOG, SYSZ_INS_LAOG,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREINTERLOCKEDACCESS1, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_INTERLOCKEDACCESS1, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2628,13 +2628,13 @@ static insn_map insns[] = {
 	{
 		SystemZ_LAX, SYSZ_INS_LAX,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREINTERLOCKEDACCESS1, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_INTERLOCKEDACCESS1, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_LAXG, SYSZ_INS_LAXG,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREINTERLOCKEDACCESS1, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_INTERLOCKEDACCESS1, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2652,7 +2652,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_LBH, SYSZ_INS_LBH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREHIGHWORD, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_HIGHWORD, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2734,6 +2734,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		SystemZ_LDXBRA, SYSZ_INS_LDXBRA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
+#endif
+	},
+	{
 		SystemZ_LDY, SYSZ_INS_LDY,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
@@ -2752,6 +2758,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		SystemZ_LEDBRA, SYSZ_INS_LEDBRA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
+#endif
+	},
+	{
 		SystemZ_LER, SYSZ_INS_LER,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
@@ -2764,6 +2776,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		SystemZ_LEXBRA, SYSZ_INS_LEXBRA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { SYSZ_GRP_FPEXTENSION, 0 }, 0, 0
+#endif
+	},
+	{
 		SystemZ_LEY, SYSZ_INS_LEY,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
@@ -2772,7 +2790,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_LFH, SYSZ_INS_LFH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREHIGHWORD, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_HIGHWORD, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2868,7 +2886,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_LHH, SYSZ_INS_LHH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREHIGHWORD, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_HIGHWORD, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2904,7 +2922,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_LLCH, SYSZ_INS_LLCH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREHIGHWORD, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_HIGHWORD, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2970,7 +2988,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_LLHH, SYSZ_INS_LLHH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREHIGHWORD, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_HIGHWORD, 0 }, 0, 0
 #endif
 	},
 	{
@@ -3066,25 +3084,25 @@ static insn_map insns[] = {
 	{
 		SystemZ_LOC, SYSZ_INS_LOC,
 #ifndef CAPSTONE_DIET
-		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_LOCG, SYSZ_INS_LOCG,
 #ifndef CAPSTONE_DIET
-		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_LOCGR, SYSZ_INS_LOCGR,
 #ifndef CAPSTONE_DIET
-		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_LOCR, SYSZ_INS_LOCR,
 #ifndef CAPSTONE_DIET
-		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
@@ -3546,7 +3564,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_NGRK, SYSZ_INS_NGRK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -3606,7 +3624,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_NRK, SYSZ_INS_NRK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -3642,7 +3660,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_OGRK, SYSZ_INS_OGRK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -3702,7 +3720,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_ORK, SYSZ_INS_ORK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -3738,13 +3756,13 @@ static insn_map insns[] = {
 	{
 		SystemZ_RISBHG, SYSZ_INS_RISBHG,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREHIGHWORD, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_HIGHWORD, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_RISBLG, SYSZ_INS_RISBLG,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREHIGHWORD, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_HIGHWORD, 0 }, 0, 0
 #endif
 	},
 	{
@@ -3834,7 +3852,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_SGRK, SYSZ_INS_SGRK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -3918,7 +3936,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_SLGRK, SYSZ_INS_SLGRK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -3936,7 +3954,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_SLLK, SYSZ_INS_SLLK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -3948,7 +3966,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_SLRK, SYSZ_INS_SLRK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -4008,13 +4026,13 @@ static insn_map insns[] = {
 	{
 		SystemZ_SRAK, SYSZ_INS_SRAK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_SRK, SYSZ_INS_SRK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -4032,7 +4050,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_SRLK, SYSZ_INS_SRLK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -4056,7 +4074,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_STCH, SYSZ_INS_STCH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREHIGHWORD, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_HIGHWORD, 0 }, 0, 0
 #endif
 	},
 	{
@@ -4092,7 +4110,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_STFH, SYSZ_INS_STFH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREHIGHWORD, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_HIGHWORD, 0 }, 0, 0
 #endif
 	},
 	{
@@ -4116,7 +4134,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_STHH, SYSZ_INS_STHH,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { SYSZ_GRP_FEATUREHIGHWORD, 0 }, 0, 0
+		{ 0 }, { 0 }, { SYSZ_GRP_HIGHWORD, 0 }, 0, 0
 #endif
 	},
 	{
@@ -4140,13 +4158,13 @@ static insn_map insns[] = {
 	{
 		SystemZ_STOC, SYSZ_INS_STOC,
 #ifndef CAPSTONE_DIET
-		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
 		SystemZ_STOCG, SYSZ_INS_STOCG,
 #ifndef CAPSTONE_DIET
-		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_FEATURELOADSTOREONCOND, 0 }, 0, 0
+		{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_LOADSTOREONCOND, 0 }, 0, 0
 #endif
 	},
 	{
@@ -4248,7 +4266,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_XGRK, SYSZ_INS_XGRK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -4284,7 +4302,7 @@ static insn_map insns[] = {
 	{
 		SystemZ_XRK, SYSZ_INS_XRK,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_FEATUREDISTINCTOPS, 0 }, 0, 0
+		{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_DISTINCTOPS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -4757,11 +4775,14 @@ static name_map insn_name_maps[] = {
 	{ SYSZ_INS_LDGR, "ldgr" },
 	{ SYSZ_INS_LDR, "ldr" },
 	{ SYSZ_INS_LDXBR, "ldxbr" },
+	{ SYSZ_INS_LDXBRA, "ldxbra" },
 	{ SYSZ_INS_LDY, "ldy" },
 	{ SYSZ_INS_LE, "le" },
 	{ SYSZ_INS_LEDBR, "ledbr" },
+	{ SYSZ_INS_LEDBRA, "ledbra" },
 	{ SYSZ_INS_LER, "ler" },
 	{ SYSZ_INS_LEXBR, "lexbr" },
+	{ SYSZ_INS_LEXBRA, "lexbra" },
 	{ SYSZ_INS_LEY, "ley" },
 	{ SYSZ_INS_LFH, "lfh" },
 	{ SYSZ_INS_LG, "lg" },
@@ -5020,7 +5041,7 @@ const char *SystemZ_insn_name(csh handle, unsigned int id)
 #ifndef CAPSTONE_DIET
 	unsigned int i;
 
-	if (id >= SYSZ_INS_MAX)
+	if (id >= SYSZ_INS_ENDING)
 		return NULL;
 
 	// handle special alias first
@@ -5030,6 +5051,31 @@ const char *SystemZ_insn_name(csh handle, unsigned int id)
 	}
 
 	return insn_name_maps[id].name;
+#else
+	return NULL;
+#endif
+}
+
+#ifndef CAPSTONE_DIET
+static name_map group_name_maps[] = {
+	{ SYSZ_GRP_INVALID, NULL },
+	{ SYSZ_GRP_DISTINCTOPS, "distinctops" },
+	{ SYSZ_GRP_FPEXTENSION, "fpextension" },
+	{ SYSZ_GRP_HIGHWORD, "highword" },
+	{ SYSZ_GRP_INTERLOCKEDACCESS1, "interlockedaccess1" },
+	{ SYSZ_GRP_LOADSTOREONCOND, "loadstoreoncond" },
+
+	{ SYSZ_GRP_JUMP, "jump" },
+};
+#endif
+
+const char *SystemZ_group_name(csh handle, unsigned int id)
+{
+#ifndef CAPSTONE_DIET
+	if (id >= SYSZ_GRP_ENDING)
+		return NULL;
+
+	return group_name_maps[id].name;
 #else
 	return NULL;
 #endif

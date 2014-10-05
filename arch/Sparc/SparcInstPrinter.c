@@ -16,6 +16,10 @@
 
 #ifdef CAPSTONE_HAS_SPARC
 
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -34,6 +38,22 @@ static char *getRegisterName(unsigned RegNo);
 static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 static void printMemOperand(MCInst *MI, int opNum, SStream *O, const char *Modifier);
 static void printOperand(MCInst *MI, int opNum, SStream *O);
+
+static void Sparc_add_hint(MCInst *MI, unsigned int hint)
+{
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->sparc.hint = hint;
+	}
+}
+
+static void Sparc_add_reg(MCInst *MI, unsigned int reg)
+{
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].type = SPARC_OP_REG;
+		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].reg = reg;
+		MI->flat_insn->detail->sparc.op_count++;
+	}
+}
 
 static void set_mem_access(MCInst *MI, bool status)
 {
@@ -96,16 +116,18 @@ static bool printSparcAliasInstr(MCInst *MI, SStream *O)
 									MCOperand_getImm(MCInst_getOperand(MI, 2)) == 8) {
 								  switch(MCOperand_getReg(MCInst_getOperand(MI, 1))) {
 									  default: break;
-									  case SP_I7: SStream_concat0(O, "ret"); return true;
-									  case SP_O7: SStream_concat0(O, "retl"); return true;
+									  case SP_I7: SStream_concat0(O, "ret"); MCInst_setOpcodePub(MI, SPARC_INS_RET); return true;
+									  case SP_O7: SStream_concat0(O, "retl"); MCInst_setOpcodePub(MI, SPARC_INS_RETL); return true;
 								  }
 							  }
 
 							  SStream_concat0(O, "jmp\t");
+							  MCInst_setOpcodePub(MI, SPARC_INS_JMP);
 							  printMemOperand(MI, 1, O, NULL);
 							  return true;
 					 case SP_O7: // call $addr
 							  SStream_concat0(O, "call ");
+							  MCInst_setOpcodePub(MI, SPARC_INS_CALL);
 							  printMemOperand(MI, 1, O, NULL);
 							  return true;
 				 }
@@ -122,12 +144,12 @@ static bool printSparcAliasInstr(MCInst *MI, SStream *O)
 				 // if V8, skip printing %fcc0.
 				 switch(MCInst_getOpcode(MI)) {
 					 default:
-					 case SP_V9FCMPS:  SStream_concat0(O, "fcmps\t"); break;
-					 case SP_V9FCMPD:  SStream_concat0(O, "fcmpd\t"); break;
-					 case SP_V9FCMPQ:  SStream_concat0(O, "fcmpq\t"); break;
-					 case SP_V9FCMPES: SStream_concat0(O, "fcmpes\t"); break;
-					 case SP_V9FCMPED: SStream_concat0(O, "fcmped\t"); break;
-					 case SP_V9FCMPEQ: SStream_concat0(O, "fcmpeq\t"); break;
+					 case SP_V9FCMPS:  SStream_concat0(O, "fcmps\t"); MCInst_setOpcodePub(MI, SPARC_INS_FCMPS); break;
+					 case SP_V9FCMPD:  SStream_concat0(O, "fcmpd\t"); MCInst_setOpcodePub(MI, SPARC_INS_FCMPD); break;
+					 case SP_V9FCMPQ:  SStream_concat0(O, "fcmpq\t"); MCInst_setOpcodePub(MI, SPARC_INS_FCMPQ); break;
+					 case SP_V9FCMPES: SStream_concat0(O, "fcmpes\t"); MCInst_setOpcodePub(MI, SPARC_INS_FCMPES); break;
+					 case SP_V9FCMPED: SStream_concat0(O, "fcmped\t"); MCInst_setOpcodePub(MI, SPARC_INS_FCMPED); break;
+					 case SP_V9FCMPEQ: SStream_concat0(O, "fcmpeq\t"); MCInst_setOpcodePub(MI, SPARC_INS_FCMPEQ); break;
 				 }
 				 printOperand(MI, 1, O);
 				 SStream_concat0(O, ", ");
@@ -218,7 +240,7 @@ static void printMemOperand(MCInst *MI, int opNum, SStream *O, const char *Modif
 		return;   // don't print "+0"
 	}
 
-	SStream_concat0(O, "+");
+	SStream_concat0(O, "+");	// qq
 
 	printOperand(MI, opNum + 1, O);
 	set_mem_access(MI, false);
@@ -264,12 +286,86 @@ static bool printGetPCX(MCInst *MI, unsigned opNum, SStream *O)
 
 void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
 {
-	char *mnem;
+	char *mnem, *p;
+	char instr[64];	// Sparc has no instruction this long
 
 	mnem = printAliasInstr(MI, O, Info);
-	if (mnem)
+	if (mnem) {
+		// fixup instruction id due to the change in alias instruction
+		strncpy(instr, mnem, strlen(mnem));
+		instr[strlen(mnem)] = '\0';
+		// does this contains hint with a coma?
+		p = strchr(instr, ',');
+		if (p)
+			*p = '\0';	// now instr only has instruction mnemonic
+		MCInst_setOpcodePub(MI, Sparc_map_insn(instr));
+		switch(MCInst_getOpcode(MI)) {
+			case SP_BCOND:
+			case SP_BCONDA:
+			case SP_BPICCANT:
+			case SP_BPICCNT:
+			case SP_BPXCCANT:
+			case SP_BPXCCNT:
+			case SP_TXCCri:
+			case SP_TXCCrr:
+				if (MI->csh->detail) {
+					// skip 'b', 't'
+					MI->flat_insn->detail->sparc.cc = Sparc_map_ICC(instr + 1);
+					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
+				}
+				break;
+			case SP_BPFCCANT:
+			case SP_BPFCCNT:
+				if (MI->csh->detail) {
+					// skip 'fb'
+					MI->flat_insn->detail->sparc.cc = Sparc_map_FCC(instr + 2);
+					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
+				}
+				break;
+			case SP_FMOVD_ICC:
+			case SP_FMOVD_XCC:
+			case SP_FMOVQ_ICC:
+			case SP_FMOVQ_XCC:
+			case SP_FMOVS_ICC:
+			case SP_FMOVS_XCC:
+				if (MI->csh->detail) {
+					// skip 'fmovd', 'fmovq', 'fmovs'
+					MI->flat_insn->detail->sparc.cc = Sparc_map_ICC(instr + 5);
+					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
+				}
+				break;
+			case SP_MOVICCri:
+			case SP_MOVICCrr:
+			case SP_MOVXCCri:
+			case SP_MOVXCCrr:
+				if (MI->csh->detail) {
+					// skip 'mov'
+					MI->flat_insn->detail->sparc.cc = Sparc_map_ICC(instr + 3);
+					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
+				}
+				break;
+			case SP_V9FMOVD_FCC:
+			case SP_V9FMOVQ_FCC:
+			case SP_V9FMOVS_FCC:
+				if (MI->csh->detail) {
+					// skip 'fmovd', 'fmovq', 'fmovs'
+					MI->flat_insn->detail->sparc.cc = Sparc_map_FCC(instr + 5);
+					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
+				}
+				break;
+			case SP_V9MOVFCCri:
+			case SP_V9MOVFCCrr:
+				if (MI->csh->detail) {
+					// skip 'mov'
+					MI->flat_insn->detail->sparc.cc = Sparc_map_FCC(instr + 3);
+					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
+				}
+				break;
+			default:
+				break;
+		}
 		cs_mem_free(mnem);
-	else {
+	} else {
 		if (!printSparcAliasInstr(MI, O))
 			printInstruction(MI, O, NULL);
 	}

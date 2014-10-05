@@ -47,14 +47,16 @@ public class Capstone {
     // instruction mnemonic. NOTE: irrelevant for diet engine.
     public byte[] mnemonic;
     // instruction operands. NOTE: irrelevant for diet engine.
-    public byte[] operands;
+    public byte[] op_str;
     // detail information of instruction.
     public _cs_detail.ByReference cs_detail;
 
     public _cs_insn() {
       bytes = new byte[16];
       mnemonic = new byte[32];
-      operands = new byte[160];
+      op_str = new byte[160];
+      java.util.Arrays.fill(mnemonic, (byte) 0);
+      java.util.Arrays.fill(op_str, (byte) 0);
     }
 
     public _cs_insn(Pointer p) {
@@ -65,7 +67,7 @@ public class Capstone {
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("id", "address", "size", "bytes", "mnemonic", "operands", "cs_detail");
+      return Arrays.asList("id", "address", "size", "bytes", "mnemonic", "op_str", "cs_detail");
     }
   }
 
@@ -120,8 +122,12 @@ public class Capstone {
       size = insn.size;
 
       if (!diet) {
-        mnemonic = new String(insn.mnemonic).replace("\u0000","");
-        opStr = new String(insn.operands).replace("\u0000","");
+        int lm = 0;
+        while (insn.mnemonic[lm++] != 0);
+        int lo = 0;
+        while (insn.op_str[lo++] != 0);
+        mnemonic = new String(insn.mnemonic, 0, lm-1);
+        opStr = new String(insn.op_str, 0, lo-1);
       }
 
       cs = _cs;
@@ -224,6 +230,10 @@ public class Capstone {
       return cs.cs_insn_name(csh, id);
     }
 
+    public String groupName(int id) {
+      return cs.cs_group_name(csh, id);
+    }
+
     public boolean group(int gid) {
       return cs.cs_insn_group(csh, raw.getPointer(), gid) != 0;
     }
@@ -242,7 +252,7 @@ public class Capstone {
 
   private interface CS extends Library {
     public int cs_open(int arch, int mode, NativeLongByReference handle);
-    public NativeLong cs_disasm_ex(NativeLong handle, byte[] code, NativeLong code_len,
+    public NativeLong cs_disasm(NativeLong handle, byte[] code, NativeLong code_len,
         long addr, NativeLong count, PointerByReference insn);
     public void cs_free(Pointer p, NativeLong count);
     public int cs_close(NativeLongByReference handle);
@@ -253,6 +263,7 @@ public class Capstone {
     public int cs_op_index(NativeLong csh, Pointer insn, int type, int index);
 
     public String cs_insn_name(NativeLong csh, int id);
+    public String cs_group_name(NativeLong csh, int id);
     public byte cs_insn_group(NativeLong csh, Pointer insn, int id);
     public byte cs_reg_read(NativeLong csh, Pointer insn, int id);
     public byte cs_reg_write(NativeLong csh, Pointer insn, int id);
@@ -262,8 +273,8 @@ public class Capstone {
   }
 
   // Capstone API version
-  public static final int CS_API_MAJOR = 2;
-  public static final int CS_API_MINOR = 2;
+  public static final int CS_API_MAJOR = 3;
+  public static final int CS_API_MINOR = 0;
 
   // architectures
   public static final int CS_ARCH_ARM = 0;
@@ -284,8 +295,12 @@ public class Capstone {
   public static final int CS_MODE_32 = 1 << 2;
   public static final int CS_MODE_64 = 1 << 3;
   public static final int CS_MODE_THUMB = 1 << 4;	  // ARM's Thumb mode, including Thumb-2
+  public static final int CS_MODE_MCLASS = 1 << 5;	  // ARM's Cortex-M series
   public static final int CS_MODE_MICRO = 1 << 4;	  // MicroMips mode (Mips arch)
   public static final int CS_MODE_N64 = 1 << 5;	      // Nintendo-64 mode (Mips arch)
+  public static final int CS_MODE_MIPS3 = 1 << 6;     // Mips III ISA
+  public static final int CS_MODE_MIPS32R6 = 1 << 7;  // Mips32r6 ISA
+  public static final int CS_MODE_MIPSGP64 = 1 << 8;  // General Purpose Registers are 64-bit wide (MIPS arch)
   public static final int CS_MODE_BIG_ENDIAN = 1 << 31;
   public static final int CS_MODE_V9 = 1 << 4;	      // SparcV9 mode (Sparc arch)
 
@@ -398,7 +413,7 @@ public class Capstone {
   public CsInsn[] disasm(byte[] code, long address, long count) {
     PointerByReference insnRef = new PointerByReference();
 
-    NativeLong c = cs.cs_disasm_ex(ns.csh, code, new NativeLong(code.length), address, new NativeLong(count), insnRef);
+    NativeLong c = cs.cs_disasm(ns.csh, code, new NativeLong(code.length), address, new NativeLong(count), insnRef);
 
     Pointer p = insnRef.getValue();
     _cs_insn byref = new _cs_insn(p);
@@ -406,7 +421,8 @@ public class Capstone {
     CsInsn[] allInsn = fromArrayRaw((_cs_insn[]) byref.toArray(c.intValue()));
 
     // free allocated memory
-    cs.cs_free(p, c);
+    // cs.cs_free(p, c);
+    // FIXME(danghvu): Can't free because memory is still inside CsInsn
 
     return allInsn;
   }

@@ -17,7 +17,7 @@ typedef void (*PostPrinter_t)(csh handle, cs_insn *, char *mnem, MCInst *mci);
 
 typedef bool (*Disasm_t)(csh handle, const uint8_t *code, size_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *info);
 
-typedef const char *(*GetName_t)(csh handle, unsigned int reg);
+typedef const char *(*GetName_t)(csh handle, unsigned int id);
 
 typedef void (*GetID_t)(cs_struct *h, cs_insn *insn, unsigned int id);
 
@@ -40,6 +40,7 @@ struct cs_struct {
 	bool big_endian;
 	GetName_t reg_name;
 	GetName_t insn_name;
+	GetName_t group_name;
 	GetID_t insn_id;
 	PostPrinter_t post_printer;
 	cs_err errnum;
@@ -52,6 +53,7 @@ struct cs_struct {
 	bool skipdata;	// set this to True if we skip data when disassembling
 	uint8_t skipdata_size;	// how many bytes to skip
 	cs_opt_skipdata skipdata_setup;	// user-defined skipdata setup
+	uint8_t *regsize_map;	// map to register size (x86-only for now)
 };
 
 #define MAX_ARCH 8

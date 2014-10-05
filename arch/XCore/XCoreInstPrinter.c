@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <inttypes.h>
+#include "../../inttypes.h"
 
 #include "XCoreInstPrinter.h"
 #include "../../MCInst.h"

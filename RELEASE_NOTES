@@ -1,7 +1,3 @@
-Version 2.1.2 is a stable release that fixes some bugs deep in the core.
-There is no update to any architectures or bindings, so older bindings
-of release 2.1 can be used with this version 2.1.2 just fine.
-
-For this reason, after upgrading to 2.1.2, users do NOT need to upgrade
-their bindings from release 2.1.
-
+The old bindings from version 2.x are not compatible with version 3.0, so
+must be updated. For Java/Ocaml/Python bindings, see respective README files
+under bindings/ directory in the source on how to reinstall them.

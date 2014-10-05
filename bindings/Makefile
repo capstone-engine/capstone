@@ -17,6 +17,7 @@ TEST_XCORE = $(TMPDIR)/test_xcore
 all:
 	cd python && $(MAKE) gen_const
 	cd java && $(MAKE) gen_const
+	cd ocaml && $(MAKE) gen_const
 
 tests: expected python java #oclma ruby
 
@@ -79,5 +80,11 @@ clean:
 	rm -rf $(TMPDIR)
 	cd java && $(MAKE) clean
 	cd python && $(MAKE) clean
+	cd ocaml && $(MAKE) clean
+
+check:
+	make -C ocaml check
+	make -C python check
+	make -C java check
 
 FORCE:

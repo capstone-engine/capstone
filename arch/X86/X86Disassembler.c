@@ -19,7 +19,7 @@
 
 #ifdef CAPSTONE_HAS_X86
 
-#include <inttypes.h>	// debug
+#include "../../inttypes.h"	// debug
 #include <string.h>
 
 #include "../../cs_priv.h"
@@ -32,6 +32,7 @@
 #include "X86Mapping.h"
 
 #define GET_REGINFO_ENUM
+#define GET_REGINFO_MC_DESC
 #include "X86GenRegisterInfo.inc"
 
 #define GET_INSTRINFO_ENUM
@@ -574,7 +575,7 @@ static bool translateOperand(MCInst *mcInst, const OperandSpecifier *operand, In
 			return false;
 		case ENCODING_WRITEMASK:
 			return translateMaskRegister(mcInst, insn->writemask);
-		case ENCODING_RM:
+		CASE_ENCODING_RM:
 			return translateRM(mcInst, operand, insn);
 		case ENCODING_CB:
 		case ENCODING_CW:
@@ -672,20 +673,26 @@ static void update_pub_insn(cs_insn *pub, InternalInstruction *inter, uint8_t *p
 	prefixes[2] = inter->prefix2;
 	prefixes[3] = inter->prefix3;
 
-	pub->detail->x86.segment = x86_map_segment(inter->segmentOverride);
-
-	if (inter->vectorExtensionType > 0)
+	if (inter->vectorExtensionType != 0)
 		memcpy(pub->detail->x86.opcode, inter->vectorExtensionPrefix, sizeof(pub->detail->x86.opcode));
 	else {
-		pub->detail->x86.opcode[0] = inter->opcode;
-		pub->detail->x86.opcode[1] = inter->twoByteEscape;
-		pub->detail->x86.opcode[2] = inter->threeByteEscape;
+		if (inter->twoByteEscape) {
+			if (inter->threeByteEscape) {
+				pub->detail->x86.opcode[0] = inter->twoByteEscape;
+				pub->detail->x86.opcode[1] = inter->threeByteEscape;
+				pub->detail->x86.opcode[2] = inter->opcode;
+			} else {
+				pub->detail->x86.opcode[0] = inter->twoByteEscape;
+				pub->detail->x86.opcode[1] = inter->opcode;
+			}
+		} else {
+				pub->detail->x86.opcode[0] = inter->opcode;
+		}
 	}
 
-	pub->detail->x86.op_size = inter->operandSize;
+	pub->detail->x86.rex = inter->rexPrefix;
+
 	pub->detail->x86.addr_size = inter->addressSize;
-	pub->detail->x86.disp_size = inter->displacementSize;
-	pub->detail->x86.imm_size = inter->immediateSize;
 
 	pub->detail->x86.modrm = inter->orgModRM;
 	pub->detail->x86.sib = inter->sib;
@@ -694,6 +701,25 @@ static void update_pub_insn(cs_insn *pub, InternalInstruction *inter, uint8_t *p
 	pub->detail->x86.sib_index = x86_map_sib_index(inter->sibIndex);
 	pub->detail->x86.sib_scale = inter->sibScale;
 	pub->detail->x86.sib_base = x86_map_sib_base(inter->sibBase);
+}
+
+void X86_init(MCRegisterInfo *MRI)
+{
+	/*
+	   InitMCRegisterInfo(X86RegDesc, 234,
+	   RA, PC,
+	   X86MCRegisterClasses, 79,
+	   X86RegUnitRoots, 119, X86RegDiffLists, X86RegStrings,
+	   X86SubRegIdxLists, 7,
+	   X86SubRegIdxRanges, X86RegEncodingTable);
+	*/
+
+	MCRegisterInfo_InitMCRegisterInfo(MRI, X86RegDesc, 234,
+			0, 0,
+			X86MCRegisterClasses, 79,
+			0, 0, X86RegDiffLists, 0,
+			X86SubRegIdxLists, 7,
+			0);
 }
 
 // Public interface for the disassembler
@@ -714,8 +740,14 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 
 	if (instr->flat_insn->detail) {
 		instr->flat_insn->detail->x86.op_count = 0;
+		instr->flat_insn->detail->x86.sse_cc = X86_SSE_CC_INVALID;
+		instr->flat_insn->detail->x86.avx_cc = X86_AVX_CC_INVALID;
+		instr->flat_insn->detail->x86.avx_sae = false;
+		instr->flat_insn->detail->x86.avx_rm = X86_AVX_RM_INVALID;
+
 		memset(instr->flat_insn->detail->x86.prefix, 0, sizeof(instr->flat_insn->detail->x86.prefix));
-		memset(instr->flat_insn->detail->x86.operands, 0, ARR_SIZE(instr->flat_insn->detail->x86.operands));
+		memset(instr->flat_insn->detail->x86.opcode, 0, sizeof(instr->flat_insn->detail->x86.opcode));
+		memset(instr->flat_insn->detail->x86.operands, 0, sizeof(instr->flat_insn->detail->x86.operands));
 	}
 
 	if (handle->mode & CS_MODE_16)
@@ -743,18 +775,16 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 
 		result = (!translateInstruction(instr, &insn)) ?  true : false;
 		if (result) {
-			if (handle->detail)
+			if (handle->detail) {
 				update_pub_insn(instr->flat_insn, &insn, instr->x86_prefix);
-			else {
-				// copy all prefixes
+				instr->imm_size = insn.immSize;
+			} else {
+				// still copy all prefixes
 				instr->x86_prefix[0] = insn.prefix0;
 				instr->x86_prefix[1] = insn.prefix1;
 				instr->x86_prefix[2] = insn.prefix2;
 				instr->x86_prefix[3] = insn.prefix3;
 			}
-
-			// save immediate size to print immediate properly
-			instr->x86_imm_size = insn.immediateSize;
 		}
 
 		return result;

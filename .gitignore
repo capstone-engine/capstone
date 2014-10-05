@@ -71,9 +71,14 @@ _*
 packages/freebsd/ports/devel/capstone/distinfo
 
 # VisualStudio
-Debug
-Release
+Debug/
+Release/
+ipch/
 *.sdf
 *.opensdf
 *.suo
 *.user
+
+# suite/
+test_arm_regression
+test_arm_regression.o

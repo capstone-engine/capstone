@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <inttypes.h>
+#include "../../inttypes.h"
 
 #include "ARMAddressingModes.h"
 #include "ARMBaseInfo.h"
@@ -364,7 +364,7 @@ static DecodeStatus DecodeMRRC2(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder);
 
 // Hacky: enable all features for disassembler
-static uint64_t getFeatureBits(int mode)
+uint64_t ARM_getFeatureBits(unsigned int mode)
 {
 	uint64_t Bits = (uint64_t)-1;	// everything by default
 
@@ -377,7 +377,8 @@ static uint64_t getFeatureBits(int mode)
 	//Bits &= ~ARM_HasV8Ops;
 	//Bits &= ~ARM_HasV6Ops;
 
-	//Bits &= (~ARM_FeatureMClass);
+	if ((mode & CS_MODE_MCLASS) == 0)
+		Bits &= (~ARM_FeatureMClass);
 
 	// some features are mutually exclusive
 	if (mode & CS_MODE_THUMB) {
@@ -440,7 +441,7 @@ void ARM_init(MCRegisterInfo *MRI)
 static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t *code, size_t code_len,
 		uint16_t *Size, uint64_t Address)
 {
-	uint32_t insn;
+	uint32_t insn, i;
 	uint8_t bytes[4];
 	DecodeStatus result;
 
@@ -452,6 +453,8 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t
 
 	if (MI->flat_insn->detail) {
 		memset(&MI->flat_insn->detail->arm, 0, sizeof(cs_arm));
+		for (i = 0; i < ARR_SIZE(MI->flat_insn->detail->arm.operands); i++)
+			MI->flat_insn->detail->arm.operands[i].vector_index = -1;
 	}
 
 	memcpy(bytes, code, 4);
@@ -683,6 +686,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 	bool InITBlock;
 	unsigned Firstcond, Mask; 
 	uint32_t NEONLdStInsn, insn32, NEONDataInsn, NEONCryptoInsn, NEONv8Insn;
+	int i;
 
 	// We want to read exactly 2 bytes of data.
 	if (code_len < 2)
@@ -693,6 +697,8 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 
 	if (MI->flat_insn->detail) {
 		memset(&MI->flat_insn->detail->arm, 0, sizeof(cs_arm));
+		for (i = 0; i < ARR_SIZE(MI->flat_insn->detail->arm.operands); i++)
+			MI->flat_insn->detail->arm.operands[i].vector_index = -1;
 	}
 
 	memcpy(bytes, code, 2);
@@ -1231,10 +1237,13 @@ static DecodeStatus DecodeRegListOperand(MCInst *Inst, unsigned Val,
 {
 	unsigned i;
 	DecodeStatus S = MCDisassembler_Success;
+	unsigned opcode;
 
 	bool NeedDisjointWriteback = false;
 	unsigned WritebackReg = 0;
-	switch (MCInst_getOpcode(Inst)) {
+
+	opcode = MCInst_getOpcode(Inst);
+	switch (opcode) {
 		default:
 			break;
 		case ARM_LDMIA_UPD:
@@ -1259,6 +1268,15 @@ static DecodeStatus DecodeRegListOperand(MCInst *Inst, unsigned Val,
 			// Writeback not allowed if Rn is in the target list.
 			if (NeedDisjointWriteback && WritebackReg == MCOperand_getReg(&(Inst->Operands[Inst->size-1])))
 				Check(&S, MCDisassembler_SoftFail);
+		}
+	}
+
+	if (opcode == ARM_t2LDMIA_UPD && WritebackReg == ARM_SP) {
+		if (Val & (1 << ARM_SP)
+				|| ((Val & (1 << ARM_PC)) && (Val & (1 << ARM_LR)))) {
+			// invalid thumb2 pop
+			// needs no sp in reglist and not both pc and lr set at the same time
+			return MCDisassembler_Fail;
 		}
 	}
 
@@ -4035,7 +4053,53 @@ static DecodeStatus DecodeInstSyncBarrierOption(MCInst *Inst, unsigned Val,
 static DecodeStatus DecodeMSRMask(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder)
 {
-	if (!Val) return MCDisassembler_Fail;
+	uint64_t FeatureBits = ARM_getFeatureBits(Inst->csh->mode);
+	if (FeatureBits & ARM_FeatureMClass) {
+		unsigned ValLow = Val & 0xff;
+
+		// Validate the SYSm value first.
+		switch (ValLow) {
+			case  0: // apsr
+			case  1: // iapsr
+			case  2: // eapsr
+			case  3: // xpsr
+			case  5: // ipsr
+			case  6: // epsr
+			case  7: // iepsr
+			case  8: // msp
+			case  9: // psp
+			case 16: // primask
+			case 20: // control
+				break;
+			case 17: // basepri
+			case 18: // basepri_max
+			case 19: // faultmask
+				if (!(FeatureBits & ARM_HasV7Ops))
+					// Values basepri, basepri_max and faultmask are only valid for v7m.
+					return MCDisassembler_Fail;
+				break;
+			default:
+				return MCDisassembler_Fail;
+		}
+
+		// The ARMv7-M architecture has an additional 2-bit mask value in the MSR
+		// instruction (bits {11,10}). The mask is used only with apsr, iapsr,
+		// eapsr and xpsr, it has to be 0b10 in other cases. Bit mask{1} indicates
+		// if the NZCVQ bits should be moved by the instruction. Bit mask{0}
+		// indicates the move for the GE{3:0} bits, the mask{0} bit can be set
+		// only if the processor includes the DSP extension.
+		if ((FeatureBits & ARM_HasV7Ops) && MCInst_getOpcode(Inst) == ARM_t2MSR_M) {
+			unsigned Mask = (Val >> 10) & 3;
+			if (Mask == 0 || (Mask != 2 && ValLow > 3) ||
+					(!(FeatureBits & ARM_FeatureDSPThumb2) && Mask == 1))
+				return MCDisassembler_Fail;
+		}
+	} else {
+		// A/R class
+		if (Val == 0)
+			return MCDisassembler_Fail;
+	}
+
 	MCOperand_CreateImm0(Inst, Val);
 	return MCDisassembler_Success;
 }

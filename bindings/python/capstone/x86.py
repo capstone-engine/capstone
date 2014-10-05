@@ -6,6 +6,7 @@ from .x86_const import *
 # define the API
 class X86OpMem(ctypes.Structure):
     _fields_ = (
+        ('segment', ctypes.c_uint),
         ('base', ctypes.c_uint),
         ('index', ctypes.c_uint),
         ('scale', ctypes.c_int),
@@ -24,6 +25,9 @@ class X86Op(ctypes.Structure):
     _fields_ = (
         ('type', ctypes.c_uint),
         ('value', X86OpValue),
+        ('size', ctypes.c_uint8),
+        ('avx_bcast', ctypes.c_uint),
+        ('avx_zero_opmask', ctypes.c_uint8),
     )
 
     @property
@@ -45,25 +49,27 @@ class X86Op(ctypes.Structure):
 
 class CsX86(ctypes.Structure):
     _fields_ = (
-        ('prefix', ctypes.c_uint8 * 5),
-        ('segment', ctypes.c_uint),
-        ('opcode', ctypes.c_uint8 * 3),
-        ('op_size', ctypes.c_uint8),
+        ('prefix', ctypes.c_uint8 * 4),
+        ('opcode', ctypes.c_uint8 * 4),
+        ('rex', ctypes.c_uint8),
         ('addr_size', ctypes.c_uint8),
-        ('disp_size', ctypes.c_uint8),
-        ('imm_size', ctypes.c_uint8),
         ('modrm', ctypes.c_uint8),
         ('sib', ctypes.c_uint8),
         ('disp', ctypes.c_int32),
         ('sib_index', ctypes.c_uint),
         ('sib_scale', ctypes.c_int8),
         ('sib_base', ctypes.c_uint),
+        ('sse_cc', ctypes.c_uint),
+        ('avx_cc', ctypes.c_uint),
+        ('avx_sae', ctypes.c_bool),
+        ('avx_rm', ctypes.c_uint),
         ('op_count', ctypes.c_uint8),
         ('operands', X86Op * 8),
     )
 
 def get_arch_info(a):
-    return (a.prefix[:], a.segment, a.opcode[:], a.op_size, a.addr_size, a.disp_size, \
-            a.imm_size, a.modrm, a.sib, a.disp, a.sib_index, a.sib_scale, \
-            a.sib_base, copy.deepcopy(a.operands[:a.op_count]))
+    return (a.prefix[:], a.opcode[:], a.rex, a.addr_size, \
+            a.modrm, a.sib, a.disp, a.sib_index, a.sib_scale, \
+            a.sib_base, a.sse_cc, a.avx_cc, a.avx_sae, a.avx_rm, \
+            copy.deepcopy(a.operands[:a.op_count]))
 

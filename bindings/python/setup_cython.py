@@ -3,11 +3,11 @@ from distutils.extension import Extension
 from distutils.command.install_lib import install_lib as _install
 from Cython.Distutils import build_ext
 
-VERSION = '2.2'
+VERSION = '3.0'
 
 compile_args = ['-O3', '-fomit-frame-pointer']
 
-ext_modules = [ Extension("capstone.capstone", ["pyx/capstone.pyx"], extra_compile_args=compile_args),
+ext_modules = [
     Extension("capstone.ccapstone", ["pyx/ccapstone.pyx"], libraries=["capstone"], extra_compile_args=compile_args),
     Extension("capstone.arm", ["pyx/arm.pyx"], extra_compile_args=compile_args),
     Extension("capstone.arm_const", ["pyx/arm_const.pyx"], extra_compile_args=compile_args),
@@ -18,7 +18,11 @@ ext_modules = [ Extension("capstone.capstone", ["pyx/capstone.pyx"], extra_compi
     Extension("capstone.ppc", ["pyx/ppc.pyx"], extra_compile_args=compile_args),
     Extension("capstone.ppc_const", ["pyx/ppc_const.pyx"], extra_compile_args=compile_args),
     Extension("capstone.x86", ["pyx/x86.pyx"], extra_compile_args=compile_args),
-    Extension("capstone.x86_const", ["pyx/x86_const.pyx"], extra_compile_args=compile_args)
+    Extension("capstone.x86_const", ["pyx/x86_const.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.sparc", ["pyx/sparc.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.sparc_const", ["pyx/sparc_const.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.systemz", ["pyx/systemz.pyx"], extra_compile_args=compile_args),
+    Extension("capstone.sysz_const", ["pyx/sysz_const.pyx"], extra_compile_args=compile_args),
     Extension("capstone.xcore", ["pyx/xcore.pyx"], extra_compile_args=compile_args),
     Extension("capstone.xcore_const", ["pyx/xcore_const.pyx"], extra_compile_args=compile_args)
 ]
@@ -40,8 +44,8 @@ setup(
     packages     = ['capstone'],
     name         = 'capstone',
     version      = VERSION,
-    cmdclass = {'build_ext': build_ext},
-    ext_modules = ext_modules,
+    cmdclass     = {'build_ext': build_ext},
+    ext_modules  = ext_modules,
     author       = 'Nguyen Anh Quynh',
     author_email = 'aquynh@gmail.com',
     description  = 'Capstone disassembly engine',

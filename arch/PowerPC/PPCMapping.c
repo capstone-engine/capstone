@@ -18,6 +18,7 @@ static name_map reg_name_maps[] = {
 	{ PPC_REG_INVALID, NULL },
 
 	{ PPC_REG_CARRY, "ca" },
+	{ PPC_REG_CC, "cc"},
 	{ PPC_REG_CR0, "cr0" },
 	{ PPC_REG_CR1, "cr1" },
 	{ PPC_REG_CR2, "cr2" },
@@ -26,30 +27,6 @@ static name_map reg_name_maps[] = {
 	{ PPC_REG_CR5, "cr5" },
 	{ PPC_REG_CR6, "cr6" },
 	{ PPC_REG_CR7, "cr7" },
-	{ PPC_REG_CR8, "cr8" },
-	{ PPC_REG_CR9, "cr9" },
-	{ PPC_REG_CR10, "cr10" },
-	{ PPC_REG_CR11, "cr11" },
-	{ PPC_REG_CR12, "cr12" },
-	{ PPC_REG_CR13, "cr13" },
-	{ PPC_REG_CR14, "cr14" },
-	{ PPC_REG_CR15, "cr15" },
-	{ PPC_REG_CR16, "cr16" },
-	{ PPC_REG_CR17, "cr17" },
-	{ PPC_REG_CR18, "cr18" },
-	{ PPC_REG_CR19, "cr19" },
-	{ PPC_REG_CR20, "cr20" },
-	{ PPC_REG_CR21, "cr21" },
-	{ PPC_REG_CR22, "cr22" },
-	{ PPC_REG_CR23, "cr23" },
-	{ PPC_REG_CR24, "cr24" },
-	{ PPC_REG_CR25, "cr25" },
-	{ PPC_REG_CR26, "cr26" },
-	{ PPC_REG_CR27, "cr27" },
-	{ PPC_REG_CR28, "cr28" },
-	{ PPC_REG_CR29, "cr29" },
-	{ PPC_REG_CR30, "cr30" },
-	{ PPC_REG_CR31, "cr31" },
 	{ PPC_REG_CTR, "ctr" },
 	{ PPC_REG_F0, "f0" },
 	{ PPC_REG_F1, "f1" },
@@ -149,6 +126,70 @@ static name_map reg_name_maps[] = {
 	{ PPC_REG_V30, "v30" },
 	{ PPC_REG_V31, "v31" },
 	{ PPC_REG_VRSAVE, "vrsave" },
+	{ PPC_REG_VS0, "vs0"},
+	{ PPC_REG_VS1, "vs1"},
+	{ PPC_REG_VS2, "vs2"},
+	{ PPC_REG_VS3, "vs3"},
+	{ PPC_REG_VS4, "vs4"},
+	{ PPC_REG_VS5, "vs5"},
+	{ PPC_REG_VS6, "vs6"},
+	{ PPC_REG_VS7, "vs7"},
+	{ PPC_REG_VS8, "vs8"},
+	{ PPC_REG_VS9, "vs9"},
+	{ PPC_REG_VS10, "vs10"},
+	{ PPC_REG_VS11, "vs11"},
+	{ PPC_REG_VS12, "vs12"},
+	{ PPC_REG_VS13, "vs13"},
+	{ PPC_REG_VS14, "vs14"},
+	{ PPC_REG_VS15, "vs15"},
+	{ PPC_REG_VS16, "vs16"},
+	{ PPC_REG_VS17, "vs17"},
+	{ PPC_REG_VS18, "vs18"},
+	{ PPC_REG_VS19, "vs19"},
+	{ PPC_REG_VS20, "vs20"},
+	{ PPC_REG_VS21, "vs21"},
+	{ PPC_REG_VS22, "vs22"},
+	{ PPC_REG_VS23, "vs23"},
+	{ PPC_REG_VS24, "vs24"},
+	{ PPC_REG_VS25, "vs25"},
+	{ PPC_REG_VS26, "vs26"},
+	{ PPC_REG_VS27, "vs27"},
+	{ PPC_REG_VS28, "vs28"},
+	{ PPC_REG_VS29, "vs29"},
+	{ PPC_REG_VS30, "vs30"},
+	{ PPC_REG_VS31, "vs31"},
+	{ PPC_REG_VS32, "vs32"},
+	{ PPC_REG_VS33, "vs33"},
+	{ PPC_REG_VS34, "vs34"},
+	{ PPC_REG_VS35, "vs35"},
+	{ PPC_REG_VS36, "vs36"},
+	{ PPC_REG_VS37, "vs37"},
+	{ PPC_REG_VS38, "vs38"},
+	{ PPC_REG_VS39, "vs39"},
+	{ PPC_REG_VS40, "vs40"},
+	{ PPC_REG_VS41, "vs41"},
+	{ PPC_REG_VS42, "vs42"},
+	{ PPC_REG_VS43, "vs43"},
+	{ PPC_REG_VS44, "vs44"},
+	{ PPC_REG_VS45, "vs45"},
+	{ PPC_REG_VS46, "vs46"},
+	{ PPC_REG_VS47, "vs47"},
+	{ PPC_REG_VS48, "vs48"},
+	{ PPC_REG_VS49, "vs49"},
+	{ PPC_REG_VS50, "vs50"},
+	{ PPC_REG_VS51, "vs51"},
+	{ PPC_REG_VS52, "vs52"},
+	{ PPC_REG_VS53, "vs53"},
+	{ PPC_REG_VS54, "vs54"},
+	{ PPC_REG_VS55, "vs55"},
+	{ PPC_REG_VS56, "vs56"},
+	{ PPC_REG_VS57, "vs57"},
+	{ PPC_REG_VS58, "vs58"},
+	{ PPC_REG_VS59, "vs59"},
+	{ PPC_REG_VS60, "vs60"},
+	{ PPC_REG_VS61, "vs61"},
+	{ PPC_REG_VS62, "vs62"},
+	{ PPC_REG_VS63, "vs63"},
 
 	// extras
 	{ PPC_REG_RM, "rm" },
@@ -161,7 +202,7 @@ static name_map reg_name_maps[] = {
 const char *PPC_reg_name(csh handle, unsigned int reg)
 {
 #ifndef CAPSTONE_DIET
-	if (reg >= PPC_REG_MAX)
+	if (reg >= PPC_REG_ENDING)
 		return NULL;
 
 	return reg_name_maps[reg].name;
@@ -444,67 +485,157 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		PPC_BC, PPC_INS_BC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
 		PPC_BCC, PPC_INS_B,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 1, 0
 #endif
 	},
 	{
-		PPC_BCCA, PPC_INS_B,
+		PPC_BCCA, PPC_INS_BA,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 1, 0
 #endif
 	},
 	{
-		PPC_BCCL, PPC_INS_B,
-#ifndef CAPSTONE_DIET
-		{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		PPC_BCCLA, PPC_INS_B,
-#ifndef CAPSTONE_DIET
-		{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		PPC_BCCTR, PPC_INS_B,
+		PPC_BCCCTR, PPC_INS_BCTR,
 #ifndef CAPSTONE_DIET
 		{ PPC_REG_CTR, 0 }, { 0 }, { 0 }, 1, 1
 #endif
 	},
 	{
-		PPC_BCCTR8, PPC_INS_B,
+		PPC_BCCCTR8, PPC_INS_BCTR,
 #ifndef CAPSTONE_DIET
 		{ PPC_REG_CTR8, 0 }, { 0 }, { PPC_GRP_MODE64, 0 }, 1, 1
 #endif
 	},
 	{
-		PPC_BCCTRL, PPC_INS_B,
+		PPC_BCCCTRL, PPC_INS_BCTRL,
 #ifndef CAPSTONE_DIET
 		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		PPC_BCCTRL8, PPC_INS_B,
+		PPC_BCCCTRL8, PPC_INS_BCTRL,
 #ifndef CAPSTONE_DIET
 		{ PPC_REG_CTR8, PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { PPC_GRP_MODE64, 0 }, 0, 0
 #endif
 	},
 	{
-		PPC_BCLR, PPC_INS_B,
+		PPC_BCCL, PPC_INS_BL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BCCLA, PPC_INS_BLA,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BCCLR, PPC_INS_BLR,
 #ifndef CAPSTONE_DIET
 		{ PPC_REG_LR, PPC_REG_RM, 0 }, { 0 }, { 0 }, 1, 0
 #endif
 	},
 	{
-		PPC_BCLRL, PPC_INS_B,
+		PPC_BCCLRL, PPC_INS_BLRL,
 #ifndef CAPSTONE_DIET
 		{ PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
+		PPC_BCCTR, PPC_INS_BCCTR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, 0 }, { 0 }, { 0 }, 1, 1
+#endif
+	},
+	{
+		PPC_BCCTR8, PPC_INS_BCCTR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR8, 0 }, { 0 }, { PPC_GRP_MODE64, 0 }, 1, 1
+#endif
+	},
+	{
+		PPC_BCCTR8n, PPC_INS_BCCTR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR8, 0 }, { 0 }, { PPC_GRP_MODE64, 0 }, 1, 1
+#endif
+	},
+	{
+		PPC_BCCTRL, PPC_INS_BCCTRL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BCCTRL8, PPC_INS_BCCTRL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR8, PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { PPC_GRP_MODE64, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BCCTRL8n, PPC_INS_BCCTRL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR8, PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { PPC_GRP_MODE64, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BCCTRLn, PPC_INS_BCCTRL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BCCTRn, PPC_INS_BCCTR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_CTR, 0 }, { 0 }, { 0 }, 1, 1
+#endif
+	},
+	{
+		PPC_BCL, PPC_INS_BCL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BCLR, PPC_INS_BCLR,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_LR, PPC_REG_RM, 0 }, { 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
+		PPC_BCLRL, PPC_INS_BCLRL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BCLRLn, PPC_INS_BCLRL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BCLRn, PPC_INS_BCLR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 1, 0
+#endif
+	},
+	{
 		PPC_BCLalways, PPC_INS_BCL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BCLn, PPC_INS_BCL,
 #ifndef CAPSTONE_DIET
 		{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
 #endif
@@ -531,6 +662,12 @@ static insn_map insns[] = {
 		PPC_BCTRL8, PPC_INS_BCTRL,
 #ifndef CAPSTONE_DIET
 		{ PPC_REG_CTR8, PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { PPC_GRP_MODE64, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BCn, PPC_INS_BC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 1, 0
 #endif
 	},
 	{
@@ -840,6 +977,18 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		PPC_BL_TLS, PPC_INS_BL,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_BRINC, PPC_INS_BRINC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
 		PPC_CMPD, PPC_INS_CMPD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
@@ -1032,6 +1181,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		PPC_DCCCI, PPC_INS_DCCCI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_PPC4XX, 0 }, 0, 0
+#endif
+	},
+	{
 		PPC_DIVD, PPC_INS_DIVD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
@@ -1167,6 +1322,1032 @@ static insn_map insns[] = {
 		PPC_EQVo, PPC_INS_EQV,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVABS, PPC_INS_EVABS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVADDIW, PPC_INS_EVADDIW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVADDSMIAAW, PPC_INS_EVADDSMIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVADDSSIAAW, PPC_INS_EVADDSSIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVADDUMIAAW, PPC_INS_EVADDUMIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVADDUSIAAW, PPC_INS_EVADDUSIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVADDW, PPC_INS_EVADDW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVAND, PPC_INS_EVAND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVANDC, PPC_INS_EVANDC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVCMPEQ, PPC_INS_EVCMPEQ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVCMPGTS, PPC_INS_EVCMPGTS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVCMPGTU, PPC_INS_EVCMPGTU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVCMPLTS, PPC_INS_EVCMPLTS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVCMPLTU, PPC_INS_EVCMPLTU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVCNTLSW, PPC_INS_EVCNTLSW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVCNTLZW, PPC_INS_EVCNTLZW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVDIVWS, PPC_INS_EVDIVWS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVDIVWU, PPC_INS_EVDIVWU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVEQV, PPC_INS_EVEQV,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVEXTSB, PPC_INS_EVEXTSB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVEXTSH, PPC_INS_EVEXTSH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLDD, PPC_INS_EVLDD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLDDX, PPC_INS_EVLDDX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLDH, PPC_INS_EVLDH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLDHX, PPC_INS_EVLDHX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLDW, PPC_INS_EVLDW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLDWX, PPC_INS_EVLDWX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLHHESPLAT, PPC_INS_EVLHHESPLAT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLHHESPLATX, PPC_INS_EVLHHESPLATX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLHHOSSPLAT, PPC_INS_EVLHHOSSPLAT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLHHOSSPLATX, PPC_INS_EVLHHOSSPLATX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLHHOUSPLAT, PPC_INS_EVLHHOUSPLAT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLHHOUSPLATX, PPC_INS_EVLHHOUSPLATX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLWHE, PPC_INS_EVLWHE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLWHEX, PPC_INS_EVLWHEX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLWHOS, PPC_INS_EVLWHOS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLWHOSX, PPC_INS_EVLWHOSX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLWHOU, PPC_INS_EVLWHOU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLWHOUX, PPC_INS_EVLWHOUX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLWHSPLAT, PPC_INS_EVLWHSPLAT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLWHSPLATX, PPC_INS_EVLWHSPLATX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLWWSPLAT, PPC_INS_EVLWWSPLAT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVLWWSPLATX, PPC_INS_EVLWWSPLATX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMERGEHI, PPC_INS_EVMERGEHI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMERGEHILO, PPC_INS_EVMERGEHILO,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMERGELO, PPC_INS_EVMERGELO,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMERGELOHI, PPC_INS_EVMERGELOHI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHEGSMFAA, PPC_INS_EVMHEGSMFAA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHEGSMFAN, PPC_INS_EVMHEGSMFAN,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHEGSMIAA, PPC_INS_EVMHEGSMIAA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHEGSMIAN, PPC_INS_EVMHEGSMIAN,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHEGUMIAA, PPC_INS_EVMHEGUMIAA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHEGUMIAN, PPC_INS_EVMHEGUMIAN,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHESMF, PPC_INS_EVMHESMF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHESMFA, PPC_INS_EVMHESMFA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHESMFAAW, PPC_INS_EVMHESMFAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHESMFANW, PPC_INS_EVMHESMFANW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHESMI, PPC_INS_EVMHESMI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHESMIA, PPC_INS_EVMHESMIA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHESMIAAW, PPC_INS_EVMHESMIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHESMIANW, PPC_INS_EVMHESMIANW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHESSF, PPC_INS_EVMHESSF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHESSFA, PPC_INS_EVMHESSFA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHESSFAAW, PPC_INS_EVMHESSFAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHESSFANW, PPC_INS_EVMHESSFANW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHESSIAAW, PPC_INS_EVMHESSIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHESSIANW, PPC_INS_EVMHESSIANW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHEUMI, PPC_INS_EVMHEUMI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHEUMIA, PPC_INS_EVMHEUMIA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHEUMIAAW, PPC_INS_EVMHEUMIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHEUMIANW, PPC_INS_EVMHEUMIANW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHEUSIAAW, PPC_INS_EVMHEUSIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHEUSIANW, PPC_INS_EVMHEUSIANW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOGSMFAA, PPC_INS_EVMHOGSMFAA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOGSMFAN, PPC_INS_EVMHOGSMFAN,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOGSMIAA, PPC_INS_EVMHOGSMIAA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOGSMIAN, PPC_INS_EVMHOGSMIAN,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOGUMIAA, PPC_INS_EVMHOGUMIAA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOGUMIAN, PPC_INS_EVMHOGUMIAN,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOSMF, PPC_INS_EVMHOSMF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOSMFA, PPC_INS_EVMHOSMFA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOSMFAAW, PPC_INS_EVMHOSMFAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOSMFANW, PPC_INS_EVMHOSMFANW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOSMI, PPC_INS_EVMHOSMI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOSMIA, PPC_INS_EVMHOSMIA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOSMIAAW, PPC_INS_EVMHOSMIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOSMIANW, PPC_INS_EVMHOSMIANW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOSSF, PPC_INS_EVMHOSSF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOSSFA, PPC_INS_EVMHOSSFA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOSSFAAW, PPC_INS_EVMHOSSFAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOSSFANW, PPC_INS_EVMHOSSFANW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOSSIAAW, PPC_INS_EVMHOSSIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOSSIANW, PPC_INS_EVMHOSSIANW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOUMI, PPC_INS_EVMHOUMI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOUMIA, PPC_INS_EVMHOUMIA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOUMIAAW, PPC_INS_EVMHOUMIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOUMIANW, PPC_INS_EVMHOUMIANW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOUSIAAW, PPC_INS_EVMHOUSIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMHOUSIANW, PPC_INS_EVMHOUSIANW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMRA, PPC_INS_EVMRA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWHSMF, PPC_INS_EVMWHSMF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWHSMFA, PPC_INS_EVMWHSMFA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWHSMI, PPC_INS_EVMWHSMI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWHSMIA, PPC_INS_EVMWHSMIA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWHSSF, PPC_INS_EVMWHSSF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWHSSFA, PPC_INS_EVMWHSSFA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWHUMI, PPC_INS_EVMWHUMI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWHUMIA, PPC_INS_EVMWHUMIA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWLSMIAAW, PPC_INS_EVMWLSMIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWLSMIANW, PPC_INS_EVMWLSMIANW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWLSSIAAW, PPC_INS_EVMWLSSIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWLSSIANW, PPC_INS_EVMWLSSIANW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWLUMI, PPC_INS_EVMWLUMI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWLUMIA, PPC_INS_EVMWLUMIA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWLUMIAAW, PPC_INS_EVMWLUMIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWLUMIANW, PPC_INS_EVMWLUMIANW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWLUSIAAW, PPC_INS_EVMWLUSIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWLUSIANW, PPC_INS_EVMWLUSIANW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWSMF, PPC_INS_EVMWSMF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWSMFA, PPC_INS_EVMWSMFA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWSMFAA, PPC_INS_EVMWSMFAA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWSMFAN, PPC_INS_EVMWSMFAN,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWSMI, PPC_INS_EVMWSMI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWSMIA, PPC_INS_EVMWSMIA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWSMIAA, PPC_INS_EVMWSMIAA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWSMIAN, PPC_INS_EVMWSMIAN,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWSSF, PPC_INS_EVMWSSF,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWSSFA, PPC_INS_EVMWSSFA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWSSFAA, PPC_INS_EVMWSSFAA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWSSFAN, PPC_INS_EVMWSSFAN,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWUMI, PPC_INS_EVMWUMI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWUMIA, PPC_INS_EVMWUMIA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWUMIAA, PPC_INS_EVMWUMIAA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVMWUMIAN, PPC_INS_EVMWUMIAN,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVNAND, PPC_INS_EVNAND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVNEG, PPC_INS_EVNEG,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVNOR, PPC_INS_EVNOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVOR, PPC_INS_EVOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVORC, PPC_INS_EVORC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVRLW, PPC_INS_EVRLW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVRLWI, PPC_INS_EVRLWI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVRNDW, PPC_INS_EVRNDW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSLW, PPC_INS_EVSLW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSLWI, PPC_INS_EVSLWI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSPLATFI, PPC_INS_EVSPLATFI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSPLATI, PPC_INS_EVSPLATI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSRWIS, PPC_INS_EVSRWIS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSRWIU, PPC_INS_EVSRWIU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSRWS, PPC_INS_EVSRWS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSRWU, PPC_INS_EVSRWU,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSTDD, PPC_INS_EVSTDD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSTDDX, PPC_INS_EVSTDDX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSTDH, PPC_INS_EVSTDH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSTDHX, PPC_INS_EVSTDHX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSTDW, PPC_INS_EVSTDW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSTDWX, PPC_INS_EVSTDWX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSTWHE, PPC_INS_EVSTWHE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSTWHEX, PPC_INS_EVSTWHEX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSTWHO, PPC_INS_EVSTWHO,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSTWHOX, PPC_INS_EVSTWHOX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSTWWE, PPC_INS_EVSTWWE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSTWWEX, PPC_INS_EVSTWWEX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSTWWO, PPC_INS_EVSTWWO,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSTWWOX, PPC_INS_EVSTWWOX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSUBFSMIAAW, PPC_INS_EVSUBFSMIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSUBFSSIAAW, PPC_INS_EVSUBFSSIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSUBFUMIAAW, PPC_INS_EVSUBFUMIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSUBFUSIAAW, PPC_INS_EVSUBFUSIAAW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSUBFW, PPC_INS_EVSUBFW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVSUBIFW, PPC_INS_EVSUBIFW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_EVXOR, PPC_INS_EVXOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_SPE, 0 }, 0, 0
 #endif
 	},
 	{
@@ -1896,6 +3077,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		PPC_ICCCI, PPC_INS_ICCCI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_PPC4XX, 0 }, 0, 0
+#endif
+	},
+	{
 		PPC_ISEL, PPC_INS_ISEL,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
@@ -2005,12 +3192,6 @@ static insn_map insns[] = {
 	},
 	{
 		PPC_LDinto_toc, PPC_INS_LD,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		PPC_LDtoc_restore, PPC_INS_LD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -2208,6 +3389,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		PPC_LSWI, PPC_INS_LSWI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
 		PPC_LVEBX, PPC_INS_LVEBX,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
@@ -2340,6 +3527,36 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		PPC_LXSDX, PPC_INS_LXSDX,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LXVD2X, PPC_INS_LXVD2X,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LXVDSX, PPC_INS_LXVDSX,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_LXVW4X, PPC_INS_LXVW4X,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MBAR, PPC_INS_MBAR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_BOOKE, 0 }, 0, 0
+#endif
+	},
+	{
 		PPC_MCRF, PPC_INS_MCRF,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
@@ -2367,6 +3584,12 @@ static insn_map insns[] = {
 		PPC_MFCTR8, PPC_INS_MFCTR,
 #ifndef CAPSTONE_DIET
 		{ PPC_REG_CTR8, 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MFDCR, PPC_INS_MFDCR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_PPC4XX, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2407,6 +3630,18 @@ static insn_map insns[] = {
 	},
 	{
 		PPC_MFSPR, PPC_INS_MFSPR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MFSR, PPC_INS_MFSR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MFSRIN, PPC_INS_MFSRIN,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -2484,6 +3719,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		PPC_MTDCR, PPC_INS_MTDCR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_PPC4XX, 0 }, 0, 0
+#endif
+	},
+	{
 		PPC_MTFSB0, PPC_INS_MTFSB0,
 #ifndef CAPSTONE_DIET
 		{ PPC_REG_RM, 0 }, { PPC_REG_RM, 0 }, { 0 }, 0, 0
@@ -2539,6 +3780,18 @@ static insn_map insns[] = {
 	},
 	{
 		PPC_MTSPR, PPC_INS_MTSPR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTSR, PPC_INS_MTSR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_MTSRIN, PPC_INS_MTSRIN,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -2820,6 +4073,36 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		PPC_RFCI, PPC_INS_RFCI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_BOOKE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RFDI, PPC_INS_RFDI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_E500, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RFI, PPC_INS_RFI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_BOOKE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RFID, PPC_INS_RFID,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RFMCI, PPC_INS_RFMCI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_E500, 0 }, 0, 0
+#endif
+	},
+	{
 		PPC_RLDCL, PPC_INS_RLDCL,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
@@ -2901,6 +4184,18 @@ static insn_map insns[] = {
 		PPC_RLWIMI, PPC_INS_RLWIMI,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLWIMI8, PPC_INS_RLWIMI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_RLWIMI8o, PPC_INS_RLWIMI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
@@ -3270,6 +4565,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		PPC_STSWI, PPC_INS_STSWI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
 		PPC_STVEBX, PPC_INS_STVEBX,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
@@ -3357,6 +4658,24 @@ static insn_map insns[] = {
 		PPC_STWX8, PPC_INS_STWX,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STXSDX, PPC_INS_STXSDX,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STXVD2X, PPC_INS_STXVD2X,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_STXVW4X, PPC_INS_STXVW4X,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
 #endif
 	},
 	{
@@ -3546,6 +4865,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		PPC_TLBIA, PPC_INS_TLBIA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
 		PPC_TLBIE, PPC_INS_TLBIE,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
@@ -3558,9 +4883,69 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		PPC_TLBIVAX, PPC_INS_TLBIVAX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_BOOKE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_TLBLD, PPC_INS_TLBLD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_PPC6XX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_TLBLI, PPC_INS_TLBLI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_PPC6XX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_TLBRE, PPC_INS_TLBRE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_BOOKE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_TLBRE2, PPC_INS_TLBRE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_PPC4XX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_TLBSX, PPC_INS_TLBSX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_BOOKE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_TLBSX2, PPC_INS_TLBSX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_PPC4XX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_TLBSX2D, PPC_INS_TLBSX,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_PPC4XX, 0 }, 0, 0
+#endif
+	},
+	{
 		PPC_TLBSYNC, PPC_INS_TLBSYNC,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_TLBWE, PPC_INS_TLBWE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_BOOKE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_TLBWE2, PPC_INS_TLBWE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_PPC4XX, 0 }, 0, 0
 #endif
 	},
 	{
@@ -4578,6 +5963,18 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		PPC_WRTEE, PPC_INS_WRTEE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_BOOKE, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_WRTEEI, PPC_INS_WRTEEI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_BOOKE, 0 }, 0, 0
+#endif
+	},
+	{
 		PPC_XOR, PPC_INS_XOR,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
@@ -4623,6 +6020,822 @@ static insn_map insns[] = {
 		PPC_XORo, PPC_INS_XOR,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSABSDP, PPC_INS_XSABSDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSADDDP, PPC_INS_XSADDDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSCMPODP, PPC_INS_XSCMPODP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSCMPUDP, PPC_INS_XSCMPUDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSCPSGNDP, PPC_INS_XSCPSGNDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSCVDPSP, PPC_INS_XSCVDPSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSCVDPSXDS, PPC_INS_XSCVDPSXDS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSCVDPSXWS, PPC_INS_XSCVDPSXWS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSCVDPUXDS, PPC_INS_XSCVDPUXDS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSCVDPUXWS, PPC_INS_XSCVDPUXWS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSCVSPDP, PPC_INS_XSCVSPDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSCVSXDDP, PPC_INS_XSCVSXDDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSCVUXDDP, PPC_INS_XSCVUXDDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSDIVDP, PPC_INS_XSDIVDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSMADDADP, PPC_INS_XSMADDADP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSMADDMDP, PPC_INS_XSMADDMDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSMAXDP, PPC_INS_XSMAXDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSMINDP, PPC_INS_XSMINDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSMSUBADP, PPC_INS_XSMSUBADP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSMSUBMDP, PPC_INS_XSMSUBMDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSMULDP, PPC_INS_XSMULDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSNABSDP, PPC_INS_XSNABSDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSNEGDP, PPC_INS_XSNEGDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSNMADDADP, PPC_INS_XSNMADDADP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSNMADDMDP, PPC_INS_XSNMADDMDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSNMSUBADP, PPC_INS_XSNMSUBADP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSNMSUBMDP, PPC_INS_XSNMSUBMDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSRDPI, PPC_INS_XSRDPI,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSRDPIC, PPC_INS_XSRDPIC,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSRDPIM, PPC_INS_XSRDPIM,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSRDPIP, PPC_INS_XSRDPIP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSRDPIZ, PPC_INS_XSRDPIZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSREDP, PPC_INS_XSREDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSRSQRTEDP, PPC_INS_XSRSQRTEDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSSQRTDP, PPC_INS_XSSQRTDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSSUBDP, PPC_INS_XSSUBDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSTDIVDP, PPC_INS_XSTDIVDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XSTSQRTDP, PPC_INS_XSTSQRTDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVABSDP, PPC_INS_XVABSDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVABSSP, PPC_INS_XVABSSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVADDDP, PPC_INS_XVADDDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVADDSP, PPC_INS_XVADDSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCMPEQDP, PPC_INS_XVCMPEQDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCMPEQDPo, PPC_INS_XVCMPEQDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCMPEQSP, PPC_INS_XVCMPEQSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCMPEQSPo, PPC_INS_XVCMPEQSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCMPGEDP, PPC_INS_XVCMPGEDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCMPGEDPo, PPC_INS_XVCMPGEDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCMPGESP, PPC_INS_XVCMPGESP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCMPGESPo, PPC_INS_XVCMPGESP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCMPGTDP, PPC_INS_XVCMPGTDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCMPGTDPo, PPC_INS_XVCMPGTDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCMPGTSP, PPC_INS_XVCMPGTSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCMPGTSPo, PPC_INS_XVCMPGTSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { PPC_REG_CR6, 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCPSGNDP, PPC_INS_XVCPSGNDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCPSGNSP, PPC_INS_XVCPSGNSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCVDPSP, PPC_INS_XVCVDPSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCVDPSXDS, PPC_INS_XVCVDPSXDS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCVDPSXWS, PPC_INS_XVCVDPSXWS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCVDPUXDS, PPC_INS_XVCVDPUXDS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCVDPUXWS, PPC_INS_XVCVDPUXWS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCVSPDP, PPC_INS_XVCVSPDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCVSPSXDS, PPC_INS_XVCVSPSXDS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCVSPSXWS, PPC_INS_XVCVSPSXWS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCVSPUXDS, PPC_INS_XVCVSPUXDS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCVSPUXWS, PPC_INS_XVCVSPUXWS,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCVSXDDP, PPC_INS_XVCVSXDDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCVSXDSP, PPC_INS_XVCVSXDSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCVSXWDP, PPC_INS_XVCVSXWDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCVSXWSP, PPC_INS_XVCVSXWSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCVUXDDP, PPC_INS_XVCVUXDDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCVUXDSP, PPC_INS_XVCVUXDSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCVUXWDP, PPC_INS_XVCVUXWDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVCVUXWSP, PPC_INS_XVCVUXWSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVDIVDP, PPC_INS_XVDIVDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVDIVSP, PPC_INS_XVDIVSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVMADDADP, PPC_INS_XVMADDADP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVMADDASP, PPC_INS_XVMADDASP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVMADDMDP, PPC_INS_XVMADDMDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVMADDMSP, PPC_INS_XVMADDMSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVMAXDP, PPC_INS_XVMAXDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVMAXSP, PPC_INS_XVMAXSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVMINDP, PPC_INS_XVMINDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVMINSP, PPC_INS_XVMINSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVMSUBADP, PPC_INS_XVMSUBADP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVMSUBASP, PPC_INS_XVMSUBASP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVMSUBMDP, PPC_INS_XVMSUBMDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVMSUBMSP, PPC_INS_XVMSUBMSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVMULDP, PPC_INS_XVMULDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVMULSP, PPC_INS_XVMULSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVNABSDP, PPC_INS_XVNABSDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVNABSSP, PPC_INS_XVNABSSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVNEGDP, PPC_INS_XVNEGDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVNEGSP, PPC_INS_XVNEGSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVNMADDADP, PPC_INS_XVNMADDADP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVNMADDASP, PPC_INS_XVNMADDASP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVNMADDMDP, PPC_INS_XVNMADDMDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVNMADDMSP, PPC_INS_XVNMADDMSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVNMSUBADP, PPC_INS_XVNMSUBADP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVNMSUBASP, PPC_INS_XVNMSUBASP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVNMSUBMDP, PPC_INS_XVNMSUBMDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVNMSUBMSP, PPC_INS_XVNMSUBMSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVRDPI, PPC_INS_XVRDPI,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVRDPIC, PPC_INS_XVRDPIC,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVRDPIM, PPC_INS_XVRDPIM,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVRDPIP, PPC_INS_XVRDPIP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVRDPIZ, PPC_INS_XVRDPIZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVREDP, PPC_INS_XVREDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVRESP, PPC_INS_XVRESP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVRSPI, PPC_INS_XVRSPI,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVRSPIC, PPC_INS_XVRSPIC,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVRSPIM, PPC_INS_XVRSPIM,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVRSPIP, PPC_INS_XVRSPIP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVRSPIZ, PPC_INS_XVRSPIZ,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVRSQRTEDP, PPC_INS_XVRSQRTEDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVRSQRTESP, PPC_INS_XVRSQRTESP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVSQRTDP, PPC_INS_XVSQRTDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVSQRTSP, PPC_INS_XVSQRTSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVSUBDP, PPC_INS_XVSUBDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVSUBSP, PPC_INS_XVSUBSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVTDIVDP, PPC_INS_XVTDIVDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVTDIVSP, PPC_INS_XVTDIVSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVTSQRTDP, PPC_INS_XVTSQRTDP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XVTSQRTSP, PPC_INS_XVTSQRTSP,
+#ifndef CAPSTONE_DIET
+		{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XXLAND, PPC_INS_XXLAND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XXLANDC, PPC_INS_XXLANDC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XXLNOR, PPC_INS_XXLNOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XXLOR, PPC_INS_XXLOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XXLORf, PPC_INS_XXLOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XXLXOR, PPC_INS_XXLXOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XXMRGHW, PPC_INS_XXMRGHW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XXMRGLW, PPC_INS_XXMRGLW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XXPERMDI, PPC_INS_XXPERMDI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XXSEL, PPC_INS_XXSEL,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XXSLDWI, PPC_INS_XXSLDWI,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
+#endif
+	},
+	{
+		PPC_XXSPLTW, PPC_INS_XXSPLTW,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { PPC_GRP_VSX, 0 }, 0, 0
 #endif
 	},
 	{
@@ -4728,7 +6941,12 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_ANDI, "andi" },
 	{ PPC_INS_B, "b" },
 	{ PPC_INS_BA, "ba" },
+	{ PPC_INS_BC, "bc" },
+	{ PPC_INS_BCCTR, "bcctr" },
+	{ PPC_INS_BCCTRL, "bcctrl" },
 	{ PPC_INS_BCL, "bcl" },
+	{ PPC_INS_BCLR, "bclr" },
+	{ PPC_INS_BCLRL, "bclrl" },
 	{ PPC_INS_BCTR, "bctr" },
 	{ PPC_INS_BCTRL, "bctrl" },
 	{ PPC_INS_BDNZ, "bdnz" },
@@ -4747,6 +6965,7 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_BLA, "bla" },
 	{ PPC_INS_BLR, "blr" },
 	{ PPC_INS_BLRL, "blrl" },
+	{ PPC_INS_BRINC, "brinc" },
 	{ PPC_INS_CMPD, "cmpd" },
 	{ PPC_INS_CMPDI, "cmpdi" },
 	{ PPC_INS_CMPLD, "cmpld" },
@@ -4773,6 +6992,7 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_DCBTST, "dcbtst" },
 	{ PPC_INS_DCBZ, "dcbz" },
 	{ PPC_INS_DCBZL, "dcbzl" },
+	{ PPC_INS_DCCCI, "dccci" },
 	{ PPC_INS_DIVD, "divd" },
 	{ PPC_INS_DIVDU, "divdu" },
 	{ PPC_INS_DIVW, "divw" },
@@ -4785,6 +7005,177 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_DSTT, "dstt" },
 	{ PPC_INS_EIEIO, "eieio" },
 	{ PPC_INS_EQV, "eqv" },
+	{ PPC_INS_EVABS, "evabs" },
+	{ PPC_INS_EVADDIW, "evaddiw" },
+	{ PPC_INS_EVADDSMIAAW, "evaddsmiaaw" },
+	{ PPC_INS_EVADDSSIAAW, "evaddssiaaw" },
+	{ PPC_INS_EVADDUMIAAW, "evaddumiaaw" },
+	{ PPC_INS_EVADDUSIAAW, "evaddusiaaw" },
+	{ PPC_INS_EVADDW, "evaddw" },
+	{ PPC_INS_EVAND, "evand" },
+	{ PPC_INS_EVANDC, "evandc" },
+	{ PPC_INS_EVCMPEQ, "evcmpeq" },
+	{ PPC_INS_EVCMPGTS, "evcmpgts" },
+	{ PPC_INS_EVCMPGTU, "evcmpgtu" },
+	{ PPC_INS_EVCMPLTS, "evcmplts" },
+	{ PPC_INS_EVCMPLTU, "evcmpltu" },
+	{ PPC_INS_EVCNTLSW, "evcntlsw" },
+	{ PPC_INS_EVCNTLZW, "evcntlzw" },
+	{ PPC_INS_EVDIVWS, "evdivws" },
+	{ PPC_INS_EVDIVWU, "evdivwu" },
+	{ PPC_INS_EVEQV, "eveqv" },
+	{ PPC_INS_EVEXTSB, "evextsb" },
+	{ PPC_INS_EVEXTSH, "evextsh" },
+	{ PPC_INS_EVLDD, "evldd" },
+	{ PPC_INS_EVLDDX, "evlddx" },
+	{ PPC_INS_EVLDH, "evldh" },
+	{ PPC_INS_EVLDHX, "evldhx" },
+	{ PPC_INS_EVLDW, "evldw" },
+	{ PPC_INS_EVLDWX, "evldwx" },
+	{ PPC_INS_EVLHHESPLAT, "evlhhesplat" },
+	{ PPC_INS_EVLHHESPLATX, "evlhhesplatx" },
+	{ PPC_INS_EVLHHOSSPLAT, "evlhhossplat" },
+	{ PPC_INS_EVLHHOSSPLATX, "evlhhossplatx" },
+	{ PPC_INS_EVLHHOUSPLAT, "evlhhousplat" },
+	{ PPC_INS_EVLHHOUSPLATX, "evlhhousplatx" },
+	{ PPC_INS_EVLWHE, "evlwhe" },
+	{ PPC_INS_EVLWHEX, "evlwhex" },
+	{ PPC_INS_EVLWHOS, "evlwhos" },
+	{ PPC_INS_EVLWHOSX, "evlwhosx" },
+	{ PPC_INS_EVLWHOU, "evlwhou" },
+	{ PPC_INS_EVLWHOUX, "evlwhoux" },
+	{ PPC_INS_EVLWHSPLAT, "evlwhsplat" },
+	{ PPC_INS_EVLWHSPLATX, "evlwhsplatx" },
+	{ PPC_INS_EVLWWSPLAT, "evlwwsplat" },
+	{ PPC_INS_EVLWWSPLATX, "evlwwsplatx" },
+	{ PPC_INS_EVMERGEHI, "evmergehi" },
+	{ PPC_INS_EVMERGEHILO, "evmergehilo" },
+	{ PPC_INS_EVMERGELO, "evmergelo" },
+	{ PPC_INS_EVMERGELOHI, "evmergelohi" },
+	{ PPC_INS_EVMHEGSMFAA, "evmhegsmfaa" },
+	{ PPC_INS_EVMHEGSMFAN, "evmhegsmfan" },
+	{ PPC_INS_EVMHEGSMIAA, "evmhegsmiaa" },
+	{ PPC_INS_EVMHEGSMIAN, "evmhegsmian" },
+	{ PPC_INS_EVMHEGUMIAA, "evmhegumiaa" },
+	{ PPC_INS_EVMHEGUMIAN, "evmhegumian" },
+	{ PPC_INS_EVMHESMF, "evmhesmf" },
+	{ PPC_INS_EVMHESMFA, "evmhesmfa" },
+	{ PPC_INS_EVMHESMFAAW, "evmhesmfaaw" },
+	{ PPC_INS_EVMHESMFANW, "evmhesmfanw" },
+	{ PPC_INS_EVMHESMI, "evmhesmi" },
+	{ PPC_INS_EVMHESMIA, "evmhesmia" },
+	{ PPC_INS_EVMHESMIAAW, "evmhesmiaaw" },
+	{ PPC_INS_EVMHESMIANW, "evmhesmianw" },
+	{ PPC_INS_EVMHESSF, "evmhessf" },
+	{ PPC_INS_EVMHESSFA, "evmhessfa" },
+	{ PPC_INS_EVMHESSFAAW, "evmhessfaaw" },
+	{ PPC_INS_EVMHESSFANW, "evmhessfanw" },
+	{ PPC_INS_EVMHESSIAAW, "evmhessiaaw" },
+	{ PPC_INS_EVMHESSIANW, "evmhessianw" },
+	{ PPC_INS_EVMHEUMI, "evmheumi" },
+	{ PPC_INS_EVMHEUMIA, "evmheumia" },
+	{ PPC_INS_EVMHEUMIAAW, "evmheumiaaw" },
+	{ PPC_INS_EVMHEUMIANW, "evmheumianw" },
+	{ PPC_INS_EVMHEUSIAAW, "evmheusiaaw" },
+	{ PPC_INS_EVMHEUSIANW, "evmheusianw" },
+	{ PPC_INS_EVMHOGSMFAA, "evmhogsmfaa" },
+	{ PPC_INS_EVMHOGSMFAN, "evmhogsmfan" },
+	{ PPC_INS_EVMHOGSMIAA, "evmhogsmiaa" },
+	{ PPC_INS_EVMHOGSMIAN, "evmhogsmian" },
+	{ PPC_INS_EVMHOGUMIAA, "evmhogumiaa" },
+	{ PPC_INS_EVMHOGUMIAN, "evmhogumian" },
+	{ PPC_INS_EVMHOSMF, "evmhosmf" },
+	{ PPC_INS_EVMHOSMFA, "evmhosmfa" },
+	{ PPC_INS_EVMHOSMFAAW, "evmhosmfaaw" },
+	{ PPC_INS_EVMHOSMFANW, "evmhosmfanw" },
+	{ PPC_INS_EVMHOSMI, "evmhosmi" },
+	{ PPC_INS_EVMHOSMIA, "evmhosmia" },
+	{ PPC_INS_EVMHOSMIAAW, "evmhosmiaaw" },
+	{ PPC_INS_EVMHOSMIANW, "evmhosmianw" },
+	{ PPC_INS_EVMHOSSF, "evmhossf" },
+	{ PPC_INS_EVMHOSSFA, "evmhossfa" },
+	{ PPC_INS_EVMHOSSFAAW, "evmhossfaaw" },
+	{ PPC_INS_EVMHOSSFANW, "evmhossfanw" },
+	{ PPC_INS_EVMHOSSIAAW, "evmhossiaaw" },
+	{ PPC_INS_EVMHOSSIANW, "evmhossianw" },
+	{ PPC_INS_EVMHOUMI, "evmhoumi" },
+	{ PPC_INS_EVMHOUMIA, "evmhoumia" },
+	{ PPC_INS_EVMHOUMIAAW, "evmhoumiaaw" },
+	{ PPC_INS_EVMHOUMIANW, "evmhoumianw" },
+	{ PPC_INS_EVMHOUSIAAW, "evmhousiaaw" },
+	{ PPC_INS_EVMHOUSIANW, "evmhousianw" },
+	{ PPC_INS_EVMRA, "evmra" },
+	{ PPC_INS_EVMWHSMF, "evmwhsmf" },
+	{ PPC_INS_EVMWHSMFA, "evmwhsmfa" },
+	{ PPC_INS_EVMWHSMI, "evmwhsmi" },
+	{ PPC_INS_EVMWHSMIA, "evmwhsmia" },
+	{ PPC_INS_EVMWHSSF, "evmwhssf" },
+	{ PPC_INS_EVMWHSSFA, "evmwhssfa" },
+	{ PPC_INS_EVMWHUMI, "evmwhumi" },
+	{ PPC_INS_EVMWHUMIA, "evmwhumia" },
+	{ PPC_INS_EVMWLSMIAAW, "evmwlsmiaaw" },
+	{ PPC_INS_EVMWLSMIANW, "evmwlsmianw" },
+	{ PPC_INS_EVMWLSSIAAW, "evmwlssiaaw" },
+	{ PPC_INS_EVMWLSSIANW, "evmwlssianw" },
+	{ PPC_INS_EVMWLUMI, "evmwlumi" },
+	{ PPC_INS_EVMWLUMIA, "evmwlumia" },
+	{ PPC_INS_EVMWLUMIAAW, "evmwlumiaaw" },
+	{ PPC_INS_EVMWLUMIANW, "evmwlumianw" },
+	{ PPC_INS_EVMWLUSIAAW, "evmwlusiaaw" },
+	{ PPC_INS_EVMWLUSIANW, "evmwlusianw" },
+	{ PPC_INS_EVMWSMF, "evmwsmf" },
+	{ PPC_INS_EVMWSMFA, "evmwsmfa" },
+	{ PPC_INS_EVMWSMFAA, "evmwsmfaa" },
+	{ PPC_INS_EVMWSMFAN, "evmwsmfan" },
+	{ PPC_INS_EVMWSMI, "evmwsmi" },
+	{ PPC_INS_EVMWSMIA, "evmwsmia" },
+	{ PPC_INS_EVMWSMIAA, "evmwsmiaa" },
+	{ PPC_INS_EVMWSMIAN, "evmwsmian" },
+	{ PPC_INS_EVMWSSF, "evmwssf" },
+	{ PPC_INS_EVMWSSFA, "evmwssfa" },
+	{ PPC_INS_EVMWSSFAA, "evmwssfaa" },
+	{ PPC_INS_EVMWSSFAN, "evmwssfan" },
+	{ PPC_INS_EVMWUMI, "evmwumi" },
+	{ PPC_INS_EVMWUMIA, "evmwumia" },
+	{ PPC_INS_EVMWUMIAA, "evmwumiaa" },
+	{ PPC_INS_EVMWUMIAN, "evmwumian" },
+	{ PPC_INS_EVNAND, "evnand" },
+	{ PPC_INS_EVNEG, "evneg" },
+	{ PPC_INS_EVNOR, "evnor" },
+	{ PPC_INS_EVOR, "evor" },
+	{ PPC_INS_EVORC, "evorc" },
+	{ PPC_INS_EVRLW, "evrlw" },
+	{ PPC_INS_EVRLWI, "evrlwi" },
+	{ PPC_INS_EVRNDW, "evrndw" },
+	{ PPC_INS_EVSLW, "evslw" },
+	{ PPC_INS_EVSLWI, "evslwi" },
+	{ PPC_INS_EVSPLATFI, "evsplatfi" },
+	{ PPC_INS_EVSPLATI, "evsplati" },
+	{ PPC_INS_EVSRWIS, "evsrwis" },
+	{ PPC_INS_EVSRWIU, "evsrwiu" },
+	{ PPC_INS_EVSRWS, "evsrws" },
+	{ PPC_INS_EVSRWU, "evsrwu" },
+	{ PPC_INS_EVSTDD, "evstdd" },
+	{ PPC_INS_EVSTDDX, "evstddx" },
+	{ PPC_INS_EVSTDH, "evstdh" },
+	{ PPC_INS_EVSTDHX, "evstdhx" },
+	{ PPC_INS_EVSTDW, "evstdw" },
+	{ PPC_INS_EVSTDWX, "evstdwx" },
+	{ PPC_INS_EVSTWHE, "evstwhe" },
+	{ PPC_INS_EVSTWHEX, "evstwhex" },
+	{ PPC_INS_EVSTWHO, "evstwho" },
+	{ PPC_INS_EVSTWHOX, "evstwhox" },
+	{ PPC_INS_EVSTWWE, "evstwwe" },
+	{ PPC_INS_EVSTWWEX, "evstwwex" },
+	{ PPC_INS_EVSTWWO, "evstwwo" },
+	{ PPC_INS_EVSTWWOX, "evstwwox" },
+	{ PPC_INS_EVSUBFSMIAAW, "evsubfsmiaaw" },
+	{ PPC_INS_EVSUBFSSIAAW, "evsubfssiaaw" },
+	{ PPC_INS_EVSUBFUMIAAW, "evsubfumiaaw" },
+	{ PPC_INS_EVSUBFUSIAAW, "evsubfusiaaw" },
+	{ PPC_INS_EVSUBFW, "evsubfw" },
+	{ PPC_INS_EVSUBIFW, "evsubifw" },
+	{ PPC_INS_EVXOR, "evxor" },
 	{ PPC_INS_EXTSB, "extsb" },
 	{ PPC_INS_EXTSH, "extsh" },
 	{ PPC_INS_EXTSW, "extsw" },
@@ -4833,6 +7224,7 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_FSUB, "fsub" },
 	{ PPC_INS_FSUBS, "fsubs" },
 	{ PPC_INS_ICBI, "icbi" },
+	{ PPC_INS_ICCCI, "iccci" },
 	{ PPC_INS_ISEL, "isel" },
 	{ PPC_INS_ISYNC, "isync" },
 	{ PPC_INS_LA, "la" },
@@ -4868,6 +7260,7 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_LI, "li" },
 	{ PPC_INS_LIS, "lis" },
 	{ PPC_INS_LMW, "lmw" },
+	{ PPC_INS_LSWI, "lswi" },
 	{ PPC_INS_LVEBX, "lvebx" },
 	{ PPC_INS_LVEHX, "lvehx" },
 	{ PPC_INS_LVEWX, "lvewx" },
@@ -4884,19 +7277,28 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_LWZU, "lwzu" },
 	{ PPC_INS_LWZUX, "lwzux" },
 	{ PPC_INS_LWZX, "lwzx" },
+	{ PPC_INS_LXSDX, "lxsdx" },
+	{ PPC_INS_LXVD2X, "lxvd2x" },
+	{ PPC_INS_LXVDSX, "lxvdsx" },
+	{ PPC_INS_LXVW4X, "lxvw4x" },
+	{ PPC_INS_MBAR, "mbar" },
 	{ PPC_INS_MCRF, "mcrf" },
 	{ PPC_INS_MFCR, "mfcr" },
 	{ PPC_INS_MFCTR, "mfctr" },
+	{ PPC_INS_MFDCR, "mfdcr" },
 	{ PPC_INS_MFFS, "mffs" },
 	{ PPC_INS_MFLR, "mflr" },
 	{ PPC_INS_MFMSR, "mfmsr" },
 	{ PPC_INS_MFOCRF, "mfocrf" },
 	{ PPC_INS_MFSPR, "mfspr" },
+	{ PPC_INS_MFSR, "mfsr" },
+	{ PPC_INS_MFSRIN, "mfsrin" },
 	{ PPC_INS_MFTB, "mftb" },
 	{ PPC_INS_MFVSCR, "mfvscr" },
 	{ PPC_INS_MSYNC, "msync" },
 	{ PPC_INS_MTCRF, "mtcrf" },
 	{ PPC_INS_MTCTR, "mtctr" },
+	{ PPC_INS_MTDCR, "mtdcr" },
 	{ PPC_INS_MTFSB0, "mtfsb0" },
 	{ PPC_INS_MTFSB1, "mtfsb1" },
 	{ PPC_INS_MTFSF, "mtfsf" },
@@ -4905,6 +7307,8 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_MTMSRD, "mtmsrd" },
 	{ PPC_INS_MTOCRF, "mtocrf" },
 	{ PPC_INS_MTSPR, "mtspr" },
+	{ PPC_INS_MTSR, "mtsr" },
+	{ PPC_INS_MTSRIN, "mtsrin" },
 	{ PPC_INS_MTVSCR, "mtvscr" },
 	{ PPC_INS_MULHD, "mulhd" },
 	{ PPC_INS_MULHDU, "mulhdu" },
@@ -4923,6 +7327,11 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_ORIS, "oris" },
 	{ PPC_INS_POPCNTD, "popcntd" },
 	{ PPC_INS_POPCNTW, "popcntw" },
+	{ PPC_INS_RFCI, "rfci" },
+	{ PPC_INS_RFDI, "rfdi" },
+	{ PPC_INS_RFI, "rfi" },
+	{ PPC_INS_RFID, "rfid" },
+	{ PPC_INS_RFMCI, "rfmci" },
 	{ PPC_INS_RLDCL, "rldcl" },
 	{ PPC_INS_RLDCR, "rldcr" },
 	{ PPC_INS_RLDIC, "rldic" },
@@ -4970,6 +7379,7 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_STHUX, "sthux" },
 	{ PPC_INS_STHX, "sthx" },
 	{ PPC_INS_STMW, "stmw" },
+	{ PPC_INS_STSWI, "stswi" },
 	{ PPC_INS_STVEBX, "stvebx" },
 	{ PPC_INS_STVEHX, "stvehx" },
 	{ PPC_INS_STVEWX, "stvewx" },
@@ -4981,6 +7391,9 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_STWU, "stwu" },
 	{ PPC_INS_STWUX, "stwux" },
 	{ PPC_INS_STWX, "stwx" },
+	{ PPC_INS_STXSDX, "stxsdx" },
+	{ PPC_INS_STXVD2X, "stxvd2x" },
+	{ PPC_INS_STXVW4X, "stxvw4x" },
 	{ PPC_INS_SUBF, "subf" },
 	{ PPC_INS_SUBFC, "subfc" },
 	{ PPC_INS_SUBFE, "subfe" },
@@ -4990,9 +7403,16 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_SYNC, "sync" },
 	{ PPC_INS_TD, "td" },
 	{ PPC_INS_TDI, "tdi" },
+	{ PPC_INS_TLBIA, "tlbia" },
 	{ PPC_INS_TLBIE, "tlbie" },
 	{ PPC_INS_TLBIEL, "tlbiel" },
+	{ PPC_INS_TLBIVAX, "tlbivax" },
+	{ PPC_INS_TLBLD, "tlbld" },
+	{ PPC_INS_TLBLI, "tlbli" },
+	{ PPC_INS_TLBRE, "tlbre" },
+	{ PPC_INS_TLBSX, "tlbsx" },
 	{ PPC_INS_TLBSYNC, "tlbsync" },
+	{ PPC_INS_TLBWE, "tlbwe" },
 	{ PPC_INS_TRAP, "trap" },
 	{ PPC_INS_TW, "tw" },
 	{ PPC_INS_TWI, "twi" },
@@ -5139,16 +7559,309 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_VUPKLSH, "vupklsh" },
 	{ PPC_INS_VXOR, "vxor" },
 	{ PPC_INS_WAIT, "wait" },
+	{ PPC_INS_WRTEE, "wrtee" },
+	{ PPC_INS_WRTEEI, "wrteei" },
 	{ PPC_INS_XOR, "xor" },
 	{ PPC_INS_XORI, "xori" },
 	{ PPC_INS_XORIS, "xoris" },
-	{ PPC_INS_BC, "bc" },
+	{ PPC_INS_XSABSDP, "xsabsdp" },
+	{ PPC_INS_XSADDDP, "xsadddp" },
+	{ PPC_INS_XSCMPODP, "xscmpodp" },
+	{ PPC_INS_XSCMPUDP, "xscmpudp" },
+	{ PPC_INS_XSCPSGNDP, "xscpsgndp" },
+	{ PPC_INS_XSCVDPSP, "xscvdpsp" },
+	{ PPC_INS_XSCVDPSXDS, "xscvdpsxds" },
+	{ PPC_INS_XSCVDPSXWS, "xscvdpsxws" },
+	{ PPC_INS_XSCVDPUXDS, "xscvdpuxds" },
+	{ PPC_INS_XSCVDPUXWS, "xscvdpuxws" },
+	{ PPC_INS_XSCVSPDP, "xscvspdp" },
+	{ PPC_INS_XSCVSXDDP, "xscvsxddp" },
+	{ PPC_INS_XSCVUXDDP, "xscvuxddp" },
+	{ PPC_INS_XSDIVDP, "xsdivdp" },
+	{ PPC_INS_XSMADDADP, "xsmaddadp" },
+	{ PPC_INS_XSMADDMDP, "xsmaddmdp" },
+	{ PPC_INS_XSMAXDP, "xsmaxdp" },
+	{ PPC_INS_XSMINDP, "xsmindp" },
+	{ PPC_INS_XSMSUBADP, "xsmsubadp" },
+	{ PPC_INS_XSMSUBMDP, "xsmsubmdp" },
+	{ PPC_INS_XSMULDP, "xsmuldp" },
+	{ PPC_INS_XSNABSDP, "xsnabsdp" },
+	{ PPC_INS_XSNEGDP, "xsnegdp" },
+	{ PPC_INS_XSNMADDADP, "xsnmaddadp" },
+	{ PPC_INS_XSNMADDMDP, "xsnmaddmdp" },
+	{ PPC_INS_XSNMSUBADP, "xsnmsubadp" },
+	{ PPC_INS_XSNMSUBMDP, "xsnmsubmdp" },
+	{ PPC_INS_XSRDPI, "xsrdpi" },
+	{ PPC_INS_XSRDPIC, "xsrdpic" },
+	{ PPC_INS_XSRDPIM, "xsrdpim" },
+	{ PPC_INS_XSRDPIP, "xsrdpip" },
+	{ PPC_INS_XSRDPIZ, "xsrdpiz" },
+	{ PPC_INS_XSREDP, "xsredp" },
+	{ PPC_INS_XSRSQRTEDP, "xsrsqrtedp" },
+	{ PPC_INS_XSSQRTDP, "xssqrtdp" },
+	{ PPC_INS_XSSUBDP, "xssubdp" },
+	{ PPC_INS_XSTDIVDP, "xstdivdp" },
+	{ PPC_INS_XSTSQRTDP, "xstsqrtdp" },
+	{ PPC_INS_XVABSDP, "xvabsdp" },
+	{ PPC_INS_XVABSSP, "xvabssp" },
+	{ PPC_INS_XVADDDP, "xvadddp" },
+	{ PPC_INS_XVADDSP, "xvaddsp" },
+	{ PPC_INS_XVCMPEQDP, "xvcmpeqdp" },
+	{ PPC_INS_XVCMPEQSP, "xvcmpeqsp" },
+	{ PPC_INS_XVCMPGEDP, "xvcmpgedp" },
+	{ PPC_INS_XVCMPGESP, "xvcmpgesp" },
+	{ PPC_INS_XVCMPGTDP, "xvcmpgtdp" },
+	{ PPC_INS_XVCMPGTSP, "xvcmpgtsp" },
+	{ PPC_INS_XVCPSGNDP, "xvcpsgndp" },
+	{ PPC_INS_XVCPSGNSP, "xvcpsgnsp" },
+	{ PPC_INS_XVCVDPSP, "xvcvdpsp" },
+	{ PPC_INS_XVCVDPSXDS, "xvcvdpsxds" },
+	{ PPC_INS_XVCVDPSXWS, "xvcvdpsxws" },
+	{ PPC_INS_XVCVDPUXDS, "xvcvdpuxds" },
+	{ PPC_INS_XVCVDPUXWS, "xvcvdpuxws" },
+	{ PPC_INS_XVCVSPDP, "xvcvspdp" },
+	{ PPC_INS_XVCVSPSXDS, "xvcvspsxds" },
+	{ PPC_INS_XVCVSPSXWS, "xvcvspsxws" },
+	{ PPC_INS_XVCVSPUXDS, "xvcvspuxds" },
+	{ PPC_INS_XVCVSPUXWS, "xvcvspuxws" },
+	{ PPC_INS_XVCVSXDDP, "xvcvsxddp" },
+	{ PPC_INS_XVCVSXDSP, "xvcvsxdsp" },
+	{ PPC_INS_XVCVSXWDP, "xvcvsxwdp" },
+	{ PPC_INS_XVCVSXWSP, "xvcvsxwsp" },
+	{ PPC_INS_XVCVUXDDP, "xvcvuxddp" },
+	{ PPC_INS_XVCVUXDSP, "xvcvuxdsp" },
+	{ PPC_INS_XVCVUXWDP, "xvcvuxwdp" },
+	{ PPC_INS_XVCVUXWSP, "xvcvuxwsp" },
+	{ PPC_INS_XVDIVDP, "xvdivdp" },
+	{ PPC_INS_XVDIVSP, "xvdivsp" },
+	{ PPC_INS_XVMADDADP, "xvmaddadp" },
+	{ PPC_INS_XVMADDASP, "xvmaddasp" },
+	{ PPC_INS_XVMADDMDP, "xvmaddmdp" },
+	{ PPC_INS_XVMADDMSP, "xvmaddmsp" },
+	{ PPC_INS_XVMAXDP, "xvmaxdp" },
+	{ PPC_INS_XVMAXSP, "xvmaxsp" },
+	{ PPC_INS_XVMINDP, "xvmindp" },
+	{ PPC_INS_XVMINSP, "xvminsp" },
+	{ PPC_INS_XVMSUBADP, "xvmsubadp" },
+	{ PPC_INS_XVMSUBASP, "xvmsubasp" },
+	{ PPC_INS_XVMSUBMDP, "xvmsubmdp" },
+	{ PPC_INS_XVMSUBMSP, "xvmsubmsp" },
+	{ PPC_INS_XVMULDP, "xvmuldp" },
+	{ PPC_INS_XVMULSP, "xvmulsp" },
+	{ PPC_INS_XVNABSDP, "xvnabsdp" },
+	{ PPC_INS_XVNABSSP, "xvnabssp" },
+	{ PPC_INS_XVNEGDP, "xvnegdp" },
+	{ PPC_INS_XVNEGSP, "xvnegsp" },
+	{ PPC_INS_XVNMADDADP, "xvnmaddadp" },
+	{ PPC_INS_XVNMADDASP, "xvnmaddasp" },
+	{ PPC_INS_XVNMADDMDP, "xvnmaddmdp" },
+	{ PPC_INS_XVNMADDMSP, "xvnmaddmsp" },
+	{ PPC_INS_XVNMSUBADP, "xvnmsubadp" },
+	{ PPC_INS_XVNMSUBASP, "xvnmsubasp" },
+	{ PPC_INS_XVNMSUBMDP, "xvnmsubmdp" },
+	{ PPC_INS_XVNMSUBMSP, "xvnmsubmsp" },
+	{ PPC_INS_XVRDPI, "xvrdpi" },
+	{ PPC_INS_XVRDPIC, "xvrdpic" },
+	{ PPC_INS_XVRDPIM, "xvrdpim" },
+	{ PPC_INS_XVRDPIP, "xvrdpip" },
+	{ PPC_INS_XVRDPIZ, "xvrdpiz" },
+	{ PPC_INS_XVREDP, "xvredp" },
+	{ PPC_INS_XVRESP, "xvresp" },
+	{ PPC_INS_XVRSPI, "xvrspi" },
+	{ PPC_INS_XVRSPIC, "xvrspic" },
+	{ PPC_INS_XVRSPIM, "xvrspim" },
+	{ PPC_INS_XVRSPIP, "xvrspip" },
+	{ PPC_INS_XVRSPIZ, "xvrspiz" },
+	{ PPC_INS_XVRSQRTEDP, "xvrsqrtedp" },
+	{ PPC_INS_XVRSQRTESP, "xvrsqrtesp" },
+	{ PPC_INS_XVSQRTDP, "xvsqrtdp" },
+	{ PPC_INS_XVSQRTSP, "xvsqrtsp" },
+	{ PPC_INS_XVSUBDP, "xvsubdp" },
+	{ PPC_INS_XVSUBSP, "xvsubsp" },
+	{ PPC_INS_XVTDIVDP, "xvtdivdp" },
+	{ PPC_INS_XVTDIVSP, "xvtdivsp" },
+	{ PPC_INS_XVTSQRTDP, "xvtsqrtdp" },
+	{ PPC_INS_XVTSQRTSP, "xvtsqrtsp" },
+	{ PPC_INS_XXLAND, "xxland" },
+	{ PPC_INS_XXLANDC, "xxlandc" },
+	{ PPC_INS_XXLNOR, "xxlnor" },
+	{ PPC_INS_XXLOR, "xxlor" },
+	{ PPC_INS_XXLXOR, "xxlxor" },
+	{ PPC_INS_XXMRGHW, "xxmrghw" },
+	{ PPC_INS_XXMRGLW, "xxmrglw" },
+	{ PPC_INS_XXPERMDI, "xxpermdi" },
+	{ PPC_INS_XXSEL, "xxsel" },
+	{ PPC_INS_XXSLDWI, "xxsldwi" },
+	{ PPC_INS_XXSPLTW, "xxspltw" },
 	{ PPC_INS_BCA, "bca" },
-	{ PPC_INS_BCCTR, "bcctr" },
-	{ PPC_INS_BCCTRL, "bcctrl" },
 	{ PPC_INS_BCLA, "bcla" },
-	{ PPC_INS_BCLR, "bclr" },
-	{ PPC_INS_BCLRL, "bclrl" },
+
+	// extra & alias instructions
+	{ PPC_INS_SLWI, "slwi" },
+	{ PPC_INS_SRWI, "srwi" },
+	{ PPC_INS_SLDI, "sldi" },
+	{ PPC_INS_BTA, "bta" },
+	{ PPC_INS_CRSET, "crset" },
+	{ PPC_INS_CRNOT, "crnot" },
+	{ PPC_INS_CRMOVE, "crmove" },
+	{ PPC_INS_CRCLR, "crclr" },
+	{ PPC_INS_MFBR0, "mfbr0" },
+	{ PPC_INS_MFBR1, "mfbr1" },
+	{ PPC_INS_MFBR2, "mfbr2" },
+	{ PPC_INS_MFBR3, "mfbr3" },
+	{ PPC_INS_MFBR4, "mfbr4" },
+	{ PPC_INS_MFBR5, "mfbr5" },
+	{ PPC_INS_MFBR6, "mfbr6" },
+	{ PPC_INS_MFBR7, "mfbr7" },
+	{ PPC_INS_MFXER, "mfxer" },
+	{ PPC_INS_MFRTCU, "mfrtcu" },
+	{ PPC_INS_MFRTCL, "mfrtcl" },
+	{ PPC_INS_MFDSCR, "mfdscr" },
+	{ PPC_INS_MFDSISR, "mfdsisr" },
+	{ PPC_INS_MFDAR, "mfdar" },
+	{ PPC_INS_MFSRR2, "mfsrr2" },
+	{ PPC_INS_MFSRR3, "mfsrr3" },
+	{ PPC_INS_MFCFAR, "mfcfar" },
+	{ PPC_INS_MFAMR, "mfamr" },
+	{ PPC_INS_MFPID, "mfpid" },
+	{ PPC_INS_MFTBLO, "mftblo" },
+	{ PPC_INS_MFTBHI, "mftbhi" },
+	{ PPC_INS_MFDBATU, "mfdbatu" },
+	{ PPC_INS_MFDBATL, "mfdbatl" },
+	{ PPC_INS_MFIBATU, "mfibatu" },
+	{ PPC_INS_MFIBATL, "mfibatl" },
+	{ PPC_INS_MFDCCR, "mfdccr" },
+	{ PPC_INS_MFICCR, "mficcr" },
+	{ PPC_INS_MFDEAR, "mfdear" },
+	{ PPC_INS_MFESR, "mfesr" },
+	{ PPC_INS_MFSPEFSCR, "mfspefscr" },
+	{ PPC_INS_MFTCR, "mftcr" },
+	{ PPC_INS_MFASR, "mfasr" },
+	{ PPC_INS_MFPVR, "mfpvr" },
+	{ PPC_INS_MFTBU, "mftbu" },
+	{ PPC_INS_MTCR, "mtcr" },
+	{ PPC_INS_MTBR0, "mtbr0" },
+	{ PPC_INS_MTBR1, "mtbr1" },
+	{ PPC_INS_MTBR2, "mtbr2" },
+	{ PPC_INS_MTBR3, "mtbr3" },
+	{ PPC_INS_MTBR4, "mtbr4" },
+	{ PPC_INS_MTBR5, "mtbr5" },
+	{ PPC_INS_MTBR6, "mtbr6" },
+	{ PPC_INS_MTBR7, "mtbr7" },
+	{ PPC_INS_MTXER, "mtxer" },
+	{ PPC_INS_MTDSCR, "mtdscr" },
+	{ PPC_INS_MTDSISR, "mtdsisr" },
+	{ PPC_INS_MTDAR, "mtdar" },
+	{ PPC_INS_MTSRR2, "mtsrr2" },
+	{ PPC_INS_MTSRR3, "mtsrr3" },
+	{ PPC_INS_MTCFAR, "mtcfar" },
+	{ PPC_INS_MTAMR, "mtamr" },
+	{ PPC_INS_MTPID, "mtpid" },
+	{ PPC_INS_MTTBL, "mttbl" },
+	{ PPC_INS_MTTBU, "mttbu" },
+	{ PPC_INS_MTTBLO, "mttblo" },
+	{ PPC_INS_MTTBHI, "mttbhi" },
+	{ PPC_INS_MTDBATU, "mtdbatu" },
+	{ PPC_INS_MTDBATL, "mtdbatl" },
+	{ PPC_INS_MTIBATU, "mtibatu" },
+	{ PPC_INS_MTIBATL, "mtibatl" },
+	{ PPC_INS_MTDCCR, "mtdccr" },
+	{ PPC_INS_MTICCR, "mticcr" },
+	{ PPC_INS_MTDEAR, "mtdear" },
+	{ PPC_INS_MTESR, "mtesr" },
+	{ PPC_INS_MTSPEFSCR, "mtspefscr" },
+	{ PPC_INS_MTTCR, "mttcr" },
+	{ PPC_INS_NOT, "not" },
+	{ PPC_INS_MR, "mr" },
+	{ PPC_INS_ROTLD, "rotld" },
+	{ PPC_INS_ROTLDI, "rotldi" },
+	{ PPC_INS_CLRLDI, "clrldi" },
+	{ PPC_INS_ROTLWI, "rotlwi" },
+	{ PPC_INS_CLRLWI, "clrlwi" },
+	{ PPC_INS_ROTLW, "rotlw" },
+	{ PPC_INS_SUB, "sub" },
+	{ PPC_INS_SUBC, "subc" },
+	{ PPC_INS_LWSYNC, "lwsync" },
+	{ PPC_INS_PTESYNC, "ptesync" },
+	{ PPC_INS_TDLT, "tdlt" },
+	{ PPC_INS_TDEQ, "tdeq" },
+	{ PPC_INS_TDGT, "tdgt" },
+	{ PPC_INS_TDNE, "tdne" },
+	{ PPC_INS_TDLLT, "tdllt" },
+	{ PPC_INS_TDLGT, "tdlgt" },
+	{ PPC_INS_TDU, "tdu" },
+	{ PPC_INS_TDLTI, "tdlti" },
+	{ PPC_INS_TDEQI, "tdeqi" },
+	{ PPC_INS_TDGTI, "tdgti" },
+	{ PPC_INS_TDNEI, "tdnei" },
+	{ PPC_INS_TDLLTI, "tdllti" },
+	{ PPC_INS_TDLGTI, "tdlgti" },
+	{ PPC_INS_TDUI, "tdui" },
+	{ PPC_INS_TLBREHI, "tlbrehi" },
+	{ PPC_INS_TLBRELO, "tlbrelo" },
+	{ PPC_INS_TLBWEHI, "tlbwehi" },
+	{ PPC_INS_TLBWELO, "tlbwelo" },
+	{ PPC_INS_TWLT, "twlt" },
+	{ PPC_INS_TWEQ, "tweq" },
+	{ PPC_INS_TWGT, "twgt" },
+	{ PPC_INS_TWNE, "twne" },
+	{ PPC_INS_TWLLT, "twllt" },
+	{ PPC_INS_TWLGT, "twlgt" },
+	{ PPC_INS_TWU, "twu" },
+	{ PPC_INS_TWLTI, "twlti" },
+	{ PPC_INS_TWEQI, "tweqi" },
+	{ PPC_INS_TWGTI, "twgti" },
+	{ PPC_INS_TWNEI, "twnei" },
+	{ PPC_INS_TWLLTI, "twllti" },
+	{ PPC_INS_TWLGTI, "twlgti" },
+	{ PPC_INS_TWUI, "twui" },
+	{ PPC_INS_WAITRSV, "waitrsv" },
+	{ PPC_INS_WAITIMPL, "waitimpl" },
+	{ PPC_INS_XNOP, "xnop" },
+	{ PPC_INS_XVMOVDP, "xvmovdp" },
+	{ PPC_INS_XVMOVSP, "xvmovsp" },
+	{ PPC_INS_XXSPLTD, "xxspltd" },
+	{ PPC_INS_XXMRGHD, "xxmrghd" },
+	{ PPC_INS_XXMRGLD, "xxmrgld" },
+	{ PPC_INS_XXSWAPD, "xxswapd" },
+	{ PPC_INS_BT, "bt" },
+	{ PPC_INS_BF, "bf" },
+	{ PPC_INS_BDNZT, "bdnzt" },
+	{ PPC_INS_BDNZF, "bdnzf" },
+	{ PPC_INS_BDZF, "bdzf" },
+	{ PPC_INS_BDZT, "bdzt" },
+	{ PPC_INS_BFA, "bfa" },
+	{ PPC_INS_BDNZTA, "bdnzta" },
+	{ PPC_INS_BDNZFA, "bdnzfa" },
+	{ PPC_INS_BDZTA, "bdzta" },
+	{ PPC_INS_BDZFA, "bdzfa" },
+	{ PPC_INS_BTCTR, "btctr" },
+	{ PPC_INS_BFCTR, "bfctr" },
+	{ PPC_INS_BTCTRL, "btctrl" },
+	{ PPC_INS_BFCTRL, "bfctrl" },
+	{ PPC_INS_BTL, "btl" },
+	{ PPC_INS_BFL, "bfl" },
+	{ PPC_INS_BDNZTL, "bdnztl" },
+	{ PPC_INS_BDNZFL, "bdnzfl" },
+	{ PPC_INS_BDZTL, "bdztl" },
+	{ PPC_INS_BDZFL, "bdzfl" },
+	{ PPC_INS_BTLA, "btla" },
+	{ PPC_INS_BFLA, "bfla" },
+	{ PPC_INS_BDNZTLA, "bdnztla" },
+	{ PPC_INS_BDNZFLA, "bdnzfla" },
+	{ PPC_INS_BDZTLA, "bdztla" },
+	{ PPC_INS_BDZFLA, "bdzfla" },
+	{ PPC_INS_BTLR, "btlr" },
+	{ PPC_INS_BFLR, "bflr" },
+	{ PPC_INS_BDNZTLR, "bdnztlr" },
+	{ PPC_INS_BDZTLR, "bdztlr" },
+	{ PPC_INS_BDZFLR, "bdzflr" },
+	{ PPC_INS_BTLRL, "btlrl" },
+	{ PPC_INS_BFLRL, "bflrl" },
+	{ PPC_INS_BDNZTLRL, "bdnztlrl" },
+	{ PPC_INS_BDNZFLRL, "bdnzflrl" },
+	{ PPC_INS_BDZTLRL, "bdztlrl" },
+	{ PPC_INS_BDZFLRL, "bdzflrl" },
 };
 
 // special alias insn
@@ -5162,7 +7875,7 @@ const char *PPC_insn_name(csh handle, unsigned int id)
 #ifndef CAPSTONE_DIET
 	unsigned int i;
 
-	if (id >= PPC_INS_MAX)
+	if (id >= PPC_INS_ENDING)
 		return NULL;
 
 	// handle special alias first
@@ -5177,53 +7890,255 @@ const char *PPC_insn_name(csh handle, unsigned int id)
 #endif
 }
 
+#ifndef CAPSTONE_DIET
+static name_map group_name_maps[] = {
+	{ PPC_GRP_INVALID, NULL },
+	{ PPC_GRP_ALTIVEC, "altivec" },
+	{ PPC_GRP_MODE32, "mode32" },
+	{ PPC_GRP_MODE64, "mode64" },
+	{ PPC_GRP_BOOKE, "booke" },
+	{ PPC_GRP_NOTBOOKE, "notbooke" },
+	{ PPC_GRP_SPE, "spe" },
+	{ PPC_GRP_VSX, "vsx" },
+	{ PPC_GRP_E500, "e500" },
+	{ PPC_GRP_PPC4XX, "ppc4xx" },
+	{ PPC_GRP_PPC6XX, "ppc6xx" },
+
+	{ PPC_GRP_JUMP,	"jump" },
+};
+#endif
+
+const char *PPC_group_name(csh handle, unsigned int id)
+{
+#ifndef CAPSTONE_DIET
+	if (id >= PPC_GRP_ENDING)
+		return NULL;
+
+	return group_name_maps[id].name;
+#else
+	return NULL;
+#endif
+}
+
 // map internal raw register to 'public' register
 ppc_reg PPC_map_register(unsigned int r)
 {
-	static unsigned int map[] = {
-		0, 0, PPC_REG_CARRY, PPC_REG_CTR, 0, PPC_REG_LR,
-		0, PPC_REG_VRSAVE, PPC_REG_CR0, 0, PPC_REG_CR0,
-		PPC_REG_CR1, PPC_REG_CR2, PPC_REG_CR3, PPC_REG_CR4, PPC_REG_CR5,
-		PPC_REG_CR6, PPC_REG_CR7, PPC_REG_CTR, PPC_REG_F0, PPC_REG_F1,
-		PPC_REG_F2, PPC_REG_F3, PPC_REG_F4, PPC_REG_F5, PPC_REG_F6,
-		PPC_REG_F7, PPC_REG_F8, PPC_REG_F9, PPC_REG_F10, PPC_REG_F11,
-		PPC_REG_F12, PPC_REG_F13, PPC_REG_F14, PPC_REG_F15, PPC_REG_F16,
-		PPC_REG_F17, PPC_REG_F18, PPC_REG_F19, PPC_REG_F20, PPC_REG_F21,
-		PPC_REG_F22, PPC_REG_F23, PPC_REG_F24, PPC_REG_F25, PPC_REG_F26,
-		PPC_REG_F27, PPC_REG_F28, PPC_REG_F29, PPC_REG_F30, PPC_REG_F31,
-		0, PPC_REG_LR, PPC_REG_R0, PPC_REG_R1, PPC_REG_R2,
-		PPC_REG_R3, PPC_REG_R4, PPC_REG_R5, PPC_REG_R6, PPC_REG_R7,
-		PPC_REG_R8, PPC_REG_R9, PPC_REG_R10, PPC_REG_R11, PPC_REG_R12,
-		PPC_REG_R13, PPC_REG_R14, PPC_REG_R15, PPC_REG_R16, PPC_REG_R17,
-		PPC_REG_R18, PPC_REG_R19, PPC_REG_R20, PPC_REG_R21, PPC_REG_R22,
-		PPC_REG_R23, PPC_REG_R24, PPC_REG_R25, PPC_REG_R26, PPC_REG_R27,
-		PPC_REG_R28, PPC_REG_R29, PPC_REG_R30, PPC_REG_R31, PPC_REG_V0,
-		PPC_REG_V1, PPC_REG_V2, PPC_REG_V3, PPC_REG_V4, PPC_REG_V5,
-		PPC_REG_V6, PPC_REG_V7, PPC_REG_V8, PPC_REG_V9, PPC_REG_V10,
-		PPC_REG_V11, PPC_REG_V12, PPC_REG_V13, PPC_REG_V14, PPC_REG_V15,
-		PPC_REG_V16, PPC_REG_V17, PPC_REG_V18, PPC_REG_V19, PPC_REG_V20,
-		PPC_REG_V21, PPC_REG_V22, PPC_REG_V23, PPC_REG_V24, PPC_REG_V25,
-		PPC_REG_V26, PPC_REG_V27, PPC_REG_V28, PPC_REG_V29, PPC_REG_V30,
-		PPC_REG_V31, PPC_REG_R0, PPC_REG_R1, PPC_REG_R2, PPC_REG_R3,
-		PPC_REG_R4, PPC_REG_R5, PPC_REG_R6, PPC_REG_R7, PPC_REG_R8,
-		PPC_REG_R9, PPC_REG_R10, PPC_REG_R11, PPC_REG_R12, PPC_REG_R13,
-		PPC_REG_R14, PPC_REG_R15, PPC_REG_R16, PPC_REG_R17, PPC_REG_R18,
-		PPC_REG_R19, PPC_REG_R20, PPC_REG_R21, PPC_REG_R22, PPC_REG_R23,
-		PPC_REG_R24, PPC_REG_R25, PPC_REG_R26, PPC_REG_R27, PPC_REG_R28,
-		PPC_REG_R29, PPC_REG_R30, PPC_REG_R31, PPC_REG_CR0, PPC_REG_CR2,
-		PPC_REG_CR6, PPC_REG_CR10, PPC_REG_CR14, PPC_REG_CR18, PPC_REG_CR22,
-		PPC_REG_CR26, PPC_REG_CR30, PPC_REG_CR1, PPC_REG_CR5, PPC_REG_CR9,
-		PPC_REG_CR13, PPC_REG_CR17, PPC_REG_CR21, PPC_REG_CR25, PPC_REG_CR29,
-		PPC_REG_CR0, PPC_REG_CR4, PPC_REG_CR8, PPC_REG_CR12, PPC_REG_CR16,
-		PPC_REG_CR20, PPC_REG_CR24, PPC_REG_CR28, PPC_REG_CR3, PPC_REG_CR7,
-		PPC_REG_CR11, PPC_REG_CR15, PPC_REG_CR19, PPC_REG_CR23, PPC_REG_CR27,
-		PPC_REG_CR31, };
+	static unsigned int map[] = { 0,
+		0, PPC_REG_CARRY, PPC_REG_CC, PPC_REG_CTR, 0,
+		PPC_REG_LR, 0, PPC_REG_VRSAVE, PPC_REG_R0, 0,
+		PPC_REG_CR0, PPC_REG_CR1, PPC_REG_CR2, PPC_REG_CR3, PPC_REG_CR4,
+		PPC_REG_CR5, PPC_REG_CR6, PPC_REG_CR7, PPC_REG_CTR, PPC_REG_F0,
+		PPC_REG_F1, PPC_REG_F2, PPC_REG_F3, PPC_REG_F4, PPC_REG_F5,
+		PPC_REG_F6, PPC_REG_F7, PPC_REG_F8, PPC_REG_F9, PPC_REG_F10,
+		PPC_REG_F11, PPC_REG_F12, PPC_REG_F13, PPC_REG_F14, PPC_REG_F15,
+		PPC_REG_F16, PPC_REG_F17, PPC_REG_F18, PPC_REG_F19, PPC_REG_F20,
+		PPC_REG_F21, PPC_REG_F22, PPC_REG_F23, PPC_REG_F24, PPC_REG_F25,
+		PPC_REG_F26, PPC_REG_F27, PPC_REG_F28, PPC_REG_F29, PPC_REG_F30,
+		PPC_REG_F31, 0, PPC_REG_LR, PPC_REG_R0, PPC_REG_R1,
+		PPC_REG_R2, PPC_REG_R3, PPC_REG_R4, PPC_REG_R5, PPC_REG_R6,
+		PPC_REG_R7, PPC_REG_R8, PPC_REG_R9, PPC_REG_R10, PPC_REG_R11,
+		PPC_REG_R12, PPC_REG_R13, PPC_REG_R14, PPC_REG_R15, PPC_REG_R16,
+		PPC_REG_R17, PPC_REG_R18, PPC_REG_R19, PPC_REG_R20, PPC_REG_R21,
+		PPC_REG_R22, PPC_REG_R23, PPC_REG_R24, PPC_REG_R25, PPC_REG_R26,
+		PPC_REG_R27, PPC_REG_R28, PPC_REG_R29, PPC_REG_R30, PPC_REG_R31,
+		PPC_REG_V0, PPC_REG_V1, PPC_REG_V2, PPC_REG_V3, PPC_REG_V4,
+		PPC_REG_V5, PPC_REG_V6, PPC_REG_V7, PPC_REG_V8, PPC_REG_V9,
+		PPC_REG_V10, PPC_REG_V11, PPC_REG_V12, PPC_REG_V13, PPC_REG_V14,
+		PPC_REG_V15, PPC_REG_V16, PPC_REG_V17, PPC_REG_V18, PPC_REG_V19,
+		PPC_REG_V20, PPC_REG_V21, PPC_REG_V22, PPC_REG_V23, PPC_REG_V24,
+		PPC_REG_V25, PPC_REG_V26, PPC_REG_V27, PPC_REG_V28, PPC_REG_V29,
+		PPC_REG_V30, PPC_REG_V31, PPC_REG_VS32, PPC_REG_VS33, PPC_REG_VS34,
+		PPC_REG_VS35, PPC_REG_VS36, PPC_REG_VS37, PPC_REG_VS38, PPC_REG_VS39,
+		PPC_REG_VS40, PPC_REG_VS41, PPC_REG_VS42, PPC_REG_VS43, PPC_REG_VS44,
+		PPC_REG_VS45, PPC_REG_VS46, PPC_REG_VS47, PPC_REG_VS48, PPC_REG_VS49,
+		PPC_REG_VS50, PPC_REG_VS51, PPC_REG_VS52, PPC_REG_VS53, PPC_REG_VS54,
+		PPC_REG_VS55, PPC_REG_VS56, PPC_REG_VS57, PPC_REG_VS58, PPC_REG_VS59,
+		PPC_REG_VS60, PPC_REG_VS61, PPC_REG_VS62, PPC_REG_VS63, PPC_REG_VS32,
+		PPC_REG_VS33, PPC_REG_VS34, PPC_REG_VS35, PPC_REG_VS36, PPC_REG_VS37,
+		PPC_REG_VS38, PPC_REG_VS39, PPC_REG_VS40, PPC_REG_VS41, PPC_REG_VS42,
+		PPC_REG_VS43, PPC_REG_VS44, PPC_REG_VS45, PPC_REG_VS46, PPC_REG_VS47,
+		PPC_REG_VS48, PPC_REG_VS49, PPC_REG_VS50, PPC_REG_VS51, PPC_REG_VS52,
+		PPC_REG_VS53, PPC_REG_VS54, PPC_REG_VS55, PPC_REG_VS56, PPC_REG_VS57,
+		PPC_REG_VS58, PPC_REG_VS59, PPC_REG_VS60, PPC_REG_VS61, PPC_REG_VS62,
+		PPC_REG_VS63, PPC_REG_VS0, PPC_REG_VS1, PPC_REG_VS2, PPC_REG_VS3,
+		PPC_REG_VS4, PPC_REG_VS5, PPC_REG_VS6, PPC_REG_VS7, PPC_REG_VS8,
+		PPC_REG_VS9, PPC_REG_VS10, PPC_REG_VS11, PPC_REG_VS12, PPC_REG_VS13,
+		PPC_REG_VS14, PPC_REG_VS15, PPC_REG_VS16, PPC_REG_VS17, PPC_REG_VS18,
+		PPC_REG_VS19, PPC_REG_VS20, PPC_REG_VS21, PPC_REG_VS22, PPC_REG_VS23,
+		PPC_REG_VS24, PPC_REG_VS25, PPC_REG_VS26, PPC_REG_VS27, PPC_REG_VS28,
+		PPC_REG_VS29, PPC_REG_VS30, PPC_REG_VS31, PPC_REG_R0, PPC_REG_R1,
+		PPC_REG_R2, PPC_REG_R3, PPC_REG_R4, PPC_REG_R5, PPC_REG_R6,
+		PPC_REG_R7, PPC_REG_R8, PPC_REG_R9, PPC_REG_R10, PPC_REG_R11,
+		PPC_REG_R12, PPC_REG_R13, PPC_REG_R14, PPC_REG_R15, PPC_REG_R16,
+		PPC_REG_R17, PPC_REG_R18, PPC_REG_R19, PPC_REG_R20, PPC_REG_R21,
+		PPC_REG_R22, PPC_REG_R23, PPC_REG_R24, PPC_REG_R25, PPC_REG_R26,
+		PPC_REG_R27, PPC_REG_R28, PPC_REG_R29, PPC_REG_R30, PPC_REG_R31,
+		PPC_REG_R0, PPC_REG_R2, PPC_REG_R6, PPC_REG_R10, PPC_REG_R14,
+		PPC_REG_R18, PPC_REG_R22, PPC_REG_R26, PPC_REG_R30, PPC_REG_R1,
+		PPC_REG_R5, PPC_REG_R9, PPC_REG_R13, PPC_REG_R17, PPC_REG_R21,
+		PPC_REG_R25, PPC_REG_R29, PPC_REG_R0, PPC_REG_R4, PPC_REG_R8,
+		PPC_REG_R12, PPC_REG_R16, PPC_REG_R20, PPC_REG_R24, PPC_REG_R28,
+		PPC_REG_R3, PPC_REG_R7, PPC_REG_R11, PPC_REG_R15, PPC_REG_R19,
+		PPC_REG_R23, PPC_REG_R27, PPC_REG_R31, };
 
 	if (r < ARR_SIZE(map))
 		return map[r];
 
 	// cannot find this register
 	return 0;
+}
+
+static struct ppc_alias alias_insn_name_maps[] = {
+	//{ PPC_INS_BTA, "bta" },
+	{ PPC_INS_B, PPC_BC_LT, "blt" },
+	{ PPC_INS_B, PPC_BC_LE, "ble" },
+	{ PPC_INS_B, PPC_BC_EQ, "beq" },
+	{ PPC_INS_B, PPC_BC_GE, "bge" },
+	{ PPC_INS_B, PPC_BC_GT, "bgt" },
+	{ PPC_INS_B, PPC_BC_NE, "bne" },
+	{ PPC_INS_B, PPC_BC_UN, "bun" },
+	{ PPC_INS_B, PPC_BC_NU, "bnu" },
+	{ PPC_INS_B, PPC_BC_SO, "bso" },
+	{ PPC_INS_B, PPC_BC_NS, "bns" },
+
+	{ PPC_INS_BA, PPC_BC_LT, "blta" },
+	{ PPC_INS_BA, PPC_BC_LE, "blea" },
+	{ PPC_INS_BA, PPC_BC_EQ, "beqa" },
+	{ PPC_INS_BA, PPC_BC_GE, "bgea" },
+	{ PPC_INS_BA, PPC_BC_GT, "bgta" },
+	{ PPC_INS_BA, PPC_BC_NE, "bnea" },
+	{ PPC_INS_BA, PPC_BC_UN, "buna" },
+	{ PPC_INS_BA, PPC_BC_NU, "bnua" },
+	{ PPC_INS_BA, PPC_BC_SO, "bsoa" },
+	{ PPC_INS_BA, PPC_BC_NS, "bnsa" },
+
+	{ PPC_INS_BCTR, PPC_BC_LT, "bltctr" },
+	{ PPC_INS_BCTR, PPC_BC_LE, "blectr" },
+	{ PPC_INS_BCTR, PPC_BC_EQ, "beqctr" },
+	{ PPC_INS_BCTR, PPC_BC_GE, "bgectr" },
+	{ PPC_INS_BCTR, PPC_BC_GT, "bgtctr" },
+	{ PPC_INS_BCTR, PPC_BC_NE, "bnectr" },
+	{ PPC_INS_BCTR, PPC_BC_UN, "bunctr" },
+	{ PPC_INS_BCTR, PPC_BC_NU, "bnuctr" },
+	{ PPC_INS_BCTR, PPC_BC_SO, "bsoctr" },
+	{ PPC_INS_BCTR, PPC_BC_NS, "bnsctr" },
+
+	{ PPC_INS_BCTRL, PPC_BC_LT, "bltctrl" },
+	{ PPC_INS_BCTRL, PPC_BC_LE, "blectrl" },
+	{ PPC_INS_BCTRL, PPC_BC_EQ, "beqctrl" },
+	{ PPC_INS_BCTRL, PPC_BC_GE, "bgectrl" },
+	{ PPC_INS_BCTRL, PPC_BC_GT, "bgtctrl" },
+	{ PPC_INS_BCTRL, PPC_BC_NE, "bnectrl" },
+	{ PPC_INS_BCTRL, PPC_BC_UN, "bunctrl" },
+	{ PPC_INS_BCTRL, PPC_BC_NU, "bnuctrl" },
+	{ PPC_INS_BCTRL, PPC_BC_SO, "bsoctrl" },
+	{ PPC_INS_BCTRL, PPC_BC_NS, "bnsctrl" },
+
+	{ PPC_INS_BL, PPC_BC_LT, "bltl" },
+	{ PPC_INS_BL, PPC_BC_LE, "blel" },
+	{ PPC_INS_BL, PPC_BC_EQ, "beql" },
+	{ PPC_INS_BL, PPC_BC_GE, "bgel" },
+	{ PPC_INS_BL, PPC_BC_GT, "bgtl" },
+	{ PPC_INS_BL, PPC_BC_NE, "bnel" },
+	{ PPC_INS_BL, PPC_BC_UN, "bunl" },
+	{ PPC_INS_BL, PPC_BC_NU, "bnul" },
+	{ PPC_INS_BL, PPC_BC_SO, "bsol" },
+	{ PPC_INS_BL, PPC_BC_NS, "bnsl" },
+
+	{ PPC_INS_BLA, PPC_BC_LT, "bltla" },
+	{ PPC_INS_BLA, PPC_BC_LE, "blela" },
+	{ PPC_INS_BLA, PPC_BC_EQ, "beqla" },
+	{ PPC_INS_BLA, PPC_BC_GE, "bgela" },
+	{ PPC_INS_BLA, PPC_BC_GT, "bgtla" },
+	{ PPC_INS_BLA, PPC_BC_NE, "bnela" },
+	{ PPC_INS_BLA, PPC_BC_UN, "bunla" },
+	{ PPC_INS_BLA, PPC_BC_NU, "bnula" },
+	{ PPC_INS_BLA, PPC_BC_SO, "bsola" },
+	{ PPC_INS_BLA, PPC_BC_NS, "bnsla" },
+
+	{ PPC_INS_BLR, PPC_BC_LT, "bltlr" },
+	{ PPC_INS_BLR, PPC_BC_LE, "blelr" },
+	{ PPC_INS_BLR, PPC_BC_EQ, "beqlr" },
+	{ PPC_INS_BLR, PPC_BC_GE, "bgelr" },
+	{ PPC_INS_BLR, PPC_BC_GT, "bgtlr" },
+	{ PPC_INS_BLR, PPC_BC_NE, "bnelr" },
+	{ PPC_INS_BLR, PPC_BC_UN, "bunlr" },
+	{ PPC_INS_BLR, PPC_BC_NU, "bnulr" },
+	{ PPC_INS_BLR, PPC_BC_SO, "bsolr" },
+	{ PPC_INS_BLR, PPC_BC_NS, "bnslr" },
+
+	{ PPC_INS_BLRL, PPC_BC_LT, "bltlrl" },
+	{ PPC_INS_BLRL, PPC_BC_LE, "blelrl" },
+	{ PPC_INS_BLRL, PPC_BC_EQ, "beqlrl" },
+	{ PPC_INS_BLRL, PPC_BC_GE, "bgelrl" },
+	{ PPC_INS_BLRL, PPC_BC_GT, "bgtlrl" },
+	{ PPC_INS_BLRL, PPC_BC_NE, "bnelrl" },
+	{ PPC_INS_BLRL, PPC_BC_UN, "bunlrl" },
+	{ PPC_INS_BLRL, PPC_BC_NU, "bnulrl" },
+	{ PPC_INS_BLRL, PPC_BC_SO, "bsolrl" },
+	{ PPC_INS_BLRL, PPC_BC_NS, "bnslrl" },
+};
+
+// given alias mnemonic, return instruction ID & CC
+bool PPC_alias_insn(const char *name, struct ppc_alias *alias)
+{
+	int i;
+
+	for(i = 0; i < ARR_SIZE(alias_insn_name_maps); i++) {
+		if (!strcmp(name, alias_insn_name_maps[i].mnem)) {
+			alias->id = alias_insn_name_maps[i].id;
+			alias->cc = alias_insn_name_maps[i].cc;
+			return true;
+		}
+	}
+
+	// not really an alias insn
+	i = name2id(&insn_name_maps[1], ARR_SIZE(insn_name_maps) - 1, name);
+	if (i != -1) {
+		alias->id = insn_name_maps[i].id;
+		alias->cc = PPC_BC_INVALID;
+		return true;
+	}
+
+	// not found
+	return false;
+}
+
+// list all relative branch instructions
+static unsigned int insn_abs[] = {
+	PPC_BA,
+	PPC_BCCA,
+	PPC_BCCLA,
+	PPC_BDNZA,
+	PPC_BDNZAm,
+	PPC_BDNZAp,
+	PPC_BDNZLA,
+	PPC_BDNZLAm,
+	PPC_BDNZLAp,
+	PPC_BDZA,
+	PPC_BDZAm,
+	PPC_BDZAp,
+	PPC_BDZLAm,
+	PPC_BDZLAp,
+	PPC_BLA,
+	PPC_gBCA,
+	PPC_gBCLA,
+	0
+};
+
+// check if this insn is relative branch
+bool PPC_abs_branch(cs_struct *h, unsigned int id)
+{
+	int i;
+
+	for (i = 0; insn_abs[i]; i++) {
+		if (id == insn_abs[i]) {
+			return true;
+		}
+	}
+
+	// not found
+	return false;
 }
 
 #endif

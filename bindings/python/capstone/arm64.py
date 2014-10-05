@@ -23,10 +23,17 @@ class Arm64OpValue(ctypes.Union):
         ('imm', ctypes.c_int32),
         ('fp', ctypes.c_double),
         ('mem', Arm64OpMem),
+        ('pstate', ctypes.c_int),
+        ('sys', ctypes.c_uint),
+        ('prefetch', ctypes.c_int),
+        ('barrier', ctypes.c_int),
     )
 
 class Arm64Op(ctypes.Structure):
     _fields_ = (
+        ('vector_index', ctypes.c_int),
+        ('vas', ctypes.c_int),
+        ('vess', ctypes.c_int),
         ('shift', Arm64OpShift),
         ('ext', ctypes.c_uint),
         ('type', ctypes.c_uint),
@@ -48,6 +55,23 @@ class Arm64Op(ctypes.Structure):
     @property
     def mem(self):
         return self.value.mem
+
+    @property
+    def pstate(self):
+        return self.value.pstate
+
+    @property
+    def sys(self):
+        return self.value.sys
+
+    @property
+    def prefetch(self):
+        return self.value.prefetch
+
+    @property
+    def barrier(self):
+        return self.value.barrier
+
 
 
 class CsArm64(ctypes.Structure):

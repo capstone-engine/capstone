@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <inttypes.h>
+#include "../inttypes.h"
 
 #include <capstone.h>
 
@@ -19,7 +19,7 @@ struct platform {
 	cs_opt_value opt_value;
 };
 
-static void print_string_hex(char *comment, unsigned char *str, int len)
+static void print_string_hex(char *comment, unsigned char *str, size_t len)
 {
 	unsigned char *c;
 
@@ -42,13 +42,13 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 
 	x86 = &(ins->detail->x86);
 
-	print_string_hex("\tPrefix:", x86->prefix, 5);
+	print_string_hex("\tPrefix:", x86->prefix, 4);
 
-	if (x86->segment != X86_REG_INVALID)
-		printf("\tSegment override: %s\n", cs_reg_name(handle, x86->segment));
+	print_string_hex("\tOpcode:", x86->opcode, 4);
 
-	print_string_hex("\tOpcode:", x86->opcode, 3);
-	printf("\top_size: %u, addr_size: %u, disp_size: %u, imm_size: %u\n", x86->op_size, x86->addr_size, x86->disp_size, x86->imm_size);
+	printf("\trex: 0x%x\n", x86->rex);
+
+	printf("\taddr_size: %u\n", x86->addr_size);
 	printf("\tmodrm: 0x%x\n", x86->modrm);
 	printf("\tdisp: 0x%x\n", x86->disp);
 
@@ -61,6 +61,26 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 			printf("\t\tsib_index: %s\n", cs_reg_name(handle, x86->sib_index));
 		if (x86->sib_scale != 0)
 			printf("\t\tsib_scale: %d\n", x86->sib_scale);
+	}
+
+	// SSE code condition
+	if (x86->sse_cc != X86_SSE_CC_INVALID) {
+		printf("\tsse_cc: %u\n", x86->sse_cc);
+	}
+
+	// AVX code condition
+	if (x86->avx_cc != X86_AVX_CC_INVALID) {
+		printf("\tavx_cc: %u\n", x86->avx_cc);
+	}
+
+	// AVX Suppress All Exception
+	if (x86->avx_sae) {
+		printf("\tavx_sae: %u\n", x86->avx_sae);
+	}
+
+	// AVX Rounding Mode
+	if (x86->avx_rm != X86_AVX_RM_INVALID) {
+		printf("\tavx_rm: %u\n", x86->avx_rm);
 	}
 
 	count = cs_op_count(ud, ins, X86_OP_IMM);
@@ -89,9 +109,11 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 				break;
 			case X86_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
-				if (op->mem.base != 0)
+				if (op->mem.segment != X86_REG_INVALID)
+					printf("\t\t\toperands[%u].mem.segment: REG = %s\n", i, cs_reg_name(handle, op->mem.segment));
+				if (op->mem.base != X86_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.base: REG = %s\n", i, cs_reg_name(handle, op->mem.base));
-				if (op->mem.index != 0)
+				if (op->mem.index != X86_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.index: REG = %s\n", i, cs_reg_name(handle, op->mem.index));
 				if (op->mem.scale != 1)
 					printf("\t\t\toperands[%u].mem.scale: %u\n", i, op->mem.scale);
@@ -101,6 +123,16 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 			default:
 				break;
 		}
+
+		// AVX broadcast type
+		if (op->avx_bcast != X86_AVX_BCAST_INVALID)
+			printf("\t\toperands[%u].avx_bcast: %u\n", i, op->avx_bcast);
+
+		// AVX zero opmask {z}
+		if (op->avx_zero_opmask != false)
+			printf("\t\toperands[%u].avx_zero_opmask: TRUE\n", i);
+
+		printf("\t\toperands[%u].size: %u\n", i, op->size);
 	}
 
 	printf("\n");
@@ -184,7 +216,7 @@ static void test()
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
-		count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
+		count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {
 			size_t j;
 
@@ -199,7 +231,7 @@ static void test()
 			}
 			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
 
-			// free memory allocated by cs_disasm_ex()
+			// free memory allocated by cs_disasm()
 			cs_free(insn, count);
 		} else {
 			printf("****************\n");

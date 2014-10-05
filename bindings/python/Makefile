@@ -24,7 +24,6 @@ install_cython:
 	cp setup_cython.py $(OBJDIR)
 	cp pyx/ccapstone* $(OBJDIR)/pyx/
 	cp capstone/__init__.py $(OBJDIR)/pyx/__init__.py
-	cp capstone/capstone.py $(OBJDIR)/pyx/capstone.pyx
 	cp capstone/arm.py $(OBJDIR)/pyx/arm.pyx
 	cp capstone/arm_const.py $(OBJDIR)/pyx/arm_const.pyx
 	cp capstone/arm64.py $(OBJDIR)/pyx/arm64.pyx
@@ -41,7 +40,20 @@ install_cython:
 	cp capstone/x86_const.py $(OBJDIR)/pyx/x86_const.pyx
 	cp capstone/xcore.py $(OBJDIR)/pyx/xcore.pyx
 	cp capstone/xcore_const.py $(OBJDIR)/pyx/xcore_const.pyx
+	cd $(OBJDIR) && python setup_cython.py build -b ./tmp install --home=$(OBJDIR)
+	mv $(OBJDIR)/build/lib/python/capstone/* capstone
 	cd $(OBJDIR) && python setup_cython.py build -b ./tmp install
 
 clean:
 	rm -rf $(OBJDIR)
+	rm -f capstone/*.so
+
+
+TESTS = test.py test_detail.py test_arm.py test_arm64.py test_mips.py test_ppc.py
+TESTS += test_sparc.py test_systemz.py test_x86.py test_xcore.py test_skipdata.py
+check:
+	@for t in $(TESTS); do \
+		echo Check $$t ... ; \
+		./$$t > /dev/null && echo OK || echo FAILED; \
+	done
+

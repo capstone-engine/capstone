@@ -36,16 +36,14 @@ def print_insn_detail(mode, insn):
     # print instruction prefix
     print_string_hex("\tPrefix:", insn.prefix)
 
-    # print segment override (if applicable)
-    if insn.segment != X86_REG_INVALID:
-        print("\tSegment override: %s" % insn.reg_name(insn.segment))
-
     # print instruction's opcode
     print_string_hex("\tOpcode:", insn.opcode)
 
-    # print operand's size, address size, displacement size & immediate size
-    print("\top_size: %u, addr_size: %u, disp_size: %u, imm_size: %u" \
-        % (insn.op_size, insn.addr_size, insn.disp_size, insn.imm_size))
+    # print operand's REX prefix (non-zero value is relavant for x86_64 instructions)
+    print("\trex: 0x%x" % (insn.rex))
+
+    # print operand's address size
+    print("\taddr_size: %u" % (insn.addr_size))
 
     # print modRM byte
     print("\tmodrm: 0x%x" % (insn.modrm))
@@ -64,6 +62,22 @@ def print_insn_detail(mode, insn):
                 print("\t\tsib_index: %s" % (insn.reg_name(insn.sib_index)))
             if insn.sib_scale != 0:
                 print("\t\tsib_scale: %d" % (insn.sib_scale))
+
+    # SSE CC type
+    if insn.sse_cc != X86_SSE_CC_INVALID:
+        print("\tsse_cc: %u" % (insn.sse_cc))
+
+    # AVX CC type
+    if insn.avx_cc != X86_AVX_CC_INVALID:
+        print("\tavx_cc: %u" % (insn.avx_cc))
+
+    # AVX Suppress All Exception
+    if insn.avx_sae:
+        print("\tavx_sae: TRUE")
+
+    # AVX Rounding Mode type
+    if insn.avx_rm != X86_AVX_RM_INVALID:
+        print("\tavx_rm: %u" % (insn.avx_rm))
 
     count = insn.op_count(X86_OP_IMM)
     if count > 0:
@@ -85,6 +99,8 @@ def print_insn_detail(mode, insn):
                 print("\t\toperands[%u].type: FP = %f" % (c, i.fp))
             if i.type == X86_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
+                if i.mem.segment != 0:
+                    print("\t\t\toperands[%u].mem.segment: REG = %s" % (c, insn.reg_name(i.mem.segment)))
                 if i.mem.base != 0:
                     print("\t\t\toperands[%u].mem.base: REG = %s" % (c, insn.reg_name(i.mem.base)))
                 if i.mem.index != 0:
@@ -93,6 +109,16 @@ def print_insn_detail(mode, insn):
                     print("\t\t\toperands[%u].mem.scale: %u" % (c, i.mem.scale))
                 if i.mem.disp != 0:
                     print("\t\t\toperands[%u].mem.disp: 0x%s" % (c, to_x(i.mem.disp)))
+
+            # AVX broadcast type
+            if i.avx_bcast != X86_AVX_BCAST_INVALID:
+                print("\t\toperands[%u].avx_bcast: %u" % (c, i.avx_bcast))
+
+            # AVX zero opmask {z}
+            if i.avx_zero_opmask:
+                print("\t\toperands[%u].avx_zero_opmask: TRUE" % (c))
+
+            print("\t\toperands[%u].size: %u" % (c, i.size))
 
 
 # ## Test class Cs

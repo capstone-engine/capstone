@@ -25,6 +25,7 @@ static cs_err init(cs_struct *ud)
 	ud->reg_name = SystemZ_reg_name;
 	ud->insn_id = SystemZ_get_insn_id;
 	ud->insn_name = SystemZ_insn_name;
+	ud->group_name = SystemZ_group_name;
 
 	return CS_ERR_OK;
 }
@@ -32,7 +33,7 @@ static cs_err init(cs_struct *ud)
 static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_SYNTAX)
-		handle->syntax = value;
+		handle->syntax = (int) value;
 
 	return CS_ERR_OK;
 }

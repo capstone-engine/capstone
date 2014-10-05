@@ -40,7 +40,7 @@ public class Xcore_const {
 	public static final int XCORE_REG_KEP = 23;
 	public static final int XCORE_REG_KSP = 24;
 	public static final int XCORE_REG_ID = 25;
-	public static final int XCORE_REG_MAX = 26;
+	public static final int XCORE_REG_ENDING = 26;
 
 	// XCore instruction
 
@@ -165,11 +165,11 @@ public class Xcore_const {
 	public static final int XCORE_INS_WAITEU = 118;
 	public static final int XCORE_INS_XOR = 119;
 	public static final int XCORE_INS_ZEXT = 120;
-	public static final int XCORE_INS_MAX = 121;
+	public static final int XCORE_INS_ENDING = 121;
 
 	// Group of XCore instructions
 
 	public static final int XCORE_GRP_INVALID = 0;
 	public static final int XCORE_GRP_JUMP = 1;
-	public static final int XCORE_GRP_MAX = 2;
+	public static final int XCORE_GRP_ENDING = 2;
 }

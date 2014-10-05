@@ -29,328 +29,328 @@ static uint8_t DecoderTable16[] = {
 /* 3 */       MCD_OPC_FilterValue, 0, 108, 0, // Skip to: 115
 /* 7 */       MCD_OPC_ExtractField, 0, 11,  // Inst{10-0} ...
 /* 10 */      MCD_OPC_FilterValue, 236, 15, 4, 0, // Skip to: 19
-/* 15 */      MCD_OPC_Decode, 240, 1, 0, // Opcode: WAITEU_0R
+/* 15 */      MCD_OPC_Decode, 241, 1, 0, // Opcode: WAITEU_0R
 /* 19 */      MCD_OPC_FilterValue, 237, 15, 3, 0, // Skip to: 27
-/* 24 */      MCD_OPC_Decode, 56, 0, // Opcode: CLRE_0R
+/* 24 */      MCD_OPC_Decode, 57, 0, // Opcode: CLRE_0R
 /* 27 */      MCD_OPC_FilterValue, 238, 15, 4, 0, // Skip to: 36
-/* 32 */      MCD_OPC_Decode, 215, 1, 0, // Opcode: SSYNC_0r
+/* 32 */      MCD_OPC_Decode, 216, 1, 0, // Opcode: SSYNC_0r
 /* 36 */      MCD_OPC_FilterValue, 239, 15, 3, 0, // Skip to: 44
-/* 41 */      MCD_OPC_Decode, 90, 0, // Opcode: FREET_0R
+/* 41 */      MCD_OPC_Decode, 91, 0, // Opcode: FREET_0R
 /* 44 */      MCD_OPC_FilterValue, 252, 15, 3, 0, // Skip to: 52
-/* 49 */      MCD_OPC_Decode, 65, 0, // Opcode: DCALL_0R
+/* 49 */      MCD_OPC_Decode, 66, 0, // Opcode: DCALL_0R
 /* 52 */      MCD_OPC_FilterValue, 253, 15, 3, 0, // Skip to: 60
-/* 57 */      MCD_OPC_Decode, 122, 0, // Opcode: KRET_0R
+/* 57 */      MCD_OPC_Decode, 123, 0, // Opcode: KRET_0R
 /* 60 */      MCD_OPC_FilterValue, 254, 15, 3, 0, // Skip to: 68
-/* 65 */      MCD_OPC_Decode, 71, 0, // Opcode: DRET_0R
+/* 65 */      MCD_OPC_Decode, 72, 0, // Opcode: DRET_0R
 /* 68 */      MCD_OPC_FilterValue, 255, 15, 4, 0, // Skip to: 77
-/* 73 */      MCD_OPC_Decode, 196, 1, 0, // Opcode: SETKEP_0R
+/* 73 */      MCD_OPC_Decode, 197, 1, 0, // Opcode: SETKEP_0R
 /* 77 */      MCD_OPC_ExtractField, 4, 7,  // Inst{10-4} ...
 /* 80 */      MCD_OPC_FilterValue, 126, 3, 0, // Skip to: 87
-/* 84 */      MCD_OPC_Decode, 74, 1, // Opcode: EDU_1r
+/* 84 */      MCD_OPC_Decode, 75, 1, // Opcode: EDU_1r
 /* 87 */      MCD_OPC_FilterValue, 127, 3, 0, // Skip to: 94
-/* 91 */      MCD_OPC_Decode, 77, 1, // Opcode: EEU_1r
+/* 91 */      MCD_OPC_Decode, 78, 1, // Opcode: EEU_1r
 /* 94 */      MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 97 */      MCD_OPC_FilterValue, 0, 3, 0, // Skip to: 104
-/* 101 */     MCD_OPC_Decode, 108, 2, // Opcode: INITPC_2r
+/* 101 */     MCD_OPC_Decode, 109, 2, // Opcode: INITPC_2r
 /* 104 */     MCD_OPC_FilterValue, 1, 3, 0, // Skip to: 111
-/* 108 */     MCD_OPC_Decode, 102, 2, // Opcode: GETST_2r
-/* 111 */     MCD_OPC_Decode, 227, 1, 3, // Opcode: STW_2rus
+/* 108 */     MCD_OPC_Decode, 103, 2, // Opcode: GETST_2r
+/* 111 */     MCD_OPC_Decode, 228, 1, 3, // Opcode: STW_2rus
 /* 115 */     MCD_OPC_FilterValue, 1, 114, 0, // Skip to: 233
 /* 119 */     MCD_OPC_ExtractField, 0, 11,  // Inst{10-0} ...
 /* 122 */     MCD_OPC_FilterValue, 236, 15, 4, 0, // Skip to: 131
-/* 127 */     MCD_OPC_Decode, 149, 1, 0, // Opcode: LDSPC_0R
+/* 127 */     MCD_OPC_Decode, 150, 1, 0, // Opcode: LDSPC_0R
 /* 131 */     MCD_OPC_FilterValue, 237, 15, 4, 0, // Skip to: 140
-/* 136 */     MCD_OPC_Decode, 220, 1, 0, // Opcode: STSPC_0R
+/* 136 */     MCD_OPC_Decode, 221, 1, 0, // Opcode: STSPC_0R
 /* 140 */     MCD_OPC_FilterValue, 238, 15, 4, 0, // Skip to: 149
-/* 145 */     MCD_OPC_Decode, 150, 1, 0, // Opcode: LDSSR_0R
+/* 145 */     MCD_OPC_Decode, 151, 1, 0, // Opcode: LDSSR_0R
 /* 149 */     MCD_OPC_FilterValue, 239, 15, 4, 0, // Skip to: 158
-/* 154 */     MCD_OPC_Decode, 221, 1, 0, // Opcode: STSSR_0R
+/* 154 */     MCD_OPC_Decode, 222, 1, 0, // Opcode: STSSR_0R
 /* 158 */     MCD_OPC_FilterValue, 252, 15, 4, 0, // Skip to: 167
-/* 163 */     MCD_OPC_Decode, 219, 1, 0, // Opcode: STSED_0R
+/* 163 */     MCD_OPC_Decode, 220, 1, 0, // Opcode: STSED_0R
 /* 167 */     MCD_OPC_FilterValue, 253, 15, 4, 0, // Skip to: 176
-/* 172 */     MCD_OPC_Decode, 218, 1, 0, // Opcode: STET_0R
+/* 172 */     MCD_OPC_Decode, 219, 1, 0, // Opcode: STET_0R
 /* 176 */     MCD_OPC_FilterValue, 254, 15, 3, 0, // Skip to: 184
-/* 181 */     MCD_OPC_Decode, 92, 0, // Opcode: GETED_0R
+/* 181 */     MCD_OPC_Decode, 93, 0, // Opcode: GETED_0R
 /* 184 */     MCD_OPC_FilterValue, 255, 15, 3, 0, // Skip to: 192
-/* 189 */     MCD_OPC_Decode, 93, 0, // Opcode: GETET_0R
+/* 189 */     MCD_OPC_Decode, 94, 0, // Opcode: GETET_0R
 /* 192 */     MCD_OPC_ExtractField, 4, 7,  // Inst{10-4} ...
 /* 195 */     MCD_OPC_FilterValue, 126, 4, 0, // Skip to: 203
-/* 199 */     MCD_OPC_Decode, 239, 1, 1, // Opcode: WAITET_1R
+/* 199 */     MCD_OPC_Decode, 240, 1, 1, // Opcode: WAITET_1R
 /* 203 */     MCD_OPC_FilterValue, 127, 4, 0, // Skip to: 211
-/* 207 */     MCD_OPC_Decode, 238, 1, 1, // Opcode: WAITEF_1R
+/* 207 */     MCD_OPC_Decode, 239, 1, 1, // Opcode: WAITEF_1R
 /* 211 */     MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 214 */     MCD_OPC_FilterValue, 0, 3, 0, // Skip to: 221
-/* 218 */     MCD_OPC_Decode, 106, 2, // Opcode: INITDP_2r
+/* 218 */     MCD_OPC_Decode, 107, 2, // Opcode: INITDP_2r
 /* 221 */     MCD_OPC_FilterValue, 1, 4, 0, // Skip to: 229
-/* 225 */     MCD_OPC_Decode, 180, 1, 4, // Opcode: OUTT_2r
-/* 229 */     MCD_OPC_Decode, 160, 1, 3, // Opcode: LDW_2rus
+/* 225 */     MCD_OPC_Decode, 181, 1, 4, // Opcode: OUTT_2r
+/* 229 */     MCD_OPC_Decode, 161, 1, 3, // Opcode: LDW_2rus
 /* 233 */     MCD_OPC_FilterValue, 2, 100, 0, // Skip to: 337
 /* 237 */     MCD_OPC_ExtractField, 0, 11,  // Inst{10-0} ...
 /* 240 */     MCD_OPC_FilterValue, 236, 15, 3, 0, // Skip to: 248
-/* 245 */     MCD_OPC_Decode, 66, 0, // Opcode: DENTSP_0R
+/* 245 */     MCD_OPC_Decode, 67, 0, // Opcode: DENTSP_0R
 /* 248 */     MCD_OPC_FilterValue, 237, 15, 3, 0, // Skip to: 256
-/* 253 */     MCD_OPC_Decode, 70, 0, // Opcode: DRESTSP_0R
+/* 253 */     MCD_OPC_Decode, 71, 0, // Opcode: DRESTSP_0R
 /* 256 */     MCD_OPC_FilterValue, 238, 15, 3, 0, // Skip to: 264
-/* 261 */     MCD_OPC_Decode, 94, 0, // Opcode: GETID_0R
+/* 261 */     MCD_OPC_Decode, 95, 0, // Opcode: GETID_0R
 /* 264 */     MCD_OPC_FilterValue, 239, 15, 3, 0, // Skip to: 272
-/* 269 */     MCD_OPC_Decode, 95, 0, // Opcode: GETKEP_0R
+/* 269 */     MCD_OPC_Decode, 96, 0, // Opcode: GETKEP_0R
 /* 272 */     MCD_OPC_FilterValue, 252, 15, 3, 0, // Skip to: 280
-/* 277 */     MCD_OPC_Decode, 96, 0, // Opcode: GETKSP_0R
+/* 277 */     MCD_OPC_Decode, 97, 0, // Opcode: GETKSP_0R
 /* 280 */     MCD_OPC_FilterValue, 253, 15, 4, 0, // Skip to: 289
-/* 285 */     MCD_OPC_Decode, 148, 1, 0, // Opcode: LDSED_0R
+/* 285 */     MCD_OPC_Decode, 149, 1, 0, // Opcode: LDSED_0R
 /* 289 */     MCD_OPC_FilterValue, 254, 15, 4, 0, // Skip to: 298
-/* 294 */     MCD_OPC_Decode, 146, 1, 0, // Opcode: LDET_0R
+/* 294 */     MCD_OPC_Decode, 147, 1, 0, // Opcode: LDET_0R
 /* 298 */     MCD_OPC_ExtractField, 4, 7,  // Inst{10-4} ...
 /* 301 */     MCD_OPC_FilterValue, 126, 3, 0, // Skip to: 308
-/* 305 */     MCD_OPC_Decode, 89, 1, // Opcode: FREER_1r
+/* 305 */     MCD_OPC_Decode, 90, 1, // Opcode: FREER_1r
 /* 308 */     MCD_OPC_FilterValue, 127, 4, 0, // Skip to: 316
-/* 312 */     MCD_OPC_Decode, 168, 1, 1, // Opcode: MJOIN_1r
+/* 312 */     MCD_OPC_Decode, 169, 1, 1, // Opcode: MJOIN_1r
 /* 316 */     MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 319 */     MCD_OPC_FilterValue, 0, 3, 0, // Skip to: 326
-/* 323 */     MCD_OPC_Decode, 109, 2, // Opcode: INITSP_2r
+/* 323 */     MCD_OPC_Decode, 110, 2, // Opcode: INITSP_2r
 /* 326 */     MCD_OPC_FilterValue, 1, 4, 0, // Skip to: 334
-/* 330 */     MCD_OPC_Decode, 194, 1, 4, // Opcode: SETD_2r
-/* 334 */     MCD_OPC_Decode, 20, 5, // Opcode: ADD_3r
+/* 330 */     MCD_OPC_Decode, 195, 1, 4, // Opcode: SETD_2r
+/* 334 */     MCD_OPC_Decode, 21, 5, // Opcode: ADD_3r
 /* 337 */     MCD_OPC_FilterValue, 3, 41, 0, // Skip to: 382
 /* 341 */     MCD_OPC_ExtractField, 4, 7,  // Inst{10-4} ...
 /* 344 */     MCD_OPC_FilterValue, 126, 4, 0, // Skip to: 352
-/* 348 */     MCD_OPC_Decode, 237, 1, 1, // Opcode: TSTART_1R
+/* 348 */     MCD_OPC_Decode, 238, 1, 1, // Opcode: TSTART_1R
 /* 352 */     MCD_OPC_FilterValue, 127, 4, 0, // Skip to: 360
-/* 356 */     MCD_OPC_Decode, 171, 1, 1, // Opcode: MSYNC_1r
+/* 356 */     MCD_OPC_Decode, 172, 1, 1, // Opcode: MSYNC_1r
 /* 360 */     MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 363 */     MCD_OPC_FilterValue, 0, 3, 0, // Skip to: 370
-/* 367 */     MCD_OPC_Decode, 105, 2, // Opcode: INITCP_2r
+/* 367 */     MCD_OPC_Decode, 106, 2, // Opcode: INITCP_2r
 /* 370 */     MCD_OPC_FilterValue, 1, 4, 0, // Skip to: 378
-/* 374 */     MCD_OPC_Decode, 235, 1, 6, // Opcode: TSETMR_2r
-/* 378 */     MCD_OPC_Decode, 230, 1, 5, // Opcode: SUB_3r
+/* 374 */     MCD_OPC_Decode, 236, 1, 6, // Opcode: TSETMR_2r
+/* 378 */     MCD_OPC_Decode, 231, 1, 5, // Opcode: SUB_3r
 /* 382 */     MCD_OPC_FilterValue, 4, 30, 0, // Skip to: 416
 /* 386 */     MCD_OPC_ExtractField, 4, 7,  // Inst{10-4} ...
 /* 389 */     MCD_OPC_FilterValue, 126, 3, 0, // Skip to: 396
-/* 393 */     MCD_OPC_Decode, 33, 1, // Opcode: BLA_1r
+/* 393 */     MCD_OPC_Decode, 34, 1, // Opcode: BLA_1r
 /* 396 */     MCD_OPC_FilterValue, 127, 3, 0, // Skip to: 403
-/* 400 */     MCD_OPC_Decode, 27, 1, // Opcode: BAU_1r
+/* 400 */     MCD_OPC_Decode, 28, 1, // Opcode: BAU_1r
 /* 403 */     MCD_OPC_CheckField, 4, 1, 1, 3, 0, // Skip to: 412
-/* 409 */     MCD_OPC_Decode, 76, 2, // Opcode: EET_2r
-/* 412 */     MCD_OPC_Decode, 212, 1, 5, // Opcode: SHL_3r
+/* 409 */     MCD_OPC_Decode, 77, 2, // Opcode: EET_2r
+/* 412 */     MCD_OPC_Decode, 213, 1, 5, // Opcode: SHL_3r
 /* 416 */     MCD_OPC_FilterValue, 5, 39, 0, // Skip to: 459
 /* 420 */     MCD_OPC_ExtractField, 4, 7,  // Inst{10-4} ...
 /* 423 */     MCD_OPC_FilterValue, 126, 3, 0, // Skip to: 430
-/* 427 */     MCD_OPC_Decode, 50, 1, // Opcode: BRU_1r
+/* 427 */     MCD_OPC_Decode, 51, 1, // Opcode: BRU_1r
 /* 430 */     MCD_OPC_FilterValue, 127, 4, 0, // Skip to: 438
-/* 434 */     MCD_OPC_Decode, 202, 1, 1, // Opcode: SETSP_1r
+/* 434 */     MCD_OPC_Decode, 203, 1, 1, // Opcode: SETSP_1r
 /* 438 */     MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 441 */     MCD_OPC_FilterValue, 0, 3, 0, // Skip to: 448
-/* 445 */     MCD_OPC_Decode, 23, 7, // Opcode: ANDNOT_2r
+/* 445 */     MCD_OPC_Decode, 24, 7, // Opcode: ANDNOT_2r
 /* 448 */     MCD_OPC_FilterValue, 1, 3, 0, // Skip to: 455
-/* 452 */     MCD_OPC_Decode, 75, 2, // Opcode: EEF_2r
-/* 455 */     MCD_OPC_Decode, 214, 1, 5, // Opcode: SHR_3r
+/* 452 */     MCD_OPC_Decode, 76, 2, // Opcode: EEF_2r
+/* 455 */     MCD_OPC_Decode, 215, 1, 5, // Opcode: SHR_3r
 /* 459 */     MCD_OPC_FilterValue, 6, 41, 0, // Skip to: 504
 /* 463 */     MCD_OPC_ExtractField, 4, 7,  // Inst{10-4} ...
 /* 466 */     MCD_OPC_FilterValue, 126, 4, 0, // Skip to: 474
-/* 470 */     MCD_OPC_Decode, 193, 1, 1, // Opcode: SETDP_1r
+/* 470 */     MCD_OPC_Decode, 194, 1, 1, // Opcode: SETDP_1r
 /* 474 */     MCD_OPC_FilterValue, 127, 4, 0, // Skip to: 482
-/* 478 */     MCD_OPC_Decode, 189, 1, 1, // Opcode: SETCP_1r
+/* 478 */     MCD_OPC_Decode, 190, 1, 1, // Opcode: SETCP_1r
 /* 482 */     MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 485 */     MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 493
-/* 489 */     MCD_OPC_Decode, 209, 1, 7, // Opcode: SEXT_2r
+/* 489 */     MCD_OPC_Decode, 210, 1, 7, // Opcode: SEXT_2r
 /* 493 */     MCD_OPC_FilterValue, 1, 4, 0, // Skip to: 501
-/* 497 */     MCD_OPC_Decode, 210, 1, 8, // Opcode: SEXT_rus
-/* 501 */     MCD_OPC_Decode, 83, 5, // Opcode: EQ_3r
+/* 497 */     MCD_OPC_Decode, 211, 1, 8, // Opcode: SEXT_rus
+/* 501 */     MCD_OPC_Decode, 84, 5, // Opcode: EQ_3r
 /* 504 */     MCD_OPC_FilterValue, 7, 39, 0, // Skip to: 547
 /* 508 */     MCD_OPC_ExtractField, 4, 7,  // Inst{10-4} ...
 /* 511 */     MCD_OPC_FilterValue, 126, 3, 0, // Skip to: 518
-/* 515 */     MCD_OPC_Decode, 67, 1, // Opcode: DGETREG_1r
+/* 515 */     MCD_OPC_Decode, 68, 1, // Opcode: DGETREG_1r
 /* 518 */     MCD_OPC_FilterValue, 127, 4, 0, // Skip to: 526
-/* 522 */     MCD_OPC_Decode, 195, 1, 1, // Opcode: SETEV_1r
+/* 522 */     MCD_OPC_Decode, 196, 1, 1, // Opcode: SETEV_1r
 /* 526 */     MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 529 */     MCD_OPC_FilterValue, 0, 3, 0, // Skip to: 536
-/* 533 */     MCD_OPC_Decode, 103, 2, // Opcode: GETTS_2r
+/* 533 */     MCD_OPC_Decode, 104, 2, // Opcode: GETTS_2r
 /* 536 */     MCD_OPC_FilterValue, 1, 4, 0, // Skip to: 544
-/* 540 */     MCD_OPC_Decode, 200, 1, 4, // Opcode: SETPT_2r
-/* 544 */     MCD_OPC_Decode, 24, 5, // Opcode: AND_3r
+/* 540 */     MCD_OPC_Decode, 201, 1, 4, // Opcode: SETPT_2r
+/* 544 */     MCD_OPC_Decode, 25, 5, // Opcode: AND_3r
 /* 547 */     MCD_OPC_FilterValue, 8, 41, 0, // Skip to: 592
 /* 551 */     MCD_OPC_ExtractField, 4, 7,  // Inst{10-4} ...
 /* 554 */     MCD_OPC_FilterValue, 126, 3, 0, // Skip to: 561
-/* 558 */     MCD_OPC_Decode, 115, 1, // Opcode: KCALL_1r
+/* 558 */     MCD_OPC_Decode, 116, 1, // Opcode: KCALL_1r
 /* 561 */     MCD_OPC_FilterValue, 127, 4, 0, // Skip to: 569
-/* 565 */     MCD_OPC_Decode, 208, 1, 1, // Opcode: SETV_1r
+/* 565 */     MCD_OPC_Decode, 209, 1, 1, // Opcode: SETV_1r
 /* 569 */     MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 572 */     MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 580
-/* 576 */     MCD_OPC_Decode, 242, 1, 7, // Opcode: ZEXT_2r
+/* 576 */     MCD_OPC_Decode, 243, 1, 7, // Opcode: ZEXT_2r
 /* 580 */     MCD_OPC_FilterValue, 1, 4, 0, // Skip to: 588
-/* 584 */     MCD_OPC_Decode, 243, 1, 8, // Opcode: ZEXT_rus
-/* 588 */     MCD_OPC_Decode, 175, 1, 5, // Opcode: OR_3r
+/* 584 */     MCD_OPC_Decode, 244, 1, 8, // Opcode: ZEXT_rus
+/* 588 */     MCD_OPC_Decode, 176, 1, 5, // Opcode: OR_3r
 /* 592 */     MCD_OPC_FilterValue, 9, 40, 0, // Skip to: 636
 /* 596 */     MCD_OPC_ExtractField, 4, 7,  // Inst{10-4} ...
 /* 599 */     MCD_OPC_FilterValue, 126, 3, 0, // Skip to: 606
-/* 603 */     MCD_OPC_Decode, 72, 1, // Opcode: ECALLF_1r
+/* 603 */     MCD_OPC_Decode, 73, 1, // Opcode: ECALLF_1r
 /* 606 */     MCD_OPC_FilterValue, 127, 3, 0, // Skip to: 613
-/* 610 */     MCD_OPC_Decode, 73, 1, // Opcode: ECALLT_1r
+/* 610 */     MCD_OPC_Decode, 74, 1, // Opcode: ECALLT_1r
 /* 613 */     MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 616 */     MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 624
-/* 620 */     MCD_OPC_Decode, 176, 1, 2, // Opcode: OUTCT_2r
+/* 620 */     MCD_OPC_Decode, 177, 1, 2, // Opcode: OUTCT_2r
 /* 624 */     MCD_OPC_FilterValue, 1, 4, 0, // Skip to: 632
-/* 628 */     MCD_OPC_Decode, 177, 1, 9, // Opcode: OUTCT_rus
-/* 632 */     MCD_OPC_Decode, 161, 1, 5, // Opcode: LDW_3r
+/* 628 */     MCD_OPC_Decode, 178, 1, 9, // Opcode: OUTCT_rus
+/* 632 */     MCD_OPC_Decode, 162, 1, 5, // Opcode: LDW_3r
 /* 636 */     MCD_OPC_FilterValue, 10, 19, 0, // Skip to: 659
 /* 640 */     MCD_OPC_ExtractField, 10, 1,  // Inst{10} ...
 /* 643 */     MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 651
-/* 647 */     MCD_OPC_Decode, 223, 1, 10, // Opcode: STWDP_ru6
+/* 647 */     MCD_OPC_Decode, 224, 1, 10, // Opcode: STWDP_ru6
 /* 651 */     MCD_OPC_FilterValue, 1, 53, 2, // Skip to: 1220
-/* 655 */     MCD_OPC_Decode, 226, 1, 10, // Opcode: STWSP_ru6
+/* 655 */     MCD_OPC_Decode, 227, 1, 10, // Opcode: STWSP_ru6
 /* 659 */     MCD_OPC_FilterValue, 11, 19, 0, // Skip to: 682
 /* 663 */     MCD_OPC_ExtractField, 10, 1,  // Inst{10} ...
 /* 666 */     MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 674
-/* 670 */     MCD_OPC_Decode, 156, 1, 10, // Opcode: LDWDP_ru6
+/* 670 */     MCD_OPC_Decode, 157, 1, 10, // Opcode: LDWDP_ru6
 /* 674 */     MCD_OPC_FilterValue, 1, 30, 2, // Skip to: 1220
-/* 678 */     MCD_OPC_Decode, 159, 1, 10, // Opcode: LDWSP_ru6
+/* 678 */     MCD_OPC_Decode, 160, 1, 10, // Opcode: LDWSP_ru6
 /* 682 */     MCD_OPC_FilterValue, 12, 19, 0, // Skip to: 705
 /* 686 */     MCD_OPC_ExtractField, 10, 1,  // Inst{10} ...
 /* 689 */     MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 697
-/* 693 */     MCD_OPC_Decode, 138, 1, 10, // Opcode: LDAWDP_ru6
+/* 693 */     MCD_OPC_Decode, 139, 1, 10, // Opcode: LDAWDP_ru6
 /* 697 */     MCD_OPC_FilterValue, 1, 7, 2, // Skip to: 1220
-/* 701 */     MCD_OPC_Decode, 143, 1, 10, // Opcode: LDAWSP_ru6
+/* 701 */     MCD_OPC_Decode, 144, 1, 10, // Opcode: LDAWSP_ru6
 /* 705 */     MCD_OPC_FilterValue, 13, 19, 0, // Skip to: 728
 /* 709 */     MCD_OPC_ExtractField, 10, 1,  // Inst{10} ...
 /* 712 */     MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 720
-/* 716 */     MCD_OPC_Decode, 145, 1, 10, // Opcode: LDC_ru6
+/* 716 */     MCD_OPC_Decode, 146, 1, 10, // Opcode: LDC_ru6
 /* 720 */     MCD_OPC_FilterValue, 1, 240, 1, // Skip to: 1220
-/* 724 */     MCD_OPC_Decode, 153, 1, 10, // Opcode: LDWCP_ru6
+/* 724 */     MCD_OPC_Decode, 154, 1, 10, // Opcode: LDWCP_ru6
 /* 728 */     MCD_OPC_FilterValue, 14, 80, 0, // Skip to: 812
 /* 732 */     MCD_OPC_ExtractField, 10, 1,  // Inst{10} ...
 /* 735 */     MCD_OPC_FilterValue, 0, 34, 0, // Skip to: 773
 /* 739 */     MCD_OPC_ExtractField, 6, 4,  // Inst{9-6} ...
 /* 742 */     MCD_OPC_FilterValue, 12, 3, 0, // Skip to: 749
-/* 746 */     MCD_OPC_Decode, 49, 11, // Opcode: BRFU_u6
+/* 746 */     MCD_OPC_Decode, 50, 11, // Opcode: BRFU_u6
 /* 749 */     MCD_OPC_FilterValue, 13, 3, 0, // Skip to: 756
-/* 753 */     MCD_OPC_Decode, 32, 11, // Opcode: BLAT_u6
+/* 753 */     MCD_OPC_Decode, 33, 11, // Opcode: BLAT_u6
 /* 756 */     MCD_OPC_FilterValue, 14, 3, 0, // Skip to: 763
-/* 760 */     MCD_OPC_Decode, 85, 11, // Opcode: EXTDP_u6
+/* 760 */     MCD_OPC_Decode, 86, 11, // Opcode: EXTDP_u6
 /* 763 */     MCD_OPC_FilterValue, 15, 3, 0, // Skip to: 770
-/* 767 */     MCD_OPC_Decode, 117, 11, // Opcode: KCALL_u6
-/* 770 */     MCD_OPC_Decode, 47, 12, // Opcode: BRFT_ru6
+/* 767 */     MCD_OPC_Decode, 118, 11, // Opcode: KCALL_u6
+/* 770 */     MCD_OPC_Decode, 48, 12, // Opcode: BRFT_ru6
 /* 773 */     MCD_OPC_FilterValue, 1, 187, 1, // Skip to: 1220
 /* 777 */     MCD_OPC_ExtractField, 6, 4,  // Inst{9-6} ...
 /* 780 */     MCD_OPC_FilterValue, 12, 3, 0, // Skip to: 787
-/* 784 */     MCD_OPC_Decode, 43, 13, // Opcode: BRBU_u6
+/* 784 */     MCD_OPC_Decode, 44, 13, // Opcode: BRBU_u6
 /* 787 */     MCD_OPC_FilterValue, 13, 3, 0, // Skip to: 794
-/* 791 */     MCD_OPC_Decode, 81, 11, // Opcode: ENTSP_u6
+/* 791 */     MCD_OPC_Decode, 82, 11, // Opcode: ENTSP_u6
 /* 794 */     MCD_OPC_FilterValue, 14, 3, 0, // Skip to: 801
-/* 798 */     MCD_OPC_Decode, 87, 11, // Opcode: EXTSP_u6
+/* 798 */     MCD_OPC_Decode, 88, 11, // Opcode: EXTSP_u6
 /* 801 */     MCD_OPC_FilterValue, 15, 4, 0, // Skip to: 809
-/* 805 */     MCD_OPC_Decode, 186, 1, 11, // Opcode: RETSP_u6
-/* 809 */     MCD_OPC_Decode, 41, 14, // Opcode: BRBT_ru6
+/* 805 */     MCD_OPC_Decode, 187, 1, 11, // Opcode: RETSP_u6
+/* 809 */     MCD_OPC_Decode, 42, 14, // Opcode: BRBT_ru6
 /* 812 */     MCD_OPC_FilterValue, 15, 67, 0, // Skip to: 883
 /* 816 */     MCD_OPC_ExtractField, 10, 1,  // Inst{10} ...
 /* 819 */     MCD_OPC_FilterValue, 0, 35, 0, // Skip to: 858
 /* 823 */     MCD_OPC_ExtractField, 6, 4,  // Inst{9-6} ...
 /* 826 */     MCD_OPC_FilterValue, 12, 3, 0, // Skip to: 833
-/* 830 */     MCD_OPC_Decode, 61, 11, // Opcode: CLRSR_u6
+/* 830 */     MCD_OPC_Decode, 62, 11, // Opcode: CLRSR_u6
 /* 833 */     MCD_OPC_FilterValue, 13, 4, 0, // Skip to: 841
-/* 837 */     MCD_OPC_Decode, 206, 1, 11, // Opcode: SETSR_u6
+/* 837 */     MCD_OPC_Decode, 207, 1, 11, // Opcode: SETSR_u6
 /* 841 */     MCD_OPC_FilterValue, 14, 3, 0, // Skip to: 848
-/* 845 */     MCD_OPC_Decode, 119, 11, // Opcode: KENTSP_u6
+/* 845 */     MCD_OPC_Decode, 120, 11, // Opcode: KENTSP_u6
 /* 848 */     MCD_OPC_FilterValue, 15, 3, 0, // Skip to: 855
-/* 852 */     MCD_OPC_Decode, 121, 11, // Opcode: KRESTSP_u6
-/* 855 */     MCD_OPC_Decode, 45, 12, // Opcode: BRFF_ru6
+/* 852 */     MCD_OPC_Decode, 122, 11, // Opcode: KRESTSP_u6
+/* 855 */     MCD_OPC_Decode, 46, 12, // Opcode: BRFF_ru6
 /* 858 */     MCD_OPC_FilterValue, 1, 102, 1, // Skip to: 1220
 /* 862 */     MCD_OPC_ExtractField, 6, 4,  // Inst{9-6} ...
 /* 865 */     MCD_OPC_FilterValue, 12, 3, 0, // Skip to: 872
-/* 869 */     MCD_OPC_Decode, 101, 11, // Opcode: GETSR_u6
+/* 869 */     MCD_OPC_Decode, 102, 11, // Opcode: GETSR_u6
 /* 872 */     MCD_OPC_FilterValue, 13, 4, 0, // Skip to: 880
-/* 876 */     MCD_OPC_Decode, 136, 1, 11, // Opcode: LDAWCP_u6
-/* 880 */     MCD_OPC_Decode, 39, 14, // Opcode: BRBF_ru6
+/* 876 */     MCD_OPC_Decode, 137, 1, 11, // Opcode: LDAWCP_u6
+/* 880 */     MCD_OPC_Decode, 40, 14, // Opcode: BRBF_ru6
 /* 883 */     MCD_OPC_FilterValue, 16, 38, 0, // Skip to: 925
 /* 887 */     MCD_OPC_ExtractField, 4, 7,  // Inst{10-4} ...
 /* 890 */     MCD_OPC_FilterValue, 126, 3, 0, // Skip to: 897
-/* 894 */     MCD_OPC_Decode, 57, 1, // Opcode: CLRPT_1R
+/* 894 */     MCD_OPC_Decode, 58, 1, // Opcode: CLRPT_1R
 /* 897 */     MCD_OPC_FilterValue, 127, 4, 0, // Skip to: 905
-/* 901 */     MCD_OPC_Decode, 231, 1, 1, // Opcode: SYNCR_1r
+/* 901 */     MCD_OPC_Decode, 232, 1, 1, // Opcode: SYNCR_1r
 /* 905 */     MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 908 */     MCD_OPC_FilterValue, 0, 3, 0, // Skip to: 915
-/* 912 */     MCD_OPC_Decode, 99, 9, // Opcode: GETR_rus
+/* 912 */     MCD_OPC_Decode, 100, 9, // Opcode: GETR_rus
 /* 915 */     MCD_OPC_FilterValue, 1, 3, 0, // Skip to: 922
-/* 919 */     MCD_OPC_Decode, 104, 2, // Opcode: INCT_2r
-/* 922 */     MCD_OPC_Decode, 124, 5, // Opcode: LD16S_3r
+/* 919 */     MCD_OPC_Decode, 105, 2, // Opcode: INCT_2r
+/* 922 */     MCD_OPC_Decode, 125, 5, // Opcode: LD16S_3r
 /* 925 */     MCD_OPC_FilterValue, 17, 21, 0, // Skip to: 950
 /* 929 */     MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 932 */     MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 940
-/* 936 */     MCD_OPC_Decode, 174, 1, 2, // Opcode: NOT
+/* 936 */     MCD_OPC_Decode, 175, 1, 2, // Opcode: NOT
 /* 940 */     MCD_OPC_FilterValue, 1, 3, 0, // Skip to: 947
-/* 944 */     MCD_OPC_Decode, 112, 2, // Opcode: INT_2r
-/* 947 */     MCD_OPC_Decode, 125, 5, // Opcode: LD8U_3r
+/* 944 */     MCD_OPC_Decode, 113, 2, // Opcode: INT_2r
+/* 947 */     MCD_OPC_Decode, 126, 5, // Opcode: LD8U_3r
 /* 950 */     MCD_OPC_FilterValue, 18, 21, 0, // Skip to: 975
 /* 954 */     MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 957 */     MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 965
-/* 961 */     MCD_OPC_Decode, 173, 1, 2, // Opcode: NEG
+/* 961 */     MCD_OPC_Decode, 174, 1, 2, // Opcode: NEG
 /* 965 */     MCD_OPC_FilterValue, 1, 3, 0, // Skip to: 972
-/* 969 */     MCD_OPC_Decode, 79, 2, // Opcode: ENDIN_2r
-/* 972 */     MCD_OPC_Decode, 19, 3, // Opcode: ADD_2rus
+/* 969 */     MCD_OPC_Decode, 80, 2, // Opcode: ENDIN_2r
+/* 972 */     MCD_OPC_Decode, 20, 3, // Opcode: ADD_2rus
 /* 975 */     MCD_OPC_FilterValue, 19, 4, 0, // Skip to: 983
-/* 979 */     MCD_OPC_Decode, 229, 1, 3, // Opcode: SUB_2rus
+/* 979 */     MCD_OPC_Decode, 230, 1, 3, // Opcode: SUB_2rus
 /* 983 */     MCD_OPC_FilterValue, 20, 23, 0, // Skip to: 1010
 /* 987 */     MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 990 */     MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 998
-/* 994 */     MCD_OPC_Decode, 169, 1, 2, // Opcode: MKMSK_2r
+/* 994 */     MCD_OPC_Decode, 170, 1, 2, // Opcode: MKMSK_2r
 /* 998 */     MCD_OPC_FilterValue, 1, 4, 0, // Skip to: 1006
-/* 1002 */    MCD_OPC_Decode, 170, 1, 15, // Opcode: MKMSK_rus
-/* 1006 */    MCD_OPC_Decode, 211, 1, 16, // Opcode: SHL_2rus
+/* 1002 */    MCD_OPC_Decode, 171, 1, 15, // Opcode: MKMSK_rus
+/* 1006 */    MCD_OPC_Decode, 212, 1, 16, // Opcode: SHL_2rus
 /* 1010 */    MCD_OPC_FilterValue, 21, 23, 0, // Skip to: 1037
 /* 1014 */    MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 1017 */    MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 1025
-/* 1021 */    MCD_OPC_Decode, 181, 1, 4, // Opcode: OUT_2r
+/* 1021 */    MCD_OPC_Decode, 182, 1, 4, // Opcode: OUT_2r
 /* 1025 */    MCD_OPC_FilterValue, 1, 4, 0, // Skip to: 1033
-/* 1029 */    MCD_OPC_Decode, 179, 1, 7, // Opcode: OUTSHR_2r
-/* 1033 */    MCD_OPC_Decode, 213, 1, 16, // Opcode: SHR_2rus
+/* 1029 */    MCD_OPC_Decode, 180, 1, 7, // Opcode: OUTSHR_2r
+/* 1033 */    MCD_OPC_Decode, 214, 1, 16, // Opcode: SHR_2rus
 /* 1037 */    MCD_OPC_FilterValue, 22, 20, 0, // Skip to: 1061
 /* 1041 */    MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 1044 */    MCD_OPC_FilterValue, 0, 3, 0, // Skip to: 1051
-/* 1048 */    MCD_OPC_Decode, 113, 2, // Opcode: IN_2r
+/* 1048 */    MCD_OPC_Decode, 114, 2, // Opcode: IN_2r
 /* 1051 */    MCD_OPC_FilterValue, 1, 3, 0, // Skip to: 1058
-/* 1055 */    MCD_OPC_Decode, 111, 7, // Opcode: INSHR_2r
-/* 1058 */    MCD_OPC_Decode, 82, 3, // Opcode: EQ_2rus
+/* 1055 */    MCD_OPC_Decode, 112, 7, // Opcode: INSHR_2r
+/* 1058 */    MCD_OPC_Decode, 83, 3, // Opcode: EQ_2rus
 /* 1061 */    MCD_OPC_FilterValue, 23, 23, 0, // Skip to: 1088
 /* 1065 */    MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 1068 */    MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 1076
-/* 1072 */    MCD_OPC_Decode, 182, 1, 2, // Opcode: PEEK_2r
+/* 1072 */    MCD_OPC_Decode, 183, 1, 2, // Opcode: PEEK_2r
 /* 1076 */    MCD_OPC_FilterValue, 1, 4, 0, // Skip to: 1084
-/* 1080 */    MCD_OPC_Decode, 232, 1, 2, // Opcode: TESTCT_2r
-/* 1084 */    MCD_OPC_Decode, 236, 1, 17, // Opcode: TSETR_3r
+/* 1080 */    MCD_OPC_Decode, 233, 1, 2, // Opcode: TESTCT_2r
+/* 1084 */    MCD_OPC_Decode, 237, 1, 17, // Opcode: TSETR_3r
 /* 1088 */    MCD_OPC_FilterValue, 24, 23, 0, // Skip to: 1115
 /* 1092 */    MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 1095 */    MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 1103
-/* 1099 */    MCD_OPC_Decode, 198, 1, 4, // Opcode: SETPSC_2r
+/* 1099 */    MCD_OPC_Decode, 199, 1, 4, // Opcode: SETPSC_2r
 /* 1103 */    MCD_OPC_FilterValue, 1, 4, 0, // Skip to: 1111
-/* 1107 */    MCD_OPC_Decode, 234, 1, 2, // Opcode: TESTWCT_2r
-/* 1111 */    MCD_OPC_Decode, 163, 1, 5, // Opcode: LSS_3r
+/* 1107 */    MCD_OPC_Decode, 235, 1, 2, // Opcode: TESTWCT_2r
+/* 1111 */    MCD_OPC_Decode, 164, 1, 5, // Opcode: LSS_3r
 /* 1115 */    MCD_OPC_FilterValue, 25, 21, 0, // Skip to: 1140
 /* 1119 */    MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 1122 */    MCD_OPC_FilterValue, 0, 3, 0, // Skip to: 1129
-/* 1126 */    MCD_OPC_Decode, 54, 2, // Opcode: CHKCT_2r
+/* 1126 */    MCD_OPC_Decode, 55, 2, // Opcode: CHKCT_2r
 /* 1129 */    MCD_OPC_FilterValue, 1, 3, 0, // Skip to: 1136
-/* 1133 */    MCD_OPC_Decode, 55, 15, // Opcode: CHKCT_rus
-/* 1136 */    MCD_OPC_Decode, 165, 1, 5, // Opcode: LSU_3r
+/* 1133 */    MCD_OPC_Decode, 56, 15, // Opcode: CHKCT_rus
+/* 1136 */    MCD_OPC_Decode, 166, 1, 5, // Opcode: LSU_3r
 /* 1140 */    MCD_OPC_FilterValue, 26, 17, 0, // Skip to: 1161
 /* 1144 */    MCD_OPC_ExtractField, 10, 1,  // Inst{10} ...
 /* 1147 */    MCD_OPC_FilterValue, 0, 3, 0, // Skip to: 1154
-/* 1151 */    MCD_OPC_Decode, 37, 18, // Opcode: BLRF_u10
+/* 1151 */    MCD_OPC_Decode, 38, 18, // Opcode: BLRF_u10
 /* 1154 */    MCD_OPC_FilterValue, 1, 62, 0, // Skip to: 1220
-/* 1158 */    MCD_OPC_Decode, 35, 19, // Opcode: BLRB_u10
+/* 1158 */    MCD_OPC_Decode, 36, 19, // Opcode: BLRB_u10
 /* 1161 */    MCD_OPC_FilterValue, 27, 19, 0, // Skip to: 1184
 /* 1165 */    MCD_OPC_ExtractField, 10, 1,  // Inst{10} ...
 /* 1168 */    MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 1176
-/* 1172 */    MCD_OPC_Decode, 132, 1, 18, // Opcode: LDAPF_u10
+/* 1172 */    MCD_OPC_Decode, 133, 1, 18, // Opcode: LDAPF_u10
 /* 1176 */    MCD_OPC_FilterValue, 1, 40, 0, // Skip to: 1220
-/* 1180 */    MCD_OPC_Decode, 129, 1, 19, // Opcode: LDAPB_u10
+/* 1180 */    MCD_OPC_Decode, 130, 1, 19, // Opcode: LDAPB_u10
 /* 1184 */    MCD_OPC_FilterValue, 28, 18, 0, // Skip to: 1206
 /* 1188 */    MCD_OPC_ExtractField, 10, 1,  // Inst{10} ...
 /* 1191 */    MCD_OPC_FilterValue, 0, 3, 0, // Skip to: 1198
-/* 1195 */    MCD_OPC_Decode, 30, 18, // Opcode: BLACP_u10
+/* 1195 */    MCD_OPC_Decode, 31, 18, // Opcode: BLACP_u10
 /* 1198 */    MCD_OPC_FilterValue, 1, 18, 0, // Skip to: 1220
-/* 1202 */    MCD_OPC_Decode, 154, 1, 18, // Opcode: LDWCP_u10
+/* 1202 */    MCD_OPC_Decode, 155, 1, 18, // Opcode: LDWCP_u10
 /* 1206 */    MCD_OPC_FilterValue, 29, 10, 0, // Skip to: 1220
 /* 1210 */    MCD_OPC_CheckField, 10, 1, 0, 4, 0, // Skip to: 1220
-/* 1216 */    MCD_OPC_Decode, 192, 1, 12, // Opcode: SETC_ru6
+/* 1216 */    MCD_OPC_Decode, 193, 1, 12, // Opcode: SETC_ru6
 /* 1220 */    MCD_OPC_Fail,
   0
 };
@@ -359,243 +359,243 @@ static uint8_t DecoderTable32[] = {
 /* 0 */       MCD_OPC_ExtractField, 27, 5,  // Inst{31-27} ...
 /* 3 */       MCD_OPC_FilterValue, 0, 89, 0, // Skip to: 96
 /* 7 */       MCD_OPC_ExtractField, 11, 5,  // Inst{15-11} ...
-/* 10 */      MCD_OPC_FilterValue, 31, 214, 3, // Skip to: 996
+/* 10 */      MCD_OPC_FilterValue, 31, 215, 3, // Skip to: 997
 /* 14 */      MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 17 */      MCD_OPC_FilterValue, 0, 10, 0, // Skip to: 31
 /* 21 */      MCD_OPC_CheckField, 16, 11, 236, 15, 17, 0, // Skip to: 45
-/* 28 */      MCD_OPC_Decode, 28, 20, // Opcode: BITREV_l2r
+/* 28 */      MCD_OPC_Decode, 29, 20, // Opcode: BITREV_l2r
 /* 31 */      MCD_OPC_FilterValue, 1, 10, 0, // Skip to: 45
 /* 35 */      MCD_OPC_CheckField, 16, 11, 236, 15, 3, 0, // Skip to: 45
-/* 42 */      MCD_OPC_Decode, 53, 20, // Opcode: BYTEREV_l2r
+/* 42 */      MCD_OPC_Decode, 54, 20, // Opcode: BYTEREV_l2r
 /* 45 */      MCD_OPC_CheckField, 16, 11, 236, 15, 4, 0, // Skip to: 56
-/* 52 */      MCD_OPC_Decode, 228, 1, 21, // Opcode: STW_l3r
+/* 52 */      MCD_OPC_Decode, 229, 1, 21, // Opcode: STW_l3r
 /* 56 */      MCD_OPC_ExtractField, 20, 7,  // Inst{26-20} ...
 /* 59 */      MCD_OPC_FilterValue, 126, 3, 0, // Skip to: 66
-/* 63 */      MCD_OPC_Decode, 63, 22, // Opcode: CRC8_l4r
+/* 63 */      MCD_OPC_Decode, 64, 22, // Opcode: CRC8_l4r
 /* 66 */      MCD_OPC_FilterValue, 127, 4, 0, // Skip to: 74
-/* 70 */      MCD_OPC_Decode, 167, 1, 23, // Opcode: MACCU_l4r
+/* 70 */      MCD_OPC_Decode, 168, 1, 23, // Opcode: MACCU_l4r
 /* 74 */      MCD_OPC_ExtractField, 20, 1,  // Inst{20} ...
 /* 77 */      MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 85
-/* 81 */      MCD_OPC_Decode, 147, 1, 24, // Opcode: LDIVU_l5r
+/* 81 */      MCD_OPC_Decode, 148, 1, 24, // Opcode: LDIVU_l5r
 /* 85 */      MCD_OPC_FilterValue, 1, 3, 0, // Skip to: 92
-/* 89 */      MCD_OPC_Decode, 123, 24, // Opcode: LADD_l5r
-/* 92 */      MCD_OPC_Decode, 162, 1, 25, // Opcode: LMUL_l6r
+/* 89 */      MCD_OPC_Decode, 124, 24, // Opcode: LADD_l5r
+/* 92 */      MCD_OPC_Decode, 163, 1, 25, // Opcode: LMUL_l6r
 /* 96 */      MCD_OPC_FilterValue, 1, 86, 0, // Skip to: 186
 /* 100 */     MCD_OPC_ExtractField, 11, 5,  // Inst{15-11} ...
-/* 103 */     MCD_OPC_FilterValue, 31, 121, 3, // Skip to: 996
+/* 103 */     MCD_OPC_FilterValue, 31, 122, 3, // Skip to: 997
 /* 107 */     MCD_OPC_ExtractField, 20, 1,  // Inst{20} ...
-/* 110 */     MCD_OPC_FilterValue, 0, 114, 3, // Skip to: 996
+/* 110 */     MCD_OPC_FilterValue, 0, 115, 3, // Skip to: 997
 /* 114 */     MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 117 */     MCD_OPC_FilterValue, 0, 15, 0, // Skip to: 136
 /* 121 */     MCD_OPC_CheckField, 21, 6, 63, 29, 0, // Skip to: 156
 /* 127 */     MCD_OPC_CheckField, 16, 4, 12, 23, 0, // Skip to: 156
-/* 133 */     MCD_OPC_Decode, 62, 20, // Opcode: CLZ_l2r
+/* 133 */     MCD_OPC_Decode, 63, 20, // Opcode: CLZ_l2r
 /* 136 */     MCD_OPC_FilterValue, 1, 16, 0, // Skip to: 156
 /* 140 */     MCD_OPC_CheckField, 21, 6, 63, 10, 0, // Skip to: 156
 /* 146 */     MCD_OPC_CheckField, 16, 4, 12, 4, 0, // Skip to: 156
-/* 152 */     MCD_OPC_Decode, 188, 1, 26, // Opcode: SETCLK_l2r
+/* 152 */     MCD_OPC_Decode, 189, 1, 26, // Opcode: SETCLK_l2r
 /* 156 */     MCD_OPC_CheckField, 21, 6, 63, 10, 0, // Skip to: 172
 /* 162 */     MCD_OPC_CheckField, 16, 4, 12, 4, 0, // Skip to: 172
-/* 168 */     MCD_OPC_Decode, 241, 1, 21, // Opcode: XOR_l3r
+/* 168 */     MCD_OPC_Decode, 242, 1, 21, // Opcode: XOR_l3r
 /* 172 */     MCD_OPC_CheckField, 21, 6, 63, 4, 0, // Skip to: 182
-/* 178 */     MCD_OPC_Decode, 166, 1, 23, // Opcode: MACCS_l4r
-/* 182 */     MCD_OPC_Decode, 164, 1, 24, // Opcode: LSUB_l5r
+/* 178 */     MCD_OPC_Decode, 167, 1, 23, // Opcode: MACCS_l4r
+/* 182 */     MCD_OPC_Decode, 165, 1, 24, // Opcode: LSUB_l5r
 /* 186 */     MCD_OPC_FilterValue, 2, 29, 0, // Skip to: 219
 /* 190 */     MCD_OPC_ExtractField, 11, 16,  // Inst{26-11} ...
-/* 193 */     MCD_OPC_FilterValue, 159, 251, 3, 29, 3, // Skip to: 996
+/* 193 */     MCD_OPC_FilterValue, 159, 251, 3, 30, 3, // Skip to: 997
 /* 199 */     MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 202 */     MCD_OPC_FilterValue, 0, 3, 0, // Skip to: 209
-/* 206 */     MCD_OPC_Decode, 107, 20, // Opcode: INITLR_l2r
+/* 206 */     MCD_OPC_Decode, 108, 20, // Opcode: INITLR_l2r
 /* 209 */     MCD_OPC_FilterValue, 1, 3, 0, // Skip to: 216
-/* 213 */     MCD_OPC_Decode, 98, 20, // Opcode: GETPS_l2r
-/* 216 */     MCD_OPC_Decode, 26, 21, // Opcode: ASHR_l3r
+/* 213 */     MCD_OPC_Decode, 99, 20, // Opcode: GETPS_l2r
+/* 216 */     MCD_OPC_Decode, 27, 21, // Opcode: ASHR_l3r
 /* 219 */     MCD_OPC_FilterValue, 3, 31, 0, // Skip to: 254
 /* 223 */     MCD_OPC_ExtractField, 11, 16,  // Inst{26-11} ...
-/* 226 */     MCD_OPC_FilterValue, 159, 251, 3, 252, 2, // Skip to: 996
+/* 226 */     MCD_OPC_FilterValue, 159, 251, 3, 253, 2, // Skip to: 997
 /* 232 */     MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 235 */     MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 243
-/* 239 */     MCD_OPC_Decode, 199, 1, 26, // Opcode: SETPS_l2r
+/* 239 */     MCD_OPC_Decode, 200, 1, 26, // Opcode: SETPS_l2r
 /* 243 */     MCD_OPC_FilterValue, 1, 3, 0, // Skip to: 250
-/* 247 */     MCD_OPC_Decode, 91, 20, // Opcode: GETD_l2r
-/* 250 */     MCD_OPC_Decode, 141, 1, 21, // Opcode: LDAWF_l3r
+/* 247 */     MCD_OPC_Decode, 92, 20, // Opcode: GETD_l2r
+/* 250 */     MCD_OPC_Decode, 142, 1, 21, // Opcode: LDAWF_l3r
 /* 254 */     MCD_OPC_FilterValue, 4, 32, 0, // Skip to: 290
 /* 258 */     MCD_OPC_ExtractField, 11, 16,  // Inst{26-11} ...
-/* 261 */     MCD_OPC_FilterValue, 159, 251, 3, 217, 2, // Skip to: 996
+/* 261 */     MCD_OPC_FilterValue, 159, 251, 3, 218, 2, // Skip to: 997
 /* 267 */     MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 270 */     MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 278
-/* 274 */     MCD_OPC_Decode, 233, 1, 20, // Opcode: TESTLCL_l2r
+/* 274 */     MCD_OPC_Decode, 234, 1, 20, // Opcode: TESTLCL_l2r
 /* 278 */     MCD_OPC_FilterValue, 1, 4, 0, // Skip to: 286
-/* 282 */     MCD_OPC_Decode, 207, 1, 26, // Opcode: SETTW_l2r
-/* 286 */     MCD_OPC_Decode, 134, 1, 21, // Opcode: LDAWB_l3r
-/* 290 */     MCD_OPC_FilterValue, 5, 31, 0, // Skip to: 325
+/* 282 */     MCD_OPC_Decode, 208, 1, 26, // Opcode: SETTW_l2r
+/* 286 */     MCD_OPC_Decode, 135, 1, 21, // Opcode: LDAWB_l3r
+/* 290 */     MCD_OPC_FilterValue, 5, 32, 0, // Skip to: 326
 /* 294 */     MCD_OPC_ExtractField, 11, 16,  // Inst{26-11} ...
-/* 297 */     MCD_OPC_FilterValue, 159, 251, 3, 181, 2, // Skip to: 996
+/* 297 */     MCD_OPC_FilterValue, 159, 251, 3, 182, 2, // Skip to: 997
 /* 303 */     MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 306 */     MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 314
-/* 310 */     MCD_OPC_Decode, 201, 1, 26, // Opcode: SETRDY_l2r
+/* 310 */     MCD_OPC_Decode, 202, 1, 26, // Opcode: SETRDY_l2r
 /* 314 */     MCD_OPC_FilterValue, 1, 4, 0, // Skip to: 322
-/* 318 */     MCD_OPC_Decode, 190, 1, 20, // Opcode: SETC_l2r
-/* 322 */     MCD_OPC_Decode, 127, 21, // Opcode: LDA16F_l3r
-/* 325 */     MCD_OPC_FilterValue, 6, 30, 0, // Skip to: 359
-/* 329 */     MCD_OPC_ExtractField, 11, 16,  // Inst{26-11} ...
-/* 332 */     MCD_OPC_FilterValue, 159, 251, 3, 146, 2, // Skip to: 996
-/* 338 */     MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
-/* 341 */     MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 349
-/* 345 */     MCD_OPC_Decode, 197, 1, 26, // Opcode: SETN_l2r
-/* 349 */     MCD_OPC_FilterValue, 1, 3, 0, // Skip to: 356
-/* 353 */     MCD_OPC_Decode, 97, 20, // Opcode: GETN_l2r
-/* 356 */     MCD_OPC_Decode, 126, 21, // Opcode: LDA16B_l3r
-/* 359 */     MCD_OPC_FilterValue, 7, 12, 0, // Skip to: 375
-/* 363 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 113, 2, // Skip to: 996
-/* 371 */     MCD_OPC_Decode, 172, 1, 21, // Opcode: MUL_l3r
-/* 375 */     MCD_OPC_FilterValue, 8, 11, 0, // Skip to: 390
-/* 379 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 97, 2, // Skip to: 996
-/* 387 */     MCD_OPC_Decode, 68, 21, // Opcode: DIVS_l3r
-/* 390 */     MCD_OPC_FilterValue, 9, 11, 0, // Skip to: 405
-/* 394 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 82, 2, // Skip to: 996
-/* 402 */     MCD_OPC_Decode, 69, 21, // Opcode: DIVU_l3r
-/* 405 */     MCD_OPC_FilterValue, 10, 31, 0, // Skip to: 440
-/* 409 */     MCD_OPC_ExtractField, 26, 1,  // Inst{26} ...
-/* 412 */     MCD_OPC_FilterValue, 0, 10, 0, // Skip to: 426
-/* 416 */     MCD_OPC_CheckField, 10, 6, 60, 62, 2, // Skip to: 996
-/* 422 */     MCD_OPC_Decode, 222, 1, 27, // Opcode: STWDP_lru6
-/* 426 */     MCD_OPC_FilterValue, 1, 54, 2, // Skip to: 996
-/* 430 */     MCD_OPC_CheckField, 10, 6, 60, 48, 2, // Skip to: 996
-/* 436 */     MCD_OPC_Decode, 225, 1, 27, // Opcode: STWSP_lru6
-/* 440 */     MCD_OPC_FilterValue, 11, 31, 0, // Skip to: 475
-/* 444 */     MCD_OPC_ExtractField, 26, 1,  // Inst{26} ...
-/* 447 */     MCD_OPC_FilterValue, 0, 10, 0, // Skip to: 461
-/* 451 */     MCD_OPC_CheckField, 10, 6, 60, 27, 2, // Skip to: 996
-/* 457 */     MCD_OPC_Decode, 155, 1, 27, // Opcode: LDWDP_lru6
-/* 461 */     MCD_OPC_FilterValue, 1, 19, 2, // Skip to: 996
-/* 465 */     MCD_OPC_CheckField, 10, 6, 60, 13, 2, // Skip to: 996
-/* 471 */     MCD_OPC_Decode, 158, 1, 27, // Opcode: LDWSP_lru6
-/* 475 */     MCD_OPC_FilterValue, 12, 31, 0, // Skip to: 510
-/* 479 */     MCD_OPC_ExtractField, 26, 1,  // Inst{26} ...
-/* 482 */     MCD_OPC_FilterValue, 0, 10, 0, // Skip to: 496
-/* 486 */     MCD_OPC_CheckField, 10, 6, 60, 248, 1, // Skip to: 996
-/* 492 */     MCD_OPC_Decode, 137, 1, 27, // Opcode: LDAWDP_lru6
-/* 496 */     MCD_OPC_FilterValue, 1, 240, 1, // Skip to: 996
-/* 500 */     MCD_OPC_CheckField, 10, 6, 60, 234, 1, // Skip to: 996
-/* 506 */     MCD_OPC_Decode, 142, 1, 27, // Opcode: LDAWSP_lru6
-/* 510 */     MCD_OPC_FilterValue, 13, 31, 0, // Skip to: 545
-/* 514 */     MCD_OPC_ExtractField, 26, 1,  // Inst{26} ...
-/* 517 */     MCD_OPC_FilterValue, 0, 10, 0, // Skip to: 531
-/* 521 */     MCD_OPC_CheckField, 10, 6, 60, 213, 1, // Skip to: 996
-/* 527 */     MCD_OPC_Decode, 144, 1, 27, // Opcode: LDC_lru6
-/* 531 */     MCD_OPC_FilterValue, 1, 205, 1, // Skip to: 996
-/* 535 */     MCD_OPC_CheckField, 10, 6, 60, 199, 1, // Skip to: 996
-/* 541 */     MCD_OPC_Decode, 151, 1, 27, // Opcode: LDWCP_lru6
-/* 545 */     MCD_OPC_FilterValue, 14, 94, 0, // Skip to: 643
-/* 549 */     MCD_OPC_ExtractField, 26, 1,  // Inst{26} ...
-/* 552 */     MCD_OPC_FilterValue, 0, 41, 0, // Skip to: 597
-/* 556 */     MCD_OPC_ExtractField, 10, 6,  // Inst{15-10} ...
-/* 559 */     MCD_OPC_FilterValue, 60, 177, 1, // Skip to: 996
-/* 563 */     MCD_OPC_ExtractField, 22, 4,  // Inst{25-22} ...
-/* 566 */     MCD_OPC_FilterValue, 12, 3, 0, // Skip to: 573
-/* 570 */     MCD_OPC_Decode, 48, 28, // Opcode: BRFU_lu6
-/* 573 */     MCD_OPC_FilterValue, 13, 3, 0, // Skip to: 580
-/* 577 */     MCD_OPC_Decode, 31, 28, // Opcode: BLAT_lu6
-/* 580 */     MCD_OPC_FilterValue, 14, 3, 0, // Skip to: 587
-/* 584 */     MCD_OPC_Decode, 84, 28, // Opcode: EXTDP_lu6
-/* 587 */     MCD_OPC_FilterValue, 15, 3, 0, // Skip to: 594
-/* 591 */     MCD_OPC_Decode, 116, 28, // Opcode: KCALL_lu6
-/* 594 */     MCD_OPC_Decode, 46, 29, // Opcode: BRFT_lru6
-/* 597 */     MCD_OPC_FilterValue, 1, 139, 1, // Skip to: 996
-/* 601 */     MCD_OPC_ExtractField, 10, 6,  // Inst{15-10} ...
-/* 604 */     MCD_OPC_FilterValue, 60, 132, 1, // Skip to: 996
-/* 608 */     MCD_OPC_ExtractField, 22, 4,  // Inst{25-22} ...
-/* 611 */     MCD_OPC_FilterValue, 12, 3, 0, // Skip to: 618
-/* 615 */     MCD_OPC_Decode, 42, 30, // Opcode: BRBU_lu6
-/* 618 */     MCD_OPC_FilterValue, 13, 3, 0, // Skip to: 625
-/* 622 */     MCD_OPC_Decode, 80, 28, // Opcode: ENTSP_lu6
-/* 625 */     MCD_OPC_FilterValue, 14, 3, 0, // Skip to: 632
-/* 629 */     MCD_OPC_Decode, 86, 28, // Opcode: EXTSP_lu6
-/* 632 */     MCD_OPC_FilterValue, 15, 4, 0, // Skip to: 640
-/* 636 */     MCD_OPC_Decode, 185, 1, 28, // Opcode: RETSP_lu6
-/* 640 */     MCD_OPC_Decode, 40, 31, // Opcode: BRBT_lru6
-/* 643 */     MCD_OPC_FilterValue, 15, 81, 0, // Skip to: 728
-/* 647 */     MCD_OPC_ExtractField, 26, 1,  // Inst{26} ...
-/* 650 */     MCD_OPC_FilterValue, 0, 42, 0, // Skip to: 696
-/* 654 */     MCD_OPC_ExtractField, 10, 6,  // Inst{15-10} ...
-/* 657 */     MCD_OPC_FilterValue, 60, 79, 1, // Skip to: 996
-/* 661 */     MCD_OPC_ExtractField, 22, 4,  // Inst{25-22} ...
-/* 664 */     MCD_OPC_FilterValue, 12, 3, 0, // Skip to: 671
-/* 668 */     MCD_OPC_Decode, 60, 28, // Opcode: CLRSR_lu6
-/* 671 */     MCD_OPC_FilterValue, 13, 4, 0, // Skip to: 679
-/* 675 */     MCD_OPC_Decode, 205, 1, 28, // Opcode: SETSR_lu6
-/* 679 */     MCD_OPC_FilterValue, 14, 3, 0, // Skip to: 686
-/* 683 */     MCD_OPC_Decode, 118, 28, // Opcode: KENTSP_lu6
-/* 686 */     MCD_OPC_FilterValue, 15, 3, 0, // Skip to: 693
-/* 690 */     MCD_OPC_Decode, 120, 28, // Opcode: KRESTSP_lu6
-/* 693 */     MCD_OPC_Decode, 44, 29, // Opcode: BRFF_lru6
-/* 696 */     MCD_OPC_FilterValue, 1, 40, 1, // Skip to: 996
-/* 700 */     MCD_OPC_ExtractField, 10, 6,  // Inst{15-10} ...
-/* 703 */     MCD_OPC_FilterValue, 60, 33, 1, // Skip to: 996
-/* 707 */     MCD_OPC_ExtractField, 22, 4,  // Inst{25-22} ...
-/* 710 */     MCD_OPC_FilterValue, 12, 3, 0, // Skip to: 717
-/* 714 */     MCD_OPC_Decode, 100, 28, // Opcode: GETSR_lu6
-/* 717 */     MCD_OPC_FilterValue, 13, 4, 0, // Skip to: 725
-/* 721 */     MCD_OPC_Decode, 135, 1, 28, // Opcode: LDAWCP_lu6
-/* 725 */     MCD_OPC_Decode, 38, 31, // Opcode: BRBF_lru6
-/* 728 */     MCD_OPC_FilterValue, 16, 12, 0, // Skip to: 744
-/* 732 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 0, 1, // Skip to: 996
-/* 740 */     MCD_OPC_Decode, 216, 1, 21, // Opcode: ST16_l3r
-/* 744 */     MCD_OPC_FilterValue, 17, 12, 0, // Skip to: 760
-/* 748 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 240, 0, // Skip to: 996
-/* 756 */     MCD_OPC_Decode, 217, 1, 21, // Opcode: ST8_l3r
-/* 760 */     MCD_OPC_FilterValue, 18, 31, 0, // Skip to: 795
-/* 764 */     MCD_OPC_ExtractField, 11, 16,  // Inst{26-11} ...
-/* 767 */     MCD_OPC_FilterValue, 159, 251, 3, 3, 0, // Skip to: 776
-/* 773 */     MCD_OPC_Decode, 25, 32, // Opcode: ASHR_l2rus
-/* 776 */     MCD_OPC_FilterValue, 191, 251, 3, 4, 0, // Skip to: 786
-/* 782 */     MCD_OPC_Decode, 178, 1, 32, // Opcode: OUTPW_l2rus
-/* 786 */     MCD_OPC_FilterValue, 223, 251, 3, 204, 0, // Skip to: 996
-/* 792 */     MCD_OPC_Decode, 110, 32, // Opcode: INPW_l2rus
-/* 795 */     MCD_OPC_FilterValue, 19, 12, 0, // Skip to: 811
-/* 799 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 189, 0, // Skip to: 996
-/* 807 */     MCD_OPC_Decode, 140, 1, 33, // Opcode: LDAWF_l2rus
-/* 811 */     MCD_OPC_FilterValue, 20, 12, 0, // Skip to: 827
-/* 815 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 173, 0, // Skip to: 996
-/* 823 */     MCD_OPC_Decode, 133, 1, 33, // Opcode: LDAWB_l2rus
-/* 827 */     MCD_OPC_FilterValue, 21, 11, 0, // Skip to: 842
-/* 831 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 157, 0, // Skip to: 996
-/* 839 */     MCD_OPC_Decode, 64, 34, // Opcode: CRC_l3r
-/* 842 */     MCD_OPC_FilterValue, 24, 12, 0, // Skip to: 858
-/* 846 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 142, 0, // Skip to: 996
-/* 854 */     MCD_OPC_Decode, 183, 1, 21, // Opcode: REMS_l3r
-/* 858 */     MCD_OPC_FilterValue, 25, 12, 0, // Skip to: 874
-/* 862 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 126, 0, // Skip to: 996
-/* 870 */     MCD_OPC_Decode, 184, 1, 21, // Opcode: REMU_l3r
-/* 874 */     MCD_OPC_FilterValue, 26, 29, 0, // Skip to: 907
-/* 878 */     MCD_OPC_ExtractField, 26, 1,  // Inst{26} ...
-/* 881 */     MCD_OPC_FilterValue, 0, 9, 0, // Skip to: 894
-/* 885 */     MCD_OPC_CheckField, 10, 6, 60, 105, 0, // Skip to: 996
-/* 891 */     MCD_OPC_Decode, 36, 35, // Opcode: BLRF_lu10
-/* 894 */     MCD_OPC_FilterValue, 1, 98, 0, // Skip to: 996
-/* 898 */     MCD_OPC_CheckField, 10, 6, 60, 92, 0, // Skip to: 996
-/* 904 */     MCD_OPC_Decode, 34, 36, // Opcode: BLRB_lu10
-/* 907 */     MCD_OPC_FilterValue, 27, 31, 0, // Skip to: 942
-/* 911 */     MCD_OPC_ExtractField, 26, 1,  // Inst{26} ...
-/* 914 */     MCD_OPC_FilterValue, 0, 10, 0, // Skip to: 928
-/* 918 */     MCD_OPC_CheckField, 10, 6, 60, 72, 0, // Skip to: 996
-/* 924 */     MCD_OPC_Decode, 130, 1, 35, // Opcode: LDAPF_lu10
-/* 928 */     MCD_OPC_FilterValue, 1, 64, 0, // Skip to: 996
-/* 932 */     MCD_OPC_CheckField, 10, 6, 60, 58, 0, // Skip to: 996
-/* 938 */     MCD_OPC_Decode, 128, 1, 36, // Opcode: LDAPB_lu10
-/* 942 */     MCD_OPC_FilterValue, 28, 30, 0, // Skip to: 976
-/* 946 */     MCD_OPC_ExtractField, 26, 1,  // Inst{26} ...
-/* 949 */     MCD_OPC_FilterValue, 0, 9, 0, // Skip to: 962
-/* 953 */     MCD_OPC_CheckField, 10, 6, 60, 37, 0, // Skip to: 996
-/* 959 */     MCD_OPC_Decode, 29, 35, // Opcode: BLACP_lu10
-/* 962 */     MCD_OPC_FilterValue, 1, 30, 0, // Skip to: 996
-/* 966 */     MCD_OPC_CheckField, 10, 6, 60, 24, 0, // Skip to: 996
-/* 972 */     MCD_OPC_Decode, 152, 1, 35, // Opcode: LDWCP_lu10
-/* 976 */     MCD_OPC_FilterValue, 29, 16, 0, // Skip to: 996
-/* 980 */     MCD_OPC_CheckField, 26, 1, 0, 10, 0, // Skip to: 996
-/* 986 */     MCD_OPC_CheckField, 10, 6, 60, 4, 0, // Skip to: 996
-/* 992 */     MCD_OPC_Decode, 191, 1, 29, // Opcode: SETC_lru6
-/* 996 */     MCD_OPC_Fail,
+/* 318 */     MCD_OPC_Decode, 191, 1, 20, // Opcode: SETC_l2r
+/* 322 */     MCD_OPC_Decode, 128, 1, 21, // Opcode: LDA16F_l3r
+/* 326 */     MCD_OPC_FilterValue, 6, 30, 0, // Skip to: 360
+/* 330 */     MCD_OPC_ExtractField, 11, 16,  // Inst{26-11} ...
+/* 333 */     MCD_OPC_FilterValue, 159, 251, 3, 146, 2, // Skip to: 997
+/* 339 */     MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
+/* 342 */     MCD_OPC_FilterValue, 0, 4, 0, // Skip to: 350
+/* 346 */     MCD_OPC_Decode, 198, 1, 26, // Opcode: SETN_l2r
+/* 350 */     MCD_OPC_FilterValue, 1, 3, 0, // Skip to: 357
+/* 354 */     MCD_OPC_Decode, 98, 20, // Opcode: GETN_l2r
+/* 357 */     MCD_OPC_Decode, 127, 21, // Opcode: LDA16B_l3r
+/* 360 */     MCD_OPC_FilterValue, 7, 12, 0, // Skip to: 376
+/* 364 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 113, 2, // Skip to: 997
+/* 372 */     MCD_OPC_Decode, 173, 1, 21, // Opcode: MUL_l3r
+/* 376 */     MCD_OPC_FilterValue, 8, 11, 0, // Skip to: 391
+/* 380 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 97, 2, // Skip to: 997
+/* 388 */     MCD_OPC_Decode, 69, 21, // Opcode: DIVS_l3r
+/* 391 */     MCD_OPC_FilterValue, 9, 11, 0, // Skip to: 406
+/* 395 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 82, 2, // Skip to: 997
+/* 403 */     MCD_OPC_Decode, 70, 21, // Opcode: DIVU_l3r
+/* 406 */     MCD_OPC_FilterValue, 10, 31, 0, // Skip to: 441
+/* 410 */     MCD_OPC_ExtractField, 26, 1,  // Inst{26} ...
+/* 413 */     MCD_OPC_FilterValue, 0, 10, 0, // Skip to: 427
+/* 417 */     MCD_OPC_CheckField, 10, 6, 60, 62, 2, // Skip to: 997
+/* 423 */     MCD_OPC_Decode, 223, 1, 27, // Opcode: STWDP_lru6
+/* 427 */     MCD_OPC_FilterValue, 1, 54, 2, // Skip to: 997
+/* 431 */     MCD_OPC_CheckField, 10, 6, 60, 48, 2, // Skip to: 997
+/* 437 */     MCD_OPC_Decode, 226, 1, 27, // Opcode: STWSP_lru6
+/* 441 */     MCD_OPC_FilterValue, 11, 31, 0, // Skip to: 476
+/* 445 */     MCD_OPC_ExtractField, 26, 1,  // Inst{26} ...
+/* 448 */     MCD_OPC_FilterValue, 0, 10, 0, // Skip to: 462
+/* 452 */     MCD_OPC_CheckField, 10, 6, 60, 27, 2, // Skip to: 997
+/* 458 */     MCD_OPC_Decode, 156, 1, 27, // Opcode: LDWDP_lru6
+/* 462 */     MCD_OPC_FilterValue, 1, 19, 2, // Skip to: 997
+/* 466 */     MCD_OPC_CheckField, 10, 6, 60, 13, 2, // Skip to: 997
+/* 472 */     MCD_OPC_Decode, 159, 1, 27, // Opcode: LDWSP_lru6
+/* 476 */     MCD_OPC_FilterValue, 12, 31, 0, // Skip to: 511
+/* 480 */     MCD_OPC_ExtractField, 26, 1,  // Inst{26} ...
+/* 483 */     MCD_OPC_FilterValue, 0, 10, 0, // Skip to: 497
+/* 487 */     MCD_OPC_CheckField, 10, 6, 60, 248, 1, // Skip to: 997
+/* 493 */     MCD_OPC_Decode, 138, 1, 27, // Opcode: LDAWDP_lru6
+/* 497 */     MCD_OPC_FilterValue, 1, 240, 1, // Skip to: 997
+/* 501 */     MCD_OPC_CheckField, 10, 6, 60, 234, 1, // Skip to: 997
+/* 507 */     MCD_OPC_Decode, 143, 1, 27, // Opcode: LDAWSP_lru6
+/* 511 */     MCD_OPC_FilterValue, 13, 31, 0, // Skip to: 546
+/* 515 */     MCD_OPC_ExtractField, 26, 1,  // Inst{26} ...
+/* 518 */     MCD_OPC_FilterValue, 0, 10, 0, // Skip to: 532
+/* 522 */     MCD_OPC_CheckField, 10, 6, 60, 213, 1, // Skip to: 997
+/* 528 */     MCD_OPC_Decode, 145, 1, 27, // Opcode: LDC_lru6
+/* 532 */     MCD_OPC_FilterValue, 1, 205, 1, // Skip to: 997
+/* 536 */     MCD_OPC_CheckField, 10, 6, 60, 199, 1, // Skip to: 997
+/* 542 */     MCD_OPC_Decode, 152, 1, 27, // Opcode: LDWCP_lru6
+/* 546 */     MCD_OPC_FilterValue, 14, 94, 0, // Skip to: 644
+/* 550 */     MCD_OPC_ExtractField, 26, 1,  // Inst{26} ...
+/* 553 */     MCD_OPC_FilterValue, 0, 41, 0, // Skip to: 598
+/* 557 */     MCD_OPC_ExtractField, 10, 6,  // Inst{15-10} ...
+/* 560 */     MCD_OPC_FilterValue, 60, 177, 1, // Skip to: 997
+/* 564 */     MCD_OPC_ExtractField, 22, 4,  // Inst{25-22} ...
+/* 567 */     MCD_OPC_FilterValue, 12, 3, 0, // Skip to: 574
+/* 571 */     MCD_OPC_Decode, 49, 28, // Opcode: BRFU_lu6
+/* 574 */     MCD_OPC_FilterValue, 13, 3, 0, // Skip to: 581
+/* 578 */     MCD_OPC_Decode, 32, 28, // Opcode: BLAT_lu6
+/* 581 */     MCD_OPC_FilterValue, 14, 3, 0, // Skip to: 588
+/* 585 */     MCD_OPC_Decode, 85, 28, // Opcode: EXTDP_lu6
+/* 588 */     MCD_OPC_FilterValue, 15, 3, 0, // Skip to: 595
+/* 592 */     MCD_OPC_Decode, 117, 28, // Opcode: KCALL_lu6
+/* 595 */     MCD_OPC_Decode, 47, 29, // Opcode: BRFT_lru6
+/* 598 */     MCD_OPC_FilterValue, 1, 139, 1, // Skip to: 997
+/* 602 */     MCD_OPC_ExtractField, 10, 6,  // Inst{15-10} ...
+/* 605 */     MCD_OPC_FilterValue, 60, 132, 1, // Skip to: 997
+/* 609 */     MCD_OPC_ExtractField, 22, 4,  // Inst{25-22} ...
+/* 612 */     MCD_OPC_FilterValue, 12, 3, 0, // Skip to: 619
+/* 616 */     MCD_OPC_Decode, 43, 30, // Opcode: BRBU_lu6
+/* 619 */     MCD_OPC_FilterValue, 13, 3, 0, // Skip to: 626
+/* 623 */     MCD_OPC_Decode, 81, 28, // Opcode: ENTSP_lu6
+/* 626 */     MCD_OPC_FilterValue, 14, 3, 0, // Skip to: 633
+/* 630 */     MCD_OPC_Decode, 87, 28, // Opcode: EXTSP_lu6
+/* 633 */     MCD_OPC_FilterValue, 15, 4, 0, // Skip to: 641
+/* 637 */     MCD_OPC_Decode, 186, 1, 28, // Opcode: RETSP_lu6
+/* 641 */     MCD_OPC_Decode, 41, 31, // Opcode: BRBT_lru6
+/* 644 */     MCD_OPC_FilterValue, 15, 81, 0, // Skip to: 729
+/* 648 */     MCD_OPC_ExtractField, 26, 1,  // Inst{26} ...
+/* 651 */     MCD_OPC_FilterValue, 0, 42, 0, // Skip to: 697
+/* 655 */     MCD_OPC_ExtractField, 10, 6,  // Inst{15-10} ...
+/* 658 */     MCD_OPC_FilterValue, 60, 79, 1, // Skip to: 997
+/* 662 */     MCD_OPC_ExtractField, 22, 4,  // Inst{25-22} ...
+/* 665 */     MCD_OPC_FilterValue, 12, 3, 0, // Skip to: 672
+/* 669 */     MCD_OPC_Decode, 61, 28, // Opcode: CLRSR_lu6
+/* 672 */     MCD_OPC_FilterValue, 13, 4, 0, // Skip to: 680
+/* 676 */     MCD_OPC_Decode, 206, 1, 28, // Opcode: SETSR_lu6
+/* 680 */     MCD_OPC_FilterValue, 14, 3, 0, // Skip to: 687
+/* 684 */     MCD_OPC_Decode, 119, 28, // Opcode: KENTSP_lu6
+/* 687 */     MCD_OPC_FilterValue, 15, 3, 0, // Skip to: 694
+/* 691 */     MCD_OPC_Decode, 121, 28, // Opcode: KRESTSP_lu6
+/* 694 */     MCD_OPC_Decode, 45, 29, // Opcode: BRFF_lru6
+/* 697 */     MCD_OPC_FilterValue, 1, 40, 1, // Skip to: 997
+/* 701 */     MCD_OPC_ExtractField, 10, 6,  // Inst{15-10} ...
+/* 704 */     MCD_OPC_FilterValue, 60, 33, 1, // Skip to: 997
+/* 708 */     MCD_OPC_ExtractField, 22, 4,  // Inst{25-22} ...
+/* 711 */     MCD_OPC_FilterValue, 12, 3, 0, // Skip to: 718
+/* 715 */     MCD_OPC_Decode, 101, 28, // Opcode: GETSR_lu6
+/* 718 */     MCD_OPC_FilterValue, 13, 4, 0, // Skip to: 726
+/* 722 */     MCD_OPC_Decode, 136, 1, 28, // Opcode: LDAWCP_lu6
+/* 726 */     MCD_OPC_Decode, 39, 31, // Opcode: BRBF_lru6
+/* 729 */     MCD_OPC_FilterValue, 16, 12, 0, // Skip to: 745
+/* 733 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 0, 1, // Skip to: 997
+/* 741 */     MCD_OPC_Decode, 217, 1, 21, // Opcode: ST16_l3r
+/* 745 */     MCD_OPC_FilterValue, 17, 12, 0, // Skip to: 761
+/* 749 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 240, 0, // Skip to: 997
+/* 757 */     MCD_OPC_Decode, 218, 1, 21, // Opcode: ST8_l3r
+/* 761 */     MCD_OPC_FilterValue, 18, 31, 0, // Skip to: 796
+/* 765 */     MCD_OPC_ExtractField, 11, 16,  // Inst{26-11} ...
+/* 768 */     MCD_OPC_FilterValue, 159, 251, 3, 3, 0, // Skip to: 777
+/* 774 */     MCD_OPC_Decode, 26, 32, // Opcode: ASHR_l2rus
+/* 777 */     MCD_OPC_FilterValue, 191, 251, 3, 4, 0, // Skip to: 787
+/* 783 */     MCD_OPC_Decode, 179, 1, 32, // Opcode: OUTPW_l2rus
+/* 787 */     MCD_OPC_FilterValue, 223, 251, 3, 204, 0, // Skip to: 997
+/* 793 */     MCD_OPC_Decode, 111, 32, // Opcode: INPW_l2rus
+/* 796 */     MCD_OPC_FilterValue, 19, 12, 0, // Skip to: 812
+/* 800 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 189, 0, // Skip to: 997
+/* 808 */     MCD_OPC_Decode, 141, 1, 33, // Opcode: LDAWF_l2rus
+/* 812 */     MCD_OPC_FilterValue, 20, 12, 0, // Skip to: 828
+/* 816 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 173, 0, // Skip to: 997
+/* 824 */     MCD_OPC_Decode, 134, 1, 33, // Opcode: LDAWB_l2rus
+/* 828 */     MCD_OPC_FilterValue, 21, 11, 0, // Skip to: 843
+/* 832 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 157, 0, // Skip to: 997
+/* 840 */     MCD_OPC_Decode, 65, 34, // Opcode: CRC_l3r
+/* 843 */     MCD_OPC_FilterValue, 24, 12, 0, // Skip to: 859
+/* 847 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 142, 0, // Skip to: 997
+/* 855 */     MCD_OPC_Decode, 184, 1, 21, // Opcode: REMS_l3r
+/* 859 */     MCD_OPC_FilterValue, 25, 12, 0, // Skip to: 875
+/* 863 */     MCD_OPC_CheckField, 11, 16, 159, 251, 3, 126, 0, // Skip to: 997
+/* 871 */     MCD_OPC_Decode, 185, 1, 21, // Opcode: REMU_l3r
+/* 875 */     MCD_OPC_FilterValue, 26, 29, 0, // Skip to: 908
+/* 879 */     MCD_OPC_ExtractField, 26, 1,  // Inst{26} ...
+/* 882 */     MCD_OPC_FilterValue, 0, 9, 0, // Skip to: 895
+/* 886 */     MCD_OPC_CheckField, 10, 6, 60, 105, 0, // Skip to: 997
+/* 892 */     MCD_OPC_Decode, 37, 35, // Opcode: BLRF_lu10
+/* 895 */     MCD_OPC_FilterValue, 1, 98, 0, // Skip to: 997
+/* 899 */     MCD_OPC_CheckField, 10, 6, 60, 92, 0, // Skip to: 997
+/* 905 */     MCD_OPC_Decode, 35, 36, // Opcode: BLRB_lu10
+/* 908 */     MCD_OPC_FilterValue, 27, 31, 0, // Skip to: 943
+/* 912 */     MCD_OPC_ExtractField, 26, 1,  // Inst{26} ...
+/* 915 */     MCD_OPC_FilterValue, 0, 10, 0, // Skip to: 929
+/* 919 */     MCD_OPC_CheckField, 10, 6, 60, 72, 0, // Skip to: 997
+/* 925 */     MCD_OPC_Decode, 131, 1, 35, // Opcode: LDAPF_lu10
+/* 929 */     MCD_OPC_FilterValue, 1, 64, 0, // Skip to: 997
+/* 933 */     MCD_OPC_CheckField, 10, 6, 60, 58, 0, // Skip to: 997
+/* 939 */     MCD_OPC_Decode, 129, 1, 36, // Opcode: LDAPB_lu10
+/* 943 */     MCD_OPC_FilterValue, 28, 30, 0, // Skip to: 977
+/* 947 */     MCD_OPC_ExtractField, 26, 1,  // Inst{26} ...
+/* 950 */     MCD_OPC_FilterValue, 0, 9, 0, // Skip to: 963
+/* 954 */     MCD_OPC_CheckField, 10, 6, 60, 37, 0, // Skip to: 997
+/* 960 */     MCD_OPC_Decode, 30, 35, // Opcode: BLACP_lu10
+/* 963 */     MCD_OPC_FilterValue, 1, 30, 0, // Skip to: 997
+/* 967 */     MCD_OPC_CheckField, 10, 6, 60, 24, 0, // Skip to: 997
+/* 973 */     MCD_OPC_Decode, 153, 1, 35, // Opcode: LDWCP_lu10
+/* 977 */     MCD_OPC_FilterValue, 29, 16, 0, // Skip to: 997
+/* 981 */     MCD_OPC_CheckField, 26, 1, 0, 10, 0, // Skip to: 997
+/* 987 */     MCD_OPC_CheckField, 10, 6, 60, 4, 0, // Skip to: 997
+/* 993 */     MCD_OPC_Decode, 192, 1, 29, // Opcode: SETC_lru6
+/* 997 */     MCD_OPC_Fail,
   0
 };
 

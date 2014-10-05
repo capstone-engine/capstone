@@ -16,7 +16,7 @@
 
 #ifdef CAPSTONE_HAS_MIPS
 
-#include <inttypes.h>
+#include "../../inttypes.h"
 #include <stdlib.h>
 #include <stdio.h>	// debug
 #include <string.h>
@@ -152,49 +152,16 @@ static void printRegName(SStream *OS, unsigned RegNo)
 	SStream_concat(OS, "$%s", getRegisterName(RegNo));
 }
 
-static void printSaveRestore(MCInst *MI, SStream *O)
-{
-	unsigned i, e;
-	for (i = 0, e = MCInst_getNumOperands(MI); i != e; ++i) {
-		if (i != 0)
-			SStream_concat0(O, ", ");
-		if (MCOperand_isReg(MCInst_getOperand(MI, i)))
-			printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, i)));
-		else
-			printUnsignedImm(MI, i, O);
-	}
-}
-
 void Mips_printInst(MCInst *MI, SStream *O, void *info)
 {
 	char *mnem;
 
 	switch (MCInst_getOpcode(MI)) {
 		default: break;
-		case Mips_RDHWR:
-		case Mips_RDHWR64:
-			SStream_concat0(O, ".set\tpush\n");
-			SStream_concat0(O, ".set\tmips32r2\n");
-			break;
 		case Mips_Save16:
-			SStream_concat0(O, "\tsave\t");
-			printSaveRestore(MI, O);
-			SStream_concat0(O, " # 16 bit inst\n");
-			return;
 		case Mips_SaveX16:
-			SStream_concat0(O, "\tsave\t");
-			printSaveRestore(MI, O);
-			SStream_concat0(O, "\n");
-			return;
 		case Mips_Restore16:
-			SStream_concat0(O, "\trestore\t");
-			printSaveRestore(MI, O);
-			SStream_concat0(O, " # 16 bit inst\n");
-			return;
 		case Mips_RestoreX16:
-			SStream_concat0(O, "\trestore\t");
-			printSaveRestore(MI, O);
-			SStream_concat0(O, "\n");
 			return;
 	}
 
@@ -211,14 +178,27 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
 		MCInst_setOpcodePub(MI, Mips_map_insn(mnem));
 		cs_mem_free(mnem);
 	}
+}
 
-	switch (MCInst_getOpcode(MI)) {
-		default: break;
-		case Mips_RDHWR:
-		case Mips_RDHWR64:
-			SStream_concat0(O, "\n.set\tpop");
-			break;
+// check to see if @id is opcode of a relative branch instruction
+static bool relativeBranch(unsigned int id)
+{
+	static unsigned int branchIns[] = {
+		Mips_BEQ, Mips_BC1F, Mips_BGEZ, Mips_BGEZAL, Mips_BGTZ,
+		Mips_BLEZ, Mips_BLTZ, Mips_BLTZAL, Mips_BNE, Mips_BC1T,
+		Mips_BEQL, Mips_BGEZALL, Mips_BGEZL, Mips_BGTZL, Mips_BLEZL,
+		Mips_BLTZALL, Mips_BLTZL, Mips_BNEL, Mips_BC1F, Mips_BC1FL,
+		Mips_BC1TL, Mips_BC0F,
+	};
+	int i;
+
+	for(i = 0; i < ARR_SIZE(branchIns); i++) {
+		if (id == branchIns[i])
+			return true;
 	}
+
+	// not found
+	return false;
 }
 
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
@@ -237,9 +217,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				MI->flat_insn->detail->mips.op_count++;
 			}
 		}
-	}
-
-	if (MCOperand_isImm(Op)) {
+	} else if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op);
 		if (MI->csh->doing_mem) {
 			if (imm) {	// only print Imm offset if it is not 0
@@ -258,6 +236,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			if (MI->csh->detail)
 				MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].mem.disp = imm;
 		} else {
+			if (relativeBranch(MI->Opcode)) {
+				imm += MI->address;
+			}
+
 			if (imm >= 0) {
 				if (imm > HEX_THRESHOLD)
 					SStream_concat(O, "0x%"PRIx64, imm);
@@ -385,6 +367,11 @@ static char *printAlias(MCInst *MI, SStream *OS)
 			if (isReg(MI, 1, Mips_ZERO))
 				return printAlias2("beqz", MI, 0, 2, OS);
 			return NULL;
+		case Mips_BEQL:
+			// beql $r0, $zero, $L2 => beqzl $r0, $L2
+			if (isReg(MI, 0, Mips_ZERO) && isReg(MI, 1, Mips_ZERO))
+				return printAlias2("beqzl", MI, 0, 2, OS);
+			return NULL;
 		case Mips_BEQ64:
 			// beq $r0, $zero, $L2 => beqz $r0, $L2
 			if (isReg(MI, 1, Mips_ZERO_64))
@@ -394,6 +381,11 @@ static char *printAlias(MCInst *MI, SStream *OS)
 			// bne $r0, $zero, $L2 => bnez $r0, $L2
 			if (isReg(MI, 1, Mips_ZERO))
 				return printAlias2("bnez", MI, 0, 2, OS);
+			return NULL;
+		case Mips_BNEL:
+			// bnel $r0, $zero, $L2 => bnezl $r0, $L2
+			if (isReg(MI, 1, Mips_ZERO))
+				return printAlias2("bnezl", MI, 0, 2, OS);
 			return NULL;
 		case Mips_BNE64:
 			// bne $r0, $zero, $L2 => bnez $r0, $L2

@@ -12,10 +12,12 @@ fi
 
 case "$1" in
   "") java -classpath ${JNA}:. Test ;;
+  "test") java -classpath ${JNA}:. Test ;;
   "arm") java -classpath ${JNA}:. TestArm ;;
   "arm64") java -classpath ${JNA}:. TestArm64 ;;
   "mips") java -classpath ${JNA}:. TestMips ;;
   "x86") java -classpath ${JNA}:. TestX86 ;;
+  "xcore") java -classpath ${JNA}:. TestXcore; ;;
   "ppc") java -classpath ${JNA}:. TestPpc ;;
   "sparc") java -classpath ${JNA}:. TestSparc ;;
   "systemz") java -classpath ${JNA}:. TestSystemz ;;

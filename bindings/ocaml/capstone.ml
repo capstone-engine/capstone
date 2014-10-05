@@ -1,5 +1,5 @@
-(* Capstone Disassembler Engine
- * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> *)
+(* Capstone Disassembly Engine
+ * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 *)
 
 open Arm
 open Arm64
@@ -20,8 +20,6 @@ type arch =
   | CS_ARCH_SPARC
   | CS_ARCH_SYSZ
   | CS_ARCH_XCORE
-  | CS_ARCH_MAX
-  | CS_ARCH_ALL
 
 type mode =
   |	CS_MODE_LITTLE_ENDIAN	(* little-endian mode (default mode) *)
@@ -30,9 +28,13 @@ type mode =
   |	CS_MODE_32			(* 32-bit mode (for X86, Mips) *)
   |	CS_MODE_64			(* 64-bit mode (for X86, Mips) *)
   |	CS_MODE_THUMB		(* ARM's Thumb mode, including Thumb-2 *)
+  |	CS_MODE_MCLASS		(* ARM's MClass mode *)
   |	CS_MODE_MICRO		(* MicroMips mode (MIPS architecture) *)
   |	CS_MODE_N64			(* Nintendo-64 mode (MIPS architecture) *)
-  |	CS_MODE_V9		(* SparcV9 mode (Sparc architecture) *)
+  |	CS_MODE_MIPS3		(* Mips3 mode (MIPS architecture) *)
+  |	CS_MODE_MIPS32R6	(* Mips32-R6 mode (MIPS architecture) *)
+  |	CS_MODE_MIPSGP64	(* MipsGP64 mode (MIPS architecture) *)
+  |	CS_MODE_V9			(* SparcV9 mode (Sparc architecture) *)
   |	CS_MODE_BIG_ENDIAN	(* big-endian mode *)
 
 
@@ -45,13 +47,13 @@ type opt_type =
   |	CS_OPT_SKIPDATA_SETUP 	(* Setup user-defined function for SKIPDATA option *)
 
 
-type opt_value = 
-  |	CS_OPT_OFF 		(* Turn OFF an option - default option of CS_OPT_DETAIL, CS_OPT_SKIPDATA. *)
-  |	CS_OPT_ON  		(* Turn ON an option (CS_OPT_DETAIL, CS_OPT_SKIPDATA). *)
-  |	CS_OPT_SYNTAX_DEFAULT 	(* Default asm syntax (CS_OPT_SYNTAX). *)
-  |	CS_OPT_SYNTAX_INTEL 	(* X86 Intel asm syntax - default on X86 (CS_OPT_SYNTAX). *)
-  |	CS_OPT_SYNTAX_ATT 	(* X86 ATT asm syntax (CS_OPT_SYNTAX). *)
-  |	CS_OPT_SYNTAX_NOREGNAME	(* Prints register name with only number (CS_OPT_SYNTAX) *)
+let _CS_OPT_OFF = 0L;; (* Turn OFF an option - default option of CS_OPT_DETAIL, CS_OPT_SKIPDATA. *)
+let _CS_OPT_ON = 3L;;  (* Turn ON an option (CS_OPT_DETAIL, CS_OPT_SKIPDATA). *)
+let _CS_OPT_SYNTAX_DEFAULT = 0L;; (* Default asm syntax (CS_OPT_SYNTAX). *)
+let _CS_OPT_SYNTAX_INTEL = 1L;; (* X86 Intel asm syntax - default on X86 (CS_OPT_SYNTAX). *)
+let _CS_OPT_SYNTAX_ATT = 2L;; (* X86 ATT asm syntax (CS_OPT_SYNTAX). *)
+let _CS_OPT_SYNTAX_NOREGNAME = 3L;; (* Prints register name with only number (CS_OPT_SYNTAX) *)
+
 
 type cs_arch = 
 	| CS_INFO_ARM of cs_arm
@@ -64,6 +66,11 @@ type cs_arch =
 	| CS_INFO_XCORE of cs_xcore
 
 
+type csh = {
+	h: Int64.t;
+	a: arch;
+}
+
 type cs_insn0 = {
 	id: int;
 	address: int;
@@ -72,27 +79,60 @@ type cs_insn0 = {
 	mnemonic: string;
 	op_str: string;
 	regs_read: int array;
-	regs_read_count: int;
 	regs_write: int array;
-	regs_write_count: int;
 	groups: int array;
-	groups_count: int;
 	arch: cs_arch;
 }
 
-external cs_open: arch -> mode list -> Int64.t option = "ocaml_cs_open"
-external cs_disasm_quick: arch -> mode list -> string -> Int64.t -> Int64.t -> cs_insn0 list = "ocaml_cs_disasm_quick"
-external cs_disasm_dyn: arch -> Int64.t -> string -> Int64.t -> Int64.t -> cs_insn0 list = "ocaml_cs_disasm_dyn"
-external cs_reg_name: Int64.t -> int -> string = "cs_register_name"
-external cs_insn_name: Int64.t -> int -> string = "cs_instruction_name"
+external _cs_open: arch -> mode list -> Int64.t option = "ocaml_open"
+external cs_disasm_quick: arch -> mode list -> string -> Int64.t -> Int64.t -> cs_insn0 list = "ocaml_cs_disasm"
+external _cs_disasm_internal: arch -> Int64.t -> string -> Int64.t -> Int64.t -> cs_insn0 list = "ocaml_cs_disasm_internal"
+external _cs_reg_name: Int64.t -> int -> string = "ocaml_register_name"
+external _cs_insn_name: Int64.t -> int -> string = "ocaml_instruction_name"
+external _cs_group_name: Int64.t -> int -> string = "ocaml_group_name"
+external cs_version: unit -> int = "ocaml_version"
+external _cs_option: Int64.t -> opt_type -> Int64.t -> int = "ocaml_option"
+external _cs_close: Int64.t -> int = "ocaml_close"
+
+
+let cs_open _arch _mode: csh = (
+	let _handle = _cs_open _arch _mode in (
+	match _handle with
+	| None -> { h = 0L; a = _arch }
+	| Some v -> { h = v; a = _arch }
+	);
+);;
+
+let cs_close handle = (
+	_cs_close handle.h;
+)
+
+let cs_option handle opt value = (
+	_cs_option handle.h opt value;
+);;
+
+let cs_disasm handle code address count = (
+	_cs_disasm_internal handle.a handle.h code address count;
+);;
+
+let cs_reg_name handle id = (
+	_cs_reg_name handle.h id;
+);;
+
+let cs_insn_name handle id = (
+	_cs_insn_name handle.h id;
+);;
+
+let cs_group_name handle id = (
+	_cs_group_name handle.h id;
+);;
 
 class cs_insn c a =
 	let csh = c in
-	let (id, address, size, bytes, mnemonic, op_str, regs_read, regs_read_count,
-        regs_write, regs_write_count, groups, groups_count, arch) =
+	let (id, address, size, bytes, mnemonic, op_str, regs_read,
+        regs_write, groups, arch) =
         (a.id, a.address, a.size, a.bytes, a.mnemonic, a.op_str,
-        a.regs_read, a.regs_read_count, a.regs_write, a.regs_write_count,
-		a.groups, a.groups_count, a.arch) in
+        a.regs_read, a.regs_write, a.groups, a.arch) in
 	object
 		method id = id;
 		method address = address;
@@ -101,13 +141,12 @@ class cs_insn c a =
 		method mnemonic = mnemonic;
 		method op_str = op_str;
 		method regs_read = regs_read;
-	        method regs_read_count = regs_read_count;
 		method regs_write = regs_write;
-	        method regs_write_count = regs_write_count;
 		method groups = groups;
-	        method groups_count = groups_count;
 		method arch = arch;
-		method insn_name = cs_insn_name csh id;
+		method reg_name id = _cs_reg_name csh.h id;
+		method insn_name id = _cs_insn_name csh.h id;
+		method group_name id = _cs_group_name csh.h id;
 	end;;
 
 let cs_insn_group handle insn group_id =
@@ -122,16 +161,10 @@ let cs_reg_write handle insn reg_id =
 
 class cs a m =
 	let mode = m and arch = a in
-	let csh = cs_open arch mode in
+	let handle = cs_open arch mode in
 	object
-		val handle = match csh with
-			| None -> failwith "impossible to open an handle"
-			| Some v -> v
-
-		method get_csh = handle
-
 		method disasm code offset count =
-			let insns = (cs_disasm_dyn arch handle code offset count) in
+			let insns = (_cs_disasm_internal arch handle.h code offset count) in
 			List.map (fun x -> new cs_insn handle x) insns;
 
 	end;;

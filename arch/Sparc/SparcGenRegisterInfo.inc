@@ -369,7 +369,7 @@ static MCRegisterDesc SparcRegDesc[] = { // Descriptors
 };
 
   // FCCRegs Register Class...
-  static uint16_t FCCRegs[] = {
+  static MCPhysReg FCCRegs[] = {
     SP_FCC0, SP_FCC1, SP_FCC2, SP_FCC3, 
   };
 
@@ -379,7 +379,7 @@ static MCRegisterDesc SparcRegDesc[] = { // Descriptors
   };
 
   // FPRegs Register Class...
-  static uint16_t FPRegs[] = {
+  static MCPhysReg FPRegs[] = {
     SP_F0, SP_F1, SP_F2, SP_F3, SP_F4, SP_F5, SP_F6, SP_F7, SP_F8, SP_F9, SP_F10, SP_F11, SP_F12, SP_F13, SP_F14, SP_F15, SP_F16, SP_F17, SP_F18, SP_F19, SP_F20, SP_F21, SP_F22, SP_F23, SP_F24, SP_F25, SP_F26, SP_F27, SP_F28, SP_F29, SP_F30, SP_F31, 
   };
 
@@ -389,7 +389,7 @@ static MCRegisterDesc SparcRegDesc[] = { // Descriptors
   };
 
   // IntRegs Register Class...
-  static uint16_t IntRegs[] = {
+  static MCPhysReg IntRegs[] = {
     SP_I0, SP_I1, SP_I2, SP_I3, SP_I4, SP_I5, SP_I6, SP_I7, SP_G0, SP_G1, SP_G2, SP_G3, SP_G4, SP_G5, SP_G6, SP_G7, SP_L0, SP_L1, SP_L2, SP_L3, SP_L4, SP_L5, SP_L6, SP_L7, SP_O0, SP_O1, SP_O2, SP_O3, SP_O4, SP_O5, SP_O6, SP_O7, 
   };
 
@@ -399,7 +399,7 @@ static MCRegisterDesc SparcRegDesc[] = { // Descriptors
   };
 
   // DFPRegs Register Class...
-  static uint16_t DFPRegs[] = {
+  static MCPhysReg DFPRegs[] = {
     SP_D0, SP_D1, SP_D2, SP_D3, SP_D4, SP_D5, SP_D6, SP_D7, SP_D8, SP_D9, SP_D10, SP_D11, SP_D12, SP_D13, SP_D14, SP_D15, SP_D16, SP_D17, SP_D18, SP_D19, SP_D20, SP_D21, SP_D22, SP_D23, SP_D24, SP_D25, SP_D26, SP_D27, SP_D28, SP_D29, SP_D30, SP_D31, 
   };
 
@@ -409,7 +409,7 @@ static MCRegisterDesc SparcRegDesc[] = { // Descriptors
   };
 
   // I64Regs Register Class...
-  static uint16_t I64Regs[] = {
+  static MCPhysReg I64Regs[] = {
     SP_I0, SP_I1, SP_I2, SP_I3, SP_I4, SP_I5, SP_I6, SP_I7, SP_G0, SP_G1, SP_G2, SP_G3, SP_G4, SP_G5, SP_G6, SP_G7, SP_L0, SP_L1, SP_L2, SP_L3, SP_L4, SP_L5, SP_L6, SP_L7, SP_O0, SP_O1, SP_O2, SP_O3, SP_O4, SP_O5, SP_O6, SP_O7, 
   };
 
@@ -419,7 +419,7 @@ static MCRegisterDesc SparcRegDesc[] = { // Descriptors
   };
 
   // DFPRegs_with_sub_even Register Class...
-  static uint16_t DFPRegs_with_sub_even[] = {
+  static MCPhysReg DFPRegs_with_sub_even[] = {
     SP_D0, SP_D1, SP_D2, SP_D3, SP_D4, SP_D5, SP_D6, SP_D7, SP_D8, SP_D9, SP_D10, SP_D11, SP_D12, SP_D13, SP_D14, SP_D15, 
   };
 
@@ -429,7 +429,7 @@ static MCRegisterDesc SparcRegDesc[] = { // Descriptors
   };
 
   // QFPRegs Register Class...
-  static uint16_t QFPRegs[] = {
+  static MCPhysReg QFPRegs[] = {
     SP_Q0, SP_Q1, SP_Q2, SP_Q3, SP_Q4, SP_Q5, SP_Q6, SP_Q7, SP_Q8, SP_Q9, SP_Q10, SP_Q11, SP_Q12, SP_Q13, SP_Q14, SP_Q15, 
   };
 
@@ -439,7 +439,7 @@ static MCRegisterDesc SparcRegDesc[] = { // Descriptors
   };
 
   // QFPRegs_with_sub_even Register Class...
-  static uint16_t QFPRegs_with_sub_even[] = {
+  static MCPhysReg QFPRegs_with_sub_even[] = {
     SP_Q0, SP_Q1, SP_Q2, SP_Q3, SP_Q4, SP_Q5, SP_Q6, SP_Q7, 
   };
 

@@ -27,9 +27,18 @@ extern "C" {
     #define CAPSTONE_EXPORT
 #endif
 
+#ifdef __GNUC__
+#define CAPSTONE_DEPRECATED __attribute__((deprecated))
+#elif defined(_MSC_VER)
+#define CAPSTONE_DEPRECATED __declspec(deprecated)
+#else
+#pragma message("WARNING: You need to implement CAPSTONE_DEPRECATED for this compiler")
+#define CAPSTONE_DEPRECATED
+#endif
+
 // Capstone API version
-#define CS_API_MAJOR 2
-#define CS_API_MINOR 2
+#define CS_API_MAJOR 3
+#define CS_API_MINOR 0
 
 // Macro to create combined version which can be compared to
 // result of cs_version() API.
@@ -70,8 +79,12 @@ typedef enum cs_mode {
 	CS_MODE_32 = 1 << 2,	// 32-bit mode
 	CS_MODE_64 = 1 << 3,	// 64-bit mode
 	CS_MODE_THUMB = 1 << 4,	// ARM's Thumb mode, including Thumb-2
+	CS_MODE_MCLASS = 1 << 5,	// ARM's Cortex-M series
 	CS_MODE_MICRO = 1 << 4, // MicroMips mode (MIPS architecture)
 	CS_MODE_N64 = 1 << 5, // Nintendo-64 mode (MIPS architecture)
+	CS_MODE_MIPS3 = 1 << 6, // Mips III ISA
+	CS_MODE_MIPS32R6 = 1 << 7, // Mips32r6 ISA
+	CS_MODE_MIPSGP64 = 1 << 8, // General Purpose Registers are 64-bit wide (MIPS arch)
 	CS_MODE_V9 = 1 << 4, // SparcV9 mode (Sparc architecture)
 	CS_MODE_BIG_ENDIAN = 1 << 31	// big endian mode
 } cs_mode;
@@ -115,7 +128,7 @@ typedef enum cs_opt_value {
 
 // User-defined callback function for SKIPDATA option
 // @code: the input buffer containing code to be disassembled. This is the 
-//      same buffer passed to cs_disasm_ex().
+//      same buffer passed to cs_disasm().
 // @code_size: size (in bytes) of the above @code buffer.
 // @offset: the position of the currently-examining byte in the input
 //      buffer @code mentioned above.
@@ -128,14 +141,14 @@ typedef size_t (*cs_skipdata_cb_t)(const uint8_t *code, size_t code_size, size_t
 typedef struct cs_opt_skipdata {
 	// Capstone considers data to skip as special "instructions".
 	// User can specify the string for this instruction's "mnemonic" here.
-	// By default (if @mnemonic is NULL), Capstone use ".db".
+	// By default (if @mnemonic is NULL), Capstone use ".byte".
 	const char *mnemonic;
 
 	// User-defined callback function to be called when Capstone hits data.
 	// If the returned value from this callback is positive (>0), Capstone
 	// will skip exactly that number of bytes & continue. Otherwise, if
 	// the callback returns 0, Capstone stops disassembling and returns
-	// immediately from cs_disasm_ex()
+	// immediately from cs_disasm()
 	// NOTE: if this callback pointer is NULL, Capstone would skip a number
 	// of bytes depending on architectures, as following:
 	// Arm:     2 bytes (Thumb mode) or 4 bytes.
@@ -232,7 +245,7 @@ typedef struct cs_insn {
 // These are values returned by cs_errno()
 typedef enum cs_err {
 	CS_ERR_OK = 0,   // No error: everything was fine
-	CS_ERR_MEM,      // Out-Of-Memory error: cs_open(), cs_disasm_ex()
+	CS_ERR_MEM,      // Out-Of-Memory error: cs_open(), cs_disasm()
 	CS_ERR_ARCH,     // Unsupported architecture: cs_open()
 	CS_ERR_HANDLE,   // Invalid handle: cs_op_count(), cs_op_index()
 	CS_ERR_CSH,	     // Invalid csh argument: cs_close(), cs_errno(), cs_option()
@@ -376,6 +389,18 @@ const char *cs_strerror(cs_err code);
  On failure, call cs_errno() for error code.
 */
 CAPSTONE_EXPORT
+size_t cs_disasm(csh handle,
+		const uint8_t *code, size_t code_size,
+		uint64_t address,
+		size_t count,
+		cs_insn **insn);
+
+/*
+  Deprecated function - to be retired in the next version!
+  Use cs_disasm() instead of cs_disasm_ex()
+*/
+CAPSTONE_EXPORT
+CAPSTONE_DEPRECATED
 size_t cs_disasm_ex(csh handle,
 		const uint8_t *code, size_t code_size,
 		uint64_t address,
@@ -383,16 +408,16 @@ size_t cs_disasm_ex(csh handle,
 		cs_insn **insn);
 
 /*
- Free memory allocated in @insn by cs_disasm_ex()
+ Free memory allocated in @insn by cs_disasm()
 
- @insn: pointer returned by @insn argument in cs_disasm_ex()
- @count: number of cs_insn structures returned by cs_disasm_ex()
+ @insn: pointer returned by @insn argument in cs_disasm()
+ @count: number of cs_insn structures returned by cs_disasm()
 */
 CAPSTONE_EXPORT
 void cs_free(cs_insn *insn, size_t count);
 
 /*
- Return friendly name of regiser in a string
+ Return friendly name of regiser in a string.
  Find the instruction id from header file of corresponding architecture (arm.h for ARM,
  x86.h for X86, ...)
 
@@ -400,26 +425,41 @@ void cs_free(cs_insn *insn, size_t count);
  store register name.
 
  @handle: handle returned by cs_open()
- @reg: register id
+ @reg_id: register id
  @return: string name of the register, or NULL if @reg_id is invalid.
 */
 CAPSTONE_EXPORT
 const char *cs_reg_name(csh handle, unsigned int reg_id);
 
 /*
- Return friendly name of an instruction in a string
+ Return friendly name of an instruction in a string.
  Find the instruction id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
 
  WARN: when in 'diet' mode, this API is irrelevant because the engine does not
  store instruction name.
 
  @handle: handle returned by cs_open()
- @insn: instruction id
+ @insn_id: instruction id
 
  @return: string name of the instruction, or NULL if @insn_id is invalid.
 */
 CAPSTONE_EXPORT
 const char *cs_insn_name(csh handle, unsigned int insn_id);
+
+/*
+ Return friendly name of a group id (that an instruction can belong to)
+ Find the group id from header file of corresponding architecture (arm.h for ARM, x86.h for X86, ...)
+
+ WARN: when in 'diet' mode, this API is irrelevant because the engine does not
+ store group name.
+
+ @handle: handle returned by cs_open()
+ @group_id: group id
+
+ @return: string name of the group, or NULL if @group_id is invalid.
+*/
+CAPSTONE_EXPORT
+const char *cs_group_name(csh handle, unsigned int group_id);
 
 /*
  Check if a disassembled instruction belong to a particular group.
@@ -432,7 +472,7 @@ const char *cs_insn_name(csh handle, unsigned int insn_id);
  update @groups array.
 
  @handle: handle returned by cs_open()
- @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
+ @insn: disassembled instruction structure received from cs_disasm() or cs_disasm()
  @group_id: group that you want to check if this instruction belong to.
 
  @return: true if this instruction indeed belongs to aboved group, or false otherwise.
@@ -450,7 +490,7 @@ bool cs_insn_group(csh handle, const cs_insn *insn, unsigned int group_id);
  WARN: when in 'diet' mode, this API is irrelevant because the engine does not
  update @regs_read array.
 
- @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
+ @insn: disassembled instruction structure received from cs_disasm() or cs_disasm()
  @reg_id: register that you want to check if this instruction used it.
 
  @return: true if this instruction indeed implicitly used aboved register, or false otherwise.
@@ -468,7 +508,7 @@ bool cs_reg_read(csh handle, const cs_insn *insn, unsigned int reg_id);
  WARN: when in 'diet' mode, this API is irrelevant because the engine does not
  update @regs_write array.
 
- @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
+ @insn: disassembled instruction structure received from cs_disasm() or cs_disasm()
  @reg_id: register that you want to check if this instruction modified it.
 
  @return: true if this instruction indeed implicitly modified aboved register, or false otherwise.
@@ -483,7 +523,7 @@ bool cs_reg_write(csh handle, const cs_insn *insn, unsigned int reg_id);
  NOTE: this API is only valid when detail option is ON (which is OFF by default)
 
  @handle: handle returned by cs_open()
- @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
+ @insn: disassembled instruction structure received from cs_disasm() or cs_disasm()
  @op_type: Operand type to be found.
 
  @return: number of operands of given type @op_type in instruction @insn,
@@ -500,7 +540,7 @@ int cs_op_count(csh handle, const cs_insn *insn, unsigned int op_type);
  NOTE: this API is only valid when detail option is ON (which is OFF by default)
 
  @handle: handle returned by cs_open()
- @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_ex()
+ @insn: disassembled instruction structure received from cs_disasm() or cs_disasm()
  @op_type: Operand type to be found.
  @position: position of the operand to be found. This must be in the range
 			[1, cs_op_count(handle, insn, op_type)]

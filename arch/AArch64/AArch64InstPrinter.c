@@ -16,7 +16,7 @@
 
 #ifdef CAPSTONE_HAS_ARM64
 
-#include <inttypes.h>
+#include "../../inttypes.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -29,9 +29,21 @@
 #include "../../MathExtras.h"
 
 #include "AArch64Mapping.h"
+#include "AArch64AddressingModes.h"
 
-static char *getRegisterName(unsigned RegNo);
+#define GET_REGINFO_ENUM
+#include "AArch64GenRegisterInfo.inc"
+
+#define GET_INSTRINFO_ENUM
+#include "AArch64GenInstrInfo.inc"
+
+
+static char *getRegisterName(unsigned RegNo, int AltIdx);
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
+static bool printSysAlias(MCInst *MI, SStream *O);
+static char *printAliasInstr(MCInst *MI, SStream *OS, void *info);
+static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
+static void printShifter(MCInst *MI, unsigned OpNum, SStream *O);
 
 static void set_mem_access(MCInst *MI, bool status)
 {
@@ -51,577 +63,986 @@ static void set_mem_access(MCInst *MI, bool status)
 	}
 }
 
-static int64_t unpackSignedImm(int BitWidth, uint64_t Value)
+void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 {
-	//assert(!(Value & ~((1ULL << BitWidth)-1)) && "immediate not n-bit");
-	if (Value & (1ULL <<  (BitWidth - 1)))
-		return (int64_t)Value - (1LL << BitWidth);
-	else
-		return Value;
-}
+	// Check for special encodings and print the canonical alias instead.
+	unsigned Opcode = MCInst_getOpcode(MI);
+	int LSB;
+	int Width;
+	char *mnem;
 
-static void printOffsetSImm9Operand(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	MCOperand *MOImm = MCInst_getOperand(MI, OpNum);
-	int32_t Imm = (int32_t)unpackSignedImm(9, MCOperand_getImm(MOImm));
+	if (Opcode == AArch64_SYSxt && printSysAlias(MI, O))
+		return;
 
-	if (Imm >=0) {
-		if (Imm > HEX_THRESHOLD)
-			SStream_concat(O, "#0x%x", Imm);
-		else
-			SStream_concat(O, "#%u", Imm);
-	} else {
-		if (Imm < -HEX_THRESHOLD)
-			SStream_concat(O, "#-0x%x", -Imm);
-		else
-			SStream_concat(O, "#-%u", -Imm);
-	}
+	// SBFM/UBFM should print to a nicer aliased form if possible.
+	if (Opcode == AArch64_SBFMXri || Opcode == AArch64_SBFMWri ||
+			Opcode == AArch64_UBFMXri || Opcode == AArch64_UBFMWri) {
+		MCOperand *Op0 = MCInst_getOperand(MI, 0);
+		MCOperand *Op1 = MCInst_getOperand(MI, 1);
+		MCOperand *Op2 = MCInst_getOperand(MI, 2);
+		MCOperand *Op3 = MCInst_getOperand(MI, 3);
 
-	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Imm;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-}
+		bool IsSigned = (Opcode == AArch64_SBFMXri || Opcode == AArch64_SBFMWri);
+		bool Is64Bit = (Opcode == AArch64_SBFMXri || Opcode == AArch64_UBFMXri);
 
-static void printAddrRegExtendOperand(MCInst *MI, unsigned OpNum,
-		SStream *O, unsigned MemSize, unsigned RmSize)
-{
-	unsigned ExtImm = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	unsigned OptionHi = ExtImm >> 1;
-	unsigned S = ExtImm & 1;
-	bool IsLSL = OptionHi == 1 && RmSize == 64;
+		if (MCOperand_isImm(Op2) && MCOperand_getImm(Op2) == 0 && MCOperand_isImm(Op3)) {
+			char *AsmMnemonic = NULL;
 
-	char *Ext = NULL;
-	switch (OptionHi) {
-		case 1:
-			if (RmSize == 32) {
-				Ext = "uxtw";
-				if (MI->csh->detail)
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].ext = ARM64_EXT_UXTW;
-			} else {
-				Ext = "lsl";
+			switch (MCOperand_getImm(Op3)) {
+				default:
+					break;
+				case 7:
+					if (IsSigned)
+						AsmMnemonic = "sxtb";
+					else if (!Is64Bit)
+						AsmMnemonic = "uxtb";
+					break;
+				case 15:
+					if (IsSigned)
+						AsmMnemonic = "sxth";
+					else if (!Is64Bit)
+						AsmMnemonic = "uxth";
+					break;
+				case 31:
+					// *xtw is only valid for signed 64-bit operations.
+					if (Is64Bit && IsSigned)
+						AsmMnemonic = "sxtw";
+					break;
 			}
-			break;
-		case 3:
-			if (RmSize == 32) {
-				Ext = "sxtw";
-				if (MI->csh->detail)
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].ext = ARM64_EXT_SXTW;
-			} else {
-				Ext = "sxtx";
-				if (MI->csh->detail)
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].ext = ARM64_EXT_SXTX;
-			}
-			break;
-		default:
-			break; //llvm_unreachable("Incorrect Option on load/store (reg offset)");
-	}
-	SStream_concat0(O, Ext);
 
-	if (S) {
-		unsigned ShiftAmt = Log2_32(MemSize);
-		if (ShiftAmt > HEX_THRESHOLD)
-			SStream_concat(O, " #0x%x", ShiftAmt);
-		else
-			SStream_concat(O, " #%u", ShiftAmt);
-		if (MI->csh->detail) {
-			if (MI->csh->doing_mem) {
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].shift.type = ARM64_SFT_LSL;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].shift.value = ShiftAmt;
-			} else {
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.type = ARM64_SFT_LSL;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.value = ShiftAmt;
+			if (AsmMnemonic) {
+				SStream_concat(O, "%s\t%s, %s", AsmMnemonic,
+						getRegisterName(MCOperand_getReg(Op0), AArch64_NoRegAltName),
+						getRegisterName(getWRegFromXReg(MCOperand_getReg(Op1)), AArch64_NoRegAltName));
+
+				if (MI->csh->detail) {
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
+					MI->flat_insn->detail->arm64.op_count++;
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = getWRegFromXReg(MCOperand_getReg(Op1));
+					MI->flat_insn->detail->arm64.op_count++;
+				}
+
+				MCInst_setOpcodePub(MI, AArch64_map_insn(AsmMnemonic));
+
+				return;
 			}
 		}
-	} else if (IsLSL) {
-		SStream_concat0(O, " #0");
-	}
-}
 
-static void printAddSubImmLSL0Operand(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	MCOperand *Imm12Op = MCInst_getOperand(MI, OpNum);
+		// All immediate shifts are aliases, implemented using the Bitfield
+		// instruction. In all cases the immediate shift amount shift must be in
+		// the range 0 to (reg.size -1).
+		if (MCOperand_isImm(Op2) && MCOperand_isImm(Op3)) {
+			char *AsmMnemonic = NULL;
+			int shift = 0;
+			int immr = (int)MCOperand_getImm(Op2);
+			int imms = (int)MCOperand_getImm(Op3);
 
-	if (MCOperand_isImm(Imm12Op)) {
-		int64_t Imm12 = MCOperand_getImm(Imm12Op);
-		//assert(Imm12 >= 0 && "Invalid immediate for add/sub imm");
-		if (Imm12 > HEX_THRESHOLD)
-			SStream_concat(O, "#0x%"PRIx64, Imm12);
-		else
-			SStream_concat(O, "#%u"PRIu64, Imm12);
+			if (Opcode == AArch64_UBFMWri && imms != 0x1F && ((imms + 1) == immr)) {
+				AsmMnemonic = "lsl";
+				shift = 31 - imms;
+			} else if (Opcode == AArch64_UBFMXri && imms != 0x3f &&
+					((imms + 1 == immr))) {
+				AsmMnemonic = "lsl";
+				shift = 63 - imms;
+			} else if (Opcode == AArch64_UBFMWri && imms == 0x1f) {
+				AsmMnemonic = "lsr";
+				shift = immr;
+			} else if (Opcode == AArch64_UBFMXri && imms == 0x3f) {
+				AsmMnemonic = "lsr";
+				shift = immr;
+			} else if (Opcode == AArch64_SBFMWri && imms == 0x1f) {
+				AsmMnemonic = "asr";
+				shift = immr;
+			} else if (Opcode == AArch64_SBFMXri && imms == 0x3f) {
+				AsmMnemonic = "asr";
+				shift = immr;
+			}
+
+			if (AsmMnemonic) {
+				SStream_concat(O, "%s\t%s, %s, ", AsmMnemonic,
+						getRegisterName(MCOperand_getReg(Op0), AArch64_NoRegAltName),
+						getRegisterName(MCOperand_getReg(Op1), AArch64_NoRegAltName));
+
+				printInt32Bang(O, shift);
+
+				MCInst_setOpcodePub(MI, AArch64_map_insn(AsmMnemonic));
+
+				if (MI->csh->detail) {
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
+					MI->flat_insn->detail->arm64.op_count++;
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op1);
+					MI->flat_insn->detail->arm64.op_count++;
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = shift;
+					MI->flat_insn->detail->arm64.op_count++;
+				}
+
+				return;
+			}
+		}
+
+		// SBFIZ/UBFIZ aliases
+		if (MCOperand_getImm(Op2) > MCOperand_getImm(Op3)) {
+			SStream_concat(O, "%s\t%s, %s ", (IsSigned ? "sbfiz" : "ubfiz"),
+					getRegisterName(MCOperand_getReg(Op0), AArch64_NoRegAltName),
+					getRegisterName(MCOperand_getReg(Op1), AArch64_NoRegAltName));
+			printInt32Bang(O, (int)((Is64Bit ? 64 : 32) - MCOperand_getImm(Op2)));
+			SStream_concat0(O, ", ");
+			printInt32Bang(O, (int)MCOperand_getImm(Op3) + 1);
+
+			MCInst_setOpcodePub(MI, AArch64_map_insn(IsSigned ? "sbfiz" : "ubfiz"));
+
+			if (MI->csh->detail) {
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
+				MI->flat_insn->detail->arm64.op_count++;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op1);
+				MI->flat_insn->detail->arm64.op_count++;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (Is64Bit ? 64 : 32) - (int)MCOperand_getImm(Op2);
+				MI->flat_insn->detail->arm64.op_count++;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)MCOperand_getImm(Op3) + 1;
+				MI->flat_insn->detail->arm64.op_count++;
+			}
+
+			return;
+		}
+
+		// Otherwise SBFX/UBFX is the preferred form
+		SStream_concat(O, "%s\t%s, %s ", (IsSigned ? "sbfx" : "ubfx"),
+				getRegisterName(MCOperand_getReg(Op0), AArch64_NoRegAltName),
+				getRegisterName(MCOperand_getReg(Op1), AArch64_NoRegAltName));
+		printInt32Bang(O, (int)MCOperand_getImm(Op2));
+		SStream_concat0(O, ", ");
+		printInt32Bang(O, (int)MCOperand_getImm(Op3) - (int)MCOperand_getImm(Op2) + 1);
+
+		MCInst_setOpcodePub(MI, AArch64_map_insn(IsSigned ? "sbfx" : "ubfx"));
+
 		if (MI->csh->detail) {
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
+			MI->flat_insn->detail->arm64.op_count++;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op1);
+			MI->flat_insn->detail->arm64.op_count++;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int32_t)Imm12;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)MCOperand_getImm(Op2);
+			MI->flat_insn->detail->arm64.op_count++;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)MCOperand_getImm(Op3) - (int)MCOperand_getImm(Op2) + 1;
 			MI->flat_insn->detail->arm64.op_count++;
 		}
-	}
-}
 
-static void printAddSubImmLSL12Operand(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	printAddSubImmLSL0Operand(MI, OpNum, O);
-
-	SStream_concat0(O, ", lsl #12");
-	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.type = ARM64_SFT_LSL;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.value = 12;
-	}
-}
-
-static void printBareImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	uint64_t imm = MCOperand_getImm(MO);
-	if (imm > HEX_THRESHOLD)
-		SStream_concat(O, "0x%"PRIx64, imm);
-	else
-		SStream_concat(O, "%"PRIu64, imm);
-	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int32_t)imm;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-}
-
-static void printBFILSBOperand(MCInst *MI, unsigned OpNum,
-		SStream *O, unsigned RegWidth)
-{
-	MCOperand *ImmROp = MCInst_getOperand(MI, OpNum);
-	unsigned LSB = MCOperand_getImm(ImmROp) == 0 ? 0 : RegWidth - (unsigned int)MCOperand_getImm(ImmROp);
-
-	if (LSB > HEX_THRESHOLD)
-		SStream_concat(O, "#0x%x", LSB);
-	else
-		SStream_concat(O, "#%u", LSB);
-	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = LSB;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-}
-
-static void printBFIWidthOperand(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	MCOperand *ImmSOp = MCInst_getOperand(MI, OpNum);
-	unsigned Width = (unsigned int)MCOperand_getImm(ImmSOp) + 1;
-
-	if (Width > HEX_THRESHOLD)
-		SStream_concat(O, "#0x%x", Width);
-	else
-		SStream_concat(O, "#%u", Width);
-}
-
-static void printBFXWidthOperand(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	MCOperand *ImmSOp = MCInst_getOperand(MI, OpNum);
-	MCOperand *ImmROp = MCInst_getOperand(MI, OpNum - 1);
-
-	unsigned ImmR = (unsigned int)MCOperand_getImm(ImmROp);
-	unsigned ImmS = (unsigned int)MCOperand_getImm(ImmSOp);
-
-	//assert(ImmS >= ImmR && "Invalid ImmR, ImmS combination for bitfield extract");
-
-	if (ImmS - ImmR + 1 > HEX_THRESHOLD)
-		SStream_concat(O, "#0x%x", (ImmS - ImmR + 1));
-	else
-		SStream_concat(O, "#%u", (ImmS - ImmR + 1));
-
-	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = ImmS - ImmR + 1;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-}
-
-static void printCRxOperand(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	MCOperand *CRx = MCInst_getOperand(MI, OpNum);
-	SStream_concat(O, "c%"PRIu64, MCOperand_getImm(CRx));
-
-	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_CIMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int32_t)MCOperand_getImm(CRx);
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-}
-
-static void printCVTFixedPosOperand(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	MCOperand *ScaleOp = MCInst_getOperand(MI, OpNum);
-
-	if (64 - MCOperand_getImm(ScaleOp) > HEX_THRESHOLD)
-		SStream_concat(O, "#0x%x", 64 - MCOperand_getImm(ScaleOp));
-	else
-		SStream_concat(O, "#%u", 64 - MCOperand_getImm(ScaleOp));
-	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = 64 - (int32_t)MCOperand_getImm(ScaleOp);
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-}
-
-static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	MCOperand *MOImm8 = MCInst_getOperand(MI, OpNum);
-
-	//assert(MOImm8.isImm()
-	//       && "Immediate operand required for floating-point immediate inst");
-
-	uint32_t Imm8 = (uint32_t)MCOperand_getImm(MOImm8);
-	uint32_t Fraction = Imm8 & 0xf;
-	uint32_t Exponent = (Imm8 >> 4) & 0x7;
-	uint32_t Negative = (Imm8 >> 7) & 0x1;
-
-	float Val = 1.0f + Fraction / 16.0f;
-
-	// That is:
-	// 000 -> 2^1,  001 -> 2^2,  010 -> 2^3,  011 -> 2^4,
-	// 100 -> 2^-3, 101 -> 2^-2, 110 -> 2^-1, 111 -> 2^0
-	if (Exponent & 0x4) {
-		Val /= 1 << (7 - Exponent);
-	} else {
-		Val *= 1 << (Exponent + 1);
-	}
-
-	Val = Negative ? -Val : Val;
-
-	//o << '#' << format("%.8f", Val);
-	SStream_concat(O, "#%.8f", Val);
-	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_FP;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].fp = Val;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-}
-
-static void printFPZeroOperand(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	SStream_concat0(O, "#0.0");
-	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_FP;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].fp = 0;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-}
-
-static void printCondCodeOperand(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	SStream_concat0(O, A64CondCodeToString((A64CC_CondCodes)(MCOperand_getImm(MO))));
-	if (MI->csh->detail)
-		MI->flat_insn->detail->arm64.cc = MCOperand_getImm(MO) + 1;
-}
-
-static void printLabelOperand(MCInst *MI, unsigned OpNum,
-		SStream *O, unsigned field_width, unsigned scale)
-{
-	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	uint64_t UImm, Sign;
-	int64_t SImm, tmp;
-
-	if (!MCOperand_isImm(MO)) {
-		printOperand(MI, OpNum, O);
 		return;
 	}
 
-	// The immediate of LDR (lit) instructions is a signed 19-bit immediate, which
-	// is multiplied by 4 (because all A64 instructions are 32-bits wide).
-	UImm = MCOperand_getImm(MO);
-	Sign = UImm & (1LL << (field_width - 1));
-	SImm = scale * ((UImm & ~Sign) - Sign);
+	if (Opcode == AArch64_BFMXri || Opcode == AArch64_BFMWri) {
+		MCOperand *Op0 = MCInst_getOperand(MI, 0); // Op1 == Op0
+		MCOperand *Op2 = MCInst_getOperand(MI, 2);
+		int ImmR = (int)MCOperand_getImm(MCInst_getOperand(MI, 3));
+		int ImmS = (int)MCOperand_getImm(MCInst_getOperand(MI, 4));
 
-	// this is a relative address, so add with the address
-	// of current instruction
-	SImm += MI->address;
+		// BFI alias
+		if (ImmS < ImmR) {
+			int BitWidth = Opcode == AArch64_BFMXri ? 64 : 32;
+			LSB = (BitWidth - ImmR) % BitWidth;
+			Width = ImmS + 1;
 
-	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int32_t)SImm;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
+			SStream_concat(O, "bfi\t%s, %s, ",
+					getRegisterName(MCOperand_getReg(Op0), AArch64_NoRegAltName),
+					getRegisterName(MCOperand_getReg(Op2), AArch64_NoRegAltName));
+			printInt32Bang(O, LSB);
+			SStream_concat0(O, ", ");
+			printInt32Bang(O, Width);
+			MCInst_setOpcodePub(MI, AArch64_map_insn("bfi"));
 
-	if (SImm >= 0) {
-		if (SImm > HEX_THRESHOLD)
-			SStream_concat(O, "#0x%"PRIx64, SImm);
-		else
-			SStream_concat(O, "#%"PRIu64, SImm);
-	} else {
-		tmp = -(int64_t)SImm;
-		if (SImm < -HEX_THRESHOLD)
-			SStream_concat(O, "#-0x%"PRIx64, tmp);
-		else
-			SStream_concat(O, "#-%"PRIu64, tmp);
-	}
-}
+			if (MI->csh->detail) {
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
+				MI->flat_insn->detail->arm64.op_count++;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op2);
+				MI->flat_insn->detail->arm64.op_count++;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = LSB;
+				MI->flat_insn->detail->arm64.op_count++;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Width;
+				MI->flat_insn->detail->arm64.op_count++;
+			}
 
-static void printLogicalImmOperand(MCInst *MI, unsigned OpNum,
-		SStream *O, unsigned RegWidth)
-{
-	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	uint64_t Val;
-	A64Imms_isLogicalImmBits(RegWidth, (uint32_t)MCOperand_getImm(MO), &Val);
-	if (Val > HEX_THRESHOLD)
-		SStream_concat(O, "#0x%"PRIx64, Val);
-	else
-		SStream_concat(O, "#%"PRIu64, Val);
-	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int32_t)Val;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-}
+			return;
+		}
 
-static void printOffsetUImm12Operand(MCInst *MI, unsigned OpNum,
-		SStream *O, int MemSize)
-{
-	MCOperand *MOImm = MCInst_getOperand(MI, OpNum);
-
-	if (MCOperand_isImm(MOImm)) {
-		uint32_t Imm = (uint32_t)MCOperand_getImm(MOImm) * MemSize;
-
-		if (Imm > HEX_THRESHOLD)
-			SStream_concat(O, "#0x%x", Imm);
-		else
-			SStream_concat(O, "#%u", Imm);
+		LSB = ImmR;
+		Width = ImmS - ImmR + 1;
+		// Otherwise BFXIL the preferred form
+		SStream_concat(O, "bfxil\t%s, %s, ",
+				getRegisterName(MCOperand_getReg(Op0), AArch64_NoRegAltName),
+				getRegisterName(MCOperand_getReg(Op2), AArch64_NoRegAltName));
+		printInt32Bang(O, LSB);
+		SStream_concat0(O, ", ");
+		printInt32Bang(O, Width);
+		MCInst_setOpcodePub(MI, AArch64_map_insn("bfxil"));
 
 		if (MI->csh->detail) {
-			if (MI->csh->doing_mem) {
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = Imm;
-			} else {
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Imm;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
+			MI->flat_insn->detail->arm64.op_count++;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op2);
+			MI->flat_insn->detail->arm64.op_count++;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = LSB;
+			MI->flat_insn->detail->arm64.op_count++;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Width;
+			MI->flat_insn->detail->arm64.op_count++;
+		}
+
+		return;
+	}
+
+	mnem = printAliasInstr(MI, O, Info);
+	if (mnem) {
+		MCInst_setOpcodePub(MI, AArch64_map_insn(mnem));
+		cs_mem_free(mnem);
+	} else {
+		printInstruction(MI, O, Info);
+	}
+}
+
+#if 0
+static bool isTblTbxInstruction(unsigned Opcode, char **Layout, bool *IsTbx)
+{
+	switch (Opcode) {
+		case AArch64_TBXv8i8One:
+		case AArch64_TBXv8i8Two:
+		case AArch64_TBXv8i8Three:
+		case AArch64_TBXv8i8Four:
+			*IsTbx = true;
+			*Layout = ".8b";
+			return true;
+		case AArch64_TBLv8i8One:
+		case AArch64_TBLv8i8Two:
+		case AArch64_TBLv8i8Three:
+		case AArch64_TBLv8i8Four:
+			*IsTbx = false;
+			*Layout = ".8b";
+			return true;
+		case AArch64_TBXv16i8One:
+		case AArch64_TBXv16i8Two:
+		case AArch64_TBXv16i8Three:
+		case AArch64_TBXv16i8Four:
+			*IsTbx = true;
+			*Layout = ".16b";
+			return true;
+		case AArch64_TBLv16i8One:
+		case AArch64_TBLv16i8Two:
+		case AArch64_TBLv16i8Three:
+		case AArch64_TBLv16i8Four:
+			*IsTbx = false;
+			*Layout = ".16b";
+			return true;
+		default:
+			return false;
+	}
+}
+
+struct LdStNInstrDesc {
+	unsigned Opcode;
+	char *Mnemonic;
+	char *Layout;
+	int ListOperand;
+	bool HasLane;
+	int NaturalOffset;
+};
+
+static struct LdStNInstrDesc LdStNInstInfo[] = {
+	{ AArch64_LD1i8,             "ld1",  ".b",     1, true,  0  },
+	{ AArch64_LD1i16,            "ld1",  ".h",     1, true,  0  },
+	{ AArch64_LD1i32,            "ld1",  ".s",     1, true,  0  },
+	{ AArch64_LD1i64,            "ld1",  ".d",     1, true,  0  },
+	{ AArch64_LD1i8_POST,        "ld1",  ".b",     2, true,  1  },
+	{ AArch64_LD1i16_POST,       "ld1",  ".h",     2, true,  2  },
+	{ AArch64_LD1i32_POST,       "ld1",  ".s",     2, true,  4  },
+	{ AArch64_LD1i64_POST,       "ld1",  ".d",     2, true,  8  },
+	{ AArch64_LD1Rv16b,          "ld1r", ".16b",   0, false, 0  },
+	{ AArch64_LD1Rv8h,           "ld1r", ".8h",    0, false, 0  },
+	{ AArch64_LD1Rv4s,           "ld1r", ".4s",    0, false, 0  },
+	{ AArch64_LD1Rv2d,           "ld1r", ".2d",    0, false, 0  },
+	{ AArch64_LD1Rv8b,           "ld1r", ".8b",    0, false, 0  },
+	{ AArch64_LD1Rv4h,           "ld1r", ".4h",    0, false, 0  },
+	{ AArch64_LD1Rv2s,           "ld1r", ".2s",    0, false, 0  },
+	{ AArch64_LD1Rv1d,           "ld1r", ".1d",    0, false, 0  },
+	{ AArch64_LD1Rv16b_POST,     "ld1r", ".16b",   1, false, 1  },
+	{ AArch64_LD1Rv8h_POST,      "ld1r", ".8h",    1, false, 2  },
+	{ AArch64_LD1Rv4s_POST,      "ld1r", ".4s",    1, false, 4  },
+	{ AArch64_LD1Rv2d_POST,      "ld1r", ".2d",    1, false, 8  },
+	{ AArch64_LD1Rv8b_POST,      "ld1r", ".8b",    1, false, 1  },
+	{ AArch64_LD1Rv4h_POST,      "ld1r", ".4h",    1, false, 2  },
+	{ AArch64_LD1Rv2s_POST,      "ld1r", ".2s",    1, false, 4  },
+	{ AArch64_LD1Rv1d_POST,      "ld1r", ".1d",    1, false, 8  },
+	{ AArch64_LD1Onev16b,        "ld1",  ".16b",   0, false, 0  },
+	{ AArch64_LD1Onev8h,         "ld1",  ".8h",    0, false, 0  },
+	{ AArch64_LD1Onev4s,         "ld1",  ".4s",    0, false, 0  },
+	{ AArch64_LD1Onev2d,         "ld1",  ".2d",    0, false, 0  },
+	{ AArch64_LD1Onev8b,         "ld1",  ".8b",    0, false, 0  },
+	{ AArch64_LD1Onev4h,         "ld1",  ".4h",    0, false, 0  },
+	{ AArch64_LD1Onev2s,         "ld1",  ".2s",    0, false, 0  },
+	{ AArch64_LD1Onev1d,         "ld1",  ".1d",    0, false, 0  },
+	{ AArch64_LD1Onev16b_POST,   "ld1",  ".16b",   1, false, 16 },
+	{ AArch64_LD1Onev8h_POST,    "ld1",  ".8h",    1, false, 16 },
+	{ AArch64_LD1Onev4s_POST,    "ld1",  ".4s",    1, false, 16 },
+	{ AArch64_LD1Onev2d_POST,    "ld1",  ".2d",    1, false, 16 },
+	{ AArch64_LD1Onev8b_POST,    "ld1",  ".8b",    1, false, 8  },
+	{ AArch64_LD1Onev4h_POST,    "ld1",  ".4h",    1, false, 8  },
+	{ AArch64_LD1Onev2s_POST,    "ld1",  ".2s",    1, false, 8  },
+	{ AArch64_LD1Onev1d_POST,    "ld1",  ".1d",    1, false, 8  },
+	{ AArch64_LD1Twov16b,        "ld1",  ".16b",   0, false, 0  },
+	{ AArch64_LD1Twov8h,         "ld1",  ".8h",    0, false, 0  },
+	{ AArch64_LD1Twov4s,         "ld1",  ".4s",    0, false, 0  },
+	{ AArch64_LD1Twov2d,         "ld1",  ".2d",    0, false, 0  },
+	{ AArch64_LD1Twov8b,         "ld1",  ".8b",    0, false, 0  },
+	{ AArch64_LD1Twov4h,         "ld1",  ".4h",    0, false, 0  },
+	{ AArch64_LD1Twov2s,         "ld1",  ".2s",    0, false, 0  },
+	{ AArch64_LD1Twov1d,         "ld1",  ".1d",    0, false, 0  },
+	{ AArch64_LD1Twov16b_POST,   "ld1",  ".16b",   1, false, 32 },
+	{ AArch64_LD1Twov8h_POST,    "ld1",  ".8h",    1, false, 32 },
+	{ AArch64_LD1Twov4s_POST,    "ld1",  ".4s",    1, false, 32 },
+	{ AArch64_LD1Twov2d_POST,    "ld1",  ".2d",    1, false, 32 },
+	{ AArch64_LD1Twov8b_POST,    "ld1",  ".8b",    1, false, 16 },
+	{ AArch64_LD1Twov4h_POST,    "ld1",  ".4h",    1, false, 16 },
+	{ AArch64_LD1Twov2s_POST,    "ld1",  ".2s",    1, false, 16 },
+	{ AArch64_LD1Twov1d_POST,    "ld1",  ".1d",    1, false, 16 },
+	{ AArch64_LD1Threev16b,      "ld1",  ".16b",   0, false, 0  },
+	{ AArch64_LD1Threev8h,       "ld1",  ".8h",    0, false, 0  },
+	{ AArch64_LD1Threev4s,       "ld1",  ".4s",    0, false, 0  },
+	{ AArch64_LD1Threev2d,       "ld1",  ".2d",    0, false, 0  },
+	{ AArch64_LD1Threev8b,       "ld1",  ".8b",    0, false, 0  },
+	{ AArch64_LD1Threev4h,       "ld1",  ".4h",    0, false, 0  },
+	{ AArch64_LD1Threev2s,       "ld1",  ".2s",    0, false, 0  },
+	{ AArch64_LD1Threev1d,       "ld1",  ".1d",    0, false, 0  },
+	{ AArch64_LD1Threev16b_POST, "ld1",  ".16b",   1, false, 48 },
+	{ AArch64_LD1Threev8h_POST,  "ld1",  ".8h",    1, false, 48 },
+	{ AArch64_LD1Threev4s_POST,  "ld1",  ".4s",    1, false, 48 },
+	{ AArch64_LD1Threev2d_POST,  "ld1",  ".2d",    1, false, 48 },
+	{ AArch64_LD1Threev8b_POST,  "ld1",  ".8b",    1, false, 24 },
+	{ AArch64_LD1Threev4h_POST,  "ld1",  ".4h",    1, false, 24 },
+	{ AArch64_LD1Threev2s_POST,  "ld1",  ".2s",    1, false, 24 },
+	{ AArch64_LD1Threev1d_POST,  "ld1",  ".1d",    1, false, 24 },
+	{ AArch64_LD1Fourv16b,       "ld1",  ".16b",   0, false, 0  },
+	{ AArch64_LD1Fourv8h,        "ld1",  ".8h",    0, false, 0  },
+	{ AArch64_LD1Fourv4s,        "ld1",  ".4s",    0, false, 0  },
+	{ AArch64_LD1Fourv2d,        "ld1",  ".2d",    0, false, 0  },
+	{ AArch64_LD1Fourv8b,        "ld1",  ".8b",    0, false, 0  },
+	{ AArch64_LD1Fourv4h,        "ld1",  ".4h",    0, false, 0  },
+	{ AArch64_LD1Fourv2s,        "ld1",  ".2s",    0, false, 0  },
+	{ AArch64_LD1Fourv1d,        "ld1",  ".1d",    0, false, 0  },
+	{ AArch64_LD1Fourv16b_POST,  "ld1",  ".16b",   1, false, 64 },
+	{ AArch64_LD1Fourv8h_POST,   "ld1",  ".8h",    1, false, 64 },
+	{ AArch64_LD1Fourv4s_POST,   "ld1",  ".4s",    1, false, 64 },
+	{ AArch64_LD1Fourv2d_POST,   "ld1",  ".2d",    1, false, 64 },
+	{ AArch64_LD1Fourv8b_POST,   "ld1",  ".8b",    1, false, 32 },
+	{ AArch64_LD1Fourv4h_POST,   "ld1",  ".4h",    1, false, 32 },
+	{ AArch64_LD1Fourv2s_POST,   "ld1",  ".2s",    1, false, 32 },
+	{ AArch64_LD1Fourv1d_POST,   "ld1",  ".1d",    1, false, 32 },
+	{ AArch64_LD2i8,             "ld2",  ".b",     1, true,  0  },
+	{ AArch64_LD2i16,            "ld2",  ".h",     1, true,  0  },
+	{ AArch64_LD2i32,            "ld2",  ".s",     1, true,  0  },
+	{ AArch64_LD2i64,            "ld2",  ".d",     1, true,  0  },
+	{ AArch64_LD2i8_POST,        "ld2",  ".b",     2, true,  2  },
+	{ AArch64_LD2i16_POST,       "ld2",  ".h",     2, true,  4  },
+	{ AArch64_LD2i32_POST,       "ld2",  ".s",     2, true,  8  },
+	{ AArch64_LD2i64_POST,       "ld2",  ".d",     2, true,  16  },
+	{ AArch64_LD2Rv16b,          "ld2r", ".16b",   0, false, 0  },
+	{ AArch64_LD2Rv8h,           "ld2r", ".8h",    0, false, 0  },
+	{ AArch64_LD2Rv4s,           "ld2r", ".4s",    0, false, 0  },
+	{ AArch64_LD2Rv2d,           "ld2r", ".2d",    0, false, 0  },
+	{ AArch64_LD2Rv8b,           "ld2r", ".8b",    0, false, 0  },
+	{ AArch64_LD2Rv4h,           "ld2r", ".4h",    0, false, 0  },
+	{ AArch64_LD2Rv2s,           "ld2r", ".2s",    0, false, 0  },
+	{ AArch64_LD2Rv1d,           "ld2r", ".1d",    0, false, 0  },
+	{ AArch64_LD2Rv16b_POST,     "ld2r", ".16b",   1, false, 2  },
+	{ AArch64_LD2Rv8h_POST,      "ld2r", ".8h",    1, false, 4  },
+	{ AArch64_LD2Rv4s_POST,      "ld2r", ".4s",    1, false, 8  },
+	{ AArch64_LD2Rv2d_POST,      "ld2r", ".2d",    1, false, 16 },
+	{ AArch64_LD2Rv8b_POST,      "ld2r", ".8b",    1, false, 2  },
+	{ AArch64_LD2Rv4h_POST,      "ld2r", ".4h",    1, false, 4  },
+	{ AArch64_LD2Rv2s_POST,      "ld2r", ".2s",    1, false, 8  },
+	{ AArch64_LD2Rv1d_POST,      "ld2r", ".1d",    1, false, 16 },
+	{ AArch64_LD2Twov16b,        "ld2",  ".16b",   0, false, 0  },
+	{ AArch64_LD2Twov8h,         "ld2",  ".8h",    0, false, 0  },
+	{ AArch64_LD2Twov4s,         "ld2",  ".4s",    0, false, 0  },
+	{ AArch64_LD2Twov2d,         "ld2",  ".2d",    0, false, 0  },
+	{ AArch64_LD2Twov8b,         "ld2",  ".8b",    0, false, 0  },
+	{ AArch64_LD2Twov4h,         "ld2",  ".4h",    0, false, 0  },
+	{ AArch64_LD2Twov2s,         "ld2",  ".2s",    0, false, 0  },
+	{ AArch64_LD2Twov16b_POST,   "ld2",  ".16b",   1, false, 32 },
+	{ AArch64_LD2Twov8h_POST,    "ld2",  ".8h",    1, false, 32 },
+	{ AArch64_LD2Twov4s_POST,    "ld2",  ".4s",    1, false, 32 },
+	{ AArch64_LD2Twov2d_POST,    "ld2",  ".2d",    1, false, 32 },
+	{ AArch64_LD2Twov8b_POST,    "ld2",  ".8b",    1, false, 16 },
+	{ AArch64_LD2Twov4h_POST,    "ld2",  ".4h",    1, false, 16 },
+	{ AArch64_LD2Twov2s_POST,    "ld2",  ".2s",    1, false, 16 },
+	{ AArch64_LD3i8,             "ld3",  ".b",     1, true,  0  },
+	{ AArch64_LD3i16,            "ld3",  ".h",     1, true,  0  },
+	{ AArch64_LD3i32,            "ld3",  ".s",     1, true,  0  },
+	{ AArch64_LD3i64,            "ld3",  ".d",     1, true,  0  },
+	{ AArch64_LD3i8_POST,        "ld3",  ".b",     2, true,  3  },
+	{ AArch64_LD3i16_POST,       "ld3",  ".h",     2, true,  6  },
+	{ AArch64_LD3i32_POST,       "ld3",  ".s",     2, true,  12  },
+	{ AArch64_LD3i64_POST,       "ld3",  ".d",     2, true,  24  },
+	{ AArch64_LD3Rv16b,          "ld3r", ".16b",   0, false, 0  },
+	{ AArch64_LD3Rv8h,           "ld3r", ".8h",    0, false, 0  },
+	{ AArch64_LD3Rv4s,           "ld3r", ".4s",    0, false, 0  },
+	{ AArch64_LD3Rv2d,           "ld3r", ".2d",    0, false, 0  },
+	{ AArch64_LD3Rv8b,           "ld3r", ".8b",    0, false, 0  },
+	{ AArch64_LD3Rv4h,           "ld3r", ".4h",    0, false, 0  },
+	{ AArch64_LD3Rv2s,           "ld3r", ".2s",    0, false, 0  },
+	{ AArch64_LD3Rv1d,           "ld3r", ".1d",    0, false, 0  },
+	{ AArch64_LD3Rv16b_POST,     "ld3r", ".16b",   1, false, 3  },
+	{ AArch64_LD3Rv8h_POST,      "ld3r", ".8h",    1, false, 6  },
+	{ AArch64_LD3Rv4s_POST,      "ld3r", ".4s",    1, false, 12 },
+	{ AArch64_LD3Rv2d_POST,      "ld3r", ".2d",    1, false, 24 },
+	{ AArch64_LD3Rv8b_POST,      "ld3r", ".8b",    1, false, 3  },
+	{ AArch64_LD3Rv4h_POST,      "ld3r", ".4h",    1, false, 6  },
+	{ AArch64_LD3Rv2s_POST,      "ld3r", ".2s",    1, false, 12 },
+	{ AArch64_LD3Rv1d_POST,      "ld3r", ".1d",    1, false, 24 },
+	{ AArch64_LD3Threev16b,      "ld3",  ".16b",   0, false, 0  },
+	{ AArch64_LD3Threev8h,       "ld3",  ".8h",    0, false, 0  },
+	{ AArch64_LD3Threev4s,       "ld3",  ".4s",    0, false, 0  },
+	{ AArch64_LD3Threev2d,       "ld3",  ".2d",    0, false, 0  },
+	{ AArch64_LD3Threev8b,       "ld3",  ".8b",    0, false, 0  },
+	{ AArch64_LD3Threev4h,       "ld3",  ".4h",    0, false, 0  },
+	{ AArch64_LD3Threev2s,       "ld3",  ".2s",    0, false, 0  },
+	{ AArch64_LD3Threev16b_POST, "ld3",  ".16b",   1, false, 48 },
+	{ AArch64_LD3Threev8h_POST,  "ld3",  ".8h",    1, false, 48 },
+	{ AArch64_LD3Threev4s_POST,  "ld3",  ".4s",    1, false, 48 },
+	{ AArch64_LD3Threev2d_POST,  "ld3",  ".2d",    1, false, 48 },
+	{ AArch64_LD3Threev8b_POST,  "ld3",  ".8b",    1, false, 24 },
+	{ AArch64_LD3Threev4h_POST,  "ld3",  ".4h",    1, false, 24 },
+	{ AArch64_LD3Threev2s_POST,  "ld3",  ".2s",    1, false, 24 },
+	{ AArch64_LD4i8,             "ld4",  ".b",     1, true,  0  },
+	{ AArch64_LD4i16,            "ld4",  ".h",     1, true,  0  },
+	{ AArch64_LD4i32,            "ld4",  ".s",     1, true,  0  },
+	{ AArch64_LD4i64,            "ld4",  ".d",     1, true,  0  },
+	{ AArch64_LD4i8_POST,        "ld4",  ".b",     2, true,  4  },
+	{ AArch64_LD4i16_POST,       "ld4",  ".h",     2, true,  8  },
+	{ AArch64_LD4i32_POST,       "ld4",  ".s",     2, true,  16 },
+	{ AArch64_LD4i64_POST,       "ld4",  ".d",     2, true,  32 },
+	{ AArch64_LD4Rv16b,          "ld4r", ".16b",   0, false, 0  },
+	{ AArch64_LD4Rv8h,           "ld4r", ".8h",    0, false, 0  },
+	{ AArch64_LD4Rv4s,           "ld4r", ".4s",    0, false, 0  },
+	{ AArch64_LD4Rv2d,           "ld4r", ".2d",    0, false, 0  },
+	{ AArch64_LD4Rv8b,           "ld4r", ".8b",    0, false, 0  },
+	{ AArch64_LD4Rv4h,           "ld4r", ".4h",    0, false, 0  },
+	{ AArch64_LD4Rv2s,           "ld4r", ".2s",    0, false, 0  },
+	{ AArch64_LD4Rv1d,           "ld4r", ".1d",    0, false, 0  },
+	{ AArch64_LD4Rv16b_POST,     "ld4r", ".16b",   1, false, 4  },
+	{ AArch64_LD4Rv8h_POST,      "ld4r", ".8h",    1, false, 8  },
+	{ AArch64_LD4Rv4s_POST,      "ld4r", ".4s",    1, false, 16 },
+	{ AArch64_LD4Rv2d_POST,      "ld4r", ".2d",    1, false, 32 },
+	{ AArch64_LD4Rv8b_POST,      "ld4r", ".8b",    1, false, 4  },
+	{ AArch64_LD4Rv4h_POST,      "ld4r", ".4h",    1, false, 8  },
+	{ AArch64_LD4Rv2s_POST,      "ld4r", ".2s",    1, false, 16 },
+	{ AArch64_LD4Rv1d_POST,      "ld4r", ".1d",    1, false, 32 },
+	{ AArch64_LD4Fourv16b,       "ld4",  ".16b",   0, false, 0  },
+	{ AArch64_LD4Fourv8h,        "ld4",  ".8h",    0, false, 0  },
+	{ AArch64_LD4Fourv4s,        "ld4",  ".4s",    0, false, 0  },
+	{ AArch64_LD4Fourv2d,        "ld4",  ".2d",    0, false, 0  },
+	{ AArch64_LD4Fourv8b,        "ld4",  ".8b",    0, false, 0  },
+	{ AArch64_LD4Fourv4h,        "ld4",  ".4h",    0, false, 0  },
+	{ AArch64_LD4Fourv2s,        "ld4",  ".2s",    0, false, 0  },
+	{ AArch64_LD4Fourv16b_POST,  "ld4",  ".16b",   1, false, 64 },
+	{ AArch64_LD4Fourv8h_POST,   "ld4",  ".8h",    1, false, 64 },
+	{ AArch64_LD4Fourv4s_POST,   "ld4",  ".4s",    1, false, 64 },
+	{ AArch64_LD4Fourv2d_POST,   "ld4",  ".2d",    1, false, 64 },
+	{ AArch64_LD4Fourv8b_POST,   "ld4",  ".8b",    1, false, 32 },
+	{ AArch64_LD4Fourv4h_POST,   "ld4",  ".4h",    1, false, 32 },
+	{ AArch64_LD4Fourv2s_POST,   "ld4",  ".2s",    1, false, 32 },
+	{ AArch64_ST1i8,             "st1",  ".b",     0, true,  0  },
+	{ AArch64_ST1i16,            "st1",  ".h",     0, true,  0  },
+	{ AArch64_ST1i32,            "st1",  ".s",     0, true,  0  },
+	{ AArch64_ST1i64,            "st1",  ".d",     0, true,  0  },
+	{ AArch64_ST1i8_POST,        "st1",  ".b",     1, true,  1  },
+	{ AArch64_ST1i16_POST,       "st1",  ".h",     1, true,  2  },
+	{ AArch64_ST1i32_POST,       "st1",  ".s",     1, true,  4  },
+	{ AArch64_ST1i64_POST,       "st1",  ".d",     1, true,  8  },
+	{ AArch64_ST1Onev16b,        "st1",  ".16b",   0, false, 0  },
+	{ AArch64_ST1Onev8h,         "st1",  ".8h",    0, false, 0  },
+	{ AArch64_ST1Onev4s,         "st1",  ".4s",    0, false, 0  },
+	{ AArch64_ST1Onev2d,         "st1",  ".2d",    0, false, 0  },
+	{ AArch64_ST1Onev8b,         "st1",  ".8b",    0, false, 0  },
+	{ AArch64_ST1Onev4h,         "st1",  ".4h",    0, false, 0  },
+	{ AArch64_ST1Onev2s,         "st1",  ".2s",    0, false, 0  },
+	{ AArch64_ST1Onev1d,         "st1",  ".1d",    0, false, 0  },
+	{ AArch64_ST1Onev16b_POST,   "st1",  ".16b",   1, false, 16 },
+	{ AArch64_ST1Onev8h_POST,    "st1",  ".8h",    1, false, 16 },
+	{ AArch64_ST1Onev4s_POST,    "st1",  ".4s",    1, false, 16 },
+	{ AArch64_ST1Onev2d_POST,    "st1",  ".2d",    1, false, 16 },
+	{ AArch64_ST1Onev8b_POST,    "st1",  ".8b",    1, false, 8  },
+	{ AArch64_ST1Onev4h_POST,    "st1",  ".4h",    1, false, 8  },
+	{ AArch64_ST1Onev2s_POST,    "st1",  ".2s",    1, false, 8  },
+	{ AArch64_ST1Onev1d_POST,    "st1",  ".1d",    1, false, 8  },
+	{ AArch64_ST1Twov16b,        "st1",  ".16b",   0, false, 0  },
+	{ AArch64_ST1Twov8h,         "st1",  ".8h",    0, false, 0  },
+	{ AArch64_ST1Twov4s,         "st1",  ".4s",    0, false, 0  },
+	{ AArch64_ST1Twov2d,         "st1",  ".2d",    0, false, 0  },
+	{ AArch64_ST1Twov8b,         "st1",  ".8b",    0, false, 0  },
+	{ AArch64_ST1Twov4h,         "st1",  ".4h",    0, false, 0  },
+	{ AArch64_ST1Twov2s,         "st1",  ".2s",    0, false, 0  },
+	{ AArch64_ST1Twov1d,         "st1",  ".1d",    0, false, 0  },
+	{ AArch64_ST1Twov16b_POST,   "st1",  ".16b",   1, false, 32 },
+	{ AArch64_ST1Twov8h_POST,    "st1",  ".8h",    1, false, 32 },
+	{ AArch64_ST1Twov4s_POST,    "st1",  ".4s",    1, false, 32 },
+	{ AArch64_ST1Twov2d_POST,    "st1",  ".2d",    1, false, 32 },
+	{ AArch64_ST1Twov8b_POST,    "st1",  ".8b",    1, false, 16 },
+	{ AArch64_ST1Twov4h_POST,    "st1",  ".4h",    1, false, 16 },
+	{ AArch64_ST1Twov2s_POST,    "st1",  ".2s",    1, false, 16 },
+	{ AArch64_ST1Twov1d_POST,    "st1",  ".1d",    1, false, 16 },
+	{ AArch64_ST1Threev16b,      "st1",  ".16b",   0, false, 0  },
+	{ AArch64_ST1Threev8h,       "st1",  ".8h",    0, false, 0  },
+	{ AArch64_ST1Threev4s,       "st1",  ".4s",    0, false, 0  },
+	{ AArch64_ST1Threev2d,       "st1",  ".2d",    0, false, 0  },
+	{ AArch64_ST1Threev8b,       "st1",  ".8b",    0, false, 0  },
+	{ AArch64_ST1Threev4h,       "st1",  ".4h",    0, false, 0  },
+	{ AArch64_ST1Threev2s,       "st1",  ".2s",    0, false, 0  },
+	{ AArch64_ST1Threev1d,       "st1",  ".1d",    0, false, 0  },
+	{ AArch64_ST1Threev16b_POST, "st1",  ".16b",   1, false, 48 },
+	{ AArch64_ST1Threev8h_POST,  "st1",  ".8h",    1, false, 48 },
+	{ AArch64_ST1Threev4s_POST,  "st1",  ".4s",    1, false, 48 },
+	{ AArch64_ST1Threev2d_POST,  "st1",  ".2d",    1, false, 48 },
+	{ AArch64_ST1Threev8b_POST,  "st1",  ".8b",    1, false, 24 },
+	{ AArch64_ST1Threev4h_POST,  "st1",  ".4h",    1, false, 24 },
+	{ AArch64_ST1Threev2s_POST,  "st1",  ".2s",    1, false, 24 },
+	{ AArch64_ST1Threev1d_POST,  "st1",  ".1d",    1, false, 24 },
+	{ AArch64_ST1Fourv16b,       "st1",  ".16b",   0, false, 0  },
+	{ AArch64_ST1Fourv8h,        "st1",  ".8h",    0, false, 0  },
+	{ AArch64_ST1Fourv4s,        "st1",  ".4s",    0, false, 0  },
+	{ AArch64_ST1Fourv2d,        "st1",  ".2d",    0, false, 0  },
+	{ AArch64_ST1Fourv8b,        "st1",  ".8b",    0, false, 0  },
+	{ AArch64_ST1Fourv4h,        "st1",  ".4h",    0, false, 0  },
+	{ AArch64_ST1Fourv2s,        "st1",  ".2s",    0, false, 0  },
+	{ AArch64_ST1Fourv1d,        "st1",  ".1d",    0, false, 0  },
+	{ AArch64_ST1Fourv16b_POST,  "st1",  ".16b",   1, false, 64 },
+	{ AArch64_ST1Fourv8h_POST,   "st1",  ".8h",    1, false, 64 },
+	{ AArch64_ST1Fourv4s_POST,   "st1",  ".4s",    1, false, 64 },
+	{ AArch64_ST1Fourv2d_POST,   "st1",  ".2d",    1, false, 64 },
+	{ AArch64_ST1Fourv8b_POST,   "st1",  ".8b",    1, false, 32 },
+	{ AArch64_ST1Fourv4h_POST,   "st1",  ".4h",    1, false, 32 },
+	{ AArch64_ST1Fourv2s_POST,   "st1",  ".2s",    1, false, 32 },
+	{ AArch64_ST1Fourv1d_POST,   "st1",  ".1d",    1, false, 32 },
+	{ AArch64_ST2i8,             "st2",  ".b",     0, true,  0  },
+	{ AArch64_ST2i16,            "st2",  ".h",     0, true,  0  },
+	{ AArch64_ST2i32,            "st2",  ".s",     0, true,  0  },
+	{ AArch64_ST2i64,            "st2",  ".d",     0, true,  0  },
+	{ AArch64_ST2i8_POST,        "st2",  ".b",     1, true,  2  },
+	{ AArch64_ST2i16_POST,       "st2",  ".h",     1, true,  4  },
+	{ AArch64_ST2i32_POST,       "st2",  ".s",     1, true,  8  },
+	{ AArch64_ST2i64_POST,       "st2",  ".d",     1, true,  16 },
+	{ AArch64_ST2Twov16b,        "st2",  ".16b",   0, false, 0  },
+	{ AArch64_ST2Twov8h,         "st2",  ".8h",    0, false, 0  },
+	{ AArch64_ST2Twov4s,         "st2",  ".4s",    0, false, 0  },
+	{ AArch64_ST2Twov2d,         "st2",  ".2d",    0, false, 0  },
+	{ AArch64_ST2Twov8b,         "st2",  ".8b",    0, false, 0  },
+	{ AArch64_ST2Twov4h,         "st2",  ".4h",    0, false, 0  },
+	{ AArch64_ST2Twov2s,         "st2",  ".2s",    0, false, 0  },
+	{ AArch64_ST2Twov16b_POST,   "st2",  ".16b",   1, false, 32 },
+	{ AArch64_ST2Twov8h_POST,    "st2",  ".8h",    1, false, 32 },
+	{ AArch64_ST2Twov4s_POST,    "st2",  ".4s",    1, false, 32 },
+	{ AArch64_ST2Twov2d_POST,    "st2",  ".2d",    1, false, 32 },
+	{ AArch64_ST2Twov8b_POST,    "st2",  ".8b",    1, false, 16 },
+	{ AArch64_ST2Twov4h_POST,    "st2",  ".4h",    1, false, 16 },
+	{ AArch64_ST2Twov2s_POST,    "st2",  ".2s",    1, false, 16 },
+	{ AArch64_ST3i8,             "st3",  ".b",     0, true,  0  },
+	{ AArch64_ST3i16,            "st3",  ".h",     0, true,  0  },
+	{ AArch64_ST3i32,            "st3",  ".s",     0, true,  0  },
+	{ AArch64_ST3i64,            "st3",  ".d",     0, true,  0  },
+	{ AArch64_ST3i8_POST,        "st3",  ".b",     1, true,  3  },
+	{ AArch64_ST3i16_POST,       "st3",  ".h",     1, true,  6  },
+	{ AArch64_ST3i32_POST,       "st3",  ".s",     1, true,  12 },
+	{ AArch64_ST3i64_POST,       "st3",  ".d",     1, true,  24 },
+	{ AArch64_ST3Threev16b,      "st3",  ".16b",   0, false, 0  },
+	{ AArch64_ST3Threev8h,       "st3",  ".8h",    0, false, 0  },
+	{ AArch64_ST3Threev4s,       "st3",  ".4s",    0, false, 0  },
+	{ AArch64_ST3Threev2d,       "st3",  ".2d",    0, false, 0  },
+	{ AArch64_ST3Threev8b,       "st3",  ".8b",    0, false, 0  },
+	{ AArch64_ST3Threev4h,       "st3",  ".4h",    0, false, 0  },
+	{ AArch64_ST3Threev2s,       "st3",  ".2s",    0, false, 0  },
+	{ AArch64_ST3Threev16b_POST, "st3",  ".16b",   1, false, 48 },
+	{ AArch64_ST3Threev8h_POST,  "st3",  ".8h",    1, false, 48 },
+	{ AArch64_ST3Threev4s_POST,  "st3",  ".4s",    1, false, 48 },
+	{ AArch64_ST3Threev2d_POST,  "st3",  ".2d",    1, false, 48 },
+	{ AArch64_ST3Threev8b_POST,  "st3",  ".8b",    1, false, 24 },
+	{ AArch64_ST3Threev4h_POST,  "st3",  ".4h",    1, false, 24 },
+	{ AArch64_ST3Threev2s_POST,  "st3",  ".2s",    1, false, 24 },
+	{ AArch64_ST4i8,             "st4",  ".b",     0, true,  0  },
+	{ AArch64_ST4i16,            "st4",  ".h",     0, true,  0  },
+	{ AArch64_ST4i32,            "st4",  ".s",     0, true,  0  },
+	{ AArch64_ST4i64,            "st4",  ".d",     0, true,  0  },
+	{ AArch64_ST4i8_POST,        "st4",  ".b",     1, true,  4  },
+	{ AArch64_ST4i16_POST,       "st4",  ".h",     1, true,  8  },
+	{ AArch64_ST4i32_POST,       "st4",  ".s",     1, true,  16 },
+	{ AArch64_ST4i64_POST,       "st4",  ".d",     1, true,  32 },
+	{ AArch64_ST4Fourv16b,       "st4",  ".16b",   0, false, 0  },
+	{ AArch64_ST4Fourv8h,        "st4",  ".8h",    0, false, 0  },
+	{ AArch64_ST4Fourv4s,        "st4",  ".4s",    0, false, 0  },
+	{ AArch64_ST4Fourv2d,        "st4",  ".2d",    0, false, 0  },
+	{ AArch64_ST4Fourv8b,        "st4",  ".8b",    0, false, 0  },
+	{ AArch64_ST4Fourv4h,        "st4",  ".4h",    0, false, 0  },
+	{ AArch64_ST4Fourv2s,        "st4",  ".2s",    0, false, 0  },
+	{ AArch64_ST4Fourv16b_POST,  "st4",  ".16b",   1, false, 64 },
+	{ AArch64_ST4Fourv8h_POST,   "st4",  ".8h",    1, false, 64 },
+	{ AArch64_ST4Fourv4s_POST,   "st4",  ".4s",    1, false, 64 },
+	{ AArch64_ST4Fourv2d_POST,   "st4",  ".2d",    1, false, 64 },
+	{ AArch64_ST4Fourv8b_POST,   "st4",  ".8b",    1, false, 32 },
+	{ AArch64_ST4Fourv4h_POST,   "st4",  ".4h",    1, false, 32 },
+	{ AArch64_ST4Fourv2s_POST,   "st4",  ".2s",    1, false, 32 },
+};
+
+static LdStNInstrDesc *getLdStNInstrDesc(unsigned Opcode)
+{
+	unsigned Idx;
+
+	for (Idx = 0; Idx != ARR_SIZE(LdStNInstInfo); ++Idx)
+		if (LdStNInstInfo[Idx].Opcode == Opcode)
+			return &LdStNInstInfo[Idx];
+
+	return NULL;
+}
+
+static void printAMNoIndex(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	SStream_concat(O, "[%s]", getRegisterName(MCOperand_getReg(MCInst_getOperand(MI, OpNum)), AArch64_NoRegAltName));
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_MEM;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.base = MCInst_getOperand(MI, OpNum);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.index = ARM64_REG_INVALID;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = 0;
+		MI->flat_insn->detail->arm64.op_count++;
+	}
+}
+
+static void printAMIndexedWB(MCInst *MI, unsigned OpNum, unsigned Scale, SStream *O)
+{
+	MCOperand *MO1 = MCInst_getOperand(MI, OpNum + 1);
+
+	SStream_concat(O, "[%s", getRegisterName(MCOperand_getReg(MCInst_getOperand(MI, OpNum)), AArch64_NoRegAltName));
+
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_MEM;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.base = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.index = ARM64_REG_INVALID;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = 0;
+	}
+
+	if (MCOperand_isImm(MO1)) {
+		int64_t val = Scale * MCOperand_getImm(MO1);
+		printInt64Bang(O, val);
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = val;
+		}
+	}
+
+	SStream_concat0(O, "]");
+
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->arm64.op_count++;
+	}
+}
+
+static void printImplicitlyTypedVectorList(MCInst *MI, unsigned OpNum, SStream *O, MCRegisterInfo *MRI)
+{
+	printVectorList(MI, OpNum, O, "", MRI, 0, 0);
+}
+
+#endif
+
+static bool printSysAlias(MCInst *MI, SStream *O)
+{
+	// unsigned Opcode = MCInst_getOpcode(MI);
+	//assert(Opcode == AArch64_SYSxt && "Invalid opcode for SYS alias!");
+
+	char *Asm = NULL;
+	MCOperand *Op1 = MCInst_getOperand(MI, 0);
+	MCOperand *Cn = MCInst_getOperand(MI, 1);
+	MCOperand *Cm = MCInst_getOperand(MI, 2);
+	MCOperand *Op2 = MCInst_getOperand(MI, 3);
+
+	unsigned Op1Val = (unsigned)MCOperand_getImm(Op1);
+	unsigned CnVal = (unsigned)MCOperand_getImm(Cn);
+	unsigned CmVal = (unsigned)MCOperand_getImm(Cm);
+	unsigned Op2Val = (unsigned)MCOperand_getImm(Op2);
+	unsigned insn_id, op_ic = 0, op_dc = 0, op_at = 0, op_tlbi = 0;
+
+	if (CnVal == 7) {
+		switch (CmVal) {
+			default:
+				break;
+
+				// IC aliases
+			case 1:
+				if (Op1Val == 0 && Op2Val == 0) {
+					Asm = "ic\tialluis";
+					insn_id = ARM64_INS_IC;
+					op_ic = ARM64_IC_IALLUIS;
+				}
+				break;
+			case 5:
+				if (Op1Val == 0 && Op2Val == 0) {
+					Asm = "ic\tiallu";
+					insn_id = ARM64_INS_IC;
+					op_ic = ARM64_IC_IALLU;
+				} else if (Op1Val == 3 && Op2Val == 1) {
+					Asm = "ic\tivau";
+					insn_id = ARM64_INS_IC;
+					op_ic = ARM64_IC_IVAU;
+				}
+				break;
+
+				// DC aliases
+			case 4:
+				if (Op1Val == 3 && Op2Val == 1) {
+					Asm = "dc\tzva";
+					insn_id = ARM64_INS_DC;
+					op_dc = ARM64_DC_ZVA;
+				}
+				break;
+			case 6:
+				if (Op1Val == 0 && Op2Val == 1) {
+					Asm = "dc\tivac";
+					insn_id = ARM64_INS_DC;
+					op_dc = ARM64_DC_IVAC;
+				}
+				if (Op1Val == 0 && Op2Val == 2) {
+					Asm = "dc\tisw";
+					insn_id = ARM64_INS_DC;
+					op_dc = ARM64_DC_ISW;
+				}
+				break;
+			case 10:
+				if (Op1Val == 3 && Op2Val == 1) {
+					Asm = "dc\tcvac";
+					insn_id = ARM64_INS_DC;
+					op_dc = ARM64_DC_CVAC;
+				} else if (Op1Val == 0 && Op2Val == 2) {
+					Asm = "dc\tcsw";
+					insn_id = ARM64_INS_DC;
+					op_dc = ARM64_DC_CSW;
+				}
+				break;
+			case 11:
+				if (Op1Val == 3 && Op2Val == 1) {
+					Asm = "dc\tcvau";
+					insn_id = ARM64_INS_DC;
+					op_dc = ARM64_DC_CVAU;
+				}
+				break;
+			case 14:
+				if (Op1Val == 3 && Op2Val == 1) {
+					Asm = "dc\tcivac";
+					insn_id = ARM64_INS_DC;
+					op_dc = ARM64_DC_CIVAC;
+				} else if (Op1Val == 0 && Op2Val == 2) {
+					Asm = "dc\tcisw";
+					insn_id = ARM64_INS_DC;
+					op_dc = ARM64_DC_CISW;
+				}
+				break;
+
+				// AT aliases
+			case 8:
+				switch (Op1Val) {
+					default:
+						break;
+					case 0:
+						switch (Op2Val) {
+							default:
+								break;
+							case 0: Asm = "at\ts1e1r"; insn_id = ARM64_INS_AT; op_at = ARM64_AT_S1E1R; break;
+							case 1: Asm = "at\ts1e1w"; insn_id = ARM64_INS_AT; op_at = ARM64_AT_S1E1W; break;
+							case 2: Asm = "at\ts1e0r"; insn_id = ARM64_INS_AT; op_at = ARM64_AT_S1E0R; break;
+							case 3: Asm = "at\ts1e0w"; insn_id = ARM64_INS_AT; op_at = ARM64_AT_S1E0W; break;
+						}
+						break;
+					case 4:
+						switch (Op2Val) {
+							default:
+								break;
+							case 0: Asm = "at\ts1e2r"; insn_id = ARM64_INS_AT; op_at = ARM64_AT_S1E2R; break;
+							case 1: Asm = "at\ts1e2w"; insn_id = ARM64_INS_AT; op_at = ARM64_AT_S1E2W; break;
+							case 4: Asm = "at\ts12e1r"; insn_id = ARM64_INS_AT; op_at = ARM64_AT_S1E1R; break;
+							case 5: Asm = "at\ts12e1w"; insn_id = ARM64_INS_AT; op_at = ARM64_AT_S1E1W; break;
+							case 6: Asm = "at\ts12e0r"; insn_id = ARM64_INS_AT; op_at = ARM64_AT_S1E0R; break;
+							case 7: Asm = "at\ts12e0w"; insn_id = ARM64_INS_AT; op_at = ARM64_AT_S1E0W; break;
+						}
+						break;
+					case 6:
+						switch (Op2Val) {
+							default:
+								break;
+							case 0: Asm = "at\ts1e3r"; insn_id = ARM64_INS_AT; op_at = ARM64_AT_S1E3R; break;
+							case 1: Asm = "at\ts1e3w"; insn_id = ARM64_INS_AT; op_at = ARM64_AT_S1E3W; break;
+						}
+						break;
+				}
+				break;
+		}
+	} else if (CnVal == 8) {
+		// TLBI aliases
+		switch (CmVal) {
+			default:
+				break;
+			case 3:
+				switch (Op1Val) {
+					default:
+						break;
+					case 0:
+						switch (Op2Val) {
+							default:
+								break;
+							case 0: Asm = "tlbi\tvmalle1is"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_VMALLE1IS; break;
+							case 1: Asm = "tlbi\tvae1is"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_VAE1IS; break;
+							case 2: Asm = "tlbi\taside1is"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_ASIDE1IS; break;
+							case 3: Asm = "tlbi\tvaae1is"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_VAAE1IS; break;
+							case 5: Asm = "tlbi\tvale1is"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_VALE1IS; break;
+							case 7: Asm = "tlbi\tvaale1is"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_VAALE1IS; break;
+						}
+						break;
+					case 4:
+						switch (Op2Val) {
+							default:
+								break;
+							case 0: Asm = "tlbi\talle2is"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_ALLE2IS; break;
+							case 1: Asm = "tlbi\tvae2is"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_VAE2IS; break;
+							case 4: Asm = "tlbi\talle1is"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_ALLE1IS; break;
+							case 5: Asm = "tlbi\tvale2is"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_VALE2IS; break;
+							case 6: Asm = "tlbi\tvmalls12e1is"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_VMALLS12E1IS; break;
+						}
+						break;
+					case 6:
+						switch (Op2Val) {
+							default:
+								break;
+							case 0: Asm = "tlbi\talle3is"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_ALLE3IS; break;
+							case 1: Asm = "tlbi\tvae3is"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_VAE3IS; break;
+							case 5: Asm = "tlbi\tvale3is"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_VALE3IS; break;
+						}
+						break;
+				}
+				break;
+			case 0:
+				switch (Op1Val) {
+					default:
+						break;
+					case 4:
+						switch (Op2Val) {
+							default:
+								break;
+							case 1: Asm = "tlbi\tipas2e1is"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_IPAS2E1IS; break;
+							case 5: Asm = "tlbi\tipas2le1is"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_IPAS2LE1IS; break;
+						}
+						break;
+				}
+				break;
+			case 4:
+				switch (Op1Val) {
+					default:
+						break;
+					case 4:
+						switch (Op2Val) {
+							default:
+								break;
+							case 1: Asm = "tlbi\tipas2e1"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_IPAS2E1; break;
+							case 5: Asm = "tlbi\tipas2le1"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_IPAS2LE1; break;
+						}
+						break;
+				}
+				break;
+			case 7:
+				switch (Op1Val) {
+					default:
+						break;
+					case 0:
+						switch (Op2Val) {
+							default:
+								break;
+							case 0: Asm = "tlbi\tvmalle1"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_VMALLE1; break;
+							case 1: Asm = "tlbi\tvae1"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_VAE1; break;
+							case 2: Asm = "tlbi\taside1"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_ASIDE1; break;
+							case 3: Asm = "tlbi\tvaae1"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_VAAE1; break;
+							case 5: Asm = "tlbi\tvale1"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_VALE1; break;
+							case 7: Asm = "tlbi\tvaale1"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_VAALE1; break;
+						}
+						break;
+					case 4:
+						switch (Op2Val) {
+							default:
+								break;
+							case 0: Asm = "tlbi\talle2"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_ALLE2; break;
+							case 1: Asm = "tlbi\tvae2"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_VAE2; break;
+							case 4: Asm = "tlbi\talle1"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_ALLE1; break;
+							case 5: Asm = "tlbi\tvale2"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_VALE2; break;
+							case 6: Asm = "tlbi\tvmalls12e1"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_VMALLS12E1; break;
+						}
+						break;
+					case 6:
+						switch (Op2Val) {
+							default:
+								break;
+							case 0: Asm = "tlbi\talle3"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_ALLE3; break;
+							case 1: Asm = "tlbi\tvae3"; insn_id = ARM64_INS_TLBI;  op_tlbi = ARM64_TLBI_VAE3; break;
+							case 5: Asm = "tlbi\tvale3"; insn_id = ARM64_INS_TLBI; op_tlbi = ARM64_TLBI_VALE3; break;
+						}
+						break;
+				}
+				break;
+		}
+	}
+
+	if (Asm) {
+		MCInst_setOpcodePub(MI, insn_id);
+		SStream_concat0(O, Asm);
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_SYS;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].sys = op_ic + op_dc + op_at + op_tlbi;
+			MI->flat_insn->detail->arm64.op_count++;
+		}
+
+		if (!strstr(Asm, "all")) {
+			unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, 4));
+			SStream_concat(O, ", %s", getRegisterName(Reg, AArch64_NoRegAltName));
+			if (MI->csh->detail) {
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
 				MI->flat_insn->detail->arm64.op_count++;
 			}
 		}
 	}
-}
 
-static void printShiftOperand(MCInst *MI,  unsigned OpNum,
-		SStream *O, A64SE_ShiftExtSpecifiers Shift)
-{
-	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	unsigned int imm;
-
-	// LSL #0 is not printed
-	if (Shift == A64SE_LSL && MCOperand_isImm(MO) && MCOperand_getImm(MO) == 0)
-		return;
-
-	switch (Shift) {
-		case A64SE_LSL: SStream_concat0(O, "lsl"); break;
-		case A64SE_LSR: SStream_concat0(O, "lsr"); break;
-		case A64SE_ASR: SStream_concat0(O, "asr"); break;
-		case A64SE_ROR: SStream_concat0(O, "ror"); break;
-		default: break; // llvm_unreachable("Invalid shift specifier in logical instruction");
-	}
-
-	imm = (unsigned int)MCOperand_getImm(MO);
-	if (imm > HEX_THRESHOLD)
-		SStream_concat(O, " #0x%x", imm);
-	else
-		SStream_concat(O, " #%u", imm);
-	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.type = Shift + 1;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.value = imm;
-	}
-}
-
-static void printMoveWideImmOperand(MCInst *MI,  unsigned OpNum, SStream *O)
-{
-	MCOperand *UImm16MO = MCInst_getOperand(MI, OpNum);
-	MCOperand *ShiftMO = MCInst_getOperand(MI, OpNum + 1);
-
-	if (MCOperand_isImm(UImm16MO)) {
-		uint64_t imm = MCOperand_getImm(UImm16MO);
-		if (imm > HEX_THRESHOLD)
-			SStream_concat(O, "#0x%"PRIx64, imm);
-		else
-			SStream_concat(O, "#%"PRIu64, imm);
-		if (MI->csh->detail) {
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int32_t)imm;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-
-		if (MCOperand_getImm(ShiftMO) != 0) {
-			unsigned int shift = (unsigned int)MCOperand_getImm(ShiftMO) * 16;
-			if (shift > HEX_THRESHOLD)
-				SStream_concat(O, ", lsl #0x%x", shift);
-			else
-				SStream_concat(O, ", lsl #%u", shift);
-			if (MI->csh->detail) {
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.type = ARM64_SFT_LSL;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.value = shift;
-			}
-		}
-
-		return;
-	}
-}
-
-static void printNamedImmOperand(MCInst *MI, unsigned OpNum, SStream *O, NamedImmMapper *Mapper)
-{
-	bool ValidName;
-	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	char *Name = NamedImmMapper_toString(Mapper, (uint32_t)MCOperand_getImm(MO), &ValidName);
-
-	if (ValidName)
-		SStream_concat0(O, Name);
-	else {
-		uint64_t imm = MCOperand_getImm(MO);
-		if (imm > HEX_THRESHOLD)
-			SStream_concat(O, "#0x%"PRIx64, imm);
-		else
-			SStream_concat(O, "#%"PRIu64, imm);
-		if (MI->csh->detail) {
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int32_t)imm;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-	}
-}
-
-static void printSysRegOperand(SysRegMapper *Mapper,
-		MCInst *MI, unsigned OpNum, SStream *O)
-{
-	bool ValidName;
-	char Name[128];
-
-	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-
-	SysRegMapper_toString(Mapper, (uint32_t)MCOperand_getImm(MO), &ValidName, Name);
-	if (ValidName) {
-		SStream_concat0(O, Name);
-	}
-}
-
-#define GET_REGINFO_ENUM
-#include "AArch64GenRegisterInfo.inc"
-
-static inline bool isStackReg(unsigned RegNo)
-{
-	return RegNo == AArch64_XSP || RegNo == AArch64_WSP;
-}
-
-static void printRegExtendOperand(MCInst *MI, unsigned OpNum, SStream *O,
-		A64SE_ShiftExtSpecifiers Ext)
-{
-	// FIXME: In principle TableGen should be able to detect this itself far more
-	// easily. We will only accumulate more of these hacks.
-	unsigned Reg0 = MCOperand_getReg(MCInst_getOperand(MI, 0));
-	unsigned Reg1 = MCOperand_getReg(MCInst_getOperand(MI, 1));
-	MCOperand *MO;
-
-	if (isStackReg(Reg0) || isStackReg(Reg1)) {
-		A64SE_ShiftExtSpecifiers LSLEquiv;
-
-		if (Reg0 == AArch64_XSP || Reg1 == AArch64_XSP)
-			LSLEquiv = A64SE_UXTX;
-		else
-			LSLEquiv = A64SE_UXTW;
-
-		if (Ext == LSLEquiv) {
-			unsigned int shift = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-			if (shift > HEX_THRESHOLD)
-				SStream_concat(O, "lsl #0x%x", shift);
-			else
-				SStream_concat(O, "lsl #%u", shift);
-			if (MI->csh->detail) {
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.type = ARM64_SFT_LSL;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.value = shift;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].ext = Ext - 4;
-			}
-			return;
-		}
-	}
-
-	switch (Ext) {
-		case A64SE_UXTB: SStream_concat0(O, "uxtb"); break;
-		case A64SE_UXTH: SStream_concat0(O, "uxth"); break;
-		case A64SE_UXTW: SStream_concat0(O, "uxtw"); break;
-		case A64SE_UXTX: SStream_concat0(O, "uxtx"); break;
-		case A64SE_SXTB: SStream_concat0(O, "sxtb"); break;
-		case A64SE_SXTH: SStream_concat0(O, "sxth"); break;
-		case A64SE_SXTW: SStream_concat0(O, "sxtw"); break;
-		case A64SE_SXTX: SStream_concat0(O, "sxtx"); break;
-		default: break; //llvm_unreachable("Unexpected shift type for printing");
-	}
-
-	if (MI->csh->detail)
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].ext = Ext - 4;
-	MO = MCInst_getOperand(MI, OpNum);
-	if (MCOperand_getImm(MO) != 0) {
-		unsigned int shift = (unsigned int)MCOperand_getImm(MO);
-		if (shift > HEX_THRESHOLD)
-			SStream_concat(O, " #0x%x", shift);
-		else
-			SStream_concat(O, " #%u", shift);
-		if (MI->csh->detail) {
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.type = ARM64_SFT_LSL;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.value = shift;
-		}
-	}
-}
-
-static void printSImm7ScaledOperand(MCInst *MI, unsigned OpNum,
-		SStream *O, int MemScale)
-{
-	MCOperand *MOImm = MCInst_getOperand(MI, OpNum);
-	int32_t Imm = (int32_t)unpackSignedImm(7, MCOperand_getImm(MOImm));
-	int64_t res;
-
-	res = (int64_t)Imm * MemScale;
-	if (res >= 0) {
-		if (res > HEX_THRESHOLD)
-			SStream_concat(O, "#0x%"PRIx64, res);
-		else
-			SStream_concat(O, "#%"PRIu64, res);
-	} else {
-		if (res < -HEX_THRESHOLD)
-			SStream_concat(O, "#-0x%"PRIx64, -res);
-		else
-			SStream_concat(O, "#-%"PRIu64, -res);
-	}
-
-	if (MI->csh->detail) {
-		if (MI->csh->doing_mem) {
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int32_t)res;
-		} else {
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int32_t)res;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-	}
-}
-
-// TODO: handle this Vd register??
-static void printVPRRegister(MCInst *MI, unsigned OpNo, SStream *O)
-{
-	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNo));
-#ifndef CAPSTONE_DIET
-	char *Name = cs_strdup(getRegisterName(Reg));
-	Name[0] = 'v';
-	SStream_concat0(O, Name);
-	cs_mem_free(Name);
-#endif
-	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
+	return Asm != NULL;
 }
 
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	MCOperand *Op = MCInst_getOperand(MI, OpNo);
+
 	if (MCOperand_isReg(Op)) {
 		unsigned Reg = MCOperand_getReg(Op);
-		SStream_concat0(O, getRegisterName(Reg));
+		SStream_concat0(O, getRegisterName(Reg, AArch64_NoRegAltName));
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
 				if (MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.base == ARM64_REG_INVALID) {
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.base = Reg;
-				} else {
+				}
+				else if (MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.index == ARM64_REG_INVALID) {
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.index = Reg;
 				}
 			} else {
@@ -631,221 +1052,762 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			}
 		}
 	} else if (MCOperand_isImm(Op)) {
-		int64_t imm = MCOperand_getImm(Op);
-		if (imm >= 0) {
-			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "#0x%"PRIx64, imm);
-			else
-				SStream_concat(O, "#%"PRIu64, imm);
-		} else {
-			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "#-0x%"PRIx64, -imm);
-			else
-				SStream_concat(O, "#-%"PRIu64, -imm);
-		}
-
+		int imm = (int)MCOperand_getImm(Op);
+		printInt32Bang(O, imm);
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int32_t)imm;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = imm;
 			} else {
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int32_t)imm;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = imm;
 				MI->flat_insn->detail->arm64.op_count++;
 			}
 		}
 	}
 }
 
-#define GET_INSTRINFO_ENUM
-#include "AArch64GenInstrInfo.inc"
+static void printHexImm(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	MCOperand *Op = MCInst_getOperand(MI, OpNo);
+	SStream_concat(O, "#%#llx", MCOperand_getImm(Op));
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)MCOperand_getImm(Op);
+		MI->flat_insn->detail->arm64.op_count++;
+	}
+}
 
-static void printNeonMovImmShiftOperand(MCInst *MI, unsigned OpNum,
-		SStream *O, A64SE_ShiftExtSpecifiers Ext, bool isHalf)
+static void printPostIncOperand(MCInst *MI, unsigned OpNo,
+		unsigned Imm, SStream *O)
+{
+	MCOperand *Op = MCInst_getOperand(MI, OpNo);
+
+	if (MCOperand_isReg(Op)) {
+		unsigned Reg = MCOperand_getReg(Op);
+		if (Reg == AArch64_XZR) {
+			printInt32Bang(O, Imm);
+			if (MI->csh->detail) {
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Imm;
+				MI->flat_insn->detail->arm64.op_count++;
+			}
+		} else {
+			SStream_concat0(O, getRegisterName(Reg, AArch64_NoRegAltName));
+			if (MI->csh->detail) {
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
+				MI->flat_insn->detail->arm64.op_count++;
+			}
+		}
+	}
+	//llvm_unreachable("unknown operand kind in printPostIncOperand64");
+}
+
+static void printPostIncOperand2(MCInst *MI, unsigned OpNo, SStream *O, int Amount)
+{
+	printPostIncOperand(MI, OpNo, Amount, O);
+}
+
+static void printVRegOperand(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	MCOperand *Op = MCInst_getOperand(MI, OpNo);
+	//assert(Op.isReg() && "Non-register vreg operand!");
+	unsigned Reg = MCOperand_getReg(Op);
+	SStream_concat0(O, getRegisterName(Reg, AArch64_vreg));
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = AArch64_map_vregister(Reg);
+		MI->flat_insn->detail->arm64.op_count++;
+	}
+}
+
+static void printSysCROperand(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	MCOperand *Op = MCInst_getOperand(MI, OpNo);
+	//assert(Op.isImm() && "System instruction C[nm] operands must be immediates!");
+	SStream_concat(O, "c%u", MCOperand_getImm(Op));
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_CIMM;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)MCOperand_getImm(Op);
+		MI->flat_insn->detail->arm64.op_count++;
+	}
+}
+
+static void printAddSubImm(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	int64_t Imm;
-	//assert(MO.isImm() &&
-	//       "Immediate operand required for Neon vector immediate inst.");
+	if (MCOperand_isImm(MO)) {
+		unsigned Val = (MCOperand_getImm(MO) & 0xfff);
+		//assert(Val == MO.getImm() && "Add/sub immediate out of range!");
+		unsigned Shift = AArch64_AM_getShiftValue((int)MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1)));
 
-	bool IsLSL = false;
-	if (Ext == A64SE_LSL)
-		IsLSL = true;
-	else if (Ext != A64SE_MSL) {
-		//llvm_unreachable("Invalid shift specifier in movi instruction");
+		printInt32Bang(O, Val);
+
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
+			MI->flat_insn->detail->arm64.op_count++;
+		}
+
+		if (Shift != 0)
+			printShifter(MI, OpNum + 1, O);
 	}
+}
 
-	Imm = MCOperand_getImm(MO);
+static void printLogicalImm32(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	int64_t Val = (int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 
-	// MSL and LSLH accepts encoded shift amount 0 or 1.
-	if ((!IsLSL || (IsLSL && isHalf)) && Imm != 0 && Imm != 1) {
-		// llvm_unreachable("Invalid shift amount in movi instruction");
+	Val = AArch64_AM_decodeLogicalImmediate(Val, 32);
+	printUInt32Bang(O, (int)Val);
+
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)Val;
+		MI->flat_insn->detail->arm64.op_count++;
 	}
+}
 
-	// LSH accepts encoded shift amount 0, 1, 2 or 3.
-	if (IsLSL && (Imm < 0 || Imm > 3)) {
-		//llvm_unreachable("Invalid shift amount in movi instruction");
+static void printLogicalImm64(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	int64_t Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	Val = AArch64_AM_decodeLogicalImmediate(Val, 64);
+	printInt64Bang(O, Val);
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)Val;
+		MI->flat_insn->detail->arm64.op_count++;
 	}
+}
 
-	// Print shift amount as multiple of 8 with MSL encoded shift amount
-	// 0 and 1 printed as 8 and 16.
-	if (!IsLSL)
-		Imm++;
-	Imm *= 8;
+static void printShifter(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 
-	// LSL #0 is not printed
-	if (IsLSL) {
-		if (Imm == 0)
+	// LSL #0 should not be printed.
+	if (AArch64_AM_getShiftType(Val) == AArch64_AM_LSL &&
+			AArch64_AM_getShiftValue(Val) == 0)
+		return;
+
+	SStream_concat(O, ", %s ", AArch64_AM_getShiftExtendName(AArch64_AM_getShiftType(Val)));
+	printInt32Bang(O, AArch64_AM_getShiftValue(Val));
+	if (MI->csh->detail) {
+		arm64_shifter shifter = ARM64_SFT_INVALID;
+		switch(AArch64_AM_getShiftType(Val)) {
+			default:	// never reach
+			case AArch64_AM_LSL:
+				shifter = ARM64_SFT_LSL;
+				break;
+			case AArch64_AM_LSR:
+				shifter = ARM64_SFT_LSR;
+				break;
+			case AArch64_AM_ASR:
+				shifter = ARM64_SFT_ASR;
+				break;
+			case AArch64_AM_ROR:
+				shifter = ARM64_SFT_ROR;
+				break;
+			case AArch64_AM_MSL:
+				shifter = ARM64_SFT_MSL;
+				break;
+		}
+
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.type = shifter;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.value = AArch64_AM_getShiftValue(Val);
+	}
+}
+
+static void printShiftedRegister(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	SStream_concat0(O, getRegisterName(MCOperand_getReg(MCInst_getOperand(MI, OpNum)), AArch64_NoRegAltName));
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
+		MI->flat_insn->detail->arm64.op_count++;
+	}
+	printShifter(MI, OpNum + 1, O);
+}
+
+static void printArithExtend(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	AArch64_AM_ShiftExtendType ExtType = AArch64_AM_getArithExtendType(Val);
+	unsigned ShiftVal = AArch64_AM_getArithShiftValue(Val);
+
+	// If the destination or first source register operand is [W]SP, print
+	// UXTW/UXTX as LSL, and if the shift amount is also zero, print nothing at
+	// all.
+	if (ExtType == AArch64_AM_UXTW || ExtType == AArch64_AM_UXTX) {
+		unsigned Dest = MCOperand_getReg(MCInst_getOperand(MI, 0));
+		unsigned Src1 = MCOperand_getReg(MCInst_getOperand(MI, 1));
+		if ( ((Dest == AArch64_SP || Src1 == AArch64_SP) &&
+					ExtType == AArch64_AM_UXTX) ||
+				((Dest == AArch64_WSP || Src1 == AArch64_WSP) &&
+				 ExtType == AArch64_AM_UXTW) ) {
+			if (ShiftVal != 0) {
+				SStream_concat0(O, ", lsl ");
+				printInt32Bang(O, ShiftVal);
+				if (MI->csh->detail) {
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.type = ARM64_SFT_LSL;
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.value = ShiftVal;
+				}
+			}
+
 			return;
-		SStream_concat0(O, ", lsl");
-		if (MI->csh->detail)
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.type = ARM64_SFT_LSL;
-	} else {
-		SStream_concat0(O, ", msl");
-		if (MI->csh->detail)
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.type = ARM64_SFT_MSL;
+		}
 	}
 
-	if (Imm >= 0) {
-		if (Imm > HEX_THRESHOLD)
-			SStream_concat(O, " #0x%"PRIx64, Imm);
-		else
-			SStream_concat(O, " #%"PRIu64, Imm);
-	} else {
-		if (Imm < -HEX_THRESHOLD)
-			SStream_concat(O, " #-0x%"PRIx64, -Imm);
-		else
-			SStream_concat(O, " #-%"PRIu64, -Imm);
+	SStream_concat(O, ", %s", AArch64_AM_getShiftExtendName(ExtType));
+	if (MI->csh->detail) {
+		arm64_extender ext = ARM64_EXT_INVALID;
+		switch(ExtType) {
+			default:	// never reach
+			case AArch64_AM_UXTB:
+				ext = ARM64_EXT_UXTW;
+				break;
+			case AArch64_AM_UXTH:
+				ext = ARM64_EXT_UXTW;
+				break;
+			case AArch64_AM_UXTW:
+				ext = ARM64_EXT_UXTW;
+				break;
+			case AArch64_AM_UXTX:
+				ext = ARM64_EXT_UXTW;
+				break;
+			case AArch64_AM_SXTB:
+				ext = ARM64_EXT_UXTW;
+				break;
+			case AArch64_AM_SXTH:
+				ext = ARM64_EXT_UXTW;
+				break;
+			case AArch64_AM_SXTW:
+				ext = ARM64_EXT_UXTW;
+				break;
+			case AArch64_AM_SXTX:
+				ext = ARM64_EXT_UXTW;
+				break;
+		}
+
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].ext = ext;
 	}
+
+	if (ShiftVal != 0) {
+		SStream_concat0(O, " ");
+		printInt32Bang(O, ShiftVal);
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.type = ARM64_SFT_LSL;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.value = ShiftVal;
+		}
+	}
+}
+
+static void printExtendedRegister(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
+
+	SStream_concat0(O, getRegisterName(Reg, AArch64_NoRegAltName));
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
+		MI->flat_insn->detail->arm64.op_count++;
+	}
+
+	printArithExtend(MI, OpNum + 1, O);
+}
+
+static void printMemExtend(MCInst *MI, unsigned OpNum, SStream *O, char SrcRegKind, unsigned Width)
+{
+	unsigned SignExtend = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned DoShift = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
+
+	// sxtw, sxtx, uxtw or lsl (== uxtx)
+	bool IsLSL = !SignExtend && SrcRegKind == 'x';
+	if (IsLSL) {
+		SStream_concat0(O, "lsl");
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].shift.type = ARM64_SFT_LSL;
+		}
+	} else {
+		SStream_concat(O, "%cxt%c", (SignExtend ? 's' : 'u'), SrcRegKind);
+		if (MI->csh->detail) {
+			if (!SignExtend) {
+				switch(SrcRegKind) {
+					default: break;
+					case 'b':
+							 MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].ext = ARM64_EXT_UXTB;
+							 break;
+					case 'h':
+							 MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].ext = ARM64_EXT_UXTH;
+							 break;
+					case 'w':
+							 MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].ext = ARM64_EXT_UXTW;
+							 break;
+				}
+			} else {
+					switch(SrcRegKind) {
+						default: break;
+						case 'b':
+							MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].ext = ARM64_EXT_SXTB;
+							break;
+						case 'h':
+							MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].ext = ARM64_EXT_SXTH;
+							break;
+						case 'w':
+							MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].ext = ARM64_EXT_SXTW;
+							break;
+						case 'x':
+							MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].ext = ARM64_EXT_SXTX;
+							break;
+					}
+			}
+		}
+	}
+
+	if (DoShift || IsLSL) {
+		SStream_concat(O, " #%u", Log2_32(Width / 8));
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].shift.type = ARM64_SFT_LSL;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].shift.value = Log2_32(Width / 8);
+		}
+	}
+}
+
+static void printCondCode(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	A64CC_CondCode CC = (A64CC_CondCode)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	SStream_concat0(O, getCondCodeName(CC));
 
 	if (MI->csh->detail)
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.value = (unsigned int)Imm;
+		MI->flat_insn->detail->arm64.cc = (arm64_cc)(CC + 1);
 }
 
-static void printNeonUImm0Operand(MCInst *MI, unsigned OpNum, SStream *O)
+static void printInverseCondCode(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	SStream_concat0(O, "#0");
-	// FIXME: vector ZERO
+	A64CC_CondCode CC = (A64CC_CondCode)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	SStream_concat0(O, getCondCodeName(getInvertedCondCode(CC)));
+
 	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = 0;
-		MI->flat_insn->detail->arm64.op_count++;
+		MI->flat_insn->detail->arm64.cc = (arm64_cc)(getInvertedCondCode(CC) + 1);
 	}
 }
 
-static void printUImmHexOperand(MCInst *MI, unsigned OpNum, SStream *O)
+static void printImmScale(MCInst *MI, unsigned OpNum, SStream *O, int Scale)
 {
-	MCOperand *MOUImm = MCInst_getOperand(MI, OpNum);
+	int64_t val = Scale * MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 
-	//assert(MOUImm.isImm() &&
-	//       "Immediate operand required for Neon vector immediate inst.");
-
-	unsigned Imm = (unsigned int)MCOperand_getImm(MOUImm);
-
-	if (Imm > HEX_THRESHOLD)
-		SStream_concat(O, "#0x%x", Imm);
-	else
-		SStream_concat(O, "#%u", Imm);
-	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Imm;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-}
-
-static void printUImmBareOperand(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	MCOperand *MOUImm = MCInst_getOperand(MI, OpNum);
-
-	//assert(MOUImm.isImm()
-	//		&& "Immediate operand required for Neon vector immediate inst.");
-
-	unsigned Imm = (unsigned int)MCOperand_getImm(MOUImm);
-	if (Imm > HEX_THRESHOLD)
-		SStream_concat(O, "0x%x", Imm);
-	else
-		SStream_concat(O, "%u", Imm);
+	printInt64Bang(O, val);
 
 	if (MI->csh->detail) {
 		if (MI->csh->doing_mem) {
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = Imm;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int)val;
 		} else {
-			// FIXME: never has false branch??
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)val;
+			MI->flat_insn->detail->arm64.op_count++;
 		}
 	}
 }
 
-static void printNeonUImm64MaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
+static void printUImm12Offset(MCInst *MI, unsigned OpNum, unsigned Scale, SStream *O)
 {
-	MCOperand *MOUImm8 = MCInst_getOperand(MI, OpNum);
+	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 
-	//assert(MOUImm8.isImm() &&
-	//       "Immediate operand required for Neon vector immediate bytemask inst.");
-
-	uint32_t UImm8 = (uint32_t)MCOperand_getImm(MOUImm8);
-	uint64_t Mask = 0;
-
-	// Replicates 0x00 or 0xff byte in a 64-bit vector
-	unsigned ByteNum;
-	for (ByteNum = 0; ByteNum < 8; ++ByteNum) {
-		if ((UImm8 >> ByteNum) & 1)
-			Mask |= (uint64_t)0xff << (8 * ByteNum);
+	if (MCOperand_isImm(MO)) {
+		int64_t val = Scale * MCOperand_getImm(MO);
+		printInt64Bang(O, val);
+		if (MI->csh->detail) {
+			if (MI->csh->doing_mem) {
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int)val;
+			} else {
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)val;
+			MI->flat_insn->detail->arm64.op_count++;
+			}
+		}
 	}
+}
 
-	if (Mask > HEX_THRESHOLD)
-		SStream_concat(O, "#0x%"PRIx64, Mask);
-	else
-		SStream_concat(O, "#%"PRIu64, Mask);
+static void printUImm12Offset2(MCInst *MI, unsigned OpNum, SStream *O, int Scale)
+{
+	printUImm12Offset(MI, OpNum, Scale, O);
+}
+
+static void printPrefetchOp(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	unsigned prfop = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	bool Valid;
+	char *Name = A64NamedImmMapper_toString(&A64PRFM_PRFMMapper, prfop, &Valid);
+
+	if (Valid) {
+		SStream_concat0(O, Name);
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_PREFETCH;
+			// we have to plus 1 to prfop because 0 is a valid value of prfop
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].prefetch = prfop + 1;
+			MI->flat_insn->detail->arm64.op_count++;
+		}
+	} else {
+		printInt32Bang(O, prfop);
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = prfop;
+			MI->flat_insn->detail->arm64.op_count++;
+		}
+	}
+}
+
+static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	MCOperand *MO = MCInst_getOperand(MI, OpNum);
+	double FPImm = MCOperand_isFPImm(MO) ? MCOperand_getFPImm(MO) : AArch64_AM_getFPImmFloat((int)MCOperand_getImm(MO));
+
+	// 8 decimal places are enough to perfectly represent permitted floats.
+	SStream_concat(O, "#%.8f", FPImm);
 	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int32_t)Mask;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_FP;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].fp = FPImm;
 		MI->flat_insn->detail->arm64.op_count++;
 	}
 }
 
-static void printMRSOperand(MCInst *MI, unsigned OpNum, SStream *O)
+//static unsigned getNextVectorRegister(unsigned Reg, unsigned Stride = 1)
+static unsigned getNextVectorRegister(unsigned Reg, unsigned Stride)
 {
-	printSysRegOperand(&AArch64_MRSMapper, MI, OpNum, O);
+	while (Stride--) {
+		switch (Reg) {
+			default:
+				// llvm_unreachable("Vector register expected!");
+			case AArch64_Q0:  Reg = AArch64_Q1;  break;
+			case AArch64_Q1:  Reg = AArch64_Q2;  break;
+			case AArch64_Q2:  Reg = AArch64_Q3;  break;
+			case AArch64_Q3:  Reg = AArch64_Q4;  break;
+			case AArch64_Q4:  Reg = AArch64_Q5;  break;
+			case AArch64_Q5:  Reg = AArch64_Q6;  break;
+			case AArch64_Q6:  Reg = AArch64_Q7;  break;
+			case AArch64_Q7:  Reg = AArch64_Q8;  break;
+			case AArch64_Q8:  Reg = AArch64_Q9;  break;
+			case AArch64_Q9:  Reg = AArch64_Q10; break;
+			case AArch64_Q10: Reg = AArch64_Q11; break;
+			case AArch64_Q11: Reg = AArch64_Q12; break;
+			case AArch64_Q12: Reg = AArch64_Q13; break;
+			case AArch64_Q13: Reg = AArch64_Q14; break;
+			case AArch64_Q14: Reg = AArch64_Q15; break;
+			case AArch64_Q15: Reg = AArch64_Q16; break;
+			case AArch64_Q16: Reg = AArch64_Q17; break;
+			case AArch64_Q17: Reg = AArch64_Q18; break;
+			case AArch64_Q18: Reg = AArch64_Q19; break;
+			case AArch64_Q19: Reg = AArch64_Q20; break;
+			case AArch64_Q20: Reg = AArch64_Q21; break;
+			case AArch64_Q21: Reg = AArch64_Q22; break;
+			case AArch64_Q22: Reg = AArch64_Q23; break;
+			case AArch64_Q23: Reg = AArch64_Q24; break;
+			case AArch64_Q24: Reg = AArch64_Q25; break;
+			case AArch64_Q25: Reg = AArch64_Q26; break;
+			case AArch64_Q26: Reg = AArch64_Q27; break;
+			case AArch64_Q27: Reg = AArch64_Q28; break;
+			case AArch64_Q28: Reg = AArch64_Q29; break;
+			case AArch64_Q29: Reg = AArch64_Q30; break;
+			case AArch64_Q30: Reg = AArch64_Q31; break;
+							   // Vector lists can wrap around.
+			case AArch64_Q31: Reg = AArch64_Q0; break;
+		}
+	}
+
+	return Reg;
 }
 
-static void printMSROperand(MCInst *MI, unsigned OpNum, SStream *O)
+static void printVectorList(MCInst *MI, unsigned OpNum, SStream *O, char *LayoutSuffix, MCRegisterInfo *MRI, arm64_vas vas, arm64_vess vess)
 {
-	printSysRegOperand(&AArch64_MSRMapper, MI, OpNum, O);
-}
-
-// If Count > 1, there are two valid kinds of vector list:
-//   (1) {Vn.layout, Vn+1.layout, ... , Vm.layout}
-//   (2) {Vn.layout - Vm.layout}
-// We choose the first kind as output.
-static void printVectorList(MCInst *MI, unsigned OpNum,
-		SStream *O, A64Layout_VectorLayout Layout, unsigned Count, MCRegisterInfo *MRI)
-{
-#ifndef CAPSTONE_DIET
-	//assert(Count >= 1 && Count <= 4 && "Invalid Number of Vectors");
+#define GETREGCLASS_CONTAIN0(_class, _reg) MCRegisterClass_contains(MCRegisterInfo_getRegClass(MRI, _class), _reg)
 
 	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
-	const char *LayoutStr = A64VectorLayoutToString(Layout);
+	unsigned NumRegs = 1, FirstReg, i;
+
 	SStream_concat0(O, "{");
-	if (Count > 1) { // Print sub registers separately
-		bool IsVec64 = (Layout < A64Layout_VL_16B);
-		unsigned SubRegIdx = IsVec64 ? AArch64_dsub_0 : AArch64_qsub_0;
-		unsigned I;
-		for (I = 0; I < Count; I++) {
-			char *Name = cs_strdup(getRegisterName(MCRegisterInfo_getSubReg(MRI, Reg, SubRegIdx++)));
-			Name[0] = 'v';
-			SStream_concat(O, "%s%s", Name, LayoutStr);
-			if (I != Count - 1)
-				SStream_concat0(O, ", ");
-			cs_mem_free(Name);
-		}
-	} else { // Print the register directly when NumVecs is 1.
-		char *Name = cs_strdup(getRegisterName(Reg));
-		Name[0] = 'v';
-		SStream_concat(O, "%s%s", Name, LayoutStr);
-		cs_mem_free(Name);
+
+	// Work out how many registers there are in the list (if there is an actual
+	// list).
+	if (GETREGCLASS_CONTAIN0(AArch64_DDRegClassID , Reg) ||
+			GETREGCLASS_CONTAIN0(AArch64_QQRegClassID, Reg))
+		NumRegs = 2;
+	else if (GETREGCLASS_CONTAIN0(AArch64_DDDRegClassID, Reg) ||
+			GETREGCLASS_CONTAIN0(AArch64_QQQRegClassID, Reg))
+		NumRegs = 3;
+	else if (GETREGCLASS_CONTAIN0(AArch64_DDDDRegClassID, Reg) ||
+			GETREGCLASS_CONTAIN0(AArch64_QQQQRegClassID, Reg))
+		NumRegs = 4;
+
+	// Now forget about the list and find out what the first register is.
+	if ((FirstReg = MCRegisterInfo_getSubReg(MRI, Reg, AArch64_dsub0)))
+		Reg = FirstReg;
+	else if ((FirstReg = MCRegisterInfo_getSubReg(MRI, Reg, AArch64_qsub0)))
+		Reg = FirstReg;
+
+	// If it's a D-reg, we need to promote it to the equivalent Q-reg before
+	// printing (otherwise getRegisterName fails).
+	if (GETREGCLASS_CONTAIN0(AArch64_FPR64RegClassID, Reg)) {
+		MCRegisterClass *FPR128RC = MCRegisterInfo_getRegClass(MRI, AArch64_FPR128RegClassID);
+		Reg = MCRegisterInfo_getMatchingSuperReg(MRI, Reg, AArch64_dsub, FPR128RC);
 	}
+
+	for (i = 0; i < NumRegs; ++i, Reg = getNextVectorRegister(Reg, 1)) {
+		SStream_concat(O, "%s%s", getRegisterName(Reg, AArch64_vreg), LayoutSuffix);
+		if (i + 1 != NumRegs)
+			SStream_concat0(O, ", ");
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = AArch64_map_vregister(Reg);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].vas = vas;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].vess = vess;
+			MI->flat_insn->detail->arm64.op_count++;
+		}
+	}
+
 	SStream_concat0(O, "}");
+}
+
+static void printTypedVectorList(MCInst *MI, unsigned OpNum, SStream *O, unsigned NumLanes, char LaneKind, MCRegisterInfo *MRI)
+{
+	char Suffix[32];
+	arm64_vas vas = 0;
+	arm64_vess vess = 0;
+
+	if (NumLanes) {
+		cs_snprintf(Suffix, sizeof(Suffix), ".%u%c", NumLanes, LaneKind);
+		switch(LaneKind) {
+			default: break;
+			case 'b':
+				switch(NumLanes) {
+					default: break;
+					case 8:
+							 vas = ARM64_VAS_8B;
+							 break;
+					case 16:
+							 vas = ARM64_VAS_16B;
+							 break;
+				}
+				break;
+			case 'h':
+				switch(NumLanes) {
+					default: break;
+					case 4:
+							 vas = ARM64_VAS_4H;
+							 break;
+					case 8:
+							 vas = ARM64_VAS_8H;
+							 break;
+				}
+				break;
+			case 's':
+				switch(NumLanes) {
+					default: break;
+					case 2:
+							 vas = ARM64_VAS_2S;
+							 break;
+					case 4:
+							 vas = ARM64_VAS_4S;
+							 break;
+				}
+				break;
+			case 'd':
+				switch(NumLanes) {
+					default: break;
+					case 1:
+							 vas = ARM64_VAS_1D;
+							 break;
+					case 2:
+							 vas = ARM64_VAS_2D;
+							 break;
+				}
+				break;
+			case 'q':
+				switch(NumLanes) {
+					default: break;
+					case 1:
+							 vas = ARM64_VAS_1Q;
+							 break;
+				}
+				break;
+		}
+	} else {
+		cs_snprintf(Suffix, sizeof(Suffix), ".%c", LaneKind);
+		switch(LaneKind) {
+			default: break;
+			case 'b':
+					 vess = ARM64_VESS_B;
+					 break;
+			case 'h':
+					 vess = ARM64_VESS_H;
+					 break;
+			case 's':
+					 vess = ARM64_VESS_S;
+					 break;
+			case 'd':
+					 vess = ARM64_VESS_D;
+					 break;
+		}
+	}
+
+	printVectorList(MI, OpNum, O, Suffix, MRI, vas, vess);
+}
+
+static void printVectorIndex(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	SStream_concat0(O, "[");
+	printInt32(O, (int)MCOperand_getImm(MCInst_getOperand(MI, OpNum)));
+	SStream_concat0(O, "]");
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].vector_index = (int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	}
+}
+
+static void printAlignedLabel(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	MCOperand *Op = MCInst_getOperand(MI, OpNum);
+
+	// If the label has already been resolved to an immediate offset (say, when
+	// we're running the disassembler), just print the immediate.
+	if (MCOperand_isImm(Op)) {
+		printInt64Bang(O, MCOperand_getImm(Op) << 2);
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)MCOperand_getImm(Op) << 2;
+			MI->flat_insn->detail->arm64.op_count++;
+		}
+		return;
+	}
+
+#if 0
+	// If the branch target is simply an address then print it in hex.
+	const MCConstantExpr *BranchTarget =
+		dyn_cast<MCConstantExpr>(MI->getOperand(OpNum).getExpr());
+	int64_t Address;
+	if (BranchTarget && BranchTarget->EvaluateAsAbsolute(Address)) {
+		O << "0x";
+		O.write_hex(Address);
+	} else {
+		// Otherwise, just print the expression.
+		O << *MI->getOperand(OpNum).getExpr();
+	}
 #endif
 }
+
+static void printAdrpLabel(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	MCOperand *Op = MCInst_getOperand(MI, OpNum);
+
+	// If the label has already been resolved to an immediate offset (say, when
+	// we're running the disassembler), just print the immediate.
+	if (MCOperand_isImm(Op)) {
+		printInt64Bang(O, MCOperand_getImm(Op) << 12);
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)MCOperand_getImm(Op) << 12;
+			MI->flat_insn->detail->arm64.op_count++;
+		}
+		return;
+	}
+}
+
+static void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+	unsigned Opcode = MCInst_getOpcode(MI);
+	bool Valid;
+	char *Name;
+
+	if (Opcode == AArch64_ISB)
+		Name = A64NamedImmMapper_toString(&A64ISB_ISBMapper, Val, &Valid);
+	else
+		Name = A64NamedImmMapper_toString(&A64DB_DBarrierMapper, Val, &Valid);
+
+	if (Valid) {
+		SStream_concat0(O, Name);
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_BARRIER;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].barrier = Val;
+			MI->flat_insn->detail->arm64.op_count++;
+		}
+	} else {
+		printUInt32Bang(O, Val);
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
+			MI->flat_insn->detail->arm64.op_count++;
+		}
+	}
+}
+
+static void printMRSSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+	bool Valid;
+	char Name[128];
+
+	A64SysRegMapper_toString(&AArch64_MRSMapper, Val, &Valid, Name);
+
+	if (Valid) {
+		SStream_concat0(O, Name);
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG_MRS;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Val;
+			MI->flat_insn->detail->arm64.op_count++;
+		}
+	}
+}
+
+static void printMSRSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+	bool Valid;
+	char Name[128];
+
+	A64SysRegMapper_toString(&AArch64_MSRMapper, Val, &Valid, Name);
+
+	if (Valid) {
+		SStream_concat0(O, Name);
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG_MSR;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Val;
+			MI->flat_insn->detail->arm64.op_count++;
+		}
+	}
+}
+
+static void printSystemPStateField(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+	bool Valid;
+	char *Name;
+
+	Name = A64NamedImmMapper_toString(&A64PState_PStateMapper, Val, &Valid);
+	if (Valid) {
+		SStream_concat0(O, Name);
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_PSTATE;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].pstate = Val;
+			MI->flat_insn->detail->arm64.op_count++;
+		}
+	} else {
+		printInt32Bang(O, Val);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
+		MI->flat_insn->detail->arm64.op_count++;
+	}
+}
+
+static void printSIMDType10Operand(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	unsigned RawVal = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+	uint64_t Val = AArch64_AM_decodeAdvSIMDModImmType10(RawVal);
+	SStream_concat(O, "#%#016llx", Val);
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)Val;
+		MI->flat_insn->detail->arm64.op_count++;
+	}
+}
+
 
 #define PRINT_ALIAS_INSTR
 #include "AArch64GenAsmWriter.inc"
@@ -858,19 +1820,6 @@ void AArch64_post_printer(csh handle, cs_insn *flat_insn, char *insn_asm, MCInst
 	// check if this insn requests write-back
 	if (strrchr(insn_asm, '!') != NULL)
 		flat_insn->detail->arm64.writeback = true;
-}
-
-void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
-{
-	char *mnem;
-
-	mnem = printAliasInstr(MI, O, Info);
-	if (mnem) {
-		MCInst_setOpcodePub(MI, AArch64_map_insn(mnem));
-		cs_mem_free(mnem);
-	} else {
-		printInstruction(MI, O, Info);
-	}
 }
 
 #endif

@@ -24,10 +24,12 @@ class ArmOpValue(ctypes.Union):
         ('imm', ctypes.c_int32),
         ('fp', ctypes.c_double),
         ('mem', ArmOpMem),
+        ('setend', ctypes.c_int),
     )
 
 class ArmOp(ctypes.Structure):
     _fields_ = (
+        ('vector_index', ctypes.c_int),
         ('shift', ArmOpShift),
         ('type', ctypes.c_uint),
         ('value', ArmOpValue),
@@ -49,9 +51,18 @@ class ArmOp(ctypes.Structure):
     def mem(self):
         return self.value.mem
 
+    @property
+    def setend(self):
+        return self.value.setend
+
 
 class CsArm(ctypes.Structure):
     _fields_ = (
+        ('usermode', ctypes.c_bool),
+        ('vector_size', ctypes.c_int),
+        ('vector_data', ctypes.c_int),
+        ('cps_mode', ctypes.c_int),
+        ('cps_flag', ctypes.c_int),
         ('cc', ctypes.c_uint),
         ('update_flags', ctypes.c_bool),
         ('writeback', ctypes.c_bool),
@@ -60,5 +71,5 @@ class CsArm(ctypes.Structure):
     )
 
 def get_arch_info(a):
-    return (a.cc, a.update_flags, a.writeback, copy.deepcopy(a.operands[:a.op_count]))
+    return (a.usermode, a.vector_size, a.vector_data, a.cps_mode, a.cps_flag, a.cc, a.update_flags, a.writeback, copy.deepcopy(a.operands[:a.op_count]))
 

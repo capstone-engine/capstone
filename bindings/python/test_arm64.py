@@ -8,7 +8,7 @@ from capstone.arm64 import *
 from xprint import to_hex, to_x
 
 
-ARM64_CODE = b"\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9\x20\x04\x81\xda\x20\x08\x02\x8b"
+ARM64_CODE = b"\x09\x00\x38\xd5\xbf\x40\x00\xd5\x0c\x05\x13\xd5\x20\x50\x02\x0e\x20\xe4\x3d\x0f\x00\x18\xa0\x5f\xa2\x00\xae\x9e\x9f\x37\x03\xd5\xbf\x33\x03\xd5\xdf\x3f\x03\xd5\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9\x20\x04\x81\xda\x20\x08\x02\x8b\x10\x5b\xe8\x3c"
 
 all_tests = (
         (CS_ARCH_ARM64, CS_MODE_ARM, ARM64_CODE, "ARM-64"),
@@ -47,6 +47,18 @@ def print_insn_detail(insn):
                 if i.mem.disp != 0:
                     print("\t\t\toperands[%u].mem.disp: 0x%s" \
                         % (c, to_x(i.mem.disp)))
+            if i.type == ARM64_OP_REG_MRS:
+                print("\t\toperands[%u].type: REG_MRS = 0x%x" % (c, i.reg))
+            if i.type == ARM64_OP_REG_MSR:
+                print("\t\toperands[%u].type: REG_MSR = 0x%x" % (c, i.reg))
+            if i.type == ARM64_OP_PSTATE:
+                print("\t\toperands[%u].type: PSTATE = 0x%x" % (c, i.pstate))
+            if i.type == ARM64_OP_SYS:
+                print("\t\toperands[%u].type: SYS = 0x%x" % (c, i.sys))
+            if i.type == ARM64_OP_PREFETCH:
+                print("\t\toperands[%u].type: PREFETCH = 0x%x" % (c, i.prefetch))
+            if i.type == ARM64_OP_BARRIER:
+                print("\t\toperands[%u].type: BARRIER = 0x%x" % (c, i.barrier))
 
             if i.shift.type != ARM64_SFT_INVALID and i.shift.value:
                 print("\t\t\tShift: type = %u, value = %u" % (i.shift.type, i.shift.value))
@@ -54,10 +66,19 @@ def print_insn_detail(insn):
             if i.ext != ARM64_EXT_INVALID:
                 print("\t\t\tExt: %u" % i.ext)
 
+            if i.vas != ARM64_VAS_INVALID:
+                print("\t\t\tVector Arrangement Specifier: 0x%x" % i.vas)
+
+            if i.vess != ARM64_VESS_INVALID:
+                print("\t\t\tVector Element Size Specifier: %u" % i.vess)
+
+            if i.vector_index != -1:
+                print("\t\t\tVector Index: %u" % i.vector_index)
+
     if insn.writeback:
         print("\tWrite-back: True")
     if not insn.cc in [ARM64_CC_AL, ARM64_CC_INVALID]:
-        print("\tCode condition: %u" % insn.cc)
+        print("\tCode-condition: %u" % insn.cc)
     if insn.update_flags:
         print("\tUpdate-flags: True")
 

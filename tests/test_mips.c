@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <inttypes.h>
+#include "../inttypes.h"
 
 #include <capstone.h>
 
@@ -17,7 +17,7 @@ struct platform {
 
 static csh handle;
 
-static void print_string_hex(char *comment, unsigned char *str, int len)
+static void print_string_hex(char *comment, unsigned char *str, size_t len)
 {
 	unsigned char *c;
 
@@ -112,7 +112,7 @@ static void test()
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
-		count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
+		count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {
 			size_t j;
 
@@ -127,7 +127,7 @@ static void test()
 			}
 			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
 
-			// free memory allocated by cs_disasm_ex()
+			// free memory allocated by cs_disasm()
 			cs_free(insn, count);
 		} else {
 			printf("****************\n");

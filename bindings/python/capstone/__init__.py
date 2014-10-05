@@ -3,7 +3,7 @@ import sys
 _python2 = sys.version_info.major < 3
 if _python2:
     range = xrange
-from capstone import arm, arm64, mips, ppc, sparc, systemz, x86, xcore
+from . import arm, arm64, mips, ppc, sparc, systemz, x86, xcore
 
 __all__ = [
     'Cs',
@@ -36,8 +36,12 @@ __all__ = [
     'CS_MODE_64',
     'CS_MODE_ARM',
     'CS_MODE_THUMB',
+    'CS_MODE_MCLASS',
     'CS_MODE_MICRO',
     'CS_MODE_N64',
+    'CS_MODE_MIPS3',
+    'CS_MODE_MIPS32R6',
+    'CS_MODE_MIPSGP64',
     'CS_MODE_V9',
 
     'CS_OPT_SYNTAX',
@@ -76,8 +80,8 @@ __all__ = [
 # Capstone C interface
 
 # API version
-CS_API_MAJOR = 2
-CS_API_MINOR = 2
+CS_API_MAJOR = 3
+CS_API_MINOR = 0
 
 # architectures
 CS_ARCH_ARM = 0
@@ -98,8 +102,12 @@ CS_MODE_16 = (1 << 1)          # 16-bit mode (for X86, Mips)
 CS_MODE_32 = (1 << 2)          # 32-bit mode (for X86, Mips)
 CS_MODE_64 = (1 << 3)          # 64-bit mode (for X86, Mips)
 CS_MODE_THUMB = (1 << 4)       # ARM's Thumb mode, including Thumb-2
+CS_MODE_MCLASS = (1 << 5)      # ARM's Cortex-M series
 CS_MODE_MICRO = (1 << 4)       # MicroMips mode (MIPS architecture)
 CS_MODE_N64 = (1 << 5)         # Nintendo-64 mode (MIPS architecture)
+CS_MODE_MIPS3 = 1 << 6         # Mips III ISA
+CS_MODE_MIPS32R6 = 1 << 7      # Mips32r6 ISA
+CS_MODE_MIPSGP64 = 1 << 8      # General Purpose Registers are 64-bit wide (MIPS arch)
 CS_MODE_V9 = (1 << 4)          # Nintendo-64 mode (MIPS architecture)
 CS_MODE_BIG_ENDIAN = (1 << 31) # big-endian mode
 
@@ -123,7 +131,7 @@ CS_OPT_SYNTAX_NOREGNAME = 3   # Asm syntax prints register name with only number
 
 # Capstone error type
 CS_ERR_OK = 0      # No error: everything was fine
-CS_ERR_MEM = 1     # Out-Of-Memory error: cs_open(), cs_disasm_ex()
+CS_ERR_MEM = 1     # Out-Of-Memory error: cs_open(), cs_disasm()
 CS_ERR_ARCH = 2    # Unsupported architecture: cs_open()
 CS_ERR_HANDLE = 3  # Invalid handle: cs_op_count(), cs_op_index()
 CS_ERR_CSH = 4     # Invalid csh argument: cs_close(), cs_errno(), cs_option()
@@ -242,12 +250,13 @@ def _setup_prototype(lib, fname, restype, *argtypes):
     getattr(lib, fname).argtypes = argtypes
 
 _setup_prototype(_cs, "cs_open", ctypes.c_int, ctypes.c_uint, ctypes.c_uint, ctypes.POINTER(ctypes.c_size_t))
-_setup_prototype(_cs, "cs_disasm_ex", ctypes.c_size_t, ctypes.c_size_t, ctypes.POINTER(ctypes.c_char), ctypes.c_size_t, \
+_setup_prototype(_cs, "cs_disasm", ctypes.c_size_t, ctypes.c_size_t, ctypes.POINTER(ctypes.c_char), ctypes.c_size_t, \
         ctypes.c_uint64, ctypes.c_size_t, ctypes.POINTER(ctypes.POINTER(_cs_insn)))
 _setup_prototype(_cs, "cs_free", None, ctypes.c_void_p, ctypes.c_size_t)
 _setup_prototype(_cs, "cs_close", ctypes.c_int, ctypes.POINTER(ctypes.c_size_t))
 _setup_prototype(_cs, "cs_reg_name", ctypes.c_char_p, ctypes.c_size_t, ctypes.c_uint)
 _setup_prototype(_cs, "cs_insn_name", ctypes.c_char_p, ctypes.c_size_t, ctypes.c_uint)
+_setup_prototype(_cs, "cs_group_name", ctypes.c_char_p, ctypes.c_size_t, ctypes.c_uint)
 _setup_prototype(_cs, "cs_op_count", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint)
 _setup_prototype(_cs, "cs_op_index", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.c_uint, ctypes.c_uint)
 _setup_prototype(_cs, "cs_errno", ctypes.c_int, ctypes.c_size_t)
@@ -307,7 +316,7 @@ def cs_disasm_quick(arch, mode, code, offset, count=0):
         raise CsError(status)
 
     all_insn = ctypes.POINTER(_cs_insn)()
-    res = _cs.cs_disasm_ex(csh, code, len(code), offset, count, ctypes.byref(all_insn))
+    res = _cs.cs_disasm(csh, code, len(code), offset, count, ctypes.byref(all_insn))
     if res > 0:
         for i in range(res):
             yield CsInsn(_dummy_cs(csh, arch), all_insn[i])
@@ -347,7 +356,7 @@ def cs_disasm_lite(arch, mode, code, offset, count=0):
         raise CsError(status)
 
     all_insn = ctypes.POINTER(_cs_insn)()
-    res = _cs.cs_disasm_ex(csh, code, len(code), offset, count, ctypes.byref(all_insn))
+    res = _cs.cs_disasm(csh, code, len(code), offset, count, ctypes.byref(all_insn))
     if res > 0:
         for i in range(res):
             insn = all_insn[i]
@@ -469,15 +478,16 @@ class CsInsn(object):
     def __gen_detail(self):
         arch = self._cs.arch
         if arch == CS_ARCH_ARM:
-            (self.cc, self.update_flags, self.writeback, self.operands) = \
+            (self.usermode, self.vector_size, self.vector_data, self.cps_mode, self.cps_flag, self.cc, self.update_flags, self.writeback, self.operands) = \
                 arm.get_arch_info(self._detail.arch.arm)
         elif arch == CS_ARCH_ARM64:
             (self.cc, self.update_flags, self.writeback, self.operands) = \
                 arm64.get_arch_info(self._detail.arch.arm64)
         elif arch == CS_ARCH_X86:
-            (self.prefix, self.segment, self.opcode, self.op_size, self.addr_size, \
-                self.disp_size, self.imm_size, self.modrm, self.sib, self.disp, \
-                self.sib_index, self.sib_scale, self.sib_base, self.operands) = x86.get_arch_info(self._detail.arch.x86)
+            (self.prefix, self.opcode, self.rex, self.addr_size, \
+                self.modrm, self.sib, self.disp, \
+                self.sib_index, self.sib_scale, self.sib_base, self.sse_cc, \
+                self.avx_cc, self.avx_sae, self.avx_rm, self.operands) = x86.get_arch_info(self._detail.arch.x86)
         elif arch == CS_ARCH_MIPS:
                 self.operands = mips.get_arch_info(self._detail.arch.mips)
         elif arch == CS_ARCH_PPC:
@@ -523,7 +533,7 @@ class CsInsn(object):
 
         return _cs.cs_reg_name(self._cs.csh, reg_id).decode('ascii')
 
-    # get the instruction string
+    # get the instruction name
     def insn_name(self):
         if self._cs._diet:
             # Diet engine cannot provide instruction name
@@ -533,6 +543,21 @@ class CsInsn(object):
             return "(invalid)"
 
         return _cs.cs_insn_name(self._cs.csh, self.id).decode('ascii')
+
+    # get the group name
+    def group_name(self, group_id):
+        if self._raw.id == 0:
+            raise CsError(CS_ERR_SKIPDATA)
+
+        if self._cs._diet:
+            # Diet engine cannot provide register name
+            raise CsError(CS_ERR_DIET)
+
+        if group_id == 0:
+            return "(invalid)"
+
+        return _cs.cs_group_name(self._cs.csh, group_id).decode('ascii')
+
 
     # verify if this insn belong to group with id as @group_id
     def group(self, group_id):
@@ -623,7 +648,7 @@ class Cs(object):
         self._detail = False  # by default, do not produce instruction details
         self._diet = cs_support(CS_SUPPORT_DIET)
         self._x86reduce = cs_support(CS_SUPPORT_X86_REDUCE)
-        
+
         # default mnemonic for SKIPDATA
         self._skipdata_mnem = ".byte"
         self._skipdata = False
@@ -751,7 +776,7 @@ class Cs(object):
             print(code)
             code = code.encode()
             print(code)'''
-        res = _cs.cs_disasm_ex(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
+        res = _cs.cs_disasm(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
         if res > 0:
             for i in range(res):
                 yield CsInsn(self, all_insn[i])
@@ -773,7 +798,7 @@ class Cs(object):
             raise CsError(CS_ERR_DIET)
 
         all_insn = ctypes.POINTER(_cs_insn)()
-        res = _cs.cs_disasm_ex(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
+        res = _cs.cs_disasm(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
         if res > 0:
             for i in range(res):
                 insn = all_insn[i]
@@ -791,7 +816,7 @@ class Cs(object):
 def debug():
     # is Cython there?
     try:
-        import ccapstone
+        from . import ccapstone
         return ccapstone.debug()
     except:
         # no Cython, fallback to Python code below

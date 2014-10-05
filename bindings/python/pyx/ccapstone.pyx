@@ -2,7 +2,7 @@
 
 cimport pyx.ccapstone as cc
 import capstone, ctypes
-from capstone import arm, x86, mips, ppc, arm64, sparc, systemz, CsError
+from . import arm, x86, mips, ppc, arm64, sparc, systemz, xcore, CsError
 
 _diet = cc.cs_support(capstone.CS_SUPPORT_DIET)
 
@@ -22,15 +22,18 @@ class CsDetail(object):
         self.groups_count = detail.groups_count
 
         if arch == capstone.CS_ARCH_ARM:
-            (self.cc, self.update_flags, self.writeback, self.operands) = \
+            (self.usermode, self.vector_size, self.vector_data, self.cps_mode, self.cps_flag, \
+                self.cc, self.update_flags, self.writeback, self.operands) = \
                 arm.get_arch_info(detail.arch.arm)
         elif arch == capstone.CS_ARCH_ARM64:
             (self.cc, self.update_flags, self.writeback, self.operands) = \
                 arm64.get_arch_info(detail.arch.arm64)
         elif arch == capstone.CS_ARCH_X86:
-            (self.prefix, self.segment, self.opcode, self.op_size, self.addr_size, \
-                self.disp_size, self.imm_size, self.modrm, self.sib, self.disp, \
-                self.sib_index, self.sib_scale, self.sib_base, self.operands) = x86.get_arch_info(detail.arch.x86)
+            (self.prefix, self.opcode, self.rex, self.addr_size, \
+                self.modrm, self.sib, self.disp, \
+                self.sib_index, self.sib_scale, self.sib_base, \
+                self.sse_cc, self.avx_cc, self.avx_sae, self.avx_rm, \
+                self.operands) = x86.get_arch_info(detail.arch.x86)
         elif arch == capstone.CS_ARCH_MIPS:
                 self.operands = mips.get_arch_info(detail.arch.mips)
         elif arch == capstone.CS_ARCH_PPC:
@@ -40,6 +43,8 @@ class CsDetail(object):
             (self.cc, self.hint, self.operands) = sparc.get_arch_info(detail.arch.sparc)
         elif arch == capstone.CS_ARCH_SYSZ:
             (self.cc, self.operands) = systemz.get_arch_info(detail.arch.sysz)
+        elif arch == capstone.CS_ARCH_XCORE:
+                self.operands = xcore.get_arch_info(detail.arch.xcore)
 
 
 cdef class CsInsn(object):
@@ -172,6 +177,14 @@ cdef class CsInsn(object):
 
         return cc.cs_insn_name(self._csh, self.id)
 
+    # get the group string
+    def group_name(self, group_id):
+        if _diet:
+            # Diet engine cannot provide group's name
+            raise CsError(capstone.CS_ERR_DIET)
+
+        return cc.cs_group_name(self._csh, group_id)
+
     # verify if this insn belong to group with id as @group_id
     def group(self, group_id):
         if self._raw.id == 0:
@@ -256,7 +269,7 @@ cdef class Cs(object):
     def disasm(self, code, addr, count=0):
         cdef cc.cs_insn *allinsn
 
-        cdef res = cc.cs_disasm_ex(self.csh, code, len(code), addr, count, &allinsn)
+        cdef res = cc.cs_disasm(self.csh, code, len(code), addr, count, &allinsn)
         detail = self._cs.detail
         arch = self._cs.arch
 
@@ -284,7 +297,7 @@ cdef class Cs(object):
             # Diet engine cannot provide @mnemonic & @op_str
             raise CsError(capstone.CS_ERR_DIET)
 
-        cdef res = cc.cs_disasm_ex(self.csh, code, len(code), addr, count, &allinsn)
+        cdef res = cc.cs_disasm(self.csh, code, len(code), addr, count, &allinsn)
 
         for i from 0 <= i < res:
             insn = allinsn[i]

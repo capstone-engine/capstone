@@ -41,7 +41,7 @@ cdef extern from "<capstone/capstone.h>":
 
     cs_err cs_errno(csh handle)
 
-    size_t cs_disasm_ex(csh handle,
+    size_t cs_disasm(csh handle,
         const uint8_t *code, size_t code_size,
         uint64_t address,
         size_t count,
@@ -54,6 +54,8 @@ cdef extern from "<capstone/capstone.h>":
     const char *cs_reg_name(csh handle, unsigned int reg_id)
 
     const char *cs_insn_name(csh handle, unsigned int insn_id)
+
+    const char *cs_group_name(csh handle, unsigned int group_id)
 
     bool cs_insn_group(csh handle, cs_insn *insn, unsigned int group_id)
 

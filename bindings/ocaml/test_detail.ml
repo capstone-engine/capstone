@@ -1,5 +1,5 @@
-(* Capstone Disassembler Engine
- * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> *)
+(* Capstone Disassembly Engine
+ * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 *)
 
 open Printf
 open List
@@ -41,17 +41,17 @@ let all_tests = [
 ];;
 
 
-let print_detail csh insn =
+let print_detail handle insn =
 	(* print immediate operands *)
 	if (Array.length insn.regs_read) > 0 then begin
 		printf "\tImplicit registers read: ";
-		Array.iter (fun x -> printf "%s "(cs_reg_name csh x)) insn.regs_read;
+		Array.iter (fun x -> printf "%s "(cs_reg_name handle x)) insn.regs_read;
 		printf "\n";
 	end;
 
 	if (Array.length insn.regs_write) > 0 then begin
 		printf "\tImplicit registers written: ";
-		Array.iter (fun x -> printf "%s "(cs_reg_name csh x)) insn.regs_write;
+		Array.iter (fun x -> printf "%s "(cs_reg_name handle x)) insn.regs_write;
 		printf "\n";
 	end;
 
@@ -63,61 +63,25 @@ let print_detail csh insn =
 	printf "\n";;
 
 
-let print_insn mode arch insn =
+let print_insn handle insn =
 	printf "0x%x\t%s\t%s\n" insn.address insn.mnemonic insn.op_str;
-	let csh = cs_open arch mode in
-	match csh with
-	| None -> ()
-	| Some v -> print_detail v insn
+	print_detail handle insn
 
 
 let print_arch x =
 	let (arch, mode, code, comment, syntax) = x in
-		let insns = cs_disasm_quick arch mode code 0x1000L 0L in
+		let handle = cs_open arch mode in
+		let err = cs_option handle CS_OPT_DETAIL _CS_OPT_ON in
+		match err with
+		| _ -> ();
+		let insns = cs_disasm handle code 0x1000L 0L in
 			printf "*************\n";
 			printf "Platform: %s\n" comment;
-			List.iter (print_insn mode arch) insns;;
+			List.iter (print_insn handle) insns;
+		match cs_close handle with
+		| 0 -> ();
+		| _ -> printf "Failed to close handle";
+		;;
 
 
 List.iter print_arch all_tests;;
-
-
-(* all below code use OO class of Capstone *)
-let print_detail_cls arch csh insn =
-	(* print immediate operands *)
-	if (Array.length insn#regs_read) > 0 then begin
-		printf "\tImplicit registers read: ";
-		Array.iter (fun x -> printf "%s "(cs_reg_name csh x)) insn#regs_read;
-		printf "\n";
-	end;
-
-	if (Array.length insn#regs_write) > 0 then begin
-		printf "\tImplicit registers written: ";
-		Array.iter (fun x -> printf "%s "(cs_reg_name csh x)) insn#regs_write;
-		printf "\n";
-	end;
-
-	if (Array.length insn#groups) > 0 then begin
-		printf "\tThis instruction belongs to groups: ";
-		Array.iter (printf "%u ") insn#groups;
-		printf "\n";
-	end;
-	printf "\n";;
-
-
-let print_insn_cls arch csh insn =
-	printf "0x%x\t%s\t%s\n" insn#address insn#mnemonic insn#op_str;
-	print_detail_cls arch csh insn;;
-
-
-let print_arch_cls x =
-	let (arch, mode, code, comment, syntax) = x in
-		let d = new cs arch mode in
-			let insns = d#disasm code 0x1000L 0L in
-				printf "*************\n";
-				printf "Platform: %s\n" comment;
-				List.iter (print_insn_cls arch (d#get_csh)) insns;
-	();;
-
-List.iter print_arch_cls all_tests;;
-

@@ -71,6 +71,46 @@ static const unsigned VRegs[] = {
 	PPC_V28, PPC_V29, PPC_V30, PPC_V31
 };
 
+static const unsigned VSRegs[] = {
+	PPC_VSL0, PPC_VSL1, PPC_VSL2, PPC_VSL3,
+	PPC_VSL4, PPC_VSL5, PPC_VSL6, PPC_VSL7,
+	PPC_VSL8, PPC_VSL9, PPC_VSL10, PPC_VSL11,
+	PPC_VSL12, PPC_VSL13, PPC_VSL14, PPC_VSL15,
+	PPC_VSL16, PPC_VSL17, PPC_VSL18, PPC_VSL19,
+	PPC_VSL20, PPC_VSL21, PPC_VSL22, PPC_VSL23,
+	PPC_VSL24, PPC_VSL25, PPC_VSL26, PPC_VSL27,
+	PPC_VSL28, PPC_VSL29, PPC_VSL30, PPC_VSL31,
+
+	PPC_VSH0, PPC_VSH1, PPC_VSH2, PPC_VSH3,
+	PPC_VSH4, PPC_VSH5, PPC_VSH6, PPC_VSH7,
+	PPC_VSH8, PPC_VSH9, PPC_VSH10, PPC_VSH11,
+	PPC_VSH12, PPC_VSH13, PPC_VSH14, PPC_VSH15,
+	PPC_VSH16, PPC_VSH17, PPC_VSH18, PPC_VSH19,
+	PPC_VSH20, PPC_VSH21, PPC_VSH22, PPC_VSH23,
+	PPC_VSH24, PPC_VSH25, PPC_VSH26, PPC_VSH27,
+	PPC_VSH28, PPC_VSH29, PPC_VSH30, PPC_VSH31
+};
+
+static const unsigned VSFRegs[] = {
+	PPC_F0, PPC_F1, PPC_F2, PPC_F3,
+	PPC_F4, PPC_F5, PPC_F6, PPC_F7,
+	PPC_F8, PPC_F9, PPC_F10, PPC_F11,
+	PPC_F12, PPC_F13, PPC_F14, PPC_F15,
+	PPC_F16, PPC_F17, PPC_F18, PPC_F19,
+	PPC_F20, PPC_F21, PPC_F22, PPC_F23,
+	PPC_F24, PPC_F25, PPC_F26, PPC_F27,
+	PPC_F28, PPC_F29, PPC_F30, PPC_F31,
+
+	PPC_VF0, PPC_VF1, PPC_VF2, PPC_VF3,
+	PPC_VF4, PPC_VF5, PPC_VF6, PPC_VF7,
+	PPC_VF8, PPC_VF9, PPC_VF10, PPC_VF11,
+	PPC_VF12, PPC_VF13, PPC_VF14, PPC_VF15,
+	PPC_VF16, PPC_VF17, PPC_VF18, PPC_VF19,
+	PPC_VF20, PPC_VF21, PPC_VF22, PPC_VF23,
+	PPC_VF24, PPC_VF25, PPC_VF26, PPC_VF27,
+	PPC_VF28, PPC_VF29, PPC_VF30, PPC_VF31
+};
+
 static const unsigned GPRegs[] = {
 	PPC_R0, PPC_R1, PPC_R2, PPC_R3,
 	PPC_R4, PPC_R5, PPC_R6, PPC_R7,
@@ -151,6 +191,20 @@ static DecodeStatus DecodeVRRCRegisterClass(MCInst *Inst, uint64_t RegNo,
 		const void *Decoder)
 {
 	return decodeRegisterClass(Inst, RegNo, VRegs);
+}
+
+static DecodeStatus DecodeVSRCRegisterClass(MCInst *Inst, uint64_t RegNo,
+		uint64_t Address,
+		const void *Decoder)
+{
+	return decodeRegisterClass(Inst, RegNo, VSRegs);
+}
+
+static DecodeStatus DecodeVSFRCRegisterClass(MCInst *Inst, uint64_t RegNo,
+		uint64_t Address,
+		const void *Decoder)
+{
+	return decodeRegisterClass(Inst, RegNo, VSFRegs);
 }
 
 static DecodeStatus DecodeGPRCRegisterClass(MCInst *Inst, uint64_t RegNo,
@@ -292,7 +346,7 @@ static DecodeStatus getInstruction(MCInst *MI,
 			(code[1] <<  8) | (code[0] <<  0);
 
 	if (MI->flat_insn->detail) {
-		memset(&MI->flat_insn->detail->ppc, 0, offsetof(cs_ppc, operands));
+		memset(MI->flat_insn->detail, 0, sizeof(cs_detail));
 	}
 
 	result = decodeInstruction_4(DecoderTable32, MI, insn, Address, 4);
@@ -323,25 +377,25 @@ bool PPC_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 void PPC_init(MCRegisterInfo *MRI)
 {
 	/*
-	   InitMCRegisterInfo( PPCRegDesc, 182, RA, PC,
-	   PPCMCRegisterClasses, 15,
-	   PPCRegUnitRoots,
-	   138,
-	   PPCRegDiffLists,
-	   PPCRegStrings,
-	   PPCSubRegIdxLists,
-	   6,
-	   PPCSubRegIdxRanges,
-	   PPCRegEncodingTable);
-	 */
+	InitMCRegisterInfo(PPCRegDesc, 279, RA, PC,
+			PPCMCRegisterClasses, 21,
+			PPCRegUnitRoots,
+			146,
+			PPCRegDiffLists,
+			PPCRegStrings,
+			PPCSubRegIdxLists,
+			8,
+			PPCSubRegIdxRanges,
+			PPCRegEncodingTable);
+	*/
 
-	MCRegisterInfo_InitMCRegisterInfo(MRI, PPCRegDesc, 182,
+	MCRegisterInfo_InitMCRegisterInfo(MRI, PPCRegDesc, 279,
 			0, 0,
-			PPCMCRegisterClasses, 15,
+			PPCMCRegisterClasses, 21,
 			0, 0,
 			PPCRegDiffLists,
 			0,
-			PPCSubRegIdxLists, 6,
+			PPCSubRegIdxLists, 8,
 			0);
 }
 

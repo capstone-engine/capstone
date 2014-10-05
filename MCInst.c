@@ -14,6 +14,7 @@ void MCInst_Init(MCInst *inst)
 {
 	inst->OpcodePub = 0;
 	inst->size = 0;
+	inst->has_imm = 0;
 }
 
 void MCInst_clear(MCInst *inst)

@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <inttypes.h>
+#include "../inttypes.h"
 
 #include <capstone.h>
 
@@ -17,7 +17,7 @@ struct platform {
 	char *comment;
 };
 
-static void print_string_hex(char *comment, unsigned char *str, int len)
+static void print_string_hex(char *comment, unsigned char *str, size_t len)
 {
 	unsigned char *c;
 
@@ -69,6 +69,24 @@ static void print_insn_detail(cs_insn *ins)
 			case ARM64_OP_CIMM:
 				printf("\t\toperands[%u].type: C-IMM = %u\n", i, op->imm);
 				break;
+			case ARM64_OP_REG_MRS:
+				printf("\t\toperands[%u].type: REG_MRS = 0x%x\n", i, op->reg);
+				break;
+			case ARM64_OP_REG_MSR:
+				printf("\t\toperands[%u].type: REG_MSR = 0x%x\n", i, op->reg);
+				break;
+			case ARM64_OP_PSTATE:
+				printf("\t\toperands[%u].type: PSTATE = 0x%x\n", i, op->pstate);
+				break;
+			case ARM64_OP_SYS:
+				printf("\t\toperands[%u].type: SYS = 0x%x\n", i, op->sys);
+				break;
+			case ARM64_OP_PREFETCH:
+				printf("\t\toperands[%u].type: PREFETCH = 0x%x\n", i, op->prefetch);
+				break;
+			case ARM64_OP_BARRIER:
+				printf("\t\toperands[%u].type: BARRIER = 0x%x\n", i, op->barrier);
+				break;
 		}
 
 		if (op->shift.type != ARM64_SFT_INVALID &&
@@ -78,16 +96,25 @@ static void print_insn_detail(cs_insn *ins)
 
 		if (op->ext != ARM64_EXT_INVALID)
 			printf("\t\t\tExt: %u\n", op->ext);
-	}
 
-	if (arm64->cc != ARM64_CC_INVALID)
-		printf("\tCode condition: %u\n", arm64->cc);
+		if (op->vas != ARM64_VAS_INVALID)
+			printf("\t\t\tVector Arrangement Specifier: 0x%x\n", op->vas);
+
+		if (op->vess != ARM64_VESS_INVALID)
+			printf("\t\t\tVector Element Size Specifier: %u\n", op->vess);
+
+		if (op->vector_index != -1)
+			printf("\t\t\tVector Index: %u\n", op->vector_index);
+	}
 
 	if (arm64->update_flags)
 		printf("\tUpdate-flags: True\n");
 
 	if (arm64->writeback)
 		printf("\tWrite-back: True\n");
+
+	if (arm64->cc)
+		printf("\tCode-condition: %u\n", arm64->cc);
 
 	printf("\n");
 }
@@ -139,7 +166,16 @@ static void test()
 //#define ARM64_CODE "\x20\xf4\x18\x9e"	// fcvtzs	x0, s1, #3
 //#define ARM64_CODE "\x20\xfc\x02\x9b"	// mneg	x0, x1, x2
 //#define ARM64_CODE "\xd0\xb6\x1e\xd5"	// msr	s3_6_c11_c6_6, x16
-#define ARM64_CODE "\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9\x20\x04\x81\xda\x20\x08\x02\x8b"
+
+//#define ARM64_CODE "\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9\x20\x04\x81\xda\x20\x08\x02\x8b"
+
+//#define ARM64_CODE "\x09\x00\x38\xd5"	// DBarrier
+//#define ARM64_CODE "\x20\xe4\x3d\x0f\xa2\x00\xae\x9e"
+//#define ARM64_CODE "\x9f\x37\x03\xd5\xbf\x33\x03\xd5\xdf\x3f\x03\xd5"	// DBarrier
+//#define ARM64_CODE "\x10\x5b\xe8\x3c"
+//#define ARM64_CODE "\x00\x18\xa0\x5f\xa2\x00\xae\x9e"
+
+#define ARM64_CODE "\x09\x00\x38\xd5\xbf\x40\x00\xd5\x0c\x05\x13\xd5\x20\x50\x02\x0e\x20\xe4\x3d\x0f\x00\x18\xa0\x5f\xa2\x00\xae\x9e\x9f\x37\x03\xd5\xbf\x33\x03\xd5\xdf\x3f\x03\xd5\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9\x20\x04\x81\xda\x20\x08\x02\x8b\x10\x5b\xe8\x3c"
 
 	struct platform platforms[] = {
 		{
@@ -165,13 +201,13 @@ static void test()
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
-		count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
+		count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {
 			size_t j;
 
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
-			print_string_hex("Code:", platforms[i].code, platforms[i].size);
+			print_string_hex("Code: ", platforms[i].code, platforms[i].size);
 			printf("Disasm:\n");
 
 			for (j = 0; j < count; j++) {
@@ -180,12 +216,12 @@ static void test()
 			}
 			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
 
-			// free memory allocated by cs_disasm_ex()
+			// free memory allocated by cs_disasm()
 			cs_free(insn, count);
 		} else {
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
-			print_string_hex("Code:", platforms[i].code, platforms[i].size);
+			print_string_hex("Code: ", platforms[i].code, platforms[i].size);
 			printf("ERROR: Failed to disasm given code!\n");
 		}
 

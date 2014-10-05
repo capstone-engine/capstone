@@ -19,22 +19,9 @@
 #ifndef CS_X86_DISASSEMBLERDECODER_H
 #define CS_X86_DISASSEMBLERDECODER_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#define INSTRUCTION_SPECIFIER_FIELDS \
-  uint16_t operands;
-
-#define INSTRUCTION_IDS     \
-  uint16_t instructionIDs;
-
 #include <stdio.h>
 
 #include "X86DisassemblerDecoderCommon.h"
-
-#undef INSTRUCTION_SPECIFIER_FIELDS
-#undef INSTRUCTION_IDS
 
 #include <stdint.h>
 
@@ -483,7 +470,6 @@ typedef enum {
 /*
  * VEXLeadingOpcodeByte - Possible values for the VEX.m-mmmm field
  */
-
 typedef enum {
   VEX_LOB_0F = 0x1,
   VEX_LOB_0F38 = 0x2,
@@ -499,7 +485,6 @@ typedef enum {
 /*
  * VEXPrefixCode - Possible values for the VEX.pp/EVEX.pp field
  */
-
 typedef enum {
   VEX_PREFIX_NONE = 0x0,
   VEX_PREFIX_66 = 0x1,
@@ -514,8 +499,6 @@ typedef enum {
 	TYPE_EVEX         = 0x3,
 	TYPE_XOP          = 0x4
 } VectorExtensionType;
-
-typedef uint8_t BOOL;
 
 struct reader_info {
 	const uint8_t *code;
@@ -546,6 +529,12 @@ typedef int (*byteReader_t)(const struct reader_info *arg, uint8_t* byte, uint64
  */
 typedef void (*dlog_t)(void* arg, const char *log);
 
+/// The specification for how to extract and interpret a full instruction and
+/// its operands.
+struct InstructionSpecifier {
+	uint16_t operands;
+};
+
 /*
  * The x86 internal instruction, which is produced by the decoder.
  */
@@ -559,13 +548,13 @@ typedef struct InternalInstruction {
   uint8_t rexPrefix;
   /* The segment override type */
   SegmentOverride segmentOverride;
-  BOOL                          consumedModRM;
+  bool                          consumedModRM;
   uint8_t                       orgModRM;  // save original modRM because we will modify modRM
   /* The SIB byte, used for more complex 32- or 64-bit memory operands */
-  BOOL                          consumedSIB;
+  bool                          consumedSIB;
   uint8_t                       sib;
   /* The displacement, used for memory operands */
-  BOOL                          consumedDisplacement;
+  bool                          consumedDisplacement;
   int32_t                       displacement;
   /* The value of the two-byte escape prefix (usually 0x0f) */
   uint8_t twoByteEscape;
@@ -577,7 +566,10 @@ typedef struct InternalInstruction {
   SIBBase                       sibBase;
   uint8_t                       numImmediatesConsumed;
   /* 1 if the prefix byte, 0xf2 or 0xf3 is xacquire or xrelease */
-  BOOL xAcquireRelease;
+  bool xAcquireRelease;
+
+  /* The value of the vector extension prefix(EVEX/VEX/XOP), if present */
+  uint8_t vectorExtensionPrefix[4];
 
   // end-of-zero-members
 
@@ -606,8 +598,6 @@ typedef struct InternalInstruction {
 
   /* contains the location (for use with the reader) of the prefix byte */
   uint64_t prefixLocations[0x100];
-  /* The value of the vector extension prefix(EVEX/VEX/XOP), if present */
-  uint8_t vectorExtensionPrefix[4];
   /* The type of the vector extension prefix */
   VectorExtensionType vectorExtensionType;
   /* The location where a mandatory prefix would have to be (i.e., right before
@@ -619,6 +609,8 @@ typedef struct InternalInstruction {
   uint8_t addressSize;
   uint8_t displacementSize;
   uint8_t immediateSize;
+
+  uint8_t immSize;	// immediate size for X86_OP_IMM operand
 
   /* Offsets from the start of the instruction to the pieces of data, which is
      needed to find relocation entries for adding symbolic operands */
@@ -705,9 +697,5 @@ int decodeInstruction(struct InternalInstruction* insn,
                       DisassemblerMode mode);
 
 //const char *x86DisassemblerGetInstrName(unsigned Opcode, const void *mii);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif
