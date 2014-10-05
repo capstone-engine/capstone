@@ -204,6 +204,7 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		ud->big_endian = mode & CS_MODE_BIG_ENDIAN;
 		// by default, do not break instruction into details
 		ud->detail = CS_OPT_OFF;
+		ud->insn = NULL;
 
 		// default skipdata setup
 		ud->skipdata_setup.mnemonic = SKIPDATA_MNEM;
@@ -234,6 +235,13 @@ cs_err cs_close(csh *handle)
 		return CS_ERR_CSH;
 
 	ud = (struct cs_struct *)(*handle);
+
+	if (ud->insn) {
+		if (ud->detail)
+			cs_free(ud->insn, 1);
+		else
+			cs_mem_free(ud->insn);
+	}
 
 	if (ud->printer_info)
 		cs_mem_free(ud->printer_info);
@@ -610,6 +618,87 @@ void cs_free(cs_insn *insn, size_t count)
 
 	// then free pointer to cs_insn array
 	cs_mem_free(insn);
+}
+
+// iterator for instruction "single-stepping"
+CAPSTONE_EXPORT
+cs_insn *cs_disasm_iter(csh ud, const uint8_t **code, size_t *size, uint64_t *address)
+{
+	struct cs_struct *handle;
+	cs_insn *insn_cache;
+	uint16_t insn_size;
+	MCInst mci;
+	bool r;
+
+	handle = (struct cs_struct *)(uintptr_t)ud;
+	if (!handle)
+	{
+		return NULL;
+	}
+
+	handle->errnum = CS_ERR_OK;
+
+	insn_cache = handle->insn;
+	if (!insn_cache)
+	{
+		insn_cache = cs_mem_malloc(sizeof(cs_insn));
+		if (!insn_cache)
+		{
+			handle->errnum = CS_ERR_MEM;
+			return NULL;
+		}
+		else
+		{
+			handle->insn = insn_cache;
+			if (handle->detail)
+			{
+				// allocate memory for @detail pointer
+				insn_cache->detail = cs_mem_malloc(sizeof(cs_detail));
+				if (insn_cache->detail == NULL)
+				{	// insufficient memory
+					cs_mem_free(insn_cache);
+					handle->errnum = CS_ERR_MEM;
+					return NULL;
+				}
+			}
+			else
+				insn_cache->detail = NULL;
+		}
+	}
+
+	MCInst_Init(&mci);
+	mci.csh = handle;
+
+	// relative branches need to know the address & size of current insn
+	mci.address = *address;
+
+	// save all the information for non-detailed mode
+	mci.flat_insn = insn_cache;
+	mci.flat_insn->address = *address;
+#ifdef CAPSTONE_DIET
+	// zero out mnemonic & op_str
+	mci.flat_insn->mnemonic[0] = '\0';
+	mci.flat_insn->op_str[0] = '\0';
+#endif
+
+	r = handle->disasm(ud, *code, *size, &mci, &insn_size, *address, handle->getinsn_info);
+	if (r)
+	{
+		SStream ss;
+		SStream_Init(&ss);
+
+		mci.flat_insn->size = insn_size;
+		handle->printer(&mci, &ss, handle->printer_info);
+		fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, *code);
+		*code += insn_size;
+		*size -= insn_size;
+		*address += insn_size;
+	}
+	else
+	{
+		insn_cache->id = 0;	// invalid ID for this "data" instruction
+	}
+	return insn_cache;
 }
 
 // return friendly name of regiser in a string
