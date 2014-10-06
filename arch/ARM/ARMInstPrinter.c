@@ -910,7 +910,7 @@ static void printAM3PostIndexOp(MCInst *MI, unsigned Op, SStream *O)
 	set_mem_access(MI, false);
 
 	if (MCOperand_getReg(MO2)) {
-		SStream_concat(O, "%c", (char)subtracted);
+		SStream_concat(O, "%c", (char)subtracted);	// FIXME ??
 		printRegName(MI->csh, O, MCOperand_getReg(MO2));
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
