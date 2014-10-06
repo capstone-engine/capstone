@@ -758,6 +758,7 @@ static void printAM2PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O)
 	MCOperand *MO1 = MCInst_getOperand(MI, Op);
 	MCOperand *MO2 = MCInst_getOperand(MI, Op + 1);
 	MCOperand *MO3 = MCInst_getOperand(MI, Op + 2);
+	ARM_AM_AddrOpc subtracted = getAM2Op((unsigned int)MCOperand_getImm(MO3));
 
 	SStream_concat0(O, "[");
 	set_mem_access(MI, true);
@@ -770,14 +771,17 @@ static void printAM2PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O)
 	if (!MCOperand_getReg(MO2)) {
 		unsigned tmp = getAM2Offset((unsigned int)MCOperand_getImm(MO3));
 		if (tmp) { // Don't print +0.
+			subtracted = getAM2Op((unsigned int)MCOperand_getImm(MO3));
+
 			SStream_concat0(O, ", ");
 			if (tmp > HEX_THRESHOLD)
-				SStream_concat(O, "#%s0x%x", ARM_AM_getAddrOpcStr(getAM2Op((unsigned int)MCOperand_getImm(MO3))), tmp);
+				SStream_concat(O, "#%s0x%x", ARM_AM_getAddrOpcStr(subtracted), tmp);
 			else
-				SStream_concat(O, "#%s%u", ARM_AM_getAddrOpcStr(getAM2Op((unsigned int)MCOperand_getImm(MO3))), tmp);
+				SStream_concat(O, "#%s%u", ARM_AM_getAddrOpcStr(subtracted), tmp);
 			if (MI->csh->detail) {
 				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].shift.type = (arm_shifter)getAM2Op((unsigned int)MCOperand_getImm(MO3));
 				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].shift.value = tmp;
+				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].subtracted = subtracted == ARM_AM_sub;
 			}
 		}
 		SStream_concat0(O, "]");
@@ -786,10 +790,11 @@ static void printAM2PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O)
 	}
 
 	SStream_concat0(O, ", ");
-	SStream_concat0(O, ARM_AM_getAddrOpcStr(getAM2Op((unsigned int)MCOperand_getImm(MO3))));
+	SStream_concat0(O, ARM_AM_getAddrOpcStr(subtracted));
 	printRegName(MI->csh, O, MCOperand_getReg(MO2));
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.index = MCOperand_getReg(MO2);
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].subtracted = subtracted == ARM_AM_sub;
 	}
 
 	printRegImmShift(MI, O, getAM2ShiftOpc((unsigned int)MCOperand_getImm(MO3)),
@@ -852,28 +857,31 @@ static void printAddrMode2OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
+	ARM_AM_AddrOpc subtracted = getAM2Op((unsigned int)MCOperand_getImm(MO2));
 
 	if (!MCOperand_getReg(MO1)) {
 		unsigned ImmOffs = getAM2Offset((unsigned int)MCOperand_getImm(MO2));
 		if (ImmOffs > HEX_THRESHOLD)
 			SStream_concat(O, "#%s0x%x",
-					ARM_AM_getAddrOpcStr(getAM2Op((unsigned int)MCOperand_getImm(MO2))), ImmOffs);
+					ARM_AM_getAddrOpcStr(subtracted), ImmOffs);
 		else
 			SStream_concat(O, "#%s%u",
-					ARM_AM_getAddrOpcStr(getAM2Op((unsigned int)MCOperand_getImm(MO2))), ImmOffs);
+					ARM_AM_getAddrOpcStr(subtracted), ImmOffs);
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_IMM;
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = ImmOffs;
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].subtracted = subtracted == ARM_AM_sub;
 			MI->flat_insn->detail->arm.op_count++;
 		}
 		return;
 	}
 
-	SStream_concat0(O, ARM_AM_getAddrOpcStr(getAM2Op((unsigned int)MCOperand_getImm(MO2))));
+	SStream_concat0(O, ARM_AM_getAddrOpcStr(subtracted));
 	printRegName(MI->csh, O, MCOperand_getReg(MO1));
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MO1);
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].subtracted = subtracted == ARM_AM_sub;
 		MI->flat_insn->detail->arm.op_count++;
 	}
 
@@ -890,7 +898,7 @@ static void printAM3PostIndexOp(MCInst *MI, unsigned Op, SStream *O)
 	MCOperand *MO1 = MCInst_getOperand(MI, Op);
 	MCOperand *MO2 = MCInst_getOperand(MI, Op+1);
 	MCOperand *MO3 = MCInst_getOperand(MI, Op+2);
-	ARM_AM_AddrOpc op = getAM3Op((unsigned int)MCOperand_getImm(MO3));
+	ARM_AM_AddrOpc subtracted = getAM3Op((unsigned int)MCOperand_getImm(MO3));
 	unsigned ImmOffs;
 
 	SStream_concat0(O, "[");
@@ -902,11 +910,12 @@ static void printAM3PostIndexOp(MCInst *MI, unsigned Op, SStream *O)
 	set_mem_access(MI, false);
 
 	if (MCOperand_getReg(MO2)) {
-		SStream_concat(O, "%c", (char)op);
+		SStream_concat(O, "%c", (char)subtracted);
 		printRegName(MI->csh, O, MCOperand_getReg(MO2));
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MO2);
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].subtracted = subtracted == ARM_AM_sub;
 			MI->flat_insn->detail->arm.op_count++;
 		}
 		return;
@@ -914,16 +923,17 @@ static void printAM3PostIndexOp(MCInst *MI, unsigned Op, SStream *O)
 
 	ImmOffs = getAM3Offset((unsigned int)MCOperand_getImm(MO3));
 	if (ImmOffs > HEX_THRESHOLD)
-		SStream_concat(O, "#%s0x%x", ARM_AM_getAddrOpcStr(op), ImmOffs);
+		SStream_concat(O, "#%s0x%x", ARM_AM_getAddrOpcStr(subtracted), ImmOffs);
 	else
-		SStream_concat(O, "#%s%u", ARM_AM_getAddrOpcStr(op), ImmOffs);
+		SStream_concat(O, "#%s%u", ARM_AM_getAddrOpcStr(subtracted), ImmOffs);
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_IMM;
 
-		if (op)
+		if (subtracted) {
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = ImmOffs;
-		else
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].subtracted = subtracted == ARM_AM_sub;
+		} else
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = -(int)ImmOffs;
 
 		MI->flat_insn->detail->arm.op_count++;
@@ -936,7 +946,7 @@ static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 	MCOperand *MO1 = MCInst_getOperand(MI, Op);
 	MCOperand *MO2 = MCInst_getOperand(MI, Op+1);
 	MCOperand *MO3 = MCInst_getOperand(MI, Op+2);
-	ARM_AM_AddrOpc op = getAM3Op((unsigned int)MCOperand_getImm(MO3));
+	ARM_AM_AddrOpc subtracted = getAM3Op((unsigned int)MCOperand_getImm(MO3));
 	unsigned ImmOffs;
 
 	SStream_concat0(O, "[");
@@ -947,12 +957,14 @@ static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 
 	if (MCOperand_getReg(MO2)) {
 		SStream_concat0(O, ", ");
-		SStream_concat0(O, ARM_AM_getAddrOpcStr(op));
+		SStream_concat0(O, ARM_AM_getAddrOpcStr(subtracted));
 		printRegName(MI->csh, O, MCOperand_getReg(MO2));
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.index = MCOperand_getReg(MO2);
-			if (op)
+			if (subtracted) {
 				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.scale = -1;
+				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].subtracted = true;
+			}
 		}
 		SStream_concat0(O, "]");
 		set_mem_access(MI, false);
@@ -962,17 +974,18 @@ static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 	//If the op is sub we have to print the immediate even if it is 0
 	ImmOffs = getAM3Offset((unsigned int)MCOperand_getImm(MO3));
 
-	if (AlwaysPrintImm0 || ImmOffs || (op == ARM_AM_sub)) {
+	if (AlwaysPrintImm0 || ImmOffs || (subtracted == ARM_AM_sub)) {
 		if (ImmOffs > HEX_THRESHOLD)
-			SStream_concat(O, ", #%s0x%x", ARM_AM_getAddrOpcStr(op), ImmOffs);
+			SStream_concat(O, ", #%s0x%x", ARM_AM_getAddrOpcStr(subtracted), ImmOffs);
 		else
-			SStream_concat(O, ", #%s%u", ARM_AM_getAddrOpcStr(op), ImmOffs);
+			SStream_concat(O, ", #%s%u", ARM_AM_getAddrOpcStr(subtracted), ImmOffs);
 	}
 
 	if (MI->csh->detail) {
-		if (op)
+		if (subtracted) {
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = (int)MCOperand_getImm(MO3);
-		else
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].subtracted = true;
+		} else
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = (int)-MCOperand_getImm(MO3);
 	}
 
@@ -1006,15 +1019,16 @@ static void printAddrMode3OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
-	ARM_AM_AddrOpc op = getAM3Op((unsigned int)MCOperand_getImm(MO2));
+	ARM_AM_AddrOpc subtracted = getAM3Op((unsigned int)MCOperand_getImm(MO2));
 	unsigned ImmOffs;
 
 	if (MCOperand_getReg(MO1)) {
-		SStream_concat0(O, ARM_AM_getAddrOpcStr(op));
+		SStream_concat0(O, ARM_AM_getAddrOpcStr(subtracted));
 		printRegName(MI->csh, O, MCOperand_getReg(MO1));
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MO1);
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].subtracted = subtracted == ARM_AM_sub;
 			MI->flat_insn->detail->arm.op_count++;
 		}
 		return;
@@ -1022,15 +1036,16 @@ static void printAddrMode3OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 
 	ImmOffs = getAM3Offset((unsigned int)MCOperand_getImm(MO2));
 	if (ImmOffs > HEX_THRESHOLD)
-		SStream_concat(O, "#%s0x%x", ARM_AM_getAddrOpcStr(op), ImmOffs);
+		SStream_concat(O, "#%s0x%x", ARM_AM_getAddrOpcStr(subtracted), ImmOffs);
 	else
-		SStream_concat(O, "#%s%u", ARM_AM_getAddrOpcStr(op), ImmOffs);
+		SStream_concat(O, "#%s%u", ARM_AM_getAddrOpcStr(subtracted), ImmOffs);
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_IMM;
 
-		if (op)
+		if (subtracted) {
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = ImmOffs;
-		else
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].subtracted = true;
+		} else
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = -(int)ImmOffs;
 
 		MI->flat_insn->detail->arm.op_count++;
@@ -1081,7 +1096,9 @@ static void printAddrMode5Operand(MCInst *MI, unsigned OpNum, SStream *O,
 {
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
+	ARM_AM_AddrOpc subtracted = getAM2Op((unsigned int)MCOperand_getImm(MO2));
 	unsigned ImmOffs, Op;
+
 	if (!MCOperand_isReg(MO1)) {   // FIXME: This is for CP entries, but isn't right.
 		printOperand(MI, OpNum, O);
 		return;
@@ -1103,14 +1120,15 @@ static void printAddrMode5Operand(MCInst *MI, unsigned OpNum, SStream *O,
 	if (AlwaysPrintImm0 || ImmOffs || Op == ARM_AM_sub) {
 		if (ImmOffs * 4 > HEX_THRESHOLD)
 			SStream_concat(O, ", #%s0x%x",
-					ARM_AM_getAddrOpcStr(ARM_AM_getAM5Op((unsigned int)MCOperand_getImm(MO2))),
+					ARM_AM_getAddrOpcStr(subtracted),
 					ImmOffs * 4);
 		else
 			SStream_concat(O, ", #%s%u",
-					ARM_AM_getAddrOpcStr(ARM_AM_getAM5Op((unsigned int)MCOperand_getImm(MO2))),
+					ARM_AM_getAddrOpcStr(subtracted),
 					ImmOffs * 4);
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = ImmOffs * 4;
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].subtracted = subtracted == ARM_AM_sub;
 		}
 	}
 	SStream_concat0(O, "]");
