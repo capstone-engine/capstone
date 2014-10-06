@@ -49,7 +49,6 @@ static void printAM2PreOrOffsetIndexOp(MCInst *MI, unsigned OpNum, SStream *O);
 static void printAddrMode2OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O);
 static void printAddrMode3Operand(MCInst *MI, unsigned OpNum, SStream *O, bool AlwaysPrintImm0);
 static void printAddrMode3OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O);
-static void printAM3PostIndexOp(MCInst *MI, unsigned Op, SStream *O);
 static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O, bool AlwaysPrintImm0);
 static void printPostIdxImm8Operand(MCInst *MI, unsigned OpNum, SStream *O);
 static void printPostIdxRegOperand(MCInst *MI, unsigned OpNum, SStream *O);
@@ -893,53 +892,6 @@ static void printAddrMode2OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 // Addressing Mode #3
 //===--------------------------------------------------------------------===//
 
-static void printAM3PostIndexOp(MCInst *MI, unsigned Op, SStream *O)
-{
-	MCOperand *MO1 = MCInst_getOperand(MI, Op);
-	MCOperand *MO2 = MCInst_getOperand(MI, Op+1);
-	MCOperand *MO3 = MCInst_getOperand(MI, Op+2);
-	ARM_AM_AddrOpc subtracted = getAM3Op((unsigned int)MCOperand_getImm(MO3));
-	unsigned ImmOffs;
-
-	SStream_concat0(O, "[");
-	set_mem_access(MI, true);
-	printRegName(MI->csh, O, MCOperand_getReg(MO1));
-	if (MI->csh->detail)
-		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.base = MCOperand_getReg(MO1);
-	SStream_concat0(O, "], ");
-	set_mem_access(MI, false);
-
-	if (MCOperand_getReg(MO2)) {
-		SStream_concat(O, "%c", (char)subtracted);	// FIXME ??
-		printRegName(MI->csh, O, MCOperand_getReg(MO2));
-		if (MI->csh->detail) {
-			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
-			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MO2);
-			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].subtracted = subtracted == ARM_AM_sub;
-			MI->flat_insn->detail->arm.op_count++;
-		}
-		return;
-	}
-
-	ImmOffs = getAM3Offset((unsigned int)MCOperand_getImm(MO3));
-	if (ImmOffs > HEX_THRESHOLD)
-		SStream_concat(O, "#%s0x%x", ARM_AM_getAddrOpcStr(subtracted), ImmOffs);
-	else
-		SStream_concat(O, "#%s%u", ARM_AM_getAddrOpcStr(subtracted), ImmOffs);
-
-	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_IMM;
-
-		if (subtracted) {
-			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = ImmOffs;
-			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].subtracted = subtracted == ARM_AM_sub;
-		} else
-			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = -(int)ImmOffs;
-
-		MI->flat_insn->detail->arm.op_count++;
-	}
-}
-
 static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 		bool AlwaysPrintImm0)
 {
@@ -996,19 +948,9 @@ static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 static void printAddrMode3Operand(MCInst *MI, unsigned Op, SStream *O,
 		bool AlwaysPrintImm0)
 {
-	unsigned IdxMode;
-	MCOperand *MO3;
 	MCOperand *MO1 = MCInst_getOperand(MI, Op);
 	if (!MCOperand_isReg(MO1)) {   //  For label symbolic references.
 		printOperand(MI, Op, O);
-		return;
-	}
-
-	MO3 = MCInst_getOperand(MI, Op+2);
-	IdxMode = getAM3IdxMode((unsigned int)MCOperand_getImm(MO3));
-
-	if (IdxMode == ARMII_IndexModePost) {
-		printAM3PostIndexOp(MI, Op, O);
 		return;
 	}
 
