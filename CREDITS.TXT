@@ -50,3 +50,4 @@ Daniel Pistelli: Cmake support.
 Peter Hlavaty: integrate Capstone for Windows kernel drivers.
 Guillaume Jeanne: Ocaml binding.
 Martin Tofall, Obsidium Software: Optimize X86 performance & size.
+David Martínez Moreno: Debian package.
