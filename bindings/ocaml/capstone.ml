@@ -47,13 +47,12 @@ type opt_type =
   |	CS_OPT_SKIPDATA_SETUP 	(* Setup user-defined function for SKIPDATA option *)
 
 
-type opt_value = 
-  |	CS_OPT_OFF 		(* Turn OFF an option - default option of CS_OPT_DETAIL, CS_OPT_SKIPDATA. *)
-  |	CS_OPT_ON  		(* Turn ON an option (CS_OPT_DETAIL, CS_OPT_SKIPDATA). *)
-  |	CS_OPT_SYNTAX_DEFAULT 	(* Default asm syntax (CS_OPT_SYNTAX). *)
-  |	CS_OPT_SYNTAX_INTEL 	(* X86 Intel asm syntax - default on X86 (CS_OPT_SYNTAX). *)
-  |	CS_OPT_SYNTAX_ATT 	(* X86 ATT asm syntax (CS_OPT_SYNTAX). *)
-  |	CS_OPT_SYNTAX_NOREGNAME	(* Prints register name with only number (CS_OPT_SYNTAX) *)
+let _CS_OPT_OFF = 0L;; (* Turn OFF an option - default option of CS_OPT_DETAIL, CS_OPT_SKIPDATA. *)
+let _CS_OPT_ON = 3L;;  (* Turn ON an option (CS_OPT_DETAIL, CS_OPT_SKIPDATA). *)
+let _CS_OPT_SYNTAX_DEFAULT = 0L;; (* Default asm syntax (CS_OPT_SYNTAX). *)
+let _CS_OPT_SYNTAX_INTEL = 1L;; (* X86 Intel asm syntax - default on X86 (CS_OPT_SYNTAX). *)
+let _CS_OPT_SYNTAX_ATT = 2L;; (* X86 ATT asm syntax (CS_OPT_SYNTAX). *)
+let _CS_OPT_SYNTAX_NOREGNAME = 3L;; (* Prints register name with only number (CS_OPT_SYNTAX) *)
 
 
 type cs_arch = 
@@ -66,6 +65,11 @@ type cs_arch =
 	| CS_INFO_SYSZ of cs_sysz
 	| CS_INFO_XCORE of cs_xcore
 
+
+type csh = {
+	h: Int64.t;
+	a: arch;
+}
 
 type cs_insn0 = {
 	id: int;
@@ -80,13 +84,48 @@ type cs_insn0 = {
 	arch: cs_arch;
 }
 
-external cs_open: arch -> mode list -> Int64.t option = "ocaml_cs_open"
+external _cs_open: arch -> mode list -> Int64.t option = "ocaml_open"
 external cs_disasm_quick: arch -> mode list -> string -> Int64.t -> Int64.t -> cs_insn0 list = "ocaml_cs_disasm"
 external _cs_disasm_internal: arch -> Int64.t -> string -> Int64.t -> Int64.t -> cs_insn0 list = "ocaml_cs_disasm_internal"
-external cs_reg_name: Int64.t -> int -> string = "ocaml_register_name"
-external cs_insn_name: Int64.t -> int -> string = "ocaml_instruction_name"
-external cs_group_name: Int64.t -> int -> string = "ocaml_group_name"
+external _cs_reg_name: Int64.t -> int -> string = "ocaml_register_name"
+external _cs_insn_name: Int64.t -> int -> string = "ocaml_instruction_name"
+external _cs_group_name: Int64.t -> int -> string = "ocaml_group_name"
 external cs_version: unit -> int = "ocaml_version"
+external _cs_option: Int64.t -> opt_type -> Int64.t -> int = "ocaml_option"
+external _cs_close: Int64.t -> int = "ocaml_close"
+
+
+let cs_open _arch _mode: csh = (
+	let _handle = _cs_open _arch _mode in (
+	match _handle with
+	| None -> { h = 0L; a = _arch }
+	| Some v -> { h = v; a = _arch }
+	);
+);;
+
+let cs_close handle = (
+	_cs_close handle.h;
+)
+
+let cs_option handle opt value = (
+	_cs_option handle.h opt value;
+);;
+
+let cs_disasm handle code address count = (
+	_cs_disasm_internal handle.a handle.h code address count;
+);;
+
+let cs_reg_name handle id = (
+	_cs_reg_name handle.h id;
+);;
+
+let cs_insn_name handle id = (
+	_cs_insn_name handle.h id;
+);;
+
+let cs_group_name handle id = (
+	_cs_group_name handle.h id;
+);;
 
 class cs_insn c a =
 	let csh = c in
@@ -105,7 +144,9 @@ class cs_insn c a =
 		method regs_write = regs_write;
 		method groups = groups;
 		method arch = arch;
-		method insn_name = cs_insn_name csh id;
+		method reg_name id = _cs_reg_name csh.h id;
+		method insn_name id = _cs_insn_name csh.h id;
+		method group_name id = _cs_group_name csh.h id;
 	end;;
 
 let cs_insn_group handle insn group_id =
@@ -120,16 +161,10 @@ let cs_reg_write handle insn reg_id =
 
 class cs a m =
 	let mode = m and arch = a in
-	let csh = cs_open arch mode in
+	let handle = cs_open arch mode in
 	object
-		val handle = match csh with
-			| None -> failwith "impossible to open an handle"
-			| Some v -> v
-
-		method get_csh = handle
-
 		method disasm code offset count =
-			let insns = (_cs_disasm_internal arch handle code offset count) in
+			let insns = (_cs_disasm_internal arch handle.h code offset count) in
 			List.map (fun x -> new cs_insn handle x) insns;
 
 	end;;
