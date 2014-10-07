@@ -201,11 +201,6 @@ typedef struct arm_op_mem {
 
 // Instruction operand
 typedef struct cs_arm_op {
-	int vector_index;	// Vector Index for some vector operands (or -1 if irrelevant)
-	struct {
-		arm_shifter type;
-		unsigned int value;
-	} shift;
 	arm_op_type type;	// operand type
 	union {
 		unsigned int reg;	// register value for REG/SYSREG operand
@@ -214,6 +209,11 @@ typedef struct cs_arm_op {
 		arm_op_mem mem;		// base/index/scale/disp value for MEM operand
 		arm_setend_type setend; // SETEND instruction's operand type
 	};
+	int vector_index;	// Vector Index for some vector operands (or -1 if irrelevant)
+	struct {
+		arm_shifter type;
+		unsigned int value;
+	} shift;
 } cs_arm_op;
 
 // Instruction structure

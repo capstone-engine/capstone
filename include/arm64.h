@@ -355,14 +355,6 @@ typedef struct arm64_op_mem {
 
 // Instruction operand
 typedef struct cs_arm64_op {
-	int vector_index;	// Vector Index for some vector operands (or -1 if irrelevant)
-	arm64_vas vas;		// Vector Arrangement Specifier
-	arm64_vess vess;	// Vector Element Size Specifier
-	struct {
-		arm64_shifter type;	// shifter type of this operand
-		unsigned int value;	// shifter value of this operand
-	} shift;
-	arm64_extender ext;		// extender type of this operand
 	arm64_op_type type;	// operand type
 	union {
 		unsigned int reg;	// register value for REG operand
@@ -374,6 +366,14 @@ typedef struct cs_arm64_op {
 		arm64_prefetch_op prefetch;  // PRFM operation.
 		arm64_barrier_op barrier;  // Memory barrier operation (ISB/DMB/DSB instructions).
 	};
+	int vector_index;	// Vector Index for some vector operands (or -1 if irrelevant)
+	arm64_vas vas;		// Vector Arrangement Specifier
+	arm64_vess vess;	// Vector Element Size Specifier
+	struct {
+		arm64_shifter type;	// shifter type of this operand
+		unsigned int value;	// shifter value of this operand
+	} shift;
+	arm64_extender ext;		// extender type of this operand
 } cs_arm64_op;
 
 // Instruction structure

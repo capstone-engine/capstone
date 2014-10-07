@@ -19,4 +19,14 @@ typedef enum generic_insn_group {
 	GENERIC_GRP_ARCH_SPECIFIC, // Last value. Arch-specific operand type identifiers start here.
 } generic_insn_group;
 
+typedef struct cs_generic_op {
+	generic_op_type type; // operand type
+	union {
+		unsigned int reg;
+		int32_t imm32;
+		int64_t imm64;
+		double fp;
+	};
+} cs_generic_op;
+
 #endif
