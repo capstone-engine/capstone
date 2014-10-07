@@ -164,23 +164,26 @@ typedef struct x86_op_mem {
 } x86_op_mem;
 
 // Instruction operand
-typedef struct cs_x86_op {
-	x86_op_type type;	// operand type
-	union {
-		unsigned int reg;	// register value for REG operand
-		int64_t imm;		// immediate value for IMM operand
-		double fp;		// floating point value for FP operand
-		x86_op_mem mem;		// base/index/scale/disp value for MEM operand
+typedef union cs_x86_op {
+	struct {
+		x86_op_type type;	// operand type
+		union {
+			unsigned int reg;	// register value for REG operand
+			int64_t imm;		// immediate value for IMM operand
+			double fp;		// floating point value for FP operand
+			x86_op_mem mem;		// base/index/scale/disp value for MEM operand
+		};
+
+		// size of this operand (in bytes).
+		uint8_t size;
+
+		// AVX broadcast type, or 0 if irrelevant
+		x86_avx_bcast avx_bcast;
+
+		// AVX zero opmask {z}
+		bool avx_zero_opmask;
 	};
-
-	// size of this operand (in bytes).
-	uint8_t size;
-
-	// AVX broadcast type, or 0 if irrelevant
-	x86_avx_bcast avx_bcast;
-
-	// AVX zero opmask {z}
-	bool avx_zero_opmask;
+	cs_generic_op generic;
 } cs_x86_op;
 
 // Instruction structure

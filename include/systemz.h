@@ -55,13 +55,16 @@ typedef struct sysz_op_mem {
 } sysz_op_mem;
 
 // Instruction operand
-typedef struct cs_sysz_op {
-	sysz_op_type type;	// operand type
-	union {
-		unsigned int reg;	// register value for REG operand
-		int64_t imm;		// immediate value for IMM operand
-		sysz_op_mem mem;		// base/disp value for MEM operand
+typedef union cs_sysz_op {
+	struct {
+		sysz_op_type type;	// operand type
+		union {
+			unsigned int reg;	// register value for REG operand
+			int64_t imm;		// immediate value for IMM operand
+			sysz_op_mem mem;		// base/disp value for MEM operand
+		};
 	};
+	cs_generic_op generic;
 } cs_sysz_op;
 
 // Instruction structure

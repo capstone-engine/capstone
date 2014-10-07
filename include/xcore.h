@@ -34,13 +34,16 @@ typedef struct xcore_op_mem {
 } xcore_op_mem;
 
 // Instruction operand
-typedef struct cs_xcore_op {
-	xcore_op_type type;	// operand type
-	union {
-		unsigned int reg;	// register value for REG operand
-		int32_t imm;		// immediate value for IMM operand
-		xcore_op_mem mem;		// base/disp value for MEM operand
+typedef union cs_xcore_op {
+	struct {
+		xcore_op_type type;	// operand type
+		union {
+			unsigned int reg;	// register value for REG operand
+			int32_t imm;		// immediate value for IMM operand
+			xcore_op_mem mem;		// base/disp value for MEM operand
+		};
 	};
+	cs_generic_op generic;
 } cs_xcore_op;
 
 // Instruction structure

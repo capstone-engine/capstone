@@ -85,13 +85,16 @@ typedef struct sparc_op_mem {
 } sparc_op_mem;
 
 // Instruction operand
-typedef struct cs_sparc_op {
-	sparc_op_type type;	// operand type
-	union {
-		unsigned int reg;	// register value for REG operand
-		int32_t imm;		// immediate value for IMM operand
-		sparc_op_mem mem;		// base/disp value for MEM operand
+typedef union cs_sparc_op {
+	struct {
+		sparc_op_type type;	// operand type
+		union {
+			unsigned int reg;	// register value for REG operand
+			int32_t imm;		// immediate value for IMM operand
+			sparc_op_mem mem;		// base/disp value for MEM operand
+		};
 	};
+	cs_generic_op generic;
 } cs_sparc_op;
 
 // Instruction structure

@@ -233,13 +233,13 @@ typedef enum arm64_barrier_op {
 
 //> Operand type for instruction's operands
 typedef enum arm64_op_type {
+	ARM64_OP_INVALID = GENERIC_OP_INVALID,	// Uninitialized.
 	ARM64_OP_FP = GENERIC_OP_FP,	// Floating-Point immediate operand.
 	ARM64_OP_REG = GENERIC_OP_REG,	// Register operand.
 	ARM64_OP_IMM = GENERIC_OP_IMM,	// Immediate operand.
 	ARM64_OP_MEM = GENERIC_OP_MEM,	// Memory operand
-	ARM64_OP_INVALID = GENERIC_OP_INVALID,	// Uninitialized.
 	
-	ARM64_OP_CIMM, // C-Immediate
+	ARM64_OP_CIMM = GENERIC_OP_ARCH_SPECIFIC, // C-Immediate
 	ARM64_OP_REG_MRS, // MRS register operand.
 	ARM64_OP_REG_MSR, // MSR register operand.
 	ARM64_OP_PSTATE, // PState operand.
@@ -354,26 +354,29 @@ typedef struct arm64_op_mem {
 } arm64_op_mem;
 
 // Instruction operand
-typedef struct cs_arm64_op {
-	arm64_op_type type;	// operand type
-	union {
-		unsigned int reg;	// register value for REG operand
-		int32_t imm;		// immediate value, or index for C-IMM or IMM operand
-		double fp;			// floating point value for FP operand
-		arm64_op_mem mem;		// base/index/scale/disp value for MEM operand
-		arm64_pstate pstate;		// PState field of MSR instruction.
-		unsigned int sys;  // IC/DC/AT/TLBI operation (see arm64_ic_op, arm64_dc_op, arm64_at_op, arm64_tlbi_op)
-		arm64_prefetch_op prefetch;  // PRFM operation.
-		arm64_barrier_op barrier;  // Memory barrier operation (ISB/DMB/DSB instructions).
-	};
-	int vector_index;	// Vector Index for some vector operands (or -1 if irrelevant)
-	arm64_vas vas;		// Vector Arrangement Specifier
-	arm64_vess vess;	// Vector Element Size Specifier
+typedef union cs_arm64_op {
 	struct {
-		arm64_shifter type;	// shifter type of this operand
-		unsigned int value;	// shifter value of this operand
-	} shift;
-	arm64_extender ext;		// extender type of this operand
+		arm64_op_type type;	// operand type
+		union {
+			unsigned int reg;	// register value for REG operand
+			int32_t imm;		// immediate value, or index for C-IMM or IMM operand
+			double fp;			// floating point value for FP operand
+			arm64_op_mem mem;		// base/index/scale/disp value for MEM operand
+			arm64_pstate pstate;		// PState field of MSR instruction.
+			unsigned int sys;  // IC/DC/AT/TLBI operation (see arm64_ic_op, arm64_dc_op, arm64_at_op, arm64_tlbi_op)
+			arm64_prefetch_op prefetch;  // PRFM operation.
+			arm64_barrier_op barrier;  // Memory barrier operation (ISB/DMB/DSB instructions).
+		};
+		int vector_index;	// Vector Index for some vector operands (or -1 if irrelevant)
+		arm64_vas vas;		// Vector Arrangement Specifier
+		arm64_vess vess;	// Vector Element Size Specifier
+		struct {
+			arm64_shifter type;	// shifter type of this operand
+			unsigned int value;	// shifter value of this operand
+		} shift;
+		arm64_extender ext;		// extender type of this operand
+	};
+	cs_generic_op generic;
 } cs_arm64_op;
 
 // Instruction structure
