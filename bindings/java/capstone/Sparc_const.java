@@ -51,11 +51,10 @@ public class Sparc_const {
 	public static final int SPARC_HINT_PN = 1<<2;
 
 	// Operand type for instruction's operands
-
-	public static final int SPARC_OP_INVALID = 0;
-	public static final int SPARC_OP_REG = 1;
-	public static final int SPARC_OP_IMM = 2;
-	public static final int SPARC_OP_MEM = 3;
+	public static final int SPARC_OP_INVALID = GENERIC_OP_INVALID;
+	public static final int SPARC_OP_REG = GENERIC_OP_REG;
+	public static final int SPARC_OP_IMM = GENERIC_OP_IMM;
+	public static final int SPARC_OP_MEM = GENERIC_OP_MEM;
 
 	// SPARC registers
 
@@ -435,15 +434,14 @@ public class Sparc_const {
 	public static final int SPARC_INS_ENDING = 279;
 
 	// Group of SPARC instructions
-
-	public static final int SPARC_GRP_INVALID = 0;
-	public static final int SPARC_GRP_HARDQUAD = 1;
-	public static final int SPARC_GRP_V9 = 2;
-	public static final int SPARC_GRP_VIS = 3;
-	public static final int SPARC_GRP_VIS2 = 4;
-	public static final int SPARC_GRP_VIS3 = 5;
-	public static final int SPARC_GRP_32BIT = 6;
-	public static final int SPARC_GRP_64BIT = 7;
-	public static final int SPARC_GRP_JUMP = 8;
-	public static final int SPARC_GRP_ENDING = 9;
+	public static final int SPARC_GRP_INVALID = GENERIC_GRP_INVALID;
+	public static final int SPARC_GRP_JUMP = GENERIC_GRP_JUMP;
+	public static final int SPARC_GRP_HARDQUAD = GENERIC_GRP_ARCH_SPECIFIC;
+	public static final int SPARC_GRP_V9 = 280;
+	public static final int SPARC_GRP_VIS = 281;
+	public static final int SPARC_GRP_VIS2 = 282;
+	public static final int SPARC_GRP_VIS3 = 283;
+	public static final int SPARC_GRP_32BIT = 284;
+	public static final int SPARC_GRP_64BIT = 285;
+	public static final int SPARC_GRP_ENDING = 286;
 }

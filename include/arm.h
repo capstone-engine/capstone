@@ -10,6 +10,7 @@ extern "C" {
 
 #include <stdint.h>
 #include "platform.h"
+#include "generic.h"
 
 #ifdef _MSC_VER
 #pragma warning(disable:4201)
@@ -99,13 +100,14 @@ typedef enum arm_sysreg {
 
 //> Operand type for instruction's operands
 typedef enum arm_op_type {
-	ARM_OP_INVALID = 0,	// Uninitialized.
-	ARM_OP_REG,	// Register operand.
-	ARM_OP_CIMM, // C-Immediate (coprocessor registers)
+	ARM_OP_INVALID = GENERIC_OP_INVALID,	// Uninitialized.
+	ARM_OP_REG = GENERIC_OP_REG, // Register operand.
+	ARM_OP_FP = GENERIC_OP_FP, // Floating-Point immediate operand.
+	ARM_OP_MEM = GENERIC_OP_MEM, // Memory operand.
+	ARM_OP_IMM = GENERIC_OP_IMM, // Immediate operand.
+	
+	ARM_OP_CIMM = GENERIC_OP_ARCH_SPECIFIC, // C-Immediate (coprocessor registers)
 	ARM_OP_PIMM, // P-Immediate (coprocessor registers)
-	ARM_OP_IMM,	// Immediate operand.
-	ARM_OP_FP,	// Floating-Point immediate operand.
-	ARM_OP_MEM,	// Memory operand
 	ARM_OP_SETEND,	// operand for SETEND instruction
 	ARM_OP_SYSREG,	// MSR/MSR special register operand
 } arm_op_type;
@@ -805,8 +807,10 @@ typedef enum arm_insn {
 
 //> Group of ARM instructions
 typedef enum arm_insn_group {
-	ARM_GRP_INVALID = 0,
-	ARM_GRP_CRYPTO,
+	ARM_GRP_INVALID = GENERIC_GRP_INVALID,
+	ARM_GRP_JUMP = GENERIC_GRP_JUMP, // all jump instructions (conditional+direct+indirect jumps)
+	
+	ARM_GRP_CRYPTO = GENERIC_GRP_ARCH_SPECIFIC,
 	ARM_GRP_DATABARRIER,
 	ARM_GRP_DIVIDE,
 	ARM_GRP_FPARMV8,
@@ -837,8 +841,6 @@ typedef enum arm_insn_group {
 	ARM_GRP_CRC,
 	ARM_GRP_DPVFP,
 	ARM_GRP_V6M,
-
-	ARM_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
 	ARM_GRP_ENDING,
 } arm_insn_group;

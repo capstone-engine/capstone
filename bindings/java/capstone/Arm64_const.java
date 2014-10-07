@@ -200,19 +200,18 @@ public class Arm64_const {
 	public static final int ARM64_BARRIER_SY = 0xf;
 
 	// Operand type for instruction's operands
-
-	public static final int ARM64_OP_INVALID = 0;
-	public static final int ARM64_OP_REG = 1;
-	public static final int ARM64_OP_CIMM = 2;
-	public static final int ARM64_OP_IMM = 3;
-	public static final int ARM64_OP_FP = 4;
-	public static final int ARM64_OP_MEM = 5;
-	public static final int ARM64_OP_REG_MRS = 6;
-	public static final int ARM64_OP_REG_MSR = 7;
-	public static final int ARM64_OP_PSTATE = 8;
-	public static final int ARM64_OP_SYS = 9;
-	public static final int ARM64_OP_PREFETCH = 10;
-	public static final int ARM64_OP_BARRIER = 11;
+	public static final int ARM64_OP_FP = GENERIC_OP_FP;
+	public static final int ARM64_OP_REG = GENERIC_OP_REG;
+	public static final int ARM64_OP_IMM = GENERIC_OP_IMM;
+	public static final int ARM64_OP_MEM = GENERIC_OP_MEM;
+	public static final int ARM64_OP_INVALID = GENERIC_OP_INVALID;
+	public static final int ARM64_OP_CIMM = 1;
+	public static final int ARM64_OP_REG_MRS = 2;
+	public static final int ARM64_OP_REG_MSR = 3;
+	public static final int ARM64_OP_PSTATE = 4;
+	public static final int ARM64_OP_SYS = 5;
+	public static final int ARM64_OP_PREFETCH = 6;
+	public static final int ARM64_OP_BARRIER = 7;
 
 	// TLBI operations
 
@@ -1032,12 +1031,11 @@ public class Arm64_const {
 	public static final int ARM64_INS_ENDING = 452;
 
 	// Group of ARM64 instructions
-
-	public static final int ARM64_GRP_INVALID = 0;
-	public static final int ARM64_GRP_CRYPTO = 1;
-	public static final int ARM64_GRP_FPARMV8 = 2;
-	public static final int ARM64_GRP_NEON = 3;
-	public static final int ARM64_GRP_CRC = 4;
-	public static final int ARM64_GRP_JUMP = 5;
-	public static final int ARM64_GRP_ENDING = 6;
+	public static final int ARM64_GRP_INVALID = GENERIC_GRP_INVALID;
+	public static final int ARM64_GRP_JUMP = GENERIC_GRP_JUMP;
+	public static final int ARM64_GRP_CRYPTO = GENERIC_GRP_ARCH_SPECIFIC;
+	public static final int ARM64_GRP_FPARMV8 = 453;
+	public static final int ARM64_GRP_NEON = 454;
+	public static final int ARM64_GRP_CRC = 455;
+	public static final int ARM64_GRP_ENDING = 456;
 }

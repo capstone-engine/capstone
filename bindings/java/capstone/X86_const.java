@@ -242,12 +242,11 @@ public class X86_const {
 	public static final int X86_REG_ENDING = 234;
 
 	// Operand type for instruction's operands
-
-	public static final int X86_OP_INVALID = 0;
-	public static final int X86_OP_REG = 1;
-	public static final int X86_OP_IMM = 2;
-	public static final int X86_OP_FP = 3;
-	public static final int X86_OP_MEM = 4;
+	public static final int X86_OP_INVALID = GENERIC_OP_INVALID;
+	public static final int X86_OP_REG = GENERIC_OP_REG;
+	public static final int X86_OP_IMM = GENERIC_OP_IMM;
+	public static final int X86_OP_FP = GENERIC_OP_FP;
+	public static final int X86_OP_MEM = GENERIC_OP_MEM;
 
 	// AVX broadcast type
 
@@ -1624,53 +1623,52 @@ public class X86_const {
 	public static final int X86_INS_ENDING = 1298;
 
 	// Group of X86 instructions
-
-	public static final int X86_GRP_INVALID = 0;
-	public static final int X86_GRP_3DNOW = 1;
-	public static final int X86_GRP_AES = 2;
-	public static final int X86_GRP_ADX = 3;
-	public static final int X86_GRP_AVX = 4;
-	public static final int X86_GRP_AVX2 = 5;
-	public static final int X86_GRP_AVX512 = 6;
-	public static final int X86_GRP_BMI = 7;
-	public static final int X86_GRP_BMI2 = 8;
-	public static final int X86_GRP_CMOV = 9;
-	public static final int X86_GRP_F16C = 10;
-	public static final int X86_GRP_FMA = 11;
-	public static final int X86_GRP_FMA4 = 12;
-	public static final int X86_GRP_FSGSBASE = 13;
-	public static final int X86_GRP_HLE = 14;
-	public static final int X86_GRP_MMX = 15;
-	public static final int X86_GRP_MODE32 = 16;
-	public static final int X86_GRP_MODE64 = 17;
-	public static final int X86_GRP_RTM = 18;
-	public static final int X86_GRP_SHA = 19;
-	public static final int X86_GRP_SSE1 = 20;
-	public static final int X86_GRP_SSE2 = 21;
-	public static final int X86_GRP_SSE3 = 22;
-	public static final int X86_GRP_SSE41 = 23;
-	public static final int X86_GRP_SSE42 = 24;
-	public static final int X86_GRP_SSE4A = 25;
-	public static final int X86_GRP_SSSE3 = 26;
-	public static final int X86_GRP_PCLMUL = 27;
-	public static final int X86_GRP_XOP = 28;
-	public static final int X86_GRP_CDI = 29;
-	public static final int X86_GRP_ERI = 30;
-	public static final int X86_GRP_TBM = 31;
-	public static final int X86_GRP_16BITMODE = 32;
-	public static final int X86_GRP_NOT64BITMODE = 33;
-	public static final int X86_GRP_SGX = 34;
-	public static final int X86_GRP_DQI = 35;
-	public static final int X86_GRP_BWI = 36;
-	public static final int X86_GRP_PFI = 37;
-	public static final int X86_GRP_VLX = 38;
-	public static final int X86_GRP_SMAP = 39;
-	public static final int X86_GRP_NOVLX = 40;
-	public static final int X86_GRP_JUMP = 41;
-	public static final int X86_GRP_VM = 42;
-	public static final int X86_GRP_INT = 43;
-	public static final int X86_GRP_IRET = 44;
-	public static final int X86_GRP_CALL = 45;
-	public static final int X86_GRP_RET = 46;
-	public static final int X86_GRP_ENDING = 47;
+	public static final int X86_GRP_INVALID = GENERIC_GRP_INVALID;
+	public static final int X86_GRP_JUMP = GENERIC_GRP_JUMP;
+	public static final int X86_GRP_VM = GENERIC_GRP_ARCH_SPECIFIC;
+	public static final int X86_GRP_INT = 1299;
+	public static final int X86_GRP_IRET = 1300;
+	public static final int X86_GRP_CALL = 1301;
+	public static final int X86_GRP_RET = 1302;
+	public static final int X86_GRP_3DNOW = 1303;
+	public static final int X86_GRP_AES = 1304;
+	public static final int X86_GRP_ADX = 1305;
+	public static final int X86_GRP_AVX = 1306;
+	public static final int X86_GRP_AVX2 = 1307;
+	public static final int X86_GRP_AVX512 = 1308;
+	public static final int X86_GRP_BMI = 1309;
+	public static final int X86_GRP_BMI2 = 1310;
+	public static final int X86_GRP_CMOV = 1311;
+	public static final int X86_GRP_F16C = 1312;
+	public static final int X86_GRP_FMA = 1313;
+	public static final int X86_GRP_FMA4 = 1314;
+	public static final int X86_GRP_FSGSBASE = 1315;
+	public static final int X86_GRP_HLE = 1316;
+	public static final int X86_GRP_MMX = 1317;
+	public static final int X86_GRP_MODE32 = 1318;
+	public static final int X86_GRP_MODE64 = 1319;
+	public static final int X86_GRP_RTM = 1320;
+	public static final int X86_GRP_SHA = 1321;
+	public static final int X86_GRP_SSE1 = 1322;
+	public static final int X86_GRP_SSE2 = 1323;
+	public static final int X86_GRP_SSE3 = 1324;
+	public static final int X86_GRP_SSE41 = 1325;
+	public static final int X86_GRP_SSE42 = 1326;
+	public static final int X86_GRP_SSE4A = 1327;
+	public static final int X86_GRP_SSSE3 = 1328;
+	public static final int X86_GRP_PCLMUL = 1329;
+	public static final int X86_GRP_XOP = 1330;
+	public static final int X86_GRP_CDI = 1331;
+	public static final int X86_GRP_ERI = 1332;
+	public static final int X86_GRP_TBM = 1333;
+	public static final int X86_GRP_16BITMODE = 1334;
+	public static final int X86_GRP_NOT64BITMODE = 1335;
+	public static final int X86_GRP_SGX = 1336;
+	public static final int X86_GRP_DQI = 1337;
+	public static final int X86_GRP_BWI = 1338;
+	public static final int X86_GRP_PFI = 1339;
+	public static final int X86_GRP_VLX = 1340;
+	public static final int X86_GRP_SMAP = 1341;
+	public static final int X86_GRP_NOVLX = 1342;
+	public static final int X86_GRP_ENDING = 1343;
 }

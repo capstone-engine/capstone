@@ -24,11 +24,10 @@ public class Ppc_const {
 	public static final int PPC_BH_MINUS = 2;
 
 	// Operand type for instruction's operands
-
-	public static final int PPC_OP_INVALID = 0;
-	public static final int PPC_OP_REG = 1;
-	public static final int PPC_OP_IMM = 2;
-	public static final int PPC_OP_MEM = 3;
+	public static final int PPC_OP_INVALID = GENERIC_OP_INVALID;
+	public static final int PPC_OP_REG = GENERIC_OP_REG;
+	public static final int PPC_OP_IMM = GENERIC_OP_IMM;
+	public static final int PPC_OP_MEM = GENERIC_OP_MEM;
 
 	// PPC registers
 
@@ -1151,18 +1150,17 @@ public class Ppc_const {
 	public static final int PPC_INS_ENDING = 934;
 
 	// Group of PPC instructions
-
-	public static final int PPC_GRP_INVALID = 0;
-	public static final int PPC_GRP_ALTIVEC = 1;
-	public static final int PPC_GRP_MODE32 = 2;
-	public static final int PPC_GRP_MODE64 = 3;
-	public static final int PPC_GRP_BOOKE = 4;
-	public static final int PPC_GRP_NOTBOOKE = 5;
-	public static final int PPC_GRP_SPE = 6;
-	public static final int PPC_GRP_VSX = 7;
-	public static final int PPC_GRP_E500 = 8;
-	public static final int PPC_GRP_PPC4XX = 9;
-	public static final int PPC_GRP_PPC6XX = 10;
-	public static final int PPC_GRP_JUMP = 11;
-	public static final int PPC_GRP_ENDING = 12;
+	public static final int PPC_GRP_INVALID = GENERIC_GRP_INVALID;
+	public static final int PPC_GRP_JUMP = GENERIC_GRP_JUMP;
+	public static final int PPC_GRP_ALTIVEC = GENERIC_GRP_ARCH_SPECIFIC;
+	public static final int PPC_GRP_MODE32 = 935;
+	public static final int PPC_GRP_MODE64 = 936;
+	public static final int PPC_GRP_BOOKE = 937;
+	public static final int PPC_GRP_NOTBOOKE = 938;
+	public static final int PPC_GRP_SPE = 939;
+	public static final int PPC_GRP_VSX = 940;
+	public static final int PPC_GRP_E500 = 941;
+	public static final int PPC_GRP_PPC4XX = 942;
+	public static final int PPC_GRP_PPC6XX = 943;
+	public static final int PPC_GRP_ENDING = 944;
 }

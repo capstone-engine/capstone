@@ -22,12 +22,11 @@ public class Sysz_const {
 	public static final int SYSZ_CC_NO = 14;
 
 	// Operand type for instruction's operands
-
-	public static final int SYSZ_OP_INVALID = 0;
-	public static final int SYSZ_OP_REG = 1;
-	public static final int SYSZ_OP_ACREG = 2;
-	public static final int SYSZ_OP_IMM = 3;
-	public static final int SYSZ_OP_MEM = 4;
+	public static final int SYSZ_OP_INVALID = GENERIC_OP_INVALID;
+	public static final int SYSZ_OP_REG = GENERIC_OP_REG;
+	public static final int SYSZ_OP_IMM = GENERIC_OP_IMM;
+	public static final int SYSZ_OP_MEM = GENERIC_OP_MEM;
+	public static final int SYSZ_OP_ACREG = GENERIC_OP_ARCH_SPECIFIC;
 
 	// SystemZ registers
 
@@ -755,13 +754,12 @@ public class Sysz_const {
 	public static final int SYSZ_INS_ENDING = 682;
 
 	// Group of SystemZ instructions
-
-	public static final int SYSZ_GRP_INVALID = 0;
-	public static final int SYSZ_GRP_DISTINCTOPS = 1;
-	public static final int SYSZ_GRP_FPEXTENSION = 2;
-	public static final int SYSZ_GRP_HIGHWORD = 3;
-	public static final int SYSZ_GRP_INTERLOCKEDACCESS1 = 4;
-	public static final int SYSZ_GRP_LOADSTOREONCOND = 5;
-	public static final int SYSZ_GRP_JUMP = 6;
-	public static final int SYSZ_GRP_ENDING = 7;
+	public static final int SYSZ_GRP_INVALID = GENERIC_GRP_INVALID;
+	public static final int SYSZ_GRP_JUMP = GENERIC_GRP_JUMP;
+	public static final int SYSZ_GRP_DISTINCTOPS = GENERIC_GRP_ARCH_SPECIFIC;
+	public static final int SYSZ_GRP_FPEXTENSION = 683;
+	public static final int SYSZ_GRP_HIGHWORD = 684;
+	public static final int SYSZ_GRP_INTERLOCKEDACCESS1 = 685;
+	public static final int SYSZ_GRP_LOADSTOREONCOND = 686;
+	public static final int SYSZ_GRP_ENDING = 687;
 }

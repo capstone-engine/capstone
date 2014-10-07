@@ -4,11 +4,10 @@ package capstone;
 public class Xcore_const {
 
 	// Operand type for instruction's operands
-
-	public static final int XCORE_OP_INVALID = 0;
-	public static final int XCORE_OP_REG = 1;
-	public static final int XCORE_OP_IMM = 2;
-	public static final int XCORE_OP_MEM = 3;
+	public static final int XCORE_OP_INVALID = GENERIC_OP_INVALID;
+	public static final int XCORE_OP_REG = GENERIC_OP_REG;
+	public static final int XCORE_OP_IMM = GENERIC_OP_IMM;
+	public static final int XCORE_OP_MEM = GENERIC_OP_MEM;
 
 	// XCore registers
 
@@ -168,8 +167,7 @@ public class Xcore_const {
 	public static final int XCORE_INS_ENDING = 121;
 
 	// Group of XCore instructions
-
-	public static final int XCORE_GRP_INVALID = 0;
-	public static final int XCORE_GRP_JUMP = 1;
-	public static final int XCORE_GRP_ENDING = 2;
+	public static final int XCORE_GRP_INVALID = GENERIC_OP_INVALID;
+	public static final int XCORE_GRP_JUMP = GENERIC_GRP_JUMP;
+	public static final int XCORE_GRP_ENDING = 122;
 }

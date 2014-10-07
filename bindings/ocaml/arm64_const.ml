@@ -197,19 +197,18 @@ let _ARM64_BARRIER_ST = 0xe;;
 let _ARM64_BARRIER_SY = 0xf;;
 
 (* Operand type for instruction's operands *)
-
-let _ARM64_OP_INVALID = 0;;
-let _ARM64_OP_REG = 1;;
-let _ARM64_OP_CIMM = 2;;
-let _ARM64_OP_IMM = 3;;
-let _ARM64_OP_FP = 4;;
-let _ARM64_OP_MEM = 5;;
-let _ARM64_OP_REG_MRS = 6;;
-let _ARM64_OP_REG_MSR = 7;;
-let _ARM64_OP_PSTATE = 8;;
-let _ARM64_OP_SYS = 9;;
-let _ARM64_OP_PREFETCH = 10;;
-let _ARM64_OP_BARRIER = 11;;
+let _ARM64_OP_FP = _GENERIC_OP_FP;;
+let _ARM64_OP_REG = _GENERIC_OP_REG;;
+let _ARM64_OP_IMM = _GENERIC_OP_IMM;;
+let _ARM64_OP_MEM = _GENERIC_OP_MEM;;
+let _ARM64_OP_INVALID = _GENERIC_OP_INVALID;;
+let _ARM64_OP_CIMM = 1;;
+let _ARM64_OP_REG_MRS = 2;;
+let _ARM64_OP_REG_MSR = 3;;
+let _ARM64_OP_PSTATE = 4;;
+let _ARM64_OP_SYS = 5;;
+let _ARM64_OP_PREFETCH = 6;;
+let _ARM64_OP_BARRIER = 7;;
 
 (* TLBI operations *)
 
@@ -1029,11 +1028,10 @@ let _ARM64_INS_TLBI = 451;;
 let _ARM64_INS_ENDING = 452;;
 
 (* Group of ARM64 instructions *)
-
-let _ARM64_GRP_INVALID = 0;;
-let _ARM64_GRP_CRYPTO = 1;;
-let _ARM64_GRP_FPARMV8 = 2;;
-let _ARM64_GRP_NEON = 3;;
-let _ARM64_GRP_CRC = 4;;
-let _ARM64_GRP_JUMP = 5;;
-let _ARM64_GRP_ENDING = 6;;
+let _ARM64_GRP_INVALID = _GENERIC_GRP_INVALID;;
+let _ARM64_GRP_JUMP = _GENERIC_GRP_JUMP;;
+let _ARM64_GRP_CRYPTO = _GENERIC_GRP_ARCH_SPECIFIC;;
+let _ARM64_GRP_FPARMV8 = 453;;
+let _ARM64_GRP_NEON = 454;;
+let _ARM64_GRP_CRC = 455;;
+let _ARM64_GRP_ENDING = 456;;

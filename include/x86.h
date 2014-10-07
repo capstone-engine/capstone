@@ -9,6 +9,7 @@ extern "C" {
 #endif
 
 #include <stdint.h>
+#include "generic.h"
 
 // Calculate relative address for X86-64, given cs_insn structure
 #define X86_REL_ADDR(insn) (insn.address + insn.size + insn.detail->x86.disp)
@@ -69,11 +70,11 @@ typedef enum x86_reg {
 
 //> Operand type for instruction's operands
 typedef enum x86_op_type {
-	X86_OP_INVALID = 0,	// Uninitialized.
-	X86_OP_REG,	// Register operand.
-	X86_OP_IMM,	// Immediate operand.
-	X86_OP_FP,	// Floating-Point immediate operand.
-	X86_OP_MEM,	// Memory operand
+	X86_OP_INVALID = GENERIC_OP_INVALID,	// Uninitialized.
+	X86_OP_REG = GENERIC_OP_REG,	// Register operand.
+	X86_OP_IMM = GENERIC_OP_IMM,	// Immediate operand.
+	X86_OP_FP = GENERIC_OP_FP,	// Floating-Point immediate operand.
+	X86_OP_MEM = GENERIC_OP_MEM,	// Memory operand
 } x86_op_type;
 
 //> AVX broadcast type
@@ -1547,7 +1548,13 @@ typedef enum x86_insn {
 
 //> Group of X86 instructions
 typedef enum  x86_insn_group {
-	X86_GRP_INVALID = 0,
+	X86_GRP_INVALID = GENERIC_GRP_INVALID,
+	X86_GRP_JUMP = GENERIC_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
+	X86_GRP_VM = GENERIC_GRP_ARCH_SPECIFIC,	// all virtualization instructions (VT-x + AMD-V)
+	X86_GRP_INT,	// all interrupt instructions (int+syscall)
+	X86_GRP_IRET,	// all interrupt return instructions
+	X86_GRP_CALL,	// all call instructions
+	X86_GRP_RET,	// all call return instructions
 
 	X86_GRP_3DNOW,
 	X86_GRP_AES,
@@ -1589,13 +1596,6 @@ typedef enum  x86_insn_group {
 	X86_GRP_VLX,
 	X86_GRP_SMAP,
 	X86_GRP_NOVLX,
-
-	X86_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
-	X86_GRP_VM,	// all virtualization instructions (VT-x + AMD-V)
-	X86_GRP_INT,	// all interrupt instructions (int+syscall)
-	X86_GRP_IRET,	// all interrupt return instructions
-	X86_GRP_CALL,	// all call instructions
-	X86_GRP_RET,	// all call return instructions
 
 	X86_GRP_ENDING
 } x86_insn_group;

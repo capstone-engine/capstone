@@ -10,6 +10,7 @@ extern "C" {
 
 #include <stdint.h>
 #include "platform.h"
+#include "generic.h"
 
 #ifdef _MSC_VER
 #pragma warning(disable:4201)
@@ -232,12 +233,13 @@ typedef enum arm64_barrier_op {
 
 //> Operand type for instruction's operands
 typedef enum arm64_op_type {
-	ARM64_OP_INVALID = 0,	// Uninitialized.
-	ARM64_OP_REG,	// Register operand.
+	ARM64_OP_FP = GENERIC_OP_FP,	// Floating-Point immediate operand.
+	ARM64_OP_REG = GENERIC_OP_REG,	// Register operand.
+	ARM64_OP_IMM = GENERIC_OP_IMM,	// Immediate operand.
+	ARM64_OP_MEM = GENERIC_OP_MEM,	// Memory operand
+	ARM64_OP_INVALID = GENERIC_OP_INVALID,	// Uninitialized.
+	
 	ARM64_OP_CIMM, // C-Immediate
-	ARM64_OP_IMM,	// Immediate operand.
-	ARM64_OP_FP,	// Floating-Point immediate operand.
-	ARM64_OP_MEM,	// Memory operand
 	ARM64_OP_REG_MRS, // MRS register operand.
 	ARM64_OP_REG_MSR, // MSR register operand.
 	ARM64_OP_PSTATE, // PState operand.
@@ -1129,14 +1131,13 @@ typedef enum arm64_insn {
 
 //> Group of ARM64 instructions
 typedef enum arm64_insn_group {
-	ARM64_GRP_INVALID = 0,
+	ARM64_GRP_INVALID = GENERIC_GRP_INVALID,
+	ARM64_GRP_JUMP = GENERIC_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
-	ARM64_GRP_CRYPTO,
+	ARM64_GRP_CRYPTO = GENERIC_GRP_ARCH_SPECIFIC,
 	ARM64_GRP_FPARMV8,
 	ARM64_GRP_NEON,
 	ARM64_GRP_CRC,
-
-	ARM64_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
 	ARM64_GRP_ENDING,  // <-- mark the end of the list of groups
 } arm64_insn_group;

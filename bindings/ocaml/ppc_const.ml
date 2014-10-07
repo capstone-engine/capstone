@@ -21,11 +21,10 @@ let _PPC_BH_PLUS = 1;;
 let _PPC_BH_MINUS = 2;;
 
 (* Operand type for instruction's operands *)
-
-let _PPC_OP_INVALID = 0;;
-let _PPC_OP_REG = 1;;
-let _PPC_OP_IMM = 2;;
-let _PPC_OP_MEM = 3;;
+let _PPC_OP_INVALID = _GENERIC_OP_INVALID;;
+let _PPC_OP_REG = _GENERIC_OP_REG;;
+let _PPC_OP_IMM = _GENERIC_OP_IMM;;
+let _PPC_OP_MEM = _GENERIC_OP_MEM;;
 
 (* PPC registers *)
 
@@ -1148,17 +1147,16 @@ let _PPC_INS_BDZFLRL = 933;;
 let _PPC_INS_ENDING = 934;;
 
 (* Group of PPC instructions *)
-
-let _PPC_GRP_INVALID = 0;;
-let _PPC_GRP_ALTIVEC = 1;;
-let _PPC_GRP_MODE32 = 2;;
-let _PPC_GRP_MODE64 = 3;;
-let _PPC_GRP_BOOKE = 4;;
-let _PPC_GRP_NOTBOOKE = 5;;
-let _PPC_GRP_SPE = 6;;
-let _PPC_GRP_VSX = 7;;
-let _PPC_GRP_E500 = 8;;
-let _PPC_GRP_PPC4XX = 9;;
-let _PPC_GRP_PPC6XX = 10;;
-let _PPC_GRP_JUMP = 11;;
-let _PPC_GRP_ENDING = 12;;
+let _PPC_GRP_INVALID = _GENERIC_GRP_INVALID;;
+let _PPC_GRP_JUMP = _GENERIC_GRP_JUMP;;
+let _PPC_GRP_ALTIVEC = _GENERIC_GRP_ARCH_SPECIFIC;;
+let _PPC_GRP_MODE32 = 935;;
+let _PPC_GRP_MODE64 = 936;;
+let _PPC_GRP_BOOKE = 937;;
+let _PPC_GRP_NOTBOOKE = 938;;
+let _PPC_GRP_SPE = 939;;
+let _PPC_GRP_VSX = 940;;
+let _PPC_GRP_E500 = 941;;
+let _PPC_GRP_PPC4XX = 942;;
+let _PPC_GRP_PPC6XX = 943;;
+let _PPC_GRP_ENDING = 944;;

@@ -72,16 +72,15 @@ public class Arm_const {
 	public static final int ARM_SYSREG_CONTROL = 278;
 
 	// Operand type for instruction's operands
-
-	public static final int ARM_OP_INVALID = 0;
-	public static final int ARM_OP_REG = 1;
-	public static final int ARM_OP_CIMM = 2;
-	public static final int ARM_OP_PIMM = 3;
-	public static final int ARM_OP_IMM = 4;
-	public static final int ARM_OP_FP = 5;
-	public static final int ARM_OP_MEM = 6;
-	public static final int ARM_OP_SETEND = 7;
-	public static final int ARM_OP_SYSREG = 8;
+	public static final int ARM_OP_INVALID = GENERIC_OP_INVALID;
+	public static final int ARM_OP_REG = GENERIC_OP_REG;
+	public static final int ARM_OP_FP = GENERIC_OP_FP;
+	public static final int ARM_OP_MEM = GENERIC_OP_MEM;
+	public static final int ARM_OP_IMM = GENERIC_OP_IMM;
+	public static final int ARM_OP_CIMM = GENERIC_OP_ARCH_SPECIFIC;
+	public static final int ARM_OP_PIMM = 279;
+	public static final int ARM_OP_SETEND = 280;
+	public static final int ARM_OP_SYSREG = 281;
 
 	// Operand type for SETEND instruction
 
@@ -706,39 +705,38 @@ public class Arm_const {
 	public static final int ARM_INS_ENDING = 435;
 
 	// Group of ARM instructions
-
-	public static final int ARM_GRP_INVALID = 0;
-	public static final int ARM_GRP_CRYPTO = 1;
-	public static final int ARM_GRP_DATABARRIER = 2;
-	public static final int ARM_GRP_DIVIDE = 3;
-	public static final int ARM_GRP_FPARMV8 = 4;
-	public static final int ARM_GRP_MULTPRO = 5;
-	public static final int ARM_GRP_NEON = 6;
-	public static final int ARM_GRP_T2EXTRACTPACK = 7;
-	public static final int ARM_GRP_THUMB2DSP = 8;
-	public static final int ARM_GRP_TRUSTZONE = 9;
-	public static final int ARM_GRP_V4T = 10;
-	public static final int ARM_GRP_V5T = 11;
-	public static final int ARM_GRP_V5TE = 12;
-	public static final int ARM_GRP_V6 = 13;
-	public static final int ARM_GRP_V6T2 = 14;
-	public static final int ARM_GRP_V7 = 15;
-	public static final int ARM_GRP_V8 = 16;
-	public static final int ARM_GRP_VFP2 = 17;
-	public static final int ARM_GRP_VFP3 = 18;
-	public static final int ARM_GRP_VFP4 = 19;
-	public static final int ARM_GRP_ARM = 20;
-	public static final int ARM_GRP_MCLASS = 21;
-	public static final int ARM_GRP_NOTMCLASS = 22;
-	public static final int ARM_GRP_THUMB = 23;
-	public static final int ARM_GRP_THUMB1ONLY = 24;
-	public static final int ARM_GRP_THUMB2 = 25;
-	public static final int ARM_GRP_PREV8 = 26;
-	public static final int ARM_GRP_FPVMLX = 27;
-	public static final int ARM_GRP_MULOPS = 28;
-	public static final int ARM_GRP_CRC = 29;
-	public static final int ARM_GRP_DPVFP = 30;
-	public static final int ARM_GRP_V6M = 31;
-	public static final int ARM_GRP_JUMP = 32;
-	public static final int ARM_GRP_ENDING = 33;
+	public static final int ARM_GRP_INVALID = GENERIC_GRP_INVALID;
+	public static final int ARM_GRP_JUMP = GENERIC_GRP_JUMP;
+	public static final int ARM_GRP_CRYPTO = GENERIC_GRP_ARCH_SPECIFIC;
+	public static final int ARM_GRP_DATABARRIER = 436;
+	public static final int ARM_GRP_DIVIDE = 437;
+	public static final int ARM_GRP_FPARMV8 = 438;
+	public static final int ARM_GRP_MULTPRO = 439;
+	public static final int ARM_GRP_NEON = 440;
+	public static final int ARM_GRP_T2EXTRACTPACK = 441;
+	public static final int ARM_GRP_THUMB2DSP = 442;
+	public static final int ARM_GRP_TRUSTZONE = 443;
+	public static final int ARM_GRP_V4T = 444;
+	public static final int ARM_GRP_V5T = 445;
+	public static final int ARM_GRP_V5TE = 446;
+	public static final int ARM_GRP_V6 = 447;
+	public static final int ARM_GRP_V6T2 = 448;
+	public static final int ARM_GRP_V7 = 449;
+	public static final int ARM_GRP_V8 = 450;
+	public static final int ARM_GRP_VFP2 = 451;
+	public static final int ARM_GRP_VFP3 = 452;
+	public static final int ARM_GRP_VFP4 = 453;
+	public static final int ARM_GRP_ARM = 454;
+	public static final int ARM_GRP_MCLASS = 455;
+	public static final int ARM_GRP_NOTMCLASS = 456;
+	public static final int ARM_GRP_THUMB = 457;
+	public static final int ARM_GRP_THUMB1ONLY = 458;
+	public static final int ARM_GRP_THUMB2 = 459;
+	public static final int ARM_GRP_PREV8 = 460;
+	public static final int ARM_GRP_FPVMLX = 461;
+	public static final int ARM_GRP_MULOPS = 462;
+	public static final int ARM_GRP_CRC = 463;
+	public static final int ARM_GRP_DPVFP = 464;
+	public static final int ARM_GRP_V6M = 465;
+	public static final int ARM_GRP_ENDING = 466;
 }

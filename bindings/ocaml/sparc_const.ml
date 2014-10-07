@@ -48,11 +48,10 @@ let _SPARC_HINT_PT = 1 lsl 1;;
 let _SPARC_HINT_PN = 1 lsl 2;;
 
 (* Operand type for instruction's operands *)
-
-let _SPARC_OP_INVALID = 0;;
-let _SPARC_OP_REG = 1;;
-let _SPARC_OP_IMM = 2;;
-let _SPARC_OP_MEM = 3;;
+let _SPARC_OP_INVALID = _GENERIC_OP_INVALID;;
+let _SPARC_OP_REG = _GENERIC_OP_REG;;
+let _SPARC_OP_IMM = _GENERIC_OP_IMM;;
+let _SPARC_OP_MEM = _GENERIC_OP_MEM;;
 
 (* SPARC registers *)
 
@@ -432,14 +431,13 @@ let _SPARC_INS_RETL = 278;;
 let _SPARC_INS_ENDING = 279;;
 
 (* Group of SPARC instructions *)
-
-let _SPARC_GRP_INVALID = 0;;
-let _SPARC_GRP_HARDQUAD = 1;;
-let _SPARC_GRP_V9 = 2;;
-let _SPARC_GRP_VIS = 3;;
-let _SPARC_GRP_VIS2 = 4;;
-let _SPARC_GRP_VIS3 = 5;;
-let _SPARC_GRP_32BIT = 6;;
-let _SPARC_GRP_64BIT = 7;;
-let _SPARC_GRP_JUMP = 8;;
-let _SPARC_GRP_ENDING = 9;;
+let _SPARC_GRP_INVALID = _GENERIC_GRP_INVALID;;
+let _SPARC_GRP_JUMP = _GENERIC_GRP_JUMP;;
+let _SPARC_GRP_HARDQUAD = _GENERIC_GRP_ARCH_SPECIFIC;;
+let _SPARC_GRP_V9 = 280;;
+let _SPARC_GRP_VIS = 281;;
+let _SPARC_GRP_VIS2 = 282;;
+let _SPARC_GRP_VIS3 = 283;;
+let _SPARC_GRP_32BIT = 284;;
+let _SPARC_GRP_64BIT = 285;;
+let _SPARC_GRP_ENDING = 286;;

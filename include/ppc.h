@@ -10,6 +10,7 @@ extern "C" {
 
 #include <stdint.h>
 #include "platform.h"
+#include "generic.h"
 
 #ifdef _MSC_VER
 #pragma warning(disable:4201)
@@ -41,10 +42,10 @@ typedef enum ppc_bh {
 
 //> Operand type for instruction's operands
 typedef enum ppc_op_type {
-	PPC_OP_INVALID = 0,	// Uninitialized.
-	PPC_OP_REG,	// Register operand.
-	PPC_OP_IMM,	// Immediate operand.
-	PPC_OP_MEM,	// Memory operand
+	PPC_OP_INVALID = GENERIC_OP_INVALID,	// Uninitialized.
+	PPC_OP_REG = GENERIC_OP_REG,	// Register operand.
+	PPC_OP_IMM = GENERIC_OP_IMM,	// Immediate operand.
+	PPC_OP_MEM = GENERIC_OP_MEM,	// Memory operand
 } ppc_op_type;
 
 // Instruction's operand referring to memory
@@ -1214,9 +1215,10 @@ typedef enum ppc_insn {
 
 //> Group of PPC instructions
 typedef enum ppc_insn_group {
-	PPC_GRP_INVALID = 0,
+	PPC_GRP_INVALID = GENERIC_GRP_INVALID,
+	PPC_GRP_JUMP = GENERIC_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
-	PPC_GRP_ALTIVEC,
+	PPC_GRP_ALTIVEC = GENERIC_GRP_ARCH_SPECIFIC,
 	PPC_GRP_MODE32,
 	PPC_GRP_MODE64,
 	PPC_GRP_BOOKE,
@@ -1226,8 +1228,6 @@ typedef enum ppc_insn_group {
 	PPC_GRP_E500,
 	PPC_GRP_PPC4XX,
 	PPC_GRP_PPC6XX,
-
-	PPC_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
 	PPC_GRP_ENDING,   // <-- mark the end of the list of groups
 } ppc_insn_group;

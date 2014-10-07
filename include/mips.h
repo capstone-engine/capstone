@@ -10,6 +10,7 @@ extern "C" {
 
 #include <stdint.h>
 #include "platform.h"
+#include "generic.h"
 
 // GCC MIPS toolchain has a default macro called "mips" which breaks
 // compilation
@@ -21,10 +22,10 @@ extern "C" {
 
 //> Operand type for instruction's operands
 typedef enum mips_op_type {
-	MIPS_OP_INVALID = 0,	// Uninitialized.
-	MIPS_OP_REG,	// Register operand.
-	MIPS_OP_IMM,	// Immediate operand.
-	MIPS_OP_MEM,	// Memory operand
+	MIPS_OP_INVALID = GENERIC_OP_INVALID,	// Uninitialized.
+	MIPS_OP_REG = GENERIC_OP_REG,	// Register operand.
+	MIPS_OP_IMM = GENERIC_OP_IMM,	// Immediate operand.
+	MIPS_OP_MEM = GENERIC_OP_MEM,	// Memory operand
 } mips_op_type;
 
 // Instruction's operand referring to memory
@@ -853,9 +854,10 @@ typedef enum mips_insn {
 
 //> Group of MIPS instructions
 typedef enum mips_insn_group {
-	MIPS_GRP_INVALID = 0,
+	MIPS_GRP_INVALID = GENERIC_GRP_INVALID,
+	MIPS_GRP_JUMP = GENERIC_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
-	MIPS_GRP_BITCOUNT,
+	MIPS_GRP_BITCOUNT = GENERIC_GRP_ARCH_SPECIFIC,
 	MIPS_GRP_DSP,
 	MIPS_GRP_DSPR2,
 	MIPS_GRP_FPIDX,
@@ -888,8 +890,6 @@ typedef enum mips_insn_group {
 	MIPS_GRP_MIPS5_32R2,
 	MIPS_GRP_GP32BIT,
 	MIPS_GRP_GP64BIT,
-
-	MIPS_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
 	MIPS_GRP_ENDING,
 } mips_insn_group;

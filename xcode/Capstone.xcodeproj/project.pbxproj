@@ -125,6 +125,7 @@
 		DC474FDE19DE6FDA00BCA449 /* XCoreInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE245019DDCD8800EF8EA9 /* XCoreInstPrinter.c */; };
 		DC474FDF19DE6FDA00BCA449 /* XCoreMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE245219DDCD8800EF8EA9 /* XCoreMapping.c */; };
 		DC474FE019DE6FDA00BCA449 /* XCoreModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE245419DDCD8800EF8EA9 /* XCoreModule.c */; };
+		DCAD7A6519E38E6800907E6F /* generic.h in Headers */ = {isa = PBXBuildFile; fileRef = DCAD7A6319E37FA900907E6F /* generic.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DCFE245519DDCD9200EF8EA9 /* AArch64BaseInfo.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23DE19DDCD8700EF8EA9 /* AArch64BaseInfo.c */; };
 		DCFE245619DDCD9200EF8EA9 /* AArch64Disassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23E019DDCD8700EF8EA9 /* AArch64Disassembler.c */; };
 		DCFE245719DDCD9200EF8EA9 /* AArch64InstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23E719DDCD8700EF8EA9 /* AArch64InstPrinter.c */; };
@@ -296,6 +297,7 @@
 		DC474EEA19DDEAE400BCA449 /* test_arm64 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_arm64; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC474F6819DE6F3B00BCA449 /* Capstone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Capstone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC474F6B19DE6F3B00BCA449 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DCAD7A6319E37FA900907E6F /* generic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = generic.h; sourceTree = "<group>"; };
 		DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcapstone.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCFE23CD19DDCC9500EF8EA9 /* libcapstone.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libcapstone.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCFE23DD19DDCD8700EF8EA9 /* AArch64AddressingModes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AArch64AddressingModes.h; sourceTree = "<group>"; };
@@ -822,6 +824,7 @@
 				DCFE24BC19DDCE2F00EF8EA9 /* arm.h */,
 				DCFE24BD19DDCE2F00EF8EA9 /* arm64.h */,
 				DCFE24BE19DDCE2F00EF8EA9 /* capstone.h */,
+				DCAD7A6319E37FA900907E6F /* generic.h */,
 				DCFE24BF19DDCE2F00EF8EA9 /* mips.h */,
 				DCFE24C019DDCE2F00EF8EA9 /* platform.h */,
 				DCFE24C119DDCE2F00EF8EA9 /* ppc.h */,
@@ -844,6 +847,7 @@
 				DC474F8119DE6F6B00BCA449 /* arm.h in Headers */,
 				DC474F8219DE6F6B00BCA449 /* arm64.h in Headers */,
 				DC474F8319DE6F6B00BCA449 /* capstone.h in Headers */,
+				DCAD7A6519E38E6800907E6F /* generic.h in Headers */,
 				DC474F8419DE6F6B00BCA449 /* mips.h in Headers */,
 				DC474F8519DE6F6B00BCA449 /* platform.h in Headers */,
 				DC474F8619DE6F6B00BCA449 /* ppc.h in Headers */,
