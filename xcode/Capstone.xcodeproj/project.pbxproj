@@ -39,7 +39,6 @@
 		DC474F8819DE6F6B00BCA449 /* systemz.h in Headers */ = {isa = PBXBuildFile; fileRef = DCFE24C319DDCE2F00EF8EA9 /* systemz.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DC474F8919DE6F6B00BCA449 /* x86.h in Headers */ = {isa = PBXBuildFile; fileRef = DCFE24C419DDCE2F00EF8EA9 /* x86.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DC474F8A19DE6F6B00BCA449 /* xcore.h in Headers */ = {isa = PBXBuildFile; fileRef = DCFE24C519DDCE2F00EF8EA9 /* xcore.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DC474F8B19DE6F7A00BCA449 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
 		DC474F8C19DE6F8000BCA449 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
 		DC474F8D19DE6FCD00BCA449 /* cs.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE249D19DDCDEE00EF8EA9 /* cs.c */; };
 		DC474F8E19DE6FCD00BCA449 /* MCInst.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE249E19DDCDEE00EF8EA9 /* MCInst.c */; };
@@ -535,7 +534,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC474F8B19DE6F7A00BCA449 /* libcapstone.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
