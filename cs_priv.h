@@ -54,7 +54,6 @@ struct cs_struct {
 	uint8_t skipdata_size;	// how many bytes to skip
 	cs_opt_skipdata skipdata_setup;	// user-defined skipdata setup
 	uint8_t *regsize_map;	// map to register size (x86-only for now)
-	cs_insn *insn;
 };
 
 #define MAX_ARCH 8

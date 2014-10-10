@@ -204,7 +204,6 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		ud->big_endian = mode & CS_MODE_BIG_ENDIAN;
 		// by default, do not break instruction into details
 		ud->detail = CS_OPT_OFF;
-		ud->insn = NULL;
 
 		// default skipdata setup
 		ud->skipdata_setup.mnemonic = SKIPDATA_MNEM;
@@ -236,19 +235,11 @@ cs_err cs_close(csh *handle)
 
 	ud = (struct cs_struct *)(*handle);
 
-	if (ud->insn) {
-		if (ud->detail)
-			cs_free(ud->insn, 1);
-		else
-			cs_mem_free(ud->insn);
-	}
-
 	if (ud->printer_info)
 		cs_mem_free(ud->printer_info);
 
-	// arch_destroy[ud->arch](ud);
-
 	cs_mem_free(ud->insn_cache);
+
 	memset(ud, 0, sizeof(*ud));
 	cs_mem_free(ud);
 
@@ -418,7 +409,7 @@ static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
 CAPSTONE_EXPORT
 size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
 {
-	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
+	struct cs_struct *handle;
 	MCInst mci;
 	uint16_t insn_size;
 	size_t c = 0, i;
@@ -435,6 +426,7 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 	unsigned int cache_size = INSN_CACHE_SIZE;
 	size_t next_offset;
 
+	handle = (struct cs_struct *)(uintptr_t)ud;
 	if (!handle) {
 		// FIXME: how to handle this case:
 		// handle->errnum = CS_ERR_HANDLE;
@@ -519,7 +511,7 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 			// we have to skip some amount of data, depending on arch & mode
 			insn_cache->id = 0;	// invalid ID for this "data" instruction
 			insn_cache->address = offset;
-			insn_cache->size = (uint16_t) skipdata_bytes;
+			insn_cache->size = (uint16_t)skipdata_bytes;
 			memcpy(insn_cache->bytes, buffer, skipdata_bytes);
 			strncpy(insn_cache->mnemonic, handle->skipdata_setup.mnemonic,
 					sizeof(insn_cache->mnemonic) - 1);
@@ -620,51 +612,49 @@ void cs_free(cs_insn *insn, size_t count)
 	cs_mem_free(insn);
 }
 
+CAPSTONE_EXPORT
+cs_insn *cs_malloc(csh ud)
+{
+	cs_insn *insn;
+	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
+
+	insn = cs_mem_malloc(sizeof(cs_insn));
+	if (!insn) {
+		// insufficient memory
+		handle->errnum = CS_ERR_MEM;
+		return NULL;
+	} else {
+		if (handle->detail) {
+			// allocate memory for @detail pointer
+			insn->detail = cs_mem_malloc(sizeof(cs_detail));
+			if (insn->detail == NULL) {	// insufficient memory
+				cs_mem_free(insn);
+				handle->errnum = CS_ERR_MEM;
+				return NULL;
+			}
+		} else
+			insn->detail = NULL;
+	}
+
+	return insn;
+}
+
 // iterator for instruction "single-stepping"
 CAPSTONE_EXPORT
-cs_insn *cs_disasm_iter(csh ud, const uint8_t **code, size_t *size, uint64_t *address)
+bool cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
+		uint64_t *address, cs_insn *insn)
 {
 	struct cs_struct *handle;
-	cs_insn *insn_cache;
 	uint16_t insn_size;
 	MCInst mci;
 	bool r;
 
 	handle = (struct cs_struct *)(uintptr_t)ud;
-	if (!handle)
-	{
+	if (!handle) {
 		return NULL;
 	}
 
 	handle->errnum = CS_ERR_OK;
-
-	insn_cache = handle->insn;
-	if (!insn_cache)
-	{
-		insn_cache = cs_mem_malloc(sizeof(cs_insn));
-		if (!insn_cache)
-		{
-			handle->errnum = CS_ERR_MEM;
-			return NULL;
-		}
-		else
-		{
-			handle->insn = insn_cache;
-			if (handle->detail)
-			{
-				// allocate memory for @detail pointer
-				insn_cache->detail = cs_mem_malloc(sizeof(cs_detail));
-				if (insn_cache->detail == NULL)
-				{	// insufficient memory
-					cs_mem_free(insn_cache);
-					handle->errnum = CS_ERR_MEM;
-					return NULL;
-				}
-			}
-			else
-				insn_cache->detail = NULL;
-		}
-	}
 
 	MCInst_Init(&mci);
 	mci.csh = handle;
@@ -673,7 +663,7 @@ cs_insn *cs_disasm_iter(csh ud, const uint8_t **code, size_t *size, uint64_t *ad
 	mci.address = *address;
 
 	// save all the information for non-detailed mode
-	mci.flat_insn = insn_cache;
+	mci.flat_insn = insn;
 	mci.flat_insn->address = *address;
 #ifdef CAPSTONE_DIET
 	// zero out mnemonic & op_str
@@ -682,23 +672,57 @@ cs_insn *cs_disasm_iter(csh ud, const uint8_t **code, size_t *size, uint64_t *ad
 #endif
 
 	r = handle->disasm(ud, *code, *size, &mci, &insn_size, *address, handle->getinsn_info);
-	if (r)
-	{
+	if (r) {
 		SStream ss;
 		SStream_Init(&ss);
 
 		mci.flat_insn->size = insn_size;
 		handle->printer(&mci, &ss, handle->printer_info);
-		fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, *code);
+		fill_insn(handle, insn, ss.buffer, &mci, handle->post_printer, *code);
 		*code += insn_size;
 		*size -= insn_size;
 		*address += insn_size;
+	} else { 	// encounter a broken instruction
+		size_t skipdata_bytes;
+
+		// if there is no request to skip data, or remaining data is too small,
+		// then bail out
+		if (!handle->skipdata || handle->skipdata_size > *size)
+			return false;
+
+		if (handle->skipdata_setup.callback) {
+			skipdata_bytes = handle->skipdata_setup.callback(*code, *size,
+					0, handle->skipdata_setup.user_data);
+			if (skipdata_bytes > *size)
+				// remaining data is not enough
+				return false;
+
+			if (!skipdata_bytes)
+				// user requested not to skip data, so bail out
+				return false;
+		} else
+			skipdata_bytes = handle->skipdata_size;
+
+		// we have to skip some amount of data, depending on arch & mode
+		insn->id = 0;	// invalid ID for this "data" instruction
+		insn->address = *address;
+		insn->size = (uint16_t)skipdata_bytes;
+		memcpy(insn->bytes, *code, skipdata_bytes);
+		strncpy(insn->mnemonic, handle->skipdata_setup.mnemonic,
+				sizeof(insn->mnemonic) - 1);
+		skipdata_opstr(insn->op_str, *code, skipdata_bytes);
+
+		// NOTE: if detail mode is OFF, content of detail pointer is irrelevant
+		// to be sure, zero out content of detail pointer
+		if (insn->detail)
+			memset(insn->detail, 0, sizeof(cs_detail));
+
+		*code += skipdata_bytes;
+		*size -= skipdata_bytes;
+		*address += skipdata_bytes;
 	}
-	else
-	{
-		insn_cache->id = 0;	// invalid ID for this "data" instruction
-	}
-	return insn_cache;
+
+	return true;
 }
 
 // return friendly name of regiser in a string

@@ -126,15 +126,18 @@ typedef enum cs_opt_value {
 	CS_OPT_SYNTAX_NOREGNAME, // Prints register name with only number (CS_OPT_SYNTAX)
 } cs_opt_value;
 
-// User-defined callback function for SKIPDATA option
-// @code: the input buffer containing code to be disassembled. This is the 
-//      same buffer passed to cs_disasm().
-// @code_size: size (in bytes) of the above @code buffer.
-// @offset: the position of the currently-examining byte in the input
-//      buffer @code mentioned above.
-// @user_data: user-data passed to cs_option() via @user_data field in
-//      cs_opt_skipdata struct below.
-// @return: return number of bytes to skip, or 0 to immediately stop disassembling.
+/*
+ User-defined callback function for SKIPDATA option
+ @code: the input buffer containing code to be disassembled.
+        This is the same buffer passed to cs_disasm().
+ @code_size: size (in bytes) of the above @code buffer.
+ @offset: the position of the currently-examining byte in the input
+      buffer @code mentioned above.
+ @user_data: user-data passed to cs_option() via @user_data field in
+      cs_opt_skipdata struct below.
+
+ @return: return number of bytes to skip, or 0 to immediately stop disassembling.
+*/
 typedef size_t (*cs_skipdata_cb_t)(const uint8_t *code, size_t code_size, size_t offset, void* user_data);
 
 // User-customized setup for SKIPDATA option
@@ -334,7 +337,7 @@ cs_err cs_close(csh *handle);
  @type: type of option to be set
  @value: option value corresponding with @type
 
- @return CS_ERR_OK on success, or other value on failure.
+ @return: CS_ERR_OK on success, or other value on failure.
  Refer to cs_err enum for detailed error.
 
  NOTE: in the case of CS_OPT_MEM, handle's value can be anything,
@@ -368,21 +371,24 @@ CAPSTONE_EXPORT
 const char *cs_strerror(cs_err code);
 
 /*
- Dynamicly allocate memory to contain disasm insn
- Disassembled instructions will be put into @*insn
+ Disassemble binary code, given the code buffer, size, address and number
+ of instructions to be decoded.
+ This API dynamicly allocate memory to contain disassembled instruction.
+ Resulted instructions will be put into @*insn
 
  NOTE 1: this API will automatically determine memory needed to contain
  output disassembled instructions in @insn.
- NOTE 2: caller must free() the allocated memory itself to avoid memory leaking
+ NOTE 2: caller must free the allocated memory itself to avoid memory leaking.
 
  @handle: handle returned by cs_open()
- @code: buffer containing raw binary code to be disassembled
- @code_size: size of above code
- @address: address of the first insn in given raw code buffer
- @insn: array of insn filled in by this function
+ @code: buffer containing raw binary code to be disassembled.
+ @code_size: size of the above code buffer.
+ @address: address of the first instruction in given raw code buffer.
+ @insn: array of instructions filled in by this API.
 	   NOTE: @insn will be allocated by this function, and should be freed
 	   with cs_free() API.
  @count: number of instrutions to be disassembled, or 0 to get all of them
+
  @return: the number of succesfully disassembled instructions,
  or 0 if this function failed to disassemble the given code
 
@@ -416,11 +422,43 @@ size_t cs_disasm_ex(csh handle,
 CAPSTONE_EXPORT
 void cs_free(cs_insn *insn, size_t count);
 
-/* TODO */
+
+/*
+ Allocate memory for 1 instruction to be used by cs_disasm_iter().
+
+ @handle: handle returned by cs_open()
+
+ NOTE: when no longer in use, reclaim the memory allocated for
+ this instruction with cs_free(insn, 1)
+*/
 CAPSTONE_EXPORT
-cs_insn *cs_disasm_iter(csh handle,
+cs_insn *cs_malloc(csh handle);
+
+/*
+ Disassemble binary code, given the code buffer, size, address and number
+ of instructions to be decoded.
+ This API put the resulted instruction into a given cache in @insn.
+
+ NOTE 1: this API will update @code, @size & @address to point to the next
+ instruction in the buffer. Therefore, it is covenient to use cs_disasm_iter()
+ inside a loop to quickly iterate all the instructions in the input buffer.
+ NOTE 2: the cache in @insn can be created with cs_malloc() API.
+
+ @handle: handle returned by cs_open()
+ @code: buffer containing raw binary code to be disassembled
+ @code_size: size of above code
+ @address: address of the first insn in given raw code buffer
+ @insn: pointer to instruction to be filled in by this API.
+
+ @return: true if this API successfully decode 1 instruction,
+ or false otherwise.
+
+ On failure, call cs_errno() for error code.
+*/
+CAPSTONE_EXPORT
+bool cs_disasm_iter(csh handle,
 	const uint8_t **code, size_t *size,
-	uint64_t *address);
+	uint64_t *address, cs_insn *insn);
 
 /*
  Return friendly name of regiser in a string.
@@ -432,6 +470,7 @@ cs_insn *cs_disasm_iter(csh handle,
 
  @handle: handle returned by cs_open()
  @reg_id: register id
+
  @return: string name of the register, or NULL if @reg_id is invalid.
 */
 CAPSTONE_EXPORT
