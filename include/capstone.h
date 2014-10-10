@@ -428,20 +428,24 @@ void cs_free(cs_insn *insn, size_t count);
 
  @handle: handle returned by cs_open()
 
- NOTE: when no longer in use, reclaim the memory allocated for
+ NOTE: when no longer in use, you can reclaim the memory allocated for
  this instruction with cs_free(insn, 1)
 */
 CAPSTONE_EXPORT
 cs_insn *cs_malloc(csh handle);
 
 /*
- Disassemble binary code, given the code buffer, size, address and number
- of instructions to be decoded.
+ Fast API to disassemble binary code, given the code buffer, size, address
+ and number of instructions to be decoded.
  This API put the resulted instruction into a given cache in @insn.
 
  NOTE 1: this API will update @code, @size & @address to point to the next
- instruction in the buffer. Therefore, it is covenient to use cs_disasm_iter()
- inside a loop to quickly iterate all the instructions in the input buffer.
+ instruction in the input buffer. Therefore, it is covenient to use
+ cs_disasm_iter() inside a loop to quickly iterate all the instructions.
+ While decoding one instruction at a time can also be achieved with
+ cs_disasm(count=1), some benchmarks shown that cs_disasm_iter() can be 30%
+ faster on random input.
+
  NOTE 2: the cache in @insn can be created with cs_malloc() API.
 
  @handle: handle returned by cs_open()
