@@ -197,7 +197,6 @@ typedef enum mips_reg {
 
 	MIPS_REG_HI,
 	MIPS_REG_LO,
-	MIPS_REG_PC,
 
 	MIPS_REG_P0,
 	MIPS_REG_P1,
