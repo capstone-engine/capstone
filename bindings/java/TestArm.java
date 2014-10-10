@@ -76,7 +76,7 @@ public class TestArm {
         if (i.shift.type != ARM_SFT_INVALID && i.shift.value > 0)
           System.out.printf("\t\t\tShift: %d = %d\n", i.shift.type, i.shift.value);
         if (i.subtracted)
-          System.out.printf("\t\t\toperands[%d].subtracted = True\n");
+          System.out.printf("\t\t\toperands[%d].subtracted = True\n", c);
       }
     }
     if (operands.writeback)
