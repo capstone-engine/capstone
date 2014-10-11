@@ -1,6 +1,7 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
+// This sample code demonstrates the APIs cs_malloc() & cs_disasm_iter().
 #include <stdio.h>
 #include <stdlib.h>
 #include "../inttypes.h"
@@ -200,6 +201,7 @@ static void test()
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
+		// allocate memory for the cache to be used by cs_disasm_iter()
 		insn = cs_malloc(handle);
 
 		print_string_hex(platforms[i].code, platforms[i].size);
