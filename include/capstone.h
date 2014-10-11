@@ -414,10 +414,11 @@ size_t cs_disasm_ex(csh handle,
 		cs_insn **insn);
 
 /*
- Free memory allocated in @insn by cs_disasm()
+ Free memory allocated by cs_malloc() or cs_disasm() (argument @insn)
 
- @insn: pointer returned by @insn argument in cs_disasm()
- @count: number of cs_insn structures returned by cs_disasm()
+ @insn: pointer returned by @insn argument in cs_disasm() or cs_malloc()
+ @count: number of cs_insn structures returned by cs_disasm(), or 1
+     to free memory allocated by cs_malloc().
 */
 CAPSTONE_EXPORT
 void cs_free(cs_insn *insn, size_t count);
