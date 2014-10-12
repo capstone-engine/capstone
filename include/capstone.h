@@ -230,10 +230,11 @@ typedef struct cs_insn {
 	char op_str[160];
 
 	// Pointer to cs_detail.
-	// NOTE: detail pointer is only valid (not NULL) when both requirements below are met:
+	// NOTE: detail pointer is only valid when both requirements below are met:
 	// (1) CS_OP_DETAIL = CS_OPT_ON
-	// (2) If engine is in Skipdata mode (CS_OP_SKIPDATA option set to CS_OPT_ON), then
-	//   the current instruction is not the "data" instruction (which clearly has no detail).
+	// (2) Engine is not in Skipdata mode (CS_OP_SKIPDATA option set to CS_OPT_ON)
+	//     Note: when in Skipdata mode, even if this pointer is not NULL,
+	//     its content is irrelevant.
 	cs_detail *detail;
 } cs_insn;
 
