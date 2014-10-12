@@ -50,7 +50,7 @@ set(SOURCES
     utils.c
     )
 
-set(TEST_SOURCES test.c test_detail.c test_skipdata.c)
+set(TEST_SOURCES test.c test_detail.c test_skipdata.c test_iter.c)
 
 ## architecture support
 if (CAPSTONE_ARM_SUPPORT)
