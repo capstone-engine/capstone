@@ -210,6 +210,7 @@ typedef struct cs_insn {
 	// Find the instruction id from header file of corresponding architecture,
 	// such as arm.h for ARM, x86.h for X86, etc...
 	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
+	// NOTE: in Skipdata mode, "data" instruction has 0 for this id field.
 	unsigned int id;
 
 	// Address (EIP) of this instruction
