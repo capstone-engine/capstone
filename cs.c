@@ -651,7 +651,7 @@ bool cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 
 	handle = (struct cs_struct *)(uintptr_t)ud;
 	if (!handle) {
-		return NULL;
+		return false;
 	}
 
 	handle->errnum = CS_ERR_OK;
@@ -714,8 +714,8 @@ bool cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 
 		// NOTE: if detail mode is OFF, content of detail pointer is irrelevant
 		// to be sure, zero out content of detail pointer
-		if (insn->detail)
-			memset(insn->detail, 0, sizeof(cs_detail));
+		//if (insn->detail)
+		//	memset(insn->detail, 0, sizeof(cs_detail));
 
 		*code += skipdata_bytes;
 		*size -= skipdata_bytes;

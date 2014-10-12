@@ -127,7 +127,9 @@ typedef enum cs_opt_value {
 } cs_opt_value;
 
 /*
- User-defined callback function for SKIPDATA option
+ User-defined callback function for SKIPDATA option.
+ See tests/test_skipdata.c for sample code demonstrating this API.
+
  @code: the input buffer containing code to be disassembled.
         This is the same buffer passed to cs_disasm().
  @code_size: size (in bytes) of the above @code buffer.
@@ -208,6 +210,7 @@ typedef struct cs_insn {
 	// Find the instruction id from header file of corresponding architecture,
 	// such as arm.h for ARM, x86.h for X86, etc...
 	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
+	// NOTE: in Skipdata mode, "data" instruction has 0 for this id field.
 	unsigned int id;
 
 	// Address (EIP) of this instruction
@@ -230,10 +233,11 @@ typedef struct cs_insn {
 	char op_str[160];
 
 	// Pointer to cs_detail.
-	// NOTE: detail pointer is only valid (not NULL) when both requirements below are met:
+	// NOTE: detail pointer is only valid when both requirements below are met:
 	// (1) CS_OP_DETAIL = CS_OPT_ON
-	// (2) If engine is in Skipdata mode (CS_OP_SKIPDATA option set to CS_OPT_ON), then
-	//   the current instruction is not the "data" instruction (which clearly has no detail).
+	// (2) Engine is not in Skipdata mode (CS_OP_SKIPDATA option set to CS_OPT_ON)
+	//     Note: when in Skipdata mode, even if this pointer is not NULL,
+	//     its content is irrelevant.
 	cs_detail *detail;
 } cs_insn;
 
@@ -439,6 +443,7 @@ cs_insn *cs_malloc(csh handle);
  Fast API to disassemble binary code, given the code buffer, size, address
  and number of instructions to be decoded.
  This API put the resulted instruction into a given cache in @insn.
+ See tests/test_iter.c for sample code demonstrating this API.
 
  NOTE 1: this API will update @code, @size & @address to point to the next
  instruction in the input buffer. Therefore, it is covenient to use
