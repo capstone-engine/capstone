@@ -712,11 +712,6 @@ bool cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 				sizeof(insn->mnemonic) - 1);
 		skipdata_opstr(insn->op_str, *code, skipdata_bytes);
 
-		// NOTE: if detail mode is OFF, content of detail pointer is irrelevant
-		// to be sure, zero out content of detail pointer
-		//if (insn->detail)
-		//	memset(insn->detail, 0, sizeof(cs_detail));
-
 		*code += skipdata_bytes;
 		*size -= skipdata_bytes;
 		*address += skipdata_bytes;
