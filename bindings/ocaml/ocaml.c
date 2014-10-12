@@ -47,7 +47,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 			Store_field(rec_insn, 0, Val_int(insn[j-1].id));
 			Store_field(rec_insn, 1, Val_int(insn[j-1].address));
 			Store_field(rec_insn, 2, Val_int(insn[j-1].size));
-			
+
 			// copy raw bytes of instruction
 			lcount = insn[j-1].size;
 			if (lcount) {
@@ -680,21 +680,18 @@ CAMLprim value ocaml_cs_disasm(value _arch, value _mode, value _code, value _add
 				mode |= CS_MODE_MICRO;
 				break;
 			case 8:
-				mode |= CS_MODE_N64;
-				break;
-			case 9:
 				mode |= CS_MODE_MIPS3;
 				break;
-			case 10:
+			case 9:
 				mode |= CS_MODE_MIPS32R6;
 				break;
-			case 11:
+			case 10:
 				mode |= CS_MODE_MIPSGP64;
 				break;
-			case 12:
+			case 11:
 				mode |= CS_MODE_V9;
 				break;
-			case 13:
+			case 12:
 				mode |= CS_MODE_BIG_ENDIAN;
 				break;
 			default:
@@ -726,7 +723,7 @@ CAMLprim value ocaml_cs_disasm_internal(value _arch, value _handle, value _code,
 	uint64_t addr, count, code_len;
 
 	handle = Int64_val(_handle);
-	
+
 	arch = Int_val(_arch);
 	code = (uint8_t *)String_val(_code);
 	code_len = caml_string_length(_code);
@@ -805,21 +802,18 @@ CAMLprim value ocaml_open(value _arch, value _mode)
 				mode |= CS_MODE_MICRO;
 				break;
 			case 8:
-				mode |= CS_MODE_N64;
-				break;
-			case 9:
 				mode |= CS_MODE_MIPS3;
 				break;
-			case 10:
+			case 9:
 				mode |= CS_MODE_MIPS32R6;
 				break;
-			case 11:
+			case 10:
 				mode |= CS_MODE_MIPSGP64;
 				break;
-			case 12:
+			case 11:
 				mode |= CS_MODE_V9;
 				break;
-			case 13:
+			case 12:
 				mode |= CS_MODE_BIG_ENDIAN;
 				break;
 			default:
@@ -829,7 +823,7 @@ CAMLprim value ocaml_open(value _arch, value _mode)
 		_mode = Field(_mode, 1);  /* point to the tail for next loop */
 	}
 
-	if (cs_open(arch, mode, &handle) != 0) 
+	if (cs_open(arch, mode, &handle) != 0)
 		CAMLreturn(Val_int(0));
 
 	CAMLlocal1(result);
