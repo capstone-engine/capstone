@@ -30,7 +30,6 @@ type mode =
   |	CS_MODE_THUMB		(* ARM's Thumb mode, including Thumb-2 *)
   |	CS_MODE_MCLASS		(* ARM's MClass mode *)
   |	CS_MODE_MICRO		(* MicroMips mode (MIPS architecture) *)
-  |	CS_MODE_N64			(* Nintendo-64 mode (MIPS architecture) *)
   |	CS_MODE_MIPS3		(* Mips3 mode (MIPS architecture) *)
   |	CS_MODE_MIPS32R6	(* Mips32-R6 mode (MIPS architecture) *)
   |	CS_MODE_MIPSGP64	(* MipsGP64 mode (MIPS architecture) *)
@@ -55,7 +54,7 @@ let _CS_OPT_SYNTAX_ATT = 2L;; (* X86 ATT asm syntax (CS_OPT_SYNTAX). *)
 let _CS_OPT_SYNTAX_NOREGNAME = 3L;; (* Prints register name with only number (CS_OPT_SYNTAX) *)
 
 
-type cs_arch = 
+type cs_arch =
 	| CS_INFO_ARM of cs_arm
 	| CS_INFO_ARM64 of cs_arm64
 	| CS_INFO_MIPS of cs_mips
@@ -168,4 +167,3 @@ class cs a m =
 			List.map (fun x -> new cs_insn handle x) insns;
 
 	end;;
-

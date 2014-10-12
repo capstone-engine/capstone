@@ -265,11 +265,11 @@ void Mips_init(MCRegisterInfo *MRI)
 	// 		MipsRegEncodingTable);
 
 	MCRegisterInfo_InitMCRegisterInfo(MRI, MipsRegDesc, 394,
-			0, 0, 
+			0, 0,
 			MipsMCRegisterClasses, 48,
-			0, 0, 
+			0, 0,
 			MipsRegDiffLists,
-			0, 
+			0,
 			MipsSubRegIdxLists, 12,
 			0);
 }
@@ -767,7 +767,7 @@ static DecodeStatus DecodeGPR32RegisterClass(MCInst *Inst,
 static DecodeStatus DecodePtrRegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	if (Inst->csh->mode & CS_MODE_N64)
+	if (Inst->csh->mode & CS_MODE_64)
 		return DecodeGPR64RegisterClass(Inst, RegNo, Address, Decoder);
 
 	return DecodeGPR32RegisterClass(Inst, RegNo, Address, Decoder);
