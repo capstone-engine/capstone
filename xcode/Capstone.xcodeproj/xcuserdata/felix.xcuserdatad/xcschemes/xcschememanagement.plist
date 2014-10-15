@@ -39,6 +39,11 @@
 			<key>orderHint</key>
 			<integer>9</integer>
 		</dict>
+		<key>test_iter.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>28</integer>
+		</dict>
 		<key>test_mips.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -148,6 +153,11 @@
 			<true/>
 		</dict>
 		<key>DC474F7119DE6F3B00BCA449</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DC5BFF3219EE4BA4008CA585</key>
 		<dict>
 			<key>primary</key>
 			<true/>

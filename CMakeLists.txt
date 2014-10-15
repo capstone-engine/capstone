@@ -22,7 +22,7 @@ option(CAPSTONE_SYSZ_SUPPORT "SystemZ support" ON)
 option(CAPSTONE_XCORE_SUPPORT "XCore support" ON)
 option(CAPSTONE_X86_SUPPORT "x86 support" ON)
 option(CAPSTONE_X86_REDUCE "x86 with reduce instruction sets to minimize library" OFF)
-option(CAPSTONE_X86_ATT_DISABLE, "Disable x86 AT&T syntax" OFF)
+option(CAPSTONE_X86_ATT_DISABLE "Disable x86 AT&T syntax" OFF)
 
 if (CAPSTONE_BUILD_DIET)
     add_definitions(-DCAPSTONE_DIET)
@@ -50,7 +50,7 @@ set(SOURCES
     utils.c
     )
 
-set(TEST_SOURCES test.c test_detail.c test_skipdata.c)
+set(TEST_SOURCES test.c test_detail.c test_skipdata.c test_iter.c)
 
 ## architecture support
 if (CAPSTONE_ARM_SUPPORT)

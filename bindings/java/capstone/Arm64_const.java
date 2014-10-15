@@ -200,18 +200,18 @@ public class Arm64_const {
 	public static final int ARM64_BARRIER_SY = 0xf;
 
 	// Operand type for instruction's operands
+	public static final int ARM64_OP_INVALID = GENERIC_OP_INVALID;
 	public static final int ARM64_OP_FP = GENERIC_OP_FP;
 	public static final int ARM64_OP_REG = GENERIC_OP_REG;
 	public static final int ARM64_OP_IMM = GENERIC_OP_IMM;
 	public static final int ARM64_OP_MEM = GENERIC_OP_MEM;
-	public static final int ARM64_OP_INVALID = GENERIC_OP_INVALID;
-	public static final int ARM64_OP_CIMM = 1;
-	public static final int ARM64_OP_REG_MRS = 2;
-	public static final int ARM64_OP_REG_MSR = 3;
-	public static final int ARM64_OP_PSTATE = 4;
-	public static final int ARM64_OP_SYS = 5;
-	public static final int ARM64_OP_PREFETCH = 6;
-	public static final int ARM64_OP_BARRIER = 7;
+	public static final int ARM64_OP_CIMM = GENERIC_OP_ARCH_SPECIFIC;
+	public static final int ARM64_OP_REG_MRS = 1;
+	public static final int ARM64_OP_REG_MSR = 2;
+	public static final int ARM64_OP_PSTATE = 3;
+	public static final int ARM64_OP_SYS = 4;
+	public static final int ARM64_OP_PREFETCH = 5;
+	public static final int ARM64_OP_BARRIER = 6;
 
 	// TLBI operations
 

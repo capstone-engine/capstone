@@ -215,6 +215,10 @@ typedef union cs_arm_op {
 			arm_shifter type;
 			unsigned int value;
 		} shift;
+		
+		// in some instructions, an operand can be subtracted or added to
+		// the base register,
+		bool subtracted; // if TRUE, this operand is subtracted. otherwise, it is added.
 	};
 	cs_generic_op generic;
 } cs_arm_op;

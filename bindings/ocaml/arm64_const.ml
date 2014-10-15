@@ -197,18 +197,18 @@ let _ARM64_BARRIER_ST = 0xe;;
 let _ARM64_BARRIER_SY = 0xf;;
 
 (* Operand type for instruction's operands *)
+let _ARM64_OP_INVALID = _GENERIC_OP_INVALID;;
 let _ARM64_OP_FP = _GENERIC_OP_FP;;
 let _ARM64_OP_REG = _GENERIC_OP_REG;;
 let _ARM64_OP_IMM = _GENERIC_OP_IMM;;
 let _ARM64_OP_MEM = _GENERIC_OP_MEM;;
-let _ARM64_OP_INVALID = _GENERIC_OP_INVALID;;
-let _ARM64_OP_CIMM = 1;;
-let _ARM64_OP_REG_MRS = 2;;
-let _ARM64_OP_REG_MSR = 3;;
-let _ARM64_OP_PSTATE = 4;;
-let _ARM64_OP_SYS = 5;;
-let _ARM64_OP_PREFETCH = 6;;
-let _ARM64_OP_BARRIER = 7;;
+let _ARM64_OP_CIMM = _GENERIC_OP_ARCH_SPECIFIC;;
+let _ARM64_OP_REG_MRS = 1;;
+let _ARM64_OP_REG_MSR = 2;;
+let _ARM64_OP_PSTATE = 3;;
+let _ARM64_OP_SYS = 4;;
+let _ARM64_OP_PREFETCH = 5;;
+let _ARM64_OP_BARRIER = 6;;
 
 (* TLBI operations *)
 

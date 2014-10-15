@@ -53,6 +53,7 @@ public class Arm {
     public OpShift shift;
     public int type;
     public OpValue value;
+    public boolean subtracted;
 
     public void read() {
       readField("vector_index");
@@ -69,11 +70,12 @@ public class Arm {
         return;
       readField("value");
       readField("shift");
+      readField("subtracted");
     }
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("vector_index", "shift", "type", "value");
+      return Arrays.asList("vector_index", "shift", "type", "value", "subtracted");
     }
   }
 
