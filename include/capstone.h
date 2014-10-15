@@ -252,7 +252,7 @@ typedef struct cs_insn {
 // These are values returned by cs_errno()
 typedef enum cs_err {
 	CS_ERR_OK = 0,   // No error: everything was fine
-	CS_ERR_MEM,      // Out-Of-Memory error: cs_open(), cs_disasm()
+	CS_ERR_MEM,      // Out-Of-Memory error: cs_open(), cs_disasm(), cs_disasm_iter()
 	CS_ERR_ARCH,     // Unsupported architecture: cs_open()
 	CS_ERR_HANDLE,   // Invalid handle: cs_op_count(), cs_op_index()
 	CS_ERR_CSH,	     // Invalid csh argument: cs_close(), cs_errno(), cs_option()
@@ -527,7 +527,7 @@ const char *cs_group_name(csh handle, unsigned int group_id);
  update @groups array.
 
  @handle: handle returned by cs_open()
- @insn: disassembled instruction structure received from cs_disasm() or cs_disasm()
+ @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_iter()
  @group_id: group that you want to check if this instruction belong to.
 
  @return: true if this instruction indeed belongs to aboved group, or false otherwise.
@@ -545,7 +545,7 @@ bool cs_insn_group(csh handle, const cs_insn *insn, unsigned int group_id);
  WARN: when in 'diet' mode, this API is irrelevant because the engine does not
  update @regs_read array.
 
- @insn: disassembled instruction structure received from cs_disasm() or cs_disasm()
+ @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_iter()
  @reg_id: register that you want to check if this instruction used it.
 
  @return: true if this instruction indeed implicitly used aboved register, or false otherwise.
@@ -563,7 +563,7 @@ bool cs_reg_read(csh handle, const cs_insn *insn, unsigned int reg_id);
  WARN: when in 'diet' mode, this API is irrelevant because the engine does not
  update @regs_write array.
 
- @insn: disassembled instruction structure received from cs_disasm() or cs_disasm()
+ @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_iter()
  @reg_id: register that you want to check if this instruction modified it.
 
  @return: true if this instruction indeed implicitly modified aboved register, or false otherwise.
@@ -578,7 +578,7 @@ bool cs_reg_write(csh handle, const cs_insn *insn, unsigned int reg_id);
  NOTE: this API is only valid when detail option is ON (which is OFF by default)
 
  @handle: handle returned by cs_open()
- @insn: disassembled instruction structure received from cs_disasm() or cs_disasm()
+ @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_iter()
  @op_type: Operand type to be found.
 
  @return: number of operands of given type @op_type in instruction @insn,
@@ -595,7 +595,7 @@ int cs_op_count(csh handle, const cs_insn *insn, unsigned int op_type);
  NOTE: this API is only valid when detail option is ON (which is OFF by default)
 
  @handle: handle returned by cs_open()
- @insn: disassembled instruction structure received from cs_disasm() or cs_disasm()
+ @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_iter()
  @op_type: Operand type to be found.
  @position: position of the operand to be found. This must be in the range
 			[1, cs_op_count(handle, insn, op_type)]
