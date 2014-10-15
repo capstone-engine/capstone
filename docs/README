@@ -36,6 +36,10 @@ Documention of Capstone disassembly framework.
 
 	http://capstone-engine.org/skipdata.html
 
+* Quickly iterate instructions with cs_disasm_iter().
+
+	http://capstone-engine.org/iteration.html
+
 * Build X86-reduce engine for firmware/OS kernel.
 
 	http://capstone-engine.org/x86reduce.html

@@ -35,6 +35,7 @@ type arm_op = {
 	vector_index: int;
 	shift: arm_op_shift;
 	value: arm_op_value;
+	subtracted: bool;
 }
 
 type cs_arm = {

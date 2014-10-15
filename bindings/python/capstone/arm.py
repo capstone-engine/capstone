@@ -33,6 +33,7 @@ class ArmOp(ctypes.Structure):
         ('shift', ArmOpShift),
         ('type', ctypes.c_uint),
         ('value', ArmOpValue),
+        ('subtracted', ctypes.c_bool),
     )
 
     @property

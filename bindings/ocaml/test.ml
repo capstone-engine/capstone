@@ -22,23 +22,23 @@ let _SYSZ_CODE = "\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x
 let _XCORE_CODE = "\xfe\x0f\xfe\x17\x13\x17\xc6\xfe\xec\x17\x97\xf8\xec\x4f\x1f\xfd\xec\x37\x07\xf2\x45\x5b\xf9\xfa\x02\x06\x1b\x10";;
 
 let all_tests = [
-	(CS_ARCH_X86, [CS_MODE_16], _X86_CODE16, "X86 16bit (Intel syntax)", 0);
-	(CS_ARCH_X86, [CS_MODE_32], _X86_CODE32, "X86 32bit (ATT syntax)", 0);
-	(CS_ARCH_X86, [CS_MODE_32], _X86_CODE32, "X86 32 (Intel syntax)", 0);
-	(CS_ARCH_X86, [CS_MODE_64], _X86_CODE64, "X86 64 (Intel syntax)", 0);
-	(CS_ARCH_ARM, [CS_MODE_ARM], _ARM_CODE, "ARM", 0);
-	(CS_ARCH_ARM, [CS_MODE_ARM], _ARM_CODE2, "ARM: Cortex-A15 + NEON", 0);
-	(CS_ARCH_ARM, [CS_MODE_THUMB], _THUMB_CODE, "THUMB", 0);
-	(CS_ARCH_ARM, [CS_MODE_THUMB], _THUMB_CODE2, "THUMB-2", 0);
-	(CS_ARCH_ARM64, [CS_MODE_ARM], _ARM64_CODE, "ARM-64", 0);
-	(CS_ARCH_MIPS, [CS_MODE_32; CS_MODE_BIG_ENDIAN], _MIPS_CODE, "MIPS-32 (Big-endian)", 0);
-	(CS_ARCH_MIPS, [CS_MODE_64; CS_MODE_LITTLE_ENDIAN], _MIPS_CODE2, "MIPS-64-EL (Little-endian)", 0);
-        (CS_ARCH_PPC, [CS_MODE_BIG_ENDIAN], _PPC_CODE, "PPC-64", 0);
-        (CS_ARCH_PPC, [CS_MODE_BIG_ENDIAN], _PPC_CODE, "PPC-64, print register with number only", 0);
-        (CS_ARCH_SPARC, [CS_MODE_BIG_ENDIAN], _SPARC_CODE, "Sparc", 0);
-        (CS_ARCH_SPARC, [CS_MODE_BIG_ENDIAN; CS_MODE_V9], _SPARCV9_CODE, "SparcV9", 0);
-        (CS_ARCH_SYSZ, [CS_MODE_LITTLE_ENDIAN], _SYSZ_CODE, "SystemZ", 0);
-        (CS_ARCH_XCORE, [CS_MODE_LITTLE_ENDIAN], _XCORE_CODE, "XCore", 0);
+	(CS_ARCH_X86, [CS_MODE_16], _X86_CODE16, "X86 16bit (Intel syntax)", 0L);
+	(CS_ARCH_X86, [CS_MODE_32], _X86_CODE32, "X86 32bit (ATT syntax)", _CS_OPT_SYNTAX_ATT);
+	(CS_ARCH_X86, [CS_MODE_32], _X86_CODE32, "X86 32 (Intel syntax)", 0L);
+	(CS_ARCH_X86, [CS_MODE_64], _X86_CODE64, "X86 64 (Intel syntax)", 0L);
+	(CS_ARCH_ARM, [CS_MODE_ARM], _ARM_CODE, "ARM", 0L);
+	(CS_ARCH_ARM, [CS_MODE_ARM], _ARM_CODE2, "ARM: Cortex-A15 + NEON", 0L);
+	(CS_ARCH_ARM, [CS_MODE_THUMB], _THUMB_CODE, "THUMB", 0L);
+	(CS_ARCH_ARM, [CS_MODE_THUMB], _THUMB_CODE2, "THUMB-2", 0L);
+	(CS_ARCH_ARM64, [CS_MODE_ARM], _ARM64_CODE, "ARM-64", 0L);
+	(CS_ARCH_MIPS, [CS_MODE_32; CS_MODE_BIG_ENDIAN], _MIPS_CODE, "MIPS-32 (Big-endian)", 0L);
+	(CS_ARCH_MIPS, [CS_MODE_64; CS_MODE_LITTLE_ENDIAN], _MIPS_CODE2, "MIPS-64-EL (Little-endian)", 0L);
+        (CS_ARCH_PPC, [CS_MODE_BIG_ENDIAN], _PPC_CODE, "PPC-64", 0L);
+        (CS_ARCH_PPC, [CS_MODE_BIG_ENDIAN], _PPC_CODE, "PPC-64, print register with number only", 0L);
+        (CS_ARCH_SPARC, [CS_MODE_BIG_ENDIAN], _SPARC_CODE, "Sparc", 0L);
+        (CS_ARCH_SPARC, [CS_MODE_BIG_ENDIAN; CS_MODE_V9], _SPARCV9_CODE, "SparcV9", 0L);
+        (CS_ARCH_SYSZ, [CS_MODE_LITTLE_ENDIAN], _SYSZ_CODE, "SystemZ", 0L);
+        (CS_ARCH_XCORE, [CS_MODE_LITTLE_ENDIAN], _XCORE_CODE, "XCore", 0L);
 ];;
 
 
@@ -47,26 +47,21 @@ let print_insn insn =
 
 let print_arch x =
 	let (arch, mode, code, comment, syntax) = x in
-		let insns = cs_disasm_quick arch mode code 0x1000L 0L in
+	let handle = cs_open arch mode in (
+		if syntax != 0L then (
+			let err = cs_option handle CS_OPT_SYNTAX syntax in
+			match err with
+			| _ -> ();
+		);
+		let insns = cs_disasm handle code 0x1000L 0L in (
 			printf "*************\n";
 			printf "Platform: %s\n" comment;
-			List.iter print_insn insns;;
+			List.iter print_insn insns;
+		);
+		match cs_close handle with
+		| 0 -> ();
+		| _ -> printf "Failed to close handle";
+	);;
 
 
 List.iter print_arch all_tests;;
-
-
-let print_insn_cls insn =
-	printf "0x%x\t%s\t%s\n" insn#address insn#mnemonic insn#op_str;;
-
-let print_arch_cls x =
-	let (arch, mode, code, comment, syntax) = x in (
-		let d = new cs arch mode in
-			let insns = d#disasm code 0x1000L 0L in
-				printf "*************\n";
-				printf "Platform: %s\n" comment;
-				List.iter print_insn_cls insns;
-	);;
-
-List.iter print_arch_cls all_tests;;
-

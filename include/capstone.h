@@ -16,15 +16,15 @@ extern "C" {
 #include "platform.h"
 
 #ifdef _MSC_VER
-    #pragma warning(disable:4201)
-    #pragma warning(disable:4100)
-    #ifdef CAPSTONE_SHARED
-        #define CAPSTONE_EXPORT __declspec(dllexport)
-    #else    // defined(CAPSTONE_STATIC)
-        #define CAPSTONE_EXPORT
-    #endif
+	#pragma warning(disable:4201)
+	#pragma warning(disable:4100)
+	#ifdef CAPSTONE_SHARED
+		#define CAPSTONE_EXPORT __declspec(dllexport)
+	#else    // defined(CAPSTONE_STATIC)
+		#define CAPSTONE_EXPORT
+	#endif
 #else
-    #define CAPSTONE_EXPORT
+	#define CAPSTONE_EXPORT
 #endif
 
 #ifdef __GNUC__
@@ -81,10 +81,9 @@ typedef enum cs_mode {
 	CS_MODE_THUMB = 1 << 4,	// ARM's Thumb mode, including Thumb-2
 	CS_MODE_MCLASS = 1 << 5,	// ARM's Cortex-M series
 	CS_MODE_MICRO = 1 << 4, // MicroMips mode (MIPS architecture)
-	CS_MODE_N64 = 1 << 5, // Nintendo-64 mode (MIPS architecture)
-	CS_MODE_MIPS3 = 1 << 6, // Mips III ISA
-	CS_MODE_MIPS32R6 = 1 << 7, // Mips32r6 ISA
-	CS_MODE_MIPSGP64 = 1 << 8, // General Purpose Registers are 64-bit wide (MIPS arch)
+	CS_MODE_MIPS3 = 1 << 5, // Mips III ISA
+	CS_MODE_MIPS32R6 = 1 << 6, // Mips32r6 ISA
+	CS_MODE_MIPSGP64 = 1 << 7, // General Purpose Registers are 64-bit wide (MIPS arch)
 	CS_MODE_V9 = 1 << 4, // SparcV9 mode (Sparc architecture)
 	CS_MODE_BIG_ENDIAN = 1 << 31	// big endian mode
 } cs_mode;
@@ -126,16 +125,21 @@ typedef enum cs_opt_value {
 	CS_OPT_SYNTAX_NOREGNAME, // Prints register name with only number (CS_OPT_SYNTAX)
 } cs_opt_value;
 
-// User-defined callback function for SKIPDATA option
-// @code: the input buffer containing code to be disassembled. This is the 
-//      same buffer passed to cs_disasm().
-// @code_size: size (in bytes) of the above @code buffer.
-// @offset: the position of the currently-examining byte in the input
-//      buffer @code mentioned above.
-// @user_data: user-data passed to cs_option() via @user_data field in
-//      cs_opt_skipdata struct below.
-// @return: return number of bytes to skip, or 0 to immediately stop disassembling.
-typedef size_t (*cs_skipdata_cb_t)(const uint8_t *code, size_t code_size, size_t offset, void* user_data);
+/*
+ User-defined callback function for SKIPDATA option.
+ See tests/test_skipdata.c for sample code demonstrating this API.
+
+ @code: the input buffer containing code to be disassembled.
+        This is the same buffer passed to cs_disasm().
+ @code_size: size (in bytes) of the above @code buffer.
+ @offset: the position of the currently-examining byte in the input
+      buffer @code mentioned above.
+ @user_data: user-data passed to cs_option() via @user_data field in
+      cs_opt_skipdata struct below.
+
+ @return: return number of bytes to skip, or 0 to immediately stop disassembling.
+*/
+typedef size_t (*cs_skipdata_cb_t)(const uint8_t *code, size_t code_size, size_t offset, void *user_data);
 
 // User-customized setup for SKIPDATA option
 typedef struct cs_opt_skipdata {
@@ -205,6 +209,7 @@ typedef struct cs_insn {
 	// Find the instruction id from header file of corresponding architecture,
 	// such as arm.h for ARM, x86.h for X86, etc...
 	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
+	// NOTE: in Skipdata mode, "data" instruction has 0 for this id field.
 	unsigned int id;
 
 	// Address (EIP) of this instruction
@@ -227,10 +232,12 @@ typedef struct cs_insn {
 	char op_str[160];
 
 	// Pointer to cs_detail.
-	// NOTE: detail pointer is only valid (not NULL) when both requirements below are met:
+	// NOTE: detail pointer is only valid when both requirements below are met:
 	// (1) CS_OP_DETAIL = CS_OPT_ON
-	// (2) If engine is in Skipdata mode (CS_OP_SKIPDATA option set to CS_OPT_ON), then
-	//   the current instruction is not the "data" instruction (which clearly has no detail).
+	// (2) Engine is not in Skipdata mode (CS_OP_SKIPDATA option set to CS_OPT_ON)
+	//
+	// NOTE 2: when in Skipdata mode, or when detail mode is OFF, even if this pointer
+	//     is not NULL, its content is still irrelevant.
 	cs_detail *detail;
 } cs_insn;
 
@@ -267,8 +274,8 @@ typedef enum cs_err {
  @minor: minor number of API version
 
  @return hexical number as (major << 8 | minor), which encodes both
-     major & minor versions.
-     NOTE: This returned value can be compared with version number made
+	 major & minor versions.
+	 NOTE: This returned value can be compared with version number made
 	 with macro CS_MAKE_VERSION
 
  For example, second API version would return 1 in @major, and 1 in @minor
@@ -334,7 +341,7 @@ cs_err cs_close(csh *handle);
  @type: type of option to be set
  @value: option value corresponding with @type
 
- @return CS_ERR_OK on success, or other value on failure.
+ @return: CS_ERR_OK on success, or other value on failure.
  Refer to cs_err enum for detailed error.
 
  NOTE: in the case of CS_OPT_MEM, handle's value can be anything,
@@ -362,27 +369,30 @@ cs_err cs_errno(csh handle);
  @code: error code (see CS_ERR_* above)
 
  @return: returns a pointer to a string that describes the error code
-    passed in the argument @code
+	passed in the argument @code
 */
 CAPSTONE_EXPORT
 const char *cs_strerror(cs_err code);
 
 /*
- Dynamicly allocate memory to contain disasm insn
- Disassembled instructions will be put into @*insn
+ Disassemble binary code, given the code buffer, size, address and number
+ of instructions to be decoded.
+ This API dynamicly allocate memory to contain disassembled instruction.
+ Resulted instructions will be put into @*insn
 
  NOTE 1: this API will automatically determine memory needed to contain
  output disassembled instructions in @insn.
- NOTE 2: caller must free() the allocated memory itself to avoid memory leaking
+ NOTE 2: caller must free the allocated memory itself to avoid memory leaking.
 
  @handle: handle returned by cs_open()
- @code: buffer containing raw binary code to be disassembled
- @code_size: size of above code
- @address: address of the first insn in given raw code buffer
- @insn: array of insn filled in by this function
-       NOTE: @insn will be allocated by this function, and should be freed
+ @code: buffer containing raw binary code to be disassembled.
+ @code_size: size of the above code buffer.
+ @address: address of the first instruction in given raw code buffer.
+ @insn: array of instructions filled in by this API.
+	   NOTE: @insn will be allocated by this function, and should be freed
 	   with cs_free() API.
  @count: number of instrutions to be disassembled, or 0 to get all of them
+
  @return: the number of succesfully disassembled instructions,
  or 0 if this function failed to disassemble the given code
 
@@ -408,13 +418,57 @@ size_t cs_disasm_ex(csh handle,
 		cs_insn **insn);
 
 /*
- Free memory allocated in @insn by cs_disasm()
+ Free memory allocated by cs_malloc() or cs_disasm() (argument @insn)
 
- @insn: pointer returned by @insn argument in cs_disasm()
- @count: number of cs_insn structures returned by cs_disasm()
+ @insn: pointer returned by @insn argument in cs_disasm() or cs_malloc()
+ @count: number of cs_insn structures returned by cs_disasm(), or 1
+     to free memory allocated by cs_malloc().
 */
 CAPSTONE_EXPORT
 void cs_free(cs_insn *insn, size_t count);
+
+
+/*
+ Allocate memory for 1 instruction to be used by cs_disasm_iter().
+
+ @handle: handle returned by cs_open()
+
+ NOTE: when no longer in use, you can reclaim the memory allocated for
+ this instruction with cs_free(insn, 1)
+*/
+CAPSTONE_EXPORT
+cs_insn *cs_malloc(csh handle);
+
+/*
+ Fast API to disassemble binary code, given the code buffer, size, address
+ and number of instructions to be decoded.
+ This API put the resulted instruction into a given cache in @insn.
+ See tests/test_iter.c for sample code demonstrating this API.
+
+ NOTE 1: this API will update @code, @size & @address to point to the next
+ instruction in the input buffer. Therefore, it is covenient to use
+ cs_disasm_iter() inside a loop to quickly iterate all the instructions.
+ While decoding one instruction at a time can also be achieved with
+ cs_disasm(count=1), some benchmarks shown that cs_disasm_iter() can be 30%
+ faster on random input.
+
+ NOTE 2: the cache in @insn can be created with cs_malloc() API.
+
+ @handle: handle returned by cs_open()
+ @code: buffer containing raw binary code to be disassembled
+ @code_size: size of above code
+ @address: address of the first insn in given raw code buffer
+ @insn: pointer to instruction to be filled in by this API.
+
+ @return: true if this API successfully decode 1 instruction,
+ or false otherwise.
+
+ On failure, call cs_errno() for error code.
+*/
+CAPSTONE_EXPORT
+bool cs_disasm_iter(csh handle,
+	const uint8_t **code, size_t *size,
+	uint64_t *address, cs_insn *insn);
 
 /*
  Return friendly name of regiser in a string.
@@ -426,6 +480,7 @@ void cs_free(cs_insn *insn, size_t count);
 
  @handle: handle returned by cs_open()
  @reg_id: register id
+
  @return: string name of the register, or NULL if @reg_id is invalid.
 */
 CAPSTONE_EXPORT

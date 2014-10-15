@@ -1,6 +1,7 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
+// This sample code demonstrates the APIs cs_malloc() & cs_disasm_iter().
 #include <stdio.h>
 #include <stdlib.h>
 #include "../inttypes.h"
@@ -178,12 +179,13 @@ static void test()
 	};
 
 	csh handle;
-	uint64_t address = 0x1000;
-	cs_insn *all_insn;
+	uint64_t address;
+	cs_insn *insn;
 	cs_detail *detail;
 	int i;
-	size_t count;
 	cs_err err;
+	const uint8_t *code;
+	size_t size;
 
 	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
 		printf("****************\n");
@@ -199,63 +201,56 @@ static void test()
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
-		count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, &all_insn);
-		if (count) {
-			size_t j;
+		// allocate memory for the cache to be used by cs_disasm_iter()
+		insn = cs_malloc(handle);
+
+		print_string_hex(platforms[i].code, platforms[i].size);
+		printf("Disasm:\n");
+
+		address = 0x1000;
+		code = platforms[i].code;
+		size = platforms[i].size;
+		while(cs_disasm_iter(handle, &code, &size, &address, insn)) {
 			int n;
 
-			print_string_hex(platforms[i].code, platforms[i].size);
-			printf("Disasm:\n");
+			printf("0x%"PRIx64":\t%s\t\t%s // insn-ID: %u, insn-mnem: %s\n",
+					insn->address, insn->mnemonic, insn->op_str,
+					insn->id, cs_insn_name(handle, insn->id));
 
-			for (j = 0; j < count; j++) {
-				cs_insn *i = &(all_insn[j]);
-				printf("0x%"PRIx64":\t%s\t\t%s // insn-ID: %u, insn-mnem: %s\n",
-						i->address, i->mnemonic, i->op_str,
-						i->id, cs_insn_name(handle, i->id));
+			// print implicit registers used by this instruction
+			detail = insn->detail;
 
-				// print implicit registers used by this instruction
-				detail = i->detail;
-
-				if (detail->regs_read_count > 0) {
-					printf("\tImplicit registers read: ");
-					for (n = 0; n < detail->regs_read_count; n++) {
-						printf("%s ", cs_reg_name(handle, detail->regs_read[n]));
-					}
-					printf("\n");
+			if (detail->regs_read_count > 0) {
+				printf("\tImplicit registers read: ");
+				for (n = 0; n < detail->regs_read_count; n++) {
+					printf("%s ", cs_reg_name(handle, detail->regs_read[n]));
 				}
-
-				// print implicit registers modified by this instruction
-				if (detail->regs_write_count > 0) {
-					printf("\tImplicit registers modified: ");
-					for (n = 0; n < detail->regs_write_count; n++) {
-						printf("%s ", cs_reg_name(handle, detail->regs_write[n]));
-					}
-					printf("\n");
-				}
-
-				// print the groups this instruction belong to
-				if (detail->groups_count > 0) {
-					printf("\tThis instruction belongs to groups: ");
-					for (n = 0; n < detail->groups_count; n++) {
-						printf("%s ", cs_group_name(handle, detail->groups[n]));
-					}
-					printf("\n");
-				}
+				printf("\n");
 			}
 
-			// print out the next offset, after the last insn
-			printf("0x%"PRIx64":\n", all_insn[j-1].address + all_insn[j-1].size);
+			// print implicit registers modified by this instruction
+			if (detail->regs_write_count > 0) {
+				printf("\tImplicit registers modified: ");
+				for (n = 0; n < detail->regs_write_count; n++) {
+					printf("%s ", cs_reg_name(handle, detail->regs_write[n]));
+				}
+				printf("\n");
+			}
 
-			// free memory allocated by cs_disasm()
-			cs_free(all_insn, count);
-		} else {
-			printf("****************\n");
-			printf("Platform: %s\n", platforms[i].comment);
-			print_string_hex(platforms[i].code, platforms[i].size);
-			printf("ERROR: Failed to disasm given code!\n");
+			// print the groups this instruction belong to
+			if (detail->groups_count > 0) {
+				printf("\tThis instruction belongs to groups: ");
+				for (n = 0; n < detail->groups_count; n++) {
+					printf("%s ", cs_group_name(handle, detail->groups[n]));
+				}
+				printf("\n");
+			}
 		}
 
 		printf("\n");
+
+		// free memory allocated by cs_malloc()
+		cs_free(insn, 1);
 
 		cs_close(&handle);
 	}

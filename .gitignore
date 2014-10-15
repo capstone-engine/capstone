@@ -47,6 +47,7 @@ bindings/ocaml/test_xcore
 # test binaries
 tests/test
 tests/test_detail
+tests/test_iter
 tests/test_arm
 tests/test_arm64
 tests/test_mips
@@ -85,3 +86,5 @@ xcode/Capstone.xcodeproj/xcuserdata
 # suite/
 test_arm_regression
 test_arm_regression.o
+
+ *.s

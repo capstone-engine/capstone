@@ -5,6 +5,8 @@ To natively compile for Windows using Microsoft Visual Studio, see COMPILE_MSVC.
 
 To compile using CMake, see COMPILE_CMAKE.TXT.
 
+To compile using XCode on MacOSX, see xcode/README.md.
+
                         *-*-*-*-*-*
 
 Capstone requires no prerequisite packages, so it is easy to compile & install.

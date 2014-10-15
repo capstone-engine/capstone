@@ -212,6 +212,9 @@ typedef struct cs_arm_op {
 		arm_op_mem mem;		// base/index/scale/disp value for MEM operand
 		arm_setend_type setend; // SETEND instruction's operand type
 	};
+	// in some instructions, an operand can be subtracted or added to
+	// the base register,
+	bool subtracted; // if TRUE, this operand is subtracted. otherwise, it is added.
 } cs_arm_op;
 
 // Instruction structure
