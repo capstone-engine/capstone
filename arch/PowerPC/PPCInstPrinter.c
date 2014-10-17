@@ -907,10 +907,6 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 			(MCOperand_getImm(MCInst_getOperand(MI, 0)) < 16)) {
 		int cr = getBICR(MCOperand_getReg(MCInst_getOperand(MI, 1)));
 
-		if (cr != PPC_CR0) {
-			op_addReg(MI, PPC_REG_CR0 + cr - PPC_CR0);
-		}
-
 		if (decCtr) {
 			needComma = true;
 			SStream_concat0(&ss, " ");
@@ -938,10 +934,22 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 					op_addBC(MI, PPC_BC_SO);
 					break;
 			}
+
+			cr = getBICR(MCOperand_getReg(MCInst_getOperand(MI, 1)));
+			if (cr > PPC_CR0) {
+				if (MI->csh->detail) {
+					MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_CRX;
+					MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].crx.scale = 4;
+					MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].crx.reg = PPC_REG_CR0 + cr - PPC_CR0;
+					MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].crx.cond = MI->flat_insn->detail->ppc.bc;
+					MI->flat_insn->detail->ppc.op_count++;
+				}
+			}
 		} else {
 			if (cr > PPC_CR0) {
 				needComma = true;
 				SStream_concat(&ss, " cr%d", cr - PPC_CR0);
+				op_addReg(MI, PPC_REG_CR0 + cr - PPC_CR0);
 			}
 		}
 	}

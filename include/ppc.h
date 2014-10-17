@@ -28,8 +28,8 @@ typedef enum ppc_bc {
 	PPC_BC_NU       = (3 << 5) |  4,
 
 	// extra conditions
-	PPC_BC_SO = 4 << 5,	// summary overflow
-	PPC_BC_NS = 4 << 5,	// not summary overflow
+	PPC_BC_SO = (4 << 5) | 12,	// summary overflow
+	PPC_BC_NS = (4 << 5) | 4,	// not summary overflow
 } ppc_bc;
 
 //> PPC branch hint for some branch instructions
@@ -45,6 +45,7 @@ typedef enum ppc_op_type {
 	PPC_OP_REG,	// Register operand.
 	PPC_OP_IMM,	// Immediate operand.
 	PPC_OP_MEM,	// Memory operand
+	PPC_OP_CRX, // Condition Register field
 } ppc_op_type;
 
 // Instruction's operand referring to memory
@@ -54,6 +55,12 @@ typedef struct ppc_op_mem {
 	int32_t disp;	// displacement/offset value
 } ppc_op_mem;
 
+typedef struct ppc_op_crx {
+	unsigned int scale;
+	unsigned int reg;
+	unsigned int cond;
+} ppc_op_crx;
+
 // Instruction operand
 typedef struct cs_ppc_op {
 	ppc_op_type type;	// operand type
@@ -61,6 +68,7 @@ typedef struct cs_ppc_op {
 		unsigned int reg;	// register value for REG operand
 		int32_t imm;		// immediate value for IMM operand
 		ppc_op_mem mem;		// base/disp value for MEM operand
+		ppc_op_crx crx;		// 
 	};
 } cs_ppc_op;
 
