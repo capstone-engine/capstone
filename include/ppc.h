@@ -45,7 +45,7 @@ typedef enum ppc_op_type {
 	PPC_OP_REG,	// Register operand.
 	PPC_OP_IMM,	// Immediate operand.
 	PPC_OP_MEM,	// Memory operand
-	PPC_OP_CRX, // Condition Register field
+	PPC_OP_CRX,	// Condition Register field
 } ppc_op_type;
 
 // Instruction's operand referring to memory
@@ -68,7 +68,7 @@ typedef struct cs_ppc_op {
 		unsigned int reg;	// register value for REG operand
 		int32_t imm;		// immediate value for IMM operand
 		ppc_op_mem mem;		// base/disp value for MEM operand
-		ppc_op_crx crx;		// 
+		ppc_op_crx crx;		// operand with condition register
 	};
 } cs_ppc_op;
 
