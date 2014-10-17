@@ -58,7 +58,7 @@ typedef struct ppc_op_mem {
 typedef struct ppc_op_crx {
 	unsigned int scale;
 	unsigned int reg;
-	unsigned int cond;
+	ppc_bc cond;
 } ppc_op_crx;
 
 // Instruction operand
