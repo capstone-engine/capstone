@@ -23,10 +23,22 @@ public class Ppc {
     }
   }
 
+  public static class CrxType extends Structure {
+    public int scale;
+    public int reg;
+    public int cond;
+
+    @Override
+    public List getFieldOrder() {
+      return Arrays.asList("scale", "reg", "cond");
+    }
+  }
+
   public static class OpValue extends Union {
     public int reg;
     public int imm;
     public MemType mem;
+    public CrxType crx;
   }
 
   public static class Operand extends Structure {
@@ -37,6 +49,8 @@ public class Ppc {
       readField("type");
       if (type == PPC_OP_MEM)
         value.setType(MemType.class);
+      if (type == PPC_OP_CRX)
+        value.setType(CrxType.class);
       if (type == PPC_OP_IMM || type == PPC_OP_REG)
         value.setType(Integer.TYPE);
       if (type == PPC_OP_INVALID)
