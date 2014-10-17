@@ -152,6 +152,23 @@ typedef enum x86_avx_rm {
 	X86_AVX_RM_RZ,	// Round toward zero
 } x86_avx_rm;
 
+//> Instruction prefixes - to be used in cs_x86.prefix[]
+typedef enum x86_prefix {
+	X86_PREFIX_LOCK		= 	0xf0,	// lock (cs_x86.prefix[0]
+	X86_PREFIX_REP		= 	0xf3,	// rep (cs_x86.prefix[0]
+	X86_PREFIX_REPNE	= 	0xf2,	// repne (cs_x86.prefix[0]
+
+	X86_PREFIX_CS		= 	0x2e,	// segment override CS (cs_x86.prefix[1]
+	X86_PREFIX_SS		= 	0x36,	// segment override SS (cs_x86.prefix[1]
+	X86_PREFIX_DS		= 	0x3e,	// segment override DS (cs_x86.prefix[1]
+	X86_PREFIX_ES		= 	0x26,	// segment override ES (cs_x86.prefix[1]
+	X86_PREFIX_FS		= 	0x64,	// segment override FS (cs_x86.prefix[1]
+	X86_PREFIX_GS		= 	0x65,	// segment override GS (cs_x86.prefix[1]
+
+	X86_PREFIX_OPSIZE	=	0x66,	// operand-size override (cs_x86.prefix[2]
+	X86_PREFIX_ADDRSIZE	=	0x67,	// address-size override (cs_x86.prefix[3]
+} x86_prefix;
+
 // Instruction's operand referring to memory
 // This is associated with X86_OP_MEM operand type above
 typedef struct x86_op_mem {
@@ -186,11 +203,11 @@ typedef struct cs_x86_op {
 typedef struct cs_x86 {
 	// Instruction prefix, which can be up to 4 bytes.
 	// A prefix byte gets value 0 when irrelevant.
-	// prefix[0] indicates REP/REPNE/LOCK prefix (0xf3/0xf2/0xf0 respectively)
+	// prefix[0] indicates REP/REPNE/LOCK prefix (See X86_PREFIX_REP/REPNE/LOCK above)
 	// prefix[1] indicates segment override (irrelevant for x86_64):
-	//	0x2e = CS, 0x36 = SS, 0x3e = DS, 0x26 = ES, 0x64 = FS, 0x65 = GS
-	// prefix[2] indicates operand-size override (0x66)
-	// prefix[3] indicates address-size override (0x67)
+	// See X86_PREFIX_CS/SS/DS/ES/FS/GS above.
+	// prefix[2] indicates operand-size override (X86_PREFIX_OPSIZE)
+	// prefix[3] indicates address-size override (X86_PREFIX_ADDRSIZE)
 	uint8_t prefix[4];
 
 	// Instruction opcode, wich can be from 1 to 4 bytes in size.
