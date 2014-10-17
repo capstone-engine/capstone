@@ -8,11 +8,18 @@ type ppc_op_mem = {
 	disp: int;
 }
 
+type ppc_op_crx = {
+	scale: int;
+	reg: int;
+	cond: int;
+}
+
 type ppc_op_value = 
 	| PPC_OP_INVALID of int
 	| PPC_OP_REG of int
 	| PPC_OP_IMM of int
 	| PPC_OP_MEM of ppc_op_mem
+	| PPC_OP_CRX of ppc_op_crx
 
 type ppc_op = {
 	value: ppc_op_value;

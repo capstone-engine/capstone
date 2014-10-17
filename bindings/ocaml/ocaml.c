@@ -435,6 +435,14 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 										Store_field(tmp3, 1, Val_int(insn[j-1].detail->ppc.operands[i].mem.disp));
 										Store_field(tmp, 0, tmp3);
 										break;
+									case PPC_OP_CRX:
+										tmp = caml_alloc(1, 4);
+										tmp3 = caml_alloc(3, 0);
+										Store_field(tmp3, 0, Val_int(insn[j-1].detail->ppc.operands[i].crx.scale));
+										Store_field(tmp3, 1, Val_int(insn[j-1].detail->ppc.operands[i].crx.reg));
+										Store_field(tmp3, 2, Val_int(insn[j-1].detail->ppc.operands[i].crx.cond));
+										Store_field(tmp, 0, tmp3);
+										break;
 									default: break;
 								}
 								Store_field(tmp2, 0, tmp);
