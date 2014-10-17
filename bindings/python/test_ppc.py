@@ -5,7 +5,8 @@ from __future__ import print_function
 from capstone import *
 from capstone.ppc import *
 from xprint import to_x, to_hex, to_x_32
-PPC_CODE = b"\x80\x20\x00\x00\x80\x3f\x00\x00\x10\x43\x23\x0e\xd0\x44\x00\x80\x4c\x43\x22\x02\x2d\x03\x00\x80\x7c\x43\x20\x14\x7c\x43\x20\x93\x4f\x20\x00\x21\x4c\xc8\x00\x21\x40\x82\x00\x14"
+
+PPC_CODE = b"\x43\x20\x0c\x07\x41\x56\xff\x17\x80\x20\x00\x00\x80\x3f\x00\x00\x10\x43\x23\x0e\xd0\x44\x00\x80\x4c\x43\x22\x02\x2d\x03\x00\x80\x7c\x43\x20\x14\x7c\x43\x20\x93\x4f\x20\x00\x21\x4c\xc8\x00\x21\x40\x82\x00\x14"
 
 all_tests = (
         (CS_ARCH_PPC, CS_MODE_BIG_ENDIAN, PPC_CODE, "PPC-64"),
@@ -36,6 +37,16 @@ def print_insn_detail(insn):
                 if i.mem.disp != 0:
                     print("\t\t\toperands[%u].mem.disp: 0x%s" \
                         % (c, to_x_32(i.mem.disp)))
+            if i.type == PPC_OP_CRX:
+                print("\t\toperands[%u].type: CRX" % c)
+                print("\t\t\toperands[%u].crx.scale: = %s" \
+                        % (c, i.crx.scale))
+                if i.crx.reg != 0:
+                    print("\t\t\toperands[%u].crx.reg: REG = %s" \
+                        % (c, insn.reg_name(i.crx.reg)))
+                if i.crx.cond != 0:
+                    print("\t\t\toperands[%u].crx.cond: 0x%s" \
+                        % (c, to_x_32(i.crx.cond)))
             c += 1
 
     if insn.bc:

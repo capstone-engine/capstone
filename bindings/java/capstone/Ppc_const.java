@@ -14,8 +14,8 @@ public class Ppc_const {
 	public static final int PPC_BC_NE = (2<<5)|4;
 	public static final int PPC_BC_UN = (3<<5)|12;
 	public static final int PPC_BC_NU = (3<<5)|4;
-	public static final int PPC_BC_SO = 4<<5;
-	public static final int PPC_BC_NS = 4<<5;
+	public static final int PPC_BC_SO = (4<<5)|12;
+	public static final int PPC_BC_NS = (4<<5)|4;
 
 	// PPC branch hint for some branch instructions
 
@@ -29,6 +29,7 @@ public class Ppc_const {
 	public static final int PPC_OP_REG = 1;
 	public static final int PPC_OP_IMM = 2;
 	public static final int PPC_OP_MEM = 3;
+	public static final int PPC_OP_CRX = 4;
 
 	// PPC registers
 

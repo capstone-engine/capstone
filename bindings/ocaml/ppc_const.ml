@@ -11,8 +11,8 @@ let _PPC_BC_GT = (1 lsl 5) lor 12;;
 let _PPC_BC_NE = (2 lsl 5) lor 4;;
 let _PPC_BC_UN = (3 lsl 5) lor 12;;
 let _PPC_BC_NU = (3 lsl 5) lor 4;;
-let _PPC_BC_SO = 4 lsl 5;;
-let _PPC_BC_NS = 4 lsl 5;;
+let _PPC_BC_SO = (4 lsl 5) lor 12;;
+let _PPC_BC_NS = (4 lsl 5) lor 4;;
 
 (* PPC branch hint for some branch instructions *)
 
@@ -26,6 +26,7 @@ let _PPC_OP_INVALID = 0;;
 let _PPC_OP_REG = 1;;
 let _PPC_OP_IMM = 2;;
 let _PPC_OP_MEM = 3;;
+let _PPC_OP_CRX = 4;;
 
 (* PPC registers *)
 

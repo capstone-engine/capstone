@@ -10,11 +10,19 @@ class PpcOpMem(ctypes.Structure):
         ('disp', ctypes.c_int32),
     )
 
+class PpcOpCrx(ctypes.Structure):
+    _fields_ = (
+        ('scale', ctypes.c_uint),
+        ('reg', ctypes.c_uint),
+        ('cond', ctypes.c_uint),
+    )
+
 class PpcOpValue(ctypes.Union):
     _fields_ = (
         ('reg', ctypes.c_uint),
         ('imm', ctypes.c_int32),
         ('mem', PpcOpMem),
+        ('crx', PpcOpCrx),
     )
 
 class PpcOp(ctypes.Structure):
@@ -34,6 +42,10 @@ class PpcOp(ctypes.Structure):
     @property
     def mem(self):
         return self.value.mem
+
+    @property
+    def crx(self):
+        return self.value.crx
 
 
 class CsPpc(ctypes.Structure):

@@ -11,8 +11,8 @@ PPC_BC_GT = (1<<5)|12
 PPC_BC_NE = (2<<5)|4
 PPC_BC_UN = (3<<5)|12
 PPC_BC_NU = (3<<5)|4
-PPC_BC_SO = 4<<5
-PPC_BC_NS = 4<<5
+PPC_BC_SO = (4<<5)|12
+PPC_BC_NS = (4<<5)|4
 
 # PPC branch hint for some branch instructions
 
@@ -26,6 +26,7 @@ PPC_OP_INVALID = 0
 PPC_OP_REG = 1
 PPC_OP_IMM = 2
 PPC_OP_MEM = 3
+PPC_OP_CRX = 4
 
 # PPC registers
 
