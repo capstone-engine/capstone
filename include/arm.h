@@ -225,6 +225,11 @@ typedef union cs_arm_op {
 
 // Instruction structure
 typedef struct cs_arm {
+	// Number of operands of this instruction,
+	// or 0 when instruction has no operand.
+	uint8_t op_count;
+	cs_arm_op operands[36];	// operands for this instruction.
+	
 	bool usermode;	// User-mode registers to be loaded (for LDM/STM instructions)
 	int vector_size; 	// Scalar size for vector instructions
 	arm_vectordata_type vector_data; // Data type for elements of vector instructions
@@ -233,12 +238,6 @@ typedef struct cs_arm {
 	arm_cc cc;			// conditional code for this insn
 	bool update_flags;	// does this insn update flags?
 	bool writeback;		// does this insn write-back?
-
-	// Number of operands of this instruction, 
-	// or 0 when instruction has no operand.
-	uint8_t op_count;
-
-	cs_arm_op operands[36];	// operands for this instruction.
 } cs_arm;
 
 //> ARM registers

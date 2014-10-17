@@ -99,12 +99,13 @@ typedef union cs_sparc_op {
 
 // Instruction structure
 typedef struct cs_sparc {
-	sparc_cc cc;	// code condition for this insn
-	sparc_hint hint;	// branch hint: encoding as bitwise OR of sparc_hint.
-	// Number of operands of this instruction, 
+	// Number of operands of this instruction,
 	// or 0 when instruction has no operand.
 	uint8_t op_count;
 	cs_sparc_op operands[4]; // operands for this instruction.
+	
+	sparc_cc cc;	// code condition for this insn
+	sparc_hint hint;	// branch hint: encoding as bitwise OR of sparc_hint.
 } cs_sparc;
 
 //> SPARC registers

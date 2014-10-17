@@ -188,6 +188,11 @@ typedef union cs_x86_op {
 
 // Instruction structure
 typedef struct cs_x86 {
+	// Number of operands of this instruction,
+	// or 0 when instruction has no operand.
+	uint8_t op_count;
+	cs_x86_op operands[8];	// operands for this instruction.
+
 	// Instruction prefix, which can be up to 4 bytes.
 	// A prefix byte gets value 0 when irrelevant.
 	// prefix[0] indicates REP/REPNE/LOCK prefix (0xf3/0xf2/0xf0 respectively)
@@ -236,12 +241,6 @@ typedef struct cs_x86 {
 
 	// AVX static rounding mode
 	x86_avx_rm avx_rm;
-
-	// Number of operands of this instruction,
-	// or 0 when instruction has no operand.
-	uint8_t op_count;
-
-	cs_x86_op operands[8];	// operands for this instruction.
 } cs_x86;
 
 //> X86 instructions

@@ -69,11 +69,11 @@ typedef union cs_sysz_op {
 
 // Instruction structure
 typedef struct cs_sysz {
-	sysz_cc cc;		// Code condition
 	// Number of operands of this instruction, 
 	// or 0 when instruction has no operand.
 	uint8_t op_count;
 	cs_sysz_op operands[6]; // operands for this instruction.
+	sysz_cc cc;		// Code condition
 } cs_sysz;
 
 //> SystemZ registers

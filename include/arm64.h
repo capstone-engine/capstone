@@ -381,15 +381,14 @@ typedef union cs_arm64_op {
 
 // Instruction structure
 typedef struct cs_arm64 {
+	// Number of operands of this instruction,
+	// or 0 when instruction has no operand.
+	uint8_t op_count;
+	cs_arm64_op operands[8]; // operands for this instruction.
+	
 	arm64_cc cc;	// conditional code for this insn
 	bool update_flags;	// does this insn update flags?
 	bool writeback;	// does this insn request writeback? 'True' means 'yes'
-
-	// Number of operands of this instruction, 
-	// or 0 when instruction has no operand.
-	uint8_t op_count;
-
-	cs_arm64_op operands[8]; // operands for this instruction.
 } cs_arm64;
 
 //> ARM64 registers

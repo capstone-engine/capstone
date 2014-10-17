@@ -29,4 +29,10 @@ typedef struct cs_generic_op {
 	};
 } cs_generic_op;
 
+typedef struct cs_generic {
+	// Number of operands of this instruction,
+	// or 0 when instruction has no operand.
+	uint8_t op_count;
+} cs_generic;
+
 #endif

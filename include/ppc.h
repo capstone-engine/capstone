@@ -70,6 +70,11 @@ typedef union cs_ppc_op {
 
 // Instruction structure
 typedef struct cs_ppc {
+	// Number of operands of this instruction,
+	// or 0 when instruction has no operand.
+	uint8_t op_count;
+	cs_ppc_op operands[8]; // operands for this instruction.
+	
 	// branch code for branch instructions
 	ppc_bc bc;
 
@@ -78,11 +83,6 @@ typedef struct cs_ppc {
 
 	// if update_cr0 = True, then this 'dot' insn updates CR0
 	bool update_cr0;
-
-	// Number of operands of this instruction, 
-	// or 0 when instruction has no operand.
-	uint8_t op_count;
-	cs_ppc_op operands[8]; // operands for this instruction.
 } cs_ppc;
 
 //> PPC registers
