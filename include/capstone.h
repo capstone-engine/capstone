@@ -382,8 +382,17 @@ const char *cs_strerror(cs_err code);
 
  NOTE 1: this API will automatically determine memory needed to contain
  output disassembled instructions in @insn.
+
  NOTE 2: caller must free the allocated memory itself to avoid memory leaking.
 
+ NOTE 3: for system with scarce memory to be dynamically allocated such as
+ OS kernel or firmware, the API cs_disasm_iter() might be a better choice than
+ cs_disasm(). The reason is that with cs_disasm(), based on limited available
+ memory, we have to calculate in advance how many instructions to be disassembled,
+ which complicates things. This is especially troublesome for the case @count=0,
+ when cs_disasm() runs uncontrolly (until either end of input buffer, or
+ when it encounters an invalid instruction).
+ 
  @handle: handle returned by cs_open()
  @code: buffer containing raw binary code to be disassembled.
  @code_size: size of the above code buffer.
@@ -454,6 +463,15 @@ cs_insn *cs_malloc(csh handle);
 
  NOTE 2: the cache in @insn can be created with cs_malloc() API.
 
+ NOTE 3: for system with scarce memory to be dynamically allocated such as
+ OS kernel or firmware, this API is recommended over cs_disasm(), which
+ allocates memory based on the number of instructions to be disassembled.
+ The reason is that with cs_disasm(), based on limited available memory,
+ we have to calculate in advance how many instructions to be disassembled,
+ which complicates things. This is especially troublesome for the case
+ @count=0, when cs_disasm() runs uncontrolly (until either end of input
+ buffer, or when it encounters an invalid instruction).
+ 
  @handle: handle returned by cs_open()
  @code: buffer containing raw binary code to be disassembled
  @code_size: size of above code
