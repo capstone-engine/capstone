@@ -25,6 +25,9 @@ Capstone offers some unparalleled features:
 
 - Special support for embedding into firmware or OS kernel.
 
+- High performance & suitable for malware analysis (capable of handling various
+  X86 malware tricks).
+
 - Distributed under the open source BSD license.
 
 Further information is available at http://www.capstone-engine.org
