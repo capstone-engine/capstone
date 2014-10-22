@@ -1272,8 +1272,7 @@ static DecodeStatus DecodeRegListOperand(MCInst *Inst, unsigned Val,
 	}
 
 	if (opcode == ARM_t2LDMIA_UPD && WritebackReg == ARM_SP) {
-		if (Val & (1 << ARM_SP)
-				|| ((Val & (1 << ARM_PC)) && (Val & (1 << ARM_LR)))) {
+		if (Val & (1 << 13) || ((Val & (1 << 15)) && (Val & (1 << 14)))) {
 			// invalid thumb2 pop
 			// needs no sp in reglist and not both pc and lr set at the same time
 			return MCDisassembler_Fail;

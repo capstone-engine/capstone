@@ -437,7 +437,7 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 
 #ifdef CAPSTONE_USE_SYS_DYN_MEM
 	if (count > 0 && count <= INSN_CACHE_SIZE)
-		cache_size = count;
+		cache_size = (unsigned int) count;
 #endif
 
 	// save the original offset for SKIPDATA

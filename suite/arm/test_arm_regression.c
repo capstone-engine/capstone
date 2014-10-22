@@ -11,7 +11,7 @@
 #include <string.h>
 #include "../../inttypes.h"
 
-#include <capstone/capstone.h>
+#include <capstone.h>
 
 static csh handle;
 
@@ -192,6 +192,7 @@ static void test_invalids()
 		}
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+		cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_NOREGNAME);
 
 		for (j = 0; j < invalid->num_invalid_codes; ++j) {
 			struct invalid_code * invalid_code = NULL;
@@ -252,24 +253,36 @@ static void test_valids()
 		CS_ARCH_ARM,
 			CS_MODE_THUMB,
 			"Thumb",
-			2,
+			3,
 			{{ (unsigned char *)"\x00\xf0\x26\xe8", 4, 0x352,
+				"0x352:\tblx\t#0x3a0\n"
+					"\top_count: 1\n"
+					"\t\toperands[0].type: IMM = 0x3a0\n",
 
-				 "0x352:\tblx\t#0x3a0\n"
-					 "\top_count: 1\n"
-					 "\t\toperands[0].type: IMM = 0x3a0\n",
+				"thumb2 blx with misaligned immediate"
+			}, { (unsigned char *)"\x05\xdd", 2, 0x1f0,
+				"0x1f0:\tble\t#0x1fe\n"
+					"\top_count: 1\n"
+					"\t\toperands[0].type: IMM = 0x1fe\n"
+					"\tCode condition: 14\n",
 
-				 "thumb2 blx with misaligned immediate"
+				"thumb b cc with thumb-aligned target"
+			}, { (unsigned char *)"\xbd\xe8\xf0\x8f", 4, 0,
+			 "0x0:\tpop.w\t{r4, r5, r6, r7, r8, r9, r10, r11, pc}\n"
+				 "\top_count: 9\n"
+				 "\t\toperands[0].type: REG = r4\n"
+				 "\t\toperands[1].type: REG = r5\n"
+				 "\t\toperands[2].type: REG = r6\n"
+				 "\t\toperands[3].type: REG = r7\n"
+				 "\t\toperands[4].type: REG = r8\n"
+				 "\t\toperands[5].type: REG = r9\n"
+				 "\t\toperands[6].type: REG = r10\n"
+				 "\t\toperands[7].type: REG = r11\n"
+				 "\t\toperands[8].type: REG = pc\n",
 
-			 }, { (unsigned char *)"\x05\xdd", 2, 0x1f0,
-
-				 "0x1f0:\tble\t#0x1fe\n"
-					 "\top_count: 1\n"
-					 "\t\toperands[0].type: IMM = 0x1fe\n"
-					 "\tCode condition: 14\n",
-
-				 "thumb b cc with thumb-aligned target"
-			 }}
+				"thumb2 pop that should be valid"
+			},
+		}
 	}};
 
 	struct valid_instructions * valid = NULL;
@@ -293,6 +306,7 @@ static void test_valids()
 		}
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+		cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_NOREGNAME);
 
 #define _this_printf(...) \
 		{ \
@@ -349,10 +363,10 @@ static void test_valids()
 
 				if (memcmp(tmp_buf, valid_code->expected_out, max_len)) {
 					printf(
-							"    ERROR: '''\n%s''' does not match"
-							" expected '''\n%s'''\n", 
-							tmp_buf, valid_code->expected_out
-						  );
+						"    ERROR: '''\n%s''' does not match"
+						" expected '''\n%s'''\n", 
+						tmp_buf, valid_code->expected_out
+					);
 				} else {
 					printf("    SUCCESS: valid\n");
 				}

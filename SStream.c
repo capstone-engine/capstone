@@ -24,7 +24,7 @@ void SStream_Init(SStream *ss)
 void SStream_concat0(SStream *ss, char *s)
 {
 #ifndef CAPSTONE_DIET
-	unsigned int len = strlen(s);
+	unsigned int len = (unsigned int) strlen(s);
 
 	memcpy(ss->buffer + ss->index, s, len);
 	ss->index += len;
