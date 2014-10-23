@@ -206,7 +206,7 @@ static void test_invalids()
 
 			free(hex_str);
 
-			count = cs_disasm_ex(handle,
+			count = cs_disasm(handle,
 					invalid_code->code, invalid_code->size, address, 0, &insn
 					);
 
@@ -335,7 +335,7 @@ static void test_valids()
 					valid->platform_comment, hex_str, valid_code->start_addr, 
 					valid_code->comment, valid_code->expected_out);
 
-			count = cs_disasm_ex(handle,
+			count = cs_disasm(handle,
 					valid_code->code, valid_code->size, 
 					valid_code->start_addr, 0, &insn
 					);
