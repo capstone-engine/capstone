@@ -10,11 +10,6 @@ Issues to be solved in next versions
 
 - More optimization for better performance.
 
-- Support more operand details for Arm, Arm64, Mips & X86, especially focus on
-  non-standard instructions.
-
-- Reduce the binary size of libraries, so Capstone can be embeded into products.
-
 
 [Bindings]
 
