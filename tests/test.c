@@ -41,7 +41,6 @@ static void test()
 #define THUMB_CODE2 "\x4f\xf0\x00\x01\xbd\xe8\x00\x88\xd1\xe8\x00\xf0"
 #define MIPS_CODE "\x0C\x10\x00\x97\x00\x00\x00\x00\x24\x02\x00\x0c\x8f\xa2\x00\x00\x34\x21\x34\x56"
 #define MIPS_CODE2 "\x56\x34\x21\x34\xc2\x17\x01\x00"
-#define MIPS_MICRO "\x07\x42\xed\xfe\x45\xc9\x0c\x00"
 #define MIPS_32R6 "\x00\x07\x00\x07\x00\x11\x93\x7c\x01\x8c\x8b\x7c\x00\xc7\x48\xd0"
 //#define ARM64_CODE "\x00\x40\x21\x4b"	// 	sub		w0, w0, w1, uxtw
 //#define ARM64_CODE "\x21\x7c\x02\x9b"	// mul	x1, x1, x2
@@ -134,13 +133,6 @@ static void test()
 			(unsigned char*)MIPS_CODE2,
 			sizeof(MIPS_CODE2) - 1,
 			"MIPS-64-EL (Little-endian)"
-		},
-		{
-			CS_ARCH_MIPS,
-			(cs_mode)(CS_MODE_32 + CS_MODE_MICRO + CS_MODE_BIG_ENDIAN),
-			(unsigned char*)MIPS_MICRO,
-			sizeof(MIPS_MICRO) - 1,
-			"MIPS-Micro (Big-endian)"
 		},
 		{
 			CS_ARCH_MIPS,
