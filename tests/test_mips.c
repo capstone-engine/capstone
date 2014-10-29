@@ -80,6 +80,7 @@ static void test()
 #define MIPS_CODE "\x0C\x10\x00\x97\x00\x00\x00\x00\x24\x02\x00\x0c\x8f\xa2\x00\x00\x34\x21\x34\x56"
 //#define MIPS_CODE "\x04\x11\x00\x01"	// bal	0x8
 #define MIPS_CODE2 "\x56\x34\x21\x34\xc2\x17\x01\x00"
+#define MIPS_32R6 "\x00\x07\x00\x07\x00\x11\x93\x7c\x01\x8c\x8b\x7c\x00\xc7\x48\xd0"
 
 	struct platform platforms[] = {
 		{
@@ -95,6 +96,13 @@ static void test()
 			(unsigned char *)MIPS_CODE2,
 			sizeof(MIPS_CODE2) - 1,
 			"MIPS-64-EL (Little-endian)"
+		},
+		{
+			CS_ARCH_MIPS,
+			(cs_mode)(CS_MODE_32 + CS_MODE_MIPS32R6 + CS_MODE_MICRO + CS_MODE_BIG_ENDIAN),
+			(unsigned char*)MIPS_32R6,
+			sizeof(MIPS_32R6) - 1,
+			"MIPS-32R6 | Micro (Big-endian)"
 		},
 	};
 
