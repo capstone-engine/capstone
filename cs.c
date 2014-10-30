@@ -257,9 +257,12 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 #ifndef CAPSTONE_DIET
 	char *sp, *mnem;
 #endif
+	unsigned int copy_size = MIN(sizeof(insn->bytes), insn->size);
 
-	// fill the instruction bytes
-	memcpy(insn->bytes, code, insn->size);
+	// fill the instruction bytes.
+	// we might skip some redundant bytes in front in the case of X86
+	memcpy(insn->bytes, code + insn->size - copy_size, copy_size);
+	insn->size = copy_size;
 
 	// map internal instruction opcode to public insn ID
 	handle->insn_id(handle, insn, MCInst_getOpcode(mci));
