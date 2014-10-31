@@ -5058,24 +5058,31 @@ const char *SystemZ_insn_name(csh handle, unsigned int id)
 
 #ifndef CAPSTONE_DIET
 static name_map group_name_maps[] = {
+	// generic groups
 	{ SYSZ_GRP_INVALID, NULL },
+	{ SYSZ_GRP_JUMP, "jump" },
+
+	// architecture-specific groups
 	{ SYSZ_GRP_DISTINCTOPS, "distinctops" },
 	{ SYSZ_GRP_FPEXTENSION, "fpextension" },
 	{ SYSZ_GRP_HIGHWORD, "highword" },
 	{ SYSZ_GRP_INTERLOCKEDACCESS1, "interlockedaccess1" },
 	{ SYSZ_GRP_LOADSTOREONCOND, "loadstoreoncond" },
-
-	{ SYSZ_GRP_JUMP, "jump" },
 };
 #endif
 
 const char *SystemZ_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	if (id >= SYSZ_GRP_ENDING)
+	// verify group id
+	if (id >= SYSZ_GRP_ENDING || (id > SYSZ_GRP_JUMP && id < SYSZ_GRP_DISTINCTOPS))
 		return NULL;
 
-	return group_name_maps[id].name;
+	// NOTE: when new generic groups are added, 2 must be changed accordingly
+	if (id >= 128)
+		return group_name_maps[id - 128 + 2].name;
+	else
+		return group_name_maps[id].name;
 #else
 	return NULL;
 #endif

@@ -2126,7 +2126,16 @@ const char *X86_insn_name(csh handle, unsigned int id)
 
 #ifndef CAPSTONE_DIET
 static name_map group_name_maps[] = {
+	// generic groups
 	{ X86_GRP_INVALID, NULL },
+	{ X86_GRP_JUMP,	"jump" },
+	{ X86_GRP_CALL,	"call" },
+	{ X86_GRP_RET, "ret" },
+	{ X86_GRP_INT, "int" },
+	{ X86_GRP_IRET,	"iret" },
+
+	// architecture-specific groups
+	{ X86_GRP_VM, "vm" },
 	{ X86_GRP_3DNOW, "3dnow" },
 	{ X86_GRP_AES, "aes" },
 	{ X86_GRP_ADX, "adx" },
@@ -2167,23 +2176,21 @@ static name_map group_name_maps[] = {
 	{ X86_GRP_VLX,	"vlx" },
 	{ X86_GRP_SMAP,	"smap" },
 	{ X86_GRP_NOVLX, "novlx" },
-
-	{ X86_GRP_JUMP,	"jump" },
-	{ X86_GRP_VM, "vm" },
-	{ X86_GRP_INT, "int" },
-	{ X86_GRP_IRET,	"iret" },
-	{ X86_GRP_CALL,	"call" },
-	{ X86_GRP_RET, "ret" },
 };
 #endif
 
 const char *X86_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	if (id >= X86_GRP_ENDING)
+	// verify group id
+	if (id >= X86_GRP_ENDING || (id > X86_GRP_IRET && id < X86_GRP_VM))
 		return NULL;
 
-	return group_name_maps[id].name;
+	// NOTE: when new generic groups are added, 6 must be changed accordingly
+	if (id >= 128)
+		return group_name_maps[id - 128 + 6].name;
+	else
+		return group_name_maps[id].name;
 #else
 	return NULL;
 #endif

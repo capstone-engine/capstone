@@ -7892,7 +7892,11 @@ const char *PPC_insn_name(csh handle, unsigned int id)
 
 #ifndef CAPSTONE_DIET
 static name_map group_name_maps[] = {
+	// generic groups
 	{ PPC_GRP_INVALID, NULL },
+	{ PPC_GRP_JUMP,	"jump" },
+
+	// architecture-specific groups
 	{ PPC_GRP_ALTIVEC, "altivec" },
 	{ PPC_GRP_MODE32, "mode32" },
 	{ PPC_GRP_MODE64, "mode64" },
@@ -7903,18 +7907,21 @@ static name_map group_name_maps[] = {
 	{ PPC_GRP_E500, "e500" },
 	{ PPC_GRP_PPC4XX, "ppc4xx" },
 	{ PPC_GRP_PPC6XX, "ppc6xx" },
-
-	{ PPC_GRP_JUMP,	"jump" },
 };
 #endif
 
 const char *PPC_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	if (id >= PPC_GRP_ENDING)
+	// verify group id
+	if (id >= PPC_GRP_ENDING || (id > PPC_GRP_JUMP && id < PPC_GRP_ALTIVEC))
 		return NULL;
 
-	return group_name_maps[id].name;
+	// NOTE: when new generic groups are added, 2 must be changed accordingly
+	if (id >= 128)
+		return group_name_maps[id - 128 + 2].name;
+	else
+		return group_name_maps[id].name;
 #else
 	return NULL;
 #endif

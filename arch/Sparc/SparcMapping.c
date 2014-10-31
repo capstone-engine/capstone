@@ -3147,7 +3147,11 @@ const char *Sparc_insn_name(csh handle, unsigned int id)
 
 #ifndef CAPSTONE_DIET
 static name_map group_name_maps[] = {
+	// generic groups
 	{ SPARC_GRP_INVALID, NULL },
+	{ SPARC_GRP_JUMP, "jump" },
+
+	// architecture-specific groups
 	{ SPARC_GRP_HARDQUAD, "hardquad" },
 	{ SPARC_GRP_V9, "v9" },
 	{ SPARC_GRP_VIS, "vis" },
@@ -3155,18 +3159,21 @@ static name_map group_name_maps[] = {
 	{ SPARC_GRP_VIS3,  "vis3" },
 	{ SPARC_GRP_32BIT, "32bit" },
 	{ SPARC_GRP_64BIT, "64bit" },
-
-	{ SPARC_GRP_JUMP, "jump" },
 };
 #endif
 
 const char *Sparc_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	if (id >= SPARC_GRP_ENDING)
+	// verify group id
+	if (id >= SPARC_GRP_ENDING || (id > SPARC_GRP_JUMP && id < SPARC_GRP_HARDQUAD))
 		return NULL;
 
-	return group_name_maps[id].name;
+	// NOTE: when new generic groups are added, 2 must be changed accordingly
+	if (id >= 128)
+		return group_name_maps[id - 128 + 2].name;
+	else
+		return group_name_maps[id].name;
 #else
 	return NULL;
 #endif

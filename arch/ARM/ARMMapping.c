@@ -14032,7 +14032,11 @@ const char *ARM_insn_name(csh handle, unsigned int id)
 
 #ifndef CAPSTONE_DIET
 static name_map group_name_maps[] = {
+	// generic groups
 	{ ARM_GRP_INVALID, NULL },
+	{ ARM_GRP_JUMP,	"jump" },
+
+	// architecture-specific groups
 	{ ARM_GRP_CRYPTO, "crypto" },
 	{ ARM_GRP_DATABARRIER, "databarrier" },
 	{ ARM_GRP_DIVIDE, "divide" },
@@ -14064,18 +14068,21 @@ static name_map group_name_maps[] = {
 	{ ARM_GRP_CRC, "crc" },
 	{ ARM_GRP_DPVFP, "dpvfp" },
 	{ ARM_GRP_V6M, "v6m" },
-
-	{ ARM_GRP_JUMP,	"jump" }
 };
 #endif
 
 const char *ARM_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	if (id >= ARM_GRP_ENDING)
+	// verify group id
+	if (id >= ARM_GRP_ENDING || (id > ARM_GRP_JUMP && id < ARM_GRP_CRYPTO))
 		return NULL;
 
-	return group_name_maps[id].name;
+	// NOTE: when new generic groups are added, 2 must be changed accordingly
+	if (id >= 128)
+		return group_name_maps[id - 128 + 2].name;
+	else
+		return group_name_maps[id].name;
 #else
 	return NULL;
 #endif
