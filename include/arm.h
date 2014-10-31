@@ -808,8 +808,14 @@ typedef enum arm_insn {
 
 //> Group of ARM instructions
 typedef enum arm_insn_group {
-	ARM_GRP_INVALID = 0,
-	ARM_GRP_CRYPTO,
+	ARM_GRP_INVALID = 0, // = CS_GRP_INVALID
+
+	//> Generic groups
+	// all jump instructions (conditional+direct+indirect jumps)
+	ARM_GRP_JUMP,	// = CS_GRP_JUMP
+
+	//> Architecture-specific groups
+	ARM_GRP_CRYPTO = 128,
 	ARM_GRP_DATABARRIER,
 	ARM_GRP_DIVIDE,
 	ARM_GRP_FPARMV8,
@@ -840,8 +846,6 @@ typedef enum arm_insn_group {
 	ARM_GRP_CRC,
 	ARM_GRP_DPVFP,
 	ARM_GRP_V6M,
-
-	ARM_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
 	ARM_GRP_ENDING,
 } arm_insn_group;

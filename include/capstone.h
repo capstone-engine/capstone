@@ -125,14 +125,24 @@ typedef enum cs_opt_value {
 	CS_OPT_SYNTAX_NOREGNAME, // Prints register name with only number (CS_OPT_SYNTAX)
 } cs_opt_value;
 
-//> Common operand types - to be used consistently across all architectures.
+//> Common instruction operand types - to be consistent across all architectures.
 typedef enum cs_op_type {
 	CS_OP_INVALID = 0,  // uninitialized/invalid operand.
 	CS_OP_REG,          // Register operand.
 	CS_OP_IMM,          // Immediate operand.
 	CS_OP_MEM,          // Memory operand.
-	CS_OP_FP,           // Floating-point operand.
+	CS_OP_FP,           // Floating-Point operand.
 } cs_op_type;
+
+//> Common instruction groups - to be consistent across all architectures.
+typedef enum cs_group_type {
+	CS_GRP_INVALID = 0,  // uninitialized/invalid group.
+	CS_GRP_JUMP,    // all jump instructions (conditional+direct+indirect jumps)
+	CS_GRP_CALL,    // all call instructions
+	CS_GRP_RET,     // all return instructions
+	CS_GRP_INT,     // all interrupt instructions (int+syscall)
+	CS_GRP_IRET,    // all interrupt return instructions
+} cs_group_type;
 
 /*
  User-defined callback function for SKIPDATA option.

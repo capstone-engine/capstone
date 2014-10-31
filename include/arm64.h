@@ -1129,14 +1129,17 @@ typedef enum arm64_insn {
 
 //> Group of ARM64 instructions
 typedef enum arm64_insn_group {
-	ARM64_GRP_INVALID = 0,
+	ARM64_GRP_INVALID = 0, // = CS_GRP_INVALID
 
-	ARM64_GRP_CRYPTO,
+	//> Generic groups
+	// all jump instructions (conditional+direct+indirect jumps)
+	ARM64_GRP_JUMP,	// = CS_GRP_JUMP
+
+	//> Architecture-specific groups
+	ARM64_GRP_CRYPTO = 128,
 	ARM64_GRP_FPARMV8,
 	ARM64_GRP_NEON,
 	ARM64_GRP_CRC,
-
-	ARM64_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
 	ARM64_GRP_ENDING,  // <-- mark the end of the list of groups
 } arm64_insn_group;

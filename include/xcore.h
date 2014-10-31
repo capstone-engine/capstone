@@ -218,9 +218,11 @@ typedef enum xcore_insn {
 
 //> Group of XCore instructions
 typedef enum xcore_insn_group {
-	XCORE_GRP_INVALID = 0,
+	XCORE_GRP_INVALID = 0, // = CS_GRP_INVALID
 
-	XCORE_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
+	//> Generic groups
+	// all jump instructions (conditional+direct+indirect jumps)
+	XCORE_GRP_JUMP,	// = CS_GRP_JUMP
 
 	XCORE_GRP_ENDING,   // <-- mark the end of the list of groups
 } xcore_insn_group;

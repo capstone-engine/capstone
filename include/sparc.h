@@ -494,17 +494,20 @@ typedef enum sparc_insn {
 
 //> Group of SPARC instructions
 typedef enum sparc_insn_group {
-	SPARC_GRP_INVALID = 0,
+	SPARC_GRP_INVALID = 0, // = CS_GRP_INVALID
 
-	SPARC_GRP_HARDQUAD,
+	//> Generic groups
+	// all jump instructions (conditional+direct+indirect jumps)
+	SPARC_GRP_JUMP,	// = CS_GRP_JUMP
+
+	//> Architecture-specific groups
+	SPARC_GRP_HARDQUAD = 128,
 	SPARC_GRP_V9,
 	SPARC_GRP_VIS,
 	SPARC_GRP_VIS2,
 	SPARC_GRP_VIS3, 
 	SPARC_GRP_32BIT,
 	SPARC_GRP_64BIT,
-
-	SPARC_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
 	SPARC_GRP_ENDING,   // <-- mark the end of the list of groups
 } sparc_insn_group;

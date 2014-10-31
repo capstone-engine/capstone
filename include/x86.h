@@ -1561,8 +1561,22 @@ typedef enum x86_insn {
 
 //> Group of X86 instructions
 typedef enum  x86_insn_group {
-	X86_GRP_INVALID = 0,
+	X86_GRP_INVALID = 0, // = CS_GRP_INVALID
 
+	//> Generic groups
+	// all jump instructions (conditional+direct+indirect jumps)
+	X86_GRP_JUMP,	// = CS_GRP_JUMP
+	// all call instructions
+	X86_GRP_CALL,	// = CS_GRP_CALL
+	// all return instructions
+	X86_GRP_RET,	// = CS_GRP_RET
+	// all interrupt instructions (int+syscall)
+	X86_GRP_INT,	// = CS_GRP_INT
+	// all interrupt return instructions
+	X86_GRP_IRET,	// = CS_GRP_IRET
+
+	//> Architecture-specific groups
+	X86_GRP_VM = 128,	// all virtualization instructions (VT-x + AMD-V)
 	X86_GRP_3DNOW,
 	X86_GRP_AES,
 	X86_GRP_ADX,
@@ -1603,13 +1617,6 @@ typedef enum  x86_insn_group {
 	X86_GRP_VLX,
 	X86_GRP_SMAP,
 	X86_GRP_NOVLX,
-
-	X86_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
-	X86_GRP_VM,	// all virtualization instructions (VT-x + AMD-V)
-	X86_GRP_INT,	// all interrupt instructions (int+syscall)
-	X86_GRP_IRET,	// all interrupt return instructions
-	X86_GRP_CALL,	// all call instructions
-	X86_GRP_RET,	// all call return instructions
 
 	X86_GRP_ENDING
 } x86_insn_group;

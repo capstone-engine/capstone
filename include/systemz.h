@@ -806,14 +806,18 @@ typedef enum sysz_insn {
 
 //> Group of SystemZ instructions
 typedef enum sysz_insn_group {
-	SYSZ_GRP_INVALID = 0,
-	SYSZ_GRP_DISTINCTOPS,
+	SYSZ_GRP_INVALID = 0, // = CS_GRP_INVALID
+
+	//> Generic groups
+	// all jump instructions (conditional+direct+indirect jumps)
+	SYSZ_GRP_JUMP,	// = CS_GRP_JUMP
+
+	//> Architecture-specific groups
+	SYSZ_GRP_DISTINCTOPS = 128,
 	SYSZ_GRP_FPEXTENSION,
 	SYSZ_GRP_HIGHWORD,
 	SYSZ_GRP_INTERLOCKEDACCESS1,
 	SYSZ_GRP_LOADSTOREONCOND,
-
-	SYSZ_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
 
 	SYSZ_GRP_ENDING,   // <-- mark the end of the list of groups
 } sysz_insn_group;
