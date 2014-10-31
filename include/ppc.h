@@ -41,10 +41,10 @@ typedef enum ppc_bh {
 
 //> Operand type for instruction's operands
 typedef enum ppc_op_type {
-	PPC_OP_INVALID = CS_OP_INVALID,	// Uninitialized.
-	PPC_OP_REG = CS_OP_REG,	// Register operand.
-	PPC_OP_IMM = CS_OP_IMM,	// Immediate operand.
-	PPC_OP_MEM = CS_OP_MEM,	// Memory operand
+	PPC_OP_INVALID = 0, // = CS_OP_INVALID (Uninitialized).
+	PPC_OP_REG, // = CS_OP_REG (Register operand).
+	PPC_OP_IMM, // = CS_OP_IMM (Immediate operand).
+	PPC_OP_MEM, // = CS_OP_MEM (Memory operand).
 	PPC_OP_CRX = 64,	// Condition Register field
 } ppc_op_type;
 

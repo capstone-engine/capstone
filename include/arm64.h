@@ -232,11 +232,11 @@ typedef enum arm64_barrier_op {
 
 //> Operand type for instruction's operands
 typedef enum arm64_op_type {
-	ARM64_OP_INVALID = CS_OP_INVALID,	// Uninitialized.
-	ARM64_OP_REG = CS_OP_REG,	// Register operand.
-	ARM64_OP_IMM = CS_OP_IMM,	// Immediate operand.
-	ARM64_OP_MEM = CS_OP_MEM,	// Memory operand
-	ARM64_OP_FP  = CS_OP_FP,	// Floating-Point immediate operand.
+	ARM64_OP_INVALID = 0, // = CS_OP_INVALID (Uninitialized).
+	ARM64_OP_REG, // = CS_OP_REG (Register operand).
+	ARM64_OP_IMM, // = CS_OP_IMM (Immediate operand).
+	ARM64_OP_MEM, // = CS_OP_MEM (Memory operand).
+	ARM64_OP_FP,  // = CS_OP_FP (Floating-Point operand).
 	ARM64_OP_CIMM = 64, // C-Immediate
 	ARM64_OP_REG_MRS, // MRS register operand.
 	ARM64_OP_REG_MSR, // MSR register operand.

@@ -20,7 +20,6 @@
 #ifndef CS_ARMBASEINFO_H
 #define CS_ARMBASEINFO_H
 
-#include "../../include/capstone.h"
 #include "../../include/arm.h"
 
 // Defines symbolic names for ARM registers.  This defines a mapping from
