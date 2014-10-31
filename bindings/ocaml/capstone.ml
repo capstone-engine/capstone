@@ -11,6 +11,7 @@ open Systemz
 open Xcore
 open Printf	(* debug *)
 
+(* Hardware architectures *)
 type arch =
   | CS_ARCH_ARM
   | CS_ARCH_ARM64
@@ -21,6 +22,7 @@ type arch =
   | CS_ARCH_SYSZ
   | CS_ARCH_XCORE
 
+(* Hardware modes *)
 type mode =
   |	CS_MODE_LITTLE_ENDIAN	(* little-endian mode (default mode) *)
   |	CS_MODE_ARM			(* ARM mode *)
@@ -37,6 +39,7 @@ type mode =
   |	CS_MODE_BIG_ENDIAN	(* big-endian mode *)
 
 
+(* Runtime option for the disassembled engine *)
 type opt_type =
   |	CS_OPT_SYNTAX		(*  Asssembly output syntax *)
   |	CS_OPT_DETAIL		(* Break down instruction structure into details *)
@@ -46,6 +49,7 @@ type opt_type =
   |	CS_OPT_SKIPDATA_SETUP 	(* Setup user-defined function for SKIPDATA option *)
 
 
+(* Runtime option value (associated with option type above) *)
 let _CS_OPT_OFF = 0L;; (* Turn OFF an option - default option of CS_OPT_DETAIL, CS_OPT_SKIPDATA. *)
 let _CS_OPT_ON = 3L;;  (* Turn ON an option (CS_OPT_DETAIL, CS_OPT_SKIPDATA). *)
 let _CS_OPT_SYNTAX_DEFAULT = 0L;; (* Default asm syntax (CS_OPT_SYNTAX). *)
@@ -53,6 +57,12 @@ let _CS_OPT_SYNTAX_INTEL = 1L;; (* X86 Intel asm syntax - default on X86 (CS_OPT
 let _CS_OPT_SYNTAX_ATT = 2L;; (* X86 ATT asm syntax (CS_OPT_SYNTAX). *)
 let _CS_OPT_SYNTAX_NOREGNAME = 3L;; (* Prints register name with only number (CS_OPT_SYNTAX) *)
 
+(* Common instruction operand types - to be consistent across all architectures. *)
+let _CS_OP_INVALID = 0;;  (* uninitialized/invalid operand. *)
+let _CS_OP_REG     = 1;;  (* Register operand. *)
+let _CS_OP_IMM     = 2;;  (* Immediate operand. *)
+let _CS_OP_MEM     = 3;;  (* Memory operand. *)
+let _CS_OP_FP      = 4;;  (* Floating-Point operand. *)
 
 type cs_arch =
 	| CS_INFO_ARM of cs_arm

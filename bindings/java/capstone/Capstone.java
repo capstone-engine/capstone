@@ -331,7 +331,14 @@ public class Capstone {
   public static final int CS_OPT_ON = 3;  // Turn ON an option (CS_OPT_DETAIL)
   public static final int CS_OPT_SYNTAX_NOREGNAME = 3; // PPC asm syntax: Prints register name with only number (CS_OPT_SYNTAX)
 
-  // query id for cs_support()
+  // Common instruction operand types - to be consistent across all architectures.
+  public static final int CS_OP_INVALID = 0;
+  public static final int CS_OP_REG = 1;
+  public static final int CS_OP_IMM = 2;
+  public static final int CS_OP_MEM = 3;
+  public static final int CS_OP_FP  = 4;
+
+  // Query id for cs_support()
   public static final int CS_SUPPORT_DIET = CS_ARCH_ALL+1;	  // diet mode
 
   protected class NativeStruct {
