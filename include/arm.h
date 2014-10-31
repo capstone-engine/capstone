@@ -99,13 +99,13 @@ typedef enum arm_sysreg {
 
 //> Operand type for instruction's operands
 typedef enum arm_op_type {
-	ARM_OP_INVALID = 0,	// Uninitialized.
-	ARM_OP_REG,	// Register operand.
-	ARM_OP_CIMM, // C-Immediate (coprocessor registers)
+	ARM_OP_INVALID = CS_OP_INVALID,	// Uninitialized.
+	ARM_OP_REG = CS_OP_REG,	// Register operand.
+	ARM_OP_IMM = CS_OP_IMM,	// Immediate operand.
+	ARM_OP_MEM = CS_OP_MEM,	// Memory operand
+	ARM_OP_FP  = CS_OP_FP,	// Floating-Point immediate operand.
+	ARM_OP_CIMM = 64, // C-Immediate (coprocessor registers)
 	ARM_OP_PIMM, // P-Immediate (coprocessor registers)
-	ARM_OP_IMM,	// Immediate operand.
-	ARM_OP_FP,	// Floating-Point immediate operand.
-	ARM_OP_MEM,	// Memory operand
 	ARM_OP_SETEND,	// operand for SETEND instruction
 	ARM_OP_SYSREG,	// MSR/MSR special register operand
 } arm_op_type;

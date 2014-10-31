@@ -125,6 +125,15 @@ typedef enum cs_opt_value {
 	CS_OPT_SYNTAX_NOREGNAME, // Prints register name with only number (CS_OPT_SYNTAX)
 } cs_opt_value;
 
+//> Common operand types - to be used consistently across all architectures.
+typedef enum cs_op_type {
+	CS_OP_INVALID = 0,  // uninitialized/invalid operand.
+	CS_OP_REG,          // Register operand.
+	CS_OP_IMM,          // Immediate operand.
+	CS_OP_MEM,          // Memory operand.
+	CS_OP_FP,           // Floating-point operand.
+} cs_op_type;
+
 /*
  User-defined callback function for SKIPDATA option.
  See tests/test_skipdata.c for sample code demonstrating this API.

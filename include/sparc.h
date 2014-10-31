@@ -69,10 +69,10 @@ typedef enum sparc_hint {
 
 //> Operand type for instruction's operands
 typedef enum sparc_op_type {
-	SPARC_OP_INVALID = 0,	// Uninitialized.
-	SPARC_OP_REG,	// Register operand.
-	SPARC_OP_IMM,	// Immediate operand.
-	SPARC_OP_MEM,	// Memory operand
+	SPARC_OP_INVALID = CS_OP_INVALID,	// Uninitialized.
+	SPARC_OP_REG = CS_OP_REG,	// Register operand.
+	SPARC_OP_IMM = CS_OP_IMM,	// Immediate operand.
+	SPARC_OP_MEM = CS_OP_MEM,	// Memory operand
 } sparc_op_type;
 
 // Instruction's operand referring to memory

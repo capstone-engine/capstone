@@ -69,11 +69,11 @@ typedef enum x86_reg {
 
 //> Operand type for instruction's operands
 typedef enum x86_op_type {
-	X86_OP_INVALID = 0,	// Uninitialized.
-	X86_OP_REG,	// Register operand.
-	X86_OP_IMM,	// Immediate operand.
-	X86_OP_FP,	// Floating-Point immediate operand.
-	X86_OP_MEM,	// Memory operand
+	X86_OP_INVALID = CS_OP_INVALID,	// Uninitialized.
+	X86_OP_REG = CS_OP_REG,	// Register operand.
+	X86_OP_IMM = CS_OP_IMM,	// Immediate operand.
+	X86_OP_MEM = CS_OP_MEM,	// Memory operand
+	X86_OP_FP  = CS_OP_FP,	// Floating-Point operand.
 } x86_op_type;
 
 //> AVX broadcast type
