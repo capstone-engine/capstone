@@ -434,12 +434,16 @@ let _SPARC_INS_ENDING = 279;;
 (* Group of SPARC instructions *)
 
 let _SPARC_GRP_INVALID = 0;;
-let _SPARC_GRP_HARDQUAD = 1;;
-let _SPARC_GRP_V9 = 2;;
-let _SPARC_GRP_VIS = 3;;
-let _SPARC_GRP_VIS2 = 4;;
-let _SPARC_GRP_VIS3 = 5;;
-let _SPARC_GRP_32BIT = 6;;
-let _SPARC_GRP_64BIT = 7;;
-let _SPARC_GRP_JUMP = 8;;
-let _SPARC_GRP_ENDING = 9;;
+
+(* Generic groups *)
+let _SPARC_GRP_JUMP = 1;;
+
+(* Architecture-specific groups *)
+let _SPARC_GRP_HARDQUAD = 128;;
+let _SPARC_GRP_V9 = 129;;
+let _SPARC_GRP_VIS = 130;;
+let _SPARC_GRP_VIS2 = 131;;
+let _SPARC_GRP_VIS3 = 132;;
+let _SPARC_GRP_32BIT = 133;;
+let _SPARC_GRP_64BIT = 134;;
+let _SPARC_GRP_ENDING = 135;;

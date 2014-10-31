@@ -170,6 +170,8 @@ public class Xcore_const {
 	// Group of XCore instructions
 
 	public static final int XCORE_GRP_INVALID = 0;
+
+	// Generic groups
 	public static final int XCORE_GRP_JUMP = 1;
 	public static final int XCORE_GRP_ENDING = 2;
 }

@@ -64,6 +64,14 @@ let _CS_OP_IMM     = 2;;  (* Immediate operand. *)
 let _CS_OP_MEM     = 3;;  (* Memory operand. *)
 let _CS_OP_FP      = 4;;  (* Floating-Point operand. *)
 
+(* Common instruction groups - to be consistent across all architectures. *)
+let _CS_GRP_INVALID = 0;;  (* uninitialized/invalid group. *)
+let _CS_GRP_JUMP    = 1;;  (* all jump instructions (conditional+direct+indirect jumps) *)
+let _CS_GRP_CALL    = 2;;  (* all call instructions *)
+let _CS_GRP_RET     = 3;;  (* all return instructions *)
+let _CS_GRP_INT     = 4;;  (* all interrupt instructions (int+syscall) *)
+let _CS_GRP_IRET    = 5;;  (* all interrupt return instructions *)
+
 type cs_arch =
 	| CS_INFO_ARM of cs_arm
 	| CS_INFO_ARM64 of cs_arm64

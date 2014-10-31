@@ -754,10 +754,14 @@ let _SYSZ_INS_ENDING = 682;;
 (* Group of SystemZ instructions *)
 
 let _SYSZ_GRP_INVALID = 0;;
-let _SYSZ_GRP_DISTINCTOPS = 1;;
-let _SYSZ_GRP_FPEXTENSION = 2;;
-let _SYSZ_GRP_HIGHWORD = 3;;
-let _SYSZ_GRP_INTERLOCKEDACCESS1 = 4;;
-let _SYSZ_GRP_LOADSTOREONCOND = 5;;
-let _SYSZ_GRP_JUMP = 6;;
-let _SYSZ_GRP_ENDING = 7;;
+
+(* Generic groups *)
+let _SYSZ_GRP_JUMP = 1;;
+
+(* Architecture-specific groups *)
+let _SYSZ_GRP_DISTINCTOPS = 128;;
+let _SYSZ_GRP_FPEXTENSION = 129;;
+let _SYSZ_GRP_HIGHWORD = 130;;
+let _SYSZ_GRP_INTERLOCKEDACCESS1 = 131;;
+let _SYSZ_GRP_LOADSTOREONCOND = 132;;
+let _SYSZ_GRP_ENDING = 133;;

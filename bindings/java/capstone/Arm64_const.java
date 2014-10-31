@@ -1034,10 +1034,14 @@ public class Arm64_const {
 	// Group of ARM64 instructions
 
 	public static final int ARM64_GRP_INVALID = 0;
-	public static final int ARM64_GRP_CRYPTO = 1;
-	public static final int ARM64_GRP_FPARMV8 = 2;
-	public static final int ARM64_GRP_NEON = 3;
-	public static final int ARM64_GRP_CRC = 4;
-	public static final int ARM64_GRP_JUMP = 5;
-	public static final int ARM64_GRP_ENDING = 6;
+
+	// Generic groups
+	public static final int ARM64_GRP_JUMP = 1;
+
+	// Architecture-specific groups
+	public static final int ARM64_GRP_CRYPTO = 128;
+	public static final int ARM64_GRP_FPARMV8 = 129;
+	public static final int ARM64_GRP_NEON = 130;
+	public static final int ARM64_GRP_CRC = 131;
+	public static final int ARM64_GRP_ENDING = 132;
 }

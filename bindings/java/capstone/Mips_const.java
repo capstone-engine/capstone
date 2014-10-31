@@ -800,39 +800,43 @@ public class Mips_const {
 	// Group of MIPS instructions
 
 	public static final int MIPS_GRP_INVALID = 0;
-	public static final int MIPS_GRP_BITCOUNT = 1;
-	public static final int MIPS_GRP_DSP = 2;
-	public static final int MIPS_GRP_DSPR2 = 3;
-	public static final int MIPS_GRP_FPIDX = 4;
-	public static final int MIPS_GRP_MSA = 5;
-	public static final int MIPS_GRP_MIPS32R2 = 6;
-	public static final int MIPS_GRP_MIPS64 = 7;
-	public static final int MIPS_GRP_MIPS64R2 = 8;
-	public static final int MIPS_GRP_SEINREG = 9;
-	public static final int MIPS_GRP_STDENC = 10;
-	public static final int MIPS_GRP_SWAP = 11;
-	public static final int MIPS_GRP_MICROMIPS = 12;
-	public static final int MIPS_GRP_MIPS16MODE = 13;
-	public static final int MIPS_GRP_FP64BIT = 14;
-	public static final int MIPS_GRP_NONANSFPMATH = 15;
-	public static final int MIPS_GRP_NOTFP64BIT = 16;
-	public static final int MIPS_GRP_NOTINMICROMIPS = 17;
-	public static final int MIPS_GRP_NOTNACL = 18;
-	public static final int MIPS_GRP_NOTMIPS32R6 = 19;
-	public static final int MIPS_GRP_NOTMIPS64R6 = 20;
-	public static final int MIPS_GRP_CNMIPS = 21;
-	public static final int MIPS_GRP_MIPS32 = 22;
-	public static final int MIPS_GRP_MIPS32R6 = 23;
-	public static final int MIPS_GRP_MIPS64R6 = 24;
-	public static final int MIPS_GRP_MIPS2 = 25;
-	public static final int MIPS_GRP_MIPS3 = 26;
-	public static final int MIPS_GRP_MIPS3_32 = 27;
-	public static final int MIPS_GRP_MIPS3_32R2 = 28;
-	public static final int MIPS_GRP_MIPS4_32 = 29;
-	public static final int MIPS_GRP_MIPS4_32R2 = 30;
-	public static final int MIPS_GRP_MIPS5_32R2 = 31;
-	public static final int MIPS_GRP_GP32BIT = 32;
-	public static final int MIPS_GRP_GP64BIT = 33;
-	public static final int MIPS_GRP_JUMP = 34;
-	public static final int MIPS_GRP_ENDING = 35;
+
+	// Generic groups
+	public static final int MIPS_GRP_JUMP = 1;
+
+	// Architecture-specific groups
+	public static final int MIPS_GRP_BITCOUNT = 128;
+	public static final int MIPS_GRP_DSP = 129;
+	public static final int MIPS_GRP_DSPR2 = 130;
+	public static final int MIPS_GRP_FPIDX = 131;
+	public static final int MIPS_GRP_MSA = 132;
+	public static final int MIPS_GRP_MIPS32R2 = 133;
+	public static final int MIPS_GRP_MIPS64 = 134;
+	public static final int MIPS_GRP_MIPS64R2 = 135;
+	public static final int MIPS_GRP_SEINREG = 136;
+	public static final int MIPS_GRP_STDENC = 137;
+	public static final int MIPS_GRP_SWAP = 138;
+	public static final int MIPS_GRP_MICROMIPS = 139;
+	public static final int MIPS_GRP_MIPS16MODE = 140;
+	public static final int MIPS_GRP_FP64BIT = 141;
+	public static final int MIPS_GRP_NONANSFPMATH = 142;
+	public static final int MIPS_GRP_NOTFP64BIT = 143;
+	public static final int MIPS_GRP_NOTINMICROMIPS = 144;
+	public static final int MIPS_GRP_NOTNACL = 145;
+	public static final int MIPS_GRP_NOTMIPS32R6 = 146;
+	public static final int MIPS_GRP_NOTMIPS64R6 = 147;
+	public static final int MIPS_GRP_CNMIPS = 148;
+	public static final int MIPS_GRP_MIPS32 = 149;
+	public static final int MIPS_GRP_MIPS32R6 = 150;
+	public static final int MIPS_GRP_MIPS64R6 = 151;
+	public static final int MIPS_GRP_MIPS2 = 152;
+	public static final int MIPS_GRP_MIPS3 = 153;
+	public static final int MIPS_GRP_MIPS3_32 = 154;
+	public static final int MIPS_GRP_MIPS3_32R2 = 155;
+	public static final int MIPS_GRP_MIPS4_32 = 156;
+	public static final int MIPS_GRP_MIPS4_32R2 = 157;
+	public static final int MIPS_GRP_MIPS5_32R2 = 158;
+	public static final int MIPS_GRP_GP32BIT = 159;
+	public static final int MIPS_GRP_GP64BIT = 160;
+	public static final int MIPS_GRP_ENDING = 161;
 }

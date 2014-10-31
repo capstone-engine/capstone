@@ -437,13 +437,17 @@ public class Sparc_const {
 	// Group of SPARC instructions
 
 	public static final int SPARC_GRP_INVALID = 0;
-	public static final int SPARC_GRP_HARDQUAD = 1;
-	public static final int SPARC_GRP_V9 = 2;
-	public static final int SPARC_GRP_VIS = 3;
-	public static final int SPARC_GRP_VIS2 = 4;
-	public static final int SPARC_GRP_VIS3 = 5;
-	public static final int SPARC_GRP_32BIT = 6;
-	public static final int SPARC_GRP_64BIT = 7;
-	public static final int SPARC_GRP_JUMP = 8;
-	public static final int SPARC_GRP_ENDING = 9;
+
+	// Generic groups
+	public static final int SPARC_GRP_JUMP = 1;
+
+	// Architecture-specific groups
+	public static final int SPARC_GRP_HARDQUAD = 128;
+	public static final int SPARC_GRP_V9 = 129;
+	public static final int SPARC_GRP_VIS = 130;
+	public static final int SPARC_GRP_VIS2 = 131;
+	public static final int SPARC_GRP_VIS3 = 132;
+	public static final int SPARC_GRP_32BIT = 133;
+	public static final int SPARC_GRP_64BIT = 134;
+	public static final int SPARC_GRP_ENDING = 135;
 }

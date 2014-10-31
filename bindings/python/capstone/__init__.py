@@ -128,6 +128,14 @@ CS_OP_IMM = 2
 CS_OP_MEM = 3
 CS_OP_FP  = 4
 
+# Common instruction groups - to be consistent across all architectures.
+CS_GRP_INVALID = 0  # uninitialized/invalid group.
+CS_GRP_JUMP    = 1  # all jump instructions (conditional+direct+indirect jumps)
+CS_GRP_CALL    = 2  # all call instructions
+CS_GRP_RET     = 3  # all return instructions
+CS_GRP_INT     = 4  # all interrupt instructions (int+syscall)
+CS_GRP_IRET    = 5  # all interrupt return instructions
+
 # Capstone syntax value
 CS_OPT_SYNTAX_DEFAULT = 0    # Default assembly syntax of all platforms (CS_OPT_SYNTAX)
 CS_OPT_SYNTAX_INTEL = 1    # Intel X86 asm syntax - default syntax on X86 (CS_OPT_SYNTAX, CS_ARCH_X86)

@@ -757,11 +757,15 @@ public class Sysz_const {
 	// Group of SystemZ instructions
 
 	public static final int SYSZ_GRP_INVALID = 0;
-	public static final int SYSZ_GRP_DISTINCTOPS = 1;
-	public static final int SYSZ_GRP_FPEXTENSION = 2;
-	public static final int SYSZ_GRP_HIGHWORD = 3;
-	public static final int SYSZ_GRP_INTERLOCKEDACCESS1 = 4;
-	public static final int SYSZ_GRP_LOADSTOREONCOND = 5;
-	public static final int SYSZ_GRP_JUMP = 6;
-	public static final int SYSZ_GRP_ENDING = 7;
+
+	// Generic groups
+	public static final int SYSZ_GRP_JUMP = 1;
+
+	// Architecture-specific groups
+	public static final int SYSZ_GRP_DISTINCTOPS = 128;
+	public static final int SYSZ_GRP_FPEXTENSION = 129;
+	public static final int SYSZ_GRP_HIGHWORD = 130;
+	public static final int SYSZ_GRP_INTERLOCKEDACCESS1 = 131;
+	public static final int SYSZ_GRP_LOADSTOREONCOND = 132;
+	public static final int SYSZ_GRP_ENDING = 133;
 }

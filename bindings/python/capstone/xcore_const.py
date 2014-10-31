@@ -167,5 +167,7 @@ XCORE_INS_ENDING = 121
 # Group of XCore instructions
 
 XCORE_GRP_INVALID = 0
+
+# Generic groups
 XCORE_GRP_JUMP = 1
 XCORE_GRP_ENDING = 2

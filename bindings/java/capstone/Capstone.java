@@ -338,6 +338,14 @@ public class Capstone {
   public static final int CS_OP_MEM = 3;
   public static final int CS_OP_FP  = 4;
 
+  // Common instruction groups - to be consistent across all architectures.
+  public static final int CS_GRP_INVALID = 0;  // uninitialized/invalid group.
+  public static final int CS_GRP_JUMP    = 1;  // all jump instructions (conditional+direct+indirect jumps)
+  public static final int CS_GRP_CALL    = 2;  // all call instructions
+  public static final int CS_GRP_RET     = 3;  // all return instructions
+  public static final int CS_GRP_INT     = 4;  // all interrupt instructions (int+syscall)
+  public static final int CS_GRP_IRET    = 5;  // all interrupt return instructions
+
   // Query id for cs_support()
   public static final int CS_SUPPORT_DIET = CS_ARCH_ALL+1;	  // diet mode
 

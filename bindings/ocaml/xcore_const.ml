@@ -167,5 +167,7 @@ let _XCORE_INS_ENDING = 121;;
 (* Group of XCore instructions *)
 
 let _XCORE_GRP_INVALID = 0;;
+
+(* Generic groups *)
 let _XCORE_GRP_JUMP = 1;;
 let _XCORE_GRP_ENDING = 2;;

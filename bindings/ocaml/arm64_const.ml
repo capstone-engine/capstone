@@ -1031,9 +1031,13 @@ let _ARM64_INS_ENDING = 452;;
 (* Group of ARM64 instructions *)
 
 let _ARM64_GRP_INVALID = 0;;
-let _ARM64_GRP_CRYPTO = 1;;
-let _ARM64_GRP_FPARMV8 = 2;;
-let _ARM64_GRP_NEON = 3;;
-let _ARM64_GRP_CRC = 4;;
-let _ARM64_GRP_JUMP = 5;;
-let _ARM64_GRP_ENDING = 6;;
+
+(* Generic groups *)
+let _ARM64_GRP_JUMP = 1;;
+
+(* Architecture-specific groups *)
+let _ARM64_GRP_CRYPTO = 128;;
+let _ARM64_GRP_FPARMV8 = 129;;
+let _ARM64_GRP_NEON = 130;;
+let _ARM64_GRP_CRC = 131;;
+let _ARM64_GRP_ENDING = 132;;
