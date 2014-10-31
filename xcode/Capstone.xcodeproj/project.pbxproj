@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC07A86E19F6061D00254FCF /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
 		DC474EE519DDEAD900BCA449 /* test_arm.c in Sources */ = {isa = PBXBuildFile; fileRef = DC474E6C19DDEA9500BCA449 /* test_arm.c */; };
 		DC474EF119DDEAED00BCA449 /* test_arm64.c in Sources */ = {isa = PBXBuildFile; fileRef = DC474E6D19DDEA9500BCA449 /* test_arm64.c */; };
 		DC474EF219DDEAF000BCA449 /* test_detail.c in Sources */ = {isa = PBXBuildFile; fileRef = DC474E6E19DDEA9500BCA449 /* test_detail.c */; };
@@ -19,7 +20,6 @@
 		DC474EF919DDEB0000BCA449 /* test_xcore.c in Sources */ = {isa = PBXBuildFile; fileRef = DC474E7519DDEA9500BCA449 /* test_xcore.c */; };
 		DC474EFA19DDEB0200BCA449 /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = DC474E7619DDEA9500BCA449 /* test.c */; };
 		DC474EFB19DDEB1100BCA449 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
-		DC474EFC19DDEB1500BCA449 /* test_arm in Frameworks */ = {isa = PBXBuildFile; fileRef = DC474E8619DDEAA200BCA449 /* test_arm */; };
 		DC474EFD19DDEB1A00BCA449 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
 		DC474EFE19DDEB1C00BCA449 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
 		DC474EFF19DDEB1E00BCA449 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
@@ -465,7 +465,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC474EFC19DDEB1500BCA449 /* test_arm in Frameworks */,
+				DC07A86E19F6061D00254FCF /* libcapstone.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2488,7 +2488,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = CapstoneFramework/Info.plist;
-				INSTALL_PATH = "@executable_path/../Frameworks";
+				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -2550,7 +2550,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = CapstoneFramework/Info.plist;
-				INSTALL_PATH = "@executable_path/../Frameworks";
+				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -3002,6 +3002,7 @@
 				DC5BFF4519EE544E008CA585 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DCFE239D19DDCB4900EF8EA9 /* Build configuration list for PBXProject "Capstone" */ = {
 			isa = XCConfigurationList;
