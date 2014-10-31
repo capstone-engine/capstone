@@ -25,9 +25,9 @@ public class Sysz_const {
 
 	public static final int SYSZ_OP_INVALID = 0;
 	public static final int SYSZ_OP_REG = 1;
-	public static final int SYSZ_OP_ACREG = 2;
-	public static final int SYSZ_OP_IMM = 3;
-	public static final int SYSZ_OP_MEM = 4;
+	public static final int SYSZ_OP_IMM = 2;
+	public static final int SYSZ_OP_MEM = 3;
+	public static final int SYSZ_OP_ACREG = 64;
 
 	// SystemZ registers
 

@@ -75,13 +75,13 @@ public class Arm_const {
 
 	public static final int ARM_OP_INVALID = 0;
 	public static final int ARM_OP_REG = 1;
-	public static final int ARM_OP_CIMM = 2;
-	public static final int ARM_OP_PIMM = 3;
-	public static final int ARM_OP_IMM = 4;
-	public static final int ARM_OP_FP = 5;
-	public static final int ARM_OP_MEM = 6;
-	public static final int ARM_OP_SETEND = 7;
-	public static final int ARM_OP_SYSREG = 8;
+	public static final int ARM_OP_IMM = 2;
+	public static final int ARM_OP_MEM = 3;
+	public static final int ARM_OP_FP = 4;
+	public static final int ARM_OP_CIMM = 64;
+	public static final int ARM_OP_PIMM = 65;
+	public static final int ARM_OP_SETEND = 66;
+	public static final int ARM_OP_SYSREG = 67;
 
 	// Operand type for SETEND instruction
 

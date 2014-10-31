@@ -22,9 +22,9 @@ let _SYSZ_CC_NO = 14;;
 
 let _SYSZ_OP_INVALID = 0;;
 let _SYSZ_OP_REG = 1;;
-let _SYSZ_OP_ACREG = 2;;
-let _SYSZ_OP_IMM = 3;;
-let _SYSZ_OP_MEM = 4;;
+let _SYSZ_OP_IMM = 2;;
+let _SYSZ_OP_MEM = 3;;
+let _SYSZ_OP_ACREG = 64;;
 
 (* SystemZ registers *)
 

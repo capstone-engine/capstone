@@ -243,8 +243,8 @@ let _X86_REG_ENDING = 234;;
 let _X86_OP_INVALID = 0;;
 let _X86_OP_REG = 1;;
 let _X86_OP_IMM = 2;;
-let _X86_OP_FP = 3;;
-let _X86_OP_MEM = 4;;
+let _X86_OP_MEM = 3;;
+let _X86_OP_FP = 4;;
 
 (* AVX broadcast type *)
 

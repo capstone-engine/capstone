@@ -72,13 +72,13 @@ let _ARM_SYSREG_CONTROL = 278;;
 
 let _ARM_OP_INVALID = 0;;
 let _ARM_OP_REG = 1;;
-let _ARM_OP_CIMM = 2;;
-let _ARM_OP_PIMM = 3;;
-let _ARM_OP_IMM = 4;;
-let _ARM_OP_FP = 5;;
-let _ARM_OP_MEM = 6;;
-let _ARM_OP_SETEND = 7;;
-let _ARM_OP_SYSREG = 8;;
+let _ARM_OP_IMM = 2;;
+let _ARM_OP_MEM = 3;;
+let _ARM_OP_FP = 4;;
+let _ARM_OP_CIMM = 64;;
+let _ARM_OP_PIMM = 65;;
+let _ARM_OP_SETEND = 66;;
+let _ARM_OP_SYSREG = 67;;
 
 (* Operand type for SETEND instruction *)
 

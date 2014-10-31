@@ -29,7 +29,7 @@ public class Ppc_const {
 	public static final int PPC_OP_REG = 1;
 	public static final int PPC_OP_IMM = 2;
 	public static final int PPC_OP_MEM = 3;
-	public static final int PPC_OP_CRX = 4;
+	public static final int PPC_OP_CRX = 64;
 
 	// PPC registers
 

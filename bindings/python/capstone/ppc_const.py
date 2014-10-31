@@ -26,7 +26,7 @@ PPC_OP_INVALID = 0
 PPC_OP_REG = 1
 PPC_OP_IMM = 2
 PPC_OP_MEM = 3
-PPC_OP_CRX = 4
+PPC_OP_CRX = 64
 
 # PPC registers
 

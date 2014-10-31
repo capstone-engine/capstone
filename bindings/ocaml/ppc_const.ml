@@ -26,7 +26,7 @@ let _PPC_OP_INVALID = 0;;
 let _PPC_OP_REG = 1;;
 let _PPC_OP_IMM = 2;;
 let _PPC_OP_MEM = 3;;
-let _PPC_OP_CRX = 4;;
+let _PPC_OP_CRX = 64;;
 
 (* PPC registers *)
 
