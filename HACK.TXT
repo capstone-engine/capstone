@@ -14,7 +14,7 @@ Capstone source is organized as followings.
 ├── bindings        <- all bindings are under this dir
 │   ├── java        <- Java bindings + test code
 │   ├── ocaml       <- Ocaml bindings + test code
-│   ├── python      <- Python bindings + test code
+│   └── python      <- Python bindings + test code
 ├── contrib         <- Code contributed by community to help Capstone integration
 ├── docs            <- Documentation
 ├── include         <- API headers in C language (*.h)
@@ -22,7 +22,7 @@ Capstone source is organized as followings.
 ├── packages        <- Packages for Linux/OSX/BSD.
 ├── suite           <- Development test tools - for Capstone developers only
 ├── tests           <- Test code (in C language)
-├── xcode           <- Xcode support (for MacOSX compile)
+└── xcode           <- Xcode support (for MacOSX compile)
 
 
 Follow instructions in COMPILE.TXT for how to compile and run test code.
