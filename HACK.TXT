@@ -15,13 +15,17 @@ Capstone source is organized as followings.
 │   ├── java        <- Java bindings + test code
 │   ├── ocaml       <- Ocaml bindings + test code
 │   ├── python      <- Python bindings + test code
+├── contrib         <- Code contributed by community to help Capstone integration
+├── docs            <- Documentation
 ├── include         <- API headers in C language (*.h)
+├── msvc            <- Microsoft Visual Studio support (for Windows compile)
+├── packages        <- Packages for Linux/OSX/BSD.
 ├── suite           <- Development test tools - for Capstone developers only
 ├── tests           <- Test code (in C language)
-├── contrib         <- Code contributed by community to help Capstone integration
+├── xcode           <- Xcode support (for MacOSX compile)
 
 
-Follow instructions in COMPILE.TXT to see how to compile and run code.
+Follow instructions in COMPILE.TXT for how to compile and run test code.
 
 Note: if you find some strange bugs, it is recommended to firstly clean
 the code and try to recompile/reinstall again. This can be done with:
@@ -29,4 +33,8 @@ the code and try to recompile/reinstall again. This can be done with:
 	$ ./make.sh
 	$ sudo ./make.sh install
 
-
+At the same time, for Java/Ocaml/Python bindings, be sure to always use
+the bindings coming with the core to avoid potential incompatility issue
+with older versions.
+See bindings/<language>/README for detail instructions on how to compile &
+install the bindings.
