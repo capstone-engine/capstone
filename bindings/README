@@ -1,4 +1,5 @@
-This directory contains bindings for Python, Java & OCaml.
+This directory contains bindings & test code for Python, Java & OCaml.
+See <language>/README for how to compile & install each binding.
 
 More bindings created & maintained by the community are available as followings.
 
