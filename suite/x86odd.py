@@ -34,11 +34,20 @@ CODE32 += b"\x0f\x23\x00"       # mov dr0, eax
 CODE32 += b"\x0f\x23\x40"       # mov dr0, eax
 CODE32 += b"\x0f\x23\x80"       # mov dr0, eax
 
+CODE32_MEMREF  = b"\x8b\x84\x91\x23\x01\x00\x00"
+CODE32_MEMREF += b"\x8b\x04\x95\x23\x01\x00\x00"
+CODE32_MEMREF += b"\x8b\x04\x95\xdd\xfe\xff\xff"
+CODE32_MEMREF += b"\xa1\x23\x01\x00\x00"
+CODE32_MEMREF += b"\xa1\x00\x00\x00\x00"
+
 
 _python3 = sys.version_info.major == 3
 
 all_tests = (
         (CS_ARCH_X86, CS_MODE_32, CODE32, "X86 32 (Intel syntax)", 0),
+        (CS_ARCH_X86, CS_MODE_32, CODE32, "X86 32 (ATT syntax)", CS_OPT_SYNTAX_ATT),
+        (CS_ARCH_X86, CS_MODE_32, CODE32_MEMREF, "X86 32 MemRef (Intel syntax)", 0),
+        (CS_ARCH_X86, CS_MODE_32, CODE32_MEMREF, "X86 32 MemRef (ATT syntax)", CS_OPT_SYNTAX_ATT),
         #(CS_ARCH_X86, CS_MODE_64, X86_CODE64, "X86 64 (Intel syntax)", 0),
 )
 
@@ -55,9 +64,12 @@ def test_cs_disasm_quick():
         print("Platform: %s" % comment)
         print("Code: %s" %(to_hex(code))),
         print("Disasm:")
-        for (addr, size, mnemonic, op_str) in cs_disasm_lite(arch, mode, code, 0x1000):
-            print("0x%x:\t%s\t%s" % (addr, mnemonic, op_str))
-        print()
+        md = Cs(arch, mode)
+        if syntax != 0:
+            md.syntax = syntax
+        for insn in md.disasm(code, 0x1000):
+            print("0x%x:\t%s\t%s" % (insn.address, insn.mnemonic, insn.op_str))
+        print("--------")
 
 
 if __name__ == '__main__':
