@@ -539,14 +539,29 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 		int64_t DispVal = MCOperand_getImm(DispSpec);
 		if (MI->csh->detail)
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = DispVal;
-		if (DispVal || (!MCOperand_getReg(IndexReg) && !MCOperand_getReg(BaseReg))) {
-			if (DispVal < 0) {
-				SStream_concat(O, "0x%"PRIx64, arch_masks[MI->csh->mode] & DispVal);
+		if (DispVal) {
+			if (MCOperand_getReg(IndexReg) || MCOperand_getReg(BaseReg)) {
+				if (DispVal < 0) {
+					if (DispVal <  -HEX_THRESHOLD)
+						SStream_concat(O, " -0x%"PRIx64, -DispVal);
+					else
+						SStream_concat(O, " -%"PRIu64, -DispVal);
+				} else {
+					if (DispVal > HEX_THRESHOLD)
+						SStream_concat(O, "0x%"PRIx64, DispVal);
+					else
+						SStream_concat(O, "%"PRIu64, DispVal);
+				}
 			} else {
-				if (DispVal > HEX_THRESHOLD)
-					SStream_concat(O, "0x%"PRIx64, DispVal);
-				else
-					SStream_concat(O, "%"PRIu64, DispVal);
+				// only immediate as address of memory
+				if (DispVal < 0) {
+					SStream_concat(O, "0x%"PRIx64, arch_masks[MI->csh->mode] & DispVal);
+				} else {
+					if (DispVal > HEX_THRESHOLD)
+						SStream_concat(O, "0x%"PRIx64, DispVal);
+					else
+						SStream_concat(O, "%"PRIu64, DispVal);
+				}
 			}
 		}
 	}

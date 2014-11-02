@@ -40,6 +40,7 @@ CODE32_MEMREF += b"\x8b\x04\x95\xdd\xfe\xff\xff"
 CODE32_MEMREF += b"\xa1\x23\x01\x00\x00"
 CODE32_MEMREF += b"\xa1\x00\x00\x00\x00"
 CODE32_MEMREF += b"\xa1\xdd\xfe\xff\xff"
+CODE32_MEMREF += b"\x8b\x04\x91"
 
 
 _python3 = sys.version_info.major == 3
