@@ -47600,6 +47600,9 @@ void op_addReg(MCInst *MI, int reg)
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->csh->regsize_map[reg];
 		MI->flat_insn->detail->x86.op_count++;
 	}
+
+	if (MI->op1_size == 0)
+		MI->op1_size = MI->csh->regsize_map[reg];
 }
 
 void op_addImm(MCInst *MI, int v)
@@ -47614,9 +47617,12 @@ void op_addImm(MCInst *MI, int v)
 			else
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->imm_size;
 		} else
-			MI->has_imm = 1;
+			MI->has_imm = true;
 		MI->flat_insn->detail->x86.op_count++;
 	}
+
+	if (MI->op1_size == 0)
+		MI->op1_size = MI->imm_size;
 }
 
 void op_addSseCC(MCInst *MI, int v)

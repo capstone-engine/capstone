@@ -775,9 +775,9 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 
 		result = (!translateInstruction(instr, &insn)) ?  true : false;
 		if (result) {
+			instr->imm_size = insn.immSize;
 			if (handle->detail) {
 				update_pub_insn(instr->flat_insn, &insn, instr->x86_prefix);
-				instr->imm_size = insn.immSize;
 			} else {
 				// still copy all prefixes
 				instr->x86_prefix[0] = insn.prefix0;

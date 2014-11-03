@@ -454,7 +454,7 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 		}
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
-			MI->has_imm = 1;
+			MI->has_imm = true;
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = imm;
 			MI->flat_insn->detail->x86.op_count++;
 		}
@@ -497,7 +497,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = imm;
 			} else {
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
-				MI->has_imm = 1;
+				MI->has_imm = true;
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = imm;
 				MI->flat_insn->detail->x86.op_count++;
 			}

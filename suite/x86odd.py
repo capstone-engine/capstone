@@ -43,14 +43,28 @@ CODE32_MEMREF += b"\xa1\xdd\xfe\xff\xff"
 CODE32_MEMREF += b"\x8b\x04\x91"
 
 
+CODE32_ARITH  = b"\x83\xe0\xf7"
+CODE32_ARITH += b"\x83\xe0\x10"
+CODE32_ARITH += b"\x83\xe0\x00"
+CODE32_ARITH += b"\x80\x23\x10"
+
+CODE64_ARITH  = b"\x41\x83\xe0\xfa"
+CODE64_ARITH += b"\x48\x83\xe4\xf0"
+
+
+
 _python3 = sys.version_info.major == 3
 
 all_tests = (
         (CS_ARCH_X86, CS_MODE_32, CODE32, "X86 32 (Intel syntax)", 0),
         (CS_ARCH_X86, CS_MODE_32, CODE32, "X86 32 (ATT syntax)", CS_OPT_SYNTAX_ATT),
+
         (CS_ARCH_X86, CS_MODE_32, CODE32_MEMREF, "X86 32 MemRef (Intel syntax)", 0),
         (CS_ARCH_X86, CS_MODE_32, CODE32_MEMREF, "X86 32 MemRef (ATT syntax)", CS_OPT_SYNTAX_ATT),
-        #(CS_ARCH_X86, CS_MODE_64, X86_CODE64, "X86 64 (Intel syntax)", 0),
+
+        (CS_ARCH_X86, CS_MODE_32, CODE32_ARITH, "X86 32 (Intel syntax)", 0),
+
+        (CS_ARCH_X86, CS_MODE_64, CODE64_ARITH, "X86 64 (Intel syntax)", 0),
 )
 
 

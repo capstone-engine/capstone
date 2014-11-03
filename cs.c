@@ -264,9 +264,6 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 	memcpy(insn->bytes, code + insn->size - copy_size, copy_size);
 	insn->size = copy_size;
 
-	// map internal instruction opcode to public insn ID
-	handle->insn_id(handle, insn, MCInst_getOpcode(mci));
-
 	// alias instruction might have ID saved in OpcodePub
 	if (MCInst_getOpcodePub(mci))
 		insn->id = MCInst_getOpcodePub(mci);
@@ -481,7 +478,12 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 			SStream_Init(&ss);
 
 			mci.flat_insn->size = insn_size;
+
+			// map internal instruction opcode to public insn ID
+			handle->insn_id(handle, insn_cache, mci.Opcode);
+
 			handle->printer(&mci, &ss, handle->printer_info);
+
 			fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, buffer);
 
 			next_offset = insn_size;
@@ -680,8 +682,14 @@ bool cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 		SStream_Init(&ss);
 
 		mci.flat_insn->size = insn_size;
+
+		// map internal instruction opcode to public insn ID
+		handle->insn_id(handle, insn, mci.Opcode);
+
 		handle->printer(&mci, &ss, handle->printer_info);
+
 		fill_insn(handle, insn, ss.buffer, &mci, handle->post_printer, *code);
+
 		*code += insn_size;
 		*size -= insn_size;
 		*address += insn_size;

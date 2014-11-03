@@ -433,6 +433,9 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 
 	if (MI->csh->detail)
 		MI->flat_insn->detail->x86.op_count++;
+
+	if (MI->op1_size == 0)
+		MI->op1_size = MI->x86opsize;
 }
 
 static void printMemOffs8(MCInst *MI, unsigned OpNo, SStream *O)
@@ -477,10 +480,10 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 	else
 		printInstruction(MI, O, Info);
 
+	reg = X86_insn_reg_intel(MCInst_getOpcode(MI));
 	if (MI->csh->detail) {
 		// first op can be embedded in the asm by llvm.
 		// so we have to add the missing register as the first operand
-		reg = X86_insn_reg_intel(MCInst_getOpcode(MI));
 		if (reg) {
 			// shift all the ops right to leave 1st slot for this new register op
 			memmove(&(MI->flat_insn->detail->x86.operands[1]), &(MI->flat_insn->detail->x86.operands[0]),
@@ -491,6 +494,9 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 			MI->flat_insn->detail->x86.op_count++;
 		}
 	}
+
+	if (MI->op1_size == 0 && reg)
+		MI->op1_size = MI->csh->regsize_map[reg];
 }
 
 /// printPCRelImm - This is used to print an immediate value that ends up
@@ -522,6 +528,9 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = imm;
 			MI->flat_insn->detail->x86.op_count++;
 		}
+
+		if (MI->op1_size == 0)
+			MI->op1_size = MI->imm_size;
 	}
 }
 
@@ -542,18 +551,37 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				MI->flat_insn->detail->x86.op_count++;
 			}
 		}
+
+		if (MI->op1_size == 0)
+			MI->op1_size = MI->csh->regsize_map[reg];
 	} else if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op);
-		if (imm >= 0) {
-			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%"PRIx64, imm);
-			else
-				SStream_concat(O, "%"PRIu64, imm);
-		} else {
-			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%"PRIx64, -imm);
-			else
-				SStream_concat(O, "-%"PRIu64, -imm);
+
+		switch(MI->flat_insn->id) {
+			default:
+				if (imm >= 0) {
+					if (imm > HEX_THRESHOLD)
+						SStream_concat(O, "0x%"PRIx64, imm);
+					else
+						SStream_concat(O, "%"PRIu64, imm);
+				} else {
+					if (imm < -HEX_THRESHOLD)
+						SStream_concat(O, "-0x%"PRIx64, -imm);
+					else
+						SStream_concat(O, "-%"PRIu64, -imm);
+				}
+
+				break;
+
+			case X86_INS_AND:
+			case X86_INS_OR:
+			case X86_INS_XOR:
+				// do not print number in negative form
+				if (imm == 0)
+					SStream_concat0(O, "0");
+				else
+					SStream_concat(O, "0x%"PRIx64, arch_masks[MI->op1_size? MI->op1_size : MI->imm_size] & imm);
+				break;
 		}
 
 		if (MI->csh->detail) {
@@ -569,6 +597,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				MI->flat_insn->detail->x86.op_count++;
 			}
 		}
+
+		//if (MI->op1_size == 0)
+		//	MI->op1_size = MI->imm_size;
 	}
 }
 
@@ -657,6 +688,9 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 
 	if (MI->csh->detail)
 		MI->flat_insn->detail->x86.op_count++;
+
+	if (MI->op1_size == 0)
+		MI->op1_size = MI->x86opsize;
 }
 
 #define GET_REGINFO_ENUM
