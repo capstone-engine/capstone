@@ -480,17 +480,32 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	} else if (MCOperand_isImm(Op)) {
 		// Print X86 immediates as signed values.
 		int64_t imm = MCOperand_getImm(Op);
-		if (imm >= 0) {
-			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "$0x%"PRIx64, imm);
-			else
-				SStream_concat(O, "$%"PRIu64, imm);
-		} else {
-			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "$-0x%"PRIx64, -imm);
-			else
-				SStream_concat(O, "$-%"PRIu64, -imm);
+
+		switch(MI->flat_insn->id) {
+			default:
+				if (imm >= 0) {
+					if (imm > HEX_THRESHOLD)
+						SStream_concat(O, "$0x%"PRIx64, imm);
+					else
+						SStream_concat(O, "$%"PRIu64, imm);
+				} else {
+					if (imm < -HEX_THRESHOLD)
+						SStream_concat(O, "$-0x%"PRIx64, -imm);
+					else
+						SStream_concat(O, "$-%"PRIu64, -imm);
+				}
+				break;
+			case X86_INS_RET:
+				// RET imm16
+				if (imm >= 0 && imm <= HEX_THRESHOLD)
+					SStream_concat(O, "$%u", imm);
+				else {
+					imm = 0xffff & imm;
+					SStream_concat(O, "$0x%x", imm);
+				}
+				break;
 		}
+
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
@@ -543,9 +558,9 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 			if (MCOperand_getReg(IndexReg) || MCOperand_getReg(BaseReg)) {
 				if (DispVal < 0) {
 					if (DispVal <  -HEX_THRESHOLD)
-						SStream_concat(O, " -0x%"PRIx64, -DispVal);
+						SStream_concat(O, "-0x%"PRIx64, -DispVal);
 					else
-						SStream_concat(O, " -%"PRIu64, -DispVal);
+						SStream_concat(O, "-%"PRIu64, -DispVal);
 				} else {
 					if (DispVal > HEX_THRESHOLD)
 						SStream_concat(O, "0x%"PRIx64, DispVal);
