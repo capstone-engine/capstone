@@ -2,6 +2,12 @@ This directory contains some tools used by developers of Capstone project.
 Average users should ignore all the contents here.
 
 
+- arm/
+	Test some ARM's special input.
+
+- MC/
+	Input used to test various architectures & modes.
+
 - benchmark.py
 	This script benchmarks Python binding by disassembling some random code.
 
@@ -17,3 +23,13 @@ Average users should ignore all the contents here.
 - fuzz.py
 	This simple script disassembles random code for all archs (or selected arch)
 	in order to find segfaults.
+
+- test_mc.sh
+    This script compares the output of Capstone with LLVM's llvm-mc with the
+	input coming from MC/. This relies on test_mc.py to do all the hard works.
+
+- x86odd.py
+	Test some tricky X86 instructions.
+
+- ppcbranch.py
+	Test some tricky branch PPC instructions.
