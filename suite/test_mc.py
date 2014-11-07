@@ -1,5 +1,5 @@
 #!/usr/bin/python
-
+# Test tool to compare Capstone output with llvm-mc. By Nguyen Anh Quynh, 2014
 import array, os.path, sys
 from subprocess import Popen, PIPE, STDOUT
 from capstone import *
@@ -24,8 +24,6 @@ def run_mc(arch, hexcode, option, syntax=None):
             p = Popen(['llvm-mc', '-disassemble', '-print-imm-hex', syntax] + option, stdout=PIPE, stdin=PIPE, stderr=STDOUT)
     else:
         if arch == CS_ARCH_MIPS:
-            #p = Popen(['llvm-mc', '-disassemble', '-print-imm-hex', '-mattr=+msa,micromips', option], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
-            #p = Popen(['llvm-mc', '-disassemble', '-print-imm-hex', '-mattr=+msa', option], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
             p = Popen(['llvm-mc', '-disassemble', '-print-imm-hex', '-mattr=+msa'] + option, stdout=PIPE, stdin=PIPE, stderr=STDOUT)
         else:
             p = Popen(['llvm-mc', '-disassemble', '-print-imm-hex'] + option, stdout=PIPE, stdin=PIPE, stderr=STDOUT)
@@ -119,15 +117,14 @@ def test_file(fname):
 
     mc_option = None
     if arch == 'CS_ARCH_X86':
+        # tell llvm-mc to use Intel syntax
         mc_option = '-output-asm-variant=1'
 
     if arch == 'CS_ARCH_ARM':
         md.syntax = CS_OPT_SYNTAX_NOREGNAME
 
-    #if not option in ('', 'None'):  # ATT syntax?
-    #    #md.syntax = options[option]
-    
     for line in lines[1:]:
+        # ignore all the input lines having # in front.
         if line.startswith('#'):
             continue
         #print("Check %s" %line)
@@ -161,7 +158,4 @@ if __name__ == '__main__':
     else:
         #print("Usage: ./test_mc.py <input-file.s.cs>")
         test_file(sys.argv[1])
-    #run_mc('0x33', '-triple=i386')
-    #run_mc('0x0f,0x0e', '-triple=i386')
-    #run_mc('0x0f,0x0f,0xca,0xae', '-triple=i386', '-output-asm-variant=1')
 
