@@ -875,18 +875,27 @@ static int readOpcode(struct InternalInstruction* insn)
 			insn->opcodeType = THREEBYTE_3A;
 		} else {
 #ifndef CAPSTONE_X86_REDUCE
-			if (current == 0x0f) {
-				// 3DNow instruction has weird format: ModRM/SIB/displacement + opcode
-				if (readModRM(insn))
-					return -1;
-				// next is 3DNow opcode
-				if (consumeByte(insn, &current))
-					return -1;
-				insn->opcodeType = T3DNOW_MAP;
-			} else
+			switch(current) {
+				default:
+					// dbgprintf(insn, "Didn't find a three-byte escape prefix");
+					insn->opcodeType = TWOBYTE;
+					break;
+				case 0x0e:	// HACK for femms. to be handled properly in next version 3.x
+					insn->opcodeType = T3DNOW_MAP;
+					// this encode does not have ModRM
+					insn->consumedModRM = true;
+					break;
+				case 0x0f:
+					// 3DNow instruction has weird format: ModRM/SIB/displacement + opcode
+					if (readModRM(insn))
+						return -1;
+					// next is 3DNow opcode
+					if (consumeByte(insn, &current))
+						return -1;
+					insn->opcodeType = T3DNOW_MAP;
+					break;
+			}
 #endif
-				// dbgprintf(insn, "Didn't find a three-byte escape prefix");
-				insn->opcodeType = TWOBYTE;
 		}
 	}
 
@@ -919,6 +928,12 @@ static int getIDWithAttrMask(uint16_t* instructionID,
 	bool hasModRMExtension;
 
 	InstructionContext instructionClass;
+
+	// HACK for femms. to be handled properly in next version 3.x
+	if (insn->opcode == 0x0e && insn->opcodeType == T3DNOW_MAP) {
+		*instructionID = 764;
+		return 0;
+	}
 
 	if (insn->opcodeType == T3DNOW_MAP)
 		instructionClass = IC_OF;
