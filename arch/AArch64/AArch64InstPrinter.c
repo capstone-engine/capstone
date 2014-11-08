@@ -187,7 +187,7 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 
 		// SBFIZ/UBFIZ aliases
 		if (MCOperand_getImm(Op2) > MCOperand_getImm(Op3)) {
-			SStream_concat(O, "%s\t%s, %s ", (IsSigned ? "sbfiz" : "ubfiz"),
+			SStream_concat(O, "%s\t%s, %s, ", (IsSigned ? "sbfiz" : "ubfiz"),
 					getRegisterName(MCOperand_getReg(Op0), AArch64_NoRegAltName),
 					getRegisterName(MCOperand_getReg(Op1), AArch64_NoRegAltName));
 			printInt32Bang(O, (int)((Is64Bit ? 64 : 32) - MCOperand_getImm(Op2)));
@@ -215,7 +215,7 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 		}
 
 		// Otherwise SBFX/UBFX is the preferred form
-		SStream_concat(O, "%s\t%s, %s ", (IsSigned ? "sbfx" : "ubfx"),
+		SStream_concat(O, "%s\t%s, %s, ", (IsSigned ? "sbfx" : "ubfx"),
 				getRegisterName(MCOperand_getReg(Op0), AArch64_NoRegAltName),
 				getRegisterName(MCOperand_getReg(Op1), AArch64_NoRegAltName));
 		printInt32Bang(O, (int)MCOperand_getImm(Op2));
