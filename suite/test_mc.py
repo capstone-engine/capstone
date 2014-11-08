@@ -9,8 +9,8 @@ def run_mc(arch, hexcode, option, syntax=None):
         # remove tabs
         items = text.split()
         text = ' '.join(items)
-         # remove comment after #
         if arch == CS_ARCH_X86:
+            # remove comment after #
             i = text.find('# ')
             if i != -1:
                 return text[:i].lower()
