@@ -27,4 +27,7 @@ void printUInt32Bang(SStream *O, uint32_t val);
 
 void printUInt32(SStream *O, uint32_t val);
 
+// print number in decimal mode
+void printInt32BangDec(SStream *O, int32_t val);
+
 #endif

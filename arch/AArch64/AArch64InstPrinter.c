@@ -1190,7 +1190,7 @@ static void printShifter(MCInst *MI, unsigned OpNum, SStream *O)
 		return;
 
 	SStream_concat(O, ", %s ", AArch64_AM_getShiftExtendName(AArch64_AM_getShiftType(Val)));
-	printInt32Bang(O, AArch64_AM_getShiftValue(Val));
+	printInt32BangDec(O, AArch64_AM_getShiftValue(Val));
 	if (MI->csh->detail) {
 		arm64_shifter shifter = ARM64_SFT_INVALID;
 		switch(AArch64_AM_getShiftType(Val)) {

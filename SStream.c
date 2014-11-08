@@ -77,6 +77,15 @@ void printInt64(SStream *O, int64_t val)
 	}
 }
 
+// print number in decimal mode
+void printInt32BangDec(SStream *O, int32_t val)
+{
+	if (val >= 0)
+		SStream_concat(O, "#%u", val);
+	else
+		SStream_concat(O, "#-%u", -val);
+}
+
 void printInt32Bang(SStream *O, int32_t val)
 {
 	if (val >= 0) {
