@@ -41,7 +41,8 @@ static void test()
 #define THUMB_CODE2 "\x4f\xf0\x00\x01\xbd\xe8\x00\x88\xd1\xe8\x00\xf0"
 #define MIPS_CODE "\x0C\x10\x00\x97\x00\x00\x00\x00\x24\x02\x00\x0c\x8f\xa2\x00\x00\x34\x21\x34\x56"
 #define MIPS_CODE2 "\x56\x34\x21\x34\xc2\x17\x01\x00"
-#define MIPS_32R6 "\x00\x07\x00\x07\x00\x11\x93\x7c\x01\x8c\x8b\x7c\x00\xc7\x48\xd0"
+#define MIPS_32R6M "\x00\x07\x00\x07\x00\x11\x93\x7c\x01\x8c\x8b\x7c\x00\xc7\x48\xd0"
+#define MIPS_32R6 "\xec\x80\x00\x19\x7c\x43\x22\xa0"
 //#define ARM64_CODE "\x00\x40\x21\x4b"	// 	sub		w0, w0, w1, uxtw
 //#define ARM64_CODE "\x21\x7c\x02\x9b"	// mul	x1, x1, x2
 //#define ARM64_CODE "\x20\x74\x0b\xd5"	// dc	zva, x0
@@ -137,9 +138,16 @@ static void test()
 		{
 			CS_ARCH_MIPS,
 			(cs_mode)(CS_MODE_32 + CS_MODE_MIPS32R6 + CS_MODE_MICRO + CS_MODE_BIG_ENDIAN),
+			(unsigned char*)MIPS_32R6M,
+			sizeof(MIPS_32R6M) - 1,
+			"MIPS-32R6 | Micro (Big-endian)"
+		},
+		{
+			CS_ARCH_MIPS,
+			(cs_mode)(CS_MODE_32 + CS_MODE_MIPS32R6 + CS_MODE_BIG_ENDIAN),
 			(unsigned char*)MIPS_32R6,
 			sizeof(MIPS_32R6) - 1,
-			"MIPS-32R6 | Micro (Big-endian)"
+			"MIPS-32R6 (Big-endian)"
 		},
 		{
 			CS_ARCH_ARM64,

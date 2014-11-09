@@ -229,6 +229,10 @@ static uint64_t getFeatureBits(int mode)
 		Bits &= ~Mips_FeatureMips64r6;
 	}
 
+	if (mode & CS_MODE_MIPS32R6) {
+		Bits |= Mips_FeatureMips32r6;
+	}
+
 	if (mode & CS_MODE_MICRO) {
 		Bits |= Mips_FeatureMicroMips;
 		Bits &= ~Mips_FeatureMips4_32r2;
