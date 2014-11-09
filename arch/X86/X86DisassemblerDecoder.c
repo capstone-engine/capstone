@@ -365,10 +365,6 @@ static bool isPrefixAtLocation(struct InternalInstruction* insn,
 		uint8_t prefix,
 		uint64_t location)
 {
-	// allow 0x66 & 0x67 to be put anywhere
-	if (prefix == 0x66 || prefix == 0x67)
-		return insn->prefixPresent[prefix] == 1;
-
 	if (insn->prefixPresent[prefix] == 1 &&
 			insn->prefixLocations[prefix] == location)
 		return true;
@@ -544,6 +540,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 	}
 
 	insn->vectorExtensionType = TYPE_NO_VEX_XOP;
+
 
 	if (byte == 0x62) {
 		uint8_t byte1, byte2;

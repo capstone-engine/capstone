@@ -568,6 +568,9 @@ typedef struct InternalInstruction {
   /* 1 if the prefix byte, 0xf2 or 0xf3 is xacquire or xrelease */
   bool xAcquireRelease;
 
+  /* contains the location (for use with the reader) of the prefix byte */
+  uint64_t prefixLocations[0x100];
+
   /* The value of the vector extension prefix(EVEX/VEX/XOP), if present */
   uint8_t vectorExtensionPrefix[4];
 
@@ -596,8 +599,6 @@ typedef struct InternalInstruction {
 
   /* Prefix state */
 
-  /* contains the location (for use with the reader) of the prefix byte */
-  uint64_t prefixLocations[0x100];
   /* The type of the vector extension prefix */
   VectorExtensionType vectorExtensionType;
   /* The location where a mandatory prefix would have to be (i.e., right before
