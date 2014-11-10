@@ -313,15 +313,12 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 				case 4: SStream_concat0(O, "sev"); pubOpcode = ARM_INS_SEV; break;
 				case 5:
 						// FIXME: HasV80Ops becomes a mode
-						//if ((ARM_getFeatureBits(MI->csh->mode) & ARM_HasV8Ops)) {
-						//	SStream_concat0(O, "sevl");
-						//	break;
-						//}
+						if ((ARM_getFeatureBits(MI->csh->mode) & ARM_HasV8Ops)) {
+							SStream_concat0(O, "sevl");
+							pubOpcode = ARM_INS_SEVL;
+							break;
+						}
 						// Fallthrough for non-v8
-
-						SStream_concat0(O, "sevl");
-						pubOpcode = ARM_INS_SEVL;
-						break;
 				default:
 						// Anything else should just print normally.
 						printInstruction(MI, O, MRI);
@@ -1163,10 +1160,8 @@ static void printBitfieldInvMaskImmOperand(MCInst *MI, unsigned OpNum, SStream *
 static void printMemBOption(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	unsigned val = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	// FIXME: HasV80Ops becomes a mode
-	// SStream_concat0(O, ARM_MB_MemBOptToString(val,
-	// 			ARM_getFeatureBits(MI->csh->mode) & ARM_HasV8Ops));
-	SStream_concat0(O, ARM_MB_MemBOptToString(val, true));
+	SStream_concat0(O, ARM_MB_MemBOptToString(val,
+				ARM_getFeatureBits(MI->csh->mode) & ARM_HasV8Ops));
 }
 
 void printInstSyncBOption(MCInst *MI, unsigned OpNum, SStream *O)

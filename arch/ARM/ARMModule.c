@@ -14,7 +14,7 @@ static cs_err init(cs_struct *ud)
 	MCRegisterInfo *mri;
 
 	// verify if requested mode is valid
-	if (ud->mode & ~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM |
+	if (ud->mode & ~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_V8 |
 				CS_MODE_MCLASS | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN))
 		return CS_ERR_MODE;
 

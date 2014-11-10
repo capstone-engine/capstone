@@ -374,7 +374,8 @@ uint64_t ARM_getFeatureBits(unsigned int mode)
 	// FIXME: no Armv8 support?
 	//Bits -= ARM_HasV7Ops;
 	//Bits &= ~ARM_FeatureMP;
-	//Bits &= ~ARM_HasV8Ops;
+	if ((mode & CS_MODE_V8) == 0)
+		Bits &= ~ARM_HasV8Ops;
 	//Bits &= ~ARM_HasV6Ops;
 
 	if ((mode & CS_MODE_MCLASS) == 0)
