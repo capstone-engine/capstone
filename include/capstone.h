@@ -80,6 +80,7 @@ typedef enum cs_mode {
 	CS_MODE_64 = 1 << 3,	// 64-bit mode
 	CS_MODE_THUMB = 1 << 4,	// ARM's Thumb mode, including Thumb-2
 	CS_MODE_MCLASS = 1 << 5,	// ARM's Cortex-M series
+	CS_MODE_V8 = 1 << 6,	// ARMv8 A32 encodings for ARM
 	CS_MODE_MICRO = 1 << 4, // MicroMips mode (MIPS architecture)
 	CS_MODE_MIPS3 = 1 << 5, // Mips III ISA
 	CS_MODE_MIPS32R6 = 1 << 6, // Mips32r6 ISA
