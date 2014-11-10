@@ -13829,6 +13829,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 	;
 #endif
 
+  // Hacky: handle far jump in Real mode
+  if (opcode == X86_FARJMP16i) {
+    printOperand(MI, 1, O); 
+    SStream_concat0(O, ":"); 
+    printOperand(MI, 0, O); 
+	return;
+  }
+
   // Fragment 0 encoded into 6 bits for 45 unique commands.
   //printf("Frag-0: %"PRIu64"\n", (Bits >> 14) & 63);
   switch ((Bits >> 14) & 63) {
