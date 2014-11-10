@@ -1974,7 +1974,7 @@ static void printT2AddrModeSoRegOperand(MCInst *MI,
 static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	SStream_concat(O, "#%f", getFPImmFloat((unsigned int)MCOperand_getImm(MO)));
+	SStream_concat(O, "#%e", getFPImmFloat((unsigned int)MCOperand_getImm(MO)));
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_FP;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].fp = getFPImmFloat((unsigned int)MCOperand_getImm(MO));
