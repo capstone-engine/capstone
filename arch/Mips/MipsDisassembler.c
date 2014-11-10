@@ -227,6 +227,7 @@ static uint64_t getFeatureBits(int mode)
 		Bits &= ~Mips_FeatureMips16;
 		Bits &= ~Mips_FeatureMips64r6;
 		Bits &= ~Mips_FeatureMips64r6;
+		Bits &= ~Mips_FeatureMips32r6;
 	}
 
 	if (mode & CS_MODE_MIPS32R6) {
@@ -414,6 +415,7 @@ static DecodeStatus Mips64Disassembler_getInstruction(int mode, MCInst *instr,
 		*Size = 4;
 		return Result;
 	}
+
 	// If we fail to decode in Mips64 decoder space we can try in Mips32
 	Result = decodeInstruction(DecoderTableMips32, instr, Insn, Address, MRI, mode);
 	if (Result != MCDisassembler_Fail) {
