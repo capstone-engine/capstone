@@ -1033,10 +1033,10 @@ static void printPostIdxImm8s4Operand(MCInst *MI, unsigned OpNum, SStream *O)
 static void printAddrMode5Operand(MCInst *MI, unsigned OpNum, SStream *O,
 		bool AlwaysPrintImm0)
 {
+	unsigned ImmOffs;
 	MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
 	MCOperand *MO2 = MCInst_getOperand(MI, OpNum+1);
-	ARM_AM_AddrOpc subtracted = getAM2Op((unsigned int)MCOperand_getImm(MO2));
-	unsigned ImmOffs, Op;
+	ARM_AM_AddrOpc subtracted = ARM_AM_getAM5Op((unsigned int)MCOperand_getImm(MO2));
 
 	if (!MCOperand_isReg(MO1)) {   // FIXME: This is for CP entries, but isn't right.
 		printOperand(MI, OpNum, O);
@@ -1055,8 +1055,7 @@ static void printAddrMode5Operand(MCInst *MI, unsigned OpNum, SStream *O,
 	}
 
 	ImmOffs = ARM_AM_getAM5Offset((unsigned int)MCOperand_getImm(MO2));
-	Op = ARM_AM_getAM5Op((unsigned int)MCOperand_getImm(MO2));
-	if (AlwaysPrintImm0 || ImmOffs || Op == ARM_AM_sub) {
+	if (AlwaysPrintImm0 || ImmOffs || subtracted == ARM_AM_sub) {
 		if (ImmOffs * 4 > HEX_THRESHOLD)
 			SStream_concat(O, ", #%s0x%x",
 					ARM_AM_getAddrOpcStr(subtracted),
@@ -1066,8 +1065,10 @@ static void printAddrMode5Operand(MCInst *MI, unsigned OpNum, SStream *O,
 					ARM_AM_getAddrOpcStr(subtracted),
 					ImmOffs * 4);
 		if (MI->csh->detail) {
-			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = ImmOffs * 4;
-			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].subtracted = subtracted == ARM_AM_sub;
+			if (subtracted)
+				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = ImmOffs * 4;
+			else
+				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = -ImmOffs * 4;
 		}
 	}
 	SStream_concat0(O, "]");
