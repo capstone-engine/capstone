@@ -379,4 +379,13 @@ void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
 	}
 }
 
+void Sparc_addReg(MCInst *MI, int reg)
+{
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].type = SPARC_OP_REG;
+		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].reg = reg;
+		MI->flat_insn->detail->sparc.op_count++;
+	}
+}
+
 #endif
