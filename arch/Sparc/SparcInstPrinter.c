@@ -187,6 +187,11 @@ static void printOperand(MCInst *MI, int opNum, SStream *O)
 
 	if (MCOperand_isImm(MO)) {
 		Imm = (int)MCOperand_getImm(MO);
+
+		// get absolute address for CALL
+		if (MI->Opcode == SP_CALL)
+			Imm += MI->address;
+
 		if (Imm >= 0) {
 			if (Imm > HEX_THRESHOLD)
 				SStream_concat(O, "0x%x", Imm);
