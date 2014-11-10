@@ -31,6 +31,7 @@ type mode =
   |	CS_MODE_64			(* 64-bit mode (for X86, Mips) *)
   |	CS_MODE_THUMB		(* ARM's Thumb mode, including Thumb-2 *)
   |	CS_MODE_MCLASS		(* ARM's MClass mode *)
+  |	CS_MODE_V8    		(* ARMv8 A32 encodings for ARM *)
   |	CS_MODE_MICRO		(* MicroMips mode (MIPS architecture) *)
   |	CS_MODE_MIPS3		(* Mips3 mode (MIPS architecture) *)
   |	CS_MODE_MIPS32R6	(* Mips32-R6 mode (MIPS architecture) *)
