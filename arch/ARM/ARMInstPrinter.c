@@ -1378,7 +1378,7 @@ static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	// As special cases, CPSR_f, CPSR_s and CPSR_fs prefer printing as
 	// APSR_nzcvq, APSR_g and APSRnzcvqg, respectively.
 	if (!SpecRegRBit && (Mask == 8 || Mask == 4 || Mask == 12)) {
-		SStream_concat0(O, "APSR_");
+		SStream_concat0(O, "apsr_");
 		switch (Mask) {
 			default: // llvm_unreachable("Unexpected mask value!");
 			case 4:  SStream_concat0(O, "g"); ARM_addSysReg(MI, ARM_SYSREG_APSR_G); return;
@@ -1389,7 +1389,7 @@ static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 
 	reg = 0;
 	if (SpecRegRBit) {
-		SStream_concat0(O, "SPSR");
+		SStream_concat0(O, "spsr");
 		if (Mask) {
 			SStream_concat0(O, "_");
 			if (Mask & 8) {
@@ -1414,7 +1414,7 @@ static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 			ARM_addSysReg(MI, reg);
 		}
 	} else {
-		SStream_concat0(O, "CPSR");
+		SStream_concat0(O, "cpsr");
 		if (Mask) {
 			SStream_concat0(O, "_");
 			if (Mask & 8) {
