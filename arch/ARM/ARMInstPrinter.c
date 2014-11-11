@@ -1180,7 +1180,7 @@ static void printMemBOption(MCInst *MI, unsigned OpNum, SStream *O)
 				ARM_getFeatureBits(MI->csh->mode) & ARM_HasV8Ops));
 
 	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm.mem_barrier = (arm_membarrier)(val + 1);
+		MI->flat_insn->detail->arm.mem_barrier = (arm_mem_barrier)(val + 1);
 	}
 }
 
