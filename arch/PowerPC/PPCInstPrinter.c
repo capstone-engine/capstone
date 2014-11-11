@@ -117,7 +117,7 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 	}
 
 	if ((MCInst_getOpcode(MI) == PPC_OR || MCInst_getOpcode(MI) == PPC_OR8) &&
-			MCOperand_getReg(MCInst_getOperand(MI, 1)) == MCOperand_getReg(MCInst_getOperand(MI, 1))) {
+			MCOperand_getReg(MCInst_getOperand(MI, 1)) == MCOperand_getReg(MCInst_getOperand(MI, 2))) {
 		SStream_concat0(O, "mr\t");
 		MCInst_setOpcodePub(MI, PPC_INS_MR);
 		printOperand(MI, 0, O);
