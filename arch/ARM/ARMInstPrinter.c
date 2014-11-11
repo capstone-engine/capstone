@@ -632,16 +632,32 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			} else {
 				SStream_concat(O, "#0x%x", imm);
 			}
-		} else if (imm >= 0) {
-			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "#0x%x", imm);
-			else
-				SStream_concat(O, "#%u", imm);
 		} else {
-			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "#-0x%x", -imm);
-			else
-				SStream_concat(O, "#-%u", -imm);
+			switch(MI->flat_insn->id) {
+				default:
+					if (imm >= 0) {
+						if (imm > HEX_THRESHOLD)
+							SStream_concat(O, "#0x%x", imm);
+						else
+							SStream_concat(O, "#%u", imm);
+					} else {
+						if (imm < -HEX_THRESHOLD)
+							SStream_concat(O, "#-0x%x", -imm);
+						else
+							SStream_concat(O, "#-%u", -imm);
+					}
+					break;
+				case ARM_INS_AND:
+				case ARM_INS_ORR:
+				case ARM_INS_EOR:
+				case ARM_INS_BIC:
+					// do not print number in negative form
+					if (imm >= 0 && imm <= HEX_THRESHOLD)
+						SStream_concat(O, "#%u", imm);
+					else
+						SStream_concat(O, "#0x%x", imm);
+					break;
+			}
 		}
 
 		if (MI->csh->detail) {
