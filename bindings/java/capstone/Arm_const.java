@@ -71,6 +71,27 @@ public class Arm_const {
 	public static final int ARM_SYSREG_FAULTMASK = 277;
 	public static final int ARM_SYSREG_CONTROL = 278;
 
+	// The memory barrier constants map directly to the 4-bit encoding of
+	// the option field for Memory Barrier operations.
+
+	public static final int ARM_MB_INVALID = 0;
+	public static final int ARM_MB_RESERVED_0 = 1;
+	public static final int ARM_MB_OSHLD = 2;
+	public static final int ARM_MB_OSHST = 3;
+	public static final int ARM_MB_OSH = 4;
+	public static final int ARM_MB_RESERVED_4 = 5;
+	public static final int ARM_MB_NSHLD = 6;
+	public static final int ARM_MB_NSHST = 7;
+	public static final int ARM_MB_NSH = 8;
+	public static final int ARM_MB_RESERVED_8 = 9;
+	public static final int ARM_MB_ISHLD = 10;
+	public static final int ARM_MB_ISHST = 11;
+	public static final int ARM_MB_ISH = 12;
+	public static final int ARM_MB_RESERVED_12 = 13;
+	public static final int ARM_MB_LD = 14;
+	public static final int ARM_MB_ST = 15;
+	public static final int ARM_MB_SY = 16;
+
 	// Operand type for instruction's operands
 
 	public static final int ARM_OP_INVALID = 0;

@@ -95,6 +95,8 @@ def print_insn_detail(insn):
         print("\tVector-size: %u" %(insn.vector_size))
     if insn.usermode:
         print("\tUser-mode: True")
+    if insn.mem_barrier:
+        print("\tMemory-barrier: %u" %(insn.mem_barrier))
 
 
 # ## Test class Cs

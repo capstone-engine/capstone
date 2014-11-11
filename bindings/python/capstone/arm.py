@@ -67,10 +67,12 @@ class CsArm(ctypes.Structure):
         ('cc', ctypes.c_uint),
         ('update_flags', ctypes.c_bool),
         ('writeback', ctypes.c_bool),
+        ('mem_barrier', ctypes.c_int),
         ('op_count', ctypes.c_uint8),
         ('operands', ArmOp * 36),
     )
 
 def get_arch_info(a):
-    return (a.usermode, a.vector_size, a.vector_data, a.cps_mode, a.cps_flag, a.cc, a.update_flags, a.writeback, copy.deepcopy(a.operands[:a.op_count]))
+    return (a.usermode, a.vector_size, a.vector_data, a.cps_mode, a.cps_flag, a.cc, a.update_flags, \
+        a.writeback, a.mem_barrier, copy.deepcopy(a.operands[:a.op_count]))
 

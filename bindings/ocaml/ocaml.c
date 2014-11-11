@@ -107,7 +107,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 					case CS_ARCH_ARM:
 						arch_info = caml_alloc(1, 0);
 
-						op_info_val = caml_alloc(9, 0);
+						op_info_val = caml_alloc(10, 0);
 						Store_field(op_info_val, 0, Val_bool(insn[j-1].detail->arm.usermode));
 						Store_field(op_info_val, 1, Val_int(insn[j-1].detail->arm.vector_size));
 						Store_field(op_info_val, 2, Val_int(insn[j-1].detail->arm.vector_data));
@@ -116,6 +116,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						Store_field(op_info_val, 5, Val_int(insn[j-1].detail->arm.cc));
 						Store_field(op_info_val, 6, Val_bool(insn[j-1].detail->arm.update_flags));
 						Store_field(op_info_val, 7, Val_bool(insn[j-1].detail->arm.writeback));
+						Store_field(op_info_val, 8, Val_int(insn[j-1].detail->arm.mem_barrier));
 
 						lcount = insn[j-1].detail->arm.op_count;
 						if (lcount > 0) {
@@ -171,7 +172,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						} else	// empty list
 							array = Atom(0);
 
-						Store_field(op_info_val, 8, array);
+						Store_field(op_info_val, 9, array);
 
 						// finally, insert this into arch_info
 						Store_field(arch_info, 0, op_info_val);

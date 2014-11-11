@@ -47,5 +47,6 @@ type cs_arm = {
 	cc: int;
 	update_flags: bool;
 	writeback: bool;
+	mem_barrier: int;
 	operands: arm_op array;
 }

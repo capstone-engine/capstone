@@ -68,6 +68,27 @@ ARM_SYSREG_BASEPRI_MAX = 276
 ARM_SYSREG_FAULTMASK = 277
 ARM_SYSREG_CONTROL = 278
 
+# The memory barrier constants map directly to the 4-bit encoding of
+# the option field for Memory Barrier operations.
+
+ARM_MB_INVALID = 0
+ARM_MB_RESERVED_0 = 1
+ARM_MB_OSHLD = 2
+ARM_MB_OSHST = 3
+ARM_MB_OSH = 4
+ARM_MB_RESERVED_4 = 5
+ARM_MB_NSHLD = 6
+ARM_MB_NSHST = 7
+ARM_MB_NSH = 8
+ARM_MB_RESERVED_8 = 9
+ARM_MB_ISHLD = 10
+ARM_MB_ISHST = 11
+ARM_MB_ISH = 12
+ARM_MB_RESERVED_12 = 13
+ARM_MB_LD = 14
+ARM_MB_ST = 15
+ARM_MB_SY = 16
+
 # Operand type for instruction's operands
 
 ARM_OP_INVALID = 0

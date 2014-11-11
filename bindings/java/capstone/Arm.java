@@ -88,6 +88,7 @@ public class Arm {
     public int cc;
     public byte update_flags;
     public byte writeback;
+    public byte mem_barrier;
     public byte op_count;
 
     public Operand [] op;
@@ -105,6 +106,7 @@ public class Arm {
       readField("cc");
       readField("update_flags");
       readField("writeback");
+      readField("mem_barrier");
       readField("op_count");
       op = new Operand[op_count];
       if (op_count != 0)
@@ -114,7 +116,7 @@ public class Arm {
     @Override
     public List getFieldOrder() {
       return Arrays.asList("usermode", "vector_size", "vector_data",
-          "cps_mode", "cps_flag", "cc", "update_flags", "writeback", "op_count", "op");
+          "cps_mode", "cps_flag", "cc", "update_flags", "writeback", "mem_barrier", "op_count", "op");
     }
   }
 
@@ -127,6 +129,7 @@ public class Arm {
     public int cc;
     public boolean updateFlags;
     public boolean writeback;
+    public boolean memBarrier;
     public Operand [] op = null;
 
     public OpInfo(UnionOpInfo op_info) {
@@ -138,6 +141,7 @@ public class Arm {
       cc = op_info.cc;
       updateFlags = (op_info.update_flags > 0);
       writeback = (op_info.writeback > 0);
+      memBarrier = op_info.mem_barrier;
       op = op_info.op;
     }
   }
