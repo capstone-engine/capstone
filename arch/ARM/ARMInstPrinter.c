@@ -1083,7 +1083,7 @@ static void printAddrMode5Operand(MCInst *MI, unsigned OpNum, SStream *O,
 			if (subtracted)
 				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = ImmOffs * 4;
 			else
-				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = -ImmOffs * 4;
+				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = -(int)ImmOffs * 4;
 		}
 	}
 	SStream_concat0(O, "]");
@@ -1177,10 +1177,10 @@ static void printMemBOption(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	unsigned val = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	SStream_concat0(O, ARM_MB_MemBOptToString(val + 1,
-				ARM_getFeatureBits(MI->csh->mode) & ARM_HasV8Ops));
+				ARM_getFeatureBits((MI->csh->mode) & ARM_HasV8Ops)));
 
 	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm.mem_barrier = (arm_membarrier)(val + 1);
+		MI->flat_insn->detail->arm.mem_barrier = (arm_mem_barrier)(val + 1);
 	}
 }
 
