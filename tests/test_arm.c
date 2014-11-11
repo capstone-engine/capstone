@@ -191,6 +191,9 @@ static void test()
 //#define THUMB_CODE "\x0a\xbf" // itet eq
 #define THUMB_CODE "\x70\x47\xeb\x46\x83\xb0\xc9\x68\x1f\xb1\x30\xbf\xaf\xf3\x20\x84"
 #define THUMB_CODE2 "\x4f\xf0\x00\x01\xbd\xe8\x00\x88\xd1\xe8\x00\xf0\x18\xbf\xad\xbf\xf3\xff\x0b\x0c\x86\xf3\x00\x89\x80\xf3\x00\x8c\x4f\xfa\x99\xf6\xd0\xff\xa2\x01"
+#define THUMB_MCLASS "\xef\xf3\x02\x80"
+#define ARMV8 "\xe0\x3b\xb2\xee\x42\x00\x01\xe1\x51\xf0\x7f\xf5"
+#define ARMV8 "\x51\xf0\x7f\xf5"
 
 	struct platform platforms[] = {
 		{
@@ -221,6 +224,20 @@ static void test()
 			sizeof(THUMB_CODE2) - 1,
 			"Thumb-2 & register named with numbers",
 			CS_OPT_SYNTAX_NOREGNAME
+		},
+		{
+			CS_ARCH_ARM,
+			(cs_mode)(CS_MODE_THUMB + CS_MODE_MCLASS),
+			(unsigned char*)THUMB_MCLASS,
+			sizeof(THUMB_MCLASS) - 1,
+			"Thumb-MClass"
+		},
+		{
+			CS_ARCH_ARM,
+			(cs_mode)(CS_MODE_ARM + CS_MODE_V8),
+			(unsigned char*)ARMV8,
+			sizeof(ARMV8) - 1,
+			"Arm-V8"
 		},
 	};
 
