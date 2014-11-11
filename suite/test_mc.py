@@ -225,8 +225,15 @@ def test_file(fname):
         else:
             mc_output = run_mc(archs[arch], code, mc_modes[(arch, mode)], mc_option)
         mc_output2 = normalize_hex(mc_output)
+
         if arch == 'CS_ARCH_MIPS':
             mc_output2 = mc_output2.replace(' 0(', '(')
+
+        if arch == 'CS_ARCH_PPC':
+            mc_output2 = mc_output2.replace('.+', '')
+            mc_output2 = mc_output2.replace('.', '')
+            mc_output2 = mc_output2.replace(' 0(', '(')
+
         mc_output2 = mc_output2.replace(' ', '')
         mc_output2 = mc_output2.replace('opaque', '')
 
