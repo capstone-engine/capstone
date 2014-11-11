@@ -312,7 +312,6 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 				case 3: SStream_concat0(O, "wfi"); pubOpcode = ARM_INS_WFI; break;
 				case 4: SStream_concat0(O, "sev"); pubOpcode = ARM_INS_SEV; break;
 				case 5:
-						// FIXME: HasV80Ops becomes a mode
 						if ((ARM_getFeatureBits(MI->csh->mode) & ARM_HasV8Ops)) {
 							SStream_concat0(O, "sevl");
 							pubOpcode = ARM_INS_SEVL;
@@ -514,7 +513,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 						break;
 
 		case ARM_tLDMIA: {
-							 bool Writeback = true;	// FIXME: expose this
+							 bool Writeback = true;
 							 unsigned BaseReg = MCOperand_getReg(MCInst_getOperand(MI, 0));
 							 unsigned i;
 							 for (i = 3; i < MCInst_getNumOperands(MI); ++i) {
@@ -1177,8 +1176,12 @@ static void printBitfieldInvMaskImmOperand(MCInst *MI, unsigned OpNum, SStream *
 static void printMemBOption(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	unsigned val = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	SStream_concat0(O, ARM_MB_MemBOptToString(val,
+	SStream_concat0(O, ARM_MB_MemBOptToString(val + 1,
 				ARM_getFeatureBits(MI->csh->mode) & ARM_HasV8Ops));
+
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->arm.mem_barrier = (arm_membarrier)(val + 1);
+	}
 }
 
 void printInstSyncBOption(MCInst *MI, unsigned OpNum, SStream *O)

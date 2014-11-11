@@ -128,6 +128,9 @@ static void print_insn_detail(cs_insn *ins)
 	if (arm->usermode)
 		printf("\tUser-mode: True\n");
 
+	if (arm->mem_barrier)
+		printf("\tMemory-barrier: %u\n", arm->mem_barrier);
+
 	printf("\n");
 }
 
@@ -193,7 +196,6 @@ static void test()
 #define THUMB_CODE2 "\x4f\xf0\x00\x01\xbd\xe8\x00\x88\xd1\xe8\x00\xf0\x18\xbf\xad\xbf\xf3\xff\x0b\x0c\x86\xf3\x00\x89\x80\xf3\x00\x8c\x4f\xfa\x99\xf6\xd0\xff\xa2\x01"
 #define THUMB_MCLASS "\xef\xf3\x02\x80"
 #define ARMV8 "\xe0\x3b\xb2\xee\x42\x00\x01\xe1\x51\xf0\x7f\xf5"
-#define ARMV8 "\x51\xf0\x7f\xf5"
 
 	struct platform platforms[] = {
 		{

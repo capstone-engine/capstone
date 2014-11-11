@@ -111,27 +111,6 @@ inline static char *ARM_PROC_IModToString(unsigned val)
 	}
 }
 
-// The Memory Barrier Option constants map directly to the 4-bit encoding of
-// the option field for memory barrier operations.
-enum ARM_MB_MemBOpt {
-    ARM_MB_RESERVED_0 = 0,
-    ARM_MB_OSHLD = 1,
-    ARM_MB_OSHST = 2,
-    ARM_MB_OSH   = 3,
-    ARM_MB_RESERVED_4 = 4,
-    ARM_MB_NSHLD = 5,
-    ARM_MB_NSHST = 6,
-    ARM_MB_NSH   = 7,
-    ARM_MB_RESERVED_8 = 8,
-    ARM_MB_ISHLD = 9,
-    ARM_MB_ISHST = 10,
-    ARM_MB_ISH   = 11,
-    ARM_MB_RESERVED_12 = 12,
-    ARM_MB_LD = 13,
-    ARM_MB_ST    = 14,
-    ARM_MB_SY    = 15
-};
-
 inline static char *ARM_MB_MemBOptToString(unsigned val, bool HasV8)
 {
 	switch (val) {
