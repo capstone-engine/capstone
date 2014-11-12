@@ -129,7 +129,7 @@ public class Arm {
     public int cc;
     public boolean updateFlags;
     public boolean writeback;
-    public boolean memBarrier;
+    public int memBarrier;
     public Operand [] op = null;
 
     public OpInfo(UnionOpInfo op_info) {
