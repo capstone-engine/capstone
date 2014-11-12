@@ -315,7 +315,8 @@ def debug():
 
     archs = { "arm": capstone.CS_ARCH_ARM, "arm64": capstone.CS_ARCH_ARM64, \
         "mips": capstone.CS_ARCH_MIPS, "ppc": capstone.CS_ARCH_PPC, \
-        "sparc": capstone.CS_ARCH_SPARC, "sysz": capstone.CS_ARCH_SYSZ }
+        "sparc": capstone.CS_ARCH_SPARC, "sysz": capstone.CS_ARCH_SYSZ, \
+		"xcore": capstone.CS_ARCH_XCORE }
 
     all_archs = ""
     keys = archs.keys()
@@ -332,4 +333,3 @@ def debug():
     (major, minor, _combined) = capstone.cs_version()
 
     return "Cython-%s%s-c%u.%u-b%u.%u" %(diet, all_archs, major, minor, capstone.CS_API_MAJOR, capstone.CS_API_MINOR)
-
