@@ -205,7 +205,13 @@ static DecodeStatus DecodeBlezGroupBranch_4(MCInst *MI,
 // Hacky: enable all features for disassembler
 static uint64_t getFeatureBits(int mode)
 {
-	uint64_t Bits = (uint64_t)-1;	// include every features by default
+	uint64_t Bits = (uint64_t)-1;	// include every features at first
+
+	// By default we do not support Mips1
+	Bits &= ~Mips_FeatureMips1;
+
+	// No MicroMips
+	Bits &= ~Mips_FeatureMicroMips;
 
 	// ref: MipsGenDisassemblerTables.inc::checkDecoderPredicate()
 	// some features are mutually execlusive
@@ -238,8 +244,6 @@ static uint64_t getFeatureBits(int mode)
 		Bits |= Mips_FeatureMicroMips;
 		Bits &= ~Mips_FeatureMips4_32r2;
 		Bits &= ~Mips_FeatureMips2;
-	} else {
-		Bits &= ~Mips_FeatureMicroMips;
 	}
 
 	return Bits;
