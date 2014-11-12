@@ -58,7 +58,7 @@ typedef enum cs_arch {
 	CS_ARCH_SYSZ,		// SystemZ architecture
 	CS_ARCH_XCORE,		// XCore architecture
 	CS_ARCH_MAX,
-	CS_ARCH_ALL = 0xFFFF,
+	CS_ARCH_ALL = 0xFFFF, // All architectures - for cs_support()
 } cs_arch;
 
 // Support value to verify diet mode of the engine.

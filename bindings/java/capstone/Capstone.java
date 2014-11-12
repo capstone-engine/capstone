@@ -349,6 +349,7 @@ public class Capstone {
 
   // Query id for cs_support()
   public static final int CS_SUPPORT_DIET = CS_ARCH_ALL+1;	  // diet mode
+  public static final int CS_SUPPORT_X86_REDUCE = CS_ARCH_ALL+2;  // X86 reduce mode
 
   protected class NativeStruct {
       private NativeLong csh;
