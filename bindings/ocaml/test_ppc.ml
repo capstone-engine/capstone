@@ -31,6 +31,14 @@ let print_op handle i op =
 		if mem.disp != 0 then
 			printf "\t\t\toperands[%u].mem.disp: 0x%x\n" i mem.disp;
 		);
+	| PPC_OP_CRX crx -> ( printf "\t\top[%d]: CRX\n" i;
+		if crx.scale != 0 then
+			printf "\t\t\toperands[%u].crx.scale = %u\n" i crx.scale;
+		if crx.reg != 0 then
+			printf "\t\t\toperands[%u].crx.reg = %s\n" i (cs_reg_name handle crx.reg);
+		if crx.cond != 0 then
+			printf "\t\t\toperands[%u].crx.cond = 0x%x\n" i crx.cond;
+		);
 	);
 	();;
 
