@@ -1215,8 +1215,8 @@ static DecodeStatus DecodeCOP2RegisterClass(MCInst *Inst,
 static DecodeStatus DecodeBranchTarget(MCInst *Inst,
 		unsigned Offset, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	int32_t BranchOffset = (SignExtend32(Offset, 16) * 4) + 4;
-	MCOperand_CreateImm0(Inst, BranchOffset);
+	uint64_t TargetAddress = (SignExtend32(Offset, 16) * 4) + Address + 4;
+	MCOperand_CreateImm0(Inst, TargetAddress);
 
 	return MCDisassembler_Success;
 }
@@ -1224,8 +1224,8 @@ static DecodeStatus DecodeBranchTarget(MCInst *Inst,
 static DecodeStatus DecodeJumpTarget(MCInst *Inst,
 		unsigned Insn, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	unsigned JumpOffset = fieldFromInstruction(Insn, 0, 26) << 2;
-	MCOperand_CreateImm0(Inst, JumpOffset);
+	uint64_t TargetAddress = (fieldFromInstruction(Insn, 0, 26) << 2) | ((Address + 4) & ~0x0FFFFFFF);
+	MCOperand_CreateImm0(Inst, TargetAddress);
 
 	return MCDisassembler_Success;
 }
