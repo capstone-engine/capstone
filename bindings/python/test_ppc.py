@@ -39,14 +39,14 @@ def print_insn_detail(insn):
                         % (c, to_x_32(i.mem.disp)))
             if i.type == PPC_OP_CRX:
                 print("\t\toperands[%u].type: CRX" % c)
-                print("\t\t\toperands[%u].crx.scale: = %s" \
+                print("\t\t\toperands[%u].crx.scale: = %u" \
                         % (c, i.crx.scale))
                 if i.crx.reg != 0:
                     print("\t\t\toperands[%u].crx.reg: REG = %s" \
                         % (c, insn.reg_name(i.crx.reg)))
                 if i.crx.cond != 0:
-                    print("\t\t\toperands[%u].crx.cond: 0x%s" \
-                        % (c, to_x_32(i.crx.cond)))
+                    print("\t\t\toperands[%u].crx.cond: 0x%x" \
+                        % (c, i.crx.cond))
             c += 1
 
     if insn.bc:
