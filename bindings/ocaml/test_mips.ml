@@ -18,8 +18,8 @@ let _MIPS_CODE  = "\x0C\x10\x00\x97\x00\x00\x00\x00\x24\x02\x00\x0c\x8f\xa2\x00\
 let _MIPS_CODE2 = "\x56\x34\x21\x34\xc2\x17\x01\x00";;
 
 let all_tests = [
-	(CS_ARCH_MIPS, [CS_MODE_32; CS_MODE_BIG_ENDIAN], _MIPS_CODE, "MIPS-32 (Big-endian)");
-	(CS_ARCH_MIPS, [CS_MODE_64; CS_MODE_LITTLE_ENDIAN], _MIPS_CODE2, "MIPS-64-EL (Little-endian)");
+	(CS_ARCH_MIPS, [CS_MODE_MIPS32; CS_MODE_BIG_ENDIAN], _MIPS_CODE, "MIPS-32 (Big-endian)");
+	(CS_ARCH_MIPS, [CS_MODE_MIPS64; CS_MODE_LITTLE_ENDIAN], _MIPS_CODE2, "MIPS-64-EL (Little-endian)");
 ];;
 
 let print_op handle i op =

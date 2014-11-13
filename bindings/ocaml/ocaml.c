@@ -706,6 +706,12 @@ CAMLprim value ocaml_cs_disasm(value _arch, value _mode, value _code, value _add
 			case 13:
 				mode |= CS_MODE_BIG_ENDIAN;
 				break;
+			case 14:
+				mode |= CS_MODE_MIPS32;
+				break;
+			case 15:
+				mode |= CS_MODE_MIPS64;
+				break;
 			default:
 				caml_invalid_argument("Invalid mode");
 				return Val_emptylist;
@@ -830,6 +836,12 @@ CAMLprim value ocaml_open(value _arch, value _mode)
 				break;
 			case 13:
 				mode |= CS_MODE_BIG_ENDIAN;
+				break;
+			case 14:
+				mode |= CS_MODE_MIPS32;
+				break;
+			case 15:
+				mode |= CS_MODE_MIPS64;
 				break;
 			default:
 				caml_invalid_argument("Invalid mode");
