@@ -43,6 +43,8 @@ __all__ = [
     'CS_MODE_MIPSGP64',
     'CS_MODE_V8',
     'CS_MODE_V9',
+    'CS_MODE_MIPS32',
+    'CS_MODE_MIPS64',
 
     'CS_OPT_SYNTAX',
     'CS_OPT_SYNTAX_DEFAULT',
@@ -110,6 +112,8 @@ CS_MODE_MIPS32R6 = (1 << 6)    # Mips32r6 ISA
 CS_MODE_MIPSGP64 = (1 << 7)    # General Purpose Registers are 64-bit wide (MIPS arch)
 CS_MODE_V9 = (1 << 4)          # Nintendo-64 mode (MIPS architecture)
 CS_MODE_BIG_ENDIAN = (1 << 31) # big-endian mode
+CS_MODE_MIPS32 = CS_MODE_32    # Mips32 ISA
+CS_MODE_MIPS64 = CS_MODE_64    # Mips64 ISA
 
 # Capstone option type
 CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
