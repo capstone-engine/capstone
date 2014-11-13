@@ -98,13 +98,13 @@ public class Test {
           ),
       new platform(
           Capstone.CS_ARCH_MIPS,
-          Capstone.CS_MODE_32 + Capstone.CS_MODE_BIG_ENDIAN,
+          Capstone.CS_MODE_MIPS32 + Capstone.CS_MODE_BIG_ENDIAN,
           new byte[] {(byte)0x0C, (byte)0x10, (byte)0x00, (byte)0x97, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x24, (byte)0x02, (byte)0x00, (byte)0x0c, (byte)0x8f, (byte)0xa2, (byte)0x00, (byte)0x00, (byte)0x34, (byte)0x21, (byte)0x34, (byte)0x56 },
           "MIPS-32 (Big-endian)"
           ),
       new platform(
           Capstone.CS_ARCH_MIPS,
-          Capstone.CS_MODE_64+ Capstone.CS_MODE_LITTLE_ENDIAN,
+          Capstone.CS_MODE_MIPS64+ Capstone.CS_MODE_LITTLE_ENDIAN,
           new byte[] {(byte)0x56, (byte)0x34, (byte)0x21, (byte)0x34, (byte)0xc2, (byte)0x17, (byte)0x01, (byte)0x00 },
           "MIPS-64-EL (Little-endian)"
           ),
