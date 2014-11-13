@@ -1,4 +1,4 @@
-# CS_ARCH_MIPS, CS_MODE_32+CS_MODE_BIG_ENDIAN, None
+# CS_ARCH_MIPS, CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN, None
 0x24,0x00,0x00,0x00 = addiu $zero, $zero, 0
 0x24,0x01,0x00,0x00 = addiu $at, $zero, 0
 0x24,0x02,0x00,0x00 = addiu $v0, $zero, 0

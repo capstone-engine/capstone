@@ -1,4 +1,4 @@
-# CS_ARCH_MIPS, CS_MODE_32+CS_MODE_BIG_ENDIAN, None
+# CS_ARCH_MIPS, CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN, None
 0x78,0x04,0x4e,0x90 = add_a.b $w26, $w9, $w4
 0x78,0x3f,0xdd,0xd0 = add_a.h $w23, $w27, $w31
 0x78,0x56,0x32,0xd0 = add_a.w $w11, $w6, $w22

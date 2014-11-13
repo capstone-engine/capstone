@@ -1,4 +1,4 @@
-# CS_ARCH_MIPS, CS_MODE_32+CS_MODE_BIG_ENDIAN, None
+# CS_ARCH_MIPS, CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN, None
 0x79,0xf2,0xf5,0x49 = bclri.b $w21, $w30, 2
 0x79,0xe0,0xae,0x09 = bclri.h $w24, $w21, 0
 0x79,0xc3,0xf5,0xc9 = bclri.w $w23, $w30, 3

@@ -1,4 +1,4 @@
-# CS_ARCH_MIPS, CS_MODE_32+CS_MODE_BIG_ENDIAN, None
+# CS_ARCH_MIPS, CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN, None
 0x78,0x1e,0xf8,0xc6 = addvi.b $w3, $w31, 30
 0x78,0x3a,0x6e,0x06 = addvi.h $w24, $w13, 26
 0x78,0x5a,0xa6,0x86 = addvi.w $w26, $w20, 26

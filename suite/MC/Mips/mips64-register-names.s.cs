@@ -1,4 +1,4 @@
-# CS_ARCH_MIPS, CS_MODE_64+CS_MODE_BIG_ENDIAN, None
+# CS_ARCH_MIPS, CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN, None
 0x64,0x00,0x00,0x00 = daddiu $zero, $zero, 0
 0x64,0x01,0x00,0x00 = daddiu $at, $zero, 0
 0x64,0x02,0x00,0x00 = daddiu $v0, $zero, 0

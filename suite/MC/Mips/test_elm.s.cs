@@ -1,4 +1,4 @@
-# CS_ARCH_MIPS, CS_MODE_32+CS_MODE_BIG_ENDIAN, None
+# CS_ARCH_MIPS, CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN, None
 0x78,0x82,0x43,0x59 = copy_s.b $13, $w8[2]
 0x78,0xa0,0xc8,0x59 = copy_s.h $1, $w25[0]
 0x78,0xb1,0x2d,0x99 = copy_s.w $22, $w5[1]
