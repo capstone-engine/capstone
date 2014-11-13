@@ -24,6 +24,8 @@ static InsnType fname(InsnType insn, unsigned startBit, unsigned numBits) \
   return (insn & fieldMask) >> startBit; \
 }
 
+#if 0
+// TODO: properly handle this in the future with MIPS1/2 modes
 static uint8_t DecoderTableCOP3_32[] = {
 /* 0 */       MCD_OPC_ExtractField, 26, 6,  // Inst{31-26} ...
 /* 3 */       MCD_OPC_FilterValue, 51, 8, 0, // Skip to: 15
@@ -41,6 +43,7 @@ static uint8_t DecoderTableCOP3_32[] = {
 /* 51 */      MCD_OPC_Fail,
   0
 };
+#endif
 
 static uint8_t DecoderTableMicroMips32[] = {
 /* 0 */       MCD_OPC_ExtractField, 26, 6,  // Inst{31-26} ...

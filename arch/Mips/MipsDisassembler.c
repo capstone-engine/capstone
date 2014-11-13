@@ -227,17 +227,19 @@ static uint64_t getFeatureBits(int mode)
 	} else if (mode & CS_MODE_32) {
 		Bits &= ~Mips_FeatureMips16;
 		Bits &= ~Mips_FeatureFP64Bit;
+		Bits &= ~Mips_FeatureMips64r2;
 		Bits &= ~Mips_FeatureMips32r6;
 		Bits &= ~Mips_FeatureMips64r6;
 	} else if (mode & CS_MODE_64) {
 		Bits &= ~Mips_FeatureMips16;
 		Bits &= ~Mips_FeatureMips64r6;
-		Bits &= ~Mips_FeatureMips64r6;
 		Bits &= ~Mips_FeatureMips32r6;
-	}
-
-	if (mode & CS_MODE_MIPS32R6) {
+	} else if (mode & CS_MODE_MIPS32R6) {
 		Bits |= Mips_FeatureMips32r6;
+		Bits &= ~Mips_FeatureMips16;
+		Bits &= ~Mips_FeatureFP64Bit;
+		Bits &= ~Mips_FeatureMips64r6;
+		Bits &= ~Mips_FeatureMips64r2;
 	}
 
 	if (mode & CS_MODE_MICRO) {
@@ -346,6 +348,8 @@ static DecodeStatus MipsDisassembler_getInstruction(int mode, MCInst *instr,
 		return MCDisassembler_Fail;
 	}
 
+#if 0
+	// TODO: properly handle this in the future with MIPS1/2 modes
 	if (((mode & CS_MODE_32) == 0) && ((mode & CS_MODE_MIPS3) == 0)) {	// COP3
 		// DEBUG(dbgs() << "Trying COP3_ table (32-bit opcodes):\n");
 		Result = decodeInstruction(DecoderTableCOP3_32, instr, Insn, Address, MRI, mode);
@@ -354,6 +358,7 @@ static DecodeStatus MipsDisassembler_getInstruction(int mode, MCInst *instr,
 			return Result;
 		}
 	}
+#endif
 
 	if (((mode & CS_MODE_MIPS32R6) != 0) && ((mode & CS_MODE_MIPSGP64) != 0)) {
 		// DEBUG(dbgs() << "Trying Mips32r6_64r6 (GPR64) table (32-bit opcodes):\n");
