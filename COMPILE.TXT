@@ -30,11 +30,13 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
   - CAPSTONE_DIET: use this to make the output binaries more compact.
   - CAPSTONE_X86_REDUCE: another option to make X86 binary smaller.
   - CAPSTONE_X86_ATT_DISABLE: disables AT&T syntax on x86.
+  - CAPSTONE_STATIC: build static library.
+  - CAPSTONE_SHARED: build dynamic (shared) library.
 
-  By default, Capstone use system dynamic memory management, and both DIET and X86_REDUCE
-  modes are disable.
+  By default, Capstone uses system dynamic memory management, both DIET and X86_REDUCE
+  modes are disable, and builds all the static & shared libraries.
 
-  To avoid editing config.mk for these customization, can pass their values to
+  To avoid editing config.mk for these customization, we can pass their values to
   make.sh, as followings.
 
   $ CAPSTONE_ARCHS="arm aarch64 x86" CAPSTONE_USE_SYS_DYN_MEM=no CAPSTONE_DIET=yes CAPSTONE_X86_REDUCE=yes ./make.sh
