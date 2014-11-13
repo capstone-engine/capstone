@@ -76,8 +76,8 @@ typedef enum cs_mode {
 	CS_MODE_LITTLE_ENDIAN = 0,	// little endian mode (default mode)
 	CS_MODE_ARM = 0,	// 32-bit ARM
 	CS_MODE_16 = 1 << 1,	// 16-bit mode
-	CS_MODE_32 = 1 << 2,	// 32-bit mode. Also use for MIPS32 ISA
-	CS_MODE_64 = 1 << 3,	// 64-bit mode. Also use for MIPS64 ISA
+	CS_MODE_32 = 1 << 2,	// 32-bit mode.
+	CS_MODE_64 = 1 << 3,	// 64-bit mode.
 	CS_MODE_THUMB = 1 << 4,	// ARM's Thumb mode, including Thumb-2
 	CS_MODE_MCLASS = 1 << 5,	// ARM's Cortex-M series
 	CS_MODE_V8 = 1 << 6,	// ARMv8 A32 encodings for ARM
@@ -87,6 +87,8 @@ typedef enum cs_mode {
 	CS_MODE_MIPSGP64 = 1 << 7, // General Purpose Registers are 64-bit wide (MIPS arch)
 	CS_MODE_V9 = 1 << 4, // SparcV9 mode (Sparc architecture)
 	CS_MODE_BIG_ENDIAN = 1 << 31	// big endian mode
+	CS_MODE_MIPS32 = CS_MODE_32,	// Mips32 ISA
+	CS_MODE_MIPS64 = CS_MODE_64,	// Mips64 ISA.
 } cs_mode;
 
 typedef void* (*cs_malloc_t)(size_t size);
