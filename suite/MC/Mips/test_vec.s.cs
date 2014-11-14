@@ -1,4 +1,4 @@
-# CS_ARCH_MIPS, CS_MODE_32+CS_MODE_BIG_ENDIAN, None
+# CS_ARCH_MIPS, CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN, None
 0x78,0x1b,0xa6,0x5e = and.v $w25, $w20, $w27
 0x78,0x87,0x34,0x5e = bmnz.v $w17, $w6, $w7
 0x78,0xa9,0x88,0xde = bmz.v $w3, $w17, $w9

@@ -289,11 +289,11 @@ public class Capstone {
   public static final int CS_ARCH_ALL = 0xFFFF; // query id for cs_support()
 
   // disasm mode
-  public static final int CS_MODE_LITTLE_ENDIAN = 0;  // default mode
+  public static final int CS_MODE_LITTLE_ENDIAN = 0;  // little-endian mode (default mode)
   public static final int CS_MODE_ARM = 0;	          // 32-bit ARM
-  public static final int CS_MODE_16 = 1 << 1;
-  public static final int CS_MODE_32 = 1 << 2;
-  public static final int CS_MODE_64 = 1 << 3;
+  public static final int CS_MODE_16 = 1 << 1;		// 16-bit mode for X86
+  public static final int CS_MODE_32 = 1 << 2;		// 32-bit mode for X86
+  public static final int CS_MODE_64 = 1 << 3;		// 64-bit mode for X86, PPC
   public static final int CS_MODE_THUMB = 1 << 4;	  // ARM's Thumb mode, including Thumb-2
   public static final int CS_MODE_MCLASS = 1 << 5;	  // ARM's Cortex-M series
   public static final int CS_MODE_V8 = 1 << 6;	      // ARMv8 A32 encodings for ARM
@@ -301,8 +301,10 @@ public class Capstone {
   public static final int CS_MODE_MIPS3 = 1 << 5;     // Mips III ISA
   public static final int CS_MODE_MIPS32R6 = 1 << 6;  // Mips32r6 ISA
   public static final int CS_MODE_MIPSGP64 = 1 << 7;  // General Purpose Registers are 64-bit wide (MIPS arch)
-  public static final int CS_MODE_BIG_ENDIAN = 1 << 31;
+  public static final int CS_MODE_BIG_ENDIAN = 1 << 31; // big-endian mode
   public static final int CS_MODE_V9 = 1 << 4;	      // SparcV9 mode (Sparc arch)
+  public static final int CS_MODE_MIPS32 = CS_MODE_32; // Mips32 ISA
+  public static final int CS_MODE_MIPS64 = CS_MODE_64; // Mips64 ISA
 
   // Capstone error
   public static final int CS_ERR_OK = 0;

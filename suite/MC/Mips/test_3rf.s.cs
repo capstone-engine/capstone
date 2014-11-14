@@ -1,4 +1,4 @@
-# CS_ARCH_MIPS, CS_MODE_32+CS_MODE_BIG_ENDIAN, None
+# CS_ARCH_MIPS, CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN, None
 0x78,0x1c,0x9f,0x1b = fadd.w $w28, $w19, $w28
 0x78,0x3d,0x13,0x5b = fadd.d $w13, $w2, $w29
 0x78,0x19,0x5b,0x9a = fcaf.w $w14, $w11, $w25

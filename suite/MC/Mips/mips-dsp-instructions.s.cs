@@ -1,4 +1,4 @@
-# CS_ARCH_MIPS, CS_MODE_32+CS_MODE_BIG_ENDIAN, None
+# CS_ARCH_MIPS, CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN, None
 0x7e,0x32,0x83,0x11 = precrq.qb.ph $16, $17, $18
 0x7e,0x53,0x8d,0x11 = precrq.ph.w $17, $18, $19
 0x7e,0x74,0x95,0x51 = precrq_rs.ph.w $18, $19, $20

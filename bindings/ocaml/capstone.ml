@@ -26,9 +26,9 @@ type arch =
 type mode =
   |	CS_MODE_LITTLE_ENDIAN	(* little-endian mode (default mode) *)
   |	CS_MODE_ARM			(* ARM mode *)
-  |	CS_MODE_16			(* 16-bit mode (for X86, Mips) *)
-  |	CS_MODE_32			(* 32-bit mode (for X86, Mips) *)
-  |	CS_MODE_64			(* 64-bit mode (for X86, Mips) *)
+  |	CS_MODE_16			(* 16-bit mode (for X86) *)
+  |	CS_MODE_32			(* 32-bit mode (for X86) *)
+  |	CS_MODE_64			(* 64-bit mode (for X86, PPC) *)
   |	CS_MODE_THUMB		(* ARM's Thumb mode, including Thumb-2 *)
   |	CS_MODE_MCLASS		(* ARM's MClass mode *)
   |	CS_MODE_V8    		(* ARMv8 A32 encodings for ARM *)
@@ -38,6 +38,8 @@ type mode =
   |	CS_MODE_MIPSGP64	(* MipsGP64 mode (MIPS architecture) *)
   |	CS_MODE_V9			(* SparcV9 mode (Sparc architecture) *)
   |	CS_MODE_BIG_ENDIAN	(* big-endian mode *)
+  |	CS_MODE_MIPS32		(* Mips32 mode (for Mips) *)
+  |	CS_MODE_MIPS64		(* Mips64 mode (for Mips) *)
 
 
 (* Runtime option for the disassembled engine *)

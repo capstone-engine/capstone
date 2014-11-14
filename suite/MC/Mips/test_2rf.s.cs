@@ -1,4 +1,4 @@
-# CS_ARCH_MIPS, CS_MODE_32+CS_MODE_BIG_ENDIAN, None
+# CS_ARCH_MIPS, CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN, None
 0x7b,0x20,0x66,0x9e = fclass.w $w26, $w12
 0x7b,0x21,0x8e,0x1e = fclass.d $w24, $w17
 0x7b,0x30,0x02,0x1e = fexupl.w $w8, $w0

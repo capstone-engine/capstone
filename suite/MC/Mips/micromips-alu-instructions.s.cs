@@ -1,4 +1,4 @@
-# CS_ARCH_MIPS, CS_MODE_32+CS_MODE_MICRO, None
+# CS_ARCH_MIPS, CS_MODE_MIPS32+CS_MODE_MICRO, None
 0xe6,0x00,0x10,0x49 = add $9, $6, $7
 0x26,0x11,0x67,0x45 = addi $9, $6, 17767
 0x26,0x31,0x67,0xc5 = addiu $9, $6, -15001

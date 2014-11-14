@@ -30,7 +30,7 @@ static cs_err init(cs_struct *ud)
 	ud->insn_name = Mips_insn_name;
 	ud->group_name = Mips_group_name;
 
-	if (ud->mode & CS_MODE_32)
+	if (ud->mode & CS_MODE_32 || ud->mode & CS_MODE_MIPS32R6)
 		ud->disasm = Mips_getInstruction;
 	else
 		ud->disasm = Mips64_getInstruction;

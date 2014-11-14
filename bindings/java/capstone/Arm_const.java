@@ -72,6 +72,7 @@ public class Arm_const {
 	public static final int ARM_SYSREG_CONTROL = 278;
 
 	// The memory barrier constants map directly to the 4-bit encoding of
+
 	// the option field for Memory Barrier operations.
 
 	public static final int ARM_MB_INVALID = 0;

@@ -1,4 +1,4 @@
-# CS_ARCH_MIPS, CS_MODE_32+CS_MODE_BIG_ENDIAN, None
+# CS_ARCH_MIPS, CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN, None
 0x78,0x30,0xe8,0x80 = andi.b $w2, $w29, 48
 0x78,0x7e,0xb1,0x81 = bmnzi.b $w6, $w22, 126
 0x79,0x58,0x0e,0xc1 = bmzi.b $w27, $w1, 88

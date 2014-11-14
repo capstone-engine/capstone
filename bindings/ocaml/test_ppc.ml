@@ -17,7 +17,7 @@ let print_string_hex comment str =
 let _PPC_CODE = "\x80\x20\x00\x00\x80\x3f\x00\x00\x10\x43\x23\x0e\xd0\x44\x00\x80\x4c\x43\x22\x02\x2d\x03\x00\x80\x7c\x43\x20\x14\x7c\x43\x20\x93\x4f\x20\x00\x21\x4c\xc8\x00\x21";;
 
 let all_tests = [
-	(CS_ARCH_PPC, [CS_MODE_32; CS_MODE_BIG_ENDIAN], _PPC_CODE, "PPC-64");
+	(CS_ARCH_PPC, [CS_MODE_64; CS_MODE_BIG_ENDIAN], _PPC_CODE, "PPC-64");
 ];;
 
 let print_op handle i op =

@@ -1,4 +1,4 @@
-# CS_ARCH_MIPS, CS_MODE_32+CS_MODE_BIG_ENDIAN, None
+# CS_ARCH_MIPS, CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN, None
 0x7a,0x00,0x08,0x20 = ld.b $w0, -512($1)
 0x78,0x00,0x10,0x60 = ld.b $w1, 0($2)
 0x79,0xff,0x18,0xa0 = ld.b $w2, 511($3)

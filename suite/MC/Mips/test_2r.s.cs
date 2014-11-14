@@ -1,4 +1,4 @@
-# CS_ARCH_MIPS, CS_MODE_32+CS_MODE_BIG_ENDIAN, None
+# CS_ARCH_MIPS, CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN, None
 0x7b,0x00,0x4f,0x9e = fill.b $w30, $9
 0x7b,0x01,0xbf,0xde = fill.h $w31, $23
 0x7b,0x02,0xc4,0x1e = fill.w $w16, $24

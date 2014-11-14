@@ -1,4 +1,4 @@
-# CS_ARCH_MIPS, CS_MODE_32+CS_MODE_BIG_ENDIAN, None
+# CS_ARCH_MIPS, CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN, None
 0x79,0x43,0x4e,0x59 = insve.b $w25[3], $w9[0]
 0x79,0x62,0x16,0x19 = insve.h $w24[2], $w2[0]
 0x79,0x72,0x68,0x19 = insve.w $w0[2], $w13[0]
