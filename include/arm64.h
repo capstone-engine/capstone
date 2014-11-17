@@ -364,7 +364,7 @@ typedef struct cs_arm64_op {
 	arm64_op_type type;	// operand type
 	union {
 		unsigned int reg;	// register value for REG operand
-		int32_t imm;		// immediate value, or index for C-IMM or IMM operand
+		int64_t imm;		// immediate value, or index for C-IMM or IMM operand
 		double fp;			// floating point value for FP operand
 		arm64_op_mem mem;		// base/index/scale/disp value for MEM operand
 		arm64_pstate pstate;		// PState field of MSR instruction.
