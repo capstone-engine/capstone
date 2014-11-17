@@ -20,7 +20,7 @@ class Arm64OpShift(ctypes.Structure):
 class Arm64OpValue(ctypes.Union):
     _fields_ = (
         ('reg', ctypes.c_uint),
-        ('imm', ctypes.c_int32),
+        ('imm', ctypes.c_int64),
         ('fp', ctypes.c_double),
         ('mem', Arm64OpMem),
         ('pstate', ctypes.c_int),

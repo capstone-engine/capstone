@@ -26,7 +26,7 @@ public class Arm64 {
 
   public static class OpValue extends Union {
     public int reg;
-    public int imm;
+    public long imm;
     public double fp;
     public MemType mem;
     public int pstate;
