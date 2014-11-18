@@ -55,7 +55,10 @@ class custom_sdist(sdist):
         """
         result = []
 
-        dir_util.remove_tree("src/")
+        try:
+            dir_util.remove_tree("src/")
+        except:
+            pass
         dir_util.copy_tree("../../arch", "src/arch/")
         dir_util.copy_tree("../../include", "src/include/")
         dir_util.copy_tree("../../msvc/headers", "src/msvc/headers/")
