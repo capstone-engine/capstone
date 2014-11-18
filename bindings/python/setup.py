@@ -34,7 +34,8 @@ def get_sources():
     result = []
     for root, _, files in os.walk("./src/"):
         for name in files:
-            if name.endswith(".c"):
+            if name.endswith(".c") or name.endswith(".h") or \
+                name.endswith(".inc") or root == "./src/":
                 result.append(os.path.join(root, name))
 
     return result
@@ -64,6 +65,12 @@ class custom_sdist(sdist):
         dir_util.copy_tree("../../msvc/headers", "src/msvc/headers/")
 
         result.extend(glob.glob("../../*.[ch]"))
+        result.extend(glob.glob("../../*.mk"))
+        result.extend(glob.glob("../../Makefile"))
+        result.extend(glob.glob("../../LICENSE*"))
+        result.extend(glob.glob("../../README"))
+        result.extend(glob.glob("../../*.TXT"))
+        result.extend(glob.glob("../../RELEASE_NOTES"))
 
         for filename in result:
             outpath = os.path.join("./src/", os.path.basename(filename))
