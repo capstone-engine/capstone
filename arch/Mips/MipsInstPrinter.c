@@ -169,8 +169,9 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
 	mnem = printAliasInstr(MI, O, info);
 	if (!mnem) {
 		mnem = printAlias(MI, O);
-		if (!mnem)
+		if (!mnem) {
 			printInstruction(MI, O, NULL);
+		}
 	}
 
 	if (mnem) {
@@ -182,7 +183,12 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
 
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	MCOperand *Op = MCInst_getOperand(MI, OpNo);
+	MCOperand *Op;
+
+	if (OpNo >= MI->size)
+		return;
+
+	Op = MCInst_getOperand(MI, OpNo);
 	if (MCOperand_isReg(Op)) {
 		unsigned int reg = MCOperand_getReg(Op);
 		printRegName(O, reg);

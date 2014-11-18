@@ -34,6 +34,11 @@ CODE32 += b"\x0f\x23\x00"       # mov dr0, eax
 CODE32 += b"\x0f\x23\x40"       # mov dr0, eax
 CODE32 += b"\x0f\x23\x80"       # mov dr0, eax
 
+CODE32 += b"\x66\x2e\x0f\x58\xc0" # addpd   xmm0, xmm0
+CODE32 += b"\x2e\x66\x0f\x58\xc0" # addpd   xmm0, xmm0
+CODE32 += b"\x66\xf2\x0f\x38\xf1\xc3" # crc32w %bx, %eax
+CODE32 += b"\xf2\x0f\x38\xf1\x8c\xcb\xef\xbe\xad\xde" # crc32l -0x21524111(%ebx, %ecx, 8), %ecx
+
 CODE32_MEMREF  = b"\x8b\x84\x91\x23\x01\x00\x00"
 CODE32_MEMREF += b"\x8b\x04\x95\x23\x01\x00\x00"
 CODE32_MEMREF += b"\x8b\x04\x95\xdd\xfe\xff\xff"
