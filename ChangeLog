@@ -18,6 +18,8 @@ Version 3.0: November 2014
 
 - Python binding supports Python3 (besides Python2).
 - Support Ocaml binding.
+- Java: add close() method to be used to deinitialize a Capstone object when
+  no longer use it.
 
 
 [ Architectures ]
