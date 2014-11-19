@@ -2,8 +2,8 @@
 # To be used to generate capstone.pc for pkg-config
 
 # version major & minor 
-PKG_MAJOR = 2
-PKG_MINOR = 1
+PKG_MAJOR = 3
+PKG_MINOR = 0
 
 # version bugfix level. Example: PKG_EXTRA = 1
-PKG_EXTRA = 2
+PKG_EXTRA =

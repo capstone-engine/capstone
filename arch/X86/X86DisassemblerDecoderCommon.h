@@ -14,8 +14,8 @@
  *
  *===----------------------------------------------------------------------===*/
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 /*
  * This header file provides those definitions that need to be shared between
@@ -36,6 +36,8 @@
 #define XOP8_MAP_SYM      x86DisassemblerXOP8Opcodes
 #define XOP9_MAP_SYM      x86DisassemblerXOP9Opcodes
 #define XOPA_MAP_SYM      x86DisassemblerXOPAOpcodes
+#define T3DNOW_MAP_SYM    x86DisassemblerT3DNOWOpcodes
+
 
 /*
  * Attributes of an instruction that must be known before the opcode can be
@@ -81,6 +83,7 @@ ENUM_ENTRY(IC_OPSIZE,             3,  "requires an OPSIZE prefix, so "       \
 		"operands change width")               \
 ENUM_ENTRY(IC_ADSIZE,             3,  "requires an ADSIZE prefix, so "       \
 		"operands change width")               \
+ENUM_ENTRY(IC_OF,                 2,  "requires 0x0F prefix")                 \
 ENUM_ENTRY(IC_XD,                 2,  "may say something about the opcode "  \
 		"but not the operands")                \
 ENUM_ENTRY(IC_XS,                 2,  "may say something about the opcode "  \
@@ -284,7 +287,8 @@ typedef enum {
 	THREEBYTE_3A  = 3,
 	XOP8_MAP      = 4,
 	XOP9_MAP      = 5,
-	XOPA_MAP      = 6
+	XOPA_MAP      = 6,
+	T3DNOW_MAP    = 7
 } OpcodeType;
 
 /*
@@ -332,34 +336,27 @@ typedef enum {
 } ModRMDecisionType;
 #undef ENUM_ENTRY
 
-/*
- * ModRMDecision - Specifies whether a ModR/M byte is needed and (if so) which
- *  instruction each possible value of the ModR/M byte corresponds to.  Once
- *  this information is known, we have narrowed down to a single instruction.
- */
-struct ModRMDecision {
-	uint8_t     modrm_type;
-
-	/* The macro below must be defined wherever this file is included. */
-	INSTRUCTION_IDS
-};
-
-/*
- * OpcodeDecision - Specifies which set of ModR/M->instruction tables to look at
- *   given a particular opcode.
- */
-struct OpcodeDecision {
-	struct ModRMDecision modRMDecisions[256];
-};
-
-/*
- * Physical encodings of instruction operands.
- */
+#define CASE_ENCODING_RM     \
+    case ENCODING_RM:        \
+    case ENCODING_RM_CD2:    \
+    case ENCODING_RM_CD4:    \
+    case ENCODING_RM_CD8:    \
+    case ENCODING_RM_CD16:   \
+    case ENCODING_RM_CD32:   \
+    case ENCODING_RM_CD64
+ 
+// Physical encodings of instruction operands.
 
 #define ENCODINGS                                                            \
 ENUM_ENTRY(ENCODING_NONE,   "")                                              \
 ENUM_ENTRY(ENCODING_REG,    "Register operand in ModR/M byte.")              \
 ENUM_ENTRY(ENCODING_RM,     "R/M operand in ModR/M byte.")                   \
+ENUM_ENTRY(ENCODING_RM_CD2, "R/M operand with CDisp scaling of 2")           \
+ENUM_ENTRY(ENCODING_RM_CD4, "R/M operand with CDisp scaling of 4")           \
+ENUM_ENTRY(ENCODING_RM_CD8, "R/M operand with CDisp scaling of 8")           \
+ENUM_ENTRY(ENCODING_RM_CD16,"R/M operand with CDisp scaling of 16")          \
+ENUM_ENTRY(ENCODING_RM_CD32,"R/M operand with CDisp scaling of 32")          \
+ENUM_ENTRY(ENCODING_RM_CD64,"R/M operand with CDisp scaling of 64")          \
 ENUM_ENTRY(ENCODING_VVVV,   "Register operand in VEX.vvvv byte.")            \
 ENUM_ENTRY(ENCODING_WRITEMASK, "Register operand in EVEX.aaa byte.")         \
 ENUM_ENTRY(ENCODING_CB,     "1-byte code offset (possible new CS value)")    \
@@ -470,8 +467,12 @@ ENUM_ENTRY(TYPE_XMM128,     "16-byte")                                       \
 ENUM_ENTRY(TYPE_XMM256,     "32-byte")                                       \
 ENUM_ENTRY(TYPE_XMM512,     "64-byte")                                       \
 ENUM_ENTRY(TYPE_VK1,        "1-bit")                                         \
+ENUM_ENTRY(TYPE_VK2,        "2-bit")                                         \
+ENUM_ENTRY(TYPE_VK4,        "4-bit")                                         \
 ENUM_ENTRY(TYPE_VK8,        "8-bit")                                         \
 ENUM_ENTRY(TYPE_VK16,       "16-bit")                                        \
+ENUM_ENTRY(TYPE_VK32,       "32-bit")                                        \
+ENUM_ENTRY(TYPE_VK64,       "64-bit")                                        \
 ENUM_ENTRY(TYPE_XMM0,       "Implicit use of XMM0")                          \
 ENUM_ENTRY(TYPE_SEGMENTREG, "Segment register operand")                      \
 ENUM_ENTRY(TYPE_DEBUGREG,   "Debug register operand")                        \
@@ -520,15 +521,6 @@ typedef enum {
 #undef ENUM_ENTRY
 
 #define X86_MAX_OPERANDS 5
-
-/*
- * The specification for how to extract and interpret a full instruction and
- * its operands.
- */
-struct InstructionSpecifier {
-	/* The macro below must be defined wherever this file is included. */
-	INSTRUCTION_SPECIFIER_FIELDS
-};
 
 /*
  * Decoding mode for the Intel disassembler.  16-bit, 32-bit, and 64-bit mode

@@ -1,0 +1,6 @@
+Input files for testing Capstone engine.
+
+Format of input files:
+
+# ARCH, MODE, OPTION
+hexcode = assembly

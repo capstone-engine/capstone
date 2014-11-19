@@ -38,3 +38,19 @@ Hugo Fortier
 Joxean Koret
 Bruce Dang
 Andrew Dunham
+
+
+Contributors (in no particular order)
+=====================================
+(Please let us know if you want to have your name here)
+
+Ole André Vadla Ravnås (author of the 100th Pull-Request in our Github repo, thanks!)
+Axel "0vercl0k" Souchet (@0vercl0k) & Alex Ionescu: port to MSVC.
+Daniel Pistelli: Cmake support.
+Peter Hlavaty: integrate Capstone for Windows kernel drivers.
+Guillaume Jeanne: Ocaml binding.
+Martin Tofall, Obsidium Software: Optimize X86 performance & size.
+David Martínez Moreno: Debian package.
+Félix Cloutier: Xcode project.
+Benoit Lecocq: OpenBSD package.
+Christophe Avoinne (Hlide): Improve memory management for better performance.

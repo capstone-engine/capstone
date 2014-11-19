@@ -1,5 +1,5 @@
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #ifndef CS_SSTREAM_H_
 #define CS_SSTREAM_H_
@@ -12,5 +12,22 @@ typedef struct SStream {
 void SStream_Init(SStream *ss);
 
 void SStream_concat(SStream *ss, const char *fmt, ...);
+
+void SStream_concat0(SStream *ss, char *s);
+
+void printInt64Bang(SStream *O, int64_t val);
+
+void printInt64(SStream *O, int64_t val);
+
+void printInt32Bang(SStream *O, int32_t val);
+
+void printInt32(SStream *O, int32_t val);
+
+void printUInt32Bang(SStream *O, uint32_t val);
+
+void printUInt32(SStream *O, uint32_t val);
+
+// print number in decimal mode
+void printInt32BangDec(SStream *O, int32_t val);
 
 #endif

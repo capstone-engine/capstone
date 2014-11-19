@@ -7,7 +7,7 @@
 \*===----------------------------------------------------------------------===*/
 
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 
 #ifdef GET_SUBTARGETINFO_ENUM
@@ -48,26 +48,27 @@
 #define ARM_FeatureVFPOnlySP (1ULL << 32)
 #define ARM_FeatureVMLxForwarding (1ULL << 33)
 #define ARM_FeatureVirtualization (1ULL << 34)
-#define ARM_HasV4TOps (1ULL << 35)
-#define ARM_HasV5TEOps (1ULL << 36)
-#define ARM_HasV5TOps (1ULL << 37)
-#define ARM_HasV6MOps (1ULL << 38)
-#define ARM_HasV6Ops (1ULL << 39)
-#define ARM_HasV6T2Ops (1ULL << 40)
-#define ARM_HasV7Ops (1ULL << 41)
-#define ARM_HasV8Ops (1ULL << 42)
-#define ARM_ModeThumb (1ULL << 43)
-#define ARM_ProcA5 (1ULL << 44)
-#define ARM_ProcA7 (1ULL << 45)
-#define ARM_ProcA8 (1ULL << 46)
-#define ARM_ProcA9 (1ULL << 47)
-#define ARM_ProcA12 (1ULL << 48)
-#define ARM_ProcA15 (1ULL << 49)
-#define ARM_ProcA53 (1ULL << 50)
-#define ARM_ProcA57 (1ULL << 51)
-#define ARM_ProcKrait (1ULL << 52)
-#define ARM_ProcR5 (1ULL << 53)
-#define ARM_ProcSwift (1ULL << 54)
+#define ARM_FeatureZCZeroing (1ULL << 35)
+#define ARM_HasV4TOps (1ULL << 36)
+#define ARM_HasV5TEOps (1ULL << 37)
+#define ARM_HasV5TOps (1ULL << 38)
+#define ARM_HasV6MOps (1ULL << 39)
+#define ARM_HasV6Ops (1ULL << 40)
+#define ARM_HasV6T2Ops (1ULL << 41)
+#define ARM_HasV7Ops (1ULL << 42)
+#define ARM_HasV8Ops (1ULL << 43)
+#define ARM_ModeThumb (1ULL << 44)
+#define ARM_ProcA5 (1ULL << 45)
+#define ARM_ProcA7 (1ULL << 46)
+#define ARM_ProcA8 (1ULL << 47)
+#define ARM_ProcA9 (1ULL << 48)
+#define ARM_ProcA12 (1ULL << 49)
+#define ARM_ProcA15 (1ULL << 50)
+#define ARM_ProcA53 (1ULL << 51)
+#define ARM_ProcA57 (1ULL << 52)
+#define ARM_ProcKrait (1ULL << 53)
+#define ARM_ProcR5 (1ULL << 54)
+#define ARM_ProcSwift (1ULL << 55)
 
 #endif // GET_SUBTARGETINFO_ENUM
 

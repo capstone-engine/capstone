@@ -39,6 +39,10 @@ public class Test {
 
   public static final byte[] PPC_CODE = new byte[] {(byte)0x80, (byte)0x20, (byte)0x00, (byte)0x00, (byte)0x80, (byte)0x3f, (byte)0x00, (byte)0x00, (byte)0x10, (byte)0x43, (byte)0x23, (byte)0x0e, (byte)0xd0, (byte)0x44, (byte)0x00, (byte)0x80, (byte)0x4c, (byte)0x43, (byte)0x22, (byte)0x02, (byte)0x2d, (byte)0x03, (byte)0x00, (byte)0x80, (byte)0x7c, (byte)0x43, (byte)0x20, (byte)0x14, (byte)0x7c, (byte)0x43, (byte)0x20, (byte)0x93, (byte)0x4f, (byte)0x20, (byte)0x00, (byte)0x21, (byte)0x4c, (byte)0xc8, (byte)0x00, (byte)0x21 };
   public static final byte[] X86_CODE = new byte[] { (byte)0x8d, (byte)0x4c, (byte)0x32, (byte)0x08, (byte)0x01, (byte)0xd8, (byte)0x81, (byte)0xc6, (byte)0x34, (byte)0x12, (byte)0x00, (byte)0x00 };
+  public static final byte[] SPARC_CODE = new byte[] { (byte)0x80, (byte)0xa0, (byte)0x40, (byte)0x02, (byte)0x85, (byte)0xc2, (byte)0x60, (byte)0x08, (byte)0x85, (byte)0xe8, (byte)0x20, (byte)0x01, (byte)0x81, (byte)0xe8, (byte)0x00, (byte)0x00, (byte)0x90, (byte)0x10, (byte)0x20, (byte)0x01, (byte)0xd5, (byte)0xf6, (byte)0x10, (byte)0x16, (byte)0x21, (byte)0x00, (byte)0x00, (byte)0x0a, (byte)0x86, (byte)0x00, (byte)0x40, (byte)0x02, (byte)0x01, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x12, (byte)0xbf, (byte)0xff, (byte)0xff, (byte)0x10, (byte)0xbf, (byte)0xff, (byte)0xff, (byte)0xa0, (byte)0x02, (byte)0x00, (byte)0x09, (byte)0x0d, (byte)0xbf, (byte)0xff, (byte)0xff, (byte)0xd4, (byte)0x20, (byte)0x60, (byte)0x00, (byte)0xd4, (byte)0x4e, (byte)0x00, (byte)0x16, (byte)0x2a, (byte)0xc2, (byte)0x80, (byte)0x03 };
+  public static final byte[] SYSZ_CODE = new byte[] { (byte)0xed, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x1a, (byte)0x5a, (byte)0x0f, (byte)0x1f, (byte)0xff, (byte)0xc2, (byte)0x09, (byte)0x80, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x07, (byte)0xf7, (byte)0xeb, (byte)0x2a, (byte)0xff, (byte)0xff, (byte)0x7f, (byte)0x57, (byte)0xe3, (byte)0x01, (byte)0xff, (byte)0xff, (byte)0x7f, (byte)0x57, (byte)0xeb, (byte)0x00, (byte)0xf0, (byte)0x00, (byte)0x00, (byte)0x24, (byte)0xb2, (byte)0x4f, (byte)0x00, (byte)0x78 };
+  public static final byte[] SPARCV9_CODE = new byte[] { (byte)0x81, (byte)0xa8, (byte)0x0a, (byte)0x24, (byte)0x89, (byte)0xa0, (byte)0x10, (byte)0x20, (byte)0x89, (byte)0xa0, (byte)0x1a, (byte)0x60, (byte)0x89, (byte)0xa0, (byte)0x00, (byte)0xe0 };
+  public static final byte[] XCORE_CODE = new byte[] { (byte)0xfe, (byte)0x0f, (byte)0xfe, (byte)0x17, (byte)0x13, (byte)0x17, (byte)0xc6, (byte)0xfe, (byte)0xec, (byte)0x17, (byte)0x97, (byte)0xf8, (byte)0xec, (byte)0x4f, (byte)0x1f, (byte)0xfd, (byte)0xec, (byte)0x37, (byte)0x07, (byte)0xf2, (byte)0x45, (byte)0x5b, (byte)0xf9, (byte)0xfa, (byte)0x02, (byte)0x06, (byte)0x1b, (byte)0x10 };
 
   static public void main(String argv[]) {
     platform[] platforms = {
@@ -94,13 +98,13 @@ public class Test {
           ),
       new platform(
           Capstone.CS_ARCH_MIPS,
-          Capstone.CS_MODE_32 + Capstone.CS_MODE_BIG_ENDIAN,
+          Capstone.CS_MODE_MIPS32 + Capstone.CS_MODE_BIG_ENDIAN,
           new byte[] {(byte)0x0C, (byte)0x10, (byte)0x00, (byte)0x97, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x24, (byte)0x02, (byte)0x00, (byte)0x0c, (byte)0x8f, (byte)0xa2, (byte)0x00, (byte)0x00, (byte)0x34, (byte)0x21, (byte)0x34, (byte)0x56 },
           "MIPS-32 (Big-endian)"
           ),
       new platform(
           Capstone.CS_ARCH_MIPS,
-          Capstone.CS_MODE_64+ Capstone.CS_MODE_LITTLE_ENDIAN,
+          Capstone.CS_MODE_MIPS64+ Capstone.CS_MODE_LITTLE_ENDIAN,
           new byte[] {(byte)0x56, (byte)0x34, (byte)0x21, (byte)0x34, (byte)0xc2, (byte)0x17, (byte)0x01, (byte)0x00 },
           "MIPS-64-EL (Little-endian)"
           ),
@@ -123,6 +127,30 @@ public class Test {
           PPC_CODE,
           "PPC-64, print register with number only"
           ),
+      new platform (
+          Capstone.CS_ARCH_SPARC,
+          Capstone.CS_MODE_BIG_ENDIAN,
+          SPARC_CODE,
+          "Sparc"
+          ),
+      new platform (
+          Capstone.CS_ARCH_SPARC,
+          Capstone.CS_MODE_BIG_ENDIAN + Capstone.CS_MODE_V9,
+          SPARCV9_CODE,
+          "SparcV9"
+          ),
+      new platform (
+          Capstone.CS_ARCH_SYSZ,
+          0,
+          SYSZ_CODE,
+          "SystemZ"
+          ),
+      new platform (
+          Capstone.CS_ARCH_XCORE,
+          0,
+          XCORE_CODE,
+          "XCore"
+          ),
     };
 
     for (int j = 0; j < platforms.length; j++) {
@@ -142,6 +170,9 @@ public class Test {
               all_insn[i].mnemonic, all_insn[i].opStr));
       }
       System.out.printf("0x%x:\n\n", all_insn[all_insn.length-1].address + all_insn[all_insn.length-1].size);
+
+      // Close when done
+      cs.close();
     }
   }
 }

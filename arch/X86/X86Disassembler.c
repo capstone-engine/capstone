@@ -14,10 +14,12 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
-#include <inttypes.h>	// debug
+#ifdef CAPSTONE_HAS_X86
+
+#include "../../inttypes.h"	// debug
 #include <string.h>
 
 #include "../../cs_priv.h"
@@ -26,19 +28,19 @@
 #include "X86DisassemblerDecoderCommon.h"
 #include "X86DisassemblerDecoder.h"
 #include "../../MCInst.h"
+#include "../../utils.h"
 #include "X86Mapping.h"
 
 #define GET_REGINFO_ENUM
+#define GET_REGINFO_MC_DESC
 #include "X86GenRegisterInfo.inc"
 
 #define GET_INSTRINFO_ENUM
+#ifdef CAPSTONE_X86_REDUCE
+#include "X86GenInstrInfo_reduce.inc"
+#else
 #include "X86GenInstrInfo.inc"
-
-struct reader_info {
-	const uint8_t *code;
-	uint64_t size;
-	uint64_t offset;
-};
+#endif
 
 // Fill-ins to make the compiler happy.  These constants are never actually
 //   assigned; they are just filler to make an automatically-generated switch
@@ -63,7 +65,6 @@ enum {
 /// @param reg        - The Reg to append.
 static void translateRegister(MCInst *mcInst, Reg reg)
 {
-//#define ENTRY(x) X86_x,
 #define ENTRY(x) X86_##x,
 	uint8_t llvmRegnums[] = {
 		ALL_REGS
@@ -72,7 +73,7 @@ static void translateRegister(MCInst *mcInst, Reg reg)
 #undef ENTRY
 
 	uint8_t llvmRegnum = llvmRegnums[reg];
-	MCInst_addOperand(mcInst, MCOperand_CreateReg(llvmRegnum));
+	MCOperand_CreateReg0(mcInst, llvmRegnum);
 }
 
 static const uint8_t segmentRegnums[SEG_OVERRIDE_max] = {
@@ -92,8 +93,6 @@ static const uint8_t segmentRegnums[SEG_OVERRIDE_max] = {
 static bool translateSrcIndex(MCInst *mcInst, InternalInstruction *insn)
 {
 	unsigned baseRegNo;
-	MCOperand *segmentReg;
-	MCOperand *baseReg;
 
 	if (insn->mode == MODE_64BIT)
 		baseRegNo = insn->prefixPresent[0x67] ? X86_ESI : X86_RSI;
@@ -104,11 +103,9 @@ static bool translateSrcIndex(MCInst *mcInst, InternalInstruction *insn)
 		baseRegNo = insn->prefixPresent[0x67] ? X86_ESI : X86_SI;
 	}
 
-	baseReg = MCOperand_CreateReg(baseRegNo);
-	MCInst_addOperand(mcInst, baseReg);
+	MCOperand_CreateReg0(mcInst, baseRegNo);
 
-	segmentReg = MCOperand_CreateReg(segmentRegnums[insn->segmentOverride]);
-	MCInst_addOperand(mcInst, segmentReg);
+	MCOperand_CreateReg0(mcInst, segmentRegnums[insn->segmentOverride]);
 
 	return false;
 }
@@ -120,7 +117,6 @@ static bool translateSrcIndex(MCInst *mcInst, InternalInstruction *insn)
 static bool translateDstIndex(MCInst *mcInst, InternalInstruction *insn)
 {
 	unsigned baseRegNo;
-	MCOperand *baseReg;
 
 	if (insn->mode == MODE_64BIT)
 		baseRegNo = insn->prefixPresent[0x67] ? X86_EDI : X86_RDI;
@@ -131,8 +127,7 @@ static bool translateDstIndex(MCInst *mcInst, InternalInstruction *insn)
 		baseRegNo = insn->prefixPresent[0x67] ? X86_EDI : X86_DI;
 	}
 
-	baseReg = MCOperand_CreateReg(baseRegNo);
-	MCInst_addOperand(mcInst, baseReg);
+	MCOperand_CreateReg0(mcInst, baseRegNo);
 
 	return false;
 }
@@ -147,7 +142,6 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 		const OperandSpecifier *operand, InternalInstruction *insn)
 {
 	OperandType type;
-	MCOperand *segmentReg;
 
 	type = (OperandType)operand->type;
 	if (type == TYPE_RELv) {
@@ -173,7 +167,7 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 		}
 	} // By default sign-extend all X86 immediates based on their encoding.
 	else if (type == TYPE_IMM8 || type == TYPE_IMM16 || type == TYPE_IMM32 ||
-			type == TYPE_IMM64) {
+			type == TYPE_IMM64 || type == TYPE_IMMv) {
 		uint32_t Opcode = MCInst_getOpcode(mcInst);
 		switch (operand->encoding) {
 			default:
@@ -181,17 +175,29 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 			case ENCODING_IB:
 				// Special case those X86 instructions that use the imm8 as a set of
 				// bits, bit count, etc. and are not sign-extend.
-				if (Opcode != X86_BLENDPSrri && Opcode != X86_BLENDPDrri &&
-						Opcode != X86_PBLENDWrri && Opcode != X86_MPSADBWrri &&
-						Opcode != X86_DPPSrri && Opcode != X86_DPPDrri &&
-						Opcode != X86_INSERTPSrr && Opcode != X86_VBLENDPSYrri &&
-						Opcode != X86_VBLENDPSYrmi && Opcode != X86_VBLENDPDYrri &&
-						Opcode != X86_VBLENDPDYrmi && Opcode != X86_VPBLENDWrri &&
-						Opcode != X86_VMPSADBWrri && Opcode != X86_VDPPSYrri &&
-						Opcode != X86_VDPPSYrmi && Opcode != X86_VDPPDrri &&
-						Opcode != X86_VINSERTPSrr && Opcode != X86_INT)
-					if(immediate & 0x80)
-						immediate |= ~(0xffull);
+				if (
+#ifndef CAPSTONE_X86_REDUCE
+						Opcode != X86_BLENDPSrri &&
+						Opcode != X86_BLENDPDrri &&
+						Opcode != X86_PBLENDWrri &&
+						Opcode != X86_MPSADBWrri &&
+						Opcode != X86_DPPSrri &&
+						Opcode != X86_DPPDrri &&
+						Opcode != X86_INSERTPSrr &&
+						Opcode != X86_VBLENDPSYrri &&
+						Opcode != X86_VBLENDPSYrmi &&
+						Opcode != X86_VBLENDPDYrri &&
+						Opcode != X86_VBLENDPDYrmi &&
+						Opcode != X86_VPBLENDWrri &&
+						Opcode != X86_VMPSADBWrri &&
+						Opcode != X86_VDPPSYrri &&
+						Opcode != X86_VDPPSYrmi &&
+						Opcode != X86_VDPPDrri &&
+						Opcode != X86_VINSERTPSrr &&
+#endif
+						Opcode != X86_INT)
+						if(immediate & 0x80)
+							immediate |= ~(0xffull);
 				break;
 			case ENCODING_IW:
 				if(immediate & 0x8000)
@@ -210,13 +216,13 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 		case TYPE_XMM32:
 		case TYPE_XMM64:
 		case TYPE_XMM128:
-			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_XMM0 + ((uint32_t)immediate >> 4)));
+			MCOperand_CreateReg0(mcInst, X86_XMM0 + ((uint32_t)immediate >> 4));
 			return;
 		case TYPE_XMM256:
-			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_YMM0 + ((uint32_t)immediate >> 4)));
+			MCOperand_CreateReg0(mcInst, X86_YMM0 + ((uint32_t)immediate >> 4));
 			return;
 		case TYPE_XMM512:
-			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_ZMM0 + ((uint32_t)immediate >> 4)));
+			MCOperand_CreateReg0(mcInst, X86_ZMM0 + ((uint32_t)immediate >> 4));
 			return;
 		case TYPE_REL8:
 			if(immediate & 0x80)
@@ -232,12 +238,11 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 			break;
 	}
 
-	MCInst_addOperand(mcInst, MCOperand_CreateImm(immediate));
+	MCOperand_CreateImm0(mcInst, immediate);
 
 	if (type == TYPE_MOFFS8 || type == TYPE_MOFFS16 ||
 			type == TYPE_MOFFS32 || type == TYPE_MOFFS64) {
-		segmentReg = MCOperand_CreateReg(segmentRegnums[insn->segmentOverride]);
-		MCInst_addOperand(mcInst, segmentReg);
+		MCOperand_CreateReg0(mcInst, segmentRegnums[insn->segmentOverride]);
 	}
 }
 
@@ -266,7 +271,7 @@ static bool translateRMRegister(MCInst *mcInst, InternalInstruction *insn)
 				return true;
 #define ENTRY(x)                                                      \
 		case EA_REG_##x:                                                    \
-																			MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_##x)); break;
+			MCOperand_CreateReg0(mcInst, X86_##x); break;
 			ALL_REGS
 #undef ENTRY
 		default:
@@ -299,19 +304,18 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 	//   5. segmentreg    (register)  x86_registerNONE for now, but could be set
 	//                                if we have segment overrides
 
-	MCOperand *baseReg;
-	MCOperand *scaleAmount;
-	MCOperand *indexReg;
-	MCOperand *displacement;
-	MCOperand *segmentReg;
-	bool IndexIs512;
+	bool IndexIs512, IndexIs128, IndexIs256;
+	int scaleAmount, indexReg;
+#ifndef CAPSTONE_X86_REDUCE
+	uint32_t Opcode;
+#endif
 
 	if (insn->eaBase == EA_BASE_sib || insn->eaBase == EA_BASE_sib64) {
 		if (insn->sibBase != SIB_BASE_NONE) {
 			switch (insn->sibBase) {
 #define ENTRY(x)                                          \
 				case SIB_BASE_##x:                                  \
-																	baseReg = MCOperand_CreateReg(X86_##x); break;
+				MCOperand_CreateReg0(mcInst, X86_##x); break;
 				ALL_SIB_BASES
 #undef ENTRY
 				default:
@@ -319,7 +323,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 					return true;
 			}
 		} else {
-			baseReg = MCOperand_CreateReg(0);
+			MCOperand_CreateReg0(mcInst, 0);
 		}
 
 		// Check whether we are handling VSIB addressing mode for GATHER.
@@ -328,8 +332,12 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 		// I don't see a way to get the correct IndexReg in readSIB:
 		//   We can tell whether it is VSIB or SIB after instruction ID is decoded,
 		//   but instruction ID may not be decoded yet when calling readSIB.
-		uint32_t Opcode = MCInst_getOpcode(mcInst);
-		bool IndexIs128 = (Opcode == X86_VGATHERDPDrm ||
+#ifndef CAPSTONE_X86_REDUCE
+		Opcode = MCInst_getOpcode(mcInst);
+#endif
+		IndexIs128 = (
+#ifndef CAPSTONE_X86_REDUCE
+				Opcode == X86_VGATHERDPDrm ||
 				Opcode == X86_VGATHERDPDYrm ||
 				Opcode == X86_VGATHERQPDrm ||
 				Opcode == X86_VGATHERDPSrm ||
@@ -338,21 +346,34 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 				Opcode == X86_VPGATHERDQYrm ||
 				Opcode == X86_VPGATHERQQrm ||
 				Opcode == X86_VPGATHERDDrm ||
-				Opcode == X86_VPGATHERQDrm);
-		bool IndexIs256 = (Opcode == X86_VGATHERQPDYrm ||
+				Opcode == X86_VPGATHERQDrm ||
+#endif
+				false
+				);
+		IndexIs256 = (
+#ifndef CAPSTONE_X86_REDUCE
+				Opcode == X86_VGATHERQPDYrm ||
 				Opcode == X86_VGATHERDPSYrm ||
 				Opcode == X86_VGATHERQPSYrm ||
 				Opcode == X86_VGATHERDPDZrm ||
 				Opcode == X86_VPGATHERDQZrm ||
 				Opcode == X86_VPGATHERQQYrm ||
 				Opcode == X86_VPGATHERDDYrm ||
-				Opcode == X86_VPGATHERQDYrm);
-		IndexIs512 = (Opcode == X86_VGATHERQPDZrm ||
+				Opcode == X86_VPGATHERQDYrm ||
+#endif
+				false
+				);
+		IndexIs512 = (
+#ifndef CAPSTONE_X86_REDUCE
+				Opcode == X86_VGATHERQPDZrm ||
 				Opcode == X86_VGATHERDPSZrm ||
 				Opcode == X86_VGATHERQPSZrm ||
 				Opcode == X86_VPGATHERQQZrm ||
 				Opcode == X86_VPGATHERDDZrm ||
-				Opcode == X86_VPGATHERQDZrm);
+				Opcode == X86_VPGATHERQDZrm ||
+#endif
+				false
+				);
 
 		if (IndexIs128 || IndexIs256 || IndexIs512) {
 			unsigned IndexOffset = insn->sibIndex -
@@ -370,7 +391,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 					return true;
 #define ENTRY(x)                                          \
 				case SIB_INDEX_##x:                                 \
-																	indexReg = MCOperand_CreateReg(X86_##x); break;
+					indexReg = X86_##x; break;
 					EA_BASES_32BIT
 						EA_BASES_64BIT
 						REGS_XMM
@@ -379,10 +400,10 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 #undef ENTRY
 			}
 		} else {
-			indexReg = MCOperand_CreateReg(0);
+			indexReg = 0;
 		}
 
-		scaleAmount = MCOperand_CreateImm(insn->sibScale);
+		scaleAmount = insn->sibScale;
 	} else {
 		switch (insn->eaBase) {
 			case EA_BASE_NONE:
@@ -391,30 +412,34 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 					return true;
 				}
 				if (insn->mode == MODE_64BIT) {
-					baseReg = MCOperand_CreateReg(X86_RIP); // Section 2.2.1.6
-				} else
-					baseReg = MCOperand_CreateReg(0);
+					if (insn->prefix3 == 0x67)	// address-size prefix overrides RIP relative addressing
+						MCOperand_CreateReg0(mcInst, X86_EIP);
+					else
+						MCOperand_CreateReg0(mcInst, X86_RIP); // Section 2.2.1.6
+				} else {
+					MCOperand_CreateReg0(mcInst, 0);
+				}
 
-				indexReg = MCOperand_CreateReg(0);
+				indexReg = 0;
 				break;
 			case EA_BASE_BX_SI:
-				baseReg = MCOperand_CreateReg(X86_BX);
-				indexReg = MCOperand_CreateReg(X86_SI);
+				MCOperand_CreateReg0(mcInst, X86_BX);
+				indexReg = X86_SI;
 				break;
 			case EA_BASE_BX_DI:
-				baseReg = MCOperand_CreateReg(X86_BX);
-				indexReg = MCOperand_CreateReg(X86_DI);
+				MCOperand_CreateReg0(mcInst, X86_BX);
+				indexReg = X86_DI;
 				break;
 			case EA_BASE_BP_SI:
-				baseReg = MCOperand_CreateReg(X86_BP);
-				indexReg = MCOperand_CreateReg(X86_SI);
+				MCOperand_CreateReg0(mcInst, X86_BP);
+				indexReg = X86_SI;
 				break;
 			case EA_BASE_BP_DI:
-				baseReg = MCOperand_CreateReg(X86_BP);
-				indexReg = MCOperand_CreateReg(X86_DI);
+				MCOperand_CreateReg0(mcInst, X86_BP);
+				indexReg = X86_DI;
 				break;
 			default:
-				indexReg = MCOperand_CreateReg(0);
+				indexReg = 0;
 				switch (insn->eaBase) {
 					default:
 						//debug("Unexpected eaBase");
@@ -425,7 +450,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 						//   placeholders to keep the compiler happy.
 #define ENTRY(x)                                        \
 					case EA_BASE_##x:                                 \
-																	  baseReg = MCOperand_CreateReg(X86_##x); break; 
+						  MCOperand_CreateReg0(mcInst, X86_##x); break; 
 						ALL_EA_BASES
 #undef ENTRY
 #define ENTRY(x) case EA_REG_##x:
@@ -437,19 +462,14 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 				}
 		}
 
-		scaleAmount = MCOperand_CreateImm(1);
+		scaleAmount = 1;
 	}
 
-	displacement = MCOperand_CreateImm(insn->displacement);
+	MCOperand_CreateImm0(mcInst, scaleAmount);
+	MCOperand_CreateReg0(mcInst, indexReg);
+	MCOperand_CreateImm0(mcInst, insn->displacement);
 
-	segmentReg = MCOperand_CreateReg(segmentRegnums[insn->segmentOverride]);
-
-	MCInst_addOperand(mcInst, baseReg);
-	MCInst_addOperand(mcInst, scaleAmount);
-	MCInst_addOperand(mcInst, indexReg);
-
-	MCInst_addOperand(mcInst, displacement);
-	MCInst_addOperand(mcInst, segmentReg);
+	MCOperand_CreateReg0(mcInst, segmentRegnums[insn->segmentOverride]);
 
 	return false;
 }
@@ -519,7 +539,7 @@ static bool translateRM(MCInst *mcInst, const OperandSpecifier *operand,
 /// @param stackPos     - The stack position to translate.
 static void translateFPRegister(MCInst *mcInst, uint8_t stackPos)
 {
-	MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_ST0 + stackPos));
+	MCOperand_CreateReg0(mcInst, X86_ST0 + stackPos);
 }
 
 /// translateMaskRegister - Translates a 3-bit mask register number to
@@ -535,7 +555,7 @@ static bool translateMaskRegister(MCInst *mcInst, uint8_t maskRegNum)
 		return true;
 	}
 
-	MCInst_addOperand(mcInst, MCOperand_CreateReg(X86_K0 + maskRegNum));
+	MCOperand_CreateReg0(mcInst, X86_K0 + maskRegNum);
 
 	return false;
 }
@@ -555,7 +575,7 @@ static bool translateOperand(MCInst *mcInst, const OperandSpecifier *operand, In
 			return false;
 		case ENCODING_WRITEMASK:
 			return translateMaskRegister(mcInst, insn->writemask);
-		case ENCODING_RM:
+		CASE_ENCODING_RM:
 			return translateRM(mcInst, operand, insn);
 		case ENCODING_CB:
 		case ENCODING_CW:
@@ -612,12 +632,14 @@ static bool translateInstruction(MCInst *mcInst, InternalInstruction *insn)
 	// If when reading the prefix bytes we determined the overlapping 0xf2 or 0xf3
 	// prefix bytes should be disassembled as xrelease and xacquire then set the
 	// opcode to those instead of the rep and repne opcodes.
+#ifndef CAPSTONE_X86_REDUCE
 	if (insn->xAcquireRelease) {
 		if (MCInst_getOpcode(mcInst) == X86_REP_PREFIX)
 			MCInst_setOpcode(mcInst, X86_XRELEASE_PREFIX);
 		else if (MCInst_getOpcode(mcInst) == X86_REPNE_PREFIX)
 			MCInst_setOpcode(mcInst, X86_XACQUIRE_PREFIX);
 	}
+#endif
 
 	insn->numImmediatesTranslated = 0;
 
@@ -632,10 +654,8 @@ static bool translateInstruction(MCInst *mcInst, InternalInstruction *insn)
 	return false;
 }
 
-static int reader(const void* arg, uint8_t* byte, uint64_t address)
+static int reader(const struct reader_info *info, uint8_t *byte, uint64_t address)
 {
-	struct reader_info *info = (void *)arg;
-
 	if (address - info->offset >= info->size)
 		// out of buffer range
 		return -1;
@@ -646,44 +666,65 @@ static int reader(const void* arg, uint8_t* byte, uint64_t address)
 }
 
 // copy x86 detail information from internal structure to public structure
-static void update_pub_insn(cs_insn_flat *pub, InternalInstruction *inter)
+static void update_pub_insn(cs_insn *pub, InternalInstruction *inter, uint8_t *prefixes)
 {
-	int i, c;
+	prefixes[0] = inter->prefix0;
+	prefixes[1] = inter->prefix1;
+	prefixes[2] = inter->prefix2;
+	prefixes[3] = inter->prefix3;
 
-	c = 0;
-	for(i = 0; i < 0x100; i++) {
-		if (inter->prefixPresent[i] > 0) {
-			pub->x86.prefix[c] = inter->prefixPresent[i];
-			c++;
+	if (inter->vectorExtensionType != 0)
+		memcpy(pub->detail->x86.opcode, inter->vectorExtensionPrefix, sizeof(pub->detail->x86.opcode));
+	else {
+		if (inter->twoByteEscape) {
+			if (inter->threeByteEscape) {
+				pub->detail->x86.opcode[0] = inter->twoByteEscape;
+				pub->detail->x86.opcode[1] = inter->threeByteEscape;
+				pub->detail->x86.opcode[2] = inter->opcode;
+			} else {
+				pub->detail->x86.opcode[0] = inter->twoByteEscape;
+				pub->detail->x86.opcode[1] = inter->opcode;
+			}
+		} else {
+				pub->detail->x86.opcode[0] = inter->opcode;
 		}
 	}
 
-	pub->x86.segment = x86_map_segment(inter->segmentOverride);
+	pub->detail->x86.rex = inter->rexPrefix;
 
-	if (inter->vectorExtensionType > 0)
-		memcpy(pub->x86.opcode, inter->vectorExtensionPrefix, sizeof(pub->x86.opcode));
-	else {
-		pub->x86.opcode[0] = inter->opcode;
-		pub->x86.opcode[1] = inter->twoByteEscape;
-		pub->x86.opcode[2] = inter->threeByteEscape;
-	}
+	pub->detail->x86.addr_size = inter->addressSize;
 
-	pub->x86.op_size = inter->operandSize;
-	pub->x86.addr_size = inter->addressSize;
-	pub->x86.disp_size = inter->displacementSize;
-	pub->x86.imm_size = inter->immediateSize;
+	pub->detail->x86.modrm = inter->orgModRM;
+	pub->detail->x86.sib = inter->sib;
+	pub->detail->x86.disp = inter->displacement;
 
-	pub->x86.modrm = inter->modRM;
-	pub->x86.sib = inter->sib;
-	pub->x86.disp = inter->displacement;
+	pub->detail->x86.sib_index = x86_map_sib_index(inter->sibIndex);
+	pub->detail->x86.sib_scale = inter->sibScale;
+	pub->detail->x86.sib_base = x86_map_sib_base(inter->sibBase);
+}
 
-	pub->x86.sib_index = x86_map_sib_index(inter->sibIndex);
-	pub->x86.sib_scale = inter->sibScale;
-	pub->x86.sib_base = x86_map_sib_base(inter->sibBase);
+void X86_init(MCRegisterInfo *MRI)
+{
+	/*
+	   InitMCRegisterInfo(X86RegDesc, 234,
+	   RA, PC,
+	   X86MCRegisterClasses, 79,
+	   X86RegUnitRoots, 119, X86RegDiffLists, X86RegStrings,
+	   X86SubRegIdxLists, 7,
+	   X86SubRegIdxRanges, X86RegEncodingTable);
+	*/
+
+	MCRegisterInfo_InitMCRegisterInfo(MRI, X86RegDesc, 234,
+			0, 0,
+			X86MCRegisterClasses, 79,
+			0, 0, X86RegDiffLists, 0,
+			X86SubRegIdxLists, 7,
+			0);
 }
 
 // Public interface for the disassembler
-bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *_info)
+bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
+		MCInst *instr, uint16_t *size, uint64_t address, void *_info)
 {
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 	InternalInstruction insn;
@@ -695,7 +736,19 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *in
 	info.size = code_len;
 	info.offset = address;
 
-	memset(&insn, 0, sizeof(insn));
+	memset(&insn, 0, offsetof(InternalInstruction, reader));
+
+	if (instr->flat_insn->detail) {
+		instr->flat_insn->detail->x86.op_count = 0;
+		instr->flat_insn->detail->x86.sse_cc = X86_SSE_CC_INVALID;
+		instr->flat_insn->detail->x86.avx_cc = X86_AVX_CC_INVALID;
+		instr->flat_insn->detail->x86.avx_sae = false;
+		instr->flat_insn->detail->x86.avx_rm = X86_AVX_RM_INVALID;
+
+		memset(instr->flat_insn->detail->x86.prefix, 0, sizeof(instr->flat_insn->detail->x86.prefix));
+		memset(instr->flat_insn->detail->x86.opcode, 0, sizeof(instr->flat_insn->detail->x86.opcode));
+		memset(instr->flat_insn->detail->x86.operands, 0, sizeof(instr->flat_insn->detail->x86.operands));
+	}
 
 	if (handle->mode & CS_MODE_16)
 		ret = decodeInstruction(&insn,
@@ -715,18 +768,27 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *in
 
 	if (ret) {
 		*size = (uint16_t)(insn.readerCursor - address);
+
 		return false;
 	} else {
 		*size = (uint16_t)insn.length;
+
 		result = (!translateInstruction(instr, &insn)) ?  true : false;
 		if (result) {
-			if (handle->detail)
-				update_pub_insn(&instr->flat_insn, &insn);
-
-			// save immediate size to print immediate properly
-			instr->x86_imm_size = insn.immediateSize;
+			instr->imm_size = insn.immSize;
+			if (handle->detail) {
+				update_pub_insn(instr->flat_insn, &insn, instr->x86_prefix);
+			} else {
+				// still copy all prefixes
+				instr->x86_prefix[0] = insn.prefix0;
+				instr->x86_prefix[1] = insn.prefix1;
+				instr->x86_prefix[2] = insn.prefix2;
+				instr->x86_prefix[3] = insn.prefix3;
+			}
 		}
 
 		return result;
 	}
 }
+
+#endif

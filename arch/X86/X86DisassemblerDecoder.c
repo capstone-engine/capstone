@@ -13,37 +13,54 @@
  *
  *===----------------------------------------------------------------------===*/
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+
+#ifdef CAPSTONE_HAS_X86
 
 #include <stdarg.h>   /* for va_*()       */
 #include <stdlib.h>   /* for exit()       */
-#include <string.h>   /* for memset()     */
 
 #include "../../cs_priv.h"
+#include "../../utils.h"
 
 #include "X86DisassemblerDecoder.h"
 
+/// Specifies whether a ModR/M byte is needed and (if so) which
+/// instruction each possible value of the ModR/M byte corresponds to.  Once
+/// this information is known, we have narrowed down to a single instruction.
+struct ModRMDecision {
+	uint8_t modrm_type;
+	uint16_t instructionIDs;
+};
+
+/// Specifies which set of ModR/M->instruction tables to look at
+/// given a particular opcode.
+struct OpcodeDecision {
+	struct ModRMDecision modRMDecisions[256];
+};
+
+/// Specifies which opcode->instruction tables to look at given
+/// a particular context (set of attributes).  Since there are many possible
+/// contexts, the decoder first uses CONTEXTS_SYM to determine which context
+/// applies given a specific set of attributes.  Hence there are only IC_max
+/// entries in this table, rather than 2^(ATTR_max).
+struct ContextDecision {
+	struct OpcodeDecision opcodeDecisions[IC_max];
+};
+
+#ifdef CAPSTONE_X86_REDUCE
+#include "X86GenDisassemblerTables_reduce.inc"
+#else
 #include "X86GenDisassemblerTables.inc"
+#endif
 
 //#define GET_INSTRINFO_ENUM
 #define GET_INSTRINFO_MC_DESC
-#include "X86GenInstrInfo.inc"
-
-static const char *x86DisassemblerGetInstrName(unsigned Opcode)
-{
-	return &X86InstrNameData[X86InstrNameIndices[Opcode]];
-}
-
-#define TRUE  1
-#define FALSE 0
-
-#define NDEBUG
-
-#ifndef NDEBUG
-#define debug(s) do { x86DisassemblerDebug(__FILE__, __LINE__, s); } while (0)
+#ifdef CAPSTONE_X86_REDUCE
+#include "X86GenInstrInfo_reduce.inc"
 #else
-#define debug(s) ((void) 0)
+#include "X86GenInstrInfo.inc"
 #endif
 
 /*
@@ -68,7 +85,7 @@ static InstructionContext contextForAttrs(uint16_t attrMask)
  *                      contextForAttrs.
  * @param opcode      - The last byte of the instruction's opcode, not counting
  *                      ModR/M extensions and escapes.
- * @return            - TRUE if the ModR/M byte is required, FALSE otherwise.
+ * @return            - true if the ModR/M byte is required, false otherwise.
  */
 static int modRMRequired(OpcodeType type,
 		InstructionContext insnContext,
@@ -79,6 +96,7 @@ static int modRMRequired(OpcodeType type,
 	uint8_t index;
 
 	switch (type) {
+		default:
 		case ONEBYTE:
 			decision = ONEBYTE_SYM;
 			indextable = index_x86DisassemblerOneByteOpcodes;
@@ -95,6 +113,7 @@ static int modRMRequired(OpcodeType type,
 			decision = THREEBYTE3A_SYM;
 			indextable = index_x86DisassemblerThreeByte3AOpcodes;
 			break;
+#ifndef CAPSTONE_X86_REDUCE
 		case XOP8_MAP:
 			decision = XOP8_MAP_SYM;
 			indextable = index_x86DisassemblerXOP8Opcodes;
@@ -107,12 +126,15 @@ static int modRMRequired(OpcodeType type,
 			decision = XOPA_MAP_SYM;
 			indextable = index_x86DisassemblerXOPAOpcodes;
 			break;
+		case T3DNOW_MAP:
+			// 3DNow instructions always have ModRM byte
+			return true;
+#endif
 	}
 
 	index = indextable[insnContext];
 	if (index)
-		return decision[index - 1].modRMDecisions[opcode].
-			modrm_type != MODRM_ONEENTRY;
+		return decision[index - 1].modRMDecisions[opcode].modrm_type != MODRM_ONEENTRY;
 	else
 		return false;
 }
@@ -132,11 +154,12 @@ static InstrUID decode(OpcodeType type,
 		uint8_t opcode,
 		uint8_t modRM)
 {
-	const struct ModRMDecision* dec = 0;
+	const struct ModRMDecision* dec = NULL;
 	const uint8_t *indextable = NULL;
 	uint8_t index;
 
 	switch (type) {
+		default:
 		case ONEBYTE:
 			indextable = index_x86DisassemblerOneByteOpcodes;
 			index = indextable[insnContext];
@@ -169,6 +192,7 @@ static InstrUID decode(OpcodeType type,
 			else
 				dec = &emptyTable.modRMDecisions[opcode];
 			break;
+#ifndef CAPSTONE_X86_REDUCE
 		case XOP8_MAP:
 			indextable = index_x86DisassemblerXOP8Opcodes;
 			index = indextable[insnContext];
@@ -193,11 +217,20 @@ static InstrUID decode(OpcodeType type,
 			else
 				dec = &emptyTable.modRMDecisions[opcode];
 			break;
+		case T3DNOW_MAP:
+			indextable = index_x86DisassemblerT3DNOWOpcodes;
+			index = indextable[insnContext];
+			if (index)
+				dec = &T3DNOW_MAP_SYM[index - 1].modRMDecisions[opcode];
+			else
+				dec = &emptyTable.modRMDecisions[opcode];
+			break;
+#endif
 	}
 
 	switch (dec->modrm_type) {
 		default:
-			debug("Corrupt table!  Unknown modrm_type");
+			//debug("Corrupt table!  Unknown modrm_type");
 			return 0;
 		case MODRM_ONEENTRY:
 			return modRMTable[dec->instructionIDs];
@@ -258,7 +291,7 @@ static int consumeByte(struct InternalInstruction* insn, uint8_t* byte)
  * @param byte  - See consumeByte().
  * @return      - See consumeByte().
  */
-static int lookAtByte(struct InternalInstruction* insn, uint8_t* byte)
+static int lookAtByte(struct InternalInstruction *insn, uint8_t *byte)
 {
 	return insn->reader(insn->readerArg, byte, insn->readerCursor);
 }
@@ -304,32 +337,6 @@ CONSUME_FUNC(consumeUInt32, uint32_t)
 CONSUME_FUNC(consumeUInt64, uint64_t)
 
 /*
- * dbgprintf - Uses the logging function provided by the user to log a single
- *   message, typically without a carriage-return.
- *
- * @param insn    - The instruction containing the logging function.
- * @param format  - See printf().
- * @param ...     - See printf().
- */
-static void dbgprintf(struct InternalInstruction* insn,
-		const char* format, ...)
-{
-	char buffer[256];
-	va_list ap;
-
-	if (!insn->dlog)
-		return;
-
-	va_start(ap, format);
-	(void)cs_vsnprintf(buffer, sizeof(buffer), format, ap);
-	va_end(ap);
-
-	insn->dlog(insn->dlogArg, buffer);
-
-	return;
-}
-
-/*
  * setPrefixPresent - Marks that a particular prefix is present at a particular
  *   location.
  *
@@ -354,15 +361,15 @@ static void setPrefixPresent(struct InternalInstruction* insn,
  * @param location  - The location to query.
  * @return          - Whether the prefix is at that location.
  */
-static BOOL isPrefixAtLocation(struct InternalInstruction* insn,
+static bool isPrefixAtLocation(struct InternalInstruction* insn,
 		uint8_t prefix,
 		uint64_t location)
 {
 	if (insn->prefixPresent[prefix] == 1 &&
 			insn->prefixLocations[prefix] == location)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 /*
@@ -376,28 +383,18 @@ static BOOL isPrefixAtLocation(struct InternalInstruction* insn,
  */
 static int readPrefixes(struct InternalInstruction* insn)
 {
-	BOOL isPrefix = TRUE;
-	BOOL prefixGroups[4] = { FALSE };
+	bool isPrefix = true;
 	uint64_t prefixLocation;
 	uint8_t byte = 0, nextByte;
 
-	BOOL hasAdSize = FALSE;
-	BOOL hasOpSize = FALSE;
-
-	dbgprintf(insn, "readPrefixes()");
+	bool hasAdSize = false;
+	bool hasOpSize = false;
 
 	while (isPrefix) {
 		prefixLocation = insn->readerCursor;
 
 		/* If we fail reading prefixes, just stop here and let the opcode reader deal with it */
 		if (consumeByte(insn, &byte))
-			break;
-
-		/*
-		 * If the byte is a LOCK/REP/REPNE prefix and not a part of the opcode, then
-		 * break and let it be disassembled as a normal "instruction".
-		 */
-		if (insn->readerCursor - 1 == insn->startLocation && byte == 0xf0)
 			break;
 
 		if (insn->readerCursor - 1 == insn->startLocation
@@ -413,7 +410,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 			if ((byte == 0xf2 || byte == 0xf3) &&
 					((nextByte == 0xf0) |
 					 ((nextByte & 0xfe) == 0x86 || (nextByte & 0xf8) == 0x90)))
-				insn->xAcquireRelease = TRUE;
+				insn->xAcquireRelease = true;
 			/*
 			 * Also if the byte is 0xf3, and the following condition is met:
 			 * - it is followed by a "mov mem, reg" (opcode 0x88/0x89) or
@@ -423,7 +420,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 			if (byte == 0xf3 &&
 					(nextByte == 0x88 || nextByte == 0x89 ||
 					 nextByte == 0xc6 || nextByte == 0xc7))
-				insn->xAcquireRelease = TRUE;
+				insn->xAcquireRelease = true;
 
 			if (insn->mode == MODE_64BIT && (nextByte & 0xf0) == 0x40) {
 				if (consumeByte(insn, &nextByte))
@@ -432,139 +429,186 @@ static int readPrefixes(struct InternalInstruction* insn)
 					return -1;
 				unconsumeByte(insn);
 			}
-			if (nextByte != 0x0f && nextByte != 0x90)
-				break;
 		}
 
 		switch (byte) {
-			case 0xf0:  /* LOCK */
 			case 0xf2:  /* REPNE/REPNZ */
 			case 0xf3:  /* REP or REPE/REPZ */
-				if (prefixGroups[0])
-					dbgprintf(insn, "Redundant Group 1 prefix");
-				prefixGroups[0] = TRUE;
+			case 0xf0:  /* LOCK */
+				// only accept the last prefix
+				insn->prefixPresent[0xf2] = 0;
+				insn->prefixPresent[0xf3] = 0;
+				insn->prefixPresent[0xf0] = 0;
 				setPrefixPresent(insn, byte, prefixLocation);
+				insn->prefix0 = byte;
 				break;
 			case 0x2e:  /* CS segment override -OR- Branch not taken */
-			case 0x36:  /* SS segment override -OR- Branch taken */
-			case 0x3e:  /* DS segment override */
-			case 0x26:  /* ES segment override */
-			case 0x64:  /* FS segment override */
-			case 0x65:  /* GS segment override */
-				switch (byte) {
-					case 0x2e:
-						insn->segmentOverride = SEG_OVERRIDE_CS;
-						break;
-					case 0x36:
-						insn->segmentOverride = SEG_OVERRIDE_SS;
-						break;
-					case 0x3e:
-						insn->segmentOverride = SEG_OVERRIDE_DS;
-						break;
-					case 0x26:
-						insn->segmentOverride = SEG_OVERRIDE_ES;
-						break;
-					case 0x64:
-						insn->segmentOverride = SEG_OVERRIDE_FS;
-						break;
-					case 0x65:
-						insn->segmentOverride = SEG_OVERRIDE_GS;
-						break;
-					default:
-						debug("Unhandled override");
-						return -1;
-				}
-				if (prefixGroups[1])
-					dbgprintf(insn, "Redundant Group 2 prefix");
-				prefixGroups[1] = TRUE;
+				insn->segmentOverride = SEG_OVERRIDE_CS;
+				// only accept the last prefix
+				insn->prefixPresent[0x2e] = 0;
+				insn->prefixPresent[0x36] = 0;
+				insn->prefixPresent[0x3e] = 0;
+				insn->prefixPresent[0x26] = 0;
+				insn->prefixPresent[0x64] = 0;
+				insn->prefixPresent[0x65] = 0;
+
 				setPrefixPresent(insn, byte, prefixLocation);
+				insn->prefix1 = byte;
+				break;
+			case 0x36:  /* SS segment override -OR- Branch taken */
+				insn->segmentOverride = SEG_OVERRIDE_SS;
+				// only accept the last prefix
+				insn->prefixPresent[0x2e] = 0;
+				insn->prefixPresent[0x36] = 0;
+				insn->prefixPresent[0x3e] = 0;
+				insn->prefixPresent[0x26] = 0;
+				insn->prefixPresent[0x64] = 0;
+				insn->prefixPresent[0x65] = 0;
+
+				setPrefixPresent(insn, byte, prefixLocation);
+				insn->prefix1 = byte;
+				break;
+			case 0x3e:  /* DS segment override */
+				insn->segmentOverride = SEG_OVERRIDE_DS;
+				// only accept the last prefix
+				insn->prefixPresent[0x2e] = 0;
+				insn->prefixPresent[0x36] = 0;
+				insn->prefixPresent[0x3e] = 0;
+				insn->prefixPresent[0x26] = 0;
+				insn->prefixPresent[0x64] = 0;
+				insn->prefixPresent[0x65] = 0;
+
+				setPrefixPresent(insn, byte, prefixLocation);
+				insn->prefix1 = byte;
+				break;
+			case 0x26:  /* ES segment override */
+				insn->segmentOverride = SEG_OVERRIDE_ES;
+				// only accept the last prefix
+				insn->prefixPresent[0x2e] = 0;
+				insn->prefixPresent[0x36] = 0;
+				insn->prefixPresent[0x3e] = 0;
+				insn->prefixPresent[0x26] = 0;
+				insn->prefixPresent[0x64] = 0;
+				insn->prefixPresent[0x65] = 0;
+
+				setPrefixPresent(insn, byte, prefixLocation);
+				insn->prefix1 = byte;
+				break;
+			case 0x64:  /* FS segment override */
+				insn->segmentOverride = SEG_OVERRIDE_FS;
+				// only accept the last prefix
+				insn->prefixPresent[0x2e] = 0;
+				insn->prefixPresent[0x36] = 0;
+				insn->prefixPresent[0x3e] = 0;
+				insn->prefixPresent[0x26] = 0;
+				insn->prefixPresent[0x64] = 0;
+				insn->prefixPresent[0x65] = 0;
+
+				setPrefixPresent(insn, byte, prefixLocation);
+				insn->prefix1 = byte;
+				break;
+			case 0x65:  /* GS segment override */
+				insn->segmentOverride = SEG_OVERRIDE_GS;
+				// only accept the last prefix
+				insn->prefixPresent[0x2e] = 0;
+				insn->prefixPresent[0x36] = 0;
+				insn->prefixPresent[0x3e] = 0;
+				insn->prefixPresent[0x26] = 0;
+				insn->prefixPresent[0x64] = 0;
+				insn->prefixPresent[0x65] = 0;
+
+				setPrefixPresent(insn, byte, prefixLocation);
+				insn->prefix1 = byte;
 				break;
 			case 0x66:  /* Operand-size override */
-				if (prefixGroups[2])
-					dbgprintf(insn, "Redundant Group 3 prefix");
-				prefixGroups[2] = TRUE;
-				hasOpSize = TRUE;
+				hasOpSize = true;
 				setPrefixPresent(insn, byte, prefixLocation);
+				insn->prefix2 = byte;
 				break;
 			case 0x67:  /* Address-size override */
-				if (prefixGroups[3])
-					dbgprintf(insn, "Redundant Group 4 prefix");
-				prefixGroups[3] = TRUE;
-				hasAdSize = TRUE;
+				hasAdSize = true;
 				setPrefixPresent(insn, byte, prefixLocation);
+				insn->prefix3 = byte;
 				break;
 			default:    /* Not a prefix byte */
-				isPrefix = FALSE;
+				isPrefix = false;
 				break;
 		}
 
-		if (isPrefix)
-			dbgprintf(insn, "Found prefix 0x%hhx", byte);
+		//if (isPrefix)
+		//	dbgprintf(insn, "Found prefix 0x%hhx", byte);
 	}
 
 	insn->vectorExtensionType = TYPE_NO_VEX_XOP;
+
 
 	if (byte == 0x62) {
 		uint8_t byte1, byte2;
 
 		if (consumeByte(insn, &byte1)) {
-			dbgprintf(insn, "Couldn't read second byte of EVEX prefix");
-			return -1;
-		}
-
-		if (lookAtByte(insn, &byte2)) {
-			dbgprintf(insn, "Couldn't read third byte of EVEX prefix");
+			//dbgprintf(insn, "Couldn't read second byte of EVEX prefix");
 			return -1;
 		}
 
 		if ((insn->mode == MODE_64BIT || (byte1 & 0xc0) == 0xc0) &&
-				((~byte1 & 0xc) == 0xc) && ((byte2 & 0x4) == 0x4)) {
-			insn->vectorExtensionType = TYPE_EVEX;
-		}
-		else {
+				((~byte1 & 0xc) == 0xc)) {
+			if (lookAtByte(insn, &byte2)) {
+				//dbgprintf(insn, "Couldn't read third byte of EVEX prefix");
+				return -1;
+			}
+
+			if ((byte2 & 0x4) == 0x4) {
+				insn->vectorExtensionType = TYPE_EVEX;
+			} else {
+				unconsumeByte(insn); /* unconsume byte1 */
+				unconsumeByte(insn); /* unconsume byte  */
+				insn->necessaryPrefixLocation = insn->readerCursor - 2;
+			}
+
+			if (insn->vectorExtensionType == TYPE_EVEX) {
+				insn->vectorExtensionPrefix[0] = byte;
+				insn->vectorExtensionPrefix[1] = byte1;
+
+				if (consumeByte(insn, &insn->vectorExtensionPrefix[2])) {
+					//dbgprintf(insn, "Couldn't read third byte of EVEX prefix");
+					return -1;
+				}
+
+				if (consumeByte(insn, &insn->vectorExtensionPrefix[3])) {
+					//dbgprintf(insn, "Couldn't read fourth byte of EVEX prefix");
+					return -1;
+				}
+
+				/* We simulate the REX prefix for simplicity's sake */
+				if (insn->mode == MODE_64BIT) {
+					insn->rexPrefix = 0x40
+						| (wFromEVEX3of4(insn->vectorExtensionPrefix[2]) << 3)
+						| (rFromEVEX2of4(insn->vectorExtensionPrefix[1]) << 2)
+						| (xFromEVEX2of4(insn->vectorExtensionPrefix[1]) << 1)
+						| (bFromEVEX2of4(insn->vectorExtensionPrefix[1]) << 0);
+				}
+
+				//dbgprintf(insn, "Found EVEX prefix 0x%hhx 0x%hhx 0x%hhx 0x%hhx",
+				//		insn->vectorExtensionPrefix[0], insn->vectorExtensionPrefix[1],
+				//		insn->vectorExtensionPrefix[2], insn->vectorExtensionPrefix[3]);
+			}
+		} else {
+			// BOUND instruction
 			unconsumeByte(insn); /* unconsume byte1 */
-			unconsumeByte(insn); /* unconsume byte  */
-			insn->necessaryPrefixLocation = insn->readerCursor - 2;
-		}
-
-		if (insn->vectorExtensionType == TYPE_EVEX) {
-			insn->vectorExtensionPrefix[0] = byte;
-			insn->vectorExtensionPrefix[1] = byte1;
-			if (consumeByte(insn, &insn->vectorExtensionPrefix[2])) {
-				dbgprintf(insn, "Couldn't read third byte of EVEX prefix");
-				return -1;
-			}
-			if (consumeByte(insn, &insn->vectorExtensionPrefix[3])) {
-				dbgprintf(insn, "Couldn't read fourth byte of EVEX prefix");
-				return -1;
-			}
-
-			/* We simulate the REX prefix for simplicity's sake */
-			if (insn->mode == MODE_64BIT) {
-				insn->rexPrefix = 0x40
-					| (wFromEVEX3of4(insn->vectorExtensionPrefix[2]) << 3)
-					| (rFromEVEX2of4(insn->vectorExtensionPrefix[1]) << 2)
-					| (xFromEVEX2of4(insn->vectorExtensionPrefix[1]) << 1)
-					| (bFromEVEX2of4(insn->vectorExtensionPrefix[1]) << 0);
-			}
-
-			dbgprintf(insn, "Found EVEX prefix 0x%hhx 0x%hhx 0x%hhx 0x%hhx",
-					insn->vectorExtensionPrefix[0], insn->vectorExtensionPrefix[1],
-					insn->vectorExtensionPrefix[2], insn->vectorExtensionPrefix[3]);
+			unconsumeByte(insn); /* unconsume byte */
 		}
 	} else if (byte == 0xc4) {
 		uint8_t byte1;
 
 		if (lookAtByte(insn, &byte1)) {
-			dbgprintf(insn, "Couldn't read second byte of VEX");
+			//dbgprintf(insn, "Couldn't read second byte of VEX");
 			return -1;
 		}
 
 		if (insn->mode == MODE_64BIT || (byte1 & 0xc0) == 0xc0) {
 			insn->vectorExtensionType = TYPE_VEX_3B;
 			insn->necessaryPrefixLocation = insn->readerCursor - 1;
-		}
-		else {
+		} else {
 			unconsumeByte(insn);
 			insn->necessaryPrefixLocation = insn->readerCursor - 1;
 		}
@@ -588,7 +632,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 		uint8_t byte1;
 
 		if (lookAtByte(insn, &byte1)) {
-			dbgprintf(insn, "Couldn't read second byte of VEX");
+			//dbgprintf(insn, "Couldn't read second byte of VEX");
 			return -1;
 		}
 
@@ -611,7 +655,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 				default:
 					break;
 				case VEX_PREFIX_66:
-					hasOpSize = TRUE;
+					hasOpSize = true;
 					break;
 			}
 		}
@@ -650,7 +694,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 				default:
 					break;
 				case VEX_PREFIX_66:
-					hasOpSize = TRUE;
+					hasOpSize = true;
 					break;
 			}
 		}
@@ -666,7 +710,6 @@ static int readPrefixes(struct InternalInstruction* insn)
 
 				insn->rexPrefix = byte;
 				insn->necessaryPrefixLocation = insn->readerCursor - 2;
-
 				// dbgprintf(insn, "Found REX prefix 0x%hhx", byte);
 			} else {
 				unconsumeByte(insn);
@@ -683,32 +726,39 @@ static int readPrefixes(struct InternalInstruction* insn)
 		insn->addressSize        = (hasAdSize ? 4 : 2);
 		insn->displacementSize   = (hasAdSize ? 4 : 2);
 		insn->immediateSize      = (hasOpSize ? 4 : 2);
+		insn->immSize = (hasOpSize ? 4 : 2);
 	} else if (insn->mode == MODE_32BIT) {
 		insn->registerSize       = (hasOpSize ? 2 : 4);
 		insn->addressSize        = (hasAdSize ? 2 : 4);
 		insn->displacementSize   = (hasAdSize ? 2 : 4);
 		insn->immediateSize      = (hasOpSize ? 2 : 4);
+		insn->immSize = (hasOpSize ? 2 : 4);
 	} else if (insn->mode == MODE_64BIT) {
 		if (insn->rexPrefix && wFromREX(insn->rexPrefix)) {
 			insn->registerSize       = 8;
 			insn->addressSize        = (hasAdSize ? 4 : 8);
 			insn->displacementSize   = 4;
 			insn->immediateSize      = 4;
+			insn->immSize      = 4;
 		} else if (insn->rexPrefix) {
 			insn->registerSize       = (hasOpSize ? 2 : 4);
 			insn->addressSize        = (hasAdSize ? 4 : 8);
 			insn->displacementSize   = (hasOpSize ? 2 : 4);
 			insn->immediateSize      = (hasOpSize ? 2 : 4);
+			insn->immSize      = (hasOpSize ? 2 : 4);
 		} else {
 			insn->registerSize       = (hasOpSize ? 2 : 4);
 			insn->addressSize        = (hasAdSize ? 4 : 8);
 			insn->displacementSize   = (hasOpSize ? 2 : 4);
 			insn->immediateSize      = (hasOpSize ? 2 : 4);
+			insn->immSize      = (hasOpSize ? 4 : 8);
 		}
 	}
 
 	return 0;
 }
+
+static int readModRM(struct InternalInstruction* insn);
 
 /*
  * readOpcode - Reads the opcode (excepting the ModR/M byte in the case of
@@ -743,8 +793,7 @@ static int readOpcode(struct InternalInstruction* insn)
 				return consumeByte(insn, &insn->opcode);
 		}
 	} else if (insn->vectorExtensionType == TYPE_VEX_3B) {
-					switch (mmmmmFromVEX2of3(insn->vectorExtensionPrefix[1])) {
-
+		switch (mmmmmFromVEX2of3(insn->vectorExtensionPrefix[1])) {
 			default:
 				// dbgprintf(insn, "Unhandled m-mmmm field for instruction (0x%hhx)",
 				//		mmmmmFromVEX2of3(insn->vectorExtensionPrefix[1]));
@@ -792,6 +841,9 @@ static int readOpcode(struct InternalInstruction* insn)
 	if (consumeByte(insn, &current))
 		return -1;
 
+	// save this first byte for MOVcr, MOVdr, MOVrc, MOVrd
+	insn->firstByte = current;
+
 	if (current == 0x0f) {
 		// dbgprintf(insn, "Found a two-byte escape prefix (0x%hhx)", current);
 
@@ -819,9 +871,28 @@ static int readOpcode(struct InternalInstruction* insn)
 
 			insn->opcodeType = THREEBYTE_3A;
 		} else {
-			// dbgprintf(insn, "Didn't find a three-byte escape prefix");
-
-			insn->opcodeType = TWOBYTE;
+#ifndef CAPSTONE_X86_REDUCE
+			switch(current) {
+				default:
+					// dbgprintf(insn, "Didn't find a three-byte escape prefix");
+					insn->opcodeType = TWOBYTE;
+					break;
+				case 0x0e:	// HACK for femms. to be handled properly in next version 3.x
+					insn->opcodeType = T3DNOW_MAP;
+					// this encode does not have ModRM
+					insn->consumedModRM = true;
+					break;
+				case 0x0f:
+					// 3DNow instruction has weird format: ModRM/SIB/displacement + opcode
+					if (readModRM(insn))
+						return -1;
+					// next is 3DNow opcode
+					if (consumeByte(insn, &current))
+						return -1;
+					insn->opcodeType = T3DNOW_MAP;
+					break;
+			}
+#endif
 		}
 	}
 
@@ -834,8 +905,6 @@ static int readOpcode(struct InternalInstruction* insn)
 
 	return 0;
 }
-
-static int readModRM(struct InternalInstruction* insn);
 
 /*
  * getIDWithAttrMask - Determines the ID of an instruction, consuming
@@ -853,15 +922,24 @@ static int getIDWithAttrMask(uint16_t* instructionID,
 		struct InternalInstruction* insn,
 		uint16_t attrMask)
 {
-	BOOL hasModRMExtension;
+	bool hasModRMExtension;
 
-	uint16_t instructionClass;
+	InstructionContext instructionClass;
 
-	instructionClass = contextForAttrs(attrMask);
+	// HACK for femms. to be handled properly in next version 3.x
+	if (insn->opcode == 0x0e && insn->opcodeType == T3DNOW_MAP) {
+		*instructionID = 764;
+		return 0;
+	}
+
+	if (insn->opcodeType == T3DNOW_MAP)
+		instructionClass = IC_OF;
+	else
+		instructionClass = contextForAttrs(attrMask);
 
 	hasModRMExtension = modRMRequired(insn->opcodeType,
 			instructionClass,
-			insn->opcode) == TRUE;
+			insn->opcode);
 
 	if (hasModRMExtension) {
 		if (readModRM(insn))
@@ -885,28 +963,22 @@ static int getIDWithAttrMask(uint16_t* instructionID,
  * is16BitEquivalent - Determines whether two instruction names refer to
  * equivalent instructions but one is 16-bit whereas the other is not.
  *
- * @param orig  - The instruction that is not 16-bit
- * @param equiv - The instruction that is 16-bit
+ * @param orig  - The instruction ID that is not 16-bit
+ * @param equiv - The instruction ID that is 16-bit
  */
-static BOOL is16BitEquivalent(const char* orig, const char* equiv)
+static bool is16BitEquivalent(unsigned orig, unsigned equiv)
 {
 	size_t i;
+	uint16_t idx;
 
-	for (i = 0;; i++) {
-		if (orig[i] == '\0' && equiv[i] == '\0')
-			return TRUE;
-		if (orig[i] == '\0' || equiv[i] == '\0')
-			return FALSE;
-		if (orig[i] != equiv[i]) {
-			if ((orig[i] == 'Q' || orig[i] == 'L') && equiv[i] == 'W')
-				continue;
-			if ((orig[i] == '6' || orig[i] == '3') && equiv[i] == '1')
-				continue;
-			if ((orig[i] == '4' || orig[i] == '2') && equiv[i] == '6')
-				continue;
-			return FALSE;
+	if ((idx = x86_16_bit_eq_lookup[orig]) != 0) {
+		for (i = idx - 1; i < ARR_SIZE(x86_16_bit_eq_tbl) && x86_16_bit_eq_tbl[i].first == orig; i++) {
+			if (x86_16_bit_eq_tbl[i].second == equiv)
+				return true;
 		}
 	}
+
+	return false;
 }
 
 /*
@@ -923,8 +995,6 @@ static int getID(struct InternalInstruction* insn)
 	uint16_t attrMask;
 	uint16_t instructionID;
 	const struct InstructionSpecifier *spec;
-
-	//printf(">>> getID()\n");
 
 	attrMask = ATTR_NONE;
 
@@ -957,10 +1027,8 @@ static int getID(struct InternalInstruction* insn)
 				attrMask |= ATTR_EVEXL;
 			if (l2FromEVEX4of4(insn->vectorExtensionPrefix[3]))
 				attrMask |= ATTR_EVEXL2;
-		}
-		else if (insn->vectorExtensionType == TYPE_VEX_3B) {
+		} else if (insn->vectorExtensionType == TYPE_VEX_3B) {
 			switch (ppFromVEX3of3(insn->vectorExtensionPrefix[2])) {
-
 				case VEX_PREFIX_66:
 					attrMask |= ATTR_OPSIZE;
 					break;
@@ -973,11 +1041,9 @@ static int getID(struct InternalInstruction* insn)
 			}
 
 			if (lFromVEX3of3(insn->vectorExtensionPrefix[2]))
-
 				attrMask |= ATTR_VEXL;
 		} else if (insn->vectorExtensionType == TYPE_VEX_2B) {
 			switch (ppFromVEX2of2(insn->vectorExtensionPrefix[1])) {
-
 				case VEX_PREFIX_66:
 					attrMask |= ATTR_OPSIZE;
 					break;
@@ -991,10 +1057,8 @@ static int getID(struct InternalInstruction* insn)
 
 			if (lFromVEX2of2(insn->vectorExtensionPrefix[1]))
 				attrMask |= ATTR_VEXL;
-		}
-		else if (insn->vectorExtensionType == TYPE_XOP) {
+		} else if (insn->vectorExtensionType == TYPE_XOP) {
 			switch (ppFromXOP3of3(insn->vectorExtensionPrefix[2])) {
-
 				case VEX_PREFIX_66:
 					attrMask |= ATTR_OPSIZE;
 					break;
@@ -1008,12 +1072,10 @@ static int getID(struct InternalInstruction* insn)
 
 			if (lFromXOP3of3(insn->vectorExtensionPrefix[2]))
 				attrMask |= ATTR_VEXL;
-		}
-		else {
+		} else {
 			return -1;
 		}
-	}
-	else {
+	} else {
 		if (insn->mode != MODE_16BIT && isPrefixAtLocation(insn, 0x66, insn->necessaryPrefixLocation))
 			attrMask |= ATTR_OPSIZE;
 		else if (isPrefixAtLocation(insn, 0x67, insn->necessaryPrefixLocation))
@@ -1061,13 +1123,11 @@ static int getID(struct InternalInstruction* insn)
 
 		const struct InstructionSpecifier *spec;
 		uint16_t instructionIDWithOpsize;
-		const char *specName, *specWithOpSizeName;
 
 		spec = specifierForUID(instructionID);
 
 		if (getIDWithAttrMask(&instructionIDWithOpsize,
-					insn,
-					attrMask | ATTR_OPSIZE)) {
+					insn, attrMask | ATTR_OPSIZE)) {
 			/*
 			 * ModRM required with OpSize but not present; give up and return version
 			 * without OpSize set
@@ -1078,11 +1138,7 @@ static int getID(struct InternalInstruction* insn)
 			return 0;
 		}
 
-		specName = x86DisassemblerGetInstrName(instructionID);
-		specWithOpSizeName =
-			x86DisassemblerGetInstrName(instructionIDWithOpsize);
-
-		if (is16BitEquivalent(specName, specWithOpSizeName) &&
+		if (is16BitEquivalent(instructionID, instructionIDWithOpsize) &&
 				(insn->mode == MODE_16BIT) ^ insn->prefixPresent[0x66]) {
 			insn->instructionID = instructionIDWithOpsize;
 			insn->spec = specifierForUID(instructionIDWithOpsize);
@@ -1145,8 +1201,8 @@ static int getID(struct InternalInstruction* insn)
  */
 static int readSIB(struct InternalInstruction* insn)
 {
-	SIBIndex sibIndexBase = 0;
-	SIBBase sibBaseBase = 0;
+	SIBIndex sibIndexBase = SIB_INDEX_NONE;
+	SIBBase sibBaseBase = SIB_BASE_NONE;
 	uint8_t index, base;
 
 	// dbgprintf(insn, "readSIB()");
@@ -1154,7 +1210,7 @@ static int readSIB(struct InternalInstruction* insn)
 	if (insn->consumedSIB)
 		return 0;
 
-	insn->consumedSIB = TRUE;
+	insn->consumedSIB = true;
 
 	switch (insn->addressSize) {
 		case 2:
@@ -1223,7 +1279,7 @@ static int readSIB(struct InternalInstruction* insn)
 					insn->sibBase = (SIBBase)(sibBaseBase + base);
 					break;
 				case 0x3:
-					debug("Cannot have Mod = 0b11 and a SIB byte");
+					//debug("Cannot have Mod = 0b11 and a SIB byte");
 					return -1;
 			}
 			break;
@@ -1253,12 +1309,12 @@ static int readDisplacement(struct InternalInstruction* insn)
 	if (insn->consumedDisplacement)
 		return 0;
 
-	insn->consumedDisplacement = TRUE;
+	insn->consumedDisplacement = true;
 	insn->displacementOffset = (uint8_t)(insn->readerCursor - insn->startLocation);
 
 	switch (insn->eaDisplacement) {
 		case EA_DISP_NONE:
-			insn->consumedDisplacement = FALSE;
+			insn->consumedDisplacement = false;
 			break;
 		case EA_DISP_8:
 			if (consumeInt8(insn, &d8))
@@ -1277,7 +1333,7 @@ static int readDisplacement(struct InternalInstruction* insn)
 			break;
 	}
 
-	insn->consumedDisplacement = TRUE;
+	insn->consumedDisplacement = true;
 	return 0;
 }
 
@@ -1294,12 +1350,23 @@ static int readModRM(struct InternalInstruction* insn)
 
 	// dbgprintf(insn, "readModRM()");
 
+	// already got ModRM byte?
 	if (insn->consumedModRM)
 		return 0;
 
 	if (consumeByte(insn, &insn->modRM))
 		return -1;
-	insn->consumedModRM = TRUE;
+
+	// mark that we already got ModRM
+	insn->consumedModRM = true;
+
+	// save original ModRM for later reference
+	insn->orgModRM = insn->modRM;
+
+	// handle MOVcr, MOVdr, MOVrc, MOVrd by pretending they have MRM.mod = 3
+	if ((insn->firstByte == 0x0f && insn->opcodeType == TWOBYTE) &&
+			(insn->opcode >= 0x20 && insn->opcode <= 0x23 ))
+		insn->modRM |= 0xC0;
 
 	mod     = modFromModRM(insn->modRM);
 	rm      = rmFromModRM(insn->modRM);
@@ -1387,6 +1454,7 @@ static int readModRM(struct InternalInstruction* insn)
 								return -1;
 							break;
 						case 0x5:
+						case 0xd:
 							insn->eaBase = EA_BASE_NONE;
 							insn->eaDisplacement = EA_DISP_32;
 							if (readDisplacement(insn))
@@ -1480,57 +1548,56 @@ static int readModRM(struct InternalInstruction* insn)
 				break; \
 			default: break; \
 		} \
-		switch (type) {                                       \
+		switch (type) {                                           \
 			default:                                              \
-																  debug("Unhandled register type");                   \
-			*valid = 0;                                         \
-			return 0;                                           \
+				*valid = 0;                                           \
+				return 0;                                             \
 			case TYPE_Rv:                                         \
-																  return (uint8_t)(base + index);                     \
+				return (uint8_t)(base + index);                   \
 			case TYPE_R8:                                         \
-																  if (insn->rexPrefix &&                              \
-																		  index >= 4 && index <= 7) {                 \
-																	  return prefix##_SPL + (index - 4);              \
-																  } else {                                            \
-																	  return prefix##_AL + index;                     \
-																  }                                                   \
+				if (insn->rexPrefix &&                            \
+					index >= 4 && index <= 7) { \
+					return prefix##_SPL + (index - 4);        \
+				} else {                                      \
+					return prefix##_AL + index;               \
+				}                                             \
 			case TYPE_R16:                                        \
-																  return prefix##_AX + index;                         \
+				return prefix##_AX + index;                       \
 			case TYPE_R32:                                        \
-																  return prefix##_EAX + index;                        \
+				return prefix##_EAX + index;                      \
 			case TYPE_R64:                                        \
-																  return prefix##_RAX + index;                        \
+				return prefix##_RAX + index;                      \
 			case TYPE_XMM512:                                     \
-																  return prefix##_ZMM0 + index;                       \
+				return prefix##_ZMM0 + index;                     \
 			case TYPE_XMM256:                                     \
-																  return prefix##_YMM0 + index;                       \
+				return prefix##_YMM0 + index;                     \
 			case TYPE_XMM128:                                     \
 			case TYPE_XMM64:                                      \
 			case TYPE_XMM32:                                      \
 			case TYPE_XMM:                                        \
-																  return prefix##_XMM0 + index;                       \
+				return prefix##_XMM0 + index;                     \
 			case TYPE_VK1:                                        \
 			case TYPE_VK8:                                        \
 			case TYPE_VK16:                                       \
-																  return prefix##_K0 + index;                         \
+				return prefix##_K0 + index;                       \
 			case TYPE_MM64:                                       \
 			case TYPE_MM32:                                       \
 			case TYPE_MM:                                         \
-																  if (index > 7)                                      \
-			*valid = 0;                                       \
-			return prefix##_MM0 + index;                        \
+				if (index > 7)                                    \
+					*valid = 0;                                   \
+				return prefix##_MM0 + index;                      \
 			case TYPE_SEGMENTREG:                                 \
-																  if (index > 5)                                      \
-			*valid = 0;                                       \
-			return prefix##_ES + index;                         \
+				if (index > 5)                                    \
+					*valid = 0;                                   \
+				return prefix##_ES + index;                       \
 			case TYPE_DEBUGREG:                                   \
-																  if (index > 7)                                      \
-			*valid = 0;                                       \
-			return prefix##_DR0 + index;                        \
+				if (index > 7)                                    \
+					*valid = 0;                                   \
+				return prefix##_DR0 + index;                      \
 			case TYPE_CONTROLREG:                                 \
-																  if (index > 8)                                      \
-			*valid = 0;                                       \
-			return prefix##_CR0 + index;                        \
+				if (index > 8)                                    \
+					*valid = 0;                                   \
+				return prefix##_CR0 + index;                      \
 		}                                                     \
 	}
 
@@ -1568,7 +1635,7 @@ static int fixupReg(struct InternalInstruction *insn,
 
 	switch ((OperandEncoding)op->encoding) {
 		default:
-			debug("Expected a REG or R/M encoding in fixupReg");
+			//debug("Expected a REG or R/M encoding in fixupReg");
 			return -1;
 		case ENCODING_VVVV:
 			insn->vvvv = (Reg)fixupRegValue(insn,
@@ -1586,7 +1653,7 @@ static int fixupReg(struct InternalInstruction *insn,
 			if (!valid)
 				return -1;
 			break;
-		case ENCODING_RM:
+		CASE_ENCODING_RM:
 			if (insn->eaBase >= insn->eaRegBase) {
 				insn->eaBase = (EABase)fixupRMValue(insn,
 						(OperandType)op->type,
@@ -1672,7 +1739,7 @@ static int readImmediate(struct InternalInstruction* insn, uint8_t size)
 	// dbgprintf(insn, "readImmediate()");
 
 	if (insn->numImmediatesConsumed == 2) {
-		debug("Already consumed two immediates");
+		//debug("Already consumed two immediates");
 		return -1;
 	}
 
@@ -1719,21 +1786,25 @@ static int readImmediate(struct InternalInstruction* insn, uint8_t size)
  */
 static int readVVVV(struct InternalInstruction* insn)
 {
+	int vvvv;
 	// dbgprintf(insn, "readVVVV()");
 
 	if (insn->vectorExtensionType == TYPE_EVEX)
-		insn->vvvv = vvvvFromEVEX3of4(insn->vectorExtensionPrefix[2]);
+		vvvv = (v2FromEVEX4of4(insn->vectorExtensionPrefix[3]) << 4 |
+				vvvvFromEVEX3of4(insn->vectorExtensionPrefix[2]));
 	else if (insn->vectorExtensionType == TYPE_VEX_3B)
-		insn->vvvv = vvvvFromVEX3of3(insn->vectorExtensionPrefix[2]);
+		vvvv = vvvvFromVEX3of3(insn->vectorExtensionPrefix[2]);
 	else if (insn->vectorExtensionType == TYPE_VEX_2B)
-		insn->vvvv = vvvvFromVEX2of2(insn->vectorExtensionPrefix[1]);
+		vvvv = vvvvFromVEX2of2(insn->vectorExtensionPrefix[1]);
 	else if (insn->vectorExtensionType == TYPE_XOP)
-		insn->vvvv = vvvvFromXOP3of3(insn->vectorExtensionPrefix[2]);
+		vvvv = vvvvFromXOP3of3(insn->vectorExtensionPrefix[2]);
 	else
 		return -1;
 
 	if (insn->mode != MODE_64BIT)
-		insn->vvvv &= 0x7;
+		vvvv &= 0x7;
+
+	insn->vvvv = vvvv;
 
 	return 0;
 }
@@ -1783,11 +1854,14 @@ static int readOperands(struct InternalInstruction* insn)
 			case ENCODING_DI:
 				break;
 			case ENCODING_REG:
-			case ENCODING_RM:
+			CASE_ENCODING_RM:
 				if (readModRM(insn))
 					return -1;
 				if (fixupReg(insn, &x86OperandSets[insn->spec->operands][index]))
 					return -1;
+				// Apply the AVX512 compressed displacement scaling factor.
+				if (x86OperandSets[insn->spec->operands][index].encoding != ENCODING_REG && insn->eaDisplacement == EA_DISP_8)
+					insn->displacement *= 1 << (x86OperandSets[insn->spec->operands][index].encoding - ENCODING_RM);
 				break;
 			case ENCODING_CB:
 			case ENCODING_CW:
@@ -1911,14 +1985,11 @@ int decodeInstruction(struct InternalInstruction* insn,
 		uint64_t startLoc,
 		DisassemblerMode mode)
 {
-	memset(insn, 0, sizeof(*insn));
-
 	insn->reader = reader;
 	insn->readerArg = readerArg;
 	insn->startLocation = startLoc;
 	insn->readerCursor = startLoc;
 	insn->mode = mode;
-	insn->numImmediatesConsumed = 0;
 
 	if (readPrefixes(insn)       ||
 			readOpcode(insn)         ||
@@ -1937,8 +2008,8 @@ int decodeInstruction(struct InternalInstruction* insn,
 	// dbgprintf(insn, "Read from 0x%llx to 0x%llx: length %zu",
 	// 		startLoc, insn->readerCursor, insn->length);
 
-	if (insn->length > 15)
-		dbgprintf(insn, "Instruction exceeds 15-byte limit");
+	//if (insn->length > 15)
+	//	dbgprintf(insn, "Instruction exceeds 15-byte limit");
 
 #if 0
 	printf("\n>>> x86OperandSets = %lu\n", sizeof(x86OperandSets));
@@ -1958,3 +2029,5 @@ int decodeInstruction(struct InternalInstruction* insn,
 
 	return 0;
 }
+
+#endif

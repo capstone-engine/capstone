@@ -11,8 +11,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #ifndef CS_LLVM_AARCH64INSTPRINTER_H
 #define CS_LLVM_AARCH64INSTPRINTER_H
@@ -23,6 +23,6 @@
 
 void AArch64_printInst(MCInst *MI, SStream *O, void *);
 
-void AArch64_post_printer(csh handle, cs_insn *pub_insn, char *insn_asm);
+void AArch64_post_printer(csh handle, cs_insn *pub_insn, char *insn_asm, MCInst *mci);
 
 #endif

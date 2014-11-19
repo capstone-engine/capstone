@@ -13,14 +13,13 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #ifndef CS_MCINST_H
 #define CS_MCINST_H
 
 #include <stdint.h>
-#include <stdbool.h>
 
 #include "include/capstone.h"
 
@@ -76,80 +75,45 @@ const MCInst *MCOperand_getInst(const MCOperand *op);
 
 void MCOperand_setInst(MCOperand *op, const MCInst *Val);
 
-MCOperand *MCOperand_CreateReg(unsigned Reg);
+// create Reg operand in the next slot
+void MCOperand_CreateReg0(MCInst *inst, unsigned Reg);
 
-MCOperand *MCOperand_CreateImm(int64_t Val);
+// create Reg operand use the last-unused slot
+MCOperand *MCOperand_CreateReg1(MCInst *inst, unsigned Reg);
 
-MCOperand *MCOperand_CreateFPImm(double Val);
+// create Imm operand in the next slot
+void MCOperand_CreateImm0(MCInst *inst, int64_t Val);
 
-// NOTE: this structure is a flatten version of cs_insn struct
-// Detail information of disassembled instruction
-typedef struct cs_insn_flat {
-	// Instruction ID
-	// Find the instruction id from header file of corresponding architecture,
-	// such as arm.h for ARM, x86.h for X86, etc...
-	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
-	unsigned int id;
-
-	// Address (EIP) of this instruction
-	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
-	uint64_t address;
-
-	// Size of this instruction
-	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
-	uint16_t size;
-	// Machine bytes of this instruction, with number of bytes indicated by @size above
-	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
-	uint8_t bytes[16];
-
-	// Ascii text of instruction mnemonic
-	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
-	char mnemonic[32];
-
-	// Ascii text of instruction operands
-	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
-	char op_str[160];
-
-	// NOTE: All information below is not available when CS_OPT_DETAIL = CS_OPT_OFF
-
-	uint8_t regs_read[12]; // list of implicit registers read by this insn
-	uint8_t regs_read_count; // number of implicit registers read by this insn
-
-	uint8_t regs_write[20]; // list of implicit registers modified by this insn
-	uint8_t regs_write_count; // number of implicit registers modified by this insn
-
-	uint8_t groups[8]; // list of group this instruction belong to
-	uint8_t groups_count; // number of groups this insn belongs to
-
-	// Architecture-specific instruction info
-	union {
-		cs_x86 x86;	// X86 architecture, including 16-bit, 32-bit & 64-bit mode
-		cs_arm64 arm64;	// ARM64 architecture (aka AArch64)
-		cs_arm arm;		// ARM architecture (including Thumb/Thumb2)
-		cs_mips mips;	// MIPS architecture
-		cs_ppc ppc;	// PowerPC architecture
-	};
-} cs_insn_flat;
+// create Imm operand in the last-unused slot
+MCOperand *MCOperand_CreateImm1(MCInst *inst, int64_t Val);
 
 /// MCInst - Instances of this class represent a single low-level machine
 /// instruction.
 struct MCInst {
-	unsigned Opcode;
-	MCOperand Operands[32];
-	unsigned size;	// number of operands
-	cs_insn_flat flat_insn;	// insn to be exposed to public
 	unsigned OpcodePub;
-	int insn_size;	// instruction size
+	uint8_t size;	// number of operands
+	bool has_imm;	// indicate this instruction has an X86_OP_IMM operand - used for ATT syntax
+	uint8_t op1_size; // size of 1st operand - for X86 Intel syntax
+	unsigned Opcode;
+	MCOperand Operands[48];
+	cs_insn *flat_insn;	// insn to be exposed to public
 	uint64_t address;	// address of this insn
 	cs_struct *csh;	// save the main csh
-	uint8_t x86_imm_size;	// save immediate size to print immediate properly
+	uint8_t x86opsize;	// opsize for [mem] operand
+
+	// (Optional) instruction prefix, which can be up to 4 bytes.
+	// A prefix byte gets value 0 when irrelevant.
+	// This is copied from cs_x86 struct
+	uint8_t x86_prefix[4];
+	uint8_t imm_size;	// immediate size for X86_OP_IMM operand
 };
 
 void MCInst_Init(MCInst *inst);
 
 void MCInst_clear(MCInst *inst);
 
-void MCInst_insert(MCInst *inst, int index, MCOperand *Op);
+// do not free operand after inserting
+void MCInst_insert0(MCInst *inst, int index, MCOperand *Op);
 
 void MCInst_setOpcode(MCInst *inst, unsigned Op);
 
@@ -163,9 +127,7 @@ MCOperand *MCInst_getOperand(MCInst *inst, unsigned i);
 
 unsigned MCInst_getNumOperands(const MCInst *inst);
 
-int MCInst_addOperand(MCInst *inst, MCOperand *Op);
-
 // This addOperand2 function doesnt free Op
-int MCInst_addOperand2(MCInst *inst, MCOperand *Op);
+void MCInst_addOperand2(MCInst *inst, MCOperand *Op);
 
 #endif

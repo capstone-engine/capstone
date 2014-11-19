@@ -11,14 +11,13 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #ifndef CS_LLVM_TARGET_ARM_ARMADDRESSINGMODES_H
 #define CS_LLVM_TARGET_ARM_ARMADDRESSINGMODES_H
 
-#include <stdbool.h>
-
+#include "../../include/platform.h"
 #include "../../MathExtras.h"
 
 /// ARM_AM - ARM Addressing Mode Stuff
@@ -36,12 +35,12 @@ typedef enum ARM_AM_AddrOpc {
 	ARM_AM_add
 } ARM_AM_AddrOpc;
 
-static inline const char *ARM_AM_getAddrOpcStr(ARM_AM_AddrOpc Op)
+static inline char *ARM_AM_getAddrOpcStr(ARM_AM_AddrOpc Op)
 {
 	return Op == ARM_AM_sub ? "-" : "";
 }
 
-static inline const char *ARM_AM_getShiftOpcStr(ARM_AM_ShiftOpc Op)
+static inline char *ARM_AM_getShiftOpcStr(ARM_AM_ShiftOpc Op)
 {
 	switch (Op) {
 		default: return "";	//llvm_unreachable("Unknown shift opc!");
@@ -148,16 +147,17 @@ static inline unsigned getSOImmValRot(unsigned Imm)
 /// take a maximal chunk of bits out of the immediate.
 static inline unsigned getSOImmValRotate(unsigned Imm)
 {
+	unsigned TZ, RotAmt;
 	// 8-bit (or less) immediates are trivially shifter_operands with a rotate
 	// of zero.
 	if ((Imm & ~255U) == 0) return 0;
 
 	// Use CTZ to compute the rotate amount.
-	unsigned TZ = CountTrailingZeros_32(Imm);
+	TZ = CountTrailingZeros_32(Imm);
 
 	// Rotate amount must be even.  Something like 0x200 must be rotated 8 bits,
 	// not 9.
-	unsigned RotAmt = TZ & ~1;
+	RotAmt = TZ & ~1;
 
 	// If we can handle this spread, return it.
 	if ((rotr32(Imm, RotAmt) & ~255U) == 0)
@@ -183,11 +183,12 @@ static inline unsigned getSOImmValRotate(unsigned Imm)
 /// it.  If not, return -1.
 static inline int getSOImmVal(unsigned Arg)
 {
+	unsigned RotAmt;
 	// 8-bit (or less) immediates are trivially shifter_operands with a rotate
 	// of zero.
 	if ((Arg & ~255U) == 0) return Arg;
 
-	unsigned RotAmt = getSOImmValRotate(Arg);
+	RotAmt = getSOImmValRotate(Arg);
 
 	// If this cannot be handled with a single shifter_op, bail out.
 	if (rotr32(~255U, RotAmt) & Arg)
@@ -337,13 +338,14 @@ static inline int getT2SOImmValRotateVal(unsigned V)
 /// See ARM Reference Manual A6.3.2.
 static inline int getT2SOImmVal(unsigned Arg)
 {
+	int Rot;
 	// If 'Arg' is an 8-bit splat, then get the encoded value.
 	int Splat = getT2SOImmValSplatVal(Arg);
 	if (Splat != -1)
 		return Splat;
 
 	// If 'Arg' can be handled with a single shifter_op return the value.
-	int Rot = getT2SOImmValRotateVal(Arg);
+	Rot = getT2SOImmValRotateVal(Arg);
 	if (Rot != -1)
 		return Rot;
 
@@ -352,9 +354,13 @@ static inline int getT2SOImmVal(unsigned Arg)
 
 static inline unsigned getT2SOImmValRotate(unsigned V)
 {
-	if ((V & ~255U) == 0) return 0;
+	unsigned RotAmt;
+
+	if ((V & ~255U) == 0)
+		return 0;
+
 	// Use CTZ to compute the rotate amount.
-	unsigned RotAmt = CountTrailingZeros_32(V);
+	RotAmt = CountTrailingZeros_32(V);
 	return (32 - RotAmt) & 31;
 }
 
@@ -595,6 +601,7 @@ static inline uint64_t ARM_AM_decodeNEONModImm(unsigned ModImm, unsigned *EltBit
 	unsigned OpCmode = getNEONModImmOpCmode(ModImm);
 	unsigned Imm8 = getNEONModImmVal(ModImm);
 	uint64_t Val = 0;
+	unsigned ByteNum;
 
 	if (OpCmode == 0xe) {
 		// 8-bit vector elements
@@ -602,22 +609,21 @@ static inline uint64_t ARM_AM_decodeNEONModImm(unsigned ModImm, unsigned *EltBit
 		*EltBits = 8;
 	} else if ((OpCmode & 0xc) == 0x8) {
 		// 16-bit vector elements
-		unsigned ByteNum = (OpCmode & 0x6) >> 1;
-		Val = Imm8 << (8 * ByteNum);
+		ByteNum = (OpCmode & 0x6) >> 1;
+		Val = (uint64_t)Imm8 << (8 * ByteNum);
 		*EltBits = 16;
 	} else if ((OpCmode & 0x8) == 0) {
 		// 32-bit vector elements, zero with one byte set
-		unsigned ByteNum = (OpCmode & 0x6) >> 1;
-		Val = Imm8 << (8 * ByteNum);
+		ByteNum = (OpCmode & 0x6) >> 1;
+		Val = (uint64_t)Imm8 << (8 * ByteNum);
 		*EltBits = 32;
 	} else if ((OpCmode & 0xe) == 0xc) {
 		// 32-bit vector elements, one byte with low bits set
-		unsigned ByteNum = 1 + (OpCmode & 0x1);
+		ByteNum = 1 + (OpCmode & 0x1);
 		Val = (Imm8 << (8 * ByteNum)) | (0xffff >> (8 * (2 - ByteNum)));
 		*EltBits = 32;
 	} else if (OpCmode == 0x1e) {
 		// 64-bit vector elements
-		unsigned ByteNum;
 		for (ByteNum = 0; ByteNum < 8; ++ByteNum) {
 			if ((ModImm >> ByteNum) & 1)
 				Val |= (uint64_t)0xff << (8 * ByteNum);

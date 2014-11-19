@@ -30,6 +30,9 @@ public class Capstone {
     public X86.UnionOpInfo x86;
     public Mips.UnionOpInfo mips;
     public Ppc.UnionOpInfo ppc;
+    public Sparc.UnionOpInfo sparc;
+    public Systemz.UnionOpInfo sysz;
+    public Xcore.UnionOpInfo xcore;
   }
 
   protected static class _cs_insn extends Structure {
@@ -44,14 +47,16 @@ public class Capstone {
     // instruction mnemonic. NOTE: irrelevant for diet engine.
     public byte[] mnemonic;
     // instruction operands. NOTE: irrelevant for diet engine.
-    public byte[] operands;
+    public byte[] op_str;
     // detail information of instruction.
     public _cs_detail.ByReference cs_detail;
 
     public _cs_insn() {
       bytes = new byte[16];
       mnemonic = new byte[32];
-      operands = new byte[160];
+      op_str = new byte[160];
+      java.util.Arrays.fill(mnemonic, (byte) 0);
+      java.util.Arrays.fill(op_str, (byte) 0);
     }
 
     public _cs_insn(Pointer p) {
@@ -62,7 +67,7 @@ public class Capstone {
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("id", "address", "size", "bytes", "mnemonic", "operands", "cs_detail");
+      return Arrays.asList("id", "address", "size", "bytes", "mnemonic", "op_str", "cs_detail");
     }
   }
 
@@ -117,8 +122,12 @@ public class Capstone {
       size = insn.size;
 
       if (!diet) {
-        mnemonic = new String(insn.mnemonic).replace("\u0000","");
-        opStr = new String(insn.operands).replace("\u0000","");
+        int lm = 0;
+        while (insn.mnemonic[lm++] != 0);
+        int lo = 0;
+        while (insn.op_str[lo++] != 0);
+        mnemonic = new String(insn.mnemonic, 0, lm-1);
+        opStr = new String(insn.op_str, 0, lo-1);
       }
 
       cs = _cs;
@@ -167,10 +176,25 @@ public class Capstone {
           detail.arch.read();
           op_info = new X86.OpInfo((X86.UnionOpInfo) detail.arch.x86);
           break;
+        case CS_ARCH_SPARC:
+          detail.arch.setType(Sparc.UnionOpInfo.class);
+          detail.arch.read();
+          op_info = new Sparc.OpInfo((Sparc.UnionOpInfo) detail.arch.sparc);
+          break;
+        case CS_ARCH_SYSZ:
+          detail.arch.setType(Systemz.UnionOpInfo.class);
+          detail.arch.read();
+          op_info = new Systemz.OpInfo((Systemz.UnionOpInfo) detail.arch.sysz);
+          break;
         case CS_ARCH_PPC:
           detail.arch.setType(Ppc.UnionOpInfo.class);
           detail.arch.read();
           op_info = new Ppc.OpInfo((Ppc.UnionOpInfo) detail.arch.ppc);
+          break;
+        case CS_ARCH_XCORE:
+          detail.arch.setType(Xcore.UnionOpInfo.class);
+          detail.arch.read();
+          op_info = new Xcore.OpInfo((Xcore.UnionOpInfo) detail.arch.xcore);
           break;
         default:
       }
@@ -206,6 +230,10 @@ public class Capstone {
       return cs.cs_insn_name(csh, id);
     }
 
+    public String groupName(int id) {
+      return cs.cs_group_name(csh, id);
+    }
+
     public boolean group(int gid) {
       return cs.cs_insn_group(csh, raw.getPointer(), gid) != 0;
     }
@@ -224,7 +252,7 @@ public class Capstone {
 
   private interface CS extends Library {
     public int cs_open(int arch, int mode, NativeLongByReference handle);
-    public NativeLong cs_disasm_ex(NativeLong handle, byte[] code, NativeLong code_len,
+    public NativeLong cs_disasm(NativeLong handle, byte[] code, NativeLong code_len,
         long addr, NativeLong count, PointerByReference insn);
     public void cs_free(Pointer p, NativeLong count);
     public int cs_close(NativeLongByReference handle);
@@ -235,6 +263,7 @@ public class Capstone {
     public int cs_op_index(NativeLong csh, Pointer insn, int type, int index);
 
     public String cs_insn_name(NativeLong csh, int id);
+    public String cs_group_name(NativeLong csh, int id);
     public byte cs_insn_group(NativeLong csh, Pointer insn, int id);
     public byte cs_reg_read(NativeLong csh, Pointer insn, int id);
     public byte cs_reg_write(NativeLong csh, Pointer insn, int id);
@@ -244,8 +273,8 @@ public class Capstone {
   }
 
   // Capstone API version
-  public static final int CS_API_MAJOR = 2;
-  public static final int CS_API_MINOR = 1;
+  public static final int CS_API_MAJOR = 3;
+  public static final int CS_API_MINOR = 0;
 
   // architectures
   public static final int CS_ARCH_ARM = 0;
@@ -253,18 +282,29 @@ public class Capstone {
   public static final int CS_ARCH_MIPS = 2;
   public static final int CS_ARCH_X86 = 3;
   public static final int CS_ARCH_PPC = 4;
+  public static final int CS_ARCH_SPARC = 5;
+  public static final int CS_ARCH_SYSZ = 6;
+  public static final int CS_ARCH_XCORE = 7;
+  public static final int CS_ARCH_MAX = 8;
   public static final int CS_ARCH_ALL = 0xFFFF; // query id for cs_support()
 
   // disasm mode
-  public static final int CS_MODE_LITTLE_ENDIAN = 0;  // default mode
+  public static final int CS_MODE_LITTLE_ENDIAN = 0;  // little-endian mode (default mode)
   public static final int CS_MODE_ARM = 0;	          // 32-bit ARM
-  public static final int CS_MODE_16 = 1 << 1;
-  public static final int CS_MODE_32 = 1 << 2;
-  public static final int CS_MODE_64 = 1 << 3;
-  public static final int CS_MODE_THUMB = 1 << 4;	      // ARM's Thumb mode, including Thumb-2
-  public static final int CS_MODE_MICRO = 1 << 4;	      // MicroMips mode (Mips arch)
-  public static final int CS_MODE_N64 = 1 << 5;	      // Nintendo-64 mode (Mips arch)
-  public static final int CS_MODE_BIG_ENDIAN = 1 << 31;
+  public static final int CS_MODE_16 = 1 << 1;		// 16-bit mode for X86
+  public static final int CS_MODE_32 = 1 << 2;		// 32-bit mode for X86
+  public static final int CS_MODE_64 = 1 << 3;		// 64-bit mode for X86, PPC
+  public static final int CS_MODE_THUMB = 1 << 4;	  // ARM's Thumb mode, including Thumb-2
+  public static final int CS_MODE_MCLASS = 1 << 5;	  // ARM's Cortex-M series
+  public static final int CS_MODE_V8 = 1 << 6;	      // ARMv8 A32 encodings for ARM
+  public static final int CS_MODE_MICRO = 1 << 4;	  // MicroMips mode (Mips arch)
+  public static final int CS_MODE_MIPS3 = 1 << 5;     // Mips III ISA
+  public static final int CS_MODE_MIPS32R6 = 1 << 6;  // Mips32r6 ISA
+  public static final int CS_MODE_MIPSGP64 = 1 << 7;  // General Purpose Registers are 64-bit wide (MIPS arch)
+  public static final int CS_MODE_BIG_ENDIAN = 1 << 31; // big-endian mode
+  public static final int CS_MODE_V9 = 1 << 4;	      // SparcV9 mode (Sparc arch)
+  public static final int CS_MODE_MIPS32 = CS_MODE_32; // Mips32 ISA
+  public static final int CS_MODE_MIPS64 = CS_MODE_64; // Mips64 ISA
 
   // Capstone error
   public static final int CS_ERR_OK = 0;
@@ -278,6 +318,9 @@ public class Capstone {
   public static final int CS_ERR_MEMSETUP = 8;
   public static final int CS_ERR_VERSION = 9;  //Unsupported version (bindings)
   public static final int CS_ERR_DIET = 10;  //Information irrelevant in diet engine
+  public static final int CS_ERR_SKIPDATA = 11;  //Access irrelevant data for "data" instruction in SKIPDATA mode
+  public static final int CS_ERR_X86_ATT = 12;  //X86 AT&T syntax is unsupported (opt-out at compile time)
+  public static final int CS_ERR_X86_INTEL = 13;  //X86 Intel syntax is unsupported (opt-out at compile time)
 
   // Capstone option type
   public static final int CS_OPT_SYNTAX = 1;  // Intel X86 asm syntax (CS_ARCH_X86 arch)
@@ -291,8 +334,24 @@ public class Capstone {
   public static final int CS_OPT_ON = 3;  // Turn ON an option (CS_OPT_DETAIL)
   public static final int CS_OPT_SYNTAX_NOREGNAME = 3; // PPC asm syntax: Prints register name with only number (CS_OPT_SYNTAX)
 
-  // query id for cs_support()
+  // Common instruction operand types - to be consistent across all architectures.
+  public static final int CS_OP_INVALID = 0;
+  public static final int CS_OP_REG = 1;
+  public static final int CS_OP_IMM = 2;
+  public static final int CS_OP_MEM = 3;
+  public static final int CS_OP_FP  = 4;
+
+  // Common instruction groups - to be consistent across all architectures.
+  public static final int CS_GRP_INVALID = 0;  // uninitialized/invalid group.
+  public static final int CS_GRP_JUMP    = 1;  // all jump instructions (conditional+direct+indirect jumps)
+  public static final int CS_GRP_CALL    = 2;  // all call instructions
+  public static final int CS_GRP_RET     = 3;  // all return instructions
+  public static final int CS_GRP_INT     = 4;  // all interrupt instructions (int+syscall)
+  public static final int CS_GRP_IRET    = 5;  // all interrupt return instructions
+
+  // Query id for cs_support()
   public static final int CS_SUPPORT_DIET = CS_ARCH_ALL+1;	  // diet mode
+  public static final int CS_SUPPORT_X86_REDUCE = CS_ARCH_ALL+2;  // X86 reduce mode
 
   protected class NativeStruct {
       private NativeLong csh;
@@ -360,7 +419,13 @@ public class Capstone {
 
   // destructor automatically caled at destroyed time.
   protected void finalize() {
-    cs.cs_close(ns.handleRef);
+    // FIXME: crashed on Ubuntu 14.04 64bit, OpenJDK java 1.6.0_33
+    // cs.cs_close(ns.handleRef);
+  }
+
+  // destructor automatically caled at destroyed time.
+  public int close() {
+    return cs.cs_close(ns.handleRef);
   }
 
   // disassemble until either no more code, or encounter broken insn.
@@ -372,7 +437,7 @@ public class Capstone {
   public CsInsn[] disasm(byte[] code, long address, long count) {
     PointerByReference insnRef = new PointerByReference();
 
-    NativeLong c = cs.cs_disasm_ex(ns.csh, code, new NativeLong(code.length), address, new NativeLong(count), insnRef);
+    NativeLong c = cs.cs_disasm(ns.csh, code, new NativeLong(code.length), address, new NativeLong(count), insnRef);
 
     Pointer p = insnRef.getValue();
     _cs_insn byref = new _cs_insn(p);
@@ -380,9 +445,9 @@ public class Capstone {
     CsInsn[] allInsn = fromArrayRaw((_cs_insn[]) byref.toArray(c.intValue()));
 
     // free allocated memory
-    cs.cs_free(p, c);
+    // cs.cs_free(p, c);
+    // FIXME(danghvu): Can't free because memory is still inside CsInsn
 
     return allInsn;
   }
 }
-

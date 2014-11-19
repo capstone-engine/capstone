@@ -1,5 +1,5 @@
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,9 +8,14 @@
 #include "MCInst.h"
 #include "utils.h"
 
+#define MCINST_CACHE (ARR_SIZE(mcInst->Operands) - 1)
+
 void MCInst_Init(MCInst *inst)
 {
-	memset(inst, 0, sizeof(*inst));
+	inst->OpcodePub = 0;
+	inst->size = 0;
+	inst->has_imm = false;
+	inst->op1_size = 0;
 }
 
 void MCInst_clear(MCInst *inst)
@@ -18,8 +23,8 @@ void MCInst_clear(MCInst *inst)
 	inst->size = 0;
 }
 
-// NOTE: this will free @Op argument
-void MCInst_insert(MCInst *inst, int index, MCOperand *Op)
+// do not free @Op
+void MCInst_insert0(MCInst *inst, int index, MCOperand *Op)
 {
 	int i;
 
@@ -29,8 +34,6 @@ void MCInst_insert(MCInst *inst, int index, MCOperand *Op)
 
 	inst->Operands[index] = *Op;
 	inst->size++;
-
-	cs_mem_free(Op);
 }
 
 void MCInst_setOpcode(MCInst *inst, unsigned Op)
@@ -63,33 +66,12 @@ unsigned MCInst_getNumOperands(const MCInst *inst)
 	return inst->size;
 }
 
-// NOTE: this will free @Op argument
-int MCInst_addOperand(MCInst *inst, MCOperand *Op)
-{
-	if (inst->size == ARR_SIZE(inst->Operands))
-		// full
-		return -1;
-
-	inst->Operands[inst->size] = *Op;
-	cs_mem_free(Op);
-
-	inst->size++;
-
-	return 0;
-}
-
 // This addOperand2 function doesnt free Op
-int MCInst_addOperand2(MCInst *inst, MCOperand *Op)
+void MCInst_addOperand2(MCInst *inst, MCOperand *Op)
 {
-	if (inst->size == ARR_SIZE(inst->Operands))
-		// full
-		return -1;
-
 	inst->Operands[inst->size] = *Op;
 
 	inst->size++;
-
-	return 0;
 }
 
 void MCOperand_Init(MCOperand *op)
@@ -150,9 +132,9 @@ void MCOperand_setFPImm(MCOperand *op, double Val)
 	op->FPImmVal = Val;
 }
 
-MCOperand *MCOperand_CreateReg(unsigned Reg)
+MCOperand *MCOperand_CreateReg1(MCInst *mcInst, unsigned Reg)
 {
-	MCOperand *op = cs_mem_malloc(sizeof(*op));
+	MCOperand *op = &(mcInst->Operands[MCINST_CACHE]);
 
 	op->Kind = kRegister;
 	op->RegVal = Reg;
@@ -160,9 +142,18 @@ MCOperand *MCOperand_CreateReg(unsigned Reg)
 	return op;
 }
 
-MCOperand *MCOperand_CreateImm(int64_t Val)
+void MCOperand_CreateReg0(MCInst *mcInst, unsigned Reg)
 {
-	MCOperand *op = cs_mem_malloc(sizeof(*op));
+	MCOperand *op = &(mcInst->Operands[mcInst->size]);
+	mcInst->size++;
+
+	op->Kind = kRegister;
+	op->RegVal = Reg;
+}
+
+MCOperand *MCOperand_CreateImm1(MCInst *mcInst, int64_t Val)
+{
+	MCOperand *op = &(mcInst->Operands[MCINST_CACHE]);
 
 	op->Kind = kImmediate;
 	op->ImmVal = Val;
@@ -170,12 +161,11 @@ MCOperand *MCOperand_CreateImm(int64_t Val)
 	return op;
 }
 
-MCOperand *MCOperand_CreateFPImm(double Val)
+void MCOperand_CreateImm0(MCInst *mcInst, int64_t Val)
 {
-	MCOperand *op = cs_mem_malloc(sizeof(*op));
+	MCOperand *op = &(mcInst->Operands[mcInst->size]);
+	mcInst->size++;
 
-	op->Kind = kFPImmediate;
-	op->FPImmVal = Val;
-
-	return op;
+	op->Kind = kImmediate;
+	op->ImmVal = Val;
 }

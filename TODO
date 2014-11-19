@@ -3,24 +3,14 @@ Issues to be solved in next versions
 
 [Core]
 
-- X86 cannot handle many tricks introduced by malware yet. If you find any such
-  instruction sequence that Capstone disassembles wrongly or fails completely,
-  please report. This would be the top priority of our project.
+- X86 can already handle all the malware tricks we are aware of. If you find
+  any such instruction sequence that Capstone disassembles wrongly or fails
+  completely, please report. Fixing this issue is always the top priority of
+  our project.
 
 - More optimization for better performance.
-
-- Support more operand details for Arm, Arm64, Mips & X86, especially focus on
-  non-standard instructions.
-
-- At the moment the only way to get Windows binaries is cross-compiling. We have
-  to port the code over to Visual Studio, so those only have Windows can still
-  compile Capstone without needing to have Linux machine for cross-compiling.
-
-- Reduce the binary size of libraries, so Capstone can be embeded into products.
 
 
 [Bindings]
 
-- OCaml binding are broken due to many API changes. This should be fixed ASAP.
-
-- Python 3 support is needed.
+- OCaml binding is working, but still support the core API better.

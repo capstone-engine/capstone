@@ -11,8 +11,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #ifndef CS_POWERPC_PPCPREDICATES_H
 #define CS_POWERPC_PPCPREDICATES_H
@@ -44,7 +44,12 @@ typedef enum ppc_predicate {
   PPC_PRED_GT_PLUS  = (1 << 5) | 15,
   PPC_PRED_NE_PLUS  = (2 << 5) |  7,
   PPC_PRED_UN_PLUS  = (3 << 5) | 15,
-  PPC_PRED_NU_PLUS  = (3 << 5) |  7
+  PPC_PRED_NU_PLUS  = (3 << 5) |  7,
+
+  // When dealing with individual condition-register bits, we have simple set
+  // and unset predicates.
+  PPC_PRED_BIT_SET =   1024,
+  PPC_PRED_BIT_UNSET = 1025
 } ppc_predicate;
 
 /// Invert the specified predicate.  != -> ==, < -> >=.

@@ -2,6 +2,9 @@
 *.o
 *.ko
 
+# Gcc dependency-tracking files
+*.d
+
 # Libraries
 *.lib
 *.a
@@ -20,35 +23,45 @@
 # python
 bindings/python/build/
 *.pyc
-bindings/python/pyx/*.c
-bindings/python/pyx/arm.pyx
-bindings/python/pyx/arm64.pyx
-bindings/python/pyx/arm64_const.pyx
-bindings/python/pyx/arm_const.pyx
-bindings/python/pyx/capstone.pyx
-bindings/python/pyx/mips.pyx
-bindings/python/pyx/mips_const.pyx
-bindings/python/pyx/ppc.pyx
-bindings/python/pyx/ppc_const.pyx
-bindings/python/pyx/x86.pyx
-bindings/python/pyx/x86_const.pyx
-
 
 # java
 bindings/java/capstone.jar
 
+# ocaml
+bindings/ocaml/*.cmi
+bindings/ocaml/*.cmx
+bindings/ocaml/*.cmxa
+bindings/ocaml/*.mli
+bindings/ocaml/test
+bindings/ocaml/test_arm
+bindings/ocaml/test_arm64
+bindings/ocaml/test_mips
+bindings/ocaml/test_x86
+bindings/ocaml/test_detail
+bindings/ocaml/test_ppc
+bindings/ocaml/test_sparc
+bindings/ocaml/test_systemz
+bindings/ocaml/test_xcore
+
+
 # test binaries
 tests/test
 tests/test_detail
+tests/test_iter
 tests/test_arm
 tests/test_arm64
 tests/test_mips
 tests/test_x86
 tests/test_ppc
+tests/test_skipdata
+tests/test_sparc
+tests/test_systemz
+tests/test_xcore
 tests/*.static
 
 # vim tmp file
 *.swp
+*~
 
 capstone.pc
 
@@ -57,3 +70,21 @@ _*
 
 # freebsd ports: generated file with "make makesum" command
 packages/freebsd/ports/devel/capstone/distinfo
+
+# VisualStudio
+Debug/
+Release/
+ipch/
+*.sdf
+*.opensdf
+*.suo
+*.user
+
+# Xcode
+xcode/Capstone.xcodeproj/xcuserdata
+
+# suite/
+test_arm_regression
+test_arm_regression.o
+
+ *.s

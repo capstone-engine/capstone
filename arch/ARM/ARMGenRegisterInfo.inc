@@ -7,7 +7,7 @@
 \*===----------------------------------------------------------------------===*/
 
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 
 #ifdef GET_REGINFO_ENUM
@@ -483,7 +483,7 @@ enum {
 \*===----------------------------------------------------------------------===*/
 
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 
 #ifdef GET_REGINFO_MC_DESC

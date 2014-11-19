@@ -19,7 +19,7 @@ public class TestPpc {
     return data;
   }
 
-  static final String PPC_CODE = "80200000803f00001043230ed04400804c4322022d0300807c4320147c4320934f2000214cc80021";
+  static final String PPC_CODE = "80200000803f00001043230ed04400804c4322022d0300807c4320147c4320934f2000214cc8002140820014";
 
   public static Capstone cs;
 
@@ -63,7 +63,6 @@ public class TestPpc {
     if (operands.updateCr0)
       System.out.printf("\tUpdate-CR0: True\n");
 
-    System.out.printf("\n");
   }
 
   public static void main(String argv[]) {
@@ -88,6 +87,9 @@ public class TestPpc {
         System.out.println();
       }
       System.out.printf("0x%x:\n\n", (all_ins[all_ins.length-1].address + all_ins[all_ins.length-1].size));
+
+      // Close when done
+      cs.close();
     }
   }
 

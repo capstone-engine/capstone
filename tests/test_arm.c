@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <inttypes.h>
+#include "../inttypes.h"
 
 #include <capstone.h>
 
@@ -15,9 +15,10 @@ struct platform {
 	unsigned char *code;
 	size_t size;
 	char *comment;
+	int syntax;
 };
 
-static void print_string_hex(char *comment, unsigned char *str, int len)
+static void print_string_hex(char *comment, unsigned char *str, size_t len)
 {
 	unsigned char *c;
 
@@ -31,12 +32,18 @@ static void print_string_hex(char *comment, unsigned char *str, int len)
 
 static void print_insn_detail(cs_insn *ins)
 {
-	cs_arm *arm = &(ins->detail->arm);
+	cs_arm *arm;
+	int i;
+
+	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
+	if (ins->detail == NULL)
+		return;
+
+	arm = &(ins->detail->arm);
 
 	if (arm->op_count)
 		printf("\top_count: %u\n", arm->op_count);
 
-	int i;
 	for (i = 0; i < arm->op_count; i++) {
 		cs_arm_op *op = &(arm->operands[i]);
 		switch((int)op->type) {
@@ -71,6 +78,12 @@ static void print_insn_detail(cs_insn *ins)
 			case ARM_OP_CIMM:
 				printf("\t\toperands[%u].type: C-IMM = %u\n", i, op->imm);
 				break;
+			case ARM_OP_SETEND:
+				printf("\t\toperands[%u].type: SETEND = %s\n", i, op->setend == ARM_SETEND_BE? "be" : "le");
+				break;
+			case ARM_OP_SYSREG:
+				printf("\t\toperands[%u].type: SYSREG = %u\n", i, op->reg);
+				break;
 		}
 
 		if (op->shift.type != ARM_SFT_INVALID && op->shift.value) {
@@ -82,6 +95,13 @@ static void print_insn_detail(cs_insn *ins)
 				printf("\t\t\tShift: %u = %s\n", op->shift.type,
 						cs_reg_name(handle, op->shift.value));
 		}
+
+		if (op->vector_index != -1) {
+			printf("\t\toperands[%u].vector_index = %u\n", i, op->vector_index);
+		}
+
+		if (op->subtracted)
+			printf("\t\tSubtracted: True\n");
 	}
 
 	if (arm->cc != ARM_CC_AL && arm->cc != ARM_CC_INVALID)
@@ -92,6 +112,24 @@ static void print_insn_detail(cs_insn *ins)
 
 	if (arm->writeback)
 		printf("\tWrite-back: True\n");
+
+	if (arm->cps_mode)
+		printf("\tCPSI-mode: %u\n", arm->cps_mode);
+
+	if (arm->cps_flag)
+		printf("\tCPSI-flag: %u\n", arm->cps_flag);
+
+	if (arm->vector_data)
+		printf("\tVector-data: %u\n", arm->vector_data);
+
+	if (arm->vector_size)
+		printf("\tVector-size: %u\n", arm->vector_size);
+
+	if (arm->usermode)
+		printf("\tUser-mode: True\n");
+
+	if (arm->mem_barrier)
+		printf("\tMemory-barrier: %u\n", arm->mem_barrier);
 
 	printf("\n");
 }
@@ -144,7 +182,7 @@ static void test()
 //#define ARM_CODE "\x90\x04\x0E\x00"	// muleq	lr, r0, r4
 //#define ARM_CODE "\x90\x24\x0E\x00"	// muleq	lr, r0, r4
 //#define ARM_CODE "\xb6\x10\x5f\xe1"	// ldrh	r1, [pc, #-6]
-#define ARM_CODE "\xED\xFF\xFF\xEB\x04\xe0\x2d\xe5\x00\x00\x00\x00\xe0\x83\x22\xe5\xf1\x02\x03\x0e\x00\x00\xa0\xe3\x02\x30\xc1\xe7\x00\x00\x53\xe3"
+#define ARM_CODE "\xED\xFF\xFF\xEB\x04\xe0\x2d\xe5\x00\x00\x00\x00\xe0\x83\x22\xe5\xf1\x02\x03\x0e\x00\x00\xa0\xe3\x02\x30\xc1\xe7\x00\x00\x53\xe3\x00\x02\x01\xf1\x05\x40\xd0\xe8\xf4\x80\x00\x00"
 //#define ARM_CODE2 "\xf0\x24"
 //#define ARM_CODE2 "\x83\xb0"
 #define ARM_CODE2 "\xd1\xe8\x00\xf0\xf0\x24\x04\x07\x1f\x3c\xf2\xc0\x00\x00\x4f\xf0\x00\x01\x46\x6c"
@@ -154,43 +192,61 @@ static void test()
 //#define THUMB_CODE "\x01\x47"	// bx r0
 //#define THUMB_CODE "\x02\x47"	// bx r0
 //#define THUMB_CODE "\x0a\xbf" // itet eq
-#define THUMB_CODE "\x70\x47\xeb\x46\x83\xb0\xc9\x68\x1f\xb1"
-#define THUMB_CODE2 "\x4f\xf0\x00\x01\xbd\xe8\x00\x88\xd1\xe8\x00\xf0"
+#define THUMB_CODE "\x70\x47\xeb\x46\x83\xb0\xc9\x68\x1f\xb1\x30\xbf\xaf\xf3\x20\x84"
+#define THUMB_CODE2 "\x4f\xf0\x00\x01\xbd\xe8\x00\x88\xd1\xe8\x00\xf0\x18\xbf\xad\xbf\xf3\xff\x0b\x0c\x86\xf3\x00\x89\x80\xf3\x00\x8c\x4f\xfa\x99\xf6\xd0\xff\xa2\x01"
+#define THUMB_MCLASS "\xef\xf3\x02\x80"
+#define ARMV8 "\xe0\x3b\xb2\xee\x42\x00\x01\xe1\x51\xf0\x7f\xf5"
 
 	struct platform platforms[] = {
 		{
-			.arch = CS_ARCH_ARM,
-			.mode = CS_MODE_ARM,
-			.code = (unsigned char *)ARM_CODE,
-			.size = sizeof(ARM_CODE) - 1,
-			.comment = "ARM"
+			CS_ARCH_ARM,
+			CS_MODE_ARM,
+			(unsigned char *)ARM_CODE,
+			sizeof(ARM_CODE) - 1,
+			"ARM"
 		},
 		{
-			.arch = CS_ARCH_ARM,
-			.mode = CS_MODE_THUMB,
-			.code = (unsigned char *)THUMB_CODE,
-			.size = sizeof(THUMB_CODE) - 1,
-			.comment = "Thumb"
+			CS_ARCH_ARM,
+			CS_MODE_THUMB,
+			(unsigned char *)THUMB_CODE,
+			sizeof(THUMB_CODE) - 1,
+			"Thumb"
 		},
 		{
-			.arch = CS_ARCH_ARM,
-			.mode = CS_MODE_THUMB,
-			.code = (unsigned char *)ARM_CODE2,
-			.size = sizeof(ARM_CODE2) - 1,
-			.comment = "Thumb-mixed"
+			CS_ARCH_ARM,
+			CS_MODE_THUMB,
+			(unsigned char *)ARM_CODE2,
+			sizeof(ARM_CODE2) - 1,
+			"Thumb-mixed"
 		},
 		{
-			.arch = CS_ARCH_ARM,
-			.mode = CS_MODE_THUMB,
-			.code = (unsigned char *)THUMB_CODE2,
-			.size = sizeof(THUMB_CODE2) - 1,
-			.comment = "Thumb-2"
+			CS_ARCH_ARM,
+			CS_MODE_THUMB,
+			(unsigned char *)THUMB_CODE2,
+			sizeof(THUMB_CODE2) - 1,
+			"Thumb-2 & register named with numbers",
+			CS_OPT_SYNTAX_NOREGNAME
+		},
+		{
+			CS_ARCH_ARM,
+			(cs_mode)(CS_MODE_THUMB + CS_MODE_MCLASS),
+			(unsigned char*)THUMB_MCLASS,
+			sizeof(THUMB_MCLASS) - 1,
+			"Thumb-MClass"
+		},
+		{
+			CS_ARCH_ARM,
+			(cs_mode)(CS_MODE_ARM + CS_MODE_V8),
+			(unsigned char*)ARMV8,
+			sizeof(ARMV8) - 1,
+			"Arm-V8"
 		},
 	};
 
 	uint64_t address = 0x1000;
 	cs_insn *insn;
 	int i;
+	size_t count;
 
 	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
 		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
@@ -201,21 +257,24 @@ static void test()
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
-		size_t count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
+		if (platforms[i].syntax)
+			cs_option(handle, CS_OPT_SYNTAX, platforms[i].syntax);
+
+		count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {
+			size_t j;
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code:", platforms[i].code, platforms[i].size);
 			printf("Disasm:\n");
 
-			size_t j;
 			for (j = 0; j < count; j++) {
 				printf("0x%"PRIx64":\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
 				print_insn_detail(&insn[j]);
 			}
 			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
 
-			// free memory allocated by cs_disasm_ex()
+			// free memory allocated by cs_disasm()
 			cs_free(insn, count);
 		} else {
 			printf("****************\n");

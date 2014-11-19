@@ -30,10 +30,11 @@ public class Arm {
     public int imm;
     public double fp;
     public MemType mem;
+    public int setend;
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("reg", "imm", "fp", "mem");
+      return Arrays.asList("reg", "imm", "fp", "mem", "setend");
     }
   }
 
@@ -48,11 +49,14 @@ public class Arm {
   }
 
   public static class Operand extends Structure {
+    public int vector_index;
     public OpShift shift;
     public int type;
     public OpValue value;
+    public boolean subtracted;
 
     public void read() {
+      readField("vector_index");
       readField("type");
       if (type == ARM_OP_MEM)
         value.setType(MemType.class);
@@ -66,18 +70,25 @@ public class Arm {
         return;
       readField("value");
       readField("shift");
+      readField("subtracted");
     }
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("shift", "type", "value");
+      return Arrays.asList("vector_index", "shift", "type", "value", "subtracted");
     }
   }
 
   public static class UnionOpInfo extends Capstone.UnionOpInfo {
+    public boolean usermode;
+    public int vector_size;
+    public int vector_data;
+    public int cps_mode;
+    public int cps_flag;
     public int cc;
-    public byte _update_flags;
-    public byte _writeback;
+    public byte update_flags;
+    public byte writeback;
+    public byte mem_barrier;
     public byte op_count;
 
     public Operand [] op;
@@ -87,9 +98,15 @@ public class Arm {
     }
 
     public void read() {
+      readField("usermode");
+      readField("vector_size");
+      readField("vector_data");
+      readField("cps_mode");
+      readField("cps_flag");
       readField("cc");
-      readField("_update_flags");
-      readField("_writeback");
+      readField("update_flags");
+      readField("writeback");
+      readField("mem_barrier");
       readField("op_count");
       op = new Operand[op_count];
       if (op_count != 0)
@@ -98,20 +115,33 @@ public class Arm {
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("cc", "_update_flags", "_writeback", "op_count", "op");
+      return Arrays.asList("usermode", "vector_size", "vector_data",
+          "cps_mode", "cps_flag", "cc", "update_flags", "writeback", "mem_barrier", "op_count", "op");
     }
   }
 
   public static class OpInfo extends Capstone.OpInfo {
+    public boolean usermode;
+    public int vectorSize;
+    public int vectorData;
+    public int cpsMode;
+    public int cpsFlag;
     public int cc;
     public boolean updateFlags;
     public boolean writeback;
+    public int memBarrier;
     public Operand [] op = null;
 
     public OpInfo(UnionOpInfo op_info) {
+      usermode = op_info.usermode;
+      vectorSize = op_info.vector_size;
+      vectorData = op_info.vector_data;
+      cpsMode = op_info.cps_mode;
+      cpsFlag = op_info.cps_flag;
       cc = op_info.cc;
-      updateFlags = (op_info._update_flags > 0);
-      writeback = (op_info._writeback > 0);
+      updateFlags = (op_info.update_flags > 0);
+      writeback = (op_info.writeback > 0);
+      memBarrier = op_info.mem_barrier;
       op = op_info.op;
     }
   }

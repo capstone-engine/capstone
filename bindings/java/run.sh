@@ -12,10 +12,14 @@ fi
 
 case "$1" in
   "") java -classpath ${JNA}:. Test ;;
+  "test") java -classpath ${JNA}:. Test ;;
   "arm") java -classpath ${JNA}:. TestArm ;;
   "arm64") java -classpath ${JNA}:. TestArm64 ;;
   "mips") java -classpath ${JNA}:. TestMips ;;
   "x86") java -classpath ${JNA}:. TestX86 ;;
+  "xcore") java -classpath ${JNA}:. TestXcore; ;;
   "ppc") java -classpath ${JNA}:. TestPpc ;;
-  * ) echo "Usage: ./run.sh [arm|arm64|mips|x86|ppc]"; exit 1;;
+  "sparc") java -classpath ${JNA}:. TestSparc ;;
+  "systemz") java -classpath ${JNA}:. TestSystemz ;;
+  * ) echo "Usage: ./run.sh [arm|arm64|mips|ppc|sparc|systemz|x86]"; exit 1;;
 esac

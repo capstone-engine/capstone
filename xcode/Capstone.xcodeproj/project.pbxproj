@@ -1,0 +1,3037 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DC07A86E19F6061D00254FCF /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
+		DC474EE519DDEAD900BCA449 /* test_arm.c in Sources */ = {isa = PBXBuildFile; fileRef = DC474E6C19DDEA9500BCA449 /* test_arm.c */; };
+		DC474EF119DDEAED00BCA449 /* test_arm64.c in Sources */ = {isa = PBXBuildFile; fileRef = DC474E6D19DDEA9500BCA449 /* test_arm64.c */; };
+		DC474EF219DDEAF000BCA449 /* test_detail.c in Sources */ = {isa = PBXBuildFile; fileRef = DC474E6E19DDEA9500BCA449 /* test_detail.c */; };
+		DC474EF319DDEAF200BCA449 /* test_mips.c in Sources */ = {isa = PBXBuildFile; fileRef = DC474E6F19DDEA9500BCA449 /* test_mips.c */; };
+		DC474EF419DDEAF400BCA449 /* test_ppc.c in Sources */ = {isa = PBXBuildFile; fileRef = DC474E7019DDEA9500BCA449 /* test_ppc.c */; };
+		DC474EF519DDEAF600BCA449 /* test_skipdata.c in Sources */ = {isa = PBXBuildFile; fileRef = DC474E7119DDEA9500BCA449 /* test_skipdata.c */; };
+		DC474EF619DDEAF800BCA449 /* test_sparc.c in Sources */ = {isa = PBXBuildFile; fileRef = DC474E7219DDEA9500BCA449 /* test_sparc.c */; };
+		DC474EF719DDEAFA00BCA449 /* test_systemz.c in Sources */ = {isa = PBXBuildFile; fileRef = DC474E7319DDEA9500BCA449 /* test_systemz.c */; };
+		DC474EF819DDEAFD00BCA449 /* test_x86.c in Sources */ = {isa = PBXBuildFile; fileRef = DC474E7419DDEA9500BCA449 /* test_x86.c */; };
+		DC474EF919DDEB0000BCA449 /* test_xcore.c in Sources */ = {isa = PBXBuildFile; fileRef = DC474E7519DDEA9500BCA449 /* test_xcore.c */; };
+		DC474EFA19DDEB0200BCA449 /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = DC474E7619DDEA9500BCA449 /* test.c */; };
+		DC474EFB19DDEB1100BCA449 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
+		DC474EFD19DDEB1A00BCA449 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
+		DC474EFE19DDEB1C00BCA449 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
+		DC474EFF19DDEB1E00BCA449 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
+		DC474F0019DDEB2100BCA449 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
+		DC474F0119DDEB2300BCA449 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
+		DC474F0219DDEB2500BCA449 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
+		DC474F0319DDEB2700BCA449 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
+		DC474F0419DDEB2A00BCA449 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
+		DC474F0519DDEB2D00BCA449 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
+		DC474F8119DE6F6B00BCA449 /* arm.h in Headers */ = {isa = PBXBuildFile; fileRef = DCFE24BC19DDCE2F00EF8EA9 /* arm.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC474F8219DE6F6B00BCA449 /* arm64.h in Headers */ = {isa = PBXBuildFile; fileRef = DCFE24BD19DDCE2F00EF8EA9 /* arm64.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC474F8319DE6F6B00BCA449 /* capstone.h in Headers */ = {isa = PBXBuildFile; fileRef = DCFE24BE19DDCE2F00EF8EA9 /* capstone.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC474F8419DE6F6B00BCA449 /* mips.h in Headers */ = {isa = PBXBuildFile; fileRef = DCFE24BF19DDCE2F00EF8EA9 /* mips.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC474F8519DE6F6B00BCA449 /* platform.h in Headers */ = {isa = PBXBuildFile; fileRef = DCFE24C019DDCE2F00EF8EA9 /* platform.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC474F8619DE6F6B00BCA449 /* ppc.h in Headers */ = {isa = PBXBuildFile; fileRef = DCFE24C119DDCE2F00EF8EA9 /* ppc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC474F8719DE6F6B00BCA449 /* sparc.h in Headers */ = {isa = PBXBuildFile; fileRef = DCFE24C219DDCE2F00EF8EA9 /* sparc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC474F8819DE6F6B00BCA449 /* systemz.h in Headers */ = {isa = PBXBuildFile; fileRef = DCFE24C319DDCE2F00EF8EA9 /* systemz.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC474F8919DE6F6B00BCA449 /* x86.h in Headers */ = {isa = PBXBuildFile; fileRef = DCFE24C419DDCE2F00EF8EA9 /* x86.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC474F8A19DE6F6B00BCA449 /* xcore.h in Headers */ = {isa = PBXBuildFile; fileRef = DCFE24C519DDCE2F00EF8EA9 /* xcore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC474F8C19DE6F8000BCA449 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
+		DC474F8D19DE6FCD00BCA449 /* cs.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE249D19DDCDEE00EF8EA9 /* cs.c */; };
+		DC474F8E19DE6FCD00BCA449 /* MCInst.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE249E19DDCDEE00EF8EA9 /* MCInst.c */; };
+		DC474F8F19DE6FCD00BCA449 /* MCInstrDesc.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE249F19DDCDEE00EF8EA9 /* MCInstrDesc.c */; };
+		DC474F9019DE6FCD00BCA449 /* MCRegisterInfo.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE24A019DDCDEE00EF8EA9 /* MCRegisterInfo.c */; };
+		DC474F9119DE6FCD00BCA449 /* SStream.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE24A119DDCDEE00EF8EA9 /* SStream.c */; };
+		DC474F9219DE6FCD00BCA449 /* utils.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE24A219DDCDEE00EF8EA9 /* utils.c */; };
+		DC474F9319DE6FCD00BCA449 /* cs.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE249D19DDCDEE00EF8EA9 /* cs.c */; };
+		DC474F9419DE6FCD00BCA449 /* MCInst.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE249E19DDCDEE00EF8EA9 /* MCInst.c */; };
+		DC474F9519DE6FCD00BCA449 /* MCInstrDesc.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE249F19DDCDEE00EF8EA9 /* MCInstrDesc.c */; };
+		DC474F9619DE6FCD00BCA449 /* MCRegisterInfo.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE24A019DDCDEE00EF8EA9 /* MCRegisterInfo.c */; };
+		DC474F9719DE6FCD00BCA449 /* SStream.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE24A119DDCDEE00EF8EA9 /* SStream.c */; };
+		DC474F9819DE6FCD00BCA449 /* utils.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE24A219DDCDEE00EF8EA9 /* utils.c */; };
+		DC474F9919DE6FDA00BCA449 /* AArch64BaseInfo.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23DE19DDCD8700EF8EA9 /* AArch64BaseInfo.c */; };
+		DC474F9A19DE6FDA00BCA449 /* AArch64Disassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23E019DDCD8700EF8EA9 /* AArch64Disassembler.c */; };
+		DC474F9B19DE6FDA00BCA449 /* AArch64InstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23E719DDCD8700EF8EA9 /* AArch64InstPrinter.c */; };
+		DC474F9C19DE6FDA00BCA449 /* AArch64Mapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23E919DDCD8700EF8EA9 /* AArch64Mapping.c */; };
+		DC474F9D19DE6FDA00BCA449 /* AArch64Module.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23EB19DDCD8700EF8EA9 /* AArch64Module.c */; };
+		DC474F9E19DE6FDA00BCA449 /* ARMDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23EF19DDCD8700EF8EA9 /* ARMDisassembler.c */; };
+		DC474F9F19DE6FDA00BCA449 /* ARMInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23F619DDCD8700EF8EA9 /* ARMInstPrinter.c */; };
+		DC474FA019DE6FDA00BCA449 /* ARMMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23F819DDCD8700EF8EA9 /* ARMMapping.c */; };
+		DC474FA119DE6FDA00BCA449 /* ARMModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23FA19DDCD8700EF8EA9 /* ARMModule.c */; };
+		DC474FA219DE6FDA00BCA449 /* MipsDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23FC19DDCD8700EF8EA9 /* MipsDisassembler.c */; };
+		DC474FA319DE6FDA00BCA449 /* MipsInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE240319DDCD8700EF8EA9 /* MipsInstPrinter.c */; };
+		DC474FA419DE6FDA00BCA449 /* MipsMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE240519DDCD8700EF8EA9 /* MipsMapping.c */; };
+		DC474FA519DE6FDA00BCA449 /* MipsModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE240719DDCD8700EF8EA9 /* MipsModule.c */; };
+		DC474FA619DE6FDA00BCA449 /* PPCDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE240919DDCD8700EF8EA9 /* PPCDisassembler.c */; };
+		DC474FA719DE6FDA00BCA449 /* PPCInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE241019DDCD8700EF8EA9 /* PPCInstPrinter.c */; };
+		DC474FA819DE6FDA00BCA449 /* PPCMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE241219DDCD8700EF8EA9 /* PPCMapping.c */; };
+		DC474FA919DE6FDA00BCA449 /* PPCModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE241419DDCD8700EF8EA9 /* PPCModule.c */; };
+		DC474FAA19DE6FDA00BCA449 /* SparcDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE241819DDCD8700EF8EA9 /* SparcDisassembler.c */; };
+		DC474FAB19DE6FDA00BCA449 /* SparcInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE241F19DDCD8800EF8EA9 /* SparcInstPrinter.c */; };
+		DC474FAC19DE6FDA00BCA449 /* SparcMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE242119DDCD8800EF8EA9 /* SparcMapping.c */; };
+		DC474FAD19DE6FDA00BCA449 /* SparcModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE242319DDCD8800EF8EA9 /* SparcModule.c */; };
+		DC474FAE19DE6FDA00BCA449 /* SystemZDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE242519DDCD8800EF8EA9 /* SystemZDisassembler.c */; };
+		DC474FAF19DE6FDA00BCA449 /* SystemZInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE242C19DDCD8800EF8EA9 /* SystemZInstPrinter.c */; };
+		DC474FB019DE6FDA00BCA449 /* SystemZMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE242E19DDCD8800EF8EA9 /* SystemZMapping.c */; };
+		DC474FB119DE6FDA00BCA449 /* SystemZMCTargetDesc.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE243019DDCD8800EF8EA9 /* SystemZMCTargetDesc.c */; };
+		DC474FB219DE6FDA00BCA449 /* SystemZModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE243219DDCD8800EF8EA9 /* SystemZModule.c */; };
+		DC474FB319DE6FDA00BCA449 /* X86ATTInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE243419DDCD8800EF8EA9 /* X86ATTInstPrinter.c */; };
+		DC474FB419DE6FDA00BCA449 /* X86Disassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE243619DDCD8800EF8EA9 /* X86Disassembler.c */; };
+		DC474FB519DE6FDA00BCA449 /* X86DisassemblerDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE243819DDCD8800EF8EA9 /* X86DisassemblerDecoder.c */; };
+		DC474FB619DE6FDA00BCA449 /* X86IntelInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE244519DDCD8800EF8EA9 /* X86IntelInstPrinter.c */; };
+		DC474FB719DE6FDA00BCA449 /* X86Mapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE244619DDCD8800EF8EA9 /* X86Mapping.c */; };
+		DC474FB819DE6FDA00BCA449 /* X86Module.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE244819DDCD8800EF8EA9 /* X86Module.c */; };
+		DC474FB919DE6FDA00BCA449 /* XCoreDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE244A19DDCD8800EF8EA9 /* XCoreDisassembler.c */; };
+		DC474FBA19DE6FDA00BCA449 /* XCoreInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE245019DDCD8800EF8EA9 /* XCoreInstPrinter.c */; };
+		DC474FBB19DE6FDA00BCA449 /* XCoreMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE245219DDCD8800EF8EA9 /* XCoreMapping.c */; };
+		DC474FBC19DE6FDA00BCA449 /* XCoreModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE245419DDCD8800EF8EA9 /* XCoreModule.c */; };
+		DC474FBD19DE6FDA00BCA449 /* AArch64BaseInfo.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23DE19DDCD8700EF8EA9 /* AArch64BaseInfo.c */; };
+		DC474FBE19DE6FDA00BCA449 /* AArch64Disassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23E019DDCD8700EF8EA9 /* AArch64Disassembler.c */; };
+		DC474FBF19DE6FDA00BCA449 /* AArch64InstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23E719DDCD8700EF8EA9 /* AArch64InstPrinter.c */; };
+		DC474FC019DE6FDA00BCA449 /* AArch64Mapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23E919DDCD8700EF8EA9 /* AArch64Mapping.c */; };
+		DC474FC119DE6FDA00BCA449 /* AArch64Module.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23EB19DDCD8700EF8EA9 /* AArch64Module.c */; };
+		DC474FC219DE6FDA00BCA449 /* ARMDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23EF19DDCD8700EF8EA9 /* ARMDisassembler.c */; };
+		DC474FC319DE6FDA00BCA449 /* ARMInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23F619DDCD8700EF8EA9 /* ARMInstPrinter.c */; };
+		DC474FC419DE6FDA00BCA449 /* ARMMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23F819DDCD8700EF8EA9 /* ARMMapping.c */; };
+		DC474FC519DE6FDA00BCA449 /* ARMModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23FA19DDCD8700EF8EA9 /* ARMModule.c */; };
+		DC474FC619DE6FDA00BCA449 /* MipsDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23FC19DDCD8700EF8EA9 /* MipsDisassembler.c */; };
+		DC474FC719DE6FDA00BCA449 /* MipsInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE240319DDCD8700EF8EA9 /* MipsInstPrinter.c */; };
+		DC474FC819DE6FDA00BCA449 /* MipsMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE240519DDCD8700EF8EA9 /* MipsMapping.c */; };
+		DC474FC919DE6FDA00BCA449 /* MipsModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE240719DDCD8700EF8EA9 /* MipsModule.c */; };
+		DC474FCA19DE6FDA00BCA449 /* PPCDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE240919DDCD8700EF8EA9 /* PPCDisassembler.c */; };
+		DC474FCB19DE6FDA00BCA449 /* PPCInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE241019DDCD8700EF8EA9 /* PPCInstPrinter.c */; };
+		DC474FCC19DE6FDA00BCA449 /* PPCMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE241219DDCD8700EF8EA9 /* PPCMapping.c */; };
+		DC474FCD19DE6FDA00BCA449 /* PPCModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE241419DDCD8700EF8EA9 /* PPCModule.c */; };
+		DC474FCE19DE6FDA00BCA449 /* SparcDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE241819DDCD8700EF8EA9 /* SparcDisassembler.c */; };
+		DC474FCF19DE6FDA00BCA449 /* SparcInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE241F19DDCD8800EF8EA9 /* SparcInstPrinter.c */; };
+		DC474FD019DE6FDA00BCA449 /* SparcMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE242119DDCD8800EF8EA9 /* SparcMapping.c */; };
+		DC474FD119DE6FDA00BCA449 /* SparcModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE242319DDCD8800EF8EA9 /* SparcModule.c */; };
+		DC474FD219DE6FDA00BCA449 /* SystemZDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE242519DDCD8800EF8EA9 /* SystemZDisassembler.c */; };
+		DC474FD319DE6FDA00BCA449 /* SystemZInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE242C19DDCD8800EF8EA9 /* SystemZInstPrinter.c */; };
+		DC474FD419DE6FDA00BCA449 /* SystemZMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE242E19DDCD8800EF8EA9 /* SystemZMapping.c */; };
+		DC474FD519DE6FDA00BCA449 /* SystemZMCTargetDesc.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE243019DDCD8800EF8EA9 /* SystemZMCTargetDesc.c */; };
+		DC474FD619DE6FDA00BCA449 /* SystemZModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE243219DDCD8800EF8EA9 /* SystemZModule.c */; };
+		DC474FD719DE6FDA00BCA449 /* X86ATTInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE243419DDCD8800EF8EA9 /* X86ATTInstPrinter.c */; };
+		DC474FD819DE6FDA00BCA449 /* X86Disassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE243619DDCD8800EF8EA9 /* X86Disassembler.c */; };
+		DC474FD919DE6FDA00BCA449 /* X86DisassemblerDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE243819DDCD8800EF8EA9 /* X86DisassemblerDecoder.c */; };
+		DC474FDA19DE6FDA00BCA449 /* X86IntelInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE244519DDCD8800EF8EA9 /* X86IntelInstPrinter.c */; };
+		DC474FDB19DE6FDA00BCA449 /* X86Mapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE244619DDCD8800EF8EA9 /* X86Mapping.c */; };
+		DC474FDC19DE6FDA00BCA449 /* X86Module.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE244819DDCD8800EF8EA9 /* X86Module.c */; };
+		DC474FDD19DE6FDA00BCA449 /* XCoreDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE244A19DDCD8800EF8EA9 /* XCoreDisassembler.c */; };
+		DC474FDE19DE6FDA00BCA449 /* XCoreInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE245019DDCD8800EF8EA9 /* XCoreInstPrinter.c */; };
+		DC474FDF19DE6FDA00BCA449 /* XCoreMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE245219DDCD8800EF8EA9 /* XCoreMapping.c */; };
+		DC474FE019DE6FDA00BCA449 /* XCoreModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE245419DDCD8800EF8EA9 /* XCoreModule.c */; };
+		DC5BFF4719EE547F008CA585 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
+		DC5BFF4919EE54BE008CA585 /* test_iter.c in Sources */ = {isa = PBXBuildFile; fileRef = DC5BFF4819EE54BE008CA585 /* test_iter.c */; };
+		DCFE245519DDCD9200EF8EA9 /* AArch64BaseInfo.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23DE19DDCD8700EF8EA9 /* AArch64BaseInfo.c */; };
+		DCFE245619DDCD9200EF8EA9 /* AArch64Disassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23E019DDCD8700EF8EA9 /* AArch64Disassembler.c */; };
+		DCFE245719DDCD9200EF8EA9 /* AArch64InstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23E719DDCD8700EF8EA9 /* AArch64InstPrinter.c */; };
+		DCFE245819DDCD9200EF8EA9 /* AArch64Mapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23E919DDCD8700EF8EA9 /* AArch64Mapping.c */; };
+		DCFE245919DDCD9200EF8EA9 /* AArch64Module.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23EB19DDCD8700EF8EA9 /* AArch64Module.c */; };
+		DCFE245F19DDCD9900EF8EA9 /* ARMDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23EF19DDCD8700EF8EA9 /* ARMDisassembler.c */; };
+		DCFE246019DDCD9900EF8EA9 /* ARMInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23F619DDCD8700EF8EA9 /* ARMInstPrinter.c */; };
+		DCFE246119DDCD9900EF8EA9 /* ARMMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23F819DDCD8700EF8EA9 /* ARMMapping.c */; };
+		DCFE246219DDCD9900EF8EA9 /* ARMModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23FA19DDCD8700EF8EA9 /* ARMModule.c */; };
+		DCFE246719DDCDA000EF8EA9 /* MipsDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23FC19DDCD8700EF8EA9 /* MipsDisassembler.c */; };
+		DCFE246819DDCDA000EF8EA9 /* MipsInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE240319DDCD8700EF8EA9 /* MipsInstPrinter.c */; };
+		DCFE246919DDCDA000EF8EA9 /* MipsMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE240519DDCD8700EF8EA9 /* MipsMapping.c */; };
+		DCFE246A19DDCDA000EF8EA9 /* MipsModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE240719DDCD8700EF8EA9 /* MipsModule.c */; };
+		DCFE246F19DDCDA700EF8EA9 /* PPCDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE240919DDCD8700EF8EA9 /* PPCDisassembler.c */; };
+		DCFE247019DDCDA700EF8EA9 /* PPCInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE241019DDCD8700EF8EA9 /* PPCInstPrinter.c */; };
+		DCFE247119DDCDA700EF8EA9 /* PPCMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE241219DDCD8700EF8EA9 /* PPCMapping.c */; };
+		DCFE247219DDCDA700EF8EA9 /* PPCModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE241419DDCD8700EF8EA9 /* PPCModule.c */; };
+		DCFE247719DDCDAD00EF8EA9 /* SparcDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE241819DDCD8700EF8EA9 /* SparcDisassembler.c */; };
+		DCFE247819DDCDAD00EF8EA9 /* SparcInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE241F19DDCD8800EF8EA9 /* SparcInstPrinter.c */; };
+		DCFE247919DDCDAD00EF8EA9 /* SparcMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE242119DDCD8800EF8EA9 /* SparcMapping.c */; };
+		DCFE247A19DDCDAD00EF8EA9 /* SparcModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE242319DDCD8800EF8EA9 /* SparcModule.c */; };
+		DCFE247F19DDCDB700EF8EA9 /* SystemZDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE242519DDCD8800EF8EA9 /* SystemZDisassembler.c */; };
+		DCFE248019DDCDB700EF8EA9 /* SystemZInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE242C19DDCD8800EF8EA9 /* SystemZInstPrinter.c */; };
+		DCFE248119DDCDB700EF8EA9 /* SystemZMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE242E19DDCD8800EF8EA9 /* SystemZMapping.c */; };
+		DCFE248219DDCDB700EF8EA9 /* SystemZMCTargetDesc.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE243019DDCD8800EF8EA9 /* SystemZMCTargetDesc.c */; };
+		DCFE248319DDCDB700EF8EA9 /* SystemZModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE243219DDCD8800EF8EA9 /* SystemZModule.c */; };
+		DCFE248919DDCDC000EF8EA9 /* X86ATTInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE243419DDCD8800EF8EA9 /* X86ATTInstPrinter.c */; };
+		DCFE248A19DDCDC000EF8EA9 /* X86Disassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE243619DDCD8800EF8EA9 /* X86Disassembler.c */; };
+		DCFE248B19DDCDC000EF8EA9 /* X86DisassemblerDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE243819DDCD8800EF8EA9 /* X86DisassemblerDecoder.c */; };
+		DCFE248C19DDCDC000EF8EA9 /* X86IntelInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE244519DDCD8800EF8EA9 /* X86IntelInstPrinter.c */; };
+		DCFE248D19DDCDC000EF8EA9 /* X86Mapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE244619DDCD8800EF8EA9 /* X86Mapping.c */; };
+		DCFE248E19DDCDC000EF8EA9 /* X86Module.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE244819DDCD8800EF8EA9 /* X86Module.c */; };
+		DCFE249519DDCDD000EF8EA9 /* XCoreDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE244A19DDCD8800EF8EA9 /* XCoreDisassembler.c */; };
+		DCFE249619DDCDD000EF8EA9 /* XCoreInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE245019DDCD8800EF8EA9 /* XCoreInstPrinter.c */; };
+		DCFE249719DDCDD000EF8EA9 /* XCoreMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE245219DDCD8800EF8EA9 /* XCoreMapping.c */; };
+		DCFE249819DDCDD000EF8EA9 /* XCoreModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE245419DDCD8800EF8EA9 /* XCoreModule.c */; };
+		DCFE24A319DDCDEE00EF8EA9 /* cs.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE249D19DDCDEE00EF8EA9 /* cs.c */; };
+		DCFE24A519DDCDEE00EF8EA9 /* MCInst.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE249E19DDCDEE00EF8EA9 /* MCInst.c */; };
+		DCFE24A719DDCDEE00EF8EA9 /* MCInstrDesc.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE249F19DDCDEE00EF8EA9 /* MCInstrDesc.c */; };
+		DCFE24A919DDCDEE00EF8EA9 /* MCRegisterInfo.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE24A019DDCDEE00EF8EA9 /* MCRegisterInfo.c */; };
+		DCFE24AB19DDCDEE00EF8EA9 /* SStream.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE24A119DDCDEE00EF8EA9 /* SStream.c */; };
+		DCFE24AD19DDCDEE00EF8EA9 /* utils.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE24A219DDCDEE00EF8EA9 /* utils.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DC474E6219DDEA5F00BCA449 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		DC474E8419DDEAA200BCA449 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		DC474E8F19DDEAA700BCA449 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		DC474E9A19DDEAAC00BCA449 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		DC474EA519DDEAB000BCA449 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		DC474EB019DDEAB700BCA449 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		DC474EBB19DDEABC00BCA449 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		DC474EC619DDEAC100BCA449 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		DC474ED119DDEAC600BCA449 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		DC474EDC19DDEACC00BCA449 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		DC474EE819DDEAE400BCA449 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		DC5BFF3E19EE544E008CA585 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		DC474E6419DDEA5F00BCA449 /* test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC474E6C19DDEA9500BCA449 /* test_arm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_arm.c; path = ../tests/test_arm.c; sourceTree = "<group>"; };
+		DC474E6D19DDEA9500BCA449 /* test_arm64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_arm64.c; path = ../tests/test_arm64.c; sourceTree = "<group>"; };
+		DC474E6E19DDEA9500BCA449 /* test_detail.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_detail.c; path = ../tests/test_detail.c; sourceTree = "<group>"; };
+		DC474E6F19DDEA9500BCA449 /* test_mips.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_mips.c; path = ../tests/test_mips.c; sourceTree = "<group>"; };
+		DC474E7019DDEA9500BCA449 /* test_ppc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_ppc.c; path = ../tests/test_ppc.c; sourceTree = "<group>"; };
+		DC474E7119DDEA9500BCA449 /* test_skipdata.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_skipdata.c; path = ../tests/test_skipdata.c; sourceTree = "<group>"; };
+		DC474E7219DDEA9500BCA449 /* test_sparc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_sparc.c; path = ../tests/test_sparc.c; sourceTree = "<group>"; };
+		DC474E7319DDEA9500BCA449 /* test_systemz.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_systemz.c; path = ../tests/test_systemz.c; sourceTree = "<group>"; };
+		DC474E7419DDEA9500BCA449 /* test_x86.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_x86.c; path = ../tests/test_x86.c; sourceTree = "<group>"; };
+		DC474E7519DDEA9500BCA449 /* test_xcore.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_xcore.c; path = ../tests/test_xcore.c; sourceTree = "<group>"; };
+		DC474E7619DDEA9500BCA449 /* test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test.c; path = ../tests/test.c; sourceTree = "<group>"; };
+		DC474E8619DDEAA200BCA449 /* test_arm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_arm; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC474E9119DDEAA700BCA449 /* test_detail */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_detail; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC474E9C19DDEAAC00BCA449 /* test_mips */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_mips; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC474EA719DDEAB000BCA449 /* test_ppc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_ppc; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC474EB219DDEAB700BCA449 /* test_skipdata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_skipdata; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC474EBD19DDEABC00BCA449 /* test_sparc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_sparc; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC474EC819DDEAC100BCA449 /* test_systemz */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_systemz; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC474ED319DDEAC600BCA449 /* test_x86 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_x86; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC474EDE19DDEACC00BCA449 /* test_xcore */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_xcore; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC474EEA19DDEAE400BCA449 /* test_arm64 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_arm64; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC474F6819DE6F3B00BCA449 /* Capstone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Capstone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC474F6B19DE6F3B00BCA449 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC5BFF4019EE544E008CA585 /* test_iter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_iter; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC5BFF4819EE54BE008CA585 /* test_iter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_iter.c; path = ../tests/test_iter.c; sourceTree = "<group>"; };
+		DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcapstone.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCFE23CD19DDCC9500EF8EA9 /* libcapstone.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libcapstone.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCFE23DD19DDCD8700EF8EA9 /* AArch64AddressingModes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AArch64AddressingModes.h; sourceTree = "<group>"; };
+		DCFE23DE19DDCD8700EF8EA9 /* AArch64BaseInfo.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = AArch64BaseInfo.c; sourceTree = "<group>"; };
+		DCFE23DF19DDCD8700EF8EA9 /* AArch64BaseInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AArch64BaseInfo.h; sourceTree = "<group>"; };
+		DCFE23E019DDCD8700EF8EA9 /* AArch64Disassembler.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = AArch64Disassembler.c; sourceTree = "<group>"; };
+		DCFE23E119DDCD8700EF8EA9 /* AArch64Disassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AArch64Disassembler.h; sourceTree = "<group>"; };
+		DCFE23E219DDCD8700EF8EA9 /* AArch64GenAsmWriter.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = AArch64GenAsmWriter.inc; sourceTree = "<group>"; };
+		DCFE23E319DDCD8700EF8EA9 /* AArch64GenDisassemblerTables.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = AArch64GenDisassemblerTables.inc; sourceTree = "<group>"; };
+		DCFE23E419DDCD8700EF8EA9 /* AArch64GenInstrInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = AArch64GenInstrInfo.inc; sourceTree = "<group>"; };
+		DCFE23E519DDCD8700EF8EA9 /* AArch64GenRegisterInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = AArch64GenRegisterInfo.inc; sourceTree = "<group>"; };
+		DCFE23E619DDCD8700EF8EA9 /* AArch64GenSubtargetInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = AArch64GenSubtargetInfo.inc; sourceTree = "<group>"; };
+		DCFE23E719DDCD8700EF8EA9 /* AArch64InstPrinter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = AArch64InstPrinter.c; sourceTree = "<group>"; };
+		DCFE23E819DDCD8700EF8EA9 /* AArch64InstPrinter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AArch64InstPrinter.h; sourceTree = "<group>"; };
+		DCFE23E919DDCD8700EF8EA9 /* AArch64Mapping.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = AArch64Mapping.c; sourceTree = "<group>"; };
+		DCFE23EA19DDCD8700EF8EA9 /* AArch64Mapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AArch64Mapping.h; sourceTree = "<group>"; };
+		DCFE23EB19DDCD8700EF8EA9 /* AArch64Module.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = AArch64Module.c; sourceTree = "<group>"; };
+		DCFE23ED19DDCD8700EF8EA9 /* ARMAddressingModes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARMAddressingModes.h; sourceTree = "<group>"; };
+		DCFE23EE19DDCD8700EF8EA9 /* ARMBaseInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARMBaseInfo.h; sourceTree = "<group>"; };
+		DCFE23EF19DDCD8700EF8EA9 /* ARMDisassembler.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ARMDisassembler.c; sourceTree = "<group>"; };
+		DCFE23F019DDCD8700EF8EA9 /* ARMDisassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARMDisassembler.h; sourceTree = "<group>"; };
+		DCFE23F119DDCD8700EF8EA9 /* ARMGenAsmWriter.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = ARMGenAsmWriter.inc; sourceTree = "<group>"; };
+		DCFE23F219DDCD8700EF8EA9 /* ARMGenDisassemblerTables.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = ARMGenDisassemblerTables.inc; sourceTree = "<group>"; };
+		DCFE23F319DDCD8700EF8EA9 /* ARMGenInstrInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = ARMGenInstrInfo.inc; sourceTree = "<group>"; };
+		DCFE23F419DDCD8700EF8EA9 /* ARMGenRegisterInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = ARMGenRegisterInfo.inc; sourceTree = "<group>"; };
+		DCFE23F519DDCD8700EF8EA9 /* ARMGenSubtargetInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = ARMGenSubtargetInfo.inc; sourceTree = "<group>"; };
+		DCFE23F619DDCD8700EF8EA9 /* ARMInstPrinter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ARMInstPrinter.c; sourceTree = "<group>"; };
+		DCFE23F719DDCD8700EF8EA9 /* ARMInstPrinter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARMInstPrinter.h; sourceTree = "<group>"; };
+		DCFE23F819DDCD8700EF8EA9 /* ARMMapping.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ARMMapping.c; sourceTree = "<group>"; };
+		DCFE23F919DDCD8700EF8EA9 /* ARMMapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARMMapping.h; sourceTree = "<group>"; };
+		DCFE23FA19DDCD8700EF8EA9 /* ARMModule.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ARMModule.c; sourceTree = "<group>"; };
+		DCFE23FC19DDCD8700EF8EA9 /* MipsDisassembler.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MipsDisassembler.c; sourceTree = "<group>"; };
+		DCFE23FD19DDCD8700EF8EA9 /* MipsDisassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MipsDisassembler.h; sourceTree = "<group>"; };
+		DCFE23FE19DDCD8700EF8EA9 /* MipsGenAsmWriter.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = MipsGenAsmWriter.inc; sourceTree = "<group>"; };
+		DCFE23FF19DDCD8700EF8EA9 /* MipsGenDisassemblerTables.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = MipsGenDisassemblerTables.inc; sourceTree = "<group>"; };
+		DCFE240019DDCD8700EF8EA9 /* MipsGenInstrInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = MipsGenInstrInfo.inc; sourceTree = "<group>"; };
+		DCFE240119DDCD8700EF8EA9 /* MipsGenRegisterInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = MipsGenRegisterInfo.inc; sourceTree = "<group>"; };
+		DCFE240219DDCD8700EF8EA9 /* MipsGenSubtargetInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = MipsGenSubtargetInfo.inc; sourceTree = "<group>"; };
+		DCFE240319DDCD8700EF8EA9 /* MipsInstPrinter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MipsInstPrinter.c; sourceTree = "<group>"; };
+		DCFE240419DDCD8700EF8EA9 /* MipsInstPrinter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MipsInstPrinter.h; sourceTree = "<group>"; };
+		DCFE240519DDCD8700EF8EA9 /* MipsMapping.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MipsMapping.c; sourceTree = "<group>"; };
+		DCFE240619DDCD8700EF8EA9 /* MipsMapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MipsMapping.h; sourceTree = "<group>"; };
+		DCFE240719DDCD8700EF8EA9 /* MipsModule.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MipsModule.c; sourceTree = "<group>"; };
+		DCFE240919DDCD8700EF8EA9 /* PPCDisassembler.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PPCDisassembler.c; sourceTree = "<group>"; };
+		DCFE240A19DDCD8700EF8EA9 /* PPCDisassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPCDisassembler.h; sourceTree = "<group>"; };
+		DCFE240B19DDCD8700EF8EA9 /* PPCGenAsmWriter.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = PPCGenAsmWriter.inc; sourceTree = "<group>"; };
+		DCFE240C19DDCD8700EF8EA9 /* PPCGenDisassemblerTables.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = PPCGenDisassemblerTables.inc; sourceTree = "<group>"; };
+		DCFE240D19DDCD8700EF8EA9 /* PPCGenInstrInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = PPCGenInstrInfo.inc; sourceTree = "<group>"; };
+		DCFE240E19DDCD8700EF8EA9 /* PPCGenRegisterInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = PPCGenRegisterInfo.inc; sourceTree = "<group>"; };
+		DCFE240F19DDCD8700EF8EA9 /* PPCGenSubtargetInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = PPCGenSubtargetInfo.inc; sourceTree = "<group>"; };
+		DCFE241019DDCD8700EF8EA9 /* PPCInstPrinter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PPCInstPrinter.c; sourceTree = "<group>"; };
+		DCFE241119DDCD8700EF8EA9 /* PPCInstPrinter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPCInstPrinter.h; sourceTree = "<group>"; };
+		DCFE241219DDCD8700EF8EA9 /* PPCMapping.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PPCMapping.c; sourceTree = "<group>"; };
+		DCFE241319DDCD8700EF8EA9 /* PPCMapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPCMapping.h; sourceTree = "<group>"; };
+		DCFE241419DDCD8700EF8EA9 /* PPCModule.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PPCModule.c; sourceTree = "<group>"; };
+		DCFE241519DDCD8700EF8EA9 /* PPCPredicates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPCPredicates.h; sourceTree = "<group>"; };
+		DCFE241719DDCD8700EF8EA9 /* Sparc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sparc.h; sourceTree = "<group>"; };
+		DCFE241819DDCD8700EF8EA9 /* SparcDisassembler.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SparcDisassembler.c; sourceTree = "<group>"; };
+		DCFE241919DDCD8700EF8EA9 /* SparcDisassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SparcDisassembler.h; sourceTree = "<group>"; };
+		DCFE241A19DDCD8700EF8EA9 /* SparcGenAsmWriter.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = SparcGenAsmWriter.inc; sourceTree = "<group>"; };
+		DCFE241B19DDCD8700EF8EA9 /* SparcGenDisassemblerTables.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = SparcGenDisassemblerTables.inc; sourceTree = "<group>"; };
+		DCFE241C19DDCD8700EF8EA9 /* SparcGenInstrInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = SparcGenInstrInfo.inc; sourceTree = "<group>"; };
+		DCFE241D19DDCD8700EF8EA9 /* SparcGenRegisterInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = SparcGenRegisterInfo.inc; sourceTree = "<group>"; };
+		DCFE241E19DDCD8700EF8EA9 /* SparcGenSubtargetInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = SparcGenSubtargetInfo.inc; sourceTree = "<group>"; };
+		DCFE241F19DDCD8800EF8EA9 /* SparcInstPrinter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SparcInstPrinter.c; sourceTree = "<group>"; };
+		DCFE242019DDCD8800EF8EA9 /* SparcInstPrinter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SparcInstPrinter.h; sourceTree = "<group>"; };
+		DCFE242119DDCD8800EF8EA9 /* SparcMapping.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SparcMapping.c; sourceTree = "<group>"; };
+		DCFE242219DDCD8800EF8EA9 /* SparcMapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SparcMapping.h; sourceTree = "<group>"; };
+		DCFE242319DDCD8800EF8EA9 /* SparcModule.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SparcModule.c; sourceTree = "<group>"; };
+		DCFE242519DDCD8800EF8EA9 /* SystemZDisassembler.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SystemZDisassembler.c; sourceTree = "<group>"; };
+		DCFE242619DDCD8800EF8EA9 /* SystemZDisassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemZDisassembler.h; sourceTree = "<group>"; };
+		DCFE242719DDCD8800EF8EA9 /* SystemZGenAsmWriter.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = SystemZGenAsmWriter.inc; sourceTree = "<group>"; };
+		DCFE242819DDCD8800EF8EA9 /* SystemZGenDisassemblerTables.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = SystemZGenDisassemblerTables.inc; sourceTree = "<group>"; };
+		DCFE242919DDCD8800EF8EA9 /* SystemZGenInstrInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = SystemZGenInstrInfo.inc; sourceTree = "<group>"; };
+		DCFE242A19DDCD8800EF8EA9 /* SystemZGenRegisterInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = SystemZGenRegisterInfo.inc; sourceTree = "<group>"; };
+		DCFE242B19DDCD8800EF8EA9 /* SystemZGenSubtargetInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = SystemZGenSubtargetInfo.inc; sourceTree = "<group>"; };
+		DCFE242C19DDCD8800EF8EA9 /* SystemZInstPrinter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SystemZInstPrinter.c; sourceTree = "<group>"; };
+		DCFE242D19DDCD8800EF8EA9 /* SystemZInstPrinter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemZInstPrinter.h; sourceTree = "<group>"; };
+		DCFE242E19DDCD8800EF8EA9 /* SystemZMapping.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SystemZMapping.c; sourceTree = "<group>"; };
+		DCFE242F19DDCD8800EF8EA9 /* SystemZMapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemZMapping.h; sourceTree = "<group>"; };
+		DCFE243019DDCD8800EF8EA9 /* SystemZMCTargetDesc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SystemZMCTargetDesc.c; sourceTree = "<group>"; };
+		DCFE243119DDCD8800EF8EA9 /* SystemZMCTargetDesc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemZMCTargetDesc.h; sourceTree = "<group>"; };
+		DCFE243219DDCD8800EF8EA9 /* SystemZModule.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SystemZModule.c; sourceTree = "<group>"; };
+		DCFE243419DDCD8800EF8EA9 /* X86ATTInstPrinter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = X86ATTInstPrinter.c; sourceTree = "<group>"; };
+		DCFE243519DDCD8800EF8EA9 /* X86BaseInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = X86BaseInfo.h; sourceTree = "<group>"; };
+		DCFE243619DDCD8800EF8EA9 /* X86Disassembler.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = X86Disassembler.c; sourceTree = "<group>"; };
+		DCFE243719DDCD8800EF8EA9 /* X86Disassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = X86Disassembler.h; sourceTree = "<group>"; };
+		DCFE243819DDCD8800EF8EA9 /* X86DisassemblerDecoder.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = X86DisassemblerDecoder.c; sourceTree = "<group>"; };
+		DCFE243919DDCD8800EF8EA9 /* X86DisassemblerDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = X86DisassemblerDecoder.h; sourceTree = "<group>"; };
+		DCFE243A19DDCD8800EF8EA9 /* X86DisassemblerDecoderCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = X86DisassemblerDecoderCommon.h; sourceTree = "<group>"; };
+		DCFE243B19DDCD8800EF8EA9 /* X86GenAsmWriter.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = X86GenAsmWriter.inc; sourceTree = "<group>"; };
+		DCFE243C19DDCD8800EF8EA9 /* X86GenAsmWriter1.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = X86GenAsmWriter1.inc; sourceTree = "<group>"; };
+		DCFE243D19DDCD8800EF8EA9 /* X86GenAsmWriter1_reduce.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = X86GenAsmWriter1_reduce.inc; sourceTree = "<group>"; };
+		DCFE243E19DDCD8800EF8EA9 /* X86GenAsmWriter_reduce.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = X86GenAsmWriter_reduce.inc; sourceTree = "<group>"; };
+		DCFE243F19DDCD8800EF8EA9 /* X86GenDisassemblerTables.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = X86GenDisassemblerTables.inc; sourceTree = "<group>"; };
+		DCFE244019DDCD8800EF8EA9 /* X86GenDisassemblerTables_reduce.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = X86GenDisassemblerTables_reduce.inc; sourceTree = "<group>"; };
+		DCFE244119DDCD8800EF8EA9 /* X86GenInstrInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = X86GenInstrInfo.inc; sourceTree = "<group>"; };
+		DCFE244219DDCD8800EF8EA9 /* X86GenInstrInfo_reduce.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = X86GenInstrInfo_reduce.inc; sourceTree = "<group>"; };
+		DCFE244319DDCD8800EF8EA9 /* X86GenRegisterInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = X86GenRegisterInfo.inc; sourceTree = "<group>"; };
+		DCFE244419DDCD8800EF8EA9 /* X86InstPrinter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = X86InstPrinter.h; sourceTree = "<group>"; };
+		DCFE244519DDCD8800EF8EA9 /* X86IntelInstPrinter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = X86IntelInstPrinter.c; sourceTree = "<group>"; };
+		DCFE244619DDCD8800EF8EA9 /* X86Mapping.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = X86Mapping.c; sourceTree = "<group>"; };
+		DCFE244719DDCD8800EF8EA9 /* X86Mapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = X86Mapping.h; sourceTree = "<group>"; };
+		DCFE244819DDCD8800EF8EA9 /* X86Module.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = X86Module.c; sourceTree = "<group>"; };
+		DCFE244A19DDCD8800EF8EA9 /* XCoreDisassembler.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = XCoreDisassembler.c; sourceTree = "<group>"; };
+		DCFE244B19DDCD8800EF8EA9 /* XCoreDisassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCoreDisassembler.h; sourceTree = "<group>"; };
+		DCFE244C19DDCD8800EF8EA9 /* XCoreGenAsmWriter.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = XCoreGenAsmWriter.inc; sourceTree = "<group>"; };
+		DCFE244D19DDCD8800EF8EA9 /* XCoreGenDisassemblerTables.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = XCoreGenDisassemblerTables.inc; sourceTree = "<group>"; };
+		DCFE244E19DDCD8800EF8EA9 /* XCoreGenInstrInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = XCoreGenInstrInfo.inc; sourceTree = "<group>"; };
+		DCFE244F19DDCD8800EF8EA9 /* XCoreGenRegisterInfo.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = XCoreGenRegisterInfo.inc; sourceTree = "<group>"; };
+		DCFE245019DDCD8800EF8EA9 /* XCoreInstPrinter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = XCoreInstPrinter.c; sourceTree = "<group>"; };
+		DCFE245119DDCD8800EF8EA9 /* XCoreInstPrinter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCoreInstPrinter.h; sourceTree = "<group>"; };
+		DCFE245219DDCD8800EF8EA9 /* XCoreMapping.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = XCoreMapping.c; sourceTree = "<group>"; };
+		DCFE245319DDCD8800EF8EA9 /* XCoreMapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCoreMapping.h; sourceTree = "<group>"; };
+		DCFE245419DDCD8800EF8EA9 /* XCoreModule.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = XCoreModule.c; sourceTree = "<group>"; };
+		DCFE249D19DDCDEE00EF8EA9 /* cs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cs.c; path = ../cs.c; sourceTree = "<group>"; };
+		DCFE249E19DDCDEE00EF8EA9 /* MCInst.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = MCInst.c; path = ../MCInst.c; sourceTree = "<group>"; };
+		DCFE249F19DDCDEE00EF8EA9 /* MCInstrDesc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = MCInstrDesc.c; path = ../MCInstrDesc.c; sourceTree = "<group>"; };
+		DCFE24A019DDCDEE00EF8EA9 /* MCRegisterInfo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = MCRegisterInfo.c; path = ../MCRegisterInfo.c; sourceTree = "<group>"; };
+		DCFE24A119DDCDEE00EF8EA9 /* SStream.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SStream.c; path = ../SStream.c; sourceTree = "<group>"; };
+		DCFE24A219DDCDEE00EF8EA9 /* utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utils.c; path = ../utils.c; sourceTree = "<group>"; };
+		DCFE24B019DDCE1E00EF8EA9 /* cs_priv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = cs_priv.h; path = ../cs_priv.h; sourceTree = "<group>"; };
+		DCFE24B119DDCE1E00EF8EA9 /* inttypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = inttypes.h; path = ../inttypes.h; sourceTree = "<group>"; };
+		DCFE24B219DDCE1E00EF8EA9 /* LEB128.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LEB128.h; path = ../LEB128.h; sourceTree = "<group>"; };
+		DCFE24B319DDCE1E00EF8EA9 /* MathExtras.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MathExtras.h; path = ../MathExtras.h; sourceTree = "<group>"; };
+		DCFE24B419DDCE1E00EF8EA9 /* MCDisassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MCDisassembler.h; path = ../MCDisassembler.h; sourceTree = "<group>"; };
+		DCFE24B519DDCE1E00EF8EA9 /* MCFixedLenDisassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MCFixedLenDisassembler.h; path = ../MCFixedLenDisassembler.h; sourceTree = "<group>"; };
+		DCFE24B619DDCE1E00EF8EA9 /* MCInst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MCInst.h; path = ../MCInst.h; sourceTree = "<group>"; };
+		DCFE24B719DDCE1E00EF8EA9 /* MCInstrDesc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MCInstrDesc.h; path = ../MCInstrDesc.h; sourceTree = "<group>"; };
+		DCFE24B819DDCE1E00EF8EA9 /* MCRegisterInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MCRegisterInfo.h; path = ../MCRegisterInfo.h; sourceTree = "<group>"; };
+		DCFE24B919DDCE1E00EF8EA9 /* SStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SStream.h; path = ../SStream.h; sourceTree = "<group>"; };
+		DCFE24BA19DDCE1E00EF8EA9 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = utils.h; path = ../utils.h; sourceTree = "<group>"; };
+		DCFE24BC19DDCE2F00EF8EA9 /* arm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = arm.h; sourceTree = "<group>"; };
+		DCFE24BD19DDCE2F00EF8EA9 /* arm64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = arm64.h; sourceTree = "<group>"; };
+		DCFE24BE19DDCE2F00EF8EA9 /* capstone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = capstone.h; sourceTree = "<group>"; };
+		DCFE24BF19DDCE2F00EF8EA9 /* mips.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mips.h; sourceTree = "<group>"; };
+		DCFE24C019DDCE2F00EF8EA9 /* platform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
+		DCFE24C119DDCE2F00EF8EA9 /* ppc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ppc.h; sourceTree = "<group>"; };
+		DCFE24C219DDCE2F00EF8EA9 /* sparc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sparc.h; sourceTree = "<group>"; };
+		DCFE24C319DDCE2F00EF8EA9 /* systemz.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = systemz.h; sourceTree = "<group>"; };
+		DCFE24C419DDCE2F00EF8EA9 /* x86.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = x86.h; sourceTree = "<group>"; };
+		DCFE24C519DDCE2F00EF8EA9 /* xcore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xcore.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DC474E6119DDEA5F00BCA449 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474EFB19DDEB1100BCA449 /* libcapstone.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474E8319DDEAA200BCA449 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC07A86E19F6061D00254FCF /* libcapstone.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474E8E19DDEAA700BCA449 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474EFE19DDEB1C00BCA449 /* libcapstone.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474E9919DDEAAC00BCA449 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474EFF19DDEB1E00BCA449 /* libcapstone.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474EA419DDEAB000BCA449 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474F0019DDEB2100BCA449 /* libcapstone.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474EAF19DDEAB700BCA449 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474F0119DDEB2300BCA449 /* libcapstone.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474EBA19DDEABC00BCA449 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474F0219DDEB2500BCA449 /* libcapstone.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474EC519DDEAC100BCA449 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474F0319DDEB2700BCA449 /* libcapstone.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474ED019DDEAC600BCA449 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474F0419DDEB2A00BCA449 /* libcapstone.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474EDB19DDEACC00BCA449 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474F0519DDEB2D00BCA449 /* libcapstone.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474EE719DDEAE400BCA449 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474EFD19DDEB1A00BCA449 /* libcapstone.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474F6419DE6F3B00BCA449 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC5BFF3D19EE544E008CA585 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC5BFF4719EE547F008CA585 /* libcapstone.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DCFE23BA19DDCC2D00EF8EA9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DCFE23CA19DDCC9500EF8EA9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474F8C19DE6F8000BCA449 /* libcapstone.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DC474E6B19DDEA8600BCA449 /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				DC474E7619DDEA9500BCA449 /* test.c */,
+				DC474E6C19DDEA9500BCA449 /* test_arm.c */,
+				DC474E6D19DDEA9500BCA449 /* test_arm64.c */,
+				DC474E6E19DDEA9500BCA449 /* test_detail.c */,
+				DC5BFF4819EE54BE008CA585 /* test_iter.c */,
+				DC474E6F19DDEA9500BCA449 /* test_mips.c */,
+				DC474E7019DDEA9500BCA449 /* test_ppc.c */,
+				DC474E7119DDEA9500BCA449 /* test_skipdata.c */,
+				DC474E7219DDEA9500BCA449 /* test_sparc.c */,
+				DC474E7319DDEA9500BCA449 /* test_systemz.c */,
+				DC474E7419DDEA9500BCA449 /* test_x86.c */,
+				DC474E7519DDEA9500BCA449 /* test_xcore.c */,
+			);
+			name = tests;
+			sourceTree = "<group>";
+		};
+		DC474F6919DE6F3B00BCA449 /* framework */ = {
+			isa = PBXGroup;
+			children = (
+				DC474F6B19DE6F3B00BCA449 /* Info.plist */,
+			);
+			name = framework;
+			path = CapstoneFramework;
+			sourceTree = "<group>";
+		};
+		DCFE239919DDCB4900EF8EA9 = {
+			isa = PBXGroup;
+			children = (
+				DCFE249D19DDCDEE00EF8EA9 /* cs.c */,
+				DCFE24B019DDCE1E00EF8EA9 /* cs_priv.h */,
+				DCFE24B119DDCE1E00EF8EA9 /* inttypes.h */,
+				DCFE24B219DDCE1E00EF8EA9 /* LEB128.h */,
+				DCFE24B319DDCE1E00EF8EA9 /* MathExtras.h */,
+				DCFE24B419DDCE1E00EF8EA9 /* MCDisassembler.h */,
+				DCFE24B519DDCE1E00EF8EA9 /* MCFixedLenDisassembler.h */,
+				DCFE249E19DDCDEE00EF8EA9 /* MCInst.c */,
+				DCFE24B619DDCE1E00EF8EA9 /* MCInst.h */,
+				DCFE249F19DDCDEE00EF8EA9 /* MCInstrDesc.c */,
+				DCFE24B719DDCE1E00EF8EA9 /* MCInstrDesc.h */,
+				DCFE24A019DDCDEE00EF8EA9 /* MCRegisterInfo.c */,
+				DCFE24B819DDCE1E00EF8EA9 /* MCRegisterInfo.h */,
+				DCFE24A119DDCDEE00EF8EA9 /* SStream.c */,
+				DCFE24B919DDCE1E00EF8EA9 /* SStream.h */,
+				DCFE24A219DDCDEE00EF8EA9 /* utils.c */,
+				DCFE24BA19DDCE1E00EF8EA9 /* utils.h */,
+				DCFE23DB19DDCD8700EF8EA9 /* arch */,
+				DCFE24BB19DDCE2F00EF8EA9 /* include */,
+				DC474E6B19DDEA8600BCA449 /* tests */,
+				DC474F6919DE6F3B00BCA449 /* framework */,
+				DCFE23A519DDCBC300EF8EA9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DCFE23A519DDCBC300EF8EA9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */,
+				DCFE23CD19DDCC9500EF8EA9 /* libcapstone.dylib */,
+				DC474E6419DDEA5F00BCA449 /* test */,
+				DC474E8619DDEAA200BCA449 /* test_arm */,
+				DC474E9119DDEAA700BCA449 /* test_detail */,
+				DC474E9C19DDEAAC00BCA449 /* test_mips */,
+				DC474EA719DDEAB000BCA449 /* test_ppc */,
+				DC474EB219DDEAB700BCA449 /* test_skipdata */,
+				DC474EBD19DDEABC00BCA449 /* test_sparc */,
+				DC474EC819DDEAC100BCA449 /* test_systemz */,
+				DC474ED319DDEAC600BCA449 /* test_x86 */,
+				DC474EDE19DDEACC00BCA449 /* test_xcore */,
+				DC474EEA19DDEAE400BCA449 /* test_arm64 */,
+				DC474F6819DE6F3B00BCA449 /* Capstone.framework */,
+				DC5BFF4019EE544E008CA585 /* test_iter */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DCFE23DB19DDCD8700EF8EA9 /* arch */ = {
+			isa = PBXGroup;
+			children = (
+				DCFE23DC19DDCD8700EF8EA9 /* AArch64 */,
+				DCFE23EC19DDCD8700EF8EA9 /* ARM */,
+				DCFE23FB19DDCD8700EF8EA9 /* Mips */,
+				DCFE240819DDCD8700EF8EA9 /* PowerPC */,
+				DCFE241619DDCD8700EF8EA9 /* Sparc */,
+				DCFE242419DDCD8800EF8EA9 /* SystemZ */,
+				DCFE243319DDCD8800EF8EA9 /* X86 */,
+				DCFE244919DDCD8800EF8EA9 /* XCore */,
+			);
+			name = arch;
+			path = ../arch;
+			sourceTree = "<group>";
+		};
+		DCFE23DC19DDCD8700EF8EA9 /* AArch64 */ = {
+			isa = PBXGroup;
+			children = (
+				DCFE23DD19DDCD8700EF8EA9 /* AArch64AddressingModes.h */,
+				DCFE23DE19DDCD8700EF8EA9 /* AArch64BaseInfo.c */,
+				DCFE23DF19DDCD8700EF8EA9 /* AArch64BaseInfo.h */,
+				DCFE23E019DDCD8700EF8EA9 /* AArch64Disassembler.c */,
+				DCFE23E119DDCD8700EF8EA9 /* AArch64Disassembler.h */,
+				DCFE23E219DDCD8700EF8EA9 /* AArch64GenAsmWriter.inc */,
+				DCFE23E319DDCD8700EF8EA9 /* AArch64GenDisassemblerTables.inc */,
+				DCFE23E419DDCD8700EF8EA9 /* AArch64GenInstrInfo.inc */,
+				DCFE23E519DDCD8700EF8EA9 /* AArch64GenRegisterInfo.inc */,
+				DCFE23E619DDCD8700EF8EA9 /* AArch64GenSubtargetInfo.inc */,
+				DCFE23E719DDCD8700EF8EA9 /* AArch64InstPrinter.c */,
+				DCFE23E819DDCD8700EF8EA9 /* AArch64InstPrinter.h */,
+				DCFE23E919DDCD8700EF8EA9 /* AArch64Mapping.c */,
+				DCFE23EA19DDCD8700EF8EA9 /* AArch64Mapping.h */,
+				DCFE23EB19DDCD8700EF8EA9 /* AArch64Module.c */,
+			);
+			path = AArch64;
+			sourceTree = "<group>";
+		};
+		DCFE23EC19DDCD8700EF8EA9 /* ARM */ = {
+			isa = PBXGroup;
+			children = (
+				DCFE23ED19DDCD8700EF8EA9 /* ARMAddressingModes.h */,
+				DCFE23EE19DDCD8700EF8EA9 /* ARMBaseInfo.h */,
+				DCFE23EF19DDCD8700EF8EA9 /* ARMDisassembler.c */,
+				DCFE23F019DDCD8700EF8EA9 /* ARMDisassembler.h */,
+				DCFE23F119DDCD8700EF8EA9 /* ARMGenAsmWriter.inc */,
+				DCFE23F219DDCD8700EF8EA9 /* ARMGenDisassemblerTables.inc */,
+				DCFE23F319DDCD8700EF8EA9 /* ARMGenInstrInfo.inc */,
+				DCFE23F419DDCD8700EF8EA9 /* ARMGenRegisterInfo.inc */,
+				DCFE23F519DDCD8700EF8EA9 /* ARMGenSubtargetInfo.inc */,
+				DCFE23F619DDCD8700EF8EA9 /* ARMInstPrinter.c */,
+				DCFE23F719DDCD8700EF8EA9 /* ARMInstPrinter.h */,
+				DCFE23F819DDCD8700EF8EA9 /* ARMMapping.c */,
+				DCFE23F919DDCD8700EF8EA9 /* ARMMapping.h */,
+				DCFE23FA19DDCD8700EF8EA9 /* ARMModule.c */,
+			);
+			path = ARM;
+			sourceTree = "<group>";
+		};
+		DCFE23FB19DDCD8700EF8EA9 /* Mips */ = {
+			isa = PBXGroup;
+			children = (
+				DCFE23FC19DDCD8700EF8EA9 /* MipsDisassembler.c */,
+				DCFE23FD19DDCD8700EF8EA9 /* MipsDisassembler.h */,
+				DCFE23FE19DDCD8700EF8EA9 /* MipsGenAsmWriter.inc */,
+				DCFE23FF19DDCD8700EF8EA9 /* MipsGenDisassemblerTables.inc */,
+				DCFE240019DDCD8700EF8EA9 /* MipsGenInstrInfo.inc */,
+				DCFE240119DDCD8700EF8EA9 /* MipsGenRegisterInfo.inc */,
+				DCFE240219DDCD8700EF8EA9 /* MipsGenSubtargetInfo.inc */,
+				DCFE240319DDCD8700EF8EA9 /* MipsInstPrinter.c */,
+				DCFE240419DDCD8700EF8EA9 /* MipsInstPrinter.h */,
+				DCFE240519DDCD8700EF8EA9 /* MipsMapping.c */,
+				DCFE240619DDCD8700EF8EA9 /* MipsMapping.h */,
+				DCFE240719DDCD8700EF8EA9 /* MipsModule.c */,
+			);
+			path = Mips;
+			sourceTree = "<group>";
+		};
+		DCFE240819DDCD8700EF8EA9 /* PowerPC */ = {
+			isa = PBXGroup;
+			children = (
+				DCFE240919DDCD8700EF8EA9 /* PPCDisassembler.c */,
+				DCFE240A19DDCD8700EF8EA9 /* PPCDisassembler.h */,
+				DCFE240B19DDCD8700EF8EA9 /* PPCGenAsmWriter.inc */,
+				DCFE240C19DDCD8700EF8EA9 /* PPCGenDisassemblerTables.inc */,
+				DCFE240D19DDCD8700EF8EA9 /* PPCGenInstrInfo.inc */,
+				DCFE240E19DDCD8700EF8EA9 /* PPCGenRegisterInfo.inc */,
+				DCFE240F19DDCD8700EF8EA9 /* PPCGenSubtargetInfo.inc */,
+				DCFE241019DDCD8700EF8EA9 /* PPCInstPrinter.c */,
+				DCFE241119DDCD8700EF8EA9 /* PPCInstPrinter.h */,
+				DCFE241219DDCD8700EF8EA9 /* PPCMapping.c */,
+				DCFE241319DDCD8700EF8EA9 /* PPCMapping.h */,
+				DCFE241419DDCD8700EF8EA9 /* PPCModule.c */,
+				DCFE241519DDCD8700EF8EA9 /* PPCPredicates.h */,
+			);
+			path = PowerPC;
+			sourceTree = "<group>";
+		};
+		DCFE241619DDCD8700EF8EA9 /* Sparc */ = {
+			isa = PBXGroup;
+			children = (
+				DCFE241719DDCD8700EF8EA9 /* Sparc.h */,
+				DCFE241819DDCD8700EF8EA9 /* SparcDisassembler.c */,
+				DCFE241919DDCD8700EF8EA9 /* SparcDisassembler.h */,
+				DCFE241A19DDCD8700EF8EA9 /* SparcGenAsmWriter.inc */,
+				DCFE241B19DDCD8700EF8EA9 /* SparcGenDisassemblerTables.inc */,
+				DCFE241C19DDCD8700EF8EA9 /* SparcGenInstrInfo.inc */,
+				DCFE241D19DDCD8700EF8EA9 /* SparcGenRegisterInfo.inc */,
+				DCFE241E19DDCD8700EF8EA9 /* SparcGenSubtargetInfo.inc */,
+				DCFE241F19DDCD8800EF8EA9 /* SparcInstPrinter.c */,
+				DCFE242019DDCD8800EF8EA9 /* SparcInstPrinter.h */,
+				DCFE242119DDCD8800EF8EA9 /* SparcMapping.c */,
+				DCFE242219DDCD8800EF8EA9 /* SparcMapping.h */,
+				DCFE242319DDCD8800EF8EA9 /* SparcModule.c */,
+			);
+			path = Sparc;
+			sourceTree = "<group>";
+		};
+		DCFE242419DDCD8800EF8EA9 /* SystemZ */ = {
+			isa = PBXGroup;
+			children = (
+				DCFE242519DDCD8800EF8EA9 /* SystemZDisassembler.c */,
+				DCFE242619DDCD8800EF8EA9 /* SystemZDisassembler.h */,
+				DCFE242719DDCD8800EF8EA9 /* SystemZGenAsmWriter.inc */,
+				DCFE242819DDCD8800EF8EA9 /* SystemZGenDisassemblerTables.inc */,
+				DCFE242919DDCD8800EF8EA9 /* SystemZGenInstrInfo.inc */,
+				DCFE242A19DDCD8800EF8EA9 /* SystemZGenRegisterInfo.inc */,
+				DCFE242B19DDCD8800EF8EA9 /* SystemZGenSubtargetInfo.inc */,
+				DCFE242C19DDCD8800EF8EA9 /* SystemZInstPrinter.c */,
+				DCFE242D19DDCD8800EF8EA9 /* SystemZInstPrinter.h */,
+				DCFE242E19DDCD8800EF8EA9 /* SystemZMapping.c */,
+				DCFE242F19DDCD8800EF8EA9 /* SystemZMapping.h */,
+				DCFE243019DDCD8800EF8EA9 /* SystemZMCTargetDesc.c */,
+				DCFE243119DDCD8800EF8EA9 /* SystemZMCTargetDesc.h */,
+				DCFE243219DDCD8800EF8EA9 /* SystemZModule.c */,
+			);
+			path = SystemZ;
+			sourceTree = "<group>";
+		};
+		DCFE243319DDCD8800EF8EA9 /* X86 */ = {
+			isa = PBXGroup;
+			children = (
+				DCFE243419DDCD8800EF8EA9 /* X86ATTInstPrinter.c */,
+				DCFE243519DDCD8800EF8EA9 /* X86BaseInfo.h */,
+				DCFE243619DDCD8800EF8EA9 /* X86Disassembler.c */,
+				DCFE243719DDCD8800EF8EA9 /* X86Disassembler.h */,
+				DCFE243819DDCD8800EF8EA9 /* X86DisassemblerDecoder.c */,
+				DCFE243919DDCD8800EF8EA9 /* X86DisassemblerDecoder.h */,
+				DCFE243A19DDCD8800EF8EA9 /* X86DisassemblerDecoderCommon.h */,
+				DCFE243B19DDCD8800EF8EA9 /* X86GenAsmWriter.inc */,
+				DCFE243C19DDCD8800EF8EA9 /* X86GenAsmWriter1.inc */,
+				DCFE243D19DDCD8800EF8EA9 /* X86GenAsmWriter1_reduce.inc */,
+				DCFE243E19DDCD8800EF8EA9 /* X86GenAsmWriter_reduce.inc */,
+				DCFE243F19DDCD8800EF8EA9 /* X86GenDisassemblerTables.inc */,
+				DCFE244019DDCD8800EF8EA9 /* X86GenDisassemblerTables_reduce.inc */,
+				DCFE244119DDCD8800EF8EA9 /* X86GenInstrInfo.inc */,
+				DCFE244219DDCD8800EF8EA9 /* X86GenInstrInfo_reduce.inc */,
+				DCFE244319DDCD8800EF8EA9 /* X86GenRegisterInfo.inc */,
+				DCFE244419DDCD8800EF8EA9 /* X86InstPrinter.h */,
+				DCFE244519DDCD8800EF8EA9 /* X86IntelInstPrinter.c */,
+				DCFE244619DDCD8800EF8EA9 /* X86Mapping.c */,
+				DCFE244719DDCD8800EF8EA9 /* X86Mapping.h */,
+				DCFE244819DDCD8800EF8EA9 /* X86Module.c */,
+			);
+			path = X86;
+			sourceTree = "<group>";
+		};
+		DCFE244919DDCD8800EF8EA9 /* XCore */ = {
+			isa = PBXGroup;
+			children = (
+				DCFE244A19DDCD8800EF8EA9 /* XCoreDisassembler.c */,
+				DCFE244B19DDCD8800EF8EA9 /* XCoreDisassembler.h */,
+				DCFE244C19DDCD8800EF8EA9 /* XCoreGenAsmWriter.inc */,
+				DCFE244D19DDCD8800EF8EA9 /* XCoreGenDisassemblerTables.inc */,
+				DCFE244E19DDCD8800EF8EA9 /* XCoreGenInstrInfo.inc */,
+				DCFE244F19DDCD8800EF8EA9 /* XCoreGenRegisterInfo.inc */,
+				DCFE245019DDCD8800EF8EA9 /* XCoreInstPrinter.c */,
+				DCFE245119DDCD8800EF8EA9 /* XCoreInstPrinter.h */,
+				DCFE245219DDCD8800EF8EA9 /* XCoreMapping.c */,
+				DCFE245319DDCD8800EF8EA9 /* XCoreMapping.h */,
+				DCFE245419DDCD8800EF8EA9 /* XCoreModule.c */,
+			);
+			path = XCore;
+			sourceTree = "<group>";
+		};
+		DCFE24BB19DDCE2F00EF8EA9 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				DCFE24BC19DDCE2F00EF8EA9 /* arm.h */,
+				DCFE24BD19DDCE2F00EF8EA9 /* arm64.h */,
+				DCFE24BE19DDCE2F00EF8EA9 /* capstone.h */,
+				DCFE24BF19DDCE2F00EF8EA9 /* mips.h */,
+				DCFE24C019DDCE2F00EF8EA9 /* platform.h */,
+				DCFE24C119DDCE2F00EF8EA9 /* ppc.h */,
+				DCFE24C219DDCE2F00EF8EA9 /* sparc.h */,
+				DCFE24C319DDCE2F00EF8EA9 /* systemz.h */,
+				DCFE24C419DDCE2F00EF8EA9 /* x86.h */,
+				DCFE24C519DDCE2F00EF8EA9 /* xcore.h */,
+			);
+			name = include;
+			path = ../include;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		DC474F6519DE6F3B00BCA449 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474F8119DE6F6B00BCA449 /* arm.h in Headers */,
+				DC474F8219DE6F6B00BCA449 /* arm64.h in Headers */,
+				DC474F8319DE6F6B00BCA449 /* capstone.h in Headers */,
+				DC474F8419DE6F6B00BCA449 /* mips.h in Headers */,
+				DC474F8519DE6F6B00BCA449 /* platform.h in Headers */,
+				DC474F8619DE6F6B00BCA449 /* ppc.h in Headers */,
+				DC474F8719DE6F6B00BCA449 /* sparc.h in Headers */,
+				DC474F8819DE6F6B00BCA449 /* systemz.h in Headers */,
+				DC474F8919DE6F6B00BCA449 /* x86.h in Headers */,
+				DC474F8A19DE6F6B00BCA449 /* xcore.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DCFE23BB19DDCC2D00EF8EA9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DCFE23CB19DDCC9500EF8EA9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		DC474E6319DDEA5F00BCA449 /* test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC474E6A19DDEA5F00BCA449 /* Build configuration list for PBXNativeTarget "test" */;
+			buildPhases = (
+				DC474E6019DDEA5F00BCA449 /* Sources */,
+				DC474E6119DDEA5F00BCA449 /* Frameworks */,
+				DC474E6219DDEA5F00BCA449 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = test;
+			productName = test;
+			productReference = DC474E6419DDEA5F00BCA449 /* test */;
+			productType = "com.apple.product-type.tool";
+		};
+		DC474E8519DDEAA200BCA449 /* test_arm */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC474E8A19DDEAA200BCA449 /* Build configuration list for PBXNativeTarget "test_arm" */;
+			buildPhases = (
+				DC474E8219DDEAA200BCA449 /* Sources */,
+				DC474E8319DDEAA200BCA449 /* Frameworks */,
+				DC474E8419DDEAA200BCA449 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = test_arm;
+			productName = test_arm;
+			productReference = DC474E8619DDEAA200BCA449 /* test_arm */;
+			productType = "com.apple.product-type.tool";
+		};
+		DC474E9019DDEAA700BCA449 /* test_detail */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC474E9519DDEAA700BCA449 /* Build configuration list for PBXNativeTarget "test_detail" */;
+			buildPhases = (
+				DC474E8D19DDEAA700BCA449 /* Sources */,
+				DC474E8E19DDEAA700BCA449 /* Frameworks */,
+				DC474E8F19DDEAA700BCA449 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = test_detail;
+			productName = test_detail;
+			productReference = DC474E9119DDEAA700BCA449 /* test_detail */;
+			productType = "com.apple.product-type.tool";
+		};
+		DC474E9B19DDEAAC00BCA449 /* test_mips */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC474EA019DDEAAC00BCA449 /* Build configuration list for PBXNativeTarget "test_mips" */;
+			buildPhases = (
+				DC474E9819DDEAAC00BCA449 /* Sources */,
+				DC474E9919DDEAAC00BCA449 /* Frameworks */,
+				DC474E9A19DDEAAC00BCA449 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = test_mips;
+			productName = test_mips;
+			productReference = DC474E9C19DDEAAC00BCA449 /* test_mips */;
+			productType = "com.apple.product-type.tool";
+		};
+		DC474EA619DDEAB000BCA449 /* test_ppc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC474EAB19DDEAB000BCA449 /* Build configuration list for PBXNativeTarget "test_ppc" */;
+			buildPhases = (
+				DC474EA319DDEAB000BCA449 /* Sources */,
+				DC474EA419DDEAB000BCA449 /* Frameworks */,
+				DC474EA519DDEAB000BCA449 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = test_ppc;
+			productName = test_ppc;
+			productReference = DC474EA719DDEAB000BCA449 /* test_ppc */;
+			productType = "com.apple.product-type.tool";
+		};
+		DC474EB119DDEAB700BCA449 /* test_skipdata */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC474EB619DDEAB700BCA449 /* Build configuration list for PBXNativeTarget "test_skipdata" */;
+			buildPhases = (
+				DC474EAE19DDEAB700BCA449 /* Sources */,
+				DC474EAF19DDEAB700BCA449 /* Frameworks */,
+				DC474EB019DDEAB700BCA449 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = test_skipdata;
+			productName = test_skipdata;
+			productReference = DC474EB219DDEAB700BCA449 /* test_skipdata */;
+			productType = "com.apple.product-type.tool";
+		};
+		DC474EBC19DDEABC00BCA449 /* test_sparc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC474EC119DDEABC00BCA449 /* Build configuration list for PBXNativeTarget "test_sparc" */;
+			buildPhases = (
+				DC474EB919DDEABC00BCA449 /* Sources */,
+				DC474EBA19DDEABC00BCA449 /* Frameworks */,
+				DC474EBB19DDEABC00BCA449 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = test_sparc;
+			productName = test_sparc;
+			productReference = DC474EBD19DDEABC00BCA449 /* test_sparc */;
+			productType = "com.apple.product-type.tool";
+		};
+		DC474EC719DDEAC100BCA449 /* test_systemz */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC474ECC19DDEAC100BCA449 /* Build configuration list for PBXNativeTarget "test_systemz" */;
+			buildPhases = (
+				DC474EC419DDEAC100BCA449 /* Sources */,
+				DC474EC519DDEAC100BCA449 /* Frameworks */,
+				DC474EC619DDEAC100BCA449 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = test_systemz;
+			productName = test_systemz;
+			productReference = DC474EC819DDEAC100BCA449 /* test_systemz */;
+			productType = "com.apple.product-type.tool";
+		};
+		DC474ED219DDEAC600BCA449 /* test_x86 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC474ED719DDEAC600BCA449 /* Build configuration list for PBXNativeTarget "test_x86" */;
+			buildPhases = (
+				DC474ECF19DDEAC600BCA449 /* Sources */,
+				DC474ED019DDEAC600BCA449 /* Frameworks */,
+				DC474ED119DDEAC600BCA449 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = test_x86;
+			productName = test_x86;
+			productReference = DC474ED319DDEAC600BCA449 /* test_x86 */;
+			productType = "com.apple.product-type.tool";
+		};
+		DC474EDD19DDEACC00BCA449 /* test_xcore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC474EE219DDEACC00BCA449 /* Build configuration list for PBXNativeTarget "test_xcore" */;
+			buildPhases = (
+				DC474EDA19DDEACC00BCA449 /* Sources */,
+				DC474EDB19DDEACC00BCA449 /* Frameworks */,
+				DC474EDC19DDEACC00BCA449 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = test_xcore;
+			productName = test_xcore;
+			productReference = DC474EDE19DDEACC00BCA449 /* test_xcore */;
+			productType = "com.apple.product-type.tool";
+		};
+		DC474EE919DDEAE400BCA449 /* test_arm64 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC474EEE19DDEAE400BCA449 /* Build configuration list for PBXNativeTarget "test_arm64" */;
+			buildPhases = (
+				DC474EE619DDEAE400BCA449 /* Sources */,
+				DC474EE719DDEAE400BCA449 /* Frameworks */,
+				DC474EE819DDEAE400BCA449 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = test_arm64;
+			productName = test_arm64;
+			productReference = DC474EEA19DDEAE400BCA449 /* test_arm64 */;
+			productType = "com.apple.product-type.tool";
+		};
+		DC474F6719DE6F3B00BCA449 /* CapstoneFramework */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC474F7F19DE6F3C00BCA449 /* Build configuration list for PBXNativeTarget "CapstoneFramework" */;
+			buildPhases = (
+				DC474F6319DE6F3B00BCA449 /* Sources */,
+				DC474F6419DE6F3B00BCA449 /* Frameworks */,
+				DC474F6519DE6F3B00BCA449 /* Headers */,
+				DC474F6619DE6F3B00BCA449 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CapstoneFramework;
+			productName = CapstoneFramework;
+			productReference = DC474F6819DE6F3B00BCA449 /* Capstone.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		DC5BFF3F19EE544E008CA585 /* test_iter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC5BFF4619EE544E008CA585 /* Build configuration list for PBXNativeTarget "test_iter" */;
+			buildPhases = (
+				DC5BFF3C19EE544E008CA585 /* Sources */,
+				DC5BFF3D19EE544E008CA585 /* Frameworks */,
+				DC5BFF3E19EE544E008CA585 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = test_iter;
+			productName = test_iter;
+			productReference = DC5BFF4019EE544E008CA585 /* test_iter */;
+			productType = "com.apple.product-type.tool";
+		};
+		DCFE23BC19DDCC2D00EF8EA9 /* CapstoneStatic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DCFE23BE19DDCC2D00EF8EA9 /* Build configuration list for PBXNativeTarget "CapstoneStatic" */;
+			buildPhases = (
+				DCFE23B919DDCC2D00EF8EA9 /* Sources */,
+				DCFE23BA19DDCC2D00EF8EA9 /* Frameworks */,
+				DCFE23BB19DDCC2D00EF8EA9 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CapstoneStatic;
+			productName = CapstoneStatic;
+			productReference = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		DCFE23CC19DDCC9500EF8EA9 /* CapstoneDynamic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DCFE23CE19DDCC9500EF8EA9 /* Build configuration list for PBXNativeTarget "CapstoneDynamic" */;
+			buildPhases = (
+				DCFE23C919DDCC9500EF8EA9 /* Sources */,
+				DCFE23CA19DDCC9500EF8EA9 /* Frameworks */,
+				DCFE23CB19DDCC9500EF8EA9 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CapstoneDynamic;
+			productName = CapstoneDynamic;
+			productReference = DCFE23CD19DDCC9500EF8EA9 /* libcapstone.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DCFE239A19DDCB4900EF8EA9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				TargetAttributes = {
+					DC474E6319DDEA5F00BCA449 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					DC474E8519DDEAA200BCA449 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					DC474E9019DDEAA700BCA449 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					DC474E9B19DDEAAC00BCA449 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					DC474EA619DDEAB000BCA449 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					DC474EB119DDEAB700BCA449 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					DC474EBC19DDEABC00BCA449 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					DC474EC719DDEAC100BCA449 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					DC474ED219DDEAC600BCA449 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					DC474EDD19DDEACC00BCA449 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					DC474EE919DDEAE400BCA449 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					DC474F6719DE6F3B00BCA449 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					DC5BFF3F19EE544E008CA585 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					DCFE23BC19DDCC2D00EF8EA9 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					DCFE23CC19DDCC9500EF8EA9 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
+			};
+			buildConfigurationList = DCFE239D19DDCB4900EF8EA9 /* Build configuration list for PBXProject "Capstone" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = DCFE239919DDCB4900EF8EA9;
+			productRefGroup = DCFE23A519DDCBC300EF8EA9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DCFE23BC19DDCC2D00EF8EA9 /* CapstoneStatic */,
+				DCFE23CC19DDCC9500EF8EA9 /* CapstoneDynamic */,
+				DC474F6719DE6F3B00BCA449 /* CapstoneFramework */,
+				DC474E6319DDEA5F00BCA449 /* test */,
+				DC474E8519DDEAA200BCA449 /* test_arm */,
+				DC474EE919DDEAE400BCA449 /* test_arm64 */,
+				DC474E9019DDEAA700BCA449 /* test_detail */,
+				DC5BFF3F19EE544E008CA585 /* test_iter */,
+				DC474E9B19DDEAAC00BCA449 /* test_mips */,
+				DC474EA619DDEAB000BCA449 /* test_ppc */,
+				DC474EB119DDEAB700BCA449 /* test_skipdata */,
+				DC474EBC19DDEABC00BCA449 /* test_sparc */,
+				DC474EC719DDEAC100BCA449 /* test_systemz */,
+				DC474ED219DDEAC600BCA449 /* test_x86 */,
+				DC474EDD19DDEACC00BCA449 /* test_xcore */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DC474F6619DE6F3B00BCA449 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DC474E6019DDEA5F00BCA449 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474EFA19DDEB0200BCA449 /* test.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474E8219DDEAA200BCA449 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474EE519DDEAD900BCA449 /* test_arm.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474E8D19DDEAA700BCA449 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474EF219DDEAF000BCA449 /* test_detail.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474E9819DDEAAC00BCA449 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474EF319DDEAF200BCA449 /* test_mips.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474EA319DDEAB000BCA449 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474EF419DDEAF400BCA449 /* test_ppc.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474EAE19DDEAB700BCA449 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474EF519DDEAF600BCA449 /* test_skipdata.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474EB919DDEABC00BCA449 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474EF619DDEAF800BCA449 /* test_sparc.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474EC419DDEAC100BCA449 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474EF719DDEAFA00BCA449 /* test_systemz.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474ECF19DDEAC600BCA449 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474EF819DDEAFD00BCA449 /* test_x86.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474EDA19DDEACC00BCA449 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474EF919DDEB0000BCA449 /* test_xcore.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474EE619DDEAE400BCA449 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474EF119DDEAED00BCA449 /* test_arm64.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC474F6319DE6F3B00BCA449 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474FCF19DE6FDA00BCA449 /* SparcInstPrinter.c in Sources */,
+				DC474FBD19DE6FDA00BCA449 /* AArch64BaseInfo.c in Sources */,
+				DC474FDF19DE6FDA00BCA449 /* XCoreMapping.c in Sources */,
+				DC474FD719DE6FDA00BCA449 /* X86ATTInstPrinter.c in Sources */,
+				DC474FD019DE6FDA00BCA449 /* SparcMapping.c in Sources */,
+				DC474FC119DE6FDA00BCA449 /* AArch64Module.c in Sources */,
+				DC474FC319DE6FDA00BCA449 /* ARMInstPrinter.c in Sources */,
+				DC474FDE19DE6FDA00BCA449 /* XCoreInstPrinter.c in Sources */,
+				DC474FDC19DE6FDA00BCA449 /* X86Module.c in Sources */,
+				DC474FE019DE6FDA00BCA449 /* XCoreModule.c in Sources */,
+				DC474FD619DE6FDA00BCA449 /* SystemZModule.c in Sources */,
+				DC474FCA19DE6FDA00BCA449 /* PPCDisassembler.c in Sources */,
+				DC474FD919DE6FDA00BCA449 /* X86DisassemblerDecoder.c in Sources */,
+				DC474FC819DE6FDA00BCA449 /* MipsMapping.c in Sources */,
+				DC474FD119DE6FDA00BCA449 /* SparcModule.c in Sources */,
+				DC474FDD19DE6FDA00BCA449 /* XCoreDisassembler.c in Sources */,
+				DC474FD819DE6FDA00BCA449 /* X86Disassembler.c in Sources */,
+				DC474FC519DE6FDA00BCA449 /* ARMModule.c in Sources */,
+				DC474FC719DE6FDA00BCA449 /* MipsInstPrinter.c in Sources */,
+				DC474F9319DE6FCD00BCA449 /* cs.c in Sources */,
+				DC474FCD19DE6FDA00BCA449 /* PPCModule.c in Sources */,
+				DC474F9519DE6FCD00BCA449 /* MCInstrDesc.c in Sources */,
+				DC474FD519DE6FDA00BCA449 /* SystemZMCTargetDesc.c in Sources */,
+				DC474F9719DE6FCD00BCA449 /* SStream.c in Sources */,
+				DC474FCE19DE6FDA00BCA449 /* SparcDisassembler.c in Sources */,
+				DC474FD219DE6FDA00BCA449 /* SystemZDisassembler.c in Sources */,
+				DC474FC919DE6FDA00BCA449 /* MipsModule.c in Sources */,
+				DC474FC019DE6FDA00BCA449 /* AArch64Mapping.c in Sources */,
+				DC474FBF19DE6FDA00BCA449 /* AArch64InstPrinter.c in Sources */,
+				DC474FCB19DE6FDA00BCA449 /* PPCInstPrinter.c in Sources */,
+				DC474FD319DE6FDA00BCA449 /* SystemZInstPrinter.c in Sources */,
+				DC474FDA19DE6FDA00BCA449 /* X86IntelInstPrinter.c in Sources */,
+				DC474FDB19DE6FDA00BCA449 /* X86Mapping.c in Sources */,
+				DC474F9819DE6FCD00BCA449 /* utils.c in Sources */,
+				DC474FC619DE6FDA00BCA449 /* MipsDisassembler.c in Sources */,
+				DC474FCC19DE6FDA00BCA449 /* PPCMapping.c in Sources */,
+				DC474FC419DE6FDA00BCA449 /* ARMMapping.c in Sources */,
+				DC474FC219DE6FDA00BCA449 /* ARMDisassembler.c in Sources */,
+				DC474FD419DE6FDA00BCA449 /* SystemZMapping.c in Sources */,
+				DC474FBE19DE6FDA00BCA449 /* AArch64Disassembler.c in Sources */,
+				DC474F9619DE6FCD00BCA449 /* MCRegisterInfo.c in Sources */,
+				DC474F9419DE6FCD00BCA449 /* MCInst.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC5BFF3C19EE544E008CA585 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC5BFF4919EE54BE008CA585 /* test_iter.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DCFE23B919DDCC2D00EF8EA9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCFE249519DDCDD000EF8EA9 /* XCoreDisassembler.c in Sources */,
+				DCFE246A19DDCDA000EF8EA9 /* MipsModule.c in Sources */,
+				DCFE247019DDCDA700EF8EA9 /* PPCInstPrinter.c in Sources */,
+				DCFE248C19DDCDC000EF8EA9 /* X86IntelInstPrinter.c in Sources */,
+				DCFE246F19DDCDA700EF8EA9 /* PPCDisassembler.c in Sources */,
+				DCFE245519DDCD9200EF8EA9 /* AArch64BaseInfo.c in Sources */,
+				DCFE246119DDCD9900EF8EA9 /* ARMMapping.c in Sources */,
+				DCFE245719DDCD9200EF8EA9 /* AArch64InstPrinter.c in Sources */,
+				DCFE24A319DDCDEE00EF8EA9 /* cs.c in Sources */,
+				DCFE248019DDCDB700EF8EA9 /* SystemZInstPrinter.c in Sources */,
+				DCFE24A919DDCDEE00EF8EA9 /* MCRegisterInfo.c in Sources */,
+				DCFE248E19DDCDC000EF8EA9 /* X86Module.c in Sources */,
+				DCFE248319DDCDB700EF8EA9 /* SystemZModule.c in Sources */,
+				DCFE248D19DDCDC000EF8EA9 /* X86Mapping.c in Sources */,
+				DCFE246919DDCDA000EF8EA9 /* MipsMapping.c in Sources */,
+				DCFE24AD19DDCDEE00EF8EA9 /* utils.c in Sources */,
+				DCFE247A19DDCDAD00EF8EA9 /* SparcModule.c in Sources */,
+				DCFE247819DDCDAD00EF8EA9 /* SparcInstPrinter.c in Sources */,
+				DCFE245F19DDCD9900EF8EA9 /* ARMDisassembler.c in Sources */,
+				DCFE24A519DDCDEE00EF8EA9 /* MCInst.c in Sources */,
+				DCFE249619DDCDD000EF8EA9 /* XCoreInstPrinter.c in Sources */,
+				DCFE246819DDCDA000EF8EA9 /* MipsInstPrinter.c in Sources */,
+				DCFE247F19DDCDB700EF8EA9 /* SystemZDisassembler.c in Sources */,
+				DCFE248919DDCDC000EF8EA9 /* X86ATTInstPrinter.c in Sources */,
+				DCFE24A719DDCDEE00EF8EA9 /* MCInstrDesc.c in Sources */,
+				DCFE246719DDCDA000EF8EA9 /* MipsDisassembler.c in Sources */,
+				DCFE245819DDCD9200EF8EA9 /* AArch64Mapping.c in Sources */,
+				DCFE247919DDCDAD00EF8EA9 /* SparcMapping.c in Sources */,
+				DCFE248A19DDCDC000EF8EA9 /* X86Disassembler.c in Sources */,
+				DCFE249719DDCDD000EF8EA9 /* XCoreMapping.c in Sources */,
+				DCFE247719DDCDAD00EF8EA9 /* SparcDisassembler.c in Sources */,
+				DCFE246019DDCD9900EF8EA9 /* ARMInstPrinter.c in Sources */,
+				DCFE248B19DDCDC000EF8EA9 /* X86DisassemblerDecoder.c in Sources */,
+				DCFE248219DDCDB700EF8EA9 /* SystemZMCTargetDesc.c in Sources */,
+				DCFE247119DDCDA700EF8EA9 /* PPCMapping.c in Sources */,
+				DCFE246219DDCD9900EF8EA9 /* ARMModule.c in Sources */,
+				DCFE24AB19DDCDEE00EF8EA9 /* SStream.c in Sources */,
+				DCFE248119DDCDB700EF8EA9 /* SystemZMapping.c in Sources */,
+				DCFE247219DDCDA700EF8EA9 /* PPCModule.c in Sources */,
+				DCFE249819DDCDD000EF8EA9 /* XCoreModule.c in Sources */,
+				DCFE245619DDCD9200EF8EA9 /* AArch64Disassembler.c in Sources */,
+				DCFE245919DDCD9200EF8EA9 /* AArch64Module.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DCFE23C919DDCC9500EF8EA9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC474FAB19DE6FDA00BCA449 /* SparcInstPrinter.c in Sources */,
+				DC474F9919DE6FDA00BCA449 /* AArch64BaseInfo.c in Sources */,
+				DC474FBB19DE6FDA00BCA449 /* XCoreMapping.c in Sources */,
+				DC474FB319DE6FDA00BCA449 /* X86ATTInstPrinter.c in Sources */,
+				DC474FAC19DE6FDA00BCA449 /* SparcMapping.c in Sources */,
+				DC474F9D19DE6FDA00BCA449 /* AArch64Module.c in Sources */,
+				DC474F9F19DE6FDA00BCA449 /* ARMInstPrinter.c in Sources */,
+				DC474FBA19DE6FDA00BCA449 /* XCoreInstPrinter.c in Sources */,
+				DC474FB819DE6FDA00BCA449 /* X86Module.c in Sources */,
+				DC474FBC19DE6FDA00BCA449 /* XCoreModule.c in Sources */,
+				DC474FB219DE6FDA00BCA449 /* SystemZModule.c in Sources */,
+				DC474FA619DE6FDA00BCA449 /* PPCDisassembler.c in Sources */,
+				DC474FB519DE6FDA00BCA449 /* X86DisassemblerDecoder.c in Sources */,
+				DC474FA419DE6FDA00BCA449 /* MipsMapping.c in Sources */,
+				DC474FAD19DE6FDA00BCA449 /* SparcModule.c in Sources */,
+				DC474FB919DE6FDA00BCA449 /* XCoreDisassembler.c in Sources */,
+				DC474FB419DE6FDA00BCA449 /* X86Disassembler.c in Sources */,
+				DC474FA119DE6FDA00BCA449 /* ARMModule.c in Sources */,
+				DC474FA319DE6FDA00BCA449 /* MipsInstPrinter.c in Sources */,
+				DC474F8D19DE6FCD00BCA449 /* cs.c in Sources */,
+				DC474FA919DE6FDA00BCA449 /* PPCModule.c in Sources */,
+				DC474F8F19DE6FCD00BCA449 /* MCInstrDesc.c in Sources */,
+				DC474FB119DE6FDA00BCA449 /* SystemZMCTargetDesc.c in Sources */,
+				DC474F9119DE6FCD00BCA449 /* SStream.c in Sources */,
+				DC474FAA19DE6FDA00BCA449 /* SparcDisassembler.c in Sources */,
+				DC474FAE19DE6FDA00BCA449 /* SystemZDisassembler.c in Sources */,
+				DC474FA519DE6FDA00BCA449 /* MipsModule.c in Sources */,
+				DC474F9C19DE6FDA00BCA449 /* AArch64Mapping.c in Sources */,
+				DC474F9B19DE6FDA00BCA449 /* AArch64InstPrinter.c in Sources */,
+				DC474FA719DE6FDA00BCA449 /* PPCInstPrinter.c in Sources */,
+				DC474FAF19DE6FDA00BCA449 /* SystemZInstPrinter.c in Sources */,
+				DC474FB619DE6FDA00BCA449 /* X86IntelInstPrinter.c in Sources */,
+				DC474FB719DE6FDA00BCA449 /* X86Mapping.c in Sources */,
+				DC474F9219DE6FCD00BCA449 /* utils.c in Sources */,
+				DC474FA219DE6FDA00BCA449 /* MipsDisassembler.c in Sources */,
+				DC474FA819DE6FDA00BCA449 /* PPCMapping.c in Sources */,
+				DC474FA019DE6FDA00BCA449 /* ARMMapping.c in Sources */,
+				DC474F9E19DE6FDA00BCA449 /* ARMDisassembler.c in Sources */,
+				DC474FB019DE6FDA00BCA449 /* SystemZMapping.c in Sources */,
+				DC474F9A19DE6FDA00BCA449 /* AArch64Disassembler.c in Sources */,
+				DC474F9019DE6FCD00BCA449 /* MCRegisterInfo.c in Sources */,
+				DC474F8E19DE6FCD00BCA449 /* MCInst.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		DC474E6819DDEA5F00BCA449 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DC474E6919DDEA5F00BCA449 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DC474E8B19DDEAA200BCA449 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DC474E8C19DDEAA200BCA449 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DC474E9619DDEAA700BCA449 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DC474E9719DDEAA700BCA449 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DC474EA119DDEAAC00BCA449 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DC474EA219DDEAAC00BCA449 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DC474EAC19DDEAB000BCA449 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DC474EAD19DDEAB000BCA449 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DC474EB719DDEAB700BCA449 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DC474EB819DDEAB700BCA449 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DC474EC219DDEABC00BCA449 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DC474EC319DDEABC00BCA449 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DC474ECD19DDEAC100BCA449 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DC474ECE19DDEAC100BCA449 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DC474ED819DDEAC600BCA449 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DC474ED919DDEAC600BCA449 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DC474EE319DDEACC00BCA449 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DC474EE419DDEACC00BCA449 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DC474EEF19DDEAE400BCA449 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DC474EF019DDEAE400BCA449 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DC474F7B19DE6F3C00BCA449 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 3.0;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CAPSTONE_HAS_ARM=1",
+					"CAPSTONE_HAS_ARM64=1",
+					"CAPSTONE_HAS_MIPS=1",
+					"CAPSTONE_HAS_POWERPC=1",
+					"CAPSTONE_HAS_SPARC=1",
+					"CAPSTONE_HAS_SYSZ=1",
+					"CAPSTONE_HAS_X86=1",
+					"CAPSTONE_HAS_XCORE=1",
+					"CAPSTONE_USE_SYS_DYN_MEM=1",
+					"CAPSTONE_SHARED=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = CapstoneFramework/Info.plist;
+				INSTALL_PATH = "@rpath";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = Capstone;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		DC474F7C19DE6F3C00BCA449 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 3.0;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CAPSTONE_HAS_ARM=1",
+					"CAPSTONE_HAS_ARM64=1",
+					"CAPSTONE_HAS_MIPS=1",
+					"CAPSTONE_HAS_POWERPC=1",
+					"CAPSTONE_HAS_SPARC=1",
+					"CAPSTONE_HAS_SYSZ=1",
+					"CAPSTONE_HAS_X86=1",
+					"CAPSTONE_HAS_XCORE=1",
+					"CAPSTONE_USE_SYS_DYN_MEM=1",
+					"CAPSTONE_SHARED=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = CapstoneFramework/Info.plist;
+				INSTALL_PATH = "@rpath";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = Capstone;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		DC5BFF4419EE544E008CA585 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DC5BFF4519EE544E008CA585 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DCFE239E19DDCB4900EF8EA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		DCFE239F19DDCB4900EF8EA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		DCFE23BF19DDCC2D00EF8EA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CAPSTONE_HAS_ARM=1",
+					"CAPSTONE_HAS_ARM64=1",
+					"CAPSTONE_HAS_MIPS=1",
+					"CAPSTONE_HAS_POWERPC=1",
+					"CAPSTONE_HAS_SPARC=1",
+					"CAPSTONE_HAS_SYSZ=1",
+					"CAPSTONE_HAS_X86=1",
+					"CAPSTONE_HAS_XCORE=1",
+					"CAPSTONE_USE_SYS_DYN_MEM=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = capstone;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DCFE23C019DDCC2D00EF8EA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CAPSTONE_HAS_ARM=1",
+					"CAPSTONE_HAS_ARM64=1",
+					"CAPSTONE_HAS_MIPS=1",
+					"CAPSTONE_HAS_POWERPC=1",
+					"CAPSTONE_HAS_SPARC=1",
+					"CAPSTONE_HAS_SYSZ=1",
+					"CAPSTONE_HAS_X86=1",
+					"CAPSTONE_HAS_XCORE=1",
+					"CAPSTONE_USE_SYS_DYN_MEM=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = capstone;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DCFE23CF19DDCC9500EF8EA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CAPSTONE_HAS_ARM=1",
+					"CAPSTONE_HAS_ARM64=1",
+					"CAPSTONE_HAS_MIPS=1",
+					"CAPSTONE_HAS_POWERPC=1",
+					"CAPSTONE_HAS_SPARC=1",
+					"CAPSTONE_HAS_SYSZ=1",
+					"CAPSTONE_HAS_X86=1",
+					"CAPSTONE_HAS_XCORE=1",
+					"CAPSTONE_USE_SYS_DYN_MEM=1",
+					"CAPSTONE_SHARED=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = capstone;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DCFE23D019DDCC9500EF8EA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CAPSTONE_HAS_ARM=1",
+					"CAPSTONE_HAS_ARM64=1",
+					"CAPSTONE_HAS_MIPS=1",
+					"CAPSTONE_HAS_POWERPC=1",
+					"CAPSTONE_HAS_SPARC=1",
+					"CAPSTONE_HAS_SYSZ=1",
+					"CAPSTONE_HAS_X86=1",
+					"CAPSTONE_HAS_XCORE=1",
+					"CAPSTONE_USE_SYS_DYN_MEM=1",
+					"CAPSTONE_SHARED=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = capstone;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DC474E6A19DDEA5F00BCA449 /* Build configuration list for PBXNativeTarget "test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC474E6819DDEA5F00BCA449 /* Debug */,
+				DC474E6919DDEA5F00BCA449 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC474E8A19DDEAA200BCA449 /* Build configuration list for PBXNativeTarget "test_arm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC474E8B19DDEAA200BCA449 /* Debug */,
+				DC474E8C19DDEAA200BCA449 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC474E9519DDEAA700BCA449 /* Build configuration list for PBXNativeTarget "test_detail" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC474E9619DDEAA700BCA449 /* Debug */,
+				DC474E9719DDEAA700BCA449 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC474EA019DDEAAC00BCA449 /* Build configuration list for PBXNativeTarget "test_mips" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC474EA119DDEAAC00BCA449 /* Debug */,
+				DC474EA219DDEAAC00BCA449 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC474EAB19DDEAB000BCA449 /* Build configuration list for PBXNativeTarget "test_ppc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC474EAC19DDEAB000BCA449 /* Debug */,
+				DC474EAD19DDEAB000BCA449 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC474EB619DDEAB700BCA449 /* Build configuration list for PBXNativeTarget "test_skipdata" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC474EB719DDEAB700BCA449 /* Debug */,
+				DC474EB819DDEAB700BCA449 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC474EC119DDEABC00BCA449 /* Build configuration list for PBXNativeTarget "test_sparc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC474EC219DDEABC00BCA449 /* Debug */,
+				DC474EC319DDEABC00BCA449 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC474ECC19DDEAC100BCA449 /* Build configuration list for PBXNativeTarget "test_systemz" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC474ECD19DDEAC100BCA449 /* Debug */,
+				DC474ECE19DDEAC100BCA449 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC474ED719DDEAC600BCA449 /* Build configuration list for PBXNativeTarget "test_x86" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC474ED819DDEAC600BCA449 /* Debug */,
+				DC474ED919DDEAC600BCA449 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC474EE219DDEACC00BCA449 /* Build configuration list for PBXNativeTarget "test_xcore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC474EE319DDEACC00BCA449 /* Debug */,
+				DC474EE419DDEACC00BCA449 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC474EEE19DDEAE400BCA449 /* Build configuration list for PBXNativeTarget "test_arm64" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC474EEF19DDEAE400BCA449 /* Debug */,
+				DC474EF019DDEAE400BCA449 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC474F7F19DE6F3C00BCA449 /* Build configuration list for PBXNativeTarget "CapstoneFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC474F7B19DE6F3C00BCA449 /* Debug */,
+				DC474F7C19DE6F3C00BCA449 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC5BFF4619EE544E008CA585 /* Build configuration list for PBXNativeTarget "test_iter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC5BFF4419EE544E008CA585 /* Debug */,
+				DC5BFF4519EE544E008CA585 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DCFE239D19DDCB4900EF8EA9 /* Build configuration list for PBXProject "Capstone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DCFE239E19DDCB4900EF8EA9 /* Debug */,
+				DCFE239F19DDCB4900EF8EA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DCFE23BE19DDCC2D00EF8EA9 /* Build configuration list for PBXNativeTarget "CapstoneStatic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DCFE23BF19DDCC2D00EF8EA9 /* Debug */,
+				DCFE23C019DDCC2D00EF8EA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DCFE23CE19DDCC9500EF8EA9 /* Build configuration list for PBXNativeTarget "CapstoneDynamic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DCFE23CF19DDCC9500EF8EA9 /* Debug */,
+				DCFE23D019DDCC9500EF8EA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DCFE239A19DDCB4900EF8EA9 /* Project object */;
+}

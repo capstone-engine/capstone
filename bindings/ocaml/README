@@ -1,4 +1,12 @@
-This directory contains some test code to show how to use Capstone API.
+To compile Ocaml binding, Ocaml toolchain is needed. On Ubuntu Linux,
+you can install Ocaml with:
+
+    $ sudo apt-get install ocaml-nox
+
+To compile Ocaml binding, simply run "make" on the command line.
+
+
+This directory also contains some test code to show how to use Capstone API.
 
 - test.ml
   This code shows the most simple form of API where we only want to get basic

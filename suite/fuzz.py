@@ -34,11 +34,14 @@ all_tests = (
         (CS_ARCH_X86, CS_MODE_64, "X86-64 (ATT syntax)", CS_OPT_SYNTAX_ATT),
         (CS_ARCH_ARM, CS_MODE_ARM, "ARM", 0),
         (CS_ARCH_ARM, CS_MODE_THUMB, "THUMB (ARM)", 0),
-        (CS_ARCH_MIPS, CS_MODE_32 + CS_MODE_BIG_ENDIAN, "MIPS-32 (Big-endian)", 0),
-        (CS_ARCH_MIPS, CS_MODE_64 + CS_MODE_LITTLE_ENDIAN, "MIPS-64-EL (Little-endian)", 0),
+        (CS_ARCH_MIPS, CS_MODE_MIPS32 + CS_MODE_BIG_ENDIAN, "MIPS-32 (Big-endian)", 0),
+        (CS_ARCH_MIPS, CS_MODE_MIPS64 + CS_MODE_LITTLE_ENDIAN, "MIPS-64-EL (Little-endian)", 0),
         (CS_ARCH_ARM64, CS_MODE_ARM, "ARM-64 (AArch64)", 0),
         (CS_ARCH_PPC, CS_MODE_BIG_ENDIAN, "PPC", 0),
         (CS_ARCH_PPC, CS_MODE_BIG_ENDIAN, "PPC, print register with number only", CS_OPT_SYNTAX_NOREGNAME),
+        (CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN, "Sparc", 0),
+        (CS_ARCH_SYSZ, 0, "SystemZ", 0),
+        (CS_ARCH_XCORE, 0, "XCore", 0),
         )
 
 

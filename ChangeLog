@@ -1,6 +1,83 @@
 This file details the changelog of Capstone.
 
 ---------------------------------
+Version 3.0: November 2014
+
+[ API ]
+
+- New API: cs_disasm_iter & cs_malloc. See docs/README for tutorials.
+- Renamed cs_disasm_ex to cs_disasm (cs_disasm_ex is still supported, but
+  marked obsolete to be removed in future)
+- Support SKIPDATA mode, so Capstone can jump over unknown data and keep going
+  from the next legitimate instruction. See docs/README for tutorials.
+- More details provided in cs_detail struct for all architectures.
+- API version was bumped to 3.0.
+
+
+[ Bindings ]
+
+- Python binding supports Python3 (besides Python2).
+- Support Ocaml binding.
+- Java: add close() method to be used to deinitialize a Capstone object when
+  no longer use it.
+
+
+[ Architectures ]
+
+- New architectures: Sparc, SystemZ & XCore.
+- Important bugfixes for Arm, Arm64, Mips, PowerPC & X86.
+- Support more instructions for Arm, Arm64, Mips, PowerPC & X86.
+- Always expose absolute addresses rather than relative addresses (Arm, Arm64,
+  Mips, PPC, Sparc, X86).
+- Use common instruction operand types REG, IMM, MEM & FP across all
+  architectures (to enable cross-architecture analysis).
+- Use common instruction group types across all architectures (to enable
+  cross-architecture analysis).
+
+
+[ X86 ]
+
+- X86 engine is mature & handles all the malware tricks (that we are aware of).
+- Added a lot of new instructions (such as AVX512, 3DNow, etc).
+- Add prefix symbols X86_PREFIX_REP/REPNE/LOCK/CS/DS/SS/FS/GS/ES/OPSIZE/ADDRSIZE.
+- Print immediate in positive form & hexadecimal for AND/OR/XOR instructions.
+- More friendly disassembly for JMP16i (in the form segment:offset)
+
+
+[ Mips ]
+
+- Engine added supports for new hardware modes: Mips32R6 (CS_MODE_MIPS32R6) &
+  MipsGP64 (CS_MODE_MIPSGP64).
+- Removed the ABI-only mode CS_MODE_N64.
+- New modes CS_MODE_MIPS32 & CS_MODE_MIPS64 (to use instead of CS_MODE_32 &
+  CS_MODE_64).
+
+
+[ ARM ]
+
+- Support new mode CS_MODE_V8 for Armv8 A32 encodings.
+- Print immediate in positive form & hexadecimal for AND/ORR/EOR/BIC instructions
+
+
+[ ARM64 ]
+
+- Print immediate in hexadecimal for AND/ORR/EOR/TST instructions.
+
+
+[ PowerPC ]
+
+- Do not print a dot in front of absolute address.
+
+
+[ Other features ]
+
+- Support for Microsoft Visual Studio (so enable Windows native compilation).
+- Support CMake compilation.
+- Cross-compile for Android.
+- Build libraries/tests using XCode project
+- Much faster, while consuming less memory for all architectures.
+
+---------------------------------
 Version 2.1.2: April 3rd, 2014
 
 This is a stable release to fix some bugs deep in the core. There is no update

@@ -1,5 +1,5 @@
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #ifndef CS_PRIV_H
 #define CS_PRIV_H
@@ -13,17 +13,16 @@ typedef void (*Printer_t)(MCInst *MI, SStream *OS, void *info);
 
 // function to be called after Printer_t
 // this is the best time to gather insn's characteristics
-typedef void (*PostPrinter_t)(csh handle, cs_insn *, char *mnem);
+typedef void (*PostPrinter_t)(csh handle, cs_insn *, char *mnem, MCInst *mci);
 
 typedef bool (*Disasm_t)(csh handle, const uint8_t *code, size_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *info);
 
-typedef const char *(*GetName_t)(csh handle, unsigned int reg);
+typedef const char *(*GetName_t)(csh handle, unsigned int id);
 
 typedef void (*GetID_t)(cs_struct *h, cs_insn *insn, unsigned int id);
 
-typedef bool (*CheckCombineInsn_t)(cs_struct *h, cs_insn *insn);
-
-typedef void (*CombineInsn_t)(cs_struct *h, cs_insn *insn, cs_insn *prev);
+// return register name, given register ID
+typedef char *(*GetRegisterName_t)(unsigned RegNo);
 
 // for ARM only
 typedef struct ARM_ITStatus {
@@ -41,17 +40,20 @@ struct cs_struct {
 	bool big_endian;
 	GetName_t reg_name;
 	GetName_t insn_name;
+	GetName_t group_name;
 	GetID_t insn_id;
 	PostPrinter_t post_printer;
 	cs_err errnum;
 	ARM_ITStatus ITBlock;	// for Arm only
 	cs_opt_value detail;
-	int syntax;	// asm syntax for simple printer such as PPC
+	int syntax;	// asm syntax for simple printer such as ARM, Mips & PPC
 	bool doing_mem;	// handling memory operand in InstPrinter code
 	unsigned short *insn_cache;	// index caching for mapping.c
-	CheckCombineInsn_t check_combine;
-	CombineInsn_t combine;
-	uint8_t prev_prefix;	// save previous prefix for combining instructions - X86 only.
+	GetRegisterName_t get_regname;
+	bool skipdata;	// set this to True if we skip data when disassembling
+	uint8_t skipdata_size;	// how many bytes to skip
+	cs_opt_skipdata skipdata_setup;	// user-defined skipdata setup
+	uint8_t *regsize_map;	// map to register size (x86-only for now)
 };
 
 #define MAX_ARCH 8

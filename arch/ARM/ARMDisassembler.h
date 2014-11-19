@@ -1,5 +1,5 @@
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #ifndef CS_ARMDISASSEMBLER_H
 #define CS_ARMDISASSEMBLER_H
@@ -13,6 +13,6 @@ bool ARM_getInstruction(csh handle, const uint8_t *code, size_t code_len, MCInst
 
 bool Thumb_getInstruction(csh handle, const uint8_t *code, size_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *info);
 
-uint64_t ARM_getFeatureBits(int mode);
+uint64_t ARM_getFeatureBits(unsigned int mode);
 
 #endif

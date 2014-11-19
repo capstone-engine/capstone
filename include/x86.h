@@ -1,8 +1,8 @@
 #ifndef CAPSTONE_X86_H
 #define CAPSTONE_X86_H
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #ifdef __cplusplus
 extern "C" {
@@ -31,7 +31,7 @@ typedef enum x86_reg {
 	X86_REG_CR11, X86_REG_CR12, X86_REG_CR13, X86_REG_CR14, X86_REG_CR15,
 	X86_REG_DR0, X86_REG_DR1, X86_REG_DR2, X86_REG_DR3, X86_REG_DR4,
 	X86_REG_DR5, X86_REG_DR6, X86_REG_DR7, X86_REG_FP0, X86_REG_FP1,
-	X86_REG_FP2, X86_REG_FP3, X86_REG_FP4, X86_REG_FP5, X86_REG_FP6,
+	X86_REG_FP2, X86_REG_FP3, X86_REG_FP4, X86_REG_FP5, X86_REG_FP6, X86_REG_FP7,
 	X86_REG_K0, X86_REG_K1, X86_REG_K2, X86_REG_K3, X86_REG_K4,
 	X86_REG_K5, X86_REG_K6, X86_REG_K7, X86_REG_MM0, X86_REG_MM1,
 	X86_REG_MM2, X86_REG_MM3, X86_REG_MM4, X86_REG_MM5, X86_REG_MM6,
@@ -62,26 +62,120 @@ typedef enum x86_reg {
 	X86_REG_R12B, X86_REG_R13B, X86_REG_R14B, X86_REG_R15B, X86_REG_R8D,
 	X86_REG_R9D, X86_REG_R10D, X86_REG_R11D, X86_REG_R12D, X86_REG_R13D,
 	X86_REG_R14D, X86_REG_R15D, X86_REG_R8W, X86_REG_R9W, X86_REG_R10W,
-	X86_REG_R11W, X86_REG_R12W, X86_REG_R13W, X86_REG_R14W, X86_REG_R15W, 
+	X86_REG_R11W, X86_REG_R12W, X86_REG_R13W, X86_REG_R14W, X86_REG_R15W,
 
-	X86_REG_MAX		// <-- mark the end of the list of registers
+	X86_REG_ENDING		// <-- mark the end of the list of registers
 } x86_reg;
 
 //> Operand type for instruction's operands
 typedef enum x86_op_type {
-	X86_OP_INVALID = 0,	// Uninitialized.
-	X86_OP_REG,	// Register operand.
-	X86_OP_IMM,	// Immediate operand.
-	X86_OP_FP,	// Floating-Point immediate operand.
-	X86_OP_MEM,	// Memory operand
+	X86_OP_INVALID = 0, // = CS_OP_INVALID (Uninitialized).
+	X86_OP_REG, // = CS_OP_REG (Register operand).
+	X86_OP_IMM, // = CS_OP_IMM (Immediate operand).
+	X86_OP_MEM, // = CS_OP_MEM (Memory operand).
+	X86_OP_FP,  //  = CS_OP_FP  (Floating-Point operand).
 } x86_op_type;
+
+//> AVX broadcast type
+typedef enum x86_avx_bcast {
+	X86_AVX_BCAST_INVALID = 0,	// Uninitialized.
+	X86_AVX_BCAST_2,	// AVX512 broadcast type {1to2}
+	X86_AVX_BCAST_4,	// AVX512 broadcast type {1to4}
+	X86_AVX_BCAST_8,	// AVX512 broadcast type {1to8}
+	X86_AVX_BCAST_16,	// AVX512 broadcast type {1to16}
+} x86_avx_bcast;
+
+//> SSE Code Condition type
+typedef enum x86_sse_cc {
+	X86_SSE_CC_INVALID = 0,	// Uninitialized.
+	X86_SSE_CC_EQ,
+	X86_SSE_CC_LT,
+	X86_SSE_CC_LE,
+	X86_SSE_CC_UNORD,
+	X86_SSE_CC_NEQ,
+	X86_SSE_CC_NLT,
+	X86_SSE_CC_NLE,
+	X86_SSE_CC_ORD,
+	X86_SSE_CC_EQ_UQ,
+	X86_SSE_CC_NGE,
+	X86_SSE_CC_NGT,
+	X86_SSE_CC_FALSE,
+	X86_SSE_CC_NEQ_OQ,
+	X86_SSE_CC_GE,
+	X86_SSE_CC_GT,
+	X86_SSE_CC_TRUE,
+} x86_sse_cc;
+
+//> AVX Code Condition type
+typedef enum x86_avx_cc {
+	X86_AVX_CC_INVALID = 0,	// Uninitialized.
+	X86_AVX_CC_EQ,
+	X86_AVX_CC_LT,
+	X86_AVX_CC_LE,
+	X86_AVX_CC_UNORD,
+	X86_AVX_CC_NEQ,
+	X86_AVX_CC_NLT,
+	X86_AVX_CC_NLE,
+	X86_AVX_CC_ORD,
+	X86_AVX_CC_EQ_UQ,
+	X86_AVX_CC_NGE,
+	X86_AVX_CC_NGT,
+	X86_AVX_CC_FALSE,
+	X86_AVX_CC_NEQ_OQ,
+	X86_AVX_CC_GE,
+	X86_AVX_CC_GT,
+	X86_AVX_CC_TRUE,
+	X86_AVX_CC_EQ_OS,
+	X86_AVX_CC_LT_OQ,
+	X86_AVX_CC_LE_OQ,
+	X86_AVX_CC_UNORD_S,
+	X86_AVX_CC_NEQ_US,
+	X86_AVX_CC_NLT_UQ,
+	X86_AVX_CC_NLE_UQ,
+	X86_AVX_CC_ORD_S,
+	X86_AVX_CC_EQ_US,
+	X86_AVX_CC_NGE_UQ,
+	X86_AVX_CC_NGT_UQ,
+	X86_AVX_CC_FALSE_OS,
+	X86_AVX_CC_NEQ_OS,
+	X86_AVX_CC_GE_OQ,
+	X86_AVX_CC_GT_OQ,
+	X86_AVX_CC_TRUE_US,
+} x86_avx_cc;
+
+//> AVX static rounding mode type
+typedef enum x86_avx_rm {
+	X86_AVX_RM_INVALID = 0,	// Uninitialized.
+	X86_AVX_RM_RN,	// Round to nearest
+	X86_AVX_RM_RD,	// Round down
+	X86_AVX_RM_RU,	// Round up
+	X86_AVX_RM_RZ,	// Round toward zero
+} x86_avx_rm;
+
+//> Instruction prefixes - to be used in cs_x86.prefix[]
+typedef enum x86_prefix {
+	X86_PREFIX_LOCK		= 	0xf0,	// lock (cs_x86.prefix[0]
+	X86_PREFIX_REP		= 	0xf3,	// rep (cs_x86.prefix[0]
+	X86_PREFIX_REPNE	= 	0xf2,	// repne (cs_x86.prefix[0]
+
+	X86_PREFIX_CS		= 	0x2e,	// segment override CS (cs_x86.prefix[1]
+	X86_PREFIX_SS		= 	0x36,	// segment override SS (cs_x86.prefix[1]
+	X86_PREFIX_DS		= 	0x3e,	// segment override DS (cs_x86.prefix[1]
+	X86_PREFIX_ES		= 	0x26,	// segment override ES (cs_x86.prefix[1]
+	X86_PREFIX_FS		= 	0x64,	// segment override FS (cs_x86.prefix[1]
+	X86_PREFIX_GS		= 	0x65,	// segment override GS (cs_x86.prefix[1]
+
+	X86_PREFIX_OPSIZE	=	0x66,	// operand-size override (cs_x86.prefix[2]
+	X86_PREFIX_ADDRSIZE	=	0x67,	// address-size override (cs_x86.prefix[3]
+} x86_prefix;
 
 // Instruction's operand referring to memory
 // This is associated with X86_OP_MEM operand type above
 typedef struct x86_op_mem {
-	unsigned int base;	// base register
-	unsigned int index;	// index register
-	int scale;	// scale for index register (can be 1, or -1)
+	unsigned int segment; // segment register (or X86_REG_INVALID if irrelevant)
+	unsigned int base;	// base register (or X86_REG_INVALID if irrelevant)
+	unsigned int index;	// index register (or X86_REG_INVALID if irrelevant)
+	int scale;	// scale for index register
 	int64_t disp;	// displacement value
 } x86_op_mem;
 
@@ -94,35 +188,38 @@ typedef struct cs_x86_op {
 			double fp;		// floating point value for FP operand
 			x86_op_mem mem;		// base/index/scale/disp value for MEM operand
 		};
+
+		// size of this operand (in bytes).
+		uint8_t size;
+
+		// AVX broadcast type, or 0 if irrelevant
+		x86_avx_bcast avx_bcast;
+
+		// AVX zero opmask {z}
+		bool avx_zero_opmask;
 } cs_x86_op;
 
 // Instruction structure
 typedef struct cs_x86 {
-	// (Optional) instruction prefix, which can be up to 5 bytes.
+	// Instruction prefix, which can be up to 4 bytes.
 	// A prefix byte gets value 0 when irrelevant.
-	uint8_t prefix[5];
+	// prefix[0] indicates REP/REPNE/LOCK prefix (See X86_PREFIX_REP/REPNE/LOCK above)
+	// prefix[1] indicates segment override (irrelevant for x86_64):
+	// See X86_PREFIX_CS/SS/DS/ES/FS/GS above.
+	// prefix[2] indicates operand-size override (X86_PREFIX_OPSIZE)
+	// prefix[3] indicates address-size override (X86_PREFIX_ADDRSIZE)
+	uint8_t prefix[4];
 
-	// (Optional) segment override, which can be among CS, DS, SS, ES, FS, GS.
-	// This field get value 0 when irrelevant.
-	x86_reg segment;
-
-	// Instruction opcode, wich can be from 1 to 3 bytes in size.
+	// Instruction opcode, wich can be from 1 to 4 bytes in size.
 	// This contains VEX opcode as well.
-	// An opcode byte gets value 0 when irrelevant.
-	uint8_t opcode[3];
+	// An trailing opcode byte gets value 0 when irrelevant.
+	uint8_t opcode[4];
 
-	// Operand size, which can be overrided with above prefix[5].
-	uint8_t op_size;
+	// REX prefix: only a non-zero value is relavant for x86_64
+	uint8_t rex;
 
 	// Address size, which can be overrided with above prefix[5].
 	uint8_t addr_size;
-
-	// Size of (optional) displacement.
-	// This field get value 0 when irrelevant.
-	uint8_t disp_size;
-
-	// Size of immediate operand
-	uint8_t imm_size;
 
 	// ModR/M byte
 	uint8_t modrm;
@@ -141,7 +238,19 @@ typedef struct cs_x86 {
 	// SIB base register, or X86_REG_INVALID when irrelevant.
 	x86_reg sib_base;
 
-	// Number of operands of this instruction, 
+	// SSE Code Condition
+	x86_sse_cc sse_cc;
+
+	// AVX Code Condition
+	x86_avx_cc avx_cc;
+
+	// AVX Suppress all Exception
+	bool avx_sae;
+
+	// AVX static rounding mode
+	x86_avx_rm avx_rm;
+
+	// Number of operands of this instruction,
 	// or 0 when instruction has no operand.
 	uint8_t op_count;
 
@@ -149,7 +258,7 @@ typedef struct cs_x86 {
 } cs_x86;
 
 //> X86 instructions
-typedef enum  x86_insn {
+typedef enum x86_insn {
 	X86_INS_INVALID = 0,
 
 	X86_INS_AAA,
@@ -247,11 +356,11 @@ typedef enum  x86_insn {
 	X86_INS_CMP,
 	X86_INS_CMPPD,
 	X86_INS_CMPPS,
-	X86_INS_CMPSW,
+	X86_INS_CMPSB,
 	X86_INS_CMPSD,
 	X86_INS_CMPSQ,
-	X86_INS_CMPSB,
 	X86_INS_CMPSS,
+	X86_INS_CMPSW,
 	X86_INS_CMPXCHG16B,
 	X86_INS_CMPXCHG,
 	X86_INS_CMPXCHG8B,
@@ -265,7 +374,6 @@ typedef enum  x86_insn {
 	X86_INS_CPUID,
 	X86_INS_CQO,
 	X86_INS_CRC32,
-	X86_INS_CS,
 	X86_INS_CVTDQ2PD,
 	X86_INS_CVTDQ2PS,
 	X86_INS_CVTPD2DQ,
@@ -301,9 +409,10 @@ typedef enum  x86_insn {
 	X86_INS_FDIVP,
 	X86_INS_DPPD,
 	X86_INS_DPPS,
-	X86_INS_DS,
+	X86_INS_RET,
+	X86_INS_ENCLS,
+	X86_INS_ENCLU,
 	X86_INS_ENTER,
-	X86_INS_ES,
 	X86_INS_EXTRACTPS,
 	X86_INS_EXTRQ,
 	X86_INS_F2XM1,
@@ -341,7 +450,6 @@ typedef enum  x86_insn {
 	X86_INS_FSETPM,
 	X86_INS_FSINCOS,
 	X86_INS_FNSTENV,
-	X86_INS_FS,
 	X86_INS_FXAM,
 	X86_INS_FXRSTOR,
 	X86_INS_FXRSTOR64,
@@ -359,7 +467,6 @@ typedef enum  x86_insn {
 	X86_INS_XORPD,
 	X86_INS_XORPS,
 	X86_INS_GETSEC,
-	X86_INS_GS,
 	X86_INS_HADDPD,
 	X86_INS_HADDPS,
 	X86_INS_HLT,
@@ -368,13 +475,13 @@ typedef enum  x86_insn {
 	X86_INS_IDIV,
 	X86_INS_FILD,
 	X86_INS_IMUL,
-	X86_INS_INSW,
 	X86_INS_IN,
-	X86_INS_INSD,
-	X86_INS_INSB,
 	X86_INS_INC,
+	X86_INS_INSB,
 	X86_INS_INSERTPS,
 	X86_INS_INSERTQ,
+	X86_INS_INSD,
+	X86_INS_INSW,
 	X86_INS_INT,
 	X86_INS_INT1,
 	X86_INS_INT3,
@@ -428,16 +535,37 @@ typedef enum  x86_insn {
 	X86_INS_JP,
 	X86_INS_JRCXZ,
 	X86_INS_JS,
+	X86_INS_KANDB,
+	X86_INS_KANDD,
+	X86_INS_KANDNB,
+	X86_INS_KANDND,
+	X86_INS_KANDNQ,
 	X86_INS_KANDNW,
+	X86_INS_KANDQ,
 	X86_INS_KANDW,
+	X86_INS_KMOVB,
+	X86_INS_KMOVD,
+	X86_INS_KMOVQ,
 	X86_INS_KMOVW,
+	X86_INS_KNOTB,
+	X86_INS_KNOTD,
+	X86_INS_KNOTQ,
 	X86_INS_KNOTW,
+	X86_INS_KORB,
+	X86_INS_KORD,
+	X86_INS_KORQ,
 	X86_INS_KORTESTW,
 	X86_INS_KORW,
 	X86_INS_KSHIFTLW,
 	X86_INS_KSHIFTRW,
 	X86_INS_KUNPCKBW,
+	X86_INS_KXNORB,
+	X86_INS_KXNORD,
+	X86_INS_KXNORQ,
 	X86_INS_KXNORW,
+	X86_INS_KXORB,
+	X86_INS_KXORD,
+	X86_INS_KXORQ,
 	X86_INS_KXORW,
 	X86_INS_LAHF,
 	X86_INS_LAR,
@@ -458,7 +586,6 @@ typedef enum  x86_insn {
 	X86_INS_LLDT,
 	X86_INS_LMSW,
 	X86_INS_OR,
-	X86_INS_LOCK,
 	X86_INS_SUB,
 	X86_INS_XOR,
 	X86_INS_LODSB,
@@ -731,10 +858,6 @@ typedef enum  x86_insn {
 	X86_INS_RDSEED,
 	X86_INS_RDTSC,
 	X86_INS_RDTSCP,
-	X86_INS_REPNE,
-	X86_INS_REP,
-	X86_INS_RET,
-	X86_INS_REX64,
 	X86_INS_ROL,
 	X86_INS_ROR,
 	X86_INS_RORX,
@@ -746,14 +869,15 @@ typedef enum  x86_insn {
 	X86_INS_RSQRTPS,
 	X86_INS_RSQRTSS,
 	X86_INS_SAHF,
+	X86_INS_SAL,
 	X86_INS_SALC,
 	X86_INS_SAR,
 	X86_INS_SARX,
 	X86_INS_SBB,
-	X86_INS_SCASW,
+	X86_INS_SCASB,
 	X86_INS_SCASD,
 	X86_INS_SCASQ,
-	X86_INS_SCASB,
+	X86_INS_SCASW,
 	X86_INS_SETAE,
 	X86_INS_SETA,
 	X86_INS_SETBE,
@@ -797,7 +921,6 @@ typedef enum  x86_insn {
 	X86_INS_SQRTSD,
 	X86_INS_SQRTSS,
 	X86_INS_FSQRT,
-	X86_INS_SS,
 	X86_INS_STAC,
 	X86_INS_STC,
 	X86_INS_STD,
@@ -811,6 +934,7 @@ typedef enum  x86_insn {
 	X86_INS_STR,
 	X86_INS_FST,
 	X86_INS_FSTP,
+	X86_INS_FSTPNCE,
 	X86_INS_SUBPD,
 	X86_INS_SUBPS,
 	X86_INS_FSUBR,
@@ -868,6 +992,8 @@ typedef enum  x86_insn {
 	X86_INS_VBLENDVPS,
 	X86_INS_VBROADCASTF128,
 	X86_INS_VBROADCASTI128,
+	X86_INS_VBROADCASTI32X4,
+	X86_INS_VBROADCASTI64X4,
 	X86_INS_VBROADCASTSD,
 	X86_INS_VBROADCASTSS,
 	X86_INS_VCMPPD,
@@ -1002,6 +1128,14 @@ typedef enum  x86_insn {
 	X86_INS_VXORPS,
 	X86_INS_VGATHERDPD,
 	X86_INS_VGATHERDPS,
+	X86_INS_VGATHERPF0DPD,
+	X86_INS_VGATHERPF0DPS,
+	X86_INS_VGATHERPF0QPD,
+	X86_INS_VGATHERPF0QPS,
+	X86_INS_VGATHERPF1DPD,
+	X86_INS_VGATHERPF1DPS,
+	X86_INS_VGATHERPF1QPD,
+	X86_INS_VGATHERPF1QPS,
 	X86_INS_VGATHERQPD,
 	X86_INS_VGATHERQPS,
 	X86_INS_VHADDPD,
@@ -1040,8 +1174,10 @@ typedef enum  x86_insn {
 	X86_INS_VMOVDQA32,
 	X86_INS_VMOVDQA64,
 	X86_INS_VMOVDQA,
+	X86_INS_VMOVDQU16,
 	X86_INS_VMOVDQU32,
 	X86_INS_VMOVDQU64,
+	X86_INS_VMOVDQU8,
 	X86_INS_VMOVDQU,
 	X86_INS_VMOVHLPS,
 	X86_INS_VMOVHPD,
@@ -1192,6 +1328,8 @@ typedef enum  x86_insn {
 	X86_INS_VPINSRD,
 	X86_INS_VPINSRQ,
 	X86_INS_VPINSRW,
+	X86_INS_VPLZCNTD,
+	X86_INS_VPLZCNTQ,
 	X86_INS_VPMACSDD,
 	X86_INS_VPMACSDQH,
 	X86_INS_VPMACSDQL,
@@ -1358,6 +1496,14 @@ typedef enum  x86_insn {
 	X86_INS_VRSQRTSS,
 	X86_INS_VSCATTERDPD,
 	X86_INS_VSCATTERDPS,
+	X86_INS_VSCATTERPF0DPD,
+	X86_INS_VSCATTERPF0DPS,
+	X86_INS_VSCATTERPF0QPD,
+	X86_INS_VSCATTERPF0QPS,
+	X86_INS_VSCATTERPF1DPD,
+	X86_INS_VSCATTERPF1DPS,
+	X86_INS_VSCATTERPF1QPD,
+	X86_INS_VSCATTERPF1QPS,
 	X86_INS_VSCATTERQPD,
 	X86_INS_VSCATTERQPS,
 	X86_INS_VSHUFPD,
@@ -1410,13 +1556,27 @@ typedef enum  x86_insn {
 	X86_INS_XSTORE,
 	X86_INS_XTEST,
 
-	X86_INS_MAX,	// mark the end of the list of insn
+	X86_INS_ENDING,	// mark the end of the list of insn
 } x86_insn;
 
 //> Group of X86 instructions
 typedef enum  x86_insn_group {
-	X86_GRP_INVALID = 0,
+	X86_GRP_INVALID = 0, // = CS_GRP_INVALID
 
+	//> Generic groups
+	// all jump instructions (conditional+direct+indirect jumps)
+	X86_GRP_JUMP,	// = CS_GRP_JUMP
+	// all call instructions
+	X86_GRP_CALL,	// = CS_GRP_CALL
+	// all return instructions
+	X86_GRP_RET,	// = CS_GRP_RET
+	// all interrupt instructions (int+syscall)
+	X86_GRP_INT,	// = CS_GRP_INT
+	// all interrupt return instructions
+	X86_GRP_IRET,	// = CS_GRP_IRET
+
+	//> Architecture-specific groups
+	X86_GRP_VM = 128,	// all virtualization instructions (VT-x + AMD-V)
 	X86_GRP_3DNOW,
 	X86_GRP_AES,
 	X86_GRP_ADX,
@@ -1450,10 +1610,15 @@ typedef enum  x86_insn_group {
 	X86_GRP_TBM,
 	X86_GRP_16BITMODE,
 	X86_GRP_NOT64BITMODE,
+	X86_GRP_SGX,
+	X86_GRP_DQI,
+	X86_GRP_BWI,
+	X86_GRP_PFI,
+	X86_GRP_VLX,
+	X86_GRP_SMAP,
+	X86_GRP_NOVLX,
 
-	X86_GRP_JUMP,	// all jump instructions (conditional+direct+indirect jumps)
-
-	X86_GRP_MAX
+	X86_GRP_ENDING
 } x86_insn_group;
 
 #ifdef __cplusplus

@@ -3,34 +3,19 @@
 
 ################################################################################
 # Specify which archs you want to compile in. By default, we build all archs.
-# DO NOT touch the line below.
-CAPSTONE_ARCHS =
 
-# Comment out the line below if you don't want to support ARM
-CAPSTONE_ARCHS += arm
-
-# Comment out the line below if you don't want to support ARM64
-CAPSTONE_ARCHS += aarch64
-
-# Comment out the line below if you don't want to support Mips
-CAPSTONE_ARCHS += mips
-
-# Comment out the line below if you don't want to support PowerPC
-CAPSTONE_ARCHS += powerpc
-
-# Comment out the line below if you don't want to support Intel (16/32/64-bit)
-CAPSTONE_ARCHS += x86
+CAPSTONE_ARCHS ?= arm aarch64 mips powerpc sparc systemz x86 xcore
 
 
 ################################################################################
-# Comment out the line below ('USE_SYS_DYN_MEM = yes'), or change it to
-# 'USE_SYS_DYN_MEM = no' if do NOT use malloc/calloc/realloc/free/vsnprintf()
-# provided by system for internal dynamic memory management.
+# Comment out the line below ('CAPSTONE_USE_SYS_DYN_MEM = yes'), or change it to
+# 'CAPSTONE_USE_SYS_DYN_MEM = no' if do NOT use malloc/calloc/realloc/free/
+# vsnprintf() provided by system for internal dynamic memory management.
 #
 # NOTE: in that case, specify your own malloc/calloc/realloc/free/vsnprintf()
 # functions in your program via API cs_option(), using CS_OPT_MEM option type.
 
-USE_SYS_DYN_MEM = yes
+CAPSTONE_USE_SYS_DYN_MEM ?= yes
 
 
 ################################################################################
@@ -44,4 +29,47 @@ USE_SYS_DYN_MEM = yes
 # @regs_write, @groups, etc in fields in cs_insn structure regardless, but they
 # will not be updated (i.e empty), thus become irrelevant.
 
-CAPSTONE_DIET = no
+CAPSTONE_DIET ?= no
+
+
+################################################################################
+# Change 'CAPSTONE_X86_REDUCE = no' to 'CAPSTONE_X86_REDUCE = yes' to remove
+# non-critical instruction sets of X86, making the binary size smaller by ~60%.
+# This is desired in special cases, such as OS kernel, where these kind of
+# instructions are not used.
+#
+# The list of instruction sets to be removed includes:
+# - Floating Point Unit (FPU)
+# - MultiMedia eXtension (MMX)
+# - Streaming SIMD Extensions (SSE)
+# - 3DNow
+# - Advanced Vector Extensions (AVX)
+# - Fused Multiply Add Operations (FMA)
+# - eXtended Operations (XOP)
+# - Transactional Synchronization Extensions (TSX)
+#
+# Due to this removal, the related instructions are nolonger supported.
+#
+# By default, Capstone is compiled with 'CAPSTONE_X86_REDUCE = no',
+# thus supports complete X86 instructions.
+
+CAPSTONE_X86_REDUCE ?= no
+
+################################################################################
+# Change 'CAPSTONE_X86_ATT_DISABLE = no' to 'CAPSTONE_X86_ATT_DISABLE = yes' to
+# disable AT&T syntax on x86 to reduce library size.
+
+CAPSTONE_X86_ATT_DISABLE ?= no
+
+################################################################################
+# Change 'CAPSTONE_STATIC = yes' to 'CAPSTONE_STATIC = no' to avoid building
+# a static library.
+
+CAPSTONE_STATIC ?= yes
+
+
+################################################################################
+# Change 'CAPSTONE_SHARED = yes' to 'CAPSTONE_SHARED = no' to avoid building
+# a shared library.
+
+CAPSTONE_SHARED ?= yes

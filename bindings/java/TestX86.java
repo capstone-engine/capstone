@@ -47,15 +47,13 @@ public class TestX86 {
 
     System.out.printf("\tPrefix: %s\n", array2hex(operands.prefix));
 
-    if (operands.segment != X86_REG_INVALID)
-      System.out.println("\tSegment override: " + ins.regName(operands.segment));
-
-
     System.out.printf("\tOpcode: %s\n", array2hex(operands.opcode));
 
-    // print operand's size, address size, displacement size & immediate size
-    System.out.printf("\top_size: %d, addr_size: %d, disp_size: %d, imm_size: %d\n"
-        , operands.opSize, operands.addrSize, operands.dispSize, operands.immSize);
+    // print REX prefix (non-zero value is relevant for x86_64)
+    System.out.printf("\trex: 0x%x\n", operands.rex);
+
+    // print address size
+    System.out.printf("\taddr_size: %d\n", operands.addrSize);
 
     // print modRM byte
     System.out.printf("\tmodrm: 0x%x\n", operands.modrm);
@@ -68,9 +66,21 @@ public class TestX86 {
       // print SIB byte
       System.out.printf("\tsib: 0x%x\n", operands.sib);
       if (operands.sib != 0)
-        System.out.printf("\tsib_index: %s, sib_scale: %d, sib_base: %s\n",
-          ins.regName(operands.sibIndex), operands.sibScale, ins.regName(operands.sibBase));
+        System.out.printf("\t\tsib_base: %s\n\t\tsib_index: %s\n\t\tsib_scale: %d\n",
+          ins.regName(operands.sibBase), ins.regName(operands.sibIndex), operands.sibScale);
     }
+
+    if (operands.sseCC != 0)
+        System.out.printf("\tsse_cc: %u\n", operands.sseCC);
+
+    if (operands.avxCC != 0)
+        System.out.printf("\tavx_cc: %u\n", operands.avxCC);
+
+    if (operands.avxSae)
+        System.out.printf("\tavx_sae: TRUE\n");
+
+    if (operands.avxRm != 0)
+        System.out.printf("\tavx_rm: %u\n", operands.avxRm);
 
     int count = ins.opCount(X86_OP_IMM);
     if (count > 0) {
@@ -94,8 +104,11 @@ public class TestX86 {
           System.out.printf("\t\toperands[%d].type: FP = %f\n", c, i.value.fp);
         if (i.type == X86_OP_MEM) {
           System.out.printf("\t\toperands[%d].type: MEM\n",c);
+          String segment = ins.regName(i.value.mem.segment);
           String base = ins.regName(i.value.mem.base);
           String index = ins.regName(i.value.mem.index);
+          if (segment != null)
+            System.out.printf("\t\t\toperands[%d].mem.segment: REG = %s\n", c, segment);
           if (base != null)
             System.out.printf("\t\t\toperands[%d].mem.base: REG = %s\n", c, base);
           if (index != null)
@@ -105,6 +118,18 @@ public class TestX86 {
           if (i.value.mem.disp != 0)
             System.out.printf("\t\t\toperands[%d].mem.disp: 0x%x\n", c, i.value.mem.disp);
         }
+
+        // AVX broadcast type
+        if (i.avx_bcast != X86_AVX_BCAST_INVALID) {
+          System.out.printf("\t\toperands[%d].avx_bcast: %d\n", c, i.avx_bcast);
+        }
+
+        // AVX zero opmask {z}
+        if (i.avx_zero_opmask) {
+          System.out.printf("\t\toperands[%d].avx_zero_opmask: TRUE\n", c);
+        }
+
+        System.out.printf("\t\toperands[%d].size: %d\n", c, i.size);
       }
     }
   }
@@ -138,6 +163,9 @@ public class TestX86 {
       }
 
       System.out.printf("0x%x:\n\n", all_ins[all_ins.length-1].address + all_ins[all_ins.length-1].size);
+
+      // Close when done
+      cs.close();
     }
   }
 

@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <inttypes.h>
+#include "../inttypes.h"
 
 #include <capstone.h>
 
@@ -19,7 +19,7 @@ struct platform {
 	cs_opt_value opt_value;
 };
 
-static void print_string_hex(char *comment, unsigned char *str, int len)
+static void print_string_hex(char *comment, unsigned char *str, size_t len)
 {
 	unsigned char *c;
 
@@ -33,30 +33,57 @@ static void print_string_hex(char *comment, unsigned char *str, int len)
 
 static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 {
-	int i;
-	cs_x86 *x86 = &(ins->detail->x86);
+	int count, i;
+	cs_x86 *x86;
 
-	print_string_hex("\tPrefix:", x86->prefix, 5);
+	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
+	if (ins->detail == NULL)
+		return;
 
-	if (x86->segment != X86_REG_INVALID)
-		printf("\tSegment override: %s\n", cs_reg_name(handle, x86->segment));
+	x86 = &(ins->detail->x86);
 
-	print_string_hex("\tOpcode:", x86->opcode, 3);
-	printf("\top_size: %u, addr_size: %u, disp_size: %u, imm_size: %u\n", x86->op_size, x86->addr_size, x86->disp_size, x86->imm_size);
+	print_string_hex("\tPrefix:", x86->prefix, 4);
+
+	print_string_hex("\tOpcode:", x86->opcode, 4);
+
+	printf("\trex: 0x%x\n", x86->rex);
+
+	printf("\taddr_size: %u\n", x86->addr_size);
 	printf("\tmodrm: 0x%x\n", x86->modrm);
 	printf("\tdisp: 0x%x\n", x86->disp);
 
 	// SIB is not available in 16-bit mode
 	if ((mode & CS_MODE_16) == 0) {
 		printf("\tsib: 0x%x\n", x86->sib);
+		if (x86->sib_base != X86_REG_INVALID)
+			printf("\t\tsib_base: %s\n", cs_reg_name(handle, x86->sib_base));
 		if (x86->sib_index != X86_REG_INVALID)
-			printf("\tsib_index: %s, sib_scale: %u, sib_base: %s\n",
-					cs_reg_name(handle, x86->sib_index),
-					x86->sib_scale,
-					cs_reg_name(handle, x86->sib_base));
+			printf("\t\tsib_index: %s\n", cs_reg_name(handle, x86->sib_index));
+		if (x86->sib_scale != 0)
+			printf("\t\tsib_scale: %d\n", x86->sib_scale);
 	}
 
-	int count = cs_op_count(ud, ins, X86_OP_IMM);
+	// SSE code condition
+	if (x86->sse_cc != X86_SSE_CC_INVALID) {
+		printf("\tsse_cc: %u\n", x86->sse_cc);
+	}
+
+	// AVX code condition
+	if (x86->avx_cc != X86_AVX_CC_INVALID) {
+		printf("\tavx_cc: %u\n", x86->avx_cc);
+	}
+
+	// AVX Suppress All Exception
+	if (x86->avx_sae) {
+		printf("\tavx_sae: %u\n", x86->avx_sae);
+	}
+
+	// AVX Rounding Mode
+	if (x86->avx_rm != X86_AVX_RM_INVALID) {
+		printf("\tavx_rm: %u\n", x86->avx_rm);
+	}
+
+	count = cs_op_count(ud, ins, X86_OP_IMM);
 	if (count) {
 		printf("\timm_count: %u\n", count);
 		for (i = 1; i < count + 1; i++) {
@@ -82,9 +109,11 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 				break;
 			case X86_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
-				if (op->mem.base != 0)
+				if (op->mem.segment != X86_REG_INVALID)
+					printf("\t\t\toperands[%u].mem.segment: REG = %s\n", i, cs_reg_name(handle, op->mem.segment));
+				if (op->mem.base != X86_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.base: REG = %s\n", i, cs_reg_name(handle, op->mem.base));
-				if (op->mem.index != 0)
+				if (op->mem.index != X86_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.index: REG = %s\n", i, cs_reg_name(handle, op->mem.index));
 				if (op->mem.scale != 1)
 					printf("\t\t\toperands[%u].mem.scale: %u\n", i, op->mem.scale);
@@ -94,6 +123,16 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 			default:
 				break;
 		}
+
+		// AVX broadcast type
+		if (op->avx_bcast != X86_AVX_BCAST_INVALID)
+			printf("\t\toperands[%u].avx_bcast: %u\n", i, op->avx_bcast);
+
+		// AVX zero opmask {z}
+		if (op->avx_zero_opmask != false)
+			printf("\t\toperands[%u].avx_zero_opmask: TRUE\n", i);
+
+		printf("\t\toperands[%u].size: %u\n", i, op->size);
 	}
 
 	printf("\n");
@@ -129,40 +168,41 @@ static void test()
 
 	struct platform platforms[] = {
 		{
-			.arch = CS_ARCH_X86,
-			.mode = CS_MODE_16,
-			.code = (unsigned char *)X86_CODE16,
-			.size = sizeof(X86_CODE16) - 1,
-			.comment = "X86 16bit (Intel syntax)"
+			CS_ARCH_X86,
+			CS_MODE_16,
+			(unsigned char *)X86_CODE16,
+			sizeof(X86_CODE16) - 1,
+			"X86 16bit (Intel syntax)"
 		},
 		{
-			.arch = CS_ARCH_X86,
-			.mode = CS_MODE_32,
-			.code = (unsigned char *)X86_CODE32,
-			.size = sizeof(X86_CODE32) - 1,
-			.comment = "X86 32 (AT&T syntax)",
-			.opt_type = CS_OPT_SYNTAX,
-			.opt_value = CS_OPT_SYNTAX_ATT,
+			CS_ARCH_X86,
+			CS_MODE_32,
+			(unsigned char *)X86_CODE32,
+			sizeof(X86_CODE32) - 1,
+			"X86 32 (AT&T syntax)",
+			CS_OPT_SYNTAX,
+			CS_OPT_SYNTAX_ATT,
 		},
 		{
-			.arch = CS_ARCH_X86,
-			.mode = CS_MODE_32,
-			.code = (unsigned char *)X86_CODE32,
-			.size = sizeof(X86_CODE32) - 1,
-			.comment = "X86 32 (Intel syntax)"
+			CS_ARCH_X86,
+			CS_MODE_32,
+			(unsigned char *)X86_CODE32,
+			sizeof(X86_CODE32) - 1,
+			"X86 32 (Intel syntax)"
 		},
 		{
-			.arch = CS_ARCH_X86,
-			.mode = CS_MODE_64,
-			.code = (unsigned char *)X86_CODE64,
-			.size = sizeof(X86_CODE64) - 1,
-			.comment = "X86 64 (Intel syntax)"
+			CS_ARCH_X86,
+			CS_MODE_64,
+			(unsigned char *)X86_CODE64,
+			sizeof(X86_CODE64) - 1,
+			"X86 64 (Intel syntax)"
 		},
 	};
 
 	uint64_t address = 0x1000;
 	cs_insn *insn;
 	int i;
+	size_t count;
 
 	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
 		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
@@ -176,21 +216,22 @@ static void test()
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
-		size_t count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
+		count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {
+			size_t j;
+
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code:", platforms[i].code, platforms[i].size);
 			printf("Disasm:\n");
 
-			size_t j;
 			for (j = 0; j < count; j++) {
 				printf("0x%"PRIx64":\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
 				print_insn_detail(handle, platforms[i].mode, &insn[j]);
 			}
 			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
 
-			// free memory allocated by cs_disasm_ex()
+			// free memory allocated by cs_disasm()
 			cs_free(insn, count);
 		} else {
 			printf("****************\n");

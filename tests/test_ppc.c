@@ -2,7 +2,7 @@
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
 #include <stdio.h>
-#include <inttypes.h>
+#include "../inttypes.h"
 
 #include <capstone.h>
 
@@ -16,7 +16,7 @@ struct platform {
 
 static csh handle;
 
-static void print_string_hex(char *comment, unsigned char *str, int len)
+static void print_string_hex(char *comment, unsigned char *str, size_t len)
 {
 	unsigned char *c;
 
@@ -28,14 +28,48 @@ static void print_string_hex(char *comment, unsigned char *str, int len)
 	printf("\n");
 }
 
+static const char* get_bc_name(int bc)
+{
+	switch(bc) {
+		default:
+		case PPC_BC_INVALID:
+			return ("invalid");
+		case PPC_BC_LT:
+			return ("lt");
+		case PPC_BC_LE:
+			return ("le");
+		case PPC_BC_EQ:
+			return ("eq");
+		case PPC_BC_GE:
+			return ("ge");
+		case PPC_BC_GT:
+			return ("gt");
+		case PPC_BC_NE:
+			return ("ne");
+		case PPC_BC_UN:
+			return ("un");
+		case PPC_BC_NU:
+			return ("nu");
+		case PPC_BC_SO:
+			return ("so");
+		case PPC_BC_NS:
+			return ("ns");
+	}
+}
+
 static void print_insn_detail(cs_insn *ins)
 {
-	cs_ppc *ppc = &(ins->detail->ppc);
+	cs_ppc *ppc;
+	int i;
 
+	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
+	if (ins->detail == NULL)
+		return;
+
+	ppc = &(ins->detail->ppc);
 	if (ppc->op_count)
 		printf("\top_count: %u\n", ppc->op_count);
 
-	int i;
 	for (i = 0; i < ppc->op_count; i++) {
 		cs_ppc_op *op = &(ppc->operands[i]);
 		switch((int)op->type) {
@@ -56,6 +90,12 @@ static void print_insn_detail(cs_insn *ins)
 					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
 
 				break;
+			case PPC_OP_CRX:
+				printf("\t\toperands[%u].type: CRX\n", i);
+				printf("\t\t\toperands[%u].crx.scale: %d\n", i, op->crx.scale);
+				printf("\t\t\toperands[%u].crx.reg: %s\n", i, cs_reg_name(handle, op->crx.reg));
+				printf("\t\t\toperands[%u].crx.cond: %s\n", i, get_bc_name(op->crx.cond));
+				break;
 		}
 	}
 
@@ -73,21 +113,22 @@ static void print_insn_detail(cs_insn *ins)
 
 static void test()
 {
-#define PPC_CODE "\x80\x20\x00\x00\x80\x3f\x00\x00\x10\x43\x23\x0e\xd0\x44\x00\x80\x4c\x43\x22\x02\x2d\x03\x00\x80\x7c\x43\x20\x14\x7c\x43\x20\x93\x4f\x20\x00\x21\x4c\xc8\x00\x21"
+#define PPC_CODE "\x43\x20\x0c\x07\x41\x56\xff\x17\x80\x20\x00\x00\x80\x3f\x00\x00\x10\x43\x23\x0e\xd0\x44\x00\x80\x4c\x43\x22\x02\x2d\x03\x00\x80\x7c\x43\x20\x14\x7c\x43\x20\x93\x4f\x20\x00\x21\x4c\xc8\x00\x21\x40\x82\x00\x14"
 
 	struct platform platforms[] = {
 		{
-			.arch = CS_ARCH_PPC,
-			.mode = CS_MODE_BIG_ENDIAN,
-			.code = (unsigned char*)PPC_CODE,
-			.size = sizeof(PPC_CODE) - 1,
-			.comment = "PPC-64",
+			CS_ARCH_PPC,
+			CS_MODE_BIG_ENDIAN,
+			(unsigned char*)PPC_CODE,
+			sizeof(PPC_CODE) - 1,
+			"PPC-64",
 		}
 	};
 
 	uint64_t address = 0x1000;
 	cs_insn *insn;
 	int i;
+	size_t count;
 
 	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
 		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
@@ -98,21 +139,22 @@ static void test()
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
-		size_t count = cs_disasm_ex(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
+		count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 		if (count) {
+			size_t j;
+
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code:", platforms[i].code, platforms[i].size);
 			printf("Disasm:\n");
 
-			size_t j;
 			for (j = 0; j < count; j++) {
 				printf("0x%"PRIx64":\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
 				print_insn_detail(&insn[j]);
 			}
 			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
 
-			// free memory allocated by cs_disasm_ex()
+			// free memory allocated by cs_disasm()
 			cs_free(insn, count);
 		} else {
 			printf("****************\n");

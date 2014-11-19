@@ -1,5 +1,5 @@
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #ifndef CS_PPCINSTPRINTER_H
 #define CS_PPCINSTPRINTER_H
@@ -10,6 +10,6 @@
 
 void PPC_printInst(MCInst *MI, SStream *O, void *Info);
 
-void PPC_post_printer(csh ud, cs_insn *insn, char *insn_asm);
+void PPC_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci);
 
 #endif

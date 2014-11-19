@@ -1,25 +1,10 @@
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #include <stdlib.h>
 #include <string.h>
 
 #include "utils.h"
-
-// return the position of a string in a list of strings
-// or -1 if given string is not in the list
-int str_in_list(char **list, char *s)
-{
-	char **l;
-
-	int c = 0;
-	for(l = list; *l; c++, l++) {
-		if (!strcasecmp(*l, s))
-			return c;
-	}
-
-	return -1;
-}
 
 // create a cache for fast id lookup
 static unsigned short *make_id2insn(insn_map *insns, unsigned int size)
@@ -28,7 +13,7 @@ static unsigned short *make_id2insn(insn_map *insns, unsigned int size)
 	unsigned short max_id = insns[size - 1].id;
 	unsigned short i;
 
-	unsigned short *cache = (unsigned short *)cs_mem_calloc(sizeof(*cache), max_id + 1);
+	unsigned short *cache = (unsigned short *)cs_mem_malloc(sizeof(*cache) * (max_id + 1));
 
 	for (i = 1; i < size; i++)
 		cache[insns[i].id] = i;
@@ -54,7 +39,7 @@ int name2id(name_map* map, int max, const char *name)
 	int i;
 
 	for (i = 0; i < max; i++) {
-		if (!strcasecmp(map[i].name, name)) {
+		if (!strcmp(map[i].name, name)) {
 			return map[i].id;
 		}
 	}
@@ -83,4 +68,17 @@ char *cs_strdup(const char *str)
 		return NULL;
 
 	return (char *)memmove(new, str, len);
+}
+
+// we need this since Windows doesnt have snprintf()
+int cs_snprintf(char *buffer, size_t size, const char *fmt, ...)
+{
+	int ret;
+
+	va_list ap;
+	va_start(ap, fmt);
+	ret = cs_vsnprintf(buffer, size, fmt, ap);
+	va_end(ap);
+
+	return ret;
 }

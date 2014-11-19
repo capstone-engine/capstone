@@ -1,5 +1,5 @@
-(* Capstone Disassembler Engine
- * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> *)
+(* Capstone Disassembly Engine
+ * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 *)
 
 open Printf
 open List
@@ -15,33 +15,43 @@ let _THUMB_CODE2 = "\x4f\xf0\x00\x01\xbd\xe8\x00\x88";;
 let _MIPS_CODE = "\x0C\x10\x00\x97\x00\x00\x00\x00\x24\x02\x00\x0c\x8f\xa2\x00\x00\x34\x21\x34\x56";;
 let _MIPS_CODE2 = "\x56\x34\x21\x34\xc2\x17\x01\x00";;
 let _ARM64_CODE = "\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9";;
+let _PPC_CODE = "\x80\x20\x00\x00\x80\x3f\x00\x00\x10\x43\x23\x0e\xd0\x44\x00\x80\x4c\x43\x22\x02\x2d\x03\x00\x80\x7c\x43\x20\x14\x7c\x43\x20\x93\x4f\x20\x00\x21\x4c\xc8\x00\x21";;
+let _SPARC_CODE = "\x80\xa0\x40\x02\x85\xc2\x60\x08\x85\xe8\x20\x01\x81\xe8\x00\x00\x90\x10\x20\x01\xd5\xf6\x10\x16\x21\x00\x00\x0a\x86\x00\x40\x02\x01\x00\x00\x00\x12\xbf\xff\xff\x10\xbf\xff\xff\xa0\x02\x00\x09\x0d\xbf\xff\xff\xd4\x20\x60\x00\xd4\x4e\x00\x16\x2a\xc2\x80\x03";;
+let _SPARCV9_CODE = "\x81\xa8\x0a\x24\x89\xa0\x10\x20\x89\xa0\x1a\x60\x89\xa0\x00\xe0";;
+let _SYSZ_CODE = "\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x00\x07\xf7\xeb\x2a\xff\xff\x7f\x57\xe3\x01\xff\xff\x7f\x57\xeb\x00\xf0\x00\x00\x24\xb2\x4f\x00\x78";;
+let _XCORE_CODE = "\xfe\x0f\xfe\x17\x13\x17\xc6\xfe\xec\x17\x97\xf8\xec\x4f\x1f\xfd\xec\x37\x07\xf2\x45\x5b\xf9\xfa\x02\x06\x1b\x10";;
 
 let all_tests = [
-	(CS_ARCH_X86, [CS_MODE_16], _X86_CODE16, "X86 16bit (Intel syntax)");
-	(CS_ARCH_X86, [CS_MODE_32; CS_MODE_SYNTAX_ATT], _X86_CODE32, "X86 32bit (ATT syntax)");
-	(CS_ARCH_X86, [CS_MODE_32], _X86_CODE32, "X86 32 (Intel syntax)");
-	(CS_ARCH_X86, [CS_MODE_64], _X86_CODE64, "X86 64 (Intel syntax)");
-	(CS_ARCH_ARM, [CS_MODE_ARM], _ARM_CODE, "ARM");
-	(CS_ARCH_ARM, [CS_MODE_ARM], _ARM_CODE2, "ARM: Cortex-A15 + NEON");
-	(CS_ARCH_ARM, [CS_MODE_THUMB], _THUMB_CODE, "THUMB");
-	(CS_ARCH_ARM, [CS_MODE_THUMB], _THUMB_CODE2, "THUMB-2");
-	(CS_ARCH_ARM64, [CS_MODE_ARM], _ARM64_CODE, "ARM-64");
-	(CS_ARCH_MIPS, [CS_MODE_32; CS_MODE_BIG_ENDIAN], _MIPS_CODE, "MIPS-32 (Big-endian)");
-	(CS_ARCH_MIPS, [CS_MODE_64; CS_MODE_LITTLE_ENDIAN], _MIPS_CODE2, "MIPS-64-EL (Little-endian)");
+	(CS_ARCH_X86, [CS_MODE_16], _X86_CODE16, "X86 16bit (Intel syntax)", 0);
+	(CS_ARCH_X86, [CS_MODE_32], _X86_CODE32, "X86 32bit (ATT syntax)", 0);
+	(CS_ARCH_X86, [CS_MODE_32], _X86_CODE32, "X86 32 (Intel syntax)", 0);
+	(CS_ARCH_X86, [CS_MODE_64], _X86_CODE64, "X86 64 (Intel syntax)", 0);
+	(CS_ARCH_ARM, [CS_MODE_ARM], _ARM_CODE, "ARM", 0);
+	(CS_ARCH_ARM, [CS_MODE_ARM], _ARM_CODE2, "ARM: Cortex-A15 + NEON", 0);
+	(CS_ARCH_ARM, [CS_MODE_THUMB], _THUMB_CODE, "THUMB", 0);
+	(CS_ARCH_ARM, [CS_MODE_THUMB], _THUMB_CODE2, "THUMB-2", 0);
+	(CS_ARCH_ARM64, [CS_MODE_ARM], _ARM64_CODE, "ARM-64", 0);
+	(CS_ARCH_MIPS, [CS_MODE_MIPS32; CS_MODE_BIG_ENDIAN], _MIPS_CODE, "MIPS-32 (Big-endian)", 0);
+	(CS_ARCH_MIPS, [CS_MODE_MIPS64; CS_MODE_LITTLE_ENDIAN], _MIPS_CODE2, "MIPS-64-EL (Little-endian)", 0);
+	(CS_ARCH_PPC, [CS_MODE_64; CS_MODE_BIG_ENDIAN], _PPC_CODE, "PPC-64", 0);
+        (CS_ARCH_SPARC, [CS_MODE_BIG_ENDIAN], _SPARC_CODE, "Sparc", 0);
+        (CS_ARCH_SPARC, [CS_MODE_BIG_ENDIAN; CS_MODE_V9], _SPARCV9_CODE, "SparcV9", 0);
+        (CS_ARCH_SYSZ, [CS_MODE_LITTLE_ENDIAN], _SYSZ_CODE, "SystemZ", 0);
+        (CS_ARCH_XCORE, [CS_MODE_LITTLE_ENDIAN], _XCORE_CODE, "XCore", 0);
 ];;
 
 
-let print_detail arch insn =
+let print_detail handle insn =
 	(* print immediate operands *)
 	if (Array.length insn.regs_read) > 0 then begin
 		printf "\tImplicit registers read: ";
-		Array.iter (fun x -> printf "%s "(cs_reg_name arch x)) insn.regs_read;
+		Array.iter (fun x -> printf "%s "(cs_reg_name handle x)) insn.regs_read;
 		printf "\n";
 	end;
 
 	if (Array.length insn.regs_write) > 0 then begin
 		printf "\tImplicit registers written: ";
-		Array.iter (fun x -> printf "%s "(cs_reg_name arch x)) insn.regs_write;
+		Array.iter (fun x -> printf "%s "(cs_reg_name handle x)) insn.regs_write;
 		printf "\n";
 	end;
 
@@ -53,57 +63,25 @@ let print_detail arch insn =
 	printf "\n";;
 
 
-let print_insn arch insn =
+let print_insn handle insn =
 	printf "0x%x\t%s\t%s\n" insn.address insn.mnemonic insn.op_str;
-	print_detail arch insn;;
+	print_detail handle insn
 
 
 let print_arch x =
-	let (arch, mode, code, comment) = x in
-		let insns = cs_disasm_quick arch mode code 0x1000L 0L in
+	let (arch, mode, code, comment, syntax) = x in
+		let handle = cs_open arch mode in
+		let err = cs_option handle CS_OPT_DETAIL _CS_OPT_ON in
+		match err with
+		| _ -> ();
+		let insns = cs_disasm handle code 0x1000L 0L in
 			printf "*************\n";
 			printf "Platform: %s\n" comment;
-			List.iter (print_insn arch) insns;;
+			List.iter (print_insn handle) insns;
+		match cs_close handle with
+		| 0 -> ();
+		| _ -> printf "Failed to close handle";
+		;;
 
-(*
+
 List.iter print_arch all_tests;;
-*)
-
-(* all below code use OO class of Capstone *)
-let print_detail_cls arch insn =
-	(* print immediate operands *)
-	if (Array.length insn#regs_read) > 0 then begin
-		printf "\tImplicit registers read: ";
-		Array.iter (fun x -> printf "%s "(cs_reg_name arch x)) insn#regs_read;
-		printf "\n";
-	end;
-
-	if (Array.length insn#regs_write) > 0 then begin
-		printf "\tImplicit registers written: ";
-		Array.iter (fun x -> printf "%s "(cs_reg_name arch x)) insn#regs_write;
-		printf "\n";
-	end;
-
-	if (Array.length insn#groups) > 0 then begin
-		printf "\tThis instruction belongs to groups: ";
-		Array.iter (printf "%u ") insn#groups;
-		printf "\n";
-	end;
-	printf "\n";;
-
-
-let print_insn_cls arch insn =
-	printf "0x%x\t%s\t%s\n" insn#address insn#mnemonic insn#op_str;
-	print_detail_cls arch insn;;
-
-
-let print_arch_cls x =
-	let (arch, mode, code, comment) = x in
-		let d = new cs arch mode in
-			let insns = d#disasm code 0x1000L 0L in
-				printf "*************\n";
-				printf "Platform: %s\n" comment;
-				List.iter (print_insn_cls arch) insns;
-	();;
-
-List.iter print_arch_cls all_tests;;

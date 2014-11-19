@@ -61,8 +61,8 @@ public class TestMips {
   public static void main(String argv[]) {
 
     final Test.platform[] all_tests = {
-      new Test.platform(Capstone.CS_ARCH_MIPS, Capstone.CS_MODE_32 + Capstone.CS_MODE_BIG_ENDIAN, hexString2Byte(MIPS_CODE), "MIPS-32 (Big-endian)"),
-      new Test.platform(Capstone.CS_ARCH_MIPS, Capstone.CS_MODE_64 + Capstone.CS_MODE_LITTLE_ENDIAN, hexString2Byte(MIPS_CODE2), "MIPS-64-EL (Little-endian)"),
+      new Test.platform(Capstone.CS_ARCH_MIPS, Capstone.CS_MODE_MIPS32 + Capstone.CS_MODE_BIG_ENDIAN, hexString2Byte(MIPS_CODE), "MIPS-32 (Big-endian)"),
+      new Test.platform(Capstone.CS_ARCH_MIPS, Capstone.CS_MODE_MIPS64 + Capstone.CS_MODE_LITTLE_ENDIAN, hexString2Byte(MIPS_CODE2), "MIPS-64-EL (Little-endian)"),
     };
 
     for (int i=0; i<all_tests.length; i++) {
@@ -82,6 +82,9 @@ public class TestMips {
       }
 
       System.out.printf("0x%x:\n\n", all_ins[all_ins.length-1].address + all_ins[all_ins.length-1].size);
+
+      // Close when done
+      cs.close();
     }
   }
 

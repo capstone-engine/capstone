@@ -1,0 +1,28 @@
+This directory contains bindings & test code for Python, Java & OCaml.
+See <language>/README for how to compile & install each binding.
+
+More bindings created & maintained by the community are available as followings.
+
+- Gapstone: Go binding (by Ben Nagy).
+
+	https://github.com/bnagy/gapstone
+
+- Crabstone: Ruby binding (by Ben Nagy).
+
+	https://github.com/bnagy/crabstone
+
+- Capstone-vala: Vala binding (by Pancake).
+
+	https://github.com/radare/capstone-vala
+
+- C# binding (by Matt Graeber).
+
+	https://github.com/mattifestation/capstone
+
+- NodeJS binding (by Jason Oster).
+
+	https://github.com/parasyte/node-capstone
+
+- C++ binding (by Peter Hlavaty)
+
+	https://github.com/zer0mem/cccapstone

@@ -11,8 +11,14 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+
+#ifdef CAPSTONE_HAS_ARM64
+
+#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
+#pragma warning(disable:4996)
+#endif
 
 #include "../../utils.h"
 
@@ -21,7 +27,7 @@
 
 #include "AArch64BaseInfo.h"
 
-char *NamedImmMapper_toString(NamedImmMapper *N, uint32_t Value, bool *Valid)
+char *A64NamedImmMapper_toString(A64NamedImmMapper *N, uint32_t Value, bool *Valid)
 {
 	unsigned i;
 	for (i = 0; i < N->NumPairs; ++i) {
@@ -39,17 +45,18 @@ char *NamedImmMapper_toString(NamedImmMapper *N, uint32_t Value, bool *Valid)
 // return true if s1 == lower(f2), and false otherwise
 static bool compare_lower_str(char *s1, char *s2)
 {
+	bool res;
 	char *lower = cs_strdup(s2), *c;
 	for (c = lower; *c; c++)
 		*c = (char)tolower((int) *c);
 
-	bool res = (strcmp(s1, lower) == 0);
+	res = (strcmp(s1, lower) == 0);
 	cs_mem_free(lower);
 
 	return res;
 }
 
-uint32_t NamedImmMapper_fromString(NamedImmMapper *N, char *Name, bool *Valid)
+uint32_t A64NamedImmMapper_fromString(A64NamedImmMapper *N, char *Name, bool *Valid)
 {
 	unsigned i;
 	for (i = 0; i < N->NumPairs; ++i) {
@@ -63,7 +70,7 @@ uint32_t NamedImmMapper_fromString(NamedImmMapper *N, char *Name, bool *Valid)
 	return (uint32_t)-1;
 }
 
-bool NamedImmMapper_validImm(NamedImmMapper *N, uint32_t Value)
+bool A64NamedImmMapper_validImm(A64NamedImmMapper *N, uint32_t Value)
 {
 	return Value < N->TooBigImm;
 }
@@ -74,6 +81,7 @@ static char *utostr(uint64_t X, bool isNeg)
 {
 	char Buffer[22];
 	char *BufPtr = Buffer+21;
+	char *result;
 
 	Buffer[21] = '\0';
 	if (X == 0) *--BufPtr = '0';  // Handle special case...
@@ -85,11 +93,11 @@ static char *utostr(uint64_t X, bool isNeg)
 
 	if (isNeg) *--BufPtr = '-';   // Add negative sign...
 
-	char *result = cs_strdup(BufPtr);
+	result = cs_strdup(BufPtr);
 	return result;
 }
 
-static NamedImmMapper_Mapping SysRegPairs[] = {
+static A64NamedImmMapper_Mapping SysRegPairs[] = {
 	{"osdtrrx_el1", A64SysReg_OSDTRRX_EL1},
 	{"osdtrtx_el1",  A64SysReg_OSDTRTX_EL1},
 	{"teecr32_el1", A64SysReg_TEECR32_EL1},
@@ -568,10 +576,19 @@ static NamedImmMapper_Mapping SysRegPairs[] = {
 	{"ich_lr15_el2", A64SysReg_ICH_LR15_EL2}
 };
 
+static A64NamedImmMapper_Mapping CycloneSysRegPairs[] = {
+	{"cpm_ioacc_ctl_el3", A64SysReg_CPM_IOACC_CTL_EL3}
+};
+
 // result must be a big enough buffer: 128 bytes is more than enough
-void SysRegMapper_toString(SysRegMapper *S, uint32_t Bits, bool *Valid, char *result)
+void A64SysRegMapper_toString(A64SysRegMapper *S, uint32_t Bits, bool *Valid, char *result)
 {
+	int dummy;
+	uint32_t Op0, Op1, CRn, CRm, Op2;
+	char *Op1S, *CRnS, *CRmS, *Op2S;
 	unsigned i;
+
+	// First search the registers shared by all
 	for (i = 0; i < ARR_SIZE(SysRegPairs); ++i) {
 		if (SysRegPairs[i].Value == Bits) {
 			*Valid = true;
@@ -580,6 +597,20 @@ void SysRegMapper_toString(SysRegMapper *S, uint32_t Bits, bool *Valid, char *re
 		}
 	}
 
+	// Next search for target specific registers
+	// if (FeatureBits & AArch64_ProcCyclone) {
+	if (true) {
+		for (i = 0; i < ARR_SIZE(CycloneSysRegPairs); ++i) {
+			if (CycloneSysRegPairs[i].Value == Bits) {
+				*Valid = true;
+				strcpy(result, CycloneSysRegPairs[i].Name);
+				return;
+			}
+		}
+	}
+
+	// Now try the instruction-specific registers (either read-only or
+	// write-only).
 	for (i = 0; i < S->NumInstPairs; ++i) {
 		if (S->InstPairs[i].Value == Bits) {
 			*Valid = true;
@@ -588,11 +619,11 @@ void SysRegMapper_toString(SysRegMapper *S, uint32_t Bits, bool *Valid, char *re
 		}
 	}
 
-	uint32_t Op0 = (Bits >> 14) & 0x3;
-	uint32_t Op1 = (Bits >> 11) & 0x7;
-	uint32_t CRn = (Bits >> 7) & 0xf;
-	uint32_t CRm = (Bits >> 3) & 0xf;
-	uint32_t Op2 = Bits & 0x7;
+	Op0 = (Bits >> 14) & 0x3;
+	Op1 = (Bits >> 11) & 0x7;
+	CRn = (Bits >> 7) & 0xf;
+	CRm = (Bits >> 3) & 0xf;
+	Op2 = Bits & 0x7;
 
 	// Only combinations matching: 11 xxx 1x11 xxxx xxx are valid for a generic
 	// name.
@@ -605,14 +636,13 @@ void SysRegMapper_toString(SysRegMapper *S, uint32_t Bits, bool *Valid, char *re
 
 	*Valid = true;
 
-	char *Op1S, *CRnS, *CRmS, *Op2S;
 	Op1S = utostr(Op1, false);
 	CRnS = utostr(CRn, false);
 	CRmS = utostr(CRm, false);
 	Op2S = utostr(Op2, false);
 
 	//printf("Op1S: %s, CRnS: %s, CRmS: %s, Op2S: %s\n", Op1S, CRnS, CRmS, Op2S);
-	int dummy = sprintf(result, "s3_%s_c%s_c%s_%s", Op1S, CRnS, CRmS, Op2S);
+	dummy = sprintf(result, "s3_%s_c%s_c%s_%s", Op1S, CRnS, CRmS, Op2S);
 	(void)dummy;
 
 	cs_mem_free(Op1S);
@@ -621,7 +651,7 @@ void SysRegMapper_toString(SysRegMapper *S, uint32_t Bits, bool *Valid, char *re
 	cs_mem_free(Op2S);
 }
 
-static NamedImmMapper_Mapping TLBIPairs[] = {
+static A64NamedImmMapper_Mapping TLBIPairs[] = {
 	{"ipas2e1is", A64TLBI_IPAS2E1IS},
 	{"ipas2le1is", A64TLBI_IPAS2LE1IS},
 	{"vmalle1is", A64TLBI_VMALLE1IS},
@@ -656,13 +686,13 @@ static NamedImmMapper_Mapping TLBIPairs[] = {
 	{"vaale1", A64TLBI_VAALE1}
 };
 
-NamedImmMapper A64TLBI_TLBIMapper = {
-	.Pairs = TLBIPairs,
-	.NumPairs = ARR_SIZE(TLBIPairs),
-	.TooBigImm = 0,
+A64NamedImmMapper A64TLBI_TLBIMapper = {
+	TLBIPairs,
+	ARR_SIZE(TLBIPairs),
+	0,
 };
 
-static NamedImmMapper_Mapping ATPairs[] = {
+static A64NamedImmMapper_Mapping ATPairs[] = {
 	{"s1e1r", A64AT_S1E1R},
 	{"s1e2r", A64AT_S1E2R},
 	{"s1e3r", A64AT_S1E3R},
@@ -677,13 +707,13 @@ static NamedImmMapper_Mapping ATPairs[] = {
 	{"s12e0w", A64AT_S12E0W},
 };
 
-NamedImmMapper A64AT_ATMapper = {
-	.Pairs = ATPairs,
-	.NumPairs = ARR_SIZE(ATPairs),
-	.TooBigImm = 0,
+A64NamedImmMapper A64AT_ATMapper = {
+	ATPairs,
+	ARR_SIZE(ATPairs),
+	0,
 };
 
-static NamedImmMapper_Mapping DBarrierPairs[] = {
+static A64NamedImmMapper_Mapping DBarrierPairs[] = {
 	{"oshld", A64DB_OSHLD},
 	{"oshst", A64DB_OSHST},
 	{"osh", A64DB_OSH},
@@ -698,13 +728,13 @@ static NamedImmMapper_Mapping DBarrierPairs[] = {
 	{"sy", A64DB_SY}
 };
 
-NamedImmMapper A64DB_DBarrierMapper = {
-	.Pairs = DBarrierPairs,
-	.NumPairs = ARR_SIZE(DBarrierPairs),
-	.TooBigImm = 16,
+A64NamedImmMapper A64DB_DBarrierMapper = {
+	DBarrierPairs,
+	ARR_SIZE(DBarrierPairs),
+	16,
 };
 
-static NamedImmMapper_Mapping DCPairs[] = {
+static A64NamedImmMapper_Mapping DCPairs[] = {
 	{"zva", A64DC_ZVA},
 	{"ivac", A64DC_IVAC},
 	{"isw", A64DC_ISW},
@@ -715,35 +745,35 @@ static NamedImmMapper_Mapping DCPairs[] = {
 	{"cisw", A64DC_CISW}
 };
 
-NamedImmMapper A64DC_DCMapper = {
-	.Pairs = DCPairs,
-	.NumPairs = ARR_SIZE(DCPairs),
-	.TooBigImm = 0,
+A64NamedImmMapper A64DC_DCMapper = {
+	DCPairs,
+	ARR_SIZE(DCPairs),
+	0,
 };
 
-static NamedImmMapper_Mapping ICPairs[] = {
+static A64NamedImmMapper_Mapping ICPairs[] = {
 	{"ialluis",  A64IC_IALLUIS},
 	{"iallu", A64IC_IALLU},
 	{"ivau", A64IC_IVAU}
 };
 
-NamedImmMapper A64IC_ICMapper = {
-	.Pairs = ICPairs,
-	.NumPairs = ARR_SIZE(ICPairs),
-	.TooBigImm = 0,
+A64NamedImmMapper A64IC_ICMapper = {
+	ICPairs,
+	ARR_SIZE(ICPairs),
+	0,
 };
 
-static NamedImmMapper_Mapping ISBPairs[] = {
+static A64NamedImmMapper_Mapping ISBPairs[] = {
 	{"sy",  A64DB_SY},
 };
 
-NamedImmMapper A64ISB_ISBMapper = {
-	.Pairs = ISBPairs,
-	.NumPairs = ARR_SIZE(ISBPairs),
-	.TooBigImm = 16,
+A64NamedImmMapper A64ISB_ISBMapper = {
+	ISBPairs,
+	ARR_SIZE(ISBPairs),
+	16,
 };
 
-static NamedImmMapper_Mapping PRFMPairs[] = {
+static A64NamedImmMapper_Mapping PRFMPairs[] = {
 	{"pldl1keep", A64PRFM_PLDL1KEEP},
 	{"pldl1strm", A64PRFM_PLDL1STRM},
 	{"pldl2keep", A64PRFM_PLDL2KEEP},
@@ -764,25 +794,25 @@ static NamedImmMapper_Mapping PRFMPairs[] = {
 	{"pstl3strm", A64PRFM_PSTL3STRM}
 };
 
-NamedImmMapper A64PRFM_PRFMMapper = {
-	.Pairs = PRFMPairs,
-	.NumPairs = ARR_SIZE(PRFMPairs),
-	.TooBigImm = 32,
+A64NamedImmMapper A64PRFM_PRFMMapper = {
+	PRFMPairs,
+	ARR_SIZE(PRFMPairs),
+	32,
 };
 
-static NamedImmMapper_Mapping PStatePairs[] = {
+static A64NamedImmMapper_Mapping PStatePairs[] = {
 	{"spsel", A64PState_SPSel},
 	{"daifset", A64PState_DAIFSet},
 	{"daifclr", A64PState_DAIFClr}
 };
 
-NamedImmMapper A64PState_PStateMapper = {
-	.Pairs = PStatePairs,
-	.NumPairs = ARR_SIZE(PStatePairs),
-	.TooBigImm = 0,
+A64NamedImmMapper A64PState_PStateMapper = {
+	PStatePairs,
+	ARR_SIZE(PStatePairs),
+	0,
 };
 
-static NamedImmMapper_Mapping MRSPairs[] = {
+static A64NamedImmMapper_Mapping MRSPairs[] = {
 	{"mdccsr_el0", A64SysReg_MDCCSR_EL0},
 	{"dbgdtrrx_el0", A64SysReg_DBGDTRRX_EL0},
 	{"mdrar_el1", A64SysReg_MDRAR_EL1},
@@ -812,16 +842,16 @@ static NamedImmMapper_Mapping MRSPairs[] = {
 	{"id_isar3_el1", A64SysReg_ID_ISAR3_EL1},
 	{"id_isar4_el1", A64SysReg_ID_ISAR4_EL1},
 	{"id_isar5_el1", A64SysReg_ID_ISAR5_EL1},
-	{"id_aa64pfr0_el1", A64SysReg_ID_AA64PFR0_EL1},
-	{"id_aa64pfr1_el1", A64SysReg_ID_AA64PFR1_EL1},
-	{"id_aa64dfr0_el1", A64SysReg_ID_AA64DFR0_EL1},
-	{"id_aa64dfr1_el1", A64SysReg_ID_AA64DFR1_EL1},
-	{"id_aa64afr0_el1", A64SysReg_ID_AA64AFR0_EL1},
-	{"id_aa64afr1_el1", A64SysReg_ID_AA64AFR1_EL1},
-	{"id_aa64isar0_el1", A64SysReg_ID_AA64ISAR0_EL1},
-	{"id_aa64isar1_el1", A64SysReg_ID_AA64ISAR1_EL1},
-	{"id_aa64mmfr0_el1", A64SysReg_ID_AA64MMFR0_EL1},
-	{"id_aa64mmfr1_el1", A64SysReg_ID_AA64MMFR1_EL1},
+	{"id_aa64pfr0_el1", A64SysReg_ID_A64PFR0_EL1},
+	{"id_aa64pfr1_el1", A64SysReg_ID_A64PFR1_EL1},
+	{"id_aa64dfr0_el1", A64SysReg_ID_A64DFR0_EL1},
+	{"id_aa64dfr1_el1", A64SysReg_ID_A64DFR1_EL1},
+	{"id_aa64afr0_el1", A64SysReg_ID_A64AFR0_EL1},
+	{"id_aa64afr1_el1", A64SysReg_ID_A64AFR1_EL1},
+	{"id_aa64isar0_el1", A64SysReg_ID_A64ISAR0_EL1},
+	{"id_aa64isar1_el1", A64SysReg_ID_A64ISAR1_EL1},
+	{"id_aa64mmfr0_el1", A64SysReg_ID_A64MMFR0_EL1},
+	{"id_aa64mmfr1_el1", A64SysReg_ID_A64MMFR1_EL1},
 	{"mvfr0_el1", A64SysReg_MVFR0_EL1},
 	{"mvfr1_el1", A64SysReg_MVFR1_EL1},
 	{"mvfr2_el1", A64SysReg_MVFR2_EL1},
@@ -881,12 +911,13 @@ static NamedImmMapper_Mapping MRSPairs[] = {
 	{"ich_elsr_el2", A64SysReg_ICH_ELSR_EL2}
 };
 
-SysRegMapper AArch64_MRSMapper = {
-	.InstPairs = MRSPairs,
-	.NumInstPairs = ARR_SIZE(MRSPairs),
+A64SysRegMapper AArch64_MRSMapper = {
+	NULL,
+	MRSPairs,
+	ARR_SIZE(MRSPairs),
 };
 
-static NamedImmMapper_Mapping MSRPairs[] = {
+static A64NamedImmMapper_Mapping MSRPairs[] = {
 	{"dbgdtrtx_el0", A64SysReg_DBGDTRTX_EL0},
 	{"oslar_el1", A64SysReg_OSLAR_EL1},
 	{"pmswinc_el0", A64SysReg_PMSWINC_EL0},
@@ -904,79 +935,10 @@ static NamedImmMapper_Mapping MSRPairs[] = {
 	{"icc_sgi0r_el1", A64SysReg_ICC_SGI0R_EL1}
 };
 
-SysRegMapper AArch64_MSRMapper = {
-	.InstPairs = MSRPairs,
-	.NumInstPairs = ARR_SIZE(MSRPairs),
+A64SysRegMapper AArch64_MSRMapper = {
+	NULL,
+	MSRPairs,
+	ARR_SIZE(MSRPairs),
 };
 
-// Encoding of the immediate for logical (immediate) instructions:
-//
-// | N | imms   | immr   | size | R            | S            |
-// |---+--------+--------+------+--------------+--------------|
-// | 1 | ssssss | rrrrrr |   64 | UInt(rrrrrr) | UInt(ssssss) |
-// | 0 | 0sssss | xrrrrr |   32 | UInt(rrrrr)  | UInt(sssss)  |
-// | 0 | 10ssss | xxrrrr |   16 | UInt(rrrr)   | UInt(ssss)   |
-// | 0 | 110sss | xxxrrr |    8 | UInt(rrr)    | UInt(sss)    |
-// | 0 | 1110ss | xxxxrr |    4 | UInt(rr)     | UInt(ss)     |
-// | 0 | 11110s | xxxxxr |    2 | UInt(r)      | UInt(s)      |
-// | 0 | 11111x | -      |      | UNALLOCATED  |              |
-//
-// Columns 'R', 'S' and 'size' specify a "bitmask immediate" of size bits in
-// which the lower S+1 bits are ones and the remaining bits are zero, then
-// rotated right by R bits, which is then replicated across the datapath.
-//
-// + Values of 'N', 'imms' and 'immr' which do not match the above table are
-//   RESERVED.
-// + If all 's' bits in the imms field are set then the instruction is
-//   RESERVED.
-// + The 'x' bits in the 'immr' field are IGNORED.
-bool A64Imms_isLogicalImmBits(unsigned RegWidth, uint32_t Bits, uint64_t *Imm)
-{
-	uint32_t N = Bits >> 12;
-	uint32_t ImmR = (Bits >> 6) & 0x3f;
-	uint32_t ImmS = Bits & 0x3f;
-
-	// N=1 encodes a 64-bit replication and is invalid for the 32-bit
-	// instructions.
-	if (RegWidth == 32 && N != 0) return false;
-
-	int Width = 0;
-	if (N == 1)
-		Width = 64;
-	else if ((ImmS & 0x20) == 0)
-		Width = 32;
-	else if ((ImmS & 0x10) == 0)
-		Width = 16;
-	else if ((ImmS & 0x08) == 0)
-		Width = 8;
-	else if ((ImmS & 0x04) == 0)
-		Width = 4;
-	else if ((ImmS & 0x02) == 0)
-		Width = 2;
-	else {
-		// ImmS  is 0b11111x: UNALLOCATED
-		return false;
-	}
-
-	int Num1s = (ImmS & (Width - 1)) + 1;
-
-	// All encodings which would map to -1 (signed) are RESERVED.
-	if (Num1s == Width) return false;
-
-	int Rotation = (ImmR & (Width - 1));
-	uint64_t Mask = (1ULL << Num1s) - 1;
-	uint64_t WidthMask = Width == 64 ? -1 : (1ULL << Width) - 1;
-	if (Rotation != 0 && Rotation != 64)
-		Mask = (Mask >> Rotation)
-			| ((Mask << (Width - Rotation)) & WidthMask);
-
-	*Imm = Mask;
-	unsigned i;
-	for (i = 1; i < RegWidth / Width; ++i) {
-		Mask <<= Width;
-		*Imm |= Mask;
-	}
-
-	return true;
-}
-
+#endif

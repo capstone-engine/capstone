@@ -26,13 +26,17 @@ public class Arm64 {
 
   public static class OpValue extends Union {
     public int reg;
-    public int imm;
+    public long imm;
     public double fp;
     public MemType mem;
+    public int pstate;
+    public int sys;
+    public int prefetch;
+    public int barrier;
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("reg", "imm", "fp", "mem");
+      return Arrays.asList("reg", "imm", "fp", "mem", "pstate", "sys", "prefetch", "barrier");
     }
   }
 
@@ -47,6 +51,9 @@ public class Arm64 {
   }
 
   public static class Operand extends Structure {
+    public int vector_index;
+    public int vas;
+    public int vess;
     public OpShift shift;
     public int ext;
     public int type;
@@ -58,18 +65,21 @@ public class Arm64 {
         value.setType(MemType.class);
       if (type == ARM64_OP_FP)
         value.setType(Double.TYPE);
-      if (type == ARM64_OP_IMM || type == ARM64_OP_CIMM || type == ARM64_OP_REG)
+      if (type == ARM64_OP_IMM || type == ARM64_OP_CIMM || type == ARM64_OP_REG || type == ARM64_OP_REG_MRS || type == ARM64_OP_REG_MSR || type == ARM64_OP_PSTATE || type == ARM64_OP_SYS || type == ARM64_OP_PREFETCH || type == ARM64_OP_BARRIER)
         value.setType(Integer.TYPE);
       if (type == ARM64_OP_INVALID)
         return;
       readField("value");
       readField("ext");
       readField("shift");
+      readField("vess");
+      readField("vas");
+      readField("vector_index");
     }
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("shift", "ext", "type", "value");
+      return Arrays.asList("vector_index", "vas", "vess", "shift", "ext", "type", "value");
     }
   }
 

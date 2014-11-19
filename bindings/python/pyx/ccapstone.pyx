@@ -2,7 +2,7 @@
 
 cimport pyx.ccapstone as cc
 import capstone, ctypes
-from capstone import arm, x86, mips, ppc, arm64, CsError
+from . import arm, x86, mips, ppc, arm64, sparc, systemz, xcore, CsError
 
 _diet = cc.cs_support(capstone.CS_SUPPORT_DIET)
 
@@ -22,20 +22,29 @@ class CsDetail(object):
         self.groups_count = detail.groups_count
 
         if arch == capstone.CS_ARCH_ARM:
-            (self.cc, self.update_flags, self.writeback, self.operands) = \
+            (self.usermode, self.vector_size, self.vector_data, self.cps_mode, self.cps_flag, \
+                self.cc, self.update_flags, self.writeback, self.mem_barrier, self.operands) = \
                 arm.get_arch_info(detail.arch.arm)
         elif arch == capstone.CS_ARCH_ARM64:
             (self.cc, self.update_flags, self.writeback, self.operands) = \
                 arm64.get_arch_info(detail.arch.arm64)
         elif arch == capstone.CS_ARCH_X86:
-            (self.prefix, self.segment, self.opcode, self.op_size, self.addr_size, \
-                self.disp_size, self.imm_size, self.modrm, self.sib, self.disp, \
-                self.sib_index, self.sib_scale, self.sib_base, self.operands) = x86.get_arch_info(detail.arch.x86)
+            (self.prefix, self.opcode, self.rex, self.addr_size, \
+                self.modrm, self.sib, self.disp, \
+                self.sib_index, self.sib_scale, self.sib_base, \
+                self.sse_cc, self.avx_cc, self.avx_sae, self.avx_rm, \
+                self.operands) = x86.get_arch_info(detail.arch.x86)
         elif arch == capstone.CS_ARCH_MIPS:
                 self.operands = mips.get_arch_info(detail.arch.mips)
         elif arch == capstone.CS_ARCH_PPC:
             (self.bc, self.bh, self.update_cr0, self.operands) = \
                 ppc.get_arch_info(detail.arch.ppc)
+        elif arch == capstone.CS_ARCH_SPARC:
+            (self.cc, self.hint, self.operands) = sparc.get_arch_info(detail.arch.sparc)
+        elif arch == capstone.CS_ARCH_SYSZ:
+            (self.cc, self.operands) = systemz.get_arch_info(detail.arch.sysz)
+        elif arch == capstone.CS_ARCH_XCORE:
+                self.operands = xcore.get_arch_info(detail.arch.xcore)
 
 
 cdef class CsInsn(object):
@@ -100,6 +109,9 @@ cdef class CsInsn(object):
     # return list of all implicit registers being read.
     @property
     def regs_read(self):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
         if _diet:
             # Diet engine cannot provide @regs_read
             raise CsError(capstone.CS_ERR_DIET)
@@ -113,6 +125,9 @@ cdef class CsInsn(object):
     # return list of all implicit registers being modified
     @property
     def regs_write(self):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
         if _diet:
             # Diet engine cannot provide @regs_write
             raise CsError(capstone.CS_ERR_DIET)
@@ -126,6 +141,9 @@ cdef class CsInsn(object):
     # return list of semantic groups this instruction belongs to.
     @property
     def groups(self):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
         if _diet:
             # Diet engine cannot provide @groups
             raise CsError(capstone.CS_ERR_DIET)
@@ -142,6 +160,9 @@ cdef class CsInsn(object):
 
     # get the register name, given the register ID
     def reg_name(self, reg_id):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
         if _diet:
             # Diet engine cannot provide register's name
             raise CsError(capstone.CS_ERR_DIET)
@@ -156,8 +177,19 @@ cdef class CsInsn(object):
 
         return cc.cs_insn_name(self._csh, self.id)
 
+    # get the group string
+    def group_name(self, group_id):
+        if _diet:
+            # Diet engine cannot provide group's name
+            raise CsError(capstone.CS_ERR_DIET)
+
+        return cc.cs_group_name(self._csh, group_id)
+
     # verify if this insn belong to group with id as @group_id
     def group(self, group_id):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
         if _diet:
             # Diet engine cannot provide @groups
             raise CsError(capstone.CS_ERR_DIET)
@@ -166,6 +198,9 @@ cdef class CsInsn(object):
 
     # verify if this instruction implicitly read register @reg_id
     def reg_read(self, reg_id):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
         if _diet:
             # Diet engine cannot provide @regs_read
             raise CsError(capstone.CS_ERR_DIET)
@@ -174,6 +209,9 @@ cdef class CsInsn(object):
 
     # verify if this instruction implicitly modified register @reg_id
     def reg_write(self, reg_id):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
         if _diet:
             # Diet engine cannot provide @regs_write
             raise CsError(capstone.CS_ERR_DIET)
@@ -182,6 +220,9 @@ cdef class CsInsn(object):
 
     # return number of operands having same operand type @op_type
     def op_count(self, op_type):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
         c = 0
         for op in self._detail.operands:
             if op.type == op_type:
@@ -190,6 +231,9 @@ cdef class CsInsn(object):
 
     # get the operand at position @position of all operands having the same type @op_type
     def op_find(self, op_type, position):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
         c = 0
         for op in self._detail.operands:
             if op.type == op_type:
@@ -225,7 +269,7 @@ cdef class Cs(object):
     def disasm(self, code, addr, count=0):
         cdef cc.cs_insn *allinsn
 
-        cdef res = cc.cs_disasm_ex(self.csh, code, len(code), addr, count, &allinsn)
+        cdef res = cc.cs_disasm(self.csh, code, len(code), addr, count, &allinsn)
         detail = self._cs.detail
         arch = self._cs.arch
 
@@ -253,7 +297,7 @@ cdef class Cs(object):
             # Diet engine cannot provide @mnemonic & @op_str
             raise CsError(capstone.CS_ERR_DIET)
 
-        cdef res = cc.cs_disasm_ex(self.csh, code, len(code), addr, count, &allinsn)
+        cdef res = cc.cs_disasm(self.csh, code, len(code), addr, count, &allinsn)
 
         for i from 0 <= i < res:
             insn = allinsn[i]
@@ -271,7 +315,8 @@ def debug():
 
     archs = { "arm": capstone.CS_ARCH_ARM, "arm64": capstone.CS_ARCH_ARM64, \
         "mips": capstone.CS_ARCH_MIPS, "ppc": capstone.CS_ARCH_PPC, \
-        "x86": capstone.CS_ARCH_X86 }
+        "sparc": capstone.CS_ARCH_SPARC, "sysz": capstone.CS_ARCH_SYSZ, \
+		"xcore": capstone.CS_ARCH_XCORE }
 
     all_archs = ""
     keys = archs.keys()
@@ -280,7 +325,11 @@ def debug():
         if cc.cs_support(archs[k]):
             all_archs += "-%s" %k
 
+    if cc.cs_support(capstone.CS_ARCH_X86):
+        all_archs += "-x86"
+        if cc.cs_support(capstone.CS_SUPPORT_X86_REDUCE):
+            all_archs += "_reduce"
+
     (major, minor, _combined) = capstone.cs_version()
 
     return "Cython-%s%s-c%u.%u-b%u.%u" %(diet, all_archs, major, minor, capstone.CS_API_MAJOR, capstone.CS_API_MINOR)
-
