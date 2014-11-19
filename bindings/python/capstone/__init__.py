@@ -76,6 +76,19 @@ __all__ = [
     'CS_SUPPORT_X86_REDUCE',
     'CS_SKIPDATA_CALLBACK',
 
+    'CS_OP_INVALID',
+    'CS_OP_REG',
+    'CS_OP_IMM',
+    'CS_OP_MEM',
+    'CS_OP_FP',
+
+    'CS_GRP_INVALID',
+    'CS_GRP_JUMP',
+    'CS_GRP_CALL',
+    'CS_GRP_RET',
+    'CS_GRP_INT',
+    'CS_GRP_IRET',
+
     'CsError',
 ]
 
