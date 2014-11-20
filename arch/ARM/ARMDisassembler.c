@@ -687,7 +687,6 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 	bool InITBlock;
 	unsigned Firstcond, Mask; 
 	uint32_t NEONLdStInsn, insn32, NEONDataInsn, NEONCryptoInsn, NEONv8Insn;
-	int i;
 
 	// We want to read exactly 2 bytes of data.
 	if (code_len < 2)
@@ -698,7 +697,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 
 	if (MI->flat_insn->detail) {
 		memset(&MI->flat_insn->detail->arm, 0, sizeof(cs_arm));
-		for (i = 0; i < ARR_SIZE(MI->flat_insn->detail->arm.operands); i++)
+		for (size_t i = 0; i < ARR_SIZE(MI->flat_insn->detail->arm.operands); i++)
 			MI->flat_insn->detail->arm.operands[i].vector_index = -1;
 	}
 
