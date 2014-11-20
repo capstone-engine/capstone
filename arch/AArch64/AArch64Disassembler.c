@@ -224,6 +224,7 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 {
 	uint32_t insn;
 	DecodeStatus result;
+	size_t i;
 
 	if (code_len < 4) {
 		// not enough data
@@ -233,7 +234,7 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 
 	if (MI->flat_insn->detail) {
 		memset(MI->flat_insn->detail, 0, sizeof(cs_detail));
-		for (size_t i = 0; i < ARR_SIZE(MI->flat_insn->detail->arm64.operands); i++)
+		for (i = 0; i < ARR_SIZE(MI->flat_insn->detail->arm64.operands); i++)
 			MI->flat_insn->detail->arm64.operands[i].vector_index = -1;
 	}
 
