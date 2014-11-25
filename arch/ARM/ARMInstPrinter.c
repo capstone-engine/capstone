@@ -650,6 +650,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				case ARM_INS_ORR:
 				case ARM_INS_EOR:
 				case ARM_INS_BIC:
+				case ARM_INS_MVN:
 					// do not print number in negative form
 					if (imm >= 0 && imm <= HEX_THRESHOLD)
 						SStream_concat(O, "#%u", imm);
