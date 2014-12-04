@@ -224,7 +224,7 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 {
 	uint32_t insn;
 	DecodeStatus result;
-	int i;
+	size_t i;
 
 	if (code_len < 4) {
 		// not enough data
