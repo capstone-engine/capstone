@@ -77,10 +77,17 @@ static void printi16mem(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printi32mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	if (MI->Opcode == X86_BOUNDS32rm)
-		MI->x86opsize = 8;
-	else
-		MI->x86opsize = 4;
+	switch(MI->Opcode) {
+		default:
+			MI->x86opsize = 4;
+			break;
+		case X86_BOUNDS32rm:
+			MI->x86opsize = 8;
+			break;
+		case X86_MOV32ms:
+			MI->x86opsize = 2;
+			break;
+	}
 
 	printMemReference(MI, OpNo, O);
 }
