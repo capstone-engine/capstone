@@ -390,6 +390,25 @@ static int readPrefixes(struct InternalInstruction* insn)
 	bool hasAdSize = false;
 	bool hasOpSize = false;
 
+	if (insn->mode == MODE_64BIT) {
+		if (consumeByte(insn, &byte))
+			return -1;
+
+		if ((byte & 0xf0) == 0x40) {
+			while(true) {
+				if (lookAtByte(insn, &byte))	// out of input code
+					return -1;
+				if ((byte & 0xf0) == 0x40) {
+					// another REX prefix, but we only remember the last one
+					consumeByte(insn, &byte);
+				} else
+					break;
+			}
+		} else {
+			unconsumeByte(insn);
+		}
+	}
+
 	while (isPrefix) {
 		prefixLocation = insn->readerCursor;
 
