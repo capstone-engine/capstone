@@ -15107,7 +15107,7 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         MCOperand_getReg(MCInst_getOperand(MI, 1)) == MCOperand_getReg(MCInst_getOperand(MI, 0))) {
       // (IMUL16rri GR16:$r, GR16:$r, i16imm:$imm)
-      AsmString = "imulw $\x03, $\x01";
+      AsmString = "imulw $\x01, $\x03";
       break;
     }
     return NULL;
@@ -15118,7 +15118,7 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         MCOperand_getReg(MCInst_getOperand(MI, 1)) == MCOperand_getReg(MCInst_getOperand(MI, 0))) {
       // (IMUL16rri8 GR16:$r, GR16:$r, i16i8imm:$imm)
-      AsmString = "imulw $\x03, $\x01";
+      AsmString = "imulw $\x01, $\x03";
       break;
     }
     return NULL;
@@ -15129,7 +15129,7 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         MCOperand_getReg(MCInst_getOperand(MI, 1)) == MCOperand_getReg(MCInst_getOperand(MI, 0))) {
       // (IMUL32rri GR32:$r, GR32:$r, i32imm:$imm)
-      AsmString = "imull $\x03, $\x01";
+      AsmString = "imull $\x01, $\x03";
       break;
     }
     return NULL;
@@ -15140,7 +15140,7 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         MCOperand_getReg(MCInst_getOperand(MI, 1)) == MCOperand_getReg(MCInst_getOperand(MI, 0))) {
       // (IMUL32rri8 GR32:$r, GR32:$r, i32i8imm:$imm)
-      AsmString = "imull $\x03, $\x01";
+      AsmString = "imull $\x01, $\x03";
       break;
     }
     return NULL;
@@ -15151,7 +15151,7 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         MCOperand_getReg(MCInst_getOperand(MI, 1)) == MCOperand_getReg(MCInst_getOperand(MI, 0))) {
       // (IMUL64rri32 GR64:$r, GR64:$r, i64i32imm:$imm)
-      AsmString = "imulq $\x03, $\x01";
+      AsmString = "imulq $\x01, $\x03";
       break;
     }
     return NULL;
@@ -15162,7 +15162,7 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         MCOperand_getReg(MCInst_getOperand(MI, 1)) == MCOperand_getReg(MCInst_getOperand(MI, 0))) {
       // (IMUL64rri8 GR64:$r, GR64:$r, i64i8imm:$imm)
-      AsmString = "imulq $\x03, $\x01";
+      AsmString = "imulq $\x01, $\x03";
       break;
     }
     return NULL;
