@@ -33,6 +33,8 @@ const char *X86_group_name(csh handle, unsigned int id);
 // this is to handle instructions embedding accumulate registers into AsmStrs[]
 x86_reg X86_insn_reg_intel(unsigned int id);
 x86_reg X86_insn_reg_att(unsigned int id);
+bool X86_insn_reg_intel2(unsigned int id, x86_reg *reg1, x86_reg *reg2);
+bool X86_insn_reg_att2(unsigned int id, x86_reg *reg1, x86_reg *reg2);
 
 extern uint64_t arch_masks[9];
 
