@@ -92,6 +92,7 @@ static void printi32mem(MCInst *MI, unsigned OpNo, SStream *O)
 			MI->x86opsize = 8;
 			break;
 		case X86_MOV32ms:
+		case X86_MOV32sm:
 			SStream_concat0(O, "word ptr ");
 			MI->x86opsize = 2;
 			break;
