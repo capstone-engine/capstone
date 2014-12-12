@@ -703,9 +703,14 @@ static int readPrefixes(struct InternalInstruction* insn)
 			if ((byte & 0xf0) == 0x40) {
 				uint8_t opcodeByte;
 
-				if (lookAtByte(insn, &opcodeByte) || ((opcodeByte & 0xf0) == 0x40)) {
-					// dbgprintf(insn, "Redundant REX prefix");
-					return -1;
+				while(true) {
+					if (lookAtByte(insn, &opcodeByte))	// out of input code
+						return -1;
+					if ((opcodeByte & 0xf0) == 0x40) {
+						// another REX prefix, but we only remember the last one
+						consumeByte(insn, &byte);
+					} else
+						break;
 				}
 
 				insn->rexPrefix = byte;
