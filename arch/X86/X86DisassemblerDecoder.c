@@ -391,6 +391,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 	bool hasOpSize = false;
 
 	if (insn->mode == MODE_64BIT) {
+		// eliminate consecutive redundant REX bytes in front
 		if (consumeByte(insn, &byte))
 			return -1;
 
@@ -402,6 +403,24 @@ static int readPrefixes(struct InternalInstruction* insn)
 					// another REX prefix, but we only remember the last one
 					consumeByte(insn, &byte);
 				} else
+					break;
+			}
+			// recover the last REX byte if next byte is not a legacy prefix
+			switch (byte) {
+				case 0xf2:  /* REPNE/REPNZ */
+				case 0xf3:  /* REP or REPE/REPZ */
+				case 0xf0:  /* LOCK */
+				case 0x2e:  /* CS segment override -OR- Branch not taken */
+				case 0x36:  /* SS segment override -OR- Branch taken */
+				case 0x3e:  /* DS segment override */
+				case 0x26:  /* ES segment override */
+				case 0x64:  /* FS segment override */
+				case 0x65:  /* GS segment override */
+				case 0x66:  /* Operand-size override */
+				case 0x67:  /* Address-size override */
+					break;
+				default:    /* Not a prefix byte */
+					unconsumeByte(insn);
 					break;
 			}
 		} else {
