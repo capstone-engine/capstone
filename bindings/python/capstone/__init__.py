@@ -350,10 +350,11 @@ def cs_disasm_quick(arch, mode, code, offset, count=0):
     all_insn = ctypes.POINTER(_cs_insn)()
     res = _cs.cs_disasm(csh, code, len(code), offset, count, ctypes.byref(all_insn))
     if res > 0:
-        for i in range(res):
-            yield CsInsn(_dummy_cs(csh, arch), all_insn[i])
-
-        _cs.cs_free(all_insn, res)
+        try:
+            for i in range(res):
+                yield CsInsn(_dummy_cs(csh, arch), all_insn[i])
+        finally:
+            _cs.cs_free(all_insn, res)
     else:
         status = _cs.cs_errno(csh)
         if status != CS_ERR_OK:
@@ -390,11 +391,12 @@ def cs_disasm_lite(arch, mode, code, offset, count=0):
     all_insn = ctypes.POINTER(_cs_insn)()
     res = _cs.cs_disasm(csh, code, len(code), offset, count, ctypes.byref(all_insn))
     if res > 0:
-        for i in range(res):
-            insn = all_insn[i]
-            yield (insn.address, insn.size, insn.mnemonic.decode('ascii'), insn.op_str.decode('ascii'))
-
-        _cs.cs_free(all_insn, res)
+        try:
+            for i in range(res):
+                insn = all_insn[i]
+                yield (insn.address, insn.size, insn.mnemonic.decode('ascii'), insn.op_str.decode('ascii'))
+        finally:
+            _cs.cs_free(all_insn, res)
     else:
         status = _cs.cs_errno(csh)
         if status != CS_ERR_OK:
@@ -810,9 +812,11 @@ class Cs(object):
             print(code)'''
         res = _cs.cs_disasm(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
         if res > 0:
-            for i in range(res):
-                yield CsInsn(self, all_insn[i])
-            _cs.cs_free(all_insn, res)
+            try:
+                for i in range(res):
+                    yield CsInsn(self, all_insn[i])
+            finally:
+                _cs.cs_free(all_insn, res)
         else:
             status = _cs.cs_errno(self.csh)
             if status != CS_ERR_OK:
@@ -832,10 +836,12 @@ class Cs(object):
         all_insn = ctypes.POINTER(_cs_insn)()
         res = _cs.cs_disasm(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
         if res > 0:
-            for i in range(res):
-                insn = all_insn[i]
-                yield (insn.address, insn.size, insn.mnemonic.decode('ascii'), insn.op_str.decode('ascii'))
-            _cs.cs_free(all_insn, res)
+            try:
+                for i in range(res):
+                    insn = all_insn[i]
+                    yield (insn.address, insn.size, insn.mnemonic.decode('ascii'), insn.op_str.decode('ascii'))
+            finally:
+                _cs.cs_free(all_insn, res)
         else:
             status = _cs.cs_errno(self.csh)
             if status != CS_ERR_OK:
