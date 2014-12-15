@@ -447,6 +447,12 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 
 	total_size = sizeof(cs_insn) * cache_size;
 	total = cs_mem_malloc(total_size);
+	if (total == NULL) {
+		// insufficient memory
+		handle->errnum = CS_ERR_MEM;
+		return 0;
+	}
+
 	insn_cache = total;
 
 	while (size > 0) {
