@@ -886,6 +886,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     19010750U,	// MOVSX32rm8
     10622142U,	// MOVSX32rr16
     10622142U,	// MOVSX32rr8
+    10621209U,	// MOVSX64_NOREXrr32
     14816446U,	// MOVSX64rm16
     8524057U,	// MOVSX64rm32
     19010750U,	// MOVSX64rm8
@@ -941,6 +942,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     4852U,	// NOOP18_r5
     4852U,	// NOOP18_r6
     4852U,	// NOOP18_r7
+    1585908U,	// NOOP19rr
     17140U,	// NOOPL
     17140U,	// NOOPL_19
     17140U,	// NOOPL_1a
@@ -1078,52 +1080,52 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     4623U,	// PUSHi16
     4623U,	// PUSHi32
     8771U,	// RCL16m1
-    1581635U,	// RCL16mCL
+    1712707U,	// RCL16mCL
     139843U,	// RCL16mi
     4675U,	// RCL16r1
-    1577539U,	// RCL16rCL
+    1708611U,	// RCL16rCL
     2232899U,	// RCL16ri
     16963U,	// RCL32m1
-    1589827U,	// RCL32mCL
+    1720899U,	// RCL32mCL
     148035U,	// RCL32mi
     4675U,	// RCL32r1
-    1577539U,	// RCL32rCL
+    1708611U,	// RCL32rCL
     2232899U,	// RCL32ri
     21059U,	// RCL64m1
-    1593923U,	// RCL64mCL
+    1724995U,	// RCL64mCL
     152131U,	// RCL64mi
     4675U,	// RCL64r1
-    1577539U,	// RCL64rCL
+    1708611U,	// RCL64rCL
     2232899U,	// RCL64ri
     25155U,	// RCL8m1
-    1598019U,	// RCL8mCL
+    1729091U,	// RCL8mCL
     156227U,	// RCL8mi
     4675U,	// RCL8r1
-    1577539U,	// RCL8rCL
+    1708611U,	// RCL8rCL
     2232899U,	// RCL8ri
     9040U,	// RCR16m1
-    1581904U,	// RCR16mCL
+    1712976U,	// RCR16mCL
     140112U,	// RCR16mi
     4944U,	// RCR16r1
-    1577808U,	// RCR16rCL
+    1708880U,	// RCR16rCL
     2233168U,	// RCR16ri
     17232U,	// RCR32m1
-    1590096U,	// RCR32mCL
+    1721168U,	// RCR32mCL
     148304U,	// RCR32mi
     4944U,	// RCR32r1
-    1577808U,	// RCR32rCL
+    1708880U,	// RCR32rCL
     2233168U,	// RCR32ri
     21328U,	// RCR64m1
-    1594192U,	// RCR64mCL
+    1725264U,	// RCR64mCL
     152400U,	// RCR64mi
     4944U,	// RCR64r1
-    1577808U,	// RCR64rCL
+    1708880U,	// RCR64rCL
     2233168U,	// RCR64ri
     25424U,	// RCR8m1
-    1598288U,	// RCR8mCL
+    1729360U,	// RCR8mCL
     156496U,	// RCR8mi
     4944U,	// RCR8r1
-    1577808U,	// RCR8rCL
+    1708880U,	// RCR8rCL
     2233168U,	// RCR8ri
     4504U,	// RDFSBASE
     4504U,	// RDFSBASE64
@@ -1166,53 +1168,53 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     3328U,	// RETQ
     3328U,	// RETW
     2525U,	// REX64_PREFIX
-    1712746U,	// ROL16m1
-    1581674U,	// ROL16mCL
+    1843818U,	// ROL16m1
+    1712746U,	// ROL16mCL
     139882U,	// ROL16mi
-    1708650U,	// ROL16r1
-    1577578U,	// ROL16rCL
+    1839722U,	// ROL16r1
+    1708650U,	// ROL16rCL
     2232938U,	// ROL16ri
-    1720938U,	// ROL32m1
-    1589866U,	// ROL32mCL
+    1852010U,	// ROL32m1
+    1720938U,	// ROL32mCL
     148074U,	// ROL32mi
-    1708650U,	// ROL32r1
-    1577578U,	// ROL32rCL
+    1839722U,	// ROL32r1
+    1708650U,	// ROL32rCL
     2232938U,	// ROL32ri
-    1725034U,	// ROL64m1
-    1593962U,	// ROL64mCL
+    1856106U,	// ROL64m1
+    1725034U,	// ROL64mCL
     152170U,	// ROL64mi
-    1708650U,	// ROL64r1
-    1577578U,	// ROL64rCL
+    1839722U,	// ROL64r1
+    1708650U,	// ROL64rCL
     2232938U,	// ROL64ri
-    1729130U,	// ROL8m1
-    1598058U,	// ROL8mCL
+    1860202U,	// ROL8m1
+    1729130U,	// ROL8mCL
     156266U,	// ROL8mi
-    1708650U,	// ROL8r1
-    1577578U,	// ROL8rCL
+    1839722U,	// ROL8r1
+    1708650U,	// ROL8rCL
     2232938U,	// ROL8ri
-    1712993U,	// ROR16m1
-    1581921U,	// ROR16mCL
+    1844065U,	// ROR16m1
+    1712993U,	// ROR16mCL
     140129U,	// ROR16mi
-    1708897U,	// ROR16r1
-    1577825U,	// ROR16rCL
+    1839969U,	// ROR16r1
+    1708897U,	// ROR16rCL
     2233185U,	// ROR16ri
-    1721185U,	// ROR32m1
-    1590113U,	// ROR32mCL
+    1852257U,	// ROR32m1
+    1721185U,	// ROR32mCL
     148321U,	// ROR32mi
-    1708897U,	// ROR32r1
-    1577825U,	// ROR32rCL
+    1839969U,	// ROR32r1
+    1708897U,	// ROR32rCL
     2233185U,	// ROR32ri
-    1725281U,	// ROR64m1
-    1594209U,	// ROR64mCL
+    1856353U,	// ROR64m1
+    1725281U,	// ROR64mCL
     152417U,	// ROR64mi
-    1708897U,	// ROR64r1
-    1577825U,	// ROR64rCL
+    1839969U,	// ROR64r1
+    1708897U,	// ROR64rCL
     2233185U,	// ROR64ri
-    1729377U,	// ROR8m1
-    1598305U,	// ROR8mCL
+    1860449U,	// ROR8m1
+    1729377U,	// ROR8mCL
     156513U,	// ROR8mi
-    1708897U,	// ROR8r1
-    1577825U,	// ROR8rCL
+    1839969U,	// ROR8r1
+    1708897U,	// ROR8rCL
     2233185U,	// ROR8ri
     444732600U,	// RORX32mi
     178394296U,	// RORX32ri
@@ -1220,54 +1222,54 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     178394296U,	// RORX64ri
     3044U,	// RSM
     2914U,	// SAHF
-    1712702U,	// SAL16m1
-    1581630U,	// SAL16mCL
+    1843774U,	// SAL16m1
+    1712702U,	// SAL16mCL
     139838U,	// SAL16mi
-    1708606U,	// SAL16r1
-    1577534U,	// SAL16rCL
+    1839678U,	// SAL16r1
+    1708606U,	// SAL16rCL
     2232894U,	// SAL16ri
-    1720894U,	// SAL32m1
-    1589822U,	// SAL32mCL
+    1851966U,	// SAL32m1
+    1720894U,	// SAL32mCL
     148030U,	// SAL32mi
-    1708606U,	// SAL32r1
-    1577534U,	// SAL32rCL
+    1839678U,	// SAL32r1
+    1708606U,	// SAL32rCL
     2232894U,	// SAL32ri
-    1724990U,	// SAL64m1
-    1593918U,	// SAL64mCL
+    1856062U,	// SAL64m1
+    1724990U,	// SAL64mCL
     152126U,	// SAL64mi
-    1708606U,	// SAL64r1
-    1577534U,	// SAL64rCL
+    1839678U,	// SAL64r1
+    1708606U,	// SAL64rCL
     2232894U,	// SAL64ri
-    1729086U,	// SAL8m1
-    1598014U,	// SAL8mCL
+    1860158U,	// SAL8m1
+    1729086U,	// SAL8mCL
     156222U,	// SAL8mi
-    1708606U,	// SAL8r1
-    1577534U,	// SAL8rCL
+    1839678U,	// SAL8r1
+    1708606U,	// SAL8rCL
     2232894U,	// SAL8ri
     2733U,	// SALC
-    1712971U,	// SAR16m1
-    1581899U,	// SAR16mCL
+    1844043U,	// SAR16m1
+    1712971U,	// SAR16mCL
     140107U,	// SAR16mi
-    1708875U,	// SAR16r1
-    1577803U,	// SAR16rCL
+    1839947U,	// SAR16r1
+    1708875U,	// SAR16rCL
     2233163U,	// SAR16ri
-    1721163U,	// SAR32m1
-    1590091U,	// SAR32mCL
+    1852235U,	// SAR32m1
+    1721163U,	// SAR32mCL
     148299U,	// SAR32mi
-    1708875U,	// SAR32r1
-    1577803U,	// SAR32rCL
+    1839947U,	// SAR32r1
+    1708875U,	// SAR32rCL
     2233163U,	// SAR32ri
-    1725259U,	// SAR64m1
-    1594187U,	// SAR64mCL
+    1856331U,	// SAR64m1
+    1725259U,	// SAR64mCL
     152395U,	// SAR64mi
-    1708875U,	// SAR64r1
-    1577803U,	// SAR64rCL
+    1839947U,	// SAR64r1
+    1708875U,	// SAR64rCL
     2233163U,	// SAR64ri
-    1729355U,	// SAR8m1
-    1598283U,	// SAR8mCL
+    1860427U,	// SAR8m1
+    1729355U,	// SAR8mCL
     156491U,	// SAR8mi
-    1708875U,	// SAR8r1
-    1577803U,	// SAR8rCL
+    1839947U,	// SAR8r1
+    1708875U,	// SAR8rCL
     2233163U,	// SAR8ri
     444732588U,	// SARX32rm
     178394284U,	// SARX32rr
@@ -1360,29 +1362,29 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     54261U,	// SGDT16m
     54261U,	// SGDT32m
     54261U,	// SGDT64m
-    1712712U,	// SHL16m1
-    1581640U,	// SHL16mCL
+    1843784U,	// SHL16m1
+    1712712U,	// SHL16mCL
     139848U,	// SHL16mi
-    1708616U,	// SHL16r1
-    1577544U,	// SHL16rCL
+    1839688U,	// SHL16r1
+    1708616U,	// SHL16rCL
     2232904U,	// SHL16ri
-    1720904U,	// SHL32m1
-    1589832U,	// SHL32mCL
+    1851976U,	// SHL32m1
+    1720904U,	// SHL32mCL
     148040U,	// SHL32mi
-    1708616U,	// SHL32r1
-    1577544U,	// SHL32rCL
+    1839688U,	// SHL32r1
+    1708616U,	// SHL32rCL
     2232904U,	// SHL32ri
-    1725000U,	// SHL64m1
-    1593928U,	// SHL64mCL
+    1856072U,	// SHL64m1
+    1725000U,	// SHL64mCL
     152136U,	// SHL64mi
-    1708616U,	// SHL64r1
-    1577544U,	// SHL64rCL
+    1839688U,	// SHL64r1
+    1708616U,	// SHL64rCL
     2232904U,	// SHL64ri
-    1729096U,	// SHL8m1
-    1598024U,	// SHL8mCL
+    1860168U,	// SHL8m1
+    1729096U,	// SHL8mCL
     156232U,	// SHL8mi
-    1708616U,	// SHL8r1
-    1577544U,	// SHL8rCL
+    1839688U,	// SHL8r1
+    1708616U,	// SHL8rCL
     2232904U,	// SHL8ri
     100802778U,	// SHLD16mrCL
     436347098U,	// SHLD16mri8
@@ -1400,29 +1402,29 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     178394266U,	// SHLX32rr
     448926874U,	// SHLX64rm
     178394266U,	// SHLX64rr
-    1712988U,	// SHR16m1
-    1581916U,	// SHR16mCL
+    1844060U,	// SHR16m1
+    1712988U,	// SHR16mCL
     140124U,	// SHR16mi
-    1708892U,	// SHR16r1
-    1577820U,	// SHR16rCL
+    1839964U,	// SHR16r1
+    1708892U,	// SHR16rCL
     2233180U,	// SHR16ri
-    1721180U,	// SHR32m1
-    1590108U,	// SHR32mCL
+    1852252U,	// SHR32m1
+    1721180U,	// SHR32mCL
     148316U,	// SHR32mi
-    1708892U,	// SHR32r1
-    1577820U,	// SHR32rCL
+    1839964U,	// SHR32r1
+    1708892U,	// SHR32rCL
     2233180U,	// SHR32ri
-    1725276U,	// SHR64m1
-    1594204U,	// SHR64mCL
+    1856348U,	// SHR64m1
+    1725276U,	// SHR64mCL
     152412U,	// SHR64mi
-    1708892U,	// SHR64r1
-    1577820U,	// SHR64rCL
+    1839964U,	// SHR64r1
+    1708892U,	// SHR64rCL
     2233180U,	// SHR64ri
-    1729372U,	// SHR8m1
-    1598300U,	// SHR8mCL
+    1860444U,	// SHR8m1
+    1729372U,	// SHR8mCL
     156508U,	// SHR8mi
-    1708892U,	// SHR8r1
-    1577820U,	// SHR8rCL
+    1839964U,	// SHR8r1
+    1708892U,	// SHR8rCL
     2233180U,	// SHR8ri
     100802808U,	// SHRD16mrCL
     436347128U,	// SHRD16mri8
@@ -1512,12 +1514,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     10621083U,	// T1MSKC32rr
     12718235U,	// T1MSKC64rm
     10621083U,	// T1MSKC64rr
-    1864411U,	// TAILJMPd
-    1864411U,	// TAILJMPd64
-    1852123U,	// TAILJMPm
-    1856219U,	// TAILJMPm64
+    1995483U,	// TAILJMPd
+    1995483U,	// TAILJMPd64
+    1983195U,	// TAILJMPm
+    1987291U,	// TAILJMPm64
     0U,	// TAILJMPr
-    1839835U,	// TAILJMPr64
+    1970907U,	// TAILJMPr64
     0U,	// TCRETURNdi
     0U,	// TCRETURNdi64
     0U,	// TCRETURNmi
@@ -2109,6 +2111,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 #endif
 
   // Emit the opcode for the instruction.
+  unsigned int opcode = MCInst_getOpcode(MI);
   uint32_t Bits = OpInfo[MCInst_getOpcode(MI)];
   // assert(Bits != 0 && "Cannot print this instruction.");
 #ifndef CAPSTONE_DIET
@@ -2288,7 +2291,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   }
 
 
-  // Fragment 1 encoded into 4 bits for 15 unique commands.
+  // Fragment 1 encoded into 4 bits for 16 unique commands.
   //printf("Frag-1: %"PRIu64"\n", (Bits >> 17) & 15);
   switch ((Bits >> 17) & 15) {
   default:   // unreachable.
@@ -2356,18 +2359,23 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     return;
     break;
   case 12:
+    // NOOP19rr
+    printOperand(MI, 0, O); 
+    return;
+    break;
+  case 13:
     // RCL16mCL, RCL16rCL, RCL32mCL, RCL32rCL, RCL64mCL, RCL64rCL, RCL8mCL, R...
     SStream_concat0(O, ", cl"); 
 	op_addReg(MI, X86_REG_CL);
     return;
     break;
-  case 13:
+  case 14:
     // ROL16m1, ROL16r1, ROL32m1, ROL32r1, ROL64m1, ROL64r1, ROL8m1, ROL8r1, ...
     SStream_concat0(O, ", 1"); 
 	op_addImm(MI, 1);
     return;
     break;
-  case 14:
+  case 15:
     // TAILJMPd, TAILJMPd64, TAILJMPm, TAILJMPm64, TAILJMPr64
     SStream_concat0(O, "  # TAILCALL"); 
     return;

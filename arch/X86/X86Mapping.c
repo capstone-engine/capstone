@@ -11382,6 +11382,12 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
+		X86_MOVSX64_NOREXrr32, X86_INS_MOVSXD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { X86_GRP_MODE64, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_MOVSX64rm16, X86_INS_MOVSX,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
@@ -11911,6 +11917,12 @@ static insn_map insns[] = {	// full x86 instructions
 	},
 	{
 		X86_NOOP18_r7, X86_INS_NOP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_NOOP19rr, X86_INS_NOP,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -17202,6 +17214,18 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
+		X86_ST_FCOMPST0r, X86_INS_FCOMP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_ST_FCOMST0r, X86_INS_FCOM,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
 		X86_ST_FP32m, X86_INS_FSTP,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
@@ -17220,19 +17244,31 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_ST_FPNCE, X86_INS_FSTPNCE,
+		X86_ST_FPNCEST0r, X86_INS_FSTPNCE,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		X86_ST_FPr0r7, X86_INS_FSTP,
+		X86_ST_FPST0r, X86_INS_FSTP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_ST_FPST0r_alt, X86_INS_FSTP,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
 		X86_ST_FPrr, X86_INS_FSTP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_ST_FXCHST0r, X86_INS_FXCH,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
 #endif
@@ -42647,6 +42683,12 @@ static insn_map insns[] = {	// reduce x86 instructions
 #endif
 	},
 	{
+		X86_MOVSX64_NOREXrr32, X86_INS_MOVSXD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { X86_GRP_MODE64, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_MOVSX64rm16, X86_INS_MOVSX,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
@@ -42972,6 +43014,12 @@ static insn_map insns[] = {	// reduce x86 instructions
 	},
 	{
 		X86_NOOP18_r7, X86_INS_NOP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_NOOP19rr, X86_INS_NOP,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
