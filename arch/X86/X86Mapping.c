@@ -47245,10 +47245,14 @@ struct insn_reg {
 	x86_reg reg;
 };
 
+struct insn_reg2 {
+	uint16_t insn;
+	x86_reg reg1, reg2;
+};
+
 static struct insn_reg insn_regs_att[] = {
 	{ X86_LODSQ, X86_REG_RAX },
 	{ X86_OR32i32, X86_REG_EAX },
-	{ X86_IN16rr, X86_REG_AX },
 	{ X86_SUB32i32, X86_REG_EAX },
 	{ X86_TEST32i32, X86_REG_EAX },
 	{ X86_XCHG64ar, X86_REG_RAX },
@@ -47276,7 +47280,6 @@ static struct insn_reg insn_regs_att[] = {
 	{ X86_OR16i16, X86_REG_AX },
 	{ X86_XCHG32ar, X86_REG_EAX },
 	{ X86_SBB8i8, X86_REG_AL },
-	{ X86_IN8rr, X86_REG_AL },
 	{ X86_SCASQ, X86_REG_RAX },
 	{ X86_SBB32i32, X86_REG_EAX },
 	{ X86_XOR64i32, X86_REG_RAX },
@@ -47293,7 +47296,6 @@ static struct insn_reg insn_regs_att[] = {
 	{ X86_MOV32o32a, X86_REG_EAX },
 	{ X86_MOV8o8a_16, X86_REG_AL },
 	{ X86_SUB8i8, X86_REG_AL },
-	{ X86_IN32rr, X86_REG_EAX },
 	{ X86_ADD8i8, X86_REG_AL },
 	{ X86_OR64i32, X86_REG_RAX },
 	{ X86_SCASB, X86_REG_AL },
@@ -47310,6 +47312,39 @@ static struct insn_reg insn_regs_att[] = {
 	{ X86_CMP16i16, X86_REG_AX },
 	{ X86_ADC32i32, X86_REG_EAX },
 	{ X86_IN32ri, X86_REG_EAX },
+
+	{ X86_PUSHCS32, X86_REG_CS },
+	{ X86_PUSHDS32, X86_REG_DS },
+	{ X86_PUSHES32, X86_REG_ES },
+	{ X86_PUSHFS32, X86_REG_FS },
+	{ X86_PUSHGS32, X86_REG_GS },
+	{ X86_PUSHSS32, X86_REG_SS },
+
+	{ X86_PUSHFS64, X86_REG_FS },
+	{ X86_PUSHGS64, X86_REG_GS },
+
+	{ X86_PUSHCS16, X86_REG_CS },
+	{ X86_PUSHDS16, X86_REG_DS },
+	{ X86_PUSHES16, X86_REG_ES },
+	{ X86_PUSHFS16, X86_REG_FS },
+	{ X86_PUSHGS16, X86_REG_GS },
+	{ X86_PUSHSS16, X86_REG_SS },
+
+	{ X86_POPDS32, X86_REG_DS },
+	{ X86_POPES32, X86_REG_ES },
+	{ X86_POPFS32, X86_REG_FS },
+	{ X86_POPGS32, X86_REG_GS },
+	{ X86_POPSS32, X86_REG_SS },
+
+	{ X86_POPFS64, X86_REG_FS },
+	{ X86_POPGS64, X86_REG_GS },
+
+	{ X86_POPDS16, X86_REG_DS },
+	{ X86_POPES16, X86_REG_ES },
+	{ X86_POPFS16, X86_REG_FS },
+	{ X86_POPGS16, X86_REG_GS },
+	{ X86_POPSS16, X86_REG_SS },
+
 #ifndef CAPSTONE_X86_REDUCE
 	{ X86_SKINIT, X86_REG_EAX },
 	{ X86_INVLPGA32, X86_REG_EAX },
@@ -47327,7 +47362,6 @@ static struct insn_reg insn_regs_att[] = {
 static struct insn_reg insn_regs_intel[] = {
 	{ X86_LODSQ, X86_REG_RAX },
 	{ X86_OR32i32, X86_REG_EAX },
-	{ X86_IN16rr, X86_REG_AX },
 	{ X86_SUB32i32, X86_REG_EAX },
 	{ X86_TEST32i32, X86_REG_EAX },
 	{ X86_ADD32i32, X86_REG_EAX },
@@ -47355,7 +47389,6 @@ static struct insn_reg insn_regs_intel[] = {
 	{ X86_OR16i16, X86_REG_AX },
 	{ X86_XCHG32ar, X86_REG_EAX },
 	{ X86_SBB8i8, X86_REG_AL },
-	{ X86_IN8rr, X86_REG_AL },
 	{ X86_SCASQ, X86_REG_RAX },
 	{ X86_SBB32i32, X86_REG_EAX },
 	{ X86_XOR64i32, X86_REG_RAX },
@@ -47372,7 +47405,6 @@ static struct insn_reg insn_regs_intel[] = {
 	{ X86_MOV32o32a, X86_REG_EAX },
 	{ X86_MOV8o8a_16, X86_REG_AL },
 	{ X86_SUB8i8, X86_REG_AL },
-	{ X86_IN32rr, X86_REG_EAX },
 	{ X86_ADD8i8, X86_REG_AL },
 	{ X86_OR64i32, X86_REG_RAX },
 	{ X86_SCASB, X86_REG_AL },
@@ -47389,6 +47421,39 @@ static struct insn_reg insn_regs_intel[] = {
 	{ X86_CMP16i16, X86_REG_AX },
 	{ X86_ADC32i32, X86_REG_EAX },
 	{ X86_IN32ri, X86_REG_EAX },
+
+	{ X86_PUSHCS32, X86_REG_CS },
+	{ X86_PUSHDS32, X86_REG_DS },
+	{ X86_PUSHES32, X86_REG_ES },
+	{ X86_PUSHFS32, X86_REG_FS },
+	{ X86_PUSHGS32, X86_REG_GS },
+	{ X86_PUSHSS32, X86_REG_SS },
+
+	{ X86_PUSHFS64, X86_REG_FS },
+	{ X86_PUSHGS64, X86_REG_GS },
+
+	{ X86_PUSHCS16, X86_REG_CS },
+	{ X86_PUSHDS16, X86_REG_DS },
+	{ X86_PUSHES16, X86_REG_ES },
+	{ X86_PUSHFS16, X86_REG_FS },
+	{ X86_PUSHGS16, X86_REG_GS },
+	{ X86_PUSHSS16, X86_REG_SS },
+
+	{ X86_POPDS32, X86_REG_DS },
+	{ X86_POPES32, X86_REG_ES },
+	{ X86_POPFS32, X86_REG_FS },
+	{ X86_POPGS32, X86_REG_GS },
+	{ X86_POPSS32, X86_REG_SS },
+
+	{ X86_POPFS64, X86_REG_FS },
+	{ X86_POPGS64, X86_REG_GS },
+
+	{ X86_POPDS16, X86_REG_DS },
+	{ X86_POPES16, X86_REG_ES },
+	{ X86_POPFS16, X86_REG_FS },
+	{ X86_POPGS16, X86_REG_GS },
+	{ X86_POPSS16, X86_REG_SS },
+
 #ifndef CAPSTONE_X86_REDUCE
 	{ X86_SKINIT, X86_REG_EAX },
 	{ X86_INVLPGA32, X86_REG_EAX },
@@ -47403,7 +47468,15 @@ static struct insn_reg insn_regs_intel[] = {
 #endif
 };
 
+static struct insn_reg2 insn_regs_intel2[] = {
+	{ X86_IN8rr, X86_REG_AL, X86_REG_DX },
+	{ X86_IN16rr, X86_REG_AX, X86_REG_DX },
+	{ X86_IN32rr, X86_REG_EAX, X86_REG_DX },
 
+	{ X86_OUT8rr, X86_REG_DX, X86_REG_AL },
+	{ X86_OUT16rr, X86_REG_DX, X86_REG_AX },
+	{ X86_OUT32rr, X86_REG_DX, X86_REG_EAX },
+};
 
 // return register of given instruction id
 // return 0 if not found
@@ -47420,6 +47493,40 @@ x86_reg X86_insn_reg_intel(unsigned int id)
 
 	// not found
 	return 0;
+}
+
+bool X86_insn_reg_intel2(unsigned int id, x86_reg *reg1, x86_reg *reg2)
+{
+	unsigned int i;
+
+	for (i = 0; i < ARR_SIZE(insn_regs_intel2); i++) {
+		if (insn_regs_intel2[i].insn == id) {
+			*reg1 = insn_regs_intel2[i].reg1;
+			*reg2 = insn_regs_intel2[i].reg2;
+			return true;
+		}
+	}
+
+	// not found
+	return false;
+}
+
+// ATT just reuses Intel data, but with the order of registers reversed
+bool X86_insn_reg_att2(unsigned int id, x86_reg *reg1, x86_reg *reg2)
+{
+	unsigned int i;
+
+	for (i = 0; i < ARR_SIZE(insn_regs_intel2); i++) {
+		if (insn_regs_intel2[i].insn == id) {
+			// reverse order of Intel syntax registers
+			*reg1 = insn_regs_intel2[i].reg2;
+			*reg2 = insn_regs_intel2[i].reg1;
+			return true;
+		}
+	}
+
+	// not found
+	return false;
 }
 
 x86_reg X86_insn_reg_att(unsigned int id)

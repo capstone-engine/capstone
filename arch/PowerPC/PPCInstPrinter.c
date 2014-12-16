@@ -112,6 +112,14 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 			else
 				SStream_concat(O, ", %u", (unsigned int)SH);
 
+			if (MI->csh->detail) {
+				cs_ppc *ppc = &MI->flat_insn->detail->ppc;
+
+				ppc->operands[ppc->op_count].type = PPC_OP_IMM;
+				ppc->operands[ppc->op_count].imm = SH;
+				++ppc->op_count;
+			}
+
 			return;
 		}
 	}

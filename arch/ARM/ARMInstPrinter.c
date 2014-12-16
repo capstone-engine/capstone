@@ -469,20 +469,24 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 						break;
 
 		case ARM_LDR_POST_IMM:
-						if (MCOperand_getReg(MCInst_getOperand(MI, 2)) == ARM_SP &&
-								MCOperand_getImm(MCInst_getOperand(MI, 4)) == 4) {
-							SStream_concat0(O, "pop");
-							MCInst_setOpcodePub(MI, ARM_INS_POP);
-							printPredicateOperand(MI, 5, O);
-							SStream_concat0(O, "\t{");
-							printRegName(MI->csh, O, MCOperand_getReg(MCInst_getOperand(MI, 0)));
-							if (MI->csh->detail) {
-								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
-								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, 0));
-								MI->flat_insn->detail->arm.op_count++;
+						if (MCOperand_getReg(MCInst_getOperand(MI, 2)) == ARM_SP) {
+							MCOperand *MO2 = MCInst_getOperand(MI, 4);
+							if ((getAM2Op((unsigned int)MCOperand_getImm(MO2)) == ARM_AM_add &&
+										getAM2Offset((unsigned int)MCOperand_getImm(MO2)) == 4) ||
+									MCOperand_getImm(MO2) == 4) {
+								SStream_concat0(O, "pop");
+								MCInst_setOpcodePub(MI, ARM_INS_POP);
+								printPredicateOperand(MI, 5, O);
+								SStream_concat0(O, "\t{");
+								printRegName(MI->csh, O, MCOperand_getReg(MCInst_getOperand(MI, 0)));
+								if (MI->csh->detail) {
+									MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
+									MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, 0));
+									MI->flat_insn->detail->arm.op_count++;
+								}
+								SStream_concat0(O, "}");
+								return;
 							}
-							SStream_concat0(O, "}");
-							return;
 						}
 						break;
 
@@ -650,6 +654,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				case ARM_INS_ORR:
 				case ARM_INS_EOR:
 				case ARM_INS_BIC:
+				case ARM_INS_MVN:
 					// do not print number in negative form
 					if (imm >= 0 && imm <= HEX_THRESHOLD)
 						SStream_concat(O, "#%u", imm);

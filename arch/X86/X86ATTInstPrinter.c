@@ -77,10 +77,18 @@ static void printi16mem(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printi32mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	if (MI->Opcode == X86_BOUNDS32rm)
-		MI->x86opsize = 8;
-	else
-		MI->x86opsize = 4;
+	switch(MI->Opcode) {
+		default:
+			MI->x86opsize = 4;
+			break;
+		case X86_BOUNDS32rm:
+			MI->x86opsize = 8;
+			break;
+		case X86_MOV32ms:
+		case X86_MOV32sm:
+			MI->x86opsize = 2;
+			break;
+	}
 
 	printMemReference(MI, OpNo, O);
 }
@@ -625,7 +633,7 @@ static void printRegName(SStream *OS, unsigned RegNo)
 void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 {
 	char *mnem;
-	x86_reg reg;
+	x86_reg reg, reg2;
 	int i;
 
 	// Output CALLpcrel32 as "callq" in 64-bit mode.
@@ -672,6 +680,16 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 			MI->flat_insn->detail->x86.operands[0].reg = reg;
 			MI->flat_insn->detail->x86.operands[0].size = MI->csh->regsize_map[reg];
 			MI->flat_insn->detail->x86.op_count++;
+		} else {
+			if (X86_insn_reg_att2(MCInst_getOpcode(MI), &reg, &reg2)) {
+				MI->flat_insn->detail->x86.operands[0].type = X86_OP_REG;
+				MI->flat_insn->detail->x86.operands[0].reg = reg;
+				MI->flat_insn->detail->x86.operands[0].size = MI->csh->regsize_map[reg];
+				MI->flat_insn->detail->x86.operands[1].type = X86_OP_REG;
+				MI->flat_insn->detail->x86.operands[1].reg = reg2;
+				MI->flat_insn->detail->x86.operands[1].size = MI->csh->regsize_map[reg2];
+				MI->flat_insn->detail->x86.op_count = 2;
+			}
 		}
 	}
 }
