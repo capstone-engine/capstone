@@ -2049,6 +2049,9 @@ int decodeInstruction(struct InternalInstruction* insn,
 
 	insn->length = (size_t)(insn->readerCursor - insn->startLocation);
 
+	if (insn->length > 15)
+		return -1;
+
 	// dbgprintf(insn, "Read from 0x%llx to 0x%llx: length %zu",
 	// 		startLoc, insn->readerCursor, insn->length);
 
