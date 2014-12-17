@@ -2012,16 +2012,11 @@ static int readOperands(struct InternalInstruction* insn)
  * @param reader    - The function to be used to read the instruction's bytes.
  * @param readerArg - A generic argument to be passed to the reader to store
  *                    any internal state.
- * @param logger    - If non-NULL, the function to be used to write log messages
- *                    and warnings.
- * @param loggerArg - A generic argument to be passed to the logger to store
- *                    any internal state.
  * @param startLoc  - The address (in the reader's address space) of the first
  *                    byte in the instruction.
  * @param mode      - The mode (real mode, IA-32e, or IA-32e in 64-bit mode) to
  *                    decode the instruction in.
- * @return          - 0 if the instruction's memory could be read; nonzero if
- *                    not.
+ * @return          - 0 if instruction is valid; nonzero if not.
  */
 int decodeInstruction(struct InternalInstruction* insn,
 		byteReader_t reader,
@@ -2042,15 +2037,16 @@ int decodeInstruction(struct InternalInstruction* insn,
 			readOperands(insn))
 		return -1;
 
+	insn->length = (size_t)(insn->readerCursor - insn->startLocation);
+
+	// instruction length must be <= 15 to be valid
+	if (insn->length > 15)
+		return -1;
+
 	if (insn->operandSize == 0)
 		insn->operandSize = insn->registerSize;
 
 	insn->operands = &x86OperandSets[insn->spec->operands][0];
-
-	insn->length = (size_t)(insn->readerCursor - insn->startLocation);
-
-	if (insn->length > 15)
-		return -1;
 
 	// dbgprintf(insn, "Read from 0x%llx to 0x%llx: length %zu",
 	// 		startLoc, insn->readerCursor, insn->length);
