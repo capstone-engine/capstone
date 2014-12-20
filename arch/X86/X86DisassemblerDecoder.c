@@ -91,7 +91,7 @@ static int modRMRequired(OpcodeType type,
 		InstructionContext insnContext,
 		uint16_t opcode)
 {
-	const struct OpcodeDecision* decision = NULL;
+	const struct OpcodeDecision *decision = NULL;
 	const uint8_t *indextable = NULL;
 	uint8_t index;
 
@@ -154,7 +154,7 @@ static InstrUID decode(OpcodeType type,
 		uint8_t opcode,
 		uint8_t modRM)
 {
-	const struct ModRMDecision* dec = NULL;
+	const struct ModRMDecision *dec = NULL;
 	const uint8_t *indextable = NULL;
 	uint8_t index;
 
@@ -274,7 +274,7 @@ static const struct InstructionSpecifier *specifierForUID(InstrUID uid)
  *                with the data read.
  * @return      - 0 if the read was successful; nonzero otherwise.
  */
-static int consumeByte(struct InternalInstruction* insn, uint8_t* byte)
+static int consumeByte(struct InternalInstruction *insn, uint8_t *byte)
 {
 	int ret = insn->reader(insn->readerArg, byte, insn->readerCursor);
 
@@ -296,13 +296,13 @@ static int lookAtByte(struct InternalInstruction *insn, uint8_t *byte)
 	return insn->reader(insn->readerArg, byte, insn->readerCursor);
 }
 
-static void unconsumeByte(struct InternalInstruction* insn)
+static void unconsumeByte(struct InternalInstruction *insn)
 {
 	insn->readerCursor--;
 }
 
 #define CONSUME_FUNC(name, type)                                  \
-	static int name(struct InternalInstruction* insn, type* ptr) {  \
+	static int name(struct InternalInstruction *insn, type *ptr) {  \
 		type combined = 0;                                            \
 		unsigned offset;                                              \
 		for (offset = 0; offset < sizeof(type); ++offset) {           \
@@ -345,7 +345,7 @@ CONSUME_FUNC(consumeUInt64, uint64_t)
  * @param location  - The location where the prefix is located (in the address
  *                    space of the instruction's reader).
  */
-static void setPrefixPresent(struct InternalInstruction* insn,
+static void setPrefixPresent(struct InternalInstruction *insn,
 		uint8_t prefix, uint64_t location)
 {
 	insn->prefixPresent[prefix] = 1;
@@ -361,7 +361,7 @@ static void setPrefixPresent(struct InternalInstruction* insn,
  * @param location  - The location to query.
  * @return          - Whether the prefix is at that location.
  */
-static bool isPrefixAtLocation(struct InternalInstruction* insn,
+static bool isPrefixAtLocation(struct InternalInstruction *insn,
 		uint8_t prefix,
 		uint64_t location)
 {
@@ -381,7 +381,7 @@ static bool isPrefixAtLocation(struct InternalInstruction* insn,
  * @return      - 0 if the instruction could be read until the end of the prefix
  *                bytes, and no prefixes conflicted; nonzero otherwise.
  */
-static int readPrefixes(struct InternalInstruction* insn)
+static int readPrefixes(struct InternalInstruction *insn)
 {
 	bool isPrefix = true;
 	uint64_t prefixLocation;
@@ -802,7 +802,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 	return 0;
 }
 
-static int readModRM(struct InternalInstruction* insn);
+static int readModRM(struct InternalInstruction *insn);
 
 /*
  * readOpcode - Reads the opcode (excepting the ModR/M byte in the case of
@@ -811,7 +811,7 @@ static int readModRM(struct InternalInstruction* insn);
  * @param insn  - The instruction whose opcode is to be read.
  * @return      - 0 if the opcode could be read successfully; nonzero otherwise.
  */
-static int readOpcode(struct InternalInstruction* insn)
+static int readOpcode(struct InternalInstruction *insn)
 {
 	/* Determine the length of the primary opcode */
 	uint8_t current;
@@ -962,8 +962,8 @@ static int readOpcode(struct InternalInstruction* insn)
  * @return              - 0 if the ModR/M could be read when needed or was not
  *                        needed; nonzero otherwise.
  */
-static int getIDWithAttrMask(uint16_t* instructionID,
-		struct InternalInstruction* insn,
+static int getIDWithAttrMask(uint16_t *instructionID,
+		struct InternalInstruction *insn,
 		uint16_t attrMask)
 {
 	bool hasModRMExtension;
@@ -1034,7 +1034,7 @@ static bool is16BitEquivalent(unsigned orig, unsigned equiv)
  * @return      - 0 if the ModR/M could be read when needed or was not needed;
  *                nonzero otherwise.
  */
-static int getID(struct InternalInstruction* insn)
+static int getID(struct InternalInstruction *insn)
 {
 	uint16_t attrMask;
 	uint16_t instructionID;
@@ -1243,7 +1243,7 @@ static int getID(struct InternalInstruction* insn)
  * @param insn  - The instruction whose SIB byte is to be read.
  * @return      - 0 if the SIB byte was successfully read; nonzero otherwise.
  */
-static int readSIB(struct InternalInstruction* insn)
+static int readSIB(struct InternalInstruction *insn)
 {
 	SIBIndex sibIndexBase = SIB_INDEX_NONE;
 	SIBBase sibBaseBase = SIB_BASE_NONE;
@@ -1342,7 +1342,7 @@ static int readSIB(struct InternalInstruction* insn)
  * @return      - 0 if the displacement byte was successfully read; nonzero
  *                otherwise.
  */
-static int readDisplacement(struct InternalInstruction* insn)
+static int readDisplacement(struct InternalInstruction *insn)
 {
 	int8_t d8;
 	int16_t d16;
@@ -1388,7 +1388,7 @@ static int readDisplacement(struct InternalInstruction* insn)
  * @param insn  - The instruction whose addressing information is to be read.
  * @return      - 0 if the information was successfully read; nonzero otherwise.
  */
-static int readModRM(struct InternalInstruction* insn)
+static int readModRM(struct InternalInstruction *insn)
 {
 	uint8_t mod, rm, reg;
 
@@ -1721,7 +1721,7 @@ static int fixupReg(struct InternalInstruction *insn,
  *                RAX.
  * @return      - 0 on success; nonzero otherwise.
  */
-static int readOpcodeRegister(struct InternalInstruction* insn, uint8_t size)
+static int readOpcodeRegister(struct InternalInstruction *insn, uint8_t size)
 {
 	// dbgprintf(insn, "readOpcodeRegister()");
 
@@ -1771,7 +1771,7 @@ static int readOpcodeRegister(struct InternalInstruction* insn, uint8_t size)
  * @return      - 0 if the immediate was successfully consumed; nonzero
  *                otherwise.
  */
-static int readImmediate(struct InternalInstruction* insn, uint8_t size)
+static int readImmediate(struct InternalInstruction *insn, uint8_t size)
 {
 	uint8_t imm8;
 	uint16_t imm16;
@@ -1826,7 +1826,7 @@ static int readImmediate(struct InternalInstruction* insn, uint8_t size)
  * @return      - 0 if the vvvv was successfully consumed; nonzero
  *                otherwise.
  */
-static int readVVVV(struct InternalInstruction* insn)
+static int readVVVV(struct InternalInstruction *insn)
 {
 	int vvvv;
 	// dbgprintf(insn, "readVVVV()");
@@ -1858,7 +1858,7 @@ static int readVVVV(struct InternalInstruction* insn)
  * @param insn    - The instruction whose opcode field is to be read.
  * @return        - 0 on success; nonzero otherwise.
  */
-static int readMaskRegister(struct InternalInstruction* insn)
+static int readMaskRegister(struct InternalInstruction *insn)
 {
 	// dbgprintf(insn, "readMaskRegister()");
 
@@ -1877,7 +1877,7 @@ static int readMaskRegister(struct InternalInstruction* insn)
  * @param insn  - The instruction whose operands are to be read and interpreted.
  * @return      - 0 if all operands could be read; nonzero otherwise.
  */
-static int readOperands(struct InternalInstruction* insn)
+static int readOperands(struct InternalInstruction *insn)
 {
 	int index;
 	int hasVVVV, needVVVV;
@@ -2016,9 +2016,9 @@ static int readOperands(struct InternalInstruction* insn)
  *                    decode the instruction in.
  * @return          - 0 if instruction is valid; nonzero if not.
  */
-int decodeInstruction(struct InternalInstruction* insn,
+int decodeInstruction(struct InternalInstruction *insn,
 		byteReader_t reader,
-		const void* readerArg,
+		const void *readerArg,
 		uint64_t startLoc,
 		DisassemblerMode mode)
 {
