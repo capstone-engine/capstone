@@ -605,9 +605,13 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			}
 		}
 	} else if (MCOperand_isImm(Op)) {
-		int imm = (int)MCOperand_getImm(Op);
-		printInt32Bang(O, imm);
+		int64_t imm = MCOperand_getImm(Op);
 
+		if (MI->Opcode == AArch64_ADR) {
+			imm += MI->address;
+			printUInt64Bang(O, imm);
+		} else
+			printUInt64Bang(O, imm);
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = imm;
