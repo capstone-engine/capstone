@@ -816,7 +816,7 @@ static int readOpcode(struct InternalInstruction *insn)
 	/* Determine the length of the primary opcode */
 	uint8_t current;
 
-	//printf(">>> readOpcode()\n");
+	// printf(">>> readOpcode()\n");
 
 	insn->opcodeType = ONEBYTE;
 
@@ -1040,6 +1040,7 @@ static int getID(struct InternalInstruction *insn)
 	uint16_t instructionID;
 	const struct InstructionSpecifier *spec;
 
+	// printf(">>> getID()\n");
 	attrMask = ATTR_NONE;
 
 	if (insn->mode == MODE_64BIT)
@@ -1629,9 +1630,7 @@ static int readModRM(struct InternalInstruction *insn)
 			case TYPE_MM:                                         \
 				return prefix##_MM0 + (index & 7);                \
 			case TYPE_SEGMENTREG:                                 \
-				if (index > 5)                                    \
-					*valid = 0;                                   \
-				return prefix##_ES + index;                       \
+				return prefix##_ES + (index & 7);                 \
 			case TYPE_DEBUGREG:                                   \
 				if (index > 7)                                    \
 					*valid = 0;                                   \
@@ -1883,6 +1882,7 @@ static int readOperands(struct InternalInstruction *insn)
 	int hasVVVV, needVVVV;
 	int sawRegImm = 0;
 
+	// printf(">>> readOperands()\n");
 	/* If non-zero vvvv specified, need to make sure one of the operands
 	   uses it. */
 	hasVVVV = !readVVVV(insn);
