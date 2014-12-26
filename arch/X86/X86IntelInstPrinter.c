@@ -155,7 +155,7 @@ static void printf512mem(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printSSECC(MCInst *MI, unsigned Op, SStream *OS)
 {
-	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0xf;
+	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 7;
 	switch (Imm) {
 		default: break;	// never reach
 		case    0: SStream_concat0(OS, "eq"); op_addSseCC(MI, X86_SSE_CC_EQ); break;

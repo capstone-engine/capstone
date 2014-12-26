@@ -210,6 +210,56 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 			case ENCODING_IO:
 				break;
 		}
+	} else if (type == TYPE_IMM3) {
+		// Check for immediates that printSSECC can't handle.
+		if (immediate >= 8) {
+			unsigned NewOpc = 0;
+
+			switch (MCInst_getOpcode(mcInst)) {
+				default: break;	// never reach
+				case X86_CMPPDrmi: NewOpc = X86_CMPPDrmi_alt; break;
+				case X86_CMPPDrri: NewOpc = X86_CMPPDrri_alt; break;
+				case X86_CMPPSrmi: NewOpc = X86_CMPPSrmi_alt; break;
+				case X86_CMPPSrri: NewOpc = X86_CMPPSrri_alt; break;
+				case X86_CMPSDrm:  NewOpc = X86_CMPSDrm_alt;  break;
+				case X86_CMPSDrr:  NewOpc = X86_CMPSDrr_alt;  break;
+				case X86_CMPSSrm:  NewOpc = X86_CMPSSrm_alt;  break;
+				case X86_CMPSSrr:  NewOpc = X86_CMPSSrr_alt;  break;
+			}
+			// Switch opcode to the one that doesn't get special printing.
+			MCInst_setOpcode(mcInst, NewOpc);
+		}
+	} else if (type == TYPE_IMM5) {
+		// Check for immediates that printAVXCC can't handle.
+		if (immediate >= 32) {
+			unsigned NewOpc = 0;
+
+			switch (MCInst_getOpcode(mcInst)) {
+				default: break; // unexpected opcode
+				case X86_VCMPPDrmi:  NewOpc = X86_VCMPPDrmi_alt;  break;
+				case X86_VCMPPDrri:  NewOpc = X86_VCMPPDrri_alt;  break;
+				case X86_VCMPPSrmi:  NewOpc = X86_VCMPPSrmi_alt;  break;
+				case X86_VCMPPSrri:  NewOpc = X86_VCMPPSrri_alt;  break;
+				case X86_VCMPSDrm:   NewOpc = X86_VCMPSDrm_alt;   break;
+				case X86_VCMPSDrr:   NewOpc = X86_VCMPSDrr_alt;   break;
+				case X86_VCMPSSrm:   NewOpc = X86_VCMPSSrm_alt;   break;
+				case X86_VCMPSSrr:   NewOpc = X86_VCMPSSrr_alt;   break;
+				case X86_VCMPPDYrmi: NewOpc = X86_VCMPPDYrmi_alt; break;
+				case X86_VCMPPDYrri: NewOpc = X86_VCMPPDYrri_alt; break;
+				case X86_VCMPPSYrmi: NewOpc = X86_VCMPPSYrmi_alt; break;
+				case X86_VCMPPSYrri: NewOpc = X86_VCMPPSYrri_alt; break;
+				case X86_VCMPPDZrmi: NewOpc = X86_VCMPPDZrmi_alt; break;
+				case X86_VCMPPDZrri: NewOpc = X86_VCMPPDZrri_alt; break;
+				case X86_VCMPPSZrmi: NewOpc = X86_VCMPPSZrmi_alt; break;
+				case X86_VCMPPSZrri: NewOpc = X86_VCMPPSZrri_alt; break;
+				case X86_VCMPSDZrm:  NewOpc = X86_VCMPSDZrmi_alt; break;
+				case X86_VCMPSDZrr:  NewOpc = X86_VCMPSDZrri_alt; break;
+				case X86_VCMPSSZrm:  NewOpc = X86_VCMPSSZrmi_alt; break;
+				case X86_VCMPSSZrr:  NewOpc = X86_VCMPSSZrri_alt; break;
+			}
+			// Switch opcode to the one that doesn't get special printing.
+			MCInst_setOpcode(mcInst, NewOpc);
+		}
 	}
 
 	switch (type) {
