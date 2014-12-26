@@ -443,6 +443,7 @@ typedef enum x86_insn {
 	X86_INS_FPREM,
 	X86_INS_FPREM1,
 	X86_INS_FPTAN,
+	X86_INS_FFREEP,
 	X86_INS_FRNDINT,
 	X86_INS_FRSTOR,
 	X86_INS_FNSAVE,
@@ -935,6 +936,7 @@ typedef enum x86_insn {
 	X86_INS_FST,
 	X86_INS_FSTP,
 	X86_INS_FSTPNCE,
+	X86_INS_FXCH,
 	X86_INS_SUBPD,
 	X86_INS_SUBPS,
 	X86_INS_FSUBR,
@@ -1534,7 +1536,6 @@ typedef enum x86_insn {
 	X86_INS_XACQUIRE,
 	X86_INS_XBEGIN,
 	X86_INS_XCHG,
-	X86_INS_FXCH,
 	X86_INS_XCRYPTCBC,
 	X86_INS_XCRYPTCFB,
 	X86_INS_XCRYPTCTR,
@@ -1555,8 +1556,10 @@ typedef enum x86_insn {
 	X86_INS_XSHA256,
 	X86_INS_XSTORE,
 	X86_INS_XTEST,
+	X86_INS_FDISI8087_NOP,
+	X86_INS_FENI8087_NOP,
 
-	X86_INS_ENDING,	// mark the end of the list of insn
+	X86_INS_ENDING, // mark the end of the list of insn
 } x86_insn;
 
 //> Group of X86 instructions

@@ -997,6 +997,7 @@ static name_map insn_name_maps[] = {
 	{ X86_INS_FPREM, "fprem" },
 	{ X86_INS_FPREM1, "fprem1" },
 	{ X86_INS_FPTAN, "fptan" },
+	{ X86_INS_FFREEP, "ffreep" },
 	{ X86_INS_FRNDINT, "frndint" },
 	{ X86_INS_FRSTOR, "frstor" },
 	{ X86_INS_FNSAVE, "fnsave" },
@@ -1489,6 +1490,7 @@ static name_map insn_name_maps[] = {
 	{ X86_INS_FST, "fst" },
 	{ X86_INS_FSTP, "fstp" },
 	{ X86_INS_FSTPNCE, "fstpnce" },
+	{ X86_INS_FXCH, "fxch" },
 	{ X86_INS_SUBPD, "subpd" },
 	{ X86_INS_SUBPS, "subps" },
 	{ X86_INS_FSUBR, "fsubr" },
@@ -2088,7 +2090,6 @@ static name_map insn_name_maps[] = {
 	{ X86_INS_XACQUIRE, "xacquire" },
 	{ X86_INS_XBEGIN, "xbegin" },
 	{ X86_INS_XCHG, "xchg" },
-	{ X86_INS_FXCH, "fxch" },
 	{ X86_INS_XCRYPTCBC, "xcryptcbc" },
 	{ X86_INS_XCRYPTCFB, "xcryptcfb" },
 	{ X86_INS_XCRYPTCTR, "xcryptctr" },
@@ -2109,6 +2110,8 @@ static name_map insn_name_maps[] = {
 	{ X86_INS_XSHA256, "xsha256" },
 	{ X86_INS_XSTORE, "xstore" },
 	{ X86_INS_XTEST, "xtest" },
+	{ X86_INS_FDISI8087_NOP, "fdisi8087_nop" },
+	{ X86_INS_FENI8087_NOP, "feni8087_nop" },
 };
 #endif
 
@@ -6111,6 +6114,12 @@ static insn_map insns[] = {	// full x86 instructions
 		X86_FPTAN, X86_INS_FPTAN,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_FP_FFREEP, X86_INS_FFREEP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
@@ -37851,6 +37860,18 @@ static insn_map insns[] = {	// full x86 instructions
 		X86_XTEST, X86_INS_XTEST,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_fdisi8087_nop, X86_INS_FDISI8087_NOP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_feni8087_nop, X86_INS_FENI8087_NOP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 };
