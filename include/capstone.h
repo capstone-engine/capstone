@@ -37,7 +37,7 @@ extern "C" {
 #endif
 
 // Capstone API version
-#define CS_API_MAJOR 3
+#define CS_API_MAJOR 4
 #define CS_API_MINOR 0
 
 // Macro to create combined version which can be compared to
