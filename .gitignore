@@ -87,4 +87,4 @@ xcode/Capstone.xcodeproj/xcuserdata
 test_arm_regression
 test_arm_regression.o
 
- *.s
+*.s

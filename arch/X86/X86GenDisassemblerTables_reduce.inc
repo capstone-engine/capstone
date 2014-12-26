@@ -30877,9 +30877,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     234 /* Table234 */
    },
    /* 0x9a */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    235 /* Table235 */
+    0 /* EmptyTable */
    },
    /* 0x9b */
    { /* ModRMDecision */
@@ -31277,9 +31277,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     485 /* Table485 */
    },
    /* 0xea */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    486 /* Table486 */
+    0 /* EmptyTable */
    },
    /* 0xeb */
    { /* struct ModRMDecision */
@@ -37302,9 +37302,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     968 /* Table968 */
    },
    /* 0x9a */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    235 /* Table235 */
+    0 /* EmptyTable */
    },
    /* 0x9b */
    { /* ModRMDecision */
@@ -37702,9 +37702,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     485 /* Table485 */
    },
    /* 0xea */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    486 /* Table486 */
+    0 /* EmptyTable */
    },
    /* 0xeb */
    { /* struct ModRMDecision */
@@ -38587,9 +38587,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     748 /* Table748 */
    },
    /* 0x9a */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    749 /* Table749 */
+    0 /* EmptyTable */
    },
    /* 0x9b */
    { /* ModRMDecision */
@@ -38987,9 +38987,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     837 /* Table837 */
    },
    /* 0xea */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    838 /* Table838 */
+    0 /* EmptyTable */
    },
    /* 0xeb */
    { /* struct ModRMDecision */
@@ -39872,9 +39872,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     234 /* Table234 */
    },
    /* 0x9a */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    235 /* Table235 */
+    0 /* EmptyTable */
    },
    /* 0x9b */
    { /* ModRMDecision */
@@ -40272,9 +40272,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     485 /* Table485 */
    },
    /* 0xea */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    486 /* Table486 */
+    0 /* EmptyTable */
    },
    /* 0xeb */
    { /* struct ModRMDecision */
@@ -41157,9 +41157,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     234 /* Table234 */
    },
    /* 0x9a */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    235 /* Table235 */
+    0 /* EmptyTable */
    },
    /* 0x9b */
    { /* ModRMDecision */
@@ -41557,9 +41557,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     485 /* Table485 */
    },
    /* 0xea */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    486 /* Table486 */
+    0 /* EmptyTable */
    },
    /* 0xeb */
    { /* struct ModRMDecision */
@@ -42442,9 +42442,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     234 /* Table234 */
    },
    /* 0x9a */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    235 /* Table235 */
+    0 /* EmptyTable */
    },
    /* 0x9b */
    { /* ModRMDecision */
@@ -42842,9 +42842,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     485 /* Table485 */
    },
    /* 0xea */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    486 /* Table486 */
+    0 /* EmptyTable */
    },
    /* 0xeb */
    { /* struct ModRMDecision */
@@ -43727,9 +43727,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     968 /* Table968 */
    },
    /* 0x9a */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    235 /* Table235 */
+    0 /* EmptyTable */
    },
    /* 0x9b */
    { /* ModRMDecision */
@@ -44127,9 +44127,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     485 /* Table485 */
    },
    /* 0xea */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    486 /* Table486 */
+    0 /* EmptyTable */
    },
    /* 0xeb */
    { /* struct ModRMDecision */
@@ -45012,9 +45012,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     968 /* Table968 */
    },
    /* 0x9a */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    235 /* Table235 */
+    0 /* EmptyTable */
    },
    /* 0x9b */
    { /* ModRMDecision */
@@ -45412,9 +45412,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     485 /* Table485 */
    },
    /* 0xea */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    486 /* Table486 */
+    0 /* EmptyTable */
    },
    /* 0xeb */
    { /* struct ModRMDecision */
@@ -46297,9 +46297,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     968 /* Table968 */
    },
    /* 0x9a */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    749 /* Table749 */
+    0 /* EmptyTable */
    },
    /* 0x9b */
    { /* ModRMDecision */
@@ -46697,9 +46697,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     837 /* Table837 */
    },
    /* 0xea */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    838 /* Table838 */
+    0 /* EmptyTable */
    },
    /* 0xeb */
    { /* struct ModRMDecision */

@@ -5864,7 +5864,7 @@ static insn_map insns[] = {	// full x86 instructions
 	{
 		X86_FARCALL16i, X86_INS_LCALL,
 #ifndef CAPSTONE_DIET
-		{ X86_REG_ESP, 0 }, { 0 }, { X86_GRP_CALL, 0 }, 0, 0
+		{ X86_REG_ESP, 0 }, { 0 }, { X86_GRP_NOT64BITMODE, X86_GRP_CALL, 0 }, 0, 0
 #endif
 	},
 	{
@@ -5876,7 +5876,7 @@ static insn_map insns[] = {	// full x86 instructions
 	{
 		X86_FARCALL32i, X86_INS_LCALL,
 #ifndef CAPSTONE_DIET
-		{ X86_REG_ESP, 0 }, { 0 }, { X86_GRP_CALL, 0 }, 0, 0
+		{ X86_REG_ESP, 0 }, { 0 }, { X86_GRP_NOT64BITMODE, X86_GRP_CALL, 0 }, 0, 0
 #endif
 	},
 	{
@@ -5894,7 +5894,7 @@ static insn_map insns[] = {	// full x86 instructions
 	{
 		X86_FARJMP16i, X86_INS_LJMP,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 1, 1
+		{ 0 }, { 0 }, { X86_GRP_NOT64BITMODE, 0 }, 1, 1
 #endif
 	},
 	{
@@ -5906,7 +5906,7 @@ static insn_map insns[] = {	// full x86 instructions
 	{
 		X86_FARJMP32i, X86_INS_LJMP,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 1, 1
+		{ 0 }, { 0 }, { X86_GRP_NOT64BITMODE, 0 }, 1, 1
 #endif
 	},
 	{
@@ -17220,6 +17220,12 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
+		X86_ST_FCOMPST0r_alt, X86_INS_FCOMP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
 		X86_ST_FCOMST0r, X86_INS_FCOM,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
@@ -17269,6 +17275,12 @@ static insn_map insns[] = {	// full x86 instructions
 	},
 	{
 		X86_ST_FXCHST0r, X86_INS_FXCH,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_ST_FXCHST0r_alt, X86_INS_FXCH,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
 #endif
@@ -40447,7 +40459,7 @@ static insn_map insns[] = {	// reduce x86 instructions
 	{
 		X86_FARCALL16i, X86_INS_LCALL,
 #ifndef CAPSTONE_DIET
-		{ X86_REG_ESP, 0 }, { 0 }, { X86_GRP_CALL, 0 }, 0, 0
+		{ X86_REG_ESP, 0 }, { 0 }, { X86_GRP_NOT64BITMODE, X86_GRP_CALL, 0 }, 0, 0
 #endif
 	},
 	{
@@ -40459,7 +40471,7 @@ static insn_map insns[] = {	// reduce x86 instructions
 	{
 		X86_FARCALL32i, X86_INS_LCALL,
 #ifndef CAPSTONE_DIET
-		{ X86_REG_ESP, 0 }, { 0 }, { X86_GRP_CALL, 0 }, 0, 0
+		{ X86_REG_ESP, 0 }, { 0 }, { X86_GRP_NOT64BITMODE, X86_GRP_CALL, 0 }, 0, 0
 #endif
 	},
 	{
@@ -40477,7 +40489,7 @@ static insn_map insns[] = {	// reduce x86 instructions
 	{
 		X86_FARJMP16i, X86_INS_LJMP,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 1, 1
+		{ 0 }, { 0 }, { X86_GRP_NOT64BITMODE, 0 }, 1, 1
 #endif
 	},
 	{
@@ -40489,7 +40501,7 @@ static insn_map insns[] = {	// reduce x86 instructions
 	{
 		X86_FARJMP32i, X86_INS_LJMP,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 1, 1
+		{ 0 }, { 0 }, { X86_GRP_NOT64BITMODE, 0 }, 1, 1
 #endif
 	},
 	{
