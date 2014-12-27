@@ -422,19 +422,19 @@ static insn_map insns[] = {
 	{
 		ARM_BL, ARM_INS_BL,
 #ifndef CAPSTONE_DIET
-		{ ARM_REG_SP, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_JUMP, ARM_GRP_ARM, 0 }, 0, 0
+		{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_JUMP, ARM_GRP_ARM, 0 }, 0, 0
 #endif
 	},
 	{
 		ARM_BLX, ARM_INS_BLX,
 #ifndef CAPSTONE_DIET
-		{ ARM_REG_SP, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_JUMP, ARM_GRP_ARM, ARM_GRP_V5T, 0 }, 0, 0
+		{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_JUMP, ARM_GRP_ARM, ARM_GRP_V5T, 0 }, 0, 0
 #endif
 	},
 	{
 		ARM_BLX_pred, ARM_INS_BLX,
 #ifndef CAPSTONE_DIET
-		{ ARM_REG_SP, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_JUMP, ARM_GRP_ARM, ARM_GRP_V5T, 0 }, 0, 0
+		{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_JUMP, ARM_GRP_ARM, ARM_GRP_V5T, 0 }, 0, 0
 #endif
 	},
 	{
@@ -446,7 +446,7 @@ static insn_map insns[] = {
 	{
 		ARM_BL_pred, ARM_INS_BL,
 #ifndef CAPSTONE_DIET
-		{ ARM_REG_SP, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_JUMP, ARM_GRP_ARM, 0 }, 0, 0
+		{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_JUMP, ARM_GRP_ARM, 0 }, 0, 0
 #endif
 	},
 	{
