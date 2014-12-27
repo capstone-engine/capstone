@@ -98,14 +98,6 @@ typedef enum x86_sse_cc {
 	X86_SSE_CC_NLT,
 	X86_SSE_CC_NLE,
 	X86_SSE_CC_ORD,
-	X86_SSE_CC_EQ_UQ,
-	X86_SSE_CC_NGE,
-	X86_SSE_CC_NGT,
-	X86_SSE_CC_FALSE,
-	X86_SSE_CC_NEQ_OQ,
-	X86_SSE_CC_GE,
-	X86_SSE_CC_GT,
-	X86_SSE_CC_TRUE,
 } x86_sse_cc;
 
 //> AVX Code Condition type

@@ -273,14 +273,6 @@ let _X86_SSE_CC_NEQ = 5;;
 let _X86_SSE_CC_NLT = 6;;
 let _X86_SSE_CC_NLE = 7;;
 let _X86_SSE_CC_ORD = 8;;
-let _X86_SSE_CC_EQ_UQ = 9;;
-let _X86_SSE_CC_NGE = 10;;
-let _X86_SSE_CC_NGT = 11;;
-let _X86_SSE_CC_FALSE = 12;;
-let _X86_SSE_CC_NEQ_OQ = 13;;
-let _X86_SSE_CC_GE = 14;;
-let _X86_SSE_CC_GT = 15;;
-let _X86_SSE_CC_TRUE = 16;;
 
 (* AVX Code Condition type *)
 

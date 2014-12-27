@@ -166,14 +166,6 @@ static void printSSECC(MCInst *MI, unsigned Op, SStream *OS)
 		case    5: SStream_concat0(OS, "nlt"); op_addSseCC(MI, X86_SSE_CC_NLT); break;
 		case    6: SStream_concat0(OS, "nle"); op_addSseCC(MI, X86_SSE_CC_NLE); break;
 		case    7: SStream_concat0(OS, "ord"); op_addSseCC(MI, X86_SSE_CC_ORD); break;
-		case    8: SStream_concat0(OS, "eq_uq"); op_addSseCC(MI, X86_SSE_CC_EQ_UQ); break;
-		case    9: SStream_concat0(OS, "nge"); op_addSseCC(MI, X86_SSE_CC_NGE); break;
-		case  0xa: SStream_concat0(OS, "ngt"); op_addSseCC(MI, X86_SSE_CC_NGT); break;
-		case  0xb: SStream_concat0(OS, "false"); op_addSseCC(MI, X86_SSE_CC_FALSE); break;
-		case  0xc: SStream_concat0(OS, "neq_oq"); op_addSseCC(MI, X86_SSE_CC_NEQ_OQ); break;
-		case  0xd: SStream_concat0(OS, "ge"); op_addSseCC(MI, X86_SSE_CC_GE); break;
-		case  0xe: SStream_concat0(OS, "gt"); op_addSseCC(MI, X86_SSE_CC_GT); break;
-		case  0xf: SStream_concat0(OS, "true"); op_addSseCC(MI, X86_SSE_CC_TRUE); break;
 	}
 }
 

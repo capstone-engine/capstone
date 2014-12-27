@@ -276,14 +276,6 @@ public class X86_const {
 	public static final int X86_SSE_CC_NLT = 6;
 	public static final int X86_SSE_CC_NLE = 7;
 	public static final int X86_SSE_CC_ORD = 8;
-	public static final int X86_SSE_CC_EQ_UQ = 9;
-	public static final int X86_SSE_CC_NGE = 10;
-	public static final int X86_SSE_CC_NGT = 11;
-	public static final int X86_SSE_CC_FALSE = 12;
-	public static final int X86_SSE_CC_NEQ_OQ = 13;
-	public static final int X86_SSE_CC_GE = 14;
-	public static final int X86_SSE_CC_GT = 15;
-	public static final int X86_SSE_CC_TRUE = 16;
 
 	// AVX Code Condition type
 
