@@ -1632,8 +1632,6 @@ static int readModRM(struct InternalInstruction *insn)
 			case TYPE_SEGMENTREG:                                 \
 				return prefix##_ES + (index & 7);                 \
 			case TYPE_DEBUGREG:                                   \
-				if (index > 7)                                    \
-					*valid = 0;                                   \
 				return prefix##_DR0 + index;                      \
 			case TYPE_CONTROLREG:                                 \
 				if (index > 8)                                    \
