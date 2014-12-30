@@ -950,6 +950,14 @@ static int readOpcode(struct InternalInstruction *insn)
 	return 0;
 }
 
+// Hacky for FEMMS
+#define GET_INSTRINFO_ENUM
+#ifdef CAPSTONE_X86_REDUCE
+#include "X86GenInstrInfo_reduce.inc"
+#else
+#include "X86GenInstrInfo.inc"
+#endif
+
 /*
  * getIDWithAttrMask - Determines the ID of an instruction, consuming
  *   the ModR/M byte as appropriate for extended and escape opcodes,
@@ -972,7 +980,7 @@ static int getIDWithAttrMask(uint16_t *instructionID,
 
 	// HACK for femms. to be handled properly in next version 3.x
 	if (insn->opcode == 0x0e && insn->opcodeType == T3DNOW_MAP) {
-		*instructionID = 764;
+		*instructionID = X86_FEMMS;
 		return 0;
 	}
 
@@ -1878,7 +1886,7 @@ static int readOperands(struct InternalInstruction *insn)
 	int hasVVVV, needVVVV;
 	int sawRegImm = 0;
 
-	// printf(">>> readOperands()\n");
+	// printf(">>> readOperands(): ID = %u\n", insn->instructionID);
 	/* If non-zero vvvv specified, need to make sure one of the operands
 	   uses it. */
 	hasVVVV = !readVVVV(insn);
