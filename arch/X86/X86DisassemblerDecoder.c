@@ -951,10 +951,8 @@ static int readOpcode(struct InternalInstruction *insn)
 }
 
 // Hacky for FEMMS
+#ifndef CAPSTONE_X86_REDUCE
 #define GET_INSTRINFO_ENUM
-#ifdef CAPSTONE_X86_REDUCE
-#include "X86GenInstrInfo_reduce.inc"
-#else
 #include "X86GenInstrInfo.inc"
 #endif
 
@@ -978,11 +976,13 @@ static int getIDWithAttrMask(uint16_t *instructionID,
 
 	InstructionContext instructionClass;
 
+#ifndef CAPSTONE_X86_REDUCE
 	// HACK for femms. to be handled properly in next version 3.x
 	if (insn->opcode == 0x0e && insn->opcodeType == T3DNOW_MAP) {
 		*instructionID = X86_FEMMS;
 		return 0;
 	}
+#endif
 
 	if (insn->opcodeType == T3DNOW_MAP)
 		instructionClass = IC_OF;

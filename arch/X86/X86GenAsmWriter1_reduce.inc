@@ -69,8 +69,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     8532099U,	// ADC64rm
     2240643U,	// ADC64rr
     2232451U,	// ADC64rr_REV
+    2240643U,	// ADC82_8ri8
     5384U,	// ADC8i8
     155779U,	// ADC8mi
+    155779U,	// ADC8mi8
     155779U,	// ADC8mr
     2240643U,	// ADC8ri
     10629251U,	// ADC8rm
@@ -116,11 +118,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     2240699U,	// ADD64rr
     0U,	// ADD64rr_DB
     2232507U,	// ADD64rr_REV
+    155835U,	// ADD82_8mi8
+    2240699U,	// ADD82_8ri8
     5393U,	// ADD8i8
     155835U,	// ADD8mi
     155835U,	// ADD8mr
     2240699U,	// ADD8ri
-    2240699U,	// ADD8ri8
     10629307U,	// ADD8rm
     2240699U,	// ADD8rr
     2232507U,	// ADD8rr_REV
@@ -159,11 +162,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     8532204U,	// AND64rm
     2240748U,	// AND64rr
     2232556U,	// AND64rr_REV
+    155884U,	// AND82_8mi8
+    2240748U,	// AND82_8ri8
     5402U,	// AND8i8
     155884U,	// AND8mi
     155884U,	// AND8mr
     2240748U,	// AND8ri
-    2240748U,	// AND8ri8
     10629356U,	// AND8rm
     2240748U,	// AND8rr
     2232556U,	// AND8rr_REV
@@ -448,8 +452,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     16913109U,	// CMP64rm
     14815957U,	// CMP64rr
     14815957U,	// CMP64rr_REV
+    14815957U,	// CMP82_8ri8
     5419U,	// CMP8i8
     156373U,	// CMP8mi
+    156373U,	// CMP8mi8
     156373U,	// CMP8mr
     14815957U,	// CMP8ri
     21107413U,	// CMP8rm
@@ -993,11 +999,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     8532834U,	// OR64rm
     2241378U,	// OR64rr
     2233186U,	// OR64rr_REV
+    156514U,	// OR82_8mi8
+    2241378U,	// OR82_8ri8
     5429U,	// OR8i8
     156514U,	// OR8mi
     156514U,	// OR8mr
     2241378U,	// OR8ri
-    2241378U,	// OR8ri8
     10629986U,	// OR8rm
     2241378U,	// OR8rr
     2233186U,	// OR8rr_REV
@@ -1302,8 +1309,10 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     8532045U,	// SBB64rm
     2240589U,	// SBB64rr
     2232397U,	// SBB64rr_REV
+    2240589U,	// SBB82_8ri8
     5344U,	// SBB8i8
     155725U,	// SBB8mi
+    155725U,	// SBB8mi8
     155725U,	// SBB8mr
     2240589U,	// SBB8ri
     10629197U,	// SBB8rm
@@ -1495,11 +1504,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     8532087U,	// SUB64rm
     2240631U,	// SUB64rr
     2232439U,	// SUB64rr_REV
+    155767U,	// SUB82_8mi8
+    2240631U,	// SUB82_8ri8
     5375U,	// SUB8i8
     155767U,	// SUB8mi
     155767U,	// SUB8mr
     2240631U,	// SUB8ri
-    2240631U,	// SUB8ri8
     10629239U,	// SUB8rm
     2240631U,	// SUB8rr
     2232439U,	// SUB8rr_REV
@@ -1667,11 +1677,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     8532846U,	// XOR64rm
     2241390U,	// XOR64rr
     2233198U,	// XOR64rr_REV
+    156526U,	// XOR82_8mi8
+    2241390U,	// XOR82_8ri8
     5428U,	// XOR8i8
     156526U,	// XOR8mi
     156526U,	// XOR8mr
     2241390U,	// XOR8ri
-    2241390U,	// XOR8ri8
     10629998U,	// XOR8rm
     2241390U,	// XOR8rr
     2233198U,	// XOR8rr_REV
@@ -2146,7 +2157,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     printi64mem(MI, 0, O); 
     break;
   case 6:
-    // ADC8mi, ADC8mr, ADD8mi, ADD8mr, AND8mi, AND8mr, CMP8mi, CMP8mr, CMPXCH...
+    // ADC8mi, ADC8mi8, ADC8mr, ADD82_8mi8, ADD8mi, ADD8mr, AND82_8mi8, AND8m...
     printi8mem(MI, 0, O); 
     break;
   case 7:

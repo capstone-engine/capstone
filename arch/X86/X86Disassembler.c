@@ -211,6 +211,7 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 				break;
 		}
 	} else if (type == TYPE_IMM3) {
+#ifndef CAPSTONE_X86_REDUCE
 		// Check for immediates that printSSECC can't handle.
 		if (immediate >= 8) {
 			unsigned NewOpc = 0;
@@ -229,7 +230,9 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 			// Switch opcode to the one that doesn't get special printing.
 			MCInst_setOpcode(mcInst, NewOpc);
 		}
+#endif
 	} else if (type == TYPE_IMM5) {
+#ifndef CAPSTONE_X86_REDUCE
 		// Check for immediates that printAVXCC can't handle.
 		if (immediate >= 32) {
 			unsigned NewOpc = 0;
@@ -260,6 +263,7 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 			// Switch opcode to the one that doesn't get special printing.
 			MCInst_setOpcode(mcInst, NewOpc);
 		}
+#endif
 	}
 
 	switch (type) {
