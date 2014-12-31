@@ -422,7 +422,7 @@ class CsInsn(object):
     def __init__(self, cs, all_info):
         self._raw = copy_ctypes(all_info)
         self._cs = cs
-        if self._cs._detail:
+        if self._cs._detail and self._raw.id != 0:
             # save detail
             self._detail = copy_ctypes(self._raw.detail.contents)
 
