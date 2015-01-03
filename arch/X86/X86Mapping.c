@@ -11469,6 +11469,12 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
+		X86_MOVSX64rm32_alt, X86_INS_MOVSXD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { X86_GRP_MODE64, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_MOVSX64rm8, X86_INS_MOVSX,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
@@ -42857,6 +42863,12 @@ static insn_map insns[] = {	// reduce x86 instructions
 		X86_MOVSX64rm32, X86_INS_MOVSXD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_MOVSX64rm32_alt, X86_INS_MOVSXD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { X86_GRP_MODE64, 0 }, 0, 0
 #endif
 	},
 	{
