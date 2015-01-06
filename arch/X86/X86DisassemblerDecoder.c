@@ -2040,6 +2040,24 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 			case X86_ADCX32rm:
 			case X86_ADCX64rm:
 
+			// ADD
+			case X86_ADD16mi:
+			case X86_ADD16mi8:
+			case X86_ADD16mr:
+			case X86_ADD16rm:
+			case X86_ADD32mi:
+			case X86_ADD32mi8:
+			case X86_ADD32mr:
+			case X86_ADD32rm:
+			case X86_ADD64mi32:
+			case X86_ADD64mi8:
+			case X86_ADD64mr:
+			case X86_ADD64rm:
+			case X86_ADD82_8mi8:
+			case X86_ADD8mi:
+			case X86_ADD8mr:
+			case X86_ADD8rm:
+
 			// AND
 			case X86_AND16mi:
 			case X86_AND16mi8:
@@ -2087,6 +2105,7 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 			case X86_CMPXCHG32rm:
 			case X86_CMPXCHG64rm:
 			case X86_CMPXCHG8rm:
+			case X86_CMPXCHG8B:
 
 			// INC
 			case X86_INC16m:
