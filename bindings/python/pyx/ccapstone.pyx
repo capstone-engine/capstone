@@ -86,7 +86,7 @@ cdef class CsInsn(object):
     # return instruction's machine bytes (which should have @size bytes).
     @property
     def bytes(self):
-        return bytearray(self._raw.bytes)[:self._raw.size]
+        return bytearray(self._raw.bytes[:self._raw.size])
 
     # return instruction's mnemonic.
     @property
