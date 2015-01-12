@@ -147,11 +147,12 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 										break;
 									case ARM_OP_MEM:
 										tmp = caml_alloc(1, 6);
-										tmp3 = caml_alloc(4, 0);
+										tmp3 = caml_alloc(5, 0);
 										Store_field(tmp3, 0, Val_int(insn[j-1].detail->arm.operands[i].mem.base));
 										Store_field(tmp3, 1, Val_int(insn[j-1].detail->arm.operands[i].mem.index));
 										Store_field(tmp3, 2, Val_int(insn[j-1].detail->arm.operands[i].mem.scale));
 										Store_field(tmp3, 3, Val_int(insn[j-1].detail->arm.operands[i].mem.disp));
+										Store_field(tmp3, 4, Val_int(insn[j-1].detail->arm.operands[i].mem.lshift));
 										Store_field(tmp, 0, tmp3);
 										break;
 									case ARM_OP_SETEND:

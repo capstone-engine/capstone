@@ -18,10 +18,11 @@ public class Arm {
     public int index;
     public int scale;
     public int disp;
+    public int lshift;
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("base", "index", "scale", "disp");
+      return Arrays.asList("base", "index", "scale", "disp", "lshift");
     }
   }
 
