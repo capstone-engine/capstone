@@ -150,7 +150,8 @@ typedef enum x86_avx_rm {
 typedef enum x86_prefix {
 	X86_PREFIX_LOCK		= 	0xf0,	// lock (cs_x86.prefix[0]
 	X86_PREFIX_REP		= 	0xf3,	// rep (cs_x86.prefix[0]
-	X86_PREFIX_REPNE	= 	0xf2,	// repne (cs_x86.prefix[0]
+	X86_PREFIX_REPE		= 	0xf3,	// repe/repz (cs_x86.prefix[0]
+	X86_PREFIX_REPNE	= 	0xf2,	// repne/repnz (cs_x86.prefix[0]
 
 	X86_PREFIX_CS		= 	0x2e,	// segment override CS (cs_x86.prefix[1]
 	X86_PREFIX_SS		= 	0x36,	// segment override SS (cs_x86.prefix[1]

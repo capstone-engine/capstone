@@ -321,6 +321,7 @@ let _X86_AVX_RM_RZ = 4;;
 (* Instruction prefixes - to be used in cs_x86.prefix[] *)
 let _X86_PREFIX_LOCK = 0xf0;;
 let _X86_PREFIX_REP = 0xf3;;
+let _X86_PREFIX_REPE = 0xf3;;
 let _X86_PREFIX_REPNE = 0xf2;;
 let _X86_PREFIX_CS = 0x2e;;
 let _X86_PREFIX_SS = 0x36;;

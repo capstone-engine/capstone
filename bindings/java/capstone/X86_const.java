@@ -324,6 +324,7 @@ public class X86_const {
 	// Instruction prefixes - to be used in cs_x86.prefix[]
 	public static final int X86_PREFIX_LOCK = 0xf0;
 	public static final int X86_PREFIX_REP = 0xf3;
+	public static final int X86_PREFIX_REPE = 0xf3;
 	public static final int X86_PREFIX_REPNE = 0xf2;
 	public static final int X86_PREFIX_CS = 0x2e;
 	public static final int X86_PREFIX_SS = 0x36;
