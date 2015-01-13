@@ -13154,19 +13154,19 @@ static insn_map insns[] = {
 	{
 		ARM_tBL, ARM_INS_BL,
 #ifndef CAPSTONE_DIET
-		{ ARM_REG_SP, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_THUMB, 0 }, 0, 0
+		{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_THUMB, 0 }, 0, 0
 #endif
 	},
 	{
 		ARM_tBLXi, ARM_INS_BLX,
 #ifndef CAPSTONE_DIET
-		{ ARM_REG_SP, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_THUMB, ARM_GRP_V5T, ARM_GRP_NOTMCLASS, 0 }, 0, 0
+		{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_THUMB, ARM_GRP_V5T, ARM_GRP_NOTMCLASS, 0 }, 0, 0
 #endif
 	},
 	{
 		ARM_tBLXr, ARM_INS_BLX,
 #ifndef CAPSTONE_DIET
-		{ ARM_REG_SP, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_THUMB, ARM_GRP_V5T, 0 }, 0, 0
+		{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_THUMB, ARM_GRP_V5T, 0 }, 0, 0
 #endif
 	},
 	{

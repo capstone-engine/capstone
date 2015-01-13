@@ -3055,7 +3055,6 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
   const char *AsmString;
   char *tmp, *AsmMnem, *AsmOps, *c;
   int OpIdx, PrintMethodIdx;
-  MCRegisterInfo *MRI = (MCRegisterInfo *)info;
   switch (MCInst_getOpcode(MI)) {
   default: return NULL;
   case X86_AAD8i8:
