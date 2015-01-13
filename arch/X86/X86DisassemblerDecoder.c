@@ -2031,7 +2031,6 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 			case X86_ADC64mi8:
 			case X86_ADC64mr:
 			case X86_ADC8mi:
-			case X86_ADC8mi8:
 			case X86_ADC8mr:
 
 			// ADD
@@ -2044,7 +2043,6 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 			case X86_ADD64mi32:
 			case X86_ADD64mi8:
 			case X86_ADD64mr:
-			case X86_ADD82_8mi8:
 			case X86_ADD8mi:
 			case X86_ADD8mr:
 
@@ -2058,7 +2056,6 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 			case X86_AND64mi32:
 			case X86_AND64mi8:
 			case X86_AND64mr:
-			case X86_AND82_8mi8:
 			case X86_AND8mi:
 			case X86_AND8mr:
 
@@ -2124,7 +2121,6 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 			case X86_OR64mi32:
 			case X86_OR64mi8:
 			case X86_OR64mr:
-			case X86_OR82_8mi8:
 			case X86_OR8mi:
 			case X86_OR8mr:
 
@@ -2139,7 +2135,6 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 			case X86_SBB64mi8:
 			case X86_SBB64mr:
 			case X86_SBB8mi:
-			case X86_SBB8mi8:
 			case X86_SBB8mr:
 
 			// SUB
@@ -2152,7 +2147,6 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 			case X86_SUB64mi32:
 			case X86_SUB64mi8:
 			case X86_SUB64mr:
-			case X86_SUB82_8mi8:
 			case X86_SUB8mi:
 			case X86_SUB8mr:
 
@@ -2178,7 +2172,6 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 			case X86_XOR64mi32:
 			case X86_XOR64mi8:
 			case X86_XOR64mr:
-			case X86_XOR82_8mi8:
 			case X86_XOR8mi:
 			case X86_XOR8mr:
 
