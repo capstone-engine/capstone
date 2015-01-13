@@ -190,10 +190,10 @@ static void printOperand(MCInst *MI, int opNum, SStream *O)
 
 		// get absolute address for CALL/Bxx
 		if (MI->Opcode == SP_CALL)
-			Imm += MI->address;
+			Imm += (uint32_t)MI->address;
 		else if (MI->flat_insn->id == SPARC_INS_B)
 			// pc + (disp30 * 4)
-			Imm = MI->address + Imm * 4;
+			Imm = (uint32_t)MI->address + Imm * 4;
 
 		if (Imm >= 0) {
 			if (Imm > HEX_THRESHOLD)
