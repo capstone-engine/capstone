@@ -47792,7 +47792,43 @@ x86_reg X86_insn_reg_att(unsigned int id)
 	return 0;
 }
 
-// given MCInst's id, find out if this insn is valid for REP/REPNE prefix
+// given MCInst's id, find out if this insn is valid for REPNE prefix
+static bool valid_repne(cs_struct *h, unsigned int opcode)
+{
+	unsigned int id;
+	int i = insn_find(insns, ARR_SIZE(insns), opcode, &h->insn_cache);
+	if (i != 0) {
+		id = insns[i].mapid;
+		switch(id) {
+			default:
+				return false;
+
+			case X86_INS_CMPSB:
+			case X86_INS_CMPSW:
+			case X86_INS_CMPSQ:
+
+			case X86_INS_SCASB:
+			case X86_INS_SCASW:
+			case X86_INS_SCASQ:
+				return true;
+
+			case X86_INS_CMPSD:
+				if (opcode == X86_CMPSL) // REP CMPSD
+					return true;
+				return false;
+
+			case X86_INS_SCASD:
+				if (opcode == X86_SCASL) // REP SCASD
+					return true;
+				return false;
+		}
+	}
+
+	// not found
+	return false;
+}
+
+// given MCInst's id, find out if this insn is valid for REP prefix
 static bool valid_rep(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
@@ -47802,17 +47838,10 @@ static bool valid_rep(cs_struct *h, unsigned int opcode)
 		switch(id) {
 			default:
 				return false;
+
 			case X86_INS_MOVSB:
 			case X86_INS_MOVSW:
 			case X86_INS_MOVSQ:
-
-			case X86_INS_CMPSB:
-			case X86_INS_CMPSW:
-			case X86_INS_CMPSQ:
-
-			case X86_INS_SCASB:
-			case X86_INS_SCASW:
-			case X86_INS_SCASQ:
 
 			case X86_INS_LODSB:
 			case X86_INS_LODSW:
@@ -47838,16 +47867,6 @@ static bool valid_rep(cs_struct *h, unsigned int opcode)
 					return true;
 				return false;
 
-			case X86_INS_CMPSD:
-				if (opcode == X86_CMPSL) // REP CMPSD
-					return true;
-				return false;
-
-			case X86_INS_SCASD:
-				if (opcode == X86_SCASL) // REP SCASD
-					return true;
-				return false;
-
 			case X86_INS_LODSD:
 				if (opcode == X86_LODSL) // REP LODSD
 					return true;
@@ -47864,6 +47883,43 @@ static bool valid_rep(cs_struct *h, unsigned int opcode)
 	return false;
 }
 
+// given MCInst's id, find out if this insn is valid for REPE prefix
+static bool valid_repe(cs_struct *h, unsigned int opcode)
+{
+	unsigned int id;
+	int i = insn_find(insns, ARR_SIZE(insns), opcode, &h->insn_cache);
+	if (i != 0) {
+		id = insns[i].mapid;
+		switch(id) {
+			default:
+				return false;
+
+			case X86_INS_CMPSB:
+			case X86_INS_CMPSW:
+			case X86_INS_CMPSQ:
+
+			case X86_INS_SCASB:
+			case X86_INS_SCASW:
+			case X86_INS_SCASQ:
+				return true;
+
+			// following are some confused instructions, which have the same
+			// mnemonics in 128bit media instructions. Intel is horribly crazy!
+			case X86_INS_CMPSD:
+				if (opcode == X86_CMPSL) // REP CMPSD
+					return true;
+				return false;
+
+			case X86_INS_SCASD:
+				if (opcode == X86_SCASL) // REP SCASD
+					return true;
+				return false;
+		}
+	}
+
+	// not found
+	return false;
+}
 // return true if we patch the mnemonic
 bool X86_lockrep(MCInst *MI, SStream *O)
 {
@@ -47881,7 +47937,7 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 		case 0xf2:	// repne
 			opcode = MCInst_getOpcode(MI);
 #ifndef CAPSTONE_DIET	// only care about memonic in standard (non-diet) mode
-			if (valid_rep(MI->csh, opcode)) {
+			if (valid_repne(MI->csh, opcode)) {
 				SStream_concat(O, "repne|");
 			} else {
 				// invalid prefix
@@ -47897,7 +47953,7 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 #endif
 			}
 #else	// diet mode -> only patch opcode in special cases
-			if (!valid_rep(MI->csh, opcode)) {
+			if (!valid_repne(MI->csh, opcode)) {
 				MI->x86_prefix[0] = 0;
 			}
 #ifndef CAPSTONE_X86_REDUCE
@@ -47914,6 +47970,8 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 #ifndef CAPSTONE_DIET	// only care about memonic in standard (non-diet) mode
 			if (valid_rep(MI->csh, opcode)) {
 				SStream_concat(O, "rep|");
+			} else if (valid_repe(MI->csh, opcode)) {
+				SStream_concat(O, "repe|");
 			} else {
 				// invalid prefix
 				MI->x86_prefix[0] = 0;
@@ -47928,7 +47986,7 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 #endif
 			}
 #else	// diet mode -> only patch opcode in special cases
-			if (!valid_rep(MI->csh, opcode)) {
+			if (!valid_rep(MI->csh, opcode) && !valid_repe(MI->csh, opcode)) {
 				MI->x86_prefix[0] = 0;
 			}
 #ifndef CAPSTONE_X86_REDUCE
