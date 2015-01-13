@@ -2022,57 +2022,43 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 			case X86_ADC16mi:
 			case X86_ADC16mi8:
 			case X86_ADC16mr:
-			case X86_ADC16rm:
 			case X86_ADC32mi:
 			case X86_ADC32mi8:
 			case X86_ADC32mr:
-			case X86_ADC32rm:
 			case X86_ADC64mi32:
 			case X86_ADC64mi8:
 			case X86_ADC64mr:
-			case X86_ADC64rm:
 			case X86_ADC8mi:
 			case X86_ADC8mi8:
 			case X86_ADC8mr:
-			case X86_ADC8rm:
-			case X86_ADCX32rm:
-			case X86_ADCX64rm:
 
 			// ADD
 			case X86_ADD16mi:
 			case X86_ADD16mi8:
 			case X86_ADD16mr:
-			case X86_ADD16rm:
 			case X86_ADD32mi:
 			case X86_ADD32mi8:
 			case X86_ADD32mr:
-			case X86_ADD32rm:
 			case X86_ADD64mi32:
 			case X86_ADD64mi8:
 			case X86_ADD64mr:
-			case X86_ADD64rm:
 			case X86_ADD82_8mi8:
 			case X86_ADD8mi:
 			case X86_ADD8mr:
-			case X86_ADD8rm:
 
 			// AND
 			case X86_AND16mi:
 			case X86_AND16mi8:
 			case X86_AND16mr:
-			case X86_AND16rm:
 			case X86_AND32mi:
 			case X86_AND32mi8:
 			case X86_AND32mr:
-			case X86_AND32rm:
 			case X86_AND64mi32:
 			case X86_AND64mi8:
 			case X86_AND64mr:
-			case X86_AND64rm:
 			case X86_AND82_8mi8:
 			case X86_AND8mi:
 			case X86_AND8mr:
-			case X86_AND8rm:
 
 			// BTC
 			case X86_BTC16mi8:
@@ -2129,56 +2115,44 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 			case X86_OR16mi:
 			case X86_OR16mi8:
 			case X86_OR16mr:
-			case X86_OR16rm:
 			case X86_OR32mi:
 			case X86_OR32mi8:
 			case X86_OR32mr:
 			case X86_OR32mrLocked:
-			case X86_OR32rm:
 			case X86_OR64mi32:
 			case X86_OR64mi8:
 			case X86_OR64mr:
-			case X86_OR64rm:
 			case X86_OR82_8mi8:
 			case X86_OR8mi:
 			case X86_OR8mr:
-			case X86_OR8rm:
 
 			// SBB
 			case X86_SBB16mi:
 			case X86_SBB16mi8:
 			case X86_SBB16mr:
-			case X86_SBB16rm:
 			case X86_SBB32mi:
 			case X86_SBB32mi8:
 			case X86_SBB32mr:
-			case X86_SBB32rm:
 			case X86_SBB64mi32:
 			case X86_SBB64mi8:
 			case X86_SBB64mr:
-			case X86_SBB64rm:
 			case X86_SBB8mi:
 			case X86_SBB8mi8:
 			case X86_SBB8mr:
-			case X86_SBB8rm:
 
 			// SUB
 			case X86_SUB16mi:
 			case X86_SUB16mi8:
 			case X86_SUB16mr:
-			case X86_SUB16rm:
 			case X86_SUB32mi:
 			case X86_SUB32mi8:
 			case X86_SUB32mr:
-			case X86_SUB32rm:
 			case X86_SUB64mi32:
 			case X86_SUB64mi8:
 			case X86_SUB64mr:
-			case X86_SUB64rm:
 			case X86_SUB82_8mi8:
 			case X86_SUB8mi:
 			case X86_SUB8mr:
-			case X86_SUB8rm:
 
 			// XADD
 			case X86_XADD16rm:
@@ -2196,19 +2170,15 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 			case X86_XOR16mi:
 			case X86_XOR16mi8:
 			case X86_XOR16mr:
-			case X86_XOR16rm:
 			case X86_XOR32mi:
 			case X86_XOR32mi8:
 			case X86_XOR32mr:
-			case X86_XOR32rm:
 			case X86_XOR64mi32:
 			case X86_XOR64mi8:
 			case X86_XOR64mr:
-			case X86_XOR64rm:
 			case X86_XOR82_8mi8:
 			case X86_XOR8mi:
 			case X86_XOR8mr:
-			case X86_XOR8rm:
 
 				// this instruction can be used with LOCK prefix
 				return false;
