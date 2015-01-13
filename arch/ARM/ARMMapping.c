@@ -10910,7 +10910,7 @@ static insn_map insns[] = {
 	{
 		ARM_t2ADCrr, ARM_INS_ADC,
 #ifndef CAPSTONE_DIET
-		{ ARM_REG_CPSR, 0 }, { ARM_REG_CPSR, 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
 #endif
 	},
 	{
@@ -12086,7 +12086,7 @@ static insn_map insns[] = {
 	{
 		ARM_t2SBCrr, ARM_INS_SBC,
 #ifndef CAPSTONE_DIET
-		{ ARM_REG_CPSR, 0 }, { ARM_REG_CPSR, 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
 #endif
 	},
 	{
