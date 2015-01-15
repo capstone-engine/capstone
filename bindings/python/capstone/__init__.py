@@ -810,9 +810,13 @@ class Cs(object):
             print(code)'''
         res = _cs.cs_disasm(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
         if res > 0:
-            for i in range(res):
-                yield CsInsn(self, all_insn[i])
-            _cs.cs_free(all_insn, res)
+            try: 
+                for i in range(res):
+                    yield CsInsn(self, all_insn[i])
+            except:
+                pass
+            finally:
+                _cs.cs_free(all_insn, res)
         else:
             status = _cs.cs_errno(self.csh)
             if status != CS_ERR_OK:
@@ -832,10 +836,14 @@ class Cs(object):
         all_insn = ctypes.POINTER(_cs_insn)()
         res = _cs.cs_disasm(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
         if res > 0:
-            for i in range(res):
-                insn = all_insn[i]
-                yield (insn.address, insn.size, insn.mnemonic.decode('ascii'), insn.op_str.decode('ascii'))
-            _cs.cs_free(all_insn, res)
+            try:
+                for i in range(res):
+                    insn = all_insn[i]
+                    yield (insn.address, insn.size, insn.mnemonic.decode('ascii'), insn.op_str.decode('ascii'))
+            except:
+                pass
+            finally:
+                _cs.cs_free(all_insn, res)
         else:
             status = _cs.cs_errno(self.csh)
             if status != CS_ERR_OK:
