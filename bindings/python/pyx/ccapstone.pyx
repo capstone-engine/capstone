@@ -266,24 +266,28 @@ cdef class Cs(object):
 
 
     # Disassemble binary & return disassembled instructions in CsInsn objects
-    def disasm(self, code, addr, count=0):
-        cdef cc.cs_insn *allinsn
+    def disasm(self, code, addr, test, count=0):
+        try:
+            cdef cc.cs_insn *allinsn
 
-        cdef res = cc.cs_disasm(self.csh, code, len(code), addr, count, &allinsn)
-        detail = self._cs.detail
-        arch = self._cs.arch
+            cdef res = cc.cs_disasm(self.csh, code, len(code), addr, count, &allinsn)
+            detail = self._cs.detail
+            arch = self._cs.arch
 
-        for i from 0 <= i < res:
-            if detail:
-                dummy = CsInsn(CsDetail(arch, <size_t>allinsn[i].detail))
-            else:
-                dummy = CsInsn(None)
+            for i from 0 <= i < res:
+                if detail:
+                    dummy = CsInsn(CsDetail(arch, <size_t>allinsn[i].detail))
+                else:
+                    dummy = CsInsn(None)
 
-            dummy._raw = allinsn[i]
-            dummy._csh = self.csh
-            yield dummy
+                dummy._raw = allinsn[i]
+                dummy._csh = self.csh
+                yield dummy
+        except GeneratorExit:
+            pass
+        finally:
+            cc.cs_free(allinsn, res)
 
-        cc.cs_free(allinsn, res)
 
 
     # Light function to disassemble binary. This is about 20% faster than disasm() because
@@ -291,19 +295,23 @@ cdef class Cs(object):
     # rather than CsInsn objects.
     def disasm_lite(self, code, addr, count=0):
         # TODO: dont need detail, so we might turn off detail, then turn on again when done
-        cdef cc.cs_insn *allinsn
+        try:
+            cdef cc.cs_insn *allinsn
 
-        if _diet:
-            # Diet engine cannot provide @mnemonic & @op_str
-            raise CsError(capstone.CS_ERR_DIET)
+            if _diet:
+                # Diet engine cannot provide @mnemonic & @op_str
+                raise CsError(capstone.CS_ERR_DIET)
 
-        cdef res = cc.cs_disasm(self.csh, code, len(code), addr, count, &allinsn)
+            cdef res = cc.cs_disasm(self.csh, code, len(code), addr, count, &allinsn)
 
-        for i from 0 <= i < res:
-            insn = allinsn[i]
-            yield (insn.address, insn.size, insn.mnemonic, insn.op_str)
+            for i from 0 <= i < res:
+                insn = allinsn[i]
+                yield (insn.address, insn.size, insn.mnemonic, insn.op_str)
 
-        cc.cs_free(allinsn, res)
+        except GeneratorExit:
+            pass
+        finally:
+            cc.cs_free(allinsn, res)
 
 
 # print out debugging info
