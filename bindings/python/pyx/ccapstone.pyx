@@ -273,17 +273,18 @@ cdef class Cs(object):
         detail = self._cs.detail
         arch = self._cs.arch
 
-        for i from 0 <= i < res:
-            if detail:
-                dummy = CsInsn(CsDetail(arch, <size_t>allinsn[i].detail))
-            else:
-                dummy = CsInsn(None)
+        try:
+            for i from 0 <= i < res:
+                if detail:
+                    dummy = CsInsn(CsDetail(arch, <size_t>allinsn[i].detail))
+                else:
+                    dummy = CsInsn(None)
 
-            dummy._raw = allinsn[i]
-            dummy._csh = self.csh
-            yield dummy
-
-        cc.cs_free(allinsn, res)
+                dummy._raw = allinsn[i]
+                dummy._csh = self.csh
+                yield dummy
+        finally:
+            cc.cs_free(allinsn, res)
 
 
     # Light function to disassemble binary. This is about 20% faster than disasm() because
@@ -299,11 +300,12 @@ cdef class Cs(object):
 
         cdef res = cc.cs_disasm(self.csh, code, len(code), addr, count, &allinsn)
 
-        for i from 0 <= i < res:
-            insn = allinsn[i]
-            yield (insn.address, insn.size, insn.mnemonic, insn.op_str)
-
-        cc.cs_free(allinsn, res)
+        try:
+            for i from 0 <= i < res:
+                insn = allinsn[i]
+                yield (insn.address, insn.size, insn.mnemonic, insn.op_str)
+        finally:
+            cc.cs_free(allinsn, res)
 
 
 # print out debugging info
