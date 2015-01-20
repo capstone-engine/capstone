@@ -330,6 +330,7 @@ class _dummy_cs(object):
     def __init__(self, csh, arch):
         self.csh = csh
         self.arch = arch
+        self._detail = False
 
 
 # Quick & dirty Python function to disasm raw binary code
