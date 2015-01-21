@@ -1772,6 +1772,7 @@ static DecodeStatus DecodeAddrMode3Instruction(MCInst *Inst, unsigned Insn,
 	}
 
 	if (writeback) { // Writeback
+		Inst->writeback = true;
 		if (P)
 			U |= ARMII_IndexModePre << 9;
 		else
