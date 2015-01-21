@@ -343,6 +343,12 @@ void ARM_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 			case ARM_STRBT_POST:
 			case ARM_STRD_POST:
 			case ARM_STRH_POST:
+
+			case ARM_LDRB_POST_IMM:
+			case ARM_LDR_POST_IMM:
+			case ARM_STRB_POST_IMM:
+			case ARM_STR_POST_IMM:
+
 				insn->detail->arm.writeback = true;
 				break;
 		}
