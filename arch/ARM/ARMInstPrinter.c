@@ -250,7 +250,7 @@ void ARM_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 	// check if this insn requests write-back
 	if (mci->writeback || (strrchr(insn_asm, '!')) != NULL) {
 		insn->detail->arm.writeback = true;
-	} else if (MI->csh->mode & CS_MODE_THUMB) {
+	} else if (mci->csh->mode & CS_MODE_THUMB) {
 		// handle some special instructions with writeback
 		switch(mci->Opcode) {
 			default:
