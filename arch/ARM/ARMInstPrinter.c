@@ -248,8 +248,110 @@ void ARM_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 		return;
 
 	// check if this insn requests write-back
-	if (strrchr(insn_asm, '!') != NULL) {
+	if (mci->writeback || (strrchr(insn_asm, '!')) != NULL) {
 		insn->detail->arm.writeback = true;
+	} else if (mci->csh->mode & CS_MODE_THUMB) {
+		// handle some special instructions with writeback
+		switch(mci->Opcode) {
+			default:
+				break;
+			case ARM_t2LDC2L_PRE:
+			case ARM_t2LDC2_PRE:
+			case ARM_t2LDCL_PRE:
+			case ARM_t2LDC_PRE:
+
+			case ARM_t2LDRB_PRE:
+			case ARM_t2LDRD_PRE:
+			case ARM_t2LDRH_PRE:
+			case ARM_t2LDRSB_PRE:
+			case ARM_t2LDRSH_PRE:
+			case ARM_t2LDR_PRE:
+
+			case ARM_t2STC2L_PRE:
+			case ARM_t2STC2_PRE:
+			case ARM_t2STCL_PRE:
+			case ARM_t2STC_PRE:
+
+			case ARM_t2STRB_PRE:
+			case ARM_t2STRD_PRE:
+			case ARM_t2STRH_PRE:
+			case ARM_t2STR_PRE:
+
+			case ARM_t2LDC2L_POST:
+			case ARM_t2LDC2_POST:
+			case ARM_t2LDCL_POST:
+			case ARM_t2LDC_POST:
+
+			case ARM_t2LDRB_POST:
+			case ARM_t2LDRD_POST:
+			case ARM_t2LDRH_POST:
+			case ARM_t2LDRSB_POST:
+			case ARM_t2LDRSH_POST:
+			case ARM_t2LDR_POST:
+
+			case ARM_t2STC2L_POST:
+			case ARM_t2STC2_POST:
+			case ARM_t2STCL_POST:
+			case ARM_t2STC_POST:
+
+			case ARM_t2STRB_POST:
+			case ARM_t2STRD_POST:
+			case ARM_t2STRH_POST:
+			case ARM_t2STR_POST:
+				insn->detail->arm.writeback = true;
+				break;
+		}
+	} else {	// ARM mode
+		// handle some special instructions with writeback
+		switch(mci->Opcode) {
+			default:
+				break;
+			case ARM_LDC2L_PRE:
+			case ARM_LDC2_PRE:
+			case ARM_LDCL_PRE:
+			case ARM_LDC_PRE:
+
+			case ARM_LDRD_PRE:
+			case ARM_LDRH_PRE:
+			case ARM_LDRSB_PRE:
+			case ARM_LDRSH_PRE:
+
+			case ARM_STC2L_PRE:
+			case ARM_STC2_PRE:
+			case ARM_STCL_PRE:
+			case ARM_STC_PRE:
+
+			case ARM_STRD_PRE:
+			case ARM_STRH_PRE:
+
+			case ARM_LDC2L_POST:
+			case ARM_LDC2_POST:
+			case ARM_LDCL_POST:
+			case ARM_LDC_POST:
+
+			case ARM_LDRBT_POST:
+			case ARM_LDRD_POST:
+			case ARM_LDRH_POST:
+			case ARM_LDRSB_POST:
+			case ARM_LDRSH_POST:
+
+			case ARM_STC2L_POST:
+			case ARM_STC2_POST:
+			case ARM_STCL_POST:
+			case ARM_STC_POST:
+
+			case ARM_STRBT_POST:
+			case ARM_STRD_POST:
+			case ARM_STRH_POST:
+
+			case ARM_LDRB_POST_IMM:
+			case ARM_LDR_POST_IMM:
+			case ARM_STRB_POST_IMM:
+			case ARM_STR_POST_IMM:
+
+				insn->detail->arm.writeback = true;
+				break;
+		}
 	}
 
 	// check if this insn requests update flags
@@ -536,8 +638,10 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 								 MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = BaseReg;
 								 MI->flat_insn->detail->arm.op_count++;
 							 }
-							 if (Writeback)
+							 if (Writeback) {
+								 MI->writeback = true;
 								 SStream_concat0(O, "!");
+							 }
 							 SStream_concat0(O, ", ");
 							 printRegisterList(MI, 3, O);
 							 return;
@@ -1137,9 +1241,10 @@ static void printAddrMode7Operand(MCInst *MI, unsigned OpNum, SStream *O)
 static void printAddrMode6OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	if (MCOperand_getReg(MO) == 0)
+	if (MCOperand_getReg(MO) == 0) {
+		MI->writeback = true;
 		SStream_concat0(O, "!");
-	else {
+	} else {
 		SStream_concat0(O, ", ");
 		printRegName(MI->csh, O, MCOperand_getReg(MO));
 		if (MI->csh->detail) {
