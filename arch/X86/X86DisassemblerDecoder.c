@@ -1872,7 +1872,7 @@ static int readMaskRegister(struct InternalInstruction *insn)
 
 	return 0;
 }
-	 
+
 /*
  * readOperands - Consults the specifier for an instruction and consumes all
  *   operands for that instruction, interpreting them as it goes.
