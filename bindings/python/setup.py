@@ -14,6 +14,7 @@ from distutils.core import setup
 VERSION = '3.0'
 SYSTEM = platform.system().lower()
 
+
 class LazyList(list):
     """A list which re-evaluates each time.
 
@@ -102,6 +103,10 @@ class custom_build_clib(build_clib):
             sources = list(sources)
 
             log.info("building '%s' library", lib_name)
+
+            # Darwin systems must produce shared libraries with this extension.
+            if "darwin" in SYSTEM:
+                self.compiler.shared_lib_extension = ".dynlib"
 
             # First, compile the source code to object files in the
             # library directory.
