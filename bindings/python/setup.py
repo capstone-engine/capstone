@@ -32,6 +32,10 @@ def get_sources():
     create the library.
     """
     result = []
+    # Make the src directory if it does not exist.
+    if not os.access("./src/", os.F_OK):
+        custom_sdist.copy_sources()
+
     for root, _, files in os.walk("./src/"):
         for name in files:
             if name.endswith(".c"):
@@ -47,7 +51,8 @@ class custom_sdist(sdist):
         self.copy_sources()
         return sdist.run(self)
 
-    def copy_sources(self):
+    @staticmethod
+    def copy_sources():
         """Copy the C sources into the source directory.
 
         This rearranges the source files under the python distribution
@@ -55,7 +60,10 @@ class custom_sdist(sdist):
         """
         result = []
 
-        dir_util.remove_tree("src/")
+        try:
+            dir_util.remove_tree("src/")
+        except (IOError, OSError):
+            pass
         dir_util.copy_tree("../../arch", "src/arch/")
         dir_util.copy_tree("../../include", "src/include/")
         dir_util.copy_tree("../../msvc/headers", "src/msvc/headers/")
