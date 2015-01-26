@@ -273,7 +273,7 @@ public class Capstone {
   }
 
   // Capstone API version
-  public static final int CS_API_MAJOR = 3;
+  public static final int CS_API_MAJOR = 4;
   public static final int CS_API_MINOR = 0;
 
   // architectures

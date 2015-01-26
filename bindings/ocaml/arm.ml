@@ -18,7 +18,8 @@ type arm_op_mem = {
 	base: int;
 	index: int;
 	scale: int;
-	disp: int
+	disp: int;
+	lshift: int;
 }
 
 type arm_op_value =

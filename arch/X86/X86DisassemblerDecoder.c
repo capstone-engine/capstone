@@ -1640,8 +1640,6 @@ static int readModRM(struct InternalInstruction *insn)
 			case TYPE_SEGMENTREG:                                 \
 				return prefix##_ES + (index & 7);                 \
 			case TYPE_DEBUGREG:                                   \
-				if (index > 7)                                    \
-					*valid = 0;                                   \
 				return prefix##_DR0 + index;                      \
 			case TYPE_CONTROLREG:                                 \
 				return prefix##_CR0 + index;                      \
@@ -1874,7 +1872,7 @@ static int readMaskRegister(struct InternalInstruction *insn)
 
 	return 0;
 }
-	 
+
 /*
  * readOperands - Consults the specifier for an instruction and consumes all
  *   operands for that instruction, interpreting them as it goes.
@@ -1888,7 +1886,7 @@ static int readOperands(struct InternalInstruction *insn)
 	int hasVVVV, needVVVV;
 	int sawRegImm = 0;
 
-	// printf(">>> readOperands()\n");
+	// printf(">>> readOperands(): ID = %u\n", insn->instructionID);
 	/* If non-zero vvvv specified, need to make sure one of the operands
 	   uses it. */
 	hasVVVV = !readVVVV(insn);
@@ -2031,6 +2029,7 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 			case X86_ADC64mi8:
 			case X86_ADC64mr:
 			case X86_ADC8mi:
+			case X86_ADC8mi8:
 			case X86_ADC8mr:
 
 			// ADD
@@ -2043,6 +2042,7 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 			case X86_ADD64mi32:
 			case X86_ADD64mi8:
 			case X86_ADD64mr:
+			case X86_ADD82_8mi8:
 			case X86_ADD8mi:
 			case X86_ADD8mr:
 
@@ -2056,6 +2056,7 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 			case X86_AND64mi32:
 			case X86_AND64mi8:
 			case X86_AND64mr:
+			case X86_AND82_8mi8:
 			case X86_AND8mi:
 			case X86_AND8mr:
 
@@ -2121,6 +2122,7 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 			case X86_OR64mi32:
 			case X86_OR64mi8:
 			case X86_OR64mr:
+			case X86_OR82_8mi8:
 			case X86_OR8mi:
 			case X86_OR8mr:
 
@@ -2135,6 +2137,7 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 			case X86_SBB64mi8:
 			case X86_SBB64mr:
 			case X86_SBB8mi:
+			case X86_SBB8mi8:
 			case X86_SBB8mr:
 
 			// SUB
@@ -2147,6 +2150,7 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 			case X86_SUB64mi32:
 			case X86_SUB64mi8:
 			case X86_SUB64mr:
+			case X86_SUB82_8mi8:
 			case X86_SUB8mi:
 			case X86_SUB8mr:
 
@@ -2172,6 +2176,7 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 			case X86_XOR64mi32:
 			case X86_XOR64mi8:
 			case X86_XOR64mr:
+			case X86_XOR82_8mi8:
 			case X86_XOR8mi:
 			case X86_XOR8mr:
 

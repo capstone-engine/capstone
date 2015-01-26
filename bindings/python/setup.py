@@ -10,9 +10,13 @@ from distutils.command.build_clib import build_clib
 from distutils.command.sdist import sdist
 from distutils.core import setup
 
+<<<<<<< HEAD
 
 VERSION = '3.0'
 SYSTEM = platform.system().lower()
+=======
+VERSION = '4.0'
+>>>>>>> 58fbf2f6272ab2e77152041717e7524ef0b9b036
 
 class LazyList(list):
     """A list which re-evaluates each time.

@@ -46,6 +46,8 @@ let print_op handle i op =
 			printf "\t\t\toperands[%u].mem.scale: %d\n" i mem.scale;
 		if mem.disp != 0 then
 			printf "\t\t\toperands[%u].mem.disp: 0x%x\n" i mem.disp;
+		if mem.lshift != 0 then
+			printf "\t\t\toperands[%u].mem.lshift: 0x%x\n" i mem.lshift;
 		);
 	| ARM_OP_SETEND sd -> printf "\t\top[%d]: SETEND = %u\n" i sd;
 	);

@@ -1,0 +1,2 @@
+This directory contains some tools to verify Capstone output,
+as well as semantics of X86 machine code.

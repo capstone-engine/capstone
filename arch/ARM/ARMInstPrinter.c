@@ -955,8 +955,7 @@ static void printAddrModeTBH(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.index = MCOperand_getReg(MO2);
 	SStream_concat0(O, ", lsl #1]");
 	if (MI->csh->detail) {
-		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].shift.type = ARM_SFT_LSL;
-		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].shift.value = 1;
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.lshift = 1;
 	}
 	set_mem_access(MI, false);
 }
@@ -2091,8 +2090,7 @@ static void printT2AddrModeSoRegOperand(MCInst *MI,
 		SStream_concat0(O, ", lsl ");
 		SStream_concat(O, "#%d", ShAmt);
 		if (MI->csh->detail) {
-			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count - 1].shift.type = ARM_SFT_LSL;
-			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count - 1].shift.value = ShAmt;
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.lshift = ShAmt;
 		}
 	}
 

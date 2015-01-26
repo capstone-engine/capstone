@@ -70,6 +70,8 @@ public class TestArm {
             System.out.printf("\t\t\toperands[%d].mem.scale: %d\n", c, (i.value.mem.scale));
           if (i.value.mem.disp != 0)
             System.out.printf("\t\t\toperands[%d].mem.disp: 0x%x\n", c, (i.value.mem.disp));
+          if (i.value.mem.lshift != 0)
+            System.out.printf("\t\t\toperands[%d].mem.lshift: 0x%x\n", c, (i.value.mem.lshift));
         }
         if (i.vector_index > 0)
           System.out.printf("\t\t\toperands[%d].vector_index = %d\n", c, (i.vector_index));

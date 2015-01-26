@@ -151,6 +151,14 @@ static name_map reg_name_maps[] = {
 	{ X86_REG_DR5, "dr5" },
 	{ X86_REG_DR6, "dr6" },
 	{ X86_REG_DR7, "dr7" },
+	{ X86_REG_DR8, "dr8" },
+	{ X86_REG_DR9, "dr9" },
+	{ X86_REG_DR10, "dr10" },
+	{ X86_REG_DR11, "dr11" },
+	{ X86_REG_DR12, "dr12" },
+	{ X86_REG_DR13, "dr13" },
+	{ X86_REG_DR14, "dr14" },
+	{ X86_REG_DR15, "dr15" },
 	{ X86_REG_FP0, "fp0" },
 	{ X86_REG_FP1, "fp1" },
 	{ X86_REG_FP2, "fp2" },
@@ -390,6 +398,14 @@ uint8_t regsize_map_32 [] = {
 	4,	// { X86_REG_DR5, "dr5" },
 	4,	// { X86_REG_DR6, "dr6" },
 	4,	// { X86_REG_DR7, "dr7" },
+	4,	// { X86_REG_DR8, "dr8" },
+	4,	// { X86_REG_DR9, "dr9" },
+	4,	// { X86_REG_DR10, "dr10" },
+	4,	// { X86_REG_DR11, "dr11" },
+	4,	// { X86_REG_DR12, "dr12" },
+	4,	// { X86_REG_DR13, "dr13" },
+	4,	// { X86_REG_DR14, "dr14" },
+	4,	// { X86_REG_DR15, "dr15" },
 	10,	// { X86_REG_FP0, "fp0" },
 	10,	// { X86_REG_FP1, "fp1" },
 	10,	// { X86_REG_FP2, "fp2" },
@@ -628,6 +644,14 @@ uint8_t regsize_map_64 [] = {
 	8,	// { X86_REG_DR5, "dr5" },
 	8,	// { X86_REG_DR6, "dr6" },
 	8,	// { X86_REG_DR7, "dr7" },
+	8,	// { X86_REG_DR8, "dr8" },
+	8,	// { X86_REG_DR9, "dr9" },
+	8,	// { X86_REG_DR10, "dr10" },
+	8,	// { X86_REG_DR11, "dr11" },
+	8,	// { X86_REG_DR12, "dr12" },
+	8,	// { X86_REG_DR13, "dr13" },
+	8,	// { X86_REG_DR14, "dr14" },
+	8,	// { X86_REG_DR15, "dr15" },
 	10,	// { X86_REG_FP0, "fp0" },
 	10,	// { X86_REG_FP1, "fp1" },
 	10,	// { X86_REG_FP2, "fp2" },
@@ -997,6 +1021,7 @@ static name_map insn_name_maps[] = {
 	{ X86_INS_FPREM, "fprem" },
 	{ X86_INS_FPREM1, "fprem1" },
 	{ X86_INS_FPTAN, "fptan" },
+	{ X86_INS_FFREEP, "ffreep" },
 	{ X86_INS_FRNDINT, "frndint" },
 	{ X86_INS_FRSTOR, "frstor" },
 	{ X86_INS_FNSAVE, "fnsave" },
@@ -1489,6 +1514,7 @@ static name_map insn_name_maps[] = {
 	{ X86_INS_FST, "fst" },
 	{ X86_INS_FSTP, "fstp" },
 	{ X86_INS_FSTPNCE, "fstpnce" },
+	{ X86_INS_FXCH, "fxch" },
 	{ X86_INS_SUBPD, "subpd" },
 	{ X86_INS_SUBPS, "subps" },
 	{ X86_INS_FSUBR, "fsubr" },
@@ -2088,7 +2114,6 @@ static name_map insn_name_maps[] = {
 	{ X86_INS_XACQUIRE, "xacquire" },
 	{ X86_INS_XBEGIN, "xbegin" },
 	{ X86_INS_XCHG, "xchg" },
-	{ X86_INS_FXCH, "fxch" },
 	{ X86_INS_XCRYPTCBC, "xcryptcbc" },
 	{ X86_INS_XCRYPTCFB, "xcryptcfb" },
 	{ X86_INS_XCRYPTCTR, "xcryptctr" },
@@ -2109,6 +2134,8 @@ static name_map insn_name_maps[] = {
 	{ X86_INS_XSHA256, "xsha256" },
 	{ X86_INS_XSTORE, "xstore" },
 	{ X86_INS_XTEST, "xtest" },
+	{ X86_INS_FDISI8087_NOP, "fdisi8087_nop" },
+	{ X86_INS_FENI8087_NOP, "feni8087_nop" },
 };
 #endif
 
@@ -2406,6 +2433,12 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
+		X86_ADC82_8ri8, X86_INS_ADC,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_ADC8i8, X86_INS_ADC,
 #ifndef CAPSTONE_DIET
 		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -2415,6 +2448,12 @@ static insn_map insns[] = {	// full x86 instructions
 		X86_ADC8mi, X86_INS_ADC,
 #ifndef CAPSTONE_DIET
 		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_ADC8mi8, X86_INS_ADC,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 	},
 	{
@@ -2634,6 +2673,18 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
+		X86_ADD82_8mi8, X86_INS_ADD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
+		X86_ADD82_8ri8, X86_INS_ADD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_ADD8i8, X86_INS_ADD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -2655,12 +2706,6 @@ static insn_map insns[] = {	// full x86 instructions
 		X86_ADD8ri, X86_INS_ADD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		X86_ADD8ri8, X86_INS_ADD,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 	},
 	{
@@ -3078,6 +3123,18 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
+		X86_AND82_8mi8, X86_INS_AND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
+		X86_AND82_8ri8, X86_INS_AND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_AND8i8, X86_INS_AND,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -3099,12 +3156,6 @@ static insn_map insns[] = {	// full x86 instructions
 		X86_AND8ri, X86_INS_AND,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		X86_AND8ri8, X86_INS_AND,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 	},
 	{
@@ -4866,6 +4917,12 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
+		X86_CMP82_8ri8, X86_INS_CMP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_CMP8i8, X86_INS_CMP,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -4875,6 +4932,12 @@ static insn_map insns[] = {	// full x86 instructions
 		X86_CMP8mi, X86_INS_CMP,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_CMP8mi8, X86_INS_CMP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 	},
 	{
@@ -6111,6 +6174,12 @@ static insn_map insns[] = {	// full x86 instructions
 		X86_FPTAN, X86_INS_FPTAN,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_FP_FFREEP, X86_INS_FFREEP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
@@ -11400,6 +11469,12 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
+		X86_MOVSX64rm32_alt, X86_INS_MOVSXD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { X86_GRP_MODE64, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_MOVSX64rm8, X86_INS_MOVSX,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
@@ -12228,6 +12303,18 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
+		X86_OR82_8mi8, X86_INS_OR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
+		X86_OR82_8ri8, X86_INS_OR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_OR8i8, X86_INS_OR,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -12249,12 +12336,6 @@ static insn_map insns[] = {	// full x86 instructions
 		X86_OR8ri, X86_INS_OR,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		X86_OR8ri8, X86_INS_OR,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 	},
 	{
@@ -16086,6 +16167,12 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
+		X86_SBB82_8ri8, X86_INS_SBB,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_SBB8i8, X86_INS_SBB,
 #ifndef CAPSTONE_DIET
 		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -16095,6 +16182,12 @@ static insn_map insns[] = {	// full x86 instructions
 		X86_SBB8mi, X86_INS_SBB,
 #ifndef CAPSTONE_DIET
 		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SBB8mi8, X86_INS_SBB,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 	},
 	{
@@ -17454,6 +17547,18 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
+		X86_SUB82_8mi8, X86_INS_SUB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SUB82_8ri8, X86_INS_SUB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_SUB8i8, X86_INS_SUB,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -17475,12 +17580,6 @@ static insn_map insns[] = {	// full x86 instructions
 		X86_SUB8ri, X86_INS_SUB,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		X86_SUB8ri8, X86_INS_SUB,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 	},
 	{
@@ -37710,6 +37809,18 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
+		X86_XOR82_8mi8, X86_INS_XOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
+		X86_XOR82_8ri8, X86_INS_XOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_XOR8i8, X86_INS_XOR,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -37731,12 +37842,6 @@ static insn_map insns[] = {	// full x86 instructions
 		X86_XOR8ri, X86_INS_XOR,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		X86_XOR8ri8, X86_INS_XOR,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 	},
 	{
@@ -37851,6 +37956,18 @@ static insn_map insns[] = {	// full x86 instructions
 		X86_XTEST, X86_INS_XTEST,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_fdisi8087_nop, X86_INS_FDISI8087_NOP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_feni8087_nop, X86_INS_FENI8087_NOP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 };
@@ -38051,6 +38168,12 @@ static insn_map insns[] = {	// reduce x86 instructions
 #endif
 	},
 	{
+		X86_ADC82_8ri8, X86_INS_ADC,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_ADC8i8, X86_INS_ADC,
 #ifndef CAPSTONE_DIET
 		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -38060,6 +38183,12 @@ static insn_map insns[] = {	// reduce x86 instructions
 		X86_ADC8mi, X86_INS_ADC,
 #ifndef CAPSTONE_DIET
 		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_ADC8mi8, X86_INS_ADC,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 	},
 	{
@@ -38279,6 +38408,18 @@ static insn_map insns[] = {	// reduce x86 instructions
 #endif
 	},
 	{
+		X86_ADD82_8mi8, X86_INS_ADD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
+		X86_ADD82_8ri8, X86_INS_ADD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_ADD8i8, X86_INS_ADD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -38300,12 +38441,6 @@ static insn_map insns[] = {	// reduce x86 instructions
 		X86_ADD8ri, X86_INS_ADD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		X86_ADD8ri8, X86_INS_ADD,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 	},
 	{
@@ -38513,6 +38648,18 @@ static insn_map insns[] = {	// reduce x86 instructions
 #endif
 	},
 	{
+		X86_AND82_8mi8, X86_INS_AND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
+		X86_AND82_8ri8, X86_INS_AND,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_AND8i8, X86_INS_AND,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -38534,12 +38681,6 @@ static insn_map insns[] = {	// reduce x86 instructions
 		X86_AND8ri, X86_INS_AND,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		X86_AND8ri8, X86_INS_AND,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 	},
 	{
@@ -40145,6 +40286,12 @@ static insn_map insns[] = {	// reduce x86 instructions
 #endif
 	},
 	{
+		X86_CMP82_8ri8, X86_INS_CMP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_CMP8i8, X86_INS_CMP,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -40154,6 +40301,12 @@ static insn_map insns[] = {	// reduce x86 instructions
 		X86_CMP8mi, X86_INS_CMP,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_CMP8mi8, X86_INS_CMP,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 	},
 	{
@@ -42713,6 +42866,12 @@ static insn_map insns[] = {	// reduce x86 instructions
 #endif
 	},
 	{
+		X86_MOVSX64rm32_alt, X86_INS_MOVSXD,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { X86_GRP_MODE64, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_MOVSX64rm8, X86_INS_MOVSX,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
@@ -43337,6 +43496,18 @@ static insn_map insns[] = {	// reduce x86 instructions
 #endif
 	},
 	{
+		X86_OR82_8mi8, X86_INS_OR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
+		X86_OR82_8ri8, X86_INS_OR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_OR8i8, X86_INS_OR,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -43358,12 +43529,6 @@ static insn_map insns[] = {	// reduce x86 instructions
 		X86_OR8ri, X86_INS_OR,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		X86_OR8ri8, X86_INS_OR,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 	},
 	{
@@ -45161,6 +45326,12 @@ static insn_map insns[] = {	// reduce x86 instructions
 #endif
 	},
 	{
+		X86_SBB82_8ri8, X86_INS_SBB,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_SBB8i8, X86_INS_SBB,
 #ifndef CAPSTONE_DIET
 		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -45170,6 +45341,12 @@ static insn_map insns[] = {	// reduce x86 instructions
 		X86_SBB8mi, X86_INS_SBB,
 #ifndef CAPSTONE_DIET
 		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SBB8mi8, X86_INS_SBB,
+#ifndef CAPSTONE_DIET
+		{ X86_REG_EFLAGS, 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 	},
 	{
@@ -46235,6 +46412,18 @@ static insn_map insns[] = {	// reduce x86 instructions
 #endif
 	},
 	{
+		X86_SUB82_8mi8, X86_INS_SUB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
+		X86_SUB82_8ri8, X86_INS_SUB,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_SUB8i8, X86_INS_SUB,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -46256,12 +46445,6 @@ static insn_map insns[] = {	// reduce x86 instructions
 		X86_SUB8ri, X86_INS_SUB,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		X86_SUB8ri8, X86_INS_SUB,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 	},
 	{
@@ -47117,6 +47300,18 @@ static insn_map insns[] = {	// reduce x86 instructions
 #endif
 	},
 	{
+		X86_XOR82_8mi8, X86_INS_XOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
+		X86_XOR82_8ri8, X86_INS_XOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+#endif
+	},
+	{
 		X86_XOR8i8, X86_INS_XOR,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
@@ -47138,12 +47333,6 @@ static insn_map insns[] = {	// reduce x86 instructions
 		X86_XOR8ri, X86_INS_XOR,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		X86_XOR8ri8, X86_INS_XOR,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 	},
 	{

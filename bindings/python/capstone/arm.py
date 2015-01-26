@@ -10,6 +10,7 @@ class ArmOpMem(ctypes.Structure):
         ('index', ctypes.c_uint),
         ('scale', ctypes.c_int),
         ('disp', ctypes.c_int),
+        ('lshift', ctypes.c_int),
     )
 
 class ArmOpShift(ctypes.Structure):
