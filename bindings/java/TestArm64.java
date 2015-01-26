@@ -117,6 +117,9 @@ public class TestArm64 {
       }
 
       System.out.printf("0x%x: \n\n", all_ins[all_ins.length-1].address + all_ins[all_ins.length-1].size);
+
+      // Close when done
+      cs.close();
     }
   }
 

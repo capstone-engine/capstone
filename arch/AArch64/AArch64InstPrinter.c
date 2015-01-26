@@ -605,12 +605,16 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			}
 		}
 	} else if (MCOperand_isImm(Op)) {
-		int imm = (int)MCOperand_getImm(Op);
-		printInt32Bang(O, imm);
+		int64_t imm = MCOperand_getImm(Op);
 
+		if (MI->Opcode == AArch64_ADR) {
+			imm += MI->address;
+			printUInt64Bang(O, imm);
+		} else
+			printUInt64Bang(O, imm);
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = imm;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int32_t)imm;
 			} else {
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = imm;
@@ -1238,10 +1242,11 @@ static void printAlignedLabel(MCInst *MI, unsigned OpNum, SStream *O)
 	// If the label has already been resolved to an immediate offset (say, when
 	// we're running the disassembler), just print the immediate.
 	if (MCOperand_isImm(Op)) {
-		printInt64Bang(O, MCOperand_getImm(Op) << 2);
+		uint64_t imm = (MCOperand_getImm(Op) << 2) + MI->address;
+		printUInt64Bang(O, imm);
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)MCOperand_getImm(Op) << 2;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = imm;
 			MI->flat_insn->detail->arm64.op_count++;
 		}
 		return;
@@ -1252,13 +1257,18 @@ static void printAdrpLabel(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *Op = MCInst_getOperand(MI, OpNum);
 
-	// If the label has already been resolved to an immediate offset (say, when
-	// we're running the disassembler), just print the immediate.
 	if (MCOperand_isImm(Op)) {
-		printInt64Bang(O, MCOperand_getImm(Op) << 12);
+		// ADRP sign extends a 21-bit offset, shifts it left by 12
+		// and adds it to the value of the PC with its bottom 12 bits cleared
+		uint64_t imm = (MCOperand_getImm(Op) << 12) + (MI->address & ~0xfff);
+		if (imm > HEX_THRESHOLD)
+			SStream_concat(O, "#0x%"PRIx64, imm);
+		else
+			SStream_concat(O, "#%"PRIu64, imm);
+
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)MCOperand_getImm(Op) << 12;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = imm;
 			MI->flat_insn->detail->arm64.op_count++;
 		}
 		return;

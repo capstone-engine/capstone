@@ -51,7 +51,7 @@ static void print_insn_detail(cs_insn *ins)
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;
 			case ARM64_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->imm);
+				printf("\t\toperands[%u].type: IMM = 0x%"PRIx64 "\n", i, op->imm);
 				break;
 			case ARM64_OP_FP:
 				printf("\t\toperands[%u].type: FP = %f\n", i, op->fp);
@@ -67,7 +67,7 @@ static void print_insn_detail(cs_insn *ins)
 
 				break;
 			case ARM64_OP_CIMM:
-				printf("\t\toperands[%u].type: C-IMM = %u\n", i, op->imm);
+				printf("\t\toperands[%u].type: C-IMM = %u\n", i, (int)op->imm);
 				break;
 			case ARM64_OP_REG_MRS:
 				printf("\t\toperands[%u].type: REG_MRS = 0x%x\n", i, op->reg);

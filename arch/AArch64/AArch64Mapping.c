@@ -832,13 +832,13 @@ static insn_map insns[] = {
 	{
 		AArch64_BL, ARM64_INS_BL,
 #ifndef CAPSTONE_DIET
-		{ ARM64_REG_SP, 0 }, { ARM64_REG_LR, 0 }, { 0 }, 0, 0
+		{ 0 }, { ARM64_REG_LR, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
 		AArch64_BLR, ARM64_INS_BLR,
 #ifndef CAPSTONE_DIET
-		{ ARM64_REG_SP, 0 }, { ARM64_REG_LR, 0 }, { 0 }, 0, 0
+		{ 0 }, { ARM64_REG_LR, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{

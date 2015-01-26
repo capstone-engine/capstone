@@ -91,7 +91,7 @@ static int modRMRequired(OpcodeType type,
 		InstructionContext insnContext,
 		uint16_t opcode)
 {
-	const struct OpcodeDecision* decision = NULL;
+	const struct OpcodeDecision *decision = NULL;
 	const uint8_t *indextable = NULL;
 	uint8_t index;
 
@@ -154,7 +154,7 @@ static InstrUID decode(OpcodeType type,
 		uint8_t opcode,
 		uint8_t modRM)
 {
-	const struct ModRMDecision* dec = NULL;
+	const struct ModRMDecision *dec = NULL;
 	const uint8_t *indextable = NULL;
 	uint8_t index;
 
@@ -274,7 +274,7 @@ static const struct InstructionSpecifier *specifierForUID(InstrUID uid)
  *                with the data read.
  * @return      - 0 if the read was successful; nonzero otherwise.
  */
-static int consumeByte(struct InternalInstruction* insn, uint8_t* byte)
+static int consumeByte(struct InternalInstruction *insn, uint8_t *byte)
 {
 	int ret = insn->reader(insn->readerArg, byte, insn->readerCursor);
 
@@ -296,13 +296,13 @@ static int lookAtByte(struct InternalInstruction *insn, uint8_t *byte)
 	return insn->reader(insn->readerArg, byte, insn->readerCursor);
 }
 
-static void unconsumeByte(struct InternalInstruction* insn)
+static void unconsumeByte(struct InternalInstruction *insn)
 {
 	insn->readerCursor--;
 }
 
 #define CONSUME_FUNC(name, type)                                  \
-	static int name(struct InternalInstruction* insn, type* ptr) {  \
+	static int name(struct InternalInstruction *insn, type *ptr) {  \
 		type combined = 0;                                            \
 		unsigned offset;                                              \
 		for (offset = 0; offset < sizeof(type); ++offset) {           \
@@ -345,7 +345,7 @@ CONSUME_FUNC(consumeUInt64, uint64_t)
  * @param location  - The location where the prefix is located (in the address
  *                    space of the instruction's reader).
  */
-static void setPrefixPresent(struct InternalInstruction* insn,
+static void setPrefixPresent(struct InternalInstruction *insn,
 		uint8_t prefix, uint64_t location)
 {
 	insn->prefixPresent[prefix] = 1;
@@ -361,7 +361,7 @@ static void setPrefixPresent(struct InternalInstruction* insn,
  * @param location  - The location to query.
  * @return          - Whether the prefix is at that location.
  */
-static bool isPrefixAtLocation(struct InternalInstruction* insn,
+static bool isPrefixAtLocation(struct InternalInstruction *insn,
 		uint8_t prefix,
 		uint64_t location)
 {
@@ -381,7 +381,7 @@ static bool isPrefixAtLocation(struct InternalInstruction* insn,
  * @return      - 0 if the instruction could be read until the end of the prefix
  *                bytes, and no prefixes conflicted; nonzero otherwise.
  */
-static int readPrefixes(struct InternalInstruction* insn)
+static int readPrefixes(struct InternalInstruction *insn)
 {
 	bool isPrefix = true;
 	uint64_t prefixLocation;
@@ -391,6 +391,45 @@ static int readPrefixes(struct InternalInstruction* insn)
 	bool hasOpSize = false;
 
 	while (isPrefix) {
+		if (insn->mode == MODE_64BIT) {
+			// eliminate consecutive redundant REX bytes in front
+			if (consumeByte(insn, &byte))
+				return -1;
+
+			if ((byte & 0xf0) == 0x40) {
+				while(true) {
+					if (lookAtByte(insn, &byte))	// out of input code
+						return -1;
+					if ((byte & 0xf0) == 0x40) {
+						// another REX prefix, but we only remember the last one
+						consumeByte(insn, &byte);
+					} else
+						break;
+				}
+
+				// recover the last REX byte if next byte is not a legacy prefix
+				switch (byte) {
+					case 0xf2:  /* REPNE/REPNZ */
+					case 0xf3:  /* REP or REPE/REPZ */
+					case 0xf0:  /* LOCK */
+					case 0x2e:  /* CS segment override -OR- Branch not taken */
+					case 0x36:  /* SS segment override -OR- Branch taken */
+					case 0x3e:  /* DS segment override */
+					case 0x26:  /* ES segment override */
+					case 0x64:  /* FS segment override */
+					case 0x65:  /* GS segment override */
+					case 0x66:  /* Operand-size override */
+					case 0x67:  /* Address-size override */
+						break;
+					default:    /* Not a prefix byte */
+						unconsumeByte(insn);
+						break;
+				}
+			} else {
+				unconsumeByte(insn);
+			}
+		}
+
 		prefixLocation = insn->readerCursor;
 
 		/* If we fail reading prefixes, just stop here and let the opcode reader deal with it */
@@ -703,9 +742,14 @@ static int readPrefixes(struct InternalInstruction* insn)
 			if ((byte & 0xf0) == 0x40) {
 				uint8_t opcodeByte;
 
-				if (lookAtByte(insn, &opcodeByte) || ((opcodeByte & 0xf0) == 0x40)) {
-					// dbgprintf(insn, "Redundant REX prefix");
-					return -1;
+				while(true) {
+					if (lookAtByte(insn, &opcodeByte))	// out of input code
+						return -1;
+					if ((opcodeByte & 0xf0) == 0x40) {
+						// another REX prefix, but we only remember the last one
+						consumeByte(insn, &byte);
+					} else
+						break;
 				}
 
 				insn->rexPrefix = byte;
@@ -758,7 +802,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 	return 0;
 }
 
-static int readModRM(struct InternalInstruction* insn);
+static int readModRM(struct InternalInstruction *insn);
 
 /*
  * readOpcode - Reads the opcode (excepting the ModR/M byte in the case of
@@ -767,12 +811,12 @@ static int readModRM(struct InternalInstruction* insn);
  * @param insn  - The instruction whose opcode is to be read.
  * @return      - 0 if the opcode could be read successfully; nonzero otherwise.
  */
-static int readOpcode(struct InternalInstruction* insn)
+static int readOpcode(struct InternalInstruction *insn)
 {
 	/* Determine the length of the primary opcode */
 	uint8_t current;
 
-	//printf(">>> readOpcode()\n");
+	// printf(">>> readOpcode()\n");
 
 	insn->opcodeType = ONEBYTE;
 
@@ -906,6 +950,12 @@ static int readOpcode(struct InternalInstruction* insn)
 	return 0;
 }
 
+// Hacky for FEMMS
+#ifndef CAPSTONE_X86_REDUCE
+#define GET_INSTRINFO_ENUM
+#include "X86GenInstrInfo.inc"
+#endif
+
 /*
  * getIDWithAttrMask - Determines the ID of an instruction, consuming
  *   the ModR/M byte as appropriate for extended and escape opcodes,
@@ -918,19 +968,21 @@ static int readOpcode(struct InternalInstruction* insn)
  * @return              - 0 if the ModR/M could be read when needed or was not
  *                        needed; nonzero otherwise.
  */
-static int getIDWithAttrMask(uint16_t* instructionID,
-		struct InternalInstruction* insn,
+static int getIDWithAttrMask(uint16_t *instructionID,
+		struct InternalInstruction *insn,
 		uint16_t attrMask)
 {
 	bool hasModRMExtension;
 
 	InstructionContext instructionClass;
 
+#ifndef CAPSTONE_X86_REDUCE
 	// HACK for femms. to be handled properly in next version 3.x
 	if (insn->opcode == 0x0e && insn->opcodeType == T3DNOW_MAP) {
-		*instructionID = 764;
+		*instructionID = X86_FEMMS;
 		return 0;
 	}
+#endif
 
 	if (insn->opcodeType == T3DNOW_MAP)
 		instructionClass = IC_OF;
@@ -990,12 +1042,13 @@ static bool is16BitEquivalent(unsigned orig, unsigned equiv)
  * @return      - 0 if the ModR/M could be read when needed or was not needed;
  *                nonzero otherwise.
  */
-static int getID(struct InternalInstruction* insn)
+static int getID(struct InternalInstruction *insn)
 {
 	uint16_t attrMask;
 	uint16_t instructionID;
 	const struct InstructionSpecifier *spec;
 
+	// printf(">>> getID()\n");
 	attrMask = ATTR_NONE;
 
 	if (insn->mode == MODE_64BIT)
@@ -1199,7 +1252,7 @@ static int getID(struct InternalInstruction* insn)
  * @param insn  - The instruction whose SIB byte is to be read.
  * @return      - 0 if the SIB byte was successfully read; nonzero otherwise.
  */
-static int readSIB(struct InternalInstruction* insn)
+static int readSIB(struct InternalInstruction *insn)
 {
 	SIBIndex sibIndexBase = SIB_INDEX_NONE;
 	SIBBase sibBaseBase = SIB_BASE_NONE;
@@ -1298,7 +1351,7 @@ static int readSIB(struct InternalInstruction* insn)
  * @return      - 0 if the displacement byte was successfully read; nonzero
  *                otherwise.
  */
-static int readDisplacement(struct InternalInstruction* insn)
+static int readDisplacement(struct InternalInstruction *insn)
 {
 	int8_t d8;
 	int16_t d16;
@@ -1344,7 +1397,7 @@ static int readDisplacement(struct InternalInstruction* insn)
  * @param insn  - The instruction whose addressing information is to be read.
  * @return      - 0 if the information was successfully read; nonzero otherwise.
  */
-static int readModRM(struct InternalInstruction* insn)
+static int readModRM(struct InternalInstruction *insn)
 {
 	uint8_t mod, rm, reg;
 
@@ -1583,20 +1636,14 @@ static int readModRM(struct InternalInstruction* insn)
 			case TYPE_MM64:                                       \
 			case TYPE_MM32:                                       \
 			case TYPE_MM:                                         \
-				if (index > 7)                                    \
-					*valid = 0;                                   \
-				return prefix##_MM0 + index;                      \
+				return prefix##_MM0 + (index & 7);                \
 			case TYPE_SEGMENTREG:                                 \
-				if (index > 5)                                    \
-					*valid = 0;                                   \
-				return prefix##_ES + index;                       \
+				return prefix##_ES + (index & 7);                 \
 			case TYPE_DEBUGREG:                                   \
 				if (index > 7)                                    \
 					*valid = 0;                                   \
 				return prefix##_DR0 + index;                      \
 			case TYPE_CONTROLREG:                                 \
-				if (index > 8)                                    \
-					*valid = 0;                                   \
 				return prefix##_CR0 + index;                      \
 		}                                                     \
 	}
@@ -1679,7 +1726,7 @@ static int fixupReg(struct InternalInstruction *insn,
  *                RAX.
  * @return      - 0 on success; nonzero otherwise.
  */
-static int readOpcodeRegister(struct InternalInstruction* insn, uint8_t size)
+static int readOpcodeRegister(struct InternalInstruction *insn, uint8_t size)
 {
 	// dbgprintf(insn, "readOpcodeRegister()");
 
@@ -1729,7 +1776,7 @@ static int readOpcodeRegister(struct InternalInstruction* insn, uint8_t size)
  * @return      - 0 if the immediate was successfully consumed; nonzero
  *                otherwise.
  */
-static int readImmediate(struct InternalInstruction* insn, uint8_t size)
+static int readImmediate(struct InternalInstruction *insn, uint8_t size)
 {
 	uint8_t imm8;
 	uint16_t imm16;
@@ -1784,7 +1831,7 @@ static int readImmediate(struct InternalInstruction* insn, uint8_t size)
  * @return      - 0 if the vvvv was successfully consumed; nonzero
  *                otherwise.
  */
-static int readVVVV(struct InternalInstruction* insn)
+static int readVVVV(struct InternalInstruction *insn)
 {
 	int vvvv;
 	// dbgprintf(insn, "readVVVV()");
@@ -1816,7 +1863,7 @@ static int readVVVV(struct InternalInstruction* insn)
  * @param insn    - The instruction whose opcode field is to be read.
  * @return        - 0 on success; nonzero otherwise.
  */
-static int readMaskRegister(struct InternalInstruction* insn)
+static int readMaskRegister(struct InternalInstruction *insn)
 {
 	// dbgprintf(insn, "readMaskRegister()");
 
@@ -1835,12 +1882,13 @@ static int readMaskRegister(struct InternalInstruction* insn)
  * @param insn  - The instruction whose operands are to be read and interpreted.
  * @return      - 0 if all operands could be read; nonzero otherwise.
  */
-static int readOperands(struct InternalInstruction* insn)
+static int readOperands(struct InternalInstruction *insn)
 {
 	int index;
 	int hasVVVV, needVVVV;
 	int sawRegImm = 0;
 
+	// printf(">>> readOperands()\n");
 	/* If non-zero vvvv specified, need to make sure one of the operands
 	   uses it. */
 	hasVVVV = !readVVVV(insn);
@@ -1881,12 +1929,6 @@ static int readOperands(struct InternalInstruction* insn)
 					break;
 				}
 				if (readImmediate(insn, 1))
-					return -1;
-				if (x86OperandSets[insn->spec->operands][index].type == TYPE_IMM3 &&
-						insn->immediates[insn->numImmediatesConsumed - 1] > 7)
-					return -1;
-				if (x86OperandSets[insn->spec->operands][index].type == TYPE_IMM5 &&
-						insn->immediates[insn->numImmediatesConsumed - 1] > 31)
 					return -1;
 				if (x86OperandSets[insn->spec->operands][index].type == TYPE_XMM128 ||
 						x86OperandSets[insn->spec->operands][index].type == TYPE_XMM256)
@@ -1959,6 +2001,189 @@ static int readOperands(struct InternalInstruction* insn)
 	return 0;
 }
 
+// return True if instruction is illegal to use with prefixes
+// or False otherwise
+static bool invalidPrefix(struct InternalInstruction *insn)
+{
+	// LOCK prefix
+	if (insn->prefixPresent[0xf0]) {
+		switch(insn->instructionID) {
+			default:
+				// invalid LOCK
+				return true;
+
+			// DEC
+			case X86_DEC16m:
+			case X86_DEC32m:
+			case X86_DEC64_16m:
+			case X86_DEC64_32m:
+			case X86_DEC64m:
+			case X86_DEC8m:
+
+			// ADC
+			case X86_ADC16mi:
+			case X86_ADC16mi8:
+			case X86_ADC16mr:
+			case X86_ADC32mi:
+			case X86_ADC32mi8:
+			case X86_ADC32mr:
+			case X86_ADC64mi32:
+			case X86_ADC64mi8:
+			case X86_ADC64mr:
+			case X86_ADC8mi:
+			case X86_ADC8mr:
+
+			// ADD
+			case X86_ADD16mi:
+			case X86_ADD16mi8:
+			case X86_ADD16mr:
+			case X86_ADD32mi:
+			case X86_ADD32mi8:
+			case X86_ADD32mr:
+			case X86_ADD64mi32:
+			case X86_ADD64mi8:
+			case X86_ADD64mr:
+			case X86_ADD8mi:
+			case X86_ADD8mr:
+
+			// AND
+			case X86_AND16mi:
+			case X86_AND16mi8:
+			case X86_AND16mr:
+			case X86_AND32mi:
+			case X86_AND32mi8:
+			case X86_AND32mr:
+			case X86_AND64mi32:
+			case X86_AND64mi8:
+			case X86_AND64mr:
+			case X86_AND8mi:
+			case X86_AND8mr:
+
+			// BTC
+			case X86_BTC16mi8:
+			case X86_BTC16mr:
+			case X86_BTC32mi8:
+			case X86_BTC32mr:
+			case X86_BTC64mi8:
+			case X86_BTC64mr:
+
+			// BTR
+			case X86_BTR16mi8:
+			case X86_BTR16mr:
+			case X86_BTR32mi8:
+			case X86_BTR32mr:
+			case X86_BTR64mi8:
+			case X86_BTR64mr:
+
+			// BTS
+			case X86_BTS16mi8:
+			case X86_BTS16mr:
+			case X86_BTS32mi8:
+			case X86_BTS32mr:
+			case X86_BTS64mi8:
+			case X86_BTS64mr:
+
+			// CMPXCHG
+			case X86_CMPXCHG16rm:
+			case X86_CMPXCHG32rm:
+			case X86_CMPXCHG64rm:
+			case X86_CMPXCHG8rm:
+			case X86_CMPXCHG8B:
+
+			// INC
+			case X86_INC16m:
+			case X86_INC32m:
+			case X86_INC64_16m:
+			case X86_INC64_32m:
+			case X86_INC64m:
+			case X86_INC8m:
+
+			// NEG
+			case X86_NEG16m:
+			case X86_NEG32m:
+			case X86_NEG64m:
+			case X86_NEG8m:
+
+			// NOT
+			case X86_NOT16m:
+			case X86_NOT32m:
+			case X86_NOT64m:
+			case X86_NOT8m:
+
+			// OR
+			case X86_OR16mi:
+			case X86_OR16mi8:
+			case X86_OR16mr:
+			case X86_OR32mi:
+			case X86_OR32mi8:
+			case X86_OR32mr:
+			case X86_OR32mrLocked:
+			case X86_OR64mi32:
+			case X86_OR64mi8:
+			case X86_OR64mr:
+			case X86_OR8mi:
+			case X86_OR8mr:
+
+			// SBB
+			case X86_SBB16mi:
+			case X86_SBB16mi8:
+			case X86_SBB16mr:
+			case X86_SBB32mi:
+			case X86_SBB32mi8:
+			case X86_SBB32mr:
+			case X86_SBB64mi32:
+			case X86_SBB64mi8:
+			case X86_SBB64mr:
+			case X86_SBB8mi:
+			case X86_SBB8mr:
+
+			// SUB
+			case X86_SUB16mi:
+			case X86_SUB16mi8:
+			case X86_SUB16mr:
+			case X86_SUB32mi:
+			case X86_SUB32mi8:
+			case X86_SUB32mr:
+			case X86_SUB64mi32:
+			case X86_SUB64mi8:
+			case X86_SUB64mr:
+			case X86_SUB8mi:
+			case X86_SUB8mr:
+
+			// XADD
+			case X86_XADD16rm:
+			case X86_XADD32rm:
+			case X86_XADD64rm:
+			case X86_XADD8rm:
+
+			// XCHG
+			case X86_XCHG16rm:
+			case X86_XCHG32rm:
+			case X86_XCHG64rm:
+			case X86_XCHG8rm:
+
+			// XOR
+			case X86_XOR16mi:
+			case X86_XOR16mi8:
+			case X86_XOR16mr:
+			case X86_XOR32mi:
+			case X86_XOR32mi8:
+			case X86_XOR32mr:
+			case X86_XOR64mi32:
+			case X86_XOR64mi8:
+			case X86_XOR64mr:
+			case X86_XOR8mi:
+			case X86_XOR8mr:
+
+				// this instruction can be used with LOCK prefix
+				return false;
+		}
+	}
+
+	// no invalid prefixes
+	return false;
+}
+
 /*
  * decodeInstruction - Reads and interprets a full instruction provided by the
  *   user.
@@ -1968,20 +2193,15 @@ static int readOperands(struct InternalInstruction* insn)
  * @param reader    - The function to be used to read the instruction's bytes.
  * @param readerArg - A generic argument to be passed to the reader to store
  *                    any internal state.
- * @param logger    - If non-NULL, the function to be used to write log messages
- *                    and warnings.
- * @param loggerArg - A generic argument to be passed to the logger to store
- *                    any internal state.
  * @param startLoc  - The address (in the reader's address space) of the first
  *                    byte in the instruction.
  * @param mode      - The mode (real mode, IA-32e, or IA-32e in 64-bit mode) to
  *                    decode the instruction in.
- * @return          - 0 if the instruction's memory could be read; nonzero if
- *                    not.
+ * @return          - 0 if instruction is valid; nonzero if not.
  */
-int decodeInstruction(struct InternalInstruction* insn,
+int decodeInstruction(struct InternalInstruction *insn,
 		byteReader_t reader,
-		const void* readerArg,
+		const void *readerArg,
 		uint64_t startLoc,
 		DisassemblerMode mode)
 {
@@ -1995,15 +2215,20 @@ int decodeInstruction(struct InternalInstruction* insn,
 			readOpcode(insn)         ||
 			getID(insn)      ||
 			insn->instructionID == 0 ||
+			invalidPrefix(insn) ||
 			readOperands(insn))
+		return -1;
+
+	insn->length = (size_t)(insn->readerCursor - insn->startLocation);
+
+	// instruction length must be <= 15 to be valid
+	if (insn->length > 15)
 		return -1;
 
 	if (insn->operandSize == 0)
 		insn->operandSize = insn->registerSize;
 
 	insn->operands = &x86OperandSets[insn->spec->operands][0];
-
-	insn->length = (size_t)(insn->readerCursor - insn->startLocation);
 
 	// dbgprintf(insn, "Read from 0x%llx to 0x%llx: length %zu",
 	// 		startLoc, insn->readerCursor, insn->length);

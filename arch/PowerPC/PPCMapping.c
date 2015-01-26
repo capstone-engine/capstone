@@ -8089,7 +8089,10 @@ static struct ppc_alias alias_insn_name_maps[] = {
 // given alias mnemonic, return instruction ID & CC
 bool PPC_alias_insn(const char *name, struct ppc_alias *alias)
 {
-	int i;
+	size_t i;
+#ifndef CAPSTONE_DIET
+	int x;
+#endif
 
 	for(i = 0; i < ARR_SIZE(alias_insn_name_maps); i++) {
 		if (!strcmp(name, alias_insn_name_maps[i].mnem)) {
@@ -8099,13 +8102,15 @@ bool PPC_alias_insn(const char *name, struct ppc_alias *alias)
 		}
 	}
 
+#ifndef CAPSTONE_DIET
 	// not really an alias insn
-	i = name2id(&insn_name_maps[1], ARR_SIZE(insn_name_maps) - 1, name);
-	if (i != -1) {
-		alias->id = insn_name_maps[i].id;
+	x = name2id(&insn_name_maps[1], ARR_SIZE(insn_name_maps) - 1, name);
+	if (x != -1) {
+		alias->id = insn_name_maps[x].id;
 		alias->cc = PPC_BC_INVALID;
 		return true;
 	}
+#endif
 
 	// not found
 	return false;

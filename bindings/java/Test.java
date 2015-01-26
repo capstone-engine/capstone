@@ -170,6 +170,9 @@ public class Test {
               all_insn[i].mnemonic, all_insn[i].opStr));
       }
       System.out.printf("0x%x:\n\n", all_insn[all_insn.length-1].address + all_insn[all_insn.length-1].size);
+
+      // Close when done
+      cs.close();
     }
   }
 }
