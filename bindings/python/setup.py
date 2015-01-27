@@ -3,6 +3,7 @@ import glob
 import os
 import platform
 import shutil
+import stat
 
 from distutils import log
 from distutils import dir_util
@@ -12,7 +13,6 @@ from distutils.core import setup
 
 SYSTEM = platform.system().lower()
 VERSION = '4.0'
-
 
 class LazyList(list):
     """A list which re-evaluates each time.
@@ -26,23 +26,10 @@ class LazyList(list):
     def __iter__(self):
         return iter(self.callback())
 
-
 def get_sources():
-    """Returns a list of C source files that should be compiled to
-    create the library.
-    """
-    result = []
-    # Make the src directory if it does not exist.
-    if not os.access("./src/", os.F_OK):
-        custom_sdist.copy_sources()
+    custom_sdist.copy_sources()
 
-    for root, _, files in os.walk("./src/"):
-        for name in files:
-            if name.endswith(".c"):
-                result.append(os.path.join(root, name))
-
-    return result
-
+    return []
 
 class custom_sdist(sdist):
     """Reshuffle files for distribution."""
@@ -64,17 +51,20 @@ class custom_sdist(sdist):
             dir_util.remove_tree("src/")
         except (IOError, OSError):
             pass
+
         dir_util.copy_tree("../../arch", "src/arch/")
         dir_util.copy_tree("../../include", "src/include/")
         dir_util.copy_tree("../../msvc/headers", "src/msvc/headers/")
 
         result.extend(glob.glob("../../*.[ch]"))
         result.extend(glob.glob("../../*.mk"))
+
         result.extend(glob.glob("../../Makefile"))
         result.extend(glob.glob("../../LICENSE*"))
         result.extend(glob.glob("../../README"))
         result.extend(glob.glob("../../*.TXT"))
         result.extend(glob.glob("../../RELEASE_NOTES"))
+        result.extend(glob.glob("../../make.sh"))
 
         for filename in result:
             outpath = os.path.join("./src/", os.path.basename(filename))
@@ -109,69 +99,25 @@ class custom_build_clib(build_clib):
 
             log.info("building '%s' library", lib_name)
 
-            # Darwin systems must produce shared libraries with this extension.
-            if "darwin" in SYSTEM:
-                self.compiler.shared_lib_extension = ".dylib"
+            os.chdir("src")
 
-            # First, compile the source code to object files in the
-            # library directory.
-            macros = build_info.get('macros')
-            include_dirs = build_info.get('include_dirs')
-            objects = self.compiler.compile(
-                sources,
-                output_dir=self.build_temp,
-                macros=macros,
-                include_dirs=include_dirs,
-                extra_postargs=build_info.get('extra_compile_args', []),
-                debug=self.debug)
+            # generate autoconfig.mk
+            os.system("echo BUILD_CORE_ONLY ?= yes >> config.mk")
 
-            # Then link the object files and put the result in the
-            # package build directory.
-            package = build_info.get('package', '')
-            self.compiler.link_shared_lib(
-                objects, lib_name,
-                output_dir=os.path.join(self.build_clib, package),
-                extra_preargs=build_info.get('extra_link_args', []),
-                debug=self.debug,)
+            os.chmod("make.sh", stat.S_IREAD|stat.S_IEXEC)
+            os.system("./make.sh install")
 
-def get_compile_args():
-    result = []
-    for flag in ['CAPSTONE_X86_ATT_DISABLE_NO', 'CAPSTONE_DIET_NO',
-                 'CAPSTONE_X86_REDUCE_NO', 'CAPSTONE_HAS_ARM',
-                 'CAPSTONE_HAS_ARM64', 'CAPSTONE_HAS_MIPS',
-                 'CAPSTONE_HAS_POWERPC', 'CAPSTONE_HAS_SPARC',
-                 'CAPSTONE_HAS_SYSZ', 'CAPSTONE_HAS_X86',
-                 'CAPSTONE_HAS_XCORE', 'CAPSTONE_USE_SYS_DYN_MEM',
-                 "CAPSTONE_SHARED"]:
+            # copy core library to installed directory
+            shared_lib_extension = "so" if "linux2" in SYSTEM else "dylib"
+            
+            shared_lib = "libcapstone.%s" % shared_lib_extension
+            target_lib_path = os.path.join("../build/lib/capstone", shared_lib)
 
-        if "windows" in SYSTEM:
-            result.append("/D")
-        else:
-            result.append("-D")
-        result.append(flag)
+            print "%s -> %s" % (shared_lib, target_lib_path)
 
-    if "windows" in SYSTEM:
-        result += ['/GL', '/Ox', '/Ob1', '/Oy',
-                   '/nologo', '/c', '/TC']
+            shutil.copyfile(shared_lib, target_lib_path)
 
-    elif "darwin" in SYSTEM:
-        result += ['-arch', 'i386', '-arch', 'x86_64', '-O2',
-                   '-Wall', '-fPIC']
-
-    else:
-        result += ['-fPIC', '-O2', '-Wall']
-
-    return result
-
-def get_link_args():
-    result = []
-    if "windows" in SYSTEM:
-        result = [
-            '/MANIFEST',
-            '/LTCG',
-        ]
-
-    return result
+            os.chdir("..")
 
 
 setup(
@@ -197,10 +143,7 @@ setup(
     libraries=[(
         'capstone', dict(
             package='capstone',
-            sources=LazyList(get_sources),
-            include_dirs=['./src/include/'],
-            extra_compile_args=get_compile_args(),
-            extra_link_args=get_link_args(),
+            sources=LazyList(get_sources)
         ),
     )],
 )
