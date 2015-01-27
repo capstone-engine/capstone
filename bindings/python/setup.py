@@ -111,7 +111,7 @@ class custom_build_clib(build_clib):
 
             # Darwin systems must produce shared libraries with this extension.
             if "darwin" in SYSTEM:
-                self.compiler.shared_lib_extension = ".dynlib"
+                self.compiler.shared_lib_extension = ".dylib"
 
             # First, compile the source code to object files in the
             # library directory.
