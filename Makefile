@@ -352,11 +352,13 @@ endif
 endif
 
 $(PKGCFGF):
+ifeq (,$(findstring yes,$(BUILD_CORE_ONLY)))
 ifeq ($(V),0)
 	$(call log,GEN,$(@:$(BLDIR)/%=%))
 	@$(generate-pkgcfg)
 else
 	$(generate-pkgcfg)
+endif
 endif
 
 install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
