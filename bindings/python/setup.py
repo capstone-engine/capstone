@@ -102,21 +102,8 @@ class custom_build_clib(build_clib):
 
             os.chdir("src")
 
-            # generate autoconfig.mk
-            os.system("echo BUILD_CORE_ONLY ?= yes >> config.mk")
-
             os.chmod("make.sh", stat.S_IREAD|stat.S_IEXEC)
-            os.system("./make.sh install")
-
-            # copy core library to installed directory
-            shared_lib_extension = "so" if "linux2" in SYSTEM else "dylib"
-            
-            shared_lib = "libcapstone.%s" % shared_lib_extension
-            target_lib_path = os.path.join("../build/lib/capstone", shared_lib)
-
-            print "%s -> %s" % (shared_lib, target_lib_path)
-
-            shutil.copyfile(shared_lib, target_lib_path)
+            os.system("BUILD_CORE_ONLY=yes ./make.sh")
 
             os.chdir("..")
 
