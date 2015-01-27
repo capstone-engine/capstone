@@ -308,15 +308,15 @@ PKGCFGF = $(BLDIR)/$(LIBNAME).pc
 .PHONY: all clean install uninstall dist
 
 all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF)
-ifndef BUILD_CORE_ONLY
-	ifndef BUILDDIR
-		cd tests && $(MAKE)
-	else
-		cd tests && $(MAKE) BUILDDIR=$(BLDIR)
-	endif
-	ifeq ($(CAPSTONE_SHARED),yes)
-		$(INSTALL_DATA) $(LIBRARY) $(BLDIR)/tests/
-	endif
+ifeq (,$(findstring yes,$(BUILD_CORE_ONLY)))
+ifndef BUILDDIR
+	cd tests && $(MAKE)
+else
+	cd tests && $(MAKE) BUILDDIR=$(BLDIR)
+endif
+ifeq ($(CAPSTONE_SHARED),yes)
+	$(INSTALL_DATA) $(LIBRARY) $(BLDIR)/tests/
+endif
 endif
 
 ifeq ($(CAPSTONE_SHARED),yes)
@@ -387,7 +387,7 @@ clean:
 	rm -f $(BLDIR)/lib$(LIBNAME).* $(BLDIR)/$(LIBNAME).*
 	rm -f $(PKGCFGF)
 
-ifndef BUILD_CORE_ONLY
+ifeq (,$(findstring yes,$(BUILD_CORE_ONLY)))
 	cd tests && $(MAKE) clean
 	rm -f $(BLDIR)/tests/lib$(LIBNAME).$(EXT)
 endif
@@ -396,7 +396,7 @@ ifdef BUILDDIR
 	rm -rf $(BUILDDIR)
 endif
 
-ifndef BUILD_CORE_ONLY
+ifeq (,$(findstring yes,$(BUILD_CORE_ONLY)))
 	cd bindings/python && $(MAKE) clean
 	cd bindings/java && $(MAKE) clean
 	cd bindings/ocaml && $(MAKE) clean
