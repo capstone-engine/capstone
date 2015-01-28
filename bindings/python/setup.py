@@ -21,10 +21,10 @@ SITE_PACKAGES = os.path.join(get_python_lib(), "capstone")
 
 SETUP_DATA_FILES = []
 
-if SYSTEM == "linux2":
-    SETUP_DATA_FILES.append("src/libcapstone.so")
-elif SYSTEM == "darwin":
+if SYSTEM == "darwin":
     SETUP_DATA_FILES.append("src/libcapstone.dylib")
+elif SYSTEM != "win32":
+    SETUP_DATA_FILES.append("src/libcapstone.so")
 
 class LazyList(list):
     """A list which re-evaluates each time.
