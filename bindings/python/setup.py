@@ -13,11 +13,18 @@ from distutils.command.sdist import sdist
 from distutils.core import setup
 from distutils.sysconfig import get_python_lib
 
+# platform description refers at https://docs.python.org/2/library/sys.html#sys.platform
 SYSTEM = sys.platform
 VERSION = '4.0'
 
 SITE_PACKAGES = os.path.join(get_python_lib(), "capstone")
-SHARED_LIB_EXTENSION = "dylib" if (SYSTEM == "darwin") else "so"
+
+SETUP_DATA_FILES = []
+
+if SYSTEM == "linux2":
+    SETUP_DATA_FILES.append("src/libcapstone.so")
+elif SYSTEM == "darwin":
+    SETUP_DATA_FILES.append("src/libcapstone.dylib")
 
 class LazyList(list):
     """A list which re-evaluates each time.
@@ -106,7 +113,6 @@ class custom_build_clib(build_clib):
 
             os.chdir("src")
 
-            # platform description refers at https://docs.python.org/2/library/sys.html#sys.platform
             if SYSTEM == "linux2" or SYSTEM == "darwin":
                 os.chmod("make.sh", stat.S_IREAD|stat.S_IEXEC)
                 os.system("BUILD_CORE_ONLY=yes ./make.sh")
@@ -141,5 +147,5 @@ setup(
         ),
     )],
 
-    data_files=[(SITE_PACKAGES, ["src/libcapstone.%s" % SHARED_LIB_EXTENSION])],
+    data_files=[(SITE_PACKAGES, SETUP_DATA_FILES)],
 )
