@@ -244,7 +244,7 @@ cdef class CsInsn(object):
 
 cdef class Cs(object):
 
-    cdef cc.csh csh
+    cdef cc.csh _csh
     cdef object _cs
 
     def __cinit__(self, _cs):
@@ -253,14 +253,14 @@ cdef class Cs(object):
             # our binding version is different from the core's API version
             raise CsError(capstone.CS_ERR_VERSION)
 
-        self.csh = <cc.csh> _cs.csh.value
+        self._csh = <cc.csh> _cs._csh.value
         self._cs = _cs
 
 
     # destructor to be called automatically when object is destroyed.
     def __dealloc__(self):
-        if self.csh:
-            status = cc.cs_close(&self.csh)
+        if self._csh:
+            status = cc.cs_close(&self._csh)
             if status != capstone.CS_ERR_OK:
                 raise CsError(status)
 
@@ -269,7 +269,7 @@ cdef class Cs(object):
     def disasm(self, code, addr, count=0):
         cdef cc.cs_insn *allinsn
 
-        cdef res = cc.cs_disasm(self.csh, code, len(code), addr, count, &allinsn)
+        cdef res = cc.cs_disasm(self._csh, code, len(code), addr, count, &allinsn)
         detail = self._cs.detail
         arch = self._cs.arch
 
@@ -281,7 +281,7 @@ cdef class Cs(object):
                     dummy = CsInsn(None)
 
                 dummy._raw = allinsn[i]
-                dummy._csh = self.csh
+                dummy._csh = self._csh
                 yield dummy
         finally:
             cc.cs_free(allinsn, res)
@@ -298,7 +298,7 @@ cdef class Cs(object):
             # Diet engine cannot provide @mnemonic & @op_str
             raise CsError(capstone.CS_ERR_DIET)
 
-        cdef res = cc.cs_disasm(self.csh, code, len(code), addr, count, &allinsn)
+        cdef res = cc.cs_disasm(self._csh, code, len(code), addr, count, &allinsn)
 
         try:
             for i from 0 <= i < res:
