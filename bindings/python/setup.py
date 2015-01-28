@@ -4,16 +4,21 @@ import os
 import platform
 import shutil
 import stat
+import sys
 
 from distutils import log
 from distutils import dir_util
 from distutils.command.build_clib import build_clib
 from distutils.command.sdist import sdist
 from distutils.core import setup
+from distutils.sysconfig import get_python_lib
 
 
 VERSION = '3.0'
 SYSTEM = platform.system().lower()
+
+SITE_PACKAGES = os.path.join(get_python_lib(), "capstone")
+SHARED_LIB_EXTENSION = "dylib" if (SYSTEM == "darwin") else "so"
 
 class LazyList(list):
     """A list which re-evaluates each time.
@@ -102,8 +107,10 @@ class custom_build_clib(build_clib):
 
             os.chdir("src")
 
-            os.chmod("make.sh", stat.S_IREAD|stat.S_IEXEC)
-            os.system("BUILD_CORE_ONLY=yes ./make.sh")
+            # platform description refers at https://docs.python.org/2/library/sys.html#sys.platform
+            if SYSTEM == "linux2" or SYSTEM == "darwin":
+                os.chmod("make.sh", stat.S_IREAD|stat.S_IEXEC)
+                os.system("BUILD_CORE_ONLY=yes ./make.sh")
 
             os.chdir("..")
 
@@ -130,7 +137,9 @@ setup(
     libraries=[(
         'capstone', dict(
             package='capstone',
-            sources=LazyList(get_sources)
+            sources=LazyList(get_sources)            
         ),
     )],
+
+    data_files=[(SITE_PACKAGES, ["src/libcapstone.%s" % SHARED_LIB_EXTENSION])],
 )
