@@ -39,7 +39,7 @@ class LazyList(list):
         return iter(self.callback())
 
 def get_sources():
-    custom_sdist.copy_sources()
+    #custom_sdist.copy_sources()
 
     return []
 
