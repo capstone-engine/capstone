@@ -13,18 +13,39 @@ from distutils.command.sdist import sdist
 from distutils.core import setup
 from distutils.sysconfig import get_python_lib
 
+from optparse import OptionParser
+
 # platform description refers at https://docs.python.org/2/library/sys.html#sys.platform
 SYSTEM = sys.platform
 VERSION = '4.0'
+
+FLAG_DONT_BUILD_CORE = "--do-not-build-core"
+# parse parameters to detect if FLAG_DONT_BUILD_CORE exists
+parser = OptionParser()
+parser.add_option(
+        "", 
+        FLAG_DONT_BUILD_CORE,
+        action="store_true",
+        dest="do_not_build_core",
+        default=False,
+        )
+
+(option, _) = parser.parse_args()
+
+# remove FLAG_DONT_BUILD_CORE to prevent it pass to distutils setup parameters
+if FLAG_DONT_BUILD_CORE in sys.argv:
+    sys.argv.remove(FLAG_DONT_BUILD_CORE)
+
 
 SITE_PACKAGES = os.path.join(get_python_lib(), "capstone")
 
 SETUP_DATA_FILES = []
 
-if SYSTEM == "darwin":
-    SETUP_DATA_FILES.append("src/libcapstone.dylib")
-elif SYSTEM != "win32":
-    SETUP_DATA_FILES.append("src/libcapstone.so")
+if not option.do_not_build_core:
+    if SYSTEM == "darwin":
+        SETUP_DATA_FILES.append("src/libcapstone.dylib")
+    elif SYSTEM != "win32":
+        SETUP_DATA_FILES.append("src/libcapstone.so")
 
 class LazyList(list):
     """A list which re-evaluates each time.
@@ -105,6 +126,9 @@ class custom_build_clib(build_clib):
         build_clib.finalize_options(self)
 
     def build_libraries(self, libraries):
+        if option.do_not_build_core:
+            return
+
         for (lib_name, build_info) in libraries:
             sources = self.get_source_files()
             sources = list(sources)
