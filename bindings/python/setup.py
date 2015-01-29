@@ -20,6 +20,7 @@ VERSION = '3.0'
 SYSTEM = platform.system().lower()
 
 FLAG_DONT_BUILD_CORE = "--do-not-build-core"
+DONT_BUILD_CORE = False
 # parse parameters to detect if FLAG_DONT_BUILD_CORE exists
 parser = OptionParser()
 parser.add_option(
@@ -30,7 +31,11 @@ parser.add_option(
         default=False,
         )
 
-(option, _) = parser.parse_args()
+try:
+    (option, _) = parser.parse_args()
+    DONT_BUILD_CORE = option.do_not_build_core
+except:
+    pass
 
 # remove FLAG_DONT_BUILD_CORE to prevent it pass to distutils setup parameters
 if FLAG_DONT_BUILD_CORE in sys.argv:
@@ -41,7 +46,7 @@ SITE_PACKAGES = os.path.join(get_python_lib(), "capstone")
 
 SETUP_DATA_FILES = []
 
-if not option.do_not_build_core:
+if not DONT_BUILD_CORE:
     if SYSTEM == "darwin":
         SETUP_DATA_FILES.append("src/libcapstone.dylib")
     elif SYSTEM != "win32":
@@ -126,7 +131,7 @@ class custom_build_clib(build_clib):
         build_clib.finalize_options(self)
 
     def build_libraries(self, libraries):
-        if option.do_not_build_core:
+        if DONT_BUILD_CORE:
             return
 
         for (lib_name, build_info) in libraries:
