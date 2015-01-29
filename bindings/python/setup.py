@@ -13,29 +13,19 @@ from distutils.command.sdist import sdist
 from distutils.core import setup
 from distutils.sysconfig import get_python_lib
 
-from optparse import OptionParser
+import argparse
 
 # platform description refers at https://docs.python.org/2/library/sys.html#sys.platform
 SYSTEM = sys.platform
 VERSION = '4.0'
 
 FLAG_DONT_BUILD_CORE = "--do-not-build-core"
-DONT_BUILD_CORE = False
 # parse parameters to detect if FLAG_DONT_BUILD_CORE exists
-parser = OptionParser()
-parser.add_option(
-        "", 
-        FLAG_DONT_BUILD_CORE,
-        action="store_true",
-        dest="do_not_build_core",
-        default=False,
-        )
+parser = argparse.ArgumentParser()
+parser.add_argument(FLAG_DONT_BUILD_CORE, action="store_true")
+args, _ = parser.parse_known_args()
 
-try:
-    (option, _) = parser.parse_args()
-    DONT_BUILD_CORE = option.do_not_build_core
-except:
-    pass
+DONT_BUILD_CORE = args.do_not_build_core
 
 # remove FLAG_DONT_BUILD_CORE to prevent it pass to distutils setup parameters
 if FLAG_DONT_BUILD_CORE in sys.argv:
@@ -106,7 +96,7 @@ class custom_sdist(sdist):
 
         for filename in result:
             outpath = os.path.join("./src/", os.path.basename(filename))
-            print "%s -> %s" % (filename, outpath)
+            log.info("%s -> %s" % (filename, outpath))
             shutil.copy(filename, outpath)
 
 
