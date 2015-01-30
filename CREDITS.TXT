@@ -54,3 +54,4 @@ David Martínez Moreno: Debian package.
 Félix Cloutier: Xcode project.
 Benoit Lecocq: OpenBSD package.
 Christophe Avoinne (Hlide): Improve memory management for better performance.
+Michael Cohen & Nguyen Tan Cong: Python module installer.
