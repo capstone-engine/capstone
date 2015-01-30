@@ -40,7 +40,7 @@ def copy_sources():
     This rearranges the source files under the python distribution
     directory.
     """
-    result = []
+    src = []
 
     try:
         dir_util.remove_tree("src/")
@@ -51,17 +51,17 @@ def copy_sources():
     dir_util.copy_tree("../../include", "src/include/")
     dir_util.copy_tree("../../msvc/headers", "src/msvc/headers/")
 
-    result.extend(glob.glob("../../*.[ch]"))
-    result.extend(glob.glob("../../*.mk"))
+    src.extend(glob.glob("../../*.[ch]"))
+    src.extend(glob.glob("../../*.mk"))
 
-    result.extend(glob.glob("../../Makefile"))
-    result.extend(glob.glob("../../LICENSE*"))
-    result.extend(glob.glob("../../README"))
-    result.extend(glob.glob("../../*.TXT"))
-    result.extend(glob.glob("../../RELEASE_NOTES"))
-    result.extend(glob.glob("../../make.sh"))
+    src.extend(glob.glob("../../Makefile"))
+    src.extend(glob.glob("../../LICENSE*"))
+    src.extend(glob.glob("../../README"))
+    src.extend(glob.glob("../../*.TXT"))
+    src.extend(glob.glob("../../RELEASE_NOTES"))
+    src.extend(glob.glob("../../make.sh"))
 
-    for filename in result:
+    for filename in src:
         outpath = os.path.join("./src/", os.path.basename(filename))
         log.info("%s -> %s" % (filename, outpath))
         shutil.copy(filename, outpath)
