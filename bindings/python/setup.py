@@ -135,7 +135,7 @@ class custom_build_clib(build_clib):
             # platform description refers at https://docs.python.org/2/library/sys.html#sys.platform
             if SYSTEM != "win32":
                 os.chmod("make.sh", stat.S_IREAD|stat.S_IEXEC)
-                os.system("BUILD_CORE_ONLY=yes ./make.sh")
+                os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh")
 
             os.chdir("..")
 
