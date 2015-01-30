@@ -99,33 +99,36 @@ class custom_build_clib(build_clib):
         if not os.path.exists('src'):
             return
 
-        for (lib_name, build_info) in libraries:
-            log.info("building '%s' library", lib_name)
+        try:
+            for (lib_name, build_info) in libraries:
+                log.info("building '%s' library", lib_name)
 
-            os.chdir("src")
+                os.chdir("src")
 
-            if SYSTEM != "win32":
-                os.chmod("make.sh", stat.S_IREAD|stat.S_IEXEC)
-                os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh")
-            else:
-                # Windows build: this process requires few things:
-                #    - CMake + MSVC installed
-                #    - Run this command in an environment setup for MSVC
-                os.mkdir("build")
-                os.chdir("build")
-                # Do not build tests & static library
-                os.system('cmake -DCAPSTONE_BUILD_TESTS=0 -DCAPSTONE_BUILD_STATIC=0 -G "NMake Makefiles" ..')
-                os.system("nmake")
+                if SYSTEM != "win32":
+                    os.chmod("make.sh", stat.S_IREAD|stat.S_IEXEC)
+                    os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh")
+                else:
+                    # Windows build: this process requires few things:
+                    #    - CMake + MSVC installed
+                    #    - Run this command in an environment setup for MSVC
+                    os.mkdir("build")
+                    os.chdir("build")
+                    # Do not build tests & static library
+                    os.system('cmake -DCAPSTONE_BUILD_TESTS=0 -DCAPSTONE_BUILD_STATIC=0 -G "NMake Makefiles" ..')
+                    os.system("nmake")
+                    os.chdir("..")
+
+                if SYSTEM == "darwin":
+                    SETUP_DATA_FILES.append("src/libcapstone.dylib")
+                elif SYSTEM != "win32":
+                    SETUP_DATA_FILES.append("src/libcapstone.so")
+                else:   # Windows
+                    SETUP_DATA_FILES.append("src/build/capstone.dll")
+
                 os.chdir("..")
-
-            if SYSTEM == "darwin":
-                SETUP_DATA_FILES.append("src/libcapstone.dylib")
-            elif SYSTEM != "win32":
-                SETUP_DATA_FILES.append("src/libcapstone.so")
-            else:   # Windows
-                SETUP_DATA_FILES.append("src/build/capstone.dll")
-
-            os.chdir("..")
+        except:
+            pass
 
 
 def dummy_src():
