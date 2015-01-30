@@ -49,7 +49,6 @@ def copy_sources():
 
     dir_util.copy_tree("../../arch", "src/arch/")
     dir_util.copy_tree("../../include", "src/include/")
-    dir_util.copy_tree("../../msvc/headers", "src/msvc/headers/")
 
     src.extend(glob.glob("../../*.[ch]"))
     src.extend(glob.glob("../../*.mk"))
@@ -60,6 +59,7 @@ def copy_sources():
     src.extend(glob.glob("../../*.TXT"))
     src.extend(glob.glob("../../RELEASE_NOTES"))
     src.extend(glob.glob("../../make.sh"))
+    src.extend(glob.glob("../../CMakeLists.txt"))
 
     for filename in src:
         outpath = os.path.join("./src/", os.path.basename(filename))
@@ -108,11 +108,23 @@ class custom_build_clib(build_clib):
             if SYSTEM != "win32":
                 os.chmod("make.sh", stat.S_IREAD|stat.S_IEXEC)
                 os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh")
+            else:
+                # Windows build: this process requires few things:
+                #    - CMake + MSVC installed
+                #    - Run this command in an environment setup for MSVC
+                os.mkdir("build")
+                os.chdir("build")
+                # Do not build tests & static library
+                os.system('cmake -DCAPSTONE_BUILD_TESTS=0 -DCAPSTONE_BUILD_STATIC=0 -G "NMake Makefiles" ..')
+                os.system("nmake")
+                os.chdir("..")
 
             if SYSTEM == "darwin":
                 SETUP_DATA_FILES.append("src/libcapstone.dylib")
             elif SYSTEM != "win32":
                 SETUP_DATA_FILES.append("src/libcapstone.so")
+            else:   # Windows
+                SETUP_DATA_FILES.append("src/build/capstone.dll")
 
             os.chdir("..")
 
