@@ -11,11 +11,11 @@ gen_const:
 
 install:
 	rm -rf $(OBJDIR)
-	python setup.py build -b $(OBJDIR) install --do-not-build-core
+	python setup.py build -b $(OBJDIR) install
 
 install3:
 	rm -rf $(OBJDIR)
-	python3 setup.py build -b $(OBJDIR) install --do-not-build-core
+	python3 setup.py build -b $(OBJDIR) install
 
 # NOTE: Newer cython can be installed by: sudo pip install --upgrade cython
 install_cython:
