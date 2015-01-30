@@ -14,8 +14,7 @@ from distutils.core import setup
 from distutils.sysconfig import get_python_lib
 
 
-# platform description refers at https://docs.python.org/2/library/sys.html#sys.platform
-VERSION = '3.0'
+VERSION = '3.0.1'
 SYSTEM = sys.platform
 
 SITE_PACKAGES = os.path.join(get_python_lib(), "capstone")
