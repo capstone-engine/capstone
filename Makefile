@@ -308,7 +308,7 @@ PKGCFGF = $(BLDIR)/$(LIBNAME).pc
 .PHONY: all clean install uninstall dist
 
 all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF)
-ifeq (,$(findstring yes,$(BUILD_CORE_ONLY)))
+ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
 ifndef BUILDDIR
 	cd tests && $(MAKE)
 else
@@ -387,7 +387,7 @@ clean:
 	rm -f $(BLDIR)/lib$(LIBNAME).* $(BLDIR)/$(LIBNAME).*
 	rm -f $(PKGCFGF)
 
-ifeq (,$(findstring yes,$(BUILD_CORE_ONLY)))
+ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
 	cd tests && $(MAKE) clean
 	rm -f $(BLDIR)/tests/lib$(LIBNAME).$(EXT)
 endif
@@ -396,7 +396,7 @@ ifdef BUILDDIR
 	rm -rf $(BUILDDIR)
 endif
 
-ifeq (,$(findstring yes,$(BUILD_CORE_ONLY)))
+ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
 	cd bindings/python && $(MAKE) clean
 	cd bindings/java && $(MAKE) clean
 	cd bindings/ocaml && $(MAKE) clean
