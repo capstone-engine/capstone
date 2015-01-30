@@ -44,6 +44,12 @@ install_cython:
 	mv $(OBJDIR)/build/lib/python/capstone/* capstone
 	cd $(OBJDIR) && python setup_cython.py build -b ./tmp install
 
+sdist:
+	python setup.py sdist
+
+sdist3:
+	python3 setup.py sdist
+
 clean:
 	rm -rf $(OBJDIR) src/
 	rm -f capstone/*.so
