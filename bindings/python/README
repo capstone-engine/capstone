@@ -89,7 +89,7 @@ Manual method:
 
 		C:\> C:\location_to_python\python.exe setup.py install
 
-	Next, copy libcapstone.dll from the 'Core engine for Windows' package available
+	Next, copy capstone.dll from the 'Core engine for Windows' package available
 	on the same Capstone download page and paste it in the path:
 
 		C:\location_to_python\Lib\site-packages\capstone\
