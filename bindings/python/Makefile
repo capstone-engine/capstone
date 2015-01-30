@@ -10,16 +10,16 @@ gen_const:
 	cd .. && python const_generator.py python
 
 install:
-	rm -rf $(OBJDIR)
+	rm -rf $(OBJDIR) src/
 	python setup.py build -b $(OBJDIR) install
 
 install3:
-	rm -rf $(OBJDIR)
+	rm -rf $(OBJDIR) src/
 	python3 setup.py build -b $(OBJDIR) install
 
 # NOTE: Newer cython can be installed by: sudo pip install --upgrade cython
 install_cython:
-	rm -rf $(OBJDIR)
+	rm -rf $(OBJDIR) src/
 	mkdir -p $(OBJDIR)/pyx
 	cp setup_cython.py $(OBJDIR)
 	cp pyx/ccapstone* $(OBJDIR)/pyx/
@@ -45,7 +45,7 @@ install_cython:
 	cd $(OBJDIR) && python setup_cython.py build -b ./tmp install
 
 clean:
-	rm -rf $(OBJDIR)
+	rm -rf $(OBJDIR) src/
 	rm -f capstone/*.so
 
 
