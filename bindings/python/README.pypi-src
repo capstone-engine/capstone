@@ -2,7 +2,7 @@ NOTE: This package "capstone" includes source code of the core of Capstone.
 So installing this would also compile the core with C compiler (either "gcc" or
 "msvc" on Windows).
 
-For Windows, if you do not want to compile the core, install package "capstone-win"
+For Windows, if you do not want to compile the core, install package "capstone_win"
 instead, which already has the prebuilt core inside.
 --------------------------------------------------------------------------------
 

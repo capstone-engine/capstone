@@ -15,12 +15,14 @@ from distutils.sysconfig import get_python_lib
 
 # prebuilt libraries for Windows - for sdist
 PATH_LIB64 = "prebuilt/win64/capstone.dll"
+PATH_MSVCR64 = "prebuilt/win64/msvcr120.dll"
 PATH_LIB32 = "prebuilt/win32/capstone.dll"
+PATH_MSVCR32 = "prebuilt/win32/msvcr120.dll"
 
-# package name can be 'capstone' or 'capstone-win'
+# package name can be 'capstone' or 'capstone_win'
 PKG_NAME = 'capstone'
 if os.path.exists(PATH_LIB64) and os.path.exists(PATH_LIB32):
-    PKG_NAME = 'capstone-win'
+    PKG_NAME = 'capstone_win'
 
 SYSTEM = sys.platform
 VERSION = '4.0'
@@ -102,9 +104,11 @@ class custom_build_clib(build_clib):
             # if Windows prebuilt library is available, then include it
             if is_64bits and os.path.exists(PATH_LIB64):
                 SETUP_DATA_FILES.append(PATH_LIB64)
+                SETUP_DATA_FILES.append(PATH_MSVCR64)
                 return
             elif os.path.exists(PATH_LIB32):
                 SETUP_DATA_FILES.append(PATH_LIB32)
+                SETUP_DATA_FILES.append(PATH_MSVCR32)
                 return
 
         # build library from source if src/ is existent

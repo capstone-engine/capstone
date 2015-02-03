@@ -7,7 +7,7 @@ Maintainer: Nguyen Anh Quynh
 Maintainer-email: aquynh at gmail com
 Home-page: http://www.capstone-engine.org
 Download-url: www.capstone-engine.org
-Summary: Capstone disassembly framework
+Summary: Capstone disassembly framework with Windows prebuilt core ready inside.
 License: BSD
 Description: Capstone is a lightweight multi-platform, multi-architecture disassembly framework with some advanced features. Further information is available at the homepage http://www.capstone-engine.org
 Keywords: disassembly reverse binary arm arm64 aarch64 powerpc ppc mips x86 x86_64 sparc systemz xcore

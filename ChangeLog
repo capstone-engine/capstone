@@ -1,6 +1,55 @@
 This file details the changelog of Capstone.
 
 ---------------------------------
+Version 3.0.1: February 03, 2015
+
+[ X86 ]
+
+- Properly handle LOCK, REP, REPE & REPNE prefixes.
+- Handle undocumented immediates for SSE's (V)CMPPS/PD/SS/SD instructions.
+- Print LJUMP/LCALL without * as prefix for Intel syntax.
+- Handle REX prefix properly for segment/MMX related instructions (x86_64).
+- Instruction with length > 15 is consider invalid.
+- Handle some tricky encodings for instructions MOVSXD, FXCH, FCOM, FCOMP,
+  FSTP, FSTPNCE, NOP.
+- Handle some tricky code for some X86_64 instructions with REX prefix.
+- Add missing operands in detail mode for PUSH , POP , IN/OUT reg, reg
+- MOV32ms & MOV32sm should reference word rather than dword.
+
+
+[ Arm64 ]
+
+- BL & BLR instructions do not read SP register.
+- Print absolute (rather than relative) address for instructions B, BL,
+  CBNZ, ADR.
+
+
+[ Arm ]
+
+- Instructions ADC & SBC do not update flags.
+- BL & BLX do not read SP, but PC register.
+- Alias LDR instruction with operands [sp], 4 to POP.
+- Print immediate operand of MVN instruction in positive hexadecimal form.
+
+
+[ PowerPC ]
+
+- Fix some compilation bugs when DIET mode is enable.
+- Populate SLWI/SRWI instruction details with SH operand.
+
+
+[ Python binding ]
+
+- Fix a Cython bug when CsInsn.bytes returns a shorten array of bytes.
+- Fixed a memory leak for Cython disasm functions when we immaturely quit
+  the enumeration of disassembled instructions.
+- Fix a NULL memory access issue when SKIPDATA & Detail modes are enable
+  at the same time.
+- Fix a memory leaking bug when when we stop enumeration over the disassembled
+  instructions prematurely.
+- Export generic operand types & groups (CS_OP_xxx & CS_GRP_xxx).
+
+---------------------------------
 Version 3.0: November 19th, 2014
 
 [ API ]

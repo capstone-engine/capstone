@@ -1,4 +1,4 @@
-NOTE: This package "capstone-win" includes prebuilt Windows core of Capstone.
+NOTE: This package "capstone_win" includes prebuilt Windows core of Capstone.
 To compile from source, see package "capstone".
 --------------------------------------------------------------------------------
 
