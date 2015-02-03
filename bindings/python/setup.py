@@ -132,7 +132,7 @@ class custom_build_clib(build_clib):
                     os.mkdir("build")
                     os.chdir("build")
                     # Do not build tests & static library
-                    os.system('cmake -DCAPSTONE_BUILD_TESTS=0 -DCAPSTONE_BUILD_STATIC=0 -G "NMake Makefiles" ..')
+                    os.system('cmake -DCMAKE_BUILD_TYPE=RELEASE -DCAPSTONE_BUILD_TESTS=0 -DCAPSTONE_BUILD_STATIC=0 -G "NMake Makefiles" ..')
                     os.system("nmake")
                     os.chdir("..")
 
