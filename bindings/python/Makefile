@@ -11,15 +11,21 @@ gen_const:
 
 install:
 	rm -rf $(OBJDIR) src/
+	rm -rf prebuilt/win64/*.dll
+	rm -rf prebuilt/win32/*.dll
 	python setup.py build -b $(OBJDIR) install
 
 install3:
 	rm -rf $(OBJDIR) src/
+	rm -rf prebuilt/win64/*.dll
+	rm -rf prebuilt/win32/*.dll
 	python3 setup.py build -b $(OBJDIR) install
 
 # NOTE: Newer cython can be installed by: sudo pip install --upgrade cython
 install_cython:
 	rm -rf $(OBJDIR) src/
+	rm -rf prebuilt/win64/*.dll
+	rm -rf prebuilt/win32/*.dll
 	mkdir -p $(OBJDIR)/pyx
 	cp setup_cython.py $(OBJDIR)
 	cp pyx/ccapstone* $(OBJDIR)/pyx/
