@@ -44,34 +44,39 @@ install_cython:
 	mv $(OBJDIR)/build/lib/python/capstone/* capstone
 	cd $(OBJDIR) && python setup_cython.py build -b ./tmp install
 
-# build Python package with source
+# build & upload PyPi package with source code of the core
 sdist:
+	rm -rf src/
 	rm -rf prebuilt/win64/*.dll
 	rm -rf prebuilt/win32/*.dll
-	rm -rf README
-	mv README.pypi-src README
-	python setup.py sdist
+	cp README.pypi-src README
+	cp PKG-INFO.src PKG-INFO
+	python setup.py sdist register upload
 
-# build Python package with source
+# build & upload PyPi package with source code of the core
 sdist3:
+	rm -rf src/
 	rm -rf prebuilt/win64/*.dll
 	rm -rf prebuilt/win32/*.dll
-	rm -rf README
-	mv README.pypi-src README
-	python3 setup.py sdist
+	cp README.pypi-src README
+	cp PKG-INFO.src PKG-INFO
+	python3 setup.py sdist register upload
 
-# build Python package with prebuilt core
-sdist_bin:
+# build & upload PyPi package with prebuilt core
+# NOTE: be sure to have precompiled core under prebuilt/win*/ beforehand
+sdist_win:
 	rm -rf src/
-	rm -rf README
-	mv README.pypi-win README
-	python setup.py sdist
+	cp README.pypi-win README
+	cp PKG-INFO.win PKG-INFO
+	python setup.py sdist register upload
 
-# build Python package with prebuilt core
-sdist3_bin:
+# build & upload PyPi package with prebuilt core
+# NOTE: be sure to have precompiled core under prebuilt/win*/ beforehand
+sdist3_win:
 	rm -rf src/
-	mv README.pypi-win README
-	python3 setup.py sdist
+	cp README.pypi-win README
+	cp PKG-INFO.win PKG-INFO
+	python3 setup.py sdist register upload
 
 clean:
 	rm -rf $(OBJDIR) src/ README

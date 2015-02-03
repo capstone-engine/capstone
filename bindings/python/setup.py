@@ -17,7 +17,11 @@ from distutils.sysconfig import get_python_lib
 PATH_LIB64 = "prebuilt/win64/capstone.dll"
 PATH_LIB32 = "prebuilt/win32/capstone.dll"
 
-# platform description refers at https://docs.python.org/2/library/sys.html#sys.platform
+# package name can be 'capstone' or 'capstone-win'
+PKG_NAME = 'capstone'
+if os.path.exists(PATH_LIB64) and os.path.exists(PATH_LIB32):
+    PKG_NAME = 'capstone-win'
+
 SYSTEM = sys.platform
 VERSION = '4.0'
 
@@ -68,7 +72,7 @@ class custom_sdist(sdist):
     def run(self):
         # if prebuilt libraries are existent, then do not copy source
         if os.path.exists(PATH_LIB64) and os.path.exists(PATH_LIB32):
-            return
+            return sdist.run(self)
         copy_sources()
         return sdist.run(self)
 
@@ -146,7 +150,7 @@ def dummy_src():
 setup(
     provides=['capstone'],
     packages=['capstone'],
-    name='capstone',
+    name=PKG_NAME,
     version=VERSION,
     author='Nguyen Anh Quynh',
     author_email='aquynh@gmail.com',
