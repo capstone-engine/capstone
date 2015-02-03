@@ -7,7 +7,7 @@
 
    - README.pypi-win: How to install binding for Windows from PyPi package
      "capstone-windows". Note that this package already has prebuilt core
-	 inside, so no compilation is needed.
+     inside, so no compilation is needed.
 
 1. To install pure Python binding on *nix, run the command below:
 
