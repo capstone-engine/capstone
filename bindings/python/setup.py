@@ -21,19 +21,6 @@ SITE_PACKAGES = os.path.join(get_python_lib(), "capstone")
 
 SETUP_DATA_FILES = []
 
-
-class LazyList(list):
-    """A list which re-evaluates each time.
-    This is used to provide late binding for setup() below.
-    """
-    def __init__(self, callback):
-        super(LazyList, self).__init__()
-        self.callback = callback
-
-    def __iter__(self):
-        return iter(self.callback())
-
-
 def copy_sources():
     """Copy the C sources into the source directory.
     This rearranges the source files under the python distribution
@@ -48,6 +35,7 @@ def copy_sources():
 
     dir_util.copy_tree("../../arch", "src/arch/")
     dir_util.copy_tree("../../include", "src/include/")
+    dir_util.copy_tree("../../msvc/headers", "src/msvc/headers")
 
     src.extend(glob.glob("../../*.[ch]"))
     src.extend(glob.glob("../../*.mk"))
@@ -158,7 +146,7 @@ setup(
     libraries=[(
         'capstone', dict(
             package='capstone',
-            sources=LazyList(dummy_src)
+            sources=dummy_src()
         ),
     )],
 
