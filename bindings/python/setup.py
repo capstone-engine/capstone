@@ -13,6 +13,9 @@ from distutils.command.sdist import sdist
 from distutils.core import setup
 from distutils.sysconfig import get_python_lib
 
+# prebuilt libraries for Windows - for sdist
+PATH_LIB64 = "prebuilt/win64/capstone.dll"
+PATH_LIB32 = "prebuilt/win32/capstone.dll"
 
 # platform description refers at https://docs.python.org/2/library/sys.html#sys.platform
 SYSTEM = sys.platform
@@ -21,6 +24,10 @@ VERSION = '4.0'
 SITE_PACKAGES = os.path.join(get_python_lib(), "capstone")
 
 SETUP_DATA_FILES = []
+
+# adapted from commit e504b81 of Nguyen Tan Cong
+# Reference: https://docs.python.org/2/library/platform.html#cross-platform
+is_64bits = sys.maxsize > 2**32
 
 def copy_sources():
     """Copy the C sources into the source directory.
@@ -84,6 +91,16 @@ class custom_build_clib(build_clib):
         build_clib.finalize_options(self)
 
     def build_libraries(self, libraries):
+        if SYSTEM == "win32":
+            # if Windows prebuilt library is available, then include it
+            if is_64bits and os.path.exists(PATH_LIB64):
+                SETUP_DATA_FILES.append(PATH_LIB64)
+                return
+            elif os.path.exists(PATH_LIB32):
+                SETUP_DATA_FILES.append(PATH_LIB32)
+                return
+
+        # build library from source if src/ is existent
         if not os.path.exists('src'):
             return
 
