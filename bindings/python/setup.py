@@ -17,7 +17,7 @@ from distutils.sysconfig import get_python_lib
 PATH_LIB64 = "prebuilt/win64/capstone.dll"
 PATH_LIB32 = "prebuilt/win32/capstone.dll"
 
-# package name can be 'capstone' or 'capstone-win'
+# package name can be 'capstone' or 'capstone-windows'
 PKG_NAME = 'capstone'
 if os.path.exists(PATH_LIB64) and os.path.exists(PATH_LIB32):
     PKG_NAME = 'capstone-windows'
