@@ -48,26 +48,33 @@ install_cython:
 sdist:
 	rm -rf prebuilt/win64/*.dll
 	rm -rf prebuilt/win32/*.dll
+	rm -rf README
+	mv README.pypi-src README
 	python setup.py sdist
 
 # build Python package with source
 sdist3:
 	rm -rf prebuilt/win64/*.dll
 	rm -rf prebuilt/win32/*.dll
+	rm -rf README
+	mv README.pypi-src README
 	python3 setup.py sdist
 
 # build Python package with prebuilt core
 sdist_bin:
 	rm -rf src/
+	rm -rf README
+	mv README.pypi-win README
 	python setup.py sdist
 
 # build Python package with prebuilt core
 sdist3_bin:
 	rm -rf src/
+	mv README.pypi-win README
 	python3 setup.py sdist
 
 clean:
-	rm -rf $(OBJDIR) src/
+	rm -rf $(OBJDIR) src/ README
 	rm -f capstone/*.so
 	rm -rf prebuilt/win64/*.dll
 	rm -rf prebuilt/win32/*.dll
