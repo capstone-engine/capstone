@@ -7,6 +7,7 @@ set(VERSION_PATCH 0)
 
 # to configure the options specify them in in the command line or change them in the cmake UI.
 # Don't edit the makefile!
+option(CAPSTONE_BUILD_STATIC_RUNTIME "Embed static runtime" OFF)
 option(CAPSTONE_BUILD_STATIC "Build static library" ON)
 option(CAPSTONE_BUILD_SHARED "Build shared library" ON)
 option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
@@ -167,6 +168,18 @@ if (CAPSTONE_BUILD_STATIC)
     add_library(capstone-static STATIC ${SOURCES})
     set_property(TARGET capstone-static PROPERTY OUTPUT_NAME capstone)
     set(default-target capstone-static)
+endif ()
+
+# Force static runtime libraries
+if (CAPSTONE_BUILD_STATIC_RUNTIME)
+    FOREACH(flag
+	CMAKE_C_FLAGS_RELEASE CMAKE_C_FLAGS_RELWITHDEBINFO
+	CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_DEBUG_INIT
+	CMAKE_CXX_FLAGS_RELEASE  CMAKE_CXX_FLAGS_RELWITHDEBINFO
+	CMAKE_CXX_FLAGS_DEBUG  CMAKE_CXX_FLAGS_DEBUG_INIT)
+	STRING(REPLACE "/MD"  "/MT" "${flag}" "${${flag}}")
+	SET("${flag}" "${${flag}} /EHsc")
+    ENDFOREACH()
 endif ()
 
 if (CAPSTONE_BUILD_SHARED)
