@@ -44,15 +44,33 @@ install_cython:
 	mv $(OBJDIR)/build/lib/python/capstone/* capstone
 	cd $(OBJDIR) && python setup_cython.py build -b ./tmp install
 
+# build Python package with source
 sdist:
+	rm -rf prebuilt/win64/*.dll
+	rm -rf prebuilt/win32/*.dll
 	python setup.py sdist
 
+# build Python package with source
 sdist3:
+	rm -rf prebuilt/win64/*.dll
+	rm -rf prebuilt/win32/*.dll
+	python3 setup.py sdist
+
+# build Python package with prebuilt core
+sdist_bin:
+	rm -rf src/
+	python setup.py sdist
+
+# build Python package with prebuilt core
+sdist3_bin:
+	rm -rf src/
 	python3 setup.py sdist
 
 clean:
 	rm -rf $(OBJDIR) src/
 	rm -f capstone/*.so
+	rm -rf prebuilt/win64/*.dll
+	rm -rf prebuilt/win32/*.dll
 
 
 TESTS = test.py test_detail.py test_arm.py test_arm64.py test_mips.py test_ppc.py

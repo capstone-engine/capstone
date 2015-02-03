@@ -65,6 +65,9 @@ class custom_sdist(sdist):
     """Reshuffle files for distribution."""
 
     def run(self):
+        # if prebuilt libraries are existent, then do not copy source
+        if os.path.exists(PATH_LIB64) and os.path.exists(PATH_LIB32):
+            return
         copy_sources()
         return sdist.run(self)
 
