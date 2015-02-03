@@ -1,6 +1,8 @@
 NOTE: This package includes prebuilt Windows core of Capstone, so no external
 Capstone library is needed.
-To compile from source, see package "capstone".
+
+To compile from source, see PyPi package "capstone" instead.
+
 --------------------------------------------------------------------------------
 
 Capstone is a disassembly framework with the target of becoming the ultimate

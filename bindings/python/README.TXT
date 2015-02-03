@@ -1,3 +1,14 @@
+0. This documentation explains how to install Python binding for Capstone
+   from source. If you want to install it from PyPi package, see the below
+   docs instead:
+
+   - README.pypi-src: How to compile the Capstone core & install binding
+     at the same time from PyPi package "capstone"
+
+   - README.pypi-win: How to install binding for Windows from PyPi package
+     "capstone-windows". Note that this package already has prebuilt core
+	 inside, so no compilation is needed.
+
 1. To install pure Python binding on *nix, run the command below:
 
 		$ sudo make install
