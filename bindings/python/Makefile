@@ -23,7 +23,7 @@ install3:
 
 # NOTE: Newer cython can be installed by: sudo pip install --upgrade cython
 install_cython:
-	rm -rf $(OBJDIR) src/
+	rm -rf $(OBJDIR) src/ dist/
 	rm -rf prebuilt/win64/capstone.dll
 	rm -rf prebuilt/win32/capstone.dll
 	mkdir -p $(OBJDIR)/pyx
@@ -52,7 +52,7 @@ install_cython:
 
 # build & upload PyPi package with source code of the core
 sdist:
-	rm -rf src/
+	rm -rf src/ dist/
 	rm -rf prebuilt/win64/capstone.dll
 	rm -rf prebuilt/win32/capstone.dll
 	cp README.pypi-src README
@@ -61,7 +61,7 @@ sdist:
 
 # build & upload PyPi package with source code of the core
 sdist3:
-	rm -rf src/
+	rm -rf src/ dist/
 	rm -rf prebuilt/win64/capstone.dll
 	rm -rf prebuilt/win32/capstone.dll
 	cp README.pypi-src README
@@ -71,7 +71,7 @@ sdist3:
 # build & upload PyPi package with prebuilt core
 # NOTE: be sure to have precompiled core under prebuilt/win*/ beforehand
 sdist_win:
-	rm -rf src/
+	rm -rf src/ dist/
 	cp README.pypi-win README
 	cp PKG-INFO.win PKG-INFO
 	python setup.py sdist register upload
@@ -79,13 +79,13 @@ sdist_win:
 # build & upload PyPi package with prebuilt core
 # NOTE: be sure to have precompiled core under prebuilt/win*/ beforehand
 sdist3_win:
-	rm -rf src/
+	rm -rf src/ dist/
 	cp README.pypi-win README
 	cp PKG-INFO.win PKG-INFO
 	python3 setup.py sdist register upload
 
 clean:
-	rm -rf $(OBJDIR) src/ README
+	rm -rf $(OBJDIR) src/ dist/ README
 	rm -f capstone/*.so
 	rm -rf prebuilt/win64/capstone.dll
 	rm -rf prebuilt/win32/capstone.dll
