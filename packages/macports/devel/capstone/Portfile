@@ -4,7 +4,7 @@
 PortSystem          1.0
 
 name                capstone
-version             3.0
+version             3.0.1
 categories          devel
 platforms           darwin
 maintainers         gmail.com:aquynh
@@ -18,8 +18,8 @@ homepage            http://www.capstone-engine.org/
 master_sites        ${homepage}download/${version}/
 extract.suffix      .tgz
 
-checksums           sha256  49e41d662c5ed4dcd391ec4cfce75fb31ca4bfd245eba9e8f0cb69d6f6e8d7cc \
-                    rmd160  c4a542752c1ffc6262507a799f96470e076429b9
+checksums           sha256  38fc736830de83ae345d917a6c122e2a09119ec5724b553174ddf84062cf2551 \
+                    rmd160  3da96a34fbdde07c2cbb57ed7a76a07c035bb920
 
 patchfiles          patch-Makefile.diff
 
