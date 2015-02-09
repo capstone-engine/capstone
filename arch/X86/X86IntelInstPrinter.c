@@ -58,6 +58,21 @@ static void set_mem_access(MCInst *MI, bool status)
 static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat0(O, "ptr ");
+
+	switch(MI->csh->mode) {
+		case CS_MODE_16:
+			MI->x86opsize = 2;
+			break;
+		case CS_MODE_32:
+			MI->x86opsize = 4;
+			break;
+		case CS_MODE_64:
+			MI->x86opsize = 8;
+			break;
+		default:	// never reach
+			break;
+	}
+
 	printMemReference(MI, OpNo, O);
 }
 
