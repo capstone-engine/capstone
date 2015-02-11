@@ -88,6 +88,8 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 	/usr/include/capstone/ppc.h
 	/usr/include/capstone/sparc.h
 	/usr/include/capstone/systemz.h
+	/usr/include/capstone/xcore.h
+	/usr/include/capstone/platform.h
 	/usr/lib/libcapstone.so (for Linux/*nix), or /usr/lib/libcapstone.dylib (OSX)
 	/usr/lib/libcapstone.a
 
