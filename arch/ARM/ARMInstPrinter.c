@@ -2091,8 +2091,8 @@ static void printT2AddrModeSoRegOperand(MCInst *MI,
 		SStream_concat0(O, ", lsl ");
 		SStream_concat(O, "#%d", ShAmt);
 		if (MI->csh->detail) {
-			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count - 1].shift.type = ARM_SFT_LSL;
-			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count - 1].shift.value = ShAmt;
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].shift.type = ARM_SFT_LSL;
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].shift.value = ShAmt;
 		}
 	}
 
