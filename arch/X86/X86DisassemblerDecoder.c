@@ -951,9 +951,11 @@ static int readOpcode(struct InternalInstruction *insn)
 }
 
 // Hacky for FEMMS
-#ifndef CAPSTONE_X86_REDUCE
 #define GET_INSTRINFO_ENUM
+#ifndef CAPSTONE_X86_REDUCE
 #include "X86GenInstrInfo.inc"
+#else
+#include "X86GenInstrInfo_reduce.inc"
 #endif
 
 /*
