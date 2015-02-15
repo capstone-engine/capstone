@@ -1055,10 +1055,10 @@ static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 
 	if (MI->csh->detail) {
 		if (subtracted) {
-			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = (int)MCOperand_getImm(MO3);
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = (int)ImmOffs;
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].subtracted = true;
 		} else
-			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = (int)-MCOperand_getImm(MO3);
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = (int)-ImmOffs;
 	}
 
 	SStream_concat0(O, "]");
