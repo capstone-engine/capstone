@@ -75,7 +75,7 @@ def print_insn_detail(insn):
             if i.vector_index != -1:
                 print("\t\t\toperands[%u].vector_index = %u" %(c, i.vector_index))
             if i.subtracted:
-                print("\t\t\toperands[%u].subtracted = True")
+                print("\t\t\toperands[%u].subtracted = True" %c)
 
             c += 1
 
