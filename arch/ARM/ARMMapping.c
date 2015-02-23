@@ -22692,11 +22692,11 @@ static insn_op insn_ops[] = {
 	},
 	{	/* ARM_tADDrSP, ARM_INS_ADD: add${p}	$rdn, $sp, $rn */
 		0,
-		{ CS_OP_WRITE, CS_OP_NOREG, CS_OP_READ, 0 }
+		{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_tADDrSPi, ARM_INS_ADD: add${p}	$dst, $sp, $imm */
 		0,
-		{ 0 }
+		{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
 	},
 	{	/* ARM_tADDrr, ARM_INS_ADD: add${s}${p}	$rd, $rn, $rm */
 		0,
@@ -22704,11 +22704,11 @@ static insn_op insn_ops[] = {
 	},
 	{	/* ARM_tADDspi, ARM_INS_ADD: add${p}	$rdn, $imm */
 		0,
-		{ 0 }
+		{ CS_OP_WRITE, 0 }
 	},
 	{	/* ARM_tADDspr, ARM_INS_ADD: add${p}	$rdn, $rm */
 		0,
-		{ CS_OP_NOREG, CS_OP_READ, 0 }
+		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_tADR, ARM_INS_ADR: adr{$p}	$rd, $addr */
 		0,
@@ -22964,7 +22964,7 @@ static insn_op insn_ops[] = {
 	},
 	{	/* ARM_tSUBspi, ARM_INS_SUB: sub${p}	$rdn, $imm */
 		0,
-		{ 0 }
+		{ CS_OP_WRITE, 0 }
 	},
 	{	/* ARM_tSVC, ARM_INS_SVC: svc${p}	$imm */
 		0,
