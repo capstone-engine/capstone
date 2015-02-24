@@ -14155,19 +14155,19 @@ typedef struct insn_op {
 
 static insn_op insn_ops[] = {
 	{	/* ARM_ADCri, ARM_INS_ADC: adc${s}${p}	$rd, $rn, $imm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_ADCrr, ARM_INS_ADC: adc${s}${p}	$rd, $rn, $rm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_ADCrsi, ARM_INS_ADC: adc${s}${p}	$rd, $rn, $shift */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_ADCrsr, ARM_INS_ADC: adc${s}${p}	$rd, $rn, $shift */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_ADDri, ARM_INS_ADD: add${s}${p}	$rd, $rn, $imm */
@@ -14299,7 +14299,7 @@ static insn_op insn_ops[] = {
 		{ 0 }
 	},
 	{	/* ARM_CLREX, ARM_INS_CLREX: clrex */
-		0,
+		ARM_REG_CPSR,
 		{ 0 }
 	},
 	{	/* ARM_CLZ, ARM_INS_CLZ: clz${p}	$rd, $rm */
@@ -14307,35 +14307,35 @@ static insn_op insn_ops[] = {
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_CMNri, ARM_INS_CMN: cmn${p}	$rn, $imm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_CMNzrr, ARM_INS_CMN: cmn${p}	$rn, $rm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_CMNzrsi, ARM_INS_CMN: cmn${p}	$rn, $shift */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_CMNzrsr, ARM_INS_CMN: cmn${p}	$rn, $shift */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_CMPri, ARM_INS_CMP: cmp${p}	$rn, $imm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_CMPrr, ARM_INS_CMP: cmp${p}	$rn, $rm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_CMPrsi, ARM_INS_CMP: cmp${p}	$rn, $shift */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_CMPrsr, ARM_INS_CMP: cmp${p}	$rn, $shift */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_CPS1p, ARM_INS_CPS: cps	$mode */
@@ -14423,7 +14423,7 @@ static insn_op insn_ops[] = {
 		{ 0 }
 	},
 	{	/* ARM_FMSTAT, ARM_INS_VMRS: vmrs${p}	apsr_nzcv, fpscr */
-		0,
+		ARM_REG_CPSR,
 		{ 0 }
 	},
 	{	/* ARM_FSTMXDB_UPD, ARM_INS_FSTMDBX: fstmdbx${p}	$rn!, $regs */
@@ -14991,19 +14991,19 @@ static insn_op insn_ops[] = {
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_RSCri, ARM_INS_RSC: rsc${s}${p}	$rd, $rn, $imm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_RSCrr, ARM_INS_RSC: rsc${s}${p}	$rd, $rn, $rm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_RSCrsi, ARM_INS_RSC: rsc${s}${p}	$rd, $rn, $shift */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_RSCrsr, ARM_INS_RSC: rsc${s}${p}	$rd, $rn, $shift */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_SADD16, ARM_INS_SADD16: sadd16${p}	$rd, $rn, $rm */
@@ -15019,19 +15019,19 @@ static insn_op insn_ops[] = {
 		{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_SBCri, ARM_INS_SBC: sbc${s}${p}	$rd, $rn, $imm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_SBCrr, ARM_INS_SBC: sbc${s}${p}	$rd, $rn, $rm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_SBCrsi, ARM_INS_SBC: sbc${s}${p}	$rd, $rn, $shift */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_SBCrsr, ARM_INS_SBC: sbc${s}${p}	$rd, $rn, $shift */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_SBFX, ARM_INS_SBFX: sbfx${p}	$rd, $rn, $lsb, $width */
@@ -15603,43 +15603,43 @@ static insn_op insn_ops[] = {
 		{ CS_OP_WRITE, 0 }
 	},
 	{	/* ARM_TEQri, ARM_INS_TEQ: teq${p}	$rn, $imm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_TEQrr, ARM_INS_TEQ: teq${p}	$rn, $rm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_TEQrsi, ARM_INS_TEQ: teq${p}	$rn, $shift */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_TEQrsr, ARM_INS_TEQ: teq${p}	$rn, $shift */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_TRAP, ARM_INS_TRAP: trap */
-		0,
+		ARM_REG_CPSR,
 		{ 0 }
 	},
 	{	/* ARM_TRAPNaCl, ARM_INS_TRAP: trap */
-		0,
+		ARM_REG_CPSR,
 		{ 0 }
 	},
 	{	/* ARM_TSTri, ARM_INS_TST: tst${p}	$rn, $imm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_TSTrr, ARM_INS_TST: tst${p}	$rn, $rm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_TSTrsi, ARM_INS_TST: tst${p}	$rn, $shift */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_TSTrsr, ARM_INS_TST: tst${p}	$rn, $shift */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_UADD16, ARM_INS_UADD16: uadd16${p}	$rd, $rn, $rm */
@@ -21239,15 +21239,15 @@ static insn_op insn_ops[] = {
 		{ 0 }
 	},
 	{	/* ARM_t2ADCri, ARM_INS_ADC: adc${s}${p}	$rd, $rn, $imm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2ADCrr, ARM_INS_ADC: adc${s}${p}.w	$rd, $rn, $rm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2ADCrs, ARM_INS_ADC: adc${s}${p}.w	$rd, $rn, $shiftedrm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2ADDri, ARM_INS_ADD: add${s}${p}.w	$rd, $rn, $imm */
@@ -21331,7 +21331,7 @@ static insn_op insn_ops[] = {
 		{ 0 }
 	},
 	{	/* ARM_t2CLREX, ARM_INS_CLREX: clrex${p} */
-		0,
+		ARM_REG_CPSR,
 		{ 0 }
 	},
 	{	/* ARM_t2CLZ, ARM_INS_CLZ: clz${p}	$rd, $rm */
@@ -21339,27 +21339,27 @@ static insn_op insn_ops[] = {
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2CMNri, ARM_INS_CMN: cmn${p}.w	$rn, $imm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2CMNzrr, ARM_INS_CMN: cmn${p}.w	$rn, $rm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2CMNzrs, ARM_INS_CMN: cmn${p}.w	$rn, $shiftedrm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2CMPri, ARM_INS_CMP: cmp${p}.w	$rn, $imm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2CMPrr, ARM_INS_CMP: cmp${p}.w	$rn, $rm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2CMPrs, ARM_INS_CMP: cmp${p}.w	$rn, $shiftedrm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2CPS1p, ARM_INS_CPS: cps	$mode */
@@ -21403,15 +21403,15 @@ static insn_op insn_ops[] = {
 		{ 0 }
 	},
 	{	/* ARM_t2DCPS1, ARM_INS_DCPS1: dcps1${p} */
-		0,
+		ARM_REG_CPSR,
 		{ 0 }
 	},
 	{	/* ARM_t2DCPS2, ARM_INS_DCPS2: dcps2${p} */
-		0,
+		ARM_REG_CPSR,
 		{ 0 }
 	},
 	{	/* ARM_t2DCPS3, ARM_INS_DCPS3: dcps3${p} */
-		0,
+		ARM_REG_CPSR,
 		{ 0 }
 	},
 	{	/* ARM_t2DMB, ARM_INS_DMB: dmb${p}	$opt */
@@ -21779,11 +21779,11 @@ static insn_op insn_ops[] = {
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2MOVsra_flag, ARM_INS_ASRS: asrs${p}.w	$rd, $rm, #1 */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2MOVsrl_flag, ARM_INS_LSRS: lsrs${p}.w	$rd, $rm, #1 */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2MRC, ARM_INS_MRC: mrc${p}	$cop, $opc1, $rt, $crn, $crm, $opc2 */
@@ -22023,15 +22023,15 @@ static insn_op insn_ops[] = {
 		{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2SBCri, ARM_INS_SBC: sbc${s}${p}	$rd, $rn, $imm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2SBCrr, ARM_INS_SBC: sbc${s}${p}.w	$rd, $rn, $rm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2SBCrs, ARM_INS_SBC: sbc${s}${p}.w	$rd, $rn, $shiftedrm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2SBFX, ARM_INS_SBFX: sbfx${p}	$rd, $rn, $lsb, $msb */
@@ -22515,27 +22515,27 @@ static insn_op insn_ops[] = {
 		{ 0 }
 	},
 	{	/* ARM_t2TEQri, ARM_INS_TEQ: teq${p}.w	$rn, $imm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2TEQrr, ARM_INS_TEQ: teq${p}.w	$rn, $rm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2TEQrs, ARM_INS_TEQ: teq${p}.w	$rn, $shiftedrm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2TSTri, ARM_INS_TST: tst${p}.w	$rn, $imm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2TSTrr, ARM_INS_TST: tst${p}.w	$rn, $rm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2TSTrs, ARM_INS_TST: tst${p}.w	$rn, $shiftedrm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2UADD16, ARM_INS_UADD16: uadd16${p}	$rd, $rn, $rm */
@@ -22767,19 +22767,19 @@ static insn_op insn_ops[] = {
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_tCMNz, ARM_INS_CMN: cmn${p}	$rn, $rm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_tCMPhir, ARM_INS_CMP: cmp${p}	$rn, $rm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_tCMPi8, ARM_INS_CMP: cmp${p}	$rn, $imm8 */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_tCMPr, ARM_INS_CMP: cmp${p}	$rn, $rm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_tCPS, ARM_INS_CPS: cps$imod $iflags */
@@ -22859,7 +22859,7 @@ static insn_op insn_ops[] = {
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_tMOVSr, ARM_INS_MOVS: movs	$rd, $rm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_tMOVi8, ARM_INS_MOV: mov${s}${p}	$rd, $imm8 */
@@ -22979,11 +22979,11 @@ static insn_op insn_ops[] = {
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_tTRAP, ARM_INS_TRAP: trap */
-		0,
+		ARM_REG_CPSR,
 		{ 0 }
 	},
 	{	/* ARM_tTST, ARM_INS_TST: tst${p}	$rn, $rm */
-		0,
+		ARM_REG_CPSR,
 		{ CS_OP_READ, CS_OP_READ, 0 }
 	},
 	{	/* ARM_tUDF, ARM_INS_UDF: udf	$imm8 */
@@ -22999,6 +22999,7 @@ static insn_op insn_ops[] = {
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 };
+
 #endif
 
 #endif
