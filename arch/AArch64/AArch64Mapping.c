@@ -14986,8 +14986,8 @@ typedef struct insn_op {
 	cs_op_type operands[4];
 } insn_op;
 
-static insn_op insn_ops[] = 
-		{    /* AArch64_ABSv16i8, ARM64_INS_ABS: abs.16b    $rd, $rn */
+static insn_op insn_ops[] = {
+	{    /* AArch64_ABSv16i8, ARM64_INS_ABS: abs.16b    $rd, $rn */
 		0,
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
@@ -24294,6 +24294,8 @@ static insn_op insn_ops[] =
 	{    /* AArch64_ZIP2v8i8, ARM64_INS_ZIP2: zip2.8b    $rd, $rn, $rm */
 		0,
 		{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
-	};
+	}
+};
 #endif
+
 #endif
