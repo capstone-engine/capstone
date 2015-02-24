@@ -17,7 +17,7 @@
 #ifndef CS_POWERPC_PPCPREDICATES_H
 #define CS_POWERPC_PPCPREDICATES_H
 
-#include "../../include/ppc.h"
+#include "capstone/ppc.h"
 
 // NOTE: duplicate of ppc_bc in ppc.h to maitain code compatibility with LLVM
 typedef enum ppc_predicate {

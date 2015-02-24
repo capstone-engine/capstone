@@ -18,7 +18,7 @@
 #ifndef CS_SPARC_TARGET_SPARC_H
 #define CS_SPARC_TARGET_SPARC_H
 
-#include "../../include/sparc.h"
+#include "capstone/sparc.h"
 
 inline static char *SPARCCondCodeToString(sparc_cc CC)
 {

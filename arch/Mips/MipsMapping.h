@@ -4,7 +4,7 @@
 #ifndef CS_MIPS_MAP_H
 #define CS_MIPS_MAP_H
 
-#include "../../include/capstone.h"
+#include "capstone/capstone.h"
 
 // return name of regiser in friendly string
 const char *Mips_reg_name(csh handle, unsigned int reg);

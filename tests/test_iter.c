@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include "../inttypes.h"
 
-#include <capstone.h>
+#include <capstone/capstone.h>
 
 struct platform {
 	cs_arch arch;

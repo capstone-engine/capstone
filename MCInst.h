@@ -21,7 +21,7 @@
 
 #include <stdint.h>
 
-#include "include/capstone.h"
+#include "include/capstone/capstone.h"
 
 typedef struct MCInst MCInst;
 typedef struct cs_struct cs_struct;
