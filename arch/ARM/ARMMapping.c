@@ -14299,7 +14299,7 @@ static insn_op insn_ops[] = {
 		{ 0 }
 	},
 	{	/* ARM_CLREX, ARM_INS_CLREX: clrex */
-		ARM_REG_CPSR,
+		0,
 		{ 0 }
 	},
 	{	/* ARM_CLZ, ARM_INS_CLZ: clz${p}	$rd, $rm */
@@ -15619,11 +15619,11 @@ static insn_op insn_ops[] = {
 		{ CS_OP_READ, 0 }
 	},
 	{	/* ARM_TRAP, ARM_INS_TRAP: trap */
-		ARM_REG_CPSR,
+		0,
 		{ 0 }
 	},
 	{	/* ARM_TRAPNaCl, ARM_INS_TRAP: trap */
-		ARM_REG_CPSR,
+		0,
 		{ 0 }
 	},
 	{	/* ARM_TSTri, ARM_INS_TST: tst${p}	$rn, $imm */
@@ -21331,7 +21331,7 @@ static insn_op insn_ops[] = {
 		{ 0 }
 	},
 	{	/* ARM_t2CLREX, ARM_INS_CLREX: clrex${p} */
-		ARM_REG_CPSR,
+		0,
 		{ 0 }
 	},
 	{	/* ARM_t2CLZ, ARM_INS_CLZ: clz${p}	$rd, $rm */
@@ -21403,15 +21403,15 @@ static insn_op insn_ops[] = {
 		{ 0 }
 	},
 	{	/* ARM_t2DCPS1, ARM_INS_DCPS1: dcps1${p} */
-		ARM_REG_CPSR,
+		0,
 		{ 0 }
 	},
 	{	/* ARM_t2DCPS2, ARM_INS_DCPS2: dcps2${p} */
-		ARM_REG_CPSR,
+		0,
 		{ 0 }
 	},
 	{	/* ARM_t2DCPS3, ARM_INS_DCPS3: dcps3${p} */
-		ARM_REG_CPSR,
+		0,
 		{ 0 }
 	},
 	{	/* ARM_t2DMB, ARM_INS_DMB: dmb${p}	$opt */
@@ -22979,7 +22979,7 @@ static insn_op insn_ops[] = {
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
 	{	/* ARM_tTRAP, ARM_INS_TRAP: trap */
-		ARM_REG_CPSR,
+		0,
 		{ 0 }
 	},
 	{	/* ARM_tTST, ARM_INS_TST: tst${p}	$rn, $rm */
