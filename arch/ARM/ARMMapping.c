@@ -20120,11 +20120,11 @@ static insn_op insn_ops[] = {
 	},
 	{	/* ARM_VSHTOD, ARM_INS_VCVT: vcvt${p}.f64.s16	$dst, $a, $fbits */
 		0,
-		{ CS_OP_WRITE, CS_OP_READ, 0 }
+		{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ | CS_OP_WRITE, 0 }
 	},
 	{	/* ARM_VSHTOS, ARM_INS_VCVT: vcvt${p}.f32.s16	$dst, $a, $fbits */
 		0,
-		{ CS_OP_WRITE, CS_OP_READ, 0 }
+		{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ | CS_OP_WRITE, 0 }
 	},
 	{	/* ARM_VSITOD, ARM_INS_VCVT: vcvt${p}.f64.s32	$dd, $sm */
 		0,
@@ -20168,11 +20168,11 @@ static insn_op insn_ops[] = {
 	},
 	{	/* ARM_VSLTOD, ARM_INS_VCVT: vcvt${p}.f64.s32	$dst, $a, $fbits */
 		0,
-		{ CS_OP_WRITE, CS_OP_READ, 0 }
+		{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ | CS_OP_WRITE, 0 }
 	},
 	{	/* ARM_VSLTOS, ARM_INS_VCVT: vcvt${p}.f32.s32	$dst, $a, $fbits */
 		0,
-		{ CS_OP_WRITE, CS_OP_READ, 0 }
+		{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ | CS_OP_WRITE, 0 }
 	},
 	{	/* ARM_VSQRTD, ARM_INS_VSQRT: vsqrt${p}.f64	$dd, $dm */
 		0,
@@ -21000,11 +21000,11 @@ static insn_op insn_ops[] = {
 	},
 	{	/* ARM_VTOSHD, ARM_INS_VCVT: vcvt${p}.s16.f64	$dst, $a, $fbits */
 		0,
-		{ CS_OP_WRITE, CS_OP_READ, 0 }
+		{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ | CS_OP_WRITE, 0 }
 	},
 	{	/* ARM_VTOSHS, ARM_INS_VCVT: vcvt${p}.s16.f32	$dst, $a, $fbits */
 		0,
-		{ CS_OP_WRITE, CS_OP_READ, 0 }
+		{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ | CS_OP_WRITE, 0 }
 	},
 	{	/* ARM_VTOSIRD, ARM_INS_VCVTR: vcvtr${p}.s32.f64	$sd, $dm */
 		0,
@@ -21024,19 +21024,19 @@ static insn_op insn_ops[] = {
 	},
 	{	/* ARM_VTOSLD, ARM_INS_VCVT: vcvt${p}.s32.f64	$dst, $a, $fbits */
 		0,
-		{ CS_OP_WRITE, CS_OP_READ, 0 }
+		{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ | CS_OP_WRITE, 0 }
 	},
 	{	/* ARM_VTOSLS, ARM_INS_VCVT: vcvt${p}.s32.f32	$dst, $a, $fbits */
 		0,
-		{ CS_OP_WRITE, CS_OP_READ, 0 }
+		{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ | CS_OP_WRITE, 0 }
 	},
 	{	/* ARM_VTOUHD, ARM_INS_VCVT: vcvt${p}.u16.f64	$dst, $a, $fbits */
 		0,
-		{ CS_OP_WRITE, CS_OP_READ, 0 }
+		{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ | CS_OP_WRITE, 0 }
 	},
 	{	/* ARM_VTOUHS, ARM_INS_VCVT: vcvt${p}.u16.f32	$dst, $a, $fbits */
 		0,
-		{ CS_OP_WRITE, CS_OP_READ, 0 }
+		{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ | CS_OP_WRITE, 0 }
 	},
 	{	/* ARM_VTOUIRD, ARM_INS_VCVTR: vcvtr${p}.u32.f64	$sd, $dm */
 		0,
@@ -21056,11 +21056,11 @@ static insn_op insn_ops[] = {
 	},
 	{	/* ARM_VTOULD, ARM_INS_VCVT: vcvt${p}.u32.f64	$dst, $a, $fbits */
 		0,
-		{ CS_OP_WRITE, CS_OP_READ, 0 }
+		{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ | CS_OP_WRITE, 0 }
 	},
 	{	/* ARM_VTOULS, ARM_INS_VCVT: vcvt${p}.u32.f32	$dst, $a, $fbits */
 		0,
-		{ CS_OP_WRITE, CS_OP_READ, 0 }
+		{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ | CS_OP_WRITE, 0 }
 	},
 	{	/* ARM_VTRNd16, ARM_INS_VTRN: vtrn${p}.16	$vd, $vm */
 		0,
@@ -21112,11 +21112,11 @@ static insn_op insn_ops[] = {
 	},
 	{	/* ARM_VUHTOD, ARM_INS_VCVT: vcvt${p}.f64.u16	$dst, $a, $fbits */
 		0,
-		{ CS_OP_WRITE, CS_OP_READ, 0 }
+		{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ | CS_OP_WRITE, 0 }
 	},
 	{	/* ARM_VUHTOS, ARM_INS_VCVT: vcvt${p}.f32.u16	$dst, $a, $fbits */
 		0,
-		{ CS_OP_WRITE, CS_OP_READ, 0 }
+		{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ | CS_OP_WRITE, 0 }
 	},
 	{	/* ARM_VUITOD, ARM_INS_VCVT: vcvt${p}.f64.u32	$dd, $sm */
 		0,
@@ -21128,11 +21128,11 @@ static insn_op insn_ops[] = {
 	},
 	{	/* ARM_VULTOD, ARM_INS_VCVT: vcvt${p}.f64.u32	$dst, $a, $fbits */
 		0,
-		{ CS_OP_WRITE, CS_OP_READ, 0 }
+		{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ | CS_OP_WRITE, 0 }
 	},
 	{	/* ARM_VULTOS, ARM_INS_VCVT: vcvt${p}.f32.u32	$dst, $a, $fbits */
 		0,
-		{ CS_OP_WRITE, CS_OP_READ, 0 }
+		{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ | CS_OP_WRITE, 0 }
 	},
 	{	/* ARM_VUZPd16, ARM_INS_VUZP: vuzp${p}.16	$vd, $vm */
 		0,
