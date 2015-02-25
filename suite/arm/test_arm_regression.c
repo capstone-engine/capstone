@@ -28,8 +28,9 @@ static char *hex_string(unsigned char *str, size_t len)
 {
 	// returns a malloced string that has the hex version of the string in it
 	// null if failed to malloc
-	char * hex_out = NULL;
-	int i = 0;
+	char *hex_out;
+	size_t i;
+
 	hex_out = (char *) malloc(len*2 + 1); // two ascii characters per input character, plus trailing null
 	if (!hex_out) { goto Exit; }
 
