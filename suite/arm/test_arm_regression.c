@@ -24,7 +24,7 @@ struct platform {
 	int syntax;
 };
 
-static char* hex_string(unsigned char *str, int len)
+static char *hex_string(unsigned char *str, size_t len)
 {
 	// returns a malloced string that has the hex version of the string in it
 	// null if failed to malloc
@@ -195,8 +195,8 @@ static void test_invalids()
 		cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_NOREGNAME);
 
 		for (j = 0; j < invalid->num_invalid_codes; ++j) {
-			struct invalid_code * invalid_code = NULL;
-			char * hex_str = NULL;
+			struct invalid_code *invalid_code = NULL;
+			char *hex_str = NULL;
 
 			invalid_code = invalid->invalid_codes + j;
 
@@ -234,7 +234,7 @@ struct valid_code {
 	unsigned char *code;
 	size_t size;
 	uint32_t start_addr;
-	char* expected_out;
+	char *expected_out;
 	char *comment;
 };
 
