@@ -361,12 +361,11 @@ static void setPrefixPresent(struct InternalInstruction *insn,
  * @param location  - The location to query.
  * @return          - Whether the prefix is at that location.
  */
-static bool isPrefixAtLocation(struct InternalInstruction *insn,
-		uint8_t prefix,
-		uint64_t location)
+static bool isPrefixAtLocation(struct InternalInstruction *insn, uint8_t prefix)
 {
-	if (insn->prefixPresent[prefix] == 1 &&
-			insn->prefixLocations[prefix] == location)
+	//if (insn->prefixPresent[prefix] == 1 &&
+//			insn->prefixLocations[prefix] == location)
+	if (insn->prefixPresent[prefix] == 1)
 		return true;
 	else
 		return false;
@@ -601,7 +600,6 @@ static int readPrefixes(struct InternalInstruction *insn)
 			} else {
 				unconsumeByte(insn); /* unconsume byte1 */
 				unconsumeByte(insn); /* unconsume byte  */
-				insn->necessaryPrefixLocation = insn->readerCursor - 2;
 			}
 
 			if (insn->vectorExtensionType == TYPE_EVEX) {
@@ -646,10 +644,8 @@ static int readPrefixes(struct InternalInstruction *insn)
 
 		if (insn->mode == MODE_64BIT || (byte1 & 0xc0) == 0xc0) {
 			insn->vectorExtensionType = TYPE_VEX_3B;
-			insn->necessaryPrefixLocation = insn->readerCursor - 1;
 		} else {
 			unconsumeByte(insn);
-			insn->necessaryPrefixLocation = insn->readerCursor - 1;
 		}
 
 		if (insn->vectorExtensionType == TYPE_VEX_3B) {
@@ -708,11 +704,9 @@ static int readPrefixes(struct InternalInstruction *insn)
 
 		if ((byte1 & 0x38) != 0x0) { /* 0 in these 3 bits is a POP instruction. */
 			insn->vectorExtensionType = TYPE_XOP;
-			insn->necessaryPrefixLocation = insn->readerCursor - 1;
 		}
 		else {
 			unconsumeByte(insn);
-			insn->necessaryPrefixLocation = insn->readerCursor - 1;
 		}
 
 		if (insn->vectorExtensionType == TYPE_XOP) {
@@ -753,15 +747,12 @@ static int readPrefixes(struct InternalInstruction *insn)
 				}
 
 				insn->rexPrefix = byte;
-				insn->necessaryPrefixLocation = insn->readerCursor - 2;
 				// dbgprintf(insn, "Found REX prefix 0x%hhx", byte);
 			} else {
 				unconsumeByte(insn);
-				insn->necessaryPrefixLocation = insn->readerCursor - 1;
 			}
 		} else {
 			unconsumeByte(insn);
-			insn->necessaryPrefixLocation = insn->readerCursor - 1;
 		}
 	}
 
@@ -1131,14 +1122,18 @@ static int getID(struct InternalInstruction *insn)
 			return -1;
 		}
 	} else {
-		if (insn->mode != MODE_16BIT && isPrefixAtLocation(insn, 0x66, insn->necessaryPrefixLocation))
+		if (insn->mode != MODE_16BIT && isPrefixAtLocation(insn, 0x66))
 			attrMask |= ATTR_OPSIZE;
-		else if (isPrefixAtLocation(insn, 0x67, insn->necessaryPrefixLocation))
+		else if (isPrefixAtLocation(insn, 0x67))
 			attrMask |= ATTR_ADSIZE;
-		else if (isPrefixAtLocation(insn, 0xf3, insn->necessaryPrefixLocation))
-			attrMask |= ATTR_XS;
-		else if (isPrefixAtLocation(insn, 0xf2, insn->necessaryPrefixLocation))
-			attrMask |= ATTR_XD;
+
+		if (isPrefixAtLocation(insn, 0xf3)) {
+			if (insn->twoByteEscape == 0x0f)	// 0x66, 0x0f, ... like CRC32 case
+				attrMask |= ATTR_XS;
+		} else if (isPrefixAtLocation(insn, 0xf2)) {
+			if (insn->twoByteEscape == 0x0f)	// 0x66, 0x0f, ... like CRC32 case
+				attrMask |= ATTR_XD;
+		}
 	}
 
 	if (insn->rexPrefix & 0x08)
