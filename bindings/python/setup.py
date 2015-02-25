@@ -22,7 +22,7 @@ PKG_NAME = 'capstone'
 if os.path.exists(PATH_LIB64) and os.path.exists(PATH_LIB32):
     PKG_NAME = 'capstone-windows'
 
-VERSION = '3.0.1'
+VERSION = '3.0.2'
 SYSTEM = sys.platform
 
 SITE_PACKAGES = os.path.join(get_python_lib(), "capstone")
