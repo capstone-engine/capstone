@@ -290,6 +290,7 @@ else ifeq ($(IS_CYGWIN),1)
 LIBRARY = $(BLDIR)/$(LIBNAME).$(EXT)
 else	# *nix
 LIBRARY = $(BLDIR)/lib$(LIBNAME).$(EXT)
+CFLAGS += -fvisibility=hidden
 endif
 endif
 
