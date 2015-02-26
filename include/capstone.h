@@ -24,7 +24,11 @@ extern "C" {
 #define CAPSTONE_EXPORT
 #endif
 #else
+#ifdef __GNUC__
+#define CAPSTONE_EXPORT __attribute__((visibility("default")))
+#else
 #define CAPSTONE_EXPORT
+#endif
 #endif
 
 #ifdef __GNUC__
