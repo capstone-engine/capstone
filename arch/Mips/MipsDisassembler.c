@@ -410,6 +410,14 @@ static DecodeStatus Mips64Disassembler_getInstruction(int mode, MCInst *instr,
 {
 	uint32_t Insn;
 
+	if (code_len < 4)
+		// not enough data
+		return MCDisassembler_Fail;
+
+	if (instr->flat_insn->detail) {
+		memset(instr->flat_insn->detail, 0, sizeof(cs_detail));
+	}
+
 	DecodeStatus Result = readInstruction32((unsigned char*)code, &Insn, isBigEndian, false);
 	if (Result == MCDisassembler_Fail)
 		return MCDisassembler_Fail;
