@@ -4,7 +4,7 @@
 #ifndef CS_PRIV_H
 #define CS_PRIV_H
 
-#include <capstone.h>
+#include <capstone/capstone.h>
 
 #include "MCInst.h"
 #include "SStream.h"

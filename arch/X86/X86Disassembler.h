@@ -79,7 +79,7 @@
 
 #include <stdint.h>
 
-#include "../../include/capstone.h"
+#include "capstone/capstone.h"
 
 #include "../../MCInst.h"
 

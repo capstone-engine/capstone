@@ -4,7 +4,7 @@
 #ifndef CS_SYSZ_MAP_H
 #define CS_SYSZ_MAP_H
 
-#include "../../include/capstone.h"
+#include "capstone/capstone.h"
 
 // return name of regiser in friendly string
 const char *SystemZ_reg_name(csh handle, unsigned int reg);
