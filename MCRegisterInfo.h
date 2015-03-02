@@ -14,7 +14,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifndef CS_LLVM_MC_MCREGISTERINFO_H
 #define CS_LLVM_MC_MCREGISTERINFO_H
@@ -38,6 +38,18 @@ typedef struct MCRegisterClass {
 	int8_t CopyCost;
 	bool Allocatable;
 } MCRegisterClass;
+
+typedef struct MCRegisterClass2 {
+	iterator RegsBegin;
+	uint8_t *RegSet;
+	uint32_t NameIdx;
+	uint16_t RegsSize;
+	uint16_t RegSetSize;
+	uint16_t ID;
+	uint16_t RegSize, Alignment; // Size & Alignment of register in bytes
+	int8_t CopyCost;
+	bool Allocatable;
+} MCRegisterClass2;
 
 /// MCRegisterDesc - This record contains information about a particular
 /// register.  The SubRegs field is a zero terminated array of registers that
