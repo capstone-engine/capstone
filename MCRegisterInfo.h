@@ -28,18 +28,6 @@ typedef uint16_t MCPhysReg;
 typedef MCPhysReg* iterator;
 
 typedef struct MCRegisterClass {
-	char *Name;
-	iterator RegsBegin;
-	uint8_t *RegSet;
-	uint16_t RegsSize;
-	uint16_t RegSetSize;
-	uint16_t ID;
-	uint16_t RegSize, Alignment; // Size & Alignment of register in bytes
-	int8_t CopyCost;
-	bool Allocatable;
-} MCRegisterClass;
-
-typedef struct MCRegisterClass2 {
 	iterator RegsBegin;
 	uint8_t *RegSet;
 	uint32_t NameIdx;
@@ -49,7 +37,7 @@ typedef struct MCRegisterClass2 {
 	uint16_t RegSize, Alignment; // Size & Alignment of register in bytes
 	int8_t CopyCost;
 	bool Allocatable;
-} MCRegisterClass2;
+} MCRegisterClass;
 
 /// MCRegisterDesc - This record contains information about a particular
 /// register.  The SubRegs field is a zero terminated array of registers that
@@ -70,6 +58,10 @@ typedef struct MCRegisterDesc {
 	// RegUnits - Points to the list of register units. The low 4 bits holds the
 	// Scale, the high bits hold an offset into DiffLists. See MCRegUnitIterator.
 	uint32_t RegUnits;
+
+	/// Index into list with lane mask sequences. The sequence contains a lanemask
+	/// for every register unit.
+	uint16_t RegUnitLaneMasks;
 } MCRegisterDesc;
 
 /// MCRegisterInfo base class - We assume that the target defines a static
@@ -113,7 +105,6 @@ void MCRegisterInfo_InitMCRegisterInfo(MCRegisterInfo *RI,
 		uint16_t *SubIndices,
 		unsigned NumIndices,
 		uint16_t *RET);
-
 
 unsigned MCRegisterInfo_getMatchingSuperReg(MCRegisterInfo *RI, unsigned Reg, unsigned SubIdx, MCRegisterClass *RC);
 

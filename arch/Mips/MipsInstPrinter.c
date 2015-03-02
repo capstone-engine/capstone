@@ -430,7 +430,7 @@ static char *printAlias(MCInst *MI, SStream *OS)
 
 static void printRegisterList(MCInst *MI, int opNum, SStream *O)
 {
-	int i;
+	int i, e;
 
 	// - 2 because register List is always first operand of instruction and it is
 	// always followed by memory operand (base + offset).

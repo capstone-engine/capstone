@@ -36,26 +36,13 @@ static cs_err init(cs_struct *ud)
 
 static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 {
-	if (type == CS_OPT_MODE) {
-		if (value & CS_MODE_32)
-			handle->disasm = Mips_getInstruction;
-		else
-			handle->disasm = Mips64_getInstruction;
-
-		handle->mode = value;
-	}
-	return CS_ERR_OK;
-}
-
-static void destroy(cs_struct *handle)
-{
+	return CS_ERR_OPTION;
 }
 
 void Mips_enable(void)
 {
 	arch_init[CS_ARCH_MIPS] = init;
 	arch_option[CS_ARCH_MIPS] = option;
-	arch_destroy[CS_ARCH_MIPS] = destroy;
 
 	// support this arch
 	all_arch |= (1 << CS_ARCH_MIPS);

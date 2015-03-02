@@ -6203,7 +6203,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 178: \
-    if (DecodeINSVE_DF(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
+    if (DecodeINSVE_DF_4(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
   case 179: \
     tmp = fieldname(insn, 6, 5); \
@@ -6531,13 +6531,13 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (DecodeSimm16(MI, tmp, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
   case 226: \
-    if (DecodeBlezGroupBranch(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
+    if (DecodeBlezGroupBranch_4(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
   case 227: \
-    if (DecodeBgtzGroupBranch(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
+    if (DecodeBgtzGroupBranch_4(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
   case 228: \
-    if (DecodeAddiGroupBranch(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
+    if (DecodeAddiGroupBranch_4(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
   case 229: \
     tmp = fieldname(insn, 16, 5); \
@@ -6619,13 +6619,13 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (DecodeFMemCop2R6(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
   case 239: \
-    if (DecodeBlezlGroupBranch(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
+    if (DecodeBlezlGroupBranch_4(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
   case 240: \
-    if (DecodeBgtzlGroupBranch(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
+    if (DecodeBgtzlGroupBranch_4(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
   case 241: \
-    if (DecodeDaddiGroupBranch(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
+    if (DecodeDaddiGroupBranch_4(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
   case 242: \
     tmp = fieldname(insn, 21, 5); \

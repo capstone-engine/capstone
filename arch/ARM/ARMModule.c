@@ -61,15 +61,10 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 	return CS_ERR_OK;
 }
 
-static void destroy(cs_struct *handle)
-{
-}
-
 void ARM_enable(void)
 {
 	arch_init[CS_ARCH_ARM] = init;
 	arch_option[CS_ARCH_ARM] = option;
-	arch_destroy[CS_ARCH_ARM] = destroy;
 
 	// support this arch
 	all_arch |= (1 << CS_ARCH_ARM);

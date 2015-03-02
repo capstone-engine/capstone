@@ -5267,10 +5267,11 @@ static char *getRegisterName(unsigned RegNo)
     144, 
   };
 
+  //printf("==== RegNo = %u, id = %s\n", RegNo, AsmStrs+RegAsmOffset[RegNo-1]);
   //int i;
-  //for (i = 0; i < sizeof(RegAsmOffset)/4; i++)
+  //for (i = 0; i < sizeof(RegAsmOffset)/2; i++)
   //     printf("%s = %u\n", AsmStrs+RegAsmOffset[i], i + 1);
-  //printf("*************************\n");
+  //printf("-------------------------\n");
   return AsmStrs+RegAsmOffset[RegNo-1];
 #else
   return NULL;

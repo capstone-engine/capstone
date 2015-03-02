@@ -366,10 +366,10 @@ void Mips_init(MCRegisterInfo *MRI)
 /// Read two bytes from the ArrayRef and return 16 bit halfword sorted
 /// according to the given endianess.
 static void readInstruction16(unsigned char *code, uint32_t *insn,
-		bool IsBigEndian)
+		bool isBigEndian)
 {
 	// We want to read exactly 2 Bytes of data.
-	if (IsBigEndian)
+	if (isBigEndian)
 		*insn = (code[0] << 8) | code[1];
 	else
 		*insn = (code[1] << 8) | code[0];
@@ -388,12 +388,12 @@ static void readInstruction32(unsigned char *code, uint32_t *insn, bool isBigEnd
 	//   Little-endian: 1 | 0 | 3 | 2
 
 	// We want to read exactly 4 Bytes of data.
-	if (IsBigEndian) {
+	if (isBigEndian) {
 		// Encoded as a big-endian 32-bit word in the stream.
 		*insn =
 			(code[3] << 0) | (code[2] << 8) | (code[1] << 16) | (code[0] << 24);
 	} else {
-		if (IsMicroMips) {
+		if (isMicroMips) {
 			*insn = (code[2] << 0) | (code[3] << 8) | (code[0] << 16) |
 				(code[1] << 24);
 		} else {
@@ -420,7 +420,7 @@ static DecodeStatus MipsDisassembler_getInstruction(int mode, MCInst *instr,
 			// not enough data
 			return MCDisassembler_Fail;
 
-		readInstruction16((unsigned char*)code, &Insn, IsBigEndian);
+		readInstruction16((unsigned char*)code, &Insn, isBigEndian);
 
 		// Calling the auto-generated decoder function.
 		Result = decodeInstruction(DecoderTableMicroMips16, instr, Insn, Address, MRI, mode);
@@ -433,7 +433,7 @@ static DecodeStatus MipsDisassembler_getInstruction(int mode, MCInst *instr,
 			// not enough data
 			return MCDisassembler_Fail;
 
-		readInstruction32((unsigned char*)code, &Insn, IsBigEndian, true);
+		readInstruction32((unsigned char*)code, &Insn, isBigEndian, true);
 
 		//DEBUG(dbgs() << "Trying MicroMips32 table (32-bit instructions):\n");
 		// Calling the auto-generated decoder function.
@@ -449,9 +449,9 @@ static DecodeStatus MipsDisassembler_getInstruction(int mode, MCInst *instr,
 		// not enough data
 		return MCDisassembler_Fail;
 
-	readInstruction32((unsigned char*)code, &Insn, IsBigEndian, false);
+	readInstruction32((unsigned char*)code, &Insn, isBigEndian, false);
 
-	if (hasCOP3()) {
+	if (((mode & CS_MODE_MIPS32) == 0) && ((mode & CS_MODE_MIPS3) == 0)) {
 		// DEBUG(dbgs() << "Trying COP3_ table (32-bit opcodes):\n");
 		Result = decodeInstruction(DecoderTableCOP3_32, instr, Insn, Address, MRI, mode);
 		if (Result != MCDisassembler_Fail) {
@@ -483,11 +483,11 @@ static DecodeStatus MipsDisassembler_getInstruction(int mode, MCInst *instr,
 	if (mode & CS_MODE_MIPSGP64) {
 		// DEBUG(dbgs() << "Trying Mips64 (GPR64) table (32-bit opcodes):\n");
 		Result = decodeInstruction(DecoderTableMips6432, instr, Insn,
-				Address, MRI, mode)
-			if (Result != MCDisassembler_Fail) {
-				*Size = 4;
-				return Result;
-			}
+				Address, MRI, mode);
+		if (Result != MCDisassembler_Fail) {
+			*Size = 4;
+			return Result;
+		}
 	}
 
 	// DEBUG(dbgs() << "Trying Mips table (32-bit opcodes):\n");
@@ -1212,7 +1212,7 @@ static DecodeStatus DecodeMemMMImm12(MCInst *Inst,
 	Reg = getReg(Decoder, Mips_GPR32RegClassID, Reg);
 	Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
 
-	switch (Inst.getOpcode()) {
+	switch (MCInst_getOpcode(Inst)) {
 		case Mips_SWM32_MM:
 		case Mips_LWM32_MM:
 			if (DecodeRegListOperand(Inst, Insn, Address, Decoder)
@@ -1226,7 +1226,7 @@ static DecodeStatus DecodeMemMMImm12(MCInst *Inst,
 			// fallthrough
 		default:
 			MCOperand_CreateReg0(Inst, Reg);
-			if (Inst.getOpcode() == Mips_LWP_MM || Inst.getOpcode() == Mips_SWP_MM)
+			if (MCInst_getOpcode(Inst) == Mips_LWP_MM || MCInst_getOpcode(Inst) == Mips_SWP_MM)
 				MCOperand_CreateReg0(Inst, Reg + 1);
 
 			MCOperand_CreateReg0(Inst, Base);
@@ -1590,7 +1590,7 @@ static DecodeStatus DecodeLiSimm7(MCInst *Inst,
 		unsigned Value, uint64_t Address, MCRegisterInfo *Decoder)
 {
 	if (Value == 0x7F)
-		MCOperand_CreateImm0(Inst, -1)
+		MCOperand_CreateImm0(Inst, -1);
 	else
 		MCOperand_CreateImm0(Inst, Value);
 
@@ -1660,7 +1660,7 @@ static DecodeStatus DecodeSimm18Lsl3(MCInst *Inst,
 }
 
 static DecodeStatus DecodeSimm9SP(MCInst *Inst, unsigned Insn,
-		uint64_t Address, const void *Decoder)
+		uint64_t Address, MCRegisterInfo *Decoder)
 {
 	int32_t DecodedValue;
 
