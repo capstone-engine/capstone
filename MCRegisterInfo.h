@@ -20,7 +20,7 @@
 #define CS_LLVM_MC_MCREGISTERINFO_H
 
 #include <stdint.h>
-#include "include/platform.h"
+#include "capstone/platform.h"
 
 /// An unsigned integer type large enough to represent all physical registers,
 /// but not necessarily virtual registers.

@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <capstone.h>
+#include <capstone/capstone.h>
 
 #include "utils.h"
 #include "MCRegisterInfo.h"

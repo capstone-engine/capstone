@@ -3,7 +3,7 @@
 from __future__ import print_function
 import sys, re
 
-INCL_DIR = '../include/'
+INCL_DIR = '../include/capstone/'
 
 include = [ 'arm.h', 'arm64.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h' ]
 
