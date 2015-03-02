@@ -43,8 +43,10 @@ install() {
     rm -rf /usr/include/capstone
     # install into /usr/local
     PREFIX=/usr/local
-    # find the directory automatically, so we can support both Macport & Brew
-    PKGCFGDIR="$(pkg-config --variable pc_path pkg-config | cut -d ':' -f 1)"
+    if [ "${HOMEBREW_CAPSTONE}" != 1 ]; then
+      # find the directory automatically, so we can support both Macport & Brew
+      PKGCFGDIR="$(pkg-config --variable pc_path pkg-config | cut -d ':' -f 1)"
+    fi
     ${MAKE} install
   else  # not OSX
     test -d /usr/lib64 && ${MAKE} LIBDIRARCH=lib64
