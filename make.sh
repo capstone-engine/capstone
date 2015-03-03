@@ -1,113 +1,87 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Capstone Disassembly Engine
-# By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014
+# By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015
 
 # Note: to cross-compile "nix32" on Linux, package gcc-multilib is required.
 
+MAKE_JOBS=$((${MAKE_JOBS}+0))
+[ ${MAKE_JOBS} -lt 1 ] && \
+  MAKE_JOBS=4
 
 # build iOS lib for all iDevices, or only specific device
-function build_iOS {
-	${MAKE} clean
-	IOS_SDK=`xcrun --sdk iphoneos --show-sdk-path`
-	IOS_CC=`xcrun --sdk iphoneos -f clang`
-	IOS_CFLAGS="-Os -Wimplicit -isysroot $IOS_SDK"
-	IOS_LDFLAGS="-isysroot $IOS_SDK"
-	if (( $# == 0 )); then
-		# build for all iDevices
-		IOS_ARCHS="armv7 armv7s arm64"
-	else
-		IOS_ARCHS="$1"
-	fi
-	CC="$IOS_CC" CFLAGS="$IOS_CFLAGS" LDFLAGS="$IOS_LDFLAGS" LIBARCHS="$IOS_ARCHS" ${MAKE}
+build_iOS() {
+  ${MAKE} clean
+  IOS_SDK=`xcrun --sdk iphoneos --show-sdk-path`
+  IOS_CC=`xcrun --sdk iphoneos -f clang`
+  IOS_CFLAGS="-Os -Wimplicit -isysroot $IOS_SDK"
+  IOS_LDFLAGS="-isysroot $IOS_SDK"
+  if [ -z "$1" ]; then
+    # build for all iDevices
+    IOS_ARCHS="armv7 armv7s arm64"
+  else
+    IOS_ARCHS="$1"
+  fi
+  CC="$IOS_CC" \
+  CFLAGS="$IOS_CFLAGS" \
+  LDFLAGS="$IOS_LDFLAGS" \
+  LIBARCHS="$IOS_ARCHS" \
+    ${MAKE}
 }
 
-function build {
-	if [ $(uname -s) = Darwin ]; then
-		export LIBARCHS="i386 x86_64"
-	fi
-
-	${MAKE} clean
-
-	if [ ${CC}x != x ]; then
-		${MAKE} CC=$CC
-	else
-		${MAKE}
-	fi
+build() {
+  [ "$UNAME" = Darwin ] && LIBARCHS="i386 x86_64"
+  ${MAKE} clean
+  ${MAKE}
 }
 
-function install {
-	# Mac OSX needs to find the right directory for pkgconfig
-	if [ "$(uname)" == "Darwin" ]; then
-		# we are going to install into /usr/local, so remove old installs under /usr
-		rm -rf /usr/lib/libcapstone.*
-		rm -rf /usr/include/capstone
-		# install into /usr/local
-		export PREFIX=/usr/local
-		# find the directory automatically, so we can support both Macport & Brew
-		PKGCFGDIR="$(pkg-config --variable pc_path pkg-config | cut -d ':' -f 1)"
-		# set PKGCFGDIR only in non-Brew environment & pkg-config is available
-		if [ "$HOMEBREW_CAPSTONE" != "1" ] && [ ${PKGCFGDIR}x != x ]; then
-			if [ ${CC}x != x ]; then
-				${MAKE} CC=$CC PKGCFGDIR=$PKGCFGDIR install
-			else
-				${MAKE} PKGCFGDIR=$PKGCFGDIR install
-			fi
-		else
-			if [ ${CC}x != x ]; then
-				${MAKE} CC=$CC install
-			else
-				${MAKE} install
-			fi
-		fi
-	else	# not OSX
-		if test -d /usr/lib64; then
-			if [ ${CC}x != x ]; then
-				${MAKE} LIBDIRARCH=lib64 CC=$CC install
-			else
-				${MAKE} LIBDIRARCH=lib64 install
-			fi
-		else
-			if [ ${CC}x != x ]; then
-				${MAKE} CC=$CC install
-			else
-				${MAKE} install
-			fi
-		fi
-	fi
+install() {
+  # Mac OSX needs to find the right directory for pkgconfig
+  if [ "$UNAME" = Darwin ]; then
+    # we are going to install into /usr/local, so remove old installs under /usr
+    rm -rf /usr/lib/libcapstone.*
+    rm -rf /usr/include/capstone
+    # install into /usr/local
+    PREFIX=/usr/local
+    if [ "${HOMEBREW_CAPSTONE}" != 1 ]; then
+      # find the directory automatically, so we can support both Macport & Brew
+      PKGCFGDIR="$(pkg-config --variable pc_path pkg-config | cut -d ':' -f 1)"
+    fi
+    ${MAKE} install
+  else  # not OSX
+    test -d /usr/lib64 && ${MAKE} LIBDIRARCH=lib64
+    ${MAKE} install
+  fi
 }
 
-function uninstall {
-	# Mac OSX needs to find the right directory for pkgconfig
-	if [ "$(uname)" == "Darwin" ]; then
-		# find the directory automatically, so we can support both Macport & Brew
-		PKGCFGDIR="$(pkg-config --variable pc_path pkg-config | cut -d ':' -f 1)"
-		export PREFIX=/usr/local
-		if [ ${PKGCFGDIR}x != x ]; then
-			${MAKE} PKGCFGDIR=$PKGCFGDIR uninstall
-		else
-			${MAKE} uninstall
-		fi
-	else	# not OSX
-		if test -d /usr/lib64; then
-			${MAKE} LIBDIRARCH=lib64 uninstall
-		else
-			${MAKE} uninstall
-		fi
-	fi
+uninstall() {
+  # Mac OSX needs to find the right directory for pkgconfig
+  if [ "$UNAME" = "Darwin" ]; then
+    # find the directory automatically, so we can support both Macport & Brew
+    PKGCFGDIR="$(pkg-config --variable pc_path pkg-config | cut -d ':' -f 1)"
+    PREFIX=/usr/local
+    ${MAKE} uninstall
+  else  # not OSX
+    test -d /usr/lib64 && LIBDIRARCH=lib64
+    ${MAKE} uninstall
+  fi
 }
 
-MAKE=make
-if [ "$(uname)" == "SunOS" ]; then
-	export MAKE=gmake
-	export INSTALL_BIN=ginstall
-	export CC=gcc
+if [ "$UNAME" = SunOS ]; then
+  [ -z "${MAKE}" ] && MAKE=gmake
+  INSTALL_BIN=ginstall
+  CC=gcc
 fi
 
-if [[ "$(uname)" == *BSD* ]]; then
-	export MAKE=gmake
-	export PREFIX=/usr/local
+if [ -n "`echo "$UNAME" | grep BSD`" ]; then
+  MAKE=gmake
+  PREFIX=/usr/local
 fi
+
+[ -z "${UNAME}" ] && UNAME=$(uname)
+[ -z "${MAKE}" ] && MAKE=make
+[ -n "${MAKE_JOBS}" ] && MAKE="$MAKE -j${MAKE_JOBS}"
+export MAKE CC INSTALL_BIN PREFIX PKGCFGDIR LIBDIRARCH LIBARCHS CFLAGS LDFLAGS
 
 case "$1" in
   "" ) build;;
@@ -126,5 +100,7 @@ case "$1" in
   "ios_armv7" ) build_iOS armv7;;
   "ios_armv7s" ) build_iOS armv7s;;
   "ios_arm64" ) build_iOS arm64;;
-  * ) echo "Usage: make.sh [nix32|cross-win32|cross-win64|cygwin-mingw32|cygwin-mingw64|ios|ios_armv7|ios_armv7s|ios_arm64|cross-android|clang|gcc|install|uninstall]"; exit 1;;
+  * )
+    echo "Usage: $0 ["`grep '^  "' $0 | cut -d '"' -f 2 | tr "\\n" "|"`"]"
+    exit 1;;
 esac
