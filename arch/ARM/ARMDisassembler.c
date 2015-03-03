@@ -1060,10 +1060,11 @@ static DecodeStatus DecodeDPRRegisterClass(MCInst *Inst, unsigned RegNo,
 {
 	unsigned Register;
 
-	uint64_t featureBits = ARM_getFeatureBits(Inst->csh->mode);
-	bool hasD16 = featureBits & ARM_FeatureD16;
+	//uint64_t featureBits = ARM_getFeatureBits(Inst->csh->mode);
+	//bool hasD16 = featureBits & ARM_FeatureD16;
 
-	if (RegNo > 31 || (hasD16 && RegNo > 15))
+	//if (RegNo > 31 || (hasD16 && RegNo > 15))	// FIXME
+	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
 	Register = DPRDecoderTable[RegNo];

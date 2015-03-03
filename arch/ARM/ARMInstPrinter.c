@@ -1511,20 +1511,20 @@ static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 
 		switch (SYSm) {
 			default: //llvm_unreachable("Unexpected mask value!");
-			case  0: SStream_concat0(O, "apsr"); return;	// FIXME
-			case  1: SStream_concat0(O, "iapsr"); return;
-			case  2: SStream_concat0(O, "eapsr"); return;
-			case  3: SStream_concat0(O, "xpsr"); return;
-			case  5: SStream_concat0(O, "ipsr"); return;
-			case  6: SStream_concat0(O, "epsr"); return;
-			case  7: SStream_concat0(O, "iepsr"); return;
-			case  8: SStream_concat0(O, "msp"); return;
-			case  9: SStream_concat0(O, "psp"); return;
-			case 16: SStream_concat0(O, "primask"); return;
-			case 17: SStream_concat0(O, "basepri"); return;
-			case 18: SStream_concat0(O, "basepri_max"); return;
-			case 19: SStream_concat0(O, "faultmask"); return;
-			case 20: SStream_concat0(O, "control"); return;
+			case  0: SStream_concat0(O, "apsr"); ARM_addSysReg(MI, ARM_SYSREG_APSR); return;
+			case  1: SStream_concat0(O, "iapsr"); ARM_addSysReg(MI, ARM_SYSREG_IAPSR); return;
+			case  2: SStream_concat0(O, "eapsr"); ARM_addSysReg(MI, ARM_SYSREG_EAPSR); return;
+			case  3: SStream_concat0(O, "xpsr"); ARM_addSysReg(MI, ARM_SYSREG_XPSR); return;
+			case  5: SStream_concat0(O, "ipsr"); ARM_addSysReg(MI, ARM_SYSREG_IPSR); return;
+			case  6: SStream_concat0(O, "epsr"); ARM_addSysReg(MI, ARM_SYSREG_EPSR); return;
+			case  7: SStream_concat0(O, "iepsr"); ARM_addSysReg(MI, ARM_SYSREG_IEPSR); return;
+			case  8: SStream_concat0(O, "msp"); ARM_addSysReg(MI, ARM_SYSREG_MSP); return;
+			case  9: SStream_concat0(O, "psp"); ARM_addSysReg(MI, ARM_SYSREG_PSP); return;
+			case 16: SStream_concat0(O, "primask"); ARM_addSysReg(MI, ARM_SYSREG_PRIMASK); return;
+			case 17: SStream_concat0(O, "basepri"); ARM_addSysReg(MI, ARM_SYSREG_BASEPRI); return;
+			case 18: SStream_concat0(O, "basepri_max"); ARM_addSysReg(MI, ARM_SYSREG_BASEPRI_MAX); return;
+			case 19: SStream_concat0(O, "faultmask"); ARM_addSysReg(MI, ARM_SYSREG_FAULTMASK); return;
+			case 20: SStream_concat0(O, "control"); ARM_addSysReg(MI, ARM_SYSREG_CONTROL); return;
 		}
 	}
 
@@ -1605,6 +1605,17 @@ static void printBankedRegOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		"lr_irq", "sp_irq", "lr_svc",  "sp_svc",  "lr_abt",  "sp_abt", "lr_und", "sp_und",
 		"",       "",       "",        "",        "lr_mon",  "sp_mon", "elr_hyp", "sp_hyp"
 	};
+	arm_sysreg RegIds[] = {
+		ARM_SYSREG_R8_USR, ARM_SYSREG_R9_USR, ARM_SYSREG_R10_USR,
+		ARM_SYSREG_R11_USR, ARM_SYSREG_R12_USR, ARM_SYSREG_SP_USR,
+		ARM_SYSREG_LR_USR, 0, ARM_SYSREG_R8_FIQ, ARM_SYSREG_R9_FIQ,
+		ARM_SYSREG_R10_FIQ, ARM_SYSREG_R11_FIQ, ARM_SYSREG_R12_FIQ,
+		ARM_SYSREG_SP_FIQ, ARM_SYSREG_LR_FIQ, 0, ARM_SYSREG_LR_IRQ,
+		ARM_SYSREG_SP_IRQ, ARM_SYSREG_LR_SVC, ARM_SYSREG_SP_SVC,
+		ARM_SYSREG_LR_ABT, ARM_SYSREG_SP_ABT, ARM_SYSREG_LR_UND,
+		ARM_SYSREG_SP_UND, 0, 0, 0, 0, ARM_SYSREG_LR_MON, ARM_SYSREG_SP_MON,
+		ARM_SYSREG_ELR_HYP, ARM_SYSREG_SP_HYP,
+	};
 	char *Name = RegNames[SysM];
 
 	// Nothing much we can do about this, the encodings are specified in B9.2.3 of
@@ -1614,13 +1625,13 @@ static void printBankedRegOperand(MCInst *MI, unsigned OpNum, SStream *O)
 
 		switch(SysM) {
 			default: // llvm_unreachable("Invalid banked SPSR register");
-			case 0x0e: SStream_concat0(O, "fiq"); return;	// FIXME
-			case 0x10: SStream_concat0(O, "irq"); return;
-			case 0x12: SStream_concat0(O, "svc"); return;
-			case 0x14: SStream_concat0(O, "abt"); return;
-			case 0x16: SStream_concat0(O, "und"); return;
-			case 0x1c: SStream_concat0(O, "mon"); return;
-			case 0x1e: SStream_concat0(O, "hyp"); return;
+			case 0x0e: SStream_concat0(O, "fiq"); ARM_addSysReg(MI, ARM_SYSREG_SPSR_FIQ); return;
+			case 0x10: SStream_concat0(O, "irq"); ARM_addSysReg(MI, ARM_SYSREG_SPSR_IRQ); return;
+			case 0x12: SStream_concat0(O, "svc"); ARM_addSysReg(MI, ARM_SYSREG_SPSR_SVC); return;
+			case 0x14: SStream_concat0(O, "abt"); ARM_addSysReg(MI, ARM_SYSREG_SPSR_ABT); return;
+			case 0x16: SStream_concat0(O, "und"); ARM_addSysReg(MI, ARM_SYSREG_SPSR_UND); return;
+			case 0x1c: SStream_concat0(O, "mon"); ARM_addSysReg(MI, ARM_SYSREG_SPSR_MON); return;
+			case 0x1e: SStream_concat0(O, "hyp"); ARM_addSysReg(MI, ARM_SYSREG_SPSR_HYP); return;
 		}
 	}
 
@@ -1628,6 +1639,7 @@ static void printBankedRegOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	//assert(Name[0] && "invalid banked register operand");
 
 	SStream_concat0(O, Name);
+	ARM_addSysReg(MI, RegIds[SysM]);
 }
 
 static void printPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O)
@@ -2239,12 +2251,25 @@ static void printModImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	Rotated = rotr32(Bits, Rot);
 	if (getSOImmVal(Rotated) == MCOperand_getImm(Op)) {
 		// #rot has the least possible value
-		SStream_concat(O, "#%u", Rotated);	// FIXME
+		SStream_concat(O, "#%u", Rotated);
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_IMM;
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = Rotated;
+			MI->flat_insn->detail->arm.op_count++;
+		}
 		return;
 	}
 
 	// Explicit #bits, #rot implied
-	SStream_concat(O, "#%u, #%u", Bits, Rot);	// FIXME
+	SStream_concat(O, "#%u, #%u", Bits, Rot);
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_IMM;
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = Bits;
+		MI->flat_insn->detail->arm.op_count++;
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_IMM;
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = Rot;
+		MI->flat_insn->detail->arm.op_count++;
+	}
 }
 
 static void printFBits16(MCInst *MI, unsigned OpNum, SStream *O)
