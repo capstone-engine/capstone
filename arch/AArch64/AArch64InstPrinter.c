@@ -333,7 +333,8 @@ static bool printSysAlias(MCInst *MI, SStream *O)
 	unsigned CnVal = (unsigned)MCOperand_getImm(Cn);
 	unsigned CmVal = (unsigned)MCOperand_getImm(Cm);
 	unsigned Op2Val = (unsigned)MCOperand_getImm(Op2);
-	unsigned insn_id, op_ic = 0, op_dc = 0, op_at = 0, op_tlbi = 0;
+	unsigned insn_id = ARM64_INS_INVALID;
+	unsigned op_ic = 0, op_dc = 0, op_at = 0, op_tlbi = 0;
 
 	if (CnVal == 7) {
 		switch (CmVal) {
