@@ -20,10 +20,10 @@ AR ?= ar
 RANLIB ?= ranlib
 STRIP ?= strip
 else
-CC = $(CROSS)gcc
-AR = $(CROSS)ar
-RANLIB = $(CROSS)ranlib
-STRIP = $(CROSS)strip
+CC ?= $(CROSS)gcc
+AR ?= $(CROSS)ar
+RANLIB ?= $(CROSS)ranlib
+STRIP ?= $(CROSS)strip
 endif
 
 ifneq (,$(findstring yes,$(CAPSTONE_DIET)))
@@ -55,7 +55,7 @@ else
 BLDIR = $(abspath $(BUILDDIR))
 OBJDIR = $(BLDIR)/obj
 endif
-INCDIR = $(DESTDIR)$(PREFIX)/include
+INCDIR ?= $(DESTDIR)$(PREFIX)/include
 
 UNAME_S := $(shell uname -s)
 
@@ -63,9 +63,9 @@ LIBDIRARCH ?= lib
 # Uncomment the below line to installs x86_64 libs to lib64/ directory.
 # Or better, pass 'LIBDIRARCH=lib64' to 'make install/uninstall' via 'make.sh'.
 #LIBDIRARCH ?= lib64
-LIBDIR = $(DESTDIR)$(PREFIX)/$(LIBDIRARCH)
+LIBDIR ?= $(DESTDIR)$(PREFIX)/$(LIBDIRARCH)
 
-LIBDATADIR = $(LIBDIR)
+LIBDATADIR ?= $(LIBDIR)
 ifeq ($(UNAME_S), FreeBSD)
 LIBDATADIR = $(DESTDIR)$(PREFIX)/libdata
 endif
