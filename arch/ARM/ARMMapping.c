@@ -428,7 +428,7 @@ static insn_map insns[] = {
 	{
 		ARM_BLX, ARM_INS_BLX,
 #ifndef CAPSTONE_DIET
-		{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_JUMP, ARM_GRP_ARM, ARM_GRP_V5T, 0 }, 0, 0
+		{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_JUMP, ARM_GRP_V5T, 0 }, 0, 0
 #endif
 	},
 	{
@@ -648,6 +648,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		ARM_ERET, ARM_INS_ERET,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { ARM_REG_PC, 0 }, { ARM_GRP_ARM, ARM_GRP_VIRTUALIZATION, 0 }, 0, 0
+#endif
+	},
+	{
 		ARM_FCONSTD, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { ARM_GRP_VFP3, ARM_GRP_DPVFP, 0 }, 0, 0
@@ -711,6 +717,12 @@ static insn_map insns[] = {
 		ARM_HLT, ARM_INS_HLT,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_V8, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_HVC, ARM_INS_HVC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_VIRTUALIZATION, 0 }, 0, 0
 #endif
 	},
 	{
@@ -1254,6 +1266,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		ARM_MRSbanked, ARM_INS_MRS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_VIRTUALIZATION, 0 }, 0, 0
+#endif
+	},
+	{
 		ARM_MRSsys, ARM_INS_MRS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
@@ -1263,6 +1281,12 @@ static insn_map insns[] = {
 		ARM_MSR, ARM_INS_MSR,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_MSRbanked, ARM_INS_MSR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_VIRTUALIZATION, 0 }, 0, 0
 #endif
 	},
 	{
@@ -3932,7 +3956,7 @@ static insn_map insns[] = {
 	{
 		ARM_VCVTDS, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
 #endif
 	},
 	{
@@ -4430,7 +4454,7 @@ static insn_map insns[] = {
 	{
 		ARM_VGETLNi32, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
 #endif
 	},
 	{
@@ -8900,7 +8924,7 @@ static insn_map insns[] = {
 	{
 		ARM_VSETLNi32, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
 #endif
 	},
 	{
@@ -10910,7 +10934,7 @@ static insn_map insns[] = {
 	{
 		ARM_t2ADCrr, ARM_INS_ADC,
 #ifndef CAPSTONE_DIET
-		{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ ARM_REG_CPSR, 0 }, { ARM_REG_CPSR, 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
 #endif
 	},
 	{
@@ -11090,19 +11114,19 @@ static insn_map insns[] = {
 	{
 		ARM_t2CPS1p, ARM_INS_CPS,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, 0 }, 0, 0
 #endif
 	},
 	{
 		ARM_t2CPS2p, ARM_INS_CPS,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, 0 }, 0, 0
 #endif
 	},
 	{
 		ARM_t2CPS3p, ARM_INS_CPS,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -11199,6 +11223,12 @@ static insn_map insns[] = {
 		ARM_t2HINT, ARM_INS_HINT,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_t2HVC, ARM_INS_HVC,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_VIRTUALIZATION, 0 }, 0, 0
 #endif
 	},
 	{
@@ -11760,6 +11790,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		ARM_t2MRSbanked, ARM_INS_MRS,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_VIRTUALIZATION, 0 }, 0, 0
+#endif
+	},
+	{
 		ARM_t2MRSsys_AR, ARM_INS_MRS,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, 0 }, 0, 0
@@ -11775,6 +11811,12 @@ static insn_map insns[] = {
 		ARM_t2MSR_M, ARM_INS_MSR,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_MCLASS, 0 }, 0, 0
+#endif
+	},
+	{
+		ARM_t2MSRbanked, ARM_INS_MSR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_VIRTUALIZATION, 0 }, 0, 0
 #endif
 	},
 	{
@@ -12002,25 +12044,25 @@ static insn_map insns[] = {
 	{
 		ARM_t2RFEDB, ARM_INS_RFEDB,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, 0 }, 0, 0
 #endif
 	},
 	{
 		ARM_t2RFEDBW, ARM_INS_RFEDB,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, 0 }, 0, 0
 #endif
 	},
 	{
 		ARM_t2RFEIA, ARM_INS_RFEIA,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, 0 }, 0, 0
 #endif
 	},
 	{
 		ARM_t2RFEIAW, ARM_INS_RFEIA,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -12086,7 +12128,7 @@ static insn_map insns[] = {
 	{
 		ARM_t2SBCrr, ARM_INS_SBC,
 #ifndef CAPSTONE_DIET
-		{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ ARM_REG_CPSR, 0 }, { ARM_REG_CPSR, 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
 #endif
 	},
 	{
@@ -12374,25 +12416,25 @@ static insn_map insns[] = {
 	{
 		ARM_t2SRSDB, ARM_INS_SRSDB,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, 0 }, 0, 0
 #endif
 	},
 	{
 		ARM_t2SRSDB_UPD, ARM_INS_SRSDB,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, 0 }, 0, 0
 #endif
 	},
 	{
 		ARM_t2SRSIA, ARM_INS_SRSIA,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, 0 }, 0, 0
 #endif
 	},
 	{
 		ARM_t2SRSIA_UPD, ARM_INS_SRSIA,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -12740,7 +12782,7 @@ static insn_map insns[] = {
 	{
 		ARM_t2SUBS_PC_LR, ARM_INS_SUBS,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { ARM_REG_PC, 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ 0 }, { ARM_REG_PC, 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, 0 }, 0, 0
 #endif
 	},
 	{
@@ -12776,7 +12818,7 @@ static insn_map insns[] = {
 	{
 		ARM_t2SXTAB16, ARM_INS_SXTAB16,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_T2EXTRACTPACK, ARM_GRP_THUMB2, 0 }, 0, 0
 #endif
 	},
 	{
@@ -13028,7 +13070,7 @@ static insn_map insns[] = {
 	{
 		ARM_t2UXTAB16, ARM_INS_UXTAB16,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_T2EXTRACTPACK, ARM_GRP_THUMB2, 0 }, 0, 0
 #endif
 	},
 	{
@@ -13613,6 +13655,7 @@ static name_map insn_name_maps[] = {
 	{ ARM_INS_DMB, "dmb" },
 	{ ARM_INS_DSB, "dsb" },
 	{ ARM_INS_EOR, "eor" },
+	{ ARM_INS_ERET, "eret" },
 	{ ARM_INS_VMOV, "vmov" },
 	{ ARM_INS_FLDMDBX, "fldmdbx" },
 	{ ARM_INS_FLDMIAX, "fldmiax" },
@@ -13621,6 +13664,7 @@ static name_map insn_name_maps[] = {
 	{ ARM_INS_FSTMIAX, "fstmiax" },
 	{ ARM_INS_HINT, "hint" },
 	{ ARM_INS_HLT, "hlt" },
+	{ ARM_INS_HVC, "hvc" },
 	{ ARM_INS_ISB, "isb" },
 	{ ARM_INS_LDA, "lda" },
 	{ ARM_INS_LDAB, "ldab" },

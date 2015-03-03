@@ -111,6 +111,8 @@ enum {
 	MCID_ExtraSrcRegAllocReq,
 	MCID_ExtraDefRegAllocReq,
 	MCID_RegSequence,
+	MCID_ExtractSubreg,
+	MCID_InsertSubreg
 };
 
 /// MCInstrDesc - Describe properties that are true of each instruction in the
