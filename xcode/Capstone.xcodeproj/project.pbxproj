@@ -602,6 +602,15 @@
 			path = CapstoneFramework;
 			sourceTree = "<group>";
 		};
+		DCC6C94C1AA6BA9C001E94C1 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				DCFE24BB19DDCE2F00EF8EA9 /* capstone */,
+			);
+			name = include;
+			path = ../include;
+			sourceTree = "<group>";
+		};
 		DCFE239919DDCB4900EF8EA9 = {
 			isa = PBXGroup;
 			children = (
@@ -623,7 +632,7 @@
 				DCFE24A219DDCDEE00EF8EA9 /* utils.c */,
 				DCFE24BA19DDCE1E00EF8EA9 /* utils.h */,
 				DCFE23DB19DDCD8700EF8EA9 /* arch */,
-				DCFE24BB19DDCE2F00EF8EA9 /* include */,
+				DCC6C94C1AA6BA9C001E94C1 /* include */,
 				DC474E6B19DDEA8600BCA449 /* tests */,
 				DC474F6919DE6F3B00BCA449 /* framework */,
 				DCFE23A519DDCBC300EF8EA9 /* Products */,
@@ -837,7 +846,7 @@
 			path = XCore;
 			sourceTree = "<group>";
 		};
-		DCFE24BB19DDCE2F00EF8EA9 /* include */ = {
+		DCFE24BB19DDCE2F00EF8EA9 /* capstone */ = {
 			isa = PBXGroup;
 			children = (
 				DCFE24BC19DDCE2F00EF8EA9 /* arm.h */,
@@ -851,8 +860,7 @@
 				DCFE24C419DDCE2F00EF8EA9 /* x86.h */,
 				DCFE24C519DDCE2F00EF8EA9 /* xcore.h */,
 			);
-			name = include;
-			path = ../include;
+			path = capstone;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
