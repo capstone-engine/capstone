@@ -39,6 +39,11 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 	return CS_ERR_OPTION;
 }
 
+static void destroy(cs_struct *handle)
+{
+>>>>>>> next
+}
+
 void Mips_enable(void)
 {
 	arch_init[CS_ARCH_MIPS] = init;

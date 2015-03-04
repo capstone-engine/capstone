@@ -51,7 +51,7 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 			else
 				handle->regsize_map = regsize_map_32;
 
-			handle->mode = value;
+			handle->mode = (cs_mode)value;
 			break;
 		case CS_OPT_SYNTAX:
 			switch(value) {
