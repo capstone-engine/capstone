@@ -81,7 +81,8 @@ ipch/
 *.user
 
 # Xcode
-xcode/Capstone.xcodeproj/xcuserdata
+xcode/Capstone.xcodeproj/xcuserdata/
+xcode/Capstone.xcodeproj/project.xcworkspace/
 
 # suite/
 test_arm_regression
