@@ -144,6 +144,17 @@ static const unsigned G8Regs[] = {
 	PPC_X28, PPC_X29, PPC_X30, PPC_X31
 };
 
+static const unsigned QFRegs[] = {
+	PPC_QF0, PPC_QF1, PPC_QF2, PPC_QF3,
+	PPC_QF4, PPC_QF5, PPC_QF6, PPC_QF7,
+	PPC_QF8, PPC_QF9, PPC_QF10, PPC_QF11,
+	PPC_QF12, PPC_QF13, PPC_QF14, PPC_QF15,
+	PPC_QF16, PPC_QF17, PPC_QF18, PPC_QF19,
+	PPC_QF20, PPC_QF21, PPC_QF22, PPC_QF23,
+	PPC_QF24, PPC_QF25, PPC_QF26, PPC_QF27,
+	PPC_QF28, PPC_QF29, PPC_QF30, PPC_QF31
+};
+
 static uint64_t getFeatureBits(int feature)
 {
 	// enable all features
@@ -230,6 +241,16 @@ static DecodeStatus DecodeG8RCRegisterClass(MCInst *Inst, uint64_t RegNo,
 
 #define DecodePointerLikeRegClass0 DecodeGPRCRegisterClass
 #define DecodePointerLikeRegClass1 DecodeGPRC_NOR0RegisterClass
+
+static DecodeStatus DecodeQFRCRegisterClass(MCInst *Inst, uint64_t RegNo,
+		uint64_t Address,
+		const void *Decoder)
+{
+	return decodeRegisterClass(Inst, RegNo, QFRegs);
+}
+
+#define DecodeQSRCRegisterClass DecodeQFRCRegisterClass
+#define DecodeQBRCRegisterClass DecodeQFRCRegisterClass
 
 static DecodeStatus decodeUImmOperand(MCInst *Inst, uint64_t Imm,
 		int64_t Address, const void *Decoder, unsigned N)
@@ -347,6 +368,14 @@ static DecodeStatus getInstruction(MCInst *MI,
 
 	if (MI->flat_insn->detail) {
 		memset(MI->flat_insn->detail, 0, sizeof(cs_detail));
+	}
+
+	if (MI->csh->mode & CS_MODE_QPX) {
+		result = decodeInstruction_4(DecoderTableQPX32, MI, insn, Address, 4);
+		if (result != MCDisassembler_Fail)
+			return result;
+
+		MCInst_clear(MI);
 	}
 
 	result = decodeInstruction_4(DecoderTable32, MI, insn, Address, 4);
