@@ -315,6 +315,12 @@ static void printPCRelOperand(MCInst *MI, int OpNum, SStream *O)
 	}
 }
 
+static void printPCRelTLSOperand(MCInst *MI, int OpNum, SStream *O)
+{
+	// Output the PC-relative operand.
+	printPCRelOperand(MI, OpNum, O);
+}
+
 static void printOperand(MCInst *MI, int OpNum, SStream *O)
 {
 	_printOperand(MI, MCInst_getOperand(MI, OpNum), O);

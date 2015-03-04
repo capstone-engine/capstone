@@ -36,12 +36,12 @@ static cs_err init(cs_struct *ud)
 
 static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 {
-	return CS_ERR_OPTION;
-}
+	if (type == CS_OPT_MODE) {
+		handle->mode = (cs_mode)value;
+		return CS_ERR_OK;
+	}
 
-static void destroy(cs_struct *handle)
-{
->>>>>>> next
+	return CS_ERR_OPTION;
 }
 
 void Mips_enable(void)
