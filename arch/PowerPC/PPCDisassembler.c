@@ -406,21 +406,24 @@ bool PPC_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 void PPC_init(MCRegisterInfo *MRI)
 {
 	/*
-	InitMCRegisterInfo(PPCRegDesc, 279, RA, PC,
-			PPCMCRegisterClasses, 21,
-			PPCRegUnitRoots,
-			146,
-			PPCRegDiffLists,
-			PPCRegStrings,
-			PPCSubRegIdxLists,
-			8,
-			PPCSubRegIdxRanges,
-			PPCRegEncodingTable);
-	*/
+	   InitMCRegisterInfo(PPCRegDesc, 310, RA, PC,
+	   PPCMCRegisterClasses, 23,
+	   PPCRegUnitRoots,
+	   138,
+	   PPCRegDiffLists,
+	   PPCLaneMaskLists,
+	   PPCRegStrings,
+	   PPCRegClassStrings,
+	   PPCSubRegIdxLists,
+	   8,
+	   PPCSubRegIdxRanges,
+	   PPCRegEncodingTable);
+	 */
 
-	MCRegisterInfo_InitMCRegisterInfo(MRI, PPCRegDesc, 279,
+
+	MCRegisterInfo_InitMCRegisterInfo(MRI, PPCRegDesc, 310,
 			0, 0,
-			PPCMCRegisterClasses, 21,
+			PPCMCRegisterClasses, 23,
 			0, 0,
 			PPCRegDiffLists,
 			0,
