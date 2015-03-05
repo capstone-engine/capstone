@@ -224,6 +224,23 @@ static void printAVXCC(MCInst *MI, unsigned Op, SStream *O)
 	}
 }
 
+static void printXOPCC(MCInst *MI, unsigned Op, SStream *O)
+{
+	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op));
+
+	switch (Imm) {
+		default: // llvm_unreachable("Invalid xopcc argument!");
+		case 0: SStream_concat0(O, "lt"); break;	// FIXME
+		case 1: SStream_concat0(O, "le"); break;
+		case 2: SStream_concat0(O, "gt"); break;
+		case 3: SStream_concat0(O, "ge"); break;
+		case 4: SStream_concat0(O, "eq"); break;
+		case 5: SStream_concat0(O, "neq"); break;
+		case 6: SStream_concat0(O, "false"); break;
+		case 7: SStream_concat0(O, "true"); break;
+	}
+}
+
 static void printRoundingControl(MCInst *MI, unsigned Op, SStream *O)
 {
 	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x3;
@@ -433,6 +450,22 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 
 	if (MI->op1_size == 0)
 		MI->op1_size = MI->x86opsize;
+}
+
+static void printU8Imm(MCInst *MI, unsigned Op, SStream *O)
+{
+	uint8_t val = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0xff;
+
+	if (val > HEX_THRESHOLD)
+		SStream_concat(O, "0x%x", val);
+	else
+		SStream_concat(O, "%u", val);
+
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = val;
+		MI->flat_insn->detail->x86.op_count++;
+	}
 }
 
 static void printMemOffs8(MCInst *MI, unsigned OpNo, SStream *O)
@@ -707,6 +740,24 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 
 	if (MI->op1_size == 0)
 		MI->op1_size = MI->x86opsize;
+}
+
+static void printanymem(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	switch(MI->Opcode) {
+		default: break;
+		case X86_LEA16r:
+				 MI->x86opsize = 2;
+				 break;
+		case X86_LEA32r:
+		case X86_LEA64_32r:
+				 MI->x86opsize = 4;
+				 break;
+		case X86_LEA64r:
+				 MI->x86opsize = 8;
+				 break;
+	}
+	printMemReference(MI, OpNo, O);
 }
 
 #define GET_REGINFO_ENUM

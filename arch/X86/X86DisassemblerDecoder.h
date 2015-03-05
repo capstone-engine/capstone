@@ -20,10 +20,9 @@
 #define CS_X86_DISASSEMBLERDECODER_H
 
 #include <stdio.h>
+#include <stdint.h>
 
 #include "X86DisassemblerDecoderCommon.h"
-
-#include <stdint.h>
 
 /*
  * Accessor functions for various fields of an Intel instruction
