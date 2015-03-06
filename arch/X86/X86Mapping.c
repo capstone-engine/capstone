@@ -4086,19 +4086,19 @@ static insn_map insns[] = {	// full x86 instructions
 	{
 		X86_CALL64r, X86_INS_CALL,
 #ifndef CAPSTONE_DIET
-		{ X86_REG_RSP, 0 }, { 0 }, { X86_GRP_MODE64, 0 }, 0, 0
+		{ X86_REG_RSP, 0 }, { 0 }, { X86_GRP_CALL, X86_GRP_MODE64, 0 }, 0, 0
 #endif
 	},
 	{
 		X86_CALLpcrel16, X86_INS_CALL,
 #ifndef CAPSTONE_DIET
-		{ X86_REG_ESP, 0 }, { 0 }, { 0 }, 0, 0
+		{ X86_REG_ESP, 0 }, { 0 }, { X86_GRP_CALL, 0 }, 0, 0
 #endif
 	},
 	{
 		X86_CALLpcrel32, X86_INS_CALL,
 #ifndef CAPSTONE_DIET
-		{ X86_REG_ESP, 0 }, { 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+		{ X86_REG_ESP, 0 }, { 0 }, { X86_GRP_CALL, X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 	},
 	{
@@ -6990,7 +6990,7 @@ static insn_map insns[] = {	// full x86 instructions
 	{
 		X86_INVLPG, X86_INS_INVLPG,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { X86_GRP_VM, 0 }, 0, 0
+		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
@@ -11094,7 +11094,7 @@ static insn_map insns[] = {	// full x86 instructions
 	{
 		X86_MOV8o16a, X86_INS_MOV,
 #ifndef CAPSTONE_DIET
-		{ X86_REG_AL, 0 }, { 0 }, { 0 }, 0, 0
+		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
@@ -30900,7 +30900,7 @@ static insn_map insns[] = {	// full x86 instructions
 	{
 		X86_VMMCALL, X86_INS_VMMCALL,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 0, 0
+		{ 0 }, { 0 }, { X86_GRP_VM, 0 }, 0, 0
 #endif
 	},
 	{
@@ -55805,7 +55805,7 @@ static insn_map insns[] = {	// reduce x86 instructions
 	{
 		X86_FARCALL16i, X86_INS_LCALL,
 #ifndef CAPSTONE_DIET
-		{ X86_REG_ESP, 0 }, { 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+		{ X86_REG_ESP, 0 }, { 0 }, { X86_GRP_CALL, X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 	},
 	{
@@ -55817,7 +55817,7 @@ static insn_map insns[] = {	// reduce x86 instructions
 	{
 		X86_FARCALL32i, X86_INS_LCALL,
 #ifndef CAPSTONE_DIET
-		{ X86_REG_ESP, 0 }, { 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+		{ X86_REG_ESP, 0 }, { 0 }, { X86_GRP_CALL, X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 	},
 	{
