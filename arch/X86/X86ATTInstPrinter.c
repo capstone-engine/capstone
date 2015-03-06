@@ -424,6 +424,7 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.op_count++;
 }
 
+#ifndef CAPSTONE_X86_REDUCE
 static void printU8Imm(MCInst *MI, unsigned Op, SStream *O)
 {
 	uint8_t val = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0xff;
@@ -439,6 +440,7 @@ static void printU8Imm(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.op_count++;
 	}
 }
+#endif
 
 static void printMemOffs8(MCInst *MI, unsigned OpNo, SStream *O)
 {
