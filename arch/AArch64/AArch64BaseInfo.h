@@ -15,7 +15,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifndef CS_LLVM_AARCH64_BASEINFO_H
 #define CS_LLVM_AARCH64_BASEINFO_H
@@ -954,6 +954,6 @@ uint32_t A64NamedImmMapper_fromString(A64NamedImmMapper *N, char *Name, bool *Va
 
 bool A64NamedImmMapper_validImm(A64NamedImmMapper *N, uint32_t Value);
 
-void A64SysRegMapper_toString(A64SysRegMapper *S, uint32_t Bits, bool *Valid, char *result);
+void A64SysRegMapper_toString(A64SysRegMapper *S, uint32_t Bits, char *result);
 
 #endif

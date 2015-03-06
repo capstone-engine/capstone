@@ -8,7 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifdef CAPSTONE_HAS_SPARC
 
@@ -204,19 +204,15 @@ static DecodeStatus DecodeSWAP(MCInst *Inst, unsigned insn, uint64_t Address,
 /// readInstruction - read four bytes and return 32 bit word.
 static DecodeStatus readInstruction32(const uint8_t *code, size_t len, uint32_t *Insn)
 {
-	uint8_t Bytes[4];
-
 	if (len < 4)
 		// not enough data
 		return MCDisassembler_Fail;
 
-	memcpy(Bytes, code, 4);
-
 	// Encoded as a big-endian 32-bit word in the stream.
-	*Insn = (Bytes[3] <<  0) |
-		(Bytes[2] <<  8) |
-		(Bytes[1] << 16) |
-		(Bytes[0] << 24);
+	*Insn = (code[3] <<  0) |
+		(code[2] <<  8) |
+		(code[1] << 16) |
+		(code[0] << 24);
 
 	return MCDisassembler_Success;
 }

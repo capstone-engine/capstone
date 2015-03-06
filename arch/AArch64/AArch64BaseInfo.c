@@ -12,7 +12,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifdef CAPSTONE_HAS_ARM64
 
@@ -581,17 +581,16 @@ static A64NamedImmMapper_Mapping CycloneSysRegPairs[] = {
 };
 
 // result must be a big enough buffer: 128 bytes is more than enough
-void A64SysRegMapper_toString(A64SysRegMapper *S, uint32_t Bits, bool *Valid, char *result)
+void A64SysRegMapper_toString(A64SysRegMapper *S, uint32_t Bits, char *result)
 {
 	int dummy;
 	uint32_t Op0, Op1, CRn, CRm, Op2;
-	char *Op1S, *CRnS, *CRmS, *Op2S;
+	char *Op0S, *Op1S, *CRnS, *CRmS, *Op2S;
 	unsigned i;
 
 	// First search the registers shared by all
 	for (i = 0; i < ARR_SIZE(SysRegPairs); ++i) {
 		if (SysRegPairs[i].Value == Bits) {
-			*Valid = true;
 			strcpy(result, SysRegPairs[i].Name);
 			return;
 		}
@@ -602,7 +601,6 @@ void A64SysRegMapper_toString(A64SysRegMapper *S, uint32_t Bits, bool *Valid, ch
 	if (true) {
 		for (i = 0; i < ARR_SIZE(CycloneSysRegPairs); ++i) {
 			if (CycloneSysRegPairs[i].Value == Bits) {
-				*Valid = true;
 				strcpy(result, CycloneSysRegPairs[i].Name);
 				return;
 			}
@@ -613,7 +611,6 @@ void A64SysRegMapper_toString(A64SysRegMapper *S, uint32_t Bits, bool *Valid, ch
 	// write-only).
 	for (i = 0; i < S->NumInstPairs; ++i) {
 		if (S->InstPairs[i].Value == Bits) {
-			*Valid = true;
 			strcpy(result, S->InstPairs[i].Name);
 			return;
 		}
@@ -625,26 +622,17 @@ void A64SysRegMapper_toString(A64SysRegMapper *S, uint32_t Bits, bool *Valid, ch
 	CRm = (Bits >> 3) & 0xf;
 	Op2 = Bits & 0x7;
 
-	// Only combinations matching: 11 xxx 1x11 xxxx xxx are valid for a generic
-	// name.
-	if (Op0 != 3 || (CRn != 11 && CRn != 15)) {
-		*Valid = false;
-		return;
-	}
-
-	//assert(Op0 == 3 && (CRn == 11 || CRn == 15) && "Invalid generic sysreg");
-
-	*Valid = true;
-
+	Op0S = utostr(Op0, false);
 	Op1S = utostr(Op1, false);
 	CRnS = utostr(CRn, false);
 	CRmS = utostr(CRm, false);
 	Op2S = utostr(Op2, false);
 
 	//printf("Op1S: %s, CRnS: %s, CRmS: %s, Op2S: %s\n", Op1S, CRnS, CRmS, Op2S);
-	dummy = sprintf(result, "s3_%s_c%s_c%s_%s", Op1S, CRnS, CRmS, Op2S);
+	dummy = sprintf(result, "s%s_%s_c%s_c%s_%s", Op0S, Op1S, CRnS, CRmS, Op2S);
 	(void)dummy;
 
+	cs_mem_free(Op0S);
 	cs_mem_free(Op1S);
 	cs_mem_free(CRnS);
 	cs_mem_free(CRmS);

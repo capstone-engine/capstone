@@ -699,18 +699,15 @@ CAMLprim value ocaml_cs_disasm(value _arch, value _mode, value _code, value _add
 				mode |= CS_MODE_MIPS32R6;
 				break;
 			case 11:
-				mode |= CS_MODE_MIPSGP64;
-				break;
-			case 12:
 				mode |= CS_MODE_V9;
 				break;
-			case 13:
+			case 12:
 				mode |= CS_MODE_BIG_ENDIAN;
 				break;
-			case 14:
+			case 13:
 				mode |= CS_MODE_MIPS32;
 				break;
-			case 15:
+			case 14:
 				mode |= CS_MODE_MIPS64;
 				break;
 			default:
@@ -830,18 +827,15 @@ CAMLprim value ocaml_open(value _arch, value _mode)
 				mode |= CS_MODE_MIPS32R6;
 				break;
 			case 11:
-				mode |= CS_MODE_MIPSGP64;
-				break;
-			case 12:
 				mode |= CS_MODE_V9;
 				break;
-			case 13:
+			case 12:
 				mode |= CS_MODE_BIG_ENDIAN;
 				break;
-			case 14:
+			case 13:
 				mode |= CS_MODE_MIPS32;
 				break;
-			case 15:
+			case 14:
 				mode |= CS_MODE_MIPS64;
 				break;
 			default:

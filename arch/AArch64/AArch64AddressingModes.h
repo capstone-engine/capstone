@@ -15,7 +15,7 @@
 #define CS_AARCH64_ADDRESSINGMODES_H
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #include "../../MathExtras.h"
 

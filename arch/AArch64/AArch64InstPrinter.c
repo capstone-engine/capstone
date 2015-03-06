@@ -12,7 +12,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifdef CAPSTONE_HAS_ARM64
 
@@ -1243,7 +1243,7 @@ static void printAlignedLabel(MCInst *MI, unsigned OpNum, SStream *O)
 	// If the label has already been resolved to an immediate offset (say, when
 	// we're running the disassembler), just print the immediate.
 	if (MCOperand_isImm(Op)) {
-		uint64_t imm = (MCOperand_getImm(Op) << 2) + MI->address;
+		uint64_t imm = (MCOperand_getImm(Op) * 4) + MI->address;
 		printUInt64Bang(O, imm);
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
@@ -1261,7 +1261,7 @@ static void printAdrpLabel(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MCOperand_isImm(Op)) {
 		// ADRP sign extends a 21-bit offset, shifts it left by 12
 		// and adds it to the value of the PC with its bottom 12 bits cleared
-		uint64_t imm = (MCOperand_getImm(Op) << 12) + (MI->address & ~0xfff);
+		uint64_t imm = (MCOperand_getImm(Op) * (1 << 12)) + (MI->address & ~0xfff);
 		if (imm > HEX_THRESHOLD)
 			SStream_concat(O, "#0x%"PRIx64, imm);
 		else
@@ -1308,36 +1308,30 @@ static void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
 static void printMRSSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
-	bool Valid;
 	char Name[128];
 
-	A64SysRegMapper_toString(&AArch64_MRSMapper, Val, &Valid, Name);
+	A64SysRegMapper_toString(&AArch64_MRSMapper, Val, Name);
 
-	if (Valid) {
-		SStream_concat0(O, Name);
-		if (MI->csh->detail) {
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG_MRS;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Val;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
+	SStream_concat0(O, Name);
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG_MRS;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Val;
+		MI->flat_insn->detail->arm64.op_count++;
 	}
 }
 
 static void printMSRSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
-	bool Valid;
 	char Name[128];
 
-	A64SysRegMapper_toString(&AArch64_MSRMapper, Val, &Valid, Name);
+	A64SysRegMapper_toString(&AArch64_MSRMapper, Val, Name);
 
-	if (Valid) {
-		SStream_concat0(O, Name);
-		if (MI->csh->detail) {
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG_MSR;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Val;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
+	SStream_concat0(O, Name);
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG_MSR;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Val;
+		MI->flat_insn->detail->arm64.op_count++;
 	}
 }
 

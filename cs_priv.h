@@ -1,5 +1,5 @@
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifndef CS_PRIV_H
 #define CS_PRIV_H
@@ -63,9 +63,6 @@ extern cs_err (*arch_init[MAX_ARCH]) (cs_struct *);
 
 // support cs_option() for all archs
 extern cs_err (*arch_option[MAX_ARCH]) (cs_struct*, cs_opt_type, size_t value);
-
-// deinitialized functions: to be called when cs_close() is called
-extern void (*arch_destroy[MAX_ARCH]) (cs_struct*);
 
 extern unsigned int all_arch;
 

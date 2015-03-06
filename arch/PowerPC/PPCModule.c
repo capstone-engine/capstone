@@ -1,5 +1,5 @@
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifdef CAPSTONE_HAS_POWERPC
 
@@ -43,15 +43,10 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 	return CS_ERR_OK;
 }
 
-static void destroy(cs_struct *handle)
-{
-}
-
 void PPC_enable(void)
 {
 	arch_init[CS_ARCH_PPC] = init;
 	arch_option[CS_ARCH_PPC] = option;
-	arch_destroy[CS_ARCH_PPC] = destroy;
 
 	// support this arch
 	all_arch |= (1 << CS_ARCH_PPC);

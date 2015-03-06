@@ -2,7 +2,7 @@
 #define CAPSTONE_XCORE_H
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2014-2015 */
 
 #ifdef __cplusplus
 extern "C" {

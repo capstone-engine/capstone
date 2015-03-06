@@ -1473,25 +1473,25 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 22 */
-    { ENCODING_DUP, TYPE_DUP1 },
-    { ENCODING_RM, TYPE_R8 },
+    { ENCODING_RM, TYPE_M8 },
     { ENCODING_IB, TYPE_IMM8 },
+    { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 23 */
     { ENCODING_RM, TYPE_M8 },
-    { ENCODING_IB, TYPE_IMM8 },
+    { ENCODING_REG, TYPE_R8 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 24 */
-    { ENCODING_RM, TYPE_M8 },
-    { ENCODING_REG, TYPE_R8 },
-    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_DUP, TYPE_DUP1 },
+    { ENCODING_RM, TYPE_R8 },
+    { ENCODING_IB, TYPE_IMM8 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -1833,6 +1833,14 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 67 */
+    { ENCODING_RM, TYPE_M8 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 68 */
     { ENCODING_RM, TYPE_Rv },
     { ENCODING_Iv, TYPE_IMMv },
     { ENCODING_NONE, TYPE_NONE },
@@ -1840,7 +1848,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 68 */
+  { /* 69 */
     { ENCODING_RM, TYPE_R64 },
     { ENCODING_ID, TYPE_IMM64 },
     { ENCODING_NONE, TYPE_NONE },
@@ -1848,7 +1856,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 69 */
+  { /* 70 */
     { ENCODING_RM, TYPE_R8 },
     { ENCODING_IB, TYPE_IMM8 },
     { ENCODING_NONE, TYPE_NONE },
@@ -1856,7 +1864,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 70 */
+  { /* 71 */
     { ENCODING_REG, TYPE_R8 },
     { ENCODING_RM, TYPE_M8 },
     { ENCODING_NONE, TYPE_NONE },
@@ -1864,23 +1872,23 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 71 */
-    { ENCODING_RM, TYPE_R8 },
-    { ENCODING_REG, TYPE_R8 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
   { /* 72 */
-    { ENCODING_REG, TYPE_R8 },
     { ENCODING_RM, TYPE_R8 },
+    { ENCODING_REG, TYPE_R8 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 73 */
+    { ENCODING_REG, TYPE_R8 },
+    { ENCODING_RM, TYPE_R8 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 74 */
     { ENCODING_DI, TYPE_DSTIDX8 },
     { ENCODING_SI, TYPE_SRCIDX8 },
     { ENCODING_NONE, TYPE_NONE },
@@ -1888,7 +1896,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 74 */
+  { /* 75 */
     { ENCODING_DI, TYPE_DSTIDX32 },
     { ENCODING_SI, TYPE_SRCIDX32 },
     { ENCODING_NONE, TYPE_NONE },
@@ -1896,7 +1904,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 75 */
+  { /* 76 */
     { ENCODING_DI, TYPE_DSTIDX64 },
     { ENCODING_SI, TYPE_SRCIDX64 },
     { ENCODING_NONE, TYPE_NONE },
@@ -1904,7 +1912,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 76 */
+  { /* 77 */
     { ENCODING_DI, TYPE_DSTIDX16 },
     { ENCODING_SI, TYPE_SRCIDX16 },
     { ENCODING_NONE, TYPE_NONE },
@@ -1912,7 +1920,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 77 */
+  { /* 78 */
     { ENCODING_RM, TYPE_M128 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -1920,7 +1928,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 78 */
+  { /* 79 */
     { ENCODING_DUP, TYPE_DUP1 },
     { ENCODING_RM, TYPE_Rv },
     { ENCODING_NONE, TYPE_NONE },
@@ -1928,17 +1936,9 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 79 */
+  { /* 80 */
     { ENCODING_DUP, TYPE_DUP1 },
     { ENCODING_RM, TYPE_R64 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 80 */
-    { ENCODING_RM, TYPE_M8 },
-    { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2154,14 +2154,14 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
   },
   { /* 107 */
     { ENCODING_REG, TYPE_Rv },
-    { ENCODING_RM, TYPE_LEA },
+    { ENCODING_RM, TYPE_M },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 108 */
-    { ENCODING_REG, TYPE_R64 },
+    { ENCODING_REG, TYPE_Rv },
     { ENCODING_RM, TYPE_LEA },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2170,13 +2170,21 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
   },
   { /* 109 */
     { ENCODING_REG, TYPE_R64 },
-    { ENCODING_RM, TYPE_M1664 },
+    { ENCODING_RM, TYPE_LEA },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 110 */
+    { ENCODING_REG, TYPE_R64 },
+    { ENCODING_RM, TYPE_M1664 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 111 */
     { ENCODING_RM, TYPE_R16 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2184,7 +2192,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 111 */
+  { /* 112 */
     { ENCODING_SI, TYPE_SRCIDX8 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2192,7 +2200,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 112 */
+  { /* 113 */
     { ENCODING_SI, TYPE_SRCIDX32 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2200,7 +2208,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 113 */
+  { /* 114 */
     { ENCODING_SI, TYPE_SRCIDX64 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2208,7 +2216,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 114 */
+  { /* 115 */
     { ENCODING_SI, TYPE_SRCIDX16 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2216,7 +2224,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 115 */
+  { /* 116 */
     { ENCODING_IW, TYPE_IMM16 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2224,7 +2232,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 116 */
+  { /* 117 */
     { ENCODING_Ia, TYPE_MOFFS16 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2232,7 +2240,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 117 */
+  { /* 118 */
     { ENCODING_RM, TYPE_Mv },
     { ENCODING_REG, TYPE_SEGMENTREG },
     { ENCODING_NONE, TYPE_NONE },
@@ -2240,7 +2248,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 118 */
+  { /* 119 */
     { ENCODING_Rv, TYPE_Rv },
     { ENCODING_Iv, TYPE_IMMv },
     { ENCODING_NONE, TYPE_NONE },
@@ -2248,17 +2256,9 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 119 */
+  { /* 120 */
     { ENCODING_RM, TYPE_Rv },
     { ENCODING_REG, TYPE_SEGMENTREG },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 120 */
-    { ENCODING_REG, TYPE_SEGMENTREG },
-    { ENCODING_RM, TYPE_Mv },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2266,13 +2266,21 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
   },
   { /* 121 */
     { ENCODING_REG, TYPE_SEGMENTREG },
-    { ENCODING_RM, TYPE_Rv },
+    { ENCODING_RM, TYPE_Mv },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 122 */
+    { ENCODING_REG, TYPE_SEGMENTREG },
+    { ENCODING_RM, TYPE_Rv },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 123 */
     { ENCODING_Ia, TYPE_MOFFS32 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2280,16 +2288,8 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 123 */
-    { ENCODING_REG, TYPE_CONTROLREG },
-    { ENCODING_RM, TYPE_R32 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
   { /* 124 */
-    { ENCODING_REG, TYPE_DEBUGREG },
+    { ENCODING_REG, TYPE_CONTROLREG },
     { ENCODING_RM, TYPE_R32 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2297,8 +2297,8 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 125 */
+    { ENCODING_REG, TYPE_DEBUGREG },
     { ENCODING_RM, TYPE_R32 },
-    { ENCODING_REG, TYPE_CONTROLREG },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2306,22 +2306,22 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
   },
   { /* 126 */
     { ENCODING_RM, TYPE_R32 },
-    { ENCODING_REG, TYPE_DEBUGREG },
+    { ENCODING_REG, TYPE_CONTROLREG },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 127 */
-    { ENCODING_Ia, TYPE_MOFFS64 },
-    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_RM, TYPE_R32 },
+    { ENCODING_REG, TYPE_DEBUGREG },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 128 */
-    { ENCODING_Ia, TYPE_MOFFS8 },
+    { ENCODING_Ia, TYPE_MOFFS64 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2385,6 +2385,14 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 136 */
+    { ENCODING_Ia, TYPE_MOFFS8 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 137 */
     { ENCODING_RB, TYPE_R8 },
     { ENCODING_IB, TYPE_IMM8 },
     { ENCODING_NONE, TYPE_NONE },
@@ -2392,17 +2400,9 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 137 */
-    { ENCODING_REG, TYPE_Rv },
-    { ENCODING_RM, TYPE_M8 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
   { /* 138 */
     { ENCODING_REG, TYPE_Rv },
-    { ENCODING_RM, TYPE_R8 },
+    { ENCODING_RM, TYPE_M8 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2410,15 +2410,15 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
   },
   { /* 139 */
     { ENCODING_REG, TYPE_Rv },
-    { ENCODING_RM, TYPE_R16 },
+    { ENCODING_RM, TYPE_R8 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 140 */
-    { ENCODING_REG, TYPE_R64 },
-    { ENCODING_RM, TYPE_M8 },
+    { ENCODING_REG, TYPE_Rv },
+    { ENCODING_RM, TYPE_R16 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2426,7 +2426,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
   },
   { /* 141 */
     { ENCODING_REG, TYPE_R64 },
-    { ENCODING_RM, TYPE_R16 },
+    { ENCODING_RM, TYPE_M8 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2434,13 +2434,21 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
   },
   { /* 142 */
     { ENCODING_REG, TYPE_R64 },
-    { ENCODING_RM, TYPE_R8 },
+    { ENCODING_RM, TYPE_R16 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 143 */
+    { ENCODING_REG, TYPE_R64 },
+    { ENCODING_RM, TYPE_R8 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 144 */
     { ENCODING_Rv, TYPE_Rv },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2448,7 +2456,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 144 */
+  { /* 145 */
     { ENCODING_RO, TYPE_R64 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2456,7 +2464,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 145 */
+  { /* 146 */
     { ENCODING_IB, TYPE_IMMv },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2464,7 +2472,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 146 */
+  { /* 147 */
     { ENCODING_IB, TYPE_IMM32 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2472,7 +2480,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 147 */
+  { /* 148 */
     { ENCODING_IB, TYPE_IMM64 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2480,7 +2488,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 148 */
+  { /* 149 */
     { ENCODING_RM, TYPE_Mv },
     { ENCODING_IB, TYPE_IMM8 },
     { ENCODING_NONE, TYPE_NONE },
@@ -2488,7 +2496,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 149 */
+  { /* 150 */
     { ENCODING_DUP, TYPE_DUP1 },
     { ENCODING_RM, TYPE_Rv },
     { ENCODING_IB, TYPE_IMM8 },
@@ -2496,7 +2504,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 150 */
+  { /* 151 */
     { ENCODING_DUP, TYPE_DUP1 },
     { ENCODING_RM, TYPE_R64 },
     { ENCODING_IB, TYPE_IMM8 },
@@ -2504,33 +2512,25 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 151 */
+  { /* 152 */
     { ENCODING_RM, TYPE_R32 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 152 */
-    { ENCODING_REG, TYPE_R32 },
-    { ENCODING_RM, TYPE_Mv },
-    { ENCODING_IB, TYPE_IMM8 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 153 */
     { ENCODING_REG, TYPE_R32 },
-    { ENCODING_RM, TYPE_R32 },
+    { ENCODING_RM, TYPE_Mv },
     { ENCODING_IB, TYPE_IMM8 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 154 */
-    { ENCODING_REG, TYPE_R64 },
-    { ENCODING_RM, TYPE_Mv },
+    { ENCODING_REG, TYPE_R32 },
+    { ENCODING_RM, TYPE_R32 },
     { ENCODING_IB, TYPE_IMM8 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2538,13 +2538,21 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
   },
   { /* 155 */
     { ENCODING_REG, TYPE_R64 },
-    { ENCODING_RM, TYPE_R64 },
+    { ENCODING_RM, TYPE_Mv },
     { ENCODING_IB, TYPE_IMM8 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 156 */
+    { ENCODING_REG, TYPE_R64 },
+    { ENCODING_RM, TYPE_R64 },
+    { ENCODING_IB, TYPE_IMM8 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 157 */
     { ENCODING_DI, TYPE_DSTIDX64 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2552,7 +2560,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 157 */
+  { /* 158 */
     { ENCODING_RM, TYPE_Mv },
     { ENCODING_REG, TYPE_Rv },
     { ENCODING_IB, TYPE_IMM8 },
@@ -2560,7 +2568,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 158 */
+  { /* 159 */
     { ENCODING_DUP, TYPE_DUP1 },
     { ENCODING_RM, TYPE_Rv },
     { ENCODING_REG, TYPE_Rv },
@@ -2568,7 +2576,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 159 */
+  { /* 160 */
     { ENCODING_RM, TYPE_Mv },
     { ENCODING_REG, TYPE_R64 },
     { ENCODING_IB, TYPE_IMM8 },
@@ -2576,7 +2584,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 160 */
+  { /* 161 */
     { ENCODING_DUP, TYPE_DUP1 },
     { ENCODING_RM, TYPE_R64 },
     { ENCODING_REG, TYPE_R64 },
@@ -2584,7 +2592,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 161 */
+  { /* 162 */
     { ENCODING_RM, TYPE_Mv },
     { ENCODING_REG, TYPE_R32 },
     { ENCODING_NONE, TYPE_NONE },
@@ -2592,7 +2600,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 162 */
+  { /* 163 */
     { ENCODING_RM, TYPE_R32 },
     { ENCODING_REG, TYPE_R32 },
     { ENCODING_NONE, TYPE_NONE },
@@ -2600,7 +2608,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 163 */
+  { /* 164 */
     { ENCODING_RM, TYPE_M512 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -2610,7 +2618,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
   },
 };
 
-static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1683] = {
+static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1714] = {
   { /* 0 */
     0,
     /*  */
@@ -2693,27 +2701,27 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1683] = 
   },
   { /* 20 */
     0,
-    /* AAA */
+    /*  */
   },
   { /* 21 */
+    0,
+    /*  */
+  },
+  { /* 22 */
+    0,
+    /* AAA */
+  },
+  { /* 23 */
     1,
     /* AAD8i8 */
   },
-  { /* 22 */
+  { /* 24 */
     1,
     /* AAM8i8 */
   },
-  { /* 23 */
-    0,
-    /* AAS */
-  },
-  { /* 24 */
-    0,
-    /*  */
-  },
   { /* 25 */
     0,
-    /*  */
+    /* AAS */
   },
   { /* 26 */
     0,
@@ -2724,352 +2732,352 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1683] = 
     /*  */
   },
   { /* 28 */
+    0,
+    /*  */
+  },
+  { /* 29 */
+    0,
+    /*  */
+  },
+  { /* 30 */
     2,
     /* ADC16i16 */
   },
-  { /* 29 */
+  { /* 31 */
     3,
     /* ADC16mi */
   },
-  { /* 30 */
+  { /* 32 */
     4,
     /* ADC16mi8 */
   },
-  { /* 31 */
+  { /* 33 */
     5,
     /* ADC16mr */
   },
-  { /* 32 */
+  { /* 34 */
     6,
     /* ADC16ri */
   },
-  { /* 33 */
+  { /* 35 */
     7,
     /* ADC16ri8 */
   },
-  { /* 34 */
+  { /* 36 */
     8,
     /* ADC16rm */
   },
-  { /* 35 */
+  { /* 37 */
     9,
     /* ADC16rr */
   },
-  { /* 36 */
+  { /* 38 */
     10,
     /* ADC16rr_REV */
   },
-  { /* 37 */
+  { /* 39 */
     2,
     /* ADC32i32 */
   },
-  { /* 38 */
+  { /* 40 */
     3,
     /* ADC32mi */
   },
-  { /* 39 */
+  { /* 41 */
     11,
     /* ADC32mi8 */
   },
-  { /* 40 */
+  { /* 42 */
     5,
     /* ADC32mr */
   },
-  { /* 41 */
+  { /* 43 */
     6,
     /* ADC32ri */
   },
-  { /* 42 */
+  { /* 44 */
     12,
     /* ADC32ri8 */
   },
-  { /* 43 */
+  { /* 45 */
     8,
     /* ADC32rm */
   },
-  { /* 44 */
+  { /* 46 */
     9,
     /* ADC32rr */
   },
-  { /* 45 */
+  { /* 47 */
     10,
     /* ADC32rr_REV */
   },
-  { /* 46 */
+  { /* 48 */
     13,
     /* ADC64i32 */
   },
-  { /* 47 */
+  { /* 49 */
     14,
     /* ADC64mi32 */
   },
-  { /* 48 */
+  { /* 50 */
     15,
     /* ADC64mi8 */
   },
-  { /* 49 */
+  { /* 51 */
     16,
     /* ADC64mr */
   },
-  { /* 50 */
+  { /* 52 */
     17,
     /* ADC64ri32 */
   },
-  { /* 51 */
+  { /* 53 */
     18,
     /* ADC64ri8 */
   },
-  { /* 52 */
+  { /* 54 */
     19,
     /* ADC64rm */
   },
-  { /* 53 */
+  { /* 55 */
     20,
     /* ADC64rr */
   },
-  { /* 54 */
+  { /* 56 */
     21,
     /* ADC64rr_REV */
   },
-  { /* 55 */
-    22,
-    /* ADC82_8ri8 */
-  },
-  { /* 56 */
+  { /* 57 */
     1,
     /* ADC8i8 */
   },
-  { /* 57 */
-    23,
+  { /* 58 */
+    22,
     /* ADC8mi */
   },
-  { /* 58 */
-    23,
+  { /* 59 */
+    22,
     /* ADC8mi8 */
   },
-  { /* 59 */
-    24,
+  { /* 60 */
+    23,
     /* ADC8mr */
   },
-  { /* 60 */
-    22,
+  { /* 61 */
+    24,
     /* ADC8ri */
   },
-  { /* 61 */
+  { /* 62 */
+    24,
+    /* ADC8ri8 */
+  },
+  { /* 63 */
     25,
     /* ADC8rm */
   },
-  { /* 62 */
+  { /* 64 */
     26,
     /* ADC8rr */
   },
-  { /* 63 */
+  { /* 65 */
     27,
     /* ADC8rr_REV */
   },
-  { /* 64 */
+  { /* 66 */
     28,
     /* ADCX32rm */
   },
-  { /* 65 */
+  { /* 67 */
     29,
     /* ADCX32rr */
   },
-  { /* 66 */
+  { /* 68 */
     19,
     /* ADCX64rm */
   },
-  { /* 67 */
+  { /* 69 */
     21,
     /* ADCX64rr */
   },
-  { /* 68 */
+  { /* 70 */
     2,
     /* ADD16i16 */
   },
-  { /* 69 */
+  { /* 71 */
     3,
     /* ADD16mi */
   },
-  { /* 70 */
+  { /* 72 */
     4,
     /* ADD16mi8 */
   },
-  { /* 71 */
+  { /* 73 */
     5,
     /* ADD16mr */
   },
-  { /* 72 */
+  { /* 74 */
     6,
     /* ADD16ri */
   },
-  { /* 73 */
+  { /* 75 */
     7,
     /* ADD16ri8 */
   },
-  { /* 74 */
-    0,
-    /*  */
-  },
-  { /* 75 */
-    0,
-    /*  */
-  },
   { /* 76 */
+    0,
+    /*  */
+  },
+  { /* 77 */
+    0,
+    /*  */
+  },
+  { /* 78 */
     8,
     /* ADD16rm */
   },
-  { /* 77 */
+  { /* 79 */
     9,
     /* ADD16rr */
   },
-  { /* 78 */
+  { /* 80 */
     0,
     /*  */
   },
-  { /* 79 */
+  { /* 81 */
     10,
     /* ADD16rr_REV */
   },
-  { /* 80 */
+  { /* 82 */
     2,
     /* ADD32i32 */
   },
-  { /* 81 */
+  { /* 83 */
     3,
     /* ADD32mi */
   },
-  { /* 82 */
+  { /* 84 */
     11,
     /* ADD32mi8 */
   },
-  { /* 83 */
+  { /* 85 */
     5,
     /* ADD32mr */
   },
-  { /* 84 */
+  { /* 86 */
     6,
     /* ADD32ri */
   },
-  { /* 85 */
+  { /* 87 */
     12,
     /* ADD32ri8 */
   },
-  { /* 86 */
-    0,
-    /*  */
-  },
-  { /* 87 */
-    0,
-    /*  */
-  },
   { /* 88 */
+    0,
+    /*  */
+  },
+  { /* 89 */
+    0,
+    /*  */
+  },
+  { /* 90 */
     8,
     /* ADD32rm */
   },
-  { /* 89 */
+  { /* 91 */
     9,
     /* ADD32rr */
   },
-  { /* 90 */
+  { /* 92 */
     0,
     /*  */
   },
-  { /* 91 */
+  { /* 93 */
     10,
     /* ADD32rr_REV */
   },
-  { /* 92 */
+  { /* 94 */
     13,
     /* ADD64i32 */
   },
-  { /* 93 */
+  { /* 95 */
     14,
     /* ADD64mi32 */
   },
-  { /* 94 */
+  { /* 96 */
     15,
     /* ADD64mi8 */
   },
-  { /* 95 */
+  { /* 97 */
     16,
     /* ADD64mr */
   },
-  { /* 96 */
+  { /* 98 */
     17,
     /* ADD64ri32 */
-  },
-  { /* 97 */
-    0,
-    /*  */
-  },
-  { /* 98 */
-    18,
-    /* ADD64ri8 */
   },
   { /* 99 */
     0,
     /*  */
   },
   { /* 100 */
-    19,
-    /* ADD64rm */
+    18,
+    /* ADD64ri8 */
   },
   { /* 101 */
-    20,
-    /* ADD64rr */
-  },
-  { /* 102 */
     0,
     /*  */
   },
+  { /* 102 */
+    19,
+    /* ADD64rm */
+  },
   { /* 103 */
-    21,
-    /* ADD64rr_REV */
+    20,
+    /* ADD64rr */
   },
   { /* 104 */
-    23,
-    /* ADD82_8mi8 */
+    0,
+    /*  */
   },
   { /* 105 */
-    22,
-    /* ADD82_8ri8 */
+    21,
+    /* ADD64rr_REV */
   },
   { /* 106 */
     1,
     /* ADD8i8 */
   },
   { /* 107 */
-    23,
+    22,
     /* ADD8mi */
   },
   { /* 108 */
-    24,
-    /* ADD8mr */
+    22,
+    /* ADD8mi8 */
   },
   { /* 109 */
-    22,
-    /* ADD8ri */
+    23,
+    /* ADD8mr */
   },
   { /* 110 */
+    24,
+    /* ADD8ri */
+  },
+  { /* 111 */
+    24,
+    /* ADD8ri8 */
+  },
+  { /* 112 */
     25,
     /* ADD8rm */
   },
-  { /* 111 */
+  { /* 113 */
     26,
     /* ADD8rr */
   },
-  { /* 112 */
+  { /* 114 */
     27,
     /* ADD8rr_REV */
-  },
-  { /* 113 */
-    0,
-    /*  */
-  },
-  { /* 114 */
-    0,
-    /*  */
   },
   { /* 115 */
     0,
@@ -3080,1128 +3088,1128 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1683] = 
     /*  */
   },
   { /* 117 */
+    0,
+    /*  */
+  },
+  { /* 118 */
+    0,
+    /*  */
+  },
+  { /* 119 */
     30,
     /* ADOX32rm */
   },
-  { /* 118 */
+  { /* 120 */
     31,
     /* ADOX32rr */
   },
-  { /* 119 */
+  { /* 121 */
     32,
     /* ADOX64rm */
   },
-  { /* 120 */
+  { /* 122 */
     33,
     /* ADOX64rr */
   },
-  { /* 121 */
+  { /* 123 */
     2,
     /* AND16i16 */
   },
-  { /* 122 */
+  { /* 124 */
     3,
     /* AND16mi */
   },
-  { /* 123 */
+  { /* 125 */
     4,
     /* AND16mi8 */
   },
-  { /* 124 */
+  { /* 126 */
     5,
     /* AND16mr */
   },
-  { /* 125 */
+  { /* 127 */
     6,
     /* AND16ri */
   },
-  { /* 126 */
+  { /* 128 */
     7,
     /* AND16ri8 */
   },
-  { /* 127 */
+  { /* 129 */
     8,
     /* AND16rm */
   },
-  { /* 128 */
+  { /* 130 */
     9,
     /* AND16rr */
   },
-  { /* 129 */
+  { /* 131 */
     10,
     /* AND16rr_REV */
   },
-  { /* 130 */
+  { /* 132 */
     2,
     /* AND32i32 */
   },
-  { /* 131 */
+  { /* 133 */
     3,
     /* AND32mi */
   },
-  { /* 132 */
+  { /* 134 */
     11,
     /* AND32mi8 */
   },
-  { /* 133 */
+  { /* 135 */
     5,
     /* AND32mr */
   },
-  { /* 134 */
+  { /* 136 */
     6,
     /* AND32ri */
   },
-  { /* 135 */
+  { /* 137 */
     12,
     /* AND32ri8 */
   },
-  { /* 136 */
+  { /* 138 */
     8,
     /* AND32rm */
   },
-  { /* 137 */
+  { /* 139 */
     9,
     /* AND32rr */
   },
-  { /* 138 */
+  { /* 140 */
     10,
     /* AND32rr_REV */
   },
-  { /* 139 */
+  { /* 141 */
     13,
     /* AND64i32 */
   },
-  { /* 140 */
+  { /* 142 */
     14,
     /* AND64mi32 */
   },
-  { /* 141 */
+  { /* 143 */
     15,
     /* AND64mi8 */
   },
-  { /* 142 */
+  { /* 144 */
     16,
     /* AND64mr */
   },
-  { /* 143 */
+  { /* 145 */
     17,
     /* AND64ri32 */
   },
-  { /* 144 */
+  { /* 146 */
     18,
     /* AND64ri8 */
   },
-  { /* 145 */
+  { /* 147 */
     19,
     /* AND64rm */
   },
-  { /* 146 */
+  { /* 148 */
     20,
     /* AND64rr */
   },
-  { /* 147 */
+  { /* 149 */
     21,
     /* AND64rr_REV */
-  },
-  { /* 148 */
-    23,
-    /* AND82_8mi8 */
-  },
-  { /* 149 */
-    22,
-    /* AND82_8ri8 */
   },
   { /* 150 */
     1,
     /* AND8i8 */
   },
   { /* 151 */
-    23,
+    22,
     /* AND8mi */
   },
   { /* 152 */
-    24,
-    /* AND8mr */
+    22,
+    /* AND8mi8 */
   },
   { /* 153 */
-    22,
-    /* AND8ri */
+    23,
+    /* AND8mr */
   },
   { /* 154 */
+    24,
+    /* AND8ri */
+  },
+  { /* 155 */
+    24,
+    /* AND8ri8 */
+  },
+  { /* 156 */
     25,
     /* AND8rm */
   },
-  { /* 155 */
+  { /* 157 */
     26,
     /* AND8rr */
   },
-  { /* 156 */
+  { /* 158 */
     27,
     /* AND8rr_REV */
   },
-  { /* 157 */
+  { /* 159 */
     34,
     /* ANDN32rm */
   },
-  { /* 158 */
+  { /* 160 */
     35,
     /* ANDN32rr */
   },
-  { /* 159 */
+  { /* 161 */
     36,
     /* ANDN64rm */
   },
-  { /* 160 */
+  { /* 162 */
     37,
     /* ANDN64rr */
   },
-  { /* 161 */
+  { /* 163 */
     38,
     /* ARPL16mr */
   },
-  { /* 162 */
+  { /* 164 */
     39,
     /* ARPL16rr */
   },
-  { /* 163 */
+  { /* 165 */
     40,
     /* BEXTR32rm */
   },
-  { /* 164 */
+  { /* 166 */
     41,
     /* BEXTR32rr */
   },
-  { /* 165 */
+  { /* 167 */
     42,
     /* BEXTR64rm */
   },
-  { /* 166 */
+  { /* 168 */
     43,
     /* BEXTR64rr */
   },
-  { /* 167 */
+  { /* 169 */
     44,
     /* BEXTRI32mi */
   },
-  { /* 168 */
+  { /* 170 */
     45,
     /* BEXTRI32ri */
   },
-  { /* 169 */
+  { /* 171 */
     46,
     /* BEXTRI64mi */
   },
-  { /* 170 */
+  { /* 172 */
     47,
     /* BEXTRI64ri */
   },
-  { /* 171 */
+  { /* 173 */
     48,
     /* BLCFILL32rm */
   },
-  { /* 172 */
+  { /* 174 */
     49,
     /* BLCFILL32rr */
   },
-  { /* 173 */
+  { /* 175 */
     50,
     /* BLCFILL64rm */
   },
-  { /* 174 */
+  { /* 176 */
     51,
     /* BLCFILL64rr */
   },
-  { /* 175 */
+  { /* 177 */
     48,
     /* BLCI32rm */
   },
-  { /* 176 */
+  { /* 178 */
     49,
     /* BLCI32rr */
   },
-  { /* 177 */
+  { /* 179 */
     50,
     /* BLCI64rm */
   },
-  { /* 178 */
+  { /* 180 */
     51,
     /* BLCI64rr */
   },
-  { /* 179 */
+  { /* 181 */
     48,
     /* BLCIC32rm */
   },
-  { /* 180 */
+  { /* 182 */
     49,
     /* BLCIC32rr */
   },
-  { /* 181 */
+  { /* 183 */
     50,
     /* BLCIC64rm */
   },
-  { /* 182 */
+  { /* 184 */
     51,
     /* BLCIC64rr */
   },
-  { /* 183 */
+  { /* 185 */
     48,
     /* BLCMSK32rm */
   },
-  { /* 184 */
+  { /* 186 */
     49,
     /* BLCMSK32rr */
   },
-  { /* 185 */
+  { /* 187 */
     50,
     /* BLCMSK64rm */
   },
-  { /* 186 */
+  { /* 188 */
     51,
     /* BLCMSK64rr */
   },
-  { /* 187 */
+  { /* 189 */
     48,
     /* BLCS32rm */
   },
-  { /* 188 */
+  { /* 190 */
     49,
     /* BLCS32rr */
   },
-  { /* 189 */
+  { /* 191 */
     50,
     /* BLCS64rm */
   },
-  { /* 190 */
+  { /* 192 */
     51,
     /* BLCS64rr */
   },
-  { /* 191 */
+  { /* 193 */
     48,
     /* BLSFILL32rm */
   },
-  { /* 192 */
+  { /* 194 */
     49,
     /* BLSFILL32rr */
   },
-  { /* 193 */
+  { /* 195 */
     50,
     /* BLSFILL64rm */
   },
-  { /* 194 */
+  { /* 196 */
     51,
     /* BLSFILL64rr */
   },
-  { /* 195 */
+  { /* 197 */
     48,
     /* BLSI32rm */
   },
-  { /* 196 */
+  { /* 198 */
     49,
     /* BLSI32rr */
   },
-  { /* 197 */
+  { /* 199 */
     50,
     /* BLSI64rm */
   },
-  { /* 198 */
+  { /* 200 */
     51,
     /* BLSI64rr */
   },
-  { /* 199 */
+  { /* 201 */
     48,
     /* BLSIC32rm */
   },
-  { /* 200 */
+  { /* 202 */
     49,
     /* BLSIC32rr */
   },
-  { /* 201 */
+  { /* 203 */
     50,
     /* BLSIC64rm */
   },
-  { /* 202 */
+  { /* 204 */
     51,
     /* BLSIC64rr */
   },
-  { /* 203 */
+  { /* 205 */
     48,
     /* BLSMSK32rm */
   },
-  { /* 204 */
+  { /* 206 */
     49,
     /* BLSMSK32rr */
   },
-  { /* 205 */
+  { /* 207 */
     50,
     /* BLSMSK64rm */
   },
-  { /* 206 */
+  { /* 208 */
     51,
     /* BLSMSK64rr */
   },
-  { /* 207 */
+  { /* 209 */
     48,
     /* BLSR32rm */
   },
-  { /* 208 */
+  { /* 210 */
     49,
     /* BLSR32rr */
   },
-  { /* 209 */
+  { /* 211 */
     50,
     /* BLSR64rm */
   },
-  { /* 210 */
+  { /* 212 */
     51,
     /* BLSR64rr */
   },
-  { /* 211 */
+  { /* 213 */
     52,
     /* BOUNDS16rm */
   },
-  { /* 212 */
+  { /* 214 */
     52,
     /* BOUNDS32rm */
   },
-  { /* 213 */
+  { /* 215 */
     52,
     /* BSF16rm */
   },
-  { /* 214 */
+  { /* 216 */
     53,
     /* BSF16rr */
   },
-  { /* 215 */
+  { /* 217 */
     52,
     /* BSF32rm */
   },
-  { /* 216 */
+  { /* 218 */
     53,
     /* BSF32rr */
   },
-  { /* 217 */
+  { /* 219 */
     32,
     /* BSF64rm */
   },
-  { /* 218 */
+  { /* 220 */
     33,
     /* BSF64rr */
   },
-  { /* 219 */
+  { /* 221 */
     52,
     /* BSR16rm */
   },
-  { /* 220 */
+  { /* 222 */
     53,
     /* BSR16rr */
   },
-  { /* 221 */
+  { /* 223 */
     52,
     /* BSR32rm */
   },
-  { /* 222 */
+  { /* 224 */
     53,
     /* BSR32rr */
   },
-  { /* 223 */
+  { /* 225 */
     32,
     /* BSR64rm */
   },
-  { /* 224 */
+  { /* 226 */
     33,
     /* BSR64rr */
   },
-  { /* 225 */
+  { /* 227 */
     54,
     /* BSWAP32r */
   },
-  { /* 226 */
+  { /* 228 */
     55,
     /* BSWAP64r */
   },
-  { /* 227 */
+  { /* 229 */
     4,
     /* BT16mi8 */
   },
-  { /* 228 */
+  { /* 230 */
     5,
     /* BT16mr */
   },
-  { /* 229 */
+  { /* 231 */
     56,
     /* BT16ri8 */
   },
-  { /* 230 */
+  { /* 232 */
     57,
     /* BT16rr */
   },
-  { /* 231 */
+  { /* 233 */
     11,
     /* BT32mi8 */
   },
-  { /* 232 */
+  { /* 234 */
     5,
     /* BT32mr */
   },
-  { /* 233 */
+  { /* 235 */
     58,
     /* BT32ri8 */
   },
-  { /* 234 */
+  { /* 236 */
     57,
     /* BT32rr */
   },
-  { /* 235 */
+  { /* 237 */
     15,
     /* BT64mi8 */
   },
-  { /* 236 */
+  { /* 238 */
     16,
     /* BT64mr */
   },
-  { /* 237 */
+  { /* 239 */
     59,
     /* BT64ri8 */
   },
-  { /* 238 */
+  { /* 240 */
     60,
     /* BT64rr */
   },
-  { /* 239 */
+  { /* 241 */
     4,
     /* BTC16mi8 */
   },
-  { /* 240 */
+  { /* 242 */
     5,
     /* BTC16mr */
   },
-  { /* 241 */
+  { /* 243 */
     56,
     /* BTC16ri8 */
   },
-  { /* 242 */
+  { /* 244 */
     57,
     /* BTC16rr */
   },
-  { /* 243 */
+  { /* 245 */
     11,
     /* BTC32mi8 */
   },
-  { /* 244 */
+  { /* 246 */
     5,
     /* BTC32mr */
   },
-  { /* 245 */
+  { /* 247 */
     58,
     /* BTC32ri8 */
   },
-  { /* 246 */
+  { /* 248 */
     57,
     /* BTC32rr */
   },
-  { /* 247 */
+  { /* 249 */
     15,
     /* BTC64mi8 */
   },
-  { /* 248 */
+  { /* 250 */
     16,
     /* BTC64mr */
   },
-  { /* 249 */
+  { /* 251 */
     59,
     /* BTC64ri8 */
   },
-  { /* 250 */
+  { /* 252 */
     60,
     /* BTC64rr */
   },
-  { /* 251 */
+  { /* 253 */
     4,
     /* BTR16mi8 */
   },
-  { /* 252 */
+  { /* 254 */
     5,
     /* BTR16mr */
   },
-  { /* 253 */
+  { /* 255 */
     56,
     /* BTR16ri8 */
   },
-  { /* 254 */
+  { /* 256 */
     57,
     /* BTR16rr */
   },
-  { /* 255 */
+  { /* 257 */
     11,
     /* BTR32mi8 */
   },
-  { /* 256 */
+  { /* 258 */
     5,
     /* BTR32mr */
   },
-  { /* 257 */
+  { /* 259 */
     58,
     /* BTR32ri8 */
   },
-  { /* 258 */
+  { /* 260 */
     57,
     /* BTR32rr */
   },
-  { /* 259 */
+  { /* 261 */
     15,
     /* BTR64mi8 */
   },
-  { /* 260 */
+  { /* 262 */
     16,
     /* BTR64mr */
   },
-  { /* 261 */
+  { /* 263 */
     59,
     /* BTR64ri8 */
   },
-  { /* 262 */
+  { /* 264 */
     60,
     /* BTR64rr */
   },
-  { /* 263 */
+  { /* 265 */
     4,
     /* BTS16mi8 */
   },
-  { /* 264 */
+  { /* 266 */
     5,
     /* BTS16mr */
   },
-  { /* 265 */
+  { /* 267 */
     56,
     /* BTS16ri8 */
   },
-  { /* 266 */
+  { /* 268 */
     57,
     /* BTS16rr */
   },
-  { /* 267 */
+  { /* 269 */
     11,
     /* BTS32mi8 */
   },
-  { /* 268 */
+  { /* 270 */
     5,
     /* BTS32mr */
   },
-  { /* 269 */
+  { /* 271 */
     58,
     /* BTS32ri8 */
   },
-  { /* 270 */
+  { /* 272 */
     57,
     /* BTS32rr */
   },
-  { /* 271 */
+  { /* 273 */
     15,
     /* BTS64mi8 */
   },
-  { /* 272 */
+  { /* 274 */
     16,
     /* BTS64mr */
   },
-  { /* 273 */
+  { /* 275 */
     59,
     /* BTS64ri8 */
   },
-  { /* 274 */
+  { /* 276 */
     60,
     /* BTS64rr */
   },
-  { /* 275 */
+  { /* 277 */
     40,
     /* BZHI32rm */
   },
-  { /* 276 */
+  { /* 278 */
     41,
     /* BZHI32rr */
   },
-  { /* 277 */
+  { /* 279 */
     42,
     /* BZHI64rm */
   },
-  { /* 278 */
+  { /* 280 */
     43,
     /* BZHI64rr */
   },
-  { /* 279 */
+  { /* 281 */
     61,
     /* CALL16m */
   },
-  { /* 280 */
+  { /* 282 */
     62,
     /* CALL16r */
   },
-  { /* 281 */
+  { /* 283 */
     61,
     /* CALL32m */
   },
-  { /* 282 */
+  { /* 284 */
     62,
     /* CALL32r */
   },
-  { /* 283 */
+  { /* 285 */
     61,
     /* CALL64m */
   },
-  { /* 284 */
+  { /* 286 */
     63,
     /* CALL64pcrel32 */
   },
-  { /* 285 */
+  { /* 287 */
     64,
     /* CALL64r */
   },
-  { /* 286 */
+  { /* 288 */
     65,
     /* CALLpcrel16 */
   },
-  { /* 287 */
+  { /* 289 */
     66,
     /* CALLpcrel32 */
   },
-  { /* 288 */
+  { /* 290 */
     0,
     /* CBW */
   },
-  { /* 289 */
+  { /* 291 */
     0,
     /* CDQ */
   },
-  { /* 290 */
+  { /* 292 */
     0,
     /* CDQE */
   },
-  { /* 291 */
+  { /* 293 */
     0,
     /* CLAC */
   },
-  { /* 292 */
+  { /* 294 */
     0,
     /* CLC */
   },
-  { /* 293 */
+  { /* 295 */
     0,
     /* CLD */
   },
-  { /* 294 */
-    0,
-    /* CLGI */
-  },
-  { /* 295 */
-    0,
-    /* CLI */
-  },
   { /* 296 */
-    0,
-    /* CLTS */
+    67,
+    /* CLFLUSHOPT */
   },
   { /* 297 */
     0,
-    /* CMC */
+    /* CLGI */
   },
   { /* 298 */
+    0,
+    /* CLI */
+  },
+  { /* 299 */
+    0,
+    /* CLTS */
+  },
+  { /* 300 */
+    67,
+    /* CLWB */
+  },
+  { /* 301 */
+    0,
+    /* CMC */
+  },
+  { /* 302 */
     8,
     /* CMOVA16rm */
   },
-  { /* 299 */
+  { /* 303 */
     10,
     /* CMOVA16rr */
   },
-  { /* 300 */
+  { /* 304 */
     8,
     /* CMOVA32rm */
   },
-  { /* 301 */
+  { /* 305 */
     10,
     /* CMOVA32rr */
   },
-  { /* 302 */
+  { /* 306 */
     19,
     /* CMOVA64rm */
   },
-  { /* 303 */
+  { /* 307 */
     21,
     /* CMOVA64rr */
   },
-  { /* 304 */
+  { /* 308 */
     8,
     /* CMOVAE16rm */
   },
-  { /* 305 */
+  { /* 309 */
     10,
     /* CMOVAE16rr */
   },
-  { /* 306 */
+  { /* 310 */
     8,
     /* CMOVAE32rm */
   },
-  { /* 307 */
+  { /* 311 */
     10,
     /* CMOVAE32rr */
   },
-  { /* 308 */
+  { /* 312 */
     19,
     /* CMOVAE64rm */
   },
-  { /* 309 */
+  { /* 313 */
     21,
     /* CMOVAE64rr */
   },
-  { /* 310 */
+  { /* 314 */
     8,
     /* CMOVB16rm */
   },
-  { /* 311 */
+  { /* 315 */
     10,
     /* CMOVB16rr */
   },
-  { /* 312 */
+  { /* 316 */
     8,
     /* CMOVB32rm */
   },
-  { /* 313 */
+  { /* 317 */
     10,
     /* CMOVB32rr */
   },
-  { /* 314 */
+  { /* 318 */
     19,
     /* CMOVB64rm */
   },
-  { /* 315 */
+  { /* 319 */
     21,
     /* CMOVB64rr */
   },
-  { /* 316 */
+  { /* 320 */
     8,
     /* CMOVBE16rm */
   },
-  { /* 317 */
+  { /* 321 */
     10,
     /* CMOVBE16rr */
   },
-  { /* 318 */
+  { /* 322 */
     8,
     /* CMOVBE32rm */
   },
-  { /* 319 */
+  { /* 323 */
     10,
     /* CMOVBE32rr */
   },
-  { /* 320 */
+  { /* 324 */
     19,
     /* CMOVBE64rm */
   },
-  { /* 321 */
+  { /* 325 */
     21,
     /* CMOVBE64rr */
   },
-  { /* 322 */
+  { /* 326 */
     8,
     /* CMOVE16rm */
   },
-  { /* 323 */
+  { /* 327 */
     10,
     /* CMOVE16rr */
   },
-  { /* 324 */
+  { /* 328 */
     8,
     /* CMOVE32rm */
   },
-  { /* 325 */
+  { /* 329 */
     10,
     /* CMOVE32rr */
   },
-  { /* 326 */
+  { /* 330 */
     19,
     /* CMOVE64rm */
   },
-  { /* 327 */
+  { /* 331 */
     21,
     /* CMOVE64rr */
   },
-  { /* 328 */
+  { /* 332 */
     8,
     /* CMOVG16rm */
   },
-  { /* 329 */
+  { /* 333 */
     10,
     /* CMOVG16rr */
   },
-  { /* 330 */
+  { /* 334 */
     8,
     /* CMOVG32rm */
   },
-  { /* 331 */
+  { /* 335 */
     10,
     /* CMOVG32rr */
   },
-  { /* 332 */
+  { /* 336 */
     19,
     /* CMOVG64rm */
   },
-  { /* 333 */
+  { /* 337 */
     21,
     /* CMOVG64rr */
   },
-  { /* 334 */
+  { /* 338 */
     8,
     /* CMOVGE16rm */
   },
-  { /* 335 */
+  { /* 339 */
     10,
     /* CMOVGE16rr */
   },
-  { /* 336 */
+  { /* 340 */
     8,
     /* CMOVGE32rm */
   },
-  { /* 337 */
+  { /* 341 */
     10,
     /* CMOVGE32rr */
   },
-  { /* 338 */
+  { /* 342 */
     19,
     /* CMOVGE64rm */
   },
-  { /* 339 */
+  { /* 343 */
     21,
     /* CMOVGE64rr */
   },
-  { /* 340 */
+  { /* 344 */
     8,
     /* CMOVL16rm */
   },
-  { /* 341 */
+  { /* 345 */
     10,
     /* CMOVL16rr */
   },
-  { /* 342 */
+  { /* 346 */
     8,
     /* CMOVL32rm */
   },
-  { /* 343 */
+  { /* 347 */
     10,
     /* CMOVL32rr */
   },
-  { /* 344 */
+  { /* 348 */
     19,
     /* CMOVL64rm */
   },
-  { /* 345 */
+  { /* 349 */
     21,
     /* CMOVL64rr */
   },
-  { /* 346 */
+  { /* 350 */
     8,
     /* CMOVLE16rm */
   },
-  { /* 347 */
+  { /* 351 */
     10,
     /* CMOVLE16rr */
   },
-  { /* 348 */
+  { /* 352 */
     8,
     /* CMOVLE32rm */
   },
-  { /* 349 */
+  { /* 353 */
     10,
     /* CMOVLE32rr */
   },
-  { /* 350 */
+  { /* 354 */
     19,
     /* CMOVLE64rm */
   },
-  { /* 351 */
+  { /* 355 */
     21,
     /* CMOVLE64rr */
   },
-  { /* 352 */
+  { /* 356 */
     8,
     /* CMOVNE16rm */
   },
-  { /* 353 */
+  { /* 357 */
     10,
     /* CMOVNE16rr */
   },
-  { /* 354 */
+  { /* 358 */
     8,
     /* CMOVNE32rm */
   },
-  { /* 355 */
+  { /* 359 */
     10,
     /* CMOVNE32rr */
   },
-  { /* 356 */
+  { /* 360 */
     19,
     /* CMOVNE64rm */
   },
-  { /* 357 */
+  { /* 361 */
     21,
     /* CMOVNE64rr */
   },
-  { /* 358 */
+  { /* 362 */
     8,
     /* CMOVNO16rm */
   },
-  { /* 359 */
+  { /* 363 */
     10,
     /* CMOVNO16rr */
   },
-  { /* 360 */
+  { /* 364 */
     8,
     /* CMOVNO32rm */
   },
-  { /* 361 */
+  { /* 365 */
     10,
     /* CMOVNO32rr */
   },
-  { /* 362 */
+  { /* 366 */
     19,
     /* CMOVNO64rm */
   },
-  { /* 363 */
+  { /* 367 */
     21,
     /* CMOVNO64rr */
   },
-  { /* 364 */
+  { /* 368 */
     8,
     /* CMOVNP16rm */
   },
-  { /* 365 */
+  { /* 369 */
     10,
     /* CMOVNP16rr */
   },
-  { /* 366 */
+  { /* 370 */
     8,
     /* CMOVNP32rm */
   },
-  { /* 367 */
+  { /* 371 */
     10,
     /* CMOVNP32rr */
   },
-  { /* 368 */
+  { /* 372 */
     19,
     /* CMOVNP64rm */
   },
-  { /* 369 */
+  { /* 373 */
     21,
     /* CMOVNP64rr */
   },
-  { /* 370 */
+  { /* 374 */
     8,
     /* CMOVNS16rm */
   },
-  { /* 371 */
+  { /* 375 */
     10,
     /* CMOVNS16rr */
   },
-  { /* 372 */
+  { /* 376 */
     8,
     /* CMOVNS32rm */
   },
-  { /* 373 */
+  { /* 377 */
     10,
     /* CMOVNS32rr */
   },
-  { /* 374 */
+  { /* 378 */
     19,
     /* CMOVNS64rm */
   },
-  { /* 375 */
+  { /* 379 */
     21,
     /* CMOVNS64rr */
   },
-  { /* 376 */
+  { /* 380 */
     8,
     /* CMOVO16rm */
   },
-  { /* 377 */
+  { /* 381 */
     10,
     /* CMOVO16rr */
   },
-  { /* 378 */
+  { /* 382 */
     8,
     /* CMOVO32rm */
   },
-  { /* 379 */
+  { /* 383 */
     10,
     /* CMOVO32rr */
   },
-  { /* 380 */
+  { /* 384 */
     19,
     /* CMOVO64rm */
   },
-  { /* 381 */
+  { /* 385 */
     21,
     /* CMOVO64rr */
   },
-  { /* 382 */
+  { /* 386 */
     8,
     /* CMOVP16rm */
   },
-  { /* 383 */
+  { /* 387 */
     10,
     /* CMOVP16rr */
   },
-  { /* 384 */
+  { /* 388 */
     8,
     /* CMOVP32rm */
   },
-  { /* 385 */
+  { /* 389 */
     10,
     /* CMOVP32rr */
   },
-  { /* 386 */
+  { /* 390 */
     19,
     /* CMOVP64rm */
   },
-  { /* 387 */
+  { /* 391 */
     21,
     /* CMOVP64rr */
   },
-  { /* 388 */
+  { /* 392 */
     8,
     /* CMOVS16rm */
   },
-  { /* 389 */
+  { /* 393 */
     10,
     /* CMOVS16rr */
   },
-  { /* 390 */
+  { /* 394 */
     8,
     /* CMOVS32rm */
   },
-  { /* 391 */
+  { /* 395 */
     10,
     /* CMOVS32rr */
   },
-  { /* 392 */
+  { /* 396 */
     19,
     /* CMOVS64rm */
   },
-  { /* 393 */
+  { /* 397 */
     21,
     /* CMOVS64rr */
-  },
-  { /* 394 */
-    0,
-    /*  */
-  },
-  { /* 395 */
-    0,
-    /*  */
-  },
-  { /* 396 */
-    0,
-    /*  */
-  },
-  { /* 397 */
-    0,
-    /*  */
   },
   { /* 398 */
     0,
@@ -4256,324 +4264,324 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1683] = 
     /*  */
   },
   { /* 411 */
+    0,
+    /*  */
+  },
+  { /* 412 */
+    0,
+    /*  */
+  },
+  { /* 413 */
+    0,
+    /*  */
+  },
+  { /* 414 */
+    0,
+    /*  */
+  },
+  { /* 415 */
     2,
     /* CMP16i16 */
   },
-  { /* 412 */
+  { /* 416 */
     3,
     /* CMP16mi */
   },
-  { /* 413 */
+  { /* 417 */
     4,
     /* CMP16mi8 */
   },
-  { /* 414 */
+  { /* 418 */
     5,
     /* CMP16mr */
   },
-  { /* 415 */
-    67,
+  { /* 419 */
+    68,
     /* CMP16ri */
   },
-  { /* 416 */
+  { /* 420 */
     56,
     /* CMP16ri8 */
   },
-  { /* 417 */
+  { /* 421 */
     52,
     /* CMP16rm */
   },
-  { /* 418 */
+  { /* 422 */
     57,
     /* CMP16rr */
   },
-  { /* 419 */
+  { /* 423 */
     53,
     /* CMP16rr_REV */
   },
-  { /* 420 */
+  { /* 424 */
     2,
     /* CMP32i32 */
   },
-  { /* 421 */
+  { /* 425 */
     3,
     /* CMP32mi */
   },
-  { /* 422 */
+  { /* 426 */
     11,
     /* CMP32mi8 */
   },
-  { /* 423 */
+  { /* 427 */
     5,
     /* CMP32mr */
   },
-  { /* 424 */
-    67,
+  { /* 428 */
+    68,
     /* CMP32ri */
   },
-  { /* 425 */
+  { /* 429 */
     58,
     /* CMP32ri8 */
   },
-  { /* 426 */
+  { /* 430 */
     52,
     /* CMP32rm */
   },
-  { /* 427 */
+  { /* 431 */
     57,
     /* CMP32rr */
   },
-  { /* 428 */
+  { /* 432 */
     53,
     /* CMP32rr_REV */
   },
-  { /* 429 */
+  { /* 433 */
     13,
     /* CMP64i32 */
   },
-  { /* 430 */
+  { /* 434 */
     14,
     /* CMP64mi32 */
   },
-  { /* 431 */
+  { /* 435 */
     15,
     /* CMP64mi8 */
   },
-  { /* 432 */
+  { /* 436 */
     16,
     /* CMP64mr */
   },
-  { /* 433 */
-    68,
+  { /* 437 */
+    69,
     /* CMP64ri32 */
   },
-  { /* 434 */
+  { /* 438 */
     59,
     /* CMP64ri8 */
   },
-  { /* 435 */
+  { /* 439 */
     32,
     /* CMP64rm */
   },
-  { /* 436 */
+  { /* 440 */
     60,
     /* CMP64rr */
   },
-  { /* 437 */
+  { /* 441 */
     33,
     /* CMP64rr_REV */
   },
-  { /* 438 */
-    69,
-    /* CMP82_8ri8 */
-  },
-  { /* 439 */
+  { /* 442 */
     1,
     /* CMP8i8 */
   },
-  { /* 440 */
-    23,
+  { /* 443 */
+    22,
     /* CMP8mi */
   },
-  { /* 441 */
-    23,
+  { /* 444 */
+    22,
     /* CMP8mi8 */
   },
-  { /* 442 */
-    24,
+  { /* 445 */
+    23,
     /* CMP8mr */
   },
-  { /* 443 */
-    69,
+  { /* 446 */
+    70,
     /* CMP8ri */
   },
-  { /* 444 */
-    70,
-    /* CMP8rm */
-  },
-  { /* 445 */
-    71,
-    /* CMP8rr */
-  },
-  { /* 446 */
-    72,
-    /* CMP8rr_REV */
-  },
   { /* 447 */
-    73,
-    /* CMPSB */
+    70,
+    /* CMP8ri8 */
   },
   { /* 448 */
-    74,
-    /* CMPSL */
+    71,
+    /* CMP8rm */
   },
   { /* 449 */
-    75,
-    /* CMPSQ */
+    72,
+    /* CMP8rr */
   },
   { /* 450 */
-    76,
-    /* CMPSW */
+    73,
+    /* CMP8rr_REV */
   },
   { /* 451 */
-    77,
-    /* CMPXCHG16B */
+    74,
+    /* CMPSB */
   },
   { /* 452 */
+    75,
+    /* CMPSL */
+  },
+  { /* 453 */
+    76,
+    /* CMPSQ */
+  },
+  { /* 454 */
+    77,
+    /* CMPSW */
+  },
+  { /* 455 */
+    78,
+    /* CMPXCHG16B */
+  },
+  { /* 456 */
     5,
     /* CMPXCHG16rm */
   },
-  { /* 453 */
+  { /* 457 */
     57,
     /* CMPXCHG16rr */
   },
-  { /* 454 */
+  { /* 458 */
     5,
     /* CMPXCHG32rm */
   },
-  { /* 455 */
+  { /* 459 */
     57,
     /* CMPXCHG32rr */
   },
-  { /* 456 */
+  { /* 460 */
     16,
     /* CMPXCHG64rm */
   },
-  { /* 457 */
+  { /* 461 */
     60,
     /* CMPXCHG64rr */
   },
-  { /* 458 */
+  { /* 462 */
     61,
     /* CMPXCHG8B */
   },
-  { /* 459 */
-    24,
+  { /* 463 */
+    23,
     /* CMPXCHG8rm */
   },
-  { /* 460 */
-    71,
-    /* CMPXCHG8rr */
-  },
-  { /* 461 */
-    0,
-    /* CPUID32 */
-  },
-  { /* 462 */
-    0,
-    /* CPUID64 */
-  },
-  { /* 463 */
-    0,
-    /* CQO */
-  },
   { /* 464 */
-    0,
-    /* CWD */
+    72,
+    /* CMPXCHG8rr */
   },
   { /* 465 */
     0,
-    /* CWDE */
+    /* CPUID */
   },
   { /* 466 */
     0,
-    /* DAA */
+    /* CQO */
   },
   { /* 467 */
     0,
-    /* DAS */
+    /* CWD */
   },
   { /* 468 */
     0,
-    /* DATA16_PREFIX */
+    /* CWDE */
   },
   { /* 469 */
+    0,
+    /* DAA */
+  },
+  { /* 470 */
+    0,
+    /* DAS */
+  },
+  { /* 471 */
+    0,
+    /* DATA16_PREFIX */
+  },
+  { /* 472 */
     61,
     /* DEC16m */
   },
-  { /* 470 */
-    54,
-    /* DEC16r */
-  },
-  { /* 471 */
-    78,
-    /* DEC32_16r */
-  },
-  { /* 472 */
-    78,
-    /* DEC32_32r */
-  },
   { /* 473 */
-    61,
-    /* DEC32m */
+    79,
+    /* DEC16r */
   },
   { /* 474 */
     54,
-    /* DEC32r */
+    /* DEC16r_alt */
   },
   { /* 475 */
     61,
-    /* DEC64_16m */
+    /* DEC32m */
   },
   { /* 476 */
-    78,
-    /* DEC64_16r */
+    79,
+    /* DEC32r */
   },
   { /* 477 */
-    61,
-    /* DEC64_32m */
+    54,
+    /* DEC32r_alt */
   },
   { /* 478 */
-    78,
-    /* DEC64_32r */
-  },
-  { /* 479 */
     61,
     /* DEC64m */
   },
-  { /* 480 */
-    79,
+  { /* 479 */
+    80,
     /* DEC64r */
   },
-  { /* 481 */
-    80,
+  { /* 480 */
+    67,
     /* DEC8m */
   },
-  { /* 482 */
+  { /* 481 */
     81,
     /* DEC8r */
   },
-  { /* 483 */
+  { /* 482 */
     61,
     /* DIV16m */
   },
-  { /* 484 */
+  { /* 483 */
     62,
     /* DIV16r */
   },
-  { /* 485 */
+  { /* 484 */
     61,
     /* DIV32m */
   },
-  { /* 486 */
+  { /* 485 */
     62,
     /* DIV32r */
   },
-  { /* 487 */
+  { /* 486 */
     61,
     /* DIV64m */
   },
-  { /* 488 */
+  { /* 487 */
     64,
     /* DIV64r */
   },
-  { /* 489 */
-    80,
+  { /* 488 */
+    67,
     /* DIV8m */
   },
-  { /* 490 */
+  { /* 489 */
     82,
     /* DIV8r */
+  },
+  { /* 490 */
+    0,
+    /*  */
   },
   { /* 491 */
     0,
@@ -4600,764 +4608,764 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1683] = 
     /*  */
   },
   { /* 497 */
-    0,
-    /*  */
-  },
-  { /* 498 */
     83,
     /* ENTER */
   },
-  { /* 499 */
+  { /* 498 */
     84,
     /* FARCALL16i */
   },
-  { /* 500 */
+  { /* 499 */
     85,
     /* FARCALL16m */
   },
-  { /* 501 */
+  { /* 500 */
     86,
     /* FARCALL32i */
   },
-  { /* 502 */
+  { /* 501 */
     87,
     /* FARCALL32m */
   },
-  { /* 503 */
+  { /* 502 */
     88,
     /* FARCALL64 */
   },
-  { /* 504 */
+  { /* 503 */
     84,
     /* FARJMP16i */
   },
-  { /* 505 */
+  { /* 504 */
     85,
     /* FARJMP16m */
   },
-  { /* 506 */
+  { /* 505 */
     86,
     /* FARJMP32i */
   },
-  { /* 507 */
+  { /* 506 */
     87,
     /* FARJMP32m */
   },
-  { /* 508 */
+  { /* 507 */
     88,
     /* FARJMP64 */
   },
-  { /* 509 */
+  { /* 508 */
     0,
     /* FSETPM */
   },
-  { /* 510 */
+  { /* 509 */
     0,
     /* GETSEC */
   },
-  { /* 511 */
+  { /* 510 */
     0,
     /* HLT */
   },
-  { /* 512 */
+  { /* 511 */
     61,
     /* IDIV16m */
   },
-  { /* 513 */
+  { /* 512 */
     62,
     /* IDIV16r */
   },
-  { /* 514 */
+  { /* 513 */
     61,
     /* IDIV32m */
   },
-  { /* 515 */
+  { /* 514 */
     62,
     /* IDIV32r */
   },
-  { /* 516 */
+  { /* 515 */
     61,
     /* IDIV64m */
   },
-  { /* 517 */
+  { /* 516 */
     64,
     /* IDIV64r */
   },
-  { /* 518 */
-    80,
+  { /* 517 */
+    67,
     /* IDIV8m */
   },
-  { /* 519 */
+  { /* 518 */
     82,
     /* IDIV8r */
   },
-  { /* 520 */
+  { /* 519 */
     61,
     /* IMUL16m */
   },
-  { /* 521 */
+  { /* 520 */
     62,
     /* IMUL16r */
   },
-  { /* 522 */
+  { /* 521 */
     8,
     /* IMUL16rm */
   },
-  { /* 523 */
+  { /* 522 */
     89,
     /* IMUL16rmi */
   },
-  { /* 524 */
+  { /* 523 */
     90,
     /* IMUL16rmi8 */
   },
-  { /* 525 */
+  { /* 524 */
     10,
     /* IMUL16rr */
   },
-  { /* 526 */
+  { /* 525 */
     91,
     /* IMUL16rri */
   },
-  { /* 527 */
+  { /* 526 */
     92,
     /* IMUL16rri8 */
   },
-  { /* 528 */
+  { /* 527 */
     61,
     /* IMUL32m */
   },
-  { /* 529 */
+  { /* 528 */
     62,
     /* IMUL32r */
   },
-  { /* 530 */
+  { /* 529 */
     8,
     /* IMUL32rm */
   },
-  { /* 531 */
+  { /* 530 */
     89,
     /* IMUL32rmi */
   },
-  { /* 532 */
+  { /* 531 */
     93,
     /* IMUL32rmi8 */
   },
-  { /* 533 */
+  { /* 532 */
     10,
     /* IMUL32rr */
   },
-  { /* 534 */
+  { /* 533 */
     91,
     /* IMUL32rri */
   },
-  { /* 535 */
+  { /* 534 */
     94,
     /* IMUL32rri8 */
   },
-  { /* 536 */
+  { /* 535 */
     61,
     /* IMUL64m */
   },
-  { /* 537 */
+  { /* 536 */
     64,
     /* IMUL64r */
   },
-  { /* 538 */
+  { /* 537 */
     19,
     /* IMUL64rm */
   },
-  { /* 539 */
+  { /* 538 */
     46,
     /* IMUL64rmi32 */
   },
-  { /* 540 */
+  { /* 539 */
     95,
     /* IMUL64rmi8 */
   },
-  { /* 541 */
+  { /* 540 */
     21,
     /* IMUL64rr */
   },
-  { /* 542 */
+  { /* 541 */
     47,
     /* IMUL64rri32 */
   },
-  { /* 543 */
+  { /* 542 */
     96,
     /* IMUL64rri8 */
   },
-  { /* 544 */
-    80,
+  { /* 543 */
+    67,
     /* IMUL8m */
   },
-  { /* 545 */
+  { /* 544 */
     82,
     /* IMUL8r */
   },
-  { /* 546 */
+  { /* 545 */
     1,
     /* IN16ri */
   },
-  { /* 547 */
+  { /* 546 */
     0,
     /* IN16rr */
   },
-  { /* 548 */
+  { /* 547 */
     1,
     /* IN32ri */
   },
-  { /* 549 */
+  { /* 548 */
     0,
     /* IN32rr */
   },
-  { /* 550 */
+  { /* 549 */
     1,
     /* IN8ri */
   },
-  { /* 551 */
+  { /* 550 */
     0,
     /* IN8rr */
   },
-  { /* 552 */
+  { /* 551 */
     61,
     /* INC16m */
   },
-  { /* 553 */
-    54,
+  { /* 552 */
+    79,
     /* INC16r */
   },
+  { /* 553 */
+    54,
+    /* INC16r_alt */
+  },
   { /* 554 */
-    78,
-    /* INC32_16r */
-  },
-  { /* 555 */
-    78,
-    /* INC32_32r */
-  },
-  { /* 556 */
     61,
     /* INC32m */
   },
-  { /* 557 */
-    54,
+  { /* 555 */
+    79,
     /* INC32r */
   },
-  { /* 558 */
-    61,
-    /* INC64_16m */
+  { /* 556 */
+    54,
+    /* INC32r_alt */
   },
-  { /* 559 */
-    78,
-    /* INC64_16r */
-  },
-  { /* 560 */
-    61,
-    /* INC64_32m */
-  },
-  { /* 561 */
-    78,
-    /* INC64_32r */
-  },
-  { /* 562 */
+  { /* 557 */
     61,
     /* INC64m */
   },
-  { /* 563 */
-    79,
+  { /* 558 */
+    80,
     /* INC64r */
   },
-  { /* 564 */
-    80,
+  { /* 559 */
+    67,
     /* INC8m */
   },
-  { /* 565 */
+  { /* 560 */
     81,
     /* INC8r */
   },
-  { /* 566 */
+  { /* 561 */
     97,
     /* INSB */
   },
-  { /* 567 */
+  { /* 562 */
     98,
     /* INSL */
   },
-  { /* 568 */
+  { /* 563 */
     99,
     /* INSW */
   },
-  { /* 569 */
+  { /* 564 */
     1,
     /* INT */
   },
-  { /* 570 */
+  { /* 565 */
     0,
     /* INT1 */
   },
-  { /* 571 */
+  { /* 566 */
     0,
     /* INT3 */
   },
-  { /* 572 */
+  { /* 567 */
     0,
     /* INTO */
   },
-  { /* 573 */
+  { /* 568 */
     0,
     /* INVD */
   },
-  { /* 574 */
+  { /* 569 */
     100,
     /* INVEPT32 */
   },
-  { /* 575 */
+  { /* 570 */
     101,
     /* INVEPT64 */
   },
-  { /* 576 */
-    80,
+  { /* 571 */
+    67,
     /* INVLPG */
   },
-  { /* 577 */
+  { /* 572 */
     0,
     /* INVLPGA32 */
   },
-  { /* 578 */
+  { /* 573 */
     0,
     /* INVLPGA64 */
   },
-  { /* 579 */
+  { /* 574 */
     100,
     /* INVPCID32 */
   },
-  { /* 580 */
+  { /* 575 */
     101,
     /* INVPCID64 */
   },
-  { /* 581 */
+  { /* 576 */
     100,
     /* INVVPID32 */
   },
-  { /* 582 */
+  { /* 577 */
     101,
     /* INVVPID64 */
   },
-  { /* 583 */
+  { /* 578 */
     0,
     /* IRET16 */
   },
-  { /* 584 */
+  { /* 579 */
     0,
     /* IRET32 */
   },
-  { /* 585 */
+  { /* 580 */
     0,
     /* IRET64 */
   },
-  { /* 586 */
+  { /* 581 */
     0,
     /*  */
   },
-  { /* 587 */
+  { /* 582 */
     102,
     /* JAE_1 */
   },
-  { /* 588 */
+  { /* 583 */
     103,
     /* JAE_2 */
   },
-  { /* 589 */
+  { /* 584 */
     103,
     /* JAE_4 */
   },
-  { /* 590 */
+  { /* 585 */
     102,
     /* JA_1 */
   },
-  { /* 591 */
+  { /* 586 */
     103,
     /* JA_2 */
   },
-  { /* 592 */
+  { /* 587 */
     103,
     /* JA_4 */
   },
-  { /* 593 */
+  { /* 588 */
     102,
     /* JBE_1 */
   },
-  { /* 594 */
+  { /* 589 */
     103,
     /* JBE_2 */
   },
-  { /* 595 */
+  { /* 590 */
     103,
     /* JBE_4 */
   },
-  { /* 596 */
+  { /* 591 */
     102,
     /* JB_1 */
   },
-  { /* 597 */
+  { /* 592 */
     103,
     /* JB_2 */
   },
-  { /* 598 */
+  { /* 593 */
     103,
     /* JB_4 */
   },
-  { /* 599 */
+  { /* 594 */
     102,
     /* JCXZ */
   },
-  { /* 600 */
+  { /* 595 */
     102,
-    /* JECXZ_32 */
+    /* JECXZ */
   },
-  { /* 601 */
-    102,
-    /* JECXZ_64 */
-  },
-  { /* 602 */
+  { /* 596 */
     102,
     /* JE_1 */
   },
-  { /* 603 */
+  { /* 597 */
     103,
     /* JE_2 */
   },
-  { /* 604 */
+  { /* 598 */
     103,
     /* JE_4 */
   },
-  { /* 605 */
+  { /* 599 */
     102,
     /* JGE_1 */
   },
-  { /* 606 */
+  { /* 600 */
     103,
     /* JGE_2 */
   },
-  { /* 607 */
+  { /* 601 */
     103,
     /* JGE_4 */
   },
-  { /* 608 */
+  { /* 602 */
     102,
     /* JG_1 */
   },
-  { /* 609 */
+  { /* 603 */
     103,
     /* JG_2 */
   },
-  { /* 610 */
+  { /* 604 */
     103,
     /* JG_4 */
   },
-  { /* 611 */
+  { /* 605 */
     102,
     /* JLE_1 */
   },
-  { /* 612 */
+  { /* 606 */
     103,
     /* JLE_2 */
   },
-  { /* 613 */
+  { /* 607 */
     103,
     /* JLE_4 */
   },
-  { /* 614 */
+  { /* 608 */
     102,
     /* JL_1 */
   },
-  { /* 615 */
+  { /* 609 */
     103,
     /* JL_2 */
   },
-  { /* 616 */
+  { /* 610 */
     103,
     /* JL_4 */
   },
-  { /* 617 */
+  { /* 611 */
     61,
     /* JMP16m */
   },
-  { /* 618 */
+  { /* 612 */
     62,
     /* JMP16r */
   },
-  { /* 619 */
+  { /* 613 */
     61,
     /* JMP32m */
   },
-  { /* 620 */
+  { /* 614 */
     62,
     /* JMP32r */
   },
-  { /* 621 */
+  { /* 615 */
     61,
     /* JMP64m */
   },
-  { /* 622 */
+  { /* 616 */
     64,
     /* JMP64r */
   },
-  { /* 623 */
+  { /* 617 */
     102,
     /* JMP_1 */
   },
-  { /* 624 */
+  { /* 618 */
     103,
     /* JMP_2 */
   },
-  { /* 625 */
+  { /* 619 */
     103,
     /* JMP_4 */
   },
-  { /* 626 */
+  { /* 620 */
     102,
     /* JNE_1 */
   },
-  { /* 627 */
+  { /* 621 */
     103,
     /* JNE_2 */
   },
-  { /* 628 */
+  { /* 622 */
     103,
     /* JNE_4 */
   },
-  { /* 629 */
+  { /* 623 */
     102,
     /* JNO_1 */
   },
-  { /* 630 */
+  { /* 624 */
     103,
     /* JNO_2 */
   },
-  { /* 631 */
+  { /* 625 */
     103,
     /* JNO_4 */
   },
-  { /* 632 */
+  { /* 626 */
     102,
     /* JNP_1 */
   },
-  { /* 633 */
+  { /* 627 */
     103,
     /* JNP_2 */
   },
-  { /* 634 */
+  { /* 628 */
     103,
     /* JNP_4 */
   },
-  { /* 635 */
+  { /* 629 */
     102,
     /* JNS_1 */
   },
-  { /* 636 */
+  { /* 630 */
     103,
     /* JNS_2 */
   },
-  { /* 637 */
+  { /* 631 */
     103,
     /* JNS_4 */
   },
-  { /* 638 */
+  { /* 632 */
     102,
     /* JO_1 */
   },
-  { /* 639 */
+  { /* 633 */
     103,
     /* JO_2 */
   },
-  { /* 640 */
+  { /* 634 */
     103,
     /* JO_4 */
   },
-  { /* 641 */
+  { /* 635 */
     102,
     /* JP_1 */
   },
-  { /* 642 */
+  { /* 636 */
     103,
     /* JP_2 */
   },
-  { /* 643 */
+  { /* 637 */
     103,
     /* JP_4 */
   },
-  { /* 644 */
+  { /* 638 */
     102,
     /* JRCXZ */
   },
-  { /* 645 */
+  { /* 639 */
     102,
     /* JS_1 */
   },
-  { /* 646 */
+  { /* 640 */
     103,
     /* JS_2 */
   },
-  { /* 647 */
+  { /* 641 */
     103,
     /* JS_4 */
   },
-  { /* 648 */
+  { /* 642 */
     0,
     /* LAHF */
   },
-  { /* 649 */
+  { /* 643 */
     52,
     /* LAR16rm */
   },
-  { /* 650 */
+  { /* 644 */
     53,
     /* LAR16rr */
   },
-  { /* 651 */
+  { /* 645 */
     52,
     /* LAR32rm */
   },
-  { /* 652 */
+  { /* 646 */
     53,
     /* LAR32rr */
   },
-  { /* 653 */
+  { /* 647 */
     32,
     /* LAR64rm */
   },
-  { /* 654 */
+  { /* 648 */
     104,
     /* LAR64rr */
   },
+  { /* 649 */
+    0,
+    /*  */
+  },
+  { /* 650 */
+    0,
+    /*  */
+  },
+  { /* 651 */
+    0,
+    /*  */
+  },
+  { /* 652 */
+    0,
+    /*  */
+  },
+  { /* 653 */
+    0,
+    /*  */
+  },
+  { /* 654 */
+    0,
+    /*  */
+  },
   { /* 655 */
-    0,
-    /*  */
-  },
-  { /* 656 */
-    0,
-    /*  */
-  },
-  { /* 657 */
-    0,
-    /*  */
-  },
-  { /* 658 */
-    0,
-    /*  */
-  },
-  { /* 659 */
-    0,
-    /*  */
-  },
-  { /* 660 */
-    0,
-    /*  */
-  },
-  { /* 661 */
     105,
     /* LDS16rm */
   },
-  { /* 662 */
+  { /* 656 */
     106,
     /* LDS32rm */
   },
-  { /* 663 */
-    52,
+  { /* 657 */
+    107,
     /* LEA16r */
   },
-  { /* 664 */
-    52,
+  { /* 658 */
+    107,
     /* LEA32r */
   },
-  { /* 665 */
-    107,
+  { /* 659 */
+    108,
     /* LEA64_32r */
   },
-  { /* 666 */
-    108,
+  { /* 660 */
+    109,
     /* LEA64r */
   },
-  { /* 667 */
+  { /* 661 */
     0,
     /* LEAVE */
   },
-  { /* 668 */
+  { /* 662 */
     0,
     /* LEAVE64 */
   },
-  { /* 669 */
+  { /* 663 */
     105,
     /* LES16rm */
   },
-  { /* 670 */
+  { /* 664 */
     106,
     /* LES32rm */
   },
-  { /* 671 */
+  { /* 665 */
     105,
     /* LFS16rm */
   },
-  { /* 672 */
+  { /* 666 */
     106,
     /* LFS32rm */
   },
-  { /* 673 */
-    109,
+  { /* 667 */
+    110,
     /* LFS64rm */
   },
-  { /* 674 */
+  { /* 668 */
     87,
     /* LGDT16m */
   },
-  { /* 675 */
+  { /* 669 */
     87,
     /* LGDT32m */
   },
-  { /* 676 */
+  { /* 670 */
     88,
     /* LGDT64m */
   },
-  { /* 677 */
+  { /* 671 */
     105,
     /* LGS16rm */
   },
-  { /* 678 */
+  { /* 672 */
     106,
     /* LGS32rm */
   },
-  { /* 679 */
-    109,
+  { /* 673 */
+    110,
     /* LGS64rm */
   },
-  { /* 680 */
+  { /* 674 */
     87,
     /* LIDT16m */
   },
-  { /* 681 */
+  { /* 675 */
     87,
     /* LIDT32m */
   },
-  { /* 682 */
+  { /* 676 */
     88,
     /* LIDT64m */
   },
-  { /* 683 */
+  { /* 677 */
     61,
     /* LLDT16m */
   },
-  { /* 684 */
-    110,
+  { /* 678 */
+    111,
     /* LLDT16r */
   },
-  { /* 685 */
+  { /* 679 */
     61,
     /* LMSW16m */
   },
-  { /* 686 */
-    110,
+  { /* 680 */
+    111,
     /* LMSW16r */
+  },
+  { /* 681 */
+    0,
+    /*  */
+  },
+  { /* 682 */
+    0,
+    /*  */
+  },
+  { /* 683 */
+    0,
+    /*  */
+  },
+  { /* 684 */
+    0,
+    /*  */
+  },
+  { /* 685 */
+    0,
+    /*  */
+  },
+  { /* 686 */
+    0,
+    /*  */
   },
   { /* 687 */
     0,
@@ -5501,7 +5509,7 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1683] = 
   },
   { /* 722 */
     0,
-    /*  */
+    /* LOCK_PREFIX */
   },
   { /* 723 */
     0,
@@ -5525,7 +5533,7 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1683] = 
   },
   { /* 728 */
     0,
-    /* LOCK_PREFIX */
+    /*  */
   },
   { /* 729 */
     0,
@@ -5592,1564 +5600,1564 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1683] = 
     /*  */
   },
   { /* 745 */
-    0,
-    /*  */
-  },
-  { /* 746 */
-    0,
-    /*  */
-  },
-  { /* 747 */
-    0,
-    /*  */
-  },
-  { /* 748 */
-    0,
-    /*  */
-  },
-  { /* 749 */
-    0,
-    /*  */
-  },
-  { /* 750 */
-    0,
-    /*  */
-  },
-  { /* 751 */
-    111,
+    112,
     /* LODSB */
   },
-  { /* 752 */
-    112,
+  { /* 746 */
+    113,
     /* LODSL */
   },
-  { /* 753 */
-    113,
+  { /* 747 */
+    114,
     /* LODSQ */
   },
-  { /* 754 */
-    114,
+  { /* 748 */
+    115,
     /* LODSW */
   },
-  { /* 755 */
+  { /* 749 */
     102,
     /* LOOP */
   },
-  { /* 756 */
+  { /* 750 */
     102,
     /* LOOPE */
   },
-  { /* 757 */
+  { /* 751 */
     102,
     /* LOOPNE */
   },
-  { /* 758 */
-    115,
+  { /* 752 */
+    116,
     /* LRETIL */
   },
-  { /* 759 */
-    115,
+  { /* 753 */
+    116,
     /* LRETIQ */
   },
-  { /* 760 */
+  { /* 754 */
     2,
     /* LRETIW */
   },
-  { /* 761 */
+  { /* 755 */
     0,
     /* LRETL */
   },
-  { /* 762 */
+  { /* 756 */
     0,
     /* LRETQ */
   },
-  { /* 763 */
+  { /* 757 */
     0,
     /* LRETW */
   },
-  { /* 764 */
+  { /* 758 */
     52,
     /* LSL16rm */
   },
-  { /* 765 */
+  { /* 759 */
     53,
     /* LSL16rr */
   },
-  { /* 766 */
+  { /* 760 */
     52,
     /* LSL32rm */
   },
-  { /* 767 */
+  { /* 761 */
     53,
     /* LSL32rr */
   },
-  { /* 768 */
+  { /* 762 */
     32,
     /* LSL64rm */
   },
-  { /* 769 */
+  { /* 763 */
     33,
     /* LSL64rr */
   },
-  { /* 770 */
+  { /* 764 */
     105,
     /* LSS16rm */
   },
-  { /* 771 */
+  { /* 765 */
     106,
     /* LSS32rm */
   },
-  { /* 772 */
-    109,
+  { /* 766 */
+    110,
     /* LSS64rm */
   },
-  { /* 773 */
+  { /* 767 */
     61,
     /* LTRm */
   },
-  { /* 774 */
-    110,
+  { /* 768 */
+    111,
     /* LTRr */
   },
-  { /* 775 */
+  { /* 769 */
     0,
     /*  */
   },
-  { /* 776 */
+  { /* 770 */
     0,
     /*  */
   },
-  { /* 777 */
+  { /* 771 */
     0,
     /*  */
   },
-  { /* 778 */
+  { /* 772 */
     0,
     /*  */
   },
-  { /* 779 */
+  { /* 773 */
     52,
     /* LZCNT16rm */
   },
-  { /* 780 */
+  { /* 774 */
     53,
     /* LZCNT16rr */
   },
-  { /* 781 */
+  { /* 775 */
     52,
     /* LZCNT32rm */
   },
-  { /* 782 */
+  { /* 776 */
     53,
     /* LZCNT32rr */
   },
-  { /* 783 */
+  { /* 777 */
     32,
     /* LZCNT64rm */
   },
-  { /* 784 */
+  { /* 778 */
     33,
     /* LZCNT64rr */
   },
-  { /* 785 */
+  { /* 779 */
     0,
     /* MONTMUL */
   },
-  { /* 786 */
+  { /* 780 */
     0,
     /*  */
   },
-  { /* 787 */
+  { /* 781 */
     0,
     /*  */
   },
-  { /* 788 */
-    116,
+  { /* 782 */
+    117,
     /* MOV16ao16 */
   },
-  { /* 789 */
-    116,
-    /* MOV16ao16_16 */
+  { /* 783 */
+    117,
+    /* MOV16ao32 */
   },
-  { /* 790 */
+  { /* 784 */
+    117,
+    /* MOV16ao64 */
+  },
+  { /* 785 */
     3,
     /* MOV16mi */
   },
-  { /* 791 */
+  { /* 786 */
     5,
     /* MOV16mr */
   },
-  { /* 792 */
-    117,
+  { /* 787 */
+    118,
     /* MOV16ms */
   },
-  { /* 793 */
-    116,
+  { /* 788 */
+    117,
     /* MOV16o16a */
   },
-  { /* 794 */
-    116,
-    /* MOV16o16a_16 */
+  { /* 789 */
+    117,
+    /* MOV16o32a */
   },
-  { /* 795 */
-    118,
+  { /* 790 */
+    117,
+    /* MOV16o64a */
+  },
+  { /* 791 */
+    119,
     /* MOV16ri */
   },
-  { /* 796 */
-    67,
+  { /* 792 */
+    68,
     /* MOV16ri_alt */
   },
-  { /* 797 */
+  { /* 793 */
     52,
     /* MOV16rm */
   },
-  { /* 798 */
+  { /* 794 */
     57,
     /* MOV16rr */
   },
-  { /* 799 */
+  { /* 795 */
     53,
     /* MOV16rr_REV */
   },
-  { /* 800 */
-    119,
+  { /* 796 */
+    120,
     /* MOV16rs */
   },
-  { /* 801 */
-    120,
+  { /* 797 */
+    121,
     /* MOV16sm */
   },
-  { /* 802 */
-    121,
+  { /* 798 */
+    122,
     /* MOV16sr */
   },
-  { /* 803 */
-    122,
+  { /* 799 */
+    123,
+    /* MOV32ao16 */
+  },
+  { /* 800 */
+    123,
     /* MOV32ao32 */
   },
-  { /* 804 */
-    122,
-    /* MOV32ao32_16 */
-  },
-  { /* 805 */
+  { /* 801 */
     123,
+    /* MOV32ao64 */
+  },
+  { /* 802 */
+    124,
     /* MOV32cr */
   },
-  { /* 806 */
-    124,
+  { /* 803 */
+    125,
     /* MOV32dr */
   },
-  { /* 807 */
+  { /* 804 */
     3,
     /* MOV32mi */
   },
-  { /* 808 */
+  { /* 805 */
     5,
     /* MOV32mr */
   },
-  { /* 809 */
-    117,
+  { /* 806 */
+    118,
     /* MOV32ms */
   },
-  { /* 810 */
-    122,
+  { /* 807 */
+    123,
+    /* MOV32o16a */
+  },
+  { /* 808 */
+    123,
     /* MOV32o32a */
   },
-  { /* 811 */
-    122,
-    /* MOV32o32a_16 */
+  { /* 809 */
+    123,
+    /* MOV32o64a */
   },
-  { /* 812 */
+  { /* 810 */
     0,
     /*  */
   },
-  { /* 813 */
-    125,
+  { /* 811 */
+    126,
     /* MOV32rc */
   },
-  { /* 814 */
-    126,
+  { /* 812 */
+    127,
     /* MOV32rd */
   },
-  { /* 815 */
-    118,
+  { /* 813 */
+    119,
     /* MOV32ri */
   },
-  { /* 816 */
+  { /* 814 */
     0,
     /*  */
   },
-  { /* 817 */
-    67,
+  { /* 815 */
+    68,
     /* MOV32ri_alt */
   },
-  { /* 818 */
+  { /* 816 */
     52,
     /* MOV32rm */
   },
-  { /* 819 */
+  { /* 817 */
     57,
     /* MOV32rr */
   },
-  { /* 820 */
+  { /* 818 */
     53,
     /* MOV32rr_REV */
   },
-  { /* 821 */
-    119,
+  { /* 819 */
+    120,
     /* MOV32rs */
   },
-  { /* 822 */
-    120,
+  { /* 820 */
+    121,
     /* MOV32sm */
   },
-  { /* 823 */
-    121,
+  { /* 821 */
+    122,
     /* MOV32sr */
   },
-  { /* 824 */
-    116,
-    /* MOV64ao16 */
-  },
-  { /* 825 */
-    122,
+  { /* 822 */
+    128,
     /* MOV64ao32 */
   },
-  { /* 826 */
-    127,
+  { /* 823 */
+    128,
     /* MOV64ao64 */
   },
-  { /* 827 */
-    128,
-    /* MOV64ao8 */
-  },
-  { /* 828 */
+  { /* 824 */
     129,
     /* MOV64cr */
   },
-  { /* 829 */
+  { /* 825 */
     130,
     /* MOV64dr */
   },
-  { /* 830 */
+  { /* 826 */
     14,
     /* MOV64mi32 */
   },
-  { /* 831 */
+  { /* 827 */
     16,
     /* MOV64mr */
   },
-  { /* 832 */
-    117,
+  { /* 828 */
+    118,
     /* MOV64ms */
   },
-  { /* 833 */
-    116,
-    /* MOV64o16a */
-  },
-  { /* 834 */
-    122,
+  { /* 829 */
+    128,
     /* MOV64o32a */
   },
-  { /* 835 */
-    127,
+  { /* 830 */
+    128,
     /* MOV64o64a */
   },
-  { /* 836 */
-    128,
-    /* MOV64o8a */
-  },
-  { /* 837 */
+  { /* 831 */
     131,
     /* MOV64rc */
   },
-  { /* 838 */
+  { /* 832 */
     132,
     /* MOV64rd */
   },
-  { /* 839 */
+  { /* 833 */
     133,
     /* MOV64ri */
   },
-  { /* 840 */
-    68,
+  { /* 834 */
+    69,
     /* MOV64ri32 */
   },
-  { /* 841 */
+  { /* 835 */
     32,
     /* MOV64rm */
   },
-  { /* 842 */
+  { /* 836 */
     60,
     /* MOV64rr */
   },
-  { /* 843 */
+  { /* 837 */
     33,
     /* MOV64rr_REV */
   },
-  { /* 844 */
+  { /* 838 */
     134,
     /* MOV64rs */
   },
-  { /* 845 */
-    120,
+  { /* 839 */
+    121,
     /* MOV64sm */
   },
-  { /* 846 */
+  { /* 840 */
     135,
     /* MOV64sr */
   },
-  { /* 847 */
-    128,
-    /* MOV8ao8 */
+  { /* 841 */
+    136,
+    /* MOV8ao16 */
   },
-  { /* 848 */
-    128,
-    /* MOV8ao8_16 */
+  { /* 842 */
+    136,
+    /* MOV8ao32 */
   },
-  { /* 849 */
-    23,
+  { /* 843 */
+    136,
+    /* MOV8ao64 */
+  },
+  { /* 844 */
+    22,
     /* MOV8mi */
   },
-  { /* 850 */
-    24,
+  { /* 845 */
+    23,
     /* MOV8mr */
   },
-  { /* 851 */
+  { /* 846 */
     0,
     /*  */
   },
-  { /* 852 */
-    128,
-    /* MOV8o8a */
-  },
-  { /* 853 */
-    128,
-    /* MOV8o8a_16 */
-  },
-  { /* 854 */
+  { /* 847 */
     136,
+    /* MOV8o16a */
+  },
+  { /* 848 */
+    136,
+    /* MOV8o32a */
+  },
+  { /* 849 */
+    136,
+    /* MOV8o64a */
+  },
+  { /* 850 */
+    137,
     /* MOV8ri */
   },
-  { /* 855 */
-    69,
+  { /* 851 */
+    70,
     /* MOV8ri_alt */
   },
-  { /* 856 */
-    70,
+  { /* 852 */
+    71,
     /* MOV8rm */
   },
-  { /* 857 */
+  { /* 853 */
     0,
     /*  */
   },
-  { /* 858 */
-    71,
+  { /* 854 */
+    72,
     /* MOV8rr */
   },
-  { /* 859 */
+  { /* 855 */
     0,
     /*  */
   },
-  { /* 860 */
-    72,
+  { /* 856 */
+    73,
     /* MOV8rr_REV */
   },
-  { /* 861 */
+  { /* 857 */
     5,
     /* MOVBE16mr */
   },
-  { /* 862 */
+  { /* 858 */
     52,
     /* MOVBE16rm */
   },
-  { /* 863 */
+  { /* 859 */
     5,
     /* MOVBE32mr */
   },
-  { /* 864 */
+  { /* 860 */
     52,
     /* MOVBE32rm */
   },
-  { /* 865 */
+  { /* 861 */
     16,
     /* MOVBE64mr */
   },
-  { /* 866 */
+  { /* 862 */
     32,
     /* MOVBE64rm */
   },
-  { /* 867 */
+  { /* 863 */
     0,
     /*  */
   },
-  { /* 868 */
-    73,
+  { /* 864 */
+    74,
     /* MOVSB */
   },
-  { /* 869 */
-    74,
+  { /* 865 */
+    75,
     /* MOVSL */
   },
-  { /* 870 */
-    75,
+  { /* 866 */
+    76,
     /* MOVSQ */
   },
-  { /* 871 */
-    76,
+  { /* 867 */
+    77,
     /* MOVSW */
   },
-  { /* 872 */
-    137,
+  { /* 868 */
+    138,
     /* MOVSX16rm8 */
   },
-  { /* 873 */
-    138,
+  { /* 869 */
+    139,
     /* MOVSX16rr8 */
   },
-  { /* 874 */
+  { /* 870 */
+    0,
+    /*  */
+  },
+  { /* 871 */
+    0,
+    /*  */
+  },
+  { /* 872 */
     52,
     /* MOVSX32rm16 */
   },
-  { /* 875 */
-    137,
+  { /* 873 */
+    138,
     /* MOVSX32rm8 */
   },
-  { /* 876 */
-    139,
+  { /* 874 */
+    140,
     /* MOVSX32rr16 */
   },
-  { /* 877 */
-    138,
+  { /* 875 */
+    139,
     /* MOVSX32rr8 */
   },
-  { /* 878 */
+  { /* 876 */
     104,
     /* MOVSX64_NOREXrr32 */
   },
-  { /* 879 */
+  { /* 877 */
     32,
     /* MOVSX64rm16 */
   },
-  { /* 880 */
+  { /* 878 */
     32,
     /* MOVSX64rm32 */
   },
-  { /* 881 */
+  { /* 879 */
     32,
     /* MOVSX64rm32_alt */
   },
-  { /* 882 */
-    140,
+  { /* 880 */
+    141,
     /* MOVSX64rm8 */
   },
-  { /* 883 */
-    141,
+  { /* 881 */
+    142,
     /* MOVSX64rr16 */
   },
-  { /* 884 */
+  { /* 882 */
     104,
     /* MOVSX64rr32 */
   },
-  { /* 885 */
-    142,
+  { /* 883 */
+    143,
     /* MOVSX64rr8 */
   },
-  { /* 886 */
-    137,
+  { /* 884 */
+    138,
     /* MOVZX16rm8 */
   },
-  { /* 887 */
-    138,
+  { /* 885 */
+    139,
     /* MOVZX16rr8 */
   },
+  { /* 886 */
+    0,
+    /*  */
+  },
+  { /* 887 */
+    0,
+    /*  */
+  },
   { /* 888 */
-    0,
-    /*  */
-  },
-  { /* 889 */
-    0,
-    /*  */
-  },
-  { /* 890 */
     52,
     /* MOVZX32rm16 */
   },
-  { /* 891 */
-    137,
+  { /* 889 */
+    138,
     /* MOVZX32rm8 */
   },
-  { /* 892 */
-    139,
+  { /* 890 */
+    140,
     /* MOVZX32rr16 */
   },
-  { /* 893 */
-    138,
+  { /* 891 */
+    139,
     /* MOVZX32rr8 */
   },
-  { /* 894 */
+  { /* 892 */
     32,
     /* MOVZX64rm16_Q */
   },
-  { /* 895 */
-    140,
+  { /* 893 */
+    141,
     /* MOVZX64rm8_Q */
   },
-  { /* 896 */
-    141,
+  { /* 894 */
+    142,
     /* MOVZX64rr16_Q */
   },
-  { /* 897 */
-    142,
+  { /* 895 */
+    143,
     /* MOVZX64rr8_Q */
   },
-  { /* 898 */
+  { /* 896 */
     61,
     /* MUL16m */
   },
-  { /* 899 */
+  { /* 897 */
     62,
     /* MUL16r */
   },
-  { /* 900 */
+  { /* 898 */
     61,
     /* MUL32m */
   },
-  { /* 901 */
+  { /* 899 */
     62,
     /* MUL32r */
   },
-  { /* 902 */
+  { /* 900 */
     61,
     /* MUL64m */
   },
-  { /* 903 */
+  { /* 901 */
     64,
     /* MUL64r */
   },
-  { /* 904 */
-    80,
+  { /* 902 */
+    67,
     /* MUL8m */
   },
-  { /* 905 */
+  { /* 903 */
     82,
     /* MUL8r */
   },
-  { /* 906 */
+  { /* 904 */
     34,
     /* MULX32rm */
   },
-  { /* 907 */
+  { /* 905 */
     35,
     /* MULX32rr */
   },
-  { /* 908 */
+  { /* 906 */
     36,
     /* MULX64rm */
   },
-  { /* 909 */
+  { /* 907 */
     37,
     /* MULX64rr */
   },
-  { /* 910 */
+  { /* 908 */
     61,
     /* NEG16m */
   },
-  { /* 911 */
-    78,
+  { /* 909 */
+    79,
     /* NEG16r */
   },
-  { /* 912 */
+  { /* 910 */
     61,
     /* NEG32m */
   },
-  { /* 913 */
-    78,
+  { /* 911 */
+    79,
     /* NEG32r */
   },
-  { /* 914 */
+  { /* 912 */
     61,
     /* NEG64m */
   },
-  { /* 915 */
-    79,
+  { /* 913 */
+    80,
     /* NEG64r */
   },
-  { /* 916 */
-    80,
+  { /* 914 */
+    67,
     /* NEG8m */
   },
-  { /* 917 */
+  { /* 915 */
     81,
     /* NEG8r */
   },
-  { /* 918 */
+  { /* 916 */
     0,
     /* NOOP */
   },
-  { /* 919 */
+  { /* 917 */
     61,
     /* NOOP18_16m4 */
   },
-  { /* 920 */
+  { /* 918 */
     61,
     /* NOOP18_16m5 */
   },
-  { /* 921 */
+  { /* 919 */
     61,
     /* NOOP18_16m6 */
   },
-  { /* 922 */
+  { /* 920 */
     61,
     /* NOOP18_16m7 */
   },
-  { /* 923 */
+  { /* 921 */
     62,
     /* NOOP18_16r4 */
   },
-  { /* 924 */
+  { /* 922 */
     62,
     /* NOOP18_16r5 */
   },
-  { /* 925 */
+  { /* 923 */
     62,
     /* NOOP18_16r6 */
   },
-  { /* 926 */
+  { /* 924 */
     62,
     /* NOOP18_16r7 */
   },
-  { /* 927 */
+  { /* 925 */
     61,
     /* NOOP18_m4 */
   },
-  { /* 928 */
+  { /* 926 */
     61,
     /* NOOP18_m5 */
   },
-  { /* 929 */
+  { /* 927 */
     61,
     /* NOOP18_m6 */
   },
-  { /* 930 */
+  { /* 928 */
     61,
     /* NOOP18_m7 */
   },
-  { /* 931 */
+  { /* 929 */
     62,
     /* NOOP18_r4 */
   },
-  { /* 932 */
+  { /* 930 */
     62,
     /* NOOP18_r5 */
   },
-  { /* 933 */
+  { /* 931 */
     62,
     /* NOOP18_r6 */
   },
-  { /* 934 */
+  { /* 932 */
     62,
     /* NOOP18_r7 */
   },
-  { /* 935 */
+  { /* 933 */
     53,
     /* NOOP19rr */
   },
-  { /* 936 */
+  { /* 934 */
     61,
     /* NOOPL */
   },
-  { /* 937 */
+  { /* 935 */
     61,
     /* NOOPL_19 */
   },
-  { /* 938 */
+  { /* 936 */
     61,
     /* NOOPL_1a */
   },
-  { /* 939 */
+  { /* 937 */
     61,
     /* NOOPL_1b */
   },
-  { /* 940 */
+  { /* 938 */
     61,
     /* NOOPL_1c */
   },
-  { /* 941 */
+  { /* 939 */
     61,
     /* NOOPL_1d */
   },
-  { /* 942 */
+  { /* 940 */
     61,
     /* NOOPL_1e */
   },
-  { /* 943 */
+  { /* 941 */
     61,
     /* NOOPW */
   },
-  { /* 944 */
+  { /* 942 */
     61,
     /* NOOPW_19 */
   },
-  { /* 945 */
+  { /* 943 */
     61,
     /* NOOPW_1a */
   },
-  { /* 946 */
+  { /* 944 */
     61,
     /* NOOPW_1b */
   },
-  { /* 947 */
+  { /* 945 */
     61,
     /* NOOPW_1c */
   },
-  { /* 948 */
+  { /* 946 */
     61,
     /* NOOPW_1d */
   },
-  { /* 949 */
+  { /* 947 */
     61,
     /* NOOPW_1e */
   },
-  { /* 950 */
+  { /* 948 */
     61,
     /* NOT16m */
   },
-  { /* 951 */
-    78,
+  { /* 949 */
+    79,
     /* NOT16r */
   },
-  { /* 952 */
+  { /* 950 */
     61,
     /* NOT32m */
   },
-  { /* 953 */
-    78,
+  { /* 951 */
+    79,
     /* NOT32r */
   },
-  { /* 954 */
+  { /* 952 */
     61,
     /* NOT64m */
   },
-  { /* 955 */
-    79,
+  { /* 953 */
+    80,
     /* NOT64r */
   },
-  { /* 956 */
-    80,
+  { /* 954 */
+    67,
     /* NOT8m */
   },
-  { /* 957 */
+  { /* 955 */
     81,
     /* NOT8r */
   },
-  { /* 958 */
+  { /* 956 */
     2,
     /* OR16i16 */
   },
-  { /* 959 */
+  { /* 957 */
     3,
     /* OR16mi */
   },
-  { /* 960 */
+  { /* 958 */
     4,
     /* OR16mi8 */
   },
-  { /* 961 */
+  { /* 959 */
     5,
     /* OR16mr */
   },
-  { /* 962 */
+  { /* 960 */
     6,
     /* OR16ri */
   },
-  { /* 963 */
+  { /* 961 */
     7,
     /* OR16ri8 */
   },
-  { /* 964 */
+  { /* 962 */
     8,
     /* OR16rm */
   },
-  { /* 965 */
+  { /* 963 */
     9,
     /* OR16rr */
   },
-  { /* 966 */
+  { /* 964 */
     10,
     /* OR16rr_REV */
   },
-  { /* 967 */
+  { /* 965 */
     2,
     /* OR32i32 */
   },
-  { /* 968 */
+  { /* 966 */
     3,
     /* OR32mi */
   },
-  { /* 969 */
+  { /* 967 */
     11,
     /* OR32mi8 */
   },
-  { /* 970 */
+  { /* 968 */
     5,
     /* OR32mr */
   },
-  { /* 971 */
+  { /* 969 */
     0,
     /*  */
   },
-  { /* 972 */
+  { /* 970 */
     6,
     /* OR32ri */
   },
-  { /* 973 */
+  { /* 971 */
     12,
     /* OR32ri8 */
   },
-  { /* 974 */
+  { /* 972 */
     8,
     /* OR32rm */
   },
-  { /* 975 */
+  { /* 973 */
     9,
     /* OR32rr */
   },
-  { /* 976 */
+  { /* 974 */
     10,
     /* OR32rr_REV */
   },
-  { /* 977 */
+  { /* 975 */
     13,
     /* OR64i32 */
   },
-  { /* 978 */
+  { /* 976 */
     14,
     /* OR64mi32 */
   },
-  { /* 979 */
+  { /* 977 */
     15,
     /* OR64mi8 */
   },
-  { /* 980 */
+  { /* 978 */
     16,
     /* OR64mr */
   },
-  { /* 981 */
+  { /* 979 */
     17,
     /* OR64ri32 */
   },
-  { /* 982 */
+  { /* 980 */
     18,
     /* OR64ri8 */
   },
-  { /* 983 */
+  { /* 981 */
     19,
     /* OR64rm */
   },
-  { /* 984 */
+  { /* 982 */
     20,
     /* OR64rr */
   },
-  { /* 985 */
+  { /* 983 */
     21,
     /* OR64rr_REV */
   },
-  { /* 986 */
-    23,
-    /* OR82_8mi8 */
-  },
-  { /* 987 */
-    22,
-    /* OR82_8ri8 */
-  },
-  { /* 988 */
+  { /* 984 */
     1,
     /* OR8i8 */
   },
-  { /* 989 */
-    23,
+  { /* 985 */
+    22,
     /* OR8mi */
   },
-  { /* 990 */
-    24,
+  { /* 986 */
+    22,
+    /* OR8mi8 */
+  },
+  { /* 987 */
+    23,
     /* OR8mr */
   },
-  { /* 991 */
-    22,
+  { /* 988 */
+    24,
     /* OR8ri */
   },
-  { /* 992 */
+  { /* 989 */
+    24,
+    /* OR8ri8 */
+  },
+  { /* 990 */
     25,
     /* OR8rm */
   },
-  { /* 993 */
+  { /* 991 */
     26,
     /* OR8rr */
   },
-  { /* 994 */
+  { /* 992 */
     27,
     /* OR8rr_REV */
   },
-  { /* 995 */
+  { /* 993 */
     1,
     /* OUT16ir */
   },
-  { /* 996 */
+  { /* 994 */
     0,
     /* OUT16rr */
   },
-  { /* 997 */
+  { /* 995 */
     1,
     /* OUT32ir */
   },
-  { /* 998 */
+  { /* 996 */
     0,
     /* OUT32rr */
   },
-  { /* 999 */
+  { /* 997 */
     1,
     /* OUT8ir */
   },
-  { /* 1000 */
+  { /* 998 */
     0,
     /* OUT8rr */
   },
-  { /* 1001 */
-    111,
+  { /* 999 */
+    112,
     /* OUTSB */
   },
-  { /* 1002 */
-    112,
+  { /* 1000 */
+    113,
     /* OUTSL */
   },
-  { /* 1003 */
-    114,
+  { /* 1001 */
+    115,
     /* OUTSW */
   },
-  { /* 1004 */
+  { /* 1002 */
+    0,
+    /* PCOMMIT */
+  },
+  { /* 1003 */
     34,
     /* PDEP32rm */
   },
-  { /* 1005 */
+  { /* 1004 */
     35,
     /* PDEP32rr */
   },
-  { /* 1006 */
+  { /* 1005 */
     36,
     /* PDEP64rm */
   },
-  { /* 1007 */
+  { /* 1006 */
     37,
     /* PDEP64rr */
   },
-  { /* 1008 */
+  { /* 1007 */
     34,
     /* PEXT32rm */
   },
-  { /* 1009 */
+  { /* 1008 */
     35,
     /* PEXT32rr */
   },
-  { /* 1010 */
+  { /* 1009 */
     36,
     /* PEXT64rm */
   },
-  { /* 1011 */
+  { /* 1010 */
     37,
     /* PEXT64rr */
   },
-  { /* 1012 */
-    143,
+  { /* 1011 */
+    144,
     /* POP16r */
   },
-  { /* 1013 */
+  { /* 1012 */
     61,
     /* POP16rmm */
   },
-  { /* 1014 */
+  { /* 1013 */
     62,
     /* POP16rmr */
   },
-  { /* 1015 */
-    143,
+  { /* 1014 */
+    144,
     /* POP32r */
   },
-  { /* 1016 */
+  { /* 1015 */
     61,
     /* POP32rmm */
   },
-  { /* 1017 */
+  { /* 1016 */
     62,
     /* POP32rmr */
   },
-  { /* 1018 */
-    144,
+  { /* 1017 */
+    145,
     /* POP64r */
   },
-  { /* 1019 */
+  { /* 1018 */
     61,
     /* POP64rmm */
   },
-  { /* 1020 */
+  { /* 1019 */
     64,
     /* POP64rmr */
   },
-  { /* 1021 */
+  { /* 1020 */
     0,
     /* POPA16 */
   },
-  { /* 1022 */
+  { /* 1021 */
     0,
     /* POPA32 */
   },
-  { /* 1023 */
+  { /* 1022 */
     0,
     /* POPDS16 */
   },
-  { /* 1024 */
+  { /* 1023 */
     0,
     /* POPDS32 */
   },
-  { /* 1025 */
+  { /* 1024 */
     0,
     /* POPES16 */
   },
-  { /* 1026 */
+  { /* 1025 */
     0,
     /* POPES32 */
   },
-  { /* 1027 */
+  { /* 1026 */
     0,
     /* POPF16 */
   },
-  { /* 1028 */
+  { /* 1027 */
     0,
     /* POPF32 */
   },
-  { /* 1029 */
+  { /* 1028 */
     0,
     /* POPF64 */
   },
-  { /* 1030 */
+  { /* 1029 */
     0,
     /* POPFS16 */
   },
-  { /* 1031 */
+  { /* 1030 */
     0,
     /* POPFS32 */
   },
-  { /* 1032 */
+  { /* 1031 */
     0,
     /* POPFS64 */
   },
-  { /* 1033 */
+  { /* 1032 */
     0,
     /* POPGS16 */
   },
-  { /* 1034 */
+  { /* 1033 */
     0,
     /* POPGS32 */
   },
-  { /* 1035 */
+  { /* 1034 */
     0,
     /* POPGS64 */
   },
-  { /* 1036 */
+  { /* 1035 */
     0,
     /* POPSS16 */
   },
-  { /* 1037 */
+  { /* 1036 */
     0,
     /* POPSS32 */
   },
-  { /* 1038 */
-    145,
+  { /* 1037 */
+    146,
     /* PUSH16i8 */
   },
-  { /* 1039 */
-    143,
+  { /* 1038 */
+    144,
     /* PUSH16r */
   },
-  { /* 1040 */
+  { /* 1039 */
     61,
     /* PUSH16rmm */
   },
-  { /* 1041 */
+  { /* 1040 */
     62,
     /* PUSH16rmr */
   },
-  { /* 1042 */
-    146,
+  { /* 1041 */
+    147,
     /* PUSH32i8 */
   },
-  { /* 1043 */
-    143,
+  { /* 1042 */
+    144,
     /* PUSH32r */
   },
-  { /* 1044 */
+  { /* 1043 */
     61,
     /* PUSH32rmm */
   },
-  { /* 1045 */
+  { /* 1044 */
     62,
     /* PUSH32rmr */
   },
-  { /* 1046 */
+  { /* 1045 */
     2,
     /* PUSH64i16 */
   },
-  { /* 1047 */
+  { /* 1046 */
     13,
     /* PUSH64i32 */
   },
-  { /* 1048 */
-    147,
+  { /* 1047 */
+    148,
     /* PUSH64i8 */
   },
-  { /* 1049 */
-    144,
+  { /* 1048 */
+    145,
     /* PUSH64r */
   },
-  { /* 1050 */
+  { /* 1049 */
     61,
     /* PUSH64rmm */
   },
-  { /* 1051 */
+  { /* 1050 */
     64,
     /* PUSH64rmr */
   },
-  { /* 1052 */
+  { /* 1051 */
     0,
     /* PUSHA16 */
   },
-  { /* 1053 */
+  { /* 1052 */
     0,
     /* PUSHA32 */
   },
-  { /* 1054 */
+  { /* 1053 */
     0,
     /* PUSHCS16 */
   },
-  { /* 1055 */
+  { /* 1054 */
     0,
     /* PUSHCS32 */
   },
-  { /* 1056 */
+  { /* 1055 */
     0,
     /* PUSHDS16 */
   },
-  { /* 1057 */
+  { /* 1056 */
     0,
     /* PUSHDS32 */
   },
-  { /* 1058 */
+  { /* 1057 */
     0,
     /* PUSHES16 */
   },
-  { /* 1059 */
+  { /* 1058 */
     0,
     /* PUSHES32 */
   },
-  { /* 1060 */
+  { /* 1059 */
     0,
     /* PUSHF16 */
   },
-  { /* 1061 */
+  { /* 1060 */
     0,
     /* PUSHF32 */
   },
-  { /* 1062 */
+  { /* 1061 */
     0,
     /* PUSHF64 */
   },
-  { /* 1063 */
+  { /* 1062 */
     0,
     /* PUSHFS16 */
   },
-  { /* 1064 */
+  { /* 1063 */
     0,
     /* PUSHFS32 */
   },
-  { /* 1065 */
+  { /* 1064 */
     0,
     /* PUSHFS64 */
   },
-  { /* 1066 */
+  { /* 1065 */
     0,
     /* PUSHGS16 */
   },
-  { /* 1067 */
+  { /* 1066 */
     0,
     /* PUSHGS32 */
   },
-  { /* 1068 */
+  { /* 1067 */
     0,
     /* PUSHGS64 */
   },
-  { /* 1069 */
+  { /* 1068 */
     0,
     /* PUSHSS16 */
   },
-  { /* 1070 */
+  { /* 1069 */
     0,
     /* PUSHSS32 */
   },
-  { /* 1071 */
+  { /* 1070 */
     2,
     /* PUSHi16 */
   },
-  { /* 1072 */
+  { /* 1071 */
     2,
     /* PUSHi32 */
   },
-  { /* 1073 */
+  { /* 1072 */
     61,
     /* RCL16m1 */
   },
-  { /* 1074 */
+  { /* 1073 */
     61,
     /* RCL16mCL */
   },
-  { /* 1075 */
-    148,
+  { /* 1074 */
+    149,
     /* RCL16mi */
   },
-  { /* 1076 */
-    78,
+  { /* 1075 */
+    79,
     /* RCL16r1 */
   },
-  { /* 1077 */
-    78,
+  { /* 1076 */
+    79,
     /* RCL16rCL */
   },
-  { /* 1078 */
-    149,
+  { /* 1077 */
+    150,
     /* RCL16ri */
   },
-  { /* 1079 */
+  { /* 1078 */
     61,
     /* RCL32m1 */
   },
-  { /* 1080 */
+  { /* 1079 */
     61,
     /* RCL32mCL */
   },
-  { /* 1081 */
-    148,
+  { /* 1080 */
+    149,
     /* RCL32mi */
   },
-  { /* 1082 */
-    78,
+  { /* 1081 */
+    79,
     /* RCL32r1 */
   },
-  { /* 1083 */
-    78,
+  { /* 1082 */
+    79,
     /* RCL32rCL */
   },
-  { /* 1084 */
-    149,
+  { /* 1083 */
+    150,
     /* RCL32ri */
   },
-  { /* 1085 */
+  { /* 1084 */
     61,
     /* RCL64m1 */
   },
-  { /* 1086 */
+  { /* 1085 */
     61,
     /* RCL64mCL */
   },
-  { /* 1087 */
-    148,
+  { /* 1086 */
+    149,
     /* RCL64mi */
   },
-  { /* 1088 */
-    79,
+  { /* 1087 */
+    80,
     /* RCL64r1 */
   },
-  { /* 1089 */
-    79,
+  { /* 1088 */
+    80,
     /* RCL64rCL */
   },
-  { /* 1090 */
-    150,
+  { /* 1089 */
+    151,
     /* RCL64ri */
   },
-  { /* 1091 */
-    80,
+  { /* 1090 */
+    67,
     /* RCL8m1 */
   },
-  { /* 1092 */
-    80,
+  { /* 1091 */
+    67,
     /* RCL8mCL */
   },
-  { /* 1093 */
-    23,
+  { /* 1092 */
+    22,
     /* RCL8mi */
   },
-  { /* 1094 */
+  { /* 1093 */
     81,
     /* RCL8r1 */
   },
-  { /* 1095 */
+  { /* 1094 */
     81,
     /* RCL8rCL */
   },
-  { /* 1096 */
-    22,
+  { /* 1095 */
+    24,
     /* RCL8ri */
   },
-  { /* 1097 */
+  { /* 1096 */
     61,
     /* RCR16m1 */
   },
-  { /* 1098 */
+  { /* 1097 */
     61,
     /* RCR16mCL */
   },
-  { /* 1099 */
-    148,
+  { /* 1098 */
+    149,
     /* RCR16mi */
   },
-  { /* 1100 */
-    78,
+  { /* 1099 */
+    79,
     /* RCR16r1 */
   },
-  { /* 1101 */
-    78,
+  { /* 1100 */
+    79,
     /* RCR16rCL */
   },
-  { /* 1102 */
-    149,
+  { /* 1101 */
+    150,
     /* RCR16ri */
   },
-  { /* 1103 */
+  { /* 1102 */
     61,
     /* RCR32m1 */
   },
-  { /* 1104 */
+  { /* 1103 */
     61,
     /* RCR32mCL */
   },
-  { /* 1105 */
-    148,
+  { /* 1104 */
+    149,
     /* RCR32mi */
   },
-  { /* 1106 */
-    78,
+  { /* 1105 */
+    79,
     /* RCR32r1 */
   },
-  { /* 1107 */
-    78,
+  { /* 1106 */
+    79,
     /* RCR32rCL */
   },
-  { /* 1108 */
-    149,
+  { /* 1107 */
+    150,
     /* RCR32ri */
   },
-  { /* 1109 */
+  { /* 1108 */
     61,
     /* RCR64m1 */
   },
-  { /* 1110 */
+  { /* 1109 */
     61,
     /* RCR64mCL */
   },
-  { /* 1111 */
-    148,
+  { /* 1110 */
+    149,
     /* RCR64mi */
   },
-  { /* 1112 */
-    79,
+  { /* 1111 */
+    80,
     /* RCR64r1 */
   },
-  { /* 1113 */
-    79,
+  { /* 1112 */
+    80,
     /* RCR64rCL */
   },
-  { /* 1114 */
-    150,
+  { /* 1113 */
+    151,
     /* RCR64ri */
   },
-  { /* 1115 */
-    80,
+  { /* 1114 */
+    67,
     /* RCR8m1 */
   },
-  { /* 1116 */
-    80,
+  { /* 1115 */
+    67,
     /* RCR8mCL */
   },
-  { /* 1117 */
-    23,
+  { /* 1116 */
+    22,
     /* RCR8mi */
   },
-  { /* 1118 */
+  { /* 1117 */
     81,
     /* RCR8r1 */
   },
-  { /* 1119 */
+  { /* 1118 */
     81,
     /* RCR8rCL */
   },
-  { /* 1120 */
-    22,
+  { /* 1119 */
+    24,
     /* RCR8ri */
   },
-  { /* 1121 */
-    151,
+  { /* 1120 */
+    152,
     /* RDFSBASE */
   },
-  { /* 1122 */
+  { /* 1121 */
     64,
     /* RDFSBASE64 */
   },
-  { /* 1123 */
-    151,
+  { /* 1122 */
+    152,
     /* RDGSBASE */
   },
-  { /* 1124 */
+  { /* 1123 */
     64,
     /* RDGSBASE64 */
   },
-  { /* 1125 */
+  { /* 1124 */
     0,
     /* RDMSR */
   },
-  { /* 1126 */
+  { /* 1125 */
     0,
     /* RDPMC */
   },
-  { /* 1127 */
+  { /* 1126 */
     62,
     /* RDRAND16r */
   },
-  { /* 1128 */
+  { /* 1127 */
     62,
     /* RDRAND32r */
   },
-  { /* 1129 */
+  { /* 1128 */
     64,
     /* RDRAND64r */
   },
-  { /* 1130 */
+  { /* 1129 */
     62,
     /* RDSEED16r */
   },
-  { /* 1131 */
+  { /* 1130 */
     62,
     /* RDSEED32r */
   },
-  { /* 1132 */
+  { /* 1131 */
     64,
     /* RDSEED64r */
   },
-  { /* 1133 */
+  { /* 1132 */
     0,
     /* RDTSC */
   },
-  { /* 1134 */
+  { /* 1133 */
     0,
     /* RDTSCP */
+  },
+  { /* 1134 */
+    0,
+    /*  */
   },
   { /* 1135 */
     0,
@@ -7169,7 +7177,7 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1683] = 
   },
   { /* 1139 */
     0,
-    /* REPNE_PREFIX */
+    /*  */
   },
   { /* 1140 */
     0,
@@ -7201,7 +7209,7 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1683] = 
   },
   { /* 1147 */
     0,
-    /* REP_PREFIX */
+    /*  */
   },
   { /* 1148 */
     0,
@@ -7232,2114 +7240,2238 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1683] = 
     /*  */
   },
   { /* 1155 */
-    115,
-    /* RETIL */
+    0,
+    /*  */
   },
   { /* 1156 */
-    115,
-    /* RETIQ */
+    0,
+    /*  */
   },
   { /* 1157 */
-    2,
-    /* RETIW */
+    0,
+    /*  */
   },
   { /* 1158 */
     0,
-    /* RETL */
+    /*  */
   },
   { /* 1159 */
     0,
-    /* RETQ */
+    /*  */
   },
   { /* 1160 */
     0,
-    /* RETW */
+    /*  */
   },
   { /* 1161 */
     0,
-    /* REX64_PREFIX */
+    /*  */
   },
   { /* 1162 */
+    0,
+    /* REPNE_PREFIX */
+  },
+  { /* 1163 */
+    0,
+    /*  */
+  },
+  { /* 1164 */
+    0,
+    /*  */
+  },
+  { /* 1165 */
+    0,
+    /*  */
+  },
+  { /* 1166 */
+    0,
+    /*  */
+  },
+  { /* 1167 */
+    0,
+    /*  */
+  },
+  { /* 1168 */
+    0,
+    /*  */
+  },
+  { /* 1169 */
+    0,
+    /*  */
+  },
+  { /* 1170 */
+    0,
+    /* REP_PREFIX */
+  },
+  { /* 1171 */
+    0,
+    /*  */
+  },
+  { /* 1172 */
+    0,
+    /*  */
+  },
+  { /* 1173 */
+    0,
+    /*  */
+  },
+  { /* 1174 */
+    0,
+    /*  */
+  },
+  { /* 1175 */
+    0,
+    /*  */
+  },
+  { /* 1176 */
+    0,
+    /*  */
+  },
+  { /* 1177 */
+    0,
+    /*  */
+  },
+  { /* 1178 */
+    116,
+    /* RETIL */
+  },
+  { /* 1179 */
+    116,
+    /* RETIQ */
+  },
+  { /* 1180 */
+    2,
+    /* RETIW */
+  },
+  { /* 1181 */
+    0,
+    /* RETL */
+  },
+  { /* 1182 */
+    0,
+    /* RETQ */
+  },
+  { /* 1183 */
+    0,
+    /* RETW */
+  },
+  { /* 1184 */
+    0,
+    /* REX64_PREFIX */
+  },
+  { /* 1185 */
     61,
     /* ROL16m1 */
   },
-  { /* 1163 */
+  { /* 1186 */
     61,
     /* ROL16mCL */
   },
-  { /* 1164 */
-    148,
+  { /* 1187 */
+    149,
     /* ROL16mi */
   },
-  { /* 1165 */
-    78,
+  { /* 1188 */
+    79,
     /* ROL16r1 */
   },
-  { /* 1166 */
-    78,
+  { /* 1189 */
+    79,
     /* ROL16rCL */
   },
-  { /* 1167 */
-    149,
+  { /* 1190 */
+    150,
     /* ROL16ri */
   },
-  { /* 1168 */
+  { /* 1191 */
     61,
     /* ROL32m1 */
   },
-  { /* 1169 */
+  { /* 1192 */
     61,
     /* ROL32mCL */
   },
-  { /* 1170 */
-    148,
+  { /* 1193 */
+    149,
     /* ROL32mi */
   },
-  { /* 1171 */
-    78,
+  { /* 1194 */
+    79,
     /* ROL32r1 */
   },
-  { /* 1172 */
-    78,
+  { /* 1195 */
+    79,
     /* ROL32rCL */
   },
-  { /* 1173 */
-    149,
+  { /* 1196 */
+    150,
     /* ROL32ri */
   },
-  { /* 1174 */
+  { /* 1197 */
     61,
     /* ROL64m1 */
   },
-  { /* 1175 */
+  { /* 1198 */
     61,
     /* ROL64mCL */
   },
-  { /* 1176 */
-    148,
+  { /* 1199 */
+    149,
     /* ROL64mi */
   },
-  { /* 1177 */
-    79,
+  { /* 1200 */
+    80,
     /* ROL64r1 */
   },
-  { /* 1178 */
-    79,
+  { /* 1201 */
+    80,
     /* ROL64rCL */
   },
-  { /* 1179 */
-    150,
+  { /* 1202 */
+    151,
     /* ROL64ri */
   },
-  { /* 1180 */
-    80,
+  { /* 1203 */
+    67,
     /* ROL8m1 */
   },
-  { /* 1181 */
-    80,
+  { /* 1204 */
+    67,
     /* ROL8mCL */
   },
-  { /* 1182 */
-    23,
+  { /* 1205 */
+    22,
     /* ROL8mi */
   },
-  { /* 1183 */
+  { /* 1206 */
     81,
     /* ROL8r1 */
   },
-  { /* 1184 */
+  { /* 1207 */
     81,
     /* ROL8rCL */
   },
-  { /* 1185 */
-    22,
+  { /* 1208 */
+    24,
     /* ROL8ri */
   },
-  { /* 1186 */
+  { /* 1209 */
     61,
     /* ROR16m1 */
   },
-  { /* 1187 */
+  { /* 1210 */
     61,
     /* ROR16mCL */
   },
-  { /* 1188 */
-    148,
+  { /* 1211 */
+    149,
     /* ROR16mi */
   },
-  { /* 1189 */
-    78,
+  { /* 1212 */
+    79,
     /* ROR16r1 */
   },
-  { /* 1190 */
-    78,
+  { /* 1213 */
+    79,
     /* ROR16rCL */
   },
-  { /* 1191 */
-    149,
+  { /* 1214 */
+    150,
     /* ROR16ri */
   },
-  { /* 1192 */
+  { /* 1215 */
     61,
     /* ROR32m1 */
   },
-  { /* 1193 */
+  { /* 1216 */
     61,
     /* ROR32mCL */
   },
-  { /* 1194 */
-    148,
+  { /* 1217 */
+    149,
     /* ROR32mi */
   },
-  { /* 1195 */
-    78,
+  { /* 1218 */
+    79,
     /* ROR32r1 */
   },
-  { /* 1196 */
-    78,
+  { /* 1219 */
+    79,
     /* ROR32rCL */
   },
-  { /* 1197 */
-    149,
+  { /* 1220 */
+    150,
     /* ROR32ri */
   },
-  { /* 1198 */
+  { /* 1221 */
     61,
     /* ROR64m1 */
   },
-  { /* 1199 */
+  { /* 1222 */
     61,
     /* ROR64mCL */
   },
-  { /* 1200 */
-    148,
+  { /* 1223 */
+    149,
     /* ROR64mi */
   },
-  { /* 1201 */
-    79,
+  { /* 1224 */
+    80,
     /* ROR64r1 */
   },
-  { /* 1202 */
-    79,
+  { /* 1225 */
+    80,
     /* ROR64rCL */
   },
-  { /* 1203 */
-    150,
+  { /* 1226 */
+    151,
     /* ROR64ri */
   },
-  { /* 1204 */
-    80,
+  { /* 1227 */
+    67,
     /* ROR8m1 */
   },
-  { /* 1205 */
-    80,
+  { /* 1228 */
+    67,
     /* ROR8mCL */
   },
-  { /* 1206 */
-    23,
+  { /* 1229 */
+    22,
     /* ROR8mi */
   },
-  { /* 1207 */
+  { /* 1230 */
     81,
     /* ROR8r1 */
   },
-  { /* 1208 */
+  { /* 1231 */
     81,
     /* ROR8rCL */
   },
-  { /* 1209 */
-    22,
+  { /* 1232 */
+    24,
     /* ROR8ri */
   },
-  { /* 1210 */
-    152,
+  { /* 1233 */
+    153,
     /* RORX32mi */
   },
-  { /* 1211 */
-    153,
+  { /* 1234 */
+    154,
     /* RORX32ri */
   },
-  { /* 1212 */
-    154,
+  { /* 1235 */
+    155,
     /* RORX64mi */
   },
-  { /* 1213 */
-    155,
+  { /* 1236 */
+    156,
     /* RORX64ri */
   },
-  { /* 1214 */
+  { /* 1237 */
     0,
     /* RSM */
   },
-  { /* 1215 */
+  { /* 1238 */
     0,
     /* SAHF */
   },
-  { /* 1216 */
+  { /* 1239 */
     61,
     /* SAL16m1 */
   },
-  { /* 1217 */
+  { /* 1240 */
     61,
     /* SAL16mCL */
   },
-  { /* 1218 */
-    148,
+  { /* 1241 */
+    149,
     /* SAL16mi */
   },
-  { /* 1219 */
-    78,
+  { /* 1242 */
+    79,
     /* SAL16r1 */
   },
-  { /* 1220 */
-    78,
+  { /* 1243 */
+    79,
     /* SAL16rCL */
   },
-  { /* 1221 */
-    149,
+  { /* 1244 */
+    150,
     /* SAL16ri */
   },
-  { /* 1222 */
+  { /* 1245 */
     61,
     /* SAL32m1 */
   },
-  { /* 1223 */
+  { /* 1246 */
     61,
     /* SAL32mCL */
   },
-  { /* 1224 */
-    148,
+  { /* 1247 */
+    149,
     /* SAL32mi */
   },
-  { /* 1225 */
-    78,
+  { /* 1248 */
+    79,
     /* SAL32r1 */
   },
-  { /* 1226 */
-    78,
+  { /* 1249 */
+    79,
     /* SAL32rCL */
   },
-  { /* 1227 */
-    149,
+  { /* 1250 */
+    150,
     /* SAL32ri */
   },
-  { /* 1228 */
+  { /* 1251 */
     61,
     /* SAL64m1 */
   },
-  { /* 1229 */
+  { /* 1252 */
     61,
     /* SAL64mCL */
   },
-  { /* 1230 */
-    148,
+  { /* 1253 */
+    149,
     /* SAL64mi */
   },
-  { /* 1231 */
-    79,
+  { /* 1254 */
+    80,
     /* SAL64r1 */
   },
-  { /* 1232 */
-    79,
+  { /* 1255 */
+    80,
     /* SAL64rCL */
   },
-  { /* 1233 */
-    150,
+  { /* 1256 */
+    151,
     /* SAL64ri */
   },
-  { /* 1234 */
-    80,
+  { /* 1257 */
+    67,
     /* SAL8m1 */
   },
-  { /* 1235 */
-    80,
+  { /* 1258 */
+    67,
     /* SAL8mCL */
   },
-  { /* 1236 */
-    23,
+  { /* 1259 */
+    22,
     /* SAL8mi */
   },
-  { /* 1237 */
+  { /* 1260 */
     81,
     /* SAL8r1 */
   },
-  { /* 1238 */
+  { /* 1261 */
     81,
     /* SAL8rCL */
   },
-  { /* 1239 */
-    22,
+  { /* 1262 */
+    24,
     /* SAL8ri */
   },
-  { /* 1240 */
+  { /* 1263 */
     0,
     /* SALC */
   },
-  { /* 1241 */
+  { /* 1264 */
     61,
     /* SAR16m1 */
   },
-  { /* 1242 */
+  { /* 1265 */
     61,
     /* SAR16mCL */
   },
-  { /* 1243 */
-    148,
+  { /* 1266 */
+    149,
     /* SAR16mi */
   },
-  { /* 1244 */
-    78,
+  { /* 1267 */
+    79,
     /* SAR16r1 */
   },
-  { /* 1245 */
-    78,
+  { /* 1268 */
+    79,
     /* SAR16rCL */
   },
-  { /* 1246 */
-    149,
+  { /* 1269 */
+    150,
     /* SAR16ri */
   },
-  { /* 1247 */
+  { /* 1270 */
     61,
     /* SAR32m1 */
   },
-  { /* 1248 */
+  { /* 1271 */
     61,
     /* SAR32mCL */
   },
-  { /* 1249 */
-    148,
+  { /* 1272 */
+    149,
     /* SAR32mi */
   },
-  { /* 1250 */
-    78,
+  { /* 1273 */
+    79,
     /* SAR32r1 */
   },
-  { /* 1251 */
-    78,
+  { /* 1274 */
+    79,
     /* SAR32rCL */
   },
-  { /* 1252 */
-    149,
+  { /* 1275 */
+    150,
     /* SAR32ri */
   },
-  { /* 1253 */
+  { /* 1276 */
     61,
     /* SAR64m1 */
   },
-  { /* 1254 */
+  { /* 1277 */
     61,
     /* SAR64mCL */
   },
-  { /* 1255 */
-    148,
+  { /* 1278 */
+    149,
     /* SAR64mi */
   },
-  { /* 1256 */
-    79,
+  { /* 1279 */
+    80,
     /* SAR64r1 */
   },
-  { /* 1257 */
-    79,
+  { /* 1280 */
+    80,
     /* SAR64rCL */
   },
-  { /* 1258 */
-    150,
+  { /* 1281 */
+    151,
     /* SAR64ri */
   },
-  { /* 1259 */
-    80,
+  { /* 1282 */
+    67,
     /* SAR8m1 */
   },
-  { /* 1260 */
-    80,
+  { /* 1283 */
+    67,
     /* SAR8mCL */
   },
-  { /* 1261 */
-    23,
+  { /* 1284 */
+    22,
     /* SAR8mi */
   },
-  { /* 1262 */
+  { /* 1285 */
     81,
     /* SAR8r1 */
   },
-  { /* 1263 */
+  { /* 1286 */
     81,
     /* SAR8rCL */
   },
-  { /* 1264 */
-    22,
+  { /* 1287 */
+    24,
     /* SAR8ri */
   },
-  { /* 1265 */
+  { /* 1288 */
     40,
     /* SARX32rm */
   },
-  { /* 1266 */
+  { /* 1289 */
     41,
     /* SARX32rr */
   },
-  { /* 1267 */
+  { /* 1290 */
     42,
     /* SARX64rm */
   },
-  { /* 1268 */
+  { /* 1291 */
     43,
     /* SARX64rr */
   },
-  { /* 1269 */
+  { /* 1292 */
     2,
     /* SBB16i16 */
   },
-  { /* 1270 */
+  { /* 1293 */
     3,
     /* SBB16mi */
   },
-  { /* 1271 */
+  { /* 1294 */
     4,
     /* SBB16mi8 */
   },
-  { /* 1272 */
+  { /* 1295 */
     5,
     /* SBB16mr */
   },
-  { /* 1273 */
+  { /* 1296 */
     6,
     /* SBB16ri */
   },
-  { /* 1274 */
+  { /* 1297 */
     7,
     /* SBB16ri8 */
   },
-  { /* 1275 */
+  { /* 1298 */
     8,
     /* SBB16rm */
   },
-  { /* 1276 */
+  { /* 1299 */
     9,
     /* SBB16rr */
   },
-  { /* 1277 */
+  { /* 1300 */
     10,
     /* SBB16rr_REV */
   },
-  { /* 1278 */
+  { /* 1301 */
     2,
     /* SBB32i32 */
   },
-  { /* 1279 */
+  { /* 1302 */
     3,
     /* SBB32mi */
   },
-  { /* 1280 */
+  { /* 1303 */
     11,
     /* SBB32mi8 */
   },
-  { /* 1281 */
+  { /* 1304 */
     5,
     /* SBB32mr */
   },
-  { /* 1282 */
+  { /* 1305 */
     6,
     /* SBB32ri */
   },
-  { /* 1283 */
+  { /* 1306 */
     12,
     /* SBB32ri8 */
   },
-  { /* 1284 */
+  { /* 1307 */
     8,
     /* SBB32rm */
   },
-  { /* 1285 */
+  { /* 1308 */
     9,
     /* SBB32rr */
   },
-  { /* 1286 */
+  { /* 1309 */
     10,
     /* SBB32rr_REV */
   },
-  { /* 1287 */
+  { /* 1310 */
     13,
     /* SBB64i32 */
   },
-  { /* 1288 */
+  { /* 1311 */
     14,
     /* SBB64mi32 */
   },
-  { /* 1289 */
+  { /* 1312 */
     15,
     /* SBB64mi8 */
   },
-  { /* 1290 */
+  { /* 1313 */
     16,
     /* SBB64mr */
   },
-  { /* 1291 */
+  { /* 1314 */
     17,
     /* SBB64ri32 */
   },
-  { /* 1292 */
+  { /* 1315 */
     18,
     /* SBB64ri8 */
   },
-  { /* 1293 */
+  { /* 1316 */
     19,
     /* SBB64rm */
   },
-  { /* 1294 */
+  { /* 1317 */
     20,
     /* SBB64rr */
   },
-  { /* 1295 */
+  { /* 1318 */
     21,
     /* SBB64rr_REV */
   },
-  { /* 1296 */
-    22,
-    /* SBB82_8ri8 */
-  },
-  { /* 1297 */
+  { /* 1319 */
     1,
     /* SBB8i8 */
   },
-  { /* 1298 */
-    23,
+  { /* 1320 */
+    22,
     /* SBB8mi */
   },
-  { /* 1299 */
-    23,
+  { /* 1321 */
+    22,
     /* SBB8mi8 */
   },
-  { /* 1300 */
-    24,
+  { /* 1322 */
+    23,
     /* SBB8mr */
   },
-  { /* 1301 */
-    22,
+  { /* 1323 */
+    24,
     /* SBB8ri */
   },
-  { /* 1302 */
+  { /* 1324 */
+    24,
+    /* SBB8ri8 */
+  },
+  { /* 1325 */
     25,
     /* SBB8rm */
   },
-  { /* 1303 */
+  { /* 1326 */
     26,
     /* SBB8rr */
   },
-  { /* 1304 */
+  { /* 1327 */
     27,
     /* SBB8rr_REV */
   },
-  { /* 1305 */
+  { /* 1328 */
     97,
     /* SCASB */
   },
-  { /* 1306 */
+  { /* 1329 */
     98,
     /* SCASL */
   },
-  { /* 1307 */
-    156,
+  { /* 1330 */
+    157,
     /* SCASQ */
   },
-  { /* 1308 */
+  { /* 1331 */
     99,
     /* SCASW */
   },
-  { /* 1309 */
+  { /* 1332 */
     0,
     /*  */
   },
-  { /* 1310 */
+  { /* 1333 */
     0,
     /*  */
   },
-  { /* 1311 */
+  { /* 1334 */
     0,
     /*  */
   },
-  { /* 1312 */
+  { /* 1335 */
     0,
     /*  */
   },
-  { /* 1313 */
+  { /* 1336 */
     0,
     /*  */
   },
-  { /* 1314 */
+  { /* 1337 */
     0,
     /*  */
   },
-  { /* 1315 */
+  { /* 1338 */
     0,
     /*  */
   },
-  { /* 1316 */
+  { /* 1339 */
     0,
     /*  */
   },
-  { /* 1317 */
+  { /* 1340 */
     0,
     /*  */
   },
-  { /* 1318 */
+  { /* 1341 */
     0,
     /*  */
   },
-  { /* 1319 */
-    80,
+  { /* 1342 */
+    67,
     /* SETAEm */
   },
-  { /* 1320 */
+  { /* 1343 */
     82,
     /* SETAEr */
   },
-  { /* 1321 */
-    80,
+  { /* 1344 */
+    67,
     /* SETAm */
   },
-  { /* 1322 */
+  { /* 1345 */
     82,
     /* SETAr */
   },
-  { /* 1323 */
-    80,
+  { /* 1346 */
+    67,
     /* SETBEm */
   },
-  { /* 1324 */
+  { /* 1347 */
     82,
     /* SETBEr */
   },
-  { /* 1325 */
+  { /* 1348 */
     0,
     /*  */
   },
-  { /* 1326 */
+  { /* 1349 */
     0,
     /*  */
   },
-  { /* 1327 */
+  { /* 1350 */
     0,
     /*  */
   },
-  { /* 1328 */
+  { /* 1351 */
     0,
     /*  */
   },
-  { /* 1329 */
-    80,
+  { /* 1352 */
+    67,
     /* SETBm */
   },
-  { /* 1330 */
+  { /* 1353 */
     82,
     /* SETBr */
   },
-  { /* 1331 */
-    80,
+  { /* 1354 */
+    67,
     /* SETEm */
   },
-  { /* 1332 */
+  { /* 1355 */
     82,
     /* SETEr */
   },
-  { /* 1333 */
-    80,
+  { /* 1356 */
+    67,
     /* SETGEm */
   },
-  { /* 1334 */
+  { /* 1357 */
     82,
     /* SETGEr */
   },
-  { /* 1335 */
-    80,
+  { /* 1358 */
+    67,
     /* SETGm */
   },
-  { /* 1336 */
+  { /* 1359 */
     82,
     /* SETGr */
   },
-  { /* 1337 */
-    80,
+  { /* 1360 */
+    67,
     /* SETLEm */
   },
-  { /* 1338 */
+  { /* 1361 */
     82,
     /* SETLEr */
   },
-  { /* 1339 */
-    80,
+  { /* 1362 */
+    67,
     /* SETLm */
   },
-  { /* 1340 */
+  { /* 1363 */
     82,
     /* SETLr */
   },
-  { /* 1341 */
-    80,
+  { /* 1364 */
+    67,
     /* SETNEm */
   },
-  { /* 1342 */
+  { /* 1365 */
     82,
     /* SETNEr */
   },
-  { /* 1343 */
-    80,
+  { /* 1366 */
+    67,
     /* SETNOm */
   },
-  { /* 1344 */
+  { /* 1367 */
     82,
     /* SETNOr */
   },
-  { /* 1345 */
-    80,
+  { /* 1368 */
+    67,
     /* SETNPm */
   },
-  { /* 1346 */
+  { /* 1369 */
     82,
     /* SETNPr */
   },
-  { /* 1347 */
-    80,
+  { /* 1370 */
+    67,
     /* SETNSm */
   },
-  { /* 1348 */
+  { /* 1371 */
     82,
     /* SETNSr */
   },
-  { /* 1349 */
-    80,
+  { /* 1372 */
+    67,
     /* SETOm */
   },
-  { /* 1350 */
+  { /* 1373 */
     82,
     /* SETOr */
   },
-  { /* 1351 */
-    80,
+  { /* 1374 */
+    67,
     /* SETPm */
   },
-  { /* 1352 */
+  { /* 1375 */
     82,
     /* SETPr */
   },
-  { /* 1353 */
-    80,
+  { /* 1376 */
+    67,
     /* SETSm */
   },
-  { /* 1354 */
+  { /* 1377 */
     82,
     /* SETSr */
   },
-  { /* 1355 */
+  { /* 1378 */
     87,
     /* SGDT16m */
   },
-  { /* 1356 */
+  { /* 1379 */
     87,
     /* SGDT32m */
   },
-  { /* 1357 */
+  { /* 1380 */
     88,
     /* SGDT64m */
   },
-  { /* 1358 */
+  { /* 1381 */
     61,
     /* SHL16m1 */
   },
-  { /* 1359 */
+  { /* 1382 */
     61,
     /* SHL16mCL */
   },
-  { /* 1360 */
-    148,
+  { /* 1383 */
+    149,
     /* SHL16mi */
   },
-  { /* 1361 */
-    78,
+  { /* 1384 */
+    79,
     /* SHL16r1 */
   },
-  { /* 1362 */
-    78,
+  { /* 1385 */
+    79,
     /* SHL16rCL */
   },
-  { /* 1363 */
-    149,
+  { /* 1386 */
+    150,
     /* SHL16ri */
   },
-  { /* 1364 */
+  { /* 1387 */
     61,
     /* SHL32m1 */
   },
-  { /* 1365 */
+  { /* 1388 */
     61,
     /* SHL32mCL */
   },
-  { /* 1366 */
-    148,
+  { /* 1389 */
+    149,
     /* SHL32mi */
   },
-  { /* 1367 */
-    78,
+  { /* 1390 */
+    79,
     /* SHL32r1 */
   },
-  { /* 1368 */
-    78,
+  { /* 1391 */
+    79,
     /* SHL32rCL */
   },
-  { /* 1369 */
-    149,
+  { /* 1392 */
+    150,
     /* SHL32ri */
   },
-  { /* 1370 */
+  { /* 1393 */
     61,
     /* SHL64m1 */
   },
-  { /* 1371 */
+  { /* 1394 */
     61,
     /* SHL64mCL */
   },
-  { /* 1372 */
-    148,
+  { /* 1395 */
+    149,
     /* SHL64mi */
   },
-  { /* 1373 */
-    79,
+  { /* 1396 */
+    80,
     /* SHL64r1 */
   },
-  { /* 1374 */
-    79,
+  { /* 1397 */
+    80,
     /* SHL64rCL */
   },
-  { /* 1375 */
-    150,
+  { /* 1398 */
+    151,
     /* SHL64ri */
   },
-  { /* 1376 */
-    80,
+  { /* 1399 */
+    67,
     /* SHL8m1 */
   },
-  { /* 1377 */
-    80,
+  { /* 1400 */
+    67,
     /* SHL8mCL */
   },
-  { /* 1378 */
-    23,
+  { /* 1401 */
+    22,
     /* SHL8mi */
   },
-  { /* 1379 */
+  { /* 1402 */
     81,
     /* SHL8r1 */
   },
-  { /* 1380 */
+  { /* 1403 */
     81,
     /* SHL8rCL */
   },
-  { /* 1381 */
-    22,
+  { /* 1404 */
+    24,
     /* SHL8ri */
   },
-  { /* 1382 */
+  { /* 1405 */
     5,
     /* SHLD16mrCL */
   },
-  { /* 1383 */
-    157,
+  { /* 1406 */
+    158,
     /* SHLD16mri8 */
   },
-  { /* 1384 */
+  { /* 1407 */
     9,
     /* SHLD16rrCL */
   },
-  { /* 1385 */
-    158,
+  { /* 1408 */
+    159,
     /* SHLD16rri8 */
   },
-  { /* 1386 */
+  { /* 1409 */
     5,
     /* SHLD32mrCL */
   },
-  { /* 1387 */
-    157,
+  { /* 1410 */
+    158,
     /* SHLD32mri8 */
   },
-  { /* 1388 */
+  { /* 1411 */
     9,
     /* SHLD32rrCL */
   },
-  { /* 1389 */
-    158,
+  { /* 1412 */
+    159,
     /* SHLD32rri8 */
   },
-  { /* 1390 */
+  { /* 1413 */
     16,
     /* SHLD64mrCL */
   },
-  { /* 1391 */
-    159,
+  { /* 1414 */
+    160,
     /* SHLD64mri8 */
   },
-  { /* 1392 */
+  { /* 1415 */
     20,
     /* SHLD64rrCL */
   },
-  { /* 1393 */
-    160,
+  { /* 1416 */
+    161,
     /* SHLD64rri8 */
   },
-  { /* 1394 */
+  { /* 1417 */
     40,
     /* SHLX32rm */
   },
-  { /* 1395 */
+  { /* 1418 */
     41,
     /* SHLX32rr */
   },
-  { /* 1396 */
+  { /* 1419 */
     42,
     /* SHLX64rm */
   },
-  { /* 1397 */
+  { /* 1420 */
     43,
     /* SHLX64rr */
   },
-  { /* 1398 */
+  { /* 1421 */
     61,
     /* SHR16m1 */
   },
-  { /* 1399 */
+  { /* 1422 */
     61,
     /* SHR16mCL */
   },
-  { /* 1400 */
-    148,
+  { /* 1423 */
+    149,
     /* SHR16mi */
   },
-  { /* 1401 */
-    78,
+  { /* 1424 */
+    79,
     /* SHR16r1 */
   },
-  { /* 1402 */
-    78,
+  { /* 1425 */
+    79,
     /* SHR16rCL */
   },
-  { /* 1403 */
-    149,
+  { /* 1426 */
+    150,
     /* SHR16ri */
   },
-  { /* 1404 */
+  { /* 1427 */
     61,
     /* SHR32m1 */
   },
-  { /* 1405 */
+  { /* 1428 */
     61,
     /* SHR32mCL */
   },
-  { /* 1406 */
-    148,
+  { /* 1429 */
+    149,
     /* SHR32mi */
   },
-  { /* 1407 */
-    78,
+  { /* 1430 */
+    79,
     /* SHR32r1 */
   },
-  { /* 1408 */
-    78,
+  { /* 1431 */
+    79,
     /* SHR32rCL */
   },
-  { /* 1409 */
-    149,
+  { /* 1432 */
+    150,
     /* SHR32ri */
   },
-  { /* 1410 */
+  { /* 1433 */
     61,
     /* SHR64m1 */
   },
-  { /* 1411 */
+  { /* 1434 */
     61,
     /* SHR64mCL */
   },
-  { /* 1412 */
-    148,
+  { /* 1435 */
+    149,
     /* SHR64mi */
   },
-  { /* 1413 */
-    79,
+  { /* 1436 */
+    80,
     /* SHR64r1 */
   },
-  { /* 1414 */
-    79,
+  { /* 1437 */
+    80,
     /* SHR64rCL */
   },
-  { /* 1415 */
-    150,
+  { /* 1438 */
+    151,
     /* SHR64ri */
   },
-  { /* 1416 */
-    80,
+  { /* 1439 */
+    67,
     /* SHR8m1 */
   },
-  { /* 1417 */
-    80,
+  { /* 1440 */
+    67,
     /* SHR8mCL */
   },
-  { /* 1418 */
-    23,
+  { /* 1441 */
+    22,
     /* SHR8mi */
   },
-  { /* 1419 */
+  { /* 1442 */
     81,
     /* SHR8r1 */
   },
-  { /* 1420 */
+  { /* 1443 */
     81,
     /* SHR8rCL */
   },
-  { /* 1421 */
-    22,
+  { /* 1444 */
+    24,
     /* SHR8ri */
   },
-  { /* 1422 */
+  { /* 1445 */
     5,
     /* SHRD16mrCL */
   },
-  { /* 1423 */
-    157,
+  { /* 1446 */
+    158,
     /* SHRD16mri8 */
   },
-  { /* 1424 */
+  { /* 1447 */
     9,
     /* SHRD16rrCL */
   },
-  { /* 1425 */
-    158,
+  { /* 1448 */
+    159,
     /* SHRD16rri8 */
   },
-  { /* 1426 */
+  { /* 1449 */
     5,
     /* SHRD32mrCL */
   },
-  { /* 1427 */
-    157,
+  { /* 1450 */
+    158,
     /* SHRD32mri8 */
   },
-  { /* 1428 */
+  { /* 1451 */
     9,
     /* SHRD32rrCL */
   },
-  { /* 1429 */
-    158,
+  { /* 1452 */
+    159,
     /* SHRD32rri8 */
   },
-  { /* 1430 */
+  { /* 1453 */
     16,
     /* SHRD64mrCL */
   },
-  { /* 1431 */
-    159,
+  { /* 1454 */
+    160,
     /* SHRD64mri8 */
   },
-  { /* 1432 */
+  { /* 1455 */
     20,
     /* SHRD64rrCL */
   },
-  { /* 1433 */
-    160,
+  { /* 1456 */
+    161,
     /* SHRD64rri8 */
   },
-  { /* 1434 */
+  { /* 1457 */
     40,
     /* SHRX32rm */
   },
-  { /* 1435 */
+  { /* 1458 */
     41,
     /* SHRX32rr */
   },
-  { /* 1436 */
+  { /* 1459 */
     42,
     /* SHRX64rm */
   },
-  { /* 1437 */
+  { /* 1460 */
     43,
     /* SHRX64rr */
   },
-  { /* 1438 */
+  { /* 1461 */
     87,
     /* SIDT16m */
   },
-  { /* 1439 */
+  { /* 1462 */
     87,
     /* SIDT32m */
   },
-  { /* 1440 */
+  { /* 1463 */
     88,
     /* SIDT64m */
   },
-  { /* 1441 */
+  { /* 1464 */
     0,
     /* SKINIT */
   },
-  { /* 1442 */
+  { /* 1465 */
     61,
     /* SLDT16m */
   },
-  { /* 1443 */
+  { /* 1466 */
     62,
     /* SLDT16r */
   },
-  { /* 1444 */
+  { /* 1467 */
     62,
     /* SLDT32r */
   },
-  { /* 1445 */
+  { /* 1468 */
     61,
     /* SLDT64m */
   },
-  { /* 1446 */
+  { /* 1469 */
     64,
     /* SLDT64r */
   },
-  { /* 1447 */
+  { /* 1470 */
     61,
     /* SMSW16m */
   },
-  { /* 1448 */
+  { /* 1471 */
     62,
     /* SMSW16r */
   },
-  { /* 1449 */
+  { /* 1472 */
     62,
     /* SMSW32r */
   },
-  { /* 1450 */
+  { /* 1473 */
     64,
     /* SMSW64r */
   },
-  { /* 1451 */
+  { /* 1474 */
     0,
     /* STAC */
   },
-  { /* 1452 */
+  { /* 1475 */
     0,
     /* STC */
   },
-  { /* 1453 */
+  { /* 1476 */
     0,
     /* STD */
   },
-  { /* 1454 */
+  { /* 1477 */
     0,
     /* STGI */
   },
-  { /* 1455 */
+  { /* 1478 */
     0,
     /* STI */
   },
-  { /* 1456 */
+  { /* 1479 */
     97,
     /* STOSB */
   },
-  { /* 1457 */
+  { /* 1480 */
     98,
     /* STOSL */
   },
-  { /* 1458 */
-    156,
+  { /* 1481 */
+    157,
     /* STOSQ */
   },
-  { /* 1459 */
+  { /* 1482 */
     99,
     /* STOSW */
   },
-  { /* 1460 */
+  { /* 1483 */
     62,
     /* STR16r */
   },
-  { /* 1461 */
+  { /* 1484 */
     62,
     /* STR32r */
   },
-  { /* 1462 */
+  { /* 1485 */
     64,
     /* STR64r */
   },
-  { /* 1463 */
+  { /* 1486 */
     61,
     /* STRm */
   },
-  { /* 1464 */
+  { /* 1487 */
     2,
     /* SUB16i16 */
   },
-  { /* 1465 */
+  { /* 1488 */
     3,
     /* SUB16mi */
   },
-  { /* 1466 */
+  { /* 1489 */
     4,
     /* SUB16mi8 */
   },
-  { /* 1467 */
+  { /* 1490 */
     5,
     /* SUB16mr */
   },
-  { /* 1468 */
+  { /* 1491 */
     6,
     /* SUB16ri */
   },
-  { /* 1469 */
+  { /* 1492 */
     7,
     /* SUB16ri8 */
   },
-  { /* 1470 */
+  { /* 1493 */
     8,
     /* SUB16rm */
   },
-  { /* 1471 */
+  { /* 1494 */
     9,
     /* SUB16rr */
   },
-  { /* 1472 */
+  { /* 1495 */
     10,
     /* SUB16rr_REV */
   },
-  { /* 1473 */
+  { /* 1496 */
     2,
     /* SUB32i32 */
   },
-  { /* 1474 */
+  { /* 1497 */
     3,
     /* SUB32mi */
   },
-  { /* 1475 */
+  { /* 1498 */
     11,
     /* SUB32mi8 */
   },
-  { /* 1476 */
+  { /* 1499 */
     5,
     /* SUB32mr */
   },
-  { /* 1477 */
+  { /* 1500 */
     6,
     /* SUB32ri */
   },
-  { /* 1478 */
+  { /* 1501 */
     12,
     /* SUB32ri8 */
   },
-  { /* 1479 */
+  { /* 1502 */
     8,
     /* SUB32rm */
   },
-  { /* 1480 */
+  { /* 1503 */
     9,
     /* SUB32rr */
   },
-  { /* 1481 */
+  { /* 1504 */
     10,
     /* SUB32rr_REV */
   },
-  { /* 1482 */
+  { /* 1505 */
     13,
     /* SUB64i32 */
   },
-  { /* 1483 */
+  { /* 1506 */
     14,
     /* SUB64mi32 */
   },
-  { /* 1484 */
+  { /* 1507 */
     15,
     /* SUB64mi8 */
   },
-  { /* 1485 */
+  { /* 1508 */
     16,
     /* SUB64mr */
   },
-  { /* 1486 */
+  { /* 1509 */
     17,
     /* SUB64ri32 */
   },
-  { /* 1487 */
+  { /* 1510 */
     18,
     /* SUB64ri8 */
   },
-  { /* 1488 */
+  { /* 1511 */
     19,
     /* SUB64rm */
   },
-  { /* 1489 */
+  { /* 1512 */
     20,
     /* SUB64rr */
   },
-  { /* 1490 */
+  { /* 1513 */
     21,
     /* SUB64rr_REV */
   },
-  { /* 1491 */
-    23,
-    /* SUB82_8mi8 */
-  },
-  { /* 1492 */
-    22,
-    /* SUB82_8ri8 */
-  },
-  { /* 1493 */
+  { /* 1514 */
     1,
     /* SUB8i8 */
   },
-  { /* 1494 */
-    23,
+  { /* 1515 */
+    22,
     /* SUB8mi */
   },
-  { /* 1495 */
-    24,
+  { /* 1516 */
+    22,
+    /* SUB8mi8 */
+  },
+  { /* 1517 */
+    23,
     /* SUB8mr */
   },
-  { /* 1496 */
-    22,
+  { /* 1518 */
+    24,
     /* SUB8ri */
   },
-  { /* 1497 */
+  { /* 1519 */
+    24,
+    /* SUB8ri8 */
+  },
+  { /* 1520 */
     25,
     /* SUB8rm */
   },
-  { /* 1498 */
+  { /* 1521 */
     26,
     /* SUB8rr */
   },
-  { /* 1499 */
+  { /* 1522 */
     27,
     /* SUB8rr_REV */
   },
-  { /* 1500 */
+  { /* 1523 */
     0,
     /* SWAPGS */
   },
-  { /* 1501 */
+  { /* 1524 */
     0,
     /* SYSCALL */
   },
-  { /* 1502 */
+  { /* 1525 */
     0,
     /* SYSENTER */
   },
-  { /* 1503 */
+  { /* 1526 */
     0,
     /* SYSEXIT */
   },
-  { /* 1504 */
+  { /* 1527 */
     0,
     /* SYSEXIT64 */
   },
-  { /* 1505 */
+  { /* 1528 */
     0,
     /* SYSRET */
   },
-  { /* 1506 */
+  { /* 1529 */
     0,
     /* SYSRET64 */
   },
-  { /* 1507 */
+  { /* 1530 */
     48,
     /* T1MSKC32rm */
   },
-  { /* 1508 */
+  { /* 1531 */
     49,
     /* T1MSKC32rr */
   },
-  { /* 1509 */
+  { /* 1532 */
     50,
     /* T1MSKC64rm */
   },
-  { /* 1510 */
+  { /* 1533 */
     51,
     /* T1MSKC64rr */
   },
-  { /* 1511 */
-    0,
-    /*  */
-  },
-  { /* 1512 */
-    0,
-    /*  */
-  },
-  { /* 1513 */
-    0,
-    /*  */
-  },
-  { /* 1514 */
-    0,
-    /*  */
-  },
-  { /* 1515 */
-    0,
-    /*  */
-  },
-  { /* 1516 */
-    0,
-    /*  */
-  },
-  { /* 1517 */
-    0,
-    /*  */
-  },
-  { /* 1518 */
-    0,
-    /*  */
-  },
-  { /* 1519 */
-    0,
-    /*  */
-  },
-  { /* 1520 */
-    0,
-    /*  */
-  },
-  { /* 1521 */
-    0,
-    /*  */
-  },
-  { /* 1522 */
-    0,
-    /*  */
-  },
-  { /* 1523 */
-    2,
-    /* TEST16i16 */
-  },
-  { /* 1524 */
-    3,
-    /* TEST16mi */
-  },
-  { /* 1525 */
-    3,
-    /* TEST16mi_alt */
-  },
-  { /* 1526 */
-    67,
-    /* TEST16ri */
-  },
-  { /* 1527 */
-    67,
-    /* TEST16ri_alt */
-  },
-  { /* 1528 */
-    5,
-    /* TEST16rm */
-  },
-  { /* 1529 */
-    53,
-    /* TEST16rr */
-  },
-  { /* 1530 */
-    2,
-    /* TEST32i32 */
-  },
-  { /* 1531 */
-    3,
-    /* TEST32mi */
-  },
-  { /* 1532 */
-    3,
-    /* TEST32mi_alt */
-  },
-  { /* 1533 */
-    67,
-    /* TEST32ri */
-  },
   { /* 1534 */
-    67,
-    /* TEST32ri_alt */
+    0,
+    /*  */
   },
   { /* 1535 */
-    5,
-    /* TEST32rm */
+    0,
+    /*  */
   },
   { /* 1536 */
-    53,
-    /* TEST32rr */
+    0,
+    /*  */
   },
   { /* 1537 */
-    13,
-    /* TEST64i32 */
+    0,
+    /*  */
   },
   { /* 1538 */
-    14,
-    /* TEST64mi32 */
+    0,
+    /*  */
   },
   { /* 1539 */
-    14,
-    /* TEST64mi32_alt */
+    0,
+    /*  */
   },
   { /* 1540 */
-    68,
-    /* TEST64ri32 */
+    0,
+    /*  */
   },
   { /* 1541 */
-    68,
-    /* TEST64ri32_alt */
+    0,
+    /*  */
   },
   { /* 1542 */
-    16,
-    /* TEST64rm */
+    0,
+    /*  */
   },
   { /* 1543 */
-    33,
-    /* TEST64rr */
+    0,
+    /*  */
   },
   { /* 1544 */
-    1,
-    /* TEST8i8 */
+    0,
+    /*  */
   },
   { /* 1545 */
-    23,
-    /* TEST8mi */
+    0,
+    /*  */
   },
   { /* 1546 */
-    23,
-    /* TEST8mi_alt */
+    0,
+    /*  */
   },
   { /* 1547 */
-    69,
-    /* TEST8ri */
+    0,
+    /*  */
   },
   { /* 1548 */
     0,
     /*  */
   },
   { /* 1549 */
-    69,
-    /* TEST8ri_alt */
+    2,
+    /* TEST16i16 */
   },
   { /* 1550 */
-    24,
-    /* TEST8rm */
+    3,
+    /* TEST16mi */
   },
   { /* 1551 */
-    72,
-    /* TEST8rr */
+    3,
+    /* TEST16mi_alt */
   },
   { /* 1552 */
-    0,
-    /*  */
+    68,
+    /* TEST16ri */
   },
   { /* 1553 */
-    0,
-    /*  */
+    68,
+    /* TEST16ri_alt */
   },
   { /* 1554 */
-    0,
-    /*  */
+    52,
+    /* TEST16rm */
   },
   { /* 1555 */
-    0,
-    /*  */
+    53,
+    /* TEST16rr */
   },
   { /* 1556 */
-    0,
-    /*  */
+    2,
+    /* TEST32i32 */
   },
   { /* 1557 */
-    0,
-    /*  */
+    3,
+    /* TEST32mi */
   },
   { /* 1558 */
-    0,
-    /* TRAP */
+    3,
+    /* TEST32mi_alt */
   },
   { /* 1559 */
-    52,
-    /* TZCNT16rm */
+    68,
+    /* TEST32ri */
   },
   { /* 1560 */
-    53,
-    /* TZCNT16rr */
+    68,
+    /* TEST32ri_alt */
   },
   { /* 1561 */
     52,
-    /* TZCNT32rm */
+    /* TEST32rm */
   },
   { /* 1562 */
     53,
-    /* TZCNT32rr */
+    /* TEST32rr */
   },
   { /* 1563 */
-    32,
-    /* TZCNT64rm */
+    13,
+    /* TEST64i32 */
   },
   { /* 1564 */
-    33,
-    /* TZCNT64rr */
+    14,
+    /* TEST64mi32 */
   },
   { /* 1565 */
-    48,
-    /* TZMSK32rm */
+    14,
+    /* TEST64mi32_alt */
   },
   { /* 1566 */
-    49,
-    /* TZMSK32rr */
+    69,
+    /* TEST64ri32 */
   },
   { /* 1567 */
-    50,
-    /* TZMSK64rm */
+    69,
+    /* TEST64ri32_alt */
   },
   { /* 1568 */
-    51,
-    /* TZMSK64rr */
+    32,
+    /* TEST64rm */
   },
   { /* 1569 */
-    0,
-    /* UD2B */
+    33,
+    /* TEST64rr */
   },
   { /* 1570 */
-    0,
-    /*  */
+    1,
+    /* TEST8i8 */
   },
   { /* 1571 */
+    22,
+    /* TEST8mi */
+  },
+  { /* 1572 */
+    22,
+    /* TEST8mi_alt */
+  },
+  { /* 1573 */
+    70,
+    /* TEST8ri */
+  },
+  { /* 1574 */
     0,
     /*  */
   },
-  { /* 1572 */
-    61,
-    /* VERRm */
-  },
-  { /* 1573 */
-    110,
-    /* VERRr */
-  },
-  { /* 1574 */
-    61,
-    /* VERWm */
-  },
   { /* 1575 */
-    110,
-    /* VERWr */
+    70,
+    /* TEST8ri_alt */
   },
   { /* 1576 */
-    0,
-    /* VMCALL */
+    71,
+    /* TEST8rm */
   },
   { /* 1577 */
-    61,
-    /* VMCLEARm */
+    73,
+    /* TEST8rr */
   },
   { /* 1578 */
     0,
-    /* VMFUNC */
+    /*  */
   },
   { /* 1579 */
     0,
-    /* VMLAUNCH */
+    /*  */
   },
   { /* 1580 */
     0,
-    /* VMLOAD32 */
+    /*  */
   },
   { /* 1581 */
     0,
-    /* VMLOAD64 */
+    /*  */
   },
   { /* 1582 */
     0,
-    /* VMMCALL */
+    /*  */
   },
   { /* 1583 */
-    61,
-    /* VMPTRLDm */
-  },
-  { /* 1584 */
-    61,
-    /* VMPTRSTm */
-  },
-  { /* 1585 */
-    161,
-    /* VMREAD32rm */
-  },
-  { /* 1586 */
-    162,
-    /* VMREAD32rr */
-  },
-  { /* 1587 */
-    16,
-    /* VMREAD64rm */
-  },
-  { /* 1588 */
-    60,
-    /* VMREAD64rr */
-  },
-  { /* 1589 */
-    0,
-    /* VMRESUME */
-  },
-  { /* 1590 */
-    0,
-    /* VMRUN32 */
-  },
-  { /* 1591 */
-    0,
-    /* VMRUN64 */
-  },
-  { /* 1592 */
-    0,
-    /* VMSAVE32 */
-  },
-  { /* 1593 */
-    0,
-    /* VMSAVE64 */
-  },
-  { /* 1594 */
-    30,
-    /* VMWRITE32rm */
-  },
-  { /* 1595 */
-    31,
-    /* VMWRITE32rr */
-  },
-  { /* 1596 */
-    32,
-    /* VMWRITE64rm */
-  },
-  { /* 1597 */
-    33,
-    /* VMWRITE64rr */
-  },
-  { /* 1598 */
-    0,
-    /* VMXOFF */
-  },
-  { /* 1599 */
-    61,
-    /* VMXON */
-  },
-  { /* 1600 */
     0,
     /*  */
   },
-  { /* 1601 */
+  { /* 1584 */
     0,
-    /* WBINVD */
+    /* TRAP */
+  },
+  { /* 1585 */
+    52,
+    /* TZCNT16rm */
+  },
+  { /* 1586 */
+    53,
+    /* TZCNT16rr */
+  },
+  { /* 1587 */
+    52,
+    /* TZCNT32rm */
+  },
+  { /* 1588 */
+    53,
+    /* TZCNT32rr */
+  },
+  { /* 1589 */
+    32,
+    /* TZCNT64rm */
+  },
+  { /* 1590 */
+    33,
+    /* TZCNT64rr */
+  },
+  { /* 1591 */
+    48,
+    /* TZMSK32rm */
+  },
+  { /* 1592 */
+    49,
+    /* TZMSK32rr */
+  },
+  { /* 1593 */
+    50,
+    /* TZMSK64rm */
+  },
+  { /* 1594 */
+    51,
+    /* TZMSK64rr */
+  },
+  { /* 1595 */
+    0,
+    /* UD2B */
+  },
+  { /* 1596 */
+    0,
+    /*  */
+  },
+  { /* 1597 */
+    0,
+    /*  */
+  },
+  { /* 1598 */
+    61,
+    /* VERRm */
+  },
+  { /* 1599 */
+    111,
+    /* VERRr */
+  },
+  { /* 1600 */
+    61,
+    /* VERWm */
+  },
+  { /* 1601 */
+    111,
+    /* VERWr */
   },
   { /* 1602 */
     0,
-    /*  */
+    /* VMCALL */
   },
   { /* 1603 */
-    0,
-    /*  */
+    61,
+    /* VMCLEARm */
   },
   { /* 1604 */
     0,
-    /*  */
+    /* VMFUNC */
   },
   { /* 1605 */
-    151,
-    /* WRFSBASE */
+    0,
+    /* VMLAUNCH */
   },
   { /* 1606 */
+    0,
+    /* VMLOAD32 */
+  },
+  { /* 1607 */
+    0,
+    /* VMLOAD64 */
+  },
+  { /* 1608 */
+    0,
+    /* VMMCALL */
+  },
+  { /* 1609 */
+    61,
+    /* VMPTRLDm */
+  },
+  { /* 1610 */
+    61,
+    /* VMPTRSTm */
+  },
+  { /* 1611 */
+    162,
+    /* VMREAD32rm */
+  },
+  { /* 1612 */
+    163,
+    /* VMREAD32rr */
+  },
+  { /* 1613 */
+    16,
+    /* VMREAD64rm */
+  },
+  { /* 1614 */
+    60,
+    /* VMREAD64rr */
+  },
+  { /* 1615 */
+    0,
+    /* VMRESUME */
+  },
+  { /* 1616 */
+    0,
+    /* VMRUN32 */
+  },
+  { /* 1617 */
+    0,
+    /* VMRUN64 */
+  },
+  { /* 1618 */
+    0,
+    /* VMSAVE32 */
+  },
+  { /* 1619 */
+    0,
+    /* VMSAVE64 */
+  },
+  { /* 1620 */
+    30,
+    /* VMWRITE32rm */
+  },
+  { /* 1621 */
+    31,
+    /* VMWRITE32rr */
+  },
+  { /* 1622 */
+    32,
+    /* VMWRITE64rm */
+  },
+  { /* 1623 */
+    33,
+    /* VMWRITE64rr */
+  },
+  { /* 1624 */
+    0,
+    /* VMXOFF */
+  },
+  { /* 1625 */
+    61,
+    /* VMXON */
+  },
+  { /* 1626 */
+    0,
+    /* WBINVD */
+  },
+  { /* 1627 */
+    0,
+    /*  */
+  },
+  { /* 1628 */
+    0,
+    /*  */
+  },
+  { /* 1629 */
+    0,
+    /*  */
+  },
+  { /* 1630 */
+    152,
+    /* WRFSBASE */
+  },
+  { /* 1631 */
     64,
     /* WRFSBASE64 */
   },
-  { /* 1607 */
-    151,
+  { /* 1632 */
+    152,
     /* WRGSBASE */
   },
-  { /* 1608 */
+  { /* 1633 */
     64,
     /* WRGSBASE64 */
   },
-  { /* 1609 */
+  { /* 1634 */
     0,
     /* WRMSR */
   },
-  { /* 1610 */
+  { /* 1635 */
     5,
     /* XADD16rm */
   },
-  { /* 1611 */
+  { /* 1636 */
     57,
     /* XADD16rr */
   },
-  { /* 1612 */
+  { /* 1637 */
     5,
     /* XADD32rm */
   },
-  { /* 1613 */
+  { /* 1638 */
     57,
     /* XADD32rr */
   },
-  { /* 1614 */
+  { /* 1639 */
     16,
     /* XADD64rm */
   },
-  { /* 1615 */
+  { /* 1640 */
     60,
     /* XADD64rr */
   },
-  { /* 1616 */
-    24,
+  { /* 1641 */
+    23,
     /* XADD8rm */
   },
-  { /* 1617 */
-    71,
+  { /* 1642 */
+    72,
     /* XADD8rr */
   },
-  { /* 1618 */
-    143,
+  { /* 1643 */
+    144,
     /* XCHG16ar */
   },
-  { /* 1619 */
+  { /* 1644 */
     8,
     /* XCHG16rm */
   },
-  { /* 1620 */
+  { /* 1645 */
     10,
     /* XCHG16rr */
   },
-  { /* 1621 */
-    143,
+  { /* 1646 */
+    144,
     /* XCHG32ar */
   },
-  { /* 1622 */
-    143,
+  { /* 1647 */
+    144,
     /* XCHG32ar64 */
   },
-  { /* 1623 */
+  { /* 1648 */
     8,
     /* XCHG32rm */
   },
-  { /* 1624 */
+  { /* 1649 */
     10,
     /* XCHG32rr */
   },
-  { /* 1625 */
-    144,
+  { /* 1650 */
+    145,
     /* XCHG64ar */
   },
-  { /* 1626 */
+  { /* 1651 */
     19,
     /* XCHG64rm */
   },
-  { /* 1627 */
+  { /* 1652 */
     21,
     /* XCHG64rr */
   },
-  { /* 1628 */
+  { /* 1653 */
     25,
     /* XCHG8rm */
   },
-  { /* 1629 */
+  { /* 1654 */
     27,
     /* XCHG8rr */
   },
-  { /* 1630 */
+  { /* 1655 */
     0,
     /* XCRYPTCBC */
   },
-  { /* 1631 */
+  { /* 1656 */
     0,
     /* XCRYPTCFB */
   },
-  { /* 1632 */
+  { /* 1657 */
     0,
     /* XCRYPTCTR */
   },
-  { /* 1633 */
+  { /* 1658 */
     0,
     /* XCRYPTECB */
   },
-  { /* 1634 */
+  { /* 1659 */
     0,
     /* XCRYPTOFB */
   },
-  { /* 1635 */
+  { /* 1660 */
     0,
     /* XGETBV */
   },
-  { /* 1636 */
+  { /* 1661 */
     0,
     /* XLAT */
   },
-  { /* 1637 */
+  { /* 1662 */
     2,
     /* XOR16i16 */
   },
-  { /* 1638 */
+  { /* 1663 */
     3,
     /* XOR16mi */
   },
-  { /* 1639 */
+  { /* 1664 */
     4,
     /* XOR16mi8 */
   },
-  { /* 1640 */
+  { /* 1665 */
     5,
     /* XOR16mr */
   },
-  { /* 1641 */
+  { /* 1666 */
     6,
     /* XOR16ri */
   },
-  { /* 1642 */
+  { /* 1667 */
     7,
     /* XOR16ri8 */
   },
-  { /* 1643 */
+  { /* 1668 */
     8,
     /* XOR16rm */
   },
-  { /* 1644 */
+  { /* 1669 */
     9,
     /* XOR16rr */
   },
-  { /* 1645 */
+  { /* 1670 */
     10,
     /* XOR16rr_REV */
   },
-  { /* 1646 */
+  { /* 1671 */
     2,
     /* XOR32i32 */
   },
-  { /* 1647 */
+  { /* 1672 */
     3,
     /* XOR32mi */
   },
-  { /* 1648 */
+  { /* 1673 */
     11,
     /* XOR32mi8 */
   },
-  { /* 1649 */
+  { /* 1674 */
     5,
     /* XOR32mr */
   },
-  { /* 1650 */
+  { /* 1675 */
     6,
     /* XOR32ri */
   },
-  { /* 1651 */
+  { /* 1676 */
     12,
     /* XOR32ri8 */
   },
-  { /* 1652 */
+  { /* 1677 */
     8,
     /* XOR32rm */
   },
-  { /* 1653 */
+  { /* 1678 */
     9,
     /* XOR32rr */
   },
-  { /* 1654 */
+  { /* 1679 */
     10,
     /* XOR32rr_REV */
   },
-  { /* 1655 */
+  { /* 1680 */
     13,
     /* XOR64i32 */
   },
-  { /* 1656 */
+  { /* 1681 */
     14,
     /* XOR64mi32 */
   },
-  { /* 1657 */
+  { /* 1682 */
     15,
     /* XOR64mi8 */
   },
-  { /* 1658 */
+  { /* 1683 */
     16,
     /* XOR64mr */
   },
-  { /* 1659 */
+  { /* 1684 */
     17,
     /* XOR64ri32 */
   },
-  { /* 1660 */
+  { /* 1685 */
     18,
     /* XOR64ri8 */
   },
-  { /* 1661 */
+  { /* 1686 */
     19,
     /* XOR64rm */
   },
-  { /* 1662 */
+  { /* 1687 */
     20,
     /* XOR64rr */
   },
-  { /* 1663 */
+  { /* 1688 */
     21,
     /* XOR64rr_REV */
   },
-  { /* 1664 */
-    23,
-    /* XOR82_8mi8 */
-  },
-  { /* 1665 */
-    22,
-    /* XOR82_8ri8 */
-  },
-  { /* 1666 */
+  { /* 1689 */
     1,
     /* XOR8i8 */
   },
-  { /* 1667 */
-    23,
+  { /* 1690 */
+    22,
     /* XOR8mi */
   },
-  { /* 1668 */
-    24,
+  { /* 1691 */
+    22,
+    /* XOR8mi8 */
+  },
+  { /* 1692 */
+    23,
     /* XOR8mr */
   },
-  { /* 1669 */
-    22,
+  { /* 1693 */
+    24,
     /* XOR8ri */
   },
-  { /* 1670 */
+  { /* 1694 */
+    24,
+    /* XOR8ri8 */
+  },
+  { /* 1695 */
     25,
     /* XOR8rm */
   },
-  { /* 1671 */
+  { /* 1696 */
     26,
     /* XOR8rr */
   },
-  { /* 1672 */
+  { /* 1697 */
     27,
     /* XOR8rr_REV */
   },
-  { /* 1673 */
-    163,
+  { /* 1698 */
+    164,
     /* XRSTOR */
   },
-  { /* 1674 */
-    163,
+  { /* 1699 */
+    164,
     /* XRSTOR64 */
   },
-  { /* 1675 */
-    163,
+  { /* 1700 */
+    164,
+    /* XRSTORS */
+  },
+  { /* 1701 */
+    164,
+    /* XRSTORS64 */
+  },
+  { /* 1702 */
+    164,
     /* XSAVE */
   },
-  { /* 1676 */
-    163,
+  { /* 1703 */
+    164,
     /* XSAVE64 */
   },
-  { /* 1677 */
-    163,
+  { /* 1704 */
+    164,
+    /* XSAVEC */
+  },
+  { /* 1705 */
+    164,
+    /* XSAVEC64 */
+  },
+  { /* 1706 */
+    164,
     /* XSAVEOPT */
   },
-  { /* 1678 */
-    163,
+  { /* 1707 */
+    164,
     /* XSAVEOPT64 */
   },
-  { /* 1679 */
+  { /* 1708 */
+    164,
+    /* XSAVES */
+  },
+  { /* 1709 */
+    164,
+    /* XSAVES64 */
+  },
+  { /* 1710 */
     0,
     /* XSETBV */
   },
-  { /* 1680 */
+  { /* 1711 */
     0,
     /* XSHA1 */
   },
-  { /* 1681 */
+  { /* 1712 */
     0,
     /* XSHA256 */
   },
-  { /* 1682 */
+  { /* 1713 */
     0,
     /* XSTORE */
   }
@@ -9387,22 +9519,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 38 */
   IC_64BIT_XS, /* 39 */
   IC_ADSIZE, /* 40 */
-  IC_64BIT_ADSIZE, /* 41 */
+  IC_64BIT_REXW_ADSIZE, /* 41 */
   IC_XS, /* 42 */
   IC_64BIT_REXW_XS, /* 43 */
   IC_XD, /* 44 */
   IC_64BIT_REXW_XD, /* 45 */
   IC_XS, /* 46 */
   IC_64BIT_REXW_XS, /* 47 */
-  IC_OPSIZE, /* 48 */
-  IC_64BIT_OPSIZE, /* 49 */
+  IC_OPSIZE_ADSIZE, /* 48 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 49 */
   IC_XS_OPSIZE, /* 50 */
   IC_64BIT_XS_OPSIZE, /* 51 */
   IC_XD_OPSIZE, /* 52 */
   IC_64BIT_XD_OPSIZE, /* 53 */
   IC_XS_OPSIZE, /* 54 */
   IC_64BIT_XD_OPSIZE, /* 55 */
-  IC_OPSIZE, /* 56 */
+  IC_OPSIZE_ADSIZE, /* 56 */
   IC_64BIT_REXW_OPSIZE, /* 57 */
   IC_XS_OPSIZE, /* 58 */
   IC_64BIT_REXW_XS, /* 59 */
@@ -9899,22 +10031,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 550 */
   IC_64BIT_XS, /* 551 */
   IC_ADSIZE, /* 552 */
-  IC_64BIT_ADSIZE, /* 553 */
+  IC_64BIT_REXW_ADSIZE, /* 553 */
   IC_XS, /* 554 */
   IC_64BIT_REXW_XS, /* 555 */
   IC_XD, /* 556 */
   IC_64BIT_REXW_XD, /* 557 */
   IC_XS, /* 558 */
   IC_64BIT_REXW_XS, /* 559 */
-  IC_OPSIZE, /* 560 */
-  IC_64BIT_OPSIZE, /* 561 */
+  IC_OPSIZE_ADSIZE, /* 560 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 561 */
   IC_XS_OPSIZE, /* 562 */
   IC_64BIT_XS_OPSIZE, /* 563 */
   IC_XD_OPSIZE, /* 564 */
   IC_64BIT_XD_OPSIZE, /* 565 */
   IC_XS_OPSIZE, /* 566 */
   IC_64BIT_XD_OPSIZE, /* 567 */
-  IC_OPSIZE, /* 568 */
+  IC_OPSIZE_ADSIZE, /* 568 */
   IC_64BIT_REXW_OPSIZE, /* 569 */
   IC_XS_OPSIZE, /* 570 */
   IC_64BIT_REXW_XS, /* 571 */
@@ -10411,22 +10543,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 1062 */
   IC_64BIT_XS, /* 1063 */
   IC_ADSIZE, /* 1064 */
-  IC_64BIT_ADSIZE, /* 1065 */
+  IC_64BIT_REXW_ADSIZE, /* 1065 */
   IC_XS, /* 1066 */
   IC_64BIT_REXW_XS, /* 1067 */
   IC_XD, /* 1068 */
   IC_64BIT_REXW_XD, /* 1069 */
   IC_XS, /* 1070 */
   IC_64BIT_REXW_XS, /* 1071 */
-  IC_OPSIZE, /* 1072 */
-  IC_64BIT_OPSIZE, /* 1073 */
+  IC_OPSIZE_ADSIZE, /* 1072 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 1073 */
   IC_XS_OPSIZE, /* 1074 */
   IC_64BIT_XS_OPSIZE, /* 1075 */
   IC_XD_OPSIZE, /* 1076 */
   IC_64BIT_XD_OPSIZE, /* 1077 */
   IC_XS_OPSIZE, /* 1078 */
   IC_64BIT_XD_OPSIZE, /* 1079 */
-  IC_OPSIZE, /* 1080 */
+  IC_OPSIZE_ADSIZE, /* 1080 */
   IC_64BIT_REXW_OPSIZE, /* 1081 */
   IC_XS_OPSIZE, /* 1082 */
   IC_64BIT_REXW_XS, /* 1083 */
@@ -10923,22 +11055,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 1574 */
   IC_64BIT_XS, /* 1575 */
   IC_ADSIZE, /* 1576 */
-  IC_64BIT_ADSIZE, /* 1577 */
+  IC_64BIT_REXW_ADSIZE, /* 1577 */
   IC_XS, /* 1578 */
   IC_64BIT_REXW_XS, /* 1579 */
   IC_XD, /* 1580 */
   IC_64BIT_REXW_XD, /* 1581 */
   IC_XS, /* 1582 */
   IC_64BIT_REXW_XS, /* 1583 */
-  IC_OPSIZE, /* 1584 */
-  IC_64BIT_OPSIZE, /* 1585 */
+  IC_OPSIZE_ADSIZE, /* 1584 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 1585 */
   IC_XS_OPSIZE, /* 1586 */
   IC_64BIT_XS_OPSIZE, /* 1587 */
   IC_XD_OPSIZE, /* 1588 */
   IC_64BIT_XD_OPSIZE, /* 1589 */
   IC_XS_OPSIZE, /* 1590 */
   IC_64BIT_XD_OPSIZE, /* 1591 */
-  IC_OPSIZE, /* 1592 */
+  IC_OPSIZE_ADSIZE, /* 1592 */
   IC_64BIT_REXW_OPSIZE, /* 1593 */
   IC_XS_OPSIZE, /* 1594 */
   IC_64BIT_REXW_XS, /* 1595 */
@@ -11435,22 +11567,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 2086 */
   IC_64BIT_XS, /* 2087 */
   IC_ADSIZE, /* 2088 */
-  IC_64BIT_ADSIZE, /* 2089 */
+  IC_64BIT_REXW_ADSIZE, /* 2089 */
   IC_XS, /* 2090 */
   IC_64BIT_REXW_XS, /* 2091 */
   IC_XD, /* 2092 */
   IC_64BIT_REXW_XD, /* 2093 */
   IC_XS, /* 2094 */
   IC_64BIT_REXW_XS, /* 2095 */
-  IC_OPSIZE, /* 2096 */
-  IC_64BIT_OPSIZE, /* 2097 */
+  IC_OPSIZE_ADSIZE, /* 2096 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 2097 */
   IC_XS_OPSIZE, /* 2098 */
   IC_64BIT_XS_OPSIZE, /* 2099 */
   IC_XD_OPSIZE, /* 2100 */
   IC_64BIT_XD_OPSIZE, /* 2101 */
   IC_XS_OPSIZE, /* 2102 */
   IC_64BIT_XD_OPSIZE, /* 2103 */
-  IC_OPSIZE, /* 2104 */
+  IC_OPSIZE_ADSIZE, /* 2104 */
   IC_64BIT_REXW_OPSIZE, /* 2105 */
   IC_XS_OPSIZE, /* 2106 */
   IC_64BIT_REXW_XS, /* 2107 */
@@ -11947,22 +12079,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 2598 */
   IC_64BIT_XS, /* 2599 */
   IC_ADSIZE, /* 2600 */
-  IC_64BIT_ADSIZE, /* 2601 */
+  IC_64BIT_REXW_ADSIZE, /* 2601 */
   IC_XS, /* 2602 */
   IC_64BIT_REXW_XS, /* 2603 */
   IC_XD, /* 2604 */
   IC_64BIT_REXW_XD, /* 2605 */
   IC_XS, /* 2606 */
   IC_64BIT_REXW_XS, /* 2607 */
-  IC_OPSIZE, /* 2608 */
-  IC_64BIT_OPSIZE, /* 2609 */
+  IC_OPSIZE_ADSIZE, /* 2608 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 2609 */
   IC_XS_OPSIZE, /* 2610 */
   IC_64BIT_XS_OPSIZE, /* 2611 */
   IC_XD_OPSIZE, /* 2612 */
   IC_64BIT_XD_OPSIZE, /* 2613 */
   IC_XS_OPSIZE, /* 2614 */
   IC_64BIT_XD_OPSIZE, /* 2615 */
-  IC_OPSIZE, /* 2616 */
+  IC_OPSIZE_ADSIZE, /* 2616 */
   IC_64BIT_REXW_OPSIZE, /* 2617 */
   IC_XS_OPSIZE, /* 2618 */
   IC_64BIT_REXW_XS, /* 2619 */
@@ -12459,22 +12591,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 3110 */
   IC_64BIT_XS, /* 3111 */
   IC_ADSIZE, /* 3112 */
-  IC_64BIT_ADSIZE, /* 3113 */
+  IC_64BIT_REXW_ADSIZE, /* 3113 */
   IC_XS, /* 3114 */
   IC_64BIT_REXW_XS, /* 3115 */
   IC_XD, /* 3116 */
   IC_64BIT_REXW_XD, /* 3117 */
   IC_XS, /* 3118 */
   IC_64BIT_REXW_XS, /* 3119 */
-  IC_OPSIZE, /* 3120 */
-  IC_64BIT_OPSIZE, /* 3121 */
+  IC_OPSIZE_ADSIZE, /* 3120 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 3121 */
   IC_XS_OPSIZE, /* 3122 */
   IC_64BIT_XS_OPSIZE, /* 3123 */
   IC_XD_OPSIZE, /* 3124 */
   IC_64BIT_XD_OPSIZE, /* 3125 */
   IC_XS_OPSIZE, /* 3126 */
   IC_64BIT_XD_OPSIZE, /* 3127 */
-  IC_OPSIZE, /* 3128 */
+  IC_OPSIZE_ADSIZE, /* 3128 */
   IC_64BIT_REXW_OPSIZE, /* 3129 */
   IC_XS_OPSIZE, /* 3130 */
   IC_64BIT_REXW_XS, /* 3131 */
@@ -12971,22 +13103,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 3622 */
   IC_64BIT_XS, /* 3623 */
   IC_ADSIZE, /* 3624 */
-  IC_64BIT_ADSIZE, /* 3625 */
+  IC_64BIT_REXW_ADSIZE, /* 3625 */
   IC_XS, /* 3626 */
   IC_64BIT_REXW_XS, /* 3627 */
   IC_XD, /* 3628 */
   IC_64BIT_REXW_XD, /* 3629 */
   IC_XS, /* 3630 */
   IC_64BIT_REXW_XS, /* 3631 */
-  IC_OPSIZE, /* 3632 */
-  IC_64BIT_OPSIZE, /* 3633 */
+  IC_OPSIZE_ADSIZE, /* 3632 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 3633 */
   IC_XS_OPSIZE, /* 3634 */
   IC_64BIT_XS_OPSIZE, /* 3635 */
   IC_XD_OPSIZE, /* 3636 */
   IC_64BIT_XD_OPSIZE, /* 3637 */
   IC_XS_OPSIZE, /* 3638 */
   IC_64BIT_XD_OPSIZE, /* 3639 */
-  IC_OPSIZE, /* 3640 */
+  IC_OPSIZE_ADSIZE, /* 3640 */
   IC_64BIT_REXW_OPSIZE, /* 3641 */
   IC_XS_OPSIZE, /* 3642 */
   IC_64BIT_REXW_XS, /* 3643 */
@@ -13483,22 +13615,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 4134 */
   IC_64BIT_XS, /* 4135 */
   IC_ADSIZE, /* 4136 */
-  IC_64BIT_ADSIZE, /* 4137 */
+  IC_64BIT_REXW_ADSIZE, /* 4137 */
   IC_XS, /* 4138 */
   IC_64BIT_REXW_XS, /* 4139 */
   IC_XD, /* 4140 */
   IC_64BIT_REXW_XD, /* 4141 */
   IC_XS, /* 4142 */
   IC_64BIT_REXW_XS, /* 4143 */
-  IC_OPSIZE, /* 4144 */
-  IC_64BIT_OPSIZE, /* 4145 */
+  IC_OPSIZE_ADSIZE, /* 4144 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 4145 */
   IC_XS_OPSIZE, /* 4146 */
   IC_64BIT_XS_OPSIZE, /* 4147 */
   IC_XD_OPSIZE, /* 4148 */
   IC_64BIT_XD_OPSIZE, /* 4149 */
   IC_XS_OPSIZE, /* 4150 */
   IC_64BIT_XD_OPSIZE, /* 4151 */
-  IC_OPSIZE, /* 4152 */
+  IC_OPSIZE_ADSIZE, /* 4152 */
   IC_64BIT_REXW_OPSIZE, /* 4153 */
   IC_XS_OPSIZE, /* 4154 */
   IC_64BIT_REXW_XS, /* 4155 */
@@ -13995,22 +14127,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 4646 */
   IC_64BIT_XS, /* 4647 */
   IC_ADSIZE, /* 4648 */
-  IC_64BIT_ADSIZE, /* 4649 */
+  IC_64BIT_REXW_ADSIZE, /* 4649 */
   IC_XS, /* 4650 */
   IC_64BIT_REXW_XS, /* 4651 */
   IC_XD, /* 4652 */
   IC_64BIT_REXW_XD, /* 4653 */
   IC_XS, /* 4654 */
   IC_64BIT_REXW_XS, /* 4655 */
-  IC_OPSIZE, /* 4656 */
-  IC_64BIT_OPSIZE, /* 4657 */
+  IC_OPSIZE_ADSIZE, /* 4656 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 4657 */
   IC_XS_OPSIZE, /* 4658 */
   IC_64BIT_XS_OPSIZE, /* 4659 */
   IC_XD_OPSIZE, /* 4660 */
   IC_64BIT_XD_OPSIZE, /* 4661 */
   IC_XS_OPSIZE, /* 4662 */
   IC_64BIT_XD_OPSIZE, /* 4663 */
-  IC_OPSIZE, /* 4664 */
+  IC_OPSIZE_ADSIZE, /* 4664 */
   IC_64BIT_REXW_OPSIZE, /* 4665 */
   IC_XS_OPSIZE, /* 4666 */
   IC_64BIT_REXW_XS, /* 4667 */
@@ -14507,22 +14639,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 5158 */
   IC_64BIT_XS, /* 5159 */
   IC_ADSIZE, /* 5160 */
-  IC_64BIT_ADSIZE, /* 5161 */
+  IC_64BIT_REXW_ADSIZE, /* 5161 */
   IC_XS, /* 5162 */
   IC_64BIT_REXW_XS, /* 5163 */
   IC_XD, /* 5164 */
   IC_64BIT_REXW_XD, /* 5165 */
   IC_XS, /* 5166 */
   IC_64BIT_REXW_XS, /* 5167 */
-  IC_OPSIZE, /* 5168 */
-  IC_64BIT_OPSIZE, /* 5169 */
+  IC_OPSIZE_ADSIZE, /* 5168 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 5169 */
   IC_XS_OPSIZE, /* 5170 */
   IC_64BIT_XS_OPSIZE, /* 5171 */
   IC_XD_OPSIZE, /* 5172 */
   IC_64BIT_XD_OPSIZE, /* 5173 */
   IC_XS_OPSIZE, /* 5174 */
   IC_64BIT_XD_OPSIZE, /* 5175 */
-  IC_OPSIZE, /* 5176 */
+  IC_OPSIZE_ADSIZE, /* 5176 */
   IC_64BIT_REXW_OPSIZE, /* 5177 */
   IC_XS_OPSIZE, /* 5178 */
   IC_64BIT_REXW_XS, /* 5179 */
@@ -15019,22 +15151,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 5670 */
   IC_64BIT_XS, /* 5671 */
   IC_ADSIZE, /* 5672 */
-  IC_64BIT_ADSIZE, /* 5673 */
+  IC_64BIT_REXW_ADSIZE, /* 5673 */
   IC_XS, /* 5674 */
   IC_64BIT_REXW_XS, /* 5675 */
   IC_XD, /* 5676 */
   IC_64BIT_REXW_XD, /* 5677 */
   IC_XS, /* 5678 */
   IC_64BIT_REXW_XS, /* 5679 */
-  IC_OPSIZE, /* 5680 */
-  IC_64BIT_OPSIZE, /* 5681 */
+  IC_OPSIZE_ADSIZE, /* 5680 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 5681 */
   IC_XS_OPSIZE, /* 5682 */
   IC_64BIT_XS_OPSIZE, /* 5683 */
   IC_XD_OPSIZE, /* 5684 */
   IC_64BIT_XD_OPSIZE, /* 5685 */
   IC_XS_OPSIZE, /* 5686 */
   IC_64BIT_XD_OPSIZE, /* 5687 */
-  IC_OPSIZE, /* 5688 */
+  IC_OPSIZE_ADSIZE, /* 5688 */
   IC_64BIT_REXW_OPSIZE, /* 5689 */
   IC_XS_OPSIZE, /* 5690 */
   IC_64BIT_REXW_XS, /* 5691 */
@@ -15531,22 +15663,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 6182 */
   IC_64BIT_XS, /* 6183 */
   IC_ADSIZE, /* 6184 */
-  IC_64BIT_ADSIZE, /* 6185 */
+  IC_64BIT_REXW_ADSIZE, /* 6185 */
   IC_XS, /* 6186 */
   IC_64BIT_REXW_XS, /* 6187 */
   IC_XD, /* 6188 */
   IC_64BIT_REXW_XD, /* 6189 */
   IC_XS, /* 6190 */
   IC_64BIT_REXW_XS, /* 6191 */
-  IC_OPSIZE, /* 6192 */
-  IC_64BIT_OPSIZE, /* 6193 */
+  IC_OPSIZE_ADSIZE, /* 6192 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 6193 */
   IC_XS_OPSIZE, /* 6194 */
   IC_64BIT_XS_OPSIZE, /* 6195 */
   IC_XD_OPSIZE, /* 6196 */
   IC_64BIT_XD_OPSIZE, /* 6197 */
   IC_XS_OPSIZE, /* 6198 */
   IC_64BIT_XD_OPSIZE, /* 6199 */
-  IC_OPSIZE, /* 6200 */
+  IC_OPSIZE_ADSIZE, /* 6200 */
   IC_64BIT_REXW_OPSIZE, /* 6201 */
   IC_XS_OPSIZE, /* 6202 */
   IC_64BIT_REXW_XS, /* 6203 */
@@ -16043,22 +16175,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 6694 */
   IC_64BIT_XS, /* 6695 */
   IC_ADSIZE, /* 6696 */
-  IC_64BIT_ADSIZE, /* 6697 */
+  IC_64BIT_REXW_ADSIZE, /* 6697 */
   IC_XS, /* 6698 */
   IC_64BIT_REXW_XS, /* 6699 */
   IC_XD, /* 6700 */
   IC_64BIT_REXW_XD, /* 6701 */
   IC_XS, /* 6702 */
   IC_64BIT_REXW_XS, /* 6703 */
-  IC_OPSIZE, /* 6704 */
-  IC_64BIT_OPSIZE, /* 6705 */
+  IC_OPSIZE_ADSIZE, /* 6704 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 6705 */
   IC_XS_OPSIZE, /* 6706 */
   IC_64BIT_XS_OPSIZE, /* 6707 */
   IC_XD_OPSIZE, /* 6708 */
   IC_64BIT_XD_OPSIZE, /* 6709 */
   IC_XS_OPSIZE, /* 6710 */
   IC_64BIT_XD_OPSIZE, /* 6711 */
-  IC_OPSIZE, /* 6712 */
+  IC_OPSIZE_ADSIZE, /* 6712 */
   IC_64BIT_REXW_OPSIZE, /* 6713 */
   IC_XS_OPSIZE, /* 6714 */
   IC_64BIT_REXW_XS, /* 6715 */
@@ -16555,22 +16687,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 7206 */
   IC_64BIT_XS, /* 7207 */
   IC_ADSIZE, /* 7208 */
-  IC_64BIT_ADSIZE, /* 7209 */
+  IC_64BIT_REXW_ADSIZE, /* 7209 */
   IC_XS, /* 7210 */
   IC_64BIT_REXW_XS, /* 7211 */
   IC_XD, /* 7212 */
   IC_64BIT_REXW_XD, /* 7213 */
   IC_XS, /* 7214 */
   IC_64BIT_REXW_XS, /* 7215 */
-  IC_OPSIZE, /* 7216 */
-  IC_64BIT_OPSIZE, /* 7217 */
+  IC_OPSIZE_ADSIZE, /* 7216 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 7217 */
   IC_XS_OPSIZE, /* 7218 */
   IC_64BIT_XS_OPSIZE, /* 7219 */
   IC_XD_OPSIZE, /* 7220 */
   IC_64BIT_XD_OPSIZE, /* 7221 */
   IC_XS_OPSIZE, /* 7222 */
   IC_64BIT_XD_OPSIZE, /* 7223 */
-  IC_OPSIZE, /* 7224 */
+  IC_OPSIZE_ADSIZE, /* 7224 */
   IC_64BIT_REXW_OPSIZE, /* 7225 */
   IC_XS_OPSIZE, /* 7226 */
   IC_64BIT_REXW_XS, /* 7227 */
@@ -17067,22 +17199,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 7718 */
   IC_64BIT_XS, /* 7719 */
   IC_ADSIZE, /* 7720 */
-  IC_64BIT_ADSIZE, /* 7721 */
+  IC_64BIT_REXW_ADSIZE, /* 7721 */
   IC_XS, /* 7722 */
   IC_64BIT_REXW_XS, /* 7723 */
   IC_XD, /* 7724 */
   IC_64BIT_REXW_XD, /* 7725 */
   IC_XS, /* 7726 */
   IC_64BIT_REXW_XS, /* 7727 */
-  IC_OPSIZE, /* 7728 */
-  IC_64BIT_OPSIZE, /* 7729 */
+  IC_OPSIZE_ADSIZE, /* 7728 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 7729 */
   IC_XS_OPSIZE, /* 7730 */
   IC_64BIT_XS_OPSIZE, /* 7731 */
   IC_XD_OPSIZE, /* 7732 */
   IC_64BIT_XD_OPSIZE, /* 7733 */
   IC_XS_OPSIZE, /* 7734 */
   IC_64BIT_XD_OPSIZE, /* 7735 */
-  IC_OPSIZE, /* 7736 */
+  IC_OPSIZE_ADSIZE, /* 7736 */
   IC_64BIT_REXW_OPSIZE, /* 7737 */
   IC_XS_OPSIZE, /* 7738 */
   IC_64BIT_REXW_XS, /* 7739 */
@@ -17579,22 +17711,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 8230 */
   IC_64BIT_XS, /* 8231 */
   IC_ADSIZE, /* 8232 */
-  IC_64BIT_ADSIZE, /* 8233 */
+  IC_64BIT_REXW_ADSIZE, /* 8233 */
   IC_XS, /* 8234 */
   IC_64BIT_REXW_XS, /* 8235 */
   IC_XD, /* 8236 */
   IC_64BIT_REXW_XD, /* 8237 */
   IC_XS, /* 8238 */
   IC_64BIT_REXW_XS, /* 8239 */
-  IC_OPSIZE, /* 8240 */
-  IC_64BIT_OPSIZE, /* 8241 */
+  IC_OPSIZE_ADSIZE, /* 8240 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 8241 */
   IC_XS_OPSIZE, /* 8242 */
   IC_64BIT_XS_OPSIZE, /* 8243 */
   IC_XD_OPSIZE, /* 8244 */
   IC_64BIT_XD_OPSIZE, /* 8245 */
   IC_XS_OPSIZE, /* 8246 */
   IC_64BIT_XD_OPSIZE, /* 8247 */
-  IC_OPSIZE, /* 8248 */
+  IC_OPSIZE_ADSIZE, /* 8248 */
   IC_64BIT_REXW_OPSIZE, /* 8249 */
   IC_XS_OPSIZE, /* 8250 */
   IC_64BIT_REXW_XS, /* 8251 */
@@ -18091,22 +18223,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 8742 */
   IC_64BIT_XS, /* 8743 */
   IC_ADSIZE, /* 8744 */
-  IC_64BIT_ADSIZE, /* 8745 */
+  IC_64BIT_REXW_ADSIZE, /* 8745 */
   IC_XS, /* 8746 */
   IC_64BIT_REXW_XS, /* 8747 */
   IC_XD, /* 8748 */
   IC_64BIT_REXW_XD, /* 8749 */
   IC_XS, /* 8750 */
   IC_64BIT_REXW_XS, /* 8751 */
-  IC_OPSIZE, /* 8752 */
-  IC_64BIT_OPSIZE, /* 8753 */
+  IC_OPSIZE_ADSIZE, /* 8752 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 8753 */
   IC_XS_OPSIZE, /* 8754 */
   IC_64BIT_XS_OPSIZE, /* 8755 */
   IC_XD_OPSIZE, /* 8756 */
   IC_64BIT_XD_OPSIZE, /* 8757 */
   IC_XS_OPSIZE, /* 8758 */
   IC_64BIT_XD_OPSIZE, /* 8759 */
-  IC_OPSIZE, /* 8760 */
+  IC_OPSIZE_ADSIZE, /* 8760 */
   IC_64BIT_REXW_OPSIZE, /* 8761 */
   IC_XS_OPSIZE, /* 8762 */
   IC_64BIT_REXW_XS, /* 8763 */
@@ -18603,22 +18735,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 9254 */
   IC_64BIT_XS, /* 9255 */
   IC_ADSIZE, /* 9256 */
-  IC_64BIT_ADSIZE, /* 9257 */
+  IC_64BIT_REXW_ADSIZE, /* 9257 */
   IC_XS, /* 9258 */
   IC_64BIT_REXW_XS, /* 9259 */
   IC_XD, /* 9260 */
   IC_64BIT_REXW_XD, /* 9261 */
   IC_XS, /* 9262 */
   IC_64BIT_REXW_XS, /* 9263 */
-  IC_OPSIZE, /* 9264 */
-  IC_64BIT_OPSIZE, /* 9265 */
+  IC_OPSIZE_ADSIZE, /* 9264 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 9265 */
   IC_XS_OPSIZE, /* 9266 */
   IC_64BIT_XS_OPSIZE, /* 9267 */
   IC_XD_OPSIZE, /* 9268 */
   IC_64BIT_XD_OPSIZE, /* 9269 */
   IC_XS_OPSIZE, /* 9270 */
   IC_64BIT_XD_OPSIZE, /* 9271 */
-  IC_OPSIZE, /* 9272 */
+  IC_OPSIZE_ADSIZE, /* 9272 */
   IC_64BIT_REXW_OPSIZE, /* 9273 */
   IC_XS_OPSIZE, /* 9274 */
   IC_64BIT_REXW_XS, /* 9275 */
@@ -19115,22 +19247,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 9766 */
   IC_64BIT_XS, /* 9767 */
   IC_ADSIZE, /* 9768 */
-  IC_64BIT_ADSIZE, /* 9769 */
+  IC_64BIT_REXW_ADSIZE, /* 9769 */
   IC_XS, /* 9770 */
   IC_64BIT_REXW_XS, /* 9771 */
   IC_XD, /* 9772 */
   IC_64BIT_REXW_XD, /* 9773 */
   IC_XS, /* 9774 */
   IC_64BIT_REXW_XS, /* 9775 */
-  IC_OPSIZE, /* 9776 */
-  IC_64BIT_OPSIZE, /* 9777 */
+  IC_OPSIZE_ADSIZE, /* 9776 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 9777 */
   IC_XS_OPSIZE, /* 9778 */
   IC_64BIT_XS_OPSIZE, /* 9779 */
   IC_XD_OPSIZE, /* 9780 */
   IC_64BIT_XD_OPSIZE, /* 9781 */
   IC_XS_OPSIZE, /* 9782 */
   IC_64BIT_XD_OPSIZE, /* 9783 */
-  IC_OPSIZE, /* 9784 */
+  IC_OPSIZE_ADSIZE, /* 9784 */
   IC_64BIT_REXW_OPSIZE, /* 9785 */
   IC_XS_OPSIZE, /* 9786 */
   IC_64BIT_REXW_XS, /* 9787 */
@@ -19627,22 +19759,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 10278 */
   IC_64BIT_XS, /* 10279 */
   IC_ADSIZE, /* 10280 */
-  IC_64BIT_ADSIZE, /* 10281 */
+  IC_64BIT_REXW_ADSIZE, /* 10281 */
   IC_XS, /* 10282 */
   IC_64BIT_REXW_XS, /* 10283 */
   IC_XD, /* 10284 */
   IC_64BIT_REXW_XD, /* 10285 */
   IC_XS, /* 10286 */
   IC_64BIT_REXW_XS, /* 10287 */
-  IC_OPSIZE, /* 10288 */
-  IC_64BIT_OPSIZE, /* 10289 */
+  IC_OPSIZE_ADSIZE, /* 10288 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 10289 */
   IC_XS_OPSIZE, /* 10290 */
   IC_64BIT_XS_OPSIZE, /* 10291 */
   IC_XD_OPSIZE, /* 10292 */
   IC_64BIT_XD_OPSIZE, /* 10293 */
   IC_XS_OPSIZE, /* 10294 */
   IC_64BIT_XD_OPSIZE, /* 10295 */
-  IC_OPSIZE, /* 10296 */
+  IC_OPSIZE_ADSIZE, /* 10296 */
   IC_64BIT_REXW_OPSIZE, /* 10297 */
   IC_XS_OPSIZE, /* 10298 */
   IC_64BIT_REXW_XS, /* 10299 */
@@ -20139,22 +20271,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 10790 */
   IC_64BIT_XS, /* 10791 */
   IC_ADSIZE, /* 10792 */
-  IC_64BIT_ADSIZE, /* 10793 */
+  IC_64BIT_REXW_ADSIZE, /* 10793 */
   IC_XS, /* 10794 */
   IC_64BIT_REXW_XS, /* 10795 */
   IC_XD, /* 10796 */
   IC_64BIT_REXW_XD, /* 10797 */
   IC_XS, /* 10798 */
   IC_64BIT_REXW_XS, /* 10799 */
-  IC_OPSIZE, /* 10800 */
-  IC_64BIT_OPSIZE, /* 10801 */
+  IC_OPSIZE_ADSIZE, /* 10800 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 10801 */
   IC_XS_OPSIZE, /* 10802 */
   IC_64BIT_XS_OPSIZE, /* 10803 */
   IC_XD_OPSIZE, /* 10804 */
   IC_64BIT_XD_OPSIZE, /* 10805 */
   IC_XS_OPSIZE, /* 10806 */
   IC_64BIT_XD_OPSIZE, /* 10807 */
-  IC_OPSIZE, /* 10808 */
+  IC_OPSIZE_ADSIZE, /* 10808 */
   IC_64BIT_REXW_OPSIZE, /* 10809 */
   IC_XS_OPSIZE, /* 10810 */
   IC_64BIT_REXW_XS, /* 10811 */
@@ -20651,22 +20783,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 11302 */
   IC_64BIT_XS, /* 11303 */
   IC_ADSIZE, /* 11304 */
-  IC_64BIT_ADSIZE, /* 11305 */
+  IC_64BIT_REXW_ADSIZE, /* 11305 */
   IC_XS, /* 11306 */
   IC_64BIT_REXW_XS, /* 11307 */
   IC_XD, /* 11308 */
   IC_64BIT_REXW_XD, /* 11309 */
   IC_XS, /* 11310 */
   IC_64BIT_REXW_XS, /* 11311 */
-  IC_OPSIZE, /* 11312 */
-  IC_64BIT_OPSIZE, /* 11313 */
+  IC_OPSIZE_ADSIZE, /* 11312 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 11313 */
   IC_XS_OPSIZE, /* 11314 */
   IC_64BIT_XS_OPSIZE, /* 11315 */
   IC_XD_OPSIZE, /* 11316 */
   IC_64BIT_XD_OPSIZE, /* 11317 */
   IC_XS_OPSIZE, /* 11318 */
   IC_64BIT_XD_OPSIZE, /* 11319 */
-  IC_OPSIZE, /* 11320 */
+  IC_OPSIZE_ADSIZE, /* 11320 */
   IC_64BIT_REXW_OPSIZE, /* 11321 */
   IC_XS_OPSIZE, /* 11322 */
   IC_64BIT_REXW_XS, /* 11323 */
@@ -21163,22 +21295,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 11814 */
   IC_64BIT_XS, /* 11815 */
   IC_ADSIZE, /* 11816 */
-  IC_64BIT_ADSIZE, /* 11817 */
+  IC_64BIT_REXW_ADSIZE, /* 11817 */
   IC_XS, /* 11818 */
   IC_64BIT_REXW_XS, /* 11819 */
   IC_XD, /* 11820 */
   IC_64BIT_REXW_XD, /* 11821 */
   IC_XS, /* 11822 */
   IC_64BIT_REXW_XS, /* 11823 */
-  IC_OPSIZE, /* 11824 */
-  IC_64BIT_OPSIZE, /* 11825 */
+  IC_OPSIZE_ADSIZE, /* 11824 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 11825 */
   IC_XS_OPSIZE, /* 11826 */
   IC_64BIT_XS_OPSIZE, /* 11827 */
   IC_XD_OPSIZE, /* 11828 */
   IC_64BIT_XD_OPSIZE, /* 11829 */
   IC_XS_OPSIZE, /* 11830 */
   IC_64BIT_XD_OPSIZE, /* 11831 */
-  IC_OPSIZE, /* 11832 */
+  IC_OPSIZE_ADSIZE, /* 11832 */
   IC_64BIT_REXW_OPSIZE, /* 11833 */
   IC_XS_OPSIZE, /* 11834 */
   IC_64BIT_REXW_XS, /* 11835 */
@@ -21675,22 +21807,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 12326 */
   IC_64BIT_XS, /* 12327 */
   IC_ADSIZE, /* 12328 */
-  IC_64BIT_ADSIZE, /* 12329 */
+  IC_64BIT_REXW_ADSIZE, /* 12329 */
   IC_XS, /* 12330 */
   IC_64BIT_REXW_XS, /* 12331 */
   IC_XD, /* 12332 */
   IC_64BIT_REXW_XD, /* 12333 */
   IC_XS, /* 12334 */
   IC_64BIT_REXW_XS, /* 12335 */
-  IC_OPSIZE, /* 12336 */
-  IC_64BIT_OPSIZE, /* 12337 */
+  IC_OPSIZE_ADSIZE, /* 12336 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 12337 */
   IC_XS_OPSIZE, /* 12338 */
   IC_64BIT_XS_OPSIZE, /* 12339 */
   IC_XD_OPSIZE, /* 12340 */
   IC_64BIT_XD_OPSIZE, /* 12341 */
   IC_XS_OPSIZE, /* 12342 */
   IC_64BIT_XD_OPSIZE, /* 12343 */
-  IC_OPSIZE, /* 12344 */
+  IC_OPSIZE_ADSIZE, /* 12344 */
   IC_64BIT_REXW_OPSIZE, /* 12345 */
   IC_XS_OPSIZE, /* 12346 */
   IC_64BIT_REXW_XS, /* 12347 */
@@ -22187,22 +22319,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 12838 */
   IC_64BIT_XS, /* 12839 */
   IC_ADSIZE, /* 12840 */
-  IC_64BIT_ADSIZE, /* 12841 */
+  IC_64BIT_REXW_ADSIZE, /* 12841 */
   IC_XS, /* 12842 */
   IC_64BIT_REXW_XS, /* 12843 */
   IC_XD, /* 12844 */
   IC_64BIT_REXW_XD, /* 12845 */
   IC_XS, /* 12846 */
   IC_64BIT_REXW_XS, /* 12847 */
-  IC_OPSIZE, /* 12848 */
-  IC_64BIT_OPSIZE, /* 12849 */
+  IC_OPSIZE_ADSIZE, /* 12848 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 12849 */
   IC_XS_OPSIZE, /* 12850 */
   IC_64BIT_XS_OPSIZE, /* 12851 */
   IC_XD_OPSIZE, /* 12852 */
   IC_64BIT_XD_OPSIZE, /* 12853 */
   IC_XS_OPSIZE, /* 12854 */
   IC_64BIT_XD_OPSIZE, /* 12855 */
-  IC_OPSIZE, /* 12856 */
+  IC_OPSIZE_ADSIZE, /* 12856 */
   IC_64BIT_REXW_OPSIZE, /* 12857 */
   IC_XS_OPSIZE, /* 12858 */
   IC_64BIT_REXW_XS, /* 12859 */
@@ -22699,22 +22831,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 13350 */
   IC_64BIT_XS, /* 13351 */
   IC_ADSIZE, /* 13352 */
-  IC_64BIT_ADSIZE, /* 13353 */
+  IC_64BIT_REXW_ADSIZE, /* 13353 */
   IC_XS, /* 13354 */
   IC_64BIT_REXW_XS, /* 13355 */
   IC_XD, /* 13356 */
   IC_64BIT_REXW_XD, /* 13357 */
   IC_XS, /* 13358 */
   IC_64BIT_REXW_XS, /* 13359 */
-  IC_OPSIZE, /* 13360 */
-  IC_64BIT_OPSIZE, /* 13361 */
+  IC_OPSIZE_ADSIZE, /* 13360 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 13361 */
   IC_XS_OPSIZE, /* 13362 */
   IC_64BIT_XS_OPSIZE, /* 13363 */
   IC_XD_OPSIZE, /* 13364 */
   IC_64BIT_XD_OPSIZE, /* 13365 */
   IC_XS_OPSIZE, /* 13366 */
   IC_64BIT_XD_OPSIZE, /* 13367 */
-  IC_OPSIZE, /* 13368 */
+  IC_OPSIZE_ADSIZE, /* 13368 */
   IC_64BIT_REXW_OPSIZE, /* 13369 */
   IC_XS_OPSIZE, /* 13370 */
   IC_64BIT_REXW_XS, /* 13371 */
@@ -23211,22 +23343,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 13862 */
   IC_64BIT_XS, /* 13863 */
   IC_ADSIZE, /* 13864 */
-  IC_64BIT_ADSIZE, /* 13865 */
+  IC_64BIT_REXW_ADSIZE, /* 13865 */
   IC_XS, /* 13866 */
   IC_64BIT_REXW_XS, /* 13867 */
   IC_XD, /* 13868 */
   IC_64BIT_REXW_XD, /* 13869 */
   IC_XS, /* 13870 */
   IC_64BIT_REXW_XS, /* 13871 */
-  IC_OPSIZE, /* 13872 */
-  IC_64BIT_OPSIZE, /* 13873 */
+  IC_OPSIZE_ADSIZE, /* 13872 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 13873 */
   IC_XS_OPSIZE, /* 13874 */
   IC_64BIT_XS_OPSIZE, /* 13875 */
   IC_XD_OPSIZE, /* 13876 */
   IC_64BIT_XD_OPSIZE, /* 13877 */
   IC_XS_OPSIZE, /* 13878 */
   IC_64BIT_XD_OPSIZE, /* 13879 */
-  IC_OPSIZE, /* 13880 */
+  IC_OPSIZE_ADSIZE, /* 13880 */
   IC_64BIT_REXW_OPSIZE, /* 13881 */
   IC_XS_OPSIZE, /* 13882 */
   IC_64BIT_REXW_XS, /* 13883 */
@@ -23723,22 +23855,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 14374 */
   IC_64BIT_XS, /* 14375 */
   IC_ADSIZE, /* 14376 */
-  IC_64BIT_ADSIZE, /* 14377 */
+  IC_64BIT_REXW_ADSIZE, /* 14377 */
   IC_XS, /* 14378 */
   IC_64BIT_REXW_XS, /* 14379 */
   IC_XD, /* 14380 */
   IC_64BIT_REXW_XD, /* 14381 */
   IC_XS, /* 14382 */
   IC_64BIT_REXW_XS, /* 14383 */
-  IC_OPSIZE, /* 14384 */
-  IC_64BIT_OPSIZE, /* 14385 */
+  IC_OPSIZE_ADSIZE, /* 14384 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 14385 */
   IC_XS_OPSIZE, /* 14386 */
   IC_64BIT_XS_OPSIZE, /* 14387 */
   IC_XD_OPSIZE, /* 14388 */
   IC_64BIT_XD_OPSIZE, /* 14389 */
   IC_XS_OPSIZE, /* 14390 */
   IC_64BIT_XD_OPSIZE, /* 14391 */
-  IC_OPSIZE, /* 14392 */
+  IC_OPSIZE_ADSIZE, /* 14392 */
   IC_64BIT_REXW_OPSIZE, /* 14393 */
   IC_XS_OPSIZE, /* 14394 */
   IC_64BIT_REXW_XS, /* 14395 */
@@ -24235,22 +24367,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 14886 */
   IC_64BIT_XS, /* 14887 */
   IC_ADSIZE, /* 14888 */
-  IC_64BIT_ADSIZE, /* 14889 */
+  IC_64BIT_REXW_ADSIZE, /* 14889 */
   IC_XS, /* 14890 */
   IC_64BIT_REXW_XS, /* 14891 */
   IC_XD, /* 14892 */
   IC_64BIT_REXW_XD, /* 14893 */
   IC_XS, /* 14894 */
   IC_64BIT_REXW_XS, /* 14895 */
-  IC_OPSIZE, /* 14896 */
-  IC_64BIT_OPSIZE, /* 14897 */
+  IC_OPSIZE_ADSIZE, /* 14896 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 14897 */
   IC_XS_OPSIZE, /* 14898 */
   IC_64BIT_XS_OPSIZE, /* 14899 */
   IC_XD_OPSIZE, /* 14900 */
   IC_64BIT_XD_OPSIZE, /* 14901 */
   IC_XS_OPSIZE, /* 14902 */
   IC_64BIT_XD_OPSIZE, /* 14903 */
-  IC_OPSIZE, /* 14904 */
+  IC_OPSIZE_ADSIZE, /* 14904 */
   IC_64BIT_REXW_OPSIZE, /* 14905 */
   IC_XS_OPSIZE, /* 14906 */
   IC_64BIT_REXW_XS, /* 14907 */
@@ -24747,22 +24879,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 15398 */
   IC_64BIT_XS, /* 15399 */
   IC_ADSIZE, /* 15400 */
-  IC_64BIT_ADSIZE, /* 15401 */
+  IC_64BIT_REXW_ADSIZE, /* 15401 */
   IC_XS, /* 15402 */
   IC_64BIT_REXW_XS, /* 15403 */
   IC_XD, /* 15404 */
   IC_64BIT_REXW_XD, /* 15405 */
   IC_XS, /* 15406 */
   IC_64BIT_REXW_XS, /* 15407 */
-  IC_OPSIZE, /* 15408 */
-  IC_64BIT_OPSIZE, /* 15409 */
+  IC_OPSIZE_ADSIZE, /* 15408 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 15409 */
   IC_XS_OPSIZE, /* 15410 */
   IC_64BIT_XS_OPSIZE, /* 15411 */
   IC_XD_OPSIZE, /* 15412 */
   IC_64BIT_XD_OPSIZE, /* 15413 */
   IC_XS_OPSIZE, /* 15414 */
   IC_64BIT_XD_OPSIZE, /* 15415 */
-  IC_OPSIZE, /* 15416 */
+  IC_OPSIZE_ADSIZE, /* 15416 */
   IC_64BIT_REXW_OPSIZE, /* 15417 */
   IC_XS_OPSIZE, /* 15418 */
   IC_64BIT_REXW_XS, /* 15419 */
@@ -25259,22 +25391,22 @@ static const uint8_t x86DisassemblerContexts[16384] = {
   IC_XS, /* 15910 */
   IC_64BIT_XS, /* 15911 */
   IC_ADSIZE, /* 15912 */
-  IC_64BIT_ADSIZE, /* 15913 */
+  IC_64BIT_REXW_ADSIZE, /* 15913 */
   IC_XS, /* 15914 */
   IC_64BIT_REXW_XS, /* 15915 */
   IC_XD, /* 15916 */
   IC_64BIT_REXW_XD, /* 15917 */
   IC_XS, /* 15918 */
   IC_64BIT_REXW_XS, /* 15919 */
-  IC_OPSIZE, /* 15920 */
-  IC_64BIT_OPSIZE, /* 15921 */
+  IC_OPSIZE_ADSIZE, /* 15920 */
+  IC_64BIT_OPSIZE_ADSIZE, /* 15921 */
   IC_XS_OPSIZE, /* 15922 */
   IC_64BIT_XS_OPSIZE, /* 15923 */
   IC_XD_OPSIZE, /* 15924 */
   IC_64BIT_XD_OPSIZE, /* 15925 */
   IC_XS_OPSIZE, /* 15926 */
   IC_64BIT_XD_OPSIZE, /* 15927 */
-  IC_OPSIZE, /* 15928 */
+  IC_OPSIZE_ADSIZE, /* 15928 */
   IC_64BIT_REXW_OPSIZE, /* 15929 */
   IC_XS_OPSIZE, /* 15930 */
   IC_64BIT_REXW_XS, /* 15931 */
@@ -25736,328 +25868,328 @@ static const InstrUID modRMTable[] = {
 /* EmptyTable */
   0x0,
 /* Table1 */
-  0x6c, /* ADD8mr */
-  0x6f, /* ADD8rr */
+  0x6d, /* ADD8mr */
+  0x71, /* ADD8rr */
 /* Table3 */
-  0x53, /* ADD32mr */
-  0x59, /* ADD32rr */
+  0x55, /* ADD32mr */
+  0x5b, /* ADD32rr */
 /* Table5 */
-  0x6e, /* ADD8rm */
-  0x70, /* ADD8rr_REV */
+  0x70, /* ADD8rm */
+  0x72, /* ADD8rr_REV */
 /* Table7 */
-  0x58, /* ADD32rm */
-  0x5b, /* ADD32rr_REV */
+  0x5a, /* ADD32rm */
+  0x5d, /* ADD32rr_REV */
 /* Table9 */
   0x6a, /* ADD8i8 */
 /* Table10 */
-  0x50, /* ADD32i32 */
+  0x52, /* ADD32i32 */
 /* Table11 */
-  0x423, /* PUSHES32 */
+  0x422, /* PUSHES32 */
 /* Table12 */
-  0x402, /* POPES32 */
+  0x401, /* POPES32 */
 /* Table13 */
-  0x3de, /* OR8mr */
-  0x3e1, /* OR8rr */
+  0x3db, /* OR8mr */
+  0x3df, /* OR8rr */
 /* Table15 */
-  0x3ca, /* OR32mr */
-  0x3cf, /* OR32rr */
+  0x3c8, /* OR32mr */
+  0x3cd, /* OR32rr */
 /* Table17 */
-  0x3e0, /* OR8rm */
-  0x3e2, /* OR8rr_REV */
+  0x3de, /* OR8rm */
+  0x3e0, /* OR8rr_REV */
 /* Table19 */
-  0x3ce, /* OR32rm */
-  0x3d0, /* OR32rr_REV */
+  0x3cc, /* OR32rm */
+  0x3ce, /* OR32rr_REV */
 /* Table21 */
-  0x3dc, /* OR8i8 */
+  0x3d8, /* OR8i8 */
 /* Table22 */
-  0x3c7, /* OR32i32 */
+  0x3c5, /* OR32i32 */
 /* Table23 */
-  0x41f, /* PUSHCS32 */
+  0x41e, /* PUSHCS32 */
 /* Table24 */
-  0x3b, /* ADC8mr */
-  0x3e, /* ADC8rr */
+  0x3c, /* ADC8mr */
+  0x40, /* ADC8rr */
 /* Table26 */
-  0x28, /* ADC32mr */
-  0x2c, /* ADC32rr */
+  0x2a, /* ADC32mr */
+  0x2e, /* ADC32rr */
 /* Table28 */
-  0x3d, /* ADC8rm */
-  0x3f, /* ADC8rr_REV */
+  0x3f, /* ADC8rm */
+  0x41, /* ADC8rr_REV */
 /* Table30 */
-  0x2b, /* ADC32rm */
-  0x2d, /* ADC32rr_REV */
+  0x2d, /* ADC32rm */
+  0x2f, /* ADC32rr_REV */
 /* Table32 */
-  0x38, /* ADC8i8 */
+  0x39, /* ADC8i8 */
 /* Table33 */
-  0x25, /* ADC32i32 */
+  0x27, /* ADC32i32 */
 /* Table34 */
-  0x42e, /* PUSHSS32 */
+  0x42d, /* PUSHSS32 */
 /* Table35 */
-  0x40d, /* POPSS32 */
+  0x40c, /* POPSS32 */
 /* Table36 */
-  0x514, /* SBB8mr */
-  0x517, /* SBB8rr */
+  0x52a, /* SBB8mr */
+  0x52e, /* SBB8rr */
 /* Table38 */
-  0x501, /* SBB32mr */
-  0x505, /* SBB32rr */
+  0x518, /* SBB32mr */
+  0x51c, /* SBB32rr */
 /* Table40 */
-  0x516, /* SBB8rm */
-  0x518, /* SBB8rr_REV */
+  0x52d, /* SBB8rm */
+  0x52f, /* SBB8rr_REV */
 /* Table42 */
-  0x504, /* SBB32rm */
-  0x506, /* SBB32rr_REV */
+  0x51b, /* SBB32rm */
+  0x51d, /* SBB32rr_REV */
 /* Table44 */
-  0x511, /* SBB8i8 */
+  0x527, /* SBB8i8 */
 /* Table45 */
-  0x4fe, /* SBB32i32 */
+  0x515, /* SBB32i32 */
 /* Table46 */
-  0x421, /* PUSHDS32 */
+  0x420, /* PUSHDS32 */
 /* Table47 */
-  0x400, /* POPDS32 */
+  0x3ff, /* POPDS32 */
 /* Table48 */
-  0x98, /* AND8mr */
-  0x9b, /* AND8rr */
+  0x99, /* AND8mr */
+  0x9d, /* AND8rr */
 /* Table50 */
-  0x85, /* AND32mr */
-  0x89, /* AND32rr */
+  0x87, /* AND32mr */
+  0x8b, /* AND32rr */
 /* Table52 */
-  0x9a, /* AND8rm */
-  0x9c, /* AND8rr_REV */
+  0x9c, /* AND8rm */
+  0x9e, /* AND8rr_REV */
 /* Table54 */
-  0x88, /* AND32rm */
-  0x8a, /* AND32rr_REV */
+  0x8a, /* AND32rm */
+  0x8c, /* AND32rr_REV */
 /* Table56 */
   0x96, /* AND8i8 */
 /* Table57 */
-  0x82, /* AND32i32 */
+  0x84, /* AND32i32 */
 /* Table58 */
-  0x1d2, /* DAA */
+  0x1d5, /* DAA */
 /* Table59 */
-  0x5d7, /* SUB8mr */
-  0x5da, /* SUB8rr */
+  0x5ed, /* SUB8mr */
+  0x5f1, /* SUB8rr */
 /* Table61 */
-  0x5c4, /* SUB32mr */
-  0x5c8, /* SUB32rr */
+  0x5db, /* SUB32mr */
+  0x5df, /* SUB32rr */
 /* Table63 */
-  0x5d9, /* SUB8rm */
-  0x5db, /* SUB8rr_REV */
+  0x5f0, /* SUB8rm */
+  0x5f2, /* SUB8rr_REV */
 /* Table65 */
-  0x5c7, /* SUB32rm */
-  0x5c9, /* SUB32rr_REV */
+  0x5de, /* SUB32rm */
+  0x5e0, /* SUB32rr_REV */
 /* Table67 */
-  0x5d5, /* SUB8i8 */
+  0x5ea, /* SUB8i8 */
 /* Table68 */
-  0x5c1, /* SUB32i32 */
+  0x5d8, /* SUB32i32 */
 /* Table69 */
-  0x1d3, /* DAS */
+  0x1d6, /* DAS */
 /* Table70 */
-  0x684, /* XOR8mr */
-  0x687, /* XOR8rr */
+  0x69c, /* XOR8mr */
+  0x6a0, /* XOR8rr */
 /* Table72 */
-  0x671, /* XOR32mr */
-  0x675, /* XOR32rr */
+  0x68a, /* XOR32mr */
+  0x68e, /* XOR32rr */
 /* Table74 */
-  0x686, /* XOR8rm */
-  0x688, /* XOR8rr_REV */
+  0x69f, /* XOR8rm */
+  0x6a1, /* XOR8rr_REV */
 /* Table76 */
-  0x674, /* XOR32rm */
-  0x676, /* XOR32rr_REV */
+  0x68d, /* XOR32rm */
+  0x68f, /* XOR32rr_REV */
 /* Table78 */
-  0x682, /* XOR8i8 */
+  0x699, /* XOR8i8 */
 /* Table79 */
-  0x66e, /* XOR32i32 */
+  0x687, /* XOR32i32 */
 /* Table80 */
-  0x14, /* AAA */
+  0x16, /* AAA */
 /* Table81 */
-  0x1ba, /* CMP8mr */
-  0x1bd, /* CMP8rr */
+  0x1bd, /* CMP8mr */
+  0x1c1, /* CMP8rr */
 /* Table83 */
-  0x1a7, /* CMP32mr */
-  0x1ab, /* CMP32rr */
+  0x1ab, /* CMP32mr */
+  0x1af, /* CMP32rr */
 /* Table85 */
-  0x1bc, /* CMP8rm */
-  0x1be, /* CMP8rr_REV */
+  0x1c0, /* CMP8rm */
+  0x1c2, /* CMP8rr_REV */
 /* Table87 */
-  0x1aa, /* CMP32rm */
-  0x1ac, /* CMP32rr_REV */
+  0x1ae, /* CMP32rm */
+  0x1b0, /* CMP32rr_REV */
 /* Table89 */
-  0x1b7, /* CMP8i8 */
+  0x1ba, /* CMP8i8 */
 /* Table90 */
-  0x1a4, /* CMP32i32 */
+  0x1a8, /* CMP32i32 */
 /* Table91 */
-  0x17, /* AAS */
+  0x19, /* AAS */
 /* Table92 */
-  0x22d, /* INC32r */
+  0x22c, /* INC32r_alt */
 /* Table93 */
-  0x1da, /* DEC32r */
+  0x1dd, /* DEC32r_alt */
 /* Table94 */
-  0x413, /* PUSH32r */
+  0x412, /* PUSH32r */
 /* Table95 */
-  0x3f7, /* POP32r */
+  0x3f6, /* POP32r */
 /* Table96 */
-  0x41d, /* PUSHA32 */
+  0x41c, /* PUSHA32 */
 /* Table97 */
-  0x3fe, /* POPA32 */
+  0x3fd, /* POPA32 */
 /* Table98 */
-  0xd4, /* BOUNDS32rm */
+  0xd6, /* BOUNDS32rm */
   0x0, /*  */
 /* Table100 */
-  0xa1, /* ARPL16mr */
-  0xa2, /* ARPL16rr */
+  0xa3, /* ARPL16mr */
+  0xa4, /* ARPL16rr */
 /* Table102 */
-  0x1d4, /* DATA16_PREFIX */
+  0x1d7, /* DATA16_PREFIX */
 /* Table103 */
-  0x430, /* PUSHi32 */
+  0x42f, /* PUSHi32 */
 /* Table104 */
-  0x213, /* IMUL32rmi */
-  0x216, /* IMUL32rri */
+  0x212, /* IMUL32rmi */
+  0x215, /* IMUL32rri */
 /* Table106 */
-  0x412, /* PUSH32i8 */
+  0x411, /* PUSH32i8 */
 /* Table107 */
-  0x214, /* IMUL32rmi8 */
-  0x217, /* IMUL32rri8 */
+  0x213, /* IMUL32rmi8 */
+  0x216, /* IMUL32rri8 */
 /* Table109 */
-  0x236, /* INSB */
+  0x231, /* INSB */
 /* Table110 */
-  0x237, /* INSL */
+  0x232, /* INSL */
 /* Table111 */
-  0x3e9, /* OUTSB */
+  0x3e7, /* OUTSB */
 /* Table112 */
-  0x3ea, /* OUTSL */
+  0x3e8, /* OUTSL */
 /* Table113 */
-  0x27e, /* JO_1 */
+  0x278, /* JO_1 */
 /* Table114 */
-  0x275, /* JNO_1 */
+  0x26f, /* JNO_1 */
 /* Table115 */
-  0x254, /* JB_1 */
+  0x24f, /* JB_1 */
 /* Table116 */
-  0x24b, /* JAE_1 */
+  0x246, /* JAE_1 */
 /* Table117 */
-  0x25a, /* JE_1 */
+  0x254, /* JE_1 */
 /* Table118 */
-  0x272, /* JNE_1 */
+  0x26c, /* JNE_1 */
 /* Table119 */
-  0x251, /* JBE_1 */
+  0x24c, /* JBE_1 */
 /* Table120 */
-  0x24e, /* JA_1 */
+  0x249, /* JA_1 */
 /* Table121 */
-  0x285, /* JS_1 */
+  0x27f, /* JS_1 */
 /* Table122 */
-  0x27b, /* JNS_1 */
+  0x275, /* JNS_1 */
 /* Table123 */
-  0x281, /* JP_1 */
+  0x27b, /* JP_1 */
 /* Table124 */
-  0x278, /* JNP_1 */
+  0x272, /* JNP_1 */
 /* Table125 */
-  0x266, /* JL_1 */
+  0x260, /* JL_1 */
 /* Table126 */
-  0x25d, /* JGE_1 */
+  0x257, /* JGE_1 */
 /* Table127 */
-  0x263, /* JLE_1 */
+  0x25d, /* JLE_1 */
 /* Table128 */
-  0x260, /* JG_1 */
+  0x25a, /* JG_1 */
 /* Table129 */
   0x6b, /* ADD8mi */
-  0x3dd, /* OR8mi */
-  0x39, /* ADC8mi */
-  0x512, /* SBB8mi */
+  0x3d9, /* OR8mi */
+  0x3a, /* ADC8mi */
+  0x528, /* SBB8mi */
   0x97, /* AND8mi */
-  0x5d6, /* SUB8mi */
-  0x683, /* XOR8mi */
-  0x1b8, /* CMP8mi */
-  0x6d, /* ADD8ri */
-  0x3df, /* OR8ri */
-  0x3c, /* ADC8ri */
-  0x515, /* SBB8ri */
-  0x99, /* AND8ri */
-  0x5d8, /* SUB8ri */
-  0x685, /* XOR8ri */
-  0x1bb, /* CMP8ri */
+  0x5eb, /* SUB8mi */
+  0x69a, /* XOR8mi */
+  0x1bb, /* CMP8mi */
+  0x6e, /* ADD8ri */
+  0x3dc, /* OR8ri */
+  0x3d, /* ADC8ri */
+  0x52b, /* SBB8ri */
+  0x9a, /* AND8ri */
+  0x5ee, /* SUB8ri */
+  0x69d, /* XOR8ri */
+  0x1be, /* CMP8ri */
 /* Table145 */
-  0x51, /* ADD32mi */
-  0x3c8, /* OR32mi */
-  0x26, /* ADC32mi */
-  0x4ff, /* SBB32mi */
-  0x83, /* AND32mi */
-  0x5c2, /* SUB32mi */
-  0x66f, /* XOR32mi */
-  0x1a5, /* CMP32mi */
-  0x54, /* ADD32ri */
-  0x3cc, /* OR32ri */
-  0x29, /* ADC32ri */
-  0x502, /* SBB32ri */
-  0x86, /* AND32ri */
-  0x5c5, /* SUB32ri */
-  0x672, /* XOR32ri */
-  0x1a8, /* CMP32ri */
+  0x53, /* ADD32mi */
+  0x3c6, /* OR32mi */
+  0x28, /* ADC32mi */
+  0x516, /* SBB32mi */
+  0x85, /* AND32mi */
+  0x5d9, /* SUB32mi */
+  0x688, /* XOR32mi */
+  0x1a9, /* CMP32mi */
+  0x56, /* ADD32ri */
+  0x3ca, /* OR32ri */
+  0x2b, /* ADC32ri */
+  0x519, /* SBB32ri */
+  0x88, /* AND32ri */
+  0x5dc, /* SUB32ri */
+  0x68b, /* XOR32ri */
+  0x1ac, /* CMP32ri */
 /* Table161 */
-  0x68, /* ADD82_8mi8 */
-  0x3da, /* OR82_8mi8 */
-  0x3a, /* ADC8mi8 */
-  0x513, /* SBB8mi8 */
-  0x94, /* AND82_8mi8 */
-  0x5d3, /* SUB82_8mi8 */
-  0x680, /* XOR82_8mi8 */
-  0x1b9, /* CMP8mi8 */
-  0x69, /* ADD82_8ri8 */
-  0x3db, /* OR82_8ri8 */
-  0x37, /* ADC82_8ri8 */
-  0x510, /* SBB82_8ri8 */
-  0x95, /* AND82_8ri8 */
-  0x5d4, /* SUB82_8ri8 */
-  0x681, /* XOR82_8ri8 */
-  0x1b6, /* CMP82_8ri8 */
+  0x6c, /* ADD8mi8 */
+  0x3da, /* OR8mi8 */
+  0x3b, /* ADC8mi8 */
+  0x529, /* SBB8mi8 */
+  0x98, /* AND8mi8 */
+  0x5ec, /* SUB8mi8 */
+  0x69b, /* XOR8mi8 */
+  0x1bc, /* CMP8mi8 */
+  0x6f, /* ADD8ri8 */
+  0x3dd, /* OR8ri8 */
+  0x3e, /* ADC8ri8 */
+  0x52c, /* SBB8ri8 */
+  0x9b, /* AND8ri8 */
+  0x5ef, /* SUB8ri8 */
+  0x69e, /* XOR8ri8 */
+  0x1bf, /* CMP8ri8 */
 /* Table177 */
-  0x52, /* ADD32mi8 */
-  0x3c9, /* OR32mi8 */
-  0x27, /* ADC32mi8 */
-  0x500, /* SBB32mi8 */
-  0x84, /* AND32mi8 */
-  0x5c3, /* SUB32mi8 */
-  0x670, /* XOR32mi8 */
-  0x1a6, /* CMP32mi8 */
-  0x55, /* ADD32ri8 */
-  0x3cd, /* OR32ri8 */
-  0x2a, /* ADC32ri8 */
-  0x503, /* SBB32ri8 */
-  0x87, /* AND32ri8 */
-  0x5c6, /* SUB32ri8 */
-  0x673, /* XOR32ri8 */
-  0x1a9, /* CMP32ri8 */
+  0x54, /* ADD32mi8 */
+  0x3c7, /* OR32mi8 */
+  0x29, /* ADC32mi8 */
+  0x517, /* SBB32mi8 */
+  0x86, /* AND32mi8 */
+  0x5da, /* SUB32mi8 */
+  0x689, /* XOR32mi8 */
+  0x1aa, /* CMP32mi8 */
+  0x57, /* ADD32ri8 */
+  0x3cb, /* OR32ri8 */
+  0x2c, /* ADC32ri8 */
+  0x51a, /* SBB32ri8 */
+  0x89, /* AND32ri8 */
+  0x5dd, /* SUB32ri8 */
+  0x68c, /* XOR32ri8 */
+  0x1ad, /* CMP32ri8 */
 /* Table193 */
-  0x60e, /* TEST8rm */
-  0x60f, /* TEST8rr */
+  0x628, /* TEST8rm */
+  0x629, /* TEST8rr */
 /* Table195 */
-  0x5ff, /* TEST32rm */
-  0x600, /* TEST32rr */
+  0x619, /* TEST32rm */
+  0x61a, /* TEST32rr */
 /* Table197 */
-  0x65c, /* XCHG8rm */
-  0x65d, /* XCHG8rr */
+  0x675, /* XCHG8rm */
+  0x676, /* XCHG8rr */
 /* Table199 */
-  0x657, /* XCHG32rm */
-  0x658, /* XCHG32rr */
+  0x670, /* XCHG32rm */
+  0x671, /* XCHG32rr */
 /* Table201 */
-  0x352, /* MOV8mr */
-  0x35a, /* MOV8rr */
+  0x34d, /* MOV8mr */
+  0x356, /* MOV8rr */
 /* Table203 */
-  0x328, /* MOV32mr */
-  0x333, /* MOV32rr */
+  0x325, /* MOV32mr */
+  0x331, /* MOV32rr */
 /* Table205 */
-  0x358, /* MOV8rm */
-  0x35c, /* MOV8rr_REV */
+  0x354, /* MOV8rm */
+  0x358, /* MOV8rr_REV */
 /* Table207 */
-  0x332, /* MOV32rm */
-  0x334, /* MOV32rr_REV */
+  0x330, /* MOV32rm */
+  0x332, /* MOV32rr_REV */
 /* Table209 */
-  0x329, /* MOV32ms */
-  0x335, /* MOV32rs */
+  0x326, /* MOV32ms */
+  0x333, /* MOV32rs */
 /* Table211 */
-  0x298, /* LEA32r */
+  0x292, /* LEA32r */
   0x0, /*  */
 /* Table213 */
-  0x336, /* MOV32sm */
-  0x337, /* MOV32sr */
+  0x334, /* MOV32sm */
+  0x335, /* MOV32sr */
 /* Table215 */
-  0x3f8, /* POP32rmm */
+  0x3f7, /* POP32rmm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26065,7 +26197,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x3f9, /* POP32rmr */
+  0x3f8, /* POP32rmr */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26074,105 +26206,105 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table231 */
-  0x396, /* NOOP */
+  0x394, /* NOOP */
 /* Table232 */
-  0x655, /* XCHG32ar */
+  0x66e, /* XCHG32ar */
 /* Table233 */
-  0x1d1, /* CWDE */
+  0x1d4, /* CWDE */
 /* Table234 */
-  0x121, /* CDQ */
+  0x123, /* CDQ */
 /* Table235 */
-  0x1f5, /* FARCALL32i */
+  0x1f4, /* FARCALL32i */
 /* Table236 */
-  0x425, /* PUSHF32 */
+  0x424, /* PUSHF32 */
 /* Table237 */
-  0x404, /* POPF32 */
+  0x403, /* POPF32 */
 /* Table238 */
-  0x4bf, /* SAHF */
+  0x4d6, /* SAHF */
 /* Table239 */
-  0x288, /* LAHF */
+  0x282, /* LAHF */
 /* Table240 */
-  0x354, /* MOV8o8a */
+  0x34a, /* MOV8ao32 */
 /* Table241 */
-  0x32a, /* MOV32o32a */
+  0x320, /* MOV32ao32 */
 /* Table242 */
-  0x34f, /* MOV8ao8 */
+  0x350, /* MOV8o32a */
 /* Table243 */
-  0x323, /* MOV32ao32 */
+  0x328, /* MOV32o32a */
 /* Table244 */
-  0x364, /* MOVSB */
+  0x360, /* MOVSB */
 /* Table245 */
-  0x365, /* MOVSL */
+  0x361, /* MOVSL */
 /* Table246 */
-  0x1bf, /* CMPSB */
+  0x1c3, /* CMPSB */
 /* Table247 */
-  0x1c0, /* CMPSL */
+  0x1c4, /* CMPSL */
 /* Table248 */
-  0x608, /* TEST8i8 */
+  0x622, /* TEST8i8 */
 /* Table249 */
-  0x5fa, /* TEST32i32 */
+  0x614, /* TEST32i32 */
 /* Table250 */
-  0x5b0, /* STOSB */
+  0x5c7, /* STOSB */
 /* Table251 */
-  0x5b1, /* STOSL */
+  0x5c8, /* STOSL */
 /* Table252 */
-  0x2ef, /* LODSB */
+  0x2e9, /* LODSB */
 /* Table253 */
-  0x2f0, /* LODSL */
+  0x2ea, /* LODSL */
 /* Table254 */
-  0x519, /* SCASB */
+  0x530, /* SCASB */
 /* Table255 */
-  0x51a, /* SCASL */
+  0x531, /* SCASL */
 /* Table256 */
-  0x356, /* MOV8ri */
+  0x352, /* MOV8ri */
 /* Table257 */
-  0x32f, /* MOV32ri */
+  0x32d, /* MOV32ri */
 /* Table258 */
-  0x49e, /* ROL8mi */
-  0x4b6, /* ROR8mi */
-  0x445, /* RCL8mi */
-  0x45d, /* RCR8mi */
-  0x562, /* SHL8mi */
-  0x58a, /* SHR8mi */
-  0x4d4, /* SAL8mi */
-  0x4ed, /* SAR8mi */
-  0x4a1, /* ROL8ri */
-  0x4b9, /* ROR8ri */
-  0x448, /* RCL8ri */
-  0x460, /* RCR8ri */
-  0x565, /* SHL8ri */
-  0x58d, /* SHR8ri */
-  0x4d7, /* SAL8ri */
-  0x4f0, /* SAR8ri */
+  0x4b5, /* ROL8mi */
+  0x4cd, /* ROR8mi */
+  0x444, /* RCL8mi */
+  0x45c, /* RCR8mi */
+  0x579, /* SHL8mi */
+  0x5a1, /* SHR8mi */
+  0x4eb, /* SAL8mi */
+  0x504, /* SAR8mi */
+  0x4b8, /* ROL8ri */
+  0x4d0, /* ROR8ri */
+  0x447, /* RCL8ri */
+  0x45f, /* RCR8ri */
+  0x57c, /* SHL8ri */
+  0x5a4, /* SHR8ri */
+  0x4ee, /* SAL8ri */
+  0x507, /* SAR8ri */
 /* Table274 */
-  0x492, /* ROL32mi */
-  0x4aa, /* ROR32mi */
-  0x439, /* RCL32mi */
-  0x451, /* RCR32mi */
-  0x556, /* SHL32mi */
-  0x57e, /* SHR32mi */
-  0x4c8, /* SAL32mi */
-  0x4e1, /* SAR32mi */
-  0x495, /* ROL32ri */
-  0x4ad, /* ROR32ri */
-  0x43c, /* RCL32ri */
-  0x454, /* RCR32ri */
-  0x559, /* SHL32ri */
-  0x581, /* SHR32ri */
-  0x4cb, /* SAL32ri */
-  0x4e4, /* SAR32ri */
+  0x4a9, /* ROL32mi */
+  0x4c1, /* ROR32mi */
+  0x438, /* RCL32mi */
+  0x450, /* RCR32mi */
+  0x56d, /* SHL32mi */
+  0x595, /* SHR32mi */
+  0x4df, /* SAL32mi */
+  0x4f8, /* SAR32mi */
+  0x4ac, /* ROL32ri */
+  0x4c4, /* ROR32ri */
+  0x43b, /* RCL32ri */
+  0x453, /* RCR32ri */
+  0x570, /* SHL32ri */
+  0x598, /* SHR32ri */
+  0x4e2, /* SAL32ri */
+  0x4fb, /* SAR32ri */
 /* Table290 */
-  0x483, /* RETIL */
+  0x49a, /* RETIL */
 /* Table291 */
-  0x486, /* RETL */
+  0x49d, /* RETL */
 /* Table292 */
-  0x29e, /* LES32rm */
+  0x298, /* LES32rm */
   0x0, /*  */
 /* Table294 */
-  0x296, /* LDS32rm */
+  0x290, /* LDS32rm */
   0x0, /*  */
 /* Table296 */
-  0x351, /* MOV8mi */
+  0x34c, /* MOV8mi */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26180,7 +26312,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x357, /* MOV8ri_alt */
+  0x353, /* MOV8ri_alt */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26189,7 +26321,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table312 */
-  0x327, /* MOV32mi */
+  0x324, /* MOV32mi */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26197,7 +26329,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x331, /* MOV32ri_alt */
+  0x32f, /* MOV32ri_alt */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26206,97 +26338,97 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table328 */
-  0x1f2, /* ENTER */
+  0x1f1, /* ENTER */
 /* Table329 */
-  0x29b, /* LEAVE */
+  0x295, /* LEAVE */
 /* Table330 */
-  0x2f6, /* LRETIL */
+  0x2f0, /* LRETIL */
 /* Table331 */
-  0x2f9, /* LRETL */
+  0x2f3, /* LRETL */
 /* Table332 */
-  0x23b, /* INT3 */
+  0x236, /* INT3 */
 /* Table333 */
-  0x239, /* INT */
+  0x234, /* INT */
 /* Table334 */
-  0x23c, /* INTO */
+  0x237, /* INTO */
 /* Table335 */
-  0x248, /* IRET32 */
+  0x243, /* IRET32 */
 /* Table336 */
-  0x49c, /* ROL8m1 */
-  0x4b4, /* ROR8m1 */
-  0x443, /* RCL8m1 */
-  0x45b, /* RCR8m1 */
-  0x560, /* SHL8m1 */
-  0x588, /* SHR8m1 */
-  0x4d2, /* SAL8m1 */
-  0x4eb, /* SAR8m1 */
-  0x49f, /* ROL8r1 */
-  0x4b7, /* ROR8r1 */
-  0x446, /* RCL8r1 */
-  0x45e, /* RCR8r1 */
-  0x563, /* SHL8r1 */
-  0x58b, /* SHR8r1 */
-  0x4d5, /* SAL8r1 */
-  0x4ee, /* SAR8r1 */
+  0x4b3, /* ROL8m1 */
+  0x4cb, /* ROR8m1 */
+  0x442, /* RCL8m1 */
+  0x45a, /* RCR8m1 */
+  0x577, /* SHL8m1 */
+  0x59f, /* SHR8m1 */
+  0x4e9, /* SAL8m1 */
+  0x502, /* SAR8m1 */
+  0x4b6, /* ROL8r1 */
+  0x4ce, /* ROR8r1 */
+  0x445, /* RCL8r1 */
+  0x45d, /* RCR8r1 */
+  0x57a, /* SHL8r1 */
+  0x5a2, /* SHR8r1 */
+  0x4ec, /* SAL8r1 */
+  0x505, /* SAR8r1 */
 /* Table352 */
-  0x490, /* ROL32m1 */
-  0x4a8, /* ROR32m1 */
-  0x437, /* RCL32m1 */
-  0x44f, /* RCR32m1 */
-  0x554, /* SHL32m1 */
-  0x57c, /* SHR32m1 */
-  0x4c6, /* SAL32m1 */
-  0x4df, /* SAR32m1 */
-  0x493, /* ROL32r1 */
-  0x4ab, /* ROR32r1 */
-  0x43a, /* RCL32r1 */
-  0x452, /* RCR32r1 */
-  0x557, /* SHL32r1 */
-  0x57f, /* SHR32r1 */
-  0x4c9, /* SAL32r1 */
-  0x4e2, /* SAR32r1 */
+  0x4a7, /* ROL32m1 */
+  0x4bf, /* ROR32m1 */
+  0x436, /* RCL32m1 */
+  0x44e, /* RCR32m1 */
+  0x56b, /* SHL32m1 */
+  0x593, /* SHR32m1 */
+  0x4dd, /* SAL32m1 */
+  0x4f6, /* SAR32m1 */
+  0x4aa, /* ROL32r1 */
+  0x4c2, /* ROR32r1 */
+  0x439, /* RCL32r1 */
+  0x451, /* RCR32r1 */
+  0x56e, /* SHL32r1 */
+  0x596, /* SHR32r1 */
+  0x4e0, /* SAL32r1 */
+  0x4f9, /* SAR32r1 */
 /* Table368 */
-  0x49d, /* ROL8mCL */
-  0x4b5, /* ROR8mCL */
-  0x444, /* RCL8mCL */
-  0x45c, /* RCR8mCL */
-  0x561, /* SHL8mCL */
-  0x589, /* SHR8mCL */
-  0x4d3, /* SAL8mCL */
-  0x4ec, /* SAR8mCL */
-  0x4a0, /* ROL8rCL */
-  0x4b8, /* ROR8rCL */
-  0x447, /* RCL8rCL */
-  0x45f, /* RCR8rCL */
-  0x564, /* SHL8rCL */
-  0x58c, /* SHR8rCL */
-  0x4d6, /* SAL8rCL */
-  0x4ef, /* SAR8rCL */
+  0x4b4, /* ROL8mCL */
+  0x4cc, /* ROR8mCL */
+  0x443, /* RCL8mCL */
+  0x45b, /* RCR8mCL */
+  0x578, /* SHL8mCL */
+  0x5a0, /* SHR8mCL */
+  0x4ea, /* SAL8mCL */
+  0x503, /* SAR8mCL */
+  0x4b7, /* ROL8rCL */
+  0x4cf, /* ROR8rCL */
+  0x446, /* RCL8rCL */
+  0x45e, /* RCR8rCL */
+  0x57b, /* SHL8rCL */
+  0x5a3, /* SHR8rCL */
+  0x4ed, /* SAL8rCL */
+  0x506, /* SAR8rCL */
 /* Table384 */
-  0x491, /* ROL32mCL */
-  0x4a9, /* ROR32mCL */
-  0x438, /* RCL32mCL */
-  0x450, /* RCR32mCL */
-  0x555, /* SHL32mCL */
-  0x57d, /* SHR32mCL */
-  0x4c7, /* SAL32mCL */
-  0x4e0, /* SAR32mCL */
-  0x494, /* ROL32rCL */
-  0x4ac, /* ROR32rCL */
-  0x43b, /* RCL32rCL */
-  0x453, /* RCR32rCL */
-  0x558, /* SHL32rCL */
-  0x580, /* SHR32rCL */
-  0x4ca, /* SAL32rCL */
-  0x4e3, /* SAR32rCL */
+  0x4a8, /* ROL32mCL */
+  0x4c0, /* ROR32mCL */
+  0x437, /* RCL32mCL */
+  0x44f, /* RCR32mCL */
+  0x56c, /* SHL32mCL */
+  0x594, /* SHR32mCL */
+  0x4de, /* SAL32mCL */
+  0x4f7, /* SAR32mCL */
+  0x4ab, /* ROL32rCL */
+  0x4c3, /* ROR32rCL */
+  0x43a, /* RCL32rCL */
+  0x452, /* RCR32rCL */
+  0x56f, /* SHL32rCL */
+  0x597, /* SHR32rCL */
+  0x4e1, /* SAL32rCL */
+  0x4fa, /* SAR32rCL */
 /* Table400 */
-  0x16, /* AAM8i8 */
+  0x18, /* AAM8i8 */
 /* Table401 */
-  0x15, /* AAD8i8 */
+  0x17, /* AAD8i8 */
 /* Table402 */
-  0x4d8, /* SALC */
+  0x4ef, /* SALC */
 /* Table403 */
-  0x664, /* XLAT */
+  0x67d, /* XLAT */
 /* Table404 */
   0x0, /*  */
   0x0, /*  */
@@ -26342,7 +26474,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x1fd, /* FSETPM */
+  0x1fc, /* FSETPM */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26371,106 +26503,106 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table476 */
-  0x2f5, /* LOOPNE */
+  0x2ef, /* LOOPNE */
 /* Table477 */
-  0x2f4, /* LOOPE */
+  0x2ee, /* LOOPE */
 /* Table478 */
-  0x2f3, /* LOOP */
+  0x2ed, /* LOOP */
 /* Table479 */
-  0x258, /* JECXZ_32 */
+  0x253, /* JECXZ */
 /* Table480 */
-  0x226, /* IN8ri */
+  0x225, /* IN8ri */
 /* Table481 */
-  0x224, /* IN32ri */
+  0x223, /* IN32ri */
 /* Table482 */
-  0x3e7, /* OUT8ir */
+  0x3e5, /* OUT8ir */
 /* Table483 */
-  0x3e5, /* OUT32ir */
+  0x3e3, /* OUT32ir */
 /* Table484 */
-  0x11f, /* CALLpcrel32 */
+  0x121, /* CALLpcrel32 */
 /* Table485 */
-  0x271, /* JMP_4 */
+  0x26b, /* JMP_4 */
 /* Table486 */
-  0x1fa, /* FARJMP32i */
+  0x1f9, /* FARJMP32i */
 /* Table487 */
-  0x26f, /* JMP_1 */
+  0x269, /* JMP_1 */
 /* Table488 */
-  0x227, /* IN8rr */
+  0x226, /* IN8rr */
 /* Table489 */
-  0x225, /* IN32rr */
+  0x224, /* IN32rr */
 /* Table490 */
-  0x3e8, /* OUT8rr */
+  0x3e6, /* OUT8rr */
 /* Table491 */
-  0x3e6, /* OUT32rr */
+  0x3e4, /* OUT32rr */
 /* Table492 */
-  0x2d8, /* LOCK_PREFIX */
+  0x2d2, /* LOCK_PREFIX */
 /* Table493 */
-  0x23a, /* INT1 */
+  0x235, /* INT1 */
 /* Table494 */
-  0x473, /* REPNE_PREFIX */
+  0x48a, /* REPNE_PREFIX */
 /* Table495 */
-  0x47b, /* REP_PREFIX */
+  0x492, /* REP_PREFIX */
 /* Table496 */
-  0x1ff, /* HLT */
+  0x1fe, /* HLT */
 /* Table497 */
-  0x129, /* CMC */
+  0x12d, /* CMC */
 /* Table498 */
-  0x609, /* TEST8mi */
-  0x60a, /* TEST8mi_alt */
-  0x3bc, /* NOT8m */
-  0x394, /* NEG8m */
-  0x388, /* MUL8m */
-  0x220, /* IMUL8m */
-  0x1e9, /* DIV8m */
-  0x206, /* IDIV8m */
-  0x60b, /* TEST8ri */
-  0x60d, /* TEST8ri_alt */
-  0x3bd, /* NOT8r */
-  0x395, /* NEG8r */
-  0x389, /* MUL8r */
-  0x221, /* IMUL8r */
-  0x1ea, /* DIV8r */
-  0x207, /* IDIV8r */
+  0x623, /* TEST8mi */
+  0x624, /* TEST8mi_alt */
+  0x3ba, /* NOT8m */
+  0x392, /* NEG8m */
+  0x386, /* MUL8m */
+  0x21f, /* IMUL8m */
+  0x1e8, /* DIV8m */
+  0x205, /* IDIV8m */
+  0x625, /* TEST8ri */
+  0x627, /* TEST8ri_alt */
+  0x3bb, /* NOT8r */
+  0x393, /* NEG8r */
+  0x387, /* MUL8r */
+  0x220, /* IMUL8r */
+  0x1e9, /* DIV8r */
+  0x206, /* IDIV8r */
 /* Table514 */
-  0x5fb, /* TEST32mi */
-  0x5fc, /* TEST32mi_alt */
-  0x3b8, /* NOT32m */
-  0x390, /* NEG32m */
-  0x384, /* MUL32m */
-  0x210, /* IMUL32m */
-  0x1e5, /* DIV32m */
-  0x202, /* IDIV32m */
-  0x5fd, /* TEST32ri */
-  0x5fe, /* TEST32ri_alt */
-  0x3b9, /* NOT32r */
-  0x391, /* NEG32r */
-  0x385, /* MUL32r */
-  0x211, /* IMUL32r */
-  0x1e6, /* DIV32r */
-  0x203, /* IDIV32r */
+  0x615, /* TEST32mi */
+  0x616, /* TEST32mi_alt */
+  0x3b6, /* NOT32m */
+  0x38e, /* NEG32m */
+  0x382, /* MUL32m */
+  0x20f, /* IMUL32m */
+  0x1e4, /* DIV32m */
+  0x201, /* IDIV32m */
+  0x617, /* TEST32ri */
+  0x618, /* TEST32ri_alt */
+  0x3b7, /* NOT32r */
+  0x38f, /* NEG32r */
+  0x383, /* MUL32r */
+  0x210, /* IMUL32r */
+  0x1e5, /* DIV32r */
+  0x202, /* IDIV32r */
 /* Table530 */
-  0x124, /* CLC */
+  0x126, /* CLC */
 /* Table531 */
-  0x5ac, /* STC */
+  0x5c3, /* STC */
 /* Table532 */
-  0x127, /* CLI */
+  0x12a, /* CLI */
 /* Table533 */
-  0x5af, /* STI */
+  0x5c6, /* STI */
 /* Table534 */
-  0x125, /* CLD */
+  0x127, /* CLD */
 /* Table535 */
-  0x5ad, /* STD */
+  0x5c4, /* STD */
 /* Table536 */
-  0x234, /* INC8m */
-  0x1e1, /* DEC8m */
+  0x22f, /* INC8m */
+  0x1e0, /* DEC8m */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x235, /* INC8r */
-  0x1e2, /* DEC8r */
+  0x230, /* INC8r */
+  0x1e1, /* DEC8r */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26478,40 +26610,40 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table552 */
-  0x22c, /* INC32m */
-  0x1d9, /* DEC32m */
-  0x119, /* CALL32m */
-  0x1f6, /* FARCALL32m */
-  0x26b, /* JMP32m */
-  0x1fb, /* FARJMP32m */
-  0x414, /* PUSH32rmm */
+  0x22a, /* INC32m */
+  0x1db, /* DEC32m */
+  0x11b, /* CALL32m */
+  0x1f5, /* FARCALL32m */
+  0x265, /* JMP32m */
+  0x1fa, /* FARJMP32m */
+  0x413, /* PUSH32rmm */
   0x0, /*  */
-  0x22b, /* INC32_32r */
-  0x1d8, /* DEC32_32r */
-  0x11a, /* CALL32r */
+  0x22b, /* INC32r */
+  0x1dc, /* DEC32r */
+  0x11c, /* CALL32r */
   0x0, /*  */
-  0x26c, /* JMP32r */
+  0x266, /* JMP32r */
   0x0, /*  */
-  0x415, /* PUSH32rmr */
+  0x414, /* PUSH32rmr */
   0x0, /*  */
 /* Table568 */
-  0x489, /* REX64_PREFIX */
+  0x4a0, /* REX64_PREFIX */
 /* Table569 */
-  0x419, /* PUSH64r */
+  0x418, /* PUSH64r */
 /* Table570 */
-  0x3fa, /* POP64r */
+  0x3f9, /* POP64r */
 /* Table571 */
-  0x371, /* MOVSX64rm32_alt */
-  0x36e, /* MOVSX64_NOREXrr32 */
+  0x36f, /* MOVSX64rm32_alt */
+  0x36c, /* MOVSX64_NOREXrr32 */
 /* Table573 */
-  0x417, /* PUSH64i32 */
+  0x416, /* PUSH64i32 */
 /* Table574 */
-  0x418, /* PUSH64i8 */
+  0x417, /* PUSH64i8 */
 /* Table575 */
-  0x299, /* LEA64_32r */
+  0x293, /* LEA64_32r */
   0x0, /*  */
 /* Table577 */
-  0x3fb, /* POP64rmm */
+  0x3fa, /* POP64rmm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26519,7 +26651,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x3fc, /* POP64rmr */
+  0x3fb, /* POP64rmr */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26528,210 +26660,210 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table593 */
-  0x656, /* XCHG32ar64 */
+  0x66f, /* XCHG32ar64 */
 /* Table594 */
-  0x426, /* PUSHF64 */
+  0x425, /* PUSHF64 */
 /* Table595 */
-  0x405, /* POPF64 */
+  0x404, /* POPF64 */
 /* Table596 */
-  0x344, /* MOV64o8a */
+  0x34b, /* MOV8ao64 */
 /* Table597 */
-  0x342, /* MOV64o32a */
+  0x321, /* MOV32ao64 */
 /* Table598 */
-  0x33b, /* MOV64ao8 */
+  0x351, /* MOV8o64a */
 /* Table599 */
-  0x339, /* MOV64ao32 */
+  0x329, /* MOV32o64a */
 /* Table600 */
-  0x484, /* RETIQ */
+  0x49b, /* RETIQ */
 /* Table601 */
-  0x487, /* RETQ */
+  0x49e, /* RETQ */
 /* Table602 */
-  0x29c, /* LEAVE64 */
+  0x296, /* LEAVE64 */
 /* Table603 */
-  0x284, /* JRCXZ */
+  0x27e, /* JRCXZ */
 /* Table604 */
-  0x11c, /* CALL64pcrel32 */
+  0x11e, /* CALL64pcrel32 */
 /* Table605 */
-  0x230, /* INC64_32m */
-  0x1dd, /* DEC64_32m */
-  0x11b, /* CALL64m */
-  0x1f6, /* FARCALL32m */
-  0x26d, /* JMP64m */
-  0x1fb, /* FARJMP32m */
-  0x41a, /* PUSH64rmm */
+  0x22a, /* INC32m */
+  0x1db, /* DEC32m */
+  0x11d, /* CALL64m */
+  0x1f5, /* FARCALL32m */
+  0x267, /* JMP64m */
+  0x1fa, /* FARJMP32m */
+  0x419, /* PUSH64rmm */
   0x0, /*  */
-  0x231, /* INC64_32r */
-  0x1de, /* DEC64_32r */
-  0x11d, /* CALL64r */
+  0x22b, /* INC32r */
+  0x1dc, /* DEC32r */
+  0x11f, /* CALL64r */
   0x0, /*  */
-  0x26e, /* JMP64r */
+  0x268, /* JMP64r */
   0x0, /*  */
-  0x41b, /* PUSH64rmr */
+  0x41a, /* PUSH64rmr */
   0x0, /*  */
 /* Table621 */
-  0x47, /* ADD16mr */
-  0x4d, /* ADD16rr */
+  0x49, /* ADD16mr */
+  0x4f, /* ADD16rr */
 /* Table623 */
-  0x4c, /* ADD16rm */
-  0x4f, /* ADD16rr_REV */
+  0x4e, /* ADD16rm */
+  0x51, /* ADD16rr_REV */
 /* Table625 */
-  0x44, /* ADD16i16 */
+  0x46, /* ADD16i16 */
 /* Table626 */
-  0x422, /* PUSHES16 */
+  0x421, /* PUSHES16 */
 /* Table627 */
-  0x401, /* POPES16 */
+  0x400, /* POPES16 */
 /* Table628 */
-  0x3c1, /* OR16mr */
-  0x3c5, /* OR16rr */
+  0x3bf, /* OR16mr */
+  0x3c3, /* OR16rr */
 /* Table630 */
-  0x3c4, /* OR16rm */
-  0x3c6, /* OR16rr_REV */
+  0x3c2, /* OR16rm */
+  0x3c4, /* OR16rr_REV */
 /* Table632 */
-  0x3be, /* OR16i16 */
+  0x3bc, /* OR16i16 */
 /* Table633 */
-  0x41e, /* PUSHCS16 */
+  0x41d, /* PUSHCS16 */
 /* Table634 */
-  0x1f, /* ADC16mr */
-  0x23, /* ADC16rr */
+  0x21, /* ADC16mr */
+  0x25, /* ADC16rr */
 /* Table636 */
-  0x22, /* ADC16rm */
-  0x24, /* ADC16rr_REV */
+  0x24, /* ADC16rm */
+  0x26, /* ADC16rr_REV */
 /* Table638 */
-  0x1c, /* ADC16i16 */
+  0x1e, /* ADC16i16 */
 /* Table639 */
-  0x42d, /* PUSHSS16 */
+  0x42c, /* PUSHSS16 */
 /* Table640 */
-  0x40c, /* POPSS16 */
+  0x40b, /* POPSS16 */
 /* Table641 */
-  0x4f8, /* SBB16mr */
-  0x4fc, /* SBB16rr */
+  0x50f, /* SBB16mr */
+  0x513, /* SBB16rr */
 /* Table643 */
-  0x4fb, /* SBB16rm */
-  0x4fd, /* SBB16rr_REV */
+  0x512, /* SBB16rm */
+  0x514, /* SBB16rr_REV */
 /* Table645 */
-  0x4f5, /* SBB16i16 */
+  0x50c, /* SBB16i16 */
 /* Table646 */
-  0x420, /* PUSHDS16 */
+  0x41f, /* PUSHDS16 */
 /* Table647 */
-  0x3ff, /* POPDS16 */
+  0x3fe, /* POPDS16 */
 /* Table648 */
-  0x7c, /* AND16mr */
-  0x80, /* AND16rr */
+  0x7e, /* AND16mr */
+  0x82, /* AND16rr */
 /* Table650 */
-  0x7f, /* AND16rm */
-  0x81, /* AND16rr_REV */
+  0x81, /* AND16rm */
+  0x83, /* AND16rr_REV */
 /* Table652 */
-  0x79, /* AND16i16 */
+  0x7b, /* AND16i16 */
 /* Table653 */
-  0x5bb, /* SUB16mr */
-  0x5bf, /* SUB16rr */
+  0x5d2, /* SUB16mr */
+  0x5d6, /* SUB16rr */
 /* Table655 */
-  0x5be, /* SUB16rm */
-  0x5c0, /* SUB16rr_REV */
+  0x5d5, /* SUB16rm */
+  0x5d7, /* SUB16rr_REV */
 /* Table657 */
-  0x5b8, /* SUB16i16 */
+  0x5cf, /* SUB16i16 */
 /* Table658 */
-  0x668, /* XOR16mr */
-  0x66c, /* XOR16rr */
+  0x681, /* XOR16mr */
+  0x685, /* XOR16rr */
 /* Table660 */
-  0x66b, /* XOR16rm */
-  0x66d, /* XOR16rr_REV */
+  0x684, /* XOR16rm */
+  0x686, /* XOR16rr_REV */
 /* Table662 */
-  0x665, /* XOR16i16 */
+  0x67e, /* XOR16i16 */
 /* Table663 */
-  0x19e, /* CMP16mr */
-  0x1a2, /* CMP16rr */
+  0x1a2, /* CMP16mr */
+  0x1a6, /* CMP16rr */
 /* Table665 */
-  0x1a1, /* CMP16rm */
-  0x1a3, /* CMP16rr_REV */
+  0x1a5, /* CMP16rm */
+  0x1a7, /* CMP16rr_REV */
 /* Table667 */
-  0x19b, /* CMP16i16 */
+  0x19f, /* CMP16i16 */
 /* Table668 */
-  0x229, /* INC16r */
+  0x229, /* INC16r_alt */
 /* Table669 */
-  0x1d6, /* DEC16r */
+  0x1da, /* DEC16r_alt */
 /* Table670 */
-  0x40f, /* PUSH16r */
+  0x40e, /* PUSH16r */
 /* Table671 */
-  0x3f4, /* POP16r */
+  0x3f3, /* POP16r */
 /* Table672 */
-  0x41c, /* PUSHA16 */
+  0x41b, /* PUSHA16 */
 /* Table673 */
-  0x3fd, /* POPA16 */
+  0x3fc, /* POPA16 */
 /* Table674 */
-  0xd3, /* BOUNDS16rm */
+  0xd5, /* BOUNDS16rm */
   0x0, /*  */
 /* Table676 */
-  0x42f, /* PUSHi16 */
+  0x42e, /* PUSHi16 */
 /* Table677 */
-  0x20b, /* IMUL16rmi */
-  0x20e, /* IMUL16rri */
+  0x20a, /* IMUL16rmi */
+  0x20d, /* IMUL16rri */
 /* Table679 */
-  0x40e, /* PUSH16i8 */
+  0x40d, /* PUSH16i8 */
 /* Table680 */
-  0x20c, /* IMUL16rmi8 */
-  0x20f, /* IMUL16rri8 */
+  0x20b, /* IMUL16rmi8 */
+  0x20e, /* IMUL16rri8 */
 /* Table682 */
-  0x238, /* INSW */
+  0x233, /* INSW */
 /* Table683 */
-  0x3eb, /* OUTSW */
+  0x3e9, /* OUTSW */
 /* Table684 */
-  0x45, /* ADD16mi */
-  0x3bf, /* OR16mi */
-  0x1d, /* ADC16mi */
-  0x4f6, /* SBB16mi */
-  0x7a, /* AND16mi */
-  0x5b9, /* SUB16mi */
-  0x666, /* XOR16mi */
-  0x19c, /* CMP16mi */
-  0x48, /* ADD16ri */
-  0x3c2, /* OR16ri */
-  0x20, /* ADC16ri */
-  0x4f9, /* SBB16ri */
-  0x7d, /* AND16ri */
-  0x5bc, /* SUB16ri */
-  0x669, /* XOR16ri */
-  0x19f, /* CMP16ri */
+  0x47, /* ADD16mi */
+  0x3bd, /* OR16mi */
+  0x1f, /* ADC16mi */
+  0x50d, /* SBB16mi */
+  0x7c, /* AND16mi */
+  0x5d0, /* SUB16mi */
+  0x67f, /* XOR16mi */
+  0x1a0, /* CMP16mi */
+  0x4a, /* ADD16ri */
+  0x3c0, /* OR16ri */
+  0x22, /* ADC16ri */
+  0x510, /* SBB16ri */
+  0x7f, /* AND16ri */
+  0x5d3, /* SUB16ri */
+  0x682, /* XOR16ri */
+  0x1a3, /* CMP16ri */
 /* Table700 */
-  0x46, /* ADD16mi8 */
-  0x3c0, /* OR16mi8 */
-  0x1e, /* ADC16mi8 */
-  0x4f7, /* SBB16mi8 */
-  0x7b, /* AND16mi8 */
-  0x5ba, /* SUB16mi8 */
-  0x667, /* XOR16mi8 */
-  0x19d, /* CMP16mi8 */
-  0x49, /* ADD16ri8 */
-  0x3c3, /* OR16ri8 */
-  0x21, /* ADC16ri8 */
-  0x4fa, /* SBB16ri8 */
-  0x7e, /* AND16ri8 */
-  0x5bd, /* SUB16ri8 */
-  0x66a, /* XOR16ri8 */
-  0x1a0, /* CMP16ri8 */
+  0x48, /* ADD16mi8 */
+  0x3be, /* OR16mi8 */
+  0x20, /* ADC16mi8 */
+  0x50e, /* SBB16mi8 */
+  0x7d, /* AND16mi8 */
+  0x5d1, /* SUB16mi8 */
+  0x680, /* XOR16mi8 */
+  0x1a1, /* CMP16mi8 */
+  0x4b, /* ADD16ri8 */
+  0x3c1, /* OR16ri8 */
+  0x23, /* ADC16ri8 */
+  0x511, /* SBB16ri8 */
+  0x80, /* AND16ri8 */
+  0x5d4, /* SUB16ri8 */
+  0x683, /* XOR16ri8 */
+  0x1a4, /* CMP16ri8 */
 /* Table716 */
-  0x5f8, /* TEST16rm */
-  0x5f9, /* TEST16rr */
+  0x612, /* TEST16rm */
+  0x613, /* TEST16rr */
 /* Table718 */
-  0x653, /* XCHG16rm */
-  0x654, /* XCHG16rr */
+  0x66c, /* XCHG16rm */
+  0x66d, /* XCHG16rr */
 /* Table720 */
-  0x317, /* MOV16mr */
-  0x31e, /* MOV16rr */
+  0x312, /* MOV16mr */
+  0x31a, /* MOV16rr */
 /* Table722 */
-  0x31d, /* MOV16rm */
-  0x31f, /* MOV16rr_REV */
+  0x319, /* MOV16rm */
+  0x31b, /* MOV16rr_REV */
 /* Table724 */
-  0x318, /* MOV16ms */
-  0x320, /* MOV16rs */
+  0x313, /* MOV16ms */
+  0x31c, /* MOV16rs */
 /* Table726 */
-  0x297, /* LEA16r */
+  0x291, /* LEA16r */
   0x0, /*  */
 /* Table728 */
-  0x321, /* MOV16sm */
-  0x322, /* MOV16sr */
+  0x31d, /* MOV16sm */
+  0x31e, /* MOV16sr */
 /* Table730 */
-  0x3f5, /* POP16rmm */
+  0x3f4, /* POP16rmm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26739,7 +26871,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x3f6, /* POP16rmr */
+  0x3f5, /* POP16rmr */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26748,64 +26880,64 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table746 */
-  0x652, /* XCHG16ar */
+  0x66b, /* XCHG16ar */
 /* Table747 */
-  0x120, /* CBW */
+  0x122, /* CBW */
 /* Table748 */
-  0x1d0, /* CWD */
+  0x1d3, /* CWD */
 /* Table749 */
-  0x1f3, /* FARCALL16i */
+  0x1f2, /* FARCALL16i */
 /* Table750 */
-  0x424, /* PUSHF16 */
+  0x423, /* PUSHF16 */
 /* Table751 */
-  0x403, /* POPF16 */
+  0x402, /* POPF16 */
 /* Table752 */
-  0x319, /* MOV16o16a */
+  0x30f, /* MOV16ao32 */
 /* Table753 */
-  0x314, /* MOV16ao16 */
+  0x315, /* MOV16o32a */
 /* Table754 */
-  0x367, /* MOVSW */
+  0x363, /* MOVSW */
 /* Table755 */
-  0x1c2, /* CMPSW */
+  0x1c6, /* CMPSW */
 /* Table756 */
-  0x5f3, /* TEST16i16 */
+  0x60d, /* TEST16i16 */
 /* Table757 */
-  0x5b3, /* STOSW */
+  0x5ca, /* STOSW */
 /* Table758 */
-  0x2f2, /* LODSW */
+  0x2ec, /* LODSW */
 /* Table759 */
-  0x51c, /* SCASW */
+  0x533, /* SCASW */
 /* Table760 */
-  0x31b, /* MOV16ri */
+  0x317, /* MOV16ri */
 /* Table761 */
-  0x48c, /* ROL16mi */
-  0x4a4, /* ROR16mi */
-  0x433, /* RCL16mi */
-  0x44b, /* RCR16mi */
-  0x550, /* SHL16mi */
-  0x578, /* SHR16mi */
-  0x4c2, /* SAL16mi */
-  0x4db, /* SAR16mi */
-  0x48f, /* ROL16ri */
-  0x4a7, /* ROR16ri */
-  0x436, /* RCL16ri */
-  0x44e, /* RCR16ri */
-  0x553, /* SHL16ri */
-  0x57b, /* SHR16ri */
-  0x4c5, /* SAL16ri */
-  0x4de, /* SAR16ri */
+  0x4a3, /* ROL16mi */
+  0x4bb, /* ROR16mi */
+  0x432, /* RCL16mi */
+  0x44a, /* RCR16mi */
+  0x567, /* SHL16mi */
+  0x58f, /* SHR16mi */
+  0x4d9, /* SAL16mi */
+  0x4f2, /* SAR16mi */
+  0x4a6, /* ROL16ri */
+  0x4be, /* ROR16ri */
+  0x435, /* RCL16ri */
+  0x44d, /* RCR16ri */
+  0x56a, /* SHL16ri */
+  0x592, /* SHR16ri */
+  0x4dc, /* SAL16ri */
+  0x4f5, /* SAR16ri */
 /* Table777 */
-  0x485, /* RETIW */
+  0x49c, /* RETIW */
 /* Table778 */
-  0x488, /* RETW */
+  0x49f, /* RETW */
 /* Table779 */
-  0x29d, /* LES16rm */
+  0x297, /* LES16rm */
   0x0, /*  */
 /* Table781 */
-  0x295, /* LDS16rm */
+  0x28f, /* LDS16rm */
   0x0, /*  */
 /* Table783 */
-  0x316, /* MOV16mi */
+  0x311, /* MOV16mi */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26813,7 +26945,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x31c, /* MOV16ri_alt */
+  0x318, /* MOV16ri_alt */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26822,266 +26954,278 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table799 */
-  0x2f8, /* LRETIW */
+  0x2f2, /* LRETIW */
 /* Table800 */
-  0x2fb, /* LRETW */
+  0x2f5, /* LRETW */
 /* Table801 */
-  0x247, /* IRET16 */
+  0x242, /* IRET16 */
 /* Table802 */
-  0x48a, /* ROL16m1 */
-  0x4a2, /* ROR16m1 */
-  0x431, /* RCL16m1 */
-  0x449, /* RCR16m1 */
-  0x54e, /* SHL16m1 */
-  0x576, /* SHR16m1 */
-  0x4c0, /* SAL16m1 */
-  0x4d9, /* SAR16m1 */
-  0x48d, /* ROL16r1 */
-  0x4a5, /* ROR16r1 */
-  0x434, /* RCL16r1 */
-  0x44c, /* RCR16r1 */
-  0x551, /* SHL16r1 */
-  0x579, /* SHR16r1 */
-  0x4c3, /* SAL16r1 */
-  0x4dc, /* SAR16r1 */
+  0x4a1, /* ROL16m1 */
+  0x4b9, /* ROR16m1 */
+  0x430, /* RCL16m1 */
+  0x448, /* RCR16m1 */
+  0x565, /* SHL16m1 */
+  0x58d, /* SHR16m1 */
+  0x4d7, /* SAL16m1 */
+  0x4f0, /* SAR16m1 */
+  0x4a4, /* ROL16r1 */
+  0x4bc, /* ROR16r1 */
+  0x433, /* RCL16r1 */
+  0x44b, /* RCR16r1 */
+  0x568, /* SHL16r1 */
+  0x590, /* SHR16r1 */
+  0x4da, /* SAL16r1 */
+  0x4f3, /* SAR16r1 */
 /* Table818 */
-  0x48b, /* ROL16mCL */
-  0x4a3, /* ROR16mCL */
-  0x432, /* RCL16mCL */
-  0x44a, /* RCR16mCL */
-  0x54f, /* SHL16mCL */
-  0x577, /* SHR16mCL */
-  0x4c1, /* SAL16mCL */
-  0x4da, /* SAR16mCL */
-  0x48e, /* ROL16rCL */
-  0x4a6, /* ROR16rCL */
-  0x435, /* RCL16rCL */
-  0x44d, /* RCR16rCL */
-  0x552, /* SHL16rCL */
-  0x57a, /* SHR16rCL */
-  0x4c4, /* SAL16rCL */
-  0x4dd, /* SAR16rCL */
+  0x4a2, /* ROL16mCL */
+  0x4ba, /* ROR16mCL */
+  0x431, /* RCL16mCL */
+  0x449, /* RCR16mCL */
+  0x566, /* SHL16mCL */
+  0x58e, /* SHR16mCL */
+  0x4d8, /* SAL16mCL */
+  0x4f1, /* SAR16mCL */
+  0x4a5, /* ROL16rCL */
+  0x4bd, /* ROR16rCL */
+  0x434, /* RCL16rCL */
+  0x44c, /* RCR16rCL */
+  0x569, /* SHL16rCL */
+  0x591, /* SHR16rCL */
+  0x4db, /* SAL16rCL */
+  0x4f4, /* SAR16rCL */
 /* Table834 */
-  0x222, /* IN16ri */
+  0x221, /* IN16ri */
 /* Table835 */
-  0x3e3, /* OUT16ir */
+  0x3e1, /* OUT16ir */
 /* Table836 */
-  0x11e, /* CALLpcrel16 */
+  0x120, /* CALLpcrel16 */
 /* Table837 */
-  0x270, /* JMP_2 */
+  0x26a, /* JMP_2 */
 /* Table838 */
-  0x1f8, /* FARJMP16i */
+  0x1f7, /* FARJMP16i */
 /* Table839 */
-  0x223, /* IN16rr */
+  0x222, /* IN16rr */
 /* Table840 */
-  0x3e4, /* OUT16rr */
+  0x3e2, /* OUT16rr */
 /* Table841 */
-  0x5f4, /* TEST16mi */
-  0x5f5, /* TEST16mi_alt */
-  0x3b6, /* NOT16m */
-  0x38e, /* NEG16m */
-  0x382, /* MUL16m */
-  0x208, /* IMUL16m */
-  0x1e3, /* DIV16m */
-  0x200, /* IDIV16m */
-  0x5f6, /* TEST16ri */
-  0x5f7, /* TEST16ri_alt */
-  0x3b7, /* NOT16r */
-  0x38f, /* NEG16r */
-  0x383, /* MUL16r */
-  0x209, /* IMUL16r */
-  0x1e4, /* DIV16r */
-  0x201, /* IDIV16r */
+  0x60e, /* TEST16mi */
+  0x60f, /* TEST16mi_alt */
+  0x3b4, /* NOT16m */
+  0x38c, /* NEG16m */
+  0x380, /* MUL16m */
+  0x207, /* IMUL16m */
+  0x1e2, /* DIV16m */
+  0x1ff, /* IDIV16m */
+  0x610, /* TEST16ri */
+  0x611, /* TEST16ri_alt */
+  0x3b5, /* NOT16r */
+  0x38d, /* NEG16r */
+  0x381, /* MUL16r */
+  0x208, /* IMUL16r */
+  0x1e3, /* DIV16r */
+  0x200, /* IDIV16r */
 /* Table857 */
-  0x228, /* INC16m */
-  0x1d5, /* DEC16m */
-  0x117, /* CALL16m */
-  0x1f4, /* FARCALL16m */
-  0x269, /* JMP16m */
-  0x1f9, /* FARJMP16m */
-  0x410, /* PUSH16rmm */
+  0x227, /* INC16m */
+  0x1d8, /* DEC16m */
+  0x119, /* CALL16m */
+  0x1f3, /* FARCALL16m */
+  0x263, /* JMP16m */
+  0x1f8, /* FARJMP16m */
+  0x40f, /* PUSH16rmm */
   0x0, /*  */
-  0x22a, /* INC32_16r */
-  0x1d7, /* DEC32_16r */
-  0x118, /* CALL16r */
+  0x228, /* INC16r */
+  0x1d9, /* DEC16r */
+  0x11a, /* CALL16r */
   0x0, /*  */
-  0x26a, /* JMP16r */
+  0x264, /* JMP16r */
   0x0, /*  */
-  0x411, /* PUSH16rmr */
+  0x410, /* PUSH16rmr */
   0x0, /*  */
 /* Table873 */
-  0x257, /* JCXZ */
+  0x349, /* MOV8ao16 */
 /* Table874 */
-  0x5f, /* ADD64mr */
-  0x65, /* ADD64rr */
+  0x31f, /* MOV32ao16 */
+/* Table875 */
+  0x34f, /* MOV8o16a */
 /* Table876 */
-  0x64, /* ADD64rm */
-  0x67, /* ADD64rr_REV */
+  0x327, /* MOV32o16a */
+/* Table877 */
+  0x252, /* JCXZ */
 /* Table878 */
-  0x5c, /* ADD64i32 */
+  0x30e, /* MOV16ao16 */
 /* Table879 */
-  0x3d4, /* OR64mr */
-  0x3d8, /* OR64rr */
-/* Table881 */
-  0x3d7, /* OR64rm */
-  0x3d9, /* OR64rr_REV */
-/* Table883 */
-  0x3d1, /* OR64i32 */
+  0x314, /* MOV16o16a */
+/* Table880 */
+  0x61, /* ADD64mr */
+  0x67, /* ADD64rr */
+/* Table882 */
+  0x66, /* ADD64rm */
+  0x69, /* ADD64rr_REV */
 /* Table884 */
-  0x31, /* ADC64mr */
-  0x35, /* ADC64rr */
-/* Table886 */
-  0x34, /* ADC64rm */
-  0x36, /* ADC64rr_REV */
-/* Table888 */
-  0x2e, /* ADC64i32 */
+  0x5e, /* ADD64i32 */
+/* Table885 */
+  0x3d2, /* OR64mr */
+  0x3d6, /* OR64rr */
+/* Table887 */
+  0x3d5, /* OR64rm */
+  0x3d7, /* OR64rr_REV */
 /* Table889 */
-  0x50a, /* SBB64mr */
-  0x50e, /* SBB64rr */
-/* Table891 */
-  0x50d, /* SBB64rm */
-  0x50f, /* SBB64rr_REV */
-/* Table893 */
-  0x507, /* SBB64i32 */
+  0x3cf, /* OR64i32 */
+/* Table890 */
+  0x33, /* ADC64mr */
+  0x37, /* ADC64rr */
+/* Table892 */
+  0x36, /* ADC64rm */
+  0x38, /* ADC64rr_REV */
 /* Table894 */
-  0x8e, /* AND64mr */
-  0x92, /* AND64rr */
-/* Table896 */
-  0x91, /* AND64rm */
-  0x93, /* AND64rr_REV */
-/* Table898 */
-  0x8b, /* AND64i32 */
+  0x30, /* ADC64i32 */
+/* Table895 */
+  0x521, /* SBB64mr */
+  0x525, /* SBB64rr */
+/* Table897 */
+  0x524, /* SBB64rm */
+  0x526, /* SBB64rr_REV */
 /* Table899 */
-  0x5cd, /* SUB64mr */
-  0x5d1, /* SUB64rr */
-/* Table901 */
-  0x5d0, /* SUB64rm */
-  0x5d2, /* SUB64rr_REV */
-/* Table903 */
-  0x5ca, /* SUB64i32 */
+  0x51e, /* SBB64i32 */
+/* Table900 */
+  0x90, /* AND64mr */
+  0x94, /* AND64rr */
+/* Table902 */
+  0x93, /* AND64rm */
+  0x95, /* AND64rr_REV */
 /* Table904 */
-  0x67a, /* XOR64mr */
-  0x67e, /* XOR64rr */
-/* Table906 */
-  0x67d, /* XOR64rm */
-  0x67f, /* XOR64rr_REV */
-/* Table908 */
-  0x677, /* XOR64i32 */
+  0x8d, /* AND64i32 */
+/* Table905 */
+  0x5e4, /* SUB64mr */
+  0x5e8, /* SUB64rr */
+/* Table907 */
+  0x5e7, /* SUB64rm */
+  0x5e9, /* SUB64rr_REV */
 /* Table909 */
-  0x1b0, /* CMP64mr */
-  0x1b4, /* CMP64rr */
-/* Table911 */
-  0x1b3, /* CMP64rm */
-  0x1b5, /* CMP64rr_REV */
-/* Table913 */
-  0x1ad, /* CMP64i32 */
+  0x5e1, /* SUB64i32 */
+/* Table910 */
+  0x693, /* XOR64mr */
+  0x697, /* XOR64rr */
+/* Table912 */
+  0x696, /* XOR64rm */
+  0x698, /* XOR64rr_REV */
 /* Table914 */
-  0x370, /* MOVSX64rm32 */
-  0x374, /* MOVSX64rr32 */
-/* Table916 */
-  0x21b, /* IMUL64rmi32 */
-  0x21e, /* IMUL64rri32 */
-/* Table918 */
-  0x21c, /* IMUL64rmi8 */
-  0x21f, /* IMUL64rri8 */
+  0x690, /* XOR64i32 */
+/* Table915 */
+  0x1b4, /* CMP64mr */
+  0x1b8, /* CMP64rr */
+/* Table917 */
+  0x1b7, /* CMP64rm */
+  0x1b9, /* CMP64rr_REV */
+/* Table919 */
+  0x1b1, /* CMP64i32 */
 /* Table920 */
-  0x5d, /* ADD64mi32 */
-  0x3d2, /* OR64mi32 */
-  0x2f, /* ADC64mi32 */
-  0x508, /* SBB64mi32 */
-  0x8c, /* AND64mi32 */
-  0x5cb, /* SUB64mi32 */
-  0x678, /* XOR64mi32 */
-  0x1ae, /* CMP64mi32 */
-  0x60, /* ADD64ri32 */
-  0x3d5, /* OR64ri32 */
-  0x32, /* ADC64ri32 */
-  0x50b, /* SBB64ri32 */
-  0x8f, /* AND64ri32 */
-  0x5ce, /* SUB64ri32 */
-  0x67b, /* XOR64ri32 */
-  0x1b1, /* CMP64ri32 */
-/* Table936 */
-  0x5e, /* ADD64mi8 */
-  0x3d3, /* OR64mi8 */
-  0x30, /* ADC64mi8 */
-  0x509, /* SBB64mi8 */
-  0x8d, /* AND64mi8 */
-  0x5cc, /* SUB64mi8 */
-  0x679, /* XOR64mi8 */
-  0x1af, /* CMP64mi8 */
-  0x62, /* ADD64ri8 */
-  0x3d6, /* OR64ri8 */
-  0x33, /* ADC64ri8 */
-  0x50c, /* SBB64ri8 */
-  0x90, /* AND64ri8 */
-  0x5cf, /* SUB64ri8 */
-  0x67c, /* XOR64ri8 */
-  0x1b2, /* CMP64ri8 */
-/* Table952 */
-  0x606, /* TEST64rm */
-  0x607, /* TEST64rr */
-/* Table954 */
-  0x65a, /* XCHG64rm */
-  0x65b, /* XCHG64rr */
-/* Table956 */
-  0x33f, /* MOV64mr */
-  0x34a, /* MOV64rr */
+  0x36e, /* MOVSX64rm32 */
+  0x372, /* MOVSX64rr32 */
+/* Table922 */
+  0x21a, /* IMUL64rmi32 */
+  0x21d, /* IMUL64rri32 */
+/* Table924 */
+  0x21b, /* IMUL64rmi8 */
+  0x21e, /* IMUL64rri8 */
+/* Table926 */
+  0x5f, /* ADD64mi32 */
+  0x3d0, /* OR64mi32 */
+  0x31, /* ADC64mi32 */
+  0x51f, /* SBB64mi32 */
+  0x8e, /* AND64mi32 */
+  0x5e2, /* SUB64mi32 */
+  0x691, /* XOR64mi32 */
+  0x1b2, /* CMP64mi32 */
+  0x62, /* ADD64ri32 */
+  0x3d3, /* OR64ri32 */
+  0x34, /* ADC64ri32 */
+  0x522, /* SBB64ri32 */
+  0x91, /* AND64ri32 */
+  0x5e5, /* SUB64ri32 */
+  0x694, /* XOR64ri32 */
+  0x1b5, /* CMP64ri32 */
+/* Table942 */
+  0x60, /* ADD64mi8 */
+  0x3d1, /* OR64mi8 */
+  0x32, /* ADC64mi8 */
+  0x520, /* SBB64mi8 */
+  0x8f, /* AND64mi8 */
+  0x5e3, /* SUB64mi8 */
+  0x692, /* XOR64mi8 */
+  0x1b3, /* CMP64mi8 */
+  0x64, /* ADD64ri8 */
+  0x3d4, /* OR64ri8 */
+  0x35, /* ADC64ri8 */
+  0x523, /* SBB64ri8 */
+  0x92, /* AND64ri8 */
+  0x5e6, /* SUB64ri8 */
+  0x695, /* XOR64ri8 */
+  0x1b6, /* CMP64ri8 */
 /* Table958 */
-  0x349, /* MOV64rm */
-  0x34b, /* MOV64rr_REV */
+  0x620, /* TEST64rm */
+  0x621, /* TEST64rr */
 /* Table960 */
-  0x340, /* MOV64ms */
-  0x34c, /* MOV64rs */
+  0x673, /* XCHG64rm */
+  0x674, /* XCHG64rr */
 /* Table962 */
-  0x29a, /* LEA64r */
-  0x0, /*  */
+  0x33b, /* MOV64mr */
+  0x344, /* MOV64rr */
 /* Table964 */
-  0x34d, /* MOV64sm */
-  0x34e, /* MOV64sr */
+  0x343, /* MOV64rm */
+  0x345, /* MOV64rr_REV */
 /* Table966 */
-  0x659, /* XCHG64ar */
-/* Table967 */
-  0x122, /* CDQE */
+  0x33c, /* MOV64ms */
+  0x346, /* MOV64rs */
 /* Table968 */
-  0x1cf, /* CQO */
-/* Table969 */
-  0x343, /* MOV64o64a */
+  0x294, /* LEA64r */
+  0x0, /*  */
 /* Table970 */
-  0x33a, /* MOV64ao64 */
-/* Table971 */
-  0x366, /* MOVSQ */
+  0x347, /* MOV64sm */
+  0x348, /* MOV64sr */
 /* Table972 */
-  0x1c1, /* CMPSQ */
+  0x672, /* XCHG64ar */
 /* Table973 */
-  0x601, /* TEST64i32 */
+  0x124, /* CDQE */
 /* Table974 */
-  0x5b2, /* STOSQ */
+  0x1d2, /* CQO */
 /* Table975 */
-  0x2f1, /* LODSQ */
+  0x337, /* MOV64ao64 */
 /* Table976 */
-  0x51b, /* SCASQ */
+  0x33e, /* MOV64o64a */
 /* Table977 */
-  0x347, /* MOV64ri */
+  0x362, /* MOVSQ */
 /* Table978 */
-  0x498, /* ROL64mi */
-  0x4b0, /* ROR64mi */
-  0x43f, /* RCL64mi */
-  0x457, /* RCR64mi */
-  0x55c, /* SHL64mi */
-  0x584, /* SHR64mi */
-  0x4ce, /* SAL64mi */
-  0x4e7, /* SAR64mi */
-  0x49b, /* ROL64ri */
-  0x4b3, /* ROR64ri */
-  0x442, /* RCL64ri */
-  0x45a, /* RCR64ri */
-  0x55f, /* SHL64ri */
-  0x587, /* SHR64ri */
-  0x4d1, /* SAL64ri */
-  0x4ea, /* SAR64ri */
-/* Table994 */
-  0x33e, /* MOV64mi32 */
+  0x1c5, /* CMPSQ */
+/* Table979 */
+  0x61b, /* TEST64i32 */
+/* Table980 */
+  0x5c9, /* STOSQ */
+/* Table981 */
+  0x2eb, /* LODSQ */
+/* Table982 */
+  0x532, /* SCASQ */
+/* Table983 */
+  0x341, /* MOV64ri */
+/* Table984 */
+  0x4af, /* ROL64mi */
+  0x4c7, /* ROR64mi */
+  0x43e, /* RCL64mi */
+  0x456, /* RCR64mi */
+  0x573, /* SHL64mi */
+  0x59b, /* SHR64mi */
+  0x4e5, /* SAL64mi */
+  0x4fe, /* SAR64mi */
+  0x4b2, /* ROL64ri */
+  0x4ca, /* ROR64ri */
+  0x441, /* RCL64ri */
+  0x459, /* RCR64ri */
+  0x576, /* SHL64ri */
+  0x59e, /* SHR64ri */
+  0x4e8, /* SAL64ri */
+  0x501, /* SAR64ri */
+/* Table1000 */
+  0x33a, /* MOV64mi32 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27089,7 +27233,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x348, /* MOV64ri32 */
+  0x342, /* MOV64ri32 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27097,444 +27241,446 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table1010 */
-  0x2f7, /* LRETIQ */
-/* Table1011 */
-  0x2fa, /* LRETQ */
-/* Table1012 */
-  0x249, /* IRET64 */
-/* Table1013 */
-  0x496, /* ROL64m1 */
-  0x4ae, /* ROR64m1 */
-  0x43d, /* RCL64m1 */
-  0x455, /* RCR64m1 */
-  0x55a, /* SHL64m1 */
-  0x582, /* SHR64m1 */
-  0x4cc, /* SAL64m1 */
-  0x4e5, /* SAR64m1 */
-  0x499, /* ROL64r1 */
-  0x4b1, /* ROR64r1 */
-  0x440, /* RCL64r1 */
-  0x458, /* RCR64r1 */
-  0x55d, /* SHL64r1 */
-  0x585, /* SHR64r1 */
-  0x4cf, /* SAL64r1 */
-  0x4e8, /* SAR64r1 */
-/* Table1029 */
-  0x497, /* ROL64mCL */
-  0x4af, /* ROR64mCL */
-  0x43e, /* RCL64mCL */
-  0x456, /* RCR64mCL */
-  0x55b, /* SHL64mCL */
-  0x583, /* SHR64mCL */
-  0x4cd, /* SAL64mCL */
-  0x4e6, /* SAR64mCL */
-  0x49a, /* ROL64rCL */
-  0x4b2, /* ROR64rCL */
-  0x441, /* RCL64rCL */
-  0x459, /* RCR64rCL */
-  0x55e, /* SHL64rCL */
-  0x586, /* SHR64rCL */
-  0x4d0, /* SAL64rCL */
-  0x4e9, /* SAR64rCL */
-/* Table1045 */
-  0x602, /* TEST64mi32 */
-  0x603, /* TEST64mi32_alt */
-  0x3ba, /* NOT64m */
-  0x392, /* NEG64m */
-  0x386, /* MUL64m */
-  0x218, /* IMUL64m */
-  0x1e7, /* DIV64m */
-  0x204, /* IDIV64m */
-  0x604, /* TEST64ri32 */
-  0x605, /* TEST64ri32_alt */
-  0x3bb, /* NOT64r */
-  0x393, /* NEG64r */
-  0x387, /* MUL64r */
-  0x219, /* IMUL64r */
-  0x1e8, /* DIV64r */
-  0x205, /* IDIV64r */
-/* Table1061 */
-  0x232, /* INC64m */
-  0x1df, /* DEC64m */
-  0x11b, /* CALL64m */
-  0x1f7, /* FARCALL64 */
-  0x26d, /* JMP64m */
-  0x1fc, /* FARJMP64 */
-  0x41a, /* PUSH64rmm */
+/* Table1016 */
+  0x2f1, /* LRETIQ */
+/* Table1017 */
+  0x2f4, /* LRETQ */
+/* Table1018 */
+  0x244, /* IRET64 */
+/* Table1019 */
+  0x4ad, /* ROL64m1 */
+  0x4c5, /* ROR64m1 */
+  0x43c, /* RCL64m1 */
+  0x454, /* RCR64m1 */
+  0x571, /* SHL64m1 */
+  0x599, /* SHR64m1 */
+  0x4e3, /* SAL64m1 */
+  0x4fc, /* SAR64m1 */
+  0x4b0, /* ROL64r1 */
+  0x4c8, /* ROR64r1 */
+  0x43f, /* RCL64r1 */
+  0x457, /* RCR64r1 */
+  0x574, /* SHL64r1 */
+  0x59c, /* SHR64r1 */
+  0x4e6, /* SAL64r1 */
+  0x4ff, /* SAR64r1 */
+/* Table1035 */
+  0x4ae, /* ROL64mCL */
+  0x4c6, /* ROR64mCL */
+  0x43d, /* RCL64mCL */
+  0x455, /* RCR64mCL */
+  0x572, /* SHL64mCL */
+  0x59a, /* SHR64mCL */
+  0x4e4, /* SAL64mCL */
+  0x4fd, /* SAR64mCL */
+  0x4b1, /* ROL64rCL */
+  0x4c9, /* ROR64rCL */
+  0x440, /* RCL64rCL */
+  0x458, /* RCR64rCL */
+  0x575, /* SHL64rCL */
+  0x59d, /* SHR64rCL */
+  0x4e7, /* SAL64rCL */
+  0x500, /* SAR64rCL */
+/* Table1051 */
+  0x61c, /* TEST64mi32 */
+  0x61d, /* TEST64mi32_alt */
+  0x3b8, /* NOT64m */
+  0x390, /* NEG64m */
+  0x384, /* MUL64m */
+  0x217, /* IMUL64m */
+  0x1e6, /* DIV64m */
+  0x203, /* IDIV64m */
+  0x61e, /* TEST64ri32 */
+  0x61f, /* TEST64ri32_alt */
+  0x3b9, /* NOT64r */
+  0x391, /* NEG64r */
+  0x385, /* MUL64r */
+  0x218, /* IMUL64r */
+  0x1e7, /* DIV64r */
+  0x204, /* IDIV64r */
+/* Table1067 */
+  0x22d, /* INC64m */
+  0x1de, /* DEC64m */
+  0x11d, /* CALL64m */
+  0x1f6, /* FARCALL64 */
+  0x267, /* JMP64m */
+  0x1fb, /* FARJMP64 */
+  0x419, /* PUSH64rmm */
   0x0, /*  */
-  0x233, /* INC64r */
-  0x1e0, /* DEC64r */
-  0x11d, /* CALL64r */
+  0x22e, /* INC64r */
+  0x1df, /* DEC64r */
+  0x11f, /* CALL64r */
   0x0, /*  */
-  0x26e, /* JMP64r */
+  0x268, /* JMP64r */
   0x0, /*  */
-  0x41b, /* PUSH64rmr */
+  0x41a, /* PUSH64rmr */
   0x0, /*  */
-/* Table1077 */
-  0x416, /* PUSH64i16 */
-/* Table1078 */
-  0x341, /* MOV64o16a */
-/* Table1079 */
-  0x338, /* MOV64ao16 */
-/* Table1080 */
-  0x22e, /* INC64_16m */
-  0x1db, /* DEC64_16m */
-  0x11b, /* CALL64m */
-  0x1f4, /* FARCALL16m */
-  0x26d, /* JMP64m */
-  0x1f9, /* FARJMP16m */
-  0x410, /* PUSH16rmm */
+/* Table1083 */
+  0x415, /* PUSH64i16 */
+/* Table1084 */
+  0x336, /* MOV64ao32 */
+/* Table1085 */
+  0x33d, /* MOV64o32a */
+/* Table1086 */
+  0x22d, /* INC64m */
+  0x1de, /* DEC64m */
+  0x11d, /* CALL64m */
+  0x1f6, /* FARCALL64 */
+  0x267, /* JMP64m */
+  0x1fb, /* FARJMP64 */
+  0x40f, /* PUSH16rmm */
   0x0, /*  */
-  0x22f, /* INC64_16r */
-  0x1dc, /* DEC64_16r */
-  0x11d, /* CALL64r */
+  0x22e, /* INC64r */
+  0x1df, /* DEC64r */
+  0x11f, /* CALL64r */
   0x0, /*  */
-  0x26e, /* JMP64r */
+  0x268, /* JMP64r */
   0x0, /*  */
-  0x411, /* PUSH16rmr */
+  0x410, /* PUSH16rmr */
   0x0, /*  */
-/* Table1096 */
-  0x259, /* JECXZ_64 */
-/* Table1097 */
-  0x232, /* INC64m */
-  0x1df, /* DEC64m */
-  0x11b, /* CALL64m */
-  0x1f7, /* FARCALL64 */
-  0x26d, /* JMP64m */
-  0x1fc, /* FARJMP64 */
-  0x410, /* PUSH16rmm */
+/* Table1102 */
+  0x310, /* MOV16ao64 */
+/* Table1103 */
+  0x316, /* MOV16o64a */
+/* Table1104 */
+  0x227, /* INC16m */
+  0x1d8, /* DEC16m */
+  0x11d, /* CALL64m */
+  0x1f3, /* FARCALL16m */
+  0x267, /* JMP64m */
+  0x1f8, /* FARJMP16m */
+  0x40f, /* PUSH16rmm */
   0x0, /*  */
-  0x233, /* INC64r */
-  0x1e0, /* DEC64r */
-  0x11d, /* CALL64r */
+  0x228, /* INC16r */
+  0x1d9, /* DEC16r */
+  0x11f, /* CALL64r */
   0x0, /*  */
-  0x26e, /* JMP64r */
+  0x268, /* JMP64r */
   0x0, /*  */
-  0x411, /* PUSH16rmr */
+  0x410, /* PUSH16rmr */
   0x0, /*  */
-/* Table1113 */
-  0x5a2, /* SLDT16m */
-  0x5b7, /* STRm */
-  0x2ab, /* LLDT16m */
-  0x305, /* LTRm */
-  0x624, /* VERRm */
-  0x626, /* VERWm */
-  0x0, /*  */
-  0x0, /*  */
-  0x5a4, /* SLDT32r */
-  0x5b5, /* STR32r */
-  0x2ac, /* LLDT16r */
-  0x306, /* LTRr */
-  0x625, /* VERRr */
-  0x627, /* VERWr */
+/* Table1120 */
+  0x5b9, /* SLDT16m */
+  0x5ce, /* STRm */
+  0x2a5, /* LLDT16m */
+  0x2ff, /* LTRm */
+  0x63e, /* VERRm */
+  0x640, /* VERWm */
   0x0, /*  */
   0x0, /*  */
-/* Table1129 */
-  0x54c, /* SGDT32m */
-  0x59f, /* SIDT32m */
-  0x2a3, /* LGDT32m */
-  0x2a9, /* LIDT32m */
-  0x5a7, /* SMSW16m */
-  0x0, /*  */
-  0x2ad, /* LMSW16m */
-  0x240, /* INVLPG */
-  0x0, /*  */
-  0x628, /* VMCALL */
-  0x62b, /* VMLAUNCH */
-  0x635, /* VMRESUME */
-  0x63e, /* VMXOFF */
+  0x5bb, /* SLDT32r */
+  0x5cc, /* STR32r */
+  0x2a6, /* LLDT16r */
+  0x300, /* LTRr */
+  0x63f, /* VERRr */
+  0x641, /* VERWr */
   0x0, /*  */
   0x0, /*  */
+/* Table1136 */
+  0x563, /* SGDT32m */
+  0x5b6, /* SIDT32m */
+  0x29d, /* LGDT32m */
+  0x2a3, /* LIDT32m */
+  0x5be, /* SMSW16m */
   0x0, /*  */
+  0x2a7, /* LMSW16m */
+  0x23b, /* INVLPG */
   0x0, /*  */
-  0x0, /*  */
-  0x123, /* CLAC */
-  0x5ab, /* STAC */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x663, /* XGETBV */
-  0x68f, /* XSETBV */
-  0x0, /*  */
-  0x0, /*  */
-  0x62a, /* VMFUNC */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x636, /* VMRUN32 */
-  0x62e, /* VMMCALL */
-  0x62c, /* VMLOAD32 */
-  0x638, /* VMSAVE32 */
-  0x5ae, /* STGI */
-  0x126, /* CLGI */
-  0x5a1, /* SKINIT */
-  0x241, /* INVLPGA32 */
-  0x5a9, /* SMSW32r */
-  0x5a9, /* SMSW32r */
-  0x5a9, /* SMSW32r */
-  0x5a9, /* SMSW32r */
-  0x5a9, /* SMSW32r */
-  0x5a9, /* SMSW32r */
-  0x5a9, /* SMSW32r */
-  0x5a9, /* SMSW32r */
+  0x642, /* VMCALL */
+  0x645, /* VMLAUNCH */
+  0x64f, /* VMRESUME */
+  0x658, /* VMXOFF */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x125, /* CLAC */
+  0x5c2, /* STAC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x5dc, /* SWAPGS */
-  0x46e, /* RDTSCP */
+  0x0, /*  */
+  0x67c, /* XGETBV */
+  0x6ae, /* XSETBV */
+  0x0, /*  */
+  0x0, /*  */
+  0x644, /* VMFUNC */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x650, /* VMRUN32 */
+  0x648, /* VMMCALL */
+  0x646, /* VMLOAD32 */
+  0x652, /* VMSAVE32 */
+  0x5c5, /* STGI */
+  0x129, /* CLGI */
+  0x5b8, /* SKINIT */
+  0x23c, /* INVLPGA32 */
+  0x5c0, /* SMSW32r */
+  0x5c0, /* SMSW32r */
+  0x5c0, /* SMSW32r */
+  0x5c0, /* SMSW32r */
+  0x5c0, /* SMSW32r */
+  0x5c0, /* SMSW32r */
+  0x5c0, /* SMSW32r */
+  0x5c0, /* SMSW32r */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table1201 */
-  0x28b, /* LAR32rm */
-  0x28c, /* LAR32rr */
-/* Table1203 */
-  0x2fe, /* LSL32rm */
-  0x2ff, /* LSL32rr */
-/* Table1205 */
-  0x5dd, /* SYSCALL */
-/* Table1206 */
-  0x128, /* CLTS */
-/* Table1207 */
-  0x5e1, /* SYSRET */
+  0x0, /*  */
+  0x0, /*  */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x5f3, /* SWAPGS */
+  0x46d, /* RDTSCP */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
 /* Table1208 */
-  0x23d, /* INVD */
-/* Table1209 */
-  0x641, /* WBINVD */
+  0x285, /* LAR32rm */
+  0x286, /* LAR32rr */
 /* Table1210 */
-  0x616, /* TRAP */
-/* Table1211 */
+  0x2f8, /* LSL32rm */
+  0x2f9, /* LSL32rr */
+/* Table1212 */
+  0x5f4, /* SYSCALL */
+/* Table1213 */
+  0x12b, /* CLTS */
+/* Table1214 */
+  0x5f8, /* SYSRET */
+/* Table1215 */
+  0x238, /* INVD */
+/* Table1216 */
+  0x65a, /* WBINVD */
+/* Table1217 */
+  0x630, /* TRAP */
+/* Table1218 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x39f, /* NOOP18_m4 */
-  0x3a0, /* NOOP18_m5 */
-  0x3a1, /* NOOP18_m6 */
-  0x3a2, /* NOOP18_m7 */
+  0x39d, /* NOOP18_m4 */
+  0x39e, /* NOOP18_m5 */
+  0x39f, /* NOOP18_m6 */
+  0x3a0, /* NOOP18_m7 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x3a3, /* NOOP18_r4 */
-  0x3a4, /* NOOP18_r5 */
-  0x3a5, /* NOOP18_r6 */
-  0x3a6, /* NOOP18_r7 */
-/* Table1227 */
-  0x3a9, /* NOOPL_19 */
-  0x3a7, /* NOOP19rr */
-/* Table1229 */
-  0x3aa, /* NOOPL_1a */
+  0x3a1, /* NOOP18_r4 */
+  0x3a2, /* NOOP18_r5 */
+  0x3a3, /* NOOP18_r6 */
+  0x3a4, /* NOOP18_r7 */
+/* Table1234 */
+  0x3a7, /* NOOPL_19 */
+  0x3a5, /* NOOP19rr */
+/* Table1236 */
+  0x3a8, /* NOOPL_1a */
   0x0, /*  */
-/* Table1231 */
-  0x3ab, /* NOOPL_1b */
+/* Table1238 */
+  0x3a9, /* NOOPL_1b */
   0x0, /*  */
-/* Table1233 */
-  0x3ac, /* NOOPL_1c */
+/* Table1240 */
+  0x3aa, /* NOOPL_1c */
   0x0, /*  */
-/* Table1235 */
-  0x3ad, /* NOOPL_1d */
+/* Table1242 */
+  0x3ab, /* NOOPL_1d */
   0x0, /*  */
-/* Table1237 */
-  0x3ae, /* NOOPL_1e */
+/* Table1244 */
+  0x3ac, /* NOOPL_1e */
   0x0, /*  */
-/* Table1239 */
-  0x3a8, /* NOOPL */
+/* Table1246 */
+  0x3a6, /* NOOPL */
   0x0, /*  */
-/* Table1241 */
+/* Table1248 */
   0x0, /*  */
-  0x32d, /* MOV32rc */
-/* Table1243 */
-  0x0, /*  */
-  0x32e, /* MOV32rd */
-/* Table1245 */
-  0x0, /*  */
-  0x325, /* MOV32cr */
-/* Table1247 */
-  0x0, /*  */
-  0x326, /* MOV32dr */
-/* Table1249 */
-  0x649, /* WRMSR */
+  0x32b, /* MOV32rc */
 /* Table1250 */
-  0x46d, /* RDTSC */
-/* Table1251 */
-  0x465, /* RDMSR */
+  0x0, /*  */
+  0x32c, /* MOV32rd */
 /* Table1252 */
-  0x466, /* RDPMC */
-/* Table1253 */
-  0x5de, /* SYSENTER */
+  0x0, /*  */
+  0x322, /* MOV32cr */
 /* Table1254 */
-  0x5df, /* SYSEXIT */
-/* Table1255 */
-  0x1fe, /* GETSEC */
+  0x0, /*  */
+  0x323, /* MOV32dr */
 /* Table1256 */
-  0x17a, /* CMOVO32rm */
-  0x17b, /* CMOVO32rr */
+  0x662, /* WRMSR */
+/* Table1257 */
+  0x46c, /* RDTSC */
 /* Table1258 */
-  0x168, /* CMOVNO32rm */
-  0x169, /* CMOVNO32rr */
+  0x464, /* RDMSR */
+/* Table1259 */
+  0x465, /* RDPMC */
 /* Table1260 */
-  0x138, /* CMOVB32rm */
-  0x139, /* CMOVB32rr */
+  0x5f5, /* SYSENTER */
+/* Table1261 */
+  0x5f6, /* SYSEXIT */
 /* Table1262 */
-  0x132, /* CMOVAE32rm */
-  0x133, /* CMOVAE32rr */
-/* Table1264 */
-  0x144, /* CMOVE32rm */
-  0x145, /* CMOVE32rr */
-/* Table1266 */
-  0x162, /* CMOVNE32rm */
-  0x163, /* CMOVNE32rr */
-/* Table1268 */
-  0x13e, /* CMOVBE32rm */
-  0x13f, /* CMOVBE32rr */
-/* Table1270 */
-  0x12c, /* CMOVA32rm */
-  0x12d, /* CMOVA32rr */
-/* Table1272 */
-  0x186, /* CMOVS32rm */
-  0x187, /* CMOVS32rr */
-/* Table1274 */
-  0x174, /* CMOVNS32rm */
-  0x175, /* CMOVNS32rr */
-/* Table1276 */
-  0x180, /* CMOVP32rm */
-  0x181, /* CMOVP32rr */
-/* Table1278 */
-  0x16e, /* CMOVNP32rm */
-  0x16f, /* CMOVNP32rr */
-/* Table1280 */
-  0x156, /* CMOVL32rm */
-  0x157, /* CMOVL32rr */
-/* Table1282 */
-  0x150, /* CMOVGE32rm */
-  0x151, /* CMOVGE32rr */
-/* Table1284 */
-  0x15c, /* CMOVLE32rm */
-  0x15d, /* CMOVLE32rr */
-/* Table1286 */
-  0x14a, /* CMOVG32rm */
-  0x14b, /* CMOVG32rr */
-/* Table1288 */
-  0x631, /* VMREAD32rm */
-  0x632, /* VMREAD32rr */
-/* Table1290 */
-  0x63a, /* VMWRITE32rm */
-  0x63b, /* VMWRITE32rr */
-/* Table1292 */
-  0x280, /* JO_4 */
+  0x1fd, /* GETSEC */
+/* Table1263 */
+  0x17e, /* CMOVO32rm */
+  0x17f, /* CMOVO32rr */
+/* Table1265 */
+  0x16c, /* CMOVNO32rm */
+  0x16d, /* CMOVNO32rr */
+/* Table1267 */
+  0x13c, /* CMOVB32rm */
+  0x13d, /* CMOVB32rr */
+/* Table1269 */
+  0x136, /* CMOVAE32rm */
+  0x137, /* CMOVAE32rr */
+/* Table1271 */
+  0x148, /* CMOVE32rm */
+  0x149, /* CMOVE32rr */
+/* Table1273 */
+  0x166, /* CMOVNE32rm */
+  0x167, /* CMOVNE32rr */
+/* Table1275 */
+  0x142, /* CMOVBE32rm */
+  0x143, /* CMOVBE32rr */
+/* Table1277 */
+  0x130, /* CMOVA32rm */
+  0x131, /* CMOVA32rr */
+/* Table1279 */
+  0x18a, /* CMOVS32rm */
+  0x18b, /* CMOVS32rr */
+/* Table1281 */
+  0x178, /* CMOVNS32rm */
+  0x179, /* CMOVNS32rr */
+/* Table1283 */
+  0x184, /* CMOVP32rm */
+  0x185, /* CMOVP32rr */
+/* Table1285 */
+  0x172, /* CMOVNP32rm */
+  0x173, /* CMOVNP32rr */
+/* Table1287 */
+  0x15a, /* CMOVL32rm */
+  0x15b, /* CMOVL32rr */
+/* Table1289 */
+  0x154, /* CMOVGE32rm */
+  0x155, /* CMOVGE32rr */
+/* Table1291 */
+  0x160, /* CMOVLE32rm */
+  0x161, /* CMOVLE32rr */
 /* Table1293 */
-  0x277, /* JNO_4 */
-/* Table1294 */
-  0x256, /* JB_4 */
+  0x14e, /* CMOVG32rm */
+  0x14f, /* CMOVG32rr */
 /* Table1295 */
-  0x24d, /* JAE_4 */
-/* Table1296 */
-  0x25c, /* JE_4 */
+  0x64b, /* VMREAD32rm */
+  0x64c, /* VMREAD32rr */
 /* Table1297 */
-  0x274, /* JNE_4 */
-/* Table1298 */
-  0x253, /* JBE_4 */
+  0x654, /* VMWRITE32rm */
+  0x655, /* VMWRITE32rr */
 /* Table1299 */
-  0x250, /* JA_4 */
+  0x27a, /* JO_4 */
 /* Table1300 */
-  0x287, /* JS_4 */
+  0x271, /* JNO_4 */
 /* Table1301 */
-  0x27d, /* JNS_4 */
+  0x251, /* JB_4 */
 /* Table1302 */
-  0x283, /* JP_4 */
+  0x248, /* JAE_4 */
 /* Table1303 */
-  0x27a, /* JNP_4 */
+  0x256, /* JE_4 */
 /* Table1304 */
-  0x268, /* JL_4 */
+  0x26e, /* JNE_4 */
 /* Table1305 */
-  0x25f, /* JGE_4 */
+  0x24e, /* JBE_4 */
 /* Table1306 */
-  0x265, /* JLE_4 */
+  0x24b, /* JA_4 */
 /* Table1307 */
-  0x262, /* JG_4 */
+  0x281, /* JS_4 */
 /* Table1308 */
-  0x545, /* SETOm */
-  0x546, /* SETOr */
+  0x277, /* JNS_4 */
+/* Table1309 */
+  0x27d, /* JP_4 */
 /* Table1310 */
-  0x53f, /* SETNOm */
-  0x540, /* SETNOr */
+  0x274, /* JNP_4 */
+/* Table1311 */
+  0x262, /* JL_4 */
 /* Table1312 */
-  0x531, /* SETBm */
-  0x532, /* SETBr */
+  0x259, /* JGE_4 */
+/* Table1313 */
+  0x25f, /* JLE_4 */
 /* Table1314 */
-  0x527, /* SETAEm */
-  0x528, /* SETAEr */
-/* Table1316 */
-  0x533, /* SETEm */
-  0x534, /* SETEr */
-/* Table1318 */
-  0x53d, /* SETNEm */
-  0x53e, /* SETNEr */
-/* Table1320 */
-  0x52b, /* SETBEm */
-  0x52c, /* SETBEr */
-/* Table1322 */
-  0x529, /* SETAm */
-  0x52a, /* SETAr */
-/* Table1324 */
-  0x549, /* SETSm */
-  0x54a, /* SETSr */
-/* Table1326 */
-  0x543, /* SETNSm */
-  0x544, /* SETNSr */
-/* Table1328 */
-  0x547, /* SETPm */
-  0x548, /* SETPr */
-/* Table1330 */
-  0x541, /* SETNPm */
-  0x542, /* SETNPr */
-/* Table1332 */
-  0x53b, /* SETLm */
-  0x53c, /* SETLr */
-/* Table1334 */
-  0x535, /* SETGEm */
-  0x536, /* SETGEr */
-/* Table1336 */
-  0x539, /* SETLEm */
-  0x53a, /* SETLEr */
-/* Table1338 */
-  0x537, /* SETGm */
-  0x538, /* SETGr */
-/* Table1340 */
-  0x428, /* PUSHFS32 */
+  0x25c, /* JG_4 */
+/* Table1315 */
+  0x55c, /* SETOm */
+  0x55d, /* SETOr */
+/* Table1317 */
+  0x556, /* SETNOm */
+  0x557, /* SETNOr */
+/* Table1319 */
+  0x548, /* SETBm */
+  0x549, /* SETBr */
+/* Table1321 */
+  0x53e, /* SETAEm */
+  0x53f, /* SETAEr */
+/* Table1323 */
+  0x54a, /* SETEm */
+  0x54b, /* SETEr */
+/* Table1325 */
+  0x554, /* SETNEm */
+  0x555, /* SETNEr */
+/* Table1327 */
+  0x542, /* SETBEm */
+  0x543, /* SETBEr */
+/* Table1329 */
+  0x540, /* SETAm */
+  0x541, /* SETAr */
+/* Table1331 */
+  0x560, /* SETSm */
+  0x561, /* SETSr */
+/* Table1333 */
+  0x55a, /* SETNSm */
+  0x55b, /* SETNSr */
+/* Table1335 */
+  0x55e, /* SETPm */
+  0x55f, /* SETPr */
+/* Table1337 */
+  0x558, /* SETNPm */
+  0x559, /* SETNPr */
+/* Table1339 */
+  0x552, /* SETLm */
+  0x553, /* SETLr */
 /* Table1341 */
-  0x407, /* POPFS32 */
-/* Table1342 */
-  0x1cd, /* CPUID32 */
+  0x54c, /* SETGEm */
+  0x54d, /* SETGEr */
 /* Table1343 */
-  0xe8, /* BT32mr */
-  0xea, /* BT32rr */
+  0x550, /* SETLEm */
+  0x551, /* SETLEr */
 /* Table1345 */
-  0x56b, /* SHLD32mri8 */
-  0x56d, /* SHLD32rri8 */
+  0x54e, /* SETGm */
+  0x54f, /* SETGr */
 /* Table1347 */
-  0x56a, /* SHLD32mrCL */
-  0x56c, /* SHLD32rrCL */
+  0x427, /* PUSHFS32 */
+/* Table1348 */
+  0x406, /* POPFS32 */
 /* Table1349 */
+  0x1d1, /* CPUID */
+/* Table1350 */
+  0xea, /* BT32mr */
+  0xec, /* BT32rr */
+/* Table1352 */
+  0x582, /* SHLD32mri8 */
+  0x584, /* SHLD32rri8 */
+/* Table1354 */
+  0x581, /* SHLD32mrCL */
+  0x583, /* SHLD32rrCL */
+/* Table1356 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27543,7 +27689,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x311, /* MONTMUL */
+  0x30b, /* MONTMUL */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27551,7 +27697,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x690, /* XSHA1 */
+  0x6af, /* XSHA1 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27559,7 +27705,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x691, /* XSHA256 */
+  0x6b0, /* XSHA256 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27607,7 +27753,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table1421 */
+/* Table1428 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27616,7 +27762,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x692, /* XSTORE */
+  0x6b1, /* XSTORE */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27624,7 +27770,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x661, /* XCRYPTECB */
+  0x67a, /* XCRYPTECB */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27632,7 +27778,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x65e, /* XCRYPTCBC */
+  0x677, /* XCRYPTCBC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27640,7 +27786,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x660, /* XCRYPTCTR */
+  0x679, /* XCRYPTCTR */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27648,7 +27794,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x65f, /* XCRYPTCFB */
+  0x678, /* XCRYPTCFB */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27656,7 +27802,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x662, /* XCRYPTOFB */
+  0x67b, /* XCRYPTOFB */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27680,29 +27826,29 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table1493 */
-  0x42b, /* PUSHGS32 */
-/* Table1494 */
-  0x40a, /* POPGS32 */
-/* Table1495 */
-  0x4be, /* RSM */
-/* Table1496 */
-  0x10c, /* BTS32mr */
-  0x10e, /* BTS32rr */
-/* Table1498 */
-  0x593, /* SHRD32mri8 */
-  0x595, /* SHRD32rri8 */
 /* Table1500 */
-  0x592, /* SHRD32mrCL */
-  0x594, /* SHRD32rrCL */
+  0x42a, /* PUSHGS32 */
+/* Table1501 */
+  0x409, /* POPGS32 */
 /* Table1502 */
+  0x4d5, /* RSM */
+/* Table1503 */
+  0x10e, /* BTS32mr */
+  0x110, /* BTS32rr */
+/* Table1505 */
+  0x5aa, /* SHRD32mri8 */
+  0x5ac, /* SHRD32rri8 */
+/* Table1507 */
+  0x5a9, /* SHRD32mrCL */
+  0x5ab, /* SHRD32rrCL */
+/* Table1509 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x68b, /* XSAVE */
-  0x689, /* XRSTOR */
-  0x68d, /* XSAVEOPT */
+  0x6a6, /* XSAVE */
+  0x6a2, /* XRSTOR */
+  0x6aa, /* XSAVEOPT */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27712,706 +27858,669 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table1518 */
-  0x212, /* IMUL32rm */
-  0x215, /* IMUL32rr */
-/* Table1520 */
-  0x1cb, /* CMPXCHG8rm */
-  0x1cc, /* CMPXCHG8rr */
-/* Table1522 */
-  0x1c6, /* CMPXCHG32rm */
-  0x1c7, /* CMPXCHG32rr */
-/* Table1524 */
-  0x303, /* LSS32rm */
+/* Table1525 */
+  0x211, /* IMUL32rm */
+  0x214, /* IMUL32rr */
+/* Table1527 */
+  0x1cf, /* CMPXCHG8rm */
+  0x1d0, /* CMPXCHG8rr */
+/* Table1529 */
+  0x1ca, /* CMPXCHG32rm */
+  0x1cb, /* CMPXCHG32rr */
+/* Table1531 */
+  0x2fd, /* LSS32rm */
   0x0, /*  */
-/* Table1526 */
-  0x100, /* BTR32mr */
-  0x102, /* BTR32rr */
-/* Table1528 */
-  0x2a0, /* LFS32rm */
+/* Table1533 */
+  0x102, /* BTR32mr */
+  0x104, /* BTR32rr */
+/* Table1535 */
+  0x29a, /* LFS32rm */
   0x0, /*  */
-/* Table1530 */
-  0x2a6, /* LGS32rm */
-  0x0, /*  */
-/* Table1532 */
-  0x37b, /* MOVZX32rm8 */
-  0x37d, /* MOVZX32rr8 */
-/* Table1534 */
-  0x37a, /* MOVZX32rm16 */
-  0x37c, /* MOVZX32rr16 */
-/* Table1536 */
-  0x621, /* UD2B */
 /* Table1537 */
+  0x2a0, /* LGS32rm */
+  0x0, /*  */
+/* Table1539 */
+  0x379, /* MOVZX32rm8 */
+  0x37b, /* MOVZX32rr8 */
+/* Table1541 */
+  0x378, /* MOVZX32rm16 */
+  0x37a, /* MOVZX32rr16 */
+/* Table1543 */
+  0x63b, /* UD2B */
+/* Table1544 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0xe7, /* BT32mi8 */
-  0x10b, /* BTS32mi8 */
-  0xff, /* BTR32mi8 */
-  0xf3, /* BTC32mi8 */
+  0xe9, /* BT32mi8 */
+  0x10d, /* BTS32mi8 */
+  0x101, /* BTR32mi8 */
+  0xf5, /* BTC32mi8 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0xe9, /* BT32ri8 */
-  0x10d, /* BTS32ri8 */
-  0x101, /* BTR32ri8 */
-  0xf5, /* BTC32ri8 */
-/* Table1553 */
-  0xf4, /* BTC32mr */
-  0xf6, /* BTC32rr */
-/* Table1555 */
-  0xd7, /* BSF32rm */
-  0xd8, /* BSF32rr */
-/* Table1557 */
-  0xdd, /* BSR32rm */
-  0xde, /* BSR32rr */
-/* Table1559 */
-  0x36b, /* MOVSX32rm8 */
-  0x36d, /* MOVSX32rr8 */
-/* Table1561 */
-  0x36a, /* MOVSX32rm16 */
-  0x36c, /* MOVSX32rr16 */
-/* Table1563 */
-  0x650, /* XADD8rm */
-  0x651, /* XADD8rr */
-/* Table1565 */
-  0x64c, /* XADD32rm */
-  0x64d, /* XADD32rr */
-/* Table1567 */
+  0xeb, /* BT32ri8 */
+  0x10f, /* BTS32ri8 */
+  0x103, /* BTR32ri8 */
+  0xf7, /* BTC32ri8 */
+/* Table1560 */
+  0xf6, /* BTC32mr */
+  0xf8, /* BTC32rr */
+/* Table1562 */
+  0xd9, /* BSF32rm */
+  0xda, /* BSF32rr */
+/* Table1564 */
+  0xdf, /* BSR32rm */
+  0xe0, /* BSR32rr */
+/* Table1566 */
+  0x369, /* MOVSX32rm8 */
+  0x36b, /* MOVSX32rr8 */
+/* Table1568 */
+  0x368, /* MOVSX32rm16 */
+  0x36a, /* MOVSX32rr16 */
+/* Table1570 */
+  0x669, /* XADD8rm */
+  0x66a, /* XADD8rr */
+/* Table1572 */
+  0x665, /* XADD32rm */
+  0x666, /* XADD32rr */
+/* Table1574 */
   0x0, /*  */
-  0x1ca, /* CMPXCHG8B */
+  0x1ce, /* CMPXCHG8B */
   0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x62f, /* VMPTRLDm */
-  0x630, /* VMPTRSTm */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x468, /* RDRAND32r */
-  0x46b, /* RDSEED32r */
-/* Table1583 */
-  0xe1, /* BSWAP32r */
-/* Table1584 */
-  0x54d, /* SGDT64m */
-  0x5a0, /* SIDT64m */
-  0x2a4, /* LGDT64m */
-  0x2aa, /* LIDT64m */
-  0x5a7, /* SMSW16m */
-  0x0, /*  */
-  0x2ad, /* LMSW16m */
-  0x240, /* INVLPG */
-  0x0, /*  */
-  0x628, /* VMCALL */
-  0x62b, /* VMLAUNCH */
-  0x635, /* VMRESUME */
-  0x63e, /* VMXOFF */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x123, /* CLAC */
-  0x5ab, /* STAC */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x663, /* XGETBV */
-  0x68f, /* XSETBV */
-  0x0, /*  */
-  0x0, /*  */
-  0x62a, /* VMFUNC */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x637, /* VMRUN64 */
-  0x62e, /* VMMCALL */
-  0x62d, /* VMLOAD64 */
-  0x639, /* VMSAVE64 */
-  0x5ae, /* STGI */
-  0x126, /* CLGI */
-  0x5a1, /* SKINIT */
-  0x242, /* INVLPGA64 */
-  0x5a9, /* SMSW32r */
-  0x5a9, /* SMSW32r */
-  0x5a9, /* SMSW32r */
-  0x5a9, /* SMSW32r */
-  0x5a9, /* SMSW32r */
-  0x5a9, /* SMSW32r */
-  0x5a9, /* SMSW32r */
-  0x5a9, /* SMSW32r */
+  0x6a4, /* XRSTORS */
+  0x6a8, /* XSAVEC */
+  0x6ac, /* XSAVES */
+  0x649, /* VMPTRLDm */
+  0x64a, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x467, /* RDRAND32r */
+  0x46a, /* RDSEED32r */
+/* Table1590 */
+  0xe3, /* BSWAP32r */
+/* Table1591 */
+  0x564, /* SGDT64m */
+  0x5b7, /* SIDT64m */
+  0x29e, /* LGDT64m */
+  0x2a4, /* LIDT64m */
+  0x5be, /* SMSW16m */
+  0x0, /*  */
+  0x2a7, /* LMSW16m */
+  0x23b, /* INVLPG */
+  0x0, /*  */
+  0x642, /* VMCALL */
+  0x645, /* VMLAUNCH */
+  0x64f, /* VMRESUME */
+  0x658, /* VMXOFF */
   0x0, /*  */
   0x0, /*  */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x5dc, /* SWAPGS */
-  0x46e, /* RDTSCP */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x125, /* CLAC */
+  0x5c2, /* STAC */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x67c, /* XGETBV */
+  0x6ae, /* XSETBV */
+  0x0, /*  */
+  0x0, /*  */
+  0x644, /* VMFUNC */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x651, /* VMRUN64 */
+  0x648, /* VMMCALL */
+  0x647, /* VMLOAD64 */
+  0x653, /* VMSAVE64 */
+  0x5c5, /* STGI */
+  0x129, /* CLGI */
+  0x5b8, /* SKINIT */
+  0x23d, /* INVLPGA64 */
+  0x5c0, /* SMSW32r */
+  0x5c0, /* SMSW32r */
+  0x5c0, /* SMSW32r */
+  0x5c0, /* SMSW32r */
+  0x5c0, /* SMSW32r */
+  0x5c0, /* SMSW32r */
+  0x5c0, /* SMSW32r */
+  0x5c0, /* SMSW32r */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table1656 */
   0x0, /*  */
-  0x345, /* MOV64rc */
-/* Table1658 */
   0x0, /*  */
-  0x346, /* MOV64rd */
-/* Table1660 */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x5f3, /* SWAPGS */
+  0x46d, /* RDTSCP */
   0x0, /*  */
-  0x33c, /* MOV64cr */
-/* Table1662 */
   0x0, /*  */
-  0x33d, /* MOV64dr */
-/* Table1664 */
-  0x633, /* VMREAD64rm */
-  0x634, /* VMREAD64rr */
-/* Table1666 */
-  0x63c, /* VMWRITE64rm */
-  0x63d, /* VMWRITE64rr */
-/* Table1668 */
-  0x429, /* PUSHFS64 */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+/* Table1663 */
+  0x0, /*  */
+  0x33f, /* MOV64rc */
+/* Table1665 */
+  0x0, /*  */
+  0x340, /* MOV64rd */
+/* Table1667 */
+  0x0, /*  */
+  0x338, /* MOV64cr */
 /* Table1669 */
-  0x408, /* POPFS64 */
-/* Table1670 */
-  0x1ce, /* CPUID64 */
+  0x0, /*  */
+  0x339, /* MOV64dr */
 /* Table1671 */
-  0x42c, /* PUSHGS64 */
-/* Table1672 */
-  0x40b, /* POPGS64 */
+  0x64d, /* VMREAD64rm */
+  0x64e, /* VMREAD64rr */
 /* Table1673 */
-  0x5a2, /* SLDT16m */
-  0x5b7, /* STRm */
-  0x2ab, /* LLDT16m */
-  0x305, /* LTRm */
-  0x624, /* VERRm */
-  0x626, /* VERWm */
+  0x656, /* VMWRITE64rm */
+  0x657, /* VMWRITE64rr */
+/* Table1675 */
+  0x428, /* PUSHFS64 */
+/* Table1676 */
+  0x407, /* POPFS64 */
+/* Table1677 */
+  0x42b, /* PUSHGS64 */
+/* Table1678 */
+  0x40a, /* POPGS64 */
+/* Table1679 */
+  0x5b9, /* SLDT16m */
+  0x5ce, /* STRm */
+  0x2a5, /* LLDT16m */
+  0x2ff, /* LTRm */
+  0x63e, /* VERRm */
+  0x640, /* VERWm */
   0x0, /*  */
   0x0, /*  */
-  0x5a3, /* SLDT16r */
-  0x5b4, /* STR16r */
-  0x2ac, /* LLDT16r */
-  0x306, /* LTRr */
-  0x625, /* VERRr */
-  0x627, /* VERWr */
+  0x5ba, /* SLDT16r */
+  0x5cb, /* STR16r */
+  0x2a6, /* LLDT16r */
+  0x300, /* LTRr */
+  0x63f, /* VERRr */
+  0x641, /* VERWr */
   0x0, /*  */
   0x0, /*  */
-/* Table1689 */
-  0x54b, /* SGDT16m */
-  0x59e, /* SIDT16m */
-  0x2a2, /* LGDT16m */
-  0x2a8, /* LIDT16m */
-  0x5a7, /* SMSW16m */
+/* Table1695 */
+  0x562, /* SGDT16m */
+  0x5b5, /* SIDT16m */
+  0x29c, /* LGDT16m */
+  0x2a2, /* LIDT16m */
+  0x5be, /* SMSW16m */
   0x0, /*  */
-  0x2ad, /* LMSW16m */
-  0x240, /* INVLPG */
+  0x2a7, /* LMSW16m */
+  0x23b, /* INVLPG */
   0x0, /*  */
-  0x628, /* VMCALL */
-  0x62b, /* VMLAUNCH */
-  0x635, /* VMRESUME */
-  0x63e, /* VMXOFF */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x123, /* CLAC */
-  0x5ab, /* STAC */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x663, /* XGETBV */
-  0x68f, /* XSETBV */
-  0x0, /*  */
-  0x0, /*  */
-  0x62a, /* VMFUNC */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x636, /* VMRUN32 */
-  0x62e, /* VMMCALL */
-  0x62c, /* VMLOAD32 */
-  0x638, /* VMSAVE32 */
-  0x5ae, /* STGI */
-  0x126, /* CLGI */
-  0x5a1, /* SKINIT */
-  0x241, /* INVLPGA32 */
-  0x5a8, /* SMSW16r */
-  0x5a8, /* SMSW16r */
-  0x5a8, /* SMSW16r */
-  0x5a8, /* SMSW16r */
-  0x5a8, /* SMSW16r */
-  0x5a8, /* SMSW16r */
-  0x5a8, /* SMSW16r */
-  0x5a8, /* SMSW16r */
+  0x642, /* VMCALL */
+  0x645, /* VMLAUNCH */
+  0x64f, /* VMRESUME */
+  0x658, /* VMXOFF */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x125, /* CLAC */
+  0x5c2, /* STAC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x5dc, /* SWAPGS */
-  0x46e, /* RDTSCP */
+  0x0, /*  */
+  0x67c, /* XGETBV */
+  0x6ae, /* XSETBV */
+  0x0, /*  */
+  0x0, /*  */
+  0x644, /* VMFUNC */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x650, /* VMRUN32 */
+  0x648, /* VMMCALL */
+  0x646, /* VMLOAD32 */
+  0x652, /* VMSAVE32 */
+  0x5c5, /* STGI */
+  0x129, /* CLGI */
+  0x5b8, /* SKINIT */
+  0x23c, /* INVLPGA32 */
+  0x5bf, /* SMSW16r */
+  0x5bf, /* SMSW16r */
+  0x5bf, /* SMSW16r */
+  0x5bf, /* SMSW16r */
+  0x5bf, /* SMSW16r */
+  0x5bf, /* SMSW16r */
+  0x5bf, /* SMSW16r */
+  0x5bf, /* SMSW16r */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table1761 */
-  0x289, /* LAR16rm */
-  0x28a, /* LAR16rr */
-/* Table1763 */
-  0x2fc, /* LSL16rm */
-  0x2fd, /* LSL16rr */
-/* Table1765 */
+  0x0, /*  */
+  0x0, /*  */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x5f3, /* SWAPGS */
+  0x46d, /* RDTSCP */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x397, /* NOOP18_16m4 */
-  0x398, /* NOOP18_16m5 */
-  0x399, /* NOOP18_16m6 */
-  0x39a, /* NOOP18_16m7 */
+  0x0, /*  */
+  0x0, /*  */
+/* Table1767 */
+  0x283, /* LAR16rm */
+  0x284, /* LAR16rr */
+/* Table1769 */
+  0x2f6, /* LSL16rm */
+  0x2f7, /* LSL16rr */
+/* Table1771 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x39b, /* NOOP18_16r4 */
-  0x39c, /* NOOP18_16r5 */
-  0x39d, /* NOOP18_16r6 */
-  0x39e, /* NOOP18_16r7 */
-/* Table1781 */
-  0x3b0, /* NOOPW_19 */
-  0x3a7, /* NOOP19rr */
-/* Table1783 */
-  0x3b1, /* NOOPW_1a */
+  0x395, /* NOOP18_16m4 */
+  0x396, /* NOOP18_16m5 */
+  0x397, /* NOOP18_16m6 */
+  0x398, /* NOOP18_16m7 */
   0x0, /*  */
-/* Table1785 */
-  0x3b2, /* NOOPW_1b */
   0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x399, /* NOOP18_16r4 */
+  0x39a, /* NOOP18_16r5 */
+  0x39b, /* NOOP18_16r6 */
+  0x39c, /* NOOP18_16r7 */
 /* Table1787 */
-  0x3b3, /* NOOPW_1c */
-  0x0, /*  */
+  0x3ae, /* NOOPW_19 */
+  0x3a5, /* NOOP19rr */
 /* Table1789 */
-  0x3b4, /* NOOPW_1d */
+  0x3af, /* NOOPW_1a */
   0x0, /*  */
 /* Table1791 */
-  0x3b5, /* NOOPW_1e */
+  0x3b0, /* NOOPW_1b */
   0x0, /*  */
 /* Table1793 */
-  0x3af, /* NOOPW */
+  0x3b1, /* NOOPW_1c */
   0x0, /*  */
 /* Table1795 */
-  0x178, /* CMOVO16rm */
-  0x179, /* CMOVO16rr */
+  0x3b2, /* NOOPW_1d */
+  0x0, /*  */
 /* Table1797 */
-  0x166, /* CMOVNO16rm */
-  0x167, /* CMOVNO16rr */
+  0x3b3, /* NOOPW_1e */
+  0x0, /*  */
 /* Table1799 */
-  0x136, /* CMOVB16rm */
-  0x137, /* CMOVB16rr */
+  0x3ad, /* NOOPW */
+  0x0, /*  */
 /* Table1801 */
-  0x130, /* CMOVAE16rm */
-  0x131, /* CMOVAE16rr */
+  0x17c, /* CMOVO16rm */
+  0x17d, /* CMOVO16rr */
 /* Table1803 */
-  0x142, /* CMOVE16rm */
-  0x143, /* CMOVE16rr */
+  0x16a, /* CMOVNO16rm */
+  0x16b, /* CMOVNO16rr */
 /* Table1805 */
-  0x160, /* CMOVNE16rm */
-  0x161, /* CMOVNE16rr */
+  0x13a, /* CMOVB16rm */
+  0x13b, /* CMOVB16rr */
 /* Table1807 */
-  0x13c, /* CMOVBE16rm */
-  0x13d, /* CMOVBE16rr */
+  0x134, /* CMOVAE16rm */
+  0x135, /* CMOVAE16rr */
 /* Table1809 */
-  0x12a, /* CMOVA16rm */
-  0x12b, /* CMOVA16rr */
+  0x146, /* CMOVE16rm */
+  0x147, /* CMOVE16rr */
 /* Table1811 */
-  0x184, /* CMOVS16rm */
-  0x185, /* CMOVS16rr */
+  0x164, /* CMOVNE16rm */
+  0x165, /* CMOVNE16rr */
 /* Table1813 */
-  0x172, /* CMOVNS16rm */
-  0x173, /* CMOVNS16rr */
+  0x140, /* CMOVBE16rm */
+  0x141, /* CMOVBE16rr */
 /* Table1815 */
-  0x17e, /* CMOVP16rm */
-  0x17f, /* CMOVP16rr */
+  0x12e, /* CMOVA16rm */
+  0x12f, /* CMOVA16rr */
 /* Table1817 */
-  0x16c, /* CMOVNP16rm */
-  0x16d, /* CMOVNP16rr */
+  0x188, /* CMOVS16rm */
+  0x189, /* CMOVS16rr */
 /* Table1819 */
-  0x154, /* CMOVL16rm */
-  0x155, /* CMOVL16rr */
+  0x176, /* CMOVNS16rm */
+  0x177, /* CMOVNS16rr */
 /* Table1821 */
-  0x14e, /* CMOVGE16rm */
-  0x14f, /* CMOVGE16rr */
+  0x182, /* CMOVP16rm */
+  0x183, /* CMOVP16rr */
 /* Table1823 */
-  0x15a, /* CMOVLE16rm */
-  0x15b, /* CMOVLE16rr */
+  0x170, /* CMOVNP16rm */
+  0x171, /* CMOVNP16rr */
 /* Table1825 */
-  0x148, /* CMOVG16rm */
-  0x149, /* CMOVG16rr */
+  0x158, /* CMOVL16rm */
+  0x159, /* CMOVL16rr */
 /* Table1827 */
-  0x27f, /* JO_2 */
-/* Table1828 */
-  0x276, /* JNO_2 */
+  0x152, /* CMOVGE16rm */
+  0x153, /* CMOVGE16rr */
 /* Table1829 */
-  0x255, /* JB_2 */
-/* Table1830 */
-  0x24c, /* JAE_2 */
+  0x15e, /* CMOVLE16rm */
+  0x15f, /* CMOVLE16rr */
 /* Table1831 */
-  0x25b, /* JE_2 */
-/* Table1832 */
-  0x273, /* JNE_2 */
+  0x14c, /* CMOVG16rm */
+  0x14d, /* CMOVG16rr */
 /* Table1833 */
-  0x252, /* JBE_2 */
+  0x279, /* JO_2 */
 /* Table1834 */
-  0x24f, /* JA_2 */
+  0x270, /* JNO_2 */
 /* Table1835 */
-  0x286, /* JS_2 */
+  0x250, /* JB_2 */
 /* Table1836 */
-  0x27c, /* JNS_2 */
+  0x247, /* JAE_2 */
 /* Table1837 */
-  0x282, /* JP_2 */
+  0x255, /* JE_2 */
 /* Table1838 */
-  0x279, /* JNP_2 */
+  0x26d, /* JNE_2 */
 /* Table1839 */
-  0x267, /* JL_2 */
+  0x24d, /* JBE_2 */
 /* Table1840 */
-  0x25e, /* JGE_2 */
+  0x24a, /* JA_2 */
 /* Table1841 */
-  0x264, /* JLE_2 */
+  0x280, /* JS_2 */
 /* Table1842 */
-  0x261, /* JG_2 */
+  0x276, /* JNS_2 */
 /* Table1843 */
-  0x427, /* PUSHFS16 */
+  0x27c, /* JP_2 */
 /* Table1844 */
-  0x406, /* POPFS16 */
+  0x273, /* JNP_2 */
 /* Table1845 */
-  0xe4, /* BT16mr */
-  0xe6, /* BT16rr */
+  0x261, /* JL_2 */
+/* Table1846 */
+  0x258, /* JGE_2 */
 /* Table1847 */
-  0x567, /* SHLD16mri8 */
-  0x569, /* SHLD16rri8 */
+  0x25e, /* JLE_2 */
+/* Table1848 */
+  0x25b, /* JG_2 */
 /* Table1849 */
-  0x566, /* SHLD16mrCL */
-  0x568, /* SHLD16rrCL */
+  0x426, /* PUSHFS16 */
+/* Table1850 */
+  0x405, /* POPFS16 */
 /* Table1851 */
-  0x42a, /* PUSHGS16 */
-/* Table1852 */
-  0x409, /* POPGS16 */
+  0xe6, /* BT16mr */
+  0xe8, /* BT16rr */
 /* Table1853 */
-  0x108, /* BTS16mr */
-  0x10a, /* BTS16rr */
+  0x57e, /* SHLD16mri8 */
+  0x580, /* SHLD16rri8 */
 /* Table1855 */
-  0x58f, /* SHRD16mri8 */
-  0x591, /* SHRD16rri8 */
+  0x57d, /* SHLD16mrCL */
+  0x57f, /* SHLD16rrCL */
 /* Table1857 */
-  0x58e, /* SHRD16mrCL */
-  0x590, /* SHRD16rrCL */
+  0x429, /* PUSHGS16 */
+/* Table1858 */
+  0x408, /* POPGS16 */
 /* Table1859 */
-  0x20a, /* IMUL16rm */
-  0x20d, /* IMUL16rr */
+  0x10a, /* BTS16mr */
+  0x10c, /* BTS16rr */
 /* Table1861 */
-  0x1c4, /* CMPXCHG16rm */
-  0x1c5, /* CMPXCHG16rr */
+  0x5a6, /* SHRD16mri8 */
+  0x5a8, /* SHRD16rri8 */
 /* Table1863 */
-  0x302, /* LSS16rm */
-  0x0, /*  */
+  0x5a5, /* SHRD16mrCL */
+  0x5a7, /* SHRD16rrCL */
 /* Table1865 */
-  0xfc, /* BTR16mr */
-  0xfe, /* BTR16rr */
-/* Table1867 */
-  0x29f, /* LFS16rm */
-  0x0, /*  */
-/* Table1869 */
-  0x2a5, /* LGS16rm */
-  0x0, /*  */
-/* Table1871 */
-  0x376, /* MOVZX16rm8 */
-  0x377, /* MOVZX16rr8 */
-/* Table1873 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0xe3, /* BT16mi8 */
-  0x107, /* BTS16mi8 */
-  0xfb, /* BTR16mi8 */
-  0xef, /* BTC16mi8 */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0xe5, /* BT16ri8 */
-  0x109, /* BTS16ri8 */
-  0xfd, /* BTR16ri8 */
-  0xf1, /* BTC16ri8 */
-/* Table1889 */
-  0xf0, /* BTC16mr */
-  0xf2, /* BTC16rr */
-/* Table1891 */
-  0xd5, /* BSF16rm */
-  0xd6, /* BSF16rr */
-/* Table1893 */
-  0xdb, /* BSR16rm */
-  0xdc, /* BSR16rr */
-/* Table1895 */
-  0x368, /* MOVSX16rm8 */
-  0x369, /* MOVSX16rr8 */
-/* Table1897 */
-  0x64a, /* XADD16rm */
-  0x64b, /* XADD16rr */
-/* Table1899 */
-  0x0, /*  */
-  0x1ca, /* CMPXCHG8B */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x629, /* VMCLEARm */
-  0x630, /* VMPTRSTm */
+  0x6a6, /* XSAVE */
+  0x6a2, /* XRSTOR */
+  0x12c, /* CLWB */
+  0x128, /* CLFLUSHOPT */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x467, /* RDRAND16r */
-  0x46a, /* RDSEED16r */
-/* Table1915 */
-  0x619, /* TZCNT32rm */
-  0x61a, /* TZCNT32rr */
-/* Table1917 */
-  0x30d, /* LZCNT32rm */
-  0x30e, /* LZCNT32rr */
-/* Table1919 */
-  0x0, /*  */
-  0x1ca, /* CMPXCHG8B */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x63f, /* VMXON */
-  0x630, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x468, /* RDRAND32r */
-  0x46b, /* RDSEED32r */
-/* Table1935 */
-  0x617, /* TZCNT16rm */
-  0x618, /* TZCNT16rr */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x3ea, /* PCOMMIT */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
 /* Table1937 */
-  0x30b, /* LZCNT16rm */
-  0x30c, /* LZCNT16rr */
+  0x209, /* IMUL16rm */
+  0x20c, /* IMUL16rr */
 /* Table1939 */
-  0x5a5, /* SLDT64m */
-  0x5b7, /* STRm */
-  0x2ab, /* LLDT16m */
-  0x305, /* LTRm */
-  0x624, /* VERRm */
-  0x626, /* VERWm */
+  0x1c8, /* CMPXCHG16rm */
+  0x1c9, /* CMPXCHG16rr */
+/* Table1941 */
+  0x2fc, /* LSS16rm */
   0x0, /*  */
+/* Table1943 */
+  0xfe, /* BTR16mr */
+  0x100, /* BTR16rr */
+/* Table1945 */
+  0x299, /* LFS16rm */
   0x0, /*  */
-  0x5a6, /* SLDT64r */
-  0x5b6, /* STR64r */
-  0x2ac, /* LLDT16r */
-  0x306, /* LTRr */
-  0x625, /* VERRr */
-  0x627, /* VERWr */
+/* Table1947 */
+  0x29f, /* LGS16rm */
   0x0, /*  */
-  0x0, /*  */
-/* Table1955 */
-  0x54d, /* SGDT64m */
-  0x5a0, /* SIDT64m */
-  0x2a4, /* LGDT64m */
-  0x2aa, /* LIDT64m */
-  0x5a7, /* SMSW16m */
-  0x0, /*  */
-  0x2ad, /* LMSW16m */
-  0x240, /* INVLPG */
-  0x0, /*  */
-  0x628, /* VMCALL */
-  0x62b, /* VMLAUNCH */
-  0x635, /* VMRESUME */
-  0x63e, /* VMXOFF */
+/* Table1949 */
+  0x374, /* MOVZX16rm8 */
+  0x375, /* MOVZX16rr8 */
+/* Table1951 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x0, /*  */
-  0x123, /* CLAC */
-  0x5ab, /* STAC */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x663, /* XGETBV */
-  0x68f, /* XSETBV */
-  0x0, /*  */
-  0x0, /*  */
-  0x62a, /* VMFUNC */
+  0xe5, /* BT16mi8 */
+  0x109, /* BTS16mi8 */
+  0xfd, /* BTR16mi8 */
+  0xf1, /* BTC16mi8 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x637, /* VMRUN64 */
-  0x62e, /* VMMCALL */
-  0x62d, /* VMLOAD64 */
-  0x639, /* VMSAVE64 */
-  0x5ae, /* STGI */
-  0x126, /* CLGI */
-  0x5a1, /* SKINIT */
-  0x242, /* INVLPGA64 */
-  0x5aa, /* SMSW64r */
-  0x5aa, /* SMSW64r */
-  0x5aa, /* SMSW64r */
-  0x5aa, /* SMSW64r */
-  0x5aa, /* SMSW64r */
-  0x5aa, /* SMSW64r */
-  0x5aa, /* SMSW64r */
-  0x5aa, /* SMSW64r */
+  0x0, /*  */
+  0xe7, /* BT16ri8 */
+  0x10b, /* BTS16ri8 */
+  0xff, /* BTR16ri8 */
+  0xf3, /* BTC16ri8 */
+/* Table1967 */
+  0xf2, /* BTC16mr */
+  0xf4, /* BTC16rr */
+/* Table1969 */
+  0xd7, /* BSF16rm */
+  0xd8, /* BSF16rr */
+/* Table1971 */
+  0xdd, /* BSR16rm */
+  0xde, /* BSR16rr */
+/* Table1973 */
+  0x364, /* MOVSX16rm8 */
+  0x365, /* MOVSX16rr8 */
+/* Table1975 */
+  0x663, /* XADD16rm */
+  0x664, /* XADD16rr */
+/* Table1977 */
+  0x0, /*  */
+  0x1ce, /* CMPXCHG8B */
+  0x0, /*  */
+  0x6a4, /* XRSTORS */
+  0x6a8, /* XSAVEC */
+  0x6ac, /* XSAVES */
+  0x643, /* VMCLEARm */
+  0x64a, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x466, /* RDRAND16r */
+  0x469, /* RDSEED16r */
+/* Table1993 */
+  0x633, /* TZCNT32rm */
+  0x634, /* TZCNT32rr */
+/* Table1995 */
+  0x307, /* LZCNT32rm */
+  0x308, /* LZCNT32rr */
+/* Table1997 */
+  0x0, /*  */
+  0x1ce, /* CMPXCHG8B */
+  0x0, /*  */
+  0x6a4, /* XRSTORS */
+  0x6a8, /* XSAVEC */
+  0x6ac, /* XSAVES */
+  0x659, /* VMXON */
+  0x64a, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x5dc, /* SWAPGS */
-  0x46e, /* RDTSCP */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x467, /* RDRAND32r */
+  0x46a, /* RDSEED32r */
+/* Table2013 */
+  0x631, /* TZCNT16rm */
+  0x632, /* TZCNT16rr */
+/* Table2015 */
+  0x305, /* LZCNT16rm */
+  0x306, /* LZCNT16rr */
+/* Table2017 */
+  0x5bc, /* SLDT64m */
+  0x5ce, /* STRm */
+  0x2a5, /* LLDT16m */
+  0x2ff, /* LTRm */
+  0x63e, /* VERRm */
+  0x640, /* VERWm */
   0x0, /*  */
   0x0, /*  */
-/* Table2027 */
-  0x28d, /* LAR64rm */
-  0x28e, /* LAR64rr */
-/* Table2029 */
-  0x300, /* LSL64rm */
-  0x301, /* LSL64rr */
-/* Table2031 */
-  0x5e2, /* SYSRET64 */
-/* Table2032 */
-  0x5e0, /* SYSEXIT64 */
+  0x5bd, /* SLDT64r */
+  0x5cd, /* STR64r */
+  0x2a6, /* LLDT16r */
+  0x300, /* LTRr */
+  0x63f, /* VERRr */
+  0x641, /* VERWr */
+  0x0, /*  */
+  0x0, /*  */
 /* Table2033 */
-  0x17c, /* CMOVO64rm */
-  0x17d, /* CMOVO64rr */
-/* Table2035 */
-  0x16a, /* CMOVNO64rm */
-  0x16b, /* CMOVNO64rr */
-/* Table2037 */
-  0x13a, /* CMOVB64rm */
-  0x13b, /* CMOVB64rr */
-/* Table2039 */
-  0x134, /* CMOVAE64rm */
-  0x135, /* CMOVAE64rr */
-/* Table2041 */
-  0x146, /* CMOVE64rm */
-  0x147, /* CMOVE64rr */
-/* Table2043 */
-  0x164, /* CMOVNE64rm */
-  0x165, /* CMOVNE64rr */
-/* Table2045 */
-  0x140, /* CMOVBE64rm */
-  0x141, /* CMOVBE64rr */
-/* Table2047 */
-  0x12e, /* CMOVA64rm */
-  0x12f, /* CMOVA64rr */
-/* Table2049 */
-  0x188, /* CMOVS64rm */
-  0x189, /* CMOVS64rr */
-/* Table2051 */
-  0x176, /* CMOVNS64rm */
-  0x177, /* CMOVNS64rr */
-/* Table2053 */
-  0x182, /* CMOVP64rm */
-  0x183, /* CMOVP64rr */
-/* Table2055 */
-  0x170, /* CMOVNP64rm */
-  0x171, /* CMOVNP64rr */
-/* Table2057 */
-  0x158, /* CMOVL64rm */
-  0x159, /* CMOVL64rr */
-/* Table2059 */
-  0x152, /* CMOVGE64rm */
-  0x153, /* CMOVGE64rr */
-/* Table2061 */
-  0x15e, /* CMOVLE64rm */
-  0x15f, /* CMOVLE64rr */
-/* Table2063 */
-  0x14c, /* CMOVG64rm */
-  0x14d, /* CMOVG64rr */
-/* Table2065 */
-  0xec, /* BT64mr */
-  0xee, /* BT64rr */
-/* Table2067 */
-  0x56f, /* SHLD64mri8 */
-  0x571, /* SHLD64rri8 */
-/* Table2069 */
-  0x56e, /* SHLD64mrCL */
-  0x570, /* SHLD64rrCL */
-/* Table2071 */
-  0x110, /* BTS64mr */
-  0x112, /* BTS64rr */
-/* Table2073 */
-  0x597, /* SHRD64mri8 */
-  0x599, /* SHRD64rri8 */
-/* Table2075 */
-  0x596, /* SHRD64mrCL */
-  0x598, /* SHRD64rrCL */
-/* Table2077 */
+  0x564, /* SGDT64m */
+  0x5b7, /* SIDT64m */
+  0x29e, /* LGDT64m */
+  0x2a4, /* LIDT64m */
+  0x5be, /* SMSW16m */
+  0x0, /*  */
+  0x2a7, /* LMSW16m */
+  0x23b, /* INVLPG */
+  0x0, /*  */
+  0x642, /* VMCALL */
+  0x645, /* VMLAUNCH */
+  0x64f, /* VMRESUME */
+  0x658, /* VMXOFF */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x68c, /* XSAVE64 */
-  0x68a, /* XRSTOR64 */
-  0x68e, /* XSAVEOPT64 */
+  0x0, /*  */
+  0x125, /* CLAC */
+  0x5c2, /* STAC */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x67c, /* XGETBV */
+  0x6ae, /* XSETBV */
+  0x0, /*  */
+  0x0, /*  */
+  0x644, /* VMFUNC */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x651, /* VMRUN64 */
+  0x648, /* VMMCALL */
+  0x647, /* VMLOAD64 */
+  0x653, /* VMSAVE64 */
+  0x5c5, /* STGI */
+  0x129, /* CLGI */
+  0x5b8, /* SKINIT */
+  0x23d, /* INVLPGA64 */
+  0x5c1, /* SMSW64r */
+  0x5c1, /* SMSW64r */
+  0x5c1, /* SMSW64r */
+  0x5c1, /* SMSW64r */
+  0x5c1, /* SMSW64r */
+  0x5c1, /* SMSW64r */
+  0x5c1, /* SMSW64r */
+  0x5c1, /* SMSW64r */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -28420,448 +28529,629 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x5f3, /* SWAPGS */
+  0x46d, /* RDTSCP */
   0x0, /*  */
-/* Table2093 */
-  0x21a, /* IMUL64rm */
-  0x21d, /* IMUL64rr */
-/* Table2095 */
-  0x1c8, /* CMPXCHG64rm */
-  0x1c9, /* CMPXCHG64rr */
-/* Table2097 */
-  0x304, /* LSS64rm */
   0x0, /*  */
-/* Table2099 */
-  0x104, /* BTR64mr */
-  0x106, /* BTR64rr */
-/* Table2101 */
-  0x2a1, /* LFS64rm */
   0x0, /*  */
-/* Table2103 */
-  0x2a7, /* LGS64rm */
+  0x0, /*  */
+  0x0, /*  */
   0x0, /*  */
 /* Table2105 */
-  0x37f, /* MOVZX64rm8_Q */
-  0x381, /* MOVZX64rr8_Q */
+  0x287, /* LAR64rm */
+  0x288, /* LAR64rr */
 /* Table2107 */
-  0x37e, /* MOVZX64rm16_Q */
-  0x380, /* MOVZX64rr16_Q */
+  0x2fa, /* LSL64rm */
+  0x2fb, /* LSL64rr */
 /* Table2109 */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0xeb, /* BT64mi8 */
-  0x10f, /* BTS64mi8 */
-  0x103, /* BTR64mi8 */
-  0xf7, /* BTC64mi8 */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0xed, /* BT64ri8 */
-  0x111, /* BTS64ri8 */
-  0x105, /* BTR64ri8 */
-  0xf9, /* BTC64ri8 */
+  0x5f9, /* SYSRET64 */
+/* Table2110 */
+  0x5f7, /* SYSEXIT64 */
+/* Table2111 */
+  0x180, /* CMOVO64rm */
+  0x181, /* CMOVO64rr */
+/* Table2113 */
+  0x16e, /* CMOVNO64rm */
+  0x16f, /* CMOVNO64rr */
+/* Table2115 */
+  0x13e, /* CMOVB64rm */
+  0x13f, /* CMOVB64rr */
+/* Table2117 */
+  0x138, /* CMOVAE64rm */
+  0x139, /* CMOVAE64rr */
+/* Table2119 */
+  0x14a, /* CMOVE64rm */
+  0x14b, /* CMOVE64rr */
+/* Table2121 */
+  0x168, /* CMOVNE64rm */
+  0x169, /* CMOVNE64rr */
+/* Table2123 */
+  0x144, /* CMOVBE64rm */
+  0x145, /* CMOVBE64rr */
 /* Table2125 */
-  0xf8, /* BTC64mr */
-  0xfa, /* BTC64rr */
+  0x132, /* CMOVA64rm */
+  0x133, /* CMOVA64rr */
 /* Table2127 */
-  0xd9, /* BSF64rm */
-  0xda, /* BSF64rr */
+  0x18c, /* CMOVS64rm */
+  0x18d, /* CMOVS64rr */
 /* Table2129 */
-  0xdf, /* BSR64rm */
-  0xe0, /* BSR64rr */
+  0x17a, /* CMOVNS64rm */
+  0x17b, /* CMOVNS64rr */
 /* Table2131 */
-  0x372, /* MOVSX64rm8 */
-  0x375, /* MOVSX64rr8 */
+  0x186, /* CMOVP64rm */
+  0x187, /* CMOVP64rr */
 /* Table2133 */
-  0x36f, /* MOVSX64rm16 */
-  0x373, /* MOVSX64rr16 */
+  0x174, /* CMOVNP64rm */
+  0x175, /* CMOVNP64rr */
 /* Table2135 */
-  0x64e, /* XADD64rm */
-  0x64f, /* XADD64rr */
+  0x15c, /* CMOVL64rm */
+  0x15d, /* CMOVL64rr */
 /* Table2137 */
-  0x0, /*  */
-  0x1c3, /* CMPXCHG16B */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x62f, /* VMPTRLDm */
-  0x630, /* VMPTRSTm */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x469, /* RDRAND64r */
-  0x46c, /* RDSEED64r */
+  0x156, /* CMOVGE64rm */
+  0x157, /* CMOVGE64rr */
+/* Table2139 */
+  0x162, /* CMOVLE64rm */
+  0x163, /* CMOVLE64rr */
+/* Table2141 */
+  0x150, /* CMOVG64rm */
+  0x151, /* CMOVG64rr */
+/* Table2143 */
+  0xee, /* BT64mr */
+  0xf0, /* BT64rr */
+/* Table2145 */
+  0x586, /* SHLD64mri8 */
+  0x588, /* SHLD64rri8 */
+/* Table2147 */
+  0x585, /* SHLD64mrCL */
+  0x587, /* SHLD64rrCL */
+/* Table2149 */
+  0x112, /* BTS64mr */
+  0x114, /* BTS64rr */
+/* Table2151 */
+  0x5ae, /* SHRD64mri8 */
+  0x5b0, /* SHRD64rri8 */
 /* Table2153 */
-  0xe2, /* BSWAP64r */
-/* Table2154 */
-  0x54d, /* SGDT64m */
-  0x5a0, /* SIDT64m */
-  0x2a4, /* LGDT64m */
-  0x2aa, /* LIDT64m */
-  0x5a7, /* SMSW16m */
+  0x5ad, /* SHRD64mrCL */
+  0x5af, /* SHRD64rrCL */
+/* Table2155 */
   0x0, /*  */
-  0x2ad, /* LMSW16m */
-  0x240, /* INVLPG */
   0x0, /*  */
-  0x628, /* VMCALL */
-  0x62b, /* VMLAUNCH */
-  0x635, /* VMRESUME */
-  0x63e, /* VMXOFF */
   0x0, /*  */
   0x0, /*  */
+  0x6a7, /* XSAVE64 */
+  0x6a3, /* XRSTOR64 */
+  0x6ab, /* XSAVEOPT64 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x123, /* CLAC */
-  0x5ab, /* STAC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x663, /* XGETBV */
-  0x68f, /* XSETBV */
   0x0, /*  */
   0x0, /*  */
-  0x62a, /* VMFUNC */
+/* Table2171 */
+  0x219, /* IMUL64rm */
+  0x21c, /* IMUL64rr */
+/* Table2173 */
+  0x1cc, /* CMPXCHG64rm */
+  0x1cd, /* CMPXCHG64rr */
+/* Table2175 */
+  0x2fe, /* LSS64rm */
   0x0, /*  */
+/* Table2177 */
+  0x106, /* BTR64mr */
+  0x108, /* BTR64rr */
+/* Table2179 */
+  0x29b, /* LFS64rm */
   0x0, /*  */
+/* Table2181 */
+  0x2a1, /* LGS64rm */
   0x0, /*  */
-  0x637, /* VMRUN64 */
-  0x62e, /* VMMCALL */
-  0x62d, /* VMLOAD64 */
-  0x639, /* VMSAVE64 */
-  0x5ae, /* STGI */
-  0x126, /* CLGI */
-  0x5a1, /* SKINIT */
-  0x242, /* INVLPGA64 */
-  0x5a8, /* SMSW16r */
-  0x5a8, /* SMSW16r */
-  0x5a8, /* SMSW16r */
-  0x5a8, /* SMSW16r */
-  0x5a8, /* SMSW16r */
-  0x5a8, /* SMSW16r */
-  0x5a8, /* SMSW16r */
-  0x5a8, /* SMSW16r */
+/* Table2183 */
+  0x37d, /* MOVZX64rm8_Q */
+  0x37f, /* MOVZX64rr8_Q */
+/* Table2185 */
+  0x37c, /* MOVZX64rm16_Q */
+  0x37e, /* MOVZX64rr16_Q */
+/* Table2187 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0xed, /* BT64mi8 */
+  0x111, /* BTS64mi8 */
+  0x105, /* BTR64mi8 */
+  0xf9, /* BTC64mi8 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x2ae, /* LMSW16r */
-  0x5dc, /* SWAPGS */
-  0x46e, /* RDTSCP */
+  0xef, /* BT64ri8 */
+  0x113, /* BTS64ri8 */
+  0x107, /* BTR64ri8 */
+  0xfb, /* BTC64ri8 */
+/* Table2203 */
+  0xfa, /* BTC64mr */
+  0xfc, /* BTC64rr */
+/* Table2205 */
+  0xdb, /* BSF64rm */
+  0xdc, /* BSF64rr */
+/* Table2207 */
+  0xe1, /* BSR64rm */
+  0xe2, /* BSR64rr */
+/* Table2209 */
+  0x370, /* MOVSX64rm8 */
+  0x373, /* MOVSX64rr8 */
+/* Table2211 */
+  0x36d, /* MOVSX64rm16 */
+  0x371, /* MOVSX64rr16 */
+/* Table2213 */
+  0x667, /* XADD64rm */
+  0x668, /* XADD64rr */
+/* Table2215 */
   0x0, /*  */
+  0x1c7, /* CMPXCHG16B */
   0x0, /*  */
+  0x6a5, /* XRSTORS64 */
+  0x6a9, /* XSAVEC64 */
+  0x6ad, /* XSAVES64 */
+  0x649, /* VMPTRLDm */
+  0x64a, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table2226 */
   0x0, /*  */
   0x0, /*  */
+  0x468, /* RDRAND64r */
+  0x46b, /* RDSEED64r */
+/* Table2231 */
+  0xe4, /* BSWAP64r */
+/* Table2232 */
   0x0, /*  */
   0x0, /*  */
-  0x68b, /* XSAVE */
-  0x689, /* XRSTOR */
-  0x68d, /* XSAVEOPT */
   0x0, /*  */
-  0x461, /* RDFSBASE */
-  0x463, /* RDGSBASE */
-  0x645, /* WRFSBASE */
-  0x647, /* WRGSBASE */
   0x0, /*  */
+  0x6a7, /* XSAVE64 */
+  0x6a3, /* XRSTOR64 */
+  0x6ab, /* XSAVEOPT64 */
+  0x128, /* CLFLUSHOPT */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table2242 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x68c, /* XSAVE64 */
-  0x68a, /* XRSTOR64 */
-  0x68e, /* XSAVEOPT64 */
   0x0, /*  */
-  0x462, /* RDFSBASE64 */
-  0x464, /* RDGSBASE64 */
-  0x646, /* WRFSBASE64 */
-  0x648, /* WRGSBASE64 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table2258 */
-  0x61b, /* TZCNT64rm */
-  0x61c, /* TZCNT64rr */
-/* Table2260 */
-  0x30f, /* LZCNT64rm */
-  0x310, /* LZCNT64rr */
-/* Table2262 */
   0x0, /*  */
-  0x1c3, /* CMPXCHG16B */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x63f, /* VMXON */
-  0x630, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x469, /* RDRAND64r */
-  0x46c, /* RDSEED64r */
-/* Table2278 */
   0x0, /*  */
-  0x1c3, /* CMPXCHG16B */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x629, /* VMCLEARm */
-  0x630, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x469, /* RDRAND64r */
-  0x46c, /* RDSEED64r */
-/* Table2294 */
-  0x360, /* MOVBE32rm */
   0x0, /*  */
-/* Table2296 */
-  0x35f, /* MOVBE32mr */
   0x0, /*  */
-/* Table2298 */
-  0x23e, /* INVEPT32 */
   0x0, /*  */
-/* Table2300 */
-  0x245, /* INVVPID32 */
   0x0, /*  */
-/* Table2302 */
-  0x243, /* INVPCID32 */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x3ea, /* PCOMMIT */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
   0x0, /*  */
 /* Table2304 */
-  0x35e, /* MOVBE16rm */
   0x0, /*  */
-/* Table2306 */
-  0x35d, /* MOVBE16mr */
+  0x1c7, /* CMPXCHG16B */
   0x0, /*  */
-/* Table2308 */
-  0x40, /* ADCX32rm */
-  0x41, /* ADCX32rr */
-/* Table2310 */
-  0x75, /* ADOX32rm */
-  0x76, /* ADOX32rr */
-/* Table2312 */
-  0x362, /* MOVBE64rm */
+  0x6a5, /* XRSTORS64 */
+  0x6a9, /* XSAVEC64 */
+  0x6ad, /* XSAVES64 */
+  0x643, /* VMCLEARm */
+  0x64a, /* VMPTRSTm */
   0x0, /*  */
-/* Table2314 */
-  0x361, /* MOVBE64mr */
   0x0, /*  */
-/* Table2316 */
-  0x23f, /* INVEPT64 */
   0x0, /*  */
-/* Table2318 */
-  0x246, /* INVVPID64 */
   0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x468, /* RDRAND64r */
+  0x46b, /* RDSEED64r */
 /* Table2320 */
-  0x244, /* INVPCID64 */
+  0x564, /* SGDT64m */
+  0x5b7, /* SIDT64m */
+  0x29e, /* LGDT64m */
+  0x2a4, /* LIDT64m */
+  0x5be, /* SMSW16m */
   0x0, /*  */
-/* Table2322 */
-  0x77, /* ADOX64rm */
-  0x78, /* ADOX64rr */
-/* Table2324 */
-  0x42, /* ADCX64rm */
-  0x43, /* ADCX64rr */
-/* Table2326 */
-  0x9d, /* ANDN32rm */
-  0x9e, /* ANDN32rr */
-/* Table2328 */
+  0x2a7, /* LMSW16m */
+  0x23b, /* INVLPG */
   0x0, /*  */
-  0xcf, /* BLSR32rm */
-  0xcb, /* BLSMSK32rm */
-  0xc3, /* BLSI32rm */
+  0x642, /* VMCALL */
+  0x645, /* VMLAUNCH */
+  0x64f, /* VMRESUME */
+  0x658, /* VMXOFF */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0xd0, /* BLSR32rr */
-  0xcc, /* BLSMSK32rr */
-  0xc4, /* BLSI32rr */
+  0x125, /* CLAC */
+  0x5c2, /* STAC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table2344 */
-  0x113, /* BZHI32rm */
-  0x114, /* BZHI32rr */
-/* Table2346 */
-  0xa3, /* BEXTR32rm */
-  0xa4, /* BEXTR32rr */
-/* Table2348 */
-  0x3f0, /* PEXT32rm */
-  0x3f1, /* PEXT32rr */
-/* Table2350 */
-  0x4f1, /* SARX32rm */
-  0x4f2, /* SARX32rr */
-/* Table2352 */
-  0x3ec, /* PDEP32rm */
-  0x3ed, /* PDEP32rr */
-/* Table2354 */
-  0x38a, /* MULX32rm */
-  0x38b, /* MULX32rr */
-/* Table2356 */
-  0x59a, /* SHRX32rm */
-  0x59b, /* SHRX32rr */
-/* Table2358 */
-  0x572, /* SHLX32rm */
-  0x573, /* SHLX32rr */
-/* Table2360 */
-  0x9f, /* ANDN64rm */
-  0xa0, /* ANDN64rr */
-/* Table2362 */
+  0x67c, /* XGETBV */
+  0x6ae, /* XSETBV */
   0x0, /*  */
-  0xd1, /* BLSR64rm */
-  0xcd, /* BLSMSK64rm */
-  0xc5, /* BLSI64rm */
+  0x0, /*  */
+  0x644, /* VMFUNC */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x651, /* VMRUN64 */
+  0x648, /* VMMCALL */
+  0x647, /* VMLOAD64 */
+  0x653, /* VMSAVE64 */
+  0x5c5, /* STGI */
+  0x129, /* CLGI */
+  0x5b8, /* SKINIT */
+  0x23d, /* INVLPGA64 */
+  0x5bf, /* SMSW16r */
+  0x5bf, /* SMSW16r */
+  0x5bf, /* SMSW16r */
+  0x5bf, /* SMSW16r */
+  0x5bf, /* SMSW16r */
+  0x5bf, /* SMSW16r */
+  0x5bf, /* SMSW16r */
+  0x5bf, /* SMSW16r */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0xd2, /* BLSR64rr */
-  0xce, /* BLSMSK64rr */
-  0xc6, /* BLSI64rr */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x2a8, /* LMSW16r */
+  0x5f3, /* SWAPGS */
+  0x46d, /* RDTSCP */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table2378 */
-  0x115, /* BZHI64rm */
-  0x116, /* BZHI64rr */
-/* Table2380 */
-  0xa5, /* BEXTR64rm */
-  0xa6, /* BEXTR64rr */
-/* Table2382 */
-  0x3f2, /* PEXT64rm */
-  0x3f3, /* PEXT64rr */
-/* Table2384 */
-  0x4f3, /* SARX64rm */
-  0x4f4, /* SARX64rr */
-/* Table2386 */
-  0x3ee, /* PDEP64rm */
-  0x3ef, /* PDEP64rr */
-/* Table2388 */
-  0x38c, /* MULX64rm */
-  0x38d, /* MULX64rr */
-/* Table2390 */
-  0x59c, /* SHRX64rm */
-  0x59d, /* SHRX64rr */
+  0x0, /*  */
+  0x0, /*  */
 /* Table2392 */
-  0x574, /* SHLX64rm */
-  0x575, /* SHLX64rr */
-/* Table2394 */
-  0x4ba, /* RORX32mi */
-  0x4bb, /* RORX32ri */
-/* Table2396 */
-  0x4bc, /* RORX64mi */
-  0x4bd, /* RORX64ri */
-/* Table2398 */
-  0x0, /*  */
-  0xab, /* BLCFILL32rm */
-  0xbf, /* BLSFILL32rm */
-  0xbb, /* BLCS32rm */
-  0x61d, /* TZMSK32rm */
-  0xb3, /* BLCIC32rm */
-  0xc7, /* BLSIC32rm */
-  0x5e3, /* T1MSKC32rm */
-  0x0, /*  */
-  0xac, /* BLCFILL32rr */
-  0xc0, /* BLSFILL32rr */
-  0xbc, /* BLCS32rr */
-  0x61e, /* TZMSK32rr */
-  0xb4, /* BLCIC32rr */
-  0xc8, /* BLSIC32rr */
-  0x5e4, /* T1MSKC32rr */
-/* Table2414 */
-  0x0, /*  */
-  0xb7, /* BLCMSK32rm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0xaf, /* BLCI32rm */
+  0x6a6, /* XSAVE */
+  0x6a2, /* XRSTOR */
+  0x6aa, /* XSAVEOPT */
+  0x0, /*  */
+  0x460, /* RDFSBASE */
+  0x462, /* RDGSBASE */
+  0x65e, /* WRFSBASE */
+  0x660, /* WRGSBASE */
   0x0, /*  */
   0x0, /*  */
-  0xb8, /* BLCMSK32rr */
+  0x0, /*  */
+  0x0, /*  */
+/* Table2408 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0xb0, /* BLCI32rr */
+  0x6a7, /* XSAVE64 */
+  0x6a3, /* XRSTOR64 */
+  0x6ab, /* XSAVEOPT64 */
   0x0, /*  */
-/* Table2430 */
+  0x461, /* RDFSBASE64 */
+  0x463, /* RDGSBASE64 */
+  0x65f, /* WRFSBASE64 */
+  0x661, /* WRGSBASE64 */
   0x0, /*  */
-  0xad, /* BLCFILL64rm */
-  0xc1, /* BLSFILL64rm */
-  0xbd, /* BLCS64rm */
-  0x61f, /* TZMSK64rm */
-  0xb5, /* BLCIC64rm */
-  0xc9, /* BLSIC64rm */
-  0x5e5, /* T1MSKC64rm */
   0x0, /*  */
-  0xae, /* BLCFILL64rr */
-  0xc2, /* BLSFILL64rr */
-  0xbe, /* BLCS64rr */
-  0x620, /* TZMSK64rr */
-  0xb6, /* BLCIC64rr */
-  0xca, /* BLSIC64rr */
-  0x5e6, /* T1MSKC64rr */
+  0x0, /*  */
+  0x0, /*  */
+/* Table2424 */
+  0x635, /* TZCNT64rm */
+  0x636, /* TZCNT64rr */
+/* Table2426 */
+  0x309, /* LZCNT64rm */
+  0x30a, /* LZCNT64rr */
+/* Table2428 */
+  0x0, /*  */
+  0x1c7, /* CMPXCHG16B */
+  0x0, /*  */
+  0x6a5, /* XRSTORS64 */
+  0x6a9, /* XSAVEC64 */
+  0x6ad, /* XSAVES64 */
+  0x659, /* VMXON */
+  0x64a, /* VMPTRSTm */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x468, /* RDRAND64r */
+  0x46b, /* RDSEED64r */
+/* Table2444 */
+  0x35c, /* MOVBE32rm */
+  0x0, /*  */
 /* Table2446 */
+  0x35b, /* MOVBE32mr */
   0x0, /*  */
-  0xb9, /* BLCMSK64rm */
+/* Table2448 */
+  0x239, /* INVEPT32 */
   0x0, /*  */
+/* Table2450 */
+  0x240, /* INVVPID32 */
   0x0, /*  */
+/* Table2452 */
+  0x23e, /* INVPCID32 */
   0x0, /*  */
+/* Table2454 */
+  0x35a, /* MOVBE16rm */
   0x0, /*  */
-  0xb1, /* BLCI64rm */
+/* Table2456 */
+  0x359, /* MOVBE16mr */
   0x0, /*  */
-  0x0, /*  */
-  0xba, /* BLCMSK64rr */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0xb2, /* BLCI64rr */
-  0x0, /*  */
+/* Table2458 */
+  0x42, /* ADCX32rm */
+  0x43, /* ADCX32rr */
+/* Table2460 */
+  0x77, /* ADOX32rm */
+  0x78, /* ADOX32rr */
 /* Table2462 */
-  0xa7, /* BEXTRI32mi */
-  0xa8, /* BEXTRI32ri */
+  0x35e, /* MOVBE64rm */
+  0x0, /*  */
 /* Table2464 */
-  0xa9, /* BEXTRI64mi */
-  0xaa, /* BEXTRI64ri */
+  0x35d, /* MOVBE64mr */
+  0x0, /*  */
+/* Table2466 */
+  0x23a, /* INVEPT64 */
+  0x0, /*  */
+/* Table2468 */
+  0x241, /* INVVPID64 */
+  0x0, /*  */
+/* Table2470 */
+  0x23f, /* INVPCID64 */
+  0x0, /*  */
+/* Table2472 */
+  0x79, /* ADOX64rm */
+  0x7a, /* ADOX64rr */
+/* Table2474 */
+  0x44, /* ADCX64rm */
+  0x45, /* ADCX64rr */
+/* Table2476 */
+  0x9f, /* ANDN32rm */
+  0xa0, /* ANDN32rr */
+/* Table2478 */
+  0x0, /*  */
+  0xd1, /* BLSR32rm */
+  0xcd, /* BLSMSK32rm */
+  0xc5, /* BLSI32rm */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0xd2, /* BLSR32rr */
+  0xce, /* BLSMSK32rr */
+  0xc6, /* BLSI32rr */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+/* Table2494 */
+  0x115, /* BZHI32rm */
+  0x116, /* BZHI32rr */
+/* Table2496 */
+  0xa5, /* BEXTR32rm */
+  0xa6, /* BEXTR32rr */
+/* Table2498 */
+  0x3ef, /* PEXT32rm */
+  0x3f0, /* PEXT32rr */
+/* Table2500 */
+  0x508, /* SARX32rm */
+  0x509, /* SARX32rr */
+/* Table2502 */
+  0x3eb, /* PDEP32rm */
+  0x3ec, /* PDEP32rr */
+/* Table2504 */
+  0x388, /* MULX32rm */
+  0x389, /* MULX32rr */
+/* Table2506 */
+  0x5b1, /* SHRX32rm */
+  0x5b2, /* SHRX32rr */
+/* Table2508 */
+  0x589, /* SHLX32rm */
+  0x58a, /* SHLX32rr */
+/* Table2510 */
+  0xa1, /* ANDN64rm */
+  0xa2, /* ANDN64rr */
+/* Table2512 */
+  0x0, /*  */
+  0xd3, /* BLSR64rm */
+  0xcf, /* BLSMSK64rm */
+  0xc7, /* BLSI64rm */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0xd4, /* BLSR64rr */
+  0xd0, /* BLSMSK64rr */
+  0xc8, /* BLSI64rr */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+/* Table2528 */
+  0x117, /* BZHI64rm */
+  0x118, /* BZHI64rr */
+/* Table2530 */
+  0xa7, /* BEXTR64rm */
+  0xa8, /* BEXTR64rr */
+/* Table2532 */
+  0x3f1, /* PEXT64rm */
+  0x3f2, /* PEXT64rr */
+/* Table2534 */
+  0x50a, /* SARX64rm */
+  0x50b, /* SARX64rr */
+/* Table2536 */
+  0x3ed, /* PDEP64rm */
+  0x3ee, /* PDEP64rr */
+/* Table2538 */
+  0x38a, /* MULX64rm */
+  0x38b, /* MULX64rr */
+/* Table2540 */
+  0x5b3, /* SHRX64rm */
+  0x5b4, /* SHRX64rr */
+/* Table2542 */
+  0x58b, /* SHLX64rm */
+  0x58c, /* SHLX64rr */
+/* Table2544 */
+  0x4d1, /* RORX32mi */
+  0x4d2, /* RORX32ri */
+/* Table2546 */
+  0x4d3, /* RORX64mi */
+  0x4d4, /* RORX64ri */
+/* Table2548 */
+  0x0, /*  */
+  0xad, /* BLCFILL32rm */
+  0xc1, /* BLSFILL32rm */
+  0xbd, /* BLCS32rm */
+  0x637, /* TZMSK32rm */
+  0xb5, /* BLCIC32rm */
+  0xc9, /* BLSIC32rm */
+  0x5fa, /* T1MSKC32rm */
+  0x0, /*  */
+  0xae, /* BLCFILL32rr */
+  0xc2, /* BLSFILL32rr */
+  0xbe, /* BLCS32rr */
+  0x638, /* TZMSK32rr */
+  0xb6, /* BLCIC32rr */
+  0xca, /* BLSIC32rr */
+  0x5fb, /* T1MSKC32rr */
+/* Table2564 */
+  0x0, /*  */
+  0xb9, /* BLCMSK32rm */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0xb1, /* BLCI32rm */
+  0x0, /*  */
+  0x0, /*  */
+  0xba, /* BLCMSK32rr */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0xb2, /* BLCI32rr */
+  0x0, /*  */
+/* Table2580 */
+  0x0, /*  */
+  0xaf, /* BLCFILL64rm */
+  0xc3, /* BLSFILL64rm */
+  0xbf, /* BLCS64rm */
+  0x639, /* TZMSK64rm */
+  0xb7, /* BLCIC64rm */
+  0xcb, /* BLSIC64rm */
+  0x5fc, /* T1MSKC64rm */
+  0x0, /*  */
+  0xb0, /* BLCFILL64rr */
+  0xc4, /* BLSFILL64rr */
+  0xc0, /* BLCS64rr */
+  0x63a, /* TZMSK64rr */
+  0xb8, /* BLCIC64rr */
+  0xcc, /* BLSIC64rr */
+  0x5fd, /* T1MSKC64rr */
+/* Table2596 */
+  0x0, /*  */
+  0xbb, /* BLCMSK64rm */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0xb3, /* BLCI64rm */
+  0x0, /*  */
+  0x0, /*  */
+  0xbc, /* BLCMSK64rr */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0xb4, /* BLCI64rr */
+  0x0, /*  */
+/* Table2612 */
+  0xa9, /* BEXTRI32mi */
+  0xaa, /* BEXTRI32ri */
+/* Table2614 */
+  0xab, /* BEXTRI64mi */
+  0xac, /* BEXTRI64ri */
   0x0
 };
 
@@ -31225,9 +31515,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     0 /* EmptyTable */
    },
    /* 0xd6 */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    402 /* Table402 */
+    0 /* EmptyTable */
    },
    /* 0xd7 */
    { /* struct ModRMDecision */
@@ -33527,22 +33817,22 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa0 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    240 /* Table240 */
+    873 /* Table873 */
    },
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    241 /* Table241 */
+    874 /* Table874 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    242 /* Table242 */
+    875 /* Table875 */
    },
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    243 /* Table243 */
+    876 /* Table876 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
@@ -33862,7 +34152,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xe3 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    873 /* Table873 */
+    877 /* Table877 */
    },
    /* 0xe4 */
    { /* struct ModRMDecision */
@@ -34003,6 +34293,1291 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
     552 /* Table552 */
+   }
+  }
+ }
+,  /* IC_OPSIZE_ADSIZE */
+ { /* struct OpcodeDecision */
+  {
+   /* 0x00 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1 /* Table1 */
+   },
+   /* 0x01 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    621 /* Table621 */
+   },
+   /* 0x02 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    5 /* Table5 */
+   },
+   /* 0x03 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    623 /* Table623 */
+   },
+   /* 0x04 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    9 /* Table9 */
+   },
+   /* 0x05 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    625 /* Table625 */
+   },
+   /* 0x06 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    626 /* Table626 */
+   },
+   /* 0x07 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    627 /* Table627 */
+   },
+   /* 0x08 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    13 /* Table13 */
+   },
+   /* 0x09 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    628 /* Table628 */
+   },
+   /* 0x0a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    17 /* Table17 */
+   },
+   /* 0x0b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    630 /* Table630 */
+   },
+   /* 0x0c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    21 /* Table21 */
+   },
+   /* 0x0d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    632 /* Table632 */
+   },
+   /* 0x0e */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    633 /* Table633 */
+   },
+   /* 0x0f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x10 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    24 /* Table24 */
+   },
+   /* 0x11 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    634 /* Table634 */
+   },
+   /* 0x12 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    28 /* Table28 */
+   },
+   /* 0x13 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    636 /* Table636 */
+   },
+   /* 0x14 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    32 /* Table32 */
+   },
+   /* 0x15 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    638 /* Table638 */
+   },
+   /* 0x16 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    639 /* Table639 */
+   },
+   /* 0x17 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    640 /* Table640 */
+   },
+   /* 0x18 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    36 /* Table36 */
+   },
+   /* 0x19 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    641 /* Table641 */
+   },
+   /* 0x1a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    40 /* Table40 */
+   },
+   /* 0x1b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    643 /* Table643 */
+   },
+   /* 0x1c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    44 /* Table44 */
+   },
+   /* 0x1d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    645 /* Table645 */
+   },
+   /* 0x1e */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    646 /* Table646 */
+   },
+   /* 0x1f */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    647 /* Table647 */
+   },
+   /* 0x20 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    48 /* Table48 */
+   },
+   /* 0x21 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    648 /* Table648 */
+   },
+   /* 0x22 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    52 /* Table52 */
+   },
+   /* 0x23 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    650 /* Table650 */
+   },
+   /* 0x24 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    56 /* Table56 */
+   },
+   /* 0x25 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    652 /* Table652 */
+   },
+   /* 0x26 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x27 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    58 /* Table58 */
+   },
+   /* 0x28 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    59 /* Table59 */
+   },
+   /* 0x29 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    653 /* Table653 */
+   },
+   /* 0x2a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    63 /* Table63 */
+   },
+   /* 0x2b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    655 /* Table655 */
+   },
+   /* 0x2c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    67 /* Table67 */
+   },
+   /* 0x2d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    657 /* Table657 */
+   },
+   /* 0x2e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2f */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    69 /* Table69 */
+   },
+   /* 0x30 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    70 /* Table70 */
+   },
+   /* 0x31 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    658 /* Table658 */
+   },
+   /* 0x32 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    74 /* Table74 */
+   },
+   /* 0x33 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    660 /* Table660 */
+   },
+   /* 0x34 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    78 /* Table78 */
+   },
+   /* 0x35 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    662 /* Table662 */
+   },
+   /* 0x36 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x37 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    80 /* Table80 */
+   },
+   /* 0x38 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    81 /* Table81 */
+   },
+   /* 0x39 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    663 /* Table663 */
+   },
+   /* 0x3a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    85 /* Table85 */
+   },
+   /* 0x3b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    665 /* Table665 */
+   },
+   /* 0x3c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    89 /* Table89 */
+   },
+   /* 0x3d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    667 /* Table667 */
+   },
+   /* 0x3e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3f */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    91 /* Table91 */
+   },
+   /* 0x40 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    668 /* Table668 */
+   },
+   /* 0x41 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    668 /* Table668 */
+   },
+   /* 0x42 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    668 /* Table668 */
+   },
+   /* 0x43 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    668 /* Table668 */
+   },
+   /* 0x44 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    668 /* Table668 */
+   },
+   /* 0x45 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    668 /* Table668 */
+   },
+   /* 0x46 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    668 /* Table668 */
+   },
+   /* 0x47 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    668 /* Table668 */
+   },
+   /* 0x48 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    669 /* Table669 */
+   },
+   /* 0x49 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    669 /* Table669 */
+   },
+   /* 0x4a */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    669 /* Table669 */
+   },
+   /* 0x4b */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    669 /* Table669 */
+   },
+   /* 0x4c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    669 /* Table669 */
+   },
+   /* 0x4d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    669 /* Table669 */
+   },
+   /* 0x4e */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    669 /* Table669 */
+   },
+   /* 0x4f */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    669 /* Table669 */
+   },
+   /* 0x50 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x51 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x52 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x53 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x54 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x55 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x56 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x57 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x58 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x59 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x5a */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x5b */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x5c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x5d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x5e */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x5f */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x60 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    672 /* Table672 */
+   },
+   /* 0x61 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    673 /* Table673 */
+   },
+   /* 0x62 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    674 /* Table674 */
+   },
+   /* 0x63 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    100 /* Table100 */
+   },
+   /* 0x64 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x65 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x66 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    102 /* Table102 */
+   },
+   /* 0x67 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x68 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    676 /* Table676 */
+   },
+   /* 0x69 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    677 /* Table677 */
+   },
+   /* 0x6a */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    679 /* Table679 */
+   },
+   /* 0x6b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    680 /* Table680 */
+   },
+   /* 0x6c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    109 /* Table109 */
+   },
+   /* 0x6d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    682 /* Table682 */
+   },
+   /* 0x6e */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    111 /* Table111 */
+   },
+   /* 0x6f */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    683 /* Table683 */
+   },
+   /* 0x70 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    113 /* Table113 */
+   },
+   /* 0x71 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    114 /* Table114 */
+   },
+   /* 0x72 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    115 /* Table115 */
+   },
+   /* 0x73 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    116 /* Table116 */
+   },
+   /* 0x74 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    117 /* Table117 */
+   },
+   /* 0x75 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    118 /* Table118 */
+   },
+   /* 0x76 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    119 /* Table119 */
+   },
+   /* 0x77 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    120 /* Table120 */
+   },
+   /* 0x78 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    121 /* Table121 */
+   },
+   /* 0x79 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    122 /* Table122 */
+   },
+   /* 0x7a */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    123 /* Table123 */
+   },
+   /* 0x7b */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    124 /* Table124 */
+   },
+   /* 0x7c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    125 /* Table125 */
+   },
+   /* 0x7d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    126 /* Table126 */
+   },
+   /* 0x7e */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    127 /* Table127 */
+   },
+   /* 0x7f */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    128 /* Table128 */
+   },
+   /* 0x80 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    129 /* Table129 */
+   },
+   /* 0x81 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    684 /* Table684 */
+   },
+   /* 0x82 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    161 /* Table161 */
+   },
+   /* 0x83 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    700 /* Table700 */
+   },
+   /* 0x84 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    193 /* Table193 */
+   },
+   /* 0x85 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    716 /* Table716 */
+   },
+   /* 0x86 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    197 /* Table197 */
+   },
+   /* 0x87 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    718 /* Table718 */
+   },
+   /* 0x88 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    201 /* Table201 */
+   },
+   /* 0x89 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    720 /* Table720 */
+   },
+   /* 0x8a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    205 /* Table205 */
+   },
+   /* 0x8b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    722 /* Table722 */
+   },
+   /* 0x8c */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    724 /* Table724 */
+   },
+   /* 0x8d */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    726 /* Table726 */
+   },
+   /* 0x8e */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    728 /* Table728 */
+   },
+   /* 0x8f */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    730 /* Table730 */
+   },
+   /* 0x90 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    231 /* Table231 */
+   },
+   /* 0x91 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    746 /* Table746 */
+   },
+   /* 0x92 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    746 /* Table746 */
+   },
+   /* 0x93 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    746 /* Table746 */
+   },
+   /* 0x94 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    746 /* Table746 */
+   },
+   /* 0x95 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    746 /* Table746 */
+   },
+   /* 0x96 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    746 /* Table746 */
+   },
+   /* 0x97 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    746 /* Table746 */
+   },
+   /* 0x98 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    747 /* Table747 */
+   },
+   /* 0x99 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    748 /* Table748 */
+   },
+   /* 0x9a */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    749 /* Table749 */
+   },
+   /* 0x9b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    750 /* Table750 */
+   },
+   /* 0x9d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    751 /* Table751 */
+   },
+   /* 0x9e */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    238 /* Table238 */
+   },
+   /* 0x9f */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    239 /* Table239 */
+   },
+   /* 0xa0 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    873 /* Table873 */
+   },
+   /* 0xa1 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    878 /* Table878 */
+   },
+   /* 0xa2 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    875 /* Table875 */
+   },
+   /* 0xa3 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    879 /* Table879 */
+   },
+   /* 0xa4 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    244 /* Table244 */
+   },
+   /* 0xa5 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    754 /* Table754 */
+   },
+   /* 0xa6 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    246 /* Table246 */
+   },
+   /* 0xa7 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    755 /* Table755 */
+   },
+   /* 0xa8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    248 /* Table248 */
+   },
+   /* 0xa9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    756 /* Table756 */
+   },
+   /* 0xaa */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    250 /* Table250 */
+   },
+   /* 0xab */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    757 /* Table757 */
+   },
+   /* 0xac */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    252 /* Table252 */
+   },
+   /* 0xad */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    758 /* Table758 */
+   },
+   /* 0xae */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    254 /* Table254 */
+   },
+   /* 0xaf */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    759 /* Table759 */
+   },
+   /* 0xb0 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb1 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb2 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb3 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb4 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb5 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb6 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb7 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    760 /* Table760 */
+   },
+   /* 0xb9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    760 /* Table760 */
+   },
+   /* 0xba */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    760 /* Table760 */
+   },
+   /* 0xbb */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    760 /* Table760 */
+   },
+   /* 0xbc */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    760 /* Table760 */
+   },
+   /* 0xbd */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    760 /* Table760 */
+   },
+   /* 0xbe */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    760 /* Table760 */
+   },
+   /* 0xbf */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    760 /* Table760 */
+   },
+   /* 0xc0 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    258 /* Table258 */
+   },
+   /* 0xc1 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    761 /* Table761 */
+   },
+   /* 0xc2 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    777 /* Table777 */
+   },
+   /* 0xc3 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    778 /* Table778 */
+   },
+   /* 0xc4 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    779 /* Table779 */
+   },
+   /* 0xc5 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    781 /* Table781 */
+   },
+   /* 0xc6 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    296 /* Table296 */
+   },
+   /* 0xc7 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    783 /* Table783 */
+   },
+   /* 0xc8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    328 /* Table328 */
+   },
+   /* 0xc9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    329 /* Table329 */
+   },
+   /* 0xca */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    799 /* Table799 */
+   },
+   /* 0xcb */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    800 /* Table800 */
+   },
+   /* 0xcc */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    332 /* Table332 */
+   },
+   /* 0xcd */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    333 /* Table333 */
+   },
+   /* 0xce */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    334 /* Table334 */
+   },
+   /* 0xcf */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    801 /* Table801 */
+   },
+   /* 0xd0 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    336 /* Table336 */
+   },
+   /* 0xd1 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    802 /* Table802 */
+   },
+   /* 0xd2 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    368 /* Table368 */
+   },
+   /* 0xd3 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    818 /* Table818 */
+   },
+   /* 0xd4 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    400 /* Table400 */
+   },
+   /* 0xd5 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    401 /* Table401 */
+   },
+   /* 0xd6 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    402 /* Table402 */
+   },
+   /* 0xd7 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    403 /* Table403 */
+   },
+   /* 0xd8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xda */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdb */
+   { /* struct ModRMDecision */
+    MODRM_SPLITMISC,
+    404 /* Table404 */
+   },
+   /* 0xdc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xde */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe0 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    476 /* Table476 */
+   },
+   /* 0xe1 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    477 /* Table477 */
+   },
+   /* 0xe2 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    478 /* Table478 */
+   },
+   /* 0xe3 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    877 /* Table877 */
+   },
+   /* 0xe4 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    480 /* Table480 */
+   },
+   /* 0xe5 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    834 /* Table834 */
+   },
+   /* 0xe6 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    482 /* Table482 */
+   },
+   /* 0xe7 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    835 /* Table835 */
+   },
+   /* 0xe8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    836 /* Table836 */
+   },
+   /* 0xe9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    837 /* Table837 */
+   },
+   /* 0xea */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    838 /* Table838 */
+   },
+   /* 0xeb */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    487 /* Table487 */
+   },
+   /* 0xec */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    488 /* Table488 */
+   },
+   /* 0xed */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    839 /* Table839 */
+   },
+   /* 0xee */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    490 /* Table490 */
+   },
+   /* 0xef */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    840 /* Table840 */
+   },
+   /* 0xf0 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    492 /* Table492 */
+   },
+   /* 0xf1 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    493 /* Table493 */
+   },
+   /* 0xf2 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    494 /* Table494 */
+   },
+   /* 0xf3 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    495 /* Table495 */
+   },
+   /* 0xf4 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    496 /* Table496 */
+   },
+   /* 0xf5 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    497 /* Table497 */
+   },
+   /* 0xf6 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    498 /* Table498 */
+   },
+   /* 0xf7 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    841 /* Table841 */
+   },
+   /* 0xf8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    530 /* Table530 */
+   },
+   /* 0xf9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    531 /* Table531 */
+   },
+   /* 0xfa */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    532 /* Table532 */
+   },
+   /* 0xfb */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    533 /* Table533 */
+   },
+   /* 0xfc */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    534 /* Table534 */
+   },
+   /* 0xfd */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    535 /* Table535 */
+   },
+   /* 0xfe */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    536 /* Table536 */
+   },
+   /* 0xff */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    857 /* Table857 */
    }
   }
  }
@@ -36587,7 +38162,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x01 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    874 /* Table874 */
+    880 /* Table880 */
    },
    /* 0x02 */
    { /* struct ModRMDecision */
@@ -36597,7 +38172,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x03 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    876 /* Table876 */
+    882 /* Table882 */
    },
    /* 0x04 */
    { /* struct ModRMDecision */
@@ -36607,7 +38182,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x05 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    878 /* Table878 */
+    884 /* Table884 */
    },
    /* 0x06 */
    { /* ModRMDecision */
@@ -36627,7 +38202,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x09 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    879 /* Table879 */
+    885 /* Table885 */
    },
    /* 0x0a */
    { /* struct ModRMDecision */
@@ -36637,7 +38212,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x0b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    881 /* Table881 */
+    887 /* Table887 */
    },
    /* 0x0c */
    { /* struct ModRMDecision */
@@ -36647,7 +38222,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x0d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    883 /* Table883 */
+    889 /* Table889 */
    },
    /* 0x0e */
    { /* ModRMDecision */
@@ -36667,7 +38242,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x11 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    884 /* Table884 */
+    890 /* Table890 */
    },
    /* 0x12 */
    { /* struct ModRMDecision */
@@ -36677,7 +38252,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x13 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    886 /* Table886 */
+    892 /* Table892 */
    },
    /* 0x14 */
    { /* struct ModRMDecision */
@@ -36687,7 +38262,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x15 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    888 /* Table888 */
+    894 /* Table894 */
    },
    /* 0x16 */
    { /* ModRMDecision */
@@ -36707,7 +38282,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x19 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    889 /* Table889 */
+    895 /* Table895 */
    },
    /* 0x1a */
    { /* struct ModRMDecision */
@@ -36717,7 +38292,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x1b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    891 /* Table891 */
+    897 /* Table897 */
    },
    /* 0x1c */
    { /* struct ModRMDecision */
@@ -36727,7 +38302,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x1d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    893 /* Table893 */
+    899 /* Table899 */
    },
    /* 0x1e */
    { /* ModRMDecision */
@@ -36747,7 +38322,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x21 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    894 /* Table894 */
+    900 /* Table900 */
    },
    /* 0x22 */
    { /* struct ModRMDecision */
@@ -36757,7 +38332,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x23 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    896 /* Table896 */
+    902 /* Table902 */
    },
    /* 0x24 */
    { /* struct ModRMDecision */
@@ -36767,7 +38342,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x25 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    898 /* Table898 */
+    904 /* Table904 */
    },
    /* 0x26 */
    { /* ModRMDecision */
@@ -36787,7 +38362,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x29 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    899 /* Table899 */
+    905 /* Table905 */
    },
    /* 0x2a */
    { /* struct ModRMDecision */
@@ -36797,7 +38372,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x2b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    901 /* Table901 */
+    907 /* Table907 */
    },
    /* 0x2c */
    { /* struct ModRMDecision */
@@ -36807,7 +38382,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x2d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    903 /* Table903 */
+    909 /* Table909 */
    },
    /* 0x2e */
    { /* ModRMDecision */
@@ -36827,7 +38402,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x31 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    904 /* Table904 */
+    910 /* Table910 */
    },
    /* 0x32 */
    { /* struct ModRMDecision */
@@ -36837,7 +38412,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x33 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    906 /* Table906 */
+    912 /* Table912 */
    },
    /* 0x34 */
    { /* struct ModRMDecision */
@@ -36847,7 +38422,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x35 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    908 /* Table908 */
+    914 /* Table914 */
    },
    /* 0x36 */
    { /* ModRMDecision */
@@ -36867,7 +38442,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x39 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    909 /* Table909 */
+    915 /* Table915 */
    },
    /* 0x3a */
    { /* struct ModRMDecision */
@@ -36877,7 +38452,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x3b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    911 /* Table911 */
+    917 /* Table917 */
    },
    /* 0x3c */
    { /* struct ModRMDecision */
@@ -36887,7 +38462,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x3d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    913 /* Table913 */
+    919 /* Table919 */
    },
    /* 0x3e */
    { /* ModRMDecision */
@@ -37077,7 +38652,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x63 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    914 /* Table914 */
+    920 /* Table920 */
    },
    /* 0x64 */
    { /* ModRMDecision */
@@ -37107,7 +38682,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x69 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    916 /* Table916 */
+    922 /* Table922 */
    },
    /* 0x6a */
    { /* struct ModRMDecision */
@@ -37117,7 +38692,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x6b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    918 /* Table918 */
+    924 /* Table924 */
    },
    /* 0x6c */
    { /* struct ModRMDecision */
@@ -37227,7 +38802,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    920 /* Table920 */
+    926 /* Table926 */
    },
    /* 0x82 */
    { /* ModRMDecision */
@@ -37237,7 +38812,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x83 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    936 /* Table936 */
+    942 /* Table942 */
    },
    /* 0x84 */
    { /* struct ModRMDecision */
@@ -37247,7 +38822,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x85 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    952 /* Table952 */
+    958 /* Table958 */
    },
    /* 0x86 */
    { /* struct ModRMDecision */
@@ -37257,7 +38832,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x87 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    954 /* Table954 */
+    960 /* Table960 */
    },
    /* 0x88 */
    { /* struct ModRMDecision */
@@ -37267,7 +38842,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x89 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    956 /* Table956 */
+    962 /* Table962 */
    },
    /* 0x8a */
    { /* struct ModRMDecision */
@@ -37277,22 +38852,22 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x8b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    958 /* Table958 */
+    964 /* Table964 */
    },
    /* 0x8c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    960 /* Table960 */
+    966 /* Table966 */
    },
    /* 0x8d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    962 /* Table962 */
+    968 /* Table968 */
    },
    /* 0x8e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    964 /* Table964 */
+    970 /* Table970 */
    },
    /* 0x8f */
    { /* struct ModRMDecision */
@@ -37307,47 +38882,47 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x91 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x92 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x93 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x94 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x95 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x96 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x97 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x98 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    967 /* Table967 */
+    973 /* Table973 */
    },
    /* 0x99 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    968 /* Table968 */
+    974 /* Table974 */
    },
    /* 0x9a */
    { /* ModRMDecision */
@@ -37387,7 +38962,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    969 /* Table969 */
+    975 /* Table975 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
@@ -37397,7 +38972,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    970 /* Table970 */
+    976 /* Table976 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
@@ -37407,7 +38982,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa5 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    971 /* Table971 */
+    977 /* Table977 */
    },
    /* 0xa6 */
    { /* struct ModRMDecision */
@@ -37417,7 +38992,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa7 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    972 /* Table972 */
+    978 /* Table978 */
    },
    /* 0xa8 */
    { /* struct ModRMDecision */
@@ -37427,7 +39002,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    973 /* Table973 */
+    979 /* Table979 */
    },
    /* 0xaa */
    { /* struct ModRMDecision */
@@ -37437,7 +39012,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xab */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    974 /* Table974 */
+    980 /* Table980 */
    },
    /* 0xac */
    { /* struct ModRMDecision */
@@ -37447,7 +39022,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xad */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    975 /* Table975 */
+    981 /* Table981 */
    },
    /* 0xae */
    { /* struct ModRMDecision */
@@ -37457,7 +39032,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xaf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    976 /* Table976 */
+    982 /* Table982 */
    },
    /* 0xb0 */
    { /* struct ModRMDecision */
@@ -37502,42 +39077,42 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xb8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xb9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xba */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbe */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xc0 */
    { /* struct ModRMDecision */
@@ -37547,7 +39122,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xc1 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    978 /* Table978 */
+    984 /* Table984 */
    },
    /* 0xc2 */
    { /* struct ModRMDecision */
@@ -37577,7 +39152,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xc7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    994 /* Table994 */
+    1000 /* Table1000 */
    },
    /* 0xc8 */
    { /* struct ModRMDecision */
@@ -37592,12 +39167,12 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xca */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1010 /* Table1010 */
+    1016 /* Table1016 */
    },
    /* 0xcb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1011 /* Table1011 */
+    1017 /* Table1017 */
    },
    /* 0xcc */
    { /* struct ModRMDecision */
@@ -37617,7 +39192,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xcf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1012 /* Table1012 */
+    1018 /* Table1018 */
    },
    /* 0xd0 */
    { /* struct ModRMDecision */
@@ -37627,7 +39202,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xd1 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1013 /* Table1013 */
+    1019 /* Table1019 */
    },
    /* 0xd2 */
    { /* struct ModRMDecision */
@@ -37637,7 +39212,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xd3 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1029 /* Table1029 */
+    1035 /* Table1035 */
    },
    /* 0xd4 */
    { /* ModRMDecision */
@@ -37650,9 +39225,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     0 /* EmptyTable */
    },
    /* 0xd6 */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    402 /* Table402 */
+    0 /* EmptyTable */
    },
    /* 0xd7 */
    { /* struct ModRMDecision */
@@ -37817,7 +39392,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xf7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1045 /* Table1045 */
+    1051 /* Table1051 */
    },
    /* 0xf8 */
    { /* struct ModRMDecision */
@@ -37857,7 +39432,1292 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xff */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1061 /* Table1061 */
+    1067 /* Table1067 */
+   }
+  }
+ }
+,  /* IC_64BIT_REXW_ADSIZE */
+ { /* struct OpcodeDecision */
+  {
+   /* 0x00 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1 /* Table1 */
+   },
+   /* 0x01 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    880 /* Table880 */
+   },
+   /* 0x02 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    5 /* Table5 */
+   },
+   /* 0x03 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    882 /* Table882 */
+   },
+   /* 0x04 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    9 /* Table9 */
+   },
+   /* 0x05 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    884 /* Table884 */
+   },
+   /* 0x06 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x07 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x08 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    13 /* Table13 */
+   },
+   /* 0x09 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    885 /* Table885 */
+   },
+   /* 0x0a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    17 /* Table17 */
+   },
+   /* 0x0b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    887 /* Table887 */
+   },
+   /* 0x0c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    21 /* Table21 */
+   },
+   /* 0x0d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    889 /* Table889 */
+   },
+   /* 0x0e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x10 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    24 /* Table24 */
+   },
+   /* 0x11 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    890 /* Table890 */
+   },
+   /* 0x12 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    28 /* Table28 */
+   },
+   /* 0x13 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    892 /* Table892 */
+   },
+   /* 0x14 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    32 /* Table32 */
+   },
+   /* 0x15 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    894 /* Table894 */
+   },
+   /* 0x16 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x17 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x18 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    36 /* Table36 */
+   },
+   /* 0x19 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    895 /* Table895 */
+   },
+   /* 0x1a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    40 /* Table40 */
+   },
+   /* 0x1b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    897 /* Table897 */
+   },
+   /* 0x1c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    44 /* Table44 */
+   },
+   /* 0x1d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    899 /* Table899 */
+   },
+   /* 0x1e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x20 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    48 /* Table48 */
+   },
+   /* 0x21 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    900 /* Table900 */
+   },
+   /* 0x22 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    52 /* Table52 */
+   },
+   /* 0x23 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    902 /* Table902 */
+   },
+   /* 0x24 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    56 /* Table56 */
+   },
+   /* 0x25 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    904 /* Table904 */
+   },
+   /* 0x26 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x27 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x28 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    59 /* Table59 */
+   },
+   /* 0x29 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    905 /* Table905 */
+   },
+   /* 0x2a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    63 /* Table63 */
+   },
+   /* 0x2b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    907 /* Table907 */
+   },
+   /* 0x2c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    67 /* Table67 */
+   },
+   /* 0x2d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    909 /* Table909 */
+   },
+   /* 0x2e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x30 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    70 /* Table70 */
+   },
+   /* 0x31 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    910 /* Table910 */
+   },
+   /* 0x32 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    74 /* Table74 */
+   },
+   /* 0x33 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    912 /* Table912 */
+   },
+   /* 0x34 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    78 /* Table78 */
+   },
+   /* 0x35 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    914 /* Table914 */
+   },
+   /* 0x36 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x37 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x38 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    81 /* Table81 */
+   },
+   /* 0x39 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    915 /* Table915 */
+   },
+   /* 0x3a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    85 /* Table85 */
+   },
+   /* 0x3b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    917 /* Table917 */
+   },
+   /* 0x3c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    89 /* Table89 */
+   },
+   /* 0x3d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    919 /* Table919 */
+   },
+   /* 0x3e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x40 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x41 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x42 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x43 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x44 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x45 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x46 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x47 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x48 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    568 /* Table568 */
+   },
+   /* 0x49 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x50 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x51 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x52 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x53 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x54 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x55 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x56 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x57 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x58 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x59 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x5a */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x5b */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x5c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x5d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x5e */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x5f */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x60 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x61 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x62 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x63 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    920 /* Table920 */
+   },
+   /* 0x64 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x65 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x66 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    102 /* Table102 */
+   },
+   /* 0x67 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x68 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1083 /* Table1083 */
+   },
+   /* 0x69 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    922 /* Table922 */
+   },
+   /* 0x6a */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    574 /* Table574 */
+   },
+   /* 0x6b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    924 /* Table924 */
+   },
+   /* 0x6c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    109 /* Table109 */
+   },
+   /* 0x6d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    682 /* Table682 */
+   },
+   /* 0x6e */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    111 /* Table111 */
+   },
+   /* 0x6f */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    683 /* Table683 */
+   },
+   /* 0x70 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    113 /* Table113 */
+   },
+   /* 0x71 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    114 /* Table114 */
+   },
+   /* 0x72 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    115 /* Table115 */
+   },
+   /* 0x73 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    116 /* Table116 */
+   },
+   /* 0x74 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    117 /* Table117 */
+   },
+   /* 0x75 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    118 /* Table118 */
+   },
+   /* 0x76 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    119 /* Table119 */
+   },
+   /* 0x77 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    120 /* Table120 */
+   },
+   /* 0x78 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    121 /* Table121 */
+   },
+   /* 0x79 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    122 /* Table122 */
+   },
+   /* 0x7a */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    123 /* Table123 */
+   },
+   /* 0x7b */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    124 /* Table124 */
+   },
+   /* 0x7c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    125 /* Table125 */
+   },
+   /* 0x7d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    126 /* Table126 */
+   },
+   /* 0x7e */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    127 /* Table127 */
+   },
+   /* 0x7f */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    128 /* Table128 */
+   },
+   /* 0x80 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    129 /* Table129 */
+   },
+   /* 0x81 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    926 /* Table926 */
+   },
+   /* 0x82 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x83 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    942 /* Table942 */
+   },
+   /* 0x84 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    193 /* Table193 */
+   },
+   /* 0x85 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    958 /* Table958 */
+   },
+   /* 0x86 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    197 /* Table197 */
+   },
+   /* 0x87 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    960 /* Table960 */
+   },
+   /* 0x88 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    201 /* Table201 */
+   },
+   /* 0x89 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    962 /* Table962 */
+   },
+   /* 0x8a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    205 /* Table205 */
+   },
+   /* 0x8b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    964 /* Table964 */
+   },
+   /* 0x8c */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    966 /* Table966 */
+   },
+   /* 0x8d */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    968 /* Table968 */
+   },
+   /* 0x8e */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    970 /* Table970 */
+   },
+   /* 0x8f */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    730 /* Table730 */
+   },
+   /* 0x90 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    231 /* Table231 */
+   },
+   /* 0x91 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    972 /* Table972 */
+   },
+   /* 0x92 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    972 /* Table972 */
+   },
+   /* 0x93 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    972 /* Table972 */
+   },
+   /* 0x94 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    972 /* Table972 */
+   },
+   /* 0x95 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    972 /* Table972 */
+   },
+   /* 0x96 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    972 /* Table972 */
+   },
+   /* 0x97 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    972 /* Table972 */
+   },
+   /* 0x98 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    973 /* Table973 */
+   },
+   /* 0x99 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    974 /* Table974 */
+   },
+   /* 0x9a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    750 /* Table750 */
+   },
+   /* 0x9d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    751 /* Table751 */
+   },
+   /* 0x9e */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    238 /* Table238 */
+   },
+   /* 0x9f */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    239 /* Table239 */
+   },
+   /* 0xa0 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    596 /* Table596 */
+   },
+   /* 0xa1 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1084 /* Table1084 */
+   },
+   /* 0xa2 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    598 /* Table598 */
+   },
+   /* 0xa3 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1085 /* Table1085 */
+   },
+   /* 0xa4 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    244 /* Table244 */
+   },
+   /* 0xa5 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    977 /* Table977 */
+   },
+   /* 0xa6 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    246 /* Table246 */
+   },
+   /* 0xa7 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    978 /* Table978 */
+   },
+   /* 0xa8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    248 /* Table248 */
+   },
+   /* 0xa9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    979 /* Table979 */
+   },
+   /* 0xaa */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    250 /* Table250 */
+   },
+   /* 0xab */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    980 /* Table980 */
+   },
+   /* 0xac */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    252 /* Table252 */
+   },
+   /* 0xad */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    981 /* Table981 */
+   },
+   /* 0xae */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    254 /* Table254 */
+   },
+   /* 0xaf */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    982 /* Table982 */
+   },
+   /* 0xb0 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb1 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb2 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb3 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb4 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb5 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb6 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb7 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    983 /* Table983 */
+   },
+   /* 0xb9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    983 /* Table983 */
+   },
+   /* 0xba */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    983 /* Table983 */
+   },
+   /* 0xbb */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    983 /* Table983 */
+   },
+   /* 0xbc */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    983 /* Table983 */
+   },
+   /* 0xbd */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    983 /* Table983 */
+   },
+   /* 0xbe */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    983 /* Table983 */
+   },
+   /* 0xbf */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    983 /* Table983 */
+   },
+   /* 0xc0 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    258 /* Table258 */
+   },
+   /* 0xc1 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    984 /* Table984 */
+   },
+   /* 0xc2 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    777 /* Table777 */
+   },
+   /* 0xc3 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    778 /* Table778 */
+   },
+   /* 0xc4 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    779 /* Table779 */
+   },
+   /* 0xc5 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    781 /* Table781 */
+   },
+   /* 0xc6 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    296 /* Table296 */
+   },
+   /* 0xc7 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    1000 /* Table1000 */
+   },
+   /* 0xc8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    328 /* Table328 */
+   },
+   /* 0xc9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    602 /* Table602 */
+   },
+   /* 0xca */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1016 /* Table1016 */
+   },
+   /* 0xcb */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1017 /* Table1017 */
+   },
+   /* 0xcc */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    332 /* Table332 */
+   },
+   /* 0xcd */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    333 /* Table333 */
+   },
+   /* 0xce */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xcf */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1018 /* Table1018 */
+   },
+   /* 0xd0 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    336 /* Table336 */
+   },
+   /* 0xd1 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    1019 /* Table1019 */
+   },
+   /* 0xd2 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    368 /* Table368 */
+   },
+   /* 0xd3 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    1035 /* Table1035 */
+   },
+   /* 0xd4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd7 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    403 /* Table403 */
+   },
+   /* 0xd8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xda */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdb */
+   { /* struct ModRMDecision */
+    MODRM_SPLITMISC,
+    404 /* Table404 */
+   },
+   /* 0xdc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xde */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe0 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    476 /* Table476 */
+   },
+   /* 0xe1 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    477 /* Table477 */
+   },
+   /* 0xe2 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    478 /* Table478 */
+   },
+   /* 0xe3 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    603 /* Table603 */
+   },
+   /* 0xe4 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    480 /* Table480 */
+   },
+   /* 0xe5 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    834 /* Table834 */
+   },
+   /* 0xe6 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    482 /* Table482 */
+   },
+   /* 0xe7 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    835 /* Table835 */
+   },
+   /* 0xe8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    836 /* Table836 */
+   },
+   /* 0xe9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    837 /* Table837 */
+   },
+   /* 0xea */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xeb */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    487 /* Table487 */
+   },
+   /* 0xec */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    488 /* Table488 */
+   },
+   /* 0xed */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    839 /* Table839 */
+   },
+   /* 0xee */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    490 /* Table490 */
+   },
+   /* 0xef */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    840 /* Table840 */
+   },
+   /* 0xf0 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    492 /* Table492 */
+   },
+   /* 0xf1 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    493 /* Table493 */
+   },
+   /* 0xf2 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    494 /* Table494 */
+   },
+   /* 0xf3 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    495 /* Table495 */
+   },
+   /* 0xf4 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    496 /* Table496 */
+   },
+   /* 0xf5 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    497 /* Table497 */
+   },
+   /* 0xf6 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    498 /* Table498 */
+   },
+   /* 0xf7 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    1051 /* Table1051 */
+   },
+   /* 0xf8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    530 /* Table530 */
+   },
+   /* 0xf9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    531 /* Table531 */
+   },
+   /* 0xfa */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    532 /* Table532 */
+   },
+   /* 0xfb */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    533 /* Table533 */
+   },
+   /* 0xfc */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    534 /* Table534 */
+   },
+   /* 0xfd */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    535 /* Table535 */
+   },
+   /* 0xfe */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    536 /* Table536 */
+   },
+   /* 0xff */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    1086 /* Table1086 */
    }
   }
  }
@@ -38387,7 +41247,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x68 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1077 /* Table1077 */
+    1083 /* Table1083 */
    },
    /* 0x69 */
    { /* struct ModRMDecision */
@@ -38672,7 +41532,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1078 /* Table1078 */
+    1102 /* Table1102 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
@@ -38682,7 +41542,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1079 /* Table1079 */
+    1103 /* Table1103 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
@@ -38935,9 +41795,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     0 /* EmptyTable */
    },
    /* 0xd6 */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    402 /* Table402 */
+    0 /* EmptyTable */
    },
    /* 0xd7 */
    { /* struct ModRMDecision */
@@ -39142,7 +42002,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xff */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1080 /* Table1080 */
+    1104 /* Table1104 */
    }
   }
  }
@@ -39952,22 +42812,22 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa0 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    596 /* Table596 */
+    240 /* Table240 */
    },
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    597 /* Table597 */
+    241 /* Table241 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    598 /* Table598 */
+    242 /* Table242 */
    },
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    599 /* Table599 */
+    243 /* Table243 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
@@ -40220,9 +43080,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     0 /* EmptyTable */
    },
    /* 0xd6 */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    402 /* Table402 */
+    0 /* EmptyTable */
    },
    /* 0xd7 */
    { /* struct ModRMDecision */
@@ -40287,7 +43147,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xe3 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1096 /* Table1096 */
+    479 /* Table479 */
    },
    /* 0xe4 */
    { /* struct ModRMDecision */
@@ -40428,6 +43288,1291 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
     605 /* Table605 */
+   }
+  }
+ }
+,  /* IC_64BIT_OPSIZE_ADSIZE */
+ { /* struct OpcodeDecision */
+  {
+   /* 0x00 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1 /* Table1 */
+   },
+   /* 0x01 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    621 /* Table621 */
+   },
+   /* 0x02 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    5 /* Table5 */
+   },
+   /* 0x03 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    623 /* Table623 */
+   },
+   /* 0x04 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    9 /* Table9 */
+   },
+   /* 0x05 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    625 /* Table625 */
+   },
+   /* 0x06 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x07 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x08 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    13 /* Table13 */
+   },
+   /* 0x09 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    628 /* Table628 */
+   },
+   /* 0x0a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    17 /* Table17 */
+   },
+   /* 0x0b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    630 /* Table630 */
+   },
+   /* 0x0c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    21 /* Table21 */
+   },
+   /* 0x0d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    632 /* Table632 */
+   },
+   /* 0x0e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x10 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    24 /* Table24 */
+   },
+   /* 0x11 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    634 /* Table634 */
+   },
+   /* 0x12 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    28 /* Table28 */
+   },
+   /* 0x13 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    636 /* Table636 */
+   },
+   /* 0x14 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    32 /* Table32 */
+   },
+   /* 0x15 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    638 /* Table638 */
+   },
+   /* 0x16 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x17 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x18 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    36 /* Table36 */
+   },
+   /* 0x19 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    641 /* Table641 */
+   },
+   /* 0x1a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    40 /* Table40 */
+   },
+   /* 0x1b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    643 /* Table643 */
+   },
+   /* 0x1c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    44 /* Table44 */
+   },
+   /* 0x1d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    645 /* Table645 */
+   },
+   /* 0x1e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x20 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    48 /* Table48 */
+   },
+   /* 0x21 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    648 /* Table648 */
+   },
+   /* 0x22 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    52 /* Table52 */
+   },
+   /* 0x23 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    650 /* Table650 */
+   },
+   /* 0x24 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    56 /* Table56 */
+   },
+   /* 0x25 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    652 /* Table652 */
+   },
+   /* 0x26 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x27 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x28 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    59 /* Table59 */
+   },
+   /* 0x29 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    653 /* Table653 */
+   },
+   /* 0x2a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    63 /* Table63 */
+   },
+   /* 0x2b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    655 /* Table655 */
+   },
+   /* 0x2c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    67 /* Table67 */
+   },
+   /* 0x2d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    657 /* Table657 */
+   },
+   /* 0x2e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x30 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    70 /* Table70 */
+   },
+   /* 0x31 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    658 /* Table658 */
+   },
+   /* 0x32 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    74 /* Table74 */
+   },
+   /* 0x33 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    660 /* Table660 */
+   },
+   /* 0x34 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    78 /* Table78 */
+   },
+   /* 0x35 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    662 /* Table662 */
+   },
+   /* 0x36 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x37 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x38 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    81 /* Table81 */
+   },
+   /* 0x39 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    663 /* Table663 */
+   },
+   /* 0x3a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    85 /* Table85 */
+   },
+   /* 0x3b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    665 /* Table665 */
+   },
+   /* 0x3c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    89 /* Table89 */
+   },
+   /* 0x3d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    667 /* Table667 */
+   },
+   /* 0x3e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x40 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x41 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x42 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x43 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x44 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x45 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x46 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x47 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x48 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    568 /* Table568 */
+   },
+   /* 0x49 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x50 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x51 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x52 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x53 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x54 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x55 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x56 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x57 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    670 /* Table670 */
+   },
+   /* 0x58 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x59 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x5a */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x5b */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x5c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x5d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x5e */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x5f */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    671 /* Table671 */
+   },
+   /* 0x60 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x61 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x62 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x63 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    571 /* Table571 */
+   },
+   /* 0x64 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x65 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x66 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    102 /* Table102 */
+   },
+   /* 0x67 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x68 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1083 /* Table1083 */
+   },
+   /* 0x69 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    677 /* Table677 */
+   },
+   /* 0x6a */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    574 /* Table574 */
+   },
+   /* 0x6b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    680 /* Table680 */
+   },
+   /* 0x6c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    109 /* Table109 */
+   },
+   /* 0x6d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    682 /* Table682 */
+   },
+   /* 0x6e */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    111 /* Table111 */
+   },
+   /* 0x6f */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    683 /* Table683 */
+   },
+   /* 0x70 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    113 /* Table113 */
+   },
+   /* 0x71 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    114 /* Table114 */
+   },
+   /* 0x72 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    115 /* Table115 */
+   },
+   /* 0x73 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    116 /* Table116 */
+   },
+   /* 0x74 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    117 /* Table117 */
+   },
+   /* 0x75 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    118 /* Table118 */
+   },
+   /* 0x76 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    119 /* Table119 */
+   },
+   /* 0x77 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    120 /* Table120 */
+   },
+   /* 0x78 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    121 /* Table121 */
+   },
+   /* 0x79 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    122 /* Table122 */
+   },
+   /* 0x7a */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    123 /* Table123 */
+   },
+   /* 0x7b */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    124 /* Table124 */
+   },
+   /* 0x7c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    125 /* Table125 */
+   },
+   /* 0x7d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    126 /* Table126 */
+   },
+   /* 0x7e */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    127 /* Table127 */
+   },
+   /* 0x7f */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    128 /* Table128 */
+   },
+   /* 0x80 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    129 /* Table129 */
+   },
+   /* 0x81 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    684 /* Table684 */
+   },
+   /* 0x82 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x83 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    700 /* Table700 */
+   },
+   /* 0x84 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    193 /* Table193 */
+   },
+   /* 0x85 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    716 /* Table716 */
+   },
+   /* 0x86 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    197 /* Table197 */
+   },
+   /* 0x87 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    718 /* Table718 */
+   },
+   /* 0x88 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    201 /* Table201 */
+   },
+   /* 0x89 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    720 /* Table720 */
+   },
+   /* 0x8a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    205 /* Table205 */
+   },
+   /* 0x8b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    722 /* Table722 */
+   },
+   /* 0x8c */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    724 /* Table724 */
+   },
+   /* 0x8d */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    726 /* Table726 */
+   },
+   /* 0x8e */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    728 /* Table728 */
+   },
+   /* 0x8f */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    730 /* Table730 */
+   },
+   /* 0x90 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    231 /* Table231 */
+   },
+   /* 0x91 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    746 /* Table746 */
+   },
+   /* 0x92 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    746 /* Table746 */
+   },
+   /* 0x93 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    746 /* Table746 */
+   },
+   /* 0x94 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    746 /* Table746 */
+   },
+   /* 0x95 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    746 /* Table746 */
+   },
+   /* 0x96 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    746 /* Table746 */
+   },
+   /* 0x97 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    746 /* Table746 */
+   },
+   /* 0x98 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    747 /* Table747 */
+   },
+   /* 0x99 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    748 /* Table748 */
+   },
+   /* 0x9a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    750 /* Table750 */
+   },
+   /* 0x9d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    751 /* Table751 */
+   },
+   /* 0x9e */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    238 /* Table238 */
+   },
+   /* 0x9f */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    239 /* Table239 */
+   },
+   /* 0xa0 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    596 /* Table596 */
+   },
+   /* 0xa1 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    752 /* Table752 */
+   },
+   /* 0xa2 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    598 /* Table598 */
+   },
+   /* 0xa3 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    753 /* Table753 */
+   },
+   /* 0xa4 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    244 /* Table244 */
+   },
+   /* 0xa5 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    754 /* Table754 */
+   },
+   /* 0xa6 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    246 /* Table246 */
+   },
+   /* 0xa7 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    755 /* Table755 */
+   },
+   /* 0xa8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    248 /* Table248 */
+   },
+   /* 0xa9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    756 /* Table756 */
+   },
+   /* 0xaa */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    250 /* Table250 */
+   },
+   /* 0xab */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    757 /* Table757 */
+   },
+   /* 0xac */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    252 /* Table252 */
+   },
+   /* 0xad */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    758 /* Table758 */
+   },
+   /* 0xae */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    254 /* Table254 */
+   },
+   /* 0xaf */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    759 /* Table759 */
+   },
+   /* 0xb0 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb1 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb2 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb3 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb4 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb5 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb6 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb7 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    256 /* Table256 */
+   },
+   /* 0xb8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    760 /* Table760 */
+   },
+   /* 0xb9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    760 /* Table760 */
+   },
+   /* 0xba */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    760 /* Table760 */
+   },
+   /* 0xbb */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    760 /* Table760 */
+   },
+   /* 0xbc */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    760 /* Table760 */
+   },
+   /* 0xbd */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    760 /* Table760 */
+   },
+   /* 0xbe */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    760 /* Table760 */
+   },
+   /* 0xbf */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    760 /* Table760 */
+   },
+   /* 0xc0 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    258 /* Table258 */
+   },
+   /* 0xc1 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    761 /* Table761 */
+   },
+   /* 0xc2 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    777 /* Table777 */
+   },
+   /* 0xc3 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    778 /* Table778 */
+   },
+   /* 0xc4 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    779 /* Table779 */
+   },
+   /* 0xc5 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    781 /* Table781 */
+   },
+   /* 0xc6 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    296 /* Table296 */
+   },
+   /* 0xc7 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    783 /* Table783 */
+   },
+   /* 0xc8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    328 /* Table328 */
+   },
+   /* 0xc9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    602 /* Table602 */
+   },
+   /* 0xca */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    799 /* Table799 */
+   },
+   /* 0xcb */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    800 /* Table800 */
+   },
+   /* 0xcc */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    332 /* Table332 */
+   },
+   /* 0xcd */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    333 /* Table333 */
+   },
+   /* 0xce */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xcf */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    801 /* Table801 */
+   },
+   /* 0xd0 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    336 /* Table336 */
+   },
+   /* 0xd1 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    802 /* Table802 */
+   },
+   /* 0xd2 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    368 /* Table368 */
+   },
+   /* 0xd3 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    818 /* Table818 */
+   },
+   /* 0xd4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd7 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    403 /* Table403 */
+   },
+   /* 0xd8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xda */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdb */
+   { /* struct ModRMDecision */
+    MODRM_SPLITMISC,
+    404 /* Table404 */
+   },
+   /* 0xdc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xde */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe0 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    476 /* Table476 */
+   },
+   /* 0xe1 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    477 /* Table477 */
+   },
+   /* 0xe2 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    478 /* Table478 */
+   },
+   /* 0xe3 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    603 /* Table603 */
+   },
+   /* 0xe4 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    480 /* Table480 */
+   },
+   /* 0xe5 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    834 /* Table834 */
+   },
+   /* 0xe6 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    482 /* Table482 */
+   },
+   /* 0xe7 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    835 /* Table835 */
+   },
+   /* 0xe8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    836 /* Table836 */
+   },
+   /* 0xe9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    837 /* Table837 */
+   },
+   /* 0xea */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xeb */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    487 /* Table487 */
+   },
+   /* 0xec */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    488 /* Table488 */
+   },
+   /* 0xed */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    839 /* Table839 */
+   },
+   /* 0xee */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    490 /* Table490 */
+   },
+   /* 0xef */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    840 /* Table840 */
+   },
+   /* 0xf0 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    492 /* Table492 */
+   },
+   /* 0xf1 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    493 /* Table493 */
+   },
+   /* 0xf2 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    494 /* Table494 */
+   },
+   /* 0xf3 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    495 /* Table495 */
+   },
+   /* 0xf4 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    496 /* Table496 */
+   },
+   /* 0xf5 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    497 /* Table497 */
+   },
+   /* 0xf6 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    498 /* Table498 */
+   },
+   /* 0xf7 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    841 /* Table841 */
+   },
+   /* 0xf8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    530 /* Table530 */
+   },
+   /* 0xf9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    531 /* Table531 */
+   },
+   /* 0xfa */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    532 /* Table532 */
+   },
+   /* 0xfb */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    533 /* Table533 */
+   },
+   /* 0xfc */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    534 /* Table534 */
+   },
+   /* 0xfd */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    535 /* Table535 */
+   },
+   /* 0xfe */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    536 /* Table536 */
+   },
+   /* 0xff */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    1104 /* Table1104 */
    }
   }
  }
@@ -41505,9 +45650,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     0 /* EmptyTable */
    },
    /* 0xd6 */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    402 /* Table402 */
+    0 /* EmptyTable */
    },
    /* 0xd7 */
    { /* struct ModRMDecision */
@@ -42790,9 +46935,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     0 /* EmptyTable */
    },
    /* 0xd6 */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    402 /* Table402 */
+    0 /* EmptyTable */
    },
    /* 0xd7 */
    { /* struct ModRMDecision */
@@ -43012,7 +47157,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x01 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    874 /* Table874 */
+    880 /* Table880 */
    },
    /* 0x02 */
    { /* struct ModRMDecision */
@@ -43022,7 +47167,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x03 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    876 /* Table876 */
+    882 /* Table882 */
    },
    /* 0x04 */
    { /* struct ModRMDecision */
@@ -43032,7 +47177,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x05 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    878 /* Table878 */
+    884 /* Table884 */
    },
    /* 0x06 */
    { /* ModRMDecision */
@@ -43052,7 +47197,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x09 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    879 /* Table879 */
+    885 /* Table885 */
    },
    /* 0x0a */
    { /* struct ModRMDecision */
@@ -43062,7 +47207,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x0b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    881 /* Table881 */
+    887 /* Table887 */
    },
    /* 0x0c */
    { /* struct ModRMDecision */
@@ -43072,7 +47217,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x0d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    883 /* Table883 */
+    889 /* Table889 */
    },
    /* 0x0e */
    { /* ModRMDecision */
@@ -43092,7 +47237,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x11 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    884 /* Table884 */
+    890 /* Table890 */
    },
    /* 0x12 */
    { /* struct ModRMDecision */
@@ -43102,7 +47247,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x13 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    886 /* Table886 */
+    892 /* Table892 */
    },
    /* 0x14 */
    { /* struct ModRMDecision */
@@ -43112,7 +47257,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x15 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    888 /* Table888 */
+    894 /* Table894 */
    },
    /* 0x16 */
    { /* ModRMDecision */
@@ -43132,7 +47277,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x19 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    889 /* Table889 */
+    895 /* Table895 */
    },
    /* 0x1a */
    { /* struct ModRMDecision */
@@ -43142,7 +47287,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x1b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    891 /* Table891 */
+    897 /* Table897 */
    },
    /* 0x1c */
    { /* struct ModRMDecision */
@@ -43152,7 +47297,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x1d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    893 /* Table893 */
+    899 /* Table899 */
    },
    /* 0x1e */
    { /* ModRMDecision */
@@ -43172,7 +47317,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x21 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    894 /* Table894 */
+    900 /* Table900 */
    },
    /* 0x22 */
    { /* struct ModRMDecision */
@@ -43182,7 +47327,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x23 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    896 /* Table896 */
+    902 /* Table902 */
    },
    /* 0x24 */
    { /* struct ModRMDecision */
@@ -43192,7 +47337,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x25 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    898 /* Table898 */
+    904 /* Table904 */
    },
    /* 0x26 */
    { /* ModRMDecision */
@@ -43212,7 +47357,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x29 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    899 /* Table899 */
+    905 /* Table905 */
    },
    /* 0x2a */
    { /* struct ModRMDecision */
@@ -43222,7 +47367,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x2b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    901 /* Table901 */
+    907 /* Table907 */
    },
    /* 0x2c */
    { /* struct ModRMDecision */
@@ -43232,7 +47377,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x2d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    903 /* Table903 */
+    909 /* Table909 */
    },
    /* 0x2e */
    { /* ModRMDecision */
@@ -43252,7 +47397,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x31 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    904 /* Table904 */
+    910 /* Table910 */
    },
    /* 0x32 */
    { /* struct ModRMDecision */
@@ -43262,7 +47407,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x33 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    906 /* Table906 */
+    912 /* Table912 */
    },
    /* 0x34 */
    { /* struct ModRMDecision */
@@ -43272,7 +47417,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x35 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    908 /* Table908 */
+    914 /* Table914 */
    },
    /* 0x36 */
    { /* ModRMDecision */
@@ -43292,7 +47437,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x39 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    909 /* Table909 */
+    915 /* Table915 */
    },
    /* 0x3a */
    { /* struct ModRMDecision */
@@ -43302,7 +47447,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x3b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    911 /* Table911 */
+    917 /* Table917 */
    },
    /* 0x3c */
    { /* struct ModRMDecision */
@@ -43312,7 +47457,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x3d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    913 /* Table913 */
+    919 /* Table919 */
    },
    /* 0x3e */
    { /* ModRMDecision */
@@ -43502,7 +47647,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x63 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    914 /* Table914 */
+    920 /* Table920 */
    },
    /* 0x64 */
    { /* ModRMDecision */
@@ -43532,7 +47677,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x69 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    916 /* Table916 */
+    922 /* Table922 */
    },
    /* 0x6a */
    { /* struct ModRMDecision */
@@ -43542,7 +47687,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x6b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    918 /* Table918 */
+    924 /* Table924 */
    },
    /* 0x6c */
    { /* struct ModRMDecision */
@@ -43652,7 +47797,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    920 /* Table920 */
+    926 /* Table926 */
    },
    /* 0x82 */
    { /* ModRMDecision */
@@ -43662,7 +47807,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x83 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    936 /* Table936 */
+    942 /* Table942 */
    },
    /* 0x84 */
    { /* struct ModRMDecision */
@@ -43672,7 +47817,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x85 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    952 /* Table952 */
+    958 /* Table958 */
    },
    /* 0x86 */
    { /* struct ModRMDecision */
@@ -43682,7 +47827,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x87 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    954 /* Table954 */
+    960 /* Table960 */
    },
    /* 0x88 */
    { /* struct ModRMDecision */
@@ -43692,7 +47837,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x89 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    956 /* Table956 */
+    962 /* Table962 */
    },
    /* 0x8a */
    { /* struct ModRMDecision */
@@ -43702,22 +47847,22 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x8b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    958 /* Table958 */
+    964 /* Table964 */
    },
    /* 0x8c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    960 /* Table960 */
+    966 /* Table966 */
    },
    /* 0x8d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    962 /* Table962 */
+    968 /* Table968 */
    },
    /* 0x8e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    964 /* Table964 */
+    970 /* Table970 */
    },
    /* 0x8f */
    { /* struct ModRMDecision */
@@ -43732,47 +47877,47 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x91 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x92 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x93 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x94 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x95 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x96 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x97 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x98 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    967 /* Table967 */
+    973 /* Table973 */
    },
    /* 0x99 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    968 /* Table968 */
+    974 /* Table974 */
    },
    /* 0x9a */
    { /* ModRMDecision */
@@ -43812,7 +47957,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    969 /* Table969 */
+    975 /* Table975 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
@@ -43822,7 +47967,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    970 /* Table970 */
+    976 /* Table976 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
@@ -43832,7 +47977,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa5 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    971 /* Table971 */
+    977 /* Table977 */
    },
    /* 0xa6 */
    { /* struct ModRMDecision */
@@ -43842,7 +47987,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa7 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    972 /* Table972 */
+    978 /* Table978 */
    },
    /* 0xa8 */
    { /* struct ModRMDecision */
@@ -43852,7 +47997,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    973 /* Table973 */
+    979 /* Table979 */
    },
    /* 0xaa */
    { /* struct ModRMDecision */
@@ -43862,7 +48007,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xab */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    974 /* Table974 */
+    980 /* Table980 */
    },
    /* 0xac */
    { /* struct ModRMDecision */
@@ -43872,7 +48017,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xad */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    975 /* Table975 */
+    981 /* Table981 */
    },
    /* 0xae */
    { /* struct ModRMDecision */
@@ -43882,7 +48027,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xaf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    976 /* Table976 */
+    982 /* Table982 */
    },
    /* 0xb0 */
    { /* struct ModRMDecision */
@@ -43927,42 +48072,42 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xb8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xb9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xba */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbe */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xc0 */
    { /* struct ModRMDecision */
@@ -43972,7 +48117,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xc1 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    978 /* Table978 */
+    984 /* Table984 */
    },
    /* 0xc2 */
    { /* struct ModRMDecision */
@@ -44002,7 +48147,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xc7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    994 /* Table994 */
+    1000 /* Table1000 */
    },
    /* 0xc8 */
    { /* struct ModRMDecision */
@@ -44017,12 +48162,12 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xca */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1010 /* Table1010 */
+    1016 /* Table1016 */
    },
    /* 0xcb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1011 /* Table1011 */
+    1017 /* Table1017 */
    },
    /* 0xcc */
    { /* struct ModRMDecision */
@@ -44042,7 +48187,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xcf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1012 /* Table1012 */
+    1018 /* Table1018 */
    },
    /* 0xd0 */
    { /* struct ModRMDecision */
@@ -44052,7 +48197,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xd1 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1013 /* Table1013 */
+    1019 /* Table1019 */
    },
    /* 0xd2 */
    { /* struct ModRMDecision */
@@ -44062,7 +48207,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xd3 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1029 /* Table1029 */
+    1035 /* Table1035 */
    },
    /* 0xd4 */
    { /* ModRMDecision */
@@ -44075,9 +48220,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     0 /* EmptyTable */
    },
    /* 0xd6 */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    402 /* Table402 */
+    0 /* EmptyTable */
    },
    /* 0xd7 */
    { /* struct ModRMDecision */
@@ -44242,7 +48387,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xf7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1045 /* Table1045 */
+    1051 /* Table1051 */
    },
    /* 0xf8 */
    { /* struct ModRMDecision */
@@ -44282,7 +48427,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xff */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1061 /* Table1061 */
+    1067 /* Table1067 */
    }
   }
  }
@@ -44297,7 +48442,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x01 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    874 /* Table874 */
+    880 /* Table880 */
    },
    /* 0x02 */
    { /* struct ModRMDecision */
@@ -44307,7 +48452,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x03 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    876 /* Table876 */
+    882 /* Table882 */
    },
    /* 0x04 */
    { /* struct ModRMDecision */
@@ -44317,7 +48462,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x05 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    878 /* Table878 */
+    884 /* Table884 */
    },
    /* 0x06 */
    { /* ModRMDecision */
@@ -44337,7 +48482,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x09 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    879 /* Table879 */
+    885 /* Table885 */
    },
    /* 0x0a */
    { /* struct ModRMDecision */
@@ -44347,7 +48492,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x0b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    881 /* Table881 */
+    887 /* Table887 */
    },
    /* 0x0c */
    { /* struct ModRMDecision */
@@ -44357,7 +48502,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x0d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    883 /* Table883 */
+    889 /* Table889 */
    },
    /* 0x0e */
    { /* ModRMDecision */
@@ -44377,7 +48522,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x11 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    884 /* Table884 */
+    890 /* Table890 */
    },
    /* 0x12 */
    { /* struct ModRMDecision */
@@ -44387,7 +48532,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x13 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    886 /* Table886 */
+    892 /* Table892 */
    },
    /* 0x14 */
    { /* struct ModRMDecision */
@@ -44397,7 +48542,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x15 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    888 /* Table888 */
+    894 /* Table894 */
    },
    /* 0x16 */
    { /* ModRMDecision */
@@ -44417,7 +48562,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x19 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    889 /* Table889 */
+    895 /* Table895 */
    },
    /* 0x1a */
    { /* struct ModRMDecision */
@@ -44427,7 +48572,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x1b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    891 /* Table891 */
+    897 /* Table897 */
    },
    /* 0x1c */
    { /* struct ModRMDecision */
@@ -44437,7 +48582,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x1d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    893 /* Table893 */
+    899 /* Table899 */
    },
    /* 0x1e */
    { /* ModRMDecision */
@@ -44457,7 +48602,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x21 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    894 /* Table894 */
+    900 /* Table900 */
    },
    /* 0x22 */
    { /* struct ModRMDecision */
@@ -44467,7 +48612,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x23 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    896 /* Table896 */
+    902 /* Table902 */
    },
    /* 0x24 */
    { /* struct ModRMDecision */
@@ -44477,7 +48622,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x25 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    898 /* Table898 */
+    904 /* Table904 */
    },
    /* 0x26 */
    { /* ModRMDecision */
@@ -44497,7 +48642,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x29 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    899 /* Table899 */
+    905 /* Table905 */
    },
    /* 0x2a */
    { /* struct ModRMDecision */
@@ -44507,7 +48652,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x2b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    901 /* Table901 */
+    907 /* Table907 */
    },
    /* 0x2c */
    { /* struct ModRMDecision */
@@ -44517,7 +48662,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x2d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    903 /* Table903 */
+    909 /* Table909 */
    },
    /* 0x2e */
    { /* ModRMDecision */
@@ -44537,7 +48682,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x31 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    904 /* Table904 */
+    910 /* Table910 */
    },
    /* 0x32 */
    { /* struct ModRMDecision */
@@ -44547,7 +48692,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x33 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    906 /* Table906 */
+    912 /* Table912 */
    },
    /* 0x34 */
    { /* struct ModRMDecision */
@@ -44557,7 +48702,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x35 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    908 /* Table908 */
+    914 /* Table914 */
    },
    /* 0x36 */
    { /* ModRMDecision */
@@ -44577,7 +48722,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x39 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    909 /* Table909 */
+    915 /* Table915 */
    },
    /* 0x3a */
    { /* struct ModRMDecision */
@@ -44587,7 +48732,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x3b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    911 /* Table911 */
+    917 /* Table917 */
    },
    /* 0x3c */
    { /* struct ModRMDecision */
@@ -44597,7 +48742,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x3d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    913 /* Table913 */
+    919 /* Table919 */
    },
    /* 0x3e */
    { /* ModRMDecision */
@@ -44787,7 +48932,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x63 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    914 /* Table914 */
+    920 /* Table920 */
    },
    /* 0x64 */
    { /* ModRMDecision */
@@ -44817,7 +48962,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x69 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    916 /* Table916 */
+    922 /* Table922 */
    },
    /* 0x6a */
    { /* struct ModRMDecision */
@@ -44827,7 +48972,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x6b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    918 /* Table918 */
+    924 /* Table924 */
    },
    /* 0x6c */
    { /* struct ModRMDecision */
@@ -44937,7 +49082,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    920 /* Table920 */
+    926 /* Table926 */
    },
    /* 0x82 */
    { /* ModRMDecision */
@@ -44947,7 +49092,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x83 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    936 /* Table936 */
+    942 /* Table942 */
    },
    /* 0x84 */
    { /* struct ModRMDecision */
@@ -44957,7 +49102,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x85 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    952 /* Table952 */
+    958 /* Table958 */
    },
    /* 0x86 */
    { /* struct ModRMDecision */
@@ -44967,7 +49112,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x87 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    954 /* Table954 */
+    960 /* Table960 */
    },
    /* 0x88 */
    { /* struct ModRMDecision */
@@ -44977,7 +49122,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x89 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    956 /* Table956 */
+    962 /* Table962 */
    },
    /* 0x8a */
    { /* struct ModRMDecision */
@@ -44987,22 +49132,22 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x8b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    958 /* Table958 */
+    964 /* Table964 */
    },
    /* 0x8c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    960 /* Table960 */
+    966 /* Table966 */
    },
    /* 0x8d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    962 /* Table962 */
+    968 /* Table968 */
    },
    /* 0x8e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    964 /* Table964 */
+    970 /* Table970 */
    },
    /* 0x8f */
    { /* struct ModRMDecision */
@@ -45017,47 +49162,47 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x91 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x92 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x93 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x94 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x95 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x96 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x97 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x98 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    967 /* Table967 */
+    973 /* Table973 */
    },
    /* 0x99 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    968 /* Table968 */
+    974 /* Table974 */
    },
    /* 0x9a */
    { /* ModRMDecision */
@@ -45097,7 +49242,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    969 /* Table969 */
+    975 /* Table975 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
@@ -45107,7 +49252,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    970 /* Table970 */
+    976 /* Table976 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
@@ -45117,7 +49262,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa5 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    971 /* Table971 */
+    977 /* Table977 */
    },
    /* 0xa6 */
    { /* struct ModRMDecision */
@@ -45127,7 +49272,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa7 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    972 /* Table972 */
+    978 /* Table978 */
    },
    /* 0xa8 */
    { /* struct ModRMDecision */
@@ -45137,7 +49282,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    973 /* Table973 */
+    979 /* Table979 */
    },
    /* 0xaa */
    { /* struct ModRMDecision */
@@ -45147,7 +49292,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xab */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    974 /* Table974 */
+    980 /* Table980 */
    },
    /* 0xac */
    { /* struct ModRMDecision */
@@ -45157,7 +49302,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xad */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    975 /* Table975 */
+    981 /* Table981 */
    },
    /* 0xae */
    { /* struct ModRMDecision */
@@ -45167,7 +49312,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xaf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    976 /* Table976 */
+    982 /* Table982 */
    },
    /* 0xb0 */
    { /* struct ModRMDecision */
@@ -45212,42 +49357,42 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xb8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xb9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xba */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbe */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xc0 */
    { /* struct ModRMDecision */
@@ -45257,7 +49402,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xc1 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    978 /* Table978 */
+    984 /* Table984 */
    },
    /* 0xc2 */
    { /* struct ModRMDecision */
@@ -45287,7 +49432,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xc7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    994 /* Table994 */
+    1000 /* Table1000 */
    },
    /* 0xc8 */
    { /* struct ModRMDecision */
@@ -45302,12 +49447,12 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xca */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1010 /* Table1010 */
+    1016 /* Table1016 */
    },
    /* 0xcb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1011 /* Table1011 */
+    1017 /* Table1017 */
    },
    /* 0xcc */
    { /* struct ModRMDecision */
@@ -45327,7 +49472,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xcf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1012 /* Table1012 */
+    1018 /* Table1018 */
    },
    /* 0xd0 */
    { /* struct ModRMDecision */
@@ -45337,7 +49482,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xd1 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1013 /* Table1013 */
+    1019 /* Table1019 */
    },
    /* 0xd2 */
    { /* struct ModRMDecision */
@@ -45347,7 +49492,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xd3 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1029 /* Table1029 */
+    1035 /* Table1035 */
    },
    /* 0xd4 */
    { /* ModRMDecision */
@@ -45360,9 +49505,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     0 /* EmptyTable */
    },
    /* 0xd6 */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    402 /* Table402 */
+    0 /* EmptyTable */
    },
    /* 0xd7 */
    { /* struct ModRMDecision */
@@ -45527,7 +49672,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xf7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1045 /* Table1045 */
+    1051 /* Table1051 */
    },
    /* 0xf8 */
    { /* struct ModRMDecision */
@@ -45567,7 +49712,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xff */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1061 /* Table1061 */
+    1067 /* Table1067 */
    }
   }
  }
@@ -45582,7 +49727,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x01 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    874 /* Table874 */
+    880 /* Table880 */
    },
    /* 0x02 */
    { /* struct ModRMDecision */
@@ -45592,7 +49737,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x03 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    876 /* Table876 */
+    882 /* Table882 */
    },
    /* 0x04 */
    { /* struct ModRMDecision */
@@ -45602,7 +49747,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x05 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    878 /* Table878 */
+    884 /* Table884 */
    },
    /* 0x06 */
    { /* ModRMDecision */
@@ -45622,7 +49767,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x09 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    879 /* Table879 */
+    885 /* Table885 */
    },
    /* 0x0a */
    { /* struct ModRMDecision */
@@ -45632,7 +49777,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x0b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    881 /* Table881 */
+    887 /* Table887 */
    },
    /* 0x0c */
    { /* struct ModRMDecision */
@@ -45642,7 +49787,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x0d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    883 /* Table883 */
+    889 /* Table889 */
    },
    /* 0x0e */
    { /* ModRMDecision */
@@ -45662,7 +49807,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x11 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    884 /* Table884 */
+    890 /* Table890 */
    },
    /* 0x12 */
    { /* struct ModRMDecision */
@@ -45672,7 +49817,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x13 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    886 /* Table886 */
+    892 /* Table892 */
    },
    /* 0x14 */
    { /* struct ModRMDecision */
@@ -45682,7 +49827,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x15 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    888 /* Table888 */
+    894 /* Table894 */
    },
    /* 0x16 */
    { /* ModRMDecision */
@@ -45702,7 +49847,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x19 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    889 /* Table889 */
+    895 /* Table895 */
    },
    /* 0x1a */
    { /* struct ModRMDecision */
@@ -45712,7 +49857,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x1b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    891 /* Table891 */
+    897 /* Table897 */
    },
    /* 0x1c */
    { /* struct ModRMDecision */
@@ -45722,7 +49867,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x1d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    893 /* Table893 */
+    899 /* Table899 */
    },
    /* 0x1e */
    { /* ModRMDecision */
@@ -45742,7 +49887,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x21 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    894 /* Table894 */
+    900 /* Table900 */
    },
    /* 0x22 */
    { /* struct ModRMDecision */
@@ -45752,7 +49897,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x23 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    896 /* Table896 */
+    902 /* Table902 */
    },
    /* 0x24 */
    { /* struct ModRMDecision */
@@ -45762,7 +49907,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x25 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    898 /* Table898 */
+    904 /* Table904 */
    },
    /* 0x26 */
    { /* ModRMDecision */
@@ -45782,7 +49927,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x29 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    899 /* Table899 */
+    905 /* Table905 */
    },
    /* 0x2a */
    { /* struct ModRMDecision */
@@ -45792,7 +49937,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x2b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    901 /* Table901 */
+    907 /* Table907 */
    },
    /* 0x2c */
    { /* struct ModRMDecision */
@@ -45802,7 +49947,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x2d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    903 /* Table903 */
+    909 /* Table909 */
    },
    /* 0x2e */
    { /* ModRMDecision */
@@ -45822,7 +49967,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x31 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    904 /* Table904 */
+    910 /* Table910 */
    },
    /* 0x32 */
    { /* struct ModRMDecision */
@@ -45832,7 +49977,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x33 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    906 /* Table906 */
+    912 /* Table912 */
    },
    /* 0x34 */
    { /* struct ModRMDecision */
@@ -45842,7 +49987,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x35 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    908 /* Table908 */
+    914 /* Table914 */
    },
    /* 0x36 */
    { /* ModRMDecision */
@@ -45862,7 +50007,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x39 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    909 /* Table909 */
+    915 /* Table915 */
    },
    /* 0x3a */
    { /* struct ModRMDecision */
@@ -45872,7 +50017,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x3b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    911 /* Table911 */
+    917 /* Table917 */
    },
    /* 0x3c */
    { /* struct ModRMDecision */
@@ -45882,7 +50027,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x3d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    913 /* Table913 */
+    919 /* Table919 */
    },
    /* 0x3e */
    { /* ModRMDecision */
@@ -46072,7 +50217,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x63 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    914 /* Table914 */
+    920 /* Table920 */
    },
    /* 0x64 */
    { /* ModRMDecision */
@@ -46097,12 +50242,12 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x68 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1077 /* Table1077 */
+    1083 /* Table1083 */
    },
    /* 0x69 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    916 /* Table916 */
+    922 /* Table922 */
    },
    /* 0x6a */
    { /* struct ModRMDecision */
@@ -46112,7 +50257,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x6b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    918 /* Table918 */
+    924 /* Table924 */
    },
    /* 0x6c */
    { /* struct ModRMDecision */
@@ -46222,7 +50367,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    920 /* Table920 */
+    926 /* Table926 */
    },
    /* 0x82 */
    { /* ModRMDecision */
@@ -46232,7 +50377,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x83 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    936 /* Table936 */
+    942 /* Table942 */
    },
    /* 0x84 */
    { /* struct ModRMDecision */
@@ -46242,7 +50387,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x85 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    952 /* Table952 */
+    958 /* Table958 */
    },
    /* 0x86 */
    { /* struct ModRMDecision */
@@ -46252,7 +50397,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x87 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    954 /* Table954 */
+    960 /* Table960 */
    },
    /* 0x88 */
    { /* struct ModRMDecision */
@@ -46262,7 +50407,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x89 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    956 /* Table956 */
+    962 /* Table962 */
    },
    /* 0x8a */
    { /* struct ModRMDecision */
@@ -46272,22 +50417,22 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x8b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    958 /* Table958 */
+    964 /* Table964 */
    },
    /* 0x8c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    960 /* Table960 */
+    966 /* Table966 */
    },
    /* 0x8d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    962 /* Table962 */
+    968 /* Table968 */
    },
    /* 0x8e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    964 /* Table964 */
+    970 /* Table970 */
    },
    /* 0x8f */
    { /* struct ModRMDecision */
@@ -46302,47 +50447,47 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0x91 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x92 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x93 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x94 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x95 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x96 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x97 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    966 /* Table966 */
+    972 /* Table972 */
    },
    /* 0x98 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    967 /* Table967 */
+    973 /* Table973 */
    },
    /* 0x99 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    968 /* Table968 */
+    974 /* Table974 */
    },
    /* 0x9a */
    { /* ModRMDecision */
@@ -46382,7 +50527,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    969 /* Table969 */
+    975 /* Table975 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
@@ -46392,7 +50537,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    970 /* Table970 */
+    976 /* Table976 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
@@ -46402,7 +50547,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa5 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    971 /* Table971 */
+    977 /* Table977 */
    },
    /* 0xa6 */
    { /* struct ModRMDecision */
@@ -46412,7 +50557,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa7 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    972 /* Table972 */
+    978 /* Table978 */
    },
    /* 0xa8 */
    { /* struct ModRMDecision */
@@ -46422,7 +50567,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xa9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    973 /* Table973 */
+    979 /* Table979 */
    },
    /* 0xaa */
    { /* struct ModRMDecision */
@@ -46432,7 +50577,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xab */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    974 /* Table974 */
+    980 /* Table980 */
    },
    /* 0xac */
    { /* struct ModRMDecision */
@@ -46442,7 +50587,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xad */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    975 /* Table975 */
+    981 /* Table981 */
    },
    /* 0xae */
    { /* struct ModRMDecision */
@@ -46452,7 +50597,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xaf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    976 /* Table976 */
+    982 /* Table982 */
    },
    /* 0xb0 */
    { /* struct ModRMDecision */
@@ -46497,42 +50642,42 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xb8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xb9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xba */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbe */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xbf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    977 /* Table977 */
+    983 /* Table983 */
    },
    /* 0xc0 */
    { /* struct ModRMDecision */
@@ -46542,7 +50687,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xc1 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    978 /* Table978 */
+    984 /* Table984 */
    },
    /* 0xc2 */
    { /* struct ModRMDecision */
@@ -46572,7 +50717,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xc7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    994 /* Table994 */
+    1000 /* Table1000 */
    },
    /* 0xc8 */
    { /* struct ModRMDecision */
@@ -46587,12 +50732,12 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xca */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1010 /* Table1010 */
+    1016 /* Table1016 */
    },
    /* 0xcb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1011 /* Table1011 */
+    1017 /* Table1017 */
    },
    /* 0xcc */
    { /* struct ModRMDecision */
@@ -46612,7 +50757,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xcf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1012 /* Table1012 */
+    1018 /* Table1018 */
    },
    /* 0xd0 */
    { /* struct ModRMDecision */
@@ -46622,7 +50767,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xd1 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1013 /* Table1013 */
+    1019 /* Table1019 */
    },
    /* 0xd2 */
    { /* struct ModRMDecision */
@@ -46632,7 +50777,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xd3 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1029 /* Table1029 */
+    1035 /* Table1035 */
    },
    /* 0xd4 */
    { /* ModRMDecision */
@@ -46645,9 +50790,9 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
     0 /* EmptyTable */
    },
    /* 0xd6 */
-   { /* struct ModRMDecision */
+   { /* ModRMDecision */
     MODRM_ONEENTRY,
-    402 /* Table402 */
+    0 /* EmptyTable */
    },
    /* 0xd7 */
    { /* struct ModRMDecision */
@@ -46812,7 +50957,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xf7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1045 /* Table1045 */
+    1051 /* Table1051 */
    },
    /* 0xf8 */
    { /* struct ModRMDecision */
@@ -46852,7 +50997,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
    /* 0xff */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1097 /* Table1097 */
+    1086 /* Table1086 */
    }
   }
  }
@@ -48143,7 +52288,7 @@ static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
  }
 , };
 static const uint8_t index_x86DisassemblerOneByteOpcodes[] = {
-1, 2, 3, 4, 0, 5, 6, 0, 0, 7, 8, 9, 10, 11, 0, 0, 12, 13, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+1, 2, 3, 4, 0, 5, 6, 7, 0, 0, 8, 9, 10, 11, 12, 13, 14, 0, 0, 15, 16, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
 static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
  /* IC */
  { /* struct OpcodeDecision */
@@ -48151,22 +52296,22 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x00 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1113 /* Table1113 */
+    1120 /* Table1120 */
    },
    /* 0x01 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1129 /* Table1129 */
+    1136 /* Table1136 */
    },
    /* 0x02 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1201 /* Table1201 */
+    1208 /* Table1208 */
    },
    /* 0x03 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1203 /* Table1203 */
+    1210 /* Table1210 */
    },
    /* 0x04 */
    { /* ModRMDecision */
@@ -48176,27 +52321,27 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x05 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1205 /* Table1205 */
+    1212 /* Table1212 */
    },
    /* 0x06 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1206 /* Table1206 */
+    1213 /* Table1213 */
    },
    /* 0x07 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1207 /* Table1207 */
+    1214 /* Table1214 */
    },
    /* 0x08 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1208 /* Table1208 */
+    1215 /* Table1215 */
    },
    /* 0x09 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1209 /* Table1209 */
+    1216 /* Table1216 */
    },
    /* 0x0a */
    { /* ModRMDecision */
@@ -48206,7 +52351,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x0b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1210 /* Table1210 */
+    1217 /* Table1217 */
    },
    /* 0x0c */
    { /* ModRMDecision */
@@ -48271,62 +52416,62 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x18 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1211 /* Table1211 */
+    1218 /* Table1218 */
    },
    /* 0x19 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1227 /* Table1227 */
+    1234 /* Table1234 */
    },
    /* 0x1a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1229 /* Table1229 */
+    1236 /* Table1236 */
    },
    /* 0x1b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1231 /* Table1231 */
+    1238 /* Table1238 */
    },
    /* 0x1c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1233 /* Table1233 */
+    1240 /* Table1240 */
    },
    /* 0x1d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1235 /* Table1235 */
+    1242 /* Table1242 */
    },
    /* 0x1e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1237 /* Table1237 */
+    1244 /* Table1244 */
    },
    /* 0x1f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1239 /* Table1239 */
+    1246 /* Table1246 */
    },
    /* 0x20 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1241 /* Table1241 */
+    1248 /* Table1248 */
    },
    /* 0x21 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1243 /* Table1243 */
+    1250 /* Table1250 */
    },
    /* 0x22 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1245 /* Table1245 */
+    1252 /* Table1252 */
    },
    /* 0x23 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1247 /* Table1247 */
+    1254 /* Table1254 */
    },
    /* 0x24 */
    { /* ModRMDecision */
@@ -48391,32 +52536,32 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x30 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1249 /* Table1249 */
+    1256 /* Table1256 */
    },
    /* 0x31 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1250 /* Table1250 */
+    1257 /* Table1257 */
    },
    /* 0x32 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1251 /* Table1251 */
+    1258 /* Table1258 */
    },
    /* 0x33 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1252 /* Table1252 */
+    1259 /* Table1259 */
    },
    /* 0x34 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1253 /* Table1253 */
+    1260 /* Table1260 */
    },
    /* 0x35 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1254 /* Table1254 */
+    1261 /* Table1261 */
    },
    /* 0x36 */
    { /* ModRMDecision */
@@ -48426,7 +52571,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x37 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1255 /* Table1255 */
+    1262 /* Table1262 */
    },
    /* 0x38 */
    { /* ModRMDecision */
@@ -48471,82 +52616,82 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x40 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1256 /* Table1256 */
+    1263 /* Table1263 */
    },
    /* 0x41 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1258 /* Table1258 */
+    1265 /* Table1265 */
    },
    /* 0x42 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1260 /* Table1260 */
+    1267 /* Table1267 */
    },
    /* 0x43 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1262 /* Table1262 */
+    1269 /* Table1269 */
    },
    /* 0x44 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1264 /* Table1264 */
+    1271 /* Table1271 */
    },
    /* 0x45 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1266 /* Table1266 */
+    1273 /* Table1273 */
    },
    /* 0x46 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1268 /* Table1268 */
+    1275 /* Table1275 */
    },
    /* 0x47 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1270 /* Table1270 */
+    1277 /* Table1277 */
    },
    /* 0x48 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1272 /* Table1272 */
+    1279 /* Table1279 */
    },
    /* 0x49 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1274 /* Table1274 */
+    1281 /* Table1281 */
    },
    /* 0x4a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1276 /* Table1276 */
+    1283 /* Table1283 */
    },
    /* 0x4b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1278 /* Table1278 */
+    1285 /* Table1285 */
    },
    /* 0x4c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1280 /* Table1280 */
+    1287 /* Table1287 */
    },
    /* 0x4d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1282 /* Table1282 */
+    1289 /* Table1289 */
    },
    /* 0x4e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1284 /* Table1284 */
+    1291 /* Table1291 */
    },
    /* 0x4f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1286 /* Table1286 */
+    1293 /* Table1293 */
    },
    /* 0x50 */
    { /* ModRMDecision */
@@ -48751,12 +52896,12 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x78 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1288 /* Table1288 */
+    1295 /* Table1295 */
    },
    /* 0x79 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1290 /* Table1290 */
+    1297 /* Table1297 */
    },
    /* 0x7a */
    { /* ModRMDecision */
@@ -48791,282 +52936,282 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x80 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1292 /* Table1292 */
+    1299 /* Table1299 */
    },
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1293 /* Table1293 */
+    1300 /* Table1300 */
    },
    /* 0x82 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1294 /* Table1294 */
+    1301 /* Table1301 */
    },
    /* 0x83 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1295 /* Table1295 */
+    1302 /* Table1302 */
    },
    /* 0x84 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1296 /* Table1296 */
+    1303 /* Table1303 */
    },
    /* 0x85 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1297 /* Table1297 */
+    1304 /* Table1304 */
    },
    /* 0x86 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1298 /* Table1298 */
+    1305 /* Table1305 */
    },
    /* 0x87 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1299 /* Table1299 */
+    1306 /* Table1306 */
    },
    /* 0x88 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1300 /* Table1300 */
+    1307 /* Table1307 */
    },
    /* 0x89 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1301 /* Table1301 */
+    1308 /* Table1308 */
    },
    /* 0x8a */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1302 /* Table1302 */
+    1309 /* Table1309 */
    },
    /* 0x8b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1303 /* Table1303 */
+    1310 /* Table1310 */
    },
    /* 0x8c */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1304 /* Table1304 */
+    1311 /* Table1311 */
    },
    /* 0x8d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1305 /* Table1305 */
+    1312 /* Table1312 */
    },
    /* 0x8e */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1306 /* Table1306 */
+    1313 /* Table1313 */
    },
    /* 0x8f */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1307 /* Table1307 */
+    1314 /* Table1314 */
    },
    /* 0x90 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1308 /* Table1308 */
+    1315 /* Table1315 */
    },
    /* 0x91 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1310 /* Table1310 */
+    1317 /* Table1317 */
    },
    /* 0x92 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1312 /* Table1312 */
+    1319 /* Table1319 */
    },
    /* 0x93 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1314 /* Table1314 */
+    1321 /* Table1321 */
    },
    /* 0x94 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1316 /* Table1316 */
+    1323 /* Table1323 */
    },
    /* 0x95 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1318 /* Table1318 */
+    1325 /* Table1325 */
    },
    /* 0x96 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1320 /* Table1320 */
+    1327 /* Table1327 */
    },
    /* 0x97 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1322 /* Table1322 */
+    1329 /* Table1329 */
    },
    /* 0x98 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1324 /* Table1324 */
+    1331 /* Table1331 */
    },
    /* 0x99 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1326 /* Table1326 */
+    1333 /* Table1333 */
    },
    /* 0x9a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1328 /* Table1328 */
+    1335 /* Table1335 */
    },
    /* 0x9b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1330 /* Table1330 */
+    1337 /* Table1337 */
    },
    /* 0x9c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1332 /* Table1332 */
+    1339 /* Table1339 */
    },
    /* 0x9d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1334 /* Table1334 */
+    1341 /* Table1341 */
    },
    /* 0x9e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1336 /* Table1336 */
+    1343 /* Table1343 */
    },
    /* 0x9f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1338 /* Table1338 */
+    1345 /* Table1345 */
    },
    /* 0xa0 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1340 /* Table1340 */
+    1347 /* Table1347 */
    },
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1341 /* Table1341 */
+    1348 /* Table1348 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1342 /* Table1342 */
+    1349 /* Table1349 */
    },
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1343 /* Table1343 */
+    1350 /* Table1350 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1345 /* Table1345 */
+    1352 /* Table1352 */
    },
    /* 0xa5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1347 /* Table1347 */
+    1354 /* Table1354 */
    },
    /* 0xa6 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1349 /* Table1349 */
+    1356 /* Table1356 */
    },
    /* 0xa7 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1421 /* Table1421 */
+    1428 /* Table1428 */
    },
    /* 0xa8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1493 /* Table1493 */
+    1500 /* Table1500 */
    },
    /* 0xa9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1494 /* Table1494 */
+    1501 /* Table1501 */
    },
    /* 0xaa */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1495 /* Table1495 */
+    1502 /* Table1502 */
    },
    /* 0xab */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1496 /* Table1496 */
+    1503 /* Table1503 */
    },
    /* 0xac */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1498 /* Table1498 */
+    1505 /* Table1505 */
    },
    /* 0xad */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1500 /* Table1500 */
+    1507 /* Table1507 */
    },
    /* 0xae */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1502 /* Table1502 */
+    1509 /* Table1509 */
    },
    /* 0xaf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1518 /* Table1518 */
+    1525 /* Table1525 */
    },
    /* 0xb0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1520 /* Table1520 */
+    1527 /* Table1527 */
    },
    /* 0xb1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1522 /* Table1522 */
+    1529 /* Table1529 */
    },
    /* 0xb2 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1524 /* Table1524 */
+    1531 /* Table1531 */
    },
    /* 0xb3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1526 /* Table1526 */
+    1533 /* Table1533 */
    },
    /* 0xb4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1528 /* Table1528 */
+    1535 /* Table1535 */
    },
    /* 0xb5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1530 /* Table1530 */
+    1537 /* Table1537 */
    },
    /* 0xb6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1532 /* Table1532 */
+    1539 /* Table1539 */
    },
    /* 0xb7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1534 /* Table1534 */
+    1541 /* Table1541 */
    },
    /* 0xb8 */
    { /* ModRMDecision */
@@ -49076,47 +53221,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xb9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1536 /* Table1536 */
+    1543 /* Table1543 */
    },
    /* 0xba */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1537 /* Table1537 */
+    1544 /* Table1544 */
    },
    /* 0xbb */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1553 /* Table1553 */
+    1560 /* Table1560 */
    },
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1555 /* Table1555 */
+    1562 /* Table1562 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1557 /* Table1557 */
+    1564 /* Table1564 */
    },
    /* 0xbe */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1559 /* Table1559 */
+    1566 /* Table1566 */
    },
    /* 0xbf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1561 /* Table1561 */
+    1568 /* Table1568 */
    },
    /* 0xc0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1563 /* Table1563 */
+    1570 /* Table1570 */
    },
    /* 0xc1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1565 /* Table1565 */
+    1572 /* Table1572 */
    },
    /* 0xc2 */
    { /* ModRMDecision */
@@ -49146,47 +53291,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xc7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1567 /* Table1567 */
+    1574 /* Table1574 */
    },
    /* 0xc8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xc9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xca */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcc */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcd */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xce */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xd0 */
    { /* ModRMDecision */
@@ -49436,22 +53581,22 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x00 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1113 /* Table1113 */
+    1120 /* Table1120 */
    },
    /* 0x01 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1584 /* Table1584 */
+    1591 /* Table1591 */
    },
    /* 0x02 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1201 /* Table1201 */
+    1208 /* Table1208 */
    },
    /* 0x03 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1203 /* Table1203 */
+    1210 /* Table1210 */
    },
    /* 0x04 */
    { /* ModRMDecision */
@@ -49461,27 +53606,27 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x05 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1205 /* Table1205 */
+    1212 /* Table1212 */
    },
    /* 0x06 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1206 /* Table1206 */
+    1213 /* Table1213 */
    },
    /* 0x07 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1207 /* Table1207 */
+    1214 /* Table1214 */
    },
    /* 0x08 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1208 /* Table1208 */
+    1215 /* Table1215 */
    },
    /* 0x09 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1209 /* Table1209 */
+    1216 /* Table1216 */
    },
    /* 0x0a */
    { /* ModRMDecision */
@@ -49491,7 +53636,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x0b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1210 /* Table1210 */
+    1217 /* Table1217 */
    },
    /* 0x0c */
    { /* ModRMDecision */
@@ -49556,62 +53701,62 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x18 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1211 /* Table1211 */
+    1218 /* Table1218 */
    },
    /* 0x19 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1227 /* Table1227 */
+    1234 /* Table1234 */
    },
    /* 0x1a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1229 /* Table1229 */
+    1236 /* Table1236 */
    },
    /* 0x1b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1231 /* Table1231 */
+    1238 /* Table1238 */
    },
    /* 0x1c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1233 /* Table1233 */
+    1240 /* Table1240 */
    },
    /* 0x1d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1235 /* Table1235 */
+    1242 /* Table1242 */
    },
    /* 0x1e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1237 /* Table1237 */
+    1244 /* Table1244 */
    },
    /* 0x1f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1239 /* Table1239 */
+    1246 /* Table1246 */
    },
    /* 0x20 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1656 /* Table1656 */
+    1663 /* Table1663 */
    },
    /* 0x21 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1658 /* Table1658 */
+    1665 /* Table1665 */
    },
    /* 0x22 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1660 /* Table1660 */
+    1667 /* Table1667 */
    },
    /* 0x23 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1662 /* Table1662 */
+    1669 /* Table1669 */
    },
    /* 0x24 */
    { /* ModRMDecision */
@@ -49676,32 +53821,32 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x30 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1249 /* Table1249 */
+    1256 /* Table1256 */
    },
    /* 0x31 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1250 /* Table1250 */
+    1257 /* Table1257 */
    },
    /* 0x32 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1251 /* Table1251 */
+    1258 /* Table1258 */
    },
    /* 0x33 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1252 /* Table1252 */
+    1259 /* Table1259 */
    },
    /* 0x34 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1253 /* Table1253 */
+    1260 /* Table1260 */
    },
    /* 0x35 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1254 /* Table1254 */
+    1261 /* Table1261 */
    },
    /* 0x36 */
    { /* ModRMDecision */
@@ -49711,7 +53856,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x37 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1255 /* Table1255 */
+    1262 /* Table1262 */
    },
    /* 0x38 */
    { /* ModRMDecision */
@@ -49756,82 +53901,82 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x40 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1256 /* Table1256 */
+    1263 /* Table1263 */
    },
    /* 0x41 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1258 /* Table1258 */
+    1265 /* Table1265 */
    },
    /* 0x42 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1260 /* Table1260 */
+    1267 /* Table1267 */
    },
    /* 0x43 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1262 /* Table1262 */
+    1269 /* Table1269 */
    },
    /* 0x44 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1264 /* Table1264 */
+    1271 /* Table1271 */
    },
    /* 0x45 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1266 /* Table1266 */
+    1273 /* Table1273 */
    },
    /* 0x46 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1268 /* Table1268 */
+    1275 /* Table1275 */
    },
    /* 0x47 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1270 /* Table1270 */
+    1277 /* Table1277 */
    },
    /* 0x48 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1272 /* Table1272 */
+    1279 /* Table1279 */
    },
    /* 0x49 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1274 /* Table1274 */
+    1281 /* Table1281 */
    },
    /* 0x4a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1276 /* Table1276 */
+    1283 /* Table1283 */
    },
    /* 0x4b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1278 /* Table1278 */
+    1285 /* Table1285 */
    },
    /* 0x4c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1280 /* Table1280 */
+    1287 /* Table1287 */
    },
    /* 0x4d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1282 /* Table1282 */
+    1289 /* Table1289 */
    },
    /* 0x4e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1284 /* Table1284 */
+    1291 /* Table1291 */
    },
    /* 0x4f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1286 /* Table1286 */
+    1293 /* Table1293 */
    },
    /* 0x50 */
    { /* ModRMDecision */
@@ -50036,12 +54181,12 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x78 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1664 /* Table1664 */
+    1671 /* Table1671 */
    },
    /* 0x79 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1666 /* Table1666 */
+    1673 /* Table1673 */
    },
    /* 0x7a */
    { /* ModRMDecision */
@@ -50076,282 +54221,282 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x80 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1292 /* Table1292 */
+    1299 /* Table1299 */
    },
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1293 /* Table1293 */
+    1300 /* Table1300 */
    },
    /* 0x82 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1294 /* Table1294 */
+    1301 /* Table1301 */
    },
    /* 0x83 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1295 /* Table1295 */
+    1302 /* Table1302 */
    },
    /* 0x84 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1296 /* Table1296 */
+    1303 /* Table1303 */
    },
    /* 0x85 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1297 /* Table1297 */
+    1304 /* Table1304 */
    },
    /* 0x86 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1298 /* Table1298 */
+    1305 /* Table1305 */
    },
    /* 0x87 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1299 /* Table1299 */
+    1306 /* Table1306 */
    },
    /* 0x88 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1300 /* Table1300 */
+    1307 /* Table1307 */
    },
    /* 0x89 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1301 /* Table1301 */
+    1308 /* Table1308 */
    },
    /* 0x8a */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1302 /* Table1302 */
+    1309 /* Table1309 */
    },
    /* 0x8b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1303 /* Table1303 */
+    1310 /* Table1310 */
    },
    /* 0x8c */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1304 /* Table1304 */
+    1311 /* Table1311 */
    },
    /* 0x8d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1305 /* Table1305 */
+    1312 /* Table1312 */
    },
    /* 0x8e */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1306 /* Table1306 */
+    1313 /* Table1313 */
    },
    /* 0x8f */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1307 /* Table1307 */
+    1314 /* Table1314 */
    },
    /* 0x90 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1308 /* Table1308 */
+    1315 /* Table1315 */
    },
    /* 0x91 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1310 /* Table1310 */
+    1317 /* Table1317 */
    },
    /* 0x92 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1312 /* Table1312 */
+    1319 /* Table1319 */
    },
    /* 0x93 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1314 /* Table1314 */
+    1321 /* Table1321 */
    },
    /* 0x94 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1316 /* Table1316 */
+    1323 /* Table1323 */
    },
    /* 0x95 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1318 /* Table1318 */
+    1325 /* Table1325 */
    },
    /* 0x96 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1320 /* Table1320 */
+    1327 /* Table1327 */
    },
    /* 0x97 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1322 /* Table1322 */
+    1329 /* Table1329 */
    },
    /* 0x98 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1324 /* Table1324 */
+    1331 /* Table1331 */
    },
    /* 0x99 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1326 /* Table1326 */
+    1333 /* Table1333 */
    },
    /* 0x9a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1328 /* Table1328 */
+    1335 /* Table1335 */
    },
    /* 0x9b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1330 /* Table1330 */
+    1337 /* Table1337 */
    },
    /* 0x9c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1332 /* Table1332 */
+    1339 /* Table1339 */
    },
    /* 0x9d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1334 /* Table1334 */
+    1341 /* Table1341 */
    },
    /* 0x9e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1336 /* Table1336 */
+    1343 /* Table1343 */
    },
    /* 0x9f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1338 /* Table1338 */
+    1345 /* Table1345 */
    },
    /* 0xa0 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1668 /* Table1668 */
+    1675 /* Table1675 */
    },
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1669 /* Table1669 */
+    1676 /* Table1676 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1670 /* Table1670 */
+    1349 /* Table1349 */
    },
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1343 /* Table1343 */
+    1350 /* Table1350 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1345 /* Table1345 */
+    1352 /* Table1352 */
    },
    /* 0xa5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1347 /* Table1347 */
+    1354 /* Table1354 */
    },
    /* 0xa6 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1349 /* Table1349 */
+    1356 /* Table1356 */
    },
    /* 0xa7 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1421 /* Table1421 */
+    1428 /* Table1428 */
    },
    /* 0xa8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1671 /* Table1671 */
+    1677 /* Table1677 */
    },
    /* 0xa9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1672 /* Table1672 */
+    1678 /* Table1678 */
    },
    /* 0xaa */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1495 /* Table1495 */
+    1502 /* Table1502 */
    },
    /* 0xab */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1496 /* Table1496 */
+    1503 /* Table1503 */
    },
    /* 0xac */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1498 /* Table1498 */
+    1505 /* Table1505 */
    },
    /* 0xad */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1500 /* Table1500 */
+    1507 /* Table1507 */
    },
    /* 0xae */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1502 /* Table1502 */
+    1509 /* Table1509 */
    },
    /* 0xaf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1518 /* Table1518 */
+    1525 /* Table1525 */
    },
    /* 0xb0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1520 /* Table1520 */
+    1527 /* Table1527 */
    },
    /* 0xb1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1522 /* Table1522 */
+    1529 /* Table1529 */
    },
    /* 0xb2 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1524 /* Table1524 */
+    1531 /* Table1531 */
    },
    /* 0xb3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1526 /* Table1526 */
+    1533 /* Table1533 */
    },
    /* 0xb4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1528 /* Table1528 */
+    1535 /* Table1535 */
    },
    /* 0xb5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1530 /* Table1530 */
+    1537 /* Table1537 */
    },
    /* 0xb6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1532 /* Table1532 */
+    1539 /* Table1539 */
    },
    /* 0xb7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1534 /* Table1534 */
+    1541 /* Table1541 */
    },
    /* 0xb8 */
    { /* ModRMDecision */
@@ -50361,47 +54506,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xb9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1536 /* Table1536 */
+    1543 /* Table1543 */
    },
    /* 0xba */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1537 /* Table1537 */
+    1544 /* Table1544 */
    },
    /* 0xbb */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1553 /* Table1553 */
+    1560 /* Table1560 */
    },
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1555 /* Table1555 */
+    1562 /* Table1562 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1557 /* Table1557 */
+    1564 /* Table1564 */
    },
    /* 0xbe */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1559 /* Table1559 */
+    1566 /* Table1566 */
    },
    /* 0xbf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1561 /* Table1561 */
+    1568 /* Table1568 */
    },
    /* 0xc0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1563 /* Table1563 */
+    1570 /* Table1570 */
    },
    /* 0xc1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1565 /* Table1565 */
+    1572 /* Table1572 */
    },
    /* 0xc2 */
    { /* ModRMDecision */
@@ -50431,47 +54576,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xc7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1567 /* Table1567 */
+    1574 /* Table1574 */
    },
    /* 0xc8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xc9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xca */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcc */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcd */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xce */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xd0 */
    { /* ModRMDecision */
@@ -50721,22 +54866,22 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x00 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1673 /* Table1673 */
+    1679 /* Table1679 */
    },
    /* 0x01 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1689 /* Table1689 */
+    1695 /* Table1695 */
    },
    /* 0x02 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1761 /* Table1761 */
+    1767 /* Table1767 */
    },
    /* 0x03 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1763 /* Table1763 */
+    1769 /* Table1769 */
    },
    /* 0x04 */
    { /* ModRMDecision */
@@ -50746,27 +54891,27 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x05 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1205 /* Table1205 */
+    1212 /* Table1212 */
    },
    /* 0x06 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1206 /* Table1206 */
+    1213 /* Table1213 */
    },
    /* 0x07 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1207 /* Table1207 */
+    1214 /* Table1214 */
    },
    /* 0x08 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1208 /* Table1208 */
+    1215 /* Table1215 */
    },
    /* 0x09 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1209 /* Table1209 */
+    1216 /* Table1216 */
    },
    /* 0x0a */
    { /* ModRMDecision */
@@ -50776,7 +54921,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x0b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1210 /* Table1210 */
+    1217 /* Table1217 */
    },
    /* 0x0c */
    { /* ModRMDecision */
@@ -50841,62 +54986,62 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x18 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1765 /* Table1765 */
+    1771 /* Table1771 */
    },
    /* 0x19 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1781 /* Table1781 */
+    1787 /* Table1787 */
    },
    /* 0x1a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1783 /* Table1783 */
+    1789 /* Table1789 */
    },
    /* 0x1b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1785 /* Table1785 */
+    1791 /* Table1791 */
    },
    /* 0x1c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1787 /* Table1787 */
+    1793 /* Table1793 */
    },
    /* 0x1d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1789 /* Table1789 */
+    1795 /* Table1795 */
    },
    /* 0x1e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1791 /* Table1791 */
+    1797 /* Table1797 */
    },
    /* 0x1f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1793 /* Table1793 */
+    1799 /* Table1799 */
    },
    /* 0x20 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1241 /* Table1241 */
+    1248 /* Table1248 */
    },
    /* 0x21 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1243 /* Table1243 */
+    1250 /* Table1250 */
    },
    /* 0x22 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1245 /* Table1245 */
+    1252 /* Table1252 */
    },
    /* 0x23 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1247 /* Table1247 */
+    1254 /* Table1254 */
    },
    /* 0x24 */
    { /* ModRMDecision */
@@ -50961,32 +55106,32 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x30 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1249 /* Table1249 */
+    1256 /* Table1256 */
    },
    /* 0x31 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1250 /* Table1250 */
+    1257 /* Table1257 */
    },
    /* 0x32 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1251 /* Table1251 */
+    1258 /* Table1258 */
    },
    /* 0x33 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1252 /* Table1252 */
+    1259 /* Table1259 */
    },
    /* 0x34 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1253 /* Table1253 */
+    1260 /* Table1260 */
    },
    /* 0x35 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1254 /* Table1254 */
+    1261 /* Table1261 */
    },
    /* 0x36 */
    { /* ModRMDecision */
@@ -50996,7 +55141,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x37 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1255 /* Table1255 */
+    1262 /* Table1262 */
    },
    /* 0x38 */
    { /* ModRMDecision */
@@ -51041,82 +55186,82 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x40 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1795 /* Table1795 */
+    1801 /* Table1801 */
    },
    /* 0x41 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1797 /* Table1797 */
+    1803 /* Table1803 */
    },
    /* 0x42 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1799 /* Table1799 */
+    1805 /* Table1805 */
    },
    /* 0x43 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1801 /* Table1801 */
+    1807 /* Table1807 */
    },
    /* 0x44 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1803 /* Table1803 */
+    1809 /* Table1809 */
    },
    /* 0x45 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1805 /* Table1805 */
+    1811 /* Table1811 */
    },
    /* 0x46 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1807 /* Table1807 */
+    1813 /* Table1813 */
    },
    /* 0x47 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1809 /* Table1809 */
+    1815 /* Table1815 */
    },
    /* 0x48 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1811 /* Table1811 */
+    1817 /* Table1817 */
    },
    /* 0x49 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1813 /* Table1813 */
+    1819 /* Table1819 */
    },
    /* 0x4a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1815 /* Table1815 */
+    1821 /* Table1821 */
    },
    /* 0x4b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1817 /* Table1817 */
+    1823 /* Table1823 */
    },
    /* 0x4c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1819 /* Table1819 */
+    1825 /* Table1825 */
    },
    /* 0x4d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1821 /* Table1821 */
+    1827 /* Table1827 */
    },
    /* 0x4e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1823 /* Table1823 */
+    1829 /* Table1829 */
    },
    /* 0x4f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1825 /* Table1825 */
+    1831 /* Table1831 */
    },
    /* 0x50 */
    { /* ModRMDecision */
@@ -51321,12 +55466,12 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x78 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1288 /* Table1288 */
+    1295 /* Table1295 */
    },
    /* 0x79 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1290 /* Table1290 */
+    1297 /* Table1297 */
    },
    /* 0x7a */
    { /* ModRMDecision */
@@ -51361,282 +55506,282 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x80 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1827 /* Table1827 */
+    1833 /* Table1833 */
    },
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1828 /* Table1828 */
+    1834 /* Table1834 */
    },
    /* 0x82 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1829 /* Table1829 */
+    1835 /* Table1835 */
    },
    /* 0x83 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1830 /* Table1830 */
+    1836 /* Table1836 */
    },
    /* 0x84 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1831 /* Table1831 */
+    1837 /* Table1837 */
    },
    /* 0x85 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1832 /* Table1832 */
+    1838 /* Table1838 */
    },
    /* 0x86 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1833 /* Table1833 */
+    1839 /* Table1839 */
    },
    /* 0x87 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1834 /* Table1834 */
+    1840 /* Table1840 */
    },
    /* 0x88 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1835 /* Table1835 */
+    1841 /* Table1841 */
    },
    /* 0x89 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1836 /* Table1836 */
+    1842 /* Table1842 */
    },
    /* 0x8a */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1837 /* Table1837 */
+    1843 /* Table1843 */
    },
    /* 0x8b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1838 /* Table1838 */
+    1844 /* Table1844 */
    },
    /* 0x8c */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1839 /* Table1839 */
+    1845 /* Table1845 */
    },
    /* 0x8d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1840 /* Table1840 */
+    1846 /* Table1846 */
    },
    /* 0x8e */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1841 /* Table1841 */
+    1847 /* Table1847 */
    },
    /* 0x8f */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1842 /* Table1842 */
+    1848 /* Table1848 */
    },
    /* 0x90 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1308 /* Table1308 */
+    1315 /* Table1315 */
    },
    /* 0x91 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1310 /* Table1310 */
+    1317 /* Table1317 */
    },
    /* 0x92 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1312 /* Table1312 */
+    1319 /* Table1319 */
    },
    /* 0x93 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1314 /* Table1314 */
+    1321 /* Table1321 */
    },
    /* 0x94 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1316 /* Table1316 */
+    1323 /* Table1323 */
    },
    /* 0x95 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1318 /* Table1318 */
+    1325 /* Table1325 */
    },
    /* 0x96 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1320 /* Table1320 */
+    1327 /* Table1327 */
    },
    /* 0x97 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1322 /* Table1322 */
+    1329 /* Table1329 */
    },
    /* 0x98 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1324 /* Table1324 */
+    1331 /* Table1331 */
    },
    /* 0x99 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1326 /* Table1326 */
+    1333 /* Table1333 */
    },
    /* 0x9a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1328 /* Table1328 */
+    1335 /* Table1335 */
    },
    /* 0x9b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1330 /* Table1330 */
+    1337 /* Table1337 */
    },
    /* 0x9c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1332 /* Table1332 */
+    1339 /* Table1339 */
    },
    /* 0x9d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1334 /* Table1334 */
+    1341 /* Table1341 */
    },
    /* 0x9e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1336 /* Table1336 */
+    1343 /* Table1343 */
    },
    /* 0x9f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1338 /* Table1338 */
+    1345 /* Table1345 */
    },
    /* 0xa0 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1843 /* Table1843 */
+    1849 /* Table1849 */
    },
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1844 /* Table1844 */
+    1850 /* Table1850 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1342 /* Table1342 */
+    1349 /* Table1349 */
    },
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1845 /* Table1845 */
+    1851 /* Table1851 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1847 /* Table1847 */
+    1853 /* Table1853 */
    },
    /* 0xa5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1849 /* Table1849 */
+    1855 /* Table1855 */
    },
    /* 0xa6 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1349 /* Table1349 */
+    1356 /* Table1356 */
    },
    /* 0xa7 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1421 /* Table1421 */
+    1428 /* Table1428 */
    },
    /* 0xa8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1851 /* Table1851 */
+    1857 /* Table1857 */
    },
    /* 0xa9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1852 /* Table1852 */
+    1858 /* Table1858 */
    },
    /* 0xaa */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1495 /* Table1495 */
+    1502 /* Table1502 */
    },
    /* 0xab */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1853 /* Table1853 */
+    1859 /* Table1859 */
    },
    /* 0xac */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1855 /* Table1855 */
+    1861 /* Table1861 */
    },
    /* 0xad */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1857 /* Table1857 */
+    1863 /* Table1863 */
    },
    /* 0xae */
    { /* struct ModRMDecision */
-    MODRM_SPLITREG,
-    1502 /* Table1502 */
+    MODRM_SPLITMISC,
+    1865 /* Table1865 */
    },
    /* 0xaf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1859 /* Table1859 */
+    1937 /* Table1937 */
    },
    /* 0xb0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1520 /* Table1520 */
+    1527 /* Table1527 */
    },
    /* 0xb1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1861 /* Table1861 */
+    1939 /* Table1939 */
    },
    /* 0xb2 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1863 /* Table1863 */
+    1941 /* Table1941 */
    },
    /* 0xb3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1865 /* Table1865 */
+    1943 /* Table1943 */
    },
    /* 0xb4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1867 /* Table1867 */
+    1945 /* Table1945 */
    },
    /* 0xb5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1869 /* Table1869 */
+    1947 /* Table1947 */
    },
    /* 0xb6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1871 /* Table1871 */
+    1949 /* Table1949 */
    },
    /* 0xb7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1534 /* Table1534 */
+    1541 /* Table1541 */
    },
    /* 0xb8 */
    { /* ModRMDecision */
@@ -51646,47 +55791,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xb9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1536 /* Table1536 */
+    1543 /* Table1543 */
    },
    /* 0xba */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1873 /* Table1873 */
+    1951 /* Table1951 */
    },
    /* 0xbb */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1889 /* Table1889 */
+    1967 /* Table1967 */
    },
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1891 /* Table1891 */
+    1969 /* Table1969 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1893 /* Table1893 */
+    1971 /* Table1971 */
    },
    /* 0xbe */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1895 /* Table1895 */
+    1973 /* Table1973 */
    },
    /* 0xbf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1561 /* Table1561 */
+    1568 /* Table1568 */
    },
    /* 0xc0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1563 /* Table1563 */
+    1570 /* Table1570 */
    },
    /* 0xc1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1897 /* Table1897 */
+    1975 /* Table1975 */
    },
    /* 0xc2 */
    { /* ModRMDecision */
@@ -51716,47 +55861,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xc7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1899 /* Table1899 */
+    1977 /* Table1977 */
    },
    /* 0xc8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xc9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xca */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcc */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcd */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xce */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xd0 */
    { /* ModRMDecision */
@@ -52006,22 +56151,22 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x00 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1113 /* Table1113 */
+    1120 /* Table1120 */
    },
    /* 0x01 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1129 /* Table1129 */
+    1136 /* Table1136 */
    },
    /* 0x02 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1201 /* Table1201 */
+    1208 /* Table1208 */
    },
    /* 0x03 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1203 /* Table1203 */
+    1210 /* Table1210 */
    },
    /* 0x04 */
    { /* ModRMDecision */
@@ -52031,27 +56176,27 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x05 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1205 /* Table1205 */
+    1212 /* Table1212 */
    },
    /* 0x06 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1206 /* Table1206 */
+    1213 /* Table1213 */
    },
    /* 0x07 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1207 /* Table1207 */
+    1214 /* Table1214 */
    },
    /* 0x08 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1208 /* Table1208 */
+    1215 /* Table1215 */
    },
    /* 0x09 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1209 /* Table1209 */
+    1216 /* Table1216 */
    },
    /* 0x0a */
    { /* ModRMDecision */
@@ -52061,7 +56206,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x0b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1210 /* Table1210 */
+    1217 /* Table1217 */
    },
    /* 0x0c */
    { /* ModRMDecision */
@@ -52126,62 +56271,62 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x18 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1211 /* Table1211 */
+    1218 /* Table1218 */
    },
    /* 0x19 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1227 /* Table1227 */
+    1234 /* Table1234 */
    },
    /* 0x1a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1229 /* Table1229 */
+    1236 /* Table1236 */
    },
    /* 0x1b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1231 /* Table1231 */
+    1238 /* Table1238 */
    },
    /* 0x1c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1233 /* Table1233 */
+    1240 /* Table1240 */
    },
    /* 0x1d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1235 /* Table1235 */
+    1242 /* Table1242 */
    },
    /* 0x1e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1237 /* Table1237 */
+    1244 /* Table1244 */
    },
    /* 0x1f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1239 /* Table1239 */
+    1246 /* Table1246 */
    },
    /* 0x20 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1241 /* Table1241 */
+    1248 /* Table1248 */
    },
    /* 0x21 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1243 /* Table1243 */
+    1250 /* Table1250 */
    },
    /* 0x22 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1245 /* Table1245 */
+    1252 /* Table1252 */
    },
    /* 0x23 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1247 /* Table1247 */
+    1254 /* Table1254 */
    },
    /* 0x24 */
    { /* ModRMDecision */
@@ -52246,32 +56391,32 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x30 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1249 /* Table1249 */
+    1256 /* Table1256 */
    },
    /* 0x31 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1250 /* Table1250 */
+    1257 /* Table1257 */
    },
    /* 0x32 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1251 /* Table1251 */
+    1258 /* Table1258 */
    },
    /* 0x33 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1252 /* Table1252 */
+    1259 /* Table1259 */
    },
    /* 0x34 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1253 /* Table1253 */
+    1260 /* Table1260 */
    },
    /* 0x35 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1254 /* Table1254 */
+    1261 /* Table1261 */
    },
    /* 0x36 */
    { /* ModRMDecision */
@@ -52281,7 +56426,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x37 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1255 /* Table1255 */
+    1262 /* Table1262 */
    },
    /* 0x38 */
    { /* ModRMDecision */
@@ -52326,82 +56471,82 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x40 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1256 /* Table1256 */
+    1263 /* Table1263 */
    },
    /* 0x41 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1258 /* Table1258 */
+    1265 /* Table1265 */
    },
    /* 0x42 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1260 /* Table1260 */
+    1267 /* Table1267 */
    },
    /* 0x43 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1262 /* Table1262 */
+    1269 /* Table1269 */
    },
    /* 0x44 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1264 /* Table1264 */
+    1271 /* Table1271 */
    },
    /* 0x45 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1266 /* Table1266 */
+    1273 /* Table1273 */
    },
    /* 0x46 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1268 /* Table1268 */
+    1275 /* Table1275 */
    },
    /* 0x47 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1270 /* Table1270 */
+    1277 /* Table1277 */
    },
    /* 0x48 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1272 /* Table1272 */
+    1279 /* Table1279 */
    },
    /* 0x49 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1274 /* Table1274 */
+    1281 /* Table1281 */
    },
    /* 0x4a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1276 /* Table1276 */
+    1283 /* Table1283 */
    },
    /* 0x4b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1278 /* Table1278 */
+    1285 /* Table1285 */
    },
    /* 0x4c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1280 /* Table1280 */
+    1287 /* Table1287 */
    },
    /* 0x4d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1282 /* Table1282 */
+    1289 /* Table1289 */
    },
    /* 0x4e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1284 /* Table1284 */
+    1291 /* Table1291 */
    },
    /* 0x4f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1286 /* Table1286 */
+    1293 /* Table1293 */
    },
    /* 0x50 */
    { /* ModRMDecision */
@@ -52606,12 +56751,12 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x78 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1288 /* Table1288 */
+    1295 /* Table1295 */
    },
    /* 0x79 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1290 /* Table1290 */
+    1297 /* Table1297 */
    },
    /* 0x7a */
    { /* ModRMDecision */
@@ -52646,282 +56791,282 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x80 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1292 /* Table1292 */
+    1299 /* Table1299 */
    },
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1293 /* Table1293 */
+    1300 /* Table1300 */
    },
    /* 0x82 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1294 /* Table1294 */
+    1301 /* Table1301 */
    },
    /* 0x83 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1295 /* Table1295 */
+    1302 /* Table1302 */
    },
    /* 0x84 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1296 /* Table1296 */
+    1303 /* Table1303 */
    },
    /* 0x85 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1297 /* Table1297 */
+    1304 /* Table1304 */
    },
    /* 0x86 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1298 /* Table1298 */
+    1305 /* Table1305 */
    },
    /* 0x87 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1299 /* Table1299 */
+    1306 /* Table1306 */
    },
    /* 0x88 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1300 /* Table1300 */
+    1307 /* Table1307 */
    },
    /* 0x89 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1301 /* Table1301 */
+    1308 /* Table1308 */
    },
    /* 0x8a */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1302 /* Table1302 */
+    1309 /* Table1309 */
    },
    /* 0x8b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1303 /* Table1303 */
+    1310 /* Table1310 */
    },
    /* 0x8c */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1304 /* Table1304 */
+    1311 /* Table1311 */
    },
    /* 0x8d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1305 /* Table1305 */
+    1312 /* Table1312 */
    },
    /* 0x8e */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1306 /* Table1306 */
+    1313 /* Table1313 */
    },
    /* 0x8f */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1307 /* Table1307 */
+    1314 /* Table1314 */
    },
    /* 0x90 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1308 /* Table1308 */
+    1315 /* Table1315 */
    },
    /* 0x91 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1310 /* Table1310 */
+    1317 /* Table1317 */
    },
    /* 0x92 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1312 /* Table1312 */
+    1319 /* Table1319 */
    },
    /* 0x93 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1314 /* Table1314 */
+    1321 /* Table1321 */
    },
    /* 0x94 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1316 /* Table1316 */
+    1323 /* Table1323 */
    },
    /* 0x95 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1318 /* Table1318 */
+    1325 /* Table1325 */
    },
    /* 0x96 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1320 /* Table1320 */
+    1327 /* Table1327 */
    },
    /* 0x97 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1322 /* Table1322 */
+    1329 /* Table1329 */
    },
    /* 0x98 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1324 /* Table1324 */
+    1331 /* Table1331 */
    },
    /* 0x99 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1326 /* Table1326 */
+    1333 /* Table1333 */
    },
    /* 0x9a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1328 /* Table1328 */
+    1335 /* Table1335 */
    },
    /* 0x9b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1330 /* Table1330 */
+    1337 /* Table1337 */
    },
    /* 0x9c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1332 /* Table1332 */
+    1339 /* Table1339 */
    },
    /* 0x9d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1334 /* Table1334 */
+    1341 /* Table1341 */
    },
    /* 0x9e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1336 /* Table1336 */
+    1343 /* Table1343 */
    },
    /* 0x9f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1338 /* Table1338 */
+    1345 /* Table1345 */
    },
    /* 0xa0 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1340 /* Table1340 */
+    1347 /* Table1347 */
    },
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1341 /* Table1341 */
+    1348 /* Table1348 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1342 /* Table1342 */
+    1349 /* Table1349 */
    },
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1343 /* Table1343 */
+    1350 /* Table1350 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1345 /* Table1345 */
+    1352 /* Table1352 */
    },
    /* 0xa5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1347 /* Table1347 */
+    1354 /* Table1354 */
    },
    /* 0xa6 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1349 /* Table1349 */
+    1356 /* Table1356 */
    },
    /* 0xa7 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1421 /* Table1421 */
+    1428 /* Table1428 */
    },
    /* 0xa8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1493 /* Table1493 */
+    1500 /* Table1500 */
    },
    /* 0xa9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1494 /* Table1494 */
+    1501 /* Table1501 */
    },
    /* 0xaa */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1495 /* Table1495 */
+    1502 /* Table1502 */
    },
    /* 0xab */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1496 /* Table1496 */
+    1503 /* Table1503 */
    },
    /* 0xac */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1498 /* Table1498 */
+    1505 /* Table1505 */
    },
    /* 0xad */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1500 /* Table1500 */
+    1507 /* Table1507 */
    },
    /* 0xae */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1502 /* Table1502 */
+    1509 /* Table1509 */
    },
    /* 0xaf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1518 /* Table1518 */
+    1525 /* Table1525 */
    },
    /* 0xb0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1520 /* Table1520 */
+    1527 /* Table1527 */
    },
    /* 0xb1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1522 /* Table1522 */
+    1529 /* Table1529 */
    },
    /* 0xb2 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1524 /* Table1524 */
+    1531 /* Table1531 */
    },
    /* 0xb3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1526 /* Table1526 */
+    1533 /* Table1533 */
    },
    /* 0xb4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1528 /* Table1528 */
+    1535 /* Table1535 */
    },
    /* 0xb5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1530 /* Table1530 */
+    1537 /* Table1537 */
    },
    /* 0xb6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1532 /* Table1532 */
+    1539 /* Table1539 */
    },
    /* 0xb7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1534 /* Table1534 */
+    1541 /* Table1541 */
    },
    /* 0xb8 */
    { /* ModRMDecision */
@@ -52931,47 +57076,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xb9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1536 /* Table1536 */
+    1543 /* Table1543 */
    },
    /* 0xba */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1537 /* Table1537 */
+    1544 /* Table1544 */
    },
    /* 0xbb */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1553 /* Table1553 */
+    1560 /* Table1560 */
    },
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1555 /* Table1555 */
+    1562 /* Table1562 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1557 /* Table1557 */
+    1564 /* Table1564 */
    },
    /* 0xbe */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1559 /* Table1559 */
+    1566 /* Table1566 */
    },
    /* 0xbf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1561 /* Table1561 */
+    1568 /* Table1568 */
    },
    /* 0xc0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1563 /* Table1563 */
+    1570 /* Table1570 */
    },
    /* 0xc1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1565 /* Table1565 */
+    1572 /* Table1572 */
    },
    /* 0xc2 */
    { /* ModRMDecision */
@@ -53001,47 +57146,1332 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xc7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1567 /* Table1567 */
+    1574 /* Table1574 */
    },
    /* 0xc8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xc9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xca */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcc */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcd */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xce */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
+   },
+   /* 0xd0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xda */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xde */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xea */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xeb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xec */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xed */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xee */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xef */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfa */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfe */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xff */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   }
+  }
+ }
+,  /* IC_OPSIZE_ADSIZE */
+ { /* struct OpcodeDecision */
+  {
+   /* 0x00 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    1679 /* Table1679 */
+   },
+   /* 0x01 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITMISC,
+    1695 /* Table1695 */
+   },
+   /* 0x02 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1767 /* Table1767 */
+   },
+   /* 0x03 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1769 /* Table1769 */
+   },
+   /* 0x04 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x05 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1212 /* Table1212 */
+   },
+   /* 0x06 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1213 /* Table1213 */
+   },
+   /* 0x07 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1214 /* Table1214 */
+   },
+   /* 0x08 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1215 /* Table1215 */
+   },
+   /* 0x09 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1216 /* Table1216 */
+   },
+   /* 0x0a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0b */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1217 /* Table1217 */
+   },
+   /* 0x0c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x10 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x11 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x12 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x13 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x14 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x15 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x16 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x17 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x18 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    1771 /* Table1771 */
+   },
+   /* 0x19 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1787 /* Table1787 */
+   },
+   /* 0x1a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1789 /* Table1789 */
+   },
+   /* 0x1b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1791 /* Table1791 */
+   },
+   /* 0x1c */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1793 /* Table1793 */
+   },
+   /* 0x1d */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1795 /* Table1795 */
+   },
+   /* 0x1e */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1797 /* Table1797 */
+   },
+   /* 0x1f */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1799 /* Table1799 */
+   },
+   /* 0x20 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1248 /* Table1248 */
+   },
+   /* 0x21 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1250 /* Table1250 */
+   },
+   /* 0x22 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1252 /* Table1252 */
+   },
+   /* 0x23 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1254 /* Table1254 */
+   },
+   /* 0x24 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x25 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x26 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x27 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x28 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x29 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x30 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1256 /* Table1256 */
+   },
+   /* 0x31 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1257 /* Table1257 */
+   },
+   /* 0x32 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1258 /* Table1258 */
+   },
+   /* 0x33 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1259 /* Table1259 */
+   },
+   /* 0x34 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1260 /* Table1260 */
+   },
+   /* 0x35 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1261 /* Table1261 */
+   },
+   /* 0x36 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x37 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1262 /* Table1262 */
+   },
+   /* 0x38 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x39 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x40 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1801 /* Table1801 */
+   },
+   /* 0x41 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1803 /* Table1803 */
+   },
+   /* 0x42 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1805 /* Table1805 */
+   },
+   /* 0x43 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1807 /* Table1807 */
+   },
+   /* 0x44 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1809 /* Table1809 */
+   },
+   /* 0x45 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1811 /* Table1811 */
+   },
+   /* 0x46 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1813 /* Table1813 */
+   },
+   /* 0x47 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1815 /* Table1815 */
+   },
+   /* 0x48 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1817 /* Table1817 */
+   },
+   /* 0x49 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1819 /* Table1819 */
+   },
+   /* 0x4a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1821 /* Table1821 */
+   },
+   /* 0x4b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1823 /* Table1823 */
+   },
+   /* 0x4c */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1825 /* Table1825 */
+   },
+   /* 0x4d */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1827 /* Table1827 */
+   },
+   /* 0x4e */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1829 /* Table1829 */
+   },
+   /* 0x4f */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1831 /* Table1831 */
+   },
+   /* 0x50 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x51 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x52 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x53 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x54 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x55 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x56 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x57 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x58 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x59 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x60 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x61 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x62 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x63 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x64 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x65 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x66 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x67 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x68 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x69 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x70 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x71 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x72 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x73 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x74 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x75 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x76 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x77 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x78 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1295 /* Table1295 */
+   },
+   /* 0x79 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1297 /* Table1297 */
+   },
+   /* 0x7a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x80 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1833 /* Table1833 */
+   },
+   /* 0x81 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1834 /* Table1834 */
+   },
+   /* 0x82 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1835 /* Table1835 */
+   },
+   /* 0x83 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1836 /* Table1836 */
+   },
+   /* 0x84 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1837 /* Table1837 */
+   },
+   /* 0x85 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1838 /* Table1838 */
+   },
+   /* 0x86 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1839 /* Table1839 */
+   },
+   /* 0x87 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1840 /* Table1840 */
+   },
+   /* 0x88 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1841 /* Table1841 */
+   },
+   /* 0x89 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1842 /* Table1842 */
+   },
+   /* 0x8a */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1843 /* Table1843 */
+   },
+   /* 0x8b */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1844 /* Table1844 */
+   },
+   /* 0x8c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1845 /* Table1845 */
+   },
+   /* 0x8d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1846 /* Table1846 */
+   },
+   /* 0x8e */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1847 /* Table1847 */
+   },
+   /* 0x8f */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1848 /* Table1848 */
+   },
+   /* 0x90 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1315 /* Table1315 */
+   },
+   /* 0x91 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1317 /* Table1317 */
+   },
+   /* 0x92 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1319 /* Table1319 */
+   },
+   /* 0x93 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1321 /* Table1321 */
+   },
+   /* 0x94 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1323 /* Table1323 */
+   },
+   /* 0x95 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1325 /* Table1325 */
+   },
+   /* 0x96 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1327 /* Table1327 */
+   },
+   /* 0x97 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1329 /* Table1329 */
+   },
+   /* 0x98 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1331 /* Table1331 */
+   },
+   /* 0x99 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1333 /* Table1333 */
+   },
+   /* 0x9a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1335 /* Table1335 */
+   },
+   /* 0x9b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1337 /* Table1337 */
+   },
+   /* 0x9c */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1339 /* Table1339 */
+   },
+   /* 0x9d */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1341 /* Table1341 */
+   },
+   /* 0x9e */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1343 /* Table1343 */
+   },
+   /* 0x9f */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1345 /* Table1345 */
+   },
+   /* 0xa0 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1849 /* Table1849 */
+   },
+   /* 0xa1 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1850 /* Table1850 */
+   },
+   /* 0xa2 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1349 /* Table1349 */
+   },
+   /* 0xa3 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1851 /* Table1851 */
+   },
+   /* 0xa4 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1853 /* Table1853 */
+   },
+   /* 0xa5 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1855 /* Table1855 */
+   },
+   /* 0xa6 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITMISC,
+    1356 /* Table1356 */
+   },
+   /* 0xa7 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITMISC,
+    1428 /* Table1428 */
+   },
+   /* 0xa8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1857 /* Table1857 */
+   },
+   /* 0xa9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1858 /* Table1858 */
+   },
+   /* 0xaa */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1502 /* Table1502 */
+   },
+   /* 0xab */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1859 /* Table1859 */
+   },
+   /* 0xac */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1861 /* Table1861 */
+   },
+   /* 0xad */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1863 /* Table1863 */
+   },
+   /* 0xae */
+   { /* struct ModRMDecision */
+    MODRM_SPLITMISC,
+    1865 /* Table1865 */
+   },
+   /* 0xaf */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1937 /* Table1937 */
+   },
+   /* 0xb0 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1527 /* Table1527 */
+   },
+   /* 0xb1 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1939 /* Table1939 */
+   },
+   /* 0xb2 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1941 /* Table1941 */
+   },
+   /* 0xb3 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1943 /* Table1943 */
+   },
+   /* 0xb4 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1945 /* Table1945 */
+   },
+   /* 0xb5 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1947 /* Table1947 */
+   },
+   /* 0xb6 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1949 /* Table1949 */
+   },
+   /* 0xb7 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1541 /* Table1541 */
+   },
+   /* 0xb8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1543 /* Table1543 */
+   },
+   /* 0xba */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    1951 /* Table1951 */
+   },
+   /* 0xbb */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1967 /* Table1967 */
+   },
+   /* 0xbc */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1969 /* Table1969 */
+   },
+   /* 0xbd */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1971 /* Table1971 */
+   },
+   /* 0xbe */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1973 /* Table1973 */
+   },
+   /* 0xbf */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1568 /* Table1568 */
+   },
+   /* 0xc0 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1570 /* Table1570 */
+   },
+   /* 0xc1 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1975 /* Table1975 */
+   },
+   /* 0xc2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc7 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    1977 /* Table1977 */
+   },
+   /* 0xc8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1590 /* Table1590 */
+   },
+   /* 0xc9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1590 /* Table1590 */
+   },
+   /* 0xca */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1590 /* Table1590 */
+   },
+   /* 0xcb */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1590 /* Table1590 */
+   },
+   /* 0xcc */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1590 /* Table1590 */
+   },
+   /* 0xcd */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1590 /* Table1590 */
+   },
+   /* 0xce */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1590 /* Table1590 */
+   },
+   /* 0xcf */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1590 /* Table1590 */
    },
    /* 0xd0 */
    { /* ModRMDecision */
@@ -53291,22 +58721,22 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x00 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1113 /* Table1113 */
+    1120 /* Table1120 */
    },
    /* 0x01 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1129 /* Table1129 */
+    1136 /* Table1136 */
    },
    /* 0x02 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1201 /* Table1201 */
+    1208 /* Table1208 */
    },
    /* 0x03 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1203 /* Table1203 */
+    1210 /* Table1210 */
    },
    /* 0x04 */
    { /* ModRMDecision */
@@ -53316,27 +58746,27 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x05 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1205 /* Table1205 */
+    1212 /* Table1212 */
    },
    /* 0x06 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1206 /* Table1206 */
+    1213 /* Table1213 */
    },
    /* 0x07 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1207 /* Table1207 */
+    1214 /* Table1214 */
    },
    /* 0x08 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1208 /* Table1208 */
+    1215 /* Table1215 */
    },
    /* 0x09 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1209 /* Table1209 */
+    1216 /* Table1216 */
    },
    /* 0x0a */
    { /* ModRMDecision */
@@ -53346,7 +58776,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x0b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1210 /* Table1210 */
+    1217 /* Table1217 */
    },
    /* 0x0c */
    { /* ModRMDecision */
@@ -53411,62 +58841,62 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x18 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1211 /* Table1211 */
+    1218 /* Table1218 */
    },
    /* 0x19 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1227 /* Table1227 */
+    1234 /* Table1234 */
    },
    /* 0x1a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1229 /* Table1229 */
+    1236 /* Table1236 */
    },
    /* 0x1b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1231 /* Table1231 */
+    1238 /* Table1238 */
    },
    /* 0x1c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1233 /* Table1233 */
+    1240 /* Table1240 */
    },
    /* 0x1d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1235 /* Table1235 */
+    1242 /* Table1242 */
    },
    /* 0x1e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1237 /* Table1237 */
+    1244 /* Table1244 */
    },
    /* 0x1f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1239 /* Table1239 */
+    1246 /* Table1246 */
    },
    /* 0x20 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1241 /* Table1241 */
+    1248 /* Table1248 */
    },
    /* 0x21 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1243 /* Table1243 */
+    1250 /* Table1250 */
    },
    /* 0x22 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1245 /* Table1245 */
+    1252 /* Table1252 */
    },
    /* 0x23 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1247 /* Table1247 */
+    1254 /* Table1254 */
    },
    /* 0x24 */
    { /* ModRMDecision */
@@ -53531,32 +58961,32 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x30 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1249 /* Table1249 */
+    1256 /* Table1256 */
    },
    /* 0x31 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1250 /* Table1250 */
+    1257 /* Table1257 */
    },
    /* 0x32 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1251 /* Table1251 */
+    1258 /* Table1258 */
    },
    /* 0x33 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1252 /* Table1252 */
+    1259 /* Table1259 */
    },
    /* 0x34 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1253 /* Table1253 */
+    1260 /* Table1260 */
    },
    /* 0x35 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1254 /* Table1254 */
+    1261 /* Table1261 */
    },
    /* 0x36 */
    { /* ModRMDecision */
@@ -53566,7 +58996,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x37 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1255 /* Table1255 */
+    1262 /* Table1262 */
    },
    /* 0x38 */
    { /* ModRMDecision */
@@ -53611,82 +59041,82 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x40 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1256 /* Table1256 */
+    1263 /* Table1263 */
    },
    /* 0x41 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1258 /* Table1258 */
+    1265 /* Table1265 */
    },
    /* 0x42 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1260 /* Table1260 */
+    1267 /* Table1267 */
    },
    /* 0x43 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1262 /* Table1262 */
+    1269 /* Table1269 */
    },
    /* 0x44 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1264 /* Table1264 */
+    1271 /* Table1271 */
    },
    /* 0x45 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1266 /* Table1266 */
+    1273 /* Table1273 */
    },
    /* 0x46 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1268 /* Table1268 */
+    1275 /* Table1275 */
    },
    /* 0x47 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1270 /* Table1270 */
+    1277 /* Table1277 */
    },
    /* 0x48 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1272 /* Table1272 */
+    1279 /* Table1279 */
    },
    /* 0x49 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1274 /* Table1274 */
+    1281 /* Table1281 */
    },
    /* 0x4a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1276 /* Table1276 */
+    1283 /* Table1283 */
    },
    /* 0x4b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1278 /* Table1278 */
+    1285 /* Table1285 */
    },
    /* 0x4c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1280 /* Table1280 */
+    1287 /* Table1287 */
    },
    /* 0x4d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1282 /* Table1282 */
+    1289 /* Table1289 */
    },
    /* 0x4e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1284 /* Table1284 */
+    1291 /* Table1291 */
    },
    /* 0x4f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1286 /* Table1286 */
+    1293 /* Table1293 */
    },
    /* 0x50 */
    { /* ModRMDecision */
@@ -53891,12 +59321,12 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x78 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1288 /* Table1288 */
+    1295 /* Table1295 */
    },
    /* 0x79 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1290 /* Table1290 */
+    1297 /* Table1297 */
    },
    /* 0x7a */
    { /* ModRMDecision */
@@ -53931,282 +59361,282 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x80 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1292 /* Table1292 */
+    1299 /* Table1299 */
    },
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1293 /* Table1293 */
+    1300 /* Table1300 */
    },
    /* 0x82 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1294 /* Table1294 */
+    1301 /* Table1301 */
    },
    /* 0x83 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1295 /* Table1295 */
+    1302 /* Table1302 */
    },
    /* 0x84 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1296 /* Table1296 */
+    1303 /* Table1303 */
    },
    /* 0x85 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1297 /* Table1297 */
+    1304 /* Table1304 */
    },
    /* 0x86 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1298 /* Table1298 */
+    1305 /* Table1305 */
    },
    /* 0x87 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1299 /* Table1299 */
+    1306 /* Table1306 */
    },
    /* 0x88 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1300 /* Table1300 */
+    1307 /* Table1307 */
    },
    /* 0x89 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1301 /* Table1301 */
+    1308 /* Table1308 */
    },
    /* 0x8a */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1302 /* Table1302 */
+    1309 /* Table1309 */
    },
    /* 0x8b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1303 /* Table1303 */
+    1310 /* Table1310 */
    },
    /* 0x8c */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1304 /* Table1304 */
+    1311 /* Table1311 */
    },
    /* 0x8d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1305 /* Table1305 */
+    1312 /* Table1312 */
    },
    /* 0x8e */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1306 /* Table1306 */
+    1313 /* Table1313 */
    },
    /* 0x8f */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1307 /* Table1307 */
+    1314 /* Table1314 */
    },
    /* 0x90 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1308 /* Table1308 */
+    1315 /* Table1315 */
    },
    /* 0x91 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1310 /* Table1310 */
+    1317 /* Table1317 */
    },
    /* 0x92 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1312 /* Table1312 */
+    1319 /* Table1319 */
    },
    /* 0x93 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1314 /* Table1314 */
+    1321 /* Table1321 */
    },
    /* 0x94 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1316 /* Table1316 */
+    1323 /* Table1323 */
    },
    /* 0x95 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1318 /* Table1318 */
+    1325 /* Table1325 */
    },
    /* 0x96 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1320 /* Table1320 */
+    1327 /* Table1327 */
    },
    /* 0x97 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1322 /* Table1322 */
+    1329 /* Table1329 */
    },
    /* 0x98 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1324 /* Table1324 */
+    1331 /* Table1331 */
    },
    /* 0x99 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1326 /* Table1326 */
+    1333 /* Table1333 */
    },
    /* 0x9a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1328 /* Table1328 */
+    1335 /* Table1335 */
    },
    /* 0x9b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1330 /* Table1330 */
+    1337 /* Table1337 */
    },
    /* 0x9c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1332 /* Table1332 */
+    1339 /* Table1339 */
    },
    /* 0x9d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1334 /* Table1334 */
+    1341 /* Table1341 */
    },
    /* 0x9e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1336 /* Table1336 */
+    1343 /* Table1343 */
    },
    /* 0x9f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1338 /* Table1338 */
+    1345 /* Table1345 */
    },
    /* 0xa0 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1340 /* Table1340 */
+    1347 /* Table1347 */
    },
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1341 /* Table1341 */
+    1348 /* Table1348 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1342 /* Table1342 */
+    1349 /* Table1349 */
    },
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1343 /* Table1343 */
+    1350 /* Table1350 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1345 /* Table1345 */
+    1352 /* Table1352 */
    },
    /* 0xa5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1347 /* Table1347 */
+    1354 /* Table1354 */
    },
    /* 0xa6 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1349 /* Table1349 */
+    1356 /* Table1356 */
    },
    /* 0xa7 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1421 /* Table1421 */
+    1428 /* Table1428 */
    },
    /* 0xa8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1493 /* Table1493 */
+    1500 /* Table1500 */
    },
    /* 0xa9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1494 /* Table1494 */
+    1501 /* Table1501 */
    },
    /* 0xaa */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1495 /* Table1495 */
+    1502 /* Table1502 */
    },
    /* 0xab */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1496 /* Table1496 */
+    1503 /* Table1503 */
    },
    /* 0xac */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1498 /* Table1498 */
+    1505 /* Table1505 */
    },
    /* 0xad */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1500 /* Table1500 */
+    1507 /* Table1507 */
    },
    /* 0xae */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1502 /* Table1502 */
+    1509 /* Table1509 */
    },
    /* 0xaf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1518 /* Table1518 */
+    1525 /* Table1525 */
    },
    /* 0xb0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1520 /* Table1520 */
+    1527 /* Table1527 */
    },
    /* 0xb1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1522 /* Table1522 */
+    1529 /* Table1529 */
    },
    /* 0xb2 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1524 /* Table1524 */
+    1531 /* Table1531 */
    },
    /* 0xb3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1526 /* Table1526 */
+    1533 /* Table1533 */
    },
    /* 0xb4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1528 /* Table1528 */
+    1535 /* Table1535 */
    },
    /* 0xb5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1530 /* Table1530 */
+    1537 /* Table1537 */
    },
    /* 0xb6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1532 /* Table1532 */
+    1539 /* Table1539 */
    },
    /* 0xb7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1534 /* Table1534 */
+    1541 /* Table1541 */
    },
    /* 0xb8 */
    { /* ModRMDecision */
@@ -54216,47 +59646,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xb9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1536 /* Table1536 */
+    1543 /* Table1543 */
    },
    /* 0xba */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1537 /* Table1537 */
+    1544 /* Table1544 */
    },
    /* 0xbb */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1553 /* Table1553 */
+    1560 /* Table1560 */
    },
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1555 /* Table1555 */
+    1562 /* Table1562 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1557 /* Table1557 */
+    1564 /* Table1564 */
    },
    /* 0xbe */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1559 /* Table1559 */
+    1566 /* Table1566 */
    },
    /* 0xbf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1561 /* Table1561 */
+    1568 /* Table1568 */
    },
    /* 0xc0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1563 /* Table1563 */
+    1570 /* Table1570 */
    },
    /* 0xc1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1565 /* Table1565 */
+    1572 /* Table1572 */
    },
    /* 0xc2 */
    { /* ModRMDecision */
@@ -54286,47 +59716,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xc7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1567 /* Table1567 */
+    1574 /* Table1574 */
    },
    /* 0xc8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xc9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xca */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcc */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcd */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xce */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xd0 */
    { /* ModRMDecision */
@@ -54576,22 +60006,22 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x00 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1113 /* Table1113 */
+    1120 /* Table1120 */
    },
    /* 0x01 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1129 /* Table1129 */
+    1136 /* Table1136 */
    },
    /* 0x02 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1201 /* Table1201 */
+    1208 /* Table1208 */
    },
    /* 0x03 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1203 /* Table1203 */
+    1210 /* Table1210 */
    },
    /* 0x04 */
    { /* ModRMDecision */
@@ -54601,27 +60031,27 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x05 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1205 /* Table1205 */
+    1212 /* Table1212 */
    },
    /* 0x06 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1206 /* Table1206 */
+    1213 /* Table1213 */
    },
    /* 0x07 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1207 /* Table1207 */
+    1214 /* Table1214 */
    },
    /* 0x08 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1208 /* Table1208 */
+    1215 /* Table1215 */
    },
    /* 0x09 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1209 /* Table1209 */
+    1216 /* Table1216 */
    },
    /* 0x0a */
    { /* ModRMDecision */
@@ -54631,7 +60061,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x0b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1210 /* Table1210 */
+    1217 /* Table1217 */
    },
    /* 0x0c */
    { /* ModRMDecision */
@@ -54696,62 +60126,62 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x18 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1211 /* Table1211 */
+    1218 /* Table1218 */
    },
    /* 0x19 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1227 /* Table1227 */
+    1234 /* Table1234 */
    },
    /* 0x1a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1229 /* Table1229 */
+    1236 /* Table1236 */
    },
    /* 0x1b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1231 /* Table1231 */
+    1238 /* Table1238 */
    },
    /* 0x1c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1233 /* Table1233 */
+    1240 /* Table1240 */
    },
    /* 0x1d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1235 /* Table1235 */
+    1242 /* Table1242 */
    },
    /* 0x1e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1237 /* Table1237 */
+    1244 /* Table1244 */
    },
    /* 0x1f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1239 /* Table1239 */
+    1246 /* Table1246 */
    },
    /* 0x20 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1241 /* Table1241 */
+    1248 /* Table1248 */
    },
    /* 0x21 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1243 /* Table1243 */
+    1250 /* Table1250 */
    },
    /* 0x22 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1245 /* Table1245 */
+    1252 /* Table1252 */
    },
    /* 0x23 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1247 /* Table1247 */
+    1254 /* Table1254 */
    },
    /* 0x24 */
    { /* ModRMDecision */
@@ -54816,32 +60246,32 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x30 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1249 /* Table1249 */
+    1256 /* Table1256 */
    },
    /* 0x31 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1250 /* Table1250 */
+    1257 /* Table1257 */
    },
    /* 0x32 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1251 /* Table1251 */
+    1258 /* Table1258 */
    },
    /* 0x33 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1252 /* Table1252 */
+    1259 /* Table1259 */
    },
    /* 0x34 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1253 /* Table1253 */
+    1260 /* Table1260 */
    },
    /* 0x35 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1254 /* Table1254 */
+    1261 /* Table1261 */
    },
    /* 0x36 */
    { /* ModRMDecision */
@@ -54851,7 +60281,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x37 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1255 /* Table1255 */
+    1262 /* Table1262 */
    },
    /* 0x38 */
    { /* ModRMDecision */
@@ -54896,82 +60326,82 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x40 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1256 /* Table1256 */
+    1263 /* Table1263 */
    },
    /* 0x41 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1258 /* Table1258 */
+    1265 /* Table1265 */
    },
    /* 0x42 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1260 /* Table1260 */
+    1267 /* Table1267 */
    },
    /* 0x43 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1262 /* Table1262 */
+    1269 /* Table1269 */
    },
    /* 0x44 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1264 /* Table1264 */
+    1271 /* Table1271 */
    },
    /* 0x45 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1266 /* Table1266 */
+    1273 /* Table1273 */
    },
    /* 0x46 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1268 /* Table1268 */
+    1275 /* Table1275 */
    },
    /* 0x47 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1270 /* Table1270 */
+    1277 /* Table1277 */
    },
    /* 0x48 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1272 /* Table1272 */
+    1279 /* Table1279 */
    },
    /* 0x49 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1274 /* Table1274 */
+    1281 /* Table1281 */
    },
    /* 0x4a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1276 /* Table1276 */
+    1283 /* Table1283 */
    },
    /* 0x4b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1278 /* Table1278 */
+    1285 /* Table1285 */
    },
    /* 0x4c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1280 /* Table1280 */
+    1287 /* Table1287 */
    },
    /* 0x4d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1282 /* Table1282 */
+    1289 /* Table1289 */
    },
    /* 0x4e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1284 /* Table1284 */
+    1291 /* Table1291 */
    },
    /* 0x4f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1286 /* Table1286 */
+    1293 /* Table1293 */
    },
    /* 0x50 */
    { /* ModRMDecision */
@@ -55176,12 +60606,12 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x78 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1288 /* Table1288 */
+    1295 /* Table1295 */
    },
    /* 0x79 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1290 /* Table1290 */
+    1297 /* Table1297 */
    },
    /* 0x7a */
    { /* ModRMDecision */
@@ -55216,282 +60646,282 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x80 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1292 /* Table1292 */
+    1299 /* Table1299 */
    },
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1293 /* Table1293 */
+    1300 /* Table1300 */
    },
    /* 0x82 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1294 /* Table1294 */
+    1301 /* Table1301 */
    },
    /* 0x83 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1295 /* Table1295 */
+    1302 /* Table1302 */
    },
    /* 0x84 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1296 /* Table1296 */
+    1303 /* Table1303 */
    },
    /* 0x85 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1297 /* Table1297 */
+    1304 /* Table1304 */
    },
    /* 0x86 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1298 /* Table1298 */
+    1305 /* Table1305 */
    },
    /* 0x87 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1299 /* Table1299 */
+    1306 /* Table1306 */
    },
    /* 0x88 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1300 /* Table1300 */
+    1307 /* Table1307 */
    },
    /* 0x89 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1301 /* Table1301 */
+    1308 /* Table1308 */
    },
    /* 0x8a */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1302 /* Table1302 */
+    1309 /* Table1309 */
    },
    /* 0x8b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1303 /* Table1303 */
+    1310 /* Table1310 */
    },
    /* 0x8c */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1304 /* Table1304 */
+    1311 /* Table1311 */
    },
    /* 0x8d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1305 /* Table1305 */
+    1312 /* Table1312 */
    },
    /* 0x8e */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1306 /* Table1306 */
+    1313 /* Table1313 */
    },
    /* 0x8f */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1307 /* Table1307 */
+    1314 /* Table1314 */
    },
    /* 0x90 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1308 /* Table1308 */
+    1315 /* Table1315 */
    },
    /* 0x91 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1310 /* Table1310 */
+    1317 /* Table1317 */
    },
    /* 0x92 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1312 /* Table1312 */
+    1319 /* Table1319 */
    },
    /* 0x93 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1314 /* Table1314 */
+    1321 /* Table1321 */
    },
    /* 0x94 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1316 /* Table1316 */
+    1323 /* Table1323 */
    },
    /* 0x95 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1318 /* Table1318 */
+    1325 /* Table1325 */
    },
    /* 0x96 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1320 /* Table1320 */
+    1327 /* Table1327 */
    },
    /* 0x97 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1322 /* Table1322 */
+    1329 /* Table1329 */
    },
    /* 0x98 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1324 /* Table1324 */
+    1331 /* Table1331 */
    },
    /* 0x99 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1326 /* Table1326 */
+    1333 /* Table1333 */
    },
    /* 0x9a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1328 /* Table1328 */
+    1335 /* Table1335 */
    },
    /* 0x9b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1330 /* Table1330 */
+    1337 /* Table1337 */
    },
    /* 0x9c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1332 /* Table1332 */
+    1339 /* Table1339 */
    },
    /* 0x9d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1334 /* Table1334 */
+    1341 /* Table1341 */
    },
    /* 0x9e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1336 /* Table1336 */
+    1343 /* Table1343 */
    },
    /* 0x9f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1338 /* Table1338 */
+    1345 /* Table1345 */
    },
    /* 0xa0 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1340 /* Table1340 */
+    1347 /* Table1347 */
    },
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1341 /* Table1341 */
+    1348 /* Table1348 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1342 /* Table1342 */
+    1349 /* Table1349 */
    },
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1343 /* Table1343 */
+    1350 /* Table1350 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1345 /* Table1345 */
+    1352 /* Table1352 */
    },
    /* 0xa5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1347 /* Table1347 */
+    1354 /* Table1354 */
    },
    /* 0xa6 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1349 /* Table1349 */
+    1356 /* Table1356 */
    },
    /* 0xa7 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1421 /* Table1421 */
+    1428 /* Table1428 */
    },
    /* 0xa8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1493 /* Table1493 */
+    1500 /* Table1500 */
    },
    /* 0xa9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1494 /* Table1494 */
+    1501 /* Table1501 */
    },
    /* 0xaa */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1495 /* Table1495 */
+    1502 /* Table1502 */
    },
    /* 0xab */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1496 /* Table1496 */
+    1503 /* Table1503 */
    },
    /* 0xac */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1498 /* Table1498 */
+    1505 /* Table1505 */
    },
    /* 0xad */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1500 /* Table1500 */
+    1507 /* Table1507 */
    },
    /* 0xae */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1502 /* Table1502 */
+    1509 /* Table1509 */
    },
    /* 0xaf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1518 /* Table1518 */
+    1525 /* Table1525 */
    },
    /* 0xb0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1520 /* Table1520 */
+    1527 /* Table1527 */
    },
    /* 0xb1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1522 /* Table1522 */
+    1529 /* Table1529 */
    },
    /* 0xb2 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1524 /* Table1524 */
+    1531 /* Table1531 */
    },
    /* 0xb3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1526 /* Table1526 */
+    1533 /* Table1533 */
    },
    /* 0xb4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1528 /* Table1528 */
+    1535 /* Table1535 */
    },
    /* 0xb5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1530 /* Table1530 */
+    1537 /* Table1537 */
    },
    /* 0xb6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1532 /* Table1532 */
+    1539 /* Table1539 */
    },
    /* 0xb7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1534 /* Table1534 */
+    1541 /* Table1541 */
    },
    /* 0xb8 */
    { /* ModRMDecision */
@@ -55501,47 +60931,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xb9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1536 /* Table1536 */
+    1543 /* Table1543 */
    },
    /* 0xba */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1537 /* Table1537 */
+    1544 /* Table1544 */
    },
    /* 0xbb */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1553 /* Table1553 */
+    1560 /* Table1560 */
    },
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1915 /* Table1915 */
+    1993 /* Table1993 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1917 /* Table1917 */
+    1995 /* Table1995 */
    },
    /* 0xbe */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1559 /* Table1559 */
+    1566 /* Table1566 */
    },
    /* 0xbf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1561 /* Table1561 */
+    1568 /* Table1568 */
    },
    /* 0xc0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1563 /* Table1563 */
+    1570 /* Table1570 */
    },
    /* 0xc1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1565 /* Table1565 */
+    1572 /* Table1572 */
    },
    /* 0xc2 */
    { /* ModRMDecision */
@@ -55571,47 +61001,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xc7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1919 /* Table1919 */
+    1997 /* Table1997 */
    },
    /* 0xc8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xc9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xca */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcc */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcd */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xce */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xd0 */
    { /* ModRMDecision */
@@ -56801,12 +62231,12 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1935 /* Table1935 */
+    2013 /* Table2013 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1937 /* Table1937 */
+    2015 /* Table2015 */
    },
    /* 0xbe */
    { /* ModRMDecision */
@@ -57146,22 +62576,22 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x00 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1939 /* Table1939 */
+    2017 /* Table2017 */
    },
    /* 0x01 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1955 /* Table1955 */
+    2033 /* Table2033 */
    },
    /* 0x02 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2027 /* Table2027 */
+    2105 /* Table2105 */
    },
    /* 0x03 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2029 /* Table2029 */
+    2107 /* Table2107 */
    },
    /* 0x04 */
    { /* ModRMDecision */
@@ -57171,27 +62601,27 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x05 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1205 /* Table1205 */
+    1212 /* Table1212 */
    },
    /* 0x06 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1206 /* Table1206 */
+    1213 /* Table1213 */
    },
    /* 0x07 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2031 /* Table2031 */
+    2109 /* Table2109 */
    },
    /* 0x08 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1208 /* Table1208 */
+    1215 /* Table1215 */
    },
    /* 0x09 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1209 /* Table1209 */
+    1216 /* Table1216 */
    },
    /* 0x0a */
    { /* ModRMDecision */
@@ -57201,7 +62631,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x0b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1210 /* Table1210 */
+    1217 /* Table1217 */
    },
    /* 0x0c */
    { /* ModRMDecision */
@@ -57266,62 +62696,62 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x18 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1211 /* Table1211 */
+    1218 /* Table1218 */
    },
    /* 0x19 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1227 /* Table1227 */
+    1234 /* Table1234 */
    },
    /* 0x1a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1229 /* Table1229 */
+    1236 /* Table1236 */
    },
    /* 0x1b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1231 /* Table1231 */
+    1238 /* Table1238 */
    },
    /* 0x1c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1233 /* Table1233 */
+    1240 /* Table1240 */
    },
    /* 0x1d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1235 /* Table1235 */
+    1242 /* Table1242 */
    },
    /* 0x1e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1237 /* Table1237 */
+    1244 /* Table1244 */
    },
    /* 0x1f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1239 /* Table1239 */
+    1246 /* Table1246 */
    },
    /* 0x20 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1656 /* Table1656 */
+    1663 /* Table1663 */
    },
    /* 0x21 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1658 /* Table1658 */
+    1665 /* Table1665 */
    },
    /* 0x22 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1660 /* Table1660 */
+    1667 /* Table1667 */
    },
    /* 0x23 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1662 /* Table1662 */
+    1669 /* Table1669 */
    },
    /* 0x24 */
    { /* ModRMDecision */
@@ -57386,32 +62816,32 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x30 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1249 /* Table1249 */
+    1256 /* Table1256 */
    },
    /* 0x31 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1250 /* Table1250 */
+    1257 /* Table1257 */
    },
    /* 0x32 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1251 /* Table1251 */
+    1258 /* Table1258 */
    },
    /* 0x33 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1252 /* Table1252 */
+    1259 /* Table1259 */
    },
    /* 0x34 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1253 /* Table1253 */
+    1260 /* Table1260 */
    },
    /* 0x35 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2032 /* Table2032 */
+    2110 /* Table2110 */
    },
    /* 0x36 */
    { /* ModRMDecision */
@@ -57421,7 +62851,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x37 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1255 /* Table1255 */
+    1262 /* Table1262 */
    },
    /* 0x38 */
    { /* ModRMDecision */
@@ -57466,82 +62896,82 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x40 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2033 /* Table2033 */
+    2111 /* Table2111 */
    },
    /* 0x41 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2035 /* Table2035 */
+    2113 /* Table2113 */
    },
    /* 0x42 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2037 /* Table2037 */
+    2115 /* Table2115 */
    },
    /* 0x43 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2039 /* Table2039 */
+    2117 /* Table2117 */
    },
    /* 0x44 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2041 /* Table2041 */
+    2119 /* Table2119 */
    },
    /* 0x45 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2043 /* Table2043 */
+    2121 /* Table2121 */
    },
    /* 0x46 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2045 /* Table2045 */
+    2123 /* Table2123 */
    },
    /* 0x47 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2047 /* Table2047 */
+    2125 /* Table2125 */
    },
    /* 0x48 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2049 /* Table2049 */
+    2127 /* Table2127 */
    },
    /* 0x49 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2051 /* Table2051 */
+    2129 /* Table2129 */
    },
    /* 0x4a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2053 /* Table2053 */
+    2131 /* Table2131 */
    },
    /* 0x4b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2055 /* Table2055 */
+    2133 /* Table2133 */
    },
    /* 0x4c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2057 /* Table2057 */
+    2135 /* Table2135 */
    },
    /* 0x4d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2059 /* Table2059 */
+    2137 /* Table2137 */
    },
    /* 0x4e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2061 /* Table2061 */
+    2139 /* Table2139 */
    },
    /* 0x4f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2063 /* Table2063 */
+    2141 /* Table2141 */
    },
    /* 0x50 */
    { /* ModRMDecision */
@@ -57746,12 +63176,12 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x78 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1664 /* Table1664 */
+    1671 /* Table1671 */
    },
    /* 0x79 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1666 /* Table1666 */
+    1673 /* Table1673 */
    },
    /* 0x7a */
    { /* ModRMDecision */
@@ -57786,282 +63216,282 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x80 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1292 /* Table1292 */
+    1299 /* Table1299 */
    },
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1293 /* Table1293 */
+    1300 /* Table1300 */
    },
    /* 0x82 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1294 /* Table1294 */
+    1301 /* Table1301 */
    },
    /* 0x83 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1295 /* Table1295 */
+    1302 /* Table1302 */
    },
    /* 0x84 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1296 /* Table1296 */
+    1303 /* Table1303 */
    },
    /* 0x85 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1297 /* Table1297 */
+    1304 /* Table1304 */
    },
    /* 0x86 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1298 /* Table1298 */
+    1305 /* Table1305 */
    },
    /* 0x87 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1299 /* Table1299 */
+    1306 /* Table1306 */
    },
    /* 0x88 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1300 /* Table1300 */
+    1307 /* Table1307 */
    },
    /* 0x89 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1301 /* Table1301 */
+    1308 /* Table1308 */
    },
    /* 0x8a */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1302 /* Table1302 */
+    1309 /* Table1309 */
    },
    /* 0x8b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1303 /* Table1303 */
+    1310 /* Table1310 */
    },
    /* 0x8c */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1304 /* Table1304 */
+    1311 /* Table1311 */
    },
    /* 0x8d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1305 /* Table1305 */
+    1312 /* Table1312 */
    },
    /* 0x8e */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1306 /* Table1306 */
+    1313 /* Table1313 */
    },
    /* 0x8f */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1307 /* Table1307 */
+    1314 /* Table1314 */
    },
    /* 0x90 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1308 /* Table1308 */
+    1315 /* Table1315 */
    },
    /* 0x91 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1310 /* Table1310 */
+    1317 /* Table1317 */
    },
    /* 0x92 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1312 /* Table1312 */
+    1319 /* Table1319 */
    },
    /* 0x93 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1314 /* Table1314 */
+    1321 /* Table1321 */
    },
    /* 0x94 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1316 /* Table1316 */
+    1323 /* Table1323 */
    },
    /* 0x95 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1318 /* Table1318 */
+    1325 /* Table1325 */
    },
    /* 0x96 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1320 /* Table1320 */
+    1327 /* Table1327 */
    },
    /* 0x97 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1322 /* Table1322 */
+    1329 /* Table1329 */
    },
    /* 0x98 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1324 /* Table1324 */
+    1331 /* Table1331 */
    },
    /* 0x99 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1326 /* Table1326 */
+    1333 /* Table1333 */
    },
    /* 0x9a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1328 /* Table1328 */
+    1335 /* Table1335 */
    },
    /* 0x9b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1330 /* Table1330 */
+    1337 /* Table1337 */
    },
    /* 0x9c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1332 /* Table1332 */
+    1339 /* Table1339 */
    },
    /* 0x9d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1334 /* Table1334 */
+    1341 /* Table1341 */
    },
    /* 0x9e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1336 /* Table1336 */
+    1343 /* Table1343 */
    },
    /* 0x9f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1338 /* Table1338 */
+    1345 /* Table1345 */
    },
    /* 0xa0 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1668 /* Table1668 */
+    1675 /* Table1675 */
    },
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1669 /* Table1669 */
+    1676 /* Table1676 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1670 /* Table1670 */
+    1349 /* Table1349 */
    },
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2065 /* Table2065 */
+    2143 /* Table2143 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2067 /* Table2067 */
+    2145 /* Table2145 */
    },
    /* 0xa5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2069 /* Table2069 */
+    2147 /* Table2147 */
    },
    /* 0xa6 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1349 /* Table1349 */
+    1356 /* Table1356 */
    },
    /* 0xa7 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1421 /* Table1421 */
+    1428 /* Table1428 */
    },
    /* 0xa8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1671 /* Table1671 */
+    1677 /* Table1677 */
    },
    /* 0xa9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1672 /* Table1672 */
+    1678 /* Table1678 */
    },
    /* 0xaa */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1495 /* Table1495 */
+    1502 /* Table1502 */
    },
    /* 0xab */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2071 /* Table2071 */
+    2149 /* Table2149 */
    },
    /* 0xac */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2073 /* Table2073 */
+    2151 /* Table2151 */
    },
    /* 0xad */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2075 /* Table2075 */
+    2153 /* Table2153 */
    },
    /* 0xae */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    2077 /* Table2077 */
+    2155 /* Table2155 */
    },
    /* 0xaf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2093 /* Table2093 */
+    2171 /* Table2171 */
    },
    /* 0xb0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1520 /* Table1520 */
+    1527 /* Table1527 */
    },
    /* 0xb1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2095 /* Table2095 */
+    2173 /* Table2173 */
    },
    /* 0xb2 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2097 /* Table2097 */
+    2175 /* Table2175 */
    },
    /* 0xb3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2099 /* Table2099 */
+    2177 /* Table2177 */
    },
    /* 0xb4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2101 /* Table2101 */
+    2179 /* Table2179 */
    },
    /* 0xb5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2103 /* Table2103 */
+    2181 /* Table2181 */
    },
    /* 0xb6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2105 /* Table2105 */
+    2183 /* Table2183 */
    },
    /* 0xb7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2107 /* Table2107 */
+    2185 /* Table2185 */
    },
    /* 0xb8 */
    { /* ModRMDecision */
@@ -58071,47 +63501,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xb9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1536 /* Table1536 */
+    1543 /* Table1543 */
    },
    /* 0xba */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    2109 /* Table2109 */
+    2187 /* Table2187 */
    },
    /* 0xbb */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2125 /* Table2125 */
+    2203 /* Table2203 */
    },
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2127 /* Table2127 */
+    2205 /* Table2205 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2129 /* Table2129 */
+    2207 /* Table2207 */
    },
    /* 0xbe */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2131 /* Table2131 */
+    2209 /* Table2209 */
    },
    /* 0xbf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2133 /* Table2133 */
+    2211 /* Table2211 */
    },
    /* 0xc0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1563 /* Table1563 */
+    1570 /* Table1570 */
    },
    /* 0xc1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2135 /* Table2135 */
+    2213 /* Table2213 */
    },
    /* 0xc2 */
    { /* ModRMDecision */
@@ -58141,47 +63571,1332 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xc7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    2137 /* Table2137 */
+    2215 /* Table2215 */
    },
    /* 0xc8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xc9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xca */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xcb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xcc */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xcd */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xce */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xcf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
+    2231 /* Table2231 */
+   },
+   /* 0xd0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xda */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xde */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xea */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xeb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xec */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xed */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xee */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xef */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfa */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfe */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xff */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   }
+  }
+ }
+,  /* IC_64BIT_REXW_ADSIZE */
+ { /* struct OpcodeDecision */
+  {
+   /* 0x00 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    2017 /* Table2017 */
+   },
+   /* 0x01 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITMISC,
+    2033 /* Table2033 */
+   },
+   /* 0x02 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2105 /* Table2105 */
+   },
+   /* 0x03 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2107 /* Table2107 */
+   },
+   /* 0x04 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x05 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1212 /* Table1212 */
+   },
+   /* 0x06 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1213 /* Table1213 */
+   },
+   /* 0x07 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    2109 /* Table2109 */
+   },
+   /* 0x08 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1215 /* Table1215 */
+   },
+   /* 0x09 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1216 /* Table1216 */
+   },
+   /* 0x0a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0b */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1217 /* Table1217 */
+   },
+   /* 0x0c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x10 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x11 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x12 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x13 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x14 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x15 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x16 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x17 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x18 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    1771 /* Table1771 */
+   },
+   /* 0x19 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1787 /* Table1787 */
+   },
+   /* 0x1a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1789 /* Table1789 */
+   },
+   /* 0x1b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1791 /* Table1791 */
+   },
+   /* 0x1c */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1793 /* Table1793 */
+   },
+   /* 0x1d */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1795 /* Table1795 */
+   },
+   /* 0x1e */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1797 /* Table1797 */
+   },
+   /* 0x1f */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1799 /* Table1799 */
+   },
+   /* 0x20 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1663 /* Table1663 */
+   },
+   /* 0x21 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1665 /* Table1665 */
+   },
+   /* 0x22 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1667 /* Table1667 */
+   },
+   /* 0x23 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1669 /* Table1669 */
+   },
+   /* 0x24 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x25 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x26 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x27 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x28 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x29 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x30 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1256 /* Table1256 */
+   },
+   /* 0x31 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1257 /* Table1257 */
+   },
+   /* 0x32 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1258 /* Table1258 */
+   },
+   /* 0x33 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1259 /* Table1259 */
+   },
+   /* 0x34 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1260 /* Table1260 */
+   },
+   /* 0x35 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    2110 /* Table2110 */
+   },
+   /* 0x36 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x37 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1262 /* Table1262 */
+   },
+   /* 0x38 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x39 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x40 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2111 /* Table2111 */
+   },
+   /* 0x41 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2113 /* Table2113 */
+   },
+   /* 0x42 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2115 /* Table2115 */
+   },
+   /* 0x43 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2117 /* Table2117 */
+   },
+   /* 0x44 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2119 /* Table2119 */
+   },
+   /* 0x45 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2121 /* Table2121 */
+   },
+   /* 0x46 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2123 /* Table2123 */
+   },
+   /* 0x47 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2125 /* Table2125 */
+   },
+   /* 0x48 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2127 /* Table2127 */
+   },
+   /* 0x49 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2129 /* Table2129 */
+   },
+   /* 0x4a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2131 /* Table2131 */
+   },
+   /* 0x4b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2133 /* Table2133 */
+   },
+   /* 0x4c */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2135 /* Table2135 */
+   },
+   /* 0x4d */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2137 /* Table2137 */
+   },
+   /* 0x4e */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2139 /* Table2139 */
+   },
+   /* 0x4f */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2141 /* Table2141 */
+   },
+   /* 0x50 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x51 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x52 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x53 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x54 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x55 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x56 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x57 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x58 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x59 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x60 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x61 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x62 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x63 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x64 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x65 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x66 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x67 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x68 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x69 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x70 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x71 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x72 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x73 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x74 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x75 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x76 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x77 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x78 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1671 /* Table1671 */
+   },
+   /* 0x79 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1673 /* Table1673 */
+   },
+   /* 0x7a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x80 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1833 /* Table1833 */
+   },
+   /* 0x81 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1834 /* Table1834 */
+   },
+   /* 0x82 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1835 /* Table1835 */
+   },
+   /* 0x83 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1836 /* Table1836 */
+   },
+   /* 0x84 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1837 /* Table1837 */
+   },
+   /* 0x85 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1838 /* Table1838 */
+   },
+   /* 0x86 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1839 /* Table1839 */
+   },
+   /* 0x87 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1840 /* Table1840 */
+   },
+   /* 0x88 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1841 /* Table1841 */
+   },
+   /* 0x89 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1842 /* Table1842 */
+   },
+   /* 0x8a */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1843 /* Table1843 */
+   },
+   /* 0x8b */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1844 /* Table1844 */
+   },
+   /* 0x8c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1845 /* Table1845 */
+   },
+   /* 0x8d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1846 /* Table1846 */
+   },
+   /* 0x8e */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1847 /* Table1847 */
+   },
+   /* 0x8f */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1848 /* Table1848 */
+   },
+   /* 0x90 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1315 /* Table1315 */
+   },
+   /* 0x91 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1317 /* Table1317 */
+   },
+   /* 0x92 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1319 /* Table1319 */
+   },
+   /* 0x93 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1321 /* Table1321 */
+   },
+   /* 0x94 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1323 /* Table1323 */
+   },
+   /* 0x95 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1325 /* Table1325 */
+   },
+   /* 0x96 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1327 /* Table1327 */
+   },
+   /* 0x97 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1329 /* Table1329 */
+   },
+   /* 0x98 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1331 /* Table1331 */
+   },
+   /* 0x99 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1333 /* Table1333 */
+   },
+   /* 0x9a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1335 /* Table1335 */
+   },
+   /* 0x9b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1337 /* Table1337 */
+   },
+   /* 0x9c */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1339 /* Table1339 */
+   },
+   /* 0x9d */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1341 /* Table1341 */
+   },
+   /* 0x9e */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1343 /* Table1343 */
+   },
+   /* 0x9f */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1345 /* Table1345 */
+   },
+   /* 0xa0 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1849 /* Table1849 */
+   },
+   /* 0xa1 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1850 /* Table1850 */
+   },
+   /* 0xa2 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1349 /* Table1349 */
+   },
+   /* 0xa3 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2143 /* Table2143 */
+   },
+   /* 0xa4 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2145 /* Table2145 */
+   },
+   /* 0xa5 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2147 /* Table2147 */
+   },
+   /* 0xa6 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITMISC,
+    1356 /* Table1356 */
+   },
+   /* 0xa7 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITMISC,
+    1428 /* Table1428 */
+   },
+   /* 0xa8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1857 /* Table1857 */
+   },
+   /* 0xa9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1858 /* Table1858 */
+   },
+   /* 0xaa */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1502 /* Table1502 */
+   },
+   /* 0xab */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2149 /* Table2149 */
+   },
+   /* 0xac */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2151 /* Table2151 */
+   },
+   /* 0xad */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
     2153 /* Table2153 */
+   },
+   /* 0xae */
+   { /* struct ModRMDecision */
+    MODRM_SPLITMISC,
+    2232 /* Table2232 */
+   },
+   /* 0xaf */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2171 /* Table2171 */
+   },
+   /* 0xb0 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1527 /* Table1527 */
+   },
+   /* 0xb1 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2173 /* Table2173 */
+   },
+   /* 0xb2 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2175 /* Table2175 */
+   },
+   /* 0xb3 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2177 /* Table2177 */
+   },
+   /* 0xb4 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2179 /* Table2179 */
+   },
+   /* 0xb5 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2181 /* Table2181 */
+   },
+   /* 0xb6 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2183 /* Table2183 */
+   },
+   /* 0xb7 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2185 /* Table2185 */
+   },
+   /* 0xb8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1543 /* Table1543 */
+   },
+   /* 0xba */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    2187 /* Table2187 */
+   },
+   /* 0xbb */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2203 /* Table2203 */
+   },
+   /* 0xbc */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2205 /* Table2205 */
+   },
+   /* 0xbd */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2207 /* Table2207 */
+   },
+   /* 0xbe */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2209 /* Table2209 */
+   },
+   /* 0xbf */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2211 /* Table2211 */
+   },
+   /* 0xc0 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1570 /* Table1570 */
+   },
+   /* 0xc1 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2213 /* Table2213 */
+   },
+   /* 0xc2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc7 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    2304 /* Table2304 */
+   },
+   /* 0xc8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    2231 /* Table2231 */
+   },
+   /* 0xc9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    2231 /* Table2231 */
+   },
+   /* 0xca */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    2231 /* Table2231 */
+   },
+   /* 0xcb */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    2231 /* Table2231 */
+   },
+   /* 0xcc */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    2231 /* Table2231 */
+   },
+   /* 0xcd */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    2231 /* Table2231 */
+   },
+   /* 0xce */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    2231 /* Table2231 */
+   },
+   /* 0xcf */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    2231 /* Table2231 */
    },
    /* 0xd0 */
    { /* ModRMDecision */
@@ -58431,22 +65146,22 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x00 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1673 /* Table1673 */
+    1679 /* Table1679 */
    },
    /* 0x01 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    2154 /* Table2154 */
+    2320 /* Table2320 */
    },
    /* 0x02 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1761 /* Table1761 */
+    1767 /* Table1767 */
    },
    /* 0x03 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1763 /* Table1763 */
+    1769 /* Table1769 */
    },
    /* 0x04 */
    { /* ModRMDecision */
@@ -58456,27 +65171,27 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x05 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1205 /* Table1205 */
+    1212 /* Table1212 */
    },
    /* 0x06 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1206 /* Table1206 */
+    1213 /* Table1213 */
    },
    /* 0x07 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1207 /* Table1207 */
+    1214 /* Table1214 */
    },
    /* 0x08 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1208 /* Table1208 */
+    1215 /* Table1215 */
    },
    /* 0x09 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1209 /* Table1209 */
+    1216 /* Table1216 */
    },
    /* 0x0a */
    { /* ModRMDecision */
@@ -58486,7 +65201,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x0b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1210 /* Table1210 */
+    1217 /* Table1217 */
    },
    /* 0x0c */
    { /* ModRMDecision */
@@ -58551,62 +65266,62 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x18 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1765 /* Table1765 */
+    1771 /* Table1771 */
    },
    /* 0x19 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1781 /* Table1781 */
+    1787 /* Table1787 */
    },
    /* 0x1a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1783 /* Table1783 */
+    1789 /* Table1789 */
    },
    /* 0x1b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1785 /* Table1785 */
+    1791 /* Table1791 */
    },
    /* 0x1c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1787 /* Table1787 */
+    1793 /* Table1793 */
    },
    /* 0x1d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1789 /* Table1789 */
+    1795 /* Table1795 */
    },
    /* 0x1e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1791 /* Table1791 */
+    1797 /* Table1797 */
    },
    /* 0x1f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1793 /* Table1793 */
+    1799 /* Table1799 */
    },
    /* 0x20 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1656 /* Table1656 */
+    1663 /* Table1663 */
    },
    /* 0x21 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1658 /* Table1658 */
+    1665 /* Table1665 */
    },
    /* 0x22 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1660 /* Table1660 */
+    1667 /* Table1667 */
    },
    /* 0x23 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1662 /* Table1662 */
+    1669 /* Table1669 */
    },
    /* 0x24 */
    { /* ModRMDecision */
@@ -58671,32 +65386,32 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x30 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1249 /* Table1249 */
+    1256 /* Table1256 */
    },
    /* 0x31 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1250 /* Table1250 */
+    1257 /* Table1257 */
    },
    /* 0x32 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1251 /* Table1251 */
+    1258 /* Table1258 */
    },
    /* 0x33 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1252 /* Table1252 */
+    1259 /* Table1259 */
    },
    /* 0x34 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1253 /* Table1253 */
+    1260 /* Table1260 */
    },
    /* 0x35 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1254 /* Table1254 */
+    1261 /* Table1261 */
    },
    /* 0x36 */
    { /* ModRMDecision */
@@ -58706,7 +65421,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x37 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1255 /* Table1255 */
+    1262 /* Table1262 */
    },
    /* 0x38 */
    { /* ModRMDecision */
@@ -58751,82 +65466,82 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x40 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1795 /* Table1795 */
+    1801 /* Table1801 */
    },
    /* 0x41 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1797 /* Table1797 */
+    1803 /* Table1803 */
    },
    /* 0x42 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1799 /* Table1799 */
+    1805 /* Table1805 */
    },
    /* 0x43 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1801 /* Table1801 */
+    1807 /* Table1807 */
    },
    /* 0x44 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1803 /* Table1803 */
+    1809 /* Table1809 */
    },
    /* 0x45 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1805 /* Table1805 */
+    1811 /* Table1811 */
    },
    /* 0x46 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1807 /* Table1807 */
+    1813 /* Table1813 */
    },
    /* 0x47 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1809 /* Table1809 */
+    1815 /* Table1815 */
    },
    /* 0x48 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1811 /* Table1811 */
+    1817 /* Table1817 */
    },
    /* 0x49 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1813 /* Table1813 */
+    1819 /* Table1819 */
    },
    /* 0x4a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1815 /* Table1815 */
+    1821 /* Table1821 */
    },
    /* 0x4b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1817 /* Table1817 */
+    1823 /* Table1823 */
    },
    /* 0x4c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1819 /* Table1819 */
+    1825 /* Table1825 */
    },
    /* 0x4d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1821 /* Table1821 */
+    1827 /* Table1827 */
    },
    /* 0x4e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1823 /* Table1823 */
+    1829 /* Table1829 */
    },
    /* 0x4f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1825 /* Table1825 */
+    1831 /* Table1831 */
    },
    /* 0x50 */
    { /* ModRMDecision */
@@ -59031,12 +65746,12 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x78 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1664 /* Table1664 */
+    1671 /* Table1671 */
    },
    /* 0x79 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1666 /* Table1666 */
+    1673 /* Table1673 */
    },
    /* 0x7a */
    { /* ModRMDecision */
@@ -59071,282 +65786,282 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x80 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1827 /* Table1827 */
+    1833 /* Table1833 */
    },
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1828 /* Table1828 */
+    1834 /* Table1834 */
    },
    /* 0x82 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1829 /* Table1829 */
+    1835 /* Table1835 */
    },
    /* 0x83 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1830 /* Table1830 */
+    1836 /* Table1836 */
    },
    /* 0x84 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1831 /* Table1831 */
+    1837 /* Table1837 */
    },
    /* 0x85 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1832 /* Table1832 */
+    1838 /* Table1838 */
    },
    /* 0x86 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1833 /* Table1833 */
+    1839 /* Table1839 */
    },
    /* 0x87 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1834 /* Table1834 */
+    1840 /* Table1840 */
    },
    /* 0x88 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1835 /* Table1835 */
+    1841 /* Table1841 */
    },
    /* 0x89 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1836 /* Table1836 */
+    1842 /* Table1842 */
    },
    /* 0x8a */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1837 /* Table1837 */
+    1843 /* Table1843 */
    },
    /* 0x8b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1838 /* Table1838 */
+    1844 /* Table1844 */
    },
    /* 0x8c */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1839 /* Table1839 */
+    1845 /* Table1845 */
    },
    /* 0x8d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1840 /* Table1840 */
+    1846 /* Table1846 */
    },
    /* 0x8e */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1841 /* Table1841 */
+    1847 /* Table1847 */
    },
    /* 0x8f */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1842 /* Table1842 */
+    1848 /* Table1848 */
    },
    /* 0x90 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1308 /* Table1308 */
+    1315 /* Table1315 */
    },
    /* 0x91 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1310 /* Table1310 */
+    1317 /* Table1317 */
    },
    /* 0x92 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1312 /* Table1312 */
+    1319 /* Table1319 */
    },
    /* 0x93 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1314 /* Table1314 */
+    1321 /* Table1321 */
    },
    /* 0x94 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1316 /* Table1316 */
+    1323 /* Table1323 */
    },
    /* 0x95 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1318 /* Table1318 */
+    1325 /* Table1325 */
    },
    /* 0x96 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1320 /* Table1320 */
+    1327 /* Table1327 */
    },
    /* 0x97 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1322 /* Table1322 */
+    1329 /* Table1329 */
    },
    /* 0x98 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1324 /* Table1324 */
+    1331 /* Table1331 */
    },
    /* 0x99 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1326 /* Table1326 */
+    1333 /* Table1333 */
    },
    /* 0x9a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1328 /* Table1328 */
+    1335 /* Table1335 */
    },
    /* 0x9b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1330 /* Table1330 */
+    1337 /* Table1337 */
    },
    /* 0x9c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1332 /* Table1332 */
+    1339 /* Table1339 */
    },
    /* 0x9d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1334 /* Table1334 */
+    1341 /* Table1341 */
    },
    /* 0x9e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1336 /* Table1336 */
+    1343 /* Table1343 */
    },
    /* 0x9f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1338 /* Table1338 */
+    1345 /* Table1345 */
    },
    /* 0xa0 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1843 /* Table1843 */
+    1849 /* Table1849 */
    },
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1844 /* Table1844 */
+    1850 /* Table1850 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1670 /* Table1670 */
+    1349 /* Table1349 */
    },
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1845 /* Table1845 */
+    1851 /* Table1851 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1847 /* Table1847 */
+    1853 /* Table1853 */
    },
    /* 0xa5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1849 /* Table1849 */
+    1855 /* Table1855 */
    },
    /* 0xa6 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1349 /* Table1349 */
+    1356 /* Table1356 */
    },
    /* 0xa7 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1421 /* Table1421 */
+    1428 /* Table1428 */
    },
    /* 0xa8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1851 /* Table1851 */
+    1857 /* Table1857 */
    },
    /* 0xa9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1852 /* Table1852 */
+    1858 /* Table1858 */
    },
    /* 0xaa */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1495 /* Table1495 */
+    1502 /* Table1502 */
    },
    /* 0xab */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1853 /* Table1853 */
+    1859 /* Table1859 */
    },
    /* 0xac */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1855 /* Table1855 */
+    1861 /* Table1861 */
    },
    /* 0xad */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1857 /* Table1857 */
+    1863 /* Table1863 */
    },
    /* 0xae */
    { /* struct ModRMDecision */
-    MODRM_SPLITREG,
-    1502 /* Table1502 */
+    MODRM_SPLITMISC,
+    1865 /* Table1865 */
    },
    /* 0xaf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1859 /* Table1859 */
+    1937 /* Table1937 */
    },
    /* 0xb0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1520 /* Table1520 */
+    1527 /* Table1527 */
    },
    /* 0xb1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1861 /* Table1861 */
+    1939 /* Table1939 */
    },
    /* 0xb2 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1863 /* Table1863 */
+    1941 /* Table1941 */
    },
    /* 0xb3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1865 /* Table1865 */
+    1943 /* Table1943 */
    },
    /* 0xb4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1867 /* Table1867 */
+    1945 /* Table1945 */
    },
    /* 0xb5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1869 /* Table1869 */
+    1947 /* Table1947 */
    },
    /* 0xb6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1871 /* Table1871 */
+    1949 /* Table1949 */
    },
    /* 0xb7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1534 /* Table1534 */
+    1541 /* Table1541 */
    },
    /* 0xb8 */
    { /* ModRMDecision */
@@ -59356,47 +66071,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xb9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1536 /* Table1536 */
+    1543 /* Table1543 */
    },
    /* 0xba */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1873 /* Table1873 */
+    1951 /* Table1951 */
    },
    /* 0xbb */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1889 /* Table1889 */
+    1967 /* Table1967 */
    },
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1891 /* Table1891 */
+    1969 /* Table1969 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1893 /* Table1893 */
+    1971 /* Table1971 */
    },
    /* 0xbe */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1895 /* Table1895 */
+    1973 /* Table1973 */
    },
    /* 0xbf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1561 /* Table1561 */
+    1568 /* Table1568 */
    },
    /* 0xc0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1563 /* Table1563 */
+    1570 /* Table1570 */
    },
    /* 0xc1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1897 /* Table1897 */
+    1975 /* Table1975 */
    },
    /* 0xc2 */
    { /* ModRMDecision */
@@ -59426,47 +66141,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xc7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1899 /* Table1899 */
+    1977 /* Table1977 */
    },
    /* 0xc8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xc9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xca */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcc */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcd */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xce */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xd0 */
    { /* ModRMDecision */
@@ -59716,22 +66431,22 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x00 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1113 /* Table1113 */
+    1120 /* Table1120 */
    },
    /* 0x01 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1584 /* Table1584 */
+    1591 /* Table1591 */
    },
    /* 0x02 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1201 /* Table1201 */
+    1208 /* Table1208 */
    },
    /* 0x03 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1203 /* Table1203 */
+    1210 /* Table1210 */
    },
    /* 0x04 */
    { /* ModRMDecision */
@@ -59741,27 +66456,27 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x05 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1205 /* Table1205 */
+    1212 /* Table1212 */
    },
    /* 0x06 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1206 /* Table1206 */
+    1213 /* Table1213 */
    },
    /* 0x07 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1207 /* Table1207 */
+    1214 /* Table1214 */
    },
    /* 0x08 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1208 /* Table1208 */
+    1215 /* Table1215 */
    },
    /* 0x09 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1209 /* Table1209 */
+    1216 /* Table1216 */
    },
    /* 0x0a */
    { /* ModRMDecision */
@@ -59771,7 +66486,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x0b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1210 /* Table1210 */
+    1217 /* Table1217 */
    },
    /* 0x0c */
    { /* ModRMDecision */
@@ -59836,62 +66551,62 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x18 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1211 /* Table1211 */
+    1218 /* Table1218 */
    },
    /* 0x19 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1227 /* Table1227 */
+    1234 /* Table1234 */
    },
    /* 0x1a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1229 /* Table1229 */
+    1236 /* Table1236 */
    },
    /* 0x1b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1231 /* Table1231 */
+    1238 /* Table1238 */
    },
    /* 0x1c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1233 /* Table1233 */
+    1240 /* Table1240 */
    },
    /* 0x1d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1235 /* Table1235 */
+    1242 /* Table1242 */
    },
    /* 0x1e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1237 /* Table1237 */
+    1244 /* Table1244 */
    },
    /* 0x1f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1239 /* Table1239 */
+    1246 /* Table1246 */
    },
    /* 0x20 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1656 /* Table1656 */
+    1663 /* Table1663 */
    },
    /* 0x21 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1658 /* Table1658 */
+    1665 /* Table1665 */
    },
    /* 0x22 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1660 /* Table1660 */
+    1667 /* Table1667 */
    },
    /* 0x23 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1662 /* Table1662 */
+    1669 /* Table1669 */
    },
    /* 0x24 */
    { /* ModRMDecision */
@@ -59956,32 +66671,32 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x30 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1249 /* Table1249 */
+    1256 /* Table1256 */
    },
    /* 0x31 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1250 /* Table1250 */
+    1257 /* Table1257 */
    },
    /* 0x32 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1251 /* Table1251 */
+    1258 /* Table1258 */
    },
    /* 0x33 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1252 /* Table1252 */
+    1259 /* Table1259 */
    },
    /* 0x34 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1253 /* Table1253 */
+    1260 /* Table1260 */
    },
    /* 0x35 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1254 /* Table1254 */
+    1261 /* Table1261 */
    },
    /* 0x36 */
    { /* ModRMDecision */
@@ -59991,7 +66706,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x37 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1255 /* Table1255 */
+    1262 /* Table1262 */
    },
    /* 0x38 */
    { /* ModRMDecision */
@@ -60036,82 +66751,82 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x40 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1256 /* Table1256 */
+    1263 /* Table1263 */
    },
    /* 0x41 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1258 /* Table1258 */
+    1265 /* Table1265 */
    },
    /* 0x42 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1260 /* Table1260 */
+    1267 /* Table1267 */
    },
    /* 0x43 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1262 /* Table1262 */
+    1269 /* Table1269 */
    },
    /* 0x44 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1264 /* Table1264 */
+    1271 /* Table1271 */
    },
    /* 0x45 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1266 /* Table1266 */
+    1273 /* Table1273 */
    },
    /* 0x46 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1268 /* Table1268 */
+    1275 /* Table1275 */
    },
    /* 0x47 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1270 /* Table1270 */
+    1277 /* Table1277 */
    },
    /* 0x48 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1272 /* Table1272 */
+    1279 /* Table1279 */
    },
    /* 0x49 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1274 /* Table1274 */
+    1281 /* Table1281 */
    },
    /* 0x4a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1276 /* Table1276 */
+    1283 /* Table1283 */
    },
    /* 0x4b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1278 /* Table1278 */
+    1285 /* Table1285 */
    },
    /* 0x4c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1280 /* Table1280 */
+    1287 /* Table1287 */
    },
    /* 0x4d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1282 /* Table1282 */
+    1289 /* Table1289 */
    },
    /* 0x4e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1284 /* Table1284 */
+    1291 /* Table1291 */
    },
    /* 0x4f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1286 /* Table1286 */
+    1293 /* Table1293 */
    },
    /* 0x50 */
    { /* ModRMDecision */
@@ -60316,12 +67031,12 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x78 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1664 /* Table1664 */
+    1671 /* Table1671 */
    },
    /* 0x79 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1666 /* Table1666 */
+    1673 /* Table1673 */
    },
    /* 0x7a */
    { /* ModRMDecision */
@@ -60356,282 +67071,282 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x80 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1292 /* Table1292 */
+    1299 /* Table1299 */
    },
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1293 /* Table1293 */
+    1300 /* Table1300 */
    },
    /* 0x82 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1294 /* Table1294 */
+    1301 /* Table1301 */
    },
    /* 0x83 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1295 /* Table1295 */
+    1302 /* Table1302 */
    },
    /* 0x84 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1296 /* Table1296 */
+    1303 /* Table1303 */
    },
    /* 0x85 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1297 /* Table1297 */
+    1304 /* Table1304 */
    },
    /* 0x86 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1298 /* Table1298 */
+    1305 /* Table1305 */
    },
    /* 0x87 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1299 /* Table1299 */
+    1306 /* Table1306 */
    },
    /* 0x88 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1300 /* Table1300 */
+    1307 /* Table1307 */
    },
    /* 0x89 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1301 /* Table1301 */
+    1308 /* Table1308 */
    },
    /* 0x8a */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1302 /* Table1302 */
+    1309 /* Table1309 */
    },
    /* 0x8b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1303 /* Table1303 */
+    1310 /* Table1310 */
    },
    /* 0x8c */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1304 /* Table1304 */
+    1311 /* Table1311 */
    },
    /* 0x8d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1305 /* Table1305 */
+    1312 /* Table1312 */
    },
    /* 0x8e */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1306 /* Table1306 */
+    1313 /* Table1313 */
    },
    /* 0x8f */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1307 /* Table1307 */
+    1314 /* Table1314 */
    },
    /* 0x90 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1308 /* Table1308 */
+    1315 /* Table1315 */
    },
    /* 0x91 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1310 /* Table1310 */
+    1317 /* Table1317 */
    },
    /* 0x92 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1312 /* Table1312 */
+    1319 /* Table1319 */
    },
    /* 0x93 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1314 /* Table1314 */
+    1321 /* Table1321 */
    },
    /* 0x94 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1316 /* Table1316 */
+    1323 /* Table1323 */
    },
    /* 0x95 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1318 /* Table1318 */
+    1325 /* Table1325 */
    },
    /* 0x96 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1320 /* Table1320 */
+    1327 /* Table1327 */
    },
    /* 0x97 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1322 /* Table1322 */
+    1329 /* Table1329 */
    },
    /* 0x98 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1324 /* Table1324 */
+    1331 /* Table1331 */
    },
    /* 0x99 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1326 /* Table1326 */
+    1333 /* Table1333 */
    },
    /* 0x9a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1328 /* Table1328 */
+    1335 /* Table1335 */
    },
    /* 0x9b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1330 /* Table1330 */
+    1337 /* Table1337 */
    },
    /* 0x9c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1332 /* Table1332 */
+    1339 /* Table1339 */
    },
    /* 0x9d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1334 /* Table1334 */
+    1341 /* Table1341 */
    },
    /* 0x9e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1336 /* Table1336 */
+    1343 /* Table1343 */
    },
    /* 0x9f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1338 /* Table1338 */
+    1345 /* Table1345 */
    },
    /* 0xa0 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1668 /* Table1668 */
+    1675 /* Table1675 */
    },
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1669 /* Table1669 */
+    1676 /* Table1676 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1670 /* Table1670 */
+    1349 /* Table1349 */
    },
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1343 /* Table1343 */
+    1350 /* Table1350 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1345 /* Table1345 */
+    1352 /* Table1352 */
    },
    /* 0xa5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1347 /* Table1347 */
+    1354 /* Table1354 */
    },
    /* 0xa6 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1349 /* Table1349 */
+    1356 /* Table1356 */
    },
    /* 0xa7 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1421 /* Table1421 */
+    1428 /* Table1428 */
    },
    /* 0xa8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1671 /* Table1671 */
+    1677 /* Table1677 */
    },
    /* 0xa9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1672 /* Table1672 */
+    1678 /* Table1678 */
    },
    /* 0xaa */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1495 /* Table1495 */
+    1502 /* Table1502 */
    },
    /* 0xab */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1496 /* Table1496 */
+    1503 /* Table1503 */
    },
    /* 0xac */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1498 /* Table1498 */
+    1505 /* Table1505 */
    },
    /* 0xad */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1500 /* Table1500 */
+    1507 /* Table1507 */
    },
    /* 0xae */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1502 /* Table1502 */
+    1509 /* Table1509 */
    },
    /* 0xaf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1518 /* Table1518 */
+    1525 /* Table1525 */
    },
    /* 0xb0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1520 /* Table1520 */
+    1527 /* Table1527 */
    },
    /* 0xb1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1522 /* Table1522 */
+    1529 /* Table1529 */
    },
    /* 0xb2 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1524 /* Table1524 */
+    1531 /* Table1531 */
    },
    /* 0xb3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1526 /* Table1526 */
+    1533 /* Table1533 */
    },
    /* 0xb4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1528 /* Table1528 */
+    1535 /* Table1535 */
    },
    /* 0xb5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1530 /* Table1530 */
+    1537 /* Table1537 */
    },
    /* 0xb6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1532 /* Table1532 */
+    1539 /* Table1539 */
    },
    /* 0xb7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1534 /* Table1534 */
+    1541 /* Table1541 */
    },
    /* 0xb8 */
    { /* ModRMDecision */
@@ -60641,47 +67356,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xb9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1536 /* Table1536 */
+    1543 /* Table1543 */
    },
    /* 0xba */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1537 /* Table1537 */
+    1544 /* Table1544 */
    },
    /* 0xbb */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1553 /* Table1553 */
+    1560 /* Table1560 */
    },
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1555 /* Table1555 */
+    1562 /* Table1562 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1557 /* Table1557 */
+    1564 /* Table1564 */
    },
    /* 0xbe */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1559 /* Table1559 */
+    1566 /* Table1566 */
    },
    /* 0xbf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1561 /* Table1561 */
+    1568 /* Table1568 */
    },
    /* 0xc0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1563 /* Table1563 */
+    1570 /* Table1570 */
    },
    /* 0xc1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1565 /* Table1565 */
+    1572 /* Table1572 */
    },
    /* 0xc2 */
    { /* ModRMDecision */
@@ -60711,47 +67426,1332 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xc7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1567 /* Table1567 */
+    1574 /* Table1574 */
    },
    /* 0xc8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xc9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xca */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcc */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcd */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xce */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
+   },
+   /* 0xd0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xda */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xde */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xea */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xeb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xec */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xed */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xee */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xef */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfa */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfe */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xff */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   }
+  }
+ }
+,  /* IC_64BIT_OPSIZE_ADSIZE */
+ { /* struct OpcodeDecision */
+  {
+   /* 0x00 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    1679 /* Table1679 */
+   },
+   /* 0x01 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITMISC,
+    2320 /* Table2320 */
+   },
+   /* 0x02 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1767 /* Table1767 */
+   },
+   /* 0x03 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1769 /* Table1769 */
+   },
+   /* 0x04 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x05 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1212 /* Table1212 */
+   },
+   /* 0x06 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1213 /* Table1213 */
+   },
+   /* 0x07 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1214 /* Table1214 */
+   },
+   /* 0x08 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1215 /* Table1215 */
+   },
+   /* 0x09 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1216 /* Table1216 */
+   },
+   /* 0x0a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0b */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1217 /* Table1217 */
+   },
+   /* 0x0c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x10 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x11 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x12 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x13 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x14 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x15 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x16 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x17 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x18 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    1771 /* Table1771 */
+   },
+   /* 0x19 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1787 /* Table1787 */
+   },
+   /* 0x1a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1789 /* Table1789 */
+   },
+   /* 0x1b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1791 /* Table1791 */
+   },
+   /* 0x1c */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1793 /* Table1793 */
+   },
+   /* 0x1d */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1795 /* Table1795 */
+   },
+   /* 0x1e */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1797 /* Table1797 */
+   },
+   /* 0x1f */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1799 /* Table1799 */
+   },
+   /* 0x20 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1663 /* Table1663 */
+   },
+   /* 0x21 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1665 /* Table1665 */
+   },
+   /* 0x22 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1667 /* Table1667 */
+   },
+   /* 0x23 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1669 /* Table1669 */
+   },
+   /* 0x24 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x25 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x26 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x27 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x28 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x29 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x30 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1256 /* Table1256 */
+   },
+   /* 0x31 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1257 /* Table1257 */
+   },
+   /* 0x32 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1258 /* Table1258 */
+   },
+   /* 0x33 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1259 /* Table1259 */
+   },
+   /* 0x34 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1260 /* Table1260 */
+   },
+   /* 0x35 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1261 /* Table1261 */
+   },
+   /* 0x36 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x37 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1262 /* Table1262 */
+   },
+   /* 0x38 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x39 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x40 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1801 /* Table1801 */
+   },
+   /* 0x41 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1803 /* Table1803 */
+   },
+   /* 0x42 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1805 /* Table1805 */
+   },
+   /* 0x43 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1807 /* Table1807 */
+   },
+   /* 0x44 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1809 /* Table1809 */
+   },
+   /* 0x45 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1811 /* Table1811 */
+   },
+   /* 0x46 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1813 /* Table1813 */
+   },
+   /* 0x47 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1815 /* Table1815 */
+   },
+   /* 0x48 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1817 /* Table1817 */
+   },
+   /* 0x49 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1819 /* Table1819 */
+   },
+   /* 0x4a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1821 /* Table1821 */
+   },
+   /* 0x4b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1823 /* Table1823 */
+   },
+   /* 0x4c */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1825 /* Table1825 */
+   },
+   /* 0x4d */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1827 /* Table1827 */
+   },
+   /* 0x4e */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1829 /* Table1829 */
+   },
+   /* 0x4f */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1831 /* Table1831 */
+   },
+   /* 0x50 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x51 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x52 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x53 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x54 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x55 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x56 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x57 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x58 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x59 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x60 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x61 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x62 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x63 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x64 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x65 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x66 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x67 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x68 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x69 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x70 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x71 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x72 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x73 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x74 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x75 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x76 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x77 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x78 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1671 /* Table1671 */
+   },
+   /* 0x79 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1673 /* Table1673 */
+   },
+   /* 0x7a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x80 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1833 /* Table1833 */
+   },
+   /* 0x81 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1834 /* Table1834 */
+   },
+   /* 0x82 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1835 /* Table1835 */
+   },
+   /* 0x83 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1836 /* Table1836 */
+   },
+   /* 0x84 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1837 /* Table1837 */
+   },
+   /* 0x85 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1838 /* Table1838 */
+   },
+   /* 0x86 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1839 /* Table1839 */
+   },
+   /* 0x87 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1840 /* Table1840 */
+   },
+   /* 0x88 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1841 /* Table1841 */
+   },
+   /* 0x89 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1842 /* Table1842 */
+   },
+   /* 0x8a */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1843 /* Table1843 */
+   },
+   /* 0x8b */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1844 /* Table1844 */
+   },
+   /* 0x8c */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1845 /* Table1845 */
+   },
+   /* 0x8d */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1846 /* Table1846 */
+   },
+   /* 0x8e */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1847 /* Table1847 */
+   },
+   /* 0x8f */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1848 /* Table1848 */
+   },
+   /* 0x90 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1315 /* Table1315 */
+   },
+   /* 0x91 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1317 /* Table1317 */
+   },
+   /* 0x92 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1319 /* Table1319 */
+   },
+   /* 0x93 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1321 /* Table1321 */
+   },
+   /* 0x94 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1323 /* Table1323 */
+   },
+   /* 0x95 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1325 /* Table1325 */
+   },
+   /* 0x96 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1327 /* Table1327 */
+   },
+   /* 0x97 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1329 /* Table1329 */
+   },
+   /* 0x98 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1331 /* Table1331 */
+   },
+   /* 0x99 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1333 /* Table1333 */
+   },
+   /* 0x9a */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1335 /* Table1335 */
+   },
+   /* 0x9b */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1337 /* Table1337 */
+   },
+   /* 0x9c */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1339 /* Table1339 */
+   },
+   /* 0x9d */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1341 /* Table1341 */
+   },
+   /* 0x9e */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1343 /* Table1343 */
+   },
+   /* 0x9f */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1345 /* Table1345 */
+   },
+   /* 0xa0 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1849 /* Table1849 */
+   },
+   /* 0xa1 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1850 /* Table1850 */
+   },
+   /* 0xa2 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1349 /* Table1349 */
+   },
+   /* 0xa3 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1851 /* Table1851 */
+   },
+   /* 0xa4 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1853 /* Table1853 */
+   },
+   /* 0xa5 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1855 /* Table1855 */
+   },
+   /* 0xa6 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITMISC,
+    1356 /* Table1356 */
+   },
+   /* 0xa7 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITMISC,
+    1428 /* Table1428 */
+   },
+   /* 0xa8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1857 /* Table1857 */
+   },
+   /* 0xa9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1858 /* Table1858 */
+   },
+   /* 0xaa */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1502 /* Table1502 */
+   },
+   /* 0xab */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1859 /* Table1859 */
+   },
+   /* 0xac */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1861 /* Table1861 */
+   },
+   /* 0xad */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1863 /* Table1863 */
+   },
+   /* 0xae */
+   { /* struct ModRMDecision */
+    MODRM_SPLITMISC,
+    1865 /* Table1865 */
+   },
+   /* 0xaf */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1937 /* Table1937 */
+   },
+   /* 0xb0 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1527 /* Table1527 */
+   },
+   /* 0xb1 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1939 /* Table1939 */
+   },
+   /* 0xb2 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1941 /* Table1941 */
+   },
+   /* 0xb3 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1943 /* Table1943 */
+   },
+   /* 0xb4 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1945 /* Table1945 */
+   },
+   /* 0xb5 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1947 /* Table1947 */
+   },
+   /* 0xb6 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1949 /* Table1949 */
+   },
+   /* 0xb7 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1541 /* Table1541 */
+   },
+   /* 0xb8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1543 /* Table1543 */
+   },
+   /* 0xba */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    1951 /* Table1951 */
+   },
+   /* 0xbb */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1967 /* Table1967 */
+   },
+   /* 0xbc */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1969 /* Table1969 */
+   },
+   /* 0xbd */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1971 /* Table1971 */
+   },
+   /* 0xbe */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1973 /* Table1973 */
+   },
+   /* 0xbf */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1568 /* Table1568 */
+   },
+   /* 0xc0 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1570 /* Table1570 */
+   },
+   /* 0xc1 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    1975 /* Table1975 */
+   },
+   /* 0xc2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc7 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITREG,
+    1977 /* Table1977 */
+   },
+   /* 0xc8 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1590 /* Table1590 */
+   },
+   /* 0xc9 */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1590 /* Table1590 */
+   },
+   /* 0xca */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1590 /* Table1590 */
+   },
+   /* 0xcb */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1590 /* Table1590 */
+   },
+   /* 0xcc */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1590 /* Table1590 */
+   },
+   /* 0xcd */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1590 /* Table1590 */
+   },
+   /* 0xce */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1590 /* Table1590 */
+   },
+   /* 0xcf */
+   { /* struct ModRMDecision */
+    MODRM_ONEENTRY,
+    1590 /* Table1590 */
    },
    /* 0xd0 */
    { /* ModRMDecision */
@@ -61001,22 +69001,22 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x00 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1113 /* Table1113 */
+    1120 /* Table1120 */
    },
    /* 0x01 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1584 /* Table1584 */
+    1591 /* Table1591 */
    },
    /* 0x02 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1201 /* Table1201 */
+    1208 /* Table1208 */
    },
    /* 0x03 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1203 /* Table1203 */
+    1210 /* Table1210 */
    },
    /* 0x04 */
    { /* ModRMDecision */
@@ -61026,27 +69026,27 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x05 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1205 /* Table1205 */
+    1212 /* Table1212 */
    },
    /* 0x06 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1206 /* Table1206 */
+    1213 /* Table1213 */
    },
    /* 0x07 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1207 /* Table1207 */
+    1214 /* Table1214 */
    },
    /* 0x08 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1208 /* Table1208 */
+    1215 /* Table1215 */
    },
    /* 0x09 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1209 /* Table1209 */
+    1216 /* Table1216 */
    },
    /* 0x0a */
    { /* ModRMDecision */
@@ -61056,7 +69056,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x0b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1210 /* Table1210 */
+    1217 /* Table1217 */
    },
    /* 0x0c */
    { /* ModRMDecision */
@@ -61121,62 +69121,62 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x18 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1211 /* Table1211 */
+    1218 /* Table1218 */
    },
    /* 0x19 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1227 /* Table1227 */
+    1234 /* Table1234 */
    },
    /* 0x1a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1229 /* Table1229 */
+    1236 /* Table1236 */
    },
    /* 0x1b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1231 /* Table1231 */
+    1238 /* Table1238 */
    },
    /* 0x1c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1233 /* Table1233 */
+    1240 /* Table1240 */
    },
    /* 0x1d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1235 /* Table1235 */
+    1242 /* Table1242 */
    },
    /* 0x1e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1237 /* Table1237 */
+    1244 /* Table1244 */
    },
    /* 0x1f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1239 /* Table1239 */
+    1246 /* Table1246 */
    },
    /* 0x20 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1656 /* Table1656 */
+    1663 /* Table1663 */
    },
    /* 0x21 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1658 /* Table1658 */
+    1665 /* Table1665 */
    },
    /* 0x22 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1660 /* Table1660 */
+    1667 /* Table1667 */
    },
    /* 0x23 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1662 /* Table1662 */
+    1669 /* Table1669 */
    },
    /* 0x24 */
    { /* ModRMDecision */
@@ -61241,32 +69241,32 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x30 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1249 /* Table1249 */
+    1256 /* Table1256 */
    },
    /* 0x31 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1250 /* Table1250 */
+    1257 /* Table1257 */
    },
    /* 0x32 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1251 /* Table1251 */
+    1258 /* Table1258 */
    },
    /* 0x33 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1252 /* Table1252 */
+    1259 /* Table1259 */
    },
    /* 0x34 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1253 /* Table1253 */
+    1260 /* Table1260 */
    },
    /* 0x35 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1254 /* Table1254 */
+    1261 /* Table1261 */
    },
    /* 0x36 */
    { /* ModRMDecision */
@@ -61276,7 +69276,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x37 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1255 /* Table1255 */
+    1262 /* Table1262 */
    },
    /* 0x38 */
    { /* ModRMDecision */
@@ -61321,82 +69321,82 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x40 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1256 /* Table1256 */
+    1263 /* Table1263 */
    },
    /* 0x41 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1258 /* Table1258 */
+    1265 /* Table1265 */
    },
    /* 0x42 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1260 /* Table1260 */
+    1267 /* Table1267 */
    },
    /* 0x43 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1262 /* Table1262 */
+    1269 /* Table1269 */
    },
    /* 0x44 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1264 /* Table1264 */
+    1271 /* Table1271 */
    },
    /* 0x45 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1266 /* Table1266 */
+    1273 /* Table1273 */
    },
    /* 0x46 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1268 /* Table1268 */
+    1275 /* Table1275 */
    },
    /* 0x47 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1270 /* Table1270 */
+    1277 /* Table1277 */
    },
    /* 0x48 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1272 /* Table1272 */
+    1279 /* Table1279 */
    },
    /* 0x49 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1274 /* Table1274 */
+    1281 /* Table1281 */
    },
    /* 0x4a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1276 /* Table1276 */
+    1283 /* Table1283 */
    },
    /* 0x4b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1278 /* Table1278 */
+    1285 /* Table1285 */
    },
    /* 0x4c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1280 /* Table1280 */
+    1287 /* Table1287 */
    },
    /* 0x4d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1282 /* Table1282 */
+    1289 /* Table1289 */
    },
    /* 0x4e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1284 /* Table1284 */
+    1291 /* Table1291 */
    },
    /* 0x4f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1286 /* Table1286 */
+    1293 /* Table1293 */
    },
    /* 0x50 */
    { /* ModRMDecision */
@@ -61601,12 +69601,12 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x78 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1664 /* Table1664 */
+    1671 /* Table1671 */
    },
    /* 0x79 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1666 /* Table1666 */
+    1673 /* Table1673 */
    },
    /* 0x7a */
    { /* ModRMDecision */
@@ -61641,282 +69641,282 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x80 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1292 /* Table1292 */
+    1299 /* Table1299 */
    },
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1293 /* Table1293 */
+    1300 /* Table1300 */
    },
    /* 0x82 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1294 /* Table1294 */
+    1301 /* Table1301 */
    },
    /* 0x83 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1295 /* Table1295 */
+    1302 /* Table1302 */
    },
    /* 0x84 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1296 /* Table1296 */
+    1303 /* Table1303 */
    },
    /* 0x85 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1297 /* Table1297 */
+    1304 /* Table1304 */
    },
    /* 0x86 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1298 /* Table1298 */
+    1305 /* Table1305 */
    },
    /* 0x87 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1299 /* Table1299 */
+    1306 /* Table1306 */
    },
    /* 0x88 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1300 /* Table1300 */
+    1307 /* Table1307 */
    },
    /* 0x89 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1301 /* Table1301 */
+    1308 /* Table1308 */
    },
    /* 0x8a */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1302 /* Table1302 */
+    1309 /* Table1309 */
    },
    /* 0x8b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1303 /* Table1303 */
+    1310 /* Table1310 */
    },
    /* 0x8c */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1304 /* Table1304 */
+    1311 /* Table1311 */
    },
    /* 0x8d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1305 /* Table1305 */
+    1312 /* Table1312 */
    },
    /* 0x8e */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1306 /* Table1306 */
+    1313 /* Table1313 */
    },
    /* 0x8f */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1307 /* Table1307 */
+    1314 /* Table1314 */
    },
    /* 0x90 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1308 /* Table1308 */
+    1315 /* Table1315 */
    },
    /* 0x91 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1310 /* Table1310 */
+    1317 /* Table1317 */
    },
    /* 0x92 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1312 /* Table1312 */
+    1319 /* Table1319 */
    },
    /* 0x93 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1314 /* Table1314 */
+    1321 /* Table1321 */
    },
    /* 0x94 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1316 /* Table1316 */
+    1323 /* Table1323 */
    },
    /* 0x95 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1318 /* Table1318 */
+    1325 /* Table1325 */
    },
    /* 0x96 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1320 /* Table1320 */
+    1327 /* Table1327 */
    },
    /* 0x97 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1322 /* Table1322 */
+    1329 /* Table1329 */
    },
    /* 0x98 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1324 /* Table1324 */
+    1331 /* Table1331 */
    },
    /* 0x99 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1326 /* Table1326 */
+    1333 /* Table1333 */
    },
    /* 0x9a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1328 /* Table1328 */
+    1335 /* Table1335 */
    },
    /* 0x9b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1330 /* Table1330 */
+    1337 /* Table1337 */
    },
    /* 0x9c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1332 /* Table1332 */
+    1339 /* Table1339 */
    },
    /* 0x9d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1334 /* Table1334 */
+    1341 /* Table1341 */
    },
    /* 0x9e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1336 /* Table1336 */
+    1343 /* Table1343 */
    },
    /* 0x9f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1338 /* Table1338 */
+    1345 /* Table1345 */
    },
    /* 0xa0 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1668 /* Table1668 */
+    1675 /* Table1675 */
    },
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1669 /* Table1669 */
+    1676 /* Table1676 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1670 /* Table1670 */
+    1349 /* Table1349 */
    },
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1343 /* Table1343 */
+    1350 /* Table1350 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1345 /* Table1345 */
+    1352 /* Table1352 */
    },
    /* 0xa5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1347 /* Table1347 */
+    1354 /* Table1354 */
    },
    /* 0xa6 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1349 /* Table1349 */
+    1356 /* Table1356 */
    },
    /* 0xa7 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1421 /* Table1421 */
+    1428 /* Table1428 */
    },
    /* 0xa8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1671 /* Table1671 */
+    1677 /* Table1677 */
    },
    /* 0xa9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1672 /* Table1672 */
+    1678 /* Table1678 */
    },
    /* 0xaa */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1495 /* Table1495 */
+    1502 /* Table1502 */
    },
    /* 0xab */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1496 /* Table1496 */
+    1503 /* Table1503 */
    },
    /* 0xac */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1498 /* Table1498 */
+    1505 /* Table1505 */
    },
    /* 0xad */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1500 /* Table1500 */
+    1507 /* Table1507 */
    },
    /* 0xae */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1502 /* Table1502 */
+    1509 /* Table1509 */
    },
    /* 0xaf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1518 /* Table1518 */
+    1525 /* Table1525 */
    },
    /* 0xb0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1520 /* Table1520 */
+    1527 /* Table1527 */
    },
    /* 0xb1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1522 /* Table1522 */
+    1529 /* Table1529 */
    },
    /* 0xb2 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1524 /* Table1524 */
+    1531 /* Table1531 */
    },
    /* 0xb3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1526 /* Table1526 */
+    1533 /* Table1533 */
    },
    /* 0xb4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1528 /* Table1528 */
+    1535 /* Table1535 */
    },
    /* 0xb5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1530 /* Table1530 */
+    1537 /* Table1537 */
    },
    /* 0xb6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1532 /* Table1532 */
+    1539 /* Table1539 */
    },
    /* 0xb7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1534 /* Table1534 */
+    1541 /* Table1541 */
    },
    /* 0xb8 */
    { /* ModRMDecision */
@@ -61926,47 +69926,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xb9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1536 /* Table1536 */
+    1543 /* Table1543 */
    },
    /* 0xba */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1537 /* Table1537 */
+    1544 /* Table1544 */
    },
    /* 0xbb */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1553 /* Table1553 */
+    1560 /* Table1560 */
    },
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1555 /* Table1555 */
+    1562 /* Table1562 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1557 /* Table1557 */
+    1564 /* Table1564 */
    },
    /* 0xbe */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1559 /* Table1559 */
+    1566 /* Table1566 */
    },
    /* 0xbf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1561 /* Table1561 */
+    1568 /* Table1568 */
    },
    /* 0xc0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1563 /* Table1563 */
+    1570 /* Table1570 */
    },
    /* 0xc1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1565 /* Table1565 */
+    1572 /* Table1572 */
    },
    /* 0xc2 */
    { /* ModRMDecision */
@@ -61996,47 +69996,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xc7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1567 /* Table1567 */
+    1574 /* Table1574 */
    },
    /* 0xc8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xc9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xca */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcc */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcd */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xce */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xd0 */
    { /* ModRMDecision */
@@ -62286,22 +70286,22 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x00 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1113 /* Table1113 */
+    1120 /* Table1120 */
    },
    /* 0x01 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1584 /* Table1584 */
+    1591 /* Table1591 */
    },
    /* 0x02 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1201 /* Table1201 */
+    1208 /* Table1208 */
    },
    /* 0x03 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1203 /* Table1203 */
+    1210 /* Table1210 */
    },
    /* 0x04 */
    { /* ModRMDecision */
@@ -62311,27 +70311,27 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x05 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1205 /* Table1205 */
+    1212 /* Table1212 */
    },
    /* 0x06 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1206 /* Table1206 */
+    1213 /* Table1213 */
    },
    /* 0x07 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1207 /* Table1207 */
+    1214 /* Table1214 */
    },
    /* 0x08 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1208 /* Table1208 */
+    1215 /* Table1215 */
    },
    /* 0x09 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1209 /* Table1209 */
+    1216 /* Table1216 */
    },
    /* 0x0a */
    { /* ModRMDecision */
@@ -62341,7 +70341,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x0b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1210 /* Table1210 */
+    1217 /* Table1217 */
    },
    /* 0x0c */
    { /* ModRMDecision */
@@ -62406,62 +70406,62 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x18 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1211 /* Table1211 */
+    1218 /* Table1218 */
    },
    /* 0x19 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1227 /* Table1227 */
+    1234 /* Table1234 */
    },
    /* 0x1a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1229 /* Table1229 */
+    1236 /* Table1236 */
    },
    /* 0x1b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1231 /* Table1231 */
+    1238 /* Table1238 */
    },
    /* 0x1c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1233 /* Table1233 */
+    1240 /* Table1240 */
    },
    /* 0x1d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1235 /* Table1235 */
+    1242 /* Table1242 */
    },
    /* 0x1e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1237 /* Table1237 */
+    1244 /* Table1244 */
    },
    /* 0x1f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1239 /* Table1239 */
+    1246 /* Table1246 */
    },
    /* 0x20 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1656 /* Table1656 */
+    1663 /* Table1663 */
    },
    /* 0x21 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1658 /* Table1658 */
+    1665 /* Table1665 */
    },
    /* 0x22 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1660 /* Table1660 */
+    1667 /* Table1667 */
    },
    /* 0x23 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1662 /* Table1662 */
+    1669 /* Table1669 */
    },
    /* 0x24 */
    { /* ModRMDecision */
@@ -62526,32 +70526,32 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x30 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1249 /* Table1249 */
+    1256 /* Table1256 */
    },
    /* 0x31 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1250 /* Table1250 */
+    1257 /* Table1257 */
    },
    /* 0x32 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1251 /* Table1251 */
+    1258 /* Table1258 */
    },
    /* 0x33 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1252 /* Table1252 */
+    1259 /* Table1259 */
    },
    /* 0x34 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1253 /* Table1253 */
+    1260 /* Table1260 */
    },
    /* 0x35 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1254 /* Table1254 */
+    1261 /* Table1261 */
    },
    /* 0x36 */
    { /* ModRMDecision */
@@ -62561,7 +70561,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x37 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1255 /* Table1255 */
+    1262 /* Table1262 */
    },
    /* 0x38 */
    { /* ModRMDecision */
@@ -62606,82 +70606,82 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x40 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1256 /* Table1256 */
+    1263 /* Table1263 */
    },
    /* 0x41 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1258 /* Table1258 */
+    1265 /* Table1265 */
    },
    /* 0x42 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1260 /* Table1260 */
+    1267 /* Table1267 */
    },
    /* 0x43 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1262 /* Table1262 */
+    1269 /* Table1269 */
    },
    /* 0x44 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1264 /* Table1264 */
+    1271 /* Table1271 */
    },
    /* 0x45 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1266 /* Table1266 */
+    1273 /* Table1273 */
    },
    /* 0x46 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1268 /* Table1268 */
+    1275 /* Table1275 */
    },
    /* 0x47 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1270 /* Table1270 */
+    1277 /* Table1277 */
    },
    /* 0x48 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1272 /* Table1272 */
+    1279 /* Table1279 */
    },
    /* 0x49 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1274 /* Table1274 */
+    1281 /* Table1281 */
    },
    /* 0x4a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1276 /* Table1276 */
+    1283 /* Table1283 */
    },
    /* 0x4b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1278 /* Table1278 */
+    1285 /* Table1285 */
    },
    /* 0x4c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1280 /* Table1280 */
+    1287 /* Table1287 */
    },
    /* 0x4d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1282 /* Table1282 */
+    1289 /* Table1289 */
    },
    /* 0x4e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1284 /* Table1284 */
+    1291 /* Table1291 */
    },
    /* 0x4f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1286 /* Table1286 */
+    1293 /* Table1293 */
    },
    /* 0x50 */
    { /* ModRMDecision */
@@ -62886,12 +70886,12 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x78 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1664 /* Table1664 */
+    1671 /* Table1671 */
    },
    /* 0x79 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1666 /* Table1666 */
+    1673 /* Table1673 */
    },
    /* 0x7a */
    { /* ModRMDecision */
@@ -62926,282 +70926,282 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x80 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1292 /* Table1292 */
+    1299 /* Table1299 */
    },
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1293 /* Table1293 */
+    1300 /* Table1300 */
    },
    /* 0x82 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1294 /* Table1294 */
+    1301 /* Table1301 */
    },
    /* 0x83 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1295 /* Table1295 */
+    1302 /* Table1302 */
    },
    /* 0x84 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1296 /* Table1296 */
+    1303 /* Table1303 */
    },
    /* 0x85 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1297 /* Table1297 */
+    1304 /* Table1304 */
    },
    /* 0x86 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1298 /* Table1298 */
+    1305 /* Table1305 */
    },
    /* 0x87 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1299 /* Table1299 */
+    1306 /* Table1306 */
    },
    /* 0x88 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1300 /* Table1300 */
+    1307 /* Table1307 */
    },
    /* 0x89 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1301 /* Table1301 */
+    1308 /* Table1308 */
    },
    /* 0x8a */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1302 /* Table1302 */
+    1309 /* Table1309 */
    },
    /* 0x8b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1303 /* Table1303 */
+    1310 /* Table1310 */
    },
    /* 0x8c */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1304 /* Table1304 */
+    1311 /* Table1311 */
    },
    /* 0x8d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1305 /* Table1305 */
+    1312 /* Table1312 */
    },
    /* 0x8e */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1306 /* Table1306 */
+    1313 /* Table1313 */
    },
    /* 0x8f */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1307 /* Table1307 */
+    1314 /* Table1314 */
    },
    /* 0x90 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1308 /* Table1308 */
+    1315 /* Table1315 */
    },
    /* 0x91 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1310 /* Table1310 */
+    1317 /* Table1317 */
    },
    /* 0x92 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1312 /* Table1312 */
+    1319 /* Table1319 */
    },
    /* 0x93 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1314 /* Table1314 */
+    1321 /* Table1321 */
    },
    /* 0x94 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1316 /* Table1316 */
+    1323 /* Table1323 */
    },
    /* 0x95 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1318 /* Table1318 */
+    1325 /* Table1325 */
    },
    /* 0x96 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1320 /* Table1320 */
+    1327 /* Table1327 */
    },
    /* 0x97 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1322 /* Table1322 */
+    1329 /* Table1329 */
    },
    /* 0x98 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1324 /* Table1324 */
+    1331 /* Table1331 */
    },
    /* 0x99 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1326 /* Table1326 */
+    1333 /* Table1333 */
    },
    /* 0x9a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1328 /* Table1328 */
+    1335 /* Table1335 */
    },
    /* 0x9b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1330 /* Table1330 */
+    1337 /* Table1337 */
    },
    /* 0x9c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1332 /* Table1332 */
+    1339 /* Table1339 */
    },
    /* 0x9d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1334 /* Table1334 */
+    1341 /* Table1341 */
    },
    /* 0x9e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1336 /* Table1336 */
+    1343 /* Table1343 */
    },
    /* 0x9f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1338 /* Table1338 */
+    1345 /* Table1345 */
    },
    /* 0xa0 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1668 /* Table1668 */
+    1675 /* Table1675 */
    },
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1669 /* Table1669 */
+    1676 /* Table1676 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1670 /* Table1670 */
+    1349 /* Table1349 */
    },
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1343 /* Table1343 */
+    1350 /* Table1350 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1345 /* Table1345 */
+    1352 /* Table1352 */
    },
    /* 0xa5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1347 /* Table1347 */
+    1354 /* Table1354 */
    },
    /* 0xa6 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1349 /* Table1349 */
+    1356 /* Table1356 */
    },
    /* 0xa7 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1421 /* Table1421 */
+    1428 /* Table1428 */
    },
    /* 0xa8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1671 /* Table1671 */
+    1677 /* Table1677 */
    },
    /* 0xa9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1672 /* Table1672 */
+    1678 /* Table1678 */
    },
    /* 0xaa */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1495 /* Table1495 */
+    1502 /* Table1502 */
    },
    /* 0xab */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1496 /* Table1496 */
+    1503 /* Table1503 */
    },
    /* 0xac */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1498 /* Table1498 */
+    1505 /* Table1505 */
    },
    /* 0xad */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1500 /* Table1500 */
+    1507 /* Table1507 */
    },
    /* 0xae */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    2226 /* Table2226 */
+    2392 /* Table2392 */
    },
    /* 0xaf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1518 /* Table1518 */
+    1525 /* Table1525 */
    },
    /* 0xb0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1520 /* Table1520 */
+    1527 /* Table1527 */
    },
    /* 0xb1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1522 /* Table1522 */
+    1529 /* Table1529 */
    },
    /* 0xb2 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1524 /* Table1524 */
+    1531 /* Table1531 */
    },
    /* 0xb3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1526 /* Table1526 */
+    1533 /* Table1533 */
    },
    /* 0xb4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1528 /* Table1528 */
+    1535 /* Table1535 */
    },
    /* 0xb5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1530 /* Table1530 */
+    1537 /* Table1537 */
    },
    /* 0xb6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1532 /* Table1532 */
+    1539 /* Table1539 */
    },
    /* 0xb7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1534 /* Table1534 */
+    1541 /* Table1541 */
    },
    /* 0xb8 */
    { /* ModRMDecision */
@@ -63211,47 +71211,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xb9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1536 /* Table1536 */
+    1543 /* Table1543 */
    },
    /* 0xba */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1537 /* Table1537 */
+    1544 /* Table1544 */
    },
    /* 0xbb */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1553 /* Table1553 */
+    1560 /* Table1560 */
    },
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1915 /* Table1915 */
+    1993 /* Table1993 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1917 /* Table1917 */
+    1995 /* Table1995 */
    },
    /* 0xbe */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1559 /* Table1559 */
+    1566 /* Table1566 */
    },
    /* 0xbf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1561 /* Table1561 */
+    1568 /* Table1568 */
    },
    /* 0xc0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1563 /* Table1563 */
+    1570 /* Table1570 */
    },
    /* 0xc1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1565 /* Table1565 */
+    1572 /* Table1572 */
    },
    /* 0xc2 */
    { /* ModRMDecision */
@@ -63281,47 +71281,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xc7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1919 /* Table1919 */
+    1997 /* Table1997 */
    },
    /* 0xc8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xc9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xca */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcc */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcd */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xce */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xcf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1583 /* Table1583 */
+    1590 /* Table1590 */
    },
    /* 0xd0 */
    { /* ModRMDecision */
@@ -64511,12 +72511,12 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1935 /* Table1935 */
+    2013 /* Table2013 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1937 /* Table1937 */
+    2015 /* Table2015 */
    },
    /* 0xbe */
    { /* ModRMDecision */
@@ -64856,22 +72856,22 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x00 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1939 /* Table1939 */
+    2017 /* Table2017 */
    },
    /* 0x01 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1955 /* Table1955 */
+    2033 /* Table2033 */
    },
    /* 0x02 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2027 /* Table2027 */
+    2105 /* Table2105 */
    },
    /* 0x03 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2029 /* Table2029 */
+    2107 /* Table2107 */
    },
    /* 0x04 */
    { /* ModRMDecision */
@@ -64881,27 +72881,27 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x05 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1205 /* Table1205 */
+    1212 /* Table1212 */
    },
    /* 0x06 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1206 /* Table1206 */
+    1213 /* Table1213 */
    },
    /* 0x07 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2031 /* Table2031 */
+    2109 /* Table2109 */
    },
    /* 0x08 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1208 /* Table1208 */
+    1215 /* Table1215 */
    },
    /* 0x09 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1209 /* Table1209 */
+    1216 /* Table1216 */
    },
    /* 0x0a */
    { /* ModRMDecision */
@@ -64911,7 +72911,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x0b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1210 /* Table1210 */
+    1217 /* Table1217 */
    },
    /* 0x0c */
    { /* ModRMDecision */
@@ -64976,62 +72976,62 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x18 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1211 /* Table1211 */
+    1218 /* Table1218 */
    },
    /* 0x19 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1227 /* Table1227 */
+    1234 /* Table1234 */
    },
    /* 0x1a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1229 /* Table1229 */
+    1236 /* Table1236 */
    },
    /* 0x1b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1231 /* Table1231 */
+    1238 /* Table1238 */
    },
    /* 0x1c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1233 /* Table1233 */
+    1240 /* Table1240 */
    },
    /* 0x1d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1235 /* Table1235 */
+    1242 /* Table1242 */
    },
    /* 0x1e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1237 /* Table1237 */
+    1244 /* Table1244 */
    },
    /* 0x1f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1239 /* Table1239 */
+    1246 /* Table1246 */
    },
    /* 0x20 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1656 /* Table1656 */
+    1663 /* Table1663 */
    },
    /* 0x21 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1658 /* Table1658 */
+    1665 /* Table1665 */
    },
    /* 0x22 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1660 /* Table1660 */
+    1667 /* Table1667 */
    },
    /* 0x23 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1662 /* Table1662 */
+    1669 /* Table1669 */
    },
    /* 0x24 */
    { /* ModRMDecision */
@@ -65096,32 +73096,32 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x30 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1249 /* Table1249 */
+    1256 /* Table1256 */
    },
    /* 0x31 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1250 /* Table1250 */
+    1257 /* Table1257 */
    },
    /* 0x32 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1251 /* Table1251 */
+    1258 /* Table1258 */
    },
    /* 0x33 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1252 /* Table1252 */
+    1259 /* Table1259 */
    },
    /* 0x34 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1253 /* Table1253 */
+    1260 /* Table1260 */
    },
    /* 0x35 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2032 /* Table2032 */
+    2110 /* Table2110 */
    },
    /* 0x36 */
    { /* ModRMDecision */
@@ -65131,7 +73131,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x37 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1255 /* Table1255 */
+    1262 /* Table1262 */
    },
    /* 0x38 */
    { /* ModRMDecision */
@@ -65176,82 +73176,82 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x40 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2033 /* Table2033 */
+    2111 /* Table2111 */
    },
    /* 0x41 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2035 /* Table2035 */
+    2113 /* Table2113 */
    },
    /* 0x42 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2037 /* Table2037 */
+    2115 /* Table2115 */
    },
    /* 0x43 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2039 /* Table2039 */
+    2117 /* Table2117 */
    },
    /* 0x44 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2041 /* Table2041 */
+    2119 /* Table2119 */
    },
    /* 0x45 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2043 /* Table2043 */
+    2121 /* Table2121 */
    },
    /* 0x46 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2045 /* Table2045 */
+    2123 /* Table2123 */
    },
    /* 0x47 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2047 /* Table2047 */
+    2125 /* Table2125 */
    },
    /* 0x48 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2049 /* Table2049 */
+    2127 /* Table2127 */
    },
    /* 0x49 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2051 /* Table2051 */
+    2129 /* Table2129 */
    },
    /* 0x4a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2053 /* Table2053 */
+    2131 /* Table2131 */
    },
    /* 0x4b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2055 /* Table2055 */
+    2133 /* Table2133 */
    },
    /* 0x4c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2057 /* Table2057 */
+    2135 /* Table2135 */
    },
    /* 0x4d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2059 /* Table2059 */
+    2137 /* Table2137 */
    },
    /* 0x4e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2061 /* Table2061 */
+    2139 /* Table2139 */
    },
    /* 0x4f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2063 /* Table2063 */
+    2141 /* Table2141 */
    },
    /* 0x50 */
    { /* ModRMDecision */
@@ -65456,12 +73456,12 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x78 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1664 /* Table1664 */
+    1671 /* Table1671 */
    },
    /* 0x79 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1666 /* Table1666 */
+    1673 /* Table1673 */
    },
    /* 0x7a */
    { /* ModRMDecision */
@@ -65496,282 +73496,282 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x80 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1292 /* Table1292 */
+    1299 /* Table1299 */
    },
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1293 /* Table1293 */
+    1300 /* Table1300 */
    },
    /* 0x82 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1294 /* Table1294 */
+    1301 /* Table1301 */
    },
    /* 0x83 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1295 /* Table1295 */
+    1302 /* Table1302 */
    },
    /* 0x84 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1296 /* Table1296 */
+    1303 /* Table1303 */
    },
    /* 0x85 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1297 /* Table1297 */
+    1304 /* Table1304 */
    },
    /* 0x86 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1298 /* Table1298 */
+    1305 /* Table1305 */
    },
    /* 0x87 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1299 /* Table1299 */
+    1306 /* Table1306 */
    },
    /* 0x88 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1300 /* Table1300 */
+    1307 /* Table1307 */
    },
    /* 0x89 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1301 /* Table1301 */
+    1308 /* Table1308 */
    },
    /* 0x8a */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1302 /* Table1302 */
+    1309 /* Table1309 */
    },
    /* 0x8b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1303 /* Table1303 */
+    1310 /* Table1310 */
    },
    /* 0x8c */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1304 /* Table1304 */
+    1311 /* Table1311 */
    },
    /* 0x8d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1305 /* Table1305 */
+    1312 /* Table1312 */
    },
    /* 0x8e */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1306 /* Table1306 */
+    1313 /* Table1313 */
    },
    /* 0x8f */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1307 /* Table1307 */
+    1314 /* Table1314 */
    },
    /* 0x90 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1308 /* Table1308 */
+    1315 /* Table1315 */
    },
    /* 0x91 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1310 /* Table1310 */
+    1317 /* Table1317 */
    },
    /* 0x92 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1312 /* Table1312 */
+    1319 /* Table1319 */
    },
    /* 0x93 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1314 /* Table1314 */
+    1321 /* Table1321 */
    },
    /* 0x94 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1316 /* Table1316 */
+    1323 /* Table1323 */
    },
    /* 0x95 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1318 /* Table1318 */
+    1325 /* Table1325 */
    },
    /* 0x96 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1320 /* Table1320 */
+    1327 /* Table1327 */
    },
    /* 0x97 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1322 /* Table1322 */
+    1329 /* Table1329 */
    },
    /* 0x98 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1324 /* Table1324 */
+    1331 /* Table1331 */
    },
    /* 0x99 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1326 /* Table1326 */
+    1333 /* Table1333 */
    },
    /* 0x9a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1328 /* Table1328 */
+    1335 /* Table1335 */
    },
    /* 0x9b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1330 /* Table1330 */
+    1337 /* Table1337 */
    },
    /* 0x9c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1332 /* Table1332 */
+    1339 /* Table1339 */
    },
    /* 0x9d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1334 /* Table1334 */
+    1341 /* Table1341 */
    },
    /* 0x9e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1336 /* Table1336 */
+    1343 /* Table1343 */
    },
    /* 0x9f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1338 /* Table1338 */
+    1345 /* Table1345 */
    },
    /* 0xa0 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1668 /* Table1668 */
+    1675 /* Table1675 */
    },
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1669 /* Table1669 */
+    1676 /* Table1676 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1670 /* Table1670 */
+    1349 /* Table1349 */
    },
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2065 /* Table2065 */
+    2143 /* Table2143 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2067 /* Table2067 */
+    2145 /* Table2145 */
    },
    /* 0xa5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2069 /* Table2069 */
+    2147 /* Table2147 */
    },
    /* 0xa6 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1349 /* Table1349 */
+    1356 /* Table1356 */
    },
    /* 0xa7 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1421 /* Table1421 */
+    1428 /* Table1428 */
    },
    /* 0xa8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1671 /* Table1671 */
+    1677 /* Table1677 */
    },
    /* 0xa9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1672 /* Table1672 */
+    1678 /* Table1678 */
    },
    /* 0xaa */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1495 /* Table1495 */
+    1502 /* Table1502 */
    },
    /* 0xab */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2071 /* Table2071 */
+    2149 /* Table2149 */
    },
    /* 0xac */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2073 /* Table2073 */
+    2151 /* Table2151 */
    },
    /* 0xad */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2075 /* Table2075 */
+    2153 /* Table2153 */
    },
    /* 0xae */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    2242 /* Table2242 */
+    2408 /* Table2408 */
    },
    /* 0xaf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2093 /* Table2093 */
+    2171 /* Table2171 */
    },
    /* 0xb0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1520 /* Table1520 */
+    1527 /* Table1527 */
    },
    /* 0xb1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2095 /* Table2095 */
+    2173 /* Table2173 */
    },
    /* 0xb2 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2097 /* Table2097 */
+    2175 /* Table2175 */
    },
    /* 0xb3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2099 /* Table2099 */
+    2177 /* Table2177 */
    },
    /* 0xb4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2101 /* Table2101 */
+    2179 /* Table2179 */
    },
    /* 0xb5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2103 /* Table2103 */
+    2181 /* Table2181 */
    },
    /* 0xb6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2105 /* Table2105 */
+    2183 /* Table2183 */
    },
    /* 0xb7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2107 /* Table2107 */
+    2185 /* Table2185 */
    },
    /* 0xb8 */
    { /* ModRMDecision */
@@ -65781,47 +73781,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xb9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1536 /* Table1536 */
+    1543 /* Table1543 */
    },
    /* 0xba */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    2109 /* Table2109 */
+    2187 /* Table2187 */
    },
    /* 0xbb */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2125 /* Table2125 */
+    2203 /* Table2203 */
    },
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2258 /* Table2258 */
+    2424 /* Table2424 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2260 /* Table2260 */
+    2426 /* Table2426 */
    },
    /* 0xbe */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2131 /* Table2131 */
+    2209 /* Table2209 */
    },
    /* 0xbf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2133 /* Table2133 */
+    2211 /* Table2211 */
    },
    /* 0xc0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1563 /* Table1563 */
+    1570 /* Table1570 */
    },
    /* 0xc1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2135 /* Table2135 */
+    2213 /* Table2213 */
    },
    /* 0xc2 */
    { /* ModRMDecision */
@@ -65851,47 +73851,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xc7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    2262 /* Table2262 */
+    2428 /* Table2428 */
    },
    /* 0xc8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xc9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xca */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xcb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xcc */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xcd */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xce */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xcf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xd0 */
    { /* ModRMDecision */
@@ -66141,22 +74141,22 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x00 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1939 /* Table1939 */
+    2017 /* Table2017 */
    },
    /* 0x01 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1955 /* Table1955 */
+    2033 /* Table2033 */
    },
    /* 0x02 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2027 /* Table2027 */
+    2105 /* Table2105 */
    },
    /* 0x03 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2029 /* Table2029 */
+    2107 /* Table2107 */
    },
    /* 0x04 */
    { /* ModRMDecision */
@@ -66166,27 +74166,27 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x05 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1205 /* Table1205 */
+    1212 /* Table1212 */
    },
    /* 0x06 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1206 /* Table1206 */
+    1213 /* Table1213 */
    },
    /* 0x07 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2031 /* Table2031 */
+    2109 /* Table2109 */
    },
    /* 0x08 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1208 /* Table1208 */
+    1215 /* Table1215 */
    },
    /* 0x09 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1209 /* Table1209 */
+    1216 /* Table1216 */
    },
    /* 0x0a */
    { /* ModRMDecision */
@@ -66196,7 +74196,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x0b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1210 /* Table1210 */
+    1217 /* Table1217 */
    },
    /* 0x0c */
    { /* ModRMDecision */
@@ -66261,62 +74261,62 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x18 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1211 /* Table1211 */
+    1218 /* Table1218 */
    },
    /* 0x19 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1227 /* Table1227 */
+    1234 /* Table1234 */
    },
    /* 0x1a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1229 /* Table1229 */
+    1236 /* Table1236 */
    },
    /* 0x1b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1231 /* Table1231 */
+    1238 /* Table1238 */
    },
    /* 0x1c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1233 /* Table1233 */
+    1240 /* Table1240 */
    },
    /* 0x1d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1235 /* Table1235 */
+    1242 /* Table1242 */
    },
    /* 0x1e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1237 /* Table1237 */
+    1244 /* Table1244 */
    },
    /* 0x1f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1239 /* Table1239 */
+    1246 /* Table1246 */
    },
    /* 0x20 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1656 /* Table1656 */
+    1663 /* Table1663 */
    },
    /* 0x21 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1658 /* Table1658 */
+    1665 /* Table1665 */
    },
    /* 0x22 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1660 /* Table1660 */
+    1667 /* Table1667 */
    },
    /* 0x23 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1662 /* Table1662 */
+    1669 /* Table1669 */
    },
    /* 0x24 */
    { /* ModRMDecision */
@@ -66381,32 +74381,32 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x30 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1249 /* Table1249 */
+    1256 /* Table1256 */
    },
    /* 0x31 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1250 /* Table1250 */
+    1257 /* Table1257 */
    },
    /* 0x32 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1251 /* Table1251 */
+    1258 /* Table1258 */
    },
    /* 0x33 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1252 /* Table1252 */
+    1259 /* Table1259 */
    },
    /* 0x34 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1253 /* Table1253 */
+    1260 /* Table1260 */
    },
    /* 0x35 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2032 /* Table2032 */
+    2110 /* Table2110 */
    },
    /* 0x36 */
    { /* ModRMDecision */
@@ -66416,7 +74416,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x37 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1255 /* Table1255 */
+    1262 /* Table1262 */
    },
    /* 0x38 */
    { /* ModRMDecision */
@@ -66461,82 +74461,82 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x40 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2033 /* Table2033 */
+    2111 /* Table2111 */
    },
    /* 0x41 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2035 /* Table2035 */
+    2113 /* Table2113 */
    },
    /* 0x42 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2037 /* Table2037 */
+    2115 /* Table2115 */
    },
    /* 0x43 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2039 /* Table2039 */
+    2117 /* Table2117 */
    },
    /* 0x44 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2041 /* Table2041 */
+    2119 /* Table2119 */
    },
    /* 0x45 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2043 /* Table2043 */
+    2121 /* Table2121 */
    },
    /* 0x46 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2045 /* Table2045 */
+    2123 /* Table2123 */
    },
    /* 0x47 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2047 /* Table2047 */
+    2125 /* Table2125 */
    },
    /* 0x48 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2049 /* Table2049 */
+    2127 /* Table2127 */
    },
    /* 0x49 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2051 /* Table2051 */
+    2129 /* Table2129 */
    },
    /* 0x4a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2053 /* Table2053 */
+    2131 /* Table2131 */
    },
    /* 0x4b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2055 /* Table2055 */
+    2133 /* Table2133 */
    },
    /* 0x4c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2057 /* Table2057 */
+    2135 /* Table2135 */
    },
    /* 0x4d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2059 /* Table2059 */
+    2137 /* Table2137 */
    },
    /* 0x4e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2061 /* Table2061 */
+    2139 /* Table2139 */
    },
    /* 0x4f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2063 /* Table2063 */
+    2141 /* Table2141 */
    },
    /* 0x50 */
    { /* ModRMDecision */
@@ -66741,12 +74741,12 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x78 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1664 /* Table1664 */
+    1671 /* Table1671 */
    },
    /* 0x79 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1666 /* Table1666 */
+    1673 /* Table1673 */
    },
    /* 0x7a */
    { /* ModRMDecision */
@@ -66781,282 +74781,282 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x80 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1292 /* Table1292 */
+    1299 /* Table1299 */
    },
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1293 /* Table1293 */
+    1300 /* Table1300 */
    },
    /* 0x82 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1294 /* Table1294 */
+    1301 /* Table1301 */
    },
    /* 0x83 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1295 /* Table1295 */
+    1302 /* Table1302 */
    },
    /* 0x84 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1296 /* Table1296 */
+    1303 /* Table1303 */
    },
    /* 0x85 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1297 /* Table1297 */
+    1304 /* Table1304 */
    },
    /* 0x86 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1298 /* Table1298 */
+    1305 /* Table1305 */
    },
    /* 0x87 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1299 /* Table1299 */
+    1306 /* Table1306 */
    },
    /* 0x88 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1300 /* Table1300 */
+    1307 /* Table1307 */
    },
    /* 0x89 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1301 /* Table1301 */
+    1308 /* Table1308 */
    },
    /* 0x8a */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1302 /* Table1302 */
+    1309 /* Table1309 */
    },
    /* 0x8b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1303 /* Table1303 */
+    1310 /* Table1310 */
    },
    /* 0x8c */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1304 /* Table1304 */
+    1311 /* Table1311 */
    },
    /* 0x8d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1305 /* Table1305 */
+    1312 /* Table1312 */
    },
    /* 0x8e */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1306 /* Table1306 */
+    1313 /* Table1313 */
    },
    /* 0x8f */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1307 /* Table1307 */
+    1314 /* Table1314 */
    },
    /* 0x90 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1308 /* Table1308 */
+    1315 /* Table1315 */
    },
    /* 0x91 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1310 /* Table1310 */
+    1317 /* Table1317 */
    },
    /* 0x92 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1312 /* Table1312 */
+    1319 /* Table1319 */
    },
    /* 0x93 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1314 /* Table1314 */
+    1321 /* Table1321 */
    },
    /* 0x94 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1316 /* Table1316 */
+    1323 /* Table1323 */
    },
    /* 0x95 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1318 /* Table1318 */
+    1325 /* Table1325 */
    },
    /* 0x96 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1320 /* Table1320 */
+    1327 /* Table1327 */
    },
    /* 0x97 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1322 /* Table1322 */
+    1329 /* Table1329 */
    },
    /* 0x98 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1324 /* Table1324 */
+    1331 /* Table1331 */
    },
    /* 0x99 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1326 /* Table1326 */
+    1333 /* Table1333 */
    },
    /* 0x9a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1328 /* Table1328 */
+    1335 /* Table1335 */
    },
    /* 0x9b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1330 /* Table1330 */
+    1337 /* Table1337 */
    },
    /* 0x9c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1332 /* Table1332 */
+    1339 /* Table1339 */
    },
    /* 0x9d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1334 /* Table1334 */
+    1341 /* Table1341 */
    },
    /* 0x9e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1336 /* Table1336 */
+    1343 /* Table1343 */
    },
    /* 0x9f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1338 /* Table1338 */
+    1345 /* Table1345 */
    },
    /* 0xa0 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1668 /* Table1668 */
+    1675 /* Table1675 */
    },
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1669 /* Table1669 */
+    1676 /* Table1676 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1670 /* Table1670 */
+    1349 /* Table1349 */
    },
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2065 /* Table2065 */
+    2143 /* Table2143 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2067 /* Table2067 */
+    2145 /* Table2145 */
    },
    /* 0xa5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2069 /* Table2069 */
+    2147 /* Table2147 */
    },
    /* 0xa6 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1349 /* Table1349 */
+    1356 /* Table1356 */
    },
    /* 0xa7 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1421 /* Table1421 */
+    1428 /* Table1428 */
    },
    /* 0xa8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1671 /* Table1671 */
+    1677 /* Table1677 */
    },
    /* 0xa9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1672 /* Table1672 */
+    1678 /* Table1678 */
    },
    /* 0xaa */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1495 /* Table1495 */
+    1502 /* Table1502 */
    },
    /* 0xab */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2071 /* Table2071 */
+    2149 /* Table2149 */
    },
    /* 0xac */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2073 /* Table2073 */
+    2151 /* Table2151 */
    },
    /* 0xad */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2075 /* Table2075 */
+    2153 /* Table2153 */
    },
    /* 0xae */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    2077 /* Table2077 */
+    2155 /* Table2155 */
    },
    /* 0xaf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2093 /* Table2093 */
+    2171 /* Table2171 */
    },
    /* 0xb0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1520 /* Table1520 */
+    1527 /* Table1527 */
    },
    /* 0xb1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2095 /* Table2095 */
+    2173 /* Table2173 */
    },
    /* 0xb2 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2097 /* Table2097 */
+    2175 /* Table2175 */
    },
    /* 0xb3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2099 /* Table2099 */
+    2177 /* Table2177 */
    },
    /* 0xb4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2101 /* Table2101 */
+    2179 /* Table2179 */
    },
    /* 0xb5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2103 /* Table2103 */
+    2181 /* Table2181 */
    },
    /* 0xb6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2105 /* Table2105 */
+    2183 /* Table2183 */
    },
    /* 0xb7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2107 /* Table2107 */
+    2185 /* Table2185 */
    },
    /* 0xb8 */
    { /* ModRMDecision */
@@ -67066,47 +75066,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xb9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1536 /* Table1536 */
+    1543 /* Table1543 */
    },
    /* 0xba */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    2109 /* Table2109 */
+    2187 /* Table2187 */
    },
    /* 0xbb */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2125 /* Table2125 */
+    2203 /* Table2203 */
    },
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2127 /* Table2127 */
+    2205 /* Table2205 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2129 /* Table2129 */
+    2207 /* Table2207 */
    },
    /* 0xbe */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2131 /* Table2131 */
+    2209 /* Table2209 */
    },
    /* 0xbf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2133 /* Table2133 */
+    2211 /* Table2211 */
    },
    /* 0xc0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1563 /* Table1563 */
+    1570 /* Table1570 */
    },
    /* 0xc1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2135 /* Table2135 */
+    2213 /* Table2213 */
    },
    /* 0xc2 */
    { /* ModRMDecision */
@@ -67136,47 +75136,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xc7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    2137 /* Table2137 */
+    2215 /* Table2215 */
    },
    /* 0xc8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xc9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xca */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xcb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xcc */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xcd */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xce */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xcf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xd0 */
    { /* ModRMDecision */
@@ -67426,22 +75426,22 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x00 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1939 /* Table1939 */
+    2017 /* Table2017 */
    },
    /* 0x01 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1955 /* Table1955 */
+    2033 /* Table2033 */
    },
    /* 0x02 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2027 /* Table2027 */
+    2105 /* Table2105 */
    },
    /* 0x03 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2029 /* Table2029 */
+    2107 /* Table2107 */
    },
    /* 0x04 */
    { /* ModRMDecision */
@@ -67451,27 +75451,27 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x05 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1205 /* Table1205 */
+    1212 /* Table1212 */
    },
    /* 0x06 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1206 /* Table1206 */
+    1213 /* Table1213 */
    },
    /* 0x07 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2031 /* Table2031 */
+    2109 /* Table2109 */
    },
    /* 0x08 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1208 /* Table1208 */
+    1215 /* Table1215 */
    },
    /* 0x09 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1209 /* Table1209 */
+    1216 /* Table1216 */
    },
    /* 0x0a */
    { /* ModRMDecision */
@@ -67481,7 +75481,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x0b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1210 /* Table1210 */
+    1217 /* Table1217 */
    },
    /* 0x0c */
    { /* ModRMDecision */
@@ -67546,62 +75546,62 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x18 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    1765 /* Table1765 */
+    1771 /* Table1771 */
    },
    /* 0x19 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1781 /* Table1781 */
+    1787 /* Table1787 */
    },
    /* 0x1a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1783 /* Table1783 */
+    1789 /* Table1789 */
    },
    /* 0x1b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1785 /* Table1785 */
+    1791 /* Table1791 */
    },
    /* 0x1c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1787 /* Table1787 */
+    1793 /* Table1793 */
    },
    /* 0x1d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1789 /* Table1789 */
+    1795 /* Table1795 */
    },
    /* 0x1e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1791 /* Table1791 */
+    1797 /* Table1797 */
    },
    /* 0x1f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1793 /* Table1793 */
+    1799 /* Table1799 */
    },
    /* 0x20 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1656 /* Table1656 */
+    1663 /* Table1663 */
    },
    /* 0x21 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1658 /* Table1658 */
+    1665 /* Table1665 */
    },
    /* 0x22 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1660 /* Table1660 */
+    1667 /* Table1667 */
    },
    /* 0x23 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1662 /* Table1662 */
+    1669 /* Table1669 */
    },
    /* 0x24 */
    { /* ModRMDecision */
@@ -67666,32 +75666,32 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x30 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1249 /* Table1249 */
+    1256 /* Table1256 */
    },
    /* 0x31 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1250 /* Table1250 */
+    1257 /* Table1257 */
    },
    /* 0x32 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1251 /* Table1251 */
+    1258 /* Table1258 */
    },
    /* 0x33 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1252 /* Table1252 */
+    1259 /* Table1259 */
    },
    /* 0x34 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1253 /* Table1253 */
+    1260 /* Table1260 */
    },
    /* 0x35 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2032 /* Table2032 */
+    2110 /* Table2110 */
    },
    /* 0x36 */
    { /* ModRMDecision */
@@ -67701,7 +75701,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x37 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1255 /* Table1255 */
+    1262 /* Table1262 */
    },
    /* 0x38 */
    { /* ModRMDecision */
@@ -67746,82 +75746,82 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x40 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2033 /* Table2033 */
+    2111 /* Table2111 */
    },
    /* 0x41 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2035 /* Table2035 */
+    2113 /* Table2113 */
    },
    /* 0x42 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2037 /* Table2037 */
+    2115 /* Table2115 */
    },
    /* 0x43 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2039 /* Table2039 */
+    2117 /* Table2117 */
    },
    /* 0x44 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2041 /* Table2041 */
+    2119 /* Table2119 */
    },
    /* 0x45 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2043 /* Table2043 */
+    2121 /* Table2121 */
    },
    /* 0x46 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2045 /* Table2045 */
+    2123 /* Table2123 */
    },
    /* 0x47 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2047 /* Table2047 */
+    2125 /* Table2125 */
    },
    /* 0x48 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2049 /* Table2049 */
+    2127 /* Table2127 */
    },
    /* 0x49 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2051 /* Table2051 */
+    2129 /* Table2129 */
    },
    /* 0x4a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2053 /* Table2053 */
+    2131 /* Table2131 */
    },
    /* 0x4b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2055 /* Table2055 */
+    2133 /* Table2133 */
    },
    /* 0x4c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2057 /* Table2057 */
+    2135 /* Table2135 */
    },
    /* 0x4d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2059 /* Table2059 */
+    2137 /* Table2137 */
    },
    /* 0x4e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2061 /* Table2061 */
+    2139 /* Table2139 */
    },
    /* 0x4f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2063 /* Table2063 */
+    2141 /* Table2141 */
    },
    /* 0x50 */
    { /* ModRMDecision */
@@ -68026,12 +76026,12 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x78 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1664 /* Table1664 */
+    1671 /* Table1671 */
    },
    /* 0x79 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1666 /* Table1666 */
+    1673 /* Table1673 */
    },
    /* 0x7a */
    { /* ModRMDecision */
@@ -68066,282 +76066,282 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0x80 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1827 /* Table1827 */
+    1833 /* Table1833 */
    },
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1828 /* Table1828 */
+    1834 /* Table1834 */
    },
    /* 0x82 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1829 /* Table1829 */
+    1835 /* Table1835 */
    },
    /* 0x83 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1830 /* Table1830 */
+    1836 /* Table1836 */
    },
    /* 0x84 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1831 /* Table1831 */
+    1837 /* Table1837 */
    },
    /* 0x85 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1832 /* Table1832 */
+    1838 /* Table1838 */
    },
    /* 0x86 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1833 /* Table1833 */
+    1839 /* Table1839 */
    },
    /* 0x87 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1834 /* Table1834 */
+    1840 /* Table1840 */
    },
    /* 0x88 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1835 /* Table1835 */
+    1841 /* Table1841 */
    },
    /* 0x89 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1836 /* Table1836 */
+    1842 /* Table1842 */
    },
    /* 0x8a */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1837 /* Table1837 */
+    1843 /* Table1843 */
    },
    /* 0x8b */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1838 /* Table1838 */
+    1844 /* Table1844 */
    },
    /* 0x8c */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1839 /* Table1839 */
+    1845 /* Table1845 */
    },
    /* 0x8d */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1840 /* Table1840 */
+    1846 /* Table1846 */
    },
    /* 0x8e */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1841 /* Table1841 */
+    1847 /* Table1847 */
    },
    /* 0x8f */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1842 /* Table1842 */
+    1848 /* Table1848 */
    },
    /* 0x90 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1308 /* Table1308 */
+    1315 /* Table1315 */
    },
    /* 0x91 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1310 /* Table1310 */
+    1317 /* Table1317 */
    },
    /* 0x92 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1312 /* Table1312 */
+    1319 /* Table1319 */
    },
    /* 0x93 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1314 /* Table1314 */
+    1321 /* Table1321 */
    },
    /* 0x94 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1316 /* Table1316 */
+    1323 /* Table1323 */
    },
    /* 0x95 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1318 /* Table1318 */
+    1325 /* Table1325 */
    },
    /* 0x96 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1320 /* Table1320 */
+    1327 /* Table1327 */
    },
    /* 0x97 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1322 /* Table1322 */
+    1329 /* Table1329 */
    },
    /* 0x98 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1324 /* Table1324 */
+    1331 /* Table1331 */
    },
    /* 0x99 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1326 /* Table1326 */
+    1333 /* Table1333 */
    },
    /* 0x9a */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1328 /* Table1328 */
+    1335 /* Table1335 */
    },
    /* 0x9b */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1330 /* Table1330 */
+    1337 /* Table1337 */
    },
    /* 0x9c */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1332 /* Table1332 */
+    1339 /* Table1339 */
    },
    /* 0x9d */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1334 /* Table1334 */
+    1341 /* Table1341 */
    },
    /* 0x9e */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1336 /* Table1336 */
+    1343 /* Table1343 */
    },
    /* 0x9f */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1338 /* Table1338 */
+    1345 /* Table1345 */
    },
    /* 0xa0 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1843 /* Table1843 */
+    1849 /* Table1849 */
    },
    /* 0xa1 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1844 /* Table1844 */
+    1850 /* Table1850 */
    },
    /* 0xa2 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1670 /* Table1670 */
+    1349 /* Table1349 */
    },
    /* 0xa3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2065 /* Table2065 */
+    2143 /* Table2143 */
    },
    /* 0xa4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2067 /* Table2067 */
+    2145 /* Table2145 */
    },
    /* 0xa5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2069 /* Table2069 */
+    2147 /* Table2147 */
    },
    /* 0xa6 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1349 /* Table1349 */
+    1356 /* Table1356 */
    },
    /* 0xa7 */
    { /* struct ModRMDecision */
     MODRM_SPLITMISC,
-    1421 /* Table1421 */
+    1428 /* Table1428 */
    },
    /* 0xa8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1851 /* Table1851 */
+    1857 /* Table1857 */
    },
    /* 0xa9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1852 /* Table1852 */
+    1858 /* Table1858 */
    },
    /* 0xaa */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1495 /* Table1495 */
+    1502 /* Table1502 */
    },
    /* 0xab */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2071 /* Table2071 */
+    2149 /* Table2149 */
    },
    /* 0xac */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2073 /* Table2073 */
+    2151 /* Table2151 */
    },
    /* 0xad */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2075 /* Table2075 */
+    2153 /* Table2153 */
    },
    /* 0xae */
    { /* struct ModRMDecision */
-    MODRM_SPLITREG,
-    2077 /* Table2077 */
+    MODRM_SPLITMISC,
+    2232 /* Table2232 */
    },
    /* 0xaf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2093 /* Table2093 */
+    2171 /* Table2171 */
    },
    /* 0xb0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1520 /* Table1520 */
+    1527 /* Table1527 */
    },
    /* 0xb1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2095 /* Table2095 */
+    2173 /* Table2173 */
    },
    /* 0xb2 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2097 /* Table2097 */
+    2175 /* Table2175 */
    },
    /* 0xb3 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2099 /* Table2099 */
+    2177 /* Table2177 */
    },
    /* 0xb4 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2101 /* Table2101 */
+    2179 /* Table2179 */
    },
    /* 0xb5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2103 /* Table2103 */
+    2181 /* Table2181 */
    },
    /* 0xb6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2105 /* Table2105 */
+    2183 /* Table2183 */
    },
    /* 0xb7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2107 /* Table2107 */
+    2185 /* Table2185 */
    },
    /* 0xb8 */
    { /* ModRMDecision */
@@ -68351,47 +76351,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xb9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    1536 /* Table1536 */
+    1543 /* Table1543 */
    },
    /* 0xba */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    2109 /* Table2109 */
+    2187 /* Table2187 */
    },
    /* 0xbb */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2125 /* Table2125 */
+    2203 /* Table2203 */
    },
    /* 0xbc */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2127 /* Table2127 */
+    2205 /* Table2205 */
    },
    /* 0xbd */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2129 /* Table2129 */
+    2207 /* Table2207 */
    },
    /* 0xbe */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2131 /* Table2131 */
+    2209 /* Table2209 */
    },
    /* 0xbf */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2133 /* Table2133 */
+    2211 /* Table2211 */
    },
    /* 0xc0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    1563 /* Table1563 */
+    1570 /* Table1570 */
    },
    /* 0xc1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2135 /* Table2135 */
+    2213 /* Table2213 */
    },
    /* 0xc2 */
    { /* ModRMDecision */
@@ -68421,47 +76421,47 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
    /* 0xc7 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    2278 /* Table2278 */
+    2304 /* Table2304 */
    },
    /* 0xc8 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xc9 */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xca */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xcb */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xcc */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xcd */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xce */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xcf */
    { /* struct ModRMDecision */
     MODRM_ONEENTRY,
-    2153 /* Table2153 */
+    2231 /* Table2231 */
    },
    /* 0xd0 */
    { /* ModRMDecision */
@@ -69992,7 +77992,7 @@ static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
  }
 , };
 static const uint8_t index_x86DisassemblerTwoByteOpcodes[] = {
-1, 2, 3, 4, 0, 5, 6, 0, 7, 8, 9, 10, 11, 12, 0, 13, 14, 15, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+1, 2, 3, 4, 0, 5, 6, 7, 0, 8, 9, 10, 11, 12, 13, 14, 15, 0, 16, 17, 18, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
 static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
  /* IC */
  { /* struct OpcodeDecision */
@@ -71200,12 +79200,12 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2294 /* Table2294 */
+    2444 /* Table2444 */
    },
    /* 0xf1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2296 /* Table2296 */
+    2446 /* Table2446 */
    },
    /* 0xf2 */
    { /* ModRMDecision */
@@ -72485,12 +80485,12 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2294 /* Table2294 */
+    2444 /* Table2444 */
    },
    /* 0xf1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2296 /* Table2296 */
+    2446 /* Table2446 */
    },
    /* 0xf2 */
    { /* ModRMDecision */
@@ -73210,17 +81210,17 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0x80 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2298 /* Table2298 */
+    2448 /* Table2448 */
    },
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2300 /* Table2300 */
+    2450 /* Table2450 */
    },
    /* 0x82 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2302 /* Table2302 */
+    2452 /* Table2452 */
    },
    /* 0x83 */
    { /* ModRMDecision */
@@ -73770,12 +81770,12 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2304 /* Table2304 */
+    2454 /* Table2454 */
    },
    /* 0xf1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2306 /* Table2306 */
+    2456 /* Table2456 */
    },
    /* 0xf2 */
    { /* ModRMDecision */
@@ -73800,7 +81800,7 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2308 /* Table2308 */
+    2458 /* Table2458 */
    },
    /* 0xf7 */
    { /* ModRMDecision */
@@ -75055,12 +83055,12 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2294 /* Table2294 */
+    2444 /* Table2444 */
    },
    /* 0xf1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2296 /* Table2296 */
+    2446 /* Table2446 */
    },
    /* 0xf2 */
    { /* ModRMDecision */
@@ -75086,6 +83086,1291 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    { /* ModRMDecision */
     MODRM_ONEENTRY,
     0 /* EmptyTable */
+   },
+   /* 0xf7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfa */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfe */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xff */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   }
+  }
+ }
+,  /* IC_OPSIZE_ADSIZE */
+ { /* struct OpcodeDecision */
+  {
+   /* 0x00 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x01 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x02 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x03 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x04 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x05 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x06 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x07 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x08 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x09 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x10 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x11 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x12 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x13 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x14 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x15 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x16 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x17 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x18 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x19 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x20 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x21 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x22 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x23 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x24 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x25 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x26 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x27 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x28 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x29 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x30 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x31 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x32 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x33 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x34 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x35 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x36 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x37 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x38 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x39 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x40 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x41 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x42 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x43 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x44 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x45 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x46 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x47 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x48 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x49 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x50 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x51 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x52 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x53 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x54 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x55 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x56 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x57 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x58 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x59 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x60 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x61 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x62 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x63 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x64 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x65 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x66 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x67 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x68 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x69 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x70 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x71 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x72 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x73 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x74 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x75 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x76 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x77 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x78 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x79 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x80 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2448 /* Table2448 */
+   },
+   /* 0x81 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2450 /* Table2450 */
+   },
+   /* 0x82 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2452 /* Table2452 */
+   },
+   /* 0x83 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x84 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x85 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x86 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x87 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x88 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x89 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x90 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x91 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x92 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x93 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x94 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x95 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x96 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x97 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x98 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x99 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xaa */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xab */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xac */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xad */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xae */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xaf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xba */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbe */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xca */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xcb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xcc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xcd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xce */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xcf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xda */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xde */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xea */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xeb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xec */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xed */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xee */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xef */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf0 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2454 /* Table2454 */
+   },
+   /* 0xf1 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2456 /* Table2456 */
+   },
+   /* 0xf2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf6 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2458 /* Table2458 */
    },
    /* 0xf7 */
    { /* ModRMDecision */
@@ -76340,12 +85625,12 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2294 /* Table2294 */
+    2444 /* Table2444 */
    },
    /* 0xf1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2296 /* Table2296 */
+    2446 /* Table2446 */
    },
    /* 0xf2 */
    { /* ModRMDecision */
@@ -77625,12 +86910,12 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2294 /* Table2294 */
+    2444 /* Table2444 */
    },
    /* 0xf1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2296 /* Table2296 */
+    2446 /* Table2446 */
    },
    /* 0xf2 */
    { /* ModRMDecision */
@@ -77655,7 +86940,7 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2310 /* Table2310 */
+    2460 /* Table2460 */
    },
    /* 0xf7 */
    { /* ModRMDecision */
@@ -78910,12 +88195,12 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2312 /* Table2312 */
+    2462 /* Table2462 */
    },
    /* 0xf1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2314 /* Table2314 */
+    2464 /* Table2464 */
    },
    /* 0xf2 */
    { /* ModRMDecision */
@@ -78941,6 +88226,1291 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    { /* ModRMDecision */
     MODRM_ONEENTRY,
     0 /* EmptyTable */
+   },
+   /* 0xf7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfa */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfe */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xff */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   }
+  }
+ }
+,  /* IC_64BIT_REXW_ADSIZE */
+ { /* struct OpcodeDecision */
+  {
+   /* 0x00 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x01 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x02 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x03 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x04 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x05 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x06 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x07 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x08 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x09 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x10 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x11 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x12 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x13 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x14 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x15 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x16 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x17 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x18 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x19 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x20 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x21 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x22 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x23 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x24 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x25 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x26 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x27 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x28 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x29 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x30 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x31 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x32 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x33 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x34 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x35 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x36 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x37 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x38 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x39 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x40 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x41 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x42 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x43 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x44 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x45 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x46 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x47 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x48 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x49 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x50 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x51 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x52 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x53 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x54 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x55 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x56 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x57 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x58 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x59 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x60 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x61 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x62 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x63 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x64 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x65 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x66 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x67 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x68 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x69 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x70 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x71 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x72 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x73 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x74 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x75 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x76 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x77 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x78 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x79 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x80 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2466 /* Table2466 */
+   },
+   /* 0x81 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2468 /* Table2468 */
+   },
+   /* 0x82 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2470 /* Table2470 */
+   },
+   /* 0x83 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x84 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x85 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x86 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x87 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x88 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x89 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x90 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x91 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x92 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x93 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x94 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x95 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x96 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x97 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x98 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x99 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xaa */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xab */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xac */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xad */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xae */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xaf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xba */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbe */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xca */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xcb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xcc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xcd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xce */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xcf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xda */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xde */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xea */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xeb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xec */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xed */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xee */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xef */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf0 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2462 /* Table2462 */
+   },
+   /* 0xf1 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2464 /* Table2464 */
+   },
+   /* 0xf2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf6 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2458 /* Table2458 */
    },
    /* 0xf7 */
    { /* ModRMDecision */
@@ -79635,17 +90205,17 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0x80 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2316 /* Table2316 */
+    2466 /* Table2466 */
    },
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2318 /* Table2318 */
+    2468 /* Table2468 */
    },
    /* 0x82 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2320 /* Table2320 */
+    2470 /* Table2470 */
    },
    /* 0x83 */
    { /* ModRMDecision */
@@ -80195,12 +90765,12 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2304 /* Table2304 */
+    2454 /* Table2454 */
    },
    /* 0xf1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2306 /* Table2306 */
+    2456 /* Table2456 */
    },
    /* 0xf2 */
    { /* ModRMDecision */
@@ -80225,7 +90795,7 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2308 /* Table2308 */
+    2458 /* Table2458 */
    },
    /* 0xf7 */
    { /* ModRMDecision */
@@ -81480,12 +92050,12 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2294 /* Table2294 */
+    2444 /* Table2444 */
    },
    /* 0xf1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2296 /* Table2296 */
+    2446 /* Table2446 */
    },
    /* 0xf2 */
    { /* ModRMDecision */
@@ -81511,6 +92081,1291 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    { /* ModRMDecision */
     MODRM_ONEENTRY,
     0 /* EmptyTable */
+   },
+   /* 0xf7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfa */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xfe */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xff */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   }
+  }
+ }
+,  /* IC_64BIT_OPSIZE_ADSIZE */
+ { /* struct OpcodeDecision */
+  {
+   /* 0x00 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x01 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x02 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x03 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x04 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x05 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x06 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x07 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x08 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x09 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x0f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x10 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x11 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x12 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x13 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x14 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x15 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x16 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x17 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x18 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x19 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x1f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x20 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x21 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x22 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x23 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x24 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x25 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x26 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x27 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x28 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x29 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x2f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x30 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x31 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x32 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x33 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x34 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x35 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x36 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x37 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x38 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x39 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x3f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x40 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x41 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x42 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x43 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x44 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x45 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x46 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x47 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x48 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x49 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x4f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x50 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x51 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x52 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x53 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x54 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x55 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x56 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x57 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x58 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x59 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x5f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x60 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x61 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x62 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x63 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x64 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x65 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x66 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x67 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x68 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x69 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x6f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x70 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x71 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x72 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x73 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x74 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x75 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x76 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x77 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x78 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x79 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x7f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x80 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2466 /* Table2466 */
+   },
+   /* 0x81 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2468 /* Table2468 */
+   },
+   /* 0x82 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2470 /* Table2470 */
+   },
+   /* 0x83 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x84 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x85 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x86 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x87 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x88 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x89 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x8f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x90 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x91 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x92 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x93 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x94 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x95 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x96 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x97 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x98 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x99 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9a */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9b */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9c */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9d */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9e */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0x9f */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xa9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xaa */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xab */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xac */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xad */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xae */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xaf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xb9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xba */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbe */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xbf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xc9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xca */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xcb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xcc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xcd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xce */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xcf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xd9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xda */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdc */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdd */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xde */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xdf */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe0 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe1 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe6 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe7 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe8 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xe9 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xea */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xeb */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xec */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xed */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xee */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xef */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf0 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2454 /* Table2454 */
+   },
+   /* 0xf1 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2456 /* Table2456 */
+   },
+   /* 0xf2 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf3 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf4 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf5 */
+   { /* ModRMDecision */
+    MODRM_ONEENTRY,
+    0 /* EmptyTable */
+   },
+   /* 0xf6 */
+   { /* struct ModRMDecision */
+    MODRM_SPLITRM,
+    2458 /* Table2458 */
    },
    /* 0xf7 */
    { /* ModRMDecision */
@@ -82765,12 +94620,12 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2294 /* Table2294 */
+    2444 /* Table2444 */
    },
    /* 0xf1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2296 /* Table2296 */
+    2446 /* Table2446 */
    },
    /* 0xf2 */
    { /* ModRMDecision */
@@ -84050,12 +95905,12 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2294 /* Table2294 */
+    2444 /* Table2444 */
    },
    /* 0xf1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2296 /* Table2296 */
+    2446 /* Table2446 */
    },
    /* 0xf2 */
    { /* ModRMDecision */
@@ -84080,7 +95935,7 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2310 /* Table2310 */
+    2460 /* Table2460 */
    },
    /* 0xf7 */
    { /* ModRMDecision */
@@ -85335,12 +97190,12 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2312 /* Table2312 */
+    2462 /* Table2462 */
    },
    /* 0xf1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2314 /* Table2314 */
+    2464 /* Table2464 */
    },
    /* 0xf2 */
    { /* ModRMDecision */
@@ -85365,7 +97220,7 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2322 /* Table2322 */
+    2472 /* Table2472 */
    },
    /* 0xf7 */
    { /* ModRMDecision */
@@ -86620,12 +98475,12 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2312 /* Table2312 */
+    2462 /* Table2462 */
    },
    /* 0xf1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2314 /* Table2314 */
+    2464 /* Table2464 */
    },
    /* 0xf2 */
    { /* ModRMDecision */
@@ -87345,17 +99200,17 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0x80 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2316 /* Table2316 */
+    2466 /* Table2466 */
    },
    /* 0x81 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2318 /* Table2318 */
+    2468 /* Table2468 */
    },
    /* 0x82 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2320 /* Table2320 */
+    2470 /* Table2470 */
    },
    /* 0x83 */
    { /* ModRMDecision */
@@ -87905,12 +99760,12 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2312 /* Table2312 */
+    2462 /* Table2462 */
    },
    /* 0xf1 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2314 /* Table2314 */
+    2464 /* Table2464 */
    },
    /* 0xf2 */
    { /* ModRMDecision */
@@ -87935,7 +99790,7 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2324 /* Table2324 */
+    2474 /* Table2474 */
    },
    /* 0xf7 */
    { /* ModRMDecision */
@@ -89200,12 +101055,12 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf2 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2326 /* Table2326 */
+    2476 /* Table2476 */
    },
    /* 0xf3 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    2328 /* Table2328 */
+    2478 /* Table2478 */
    },
    /* 0xf4 */
    { /* ModRMDecision */
@@ -89215,7 +101070,7 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2344 /* Table2344 */
+    2494 /* Table2494 */
    },
    /* 0xf6 */
    { /* ModRMDecision */
@@ -89225,7 +101080,7 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2346 /* Table2346 */
+    2496 /* Table2496 */
    },
    /* 0xf8 */
    { /* ModRMDecision */
@@ -90500,7 +102355,7 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2348 /* Table2348 */
+    2498 /* Table2498 */
    },
    /* 0xf6 */
    { /* ModRMDecision */
@@ -90510,7 +102365,7 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2350 /* Table2350 */
+    2500 /* Table2500 */
    },
    /* 0xf8 */
    { /* ModRMDecision */
@@ -91785,17 +103640,17 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2352 /* Table2352 */
+    2502 /* Table2502 */
    },
    /* 0xf6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2354 /* Table2354 */
+    2504 /* Table2504 */
    },
    /* 0xf7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2356 /* Table2356 */
+    2506 /* Table2506 */
    },
    /* 0xf8 */
    { /* ModRMDecision */
@@ -93080,7 +104935,7 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2358 /* Table2358 */
+    2508 /* Table2508 */
    },
    /* 0xf8 */
    { /* ModRMDecision */
@@ -94340,12 +106195,12 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf2 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2360 /* Table2360 */
+    2510 /* Table2510 */
    },
    /* 0xf3 */
    { /* struct ModRMDecision */
     MODRM_SPLITREG,
-    2362 /* Table2362 */
+    2512 /* Table2512 */
    },
    /* 0xf4 */
    { /* ModRMDecision */
@@ -94355,7 +106210,7 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2378 /* Table2378 */
+    2528 /* Table2528 */
    },
    /* 0xf6 */
    { /* ModRMDecision */
@@ -94365,7 +106220,7 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2380 /* Table2380 */
+    2530 /* Table2530 */
    },
    /* 0xf8 */
    { /* ModRMDecision */
@@ -95640,7 +107495,7 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2382 /* Table2382 */
+    2532 /* Table2532 */
    },
    /* 0xf6 */
    { /* ModRMDecision */
@@ -95650,7 +107505,7 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2384 /* Table2384 */
+    2534 /* Table2534 */
    },
    /* 0xf8 */
    { /* ModRMDecision */
@@ -96925,17 +108780,17 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf5 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2386 /* Table2386 */
+    2536 /* Table2536 */
    },
    /* 0xf6 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2388 /* Table2388 */
+    2538 /* Table2538 */
    },
    /* 0xf7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2390 /* Table2390 */
+    2540 /* Table2540 */
    },
    /* 0xf8 */
    { /* ModRMDecision */
@@ -98220,7 +110075,7 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
    /* 0xf7 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2392 /* Table2392 */
+    2542 /* Table2542 */
    },
    /* 0xf8 */
    { /* ModRMDecision */
@@ -99551,7 +111406,7 @@ static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
  }
 , };
 static const uint8_t index_x86DisassemblerThreeByte38Opcodes[] = {
-1, 2, 3, 4, 0, 5, 6, 0, 0, 7, 8, 9, 10, 11, 0, 0, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+1, 2, 3, 4, 0, 5, 6, 7, 0, 0, 8, 9, 10, 11, 12, 13, 14, 0, 0, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
 static const struct OpcodeDecision x86DisassemblerThreeByte3AOpcodes[] = {
  /* IC_VEX_XD */
  { /* struct OpcodeDecision */
@@ -100759,7 +112614,7 @@ static const struct OpcodeDecision x86DisassemblerThreeByte3AOpcodes[] = {
    /* 0xf0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2394 /* Table2394 */
+    2544 /* Table2544 */
    },
    /* 0xf1 */
    { /* ModRMDecision */
@@ -102044,7 +113899,7 @@ static const struct OpcodeDecision x86DisassemblerThreeByte3AOpcodes[] = {
    /* 0xf0 */
    { /* struct ModRMDecision */
     MODRM_SPLITRM,
-    2396 /* Table2396 */
+    2546 /* Table2546 */
    },
    /* 0xf1 */
    { /* ModRMDecision */
@@ -103410,4 +115265,4 @@ static const struct OpcodeDecision x86DisassemblerThreeByte3AOpcodes[] = {
  }
 , };
 static const uint8_t index_x86DisassemblerThreeByte3AOpcodes[] = {
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };

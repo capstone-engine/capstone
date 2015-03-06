@@ -12,7 +12,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifdef CAPSTONE_HAS_ARM
 
@@ -116,6 +116,8 @@ static void printVectorListThreeSpacedAllLanes(MCInst *MI, unsigned OpNum, SStre
 static void printVectorListFourSpacedAllLanes(MCInst *MI, unsigned OpNum, SStream *O);
 static void printVectorListThreeSpaced(MCInst *MI, unsigned OpNum, SStream *O);
 static void printVectorListFourSpaced(MCInst *MI, unsigned OpNum, SStream *O);
+static void printBankedRegOperand(MCInst *MI, unsigned OpNum, SStream *O);
+static void printModImmOperand(MCInst *MI, unsigned OpNum, SStream *O);
 
 static void printInstSyncBOption(MCInst *MI, unsigned OpNum, SStream *O);
 
@@ -659,8 +661,8 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 		case ARM_STLEXD: {
 				MCRegisterClass* MRC = MCRegisterInfo_getRegClass(MRI, ARM_GPRRegClassID);
 				bool isStore = Opcode == ARM_STREXD || Opcode == ARM_STLEXD;
-
 				unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, isStore ? 1 : 0));
+
 				if (MCRegisterClass_contains(MRC, Reg)) {
 				    MCInst NewMI;
 
@@ -680,7 +682,24 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 				    printInstruction(&NewMI, O, MRI);
 				    return;
 				}
+				break;
 		 }
+		 // B9.3.3 ERET (Thumb)
+		 // For a target that has Virtualization Extensions, ERET is the preferred
+		 // disassembly of SUBS PC, LR, #0
+		case ARM_t2SUBS_PC_LR: {
+						MCOperand *opc = MCInst_getOperand(MI, 0);
+						if (MCInst_getNumOperands(MI) == 3 &&
+							MCOperand_isImm(opc) &&
+							MCOperand_getImm(opc) == 0 &&
+							(ARM_getFeatureBits(MI->csh->mode) & ARM_FeatureVirtualization)) {
+							SStream_concat0(O, "eret");
+							MCInst_setOpcodePub(MI, ARM_INS_ERET);
+							printPredicateOperand(MI, 1, O);
+							return;
+						}
+						break;
+				}
 	}
 
 	//if (printAliasInstr(MI, O, MRI))
@@ -1455,52 +1474,57 @@ static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	unsigned SpecRegRBit = (unsigned)MCOperand_getImm(Op) >> 4;
 	unsigned Mask = MCOperand_getImm(Op) & 0xf;
 	unsigned reg;
+	uint64_t FeatureBits = ARM_getFeatureBits(MI->csh->mode);
 
-	if (ARM_getFeatureBits(MI->csh->mode) & ARM_FeatureMClass) {
+	if (FeatureBits & ARM_FeatureMClass) {
 		unsigned SYSm = (unsigned)MCOperand_getImm(Op);
 		unsigned Opcode = MCInst_getOpcode(MI);
-		// For reads of the special registers ignore the "mask encoding" bits
-		// which are only for writes.
-		if (Opcode == ARM_t2MRS_M)
-			SYSm &= 0xff;
+
+		// For writes, handle extended mask bits if the DSP extension is present.
+		if (Opcode == ARM_t2MSR_M && (FeatureBits & ARM_FeatureDSPThumb2)) {
+			switch (SYSm) {
+				case 0x400: SStream_concat0(O, "apsr_g"); ARM_addSysReg(MI, ARM_SYSREG_APSR_G); return;
+				case 0xc00: SStream_concat0(O, "apsr_nzcvqg"); ARM_addSysReg(MI, ARM_SYSREG_APSR_NZCVQG); return;
+				case 0x401: SStream_concat0(O, "iapsr_g"); ARM_addSysReg(MI, ARM_SYSREG_IAPSR_G); return;
+				case 0xc01: SStream_concat0(O, "iapsr_nzcvqg"); ARM_addSysReg(MI, ARM_SYSREG_IAPSR_NZCVQG); return;
+				case 0x402: SStream_concat0(O, "eapsr_g"); ARM_addSysReg(MI, ARM_SYSREG_EAPSR_G); return;
+				case 0xc02: SStream_concat0(O, "eapsr_nzcvqg"); ARM_addSysReg(MI, ARM_SYSREG_EAPSR_NZCVQG); return;
+				case 0x403: SStream_concat0(O, "xpsr_g"); ARM_addSysReg(MI, ARM_SYSREG_XPSR_G); return;
+				case 0xc03: SStream_concat0(O, "xpsr_nzcvqg"); ARM_addSysReg(MI, ARM_SYSREG_XPSR_NZCVQG); return;
+			}
+		}
+
+		// Handle the basic 8-bit mask.
+		SYSm &= 0xff;
+
+		if (Opcode == ARM_t2MSR_M && (FeatureBits & ARM_HasV7Ops)) {
+			// ARMv7-M deprecates using MSR APSR without a _<bits> qualifier as an
+			// alias for MSR APSR_nzcvq.
+			switch (SYSm) {
+				case 0: SStream_concat0(O, "apsr_nzcvq"); ARM_addSysReg(MI, ARM_SYSREG_APSR_NZCVQ); return;
+				case 1: SStream_concat0(O, "iapsr_nzcvq"); ARM_addSysReg(MI, ARM_SYSREG_IAPSR_NZCVQ); return;
+				case 2: SStream_concat0(O, "eapsr_nzcvq"); ARM_addSysReg(MI, ARM_SYSREG_EAPSR_NZCVQ); return;
+				case 3: SStream_concat0(O, "xpsr_nzcvq"); ARM_addSysReg(MI, ARM_SYSREG_XPSR_NZCVQ); return;
+			}
+		}
+
+
 		switch (SYSm) {
 			default: //llvm_unreachable("Unexpected mask value!");
-			case     0:
-			case 0x800: SStream_concat0(O, "apsr"); ARM_addSysReg(MI, ARM_SYSREG_APSR); return; // with _nzcvq bits is an alias for aspr
-			case 0x400: SStream_concat0(O, "apsr_g"); ARM_addSysReg(MI, ARM_SYSREG_APSR_G); return;
-			case 0xc00: SStream_concat0(O, "apsr_nzcvqg"); ARM_addSysReg(MI, ARM_SYSREG_APSR_NZCVQG); return;
-			case     1:
-			case 0x801: SStream_concat0(O, "iapsr"); ARM_addSysReg(MI, ARM_SYSREG_IAPSR); return; // with _nzcvq bits is an alias for iapsr
-			case 0x401: SStream_concat0(O, "iapsr_g"); ARM_addSysReg(MI, ARM_SYSREG_IAPSR_G); return;
-			case 0xc01: SStream_concat0(O, "iapsr_nzcvqg"); ARM_addSysReg(MI, ARM_SYSREG_IAPSR_NZCVQG); return;
-			case     2:
-			case 0x802: SStream_concat0(O, "eapsr"); ARM_addSysReg(MI, ARM_SYSREG_EAPSR); return; // with _nzcvq bits is an alias for eapsr
-			case 0x402: SStream_concat0(O, "eapsr_g"); ARM_addSysReg(MI, ARM_SYSREG_EAPSR_G); return;
-			case 0xc02: SStream_concat0(O, "eapsr_nzcvqg"); ARM_addSysReg(MI, ARM_SYSREG_EAPSR_NZCVQG); return;
-			case     3:
-			case 0x803: SStream_concat0(O, "xpsr"); ARM_addSysReg(MI, ARM_SYSREG_XPSR); return; // with _nzcvq bits is an alias for xpsr
-			case 0x403: SStream_concat0(O, "xpsr_g"); ARM_addSysReg(MI, ARM_SYSREG_XPSR_G); return;
-			case 0xc03: SStream_concat0(O, "xpsr_nzcvqg"); ARM_addSysReg(MI, ARM_SYSREG_XPSR_NZCVQG); return;
-			case     5:
-			case 0x805: SStream_concat0(O, "ipsr"); ARM_addSysReg(MI, ARM_SYSREG_IPSR); return;
-			case     6:
-			case 0x806: SStream_concat0(O, "epsr"); ARM_addSysReg(MI, ARM_SYSREG_EPSR); return;
-			case     7:
-			case 0x807: SStream_concat0(O, "iepsr"); ARM_addSysReg(MI, ARM_SYSREG_IEPSR); return;
-			case     8:
-			case 0x808: SStream_concat0(O, "msp"); ARM_addSysReg(MI, ARM_SYSREG_MSP); return;
-			case     9:
-			case 0x809: SStream_concat0(O, "psp"); ARM_addSysReg(MI, ARM_SYSREG_PSP); return;
-			case  0x10:
-			case 0x810: SStream_concat0(O, "primask"); ARM_addSysReg(MI, ARM_SYSREG_PRIMASK); return;
-			case  0x11:
-			case 0x811: SStream_concat0(O, "basepri"); ARM_addSysReg(MI, ARM_SYSREG_BASEPRI); return;
-			case  0x12:
-			case 0x812: SStream_concat0(O, "basepri_max"); ARM_addSysReg(MI, ARM_SYSREG_BASEPRI_MAX); return;
-			case  0x13:
-			case 0x813: SStream_concat0(O, "faultmask"); ARM_addSysReg(MI, ARM_SYSREG_FAULTMASK); return;
-			case  0x14:
-			case 0x814: SStream_concat0(O, "control"); ARM_addSysReg(MI, ARM_SYSREG_CONTROL); return;
+			case  0: SStream_concat0(O, "apsr"); ARM_addSysReg(MI, ARM_SYSREG_APSR); return;
+			case  1: SStream_concat0(O, "iapsr"); ARM_addSysReg(MI, ARM_SYSREG_IAPSR); return;
+			case  2: SStream_concat0(O, "eapsr"); ARM_addSysReg(MI, ARM_SYSREG_EAPSR); return;
+			case  3: SStream_concat0(O, "xpsr"); ARM_addSysReg(MI, ARM_SYSREG_XPSR); return;
+			case  5: SStream_concat0(O, "ipsr"); ARM_addSysReg(MI, ARM_SYSREG_IPSR); return;
+			case  6: SStream_concat0(O, "epsr"); ARM_addSysReg(MI, ARM_SYSREG_EPSR); return;
+			case  7: SStream_concat0(O, "iepsr"); ARM_addSysReg(MI, ARM_SYSREG_IEPSR); return;
+			case  8: SStream_concat0(O, "msp"); ARM_addSysReg(MI, ARM_SYSREG_MSP); return;
+			case  9: SStream_concat0(O, "psp"); ARM_addSysReg(MI, ARM_SYSREG_PSP); return;
+			case 16: SStream_concat0(O, "primask"); ARM_addSysReg(MI, ARM_SYSREG_PRIMASK); return;
+			case 17: SStream_concat0(O, "basepri"); ARM_addSysReg(MI, ARM_SYSREG_BASEPRI); return;
+			case 18: SStream_concat0(O, "basepri_max"); ARM_addSysReg(MI, ARM_SYSREG_BASEPRI_MAX); return;
+			case 19: SStream_concat0(O, "faultmask"); ARM_addSysReg(MI, ARM_SYSREG_FAULTMASK); return;
+			case 20: SStream_concat0(O, "control"); ARM_addSysReg(MI, ARM_SYSREG_CONTROL); return;
 		}
 	}
 
@@ -1568,6 +1592,54 @@ static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 			ARM_addSysReg(MI, reg);
 		}
 	}
+}
+
+static void printBankedRegOperand(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	uint32_t Banked = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	uint32_t R = (Banked & 0x20) >> 5;
+	uint32_t SysM = Banked & 0x1f;
+	char *RegNames[] = {
+		"r8_usr", "r9_usr", "r10_usr", "r11_usr", "r12_usr", "sp_usr", "lr_usr", "",
+		"r8_fiq", "r9_fiq", "r10_fiq", "r11_fiq", "r12_fiq", "sp_fiq", "lr_fiq", "",
+		"lr_irq", "sp_irq", "lr_svc",  "sp_svc",  "lr_abt",  "sp_abt", "lr_und", "sp_und",
+		"",       "",       "",        "",        "lr_mon",  "sp_mon", "elr_hyp", "sp_hyp"
+	};
+	arm_sysreg RegIds[] = {
+		ARM_SYSREG_R8_USR, ARM_SYSREG_R9_USR, ARM_SYSREG_R10_USR,
+		ARM_SYSREG_R11_USR, ARM_SYSREG_R12_USR, ARM_SYSREG_SP_USR,
+		ARM_SYSREG_LR_USR, 0, ARM_SYSREG_R8_FIQ, ARM_SYSREG_R9_FIQ,
+		ARM_SYSREG_R10_FIQ, ARM_SYSREG_R11_FIQ, ARM_SYSREG_R12_FIQ,
+		ARM_SYSREG_SP_FIQ, ARM_SYSREG_LR_FIQ, 0, ARM_SYSREG_LR_IRQ,
+		ARM_SYSREG_SP_IRQ, ARM_SYSREG_LR_SVC, ARM_SYSREG_SP_SVC,
+		ARM_SYSREG_LR_ABT, ARM_SYSREG_SP_ABT, ARM_SYSREG_LR_UND,
+		ARM_SYSREG_SP_UND, 0, 0, 0, 0, ARM_SYSREG_LR_MON, ARM_SYSREG_SP_MON,
+		ARM_SYSREG_ELR_HYP, ARM_SYSREG_SP_HYP,
+	};
+	char *Name = RegNames[SysM];
+
+	// Nothing much we can do about this, the encodings are specified in B9.2.3 of
+	// the ARM ARM v7C, and are all over the shop.
+	if (R) {
+		SStream_concat0(O, "SPSR_");
+
+		switch(SysM) {
+			default: // llvm_unreachable("Invalid banked SPSR register");
+			case 0x0e: SStream_concat0(O, "fiq"); ARM_addSysReg(MI, ARM_SYSREG_SPSR_FIQ); return;
+			case 0x10: SStream_concat0(O, "irq"); ARM_addSysReg(MI, ARM_SYSREG_SPSR_IRQ); return;
+			case 0x12: SStream_concat0(O, "svc"); ARM_addSysReg(MI, ARM_SYSREG_SPSR_SVC); return;
+			case 0x14: SStream_concat0(O, "abt"); ARM_addSysReg(MI, ARM_SYSREG_SPSR_ABT); return;
+			case 0x16: SStream_concat0(O, "und"); ARM_addSysReg(MI, ARM_SYSREG_SPSR_UND); return;
+			case 0x1c: SStream_concat0(O, "mon"); ARM_addSysReg(MI, ARM_SYSREG_SPSR_MON); return;
+			case 0x1e: SStream_concat0(O, "hyp"); ARM_addSysReg(MI, ARM_SYSREG_SPSR_HYP); return;
+		}
+	}
+
+	//assert(!R && "should have dealt with SPSR regs");
+	//assert(Name[0] && "invalid banked register operand");
+
+	SStream_concat0(O, Name);
+	ARM_addSysReg(MI, RegIds[SysM]);
 }
 
 static void printPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O)
@@ -2154,6 +2226,56 @@ static void printRotImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count - 1].shift.type = ARM_SFT_ROR;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count - 1].shift.value = Imm * 8;
+	}
+}
+
+static void printModImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	MCOperand *Op = MCInst_getOperand(MI, OpNum);
+	unsigned Bits = MCOperand_getImm(Op) & 0xFF;
+	unsigned Rot = (MCOperand_getImm(Op) & 0xF00) >> 7;
+	int32_t Rotated;
+
+	bool  PrintUnsigned = false;
+	switch (MCInst_getOpcode(MI)) {
+		case ARM_MOVi:
+			// Movs to PC should be treated unsigned
+			PrintUnsigned = (MCOperand_getReg(MCInst_getOperand(MI, OpNum - 1)) == ARM_PC);
+			break;
+		case ARM_MSRi:
+			// Movs to special registers should be treated unsigned
+			PrintUnsigned = true;
+			break;
+	}
+
+	Rotated = rotr32(Bits, Rot);
+	if (getSOImmVal(Rotated) == MCOperand_getImm(Op)) {
+		// #rot has the least possible value
+		if (Rotated >= 0) {
+			if (Rotated > HEX_THRESHOLD)
+				SStream_concat(O, "#0x%x", Rotated);
+			else
+				SStream_concat(O, "#%u", Rotated);
+		} else {
+			SStream_concat(O, "#0x%x", Rotated);
+		}
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_IMM;
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = Rotated;
+			MI->flat_insn->detail->arm.op_count++;
+		}
+		return;
+	}
+
+	// Explicit #bits, #rot implied
+	SStream_concat(O, "#%u, #%u", Bits, Rot);
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_IMM;
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = Bits;
+		MI->flat_insn->detail->arm.op_count++;
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_IMM;
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = Rot;
+		MI->flat_insn->detail->arm.op_count++;
 	}
 }
 

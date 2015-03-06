@@ -14,7 +14,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifdef CAPSTONE_HAS_ARM64
 
@@ -703,30 +703,20 @@ static DecodeStatus DecodeMemExtend(MCInst *Inst, unsigned Imm,
 static DecodeStatus DecodeMRSSystemRegister(MCInst *Inst, unsigned Imm,
 		uint64_t Address, void *Decoder)
 {
-	bool ValidNamed;
-	char result[128];
-
-	Imm |= 0x8000;
 	MCOperand_CreateImm0(Inst, Imm);
 
-	A64SysRegMapper_toString(&AArch64_MRSMapper, Imm, &ValidNamed, result);
-
-	return ValidNamed ? Success : Fail;
+	// Every system register in the encoding space is valid with the syntax
+	// S<op0>_<op1>_<Cn>_<Cm>_<op2>, so decoding system registers always succeeds.
+	return Success;
 }
 
 static DecodeStatus DecodeMSRSystemRegister(MCInst *Inst, unsigned Imm,
 		uint64_t Address,
 		void *Decoder)
 {
-	bool ValidNamed;
-	char result[128];
-
-	Imm |= 0x8000;
 	MCOperand_CreateImm0(Inst, Imm);
 
-	A64SysRegMapper_toString(&AArch64_MSRMapper, Imm, &ValidNamed, result);
-
-	return ValidNamed ? Success : Fail;
+	return Success;
 }
 
 static DecodeStatus DecodeFMOVLaneInstruction(MCInst *Inst, unsigned Insn,

@@ -12,7 +12,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifdef CAPSTONE_HAS_SYSZ
 
@@ -313,6 +313,12 @@ static void printPCRelOperand(MCInst *MI, int OpNum, SStream *O)
 			MI->flat_insn->detail->sysz.op_count++;
 		}
 	}
+}
+
+static void printPCRelTLSOperand(MCInst *MI, int OpNum, SStream *O)
+{
+	// Output the PC-relative operand.
+	printPCRelOperand(MI, OpNum, O);
 }
 
 static void printOperand(MCInst *MI, int OpNum, SStream *O)
