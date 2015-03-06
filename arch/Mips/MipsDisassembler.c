@@ -460,7 +460,7 @@ static DecodeStatus MipsDisassembler_getInstruction(int mode, MCInst *instr,
 		}
 	}
 
-	if ((mode & CS_MODE_MIPS32R6) && (mode & CS_MODE_MIPSGP64)) {
+	if ((mode & CS_MODE_MIPS32R6) && (mode & CS_MODE_MIPS64)) {
 		// DEBUG(dbgs() << "Trying Mips32r6_64r6 (GPR64) table (32-bit opcodes):\n");
 		Result = decodeInstruction(DecoderTableMips32r6_64r6_GP6432, instr, Insn,
 				Address, MRI, mode);
@@ -480,7 +480,7 @@ static DecodeStatus MipsDisassembler_getInstruction(int mode, MCInst *instr,
 		}
 	}
 
-	if (mode & CS_MODE_MIPSGP64) {
+	if (mode & CS_MODE_MIPS64) {
 		// DEBUG(dbgs() << "Trying Mips64 (GPR64) table (32-bit opcodes):\n");
 		Result = decodeInstruction(DecoderTableMips6432, instr, Insn,
 				Address, MRI, mode);
@@ -886,7 +886,7 @@ static DecodeStatus DecodePtrRegisterClass(MCInst *Inst,
 		unsigned RegNo, uint64_t Address, MCRegisterInfo *Decoder)
 {
 	// if (static_cast<const MipsDisassembler *>(Decoder)->isGP64())
-	if (Inst->csh->mode & CS_MODE_MIPSGP64)  // FIXME
+	if (Inst->csh->mode & CS_MODE_MIPS64)
 		return DecodeGPR64RegisterClass(Inst, RegNo, Address, Decoder);
 
 	return DecodeGPR32RegisterClass(Inst, RegNo, Address, Decoder);

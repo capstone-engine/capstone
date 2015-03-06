@@ -35,7 +35,6 @@ type mode =
   |	CS_MODE_MICRO		(* MicroMips mode (MIPS architecture) *)
   |	CS_MODE_MIPS3		(* Mips3 mode (MIPS architecture) *)
   |	CS_MODE_MIPS32R6	(* Mips32-R6 mode (MIPS architecture) *)
-  |	CS_MODE_MIPSGP64	(* MipsGP64 mode (MIPS architecture) *)
   |	CS_MODE_V9			(* SparcV9 mode (Sparc architecture) *)
   |	CS_MODE_BIG_ENDIAN	(* big-endian mode *)
   |	CS_MODE_MIPS32		(* Mips32 mode (for Mips) *)

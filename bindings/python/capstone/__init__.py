@@ -40,7 +40,6 @@ __all__ = [
     'CS_MODE_MICRO',
     'CS_MODE_MIPS3',
     'CS_MODE_MIPS32R6',
-    'CS_MODE_MIPSGP64',
     'CS_MODE_V8',
     'CS_MODE_V9',
     'CS_MODE_MIPS32',
@@ -122,7 +121,6 @@ CS_MODE_V8 = (1 << 6)          # ARMv8 A32 encodings for ARM
 CS_MODE_MICRO = (1 << 4)       # MicroMips mode (MIPS architecture)
 CS_MODE_MIPS3 = (1 << 5)       # Mips III ISA
 CS_MODE_MIPS32R6 = (1 << 6)    # Mips32r6 ISA
-CS_MODE_MIPSGP64 = (1 << 7)    # General Purpose Registers are 64-bit wide (MIPS arch)
 CS_MODE_V9 = (1 << 4)          # Sparc V9 mode (for Sparc)
 CS_MODE_BIG_ENDIAN = (1 << 31) # big-endian mode
 CS_MODE_MIPS32 = CS_MODE_32    # Mips32 ISA
