@@ -2251,7 +2251,14 @@ static void printModImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	Rotated = rotr32(Bits, Rot);
 	if (getSOImmVal(Rotated) == MCOperand_getImm(Op)) {
 		// #rot has the least possible value
-		SStream_concat(O, "#%u", Rotated);
+		if (Rotated >= 0) {
+			if (Rotated > HEX_THRESHOLD)
+				SStream_concat(O, "#0x%x", Rotated);
+			else
+				SStream_concat(O, "#%u", Rotated);
+		} else {
+			SStream_concat(O, "#0x%x", Rotated);
+		}
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_IMM;
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = Rotated;
