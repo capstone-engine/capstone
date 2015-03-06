@@ -19458,7 +19458,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     // LODSQ
     printSrcIdx64(MI, 0, O); 
     SStream_concat0(O, ", %rax"); 
-	op_addReg(MI, X86_REG_RAX);
+    op_addReg(MI, X86_REG_RAX);
     return;
     break;
   case 50:
@@ -19797,7 +19797,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   // Fragment 1 encoded into 7 bits for 82 unique commands.
   //printf("Frag-1: %"PRIu64"\n", (Bits >> 21) & 127);
   switch ((Bits >> 21) & 127) {
-  default:   // unreachable.
+  default: // llvm_unreachable("Invalid command number.");
   case 0:
     // AAD8i8, AAM8i8, ADD_FPrST0, ADD_FST0r, ADD_FrST0, BSWAP32r, BSWAP64r, ...
     return;
@@ -19805,7 +19805,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 1:
     // ADC16i16, ADD16i16, AND16i16, CMP16i16, IN16ri, LODSW, MOV16ao16, MOV1...
     SStream_concat0(O, ", %ax"); 
-	op_addReg(MI, X86_REG_AX);
+    op_addReg(MI, X86_REG_AX);
     return;
     break;
   case 2:
@@ -19824,7 +19824,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 5:
     // ADC32i32, ADD32i32, AND32i32, CMP32i32, IN32ri, LODSL, MOV32ao16, MOV3...
     SStream_concat0(O, ", %eax"); 
-	op_addReg(MI, X86_REG_EAX);
+    op_addReg(MI, X86_REG_EAX);
     return;
     break;
   case 6:
@@ -19839,7 +19839,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 8:
     // ADC64i32, ADD64i32, AND64i32, CMP64i32, MOV64ao32, MOV64ao64, OR64i32,...
     SStream_concat0(O, ", %rax"); 
-	op_addReg(MI, X86_REG_RAX);
+    op_addReg(MI, X86_REG_RAX);
     return;
     break;
   case 9:
@@ -19850,7 +19850,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 10:
     // ADC8i8, ADD8i8, AND8i8, CMP8i8, IN8ri, LODSB, MOV8ao16, MOV8ao32, MOV8...
     SStream_concat0(O, ", %al"); 
-	op_addReg(MI, X86_REG_AL);
+    op_addReg(MI, X86_REG_AL);
     return;
     break;
   case 11:
@@ -19885,7 +19885,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 17:
     // CMOVBE_F, CMOVB_F, CMOVE_F, CMOVNBE_F, CMOVNB_F, CMOVNE_F, CMOVNP_F, C...
     SStream_concat0(O, ", %st(0)"); 
-	op_addReg(MI, X86_REG_ST0);
+    op_addReg(MI, X86_REG_ST0);
     return;
     break;
   case 18:
@@ -19985,7 +19985,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 37:
     // OUTSB, OUTSL, OUTSW
     SStream_concat0(O, ", %dx"); 
-	op_addReg(MI, X86_REG_DX);
+    op_addReg(MI, X86_REG_DX);
     return;
     break;
   case 38:
@@ -20007,7 +20007,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 41:
     // VADDPDZ128rmb, VADDPDZ128rmbk, VADDPDZ128rmbkz, VBLENDMPDZ128rmb, VBLE...
     SStream_concat0(O, "{1to2}, "); 
-	op_addAvxBroadcast(MI, X86_AVX_BCAST_2);
+    op_addAvxBroadcast(MI, X86_AVX_BCAST_2);
     break;
   case 42:
     // VADDPDZ128rmk, VADDPDZ256rmk, VADDPDZrbk, VADDPDZrmk, VADDPSZ128rmk, V...
@@ -20017,7 +20017,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 43:
     // VADDPDZ256rmb, VADDPDZ256rmbk, VADDPDZ256rmbkz, VADDPSZ128rmb, VADDPSZ...
     SStream_concat0(O, "{1to4}, "); 
-	op_addAvxBroadcast(MI, X86_AVX_BCAST_4);
+    op_addAvxBroadcast(MI, X86_AVX_BCAST_4);
     break;
   case 44:
     // VADDPDZrbkz, VADDPSZrbkz, VADDSDZrrbkz, VADDSSZrrbkz, VDIVPDZrbkz, VDI...
@@ -20026,12 +20026,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 45:
     // VADDPDZrmb, VADDPDZrmbk, VADDPDZrmbkz, VADDPSZ256rmb, VADDPSZ256rmbk, ...
     SStream_concat0(O, "{1to8}, "); 
-	op_addAvxBroadcast(MI, X86_AVX_BCAST_8);
+    op_addAvxBroadcast(MI, X86_AVX_BCAST_8);
     break;
   case 46:
     // VADDPSZrmb, VADDPSZrmbk, VADDPSZrmbkz, VBLENDMPSZrmb, VBLENDMPSZrmbk, ...
     SStream_concat0(O, "{1to16}, "); 
-	op_addAvxBroadcast(MI, X86_AVX_BCAST_16);
+    op_addAvxBroadcast(MI, X86_AVX_BCAST_16);
     break;
   case 47:
     // VALIGNDrmi, VALIGNQrmi, VPCMPBZrmi_alt, VPCMPDZrmi_alt, VPCMPQZrmi_alt...
@@ -20064,7 +20064,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 51:
     // VCMPPDZrrib
     SStream_concat0(O, "pd\t{sae}, "); 
-	op_addAvxSae(MI);
+    op_addAvxSae(MI);
     printOperand(MI, 2, O); 
     SStream_concat0(O, ", "); 
     printOperand(MI, 1, O); 
@@ -20075,7 +20075,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 52:
     // VCMPPSZrrib
     SStream_concat0(O, "ps\t{sae}, "); 
-	op_addAvxSae(MI);
+    op_addAvxSae(MI);
     printOperand(MI, 2, O); 
     SStream_concat0(O, ", "); 
     printOperand(MI, 1, O); 
@@ -20108,7 +20108,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 57:
     // VFMADDPDZ128v213rmkz, VFMADDPDZ128v231rmkz, VFMADDPDZ256v213rmkz, VFMA...
     SStream_concat0(O, "} {z}"); 
-	op_addAvxZeroOpmask(MI);
+    op_addAvxZeroOpmask(MI);
     return;
     break;
   case 58:
@@ -20246,7 +20246,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 81:
     // VRNDSCALESDrbk, VRNDSCALESSrbk
     SStream_concat0(O, "}{sae}"); 
-	op_addAvxSae(MI);
+    op_addAvxSae(MI);
     return;
     break;
   }
@@ -20495,7 +20495,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 41:
     // VPCMPDZ128rmib_alt, VPCMPDZ128rmibk_alt, VPCMPQZ256rmib_alt, VPCMPQZ25...
     SStream_concat0(O, "{1to4}, "); 
-	op_addAvxBroadcast(MI, X86_AVX_BCAST_4);
+    op_addAvxBroadcast(MI, X86_AVX_BCAST_4);
     break;
   case 42:
     // VPCMPDZ128rmibk, VPCMPDZ256rmibk, VPCMPDZrmibk, VPCMPUDZ128rmibk, VPCM...
@@ -20504,17 +20504,17 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 43:
     // VPCMPDZ256rmib_alt, VPCMPDZ256rmibk_alt, VPCMPQZrmib_alt, VPCMPQZrmibk...
     SStream_concat0(O, "{1to8}, "); 
-	op_addAvxBroadcast(MI, X86_AVX_BCAST_8);
+    op_addAvxBroadcast(MI, X86_AVX_BCAST_8);
     break;
   case 44:
     // VPCMPDZrmib_alt, VPCMPDZrmibk_alt, VPCMPUDZrmib_alt, VPCMPUDZrmibk_alt
     SStream_concat0(O, "{1to16}, "); 
-	op_addAvxBroadcast(MI, X86_AVX_BCAST_16);
+    op_addAvxBroadcast(MI, X86_AVX_BCAST_16);
     break;
   case 45:
     // VPCMPQZ128rmib_alt, VPCMPQZ128rmibk_alt, VPCMPUQZ128rmib_alt, VPCMPUQZ...
     SStream_concat0(O, "{1to2}, "); 
-	op_addAvxBroadcast(MI, X86_AVX_BCAST_2);
+    op_addAvxBroadcast(MI, X86_AVX_BCAST_2);
     break;
   case 46:
     // VPCMPQZ128rmibk, VPCMPQZ256rmibk, VPCMPQZrmibk, VPCMPUQZ128rmibk, VPCM...
@@ -20563,7 +20563,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 7:
     // VADDPDZrbkz, VADDPSZrbkz, VADDSDZrrbkz, VADDSSZrrbkz, VDIVPDZrbkz, VDI...
     SStream_concat0(O, "} {z}"); 
-	op_addAvxZeroOpmask(MI);
+    op_addAvxZeroOpmask(MI);
     return;
     break;
   case 8:
@@ -20578,7 +20578,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 10:
     // VEXP2PDrb, VEXP2PSrb, VRCP28PDrb, VRCP28PSrb, VRSQRT28PDrb, VRSQRT28PS...
     SStream_concat0(O, " {sae}"); 
-	op_addAvxSae(MI);
+    op_addAvxSae(MI);
     return;
     break;
   case 11:
@@ -20589,22 +20589,22 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 12:
     // VPCMPDZ128rmib, VPCMPDZ128rmibk, VPCMPQZ256rmib, VPCMPQZ256rmibk, VPCM...
     SStream_concat0(O, "{1to4}, "); 
-	op_addAvxBroadcast(MI, X86_AVX_BCAST_4);
+    op_addAvxBroadcast(MI, X86_AVX_BCAST_4);
     break;
   case 13:
     // VPCMPDZ256rmib, VPCMPDZ256rmibk, VPCMPQZrmib, VPCMPQZrmibk, VPCMPUDZ25...
     SStream_concat0(O, "{1to8}, "); 
-	op_addAvxBroadcast(MI, X86_AVX_BCAST_8);
+    op_addAvxBroadcast(MI, X86_AVX_BCAST_8);
     break;
   case 14:
     // VPCMPDZrmib, VPCMPDZrmibk, VPCMPUDZrmib, VPCMPUDZrmibk
     SStream_concat0(O, "{1to16}, "); 
-	op_addAvxBroadcast(MI, X86_AVX_BCAST_16);
+    op_addAvxBroadcast(MI, X86_AVX_BCAST_16);
     break;
   case 15:
     // VPCMPQZ128rmib, VPCMPQZ128rmibk, VPCMPUQZ128rmib, VPCMPUQZ128rmibk
     SStream_concat0(O, "{1to2}, "); 
-	op_addAvxBroadcast(MI, X86_AVX_BCAST_2);
+    op_addAvxBroadcast(MI, X86_AVX_BCAST_2);
     break;
   case 16:
     // VPSCATTERDDZmr, VPSCATTERDQZmr, VPSCATTERQDZmr, VPSCATTERQQZmr, VSCATT...
@@ -20647,7 +20647,6 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 5:
     // VADDPDZ128rm, VADDPDZ128rr, VADDPDZ256rm, VADDPDZ256rr, VADDPDZrm, VAD...
-    SStream_concat0(O, " "); 
     return;
     break;
   case 6:
@@ -20667,7 +20666,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 9:
     // VBROADCASTI32X4krm, VBROADCASTI64X4krm, VBROADCASTSDZ256rkz, VBROADCAS...
     SStream_concat0(O, "} {z}"); 
-	op_addAvxZeroOpmask(MI);
+    op_addAvxZeroOpmask(MI);
     return;
     break;
   case 10:
@@ -20678,14 +20677,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 11:
     // VEXP2PDrbk, VEXP2PSrbk, VMAXSDZrrbk, VMAXSSZrrbk, VMINSDZrrbk, VMINSSZ...
     SStream_concat0(O, "}{sae}"); 
-	op_addAvxSae(MI);
+    op_addAvxSae(MI);
     return;
     break;
   case 12:
     // VEXP2PDrbkz, VEXP2PSrbkz, VRCP28PDrbkz, VRCP28PSrbkz, VRSQRT28PDrbkz, ...
     SStream_concat0(O, "} {z}{sae}"); 
-	op_addAvxZeroOpmask(MI);
-	op_addAvxSae(MI);
+    op_addAvxSae(MI);
+    op_addAvxZeroOpmask(MI);
     return;
     break;
   case 13:
@@ -20697,13 +20696,13 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 14:
     // VMAXSDZrrb, VMAXSSZrrb, VMINSDZrrb, VMINSSZrrb, VRCP28SDrb, VRCP28SSrb...
     SStream_concat0(O, " {sae}"); 
-	op_addAvxSae(MI);
+    op_addAvxSae(MI);
     return;
     break;
   case 15:
     // VPERMI2Drrkz, VPERMI2PDrrkz, VPERMI2PSrrkz, VPERMI2Qrrkz, VPERMT2Drrkz...
     SStream_concat0(O, "} {z} "); 
-	op_addAvxZeroOpmask(MI);
+    op_addAvxZeroOpmask(MI);
     return;
     break;
   case 16:
@@ -20715,8 +20714,8 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 
   // Fragment 5 encoded into 4 bits for 10 unique commands.
-  //printf("Frag-5: %"PRIu64"\n", (Bits >> 43) & 15);
-  switch ((Bits >> 43) & 15) {
+  //printf("Frag-5: %"PRIu64"\n", (Bits >> 44) & 15);
+  switch ((Bits >> 44) & 15) {
   default: // llvm_unreachable("Invalid command number.");
   case 0:
     // ANDN32rm, ANDN64rm, CMPPDrri, CMPPSrri, CMPSDrr, CMPSSrr, Int_CMPSDrr,...
@@ -20729,7 +20728,6 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 2:
     // VADDPDZ128rmb, VADDPDZ256rmb, VADDPDZrmb, VADDPSZ128rmb, VADDPSZ256rmb...
-    SStream_concat0(O, " "); 
     return;
     break;
   case 3:
@@ -20745,14 +20743,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 5:
     // VADDPDZ128rmkz, VADDPDZ128rrkz, VADDPDZ256rmkz, VADDPDZ256rrkz, VADDPD...
     SStream_concat0(O, "} {z}"); 
-	op_addAvxZeroOpmask(MI);
+    op_addAvxZeroOpmask(MI);
     return;
     break;
   case 6:
     // VMAXSDZrrbkz, VMAXSSZrrbkz, VMINSDZrrbkz, VMINSSZrrbkz, VRCP28SDrbkz, ...
     SStream_concat0(O, "} {z}{sae}"); 
-	op_addAvxZeroOpmask(MI);
-	op_addAvxSae(MI);
+    op_addAvxSae(MI);
+    op_addAvxZeroOpmask(MI);
     return;
     break;
   case 7:
@@ -20763,21 +20761,21 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 8:
     // VPSLLDZmikz, VPSLLDZrikz, VPSLLDZrmkz, VPSLLDZrrkz, VPSLLQZmikz, VPSLL...
     SStream_concat0(O, "} {z} "); 
-	op_addAvxZeroOpmask(MI);
+    op_addAvxZeroOpmask(MI);
     return;
     break;
   case 9:
     // VRNDSCALESDrb, VRNDSCALESSrb
     SStream_concat0(O, " {sae}"); 
-	op_addAvxSae(MI);
+    op_addAvxSae(MI);
     return;
     break;
   }
 
 
   // Fragment 6 encoded into 3 bits for 5 unique commands.
-  //printf("Frag-6: %"PRIu64"\n", (Bits >> 47) & 7);
-  switch ((Bits >> 47) & 7) {
+  //printf("Frag-6: %"PRIu64"\n", (Bits >> 48) & 7);
+  switch ((Bits >> 48) & 7) {
   default: // llvm_unreachable("Invalid command number.");
   case 0:
     // Int_VCMPSDrr, Int_VCMPSSrr, VCMPPDYrri, VCMPPDZrri, VCMPPDrri, VCMPPSY...
@@ -20786,7 +20784,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 1:
     // VADDPDZ128rmbkz, VADDPDZ256rmbkz, VADDPDZrmbkz, VADDPSZ128rmbkz, VADDP...
     SStream_concat0(O, "} {z}"); 
-	op_addAvxZeroOpmask(MI);
+    op_addAvxZeroOpmask(MI);
     return;
     break;
   case 2:
@@ -20804,8 +20802,8 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 4:
     // VRNDSCALESDrbkz, VRNDSCALESSrbkz
     SStream_concat0(O, "} {z}{sae}"); 
-	op_addAvxZeroOpmask(MI);
-	op_addAvxSae(MI);
+    op_addAvxSae(MI);
+    op_addAvxZeroOpmask(MI);
     return;
     break;
   }
