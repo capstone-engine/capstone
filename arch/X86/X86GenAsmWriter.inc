@@ -20707,7 +20707,6 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 16:
     // VPSLLDZri, VPSLLDZrm, VPSLLDZrr, VPSLLQZri, VPSLLQZrm, VPSLLQZrr, VPSL...
-    SStream_concat0(O, "  "); 
     return;
     break;
   }
