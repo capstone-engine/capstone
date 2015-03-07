@@ -257,6 +257,18 @@ public class X86_const {
 	public static final int X86_OP_MEM = 3;
 	public static final int X86_OP_FP = 4;
 
+	// XOP Code Condition type
+
+	public static final int X86_XOP_CC_INVALID = 0;
+	public static final int X86_XOP_CC_LT = 1;
+	public static final int X86_XOP_CC_LE = 2;
+	public static final int X86_XOP_CC_GT = 3;
+	public static final int X86_XOP_CC_GE = 4;
+	public static final int X86_XOP_CC_EQ = 5;
+	public static final int X86_XOP_CC_NEQ = 6;
+	public static final int X86_XOP_CC_FALSE = 7;
+	public static final int X86_XOP_CC_TRUE = 8;
+
 	// AVX broadcast type
 
 	public static final int X86_AVX_BCAST_INVALID = 0;

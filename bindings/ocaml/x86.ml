@@ -37,6 +37,7 @@ type cs_x86 = {
 	sib_index: int;
 	sib_scale: int;
 	sib_base: int;
+	xop_cc: int;
 	sse_cc: int;
 	avx_cc: int;
 	avx_sae: int;

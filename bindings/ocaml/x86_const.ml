@@ -254,6 +254,18 @@ let _X86_OP_IMM = 2;;
 let _X86_OP_MEM = 3;;
 let _X86_OP_FP = 4;;
 
+(* XOP Code Condition type *)
+
+let _X86_XOP_CC_INVALID = 0;;
+let _X86_XOP_CC_LT = 1;;
+let _X86_XOP_CC_LE = 2;;
+let _X86_XOP_CC_GT = 3;;
+let _X86_XOP_CC_GE = 4;;
+let _X86_XOP_CC_EQ = 5;;
+let _X86_XOP_CC_NEQ = 6;;
+let _X86_XOP_CC_FALSE = 7;;
+let _X86_XOP_CC_TRUE = 8;;
+
 (* AVX broadcast type *)
 
 let _X86_AVX_BCAST_INVALID = 0;;

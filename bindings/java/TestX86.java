@@ -70,6 +70,9 @@ public class TestX86 {
           ins.regName(operands.sibBase), ins.regName(operands.sibIndex), operands.sibScale);
     }
 
+    if (operands.xopCC != 0)
+        System.out.printf("\txop_cc: %u\n", operands.xopCC);
+
     if (operands.sseCC != 0)
         System.out.printf("\tsse_cc: %u\n", operands.sseCC);
 

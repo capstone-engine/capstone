@@ -314,7 +314,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 					case CS_ARCH_X86:
 						arch_info = caml_alloc(1, 3);
 
-						op_info_val = caml_alloc(15, 0);
+						op_info_val = caml_alloc(16, 0);
 
 						// fill prefix
 						lcount = list_count(insn[j-1].detail->x86.prefix, ARR_SIZE(insn[j-1].detail->x86.prefix));
@@ -354,10 +354,11 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 
 						Store_field(op_info_val, 9, Val_int(insn[j-1].detail->x86.sib_base));
 
-						Store_field(op_info_val, 10, Val_int(insn[j-1].detail->x86.sse_cc));
-						Store_field(op_info_val, 11, Val_int(insn[j-1].detail->x86.avx_cc));
-						Store_field(op_info_val, 12, Val_int(insn[j-1].detail->x86.avx_sae));
-						Store_field(op_info_val, 13, Val_int(insn[j-1].detail->x86.avx_rm));
+						Store_field(op_info_val, 10, Val_int(insn[j-1].detail->x86.xop_cc));
+						Store_field(op_info_val, 11, Val_int(insn[j-1].detail->x86.sse_cc));
+						Store_field(op_info_val, 12, Val_int(insn[j-1].detail->x86.avx_cc));
+						Store_field(op_info_val, 13, Val_int(insn[j-1].detail->x86.avx_sae));
+						Store_field(op_info_val, 14, Val_int(insn[j-1].detail->x86.avx_rm));
 
 						lcount = insn[j-1].detail->x86.op_count;
 						if (lcount > 0) {
@@ -399,7 +400,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 							}
 						} else	// empty array
 							array = Atom(0);
-						Store_field(op_info_val, 14, array);
+						Store_field(op_info_val, 15, array);
 
 						// finally, insert this into arch_info
 						Store_field(arch_info, 0, op_info_val);
