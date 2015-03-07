@@ -63165,6 +63165,13 @@ void op_addImm(MCInst *MI, int v)
 		MI->op1_size = MI->imm_size;
 }
 
+void op_addXopCC(MCInst *MI, int v)
+{
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->x86.xop_cc = v;
+	}
+}
+
 void op_addSseCC(MCInst *MI, int v)
 {
 	if (MI->csh->detail) {

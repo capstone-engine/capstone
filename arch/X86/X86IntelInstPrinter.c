@@ -230,14 +230,14 @@ static void printXOPCC(MCInst *MI, unsigned Op, SStream *O)
 
 	switch (Imm) {
 		default: // llvm_unreachable("Invalid xopcc argument!");
-		case 0: SStream_concat0(O, "lt"); break;	// FIXME
-		case 1: SStream_concat0(O, "le"); break;
-		case 2: SStream_concat0(O, "gt"); break;
-		case 3: SStream_concat0(O, "ge"); break;
-		case 4: SStream_concat0(O, "eq"); break;
-		case 5: SStream_concat0(O, "neq"); break;
-		case 6: SStream_concat0(O, "false"); break;
-		case 7: SStream_concat0(O, "true"); break;
+		case 0: SStream_concat0(O, "lt"); op_addXopCC(MI, X86_XOP_CC_LT); break;
+		case 1: SStream_concat0(O, "le"); op_addXopCC(MI, X86_XOP_CC_LE); break;
+		case 2: SStream_concat0(O, "gt"); op_addXopCC(MI, X86_XOP_CC_GT); break;
+		case 3: SStream_concat0(O, "ge"); op_addXopCC(MI, X86_XOP_CC_GE); break;
+		case 4: SStream_concat0(O, "eq"); op_addXopCC(MI, X86_XOP_CC_EQ); break;
+		case 5: SStream_concat0(O, "neq"); op_addXopCC(MI, X86_XOP_CC_NEQ); break;
+		case 6: SStream_concat0(O, "false"); op_addXopCC(MI, X86_XOP_CC_FALSE); break;
+		case 7: SStream_concat0(O, "true"); op_addXopCC(MI, X86_XOP_CC_TRUE); break;
 	}
 }
 

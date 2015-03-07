@@ -78,6 +78,19 @@ typedef enum x86_op_type {
 	X86_OP_FP,  //  = CS_OP_FP  (Floating-Point operand).
 } x86_op_type;
 
+//> XOP Code Condition type
+typedef enum x86_xop_cc {
+	X86_XOP_CC_INVALID = 0,	// Uninitialized.
+	X86_XOP_CC_LT,
+	X86_XOP_CC_LE,
+	X86_XOP_CC_GT,
+	X86_XOP_CC_GE,
+	X86_XOP_CC_EQ,
+	X86_XOP_CC_NEQ,
+	X86_XOP_CC_FALSE,
+	X86_XOP_CC_TRUE,
+} x86_xop_cc;
+
 //> AVX broadcast type
 typedef enum x86_avx_bcast {
 	X86_AVX_BCAST_INVALID = 0,	// Uninitialized.
@@ -232,6 +245,9 @@ typedef struct cs_x86 {
 	int8_t sib_scale;
 	// SIB base register, or X86_REG_INVALID when irrelevant.
 	x86_reg sib_base;
+
+	// XOP Code Condition
+	x86_xop_cc xop_cc;
 
 	// SSE Code Condition
 	x86_sse_cc sse_cc;
