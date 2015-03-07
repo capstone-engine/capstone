@@ -1081,7 +1081,6 @@ static name_map insn_name_maps[] = {
 	{ X86_INS_FISTP, "fistp" },
 	{ X86_INS_UCOMISD, "ucomisd" },
 	{ X86_INS_UCOMISS, "ucomiss" },
-	{ X86_INS_VCMP, "vcmp" },
 	{ X86_INS_VCOMISD, "vcomisd" },
 	{ X86_INS_VCOMISS, "vcomiss" },
 	{ X86_INS_VCVTSD2SS, "vcvtsd2ss" },
@@ -19797,7 +19796,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPPDZrri, X86_INS_VCMP,
+		X86_VCMPPDZrri, X86_INS_VCMPPD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
@@ -19833,7 +19832,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VCMPPDrri, X86_INS_VCMP,
+		X86_VCMPPDrri, X86_INS_VCMPPD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_AVX, 0 }, 0, 0
 #endif
