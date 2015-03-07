@@ -32,7 +32,7 @@ class CsDetail(object):
             (self.prefix, self.opcode, self.rex, self.addr_size, \
                 self.modrm, self.sib, self.disp, \
                 self.sib_index, self.sib_scale, self.sib_base, \
-                self.sse_cc, self.avx_cc, self.avx_sae, self.avx_rm, \
+                self.xop_cc, self.sse_cc, self.avx_cc, self.avx_sae, self.avx_rm, \
                 self.operands) = x86.get_arch_info(detail.arch.x86)
         elif arch == capstone.CS_ARCH_MIPS:
                 self.operands = mips.get_arch_info(detail.arch.mips)
