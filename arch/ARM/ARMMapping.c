@@ -14198,6 +14198,11 @@ typedef struct insn_op {
 } insn_op;
 
 static insn_op insn_ops[] = {
+	{
+		// NULL item
+		0,
+		{ 0 }
+	},
 	{	/* ARM_ADCri, ARM_INS_ADC: adc${s}${p}	$rd, $rn, $imm */
 		ARM_REG_CPSR,
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
@@ -14446,6 +14451,10 @@ static insn_op insn_ops[] = {
 		0,
 		{ CS_OP_WRITE, CS_OP_READ, 0 }
 	},
+	{	/* ARM_ERET, ARM_INS_ERET: eret${p} */
+		0,
+		{ 0 }
+	},
 	{	/* ARM_FCONSTD, ARM_INS_VMOV: vmov${p}.f64	$dd, $imm */
 		0,
 		{ CS_OP_WRITE, 0 }
@@ -14487,6 +14496,10 @@ static insn_op insn_ops[] = {
 		{ 0 }
 	},
 	{	/* ARM_HLT, ARM_INS_HLT: hlt	$val */
+		0,
+		{ 0 }
+	},
+	{	/* ARM_HVC, ARM_INS_HVC: hvc	$imm */
 		0,
 		{ 0 }
 	},
@@ -14850,6 +14863,10 @@ static insn_op insn_ops[] = {
 		0,
 		{ CS_OP_WRITE, 0 }
 	},
+	{	/* ARM_MRSbanked, ARM_INS_MRS: mrs${p}	$rd, $banked */
+		0,
+		{ CS_OP_WRITE, 0 }
+	},
 	{	/* ARM_MRSsys, ARM_INS_MRS: mrs${p}	$rd, spsr */
 		0,
 		{ CS_OP_WRITE, 0 }
@@ -14858,7 +14875,11 @@ static insn_op insn_ops[] = {
 		0,
 		{ CS_OP_NOREG, CS_OP_READ, 0 }
 	},
-	{	/* ARM_MSRi, ARM_INS_MSR: msr${p}	$mask, $a */
+	{	/* ARM_MSRbanked, ARM_INS_MSR: msr${p}	$banked, $rn */
+		0,
+		{ CS_OP_NOREG, CS_OP_READ, 0 }
+	},
+	{	/* ARM_MSRi, ARM_INS_MSR: msr${p}	$mask, $imm */
 		0,
 		{ 0 }
 	},
@@ -21482,6 +21503,10 @@ static insn_op insn_ops[] = {
 		0,
 		{ 0 }
 	},
+	{	/* ARM_t2HVC, ARM_INS_HVC: hvc.w	$imm16 */
+		0,
+		{ 0 }
+	},
 	{	/* ARM_t2ISB, ARM_INS_ISB: isb${p}	$opt */
 		0,
 		{ 0 }
@@ -21850,7 +21875,11 @@ static insn_op insn_ops[] = {
 		0,
 		{ CS_OP_WRITE, 0 }
 	},
-	{	/* ARM_t2MRS_M, ARM_INS_MRS: mrs${p}	$rd, $mask */
+	{	/* ARM_t2MRS_M, ARM_INS_MRS: mrs${p}	$rd, $sysm */
+		0,
+		{ CS_OP_WRITE, 0 }
+	},
+	{	/* ARM_t2MRSbanked, ARM_INS_MRS: mrs${p}	$rd, $banked */
 		0,
 		{ CS_OP_WRITE, 0 }
 	},
@@ -21863,6 +21892,10 @@ static insn_op insn_ops[] = {
 		{ CS_OP_NOREG, CS_OP_READ, 0 }
 	},
 	{	/* ARM_t2MSR_M, ARM_INS_MSR: msr${p}	$sysm, $rn */
+		0,
+		{ CS_OP_NOREG, CS_OP_READ, 0 }
+	},
+	{	/* ARM_t2MSRbanked, ARM_INS_MSR: msr${p}	$banked, $rn */
 		0,
 		{ CS_OP_NOREG, CS_OP_READ, 0 }
 	},
