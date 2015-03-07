@@ -430,14 +430,20 @@ static char *printAlias(MCInst *MI, SStream *OS)
 
 static void printRegisterList(MCInst *MI, int opNum, SStream *O)
 {
-	int i, e;
+	int i, e, reg;
 
 	// - 2 because register List is always first operand of instruction and it is
 	// always followed by memory operand (base + offset).
 	for (i = opNum, e = MCInst_getNumOperands(MI) - 2; i != e; ++i) {
 		if (i != opNum)
 			SStream_concat0(O, ", ");
-		printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, i)));
+		reg = MCOperand_getReg(MCInst_getOperand(MI, i));
+		printRegName(O, reg);
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].type = MIPS_OP_REG;
+			MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].reg = reg;
+			MI->flat_insn->detail->mips.op_count++;
+		}
 	}
 }
 
