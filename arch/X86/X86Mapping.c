@@ -1871,7 +1871,6 @@ static name_map insn_name_maps[] = {
 	{ X86_INS_VPCMPUQ, "vpcmpuq" },
 	{ X86_INS_VPCMPUW, "vpcmpuw" },
 	{ X86_INS_VPCMPW, "vpcmpw" },
-	{ X86_INS_VPCOM, "vpcom" },
 	{ X86_INS_VPCOMB, "vpcomb" },
 	{ X86_INS_VPCOMD, "vpcomd" },
 	{ X86_INS_VPCOMPRESSD, "vpcompressd" },
@@ -39812,7 +39811,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCOMBmi, X86_INS_VPCOM,
+		X86_VPCOMBmi, X86_INS_VPCOMB,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_XOP, 0 }, 0, 0
 #endif
@@ -39824,7 +39823,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCOMBri, X86_INS_VPCOM,
+		X86_VPCOMBri, X86_INS_VPCOMB,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_XOP, 0 }, 0, 0
 #endif
@@ -39836,7 +39835,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCOMDmi, X86_INS_VPCOM,
+		X86_VPCOMDmi, X86_INS_VPCOMD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_XOP, 0 }, 0, 0
 #endif
@@ -39848,7 +39847,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCOMDri, X86_INS_VPCOM,
+		X86_VPCOMDri, X86_INS_VPCOMD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_XOP, 0 }, 0, 0
 #endif
@@ -39968,7 +39967,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCOMQmi, X86_INS_VPCOM,
+		X86_VPCOMQmi, X86_INS_VPCOMQ,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_XOP, 0 }, 0, 0
 #endif
@@ -39980,7 +39979,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCOMQri, X86_INS_VPCOM,
+		X86_VPCOMQri, X86_INS_VPCOMQ,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_XOP, 0 }, 0, 0
 #endif
@@ -39992,7 +39991,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCOMUBmi, X86_INS_VPCOM,
+		X86_VPCOMUBmi, X86_INS_VPCOMUB,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_XOP, 0 }, 0, 0
 #endif
@@ -40004,7 +40003,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCOMUBri, X86_INS_VPCOM,
+		X86_VPCOMUBri, X86_INS_VPCOMUB,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_XOP, 0 }, 0, 0
 #endif
@@ -40016,7 +40015,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCOMUDmi, X86_INS_VPCOM,
+		X86_VPCOMUDmi, X86_INS_VPCOMUD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_XOP, 0 }, 0, 0
 #endif
@@ -40028,7 +40027,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCOMUDri, X86_INS_VPCOM,
+		X86_VPCOMUDri, X86_INS_VPCOMUD,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_XOP, 0 }, 0, 0
 #endif
@@ -40040,7 +40039,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCOMUQmi, X86_INS_VPCOM,
+		X86_VPCOMUQmi, X86_INS_VPCOMUQ,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_XOP, 0 }, 0, 0
 #endif
@@ -40052,7 +40051,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCOMUQri, X86_INS_VPCOM,
+		X86_VPCOMUQri, X86_INS_VPCOMUQ,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_XOP, 0 }, 0, 0
 #endif
@@ -40064,7 +40063,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCOMUWmi, X86_INS_VPCOM,
+		X86_VPCOMUWmi, X86_INS_VPCOMUW,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_XOP, 0 }, 0, 0
 #endif
@@ -40076,7 +40075,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCOMUWri, X86_INS_VPCOM,
+		X86_VPCOMUWri, X86_INS_VPCOMUW,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_XOP, 0 }, 0, 0
 #endif
@@ -40088,7 +40087,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCOMWmi, X86_INS_VPCOM,
+		X86_VPCOMWmi, X86_INS_VPCOMW,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_XOP, 0 }, 0, 0
 #endif
@@ -40100,7 +40099,7 @@ static insn_map insns[] = {	// full x86 instructions
 #endif
 	},
 	{
-		X86_VPCOMWri, X86_INS_VPCOM,
+		X86_VPCOMWri, X86_INS_VPCOMW,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { X86_GRP_XOP, 0 }, 0, 0
 #endif
