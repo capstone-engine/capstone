@@ -1628,6 +1628,8 @@ typedef enum  x86_insn_group {
 	X86_GRP_INT,	// = CS_GRP_INT
 	// all interrupt return instructions
 	X86_GRP_IRET,	// = CS_GRP_IRET
+	// all privileged instructions
+	X86_GRP_PRIVILEGE,	// = CS_GRP_PRIVILEGE
 
 	//> Architecture-specific groups
 	X86_GRP_VM = 128,	// all virtualization instructions (VT-x + AMD-V)

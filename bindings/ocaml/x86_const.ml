@@ -1696,6 +1696,7 @@ let _X86_GRP_CALL = 2;;
 let _X86_GRP_RET = 3;;
 let _X86_GRP_INT = 4;;
 let _X86_GRP_IRET = 5;;
+let _X86_GRP_PRIVILEGE = 6;;
 
 (* Architecture-specific groups *)
 let _X86_GRP_VM = 128;;

@@ -149,6 +149,7 @@ typedef enum cs_group_type {
 	CS_GRP_RET,     // all return instructions
 	CS_GRP_INT,     // all interrupt instructions (int+syscall)
 	CS_GRP_IRET,    // all interrupt return instructions
+	CS_GRP_PRIVILEGE,    // all privileged instructions
 } cs_group_type;
 
 /*

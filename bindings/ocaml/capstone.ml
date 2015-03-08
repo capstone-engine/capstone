@@ -73,6 +73,7 @@ let _CS_GRP_CALL    = 2;;  (* all call instructions *)
 let _CS_GRP_RET     = 3;;  (* all return instructions *)
 let _CS_GRP_INT     = 4;;  (* all interrupt instructions (int+syscall) *)
 let _CS_GRP_IRET    = 5;;  (* all interrupt return instructions *)
+let _CS_GRP_PRIVILEGE = 6;;  (* all privileged instructions *)
 
 type cs_arch =
 	| CS_INFO_ARM of cs_arm

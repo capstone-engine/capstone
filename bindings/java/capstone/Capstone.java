@@ -347,6 +347,7 @@ public class Capstone {
   public static final int CS_GRP_RET     = 3;  // all return instructions
   public static final int CS_GRP_INT     = 4;  // all interrupt instructions (int+syscall)
   public static final int CS_GRP_IRET    = 5;  // all interrupt return instructions
+  public static final int CS_GRP_PRIVILEGE = 6;  // all privileged instructions
 
   // Query id for cs_support()
   public static final int CS_SUPPORT_DIET = CS_ARCH_ALL+1;	  // diet mode

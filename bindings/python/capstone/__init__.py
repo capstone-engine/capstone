@@ -87,6 +87,7 @@ __all__ = [
     'CS_GRP_RET',
     'CS_GRP_INT',
     'CS_GRP_IRET',
+    'CS_GRP_PRIVILEGE',
 
     'CsError',
 ]
@@ -152,6 +153,7 @@ CS_GRP_CALL    = 2  # all call instructions
 CS_GRP_RET     = 3  # all return instructions
 CS_GRP_INT     = 4  # all interrupt instructions (int+syscall)
 CS_GRP_IRET    = 5  # all interrupt return instructions
+CS_GRP_PRIVILEGE = 6  # all privileged instructions
 
 # Capstone syntax value
 CS_OPT_SYNTAX_DEFAULT = 0    # Default assembly syntax of all platforms (CS_OPT_SYNTAX)

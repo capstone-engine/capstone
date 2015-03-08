@@ -1696,6 +1696,7 @@ X86_GRP_CALL = 2
 X86_GRP_RET = 3
 X86_GRP_INT = 4
 X86_GRP_IRET = 5
+X86_GRP_PRIVILEGE = 6
 
 # Architecture-specific groups
 X86_GRP_VM = 128
