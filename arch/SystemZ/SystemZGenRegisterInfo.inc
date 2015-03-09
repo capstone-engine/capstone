@@ -131,18 +131,6 @@ enum {
   SystemZ_ADDR128BitRegClassID = 11
 };
 
-// Subregister indices
-enum {
-  SystemZ_NoSubRegister,
-  SystemZ_subreg_h32,	// 1
-  SystemZ_subreg_h64,	// 2
-  SystemZ_subreg_hh32,	// 3
-  SystemZ_subreg_hl32,	// 4
-  SystemZ_subreg_l32,	// 5
-  SystemZ_subreg_l64,	// 6
-  SystemZ_NUM_TARGET_SUBREGS
-};
-
 #endif // GET_REGINFO_ENUM
 
 /*===- TableGen'erated file -------------------------------------*- C++ -*-===*\
