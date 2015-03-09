@@ -44,6 +44,11 @@ extern "C" {
 #define CS_API_MAJOR 4
 #define CS_API_MINOR 0
 
+// Version for bleeding edge code of the Github's "next" branch.
+// Use this if you want the absolutely latest developement code.
+// This version number will be bumped up whenever we have new major change.
+#define CS_NEXT_VERSION 1
+
 // Macro to create combined version which can be compared to
 // result of cs_version() API.
 #define CS_MAKE_VERSION(major, minor) ((major << 8) + minor)
