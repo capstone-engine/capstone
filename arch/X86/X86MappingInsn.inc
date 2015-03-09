@@ -1882,7 +1882,7 @@
 {
 	X86_CLI, X86_INS_CLI,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { X86_GRP_PRIVILEGE, 0 }, 0, 0
 #endif
 },
 {
@@ -15064,7 +15064,7 @@
 {
 	X86_STI, X86_INS_STI,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { X86_GRP_PRIVILEGE, 0 }, 0, 0
 #endif
 },
 {
