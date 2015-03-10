@@ -319,7 +319,7 @@ bool SystemZ_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst
 
 	if (code_len < *size)
 		// short of input data
-		return MCDisassembler_Fail;
+		return false;
 
 	if (MI->flat_insn->detail) {
 		memset(MI->flat_insn->detail, 0, sizeof(cs_detail));
