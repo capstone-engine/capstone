@@ -2841,366 +2841,368 @@ enum {
 #define ImplicitList14 NULL
 #define ImplicitList15 NULL
 
-#define OperandInfo2 NULL
-#define OperandInfo3 NULL
-#define OperandInfo4 NULL
-#define OperandInfo5 NULL
-#define OperandInfo6 NULL
-#define OperandInfo7 NULL
-#define OperandInfo8 NULL
-#define OperandInfo9 NULL
-#define OperandInfo10 NULL
-#define OperandInfo11 NULL
-#define OperandInfo12 NULL
-#define OperandInfo13 NULL
-#define OperandInfo14 NULL
-#define OperandInfo15 NULL
-#define OperandInfo16 NULL
-#define OperandInfo17 NULL
-#define OperandInfo18 NULL
-#define OperandInfo19 NULL
-#define OperandInfo20 NULL
-#define OperandInfo21 NULL
-#define OperandInfo22 NULL
-#define OperandInfo23 NULL
-#define OperandInfo24 NULL
-#define OperandInfo25 NULL
-#define OperandInfo26 NULL
-#define OperandInfo27 NULL
-#define OperandInfo28 NULL
-#define OperandInfo29 NULL
-#define OperandInfo30 NULL
-#define OperandInfo31 NULL
-#define OperandInfo32 NULL
-#define OperandInfo33 NULL
-#define OperandInfo34 NULL
-#define OperandInfo35 NULL
-#define OperandInfo36 NULL
-#define OperandInfo37 NULL
-#define OperandInfo38 NULL
-#define OperandInfo39 NULL
-#define OperandInfo40 NULL
-#define OperandInfo41 NULL
-#define OperandInfo42 NULL
-#define OperandInfo43 NULL
-#define OperandInfo44 NULL
-#define OperandInfo45 NULL
-#define OperandInfo46 NULL
-#define OperandInfo47 NULL
-#define OperandInfo48 NULL
-#define OperandInfo49 NULL
-#define OperandInfo50 NULL
-#define OperandInfo51 NULL
-#define OperandInfo52 NULL
-#define OperandInfo53 NULL
-#define OperandInfo54 NULL
-#define OperandInfo55 NULL
-#define OperandInfo56 NULL
-#define OperandInfo57 NULL
-#define OperandInfo58 NULL
-#define OperandInfo59 NULL
-#define OperandInfo60 NULL
-#define OperandInfo61 NULL
-#define OperandInfo62 NULL
-#define OperandInfo63 NULL
-#define OperandInfo64 NULL
-#define OperandInfo65 NULL
-#define OperandInfo66 NULL
-#define OperandInfo67 NULL
-#define OperandInfo68 NULL
-#define OperandInfo69 NULL
-#define OperandInfo70 NULL
-#define OperandInfo71 NULL
-#define OperandInfo72 NULL
-#define OperandInfo73 NULL
-#define OperandInfo74 NULL
-#define OperandInfo75 NULL
-#define OperandInfo76 NULL
-#define OperandInfo77 NULL
-#define OperandInfo78 NULL
-#define OperandInfo79 NULL
-#define OperandInfo80 NULL
-#define OperandInfo81 NULL
-#define OperandInfo82 NULL
-#define OperandInfo83 NULL
-#define OperandInfo84 NULL
-#define OperandInfo85 NULL
-#define OperandInfo86 NULL
-#define OperandInfo87 NULL
-#define OperandInfo88 NULL
-#define OperandInfo89 NULL
-#define OperandInfo90 NULL
-#define OperandInfo91 NULL
-#define OperandInfo92 NULL
-#define OperandInfo93 NULL
-#define OperandInfo94 NULL
-#define OperandInfo95 NULL
-#define OperandInfo96 NULL
-#define OperandInfo97 NULL
-#define OperandInfo98 NULL
-#define OperandInfo99 NULL
-#define OperandInfo100 NULL
-#define OperandInfo101 NULL
-#define OperandInfo102 NULL
-#define OperandInfo103 NULL
-#define OperandInfo104 NULL
-#define OperandInfo105 NULL
-#define OperandInfo106 NULL
-#define OperandInfo107 NULL
-#define OperandInfo108 NULL
-#define OperandInfo109 NULL
-#define OperandInfo110 NULL
-#define OperandInfo111 NULL
-#define OperandInfo112 NULL
-#define OperandInfo113 NULL
-#define OperandInfo114 NULL
-#define OperandInfo115 NULL
-#define OperandInfo116 NULL
-#define OperandInfo117 NULL
-#define OperandInfo118 NULL
-#define OperandInfo119 NULL
-#define OperandInfo120 NULL
-#define OperandInfo121 NULL
-#define OperandInfo122 NULL
-#define OperandInfo123 NULL
-#define OperandInfo124 NULL
-#define OperandInfo125 NULL
-#define OperandInfo126 NULL
-#define OperandInfo127 NULL
-#define OperandInfo128 NULL
-#define OperandInfo129 NULL
-#define OperandInfo130 NULL
-#define OperandInfo131 NULL
-#define OperandInfo132 NULL
-#define OperandInfo133 NULL
-#define OperandInfo134 NULL
-#define OperandInfo135 NULL
-#define OperandInfo136 NULL
-#define OperandInfo137 NULL
-#define OperandInfo138 NULL
-#define OperandInfo139 NULL
-#define OperandInfo140 NULL
-#define OperandInfo141 NULL
-#define OperandInfo142 NULL
-#define OperandInfo143 NULL
-#define OperandInfo144 NULL
-#define OperandInfo145 NULL
-#define OperandInfo146 NULL
-#define OperandInfo147 NULL
-#define OperandInfo148 NULL
-#define OperandInfo149 NULL
-#define OperandInfo150 NULL
-#define OperandInfo151 NULL
-#define OperandInfo152 NULL
-#define OperandInfo153 NULL
-#define OperandInfo154 NULL
-#define OperandInfo155 NULL
-#define OperandInfo156 NULL
-#define OperandInfo157 NULL
-#define OperandInfo158 NULL
-#define OperandInfo159 NULL
-#define OperandInfo160 NULL
-#define OperandInfo161 NULL
-#define OperandInfo162 NULL
-#define OperandInfo163 NULL
-#define OperandInfo164 NULL
-#define OperandInfo165 NULL
-#define OperandInfo166 NULL
-#define OperandInfo167 NULL
-#define OperandInfo168 NULL
-#define OperandInfo169 NULL
-#define OperandInfo170 NULL
-#define OperandInfo171 NULL
-#define OperandInfo172 NULL
-#define OperandInfo173 NULL
-#define OperandInfo174 NULL
-#define OperandInfo175 NULL
-#define OperandInfo176 NULL
-#define OperandInfo177 NULL
-#define OperandInfo178 NULL
-#define OperandInfo179 NULL
-#define OperandInfo180 NULL
-#define OperandInfo181 NULL
-#define OperandInfo182 NULL
-#define OperandInfo183 NULL
-#define OperandInfo184 NULL
-#define OperandInfo185 NULL
-#define OperandInfo186 NULL
-#define OperandInfo187 NULL
-#define OperandInfo188 NULL
-#define OperandInfo189 NULL
-#define OperandInfo190 NULL
-#define OperandInfo191 NULL
-#define OperandInfo192 NULL
-#define OperandInfo193 NULL
-#define OperandInfo194 NULL
-#define OperandInfo195 NULL
-#define OperandInfo196 NULL
-#define OperandInfo197 NULL
-#define OperandInfo198 NULL
-#define OperandInfo199 NULL
-#define OperandInfo200 NULL
-#define OperandInfo201 NULL
-#define OperandInfo202 NULL
-#define OperandInfo203 NULL
-#define OperandInfo204 NULL
-#define OperandInfo205 NULL
-#define OperandInfo206 NULL
-#define OperandInfo207 NULL
-#define OperandInfo208 NULL
-#define OperandInfo209 NULL
-#define OperandInfo210 NULL
-#define OperandInfo211 NULL
-#define OperandInfo212 NULL
-#define OperandInfo213 NULL
-#define OperandInfo214 NULL
-#define OperandInfo215 NULL
-#define OperandInfo216 NULL
-#define OperandInfo217 NULL
-#define OperandInfo218 NULL
-#define OperandInfo219 NULL
-#define OperandInfo220 NULL
-#define OperandInfo221 NULL
-#define OperandInfo222 NULL
-#define OperandInfo223 NULL
-#define OperandInfo224 NULL
-#define OperandInfo225 NULL
-#define OperandInfo226 NULL
-#define OperandInfo227 NULL
-#define OperandInfo228 NULL
-#define OperandInfo229 NULL
-#define OperandInfo230 NULL
-#define OperandInfo231 NULL
-#define OperandInfo232 NULL
-#define OperandInfo233 NULL
-#define OperandInfo234 NULL
-#define OperandInfo235 NULL
-#define OperandInfo236 NULL
-#define OperandInfo237 NULL
-#define OperandInfo238 NULL
-#define OperandInfo239 NULL
-#define OperandInfo240 NULL
-#define OperandInfo241 NULL
-#define OperandInfo242 NULL
-#define OperandInfo243 NULL
-#define OperandInfo244 NULL
-#define OperandInfo245 NULL
-#define OperandInfo246 NULL
-#define OperandInfo247 NULL
-#define OperandInfo248 NULL
-#define OperandInfo249 NULL
-#define OperandInfo250 NULL
-#define OperandInfo251 NULL
-#define OperandInfo252 NULL
-#define OperandInfo253 NULL
-#define OperandInfo254 NULL
-#define OperandInfo255 NULL
-#define OperandInfo256 NULL
-#define OperandInfo257 NULL
-#define OperandInfo258 NULL
-#define OperandInfo259 NULL
-#define OperandInfo260 NULL
-#define OperandInfo261 NULL
-#define OperandInfo262 NULL
-#define OperandInfo263 NULL
-#define OperandInfo264 NULL
-#define OperandInfo265 NULL
-#define OperandInfo266 NULL
-#define OperandInfo267 NULL
-#define OperandInfo268 NULL
-#define OperandInfo269 NULL
-#define OperandInfo270 NULL
-#define OperandInfo271 NULL
-#define OperandInfo272 NULL
-#define OperandInfo273 NULL
-#define OperandInfo274 NULL
-#define OperandInfo275 NULL
-#define OperandInfo276 NULL
-#define OperandInfo277 NULL
-#define OperandInfo278 NULL
-#define OperandInfo279 NULL
-#define OperandInfo280 NULL
-#define OperandInfo281 NULL
-#define OperandInfo282 NULL
-#define OperandInfo283 NULL
-#define OperandInfo284 NULL
-#define OperandInfo285 NULL
-#define OperandInfo286 NULL
-#define OperandInfo287 NULL
-#define OperandInfo288 NULL
-#define OperandInfo289 NULL
-#define OperandInfo290 NULL
-#define OperandInfo291 NULL
-#define OperandInfo292 NULL
-#define OperandInfo293 NULL
-#define OperandInfo294 NULL
-#define OperandInfo295 NULL
-#define OperandInfo296 NULL
-#define OperandInfo297 NULL
-#define OperandInfo298 NULL
-#define OperandInfo299 NULL
-#define OperandInfo300 NULL
-#define OperandInfo301 NULL
-#define OperandInfo302 NULL
-#define OperandInfo303 NULL
-#define OperandInfo304 NULL
-#define OperandInfo305 NULL
-#define OperandInfo306 NULL
-#define OperandInfo307 NULL
-#define OperandInfo308 NULL
-#define OperandInfo309 NULL
-#define OperandInfo310 NULL
-#define OperandInfo311 NULL
-#define OperandInfo312 NULL
-#define OperandInfo313 NULL
-#define OperandInfo314 NULL
-#define OperandInfo315 NULL
-#define OperandInfo316 NULL
-#define OperandInfo317 NULL
-#define OperandInfo318 NULL
-#define OperandInfo319 NULL
-#define OperandInfo320 NULL
-#define OperandInfo321 NULL
-#define OperandInfo322 NULL
-#define OperandInfo323 NULL
-#define OperandInfo324 NULL
-#define OperandInfo325 NULL
-#define OperandInfo326 NULL
-#define OperandInfo327 NULL
-#define OperandInfo328 NULL
-#define OperandInfo329 NULL
-#define OperandInfo330 NULL
-#define OperandInfo331 NULL
-#define OperandInfo332 NULL
-#define OperandInfo333 NULL
-#define OperandInfo334 NULL
-#define OperandInfo335 NULL
-#define OperandInfo336 NULL
-#define OperandInfo337 NULL
-#define OperandInfo338 NULL
-#define OperandInfo339 NULL
-#define OperandInfo340 NULL
-#define OperandInfo341 NULL
-#define OperandInfo342 NULL
-#define OperandInfo343 NULL
-#define OperandInfo344 NULL
-#define OperandInfo345 NULL
-#define OperandInfo346 NULL
-#define OperandInfo347 NULL
-#define OperandInfo348 NULL
-#define OperandInfo349 NULL
-#define OperandInfo350 NULL
-#define OperandInfo351 NULL
-#define OperandInfo352 NULL
-#define OperandInfo353 NULL
-#define OperandInfo354 NULL
-#define OperandInfo355 NULL
-#define OperandInfo356 NULL
-#define OperandInfo357 NULL
-#define OperandInfo358 NULL
-#define OperandInfo359 NULL
-#define OperandInfo360 NULL
-#define OperandInfo361 NULL
+
+static MCOperandInfo OperandInfo2[] = { { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static MCOperandInfo OperandInfo3[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static MCOperandInfo OperandInfo4[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static MCOperandInfo OperandInfo5[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo6[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static MCOperandInfo OperandInfo7[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo8[] = { { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static MCOperandInfo OperandInfo9[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static MCOperandInfo OperandInfo10[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo11[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static MCOperandInfo OperandInfo12[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo13[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo14[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo15[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo16[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo17[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo18[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo19[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo20[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo21[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo22[] = { { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo23[] = { { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo24[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo25[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo26[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo27[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo28[] = { { -1, 0, MCOI_OPERAND_PCREL, 0 }, };
+static MCOperandInfo OperandInfo29[] = { { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_PCREL, 0 }, };
+static MCOperandInfo OperandInfo30[] = { { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_PCREL, 0 }, };
+static MCOperandInfo OperandInfo31[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo32[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo33[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo34[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo35[] = { { -1, 0, MCOI_OPERAND_PCREL, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo36[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo37[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static MCOperandInfo OperandInfo38[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static MCOperandInfo OperandInfo39[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static MCOperandInfo OperandInfo40[] = { { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo41[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo42[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo43[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo44[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo45[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo46[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo47[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo48[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo49[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo50[] = { { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo51[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo52[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo53[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo54[] = { { ARM_GPRPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo55[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo56[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo57[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo58[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo59[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo60[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo61[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo62[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((2 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo63[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo64[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo65[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo66[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static MCOperandInfo OperandInfo67[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo68[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo69[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo70[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo71[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo72[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo73[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo74[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo75[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, (1 << MCOI_EARLY_CLOBBER) }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo76[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo77[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo78[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo79[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo80[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo81[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo82[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo83[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo84[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo85[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo86[] = { { ARM_tcGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_tcGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo87[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo88[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo89[] = { { ARM_GPRwithAPSRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo90[] = { { ARM_GPRwithAPSRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo91[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo92[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo93[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo94[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo95[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo96[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, (1 << MCOI_EARLY_CLOBBER) }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo97[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo98[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo99[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo100[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo101[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo102[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo103[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo104[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo105[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo106[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo107[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, (1 << MCOI_EARLY_CLOBBER) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, (1 << MCOI_EARLY_CLOBBER) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo108[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo109[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, (1 << MCOI_EARLY_CLOBBER) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, (1 << MCOI_EARLY_CLOBBER) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo110[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo111[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo112[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo113[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, (1 << MCOI_EARLY_CLOBBER) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo114[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, (1 << MCOI_EARLY_CLOBBER) }, { ARM_GPRPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo115[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo116[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, (1 << MCOI_EARLY_CLOBBER) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo117[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, (1 << MCOI_EARLY_CLOBBER) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo118[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, (1 << MCOI_EARLY_CLOBBER) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo119[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo120[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo121[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, (1 << MCOI_EARLY_CLOBBER) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo122[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, (1 << MCOI_EARLY_CLOBBER) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo123[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo124[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo125[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo126[] = { { ARM_tcGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo127[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo128[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo129[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo130[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo131[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo132[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo133[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo134[] = { { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo135[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo136[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo137[] = { { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo138[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo139[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo140[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo141[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo142[] = { { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo143[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo144[] = { { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo145[] = { { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo146[] = { { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo147[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo148[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo149[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo150[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo151[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo152[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo153[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo154[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo155[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo156[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo157[] = { { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo158[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo159[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo160[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo161[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo162[] = { { ARM_DPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo163[] = { { ARM_DPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo164[] = { { ARM_DPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo165[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo166[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo167[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo168[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo169[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo170[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo171[] = { { ARM_QQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo172[] = { { ARM_QQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo173[] = { { ARM_QQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo174[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo175[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((2 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo176[] = { { ARM_QQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QQPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo177[] = { { ARM_QQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QQPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo178[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo179[] = { { ARM_QQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo180[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((3 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo181[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo182[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((2 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo183[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((3 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((2 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo184[] = { { ARM_QQQQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QQQQPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo185[] = { { ARM_QQQQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QQQQPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo186[] = { { ARM_QQQQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QQQQPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo187[] = { { ARM_QQQQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QQQQPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo188[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo189[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((4 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo190[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((2 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((3 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo191[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((4 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((2 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((3 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo192[] = { { ARM_DPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo193[] = { { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo194[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo195[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo196[] = { { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo197[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPR_VFP2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo198[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPR_8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo199[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPR_VFP2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo200[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPR_VFP2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo201[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPR_8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo202[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPR_8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo203[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo204[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo205[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo206[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo207[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo208[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo209[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo210[] = { { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo211[] = { { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo212[] = { { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo213[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo214[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo215[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPR_VFP2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo216[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPR_8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo217[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPR_VFP2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo218[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPR_VFP2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo219[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPR_8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo220[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPR_8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo221[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo222[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo223[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo224[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo225[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo226[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo227[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo228[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo229[] = { { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_SPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo230[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo231[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo232[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo233[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo234[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo235[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo236[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo237[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo238[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo239[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo240[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo241[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo242[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo243[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo244[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo245[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo246[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo247[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo248[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo249[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo250[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo251[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo252[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QQQQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo253[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QQQQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo254[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo255[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo256[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QQQQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo257[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_QQQQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo258[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo259[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo260[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo261[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo262[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo263[] = { { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_QPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo264[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo265[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_QQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo266[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_DPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo267[] = { { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_QQPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_DPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo268[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo269[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo270[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo271[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo272[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo273[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo274[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo275[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo276[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo277[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo278[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo279[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo280[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo281[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo282[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo283[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo284[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo285[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo286[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo287[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo288[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo289[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo290[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo291[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo292[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((2 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo293[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo294[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo295[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo296[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo297[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo298[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo299[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo300[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo301[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo302[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo303[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo304[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo305[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo306[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo307[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static MCOperandInfo OperandInfo308[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo309[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo310[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo311[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo312[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo313[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo314[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo315[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo316[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo317[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo318[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo319[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo320[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((1 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo321[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo322[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo323[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, (1 << MCOI_EARLY_CLOBBER) }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo324[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, (1 << MCOI_EARLY_CLOBBER) }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo325[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, (1 << MCOI_EARLY_CLOBBER) }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo326[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, (1 << MCOI_EARLY_CLOBBER) }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo327[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo328[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo329[] = { { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, (1 << MCOI_EARLY_CLOBBER) }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo330[] = { { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, (1 << MCOI_EARLY_CLOBBER) }, { ARM_GPRnopcRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo331[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_rGPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo332[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo333[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static MCOperandInfo OperandInfo334[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo335[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo336[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRspRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo337[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRspRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo338[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo339[] = { { ARM_GPRspRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRspRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo340[] = { { ARM_GPRspRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRspRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo341[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_PCREL, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo342[] = { { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_PCREL, 0 }, };
+static MCOperandInfo OperandInfo343[] = { { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo344[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo345[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_PCREL, 0 }, };
+static MCOperandInfo OperandInfo346[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo347[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo348[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo349[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_tGPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo350[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_tGPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { ARM_tGPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo351[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static MCOperandInfo OperandInfo352[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo353[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo354[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo355[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo356[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo357[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo358[] = { { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_CCRRegClassID, 0|(1<<MCOI_OptionalDef), MCOI_OPERAND_UNKNOWN, 0 }, { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo359[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo360[] = { { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo361[] = { { ARM_GPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARM_tGPRRegClassID, 0, MCOI_OPERAND_REGISTER, ((0 << 16) | (1 << MCOI_TIED_TO)) }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+
 
 static MCInstrDesc ARMInsts[] = {
   { 0,	0,	0,	0,	0,	0|(1<<MCID_Pseudo)|(1<<MCID_Variadic)|(1<<MCID_UnmodeledSideEffects), 0x0ULL, nullptr, nullptr, nullptr,0,nullptr },  // Inst #0 = PHI
