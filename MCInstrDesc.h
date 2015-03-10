@@ -126,8 +126,8 @@ typedef struct MCInstrDesc {
 	unsigned char  Size;          // Number of bytes in encoding.
 	unsigned        Flags;         // Flags identifying machine instr class
 	uint64_t        TSFlags;       // Target Specific Flag values
-	uint16_t *ImplicitUses;  // Registers implicitly read by this instr
-	uint16_t *ImplicitDefs;  // Registers implicitly defined by this instr
+	char ImplicitUses;  // Registers implicitly read by this instr
+	char ImplicitDefs;  // Registers implicitly defined by this instr
 	MCOperandInfo *OpInfo;   // 'NumOperands' entries about operands
 	uint64_t DeprecatedFeatureMask;// Feature bits that this is deprecated on, if any     
 	// A complex method to determine is a certain is deprecated or not, and return        

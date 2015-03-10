@@ -2814,21 +2814,21 @@ enum {
 
 #define nullptr 0
 
-#define ImplicitList1 NULL
-#define ImplicitList2 NULL
-#define ImplicitList3 NULL
-#define ImplicitList4 NULL
-#define ImplicitList5 NULL
-#define ImplicitList6 NULL
-#define ImplicitList7 NULL
-#define ImplicitList8 NULL
-#define ImplicitList9 NULL
-#define ImplicitList10 NULL
-#define ImplicitList11 NULL
-#define ImplicitList12 NULL
-#define ImplicitList13 NULL
-#define ImplicitList14 NULL
-#define ImplicitList15 NULL
+#define ImplicitList1 0
+#define ImplicitList2 0
+#define ImplicitList3 0
+#define ImplicitList4 0
+#define ImplicitList5 0
+#define ImplicitList6 0
+#define ImplicitList7 0
+#define ImplicitList8 0
+#define ImplicitList9 0
+#define ImplicitList10 0
+#define ImplicitList11 0
+#define ImplicitList12 0
+#define ImplicitList13 0
+#define ImplicitList14 0
+#define ImplicitList15 0
 
 static MCOperandInfo OperandInfo2[] = { { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
 static MCOperandInfo OperandInfo3[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
