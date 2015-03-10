@@ -734,7 +734,7 @@ bool XCore_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *
 	DecodeStatus Result;
 
 	if (!readInstruction16(code, code_len, &insn16)) {
-		return MCDisassembler_Fail;
+		return false;
 	}
 
 	if (MI->flat_insn->detail) {
@@ -745,21 +745,21 @@ bool XCore_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *
 	Result = decodeInstruction_2(DecoderTable16, MI, insn16, address, info, 0);
 	if (Result != MCDisassembler_Fail) {
 		*size = 2;
-		return Result;
+		return true;
 	}
 
 	if (!readInstruction32(code, code_len, &insn32)) {
-		return MCDisassembler_Fail;
+		return false;
 	}
 
 	// Calling the auto-generated decoder function.
 	Result = decodeInstruction_4(DecoderTable32, MI, insn32, address, info, 0);
 	if (Result != MCDisassembler_Fail) {
 		*size = 4;
-		return Result;
+		return true;
 	}
 
-	return MCDisassembler_Fail;
+	return false;
 }
 
 void XCore_init(MCRegisterInfo *MRI)
