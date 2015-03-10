@@ -208,13 +208,13 @@
 {
 	ARM_CDP, ARM_INS_CDP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_PREV8, 0 }, 0, 0
 #endif
 },
 {
 	ARM_CDP2, ARM_INS_CDP2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_PREV8, 0 }, 0, 0
 #endif
 },
 {
@@ -880,25 +880,25 @@
 {
 	ARM_MCR, ARM_INS_MCR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_ARM, 0 }, 0, 0
 #endif
 },
 {
 	ARM_MCR2, ARM_INS_MCR2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_PREV8, 0 }, 0, 0
 #endif
 },
 {
 	ARM_MCRR, ARM_INS_MCRR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_ARM, 0 }, 0, 0
 #endif
 },
 {
 	ARM_MCRR2, ARM_INS_MCRR2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_PREV8, 0 }, 0, 0
 #endif
 },
 {
@@ -964,13 +964,13 @@
 {
 	ARM_MRC, ARM_INS_MRC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_ARM, 0 }, 0, 0
 #endif
 },
 {
 	ARM_MRC2, ARM_INS_MRC2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_PREV8, 0 }, 0, 0
 #endif
 },
 {
@@ -1468,7 +1468,7 @@
 {
 	ARM_SMC, ARM_INS_SMC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_TRUSTZONE, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_ARM, ARM_GRP_TRUSTZONE, 0 }, 0, 0
 #endif
 },
 {
@@ -10780,13 +10780,13 @@
 {
 	ARM_t2CDP, ARM_INS_CDP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, ARM_GRP_PREV8, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2CDP2, ARM_INS_CDP2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, ARM_GRP_PREV8, 0 }, 0, 0
 #endif
 },
 {
@@ -11410,25 +11410,25 @@
 {
 	ARM_t2MCR, ARM_INS_MCR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2MCR2, ARM_INS_MCR2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, ARM_GRP_PREV8, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2MCRR, ARM_INS_MCRR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2MCRR2, ARM_INS_MCRR2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, ARM_GRP_PREV8, 0 }, 0, 0
 #endif
 },
 {
@@ -11482,13 +11482,13 @@
 {
 	ARM_t2MRC, ARM_INS_MRC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2MRC2, ARM_INS_MRC2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, ARM_GRP_PREV8, 0 }, 0, 0
 #endif
 },
 {
@@ -11920,7 +11920,7 @@
 {
 	ARM_t2SMC, ARM_INS_SMC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_TRUSTZONE, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, ARM_GRP_TRUSTZONE, 0 }, 0, 0
 #endif
 },
 {

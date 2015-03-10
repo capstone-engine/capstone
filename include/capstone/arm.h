@@ -912,6 +912,7 @@ typedef enum arm_insn_group {
 	ARM_GRP_DPVFP,
 	ARM_GRP_V6M,
 	ARM_GRP_VIRTUALIZATION,
+	ARM_GRP_PRIVILEGE,
 
 	ARM_GRP_ENDING,
 } arm_insn_group;
