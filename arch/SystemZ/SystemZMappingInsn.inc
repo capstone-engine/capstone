@@ -4,7 +4,7 @@
 {
 	SystemZ_A, SYSZ_INS_A,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 0, 0
+	{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 0, 0
 #endif
 },
 {
