@@ -1999,8 +1999,8 @@ static int readOperands(struct InternalInstruction *insn)
 }
 
 // return True if instruction is illegal to use with prefixes
-// or False otherwise
-static bool invalidPrefix(struct InternalInstruction *insn)
+// This also check & fix the prefixPresent[] when a prefix is irrelevant.
+static bool checkPrefix(struct InternalInstruction *insn)
 {
 	// LOCK prefix
 	if (insn->prefixPresent[0xf0]) {
@@ -2177,6 +2177,15 @@ static bool invalidPrefix(struct InternalInstruction *insn)
 		}
 	}
 
+	// REPNE prefix
+	if (insn->prefixPresent[0xf2]) {
+		// 0xf2 can be a part of instruction encoding, but not really a prefix.
+		// In such a case, clear it.
+		if (insn->twoByteEscape == 0x0f) {
+			insn->prefix0 = 0;
+		}
+	}
+
 	// no invalid prefixes
 	return false;
 }
@@ -2212,7 +2221,7 @@ int decodeInstruction(struct InternalInstruction *insn,
 			readOpcode(insn)         ||
 			getID(insn)      ||
 			insn->instructionID == 0 ||
-			invalidPrefix(insn) ||
+			checkPrefix(insn) ||
 			readOperands(insn))
 		return -1;
 
