@@ -4,7 +4,7 @@
 {
 	ARM_ADCri, ARM_INS_ADC,
 #ifndef CAPSTONE_DIET
-		{ ARM_REG_CPSR, 0 }, { ARM_REG_CPSR, 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ ARM_REG_CPSR, 0 }, { ARM_REG_CPSR, 0 }, { ARM_GRP_ARM, 0 }, 0, 0
 #endif
 },
 {
