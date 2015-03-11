@@ -13,4 +13,4 @@ Issues to be solved in next versions
 
 [Bindings]
 
-- OCaml binding is working, but still support the core API better.
+- OCaml binding is working, but still needs to support the core API better.
