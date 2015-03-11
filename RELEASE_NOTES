@@ -1,3 +1,0 @@
-This version 3.0.1 fixed some important issues of Python binding, so Python
-users should upgrade Python binding together with the core. See file
-bindings/python/README.TXT for how to do that.
