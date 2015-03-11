@@ -189,6 +189,7 @@ static name_map reg_name_maps[] = {
 	{ PPC_REG_VS61, "vs61"},
 	{ PPC_REG_VS62, "vs62"},
 	{ PPC_REG_VS63, "vs63"},
+	{ PPC_REG_Q0, "q0" },
 	{ PPC_REG_Q1, "q1" },
 	{ PPC_REG_Q2, "q2" },
 	{ PPC_REG_Q3, "q3" },
