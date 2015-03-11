@@ -4,7 +4,7 @@
 {
 	PPC_ADD4, PPC_INS_ADD,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 {

@@ -477,23 +477,6 @@ enum {
   Mips_ACC128RegClassID = 61,
 };
 
-// Subregister indices
-enum {
-  Mips_NoSubRegister,
-  Mips_sub_32,	// 1
-  Mips_sub_64,	// 2
-  Mips_sub_dsp16_19,	// 3
-  Mips_sub_dsp20,	// 4
-  Mips_sub_dsp21,	// 5
-  Mips_sub_dsp22,	// 6
-  Mips_sub_dsp23,	// 7
-  Mips_sub_hi,	// 8
-  Mips_sub_lo,	// 9
-  Mips_sub_hi_then_sub_32,	// 10
-  Mips_sub_32_sub_hi_then_sub_32,	// 11
-  Mips_NUM_TARGET_SUBREGS
-};
-
 #endif // GET_REGINFO_ENUM
 
 /*===- TableGen'erated file -------------------------------------*- C++ -*-===*\

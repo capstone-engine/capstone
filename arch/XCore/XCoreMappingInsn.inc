@@ -4,7 +4,7 @@
 {
 	XCore_ADD_2rus, XCORE_INS_ADD,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 {

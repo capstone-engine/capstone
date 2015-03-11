@@ -4,7 +4,7 @@
 {
 	SP_ADDCCri, SPARC_INS_ADDCC,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { SPARC_REG_ICC, 0 }, { 0 }, 0, 0
+	{ 0 }, { SPARC_REG_ICC, 0 }, { 0 }, 0, 0
 #endif
 },
 {

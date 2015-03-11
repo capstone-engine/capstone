@@ -4,7 +4,7 @@
 {
 	Mips_ABSQ_S_PH, MIPS_INS_ABSQ_S,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { MIPS_REG_DSPOUTFLAG20, 0 }, { MIPS_GRP_DSP, 0 }, 0, 0
+	{ 0 }, { MIPS_REG_DSPOUTFLAG20, 0 }, { MIPS_GRP_DSP, 0 }, 0, 0
 #endif
 },
 {

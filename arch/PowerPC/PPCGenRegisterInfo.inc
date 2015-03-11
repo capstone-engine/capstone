@@ -354,18 +354,6 @@ enum {
   PPC_QFRCRegClassID = 22,
 };
 
-// Subregister indices
-enum {
-  PPC_NoSubRegister,
-  PPC_sub_32,	// 1
-  PPC_sub_64,	// 2
-  PPC_sub_128,	// 3
-  PPC_sub_eq,	// 4
-  PPC_sub_gt,	// 5
-  PPC_sub_lt,	// 6
-  PPC_sub_un,	// 7
-  PPC_NUM_TARGET_SUBREGS
-};
 #endif // GET_REGINFO_ENUM
 
 /*===- TableGen'erated file -------------------------------------*- C++ -*-===*\

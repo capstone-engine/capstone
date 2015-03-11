@@ -148,17 +148,6 @@ enum {
   SP_QFPRegs_with_sub_evenRegClassID = 7
 };
 
-// Subregister indices
-enum {
-  SP_NoSubRegister,
-  SP_sub_even,	// 1
-  SP_sub_even64,	// 2
-  SP_sub_odd,	// 3
-  SP_sub_odd64,	// 4
-  SP_sub_odd64_then_sub_even,	// 5
-  SP_sub_odd64_then_sub_odd,	// 6
-  SP_NUM_TARGET_SUBREGS
-};
 #endif // GET_REGINFO_ENUM
 
 /*===- TableGen'erated file -------------------------------------*- C++ -*-===*\

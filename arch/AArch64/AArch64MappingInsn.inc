@@ -4,7 +4,7 @@
 {
 	AArch64_ABSv16i8, ARM64_INS_ABS,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM64_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_NEON, 0 }, 0, 0
 #endif
 },
 {
