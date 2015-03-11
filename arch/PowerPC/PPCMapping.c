@@ -1438,6 +1438,10 @@ static name_map group_name_maps[] = {
 	{ PPC_GRP_E500, "e500" },
 	{ PPC_GRP_PPC4XX, "ppc4xx" },
 	{ PPC_GRP_PPC6XX, "ppc6xx" },
+	{ PPC_GRP_ICBT, "icbt" },
+	{ PPC_GRP_P8ALTIVEC, "p8altivec" },
+	{ PPC_GRP_P8VECTOR, "p8vector" },
+	{ PPC_GRP_QPX, "qpx" },
 };
 #endif
 
@@ -1449,8 +1453,8 @@ const char *PPC_group_name(csh handle, unsigned int id)
 		return NULL;
 
 	// NOTE: when new generic groups are added, 2 must be changed accordingly
-	if (id >= 128)
-		return group_name_maps[id - 128 + 2].name;
+	if (id >= PPC_GRP_ALTIVEC)
+		return group_name_maps[id - PPC_GRP_ALTIVEC + 2].name;
 	else
 		return group_name_maps[id].name;
 #else
