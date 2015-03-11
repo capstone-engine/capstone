@@ -805,6 +805,7 @@ static name_map group_name_maps[] = {
 	{ ARM_GRP_CRC, "crc" },
 	{ ARM_GRP_DPVFP, "dpvfp" },
 	{ ARM_GRP_V6M, "v6m" },
+	{ ARM_GRP_VIRTUALIZATION, "virtualization" },
 };
 #endif
 
@@ -816,8 +817,8 @@ const char *ARM_group_name(csh handle, unsigned int id)
 		return NULL;
 
 	// NOTE: when new generic groups are added, 2 must be changed accordingly
-	if (id >= 128)
-		return group_name_maps[id - 128 + 2].name;
+	if (id >= ARM_GRP_CRYPTO)
+		return group_name_maps[id - ARM_GRP_CRYPTO + 2].name;
 	else
 		return group_name_maps[id].name;
 #else
