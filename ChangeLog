@@ -1,7 +1,48 @@
 This file details the changelog of Capstone.
 
 ---------------------------------
-Version 3.0.1: February 03, 2015
+Version 3.0.2: March 11th, 2015
+
+
+[ Library ]
+
+- On *nix, only export symbols that are part of the API (instead of all
+  the internal symbols).
+
+
+[ X86 ]
+
+- Do not consider 0xF2 as REPNE prefix if it is a part of instruction encoding.
+- Fix implicit registers read/written & instruction groups of some instructions.
+- More flexible on the order of prefixes, so better handle some tricky
+  instructions.
+- REPNE prefix can go with STOS & MOVS instructions.
+- Fix a compilation bug for X86_REDUCE mode.
+- Fix operand size of instructions with operand PTR []
+
+
+[ Arm ]
+
+- Fix a bug where arm_op_mem.disp is wrongly calculated (in DETAIL mode).
+- Fix a bug on handling the If-Then block.
+
+
+[ Mips ]
+
+- Sanity check for the input size for MIPS64 mode.
+
+
+[ MSVC ]
+
+- Compile capstone.dll with static runtime MSVCR built in.
+
+
+[ Python binding ]
+
+- Fix a compiling issue of Cython binding with gcc 4.9.
+
+---------------------------------
+Version 3.0.1: February 03rd, 2015
 
 [ X86 ]
 
