@@ -345,11 +345,9 @@ CONSUME_FUNC(consumeUInt64, uint64_t)
  * @param location  - The location where the prefix is located (in the address
  *                    space of the instruction's reader).
  */
-static void setPrefixPresent(struct InternalInstruction *insn,
-		uint8_t prefix, uint64_t location)
+static void setPrefixPresent(struct InternalInstruction *insn, uint8_t prefix)
 {
 	insn->prefixPresent[prefix] = 1;
-	insn->prefixLocations[prefix] = location;
 }
 
 /*
@@ -363,8 +361,6 @@ static void setPrefixPresent(struct InternalInstruction *insn,
  */
 static bool isPrefixAtLocation(struct InternalInstruction *insn, uint8_t prefix)
 {
-	//if (insn->prefixPresent[prefix] == 1 &&
-//			insn->prefixLocations[prefix] == location)
 	if (insn->prefixPresent[prefix] == 1)
 		return true;
 	else
@@ -383,7 +379,6 @@ static bool isPrefixAtLocation(struct InternalInstruction *insn, uint8_t prefix)
 static int readPrefixes(struct InternalInstruction *insn)
 {
 	bool isPrefix = true;
-	uint64_t prefixLocation;
 	uint8_t byte = 0, nextByte;
 
 	bool hasAdSize = false;
@@ -428,8 +423,6 @@ static int readPrefixes(struct InternalInstruction *insn)
 				unconsumeByte(insn);
 			}
 		}
-
-		prefixLocation = insn->readerCursor;
 
 		/* If we fail reading prefixes, just stop here and let the opcode reader deal with it */
 		if (consumeByte(insn, &byte))
@@ -477,7 +470,7 @@ static int readPrefixes(struct InternalInstruction *insn)
 				insn->prefixPresent[0xf2] = 0;
 				insn->prefixPresent[0xf3] = 0;
 				insn->prefixPresent[0xf0] = 0;
-				setPrefixPresent(insn, byte, prefixLocation);
+				setPrefixPresent(insn, byte);
 				insn->prefix0 = byte;
 				break;
 			case 0x2e:  /* CS segment override -OR- Branch not taken */
@@ -490,7 +483,7 @@ static int readPrefixes(struct InternalInstruction *insn)
 				insn->prefixPresent[0x64] = 0;
 				insn->prefixPresent[0x65] = 0;
 
-				setPrefixPresent(insn, byte, prefixLocation);
+				setPrefixPresent(insn, byte);
 				insn->prefix1 = byte;
 				break;
 			case 0x36:  /* SS segment override -OR- Branch taken */
@@ -503,7 +496,7 @@ static int readPrefixes(struct InternalInstruction *insn)
 				insn->prefixPresent[0x64] = 0;
 				insn->prefixPresent[0x65] = 0;
 
-				setPrefixPresent(insn, byte, prefixLocation);
+				setPrefixPresent(insn, byte);
 				insn->prefix1 = byte;
 				break;
 			case 0x3e:  /* DS segment override */
@@ -516,7 +509,7 @@ static int readPrefixes(struct InternalInstruction *insn)
 				insn->prefixPresent[0x64] = 0;
 				insn->prefixPresent[0x65] = 0;
 
-				setPrefixPresent(insn, byte, prefixLocation);
+				setPrefixPresent(insn, byte);
 				insn->prefix1 = byte;
 				break;
 			case 0x26:  /* ES segment override */
@@ -529,7 +522,7 @@ static int readPrefixes(struct InternalInstruction *insn)
 				insn->prefixPresent[0x64] = 0;
 				insn->prefixPresent[0x65] = 0;
 
-				setPrefixPresent(insn, byte, prefixLocation);
+				setPrefixPresent(insn, byte);
 				insn->prefix1 = byte;
 				break;
 			case 0x64:  /* FS segment override */
@@ -542,7 +535,7 @@ static int readPrefixes(struct InternalInstruction *insn)
 				insn->prefixPresent[0x64] = 0;
 				insn->prefixPresent[0x65] = 0;
 
-				setPrefixPresent(insn, byte, prefixLocation);
+				setPrefixPresent(insn, byte);
 				insn->prefix1 = byte;
 				break;
 			case 0x65:  /* GS segment override */
@@ -555,17 +548,17 @@ static int readPrefixes(struct InternalInstruction *insn)
 				insn->prefixPresent[0x64] = 0;
 				insn->prefixPresent[0x65] = 0;
 
-				setPrefixPresent(insn, byte, prefixLocation);
+				setPrefixPresent(insn, byte);
 				insn->prefix1 = byte;
 				break;
 			case 0x66:  /* Operand-size override */
 				hasOpSize = true;
-				setPrefixPresent(insn, byte, prefixLocation);
+				setPrefixPresent(insn, byte);
 				insn->prefix2 = byte;
 				break;
 			case 0x67:  /* Address-size override */
 				hasAdSize = true;
-				setPrefixPresent(insn, byte, prefixLocation);
+				setPrefixPresent(insn, byte);
 				insn->prefix3 = byte;
 				break;
 			default:    /* Not a prefix byte */
