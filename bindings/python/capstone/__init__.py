@@ -44,6 +44,7 @@ __all__ = [
     'CS_MODE_V9',
     'CS_MODE_MIPS32',
     'CS_MODE_MIPS64',
+    'CS_MODE_QPX',
 
     'CS_OPT_SYNTAX',
     'CS_OPT_SYNTAX_DEFAULT',
@@ -126,6 +127,7 @@ CS_MODE_V9 = (1 << 4)          # Sparc V9 mode (for Sparc)
 CS_MODE_BIG_ENDIAN = (1 << 31) # big-endian mode
 CS_MODE_MIPS32 = CS_MODE_32    # Mips32 ISA
 CS_MODE_MIPS64 = CS_MODE_64    # Mips64 ISA
+CS_MODE_QPX = (1 << 4)         # Quad Processing eXtensions mode (PPC)
 
 # Capstone option type
 CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)

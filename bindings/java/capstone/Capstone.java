@@ -304,6 +304,7 @@ public class Capstone {
   public static final int CS_MODE_V9 = 1 << 4;	      // SparcV9 mode (Sparc arch)
   public static final int CS_MODE_MIPS32 = CS_MODE_32; // Mips32 ISA
   public static final int CS_MODE_MIPS64 = CS_MODE_64; // Mips64 ISA
+  public static final int CS_MODE_QPX = 1 << 4; // Quad Processing eXtensions mode (PPC)
 
   // Capstone error
   public static final int CS_ERR_OK = 0;

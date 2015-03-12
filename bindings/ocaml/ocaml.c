@@ -711,6 +711,9 @@ CAMLprim value ocaml_cs_disasm(value _arch, value _mode, value _code, value _add
 			case 14:
 				mode |= CS_MODE_MIPS64;
 				break;
+			case 15:
+				mode |= CS_MODE_QPX;
+				break;
 			default:
 				caml_invalid_argument("Invalid mode");
 				return Val_emptylist;
@@ -838,6 +841,9 @@ CAMLprim value ocaml_open(value _arch, value _mode)
 				break;
 			case 14:
 				mode |= CS_MODE_MIPS64;
+				break;
+			case 15:
+				mode |= CS_MODE_QPX;
 				break;
 			default:
 				caml_invalid_argument("Invalid mode");

@@ -1345,7 +1345,19 @@ public class Ppc_const {
 	public static final int PPC_INS_BDNZFLRL = 1095;
 	public static final int PPC_INS_BDZTLRL = 1096;
 	public static final int PPC_INS_BDZFLRL = 1097;
-	public static final int PPC_INS_ENDING = 1098;
+	public static final int PPC_INS_QVFAND = 1098;
+	public static final int PPC_INS_QVFCLR = 1099;
+	public static final int PPC_INS_QVFANDC = 1100;
+	public static final int PPC_INS_QVFCTFB = 1101;
+	public static final int PPC_INS_QVFXOR = 1102;
+	public static final int PPC_INS_QVFOR = 1103;
+	public static final int PPC_INS_QVFNOR = 1104;
+	public static final int PPC_INS_QVFEQU = 1105;
+	public static final int PPC_INS_QVFNOT = 1106;
+	public static final int PPC_INS_QVFORC = 1107;
+	public static final int PPC_INS_QVFNAND = 1108;
+	public static final int PPC_INS_QVFSET = 1109;
+	public static final int PPC_INS_ENDING = 1110;
 
 	// Group of PPC instructions
 

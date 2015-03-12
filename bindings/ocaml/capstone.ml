@@ -39,6 +39,8 @@ type mode =
   |	CS_MODE_BIG_ENDIAN	(* big-endian mode *)
   |	CS_MODE_MIPS32		(* Mips32 mode (for Mips) *)
   |	CS_MODE_MIPS64		(* Mips64 mode (for Mips) *)
+  | CS_MODE_QPX         (* Quad Processing eXtensions mode (PowerPC) *)
+
 
 
 (* Runtime option for the disassembled engine *)
