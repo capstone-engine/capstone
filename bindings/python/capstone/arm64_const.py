@@ -1034,6 +1034,7 @@ ARM64_GRP_INVALID = 0
 
 # Generic groups
 ARM64_GRP_JUMP = 1
+ARM64_GRP_PRIVILEGE = 6
 
 # Architecture-specific groups
 ARM64_GRP_CRYPTO = 128
