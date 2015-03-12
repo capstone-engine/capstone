@@ -6436,19 +6436,19 @@
 {
 	AArch64_MRS, ARM64_INS_MRS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PRIVILEGE, 0 }, 0, 0
 #endif
 },
 {
 	AArch64_MSR, ARM64_INS_MSR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PRIVILEGE, 0 }, 0, 0
 #endif
 },
 {
 	AArch64_MSRpstate, ARM64_INS_MSR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { ARM64_REG_NZCV, 0 }, { 0 }, 0, 0
+	{ 0 }, { ARM64_REG_NZCV, 0 }, { ARM64_GRP_PRIVILEGE, 0 }, 0, 0
 #endif
 },
 {
