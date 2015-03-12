@@ -1413,6 +1413,20 @@ typedef enum ppc_insn {
 	PPC_INS_BDZTLRL,
 	PPC_INS_BDZFLRL,
 
+	// QPX
+	PPC_INS_QVFAND,
+	PPC_INS_QVFCLR,
+	PPC_INS_QVFANDC,
+	PPC_INS_QVFCTFB,
+	PPC_INS_QVFXOR,
+	PPC_INS_QVFOR,
+	PPC_INS_QVFNOR,
+	PPC_INS_QVFEQU,
+	PPC_INS_QVFNOT,
+	PPC_INS_QVFORC,
+	PPC_INS_QVFNAND,
+	PPC_INS_QVFSET,
+
 	PPC_INS_ENDING,   // <-- mark the end of the list of instructions
 } ppc_insn;
 

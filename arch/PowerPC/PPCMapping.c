@@ -1393,6 +1393,20 @@ static name_map insn_name_maps[] = {
 	{ PPC_INS_BDNZFLRL, "bdnzflrl" },
 	{ PPC_INS_BDZTLRL, "bdztlrl" },
 	{ PPC_INS_BDZFLRL, "bdzflrl" },
+
+	// QPX
+	{ PPC_INS_QVFAND, "qvfand" },
+	{ PPC_INS_QVFCLR, "qvfclr" },
+	{ PPC_INS_QVFANDC, "qvfandc" },
+	{ PPC_INS_QVFCTFB, "qvfctfb" },
+	{ PPC_INS_QVFXOR, "qvfxor" },
+	{ PPC_INS_QVFOR, "qvfor" },
+	{ PPC_INS_QVFNOR, "qvfnor" },
+	{ PPC_INS_QVFEQU, "qvfequ" },
+	{ PPC_INS_QVFNOT, "qvfnot" },
+	{ PPC_INS_QVFORC, "qvforc" },
+	{ PPC_INS_QVFNAND, "qvfnand" },
+	{ PPC_INS_QVFSET, "qvfset" },
 };
 
 // special alias insn

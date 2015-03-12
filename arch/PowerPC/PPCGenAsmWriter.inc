@@ -4213,14 +4213,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 #endif
 
   // Emit the opcode for the instruction.
-  uint64_t Bits1 = OpInfo[MCInst_getOpcode(MI)];
-  uint64_t Bits2 = OpInfo2[MCInst_getOpcode(MI)];
+  unsigned int opcode = MCInst_getOpcode(MI);
+  uint64_t Bits1 = OpInfo[opcode];
+  uint64_t Bits2 = OpInfo2[opcode];
   uint64_t Bits = (Bits2 << 32) | Bits1;
   // assert(Bits != 0 && "Cannot print this instruction.");
 #ifndef CAPSTONE_DIET
   SStream_concat0(O, AsmStrs+(Bits & 16383)-1);
 #endif
-
 
   // Fragment 0 encoded into 4 bits for 14 unique commands.
   //printf("Frag-0: %"PRIu64"\n", (Bits >> 14) & 15);

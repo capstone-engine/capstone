@@ -15,7 +15,7 @@ static cs_err init(cs_struct *ud)
 
 	// verify if requested mode is valid
 	if (ud->mode & ~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 |
-				CS_MODE_BIG_ENDIAN))
+				CS_MODE_BIG_ENDIAN | CS_MODE_QPX))
 		return CS_ERR_MODE;
 
 	mri = (MCRegisterInfo *) cs_mem_malloc(sizeof(*mri));

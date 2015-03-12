@@ -372,8 +372,10 @@ static DecodeStatus getInstruction(MCInst *MI,
 
 	if (MI->csh->mode & CS_MODE_QPX) {
 		result = decodeInstruction_4(DecoderTableQPX32, MI, insn, Address, 4);
-		if (result != MCDisassembler_Fail)
+		if (result != MCDisassembler_Fail) {
+			*Size = 4;
 			return result;
+		}
 
 		MCInst_clear(MI);
 	}

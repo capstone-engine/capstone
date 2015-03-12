@@ -114,6 +114,7 @@ static void print_insn_detail(cs_insn *ins)
 static void test()
 {
 #define PPC_CODE "\x43\x20\x0c\x07\x41\x56\xff\x17\x80\x20\x00\x00\x80\x3f\x00\x00\x10\x43\x23\x0e\xd0\x44\x00\x80\x4c\x43\x22\x02\x2d\x03\x00\x80\x7c\x43\x20\x14\x7c\x43\x20\x93\x4f\x20\x00\x21\x4c\xc8\x00\x21\x40\x82\x00\x14"
+#define PPC_CODE2 "\x10\x60\x2a\x10\x10\x64\x28\x88\x7c\x4a\x5d\x0f"
 
 	struct platform platforms[] = {
 		{
@@ -122,7 +123,14 @@ static void test()
 			(unsigned char*)PPC_CODE,
 			sizeof(PPC_CODE) - 1,
 			"PPC-64",
-		}
+		},
+		{
+			CS_ARCH_PPC,
+			CS_MODE_BIG_ENDIAN + CS_MODE_QPX,
+			(unsigned char*)PPC_CODE2,
+			sizeof(PPC_CODE2) - 1,
+			"PPC-64 + QPX",
+		},
 	};
 
 	uint64_t address = 0x1000;
