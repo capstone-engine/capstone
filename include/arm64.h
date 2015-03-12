@@ -1134,6 +1134,8 @@ typedef enum arm64_insn_group {
 	//> Generic groups
 	// all jump instructions (conditional+direct+indirect jumps)
 	ARM64_GRP_JUMP,	// = CS_GRP_JUMP
+    ARM64_GRP_CALL, // = CS_GRP_CALL
+    ARM64_GRP_RET,  // = CS_GRP_RET
 
 	//> Architecture-specific groups
 	ARM64_GRP_CRYPTO = 128,

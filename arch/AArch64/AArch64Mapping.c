@@ -730,7 +730,7 @@ static insn_map insns[] = {
 	{
 		AArch64_B, ARM64_INS_B,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 1, 0
+		{ 0 }, { 0 }, { ARM64_GRP_JUMP }, 1, 0
 #endif
 	},
 	{
@@ -832,19 +832,19 @@ static insn_map insns[] = {
 	{
 		AArch64_BL, ARM64_INS_BL,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { ARM64_REG_LR, 0 }, { 0 }, 0, 0
+		{ 0 }, { ARM64_REG_LR, 0 }, { ARM64_GRP_CALL, 0 }, 0, 0
 #endif
 	},
 	{
 		AArch64_BLR, ARM64_INS_BLR,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { ARM64_REG_LR, 0 }, { 0 }, 0, 0
+		{ 0 }, { ARM64_REG_LR, 0 }, { ARM64_GRP_CALL, 0 }, 0, 0
 #endif
 	},
 	{
 		AArch64_BR, ARM64_INS_BR,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 1, 1
+		{ 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 1
 #endif
 	},
 	{
@@ -868,31 +868,31 @@ static insn_map insns[] = {
 	{
 		AArch64_Bcc, ARM64_INS_B,
 #ifndef CAPSTONE_DIET
-		{ ARM64_REG_NZCV, 0 }, { 0 }, { 0 }, 1, 0
+		{ ARM64_REG_NZCV, 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 	},
 	{
 		AArch64_CBNZW, ARM64_INS_CBNZ,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 1, 0
+		{ 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 	},
 	{
 		AArch64_CBNZX, ARM64_INS_CBNZ,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 1, 0
+		{ 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 	},
 	{
 		AArch64_CBZW, ARM64_INS_CBZ,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 1, 0
+		{ 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 	},
 	{
 		AArch64_CBZX, ARM64_INS_CBZ,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 1, 0
+		{ 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 	},
 	{
@@ -7132,7 +7132,7 @@ static insn_map insns[] = {
 	{
 		AArch64_RET, ARM64_INS_RET,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM64_GRP_RET, 0 }, 0, 0
 #endif
 	},
 	{
@@ -11932,13 +11932,13 @@ static insn_map insns[] = {
 	{
 		AArch64_TBNZW, ARM64_INS_TBNZ,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 1, 0
+		{ 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 	},
 	{
 		AArch64_TBNZX, ARM64_INS_TBNZ,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 1, 0
+		{ 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 	},
 	{
@@ -11992,13 +11992,13 @@ static insn_map insns[] = {
 	{
 		AArch64_TBZW, ARM64_INS_TBZ,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 1, 0
+		{ 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 	},
 	{
 		AArch64_TBZX, ARM64_INS_TBZ,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 1, 0
+		{ 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 	},
 	{
@@ -14293,12 +14293,6 @@ void AArch64_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			insn->detail->groups_count = (uint8_t)count_positive(insns[i].groups);
 
 			insn->detail->arm64.update_flags = cs_reg_write((csh)&handle, insn, ARM64_REG_NZCV);
-
-			if (insns[i].branch || insns[i].indirect_branch) {
-				// this insn also belongs to JUMP group. add JUMP group
-				insn->detail->groups[insn->detail->groups_count] = ARM64_GRP_JUMP;
-				insn->detail->groups_count++;
-			}
 #endif
 		}
 	}
@@ -14804,7 +14798,9 @@ const char *AArch64_insn_name(csh handle, unsigned int id)
 static name_map group_name_maps[] = {
 	// generic groups
 	{ ARM64_GRP_INVALID, NULL },
-	{ ARM64_GRP_JUMP, "jump" },
+    { ARM64_GRP_JUMP, "jump" },
+    { ARM64_GRP_CALL, "call" },
+    { ARM64_GRP_RET, "return" },
 
 	// architecture-specific groups
 	{ ARM64_GRP_CRYPTO, "crypto" },
@@ -14819,12 +14815,12 @@ const char *AArch64_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
 	// verify group id
-	if (id >= ARM64_GRP_ENDING || (id > ARM64_GRP_JUMP && id < ARM64_GRP_CRYPTO))
+	if (id >= ARM64_GRP_ENDING || (id > ARM64_GRP_RET && id < ARM64_GRP_CRYPTO))
 		return NULL;
 
 	// NOTE: when new generic groups are added, 2 must be changed accordingly
 	if (id >= 128)
-		return group_name_maps[id - 128 + 2].name;
+		return group_name_maps[id - 128 + 4].name;
 	else
 		return group_name_maps[id].name;
 #else
