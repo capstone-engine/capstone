@@ -857,9 +857,9 @@ const char *AArch64_group_name(csh handle, unsigned int id)
 	if (id >= ARM64_GRP_ENDING || (id > ARM64_GRP_RET && id < ARM64_GRP_CRYPTO))
 		return NULL;
 
-	// NOTE: when new generic groups are added, 2 must be changed accordingly
-	if (id >= 128)
-		return group_name_maps[id - 128 + 4].name;
+	// NOTE: when new generic groups are added, 4 must be changed accordingly
+	if (id >= ARM64_GRP_CRYPTO)
+		return group_name_maps[id - ARM64_GRP_CRYPTO + 4].name;
 	else
 		return group_name_maps[id].name;
 #else
