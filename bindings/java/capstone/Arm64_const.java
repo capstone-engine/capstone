@@ -1037,6 +1037,8 @@ public class Arm64_const {
 
 	// Generic groups
 	public static final int ARM64_GRP_JUMP = 1;
+	public static final int ARM64_GRP_CALL = 2;
+	public static final int ARM64_GRP_RET = 3;
 	public static final int ARM64_GRP_PRIVILEGE = 6;
 
 	// Architecture-specific groups
