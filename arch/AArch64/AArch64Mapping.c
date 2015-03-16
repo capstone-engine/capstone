@@ -332,12 +332,6 @@ void AArch64_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			insn->detail->groups_count = (uint8_t)count_positive(insns[i].groups);
 
 			insn->detail->arm64.update_flags = cs_reg_write((csh)&handle, insn, ARM64_REG_NZCV);
-
-			if (insns[i].branch || insns[i].indirect_branch) {
-				// this insn also belongs to JUMP group. add JUMP group
-				insn->detail->groups[insn->detail->groups_count] = ARM64_GRP_JUMP;
-				insn->detail->groups_count++;
-			}
 #endif
 		}
 	}
@@ -844,6 +838,8 @@ static name_map group_name_maps[] = {
 	// generic groups
 	{ ARM64_GRP_INVALID, NULL },
 	{ ARM64_GRP_JUMP, "jump" },
+	{ ARM64_GRP_CALL, "call" },
+	{ ARM64_GRP_RET, "return" },
 
 	// architecture-specific groups
 	{ ARM64_GRP_CRYPTO, "crypto" },
@@ -858,12 +854,12 @@ const char *AArch64_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
 	// verify group id
-	if (id >= ARM64_GRP_ENDING || (id > ARM64_GRP_JUMP && id < ARM64_GRP_CRYPTO))
+	if (id >= ARM64_GRP_ENDING || (id > ARM64_GRP_RET && id < ARM64_GRP_CRYPTO))
 		return NULL;
 
 	// NOTE: when new generic groups are added, 2 must be changed accordingly
 	if (id >= 128)
-		return group_name_maps[id - 128 + 2].name;
+		return group_name_maps[id - 128 + 4].name;
 	else
 		return group_name_maps[id].name;
 #else
