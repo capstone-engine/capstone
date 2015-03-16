@@ -430,7 +430,7 @@
 {
 	AArch64_B, ARM64_INS_B,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 },
 {
@@ -532,19 +532,19 @@
 {
 	AArch64_BL, ARM64_INS_BL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { ARM64_REG_LR, 0 }, { 0 }, 0, 0
+	{ 0 }, { ARM64_REG_LR, 0 }, { ARM64_GRP_CALL, 0 }, 0, 0
 #endif
 },
 {
 	AArch64_BLR, ARM64_INS_BLR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { ARM64_REG_LR, 0 }, { 0 }, 0, 0
+	{ 0 }, { ARM64_REG_LR, 0 }, { ARM64_GRP_CALL, 0 }, 0, 0
 #endif
 },
 {
 	AArch64_BR, ARM64_INS_BR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 1
+	{ 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 1
 #endif
 },
 {
@@ -568,31 +568,31 @@
 {
 	AArch64_Bcc, ARM64_INS_B,
 #ifndef CAPSTONE_DIET
-	{ ARM64_REG_NZCV, 0 }, { 0 }, { 0 }, 1, 0
+	{ ARM64_REG_NZCV, 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 },
 {
 	AArch64_CBNZW, ARM64_INS_CBNZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 },
 {
 	AArch64_CBNZX, ARM64_INS_CBNZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 },
 {
 	AArch64_CBZW, ARM64_INS_CBZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 },
 {
 	AArch64_CBZX, ARM64_INS_CBZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 },
 {
@@ -6832,7 +6832,7 @@
 {
 	AArch64_RET, ARM64_INS_RET,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_RET, 0 }, 0, 0
 #endif
 },
 {
@@ -11632,13 +11632,13 @@
 {
 	AArch64_TBNZW, ARM64_INS_TBNZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 },
 {
 	AArch64_TBNZX, ARM64_INS_TBNZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 },
 {
@@ -11692,13 +11692,13 @@
 {
 	AArch64_TBZW, ARM64_INS_TBZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 },
 {
 	AArch64_TBZX, ARM64_INS_TBZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 },
 {
