@@ -98,7 +98,7 @@ class custom_build_clib(build_clib):
         build_clib.finalize_options(self)
 
     def build_libraries(self, libraries):
-        if SYSTEM == "win32":
+        if SYSTEM in ("win32", "cygwin"):
             # if Windows prebuilt library is available, then include it
             if is_64bits and os.path.exists(PATH_LIB64):
                 SETUP_DATA_FILES.append(PATH_LIB64)
@@ -133,10 +133,12 @@ class custom_build_clib(build_clib):
 
                 if SYSTEM == "darwin":
                     SETUP_DATA_FILES.append("src/libcapstone.dylib")
-                elif SYSTEM != "win32":
-                    SETUP_DATA_FILES.append("src/libcapstone.so")
-                else:   # Windows
+                elif SYSTEM == "win32":
                     SETUP_DATA_FILES.append("src/build/capstone.dll")
+                elif SYSTEM == "cygwin":
+                    SETUP_DATA_FILES.append("src/capstone.dll")
+                else:   # Unix
+                    SETUP_DATA_FILES.append("src/libcapstone.so")
 
                 os.chdir("..")
         except:
