@@ -18,11 +18,11 @@ PATH_LIB64 = "prebuilt/win64/capstone.dll"
 PATH_LIB32 = "prebuilt/win32/capstone.dll"
 
 # package name can be 'capstone' or 'capstone-windows'
-PKG_NAME = 'capstone'
+PKG_NAME = 'tacocapstone'
 if os.path.exists(PATH_LIB64) and os.path.exists(PATH_LIB32):
     PKG_NAME = 'capstone-windows'
 
-VERSION = '3.0.2'
+VERSION = '3.0.7'
 SYSTEM = sys.platform
 
 SITE_PACKAGES = os.path.join(get_python_lib(), "capstone")
@@ -134,6 +134,13 @@ class custom_build_clib(build_clib):
 
                 if SYSTEM == "darwin":
                     SETUP_DATA_FILES.append("src/libcapstone.dylib")
+                if SYSTEM == "cygwin":
+                    os.chmod("make.sh", stat.S_IREAD|stat.S_IEXEC)
+                    if is_64bits:
+                        os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh cygwin-mingw64")
+                    else:
+                        os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh cygwin-mingw32")
+                    SETUP_DATA_FILES.append("src/capstone.dll")
                 elif SYSTEM != "win32":
                     SETUP_DATA_FILES.append("src/libcapstone.so")
                 else:   # Windows
