@@ -117,6 +117,7 @@ class custom_build_clib(build_clib):
 
                 os.chdir("src")
 
+                # platform description refers at https://docs.python.org/2/library/sys.html#sys.platform
                 if SYSTEM != "win32":
                     os.chmod("make.sh", stat.S_IREAD|stat.S_IEXEC)
                     os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh")
@@ -133,12 +134,17 @@ class custom_build_clib(build_clib):
 
                 if SYSTEM == "darwin":
                     SETUP_DATA_FILES.append("src/libcapstone.dylib")
-                elif SYSTEM == "win32":
-                    SETUP_DATA_FILES.append("src/build/capstone.dll")
                 elif SYSTEM == "cygwin":
+                    os.chmod("make.sh", stat.S_IREAD|stat.S_IEXEC)
+                    if is_64bits:
+                        os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh cygwin-mingw64")
+                    else:
+                        os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh cygwin-mingw32")
                     SETUP_DATA_FILES.append("src/capstone.dll")
-                else:   # Unix
+                elif SYSTEM != "win32": # Unix
                     SETUP_DATA_FILES.append("src/libcapstone.so")
+                else:   # Windows
+                    SETUP_DATA_FILES.append("src/build/capstone.dll")
 
                 os.chdir("..")
         except:
