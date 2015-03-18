@@ -18,11 +18,11 @@ PATH_LIB64 = "prebuilt/win64/capstone.dll"
 PATH_LIB32 = "prebuilt/win32/capstone.dll"
 
 # package name can be 'capstone' or 'capstone-windows'
-PKG_NAME = 'tacocapstone'
+PKG_NAME = 'capstone'
 if os.path.exists(PATH_LIB64) and os.path.exists(PATH_LIB32):
     PKG_NAME = 'capstone-windows'
 
-VERSION = '3.0.7'
+VERSION = '3.0.2'
 SYSTEM = sys.platform
 
 SITE_PACKAGES = os.path.join(get_python_lib(), "capstone")
