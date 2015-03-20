@@ -530,6 +530,13 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 						SStream_concat(O, "$-%"PRIu64, -imm);
 				}
 				break;
+			case X86_INS_INT:
+				// do not print number in negative form
+				if (imm >= 0 && imm <= HEX_THRESHOLD)
+					SStream_concat(O, "$%u", imm);
+				else
+					SStream_concat(O, "$0x%x", imm & 0xff);
+				break;
 			case X86_INS_RET:
 				// RET imm16
 				if (imm >= 0 && imm <= HEX_THRESHOLD)

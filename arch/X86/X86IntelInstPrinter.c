@@ -616,6 +616,13 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 				break;
 
+			case X86_INS_INT:
+				// do not print number in negative form
+				if (imm >= 0 && imm <= HEX_THRESHOLD)
+					SStream_concat(O, "%u", imm);
+				else
+					SStream_concat(O, "0x%x", imm & 0xff);
+				break;
 			case X86_INS_AND:
 			case X86_INS_OR:
 			case X86_INS_XOR:
