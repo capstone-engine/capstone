@@ -1367,11 +1367,11 @@
 },
 {	/* X86_CMOVBE_F, X86_INS_FCMOVBE: fcmovbe	st(0), $op */
 	X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_CF,
-	{ CS_OP_NOREG, CS_OP_WRITE, 0 }
+	{ CS_OP_IGNORE, CS_OP_WRITE, 0 }
 },
 {	/* X86_CMOVB_F, X86_INS_FCMOVB: fcmovb	st(0), $op */
 	X86_EFLAGS_TEST_CF,
-	{ CS_OP_NOREG, CS_OP_WRITE, 0 }
+	{ CS_OP_IGNORE, CS_OP_WRITE, 0 }
 },
 {	/* X86_CMOVE16rm, X86_INS_CMOVE: cmove{w}	$dst, $src2 */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF | X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_PF | X86_EFLAGS_TEST_CF,
@@ -1399,7 +1399,7 @@
 },
 {	/* X86_CMOVE_F, X86_INS_FCMOVE: fcmove	st(0), $op */
 	X86_EFLAGS_TEST_ZF,
-	{ CS_OP_NOREG, CS_OP_WRITE, 0 }
+	{ CS_OP_IGNORE, CS_OP_WRITE, 0 }
 },
 {	/* X86_CMOVG16rm, X86_INS_CMOVG: cmovg{w}	$dst, $src2 */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF | X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_PF | X86_EFLAGS_TEST_CF,
@@ -1499,11 +1499,11 @@
 },
 {	/* X86_CMOVNBE_F, X86_INS_FCMOVNBE: fcmovnbe	st(0), $op */
 	X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_CF,
-	{ CS_OP_NOREG, CS_OP_WRITE, 0 }
+	{ CS_OP_IGNORE, CS_OP_WRITE, 0 }
 },
 {	/* X86_CMOVNB_F, X86_INS_FCMOVNB: fcmovnb	st(0), $op */
 	X86_EFLAGS_TEST_CF,
-	{ CS_OP_NOREG, CS_OP_WRITE, 0 }
+	{ CS_OP_IGNORE, CS_OP_WRITE, 0 }
 },
 {	/* X86_CMOVNE16rm, X86_INS_CMOVNE: cmovne{w}	$dst, $src2 */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF | X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_PF | X86_EFLAGS_TEST_CF,
@@ -1531,7 +1531,7 @@
 },
 {	/* X86_CMOVNE_F, X86_INS_FCMOVNE: fcmovne	st(0), $op */
 	X86_EFLAGS_TEST_ZF,
-	{ CS_OP_NOREG, CS_OP_WRITE, 0 }
+	{ CS_OP_IGNORE, CS_OP_WRITE, 0 }
 },
 {	/* X86_CMOVNO16rm, X86_INS_CMOVNO: cmovno{w}	$dst, $src2 */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF | X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_PF | X86_EFLAGS_TEST_CF,
@@ -1583,7 +1583,7 @@
 },
 {	/* X86_CMOVNP_F, X86_INS_FCMOVNU: fcmovnu	st(0), $op */
 	X86_EFLAGS_TEST_PF,
-	{ CS_OP_NOREG, CS_OP_WRITE, 0 }
+	{ CS_OP_IGNORE, CS_OP_WRITE, 0 }
 },
 {	/* X86_CMOVNS16rm, X86_INS_CMOVNS: cmovns{w}	$dst, $src2 */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF | X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_PF | X86_EFLAGS_TEST_CF,
@@ -1659,7 +1659,7 @@
 },
 {	/* X86_CMOVP_F, X86_INS_FCMOVU: fcmovu	st(0), $op */
 	X86_EFLAGS_TEST_PF,
-	{ CS_OP_NOREG, CS_OP_WRITE, 0 }
+	{ CS_OP_IGNORE, CS_OP_WRITE, 0 }
 },
 {	/* X86_CMOVS16rm, X86_INS_CMOVS: cmovs{w}	$dst, $src2 */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF | X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_PF | X86_EFLAGS_TEST_CF,
@@ -2439,7 +2439,7 @@
 },
 {	/* X86_EXTRACTPSrr, X86_INS_EXTRACTPS: extractps	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_EXTRQ, X86_INS_EXTRQ: extrq	$src, $mask */
 	0,
@@ -5175,7 +5175,7 @@
 },
 {	/* X86_MMX_PEXTRWirri, X86_INS_PEXTRW: pextrw	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_MMX_PHADDSWrm64, X86_INS_PHADDSW: phaddsw	$dst, $src2 */
 	0,
@@ -5231,7 +5231,7 @@
 },
 {	/* X86_MMX_PINSRWirri, X86_INS_PINSRW: pinsrw	$dst, $src2, $src3 */
 	0,
-	{ CS_OP_READ | CS_OP_WRITE, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_MMX_PMADDUBSWrm64, X86_INS_PMADDUBSW: pmaddubsw	$dst, $src2 */
 	0,
@@ -5283,7 +5283,7 @@
 },
 {	/* X86_MMX_PMOVMSKBrr, X86_INS_PMOVMSKB: pmovmskb	$dst, $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_MMX_PMULHRSWrm64, X86_INS_PMULHRSW: pmulhrsw	$dst, $src2 */
 	0,
@@ -6067,11 +6067,11 @@
 },
 {	/* X86_MOVMSKPDrr, X86_INS_MOVMSKPD: movmskpd	$dst, $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_MOVMSKPSrr, X86_INS_MOVMSKPS: movmskps	$dst, $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_MOVNTDQArm, X86_INS_MOVNTDQA: movntdqa	$dst, $src */
 	0,
@@ -7235,7 +7235,7 @@
 },
 {	/* X86_PEXTRBrr, X86_INS_PEXTRB: pextrb	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_PEXTRDmr, X86_INS_PEXTRD: pextrd	$dst, $src1, $src2 */
 	0,
@@ -7259,11 +7259,11 @@
 },
 {	/* X86_PEXTRWri, X86_INS_PEXTRW: pextrw	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_PEXTRWrr_REV, X86_INS_PEXTRW: pextrw	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_PF2IDrm, X86_INS_PF2ID: pf2id	$dst, $src */
 	0,
@@ -7495,7 +7495,7 @@
 },
 {	/* X86_PINSRBrr, X86_INS_PINSRB: pinsrb	$dst, $src2, $src3 */
 	0,
-	{ CS_OP_READ | CS_OP_WRITE, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_PINSRDrm, X86_INS_PINSRD: pinsrd	$dst, $src2, $src3 */
 	0,
@@ -7519,7 +7519,7 @@
 },
 {	/* X86_PINSRWrri, X86_INS_PINSRW: pinsrw	$dst, $src2, $src3 */
 	0,
-	{ CS_OP_READ | CS_OP_WRITE, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_PMADDUBSWrm128, X86_INS_PMADDUBSW: pmaddubsw	$dst, $src2 */
 	0,
@@ -7635,7 +7635,7 @@
 },
 {	/* X86_PMOVMSKBrr, X86_INS_PMOVMSKB: pmovmskb	$dst, $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_PMOVSXBDrm, X86_INS_PMOVSXBD: pmovsxbd	$dst, $src */
 	0,
@@ -10091,15 +10091,15 @@
 },
 {	/* X86_ST_FCOMPST0r, X86_INS_FCOMP: fcomp	st(0), $op */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_IGNORE, CS_OP_READ, 0 }
 },
 {	/* X86_ST_FCOMPST0r_alt, X86_INS_FCOMP: fcomp	st(0), $op */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_IGNORE, CS_OP_READ, 0 }
 },
 {	/* X86_ST_FCOMST0r, X86_INS_FCOM: fcom	st(0), $op */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_IGNORE, CS_OP_READ, 0 }
 },
 {	/* X86_ST_FP32m, X86_INS_FSTP: fstp{s}	$dst */
 	0,
@@ -10131,11 +10131,11 @@
 },
 {	/* X86_ST_FXCHST0r, X86_INS_FXCH: fxch	st(0), $op */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_IGNORE, CS_OP_READ, 0 }
 },
 {	/* X86_ST_FXCHST0r_alt, X86_INS_FXCH: fxch	st(0), $op */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_IGNORE, CS_OP_READ, 0 }
 },
 {	/* X86_ST_Frr, X86_INS_FST: fst	$op */
 	0,
@@ -10675,7 +10675,7 @@
 },
 {	/* X86_VADDPDZ128rm, X86_INS_VADDPD: vaddpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDPDZ128rmb, X86_INS_VADDPD: vaddpd	{${src2}{1to2}, $src1, $dst |$dst , $src1, ${src2}{1to2}} */
 	0,
@@ -10699,7 +10699,7 @@
 },
 {	/* X86_VADDPDZ128rr, X86_INS_VADDPD: vaddpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDPDZ128rrk, X86_INS_VADDPD: vaddpd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -10711,7 +10711,7 @@
 },
 {	/* X86_VADDPDZ256rm, X86_INS_VADDPD: vaddpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDPDZ256rmb, X86_INS_VADDPD: vaddpd	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -10735,7 +10735,7 @@
 },
 {	/* X86_VADDPDZ256rr, X86_INS_VADDPD: vaddpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDPDZ256rrk, X86_INS_VADDPD: vaddpd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -10747,7 +10747,7 @@
 },
 {	/* X86_VADDPDZrb, X86_INS_VADDPD: vaddpd	$dst , $src1, $src2, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDPDZrbk, X86_INS_VADDPD: vaddpd	{$rc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $rc} */
 	0,
@@ -10759,7 +10759,7 @@
 },
 {	/* X86_VADDPDZrm, X86_INS_VADDPD: vaddpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDPDZrmb, X86_INS_VADDPD: vaddpd	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -10783,7 +10783,7 @@
 },
 {	/* X86_VADDPDZrr, X86_INS_VADDPD: vaddpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDPDZrrk, X86_INS_VADDPD: vaddpd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -10811,7 +10811,7 @@
 },
 {	/* X86_VADDPSZ128rm, X86_INS_VADDPS: vaddps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDPSZ128rmb, X86_INS_VADDPS: vaddps	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -10835,7 +10835,7 @@
 },
 {	/* X86_VADDPSZ128rr, X86_INS_VADDPS: vaddps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDPSZ128rrk, X86_INS_VADDPS: vaddps	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -10847,7 +10847,7 @@
 },
 {	/* X86_VADDPSZ256rm, X86_INS_VADDPS: vaddps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDPSZ256rmb, X86_INS_VADDPS: vaddps	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -10871,7 +10871,7 @@
 },
 {	/* X86_VADDPSZ256rr, X86_INS_VADDPS: vaddps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDPSZ256rrk, X86_INS_VADDPS: vaddps	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -10883,7 +10883,7 @@
 },
 {	/* X86_VADDPSZrb, X86_INS_VADDPS: vaddps	$dst , $src1, $src2, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDPSZrbk, X86_INS_VADDPS: vaddps	{$rc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $rc} */
 	0,
@@ -10895,7 +10895,7 @@
 },
 {	/* X86_VADDPSZrm, X86_INS_VADDPS: vaddps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDPSZrmb, X86_INS_VADDPS: vaddps	{${src2}{1to16}, $src1, $dst |$dst , $src1, ${src2}{1to16}} */
 	0,
@@ -10919,7 +10919,7 @@
 },
 {	/* X86_VADDPSZrr, X86_INS_VADDPS: vaddps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDPSZrrk, X86_INS_VADDPS: vaddps	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -10943,7 +10943,7 @@
 },
 {	/* X86_VADDSDZrm_Int, X86_INS_VADDSD: vaddsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDSDZrm_Intk, X86_INS_VADDSD: vaddsd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -10959,7 +10959,7 @@
 },
 {	/* X86_VADDSDZrr_Int, X86_INS_VADDSD: vaddsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDSDZrr_Intk, X86_INS_VADDSD: vaddsd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -10971,7 +10971,7 @@
 },
 {	/* X86_VADDSDZrrb, X86_INS_VADDSD: vaddsd	$dst , $src1, $src2, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDSDZrrbk, X86_INS_VADDSD: vaddsd	{$rc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $rc} */
 	0,
@@ -11003,7 +11003,7 @@
 },
 {	/* X86_VADDSSZrm_Int, X86_INS_VADDSS: vaddss	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDSSZrm_Intk, X86_INS_VADDSS: vaddss	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -11019,7 +11019,7 @@
 },
 {	/* X86_VADDSSZrr_Int, X86_INS_VADDSS: vaddss	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDSSZrr_Intk, X86_INS_VADDSS: vaddss	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -11031,7 +11031,7 @@
 },
 {	/* X86_VADDSSZrrb, X86_INS_VADDSS: vaddss	$dst , $src1, $src2, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VADDSSZrrbk, X86_INS_VADDSS: vaddss	{$rc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $rc} */
 	0,
@@ -11143,7 +11143,7 @@
 },
 {	/* X86_VALIGNDrri, X86_INS_VALIGND: valignd	$dst , $src1, $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VALIGNDrrik, X86_INS_VALIGND: valignd	{$src3, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $src3} */
 	0,
@@ -11159,7 +11159,7 @@
 },
 {	/* X86_VALIGNQrri, X86_INS_VALIGNQ: valignq	$dst , $src1, $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VALIGNQrrik, X86_INS_VALIGNQ: valignq	{$src3, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $src3} */
 	0,
@@ -11519,7 +11519,7 @@
 },
 {	/* X86_VBROADCASTSDZ256m, X86_INS_VBROADCASTSD: vbroadcastsd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VBROADCASTSDZ256mk, X86_INS_VBROADCASTSD: vbroadcastsd	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -11531,7 +11531,7 @@
 },
 {	/* X86_VBROADCASTSDZ256r, X86_INS_VBROADCASTSD: vbroadcastsd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VBROADCASTSDZ256rk, X86_INS_VBROADCASTSD: vbroadcastsd	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -11543,7 +11543,7 @@
 },
 {	/* X86_VBROADCASTSDZm, X86_INS_VBROADCASTSD: vbroadcastsd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VBROADCASTSDZmk, X86_INS_VBROADCASTSD: vbroadcastsd	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -11555,7 +11555,7 @@
 },
 {	/* X86_VBROADCASTSDZr, X86_INS_VBROADCASTSD: vbroadcastsd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VBROADCASTSDZrk, X86_INS_VBROADCASTSD: vbroadcastsd	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -11575,7 +11575,7 @@
 },
 {	/* X86_VBROADCASTSSZ128m, X86_INS_VBROADCASTSS: vbroadcastss	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VBROADCASTSSZ128mk, X86_INS_VBROADCASTSS: vbroadcastss	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -11587,7 +11587,7 @@
 },
 {	/* X86_VBROADCASTSSZ128r, X86_INS_VBROADCASTSS: vbroadcastss	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VBROADCASTSSZ128rk, X86_INS_VBROADCASTSS: vbroadcastss	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -11599,7 +11599,7 @@
 },
 {	/* X86_VBROADCASTSSZ256m, X86_INS_VBROADCASTSS: vbroadcastss	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VBROADCASTSSZ256mk, X86_INS_VBROADCASTSS: vbroadcastss	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -11611,7 +11611,7 @@
 },
 {	/* X86_VBROADCASTSSZ256r, X86_INS_VBROADCASTSS: vbroadcastss	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VBROADCASTSSZ256rk, X86_INS_VBROADCASTSS: vbroadcastss	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -11623,7 +11623,7 @@
 },
 {	/* X86_VBROADCASTSSZm, X86_INS_VBROADCASTSS: vbroadcastss	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VBROADCASTSSZmk, X86_INS_VBROADCASTSS: vbroadcastss	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -11635,7 +11635,7 @@
 },
 {	/* X86_VBROADCASTSSZr, X86_INS_VBROADCASTSS: vbroadcastss	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VBROADCASTSSZrk, X86_INS_VBROADCASTSS: vbroadcastss	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -11767,19 +11767,19 @@
 },
 {	/* X86_VCMPSDZrm, X86_INS_VCMPSD: vcmp${cc}sd	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VCMPSDZrmi_alt, X86_INS_VCMPSD: vcmpsd	$dst, $src1, $src2, $cc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VCMPSDZrr, X86_INS_VCMPSD: vcmp${cc}sd	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VCMPSDZrri_alt, X86_INS_VCMPSD: vcmpsd	$dst, $src1, $src2, $cc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VCMPSDrm, X86_INS_VCMPSD: vcmp${cc}sd	$dst, $src1, $src2 */
 	0,
@@ -11799,19 +11799,19 @@
 },
 {	/* X86_VCMPSSZrm, X86_INS_VCMPSS: vcmp${cc}ss	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VCMPSSZrmi_alt, X86_INS_VCMPSS: vcmpss	$dst, $src1, $src2, $cc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VCMPSSZrr, X86_INS_VCMPSS: vcmp${cc}ss	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VCMPSSZrri_alt, X86_INS_VCMPSS: vcmpss	$dst, $src1, $src2, $cc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VCMPSSrm, X86_INS_VCMPSS: vcmp${cc}ss	$dst, $src1, $src2 */
 	0,
@@ -12579,7 +12579,7 @@
 },
 {	/* X86_VDIVPDZ128rm, X86_INS_VDIVPD: vdivpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVPDZ128rmb, X86_INS_VDIVPD: vdivpd	{${src2}{1to2}, $src1, $dst |$dst , $src1, ${src2}{1to2}} */
 	0,
@@ -12603,7 +12603,7 @@
 },
 {	/* X86_VDIVPDZ128rr, X86_INS_VDIVPD: vdivpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVPDZ128rrk, X86_INS_VDIVPD: vdivpd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -12615,7 +12615,7 @@
 },
 {	/* X86_VDIVPDZ256rm, X86_INS_VDIVPD: vdivpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVPDZ256rmb, X86_INS_VDIVPD: vdivpd	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -12639,7 +12639,7 @@
 },
 {	/* X86_VDIVPDZ256rr, X86_INS_VDIVPD: vdivpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVPDZ256rrk, X86_INS_VDIVPD: vdivpd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -12651,7 +12651,7 @@
 },
 {	/* X86_VDIVPDZrb, X86_INS_VDIVPD: vdivpd	$dst , $src1, $src2, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVPDZrbk, X86_INS_VDIVPD: vdivpd	{$rc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $rc} */
 	0,
@@ -12663,7 +12663,7 @@
 },
 {	/* X86_VDIVPDZrm, X86_INS_VDIVPD: vdivpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVPDZrmb, X86_INS_VDIVPD: vdivpd	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -12687,7 +12687,7 @@
 },
 {	/* X86_VDIVPDZrr, X86_INS_VDIVPD: vdivpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVPDZrrk, X86_INS_VDIVPD: vdivpd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -12715,7 +12715,7 @@
 },
 {	/* X86_VDIVPSZ128rm, X86_INS_VDIVPS: vdivps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVPSZ128rmb, X86_INS_VDIVPS: vdivps	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -12739,7 +12739,7 @@
 },
 {	/* X86_VDIVPSZ128rr, X86_INS_VDIVPS: vdivps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVPSZ128rrk, X86_INS_VDIVPS: vdivps	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -12751,7 +12751,7 @@
 },
 {	/* X86_VDIVPSZ256rm, X86_INS_VDIVPS: vdivps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVPSZ256rmb, X86_INS_VDIVPS: vdivps	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -12775,7 +12775,7 @@
 },
 {	/* X86_VDIVPSZ256rr, X86_INS_VDIVPS: vdivps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVPSZ256rrk, X86_INS_VDIVPS: vdivps	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -12787,7 +12787,7 @@
 },
 {	/* X86_VDIVPSZrb, X86_INS_VDIVPS: vdivps	$dst , $src1, $src2, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVPSZrbk, X86_INS_VDIVPS: vdivps	{$rc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $rc} */
 	0,
@@ -12799,7 +12799,7 @@
 },
 {	/* X86_VDIVPSZrm, X86_INS_VDIVPS: vdivps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVPSZrmb, X86_INS_VDIVPS: vdivps	{${src2}{1to16}, $src1, $dst |$dst , $src1, ${src2}{1to16}} */
 	0,
@@ -12823,7 +12823,7 @@
 },
 {	/* X86_VDIVPSZrr, X86_INS_VDIVPS: vdivps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVPSZrrk, X86_INS_VDIVPS: vdivps	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -12847,7 +12847,7 @@
 },
 {	/* X86_VDIVSDZrm_Int, X86_INS_VDIVSD: vdivsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVSDZrm_Intk, X86_INS_VDIVSD: vdivsd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -12863,7 +12863,7 @@
 },
 {	/* X86_VDIVSDZrr_Int, X86_INS_VDIVSD: vdivsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVSDZrr_Intk, X86_INS_VDIVSD: vdivsd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -12875,7 +12875,7 @@
 },
 {	/* X86_VDIVSDZrrb, X86_INS_VDIVSD: vdivsd	$dst , $src1, $src2, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVSDZrrbk, X86_INS_VDIVSD: vdivsd	{$rc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $rc} */
 	0,
@@ -12907,7 +12907,7 @@
 },
 {	/* X86_VDIVSSZrm_Int, X86_INS_VDIVSS: vdivss	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVSSZrm_Intk, X86_INS_VDIVSS: vdivss	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -12923,7 +12923,7 @@
 },
 {	/* X86_VDIVSSZrr_Int, X86_INS_VDIVSS: vdivss	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVSSZrr_Intk, X86_INS_VDIVSS: vdivss	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -12935,7 +12935,7 @@
 },
 {	/* X86_VDIVSSZrrb, X86_INS_VDIVSS: vdivss	$dst , $src1, $src2, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VDIVSSZrrbk, X86_INS_VDIVSS: vdivss	{$rc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $rc} */
 	0,
@@ -13003,11 +13003,11 @@
 },
 {	/* X86_VEXP2PDm, X86_INS_VEXP2PD: vexp2pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VEXP2PDmb, X86_INS_VEXP2PD: vexp2pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VEXP2PDmbk, X86_INS_VEXP2PD: vexp2pd	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -13027,7 +13027,7 @@
 },
 {	/* X86_VEXP2PDr, X86_INS_VEXP2PD: vexp2pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VEXP2PDrb, X86_INS_VEXP2PD: vexp2pd	{$src, $dst {sae}|$dst {sae}, $src} */
 	0,
@@ -13051,11 +13051,11 @@
 },
 {	/* X86_VEXP2PSm, X86_INS_VEXP2PS: vexp2ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VEXP2PSmb, X86_INS_VEXP2PS: vexp2ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VEXP2PSmbk, X86_INS_VEXP2PS: vexp2ps	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -13075,7 +13075,7 @@
 },
 {	/* X86_VEXP2PSr, X86_INS_VEXP2PS: vexp2ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VEXP2PSrb, X86_INS_VEXP2PS: vexp2ps	{$src, $dst {sae}|$dst {sae}, $src} */
 	0,
@@ -13207,7 +13207,7 @@
 },
 {	/* X86_VEXTRACTF32x4rr, X86_INS_VEXTRACTF32X4: vextractf32x4	$dst , $src1, $idx */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VEXTRACTF32x4rrk, X86_INS_VEXTRACTF32X4: vextractf32x4	{$idx, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $idx} */
 	0,
@@ -13223,7 +13223,7 @@
 },
 {	/* X86_VEXTRACTF64x4rr, X86_INS_VEXTRACTF64X4: vextractf64x4	$dst , $src1, $idx */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VEXTRACTF64x4rrk, X86_INS_VEXTRACTF64X4: vextractf64x4	{$idx, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $idx} */
 	0,
@@ -13247,7 +13247,7 @@
 },
 {	/* X86_VEXTRACTI32x4rr, X86_INS_VEXTRACTI32X4: vextracti32x4	$dst , $src1, $idx */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VEXTRACTI32x4rrk, X86_INS_VEXTRACTI32X4: vextracti32x4	{$idx, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $idx} */
 	0,
@@ -13263,7 +13263,7 @@
 },
 {	/* X86_VEXTRACTI64x4rr, X86_INS_VEXTRACTI64X4: vextracti64x4	$dst , $src1, $idx */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VEXTRACTI64x4rrk, X86_INS_VEXTRACTI64X4: vextracti64x4	{$idx, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $idx} */
 	0,
@@ -13279,7 +13279,7 @@
 },
 {	/* X86_VEXTRACTPSrr, X86_INS_VEXTRACTPS: vextractps	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VEXTRACTPSzmr, X86_INS_VEXTRACTPS: vextractps	$dst, $src1, $src2 */
 	0,
@@ -13371,7 +13371,7 @@
 },
 {	/* X86_VFMADDPDZ128v213rm, X86_INS_VFMADD213PD: vfmadd213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPDZ128v213rmb, X86_INS_VFMADD213PD: vfmadd213pd	{${src3}{1to2}, $src2, $dst |$dst , $src2, ${src3}{1to2}} */
 	0,
@@ -13395,7 +13395,7 @@
 },
 {	/* X86_VFMADDPDZ128v213rr, X86_INS_VFMADD213PD: vfmadd213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPDZ128v213rrk, X86_INS_VFMADD213PD: vfmadd213pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -13407,7 +13407,7 @@
 },
 {	/* X86_VFMADDPDZ128v231rm, X86_INS_VFMADD231PD: vfmadd231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPDZ128v231rmb, X86_INS_VFMADD231PD: vfmadd231pd	{${src3}{1to2}, $src2, $dst |$dst , $src2, ${src3}{1to2}} */
 	0,
@@ -13431,7 +13431,7 @@
 },
 {	/* X86_VFMADDPDZ128v231rr, X86_INS_VFMADD231PD: vfmadd231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPDZ128v231rrk, X86_INS_VFMADD231PD: vfmadd231pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -13443,7 +13443,7 @@
 },
 {	/* X86_VFMADDPDZ256v213rm, X86_INS_VFMADD213PD: vfmadd213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPDZ256v213rmb, X86_INS_VFMADD213PD: vfmadd213pd	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -13467,7 +13467,7 @@
 },
 {	/* X86_VFMADDPDZ256v213rr, X86_INS_VFMADD213PD: vfmadd213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPDZ256v213rrk, X86_INS_VFMADD213PD: vfmadd213pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -13479,7 +13479,7 @@
 },
 {	/* X86_VFMADDPDZ256v231rm, X86_INS_VFMADD231PD: vfmadd231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPDZ256v231rmb, X86_INS_VFMADD231PD: vfmadd231pd	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -13503,7 +13503,7 @@
 },
 {	/* X86_VFMADDPDZ256v231rr, X86_INS_VFMADD231PD: vfmadd231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPDZ256v231rrk, X86_INS_VFMADD231PD: vfmadd231pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -13515,7 +13515,7 @@
 },
 {	/* X86_VFMADDPDZv213rm, X86_INS_VFMADD213PD: vfmadd213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPDZv213rmb, X86_INS_VFMADD213PD: vfmadd213pd	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -13539,11 +13539,11 @@
 },
 {	/* X86_VFMADDPDZv213rr, X86_INS_VFMADD213PD: vfmadd213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPDZv213rrb, X86_INS_VFMADD213PD: vfmadd213pd	$dst , $src2, $src3, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPDZv213rrbk, X86_INS_VFMADD213PD: vfmadd213pd	{$rc, $src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3, $rc} */
 	0,
@@ -13563,7 +13563,7 @@
 },
 {	/* X86_VFMADDPDZv231rm, X86_INS_VFMADD231PD: vfmadd231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPDZv231rmb, X86_INS_VFMADD231PD: vfmadd231pd	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -13587,7 +13587,7 @@
 },
 {	/* X86_VFMADDPDZv231rr, X86_INS_VFMADD231PD: vfmadd231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPDZv231rrk, X86_INS_VFMADD231PD: vfmadd231pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -13679,7 +13679,7 @@
 },
 {	/* X86_VFMADDPSZ128v213rm, X86_INS_VFMADD213PS: vfmadd213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPSZ128v213rmb, X86_INS_VFMADD213PS: vfmadd213ps	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -13703,7 +13703,7 @@
 },
 {	/* X86_VFMADDPSZ128v213rr, X86_INS_VFMADD213PS: vfmadd213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPSZ128v213rrk, X86_INS_VFMADD213PS: vfmadd213ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -13715,7 +13715,7 @@
 },
 {	/* X86_VFMADDPSZ128v231rm, X86_INS_VFMADD231PS: vfmadd231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPSZ128v231rmb, X86_INS_VFMADD231PS: vfmadd231ps	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -13739,7 +13739,7 @@
 },
 {	/* X86_VFMADDPSZ128v231rr, X86_INS_VFMADD231PS: vfmadd231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPSZ128v231rrk, X86_INS_VFMADD231PS: vfmadd231ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -13751,7 +13751,7 @@
 },
 {	/* X86_VFMADDPSZ256v213rm, X86_INS_VFMADD213PS: vfmadd213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPSZ256v213rmb, X86_INS_VFMADD213PS: vfmadd213ps	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -13775,7 +13775,7 @@
 },
 {	/* X86_VFMADDPSZ256v213rr, X86_INS_VFMADD213PS: vfmadd213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPSZ256v213rrk, X86_INS_VFMADD213PS: vfmadd213ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -13787,7 +13787,7 @@
 },
 {	/* X86_VFMADDPSZ256v231rm, X86_INS_VFMADD231PS: vfmadd231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPSZ256v231rmb, X86_INS_VFMADD231PS: vfmadd231ps	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -13811,7 +13811,7 @@
 },
 {	/* X86_VFMADDPSZ256v231rr, X86_INS_VFMADD231PS: vfmadd231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPSZ256v231rrk, X86_INS_VFMADD231PS: vfmadd231ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -13823,7 +13823,7 @@
 },
 {	/* X86_VFMADDPSZv213rm, X86_INS_VFMADD213PS: vfmadd213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPSZv213rmb, X86_INS_VFMADD213PS: vfmadd213ps	{${src3}{1to16}, $src2, $dst |$dst , $src2, ${src3}{1to16}} */
 	0,
@@ -13847,11 +13847,11 @@
 },
 {	/* X86_VFMADDPSZv213rr, X86_INS_VFMADD213PS: vfmadd213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPSZv213rrb, X86_INS_VFMADD213PS: vfmadd213ps	$dst , $src2, $src3, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPSZv213rrbk, X86_INS_VFMADD213PS: vfmadd213ps	{$rc, $src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3, $rc} */
 	0,
@@ -13871,7 +13871,7 @@
 },
 {	/* X86_VFMADDPSZv231rm, X86_INS_VFMADD231PS: vfmadd231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPSZv231rmb, X86_INS_VFMADD231PS: vfmadd231ps	{${src3}{1to16}, $src2, $dst |$dst , $src2, ${src3}{1to16}} */
 	0,
@@ -13895,7 +13895,7 @@
 },
 {	/* X86_VFMADDPSZv231rr, X86_INS_VFMADD231PS: vfmadd231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDPSZv231rrk, X86_INS_VFMADD231PS: vfmadd231ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -13959,7 +13959,7 @@
 },
 {	/* X86_VFMADDSD4mr_Int, X86_INS_VFMADDSD: vfmaddsd	$dst, $src1, $src2, $src3 */
 	0,
-	{ CS_OP_WRITE, CS_OP_READ, CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_IGNORE, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSD4rm, X86_INS_VFMADDSD: vfmaddsd	$dst, $src1, $src2, $src3 */
 	0,
@@ -14019,7 +14019,7 @@
 },
 {	/* X86_VFMADDSS4mr_Int, X86_INS_VFMADDSS: vfmaddss	$dst, $src1, $src2, $src3 */
 	0,
-	{ CS_OP_WRITE, CS_OP_READ, CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_IGNORE, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSS4rm, X86_INS_VFMADDSS: vfmaddss	$dst, $src1, $src2, $src3 */
 	0,
@@ -14155,7 +14155,7 @@
 },
 {	/* X86_VFMADDSUBPDZ128v213rm, X86_INS_VFMADDSUB213PD: vfmaddsub213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPDZ128v213rmb, X86_INS_VFMADDSUB213PD: vfmaddsub213pd	{${src3}{1to2}, $src2, $dst |$dst , $src2, ${src3}{1to2}} */
 	0,
@@ -14179,7 +14179,7 @@
 },
 {	/* X86_VFMADDSUBPDZ128v213rr, X86_INS_VFMADDSUB213PD: vfmaddsub213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPDZ128v213rrk, X86_INS_VFMADDSUB213PD: vfmaddsub213pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -14191,7 +14191,7 @@
 },
 {	/* X86_VFMADDSUBPDZ128v231rm, X86_INS_VFMADDSUB231PD: vfmaddsub231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPDZ128v231rmb, X86_INS_VFMADDSUB231PD: vfmaddsub231pd	{${src3}{1to2}, $src2, $dst |$dst , $src2, ${src3}{1to2}} */
 	0,
@@ -14215,7 +14215,7 @@
 },
 {	/* X86_VFMADDSUBPDZ128v231rr, X86_INS_VFMADDSUB231PD: vfmaddsub231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPDZ128v231rrk, X86_INS_VFMADDSUB231PD: vfmaddsub231pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -14227,7 +14227,7 @@
 },
 {	/* X86_VFMADDSUBPDZ256v213rm, X86_INS_VFMADDSUB213PD: vfmaddsub213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPDZ256v213rmb, X86_INS_VFMADDSUB213PD: vfmaddsub213pd	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -14251,7 +14251,7 @@
 },
 {	/* X86_VFMADDSUBPDZ256v213rr, X86_INS_VFMADDSUB213PD: vfmaddsub213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPDZ256v213rrk, X86_INS_VFMADDSUB213PD: vfmaddsub213pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -14263,7 +14263,7 @@
 },
 {	/* X86_VFMADDSUBPDZ256v231rm, X86_INS_VFMADDSUB231PD: vfmaddsub231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPDZ256v231rmb, X86_INS_VFMADDSUB231PD: vfmaddsub231pd	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -14287,7 +14287,7 @@
 },
 {	/* X86_VFMADDSUBPDZ256v231rr, X86_INS_VFMADDSUB231PD: vfmaddsub231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPDZ256v231rrk, X86_INS_VFMADDSUB231PD: vfmaddsub231pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -14299,7 +14299,7 @@
 },
 {	/* X86_VFMADDSUBPDZv213rm, X86_INS_VFMADDSUB213PD: vfmaddsub213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPDZv213rmb, X86_INS_VFMADDSUB213PD: vfmaddsub213pd	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -14323,11 +14323,11 @@
 },
 {	/* X86_VFMADDSUBPDZv213rr, X86_INS_VFMADDSUB213PD: vfmaddsub213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPDZv213rrb, X86_INS_VFMADDSUB213PD: vfmaddsub213pd	$dst , $src2, $src3, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPDZv213rrbk, X86_INS_VFMADDSUB213PD: vfmaddsub213pd	{$rc, $src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3, $rc} */
 	0,
@@ -14347,7 +14347,7 @@
 },
 {	/* X86_VFMADDSUBPDZv231rm, X86_INS_VFMADDSUB231PD: vfmaddsub231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPDZv231rmb, X86_INS_VFMADDSUB231PD: vfmaddsub231pd	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -14371,7 +14371,7 @@
 },
 {	/* X86_VFMADDSUBPDZv231rr, X86_INS_VFMADDSUB231PD: vfmaddsub231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPDZv231rrk, X86_INS_VFMADDSUB231PD: vfmaddsub231pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -14463,7 +14463,7 @@
 },
 {	/* X86_VFMADDSUBPSZ128v213rm, X86_INS_VFMADDSUB213PS: vfmaddsub213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPSZ128v213rmb, X86_INS_VFMADDSUB213PS: vfmaddsub213ps	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -14487,7 +14487,7 @@
 },
 {	/* X86_VFMADDSUBPSZ128v213rr, X86_INS_VFMADDSUB213PS: vfmaddsub213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPSZ128v213rrk, X86_INS_VFMADDSUB213PS: vfmaddsub213ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -14499,7 +14499,7 @@
 },
 {	/* X86_VFMADDSUBPSZ128v231rm, X86_INS_VFMADDSUB231PS: vfmaddsub231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPSZ128v231rmb, X86_INS_VFMADDSUB231PS: vfmaddsub231ps	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -14523,7 +14523,7 @@
 },
 {	/* X86_VFMADDSUBPSZ128v231rr, X86_INS_VFMADDSUB231PS: vfmaddsub231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPSZ128v231rrk, X86_INS_VFMADDSUB231PS: vfmaddsub231ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -14535,7 +14535,7 @@
 },
 {	/* X86_VFMADDSUBPSZ256v213rm, X86_INS_VFMADDSUB213PS: vfmaddsub213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPSZ256v213rmb, X86_INS_VFMADDSUB213PS: vfmaddsub213ps	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -14559,7 +14559,7 @@
 },
 {	/* X86_VFMADDSUBPSZ256v213rr, X86_INS_VFMADDSUB213PS: vfmaddsub213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPSZ256v213rrk, X86_INS_VFMADDSUB213PS: vfmaddsub213ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -14571,7 +14571,7 @@
 },
 {	/* X86_VFMADDSUBPSZ256v231rm, X86_INS_VFMADDSUB231PS: vfmaddsub231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPSZ256v231rmb, X86_INS_VFMADDSUB231PS: vfmaddsub231ps	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -14595,7 +14595,7 @@
 },
 {	/* X86_VFMADDSUBPSZ256v231rr, X86_INS_VFMADDSUB231PS: vfmaddsub231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPSZ256v231rrk, X86_INS_VFMADDSUB231PS: vfmaddsub231ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -14607,7 +14607,7 @@
 },
 {	/* X86_VFMADDSUBPSZv213rm, X86_INS_VFMADDSUB213PS: vfmaddsub213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPSZv213rmb, X86_INS_VFMADDSUB213PS: vfmaddsub213ps	{${src3}{1to16}, $src2, $dst |$dst , $src2, ${src3}{1to16}} */
 	0,
@@ -14631,11 +14631,11 @@
 },
 {	/* X86_VFMADDSUBPSZv213rr, X86_INS_VFMADDSUB213PS: vfmaddsub213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPSZv213rrb, X86_INS_VFMADDSUB213PS: vfmaddsub213ps	$dst , $src2, $src3, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPSZv213rrbk, X86_INS_VFMADDSUB213PS: vfmaddsub213ps	{$rc, $src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3, $rc} */
 	0,
@@ -14655,7 +14655,7 @@
 },
 {	/* X86_VFMADDSUBPSZv231rm, X86_INS_VFMADDSUB231PS: vfmaddsub231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPSZv231rmb, X86_INS_VFMADDSUB231PS: vfmaddsub231ps	{${src3}{1to16}, $src2, $dst |$dst , $src2, ${src3}{1to16}} */
 	0,
@@ -14679,7 +14679,7 @@
 },
 {	/* X86_VFMADDSUBPSZv231rr, X86_INS_VFMADDSUB231PS: vfmaddsub231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMADDSUBPSZv231rrk, X86_INS_VFMADDSUB231PS: vfmaddsub231ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -14867,7 +14867,7 @@
 },
 {	/* X86_VFMSUBADDPDZ128v213rm, X86_INS_VFMSUBADD213PD: vfmsubadd213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPDZ128v213rmb, X86_INS_VFMSUBADD213PD: vfmsubadd213pd	{${src3}{1to2}, $src2, $dst |$dst , $src2, ${src3}{1to2}} */
 	0,
@@ -14891,7 +14891,7 @@
 },
 {	/* X86_VFMSUBADDPDZ128v213rr, X86_INS_VFMSUBADD213PD: vfmsubadd213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPDZ128v213rrk, X86_INS_VFMSUBADD213PD: vfmsubadd213pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -14903,7 +14903,7 @@
 },
 {	/* X86_VFMSUBADDPDZ128v231rm, X86_INS_VFMSUBADD231PD: vfmsubadd231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPDZ128v231rmb, X86_INS_VFMSUBADD231PD: vfmsubadd231pd	{${src3}{1to2}, $src2, $dst |$dst , $src2, ${src3}{1to2}} */
 	0,
@@ -14927,7 +14927,7 @@
 },
 {	/* X86_VFMSUBADDPDZ128v231rr, X86_INS_VFMSUBADD231PD: vfmsubadd231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPDZ128v231rrk, X86_INS_VFMSUBADD231PD: vfmsubadd231pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -14939,7 +14939,7 @@
 },
 {	/* X86_VFMSUBADDPDZ256v213rm, X86_INS_VFMSUBADD213PD: vfmsubadd213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPDZ256v213rmb, X86_INS_VFMSUBADD213PD: vfmsubadd213pd	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -14963,7 +14963,7 @@
 },
 {	/* X86_VFMSUBADDPDZ256v213rr, X86_INS_VFMSUBADD213PD: vfmsubadd213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPDZ256v213rrk, X86_INS_VFMSUBADD213PD: vfmsubadd213pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -14975,7 +14975,7 @@
 },
 {	/* X86_VFMSUBADDPDZ256v231rm, X86_INS_VFMSUBADD231PD: vfmsubadd231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPDZ256v231rmb, X86_INS_VFMSUBADD231PD: vfmsubadd231pd	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -14999,7 +14999,7 @@
 },
 {	/* X86_VFMSUBADDPDZ256v231rr, X86_INS_VFMSUBADD231PD: vfmsubadd231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPDZ256v231rrk, X86_INS_VFMSUBADD231PD: vfmsubadd231pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -15011,7 +15011,7 @@
 },
 {	/* X86_VFMSUBADDPDZv213rm, X86_INS_VFMSUBADD213PD: vfmsubadd213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPDZv213rmb, X86_INS_VFMSUBADD213PD: vfmsubadd213pd	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -15035,11 +15035,11 @@
 },
 {	/* X86_VFMSUBADDPDZv213rr, X86_INS_VFMSUBADD213PD: vfmsubadd213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPDZv213rrb, X86_INS_VFMSUBADD213PD: vfmsubadd213pd	$dst , $src2, $src3, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPDZv213rrbk, X86_INS_VFMSUBADD213PD: vfmsubadd213pd	{$rc, $src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3, $rc} */
 	0,
@@ -15059,7 +15059,7 @@
 },
 {	/* X86_VFMSUBADDPDZv231rm, X86_INS_VFMSUBADD231PD: vfmsubadd231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPDZv231rmb, X86_INS_VFMSUBADD231PD: vfmsubadd231pd	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -15083,7 +15083,7 @@
 },
 {	/* X86_VFMSUBADDPDZv231rr, X86_INS_VFMSUBADD231PD: vfmsubadd231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPDZv231rrk, X86_INS_VFMSUBADD231PD: vfmsubadd231pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -15175,7 +15175,7 @@
 },
 {	/* X86_VFMSUBADDPSZ128v213rm, X86_INS_VFMSUBADD213PS: vfmsubadd213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPSZ128v213rmb, X86_INS_VFMSUBADD213PS: vfmsubadd213ps	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -15199,7 +15199,7 @@
 },
 {	/* X86_VFMSUBADDPSZ128v213rr, X86_INS_VFMSUBADD213PS: vfmsubadd213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPSZ128v213rrk, X86_INS_VFMSUBADD213PS: vfmsubadd213ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -15211,7 +15211,7 @@
 },
 {	/* X86_VFMSUBADDPSZ128v231rm, X86_INS_VFMSUBADD231PS: vfmsubadd231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPSZ128v231rmb, X86_INS_VFMSUBADD231PS: vfmsubadd231ps	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -15235,7 +15235,7 @@
 },
 {	/* X86_VFMSUBADDPSZ128v231rr, X86_INS_VFMSUBADD231PS: vfmsubadd231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPSZ128v231rrk, X86_INS_VFMSUBADD231PS: vfmsubadd231ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -15247,7 +15247,7 @@
 },
 {	/* X86_VFMSUBADDPSZ256v213rm, X86_INS_VFMSUBADD213PS: vfmsubadd213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPSZ256v213rmb, X86_INS_VFMSUBADD213PS: vfmsubadd213ps	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -15271,7 +15271,7 @@
 },
 {	/* X86_VFMSUBADDPSZ256v213rr, X86_INS_VFMSUBADD213PS: vfmsubadd213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPSZ256v213rrk, X86_INS_VFMSUBADD213PS: vfmsubadd213ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -15283,7 +15283,7 @@
 },
 {	/* X86_VFMSUBADDPSZ256v231rm, X86_INS_VFMSUBADD231PS: vfmsubadd231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPSZ256v231rmb, X86_INS_VFMSUBADD231PS: vfmsubadd231ps	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -15307,7 +15307,7 @@
 },
 {	/* X86_VFMSUBADDPSZ256v231rr, X86_INS_VFMSUBADD231PS: vfmsubadd231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPSZ256v231rrk, X86_INS_VFMSUBADD231PS: vfmsubadd231ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -15319,7 +15319,7 @@
 },
 {	/* X86_VFMSUBADDPSZv213rm, X86_INS_VFMSUBADD213PS: vfmsubadd213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPSZv213rmb, X86_INS_VFMSUBADD213PS: vfmsubadd213ps	{${src3}{1to16}, $src2, $dst |$dst , $src2, ${src3}{1to16}} */
 	0,
@@ -15343,11 +15343,11 @@
 },
 {	/* X86_VFMSUBADDPSZv213rr, X86_INS_VFMSUBADD213PS: vfmsubadd213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPSZv213rrb, X86_INS_VFMSUBADD213PS: vfmsubadd213ps	$dst , $src2, $src3, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPSZv213rrbk, X86_INS_VFMSUBADD213PS: vfmsubadd213ps	{$rc, $src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3, $rc} */
 	0,
@@ -15367,7 +15367,7 @@
 },
 {	/* X86_VFMSUBADDPSZv231rm, X86_INS_VFMSUBADD231PS: vfmsubadd231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPSZv231rmb, X86_INS_VFMSUBADD231PS: vfmsubadd231ps	{${src3}{1to16}, $src2, $dst |$dst , $src2, ${src3}{1to16}} */
 	0,
@@ -15391,7 +15391,7 @@
 },
 {	/* X86_VFMSUBADDPSZv231rr, X86_INS_VFMSUBADD231PS: vfmsubadd231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBADDPSZv231rrk, X86_INS_VFMSUBADD231PS: vfmsubadd231ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -15483,7 +15483,7 @@
 },
 {	/* X86_VFMSUBPDZ128v213rm, X86_INS_VFMSUB213PD: vfmsub213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPDZ128v213rmb, X86_INS_VFMSUB213PD: vfmsub213pd	{${src3}{1to2}, $src2, $dst |$dst , $src2, ${src3}{1to2}} */
 	0,
@@ -15507,7 +15507,7 @@
 },
 {	/* X86_VFMSUBPDZ128v213rr, X86_INS_VFMSUB213PD: vfmsub213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPDZ128v213rrk, X86_INS_VFMSUB213PD: vfmsub213pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -15519,7 +15519,7 @@
 },
 {	/* X86_VFMSUBPDZ128v231rm, X86_INS_VFMSUB231PD: vfmsub231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPDZ128v231rmb, X86_INS_VFMSUB231PD: vfmsub231pd	{${src3}{1to2}, $src2, $dst |$dst , $src2, ${src3}{1to2}} */
 	0,
@@ -15543,7 +15543,7 @@
 },
 {	/* X86_VFMSUBPDZ128v231rr, X86_INS_VFMSUB231PD: vfmsub231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPDZ128v231rrk, X86_INS_VFMSUB231PD: vfmsub231pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -15555,7 +15555,7 @@
 },
 {	/* X86_VFMSUBPDZ256v213rm, X86_INS_VFMSUB213PD: vfmsub213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPDZ256v213rmb, X86_INS_VFMSUB213PD: vfmsub213pd	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -15579,7 +15579,7 @@
 },
 {	/* X86_VFMSUBPDZ256v213rr, X86_INS_VFMSUB213PD: vfmsub213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPDZ256v213rrk, X86_INS_VFMSUB213PD: vfmsub213pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -15591,7 +15591,7 @@
 },
 {	/* X86_VFMSUBPDZ256v231rm, X86_INS_VFMSUB231PD: vfmsub231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPDZ256v231rmb, X86_INS_VFMSUB231PD: vfmsub231pd	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -15615,7 +15615,7 @@
 },
 {	/* X86_VFMSUBPDZ256v231rr, X86_INS_VFMSUB231PD: vfmsub231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPDZ256v231rrk, X86_INS_VFMSUB231PD: vfmsub231pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -15627,7 +15627,7 @@
 },
 {	/* X86_VFMSUBPDZv213rm, X86_INS_VFMSUB213PD: vfmsub213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPDZv213rmb, X86_INS_VFMSUB213PD: vfmsub213pd	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -15651,11 +15651,11 @@
 },
 {	/* X86_VFMSUBPDZv213rr, X86_INS_VFMSUB213PD: vfmsub213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPDZv213rrb, X86_INS_VFMSUB213PD: vfmsub213pd	$dst , $src2, $src3, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPDZv213rrbk, X86_INS_VFMSUB213PD: vfmsub213pd	{$rc, $src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3, $rc} */
 	0,
@@ -15675,7 +15675,7 @@
 },
 {	/* X86_VFMSUBPDZv231rm, X86_INS_VFMSUB231PD: vfmsub231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPDZv231rmb, X86_INS_VFMSUB231PD: vfmsub231pd	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -15699,7 +15699,7 @@
 },
 {	/* X86_VFMSUBPDZv231rr, X86_INS_VFMSUB231PD: vfmsub231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPDZv231rrk, X86_INS_VFMSUB231PD: vfmsub231pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -15791,7 +15791,7 @@
 },
 {	/* X86_VFMSUBPSZ128v213rm, X86_INS_VFMSUB213PS: vfmsub213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPSZ128v213rmb, X86_INS_VFMSUB213PS: vfmsub213ps	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -15815,7 +15815,7 @@
 },
 {	/* X86_VFMSUBPSZ128v213rr, X86_INS_VFMSUB213PS: vfmsub213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPSZ128v213rrk, X86_INS_VFMSUB213PS: vfmsub213ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -15827,7 +15827,7 @@
 },
 {	/* X86_VFMSUBPSZ128v231rm, X86_INS_VFMSUB231PS: vfmsub231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPSZ128v231rmb, X86_INS_VFMSUB231PS: vfmsub231ps	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -15851,7 +15851,7 @@
 },
 {	/* X86_VFMSUBPSZ128v231rr, X86_INS_VFMSUB231PS: vfmsub231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPSZ128v231rrk, X86_INS_VFMSUB231PS: vfmsub231ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -15863,7 +15863,7 @@
 },
 {	/* X86_VFMSUBPSZ256v213rm, X86_INS_VFMSUB213PS: vfmsub213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPSZ256v213rmb, X86_INS_VFMSUB213PS: vfmsub213ps	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -15887,7 +15887,7 @@
 },
 {	/* X86_VFMSUBPSZ256v213rr, X86_INS_VFMSUB213PS: vfmsub213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPSZ256v213rrk, X86_INS_VFMSUB213PS: vfmsub213ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -15899,7 +15899,7 @@
 },
 {	/* X86_VFMSUBPSZ256v231rm, X86_INS_VFMSUB231PS: vfmsub231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPSZ256v231rmb, X86_INS_VFMSUB231PS: vfmsub231ps	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -15923,7 +15923,7 @@
 },
 {	/* X86_VFMSUBPSZ256v231rr, X86_INS_VFMSUB231PS: vfmsub231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPSZ256v231rrk, X86_INS_VFMSUB231PS: vfmsub231ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -15935,7 +15935,7 @@
 },
 {	/* X86_VFMSUBPSZv213rm, X86_INS_VFMSUB213PS: vfmsub213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPSZv213rmb, X86_INS_VFMSUB213PS: vfmsub213ps	{${src3}{1to16}, $src2, $dst |$dst , $src2, ${src3}{1to16}} */
 	0,
@@ -15959,11 +15959,11 @@
 },
 {	/* X86_VFMSUBPSZv213rr, X86_INS_VFMSUB213PS: vfmsub213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPSZv213rrb, X86_INS_VFMSUB213PS: vfmsub213ps	$dst , $src2, $src3, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPSZv213rrbk, X86_INS_VFMSUB213PS: vfmsub213ps	{$rc, $src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3, $rc} */
 	0,
@@ -15983,7 +15983,7 @@
 },
 {	/* X86_VFMSUBPSZv231rm, X86_INS_VFMSUB231PS: vfmsub231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPSZv231rmb, X86_INS_VFMSUB231PS: vfmsub231ps	{${src3}{1to16}, $src2, $dst |$dst , $src2, ${src3}{1to16}} */
 	0,
@@ -16007,7 +16007,7 @@
 },
 {	/* X86_VFMSUBPSZv231rr, X86_INS_VFMSUB231PS: vfmsub231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBPSZv231rrk, X86_INS_VFMSUB231PS: vfmsub231ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -16071,7 +16071,7 @@
 },
 {	/* X86_VFMSUBSD4mr_Int, X86_INS_VFMSUBSD: vfmsubsd	$dst, $src1, $src2, $src3 */
 	0,
-	{ CS_OP_WRITE, CS_OP_READ, CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_IGNORE, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBSD4rm, X86_INS_VFMSUBSD: vfmsubsd	$dst, $src1, $src2, $src3 */
 	0,
@@ -16131,7 +16131,7 @@
 },
 {	/* X86_VFMSUBSS4mr_Int, X86_INS_VFMSUBSS: vfmsubss	$dst, $src1, $src2, $src3 */
 	0,
-	{ CS_OP_WRITE, CS_OP_READ, CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_IGNORE, CS_OP_READ, 0 }
 },
 {	/* X86_VFMSUBSS4rm, X86_INS_VFMSUBSS: vfmsubss	$dst, $src1, $src2, $src3 */
 	0,
@@ -16267,7 +16267,7 @@
 },
 {	/* X86_VFNMADDPDZ128v213rm, X86_INS_VFNMADD213PD: vfnmadd213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPDZ128v213rmb, X86_INS_VFNMADD213PD: vfnmadd213pd	{${src3}{1to2}, $src2, $dst |$dst , $src2, ${src3}{1to2}} */
 	0,
@@ -16291,7 +16291,7 @@
 },
 {	/* X86_VFNMADDPDZ128v213rr, X86_INS_VFNMADD213PD: vfnmadd213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPDZ128v213rrk, X86_INS_VFNMADD213PD: vfnmadd213pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -16303,7 +16303,7 @@
 },
 {	/* X86_VFNMADDPDZ128v231rm, X86_INS_VFNMADD231PD: vfnmadd231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPDZ128v231rmb, X86_INS_VFNMADD231PD: vfnmadd231pd	{${src3}{1to2}, $src2, $dst |$dst , $src2, ${src3}{1to2}} */
 	0,
@@ -16327,7 +16327,7 @@
 },
 {	/* X86_VFNMADDPDZ128v231rr, X86_INS_VFNMADD231PD: vfnmadd231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPDZ128v231rrk, X86_INS_VFNMADD231PD: vfnmadd231pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -16339,7 +16339,7 @@
 },
 {	/* X86_VFNMADDPDZ256v213rm, X86_INS_VFNMADD213PD: vfnmadd213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPDZ256v213rmb, X86_INS_VFNMADD213PD: vfnmadd213pd	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -16363,7 +16363,7 @@
 },
 {	/* X86_VFNMADDPDZ256v213rr, X86_INS_VFNMADD213PD: vfnmadd213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPDZ256v213rrk, X86_INS_VFNMADD213PD: vfnmadd213pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -16375,7 +16375,7 @@
 },
 {	/* X86_VFNMADDPDZ256v231rm, X86_INS_VFNMADD231PD: vfnmadd231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPDZ256v231rmb, X86_INS_VFNMADD231PD: vfnmadd231pd	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -16399,7 +16399,7 @@
 },
 {	/* X86_VFNMADDPDZ256v231rr, X86_INS_VFNMADD231PD: vfnmadd231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPDZ256v231rrk, X86_INS_VFNMADD231PD: vfnmadd231pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -16411,7 +16411,7 @@
 },
 {	/* X86_VFNMADDPDZv213rm, X86_INS_VFNMADD213PD: vfnmadd213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPDZv213rmb, X86_INS_VFNMADD213PD: vfnmadd213pd	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -16435,11 +16435,11 @@
 },
 {	/* X86_VFNMADDPDZv213rr, X86_INS_VFNMADD213PD: vfnmadd213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPDZv213rrb, X86_INS_VFNMADD213PD: vfnmadd213pd	$dst , $src2, $src3, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPDZv213rrbk, X86_INS_VFNMADD213PD: vfnmadd213pd	{$rc, $src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3, $rc} */
 	0,
@@ -16459,7 +16459,7 @@
 },
 {	/* X86_VFNMADDPDZv231rm, X86_INS_VFNMADD231PD: vfnmadd231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPDZv231rmb, X86_INS_VFNMADD231PD: vfnmadd231pd	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -16483,7 +16483,7 @@
 },
 {	/* X86_VFNMADDPDZv231rr, X86_INS_VFNMADD231PD: vfnmadd231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPDZv231rrk, X86_INS_VFNMADD231PD: vfnmadd231pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -16575,7 +16575,7 @@
 },
 {	/* X86_VFNMADDPSZ128v213rm, X86_INS_VFNMADD213PS: vfnmadd213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPSZ128v213rmb, X86_INS_VFNMADD213PS: vfnmadd213ps	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -16599,7 +16599,7 @@
 },
 {	/* X86_VFNMADDPSZ128v213rr, X86_INS_VFNMADD213PS: vfnmadd213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPSZ128v213rrk, X86_INS_VFNMADD213PS: vfnmadd213ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -16611,7 +16611,7 @@
 },
 {	/* X86_VFNMADDPSZ128v231rm, X86_INS_VFNMADD231PS: vfnmadd231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPSZ128v231rmb, X86_INS_VFNMADD231PS: vfnmadd231ps	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -16635,7 +16635,7 @@
 },
 {	/* X86_VFNMADDPSZ128v231rr, X86_INS_VFNMADD231PS: vfnmadd231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPSZ128v231rrk, X86_INS_VFNMADD231PS: vfnmadd231ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -16647,7 +16647,7 @@
 },
 {	/* X86_VFNMADDPSZ256v213rm, X86_INS_VFNMADD213PS: vfnmadd213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPSZ256v213rmb, X86_INS_VFNMADD213PS: vfnmadd213ps	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -16671,7 +16671,7 @@
 },
 {	/* X86_VFNMADDPSZ256v213rr, X86_INS_VFNMADD213PS: vfnmadd213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPSZ256v213rrk, X86_INS_VFNMADD213PS: vfnmadd213ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -16683,7 +16683,7 @@
 },
 {	/* X86_VFNMADDPSZ256v231rm, X86_INS_VFNMADD231PS: vfnmadd231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPSZ256v231rmb, X86_INS_VFNMADD231PS: vfnmadd231ps	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -16707,7 +16707,7 @@
 },
 {	/* X86_VFNMADDPSZ256v231rr, X86_INS_VFNMADD231PS: vfnmadd231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPSZ256v231rrk, X86_INS_VFNMADD231PS: vfnmadd231ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -16719,7 +16719,7 @@
 },
 {	/* X86_VFNMADDPSZv213rm, X86_INS_VFNMADD213PS: vfnmadd213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPSZv213rmb, X86_INS_VFNMADD213PS: vfnmadd213ps	{${src3}{1to16}, $src2, $dst |$dst , $src2, ${src3}{1to16}} */
 	0,
@@ -16743,11 +16743,11 @@
 },
 {	/* X86_VFNMADDPSZv213rr, X86_INS_VFNMADD213PS: vfnmadd213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPSZv213rrb, X86_INS_VFNMADD213PS: vfnmadd213ps	$dst , $src2, $src3, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPSZv213rrbk, X86_INS_VFNMADD213PS: vfnmadd213ps	{$rc, $src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3, $rc} */
 	0,
@@ -16767,7 +16767,7 @@
 },
 {	/* X86_VFNMADDPSZv231rm, X86_INS_VFNMADD231PS: vfnmadd231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPSZv231rmb, X86_INS_VFNMADD231PS: vfnmadd231ps	{${src3}{1to16}, $src2, $dst |$dst , $src2, ${src3}{1to16}} */
 	0,
@@ -16791,7 +16791,7 @@
 },
 {	/* X86_VFNMADDPSZv231rr, X86_INS_VFNMADD231PS: vfnmadd231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDPSZv231rrk, X86_INS_VFNMADD231PS: vfnmadd231ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -16855,7 +16855,7 @@
 },
 {	/* X86_VFNMADDSD4mr_Int, X86_INS_VFNMADDSD: vfnmaddsd	$dst, $src1, $src2, $src3 */
 	0,
-	{ CS_OP_WRITE, CS_OP_READ, CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_IGNORE, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDSD4rm, X86_INS_VFNMADDSD: vfnmaddsd	$dst, $src1, $src2, $src3 */
 	0,
@@ -16915,7 +16915,7 @@
 },
 {	/* X86_VFNMADDSS4mr_Int, X86_INS_VFNMADDSS: vfnmaddss	$dst, $src1, $src2, $src3 */
 	0,
-	{ CS_OP_WRITE, CS_OP_READ, CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_IGNORE, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMADDSS4rm, X86_INS_VFNMADDSS: vfnmaddss	$dst, $src1, $src2, $src3 */
 	0,
@@ -17051,7 +17051,7 @@
 },
 {	/* X86_VFNMSUBPDZ128v213rm, X86_INS_VFNMSUB213PD: vfnmsub213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPDZ128v213rmb, X86_INS_VFNMSUB213PD: vfnmsub213pd	{${src3}{1to2}, $src2, $dst |$dst , $src2, ${src3}{1to2}} */
 	0,
@@ -17075,7 +17075,7 @@
 },
 {	/* X86_VFNMSUBPDZ128v213rr, X86_INS_VFNMSUB213PD: vfnmsub213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPDZ128v213rrk, X86_INS_VFNMSUB213PD: vfnmsub213pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -17087,7 +17087,7 @@
 },
 {	/* X86_VFNMSUBPDZ128v231rm, X86_INS_VFNMSUB231PD: vfnmsub231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPDZ128v231rmb, X86_INS_VFNMSUB231PD: vfnmsub231pd	{${src3}{1to2}, $src2, $dst |$dst , $src2, ${src3}{1to2}} */
 	0,
@@ -17111,7 +17111,7 @@
 },
 {	/* X86_VFNMSUBPDZ128v231rr, X86_INS_VFNMSUB231PD: vfnmsub231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPDZ128v231rrk, X86_INS_VFNMSUB231PD: vfnmsub231pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -17123,7 +17123,7 @@
 },
 {	/* X86_VFNMSUBPDZ256v213rm, X86_INS_VFNMSUB213PD: vfnmsub213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPDZ256v213rmb, X86_INS_VFNMSUB213PD: vfnmsub213pd	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -17147,7 +17147,7 @@
 },
 {	/* X86_VFNMSUBPDZ256v213rr, X86_INS_VFNMSUB213PD: vfnmsub213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPDZ256v213rrk, X86_INS_VFNMSUB213PD: vfnmsub213pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -17159,7 +17159,7 @@
 },
 {	/* X86_VFNMSUBPDZ256v231rm, X86_INS_VFNMSUB231PD: vfnmsub231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPDZ256v231rmb, X86_INS_VFNMSUB231PD: vfnmsub231pd	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -17183,7 +17183,7 @@
 },
 {	/* X86_VFNMSUBPDZ256v231rr, X86_INS_VFNMSUB231PD: vfnmsub231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPDZ256v231rrk, X86_INS_VFNMSUB231PD: vfnmsub231pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -17195,7 +17195,7 @@
 },
 {	/* X86_VFNMSUBPDZv213rm, X86_INS_VFNMSUB213PD: vfnmsub213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPDZv213rmb, X86_INS_VFNMSUB213PD: vfnmsub213pd	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -17219,11 +17219,11 @@
 },
 {	/* X86_VFNMSUBPDZv213rr, X86_INS_VFNMSUB213PD: vfnmsub213pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPDZv213rrb, X86_INS_VFNMSUB213PD: vfnmsub213pd	$dst , $src2, $src3, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPDZv213rrbk, X86_INS_VFNMSUB213PD: vfnmsub213pd	{$rc, $src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3, $rc} */
 	0,
@@ -17243,7 +17243,7 @@
 },
 {	/* X86_VFNMSUBPDZv231rm, X86_INS_VFNMSUB231PD: vfnmsub231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPDZv231rmb, X86_INS_VFNMSUB231PD: vfnmsub231pd	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -17267,7 +17267,7 @@
 },
 {	/* X86_VFNMSUBPDZv231rr, X86_INS_VFNMSUB231PD: vfnmsub231pd	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPDZv231rrk, X86_INS_VFNMSUB231PD: vfnmsub231pd	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -17359,7 +17359,7 @@
 },
 {	/* X86_VFNMSUBPSZ128v213rm, X86_INS_VFNMSUB213PS: vfnmsub213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPSZ128v213rmb, X86_INS_VFNMSUB213PS: vfnmsub213ps	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -17383,7 +17383,7 @@
 },
 {	/* X86_VFNMSUBPSZ128v213rr, X86_INS_VFNMSUB213PS: vfnmsub213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPSZ128v213rrk, X86_INS_VFNMSUB213PS: vfnmsub213ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -17395,7 +17395,7 @@
 },
 {	/* X86_VFNMSUBPSZ128v231rm, X86_INS_VFNMSUB231PS: vfnmsub231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPSZ128v231rmb, X86_INS_VFNMSUB231PS: vfnmsub231ps	{${src3}{1to4}, $src2, $dst |$dst , $src2, ${src3}{1to4}} */
 	0,
@@ -17419,7 +17419,7 @@
 },
 {	/* X86_VFNMSUBPSZ128v231rr, X86_INS_VFNMSUB231PS: vfnmsub231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPSZ128v231rrk, X86_INS_VFNMSUB231PS: vfnmsub231ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -17431,7 +17431,7 @@
 },
 {	/* X86_VFNMSUBPSZ256v213rm, X86_INS_VFNMSUB213PS: vfnmsub213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPSZ256v213rmb, X86_INS_VFNMSUB213PS: vfnmsub213ps	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -17455,7 +17455,7 @@
 },
 {	/* X86_VFNMSUBPSZ256v213rr, X86_INS_VFNMSUB213PS: vfnmsub213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPSZ256v213rrk, X86_INS_VFNMSUB213PS: vfnmsub213ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -17467,7 +17467,7 @@
 },
 {	/* X86_VFNMSUBPSZ256v231rm, X86_INS_VFNMSUB231PS: vfnmsub231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPSZ256v231rmb, X86_INS_VFNMSUB231PS: vfnmsub231ps	{${src3}{1to8}, $src2, $dst |$dst , $src2, ${src3}{1to8}} */
 	0,
@@ -17491,7 +17491,7 @@
 },
 {	/* X86_VFNMSUBPSZ256v231rr, X86_INS_VFNMSUB231PS: vfnmsub231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPSZ256v231rrk, X86_INS_VFNMSUB231PS: vfnmsub231ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -17503,7 +17503,7 @@
 },
 {	/* X86_VFNMSUBPSZv213rm, X86_INS_VFNMSUB213PS: vfnmsub213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPSZv213rmb, X86_INS_VFNMSUB213PS: vfnmsub213ps	{${src3}{1to16}, $src2, $dst |$dst , $src2, ${src3}{1to16}} */
 	0,
@@ -17527,11 +17527,11 @@
 },
 {	/* X86_VFNMSUBPSZv213rr, X86_INS_VFNMSUB213PS: vfnmsub213ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPSZv213rrb, X86_INS_VFNMSUB213PS: vfnmsub213ps	$dst , $src2, $src3, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPSZv213rrbk, X86_INS_VFNMSUB213PS: vfnmsub213ps	{$rc, $src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3, $rc} */
 	0,
@@ -17551,7 +17551,7 @@
 },
 {	/* X86_VFNMSUBPSZv231rm, X86_INS_VFNMSUB231PS: vfnmsub231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPSZv231rmb, X86_INS_VFNMSUB231PS: vfnmsub231ps	{${src3}{1to16}, $src2, $dst |$dst , $src2, ${src3}{1to16}} */
 	0,
@@ -17575,7 +17575,7 @@
 },
 {	/* X86_VFNMSUBPSZv231rr, X86_INS_VFNMSUB231PS: vfnmsub231ps	$dst , $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_READ | CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBPSZv231rrk, X86_INS_VFNMSUB231PS: vfnmsub231ps	{$src3, $src2, $dst {${mask}}|$dst {${mask}}, $src2, $src3} */
 	0,
@@ -17639,7 +17639,7 @@
 },
 {	/* X86_VFNMSUBSD4mr_Int, X86_INS_VFNMSUBSD: vfnmsubsd	$dst, $src1, $src2, $src3 */
 	0,
-	{ CS_OP_WRITE, CS_OP_READ, CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_IGNORE, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBSD4rm, X86_INS_VFNMSUBSD: vfnmsubsd	$dst, $src1, $src2, $src3 */
 	0,
@@ -17699,7 +17699,7 @@
 },
 {	/* X86_VFNMSUBSS4mr_Int, X86_INS_VFNMSUBSS: vfnmsubss	$dst, $src1, $src2, $src3 */
 	0,
-	{ CS_OP_WRITE, CS_OP_READ, CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_IGNORE, CS_OP_READ, 0 }
 },
 {	/* X86_VFNMSUBSS4rm, X86_INS_VFNMSUBSS: vfnmsubss	$dst, $src1, $src2, $src3 */
 	0,
@@ -18279,7 +18279,7 @@
 },
 {	/* X86_VMAXPDZ128rm, X86_INS_VMAXPD: vmaxpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMAXPDZ128rmb, X86_INS_VMAXPD: vmaxpd	{${src2}{1to2}, $src1, $dst |$dst , $src1, ${src2}{1to2}} */
 	0,
@@ -18303,7 +18303,7 @@
 },
 {	/* X86_VMAXPDZ128rr, X86_INS_VMAXPD: vmaxpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMAXPDZ128rrk, X86_INS_VMAXPD: vmaxpd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -18315,7 +18315,7 @@
 },
 {	/* X86_VMAXPDZ256rm, X86_INS_VMAXPD: vmaxpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMAXPDZ256rmb, X86_INS_VMAXPD: vmaxpd	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -18339,7 +18339,7 @@
 },
 {	/* X86_VMAXPDZ256rr, X86_INS_VMAXPD: vmaxpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMAXPDZ256rrk, X86_INS_VMAXPD: vmaxpd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -18351,7 +18351,7 @@
 },
 {	/* X86_VMAXPDZrm, X86_INS_VMAXPD: vmaxpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMAXPDZrmb, X86_INS_VMAXPD: vmaxpd	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -18375,7 +18375,7 @@
 },
 {	/* X86_VMAXPDZrr, X86_INS_VMAXPD: vmaxpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMAXPDZrrk, X86_INS_VMAXPD: vmaxpd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -18403,7 +18403,7 @@
 },
 {	/* X86_VMAXPSZ128rm, X86_INS_VMAXPS: vmaxps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMAXPSZ128rmb, X86_INS_VMAXPS: vmaxps	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -18427,7 +18427,7 @@
 },
 {	/* X86_VMAXPSZ128rr, X86_INS_VMAXPS: vmaxps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMAXPSZ128rrk, X86_INS_VMAXPS: vmaxps	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -18439,7 +18439,7 @@
 },
 {	/* X86_VMAXPSZ256rm, X86_INS_VMAXPS: vmaxps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMAXPSZ256rmb, X86_INS_VMAXPS: vmaxps	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -18463,7 +18463,7 @@
 },
 {	/* X86_VMAXPSZ256rr, X86_INS_VMAXPS: vmaxps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMAXPSZ256rrk, X86_INS_VMAXPS: vmaxps	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -18475,7 +18475,7 @@
 },
 {	/* X86_VMAXPSZrm, X86_INS_VMAXPS: vmaxps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMAXPSZrmb, X86_INS_VMAXPS: vmaxps	{${src2}{1to16}, $src1, $dst |$dst , $src1, ${src2}{1to16}} */
 	0,
@@ -18499,7 +18499,7 @@
 },
 {	/* X86_VMAXPSZrr, X86_INS_VMAXPS: vmaxps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMAXPSZrrk, X86_INS_VMAXPS: vmaxps	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -18523,7 +18523,7 @@
 },
 {	/* X86_VMAXSDZrm_Int, X86_INS_VMAXSD: vmaxsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMAXSDZrm_Intk, X86_INS_VMAXSD: vmaxsd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -18539,7 +18539,7 @@
 },
 {	/* X86_VMAXSDZrr_Int, X86_INS_VMAXSD: vmaxsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMAXSDZrr_Intk, X86_INS_VMAXSD: vmaxsd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -18583,7 +18583,7 @@
 },
 {	/* X86_VMAXSSZrm_Int, X86_INS_VMAXSS: vmaxss	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMAXSSZrm_Intk, X86_INS_VMAXSS: vmaxss	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -18599,7 +18599,7 @@
 },
 {	/* X86_VMAXSSZrr_Int, X86_INS_VMAXSS: vmaxss	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMAXSSZrr_Intk, X86_INS_VMAXSS: vmaxss	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -18707,7 +18707,7 @@
 },
 {	/* X86_VMINPDZ128rm, X86_INS_VMINPD: vminpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMINPDZ128rmb, X86_INS_VMINPD: vminpd	{${src2}{1to2}, $src1, $dst |$dst , $src1, ${src2}{1to2}} */
 	0,
@@ -18731,7 +18731,7 @@
 },
 {	/* X86_VMINPDZ128rr, X86_INS_VMINPD: vminpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMINPDZ128rrk, X86_INS_VMINPD: vminpd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -18743,7 +18743,7 @@
 },
 {	/* X86_VMINPDZ256rm, X86_INS_VMINPD: vminpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMINPDZ256rmb, X86_INS_VMINPD: vminpd	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -18767,7 +18767,7 @@
 },
 {	/* X86_VMINPDZ256rr, X86_INS_VMINPD: vminpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMINPDZ256rrk, X86_INS_VMINPD: vminpd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -18779,7 +18779,7 @@
 },
 {	/* X86_VMINPDZrm, X86_INS_VMINPD: vminpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMINPDZrmb, X86_INS_VMINPD: vminpd	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -18803,7 +18803,7 @@
 },
 {	/* X86_VMINPDZrr, X86_INS_VMINPD: vminpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMINPDZrrk, X86_INS_VMINPD: vminpd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -18831,7 +18831,7 @@
 },
 {	/* X86_VMINPSZ128rm, X86_INS_VMINPS: vminps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMINPSZ128rmb, X86_INS_VMINPS: vminps	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -18855,7 +18855,7 @@
 },
 {	/* X86_VMINPSZ128rr, X86_INS_VMINPS: vminps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMINPSZ128rrk, X86_INS_VMINPS: vminps	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -18867,7 +18867,7 @@
 },
 {	/* X86_VMINPSZ256rm, X86_INS_VMINPS: vminps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMINPSZ256rmb, X86_INS_VMINPS: vminps	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -18891,7 +18891,7 @@
 },
 {	/* X86_VMINPSZ256rr, X86_INS_VMINPS: vminps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMINPSZ256rrk, X86_INS_VMINPS: vminps	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -18903,7 +18903,7 @@
 },
 {	/* X86_VMINPSZrm, X86_INS_VMINPS: vminps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMINPSZrmb, X86_INS_VMINPS: vminps	{${src2}{1to16}, $src1, $dst |$dst , $src1, ${src2}{1to16}} */
 	0,
@@ -18927,7 +18927,7 @@
 },
 {	/* X86_VMINPSZrr, X86_INS_VMINPS: vminps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMINPSZrrk, X86_INS_VMINPS: vminps	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -18951,7 +18951,7 @@
 },
 {	/* X86_VMINSDZrm_Int, X86_INS_VMINSD: vminsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMINSDZrm_Intk, X86_INS_VMINSD: vminsd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -18967,7 +18967,7 @@
 },
 {	/* X86_VMINSDZrr_Int, X86_INS_VMINSD: vminsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMINSDZrr_Intk, X86_INS_VMINSD: vminsd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -19011,7 +19011,7 @@
 },
 {	/* X86_VMINSSZrm_Int, X86_INS_VMINSS: vminss	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMINSSZrm_Intk, X86_INS_VMINSS: vminss	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -19027,7 +19027,7 @@
 },
 {	/* X86_VMINSSZrr_Int, X86_INS_VMINSS: vminss	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMINSSZrr_Intk, X86_INS_VMINSS: vminss	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -20395,19 +20395,19 @@
 },
 {	/* X86_VMOVMSKPDYrr, X86_INS_VMOVMSKPD: vmovmskpd	$dst, $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VMOVMSKPDrr, X86_INS_VMOVMSKPD: vmovmskpd	$dst, $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VMOVMSKPSYrr, X86_INS_VMOVMSKPS: vmovmskps	$dst, $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VMOVMSKPSrr, X86_INS_VMOVMSKPS: vmovmskps	$dst, $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VMOVNTDQAYrm, X86_INS_VMOVNTDQA: vmovntdqa	$dst, $src */
 	0,
@@ -21119,7 +21119,7 @@
 },
 {	/* X86_VMULPDZ128rm, X86_INS_VMULPD: vmulpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULPDZ128rmb, X86_INS_VMULPD: vmulpd	{${src2}{1to2}, $src1, $dst |$dst , $src1, ${src2}{1to2}} */
 	0,
@@ -21143,7 +21143,7 @@
 },
 {	/* X86_VMULPDZ128rr, X86_INS_VMULPD: vmulpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULPDZ128rrk, X86_INS_VMULPD: vmulpd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21155,7 +21155,7 @@
 },
 {	/* X86_VMULPDZ256rm, X86_INS_VMULPD: vmulpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULPDZ256rmb, X86_INS_VMULPD: vmulpd	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -21179,7 +21179,7 @@
 },
 {	/* X86_VMULPDZ256rr, X86_INS_VMULPD: vmulpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULPDZ256rrk, X86_INS_VMULPD: vmulpd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21191,7 +21191,7 @@
 },
 {	/* X86_VMULPDZrb, X86_INS_VMULPD: vmulpd	$dst , $src1, $src2, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULPDZrbk, X86_INS_VMULPD: vmulpd	{$rc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $rc} */
 	0,
@@ -21203,7 +21203,7 @@
 },
 {	/* X86_VMULPDZrm, X86_INS_VMULPD: vmulpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULPDZrmb, X86_INS_VMULPD: vmulpd	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -21227,7 +21227,7 @@
 },
 {	/* X86_VMULPDZrr, X86_INS_VMULPD: vmulpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULPDZrrk, X86_INS_VMULPD: vmulpd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21255,7 +21255,7 @@
 },
 {	/* X86_VMULPSZ128rm, X86_INS_VMULPS: vmulps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULPSZ128rmb, X86_INS_VMULPS: vmulps	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -21279,7 +21279,7 @@
 },
 {	/* X86_VMULPSZ128rr, X86_INS_VMULPS: vmulps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULPSZ128rrk, X86_INS_VMULPS: vmulps	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21291,7 +21291,7 @@
 },
 {	/* X86_VMULPSZ256rm, X86_INS_VMULPS: vmulps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULPSZ256rmb, X86_INS_VMULPS: vmulps	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -21315,7 +21315,7 @@
 },
 {	/* X86_VMULPSZ256rr, X86_INS_VMULPS: vmulps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULPSZ256rrk, X86_INS_VMULPS: vmulps	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21327,7 +21327,7 @@
 },
 {	/* X86_VMULPSZrb, X86_INS_VMULPS: vmulps	$dst , $src1, $src2, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULPSZrbk, X86_INS_VMULPS: vmulps	{$rc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $rc} */
 	0,
@@ -21339,7 +21339,7 @@
 },
 {	/* X86_VMULPSZrm, X86_INS_VMULPS: vmulps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULPSZrmb, X86_INS_VMULPS: vmulps	{${src2}{1to16}, $src1, $dst |$dst , $src1, ${src2}{1to16}} */
 	0,
@@ -21363,7 +21363,7 @@
 },
 {	/* X86_VMULPSZrr, X86_INS_VMULPS: vmulps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULPSZrrk, X86_INS_VMULPS: vmulps	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21387,7 +21387,7 @@
 },
 {	/* X86_VMULSDZrm_Int, X86_INS_VMULSD: vmulsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULSDZrm_Intk, X86_INS_VMULSD: vmulsd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21403,7 +21403,7 @@
 },
 {	/* X86_VMULSDZrr_Int, X86_INS_VMULSD: vmulsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULSDZrr_Intk, X86_INS_VMULSD: vmulsd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21415,7 +21415,7 @@
 },
 {	/* X86_VMULSDZrrb, X86_INS_VMULSD: vmulsd	$dst , $src1, $src2, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULSDZrrbk, X86_INS_VMULSD: vmulsd	{$rc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $rc} */
 	0,
@@ -21447,7 +21447,7 @@
 },
 {	/* X86_VMULSSZrm_Int, X86_INS_VMULSS: vmulss	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULSSZrm_Intk, X86_INS_VMULSS: vmulss	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21463,7 +21463,7 @@
 },
 {	/* X86_VMULSSZrr_Int, X86_INS_VMULSS: vmulss	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULSSZrr_Intk, X86_INS_VMULSS: vmulss	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21475,7 +21475,7 @@
 },
 {	/* X86_VMULSSZrrb, X86_INS_VMULSS: vmulss	$dst , $src1, $src2, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VMULSSZrrbk, X86_INS_VMULSS: vmulss	{$rc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $rc} */
 	0,
@@ -21751,7 +21751,7 @@
 },
 {	/* X86_VPADDBZ128rm, X86_INS_VPADDB: vpaddb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDBZ128rmk, X86_INS_VPADDB: vpaddb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21763,7 +21763,7 @@
 },
 {	/* X86_VPADDBZ128rr, X86_INS_VPADDB: vpaddb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDBZ128rrk, X86_INS_VPADDB: vpaddb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21775,7 +21775,7 @@
 },
 {	/* X86_VPADDBZ256rm, X86_INS_VPADDB: vpaddb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDBZ256rmk, X86_INS_VPADDB: vpaddb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21787,7 +21787,7 @@
 },
 {	/* X86_VPADDBZ256rr, X86_INS_VPADDB: vpaddb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDBZ256rrk, X86_INS_VPADDB: vpaddb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21799,7 +21799,7 @@
 },
 {	/* X86_VPADDBZrm, X86_INS_VPADDB: vpaddb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDBZrmk, X86_INS_VPADDB: vpaddb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21811,7 +21811,7 @@
 },
 {	/* X86_VPADDBZrr, X86_INS_VPADDB: vpaddb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDBZrrk, X86_INS_VPADDB: vpaddb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21839,7 +21839,7 @@
 },
 {	/* X86_VPADDDZ128rm, X86_INS_VPADDD: vpaddd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDDZ128rmb, X86_INS_VPADDD: vpaddd	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -21863,7 +21863,7 @@
 },
 {	/* X86_VPADDDZ128rr, X86_INS_VPADDD: vpaddd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDDZ128rrk, X86_INS_VPADDD: vpaddd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21875,7 +21875,7 @@
 },
 {	/* X86_VPADDDZ256rm, X86_INS_VPADDD: vpaddd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDDZ256rmb, X86_INS_VPADDD: vpaddd	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -21899,7 +21899,7 @@
 },
 {	/* X86_VPADDDZ256rr, X86_INS_VPADDD: vpaddd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDDZ256rrk, X86_INS_VPADDD: vpaddd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21911,7 +21911,7 @@
 },
 {	/* X86_VPADDDZrm, X86_INS_VPADDD: vpaddd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDDZrmb, X86_INS_VPADDD: vpaddd	{${src2}{1to16}, $src1, $dst |$dst , $src1, ${src2}{1to16}} */
 	0,
@@ -21935,7 +21935,7 @@
 },
 {	/* X86_VPADDDZrr, X86_INS_VPADDD: vpaddd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDDZrrk, X86_INS_VPADDD: vpaddd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21963,7 +21963,7 @@
 },
 {	/* X86_VPADDQZ128rm, X86_INS_VPADDQ: vpaddq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDQZ128rmb, X86_INS_VPADDQ: vpaddq	{${src2}{1to2}, $src1, $dst |$dst , $src1, ${src2}{1to2}} */
 	0,
@@ -21987,7 +21987,7 @@
 },
 {	/* X86_VPADDQZ128rr, X86_INS_VPADDQ: vpaddq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDQZ128rrk, X86_INS_VPADDQ: vpaddq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -21999,7 +21999,7 @@
 },
 {	/* X86_VPADDQZ256rm, X86_INS_VPADDQ: vpaddq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDQZ256rmb, X86_INS_VPADDQ: vpaddq	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -22023,7 +22023,7 @@
 },
 {	/* X86_VPADDQZ256rr, X86_INS_VPADDQ: vpaddq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDQZ256rrk, X86_INS_VPADDQ: vpaddq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -22035,7 +22035,7 @@
 },
 {	/* X86_VPADDQZrm, X86_INS_VPADDQ: vpaddq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDQZrmb, X86_INS_VPADDQ: vpaddq	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -22059,7 +22059,7 @@
 },
 {	/* X86_VPADDQZrr, X86_INS_VPADDQ: vpaddq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDQZrrk, X86_INS_VPADDQ: vpaddq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -22151,7 +22151,7 @@
 },
 {	/* X86_VPADDWZ128rm, X86_INS_VPADDW: vpaddw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDWZ128rmk, X86_INS_VPADDW: vpaddw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -22163,7 +22163,7 @@
 },
 {	/* X86_VPADDWZ128rr, X86_INS_VPADDW: vpaddw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDWZ128rrk, X86_INS_VPADDW: vpaddw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -22175,7 +22175,7 @@
 },
 {	/* X86_VPADDWZ256rm, X86_INS_VPADDW: vpaddw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDWZ256rmk, X86_INS_VPADDW: vpaddw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -22187,7 +22187,7 @@
 },
 {	/* X86_VPADDWZ256rr, X86_INS_VPADDW: vpaddw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDWZ256rrk, X86_INS_VPADDW: vpaddw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -22199,7 +22199,7 @@
 },
 {	/* X86_VPADDWZrm, X86_INS_VPADDW: vpaddw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDWZrmk, X86_INS_VPADDW: vpaddw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -22211,7 +22211,7 @@
 },
 {	/* X86_VPADDWZrr, X86_INS_VPADDW: vpaddw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPADDWZrrk, X86_INS_VPADDW: vpaddw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -22247,7 +22247,7 @@
 },
 {	/* X86_VPANDDZ128rm, X86_INS_VPANDD: vpandd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDDZ128rmb, X86_INS_VPANDD: vpandd	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -22271,7 +22271,7 @@
 },
 {	/* X86_VPANDDZ128rr, X86_INS_VPANDD: vpandd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDDZ128rrk, X86_INS_VPANDD: vpandd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -22283,7 +22283,7 @@
 },
 {	/* X86_VPANDDZ256rm, X86_INS_VPANDD: vpandd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDDZ256rmb, X86_INS_VPANDD: vpandd	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -22307,7 +22307,7 @@
 },
 {	/* X86_VPANDDZ256rr, X86_INS_VPANDD: vpandd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDDZ256rrk, X86_INS_VPANDD: vpandd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -22319,7 +22319,7 @@
 },
 {	/* X86_VPANDDZrm, X86_INS_VPANDD: vpandd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDDZrmb, X86_INS_VPANDD: vpandd	{${src2}{1to16}, $src1, $dst |$dst , $src1, ${src2}{1to16}} */
 	0,
@@ -22343,7 +22343,7 @@
 },
 {	/* X86_VPANDDZrr, X86_INS_VPANDD: vpandd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDDZrrk, X86_INS_VPANDD: vpandd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -22355,7 +22355,7 @@
 },
 {	/* X86_VPANDNDZ128rm, X86_INS_VPANDND: vpandnd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDNDZ128rmb, X86_INS_VPANDND: vpandnd	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -22379,7 +22379,7 @@
 },
 {	/* X86_VPANDNDZ128rr, X86_INS_VPANDND: vpandnd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDNDZ128rrk, X86_INS_VPANDND: vpandnd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -22391,7 +22391,7 @@
 },
 {	/* X86_VPANDNDZ256rm, X86_INS_VPANDND: vpandnd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDNDZ256rmb, X86_INS_VPANDND: vpandnd	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -22415,7 +22415,7 @@
 },
 {	/* X86_VPANDNDZ256rr, X86_INS_VPANDND: vpandnd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDNDZ256rrk, X86_INS_VPANDND: vpandnd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -22427,7 +22427,7 @@
 },
 {	/* X86_VPANDNDZrm, X86_INS_VPANDND: vpandnd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDNDZrmb, X86_INS_VPANDND: vpandnd	{${src2}{1to16}, $src1, $dst |$dst , $src1, ${src2}{1to16}} */
 	0,
@@ -22451,7 +22451,7 @@
 },
 {	/* X86_VPANDNDZrr, X86_INS_VPANDND: vpandnd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDNDZrrk, X86_INS_VPANDND: vpandnd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -22463,7 +22463,7 @@
 },
 {	/* X86_VPANDNQZ128rm, X86_INS_VPANDNQ: vpandnq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDNQZ128rmb, X86_INS_VPANDNQ: vpandnq	{${src2}{1to2}, $src1, $dst |$dst , $src1, ${src2}{1to2}} */
 	0,
@@ -22487,7 +22487,7 @@
 },
 {	/* X86_VPANDNQZ128rr, X86_INS_VPANDNQ: vpandnq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDNQZ128rrk, X86_INS_VPANDNQ: vpandnq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -22499,7 +22499,7 @@
 },
 {	/* X86_VPANDNQZ256rm, X86_INS_VPANDNQ: vpandnq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDNQZ256rmb, X86_INS_VPANDNQ: vpandnq	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -22523,7 +22523,7 @@
 },
 {	/* X86_VPANDNQZ256rr, X86_INS_VPANDNQ: vpandnq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDNQZ256rrk, X86_INS_VPANDNQ: vpandnq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -22535,7 +22535,7 @@
 },
 {	/* X86_VPANDNQZrm, X86_INS_VPANDNQ: vpandnq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDNQZrmb, X86_INS_VPANDNQ: vpandnq	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -22559,7 +22559,7 @@
 },
 {	/* X86_VPANDNQZrr, X86_INS_VPANDNQ: vpandnq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDNQZrrk, X86_INS_VPANDNQ: vpandnq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -22587,7 +22587,7 @@
 },
 {	/* X86_VPANDQZ128rm, X86_INS_VPANDQ: vpandq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDQZ128rmb, X86_INS_VPANDQ: vpandq	{${src2}{1to2}, $src1, $dst |$dst , $src1, ${src2}{1to2}} */
 	0,
@@ -22611,7 +22611,7 @@
 },
 {	/* X86_VPANDQZ128rr, X86_INS_VPANDQ: vpandq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDQZ128rrk, X86_INS_VPANDQ: vpandq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -22623,7 +22623,7 @@
 },
 {	/* X86_VPANDQZ256rm, X86_INS_VPANDQ: vpandq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDQZ256rmb, X86_INS_VPANDQ: vpandq	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -22647,7 +22647,7 @@
 },
 {	/* X86_VPANDQZ256rr, X86_INS_VPANDQ: vpandq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDQZ256rrk, X86_INS_VPANDQ: vpandq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -22659,7 +22659,7 @@
 },
 {	/* X86_VPANDQZrm, X86_INS_VPANDQ: vpandq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDQZrmb, X86_INS_VPANDQ: vpandq	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -22683,7 +22683,7 @@
 },
 {	/* X86_VPANDQZrr, X86_INS_VPANDQ: vpandq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPANDQZrrk, X86_INS_VPANDQ: vpandq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -23135,7 +23135,7 @@
 },
 {	/* X86_VPBROADCASTBrZ128r, X86_INS_VPBROADCASTB: vpbroadcastb	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPBROADCASTBrZ128rk, X86_INS_VPBROADCASTB: vpbroadcastb	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -23147,7 +23147,7 @@
 },
 {	/* X86_VPBROADCASTBrZ256r, X86_INS_VPBROADCASTB: vpbroadcastb	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPBROADCASTBrZ256rk, X86_INS_VPBROADCASTB: vpbroadcastb	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -23159,7 +23159,7 @@
 },
 {	/* X86_VPBROADCASTBrZr, X86_INS_VPBROADCASTB: vpbroadcastb	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPBROADCASTBrZrk, X86_INS_VPBROADCASTB: vpbroadcastb	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -23203,7 +23203,7 @@
 },
 {	/* X86_VPBROADCASTDrZ128r, X86_INS_VPBROADCASTD: vpbroadcastd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPBROADCASTDrZ128rk, X86_INS_VPBROADCASTD: vpbroadcastd	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -23215,7 +23215,7 @@
 },
 {	/* X86_VPBROADCASTDrZ256r, X86_INS_VPBROADCASTD: vpbroadcastd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPBROADCASTDrZ256rk, X86_INS_VPBROADCASTD: vpbroadcastd	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -23227,7 +23227,7 @@
 },
 {	/* X86_VPBROADCASTDrZr, X86_INS_VPBROADCASTD: vpbroadcastd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPBROADCASTDrZrk, X86_INS_VPBROADCASTD: vpbroadcastd	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -23295,7 +23295,7 @@
 },
 {	/* X86_VPBROADCASTQrZ128r, X86_INS_VPBROADCASTQ: vpbroadcastq	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPBROADCASTQrZ128rk, X86_INS_VPBROADCASTQ: vpbroadcastq	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -23307,7 +23307,7 @@
 },
 {	/* X86_VPBROADCASTQrZ256r, X86_INS_VPBROADCASTQ: vpbroadcastq	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPBROADCASTQrZ256rk, X86_INS_VPBROADCASTQ: vpbroadcastq	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -23319,7 +23319,7 @@
 },
 {	/* X86_VPBROADCASTQrZr, X86_INS_VPBROADCASTQ: vpbroadcastq	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPBROADCASTQrZrk, X86_INS_VPBROADCASTQ: vpbroadcastq	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -23347,7 +23347,7 @@
 },
 {	/* X86_VPBROADCASTWrZ128r, X86_INS_VPBROADCASTW: vpbroadcastw	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPBROADCASTWrZ128rk, X86_INS_VPBROADCASTW: vpbroadcastw	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -23359,7 +23359,7 @@
 },
 {	/* X86_VPBROADCASTWrZ256r, X86_INS_VPBROADCASTW: vpbroadcastw	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPBROADCASTWrZ256rk, X86_INS_VPBROADCASTW: vpbroadcastw	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -23371,7 +23371,7 @@
 },
 {	/* X86_VPBROADCASTWrZr, X86_INS_VPBROADCASTW: vpbroadcastw	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPBROADCASTWrZrk, X86_INS_VPBROADCASTW: vpbroadcastw	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -23519,51 +23519,51 @@
 },
 {	/* X86_VPCMPDZ128rmi, X86_INS_VPCMPD: vpcmp${cc}d	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPDZ128rmi_alt, X86_INS_VPCMPD: vpcmpd	$dst, $src1, $src2, $cc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPDZ128rmib, X86_INS_VPCMPD: vpcmp${cc}d	{${src2}{1to4}, $src1, $dst|$dst, $src1, ${src2}{1to4}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPDZ128rmib_alt, X86_INS_VPCMPD: vpcmpd	{$cc, ${src2}{1to4}, $src1, $dst|$dst, $src1, ${src2}{1to4}, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPDZ128rmibk, X86_INS_VPCMPD: vpcmp${cc}d	{${src2}{1to4}, $src1, $dst {${mask}}|$dst {${mask}}, $src1, ${src2}{1to4}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPDZ128rmibk_alt, X86_INS_VPCMPD: vpcmpd	{$cc, ${src2}{1to4}, $src1, $dst {${mask}}|$dst {${mask}}, $src1, ${src2}{1to4}, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPDZ128rmik, X86_INS_VPCMPD: vpcmp${cc}d	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPDZ128rmik_alt, X86_INS_VPCMPD: vpcmpd	{$cc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPDZ128rri, X86_INS_VPCMPD: vpcmp${cc}d	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPDZ128rri_alt, X86_INS_VPCMPD: vpcmpd	$dst, $src1, $src2, $cc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPDZ128rrik, X86_INS_VPCMPD: vpcmp${cc}d	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPDZ128rrik_alt, X86_INS_VPCMPD: vpcmpd	{$cc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPDZ256rmi, X86_INS_VPCMPD: vpcmp${cc}d	$dst, $src1, $src2 */
 	0,
@@ -23735,27 +23735,27 @@
 },
 {	/* X86_VPCMPEQDZ128rm, X86_INS_VPCMPEQD: vpcmpeqd	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPEQDZ128rmb, X86_INS_VPCMPEQD: vpcmpeqd	{${src2}{1to4}, $src1, $dst|$dst, $src1, ${src2}{1to4}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPEQDZ128rmbk, X86_INS_VPCMPEQD: vpcmpeqd	{${src2}{1to4}, $src1, $dst {${mask}}|$dst {${mask}}, $src1, ${src2}{1to4}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPEQDZ128rmk, X86_INS_VPCMPEQD: vpcmpeqd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPEQDZ128rr, X86_INS_VPCMPEQD: vpcmpeqd	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPEQDZ128rrk, X86_INS_VPCMPEQD: vpcmpeqd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPEQDZ256rm, X86_INS_VPCMPEQD: vpcmpeqd	$dst, $src1, $src2 */
 	0,
@@ -23823,51 +23823,51 @@
 },
 {	/* X86_VPCMPEQQZ128rm, X86_INS_VPCMPEQQ: vpcmpeqq	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPEQQZ128rmb, X86_INS_VPCMPEQQ: vpcmpeqq	{${src2}{1to2}, $src1, $dst|$dst, $src1, ${src2}{1to2}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPEQQZ128rmbk, X86_INS_VPCMPEQQ: vpcmpeqq	{${src2}{1to2}, $src1, $dst {${mask}}|$dst {${mask}}, $src1, ${src2}{1to2}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPEQQZ128rmk, X86_INS_VPCMPEQQ: vpcmpeqq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPEQQZ128rr, X86_INS_VPCMPEQQ: vpcmpeqq	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPEQQZ128rrk, X86_INS_VPCMPEQQ: vpcmpeqq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPEQQZ256rm, X86_INS_VPCMPEQQ: vpcmpeqq	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPEQQZ256rmb, X86_INS_VPCMPEQQ: vpcmpeqq	{${src2}{1to4}, $src1, $dst|$dst, $src1, ${src2}{1to4}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPEQQZ256rmbk, X86_INS_VPCMPEQQ: vpcmpeqq	{${src2}{1to4}, $src1, $dst {${mask}}|$dst {${mask}}, $src1, ${src2}{1to4}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPEQQZ256rmk, X86_INS_VPCMPEQQ: vpcmpeqq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPEQQZ256rr, X86_INS_VPCMPEQQ: vpcmpeqq	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPEQQZ256rrk, X86_INS_VPCMPEQQ: vpcmpeqq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPEQQZrm, X86_INS_VPCMPEQQ: vpcmpeqq	$dst, $src1, $src2 */
 	0,
@@ -24055,27 +24055,27 @@
 },
 {	/* X86_VPCMPGTDZ128rm, X86_INS_VPCMPGTD: vpcmpgtd	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPGTDZ128rmb, X86_INS_VPCMPGTD: vpcmpgtd	{${src2}{1to4}, $src1, $dst|$dst, $src1, ${src2}{1to4}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPGTDZ128rmbk, X86_INS_VPCMPGTD: vpcmpgtd	{${src2}{1to4}, $src1, $dst {${mask}}|$dst {${mask}}, $src1, ${src2}{1to4}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPGTDZ128rmk, X86_INS_VPCMPGTD: vpcmpgtd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPGTDZ128rr, X86_INS_VPCMPGTD: vpcmpgtd	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPGTDZ128rrk, X86_INS_VPCMPGTD: vpcmpgtd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPGTDZ256rm, X86_INS_VPCMPGTD: vpcmpgtd	$dst, $src1, $src2 */
 	0,
@@ -24143,51 +24143,51 @@
 },
 {	/* X86_VPCMPGTQZ128rm, X86_INS_VPCMPGTQ: vpcmpgtq	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPGTQZ128rmb, X86_INS_VPCMPGTQ: vpcmpgtq	{${src2}{1to2}, $src1, $dst|$dst, $src1, ${src2}{1to2}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPGTQZ128rmbk, X86_INS_VPCMPGTQ: vpcmpgtq	{${src2}{1to2}, $src1, $dst {${mask}}|$dst {${mask}}, $src1, ${src2}{1to2}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPGTQZ128rmk, X86_INS_VPCMPGTQ: vpcmpgtq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPGTQZ128rr, X86_INS_VPCMPGTQ: vpcmpgtq	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPGTQZ128rrk, X86_INS_VPCMPGTQ: vpcmpgtq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPGTQZ256rm, X86_INS_VPCMPGTQ: vpcmpgtq	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPGTQZ256rmb, X86_INS_VPCMPGTQ: vpcmpgtq	{${src2}{1to4}, $src1, $dst|$dst, $src1, ${src2}{1to4}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPGTQZ256rmbk, X86_INS_VPCMPGTQ: vpcmpgtq	{${src2}{1to4}, $src1, $dst {${mask}}|$dst {${mask}}, $src1, ${src2}{1to4}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPGTQZ256rmk, X86_INS_VPCMPGTQ: vpcmpgtq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPGTQZ256rr, X86_INS_VPCMPGTQ: vpcmpgtq	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPGTQZ256rrk, X86_INS_VPCMPGTQ: vpcmpgtq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPGTQZrm, X86_INS_VPCMPGTQ: vpcmpgtq	$dst, $src1, $src2 */
 	0,
@@ -24303,99 +24303,99 @@
 },
 {	/* X86_VPCMPQZ128rmi, X86_INS_VPCMPQ: vpcmp${cc}q	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ128rmi_alt, X86_INS_VPCMPQ: vpcmpq	$dst, $src1, $src2, $cc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ128rmib, X86_INS_VPCMPQ: vpcmp${cc}q	{${src2}{1to2}, $src1, $dst|$dst, $src1, ${src2}{1to2}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ128rmib_alt, X86_INS_VPCMPQ: vpcmpq	{$cc, ${src2}{1to2}, $src1, $dst|$dst, $src1, ${src2}{1to2}, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ128rmibk, X86_INS_VPCMPQ: vpcmp${cc}q	{${src2}{1to2}, $src1, $dst {${mask}}|$dst {${mask}}, $src1, ${src2}{1to2}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ128rmibk_alt, X86_INS_VPCMPQ: vpcmpq	{$cc, ${src2}{1to2}, $src1, $dst {${mask}}|$dst {${mask}}, $src1, ${src2}{1to2}, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ128rmik, X86_INS_VPCMPQ: vpcmp${cc}q	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ128rmik_alt, X86_INS_VPCMPQ: vpcmpq	{$cc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ128rri, X86_INS_VPCMPQ: vpcmp${cc}q	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ128rri_alt, X86_INS_VPCMPQ: vpcmpq	$dst, $src1, $src2, $cc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ128rrik, X86_INS_VPCMPQ: vpcmp${cc}q	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ128rrik_alt, X86_INS_VPCMPQ: vpcmpq	{$cc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ256rmi, X86_INS_VPCMPQ: vpcmp${cc}q	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ256rmi_alt, X86_INS_VPCMPQ: vpcmpq	$dst, $src1, $src2, $cc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ256rmib, X86_INS_VPCMPQ: vpcmp${cc}q	{${src2}{1to4}, $src1, $dst|$dst, $src1, ${src2}{1to4}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ256rmib_alt, X86_INS_VPCMPQ: vpcmpq	{$cc, ${src2}{1to4}, $src1, $dst|$dst, $src1, ${src2}{1to4}, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ256rmibk, X86_INS_VPCMPQ: vpcmp${cc}q	{${src2}{1to4}, $src1, $dst {${mask}}|$dst {${mask}}, $src1, ${src2}{1to4}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ256rmibk_alt, X86_INS_VPCMPQ: vpcmpq	{$cc, ${src2}{1to4}, $src1, $dst {${mask}}|$dst {${mask}}, $src1, ${src2}{1to4}, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ256rmik, X86_INS_VPCMPQ: vpcmp${cc}q	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ256rmik_alt, X86_INS_VPCMPQ: vpcmpq	{$cc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ256rri, X86_INS_VPCMPQ: vpcmp${cc}q	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ256rri_alt, X86_INS_VPCMPQ: vpcmpq	$dst, $src1, $src2, $cc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ256rrik, X86_INS_VPCMPQ: vpcmp${cc}q	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZ256rrik_alt, X86_INS_VPCMPQ: vpcmpq	{$cc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPQZrmi, X86_INS_VPCMPQ: vpcmp${cc}q	$dst, $src1, $src2 */
 	0,
@@ -24543,51 +24543,51 @@
 },
 {	/* X86_VPCMPUDZ128rmi, X86_INS_VPCMPUD: vpcmp${cc}ud	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUDZ128rmi_alt, X86_INS_VPCMPUD: vpcmpud	$dst, $src1, $src2, $cc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUDZ128rmib, X86_INS_VPCMPUD: vpcmp${cc}ud	{${src2}{1to4}, $src1, $dst|$dst, $src1, ${src2}{1to4}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUDZ128rmib_alt, X86_INS_VPCMPUD: vpcmpud	{$cc, ${src2}{1to4}, $src1, $dst|$dst, $src1, ${src2}{1to4}, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUDZ128rmibk, X86_INS_VPCMPUD: vpcmp${cc}ud	{${src2}{1to4}, $src1, $dst {${mask}}|$dst {${mask}}, $src1, ${src2}{1to4}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUDZ128rmibk_alt, X86_INS_VPCMPUD: vpcmpud	{$cc, ${src2}{1to4}, $src1, $dst {${mask}}|$dst {${mask}}, $src1, ${src2}{1to4}, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUDZ128rmik, X86_INS_VPCMPUD: vpcmp${cc}ud	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUDZ128rmik_alt, X86_INS_VPCMPUD: vpcmpud	{$cc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUDZ128rri, X86_INS_VPCMPUD: vpcmp${cc}ud	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUDZ128rri_alt, X86_INS_VPCMPUD: vpcmpud	$dst, $src1, $src2, $cc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUDZ128rrik, X86_INS_VPCMPUD: vpcmp${cc}ud	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUDZ128rrik_alt, X86_INS_VPCMPUD: vpcmpud	{$cc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUDZ256rmi, X86_INS_VPCMPUD: vpcmp${cc}ud	$dst, $src1, $src2 */
 	0,
@@ -24687,99 +24687,99 @@
 },
 {	/* X86_VPCMPUQZ128rmi, X86_INS_VPCMPUQ: vpcmp${cc}uq	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ128rmi_alt, X86_INS_VPCMPUQ: vpcmpuq	$dst, $src1, $src2, $cc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ128rmib, X86_INS_VPCMPUQ: vpcmp${cc}uq	{${src2}{1to2}, $src1, $dst|$dst, $src1, ${src2}{1to2}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ128rmib_alt, X86_INS_VPCMPUQ: vpcmpuq	{$cc, ${src2}{1to2}, $src1, $dst|$dst, $src1, ${src2}{1to2}, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ128rmibk, X86_INS_VPCMPUQ: vpcmp${cc}uq	{${src2}{1to2}, $src1, $dst {${mask}}|$dst {${mask}}, $src1, ${src2}{1to2}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ128rmibk_alt, X86_INS_VPCMPUQ: vpcmpuq	{$cc, ${src2}{1to2}, $src1, $dst {${mask}}|$dst {${mask}}, $src1, ${src2}{1to2}, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ128rmik, X86_INS_VPCMPUQ: vpcmp${cc}uq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ128rmik_alt, X86_INS_VPCMPUQ: vpcmpuq	{$cc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ128rri, X86_INS_VPCMPUQ: vpcmp${cc}uq	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ128rri_alt, X86_INS_VPCMPUQ: vpcmpuq	$dst, $src1, $src2, $cc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ128rrik, X86_INS_VPCMPUQ: vpcmp${cc}uq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ128rrik_alt, X86_INS_VPCMPUQ: vpcmpuq	{$cc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ256rmi, X86_INS_VPCMPUQ: vpcmp${cc}uq	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ256rmi_alt, X86_INS_VPCMPUQ: vpcmpuq	$dst, $src1, $src2, $cc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ256rmib, X86_INS_VPCMPUQ: vpcmp${cc}uq	{${src2}{1to4}, $src1, $dst|$dst, $src1, ${src2}{1to4}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ256rmib_alt, X86_INS_VPCMPUQ: vpcmpuq	{$cc, ${src2}{1to4}, $src1, $dst|$dst, $src1, ${src2}{1to4}, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ256rmibk, X86_INS_VPCMPUQ: vpcmp${cc}uq	{${src2}{1to4}, $src1, $dst {${mask}}|$dst {${mask}}, $src1, ${src2}{1to4}} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ256rmibk_alt, X86_INS_VPCMPUQ: vpcmpuq	{$cc, ${src2}{1to4}, $src1, $dst {${mask}}|$dst {${mask}}, $src1, ${src2}{1to4}, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ256rmik, X86_INS_VPCMPUQ: vpcmp${cc}uq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ256rmik_alt, X86_INS_VPCMPUQ: vpcmpuq	{$cc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ256rri, X86_INS_VPCMPUQ: vpcmp${cc}uq	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ256rri_alt, X86_INS_VPCMPUQ: vpcmpuq	$dst, $src1, $src2, $cc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ256rrik, X86_INS_VPCMPUQ: vpcmp${cc}uq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZ256rrik_alt, X86_INS_VPCMPUQ: vpcmpuq	{$cc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $cc} */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPCMPUQZrmi, X86_INS_VPCMPUQ: vpcmp${cc}uq	$dst, $src1, $src2 */
 	0,
@@ -25827,7 +25827,7 @@
 },
 {	/* X86_VPEXTRBrr, X86_INS_VPEXTRB: vpextrb	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPEXTRDmr, X86_INS_VPEXTRD: vpextrd	$dst, $src1, $src2 */
 	0,
@@ -25851,11 +25851,11 @@
 },
 {	/* X86_VPEXTRWri, X86_INS_VPEXTRW: vpextrw	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPEXTRWrr_REV, X86_INS_VPEXTRW: vpextrw	$dst, $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPGATHERDDYrm, X86_INS_VPGATHERDD: vpgatherdd	$dst, $src2, $mask */
 	0,
@@ -26135,7 +26135,7 @@
 },
 {	/* X86_VPINSRBrr, X86_INS_VPINSRB: vpinsrb	$dst, $src1, $src2, $src3 */
 	0,
-	{ CS_OP_WRITE, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPINSRDrm, X86_INS_VPINSRD: vpinsrd	$dst, $src1, $src2, $src3 */
 	0,
@@ -26159,7 +26159,7 @@
 },
 {	/* X86_VPINSRWrri, X86_INS_VPINSRW: vpinsrw	$dst, $src1, $src2, $src3 */
 	0,
-	{ CS_OP_WRITE, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPLZCNTDrm, X86_INS_VPLZCNTD: vplzcntd	{$src, ${dst}|${dst}, $src} */
 	0,
@@ -26403,7 +26403,7 @@
 },
 {	/* X86_VPMAXSBZ128rm, X86_INS_VPMAXSB: vpmaxsb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSBZ128rmk, X86_INS_VPMAXSB: vpmaxsb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26415,7 +26415,7 @@
 },
 {	/* X86_VPMAXSBZ128rr, X86_INS_VPMAXSB: vpmaxsb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSBZ128rrk, X86_INS_VPMAXSB: vpmaxsb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26427,7 +26427,7 @@
 },
 {	/* X86_VPMAXSBZ256rm, X86_INS_VPMAXSB: vpmaxsb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSBZ256rmk, X86_INS_VPMAXSB: vpmaxsb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26439,7 +26439,7 @@
 },
 {	/* X86_VPMAXSBZ256rr, X86_INS_VPMAXSB: vpmaxsb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSBZ256rrk, X86_INS_VPMAXSB: vpmaxsb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26451,7 +26451,7 @@
 },
 {	/* X86_VPMAXSBZrm, X86_INS_VPMAXSB: vpmaxsb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSBZrmk, X86_INS_VPMAXSB: vpmaxsb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26463,7 +26463,7 @@
 },
 {	/* X86_VPMAXSBZrr, X86_INS_VPMAXSB: vpmaxsb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSBZrrk, X86_INS_VPMAXSB: vpmaxsb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26491,7 +26491,7 @@
 },
 {	/* X86_VPMAXSDZ128rm, X86_INS_VPMAXSD: vpmaxsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSDZ128rmb, X86_INS_VPMAXSD: vpmaxsd	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -26515,7 +26515,7 @@
 },
 {	/* X86_VPMAXSDZ128rr, X86_INS_VPMAXSD: vpmaxsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSDZ128rrk, X86_INS_VPMAXSD: vpmaxsd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26527,7 +26527,7 @@
 },
 {	/* X86_VPMAXSDZ256rm, X86_INS_VPMAXSD: vpmaxsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSDZ256rmb, X86_INS_VPMAXSD: vpmaxsd	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -26551,7 +26551,7 @@
 },
 {	/* X86_VPMAXSDZ256rr, X86_INS_VPMAXSD: vpmaxsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSDZ256rrk, X86_INS_VPMAXSD: vpmaxsd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26563,7 +26563,7 @@
 },
 {	/* X86_VPMAXSDZrm, X86_INS_VPMAXSD: vpmaxsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSDZrmb, X86_INS_VPMAXSD: vpmaxsd	{${src2}{1to16}, $src1, $dst |$dst , $src1, ${src2}{1to16}} */
 	0,
@@ -26587,7 +26587,7 @@
 },
 {	/* X86_VPMAXSDZrr, X86_INS_VPMAXSD: vpmaxsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSDZrrk, X86_INS_VPMAXSD: vpmaxsd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26607,7 +26607,7 @@
 },
 {	/* X86_VPMAXSQZ128rm, X86_INS_VPMAXSQ: vpmaxsq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSQZ128rmb, X86_INS_VPMAXSQ: vpmaxsq	{${src2}{1to2}, $src1, $dst |$dst , $src1, ${src2}{1to2}} */
 	0,
@@ -26631,7 +26631,7 @@
 },
 {	/* X86_VPMAXSQZ128rr, X86_INS_VPMAXSQ: vpmaxsq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSQZ128rrk, X86_INS_VPMAXSQ: vpmaxsq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26643,7 +26643,7 @@
 },
 {	/* X86_VPMAXSQZ256rm, X86_INS_VPMAXSQ: vpmaxsq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSQZ256rmb, X86_INS_VPMAXSQ: vpmaxsq	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -26667,7 +26667,7 @@
 },
 {	/* X86_VPMAXSQZ256rr, X86_INS_VPMAXSQ: vpmaxsq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSQZ256rrk, X86_INS_VPMAXSQ: vpmaxsq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26679,7 +26679,7 @@
 },
 {	/* X86_VPMAXSQZrm, X86_INS_VPMAXSQ: vpmaxsq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSQZrmb, X86_INS_VPMAXSQ: vpmaxsq	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -26703,7 +26703,7 @@
 },
 {	/* X86_VPMAXSQZrr, X86_INS_VPMAXSQ: vpmaxsq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSQZrrk, X86_INS_VPMAXSQ: vpmaxsq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26723,7 +26723,7 @@
 },
 {	/* X86_VPMAXSWZ128rm, X86_INS_VPMAXSW: vpmaxsw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSWZ128rmk, X86_INS_VPMAXSW: vpmaxsw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26735,7 +26735,7 @@
 },
 {	/* X86_VPMAXSWZ128rr, X86_INS_VPMAXSW: vpmaxsw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSWZ128rrk, X86_INS_VPMAXSW: vpmaxsw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26747,7 +26747,7 @@
 },
 {	/* X86_VPMAXSWZ256rm, X86_INS_VPMAXSW: vpmaxsw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSWZ256rmk, X86_INS_VPMAXSW: vpmaxsw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26759,7 +26759,7 @@
 },
 {	/* X86_VPMAXSWZ256rr, X86_INS_VPMAXSW: vpmaxsw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSWZ256rrk, X86_INS_VPMAXSW: vpmaxsw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26771,7 +26771,7 @@
 },
 {	/* X86_VPMAXSWZrm, X86_INS_VPMAXSW: vpmaxsw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSWZrmk, X86_INS_VPMAXSW: vpmaxsw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26783,7 +26783,7 @@
 },
 {	/* X86_VPMAXSWZrr, X86_INS_VPMAXSW: vpmaxsw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXSWZrrk, X86_INS_VPMAXSW: vpmaxsw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26811,7 +26811,7 @@
 },
 {	/* X86_VPMAXUBZ128rm, X86_INS_VPMAXUB: vpmaxub	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUBZ128rmk, X86_INS_VPMAXUB: vpmaxub	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26823,7 +26823,7 @@
 },
 {	/* X86_VPMAXUBZ128rr, X86_INS_VPMAXUB: vpmaxub	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUBZ128rrk, X86_INS_VPMAXUB: vpmaxub	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26835,7 +26835,7 @@
 },
 {	/* X86_VPMAXUBZ256rm, X86_INS_VPMAXUB: vpmaxub	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUBZ256rmk, X86_INS_VPMAXUB: vpmaxub	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26847,7 +26847,7 @@
 },
 {	/* X86_VPMAXUBZ256rr, X86_INS_VPMAXUB: vpmaxub	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUBZ256rrk, X86_INS_VPMAXUB: vpmaxub	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26859,7 +26859,7 @@
 },
 {	/* X86_VPMAXUBZrm, X86_INS_VPMAXUB: vpmaxub	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUBZrmk, X86_INS_VPMAXUB: vpmaxub	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26871,7 +26871,7 @@
 },
 {	/* X86_VPMAXUBZrr, X86_INS_VPMAXUB: vpmaxub	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUBZrrk, X86_INS_VPMAXUB: vpmaxub	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26899,7 +26899,7 @@
 },
 {	/* X86_VPMAXUDZ128rm, X86_INS_VPMAXUD: vpmaxud	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUDZ128rmb, X86_INS_VPMAXUD: vpmaxud	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -26923,7 +26923,7 @@
 },
 {	/* X86_VPMAXUDZ128rr, X86_INS_VPMAXUD: vpmaxud	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUDZ128rrk, X86_INS_VPMAXUD: vpmaxud	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26935,7 +26935,7 @@
 },
 {	/* X86_VPMAXUDZ256rm, X86_INS_VPMAXUD: vpmaxud	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUDZ256rmb, X86_INS_VPMAXUD: vpmaxud	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -26959,7 +26959,7 @@
 },
 {	/* X86_VPMAXUDZ256rr, X86_INS_VPMAXUD: vpmaxud	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUDZ256rrk, X86_INS_VPMAXUD: vpmaxud	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -26971,7 +26971,7 @@
 },
 {	/* X86_VPMAXUDZrm, X86_INS_VPMAXUD: vpmaxud	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUDZrmb, X86_INS_VPMAXUD: vpmaxud	{${src2}{1to16}, $src1, $dst |$dst , $src1, ${src2}{1to16}} */
 	0,
@@ -26995,7 +26995,7 @@
 },
 {	/* X86_VPMAXUDZrr, X86_INS_VPMAXUD: vpmaxud	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUDZrrk, X86_INS_VPMAXUD: vpmaxud	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27015,7 +27015,7 @@
 },
 {	/* X86_VPMAXUQZ128rm, X86_INS_VPMAXUQ: vpmaxuq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUQZ128rmb, X86_INS_VPMAXUQ: vpmaxuq	{${src2}{1to2}, $src1, $dst |$dst , $src1, ${src2}{1to2}} */
 	0,
@@ -27039,7 +27039,7 @@
 },
 {	/* X86_VPMAXUQZ128rr, X86_INS_VPMAXUQ: vpmaxuq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUQZ128rrk, X86_INS_VPMAXUQ: vpmaxuq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27051,7 +27051,7 @@
 },
 {	/* X86_VPMAXUQZ256rm, X86_INS_VPMAXUQ: vpmaxuq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUQZ256rmb, X86_INS_VPMAXUQ: vpmaxuq	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -27075,7 +27075,7 @@
 },
 {	/* X86_VPMAXUQZ256rr, X86_INS_VPMAXUQ: vpmaxuq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUQZ256rrk, X86_INS_VPMAXUQ: vpmaxuq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27087,7 +27087,7 @@
 },
 {	/* X86_VPMAXUQZrm, X86_INS_VPMAXUQ: vpmaxuq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUQZrmb, X86_INS_VPMAXUQ: vpmaxuq	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -27111,7 +27111,7 @@
 },
 {	/* X86_VPMAXUQZrr, X86_INS_VPMAXUQ: vpmaxuq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUQZrrk, X86_INS_VPMAXUQ: vpmaxuq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27131,7 +27131,7 @@
 },
 {	/* X86_VPMAXUWZ128rm, X86_INS_VPMAXUW: vpmaxuw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUWZ128rmk, X86_INS_VPMAXUW: vpmaxuw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27143,7 +27143,7 @@
 },
 {	/* X86_VPMAXUWZ128rr, X86_INS_VPMAXUW: vpmaxuw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUWZ128rrk, X86_INS_VPMAXUW: vpmaxuw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27155,7 +27155,7 @@
 },
 {	/* X86_VPMAXUWZ256rm, X86_INS_VPMAXUW: vpmaxuw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUWZ256rmk, X86_INS_VPMAXUW: vpmaxuw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27167,7 +27167,7 @@
 },
 {	/* X86_VPMAXUWZ256rr, X86_INS_VPMAXUW: vpmaxuw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUWZ256rrk, X86_INS_VPMAXUW: vpmaxuw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27179,7 +27179,7 @@
 },
 {	/* X86_VPMAXUWZrm, X86_INS_VPMAXUW: vpmaxuw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUWZrmk, X86_INS_VPMAXUW: vpmaxuw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27191,7 +27191,7 @@
 },
 {	/* X86_VPMAXUWZrr, X86_INS_VPMAXUW: vpmaxuw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMAXUWZrrk, X86_INS_VPMAXUW: vpmaxuw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27219,7 +27219,7 @@
 },
 {	/* X86_VPMINSBZ128rm, X86_INS_VPMINSB: vpminsb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSBZ128rmk, X86_INS_VPMINSB: vpminsb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27231,7 +27231,7 @@
 },
 {	/* X86_VPMINSBZ128rr, X86_INS_VPMINSB: vpminsb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSBZ128rrk, X86_INS_VPMINSB: vpminsb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27243,7 +27243,7 @@
 },
 {	/* X86_VPMINSBZ256rm, X86_INS_VPMINSB: vpminsb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSBZ256rmk, X86_INS_VPMINSB: vpminsb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27255,7 +27255,7 @@
 },
 {	/* X86_VPMINSBZ256rr, X86_INS_VPMINSB: vpminsb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSBZ256rrk, X86_INS_VPMINSB: vpminsb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27267,7 +27267,7 @@
 },
 {	/* X86_VPMINSBZrm, X86_INS_VPMINSB: vpminsb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSBZrmk, X86_INS_VPMINSB: vpminsb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27279,7 +27279,7 @@
 },
 {	/* X86_VPMINSBZrr, X86_INS_VPMINSB: vpminsb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSBZrrk, X86_INS_VPMINSB: vpminsb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27307,7 +27307,7 @@
 },
 {	/* X86_VPMINSDZ128rm, X86_INS_VPMINSD: vpminsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSDZ128rmb, X86_INS_VPMINSD: vpminsd	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -27331,7 +27331,7 @@
 },
 {	/* X86_VPMINSDZ128rr, X86_INS_VPMINSD: vpminsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSDZ128rrk, X86_INS_VPMINSD: vpminsd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27343,7 +27343,7 @@
 },
 {	/* X86_VPMINSDZ256rm, X86_INS_VPMINSD: vpminsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSDZ256rmb, X86_INS_VPMINSD: vpminsd	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -27367,7 +27367,7 @@
 },
 {	/* X86_VPMINSDZ256rr, X86_INS_VPMINSD: vpminsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSDZ256rrk, X86_INS_VPMINSD: vpminsd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27379,7 +27379,7 @@
 },
 {	/* X86_VPMINSDZrm, X86_INS_VPMINSD: vpminsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSDZrmb, X86_INS_VPMINSD: vpminsd	{${src2}{1to16}, $src1, $dst |$dst , $src1, ${src2}{1to16}} */
 	0,
@@ -27403,7 +27403,7 @@
 },
 {	/* X86_VPMINSDZrr, X86_INS_VPMINSD: vpminsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSDZrrk, X86_INS_VPMINSD: vpminsd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27423,7 +27423,7 @@
 },
 {	/* X86_VPMINSQZ128rm, X86_INS_VPMINSQ: vpminsq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSQZ128rmb, X86_INS_VPMINSQ: vpminsq	{${src2}{1to2}, $src1, $dst |$dst , $src1, ${src2}{1to2}} */
 	0,
@@ -27447,7 +27447,7 @@
 },
 {	/* X86_VPMINSQZ128rr, X86_INS_VPMINSQ: vpminsq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSQZ128rrk, X86_INS_VPMINSQ: vpminsq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27459,7 +27459,7 @@
 },
 {	/* X86_VPMINSQZ256rm, X86_INS_VPMINSQ: vpminsq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSQZ256rmb, X86_INS_VPMINSQ: vpminsq	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -27483,7 +27483,7 @@
 },
 {	/* X86_VPMINSQZ256rr, X86_INS_VPMINSQ: vpminsq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSQZ256rrk, X86_INS_VPMINSQ: vpminsq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27495,7 +27495,7 @@
 },
 {	/* X86_VPMINSQZrm, X86_INS_VPMINSQ: vpminsq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSQZrmb, X86_INS_VPMINSQ: vpminsq	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -27519,7 +27519,7 @@
 },
 {	/* X86_VPMINSQZrr, X86_INS_VPMINSQ: vpminsq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSQZrrk, X86_INS_VPMINSQ: vpminsq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27539,7 +27539,7 @@
 },
 {	/* X86_VPMINSWZ128rm, X86_INS_VPMINSW: vpminsw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSWZ128rmk, X86_INS_VPMINSW: vpminsw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27551,7 +27551,7 @@
 },
 {	/* X86_VPMINSWZ128rr, X86_INS_VPMINSW: vpminsw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSWZ128rrk, X86_INS_VPMINSW: vpminsw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27563,7 +27563,7 @@
 },
 {	/* X86_VPMINSWZ256rm, X86_INS_VPMINSW: vpminsw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSWZ256rmk, X86_INS_VPMINSW: vpminsw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27575,7 +27575,7 @@
 },
 {	/* X86_VPMINSWZ256rr, X86_INS_VPMINSW: vpminsw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSWZ256rrk, X86_INS_VPMINSW: vpminsw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27587,7 +27587,7 @@
 },
 {	/* X86_VPMINSWZrm, X86_INS_VPMINSW: vpminsw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSWZrmk, X86_INS_VPMINSW: vpminsw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27599,7 +27599,7 @@
 },
 {	/* X86_VPMINSWZrr, X86_INS_VPMINSW: vpminsw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINSWZrrk, X86_INS_VPMINSW: vpminsw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27627,7 +27627,7 @@
 },
 {	/* X86_VPMINUBZ128rm, X86_INS_VPMINUB: vpminub	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUBZ128rmk, X86_INS_VPMINUB: vpminub	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27639,7 +27639,7 @@
 },
 {	/* X86_VPMINUBZ128rr, X86_INS_VPMINUB: vpminub	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUBZ128rrk, X86_INS_VPMINUB: vpminub	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27651,7 +27651,7 @@
 },
 {	/* X86_VPMINUBZ256rm, X86_INS_VPMINUB: vpminub	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUBZ256rmk, X86_INS_VPMINUB: vpminub	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27663,7 +27663,7 @@
 },
 {	/* X86_VPMINUBZ256rr, X86_INS_VPMINUB: vpminub	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUBZ256rrk, X86_INS_VPMINUB: vpminub	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27675,7 +27675,7 @@
 },
 {	/* X86_VPMINUBZrm, X86_INS_VPMINUB: vpminub	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUBZrmk, X86_INS_VPMINUB: vpminub	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27687,7 +27687,7 @@
 },
 {	/* X86_VPMINUBZrr, X86_INS_VPMINUB: vpminub	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUBZrrk, X86_INS_VPMINUB: vpminub	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27715,7 +27715,7 @@
 },
 {	/* X86_VPMINUDZ128rm, X86_INS_VPMINUD: vpminud	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUDZ128rmb, X86_INS_VPMINUD: vpminud	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -27739,7 +27739,7 @@
 },
 {	/* X86_VPMINUDZ128rr, X86_INS_VPMINUD: vpminud	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUDZ128rrk, X86_INS_VPMINUD: vpminud	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27751,7 +27751,7 @@
 },
 {	/* X86_VPMINUDZ256rm, X86_INS_VPMINUD: vpminud	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUDZ256rmb, X86_INS_VPMINUD: vpminud	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -27775,7 +27775,7 @@
 },
 {	/* X86_VPMINUDZ256rr, X86_INS_VPMINUD: vpminud	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUDZ256rrk, X86_INS_VPMINUD: vpminud	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27787,7 +27787,7 @@
 },
 {	/* X86_VPMINUDZrm, X86_INS_VPMINUD: vpminud	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUDZrmb, X86_INS_VPMINUD: vpminud	{${src2}{1to16}, $src1, $dst |$dst , $src1, ${src2}{1to16}} */
 	0,
@@ -27811,7 +27811,7 @@
 },
 {	/* X86_VPMINUDZrr, X86_INS_VPMINUD: vpminud	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUDZrrk, X86_INS_VPMINUD: vpminud	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27831,7 +27831,7 @@
 },
 {	/* X86_VPMINUQZ128rm, X86_INS_VPMINUQ: vpminuq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUQZ128rmb, X86_INS_VPMINUQ: vpminuq	{${src2}{1to2}, $src1, $dst |$dst , $src1, ${src2}{1to2}} */
 	0,
@@ -27855,7 +27855,7 @@
 },
 {	/* X86_VPMINUQZ128rr, X86_INS_VPMINUQ: vpminuq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUQZ128rrk, X86_INS_VPMINUQ: vpminuq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27867,7 +27867,7 @@
 },
 {	/* X86_VPMINUQZ256rm, X86_INS_VPMINUQ: vpminuq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUQZ256rmb, X86_INS_VPMINUQ: vpminuq	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -27891,7 +27891,7 @@
 },
 {	/* X86_VPMINUQZ256rr, X86_INS_VPMINUQ: vpminuq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUQZ256rrk, X86_INS_VPMINUQ: vpminuq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27903,7 +27903,7 @@
 },
 {	/* X86_VPMINUQZrm, X86_INS_VPMINUQ: vpminuq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUQZrmb, X86_INS_VPMINUQ: vpminuq	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -27927,7 +27927,7 @@
 },
 {	/* X86_VPMINUQZrr, X86_INS_VPMINUQ: vpminuq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUQZrrk, X86_INS_VPMINUQ: vpminuq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27947,7 +27947,7 @@
 },
 {	/* X86_VPMINUWZ128rm, X86_INS_VPMINUW: vpminuw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUWZ128rmk, X86_INS_VPMINUW: vpminuw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27959,7 +27959,7 @@
 },
 {	/* X86_VPMINUWZ128rr, X86_INS_VPMINUW: vpminuw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUWZ128rrk, X86_INS_VPMINUW: vpminuw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27971,7 +27971,7 @@
 },
 {	/* X86_VPMINUWZ256rm, X86_INS_VPMINUW: vpminuw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUWZ256rmk, X86_INS_VPMINUW: vpminuw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27983,7 +27983,7 @@
 },
 {	/* X86_VPMINUWZ256rr, X86_INS_VPMINUW: vpminuw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUWZ256rrk, X86_INS_VPMINUW: vpminuw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -27995,7 +27995,7 @@
 },
 {	/* X86_VPMINUWZrm, X86_INS_VPMINUW: vpminuw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUWZrmk, X86_INS_VPMINUW: vpminuw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -28007,7 +28007,7 @@
 },
 {	/* X86_VPMINUWZrr, X86_INS_VPMINUW: vpminuw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMINUWZrrk, X86_INS_VPMINUW: vpminuw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -28079,7 +28079,7 @@
 },
 {	/* X86_VPMOVM2DZ128rr, X86_INS_VPMOVM2D: vpmovm2d	$dst, $src */
 	0,
-	{ CS_OP_WRITE, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPMOVM2DZ256rr, X86_INS_VPMOVM2D: vpmovm2d	$dst, $src */
 	0,
@@ -28091,11 +28091,11 @@
 },
 {	/* X86_VPMOVM2QZ128rr, X86_INS_VPMOVM2Q: vpmovm2q	$dst, $src */
 	0,
-	{ CS_OP_WRITE, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPMOVM2QZ256rr, X86_INS_VPMOVM2Q: vpmovm2q	$dst, $src */
 	0,
-	{ CS_OP_WRITE, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPMOVM2QZrr, X86_INS_VPMOVM2Q: vpmovm2q	$dst, $src */
 	0,
@@ -28115,11 +28115,11 @@
 },
 {	/* X86_VPMOVMSKBYrr, X86_INS_VPMOVMSKB: vpmovmskb	$dst, $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPMOVMSKBrr, X86_INS_VPMOVMSKB: vpmovmskb	$dst, $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPMOVQBmr, X86_INS_VPMOVQB: vpmovqb	$dst, $src */
 	0,
@@ -28923,7 +28923,7 @@
 },
 {	/* X86_VPMULLDZ128rm, X86_INS_VPMULLD: vpmulld	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMULLDZ128rmb, X86_INS_VPMULLD: vpmulld	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -28947,7 +28947,7 @@
 },
 {	/* X86_VPMULLDZ128rr, X86_INS_VPMULLD: vpmulld	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMULLDZ128rrk, X86_INS_VPMULLD: vpmulld	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -28959,7 +28959,7 @@
 },
 {	/* X86_VPMULLDZ256rm, X86_INS_VPMULLD: vpmulld	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMULLDZ256rmb, X86_INS_VPMULLD: vpmulld	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -28983,7 +28983,7 @@
 },
 {	/* X86_VPMULLDZ256rr, X86_INS_VPMULLD: vpmulld	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMULLDZ256rrk, X86_INS_VPMULLD: vpmulld	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -28995,7 +28995,7 @@
 },
 {	/* X86_VPMULLDZrm, X86_INS_VPMULLD: vpmulld	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMULLDZrmb, X86_INS_VPMULLD: vpmulld	{${src2}{1to16}, $src1, $dst |$dst , $src1, ${src2}{1to16}} */
 	0,
@@ -29019,7 +29019,7 @@
 },
 {	/* X86_VPMULLDZrr, X86_INS_VPMULLD: vpmulld	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMULLDZrrk, X86_INS_VPMULLD: vpmulld	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -29039,7 +29039,7 @@
 },
 {	/* X86_VPMULLQZ128rm, X86_INS_VPMULLQ: vpmullq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMULLQZ128rmb, X86_INS_VPMULLQ: vpmullq	{${src2}{1to2}, $src1, $dst |$dst , $src1, ${src2}{1to2}} */
 	0,
@@ -29063,7 +29063,7 @@
 },
 {	/* X86_VPMULLQZ128rr, X86_INS_VPMULLQ: vpmullq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMULLQZ128rrk, X86_INS_VPMULLQ: vpmullq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -29075,7 +29075,7 @@
 },
 {	/* X86_VPMULLQZ256rm, X86_INS_VPMULLQ: vpmullq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMULLQZ256rmb, X86_INS_VPMULLQ: vpmullq	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -29099,7 +29099,7 @@
 },
 {	/* X86_VPMULLQZ256rr, X86_INS_VPMULLQ: vpmullq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMULLQZ256rrk, X86_INS_VPMULLQ: vpmullq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -29111,7 +29111,7 @@
 },
 {	/* X86_VPMULLQZrm, X86_INS_VPMULLQ: vpmullq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMULLQZrmb, X86_INS_VPMULLQ: vpmullq	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -29135,7 +29135,7 @@
 },
 {	/* X86_VPMULLQZrr, X86_INS_VPMULLQ: vpmullq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMULLQZrrk, X86_INS_VPMULLQ: vpmullq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -29155,7 +29155,7 @@
 },
 {	/* X86_VPMULLWZ128rm, X86_INS_VPMULLW: vpmullw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMULLWZ128rmk, X86_INS_VPMULLW: vpmullw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -29167,7 +29167,7 @@
 },
 {	/* X86_VPMULLWZ128rr, X86_INS_VPMULLW: vpmullw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMULLWZ128rrk, X86_INS_VPMULLW: vpmullw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -29179,7 +29179,7 @@
 },
 {	/* X86_VPMULLWZ256rm, X86_INS_VPMULLW: vpmullw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMULLWZ256rmk, X86_INS_VPMULLW: vpmullw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -29191,7 +29191,7 @@
 },
 {	/* X86_VPMULLWZ256rr, X86_INS_VPMULLW: vpmullw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMULLWZ256rrk, X86_INS_VPMULLW: vpmullw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -29203,7 +29203,7 @@
 },
 {	/* X86_VPMULLWZrm, X86_INS_VPMULLW: vpmullw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMULLWZrmk, X86_INS_VPMULLW: vpmullw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -29215,7 +29215,7 @@
 },
 {	/* X86_VPMULLWZrr, X86_INS_VPMULLW: vpmullw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPMULLWZrrk, X86_INS_VPMULLW: vpmullw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -29287,7 +29287,7 @@
 },
 {	/* X86_VPORDZ128rm, X86_INS_VPORD: vpord	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPORDZ128rmb, X86_INS_VPORD: vpord	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -29311,7 +29311,7 @@
 },
 {	/* X86_VPORDZ128rr, X86_INS_VPORD: vpord	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPORDZ128rrk, X86_INS_VPORD: vpord	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -29323,7 +29323,7 @@
 },
 {	/* X86_VPORDZ256rm, X86_INS_VPORD: vpord	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPORDZ256rmb, X86_INS_VPORD: vpord	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -29347,7 +29347,7 @@
 },
 {	/* X86_VPORDZ256rr, X86_INS_VPORD: vpord	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPORDZ256rrk, X86_INS_VPORD: vpord	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -29359,7 +29359,7 @@
 },
 {	/* X86_VPORDZrm, X86_INS_VPORD: vpord	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPORDZrmb, X86_INS_VPORD: vpord	{${src2}{1to16}, $src1, $dst |$dst , $src1, ${src2}{1to16}} */
 	0,
@@ -29383,7 +29383,7 @@
 },
 {	/* X86_VPORDZrr, X86_INS_VPORD: vpord	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPORDZrrk, X86_INS_VPORD: vpord	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -29395,7 +29395,7 @@
 },
 {	/* X86_VPORQZ128rm, X86_INS_VPORQ: vporq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPORQZ128rmb, X86_INS_VPORQ: vporq	{${src2}{1to2}, $src1, $dst |$dst , $src1, ${src2}{1to2}} */
 	0,
@@ -29419,7 +29419,7 @@
 },
 {	/* X86_VPORQZ128rr, X86_INS_VPORQ: vporq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPORQZ128rrk, X86_INS_VPORQ: vporq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -29431,7 +29431,7 @@
 },
 {	/* X86_VPORQZ256rm, X86_INS_VPORQ: vporq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPORQZ256rmb, X86_INS_VPORQ: vporq	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -29455,7 +29455,7 @@
 },
 {	/* X86_VPORQZ256rr, X86_INS_VPORQ: vporq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPORQZ256rrk, X86_INS_VPORQ: vporq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -29467,7 +29467,7 @@
 },
 {	/* X86_VPORQZrm, X86_INS_VPORQ: vporq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPORQZrmb, X86_INS_VPORQ: vporq	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -29491,7 +29491,7 @@
 },
 {	/* X86_VPORQZrr, X86_INS_VPORQ: vporq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPORQZrrk, X86_INS_VPORQ: vporq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -29879,7 +29879,7 @@
 },
 {	/* X86_VPSLLDZmi, X86_INS_VPSLLD: vpslld	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPSLLDZmik, X86_INS_VPSLLD: vpslld	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -29891,7 +29891,7 @@
 },
 {	/* X86_VPSLLDZri, X86_INS_VPSLLD: vpslld	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPSLLDZrik, X86_INS_VPSLLD: vpslld	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -29903,7 +29903,7 @@
 },
 {	/* X86_VPSLLDZrm, X86_INS_VPSLLD: vpslld	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSLLDZrmk, X86_INS_VPSLLD: vpslld	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -29915,7 +29915,7 @@
 },
 {	/* X86_VPSLLDZrr, X86_INS_VPSLLD: vpslld	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSLLDZrrk, X86_INS_VPSLLD: vpslld	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -29951,7 +29951,7 @@
 },
 {	/* X86_VPSLLQZmi, X86_INS_VPSLLQ: vpsllq	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPSLLQZmik, X86_INS_VPSLLQ: vpsllq	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -29963,7 +29963,7 @@
 },
 {	/* X86_VPSLLQZri, X86_INS_VPSLLQ: vpsllq	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPSLLQZrik, X86_INS_VPSLLQ: vpsllq	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -29975,7 +29975,7 @@
 },
 {	/* X86_VPSLLQZrm, X86_INS_VPSLLQ: vpsllq	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSLLQZrmk, X86_INS_VPSLLQ: vpsllq	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -29987,7 +29987,7 @@
 },
 {	/* X86_VPSLLQZrr, X86_INS_VPSLLQ: vpsllq	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSLLQZrrk, X86_INS_VPSLLQ: vpsllq	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30019,7 +30019,7 @@
 },
 {	/* X86_VPSLLVDZrm, X86_INS_VPSLLVD: vpsllvd	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSLLVDZrmk, X86_INS_VPSLLVD: vpsllvd	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30031,7 +30031,7 @@
 },
 {	/* X86_VPSLLVDZrr, X86_INS_VPSLLVD: vpsllvd	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSLLVDZrrk, X86_INS_VPSLLVD: vpsllvd	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30059,7 +30059,7 @@
 },
 {	/* X86_VPSLLVQZrm, X86_INS_VPSLLVQ: vpsllvq	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSLLVQZrmk, X86_INS_VPSLLVQ: vpsllvq	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30071,7 +30071,7 @@
 },
 {	/* X86_VPSLLVQZrr, X86_INS_VPSLLVQ: vpsllvq	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSLLVQZrrk, X86_INS_VPSLLVQ: vpsllvq	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30127,7 +30127,7 @@
 },
 {	/* X86_VPSRADZmi, X86_INS_VPSRAD: vpsrad	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRADZmik, X86_INS_VPSRAD: vpsrad	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30139,7 +30139,7 @@
 },
 {	/* X86_VPSRADZri, X86_INS_VPSRAD: vpsrad	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRADZrik, X86_INS_VPSRAD: vpsrad	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30151,7 +30151,7 @@
 },
 {	/* X86_VPSRADZrm, X86_INS_VPSRAD: vpsrad	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRADZrmk, X86_INS_VPSRAD: vpsrad	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30163,7 +30163,7 @@
 },
 {	/* X86_VPSRADZrr, X86_INS_VPSRAD: vpsrad	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRADZrrk, X86_INS_VPSRAD: vpsrad	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30187,7 +30187,7 @@
 },
 {	/* X86_VPSRAQZmi, X86_INS_VPSRAQ: vpsraq	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRAQZmik, X86_INS_VPSRAQ: vpsraq	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30199,7 +30199,7 @@
 },
 {	/* X86_VPSRAQZri, X86_INS_VPSRAQ: vpsraq	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRAQZrik, X86_INS_VPSRAQ: vpsraq	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30211,7 +30211,7 @@
 },
 {	/* X86_VPSRAQZrm, X86_INS_VPSRAQ: vpsraq	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRAQZrmk, X86_INS_VPSRAQ: vpsraq	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30223,7 +30223,7 @@
 },
 {	/* X86_VPSRAQZrr, X86_INS_VPSRAQ: vpsraq	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRAQZrrk, X86_INS_VPSRAQ: vpsraq	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30243,7 +30243,7 @@
 },
 {	/* X86_VPSRAVDZrm, X86_INS_VPSRAVD: vpsravd	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRAVDZrmk, X86_INS_VPSRAVD: vpsravd	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30255,7 +30255,7 @@
 },
 {	/* X86_VPSRAVDZrr, X86_INS_VPSRAVD: vpsravd	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRAVDZrrk, X86_INS_VPSRAVD: vpsravd	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30275,7 +30275,7 @@
 },
 {	/* X86_VPSRAVQZrm, X86_INS_VPSRAVQ: vpsravq	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRAVQZrmk, X86_INS_VPSRAVQ: vpsravq	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30287,7 +30287,7 @@
 },
 {	/* X86_VPSRAVQZrr, X86_INS_VPSRAVQ: vpsravq	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRAVQZrrk, X86_INS_VPSRAVQ: vpsravq	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30343,7 +30343,7 @@
 },
 {	/* X86_VPSRLDZmi, X86_INS_VPSRLD: vpsrld	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRLDZmik, X86_INS_VPSRLD: vpsrld	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30355,7 +30355,7 @@
 },
 {	/* X86_VPSRLDZri, X86_INS_VPSRLD: vpsrld	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRLDZrik, X86_INS_VPSRLD: vpsrld	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30367,7 +30367,7 @@
 },
 {	/* X86_VPSRLDZrm, X86_INS_VPSRLD: vpsrld	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRLDZrmk, X86_INS_VPSRLD: vpsrld	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30379,7 +30379,7 @@
 },
 {	/* X86_VPSRLDZrr, X86_INS_VPSRLD: vpsrld	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRLDZrrk, X86_INS_VPSRLD: vpsrld	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30415,7 +30415,7 @@
 },
 {	/* X86_VPSRLQZmi, X86_INS_VPSRLQ: vpsrlq	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRLQZmik, X86_INS_VPSRLQ: vpsrlq	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30427,7 +30427,7 @@
 },
 {	/* X86_VPSRLQZri, X86_INS_VPSRLQ: vpsrlq	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRLQZrik, X86_INS_VPSRLQ: vpsrlq	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30439,7 +30439,7 @@
 },
 {	/* X86_VPSRLQZrm, X86_INS_VPSRLQ: vpsrlq	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRLQZrmk, X86_INS_VPSRLQ: vpsrlq	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30451,7 +30451,7 @@
 },
 {	/* X86_VPSRLQZrr, X86_INS_VPSRLQ: vpsrlq	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRLQZrrk, X86_INS_VPSRLQ: vpsrlq	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30483,7 +30483,7 @@
 },
 {	/* X86_VPSRLVDZrm, X86_INS_VPSRLVD: vpsrlvd	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRLVDZrmk, X86_INS_VPSRLVD: vpsrlvd	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30495,7 +30495,7 @@
 },
 {	/* X86_VPSRLVDZrr, X86_INS_VPSRLVD: vpsrlvd	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRLVDZrrk, X86_INS_VPSRLVD: vpsrlvd	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30523,7 +30523,7 @@
 },
 {	/* X86_VPSRLVQZrm, X86_INS_VPSRLVQ: vpsrlvq	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRLVQZrmk, X86_INS_VPSRLVQ: vpsrlvq	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30535,7 +30535,7 @@
 },
 {	/* X86_VPSRLVQZrr, X86_INS_VPSRLVQ: vpsrlvq	$dst  , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSRLVQZrrk, X86_INS_VPSRLVQ: vpsrlvq	{$src2, $src1, $dst {${mask}} |$dst {${mask}} , $src1, $src2} */
 	0,
@@ -30587,7 +30587,7 @@
 },
 {	/* X86_VPSUBBZ128rm, X86_INS_VPSUBB: vpsubb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBBZ128rmk, X86_INS_VPSUBB: vpsubb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -30599,7 +30599,7 @@
 },
 {	/* X86_VPSUBBZ128rr, X86_INS_VPSUBB: vpsubb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBBZ128rrk, X86_INS_VPSUBB: vpsubb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -30611,7 +30611,7 @@
 },
 {	/* X86_VPSUBBZ256rm, X86_INS_VPSUBB: vpsubb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBBZ256rmk, X86_INS_VPSUBB: vpsubb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -30623,7 +30623,7 @@
 },
 {	/* X86_VPSUBBZ256rr, X86_INS_VPSUBB: vpsubb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBBZ256rrk, X86_INS_VPSUBB: vpsubb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -30635,7 +30635,7 @@
 },
 {	/* X86_VPSUBBZrm, X86_INS_VPSUBB: vpsubb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBBZrmk, X86_INS_VPSUBB: vpsubb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -30647,7 +30647,7 @@
 },
 {	/* X86_VPSUBBZrr, X86_INS_VPSUBB: vpsubb	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBBZrrk, X86_INS_VPSUBB: vpsubb	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -30675,7 +30675,7 @@
 },
 {	/* X86_VPSUBDZ128rm, X86_INS_VPSUBD: vpsubd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBDZ128rmb, X86_INS_VPSUBD: vpsubd	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -30699,7 +30699,7 @@
 },
 {	/* X86_VPSUBDZ128rr, X86_INS_VPSUBD: vpsubd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBDZ128rrk, X86_INS_VPSUBD: vpsubd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -30711,7 +30711,7 @@
 },
 {	/* X86_VPSUBDZ256rm, X86_INS_VPSUBD: vpsubd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBDZ256rmb, X86_INS_VPSUBD: vpsubd	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -30735,7 +30735,7 @@
 },
 {	/* X86_VPSUBDZ256rr, X86_INS_VPSUBD: vpsubd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBDZ256rrk, X86_INS_VPSUBD: vpsubd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -30747,7 +30747,7 @@
 },
 {	/* X86_VPSUBDZrm, X86_INS_VPSUBD: vpsubd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBDZrmb, X86_INS_VPSUBD: vpsubd	{${src2}{1to16}, $src1, $dst |$dst , $src1, ${src2}{1to16}} */
 	0,
@@ -30771,7 +30771,7 @@
 },
 {	/* X86_VPSUBDZrr, X86_INS_VPSUBD: vpsubd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBDZrrk, X86_INS_VPSUBD: vpsubd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -30799,7 +30799,7 @@
 },
 {	/* X86_VPSUBQZ128rm, X86_INS_VPSUBQ: vpsubq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBQZ128rmb, X86_INS_VPSUBQ: vpsubq	{${src2}{1to2}, $src1, $dst |$dst , $src1, ${src2}{1to2}} */
 	0,
@@ -30823,7 +30823,7 @@
 },
 {	/* X86_VPSUBQZ128rr, X86_INS_VPSUBQ: vpsubq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBQZ128rrk, X86_INS_VPSUBQ: vpsubq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -30835,7 +30835,7 @@
 },
 {	/* X86_VPSUBQZ256rm, X86_INS_VPSUBQ: vpsubq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBQZ256rmb, X86_INS_VPSUBQ: vpsubq	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -30859,7 +30859,7 @@
 },
 {	/* X86_VPSUBQZ256rr, X86_INS_VPSUBQ: vpsubq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBQZ256rrk, X86_INS_VPSUBQ: vpsubq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -30871,7 +30871,7 @@
 },
 {	/* X86_VPSUBQZrm, X86_INS_VPSUBQ: vpsubq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBQZrmb, X86_INS_VPSUBQ: vpsubq	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -30895,7 +30895,7 @@
 },
 {	/* X86_VPSUBQZrr, X86_INS_VPSUBQ: vpsubq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBQZrrk, X86_INS_VPSUBQ: vpsubq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -30987,7 +30987,7 @@
 },
 {	/* X86_VPSUBWZ128rm, X86_INS_VPSUBW: vpsubw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBWZ128rmk, X86_INS_VPSUBW: vpsubw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -30999,7 +30999,7 @@
 },
 {	/* X86_VPSUBWZ128rr, X86_INS_VPSUBW: vpsubw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBWZ128rrk, X86_INS_VPSUBW: vpsubw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -31011,7 +31011,7 @@
 },
 {	/* X86_VPSUBWZ256rm, X86_INS_VPSUBW: vpsubw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBWZ256rmk, X86_INS_VPSUBW: vpsubw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -31023,7 +31023,7 @@
 },
 {	/* X86_VPSUBWZ256rr, X86_INS_VPSUBW: vpsubw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBWZ256rrk, X86_INS_VPSUBW: vpsubw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -31035,7 +31035,7 @@
 },
 {	/* X86_VPSUBWZrm, X86_INS_VPSUBW: vpsubw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBWZrmk, X86_INS_VPSUBW: vpsubw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -31047,7 +31047,7 @@
 },
 {	/* X86_VPSUBWZrr, X86_INS_VPSUBW: vpsubw	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPSUBWZrrk, X86_INS_VPSUBW: vpsubw	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -31275,7 +31275,7 @@
 },
 {	/* X86_VPXORDZ128rm, X86_INS_VPXORD: vpxord	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPXORDZ128rmb, X86_INS_VPXORD: vpxord	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -31299,7 +31299,7 @@
 },
 {	/* X86_VPXORDZ128rr, X86_INS_VPXORD: vpxord	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPXORDZ128rrk, X86_INS_VPXORD: vpxord	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -31311,7 +31311,7 @@
 },
 {	/* X86_VPXORDZ256rm, X86_INS_VPXORD: vpxord	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPXORDZ256rmb, X86_INS_VPXORD: vpxord	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -31335,7 +31335,7 @@
 },
 {	/* X86_VPXORDZ256rr, X86_INS_VPXORD: vpxord	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPXORDZ256rrk, X86_INS_VPXORD: vpxord	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -31347,7 +31347,7 @@
 },
 {	/* X86_VPXORDZrm, X86_INS_VPXORD: vpxord	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPXORDZrmb, X86_INS_VPXORD: vpxord	{${src2}{1to16}, $src1, $dst |$dst , $src1, ${src2}{1to16}} */
 	0,
@@ -31371,7 +31371,7 @@
 },
 {	/* X86_VPXORDZrr, X86_INS_VPXORD: vpxord	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPXORDZrrk, X86_INS_VPXORD: vpxord	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -31383,7 +31383,7 @@
 },
 {	/* X86_VPXORQZ128rm, X86_INS_VPXORQ: vpxorq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPXORQZ128rmb, X86_INS_VPXORQ: vpxorq	{${src2}{1to2}, $src1, $dst |$dst , $src1, ${src2}{1to2}} */
 	0,
@@ -31407,7 +31407,7 @@
 },
 {	/* X86_VPXORQZ128rr, X86_INS_VPXORQ: vpxorq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPXORQZ128rrk, X86_INS_VPXORQ: vpxorq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -31419,7 +31419,7 @@
 },
 {	/* X86_VPXORQZ256rm, X86_INS_VPXORQ: vpxorq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPXORQZ256rmb, X86_INS_VPXORQ: vpxorq	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -31443,7 +31443,7 @@
 },
 {	/* X86_VPXORQZ256rr, X86_INS_VPXORQ: vpxorq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPXORQZ256rrk, X86_INS_VPXORQ: vpxorq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -31455,7 +31455,7 @@
 },
 {	/* X86_VPXORQZrm, X86_INS_VPXORQ: vpxorq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPXORQZrmb, X86_INS_VPXORQ: vpxorq	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -31479,7 +31479,7 @@
 },
 {	/* X86_VPXORQZrr, X86_INS_VPXORQ: vpxorq	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VPXORQZrrk, X86_INS_VPXORQ: vpxorq	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -31507,7 +31507,7 @@
 },
 {	/* X86_VRCP14PDZ128m, X86_INS_VRCP14PD: vrcp14pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP14PDZ128mb, X86_INS_VRCP14PD: vrcp14pd	{${src}{1to2}, $dst |$dst , ${src}{1to2}} */
 	0,
@@ -31531,7 +31531,7 @@
 },
 {	/* X86_VRCP14PDZ128r, X86_INS_VRCP14PD: vrcp14pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP14PDZ128rk, X86_INS_VRCP14PD: vrcp14pd	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -31543,7 +31543,7 @@
 },
 {	/* X86_VRCP14PDZ256m, X86_INS_VRCP14PD: vrcp14pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP14PDZ256mb, X86_INS_VRCP14PD: vrcp14pd	{${src}{1to4}, $dst |$dst , ${src}{1to4}} */
 	0,
@@ -31567,7 +31567,7 @@
 },
 {	/* X86_VRCP14PDZ256r, X86_INS_VRCP14PD: vrcp14pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP14PDZ256rk, X86_INS_VRCP14PD: vrcp14pd	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -31579,7 +31579,7 @@
 },
 {	/* X86_VRCP14PDZm, X86_INS_VRCP14PD: vrcp14pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP14PDZmb, X86_INS_VRCP14PD: vrcp14pd	{${src}{1to8}, $dst |$dst , ${src}{1to8}} */
 	0,
@@ -31603,7 +31603,7 @@
 },
 {	/* X86_VRCP14PDZr, X86_INS_VRCP14PD: vrcp14pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP14PDZrk, X86_INS_VRCP14PD: vrcp14pd	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -31615,7 +31615,7 @@
 },
 {	/* X86_VRCP14PSZ128m, X86_INS_VRCP14PS: vrcp14ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP14PSZ128mb, X86_INS_VRCP14PS: vrcp14ps	{${src}{1to4}, $dst |$dst , ${src}{1to4}} */
 	0,
@@ -31639,7 +31639,7 @@
 },
 {	/* X86_VRCP14PSZ128r, X86_INS_VRCP14PS: vrcp14ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP14PSZ128rk, X86_INS_VRCP14PS: vrcp14ps	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -31651,7 +31651,7 @@
 },
 {	/* X86_VRCP14PSZ256m, X86_INS_VRCP14PS: vrcp14ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP14PSZ256mb, X86_INS_VRCP14PS: vrcp14ps	{${src}{1to8}, $dst |$dst , ${src}{1to8}} */
 	0,
@@ -31675,7 +31675,7 @@
 },
 {	/* X86_VRCP14PSZ256r, X86_INS_VRCP14PS: vrcp14ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP14PSZ256rk, X86_INS_VRCP14PS: vrcp14ps	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -31687,7 +31687,7 @@
 },
 {	/* X86_VRCP14PSZm, X86_INS_VRCP14PS: vrcp14ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP14PSZmb, X86_INS_VRCP14PS: vrcp14ps	{${src}{1to16}, $dst |$dst , ${src}{1to16}} */
 	0,
@@ -31711,7 +31711,7 @@
 },
 {	/* X86_VRCP14PSZr, X86_INS_VRCP14PS: vrcp14ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP14PSZrk, X86_INS_VRCP14PS: vrcp14ps	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -31739,11 +31739,11 @@
 },
 {	/* X86_VRCP28PDm, X86_INS_VRCP28PD: vrcp28pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP28PDmb, X86_INS_VRCP28PD: vrcp28pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP28PDmbk, X86_INS_VRCP28PD: vrcp28pd	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -31763,7 +31763,7 @@
 },
 {	/* X86_VRCP28PDr, X86_INS_VRCP28PD: vrcp28pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP28PDrb, X86_INS_VRCP28PD: vrcp28pd	{$src, $dst {sae}|$dst {sae}, $src} */
 	0,
@@ -31787,11 +31787,11 @@
 },
 {	/* X86_VRCP28PSm, X86_INS_VRCP28PS: vrcp28ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP28PSmb, X86_INS_VRCP28PS: vrcp28ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP28PSmbk, X86_INS_VRCP28PS: vrcp28ps	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -31811,7 +31811,7 @@
 },
 {	/* X86_VRCP28PSr, X86_INS_VRCP28PS: vrcp28ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP28PSrb, X86_INS_VRCP28PS: vrcp28ps	{$src, $dst {sae}|$dst {sae}, $src} */
 	0,
@@ -31835,7 +31835,7 @@
 },
 {	/* X86_VRCP28SDm, X86_INS_VRCP28SD: vrcp28sd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP28SDmk, X86_INS_VRCP28SD: vrcp28sd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -31847,7 +31847,7 @@
 },
 {	/* X86_VRCP28SDr, X86_INS_VRCP28SD: vrcp28sd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP28SDrb, X86_INS_VRCP28SD: vrcp28sd	{$src2, $src1, $dst {sae}|$dst {sae}, $src1, $src2} */
 	0,
@@ -31871,7 +31871,7 @@
 },
 {	/* X86_VRCP28SSm, X86_INS_VRCP28SS: vrcp28ss	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP28SSmk, X86_INS_VRCP28SS: vrcp28ss	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -31883,7 +31883,7 @@
 },
 {	/* X86_VRCP28SSr, X86_INS_VRCP28SS: vrcp28ss	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VRCP28SSrb, X86_INS_VRCP28SS: vrcp28ss	{$src2, $src1, $dst {sae}|$dst {sae}, $src1, $src2} */
 	0,
@@ -31967,7 +31967,7 @@
 },
 {	/* X86_VRNDSCALESDm, X86_INS_VRNDSCALESD: vrndscalesd	$dst , $src1, $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VRNDSCALESDmk, X86_INS_VRNDSCALESD: vrndscalesd	{$src3, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $src3} */
 	0,
@@ -31979,7 +31979,7 @@
 },
 {	/* X86_VRNDSCALESDr, X86_INS_VRNDSCALESD: vrndscalesd	$dst , $src1, $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VRNDSCALESDrb, X86_INS_VRNDSCALESD: vrndscalesd	{$src3, $src2, $src1, $dst {sae}|$dst {sae}, $src1, $src2, $src3} */
 	0,
@@ -32003,7 +32003,7 @@
 },
 {	/* X86_VRNDSCALESSm, X86_INS_VRNDSCALESS: vrndscaless	$dst , $src1, $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VRNDSCALESSmk, X86_INS_VRNDSCALESS: vrndscaless	{$src3, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $src3} */
 	0,
@@ -32015,7 +32015,7 @@
 },
 {	/* X86_VRNDSCALESSr, X86_INS_VRNDSCALESS: vrndscaless	$dst , $src1, $src2, $src3 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VRNDSCALESSrb, X86_INS_VRNDSCALESS: vrndscaless	{$src3, $src2, $src1, $dst {sae}|$dst {sae}, $src1, $src2, $src3} */
 	0,
@@ -32095,7 +32095,7 @@
 },
 {	/* X86_VRSQRT14PDZ128m, X86_INS_VRSQRT14PD: vrsqrt14pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT14PDZ128mb, X86_INS_VRSQRT14PD: vrsqrt14pd	{${src}{1to2}, $dst |$dst , ${src}{1to2}} */
 	0,
@@ -32119,7 +32119,7 @@
 },
 {	/* X86_VRSQRT14PDZ128r, X86_INS_VRSQRT14PD: vrsqrt14pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT14PDZ128rk, X86_INS_VRSQRT14PD: vrsqrt14pd	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -32131,7 +32131,7 @@
 },
 {	/* X86_VRSQRT14PDZ256m, X86_INS_VRSQRT14PD: vrsqrt14pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT14PDZ256mb, X86_INS_VRSQRT14PD: vrsqrt14pd	{${src}{1to4}, $dst |$dst , ${src}{1to4}} */
 	0,
@@ -32155,7 +32155,7 @@
 },
 {	/* X86_VRSQRT14PDZ256r, X86_INS_VRSQRT14PD: vrsqrt14pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT14PDZ256rk, X86_INS_VRSQRT14PD: vrsqrt14pd	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -32167,7 +32167,7 @@
 },
 {	/* X86_VRSQRT14PDZm, X86_INS_VRSQRT14PD: vrsqrt14pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT14PDZmb, X86_INS_VRSQRT14PD: vrsqrt14pd	{${src}{1to8}, $dst |$dst , ${src}{1to8}} */
 	0,
@@ -32191,7 +32191,7 @@
 },
 {	/* X86_VRSQRT14PDZr, X86_INS_VRSQRT14PD: vrsqrt14pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT14PDZrk, X86_INS_VRSQRT14PD: vrsqrt14pd	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -32203,7 +32203,7 @@
 },
 {	/* X86_VRSQRT14PSZ128m, X86_INS_VRSQRT14PS: vrsqrt14ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT14PSZ128mb, X86_INS_VRSQRT14PS: vrsqrt14ps	{${src}{1to4}, $dst |$dst , ${src}{1to4}} */
 	0,
@@ -32227,7 +32227,7 @@
 },
 {	/* X86_VRSQRT14PSZ128r, X86_INS_VRSQRT14PS: vrsqrt14ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT14PSZ128rk, X86_INS_VRSQRT14PS: vrsqrt14ps	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -32239,7 +32239,7 @@
 },
 {	/* X86_VRSQRT14PSZ256m, X86_INS_VRSQRT14PS: vrsqrt14ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT14PSZ256mb, X86_INS_VRSQRT14PS: vrsqrt14ps	{${src}{1to8}, $dst |$dst , ${src}{1to8}} */
 	0,
@@ -32263,7 +32263,7 @@
 },
 {	/* X86_VRSQRT14PSZ256r, X86_INS_VRSQRT14PS: vrsqrt14ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT14PSZ256rk, X86_INS_VRSQRT14PS: vrsqrt14ps	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -32275,7 +32275,7 @@
 },
 {	/* X86_VRSQRT14PSZm, X86_INS_VRSQRT14PS: vrsqrt14ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT14PSZmb, X86_INS_VRSQRT14PS: vrsqrt14ps	{${src}{1to16}, $dst |$dst , ${src}{1to16}} */
 	0,
@@ -32299,7 +32299,7 @@
 },
 {	/* X86_VRSQRT14PSZr, X86_INS_VRSQRT14PS: vrsqrt14ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT14PSZrk, X86_INS_VRSQRT14PS: vrsqrt14ps	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -32327,11 +32327,11 @@
 },
 {	/* X86_VRSQRT28PDm, X86_INS_VRSQRT28PD: vrsqrt28pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT28PDmb, X86_INS_VRSQRT28PD: vrsqrt28pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT28PDmbk, X86_INS_VRSQRT28PD: vrsqrt28pd	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -32351,7 +32351,7 @@
 },
 {	/* X86_VRSQRT28PDr, X86_INS_VRSQRT28PD: vrsqrt28pd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT28PDrb, X86_INS_VRSQRT28PD: vrsqrt28pd	{$src, $dst {sae}|$dst {sae}, $src} */
 	0,
@@ -32375,11 +32375,11 @@
 },
 {	/* X86_VRSQRT28PSm, X86_INS_VRSQRT28PS: vrsqrt28ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT28PSmb, X86_INS_VRSQRT28PS: vrsqrt28ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT28PSmbk, X86_INS_VRSQRT28PS: vrsqrt28ps	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -32399,7 +32399,7 @@
 },
 {	/* X86_VRSQRT28PSr, X86_INS_VRSQRT28PS: vrsqrt28ps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT28PSrb, X86_INS_VRSQRT28PS: vrsqrt28ps	{$src, $dst {sae}|$dst {sae}, $src} */
 	0,
@@ -32423,7 +32423,7 @@
 },
 {	/* X86_VRSQRT28SDm, X86_INS_VRSQRT28SD: vrsqrt28sd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT28SDmk, X86_INS_VRSQRT28SD: vrsqrt28sd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -32435,7 +32435,7 @@
 },
 {	/* X86_VRSQRT28SDr, X86_INS_VRSQRT28SD: vrsqrt28sd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT28SDrb, X86_INS_VRSQRT28SD: vrsqrt28sd	{$src2, $src1, $dst {sae}|$dst {sae}, $src1, $src2} */
 	0,
@@ -32459,7 +32459,7 @@
 },
 {	/* X86_VRSQRT28SSm, X86_INS_VRSQRT28SS: vrsqrt28ss	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT28SSmk, X86_INS_VRSQRT28SS: vrsqrt28ss	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -32471,7 +32471,7 @@
 },
 {	/* X86_VRSQRT28SSr, X86_INS_VRSQRT28SS: vrsqrt28ss	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VRSQRT28SSrb, X86_INS_VRSQRT28SS: vrsqrt28ss	{$src2, $src1, $dst {sae}|$dst {sae}, $src1, $src2} */
 	0,
@@ -32643,7 +32643,7 @@
 },
 {	/* X86_VSQRTPDZ128m, X86_INS_VSQRTPD: vsqrtpd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VSQRTPDZ128mb, X86_INS_VSQRTPD: vsqrtpd	{${src}{1to2}, $dst |$dst , ${src}{1to2}} */
 	0,
@@ -32667,7 +32667,7 @@
 },
 {	/* X86_VSQRTPDZ128r, X86_INS_VSQRTPD: vsqrtpd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VSQRTPDZ128rk, X86_INS_VSQRTPD: vsqrtpd	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -32679,7 +32679,7 @@
 },
 {	/* X86_VSQRTPDZ256m, X86_INS_VSQRTPD: vsqrtpd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VSQRTPDZ256mb, X86_INS_VSQRTPD: vsqrtpd	{${src}{1to4}, $dst |$dst , ${src}{1to4}} */
 	0,
@@ -32703,7 +32703,7 @@
 },
 {	/* X86_VSQRTPDZ256r, X86_INS_VSQRTPD: vsqrtpd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VSQRTPDZ256rk, X86_INS_VSQRTPD: vsqrtpd	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -32715,7 +32715,7 @@
 },
 {	/* X86_VSQRTPDZm, X86_INS_VSQRTPD: vsqrtpd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VSQRTPDZmb, X86_INS_VSQRTPD: vsqrtpd	{${src}{1to8}, $dst |$dst , ${src}{1to8}} */
 	0,
@@ -32739,7 +32739,7 @@
 },
 {	/* X86_VSQRTPDZr, X86_INS_VSQRTPD: vsqrtpd	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VSQRTPDZrk, X86_INS_VSQRTPD: vsqrtpd	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -32767,7 +32767,7 @@
 },
 {	/* X86_VSQRTPSZ128m, X86_INS_VSQRTPS: vsqrtps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VSQRTPSZ128mb, X86_INS_VSQRTPS: vsqrtps	{${src}{1to4}, $dst |$dst , ${src}{1to4}} */
 	0,
@@ -32791,7 +32791,7 @@
 },
 {	/* X86_VSQRTPSZ128r, X86_INS_VSQRTPS: vsqrtps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VSQRTPSZ128rk, X86_INS_VSQRTPS: vsqrtps	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -32803,7 +32803,7 @@
 },
 {	/* X86_VSQRTPSZ256m, X86_INS_VSQRTPS: vsqrtps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VSQRTPSZ256mb, X86_INS_VSQRTPS: vsqrtps	{${src}{1to8}, $dst |$dst , ${src}{1to8}} */
 	0,
@@ -32827,7 +32827,7 @@
 },
 {	/* X86_VSQRTPSZ256r, X86_INS_VSQRTPS: vsqrtps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VSQRTPSZ256rk, X86_INS_VSQRTPS: vsqrtps	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -32839,7 +32839,7 @@
 },
 {	/* X86_VSQRTPSZm, X86_INS_VSQRTPS: vsqrtps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VSQRTPSZmb, X86_INS_VSQRTPS: vsqrtps	{${src}{1to16}, $dst |$dst , ${src}{1to16}} */
 	0,
@@ -32863,7 +32863,7 @@
 },
 {	/* X86_VSQRTPSZr, X86_INS_VSQRTPS: vsqrtps	$dst , $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, 0 }
 },
 {	/* X86_VSQRTPSZrk, X86_INS_VSQRTPS: vsqrtps	{$src, $dst {${mask}}|$dst {${mask}}, $src} */
 	0,
@@ -32951,7 +32951,7 @@
 },
 {	/* X86_VSUBPDZ128rm, X86_INS_VSUBPD: vsubpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBPDZ128rmb, X86_INS_VSUBPD: vsubpd	{${src2}{1to2}, $src1, $dst |$dst , $src1, ${src2}{1to2}} */
 	0,
@@ -32975,7 +32975,7 @@
 },
 {	/* X86_VSUBPDZ128rr, X86_INS_VSUBPD: vsubpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBPDZ128rrk, X86_INS_VSUBPD: vsubpd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -32987,7 +32987,7 @@
 },
 {	/* X86_VSUBPDZ256rm, X86_INS_VSUBPD: vsubpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBPDZ256rmb, X86_INS_VSUBPD: vsubpd	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -33011,7 +33011,7 @@
 },
 {	/* X86_VSUBPDZ256rr, X86_INS_VSUBPD: vsubpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBPDZ256rrk, X86_INS_VSUBPD: vsubpd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -33023,7 +33023,7 @@
 },
 {	/* X86_VSUBPDZrb, X86_INS_VSUBPD: vsubpd	$dst , $src1, $src2, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBPDZrbk, X86_INS_VSUBPD: vsubpd	{$rc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $rc} */
 	0,
@@ -33035,7 +33035,7 @@
 },
 {	/* X86_VSUBPDZrm, X86_INS_VSUBPD: vsubpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBPDZrmb, X86_INS_VSUBPD: vsubpd	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -33059,7 +33059,7 @@
 },
 {	/* X86_VSUBPDZrr, X86_INS_VSUBPD: vsubpd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBPDZrrk, X86_INS_VSUBPD: vsubpd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -33087,7 +33087,7 @@
 },
 {	/* X86_VSUBPSZ128rm, X86_INS_VSUBPS: vsubps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBPSZ128rmb, X86_INS_VSUBPS: vsubps	{${src2}{1to4}, $src1, $dst |$dst , $src1, ${src2}{1to4}} */
 	0,
@@ -33111,7 +33111,7 @@
 },
 {	/* X86_VSUBPSZ128rr, X86_INS_VSUBPS: vsubps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBPSZ128rrk, X86_INS_VSUBPS: vsubps	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -33123,7 +33123,7 @@
 },
 {	/* X86_VSUBPSZ256rm, X86_INS_VSUBPS: vsubps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBPSZ256rmb, X86_INS_VSUBPS: vsubps	{${src2}{1to8}, $src1, $dst |$dst , $src1, ${src2}{1to8}} */
 	0,
@@ -33147,7 +33147,7 @@
 },
 {	/* X86_VSUBPSZ256rr, X86_INS_VSUBPS: vsubps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBPSZ256rrk, X86_INS_VSUBPS: vsubps	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -33159,7 +33159,7 @@
 },
 {	/* X86_VSUBPSZrb, X86_INS_VSUBPS: vsubps	$dst , $src1, $src2, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBPSZrbk, X86_INS_VSUBPS: vsubps	{$rc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $rc} */
 	0,
@@ -33171,7 +33171,7 @@
 },
 {	/* X86_VSUBPSZrm, X86_INS_VSUBPS: vsubps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBPSZrmb, X86_INS_VSUBPS: vsubps	{${src2}{1to16}, $src1, $dst |$dst , $src1, ${src2}{1to16}} */
 	0,
@@ -33195,7 +33195,7 @@
 },
 {	/* X86_VSUBPSZrr, X86_INS_VSUBPS: vsubps	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBPSZrrk, X86_INS_VSUBPS: vsubps	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -33219,7 +33219,7 @@
 },
 {	/* X86_VSUBSDZrm_Int, X86_INS_VSUBSD: vsubsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBSDZrm_Intk, X86_INS_VSUBSD: vsubsd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -33235,7 +33235,7 @@
 },
 {	/* X86_VSUBSDZrr_Int, X86_INS_VSUBSD: vsubsd	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBSDZrr_Intk, X86_INS_VSUBSD: vsubsd	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -33247,7 +33247,7 @@
 },
 {	/* X86_VSUBSDZrrb, X86_INS_VSUBSD: vsubsd	$dst , $src1, $src2, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBSDZrrbk, X86_INS_VSUBSD: vsubsd	{$rc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $rc} */
 	0,
@@ -33279,7 +33279,7 @@
 },
 {	/* X86_VSUBSSZrm_Int, X86_INS_VSUBSS: vsubss	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBSSZrm_Intk, X86_INS_VSUBSS: vsubss	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -33295,7 +33295,7 @@
 },
 {	/* X86_VSUBSSZrr_Int, X86_INS_VSUBSS: vsubss	$dst , $src1, $src2 */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBSSZrr_Intk, X86_INS_VSUBSS: vsubss	{$src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2} */
 	0,
@@ -33307,7 +33307,7 @@
 },
 {	/* X86_VSUBSSZrrb, X86_INS_VSUBSS: vsubss	$dst , $src1, $src2, $rc */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, CS_OP_READ, CS_OP_NOREG, 0 }
+	{ CS_OP_WRITE, CS_OP_READ, CS_OP_READ, 0 }
 },
 {	/* X86_VSUBSSZrrbk, X86_INS_VSUBSS: vsubss	{$rc, $src2, $src1, $dst {${mask}}|$dst {${mask}}, $src1, $src2, $rc} */
 	0,
@@ -33611,7 +33611,7 @@
 },
 {	/* X86_XCHG16ar, X86_INS_XCHG: xchg{w}	ax, $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_IGNORE, CS_OP_READ, 0 }
 },
 {	/* X86_XCHG16rm, X86_INS_XCHG: xchg{w}	$ptr, $val */
 	0,
@@ -33623,11 +33623,11 @@
 },
 {	/* X86_XCHG32ar, X86_INS_XCHG: xchg{l}	eax, $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_IGNORE, CS_OP_READ, 0 }
 },
 {	/* X86_XCHG32ar64, X86_INS_XCHG: xchg{l}	eax, $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_IGNORE, CS_OP_READ, 0 }
 },
 {	/* X86_XCHG32rm, X86_INS_XCHG: xchg{l}	$ptr, $val */
 	0,
@@ -33639,7 +33639,7 @@
 },
 {	/* X86_XCHG64ar, X86_INS_XCHG: xchg{q}	rax, $src */
 	0,
-	{ CS_OP_NOREG, CS_OP_READ, 0 }
+	{ CS_OP_IGNORE, CS_OP_READ, 0 }
 },
 {	/* X86_XCHG64rm, X86_INS_XCHG: xchg{q}	$ptr, $val */
 	0,
