@@ -2972,16 +2972,10 @@ void op_addAvxBroadcast(MCInst *MI, x86_avx_bcast v)
 
 #if 0
 
-// Runtime option for the disassembled engine
-typedef enum cs_op_type {
-	CS_OP_READ = 1,	// this operand reads register
-	CS_OP_WRITE,	// this operand writes register
-} cs_op_type;
-
 // map instruction to its characteristics
 typedef struct insn_op {
 	unsigned int eflags_update;	// how this instruction update EFlags
-	cs_op_type operands[4];
+	cs_ac_type operands[4];
 } insn_op;
 
 static insn_op insn_ops[] = {
