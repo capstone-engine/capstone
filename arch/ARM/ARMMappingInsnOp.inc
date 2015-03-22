@@ -307,31 +307,31 @@
 },
 {	/* ARM_LDA, ARM_INS_LDA: lda${p}	$rt, $addr */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDAB, ARM_INS_LDAB: ldab${p}	$rt, $addr */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDAEX, ARM_INS_LDAEX: ldaex${p}	$rt, $addr */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDAEXB, ARM_INS_LDAEXB: ldaexb${p}	$rt, $addr */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDAEXD, ARM_INS_LDAEXD: ldaexd${p}	$rt, $addr */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDAEXH, ARM_INS_LDAEXH: ldaexh${p}	$rt, $addr */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDAH, ARM_INS_LDAH: ldah${p}	$rt, $addr */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDC2L_OFFSET, ARM_INS_LDC2L: ldc2l	$cop, $crd, $addr */
 	0,
@@ -339,11 +339,11 @@
 },
 {	/* ARM_LDC2L_OPTION, ARM_INS_LDC2L: ldc2l	$cop, $crd, $addr, $option */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_LDC2L_POST, ARM_INS_LDC2L: ldc2l	$cop, $crd, $addr, $offset */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_LDC2L_PRE, ARM_INS_LDC2L: ldc2l	$cop, $crd, $addr! */
 	0,
@@ -355,11 +355,11 @@
 },
 {	/* ARM_LDC2_OPTION, ARM_INS_LDC2: ldc2	$cop, $crd, $addr, $option */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_LDC2_POST, ARM_INS_LDC2: ldc2	$cop, $crd, $addr, $offset */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_LDC2_PRE, ARM_INS_LDC2: ldc2	$cop, $crd, $addr! */
 	0,
@@ -371,11 +371,11 @@
 },
 {	/* ARM_LDCL_OPTION, ARM_INS_LDCL: ldcl${p}	$cop, $crd, $addr, $option */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_LDCL_POST, ARM_INS_LDCL: ldcl${p}	$cop, $crd, $addr, $offset */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_LDCL_PRE, ARM_INS_LDCL: ldcl${p}	$cop, $crd, $addr! */
 	0,
@@ -387,11 +387,11 @@
 },
 {	/* ARM_LDC_OPTION, ARM_INS_LDC: ldc${p}	$cop, $crd, $addr, $option */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_LDC_POST, ARM_INS_LDC: ldc${p}	$cop, $crd, $addr, $offset */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_LDC_PRE, ARM_INS_LDC: ldc${p}	$cop, $crd, $addr! */
 	0,
@@ -431,19 +431,19 @@
 },
 {	/* ARM_LDRBT_POST_IMM, ARM_INS_LDRBT: ldrbt${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDRBT_POST_REG, ARM_INS_LDRBT: ldrbt${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDRB_POST_IMM, ARM_INS_LDRB: ldrb${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDRB_POST_REG, ARM_INS_LDRB: ldrb${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDRB_PRE_IMM, ARM_INS_LDRB: ldrb${p}	$rt, $addr! */
 	0,
@@ -467,7 +467,7 @@
 },
 {	/* ARM_LDRD_POST, ARM_INS_LDRD: ldrd${p}	$rt, $rt2, $addr, $offset */
 	0,
-	{ CS_AC_WRITE, CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDRD_PRE, ARM_INS_LDRD: ldrd${p}	$rt, $rt2, $addr! */
 	0,
@@ -475,19 +475,19 @@
 },
 {	/* ARM_LDREX, ARM_INS_LDREX: ldrex${p}	$rt, $addr */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDREXB, ARM_INS_LDREXB: ldrexb${p}	$rt, $addr */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDREXD, ARM_INS_LDREXD: ldrexd${p}	$rt, $addr */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDREXH, ARM_INS_LDREXH: ldrexh${p}	$rt, $addr */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDRH, ARM_INS_LDRH: ldrh${p}	$rt, $addr */
 	0,
@@ -495,15 +495,15 @@
 },
 {	/* ARM_LDRHTi, ARM_INS_LDRHT: ldrht${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDRHTr, ARM_INS_LDRHT: ldrht${p}	$rt, $addr, $rm */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_LDRH_POST, ARM_INS_LDRH: ldrh${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDRH_PRE, ARM_INS_LDRH: ldrh${p}	$rt, $addr! */
 	0,
@@ -515,15 +515,15 @@
 },
 {	/* ARM_LDRSBTi, ARM_INS_LDRSBT: ldrsbt${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDRSBTr, ARM_INS_LDRSBT: ldrsbt${p}	$rt, $addr, $rm */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_LDRSB_POST, ARM_INS_LDRSB: ldrsb${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDRSB_PRE, ARM_INS_LDRSB: ldrsb${p}	$rt, $addr! */
 	0,
@@ -535,15 +535,15 @@
 },
 {	/* ARM_LDRSHTi, ARM_INS_LDRSHT: ldrsht${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDRSHTr, ARM_INS_LDRSHT: ldrsht${p}	$rt, $addr, $rm */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_LDRSH_POST, ARM_INS_LDRSH: ldrsh${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDRSH_PRE, ARM_INS_LDRSH: ldrsh${p}	$rt, $addr! */
 	0,
@@ -551,19 +551,19 @@
 },
 {	/* ARM_LDRT_POST_IMM, ARM_INS_LDRT: ldrt${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDRT_POST_REG, ARM_INS_LDRT: ldrt${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDR_POST_IMM, ARM_INS_LDR: ldr${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDR_POST_REG, ARM_INS_LDR: ldr${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_LDR_PRE_IMM, ARM_INS_LDR: ldr${p}	$rt, $addr! */
 	0,
@@ -643,11 +643,11 @@
 },
 {	/* ARM_MRC, ARM_INS_MRC: mrc${p}	$cop, $opc1, $rt, $crn, $crm, $opc2 */
 	0,
-	{ CS_AC_READ, CS_AC_IGNORE, CS_AC_IGNORE, CS_AC_READ, CS_AC_READ, CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, CS_AC_IGNORE, CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_IGNORE, 0 }
 },
 {	/* ARM_MRC2, ARM_INS_MRC2: mrc2	$cop, $opc1, $rt, $crn, $crm, $opc2 */
 	0,
-	{ CS_AC_READ, CS_AC_IGNORE, CS_AC_IGNORE, CS_AC_READ, CS_AC_READ, CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, CS_AC_IGNORE, CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_IGNORE, 0 }
 },
 {	/* ARM_MRRC, ARM_INS_MRRC: mrrc${p}	$cop, $opc1, $rt, $rt2, $crm */
 	0,
@@ -1183,11 +1183,11 @@
 },
 {	/* ARM_STC2L_OPTION, ARM_INS_STC2L: stc2l	$cop, $crd, $addr, $option */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STC2L_POST, ARM_INS_STC2L: stc2l	$cop, $crd, $addr, $offset */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STC2L_PRE, ARM_INS_STC2L: stc2l	$cop, $crd, $addr! */
 	0,
@@ -1199,11 +1199,11 @@
 },
 {	/* ARM_STC2_OPTION, ARM_INS_STC2: stc2	$cop, $crd, $addr, $option */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STC2_POST, ARM_INS_STC2: stc2	$cop, $crd, $addr, $offset */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STC2_PRE, ARM_INS_STC2: stc2	$cop, $crd, $addr! */
 	0,
@@ -1215,11 +1215,11 @@
 },
 {	/* ARM_STCL_OPTION, ARM_INS_STCL: stcl${p}	$cop, $crd, $addr, $option */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STCL_POST, ARM_INS_STCL: stcl${p}	$cop, $crd, $addr, $offset */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STCL_PRE, ARM_INS_STCL: stcl${p}	$cop, $crd, $addr! */
 	0,
@@ -1231,11 +1231,11 @@
 },
 {	/* ARM_STC_OPTION, ARM_INS_STC: stc${p}	$cop, $crd, $addr, $option */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STC_POST, ARM_INS_STC: stc${p}	$cop, $crd, $addr, $offset */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STC_PRE, ARM_INS_STC: stc${p}	$cop, $crd, $addr! */
 	0,
@@ -1243,31 +1243,31 @@
 },
 {	/* ARM_STL, ARM_INS_STL: stl${p}	$rt, $addr */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STLB, ARM_INS_STLB: stlb${p}	$rt, $addr */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STLEX, ARM_INS_STLEX: stlex${p}	$rd, $rt, $addr */
 	0,
-	{ CS_AC_WRITE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STLEXB, ARM_INS_STLEXB: stlexb${p}	$rd, $rt, $addr */
 	0,
-	{ CS_AC_WRITE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STLEXD, ARM_INS_STLEXD: stlexd${p}	$rd, $rt, $addr */
 	0,
-	{ CS_AC_WRITE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STLEXH, ARM_INS_STLEXH: stlexh${p}	$rd, $rt, $addr */
 	0,
-	{ CS_AC_WRITE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STLH, ARM_INS_STLH: stlh${p}	$rt, $addr */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STMDA, ARM_INS_STMDA: stmda${p}	$rn, $regs */
 	0,
@@ -1303,19 +1303,19 @@
 },
 {	/* ARM_STRBT_POST_IMM, ARM_INS_STRBT: strbt${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STRBT_POST_REG, ARM_INS_STRBT: strbt${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STRB_POST_IMM, ARM_INS_STRB: strb${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STRB_POST_REG, ARM_INS_STRB: strb${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STRB_PRE_IMM, ARM_INS_STRB: strb${p}	$rt, $addr! */
 	0,
@@ -1339,7 +1339,7 @@
 },
 {	/* ARM_STRD_POST, ARM_INS_STRD: strd${p}	$rt, $rt2, $addr, $offset */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STRD_PRE, ARM_INS_STRD: strd${p}	$rt, $rt2, $addr! */
 	0,
@@ -1347,19 +1347,19 @@
 },
 {	/* ARM_STREX, ARM_INS_STREX: strex${p}	$rd, $rt, $addr */
 	0,
-	{ CS_AC_WRITE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STREXB, ARM_INS_STREXB: strexb${p}	$rd, $rt, $addr */
 	0,
-	{ CS_AC_WRITE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STREXD, ARM_INS_STREXD: strexd${p}	$rd, $rt, $addr */
 	0,
-	{ CS_AC_WRITE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STREXH, ARM_INS_STREXH: strexh${p}	$rd, $rt, $addr */
 	0,
-	{ CS_AC_WRITE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STRH, ARM_INS_STRH: strh${p}	$rt, $addr */
 	0,
@@ -1367,15 +1367,15 @@
 },
 {	/* ARM_STRHTi, ARM_INS_STRHT: strht${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STRHTr, ARM_INS_STRHT: strht${p}	$rt, $addr, $rm */
 	0,
-	{ CS_AC_READ, CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STRH_POST, ARM_INS_STRH: strh${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STRH_PRE, ARM_INS_STRH: strh${p}	$rt, $addr! */
 	0,
@@ -1383,19 +1383,19 @@
 },
 {	/* ARM_STRT_POST_IMM, ARM_INS_STRT: strt${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STRT_POST_REG, ARM_INS_STRT: strt${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STR_POST_IMM, ARM_INS_STR: str${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STR_POST_REG, ARM_INS_STR: str${p}	$rt, $addr, $offset */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STR_PRE_IMM, ARM_INS_STR: str${p}	$rt, $addr! */
 	0,
@@ -1435,11 +1435,11 @@
 },
 {	/* ARM_SWP, ARM_INS_SWP: swp${p}	$rt, $rt2, $addr */
 	0,
-	{ CS_AC_WRITE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_SWPB, ARM_INS_SWPB: swpb${p}	$rt, $rt2, $addr */
 	0,
-	{ CS_AC_WRITE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_SXTAB, ARM_INS_SXTAB: sxtab${p}	$rd, $rn, $rm$rot */
 	0,
@@ -7315,31 +7315,31 @@
 },
 {	/* ARM_t2LDA, ARM_INS_LDA: lda${p}	$rt, $addr */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_t2LDAB, ARM_INS_LDAB: ldab${p}	$rt, $addr */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_t2LDAEX, ARM_INS_LDAEX: ldaex${p}	$rt, $addr */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_t2LDAEXB, ARM_INS_LDAEXB: ldaexb${p}	$rt, $addr */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_t2LDAEXD, ARM_INS_LDAEXD: ldaexd${p}	$rt, $rt2, $addr */
 	0,
-	{ CS_AC_WRITE, CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_t2LDAEXH, ARM_INS_LDAEXH: ldaexh${p}	$rt, $addr */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_t2LDAH, ARM_INS_LDAH: ldah${p}	$rt, $addr */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_t2LDC2L_OFFSET, ARM_INS_LDC2L: ldc2l${p}	$cop, $crd, $addr */
 	0,
@@ -7347,11 +7347,11 @@
 },
 {	/* ARM_t2LDC2L_OPTION, ARM_INS_LDC2L: ldc2l${p}	$cop, $crd, $addr, $option */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2LDC2L_POST, ARM_INS_LDC2L: ldc2l${p}	$cop, $crd, $addr, $offset */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2LDC2L_PRE, ARM_INS_LDC2L: ldc2l${p}	$cop, $crd, $addr! */
 	0,
@@ -7363,11 +7363,11 @@
 },
 {	/* ARM_t2LDC2_OPTION, ARM_INS_LDC2: ldc2${p}	$cop, $crd, $addr, $option */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2LDC2_POST, ARM_INS_LDC2: ldc2${p}	$cop, $crd, $addr, $offset */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2LDC2_PRE, ARM_INS_LDC2: ldc2${p}	$cop, $crd, $addr! */
 	0,
@@ -7379,11 +7379,11 @@
 },
 {	/* ARM_t2LDCL_OPTION, ARM_INS_LDCL: ldcl${p}	$cop, $crd, $addr, $option */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2LDCL_POST, ARM_INS_LDCL: ldcl${p}	$cop, $crd, $addr, $offset */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2LDCL_PRE, ARM_INS_LDCL: ldcl${p}	$cop, $crd, $addr! */
 	0,
@@ -7395,11 +7395,11 @@
 },
 {	/* ARM_t2LDC_OPTION, ARM_INS_LDC: ldc${p}	$cop, $crd, $addr, $option */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2LDC_POST, ARM_INS_LDC: ldc${p}	$cop, $crd, $addr, $offset */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2LDC_PRE, ARM_INS_LDC: ldc${p}	$cop, $crd, $addr! */
 	0,
@@ -7467,15 +7467,15 @@
 },
 {	/* ARM_t2LDREXB, ARM_INS_LDREXB: ldrexb${p}	$rt, $addr */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_t2LDREXD, ARM_INS_LDREXD: ldrexd${p}	$rt, $rt2, $addr */
 	0,
-	{ CS_AC_WRITE, CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_t2LDREXH, ARM_INS_LDREXH: ldrexh${p}	$rt, $addr */
 	0,
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_t2LDRHT, ARM_INS_LDRHT: ldrht${p}	$rt, $addr */
 	0,
@@ -7655,11 +7655,11 @@
 },
 {	/* ARM_t2MRC, ARM_INS_MRC: mrc${p}	$cop, $opc1, $rt, $crn, $crm, $opc2 */
 	0,
-	{ CS_AC_READ, CS_AC_IGNORE, CS_AC_IGNORE, CS_AC_READ, CS_AC_READ, CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, CS_AC_IGNORE, CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_IGNORE, 0 }
 },
 {	/* ARM_t2MRC2, ARM_INS_MRC2: mrc2${p}	$cop, $opc1, $rt, $crn, $crm, $opc2 */
 	0,
-	{ CS_AC_READ, CS_AC_IGNORE, CS_AC_IGNORE, CS_AC_READ, CS_AC_READ, CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, CS_AC_IGNORE, CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_IGNORE, 0 }
 },
 {	/* ARM_t2MRRC, ARM_INS_MRRC: mrrc${p}	$cop, $opc1, $rt, $rt2, $crm */
 	0,
@@ -8135,11 +8135,11 @@
 },
 {	/* ARM_t2STC2L_OPTION, ARM_INS_STC2L: stc2l${p}	$cop, $crd, $addr, $option */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2STC2L_POST, ARM_INS_STC2L: stc2l${p}	$cop, $crd, $addr, $offset */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2STC2L_PRE, ARM_INS_STC2L: stc2l${p}	$cop, $crd, $addr! */
 	0,
@@ -8151,11 +8151,11 @@
 },
 {	/* ARM_t2STC2_OPTION, ARM_INS_STC2: stc2${p}	$cop, $crd, $addr, $option */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2STC2_POST, ARM_INS_STC2: stc2${p}	$cop, $crd, $addr, $offset */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2STC2_PRE, ARM_INS_STC2: stc2${p}	$cop, $crd, $addr! */
 	0,
@@ -8167,11 +8167,11 @@
 },
 {	/* ARM_t2STCL_OPTION, ARM_INS_STCL: stcl${p}	$cop, $crd, $addr, $option */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2STCL_POST, ARM_INS_STCL: stcl${p}	$cop, $crd, $addr, $offset */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2STCL_PRE, ARM_INS_STCL: stcl${p}	$cop, $crd, $addr! */
 	0,
@@ -8183,11 +8183,11 @@
 },
 {	/* ARM_t2STC_OPTION, ARM_INS_STC: stc${p}	$cop, $crd, $addr, $option */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2STC_POST, ARM_INS_STC: stc${p}	$cop, $crd, $addr, $offset */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2STC_PRE, ARM_INS_STC: stc${p}	$cop, $crd, $addr! */
 	0,
@@ -8195,31 +8195,31 @@
 },
 {	/* ARM_t2STL, ARM_INS_STL: stl${p}	$rt, $addr */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2STLB, ARM_INS_STLB: stlb${p}	$rt, $addr */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2STLEX, ARM_INS_STLEX: stlex${p}	$rd, $rt, $addr */
 	0,
-	{ CS_AC_WRITE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2STLEXB, ARM_INS_STLEXB: stlexb${p}	$rd, $rt, $addr */
 	0,
-	{ CS_AC_WRITE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2STLEXD, ARM_INS_STLEXD: stlexd${p}	$rd, $rt, $rt2, $addr */
 	0,
-	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2STLEXH, ARM_INS_STLEXH: stlexh${p}	$rd, $rt, $addr */
 	0,
-	{ CS_AC_WRITE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2STLH, ARM_INS_STLH: stlh${p}	$rt, $addr */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2STMDB, ARM_INS_STMDB: stmdb${p}	$rn, $regs */
 	0,
@@ -8279,15 +8279,15 @@
 },
 {	/* ARM_t2STREXB, ARM_INS_STREXB: strexb${p}	$rd, $rt, $addr */
 	0,
-	{ CS_AC_WRITE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2STREXD, ARM_INS_STREXD: strexd${p}	$rd, $rt, $rt2, $addr */
 	0,
-	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2STREXH, ARM_INS_STREXH: strexh${p}	$rd, $rt, $addr */
 	0,
-	{ CS_AC_WRITE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_t2STRHT, ARM_INS_STRHT: strht${p}	$rt, $addr */
 	0,
