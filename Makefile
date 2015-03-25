@@ -86,6 +86,7 @@ DEP_ARM += arch/ARM/ARMGenDisassemblerTables.inc
 DEP_ARM += arch/ARM/ARMGenInstrInfo.inc
 DEP_ARM += arch/ARM/ARMGenRegisterInfo.inc
 DEP_ARM += arch/ARM/ARMGenSubtargetInfo.inc
+DEP_ARM += arch/ARM/ARMMappingInsn.inc
 
 LIBOBJ_ARM =
 ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))
@@ -102,6 +103,7 @@ DEP_ARM64 += arch/AArch64/AArch64GenInstrInfo.inc
 DEP_ARM64 += arch/AArch64/AArch64GenSubtargetInfo.inc
 DEP_ARM64 += arch/AArch64/AArch64GenDisassemblerTables.inc
 DEP_ARM64 += arch/AArch64/AArch64GenRegisterInfo.inc
+DEP_ARM64 += arch/AArch64/AArch64MappingInsn.inc
 
 LIBOBJ_ARM64 =
 ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
@@ -120,6 +122,7 @@ DEP_MIPS += arch/Mips/MipsGenDisassemblerTables.inc
 DEP_MIPS += arch/Mips/MipsGenInstrInfo.inc
 DEP_MIPS += arch/Mips/MipsGenRegisterInfo.inc
 DEP_MIPS += arch/Mips/MipsGenSubtargetInfo.inc
+DEP_MIPS += arch/Mips/MipsMappingInsn.inc
 
 LIBOBJ_MIPS =
 ifneq (,$(findstring mips,$(CAPSTONE_ARCHS)))
@@ -137,6 +140,7 @@ DEP_PPC += arch/PowerPC/PPCGenInstrInfo.inc
 DEP_PPC += arch/PowerPC/PPCGenSubtargetInfo.inc
 DEP_PPC += arch/PowerPC/PPCGenDisassemblerTables.inc
 DEP_PPC += arch/PowerPC/PPCGenRegisterInfo.inc
+DEP_PPC += arch/PowerPC/PPCMappingInsn.inc
 
 LIBOBJ_PPC =
 ifneq (,$(findstring powerpc,$(CAPSTONE_ARCHS)))
@@ -154,6 +158,7 @@ DEP_SPARC += arch/Sparc/SparcGenInstrInfo.inc
 DEP_SPARC += arch/Sparc/SparcGenSubtargetInfo.inc
 DEP_SPARC += arch/Sparc/SparcGenDisassemblerTables.inc
 DEP_SPARC += arch/Sparc/SparcGenRegisterInfo.inc
+DEP_SPARC += arch/Sparc/SparcMappingInsn.inc
 
 LIBOBJ_SPARC =
 ifneq (,$(findstring sparc,$(CAPSTONE_ARCHS)))
@@ -171,6 +176,7 @@ DEP_SYSZ += arch/SystemZ/SystemZGenInstrInfo.inc
 DEP_SYSZ += arch/SystemZ/SystemZGenSubtargetInfo.inc
 DEP_SYSZ += arch/SystemZ/SystemZGenDisassemblerTables.inc
 DEP_SYSZ += arch/SystemZ/SystemZGenRegisterInfo.inc
+DEP_SYSZ += arch/SystemZ/SystemZMappingInsn.inc
 
 LIBOBJ_SYSZ =
 ifneq (,$(findstring systemz,$(CAPSTONE_ARCHS)))
@@ -196,6 +202,9 @@ DEP_X86 += arch/X86/X86GenAsmWriter1$(X86_REDUCE).inc
 DEP_X86 += arch/X86/X86GenDisassemblerTables$(X86_REDUCE).inc
 DEP_X86 += arch/X86/X86GenInstrInfo$(X86_REDUCE).inc
 DEP_X86 += arch/X86/X86GenRegisterInfo.inc
+DEP_X86 += arch/X86/X86MappingInsn.inc
+DEP_X86 += arch/X86/X86MappingInsn_reduce.inc
+DEP_X86 += arch/X86/X86MappingInsnOp.inc
 
 LIBOBJ_X86 =
 ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
@@ -219,6 +228,7 @@ DEP_XCORE += arch/XCore/XCoreGenAsmWriter.inc
 DEP_XCORE += arch/XCore/XCoreGenInstrInfo.inc
 DEP_XCORE += arch/XCore/XCoreGenDisassemblerTables.inc
 DEP_XCORE += arch/XCore/XCoreGenRegisterInfo.inc
+DEP_XCORE += arch/XCore/XCoreMappingInsn.inc
 
 LIBOBJ_XCORE =
 ifneq (,$(findstring xcore,$(CAPSTONE_ARCHS)))

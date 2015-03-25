@@ -296,7 +296,7 @@ void ARM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			insn->detail->regs_write_count = (uint8_t)count_positive(insns[i].regs_mod);
 
 			memcpy(insn->detail->groups, insns[i].groups, sizeof(insns[i].groups));
-			insn->detail->groups_count = (uint8_t)count_positive(insns[i].groups);
+			insn->detail->groups_count = (uint8_t)count_positive8(insns[i].groups);
 
 			insn->detail->arm.update_flags = cs_reg_write((csh)&handle, insn, ARM_REG_CPSR);
 

@@ -256,7 +256,7 @@ void Mips_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 				insn->detail->regs_write_count = (uint8_t)count_positive(alias_insns[i].regs_mod);
 
 				memcpy(insn->detail->groups, alias_insns[i].groups, sizeof(alias_insns[i].groups));
-				insn->detail->groups_count = (uint8_t)count_positive(alias_insns[i].groups);
+				insn->detail->groups_count = (uint8_t)count_positive8(alias_insns[i].groups);
 
 				if (alias_insns[i].branch || alias_insns[i].indirect_branch) {
 					// this insn also belongs to JUMP group. add JUMP group
@@ -283,7 +283,7 @@ void Mips_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			insn->detail->regs_write_count = (uint8_t)count_positive(insns[i].regs_mod);
 
 			memcpy(insn->detail->groups, insns[i].groups, sizeof(insns[i].groups));
-			insn->detail->groups_count = (uint8_t)count_positive(insns[i].groups);
+			insn->detail->groups_count = (uint8_t)count_positive8(insns[i].groups);
 
 			if (insns[i].branch || insns[i].indirect_branch) {
 				// this insn also belongs to JUMP group. add JUMP group

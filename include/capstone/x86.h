@@ -69,6 +69,56 @@ typedef enum x86_reg {
 	X86_REG_ENDING		// <-- mark the end of the list of registers
 } x86_reg;
 
+//> Sub-flags of EFLAGS
+typedef enum x86_eflags_type {
+	X86_EFLAGS_MODIFY_AF = (uint64_t)1 << 0,
+	X86_EFLAGS_MODIFY_CF = (uint64_t)1 << 1,
+	X86_EFLAGS_MODIFY_SF = (uint64_t)1 << 2,
+	X86_EFLAGS_MODIFY_ZF = (uint64_t)1 << 3,
+	X86_EFLAGS_MODIFY_PF = (uint64_t)1 << 4,
+	X86_EFLAGS_MODIFY_OF = (uint64_t)1 << 5,
+	X86_EFLAGS_MODIFY_TF = (uint64_t)1 << 6,
+	X86_EFLAGS_MODIFY_IF = (uint64_t)1 << 7,
+	X86_EFLAGS_MODIFY_DF = (uint64_t)1 << 8,
+	X86_EFLAGS_MODIFY_NT = (uint64_t)1 << 9,
+	X86_EFLAGS_MODIFY_RF = (uint64_t)1 << 10,
+	X86_EFLAGS_PRIOR_OF = (uint64_t)1 << 11,
+	X86_EFLAGS_PRIOR_SF = (uint64_t)1 << 12,
+	X86_EFLAGS_PRIOR_ZF = (uint64_t)1 << 13,
+	X86_EFLAGS_PRIOR_AF = (uint64_t)1 << 14,
+	X86_EFLAGS_PRIOR_PF = (uint64_t)1 << 15,
+	X86_EFLAGS_PRIOR_CF = (uint64_t)1 << 16,
+	X86_EFLAGS_PRIOR_TF = (uint64_t)1 << 17,
+	X86_EFLAGS_PRIOR_IF = (uint64_t)1 << 18,
+	X86_EFLAGS_PRIOR_DF = (uint64_t)1 << 19,
+	X86_EFLAGS_PRIOR_NT = (uint64_t)1 << 20,
+	X86_EFLAGS_RESET_OF = (uint64_t)1 << 21,
+	X86_EFLAGS_RESET_CF = (uint64_t)1 << 22,
+	X86_EFLAGS_RESET_DF = (uint64_t)1 << 23,
+	X86_EFLAGS_RESET_IF = (uint64_t)1 << 24,
+	X86_EFLAGS_RESET_SF = (uint64_t)1 << 25,
+	X86_EFLAGS_RESET_AF = (uint64_t)1 << 26,
+	X86_EFLAGS_RESET_TF = (uint64_t)1 << 27,
+	X86_EFLAGS_RESET_NT = (uint64_t)1 << 28,
+	X86_EFLAGS_RESET_PF = (uint64_t)1 << 29,
+	X86_EFLAGS_SET_CF = (uint64_t)1 << 30,
+	X86_EFLAGS_SET_DF = (uint64_t)1 << 31,
+	X86_EFLAGS_SET_IF = (uint64_t)1 << 32,
+	X86_EFLAGS_TEST_OF = (uint64_t)1 << 33,
+	X86_EFLAGS_TEST_SF = (uint64_t)1 << 34,
+	X86_EFLAGS_TEST_ZF = (uint64_t)1 << 35,
+	X86_EFLAGS_TEST_PF = (uint64_t)1 << 36,
+	X86_EFLAGS_TEST_CF = (uint64_t)1 << 37,
+	X86_EFLAGS_TEST_NT = (uint64_t)1 << 38,
+	X86_EFLAGS_TEST_DF = (uint64_t)1 << 39,
+	X86_EFLAGS_UNDEFINED_OF = (uint64_t)1 << 40,
+	X86_EFLAGS_UNDEFINED_SF = (uint64_t)1 << 41,
+	X86_EFLAGS_UNDEFINED_ZF = (uint64_t)1 << 42,
+	X86_EFLAGS_UNDEFINED_PF = (uint64_t)1 << 43,
+	X86_EFLAGS_UNDEFINED_AF = (uint64_t)1 << 44,
+	X86_EFLAGS_UNDEFINED_CF = (uint64_t)1 << 45,
+} x86_eflags_type;
+
 //> Operand type for instruction's operands
 typedef enum x86_op_type {
 	X86_OP_INVALID = 0, // = CS_OP_INVALID (Uninitialized).
@@ -200,6 +250,11 @@ typedef struct cs_x86_op {
 		// size of this operand (in bytes).
 		uint8_t size;
 
+		// How is this operand accessed? (READ, WRITE or READ|WRITE)
+		// This field is combined of cs_ac_type.
+		// NOTE: this field is irrelevant if engine is compiled in DIET mode.
+		uint8_t access;
+
 		// AVX broadcast type, or 0 if irrelevant
 		x86_avx_bcast avx_bcast;
 
@@ -260,6 +315,10 @@ typedef struct cs_x86 {
 
 	// AVX static rounding mode
 	x86_avx_rm avx_rm;
+
+	// EFLAGS updated by this instruction.
+	// This can be formed from OR combination of X86_EFLAGS_* symbols in x86.h
+	uint64_t eflags;
 
 	// Number of operands of this instruction,
 	// or 0 when instruction has no operand.

@@ -24,6 +24,11 @@ typedef void (*GetID_t)(cs_struct *h, cs_insn *insn, unsigned int id);
 // return register name, given register ID
 typedef char *(*GetRegisterName_t)(unsigned RegNo);
 
+// return registers accessed by instruction
+typedef void (*GetRegisterAccess_t)(const cs_insn *insn,
+		cs_regs regs_read, uint8_t *regs_read_count,
+		cs_regs regs_write, uint8_t *regs_write_count);
+
 // for ARM only
 typedef struct ARM_ITStatus {
 	unsigned char ITStates[128];	// FIXME
@@ -54,6 +59,7 @@ struct cs_struct {
 	uint8_t skipdata_size;	// how many bytes to skip
 	cs_opt_skipdata skipdata_setup;	// user-defined skipdata setup
 	uint8_t *regsize_map;	// map to register size (x86-only for now)
+	GetRegisterAccess_t reg_access;
 };
 
 #define MAX_ARCH 8

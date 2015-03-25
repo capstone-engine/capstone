@@ -284,12 +284,38 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
+#ifndef CAPSTONE_DIET
+// convert Intel access info to AT&T access info
+static void get_op_access(cs_struct *h, unsigned int id, uint8_t *access, uint64_t *eflags)
+{
+#ifndef CAPSTONE_DIET
+	uint8_t *arr = X86_get_op_access(h, id, eflags);
+	uint8_t i;
+
+	// copy to access but zero out CS_AC_IGNORE
+	for(i = 0; arr[i]; i++) {
+		if (arr[i] != CS_AC_IGNORE)
+			access[i] = arr[i];
+		else
+			access[i] = 0;
+	}
+
+	// mark the end of array
+	access[i] = 0;
+#endif
+}
+#endif
+
 static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 {
 	MCOperand *SegReg;
 	int reg;
 
 	if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+		uint8_t access[6];
+#endif
+
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_INVALID;
@@ -297,6 +323,11 @@ static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = X86_REG_INVALID;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = 1;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
+
+#ifndef CAPSTONE_DIET
+		get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].access = access[MI->flat_insn->detail->x86.op_count];
+#endif
 	}
 
 	SegReg = MCInst_getOperand(MI, Op+1);
@@ -321,6 +352,10 @@ static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 {
 	if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+		uint8_t access[6];
+#endif
+
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_INVALID;
@@ -328,6 +363,11 @@ static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = X86_REG_INVALID;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = 1;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
+
+#ifndef CAPSTONE_DIET
+		get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].access = access[MI->flat_insn->detail->x86.op_count];
+#endif
 	}
 
 	// DI accesses are always ES-based on non-64bit mode
@@ -408,6 +448,10 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 	int reg;
 
 	if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+		uint8_t access[6];
+#endif
+
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_INVALID;
@@ -415,6 +459,11 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = X86_REG_INVALID;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = 1;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
+
+#ifndef CAPSTONE_DIET
+		get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].access = access[MI->flat_insn->detail->x86.op_count];
+#endif
 	}
 
 	// If this has a segment register, print it.
@@ -463,8 +512,18 @@ static void printU8Imm(MCInst *MI, unsigned Op, SStream *O)
 		SStream_concat(O, "%u", val);
 
 	if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+		uint8_t access[6];
+#endif
+
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = val;
+
+#ifndef CAPSTONE_DIET
+		get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].access = access[MI->flat_insn->detail->x86.op_count];
+#endif
+
 		MI->flat_insn->detail->x86.op_count++;
 	}
 }
@@ -514,6 +573,10 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 
 	reg = X86_insn_reg_intel(MCInst_getOpcode(MI));
 	if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+		uint8_t access[6];
+#endif
+
 		// first op can be embedded in the asm by llvm.
 		// so we have to add the missing register as the first operand
 		if (reg) {
@@ -536,6 +599,12 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 				MI->flat_insn->detail->x86.op_count = 2;
 			}
 		}
+
+#ifndef CAPSTONE_DIET
+		get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+		MI->flat_insn->detail->x86.operands[0].access = access[0];
+		MI->flat_insn->detail->x86.operands[1].access = access[1];
+#endif
 	}
 
 	if (MI->op1_size == 0 && reg)
@@ -562,6 +631,10 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 				SStream_concat(O, "%"PRIu64, imm);
 		}
 		if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+			uint8_t access[6];
+#endif
+
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
 			// if op_count > 0, then this operand's size is taken from the destination op
 			if (MI->flat_insn->detail->x86.op_count > 0)
@@ -569,6 +642,12 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 			else
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->imm_size;
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = imm;
+
+#ifndef CAPSTONE_DIET
+			get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].access = access[MI->flat_insn->detail->x86.op_count];
+#endif
+
 			MI->flat_insn->detail->x86.op_count++;
 		}
 
@@ -588,9 +667,19 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			if (MI->csh->doing_mem) {
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.base = reg;
 			} else {
+#ifndef CAPSTONE_DIET
+				uint8_t access[6];
+#endif
+
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_REG;
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].reg = reg;
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->csh->regsize_map[reg];
+
+#ifndef CAPSTONE_DIET
+				get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].access = access[MI->flat_insn->detail->x86.op_count];
+#endif
+
 				MI->flat_insn->detail->x86.op_count++;
 			}
 		}
@@ -647,12 +736,22 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			if (MI->csh->doing_mem) {
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = imm;
 			} else {
+#ifndef CAPSTONE_DIET
+				uint8_t access[6];
+#endif
+
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
 				if (MI->flat_insn->detail->x86.op_count > 0)
 					MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->flat_insn->detail->x86.operands[0].size;
 				else
 					MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->imm_size;
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = imm;
+
+#ifndef CAPSTONE_DIET
+				get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].access = access[MI->flat_insn->detail->x86.op_count];
+#endif
+
 				MI->flat_insn->detail->x86.op_count++;
 			}
 		}
@@ -673,6 +772,10 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	int reg;
 
 	if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+		uint8_t access[6];
+#endif
+
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_INVALID;
@@ -680,6 +783,11 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = MCOperand_getReg(IndexReg);
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = (int)ScaleVal;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
+
+#ifndef CAPSTONE_DIET
+		get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].access = access[MI->flat_insn->detail->x86.op_count];
+#endif
 	}
 
 	// If this has a segment register, print it.

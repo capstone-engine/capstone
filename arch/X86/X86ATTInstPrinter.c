@@ -266,12 +266,39 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
+// convert Intel access info to AT&T access info
+static void get_op_access(cs_struct *h, unsigned int id, uint8_t *access, uint64_t *eflags)
+{
+	uint8_t *arr = X86_get_op_access(h, id, eflags);
+	uint8_t count, i;
+
+	// find the non-zero last entry
+	for(count = 0; arr[count]; count++);
+
+	// mark the end of array
+	access[count] = 0;
+
+	if (count == 0)
+		return;
+
+	// copy in reverse order this access array from Intel syntax -> AT&T syntax
+	count--;
+	for(i = 0; i <= count; i++) {
+		if (arr[count -1] != CS_AC_IGNORE)
+			access[i] = arr[count - i];
+		else
+			access[i] = 0;
+	}
+}
+
 static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 {
 	MCOperand *SegReg;
 	int reg;
 
 	if (MI->csh->detail) {
+		uint8_t access[6];
+
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_INVALID;
@@ -279,6 +306,9 @@ static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = X86_REG_INVALID;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = 1;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
+
+		get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].access = access[MI->flat_insn->detail->x86.op_count];
 	}
 
 	SegReg = MCInst_getOperand(MI, Op+1);
@@ -306,6 +336,8 @@ static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 {
 	if (MI->csh->detail) {
+		uint8_t access[6];
+
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_INVALID;
@@ -313,6 +345,9 @@ static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = X86_REG_INVALID;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = 1;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
+
+		get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].access = access[MI->flat_insn->detail->x86.op_count];
 	}
 
 	// DI accesses are always ES-based on non-64bit mode
@@ -387,6 +422,8 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 	int reg;
 
 	if (MI->csh->detail) {
+		uint8_t access[6];
+
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_INVALID;
@@ -394,6 +431,9 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = X86_REG_INVALID;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = 1;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
+
+		get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].access = access[MI->flat_insn->detail->x86.op_count];
 	}
 
 	// If this has a segment register, print it.
@@ -506,9 +546,15 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			if (MI->csh->doing_mem) {
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.base = reg;
 			} else {
+				uint8_t access[6];
+
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_REG;
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].reg = reg;
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->csh->regsize_map[reg];
+
+				get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].access = access[MI->flat_insn->detail->x86.op_count];
+
 				MI->flat_insn->detail->x86.op_count++;
 			}
 		}
@@ -572,6 +618,8 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	int reg;
 
 	if (MI->csh->detail) {
+		uint8_t access[6];
+
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_INVALID;
@@ -579,6 +627,9 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = MCOperand_getReg(IndexReg);
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = 1;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
+
+		get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].access = access[MI->flat_insn->detail->x86.op_count];
 	}
 
 	// If this has a segment register, print it.
@@ -725,21 +776,31 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 		// so we have to add the missing register as the first operand
 		reg = X86_insn_reg_att(MCInst_getOpcode(MI));
 		if (reg) {
+			uint8_t access[6];
 			// shift all the ops right to leave 1st slot for this new register op
 			memmove(&(MI->flat_insn->detail->x86.operands[1]), &(MI->flat_insn->detail->x86.operands[0]),
 					sizeof(MI->flat_insn->detail->x86.operands[0]) * (ARR_SIZE(MI->flat_insn->detail->x86.operands) - 1));
 			MI->flat_insn->detail->x86.operands[0].type = X86_OP_REG;
 			MI->flat_insn->detail->x86.operands[0].reg = reg;
 			MI->flat_insn->detail->x86.operands[0].size = MI->csh->regsize_map[reg];
+
+			get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+			MI->flat_insn->detail->x86.operands[0].access = access[0];
 			MI->flat_insn->detail->x86.op_count++;
 		} else {
 			if (X86_insn_reg_att2(MCInst_getOpcode(MI), &reg, &reg2)) {
+				uint8_t access[6];
+
+				get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+
 				MI->flat_insn->detail->x86.operands[0].type = X86_OP_REG;
 				MI->flat_insn->detail->x86.operands[0].reg = reg;
 				MI->flat_insn->detail->x86.operands[0].size = MI->csh->regsize_map[reg];
+				MI->flat_insn->detail->x86.operands[0].access = access[0];
 				MI->flat_insn->detail->x86.operands[1].type = X86_OP_REG;
 				MI->flat_insn->detail->x86.operands[1].reg = reg2;
 				MI->flat_insn->detail->x86.operands[1].size = MI->csh->regsize_map[reg2];
+				MI->flat_insn->detail->x86.operands[1].access = access[1];
 				MI->flat_insn->detail->x86.op_count = 2;
 			}
 		}

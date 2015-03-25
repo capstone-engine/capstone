@@ -31,6 +31,9 @@ static cs_err init(cs_struct *ud)
 	ud->insn_name = X86_insn_name;
 	ud->group_name = X86_group_name;
 	ud->post_printer = NULL;;
+#ifndef CAPSTONE_DIET
+	ud->reg_access = X86_reg_access;
+#endif
 
 	if (ud->mode == CS_MODE_64)
 		ud->regsize_map = regsize_map_64;
