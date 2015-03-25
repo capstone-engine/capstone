@@ -205,6 +205,7 @@ DEP_X86 += arch/X86/X86GenRegisterInfo.inc
 DEP_X86 += arch/X86/X86MappingInsn.inc
 DEP_X86 += arch/X86/X86MappingInsn_reduce.inc
 DEP_X86 += arch/X86/X86MappingInsnOp.inc
+DEP_X86 += arch/X86/X86MappingInsnOp_reduce.inc
 
 LIBOBJ_X86 =
 ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
