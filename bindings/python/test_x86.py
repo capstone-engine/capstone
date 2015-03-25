@@ -128,7 +128,7 @@ def print_insn_detail(mode, insn):
                 print("\t\toperands[%u].access: READ\n" % (c))
             elif i.access == CS_AC_WRITE:
                 print("\t\toperands[%u].access: WRITE\n" % (c))
-            elif i.access == CS_AC_WRITE | CS_AC_WRITE:
+            elif i.access == CS_AC_READ | CS_AC_WRITE:
                 print("\t\toperands[%u].access: READ | WRITE\n" % (c))
 
     (regs_read, regs_write) = insn.regs_access()
