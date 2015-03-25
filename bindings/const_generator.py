@@ -93,6 +93,8 @@ def gen(lang):
             for t in tmp:
                 t = t.strip()
                 if not t or t.startswith('//'): continue
+                # hacky: remove type cast (uint64_t)
+                t = t.replace('(uint64_t)', '')
                 f = re.split('\s+', t)
 
                 if f[0].startswith(prefix.upper()):

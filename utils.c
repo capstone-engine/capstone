@@ -50,7 +50,18 @@ int name2id(name_map* map, int max, const char *name)
 
 // count number of positive members in a list.
 // NOTE: list must be guaranteed to end in 0
-unsigned int count_positive(unsigned char *list)
+unsigned int count_positive(uint16_t *list)
+{
+	unsigned int c;
+
+	for (c = 0; list[c] > 0; c++);
+
+	return c;
+}
+
+// count number of positive members in a list.
+// NOTE: list must be guaranteed to end in 0
+unsigned int count_positive8(unsigned char *list)
 {
 	unsigned int c;
 

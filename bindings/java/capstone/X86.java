@@ -42,6 +42,7 @@ public class X86 {
     public int type;
     public OpValue value;
     public byte size;
+    public byte access;
     public int avx_bcast;
     public boolean avx_zero_opmask;
 
@@ -62,7 +63,7 @@ public class X86 {
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("type", "value", "size", "avx_bcast", "avx_zero_opmask");
+      return Arrays.asList("type", "value", "size", "access", "avx_bcast", "avx_zero_opmask");
     }
   }
 
@@ -82,6 +83,7 @@ public class X86 {
     public int avx_cc;
     public byte avx_sae;
     public int avx_rm;
+    public int eflags;
 
     public byte op_count;
 
@@ -96,7 +98,7 @@ public class X86 {
     @Override
     public List getFieldOrder() {
       return Arrays.asList("prefix", "opcode", "rex", "addr_size",
-          "modrm", "sib", "disp", "sib_index", "sib_scale", "sib_base", "xop_cc", "sse_cc", "avx_cc", "avx_sae", "avx_rm", "op_count", "op");
+          "modrm", "sib", "disp", "sib_index", "sib_scale", "sib_base", "xop_cc", "sse_cc", "avx_cc", "avx_sae", "avx_rm", "eflags", "op_count", "op");
     }
   }
 
@@ -118,6 +120,7 @@ public class X86 {
     public int avxCC;
     public boolean avxSae;
     public int avxRm;
+    public int eflags;
 
     public Operand[] op;
 
@@ -137,6 +140,7 @@ public class X86 {
       avxCC = e.avx_cc;
       avxSae = e.avx_sae > 0;
       avxRm = e.avx_rm;
+      eflags = e.eflags;
       op = new Operand[e.op_count];
       for (int i=0; i<e.op_count; i++)
         op[i] = e.op[i];

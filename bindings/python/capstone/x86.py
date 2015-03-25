@@ -26,6 +26,7 @@ class X86Op(ctypes.Structure):
         ('type', ctypes.c_uint),
         ('value', X86OpValue),
         ('size', ctypes.c_uint8),
+        ('access', ctypes.c_uint8),
         ('avx_bcast', ctypes.c_uint),
         ('avx_zero_opmask', ctypes.c_uint8),
     )
@@ -64,6 +65,7 @@ class CsX86(ctypes.Structure):
         ('avx_cc', ctypes.c_uint),
         ('avx_sae', ctypes.c_bool),
         ('avx_rm', ctypes.c_uint),
+        ('eflags', ctypes.c_uint64),
         ('op_count', ctypes.c_uint8),
         ('operands', X86Op * 8),
     )
@@ -71,6 +73,6 @@ class CsX86(ctypes.Structure):
 def get_arch_info(a):
     return (a.prefix[:], a.opcode[:], a.rex, a.addr_size, \
             a.modrm, a.sib, a.disp, a.sib_index, a.sib_scale, \
-            a.sib_base, a.xop_cc, a.sse_cc, a.avx_cc, a.avx_sae, a.avx_rm, \
+            a.sib_base, a.xop_cc, a.sse_cc, a.avx_cc, a.avx_sae, a.avx_rm, a.eflags, \
             copy.deepcopy(a.operands[:a.op_count]))
 

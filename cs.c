@@ -157,7 +157,7 @@ const char *cs_strerror(cs_err code)
 		case CS_ERR_MEM:
 			return "Out of memory (CS_ERR_MEM)";
 		case CS_ERR_ARCH:
-			return "Invalid architecture (CS_ERR_ARCH)";
+			return "Invalid/unsupported architecture(CS_ERR_ARCH)";
 		case CS_ERR_HANDLE:
 			return "Invalid handle (CS_ERR_HANDLE)";
 		case CS_ERR_CSH:
@@ -774,7 +774,19 @@ const char *cs_group_name(csh ud, unsigned int group)
 	return handle->group_name(ud, group);
 }
 
-static bool arr_exist(unsigned char *arr, unsigned char max, unsigned int id)
+static bool arr_exist8(unsigned char *arr, unsigned char max, unsigned int id)
+{
+	int i;
+
+	for (i = 0; i < max; i++) {
+		if (arr[i] == id)
+			return true;
+	}
+
+	return false;
+}
+
+static bool arr_exist(uint16_t *arr, unsigned char max, unsigned int id)
 {
 	int i;
 
@@ -800,17 +812,17 @@ bool cs_insn_group(csh ud, const cs_insn *insn, unsigned int group_id)
 		return false;
 	}
 
-	if(!insn->id) {
+	if (!insn->id) {
 		handle->errnum = CS_ERR_SKIPDATA;
 		return false;
 	}
 
-	if(!insn->detail) {
+	if (!insn->detail) {
 		handle->errnum = CS_ERR_DETAIL;
 		return false;
 	}
 
-	return arr_exist(insn->detail->groups, insn->detail->groups_count, group_id);
+	return arr_exist8(insn->detail->groups, insn->detail->groups_count, group_id);
 }
 
 CAPSTONE_EXPORT
@@ -827,12 +839,12 @@ bool cs_reg_read(csh ud, const cs_insn *insn, unsigned int reg_id)
 		return false;
 	}
 
-	if(!insn->id) {
+	if (!insn->id) {
 		handle->errnum = CS_ERR_SKIPDATA;
 		return false;
 	}
 
-	if(!insn->detail) {
+	if (!insn->detail) {
 		handle->errnum = CS_ERR_DETAIL;
 		return false;
 	}
@@ -854,12 +866,12 @@ bool cs_reg_write(csh ud, const cs_insn *insn, unsigned int reg_id)
 		return false;
 	}
 
-	if(!insn->id) {
+	if (!insn->id) {
 		handle->errnum = CS_ERR_SKIPDATA;
 		return false;
 	}
 
-	if(!insn->detail) {
+	if (!insn->detail) {
 		handle->errnum = CS_ERR_DETAIL;
 		return false;
 	}
@@ -882,12 +894,12 @@ int cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 		return -1;
 	}
 
-	if(!insn->id) {
+	if (!insn->id) {
 		handle->errnum = CS_ERR_SKIPDATA;
 		return -1;
 	}
 
-	if(!insn->detail) {
+	if (!insn->detail) {
 		handle->errnum = CS_ERR_DETAIL;
 		return -1;
 	}
@@ -959,12 +971,12 @@ int cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 		return -1;
 	}
 
-	if(!insn->id) {
+	if (!insn->id) {
 		handle->errnum = CS_ERR_SKIPDATA;
 		return -1;
 	}
 
-	if(!insn->detail) {
+	if (!insn->detail) {
 		handle->errnum = CS_ERR_DETAIL;
 		return -1;
 	}
@@ -1042,4 +1054,48 @@ int cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 	}
 
 	return -1;
+}
+
+CAPSTONE_EXPORT
+cs_err cs_regs_access(csh ud, const cs_insn *insn,
+		cs_regs regs_read, uint8_t *regs_read_count,
+		cs_regs regs_write, uint8_t *regs_write_count)
+{
+	struct cs_struct *handle;
+
+	if (!ud)
+		return -1;
+
+	handle = (struct cs_struct *)(uintptr_t)ud;
+
+#ifdef CAPSTONE_DIET
+	// This API does not work in DIET mode
+	handle->errnum = CS_ERR_DIET;
+	return CS_ERR_DIET;
+#else
+	if (!handle->detail) {
+		handle->errnum = CS_ERR_DETAIL;
+		return CS_ERR_DETAIL;
+	}
+
+	if (!insn->id) {
+		handle->errnum = CS_ERR_SKIPDATA;
+		return CS_ERR_SKIPDATA;
+	}
+
+	if (!insn->detail) {
+		handle->errnum = CS_ERR_DETAIL;
+		return CS_ERR_DETAIL;
+	}
+
+	if (handle->reg_access) {
+		handle->reg_access(insn, regs_read, regs_read_count, regs_write, regs_write_count);
+	} else {
+		// this arch is unsupported yet
+		handle->errnum = CS_ERR_ARCH;
+		return CS_ERR_ARCH;
+	}
+
+	return CS_ERR_OK;
+#endif
 }

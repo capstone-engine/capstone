@@ -22,6 +22,7 @@ type x86_op_value =
 type x86_op = {
 	value: x86_op_value;
 	size: int;
+	access: int;
 	avx_bcast: int;
 	avx_zero_opmask: int;
 }
@@ -42,5 +43,6 @@ type cs_x86 = {
 	avx_cc: int;
 	avx_sae: int;
 	avx_rm: int;
+	eflags: int;
 	operands: x86_op array;
 }

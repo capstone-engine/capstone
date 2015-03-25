@@ -16,8 +16,8 @@ typedef struct insn_map {
 	unsigned short id;
 	unsigned short mapid;
 #ifndef CAPSTONE_DIET
-	unsigned char regs_use[12]; // list of implicit registers used by this instruction
-	unsigned char regs_mod[20]; // list of implicit registers modified by this instruction
+	uint16_t regs_use[12]; // list of implicit registers used by this instruction
+	uint16_t regs_mod[20]; // list of implicit registers modified by this instruction
 	unsigned char groups[8]; // list of group this instruction belong to
 	bool branch;	// branch instruction?
 	bool indirect_branch;	// indirect branch instruction?
@@ -40,7 +40,8 @@ int name2id(name_map* map, int max, const char *name);
 
 // count number of positive members in a list.
 // NOTE: list must be guaranteed to end in 0
-unsigned int count_positive(unsigned char *list);
+unsigned int count_positive(uint16_t *list);
+unsigned int count_positive8(unsigned char *list);
 
 #define ARR_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
@@ -50,6 +51,8 @@ char *cs_strdup(const char *str);
 
 // we need this since Windows doesnt have snprintf()
 int cs_snprintf(char *buffer, size_t size, const char *fmt, ...);
+
+#define CS_AC_IGNORE (1 << 7)
 
 #endif
 

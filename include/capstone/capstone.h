@@ -46,8 +46,8 @@ extern "C" {
 
 // Version for bleeding edge code of the Github's "next" branch.
 // Use this if you want the absolutely latest developement code.
-// This version number will be bumped up whenever we have new major change.
-#define CS_NEXT_VERSION 1
+// This version number will be bumped up whenever we have a new major change.
+#define CS_NEXT_VERSION 2
 
 // Macro to create combined version which can be compared to
 // result of cs_version() API.
@@ -146,6 +146,14 @@ typedef enum cs_op_type {
 	CS_OP_FP,           // Floating-Point operand.
 } cs_op_type;
 
+//> Common instruction operand access types - to be consistent across all architectures.
+//> It is possible to combine access types, for example: CS_AC_READ | CS_AC_WRITE
+typedef enum cs_ac_type {
+	CS_AC_INVALID = 0,        // Uninitialized/invalid access type.
+	CS_AC_READ    = 1 << 0,   // Operand read from memory or register.
+	CS_AC_WRITE   = 1 << 1,   // Operand write to memory or register.
+} cs_ac_type;
+
 //> Common instruction groups - to be consistent across all architectures.
 typedef enum cs_group_type {
 	CS_GRP_INVALID = 0,  // uninitialized/invalid group.
@@ -213,10 +221,10 @@ typedef struct cs_opt_skipdata {
 
 // NOTE: All information in cs_detail is only available when CS_OPT_DETAIL = CS_OPT_ON
 typedef struct cs_detail {
-	uint8_t regs_read[12]; // list of implicit registers read by this insn
+	uint16_t regs_read[12]; // list of implicit registers read by this insn
 	uint8_t regs_read_count; // number of implicit registers read by this insn
 
-	uint8_t regs_write[20]; // list of implicit registers modified by this insn
+	uint16_t regs_write[20]; // list of implicit registers modified by this insn
 	uint8_t regs_write_count; // number of implicit registers modified by this insn
 
 	uint8_t groups[8]; // list of group this instruction belong to
@@ -656,6 +664,31 @@ int cs_op_count(csh handle, const cs_insn *insn, unsigned int op_type);
 CAPSTONE_EXPORT
 int cs_op_index(csh handle, const cs_insn *insn, unsigned int op_type,
 		unsigned int position);
+
+// Type of array to keep the list of registers
+typedef uint16_t cs_regs[64];
+
+/*
+ Retrieve all the registers accessed by an instruction, either explicitly or
+ implicitly.
+
+ WARN: when in 'diet' mode, this API is irrelevant because engine does not
+ store registers.
+
+ @handle: handle returned by cs_open()
+ @insn: disassembled instruction structure returned from cs_disasm() or cs_disasm_iter()
+ @regs_read: on return, this array contains all registers read by instruction.
+ @regs_read_count: number of registers kept inside @regs_read array.
+ @regs_write: on return, this array contains all registers written by instruction.
+ @regs_write_count: number of registers kept inside @regs_write array.
+
+ @return CS_ERR_OK on success, or other value on failure (refer to cs_err enum
+ for detailed error).
+*/
+CAPSTONE_EXPORT
+cs_err cs_regs_access(csh handle, const cs_insn *insn,
+		cs_regs regs_read, uint8_t *regs_read_count,
+		cs_regs regs_write, uint8_t *regs_write_count);
 
 #ifdef __cplusplus
 }

@@ -314,7 +314,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 					case CS_ARCH_X86:
 						arch_info = caml_alloc(1, 3);
 
-						op_info_val = caml_alloc(16, 0);
+						op_info_val = caml_alloc(17, 0);
 
 						// fill prefix
 						lcount = list_count(insn[j-1].detail->x86.prefix, ARR_SIZE(insn[j-1].detail->x86.prefix));
@@ -359,6 +359,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						Store_field(op_info_val, 12, Val_int(insn[j-1].detail->x86.avx_cc));
 						Store_field(op_info_val, 13, Val_int(insn[j-1].detail->x86.avx_sae));
 						Store_field(op_info_val, 14, Val_int(insn[j-1].detail->x86.avx_rm));
+						Store_field(op_info_val, 15, Val_int(insn[j-1].detail->x86.eflags));
 
 						lcount = insn[j-1].detail->x86.op_count;
 						if (lcount > 0) {
@@ -366,19 +367,19 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 							for (i = 0; i < lcount; i++) {
 								switch(insn[j-1].detail->x86.operands[i].type) {
 									case X86_OP_REG:
-										tmp = caml_alloc(4, 1);
+										tmp = caml_alloc(5, 1);
 										Store_field(tmp, 0, Val_int(insn[j-1].detail->x86.operands[i].reg));
 										break;
 									case X86_OP_IMM:
-										tmp = caml_alloc(4, 2);
+										tmp = caml_alloc(5, 2);
 										Store_field(tmp, 0, Val_int(insn[j-1].detail->x86.operands[i].imm));
 										break;
 									case X86_OP_FP:
-										tmp = caml_alloc(4, 3);
+										tmp = caml_alloc(5, 3);
 										Store_field(tmp, 0, caml_copy_double(insn[j-1].detail->x86.operands[i].fp));
 										break;
 									case X86_OP_MEM:
-										tmp = caml_alloc(4, 4);
+										tmp = caml_alloc(5, 4);
 										tmp2 = caml_alloc(5, 0);
 										Store_field(tmp2, 0, Val_int(insn[j-1].detail->x86.operands[i].mem.segment));
 										Store_field(tmp2, 1, Val_int(insn[j-1].detail->x86.operands[i].mem.base));
@@ -392,15 +393,16 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 										break;
 								}
 								Store_field(tmp, 1, Val_int(insn[j-1].detail->x86.operands[i].size));
-								Store_field(tmp, 2, Val_int(insn[j-1].detail->x86.operands[i].avx_bcast));
-								Store_field(tmp, 3, Val_int(insn[j-1].detail->x86.operands[i].avx_zero_opmask));
+								Store_field(tmp, 2, Val_int(insn[j-1].detail->x86.operands[i].access));
+								Store_field(tmp, 3, Val_int(insn[j-1].detail->x86.operands[i].avx_bcast));
+								Store_field(tmp, 4, Val_int(insn[j-1].detail->x86.operands[i].avx_zero_opmask));
 								tmp2 = caml_alloc(1, 0);
 								Store_field(tmp2, 0, tmp);
 								Store_field(array, i, tmp2);
 							}
 						} else	// empty array
 							array = Atom(0);
-						Store_field(op_info_val, 15, array);
+						Store_field(op_info_val, 16, array);
 
 						// finally, insert this into arch_info
 						Store_field(arch_info, 0, op_info_val);

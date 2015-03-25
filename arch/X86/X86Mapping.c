@@ -2338,7 +2338,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			}
 
 			memcpy(insn->detail->groups, insns[i].groups, sizeof(insns[i].groups));
-			insn->detail->groups_count = (uint8_t)count_positive(insns[i].groups);
+			insn->detail->groups_count = (uint8_t)count_positive8(insns[i].groups);
 
 			if (insns[i].branch || insns[i].indirect_branch) {
 				// this insn also belongs to JUMP group. add JUMP group
@@ -2970,12 +2970,11 @@ void op_addAvxBroadcast(MCInst *MI, x86_avx_bcast v)
 	}
 }
 
-#if 0
-
+#ifndef CAPSTONE_DIET
 // map instruction to its characteristics
 typedef struct insn_op {
-	unsigned int eflags_update;	// how this instruction update EFlags
-	cs_ac_type operands[4];
+	uint64_t eflags;	// how this instruction update EFLAGS
+	uint8_t access[6];
 } insn_op;
 
 static insn_op insn_ops[] = {
@@ -2984,8 +2983,76 @@ static insn_op insn_ops[] = {
 		{ 0 }
 	},
 
+#ifdef CAPSTONE_X86_REDUCE
+#include "X86MappingInsnOp_reduce.inc"
+#else
 #include "X86MappingInsnOp.inc"
+#endif
 };
 
+// given internal insn id, return operand access info
+uint8_t *X86_get_op_access(cs_struct *h, unsigned int id, uint64_t *eflags)
+{
+	int i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
+	if (i != 0) {
+		*eflags = insn_ops[i].eflags;
+		return insn_ops[i].access;
+	}
+
+	return NULL;
+}
+
+void X86_reg_access(const cs_insn *insn,
+		cs_regs regs_read, uint8_t *regs_read_count,
+		cs_regs regs_write, uint8_t *regs_write_count)
+{
+	uint8_t i;
+	uint8_t read_count, write_count;
+	cs_x86 *x86 = &(insn->detail->x86);
+
+	read_count = insn->detail->regs_read_count;
+	write_count = insn->detail->regs_write_count;
+
+	// implicit registers
+	memcpy(regs_read, insn->detail->regs_read, read_count * sizeof(insn->detail->regs_read[0]));
+	memcpy(regs_write, insn->detail->regs_write, write_count * sizeof(insn->detail->regs_write[0]));
+
+	// explicit registers
+	for (i = 0; i < x86->op_count; i++) {
+		cs_x86_op *op = &(x86->operands[i]);
+		switch((int)op->type) {
+			case X86_OP_REG:
+				if (op->access & CS_AC_READ) {
+					regs_read[read_count] = op->reg;
+					read_count++;
+				}
+				if (op->access & CS_AC_WRITE) {
+					regs_write[write_count] = op->reg;
+					write_count++;
+				}
+				break;
+			case X86_OP_MEM:
+				// registers appeared in memory references always being read
+				if (op->mem.segment != X86_REG_INVALID) {
+					regs_read[read_count] = op->mem.segment;
+					read_count++;
+				}
+				if (op->mem.base != X86_REG_INVALID) {
+					regs_read[read_count] = op->mem.base;
+					read_count++;
+				}
+				if (op->mem.index != X86_REG_INVALID) {
+					regs_read[read_count] = op->mem.index;
+					read_count++;
+				}
+			default:
+				break;
+		}
+	}
+
+	*regs_read_count = read_count;
+	*regs_write_count = write_count;
+}
 #endif
+
 #endif

@@ -53,6 +53,12 @@ type opt_type =
   |	CS_OPT_SKIPDATA_SETUP 	(* Setup user-defined function for SKIPDATA option *)
 
 
+(* Common instruction operand access types - to be consistent across all architectures. *)
+(* It is possible to combine access types, for example: CS_AC_READ | CS_AC_WRITE *)
+let _CS_AC_INVALID = 0;;	(* Uninitialized/invalid access type. *)
+let _CS_AC_READ    = 1 lsl 0;; (* Operand read from memory or register. *)
+let _CS_AC_WRITE   = 1 lsl 1;; (* Operand write to memory or register. *)
+
 (* Runtime option value (associated with option type above) *)
 let _CS_OPT_OFF = 0L;; (* Turn OFF an option - default option of CS_OPT_DETAIL, CS_OPT_SKIPDATA. *)
 let _CS_OPT_ON = 3L;;  (* Turn ON an option (CS_OPT_DETAIL, CS_OPT_SKIPDATA). *)

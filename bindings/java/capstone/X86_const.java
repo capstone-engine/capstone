@@ -249,6 +249,54 @@ public class X86_const {
 	public static final int X86_REG_R15W = 241;
 	public static final int X86_REG_ENDING = 242;
 
+	// Sub-flags of EFLAGS
+	public static final int X86_EFLAGS_MODIFY_AF = 1<<0;
+	public static final int X86_EFLAGS_MODIFY_CF = 1<<1;
+	public static final int X86_EFLAGS_MODIFY_SF = 1<<2;
+	public static final int X86_EFLAGS_MODIFY_ZF = 1<<3;
+	public static final int X86_EFLAGS_MODIFY_PF = 1<<4;
+	public static final int X86_EFLAGS_MODIFY_OF = 1<<5;
+	public static final int X86_EFLAGS_MODIFY_TF = 1<<6;
+	public static final int X86_EFLAGS_MODIFY_IF = 1<<7;
+	public static final int X86_EFLAGS_MODIFY_DF = 1<<8;
+	public static final int X86_EFLAGS_MODIFY_NT = 1<<9;
+	public static final int X86_EFLAGS_MODIFY_RF = 1<<10;
+	public static final int X86_EFLAGS_PRIOR_OF = 1<<11;
+	public static final int X86_EFLAGS_PRIOR_SF = 1<<12;
+	public static final int X86_EFLAGS_PRIOR_ZF = 1<<13;
+	public static final int X86_EFLAGS_PRIOR_AF = 1<<14;
+	public static final int X86_EFLAGS_PRIOR_PF = 1<<15;
+	public static final int X86_EFLAGS_PRIOR_CF = 1<<16;
+	public static final int X86_EFLAGS_PRIOR_TF = 1<<17;
+	public static final int X86_EFLAGS_PRIOR_IF = 1<<18;
+	public static final int X86_EFLAGS_PRIOR_DF = 1<<19;
+	public static final int X86_EFLAGS_PRIOR_NT = 1<<20;
+	public static final int X86_EFLAGS_RESET_OF = 1<<21;
+	public static final int X86_EFLAGS_RESET_CF = 1<<22;
+	public static final int X86_EFLAGS_RESET_DF = 1<<23;
+	public static final int X86_EFLAGS_RESET_IF = 1<<24;
+	public static final int X86_EFLAGS_RESET_SF = 1<<25;
+	public static final int X86_EFLAGS_RESET_AF = 1<<26;
+	public static final int X86_EFLAGS_RESET_TF = 1<<27;
+	public static final int X86_EFLAGS_RESET_NT = 1<<28;
+	public static final int X86_EFLAGS_RESET_PF = 1<<29;
+	public static final int X86_EFLAGS_SET_CF = 1<<30;
+	public static final int X86_EFLAGS_SET_DF = 1<<31;
+	public static final int X86_EFLAGS_SET_IF = 1<<32;
+	public static final int X86_EFLAGS_TEST_OF = 1<<33;
+	public static final int X86_EFLAGS_TEST_SF = 1<<34;
+	public static final int X86_EFLAGS_TEST_ZF = 1<<35;
+	public static final int X86_EFLAGS_TEST_PF = 1<<36;
+	public static final int X86_EFLAGS_TEST_CF = 1<<37;
+	public static final int X86_EFLAGS_TEST_NT = 1<<38;
+	public static final int X86_EFLAGS_TEST_DF = 1<<39;
+	public static final int X86_EFLAGS_UNDEFINED_OF = 1<<40;
+	public static final int X86_EFLAGS_UNDEFINED_SF = 1<<41;
+	public static final int X86_EFLAGS_UNDEFINED_ZF = 1<<42;
+	public static final int X86_EFLAGS_UNDEFINED_PF = 1<<43;
+	public static final int X86_EFLAGS_UNDEFINED_AF = 1<<44;
+	public static final int X86_EFLAGS_UNDEFINED_CF = 1<<45;
+
 	// Operand type for instruction's operands
 
 	public static final int X86_OP_INVALID = 0;
