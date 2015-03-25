@@ -20,6 +20,10 @@ Documention of Capstone disassembly framework.
 
 	http://capstone-engine.org/lang_java.html
 
+* Retrieve access information of instruction operands.
+
+	http://capstone-engine.org/op_access.html
+
 * Build compact engine with only selected architectures.
 
 	http://capstone-engine.org/compile.html
