@@ -246,6 +246,54 @@ let _X86_REG_R14W = 240;;
 let _X86_REG_R15W = 241;;
 let _X86_REG_ENDING = 242;;
 
+(* Sub-flags of EFLAGS *)
+let _X86_EFLAGS_MODIFY_AF = 1 lsl 0;;
+let _X86_EFLAGS_MODIFY_CF = 1 lsl 1;;
+let _X86_EFLAGS_MODIFY_SF = 1 lsl 2;;
+let _X86_EFLAGS_MODIFY_ZF = 1 lsl 3;;
+let _X86_EFLAGS_MODIFY_PF = 1 lsl 4;;
+let _X86_EFLAGS_MODIFY_OF = 1 lsl 5;;
+let _X86_EFLAGS_MODIFY_TF = 1 lsl 6;;
+let _X86_EFLAGS_MODIFY_IF = 1 lsl 7;;
+let _X86_EFLAGS_MODIFY_DF = 1 lsl 8;;
+let _X86_EFLAGS_MODIFY_NT = 1 lsl 9;;
+let _X86_EFLAGS_MODIFY_RF = 1 lsl 10;;
+let _X86_EFLAGS_PRIOR_OF = 1 lsl 11;;
+let _X86_EFLAGS_PRIOR_SF = 1 lsl 12;;
+let _X86_EFLAGS_PRIOR_ZF = 1 lsl 13;;
+let _X86_EFLAGS_PRIOR_AF = 1 lsl 14;;
+let _X86_EFLAGS_PRIOR_PF = 1 lsl 15;;
+let _X86_EFLAGS_PRIOR_CF = 1 lsl 16;;
+let _X86_EFLAGS_PRIOR_TF = 1 lsl 17;;
+let _X86_EFLAGS_PRIOR_IF = 1 lsl 18;;
+let _X86_EFLAGS_PRIOR_DF = 1 lsl 19;;
+let _X86_EFLAGS_PRIOR_NT = 1 lsl 20;;
+let _X86_EFLAGS_RESET_OF = 1 lsl 21;;
+let _X86_EFLAGS_RESET_CF = 1 lsl 22;;
+let _X86_EFLAGS_RESET_DF = 1 lsl 23;;
+let _X86_EFLAGS_RESET_IF = 1 lsl 24;;
+let _X86_EFLAGS_RESET_SF = 1 lsl 25;;
+let _X86_EFLAGS_RESET_AF = 1 lsl 26;;
+let _X86_EFLAGS_RESET_TF = 1 lsl 27;;
+let _X86_EFLAGS_RESET_NT = 1 lsl 28;;
+let _X86_EFLAGS_RESET_PF = 1 lsl 29;;
+let _X86_EFLAGS_SET_CF = 1 lsl 30;;
+let _X86_EFLAGS_SET_DF = 1 lsl 31;;
+let _X86_EFLAGS_SET_IF = 1 lsl 32;;
+let _X86_EFLAGS_TEST_OF = 1 lsl 33;;
+let _X86_EFLAGS_TEST_SF = 1 lsl 34;;
+let _X86_EFLAGS_TEST_ZF = 1 lsl 35;;
+let _X86_EFLAGS_TEST_PF = 1 lsl 36;;
+let _X86_EFLAGS_TEST_CF = 1 lsl 37;;
+let _X86_EFLAGS_TEST_NT = 1 lsl 38;;
+let _X86_EFLAGS_TEST_DF = 1 lsl 39;;
+let _X86_EFLAGS_UNDEFINED_OF = 1 lsl 40;;
+let _X86_EFLAGS_UNDEFINED_SF = 1 lsl 41;;
+let _X86_EFLAGS_UNDEFINED_ZF = 1 lsl 42;;
+let _X86_EFLAGS_UNDEFINED_PF = 1 lsl 43;;
+let _X86_EFLAGS_UNDEFINED_AF = 1 lsl 44;;
+let _X86_EFLAGS_UNDEFINED_CF = 1 lsl 45;;
+
 (* Operand type for instruction's operands *)
 
 let _X86_OP_INVALID = 0;;

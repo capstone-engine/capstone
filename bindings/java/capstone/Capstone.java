@@ -75,10 +75,10 @@ public class Capstone {
     public static class ByReference extends _cs_detail implements Structure.ByReference {};
 
     // list of all implicit registers being read.
-    public byte[] regs_read = new byte[12];
+    public short[] regs_read = new short[12];
     public byte regs_read_count;
     // list of all implicit registers being written.
-    public byte[] regs_write = new byte[20];
+    public short[] regs_write = new short[20];
     public byte regs_write_count;
     // list of semantic groups this instruction belongs to.
     public byte[] groups = new byte[8];
@@ -109,9 +109,9 @@ public class Capstone {
     // instruction operands. NOTE: irrelevant for diet engine.
     public String opStr;
     // list of all implicit registers being read.
-    public byte[] regsRead;
+    public short[] regsRead;
     // list of all implicit registers being written.
-    public byte[] regsWrite;
+    public short[] regsWrite;
     // list of semantic groups this instruction belongs to.
     public byte[] groups;
     public OpInfo operands;
@@ -137,10 +137,10 @@ public class Capstone {
 
       if (insn.cs_detail != null) {
         if (!diet) {
-          regsRead = new byte[insn.cs_detail.regs_read_count];
+          regsRead = new short[insn.cs_detail.regs_read_count];
           for (int i=0; i<regsRead.length; i++)
             regsRead[i] = insn.cs_detail.regs_read[i];
-          regsWrite = new byte[insn.cs_detail.regs_write_count];
+          regsWrite = new short[insn.cs_detail.regs_write_count];
           for (int i=0; i<regsWrite.length; i++)
             regsWrite[i] = insn.cs_detail.regs_write[i];
           groups = new byte[insn.cs_detail.groups_count];
@@ -340,6 +340,12 @@ public class Capstone {
   public static final int CS_OP_IMM = 2;
   public static final int CS_OP_MEM = 3;
   public static final int CS_OP_FP  = 4;
+
+  // Common instruction operand access types - to be consistent across all architectures.
+  // It is possible to combine access types, for example: CS_AC_READ | CS_AC_WRITE
+  public static final int CS_AC_INVALID = 0;
+  public static final int CS_AC_READ = 1 << 0;
+  public static final int CS_AC_WRITE = 1 << 1;
 
   // Common instruction groups - to be consistent across all architectures.
   public static final int CS_GRP_INVALID = 0;  // uninitialized/invalid group.

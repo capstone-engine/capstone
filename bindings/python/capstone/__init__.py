@@ -90,6 +90,10 @@ __all__ = [
     'CS_GRP_IRET',
     'CS_GRP_PRIVILEGE',
 
+    'CS_AC_INVALID',
+    'CS_AC_READ',
+    'CS_AC_WRITE',
+
     'CsError',
 ]
 
@@ -156,6 +160,11 @@ CS_GRP_RET     = 3  # all return instructions
 CS_GRP_INT     = 4  # all interrupt instructions (int+syscall)
 CS_GRP_IRET    = 5  # all interrupt return instructions
 CS_GRP_PRIVILEGE = 6  # all privileged instructions
+
+# Access types for instruction operands.
+CS_AC_INVALID  = 0        # Invalid/unitialized access type.
+CS_AC_READ     = (1 << 0) # Operand that is read from.
+CS_AC_WRITE    = (1 << 1) # Operand that is written to.
 
 # Capstone syntax value
 CS_OPT_SYNTAX_DEFAULT = 0    # Default assembly syntax of all platforms (CS_OPT_SYNTAX)
@@ -247,9 +256,9 @@ class _cs_arch(ctypes.Union):
 
 class _cs_detail(ctypes.Structure):
     _fields_ = (
-        ('regs_read', ctypes.c_ubyte * 12),
+        ('regs_read', ctypes.c_uint16 * 12),
         ('regs_read_count', ctypes.c_ubyte),
-        ('regs_write', ctypes.c_ubyte * 20),
+        ('regs_write', ctypes.c_uint16 * 20),
         ('regs_write_count', ctypes.c_ubyte),
         ('groups', ctypes.c_ubyte * 8),
         ('groups_count', ctypes.c_ubyte),
@@ -298,6 +307,7 @@ _setup_prototype(_cs, "cs_option", ctypes.c_int, ctypes.c_size_t, ctypes.c_int, 
 _setup_prototype(_cs, "cs_version", ctypes.c_int, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
 _setup_prototype(_cs, "cs_support", ctypes.c_bool, ctypes.c_int)
 _setup_prototype(_cs, "cs_strerror", ctypes.c_char_p, ctypes.c_int)
+_setup_prototype(_cs, "cs_regs_access", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.POINTER(ctypes.c_uint16*64), ctypes.POINTER(ctypes.c_uint8), ctypes.POINTER(ctypes.c_uint16*64), ctypes.POINTER(ctypes.c_uint8))
 
 
 # access to error code via @errno of CsError
@@ -524,7 +534,7 @@ class CsInsn(object):
             (self.prefix, self.opcode, self.rex, self.addr_size, \
                 self.modrm, self.sib, self.disp, \
                 self.sib_index, self.sib_scale, self.sib_base, self.xop_cc, self.sse_cc, \
-                self.avx_cc, self.avx_sae, self.avx_rm, self.operands) = x86.get_arch_info(self._detail.arch.x86)
+                self.avx_cc, self.avx_sae, self.avx_rm, self.eflags, self.operands) = x86.get_arch_info(self._detail.arch.x86)
         elif arch == CS_ARCH_MIPS:
                 self.operands = mips.get_arch_info(self._detail.arch.mips)
         elif arch == CS_ARCH_PPC:
@@ -651,6 +661,34 @@ class CsInsn(object):
                 c += 1
             if c == position:
                 return op
+
+    # Return (list-of-registers-read, list-of-registers-modified) by this instructions.
+    # This includes all the implicit & explicit registers.
+    def regs_access(self):
+        if self._raw.id == 0:
+            raise CsError(CS_ERR_SKIPDATA)
+
+        regs_read = (ctypes.c_uint16 * 64)()
+        regs_read_count = ctypes.c_uint8()
+        regs_write = (ctypes.c_uint16 * 64)()
+        regs_write_count = ctypes.c_uint8()
+
+        status = _cs.cs_regs_access(self._cs.csh, self._raw, ctypes.byref(regs_read), ctypes.byref(regs_read_count), ctypes.byref(regs_write), ctypes.byref(regs_write_count))
+        if status != CS_ERR_OK:
+            raise CsError(status)
+
+        if regs_read_count.value > 0:
+            regs_read = regs_read[:regs_read_count.value]
+        else:
+            regs_read = ()
+
+        if regs_write_count.value > 0:
+            regs_write = regs_write[:regs_write_count.value]
+        else:
+            regs_write = ()
+
+        return (regs_read, regs_write)
+
 
 
 class Cs(object):

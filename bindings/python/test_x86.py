@@ -124,6 +124,27 @@ def print_insn_detail(mode, insn):
 
             print("\t\toperands[%u].size: %u" % (c, i.size))
 
+            if i.access == CS_AC_READ:
+                print("\t\toperands[%u].access: READ\n" % (c))
+            elif i.access == CS_AC_WRITE:
+                print("\t\toperands[%u].access: WRITE\n" % (c))
+            elif i.access == CS_AC_WRITE | CS_AC_WRITE:
+                print("\t\toperands[%u].access: READ | WRITE\n" % (c))
+
+    (regs_read, regs_write) = insn.regs_access()
+
+    if len(regs_read) > 0:
+        print("\tRegisters read:", end="")
+        for r in regs_read:
+            print(" %s" %(insn.reg_name(r)), end="")
+        print("")
+
+    if len(regs_write) > 0:
+        print("\tRegisters modified:", end="")
+        for r in regs_write:
+            print(" %s" %(insn.reg_name(r)), end="")
+        print("")
+
 
 # ## Test class Cs
 def test_class():
