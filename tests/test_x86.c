@@ -282,8 +282,8 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 
 	if (x86->eflags) {
 		printf("\tEFLAGS:");
-		for(i = 0; i <=45; i++)
-			if (x86->eflags & (1 << i)) {
+		for(i = 0; i <= 45; i++)
+			if (x86->eflags & ((uint64_t)1 << i)) {
 				printf(" %s", get_eflag_name((uint64_t)1 << i));
 			}
 		printf("\n");
