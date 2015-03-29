@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../../inttypes.h"
+#include "../../myinttypes.h"
 
 #include "../../utils.h"
 

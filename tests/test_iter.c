@@ -4,7 +4,7 @@
 // This sample code demonstrates the APIs cs_malloc() & cs_disasm_iter().
 #include <stdio.h>
 #include <stdlib.h>
-#include "../inttypes.h"
+#include "../myinttypes.h"
 
 #include <capstone.h>
 

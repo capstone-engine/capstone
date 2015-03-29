@@ -18,7 +18,7 @@
 #ifdef CAPSTONE_HAS_X86
 
 #include <ctype.h>
-#include "../../inttypes.h"
+#include "../../myinttypes.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -496,6 +496,7 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 			MI->flat_insn->detail->x86.operands[0].type = X86_OP_REG;
 			MI->flat_insn->detail->x86.operands[0].reg = reg;
 			MI->flat_insn->detail->x86.operands[0].size = MI->csh->regsize_map[reg];
+			MI->flat_insn->detail->x86.operands[1].size = MI->csh->regsize_map[reg];
 			MI->flat_insn->detail->x86.op_count++;
 		} else {
 			if (X86_insn_reg_intel2(MCInst_getOpcode(MI), &reg, &reg2)) {

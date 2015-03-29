@@ -98,7 +98,7 @@ class custom_build_clib(build_clib):
         build_clib.finalize_options(self)
 
     def build_libraries(self, libraries):
-        if SYSTEM == "win32":
+        if SYSTEM in ("win32", "cygwin"):
             # if Windows prebuilt library is available, then include it
             if is_64bits and os.path.exists(PATH_LIB64):
                 SETUP_DATA_FILES.append(PATH_LIB64)
@@ -118,10 +118,7 @@ class custom_build_clib(build_clib):
                 os.chdir("src")
 
                 # platform description refers at https://docs.python.org/2/library/sys.html#sys.platform
-                if SYSTEM != "win32":
-                    os.chmod("make.sh", stat.S_IREAD|stat.S_IEXEC)
-                    os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh")
-                else:
+                if SYSTEM == "win32":
                     # Windows build: this process requires few things:
                     #    - CMake + MSVC installed
                     #    - Run this command in an environment setup for MSVC
@@ -131,13 +128,21 @@ class custom_build_clib(build_clib):
                     os.system('cmake -DCMAKE_BUILD_TYPE=RELEASE -DCAPSTONE_BUILD_TESTS=0 -DCAPSTONE_BUILD_STATIC=0 -G "NMake Makefiles" ..')
                     os.system("nmake")
                     os.chdir("..")
-
-                if SYSTEM == "darwin":
-                    SETUP_DATA_FILES.append("src/libcapstone.dylib")
-                elif SYSTEM != "win32":
-                    SETUP_DATA_FILES.append("src/libcapstone.so")
-                else:   # Windows
                     SETUP_DATA_FILES.append("src/build/capstone.dll")
+                elif SYSTEM == "cygwin":
+                    os.chmod("make.sh", stat.S_IREAD|stat.S_IEXEC)
+                    if is_64bits:
+                        os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh cygwin-mingw64")
+                    else:
+                        os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh cygwin-mingw32")
+                    SETUP_DATA_FILES.append("src/capstone.dll")
+                else:   # Unix
+                    os.chmod("make.sh", stat.S_IREAD|stat.S_IEXEC)
+                    os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh")
+                    if SYSTEM == "darwin":
+                        SETUP_DATA_FILES.append("src/libcapstone.dylib")
+                    else:   # Non-OSX
+                        SETUP_DATA_FILES.append("src/libcapstone.so")
 
                 os.chdir("..")
         except:
