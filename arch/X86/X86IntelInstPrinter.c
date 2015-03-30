@@ -18,7 +18,7 @@
 #ifdef CAPSTONE_HAS_X86
 
 #include <ctype.h>
-#include "../../inttypes.h"
+#include "../../myinttypes.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
