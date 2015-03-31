@@ -918,6 +918,8 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		instr->flat_insn->detail->x86.avx_cc = X86_AVX_CC_INVALID;
 		instr->flat_insn->detail->x86.avx_sae = false;
 		instr->flat_insn->detail->x86.avx_rm = X86_AVX_RM_INVALID;
+		instr->flat_insn->detail->x86.xop_cc = X86_XOP_CC_INVALID;
+		instr->flat_insn->detail->x86.eflags = 0;
 
 		memset(instr->flat_insn->detail->x86.prefix, 0, sizeof(instr->flat_insn->detail->x86.prefix));
 		memset(instr->flat_insn->detail->x86.opcode, 0, sizeof(instr->flat_insn->detail->x86.opcode));
