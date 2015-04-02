@@ -50,6 +50,30 @@ install_cython:
 	mv $(OBJDIR)/build/lib/python/capstone/* capstone
 	cd $(OBJDIR) && python setup_cython.py build -b ./tmp install
 
+build_cython:
+	rm -rf $(OBJDIR) src/ dist/
+	mkdir -p $(OBJDIR)/pyx
+	cp setup_cython.py $(OBJDIR)
+	cp pyx/ccapstone* $(OBJDIR)/pyx/
+	cp capstone/__init__.py $(OBJDIR)/pyx/__init__.py
+	cp capstone/arm.py $(OBJDIR)/pyx/arm.pyx
+	cp capstone/arm_const.py $(OBJDIR)/pyx/arm_const.pyx
+	cp capstone/arm64.py $(OBJDIR)/pyx/arm64.pyx
+	cp capstone/arm64_const.py $(OBJDIR)/pyx/arm64_const.pyx
+	cp capstone/mips.py $(OBJDIR)/pyx/mips.pyx
+	cp capstone/mips_const.py $(OBJDIR)/pyx/mips_const.pyx
+	cp capstone/ppc.py $(OBJDIR)/pyx/ppc.pyx
+	cp capstone/ppc_const.py $(OBJDIR)/pyx/ppc_const.pyx
+	cp capstone/sparc.py $(OBJDIR)/pyx/sparc.pyx
+	cp capstone/sparc_const.py $(OBJDIR)/pyx/sparc_const.pyx
+	cp capstone/systemz.py $(OBJDIR)/pyx/systemz.pyx
+	cp capstone/sysz_const.py $(OBJDIR)/pyx/sysz_const.pyx
+	cp capstone/x86.py $(OBJDIR)/pyx/x86.pyx
+	cp capstone/x86_const.py $(OBJDIR)/pyx/x86_const.pyx
+	cp capstone/xcore.py $(OBJDIR)/pyx/xcore.pyx
+	cp capstone/xcore_const.py $(OBJDIR)/pyx/xcore_const.pyx
+	cd $(OBJDIR) && python setup_cython.py build
+
 # build & upload PyPi package with source code of the core
 sdist:
 	rm -rf src/ dist/
