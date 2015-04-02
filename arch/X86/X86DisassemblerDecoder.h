@@ -614,6 +614,10 @@ typedef struct InternalInstruction {
   /* The type of the vector extension prefix */
   VectorExtensionType vectorExtensionType;
 
+  /* The location where a mandatory prefix would have to be (i.e., right before
+	 the opcode, or right before the REX prefix if one is present) */
+  uint64_t necessaryPrefixLocation;
+
   /* Sizes of various critical pieces of data, in bytes */
   uint8_t registerSize;
   uint8_t addressSize;
