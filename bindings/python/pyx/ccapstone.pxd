@@ -65,5 +65,8 @@ cdef extern from "<capstone/capstone.h>":
 
     int cs_op_count(csh handle, cs_insn *insn, unsigned int op_type)
 
+    cs_err cs_regs_access(csh handle, cs_insn *insn, uint16_t *regs_read, uint8_t *read_count, uint16_t *regs_write, uint8_t *write_count)
+
     int cs_op_index(csh handle, cs_insn *insn, unsigned int op_type,
         unsigned int position)
+

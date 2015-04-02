@@ -33,7 +33,7 @@ class CsDetail(object):
                 self.modrm, self.sib, self.disp, \
                 self.sib_index, self.sib_scale, self.sib_base, \
                 self.xop_cc, self.sse_cc, self.avx_cc, self.avx_sae, self.avx_rm, \
-                self.operands) = x86.get_arch_info(detail.arch.x86)
+                self.eflags, self.operands) = x86.get_arch_info(detail.arch.x86)
         elif arch == capstone.CS_ARCH_MIPS:
                 self.operands = mips.get_arch_info(detail.arch.mips)
         elif arch == capstone.CS_ARCH_PPC:
@@ -240,6 +240,27 @@ cdef class CsInsn(object):
                 c += 1
             if c == position:
                 return op
+
+    # Return (list-of-registers-read, list-of-registers-modified) by this instructions.
+    # This includes all the implicit & explicit registers.
+    def regs_access(self):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
+        cdef cc.uint16_t regs_read[64], regs_write[64]
+        cdef cc.uint8_t read_count, write_count
+
+        status = cc.cs_regs_access(self._cs.csh, &self._raw, regs_read, &read_count, regs_write, &write_count)
+        if status != capstone.CS_ERR_OK:
+            raise CsError(status)
+
+        r1 = []
+        for i from 0 <= i < read_count: r1.append(regs_read[i])
+
+        w1 = []
+        for i from 0 <= i < write_count: w1.append(regs_write[i])
+
+        return (r1, w1)
 
 
 cdef class Cs(object):
