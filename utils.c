@@ -93,3 +93,28 @@ int cs_snprintf(char *buffer, size_t size, const char *fmt, ...)
 
 	return ret;
 }
+
+bool arr_exist8(unsigned char *arr, unsigned char max, unsigned int id)
+{
+	int i;
+
+	for (i = 0; i < max; i++) {
+		if (arr[i] == id)
+			return true;
+	}
+
+	return false;
+}
+
+bool arr_exist(uint16_t *arr, unsigned char max, unsigned int id)
+{
+	int i;
+
+	for (i = 0; i < max; i++) {
+		if (arr[i] == id)
+			return true;
+	}
+
+	return false;
+}
+

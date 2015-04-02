@@ -2799,6 +2799,28 @@ static bool valid_repe(cs_struct *h, unsigned int opcode)
 	// not found
 	return false;
 }
+
+// add *CX register to regs_read[] & regs_write[]
+static void add_cx(MCInst *MI)
+{
+	if (MI->csh->detail) {
+		x86_reg cx;
+
+		if (MI->csh->mode & CS_MODE_16)
+			cx = X86_REG_CX;
+		else if (MI->csh->mode & CS_MODE_32)
+			cx = X86_REG_ECX;
+		else	// 64-bit
+			cx = X86_REG_RCX;
+
+		MI->flat_insn->detail->regs_read[MI->flat_insn->detail->regs_read_count] = cx;
+		MI->flat_insn->detail->regs_read_count++;
+
+		MI->flat_insn->detail->regs_write[MI->flat_insn->detail->regs_write_count] = cx;
+		MI->flat_insn->detail->regs_write_count++;
+	}
+}
+
 // return true if we patch the mnemonic
 bool X86_lockrep(MCInst *MI, SStream *O)
 {
@@ -2818,6 +2840,7 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 #ifndef CAPSTONE_DIET	// only care about memonic in standard (non-diet) mode
 			if (valid_repne(MI->csh, opcode)) {
 				SStream_concat(O, "repne|");
+				add_cx(MI);
 			} else {
 				// invalid prefix
 				MI->x86_prefix[0] = 0;
@@ -2849,8 +2872,10 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 #ifndef CAPSTONE_DIET	// only care about memonic in standard (non-diet) mode
 			if (valid_rep(MI->csh, opcode)) {
 				SStream_concat(O, "rep|");
+				add_cx(MI);
 			} else if (valid_repe(MI->csh, opcode)) {
 				SStream_concat(O, "repe|");
+				add_cx(MI);
 			} else {
 				// invalid prefix
 				MI->x86_prefix[0] = 0;
@@ -3022,26 +3047,26 @@ void X86_reg_access(const cs_insn *insn,
 		cs_x86_op *op = &(x86->operands[i]);
 		switch((int)op->type) {
 			case X86_OP_REG:
-				if (op->access & CS_AC_READ) {
+				if ((op->access & CS_AC_READ) && !arr_exist(regs_read, read_count, op->reg)) {
 					regs_read[read_count] = op->reg;
 					read_count++;
 				}
-				if (op->access & CS_AC_WRITE) {
+				if ((op->access & CS_AC_WRITE) && !arr_exist(regs_write, write_count, op->reg)) {
 					regs_write[write_count] = op->reg;
 					write_count++;
 				}
 				break;
 			case X86_OP_MEM:
 				// registers appeared in memory references always being read
-				if (op->mem.segment != X86_REG_INVALID) {
+				if ((op->mem.segment != X86_REG_INVALID)) {
 					regs_read[read_count] = op->mem.segment;
 					read_count++;
 				}
-				if (op->mem.base != X86_REG_INVALID) {
+				if ((op->mem.base != X86_REG_INVALID) && !arr_exist(regs_read, read_count, op->mem.base)) {
 					regs_read[read_count] = op->mem.base;
 					read_count++;
 				}
-				if (op->mem.index != X86_REG_INVALID) {
+				if ((op->mem.index != X86_REG_INVALID) && !arr_exist(regs_read, read_count, op->mem.index)) {
 					regs_read[read_count] = op->mem.index;
 					read_count++;
 				}

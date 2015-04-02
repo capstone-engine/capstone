@@ -774,30 +774,6 @@ const char *cs_group_name(csh ud, unsigned int group)
 	return handle->group_name(ud, group);
 }
 
-static bool arr_exist8(unsigned char *arr, unsigned char max, unsigned int id)
-{
-	int i;
-
-	for (i = 0; i < max; i++) {
-		if (arr[i] == id)
-			return true;
-	}
-
-	return false;
-}
-
-static bool arr_exist(uint16_t *arr, unsigned char max, unsigned int id)
-{
-	int i;
-
-	for (i = 0; i < max; i++) {
-		if (arr[i] == id)
-			return true;
-	}
-
-	return false;
-}
-
 CAPSTONE_EXPORT
 bool cs_insn_group(csh ud, const cs_insn *insn, unsigned int group_id)
 {
