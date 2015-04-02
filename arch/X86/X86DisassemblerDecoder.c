@@ -1123,7 +1123,8 @@ static int getID(struct InternalInstruction *insn)
 		}
 	} else {
 		if (insn->mode != MODE_16BIT && isPrefixAtLocation(insn, 0x66)) {
-			attrMask |= ATTR_OPSIZE;
+			if (insn->twoByteEscape != 0x0f)
+				attrMask |= ATTR_OPSIZE;
 		} else if (isPrefixAtLocation(insn, 0x67))
 			attrMask |= ATTR_ADSIZE;
 
