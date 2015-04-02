@@ -1122,17 +1122,15 @@ static int getID(struct InternalInstruction *insn)
 			return -1;
 		}
 	} else {
-		if (insn->mode != MODE_16BIT && isPrefixAtLocation(insn, 0x66))
+		if (insn->mode != MODE_16BIT && isPrefixAtLocation(insn, 0x66)) {
 			attrMask |= ATTR_OPSIZE;
-		else if (isPrefixAtLocation(insn, 0x67))
+		} else if (isPrefixAtLocation(insn, 0x67))
 			attrMask |= ATTR_ADSIZE;
 
 		if (isPrefixAtLocation(insn, 0xf3)) {
-			if (insn->twoByteEscape == 0x0f)	// 0x66, 0x0f, ... like CRC32 case
-				attrMask |= ATTR_XS;
+			attrMask |= ATTR_XS;
 		} else if (isPrefixAtLocation(insn, 0xf2)) {
-			if (insn->twoByteEscape == 0x0f)	// 0x66, 0x0f, ... like CRC32 case
-				attrMask |= ATTR_XD;
+			attrMask |= ATTR_XD;
 		}
 	}
 
