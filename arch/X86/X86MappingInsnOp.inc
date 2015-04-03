@@ -1863,7 +1863,7 @@
 },
 {	/* X86_CMPSB, X86_INS_CMPSB: cmpsb	$src, $dst */
 	X86_REG_EFLAGS,
-	{ CS_AC_IGNORE, CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* X86_CMPSDrm, X86_INS_CMPSD: cmp${cc}sd	$dst, $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
@@ -1887,7 +1887,7 @@
 },
 {	/* X86_CMPSQ, X86_INS_CMPSQ: cmpsq	$src, $dst */
 	X86_REG_EFLAGS,
-	{ CS_AC_IGNORE, CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* X86_CMPSSrm, X86_INS_CMPSS: cmp${cc}ss	$dst, $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
@@ -1907,7 +1907,7 @@
 },
 {	/* X86_CMPSW, X86_INS_CMPSW: cmpsw	$src, $dst */
 	X86_REG_EFLAGS,
-	{ CS_AC_IGNORE, CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* X86_CMPXCHG16B, X86_INS_CMPXCHG16B: cmpxchg16b	$dst */
 	X86_EFLAGS_MODIFY_ZF,
@@ -4539,19 +4539,19 @@
 },
 {	/* X86_LODSB, X86_INS_LODSB: lodsb	al, $src */
 	X86_EFLAGS_TEST_DF,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_LODSL, X86_INS_LODSD: lods{l|d}	{$src, %eax|eax, $src} */
 	X86_EFLAGS_TEST_DF,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_LODSQ, X86_INS_LODSQ: lodsq	rax, $src */
 	X86_EFLAGS_TEST_DF,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_LODSW, X86_INS_LODSW: lodsw	ax, $src */
 	X86_EFLAGS_TEST_DF,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_LOOP, X86_INS_LOOP: loop	$dst */
 	0,
@@ -6135,11 +6135,11 @@
 },
 {	/* X86_MOVSB, X86_INS_MOVSB: movsb	$dst, $src */
 	X86_EFLAGS_TEST_DF,
-	{ CS_AC_IGNORE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOVSDmr, X86_INS_MOVSD: movsd	$dst, $src */
 	X86_EFLAGS_TEST_DF,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOVSDrm, X86_INS_MOVSD: movsd	$dst, $src */
 	X86_EFLAGS_TEST_DF,
@@ -6171,7 +6171,7 @@
 },
 {	/* X86_MOVSL, X86_INS_MOVSD: movs{l|d}	{$src, $dst|$dst, $src} */
 	X86_EFLAGS_TEST_DF,
-	{ CS_AC_IGNORE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOVSLDUPrm, X86_INS_MOVSLDUP: movsldup	$dst, $src */
 	0,
@@ -6183,7 +6183,7 @@
 },
 {	/* X86_MOVSQ, X86_INS_MOVSQ: movsq	$dst, $src */
 	X86_EFLAGS_TEST_DF,
-	{ CS_AC_IGNORE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOVSS2DImr, X86_INS_MOVD: movd	$dst, $src */
 	0,
@@ -6211,7 +6211,7 @@
 },
 {	/* X86_MOVSW, X86_INS_MOVSW: movsw	$dst, $src */
 	X86_EFLAGS_TEST_DF,
-	{ CS_AC_IGNORE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOVSX16rm8, X86_INS_MOVSX: movs{bw|x}	{$src, $dst|$dst, $src} */
 	0,
@@ -9367,19 +9367,19 @@
 },
 {	/* X86_SCASB, X86_INS_SCASB: scasb	al, $dst */
 	X86_REG_EFLAGS,
-	{ CS_AC_READ, CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* X86_SCASL, X86_INS_SCASD: scas{l|d}	{$dst, %eax|eax, $dst} */
 	X86_REG_EFLAGS,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* X86_SCASQ, X86_INS_SCASQ: scasq	rax, $dst */
 	X86_REG_EFLAGS,
-	{ CS_AC_READ, CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* X86_SCASW, X86_INS_SCASW: scasw	ax, $dst */
 	X86_REG_EFLAGS,
-	{ CS_AC_READ, CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* X86_SETAEm, X86_INS_SETAE: setae	$dst */
 	X86_EFLAGS_TEST_CF,
@@ -10051,19 +10051,19 @@
 },
 {	/* X86_STOSB, X86_INS_STOSB: stosb	$dst, al */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_STOSL, X86_INS_STOSD: stos{l|d}	{%eax, $dst|$dst, eax} */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_STOSQ, X86_INS_STOSQ: stosq	$dst, rax */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_STOSW, X86_INS_STOSW: stosw	$dst, ax */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_STR16r, X86_INS_STR: str{w}	$dst */
 	0,
