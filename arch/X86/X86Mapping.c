@@ -2296,6 +2296,19 @@ static insn_map insns[] = {	// reduce x86 instructions
 };
 #endif
 
+// replace r1 = r2
+static void arr_replace(uint16_t *arr, uint8_t max, x86_reg r1, x86_reg r2)
+{
+	uint8_t i;
+
+	for(i = 0; i < max; i++) {
+		if (arr[i] == r1) {
+			arr[i] = r2;
+			break;
+		}
+	}
+}
+
 // given internal insn id, return public instruction info
 void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
@@ -2333,6 +2346,76 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 						insn->detail->regs_write[1] = X86_REG_ECX;
 						insn->detail->regs_write[2] = X86_REG_EDX;
 						insn->detail->regs_write_count = 3;
+					}
+					break;
+			}
+
+			switch(insn->id) {
+				default:
+					break;
+
+				case X86_INS_LODSB:
+				case X86_INS_LODSD:
+				case X86_INS_LODSQ:
+				case X86_INS_LODSW:
+					switch(h->mode) {
+						default:
+							break;
+						case CS_MODE_16:
+							arr_replace(insn->detail->regs_read, insn->detail->regs_read_count, X86_REG_ESI, X86_REG_SI);
+							arr_replace(insn->detail->regs_write, insn->detail->regs_write_count, X86_REG_ESI, X86_REG_SI);
+							break;
+						case CS_MODE_64:
+							arr_replace(insn->detail->regs_read, insn->detail->regs_read_count, X86_REG_ESI, X86_REG_RSI);
+							arr_replace(insn->detail->regs_write, insn->detail->regs_write_count, X86_REG_ESI, X86_REG_RSI);
+							break;
+					}
+					break;
+
+				case X86_INS_SCASB:
+				case X86_INS_SCASW:
+				case X86_INS_SCASQ:
+				case X86_INS_STOSB:
+				case X86_INS_STOSD:
+				case X86_INS_STOSQ:
+				case X86_INS_STOSW:
+					switch(h->mode) {
+						default:
+							break;
+						case CS_MODE_16:
+							arr_replace(insn->detail->regs_read, insn->detail->regs_read_count, X86_REG_EDI, X86_REG_DI);
+							arr_replace(insn->detail->regs_write, insn->detail->regs_write_count, X86_REG_EDI, X86_REG_DI);
+							break;
+						case CS_MODE_64:
+							arr_replace(insn->detail->regs_read, insn->detail->regs_read_count, X86_REG_EDI, X86_REG_RDI);
+							arr_replace(insn->detail->regs_write, insn->detail->regs_write_count, X86_REG_EDI, X86_REG_RDI);
+							break;
+					}
+					break;
+
+				case X86_INS_CMPSB:
+				case X86_INS_CMPSD:
+				case X86_INS_CMPSQ:
+				case X86_INS_CMPSW:
+				case X86_INS_MOVSB:
+				case X86_INS_MOVSW:
+				case X86_INS_MOVSD:
+				case X86_INS_MOVSQ:
+					switch(h->mode) {
+						default:
+							break;
+						case CS_MODE_16:
+							arr_replace(insn->detail->regs_read, insn->detail->regs_read_count, X86_REG_EDI, X86_REG_DI);
+							arr_replace(insn->detail->regs_write, insn->detail->regs_write_count, X86_REG_EDI, X86_REG_DI);
+							arr_replace(insn->detail->regs_read, insn->detail->regs_read_count, X86_REG_ESI, X86_REG_SI);
+							arr_replace(insn->detail->regs_write, insn->detail->regs_write_count, X86_REG_ESI, X86_REG_SI);
+							break;
+						case CS_MODE_64:
+							arr_replace(insn->detail->regs_read, insn->detail->regs_read_count, X86_REG_EDI, X86_REG_RDI);
+							arr_replace(insn->detail->regs_write, insn->detail->regs_write_count, X86_REG_EDI, X86_REG_RDI);
+							arr_replace(insn->detail->regs_read, insn->detail->regs_read_count, X86_REG_ESI, X86_REG_RSI);
+							arr_replace(insn->detail->regs_write, insn->detail->regs_write_count, X86_REG_ESI, X86_REG_RSI);
+							break;
 					}
 					break;
 			}
@@ -2467,6 +2550,52 @@ static struct insn_reg insn_regs_att[] = {
 	{ X86_POPFS16, X86_REG_FS },
 	{ X86_POPGS16, X86_REG_GS },
 	{ X86_POPSS16, X86_REG_SS },
+
+	{ X86_RCL32rCL, X86_REG_CL },
+	{ X86_SHL8rCL, X86_REG_CL },
+	{ X86_SHL16rCL, X86_REG_CL },
+	{ X86_SHL32rCL, X86_REG_CL },
+	{ X86_SHL64rCL, X86_REG_CL },
+	{ X86_SAL8rCL, X86_REG_CL },
+	{ X86_SAL16rCL, X86_REG_CL },
+	{ X86_SAL32rCL, X86_REG_CL },
+	{ X86_SAL64rCL, X86_REG_CL },
+	{ X86_SHR8rCL, X86_REG_CL },
+	{ X86_SHR16rCL, X86_REG_CL },
+	{ X86_SHR32rCL, X86_REG_CL },
+	{ X86_SHR64rCL, X86_REG_CL },
+	{ X86_SAR8rCL, X86_REG_CL },
+	{ X86_SAR16rCL, X86_REG_CL },
+	{ X86_SAR32rCL, X86_REG_CL },
+	{ X86_SAR64rCL, X86_REG_CL },
+	{ X86_RCL8rCL, X86_REG_CL },
+	{ X86_RCL16rCL, X86_REG_CL },
+	{ X86_RCL32rCL, X86_REG_CL },
+	{ X86_RCL64rCL, X86_REG_CL },
+	{ X86_RCR8rCL, X86_REG_CL },
+	{ X86_RCR16rCL, X86_REG_CL },
+	{ X86_RCR32rCL, X86_REG_CL },
+	{ X86_RCR64rCL, X86_REG_CL },
+	{ X86_ROL8rCL, X86_REG_CL },
+	{ X86_ROL16rCL, X86_REG_CL },
+	{ X86_ROL32rCL, X86_REG_CL },
+	{ X86_ROL64rCL, X86_REG_CL },
+	{ X86_ROR8rCL, X86_REG_CL },
+	{ X86_ROR16rCL, X86_REG_CL },
+	{ X86_ROR32rCL, X86_REG_CL },
+	{ X86_ROR64rCL, X86_REG_CL },
+	{ X86_SHLD16rrCL, X86_REG_CL },
+	{ X86_SHRD16rrCL, X86_REG_CL },
+	{ X86_SHLD32rrCL, X86_REG_CL },
+	{ X86_SHRD32rrCL, X86_REG_CL },
+	{ X86_SHLD64rrCL, X86_REG_CL },
+	{ X86_SHRD64rrCL, X86_REG_CL },
+	{ X86_SHLD16mrCL, X86_REG_CL },
+	{ X86_SHRD16mrCL, X86_REG_CL },
+	{ X86_SHLD32mrCL, X86_REG_CL },
+	{ X86_SHRD32mrCL, X86_REG_CL },
+	{ X86_SHLD64mrCL, X86_REG_CL },
+	{ X86_SHRD64mrCL, X86_REG_CL },
 
 #ifndef CAPSTONE_X86_REDUCE
 	{ X86_SKINIT, X86_REG_EAX },

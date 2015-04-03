@@ -771,12 +771,15 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 	}
 
 	if (MI->csh->detail) {
+		uint8_t access[6];
 		// special instruction needs to supply register op
 		// first op can be embedded in the asm by llvm.
 		// so we have to add the missing register as the first operand
+
+		//printf(">>> opcode = %u\n", MCInst_getOpcode(MI));
+
 		reg = X86_insn_reg_att(MCInst_getOpcode(MI));
 		if (reg) {
-			uint8_t access[6];
 			// shift all the ops right to leave 1st slot for this new register op
 			memmove(&(MI->flat_insn->detail->x86.operands[1]), &(MI->flat_insn->detail->x86.operands[0]),
 					sizeof(MI->flat_insn->detail->x86.operands[0]) * (ARR_SIZE(MI->flat_insn->detail->x86.operands) - 1));
@@ -784,26 +787,25 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 			MI->flat_insn->detail->x86.operands[0].reg = reg;
 			MI->flat_insn->detail->x86.operands[0].size = MI->csh->regsize_map[reg];
 
-			get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
-			MI->flat_insn->detail->x86.operands[0].access = access[0];
 			MI->flat_insn->detail->x86.op_count++;
 		} else {
 			if (X86_insn_reg_att2(MCInst_getOpcode(MI), &reg, &reg2)) {
-				uint8_t access[6];
-
-				get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
 
 				MI->flat_insn->detail->x86.operands[0].type = X86_OP_REG;
 				MI->flat_insn->detail->x86.operands[0].reg = reg;
 				MI->flat_insn->detail->x86.operands[0].size = MI->csh->regsize_map[reg];
-				MI->flat_insn->detail->x86.operands[0].access = access[0];
 				MI->flat_insn->detail->x86.operands[1].type = X86_OP_REG;
 				MI->flat_insn->detail->x86.operands[1].reg = reg2;
 				MI->flat_insn->detail->x86.operands[1].size = MI->csh->regsize_map[reg2];
-				MI->flat_insn->detail->x86.operands[1].access = access[1];
 				MI->flat_insn->detail->x86.op_count = 2;
 			}
 		}
+
+#ifndef CAPSTONE_DIET
+		get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+		MI->flat_insn->detail->x86.operands[0].access = access[0];
+		MI->flat_insn->detail->x86.operands[1].access = access[1];
+#endif
 	}
 }
 
