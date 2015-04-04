@@ -2560,6 +2560,13 @@ static struct insn_reg insn_regs_att[] = {
 	{ X86_VMSAVE64, X86_REG_RAX },
 
 	{ X86_FNSTSW16r, X86_REG_AX },
+
+	{ X86_ADD_FrST0, X86_REG_ST0 },
+	{ X86_SUB_FrST0, X86_REG_ST0 },
+	{ X86_SUBR_FrST0, X86_REG_ST0 },
+	{ X86_MUL_FrST0, X86_REG_ST0 },
+	{ X86_DIV_FrST0, X86_REG_ST0 },
+	{ X86_DIVR_FrST0, X86_REG_ST0 },
 #endif
 };
 
@@ -2663,6 +2670,23 @@ static struct insn_reg insn_regs_intel[] = {
 	{ X86_VMSAVE64, X86_REG_RAX },
 
 	{ X86_FNSTSW16r, X86_REG_AX },
+
+	{ X86_CMOVB_F, X86_REG_ST0 },
+	{ X86_CMOVBE_F, X86_REG_ST0 },
+	{ X86_CMOVE_F, X86_REG_ST0 },
+	{ X86_CMOVP_F, X86_REG_ST0 },
+	{ X86_CMOVNB_F, X86_REG_ST0 },
+	{ X86_CMOVNBE_F, X86_REG_ST0 },
+	{ X86_CMOVNE_F, X86_REG_ST0 },
+	{ X86_CMOVNP_F, X86_REG_ST0 },
+	{ X86_ST_FXCHST0r, X86_REG_ST0 },
+	{ X86_ST_FXCHST0r_alt, X86_REG_ST0 },
+	{ X86_ST_FCOMST0r, X86_REG_ST0 },
+	{ X86_ST_FCOMPST0r, X86_REG_ST0 },
+	{ X86_ST_FCOMPST0r_alt, X86_REG_ST0 },
+	{ X86_ST_FPST0r, X86_REG_ST0 },
+	{ X86_ST_FPST0r_alt, X86_REG_ST0 },
+	{ X86_ST_FPNCEST0r, X86_REG_ST0 },
 #endif
 };
 
