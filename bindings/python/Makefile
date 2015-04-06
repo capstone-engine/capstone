@@ -13,13 +13,21 @@ install:
 	rm -rf $(OBJDIR) src/
 	rm -rf prebuilt/win64/capstone.dll
 	rm -rf prebuilt/win32/capstone.dll
-	python setup.py build -b $(OBJDIR) install
+	if test -n "${DESTDIR}"; then \
+		python setup.py build -b $(OBJDIR) install --root="${DESTDIR}"; \
+	else \
+		python setup.py build -b $(OBJDIR) install; \
+	fi
 
 install3:
 	rm -rf $(OBJDIR) src/
 	rm -rf prebuilt/win64/capstone.dll
 	rm -rf prebuilt/win32/capstone.dll
-	python3 setup.py build -b $(OBJDIR) install
+	if test -n "${DESTDIR}"; then \
+		python3 setup.py build -b $(OBJDIR) install --root="${DESTDIR}"; \
+	else \
+		python3 setup.py build -b $(OBJDIR) install; \
+	fi
 
 # NOTE: Newer cython can be installed by: sudo pip install --upgrade cython
 install_cython:
