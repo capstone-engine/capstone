@@ -10,10 +10,7 @@ from distutils import log
 from distutils import dir_util
 from distutils.command.build_clib import build_clib
 from distutils.command.sdist import sdist
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils import setup
+from distutils.core import setup
 from distutils.sysconfig import get_python_lib
 
 # prebuilt libraries for Windows - for sdist
