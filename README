@@ -15,8 +15,8 @@ Capstone offers some unparalleled features:
   registers read & written.
 
 - Implemented in pure C language, with lightweight wrappers for C++, C#, Go,
-  Java, Lua, NodeJS, Ocaml, Python, Ruby & Vala ready (available in main code,
-  or provided externally by the community).
+  Java, Lua, NodeJS, Ocaml, Python, Ruby, Rust & Vala ready (available in main
+  code, or provided externally by the community).
 
 - Native support for all popular platforms: Windows, Mac OSX, iOS, Android,
   Linux, *BSD, Solaris, etc.
