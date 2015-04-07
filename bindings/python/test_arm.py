@@ -73,7 +73,7 @@ def print_insn_detail(insn):
                         % (c, to_x_32(i.mem.lshift)))
 
             if i.neon_lane != -1:
-                print("\t\t\toperands[%u].neon_lane = %u" % (c, i.neon_lane))
+                print("\t\toperands[%u].neon_lane = %u" % (c, i.neon_lane))
 
             if i.access == CS_AC_READ:
                 print("\t\toperands[%u].access: READ\n" % (c))
