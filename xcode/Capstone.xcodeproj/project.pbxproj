@@ -308,6 +308,7 @@
 		DC474F6B19DE6F3B00BCA449 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC5BFF4019EE544E008CA585 /* test_iter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_iter; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC5BFF4819EE54BE008CA585 /* test_iter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_iter.c; path = ../tests/test_iter.c; sourceTree = "<group>"; };
+		DC696C5E1AD4600200A56306 /* myinttypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = myinttypes.h; path = ../myinttypes.h; sourceTree = "<group>"; };
 		DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcapstone.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCFE23CD19DDCC9500EF8EA9 /* libcapstone.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libcapstone.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCFE23DD19DDCD8700EF8EA9 /* AArch64AddressingModes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AArch64AddressingModes.h; sourceTree = "<group>"; };
@@ -430,7 +431,6 @@
 		DCFE24A119DDCDEE00EF8EA9 /* SStream.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SStream.c; path = ../SStream.c; sourceTree = "<group>"; };
 		DCFE24A219DDCDEE00EF8EA9 /* utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utils.c; path = ../utils.c; sourceTree = "<group>"; };
 		DCFE24B019DDCE1E00EF8EA9 /* cs_priv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = cs_priv.h; path = ../cs_priv.h; sourceTree = "<group>"; };
-		DCFE24B119DDCE1E00EF8EA9 /* inttypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = inttypes.h; path = ../inttypes.h; sourceTree = "<group>"; };
 		DCFE24B219DDCE1E00EF8EA9 /* LEB128.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LEB128.h; path = ../LEB128.h; sourceTree = "<group>"; };
 		DCFE24B319DDCE1E00EF8EA9 /* MathExtras.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MathExtras.h; path = ../MathExtras.h; sourceTree = "<group>"; };
 		DCFE24B419DDCE1E00EF8EA9 /* MCDisassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MCDisassembler.h; path = ../MCDisassembler.h; sourceTree = "<group>"; };
@@ -616,7 +616,6 @@
 			children = (
 				DCFE249D19DDCDEE00EF8EA9 /* cs.c */,
 				DCFE24B019DDCE1E00EF8EA9 /* cs_priv.h */,
-				DCFE24B119DDCE1E00EF8EA9 /* inttypes.h */,
 				DCFE24B219DDCE1E00EF8EA9 /* LEB128.h */,
 				DCFE24B319DDCE1E00EF8EA9 /* MathExtras.h */,
 				DCFE24B419DDCE1E00EF8EA9 /* MCDisassembler.h */,
@@ -627,6 +626,7 @@
 				DCFE24B719DDCE1E00EF8EA9 /* MCInstrDesc.h */,
 				DCFE24A019DDCDEE00EF8EA9 /* MCRegisterInfo.c */,
 				DCFE24B819DDCE1E00EF8EA9 /* MCRegisterInfo.h */,
+				DC696C5E1AD4600200A56306 /* myinttypes.h */,
 				DCFE24A119DDCDEE00EF8EA9 /* SStream.c */,
 				DCFE24B919DDCE1E00EF8EA9 /* SStream.h */,
 				DCFE24A219DDCDEE00EF8EA9 /* utils.c */,
