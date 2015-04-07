@@ -35,6 +35,8 @@ class ArmOp(ctypes.Structure):
         ('type', ctypes.c_uint),
         ('value', ArmOpValue),
         ('subtracted', ctypes.c_bool),
+        ('access', ctypes.c_uint8),
+        ('neon_lane', ctypes.c_int8),
     )
 
     @property

@@ -55,6 +55,8 @@ public class Arm {
     public int type;
     public OpValue value;
     public boolean subtracted;
+    public int access;
+    public int neon_lane;
 
     public void read() {
       readField("vector_index");
@@ -72,11 +74,13 @@ public class Arm {
       readField("value");
       readField("shift");
       readField("subtracted");
+      readField("access");
+      readField("neon_lane");
     }
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("vector_index", "shift", "type", "value", "subtracted");
+      return Arrays.asList("vector_index", "shift", "type", "value", "subtracted", "access", "neon_lane");
     }
   }
 
