@@ -121,6 +121,21 @@ static void printModImmOperand(MCInst *MI, unsigned OpNum, SStream *O);
 
 static void printInstSyncBOption(MCInst *MI, unsigned OpNum, SStream *O);
 
+// copy & normalize access info
+static uint8_t get_op_access(cs_struct *h, unsigned int id, unsigned int index)
+{
+#ifndef CAPSTONE_DIET
+	uint8_t *arr = ARM_get_op_access(h, id);
+
+	if (arr[index] == CS_AC_IGNORE)
+		return 0;
+
+	return arr[index];
+#else
+	return 0;
+#endif
+}
+
 static void set_mem_access(MCInst *MI, bool status)
 {
 	if (MI->csh->detail != CS_OPT_ON)
@@ -128,11 +143,21 @@ static void set_mem_access(MCInst *MI, bool status)
 
 	MI->csh->doing_mem = status;
 	if (status) {
+#ifndef CAPSTONE_DIET
+		uint8_t access;
+#endif
+
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_MEM;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.base = ARM_REG_INVALID;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.index = ARM_REG_INVALID;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.scale = 1;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = 0;
+
+#ifndef CAPSTONE_DIET
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+		MI->ac_idx++;
+#endif
 	} else {
 		// done, create the next operand slot
 		MI->flat_insn->detail->arm.op_count++;
@@ -391,8 +416,10 @@ void ARM_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 		case ARM_MOVPCLR:
 			insn->detail->arm.operands[0].type = ARM_OP_REG;
 			insn->detail->arm.operands[0].reg = ARM_REG_PC;
+			insn->detail->arm.operands[0].access = CS_AC_READ;
 			insn->detail->arm.operands[1].type = ARM_OP_REG;
 			insn->detail->arm.operands[1].reg = ARM_REG_LR;
+			insn->detail->arm.operands[1].access = CS_AC_WRITE;
 			insn->detail->arm.op_count = 2;
 			break;
 	}
@@ -401,8 +428,8 @@ void ARM_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	MCRegisterInfo *MRI = (MCRegisterInfo *)Info;
-
 	unsigned Opcode = MCInst_getOpcode(MI), tmp, i, pubOpcode;
+
 
 	switch(Opcode) {
 		// Check for HINT instructions w/ canonical names.
@@ -452,6 +479,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 							if (MI->csh->detail) {
 								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(Dst);
+								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = CS_AC_WRITE;
 								MI->flat_insn->detail->arm.op_count++;
 							}
 
@@ -461,6 +489,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 							if (MI->csh->detail) {
 								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MO1);
+								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = CS_AC_READ;
 								MI->flat_insn->detail->arm.op_count++;
 							}
 
@@ -469,6 +498,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 							if (MI->csh->detail) {
 								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MO2);
+								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = CS_AC_READ;
 								MI->flat_insn->detail->arm.op_count++;
 							}
 							//assert(ARM_AM_getSORegOffset(MO3.getImm()) == 0);
@@ -490,6 +520,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 							if (MI->csh->detail) {
 								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(Dst);
+								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = CS_AC_WRITE;
 								MI->flat_insn->detail->arm.op_count++;
 							}
 
@@ -498,6 +529,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 							if (MI->csh->detail) {
 								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MO1);
+								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = CS_AC_READ;
 								MI->flat_insn->detail->arm.op_count++;
 							}
 
@@ -546,8 +578,16 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 							SStream_concat0(O, "\t{");
 							printRegName(MI->csh, O, MCOperand_getReg(MCInst_getOperand(MI, 1)));
 							if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+								uint8_t access;
+#endif
 								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, 1));
+#ifndef CAPSTONE_DIET
+								access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+								MI->ac_idx++;
+#endif
 								MI->flat_insn->detail->arm.op_count++;
 							}
 							SStream_concat0(O, "}");
@@ -567,6 +607,13 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 							if (Opcode == ARM_t2LDMIA_UPD)
 								SStream_concat0(O, ".w");
 							SStream_concat0(O, "\t");
+							if (MI->csh->detail) {
+								MI->flat_insn->detail->regs_read[MI->flat_insn->detail->regs_read_count] = ARM_REG_SP;
+								MI->flat_insn->detail->regs_read_count++;
+								MI->flat_insn->detail->regs_write[MI->flat_insn->detail->regs_write_count] = ARM_REG_SP;
+								MI->flat_insn->detail->regs_write_count++;
+							}
+
 							printRegisterList(MI, 4, O);
 							return;
 						}
@@ -586,6 +633,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 								if (MI->csh->detail) {
 									MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 									MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, 0));
+									MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = CS_AC_READ;
 									MI->flat_insn->detail->arm.op_count++;
 								}
 								SStream_concat0(O, "}");
@@ -638,6 +686,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 							 if (MI->csh->detail) {
 								 MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 								 MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = BaseReg;
+								 MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = CS_AC_READ;
 								 MI->flat_insn->detail->arm.op_count++;
 							 }
 							 if (Writeback) {
@@ -721,8 +770,17 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				else
 					MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.index = Reg;
 			} else {
+#ifndef CAPSTONE_DIET
+				uint8_t access;
+#endif
+
 				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = Reg;
+#ifndef CAPSTONE_DIET
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+				MI->ac_idx++;
+#endif
 				MI->flat_insn->detail->arm.op_count++;
 			}
 		}
@@ -829,6 +887,7 @@ static void printThumbLdrLabelOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.index = ARM_REG_INVALID;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.scale = 1;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = OffImm;
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = CS_AC_READ;
 		MI->flat_insn->detail->arm.op_count++;
 	}
 }
@@ -850,6 +909,7 @@ static void printSORegRegOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MO1);
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = CS_AC_READ;
 
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].shift.type = (MCOperand_getImm(MO3) & 7) + ARM_SFT_ASR_REG - 1;
 		MI->flat_insn->detail->arm.op_count++;
@@ -878,6 +938,7 @@ static void printSORegImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MO1);
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = CS_AC_READ;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].shift.type = MCOperand_getImm(MO2) & 7;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].shift.value = (unsigned int)MCOperand_getImm(MO2) >> 3;
 		MI->flat_insn->detail->arm.op_count++;
@@ -1019,6 +1080,7 @@ static void printAddrMode2OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MO1);
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = CS_AC_READ;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].subtracted = subtracted == ARM_AM_sub;
 		MI->flat_insn->detail->arm.op_count++;
 	}
@@ -1109,6 +1171,7 @@ static void printAddrMode3OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MO1);
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = CS_AC_READ;
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].subtracted = subtracted == ARM_AM_sub;
 			MI->flat_insn->detail->arm.op_count++;
 		}
@@ -1158,6 +1221,7 @@ static void printPostIdxRegOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MO1);
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = CS_AC_READ;
 		MI->flat_insn->detail->arm.op_count++;
 	}
 }
@@ -1194,6 +1258,7 @@ static void printAddrMode5Operand(MCInst *MI, unsigned OpNum, SStream *O,
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.index = ARM_REG_INVALID;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.scale = 1;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = 0;
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = CS_AC_READ;
 	}
 
 	ImmOffs = ARM_AM_getAM5Offset((unsigned int)MCOperand_getImm(MO2));
@@ -1268,6 +1333,7 @@ static void printAddrMode6OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MO);
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = CS_AC_READ;
 			MI->flat_insn->detail->arm.op_count++;
 		}
 	}
@@ -1382,17 +1448,37 @@ static void printPKHASRShiftImm(MCInst *MI, unsigned OpNum, SStream *O)
 static void printRegisterList(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	unsigned i, e;
+#ifndef CAPSTONE_DIET
+	uint8_t access;
+#endif
+
 	SStream_concat0(O, "{");
+
+#ifndef CAPSTONE_DIET
+	if (MI->csh->detail) {
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+	}
+#endif
+
 	for (i = OpNum, e = MCInst_getNumOperands(MI); i != e; ++i) {
 		if (i != OpNum) SStream_concat0(O, ", ");
 		printRegName(MI->csh, O, MCOperand_getReg(MCInst_getOperand(MI, i)));
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, i));
+#ifndef CAPSTONE_DIET
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 			MI->flat_insn->detail->arm.op_count++;
 		}
 	}
 	SStream_concat0(O, "}");
+
+#ifndef CAPSTONE_DIET
+	if (MI->csh->detail) {
+		MI->ac_idx++;
+	}
+#endif
 }
 
 static void printGPRPairOperand(MCInst *MI, unsigned OpNum, SStream *O,
@@ -1688,7 +1774,9 @@ static void printNoHashImmediate(MCInst *MI, unsigned OpNum, SStream *O)
 		SStream_concat(O, "%u", tmp);
 	if (MI->csh->detail) {
 		if (MI->csh->doing_mem) {
-			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = tmp;
+			MI->flat_insn->detail->arm.op_count--;
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].neon_lane = tmp;
+			MI->ac_idx--;	// consecutive operands share the same access right
 		} else {
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_IMM;
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = tmp;
@@ -1906,6 +1994,7 @@ static void printT2SOOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = Reg;
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = CS_AC_READ;
 		MI->flat_insn->detail->arm.op_count++;
 	}
 
@@ -2320,9 +2409,9 @@ static void printVectorIndex(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	unsigned tmp = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	if (tmp > HEX_THRESHOLD)
-		SStream_concat(O, "[0x%x]",tmp);
+		SStream_concat(O, "[0x%x]", tmp);
 	else
-		SStream_concat(O, "[%u]",tmp);
+		SStream_concat(O, "[%u]", tmp);
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count - 1].vector_index = tmp;
 	}
@@ -2333,9 +2422,22 @@ static void printVectorListOne(MCInst *MI, unsigned OpNum, SStream *O)
 	SStream_concat0(O, "{");
 	printRegName(MI->csh, O, MCOperand_getReg(MCInst_getOperand(MI, OpNum)));
 	if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+		uint8_t access;
+
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+#endif
+
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
+
+#ifndef CAPSTONE_DIET
+	MI->ac_idx++;
+#endif
 	}
 	SStream_concat0(O, "}");
 }
@@ -2343,14 +2445,25 @@ static void printVectorListOne(MCInst *MI, unsigned OpNum, SStream *O)
 static void printVectorListTwo(MCInst *MI, unsigned OpNum,
 		SStream *O, MCRegisterInfo *MRI)
 {
+#ifndef CAPSTONE_DIET
+	uint8_t access;
+#endif
 	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
 	unsigned Reg0 = MCRegisterInfo_getSubReg(MRI, Reg, ARM_dsub_0);
 	unsigned Reg1 = MCRegisterInfo_getSubReg(MRI, Reg, ARM_dsub_1);
+
+#ifndef CAPSTONE_DIET
+	access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+#endif
+
 	SStream_concat0(O, "{");
 	printRegName(MI->csh, O, Reg0);
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = Reg0;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, ", ");
@@ -2358,22 +2471,40 @@ static void printVectorListTwo(MCInst *MI, unsigned OpNum,
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = Reg1;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "}");
+
+#ifndef CAPSTONE_DIET
+	MI->ac_idx++;
+#endif
 }
 
 static void printVectorListTwoSpaced(MCInst *MI, unsigned OpNum,
 		SStream *O, MCRegisterInfo *MRI)
 {
+#ifndef CAPSTONE_DIET
+	uint8_t access;
+#endif
 	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
 	unsigned Reg0 = MCRegisterInfo_getSubReg(MRI, Reg, ARM_dsub_0);
 	unsigned Reg1 = MCRegisterInfo_getSubReg(MRI, Reg, ARM_dsub_2);
+
+#ifndef CAPSTONE_DIET
+	access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+#endif
+
 	SStream_concat0(O, "{");
 	printRegName(MI->csh, O, Reg0);
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = Reg0;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, ", ");
@@ -2381,13 +2512,26 @@ static void printVectorListTwoSpaced(MCInst *MI, unsigned OpNum,
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = Reg1;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "}");
+
+#ifndef CAPSTONE_DIET
+	MI->ac_idx++;
+#endif
 }
 
 static void printVectorListThree(MCInst *MI, unsigned OpNum, SStream *O)
 {
+#ifndef CAPSTONE_DIET
+	uint8_t access;
+
+	access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+#endif
+
 	// Normally, it's not safe to use register enum values directly with
 	// addition to get the next register, but for VFP registers, the
 	// sort order is guaranteed because they're all of the form D<n>.
@@ -2396,6 +2540,9 @@ static void printVectorListThree(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, ", ");
@@ -2403,6 +2550,9 @@ static void printVectorListThree(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 1;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, ", ");
@@ -2410,13 +2560,26 @@ static void printVectorListThree(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 2;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "}");
+
+#ifndef CAPSTONE_DIET
+	MI->ac_idx++;
+#endif
 }
 
 static void printVectorListFour(MCInst *MI, unsigned OpNum, SStream *O)
 {
+#ifndef CAPSTONE_DIET
+	uint8_t access;
+
+	access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+#endif
+
 	// Normally, it's not safe to use register enum values directly with
 	// addition to get the next register, but for VFP registers, the
 	// sort order is guaranteed because they're all of the form D<n>.
@@ -2425,6 +2588,9 @@ static void printVectorListFour(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, ", ");
@@ -2432,6 +2598,9 @@ static void printVectorListFour(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 1;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, ", ");
@@ -2439,6 +2608,9 @@ static void printVectorListFour(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 2;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, ", ");
@@ -2446,34 +2618,65 @@ static void printVectorListFour(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 3;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "}");
+
+#ifndef CAPSTONE_DIET
+	MI->ac_idx++;
+#endif
 }
 
 static void printVectorListOneAllLanes(MCInst *MI, unsigned OpNum, SStream *O)
 {
+#ifndef CAPSTONE_DIET
+	uint8_t access;
+
+	access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+#endif
+
 	SStream_concat0(O, "{");
 	printRegName(MI->csh, O, MCOperand_getReg(MCInst_getOperand(MI, OpNum)));
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "[]}");
+
+#ifndef CAPSTONE_DIET
+	MI->ac_idx++;
+#endif
 }
 
 static void printVectorListTwoAllLanes(MCInst *MI, unsigned OpNum,
 		SStream *O, MCRegisterInfo *MRI)
 {
+#ifndef CAPSTONE_DIET
+	uint8_t access;
+#endif
 	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
 	unsigned Reg0 = MCRegisterInfo_getSubReg(MRI, Reg, ARM_dsub_0);
 	unsigned Reg1 = MCRegisterInfo_getSubReg(MRI, Reg, ARM_dsub_1);
+
+#ifndef CAPSTONE_DIET
+	access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+#endif
+
 	SStream_concat0(O, "{");
 	printRegName(MI->csh, O, Reg0);
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = Reg0;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "[], ");
@@ -2481,13 +2684,26 @@ static void printVectorListTwoAllLanes(MCInst *MI, unsigned OpNum,
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = Reg1;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "[]}");
+
+#ifndef CAPSTONE_DIET
+	MI->ac_idx++;
+#endif
 }
 
 static void printVectorListThreeAllLanes(MCInst *MI, unsigned OpNum, SStream *O)
 {
+#ifndef CAPSTONE_DIET
+	uint8_t access;
+
+	access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+#endif
+
 	// Normally, it's not safe to use register enum values directly with
 	// addition to get the next register, but for VFP registers, the
 	// sort order is guaranteed because they're all of the form D<n>.
@@ -2496,6 +2712,9 @@ static void printVectorListThreeAllLanes(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "[], ");
@@ -2503,6 +2722,9 @@ static void printVectorListThreeAllLanes(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 1;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "[], ");
@@ -2510,13 +2732,26 @@ static void printVectorListThreeAllLanes(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 2;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "[]}");
+
+#ifndef CAPSTONE_DIET
+	MI->ac_idx++;
+#endif
 }
 
 static void printVectorListFourAllLanes(MCInst *MI, unsigned OpNum, SStream *O)
 {
+#ifndef CAPSTONE_DIET
+	uint8_t access;
+
+	access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+#endif
+
 	// Normally, it's not safe to use register enum values directly with
 	// addition to get the next register, but for VFP registers, the
 	// sort order is guaranteed because they're all of the form D<n>.
@@ -2525,6 +2760,9 @@ static void printVectorListFourAllLanes(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "[], ");
@@ -2532,6 +2770,9 @@ static void printVectorListFourAllLanes(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 1;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "[], ");
@@ -2539,6 +2780,9 @@ static void printVectorListFourAllLanes(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 2;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "[], ");
@@ -2546,22 +2790,40 @@ static void printVectorListFourAllLanes(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 3;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "[]}");
+
+#ifndef CAPSTONE_DIET
+	MI->ac_idx++;
+#endif
 }
 
 static void printVectorListTwoSpacedAllLanes(MCInst *MI,
 		unsigned OpNum, SStream *O, MCRegisterInfo *MRI)
 {
+#ifndef CAPSTONE_DIET
+	uint8_t access;
+#endif
 	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
 	unsigned Reg0 = MCRegisterInfo_getSubReg(MRI, Reg, ARM_dsub_0);
 	unsigned Reg1 = MCRegisterInfo_getSubReg(MRI, Reg, ARM_dsub_2);
+
+#ifndef CAPSTONE_DIET
+	access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+#endif
+
 	SStream_concat0(O, "{");
 	printRegName(MI->csh, O, Reg0);
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = Reg0;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "[], ");
@@ -2569,14 +2831,27 @@ static void printVectorListTwoSpacedAllLanes(MCInst *MI,
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = Reg1;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "[]}");
+
+#ifndef CAPSTONE_DIET
+	MI->ac_idx++;
+#endif
 }
 
 static void printVectorListThreeSpacedAllLanes(MCInst *MI,
 		unsigned OpNum, SStream *O)
 {
+#ifndef CAPSTONE_DIET
+	uint8_t access;
+
+	access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+#endif
+
 	// Normally, it's not safe to use register enum values directly with
 	// addition to get the next register, but for VFP registers, the
 	// sort order is guaranteed because they're all of the form D<n>.
@@ -2585,6 +2860,9 @@ static void printVectorListThreeSpacedAllLanes(MCInst *MI,
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "[], ");
@@ -2592,6 +2870,9 @@ static void printVectorListThreeSpacedAllLanes(MCInst *MI,
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 2;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "[], ");
@@ -2599,14 +2880,27 @@ static void printVectorListThreeSpacedAllLanes(MCInst *MI,
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 4;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "[]}");
+
+#ifndef CAPSTONE_DIET
+	MI->ac_idx++;
+#endif
 }
 
 static void printVectorListFourSpacedAllLanes(MCInst *MI,
 		unsigned OpNum, SStream *O)
 {
+#ifndef CAPSTONE_DIET
+	uint8_t access;
+
+	access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+#endif
+
 	// Normally, it's not safe to use register enum values directly with
 	// addition to get the next register, but for VFP registers, the
 	// sort order is guaranteed because they're all of the form D<n>.
@@ -2615,6 +2909,9 @@ static void printVectorListFourSpacedAllLanes(MCInst *MI,
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "[], ");
@@ -2622,6 +2919,9 @@ static void printVectorListFourSpacedAllLanes(MCInst *MI,
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 2;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "[], ");
@@ -2629,6 +2929,9 @@ static void printVectorListFourSpacedAllLanes(MCInst *MI,
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 4;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "[], ");
@@ -2636,13 +2939,26 @@ static void printVectorListFourSpacedAllLanes(MCInst *MI,
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 6;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "[]}");
+
+#ifndef CAPSTONE_DIET
+	MI->ac_idx++;
+#endif
 }
 
 static void printVectorListThreeSpaced(MCInst *MI, unsigned OpNum, SStream *O)
 {
+#ifndef CAPSTONE_DIET
+	uint8_t access;
+
+	access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+#endif
+
 	// Normally, it's not safe to use register enum values directly with
 	// addition to get the next register, but for VFP registers, the
 	// sort order is guaranteed because they're all of the form D<n>.
@@ -2651,6 +2967,9 @@ static void printVectorListThreeSpaced(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, ", ");
@@ -2658,6 +2977,9 @@ static void printVectorListThreeSpaced(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 2;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, ", ");
@@ -2665,13 +2987,26 @@ static void printVectorListThreeSpaced(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 4;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "}");
+
+#ifndef CAPSTONE_DIET
+	MI->ac_idx++;
+#endif
 }
 
 static void printVectorListFourSpaced(MCInst *MI, unsigned OpNum, SStream *O)
 {
+#ifndef CAPSTONE_DIET
+	uint8_t access;
+
+	access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+#endif
+
 	// Normally, it's not safe to use register enum values directly with
 	// addition to get the next register, but for VFP registers, the
 	// sort order is guaranteed because they're all of the form D<n>.
@@ -2680,6 +3015,9 @@ static void printVectorListFourSpaced(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, ", ");
@@ -2687,6 +3025,9 @@ static void printVectorListFourSpaced(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 2;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, ", ");
@@ -2694,6 +3035,9 @@ static void printVectorListFourSpaced(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 4;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, ", ");
@@ -2701,9 +3045,16 @@ static void printVectorListFourSpaced(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) + 6;
+#ifndef CAPSTONE_DIET
+		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = access;
+#endif
 		MI->flat_insn->detail->arm.op_count++;
 	}
 	SStream_concat0(O, "}");
+
+#ifndef CAPSTONE_DIET
+	MI->ac_idx++;
+#endif
 }
 
 void ARM_addVectorDataType(MCInst *MI, arm_vectordata_type vd)

@@ -285,7 +285,7 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 }
 
 #ifndef CAPSTONE_DIET
-// convert Intel access info to AT&T access info
+// copy & normalize access info
 static void get_op_access(cs_struct *h, unsigned int id, uint8_t *access, uint64_t *eflags)
 {
 #ifndef CAPSTONE_DIET

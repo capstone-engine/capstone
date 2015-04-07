@@ -30,10 +30,12 @@ static void print_string_hex(char *comment, unsigned char *str, size_t len)
 	printf("\n");
 }
 
-static void print_insn_detail(cs_insn *ins)
+static void print_insn_detail(csh handle, cs_insn *ins)
 {
 	cs_arm *arm;
 	int i;
+	cs_regs regs_read, regs_write;
+	uint8_t regs_read_count, regs_write_count;
 
 	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
 	if (ins->detail == NULL)
@@ -88,6 +90,24 @@ static void print_insn_detail(cs_insn *ins)
 				break;
 		}
 
+		if (op->neon_lane != -1) {
+			printf("\t\toperands[%u].neon_lane = %u\n", i, op->neon_lane);
+		}
+
+		switch(op->access) {
+			default:
+				break;
+			case CS_AC_READ:
+				printf("\t\toperands[%u].access: READ\n", i);
+				break;
+			case CS_AC_WRITE:
+				printf("\t\toperands[%u].access: WRITE\n", i);
+				break;
+			case CS_AC_READ | CS_AC_WRITE:
+				printf("\t\toperands[%u].access: READ | WRITE\n", i);
+				break;
+		}
+
 		if (op->shift.type != ARM_SFT_INVALID && op->shift.value) {
 			if (op->shift.type < ARM_SFT_ASR_REG)
 				// shift with constant value
@@ -132,6 +152,27 @@ static void print_insn_detail(cs_insn *ins)
 
 	if (arm->mem_barrier)
 		printf("\tMemory-barrier: %u\n", arm->mem_barrier);
+
+	// Print out all registers accessed by this instruction (either implicit or explicit)
+	if (!cs_regs_access(handle, ins,
+				regs_read, &regs_read_count,
+				regs_write, &regs_write_count)) {
+		if (regs_read_count) {
+			printf("\tRegisters read:");
+			for(i = 0; i < regs_read_count; i++) {
+				printf(" %s", cs_reg_name(handle, regs_read[i]));
+			}
+			printf("\n");
+		}
+
+		if (regs_write_count) {
+			printf("\tRegisters modified:");
+			for(i = 0; i < regs_write_count; i++) {
+				printf(" %s", cs_reg_name(handle, regs_write[i]));
+			}
+			printf("\n");
+		}
+	}
 
 	printf("\n");
 }
@@ -184,7 +225,11 @@ static void test()
 //#define ARM_CODE "\x90\x04\x0E\x00"	// muleq	lr, r0, r4
 //#define ARM_CODE "\x90\x24\x0E\x00"	// muleq	lr, r0, r4
 //#define ARM_CODE "\xb6\x10\x5f\xe1"	// ldrh	r1, [pc, #-6]
-#define ARM_CODE "\xED\xFF\xFF\xEB\x04\xe0\x2d\xe5\x00\x00\x00\x00\xe0\x83\x22\xe5\xf1\x02\x03\x0e\x00\x00\xa0\xe3\x02\x30\xc1\xe7\x00\x00\x53\xe3\x00\x02\x01\xf1\x05\x40\xd0\xe8\xf4\x80\x00\x00"
+
+#define ARM_CODE "\x86\x48\x60\xf4\x4d\x0f\xe2\xf4\xED\xFF\xFF\xEB\x04\xe0\x2d\xe5\x00\x00\x00\x00\xe0\x83\x22\xe5\xf1\x02\x03\x0e\x00\x00\xa0\xe3\x02\x30\xc1\xe7\x00\x00\x53\xe3\x00\x02\x01\xf1\x05\x40\xd0\xe8\xf4\x80\x00\x00"
+
+//#define ARM_CODE "\x86\x48\x60\xf4"
+
 //#define ARM_CODE2 "\xf0\x24"
 //#define ARM_CODE2 "\x83\xb0"
 #define ARM_CODE2 "\xd1\xe8\x00\xf0\xf0\x24\x04\x07\x1f\x3c\xf2\xc0\x00\x00\x4f\xf0\x00\x01\x46\x6c"
@@ -194,7 +239,10 @@ static void test()
 //#define THUMB_CODE "\x01\x47"	// bx r0
 //#define THUMB_CODE "\x02\x47"	// bx r0
 //#define THUMB_CODE "\x0a\xbf" // itet eq
-#define THUMB_CODE "\x70\x47\xeb\x46\x83\xb0\xc9\x68\x1f\xb1\x30\xbf\xaf\xf3\x20\x84\x52\xf8\x23\xf0"
+
+#define THUMB_CODE "\x60\xf9\x1f\x04\xe0\xf9\x4f\x07\x70\x47\xeb\x46\x83\xb0\xc9\x68\x1f\xb1\x30\xbf\xaf\xf3\x20\x84\x52\xf8\x23\xf0"
+//#define THUMB_CODE "\xe0\xf9\x4f\x07"
+
 #define THUMB_CODE2 "\x4f\xf0\x00\x01\xbd\xe8\x00\x88\xd1\xe8\x00\xf0\x18\xbf\xad\xbf\xf3\xff\x0b\x0c\x86\xf3\x00\x89\x80\xf3\x00\x8c\x4f\xfa\x99\xf6\xd0\xff\xa2\x01"
 #define THUMB_MCLASS "\xef\xf3\x02\x80"
 #define ARMV8 "\xe0\x3b\xb2\xee\x42\x00\x01\xe1\x51\xf0\x7f\xf5"
@@ -272,7 +320,7 @@ static void test()
 
 			for (j = 0; j < count; j++) {
 				printf("0x%"PRIx64":\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
-				print_insn_detail(&insn[j]);
+				print_insn_detail(handle, &insn[j]);
 			}
 			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
 
