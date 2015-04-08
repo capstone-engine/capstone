@@ -415,7 +415,7 @@
 },
 {	/* X86_ADD_FrST0, X86_INS_FADD: fadd	$op, st(0) */
 	0,
-	{ CS_AC_READ, CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* X86_ADOX32rm, X86_INS_ADOX: adox{l}	$dst, $src */
 	0,
@@ -1367,11 +1367,11 @@
 },
 {	/* X86_CMOVBE_F, X86_INS_FCMOVBE: fcmovbe	st(0), $op */
 	X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_CF,
-	{ CS_AC_IGNORE, CS_AC_WRITE, 0 }
+	{ CS_AC_READ, CS_AC_WRITE, 0 }
 },
 {	/* X86_CMOVB_F, X86_INS_FCMOVB: fcmovb	st(0), $op */
 	X86_EFLAGS_TEST_CF,
-	{ CS_AC_IGNORE, CS_AC_WRITE, 0 }
+	{ CS_AC_READ, CS_AC_WRITE, 0 }
 },
 {	/* X86_CMOVE16rm, X86_INS_CMOVE: cmove{w}	$dst, $src2 */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF | X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_PF | X86_EFLAGS_TEST_CF,
@@ -1399,7 +1399,7 @@
 },
 {	/* X86_CMOVE_F, X86_INS_FCMOVE: fcmove	st(0), $op */
 	X86_EFLAGS_TEST_ZF,
-	{ CS_AC_IGNORE, CS_AC_WRITE, 0 }
+	{ CS_AC_READ, CS_AC_WRITE, 0 }
 },
 {	/* X86_CMOVG16rm, X86_INS_CMOVG: cmovg{w}	$dst, $src2 */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF | X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_PF | X86_EFLAGS_TEST_CF,
@@ -1499,11 +1499,11 @@
 },
 {	/* X86_CMOVNBE_F, X86_INS_FCMOVNBE: fcmovnbe	st(0), $op */
 	X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_CF,
-	{ CS_AC_IGNORE, CS_AC_WRITE, 0 }
+	{ CS_AC_READ, CS_AC_WRITE, 0 }
 },
 {	/* X86_CMOVNB_F, X86_INS_FCMOVNB: fcmovnb	st(0), $op */
 	X86_EFLAGS_TEST_CF,
-	{ CS_AC_IGNORE, CS_AC_WRITE, 0 }
+	{ CS_AC_READ, CS_AC_WRITE, 0 }
 },
 {	/* X86_CMOVNE16rm, X86_INS_CMOVNE: cmovne{w}	$dst, $src2 */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF | X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_PF | X86_EFLAGS_TEST_CF,
@@ -1531,7 +1531,7 @@
 },
 {	/* X86_CMOVNE_F, X86_INS_FCMOVNE: fcmovne	st(0), $op */
 	X86_EFLAGS_TEST_ZF,
-	{ CS_AC_IGNORE, CS_AC_WRITE, 0 }
+	{ CS_AC_READ, CS_AC_WRITE, 0 }
 },
 {	/* X86_CMOVNO16rm, X86_INS_CMOVNO: cmovno{w}	$dst, $src2 */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF | X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_PF | X86_EFLAGS_TEST_CF,
@@ -1583,7 +1583,7 @@
 },
 {	/* X86_CMOVNP_F, X86_INS_FCMOVNU: fcmovnu	st(0), $op */
 	X86_EFLAGS_TEST_PF,
-	{ CS_AC_IGNORE, CS_AC_WRITE, 0 }
+	{ CS_AC_READ, CS_AC_WRITE, 0 }
 },
 {	/* X86_CMOVNS16rm, X86_INS_CMOVNS: cmovns{w}	$dst, $src2 */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF | X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_PF | X86_EFLAGS_TEST_CF,
@@ -1659,7 +1659,7 @@
 },
 {	/* X86_CMOVP_F, X86_INS_FCMOVU: fcmovu	st(0), $op */
 	X86_EFLAGS_TEST_PF,
-	{ CS_AC_IGNORE, CS_AC_WRITE, 0 }
+	{ CS_AC_READ, CS_AC_WRITE, 0 }
 },
 {	/* X86_CMOVS16rm, X86_INS_CMOVS: cmovs{w}	$dst, $src2 */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF | X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_PF | X86_EFLAGS_TEST_CF,
@@ -2343,7 +2343,7 @@
 },
 {	/* X86_DIVR_FrST0, X86_INS_FDIVR: fdiv{|r}	{%st(0), $op|$op, st(0)} */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* X86_DIVSDrm, X86_INS_DIVSD: divsd	$dst, $src2 */
 	0,
@@ -2403,7 +2403,7 @@
 },
 {	/* X86_DIV_FrST0, X86_INS_FDIV: fdiv{r}	$op, st(0) */
 	0,
-	{ CS_AC_READ, CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* X86_DPPDrmi, X86_INS_DPPD: dppd	$dst, $src2, $src3 */
 	0,
@@ -6503,7 +6503,7 @@
 },
 {	/* X86_MUL_FrST0, X86_INS_FMUL: fmul	$op, st(0) */
 	0,
-	{ CS_AC_READ, CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* X86_MWAITrr, X86_INS_MWAIT: mwait */
 	0,
@@ -10091,15 +10091,15 @@
 },
 {	/* X86_ST_FCOMPST0r, X86_INS_FCOMP: fcomp	st(0), $op */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* X86_ST_FCOMPST0r_alt, X86_INS_FCOMP: fcomp	st(0), $op */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* X86_ST_FCOMST0r, X86_INS_FCOM: fcom	st(0), $op */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* X86_ST_FP32m, X86_INS_FSTP: fstp{s}	$dst */
 	0,
@@ -10115,15 +10115,15 @@
 },
 {	/* X86_ST_FPNCEST0r, X86_INS_FSTPNCE: fstpnce	$op, st(0) */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_ST_FPST0r, X86_INS_FSTP: fstp	$op, st(0) */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_ST_FPST0r_alt, X86_INS_FSTP: fstp	$op, st(0) */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_ST_FPrr, X86_INS_FSTP: fstp	$op */
 	0,
@@ -10131,11 +10131,11 @@
 },
 {	/* X86_ST_FXCHST0r, X86_INS_FXCH: fxch	st(0), $op */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* X86_ST_FXCHST0r_alt, X86_INS_FXCH: fxch	st(0), $op */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* X86_ST_Frr, X86_INS_FST: fst	$op */
 	0,
@@ -10327,7 +10327,7 @@
 },
 {	/* X86_SUBR_FrST0, X86_INS_FSUBR: fsub{|r}	{%st(0), $op|$op, st(0)} */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* X86_SUBSDrm, X86_INS_SUBSD: subsd	$dst, $src2 */
 	0,
@@ -10387,7 +10387,7 @@
 },
 {	/* X86_SUB_FrST0, X86_INS_FSUB: fsub{r}	$op, st(0) */
 	0,
-	{ CS_AC_READ, CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* X86_SWAPGS, X86_INS_SWAPGS: swapgs */
 	0,

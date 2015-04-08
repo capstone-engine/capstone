@@ -107,6 +107,8 @@ struct MCInst {
 	uint8_t x86_prefix[4];
 	uint8_t imm_size;	// immediate size for X86_OP_IMM operand
 	bool writeback;	// writeback for ARM
+	// operand access index for list of registers sharing the same access right (for ARM)
+	uint8_t ac_idx;
 };
 
 void MCInst_Init(MCInst *inst);

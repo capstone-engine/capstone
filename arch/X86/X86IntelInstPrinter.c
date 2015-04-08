@@ -285,7 +285,7 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 }
 
 #ifndef CAPSTONE_DIET
-// convert Intel access info to AT&T access info
+// copy & normalize access info
 static void get_op_access(cs_struct *h, unsigned int id, uint8_t *access, uint64_t *eflags)
 {
 #ifndef CAPSTONE_DIET
@@ -689,6 +689,24 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	} else if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op);
 
+		switch(MCInst_getOpcode(MI)) {
+			default:
+				break;
+			case X86_AAD8i8:
+			case X86_AAM8i8:
+			case X86_ADC8i8:
+			case X86_ADD8i8:
+			case X86_AND8i8:
+			case X86_CMP8i8:
+			case X86_OR8i8:
+			case X86_SBB8i8:
+			case X86_SUB8i8:
+			case X86_TEST8i8:
+			case X86_XOR8i8:
+				imm = imm & 0xff;
+				break;
+		}
+
 		switch(MI->flat_insn->id) {
 			default:
 				if (imm >= 0) {
@@ -712,6 +730,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				else
 					SStream_concat(O, "0x%x", imm & 0xff);
 				break;
+
 			case X86_INS_AND:
 			case X86_INS_OR:
 			case X86_INS_XOR:
@@ -721,6 +740,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				else
 					SStream_concat(O, "0x%"PRIx64, arch_masks[MI->op1_size? MI->op1_size : MI->imm_size] & imm);
 				break;
+
 			case X86_INS_RET:
 				// RET imm16
 				if (imm >= 0 && imm <= HEX_THRESHOLD)

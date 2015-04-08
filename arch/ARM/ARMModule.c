@@ -30,6 +30,9 @@ static cs_err init(cs_struct *ud)
 	ud->insn_name = ARM_insn_name;
 	ud->group_name = ARM_group_name;
 	ud->post_printer = ARM_post_printer;
+#ifndef CAPSTONE_DIET
+	ud->reg_access = ARM_reg_access;
+#endif
 
 	if (ud->mode & CS_MODE_THUMB)
 		ud->disasm = Thumb_getInstruction;

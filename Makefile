@@ -87,6 +87,7 @@ DEP_ARM += arch/ARM/ARMGenInstrInfo.inc
 DEP_ARM += arch/ARM/ARMGenRegisterInfo.inc
 DEP_ARM += arch/ARM/ARMGenSubtargetInfo.inc
 DEP_ARM += arch/ARM/ARMMappingInsn.inc
+DEP_ARM += arch/ARM/ARMMappingInsnOp.inc
 
 LIBOBJ_ARM =
 ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))

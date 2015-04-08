@@ -23,4 +23,10 @@ bool ARM_rel_branch(cs_struct *h, unsigned int insn_id);
 
 bool ARM_blx_to_arm_mode(cs_struct *h, unsigned int insn_id);
 
+uint8_t *ARM_get_op_access(cs_struct *h, unsigned int id);
+
+void ARM_reg_access(const cs_insn *insn,
+		cs_regs regs_read, uint8_t *regs_read_count,
+		cs_regs regs_write, uint8_t *regs_write_count);
+
 #endif
