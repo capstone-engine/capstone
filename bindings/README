@@ -26,3 +26,11 @@ More bindings created & maintained by the community are available as followings.
 - C++ binding (by Peter Hlavaty)
 
 	https://github.com/zer0mem/cccapstone
+
+- Lua binding (by Antonio Davide)
+
+	https://github.com/Dax89/LuaCapstone
+
+- Rust binding (by Richo Healey)
+
+	https://github.com/richo/capstone-rs
