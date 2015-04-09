@@ -17,10 +17,16 @@
 
 #ifdef CAPSTONE_HAS_X86
 
+#if !defined(CAPSTONE_HAS_OSXKERNEL)
 #include <ctype.h>
+#endif
 #include "../../myinttypes.h"
+#if defined(CAPSTONE_HAS_OSXKERNEL)
+#include <libkern/libkern.h>
+#else
 #include <stdio.h>
 #include <stdlib.h>
+#endif
 #include <string.h>
 
 #include "../../utils.h"
