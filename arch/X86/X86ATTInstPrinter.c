@@ -18,10 +18,17 @@
 // this code is only relevant when DIET mode is disable
 #if defined(CAPSTONE_HAS_X86) && !defined(CAPSTONE_DIET) && !defined(CAPSTONE_X86_ATT_DISABLE)
 
+#if !defined(CAPSTONE_HAS_OSXKERNEL)
 #include <ctype.h>
+#endif
 #include "../../myinttypes.h"
+#if defined(CAPSTONE_HAS_OSXKERNEL)
+#include <libkern/libkern.h>
+#else
 #include <stdio.h>
 #include <stdlib.h>
+#endif
+
 #include <string.h>
 
 #include "../../utils.h"

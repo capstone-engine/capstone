@@ -11,7 +11,12 @@ extern "C" {
 #include <stdint.h>
 #include <stdio.h>
 #include <stdarg.h>
+#if defined(CAPSTONE_HAS_OSXKERNEL)
+#include <libkern/libkern.h>
+#else
 #include <stdlib.h>
+#include <stdio.h>
+#endif
 
 #include "platform.h"
 
