@@ -160,7 +160,7 @@ static bool printSparcAliasInstr(MCInst *MI, SStream *O)
 
 static void printOperand(MCInst *MI, int opNum, SStream *O)
 {
-	int Imm;
+	int Imm, len;
 	unsigned reg;
 	MCOperand *MO = MCInst_getOperand(MI, opNum);
 
@@ -189,11 +189,37 @@ static void printOperand(MCInst *MI, int opNum, SStream *O)
 		Imm = (int)MCOperand_getImm(MO);
 
 		// get absolute address for CALL/Bxx
-		if (MI->Opcode == SP_CALL)
+		if (MI->Opcode == SP_CALL) {
+			Imm = SignExtend32(Imm, 30);
 			Imm += (uint32_t)MI->address;
-		else if (MI->flat_insn->id == SPARC_INS_B)
-			// pc + (disp30 * 4)
-			Imm = (uint32_t)MI->address + Imm * 4;
+		}
+
+		// Conditional branches displacements needs to be signextended to be
+		// able to jump backwards.
+		//
+		// Displacements are measured as the number of instructions forward or
+		// backward, so they need to be multiplied by 4
+		switch (MI->flat_insn->id) {
+			case SPARC_INS_B:
+			case SPARC_INS_FB:
+				len = 19;
+
+				if (MI->csh->detail)
+					len = (MI->flat_insn->detail->sparc.op_count)? 19 : 22;
+
+				Imm = SignExtend32(Imm, len);
+				Imm = (uint32_t)MI->address + Imm * 4;
+				break;
+			case SPARC_INS_BRZ:
+			case SPARC_INS_BRNZ:
+			case SPARC_INS_BRLZ:
+			case SPARC_INS_BRLEZ:
+			case SPARC_INS_BRGEZ:
+			case SPARC_INS_BRGZ:
+				Imm = SignExtend32(Imm, 16);
+				Imm = (uint32_t)MI->address + Imm * 4;
+				break;
+		}
 
 		if (Imm >= 0) {
 			if (Imm > HEX_THRESHOLD)
