@@ -1,8 +1,12 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#if defined(CAPSTONE_HAS_OSXKERNEL)
+#include <libkern/libkern.h>
+#else
 #include <stdio.h>
 #include <stdlib.h>
+#endif
 #include <string.h>
 
 #include "MCInst.h"
