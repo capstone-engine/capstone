@@ -18935,6 +18935,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   uint64_t Bits1 = OpInfo[opcode];
   uint64_t Bits2 = OpInfo2[opcode];
   uint64_t Bits = (Bits2 << 32) | Bits1;
+  // printf("Opcode ID = %u\n", opcode);
   // assert(Bits != 0 && "Cannot print this instruction.");
   if (!X86_lockrep(MI, O))
 #ifndef CAPSTONE_DIET
