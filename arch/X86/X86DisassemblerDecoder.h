@@ -19,7 +19,11 @@
 #ifndef CS_X86_DISASSEMBLERDECODER_H
 #define CS_X86_DISASSEMBLERDECODER_H
 
+#if defined(CAPSTONE_HAS_OSXKERNEL)
+#include <libkern/libkern.h>
+#else
 #include <stdio.h>
+#endif
 #include <stdint.h>
 
 #include "X86DisassemblerDecoderCommon.h"

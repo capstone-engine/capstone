@@ -19,7 +19,11 @@
 #ifdef CAPSTONE_HAS_X86
 
 #include <stdarg.h>   /* for va_*()       */
+#if defined(CAPSTONE_HAS_OSXKERNEL)
+#include <libkern/libkern.h>
+#else
 #include <stdlib.h>   /* for exit()       */
+#endif
 
 #include "../../cs_priv.h"
 #include "../../utils.h"

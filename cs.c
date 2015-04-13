@@ -3,9 +3,14 @@
 #if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
 #pragma warning(disable:4996)
 #endif
+#if defined(CAPSTONE_HAS_OSXKERNEL)
+#include <libkern/libkern.h>
+#else
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#endif
+
 #include <string.h>
 #include <capstone/capstone.h>
 

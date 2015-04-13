@@ -24,6 +24,7 @@ option(CAPSTONE_XCORE_SUPPORT "XCore support" ON)
 option(CAPSTONE_X86_SUPPORT "x86 support" ON)
 option(CAPSTONE_X86_REDUCE "x86 with reduce instruction sets to minimize library" OFF)
 option(CAPSTONE_X86_ATT_DISABLE "Disable x86 AT&T syntax" OFF)
+option(CAPSTONE_OSXKERNEL_SUPPORT "Support to embed Capstone into OS X Kernel extensions" OFF)
 
 if (CAPSTONE_BUILD_DIET)
     add_definitions(-DCAPSTONE_DIET)
@@ -154,6 +155,10 @@ if (CAPSTONE_XCORE_SUPPORT)
 	arch/XCore/XCoreModule.c
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_xcore.c)
+endif ()
+
+if (CAPSTONE_OSXKERNEL_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_OSXKERNEL)
 endif ()
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
