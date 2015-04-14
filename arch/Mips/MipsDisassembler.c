@@ -409,6 +409,7 @@ static DecodeStatus Mips64Disassembler_getInstruction(int mode, MCInst *instr,
 		uint64_t Address, bool isBigEndian, MCRegisterInfo *MRI)
 {
 	uint32_t Insn;
+	DecodeStatus Result;
 
 	if (code_len < 4)
 		// not enough data
@@ -418,7 +419,7 @@ static DecodeStatus Mips64Disassembler_getInstruction(int mode, MCInst *instr,
 		memset(instr->flat_insn->detail, 0, sizeof(cs_detail));
 	}
 
-	DecodeStatus Result = readInstruction32((unsigned char*)code, &Insn, isBigEndian, false);
+	Result = readInstruction32((unsigned char*)code, &Insn, isBigEndian, false);
 	if (Result == MCDisassembler_Fail)
 		return MCDisassembler_Fail;
 
