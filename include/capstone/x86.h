@@ -70,54 +70,52 @@ typedef enum x86_reg {
 } x86_reg;
 
 //> Sub-flags of EFLAGS
-typedef enum x86_eflags_type {
-	X86_EFLAGS_MODIFY_AF = (uint64_t)1 << 0,
-	X86_EFLAGS_MODIFY_CF = (uint64_t)1 << 1,
-	X86_EFLAGS_MODIFY_SF = (uint64_t)1 << 2,
-	X86_EFLAGS_MODIFY_ZF = (uint64_t)1 << 3,
-	X86_EFLAGS_MODIFY_PF = (uint64_t)1 << 4,
-	X86_EFLAGS_MODIFY_OF = (uint64_t)1 << 5,
-	X86_EFLAGS_MODIFY_TF = (uint64_t)1 << 6,
-	X86_EFLAGS_MODIFY_IF = (uint64_t)1 << 7,
-	X86_EFLAGS_MODIFY_DF = (uint64_t)1 << 8,
-	X86_EFLAGS_MODIFY_NT = (uint64_t)1 << 9,
-	X86_EFLAGS_MODIFY_RF = (uint64_t)1 << 10,
-	X86_EFLAGS_PRIOR_OF = (uint64_t)1 << 11,
-	X86_EFLAGS_PRIOR_SF = (uint64_t)1 << 12,
-	X86_EFLAGS_PRIOR_ZF = (uint64_t)1 << 13,
-	X86_EFLAGS_PRIOR_AF = (uint64_t)1 << 14,
-	X86_EFLAGS_PRIOR_PF = (uint64_t)1 << 15,
-	X86_EFLAGS_PRIOR_CF = (uint64_t)1 << 16,
-	X86_EFLAGS_PRIOR_TF = (uint64_t)1 << 17,
-	X86_EFLAGS_PRIOR_IF = (uint64_t)1 << 18,
-	X86_EFLAGS_PRIOR_DF = (uint64_t)1 << 19,
-	X86_EFLAGS_PRIOR_NT = (uint64_t)1 << 20,
-	X86_EFLAGS_RESET_OF = (uint64_t)1 << 21,
-	X86_EFLAGS_RESET_CF = (uint64_t)1 << 22,
-	X86_EFLAGS_RESET_DF = (uint64_t)1 << 23,
-	X86_EFLAGS_RESET_IF = (uint64_t)1 << 24,
-	X86_EFLAGS_RESET_SF = (uint64_t)1 << 25,
-	X86_EFLAGS_RESET_AF = (uint64_t)1 << 26,
-	X86_EFLAGS_RESET_TF = (uint64_t)1 << 27,
-	X86_EFLAGS_RESET_NT = (uint64_t)1 << 28,
-	X86_EFLAGS_RESET_PF = (uint64_t)1 << 29,
-	X86_EFLAGS_SET_CF = (uint64_t)1 << 30,
-	X86_EFLAGS_SET_DF = (uint64_t)1 << 31,
-	X86_EFLAGS_SET_IF = (uint64_t)1 << 32,
-	X86_EFLAGS_TEST_OF = (uint64_t)1 << 33,
-	X86_EFLAGS_TEST_SF = (uint64_t)1 << 34,
-	X86_EFLAGS_TEST_ZF = (uint64_t)1 << 35,
-	X86_EFLAGS_TEST_PF = (uint64_t)1 << 36,
-	X86_EFLAGS_TEST_CF = (uint64_t)1 << 37,
-	X86_EFLAGS_TEST_NT = (uint64_t)1 << 38,
-	X86_EFLAGS_TEST_DF = (uint64_t)1 << 39,
-	X86_EFLAGS_UNDEFINED_OF = (uint64_t)1 << 40,
-	X86_EFLAGS_UNDEFINED_SF = (uint64_t)1 << 41,
-	X86_EFLAGS_UNDEFINED_ZF = (uint64_t)1 << 42,
-	X86_EFLAGS_UNDEFINED_PF = (uint64_t)1 << 43,
-	X86_EFLAGS_UNDEFINED_AF = (uint64_t)1 << 44,
-	X86_EFLAGS_UNDEFINED_CF = (uint64_t)1 << 45,
-} x86_eflags_type;
+#define X86_EFLAGS_MODIFY_AF (1ULL << 0)
+#define X86_EFLAGS_MODIFY_CF (1ULL << 1)
+#define X86_EFLAGS_MODIFY_SF (1ULL << 2)
+#define X86_EFLAGS_MODIFY_ZF (1ULL << 3)
+#define X86_EFLAGS_MODIFY_PF (1ULL << 4)
+#define X86_EFLAGS_MODIFY_OF (1ULL << 5)
+#define X86_EFLAGS_MODIFY_TF (1ULL << 6)
+#define X86_EFLAGS_MODIFY_IF (1ULL << 7)
+#define X86_EFLAGS_MODIFY_DF (1ULL << 8)
+#define X86_EFLAGS_MODIFY_NT (1ULL << 9)
+#define X86_EFLAGS_MODIFY_RF (1ULL << 10)
+#define X86_EFLAGS_PRIOR_OF (1ULL << 11)
+#define X86_EFLAGS_PRIOR_SF (1ULL << 12)
+#define X86_EFLAGS_PRIOR_ZF (1ULL << 13)
+#define X86_EFLAGS_PRIOR_AF (1ULL << 14)
+#define X86_EFLAGS_PRIOR_PF (1ULL << 15)
+#define X86_EFLAGS_PRIOR_CF (1ULL << 16)
+#define X86_EFLAGS_PRIOR_TF (1ULL << 17)
+#define X86_EFLAGS_PRIOR_IF (1ULL << 18)
+#define X86_EFLAGS_PRIOR_DF (1ULL << 19)
+#define X86_EFLAGS_PRIOR_NT (1ULL << 20)
+#define X86_EFLAGS_RESET_OF (1ULL << 21)
+#define X86_EFLAGS_RESET_CF (1ULL << 22)
+#define X86_EFLAGS_RESET_DF (1ULL << 23)
+#define X86_EFLAGS_RESET_IF (1ULL << 24)
+#define X86_EFLAGS_RESET_SF (1ULL << 25)
+#define X86_EFLAGS_RESET_AF (1ULL << 26)
+#define X86_EFLAGS_RESET_TF (1ULL << 27)
+#define X86_EFLAGS_RESET_NT (1ULL << 28)
+#define X86_EFLAGS_RESET_PF (1ULL << 29)
+#define X86_EFLAGS_SET_CF (1ULL << 30) 
+#define X86_EFLAGS_SET_DF (1ULL << 31)
+#define X86_EFLAGS_SET_IF (1ULL << 32)
+#define X86_EFLAGS_TEST_OF (1ULL << 33)
+#define X86_EFLAGS_TEST_SF (1ULL << 34)
+#define X86_EFLAGS_TEST_ZF (1ULL << 35)
+#define X86_EFLAGS_TEST_PF (1ULL << 36)
+#define X86_EFLAGS_TEST_CF (1ULL << 37)
+#define X86_EFLAGS_TEST_NT (1ULL << 38)
+#define X86_EFLAGS_TEST_DF (1ULL << 39)
+#define X86_EFLAGS_UNDEFINED_OF (1ULL << 40)
+#define X86_EFLAGS_UNDEFINED_SF (1ULL << 41)
+#define X86_EFLAGS_UNDEFINED_ZF (1ULL << 42)
+#define X86_EFLAGS_UNDEFINED_PF (1ULL << 43)
+#define X86_EFLAGS_UNDEFINED_AF (1ULL << 44)
+#define X86_EFLAGS_UNDEFINED_CF (1ULL << 45)
 
 //> Operand type for instruction's operands
 typedef enum x86_op_type {
