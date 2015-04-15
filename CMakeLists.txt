@@ -161,7 +161,6 @@ endif ()
 if (CAPSTONE_X86_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_X86)
     set(SOURCES_X86
-        arch/X86/X86ATTInstPrinter.c
         arch/X86/X86Disassembler.c
         arch/X86/X86DisassemblerDecoder.c
         arch/X86/X86IntelInstPrinter.c
@@ -186,7 +185,7 @@ if (CAPSTONE_X86_SUPPORT)
         arch/X86/X86Mapping.h
         )
     if (NOT CAPSTONE_BUILD_DIET)
-        set(SOURCES ${SOURCES} arch/X86/X86ATTInstPrinter.c)
+        set(SOURCES_X86 ${SOURCES_X86} arch/X86/X86ATTInstPrinter.c)
     endif ()
     set(TEST_SOURCES ${TEST_SOURCES} test_x86.c)
 endif ()
