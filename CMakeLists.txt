@@ -43,7 +43,7 @@ if (CAPSTONE_X86_ATT_DISABLE)
 endif ()
 
 ## sources
-set(SOURCES
+set(SOURCES_CORE
     cs.c
     MCInst.c
     MCInstrDesc.c
@@ -52,13 +52,25 @@ set(SOURCES
     utils.c
     )
 
+set(HEADERS_CORE
+    include/capstone.h
+    utils.h
+    MCRegisterInfo.h
+    MCInst.h
+    MCInstrDesc.h
+    SStream.h
+    cs_priv.h
+    myinttypes.h
+    include/platform.h
+    )
+
+
 set(TEST_SOURCES test.c test_detail.c test_skipdata.c test_iter.c)
 
 ## architecture support
 if (CAPSTONE_ARM_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_ARM)
-    set(SOURCES
-        ${SOURCES}
+    set(SOURCES_ARM
         arch/ARM/ARMDisassembler.c
         arch/ARM/ARMInstPrinter.c
         arch/ARM/ARMMapping.c
@@ -69,8 +81,7 @@ endif ()
 
 if (CAPSTONE_ARM64_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_ARM64)
-    set(SOURCES
-        ${SOURCES}
+    set(SOURCES_ARM64
         arch/AArch64/AArch64BaseInfo.c
         arch/AArch64/AArch64Disassembler.c
         arch/AArch64/AArch64InstPrinter.c
@@ -82,8 +93,7 @@ endif ()
 
 if (CAPSTONE_MIPS_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_MIPS)
-    set(SOURCES
-        ${SOURCES}
+    set(SOURCES_MIPS
         arch/Mips/MipsDisassembler.c
         arch/Mips/MipsInstPrinter.c
         arch/Mips/MipsMapping.c
@@ -94,8 +104,7 @@ endif ()
 
 if (CAPSTONE_PPC_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_POWERPC)
-    set(SOURCES
-        ${SOURCES}
+    set(SOURCES_PPC
         arch/PowerPC/PPCDisassembler.c
         arch/PowerPC/PPCInstPrinter.c
         arch/PowerPC/PPCMapping.c
@@ -106,8 +115,7 @@ endif ()
 
 if (CAPSTONE_X86_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_X86)
-    set(SOURCES
-        ${SOURCES}
+    set(SOURCES_X86
         arch/X86/X86Disassembler.c
         arch/X86/X86DisassemblerDecoder.c
         arch/X86/X86IntelInstPrinter.c
@@ -122,37 +130,34 @@ endif ()
 
 if (CAPSTONE_SPARC_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_SPARC)
-    set(SOURCES
-        ${SOURCES}
-	arch/Sparc/SparcDisassembler.c
-	arch/Sparc/SparcInstPrinter.c
-	arch/Sparc/SparcMapping.c
-	arch/Sparc/SparcModule.c
+    set(SOURCES_SPARC
+        arch/Sparc/SparcDisassembler.c
+        arch/Sparc/SparcInstPrinter.c
+        arch/Sparc/SparcMapping.c
+        arch/Sparc/SparcModule.c
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_sparc.c)
 endif ()
 
 if (CAPSTONE_SYSZ_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_SYSZ)
-    set(SOURCES
-        ${SOURCES}
-	arch/SystemZ/SystemZDisassembler.c
-	arch/SystemZ/SystemZInstPrinter.c
-	arch/SystemZ/SystemZMapping.c
-	arch/SystemZ/SystemZModule.c
-	arch/SystemZ/SystemZMCTargetDesc.c
+    set(SOURCES_SYSZ
+        arch/SystemZ/SystemZDisassembler.c
+        arch/SystemZ/SystemZInstPrinter.c
+        arch/SystemZ/SystemZMapping.c
+        arch/SystemZ/SystemZModule.c
+        arch/SystemZ/SystemZMCTargetDesc.c
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_systemz.c)
 endif ()
 
 if (CAPSTONE_XCORE_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_XCORE)
-    set(SOURCES
-        ${SOURCES}
-	arch/XCore/XCoreDisassembler.c
-	arch/XCore/XCoreInstPrinter.c
-	arch/XCore/XCoreMapping.c
-	arch/XCore/XCoreModule.c
+    set(SOURCES_XCORE
+        arch/XCore/XCoreDisassembler.c
+        arch/XCore/XCoreInstPrinter.c
+        arch/XCore/XCoreMapping.c
+        arch/XCore/XCoreModule.c
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_xcore.c)
 endif ()
@@ -160,6 +165,18 @@ endif ()
 if (CAPSTONE_OSXKERNEL_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_OSXKERNEL)
 endif ()
+
+set(ALL_SOURCES
+    ${SOURCES_CORE}
+    ${SOURCES_ARM}
+    ${SOURCES_ARM64}
+    ${SOURCES_MIPS}
+    ${SOURCES_PPC}
+    ${SOURCES_X86}
+    ${SOURCES_SPARC}
+    ${SOURCES_SYSZ}
+    ${SOURCES_XCORE}
+    )
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
@@ -170,7 +187,7 @@ set_property(GLOBAL PROPERTY SOVERSION SOVERSION ${VERSION_MAJOR})
 
 ## targets
 if (CAPSTONE_BUILD_STATIC)
-    add_library(capstone-static STATIC ${SOURCES})
+    add_library(capstone-static STATIC ${ALL_SOURCES})
     set_property(TARGET capstone-static PROPERTY OUTPUT_NAME capstone)
     set(default-target capstone-static)
 endif ()
@@ -178,17 +195,17 @@ endif ()
 # Force static runtime libraries
 if (CAPSTONE_BUILD_STATIC_RUNTIME)
     FOREACH(flag
-	CMAKE_C_FLAGS_RELEASE CMAKE_C_FLAGS_RELWITHDEBINFO
-	CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_DEBUG_INIT
-	CMAKE_CXX_FLAGS_RELEASE  CMAKE_CXX_FLAGS_RELWITHDEBINFO
-	CMAKE_CXX_FLAGS_DEBUG  CMAKE_CXX_FLAGS_DEBUG_INIT)
-	STRING(REPLACE "/MD"  "/MT" "${flag}" "${${flag}}")
-	SET("${flag}" "${${flag}} /EHsc")
+        CMAKE_C_FLAGS_RELEASE CMAKE_C_FLAGS_RELWITHDEBINFO
+        CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_DEBUG_INIT
+        CMAKE_CXX_FLAGS_RELEASE  CMAKE_CXX_FLAGS_RELWITHDEBINFO
+        CMAKE_CXX_FLAGS_DEBUG  CMAKE_CXX_FLAGS_DEBUG_INIT)
+        STRING(REPLACE "/MD"  "/MT" "${flag}" "${${flag}}")
+        SET("${flag}" "${${flag}} /EHsc")
     ENDFOREACH()
 endif ()
 
 if (CAPSTONE_BUILD_SHARED)
-    add_library(capstone-shared SHARED ${SOURCES})
+    add_library(capstone-shared SHARED ${ALL_SOURCES})
     set_property(TARGET capstone-shared PROPERTY OUTPUT_NAME capstone)
     set_property(TARGET capstone-shared PROPERTY COMPILE_FLAGS -DCAPSTONE_SHARED)
 
@@ -197,8 +214,8 @@ if (CAPSTONE_BUILD_SHARED)
     endif ()
 
     if(NOT DEFINED default-target)      # honor `capstone-static` for tests first.
-	set(default-target capstone-shared)
-	add_definitions(-DCAPSTONE_SHARED)
+        set(default-target capstone-shared)
+        add_definitions(-DCAPSTONE_SHARED)
     endif ()
 endif ()
 
