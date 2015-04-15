@@ -116,6 +116,7 @@ endif ()
 if (CAPSTONE_X86_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_X86)
     set(SOURCES_X86
+        arch/X86/X86ATTInstPrinter.c
         arch/X86/X86Disassembler.c
         arch/X86/X86DisassemblerDecoder.c
         arch/X86/X86IntelInstPrinter.c
