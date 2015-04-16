@@ -100,7 +100,7 @@ typedef enum x86_reg {
 #define X86_EFLAGS_RESET_TF (1ULL << 27)
 #define X86_EFLAGS_RESET_NT (1ULL << 28)
 #define X86_EFLAGS_RESET_PF (1ULL << 29)
-#define X86_EFLAGS_SET_CF (1ULL << 30) 
+#define X86_EFLAGS_SET_CF (1ULL << 30)
 #define X86_EFLAGS_SET_DF (1ULL << 31)
 #define X86_EFLAGS_SET_IF (1ULL << 32)
 #define X86_EFLAGS_TEST_OF (1ULL << 33)
