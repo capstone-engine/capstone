@@ -855,18 +855,18 @@ typedef enum arm_insn {
 	ARM_INS_IT,
 	ARM_INS_LSL,
 	ARM_INS_LSR,
-	ARM_INS_ASRS,
-	ARM_INS_LSRS,
+	ARM_INS_ASRS,               // Not used anymore
+	ARM_INS_LSRS,               // Not used anymore
 	ARM_INS_ORN,
 	ARM_INS_ROR,
 	ARM_INS_RRX,
-	ARM_INS_SUBS,
+	ARM_INS_SUBS,               // Not used anymore
 	ARM_INS_SUBW,
 	ARM_INS_TBB,
 	ARM_INS_TBH,
 	ARM_INS_CBNZ,
 	ARM_INS_CBZ,
-	ARM_INS_MOVS,
+	ARM_INS_MOVS,               // Not used anymore
 	ARM_INS_POP,
 	ARM_INS_PUSH,
 
