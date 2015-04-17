@@ -5734,10 +5734,10 @@
 {	/* ARM_t2MOVr, ARM_INS_MOV: mov${s}${p}.w	$rd, $rm */
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
-{	/* ARM_t2MOVsra_flag, ARM_INS_ASRS: asrs${p}.w	$rd, $rm, #1 */
+{	/* ARM_t2MOVsra_flag, ARM_INS_ASR: asrs${p}.w	$rd, $rm, #1 */
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
-{	/* ARM_t2MOVsrl_flag, ARM_INS_LSRS: lsrs${p}.w	$rd, $rm, #1 */
+{	/* ARM_t2MOVsrl_flag, ARM_INS_LSR: lsrs${p}.w	$rd, $rm, #1 */
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_t2MRC, ARM_INS_MRC: mrc${p}	$cop, $opc1, $rt, $crn, $crm, $opc2 */
@@ -6253,7 +6253,7 @@
 {	/* ARM_t2STRs, ARM_INS_STR: str${p}.w	$rt, $addr */
 	{ CS_AC_READ, CS_AC_WRITE, 0 }
 },
-{	/* ARM_t2SUBS_PC_LR, ARM_INS_SUBS: subs${p}	pc, lr, $imm */
+{	/* ARM_t2SUBS_PC_LR, ARM_INS_SUB: subs${p}	pc, lr, $imm */
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_t2SUBri, ARM_INS_SUB: sub${s}${p}.w	$rd, $rn, $imm */
@@ -6550,7 +6550,7 @@
 {	/* ARM_tLSRrr, ARM_INS_LSR: lsr${s}${p}	$rdn, $rm */
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
-{	/* ARM_tMOVSr, ARM_INS_MOVS: movs	$rd, $rm */
+{	/* ARM_tMOVSr, ARM_INS_MOV: movs	$rd, $rm */
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_tMOVi8, ARM_INS_MOV: mov${s}${p}	$rd, $imm8 */
