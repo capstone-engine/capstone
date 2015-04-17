@@ -2584,11 +2584,11 @@ static struct insn_reg insn_regs_intel[] = {
 	{ X86_MOV16ao32, X86_REG_AX, 4 },    // 32-bit A1 10203040              // mov     ax, word ptr [0x40302010]
 	{ X86_MOV16ao64, X86_REG_AX, 8 },    // 64-bit 66 A1 1020304050607080   // movabs  ax, word ptr [0x8070605040302010]
 
-	{ X86_MOV32ao16, X86_REG_EAX },      // ???
+	{ X86_MOV32ao16, X86_REG_EAX, 2 },   // 32-bit 67 A1 1020               // mov     eax, dword ptr [0x2010]
 	{ X86_MOV32ao32, X86_REG_EAX, 4 },   // 32-bit A1 10203040              // mov     eax, dword ptr [0x40302010]
 	{ X86_MOV32ao64, X86_REG_EAX, 8 },   // 64-bit A1 1020304050607080      // movabs  eax, dword ptr [0x8070605040302010]
 
-	{ X86_MOV64ao32, X86_REG_RAX },      // ???
+	{ X86_MOV64ao32, X86_REG_RAX, 4 },   // 64-bit 48 8B04 10203040         // mov     rax, qword ptr [0x40302010]
 	{ X86_MOV64ao64, X86_REG_RAX, 8 },   // 64-bit 48 A1 1020304050607080   // movabs  rax, qword ptr [0x8070605040302010]
 	
 	{ X86_LODSQ, X86_REG_RAX },
