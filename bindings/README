@@ -11,11 +11,11 @@ More bindings created & maintained by the community are available as followings.
 
 	https://github.com/bnagy/crabstone
 
-- Capstone-vala: Vala binding (by Pancake).
+- Capstone-Vala: Vala binding (by Pancake).
 
 	https://github.com/radare/capstone-vala
 
-- NodeJS binding (by Jason Oster).
+- Node-Capstone: NodeJS binding (by Jason Oster).
 
 	https://github.com/parasyte/node-capstone
 
