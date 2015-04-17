@@ -192,6 +192,10 @@ if (CAPSTONE_BUILD_SHARED)
     set_property(TARGET capstone-shared PROPERTY OUTPUT_NAME capstone)
     set_property(TARGET capstone-shared PROPERTY COMPILE_FLAGS -DCAPSTONE_SHARED)
 
+    if (MSVC)
+        set_target_properties(capstone-shared PROPERTIES IMPORT_SUFFIX _dll.lib)
+    endif ()
+
     if(NOT DEFINED default-target)      # honor `capstone-static` for tests first.
 	set(default-target capstone-shared)
 	add_definitions(-DCAPSTONE_SHARED)

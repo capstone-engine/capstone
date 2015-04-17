@@ -649,6 +649,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			case X86_TEST8mi_alt:
 			case X86_XOR8mi:
 			case X86_XOR8mi8:
+			case X86_PUSH64i8:
+			case X86_CMP32ri8:
+			case X86_CMP64ri8:
 
 				imm = imm & 0xff;
 				opsize = 1;	// immediate of 1 byte
