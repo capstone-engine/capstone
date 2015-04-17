@@ -15,22 +15,27 @@ More bindings created & maintained by the community are available as followings.
 
 	https://github.com/radare/capstone-vala
 
-- C# binding (by Matt Graeber).
-
-	https://github.com/mattifestation/capstone
-
 - NodeJS binding (by Jason Oster).
 
 	https://github.com/parasyte/node-capstone
 
-- C++ binding (by Peter Hlavaty)
+- CCcapstone: C++ binding (by Peter Hlavaty).
 
 	https://github.com/zer0mem/cccapstone
 
-- Lua binding (by Antonio Davide)
+- LuaCapstone: Lua binding (by Antonio Davide).
 
 	https://github.com/Dax89/LuaCapstone
 
-- Rust binding (by Richo Healey)
+- Capstone-RS: Rust binding (by Richo Healey).
 
 	https://github.com/richo/capstone-rs
+
+- Capstone.NET: .NET framework binding (by Ahmed Garhy).
+
+	https://github.com/9ee1/Capstone.NET
+
+- C# binding (by Matt Graeber). Note: this is only for Capstone v2.0.
+
+	https://github.com/mattifestation/capstone
+
