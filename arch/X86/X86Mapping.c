@@ -2455,6 +2455,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 struct insn_reg {
 	uint16_t insn;
 	x86_reg reg;
+	uint8_t imm_size;
 };
 
 struct insn_reg2 {
@@ -2575,7 +2576,21 @@ static struct insn_reg insn_regs_intel[] = {
 	{ X86_OUTSW, X86_REG_DX },
 	{ X86_OUTSL, X86_REG_DX },
 
-	{ X86_MOV32ao32, X86_REG_EAX },
+	{ X86_MOV8ao16, X86_REG_AL, 2 },     // 16-bit A0 1020                  // mov     al, byte ptr [0x2010]
+	{ X86_MOV8ao32, X86_REG_AL, 4 },     // 32-bit A0 10203040              // mov     al, byte ptr [0x40302010]
+	{ X86_MOV8ao64, X86_REG_AL, 8 },     // 64-bit 66 A0 1020304050607080   // movabs  al, byte ptr [0x8070605040302010]
+
+	{ X86_MOV16ao16, X86_REG_AX, 2 },    // 16-bit A1 1020                  // mov     ax, word ptr [0x2010]
+	{ X86_MOV16ao32, X86_REG_AX, 4 },    // 32-bit A1 10203040              // mov     ax, word ptr [0x40302010]
+	{ X86_MOV16ao64, X86_REG_AX, 8 },    // 64-bit 66 A1 1020304050607080   // movabs  ax, word ptr [0x8070605040302010]
+
+	{ X86_MOV32ao16, X86_REG_EAX, 2 },   // 32-bit 67 A1 1020               // mov     eax, dword ptr [0x2010]
+	{ X86_MOV32ao32, X86_REG_EAX, 4 },   // 32-bit A1 10203040              // mov     eax, dword ptr [0x40302010]
+	{ X86_MOV32ao64, X86_REG_EAX, 8 },   // 64-bit A1 1020304050607080      // movabs  eax, dword ptr [0x8070605040302010]
+
+	{ X86_MOV64ao32, X86_REG_RAX, 4 },   // 64-bit 48 8B04 10203040         // mov     rax, qword ptr [0x40302010]
+	{ X86_MOV64ao64, X86_REG_RAX, 8 },   // 64-bit 48 A1 1020304050607080   // movabs  rax, qword ptr [0x8070605040302010]
+	
 	{ X86_LODSQ, X86_REG_RAX },
 	{ X86_OR32i32, X86_REG_EAX },
 	{ X86_SUB32i32, X86_REG_EAX },
@@ -2706,12 +2721,13 @@ static struct insn_reg2 insn_regs_intel2[] = {
 // return register of given instruction id
 // return 0 if not found
 // this is to handle instructions embedding accumulate registers into AsmStrs[]
-x86_reg X86_insn_reg_intel(unsigned int id)
+x86_reg X86_insn_reg_intel(unsigned int id, uint8_t * imm_size)
 {
 	unsigned int i;
 
 	for (i = 0; i < ARR_SIZE(insn_regs_intel); i++) {
 		if (insn_regs_intel[i].insn == id) {
+			if (imm_size) *imm_size = insn_regs_intel[i].imm_size;
 			return insn_regs_intel[i].reg;
 		}
 	}
