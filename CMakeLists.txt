@@ -66,6 +66,20 @@ set(HEADERS_ENGINE
     utils.h
     )
 
+set(HEADERS_COMMON
+    include/capstone/arm64.h
+    include/capstone/arm.h
+    include/capstone/capstone.h
+    include/capstone/mips.h
+    include/capstone/ppc.h
+    include/capstone/x86.h
+    include/capstone/sparc.h
+    include/capstone/systemz.h
+    include/capstone/xcore.h
+    include/capstone/platform.h
+    )
+
+
 set(TEST_SOURCES test.c test_detail.c test_skipdata.c test_iter.c)
 
 ## architecture support
@@ -285,6 +299,7 @@ set(ALL_SOURCES
     )
 
 set(ALL_HEADERS
+    ${HEADERS_COMMON}
     ${HEADERS_ENGINE}
     ${HEADERS_ARM}
     ${HEADERS_ARM64}
@@ -361,6 +376,7 @@ source_group("Source\\SystemZ" FILES ${SOURCES_SYSZ})
 source_group("Source\\X86" FILES ${SOURCES_X86})
 source_group("Source\\XCore" FILES ${SOURCES_XCORE})
 
+source_group("Include\\Common" FILES ${HEADERS_COMMON})
 source_group("Include\\Engine" FILES ${HEADERS_ENGINE})
 source_group("Include\\ARM" FILES ${HEADERS_ARM})
 source_group("Include\\ARM64" FILES ${HEADERS_ARM64})
@@ -372,10 +388,7 @@ source_group("Include\\X86" FILES ${HEADERS_X86})
 source_group("Include\\XCore" FILES ${HEADERS_XCORE})
 
 ## installation
-set(INCLUDES arm64.h  arm.h  capstone.h  mips.h  ppc.h  x86.h sparc.h systemz.h xcore.h platform.h)
-foreach (INC ${INCLUDES})
-    install(FILES "include/${INC}" DESTINATION include/capstone)
-endforeach ()
+install(FILES ${HEADERS_COMMON} DESTINATION include/capstone)
 
 if (CAPSTONE_BUILD_STATIC)
     install(TARGETS capstone-static
