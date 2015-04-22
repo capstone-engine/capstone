@@ -11,7 +11,7 @@
 #include <string.h>
 #include "../../myinttypes.h"
 
-#include <capstone.h>
+#include <capstone/capstone.h>
 
 static csh handle;
 
