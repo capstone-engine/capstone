@@ -466,6 +466,7 @@ endef
 
 
 define generate-pkgcfg
+	mkdir -p $(BLDIR)
 	echo 'Name: capstone' > $(PKGCFGF)
 	echo 'Description: Capstone disassembly engine' >> $(PKGCFGF)
 	echo 'Version: $(PKG_VERSION)' >> $(PKGCFGF)
