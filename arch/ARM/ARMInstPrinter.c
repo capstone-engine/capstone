@@ -1449,7 +1449,7 @@ static void printRegisterList(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	unsigned i, e;
 #ifndef CAPSTONE_DIET
-	uint8_t access;
+	uint8_t access = 0;
 #endif
 
 	SStream_concat0(O, "{");
