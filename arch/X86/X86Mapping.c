@@ -2590,7 +2590,7 @@ static struct insn_reg insn_regs_intel[] = {
 
 	{ X86_MOV64ao32, X86_REG_RAX, 4 },   // 64-bit 48 8B04 10203040         // mov     rax, qword ptr [0x40302010]
 	{ X86_MOV64ao64, X86_REG_RAX, 8 },   // 64-bit 48 A1 1020304050607080   // movabs  rax, qword ptr [0x8070605040302010]
-	
+
 	{ X86_LODSQ, X86_REG_RAX },
 	{ X86_OR32i32, X86_REG_EAX },
 	{ X86_SUB32i32, X86_REG_EAX },
@@ -2727,7 +2727,8 @@ x86_reg X86_insn_reg_intel(unsigned int id, uint8_t * imm_size)
 
 	for (i = 0; i < ARR_SIZE(insn_regs_intel); i++) {
 		if (insn_regs_intel[i].insn == id) {
-			if (imm_size) *imm_size = insn_regs_intel[i].imm_size;
+			if (imm_size)
+				*imm_size = insn_regs_intel[i].imm_size;
 			return insn_regs_intel[i].reg;
 		}
 	}
