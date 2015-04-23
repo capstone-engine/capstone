@@ -886,6 +886,7 @@ typedef enum arm_insn_group {
 	//> Generic groups
 	// all jump instructions (conditional+direct+indirect jumps)
 	ARM_GRP_JUMP,	// = CS_GRP_JUMP
+	ARM_GRP_CALL,	// = CS_GRP_CALL
 	ARM_GRP_PRIVILEGE = 6, // = CS_GRP_PRIVILEGE
 
 	//> Architecture-specific groups
