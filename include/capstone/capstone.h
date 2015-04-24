@@ -249,9 +249,10 @@ typedef struct cs_detail {
 
 // Detail information of disassembled instruction
 typedef struct cs_insn {
-	// Instruction ID
-	// Find the instruction id from header file of corresponding architecture,
-	// such as arm.h for ARM, x86.h for X86, etc...
+	// Instruction ID (basically a numeric ID for the instruction mnemonic)
+	// Find the instruction id in the '[ARCH]_insn' enum in the header file 
+	// of corresponding architecture, such as 'arm_insn' in arm.h for ARM,
+	// 'x86_insn' in x86.h for X86, etc...
 	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
 	// NOTE: in Skipdata mode, "data" instruction has 0 for this id field.
 	unsigned int id;
