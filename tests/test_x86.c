@@ -195,7 +195,7 @@ static void test()
 	int i;
 	size_t count;
 
-	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
+	for (i = 0; i < COUNTOF(platforms); i++) {
 		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
 		if (err) {
 			printf("Failed on cs_open() with error returned: %u\n", err);
@@ -301,7 +301,7 @@ static void test_group_name()
 		{ X86_GRP_NOVLX, "novlx" },
 		{ X86_GRP_NOVLX+1, NULL }
 	};
-	test_groups_common(handle, &total_errors, group_names, sizeof(group_names) / sizeof(group_names[0]));
+	test_groups_common(handle, &total_errors, group_names, COUNTOF(group_names));
 	cs_close(&handle);
 }
 

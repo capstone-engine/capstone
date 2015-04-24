@@ -15,6 +15,8 @@ struct platform {
 	char *comment;
 };
 
+static int total_errors = 0;
+
 static csh handle;
 
 static const char* get_bc_name(int bc)
@@ -119,10 +121,11 @@ static void test()
 	int i;
 	size_t count;
 
-	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
+	for (i = 0; i < COUNTOF(platforms); i++) {
 		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
 		if (err) {
 			printf("Failed on cs_open() with error returned: %u\n", err);
+			total_errors++;
 			continue;
 		}
 
@@ -150,6 +153,7 @@ static void test()
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code:", platforms[i].code, platforms[i].size);
 			printf("ERROR: Failed to disasm given code!\n");
+			total_errors++;
 		}
 
 		printf("\n");
@@ -158,9 +162,40 @@ static void test()
 	}
 }
 
+static void test_group_name()
+{
+	cs_err err = cs_open(CS_ARCH_PPC, CS_MODE_BIG_ENDIAN, &handle);
+	if (err) {
+		printf("Failed on cs_open() with error returned: %u\n", err);
+		total_errors++;
+		return;
+	}
+	static struct group_name group_names[] = {
+		{ PPC_GRP_INVALID, NULL },
+		{ PPC_GRP_JUMP, "jump" },
+		{ PPC_GRP_JUMP+1, NULL },
+
+		// architecture-specific groups
+		{ PPC_GRP_ALTIVEC-1, NULL },
+		{ PPC_GRP_ALTIVEC, "altivec" },
+		{ PPC_GRP_MODE32, "mode32" },
+		{ PPC_GRP_MODE64, "mode64" },
+		{ PPC_GRP_BOOKE, "booke" },
+		{ PPC_GRP_NOTBOOKE, "notbooke" },
+		{ PPC_GRP_SPE, "spe" },
+		{ PPC_GRP_VSX, "vsx" },
+		{ PPC_GRP_E500, "e500" },
+		{ PPC_GRP_PPC4XX, "ppc4xx" },
+		{ PPC_GRP_PPC6XX, "ppc6xx" },
+		{ PPC_GRP_PPC6XX+1, NULL },
+	};
+	test_groups_common(handle, &total_errors, group_names, COUNTOF(group_names));
+	cs_close(&handle);
+}
+
 int main()
 {
 	test();
-
-	return 0;
+	test_group_name();
+	return total_errors;
 }

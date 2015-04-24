@@ -86,7 +86,7 @@ static void test()
 	int i;
 	size_t count;
 
-	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
+	for (i = 0; i < COUNTOF(platforms); i++) {
 		printf("****************\n");
 		printf("Platform: %s\n", platforms[i].comment);
 		err = cs_open(platforms[i].arch, platforms[i].mode, &handle);

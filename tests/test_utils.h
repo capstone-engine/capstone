@@ -7,3 +7,5 @@ struct group_name {
 };
 
 void test_groups_common(csh handle, int* error, struct group_name* groups, size_t count);
+
+#define COUNTOF(x)		(sizeof(x) / sizeof(x[0]))

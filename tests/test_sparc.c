@@ -15,6 +15,8 @@ struct platform {
 	char *comment;
 };
 
+static int total_errors = 0;
+
 static csh handle;
 
 static void print_insn_detail(cs_insn *ins)
@@ -93,10 +95,11 @@ static void test()
 	int i;
 	size_t count;
 
-	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
+	for (i = 0; i < COUNTOF(platforms); i++) {
 		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
 		if (err) {
 			printf("Failed on cs_open() with error returned: %u\n", err);
+			total_errors++;
 			continue;
 		}
 
@@ -124,6 +127,7 @@ static void test()
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code:", platforms[i].code, platforms[i].size);
 			printf("ERROR: Failed to disasm given code!\n");
+			total_errors++;
 		}
 
 		printf("\n");
@@ -132,9 +136,37 @@ static void test()
 	}
 }
 
+static void test_group_name()
+{
+	cs_err err = cs_open(CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN, &handle);
+	if (err) {
+		printf("Failed on cs_open() with error returned: %u\n", err);
+		total_errors++;
+		return;
+	}
+	static struct group_name group_names[] = {
+		{ SPARC_GRP_INVALID, NULL },
+		{ SPARC_GRP_JUMP, "jump" },
+		{ SPARC_GRP_JUMP+1, NULL },
+
+		// architecture-specific groups
+		{ SPARC_GRP_HARDQUAD-1, NULL },
+		{ SPARC_GRP_HARDQUAD, "hardquad" },
+		{ SPARC_GRP_V9, "v9" },
+		{ SPARC_GRP_VIS, "vis" },
+		{ SPARC_GRP_VIS2, "vis2" },
+		{ SPARC_GRP_VIS3,  "vis3" },
+		{ SPARC_GRP_32BIT, "32bit" },
+		{ SPARC_GRP_64BIT, "64bit" },
+		{ SPARC_GRP_64BIT+1, NULL },
+	};
+	test_groups_common(handle, &total_errors, group_names, COUNTOF(group_names));
+	cs_close(&handle);
+}
+
 int main()
 {
 	test();
-
-	return 0;
+	test_group_name();
+	return total_errors;
 }
