@@ -5,6 +5,7 @@
 #include "../myinttypes.h"
 
 #include <capstone.h>
+#include "test_utils.h"
 
 struct platform {
 	cs_arch arch;
@@ -15,18 +16,6 @@ struct platform {
 };
 
 static csh handle;
-
-static void print_string_hex(char *comment, unsigned char *str, size_t len)
-{
-	unsigned char *c;
-
-	printf("%s", comment);
-	for (c = str; c < str + len; c++) {
-		printf("0x%02x ", *c & 0xff);
-	}
-
-	printf("\n");
-}
 
 static const char* get_bc_name(int bc)
 {

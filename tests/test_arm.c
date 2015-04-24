@@ -6,6 +6,7 @@
 #include "../myinttypes.h"
 
 #include <capstone.h>
+#include "test_utils.h"
 
 static csh handle;
 
@@ -17,18 +18,6 @@ struct platform {
 	char *comment;
 	int syntax;
 };
-
-static void print_string_hex(char *comment, unsigned char *str, size_t len)
-{
-	unsigned char *c;
-
-	printf("%s", comment);
-	for (c = str; c < str + len; c++) {
-		printf("0x%02x ", *c & 0xff);
-	}
-
-	printf("\n");
-}
 
 static void print_insn_detail(cs_insn *ins)
 {

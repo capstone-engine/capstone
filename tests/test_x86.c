@@ -6,6 +6,9 @@
 #include "../myinttypes.h"
 
 #include <capstone.h>
+#include "test_utils.h"
+
+static int total_errors = 0;
 
 static csh handle;
 
@@ -18,18 +21,6 @@ struct platform {
 	cs_opt_type opt_type;
 	cs_opt_value opt_value;
 };
-
-static void print_string_hex(char *comment, unsigned char *str, size_t len)
-{
-	unsigned char *c;
-
-	printf("%s", comment);
-	for (c = str; c < str + len; c++) {
-		printf("0x%02x ", *c & 0xff);
-	}
-
-	printf("\n");
-}
 
 static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 {
@@ -208,6 +199,7 @@ static void test()
 		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
 		if (err) {
 			printf("Failed on cs_open() with error returned: %u\n", err);
+			total_errors++;
 			continue;
 		}
 
@@ -238,6 +230,7 @@ static void test()
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code:", platforms[i].code, platforms[i].size);
 			printf("ERROR: Failed to disasm given code!\n");
+			total_errors++;
 		}
 
 		printf("\n");
@@ -246,9 +239,76 @@ static void test()
 	}
 }
 
+static void test_group_name()
+{
+	cs_err err = cs_open(CS_ARCH_X86, CS_MODE_32, &handle);
+	if (err) {
+		printf("Failed on cs_open() with error returned: %u\n", err);
+		total_errors++;
+		return;
+	}
+	static struct group_name group_names[] = {
+		{ X86_GRP_INVALID, NULL },
+		{ X86_GRP_JUMP, "jump" },
+		{ X86_GRP_CALL, "call" },
+		{ X86_GRP_RET, "ret" },
+		{ X86_GRP_INT, "int" },
+		{ X86_GRP_IRET, "iret" },
+		{ X86_GRP_IRET+1, NULL },
+
+		// architecture-specific groups
+		{ X86_GRP_VM - 1, NULL },
+		{ X86_GRP_VM, "vm" },
+		{ X86_GRP_3DNOW, "3dnow" },
+		{ X86_GRP_AES, "aes" },
+		{ X86_GRP_ADX, "adx" },
+		{ X86_GRP_AVX, "avx" },
+		{ X86_GRP_AVX2, "avx2" },
+		{ X86_GRP_AVX512, "avx512" },
+		{ X86_GRP_BMI, "bmi" },
+		{ X86_GRP_BMI2, "bmi2" },
+		{ X86_GRP_CMOV, "cmov" },
+		{ X86_GRP_F16C, "fc16" },
+		{ X86_GRP_FMA, "fma" },
+		{ X86_GRP_FMA4, "fma4" },
+		{ X86_GRP_FSGSBASE, "fsgsbase" },
+		{ X86_GRP_HLE, "hle" },
+		{ X86_GRP_MMX, "mmx" },
+		{ X86_GRP_MODE32, "mode32" },
+		{ X86_GRP_MODE64, "mode64" },
+		{ X86_GRP_RTM, "rtm" },
+		{ X86_GRP_SHA, "sha" },
+		{ X86_GRP_SSE1, "sse1" },
+		{ X86_GRP_SSE2, "sse2" },
+		{ X86_GRP_SSE3, "sse3" },
+		{ X86_GRP_SSE41, "sse41" },
+		{ X86_GRP_SSE42, "sse42" },
+		{ X86_GRP_SSE4A, "sse4a" },
+		{ X86_GRP_SSSE3, "ssse3" },
+		{ X86_GRP_PCLMUL, "pclmul" },
+		{ X86_GRP_XOP, "xop" },
+		{ X86_GRP_CDI, "cdi" },
+		{ X86_GRP_ERI, "eri" },
+		{ X86_GRP_TBM, "tbm" },
+		{ X86_GRP_16BITMODE, "16bitmode" },
+		{ X86_GRP_NOT64BITMODE, "not64bitmode" },
+		{ X86_GRP_SGX, "sgx" },
+		{ X86_GRP_DQI, "dqi" },
+		{ X86_GRP_BWI, "bwi" },
+		{ X86_GRP_PFI, "pfi" },
+		{ X86_GRP_VLX, "vlx" },
+		{ X86_GRP_SMAP, "smap" },
+		{ X86_GRP_NOVLX, "novlx" },
+		{ X86_GRP_NOVLX+1, NULL }
+	};
+	test_groups_common(handle, &total_errors, group_names, sizeof(group_names) / sizeof(group_names[0]));
+	cs_close(&handle);
+}
+
+
 int main()
 {
 	test();
-
-	return 0;
+	test_group_name();
+	return total_errors;
 }

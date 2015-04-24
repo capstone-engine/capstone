@@ -6,6 +6,7 @@
 #include "../myinttypes.h"
 
 #include <capstone.h>
+#include "test_utils.h"
 
 struct platform {
 	cs_arch arch;
@@ -17,16 +18,6 @@ struct platform {
 	cs_opt_value opt_value;
 };
 
-static void print_string_hex(unsigned char *str, size_t len)
-{
-	unsigned char *c;
-
-	printf("Code: ");
-	for (c = str; c < str + len; c++) {
-		printf("0x%02x ", *c & 0xff);
-	}
-	printf("\n");
-}
 
 static void test()
 {
@@ -241,7 +232,7 @@ static void test()
 		if (count) {
 			size_t j;
 
-			print_string_hex(platforms[i].code, platforms[i].size);
+			print_string_hex("Code: ", platforms[i].code, platforms[i].size);
 			printf("Disasm:\n");
 
 			for (j = 0; j < count; j++) {
@@ -257,7 +248,7 @@ static void test()
 		} else {
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
-			print_string_hex(platforms[i].code, platforms[i].size);
+			print_string_hex("Code: ", platforms[i].code, platforms[i].size);
 			printf("ERROR: Failed to disasm given code!\n");
 		}
 
