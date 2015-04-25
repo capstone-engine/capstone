@@ -6,6 +6,7 @@
 #include "../myinttypes.h"
 
 #include <capstone.h>
+#include "test_utils.h"
 
 struct platform {
 	cs_arch arch;
@@ -15,19 +16,9 @@ struct platform {
 	char *comment;
 };
 
+static int total_errors = 0;
+
 static csh handle;
-
-static void print_string_hex(char *comment, unsigned char *str, size_t len)
-{
-	unsigned char *c;
-
-	printf("%s", comment);
-	for (c = str; c < str + len; c++) {
-		printf("0x%02x ", *c & 0xff);
-	}
-
-	printf("\n");
-}
 
 static void print_insn_detail(cs_insn *ins)
 {
@@ -119,10 +110,11 @@ static void test()
 	int i;
 	size_t count;
 
-	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
+	for (i = 0; i < COUNTOF(platforms); i++) {
 		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
 		if (err) {
 			printf("Failed on cs_open() with error returned: %u\n", err);
+			total_errors++;
 			continue;
 		}
 
@@ -150,6 +142,7 @@ static void test()
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code:", platforms[i].code, platforms[i].size);
 			printf("ERROR: Failed to disasm given code!\n");
+			total_errors++;
 		}
 
 		printf("\n");
@@ -158,9 +151,68 @@ static void test()
 	}
 }
 
+static void test_group_name()
+{
+	cs_err err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS32 | CS_MODE_BIG_ENDIAN, &handle);
+	if (err) {
+		printf("Failed on cs_open() with error returned: %u\n", err);
+		total_errors++;
+		return;
+	}
+	static struct group_name group_names[] = {
+		{ MIPS_GRP_INVALID, NULL },
+		{ MIPS_GRP_JUMP, "jump" },
+		{ MIPS_GRP_JUMP+1, NULL },
+
+		// architecture-specific groups
+		{ MIPS_GRP_BITCOUNT-1, NULL },
+		{ MIPS_GRP_BITCOUNT, "bitcount" },
+		{ MIPS_GRP_DSP, "dsp" },
+		{ MIPS_GRP_DSPR2, "dspr2" },
+		{ MIPS_GRP_FPIDX, "fpidx" },
+		{ MIPS_GRP_MSA, "msa" },
+		{ MIPS_GRP_MIPS32R2, "mips32r2" },
+		{ MIPS_GRP_MIPS64, "mips64" },
+		{ MIPS_GRP_MIPS64R2, "mips64r2" },
+		{ MIPS_GRP_SEINREG, "seinreg" },
+		{ MIPS_GRP_STDENC, "stdenc" },
+		{ MIPS_GRP_SWAP, "swap" },
+		{ MIPS_GRP_MICROMIPS, "micromips" },
+		{ MIPS_GRP_MIPS16MODE, "mips16mode" },
+		{ MIPS_GRP_FP64BIT, "fp64bit" },
+		{ MIPS_GRP_NONANSFPMATH, "nonansfpmath" },
+		{ MIPS_GRP_NOTFP64BIT, "notfp64bit" },
+		{ MIPS_GRP_NOTINMICROMIPS, "notinmicromips" },
+		{ MIPS_GRP_NOTNACL, "notnacl" },
+
+		{ MIPS_GRP_NOTMIPS32R6, "notmips32r6" },
+		{ MIPS_GRP_NOTMIPS64R6, "notmips64r6" },
+		{ MIPS_GRP_CNMIPS, "cnmips" },
+
+		{ MIPS_GRP_MIPS32, "mips32" },
+		{ MIPS_GRP_MIPS32R6, "mips32r6" },
+		{ MIPS_GRP_MIPS64R6, "mips64r6" },
+
+		{ MIPS_GRP_MIPS2, "mips2" },
+		{ MIPS_GRP_MIPS3, "mips3" },
+		{ MIPS_GRP_MIPS3_32, "mips3_32"},
+		{ MIPS_GRP_MIPS3_32R2, "mips3_32r2" },
+
+		{ MIPS_GRP_MIPS4_32, "mips4_32" },
+		{ MIPS_GRP_MIPS4_32R2, "mips4_32r2" },
+		{ MIPS_GRP_MIPS5_32R2, "mips5_32r2" },
+
+		{ MIPS_GRP_GP32BIT, "gp32bit" },
+		{ MIPS_GRP_GP64BIT, "gp64bit" },
+		{ MIPS_GRP_GP64BIT+1, NULL },
+	};
+	test_groups_common(handle, &total_errors, group_names, COUNTOF(group_names));
+	cs_close(&handle);
+}
+
 int main()
 {
 	test();
-
-	return 0;
+	test_group_name();
+	return total_errors;
 }

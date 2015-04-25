@@ -6,6 +6,9 @@
 #include "../myinttypes.h"
 
 #include <capstone.h>
+#include "test_utils.h"
+
+static int total_errors = 0;
 
 static csh handle;
 
@@ -17,18 +20,6 @@ struct platform {
 	char *comment;
 	int syntax;
 };
-
-static void print_string_hex(char *comment, unsigned char *str, size_t len)
-{
-	unsigned char *c;
-
-	printf("%s", comment);
-	for (c = str; c < str + len; c++) {
-		printf("0x%02x ", *c & 0xff);
-	}
-
-	printf("\n");
-}
 
 static void print_insn_detail(cs_insn *ins)
 {
@@ -248,10 +239,11 @@ static void test()
 	int i;
 	size_t count;
 
-	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
+	for (i = 0; i < COUNTOF(platforms); i++) {
 		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
 		if (err) {
 			printf("Failed on cs_open() with error returned: %u\n", err);
+			total_errors++;
 			continue;
 		}
 
@@ -281,6 +273,7 @@ static void test()
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code:", platforms[i].code, platforms[i].size);
 			printf("ERROR: Failed to disasm given code!\n");
+			total_errors++;
 		}
 
 		printf("\n");
@@ -289,10 +282,62 @@ static void test()
 	}
 }
 
+static void test_group_name()
+{
+	cs_err err = cs_open(CS_ARCH_ARM, CS_MODE_THUMB, &handle);
+	if (err) {
+		printf("Failed on cs_open() with error returned: %u\n", err);
+		total_errors++;
+		return;
+	}
+	static struct group_name group_names[] = {
+		{ ARM_GRP_INVALID, NULL },
+		{ ARM_GRP_JUMP,	"jump" },
+		{ ARM_GRP_JUMP + 1, NULL },
+
+		// architecture-specific groups
+		{ ARM_GRP_CRYPTO -1, NULL },
+		{ ARM_GRP_CRYPTO, "crypto" },
+		{ ARM_GRP_DATABARRIER, "databarrier" },
+		{ ARM_GRP_DIVIDE, "divide" },
+		{ ARM_GRP_FPARMV8, "fparmv8" },
+		{ ARM_GRP_MULTPRO, "multpro" },
+		{ ARM_GRP_NEON, "neon" },
+		{ ARM_GRP_T2EXTRACTPACK, "T2EXTRACTPACK" },
+		{ ARM_GRP_THUMB2DSP, "THUMB2DSP" },
+		{ ARM_GRP_TRUSTZONE, "TRUSTZONE" },
+		{ ARM_GRP_V4T, "v4t" },
+		{ ARM_GRP_V5T, "v5t" },
+		{ ARM_GRP_V5TE, "v5te" },
+		{ ARM_GRP_V6, "v6" },
+		{ ARM_GRP_V6T2, "v6t2" },
+		{ ARM_GRP_V7, "v7" },
+		{ ARM_GRP_V8, "v8" },
+		{ ARM_GRP_VFP2, "vfp2" },
+		{ ARM_GRP_VFP3, "vfp3" },
+		{ ARM_GRP_VFP4, "vfp4" },
+		{ ARM_GRP_ARM, "arm" },
+		{ ARM_GRP_MCLASS, "mclass" },
+		{ ARM_GRP_NOTMCLASS, "notmclass" },
+		{ ARM_GRP_THUMB, "thumb" },
+		{ ARM_GRP_THUMB1ONLY, "thumb1only" },
+		{ ARM_GRP_THUMB2, "thumb2" },
+		{ ARM_GRP_PREV8, "prev8" },
+		{ ARM_GRP_FPVMLX, "fpvmlx" },
+		{ ARM_GRP_MULOPS, "mulops" },
+		{ ARM_GRP_CRC, "crc" },
+		{ ARM_GRP_DPVFP, "dpvfp" },
+		{ ARM_GRP_V6M, "v6m" },
+		{ ARM_GRP_V6M + 1, NULL },
+	};
+	test_groups_common(handle, &total_errors, group_names, COUNTOF(group_names));
+	cs_close(&handle);
+}
+
 int main()
 {
 	test();
-
-	return 0;
+	test_group_name();
+	return total_errors;
 }
 

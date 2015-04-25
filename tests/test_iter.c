@@ -7,6 +7,7 @@
 #include "../myinttypes.h"
 
 #include <capstone.h>
+#include "test_utils.h"
 
 struct platform {
 	cs_arch arch;
@@ -17,17 +18,6 @@ struct platform {
 	cs_opt_type opt_type;
 	cs_opt_value opt_value;
 };
-
-static void print_string_hex(unsigned char *str, size_t len)
-{
-	unsigned char *c;
-
-	printf("Code: ");
-	for (c = str; c < str + len; c++) {
-		printf("0x%02x ", *c & 0xff);
-	}
-	printf("\n");
-}
 
 static void test()
 {
@@ -187,7 +177,7 @@ static void test()
 	const uint8_t *code;
 	size_t size;
 
-	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
+	for (i = 0; i < COUNTOF(platforms); i++) {
 		printf("****************\n");
 		printf("Platform: %s\n", platforms[i].comment);
 		err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
@@ -204,7 +194,7 @@ static void test()
 		// allocate memory for the cache to be used by cs_disasm_iter()
 		insn = cs_malloc(handle);
 
-		print_string_hex(platforms[i].code, platforms[i].size);
+		print_string_hex("Code: ", platforms[i].code, platforms[i].size);
 		printf("Disasm:\n");
 
 		address = 0x1000;

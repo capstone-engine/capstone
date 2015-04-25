@@ -6,6 +6,9 @@
 #include "../myinttypes.h"
 
 #include <capstone.h>
+#include "test_utils.h"
+
+static int total_errors = 0;
 
 static csh handle;
 
@@ -16,18 +19,6 @@ struct platform {
 	size_t size;
 	char *comment;
 };
-
-static void print_string_hex(char *comment, unsigned char *str, size_t len)
-{
-	unsigned char *c;
-
-	printf("%s", comment);
-	for (c = str; c < str + len; c++) {
-		printf("0x%02x ", *c & 0xff);
-	}
-
-	printf("\n");
-}
 
 static void print_insn_detail(cs_insn *ins)
 {
@@ -192,10 +183,11 @@ static void test()
 	int i;
 	size_t count;
 
-	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
+	for (i = 0; i < COUNTOF(platforms); i++) {
 		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
 		if (err) {
 			printf("Failed on cs_open() with error returned: %u\n", err);
+			total_errors++;
 			continue;
 		}
 
@@ -223,6 +215,7 @@ static void test()
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code: ", platforms[i].code, platforms[i].size);
 			printf("ERROR: Failed to disasm given code!\n");
+			total_errors++;
 		}
 
 		printf("\n");
@@ -231,10 +224,35 @@ static void test()
 	}
 }
 
+static void test_group_name()
+{
+	cs_err err = cs_open(CS_ARCH_ARM64, CS_MODE_ARM, &handle);
+	if (err) {
+		printf("Failed on cs_open() with error returned: %u\n", err);
+		total_errors++;
+		return;
+	}
+	static struct group_name group_names[] = {
+		{ ARM64_GRP_INVALID, NULL },
+		{ ARM64_GRP_JUMP, "jump" },
+		{ ARM64_GRP_JUMP+1, NULL },
+
+		// architecture-specific groups
+		{ ARM64_GRP_CRYPTO-1, NULL },
+		{ ARM64_GRP_CRYPTO, "crypto" },
+		{ ARM64_GRP_FPARMV8, "fparmv8" },
+		{ ARM64_GRP_NEON, "neon" },
+		{ ARM64_GRP_CRC, "crc" },
+		{ ARM64_GRP_CRC+1, NULL },
+	};
+	test_groups_common(handle, &total_errors, group_names, COUNTOF(group_names));
+	cs_close(&handle);
+}
+
 int main()
 {
 	test();
-
-	return 0;
+	test_group_name();
+	return total_errors;
 }
 
