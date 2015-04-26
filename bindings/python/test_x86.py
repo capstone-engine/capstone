@@ -57,9 +57,9 @@ def print_insn_detail(mode, insn):
         print("\tsib: 0x%x" % (insn.sib))
         if (insn.sib):
             if insn.sib_base != 0:
-                print("\t\tsib_base: %s" % (insn.reg_name(insn.sib_base)))
+                print("\t\tsib_base: %s" % (insn.reg_name2(insn.sib_base)))
             if insn.sib_index != 0:
-                print("\t\tsib_index: %s" % (insn.reg_name(insn.sib_index)))
+                print("\t\tsib_index: %s" % (insn.reg_name2(insn.sib_index)))
             if insn.sib_scale != 0:
                 print("\t\tsib_scale: %d" % (insn.sib_scale))
 
@@ -92,7 +92,7 @@ def print_insn_detail(mode, insn):
         for i in insn.operands:
             c += 1
             if i.type == X86_OP_REG:
-                print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
+                print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name2(i.reg)))
             if i.type == X86_OP_IMM:
                 print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x(i.imm)))
             if i.type == X86_OP_FP:
@@ -100,11 +100,11 @@ def print_insn_detail(mode, insn):
             if i.type == X86_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
                 if i.mem.segment != 0:
-                    print("\t\t\toperands[%u].mem.segment: REG = %s" % (c, insn.reg_name(i.mem.segment)))
+                    print("\t\t\toperands[%u].mem.segment: REG = %s" % (c, insn.reg_name2(i.mem.segment)))
                 if i.mem.base != 0:
-                    print("\t\t\toperands[%u].mem.base: REG = %s" % (c, insn.reg_name(i.mem.base)))
+                    print("\t\t\toperands[%u].mem.base: REG = %s" % (c, insn.reg_name2(i.mem.base)))
                 if i.mem.index != 0:
-                    print("\t\t\toperands[%u].mem.index: REG = %s" % (c, insn.reg_name(i.mem.index)))
+                    print("\t\t\toperands[%u].mem.index: REG = %s" % (c, insn.reg_name2(i.mem.index)))
                 if i.mem.scale != 1:
                     print("\t\t\toperands[%u].mem.scale: %u" % (c, i.mem.scale))
                 if i.mem.disp != 0:

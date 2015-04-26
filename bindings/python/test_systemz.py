@@ -28,7 +28,7 @@ def print_insn_detail(insn):
         c = 0
         for i in insn.operands:
             if i.type == SYSZ_OP_REG:
-                print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
+                print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name2(i.reg)))
             if i.type == SYSZ_OP_ACREG:
                 print("\t\toperands[%u].type: ACREG = %u" % (c, i.reg))
             if i.type == SYSZ_OP_IMM:
@@ -37,10 +37,10 @@ def print_insn_detail(insn):
                 print("\t\toperands[%u].type: MEM" % c)
                 if i.mem.base != 0:
                     print("\t\t\toperands[%u].mem.base: REG = %s" \
-                        % (c, insn.reg_name(i.mem.base)))
+                        % (c, insn.reg_name2(i.mem.base)))
                 if i.mem.index != 0:
                     print("\t\t\toperands[%u].mem.index: REG = %s" \
-                        % (c, insn.reg_name(i.mem.index)))
+                        % (c, insn.reg_name2(i.mem.index)))
                 if i.mem.length != 0:
                     print("\t\t\toperands[%u].mem.length: 0x%s" \
                         % (c, to_x(i.mem.length)))

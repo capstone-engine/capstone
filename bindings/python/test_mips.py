@@ -34,14 +34,14 @@ def print_insn_detail(insn):
         for i in insn.operands:
             c += 1
             if i.type == MIPS_OP_REG:
-                print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
+                print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name2(i.reg)))
             if i.type == MIPS_OP_IMM:
                 print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x(i.imm)))
             if i.type == MIPS_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
                 if i.mem.base != 0:
                     print("\t\t\toperands[%u].mem.base: REG = %s" \
-                        % (c, insn.reg_name(i.mem.base)))
+                        % (c, insn.reg_name2(i.mem.base)))
                 if i.mem.disp != 0:
                     print("\t\t\toperands[%u].mem.disp: 0x%s" \
                         % (c, to_x(i.mem.disp)))

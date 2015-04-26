@@ -38,7 +38,7 @@ def print_insn_detail(insn):
         c = 0
         for i in insn.operands:
             if i.type == ARM_OP_REG:
-                print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
+                print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name2(i.reg)))
             if i.type == ARM_OP_IMM:
                 print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x_32(i.imm)))
             if i.type == ARM_OP_PIMM:
@@ -58,10 +58,10 @@ def print_insn_detail(insn):
                 print("\t\toperands[%u].type: MEM" % c)
                 if i.mem.base != 0:
                     print("\t\t\toperands[%u].mem.base: REG = %s" \
-                        % (c, insn.reg_name(i.mem.base)))
+                        % (c, insn.reg_name2(i.mem.base)))
                 if i.mem.index != 0:
                     print("\t\t\toperands[%u].mem.index: REG = %s" \
-                        % (c, insn.reg_name(i.mem.index)))
+                        % (c, insn.reg_name2(i.mem.index)))
                 if i.mem.scale != 1:
                     print("\t\t\toperands[%u].mem.scale: %u" \
                         % (c, i.mem.scale))
