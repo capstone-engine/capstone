@@ -597,7 +597,7 @@ class CsInsn(object):
             raise CsError(CS_ERR_SKIPDATA)
 
         if self._cs._diet:
-            # Diet engine cannot provide register name
+            # Diet engine cannot provide group name
             raise CsError(CS_ERR_DIET)
 
         if group_id == 0:
