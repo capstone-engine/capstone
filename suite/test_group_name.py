@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from capstone import *
 from capstone.arm import *
 from capstone.arm64 import *
@@ -21,13 +23,14 @@ class GroupTest:
         self.data = data
 
     def run(self):
-        print 'Testing', self.name
+        print('Testing %s' %self.name)
         cap = Cs(self.arch, self.mode)
         for group_id in xrange(0,255):
             name = self.data.get(group_id)
             res = _cs.cs_group_name(cap.csh, group_id)
             if res != name:
-                print 'ERROR: expected', name, 'got', res
+                print("ERROR: expected '%s', but got '%s'" %(name, res))
+        print("")
 
 arm_dict = {
     ARM_GRP_JUMP: "jump",
@@ -225,5 +228,5 @@ if __name__ == '__main__':
         if all or t.name in args:
             t.run()
         else:
-            print 'Skipping', t.name
+            print('Skipping %s' %t.name)
 
