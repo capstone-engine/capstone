@@ -58,6 +58,7 @@ tests/test_sparc
 tests/test_systemz
 tests/test_xcore
 tests/*.static
+tests/test_customized_mnem
 
 # vim tmp file
 *.swp

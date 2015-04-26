@@ -233,6 +233,7 @@ CAPSTONE_EXPORT
 cs_err cs_close(csh *handle)
 {
 	struct cs_struct *ud;
+	struct insn_mnem *next, *tmp;
 
 	if (*handle == 0)
 		// invalid handle
@@ -242,6 +243,14 @@ cs_err cs_close(csh *handle)
 
 	if (ud->printer_info)
 		cs_mem_free(ud->printer_info);
+
+	// free the linked list of customized mnemonic
+	tmp = ud->mnem_list;
+	while(tmp) {
+		next = tmp->next;
+		cs_mem_free(tmp);
+		tmp = next;
+	}
 
 	cs_mem_free(ud->insn_cache);
 
@@ -294,6 +303,20 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 
 	*mnem = '\0';
 
+	// we might have customized mnemonic
+	if (handle->mnem_list) {
+		struct insn_mnem *tmp = handle->mnem_list;
+		while(tmp) {
+			if (tmp->insn.id == insn->id) {
+				// found this instruction, so copy its mnemonic
+				(void)strncpy(insn->mnemonic, tmp->insn.mnemonic, sizeof(insn->mnemonic) - 1);
+				insn->mnemonic[sizeof(insn->mnemonic) - 1] = '\0';
+				break;
+			}
+			tmp = tmp->next;
+		}
+	}
+
 	// copy @op_str
 	if (*sp) {
 		// find the next non-space char
@@ -344,6 +367,8 @@ CAPSTONE_EXPORT
 cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 {
 	struct cs_struct *handle;
+	cs_opt_mnem *opt;
+
 	archs_enable();
 
 	// cs_option() can be called with NULL handle just for CS_OPT_MEM
@@ -367,9 +392,11 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 	switch(type) {
 		default:
 			break;
+
 		case CS_OPT_DETAIL:
 			handle->detail = (cs_opt_value)value;
 			return CS_ERR_OK;
+
 		case CS_OPT_SKIPDATA:
 			handle->skipdata = (value == CS_OPT_ON);
 			if (handle->skipdata) {
@@ -379,9 +406,66 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 				}
 			}
 			return CS_ERR_OK;
+
 		case CS_OPT_SKIPDATA_SETUP:
 			if (value)
 				handle->skipdata_setup = *((cs_opt_skipdata *)value);
+			return CS_ERR_OK;
+
+		case CS_OPT_MNEMONIC:
+			opt = (cs_opt_mnem *)value;
+			if (opt->id) {
+				if (opt->mnemonic) {
+					struct insn_mnem *tmp;
+
+					// add new instruction, or replace existing instruction
+					// 1. find if we already had this insn in the linked list
+					tmp = handle->mnem_list;
+					while(tmp) {
+						if (tmp->insn.id == opt->id) {
+							// found this instruction, so replace its mnemonic
+							(void)strncpy(tmp->insn.mnemonic, opt->mnemonic, sizeof(tmp->insn.mnemonic) - 1);
+							tmp->insn.mnemonic[sizeof(tmp->insn.mnemonic) - 1] = '\0';
+							break;
+						}
+						tmp = tmp->next;
+					}
+
+					// 2. add this instruction if we have not had it yet
+					if (!tmp) {
+						tmp = cs_mem_malloc(sizeof(*tmp));
+						tmp->insn.id = opt->id;
+						(void)strncpy(tmp->insn.mnemonic, opt->mnemonic, sizeof(tmp->insn.mnemonic) - 1);
+						tmp->insn.mnemonic[sizeof(tmp->insn.mnemonic) - 1] = '\0';
+						// this new instruction is heading the list
+						tmp->next = handle->mnem_list;
+						handle->mnem_list = tmp;
+					}
+					return CS_ERR_OK;
+				} else {
+					struct insn_mnem *prev, *tmp;
+
+					// we want to delete an existing instruction
+					// iterate the list to find the instruction to remove it
+					tmp = handle->mnem_list;
+					prev = tmp;
+					while(tmp) {
+						if (tmp->insn.id == opt->id) {
+							// delete this instruction
+							if (tmp == prev) {
+								// head of the list
+								handle->mnem_list = tmp->next;
+							} else {
+								prev->next = tmp->next;
+							}
+							cs_mem_free(tmp);
+							break;
+						}
+						prev = tmp;
+						tmp = tmp->next;
+					}
+				}
+			}
 			return CS_ERR_OK;
 	}
 

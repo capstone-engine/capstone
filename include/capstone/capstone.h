@@ -57,6 +57,8 @@ extern "C" {
 // result of cs_version() API.
 #define CS_MAKE_VERSION(major, minor) ((major << 8) + minor)
 
+#define MNEMONIC_SIZE 32
+
 // Handle using with all API
 typedef size_t csh;
 
@@ -121,6 +123,17 @@ typedef struct cs_opt_mem {
 	cs_vsnprintf_t vsnprintf;
 } cs_opt_mem;
 
+// Customize mnemonic for instructions with alternative name.
+// To reset existing customized instruction to its default mnemonic,
+// call cs_option(CS_OPT_MNEMONIC) again with the same @id and NULL value
+// for @mnemonic.
+typedef struct cs_opt_mnem {
+	// ID of instruction to be customized.
+	unsigned int id;
+	// Customized instruction mnemonic.
+	char *mnemonic;
+} cs_opt_mnem;
+
 // Runtime option for the disassembled engine
 typedef enum cs_opt_type {
 	CS_OPT_SYNTAX = 1,	// Asssembly output syntax
@@ -129,6 +142,7 @@ typedef enum cs_opt_type {
 	CS_OPT_MEM,	// User-defined dynamic memory related functions
 	CS_OPT_SKIPDATA, // Skip data when disassembling. Then engine is in SKIPDATA mode.
 	CS_OPT_SKIPDATA_SETUP, // Setup user-defined function for SKIPDATA option
+	CS_OPT_MNEMONIC, // Customize instruction mnemonic
 } cs_opt_type;
 
 // Runtime option value (associated with option type above)
@@ -270,7 +284,7 @@ typedef struct cs_insn {
 
 	// Ascii text of instruction mnemonic
 	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
-	char mnemonic[32];
+	char mnemonic[MNEMONIC_SIZE];
 
 	// Ascii text of instruction operands
 	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF

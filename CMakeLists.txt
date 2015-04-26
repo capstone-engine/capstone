@@ -80,7 +80,7 @@ set(HEADERS_COMMON
     )
 
 
-set(TEST_SOURCES test.c test_detail.c test_skipdata.c test_iter.c)
+set(TEST_SOURCES test.c test_detail.c test_skipdata.c test_iter.c test_customized_mnem.c)
 
 ## architecture support
 if (CAPSTONE_ARM_SUPPORT)
