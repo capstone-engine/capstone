@@ -51,7 +51,7 @@ extern "C" {
 // Version for bleeding edge code of the Github's "next" branch.
 // Use this if you want the absolutely latest developement code.
 // This version number will be bumped up whenever we have a new major change.
-#define CS_NEXT_VERSION 2
+#define CS_NEXT_VERSION 3
 
 // Macro to create combined version which can be compared to
 // result of cs_version() API.
