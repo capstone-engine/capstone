@@ -31,6 +31,7 @@ static void print_insn(csh handle)
 	
 	count = cs_disasm(handle, (const uint8_t *)X86_CODE32, sizeof(X86_CODE32) - 1, 0x1000, 1, &insn);
 	if (count) {
+		print_string_hex((unsigned char *)X86_CODE32, sizeof(X86_CODE32) - 1);
 		printf("\t%s\t%s\n", insn[0].mnemonic, insn[0].op_str); 
 		// Free memory allocated by cs_disasm()
 		cs_free(insn, count);
@@ -55,7 +56,6 @@ static void test()
 
 	// 1. Print out the instruction in default setup.
 	printf("Disassemble X86 code with default instruction mnemonic\n");
-	print_string_hex((unsigned char *)X86_CODE32, sizeof(X86_CODE32) - 1);
 	print_insn(handle);
 
 	// Customized mnemonic JNE to JNZ using CS_OPT_MNEMONIC option
@@ -63,7 +63,6 @@ static void test()
 	cs_option(handle, CS_OPT_MNEMONIC, (size_t)&my_mnem);
 
 	// 2. Now print out the instruction in newly customized setup.
-	print_string_hex((unsigned char *)X86_CODE32, sizeof(X86_CODE32) - 1);
 	print_insn(handle);
 
 	// Reset engine to use the default mnemonic of JNE
@@ -71,7 +70,6 @@ static void test()
 	cs_option(handle, CS_OPT_MNEMONIC, (size_t)&default_mnem);
 
 	// 3. Now print out the instruction in default setup.
-	print_string_hex((unsigned char *)X86_CODE32, sizeof(X86_CODE32) - 1);
 	print_insn(handle);
 
 	// Done
