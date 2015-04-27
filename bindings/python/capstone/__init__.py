@@ -140,6 +140,7 @@ CS_OPT_MODE = 3      # Change engine's mode at run-time
 CS_OPT_MEM = 4       # Change engine's mode at run-time
 CS_OPT_SKIPDATA = 5  # Skip data when disassembling
 CS_OPT_SKIPDATA_SETUP = 6      # Setup user-defined function for SKIPDATA option
+CS_OPT_MNEMONIC = 7  # Customize instruction mnemonic
 
 # Capstone option value
 CS_OPT_OFF = 0             # Turn OFF an option - default option of CS_OPT_DETAIL
@@ -286,6 +287,11 @@ class _cs_opt_skipdata(ctypes.Structure):
         ('user_data', ctypes.c_void_p),
     )
 
+class _cs_opt_mnem(ctypes.Structure):
+    _fields_ = (
+        ('id', ctypes.c_uint),
+        ('mnemonic', ctypes.c_char_p),
+    )
 
 # setup all the function prototype
 def _setup_prototype(lib, fname, restype, *argtypes):
@@ -801,6 +807,19 @@ class Cs(object):
             raise CsError(status)
 
         self._skipdata_opt = _skipdata_opt
+
+
+    # customize instruction mnemonic
+    def mnemonic_setup(self, id, mnem):
+        _mnem_opt = _cs_opt_mnem()
+        _mnem_opt.id = id
+        if mnem:
+            _mnem_opt.mnemonic = mnem.encode()
+        else:
+            _mnem_opt.mnemonic = mnem
+        status = _cs.cs_option(self.csh, CS_OPT_MNEMONIC, ctypes.cast(ctypes.byref(_mnem_opt), ctypes.c_void_p))
+        if status != CS_ERR_OK:
+            raise CsError(status)
 
 
     # check to see if this engine supports a particular arch,

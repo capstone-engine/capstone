@@ -57,6 +57,7 @@ extern "C" {
 // result of cs_version() API.
 #define CS_MAKE_VERSION(major, minor) ((major << 8) + minor)
 
+// Maximum size of an instruction mnemonic string.
 #define CS_MNEMONIC_SIZE 32
 
 // Handle using with all API
