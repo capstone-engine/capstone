@@ -57,7 +57,7 @@ extern "C" {
 // result of cs_version() API.
 #define CS_MAKE_VERSION(major, minor) ((major << 8) + minor)
 
-#define MNEMONIC_SIZE 32
+#define CS_MNEMONIC_SIZE 32
 
 // Handle using with all API
 typedef size_t csh;
@@ -284,7 +284,7 @@ typedef struct cs_insn {
 
 	// Ascii text of instruction mnemonic
 	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
-	char mnemonic[MNEMONIC_SIZE];
+	char mnemonic[CS_MNEMONIC_SIZE];
 
 	// Ascii text of instruction operands
 	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF

@@ -40,7 +40,7 @@ struct customized_mnem {
 	// ID of instruction to be customized.
 	unsigned int id;
 	// Customized instruction mnemonic.
-	char mnemonic[MNEMONIC_SIZE];
+	char mnemonic[CS_MNEMONIC_SIZE];
 };
 
 struct insn_mnem {
