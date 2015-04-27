@@ -17,18 +17,6 @@ all_tests = (
 )
 
 
-# ## Test cs_disasm_quick()
-def test_cs_disasm_quick():
-    for (arch, mode, code, comment, syntax) in all_tests:
-        print('*' * 40)
-        print("Platform: %s" % comment)
-        print("Disasm:"),
-        print(to_hex(code))
-        for insn in cs_disasm_quick(arch, mode, code, 0x1000):
-            print("0x%x:\t%s\t%s" % (insn.address, insn.mnemonic, insn.op_str))
-        print
-
-
 # Sample callback for SKIPDATA option
 def testcb(buffer, size, offset, userdata):
     # always skip 2 bytes of data
