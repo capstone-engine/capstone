@@ -2200,6 +2200,7 @@ static name_map group_name_maps[] = {
 	{ X86_GRP_RET, "ret" },
 	{ X86_GRP_INT, "int" },
 	{ X86_GRP_IRET,	"iret" },
+	{ X86_GRP_PRIVILEGE, "privilege" },
 
 	// architecture-specific groups
 	{ X86_GRP_VM, "vm" },
@@ -2249,15 +2250,7 @@ static name_map group_name_maps[] = {
 const char *X86_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	// verify group id
-	if (id >= X86_GRP_ENDING || (id > X86_GRP_IRET && id < X86_GRP_VM))
-		return NULL;
-
-	// NOTE: when new generic groups are added, 6 must be changed accordingly
-	if (id >= 128)
-		return group_name_maps[id - 128 + 6].name;
-	else
-		return group_name_maps[id].name;
+	return id2name(group_name_maps, ARR_SIZE(group_name_maps), id);
 #else
 	return NULL;
 #endif

@@ -1462,15 +1462,7 @@ static name_map group_name_maps[] = {
 const char *PPC_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	// verify group id
-	if (id >= PPC_GRP_ENDING || (id > PPC_GRP_JUMP && id < PPC_GRP_ALTIVEC))
-		return NULL;
-
-	// NOTE: when new generic groups are added, 2 must be changed accordingly
-	if (id >= PPC_GRP_ALTIVEC)
-		return group_name_maps[id - PPC_GRP_ALTIVEC + 2].name;
-	else
-		return group_name_maps[id].name;
+	return id2name(group_name_maps, ARR_SIZE(group_name_maps), id);
 #else
 	return NULL;
 #endif

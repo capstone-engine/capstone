@@ -38,6 +38,10 @@ typedef struct name_map {
 // return 0 if not found
 int name2id(name_map* map, int max, const char *name);
 
+// map ID to a name
+// return NULL if not found
+char *id2name(name_map* map, int max, const unsigned int id);
+
 // count number of positive members in a list.
 // NOTE: list must be guaranteed to end in 0
 unsigned int count_positive(uint16_t *list);

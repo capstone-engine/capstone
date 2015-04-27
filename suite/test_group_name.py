@@ -29,7 +29,7 @@ class GroupTest:
             name = self.data.get(group_id)
             res = _cs.cs_group_name(cap.csh, group_id)
             if res != name:
-                print("ERROR: expected '%s', but got '%s'" %(name, res))
+                print("ERROR: id = %u expected '%s', but got '%s'" %(group_id, name, res))
         print("")
 
 arm_dict = {
