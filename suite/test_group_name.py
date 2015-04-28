@@ -11,10 +11,6 @@ from capstone.x86 import *
 from capstone.xcore import *
 import sys
 
-# yes this is bad, importing ctypes like this,
-# but the Cs object did not have the group_name function
-from capstone import _cs
-
 class GroupTest:
     def __init__(self, name, arch, mode, data):
         self.name = name
@@ -27,7 +23,7 @@ class GroupTest:
         cap = Cs(self.arch, self.mode)
         for group_id in xrange(0,255):
             name = self.data.get(group_id)
-            res = _cs.cs_group_name(cap.csh, group_id)
+            res = cap.group_name(group_id)
             if res != name:
                 print("ERROR: id = %u expected '%s', but got '%s'" %(group_id, name, res))
         print("")

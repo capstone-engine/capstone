@@ -435,6 +435,8 @@ def copy_ctypes(src):
     ctypes.pointer(dst)[0] = src
     return dst
 
+def _ascii_name_or_default(name, default):
+    return default if name is None else name.decode('ascii')
 
 # Python-style class to disasm code
 class CsInsn(object):
@@ -573,43 +575,31 @@ class CsInsn(object):
         return _cs.cs_errno(self._cs.csh)
 
     # get the register name, given the register ID
-    def reg_name(self, reg_id):
-        if self._raw.id == 0:
-            raise CsError(CS_ERR_SKIPDATA)
-
+    def reg_name(self, reg_id, default=None):
         if self._cs._diet:
             # Diet engine cannot provide register name
             raise CsError(CS_ERR_DIET)
 
-        if reg_id == 0:
-            return "(invalid)"
-
-        return _cs.cs_reg_name(self._cs.csh, reg_id).decode('ascii')
+        return _ascii_name_or_default(_cs.cs_reg_name(self._cs.csh, reg_id), default)
 
     # get the instruction name
-    def insn_name(self):
+    def insn_name(self, default=None):
         if self._cs._diet:
             # Diet engine cannot provide instruction name
             raise CsError(CS_ERR_DIET)
 
         if self._raw.id == 0:
-            return "(invalid)"
+            return default
 
-        return _cs.cs_insn_name(self._cs.csh, self.id).decode('ascii')
+        return _ascii_name_or_default(_cs.cs_insn_name(self._cs.csh, self.id).decode('ascii'), default)
 
     # get the group name
-    def group_name(self, group_id):
-        if self._raw.id == 0:
-            raise CsError(CS_ERR_SKIPDATA)
-
+    def group_name(self, group_id, default=None):
         if self._cs._diet:
             # Diet engine cannot provide group name
             raise CsError(CS_ERR_DIET)
 
-        if group_id == 0:
-            return "(invalid)"
-
-        return _cs.cs_group_name(self._cs.csh, group_id).decode('ascii')
+        return _ascii_name_or_default(_cs.cs_group_name(self._cs.csh, group_id), default)
 
 
     # verify if this insn belong to group with id as @group_id
@@ -862,6 +852,33 @@ class Cs(object):
         # save mode
         self._mode = opt
 
+    # get the last error code
+    def errno(self):
+        return _cs.cs_errno(self.csh)
+
+    # get the register name, given the register ID
+    def reg_name(self, reg_id, default=None):
+        if self._diet:
+            # Diet engine cannot provide register name
+            raise CsError(CS_ERR_DIET)
+
+        return _ascii_name_or_default(_cs.cs_reg_name(self.csh, reg_id), default)
+
+    # get the instruction name, given the instruction ID
+    def insn_name(self, insn_id, default=None):
+        if self._diet:
+            # Diet engine cannot provide instruction name
+            raise CsError(CS_ERR_DIET)
+
+        return _ascii_name_or_default(_cs.cs_insn_name(self.csh, insn_id), default)
+
+    # get the group name
+    def group_name(self, group_id, default=None):
+        if self._diet:
+            # Diet engine cannot provide group name
+            raise CsError(CS_ERR_DIET)
+
+        return _ascii_name_or_default(_cs.cs_group_name(self.csh, group_id), default)
 
     # Disassemble binary & return disassembled instructions in CsInsn objects
     def disasm(self, code, offset, count=0):
