@@ -4,6 +4,7 @@ _python2 = sys.version_info[0] < 3
 if _python2:
     range = xrange
 from . import arm, arm64, mips, ppc, sparc, systemz, x86, xcore
+from .decorators import deprecated
 
 __all__ = [
     'Cs',
@@ -417,6 +418,8 @@ def copy_ctypes(src):
     ctypes.pointer(dst)[0] = src
     return dst
 
+def _ascii_name_or_none(name):
+    return None if name is None else name.decode('ascii')
 
 # Python-style class to disasm code
 class CsInsn(object):
@@ -555,10 +558,8 @@ class CsInsn(object):
         return _cs.cs_errno(self._cs.csh)
 
     # get the register name, given the register ID
+    @deprecated('use reg_name2 instead')
     def reg_name(self, reg_id):
-        if self._raw.id == 0:
-            raise CsError(CS_ERR_SKIPDATA)
-
         if self._cs._diet:
             # Diet engine cannot provide register name
             raise CsError(CS_ERR_DIET)
@@ -566,9 +567,18 @@ class CsInsn(object):
         if reg_id == 0:
             return "(invalid)"
 
-        return _cs.cs_reg_name(self._cs.csh, reg_id).decode('ascii')
+        return _ascii_name_or_none(_cs.cs_reg_name(self._cs.csh, reg_id))
+
+    # get the register name, given the register ID
+    def reg_name2(self, reg_id):
+        if self._cs._diet:
+            # Diet engine cannot provide register name
+            raise CsError(CS_ERR_DIET)
+
+        return _ascii_name_or_none(_cs.cs_reg_name(self._cs.csh, reg_id))
 
     # get the instruction name
+    @deprecated('use insn_name2 instead')
     def insn_name(self):
         if self._cs._diet:
             # Diet engine cannot provide instruction name
@@ -577,13 +587,19 @@ class CsInsn(object):
         if self._raw.id == 0:
             return "(invalid)"
 
-        return _cs.cs_insn_name(self._cs.csh, self.id).decode('ascii')
+        return _ascii_name_or_none(_cs.cs_insn_name(self._cs.csh, self.id))
 
-    # get the group name
+    # get the instruction name
+    def insn_name2(self):
+        if self._cs._diet:
+            # Diet engine cannot provide instruction name
+            raise CsError(CS_ERR_DIET)
+
+        return _ascii_name_or_none(_cs.cs_insn_name(self._cs.csh, self.id))
+
+    # get the group name for the specified group id
+    @deprecated('use group_name2 instead')
     def group_name(self, group_id):
-        if self._raw.id == 0:
-            raise CsError(CS_ERR_SKIPDATA)
-
         if self._cs._diet:
             # Diet engine cannot provide register name
             raise CsError(CS_ERR_DIET)
@@ -591,8 +607,15 @@ class CsInsn(object):
         if group_id == 0:
             return "(invalid)"
 
-        return _cs.cs_group_name(self._cs.csh, group_id).decode('ascii')
+        return _ascii_name_or_none(_cs.cs_group_name(self._cs.csh, group_id))
 
+    # get the group name for the specified group id
+    def group_name2(self, group_id):
+        if self._cs._diet:
+            # Diet engine cannot provide register name
+            raise CsError(CS_ERR_DIET)
+
+        return _ascii_name_or_none(_cs.cs_group_name(self._cs.csh, group_id))
 
     # verify if this insn belong to group with id as @group_id
     def group(self, group_id):
@@ -803,6 +826,33 @@ class Cs(object):
         # save mode
         self._mode = opt
 
+    # get the last error code
+    def errno(self):
+        return _cs.cs_errno(self.csh)
+
+    # get the register name, given the register ID
+    def reg_name2(self, reg_id):
+        if self._diet:
+            # Diet engine cannot provide register name
+            raise CsError(CS_ERR_DIET)
+
+        return _ascii_name_or_none(_cs.cs_reg_name(self.csh, reg_id))
+
+    # get the instruction name, given the instruction ID
+    def insn_name2(self, insn_id):
+        if self._diet:
+            # Diet engine cannot provide instruction name
+            raise CsError(CS_ERR_DIET)
+
+        return _ascii_name_or_none(_cs.cs_insn_name(self.csh, insn_id))
+
+    # get the group name
+    def group_name2(self, group_id):
+        if self._diet:
+            # Diet engine cannot provide group name
+            raise CsError(CS_ERR_DIET)
+
+        return _ascii_name_or_none(_cs.cs_group_name(self.csh, group_id))
 
     # Disassemble binary & return disassembled instructions in CsInsn objects
     def disasm(self, code, offset, count=0):
