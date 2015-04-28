@@ -253,7 +253,7 @@ cdef class Cs(object):
             # our binding version is different from the core's API version
             raise CsError(capstone.CS_ERR_VERSION)
 
-        self._csh = <cc.csh> _cs._csh.value
+        self._csh = <cc.csh> _cs.csh.value
         self._cs = _cs
 
 
