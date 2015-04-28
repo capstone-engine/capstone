@@ -11,10 +11,6 @@ from capstone.x86 import *
 from capstone.xcore import *
 import sys
 
-# yes this is bad, importing ctypes like this,
-# but the Cs object did not have the group_name function
-from capstone import _cs
-
 class GroupTest:
     def __init__(self, name, arch, mode, data):
         self.name = name
@@ -27,13 +23,14 @@ class GroupTest:
         cap = Cs(self.arch, self.mode)
         for group_id in xrange(0,255):
             name = self.data.get(group_id)
-            res = _cs.cs_group_name(cap.csh, group_id)
+            res = cap.group_name(group_id)
             if res != name:
                 print("ERROR: id = %u expected '%s', but got '%s'" %(group_id, name, res))
         print("")
 
 arm_dict = {
     ARM_GRP_JUMP: "jump",
+    ARM_GRP_PRIVILEGE: "privilege",
 
     ARM_GRP_CRYPTO: "crypto",
     ARM_GRP_DATABARRIER: "databarrier",
@@ -66,10 +63,14 @@ arm_dict = {
     ARM_GRP_CRC: "crc",
     ARM_GRP_DPVFP: "dpvfp",
     ARM_GRP_V6M: "v6m",
+    ARM_GRP_VIRTUALIZATION: "virtualization",
 }
 
 arm64_dict = {
     ARM64_GRP_JUMP: "jump",
+    ARM64_GRP_CALL: "call",
+    ARM64_GRP_RET: "return",
+    ARM64_GRP_PRIVILEGE: "privilege",
 
     ARM64_GRP_CRYPTO: "crypto",
     ARM64_GRP_FPARMV8: "fparmv8",
@@ -132,6 +133,10 @@ ppc_dict = {
     PPC_GRP_E500: "e500",
     PPC_GRP_PPC4XX: "ppc4xx",
     PPC_GRP_PPC6XX: "ppc6xx",
+    PPC_GRP_ICBT: "icbt",
+    PPC_GRP_P8ALTIVEC: "p8altivec",
+    PPC_GRP_P8VECTOR: "p8vector",
+    PPC_GRP_QPX: "qpx",
 }
 
 sparc_dict = {
@@ -162,6 +167,7 @@ x86_dict = {
     X86_GRP_RET: "ret",
     X86_GRP_INT: "int",
     X86_GRP_IRET: "iret",
+    X86_GRP_PRIVILEGE: "privilege",
 
     X86_GRP_VM: "vm",
     X86_GRP_3DNOW: "3dnow",
