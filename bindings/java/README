@@ -6,6 +6,10 @@ Arch Linux-3.11, 64-bit.
 
        $ sudo apt-get install openjdk-6-jre-headless openjdk-6-jdk libjna-java
 
+- Java Native Access is required to run the code, you can install it on ubuntu with:
+
+       $ sudo apt-get install libjna-java
+
 - To compile and run this Java test code:
 
        $ make
