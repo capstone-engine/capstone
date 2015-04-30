@@ -52,6 +52,20 @@
             buildForTesting = "YES"
             buildForRunning = "YES"
             buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DC3A28DA1AF29BEB00FC9913"
+               BuildableName = "test_customized_mnem"
+               BlueprintName = "test_customized_mnem"
+               ReferencedContainer = "container:Capstone.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
             buildForArchiving = "NO"
             buildForAnalyzing = "YES">
             <BuildableReference
