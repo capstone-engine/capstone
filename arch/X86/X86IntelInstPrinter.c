@@ -804,10 +804,11 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 			case X86_INS_INT:
 				// do not print number in negative form
+				imm = imm & 0xff;
 				if (imm >= 0 && imm <= HEX_THRESHOLD)
 					SStream_concat(O, "%u", imm);
 				else
-					SStream_concat(O, "0x%x", imm & 0xff);
+					SStream_concat(O, "0x%x", imm);
 				break;
 
 			case X86_INS_AND:
@@ -816,8 +817,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				// do not print number in negative form
 				if (imm >= 0 && imm <= HEX_THRESHOLD)
 					SStream_concat(O, "%u", imm);
-				else
-					SStream_concat(O, "0x%"PRIx64, arch_masks[MI->op1_size? MI->op1_size : MI->imm_size] & imm);
+				else {
+					imm = arch_masks[MI->op1_size? MI->op1_size : MI->imm_size] & imm;
+					SStream_concat(O, "0x%"PRIx64, imm);
+				}
 				break;
 
 			case X86_INS_RET:
