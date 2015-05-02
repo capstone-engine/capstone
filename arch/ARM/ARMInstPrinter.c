@@ -431,6 +431,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 	unsigned Opcode = MCInst_getOpcode(MI), tmp, i, pubOpcode;
 
 
+	// printf(">>> Opcode 0: %u\n", MCInst_getOpcode(MI));
 	switch(Opcode) {
 		// Check for HINT instructions w/ canonical names.
 		case ARM_HINT:
@@ -507,11 +508,32 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 
 		case ARM_MOVsi: {
 							// FIXME: Thumb variants?
+							unsigned int opc;
 							MCOperand *Dst = MCInst_getOperand(MI, 0);
 							MCOperand *MO1 = MCInst_getOperand(MI, 1);
 							MCOperand *MO2 = MCInst_getOperand(MI, 2);
 
-							SStream_concat0(O, ARM_AM_getShiftOpcStr(ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO2))));
+							opc = ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO2));
+							SStream_concat0(O, ARM_AM_getShiftOpcStr(opc));
+							switch(opc) {
+								default:
+									break;
+								case ARM_AM_asr:
+									MCInst_setOpcodePub(MI, ARM_INS_ASR);
+									break;
+								case ARM_AM_lsl:
+									MCInst_setOpcodePub(MI, ARM_INS_LSL);
+									break;
+								case ARM_AM_lsr:
+									MCInst_setOpcodePub(MI, ARM_INS_LSR);
+									break;
+								case ARM_AM_ror:
+									MCInst_setOpcodePub(MI, ARM_INS_ROR);
+									break;
+								case ARM_AM_rrx:
+									MCInst_setOpcodePub(MI, ARM_INS_RRX);
+									break;
+							}
 							printSBitModifierOperand(MI, 5, O);
 							printPredicateOperand(MI, 3, O);
 

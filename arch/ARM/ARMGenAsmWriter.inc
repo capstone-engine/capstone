@@ -6072,6 +6072,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   };
 #endif
 
+  // printf(">>> opcode: %u\n", MCInst_getOpcode(MI));
   // Emit the opcode for the instruction.
   uint64_t Bits1 = OpInfo[MCInst_getOpcode(MI)];
   uint64_t Bits2 = OpInfo2[MCInst_getOpcode(MI)];
