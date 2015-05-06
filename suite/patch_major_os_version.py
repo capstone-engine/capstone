@@ -1,5 +1,9 @@
 #!/usr/bin/env python
-# By Nguyen Anh Quynh
+# By Daniel Pistelli & Nguyen Tan Cong
+
+# This script is to patch DLL/EXE MajorVersion to 5,
+# so they can be loaded by Windows XP.
+# This is the problem introduced by compiling on Windows 7, using VS2013.
 
 import sys, struct
 
