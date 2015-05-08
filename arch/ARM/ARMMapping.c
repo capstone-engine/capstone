@@ -440,7 +440,7 @@ static insn_map insns[] = {
 	{
 		ARM_BLXi, ARM_INS_BLX,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_JUMP, ARM_GRP_ARM, ARM_GRP_V5T, 0 }, 0, 0
+		{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_JUMP, ARM_GRP_ARM, ARM_GRP_V5T, 0 }, 0, 0
 #endif
 	},
 	{
