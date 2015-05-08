@@ -675,6 +675,83 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 	}
 
 	if (MI->csh->detail) {
+        // some instructions need to supply immediate 1 in the first op
+        switch(MCInst_getOpcode(MI)) {
+            default:
+                break;
+            case X86_SHL8r1:
+            case X86_SHL16r1:
+            case X86_SHL32r1:
+            case X86_SHL64r1:
+            case X86_SAL8r1:
+            case X86_SAL16r1:
+            case X86_SAL32r1:
+            case X86_SAL64r1:
+            case X86_SHR8r1:
+            case X86_SHR16r1:
+            case X86_SHR32r1:
+            case X86_SHR64r1:
+            case X86_SAR8r1:
+            case X86_SAR16r1:
+            case X86_SAR32r1:
+            case X86_SAR64r1:
+            case X86_RCL8r1:
+            case X86_RCL16r1:
+            case X86_RCL32r1:
+            case X86_RCL64r1:
+            case X86_RCR8r1:
+            case X86_RCR16r1:
+            case X86_RCR32r1:
+            case X86_RCR64r1:
+            case X86_ROL8r1:
+            case X86_ROL16r1:
+            case X86_ROL32r1:
+            case X86_ROL64r1:
+            case X86_ROR8r1:
+            case X86_ROR16r1:
+            case X86_ROR32r1:
+            case X86_ROR64r1:
+            case X86_SHL8m1:
+            case X86_SHL16m1:
+            case X86_SHL32m1:
+            case X86_SHL64m1:
+            case X86_SAL8m1:
+            case X86_SAL16m1:
+            case X86_SAL32m1:
+            case X86_SAL64m1:
+            case X86_SHR8m1:
+            case X86_SHR16m1:
+            case X86_SHR32m1:
+            case X86_SHR64m1:
+            case X86_SAR8m1:
+            case X86_SAR16m1:
+            case X86_SAR32m1:
+            case X86_SAR64m1:
+            case X86_RCL8m1:
+            case X86_RCL16m1:
+            case X86_RCL32m1:
+            case X86_RCL64m1:
+            case X86_RCR8m1:
+            case X86_RCR16m1:
+            case X86_RCR32m1:
+            case X86_RCR64m1:
+            case X86_ROL8m1:
+            case X86_ROL16m1:
+            case X86_ROL32m1:
+            case X86_ROL64m1:
+            case X86_ROR8m1:
+            case X86_ROR16m1:
+            case X86_ROR32m1:
+            case X86_ROR64m1:
+                // shift all the ops right to leave 1st slot for this new register op
+                memmove(&(MI->flat_insn->detail->x86.operands[1]), &(MI->flat_insn->detail->x86.operands[0]),
+                        sizeof(MI->flat_insn->detail->x86.operands[0]) * (ARR_SIZE(MI->flat_insn->detail->x86.operands) - 1));
+                MI->flat_insn->detail->x86.operands[0].type = X86_OP_IMM;
+                MI->flat_insn->detail->x86.operands[0].imm = 1;
+                MI->flat_insn->detail->x86.operands[0].size = 1;
+                MI->flat_insn->detail->x86.op_count++;
+        }
+
 		// special instruction needs to supply register op
 		// first op can be embedded in the asm by llvm.
 		// so we have to add the missing register as the first operand

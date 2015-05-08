@@ -9,6 +9,8 @@ Prompt".
 For Windows, if you do not want to compile the core, try the "capstone-windows"
 package instead, which already has the prebuilt core inside.
 
+    https://pypi.python.org/pypi/capstone-windows
+
 --------------------------------------------------------------------------------
 
 Capstone is a disassembly framework with the target of becoming the ultimate
