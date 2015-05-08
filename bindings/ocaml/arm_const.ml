@@ -764,6 +764,8 @@ let _ARM_GRP_INVALID = 0;;
 
 (* Generic groups *)
 let _ARM_GRP_JUMP = 1;;
+let _ARM_GRP_CALL = 2;;
+let _ARM_GRP_INT = 4;;
 let _ARM_GRP_PRIVILEGE = 6;;
 
 (* Architecture-specific groups *)

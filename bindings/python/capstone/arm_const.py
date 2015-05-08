@@ -764,6 +764,8 @@ ARM_GRP_INVALID = 0
 
 # Generic groups
 ARM_GRP_JUMP = 1
+ARM_GRP_CALL = 2
+ARM_GRP_INT = 4
 ARM_GRP_PRIVILEGE = 6
 
 # Architecture-specific groups
