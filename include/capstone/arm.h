@@ -888,6 +888,7 @@ typedef enum arm_insn_group {
 	ARM_GRP_JUMP,	// = CS_GRP_JUMP
 	ARM_GRP_CALL,	// = CS_GRP_CALL
 	ARM_GRP_PRIVILEGE = 6, // = CS_GRP_PRIVILEGE
+	ARM_GRP_INT,	// = CS_GRP_INT
 
 	//> Architecture-specific groups
 	ARM_GRP_CRYPTO = 128,
