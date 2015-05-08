@@ -51,11 +51,14 @@ extern "C" {
 // Version for bleeding edge code of the Github's "next" branch.
 // Use this if you want the absolutely latest developement code.
 // This version number will be bumped up whenever we have a new major change.
-#define CS_NEXT_VERSION 2
+#define CS_NEXT_VERSION 3
 
 // Macro to create combined version which can be compared to
 // result of cs_version() API.
 #define CS_MAKE_VERSION(major, minor) ((major << 8) + minor)
+
+// Maximum size of an instruction mnemonic string.
+#define CS_MNEMONIC_SIZE 32
 
 // Handle using with all API
 typedef size_t csh;
@@ -121,14 +124,26 @@ typedef struct cs_opt_mem {
 	cs_vsnprintf_t vsnprintf;
 } cs_opt_mem;
 
+// Customize mnemonic for instructions with alternative name.
+// To reset existing customized instruction to its default mnemonic,
+// call cs_option(CS_OPT_MNEMONIC) again with the same @id and NULL value
+// for @mnemonic.
+typedef struct cs_opt_mnem {
+	// ID of instruction to be customized.
+	unsigned int id;
+	// Customized instruction mnemonic.
+	char *mnemonic;
+} cs_opt_mnem;
+
 // Runtime option for the disassembled engine
 typedef enum cs_opt_type {
-	CS_OPT_SYNTAX = 1,	// Asssembly output syntax
+	CS_OPT_SYNTAX = 1,	// Assembly output syntax
 	CS_OPT_DETAIL,	// Break down instruction structure into details
 	CS_OPT_MODE,	// Change engine's mode at run-time
 	CS_OPT_MEM,	// User-defined dynamic memory related functions
 	CS_OPT_SKIPDATA, // Skip data when disassembling. Then engine is in SKIPDATA mode.
 	CS_OPT_SKIPDATA_SETUP, // Setup user-defined function for SKIPDATA option
+	CS_OPT_MNEMONIC, // Customize instruction mnemonic
 } cs_opt_type;
 
 // Runtime option value (associated with option type above)
@@ -249,9 +264,10 @@ typedef struct cs_detail {
 
 // Detail information of disassembled instruction
 typedef struct cs_insn {
-	// Instruction ID
-	// Find the instruction id from header file of corresponding architecture,
-	// such as arm.h for ARM, x86.h for X86, etc...
+	// Instruction ID (basically a numeric ID for the instruction mnemonic)
+	// Find the instruction id in the '[ARCH]_insn' enum in the header file 
+	// of corresponding architecture, such as 'arm_insn' in arm.h for ARM,
+	// 'x86_insn' in x86.h for X86, etc...
 	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
 	// NOTE: in Skipdata mode, "data" instruction has 0 for this id field.
 	unsigned int id;
@@ -269,7 +285,7 @@ typedef struct cs_insn {
 
 	// Ascii text of instruction mnemonic
 	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
-	char mnemonic[32];
+	char mnemonic[CS_MNEMONIC_SIZE];
 
 	// Ascii text of instruction operands
 	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
@@ -421,7 +437,7 @@ const char *cs_strerror(cs_err code);
 /*
  Disassemble binary code, given the code buffer, size, address and number
  of instructions to be decoded.
- This API dynamicly allocate memory to contain disassembled instruction.
+ This API dynamically allocate memory to contain disassembled instruction.
  Resulted instructions will be put into @*insn
 
  NOTE 1: this API will automatically determine memory needed to contain
@@ -434,7 +450,7 @@ const char *cs_strerror(cs_err code);
  cs_disasm(). The reason is that with cs_disasm(), based on limited available
  memory, we have to calculate in advance how many instructions to be disassembled,
  which complicates things. This is especially troublesome for the case @count=0,
- when cs_disasm() runs uncontrolly (until either end of input buffer, or
+ when cs_disasm() runs uncontrollably (until either end of input buffer, or
  when it encounters an invalid instruction).
  
  @handle: handle returned by cs_open()
@@ -444,9 +460,9 @@ const char *cs_strerror(cs_err code);
  @insn: array of instructions filled in by this API.
 	   NOTE: @insn will be allocated by this function, and should be freed
 	   with cs_free() API.
- @count: number of instrutions to be disassembled, or 0 to get all of them
+ @count: number of instructions to be disassembled, or 0 to get all of them
 
- @return: the number of succesfully disassembled instructions,
+ @return: the number of successfully disassembled instructions,
  or 0 if this function failed to disassemble the given code
 
  On failure, call cs_errno() for error code.
@@ -499,7 +515,7 @@ cs_insn *cs_malloc(csh handle);
  See tests/test_iter.c for sample code demonstrating this API.
 
  NOTE 1: this API will update @code, @size & @address to point to the next
- instruction in the input buffer. Therefore, it is covenient to use
+ instruction in the input buffer. Therefore, it is convenient to use
  cs_disasm_iter() inside a loop to quickly iterate all the instructions.
  While decoding one instruction at a time can also be achieved with
  cs_disasm(count=1), some benchmarks shown that cs_disasm_iter() can be 30%
@@ -513,7 +529,7 @@ cs_insn *cs_malloc(csh handle);
  The reason is that with cs_disasm(), based on limited available memory,
  we have to calculate in advance how many instructions to be disassembled,
  which complicates things. This is especially troublesome for the case
- @count=0, when cs_disasm() runs uncontrolly (until either end of input
+ @count=0, when cs_disasm() runs uncontrollably (until either end of input
  buffer, or when it encounters an invalid instruction).
  
  @handle: handle returned by cs_open()
@@ -533,7 +549,7 @@ bool cs_disasm_iter(csh handle,
 	uint64_t *address, cs_insn *insn);
 
 /*
- Return friendly name of regiser in a string.
+ Return friendly name of register in a string.
  Find the instruction id from header file of corresponding architecture (arm.h for ARM,
  x86.h for X86, ...)
 

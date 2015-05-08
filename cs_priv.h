@@ -35,6 +35,19 @@ typedef struct ARM_ITStatus {
 	unsigned int size;
 } ARM_ITStatus;
 
+// Customize mnemonic for instructions with alternative name.
+struct customized_mnem {
+	// ID of instruction to be customized.
+	unsigned int id;
+	// Customized instruction mnemonic.
+	char mnemonic[CS_MNEMONIC_SIZE];
+};
+
+struct insn_mnem {
+	struct customized_mnem insn;
+	struct insn_mnem *next;	// linked list of customized mnemonics
+};
+
 struct cs_struct {
 	cs_arch arch;
 	cs_mode mode;
@@ -60,6 +73,7 @@ struct cs_struct {
 	cs_opt_skipdata skipdata_setup;	// user-defined skipdata setup
 	uint8_t *regsize_map;	// map to register size (x86-only for now)
 	GetRegisterAccess_t reg_access;
+	struct insn_mnem *mnem_list;	// linked list of customized instruction mnemonic
 };
 
 #define MAX_ARCH 8

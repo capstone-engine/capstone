@@ -2200,6 +2200,7 @@ static name_map group_name_maps[] = {
 	{ X86_GRP_RET, "ret" },
 	{ X86_GRP_INT, "int" },
 	{ X86_GRP_IRET,	"iret" },
+	{ X86_GRP_PRIVILEGE, "privilege" },
 
 	// architecture-specific groups
 	{ X86_GRP_VM, "vm" },
@@ -2249,15 +2250,7 @@ static name_map group_name_maps[] = {
 const char *X86_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	// verify group id
-	if (id >= X86_GRP_ENDING || (id > X86_GRP_IRET && id < X86_GRP_VM))
-		return NULL;
-
-	// NOTE: when new generic groups are added, 6 must be changed accordingly
-	if (id >= 128)
-		return group_name_maps[id - 128 + 6].name;
-	else
-		return group_name_maps[id].name;
+	return id2name(group_name_maps, ARR_SIZE(group_name_maps), id);
 #else
 	return NULL;
 #endif
@@ -2590,7 +2583,7 @@ static struct insn_reg insn_regs_intel[] = {
 
 	{ X86_MOV64ao32, X86_REG_RAX, 4 },   // 64-bit 48 8B04 10203040         // mov     rax, qword ptr [0x40302010]
 	{ X86_MOV64ao64, X86_REG_RAX, 8 },   // 64-bit 48 A1 1020304050607080   // movabs  rax, qword ptr [0x8070605040302010]
-	
+
 	{ X86_LODSQ, X86_REG_RAX },
 	{ X86_OR32i32, X86_REG_EAX },
 	{ X86_SUB32i32, X86_REG_EAX },
@@ -2727,7 +2720,8 @@ x86_reg X86_insn_reg_intel(unsigned int id, uint8_t * imm_size)
 
 	for (i = 0; i < ARR_SIZE(insn_regs_intel); i++) {
 		if (insn_regs_intel[i].insn == id) {
-			if (imm_size) *imm_size = insn_regs_intel[i].imm_size;
+			if (imm_size)
+				*imm_size = insn_regs_intel[i].imm_size;
 			return insn_regs_intel[i].reg;
 		}
 	}

@@ -840,28 +840,20 @@ static name_map group_name_maps[] = {
 	{ ARM64_GRP_JUMP, "jump" },
 	{ ARM64_GRP_CALL, "call" },
 	{ ARM64_GRP_RET, "return" },
+	{ ARM64_GRP_PRIVILEGE, "privilege" },
 
 	// architecture-specific groups
 	{ ARM64_GRP_CRYPTO, "crypto" },
 	{ ARM64_GRP_FPARMV8, "fparmv8" },
 	{ ARM64_GRP_NEON, "neon" },
 	{ ARM64_GRP_CRC, "crc" },
-
 };
 #endif
 
 const char *AArch64_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	// verify group id
-	if (id >= ARM64_GRP_ENDING || (id > ARM64_GRP_RET && id < ARM64_GRP_CRYPTO))
-		return NULL;
-
-	// NOTE: when new generic groups are added, 4 must be changed accordingly
-	if (id >= ARM64_GRP_CRYPTO)
-		return group_name_maps[id - ARM64_GRP_CRYPTO + 4].name;
-	else
-		return group_name_maps[id].name;
+	return id2name(group_name_maps, ARR_SIZE(group_name_maps), id);
 #else
 	return NULL;
 #endif

@@ -140,6 +140,7 @@ CS_OPT_MODE = 3      # Change engine's mode at run-time
 CS_OPT_MEM = 4       # Change engine's mode at run-time
 CS_OPT_SKIPDATA = 5  # Skip data when disassembling
 CS_OPT_SKIPDATA_SETUP = 6      # Setup user-defined function for SKIPDATA option
+CS_OPT_MNEMONIC = 7  # Customize instruction mnemonic
 
 # Capstone option value
 CS_OPT_OFF = 0             # Turn OFF an option - default option of CS_OPT_DETAIL
@@ -286,6 +287,11 @@ class _cs_opt_skipdata(ctypes.Structure):
         ('user_data', ctypes.c_void_p),
     )
 
+class _cs_opt_mnem(ctypes.Structure):
+    _fields_ = (
+        ('id', ctypes.c_uint),
+        ('mnemonic', ctypes.c_char_p),
+    )
 
 # setup all the function prototype
 def _setup_prototype(lib, fname, restype, *argtypes):
@@ -429,6 +435,8 @@ def copy_ctypes(src):
     ctypes.pointer(dst)[0] = src
     return dst
 
+def _ascii_name_or_default(name, default):
+    return default if name is None else name.decode('ascii')
 
 # Python-style class to disasm code
 class CsInsn(object):
@@ -567,43 +575,31 @@ class CsInsn(object):
         return _cs.cs_errno(self._cs.csh)
 
     # get the register name, given the register ID
-    def reg_name(self, reg_id):
-        if self._raw.id == 0:
-            raise CsError(CS_ERR_SKIPDATA)
-
+    def reg_name(self, reg_id, default=None):
         if self._cs._diet:
             # Diet engine cannot provide register name
             raise CsError(CS_ERR_DIET)
 
-        if reg_id == 0:
-            return "(invalid)"
-
-        return _cs.cs_reg_name(self._cs.csh, reg_id).decode('ascii')
+        return _ascii_name_or_default(_cs.cs_reg_name(self._cs.csh, reg_id), default)
 
     # get the instruction name
-    def insn_name(self):
+    def insn_name(self, default=None):
         if self._cs._diet:
             # Diet engine cannot provide instruction name
             raise CsError(CS_ERR_DIET)
 
         if self._raw.id == 0:
-            return "(invalid)"
+            return default
 
-        return _cs.cs_insn_name(self._cs.csh, self.id).decode('ascii')
+        return _ascii_name_or_default(_cs.cs_insn_name(self._cs.csh, self.id).decode('ascii'), default)
 
     # get the group name
-    def group_name(self, group_id):
-        if self._raw.id == 0:
-            raise CsError(CS_ERR_SKIPDATA)
-
+    def group_name(self, group_id, default=None):
         if self._cs._diet:
-            # Diet engine cannot provide register name
+            # Diet engine cannot provide group name
             raise CsError(CS_ERR_DIET)
 
-        if group_id == 0:
-            return "(invalid)"
-
-        return _cs.cs_group_name(self._cs.csh, group_id).decode('ascii')
+        return _ascii_name_or_default(_cs.cs_group_name(self._cs.csh, group_id), default)
 
 
     # verify if this insn belong to group with id as @group_id
@@ -803,6 +799,19 @@ class Cs(object):
         self._skipdata_opt = _skipdata_opt
 
 
+    # customize instruction mnemonic
+    def mnemonic_setup(self, id, mnem):
+        _mnem_opt = _cs_opt_mnem()
+        _mnem_opt.id = id
+        if mnem:
+            _mnem_opt.mnemonic = mnem.encode()
+        else:
+            _mnem_opt.mnemonic = mnem
+        status = _cs.cs_option(self.csh, CS_OPT_MNEMONIC, ctypes.cast(ctypes.byref(_mnem_opt), ctypes.c_void_p))
+        if status != CS_ERR_OK:
+            raise CsError(status)
+
+
     # check to see if this engine supports a particular arch,
     # or diet mode (depending on @query).
     def support(self, query):
@@ -843,6 +852,33 @@ class Cs(object):
         # save mode
         self._mode = opt
 
+    # get the last error code
+    def errno(self):
+        return _cs.cs_errno(self.csh)
+
+    # get the register name, given the register ID
+    def reg_name(self, reg_id, default=None):
+        if self._diet:
+            # Diet engine cannot provide register name
+            raise CsError(CS_ERR_DIET)
+
+        return _ascii_name_or_default(_cs.cs_reg_name(self.csh, reg_id), default)
+
+    # get the instruction name, given the instruction ID
+    def insn_name(self, insn_id, default=None):
+        if self._diet:
+            # Diet engine cannot provide instruction name
+            raise CsError(CS_ERR_DIET)
+
+        return _ascii_name_or_default(_cs.cs_insn_name(self.csh, insn_id), default)
+
+    # get the group name
+    def group_name(self, group_id, default=None):
+        if self._diet:
+            # Diet engine cannot provide group name
+            raise CsError(CS_ERR_DIET)
+
+        return _ascii_name_or_default(_cs.cs_group_name(self.csh, group_id), default)
 
     # Disassemble binary & return disassembled instructions in CsInsn objects
     def disasm(self, code, offset, count=0):

@@ -52,6 +52,20 @@ int name2id(name_map* map, int max, const char *name)
 	return -1;
 }
 
+char *id2name(name_map* map, int max, const unsigned int id)
+{
+	int i;
+
+	for (i = 0; i < max; i++) {
+		if (map[i].id == id) {
+			return map[i].name;
+		}
+	}
+
+	// nothing match
+	return NULL;
+}
+
 // count number of positive members in a list.
 // NOTE: list must be guaranteed to end in 0
 unsigned int count_positive(uint16_t *list)

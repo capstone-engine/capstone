@@ -275,10 +275,7 @@ static name_map group_name_maps[] = {
 const char *XCore_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	if (id >= XCORE_GRP_ENDING)
-		return NULL;
-
-	return group_name_maps[id].name;
+	return id2name(group_name_maps, ARR_SIZE(group_name_maps), id);
 #else
 	return NULL;
 #endif

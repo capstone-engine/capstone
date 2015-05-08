@@ -6,7 +6,7 @@ from capstone import *
 import binascii
 import sys
 
-from xprint import to_hex, to_x, to_x_32
+from xprint import to_hex
 
 _python3 = sys.version_info.major == 3
 

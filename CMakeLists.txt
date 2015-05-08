@@ -43,116 +43,241 @@ if (CAPSTONE_X86_ATT_DISABLE)
 endif ()
 
 ## sources
-set(SOURCES
+set(SOURCES_ENGINE
     cs.c
     MCInst.c
     MCInstrDesc.c
     MCRegisterInfo.c
     SStream.c
     utils.c
+)
+set(HEADERS_ENGINE
+    cs_priv.h
+    LEB128.h
+    MathExtras.h
+    MCDisassembler.h
+    MCFixedLenDisassembler.h
+    MCInst.h
+    MCInstrDesc.h
+    MCRegisterInfo.h
+    myinttypes.h
+    osxkernel_inttypes.h
+    SStream.h
+    utils.h
     )
 
-set(TEST_SOURCES test.c test_detail.c test_skipdata.c test_iter.c)
+set(HEADERS_COMMON
+    include/capstone/arm64.h
+    include/capstone/arm.h
+    include/capstone/capstone.h
+    include/capstone/mips.h
+    include/capstone/ppc.h
+    include/capstone/x86.h
+    include/capstone/sparc.h
+    include/capstone/systemz.h
+    include/capstone/xcore.h
+    include/capstone/platform.h
+    )
+
+
+set(TEST_SOURCES test.c test_detail.c test_skipdata.c test_iter.c test_customized_mnem.c)
 
 ## architecture support
 if (CAPSTONE_ARM_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_ARM)
-    set(SOURCES
-        ${SOURCES}
+    set(SOURCES_ARM
         arch/ARM/ARMDisassembler.c
         arch/ARM/ARMInstPrinter.c
         arch/ARM/ARMMapping.c
         arch/ARM/ARMModule.c
+    )
+    set(HEADERS_ARM
+        arch/ARM/ARMAddressingModes.h
+        arch/ARM/ARMBaseInfo.h
+        arch/ARM/ARMDisassembler.h
+        arch/ARM/ARMGenAsmWriter.inc
+        arch/ARM/ARMGenDisassemblerTables.inc
+        arch/ARM/ARMGenInstrInfo.inc
+        arch/ARM/ARMGenRegisterInfo.inc
+        arch/ARM/ARMGenSubtargetInfo.inc
+        arch/ARM/ARMInstPrinter.h
+        arch/ARM/ARMMapping.h
+        arch/ARM/ARMMappingInsn.inc
+        arch/ARM/ARMMappingInsnOp.inc
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_arm.c)
 endif ()
 
 if (CAPSTONE_ARM64_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_ARM64)
-    set(SOURCES
-        ${SOURCES}
+    set(SOURCES_ARM64
         arch/AArch64/AArch64BaseInfo.c
         arch/AArch64/AArch64Disassembler.c
         arch/AArch64/AArch64InstPrinter.c
         arch/AArch64/AArch64Mapping.c
         arch/AArch64/AArch64Module.c
+    )
+    set(HEADERS_ARM64
+        arch/AArch64/AArch64AddressingModes.h
+        arch/AArch64/AArch64BaseInfo.h
+        arch/AArch64/AArch64Disassembler.h
+        arch/AArch64/AArch64GenAsmWriter.inc
+        arch/AArch64/AArch64GenDisassemblerTables.inc
+        arch/AArch64/AArch64GenInstrInfo.inc
+        arch/AArch64/AArch64GenRegisterInfo.inc
+        arch/AArch64/AArch64GenSubtargetInfo.inc
+        arch/AArch64/AArch64InstPrinter.h
+        arch/AArch64/AArch64Mapping.h
+        arch/AArch64/AArch64MappingInsn.inc
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_arm64.c)
 endif ()
 
 if (CAPSTONE_MIPS_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_MIPS)
-    set(SOURCES
-        ${SOURCES}
+    set(SOURCES_MIPS
         arch/Mips/MipsDisassembler.c
         arch/Mips/MipsInstPrinter.c
         arch/Mips/MipsMapping.c
         arch/Mips/MipsModule.c
+    )
+    set(HEADERS_MIPS
+        arch/Mips/MipsDisassembler.h
+        arch/Mips/MipsGenAsmWriter.inc
+        arch/Mips/MipsGenDisassemblerTables.inc
+        arch/Mips/MipsGenInstrInfo.inc
+        arch/Mips/MipsGenRegisterInfo.inc
+        arch/Mips/MipsGenSubtargetInfo.inc
+        arch/Mips/MipsInstPrinter.h
+        arch/Mips/MipsMapping.h
+        arch/Mips/MipsMappingInsn.inc
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_mips.c)
 endif ()
 
 if (CAPSTONE_PPC_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_POWERPC)
-    set(SOURCES
-        ${SOURCES}
+    set(SOURCES_PPC
         arch/PowerPC/PPCDisassembler.c
         arch/PowerPC/PPCInstPrinter.c
         arch/PowerPC/PPCMapping.c
         arch/PowerPC/PPCModule.c
+    )
+    set(HEADERS_PPC
+        arch/PowerPC/PPCDisassembler.h
+        arch/PowerPC/PPCGenAsmWriter.inc
+        arch/PowerPC/PPCGenDisassemblerTables.inc
+        arch/PowerPC/PPCGenInstrInfo.inc
+        arch/PowerPC/PPCGenRegisterInfo.inc
+        arch/PowerPC/PPCGenSubtargetInfo.inc
+        arch/PowerPC/PPCInstPrinter.h
+        arch/PowerPC/PPCMapping.h
+        arch/PowerPC/PPCMappingInsn.inc
+        arch/PowerPC/PPCPredicates.h
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_ppc.c)
 endif ()
 
 if (CAPSTONE_X86_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_X86)
-    set(SOURCES
-        ${SOURCES}
+    set(SOURCES_X86
         arch/X86/X86Disassembler.c
         arch/X86/X86DisassemblerDecoder.c
         arch/X86/X86IntelInstPrinter.c
         arch/X86/X86Mapping.c
         arch/X86/X86Module.c
+    )
+    set(HEADERS_X86
+        arch/X86/X86BaseInfo.h
+        arch/X86/X86Disassembler.h
+        arch/X86/X86DisassemblerDecoder.h
+        arch/X86/X86DisassemblerDecoderCommon.h
+        arch/X86/X86GenAsmWriter.inc
+        arch/X86/X86GenAsmWriter1.inc
+        arch/X86/X86GenAsmWriter1_reduce.inc
+        arch/X86/X86GenAsmWriter_reduce.inc
+        arch/X86/X86GenDisassemblerTables.inc
+        arch/X86/X86GenDisassemblerTables_reduce.inc
+        arch/X86/X86GenInstrInfo.inc
+        arch/X86/X86GenInstrInfo_reduce.inc
+        arch/X86/X86GenRegisterInfo.inc
+        arch/X86/X86InstPrinter.h
+        arch/X86/X86Mapping.h
+        arch/X86/X86MappingInsn.inc
+        arch/X86/X86MappingInsnOp.inc
+        arch/X86/X86MappingInsnOp_reduce.inc
+        arch/X86/X86MappingInsn_reduce.inc
         )
     if (NOT CAPSTONE_BUILD_DIET)
-        set(SOURCES ${SOURCES} arch/X86/X86ATTInstPrinter.c)
+        set(SOURCES_X86 ${SOURCES_X86} arch/X86/X86ATTInstPrinter.c)
     endif ()
     set(TEST_SOURCES ${TEST_SOURCES} test_x86.c)
 endif ()
 
 if (CAPSTONE_SPARC_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_SPARC)
-    set(SOURCES
-        ${SOURCES}
-	arch/Sparc/SparcDisassembler.c
-	arch/Sparc/SparcInstPrinter.c
-	arch/Sparc/SparcMapping.c
-	arch/Sparc/SparcModule.c
+    set(SOURCES_SPARC
+        arch/Sparc/SparcDisassembler.c
+        arch/Sparc/SparcInstPrinter.c
+        arch/Sparc/SparcMapping.c
+        arch/Sparc/SparcModule.c
+    )
+    set(HEADERS_SPARC
+        arch/Sparc/Sparc.h
+        arch/Sparc/SparcDisassembler.h
+        arch/Sparc/SparcGenAsmWriter.inc
+        arch/Sparc/SparcGenDisassemblerTables.inc
+        arch/Sparc/SparcGenInstrInfo.inc
+        arch/Sparc/SparcGenRegisterInfo.inc
+        arch/Sparc/SparcGenSubtargetInfo.inc
+        arch/Sparc/SparcInstPrinter.h
+        arch/Sparc/SparcMapping.h
+        arch/Sparc/SparcMappingInsn.inc
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_sparc.c)
 endif ()
 
 if (CAPSTONE_SYSZ_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_SYSZ)
-    set(SOURCES
-        ${SOURCES}
-	arch/SystemZ/SystemZDisassembler.c
-	arch/SystemZ/SystemZInstPrinter.c
-	arch/SystemZ/SystemZMapping.c
-	arch/SystemZ/SystemZModule.c
-	arch/SystemZ/SystemZMCTargetDesc.c
+    set(SOURCES_SYSZ
+        arch/SystemZ/SystemZDisassembler.c
+        arch/SystemZ/SystemZInstPrinter.c
+        arch/SystemZ/SystemZMapping.c
+        arch/SystemZ/SystemZMCTargetDesc.c
+        arch/SystemZ/SystemZModule.c
+    )
+    set(HEADERS_SYSZ
+        arch/SystemZ/SystemZDisassembler.h
+        arch/SystemZ/SystemZGenAsmWriter.inc
+        arch/SystemZ/SystemZGenDisassemblerTables.inc
+        arch/SystemZ/SystemZGenInstrInfo.inc
+        arch/SystemZ/SystemZGenRegisterInfo.inc
+        arch/SystemZ/SystemZGenSubtargetInfo.inc
+        arch/SystemZ/SystemZInstPrinter.h
+        arch/SystemZ/SystemZMapping.h
+        arch/SystemZ/SystemZMappingInsn.inc
+        arch/SystemZ/SystemZMCTargetDesc.h
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_systemz.c)
 endif ()
 
 if (CAPSTONE_XCORE_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_XCORE)
-    set(SOURCES
-        ${SOURCES}
-	arch/XCore/XCoreDisassembler.c
-	arch/XCore/XCoreInstPrinter.c
-	arch/XCore/XCoreMapping.c
-	arch/XCore/XCoreModule.c
+    set(SOURCES_XCORE
+        arch/XCore/XCoreDisassembler.c
+        arch/XCore/XCoreInstPrinter.c
+        arch/XCore/XCoreMapping.c
+        arch/XCore/XCoreModule.c
+    )
+    set(HEADERS_XCORE
+        arch/XCore/XCoreDisassembler.h
+        arch/XCore/XCoreGenAsmWriter.inc
+        arch/XCore/XCoreGenDisassemblerTables.inc
+        arch/XCore/XCoreGenInstrInfo.inc
+        arch/XCore/XCoreGenRegisterInfo.inc
+        arch/XCore/XCoreInstPrinter.h
+        arch/XCore/XCoreMapping.h
+        arch/XCore/XCoreMappingInsn.inc
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_xcore.c)
 endif ()
@@ -160,6 +285,31 @@ endif ()
 if (CAPSTONE_OSXKERNEL_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_OSXKERNEL)
 endif ()
+
+set(ALL_SOURCES
+    ${SOURCES_ENGINE}
+    ${SOURCES_ARM}
+    ${SOURCES_ARM64}
+    ${SOURCES_MIPS}
+    ${SOURCES_PPC}
+    ${SOURCES_X86}
+    ${SOURCES_SPARC}
+    ${SOURCES_SYSZ}
+    ${SOURCES_XCORE}
+    )
+
+set(ALL_HEADERS
+    ${HEADERS_COMMON}
+    ${HEADERS_ENGINE}
+    ${HEADERS_ARM}
+    ${HEADERS_ARM64}
+    ${HEADERS_MIPS}
+    ${HEADERS_PPC}
+    ${HEADERS_X86}
+    ${HEADERS_SPARC}
+    ${HEADERS_SYSZ}
+    ${HEADERS_XCORE}
+    )
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
@@ -170,7 +320,7 @@ set_property(GLOBAL PROPERTY SOVERSION SOVERSION ${VERSION_MAJOR})
 
 ## targets
 if (CAPSTONE_BUILD_STATIC)
-    add_library(capstone-static STATIC ${SOURCES})
+    add_library(capstone-static STATIC ${ALL_SOURCES} ${ALL_HEADERS})
     set_property(TARGET capstone-static PROPERTY OUTPUT_NAME capstone)
     set(default-target capstone-static)
 endif ()
@@ -188,7 +338,7 @@ if (CAPSTONE_BUILD_STATIC_RUNTIME)
 endif ()
 
 if (CAPSTONE_BUILD_SHARED)
-    add_library(capstone-shared SHARED ${SOURCES})
+    add_library(capstone-shared SHARED ${ALL_SOURCES} ${ALL_HEADERS})
     set_property(TARGET capstone-shared PROPERTY OUTPUT_NAME capstone)
     set_property(TARGET capstone-shared PROPERTY COMPILE_FLAGS -DCAPSTONE_SHARED)
 
@@ -216,11 +366,29 @@ if (CAPSTONE_BUILD_TESTS)
     endif()
 endif ()
 
+source_group("Source\\Engine" FILES ${SOURCES_ENGINE})
+source_group("Source\\ARM" FILES ${SOURCES_ARM})
+source_group("Source\\ARM64" FILES ${SOURCES_ARM64})
+source_group("Source\\Mips" FILES ${SOURCES_MIPS})
+source_group("Source\\PowerPC" FILES ${SOURCES_PPC})
+source_group("Source\\Sparc" FILES ${SOURCES_SPARC})
+source_group("Source\\SystemZ" FILES ${SOURCES_SYSZ})
+source_group("Source\\X86" FILES ${SOURCES_X86})
+source_group("Source\\XCore" FILES ${SOURCES_XCORE})
+
+source_group("Include\\Common" FILES ${HEADERS_COMMON})
+source_group("Include\\Engine" FILES ${HEADERS_ENGINE})
+source_group("Include\\ARM" FILES ${HEADERS_ARM})
+source_group("Include\\ARM64" FILES ${HEADERS_ARM64})
+source_group("Include\\Mips" FILES ${HEADERS_MIPS})
+source_group("Include\\PowerPC" FILES ${HEADERS_PPC})
+source_group("Include\\Sparc" FILES ${HEADERS_SPARC})
+source_group("Include\\SystemZ" FILES ${HEADERS_SYSZ})
+source_group("Include\\X86" FILES ${HEADERS_X86})
+source_group("Include\\XCore" FILES ${HEADERS_XCORE})
+
 ## installation
-set(INCLUDES arm64.h  arm.h  capstone.h  mips.h  ppc.h  x86.h sparc.h systemz.h xcore.h platform.h)
-foreach (INC ${INCLUDES})
-    install(FILES "include/${INC}" DESTINATION include/capstone)
-endforeach ()
+install(FILES ${HEADERS_COMMON} DESTINATION include/capstone)
 
 if (CAPSTONE_BUILD_STATIC)
     install(TARGETS capstone-static

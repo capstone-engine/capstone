@@ -768,6 +768,7 @@ static name_map group_name_maps[] = {
 	// generic groups
 	{ ARM_GRP_INVALID, NULL },
 	{ ARM_GRP_JUMP,	"jump" },
+	{ ARM_GRP_PRIVILEGE, "privilege" },
 
 	// architecture-specific groups
 	{ ARM_GRP_CRYPTO, "crypto" },
@@ -808,15 +809,7 @@ static name_map group_name_maps[] = {
 const char *ARM_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	// verify group id
-	if (id >= ARM_GRP_ENDING || (id > ARM_GRP_JUMP && id < ARM_GRP_CRYPTO))
-		return NULL;
-
-	// NOTE: when new generic groups are added, 2 must be changed accordingly
-	if (id >= ARM_GRP_CRYPTO)
-		return group_name_maps[id - ARM_GRP_CRYPTO + 2].name;
-	else
-		return group_name_maps[id].name;
+	return id2name(group_name_maps, ARR_SIZE(group_name_maps), id);
 #else
 	return NULL;
 #endif

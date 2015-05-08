@@ -431,6 +431,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 	unsigned Opcode = MCInst_getOpcode(MI), tmp, i, pubOpcode;
 
 
+	// printf(">>> Opcode 0: %u\n", MCInst_getOpcode(MI));
 	switch(Opcode) {
 		// Check for HINT instructions w/ canonical names.
 		case ARM_HINT:
@@ -465,12 +466,33 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 			// Check for MOVs and print canonical forms, instead.
 		case ARM_MOVsr: {
 							// FIXME: Thumb variants?
+							unsigned int opc;
 							MCOperand *Dst = MCInst_getOperand(MI, 0);
 							MCOperand *MO1 = MCInst_getOperand(MI, 1);
 							MCOperand *MO2 = MCInst_getOperand(MI, 2);
 							MCOperand *MO3 = MCInst_getOperand(MI, 3);
 
-							SStream_concat0(O, ARM_AM_getShiftOpcStr(ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO3))));
+							opc = ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO3));
+							SStream_concat0(O, ARM_AM_getShiftOpcStr(opc));
+							switch(opc) {
+								default:
+									break;
+								case ARM_AM_asr:
+									MCInst_setOpcodePub(MI, ARM_INS_ASR);
+									break;
+								case ARM_AM_lsl:
+									MCInst_setOpcodePub(MI, ARM_INS_LSL);
+									break;
+								case ARM_AM_lsr:
+									MCInst_setOpcodePub(MI, ARM_INS_LSR);
+									break;
+								case ARM_AM_ror:
+									MCInst_setOpcodePub(MI, ARM_INS_ROR);
+									break;
+								case ARM_AM_rrx:
+									MCInst_setOpcodePub(MI, ARM_INS_RRX);
+									break;
+							}
 							printSBitModifierOperand(MI, 6, O);
 							printPredicateOperand(MI, 4, O);
 
@@ -507,11 +529,32 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 
 		case ARM_MOVsi: {
 							// FIXME: Thumb variants?
+							unsigned int opc;
 							MCOperand *Dst = MCInst_getOperand(MI, 0);
 							MCOperand *MO1 = MCInst_getOperand(MI, 1);
 							MCOperand *MO2 = MCInst_getOperand(MI, 2);
 
-							SStream_concat0(O, ARM_AM_getShiftOpcStr(ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO2))));
+							opc = ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO2));
+							SStream_concat0(O, ARM_AM_getShiftOpcStr(opc));
+							switch(opc) {
+								default:
+									break;
+								case ARM_AM_asr:
+									MCInst_setOpcodePub(MI, ARM_INS_ASR);
+									break;
+								case ARM_AM_lsl:
+									MCInst_setOpcodePub(MI, ARM_INS_LSL);
+									break;
+								case ARM_AM_lsr:
+									MCInst_setOpcodePub(MI, ARM_INS_LSR);
+									break;
+								case ARM_AM_ror:
+									MCInst_setOpcodePub(MI, ARM_INS_ROR);
+									break;
+								case ARM_AM_rrx:
+									MCInst_setOpcodePub(MI, ARM_INS_RRX);
+									break;
+							}
 							printSBitModifierOperand(MI, 5, O);
 							printPredicateOperand(MI, 3, O);
 
@@ -533,7 +576,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 								MI->flat_insn->detail->arm.op_count++;
 							}
 
-							if (ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO2)) == ARM_AM_rrx) {
+							if (opc == ARM_AM_rrx) {
 								//printAnnotation(O, Annot);
 								return;
 							}
@@ -546,7 +589,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 								SStream_concat(O, "#%u", tmp);
 							if (MI->csh->detail) {
 								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count - 1].shift.type =
-									(arm_shifter)ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO2));
+									(arm_shifter)opc;
 								MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count - 1].shift.value = tmp;
 							}
 							return;
@@ -1449,7 +1492,7 @@ static void printRegisterList(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	unsigned i, e;
 #ifndef CAPSTONE_DIET
-	uint8_t access;
+	uint8_t access = 0;
 #endif
 
 	SStream_concat0(O, "{");
