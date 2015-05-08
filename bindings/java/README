@@ -4,7 +4,11 @@ Arch Linux-3.11, 64-bit.
 - OpenJDK is required to compile and run this test code.
   For example, install OpenJDK 6 with:
 
-       $ sudo apt-get install openjdk-6-jre-headless openjdk-6-jdk libjna-java
+       $ sudo apt-get install openjdk-6-jre-headless openjdk-6-jdk
+
+- Java Native Access is required to run the code, you can install it with:
+
+       $ sudo apt-get install libjna-java
 
 - To compile and run this Java test code:
 

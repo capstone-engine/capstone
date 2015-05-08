@@ -58,6 +58,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_xcore", "test_xcore\te
 		{5B01D900-2359-44CA-9914-6B0C6AFB7BE7} = {5B01D900-2359-44CA-9914-6B0C6AFB7BE7}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_iter", "test_iter\test_iter.vcxproj", "{48EB18D5-7060-4C54-B8B1-BFF077329604}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5B01D900-2359-44CA-9914-6B0C6AFB7BE7} = {5B01D900-2359-44CA-9914-6B0C6AFB7BE7}
+	EndProjectSection
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "capstone_dll", "capstone_dll\capstone_dll.vcxproj", "{2171C0E8-4915-49B9-AC23-A484FA08C126}"
 EndProject
 Global
@@ -172,6 +177,14 @@ Global
 		{5B880AB5-E54F-11E3-8C65-B8E8563B7BDE}.Release|Win32.Build.0 = Release|Win32
 		{5B880AB5-E54F-11E3-8C65-B8E8563B7BDE}.Release|x64.ActiveCfg = Release|x64
 		{5B880AB5-E54F-11E3-8C65-B8E8563B7BDE}.Release|x64.Build.0 = Release|x64
+		{48EB18D5-7060-4C54-B8B1-BFF077329604}.Debug|Win32.ActiveCfg = Debug|Win32
+		{48EB18D5-7060-4C54-B8B1-BFF077329604}.Debug|Win32.Build.0 = Debug|Win32
+		{48EB18D5-7060-4C54-B8B1-BFF077329604}.Debug|x64.ActiveCfg = Debug|x64
+		{48EB18D5-7060-4C54-B8B1-BFF077329604}.Debug|x64.Build.0 = Debug|x64
+		{48EB18D5-7060-4C54-B8B1-BFF077329604}.Release|Win32.ActiveCfg = Release|Win32
+		{48EB18D5-7060-4C54-B8B1-BFF077329604}.Release|Win32.Build.0 = Release|Win32
+		{48EB18D5-7060-4C54-B8B1-BFF077329604}.Release|x64.ActiveCfg = Release|x64
+		{48EB18D5-7060-4C54-B8B1-BFF077329604}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
