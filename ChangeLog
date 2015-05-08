@@ -1,6 +1,43 @@
 This file details the changelog of Capstone.
 
 ---------------------------------
+Version 3.0.3: May 08th, 2015
+
+
+[ Library ]
+
+- Support to embed into Mac OS X kernel extensions.
+- Now it is possible to compile Capstone with older C compilers, such as
+  GCC 4.8 on Ubuntu 12.04.
+- Add "test_iter" to MSVC project.
+
+
+[ X86 ]
+
+- All shifted instructions SHL, SHR, SAL, SAR, RCL, RCR, ROL & ROR now support
+  $1 as first operand in *AT&T* syntax (so we have "rcll $1, %edx" instead of
+  "rcll %edx").
+- CMPXCHG16B is a valid instruction with LOCK prefix.
+- Fixed a segfault on the input of 0xF3.
+
+
+[ Arm ]
+
+- BLX instruction modifies PC & LR registers.
+
+
+[ Sparc ]
+
+- Improved displacement decoding for sparc banching instructions.
+
+
+[ Python binding ]
+
+- Fix for Cython so it can properly initialize.
+- X86Op.avx_zero_mask now has c_bool type, but not c_uint8 type.
+- Properly support compile with Cygwin & install binding (setup.py).
+
+---------------------------------
 Version 3.0.2: March 11th, 2015
 
 
