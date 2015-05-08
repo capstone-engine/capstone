@@ -3,6 +3,8 @@ Capstone library is needed.
 
 To compile from source, see PyPi package "capstone" instead.
 
+    https://pypi.python.org/pypi/capstone
+
 --------------------------------------------------------------------------------
 
 Capstone is a disassembly framework with the target of becoming the ultimate
