@@ -1379,8 +1379,15 @@ void AArch64_post_printer(csh handle, cs_insn *flat_insn, char *insn_asm, MCInst
 		return;
 
 	// check if this insn requests write-back
-	if (strrchr(insn_asm, '!') != NULL)
+	if (strrchr(insn_asm, '!') != NULL) {
 		flat_insn->detail->arm64.writeback = true;
+	} else {
+		// check for post-index   ... [reg], #offset
+		const char * lb = strrchr(insn_asm, ']');
+		if (lb != NULL && lb[1] == ',') {
+			flat_insn->detail->arm64.writeback = true;
+		}
+	}
 }
 
 #endif
