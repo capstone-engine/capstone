@@ -193,6 +193,14 @@ CS_ERR_X86_INTEL = 13 # X86 Intel syntax is unsupported (opt-out at compile time
 CS_SUPPORT_DIET = CS_ARCH_ALL + 1
 CS_SUPPORT_X86_REDUCE = CS_ARCH_ALL+2
 
+# Capstone reverse lookup
+CS_AC    = {v:k for k,v in locals().items() if k.startswith('CS_AC_')}
+CS_ARCH  = {v:k for k,v in locals().items() if k.startswith('CS_ARCH_')}
+CS_ERR   = {v:k for k,v in locals().items() if k.startswith('CS_ERR_')}
+CS_GRP   = {v:k for k,v in locals().items() if k.startswith('CS_GRP_')}
+CS_MODE  = {v:k for k,v in locals().items() if k.startswith('CS_MODE_')}
+CS_OP    = {v:k for k,v in locals().items() if k.startswith('CS_OP_')}
+CS_OPT   = {v:k for k,v in locals().items() if k.startswith('CS_OPT_')}
 
 import ctypes, ctypes.util, sys
 from os.path import split, join, dirname
