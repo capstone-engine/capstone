@@ -57,3 +57,4 @@ Christophe Avoinne (Hlide): Improve memory management for better performance.
 Michael Cohen & Nguyen Tan Cong: Python module installer.
 Bui Dinh Cuong: Explicit registers accessed for Arm64.
 Vincent Bénony: Explicit registers accessed for X86.
+Adel Gadllah, Francisco Alonso & Stefan Cornelius: RPM package.
