@@ -7,7 +7,7 @@ run "pip install capstone" or "python setup.py install" from "Developer Command
 Prompt".
 
 For Windows, if you do not want to compile the core, try the "capstone-windows"
-package instead, which already has the prebuilt core inside.
+package instead, which already includes the prebuilt capstone.dll inside.
 
     https://pypi.python.org/pypi/capstone-windows
 
