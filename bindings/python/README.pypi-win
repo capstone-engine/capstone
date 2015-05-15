@@ -1,7 +1,13 @@
 NOTE: This package includes prebuilt Windows core of Capstone, so no external
 Capstone library is needed.
 
-To compile from source, see PyPi package "capstone" instead.
+On Windows, download this PyPi package and run "python setup.py install" from
+"Command Prompt" is all you need to install it.
+
+If you want to compile everything from source code instead, use the
+PyPi package "capstone" instead.
+
+    https://pypi.python.org/pypi/capstone
 
 --------------------------------------------------------------------------------
 
