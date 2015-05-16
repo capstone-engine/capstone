@@ -860,16 +860,16 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     116114U,	// MOV8ao64
     287927U,	// MOV8mi
     287927U,	// MOV8mr
-    268723383U,	// MOV8mr_NOREX
+    287927U,	// MOV8mr_NOREX
     1950903U,	// MOV8o16a
     1950903U,	// MOV8o32a
     1950674U,	// MOV8o64a
     29627575U,	// MOV8ri
     29627575U,	// MOV8ri_alt
     42210487U,	// MOV8rm
-    310645943U,	// MOV8rm_NOREX
+    42210487U,	// MOV8rm_NOREX
     29627575U,	// MOV8rr
-    298063031U,	// MOV8rr_NOREX
+    29627575U,	// MOV8rr_NOREX
     29627575U,	// MOV8rr_REV
     270703U,	// MOVBE16mr
     38015343U,	// MOVBE16rm
@@ -884,8 +884,8 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     71632098U,	// MOVSW
     42210579U,	// MOVSX16rm8
     29627667U,	// MOVSX16rr8
-    310646035U,	// MOVSX32_NOREXrm8
-    298063123U,	// MOVSX32_NOREXrr8
+    42210579U,	// MOVSX32_NOREXrm8
+    29627667U,	// MOVSX32_NOREXrr8
     38016275U,	// MOVSX32rm16
     42210579U,	// MOVSX32rm8
     29627667U,	// MOVSX32rr16
@@ -900,8 +900,8 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     29627667U,	// MOVSX64rr8
     42210586U,	// MOVZX16rm8
     29627674U,	// MOVZX16rr8
-    310646042U,	// MOVZX32_NOREXrm8
-    298063130U,	// MOVZX32_NOREXrr8
+    42210586U,	// MOVZX32_NOREXrm8
+    29627674U,	// MOVZX32_NOREXrr8
     38016282U,	// MOVZX32rm16
     42210586U,	// MOVZX32rm8
     29627674U,	// MOVZX32rr16
@@ -1419,17 +1419,17 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     2101877U,	// SHL8r1
     2364021U,	// SHL8rCL
     4461173U,	// SHL8ri
-    402923783U,	// SHLD16mrCL
+    268706055U,	// SHLD16mrCL
     1745101063U,	// SHLD16mri8
-    407113991U,	// SHLD16rrCL
+    272896263U,	// SHLD16rrCL
     2286162183U,	// SHLD16rri8
-    402931975U,	// SHLD32mrCL
+    268714247U,	// SHLD32mrCL
     1745109255U,	// SHLD32mri8
-    407113991U,	// SHLD32rrCL
+    272896263U,	// SHLD32rrCL
     2286162183U,	// SHLD32rri8
-    402936071U,	// SHLD64mrCL
+    268718343U,	// SHLD64mrCL
     1745113351U,	// SHLD64mri8
-    407113991U,	// SHLD64rrCL
+    272896263U,	// SHLD64rrCL
     2286162183U,	// SHLD64rri8
     1770263791U,	// SHLX32rm
     700716271U,	// SHLX32rr
@@ -1459,17 +1459,17 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     2102164U,	// SHR8r1
     2364308U,	// SHR8rCL
     4461460U,	// SHR8ri
-    402923813U,	// SHRD16mrCL
+    268706085U,	// SHRD16mrCL
     1745101093U,	// SHRD16mri8
-    407114021U,	// SHRD16rrCL
+    272896293U,	// SHRD16rrCL
     2286162213U,	// SHRD16rri8
-    402932005U,	// SHRD32mrCL
+    268714277U,	// SHRD32mrCL
     1745109285U,	// SHRD32mri8
-    407114021U,	// SHRD32rrCL
+    272896293U,	// SHRD32rrCL
     2286162213U,	// SHRD32rri8
-    402936101U,	// SHRD64mrCL
+    268718373U,	// SHRD64mrCL
     1745113381U,	// SHRD64mri8
-    407114021U,	// SHRD64rrCL
+    272896293U,	// SHRD64rrCL
     2286162213U,	// SHRD64rri8
     1770263815U,	// SHRX32rm
     700716295U,	// SHRX32rr
@@ -4110,43 +4110,43 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 3:
     // INSB, INSL, INSW
     SStream_concat0(O, ", dx"); 
-	op_addReg(MI, X86_REG_DX);
+    op_addReg(MI, X86_REG_DX);
     return;
     break;
   case 4:
     // MOV16o16a, MOV16o32a, MOV16o64a, OUT16ir, STOSW
     SStream_concat0(O, ", ax"); 
-	op_addReg(MI, X86_REG_AX);
+    op_addReg(MI, X86_REG_AX);
     return;
     break;
   case 5:
     // MOV32o16a, MOV32o32a, MOV32o64a, OUT32ir, STOSL
     SStream_concat0(O, ", eax"); 
-	op_addReg(MI, X86_REG_EAX);
+    op_addReg(MI, X86_REG_EAX);
     return;
     break;
   case 6:
     // MOV64o32a, MOV64o64a, STOSQ
     SStream_concat0(O, ", rax"); 
-	op_addReg(MI, X86_REG_RAX);
+    op_addReg(MI, X86_REG_RAX);
     return;
     break;
   case 7:
     // MOV8o16a, MOV8o32a, MOV8o64a, OUT8ir, STOSB
     SStream_concat0(O, ", al"); 
-	op_addReg(MI, X86_REG_AL);
+    op_addReg(MI, X86_REG_AL);
     return;
     break;
   case 8:
     // RCL16m1, RCL16r1, RCL32m1, RCL32r1, RCL64m1, RCL64r1, RCL8m1, RCL8r1, ...
     SStream_concat0(O, ", 1"); 
-	op_addImm(MI, 1);
+    op_addImm(MI, 1);
     return;
     break;
   case 9:
     // RCL16mCL, RCL16rCL, RCL32mCL, RCL32rCL, RCL64mCL, RCL64rCL, RCL8mCL, R...
     SStream_concat0(O, ", cl"); 
-	op_addReg(MI, X86_REG_CL);
+    op_addReg(MI, X86_REG_CL);
     return;
     break;
   }
@@ -4247,7 +4247,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   }
 
 
-  // Fragment 3 encoded into 2 bits for 4 unique commands.
+  // Fragment 3 encoded into 2 bits for 3 unique commands.
   //printf("Frag-3: %"PRIu64"\n", (Bits >> 27) & 3);
   switch ((Bits >> 27) & 3) {
   default: // llvm_unreachable("Invalid command number.");
@@ -4260,13 +4260,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     SStream_concat0(O, ", "); 
     break;
   case 2:
-    // MOV8mr_NOREX, MOV8rm_NOREX, MOV8rr_NOREX, MOVSX32_NOREXrm8, MOVSX32_NO...
-    return;
-    break;
-  case 3:
     // SHLD16mrCL, SHLD16rrCL, SHLD32mrCL, SHLD32rrCL, SHLD64mrCL, SHLD64rrCL...
     SStream_concat0(O, ", cl"); 
-	op_addReg(MI, X86_REG_CL);
+    op_addReg(MI, X86_REG_CL);
     return;
     break;
   }
