@@ -1,5 +1,5 @@
 # This file contains all customized compile options for Capstone.
-# Modify it before building step. Consult docs/README for details.
+# Consult COMPILE.TXT & docs/README for details.
 
 ################################################################################
 # Specify which archs you want to compile in. By default, we build all archs.
