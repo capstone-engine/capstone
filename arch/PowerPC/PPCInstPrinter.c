@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <inttypes.h>
 
 #include "PPCInstPrinter.h"
 #include "PPCPredicates.h"
@@ -710,17 +711,17 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 
 	if (MCOperand_isImm(Op)) {
-		int32_t imm = (int32_t)MCOperand_getImm(Op);
+		uint64_t imm = MCOperand_getImm(Op);
 		if (imm >= 0) {
 			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%x", imm);
+				SStream_concat(O, "0x%" PRIx64, imm);
 			else
-				SStream_concat(O, "%u", imm);
+				SStream_concat(O, "%" PRIu64 , imm);
 		} else {
 			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%x", -imm);
+				SStream_concat(O, "-0x%" PRIx64 , -imm);
 			else
-				SStream_concat(O, "-%u", -imm);
+				SStream_concat(O, "-%" PRIu64 , -imm);
 		}
 
 		if (MI->csh->detail) {

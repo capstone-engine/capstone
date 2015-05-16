@@ -116,6 +116,7 @@ public class X86 {
     public int sibIndex;
     public byte sibScale;
     public int sibBase;
+    public int xopCC;
     public int sseCC;
     public int avxCC;
     public boolean avxSae;
