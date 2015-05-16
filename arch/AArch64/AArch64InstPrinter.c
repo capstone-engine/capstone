@@ -1377,7 +1377,6 @@ void AArch64_post_printer(csh handle, cs_insn *flat_insn, char *insn_asm, MCInst
 {
 	if (((cs_struct *)handle)->detail != CS_OPT_ON)
 		return;
-  
   unsigned opcode = MCInst_getOpcode(mci);
   switch (opcode) {
     default:
