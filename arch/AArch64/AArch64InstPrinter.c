@@ -1,4 +1,4 @@
-s//==-- AArch64InstPrinter.cpp - Convert AArch64 MCInst to assembly syntax --==//
+//==-- AArch64InstPrinter.cpp - Convert AArch64 MCInst to assembly syntax --==//
 //
 //                     The LLVM Compiler Infrastructure
 //
