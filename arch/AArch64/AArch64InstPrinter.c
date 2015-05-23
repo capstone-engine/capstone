@@ -47,10 +47,10 @@ static void printShifter(MCInst *MI, unsigned OpNum, SStream *O);
 
 static void set_mem_access(MCInst *MI, bool status)
 {
+	MI->csh->doing_mem = status;
+
 	if (MI->csh->detail != CS_OPT_ON)
 		return;
-
-	MI->csh->doing_mem = status;
 
 	if (status) {
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_MEM;
@@ -611,8 +611,13 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		if (MI->Opcode == AArch64_ADR) {
 			imm += MI->address;
 			printUInt64Bang(O, imm);
-		} else
-			printUInt64Bang(O, imm);
+		} else {
+			if (MI->csh->doing_mem)
+				printInt64Bang(O, imm);
+			else
+				printUInt64Bang(O, imm);
+		}
+
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int32_t)imm;
