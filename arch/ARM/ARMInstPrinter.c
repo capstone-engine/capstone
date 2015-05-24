@@ -1287,7 +1287,7 @@ static void printMemBOption(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	unsigned val = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	SStream_concat0(O, ARM_MB_MemBOptToString(val + 1,
-				(ARM_getFeatureBits(MI->csh->mode) & ARM_HasV8Ops)));
+				(ARM_getFeatureBits(MI->csh->mode) & ARM_HasV8Ops) != 0));
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.mem_barrier = (arm_mem_barrier)(val + 1);
