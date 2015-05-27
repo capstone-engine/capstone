@@ -282,16 +282,13 @@ static void get_op_access(cs_struct *h, unsigned int id, uint8_t *access, uint64
 	// find the non-zero last entry
 	for(count = 0; arr[count]; count++);
 
-	// mark the end of array
-	access[count] = 0;
-
 	if (count == 0)
 		return;
 
 	// copy in reverse order this access array from Intel syntax -> AT&T syntax
 	count--;
 	for(i = 0; i <= count; i++) {
-		if (arr[count -1] != CS_AC_IGNORE)
+		if (arr[count - i] != CS_AC_IGNORE)
 			access[i] = arr[count - i];
 		else
 			access[i] = 0;

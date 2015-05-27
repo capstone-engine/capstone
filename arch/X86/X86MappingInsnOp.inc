@@ -4187,19 +4187,19 @@
 },
 {	/* X86_LEA16r, X86_INS_LEA: lea{w}	$dst, $src */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_LEA32r, X86_INS_LEA: lea{l}	$dst, $src */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_LEA64_32r, X86_INS_LEA: lea{l}	$dst, $src */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_LEA64r, X86_INS_LEA: lea{q}	$dst, $src */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_LEAVE, X86_INS_LEAVE: leave */
 	0,
