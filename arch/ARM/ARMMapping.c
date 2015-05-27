@@ -768,6 +768,8 @@ static name_map group_name_maps[] = {
 	// generic groups
 	{ ARM_GRP_INVALID, NULL },
 	{ ARM_GRP_JUMP,	"jump" },
+	{ ARM_GRP_CALL,	"call" },
+	{ ARM_GRP_INT,	"int" },
 	{ ARM_GRP_PRIVILEGE, "privilege" },
 
 	// architecture-specific groups
