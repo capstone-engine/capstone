@@ -1,6 +1,6 @@
 This directory contains some test code to show how to use Capstone API.
 
-- test.c
+- test_basic.c
   This code shows the most simple form of API where we only want to get basic
   information out of disassembled instruction, such as address, mnemonic and
   operand string.

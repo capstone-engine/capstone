@@ -26,6 +26,8 @@ option(CAPSTONE_X86_REDUCE "x86 with reduce instruction sets to minimize library
 option(CAPSTONE_X86_ATT_DISABLE "Disable x86 AT&T syntax" OFF)
 option(CAPSTONE_OSXKERNEL_SUPPORT "Support to embed Capstone into OS X Kernel extensions" OFF)
 
+enable_testing()
+
 if (CAPSTONE_BUILD_DIET)
     add_definitions(-DCAPSTONE_DIET)
 endif ()
@@ -80,7 +82,7 @@ set(HEADERS_COMMON
     )
 
 
-set(TEST_SOURCES test.c test_detail.c test_skipdata.c test_iter.c test_customized_mnem.c)
+set(TEST_SOURCES test_basic.c test_detail.c test_skipdata.c test_iter.c test_customized_mnem.c)
 
 ## architecture support
 if (CAPSTONE_ARM_SUPPORT)
@@ -357,12 +359,14 @@ if (CAPSTONE_BUILD_TESTS)
         STRING(REGEX REPLACE ".c$" "" TBIN ${TSRC})
         add_executable(${TBIN} "tests/${TSRC}")
         target_link_libraries(${TBIN} ${default-target})
+        add_test(NAME "capstone_${TBIN}" COMMAND ${TBIN})
     endforeach ()
     if (CAPSTONE_ARM_SUPPORT)
         set(ARM_REGRESS_TEST test_arm_regression.c)
         STRING(REGEX REPLACE ".c$" "" ARM_REGRESS_BIN ${ARM_REGRESS_TEST})
         add_executable(${ARM_REGRESS_BIN} "suite/arm/${ARM_REGRESS_TEST}")
         target_link_libraries(${ARM_REGRESS_BIN} ${default-target})
+        add_test(NAME "capstone_${ARM_REGRESS_BIN}" COMMAND ${ARM_REGRESS_BIN})
     endif()
 endif ()
 
