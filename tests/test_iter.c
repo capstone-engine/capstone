@@ -193,7 +193,7 @@ static void test()
 		err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
 		if (err) {
 			printf("Failed on cs_open() with error returned: %u\n", err);
-			continue;
+			abort();
 		}
 
 		if (platforms[i].opt_type)
