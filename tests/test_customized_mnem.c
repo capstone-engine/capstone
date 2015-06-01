@@ -35,8 +35,10 @@ static void print_insn(csh handle)
 		printf("\t%s\t%s\n", insn[0].mnemonic, insn[0].op_str); 
 		// Free memory allocated by cs_disasm()
 		cs_free(insn, count);
-	} else
+	} else {
 		printf("ERROR: Failed to disasm given code!\n");
+		abort();
+	}
 }
 
 static void test()
@@ -51,7 +53,7 @@ static void test()
 	err = cs_open(CS_ARCH_X86, CS_MODE_32, &handle);
 	if (err) {
 		printf("Failed on cs_open() with error returned: %u\n", err);
-		return;
+		abort();
 	}
 
 	// 1. Print out the instruction in default setup.

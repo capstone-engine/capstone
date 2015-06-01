@@ -196,7 +196,7 @@ static void test()
 		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
 		if (err) {
 			printf("Failed on cs_open() with error returned: %u\n", err);
-			continue;
+			abort();
 		}
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
@@ -223,6 +223,7 @@ static void test()
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code: ", platforms[i].code, platforms[i].size);
 			printf("ERROR: Failed to disasm given code!\n");
+			abort();
 		}
 
 		printf("\n");
