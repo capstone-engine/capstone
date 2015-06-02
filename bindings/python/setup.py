@@ -6,6 +6,7 @@ import shutil
 import stat
 import sys
 
+from site import getusersitepackages
 from distutils import log
 from distutils import dir_util
 from distutils.command.build_clib import build_clib
@@ -25,7 +26,11 @@ if os.path.exists(PATH_LIB64) and os.path.exists(PATH_LIB32):
 SYSTEM = sys.platform
 VERSION = '4.0'
 
-SITE_PACKAGES = os.path.join(get_python_lib(), "capstone")
+if "--user" in sys.argv:
+    SITE_PACKAGES = os.path.join(getusersitepackages(), "capstone")
+else:
+    SITE_PACKAGES = os.path.join(get_python_lib(), "capstone")
+
 
 SETUP_DATA_FILES = []
 
