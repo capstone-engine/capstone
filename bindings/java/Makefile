@@ -42,7 +42,7 @@ endif
 
 tests: capstone_class jna
 	@mkdir -p $(OBJDIR)
-	javac -d $(OBJDIR) -classpath "$(JNA):$(BLDIR)/capstone.jar" Test.java\
+	javac -d $(OBJDIR) -classpath "$(JNA):$(BLDIR)/capstone.jar" TestBasic.java\
 		TestArm.java TestArm64.java TestMips.java TestX86.java TestXcore.java\
 		TestPpc.java TestSparc.java TestSystemz.java
 
@@ -60,7 +60,7 @@ ifdef BUILDDIR
 	rm -rf $(OBJDIR)
 endif
 
-TESTS = test arm arm64 mips ppc sparc systemz x86 xcore
+TESTS = testbasic arm arm64 mips ppc sparc systemz x86 xcore
 check:
 	@for t in $(TESTS); do \
 		echo Check $$t ... ; \

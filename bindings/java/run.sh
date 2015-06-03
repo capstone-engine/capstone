@@ -11,8 +11,8 @@ if [ ! -f ${JNA} ]; then
 fi
 
 case "$1" in
-  "") java -classpath ${JNA}:. Test ;;
-  "test") java -classpath ${JNA}:. Test ;;
+  "") java -classpath ${JNA}:. TestBasic ;;
+  "testbasic") java -classpath ${JNA}:. TestBasic ;;
   "arm") java -classpath ${JNA}:. TestArm ;;
   "arm64") java -classpath ${JNA}:. TestArm64 ;;
   "mips") java -classpath ${JNA}:. TestMips ;;
