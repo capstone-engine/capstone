@@ -31,7 +31,7 @@ typedef void (*GetRegisterAccess_t)(const cs_insn *insn,
 
 // for ARM only
 typedef struct ARM_ITStatus {
-	unsigned char ITStates[128];	// FIXME
+	unsigned char ITStates[8];
 	unsigned int size;
 } ARM_ITStatus;
 
