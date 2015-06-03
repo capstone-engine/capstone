@@ -44,6 +44,10 @@
 
 static bool ITStatus_push_back(ARM_ITStatus *it, char v)
 {
+	if (it->size >= sizeof(it->ITStates)) {
+		// TODO: consider warning user.
+		it->size = 0;
+	}
 	it->ITStates[it->size] = v;
 	it->size++;
 
@@ -730,8 +734,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 		// Nested IT blocks are UNPREDICTABLE.  Must be checked before we add
 		// the Thumb predicate.
 		if (MCInst_getOpcode(MI) == ARM_t2IT && ITStatus_instrInITBlock(&(ud->ITBlock)))
-			result = MCDisassembler_SoftFail;
-
+			return MCDisassembler_SoftFail;
 		Check(&result, AddThumbPredicate(ud, MI));
 
 		// If we find an IT instruction, we need to parse its condition
