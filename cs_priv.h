@@ -26,7 +26,7 @@ typedef char *(*GetRegisterName_t)(unsigned RegNo);
 
 // for ARM only
 typedef struct ARM_ITStatus {
-	unsigned char ITStates[128];	// FIXME
+	unsigned char ITStates[8];
 	unsigned int size;
 } ARM_ITStatus;
 
