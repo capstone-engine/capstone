@@ -59,14 +59,14 @@
 
 This directory contains some test code to show how to use Capstone API.
 
-- test.py
+- test_basic.py
   This code shows the most simple form of API where we only want to get basic
   information out of disassembled instruction, such as address, mnemonic and
   operand string.
 
 - test_lite.py
-  Similarly to test.py, but this code shows how to use disasm_lite(), a lighter
-  method to disassemble binary. Unlike disasm() API (used by test.py), which returns
+  Similarly to test_basic.py, but this code shows how to use disasm_lite(), a lighter
+  method to disassemble binary. Unlike disasm() API (used by test_basic.py), which returns
   CsInsn objects, this API just returns tuples of (address, size, mnemonic, op_str).
 
   The main reason for using this API is better performance: disasm_lite() is at least
