@@ -692,10 +692,13 @@ class Cs(object):
 
     # destructor to be called automatically when object is destroyed.
     def __del__(self):
-        if self.csh and _cs is not None:
-            status = _cs.cs_close(ctypes.byref(self.csh))
-            if status != CS_ERR_OK:
-                raise CsError(status)
+        if self.csh:
+            try:
+                status = _cs.cs_close(ctypes.byref(self.csh))
+                if status != CS_ERR_OK:
+                    raise CsError(status)
+            except: # _cs might be pulled from under our feet
+                pass
 
 
     # def option(self, opt_type, opt_value):
