@@ -711,7 +711,6 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
 				MI->has_imm = true;
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = imm;
-				MI->flat_insn->detail->x86.op_count++;
 
 				if (opsize > 0)
 					MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = opsize;
@@ -719,6 +718,8 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->op1_size;
 				else
 					MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->imm_size;
+
+				MI->flat_insn->detail->x86.op_count++;
 			}
 		}
 	}

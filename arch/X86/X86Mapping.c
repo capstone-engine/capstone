@@ -2544,6 +2544,10 @@ static struct insn_reg insn_regs_att[] = {
 	{ X86_SHLD64mrCL, X86_REG_CL },
 	{ X86_SHRD64mrCL, X86_REG_CL },
 
+	{ X86_OUT8ir, X86_REG_AL },
+	{ X86_OUT16ir, X86_REG_AX },
+	{ X86_OUT32ir, X86_REG_EAX },
+
 #ifndef CAPSTONE_X86_REDUCE
 	{ X86_SKINIT, X86_REG_EAX },
 	{ X86_VMRUN32, X86_REG_EAX },
