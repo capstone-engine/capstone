@@ -257,6 +257,7 @@ static void printInlineJT32(MCInst *MI, int OpNum, SStream *O)
 void XCore_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	printInstruction(MI, O, Info);
+	set_mem_access(MI, false, 0);
 }
 
 #endif
