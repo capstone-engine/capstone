@@ -47213,6 +47213,10 @@ static struct insn_reg insn_regs_att[] = {
 	{ X86_POPGS16, X86_REG_GS },
 	{ X86_POPSS16, X86_REG_SS },
 
+	{ X86_OUT8ir, X86_REG_AL },
+	{ X86_OUT16ir, X86_REG_AX },
+	{ X86_OUT32ir, X86_REG_EAX },
+
 #ifndef CAPSTONE_X86_REDUCE
 	{ X86_SKINIT, X86_REG_EAX },
 	{ X86_INVLPGA32, X86_REG_EAX },
