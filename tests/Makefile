@@ -97,6 +97,8 @@ all: $(BINARY)
 
 clean:
 	rm -rf $(OBJS) $(BINARY) $(TESTDIR)/*.exe $(TESTDIR)/*.static $(OBJDIR)/lib$(LIBNAME).* $(OBJDIR)/$(LIBNAME).*
+	# remove orphan files due to renaming from test.c to test_basic.c
+	rm -rf $(TESTDIR)/test.o $(TESTDIR)/test.exe $(TESTDIR)/test.static $(TESTDIR)/test
 
 $(BINARY): $(OBJS)
 
