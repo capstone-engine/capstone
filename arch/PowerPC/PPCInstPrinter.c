@@ -181,7 +181,7 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 	if (!mnem)
 		mnem = printAliasInstr(MI, O, Info);
 
-	if (mnem) {
+	if ((mnem != NULL) && (strlen(mnem) > 0)) {
 		struct ppc_alias alias;
 		// check to remove the last letter of ('.', '-', '+')
 		if (mnem[strlen(mnem) - 1] == '-' || mnem[strlen(mnem) - 1] == '+' || mnem[strlen(mnem) - 1] == '.')
