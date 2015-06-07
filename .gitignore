@@ -45,7 +45,7 @@ bindings/ocaml/test_xcore
 
 
 # test binaries
-tests/test
+tests/test_basic
 tests/test_detail
 tests/test_iter
 tests/test_arm
