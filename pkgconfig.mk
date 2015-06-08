@@ -6,4 +6,4 @@ PKG_MAJOR = 3
 PKG_MINOR = 0
 
 # version bugfix level. Example: PKG_EXTRA = 1
-PKG_EXTRA = 3
+PKG_EXTRA = 4
