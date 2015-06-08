@@ -121,20 +121,18 @@ static void printModImmOperand(MCInst *MI, unsigned OpNum, SStream *O);
 
 static void printInstSyncBOption(MCInst *MI, unsigned OpNum, SStream *O);
 
+#ifndef CAPSTONE_DIET
 // copy & normalize access info
 static uint8_t get_op_access(cs_struct *h, unsigned int id, unsigned int index)
 {
-#ifndef CAPSTONE_DIET
 	uint8_t *arr = ARM_get_op_access(h, id);
 
 	if (arr[index] == CS_AC_IGNORE)
 		return 0;
 
 	return arr[index];
-#else
-	return 0;
-#endif
 }
+#endif
 
 static void set_mem_access(MCInst *MI, bool status)
 {
