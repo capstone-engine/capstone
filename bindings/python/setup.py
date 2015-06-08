@@ -23,7 +23,7 @@ PKG_NAME = 'capstone'
 if os.path.exists(PATH_LIB64) and os.path.exists(PATH_LIB32):
     PKG_NAME = 'capstone-windows'
 
-VERSION = '3.0.3'
+VERSION = '3.0.4'
 SYSTEM = sys.platform
 
 if "--user" in sys.argv:

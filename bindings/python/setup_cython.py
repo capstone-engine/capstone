@@ -3,7 +3,7 @@ from distutils.extension import Extension
 from distutils.command.install_lib import install_lib as _install
 from Cython.Distutils import build_ext
 
-VERSION = '3.0.3'
+VERSION = '3.0.4'
 
 compile_args = ['-O3', '-fomit-frame-pointer']
 
