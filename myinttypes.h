@@ -1,6 +1,9 @@
 /* Capstone Disassembly Engine */
 /* By Axel Souchet, 2014 */
 
+#ifndef CS_MYINTTYPES_H
+#define CS_MYINTTYPES_H
+
 #if defined(CAPSTONE_HAS_OSXKERNEL) || (defined(_MSC_VER) && _MSC_VER <= 1700)
 // this system does not have inttypes.h
 
@@ -57,4 +60,6 @@ typedef unsigned long long uint64_t;
 
 #else	// this system has inttypes.h by default
 #include <inttypes.h>
+#endif
+
 #endif
