@@ -94,6 +94,7 @@ case "$1" in
   "cygwin-mingw32" ) CROSS=i686-pc-mingw32- build;;
   "cygwin-mingw64" ) CROSS=x86_64-w64-mingw32- build;;
   "cross-android" ) CROSS=arm-linux-androideabi- build;;
+  "cross-android64" ) CROSS=aarch64-linux-gnu- build;;
   "clang" ) CC=clang build;;
   "gcc" ) CC=gcc build;;
   "ios" ) build_iOS;;
