@@ -261,6 +261,8 @@ static DecodeStatus decodeMemRIOperands(MCInst *Inst, uint64_t Imm,
 	uint64_t Disp = Imm & 0xFFFF;
 
 	// assert(Base < 32 && "Invalid base register");
+	if (Base >= 32)
+		return MCDisassembler_Fail;
 
 	switch (MCInst_getOpcode(Inst)) {
 		default: break;
