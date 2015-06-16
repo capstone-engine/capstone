@@ -1711,7 +1711,7 @@ static DecodeStatus DecodeRegListOperand(MCInst *Inst, unsigned Insn,
 		return MCDisassembler_Fail;
 
 	RegNum = RegLst & 0xf;
-	for (i = 0; i < RegNum; i++)
+	for (i = 0; i < MIN(RegNum, ARR_SIZE(Regs)); i++)
 		MCOperand_CreateReg0(Inst, Regs[i]);
 
 	if (RegLst & 0x10)
