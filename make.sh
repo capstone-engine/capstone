@@ -112,6 +112,7 @@ fi
 case "$1" in
   "" ) build;;
   "default" ) build;;
+  "debug" ) CAPSTONE_USE_SYS_DYN_MEM=yes CAPSTONE_STATIC=yes CFLAGS='-O0 -g -fsanitize=address' LDFLAGS='-fsanitize=address' build;;
   "install" ) install;;
   "uninstall" ) uninstall;;
   "nix32" ) CFLAGS=-m32 LDFLAGS=-m32 build;;
