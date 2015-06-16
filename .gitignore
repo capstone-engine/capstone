@@ -87,5 +87,8 @@ xcode/Capstone.xcodeproj/project.xcworkspace/xcuserdata
 # suite/
 test_arm_regression
 test_arm_regression.o
+fuzz_harness
+fuzz_harness.o
+
 
 *.s
