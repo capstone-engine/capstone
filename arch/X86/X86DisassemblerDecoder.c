@@ -437,7 +437,7 @@ static int readPrefixes(struct InternalInstruction *insn)
 
 		/* If we fail reading prefixes, just stop here and let the opcode reader deal with it */
 		if (consumeByte(insn, &byte))
-			break;
+			return -1;
 
 		if (insn->readerCursor - 1 == insn->startLocation
 				&& (byte == 0xf2 || byte == 0xf3)) {
