@@ -441,6 +441,9 @@ def copy_ctypes(src):
     """Returns a new ctypes object which is a bitwise copy of an existing one"""
     dst = type(src)()
     ctypes.pointer(dst)[0] = src
+    if hasattr(src, "detail"):
+        dst.detail = ctypes.pointer(src.detail._type_())
+        ctypes.pointer(dst.detail[0])[0] = src.detail[0]
     return dst
 
 def _ascii_name_or_default(name, default):
