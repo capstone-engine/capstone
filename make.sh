@@ -30,9 +30,9 @@ function build {
 	${MAKE} clean
 
 	if [ ${CC}x != x ]; then
-		${MAKE} CC=$CC
+		${MAKE} CC=$CC $*
 	else
-		${MAKE}
+		${MAKE} $*
 	fi
 }
 
@@ -109,24 +109,27 @@ if [[ "$(uname)" == *BSD* ]]; then
 	export PREFIX=/usr/local
 fi
 
-case "$1" in
-  "" ) build;;
-  "default" ) build;;
-  "debug" ) CAPSTONE_USE_SYS_DYN_MEM=yes CAPSTONE_STATIC=yes CFLAGS='-O0 -g -fsanitize=address' LDFLAGS='-fsanitize=address' build;;
+TARGET="$1"
+shift
+
+case "$TARGET" in
+  "" ) build $*;;
+  "default" ) build $*;;
+  "debug" ) CAPSTONE_USE_SYS_DYN_MEM=yes CAPSTONE_STATIC=yes CFLAGS='-O0 -g -fsanitize=address' LDFLAGS='-fsanitize=address' build $*;;
   "install" ) install;;
   "uninstall" ) uninstall;;
-  "nix32" ) CFLAGS=-m32 LDFLAGS=-m32 build;;
-  "cross-win32" ) CROSS=i686-w64-mingw32- build;;
-  "cross-win64" ) CROSS=x86_64-w64-mingw32- build;;
-  "cygwin-mingw32" ) CROSS=i686-pc-mingw32- build;;
-  "cygwin-mingw64" ) CROSS=x86_64-w64-mingw32- build;;
-  "cross-android" ) CROSS=arm-linux-androideabi- build;;
-  "cross-android64" ) CROSS=aarch64-linux-gnu- build;;
-  "clang" ) CC=clang build;;
-  "gcc" ) CC=gcc build;;
-  "ios" ) build_iOS;;
-  "ios_armv7" ) build_iOS armv7;;
-  "ios_armv7s" ) build_iOS armv7s;;
-  "ios_arm64" ) build_iOS arm64;;
+  "nix32" ) CFLAGS=-m32 LDFLAGS=-m32 build $*;;
+  "cross-win32" ) CROSS=i686-w64-mingw32- build $*;;
+  "cross-win64" ) CROSS=x86_64-w64-mingw32- build $*;;
+  "cygwin-mingw32" ) CROSS=i686-pc-mingw32- build $*;;
+  "cygwin-mingw64" ) CROSS=x86_64-w64-mingw32- build $*;;
+  "cross-android" ) CROSS=arm-linux-androideabi- build $*;;
+  "cross-android64" ) CROSS=aarch64-linux-gnu- build $*;;
+  "clang" ) CC=clang build $*;;
+  "gcc" ) CC=gcc build $*;;
+  "ios" ) build_iOS $*;;
+  "ios_armv7" ) build_iOS armv7 $*;;
+  "ios_armv7s" ) build_iOS armv7s $*;;
+  "ios_arm64" ) build_iOS arm64 $*;;
   * ) echo "Usage: make.sh [nix32|cross-win32|cross-win64|cygwin-mingw32|cygwin-mingw64|ios|ios_armv7|ios_armv7s|ios_arm64|cross-android|clang|gcc|install|uninstall]"; exit 1;;
 esac
