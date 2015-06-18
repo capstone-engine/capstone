@@ -456,7 +456,8 @@ class CsInsn(object):
         self._cs = cs
         if self._cs._detail and self._raw.id != 0:
             # save detail
-            self._detail = copy_ctypes(self._raw.detail.contents)
+            self._raw.detail = ctypes.pointer(all_info.detail._type_())
+            ctypes.pointer(self._raw.detail[0])[0] = all_info.detail[0]
 
     # return instruction's ID.
     @property
@@ -507,7 +508,7 @@ class CsInsn(object):
             raise CsError(CS_ERR_DIET)
 
         if self._cs._detail:
-            return self._detail.regs_read[:self._detail.regs_read_count]
+            return self._raw.detail.contents.regs_read[:self._raw.detail.contents.regs_read_count]
 
         raise CsError(CS_ERR_DETAIL)
 
@@ -522,7 +523,7 @@ class CsInsn(object):
             raise CsError(CS_ERR_DIET)
 
         if self._cs._detail:
-            return self._detail.regs_write[:self._detail.regs_write_count]
+            return self._raw.detail.contents.regs_write[:self._raw.detail.contents.regs_write_count]
 
         raise CsError(CS_ERR_DETAIL)
 
@@ -537,7 +538,7 @@ class CsInsn(object):
             raise CsError(CS_ERR_DIET)
 
         if self._cs._detail:
-            return self._detail.groups[:self._detail.groups_count]
+            return self._raw.detail.contents.groups[:self._raw.detail.contents.groups_count]
 
         raise CsError(CS_ERR_DETAIL)
 
@@ -545,26 +546,26 @@ class CsInsn(object):
         arch = self._cs.arch
         if arch == CS_ARCH_ARM:
             (self.usermode, self.vector_size, self.vector_data, self.cps_mode, self.cps_flag, self.cc, self.update_flags, \
-            self.writeback, self.mem_barrier, self.operands) = arm.get_arch_info(self._detail.arch.arm)
+            self.writeback, self.mem_barrier, self.operands) = arm.get_arch_info(self._raw.detail.contents.arch.arm) 
         elif arch == CS_ARCH_ARM64:
             (self.cc, self.update_flags, self.writeback, self.operands) = \
-                arm64.get_arch_info(self._detail.arch.arm64)
+                arm64.get_arch_info(self._raw.detail.contents.arch.arm64)
         elif arch == CS_ARCH_X86:
             (self.prefix, self.opcode, self.rex, self.addr_size, \
                 self.modrm, self.sib, self.disp, \
                 self.sib_index, self.sib_scale, self.sib_base, self.xop_cc, self.sse_cc, \
-                self.avx_cc, self.avx_sae, self.avx_rm, self.eflags, self.operands) = x86.get_arch_info(self._detail.arch.x86)
+                self.avx_cc, self.avx_sae, self.avx_rm, self.eflags, self.operands) = x86.get_arch_info(self._raw.detail.contents.arch.x86)
         elif arch == CS_ARCH_MIPS:
-                self.operands = mips.get_arch_info(self._detail.arch.mips)
+                self.operands = mips.get_arch_info(self._raw.detail.contents.arch.mips)
         elif arch == CS_ARCH_PPC:
             (self.bc, self.bh, self.update_cr0, self.operands) = \
-                ppc.get_arch_info(self._detail.arch.ppc)
+                ppc.get_arch_info(self._raw.detail.contents.arch.ppc)
         elif arch == CS_ARCH_SPARC:
-            (self.cc, self.hint, self.operands) = sparc.get_arch_info(self._detail.arch.sparc)
+            (self.cc, self.hint, self.operands) = sparc.get_arch_info(self._raw.detail.contents.arch.sparc)
         elif arch == CS_ARCH_SYSZ:
-            (self.cc, self.operands) = systemz.get_arch_info(self._detail.arch.sysz)
+            (self.cc, self.operands) = systemz.get_arch_info(self._raw.detail.contents.arch.sysz)
         elif arch == CS_ARCH_XCORE:
-            (self.operands) = xcore.get_arch_info(self._detail.arch.xcore)
+            (self.operands) = xcore.get_arch_info(self._raw.detail.contents.arch.xcore)
 
 
     def __getattr__(self, name):
