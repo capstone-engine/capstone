@@ -66,6 +66,7 @@ function build {
 		export LIBARCHS="i386 x86_64"
 	fi
 
+	${MAKE} clean
 
 	if [ ${CC}x != x ]; then
 		${MAKE} CC=$CC $*
@@ -168,5 +169,5 @@ case "$TARGET" in
   "ios_armv7" ) build_iOS armv7 $*;;
   "ios_armv7s" ) build_iOS armv7s $*;;
   "ios_arm64" ) build_iOS arm64 $*;;
-  * ) echo "Usage: make.sh [nix32|cross-win32|cross-win64|cygwin-mingw32|cygwin-mingw64|ios|ios_armv7|ios_armv7s|ios_arm64|cross-android|clang|gcc|install|uninstall]"; exit 1;;
+  * ) echo "Usage: make.sh [nix32|cross-win32|cross-win64|cygwin-mingw32|cygwin-mingw64|ios|ios_armv7|ios_armv7s|ios_arm64|cross-android arm|cross-android arm64|clang|gcc|install|uninstall]"; exit 1;;
 esac
