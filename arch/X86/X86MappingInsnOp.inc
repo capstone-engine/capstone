@@ -1183,7 +1183,7 @@
 },
 {	/* X86_CALL16r, X86_INS_CALL: call{w}	{*}$dst */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, 0 }
 },
 {	/* X86_CALL32m, X86_INS_CALL: call{l}	{*}$dst */
 	0,
@@ -1191,7 +1191,7 @@
 },
 {	/* X86_CALL32r, X86_INS_CALL: call{l}	{*}$dst */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, 0 }
 },
 {	/* X86_CALL64m, X86_INS_CALL: call{q}	{*}$dst */
 	0,
@@ -1203,7 +1203,7 @@
 },
 {	/* X86_CALL64r, X86_INS_CALL: call{q}	{*}$dst */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, 0 }
 },
 {	/* X86_CALLpcrel16, X86_INS_CALL: call{w}	$dst */
 	0,
@@ -3747,7 +3747,7 @@
 },
 {	/* X86_JMP16r, X86_INS_JMP: jmp{w}	{*}$dst */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, 0 }
 },
 {	/* X86_JMP32m, X86_INS_JMP: jmp{l}	{*}$dst */
 	0,
@@ -3755,7 +3755,7 @@
 },
 {	/* X86_JMP32r, X86_INS_JMP: jmp{l}	{*}$dst */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, 0 }
 },
 {	/* X86_JMP64m, X86_INS_JMP: jmp{q}	{*}$dst */
 	0,
@@ -3763,7 +3763,7 @@
 },
 {	/* X86_JMP64r, X86_INS_JMP: jmp{q}	{*}$dst */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, 0 }
 },
 {	/* X86_JMP_1, X86_INS_JMP: jmp	$dst */
 	0,
