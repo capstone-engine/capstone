@@ -63,7 +63,6 @@ set(HEADERS_ENGINE
     MCInstrDesc.h
     MCRegisterInfo.h
     myinttypes.h
-    osxkernel_inttypes.h
     SStream.h
     utils.h
     )
