@@ -490,6 +490,8 @@ static DecodeStatus DecodeINSVE_DF_4(MCInst *MI, uint32_t insn,
 	} //else llvm_unreachable("Invalid encoding");
 
 	//assert(NSize != 0 && RegDecoder != nullptr);
+	if (NSize == 0 || RegDecoder == NULL)
+		return MCDisassembler_Fail;
 
 	if (RegDecoder == NULL)
 		return MCDisassembler_Fail;

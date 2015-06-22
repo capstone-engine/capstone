@@ -588,6 +588,19 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 						SStream_concat(O, "$-%"PRIu64, -imm);
 				}
 				break;
+
+			case X86_INS_AND:
+			case X86_INS_OR:
+			case X86_INS_XOR:
+				// do not print number in negative form
+				if (imm >= 0 && imm <= HEX_THRESHOLD)
+					SStream_concat(O, "$%u", imm);
+				else {
+					imm = arch_masks[MI->op1_size? MI->op1_size : MI->imm_size] & imm;
+					SStream_concat(O, "$0x%"PRIx64, imm);
+				}
+				break;
+
 			case X86_INS_RET:
 				// RET imm16
 				if (imm >= 0 && imm <= HEX_THRESHOLD)
@@ -607,12 +620,14 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
 				MI->has_imm = true;
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = imm;
+
 				if (opsize > 0)
 					MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = opsize;
 				else if (MI->op1_size > 0)
 					MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->op1_size;
 				else
 					MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->imm_size;
+
 				MI->flat_insn->detail->x86.op_count++;
 			}
 		}
