@@ -229,12 +229,6 @@ static insn_map alias_insns[] = {
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
-	{
-		Mips_SUBu, MIPS_INS_NEGU,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { MIPS_GRP_STDENC, 0 }, 0, 0
-#endif
-	},
 };
 
 // given internal insn id, return public instruction info
