@@ -9,6 +9,44 @@ MAKE_JOBS=$((${MAKE_JOBS}+0))
 [ ${MAKE_JOBS} -lt 1 ] && \
   MAKE_JOBS=4
 
+# build Android lib for only one supported architecture
+function build_android {
+  if [ -z "$NDK" ]; then
+    echo "ERROR! Please set \$NDK to point at your Android NDK directory."
+    exit 1
+  fi
+  HOSTOS=$(uname -s | tr 'LD' 'ld')
+  HOSTARCH=$(uname -m)
+
+  TARGARCH="$1"
+  shift
+
+  case "$TARGARCH" in
+    arm)
+      [ -n "$APILEVEL" ] || APILEVEL="android-14"  # default to ICS
+      [ -n "$GCCVER" ] || GCCVER="4.8"
+      CROSS=arm-linux-androideabi-
+      ;;
+    arm64)
+      [ -n "$APILEVEL" ] || APILEVEL="android-21"  # first with arm64
+      [ -n "$GCCVER" ] || GCCVER="4.9"
+      CROSS=aarch64-linux-android-
+      ;;
+
+    *)
+      echo "ERROR! Building for Android on $1 is not currently supported."
+      exit 1
+      ;;
+  esac
+
+  TOOLCHAIN="$NDK/toolchains/$CROSS$GCCVER/prebuilt/$HOSTOS-$HOSTARCH"
+  PLATFORM="$NDK/platforms/$APILEVEL/arch-$TARGARCH"
+
+  ${MAKE} clean
+
+  CROSS="$TOOLCHAIN/bin/$CROSS" CFLAGS="--sysroot=$PLATFORM" LDFLAGS="--sysroot=$PLATFORM" ${MAKE} $*
+}
+
 # build iOS lib for all iDevices, or only specific device
 build_iOS() {
   ${MAKE} clean
@@ -32,7 +70,7 @@ build_iOS() {
 build() {
   [ "$UNAME" = Darwin ] && LIBARCHS="i386 x86_64"
   ${MAKE} clean
-  ${MAKE}
+  ${MAKE} $*
 }
 
 install() {
@@ -83,25 +121,28 @@ fi
 [ -n "${MAKE_JOBS}" ] && MAKE="$MAKE -j${MAKE_JOBS}"
 export CC INSTALL_BIN PREFIX PKGCFGDIR LIBDIRARCH LIBARCHS CFLAGS LDFLAGS
 
-case "$1" in
-  "" ) build;;
-  "default" ) build;;
-  "debug" ) CAPSTONE_USE_SYS_DYN_MEM=yes CAPSTONE_STATIC=yes CFLAGS='-O0 -g -fsanitize=address' LDFLAGS='-fsanitize=address' build;;
+TARGET="$1"
+shift
+
+case "$TARGET" in
+  "" ) build $*;;
+  "default" ) build $*;;
+  "debug" ) CAPSTONE_USE_SYS_DYN_MEM=yes CAPSTONE_STATIC=yes CFLAGS='-O0 -g -fsanitize=address' LDFLAGS='-fsanitize=address' build $*;;
   "install" ) install;;
   "uninstall" ) uninstall;;
-  "nix32" ) CFLAGS=-m32 LDFLAGS=-m32 build;;
-  "cross-win32" ) CROSS=i686-w64-mingw32- build;;
-  "cross-win64" ) CROSS=x86_64-w64-mingw32- build;;
-  "cygwin-mingw32" ) CROSS=i686-pc-mingw32- build;;
-  "cygwin-mingw64" ) CROSS=x86_64-w64-mingw32- build;;
-  "cross-android" ) CROSS=arm-linux-androideabi- build;;
-  "cross-android64" ) CROSS=aarch64-linux-gnu- build;;
-  "clang" ) CC=clang build;;
-  "gcc" ) CC=gcc build;;
-  "ios" ) build_iOS;;
-  "ios_armv7" ) build_iOS armv7;;
-  "ios_armv7s" ) build_iOS armv7s;;
-  "ios_arm64" ) build_iOS arm64;;
+  "nix32" ) CFLAGS=-m32 LDFLAGS=-m32 build $*;;
+  "cross-win32" ) CROSS=i686-w64-mingw32- build $*;;
+  "cross-win64" ) CROSS=x86_64-w64-mingw32- build $*;;
+  "cygwin-mingw32" ) CROSS=i686-pc-mingw32- build $*;;
+  "cygwin-mingw64" ) CROSS=x86_64-w64-mingw32- build $*;;
+  "cross-android" ) build_android $*;;
+  "cross-android64" ) CROSS=aarch64-linux-gnu- build $*;;	# Linux cross build
+  "clang" ) CC=clang build $*;;
+  "gcc" ) CC=gcc build $*;;
+  "ios" ) build_iOS $*;;
+  "ios_armv7" ) build_iOS armv7 $*;;
+  "ios_armv7s" ) build_iOS armv7s $*;;
+  "ios_arm64" ) build_iOS arm64 $*;;
   * )
     echo "Usage: $0 ["`grep '^  "' $0 | cut -d '"' -f 2 | tr "\\n" "|"`"]"
     exit 1;;
