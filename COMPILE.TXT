@@ -137,8 +137,11 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 (5) Cross-compile for Android
 
   To cross-compile for Android (smartphone/tablet), Android NDK is required.
+  NOTE: Only ARM and ARM64 are currently supported.
 
-	$ ./make.sh cross-android
+       $ NDK=/android/android-ndk-r10e ./make.sh cross-android arm
+       or
+       $ NDK=/android/android-ndk-r10e ./make.sh cross-android arm64
 
   Resulted files libcapstone.so, libcapstone.a & tests/test* can then
   be used on Android devices.

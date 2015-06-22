@@ -9213,53 +9213,10 @@ static insn_map insns[] = {
 	},
 };
 
-static insn_map alias_insns[] = {
-	{
-		(unsigned short)-2, MIPS_INS_NOP,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		Mips_SUBu, MIPS_INS_NEGU,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { MIPS_GRP_STDENC, 0 }, 0, 0
-#endif
-	},
-};
-
 // given internal insn id, return public instruction info
 void Mips_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
 	unsigned int i;
-
-	// consider alias insn first
-	for (i = 0; i < ARR_SIZE(alias_insns); i++) {
-		if (alias_insns[i].id == id) {
-			insn->id = alias_insns[i].mapid;
-
-			if (h->detail) {
-#ifndef CAPSTONE_DIET
-				memcpy(insn->detail->regs_read, alias_insns[i].regs_use, sizeof(alias_insns[i].regs_use));
-				insn->detail->regs_read_count = (uint8_t)count_positive(alias_insns[i].regs_use);
-
-				memcpy(insn->detail->regs_write, alias_insns[i].regs_mod, sizeof(alias_insns[i].regs_mod));
-				insn->detail->regs_write_count = (uint8_t)count_positive(alias_insns[i].regs_mod);
-
-				memcpy(insn->detail->groups, alias_insns[i].groups, sizeof(alias_insns[i].groups));
-				insn->detail->groups_count = (uint8_t)count_positive(alias_insns[i].groups);
-
-				if (alias_insns[i].branch || alias_insns[i].indirect_branch) {
-					// this insn also belongs to JUMP group. add JUMP group
-					insn->detail->groups[insn->detail->groups_count] = MIPS_GRP_JUMP;
-					insn->detail->groups_count++;
-				}
-
-#endif
-			}
-			return;
-		}
-	}
 
 	i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
 	if (i != 0) {

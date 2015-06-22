@@ -22,6 +22,7 @@
 
 # python
 bindings/python/build/
+bindings/python/capstone.egg-info/
 *.pyc
 
 # java
@@ -87,5 +88,8 @@ xcode/Capstone.xcodeproj/project.xcworkspace/xcuserdata
 # suite/
 test_arm_regression
 test_arm_regression.o
+fuzz_harness
+fuzz_harness.o
+
 
 *.s
