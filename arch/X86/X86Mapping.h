@@ -68,4 +68,7 @@ void X86_reg_access(const cs_insn *insn,
 		cs_regs regs_read, uint8_t *regs_read_count,
 		cs_regs regs_write, uint8_t *regs_write_count);
 
+// given the instruction id, return the size of its immediate operand (or 0)
+int X86_immediate_size(unsigned int id);
+
 #endif
