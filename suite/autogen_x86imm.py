@@ -16,7 +16,7 @@ for line in f.readlines():
            break
        if name.endswith("_DB"): # pseudo instruction
            continue
-       if "BEXTR" in name:  # exception
+       if "_LOCK_" in name or "BEXTR" in name:  # exception
            continue
        if name.startswith("X86_"):  # instruction
            if name.endswith("i8") or "i8_" in name:
