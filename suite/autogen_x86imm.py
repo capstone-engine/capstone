@@ -19,7 +19,52 @@ for line in f.readlines():
        if "_LOCK_" in name or "BEXTR" in name:  # exception
            continue
        if name.startswith("X86_"):  # instruction
-           if name.endswith("i8") or "i8_" in name:
+           if name.endswith("16mi8"):
+               f2.write("{2, %s},\n" %name)
+           elif name.endswith("16ri8"):
+               f2.write("{2, %s},\n" %name)
+           elif name.endswith("32ri8"):
+               f2.write("{4, %s},\n" %name)
+           elif name.endswith("32mi8"):
+               f2.write("{4, %s},\n" %name)
+           elif name.endswith("64i32"):
+               f2.write("{8, %s},\n" %name)
+           elif name.endswith("64mi32"):
+               f2.write("{8, %s},\n" %name)
+           elif name.endswith("64ri32"):
+               f2.write("{8, %s},\n" %name)
+           elif name.endswith("64ri8"):
+               f2.write("{8, %s},\n" %name)
+           elif name.endswith("64mi8"):
+               f2.write("{8, %s},\n" %name)
+           elif name.endswith("16rmi8"):
+               f2.write("{2, %s},\n" %name)
+           elif name.endswith("32rmi8"):
+               f2.write("{4, %s},\n" %name)
+           elif name.endswith("16rri8"):
+               f2.write("{2, %s},\n" %name)
+           elif name.endswith("32rri8"):
+               f2.write("{4, %s},\n" %name)
+           elif name.endswith("64rmi8"):
+               f2.write("{8, %s},\n" %name)
+           elif name.endswith("64rmi32"):
+               f2.write("{8, %s},\n" %name)
+           elif name.endswith("64rri32"):
+               f2.write("{8, %s},\n" %name)
+           elif name.endswith("64rri8"):
+               f2.write("{8, %s},\n" %name)
+           elif name.endswith("32ri64"):    # special case
+               f2.write("{8, %s},\n" %name)
+           elif name.endswith("16i8"):    # special case
+               f2.write("{2, %s},\n" %name)
+           elif name.endswith("32i8"):    # special case
+               f2.write("{4, %s},\n" %name)
+           elif name.endswith("64i16"):    # special case
+               f2.write("{8, %s},\n" %name)
+           elif name.endswith("64i8"):    # special case
+               f2.write("{8, %s},\n" %name)
+
+           elif name.endswith("i8") or "i8_" in name:
                f2.write("{1, %s},\n" %name)
            elif "8ri" in name or "8mi" in name:
                f2.write("{1, %s},\n" %name)
