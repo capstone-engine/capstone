@@ -68,7 +68,7 @@ function build {
 
 	${MAKE} clean
 
-	if [ ${CC}x != x ]; then
+	if [ -z "${CC}" ]; then
 		${MAKE} CC=$CC $*
 	else
 		${MAKE} $*
