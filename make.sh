@@ -68,8 +68,8 @@ function build {
 
 	${MAKE} clean
 
-	if [ ${CC}x != x ]; then
-		${MAKE} CC=$CC $*
+	if [ -n "$CC" ]; then
+		${MAKE} CC="$CC" $*
 	else
 		${MAKE} $*
 	fi
@@ -101,14 +101,14 @@ function install {
 		fi
 	else	# not OSX
 		if test -d /usr/lib64; then
-			if [ ${CC}x != x ]; then
-				${MAKE} LIBDIRARCH=lib64 CC=$CC install
+			if [ -n "$CC" ]; then
+				${MAKE} LIBDIRARCH=lib64 CC="$CC" install
 			else
 				${MAKE} LIBDIRARCH=lib64 install
 			fi
 		else
-			if [ ${CC}x != x ]; then
-				${MAKE} CC=$CC install
+			if [ -n "$CC" ]; then
+				${MAKE} CC="$CC" install
 			else
 				${MAKE} install
 			fi
