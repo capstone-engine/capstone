@@ -3,7 +3,7 @@ project(capstone)
 
 set(VERSION_MAJOR 3)
 set(VERSION_MINOR 0)
-set(VERSION_PATCH 3)
+set(VERSION_PATCH 4)
 
 # to configure the options specify them in in the command line or change them in the cmake UI.
 # Don't edit the makefile!
