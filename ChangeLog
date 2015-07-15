@@ -1,6 +1,55 @@
 This file details the changelog of Capstone.
 
 ---------------------------------
+Version 3.0.4: July, 2015
+
+
+[ Library ]
+
+- Improve cross-compile for Android using Android NDK.
+- Support cross-compile for AArch64 Android (with Linux GCC).
+- Removed osxkernel_inttypes.h that is incompatible with BSD license.
+- Make it possible to compile with CC having a space inside (like "ccache gcc").
+
+
+[ X86 ]
+
+- Fix a null pointer dereference bug on handling code with special prefixes.
+- Properly handle AL/AX/EAX operand for OUT instruction in AT&T syntax.
+- Print immediate operand in positive form in some algorithm instructions.
+- Properly decode some SSE instructions.
+
+
+[ PowerPC ]
+
+- Fixed a memory corruption bug.
+- Fixed a memory corruption bug for the engine built in DIET mode.
+
+
+[ Mips ]
+
+- Fixed instruction ID of SUBU instruction.
+- Fixed a memory corruption bug.
+
+
+[ Arm ]
+
+- Fixed a memory corruption bug on IT instruction.
+
+
+[ XCore ]
+
+- Fixed a memory corruption bug when instruction has a memory operand.
+
+
+[ Python ]
+
+- Support Virtualenv.
+- setup.py supports option --user if not in a virtualenv to allow for local usage.
+- Properly handle the destruction of Cs object in the case the shared library
+  was already unloaded.
+
+---------------------------------
 Version 3.0.3: May 08th, 2015
 
 
