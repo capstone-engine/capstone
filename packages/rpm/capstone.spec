@@ -1,6 +1,6 @@
 Name:           capstone
-Version:        3.0.3
-Release:        2%{?dist}
+Version:        3.0.4
+Release:        2
 Summary:        A lightweight multi-platform, multi-architecture disassembly framework
 
 License:        BSD
@@ -113,7 +113,12 @@ make check LD_LIBRARY_PATH="`pwd`"
 
 
 %files
+# %license does not work for RHEL<7
+%if 0%{?rhel} || 0%{?fedora} < 21
+%doc LICENSE.TXT LICENSE_LLVM.TXT
+%else
 %license LICENSE.TXT LICENSE_LLVM.TXT
+%endif # %license workarond for RHEL<7
 %doc README ChangeLog
 %{_libdir}/*.so.*
 
@@ -136,6 +141,12 @@ make check LD_LIBRARY_PATH="`pwd`"
 %{_javadir}/
 
 %changelog
+* Thu Jul 16 2015 Stefan Cornelius <scorneli@redhat.com> - 3.0.4-2
+- Fix EPEL6 build problems
+
+* Wed Jul 15 2015 Stefan Cornelius <scorneli@redhat.com> - 3.0.4-1
+- new version 3.0.4. Includes security fixes.
+
 * Tue May 12 2015 Stefan Cornelius <scorneli@redhat.com> - 3.0.3-2
 - Addressed issues found during package review.
 
