@@ -380,7 +380,7 @@ typedef struct cs_arm64 {
 	bool update_flags;	// does this insn update flags?
 	bool writeback;	// does this insn request writeback? 'True' means 'yes'
 
-	// Number of operands of this instruction, 
+	// Number of operands of this instruction,
 	// or 0 when instruction has no operand.
 	uint8_t op_count;
 
@@ -1136,6 +1136,7 @@ typedef enum arm64_insn_group {
 	ARM64_GRP_JUMP,	// = CS_GRP_JUMP
 	ARM64_GRP_CALL,
 	ARM64_GRP_RET,
+	ARM64_GRP_INT,
 	ARM64_GRP_PRIVILEGE = 6, // = CS_GRP_PRIVILEGE
 
 	//> Architecture-specific groups

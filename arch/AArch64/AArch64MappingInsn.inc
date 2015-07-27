@@ -11566,7 +11566,7 @@
 {
 	AArch64_SVC, ARM64_INS_SVC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0, 0 }, { ARM64_REG_LR, 0 }, { ARM64_GRP_INT, 0 }, 0, 0
 #endif
 },
 {
