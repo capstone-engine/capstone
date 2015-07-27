@@ -70,11 +70,17 @@ LIBDIRARCH ?= lib
 LIBDIR = $(DESTDIR)$(PREFIX)/$(LIBDIRARCH)
 
 LIBDATADIR = $(LIBDIR)
+
+# Don't redefine $LIBDATADIR when global environment variable
+# USE_GENERIC_LIBDATADIR is set. This is used by the pkgsrc framework.
+
+ifndef USE_GENERIC_LIBDATADIR
 ifeq ($(UNAME_S), FreeBSD)
 LIBDATADIR = $(DESTDIR)$(PREFIX)/libdata
 endif
 ifeq ($(UNAME_S), DragonFly)
 LIBDATADIR = $(DESTDIR)$(PREFIX)/libdata
+endif
 endif
 
 INSTALL_BIN ?= install
@@ -463,4 +469,3 @@ define generate-pkgcfg
 	echo 'Libs: -L$${libdir} -lcapstone' >> $(PKGCFGF)
 	echo 'Cflags: -I$${includedir}' >> $(PKGCFGF)
 endef
-
