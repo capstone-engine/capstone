@@ -10,7 +10,7 @@ MAKE_JOBS=$((${MAKE_JOBS}+0))
   MAKE_JOBS=4
 
 # build Android lib for only one supported architecture
-function build_android {
+build_android() {
   if [ -z "$NDK" ]; then
     echo "ERROR! Please set \$NDK to point at your Android NDK directory."
     exit 1
@@ -122,7 +122,7 @@ fi
 export CC INSTALL_BIN PREFIX PKGCFGDIR LIBDIRARCH LIBARCHS CFLAGS LDFLAGS
 
 TARGET="$1"
-shift
+[ -n "$TARGET" ] && shift
 
 case "$TARGET" in
   "" ) build $*;;
