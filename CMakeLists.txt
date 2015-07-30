@@ -14,14 +14,26 @@ option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
 option(CAPSTONE_BUILD_TESTS "Build tests" ON)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 
-option(CAPSTONE_ARM_SUPPORT "ARM support" ON)
-option(CAPSTONE_ARM64_SUPPORT "ARM64 support" ON)
-option(CAPSTONE_MIPS_SUPPORT "MIPS support" ON)
-option(CAPSTONE_PPC_SUPPORT "PowerPC support" ON)
-option(CAPSTONE_SPARC_SUPPORT "Sparc support" ON)
-option(CAPSTONE_SYSZ_SUPPORT "SystemZ support" ON)
-option(CAPSTONE_XCORE_SUPPORT "XCore support" ON)
-option(CAPSTONE_X86_SUPPORT "x86 support" ON)
+set(SUPPORTED_ARCHITECTURES ARM ARM64 MIPS PPC SPARC SYSZ XCORE X86)
+set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 MIPS PowerPC Sparc SystemZ XCore x86)
+
+list(LENGTH SUPPORTED_ARCHITECTURES count)
+math(EXPR count "${count}-1")
+# create options controlling whether support for a particular architecture is needed
+foreach(i RANGE ${count})
+  list(GET SUPPORTED_ARCHITECTURES ${i} supported_architecture)
+  list(GET SUPPORTED_ARCHITECTURE_LABELS ${i} supported_architecture_label)
+  option("CAPSTONE_${supported_architecture}_SUPPORT" "${supported_architecture_label} support" ON)
+endforeach(i)
+
+# propagate achitecture support variables to preprocessor
+foreach(supported_architecture SUPPORTED_ARCHITECTURES)
+  set(option_name "CAPSTONE_${supported_architecture}_SUPPORT")
+  if(${option_name})
+    add_definitions("-${option_name}")
+  endif()
+endforeach(supported_architecture)
+
 option(CAPSTONE_X86_REDUCE "x86 with reduce instruction sets to minimize library" OFF)
 option(CAPSTONE_X86_ATT_DISABLE "Disable x86 AT&T syntax" OFF)
 option(CAPSTONE_OSXKERNEL_SUPPORT "Support to embed Capstone into OS X Kernel extensions" OFF)
@@ -81,7 +93,7 @@ set(HEADERS_COMMON
     )
 
 
-set(TEST_SOURCES test_basic.c test_detail.c test_skipdata.c test_iter.c test_customized_mnem.c)
+set(TEST_SOURCES test_basic.c test_detail.c test_skipdata.c test_iter.c)
 
 ## architecture support
 if (CAPSTONE_ARM_SUPPORT)
@@ -212,7 +224,7 @@ if (CAPSTONE_X86_SUPPORT)
     if (NOT CAPSTONE_BUILD_DIET)
         set(SOURCES_X86 ${SOURCES_X86} arch/X86/X86ATTInstPrinter.c)
     endif ()
-    set(TEST_SOURCES ${TEST_SOURCES} test_x86.c)
+    set(TEST_SOURCES ${TEST_SOURCES} test_x86.c test_customized_mnem.c)
 endif ()
 
 if (CAPSTONE_SPARC_SUPPORT)
