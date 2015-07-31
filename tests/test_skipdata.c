@@ -30,11 +30,13 @@ static void print_string_hex(unsigned char *str, size_t len)
 	printf("\n");
 }
 
+#ifdef CAPSTONE_ARM_SUPPORT
 static size_t mycallback(const uint8_t *buffer, size_t buffer_size, size_t offset, void *p)
 {
 	// always skip 2 bytes when encountering data
 	return 2;
 }
+#endif
 
 static void test()
 {
@@ -43,15 +45,19 @@ static void test()
 #endif
 #define RANDOM_CODE "\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x00\x07\xf7\xeb\x2a\xff\xff\x7f\x57\xe3\x01\xff\xff\x7f\x57\xeb\x00\xf0\x00\x00\x24\xb2\x4f\x00\x78"
 
+#if defined(CAPSTONE_X86_SUPPORT) || defined(CAPSTONE_ARM_SUPPORT)
 	cs_opt_skipdata skipdata = {
 		// rename default "data" instruction from ".byte" to "db"
 		"db",
 	};
+#endif
 
+#ifdef CAPSTONE_ARM_SUPPORT
 	cs_opt_skipdata skipdata_callback = {
 		"db",
 		&mycallback,
 	};
+#endif
 
 	struct platform platforms[] = {
 #ifdef CAPSTONE_X86_SUPPORT
