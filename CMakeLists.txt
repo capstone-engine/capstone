@@ -27,10 +27,11 @@ foreach(i RANGE ${count})
 endforeach(i)
 
 # propagate achitecture support variables to preprocessor
-foreach(supported_architecture SUPPORTED_ARCHITECTURES)
+foreach(supported_architecture ${SUPPORTED_ARCHITECTURES})
   set(option_name "CAPSTONE_${supported_architecture}_SUPPORT")
   if(${option_name})
-    add_definitions("-${option_name}")
+    message("Enabling ${option_name}")
+    add_definitions("-D${option_name}")
   endif()
 endforeach(supported_architecture)
 
