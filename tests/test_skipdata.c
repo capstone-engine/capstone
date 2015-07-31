@@ -40,46 +40,46 @@ static void test()
 
 	struct platform platforms[] = {
 #ifdef CAPSTONE_X86_SUPPORT
-	{
-		CS_ARCH_X86,
-		CS_MODE_32,
-		(unsigned char*)X86_CODE32,
-		sizeof(X86_CODE32) - 1,
-		"X86 32 (Intel syntax) - Skip data",
-	},
+		{
+			CS_ARCH_X86,
+			CS_MODE_32,
+			(unsigned char*)X86_CODE32,
+			sizeof(X86_CODE32) - 1,
+			"X86 32 (Intel syntax) - Skip data",
+		},
 #endif
 #ifdef CAPSTONE_ARM_SUPPORT
-	{
-		CS_ARCH_ARM,
-		CS_MODE_ARM,
-		(unsigned char*)RANDOM_CODE,
-		sizeof(RANDOM_CODE) - 1,
-		"Arm - Skip data",
-	},
+		{
+			CS_ARCH_ARM,
+			CS_MODE_ARM,
+			(unsigned char*)RANDOM_CODE,
+			sizeof(RANDOM_CODE) - 1,
+			"Arm - Skip data",
+		},
 #endif
 #ifdef CAPSTONE_X86_SUPPORT
-	{
-		CS_ARCH_X86,
-		CS_MODE_32,
-		(unsigned char*)X86_CODE32,
-		sizeof(X86_CODE32) - 1,
-		"X86 32 (Intel syntax) - Skip data with custom mnemonic",
-		0, 0,
-		CS_OPT_SKIPDATA_SETUP,
-		(size_t) &skipdata,
-	},
+		{
+			CS_ARCH_X86,
+			CS_MODE_32,
+			(unsigned char*)X86_CODE32,
+			sizeof(X86_CODE32) - 1,
+			"X86 32 (Intel syntax) - Skip data with custom mnemonic",
+			0, 0,
+			CS_OPT_SKIPDATA_SETUP,
+			(size_t) &skipdata,
+		},
 #endif
 #ifdef CAPSTONE_ARM_SUPPORT
-	{
-		CS_ARCH_ARM,
-		CS_MODE_ARM,
-		(unsigned char*)RANDOM_CODE,
-		sizeof(RANDOM_CODE) - 1,
-		"Arm - Skip data with callback",
-		0, 0,
-		CS_OPT_SKIPDATA_SETUP,
-		(size_t) &skipdata_callback,
-	},
+		{
+			CS_ARCH_ARM,
+			CS_MODE_ARM,
+			(unsigned char*)RANDOM_CODE,
+			sizeof(RANDOM_CODE) - 1,
+			"Arm - Skip data with callback",
+			0, 0,
+			CS_OPT_SKIPDATA_SETUP,
+			(size_t) &skipdata_callback,
+		},
 #endif
 	};
 
