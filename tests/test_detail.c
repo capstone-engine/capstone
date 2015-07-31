@@ -62,162 +62,162 @@ static void test()
 
 	struct platform platforms[] = {
 #ifdef CAPSTONE_X86_SUPPORT
-    {
-        CS_ARCH_X86,
-        CS_MODE_16,
-        (unsigned char *)X86_CODE16,
-        sizeof(X86_CODE32) - 1,
-        "X86 16bit (Intel syntax)"
-    },
-    {
-        CS_ARCH_X86,
-        CS_MODE_32,
-        (unsigned char *)X86_CODE32,
-        sizeof(X86_CODE32) - 1,
-        "X86 32bit (ATT syntax)",
-        CS_OPT_SYNTAX,
-        CS_OPT_SYNTAX_ATT,
-    },
-    {
-        CS_ARCH_X86,
-        CS_MODE_32,
-        (unsigned char *)X86_CODE32,
-        sizeof(X86_CODE32) - 1,
-        "X86 32 (Intel syntax)"
-    },
-    {
-        CS_ARCH_X86,
-        CS_MODE_64,
-        (unsigned char *)X86_CODE64,
-        sizeof(X86_CODE64) - 1,
-        "X86 64 (Intel syntax)"
-    },
+	{
+		CS_ARCH_X86,
+		CS_MODE_16,
+		(unsigned char *)X86_CODE16,
+		sizeof(X86_CODE32) - 1,
+		"X86 16bit (Intel syntax)"
+	},
+	{
+		CS_ARCH_X86,
+		CS_MODE_32,
+		(unsigned char *)X86_CODE32,
+		sizeof(X86_CODE32) - 1,
+		"X86 32bit (ATT syntax)",
+		CS_OPT_SYNTAX,
+		CS_OPT_SYNTAX_ATT,
+	},
+	{
+		CS_ARCH_X86,
+		CS_MODE_32,
+		(unsigned char *)X86_CODE32,
+		sizeof(X86_CODE32) - 1,
+		"X86 32 (Intel syntax)"
+	},
+	{
+		CS_ARCH_X86,
+		CS_MODE_64,
+		(unsigned char *)X86_CODE64,
+		sizeof(X86_CODE64) - 1,
+		"X86 64 (Intel syntax)"
+	},
 #endif
 #ifdef CAPSTONE_ARM_SUPPORT
-    {
-        CS_ARCH_ARM,
-        CS_MODE_ARM,
-        (unsigned char *)ARM_CODE,
-        sizeof(ARM_CODE) - 1,
-        "ARM"
-    },
-    {
-        CS_ARCH_ARM,
-        CS_MODE_THUMB,
-        (unsigned char *)THUMB_CODE2,
-        sizeof(THUMB_CODE2) - 1,
-        "THUMB-2"
-    },
-    {
-        CS_ARCH_ARM,
-        CS_MODE_ARM,
-        (unsigned char *)ARM_CODE2,
-        sizeof(ARM_CODE2) - 1,
-        "ARM: Cortex-A15 + NEON"
-    },
-    {
-        CS_ARCH_ARM,
-        CS_MODE_THUMB,
-        (unsigned char *)THUMB_CODE,
-        sizeof(THUMB_CODE) - 1,
-        "THUMB"
-    },
-    {
-        CS_ARCH_ARM,
-        (cs_mode)(CS_MODE_THUMB + CS_MODE_MCLASS),
-        (unsigned char*)THUMB_MCLASS,
-        sizeof(THUMB_MCLASS) - 1,
-        "Thumb-MClass"
-    },
-    {
-        CS_ARCH_ARM,
-        (cs_mode)(CS_MODE_ARM + CS_MODE_V8),
-        (unsigned char*)ARMV8,
-        sizeof(ARMV8) - 1,
-        "Arm-V8"
-    },
+	{
+		CS_ARCH_ARM,
+		CS_MODE_ARM,
+		(unsigned char *)ARM_CODE,
+		sizeof(ARM_CODE) - 1,
+		"ARM"
+	},
+	{
+		CS_ARCH_ARM,
+		CS_MODE_THUMB,
+		(unsigned char *)THUMB_CODE2,
+		sizeof(THUMB_CODE2) - 1,
+		"THUMB-2"
+	},
+	{
+		CS_ARCH_ARM,
+		CS_MODE_ARM,
+		(unsigned char *)ARM_CODE2,
+		sizeof(ARM_CODE2) - 1,
+		"ARM: Cortex-A15 + NEON"
+	},
+	{
+		CS_ARCH_ARM,
+		CS_MODE_THUMB,
+		(unsigned char *)THUMB_CODE,
+		sizeof(THUMB_CODE) - 1,
+		"THUMB"
+	},
+	{
+		CS_ARCH_ARM,
+		(cs_mode)(CS_MODE_THUMB + CS_MODE_MCLASS),
+		(unsigned char*)THUMB_MCLASS,
+		sizeof(THUMB_MCLASS) - 1,
+		"Thumb-MClass"
+	},
+	{
+		CS_ARCH_ARM,
+		(cs_mode)(CS_MODE_ARM + CS_MODE_V8),
+		(unsigned char*)ARMV8,
+		sizeof(ARMV8) - 1,
+		"Arm-V8"
+	},
 #endif
 #ifdef CAPSTONE_MIPS_SUPPORT
-    {
-        CS_ARCH_MIPS,
-        (cs_mode)(CS_MODE_MIPS32 + CS_MODE_BIG_ENDIAN),
-        (unsigned char *)MIPS_CODE,
-        sizeof(MIPS_CODE) - 1,
-        "MIPS-32 (Big-endian)"
-    },
-    {
-        CS_ARCH_MIPS,
-        (cs_mode)(CS_MODE_MIPS64 + CS_MODE_LITTLE_ENDIAN),
-        (unsigned char *)MIPS_CODE2,
-        sizeof(MIPS_CODE2) - 1,
-        "MIPS-64-EL (Little-endian)"
-    },
-    {
-        CS_ARCH_MIPS,
-        (cs_mode)(CS_MODE_MIPS32R6 + CS_MODE_MICRO + CS_MODE_BIG_ENDIAN),
-        (unsigned char*)MIPS_32R6M,
-        sizeof(MIPS_32R6M) - 1,
-        "MIPS-32R6 | Micro (Big-endian)"
-    },
-    {
-        CS_ARCH_MIPS,
-        (cs_mode)(CS_MODE_MIPS32R6 + CS_MODE_BIG_ENDIAN),
-        (unsigned char*)MIPS_32R6,
-        sizeof(MIPS_32R6) - 1,
-        "MIPS-32R6 (Big-endian)"
-    },
+	{
+		CS_ARCH_MIPS,
+		(cs_mode)(CS_MODE_MIPS32 + CS_MODE_BIG_ENDIAN),
+		(unsigned char *)MIPS_CODE,
+		sizeof(MIPS_CODE) - 1,
+		"MIPS-32 (Big-endian)"
+	},
+	{
+		CS_ARCH_MIPS,
+		(cs_mode)(CS_MODE_MIPS64 + CS_MODE_LITTLE_ENDIAN),
+		(unsigned char *)MIPS_CODE2,
+		sizeof(MIPS_CODE2) - 1,
+		"MIPS-64-EL (Little-endian)"
+	},
+	{
+		CS_ARCH_MIPS,
+		(cs_mode)(CS_MODE_MIPS32R6 + CS_MODE_MICRO + CS_MODE_BIG_ENDIAN),
+		(unsigned char*)MIPS_32R6M,
+		sizeof(MIPS_32R6M) - 1,
+		"MIPS-32R6 | Micro (Big-endian)"
+	},
+	{
+		CS_ARCH_MIPS,
+		(cs_mode)(CS_MODE_MIPS32R6 + CS_MODE_BIG_ENDIAN),
+		(unsigned char*)MIPS_32R6,
+		sizeof(MIPS_32R6) - 1,
+		"MIPS-32R6 (Big-endian)"
+	},
 #endif
 #ifdef CAPSTONE_ARM64_SUPPORT
-    {
-        CS_ARCH_ARM64,
-        CS_MODE_ARM,
-        (unsigned char *)ARM64_CODE,
-        sizeof(ARM64_CODE) - 1,
-        "ARM-64"
-    },
+	{
+		CS_ARCH_ARM64,
+		CS_MODE_ARM,
+		(unsigned char *)ARM64_CODE,
+		sizeof(ARM64_CODE) - 1,
+		"ARM-64"
+	},
 #endif
 #ifdef CAPSTONE_PPC_SUPPORT
-    {
-        CS_ARCH_PPC,
-        CS_MODE_BIG_ENDIAN,
-        (unsigned char*)PPC_CODE,
-        sizeof(PPC_CODE) - 1,
-        "PPC-64"
-    },
+	{
+		CS_ARCH_PPC,
+		CS_MODE_BIG_ENDIAN,
+		(unsigned char*)PPC_CODE,
+		sizeof(PPC_CODE) - 1,
+		"PPC-64"
+	},
 #endif
 #ifdef CAPSTONE_SPARC_SUPPORT
-    {
-        CS_ARCH_SPARC,
-        CS_MODE_BIG_ENDIAN,
-        (unsigned char*)SPARC_CODE,
-        sizeof(SPARC_CODE) - 1,
-        "Sparc"
-    },
-    {
-        CS_ARCH_SPARC,
-        (cs_mode)(CS_MODE_BIG_ENDIAN + CS_MODE_V9),
-        (unsigned char*)SPARCV9_CODE,
-        sizeof(SPARCV9_CODE) - 1,
-        "SparcV9"
-    },
+	{
+		CS_ARCH_SPARC,
+		CS_MODE_BIG_ENDIAN,
+		(unsigned char*)SPARC_CODE,
+		sizeof(SPARC_CODE) - 1,
+		"Sparc"
+	},
+	{
+		CS_ARCH_SPARC,
+		(cs_mode)(CS_MODE_BIG_ENDIAN + CS_MODE_V9),
+		(unsigned char*)SPARCV9_CODE,
+		sizeof(SPARCV9_CODE) - 1,
+		"SparcV9"
+	},
 #endif
 #ifdef CAPSTONE_SYSZ_SUPPORT
-    {
-        CS_ARCH_SYSZ,
-        (cs_mode)0,
-        (unsigned char*)SYSZ_CODE,
-        sizeof(SYSZ_CODE) - 1,
-        "SystemZ"
-    },
+	{
+		CS_ARCH_SYSZ,
+		(cs_mode)0,
+		(unsigned char*)SYSZ_CODE,
+		sizeof(SYSZ_CODE) - 1,
+		"SystemZ"
+	},
 #endif
 #ifdef CAPSTONE_XCORE_SUPPORT
-    {
-        CS_ARCH_XCORE,
-        (cs_mode)0,
-        (unsigned char*)XCORE_CODE,
-        sizeof(XCORE_CODE) - 1,
-        "XCore"
-    },
+	{
+		CS_ARCH_XCORE,
+		(cs_mode)0,
+		(unsigned char*)XCORE_CODE,
+		sizeof(XCORE_CODE) - 1,
+		"XCore"
+	},
 #endif
 	};
 
