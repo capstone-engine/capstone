@@ -70,7 +70,7 @@ def gen(lang):
     print('Generating bindings for', lang)
     for target in include:
         prefix = templ[target]
-        outfile = open(templ['out_file'] %(prefix), 'w')
+        outfile = open(templ['out_file'] %(prefix), 'wb')   # open as binary prevents windows newlines
         outfile.write(templ['header'] % (prefix))
 
         lines = open(INCL_DIR + target).readlines()
