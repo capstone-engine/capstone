@@ -67,6 +67,7 @@ MARKUP = '//>'
 def gen(lang):
     global include, INCL_DIR
     templ = template[lang]
+    print('Generating bindings for', lang)
     for target in include:
         prefix = templ[target]
         outfile = open(templ['out_file'] %(prefix), 'w')
@@ -127,12 +128,16 @@ def gen(lang):
 
 def main():
     try:
-        gen(sys.argv[1])
+        if sys.argv[1] == 'all':
+            for key in template.keys():
+                gen(key)
+        else:
+            gen(sys.argv[1])
     except:
         raise RuntimeError("Unsupported binding %s" % sys.argv[1])
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage:", sys.argv[0], " <bindings: java|python|ocaml>")
+        print("Usage:", sys.argv[0], " <bindings: java|python|ocaml|all>")
         sys.exit(1)
     main()
