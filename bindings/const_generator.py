@@ -87,6 +87,16 @@ def gen(lang):
             if line == '' or line.startswith('//'):
                 continue
 
+            if line.startswith('#define '):
+                line = line[8:]     #cut off define
+                xline = re.split('\s+', line, 1)     #split to at most 2 express
+                if len(xline) != 2:
+                    continue
+                if '(' in xline[0] or ')' in xline[0]:      #does it look like a function
+                    continue
+                xline.insert(1, '=')            # insert an = so the expression below can parse it
+                line = ' '.join(xline)
+
             if not line.startswith(prefix.upper()):
                 continue
 
@@ -96,6 +106,7 @@ def gen(lang):
                 if not t or t.startswith('//'): continue
                 # hacky: remove type cast (uint64_t)
                 t = t.replace('(uint64_t)', '')
+                t = re.sub(r'\((\d+)ULL << (\d+)\)', r'\1 << \2', t)    # (1ULL<<1) to 1 << 1
                 f = re.split('\s+', t)
 
                 if f[0].startswith(prefix.upper()):
