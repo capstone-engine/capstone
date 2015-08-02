@@ -30,6 +30,8 @@ class GroupTest:
 
 arm_dict = {
     ARM_GRP_JUMP: "jump",
+    ARM_GRP_CALL: "call",
+    ARM_GRP_INT: "int",
     ARM_GRP_PRIVILEGE: "privilege",
 
     ARM_GRP_CRYPTO: "crypto",
@@ -70,6 +72,7 @@ arm64_dict = {
     ARM64_GRP_JUMP: "jump",
     ARM64_GRP_CALL: "call",
     ARM64_GRP_RET: "return",
+    ARM64_GRP_INT: "int",
     ARM64_GRP_PRIVILEGE: "privilege",
 
     ARM64_GRP_CRYPTO: "crypto",
