@@ -67,9 +67,10 @@ MARKUP = '//>'
 def gen(lang):
     global include, INCL_DIR
     templ = template[lang]
+    print('Generating bindings for', lang)
     for target in include:
         prefix = templ[target]
-        outfile = open(templ['out_file'] %(prefix), 'w')
+        outfile = open(templ['out_file'] %(prefix), 'wb')   # open as binary prevents windows newlines
         outfile.write(templ['header'] % (prefix))
 
         lines = open(INCL_DIR + target).readlines()
@@ -86,6 +87,16 @@ def gen(lang):
             if line == '' or line.startswith('//'):
                 continue
 
+            if line.startswith('#define '):
+                line = line[8:]     #cut off define
+                xline = re.split('\s+', line, 1)     #split to at most 2 express
+                if len(xline) != 2:
+                    continue
+                if '(' in xline[0] or ')' in xline[0]:      #does it look like a function
+                    continue
+                xline.insert(1, '=')            # insert an = so the expression below can parse it
+                line = ' '.join(xline)
+
             if not line.startswith(prefix.upper()):
                 continue
 
@@ -95,6 +106,7 @@ def gen(lang):
                 if not t or t.startswith('//'): continue
                 # hacky: remove type cast (uint64_t)
                 t = t.replace('(uint64_t)', '')
+                t = re.sub(r'\((\d+)ULL << (\d+)\)', r'\1 << \2', t)    # (1ULL<<1) to 1 << 1
                 f = re.split('\s+', t)
 
                 if f[0].startswith(prefix.upper()):
@@ -127,12 +139,16 @@ def gen(lang):
 
 def main():
     try:
-        gen(sys.argv[1])
+        if sys.argv[1] == 'all':
+            for key in template.keys():
+                gen(key)
+        else:
+            gen(sys.argv[1])
     except:
         raise RuntimeError("Unsupported binding %s" % sys.argv[1])
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage:", sys.argv[0], " <bindings: java|python|ocaml>")
+        print("Usage:", sys.argv[0], " <bindings: java|python|ocaml|all>")
         sys.exit(1)
     main()
