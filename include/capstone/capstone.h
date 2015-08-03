@@ -73,6 +73,7 @@ typedef enum cs_arch {
 	CS_ARCH_SPARC,		// Sparc architecture
 	CS_ARCH_SYSZ,		// SystemZ architecture
 	CS_ARCH_XCORE,		// XCore architecture
+	CS_ARCH_M68K,		// 68K architecture
 	CS_ARCH_MAX,
 	CS_ARCH_ALL = 0xFFFF, // All architectures - for cs_support()
 } cs_arch;
@@ -102,6 +103,12 @@ typedef enum cs_mode {
 	CS_MODE_MIPS32R6 = 1 << 6, // Mips32r6 ISA
 	CS_MODE_V9 = 1 << 4, // SparcV9 mode (Sparc)
 	CS_MODE_QPX = 1 << 4, // Quad Processing eXtensions mode (PPC)
+	CS_MODE_M68K_000 = 1 << 1, // M68K 68000 mode
+	CS_MODE_M68K_010 = 1 << 2, // M68K 68010 mode
+	CS_MODE_M68K_020 = 1 << 3, // M68K 68020 mode
+	CS_MODE_M68K_030 = 1 << 4, // M68K 68030 mode
+	CS_MODE_M68K_040 = 1 << 5, // M68K 68040 mode
+	CS_MODE_M68K_060 = 1 << 6, // M68K 68060 mode
 	CS_MODE_BIG_ENDIAN = 1 << 31,	// big-endian mode
 	CS_MODE_MIPS32 = CS_MODE_32,	// Mips32 ISA (Mips)
 	CS_MODE_MIPS64 = CS_MODE_64,	// Mips64 ISA (Mips)
@@ -232,6 +239,7 @@ typedef struct cs_opt_skipdata {
 
 #include "arm.h"
 #include "arm64.h"
+#include "m68k.h"
 #include "mips.h"
 #include "ppc.h"
 #include "sparc.h"
@@ -255,6 +263,7 @@ typedef struct cs_detail {
 		cs_x86 x86;	// X86 architecture, including 16-bit, 32-bit & 64-bit mode
 		cs_arm64 arm64;	// ARM64 architecture (aka AArch64)
 		cs_arm arm;		// ARM architecture (including Thumb/Thumb2)
+		cs_m68k m68k;	// M68K architecture
 		cs_mips mips;	// MIPS architecture
 		cs_ppc ppc;	// PowerPC architecture
 		cs_sparc sparc;	// Sparc architecture

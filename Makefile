@@ -127,6 +127,19 @@ ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
 endif
 
 
+DEP_M68K =
+DEP_M68K += arch/M68K/M68Kconf.h
+DEP_M68K += arch/M68K/M68Kdasm.h
+DEP_M68K += arch/M68K/M68KDisassembler.h
+
+LIBOBJ_M68K =
+ifneq (,$(findstring m68k,$(CAPSTONE_ARCHS)))
+	CFLAGS += -DCAPSTONE_HAS_M68K
+	LIBOBJ_M68K += $(OBJDIR)/arch/M68K/M68Kdasm.o
+	LIBOBJ_M68K += $(OBJDIR)/arch/M68K/M68KDisassembler.o
+	LIBOBJ_M68K += $(OBJDIR)/arch/M68K/M68KModule.o
+endif
+
 DEP_MIPS =
 DEP_MIPS += arch/Mips/MipsGenAsmWriter.inc
 DEP_MIPS += arch/Mips/MipsGenDisassemblerTables.inc
@@ -254,7 +267,7 @@ endif
 
 LIBOBJ =
 LIBOBJ += $(OBJDIR)/cs.o $(OBJDIR)/utils.o $(OBJDIR)/SStream.o $(OBJDIR)/MCInstrDesc.o $(OBJDIR)/MCRegisterInfo.o
-LIBOBJ += $(LIBOBJ_ARM) $(LIBOBJ_ARM64) $(LIBOBJ_MIPS) $(LIBOBJ_PPC) $(LIBOBJ_SPARC) $(LIBOBJ_SYSZ) $(LIBOBJ_X86) $(LIBOBJ_XCORE)
+LIBOBJ += $(LIBOBJ_ARM) $(LIBOBJ_ARM64) $(LIBOBJ_M68K) $(LIBOBJ_MIPS) $(LIBOBJ_PPC) $(LIBOBJ_SPARC) $(LIBOBJ_SYSZ) $(LIBOBJ_X86) $(LIBOBJ_XCORE)
 LIBOBJ += $(OBJDIR)/MCInst.o
 
 
@@ -361,6 +374,7 @@ $(LIBOBJ): config.mk
 
 $(LIBOBJ_ARM): $(DEP_ARM)
 $(LIBOBJ_ARM64): $(DEP_ARM64)
+$(LIBOBJ_M68K): $(DEP_M68K)
 $(LIBOBJ_MIPS): $(DEP_MIPS)
 $(LIBOBJ_PPC): $(DEP_PPC)
 $(LIBOBJ_SPARC): $(DEP_SPARC)
@@ -443,10 +457,10 @@ dist:
 	git archive --format=zip --prefix=capstone-$(DIST_VERSION)/ $(TAG) > capstone-$(DIST_VERSION).zip
 
 
-TESTS = test test_detail test_arm test_arm64 test_mips test_ppc test_sparc
+TESTS = test test_detail test_arm test_arm64 test_m68k test_mips test_ppc test_sparc
 TESTS += test_systemz test_x86 test_xcore test_iter
 TESTS += test.static test_detail.static test_arm.static test_arm64.static
-TESTS += test_mips.static test_ppc.static test_sparc.static
+TESTS += test_m68k.static test_mips.static test_ppc.static test_sparc.static
 TESTS += test_systemz.static test_x86.static test_xcore.static
 TESTS += test_skipdata test_skipdata.static test_iter.static
 check:
