@@ -5,6 +5,11 @@ set(VERSION_MAJOR 4)
 set(VERSION_MINOR 0)
 set(VERSION_PATCH 0)
 
+if(POLICY CMP0042)
+  # http://www.cmake.org/cmake/help/v3.0/policy/CMP0042.html
+  cmake_policy(SET CMP0042 NEW)
+endif(POLICY CMP0042)
+
 # to configure the options specify them in in the command line or change them in the cmake UI.
 # Don't edit the makefile!
 option(CAPSTONE_BUILD_STATIC_RUNTIME "Embed static runtime" OFF)
