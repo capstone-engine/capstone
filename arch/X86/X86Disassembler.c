@@ -751,6 +751,8 @@ static void update_pub_insn(cs_insn *pub, InternalInstruction *inter, uint8_t *p
 	pub->detail->x86.modrm = inter->orgModRM;
 	pub->detail->x86.sib = inter->sib;
 	pub->detail->x86.disp = inter->displacement;
+	pub->detail->x86.offsets.displacementOffset = inter->displacementOffset;
+	pub->detail->x86.offsets.displacementSize = inter->displacementSize;
 
 	pub->detail->x86.sib_index = x86_map_sib_index(inter->sibIndex);
 	pub->detail->x86.sib_scale = inter->sibScale;

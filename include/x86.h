@@ -199,6 +199,11 @@ typedef struct cs_x86_op {
 		bool avx_zero_opmask;
 } cs_x86_op;
 
+typedef struct x86Offsets {
+	int32_t displacementOffset; //Offset from Instruction->address
+	int32_t displacementSize; //1,2,4,8
+}x86Offsets;
+
 // Instruction structure
 typedef struct cs_x86 {
 	// Instruction prefix, which can be up to 4 bytes.
@@ -255,6 +260,7 @@ typedef struct cs_x86 {
 	uint8_t op_count;
 
 	cs_x86_op operands[8];	// operands for this instruction.
+	x86Offsets offsets;
 } cs_x86;
 
 //> X86 instructions
