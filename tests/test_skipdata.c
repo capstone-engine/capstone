@@ -30,7 +30,7 @@ static void print_string_hex(unsigned char *str, size_t len)
 	printf("\n");
 }
 
-#ifdef CAPSTONE_ARM_SUPPORT
+#ifdef CAPSTONE_HAS_ARM
 static size_t mycallback(const uint8_t *buffer, size_t buffer_size, size_t offset, void *p)
 {
 	// always skip 2 bytes when encountering data
@@ -40,19 +40,19 @@ static size_t mycallback(const uint8_t *buffer, size_t buffer_size, size_t offse
 
 static void test()
 {
-#ifdef CAPSTONE_X86_SUPPORT
+#ifdef CAPSTONE_HAS_X86
 #define X86_CODE32 "\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x00\x91\x92"
 #endif
 #define RANDOM_CODE "\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x00\x07\xf7\xeb\x2a\xff\xff\x7f\x57\xe3\x01\xff\xff\x7f\x57\xeb\x00\xf0\x00\x00\x24\xb2\x4f\x00\x78"
 
-#if defined(CAPSTONE_X86_SUPPORT) || defined(CAPSTONE_ARM_SUPPORT)
+#if defined(CAPSTONE_HAS_X86) || defined(CAPSTONE_HAS_ARM)
 	cs_opt_skipdata skipdata = {
 		// rename default "data" instruction from ".byte" to "db"
 		"db",
 	};
 #endif
 
-#ifdef CAPSTONE_ARM_SUPPORT
+#ifdef CAPSTONE_HAS_ARM
 	cs_opt_skipdata skipdata_callback = {
 		"db",
 		&mycallback,
@@ -60,7 +60,7 @@ static void test()
 #endif
 
 	struct platform platforms[] = {
-#ifdef CAPSTONE_X86_SUPPORT
+#ifdef CAPSTONE_HAS_X86
 		{
 			CS_ARCH_X86,
 			CS_MODE_32,
@@ -79,7 +79,7 @@ static void test()
 			(size_t) &skipdata,
 		},
 #endif
-#ifdef CAPSTONE_ARM_SUPPORT
+#ifdef CAPSTONE_HAS_ARM
 		{
 			CS_ARCH_ARM,
 			CS_MODE_ARM,
