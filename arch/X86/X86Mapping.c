@@ -3055,7 +3055,7 @@ void op_addImm(MCInst *MI, int v)
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = v;
 		// if op_count > 0, then this operand's size is taken from the destination op
-		if (MI->csh->syntax == CS_OPT_SYNTAX_INTEL) {
+		if (MI->csh->syntax != CS_OPT_SYNTAX_ATT) {
 			if (MI->flat_insn->detail->x86.op_count > 0)
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->flat_insn->detail->x86.operands[0].size;
 			else

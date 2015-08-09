@@ -32,7 +32,7 @@ static void test()
 {
 #ifdef CAPSTONE_HAS_X86
 #define X86_CODE16 "\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00"
-#define X86_CODE32 "\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00"
+#define X86_CODE32 "\xba\xcd\xab\x00\x00\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00"
 //#define X86_CODE32 "\x0f\xa7\xc0"	// xstorerng
 #define X86_CODE64 "\x55\x48\x8b\x05\xb8\x13\x00\x00"
 #endif
@@ -105,6 +105,15 @@ static void test()
 			(unsigned char*)X86_CODE32,
 			sizeof(X86_CODE32) - 1,
 			"X86 32 (Intel syntax)"
+		},
+		{
+			CS_ARCH_X86,
+			CS_MODE_32,
+			(unsigned char*)X86_CODE32,
+			sizeof(X86_CODE32) - 1,
+			"X86 32 (MASM syntax)",
+			CS_OPT_SYNTAX,
+			CS_OPT_SYNTAX_MASM,
 		},
 		{
 			CS_ARCH_X86,
