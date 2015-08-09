@@ -51,6 +51,7 @@ __all__ = [
     'CS_OPT_SYNTAX_INTEL',
     'CS_OPT_SYNTAX_ATT',
     'CS_OPT_SYNTAX_NOREGNAME',
+    'CS_OPT_SYNTAX_MASM',
 
     'CS_OPT_DETAIL',
     'CS_OPT_MODE',
@@ -172,6 +173,7 @@ CS_OPT_SYNTAX_DEFAULT = 0    # Default assembly syntax of all platforms (CS_OPT_
 CS_OPT_SYNTAX_INTEL = 1    # Intel X86 asm syntax - default syntax on X86 (CS_OPT_SYNTAX, CS_ARCH_X86)
 CS_OPT_SYNTAX_ATT = 2      # ATT asm syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
 CS_OPT_SYNTAX_NOREGNAME = 3   # Asm syntax prints register name with only number - (CS_OPT_SYNTAX, CS_ARCH_PPC, CS_ARCH_ARM)
+CS_OPT_SYNTAX_MASM = 4      # MASM syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
 
 # Capstone error type
 CS_ERR_OK = 0      # No error: everything was fine
@@ -188,6 +190,7 @@ CS_ERR_DIET = 10   # Information irrelevant in diet engine
 CS_ERR_SKIPDATA = 11 # Access irrelevant data for "data" instruction in SKIPDATA mode
 CS_ERR_X86_ATT = 12 # X86 AT&T syntax is unsupported (opt-out at compile time)
 CS_ERR_X86_INTEL = 13 # X86 Intel syntax is unsupported (opt-out at compile time)
+CS_ERR_X86_MASM = 14 # X86 Intel syntax is unsupported (opt-out at compile time)
 
 # query id for cs_support()
 CS_SUPPORT_DIET = CS_ARCH_ALL + 1
