@@ -102,7 +102,7 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;
 			case X86_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%"PRIx64 "\n", i, op->imm);
+				printf("\t\toperands[%u].type: IMM = 0x%"PRIx64 " OFFSET:%d\n", i, op->imm,x86->offsets.imm_offset);
 				break;
 			case X86_OP_FP:
 				printf("\t\toperands[%u].type: FP = %f\n", i, op->fp);
@@ -148,7 +148,7 @@ static void test()
 //#define X86_CODE32 "\xa1\x13\x48\x6d\x3a\x8b\x81\x23\x01\x00\x00\x8b\x84\x39\x23\x01\x00\x00"
 //#define X86_CODE32 "\xb4\xc6"	// mov	ah, 0x6c
 //#define X86_CODE32 "\x77\x04"	// ja +6
-#define X86_CODE64 "\x55\x48\x8b\x05\xb8\x13\x00\x00"
+#define X86_CODE64 "\x55\x48\x8b\x05\xb8\x13\x00\x00\xFF\x25\xEF\xBE\xAD\xDE\xE8\x4C\x01\x00\x00\x48\x83\xEC\x20"
 //#define X86_CODE64 "\xe9\x79\xff\xff\xff"	// jmp 0xf7e
 
 #define X86_CODE16 "\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x05\x23\x01\x00\x00\x36\x8b\x84\x91\x23\x01\x00\x00\x41\x8d\x84\x39\x89\x67\x00\x00\x8d\x87\x89\x67\x00\x00\xb4\xc6"
@@ -243,6 +243,7 @@ static void test()
 		printf("\n");
 
 		cs_close(&handle);
+		_getch();
 	}
 }
 

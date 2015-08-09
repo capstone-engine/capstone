@@ -200,8 +200,13 @@ typedef struct cs_x86_op {
 } cs_x86_op;
 
 typedef struct x86Offsets {
-	int32_t displacementOffset; //Offset from Instruction->address
-	int32_t displacementSize; //1,2,4,8
+	uint8_t displacement_offset; //Offset from Instruction->address
+	uint8_t displacement_size;   //1,2,4,8
+
+	uint8_t modrm_offset; // ModR/M offset, or 0 when irrelevant.
+
+	uint8_t imm_offset; //Offset of imm value from Instruction->address
+	uint8_t imm_size; //size of imm value
 }x86Offsets;
 
 // Instruction structure
@@ -228,8 +233,6 @@ typedef struct cs_x86 {
 
 	// ModR/M byte
 	uint8_t modrm;
-	// ModR/M offset, or 0 when irrelevant.
-	uint8_t modrm_offset;
 
 	// SIB value, or 0 when irrelevant.
 	uint8_t sib;
