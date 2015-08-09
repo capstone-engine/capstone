@@ -181,6 +181,12 @@ const char *cs_strerror(cs_err code)
 			return "Information irrelevant in diet engine (CS_ERR_DIET)";
 		case CS_ERR_SKIPDATA:
 			return "Information irrelevant for 'data' instruction in SKIPDATA mode (CS_ERR_SKIPDATA)";
+		case CS_ERR_X86_ATT:
+			return "AT&T syntax is unavailable (CS_ERR_X86_ATT)";
+		case CS_ERR_X86_INTEL:
+			return "INTEL syntax is unavailable (CS_ERR_X86_INTEL)";
+		case CS_ERR_X86_MASM:
+			return "MASM syntax is unavailable (CS_ERR_X86_MASM)";
 	}
 }
 
