@@ -66,27 +66,35 @@ endif
 
 SOURCES = test_basic.c test_detail.c test_skipdata.c test_iter.c test_customized_mnem.c
 ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_ARM
 SOURCES += test_arm.c
 endif
 ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_ARM64
 SOURCES += test_arm64.c
 endif
 ifneq (,$(findstring mips,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_MIPS
 SOURCES += test_mips.c
 endif
 ifneq (,$(findstring powerpc,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_POWERPC
 SOURCES += test_ppc.c
 endif
 ifneq (,$(findstring sparc,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_SPARC
 SOURCES += test_sparc.c
 endif
 ifneq (,$(findstring systemz,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_SYSZ
 SOURCES += test_systemz.c
 endif
 ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_X86
 SOURCES += test_x86.c
 endif
 ifneq (,$(findstring xcore,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_XCORE
 SOURCES += test_xcore.c
 endif
 
