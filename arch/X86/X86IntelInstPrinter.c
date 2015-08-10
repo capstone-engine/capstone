@@ -272,7 +272,7 @@ static void printRegName(SStream *OS, unsigned RegNo)
 static bool need_zero_prefix(uint64_t imm)
 {
 	// find the first hex letter representing imm
-	while(imm > 0x10)
+	while(imm >= 0x10)
 		imm >>= 4;
 
 	if (imm < 0xa)
@@ -320,7 +320,6 @@ static void printImm(int syntax, SStream *O, int64_t imm, bool positive)
 						SStream_concat(O, "-%"PRIx64"h", -imm);
 				} else
 					SStream_concat(O, "-%"PRIu64, -imm);
-
 			} else {
 				if (imm > HEX_THRESHOLD) {
 					if (need_zero_prefix(imm))
