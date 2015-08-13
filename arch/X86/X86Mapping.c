@@ -2349,6 +2349,32 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 				default:
 					break;
 
+				case X86_INS_LOOP:
+				case X86_INS_LOOPE:
+				case X86_INS_LOOPNE:
+					switch(h->mode) {
+						default: break;
+						case CS_MODE_16:
+								 insn->detail->regs_read[0] = X86_REG_CX;
+								 insn->detail->regs_read_count = 1;
+								 insn->detail->regs_write[0] = X86_REG_CX;
+								 insn->detail->regs_write_count = 1;
+								 break;
+						case CS_MODE_32:
+								 insn->detail->regs_read[0] = X86_REG_ECX;
+								 insn->detail->regs_read_count = 1;
+								 insn->detail->regs_write[0] = X86_REG_ECX;
+								 insn->detail->regs_write_count = 1;
+								 break;
+						case CS_MODE_64:
+								 insn->detail->regs_read[0] = X86_REG_RCX;
+								 insn->detail->regs_read_count = 1;
+								 insn->detail->regs_write[0] = X86_REG_RCX;
+								 insn->detail->regs_write_count = 1;
+								 break;
+					}
+					break;
+
 				case X86_INS_LODSB:
 				case X86_INS_LODSD:
 				case X86_INS_LODSQ:
