@@ -47035,6 +47035,21 @@ static insn_map insns[] = {	// reduce x86 instructions
 };
 #endif
 
+#ifndef CAPSTONE_DIET
+// replace r1 = r2
+static void arr_replace(uint8_t *arr, uint8_t max, x86_reg r1, x86_reg r2)
+{
+	uint8_t i;
+
+	for(i = 0; i < max; i++) {
+		if (arr[i] == r1) {
+			arr[i] = r2;
+			break;
+		}
+	}
+}
+#endif
+
 // given internal insn id, return public instruction info
 void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
@@ -47072,6 +47087,102 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 						insn->detail->regs_write[1] = X86_REG_ECX;
 						insn->detail->regs_write[2] = X86_REG_EDX;
 						insn->detail->regs_write_count = 3;
+					}
+					break;
+			}
+
+			switch(insn->id) {
+				default:
+					break;
+
+				case X86_INS_LOOP:
+				case X86_INS_LOOPE:
+				case X86_INS_LOOPNE:
+					switch(h->mode) {
+						default: break;
+						case CS_MODE_16:
+								 insn->detail->regs_read[0] = X86_REG_CX;
+								 insn->detail->regs_read_count = 1;
+								 insn->detail->regs_write[0] = X86_REG_CX;
+								 insn->detail->regs_write_count = 1;
+								 break;
+						case CS_MODE_32:
+								 insn->detail->regs_read[0] = X86_REG_ECX;
+								 insn->detail->regs_read_count = 1;
+								 insn->detail->regs_write[0] = X86_REG_ECX;
+								 insn->detail->regs_write_count = 1;
+								 break;
+						case CS_MODE_64:
+								 insn->detail->regs_read[0] = X86_REG_RCX;
+								 insn->detail->regs_read_count = 1;
+								 insn->detail->regs_write[0] = X86_REG_RCX;
+								 insn->detail->regs_write_count = 1;
+								 break;
+					}
+					break;
+
+				case X86_INS_LODSB:
+				case X86_INS_LODSD:
+				case X86_INS_LODSQ:
+				case X86_INS_LODSW:
+					switch(h->mode) {
+						default:
+							break;
+						case CS_MODE_16:
+							arr_replace(insn->detail->regs_read, insn->detail->regs_read_count, X86_REG_ESI, X86_REG_SI);
+							arr_replace(insn->detail->regs_write, insn->detail->regs_write_count, X86_REG_ESI, X86_REG_SI);
+							break;
+						case CS_MODE_64:
+							arr_replace(insn->detail->regs_read, insn->detail->regs_read_count, X86_REG_ESI, X86_REG_RSI);
+							arr_replace(insn->detail->regs_write, insn->detail->regs_write_count, X86_REG_ESI, X86_REG_RSI);
+							break;
+					}
+					break;
+
+				case X86_INS_SCASB:
+				case X86_INS_SCASW:
+				case X86_INS_SCASQ:
+				case X86_INS_STOSB:
+				case X86_INS_STOSD:
+				case X86_INS_STOSQ:
+				case X86_INS_STOSW:
+					switch(h->mode) {
+						default:
+							break;
+						case CS_MODE_16:
+							arr_replace(insn->detail->regs_read, insn->detail->regs_read_count, X86_REG_EDI, X86_REG_DI);
+							arr_replace(insn->detail->regs_write, insn->detail->regs_write_count, X86_REG_EDI, X86_REG_DI);
+							break;
+						case CS_MODE_64:
+							arr_replace(insn->detail->regs_read, insn->detail->regs_read_count, X86_REG_EDI, X86_REG_RDI);
+							arr_replace(insn->detail->regs_write, insn->detail->regs_write_count, X86_REG_EDI, X86_REG_RDI);
+							break;
+					}
+					break;
+
+				case X86_INS_CMPSB:
+				case X86_INS_CMPSD:
+				case X86_INS_CMPSQ:
+				case X86_INS_CMPSW:
+				case X86_INS_MOVSB:
+				case X86_INS_MOVSW:
+				case X86_INS_MOVSD:
+				case X86_INS_MOVSQ:
+					switch(h->mode) {
+						default:
+							break;
+						case CS_MODE_16:
+							arr_replace(insn->detail->regs_read, insn->detail->regs_read_count, X86_REG_EDI, X86_REG_DI);
+							arr_replace(insn->detail->regs_write, insn->detail->regs_write_count, X86_REG_EDI, X86_REG_DI);
+							arr_replace(insn->detail->regs_read, insn->detail->regs_read_count, X86_REG_ESI, X86_REG_SI);
+							arr_replace(insn->detail->regs_write, insn->detail->regs_write_count, X86_REG_ESI, X86_REG_SI);
+							break;
+						case CS_MODE_64:
+							arr_replace(insn->detail->regs_read, insn->detail->regs_read_count, X86_REG_EDI, X86_REG_RDI);
+							arr_replace(insn->detail->regs_write, insn->detail->regs_write_count, X86_REG_EDI, X86_REG_RDI);
+							arr_replace(insn->detail->regs_read, insn->detail->regs_read_count, X86_REG_ESI, X86_REG_RSI);
+							arr_replace(insn->detail->regs_write, insn->detail->regs_write_count, X86_REG_ESI, X86_REG_RSI);
+							break;
 					}
 					break;
 			}
