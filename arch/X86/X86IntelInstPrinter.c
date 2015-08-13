@@ -772,6 +772,14 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				printImm(MI->csh->syntax, O, imm, true);
 				break;
 
+			case X86_INS_LCALL:
+			case X86_INS_LJMP:
+				// always print address in positive form
+				if (OpNo == 1)	// ptr16 part
+					imm = imm & 0xffff;
+				printImm(MI->csh->syntax, O, imm, true);
+				break;
+
 			case X86_INS_AND:
 			case X86_INS_OR:
 			case X86_INS_XOR:

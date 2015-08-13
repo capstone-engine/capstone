@@ -600,6 +600,14 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				}
 				break;
 
+			case X86_INS_LCALL:
+			case X86_INS_LJMP:
+				// always print address in positive form
+				if (OpNo == 1)	// ptr16 part
+					imm = imm & 0xffff;
+				SStream_concat(O, "$0x%"PRIx64, imm);
+				break;
+
 			case X86_INS_AND:
 			case X86_INS_OR:
 			case X86_INS_XOR:
