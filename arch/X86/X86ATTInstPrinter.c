@@ -603,8 +603,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			case X86_INS_LCALL:
 			case X86_INS_LJMP:
 				// always print address in positive form
-				if (OpNo == 1)	// ptr16 part
+				if (OpNo == 1) {	// selector is ptr16
 					imm = imm & 0xffff;
+					opsize = 2;
+				}
 				SStream_concat(O, "$0x%"PRIx64, imm);
 				break;
 
@@ -807,9 +809,12 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 	if (MI->has_imm) {
 		// if op_count > 1, then this operand's size is taken from the destination op
 		if (MI->flat_insn->detail->x86.op_count > 1) {
-			for (i = 0; i < MI->flat_insn->detail->x86.op_count; i++) {
-				if (MI->flat_insn->detail->x86.operands[i].type == X86_OP_IMM)
-					MI->flat_insn->detail->x86.operands[i].size = MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count - 1].size;
+			if (MI->flat_insn->id != X86_INS_LCALL && MI->flat_insn->id != X86_INS_LJMP) {
+				for (i = 0; i < MI->flat_insn->detail->x86.op_count; i++) {
+					if (MI->flat_insn->detail->x86.operands[i].type == X86_OP_IMM)
+						MI->flat_insn->detail->x86.operands[i].size =
+							MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count - 1].size;
+				}
 			}
 		} else
 			MI->flat_insn->detail->x86.operands[0].size = MI->imm_size;
