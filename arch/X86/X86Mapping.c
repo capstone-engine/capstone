@@ -2841,10 +2841,22 @@ static bool valid_repne(cs_struct *h, unsigned int opcode)
 			case X86_INS_MOVSD:
 			case X86_INS_MOVSQ:
 
+			case X86_INS_LODSB:
+			case X86_INS_LODSW:
+			case X86_INS_LODSQ:
+
 			case X86_INS_STOSB:
 			case X86_INS_STOSW:
 			case X86_INS_STOSD:
 			case X86_INS_STOSQ:
+
+			case X86_INS_INSB:
+			case X86_INS_INSW:
+			case X86_INS_INSD:
+
+			case X86_INS_OUTSB:
+			case X86_INS_OUTSW:
+			case X86_INS_OUTSD:
 
 				return true;
 
