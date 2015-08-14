@@ -2843,6 +2843,7 @@ static bool valid_repne(cs_struct *h, unsigned int opcode)
 
 			case X86_INS_LODSB:
 			case X86_INS_LODSW:
+			case X86_INS_LODSD:
 			case X86_INS_LODSQ:
 
 			case X86_INS_STOSB:
