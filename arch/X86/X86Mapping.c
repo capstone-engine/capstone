@@ -2373,6 +2373,13 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 								 insn->detail->regs_write_count = 1;
 								 break;
 					}
+
+					// LOOPE & LOOPNE also read EFLAGS
+					if (insn->id != X86_INS_LOOP) {
+						insn->detail->regs_read[1] = X86_REG_EFLAGS;
+						insn->detail->regs_read_count = 2;
+					}
+
 					break;
 
 				case X86_INS_LODSB:
