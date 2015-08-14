@@ -67,13 +67,22 @@ static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 
 	switch(MI->csh->mode) {
 		case CS_MODE_16:
-			MI->x86opsize = 2;
+			if (MI->flat_insn->id == X86_INS_LJMP || MI->flat_insn->id == X86_INS_LCALL)
+				MI->x86opsize = 4;
+			else
+				MI->x86opsize = 2;
 			break;
 		case CS_MODE_32:
-			MI->x86opsize = 4;
+			if (MI->flat_insn->id == X86_INS_LJMP || MI->flat_insn->id == X86_INS_LCALL)
+				MI->x86opsize = 6;
+			else
+				MI->x86opsize = 4;
 			break;
 		case CS_MODE_64:
-			MI->x86opsize = 8;
+			if (MI->flat_insn->id == X86_INS_LJMP || MI->flat_insn->id == X86_INS_LCALL)
+				MI->x86opsize = 10;
+			else
+				MI->x86opsize = 8;
 			break;
 		default:	// never reach
 			break;
