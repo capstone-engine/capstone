@@ -1140,7 +1140,7 @@ static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 	MCOperand *MO1 = MCInst_getOperand(MI, Op);
 	MCOperand *MO2 = MCInst_getOperand(MI, Op+1);
 	MCOperand *MO3 = MCInst_getOperand(MI, Op+2);
-	ARM_AM_AddrOpc subtracted = getAM3Op((unsigned int)MCOperand_getImm(MO3));
+	ARM_AM_AddrOpc sign = getAM3Op((unsigned int)MCOperand_getImm(MO3));
 	unsigned ImmOffs;
 
 	SStream_concat0(O, "[");
@@ -1151,11 +1151,11 @@ static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 
 	if (MCOperand_getReg(MO2)) {
 		SStream_concat0(O, ", ");
-		SStream_concat0(O, ARM_AM_getAddrOpcStr(subtracted));
+		SStream_concat0(O, ARM_AM_getAddrOpcStr(sign));
 		printRegName(MI->csh, O, MCOperand_getReg(MO2));
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.index = MCOperand_getReg(MO2);
-			if (subtracted) {
+			if (!sign) {
 				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.scale = -1;
 				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].subtracted = true;
 			}
@@ -1168,15 +1168,15 @@ static void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
 	//If the op is sub we have to print the immediate even if it is 0
 	ImmOffs = getAM3Offset((unsigned int)MCOperand_getImm(MO3));
 
-	if (AlwaysPrintImm0 || ImmOffs || (subtracted == ARM_AM_sub)) {
+	if (AlwaysPrintImm0 || ImmOffs || (sign == ARM_AM_sub)) {
 		if (ImmOffs > HEX_THRESHOLD)
-			SStream_concat(O, ", #%s0x%x", ARM_AM_getAddrOpcStr(subtracted), ImmOffs);
+			SStream_concat(O, ", #%s0x%x", ARM_AM_getAddrOpcStr(sign), ImmOffs);
 		else
-			SStream_concat(O, ", #%s%u", ARM_AM_getAddrOpcStr(subtracted), ImmOffs);
+			SStream_concat(O, ", #%s%u", ARM_AM_getAddrOpcStr(sign), ImmOffs);
 	}
 
 	if (MI->csh->detail) {
-		if (subtracted) {
+		if (!sign) {
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = (int)ImmOffs;
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].subtracted = true;
 		} else
