@@ -544,7 +544,7 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 		}
 
 		// CALL/JMP rel16 is special
-		if (MI->Opcode == X86_CALLpcrel16 || MI->Opcode == X86_JMP_2)
+		if (MI->Opcode == X86_CALLpcrel16 || MI->Opcode == X86_JMP_2 || MI->Opcode == X86_JMP_4)
 			imm = imm & 0xffff;
 
 		if (imm < 0) {
