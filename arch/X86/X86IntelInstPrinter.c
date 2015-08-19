@@ -696,6 +696,7 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 	MCOperand *Op = MCInst_getOperand(MI, OpNo);
 	if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op) + MI->flat_insn->size + MI->address;
+		int opsize = X86_immediate_size(MI->Opcode);
 
 		// truncat imm for non-64bit
 		if (MI->csh->mode != CS_MODE_64) {
@@ -726,6 +727,8 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 			// if op_count > 0, then this operand's size is taken from the destination op
 			if (MI->flat_insn->detail->x86.op_count > 0)
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->flat_insn->detail->x86.operands[0].size;
+			else if (opsize > 0)
+				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = opsize;
 			else
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->imm_size;
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = imm;
