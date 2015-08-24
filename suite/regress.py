@@ -480,20 +480,25 @@ def str_arch_mode(a, m):
 
 
 # ## Test cs_disasm_quick()
-def test_regression():
+def test_regression(verbose):
     for (arch, mode, syntax, address, code, expected_output) in all_tests:
-        print("%s %s: %s = " %(str_arch_mode(arch, mode), str_syntax(syntax), to_hex(code)), end=""),
+        #print("%s %s: %s = " %(str_arch_mode(arch, mode), str_syntax(syntax), to_hex(code)), end=""),
+        output = "%s %s: %s = " %(str_arch_mode(arch, mode), str_syntax(syntax), to_hex(code))
         md = Cs(arch, mode)
         if syntax != 0:
             md.syntax = syntax
         insn = list(md.disasm(code, address))[0]
-        output = "%s %s" % (insn.mnemonic, insn.op_str)
-        print(output)
-        if output != expected_output:
+        output2 = "%s %s" % (insn.mnemonic, insn.op_str)
+        if output2 != expected_output:
+            print(output, output2)
             print("\t --> ERROR: expected output = %s" %(expected_output))
-
-        print()
+        elif verbose:
+            print(output, output2)
 
 
 if __name__ == '__main__':
-    test_regression()
+    import sys
+    if len(sys.argv) == 2 and sys.argv[1] == "-v":
+        test_regression(True)   # quiet
+    else:
+        test_regression(False)  # verbose
