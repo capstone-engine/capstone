@@ -63,64 +63,66 @@ static void set_mem_access(MCInst *MI, bool status)
 
 static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-    // FIXME: do this with autogen
-    switch(MI->flat_insn->id) {
-        default:
-            SStream_concat0(O, "ptr ");
-            break;
-        case X86_INS_SGDT:
-        case X86_INS_SIDT:
-        case X86_INS_LGDT:
-        case X86_INS_LIDT:
-            // do not print "ptr"
-            break;
-    }
+	// FIXME: do this with autogen
+	switch(MI->flat_insn->id) {
+		default:
+			SStream_concat0(O, "ptr ");
+			break;
+		case X86_INS_SGDT:
+		case X86_INS_SIDT:
+		case X86_INS_LGDT:
+		case X86_INS_LIDT:
+			// do not print "ptr"
+			break;
+	}
 
 	switch(MI->csh->mode) {
 		case CS_MODE_16:
-            switch(MI->flat_insn->id) {
-                default:
-                    MI->x86opsize = 2;
-                    break;
-                case X86_INS_LJMP:
-                case X86_INS_LCALL:
-                case X86_INS_SGDT:
-                case X86_INS_SIDT:
-                case X86_INS_LGDT:
-                case X86_INS_LIDT:
-                    MI->x86opsize = 4;
-                    break;
-            }
+			switch(MI->flat_insn->id) {
+				default:
+					MI->x86opsize = 2;
+					break;
+				case X86_INS_LJMP:
+				case X86_INS_LCALL:
+					MI->x86opsize = 4;
+					break;
+				case X86_INS_SGDT:
+				case X86_INS_SIDT:
+				case X86_INS_LGDT:
+				case X86_INS_LIDT:
+					MI->x86opsize = 6;
+					break;
+			}
 			break;
 		case CS_MODE_32:
-            switch(MI->flat_insn->id) {
-                default:
-                    MI->x86opsize = 4;
-                    break;
-                case X86_INS_LJMP:
-                case X86_INS_LCALL:
-                case X86_INS_SGDT:
-                case X86_INS_SIDT:
-                case X86_INS_LGDT:
-                case X86_INS_LIDT:
-                    MI->x86opsize = 6;
-                    break;
-            }
+			switch(MI->flat_insn->id) {
+				default:
+					MI->x86opsize = 4;
+					break;
+				case X86_INS_LJMP:
+				case X86_INS_LCALL:
+				case X86_INS_SGDT:
+				case X86_INS_SIDT:
+				case X86_INS_LGDT:
+				case X86_INS_LIDT:
+					MI->x86opsize = 6;
+					break;
+			}
 			break;
 		case CS_MODE_64:
-            switch(MI->flat_insn->id) {
-                default:
-                    MI->x86opsize = 8;
-                    break;
-                case X86_INS_LJMP:
-                case X86_INS_LCALL:
-                case X86_INS_SGDT:
-                case X86_INS_SIDT:
-                case X86_INS_LGDT:
-                case X86_INS_LIDT:
-                    MI->x86opsize = 10;
-                    break;
-            }
+			switch(MI->flat_insn->id) {
+				default:
+					MI->x86opsize = 8;
+					break;
+				case X86_INS_LJMP:
+				case X86_INS_LCALL:
+				case X86_INS_SGDT:
+				case X86_INS_SIDT:
+				case X86_INS_LGDT:
+				case X86_INS_LIDT:
+					MI->x86opsize = 10;
+					break;
+			}
 			break;
 		default:	// never reach
 			break;
