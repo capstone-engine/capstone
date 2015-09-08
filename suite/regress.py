@@ -447,6 +447,19 @@ all_tests = (
         (CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_INTEL, 0x649123ffe1, b"\x66\x67\xAD", "lodsw ax, word ptr [esi]"),
         (CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_INTEL, 0x649123ffe1, b"\x66\x67\xAE", "scasb al, byte ptr [edi]"),
         (CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_INTEL, 0x649123ffe1, b"\x66\x67\xAF", "scasw ax, word ptr [edi]"),
+
+        (CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_INTEL, 0x649123ffe1, b"\x0f\x01\x05\xa0\x90\x04\x08", "sgdt [rip+0x80490a0]"),
+        (CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_INTEL, 0x9123ffe1, b"\x0f\x01\x05\xa0\x90\x04\x08", "sgdt [0x80490a0]"),
+        (CS_ARCH_X86, CS_MODE_16, CS_OPT_SYNTAX_INTEL, 0xffe1, b"\x0f\x01\x05", "sgdt [di]"),
+        (CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_INTEL, 0x649123ffe1, b"\x0f\x01\x0d\xa0\x90\x04\x08", "sidt [rip+0x80490a0]"),
+        (CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_INTEL, 0x9123ffe1, b"\x0f\x01\x0d\xa0\x90\x04\x08", "sidt [0x80490a0]"),
+        (CS_ARCH_X86, CS_MODE_16, CS_OPT_SYNTAX_INTEL, 0xffe1, b"\x0f\x01\x0d", "sidt [di]"),
+        (CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_INTEL, 0x649123ffe1, b"\x0f\x01\x15\xa0\x90\x04\x08", "lgdt [rip+0x80490a0]"),
+        (CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_INTEL, 0x9123ffe1, b"\x0f\x01\x15\xa0\x90\x04\x08", "lgdt [0x80490a0]"),
+        (CS_ARCH_X86, CS_MODE_16, CS_OPT_SYNTAX_INTEL, 0xffe1, b"\x0f\x01\x15", "lgdt [di]"),
+        (CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_INTEL, 0x649123ffe1, b"\x0f\x01\x1d\xa0\x90\x04\x08", "lidt [rip+0x80490a0]"),
+        (CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_INTEL, 0x9123ffe1, b"\x0f\x01\x1d\xa0\x90\x04\x08", "lidt [0x80490a0]"),
+        (CS_ARCH_X86, CS_MODE_16, CS_OPT_SYNTAX_INTEL, 0xffe1, b"\x0f\x01\x1d", "lidt [di]"),
 )
 
 _python3 = sys.version_info.major == 3
