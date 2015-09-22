@@ -5,7 +5,7 @@
 #ifndef CAPSTONE_PLATFORM_H
 #define CAPSTONE_PLATFORM_H
 
-#if !defined(__MINGW32__) && !defined(__MINGW64__) && (defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64))
+#if !defined(__CYGWIN__) && !defined(__MINGW32__) && !defined(__MINGW64__) && (defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64))
 // MSVC
 
 // stdbool.h
