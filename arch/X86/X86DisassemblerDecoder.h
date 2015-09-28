@@ -559,8 +559,6 @@ struct InstructionSpecifier {
 typedef struct InternalInstruction {
   // from here, all members must be initialized to ZERO to work properly
   uint8_t operandSize;
-  /* 1 if the prefix byte corresponding to the entry is present; 0 if not */
-  uint8_t prefixPresent[0x100];
   uint8_t prefix0, prefix1, prefix2, prefix3;
   /* The value of the REX prefix, if present */
   uint8_t rexPrefix;
@@ -586,9 +584,6 @@ typedef struct InternalInstruction {
   /* 1 if the prefix byte, 0xf2 or 0xf3 is xacquire or xrelease */
   bool xAcquireRelease;
 
-  /* contains the location (for use with the reader) of the prefix byte */
-  uint64_t prefixLocations[0x100];
-
   /* The value of the vector extension prefix(EVEX/VEX/XOP), if present */
   uint8_t vectorExtensionPrefix[4];
 
@@ -596,6 +591,11 @@ typedef struct InternalInstruction {
 
   /* Reader interface (C) */
   byteReader_t reader;
+
+  /* 1 if the prefix byte corresponding to the entry is present; 0 if not */
+  uint8_t prefixPresent[0x100];
+  /* contains the location (for use with the reader) of the prefix byte */
+  uint64_t prefixLocations[0x100];
   /* Opaque value passed to the reader */
   const void* readerArg;
   /* The address of the next byte to read via the reader */
