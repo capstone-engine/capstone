@@ -78,7 +78,7 @@ static void test()
 	int maxcount = 10000000;
 	insn = cs_malloc(handle);
 	for (i = 0; i < maxcount;) {
-		code = X86_CODE32;
+		code = (const uint8_t *)X86_CODE32;
 		address = 0x1000;
 		size = sizeof(X86_CODE32) - 1;
 		while(cs_disasm_iter(handle, &code, &size, &address, insn)) {
