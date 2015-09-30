@@ -59,6 +59,9 @@ tests/test_sparc
 tests/test_systemz
 tests/test_xcore
 tests/*.static
+tests/test_basic
+tests/test_customized_mnem
+
 
 # vim tmp file
 *.swp
@@ -89,7 +92,7 @@ xcode/Capstone.xcodeproj/project.xcworkspace/xcuserdata
 test_arm_regression
 test_arm_regression.o
 fuzz_harness
-fuzz_harness.o
+test_iter_benchmark
 
 
 *.s
