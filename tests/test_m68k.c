@@ -28,6 +28,37 @@ static void print_string_hex(char* comment, unsigned char* str, size_t len)
 	printf("\n");
 }
 
+const char* s_addressing_modes[] =
+{
+	"<invalid mode>",
+
+	"Register Direct - Data",
+	"Register Direct - Address",
+
+	"Register Indirect - Address",
+	"Register Indirect - Address with Postincrement",
+	"Register Indirect - Address with Predecrement",
+	"Register Indirect - Address with Displacement",
+
+	"Address Register Indirect With Index - 8-bit displacement",
+	"Address Register Indirect With Index - Base displacement",
+
+	"Memory indirect - Postindex",
+	"Memory indirect - Preindex",
+
+	"Program Counter Indirect - with Displacement",
+
+	"Program Counter Indirect with Index - with 8-Bit Displacement",
+	"Program Counter Indirect with Index - with Base Displacement",
+
+	"Program Counter Memory Indirect - Postindexed",
+	"Program Counter Memory Indirect - Preindexed",
+
+	"Absolute Data Addressing  - Short",
+	"Absolute Data Addressing  - Long",
+	"Immidate value",
+}; 
+
 static void print_insn_detail(cs_insn *ins)
 {
 	cs_m68k* m68k;
@@ -51,6 +82,16 @@ static void print_insn_detail(cs_insn *ins)
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;
 			case M68K_OP_IMM:
+				if (m68k->op_size.type == M68K_SIZE_TYPE_FPU) {
+					if (m68k->op_size.fpu_size == M68K_FPU_SIZE_SINGLE)
+						printf("\t\toperands[%u].type: IMM = %f\n", i, op->simm);
+					else if (m68k->op_size.fpu_size == M68K_FPU_SIZE_DOUBLE)
+						printf("\t\toperands[%u].type: IMM = %f\n", i, op->dimm);
+					else
+						printf("\t\toperands[%u].type: IMM = <unsupported>", i);
+					break;
+				}
+
 				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, (int)op->imm);
 				break;
 			case M68K_OP_MEM:
@@ -58,12 +99,18 @@ static void print_insn_detail(cs_insn *ins)
 				if (op->mem.base_reg != M68K_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.base: REG = %s\n",
 							i, cs_reg_name(handle, op->mem.base_reg));
-				if (op->mem.index_reg != M68K_REG_INVALID)
+				if (op->mem.index_reg != M68K_REG_INVALID) {
 					printf("\t\t\toperands[%u].mem.index: REG = %s\n",
 							i, cs_reg_name(handle, op->mem.index_reg));
+					printf("\t\t\toperands[%u].mem.index: size = %c\n",
+							i, op->mem.index_size ? 'l' : 'w');
+				}
 				if (op->mem.disp != 0)
 					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
+				if (op->mem.scale != 0)
+					printf("\t\t\toperands[%u].mem.scale: %d\n", i, op->mem.scale);
 
+				printf("\t\taddress mode: %s\n", s_addressing_modes[op->address_mode]);
 				break;
 		}
 	}
