@@ -16,6 +16,7 @@ template = {
             # prefixes for constant filenames of all archs - case sensitive
             'arm.h': 'Arm',
             'arm64.h': 'Arm64',
+            'm68k.h': 'M68k',
             'mips.h': 'Mips',
             'x86.h': 'X86',
             'ppc.h': 'Ppc',
@@ -52,6 +53,7 @@ template = {
             'arm.h': 'arm',
             'arm64.h': 'arm64',
             'mips.h': 'mips',
+            'm68k.h': 'm68k',
             'x86.h': 'x86',
             'ppc.h': 'ppc',
             'sparc.h': 'sparc',
