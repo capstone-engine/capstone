@@ -11,11 +11,11 @@
 static cs_err init(cs_struct *ud)
 {
 	ud->printer = M68K_printInst;
-	ud->printer_info = 0;
-	ud->getinsn_info = 0;
+	ud->printer_info = NULL;
+	ud->getinsn_info = NULL;
 	ud->disasm = M68K_getInstruction;
 	ud->skipdata_size = 2;
-	ud->post_printer = 0;
+	ud->post_printer = NULL;
 
 	ud->reg_name = M68K_reg_name;
 	ud->insn_id = M68K_get_insn_id;
