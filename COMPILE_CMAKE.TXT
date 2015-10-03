@@ -27,6 +27,7 @@ Get CMake for free from http://www.cmake.org.
   - CAPSTONE_SPARC_SUPPORT: support Sparc. Run cmake with -DCAPSTONE_SPARC_SUPPORT=0 to remove Sparc.
   - CAPSTONE_SYSZ_SUPPORT: support SystemZ. Run cmake with -DCAPSTONE_SYSZ_SUPPORT=0 to remove SystemZ.
   - CAPSTONE_XCORE_SUPPORT: support XCore. Run cmake with -DCAPSTONE_XCORE_SUPPORT=0 to remove XCore.
+  - CAPSTONE_M68K_SUPPORT: support M68K. Run cmake with -DCAPSTONE_M68K_SUPPORT=0 to remove M68K.
   - CAPSTONE_X86_SUPPORT: support X86. Run cmake with -DCAPSTONE_X86_SUPPORT=0 to remove X86.
 
   By default, all 8 architectures are compiled in.

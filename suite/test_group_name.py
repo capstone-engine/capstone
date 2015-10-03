@@ -228,6 +228,7 @@ tests = [
     GroupTest('sysz', CS_ARCH_SYSZ, CS_MODE_BIG_ENDIAN, sysz_dict),
     GroupTest('x86', CS_ARCH_X86, CS_MODE_32, x86_dict),
     GroupTest('xcore', CS_ARCH_XCORE, CS_MODE_BIG_ENDIAN, xcore_dict),
+    GroupTest('m68k', CS_ARCH_M68K, CS_MODE_BIG_ENDIAN, xcore_dict),
 ]
 
 if __name__ == '__main__':

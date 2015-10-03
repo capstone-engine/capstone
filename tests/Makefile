@@ -73,6 +73,10 @@ ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
 CFLAGS += -DCAPSTONE_HAS_ARM64
 SOURCES += test_arm64.c
 endif
+ifneq (,$(findstring m68k,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_M68K
+SOURCES += test_m68k.c
+endif
 ifneq (,$(findstring mips,$(CAPSTONE_ARCHS)))
 CFLAGS += -DCAPSTONE_HAS_MIPS
 SOURCES += test_mips.c

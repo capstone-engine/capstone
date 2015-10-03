@@ -10,5 +10,5 @@ Download-url: www.capstone-engine.org
 Summary: Capstone disassembly framework
 License: BSD
 Description: Capstone is a lightweight multi-platform, multi-architecture disassembly framework with some advanced features. Further information is available at the homepage http://www.capstone-engine.org
-Keywords: disassembly reverse binary arm arm64 aarch64 powerpc ppc mips x86 x86_64 sparc systemz xcore
+Keywords: disassembly reverse binary arm arm64 aarch64 powerpc ppc m68k mips x86 x86_64 sparc systemz xcore
 Platform: Windows MacOSX Linux NetBSD FreeBSD OpenBSD Solaris Android iOS

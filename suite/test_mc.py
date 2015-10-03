@@ -91,6 +91,7 @@ def test_file(fname):
         "CS_ARCH_SYSZ": CS_ARCH_SYSZ,
         "CS_ARCH_X86": CS_ARCH_X86,
         "CS_ARCH_XCORE": CS_ARCH_XCORE,
+        "CS_ARCH_M68K": CS_ARCH_M68K,
     }
     
     modes = {

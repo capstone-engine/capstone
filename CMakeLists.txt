@@ -27,8 +27,8 @@ option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
 option(CAPSTONE_BUILD_TESTS "Build tests" ON)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 
-set(SUPPORTED_ARCHITECTURES ARM ARM64 MIPS PPC SPARC SYSZ XCORE X86)
-set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 MIPS PowerPC Sparc SystemZ XCore x86)
+set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86)
+set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86)
 
 list(LENGTH SUPPORTED_ARCHITECTURES count)
 math(EXPR count "${count}-1")
@@ -103,6 +103,7 @@ set(HEADERS_COMMON
     include/capstone/sparc.h
     include/capstone/systemz.h
     include/capstone/xcore.h
+    include/capstone/m68k.h
     include/capstone/platform.h
     )
 
@@ -309,6 +310,19 @@ if (CAPSTONE_XCORE_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_xcore.c)
 endif ()
 
+if (CAPSTONE_M68K_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_M68K)
+    set(SOURCES_M68K
+		arch/M68K/M68Kdasm.c
+		arch/M68K/M68KDisassembler.c
+		arch/M68K/M68KModule.c
+    )
+    set(HEADERS_M68K
+		arch/M68K/M68KDisassembler.h
+        )
+    set(TEST_SOURCES ${TEST_SOURCES} test_m68k.c)
+endif ()
+
 if (CAPSTONE_OSXKERNEL_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_OSXKERNEL)
 endif ()
@@ -323,6 +337,7 @@ set(ALL_SOURCES
     ${SOURCES_SPARC}
     ${SOURCES_SYSZ}
     ${SOURCES_XCORE}
+    ${SOURCES_M68K}
     )
 
 set(ALL_HEADERS
