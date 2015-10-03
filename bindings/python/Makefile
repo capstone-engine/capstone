@@ -7,16 +7,16 @@ endif
 .PHONY: gen_const install install3 install_cython clean
 
 gen_const:
-	cd .. && python const_generator.py python
+	cd .. && python2 const_generator.py python
 
 install:
 	rm -rf $(OBJDIR) src/
 	rm -rf prebuilt/win64/capstone.dll
 	rm -rf prebuilt/win32/capstone.dll
 	if test -n "${DESTDIR}"; then \
-		python setup.py build -b $(OBJDIR) install --root="${DESTDIR}"; \
+		python2 setup.py build -b $(OBJDIR) install --root="${DESTDIR}"; \
 	else \
-		python setup.py build -b $(OBJDIR) install; \
+		python2 setup.py build -b $(OBJDIR) install; \
 	fi
 
 install3:
@@ -54,9 +54,9 @@ install_cython:
 	cp capstone/x86_const.py $(OBJDIR)/pyx/x86_const.pyx
 	cp capstone/xcore.py $(OBJDIR)/pyx/xcore.pyx
 	cp capstone/xcore_const.py $(OBJDIR)/pyx/xcore_const.pyx
-	cd $(OBJDIR) && python setup_cython.py build -b ./tmp install --home=$(OBJDIR)
+	cd $(OBJDIR) && python2 setup_cython.py build -b ./tmp install --home=$(OBJDIR)
 	mv $(OBJDIR)/build/lib/python/capstone/* capstone
-	cd $(OBJDIR) && python setup_cython.py build -b ./tmp install
+	cd $(OBJDIR) && python2 setup_cython.py build -b ./tmp install
 
 build_cython:
 	rm -rf $(OBJDIR) src/ dist/
@@ -80,7 +80,7 @@ build_cython:
 	cp capstone/x86_const.py $(OBJDIR)/pyx/x86_const.pyx
 	cp capstone/xcore.py $(OBJDIR)/pyx/xcore.pyx
 	cp capstone/xcore_const.py $(OBJDIR)/pyx/xcore_const.pyx
-	cd $(OBJDIR) && python setup_cython.py build
+	cd $(OBJDIR) && python2 setup_cython.py build
 
 # build & upload PyPi package with source code of the core
 sdist:
@@ -89,7 +89,7 @@ sdist:
 	rm -rf prebuilt/win32/capstone.dll
 	cp README.pypi-src README
 	cp PKG-INFO.src PKG-INFO
-	python setup.py sdist register upload
+	python2 setup.py sdist register upload
 
 # build & upload PyPi package with source code of the core
 sdist3:
@@ -106,7 +106,7 @@ sdist_win:
 	rm -rf src/ dist/
 	cp README.pypi-win README
 	cp PKG-INFO.win PKG-INFO
-	python setup.py sdist register upload
+	python2 setup.py sdist register upload
 
 # build & upload PyPi package with prebuilt core
 # NOTE: be sure to have precompiled core under prebuilt/win*/ beforehand
