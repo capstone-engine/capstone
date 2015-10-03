@@ -69,6 +69,7 @@ ARM_SYSREG_FAULTMASK = 277
 ARM_SYSREG_CONTROL = 278
 
 # The memory barrier constants map directly to the 4-bit encoding of
+
 # the option field for Memory Barrier operations.
 
 ARM_MB_INVALID = 0
