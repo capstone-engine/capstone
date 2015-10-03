@@ -1,6 +1,5 @@
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
-/* M68K Backend by Daniel Collin <daniel@collin.com> */
+/* M68K Backend by Daniel Collin <daniel@collin.com> 2015 */
 
 #include <stdio.h>	// DEBUG
 #include <stdlib.h>

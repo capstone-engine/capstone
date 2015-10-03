@@ -1,5 +1,4 @@
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 /* M68K Backend by Daniel Collin <daniel@collin.com> 2015 */
 
 #ifdef CAPSTONE_HAS_M68K
