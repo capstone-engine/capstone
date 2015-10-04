@@ -37,12 +37,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "M68Kdasm.h"
+
+#include "../../cs_priv.h"
+#include "../../utils.h"
 
 #include "../../MCInst.h"
 #include "../../MCInstrDesc.h"
 #include "../../MCRegisterInfo.h"
 #include "M68KInstPrinter.h"
+#include "M68KDisassembler.h"
 
 #ifndef DECL_SPEC
 #define DECL_SPEC
@@ -145,6 +148,50 @@ typedef struct m68k_info {
 	uint type;
 	unsigned int address_mask; /* Address mask to simulate address lines */
 } m68k_info;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static uint8_t* s_disassemblyBuffer;
+static uint32_t s_baseAddress;
+
+unsigned int m68k_read_disassembler_8(uint64_t address)
+{
+	const uint64_t addr = address - s_baseAddress;
+	return s_disassemblyBuffer[addr];
+}
+
+unsigned int m68k_read_disassembler_16(uint64_t address)
+{
+	const uint64_t addr = address - s_baseAddress;
+	uint16_t v0 = s_disassemblyBuffer[addr + 0];
+	uint16_t v1 = s_disassemblyBuffer[addr + 1];
+	return (v0 << 8) | v1; 
+}
+
+unsigned int m68k_read_disassembler_32(uint64_t address)
+{
+	const uint64_t addr = address - s_baseAddress;
+	uint32_t v0 = s_disassemblyBuffer[addr + 0];
+	uint32_t v1 = s_disassemblyBuffer[addr + 1];
+	uint32_t v2 = s_disassemblyBuffer[addr + 2];
+	uint32_t v3 = s_disassemblyBuffer[addr + 3];
+	return (v0 << 24) | (v1 << 16) | (v2 << 8) | v3;
+}
+
+uint64_t m68k_read_disassembler_64(const uint64_t address)
+{
+	const uint64_t addr = address - s_baseAddress;
+	uint64_t v0 = s_disassemblyBuffer[addr + 0];
+	uint64_t v1 = s_disassemblyBuffer[addr + 1];
+	uint64_t v2 = s_disassemblyBuffer[addr + 2];
+	uint64_t v3 = s_disassemblyBuffer[addr + 3];
+	uint64_t v4 = s_disassemblyBuffer[addr + 4];
+	uint64_t v5 = s_disassemblyBuffer[addr + 5];
+	uint64_t v6 = s_disassemblyBuffer[addr + 6];
+	uint64_t v7 = s_disassemblyBuffer[addr + 7];
+
+	return (v0 << 56) | (v1 << 48) | (v2 << 40) | (v3 << 32) | (v4 << 24) | (v5 << 16) | (v6 << 8) | v7;
+}
 
 /* ======================================================================== */
 /* =============================== PROTOTYPES ============================= */
@@ -3948,6 +3995,49 @@ unsigned int m68k_disassemble(MCInst* inst, unsigned int pc, unsigned int cpu_ty
 	return info.pc - pc;
 }
 
+bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* instr, uint16_t* size, uint64_t address, void* info)
+{
+	int s;
+	int cpu_type = M68K_CPU_TYPE_68000;
+	cs_struct* handle = (cs_struct *)(uintptr_t)ud;
+
+	s_disassemblyBuffer = (uint8_t*)code;
+	s_baseAddress = (uint32_t)address;
+
+	if (handle->mode & CS_MODE_M68K_010)
+		cpu_type = M68K_CPU_TYPE_68010;
+	if (handle->mode & CS_MODE_M68K_020)
+		cpu_type = M68K_CPU_TYPE_68020;
+	if (handle->mode & CS_MODE_M68K_030)
+		cpu_type = M68K_CPU_TYPE_68030;
+	if (handle->mode & CS_MODE_M68K_040)
+		cpu_type = M68K_CPU_TYPE_68040;
+	if (handle->mode & CS_MODE_M68K_060)
+		cpu_type = M68K_CPU_TYPE_68040;	// 060 = 040 for now
+
+	s = m68k_disassemble(instr, address, cpu_type);
+
+	if (s == 0) {
+		*size = 2;
+		return false;
+	}
+
+#ifdef M68K_DEBUG
+	SStream ss;
+	SStream_Init(&ss);
+	M68K_printInst(instr, &ss, info);
+#endif
+
+	// Make sure we always stay within range 
+
+	if (s > code_len)
+		*size = code_len;
+	else
+		*size = (uint16_t)s;
+
+	return true;
+}
+
 #if 0
 
 // Currently not used
@@ -4126,49 +4216,7 @@ unsigned int m68k_is_valid_instruction(unsigned int instruction, unsigned int cp
 	return 1;
 }
 
-bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* instr, uint16_t* size, uint64_t address, void* info)
-{
-	int s;
-	int cpu_type = M68K_CPU_TYPE_68000;
-	cs_struct* handle = (cs_struct *)(uintptr_t)ud;
-
-	s_disassemblyBuffer = (uint8_t*)code;
-	s_baseAddress = (uint32_t)address;
-
-	if (handle->mode & CS_MODE_M68K_010)
-		cpu_type = M68K_CPU_TYPE_68010;
-	if (handle->mode & CS_MODE_M68K_020)
-		cpu_type = M68K_CPU_TYPE_68020;
-	if (handle->mode & CS_MODE_M68K_030)
-		cpu_type = M68K_CPU_TYPE_68030;
-	if (handle->mode & CS_MODE_M68K_040)
-		cpu_type = M68K_CPU_TYPE_68040;
-	if (handle->mode & CS_MODE_M68K_060)
-		cpu_type = M68K_CPU_TYPE_68040;	// 060 = 040 for now
-
-	s = m68k_disassemble(instr, address, cpu_type);
-
-	if (s == 0) {
-		*size = 2;
-		return false;
-	}
-
-#ifdef M68K_DEBUG
-	SStream ss;
-	SStream_Init(&ss);
-	M68K_printInst(instr, &ss, info);
 #endif
 
-	// Make sure we always stay within range 
-
-	if (s > code_len)
-		*size = code_len;
-	else
-		*size = (uint16_t)s;
-
-	return true;
-}
 
 
-
-#endif

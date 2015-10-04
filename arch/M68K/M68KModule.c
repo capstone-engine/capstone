@@ -6,6 +6,7 @@
 #include "../../utils.h"
 #include "../../MCRegisterInfo.h"
 #include "M68KDisassembler.h"
+#include "M68KInstPrinter.h"
 
 static cs_err init(cs_struct *ud)
 {

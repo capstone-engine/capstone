@@ -13,7 +13,7 @@
 #include "../../MCInstrDesc.h"
 #include "../../MCRegisterInfo.h"
 
-#include "M68Kdasm.h"
+//#include "M68Kdasm.h"
 
 #ifndef CAPSTONE_DIET
 
@@ -60,47 +60,6 @@ static const char* s_instruction_names[] = {
 
 #endif
 
-static uint8_t* s_disassemblyBuffer;
-static uint32_t s_baseAddress;
-
-unsigned int m68k_read_disassembler_8(uint64_t address)
-{
-	const uint64_t addr = address - s_baseAddress;
-	return s_disassemblyBuffer[addr];
-}
-
-unsigned int m68k_read_disassembler_16(uint64_t address)
-{
-	const uint64_t addr = address - s_baseAddress;
-	uint16_t v0 = s_disassemblyBuffer[addr + 0];
-	uint16_t v1 = s_disassemblyBuffer[addr + 1];
-	return (v0 << 8) | v1; 
-}
-
-unsigned int m68k_read_disassembler_32(uint64_t address)
-{
-	const uint64_t addr = address - s_baseAddress;
-	uint32_t v0 = s_disassemblyBuffer[addr + 0];
-	uint32_t v1 = s_disassemblyBuffer[addr + 1];
-	uint32_t v2 = s_disassemblyBuffer[addr + 2];
-	uint32_t v3 = s_disassemblyBuffer[addr + 3];
-	return (v0 << 24) | (v1 << 16) | (v2 << 8) | v3;
-}
-
-uint64_t m68k_read_disassembler_64(const uint64_t address)
-{
-	const uint64_t addr = address - s_baseAddress;
-	uint64_t v0 = s_disassemblyBuffer[addr + 0];
-	uint64_t v1 = s_disassemblyBuffer[addr + 1];
-	uint64_t v2 = s_disassemblyBuffer[addr + 2];
-	uint64_t v3 = s_disassemblyBuffer[addr + 3];
-	uint64_t v4 = s_disassemblyBuffer[addr + 4];
-	uint64_t v5 = s_disassemblyBuffer[addr + 5];
-	uint64_t v6 = s_disassemblyBuffer[addr + 6];
-	uint64_t v7 = s_disassemblyBuffer[addr + 7];
-
-	return (v0 << 56) | (v1 << 48) | (v2 << 40) | (v3 << 32) | (v4 << 24) | (v5 << 16) | (v6 << 8) | v7;
-}
 
 #ifndef CAPSTONE_DIET
 
