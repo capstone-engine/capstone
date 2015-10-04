@@ -330,49 +330,6 @@ void M68K_printInst(MCInst* MI, SStream* O, void* Info)
 #endif
 }
 
-bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* instr, uint16_t* size, uint64_t address, void* info)
-{
-	int s;
-	int cpu_type = M68K_CPU_TYPE_68000;
-	cs_struct* handle = (cs_struct *)(uintptr_t)ud;
-
-	s_disassemblyBuffer = (uint8_t*)code;
-	s_baseAddress = (uint32_t)address;
-
-	if (handle->mode & CS_MODE_M68K_010)
-		cpu_type = M68K_CPU_TYPE_68010;
-	if (handle->mode & CS_MODE_M68K_020)
-		cpu_type = M68K_CPU_TYPE_68020;
-	if (handle->mode & CS_MODE_M68K_030)
-		cpu_type = M68K_CPU_TYPE_68030;
-	if (handle->mode & CS_MODE_M68K_040)
-		cpu_type = M68K_CPU_TYPE_68040;
-	if (handle->mode & CS_MODE_M68K_060)
-		cpu_type = M68K_CPU_TYPE_68040;	// 060 = 040 for now
-
-	s = m68k_disassemble(instr, address, cpu_type);
-
-	if (s == 0) {
-		*size = 2;
-		return false;
-	}
-
-#ifdef M68K_DEBUG
-	SStream ss;
-	SStream_Init(&ss);
-	M68K_printInst(instr, &ss, info);
-#endif
-
-	// Make sure we always stay within range 
-
-	if (s > code_len)
-		*size = code_len;
-	else
-		*size = (uint16_t)s;
-
-	return true;
-}
-
 const char* M68K_reg_name(csh handle, unsigned int reg)
 {
 #ifdef CAPSTONE_DIET
