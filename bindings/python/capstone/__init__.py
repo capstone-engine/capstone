@@ -980,8 +980,7 @@ def debug():
 
     all_archs = ""
     keys = archs.keys()
-    keys.sort()
-    for k in keys:
+    for k in sorted(keys):
         if cs_support(archs[k]):
             all_archs += "-%s" % k
 

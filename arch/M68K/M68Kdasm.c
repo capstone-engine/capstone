@@ -1067,20 +1067,22 @@ static void build_link(int disp, int size)
 
 static void build_cpush_cinv(int op_offset)
 {
-	cs_m68k* info = build_init_op(M68K_INS_ILLEGAL, 2, 0);
-	switch ((g_cpu_ir >> 3) & 3)
+	cs_m68k* info = build_init_op(M68K_INS_INVALID, 2, 0);
+	switch ((g_cpu_ir >> 3) & 3) // scope
 	{
-		case 0:
-			if(info) {
-				info->op_count = 0;
-			}
-			break;
+		// Invalid
+		case 0: 
+			d68000_invalid();
+			return;
+		// Line
 		case 1:
 			MCInst_setOpcode(g_inst, op_offset + 0);
 			break;
+		// Page
 		case 2:
 			MCInst_setOpcode(g_inst, op_offset + 1);
 			break;
+		// All
 		case 3:
 			if(info) {
 				info->op_count = 1;

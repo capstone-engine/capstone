@@ -5,7 +5,6 @@ import sys
 import bitstring
 from capstone import *
 from capstone.m68k import *
-from xprint import to_hex, to_x
 
 #
 # Objdump with the same output as his binary cousin
