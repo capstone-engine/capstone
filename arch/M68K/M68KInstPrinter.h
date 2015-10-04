@@ -1,8 +1,8 @@
 /* Capstone Disassembly Engine */
 /* M68K Backend by Daniel Collin <daniel@collin.com> 2015 */
 
-#ifndef CS_M68KDISASSEMBLER_H
-#define CS_M68KDISASSEMBLER_H
+#ifndef CS_M68KINSTPRINTER_H
+#define CS_M68KINSTPRINTER_H
 
 #include <stdint.h>
 

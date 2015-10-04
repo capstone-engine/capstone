@@ -27,8 +27,8 @@
  * THE SOFTWARE.
  */
 
-#ifndef M68K__HEADER
-#define M68K__HEADER
+#ifndef CS_M68KDISASSEMBLER_H
+#define CS_M68KDISASSEMBLER_H
 
 #include "../../MCInst.h"
 #include <stdint.h>
@@ -356,4 +356,4 @@ unsigned int m68k_disassemble(MCInst* inst, unsigned int pc, unsigned int cpu_ty
 //#include "m68kmame.h"
 #endif /* M68K_COMPILE_FOR_MAME */
 
-#endif /* M68K__HEADER */
+#endif

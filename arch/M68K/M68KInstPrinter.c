@@ -13,10 +13,7 @@
 #include "../../MCInstrDesc.h"
 #include "../../MCRegisterInfo.h"
 
-//#include "M68Kdasm.h"
-
 #ifndef CAPSTONE_DIET
-
 static const char* s_spacing = " ";
 
 static const char* s_reg_names[] = {
@@ -57,12 +54,10 @@ static const char* s_instruction_names[] = {
 	"sge", "slt", "sgt", "sle", "stop", "sub", "suba", "subi", "subq", "subx", "swap", "tas", "trap", "trapv", "trapt", "trapf", "traphi", "trapls",
 	"trapcc", "traphs", "trapcs", "traplo", "trapne", "trapeq", "trapvc", "trapvs", "trappl", "trapmi", "trapge", "traplt", "trapgt", "traple", "tst", "unlk", "unpk",
 };
-
 #endif
 
 
 #ifndef CAPSTONE_DIET
-
 const char* getRegName(m68k_reg reg)
 {
 	return s_reg_names[(int)reg];
