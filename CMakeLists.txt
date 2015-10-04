@@ -351,6 +351,7 @@ set(ALL_HEADERS
     ${HEADERS_SPARC}
     ${HEADERS_SYSZ}
     ${HEADERS_XCORE}
+    ${HEADERS_M68K}
     )
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
@@ -419,6 +420,7 @@ source_group("Source\\Sparc" FILES ${SOURCES_SPARC})
 source_group("Source\\SystemZ" FILES ${SOURCES_SYSZ})
 source_group("Source\\X86" FILES ${SOURCES_X86})
 source_group("Source\\XCore" FILES ${SOURCES_XCORE})
+source_group("Source\\M68K" FILES ${SOURCES_M68K})
 
 source_group("Include\\Common" FILES ${HEADERS_COMMON})
 source_group("Include\\Engine" FILES ${HEADERS_ENGINE})
@@ -430,6 +432,7 @@ source_group("Include\\Sparc" FILES ${HEADERS_SPARC})
 source_group("Include\\SystemZ" FILES ${HEADERS_SYSZ})
 source_group("Include\\X86" FILES ${HEADERS_X86})
 source_group("Include\\XCore" FILES ${HEADERS_XCORE})
+source_group("Include\\M68K" FILES ${HEADERS_M68K})
 
 ## installation
 install(FILES ${HEADERS_COMMON} DESTINATION include/capstone)
