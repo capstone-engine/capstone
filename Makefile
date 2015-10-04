@@ -128,7 +128,7 @@ endif
 
 
 DEP_M68K =
-DEP_M68K += arch/M68K/M68Kconf.h
+DEP_M68K += arch/M68K/M68KConf.h
 DEP_M68K += arch/M68K/M68KDisassembler.h
 
 LIBOBJ_M68K =
