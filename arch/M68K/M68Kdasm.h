@@ -78,8 +78,7 @@
 
 
 /* CPU types for use in m68k_set_cpu_type() */
-enum
-{
+enum {
 	M68K_CPU_TYPE_INVALID,
 	M68K_CPU_TYPE_68000,
 	M68K_CPU_TYPE_68010,
@@ -356,10 +355,5 @@ unsigned int m68k_disassemble(MCInst* inst, unsigned int pc, unsigned int cpu_ty
 #if M68K_COMPILE_FOR_MAME == OPT_ON
 //#include "m68kmame.h"
 #endif /* M68K_COMPILE_FOR_MAME */
-
-
-/* ======================================================================== */
-/* ============================== END OF FILE ============================= */
-/* ======================================================================== */
 
 #endif /* M68K__HEADER */

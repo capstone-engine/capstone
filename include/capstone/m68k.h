@@ -2,7 +2,7 @@
 #define CAPSTONE_68K_H
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2014 */
+/* By Daniel Collin <daniel@collin.com>, 2015 */
 
 #ifdef __cplusplus
 extern "C" {
@@ -14,9 +14,9 @@ extern "C" {
 #ifdef _MSC_VER
 #pragma warning(disable:4201)
 #endif
-	
+
 #define M68K_OPERAND_COUNT 4
-	
+
 //> M68K registers and special registers
 typedef enum m68k_reg {
 	M68K_REG_INVALID = 0,
@@ -578,4 +578,3 @@ typedef enum m68k_insn {
 #endif
 
 #endif
-
