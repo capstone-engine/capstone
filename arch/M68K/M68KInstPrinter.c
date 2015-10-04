@@ -222,22 +222,29 @@ void M68K_printInst(MCInst* MI, SStream* O, void* Info)
 {
 #ifndef CAPSTONE_DIET
 	int op_count;
-	cs_m68k *info;
+	cs_m68k *info = NULL;
 	int i = 0;
+	cs_detail *detail = NULL;
 
-	cs_detail *detail = MI->flat_insn->detail;
-	if (!detail) {
-		return;
-	}
-
-	info = &detail->m68k;
-	op_count = info->op_count;
+	detail = MI->flat_insn->detail;
+	if (detail)
+		info = &detail->m68k;
 
 	if (MI->Opcode == M68K_INS_INVALID) {
-		SStream_concat(O, "dc.w $%x", info->operands[0].imm);
+		if (info)
+			SStream_concat(O, "dc.w $%x", info->operands[0].imm);
+		else
+			SStream_concat(O, "dc.w $<unknown>");
+
 		return;
 	}
+
 	SStream_concat0(O, (char*)s_instruction_names[MI->Opcode]);
+
+	if (!info)
+		return;
+
+	op_count = info->op_count;
 
 	switch (info->op_size.type) {
 		case M68K_SIZE_TYPE_INVALID :
