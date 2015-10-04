@@ -1,5 +1,5 @@
-#ifndef CAPSTONE_68K_H
-#define CAPSTONE_68K_H
+#ifndef CAPSTONE_M68K_H
+#define CAPSTONE_M68K_H
 
 /* Capstone Disassembly Engine */
 /* By Daniel Collin <daniel@collin.com>, 2015 */
