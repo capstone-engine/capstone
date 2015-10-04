@@ -67,7 +67,7 @@ static uint32_t s_baseAddress;
 unsigned int m68k_read_disassembler_8(uint64_t address)
 {
 	const uint64_t addr = address - s_baseAddress;
-	return s_disassemblyBuffer[address];
+	return s_disassemblyBuffer[addr];
 }
 
 unsigned int m68k_read_disassembler_16(uint64_t address)
@@ -175,7 +175,6 @@ void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 					break;
 			}
 			break;
-		}
 
 		case M68K_AM_REG_DIRECT_DATA: SStream_concat(O, "d%d", (op->reg - M68K_REG_D0)); break;
 		case M68K_AM_REG_DIRECT_ADDR: SStream_concat(O, "a%d", (op->reg - M68K_REG_A0)); break;
@@ -299,7 +298,6 @@ void M68K_printInst(MCInst* MI, SStream* O, void* Info)
 				case M68K_CPU_SIZE_NONE: break;  
 			}
 			break;
-		}
 
 		case M68K_SIZE_TYPE_FPU :
 			switch (info->op_size.fpu_size) {
@@ -309,7 +307,6 @@ void M68K_printInst(MCInst* MI, SStream* O, void* Info)
 				case M68K_FPU_SIZE_NONE: break;  
 			}
 			break;
-		}
 	}
 
 	SStream_concat0(O, " ");
