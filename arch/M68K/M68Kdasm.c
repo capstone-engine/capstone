@@ -137,20 +137,27 @@
 #define BITFIELD_MASK(sb,eb)  (((1 << ((sb) + 1))-1) & (~((1 << (eb))-1)))
 #define BITFIELD(val,sb,eb) ((BITFIELD_MASK(sb,eb) & (val)) >> (eb))
 
+typedef struct m68k_info {
+	MCInst *inst;
+	uint pc;        /* program counter */
+	uint ir;        /* instruction register */
+	uint type;
+	unsigned int address_mask; /* Address mask to simulate address lines */
+} m68k_info;
 
 /* ======================================================================== */
 /* =============================== PROTOTYPES ============================= */
 /* ======================================================================== */
 
 /* Read data at the PC and increment PC */
-uint  read_imm_8(void);
-uint  read_imm_16(void);
-uint  read_imm_32(void);
+uint  read_imm_8(m68k_info *info);
+uint  read_imm_16(m68k_info *info);
+uint  read_imm_32(m68k_info *info);
 
 /* Read data at the PC but don't imcrement the PC */
-uint  peek_imm_8(void);
-uint  peek_imm_16(void);
-uint  peek_imm_32(void);
+uint  peek_imm_8(m68k_info *info);
+uint  peek_imm_16(m68k_info *info);
+uint  peek_imm_32(m68k_info *info);
 
 /* make signed integers 100% portably */
 static int make_int_8(int value);
@@ -160,12 +167,12 @@ static int make_int_16(int value);
 static void build_opcode_table(void);
 static int valid_ea(uint opcode, uint mask);
 static int DECL_SPEC compare_nof_true_bits(const void *aptr, const void *bptr);
-static void d68000_invalid(void);
-static int instruction_is_valid(const unsigned int instruction, const unsigned int word_check);
+static void d68000_invalid(m68k_info *info);
+static int instruction_is_valid(m68k_info *info, const unsigned int word_check);
 
 /* used to build opcode handler jump table */
 typedef struct {
-	void (*opcode_handler)(void); /* handler function */
+	void (*opcode_handler)(m68k_info *info); /* handler function */
 	uint mask;                    /* mask on opcode */
 	uint match;                   /* what to match after masking */
 	uint ea_mask;                 /* what ea modes are allowed */
@@ -174,7 +181,7 @@ typedef struct {
 } opcode_struct;
 
 typedef struct {
-	void (*instruction)(void);    /* handler function */
+	void (*instruction)(m68k_info *info);    /* handler function */
 	uint word2_mask;              /* mask the 2nd word */
 	uint word2_match;             /* what to match after masking */
 } instruction_struct;
@@ -185,17 +192,6 @@ typedef struct {
 
 /* Opcode handler jump table */
 static instruction_struct g_instruction_table[0x10000];
-/* Flag if disassembler initialized */
-static int  g_initialized = 0;
-
-/* Address mask to simulate address lines */
-static unsigned int g_address_mask = 0xffffffff;
-
-static MCInst* g_inst;
-static char g_helper_str[100]; /* string to hold helpful info */
-static uint g_cpu_pc;        /* program counter */
-static uint g_cpu_ir;        /* instruction register */
-static uint g_cpu_type;
 
 /* used by ops like asr, ror, addq, etc */
 static uint g_3bit_qdata_table[8] = {8, 1, 2, 3, 4, 5, 6, 7};
@@ -238,21 +234,23 @@ static m68k_insn s_trap_lut[] = {
 /* =========================== UTILITY FUNCTIONS ========================== */
 /* ======================================================================== */
 
-#define LIMIT_CPU_TYPES(ALLOWED_CPU_TYPES)	\
-	if(!(g_cpu_type & ALLOWED_CPU_TYPES))	\
-{										\
-	d68000_invalid();					\
-	return;								\
-}
+#define LIMIT_CPU_TYPES(info, ALLOWED_CPU_TYPES)	\
+	do {						\
+		if(!(info->type & ALLOWED_CPU_TYPES))	\
+		{					\
+			d68000_invalid(info);		\
+			return;				\
+		}					\
+	} while (0)
 
-#define read_imm_8()  (m68k_read_disassembler_16(((g_cpu_pc+=2)-2)&g_address_mask)&0xff)
-#define read_imm_16() m68k_read_disassembler_16(((g_cpu_pc+=2)-2)&g_address_mask)
-#define read_imm_32() m68k_read_disassembler_32(((g_cpu_pc+=4)-4)&g_address_mask)
-#define read_imm_64() m68k_read_disassembler_64(((g_cpu_pc+=8)-8)&g_address_mask)
+#define read_imm_8(info)  (m68k_read_disassembler_16((((info)->pc+=2)-2)&(info)->address_mask)&0xff)
+#define read_imm_16(info) m68k_read_disassembler_16((((info)->pc+=2)-2)&(info)->address_mask)
+#define read_imm_32(info) m68k_read_disassembler_32((((info)->pc+=4)-4)&(info)->address_mask)
+#define read_imm_64(info) m68k_read_disassembler_64((((info)->pc+=8)-8)&(info)->address_mask)
 
-#define peek_imm_8()  (m68k_read_disassembler_16(g_cpu_pc & g_address_mask)&0xff)
-#define peek_imm_16() m68k_read_disassembler_16(g_cpu_pc & g_address_mask)
-#define peek_imm_32() m68k_read_disassembler_32(g_cpu_pc & g_address_mask)
+#define peek_imm_8(info)  (m68k_read_disassembler_16((info)->pc & (info)->address_mask)&0xff)
+#define peek_imm_16(info) m68k_read_disassembler_16((info)->pc & (info)->address_mask)
+#define peek_imm_32(info) m68k_read_disassembler_32((info)->pc & (info)->address_mask)
 
 /* Fake a split interface */
 #define get_ea_mode_str_8(instruction) get_ea_mode_str(instruction, 0)
@@ -279,9 +277,9 @@ static int make_int_16(int value)
 	return (value & 0x8000) ? value | ~0xffff : value & 0xffff;
 }
 
-static void get_with_index_address_mode(cs_m68k_op* op, uint instruction, uint size, bool is_pc)
+static void get_with_index_address_mode(m68k_info *info, cs_m68k_op* op, uint instruction, uint size, bool is_pc)
 {
-	uint extension = read_imm_16();
+	uint extension = read_imm_16(info);
 
 	op->address_mode = M68K_AM_AREGI_INDEX_BASE_DISP;
 
@@ -300,8 +298,8 @@ static void get_with_index_address_mode(cs_m68k_op* op, uint instruction, uint s
 		   }
 		 */
 
-		op->mem.in_disp = EXT_BASE_DISPLACEMENT_PRESENT(extension) ? (EXT_BASE_DISPLACEMENT_LONG(extension) ? read_imm_32() : read_imm_16()) : 0;
-		op->mem.out_disp = EXT_OUTER_DISPLACEMENT_PRESENT(extension) ? (EXT_OUTER_DISPLACEMENT_LONG(extension) ? read_imm_32() : read_imm_16()) : 0;
+		op->mem.in_disp = EXT_BASE_DISPLACEMENT_PRESENT(extension) ? (EXT_BASE_DISPLACEMENT_LONG(extension) ? read_imm_32(info) : read_imm_16(info)) : 0;
+		op->mem.out_disp = EXT_OUTER_DISPLACEMENT_PRESENT(extension) ? (EXT_OUTER_DISPLACEMENT_LONG(extension) ? read_imm_32(info) : read_imm_16(info)) : 0;
 
 		if (EXT_BASE_REGISTER_PRESENT(extension)) {
 			if (is_pc) {
@@ -365,7 +363,7 @@ static void get_with_index_address_mode(cs_m68k_op* op, uint instruction, uint s
 }
 
 /* Make string of effective address mode */
-void get_ea_mode_op(cs_m68k_op* op, uint instruction, uint size)
+void get_ea_mode_op(m68k_info *info, cs_m68k_op* op, uint instruction, uint size)
 {
 	// default to memory
 
@@ -408,35 +406,35 @@ void get_ea_mode_op(cs_m68k_op* op, uint instruction, uint size)
 			/* address register indirect with displacement*/
 			op->address_mode = M68K_AM_REGI_ADDR_DISP;
 			op->mem.base_reg = M68K_REG_A0 + (instruction & 7);
-			op->mem.disp = read_imm_16();
+			op->mem.disp = read_imm_16(info);
 			break;
 
 		case 0x30: case 0x31: case 0x32: case 0x33: case 0x34: case 0x35: case 0x36: case 0x37:
 			/* address register indirect with index */
-			get_with_index_address_mode(op, instruction, size, false);
+			get_with_index_address_mode(info, op, instruction, size, false);
 			break;
 
 		case 0x38:
 			/* absolute short address */
 			op->address_mode = M68K_AM_ABSOLUTE_DATA_SHORT;
-			op->imm = read_imm_16();
+			op->imm = read_imm_16(info);
 			break;
 
 		case 0x39:
 			/* absolute long address */
 			op->address_mode = M68K_AM_ABSOLUTE_DATA_LONG;
-			op->imm = read_imm_32();
+			op->imm = read_imm_32(info);
 			break;
 
 		case 0x3a:
 			/* program counter with displacement */
 			op->address_mode = M68K_AM_PCI_DISP;
-			op->mem.disp = read_imm_16();
+			op->mem.disp = read_imm_16(info);
 			break;
 
 		case 0x3b:
 			/* program counter with index */
-			get_with_index_address_mode(op, instruction, size, true);
+			get_with_index_address_mode(info, op, instruction, size, true);
 			break;
 
 		case 0x3c:
@@ -444,13 +442,13 @@ void get_ea_mode_op(cs_m68k_op* op, uint instruction, uint size)
 			op->type = M68K_OP_IMM;
 
 			if (size == 1)
-				op->imm = read_imm_8() & 0xff;
+				op->imm = read_imm_8(info) & 0xff;
 			else if (size == 2)
-				op->imm = read_imm_16() & 0xffff;
+				op->imm = read_imm_16(info) & 0xffff;
 			else if (size == 4)
-				op->imm = read_imm_32();
+				op->imm = read_imm_32(info);
 			else
-				op->imm = read_imm_64();
+				op->imm = read_imm_64(info);
 
 			break;
 
@@ -459,296 +457,296 @@ void get_ea_mode_op(cs_m68k_op* op, uint instruction, uint size)
 	}
 }
 
-static cs_m68k* build_init_op(int opcode, int count, int size)
+static cs_m68k* build_init_op(m68k_info *info, int opcode, int count, int size)
 {
-	cs_m68k* info;
+	cs_m68k* ext;
 	cs_detail *detail;
 
-	MCInst_setOpcode(g_inst, opcode);
+	MCInst_setOpcode(info->inst, opcode);
 
-	detail = g_inst->flat_insn->detail;
+	detail = info->inst->flat_insn->detail;
 	if (!detail) {
 		return NULL;
 	}
 
-	info = &detail->m68k;
+	ext = &detail->m68k;
 
-	info->op_count = count;
-	info->op_size.type = M68K_SIZE_TYPE_CPU;
-	info->op_size.cpu_size = size; 
+	ext->op_count = count;
+	ext->op_size.type = M68K_SIZE_TYPE_CPU;
+	ext->op_size.cpu_size = size;
 
-	return info;
+	return ext;
 }
 
-static void build_re_gen_1(bool isDreg, int opcode, uint8_t size)
+static void build_re_gen_1(m68k_info *info, bool isDreg, int opcode, uint8_t size)
 {
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 
-	cs_m68k* info = build_init_op(opcode, 2, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, opcode, 2, size);
+	if (!ext) {
 		return;
 	}
 
-	op0 = &info->operands[0];
-	op1 = &info->operands[1];
+	op0 = &ext->operands[0];
+	op1 = &ext->operands[1];
 
 	if (isDreg) {
 		op0->address_mode = M68K_AM_REG_DIRECT_DATA;
-		op0->reg = M68K_REG_D0 + ((g_cpu_ir >> 9 ) & 7);
+		op0->reg = M68K_REG_D0 + ((info->ir >> 9 ) & 7);
 	} else {
 		op0->address_mode = M68K_AM_REG_DIRECT_ADDR;
-		op0->reg = M68K_REG_A0 + ((g_cpu_ir >> 9 ) & 7);
+		op0->reg = M68K_REG_A0 + ((info->ir >> 9 ) & 7);
 	}
 
-	get_ea_mode_op(op1, g_cpu_ir, size);
+	get_ea_mode_op(info, op1, info->ir, size);
 }
 
-static void build_re_1(int opcode, uint8_t size)
+static void build_re_1(m68k_info *info, int opcode, uint8_t size)
 {
-	build_re_gen_1(true, opcode, size);
+	build_re_gen_1(info, true, opcode, size);
 }
 
-static void build_er_gen_1(bool isDreg, int opcode, uint8_t size)
+static void build_er_gen_1(m68k_info *info, bool isDreg, int opcode, uint8_t size)
 {
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 
-	cs_m68k* info = build_init_op(opcode, 2, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, opcode, 2, size);
+	if (!ext) {
 		return;
 	}
 
-	op0 = &info->operands[0];
-	op1 = &info->operands[1];
+	op0 = &ext->operands[0];
+	op1 = &ext->operands[1];
 
-	get_ea_mode_op(op0, g_cpu_ir, size);
+	get_ea_mode_op(info, op0, info->ir, size);
 
 	if (isDreg) {
 		op1->address_mode = M68K_AM_REG_DIRECT_DATA;
-		op1->reg = M68K_REG_D0 + ((g_cpu_ir >> 9) & 7);
+		op1->reg = M68K_REG_D0 + ((info->ir >> 9) & 7);
 	} else {
 		op1->address_mode = M68K_AM_REG_DIRECT_ADDR;
-		op1->reg = M68K_REG_A0 + ((g_cpu_ir >> 9) & 7);
+		op1->reg = M68K_REG_A0 + ((info->ir >> 9) & 7);
 	}
 }
 
-static void build_rr(int opcode, uint8_t size, int imm)
+static void build_rr(m68k_info *info, int opcode, uint8_t size, int imm)
 {
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 	cs_m68k_op* op2;
 
-	cs_m68k* info = build_init_op(opcode, 2, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, opcode, 2, size);
+	if (!ext) {
 		return;
 	}
 
-	op0 = &info->operands[0];
-	op1 = &info->operands[1];
-	op2 = &info->operands[2];
+	op0 = &ext->operands[0];
+	op1 = &ext->operands[1];
+	op2 = &ext->operands[2];
 
 	op0->address_mode = M68K_AM_REG_DIRECT_DATA;
-	op0->reg = M68K_REG_D0 + (g_cpu_ir & 7);
+	op0->reg = M68K_REG_D0 + (info->ir & 7);
 
 	op1->address_mode = M68K_AM_REG_DIRECT_DATA;
-	op1->reg = M68K_REG_D0 + ((g_cpu_ir >> 9) & 7);
+	op1->reg = M68K_REG_D0 + ((info->ir >> 9) & 7);
 
 	if (imm > 0) {
-		info->op_count = 3;
+		ext->op_count = 3;
 		op2->type = M68K_OP_IMM;
 		op2->address_mode = M68K_AM_IMMIDIATE;
 		op2->imm = imm;
 	}
 }
 
-static void build_r(int opcode, uint8_t size)
+static void build_r(m68k_info *info, int opcode, uint8_t size)
 {
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 
-	cs_m68k* info = build_init_op(opcode, 2, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, opcode, 2, size);
+	if (!ext) {
 		return;
 	}
 
-	op0 = &info->operands[0];
-	op1 = &info->operands[1];
+	op0 = &ext->operands[0];
+	op1 = &ext->operands[1];
 
 	op0->address_mode = M68K_AM_REG_DIRECT_DATA;
-	op0->reg = M68K_REG_D0 + ((g_cpu_ir >> 9) & 7);
+	op0->reg = M68K_REG_D0 + ((info->ir >> 9) & 7);
 
 	op1->address_mode = M68K_AM_REG_DIRECT_DATA;
-	op1->reg = M68K_REG_D0 + (g_cpu_ir & 7);
+	op1->reg = M68K_REG_D0 + (info->ir & 7);
 }
 
-static void build_imm_ea(int opcode, uint8_t size, int imm)
+static void build_imm_ea(m68k_info *info, int opcode, uint8_t size, int imm)
 {
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 
-	cs_m68k* info = build_init_op(opcode, 2, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, opcode, 2, size);
+	if (!ext) {
 		return;
 	}
 
-	op0 = &info->operands[0];
-	op1 = &info->operands[1];
+	op0 = &ext->operands[0];
+	op1 = &ext->operands[1];
 
 	op0->type = M68K_OP_IMM;
 	op0->address_mode = M68K_AM_IMMIDIATE;
 	op0->imm = imm; 
 
-	get_ea_mode_op(op1, g_cpu_ir, size);
+	get_ea_mode_op(info, op1, info->ir, size);
 }
 
-static void build_3bit_d(int opcode, int size)
+static void build_3bit_d(m68k_info *info, int opcode, int size)
 {
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 
-	cs_m68k* info = build_init_op(opcode, 2, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, opcode, 2, size);
+	if (!ext) {
 		return;
 	}
 
-	op0 = &info->operands[0];
-	op1 = &info->operands[1];
+	op0 = &ext->operands[0];
+	op1 = &ext->operands[1];
 
 	op0->type = M68K_OP_IMM;
 	op0->address_mode = M68K_AM_IMMIDIATE;
-	op0->imm = g_3bit_qdata_table[(g_cpu_ir >> 9) & 7];
+	op0->imm = g_3bit_qdata_table[(info->ir >> 9) & 7];
 
 	op1->address_mode = M68K_AM_REG_DIRECT_DATA;
-	op1->reg = M68K_REG_D0 + (g_cpu_ir & 7);
+	op1->reg = M68K_REG_D0 + (info->ir & 7);
 }
 
-static void build_3bit_ea(int opcode, int size)
+static void build_3bit_ea(m68k_info *info, int opcode, int size)
 {
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 
-	cs_m68k* info = build_init_op(opcode, 2, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, opcode, 2, size);
+	if (!ext) {
 		return;
 	}
 
-	op0 = &info->operands[0];
-	op1 = &info->operands[1];
+	op0 = &ext->operands[0];
+	op1 = &ext->operands[1];
 
 	op0->type = M68K_OP_IMM;
 	op0->address_mode = M68K_AM_IMMIDIATE;
-	op0->imm = g_3bit_qdata_table[(g_cpu_ir >> 9) & 7];
+	op0->imm = g_3bit_qdata_table[(info->ir >> 9) & 7];
 
-	get_ea_mode_op(op1, g_cpu_ir, size);
+	get_ea_mode_op(info, op1, info->ir, size);
 }
 
-static void build_mm(int opcode, uint8_t size, int imm)
+static void build_mm(m68k_info *info, int opcode, uint8_t size, int imm)
 {
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 	cs_m68k_op* op2;
 
-	cs_m68k* info = build_init_op(opcode, 2, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, opcode, 2, size);
+	if (!ext) {
 		return;
 	}
 
-	op0 = &info->operands[0];
-	op1 = &info->operands[1];
-	op2 = &info->operands[2];
+	op0 = &ext->operands[0];
+	op1 = &ext->operands[1];
+	op2 = &ext->operands[2];
 
 	op0->address_mode = M68K_AM_REGI_ADDR_PRE_DEC;
-	op0->reg = M68K_REG_A0 + (g_cpu_ir & 7);
+	op0->reg = M68K_REG_A0 + (info->ir & 7);
 
 	op1->address_mode = M68K_AM_REGI_ADDR_PRE_DEC;
-	op1->reg = M68K_REG_A0 + ((g_cpu_ir >> 9) & 7);
+	op1->reg = M68K_REG_A0 + ((info->ir >> 9) & 7);
 
 	if (imm > 0) {
-		info->op_count = 3;
+		ext->op_count = 3;
 		op2->type = M68K_OP_IMM;
 		op2->address_mode = M68K_AM_IMMIDIATE;
 		op2->imm = imm;
 	}
 }
 
-static void build_ea(int opcode, uint8_t size)
+static void build_ea(m68k_info *info, int opcode, uint8_t size)
 {
-	cs_m68k* info = build_init_op(opcode, 1, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, opcode, 1, size);
+	if (!ext) {
 		return;
 	}
-	get_ea_mode_op(&info->operands[0], g_cpu_ir, size);
+	get_ea_mode_op(info, &ext->operands[0], info->ir, size);
 }
 
-static void build_ea_a(int opcode, uint8_t size)
+static void build_ea_a(m68k_info *info, int opcode, uint8_t size)
 {
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 
-	cs_m68k* info = build_init_op(opcode, 2, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, opcode, 2, size);
+	if (!ext) {
 		return;
 	}
 
-	op0 = &info->operands[0];
-	op1 = &info->operands[1];
+	op0 = &ext->operands[0];
+	op1 = &ext->operands[1];
 
-	get_ea_mode_op(op0, g_cpu_ir, size);
+	get_ea_mode_op(info, op0, info->ir, size);
 
 	op1->address_mode = M68K_AM_REG_DIRECT_ADDR;
-	op1->reg = M68K_REG_A0 + ((g_cpu_ir >> 9) & 7);
+	op1->reg = M68K_REG_A0 + ((info->ir >> 9) & 7);
 }
 
-static void build_ea_ea(int opcode, int size)
+static void build_ea_ea(m68k_info *info, int opcode, int size)
 {
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 
-	cs_m68k* info = build_init_op(opcode, 2, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, opcode, 2, size);
+	if (!ext) {
 		return;
 	}
 
-	op0 = &info->operands[0];
-	op1 = &info->operands[1];
+	op0 = &ext->operands[0];
+	op1 = &ext->operands[1];
 
-	get_ea_mode_op(op0, g_cpu_ir, size);
-	get_ea_mode_op(op1, (((g_cpu_ir>>9) & 7) | ((g_cpu_ir>>3) & 0x38)), size);
+	get_ea_mode_op(info, op0, info->ir, size);
+	get_ea_mode_op(info, op1, (((info->ir>>9) & 7) | ((info->ir>>3) & 0x38)), size);
 }
 
-static void build_pi_pi(int opcode, int size)
+static void build_pi_pi(m68k_info *info, int opcode, int size)
 {
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 
-	cs_m68k* info = build_init_op(opcode, 2, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, opcode, 2, size);
+	if (!ext) {
 		return;
 	}
 
-	op0 = &info->operands[0];
-	op1 = &info->operands[1];
+	op0 = &ext->operands[0];
+	op1 = &ext->operands[1];
 
 	op0->address_mode = M68K_AM_REGI_ADDR_POST_INC;
-	op0->reg = M68K_REG_A0 + (g_cpu_ir & 7);
+	op0->reg = M68K_REG_A0 + (info->ir & 7);
 
 	op1->address_mode = M68K_AM_REGI_ADDR_POST_INC;
-	op1->reg = M68K_REG_A0 + ((g_cpu_ir >> 9) & 7);
+	op1->reg = M68K_REG_A0 + ((info->ir >> 9) & 7);
 }
 
-static void build_imm_special_reg(int opcode, int imm, int size, m68k_reg reg)
+static void build_imm_special_reg(m68k_info *info, int opcode, int imm, int size, m68k_reg reg)
 {
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 
-	cs_m68k* info = build_init_op(opcode, 2, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, opcode, 2, size);
+	if (!ext) {
 		return;
 	}
 
-	op0 = &info->operands[0];
-	op1 = &info->operands[1];
+	op0 = &ext->operands[0];
+	op1 = &ext->operands[1];
 
 	op0->type = M68K_OP_IMM;
 	op0->address_mode = M68K_AM_IMMIDIATE;
@@ -758,72 +756,72 @@ static void build_imm_special_reg(int opcode, int imm, int size, m68k_reg reg)
 	op1->reg = reg; 
 }
 
-static void build_bxx(int opcode, int size, int jump_offset)
+static void build_bxx(m68k_info *info, int opcode, int size, int jump_offset)
 {
 	cs_m68k_op* op;
-	cs_m68k* info = build_init_op(opcode, 1, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, opcode, 1, size);
+	if (!ext) {
 		return;
 	}
 
-	op = &info->operands[0];
+	op = &ext->operands[0];
 
 	op->type = M68K_OP_IMM;
 	op->address_mode = M68K_AM_IMMIDIATE;
 	op->imm = jump_offset;
 }
 
-static void build_bcc(int size, int jump_offset)
+static void build_bcc(m68k_info *info, int size, int jump_offset)
 {
-	build_bxx(s_branch_lut[(g_cpu_ir >> 8) & 0xf], size, jump_offset);
+	build_bxx(info, s_branch_lut[(info->ir >> 8) & 0xf], size, jump_offset);
 }
 
-static void build_trap(int size, int jump_offset)
+static void build_trap(m68k_info *info, int size, int jump_offset)
 {
-	build_bxx(s_trap_lut[(g_cpu_ir >> 8) & 0xf], size, jump_offset);
+	build_bxx(info, s_trap_lut[(info->ir >> 8) & 0xf], size, jump_offset);
 }
 
-static void build_dbxx(int opcode, int size, int jump_offset)
+static void build_dbxx(m68k_info *info, int opcode, int size, int jump_offset)
 {
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 
-	cs_m68k* info = build_init_op(opcode, 2, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, opcode, 2, size);
+	if (!ext) {
 		return;
 	}
 
-	op0 = &info->operands[0];
-	op1 = &info->operands[1];
+	op0 = &ext->operands[0];
+	op1 = &ext->operands[1];
 
 	op0->address_mode = M68K_AM_REG_DIRECT_DATA;
-	op0->reg = M68K_REG_D0 + (g_cpu_ir & 7);
+	op0->reg = M68K_REG_D0 + (info->ir & 7);
 
 	op1->type = M68K_OP_IMM;
 	op1->address_mode = M68K_AM_IMMIDIATE;
 	op1->imm = jump_offset;
 }
 
-static void build_dbcc(int size, int jump_offset)
+static void build_dbcc(m68k_info *info, int size, int jump_offset)
 {
-	build_dbxx(s_dbcc_lut[(g_cpu_ir >> 8) & 0xf], size, jump_offset);
+	build_dbxx(info, s_dbcc_lut[(info->ir >> 8) & 0xf], size, jump_offset);
 }
 
-static void build_d_d_ea(int opcode, int size)
+static void build_d_d_ea(m68k_info *info, int opcode, int size)
 {
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 	cs_m68k_op* op2;
-	uint extension = read_imm_16();
+	uint extension = read_imm_16(info);
 
-	cs_m68k* info = build_init_op(opcode, 3, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, opcode, 3, size);
+	if (!ext) {
 		return;
 	}
 
-	op0 = &info->operands[0];
-	op1 = &info->operands[1];
-	op2 = &info->operands[2];
+	op0 = &ext->operands[0];
+	op1 = &ext->operands[1];
+	op2 = &ext->operands[2];
 
 	op0->address_mode = M68K_AM_REG_DIRECT_DATA;
 	op0->reg = M68K_REG_D0 + (extension & 7);
@@ -831,27 +829,26 @@ static void build_d_d_ea(int opcode, int size)
 	op1->address_mode = M68K_AM_REG_DIRECT_DATA;
 	op1->reg = M68K_REG_D0 + ((extension >> 6) & 7);
 
-	get_ea_mode_op(op2, g_cpu_ir, size);
+	get_ea_mode_op(info, op2, info->ir, size);
 }
 
-static void build_bitfield_ins(int opcode, int has_d_arg)
+static void build_bitfield_ins(m68k_info *info, int opcode, int has_d_arg)
 {
 	uint8_t offset;
 	uint8_t width;
 	cs_m68k_op* op_ea;
 	cs_m68k_op* op1;
-	cs_m68k* info;
+	cs_m68k* ext;
 
+	uint extension = read_imm_16(info);
 
-	uint extension = read_imm_16();
-
-	info = build_init_op(opcode, 1, 0);
-	if (!info) {
+	ext = build_init_op(info, opcode, 1, 0);
+	if (!ext) {
 		return;
 	}
 
-	op_ea = &info->operands[0];
-	op1 = &info->operands[1];
+	op_ea = &ext->operands[0];
+	op1 = &ext->operands[1];
 
 	if (BIT_B(extension))
 		offset = (extension >> 6) & 7;
@@ -864,31 +861,31 @@ static void build_bitfield_ins(int opcode, int has_d_arg)
 		width = g_5bit_data_table[extension & 31];
 
 	if (has_d_arg) {
-		info->op_count = 2;
+		ext->op_count = 2;
 		op1->address_mode = M68K_AM_REG_DIRECT_DATA;
 		op1->reg = M68K_REG_D0 + ((extension >> 12) & 7);
 	}
 
-	get_ea_mode_op(op_ea, g_cpu_ir, 1);
+	get_ea_mode_op(info, op_ea, info->ir, 1);
 
 	op_ea->mem.bitfield = 1;
 	op_ea->mem.width = width;
 	op_ea->mem.offset = offset;
 }
 
-static void build_d(int opcode, int size)
+static void build_d(m68k_info *info, int opcode, int size)
 {
-	cs_m68k* info = build_init_op(opcode, 1, size);
+	cs_m68k* ext = build_init_op(info, opcode, 1, size);
 	cs_m68k_op* op;
 
-	if (!info) {
+	if (!ext) {
 		return;
 	}
 
-	op = &info->operands[0];
+	op = &ext->operands[0];
 
 	op->address_mode = M68K_AM_REG_DIRECT_DATA;
-	op->reg = M68K_REG_D0 + (g_cpu_ir & 7);
+	op->reg = M68K_REG_D0 + (info->ir & 7);
 }
 
 static uint16_t reverse_bits(uint v)
@@ -920,72 +917,72 @@ static uint8_t reverse_bits_8(uint v)
 }
 
 
-static void build_movem_re(int opcode, int size)
+static void build_movem_re(m68k_info *info, int opcode, int size)
 {
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 
-	cs_m68k* info = build_init_op(opcode, 2, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, opcode, 2, size);
+	if (!ext) {
 		return;
 	}
 
-	op0 = &info->operands[0];
-	op1 = &info->operands[1];
+	op0 = &ext->operands[0];
+	op1 = &ext->operands[1];
 
 	op0->type = M68K_OP_REG_BITS;
-	op0->register_bits = reverse_bits(read_imm_16());
+	op0->register_bits = reverse_bits(read_imm_16(info));
 
-	get_ea_mode_op(op1, g_cpu_ir, size);
+	get_ea_mode_op(info, op1, info->ir, size);
 }
 
-static void build_movem_er(int opcode, int size)
+static void build_movem_er(m68k_info *info, int opcode, int size)
 {
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 
-	cs_m68k* info = build_init_op(opcode, 2, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, opcode, 2, size);
+	if (!ext) {
 		return;
 	}
 
-	op0 = &info->operands[0];
-	op1 = &info->operands[1];
+	op0 = &ext->operands[0];
+	op1 = &ext->operands[1];
 
-	get_ea_mode_op(op0, g_cpu_ir, size);
+	get_ea_mode_op(info, op0, info->ir, size);
 
 	op1->type = M68K_OP_REG_BITS;
-	op1->register_bits = read_imm_16(); 
+	op1->register_bits = read_imm_16(info);
 }
 
-static void build_imm(int opcode, int data)
+static void build_imm(m68k_info *info, int opcode, int data)
 {
 	cs_m68k_op* op;
-	cs_m68k* info = build_init_op(opcode, 1, 0);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, opcode, 1, 0);
+	if (!ext) {
 		return;
 	}
 
-	MCInst_setOpcode(g_inst, opcode);
+	MCInst_setOpcode(info->inst, opcode);
 
-	op = &info->operands[0];
+	op = &ext->operands[0];
 
 	op->type = M68K_OP_IMM;
 	op->address_mode = M68K_AM_IMMIDIATE;
 	op->imm = data;
 }
 
-static void build_illegal(int data)
+static void build_illegal(m68k_info *info, int data)
 {
-	build_imm(M68K_INS_ILLEGAL, data);
+	build_imm(info, M68K_INS_ILLEGAL, data);
 }
 
-static void build_invalid(int data)
+static void build_invalid(m68k_info *info, int data)
 {
-	build_imm(M68K_INS_INVALID, data);
+	build_imm(info, M68K_INS_INVALID, data);
 }
 
-static void build_cas2(int size)
+static void build_cas2(m68k_info *info, int size)
 {
 	uint word3;
 	uint extension;
@@ -995,21 +992,21 @@ static void build_cas2(int size)
 	int reg_0, reg_1;
 
 
-	cs_m68k* info = build_init_op(M68K_INS_CAS2, 3, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_CAS2, 3, size);
+	if (!ext) {
 		return;
 	}
 
 	/* cas2 is the only 3 words instruction, word2 and word3 have the same motif bits to check */
-	word3 = peek_imm_32() & 0xffff;
-	if(!instruction_is_valid(g_cpu_ir, word3))
+	word3 = peek_imm_32(info) & 0xffff;
+	if(!instruction_is_valid(info, word3))
 		return;
 
-	op0 = &info->operands[0];
-	op1 = &info->operands[1];
-	op2 = &info->operands[2];
+	op0 = &ext->operands[0];
+	op1 = &ext->operands[1];
+	op2 = &ext->operands[2];
 
-	extension = read_imm_32();
+	extension = read_imm_32(info);
 
 	op0->address_mode = M68K_AM_NONE;
 	op0->type = M68K_OP_REG_PAIR;
@@ -1028,44 +1025,44 @@ static void build_cas2(int size)
 		(reg_1 + (BIT_F(extension) ? 8 : 0));
 }
 
-static void build_chk2_cmp2(int size)
+static void build_chk2_cmp2(m68k_info *info, int size)
 {
-	uint extension = read_imm_16();
+	uint extension = read_imm_16(info);
 
-	cs_m68k* info = build_init_op(M68K_INS_CHK2, 2, size);
+	cs_m68k* ext = build_init_op(info, M68K_INS_CHK2, 2, size);
 
 	if (BIT_B(extension))
-		MCInst_setOpcode(g_inst, M68K_INS_CHK2);
+		MCInst_setOpcode(info->inst, M68K_INS_CHK2);
 	else
-		MCInst_setOpcode(g_inst, M68K_INS_CMP2);
+		MCInst_setOpcode(info->inst, M68K_INS_CMP2);
 
-	if (!info) {
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
-	get_ea_mode_op(op0, g_cpu_ir, size);
+	get_ea_mode_op(info, op0, info->ir, size);
 
 	op1->address_mode = M68K_AM_NONE;
 	op1->type = M68K_OP_REG;
 	op1->reg = (BIT_F(extension) ? M68K_REG_A0 : M68K_REG_D0) + ((extension >> 12) & 7);
 }
 
-static void build_move16(int data[2], int modes[2])
+static void build_move16(m68k_info *info, int data[2], int modes[2])
 {
 	int i;
 
-	cs_m68k* info = build_init_op(M68K_INS_MOVE16, 2, 0);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_MOVE16, 2, 0);
+	if (!ext) {
 		return;
 	}
 
 	for (i = 0; i < 2; ++i) {
-		cs_m68k_op* op = &info->operands[i];
-		const int d = data[i]; 
-		const int m = modes[i]; 
+		cs_m68k_op* op = &ext->operands[i];
+		const int d = data[i];
+		const int m = modes[i];
 
 		op->type = M68K_OP_MEM;
 
@@ -1074,130 +1071,130 @@ static void build_move16(int data[2], int modes[2])
 			op->reg = M68K_REG_A0 + d;
 		} else {
 			op->address_mode = m;
-			op->imm = d; 
+			op->imm = d;
 		}
 	}
 }
 
-static void build_link(int disp, int size)
+static void build_link(m68k_info *info, int disp, int size)
 {
-	cs_m68k* info = build_init_op(M68K_INS_LINK, 2, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_LINK, 2, size);
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
 	op0->address_mode = M68K_AM_NONE;
-	op0->reg = M68K_REG_A0 + (g_cpu_ir & 7);
+	op0->reg = M68K_REG_A0 + (info->ir & 7);
 
 	op1->address_mode = M68K_AM_IMMIDIATE;
 	op1->type = M68K_OP_IMM;
 	op1->imm = disp;
 }
 
-static void build_cpush_cinv(int op_offset)
+static void build_cpush_cinv(m68k_info *info, int op_offset)
 {
-	cs_m68k* info = build_init_op(M68K_INS_INVALID, 2, 0);
-	switch ((g_cpu_ir >> 3) & 3) { // scope
+	cs_m68k* ext = build_init_op(info, M68K_INS_INVALID, 2, 0);
+	switch ((info->ir >> 3) & 3) { // scope
 		// Invalid
 		case 0: 
-			d68000_invalid();
+			d68000_invalid(info);
 			return;
 			// Line
 		case 1:
-			MCInst_setOpcode(g_inst, op_offset + 0);
+			MCInst_setOpcode(info->inst, op_offset + 0);
 			break;
 			// Page
 		case 2:
-			MCInst_setOpcode(g_inst, op_offset + 1);
+			MCInst_setOpcode(info->inst, op_offset + 1);
 			break;
 			// All
 		case 3:
 			if(info) {
-				info->op_count = 1;
+				ext->op_count = 1;
 			}
-			MCInst_setOpcode(g_inst, op_offset + 2);
+			MCInst_setOpcode(info->inst, op_offset + 2);
 			break;
 	}
 
-	if (!info) {
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
 	op0->address_mode = M68K_AM_IMMIDIATE;
 	op0->type = M68K_OP_IMM;
-	op0->imm = (g_cpu_ir >> 6) & 3;
+	op0->imm = (info->ir >> 6) & 3;
 
 	op1->type = M68K_OP_MEM;
 	op1->address_mode = M68K_AM_REG_DIRECT_ADDR;
-	op1->imm = M68K_REG_A0 + (g_cpu_ir & 7);
+	op1->imm = M68K_REG_A0 + (info->ir & 7);
 }
 
-static void build_movep_re(int size)
+static void build_movep_re(m68k_info *info, int size)
 {
-	cs_m68k* info = build_init_op(M68K_INS_MOVEP, 2, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_MOVEP, 2, size);
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
-	op0->reg = M68K_REG_D0 + ((g_cpu_ir >> 9) & 7);
+	op0->reg = M68K_REG_D0 + ((info->ir >> 9) & 7);
 
 	op1->address_mode = M68K_AM_REGI_ADDR_DISP;
 	op1->type = M68K_OP_MEM;
-	op1->mem.base_reg = M68K_REG_A0 + (g_cpu_ir & 7); 
-	op1->mem.disp = read_imm_16();
+	op1->mem.base_reg = M68K_REG_A0 + (info->ir & 7);
+	op1->mem.disp = read_imm_16(info);
 }
 
-static void build_movep_er(int size)
+static void build_movep_er(m68k_info *info, int size)
 {
-	cs_m68k* info = build_init_op(M68K_INS_MOVEP, 2, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_MOVEP, 2, size);
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
 	op0->address_mode = M68K_AM_REGI_ADDR_DISP;
 	op0->type = M68K_OP_MEM;
-	op0->mem.base_reg = M68K_REG_A0 + (g_cpu_ir & 7); 
-	op0->mem.disp = read_imm_16();
+	op0->mem.base_reg = M68K_REG_A0 + (info->ir & 7);
+	op0->mem.disp = read_imm_16(info);
 
-	op1->reg = M68K_REG_D0 + ((g_cpu_ir >> 9) & 7);
+	op1->reg = M68K_REG_D0 + ((info->ir >> 9) & 7);
 }
 
-static void build_moves(int size)
+static void build_moves(m68k_info *info, int size)
 {
-	uint extension = read_imm_16();
+	uint extension = read_imm_16(info);
 
-	cs_m68k* info = build_init_op(M68K_INS_MOVES, 2, size);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_MOVES, 2, size);
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
 	if (BIT_B(extension)) {
 		op0->reg = (BIT_F(extension) ? M68K_REG_A0 : M68K_REG_D0) + ((extension >> 12) & 7);
-		get_ea_mode_op(op1, g_cpu_ir, size);
+		get_ea_mode_op(info, op1, info->ir, size);
 	} else {
-		get_ea_mode_op(op0, g_cpu_ir, size);
+		get_ea_mode_op(info, op0, info->ir, size);
 		op1->reg = (BIT_F(extension) ? M68K_REG_A0 : M68K_REG_D0) + ((extension >> 12) & 7);
 	}
 }
 
-static void build_er_1(int opcode, uint8_t size)
+static void build_er_1(m68k_info *info, int opcode, uint8_t size)
 {
-	build_er_gen_1(true, opcode, size);
+	build_er_gen_1(info, true, opcode, size);
 }
 
 /* ======================================================================== */
@@ -1239,687 +1236,687 @@ static void build_er_1(int opcode, uint8_t size)
  */
 
 
-static void d68000_invalid(void)
+static void d68000_invalid(m68k_info *info)
 {
-	build_invalid(g_cpu_ir);
+	build_invalid(info, info->ir);
 }
 
-static void d68000_illegal(void)
+static void d68000_illegal(m68k_info *info)
 {
-	build_illegal(g_cpu_ir);
+	build_illegal(info, info->ir);
 }
 
-static void d68000_1010(void)
+static void d68000_1010(m68k_info *info)
 {
-	build_invalid(g_cpu_ir);
+	build_invalid(info, info->ir);
 }
 
-static void d68000_1111(void)
+static void d68000_1111(m68k_info *info)
 {
-	build_invalid(g_cpu_ir);
+	build_invalid(info, info->ir);
 }
 
-static void d68000_abcd_rr(void)
+static void d68000_abcd_rr(m68k_info *info)
 {
-	build_rr(M68K_INS_ABCD, 1, 0); 
+	build_rr(info, M68K_INS_ABCD, 1, 0);
 }
 
-static void d68000_abcd_mm(void)
+static void d68000_abcd_mm(m68k_info *info)
 {
-	build_mm(M68K_INS_ABCD, 1, 0); 
+	build_mm(info, M68K_INS_ABCD, 1, 0);
 }
 
-static void d68000_add_er_8(void)
+static void d68000_add_er_8(m68k_info *info)
 {
-	build_er_1(M68K_INS_ADD, 1);
+	build_er_1(info, M68K_INS_ADD, 1);
 }
 
-static void d68000_add_er_16(void)
+static void d68000_add_er_16(m68k_info *info)
 {
-	build_er_1(M68K_INS_ADD, 2);
+	build_er_1(info, M68K_INS_ADD, 2);
 }
 
-static void d68000_add_er_32(void)
+static void d68000_add_er_32(m68k_info *info)
 {
-	build_er_1(M68K_INS_ADD, 4);
+	build_er_1(info, M68K_INS_ADD, 4);
 }
 
-static void d68000_add_re_8(void)
+static void d68000_add_re_8(m68k_info *info)
 {
-	build_re_1(M68K_INS_ADD, 1);
+	build_re_1(info, M68K_INS_ADD, 1);
 }
 
-static void d68000_add_re_16(void)
+static void d68000_add_re_16(m68k_info *info)
 {
-	build_re_1(M68K_INS_ADD, 2);
+	build_re_1(info, M68K_INS_ADD, 2);
 }
 
-static void d68000_add_re_32(void)
+static void d68000_add_re_32(m68k_info *info)
 {
-	build_re_1(M68K_INS_ADD, 4);
+	build_re_1(info, M68K_INS_ADD, 4);
 }
 
-static void d68000_adda_16(void)
+static void d68000_adda_16(m68k_info *info)
 {
-	build_ea_a(M68K_INS_ADDA, 2);
+	build_ea_a(info, M68K_INS_ADDA, 2);
 }
 
-static void d68000_adda_32(void)
+static void d68000_adda_32(m68k_info *info)
 {
-	build_ea_a(M68K_INS_ADDA, 4);
+	build_ea_a(info, M68K_INS_ADDA, 4);
 }
 
-static void d68000_addi_8(void)
+static void d68000_addi_8(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_ADDI, 1, read_imm_8());
+	build_imm_ea(info, M68K_INS_ADDI, 1, read_imm_8(info));
 }
 
-static void d68000_addi_16(void)
+static void d68000_addi_16(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_ADDI, 2, read_imm_16());
+	build_imm_ea(info, M68K_INS_ADDI, 2, read_imm_16(info));
 }
 
-static void d68000_addi_32(void)
+static void d68000_addi_32(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_ADDI, 4, read_imm_32());
+	build_imm_ea(info, M68K_INS_ADDI, 4, read_imm_32(info));
 }
 
-static void d68000_addq_8(void)
+static void d68000_addq_8(m68k_info *info)
 {
-	build_3bit_ea(M68K_INS_ADDQ, 1);
+	build_3bit_ea(info, M68K_INS_ADDQ, 1);
 }
 
-static void d68000_addq_16(void)
+static void d68000_addq_16(m68k_info *info)
 {
-	build_3bit_ea(M68K_INS_ADDQ, 2);
+	build_3bit_ea(info, M68K_INS_ADDQ, 2);
 }
 
-static void d68000_addq_32(void)
+static void d68000_addq_32(m68k_info *info)
 {
-	build_3bit_ea(M68K_INS_ADDQ, 4);
+	build_3bit_ea(info, M68K_INS_ADDQ, 4);
 }
 
-static void d68000_addx_rr_8(void)
+static void d68000_addx_rr_8(m68k_info *info)
 {
-	build_rr(M68K_INS_ADDX, 1, 0); 
+	build_rr(info, M68K_INS_ADDX, 1, 0);
 }
 
-static void d68000_addx_rr_16(void)
+static void d68000_addx_rr_16(m68k_info *info)
 {
-	build_rr(M68K_INS_ADDX, 2, 0); 
+	build_rr(info, M68K_INS_ADDX, 2, 0);
 }
 
-static void d68000_addx_rr_32(void)
+static void d68000_addx_rr_32(m68k_info *info)
 {
-	build_rr(M68K_INS_ADDX, 4, 0); 
+	build_rr(info, M68K_INS_ADDX, 4, 0);
 }
 
-static void d68000_addx_mm_8(void)
+static void d68000_addx_mm_8(m68k_info *info)
 {
-	build_mm(M68K_INS_ADDX, 1, 0); 
+	build_mm(info, M68K_INS_ADDX, 1, 0);
 }
 
-static void d68000_addx_mm_16(void)
+static void d68000_addx_mm_16(m68k_info *info)
 {
-	build_mm(M68K_INS_ADDX, 2, 0); 
+	build_mm(info, M68K_INS_ADDX, 2, 0);
 }
 
-static void d68000_addx_mm_32(void)
+static void d68000_addx_mm_32(m68k_info *info)
 {
-	build_mm(M68K_INS_ADDX, 4, 0); 
+	build_mm(info, M68K_INS_ADDX, 4, 0);
 }
 
-static void d68000_and_er_8(void)
+static void d68000_and_er_8(m68k_info *info)
 {
-	build_er_1(M68K_INS_AND, 1);
+	build_er_1(info, M68K_INS_AND, 1);
 }
 
-static void d68000_and_er_16(void)
+static void d68000_and_er_16(m68k_info *info)
 {
-	build_er_1(M68K_INS_AND, 2);
+	build_er_1(info, M68K_INS_AND, 2);
 }
 
-static void d68000_and_er_32(void)
+static void d68000_and_er_32(m68k_info *info)
 {
-	build_er_1(M68K_INS_AND, 4);
+	build_er_1(info, M68K_INS_AND, 4);
 }
 
-static void d68000_and_re_8(void)
+static void d68000_and_re_8(m68k_info *info)
 {
-	build_re_1(M68K_INS_AND, 1);
+	build_re_1(info, M68K_INS_AND, 1);
 }
 
-static void d68000_and_re_16(void)
+static void d68000_and_re_16(m68k_info *info)
 {
-	build_re_1(M68K_INS_AND, 2);
+	build_re_1(info, M68K_INS_AND, 2);
 }
 
-static void d68000_and_re_32(void)
+static void d68000_and_re_32(m68k_info *info)
 {
-	build_re_1(M68K_INS_AND, 4);
+	build_re_1(info, M68K_INS_AND, 4);
 }
 
-static void d68000_andi_8(void)
+static void d68000_andi_8(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_ANDI, 1, read_imm_8());
+	build_imm_ea(info, M68K_INS_ANDI, 1, read_imm_8(info));
 }
 
-static void d68000_andi_16(void)
+static void d68000_andi_16(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_ANDI, 2, read_imm_16());
+	build_imm_ea(info, M68K_INS_ANDI, 2, read_imm_16(info));
 }
 
-static void d68000_andi_32(void)
+static void d68000_andi_32(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_ANDI, 4, read_imm_32());
+	build_imm_ea(info, M68K_INS_ANDI, 4, read_imm_32(info));
 }
 
-static void d68000_andi_to_ccr(void)
+static void d68000_andi_to_ccr(m68k_info *info)
 {
-	build_imm_special_reg(M68K_INS_ANDI, read_imm_8(), 1, M68K_REG_CCR);
+	build_imm_special_reg(info, M68K_INS_ANDI, read_imm_8(info), 1, M68K_REG_CCR);
 }
 
-static void d68000_andi_to_sr(void)
+static void d68000_andi_to_sr(m68k_info *info)
 {
-	build_imm_special_reg(M68K_INS_ANDI, read_imm_16(), 2, M68K_REG_SR);
+	build_imm_special_reg(info, M68K_INS_ANDI, read_imm_16(info), 2, M68K_REG_SR);
 }
 
-static void d68000_asr_s_8(void)
+static void d68000_asr_s_8(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_ASR, 1);
+	build_3bit_d(info, M68K_INS_ASR, 1);
 }
 
-static void d68000_asr_s_16(void)
+static void d68000_asr_s_16(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_ASR, 2);
+	build_3bit_d(info, M68K_INS_ASR, 2);
 }
 
-static void d68000_asr_s_32(void)
+static void d68000_asr_s_32(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_ASR, 4);
+	build_3bit_d(info, M68K_INS_ASR, 4);
 }
 
-static void d68000_asr_r_8(void)
+static void d68000_asr_r_8(m68k_info *info)
 {
-	build_r(M68K_INS_ASR, 1);
+	build_r(info, M68K_INS_ASR, 1);
 }
 
-static void d68000_asr_r_16(void)
+static void d68000_asr_r_16(m68k_info *info)
 {
-	build_r(M68K_INS_ASR, 2);
+	build_r(info, M68K_INS_ASR, 2);
 }
 
-static void d68000_asr_r_32(void)
+static void d68000_asr_r_32(m68k_info *info)
 {
-	build_r(M68K_INS_ASR, 4);
+	build_r(info, M68K_INS_ASR, 4);
 }
 
-static void d68000_asr_ea(void)
+static void d68000_asr_ea(m68k_info *info)
 {
-	build_ea(M68K_INS_ASR, 2);
+	build_ea(info, M68K_INS_ASR, 2);
 }
 
-static void d68000_asl_s_8(void)
+static void d68000_asl_s_8(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_ASL, 1);
+	build_3bit_d(info, M68K_INS_ASL, 1);
 }
 
-static void d68000_asl_s_16(void)
+static void d68000_asl_s_16(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_ASL, 2);
+	build_3bit_d(info, M68K_INS_ASL, 2);
 }
 
-static void d68000_asl_s_32(void)
+static void d68000_asl_s_32(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_ASL, 4);
+	build_3bit_d(info, M68K_INS_ASL, 4);
 }
 
-static void d68000_asl_r_8(void)
+static void d68000_asl_r_8(m68k_info *info)
 {
-	build_r(M68K_INS_ASL, 1);
+	build_r(info, M68K_INS_ASL, 1);
 }
 
-static void d68000_asl_r_16(void)
+static void d68000_asl_r_16(m68k_info *info)
 {
-	build_r(M68K_INS_ASL, 2);
+	build_r(info, M68K_INS_ASL, 2);
 }
 
-static void d68000_asl_r_32(void)
+static void d68000_asl_r_32(m68k_info *info)
 {
-	build_r(M68K_INS_ASL, 4);
+	build_r(info, M68K_INS_ASL, 4);
 }
 
-static void d68000_asl_ea(void)
+static void d68000_asl_ea(m68k_info *info)
 {
-	build_ea(M68K_INS_ASL, 2);
+	build_ea(info, M68K_INS_ASL, 2);
 }
 
-static void d68000_bcc_8(void)
+static void d68000_bcc_8(m68k_info *info)
 {
-	uint temp_pc = g_cpu_pc;
-	build_bcc(1, temp_pc + make_int_8(g_cpu_ir));
+	uint temp_pc = info->pc;
+	build_bcc(info, 1, temp_pc + make_int_8(info->ir));
 }
 
-static void d68000_bcc_16(void)
+static void d68000_bcc_16(m68k_info *info)
 {
-	uint temp_pc = g_cpu_pc;
-	build_bcc(2, temp_pc + make_int_16(read_imm_16()));
+	uint temp_pc = info->pc;
+	build_bcc(info, 2, temp_pc + make_int_16(read_imm_16(info)));
 }
 
-static void d68020_bcc_32(void)
+static void d68020_bcc_32(m68k_info *info)
 {
-	uint temp_pc = g_cpu_pc;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_bcc(4, temp_pc + read_imm_32());
+	uint temp_pc = info->pc;
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_bcc(info, 4, temp_pc + read_imm_32(info));
 }
 
-static void d68000_bchg_r(void)
+static void d68000_bchg_r(m68k_info *info)
 {
-	build_re_1(M68K_INS_BCHG, 1);
+	build_re_1(info, M68K_INS_BCHG, 1);
 }
 
-static void d68000_bchg_s(void)
+static void d68000_bchg_s(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_BCHG, 1, read_imm_8());
+	build_imm_ea(info, M68K_INS_BCHG, 1, read_imm_8(info));
 }
 
-static void d68000_bclr_r(void)
+static void d68000_bclr_r(m68k_info *info)
 {
-	build_re_1(M68K_INS_BCLR, 1);
+	build_re_1(info, M68K_INS_BCLR, 1);
 }
 
-static void d68000_bclr_s(void)
+static void d68000_bclr_s(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_BCLR, 1, read_imm_8());
+	build_imm_ea(info, M68K_INS_BCLR, 1, read_imm_8(info));
 }
 
-static void d68010_bkpt(void)
+static void d68010_bkpt(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	build_bxx(M68K_INS_BKPT, 0, g_cpu_ir & 7);
+	LIMIT_CPU_TYPES(info, M68010_PLUS);
+	build_bxx(info, M68K_INS_BKPT, 0, info->ir & 7);
 }
 
-static void d68020_bfchg(void)
+static void d68020_bfchg(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_bitfield_ins(M68K_INS_BFCHG, false);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_bitfield_ins(info, M68K_INS_BFCHG, false);
 }
 
 
-static void d68020_bfclr(void)
+static void d68020_bfclr(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_bitfield_ins(M68K_INS_BFCLR, false);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_bitfield_ins(info, M68K_INS_BFCLR, false);
 }
 
-static void d68020_bfexts(void)
+static void d68020_bfexts(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_bitfield_ins(M68K_INS_BFEXTS, true);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_bitfield_ins(info, M68K_INS_BFEXTS, true);
 }
 
-static void d68020_bfextu(void)
+static void d68020_bfextu(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_bitfield_ins(M68K_INS_BFEXTU, true);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_bitfield_ins(info, M68K_INS_BFEXTU, true);
 }
 
-static void d68020_bfffo(void)
+static void d68020_bfffo(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_bitfield_ins(M68K_INS_BFFFO, true);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_bitfield_ins(info, M68K_INS_BFFFO, true);
 }
 
-static void d68020_bfins(void)
+static void d68020_bfins(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_bitfield_ins(M68K_INS_BFINS, true);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_bitfield_ins(info, M68K_INS_BFINS, true);
 
-	cs_detail *detail = g_inst->flat_insn->detail;
+	cs_detail *detail = info->inst->flat_insn->detail;
 	if (!detail) {
 		return;
 	}
 
-	cs_m68k* info = &detail->m68k;
+	cs_m68k* ext = &detail->m68k;
 	// a bit hacky but we need to flip the args on only this instruction
 
-	cs_m68k_op temp = info->operands[0];
-	info->operands[0] = info->operands[1];
-	info->operands[1] = temp;
+	cs_m68k_op temp = ext->operands[0];
+	ext->operands[0] = ext->operands[1];
+	ext->operands[1] = temp;
 }
 
-static void d68020_bfset(void)
+static void d68020_bfset(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_bitfield_ins(M68K_INS_BFSET, false);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_bitfield_ins(info, M68K_INS_BFSET, false);
 }
 
-static void d68020_bftst(void)
+static void d68020_bftst(m68k_info *info)
 {
-	build_bitfield_ins(M68K_INS_BFTST, false);
+	build_bitfield_ins(info, M68K_INS_BFTST, false);
 }
 
-static void d68000_bra_8(void)
+static void d68000_bra_8(m68k_info *info)
 {
-	uint temp_pc = g_cpu_pc;
-	build_bxx(M68K_INS_BRA, 1, temp_pc + make_int_8(g_cpu_ir));
+	uint temp_pc = info->pc;
+	build_bxx(info, M68K_INS_BRA, 1, temp_pc + make_int_8(info->ir));
 }
 
-static void d68000_bra_16(void)
+static void d68000_bra_16(m68k_info *info)
 {
-	uint temp_pc = g_cpu_pc;
-	build_bxx(M68K_INS_BRA, 2, temp_pc + make_int_16(read_imm_16()));
+	uint temp_pc = info->pc;
+	build_bxx(info, M68K_INS_BRA, 2, temp_pc + make_int_16(read_imm_16(info)));
 }
 
-static void d68020_bra_32(void)
+static void d68020_bra_32(m68k_info *info)
 {
-	uint temp_pc = g_cpu_pc;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_bxx(M68K_INS_BRA, 4, temp_pc + read_imm_32());
+	uint temp_pc = info->pc;
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_bxx(info, M68K_INS_BRA, 4, temp_pc + read_imm_32(info));
 }
 
-static void d68000_bset_r(void)
+static void d68000_bset_r(m68k_info *info)
 {
-	build_re_1(M68K_INS_BSET, 1);
+	build_re_1(info, M68K_INS_BSET, 1);
 }
 
-static void d68000_bset_s(void)
+static void d68000_bset_s(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_BSET, 1, read_imm_8());
+	build_imm_ea(info, M68K_INS_BSET, 1, read_imm_8(info));
 }
 
-static void d68000_bsr_8(void)
+static void d68000_bsr_8(m68k_info *info)
 {
-	uint temp_pc = g_cpu_pc;
-	build_bxx(M68K_INS_BSR, 1, temp_pc + make_int_8(g_cpu_ir));
+	uint temp_pc = info->pc;
+	build_bxx(info, M68K_INS_BSR, 1, temp_pc + make_int_8(info->ir));
 }
 
-static void d68000_bsr_16(void)
+static void d68000_bsr_16(m68k_info *info)
 {
-	uint temp_pc = g_cpu_pc;
-	build_bxx(M68K_INS_BSR, 2, temp_pc + make_int_16(read_imm_16()));
+	uint temp_pc = info->pc;
+	build_bxx(info, M68K_INS_BSR, 2, temp_pc + make_int_16(read_imm_16(info)));
 }
 
-static void d68020_bsr_32(void)
+static void d68020_bsr_32(m68k_info *info)
 {
-	uint temp_pc = g_cpu_pc;
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_bxx(M68K_INS_BSR, 4, temp_pc + peek_imm_32());
+	uint temp_pc = info->pc;
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_bxx(info, M68K_INS_BSR, 4, temp_pc + peek_imm_32(info));
 }
 
-static void d68000_btst_r(void)
+static void d68000_btst_r(m68k_info *info)
 {
-	build_re_1(M68K_INS_BTST, 4);
+	build_re_1(info, M68K_INS_BTST, 4);
 }
 
-static void d68000_btst_s(void)
+static void d68000_btst_s(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_BTST, 1, read_imm_8());
+	build_imm_ea(info, M68K_INS_BTST, 1, read_imm_8(info));
 }
 
-static void d68020_callm(void)
+static void d68020_callm(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_ONLY);
-	build_imm_ea(M68K_INS_CALLM, 0, read_imm_8());
+	LIMIT_CPU_TYPES(info, M68020_ONLY);
+	build_imm_ea(info, M68K_INS_CALLM, 0, read_imm_8(info));
 }
 
-static void d68020_cas_8(void)
+static void d68020_cas_8(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_d_d_ea(M68K_INS_CAS, 1);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_d_d_ea(info, M68K_INS_CAS, 1);
 }
 
-static void d68020_cas_16(void)
+static void d68020_cas_16(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_d_d_ea(M68K_INS_CAS, 2);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_d_d_ea(info, M68K_INS_CAS, 2);
 }
 
-static void d68020_cas_32(void)
+static void d68020_cas_32(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_d_d_ea(M68K_INS_CAS, 4);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_d_d_ea(info, M68K_INS_CAS, 4);
 }
 
-static void d68020_cas2_16(void)
+static void d68020_cas2_16(m68k_info *info)
 {
-	build_cas2(2);
+	build_cas2(info, 2);
 }
 
-static void d68020_cas2_32(void)
+static void d68020_cas2_32(m68k_info *info)
 {
-	build_cas2(4);
+	build_cas2(info, 4);
 }
 
-static void d68000_chk_16(void)
+static void d68000_chk_16(m68k_info *info)
 {
-	build_er_1(M68K_INS_CHK, 2);
+	build_er_1(info, M68K_INS_CHK, 2);
 }
 
-static void d68020_chk_32(void)
+static void d68020_chk_32(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_er_1(M68K_INS_CHK, 4);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_er_1(info, M68K_INS_CHK, 4);
 }
 
-static void d68020_chk2_cmp2_8(void)
+static void d68020_chk2_cmp2_8(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_chk2_cmp2(1);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_chk2_cmp2(info, 1);
 }
 
-static void d68020_chk2_cmp2_16(void)
+static void d68020_chk2_cmp2_16(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_chk2_cmp2(2);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_chk2_cmp2(info, 2);
 }
 
-static void d68020_chk2_cmp2_32(void)
+static void d68020_chk2_cmp2_32(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_chk2_cmp2(4);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_chk2_cmp2(info, 4);
 }
 
-static void d68040_cinv(void)
+static void d68040_cinv(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68040_PLUS);
-	build_cpush_cinv(M68K_INS_CINVL);
+	LIMIT_CPU_TYPES(info, M68040_PLUS);
+	build_cpush_cinv(info, M68K_INS_CINVL);
 }
 
-static void d68000_clr_8(void)
+static void d68000_clr_8(m68k_info *info)
 {
-	build_ea(M68K_INS_CLR, 1);
+	build_ea(info, M68K_INS_CLR, 1);
 }
 
-static void d68000_clr_16(void)
+static void d68000_clr_16(m68k_info *info)
 {
-	build_ea(M68K_INS_CLR, 2);
+	build_ea(info, M68K_INS_CLR, 2);
 }
 
-static void d68000_clr_32(void)
+static void d68000_clr_32(m68k_info *info)
 {
-	build_ea(M68K_INS_CLR, 4);
+	build_ea(info, M68K_INS_CLR, 4);
 }
 
-static void d68000_cmp_8(void)
+static void d68000_cmp_8(m68k_info *info)
 {
-	build_er_1(M68K_INS_CMP, 1);
+	build_er_1(info, M68K_INS_CMP, 1);
 }
 
-static void d68000_cmp_16(void)
+static void d68000_cmp_16(m68k_info *info)
 {
-	build_er_1(M68K_INS_CMP, 2);
+	build_er_1(info, M68K_INS_CMP, 2);
 }
 
-static void d68000_cmp_32(void)
+static void d68000_cmp_32(m68k_info *info)
 {
-	build_er_1(M68K_INS_CMP, 4);
+	build_er_1(info, M68K_INS_CMP, 4);
 }
 
-static void d68000_cmpa_16(void)
+static void d68000_cmpa_16(m68k_info *info)
 {
-	build_ea_a(M68K_INS_CMPA, 2);
+	build_ea_a(info, M68K_INS_CMPA, 2);
 }
 
-static void d68000_cmpa_32(void)
+static void d68000_cmpa_32(m68k_info *info)
 {
-	build_ea_a(M68K_INS_CMPA, 4);
+	build_ea_a(info, M68K_INS_CMPA, 4);
 }
 
-static void d68000_cmpi_8(void)
+static void d68000_cmpi_8(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_CMPI, 1, read_imm_8());
+	build_imm_ea(info, M68K_INS_CMPI, 1, read_imm_8(info));
 }
 
-static void d68020_cmpi_pcdi_8(void)
+static void d68020_cmpi_pcdi_8(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	build_imm_ea(M68K_INS_CMPI, 1, read_imm_8());
+	LIMIT_CPU_TYPES(info, M68010_PLUS);
+	build_imm_ea(info, M68K_INS_CMPI, 1, read_imm_8(info));
 }
 
-static void d68020_cmpi_pcix_8(void)
+static void d68020_cmpi_pcix_8(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	build_imm_ea(M68K_INS_CMPI, 1, read_imm_8());
+	LIMIT_CPU_TYPES(info, M68010_PLUS);
+	build_imm_ea(info, M68K_INS_CMPI, 1, read_imm_8(info));
 }
 
-static void d68000_cmpi_16(void)
+static void d68000_cmpi_16(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_CMPI, 2, read_imm_16());
+	build_imm_ea(info, M68K_INS_CMPI, 2, read_imm_16(info));
 }
 
-static void d68020_cmpi_pcdi_16(void)
+static void d68020_cmpi_pcdi_16(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	build_imm_ea(M68K_INS_CMPI, 2, read_imm_16());
+	LIMIT_CPU_TYPES(info, M68010_PLUS);
+	build_imm_ea(info, M68K_INS_CMPI, 2, read_imm_16(info));
 }
 
-static void d68020_cmpi_pcix_16(void)
+static void d68020_cmpi_pcix_16(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	build_imm_ea(M68K_INS_CMPI, 2, read_imm_16());
+	LIMIT_CPU_TYPES(info, M68010_PLUS);
+	build_imm_ea(info, M68K_INS_CMPI, 2, read_imm_16(info));
 }
 
-static void d68000_cmpi_32(void)
+static void d68000_cmpi_32(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_CMPI, 4, read_imm_32());
+	build_imm_ea(info, M68K_INS_CMPI, 4, read_imm_32(info));
 }
 
-static void d68020_cmpi_pcdi_32(void)
+static void d68020_cmpi_pcdi_32(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	build_imm_ea(M68K_INS_CMPI, 4, read_imm_32());
+	LIMIT_CPU_TYPES(info, M68010_PLUS);
+	build_imm_ea(info, M68K_INS_CMPI, 4, read_imm_32(info));
 }
 
-static void d68020_cmpi_pcix_32(void)
+static void d68020_cmpi_pcix_32(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	build_imm_ea(M68K_INS_CMPI, 4, read_imm_32());
+	LIMIT_CPU_TYPES(info, M68010_PLUS);
+	build_imm_ea(info, M68K_INS_CMPI, 4, read_imm_32(info));
 }
 
-static void d68000_cmpm_8(void)
+static void d68000_cmpm_8(m68k_info *info)
 {
-	build_pi_pi(M68K_INS_CMPM, 1);
+	build_pi_pi(info, M68K_INS_CMPM, 1);
 }
 
-static void d68000_cmpm_16(void)
+static void d68000_cmpm_16(m68k_info *info)
 {
-	build_pi_pi(M68K_INS_CMPM, 2);
+	build_pi_pi(info, M68K_INS_CMPM, 2);
 }
 
-static void d68000_cmpm_32(void)
+static void d68000_cmpm_32(m68k_info *info)
 {
-	build_pi_pi(M68K_INS_CMPM, 4);
+	build_pi_pi(info, M68K_INS_CMPM, 4);
 }
 
-static void d68020_cpbcc_16(void)
+static void d68020_cpbcc_16(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
 
-	uint new_pc = g_cpu_pc;
-	new_pc += make_int_16(read_imm_16());
+	uint new_pc = info->pc;
+	new_pc += make_int_16(read_imm_16(info));
 
-	cs_m68k* info = build_init_op(M68K_INS_FBF, 1, 2);
+	cs_m68k* ext = build_init_op(info, M68K_INS_FBF, 1, 2);
 
 	// these are all in row with the extension so just doing a add here is fine
-	g_inst->Opcode += (g_cpu_ir & 0x2f); 
+	info->inst->Opcode += (info->ir & 0x2f);
 
-	if (!info) {
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
+	cs_m68k_op* op0 = &ext->operands[0];
 
 	op0->address_mode = M68K_AM_IMMIDIATE;
 	op0->type = M68K_OP_IMM;
 	op0->imm = new_pc;
 }
 
-static void d68020_cpbcc_32(void)
+static void d68020_cpbcc_32(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
 
-	LIMIT_CPU_TYPES(M68020_PLUS);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
 
-	uint new_pc = g_cpu_pc;
-	new_pc += read_imm_32();
+	uint new_pc = info->pc;
+	new_pc += read_imm_32(info);
 
-	cs_m68k* info = build_init_op(M68K_INS_FBF, 1, 4);
+	cs_m68k* ext = build_init_op(info, M68K_INS_FBF, 1, 4);
 
 	// these are all in row with the extension so just doing a add here is fine
-	g_inst->Opcode += (g_cpu_ir & 0x2f); 
+	info->inst->Opcode += (info->ir & 0x2f);
 
-	if (!info) {
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
+	cs_m68k_op* op0 = &ext->operands[0];
 
 	op0->type = M68K_OP_IMM;
 	op0->address_mode = M68K_AM_IMMIDIATE;
 	op0->imm = new_pc;
 }
 
-static void d68020_cpdbcc(void)
+static void d68020_cpdbcc(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
 
-	uint new_pc = g_cpu_pc;
-	uint ext1 = read_imm_16();
-	uint ext2 = read_imm_16();
+	uint new_pc = info->pc;
+	uint ext1 = read_imm_16(info);
+	uint ext2 = read_imm_16(info);
 	new_pc += make_int_16(ext2) + 2;
 
-	cs_m68k* info = build_init_op(M68K_INS_FDBF, 2, 0);
+	cs_m68k* ext = build_init_op(info, M68K_INS_FDBF, 2, 0);
 
 	// these are all in row with the extension so just doing a add here is fine
-	g_inst->Opcode += (ext1 & 0x2f); 
+	info->inst->Opcode += (ext1 & 0x2f);
 
-	if (!info) {
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
-	op0->reg = M68K_REG_D0 + (g_cpu_ir & 7);
+	op0->reg = M68K_REG_D0 + (info->ir & 7);
 
 	op1->address_mode = M68K_AM_IMMIDIATE;
 	op1->type = M68K_OP_IMM;
 	op1->imm = new_pc;
 }
 
-static void fmove_fpcr(uint ext)
+static void fmove_fpcr(m68k_info *info, uint extension)
 {
-	int regsel = (ext >> 10) & 0x7;
-	int dir = (ext >> 13) & 0x1;
+	int regsel = (extension >> 10) & 0x7;
+	int dir = (extension >> 13) & 0x1;
 
-	cs_m68k* info = build_init_op(M68K_INS_FMOVE, 2, 4);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_FMOVE, 2, 4);
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* special = &info->operands[0];
-	cs_m68k_op* op_ea = &info->operands[1];
+	cs_m68k_op* special = &ext->operands[0];
+	cs_m68k_op* op_ea = &ext->operands[1];
 
 	if (!dir) {
 		cs_m68k_op* t = special;
@@ -1927,29 +1924,29 @@ static void fmove_fpcr(uint ext)
 		op_ea = t;
 	}
 
-	get_ea_mode_op(op_ea, g_cpu_ir, 4);
+	get_ea_mode_op(info, op_ea, info->ir, 4);
 
 	if (regsel & 4) 
-		special->reg = M68K_REG_FPCR; 
+		special->reg = M68K_REG_FPCR;
 	else if (regsel & 2) 
-		special->reg = M68K_REG_FPSR; 
+		special->reg = M68K_REG_FPSR;
 	else if (regsel & 1) 
-		special->reg = M68K_REG_FPIAR; 
+		special->reg = M68K_REG_FPIAR;
 }
 
-static void fmovem(uint ext)
+static void fmovem(m68k_info *info, uint extension)
 {
-	int dir = (ext >> 13) & 0x1;
-	int mode = (ext >> 11) & 0x3;
-	uint reglist = ext & 0xff;
+	int dir = (extension >> 13) & 0x1;
+	int mode = (extension >> 11) & 0x3;
+	uint reglist = extension & 0xff;
 
-	cs_m68k* info = build_init_op(M68K_INS_FMOVEM, 2, 0);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_FMOVEM, 2, 0);
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op_reglist = &info->operands[0];
-	cs_m68k_op* op_ea = &info->operands[1];
+	cs_m68k_op* op_reglist = &ext->operands[0];
+	cs_m68k_op* op_ea = &ext->operands[1];
 
 	// flip args around
 
@@ -1959,7 +1956,7 @@ static void fmovem(uint ext)
 		op_ea = t;
 	}
 
-	get_ea_mode_op(op_ea, g_cpu_ir, 0);
+	get_ea_mode_op(info, op_ea, info->ir, 0);
 
 	switch (mode) {
 		case 1 : // Dynamic list in dn register
@@ -1969,24 +1966,24 @@ static void fmovem(uint ext)
 		case 0 : 
 			op_reglist->address_mode = M68K_AM_NONE;
 			op_reglist->type = M68K_OP_REG_BITS;
-			op_reglist->register_bits = reglist << 16; 
+			op_reglist->register_bits = reglist << 16;
 			break;
 
 		case 2 : // Static list
 			op_reglist->address_mode = M68K_AM_NONE;
 			op_reglist->type = M68K_OP_REG_BITS;
-			op_reglist->register_bits = ((uint32_t)reverse_bits_8(reglist)) << 16; 
+			op_reglist->register_bits = ((uint32_t)reverse_bits_8(reglist)) << 16;
 			break;
 	}
 }
 
-static void d68020_cpgen(void)
+static void d68020_cpgen(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
 
 	bool supports_single_op = true;
 
-	uint next = read_imm_16();
+	uint next = read_imm_16(info);
 
 	int rm = (next >> 14) & 0x1;
 	int src = (next >> 10) & 0x7;
@@ -1995,14 +1992,14 @@ static void d68020_cpgen(void)
 
 	// special handling for fmovecr
 
-	if (BITFIELD(g_cpu_ir, 5, 0) == 0 && BITFIELD(next, 15, 10) == 0x17) {
-		cs_m68k* info = build_init_op(M68K_INS_FMOVECR, 2, 0);
-		if (!info) {
+	if (BITFIELD(info->ir, 5, 0) == 0 && BITFIELD(next, 15, 10) == 0x17) {
+		cs_m68k* ext = build_init_op(info, M68K_INS_FMOVECR, 2, 0);
+		if (!ext) {
 			return;
 		}
 
-		cs_m68k_op* op0 = &info->operands[0];
-		cs_m68k_op* op1 = &info->operands[1];
+		cs_m68k_op* op0 = &ext->operands[0];
+		cs_m68k_op* op1 = &ext->operands[1];
 
 		op0->address_mode = M68K_AM_IMMIDIATE;
 		op0->type = M68K_OP_IMM;
@@ -2019,14 +2016,14 @@ static void d68020_cpgen(void)
 
 		case 0x4:	// FMOVEM ea, FPCR
 		case 0x5:	// FMOVEM FPCR, ea
-			fmove_fpcr(next);
+			fmove_fpcr(info, next);
 			return;
 
 			// fmovem list
 
 		case 0x6:
 		case 0x7:
-			fmovem(next);
+			fmovem(info, next);
 			return;
 	}
 
@@ -2038,43 +2035,43 @@ static void d68020_cpgen(void)
 	// special handling of some instructions here
 
 	switch (opmode) {
-		case 0x00: MCInst_setOpcode(g_inst, M68K_INS_FMOVE); supports_single_op = false; break;
-		case 0x01: MCInst_setOpcode(g_inst, M68K_INS_FINT); break; 
-		case 0x02: MCInst_setOpcode(g_inst, M68K_INS_FSINH); break;
-		case 0x03: MCInst_setOpcode(g_inst, M68K_INS_FINTRZ); break;
-		case 0x04: MCInst_setOpcode(g_inst, M68K_INS_FSQRT); break;
-		case 0x06: MCInst_setOpcode(g_inst, M68K_INS_FLOGNP1); break;
-		case 0x08: MCInst_setOpcode(g_inst, M68K_INS_FETOXM1); break;
-		case 0x09: MCInst_setOpcode(g_inst, M68K_INS_FATANH); break;
-		case 0x0a: MCInst_setOpcode(g_inst, M68K_INS_FATAN); break;
-		case 0x0c: MCInst_setOpcode(g_inst, M68K_INS_FASIN); break; 
-		case 0x0d: MCInst_setOpcode(g_inst, M68K_INS_FATANH); break;
-		case 0x0e: MCInst_setOpcode(g_inst, M68K_INS_FSIN); break;
-		case 0x0f: MCInst_setOpcode(g_inst, M68K_INS_FTAN); break;
-		case 0x10: MCInst_setOpcode(g_inst, M68K_INS_FETOX); break;
-		case 0x11: MCInst_setOpcode(g_inst, M68K_INS_FTWOTOX); break;
-		case 0x12: MCInst_setOpcode(g_inst, M68K_INS_FTENTOX); break;
-		case 0x14: MCInst_setOpcode(g_inst, M68K_INS_FLOGN); break;
-		case 0x15: MCInst_setOpcode(g_inst, M68K_INS_FLOG10); break;
-		case 0x16: MCInst_setOpcode(g_inst, M68K_INS_FLOG2); break;
-		case 0x18: MCInst_setOpcode(g_inst, M68K_INS_FABS); break;
-		case 0x19: MCInst_setOpcode(g_inst, M68K_INS_FCOSH); break;
-		case 0x1a: MCInst_setOpcode(g_inst, M68K_INS_FNEG); break;
-		case 0x1c: MCInst_setOpcode(g_inst, M68K_INS_FACOS); break; 
-		case 0x1d: MCInst_setOpcode(g_inst, M68K_INS_FCOS); break;
-		case 0x1e: MCInst_setOpcode(g_inst, M68K_INS_FGETEXP); break;
-		case 0x1f: MCInst_setOpcode(g_inst, M68K_INS_FGETMAN); break;
-		case 0x20: MCInst_setOpcode(g_inst, M68K_INS_FDIV); supports_single_op = false; break;
-		case 0x21: MCInst_setOpcode(g_inst, M68K_INS_FMOD); supports_single_op = false; break;
-		case 0x22: MCInst_setOpcode(g_inst, M68K_INS_FADD); supports_single_op = false; break;
-		case 0x23: MCInst_setOpcode(g_inst, M68K_INS_FMUL); supports_single_op = false; break;
-		case 0x24: MCInst_setOpcode(g_inst, M68K_INS_FSGLDIV); supports_single_op = false; break;
-		case 0x25: MCInst_setOpcode(g_inst, M68K_INS_FREM); break;
-		case 0x26: MCInst_setOpcode(g_inst, M68K_INS_FSCALE); break;
-		case 0x27: MCInst_setOpcode(g_inst, M68K_INS_FSGLMUL); break;
-		case 0x28: MCInst_setOpcode(g_inst, M68K_INS_FSUB); supports_single_op = false; break;
-		case 0x38: MCInst_setOpcode(g_inst, M68K_INS_FCMP); supports_single_op = false; break;
-		case 0x3a: MCInst_setOpcode(g_inst, M68K_INS_FTST); break;
+		case 0x00: MCInst_setOpcode(info->inst, M68K_INS_FMOVE); supports_single_op = false; break;
+		case 0x01: MCInst_setOpcode(info->inst, M68K_INS_FINT); break;
+		case 0x02: MCInst_setOpcode(info->inst, M68K_INS_FSINH); break;
+		case 0x03: MCInst_setOpcode(info->inst, M68K_INS_FINTRZ); break;
+		case 0x04: MCInst_setOpcode(info->inst, M68K_INS_FSQRT); break;
+		case 0x06: MCInst_setOpcode(info->inst, M68K_INS_FLOGNP1); break;
+		case 0x08: MCInst_setOpcode(info->inst, M68K_INS_FETOXM1); break;
+		case 0x09: MCInst_setOpcode(info->inst, M68K_INS_FATANH); break;
+		case 0x0a: MCInst_setOpcode(info->inst, M68K_INS_FATAN); break;
+		case 0x0c: MCInst_setOpcode(info->inst, M68K_INS_FASIN); break;
+		case 0x0d: MCInst_setOpcode(info->inst, M68K_INS_FATANH); break;
+		case 0x0e: MCInst_setOpcode(info->inst, M68K_INS_FSIN); break;
+		case 0x0f: MCInst_setOpcode(info->inst, M68K_INS_FTAN); break;
+		case 0x10: MCInst_setOpcode(info->inst, M68K_INS_FETOX); break;
+		case 0x11: MCInst_setOpcode(info->inst, M68K_INS_FTWOTOX); break;
+		case 0x12: MCInst_setOpcode(info->inst, M68K_INS_FTENTOX); break;
+		case 0x14: MCInst_setOpcode(info->inst, M68K_INS_FLOGN); break;
+		case 0x15: MCInst_setOpcode(info->inst, M68K_INS_FLOG10); break;
+		case 0x16: MCInst_setOpcode(info->inst, M68K_INS_FLOG2); break;
+		case 0x18: MCInst_setOpcode(info->inst, M68K_INS_FABS); break;
+		case 0x19: MCInst_setOpcode(info->inst, M68K_INS_FCOSH); break;
+		case 0x1a: MCInst_setOpcode(info->inst, M68K_INS_FNEG); break;
+		case 0x1c: MCInst_setOpcode(info->inst, M68K_INS_FACOS); break;
+		case 0x1d: MCInst_setOpcode(info->inst, M68K_INS_FCOS); break;
+		case 0x1e: MCInst_setOpcode(info->inst, M68K_INS_FGETEXP); break;
+		case 0x1f: MCInst_setOpcode(info->inst, M68K_INS_FGETMAN); break;
+		case 0x20: MCInst_setOpcode(info->inst, M68K_INS_FDIV); supports_single_op = false; break;
+		case 0x21: MCInst_setOpcode(info->inst, M68K_INS_FMOD); supports_single_op = false; break;
+		case 0x22: MCInst_setOpcode(info->inst, M68K_INS_FADD); supports_single_op = false; break;
+		case 0x23: MCInst_setOpcode(info->inst, M68K_INS_FMUL); supports_single_op = false; break;
+		case 0x24: MCInst_setOpcode(info->inst, M68K_INS_FSGLDIV); supports_single_op = false; break;
+		case 0x25: MCInst_setOpcode(info->inst, M68K_INS_FREM); break;
+		case 0x26: MCInst_setOpcode(info->inst, M68K_INS_FSCALE); break;
+		case 0x27: MCInst_setOpcode(info->inst, M68K_INS_FSGLMUL); break;
+		case 0x28: MCInst_setOpcode(info->inst, M68K_INS_FSUB); supports_single_op = false; break;
+		case 0x38: MCInst_setOpcode(info->inst, M68K_INS_FCMP); supports_single_op = false; break;
+		case 0x3a: MCInst_setOpcode(info->inst, M68K_INS_FTST); break;
 		default:	
 				   break;
 	}
@@ -2085,26 +2082,26 @@ static void d68020_cpgen(void)
 
 	if ((next >> 6) & 1) {
 		if ((next >> 2) & 1)
-			g_inst->Opcode += 2;
+			info->inst->Opcode += 2;
 		else
-			g_inst->Opcode += 1;
+			info->inst->Opcode += 1;
 	}
 
-	cs_detail *detail = g_inst->flat_insn->detail;
+	cs_detail *detail = info->inst->flat_insn->detail;
 	if (!detail) {
 		return;
 	}
-	cs_m68k *info = &detail->m68k;
+	cs_m68k *ext = &detail->m68k;
 
-	info->op_count = 2;
-	info->op_size.type = M68K_SIZE_TYPE_CPU;
-	info->op_size.cpu_size = 0;
+	ext->op_count = 2;
+	ext->op_size.type = M68K_SIZE_TYPE_CPU;
+	ext->op_size.cpu_size = 0;
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
 	if (rm == 0 && supports_single_op && src == dst) {
-		info->op_count = 1;
+		ext->op_count = 1;
 		op0->reg = M68K_REG_FP0 + dst;
 		return;
 	}
@@ -2112,190 +2109,190 @@ static void d68020_cpgen(void)
 	if (rm == 1) {
 		switch (src) {
 			case 0x00 : 
-				info->op_size.cpu_size = M68K_CPU_SIZE_LONG; 
-				get_ea_mode_op(op0, g_cpu_ir, 4);
+				ext->op_size.cpu_size = M68K_CPU_SIZE_LONG;
+				get_ea_mode_op(info, op0, info->ir, 4);
 				break;
 
 			case 0x06 : 
-				info->op_size.cpu_size = M68K_CPU_SIZE_BYTE; 
-				get_ea_mode_op(op0, g_cpu_ir, 1);
-				break; 
+				ext->op_size.cpu_size = M68K_CPU_SIZE_BYTE;
+				get_ea_mode_op(info, op0, info->ir, 1);
+				break;
 
 			case 0x04 : 
-				info->op_size.cpu_size = M68K_CPU_SIZE_WORD; 
-				get_ea_mode_op(op0, g_cpu_ir, 2);
+				ext->op_size.cpu_size = M68K_CPU_SIZE_WORD;
+				get_ea_mode_op(info, op0, info->ir, 2);
 				break;
 
 			case 0x01 : 
-				info->op_size.type = M68K_SIZE_TYPE_FPU;
-				info->op_size.fpu_size = M68K_FPU_SIZE_SINGLE; 
-				get_ea_mode_op(op0, g_cpu_ir, 4);
+				ext->op_size.type = M68K_SIZE_TYPE_FPU;
+				ext->op_size.fpu_size = M68K_FPU_SIZE_SINGLE;
+				get_ea_mode_op(info, op0, info->ir, 4);
 				break;
 
 			case 0x05:
-				info->op_size.type = M68K_SIZE_TYPE_FPU;
-				info->op_size.fpu_size = M68K_FPU_SIZE_DOUBLE; 
-				get_ea_mode_op(op0, g_cpu_ir, 8);
+				ext->op_size.type = M68K_SIZE_TYPE_FPU;
+				ext->op_size.fpu_size = M68K_FPU_SIZE_DOUBLE;
+				get_ea_mode_op(info, op0, info->ir, 8);
 				break;
 
 			default :
-				info->op_size.type = M68K_SIZE_TYPE_FPU;
-				info->op_size.fpu_size = M68K_FPU_SIZE_EXTENDED; 
+				ext->op_size.type = M68K_SIZE_TYPE_FPU;
+				ext->op_size.fpu_size = M68K_FPU_SIZE_EXTENDED;
 				break;
 		}
 	} else {
-		op0->reg = M68K_REG_FP0 + src; 
+		op0->reg = M68K_REG_FP0 + src;
 	}
 
 	op1->reg = M68K_REG_FP0 + dst;
 }
 
-static void d68020_cprestore(void)
+static void d68020_cprestore(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	cs_m68k* info = build_init_op(M68K_INS_FRESTORE, 1, 0);
-	if (!info) {
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	cs_m68k* ext = build_init_op(info, M68K_INS_FRESTORE, 1, 0);
+	if (!ext) {
 		return;
 	}
-	get_ea_mode_op(&info->operands[0], g_cpu_ir, 1);
+	get_ea_mode_op(info, &ext->operands[0], info->ir, 1);
 }
 
-static void d68020_cpsave(void)
+static void d68020_cpsave(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	cs_m68k* info = build_init_op(M68K_INS_FSAVE, 1, 0);
-	if (!info) {
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	cs_m68k* ext = build_init_op(info, M68K_INS_FSAVE, 1, 0);
+	if (!ext) {
 		return;
 	}
-	get_ea_mode_op(&info->operands[0], g_cpu_ir, 1);
+	get_ea_mode_op(info, &ext->operands[0], info->ir, 1);
 }
 
-static void d68020_cpscc(void)
+static void d68020_cpscc(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	cs_m68k* info = build_init_op(M68K_INS_FSF, 1, 1);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	cs_m68k* ext = build_init_op(info, M68K_INS_FSF, 1, 1);
 
 	// these are all in row with the extension so just doing a add here is fine
-	g_inst->Opcode += (read_imm_16() & 0x2f); 
+	info->inst->Opcode += (read_imm_16(info) & 0x2f);
 
-	if (!info) {
+	if (!ext) {
 		return;
 	}
 
-	get_ea_mode_op(&info->operands[0], g_cpu_ir, 1);
+	get_ea_mode_op(info, &ext->operands[0], info->ir, 1);
 }
 
-static void d68020_cptrapcc_0(void)
+static void d68020_cptrapcc_0(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	uint extension1 = read_imm_16();
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	uint extension1 = read_imm_16(info);
 
-	build_init_op(M68K_INS_FTRAPF, 0, 0);
+	build_init_op(info, M68K_INS_FTRAPF, 0, 0);
 
 	// these are all in row with the extension so just doing a add here is fine
-	g_inst->Opcode += (extension1 & 0x2f); 
+	info->inst->Opcode += (extension1 & 0x2f);
 }
 
-static void d68020_cptrapcc_16(void)
+static void d68020_cptrapcc_16(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
 
-	uint extension1 = read_imm_16();
-	uint extension2 = read_imm_16();
+	uint extension1 = read_imm_16(info);
+	uint extension2 = read_imm_16(info);
 
-	cs_m68k* info = build_init_op(M68K_INS_FTRAPF, 1, 2);
+	cs_m68k* ext = build_init_op(info, M68K_INS_FTRAPF, 1, 2);
 
 	// these are all in row with the extension so just doing a add here is fine
-	g_inst->Opcode += (extension1 & 0x2f); 
+	info->inst->Opcode += (extension1 & 0x2f);
 
-	if (!info) {
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
+	cs_m68k_op* op0 = &ext->operands[0];
 
 	op0->address_mode = M68K_AM_IMMIDIATE;
 	op0->type = M68K_OP_IMM;
 	op0->imm = extension2;
 }
 
-static void d68020_cptrapcc_32(void)
+static void d68020_cptrapcc_32(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
 
-	uint extension1 = read_imm_16();
-	uint extension2 = read_imm_32();
+	uint extension1 = read_imm_16(info);
+	uint extension2 = read_imm_32(info);
 
-	cs_m68k* info = build_init_op(M68K_INS_FTRAPF, 1, 2);
+	cs_m68k* ext = build_init_op(info, M68K_INS_FTRAPF, 1, 2);
 
 	// these are all in row with the extension so just doing a add here is fine
-	g_inst->Opcode += (extension1 & 0x2f); 
+	info->inst->Opcode += (extension1 & 0x2f);
 
-	if (!info) {
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
+	cs_m68k_op* op0 = &ext->operands[0];
 
 	op0->address_mode = M68K_AM_IMMIDIATE;
 	op0->type = M68K_OP_IMM;
 	op0->imm = extension2;
 }
 
-static void d68040_cpush(void)
+static void d68040_cpush(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68040_PLUS);
-	build_cpush_cinv(M68K_INS_CPUSHL);
+	LIMIT_CPU_TYPES(info, M68040_PLUS);
+	build_cpush_cinv(info, M68K_INS_CPUSHL);
 }
 
-static void d68000_dbra(void)
+static void d68000_dbra(m68k_info *info)
 {
-	uint temp_pc = g_cpu_pc;
-	build_dbxx(M68K_INS_DBRA, 0, temp_pc + make_int_16(read_imm_16()));
+	uint temp_pc = info->pc;
+	build_dbxx(info, M68K_INS_DBRA, 0, temp_pc + make_int_16(read_imm_16(info)));
 }
 
-static void d68000_dbcc(void)
+static void d68000_dbcc(m68k_info *info)
 {
-	uint temp_pc = g_cpu_pc;
-	build_dbcc(0, temp_pc + make_int_16(read_imm_16()));
+	uint temp_pc = info->pc;
+	build_dbcc(info, 0, temp_pc + make_int_16(read_imm_16(info)));
 }
 
-static void d68000_divs(void)
+static void d68000_divs(m68k_info *info)
 {
-	build_er_1(M68K_INS_DIVS, 2);
+	build_er_1(info, M68K_INS_DIVS, 2);
 }
 
-static void d68000_divu(void)
+static void d68000_divu(m68k_info *info)
 {
-	build_er_1(M68K_INS_DIVU, 2);
+	build_er_1(info, M68K_INS_DIVU, 2);
 }
 
-static void d68020_divl(void)
+static void d68020_divl(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
 
-	uint extension = read_imm_16();
+	uint extension = read_imm_16(info);
 	uint insn_signed = 0;
 
 	if (BIT_B((extension)))
 		insn_signed = 1;
 
-	cs_m68k* info = build_init_op(insn_signed ? M68K_INS_DIVS : M68K_INS_DIVU, 2, 4);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, insn_signed ? M68K_INS_DIVS : M68K_INS_DIVU, 2, 4);
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
-	get_ea_mode_op(op0, g_cpu_ir, 4);
+	get_ea_mode_op(info, op0, info->ir, 4);
 
 	const uint reg_0 = extension & 7;
 	const uint reg_1 = (extension >> 12) & 7;
 
 	op1->address_mode = M68K_AM_NONE;
 	op1->type = M68K_OP_REG_PAIR;
-	op1->register_bits = (reg_0 << 4) | reg_1; 
+	op1->register_bits = (reg_0 << 4) | reg_1;
 
 	if ((reg_0 == reg_1) || !BIT_A(extension)) {
 		op1->type = M68K_OP_REG;
@@ -2303,345 +2300,345 @@ static void d68020_divl(void)
 	}
 }
 
-static void d68000_eor_8(void)
+static void d68000_eor_8(m68k_info *info)
 {
-	build_re_1(M68K_INS_EOR, 1); 
+	build_re_1(info, M68K_INS_EOR, 1);
 }
 
-static void d68000_eor_16(void)
+static void d68000_eor_16(m68k_info *info)
 {
-	build_re_1(M68K_INS_EOR, 2); 
+	build_re_1(info, M68K_INS_EOR, 2);
 }
 
-static void d68000_eor_32(void)
+static void d68000_eor_32(m68k_info *info)
 {
-	build_re_1(M68K_INS_EOR, 4); 
+	build_re_1(info, M68K_INS_EOR, 4);
 }
 
-static void d68000_eori_8(void)
+static void d68000_eori_8(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_EORI, 1, read_imm_8());
+	build_imm_ea(info, M68K_INS_EORI, 1, read_imm_8(info));
 }
 
-static void d68000_eori_16(void)
+static void d68000_eori_16(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_EORI, 2, read_imm_16());
+	build_imm_ea(info, M68K_INS_EORI, 2, read_imm_16(info));
 }
 
-static void d68000_eori_32(void)
+static void d68000_eori_32(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_EORI, 4, read_imm_32());
+	build_imm_ea(info, M68K_INS_EORI, 4, read_imm_32(info));
 }
 
-static void d68000_eori_to_ccr(void)
+static void d68000_eori_to_ccr(m68k_info *info)
 {
-	build_imm_special_reg(M68K_INS_EORI, read_imm_8(), 1, M68K_REG_CCR);
+	build_imm_special_reg(info, M68K_INS_EORI, read_imm_8(info), 1, M68K_REG_CCR);
 }
 
-static void d68000_eori_to_sr(void)
+static void d68000_eori_to_sr(m68k_info *info)
 {
-	build_imm_special_reg(M68K_INS_EORI, read_imm_16(), 2, M68K_REG_SR);
+	build_imm_special_reg(info, M68K_INS_EORI, read_imm_16(info), 2, M68K_REG_SR);
 }
 
-static void d68000_exg_dd(void)
+static void d68000_exg_dd(m68k_info *info)
 {
-	build_r(M68K_INS_EXG, 4);
+	build_r(info, M68K_INS_EXG, 4);
 }
 
-static void d68000_exg_aa(void)
+static void d68000_exg_aa(m68k_info *info)
 {
-	cs_m68k* info = build_init_op(M68K_INS_EXG, 2, 4);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_EXG, 2, 4);
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
 	op0->address_mode = M68K_AM_NONE;
-	op0->reg = M68K_REG_A0 + ((g_cpu_ir >> 9) & 7);
+	op0->reg = M68K_REG_A0 + ((info->ir >> 9) & 7);
 
 	op1->address_mode = M68K_AM_NONE;
-	op1->reg = M68K_REG_A0 + (g_cpu_ir & 7);
+	op1->reg = M68K_REG_A0 + (info->ir & 7);
 }
 
-static void d68000_exg_da(void)
+static void d68000_exg_da(m68k_info *info)
 {
-	cs_m68k* info = build_init_op(M68K_INS_EXG, 2, 4);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_EXG, 2, 4);
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
 	op0->address_mode = M68K_AM_NONE;
-	op0->reg = M68K_REG_D0 + ((g_cpu_ir >> 9) & 7);
+	op0->reg = M68K_REG_D0 + ((info->ir >> 9) & 7);
 
 	op1->address_mode = M68K_AM_NONE;
-	op1->reg = M68K_REG_A0 + (g_cpu_ir & 7);
+	op1->reg = M68K_REG_A0 + (info->ir & 7);
 }
 
-static void d68000_ext_16(void)
+static void d68000_ext_16(m68k_info *info)
 {
-	build_d(M68K_INS_EXT, 2);
+	build_d(info, M68K_INS_EXT, 2);
 }
 
-static void d68000_ext_32(void)
+static void d68000_ext_32(m68k_info *info)
 {
-	build_d(M68K_INS_EXT, 4);
+	build_d(info, M68K_INS_EXT, 4);
 }
 
-static void d68020_extb_32(void)
+static void d68020_extb_32(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_d(M68K_INS_EXTB, 4);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_d(info, M68K_INS_EXTB, 4);
 }
 
-static void d68000_jmp(void)
+static void d68000_jmp(m68k_info *info)
 {
-	cs_m68k* info = build_init_op(M68K_INS_JMP, 1, 0);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_JMP, 1, 0);
+	if (!ext) {
 		return;
 	}
-	get_ea_mode_op(&info->operands[0], g_cpu_ir, 4);
+	get_ea_mode_op(info, &ext->operands[0], info->ir, 4);
 }
 
-static void d68000_jsr(void)
+static void d68000_jsr(m68k_info *info)
 {
-	cs_m68k* info = build_init_op(M68K_INS_JSR, 1, 0);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_JSR, 1, 0);
+	if (!ext) {
 		return;
 	}
-	get_ea_mode_op(&info->operands[0], g_cpu_ir, 4);
+	get_ea_mode_op(info, &ext->operands[0], info->ir, 4);
 }
 
-static void d68000_lea(void)
+static void d68000_lea(m68k_info *info)
 {
-	build_ea_a(M68K_INS_LEA, 4);
+	build_ea_a(info, M68K_INS_LEA, 4);
 }
 
-static void d68000_link_16(void)
+static void d68000_link_16(m68k_info *info)
 {
-	build_link(read_imm_16(), 2);
+	build_link(info, read_imm_16(info), 2);
 }
 
-static void d68020_link_32(void)
+static void d68020_link_32(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_link(read_imm_32(), 4);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_link(info, read_imm_32(info), 4);
 }
 
-static void d68000_lsr_s_8(void)
+static void d68000_lsr_s_8(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_LSR, 1);
+	build_3bit_d(info, M68K_INS_LSR, 1);
 }
 
-static void d68000_lsr_s_16(void)
+static void d68000_lsr_s_16(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_LSR, 2);
+	build_3bit_d(info, M68K_INS_LSR, 2);
 }
 
-static void d68000_lsr_s_32(void)
+static void d68000_lsr_s_32(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_LSR, 4);
+	build_3bit_d(info, M68K_INS_LSR, 4);
 }
 
-static void d68000_lsr_r_8(void)
+static void d68000_lsr_r_8(m68k_info *info)
 {
-	build_r(M68K_INS_LSR, 1);
+	build_r(info, M68K_INS_LSR, 1);
 }
 
-static void d68000_lsr_r_16(void)
+static void d68000_lsr_r_16(m68k_info *info)
 {
-	build_r(M68K_INS_LSR, 2);
+	build_r(info, M68K_INS_LSR, 2);
 }
 
-static void d68000_lsr_r_32(void)
+static void d68000_lsr_r_32(m68k_info *info)
 {
-	build_r(M68K_INS_LSR, 4);
+	build_r(info, M68K_INS_LSR, 4);
 }
 
-static void d68000_lsr_ea(void)
+static void d68000_lsr_ea(m68k_info *info)
 {
-	build_ea(M68K_INS_LSR, 2);
+	build_ea(info, M68K_INS_LSR, 2);
 }
 
-static void d68000_lsl_s_8(void)
+static void d68000_lsl_s_8(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_LSL, 1);
+	build_3bit_d(info, M68K_INS_LSL, 1);
 }
 
-static void d68000_lsl_s_16(void)
+static void d68000_lsl_s_16(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_LSL, 2);
+	build_3bit_d(info, M68K_INS_LSL, 2);
 }
 
-static void d68000_lsl_s_32(void)
+static void d68000_lsl_s_32(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_LSL, 4);
+	build_3bit_d(info, M68K_INS_LSL, 4);
 }
 
-static void d68000_lsl_r_8(void)
+static void d68000_lsl_r_8(m68k_info *info)
 {
-	build_r(M68K_INS_LSL, 1);
+	build_r(info, M68K_INS_LSL, 1);
 }
 
-static void d68000_lsl_r_16(void)
+static void d68000_lsl_r_16(m68k_info *info)
 {
-	build_r(M68K_INS_LSL, 2);
+	build_r(info, M68K_INS_LSL, 2);
 }
 
-static void d68000_lsl_r_32(void)
+static void d68000_lsl_r_32(m68k_info *info)
 {
-	build_r(M68K_INS_LSL, 4);
+	build_r(info, M68K_INS_LSL, 4);
 }
 
-static void d68000_lsl_ea(void)
+static void d68000_lsl_ea(m68k_info *info)
 {
-	build_ea(M68K_INS_LSL, 2);
+	build_ea(info, M68K_INS_LSL, 2);
 }
 
-static void d68000_move_8(void)
+static void d68000_move_8(m68k_info *info)
 {
-	build_ea_ea(M68K_INS_MOVE, 1);
+	build_ea_ea(info, M68K_INS_MOVE, 1);
 }
 
-static void d68000_move_16(void)
+static void d68000_move_16(m68k_info *info)
 {
-	build_ea_ea(M68K_INS_MOVE, 2);
+	build_ea_ea(info, M68K_INS_MOVE, 2);
 }
 
-static void d68000_move_32(void)
+static void d68000_move_32(m68k_info *info)
 {
-	build_ea_ea(M68K_INS_MOVE, 4);
+	build_ea_ea(info, M68K_INS_MOVE, 4);
 }
 
-static void d68000_movea_16(void)
+static void d68000_movea_16(m68k_info *info)
 {
-	build_ea_a(M68K_INS_MOVEA, 2);
+	build_ea_a(info, M68K_INS_MOVEA, 2);
 }
 
-static void d68000_movea_32(void)
+static void d68000_movea_32(m68k_info *info)
 {
-	build_ea_a(M68K_INS_MOVEA, 4);
+	build_ea_a(info, M68K_INS_MOVEA, 4);
 }
 
-static void d68000_move_to_ccr(void)
+static void d68000_move_to_ccr(m68k_info *info)
 {
-	cs_m68k* info = build_init_op(M68K_INS_MOVE, 2, 2);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_MOVE, 2, 2);
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
-	get_ea_mode_op(op0, g_cpu_ir, 1);
+	get_ea_mode_op(info, op0, info->ir, 1);
 
 	op1->address_mode = M68K_AM_NONE;
 	op1->reg = M68K_REG_CCR;
 }
 
-static void d68010_move_fr_ccr(void)
+static void d68010_move_fr_ccr(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68010_PLUS);
+	LIMIT_CPU_TYPES(info, M68010_PLUS);
 
-	cs_m68k* info = build_init_op(M68K_INS_MOVE, 2, 2);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_MOVE, 2, 2);
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
 	op0->address_mode = M68K_AM_NONE;
 	op0->reg = M68K_REG_CCR;
 
-	get_ea_mode_op(op1, g_cpu_ir, 1);
+	get_ea_mode_op(info, op1, info->ir, 1);
 }
 
-static void d68000_move_fr_sr(void)
+static void d68000_move_fr_sr(m68k_info *info)
 {
-	cs_m68k* info = build_init_op(M68K_INS_MOVE, 2, 2);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_MOVE, 2, 2);
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
 	op0->address_mode = M68K_AM_NONE;
 	op0->reg = M68K_REG_SR;
 
-	get_ea_mode_op(op1, g_cpu_ir, 2);
+	get_ea_mode_op(info, op1, info->ir, 2);
 }
 
-static void d68000_move_to_sr(void)
+static void d68000_move_to_sr(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68010_PLUS);
+	LIMIT_CPU_TYPES(info, M68010_PLUS);
 
-	cs_m68k* info = build_init_op(M68K_INS_MOVE, 2, 2);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_MOVE, 2, 2);
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
-	get_ea_mode_op(op0, g_cpu_ir, 1);
+	get_ea_mode_op(info, op0, info->ir, 1);
 
 	op1->address_mode = M68K_AM_NONE;
 	op1->reg = M68K_REG_SR;
 }
 
-static void d68000_move_fr_usp(void)
+static void d68000_move_fr_usp(m68k_info *info)
 {
-	cs_m68k* info = build_init_op(M68K_INS_MOVE, 2, 0);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_MOVE, 2, 0);
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
 	op0->address_mode = M68K_AM_NONE;
 	op0->reg = M68K_REG_USP;
 
 	op1->address_mode = M68K_AM_NONE;
-	op1->reg = M68K_REG_A0 + (g_cpu_ir & 7);
+	op1->reg = M68K_REG_A0 + (info->ir & 7);
 }
 
-static void d68000_move_to_usp(void)
+static void d68000_move_to_usp(m68k_info *info)
 {
-	cs_m68k* info = build_init_op(M68K_INS_MOVE, 2, 0);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_MOVE, 2, 0);
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
 	op0->address_mode = M68K_AM_NONE;
-	op0->reg = M68K_REG_A0 + (g_cpu_ir & 7);
+	op0->reg = M68K_REG_A0 + (info->ir & 7);
 
 	op1->address_mode = M68K_AM_NONE;
 	op1->reg = M68K_REG_USP;
 }
 
-static void d68010_movec(void)
+static void d68010_movec(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	uint extension = read_imm_16();
+	LIMIT_CPU_TYPES(info, M68010_PLUS);
+	uint extension = read_imm_16(info);
 	m68k_reg reg = M68K_REG_INVALID;
 
-	cs_m68k* info = build_init_op(M68K_INS_MOVEC, 2, 0);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_MOVEC, 2, 0);
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
 	switch (extension & 0xfff) {
 		case 0x000: reg = M68K_REG_SFC; break;
@@ -2662,188 +2659,188 @@ static void d68010_movec(void)
 		case 0x807: reg = M68K_REG_SRP; break;
 	}
 
-	if (BIT_1(g_cpu_ir)) {
+	if (BIT_1(info->ir)) {
 		op0->reg = (BIT_F(extension) ? M68K_REG_A0 : M68K_REG_D0) + ((extension >> 12) & 7);
-		op1->reg = reg; 
+		op1->reg = reg;
 	} else {
-		op0->reg = reg; 
+		op0->reg = reg;
 		op1->reg = (BIT_F(extension) ? M68K_REG_A0 : M68K_REG_D0) + ((extension >> 12) & 7);
 	}
 }
 
-static void d68000_movem_pd_16(void)
+static void d68000_movem_pd_16(m68k_info *info)
 {
-	build_movem_re(M68K_INS_MOVEM, 2);
+	build_movem_re(info, M68K_INS_MOVEM, 2);
 }
 
-static void d68000_movem_pd_32(void)
+static void d68000_movem_pd_32(m68k_info *info)
 {
-	build_movem_re(M68K_INS_MOVEM, 4);
+	build_movem_re(info, M68K_INS_MOVEM, 4);
 }
 
-static void d68000_movem_er_16(void)
+static void d68000_movem_er_16(m68k_info *info)
 {
-	build_movem_er(M68K_INS_MOVEM, 2);
+	build_movem_er(info, M68K_INS_MOVEM, 2);
 }
 
-static void d68000_movem_er_32(void)
+static void d68000_movem_er_32(m68k_info *info)
 {
-	build_movem_er(M68K_INS_MOVEM, 4);
+	build_movem_er(info, M68K_INS_MOVEM, 4);
 }
 
-static void d68000_movem_re_16(void)
+static void d68000_movem_re_16(m68k_info *info)
 {
-	build_movem_re(M68K_INS_MOVEM, 2);
+	build_movem_re(info, M68K_INS_MOVEM, 2);
 }
 
-static void d68000_movem_re_32(void)
+static void d68000_movem_re_32(m68k_info *info)
 {
-	build_movem_re(M68K_INS_MOVEM, 4);
+	build_movem_re(info, M68K_INS_MOVEM, 4);
 }
 
-static void d68000_movep_re_16(void)
+static void d68000_movep_re_16(m68k_info *info)
 {
-	build_movep_re(2);
+	build_movep_re(info, 2);
 }
 
-static void d68000_movep_re_32(void)
+static void d68000_movep_re_32(m68k_info *info)
 {
-	build_movep_re(4);
+	build_movep_re(info, 4);
 }
 
-static void d68000_movep_er_16(void)
+static void d68000_movep_er_16(m68k_info *info)
 {
-	build_movep_er(2);
+	build_movep_er(info, 2);
 }
 
-static void d68000_movep_er_32(void)
+static void d68000_movep_er_32(m68k_info *info)
 {
-	build_movep_er(4);
+	build_movep_er(info, 4);
 }
 
-static void d68010_moves_8(void)
+static void d68010_moves_8(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	build_moves(1);
+	LIMIT_CPU_TYPES(info, M68010_PLUS);
+	build_moves(info, 1);
 }
 
-static void d68010_moves_16(void)
+static void d68010_moves_16(m68k_info *info)
 {
 	//uint extension;
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	build_moves(2);
+	LIMIT_CPU_TYPES(info, M68010_PLUS);
+	build_moves(info, 2);
 }
 
-static void d68010_moves_32(void)
+static void d68010_moves_32(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	build_moves(4);
+	LIMIT_CPU_TYPES(info, M68010_PLUS);
+	build_moves(info, 4);
 }
 
-static void d68000_moveq(void)
+static void d68000_moveq(m68k_info *info)
 {
-	cs_m68k* info = build_init_op(M68K_INS_MOVEQ, 2, 0);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_MOVEQ, 2, 0);
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
 	op0->type = M68K_OP_IMM;
 	op0->address_mode = M68K_AM_IMMIDIATE;
-	op0->imm = (g_cpu_ir & 0xff);
+	op0->imm = (info->ir & 0xff);
 
 	op1->address_mode = M68K_AM_REG_DIRECT_DATA;
-	op1->reg = M68K_REG_D0 + ((g_cpu_ir >> 9) & 7);
+	op1->reg = M68K_REG_D0 + ((info->ir >> 9) & 7);
 }
 
-static void d68040_move16_pi_pi(void)
+static void d68040_move16_pi_pi(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68040_PLUS);
+	LIMIT_CPU_TYPES(info, M68040_PLUS);
 
-	int data[] = { g_cpu_ir & 7, (read_imm_16() >> 12) & 7 };
+	int data[] = { info->ir & 7, (read_imm_16(info) >> 12) & 7 };
 	int modes[] = { M68K_AM_REGI_ADDR_POST_INC, M68K_AM_REGI_ADDR_POST_INC };
 
-	build_move16(data, modes);
+	build_move16(info, data, modes);
 }
 
-static void d68040_move16_pi_al(void)
+static void d68040_move16_pi_al(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68040_PLUS);
+	LIMIT_CPU_TYPES(info, M68040_PLUS);
 
-	int data[] = { g_cpu_ir & 7, read_imm_32() };
+	int data[] = { info->ir & 7, read_imm_32(info) };
 	int modes[] = { M68K_AM_REGI_ADDR_POST_INC, M68K_AM_ABSOLUTE_DATA_LONG };
 
-	build_move16(data, modes);
+	build_move16(info, data, modes);
 }
 
-static void d68040_move16_al_pi(void)
+static void d68040_move16_al_pi(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68040_PLUS);
+	LIMIT_CPU_TYPES(info, M68040_PLUS);
 
-	int data[] = { read_imm_32(), g_cpu_ir & 7 };
+	int data[] = { read_imm_32(info), info->ir & 7 };
 	int modes[] = { M68K_AM_ABSOLUTE_DATA_LONG, M68K_AM_REGI_ADDR_POST_INC };
 
-	build_move16(data, modes);
+	build_move16(info, data, modes);
 }
 
-static void d68040_move16_ai_al(void)
+static void d68040_move16_ai_al(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68040_PLUS);
+	LIMIT_CPU_TYPES(info, M68040_PLUS);
 
-	int data[] = { g_cpu_ir & 7, read_imm_32() };
+	int data[] = { info->ir & 7, read_imm_32(info) };
 	int modes[] = { M68K_AM_REG_DIRECT_ADDR, M68K_AM_ABSOLUTE_DATA_LONG };
 
-	build_move16(data, modes);
+	build_move16(info, data, modes);
 }
 
-static void d68040_move16_al_ai(void)
+static void d68040_move16_al_ai(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68040_PLUS);
+	LIMIT_CPU_TYPES(info, M68040_PLUS);
 
-	int data[] = { read_imm_32(), g_cpu_ir & 7 };
+	int data[] = { read_imm_32(info), info->ir & 7 };
 	int modes[] = { M68K_AM_ABSOLUTE_DATA_LONG, M68K_AM_REG_DIRECT_ADDR };
 
-	build_move16(data, modes);
+	build_move16(info, data, modes);
 }
 
-static void d68000_muls(void)
+static void d68000_muls(m68k_info *info)
 {
-	build_er_1(M68K_INS_MULS, 2);
+	build_er_1(info, M68K_INS_MULS, 2);
 }
 
-static void d68000_mulu(void)
+static void d68000_mulu(m68k_info *info)
 {
-	build_er_1(M68K_INS_MULU, 2);
+	build_er_1(info, M68K_INS_MULU, 2);
 }
 
-static void d68020_mull(void)
+static void d68020_mull(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
 
-	uint extension = read_imm_16();
+	uint extension = read_imm_16(info);
 	uint insn_signed = 0;
 
 	if (BIT_B((extension)))
 		insn_signed = 1;
 
-	cs_m68k* info = build_init_op(insn_signed ? M68K_INS_MULS : M68K_INS_MULU, 2, 4);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, insn_signed ? M68K_INS_MULS : M68K_INS_MULU, 2, 4);
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op0 = &info->operands[0];
-	cs_m68k_op* op1 = &info->operands[1];
+	cs_m68k_op* op0 = &ext->operands[0];
+	cs_m68k_op* op1 = &ext->operands[1];
 
-	get_ea_mode_op(op0, g_cpu_ir, 4);
+	get_ea_mode_op(info, op0, info->ir, 4);
 
 	const uint reg_0 = extension & 7;
 	const uint reg_1 = (extension >> 12) & 7;
 
 	op1->address_mode = M68K_AM_NONE;
 	op1->type = M68K_OP_REG_PAIR;
-	op1->register_bits = (reg_0 << 4) | reg_1; 
+	op1->register_bits = (reg_0 << 4) | reg_1;
 
 	if (!BIT_A(extension)) {
 		op1->type = M68K_OP_REG;
@@ -2851,594 +2848,594 @@ static void d68020_mull(void)
 	}
 }
 
-static void d68000_nbcd(void)
+static void d68000_nbcd(m68k_info *info)
 {
-	build_ea(M68K_INS_NBCD, 1);
+	build_ea(info, M68K_INS_NBCD, 1);
 }
 
-static void d68000_neg_8(void)
+static void d68000_neg_8(m68k_info *info)
 {
-	build_ea(M68K_INS_NEG, 1);
+	build_ea(info, M68K_INS_NEG, 1);
 }
 
-static void d68000_neg_16(void)
+static void d68000_neg_16(m68k_info *info)
 {
-	build_ea(M68K_INS_NEG, 2);
+	build_ea(info, M68K_INS_NEG, 2);
 }
 
-static void d68000_neg_32(void)
+static void d68000_neg_32(m68k_info *info)
 {
-	build_ea(M68K_INS_NEG, 4);
+	build_ea(info, M68K_INS_NEG, 4);
 }
 
-static void d68000_negx_8(void)
+static void d68000_negx_8(m68k_info *info)
 {
-	build_ea(M68K_INS_NEGX, 1);
+	build_ea(info, M68K_INS_NEGX, 1);
 }
 
-static void d68000_negx_16(void)
+static void d68000_negx_16(m68k_info *info)
 {
-	build_ea(M68K_INS_NEGX, 2);
+	build_ea(info, M68K_INS_NEGX, 2);
 }
 
-static void d68000_negx_32(void)
+static void d68000_negx_32(m68k_info *info)
 {
-	build_ea(M68K_INS_NEGX, 4);
+	build_ea(info, M68K_INS_NEGX, 4);
 }
 
-static void d68000_nop(void)
+static void d68000_nop(m68k_info *info)
 {
-	MCInst_setOpcode(g_inst, M68K_INS_NOP);
+	MCInst_setOpcode(info->inst, M68K_INS_NOP);
 }
 
-static void d68000_not_8(void)
+static void d68000_not_8(m68k_info *info)
 {
-	build_ea(M68K_INS_NOT, 1);
+	build_ea(info, M68K_INS_NOT, 1);
 }
 
-static void d68000_not_16(void)
+static void d68000_not_16(m68k_info *info)
 {
-	build_ea(M68K_INS_NOT, 2);
+	build_ea(info, M68K_INS_NOT, 2);
 }
 
-static void d68000_not_32(void)
+static void d68000_not_32(m68k_info *info)
 {
-	build_ea(M68K_INS_NOT, 4);
+	build_ea(info, M68K_INS_NOT, 4);
 }
 
-static void d68000_or_er_8(void)
+static void d68000_or_er_8(m68k_info *info)
 {
-	build_er_1(M68K_INS_OR, 1);
+	build_er_1(info, M68K_INS_OR, 1);
 }
 
-static void d68000_or_er_16(void)
+static void d68000_or_er_16(m68k_info *info)
 {
-	build_er_1(M68K_INS_OR, 2);
+	build_er_1(info, M68K_INS_OR, 2);
 }
 
-static void d68000_or_er_32(void)
+static void d68000_or_er_32(m68k_info *info)
 {
-	build_er_1(M68K_INS_OR, 4);
+	build_er_1(info, M68K_INS_OR, 4);
 }
 
-static void d68000_or_re_8(void)
+static void d68000_or_re_8(m68k_info *info)
 {
-	build_re_1(M68K_INS_OR, 1); 
+	build_re_1(info, M68K_INS_OR, 1);
 }
 
-static void d68000_or_re_16(void)
+static void d68000_or_re_16(m68k_info *info)
 {
-	build_re_1(M68K_INS_OR, 2); 
+	build_re_1(info, M68K_INS_OR, 2);
 }
 
-static void d68000_or_re_32(void)
+static void d68000_or_re_32(m68k_info *info)
 {
-	build_re_1(M68K_INS_OR, 4); 
+	build_re_1(info, M68K_INS_OR, 4);
 }
 
-static void d68000_ori_8(void)
+static void d68000_ori_8(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_ORI, 1, read_imm_8());
+	build_imm_ea(info, M68K_INS_ORI, 1, read_imm_8(info));
 }
 
-static void d68000_ori_16(void)
+static void d68000_ori_16(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_ORI, 2, read_imm_16());
+	build_imm_ea(info, M68K_INS_ORI, 2, read_imm_16(info));
 }
 
-static void d68000_ori_32(void)
+static void d68000_ori_32(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_ORI, 4, read_imm_32());
+	build_imm_ea(info, M68K_INS_ORI, 4, read_imm_32(info));
 }
 
-static void d68000_ori_to_ccr(void)
+static void d68000_ori_to_ccr(m68k_info *info)
 {
-	build_imm_special_reg(M68K_INS_ORI, read_imm_8(), 1, M68K_REG_CCR);
+	build_imm_special_reg(info, M68K_INS_ORI, read_imm_8(info), 1, M68K_REG_CCR);
 }
 
-static void d68000_ori_to_sr(void)
+static void d68000_ori_to_sr(m68k_info *info)
 {
-	build_imm_special_reg(M68K_INS_ORI, read_imm_16(), 2, M68K_REG_SR);
+	build_imm_special_reg(info, M68K_INS_ORI, read_imm_16(info), 2, M68K_REG_SR);
 }
 
-static void d68020_pack_rr(void)
+static void d68020_pack_rr(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_rr(M68K_INS_PACK, 0, read_imm_16()); 
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_rr(info, M68K_INS_PACK, 0, read_imm_16(info));
 }
 
-static void d68020_pack_mm(void)
+static void d68020_pack_mm(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_mm(M68K_INS_PACK, 0, read_imm_16()); 
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_mm(info, M68K_INS_PACK, 0, read_imm_16(info));
 }
 
-static void d68000_pea(void)
+static void d68000_pea(m68k_info *info)
 {
-	build_ea(M68K_INS_PEA, 4);
+	build_ea(info, M68K_INS_PEA, 4);
 }
 
-static void d68000_reset(void)
+static void d68000_reset(m68k_info *info)
 {
-	MCInst_setOpcode(g_inst, M68K_INS_RESET);
+	MCInst_setOpcode(info->inst, M68K_INS_RESET);
 }
 
-static void d68000_ror_s_8(void)
+static void d68000_ror_s_8(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_ROR, 1);
+	build_3bit_d(info, M68K_INS_ROR, 1);
 }
 
-static void d68000_ror_s_16(void)
+static void d68000_ror_s_16(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_ROR, 2);
+	build_3bit_d(info, M68K_INS_ROR, 2);
 }
 
-static void d68000_ror_s_32(void)
+static void d68000_ror_s_32(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_ROR, 4);
+	build_3bit_d(info, M68K_INS_ROR, 4);
 }
 
-static void d68000_ror_r_8(void)
+static void d68000_ror_r_8(m68k_info *info)
 {
-	build_r(M68K_INS_ROR, 1);
+	build_r(info, M68K_INS_ROR, 1);
 }
 
-static void d68000_ror_r_16(void)
+static void d68000_ror_r_16(m68k_info *info)
 {
-	build_r(M68K_INS_ROR, 2);
+	build_r(info, M68K_INS_ROR, 2);
 }
 
-static void d68000_ror_r_32(void)
+static void d68000_ror_r_32(m68k_info *info)
 {
-	build_r(M68K_INS_ROR, 4);
+	build_r(info, M68K_INS_ROR, 4);
 }
 
-static void d68000_ror_ea(void)
+static void d68000_ror_ea(m68k_info *info)
 {
-	build_ea(M68K_INS_ROR, 2);
+	build_ea(info, M68K_INS_ROR, 2);
 }
 
-static void d68000_rol_s_8(void)
+static void d68000_rol_s_8(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_ROL, 1);
+	build_3bit_d(info, M68K_INS_ROL, 1);
 }
 
-static void d68000_rol_s_16(void)
+static void d68000_rol_s_16(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_ROL, 2);
+	build_3bit_d(info, M68K_INS_ROL, 2);
 }
 
-static void d68000_rol_s_32(void)
+static void d68000_rol_s_32(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_ROL, 4);
+	build_3bit_d(info, M68K_INS_ROL, 4);
 }
 
-static void d68000_rol_r_8(void)
+static void d68000_rol_r_8(m68k_info *info)
 {
-	build_r(M68K_INS_ROL, 1);
+	build_r(info, M68K_INS_ROL, 1);
 }
 
-static void d68000_rol_r_16(void)
+static void d68000_rol_r_16(m68k_info *info)
 {
-	build_r(M68K_INS_ROL, 2);
+	build_r(info, M68K_INS_ROL, 2);
 }
 
-static void d68000_rol_r_32(void)
+static void d68000_rol_r_32(m68k_info *info)
 {
-	build_r(M68K_INS_ROL, 4);
+	build_r(info, M68K_INS_ROL, 4);
 }
 
-static void d68000_rol_ea(void)
+static void d68000_rol_ea(m68k_info *info)
 {
-	build_ea(M68K_INS_ROL, 2);
+	build_ea(info, M68K_INS_ROL, 2);
 }
 
-static void d68000_roxr_s_8(void)
+static void d68000_roxr_s_8(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_ROXR, 1);
+	build_3bit_d(info, M68K_INS_ROXR, 1);
 }
 
-static void d68000_roxr_s_16(void)
+static void d68000_roxr_s_16(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_ROXR, 2);
+	build_3bit_d(info, M68K_INS_ROXR, 2);
 }
 
-static void d68000_roxr_s_32(void)
+static void d68000_roxr_s_32(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_ROXR, 4);
+	build_3bit_d(info, M68K_INS_ROXR, 4);
 }
 
-static void d68000_roxr_r_8(void)
+static void d68000_roxr_r_8(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_ROXR, 4);
+	build_3bit_d(info, M68K_INS_ROXR, 4);
 }
 
-static void d68000_roxr_r_16(void)
+static void d68000_roxr_r_16(m68k_info *info)
 {
-	build_r(M68K_INS_ROXR, 2);
+	build_r(info, M68K_INS_ROXR, 2);
 }
 
-static void d68000_roxr_r_32(void)
+static void d68000_roxr_r_32(m68k_info *info)
 {
-	build_r(M68K_INS_ROXR, 4);
+	build_r(info, M68K_INS_ROXR, 4);
 }
 
-static void d68000_roxr_ea(void)
+static void d68000_roxr_ea(m68k_info *info)
 {
-	build_ea(M68K_INS_ROL, 2);
+	build_ea(info, M68K_INS_ROL, 2);
 }
 
-static void d68000_roxl_s_8(void)
+static void d68000_roxl_s_8(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_ROXL, 1);
+	build_3bit_d(info, M68K_INS_ROXL, 1);
 }
 
-static void d68000_roxl_s_16(void)
+static void d68000_roxl_s_16(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_ROXL, 2);
+	build_3bit_d(info, M68K_INS_ROXL, 2);
 }
 
-static void d68000_roxl_s_32(void)
+static void d68000_roxl_s_32(m68k_info *info)
 {
-	build_3bit_d(M68K_INS_ROXL, 4);
+	build_3bit_d(info, M68K_INS_ROXL, 4);
 }
 
-static void d68000_roxl_r_8(void)
+static void d68000_roxl_r_8(m68k_info *info)
 {
-	build_r(M68K_INS_ROXL, 1);
+	build_r(info, M68K_INS_ROXL, 1);
 }
 
-static void d68000_roxl_r_16(void)
+static void d68000_roxl_r_16(m68k_info *info)
 {
-	build_r(M68K_INS_ROXL, 2);
+	build_r(info, M68K_INS_ROXL, 2);
 }
 
-static void d68000_roxl_r_32(void)
+static void d68000_roxl_r_32(m68k_info *info)
 {
-	build_r(M68K_INS_ROXL, 4);
+	build_r(info, M68K_INS_ROXL, 4);
 }
 
-static void d68000_roxl_ea(void)
+static void d68000_roxl_ea(m68k_info *info)
 {
-	build_ea(M68K_INS_ROXL, 2);
+	build_ea(info, M68K_INS_ROXL, 2);
 }
 
-static void d68010_rtd(void)
+static void d68010_rtd(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68010_PLUS);
-	build_bxx(M68K_INS_RTD, 0, read_imm_16());
+	LIMIT_CPU_TYPES(info, M68010_PLUS);
+	build_bxx(info, M68K_INS_RTD, 0, read_imm_16(info));
 }
 
-static void d68000_rte(void)
+static void d68000_rte(m68k_info *info)
 {
-	MCInst_setOpcode(g_inst, M68K_INS_RTE);
+	MCInst_setOpcode(info->inst, M68K_INS_RTE);
 }
 
-static void d68020_rtm(void)
+static void d68020_rtm(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_ONLY);
+	LIMIT_CPU_TYPES(info, M68020_ONLY);
 
-	build_bxx(M68K_INS_RTM, 0, 0); 
+	build_bxx(info, M68K_INS_RTM, 0, 0);
 
-	cs_detail *detail = g_inst->flat_insn->detail;
+	cs_detail *detail = info->inst->flat_insn->detail;
 	if (!detail) {
 		return;
 	}
 
-	cs_m68k* info = &detail->m68k;
-	cs_m68k_op* op = &info->operands[0];
+	cs_m68k* ext = &detail->m68k;
+	cs_m68k_op* op = &ext->operands[0];
 
 	op->address_mode = M68K_AM_NONE;
 	op->type = M68K_OP_REG;
 
-	if (BIT_3(g_cpu_ir)) {
-		op->reg = M68K_REG_A0 + (g_cpu_ir & 7);
+	if (BIT_3(info->ir)) {
+		op->reg = M68K_REG_A0 + (info->ir & 7);
 	} else {
-		op->reg = M68K_REG_D0 + (g_cpu_ir & 7);
+		op->reg = M68K_REG_D0 + (info->ir & 7);
 	}
 }
 
-static void d68000_rtr(void)
+static void d68000_rtr(m68k_info *info)
 {
-	MCInst_setOpcode(g_inst, M68K_INS_RTR);
+	MCInst_setOpcode(info->inst, M68K_INS_RTR);
 }
 
-static void d68000_rts(void)
+static void d68000_rts(m68k_info *info)
 {
-	MCInst_setOpcode(g_inst, M68K_INS_RTS);
+	MCInst_setOpcode(info->inst, M68K_INS_RTS);
 }
 
-static void d68000_sbcd_rr(void)
+static void d68000_sbcd_rr(m68k_info *info)
 {
-	build_rr(M68K_INS_SBCD, 1, 0); 
+	build_rr(info, M68K_INS_SBCD, 1, 0);
 }
 
-static void d68000_sbcd_mm(void)
+static void d68000_sbcd_mm(m68k_info *info)
 {
-	build_mm(M68K_INS_SBCD, 0, read_imm_16()); 
+	build_mm(info, M68K_INS_SBCD, 0, read_imm_16(info));
 }
 
-static void d68000_scc(void)
+static void d68000_scc(m68k_info *info)
 {
-	cs_m68k* info = build_init_op(s_scc_lut[(g_cpu_ir >> 8) & 0xf], 1, 1);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, s_scc_lut[(info->ir >> 8) & 0xf], 1, 1);
+	if (!ext) {
 		return;
 	}
-	get_ea_mode_op(&info->operands[0], g_cpu_ir, 1);
+	get_ea_mode_op(info, &ext->operands[0], info->ir, 1);
 }
 
-static void d68000_stop(void)
+static void d68000_stop(m68k_info *info)
 {
-	build_bxx(M68K_INS_STOP, 0, read_imm_16()); 
+	build_bxx(info, M68K_INS_STOP, 0, read_imm_16(info));
 }
 
-static void d68000_sub_er_8(void)
+static void d68000_sub_er_8(m68k_info *info)
 {
-	build_er_1(M68K_INS_SUB, 1);
+	build_er_1(info, M68K_INS_SUB, 1);
 }
 
-static void d68000_sub_er_16(void)
+static void d68000_sub_er_16(m68k_info *info)
 {
-	build_er_1(M68K_INS_SUB, 2);
+	build_er_1(info, M68K_INS_SUB, 2);
 }
 
-static void d68000_sub_er_32(void)
+static void d68000_sub_er_32(m68k_info *info)
 {
-	build_er_1(M68K_INS_SUB, 4);
+	build_er_1(info, M68K_INS_SUB, 4);
 }
 
-static void d68000_sub_re_8(void)
+static void d68000_sub_re_8(m68k_info *info)
 {
-	build_re_1(M68K_INS_SUB, 1);
+	build_re_1(info, M68K_INS_SUB, 1);
 }
 
-static void d68000_sub_re_16(void)
+static void d68000_sub_re_16(m68k_info *info)
 {
-	build_re_1(M68K_INS_SUB, 2);
+	build_re_1(info, M68K_INS_SUB, 2);
 }
 
-static void d68000_sub_re_32(void)
+static void d68000_sub_re_32(m68k_info *info)
 {
-	build_re_1(M68K_INS_SUB, 4);
+	build_re_1(info, M68K_INS_SUB, 4);
 }
 
-static void d68000_suba_16(void)
+static void d68000_suba_16(m68k_info *info)
 {
-	build_ea_a(M68K_INS_SUBA, 2);
+	build_ea_a(info, M68K_INS_SUBA, 2);
 }
 
-static void d68000_suba_32(void)
+static void d68000_suba_32(m68k_info *info)
 {
-	build_ea_a(M68K_INS_SUBA, 4);
+	build_ea_a(info, M68K_INS_SUBA, 4);
 }
 
-static void d68000_subi_8(void)
+static void d68000_subi_8(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_SUBI, 1, read_imm_8());
+	build_imm_ea(info, M68K_INS_SUBI, 1, read_imm_8(info));
 }
 
-static void d68000_subi_16(void)
+static void d68000_subi_16(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_SUBI, 2, read_imm_16());
+	build_imm_ea(info, M68K_INS_SUBI, 2, read_imm_16(info));
 }
 
-static void d68000_subi_32(void)
+static void d68000_subi_32(m68k_info *info)
 {
-	build_imm_ea(M68K_INS_SUBI, 4, read_imm_32());
+	build_imm_ea(info, M68K_INS_SUBI, 4, read_imm_32(info));
 }
 
-static void d68000_subq_8(void)
+static void d68000_subq_8(m68k_info *info)
 {
-	build_3bit_ea(M68K_INS_SUBQ, 1);
+	build_3bit_ea(info, M68K_INS_SUBQ, 1);
 }
 
-static void d68000_subq_16(void)
+static void d68000_subq_16(m68k_info *info)
 {
-	build_3bit_ea(M68K_INS_SUBQ, 2);
+	build_3bit_ea(info, M68K_INS_SUBQ, 2);
 }
 
-static void d68000_subq_32(void)
+static void d68000_subq_32(m68k_info *info)
 {
-	build_3bit_ea(M68K_INS_SUBQ, 4);
+	build_3bit_ea(info, M68K_INS_SUBQ, 4);
 }
 
-static void d68000_subx_rr_8(void)
+static void d68000_subx_rr_8(m68k_info *info)
 {
-	build_rr(M68K_INS_SUBX, 1, 0); 
+	build_rr(info, M68K_INS_SUBX, 1, 0);
 }
 
-static void d68000_subx_rr_16(void)
+static void d68000_subx_rr_16(m68k_info *info)
 {
-	build_rr(M68K_INS_SUBX, 2, 0); 
+	build_rr(info, M68K_INS_SUBX, 2, 0);
 }
 
-static void d68000_subx_rr_32(void)
+static void d68000_subx_rr_32(m68k_info *info)
 {
-	build_rr(M68K_INS_SUBX, 4, 0); 
+	build_rr(info, M68K_INS_SUBX, 4, 0);
 }
 
-static void d68000_subx_mm_8(void)
+static void d68000_subx_mm_8(m68k_info *info)
 {
-	build_mm(M68K_INS_SUBX, 1, 0); 
+	build_mm(info, M68K_INS_SUBX, 1, 0);
 }
 
-static void d68000_subx_mm_16(void)
+static void d68000_subx_mm_16(m68k_info *info)
 {
-	build_mm(M68K_INS_SUBX, 2, 0); 
+	build_mm(info, M68K_INS_SUBX, 2, 0);
 }
 
-static void d68000_subx_mm_32(void)
+static void d68000_subx_mm_32(m68k_info *info)
 {
-	build_mm(M68K_INS_SUBX, 4, 0); 
+	build_mm(info, M68K_INS_SUBX, 4, 0);
 }
 
-static void d68000_swap(void)
+static void d68000_swap(m68k_info *info)
 {
-	build_d(M68K_INS_SWAP, 0);
+	build_d(info, M68K_INS_SWAP, 0);
 }
 
-static void d68000_tas(void)
+static void d68000_tas(m68k_info *info)
 {
-	build_ea(M68K_INS_TAS, 1);
+	build_ea(info, M68K_INS_TAS, 1);
 }
 
-static void d68000_trap(void)
+static void d68000_trap(m68k_info *info)
 {
-	build_bxx(M68K_INS_TRAP, 0, g_cpu_ir&0xf);
+	build_bxx(info, M68K_INS_TRAP, 0, info->ir&0xf);
 }
 
-static void d68020_trapcc_0(void)
+static void d68020_trapcc_0(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_trap(0, 0);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_trap(info, 0, 0);
 
-	cs_detail *detail = g_inst->flat_insn->detail;
+	cs_detail *detail = info->inst->flat_insn->detail;
 	if (detail) {
 		detail->m68k.op_count = 0;
 	}
 }
 
-static void d68020_trapcc_16(void)
+static void d68020_trapcc_16(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_trap(2, read_imm_16());
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_trap(info, 2, read_imm_16(info));
 }
 
-static void d68020_trapcc_32(void)
+static void d68020_trapcc_32(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_trap(4, read_imm_32());
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_trap(info, 4, read_imm_32(info));
 }
 
-static void d68000_trapv(void)
+static void d68000_trapv(m68k_info *info)
 {
-	MCInst_setOpcode(g_inst, M68K_INS_TRAPV);
+	MCInst_setOpcode(info->inst, M68K_INS_TRAPV);
 }
 
-static void d68000_tst_8(void)
+static void d68000_tst_8(m68k_info *info)
 {
-	build_ea(M68K_INS_TST, 1);
+	build_ea(info, M68K_INS_TST, 1);
 }
 
-static void d68020_tst_pcdi_8(void)
+static void d68020_tst_pcdi_8(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_ea(M68K_INS_TST, 1);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_ea(info, M68K_INS_TST, 1);
 }
 
-static void d68020_tst_pcix_8(void)
+static void d68020_tst_pcix_8(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_ea(M68K_INS_TST, 1);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_ea(info, M68K_INS_TST, 1);
 }
 
-static void d68020_tst_i_8(void)
+static void d68020_tst_i_8(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_ea(M68K_INS_TST, 1);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_ea(info, M68K_INS_TST, 1);
 }
 
-static void d68000_tst_16(void)
+static void d68000_tst_16(m68k_info *info)
 {
-	build_ea(M68K_INS_TST, 2);
+	build_ea(info, M68K_INS_TST, 2);
 }
 
-static void d68020_tst_a_16(void)
+static void d68020_tst_a_16(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_ea(M68K_INS_TST, 2);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_ea(info, M68K_INS_TST, 2);
 }
 
-static void d68020_tst_pcdi_16(void)
+static void d68020_tst_pcdi_16(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_ea(M68K_INS_TST, 2);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_ea(info, M68K_INS_TST, 2);
 }
 
-static void d68020_tst_pcix_16(void)
+static void d68020_tst_pcix_16(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_ea(M68K_INS_TST, 2);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_ea(info, M68K_INS_TST, 2);
 }
 
-static void d68020_tst_i_16(void)
+static void d68020_tst_i_16(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_ea(M68K_INS_TST, 2);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_ea(info, M68K_INS_TST, 2);
 }
 
-static void d68000_tst_32(void)
+static void d68000_tst_32(m68k_info *info)
 {
-	build_ea(M68K_INS_TST, 4);
+	build_ea(info, M68K_INS_TST, 4);
 }
 
-static void d68020_tst_a_32(void)
+static void d68020_tst_a_32(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_ea(M68K_INS_TST, 4);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_ea(info, M68K_INS_TST, 4);
 }
 
-static void d68020_tst_pcdi_32(void)
+static void d68020_tst_pcdi_32(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_ea(M68K_INS_TST, 4);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_ea(info, M68K_INS_TST, 4);
 }
 
-static void d68020_tst_pcix_32(void)
+static void d68020_tst_pcix_32(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_ea(M68K_INS_TST, 4);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_ea(info, M68K_INS_TST, 4);
 }
 
-static void d68020_tst_i_32(void)
+static void d68020_tst_i_32(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_ea(M68K_INS_TST, 4);
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_ea(info, M68K_INS_TST, 4);
 }
 
-static void d68000_unlk(void)
+static void d68000_unlk(m68k_info *info)
 {
-	cs_m68k* info = build_init_op(M68K_INS_UNLK, 1, 0);
-	if (!info) {
+	cs_m68k* ext = build_init_op(info, M68K_INS_UNLK, 1, 0);
+	if (!ext) {
 		return;
 	}
 
-	cs_m68k_op* op = &info->operands[0];
+	cs_m68k_op* op = &ext->operands[0];
 
 	op->address_mode = M68K_AM_REG_DIRECT_ADDR;
-	op->reg = M68K_REG_A0 + (g_cpu_ir & 7);
+	op->reg = M68K_REG_A0 + (info->ir & 7);
 }
 
-static void d68020_unpk_rr(void)
+static void d68020_unpk_rr(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_rr(M68K_INS_UNPK, 0, read_imm_16()); 
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_rr(info, M68K_INS_UNPK, 0, read_imm_16(info));
 }
 
-static void d68020_unpk_mm(void)
+static void d68020_unpk_mm(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(M68020_PLUS);
-	build_mm(M68K_INS_UNPK, 0, read_imm_16()); 
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	build_mm(info, M68K_INS_UNPK, 0, read_imm_16(info));
 }
 
 /* ======================================================================== */
@@ -3833,6 +3830,11 @@ static void build_opcode_table(void)
 	opcode_struct* ostruct;
 	uint opcode_info_length = 0;
 
+	/* Already initialized ? */
+	if (g_instruction_table[0].instruction != NULL) {
+		return;
+	}
+
 	for(ostruct = g_opcode_info;ostruct->opcode_handler != 0;ostruct++)
 		opcode_info_length++;
 
@@ -3862,14 +3864,54 @@ static void build_opcode_table(void)
 	}
 }
 
-static int instruction_is_valid(const unsigned int instruction, const unsigned int word_check)
+static int instruction_is_valid(m68k_info *info, const unsigned int word_check)
 {
+	const unsigned int instruction = info->ir;
 	instruction_struct *i = &g_instruction_table[instruction];
 	if (i->word2_mask && ((word_check & i->word2_mask) != i->word2_match)) {
-		d68000_invalid();
+		d68000_invalid(info);
 		return 0;
 	}
 	return 1;
+}
+
+static void m68k_setup_internals(m68k_info* info, MCInst* inst, unsigned int pc, unsigned int cpu_type)
+{
+	info->inst = inst;
+	info->pc = pc;
+	info->ir = 0;
+	info->type = cpu_type;
+	info->address_mask = 0xffffffff;
+
+	switch(info->type) {
+		case M68K_CPU_TYPE_68000:
+			info->type = TYPE_68000;
+			info->address_mask = 0x00ffffff;
+			break;
+		case M68K_CPU_TYPE_68010:
+			info->type = TYPE_68010;
+			info->address_mask = 0x00ffffff;
+			break;
+		case M68K_CPU_TYPE_68EC020:
+			info->type = TYPE_68020;
+			info->address_mask = 0x00ffffff;
+			break;
+		case M68K_CPU_TYPE_68020:
+			info->type = TYPE_68020;
+			info->address_mask = 0xffffffff;
+			break;
+		case M68K_CPU_TYPE_68030:
+			info->type = TYPE_68030;
+			info->address_mask = 0xffffffff;
+			break;
+		case M68K_CPU_TYPE_68040:
+			info->type = TYPE_68040;
+			info->address_mask = 0xffffffff;
+			break;
+		default:
+			info->address_mask = 0;
+			return;
+	}
 }
 
 /* ======================================================================== */
@@ -3879,64 +3921,31 @@ static int instruction_is_valid(const unsigned int instruction, const unsigned i
 /* Disasemble one instruction at pc and store in str_buff */
 unsigned int m68k_disassemble(MCInst* inst, unsigned int pc, unsigned int cpu_type)
 {
-	g_inst = inst;
+	m68k_info info;
 
-	inst->Opcode = 0;
+	m68k_setup_internals(&info, inst, pc, cpu_type);
+	inst->Opcode = M68K_INS_INVALID;
 
-	cs_detail *detail = g_inst->flat_insn->detail;
+	build_opcode_table();
+
+	cs_detail *detail = info.inst->flat_insn->detail;
 	if (detail) {
-		cs_m68k* info = &detail->m68k;
+		cs_m68k* ext = &detail->m68k;
 		int i;
 
-		memset(info, 0, sizeof(cs_m68k));
-		info->op_size.type = M68K_SIZE_TYPE_CPU;
+		memset(ext, 0, sizeof(cs_m68k));
+		ext->op_size.type = M68K_SIZE_TYPE_CPU;
 
 		for (i = 0; i < M68K_OPERAND_COUNT; ++i)
-			info->operands[i].type = M68K_OP_REG; 
+			ext->operands[i].type = M68K_OP_REG;
 	}
 
-	if(!g_initialized) {
-		build_opcode_table();
-		g_initialized = 1;
+	info.ir = read_imm_16(&info);
+	if (instruction_is_valid(&info, peek_imm_16(&info))) {
+		g_instruction_table[info.ir].instruction(&info);
 	}
 
-	switch(cpu_type) {
-		case M68K_CPU_TYPE_68000:
-			g_cpu_type = TYPE_68000;
-			g_address_mask = 0x00ffffff;
-			break;
-		case M68K_CPU_TYPE_68010:
-			g_cpu_type = TYPE_68010;
-			g_address_mask = 0x00ffffff;
-			break;
-		case M68K_CPU_TYPE_68EC020:
-			g_cpu_type = TYPE_68020;
-			g_address_mask = 0x00ffffff;
-			break;
-		case M68K_CPU_TYPE_68020:
-			g_cpu_type = TYPE_68020;
-			g_address_mask = 0xffffffff;
-			break;
-		case M68K_CPU_TYPE_68030:
-			g_cpu_type = TYPE_68030;
-			g_address_mask = 0xffffffff;
-			break;
-		case M68K_CPU_TYPE_68040:
-			g_cpu_type = TYPE_68040;
-			g_address_mask = 0xffffffff;
-			break;
-		default:
-			return 0;
-	}
-
-	g_cpu_pc = pc;
-	g_helper_str[0] = 0;
-	g_cpu_ir = read_imm_16();
-	if (instruction_is_valid(g_cpu_ir, peek_imm_16())) {
-		g_instruction_table[g_cpu_ir].instruction();
-	}
-
-	return g_cpu_pc - pc;
+	return info.pc - pc;
 }
 
 #if 0
@@ -3946,11 +3955,7 @@ unsigned int m68k_disassemble(MCInst* inst, unsigned int pc, unsigned int cpu_ty
 /* Check if the instruction is a valid one */
 unsigned int m68k_is_valid_instruction(unsigned int instruction, unsigned int cpu_type)
 {
-	if(!g_initialized)
-	{
-		build_opcode_table();
-		g_initialized = 1;
-	}
+	build_opcode_table();
 
 	instruction &= 0xffff;
 	if(g_instruction_table[instruction] == d68000_invalid)
