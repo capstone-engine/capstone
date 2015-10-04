@@ -66,44 +66,39 @@ static uint32_t s_baseAddress;
 
 unsigned int m68k_read_disassembler_8(uint64_t address)
 {
-	address -= s_baseAddress;
+	const uint64_t addr = address - s_baseAddress;
 	return s_disassemblyBuffer[address];
 }
 
 unsigned int m68k_read_disassembler_16(uint64_t address)
 {
-	address -= s_baseAddress;
-
-	uint16_t v0 = s_disassemblyBuffer[address + 0];
-	uint16_t v1 = s_disassemblyBuffer[address + 1];
-
+	const uint64_t addr = address - s_baseAddress;
+	uint16_t v0 = s_disassemblyBuffer[addr + 0];
+	uint16_t v1 = s_disassemblyBuffer[addr + 1];
 	return (v0 << 8) | v1; 
 }
 
 unsigned int m68k_read_disassembler_32(uint64_t address)
 {
-	address -= s_baseAddress;
-
-	uint32_t v0 = s_disassemblyBuffer[address + 0];
-	uint32_t v1 = s_disassemblyBuffer[address + 1];
-	uint32_t v2 = s_disassemblyBuffer[address + 2];
-	uint32_t v3 = s_disassemblyBuffer[address + 3];
-
+	const uint64_t addr = address - s_baseAddress;
+	uint32_t v0 = s_disassemblyBuffer[addr + 0];
+	uint32_t v1 = s_disassemblyBuffer[addr + 1];
+	uint32_t v2 = s_disassemblyBuffer[addr + 2];
+	uint32_t v3 = s_disassemblyBuffer[addr + 3];
 	return (v0 << 24) | (v1 << 16) | (v2 << 8) | v3;
 }
 
-uint64_t m68k_read_disassembler_64(uint64_t address)
+uint64_t m68k_read_disassembler_64(const uint64_t address)
 {
-	address -= s_baseAddress;
-
-	uint64_t v0 = s_disassemblyBuffer[address + 0];
-	uint64_t v1 = s_disassemblyBuffer[address + 1];
-	uint64_t v2 = s_disassemblyBuffer[address + 2];
-	uint64_t v3 = s_disassemblyBuffer[address + 3];
-	uint64_t v4 = s_disassemblyBuffer[address + 4];
-	uint64_t v5 = s_disassemblyBuffer[address + 5];
-	uint64_t v6 = s_disassemblyBuffer[address + 6];
-	uint64_t v7 = s_disassemblyBuffer[address + 7];
+	const uint64_t addr = address - s_baseAddress;
+	uint64_t v0 = s_disassemblyBuffer[addr + 0];
+	uint64_t v1 = s_disassemblyBuffer[addr + 1];
+	uint64_t v2 = s_disassemblyBuffer[addr + 2];
+	uint64_t v3 = s_disassemblyBuffer[addr + 3];
+	uint64_t v4 = s_disassemblyBuffer[addr + 4];
+	uint64_t v5 = s_disassemblyBuffer[addr + 5];
+	uint64_t v6 = s_disassemblyBuffer[addr + 6];
+	uint64_t v7 = s_disassemblyBuffer[addr + 7];
 
 	return (v0 << 56) | (v1 << 48) | (v2 << 40) | (v3 << 32) | (v4 << 24) | (v5 << 16) | (v6 << 8) | v7;
 }
@@ -164,49 +159,34 @@ static void registerPair(SStream* O, const cs_m68k_op* op)
 
 void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 {
-	switch (op->address_mode)
-	{
+	switch (op->address_mode) {
 		case M68K_AM_NONE:
-		{
-			switch (op->type)
-			{
+			switch (op->type) {
 				case M68K_OP_REG_BITS:
-				{
 					registerBits(O, op);
 					break;
-				}
-
 				case M68K_OP_REG_PAIR:
-				{
 					registerPair(O, op);
 					break;
-				}
-
 				case M68K_OP_REG:
-				{
 					SStream_concat(O, "%s", s_reg_names[op->reg]);
 					break;
-				}
-
 				default:
 					break;
 			}
-
 			break;
 		}
 
-
-		case M68K_AM_REG_DIRECT_DATA : SStream_concat(O, "d%d", (op->reg - M68K_REG_D0)); break;
-		case M68K_AM_REG_DIRECT_ADDR : SStream_concat(O, "a%d", (op->reg - M68K_REG_A0)); break;
-		case M68K_AM_REGI_ADDR : SStream_concat(O, "(a%d)", (op->reg - M68K_REG_A0)); break;
-		case M68K_AM_REGI_ADDR_POST_INC : SStream_concat(O, "(a%d)+", (op->reg - M68K_REG_A0)); break;
-		case M68K_AM_REGI_ADDR_PRE_DEC : SStream_concat(O, "-(a%d)", (op->reg - M68K_REG_A0)); break;
-		case M68K_AM_REGI_ADDR_DISP : SStream_concat(O, "$%x(a%d)", op->mem.disp, (op->reg - M68K_REG_A0)); break;
-		case M68K_AM_PCI_DISP : SStream_concat(O, "$%x(pc)", op->mem.disp); break;
-		case M68K_AM_ABSOLUTE_DATA_SHORT : SStream_concat(O, "$%x.w", op->imm); break; 
-		case M68K_AM_ABSOLUTE_DATA_LONG : SStream_concat(O, "$%x.l", op->imm); break; 
-		case M68K_AM_IMMIDIATE : 
-		{
+		case M68K_AM_REG_DIRECT_DATA: SStream_concat(O, "d%d", (op->reg - M68K_REG_D0)); break;
+		case M68K_AM_REG_DIRECT_ADDR: SStream_concat(O, "a%d", (op->reg - M68K_REG_A0)); break;
+		case M68K_AM_REGI_ADDR: SStream_concat(O, "(a%d)", (op->reg - M68K_REG_A0)); break;
+		case M68K_AM_REGI_ADDR_POST_INC: SStream_concat(O, "(a%d)+", (op->reg - M68K_REG_A0)); break;
+		case M68K_AM_REGI_ADDR_PRE_DEC: SStream_concat(O, "-(a%d)", (op->reg - M68K_REG_A0)); break;
+		case M68K_AM_REGI_ADDR_DISP: SStream_concat(O, "$%x(a%d)", op->mem.disp, (op->reg - M68K_REG_A0)); break;
+		case M68K_AM_PCI_DISP: SStream_concat(O, "$%x(pc)", op->mem.disp); break;
+		case M68K_AM_ABSOLUTE_DATA_SHORT: SStream_concat(O, "$%x.w", op->imm); break; 
+		case M68K_AM_ABSOLUTE_DATA_LONG: SStream_concat(O, "$%x.l", op->imm); break; 
+		case M68K_AM_IMMIDIATE:
 			if (inst->op_size.type == M68K_SIZE_TYPE_FPU) {
 				if (inst->op_size.fpu_size == M68K_FPU_SIZE_SINGLE)
 					SStream_concat(O, "#%f", op->simm);
@@ -214,29 +194,18 @@ void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 					SStream_concat(O, "#%f", op->dimm);
 				else
 					SStream_concat(O, "#<unsupported>");
-
 				break;
 			}
-
 			SStream_concat(O, "#$%x", op->imm);
 			break;
-		}
-							 
-		case M68K_AM_PCI_INDEX_8_BIT_DISP : 
-		{
+		case M68K_AM_PCI_INDEX_8_BIT_DISP:
 			SStream_concat(O, "$%x(pc,%s%s)", op->mem.disp, s_spacing, getRegName(op->mem.index_reg)); 
 			break;
-		}
-
-		case M68K_AM_AREGI_INDEX_8_BIT_DISP : 
-		{
+		case M68K_AM_AREGI_INDEX_8_BIT_DISP:
 			SStream_concat(O, "$%x(%s,%s%s.%c)", op->mem.disp, getRegName(op->mem.base_reg), s_spacing, getRegName(op->mem.index_reg), op->mem.index_size ? 'l' : 'w'); 
 			break;
-		}
-
-		case M68K_AM_PCI_INDEX_BASE_DISP : 
-		case M68K_AM_AREGI_INDEX_BASE_DISP : 
-		{
+		case M68K_AM_PCI_INDEX_BASE_DISP:
+		case M68K_AM_AREGI_INDEX_BASE_DISP:
 			if (op->mem.in_disp > 0)
 				SStream_concat(O, "$%x", op->mem.in_disp);
 
@@ -247,7 +216,6 @@ void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 			} else { 
 				if (op->mem.base_reg != M68K_REG_INVALID)
 					SStream_concat(O, "a%d,%s", op->mem.base_reg - M68K_REG_A0, s_spacing);
-
 				SStream_concat(O, "%s.%c", getRegName(op->mem.index_reg), op->mem.index_size ? 'l' : 'w');
 			}
 
@@ -255,10 +223,7 @@ void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 				SStream_concat(O, "%s*%s%d)", s_spacing, s_spacing, op->mem.scale);
 			else
 				SStream_concat(O, ")");
-
 			break;
-		}
-
 		// It's ok to just use PCMI here as is as we set base_reg to PC in the disassembler. While this is not strictly correct it makes the code
 		// easier and that is what actually happens when the code is executed anyway.
 
@@ -266,9 +231,7 @@ void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 		case M68K_AM_PC_MEMI_PRE_INDEX:
 		case M68K_AM_MEMI_PRE_INDEX:
 		case M68K_AM_MEMI_POST_INDEX:
-		{
 			SStream_concat(O, "([");
-
 			if (op->mem.in_disp > 0)
 				SStream_concat(O, "$%x", op->mem.in_disp);
 
@@ -295,66 +258,56 @@ void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 				SStream_concat(O, ",%s$%x", s_spacing, op->mem.out_disp);
 
 			SStream_concat(O, ")");
-		}
-
+			break;
 		default:
 			break;
 	}
-
 	if (op->mem.bitfield)
 		SStream_concat(O, "{%d:%d}", op->mem.offset, op->mem.width);
 }
-
 #endif
 
 void M68K_printInst(MCInst* MI, SStream* O, void* Info)
 {
 #ifndef CAPSTONE_DIET
+	int op_count;
+	cs_m68k *info;
 	int i = 0;
 
 	cs_detail *detail = MI->flat_insn->detail;
 	if (!detail) {
 		return;
 	}
-	cs_m68k* info = &detail->m68k;
-
-	const int op_count = info->op_count;
+	info = &detail->m68k;
+	op_count = info->op_count;
 
 	if (MI->Opcode == M68K_INS_INVALID) {
 		SStream_concat(O, "dc.w $%x", info->operands[0].imm);
 		return;
-	} else {
-		SStream_concat0(O, (char*)s_instruction_names[MI->Opcode]);
 	}
+	SStream_concat0(O, (char*)s_instruction_names[MI->Opcode]);
 
-	switch (info->op_size.type)
-	{
+	switch (info->op_size.type) {
 		case M68K_SIZE_TYPE_INVALID :
 			break;
 
 		case M68K_SIZE_TYPE_CPU :
-		{
-			switch (info->op_size.cpu_size)
-			{
-				case M68K_CPU_SIZE_BYTE  : SStream_concat0(O, ".b"); break;
-				case M68K_CPU_SIZE_WORD  : SStream_concat0(O, ".w"); break;
-				case M68K_CPU_SIZE_LONG  : SStream_concat0(O, ".l"); break;
-				case M68K_CPU_SIZE_NONE : break;  
+			switch (info->op_size.cpu_size) {
+				case M68K_CPU_SIZE_BYTE: SStream_concat0(O, ".b"); break;
+				case M68K_CPU_SIZE_WORD: SStream_concat0(O, ".w"); break;
+				case M68K_CPU_SIZE_LONG: SStream_concat0(O, ".l"); break;
+				case M68K_CPU_SIZE_NONE: break;  
 			}
-
 			break;
 		}
 
 		case M68K_SIZE_TYPE_FPU :
-		{
-			switch (info->op_size.fpu_size)
-			{
-				case M68K_FPU_SIZE_SINGLE  : SStream_concat0(O, ".s"); break;
-				case M68K_FPU_SIZE_DOUBLE  : SStream_concat0(O, ".d"); break;
-				case M68K_FPU_SIZE_EXTENDED  : SStream_concat0(O, ".x"); break;
-				case M68K_FPU_SIZE_NONE : break;  
+			switch (info->op_size.fpu_size) {
+				case M68K_FPU_SIZE_SINGLE: SStream_concat0(O, ".s"); break;
+				case M68K_FPU_SIZE_DOUBLE: SStream_concat0(O, ".d"); break;
+				case M68K_FPU_SIZE_EXTENDED: SStream_concat0(O, ".x"); break;
+				case M68K_FPU_SIZE_NONE: break;  
 			}
-
 			break;
 		}
 	}
@@ -363,23 +316,18 @@ void M68K_printInst(MCInst* MI, SStream* O, void* Info)
 
 	// this one is a bit spacial so we do spacial things
 
-	if (MI->Opcode == M68K_INS_CAS2)
-	{
+	if (MI->Opcode == M68K_INS_CAS2) {
+		int reg_value_0, reg_value_1;
 		printAddressingMode(O, info, &info->operands[0]); SStream_concat0(O, ",");
 		printAddressingMode(O, info, &info->operands[1]); SStream_concat0(O, ",");
-
-		int reg_value_0 = info->operands[2].register_bits >> 4;
-		int reg_value_1 = info->operands[2].register_bits & 0xf;
-
+		reg_value_0 = info->operands[2].register_bits >> 4;
+		reg_value_1 = info->operands[2].register_bits & 0xf;
 		SStream_concat(O, "(%s):(%s)", s_reg_names[M68K_REG_D0 + reg_value_0], s_reg_names[M68K_REG_D0 + reg_value_1]); 
-
 		return;
 	}
 
-	for (i  = 0; i < op_count; ++i)
-	{
+	for (i  = 0; i < op_count; ++i) {
 		printAddressingMode(O, info, &info->operands[i]);
-
 		if ((i + 1) != op_count)
 			SStream_concat(O, ",%s", s_spacing);
 	}
@@ -389,17 +337,11 @@ void M68K_printInst(MCInst* MI, SStream* O, void* Info)
 bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* instr, uint16_t* size, uint64_t address, void* info)
 {
 	int s;
-
-	//s_spacing = "";
-
+	int cpu_type = M68K_CPU_TYPE_68000;
 	cs_struct* handle = (cs_struct *)(uintptr_t)ud;
 
 	s_disassemblyBuffer = (uint8_t*)code;
 	s_baseAddress = (uint32_t)address;
-
-	// Use 000 by default
-
-	int cpu_type = M68K_CPU_TYPE_68000;
 
 	if (handle->mode & CS_MODE_M68K_010)
 		cpu_type = M68K_CPU_TYPE_68010;
@@ -414,8 +356,7 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 
 	s = m68k_disassemble(instr, address, cpu_type);
 
-	if (s == 0)
-	{
+	if (s == 0) {
 		*size = 2;
 		return false;
 	}
@@ -439,7 +380,7 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 const char* M68K_reg_name(csh handle, unsigned int reg)
 {
 #ifdef CAPSTONE_DIET
-	return 0;
+	return NULL;
 #else
 	return s_reg_names[(int)reg];
 #endif
@@ -453,7 +394,7 @@ void M68K_get_insn_id(cs_struct* h, cs_insn* insn, unsigned int id)
 const char* M68K_insn_name(csh handle, unsigned int id)
 {
 #ifdef CAPSTONE_DIET
-	return 0;
+	return NULL;
 #else
 	return s_instruction_names[id];
 #endif
@@ -461,6 +402,7 @@ const char* M68K_insn_name(csh handle, unsigned int id)
 
 const char* M68K_group_name(csh handle, unsigned int id)
 {
-	return 0;
+	// TODO: Implement group names in m68k
+	return NULL;
 }
 
