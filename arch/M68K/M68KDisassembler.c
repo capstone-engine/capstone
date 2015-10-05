@@ -3872,7 +3872,7 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 	cs_struct* handle = instr->csh;
 	m68k_info *info;
 
-	if (inst_info == NULL) {
+	if (handle->printer_info == NULL) {
 		info = cs_mem_malloc(sizeof(m68k_info));
 		if (!info) {
 			handle->errnum = CS_ERR_MEM;
