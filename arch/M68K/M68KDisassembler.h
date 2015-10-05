@@ -143,9 +143,9 @@ typedef struct m68k_info {
 	const uint8_t *code;
 	uint64_t baseAddress;
 	MCInst *inst;
-	uint pc;        /* program counter */
-	uint ir;        /* instruction register */
-	uint type;
+	unsigned int pc;        /* program counter */
+	unsigned int ir;        /* instruction register */
+	unsigned int type;
 	unsigned int address_mask; /* Address mask to simulate address lines */
 	cs_m68k extension;
 } m68k_info;
