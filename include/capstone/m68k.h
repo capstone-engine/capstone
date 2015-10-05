@@ -76,7 +76,6 @@ typedef enum m68k_reg {
 	M68K_REG_ENDING,   // <-- mark the end of the list of registers
 } m68k_reg;
 
-
 //> M68K Addressing Modes
 typedef enum m68k_adress_mode {
 	M68K_AM_NONE = 0,			// No address mode. 
@@ -106,7 +105,6 @@ typedef enum m68k_adress_mode {
 	M68K_AM_ABSOLUTE_DATA_SHORT,	// Absolute Data Addressing  - Short
 	M68K_AM_ABSOLUTE_DATA_LONG,		// Absolute Data Addressing  - Long
 	M68K_AM_IMMIDIATE,				// Immidate value
-
 } m68k_adress_mode; 
 
 //> Operand type for instruction's operands
@@ -184,8 +182,7 @@ typedef struct m68k_op_size {
 } m68k_op_size;
 
 // The M68K instruction and it's operands
-typedef struct cs_m68k
-{
+typedef struct cs_m68k {
 	// Number of operands of this instruction or 0 when instruction has no operand.
 	cs_m68k_op operands[M68K_OPERAND_COUNT]; // operands for this instruction.
 	m68k_op_size op_size;	// size of data operand works on in bytes (.b, .w, .l, etc)
@@ -570,7 +567,6 @@ typedef enum m68k_insn {
 	M68K_INS_TST,
 	M68K_INS_UNLK,
 	M68K_INS_UNPK,
-
 } m68k_insn;
 
 #ifdef __cplusplus
