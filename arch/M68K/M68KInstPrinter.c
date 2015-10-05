@@ -286,8 +286,6 @@ void M68K_printInst(MCInst* MI, SStream* O, void* PrinterInfo)
 			SStream_concat(O, ",%s", s_spacing);
 	}
 #endif
-	cs_mem_free(PrinterInfo);
-	MI->csh->printer_info = NULL;
 }
 
 const char* M68K_reg_name(csh handle, unsigned int reg)

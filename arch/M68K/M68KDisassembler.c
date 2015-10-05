@@ -3869,12 +3869,18 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 #endif
 	int s;
 	int cpu_type = M68K_CPU_TYPE_68000;
-	cs_struct* handle = (cs_struct *)(uintptr_t)ud;
+	cs_struct* handle = instr->csh;
+	m68k_info *info;
 
-	m68k_info *info = cs_mem_malloc(sizeof(m68k_info));
-	if (!info) {
-		handle->errnum = CS_ERR_MEM;
-		return false;
+	if (inst_info == NULL) {
+		info = cs_mem_malloc(sizeof(m68k_info));
+		if (!info) {
+			handle->errnum = CS_ERR_MEM;
+			return false;
+		}
+		handle->printer_info = info;
+	} else {
+		info = (m68k_info *)handle->printer_info;
 	}
 
 	info->code = code;
@@ -3892,8 +3898,6 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 		cpu_type = M68K_CPU_TYPE_68040;	// 060 = 040 for now
 
 	m68k_setup_internals(info, instr, address, cpu_type);
-	handle->printer_info = info;
-
 	s = m68k_disassemble(info, address);
 
 	if (s == 0) {
