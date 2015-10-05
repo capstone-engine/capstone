@@ -141,54 +141,43 @@
 #define BITFIELD_MASK(sb,eb)  (((1 << ((sb) + 1))-1) & (~((1 << (eb))-1)))
 #define BITFIELD(val,sb,eb) ((BITFIELD_MASK(sb,eb) & (val)) >> (eb))
 
-typedef struct m68k_info {
-	MCInst *inst;
-	uint pc;        /* program counter */
-	uint ir;        /* instruction register */
-	uint type;
-	unsigned int address_mask; /* Address mask to simulate address lines */
-} m68k_info;
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static uint8_t* s_disassemblyBuffer;
-static uint32_t s_baseAddress;
-
-unsigned int m68k_read_disassembler_8(uint64_t address)
+unsigned int m68k_read_disassembler_8(m68k_info *info, const uint64_t address)
 {
-	const uint64_t addr = address - s_baseAddress;
-	return s_disassemblyBuffer[addr];
+	const uint64_t addr = address - info->baseAddress;
+	return info->code[addr];
 }
 
-unsigned int m68k_read_disassembler_16(uint64_t address)
+unsigned int m68k_read_disassembler_16(m68k_info *info, const uint64_t address)
 {
-	const uint64_t addr = address - s_baseAddress;
-	uint16_t v0 = s_disassemblyBuffer[addr + 0];
-	uint16_t v1 = s_disassemblyBuffer[addr + 1];
+	const uint64_t addr = address - info->baseAddress;
+	uint16_t v0 = info->code[addr + 0];
+	uint16_t v1 = info->code[addr + 1];
 	return (v0 << 8) | v1; 
 }
 
-unsigned int m68k_read_disassembler_32(uint64_t address)
+unsigned int m68k_read_disassembler_32(m68k_info *info, const uint64_t address)
 {
-	const uint64_t addr = address - s_baseAddress;
-	uint32_t v0 = s_disassemblyBuffer[addr + 0];
-	uint32_t v1 = s_disassemblyBuffer[addr + 1];
-	uint32_t v2 = s_disassemblyBuffer[addr + 2];
-	uint32_t v3 = s_disassemblyBuffer[addr + 3];
+	const uint64_t addr = address - info->baseAddress;
+	uint32_t v0 = info->code[addr + 0];
+	uint32_t v1 = info->code[addr + 1];
+	uint32_t v2 = info->code[addr + 2];
+	uint32_t v3 = info->code[addr + 3];
 	return (v0 << 24) | (v1 << 16) | (v2 << 8) | v3;
 }
 
-uint64_t m68k_read_disassembler_64(const uint64_t address)
+uint64_t m68k_read_disassembler_64(m68k_info *info, const uint64_t address)
 {
-	const uint64_t addr = address - s_baseAddress;
-	uint64_t v0 = s_disassemblyBuffer[addr + 0];
-	uint64_t v1 = s_disassemblyBuffer[addr + 1];
-	uint64_t v2 = s_disassemblyBuffer[addr + 2];
-	uint64_t v3 = s_disassemblyBuffer[addr + 3];
-	uint64_t v4 = s_disassemblyBuffer[addr + 4];
-	uint64_t v5 = s_disassemblyBuffer[addr + 5];
-	uint64_t v6 = s_disassemblyBuffer[addr + 6];
-	uint64_t v7 = s_disassemblyBuffer[addr + 7];
+	const uint64_t addr = address - info->baseAddress;
+	uint64_t v0 = info->code[addr + 0];
+	uint64_t v1 = info->code[addr + 1];
+	uint64_t v2 = info->code[addr + 2];
+	uint64_t v3 = info->code[addr + 3];
+	uint64_t v4 = info->code[addr + 4];
+	uint64_t v5 = info->code[addr + 5];
+	uint64_t v6 = info->code[addr + 6];
+	uint64_t v7 = info->code[addr + 7];
 
 	return (v0 << 56) | (v1 << 48) | (v2 << 40) | (v3 << 32) | (v4 << 24) | (v5 << 16) | (v6 << 8) | v7;
 }
@@ -290,14 +279,14 @@ static m68k_insn s_trap_lut[] = {
 		}					\
 	} while (0)
 
-#define read_imm_8(info)  (m68k_read_disassembler_16((((info)->pc+=2)-2)&(info)->address_mask)&0xff)
-#define read_imm_16(info) m68k_read_disassembler_16((((info)->pc+=2)-2)&(info)->address_mask)
-#define read_imm_32(info) m68k_read_disassembler_32((((info)->pc+=4)-4)&(info)->address_mask)
-#define read_imm_64(info) m68k_read_disassembler_64((((info)->pc+=8)-8)&(info)->address_mask)
+#define read_imm_8(info)  (m68k_read_disassembler_16((info), (((info)->pc+=2)-2)&(info)->address_mask)&0xff)
+#define read_imm_16(info) m68k_read_disassembler_16((info), (((info)->pc+=2)-2)&(info)->address_mask)
+#define read_imm_32(info) m68k_read_disassembler_32((info), (((info)->pc+=4)-4)&(info)->address_mask)
+#define read_imm_64(info) m68k_read_disassembler_64((info), (((info)->pc+=8)-8)&(info)->address_mask)
 
-#define peek_imm_8(info)  (m68k_read_disassembler_16((info)->pc & (info)->address_mask)&0xff)
-#define peek_imm_16(info) m68k_read_disassembler_16((info)->pc & (info)->address_mask)
-#define peek_imm_32(info) m68k_read_disassembler_32((info)->pc & (info)->address_mask)
+#define peek_imm_8(info)  (m68k_read_disassembler_16((info), (info)->pc & (info)->address_mask)&0xff)
+#define peek_imm_16(info) m68k_read_disassembler_16((info), (info)->pc & (info)->address_mask)
+#define peek_imm_32(info) m68k_read_disassembler_32((info), (info)->pc & (info)->address_mask)
 
 /* Fake a split interface */
 #define get_ea_mode_str_8(instruction) get_ea_mode_str(instruction, 0)
@@ -4094,17 +4083,16 @@ static void m68k_setup_internals(m68k_info* info, MCInst* inst, unsigned int pc,
 /* ======================================================================== */
 
 /* Disasemble one instruction at pc and store in str_buff */
-unsigned int m68k_disassemble(MCInst* inst, unsigned int pc, unsigned int cpu_type)
+static unsigned int m68k_disassemble(m68k_info *info, uint64_t pc)
 {
 	cs_detail *detail;
-	m68k_info info;
-
-	m68k_setup_internals(&info, inst, pc, cpu_type);
+	MCInst *inst = info->inst;
+	
 	inst->Opcode = M68K_INS_INVALID;
 
 	build_opcode_table();
 
-	detail = info.inst->flat_insn->detail;
+	detail = info->inst->flat_insn->detail;
 	if (detail) {
 		cs_m68k* ext = &detail->m68k;
 		int i;
@@ -4116,15 +4104,15 @@ unsigned int m68k_disassemble(MCInst* inst, unsigned int pc, unsigned int cpu_ty
 			ext->operands[i].type = M68K_OP_REG;
 	}
 
-	info.ir = read_imm_16(&info);
-	if (instruction_is_valid(&info, peek_imm_16(&info))) {
-		g_instruction_table[info.ir].instruction(&info);
+	info->ir = read_imm_16(info);
+	if (instruction_is_valid(info, peek_imm_16(info))) {
+		g_instruction_table[info->ir].instruction(info);
 	}
 
-	return info.pc - pc;
+	return info->pc - pc;
 }
 
-bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* instr, uint16_t* size, uint64_t address, void* info)
+bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* instr, uint16_t* size, uint64_t address, void* inst_info)
 {
 #ifdef M68K_DEBUG
 	SStream ss;
@@ -4133,8 +4121,14 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 	int cpu_type = M68K_CPU_TYPE_68000;
 	cs_struct* handle = (cs_struct *)(uintptr_t)ud;
 
-	s_disassemblyBuffer = (uint8_t*)code;
-	s_baseAddress = (uint32_t)address;
+	m68k_info *info = cs_mem_malloc(sizeof(m68k_info));
+	if (!info) {
+		handle->errnum = CS_ERR_MEM;
+		return false;
+	}
+
+	info->code = code;
+	info->baseAddress = address;
 
 	if (handle->mode & CS_MODE_M68K_010)
 		cpu_type = M68K_CPU_TYPE_68010;
@@ -4147,9 +4141,13 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 	if (handle->mode & CS_MODE_M68K_060)
 		cpu_type = M68K_CPU_TYPE_68040;	// 060 = 040 for now
 
-	s = m68k_disassemble(instr, address, cpu_type);
+	m68k_setup_internals(info, instr, address, cpu_type);
+	handle->printer_info = info;
+
+	s = m68k_disassemble(info, address);
 
 	if (s == 0) {
+		cs_mem_free(info);
 		*size = 2;
 		return false;
 	}
@@ -4165,6 +4163,8 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 	else
 		*size = (uint16_t)s;
 
+	/* should be removed in the future */
+	cs_mem_free(info);
 	return true;
 }
 
