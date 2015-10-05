@@ -138,6 +138,18 @@ typedef enum
 
 #endif
 
+/* Private, For internal use only */
+typedef struct m68k_info {
+	const uint8_t *code;
+	uint64_t baseAddress;
+	MCInst *inst;
+	uint pc;        /* program counter */
+	uint ir;        /* instruction register */
+	uint type;
+	unsigned int address_mask; /* Address mask to simulate address lines */
+	cs_m68k extension;
+} m68k_info;
+
 /* ======================================================================== */
 /* ====================== FUNCTIONS CALLED BY THE CPU ===================== */
 /* ======================================================================== */
@@ -163,29 +175,29 @@ typedef enum
  */
 
 /* Read from anywhere */
-unsigned int  m68k_read_memory_8(uint64_t address);
-unsigned int  m68k_read_memory_16(uint64_t address);
-unsigned int  m68k_read_memory_32(uint64_t address);
+unsigned int  m68k_read_memory_8(m68k_info *info, uint64_t address);
+unsigned int  m68k_read_memory_16(m68k_info *info, uint64_t address);
+unsigned int  m68k_read_memory_32(m68k_info *info, uint64_t address);
 
 /* Read data immediately following the PC */
-unsigned int  m68k_read_immediate_16(uint64_t address);
-unsigned int  m68k_read_immediate_32(uint64_t address);
+unsigned int  m68k_read_immediate_16(m68k_info *info, uint64_t address);
+unsigned int  m68k_read_immediate_32(m68k_info *info, uint64_t address);
 
 /* Read data relative to the PC */
-unsigned int  m68k_read_pcrelative_8(uint64_t address);
-unsigned int  m68k_read_pcrelative_16(uint64_t address);
-unsigned int  m68k_read_pcrelative_32(uint64_t address);
+unsigned int  m68k_read_pcrelative_8(m68k_info *info, uint64_t address);
+unsigned int  m68k_read_pcrelative_16(m68k_info *info, uint64_t address);
+unsigned int  m68k_read_pcrelative_32(m68k_info *info, uint64_t address);
 
 /* Memory access for the disassembler */
-unsigned int m68k_read_disassembler_8  (uint64_t address);
-unsigned int m68k_read_disassembler_16 (uint64_t address);
-unsigned int m68k_read_disassembler_32 (uint64_t address);
-uint64_t m68k_read_disassembler_64 (uint64_t address);
+unsigned int m68k_read_disassembler_8  (m68k_info *info, uint64_t address);
+unsigned int m68k_read_disassembler_16 (m68k_info *info, uint64_t address);
+unsigned int m68k_read_disassembler_32 (m68k_info *info, uint64_t address);
+uint64_t m68k_read_disassembler_64 (m68k_info *info, uint64_t address);
 
 /* Write to anywhere */
-void m68k_write_memory_8(unsigned int address, unsigned int value);
-void m68k_write_memory_16(unsigned int address, unsigned int value);
-void m68k_write_memory_32(unsigned int address, unsigned int value);
+void m68k_write_memory_8(m68k_info *info, unsigned int address, unsigned int value);
+void m68k_write_memory_16(m68k_info *info, unsigned int address, unsigned int value);
+void m68k_write_memory_32(m68k_info *info, unsigned int address, unsigned int value);
 
 /* Special call to simulate undocumented 68k behavior when move.l with a
  * predecrement destination mode is executed.
@@ -194,7 +206,7 @@ void m68k_write_memory_32(unsigned int address, unsigned int value);
  *
  * Enable this functionality with M68K_SIMULATE_PD_WRITES in m68kconf.h.
  */
-void m68k_write_memory_32_pd(unsigned int address, unsigned int value);
+void m68k_write_memory_32_pd(m68k_info *info, unsigned int address, unsigned int value);
 
 
 
@@ -346,7 +358,7 @@ unsigned int m68k_is_valid_instruction(unsigned int instruction, unsigned int cp
 /* Disassemble 1 instruction using the epecified CPU type at pc.  Stores
  * disassembly in str_buff and returns the size of the instruction in bytes.
  */
-unsigned int m68k_disassemble(MCInst* inst, unsigned int pc, unsigned int cpu_type);
+bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* instr, uint16_t* size, uint64_t address, void* info);
 
 /* ======================================================================== */
 /* ============================== MAME STUFF ============================== */
