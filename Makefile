@@ -128,14 +128,13 @@ endif
 
 
 DEP_M68K =
-DEP_M68K += arch/M68K/M68Kconf.h
-DEP_M68K += arch/M68K/M68Kdasm.h
+DEP_M68K += arch/M68K/M68KConf.h
 DEP_M68K += arch/M68K/M68KDisassembler.h
 
 LIBOBJ_M68K =
 ifneq (,$(findstring m68k,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_M68K
-	LIBOBJ_M68K += $(OBJDIR)/arch/M68K/M68Kdasm.o
+	LIBOBJ_M68K += $(OBJDIR)/arch/M68K/M68KInstPrinter.o
 	LIBOBJ_M68K += $(OBJDIR)/arch/M68K/M68KDisassembler.o
 	LIBOBJ_M68K += $(OBJDIR)/arch/M68K/M68KModule.o
 endif

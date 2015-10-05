@@ -27,8 +27,8 @@
  * THE SOFTWARE.
  */
 
-#ifndef M68KCONF__HEADER
-#define M68KCONF__HEADER
+#ifndef CS_M68KCONF_H
+#define CS_M68KCONF_H
 
 
 /* Configuration switches.
@@ -177,4 +177,4 @@
 
 #endif /* M68K_COMPILE_FOR_MAME */
 
-#endif /* M68KCONF__HEADER */
+#endif

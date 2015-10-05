@@ -5,6 +5,7 @@ Capstone source is organized as followings.
 ├── arch            <- code handling disasm engine for each arch
 │   ├── AArch64     <- ARM64 (aka ARMv8) engine
 │   ├── ARM         <- ARM engine
+│   ├── M68K        <- M68K engine
 │   ├── Mips        <- Mips engine
 │   ├── PowerPC     <- PowerPC engine
 │   ├── Sparc       <- Sparc engine
