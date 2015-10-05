@@ -1,6 +1,13 @@
 /* Capstone Disassembly Engine */
 /* M68K Backend by Daniel Collin <daniel@collin.com> 2015 */
 
+#ifdef _MSC_VER
+// Disable security warnings for strcat & sprintf
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+#endif
+
 #include <stdio.h>	// DEBUG
 #include <stdlib.h>
 #include <string.h>
@@ -92,7 +99,7 @@ static void printRegbitsRange(char* buffer, uint32_t data, const char* prefix)
 
 static void registerBits(SStream* O, const cs_m68k_op* op)
 {
-	char buffer[128] = { };
+	char buffer[128];
 	unsigned int data = op->register_bits; 
 
 	buffer[0] = 0;

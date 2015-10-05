@@ -2677,50 +2677,50 @@ static void d68000_moveq(m68k_info *info)
 
 static void d68040_move16_pi_pi(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(info, M68040_PLUS);
-
-	int data[] = { info->ir & 7, (read_imm_16(info) >> 12) & 7 };	// FIXME: declare this at the beginning of this function
+	int data[] = { info->ir & 7, (read_imm_16(info) >> 12) & 7 };
 	int modes[] = { M68K_AM_REGI_ADDR_POST_INC, M68K_AM_REGI_ADDR_POST_INC };
+
+	LIMIT_CPU_TYPES(info, M68040_PLUS);
 
 	build_move16(info, data, modes);
 }
 
 static void d68040_move16_pi_al(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(info, M68040_PLUS);
-
 	int data[] = { info->ir & 7, read_imm_32(info) };
 	int modes[] = { M68K_AM_REGI_ADDR_POST_INC, M68K_AM_ABSOLUTE_DATA_LONG };
+
+	LIMIT_CPU_TYPES(info, M68040_PLUS);
 
 	build_move16(info, data, modes);
 }
 
 static void d68040_move16_al_pi(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(info, M68040_PLUS);
-
 	int data[] = { read_imm_32(info), info->ir & 7 };
 	int modes[] = { M68K_AM_ABSOLUTE_DATA_LONG, M68K_AM_REGI_ADDR_POST_INC };
+
+	LIMIT_CPU_TYPES(info, M68040_PLUS);
 
 	build_move16(info, data, modes);
 }
 
 static void d68040_move16_ai_al(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(info, M68040_PLUS);
-
 	int data[] = { info->ir & 7, read_imm_32(info) };
 	int modes[] = { M68K_AM_REG_DIRECT_ADDR, M68K_AM_ABSOLUTE_DATA_LONG };
+
+	LIMIT_CPU_TYPES(info, M68040_PLUS);
 
 	build_move16(info, data, modes);
 }
 
 static void d68040_move16_al_ai(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(info, M68040_PLUS);
-
 	int data[] = { read_imm_32(info), info->ir & 7 };
 	int modes[] = { M68K_AM_ABSOLUTE_DATA_LONG, M68K_AM_REG_DIRECT_ADDR };
+
+	LIMIT_CPU_TYPES(info, M68040_PLUS);
 
 	build_move16(info, data, modes);
 }
@@ -3857,7 +3857,7 @@ static unsigned int m68k_disassemble(m68k_info *info, uint64_t pc)
 		g_instruction_table[info->ir].instruction(info);
 	}
 
-	return info->pc - pc;
+	return info->pc - (unsigned int)pc;
 }
 
 bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* instr, uint16_t* size, uint64_t address, void* inst_info)
@@ -3895,7 +3895,7 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 	if (handle->mode & CS_MODE_M68K_060)
 		cpu_type = M68K_CPU_TYPE_68040;	// 060 = 040 for now
 
-	m68k_setup_internals(info, instr, address, cpu_type);
+	m68k_setup_internals(info, instr, (unsigned int)address, cpu_type);
 	s = m68k_disassemble(info, address);
 
 	if (s == 0) {
@@ -3909,7 +3909,7 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 #endif
 
 	// Make sure we always stay within range 
-	if (s > code_len)
+	if (s > (int)code_len)
 		*size = code_len;
 	else
 		*size = (uint16_t)s;
