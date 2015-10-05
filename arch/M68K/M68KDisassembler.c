@@ -3901,8 +3901,6 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 	s = m68k_disassemble(info, address);
 
 	if (s == 0) {
-		cs_mem_free(info);
-		handle->printer_info = NULL;
 		*size = 2;
 		return false;
 	}
