@@ -5,7 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-//#include "M68KRegisterInfo.h"
+#include "M68KDisassembler.h"
+
 #include "../../cs_priv.h"
 #include "../../utils.h"
 
@@ -219,40 +220,35 @@ void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 }
 #endif
 
-void M68K_printInst(MCInst* MI, SStream* O, void* Info)
+void M68K_printInst(MCInst* MI, SStream* O, void* PrinterInfo)
 {
 #ifndef CAPSTONE_DIET
-	int op_count;
-	cs_m68k *info = NULL;
-	int i = 0;
+	m68k_info *info = (m68k_info *)PrinterInfo;
+	cs_m68k *ext = &info->extension;
 	cs_detail *detail = NULL;
+	int i = 0;
 
 	detail = MI->flat_insn->detail;
-	if (detail)
-		info = &detail->m68k;
+	if (detail) {
+		memcpy(&detail->m68k, ext, sizeof(cs_m68k));
+	}
 
 	if (MI->Opcode == M68K_INS_INVALID) {
-		if (info)
-			SStream_concat(O, "dc.w $%x", info->operands[0].imm);
+		if (ext->op_count)
+			SStream_concat(O, "dc.w $%x", ext->operands[0].imm);
 		else
 			SStream_concat(O, "dc.w $<unknown>");
-
 		return;
 	}
 
 	SStream_concat0(O, (char*)s_instruction_names[MI->Opcode]);
 
-	if (!info)
-		return;
-
-	op_count = info->op_count;
-
-	switch (info->op_size.type) {
+	switch (ext->op_size.type) {
 		case M68K_SIZE_TYPE_INVALID :
 			break;
 
 		case M68K_SIZE_TYPE_CPU :
-			switch (info->op_size.cpu_size) {
+			switch (ext->op_size.cpu_size) {
 				case M68K_CPU_SIZE_BYTE: SStream_concat0(O, ".b"); break;
 				case M68K_CPU_SIZE_WORD: SStream_concat0(O, ".w"); break;
 				case M68K_CPU_SIZE_LONG: SStream_concat0(O, ".l"); break;
@@ -261,7 +257,7 @@ void M68K_printInst(MCInst* MI, SStream* O, void* Info)
 			break;
 
 		case M68K_SIZE_TYPE_FPU :
-			switch (info->op_size.fpu_size) {
+			switch (ext->op_size.fpu_size) {
 				case M68K_FPU_SIZE_SINGLE: SStream_concat0(O, ".s"); break;
 				case M68K_FPU_SIZE_DOUBLE: SStream_concat0(O, ".d"); break;
 				case M68K_FPU_SIZE_EXTENDED: SStream_concat0(O, ".x"); break;
@@ -276,20 +272,22 @@ void M68K_printInst(MCInst* MI, SStream* O, void* Info)
 
 	if (MI->Opcode == M68K_INS_CAS2) {
 		int reg_value_0, reg_value_1;
-		printAddressingMode(O, info, &info->operands[0]); SStream_concat0(O, ",");
-		printAddressingMode(O, info, &info->operands[1]); SStream_concat0(O, ",");
-		reg_value_0 = info->operands[2].register_bits >> 4;
-		reg_value_1 = info->operands[2].register_bits & 0xf;
+		printAddressingMode(O, ext, &ext->operands[0]); SStream_concat0(O, ",");
+		printAddressingMode(O, ext, &ext->operands[1]); SStream_concat0(O, ",");
+		reg_value_0 = ext->operands[2].register_bits >> 4;
+		reg_value_1 = ext->operands[2].register_bits & 0xf;
 		SStream_concat(O, "(%s):(%s)", s_reg_names[M68K_REG_D0 + reg_value_0], s_reg_names[M68K_REG_D0 + reg_value_1]); 
 		return;
 	}
 
-	for (i  = 0; i < op_count; ++i) {
-		printAddressingMode(O, info, &info->operands[i]);
-		if ((i + 1) != op_count)
+	for (i  = 0; i < ext->op_count; ++i) {
+		printAddressingMode(O, ext, &ext->operands[i]);
+		if ((i + 1) != ext->op_count)
 			SStream_concat(O, ",%s", s_spacing);
 	}
 #endif
+	cs_mem_free(PrinterInfo);
+	MI->csh->printer_info = NULL;
 }
 
 const char* M68K_reg_name(csh handle, unsigned int reg)

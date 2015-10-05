@@ -147,6 +147,7 @@ typedef struct m68k_info {
 	uint ir;        /* instruction register */
 	uint type;
 	unsigned int address_mask; /* Address mask to simulate address lines */
+	cs_m68k extension;
 } m68k_info;
 
 /* ======================================================================== */
