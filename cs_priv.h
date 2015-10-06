@@ -76,7 +76,7 @@ struct cs_struct {
 	struct insn_mnem *mnem_list;	// linked list of customized instruction mnemonic
 };
 
-#define MAX_ARCH 8
+#define MAX_ARCH 9
 
 // constructor initialization for all archs
 extern cs_err (*arch_init[MAX_ARCH]) (cs_struct *);

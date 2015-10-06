@@ -27,8 +27,8 @@ option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
 option(CAPSTONE_BUILD_TESTS "Build tests" ON)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 
-set(SUPPORTED_ARCHITECTURES ARM ARM64 MIPS PPC SPARC SYSZ XCORE X86)
-set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 MIPS PowerPC Sparc SystemZ XCore x86)
+set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86)
+set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86)
 
 list(LENGTH SUPPORTED_ARCHITECTURES count)
 math(EXPR count "${count}-1")
@@ -103,6 +103,7 @@ set(HEADERS_COMMON
     include/capstone/sparc.h
     include/capstone/systemz.h
     include/capstone/xcore.h
+    include/capstone/m68k.h
     include/capstone/platform.h
     )
 
@@ -309,6 +310,19 @@ if (CAPSTONE_XCORE_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_xcore.c)
 endif ()
 
+if (CAPSTONE_M68K_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_M68K)
+    set(SOURCES_M68K
+		arch/M68K/M68KDisassembler.c
+		arch/M68K/M68KInstPrinter.c
+		arch/M68K/M68KModule.c
+    )
+    set(HEADERS_M68K
+		arch/M68K/M68KDisassembler.h
+        )
+    set(TEST_SOURCES ${TEST_SOURCES} test_m68k.c)
+endif ()
+
 if (CAPSTONE_OSXKERNEL_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_OSXKERNEL)
 endif ()
@@ -323,6 +337,7 @@ set(ALL_SOURCES
     ${SOURCES_SPARC}
     ${SOURCES_SYSZ}
     ${SOURCES_XCORE}
+    ${SOURCES_M68K}
     )
 
 set(ALL_HEADERS
@@ -336,6 +351,7 @@ set(ALL_HEADERS
     ${HEADERS_SPARC}
     ${HEADERS_SYSZ}
     ${HEADERS_XCORE}
+    ${HEADERS_M68K}
     )
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
@@ -404,6 +420,7 @@ source_group("Source\\Sparc" FILES ${SOURCES_SPARC})
 source_group("Source\\SystemZ" FILES ${SOURCES_SYSZ})
 source_group("Source\\X86" FILES ${SOURCES_X86})
 source_group("Source\\XCore" FILES ${SOURCES_XCORE})
+source_group("Source\\M68K" FILES ${SOURCES_M68K})
 
 source_group("Include\\Common" FILES ${HEADERS_COMMON})
 source_group("Include\\Engine" FILES ${HEADERS_ENGINE})
@@ -415,6 +432,7 @@ source_group("Include\\Sparc" FILES ${HEADERS_SPARC})
 source_group("Include\\SystemZ" FILES ${HEADERS_SYSZ})
 source_group("Include\\X86" FILES ${HEADERS_X86})
 source_group("Include\\XCore" FILES ${HEADERS_XCORE})
+source_group("Include\\M68K" FILES ${HEADERS_M68K})
 
 ## installation
 install(FILES ${HEADERS_COMMON} DESTINATION include/capstone)

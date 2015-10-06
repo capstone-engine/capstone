@@ -3,7 +3,7 @@ import sys
 _python2 = sys.version_info[0] < 3
 if _python2:
     range = xrange
-from . import arm, arm64, mips, ppc, sparc, systemz, x86, xcore
+from . import arm, arm64, m68k, mips, ppc, sparc, systemz, x86, xcore
 
 __all__ = [
     'Cs',
@@ -27,6 +27,7 @@ __all__ = [
     'CS_ARCH_SPARC',
     'CS_ARCH_SYSZ',
     'CS_ARCH_XCORE',
+    'CS_ARCH_M68K',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
@@ -42,9 +43,15 @@ __all__ = [
     'CS_MODE_MIPS32R6',
     'CS_MODE_V8',
     'CS_MODE_V9',
+    'CS_MODE_QPX',
+    'CS_MODE_M68K_000',
+    'CS_MODE_M68K_010',
+    'CS_MODE_M68K_020',
+    'CS_MODE_M68K_030',
+    'CS_MODE_M68K_040',
+    'CS_MODE_M68K_060',
     'CS_MODE_MIPS32',
     'CS_MODE_MIPS64',
-    'CS_MODE_QPX',
 
     'CS_OPT_SYNTAX',
     'CS_OPT_SYNTAX_DEFAULT',
@@ -113,7 +120,8 @@ CS_ARCH_PPC = 4
 CS_ARCH_SPARC = 5
 CS_ARCH_SYSZ = 6
 CS_ARCH_XCORE = 7
-CS_ARCH_MAX = 8
+CS_ARCH_M68K = 8
+CS_ARCH_MAX = 9
 CS_ARCH_ALL = 0xFFFF
 
 # disasm mode
@@ -129,10 +137,16 @@ CS_MODE_MICRO = (1 << 4)       # MicroMips mode (MIPS architecture)
 CS_MODE_MIPS3 = (1 << 5)       # Mips III ISA
 CS_MODE_MIPS32R6 = (1 << 6)    # Mips32r6 ISA
 CS_MODE_V9 = (1 << 4)          # Sparc V9 mode (for Sparc)
+CS_MODE_QPX = (1 << 4)         # Quad Processing eXtensions mode (PPC)
+CS_MODE_M68K_000 = (1 << 1)    # M68K 68000 mode
+CS_MODE_M68K_010 = (1 << 2)    # M68K 68010 mode
+CS_MODE_M68K_020 = (1 << 3)    # M68K 68020 mode
+CS_MODE_M68K_030 = (1 << 4)    # M68K 68030 mode
+CS_MODE_M68K_040 = (1 << 5)    # M68K 68040 mode
+CS_MODE_M68K_060 = (1 << 6)    # M68K 68060 mode
 CS_MODE_BIG_ENDIAN = (1 << 31) # big-endian mode
 CS_MODE_MIPS32 = CS_MODE_32    # Mips32 ISA
 CS_MODE_MIPS64 = CS_MODE_64    # Mips64 ISA
-CS_MODE_QPX = (1 << 4)         # Quad Processing eXtensions mode (PPC)
 
 # Capstone option type
 CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
@@ -258,6 +272,7 @@ class _cs_arch(ctypes.Union):
     _fields_ = (
         ('arm64', arm64.CsArm64),
         ('arm', arm.CsArm),
+        ('m68k', m68k.CsM68K),
         ('mips', mips.CsMips),
         ('x86', x86.CsX86),
         ('ppc', ppc.CsPpc),
@@ -555,6 +570,8 @@ class CsInsn(object):
                 self.modrm, self.sib, self.disp, \
                 self.sib_index, self.sib_scale, self.sib_base, self.xop_cc, self.sse_cc, \
                 self.avx_cc, self.avx_sae, self.avx_rm, self.eflags, self.operands) = x86.get_arch_info(self._raw.detail.contents.arch.x86)
+        elif arch == CS_ARCH_M68K:
+                (self.operands, self.op_size) = m68k.get_arch_info(self._raw.detail.contents.arch.m68k)
         elif arch == CS_ARCH_MIPS:
                 self.operands = mips.get_arch_info(self._raw.detail.contents.arch.mips)
         elif arch == CS_ARCH_PPC:
@@ -603,7 +620,7 @@ class CsInsn(object):
         if self._raw.id == 0:
             return default
 
-        return _ascii_name_or_default(_cs.cs_insn_name(self._cs.csh, self.id).decode('ascii'), default)
+        return _ascii_name_or_default(_cs.cs_insn_name(self._cs.csh, self.id), default)
 
     # get the group name
     def group_name(self, group_id, default=None):
@@ -957,14 +974,13 @@ def debug():
     else:
         diet = "standard"
 
-    archs = { "arm": CS_ARCH_ARM, "arm64": CS_ARCH_ARM64, \
+    archs = { "arm": CS_ARCH_ARM, "arm64": CS_ARCH_ARM64, "m68k": CS_ARCH_M68K, \
         "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "sparc": CS_ARCH_SPARC, \
         "sysz": CS_ARCH_SYSZ, 'xcore': CS_ARCH_XCORE }
 
     all_archs = ""
     keys = archs.keys()
-    keys.sort()
-    for k in keys:
+    for k in sorted(keys):
         if cs_support(archs[k]):
             all_archs += "-%s" % k
 

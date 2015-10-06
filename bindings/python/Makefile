@@ -42,6 +42,8 @@ install_cython:
 	cp capstone/arm_const.py $(OBJDIR)/pyx/arm_const.pyx
 	cp capstone/arm64.py $(OBJDIR)/pyx/arm64.pyx
 	cp capstone/arm64_const.py $(OBJDIR)/pyx/arm64_const.pyx
+	cp capstone/m68k.py $(OBJDIR)/pyx/m68k.pyx
+	cp capstone/m68k_const.py $(OBJDIR)/pyx/m68k_const.pyx
 	cp capstone/mips.py $(OBJDIR)/pyx/mips.pyx
 	cp capstone/mips_const.py $(OBJDIR)/pyx/mips_const.pyx
 	cp capstone/ppc.py $(OBJDIR)/pyx/ppc.pyx
@@ -68,6 +70,8 @@ build_cython:
 	cp capstone/arm_const.py $(OBJDIR)/pyx/arm_const.pyx
 	cp capstone/arm64.py $(OBJDIR)/pyx/arm64.pyx
 	cp capstone/arm64_const.py $(OBJDIR)/pyx/arm64_const.pyx
+	cp capstone/m68k.py $(OBJDIR)/pyx/m68k.pyx
+	cp capstone/m68k_const.py $(OBJDIR)/pyx/m68k_const.pyx
 	cp capstone/mips.py $(OBJDIR)/pyx/mips.pyx
 	cp capstone/mips_const.py $(OBJDIR)/pyx/mips_const.pyx
 	cp capstone/ppc.py $(OBJDIR)/pyx/ppc.pyx
@@ -123,8 +127,8 @@ clean:
 	rm -rf prebuilt/win32/capstone.dll
 
 
-TESTS = test_basic.py test_detail.py test_arm.py test_arm64.py test_mips.py test_ppc.py
-TESTS += test_sparc.py test_systemz.py test_x86.py test_xcore.py test_skipdata.py
+TESTS = test_basic.py test_detail.py test_arm.py test_arm64.py test_m68k.py test_mips.py
+TESTS += test_ppc.py test_sparc.py test_systemz.py test_x86.py test_xcore.py test_skipdata.py
 check:
 	@for t in $(TESTS); do \
 		echo Check $$t ... ; \

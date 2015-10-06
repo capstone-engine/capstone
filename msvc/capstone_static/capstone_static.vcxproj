@@ -28,6 +28,9 @@
     <ClCompile Include="..\..\arch\ARM\ARMInstPrinter.c" />
     <ClCompile Include="..\..\arch\ARM\ARMMapping.c" />
     <ClCompile Include="..\..\arch\ARM\ARMModule.c" />
+    <ClCompile Include="..\..\arch\M68K\M68KDisassembler.c" />
+    <ClCompile Include="..\..\arch\M68K\M68KInstPrinter.c" />
+    <ClCompile Include="..\..\arch\M68K\M68KModule.c" />
     <ClCompile Include="..\..\arch\Mips\MipsDisassembler.c" />
     <ClCompile Include="..\..\arch\Mips\MipsInstPrinter.c" />
     <ClCompile Include="..\..\arch\Mips\MipsMapping.c" />

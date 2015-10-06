@@ -72,6 +72,10 @@ static void test()
 #ifdef CAPSTONE_HAS_XCORE
 #define XCORE_CODE "\xfe\x0f\xfe\x17\x13\x17\xc6\xfe\xec\x17\x97\xf8\xec\x4f\x1f\xfd\xec\x37\x07\xf2\x45\x5b\xf9\xfa\x02\x06\x1b\x10"
 #endif
+#ifdef CAPSTONE_HAS_M68K
+#define M68K_CODE "\xd4\x40\x87\x5a\x4e\x71\x02\xb4\xc0\xde\xc0\xde\x5c\x00\x1d\x80\x71\x12\x01\x23\xf2\x3c\x44\x22\x40\x49\x0e\x56\x54\xc5\xf2\x3c\x44\x00\x44\x7a\x00\x00\xf2\x00\x0a\x28"
+#endif
+
 	struct platform {
 		cs_arch arch;
 		cs_mode mode;
@@ -263,6 +267,15 @@ static void test()
 			(unsigned char*)XCORE_CODE,
 			sizeof(XCORE_CODE) - 1,
 			"XCore"
+		},
+#endif
+#ifdef CAPSTONE_HAS_M68K
+		{
+			CS_ARCH_M68K,
+			CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040,
+			(unsigned char*)M68K_CODE,
+			sizeof(M68K_CODE) - 1,
+			"M68K",
 		},
 #endif
 	};
