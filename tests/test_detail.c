@@ -292,13 +292,13 @@ static void test()
 			printf("Disasm:\n");
 
 			for (j = 0; j < count; j++) {
-				cs_insn *i = &(all_insn[j]);
+				cs_insn *in = &(all_insn[j]);
 				printf("0x%"PRIx64":\t%s\t\t%s // insn-ID: %u, insn-mnem: %s\n",
-						i->address, i->mnemonic, i->op_str,
-						i->id, cs_insn_name(handle, i->id));
+						in->address, in->mnemonic, in->op_str,
+						in->id, cs_insn_name(handle, in->id));
 
 				// print implicit registers used by this instruction
-				detail = i->detail;
+				detail = in->detail;
 
 				if (detail->regs_read_count > 0) {
 					printf("\tImplicit registers read: ");
