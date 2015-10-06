@@ -12,7 +12,6 @@ class M68KOpMem(ctypes.Structure):
         ('in_disp', ctypes.c_uint),
         ('out_disp', ctypes.c_uint),
         ('disp', ctypes.c_ushort),
-        ('register_bits', ctypes.c_ushort),
         ('scale', ctypes.c_ubyte),
         ('bitfield', ctypes.c_ubyte),
         ('width', ctypes.c_ubyte),
