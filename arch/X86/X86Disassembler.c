@@ -799,6 +799,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	insn.prefixPresent[0x64] = 0;
 	insn.prefixPresent[0x65] = 0;
 	insn.prefixPresent[0x66] = 0;
+	insn.prefixPresent[0x67] = 0;
 	insn.prefixPresent[0xf0] = 0;
 	insn.prefixPresent[0xf2] = 0;
 	insn.prefixPresent[0xf3] = 0;
