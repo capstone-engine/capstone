@@ -238,6 +238,9 @@ void M68K_printInst(MCInst* MI, SStream* O, void* PrinterInfo)
 	detail = MI->flat_insn->detail;
 	if (detail) {
 		memcpy(&detail->m68k, ext, sizeof(cs_m68k));
+		detail->regs_read_count = 0;
+		detail->regs_write_count = 0;
+		detail->groups_count = 0;
 	}
 
 	if (MI->Opcode == M68K_INS_INVALID) {
