@@ -85,9 +85,9 @@ static void print_insn_detail(cs_insn *ins)
 					if (m68k->op_size.fpu_size == M68K_FPU_SIZE_SINGLE)
 						printf("\t\toperands[%u].type: IMM = %f\n", i, op->simm);
 					else if (m68k->op_size.fpu_size == M68K_FPU_SIZE_DOUBLE)
-						printf("\t\toperands[%u].type: IMM = %f\n", i, op->dimm);
+						printf("\t\toperands[%u].type: IMM = %lf\n", i, op->dimm);
 					else
-						printf("\t\toperands[%u].type: IMM = <unsupported>", i);
+						printf("\t\toperands[%u].type: IMM = <unsupported>\n", i);
 					break;
 				}
 
@@ -153,7 +153,7 @@ static void test()
 
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
-			print_string_hex("Code:", platforms[i].code, platforms[i].size);
+			print_string_hex("Code: ", platforms[i].code, platforms[i].size);
 			printf("Disasm:\n");
 
 			for (j = 0; j < count; j++) {
