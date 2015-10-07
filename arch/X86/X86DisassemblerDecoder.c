@@ -352,8 +352,55 @@ CONSUME_FUNC(consumeUInt64, uint64_t)
 static void setPrefixPresent(struct InternalInstruction *insn,
 		uint8_t prefix, uint64_t location)
 {
-	insn->prefixPresent[prefix] = 1;
-	insn->prefixLocations[prefix] = location;
+	switch (prefix)
+	{
+	case 0x26:
+		insn->isPrefix26 = true;
+		insn->prefix26 = location;
+		break;
+	case 0x2e:
+		insn->isPrefix2e = true;
+		insn->prefix2e = location;
+		break;
+	case 0x36:
+		insn->isPrefix36 = true;
+		insn->prefix36 = location;
+		break;
+	case 0x3e:
+		insn->isPrefix3e = true;
+		insn->prefix3e = location;
+		break;
+	case 0x64:
+		insn->isPrefix64 = true;
+		insn->prefix64 = location;
+		break;
+	case 0x65:
+		insn->isPrefix65 = true;
+		insn->prefix65 = location;
+		break;
+	case 0x66:
+		insn->isPrefix66 = true;
+		insn->prefix66 = location;
+		break;
+	case 0x67:
+		insn->isPrefix67 = true;
+		insn->prefix67 = location;
+		break;
+	case 0xf0:
+		insn->isPrefixf0 = true;
+		insn->prefixf0 = location;
+		break;
+	case 0xf2:
+		insn->isPrefixf2 = true;
+		insn->prefixf2 = location;
+		break;
+	case 0xf3:
+		insn->isPrefixf3 = true;
+		insn->prefixf3 = location;
+		break;
+	default:
+		break;
+	}
 }
 
 /*
@@ -368,11 +415,56 @@ static void setPrefixPresent(struct InternalInstruction *insn,
 static bool isPrefixAtLocation(struct InternalInstruction *insn, uint8_t prefix,
 		uint64_t location)
 {
-	if (insn->prefixPresent[prefix] == 1 &&
-			insn->prefixLocations[prefix] == location)
-		return true;
-	else
-		return false;
+	switch (prefix)
+	{
+	case 0x26:
+		if (insn->isPrefix26 && insn->prefix26 == location)
+			return true;
+		break;
+	case 0x2e:
+		if (insn->isPrefix2e && insn->prefix2e == location)
+			return true;
+		break;
+	case 0x36:
+		if (insn->isPrefix36 && insn->prefix36 == location)
+			return true;
+		break;
+	case 0x3e:
+		if (insn->isPrefix3e && insn->prefix3e == location)
+			return true;
+		break;
+	case 0x64:
+		if (insn->isPrefix64 && insn->prefix64 == location)
+			return true;
+		break;
+	case 0x65:
+		if (insn->isPrefix65 && insn->prefix65 == location)
+			return true;
+		break;
+	case 0x66:
+		if (insn->isPrefix66 && insn->prefix66 == location)
+			return true;
+		break;
+	case 0x67:
+		if (insn->isPrefix67 && insn->prefix67 == location)
+			return true;
+		break;
+	case 0xf0:
+		if (insn->isPrefixf0 && insn->prefixf0 == location)
+			return true;
+		break;
+	case 0xf2:
+		if (insn->isPrefixf2 && insn->prefixf2 == location)
+			return true;
+		break;
+	case 0xf3:
+		if (insn->isPrefixf3 && insn->prefixf3 == location)
+			return true;
+		break;
+	default:
+		break;
+	}
+	return false;
 }
 
 /*
@@ -482,21 +574,21 @@ static int readPrefixes(struct InternalInstruction *insn)
 			case 0xf3:  /* REP or REPE/REPZ */
 			case 0xf0:  /* LOCK */
 				// only accept the last prefix
-				insn->prefixPresent[0xf2] = 0;
-				insn->prefixPresent[0xf3] = 0;
-				insn->prefixPresent[0xf0] = 0;
+				insn->isPrefixf2 = false;
+				insn->isPrefixf3 = false;
+				insn->isPrefixf0 = false;
 				setPrefixPresent(insn, byte, prefixLocation);
 				insn->prefix0 = byte;
 				break;
 			case 0x2e:  /* CS segment override -OR- Branch not taken */
 				insn->segmentOverride = SEG_OVERRIDE_CS;
 				// only accept the last prefix
-				insn->prefixPresent[0x2e] = 0;
-				insn->prefixPresent[0x36] = 0;
-				insn->prefixPresent[0x3e] = 0;
-				insn->prefixPresent[0x26] = 0;
-				insn->prefixPresent[0x64] = 0;
-				insn->prefixPresent[0x65] = 0;
+				insn->isPrefix2e = false;
+				insn->isPrefix36 = false;
+				insn->isPrefix3e = false;
+				insn->isPrefix26 = false;
+				insn->isPrefix64 = false;
+				insn->isPrefix65 = false;
 
 				setPrefixPresent(insn, byte, prefixLocation);
 				insn->prefix1 = byte;
@@ -504,12 +596,12 @@ static int readPrefixes(struct InternalInstruction *insn)
 			case 0x36:  /* SS segment override -OR- Branch taken */
 				insn->segmentOverride = SEG_OVERRIDE_SS;
 				// only accept the last prefix
-				insn->prefixPresent[0x2e] = 0;
-				insn->prefixPresent[0x36] = 0;
-				insn->prefixPresent[0x3e] = 0;
-				insn->prefixPresent[0x26] = 0;
-				insn->prefixPresent[0x64] = 0;
-				insn->prefixPresent[0x65] = 0;
+				insn->isPrefix2e = false;
+				insn->isPrefix36 = false;
+				insn->isPrefix3e = false;
+				insn->isPrefix26 = false;
+				insn->isPrefix64 = false;
+				insn->isPrefix65 = false;
 
 				setPrefixPresent(insn, byte, prefixLocation);
 				insn->prefix1 = byte;
@@ -517,12 +609,12 @@ static int readPrefixes(struct InternalInstruction *insn)
 			case 0x3e:  /* DS segment override */
 				insn->segmentOverride = SEG_OVERRIDE_DS;
 				// only accept the last prefix
-				insn->prefixPresent[0x2e] = 0;
-				insn->prefixPresent[0x36] = 0;
-				insn->prefixPresent[0x3e] = 0;
-				insn->prefixPresent[0x26] = 0;
-				insn->prefixPresent[0x64] = 0;
-				insn->prefixPresent[0x65] = 0;
+				insn->isPrefix2e = false;
+				insn->isPrefix36 = false;
+				insn->isPrefix3e = false;
+				insn->isPrefix26 = false;
+				insn->isPrefix64 = false;
+				insn->isPrefix65 = false;
 
 				setPrefixPresent(insn, byte, prefixLocation);
 				insn->prefix1 = byte;
@@ -530,12 +622,12 @@ static int readPrefixes(struct InternalInstruction *insn)
 			case 0x26:  /* ES segment override */
 				insn->segmentOverride = SEG_OVERRIDE_ES;
 				// only accept the last prefix
-				insn->prefixPresent[0x2e] = 0;
-				insn->prefixPresent[0x36] = 0;
-				insn->prefixPresent[0x3e] = 0;
-				insn->prefixPresent[0x26] = 0;
-				insn->prefixPresent[0x64] = 0;
-				insn->prefixPresent[0x65] = 0;
+				insn->isPrefix2e = false;
+				insn->isPrefix36 = false;
+				insn->isPrefix3e = false;
+				insn->isPrefix26 = false;
+				insn->isPrefix64 = false;
+				insn->isPrefix65 = false;
 
 				setPrefixPresent(insn, byte, prefixLocation);
 				insn->prefix1 = byte;
@@ -543,12 +635,12 @@ static int readPrefixes(struct InternalInstruction *insn)
 			case 0x64:  /* FS segment override */
 				insn->segmentOverride = SEG_OVERRIDE_FS;
 				// only accept the last prefix
-				insn->prefixPresent[0x2e] = 0;
-				insn->prefixPresent[0x36] = 0;
-				insn->prefixPresent[0x3e] = 0;
-				insn->prefixPresent[0x26] = 0;
-				insn->prefixPresent[0x64] = 0;
-				insn->prefixPresent[0x65] = 0;
+				insn->isPrefix2e = false;
+				insn->isPrefix36 = false;
+				insn->isPrefix3e = false;
+				insn->isPrefix26 = false;
+				insn->isPrefix64 = false;
+				insn->isPrefix65 = false;
 
 				setPrefixPresent(insn, byte, prefixLocation);
 				insn->prefix1 = byte;
@@ -556,12 +648,12 @@ static int readPrefixes(struct InternalInstruction *insn)
 			case 0x65:  /* GS segment override */
 				insn->segmentOverride = SEG_OVERRIDE_GS;
 				// only accept the last prefix
-				insn->prefixPresent[0x2e] = 0;
-				insn->prefixPresent[0x36] = 0;
-				insn->prefixPresent[0x3e] = 0;
-				insn->prefixPresent[0x26] = 0;
-				insn->prefixPresent[0x64] = 0;
-				insn->prefixPresent[0x65] = 0;
+				insn->isPrefix2e = false;
+				insn->isPrefix36 = false;
+				insn->isPrefix3e = false;
+				insn->isPrefix26 = false;
+				insn->isPrefix64 = false;
+				insn->isPrefix65 = false;
 
 				setPrefixPresent(insn, byte, prefixLocation);
 				insn->prefix1 = byte;
@@ -1179,7 +1271,7 @@ static int getID(struct InternalInstruction *insn)
 	}
 
 	/* The following clauses compensate for limitations of the tables. */
-	if ((insn->mode == MODE_16BIT || insn->prefixPresent[0x66]) &&
+	if ((insn->mode == MODE_16BIT || insn->isPrefix66) &&
 			!(attrMask & ATTR_OPSIZE)) {
 		/*
 		 * The instruction tables make no distinction between instructions that
@@ -1207,7 +1299,7 @@ static int getID(struct InternalInstruction *insn)
 		}
 
 		if (is16BitEquivalent(instructionID, instructionIDWithOpsize) &&
-				(insn->mode == MODE_16BIT) ^ insn->prefixPresent[0x66]) {
+				(insn->mode == MODE_16BIT) ^ insn->isPrefix66) {
 			insn->instructionID = instructionIDWithOpsize;
 			insn->spec = specifierForUID(instructionIDWithOpsize);
 		} else {
@@ -2021,7 +2113,7 @@ static int readOperands(struct InternalInstruction *insn)
 static bool checkPrefix(struct InternalInstruction *insn)
 {
 	// LOCK prefix
-	if (insn->prefixPresent[0xf0]) {
+	if (insn->isPrefixf0) {
 		switch(insn->instructionID) {
 			default:
 				// invalid LOCK
@@ -2197,7 +2289,7 @@ static bool checkPrefix(struct InternalInstruction *insn)
 	}
 
 	// REPNE prefix
-	if (insn->prefixPresent[0xf2]) {
+	if (insn->isPrefixf2) {
 		// 0xf2 can be a part of instruction encoding, but not really a prefix.
 		// In such a case, clear it.
 		if (insn->twoByteEscape == 0x0f) {
