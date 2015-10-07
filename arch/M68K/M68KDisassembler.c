@@ -1048,9 +1048,7 @@ static void build_cpush_cinv(m68k_info *info, int op_offset)
 			break;
 			// All
 		case 3:
-			if (info) {
-				ext->op_count = 1;
-			}
+			ext->op_count = 1;
 			MCInst_setOpcode(info->inst, op_offset + 2);
 			break;
 	}
