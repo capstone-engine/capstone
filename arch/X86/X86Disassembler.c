@@ -95,12 +95,12 @@ static bool translateSrcIndex(MCInst *mcInst, InternalInstruction *insn)
 	unsigned baseRegNo;
 
 	if (insn->mode == MODE_64BIT)
-		baseRegNo = insn->prefixPresent[0x67] ? X86_ESI : X86_RSI;
+		baseRegNo = insn->isPrefix67 ? X86_ESI : X86_RSI;
 	else if (insn->mode == MODE_32BIT)
-		baseRegNo = insn->prefixPresent[0x67] ? X86_SI : X86_ESI;
+		baseRegNo = insn->isPrefix67 ? X86_SI : X86_ESI;
 	else {
 		// assert(insn->mode == MODE_16BIT);
-		baseRegNo = insn->prefixPresent[0x67] ? X86_ESI : X86_SI;
+		baseRegNo = insn->isPrefix67 ? X86_ESI : X86_SI;
 	}
 
 	MCOperand_CreateReg0(mcInst, baseRegNo);
@@ -119,12 +119,12 @@ static bool translateDstIndex(MCInst *mcInst, InternalInstruction *insn)
 	unsigned baseRegNo;
 
 	if (insn->mode == MODE_64BIT)
-		baseRegNo = insn->prefixPresent[0x67] ? X86_EDI : X86_RDI;
+		baseRegNo = insn->isPrefix67 ? X86_EDI : X86_RDI;
 	else if (insn->mode == MODE_32BIT)
-		baseRegNo = insn->prefixPresent[0x67] ? X86_DI : X86_EDI;
+		baseRegNo = insn->isPrefix67 ? X86_DI : X86_EDI;
 	else {
 		// assert(insn->mode == MODE_16BIT);
-		baseRegNo = insn->prefixPresent[0x67] ? X86_EDI : X86_DI;
+		baseRegNo = insn->isPrefix67 ? X86_EDI : X86_DI;
 	}
 
 	MCOperand_CreateReg0(mcInst, baseRegNo);
@@ -791,18 +791,6 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	info.offset = address;
 
 	memset(&insn, 0, offsetof(InternalInstruction, reader));
-	//initialize some the necessary values
-	insn.prefixPresent[0x26] = 0;
-	insn.prefixPresent[0x2e] = 0;
-	insn.prefixPresent[0x36] = 0;
-	insn.prefixPresent[0x3e] = 0;
-	insn.prefixPresent[0x64] = 0;
-	insn.prefixPresent[0x65] = 0;
-	insn.prefixPresent[0x66] = 0;
-	insn.prefixPresent[0x67] = 0;
-	insn.prefixPresent[0xf0] = 0;
-	insn.prefixPresent[0xf2] = 0;
-	insn.prefixPresent[0xf3] = 0;
 
 	if (instr->flat_insn->detail) {
 		instr->flat_insn->detail->x86.op_count = 0;
