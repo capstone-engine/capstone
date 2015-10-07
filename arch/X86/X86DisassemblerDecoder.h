@@ -560,6 +560,30 @@ typedef struct InternalInstruction {
   // from here, all members must be initialized to ZERO to work properly
   uint8_t operandSize;
   uint8_t prefix0, prefix1, prefix2, prefix3;
+  /* 1 if the prefix byte corresponding to the entry is present; 0 if not */
+  bool isPrefix26;
+  bool isPrefix2e;
+  bool isPrefix36;
+  bool isPrefix3e;
+  bool isPrefix64;
+  bool isPrefix65;
+  bool isPrefix66;
+  bool isPrefix67;
+  bool isPrefixf0;
+  bool isPrefixf2;
+  bool isPrefixf3;
+  /* contains the location (for use with the reader) of the prefix byte */
+  uint64_t prefix26;
+  uint64_t prefix2e;
+  uint64_t prefix36;
+  uint64_t prefix3e;
+  uint64_t prefix64;
+  uint64_t prefix65;
+  uint64_t prefix66;
+  uint64_t prefix67;
+  uint64_t prefixf0;
+  uint64_t prefixf2;
+  uint64_t prefixf3;
   /* The value of the REX prefix, if present */
   uint8_t rexPrefix;
   /* The segment override type */
@@ -592,10 +616,6 @@ typedef struct InternalInstruction {
   /* Reader interface (C) */
   byteReader_t reader;
 
-  /* 1 if the prefix byte corresponding to the entry is present; 0 if not */
-  uint8_t prefixPresent[0x100];
-  /* contains the location (for use with the reader) of the prefix byte */
-  uint64_t prefixLocations[0x100];
   /* Opaque value passed to the reader */
   const void* readerArg;
   /* The address of the next byte to read via the reader */
