@@ -146,12 +146,18 @@
 unsigned int m68k_read_disassembler_8(m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
+	if (addr > (info->code_len - 1)) {
+		return 0x08;
+	}
 	return info->code[addr];
 }
 
 unsigned int m68k_read_disassembler_16(m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
+	if (addr > (info->code_len - 2)) {
+		return 0x0808;
+	}
 	uint16_t v0 = info->code[addr + 0];
 	uint16_t v1 = info->code[addr + 1];
 	return (v0 << 8) | v1; 
@@ -160,6 +166,9 @@ unsigned int m68k_read_disassembler_16(m68k_info *info, const uint64_t address)
 unsigned int m68k_read_disassembler_32(m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
+	if (addr > (info->code_len - 4)) {
+		return 0x08080808;
+	}
 	uint32_t v0 = info->code[addr + 0];
 	uint32_t v1 = info->code[addr + 1];
 	uint32_t v2 = info->code[addr + 2];
@@ -170,6 +179,9 @@ unsigned int m68k_read_disassembler_32(m68k_info *info, const uint64_t address)
 uint64_t m68k_read_disassembler_64(m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
+	if (addr > (info->code_len - 8)) {
+		return 0x0808080808080808;
+	}
 	uint64_t v0 = info->code[addr + 0];
 	uint64_t v1 = info->code[addr + 1];
 	uint64_t v2 = info->code[addr + 2];
@@ -3871,6 +3883,7 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 	m68k_info *info = (m68k_info *)handle->printer_info;
 
 	info->code = code;
+	info->code_len = code_len;
 	info->baseAddress = address;
 
 	if (handle->mode & CS_MODE_M68K_010)

@@ -141,6 +141,7 @@ typedef enum
 /* Private, For internal use only */
 typedef struct m68k_info {
 	const uint8_t *code;
+	size_t code_len;
 	uint64_t baseAddress;
 	MCInst *inst;
 	unsigned int pc;        /* program counter */
