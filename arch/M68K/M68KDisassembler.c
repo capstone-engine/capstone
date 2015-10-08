@@ -143,15 +143,12 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-unsigned int m68k_read_disassembler_8(m68k_info *info, const uint64_t address)
-{
-	const uint64_t addr = address - info->baseAddress;
-	return info->code[addr];
-}
-
 unsigned int m68k_read_disassembler_16(m68k_info *info, const uint64_t address)
 {
-	const uint64_t addr = address - info->baseAddress;
+	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
+	if (addr > (info->code_len - 2)) {
+		return 0xaaaa;
+	}
 	uint16_t v0 = info->code[addr + 0];
 	uint16_t v1 = info->code[addr + 1];
 	return (v0 << 8) | v1; 
@@ -159,7 +156,10 @@ unsigned int m68k_read_disassembler_16(m68k_info *info, const uint64_t address)
 
 unsigned int m68k_read_disassembler_32(m68k_info *info, const uint64_t address)
 {
-	const uint64_t addr = address - info->baseAddress;
+	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
+	if (addr > (info->code_len - 4)) {
+		return 0xaaaaaaaa;
+	}
 	uint32_t v0 = info->code[addr + 0];
 	uint32_t v1 = info->code[addr + 1];
 	uint32_t v2 = info->code[addr + 2];
@@ -169,7 +169,10 @@ unsigned int m68k_read_disassembler_32(m68k_info *info, const uint64_t address)
 
 uint64_t m68k_read_disassembler_64(m68k_info *info, const uint64_t address)
 {
-	const uint64_t addr = address - info->baseAddress;
+	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
+	if (addr > (info->code_len - 8)) {
+		return 0xaaaaaaaaaaaaaaaa;
+	}
 	uint64_t v0 = info->code[addr + 0];
 	uint64_t v1 = info->code[addr + 1];
 	uint64_t v2 = info->code[addr + 2];
@@ -278,14 +281,15 @@ static m68k_insn s_trap_lut[] = {
 		}					\
 	} while (0)
 
-#define read_imm_8(info)  (m68k_read_disassembler_16((info), (((info)->pc+=2)-2)&(info)->address_mask)&0xff)
-#define read_imm_16(info) m68k_read_disassembler_16((info), (((info)->pc+=2)-2)&(info)->address_mask)
-#define read_imm_32(info) m68k_read_disassembler_32((info), (((info)->pc+=4)-4)&(info)->address_mask)
-#define read_imm_64(info) m68k_read_disassembler_64((info), (((info)->pc+=8)-8)&(info)->address_mask)
+#define peek_imm_8(info)  (m68k_read_disassembler_16((info), (info)->pc)&0xff)
+#define peek_imm_16(info) m68k_read_disassembler_16((info), (info)->pc)
+#define peek_imm_32(info) m68k_read_disassembler_32((info), (info)->pc)
+#define peek_imm_64(info) m68k_read_disassembler_64((info), (info)->pc)
 
-#define peek_imm_8(info)  (m68k_read_disassembler_16((info), (info)->pc & (info)->address_mask)&0xff)
-#define peek_imm_16(info) m68k_read_disassembler_16((info), (info)->pc & (info)->address_mask)
-#define peek_imm_32(info) m68k_read_disassembler_32((info), (info)->pc & (info)->address_mask)
+#define read_imm_8(info)  ( { unsigned int value = peek_imm_8(info); (info)->pc+=2; value; } )
+#define read_imm_16(info) ( { unsigned int value = peek_imm_16(info); (info)->pc+=2; value; } )
+#define read_imm_32(info) ( { unsigned int value = peek_imm_32(info); (info)->pc+=4; value; } )
+#define read_imm_64(info) ( { unsigned int value = peek_imm_64(info); (info)->pc+=8; value; } )
 
 /* Fake a split interface */
 #define get_ea_mode_str_8(instruction) get_ea_mode_str(instruction, 0)
@@ -3782,7 +3786,8 @@ static int instruction_is_valid(m68k_info *info, const unsigned int word_check)
 	const unsigned int instruction = info->ir;
 	instruction_struct *i = &g_instruction_table[instruction];
 
-	if (i->word2_mask && ((word_check & i->word2_mask) != i->word2_match)) {
+	if ( (i->word2_mask && ((word_check & i->word2_mask) != i->word2_match)) ||
+		(i->instruction == d68000_invalid) ) {
 		d68000_invalid(info);
 		return 0;
 	}
@@ -3850,8 +3855,9 @@ static unsigned int m68k_disassemble(m68k_info *info, uint64_t pc)
 	for (i = 0; i < M68K_OPERAND_COUNT; ++i)
 		ext->operands[i].type = M68K_OP_REG;
 
-	info->ir = read_imm_16(info);
-	if (instruction_is_valid(info, peek_imm_16(info))) {
+	info->ir = peek_imm_16(info);
+	if (instruction_is_valid(info, peek_imm_32(info) & 0xffff)) {
+		info->ir = read_imm_16(info);
 		g_instruction_table[info->ir].instruction(info);
 	}
 
@@ -3866,20 +3872,10 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 	int s;
 	int cpu_type = M68K_CPU_TYPE_68000;
 	cs_struct* handle = instr->csh;
-	m68k_info *info;
-
-	if (handle->printer_info == NULL) {
-		info = cs_mem_malloc(sizeof(m68k_info));
-		if (!info) {
-			handle->errnum = CS_ERR_MEM;
-			return false;
-		}
-		handle->printer_info = info;
-	} else {
-		info = (m68k_info *)handle->printer_info;
-	}
+	m68k_info *info = (m68k_info *)handle->printer_info;
 
 	info->code = code;
+	info->code_len = code_len;
 	info->baseAddress = address;
 
 	if (handle->mode & CS_MODE_M68K_010)

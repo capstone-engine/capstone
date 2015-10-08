@@ -98,7 +98,7 @@ def test_class():
             print("0x%x:\n" % (last_address))
 
         except CsError as e:
-            print("ERROR: %s" % e)
+            print("ERROR: %s" % e.__str__())
 
 if __name__ == '__main__':
     test_class()
