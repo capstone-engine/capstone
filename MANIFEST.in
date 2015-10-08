@@ -1,4 +1,0 @@
-recursive-include src *
-recursive-include pyx *
-recursive-include capstone *
-include README setup.py
