@@ -10,8 +10,15 @@
 
 static cs_err init(cs_struct *ud)
 {
+	m68k_info *info;
+
+	info = cs_mem_malloc(sizeof(m68k_info));
+	if (!info) {
+		return CS_ERR_MEM;
+	}
+
 	ud->printer = M68K_printInst;
-	ud->printer_info = NULL;
+	ud->printer_info = info;
 	ud->getinsn_info = NULL;
 	ud->disasm = M68K_getInstruction;
 	ud->skipdata_size = 2;
