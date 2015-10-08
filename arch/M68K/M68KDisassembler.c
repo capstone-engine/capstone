@@ -3782,7 +3782,8 @@ static int instruction_is_valid(m68k_info *info, const unsigned int word_check)
 	const unsigned int instruction = info->ir;
 	instruction_struct *i = &g_instruction_table[instruction];
 
-	if (i->word2_mask && ((word_check & i->word2_mask) != i->word2_match)) {
+	if ( (i->word2_mask && ((word_check & i->word2_mask) != i->word2_match)) ||
+		(i->instruction == d68000_invalid) ) {
 		d68000_invalid(info);
 		return 0;
 	}
@@ -3850,8 +3851,9 @@ static unsigned int m68k_disassemble(m68k_info *info, uint64_t pc)
 	for (i = 0; i < M68K_OPERAND_COUNT; ++i)
 		ext->operands[i].type = M68K_OP_REG;
 
-	info->ir = read_imm_16(info);
-	if (instruction_is_valid(info, peek_imm_16(info))) {
+	info->ir = peek_imm_16(info);
+	if (instruction_is_valid(info, peek_imm_32(info) & 0xffff)) {
+		info->ir = read_imm_16(info);
 		g_instruction_table[info->ir].instruction(info);
 	}
 
