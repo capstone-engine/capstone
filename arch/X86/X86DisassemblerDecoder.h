@@ -560,7 +560,7 @@ typedef struct InternalInstruction {
   // from here, all members must be initialized to ZERO to work properly
   uint8_t operandSize;
   uint8_t prefix0, prefix1, prefix2, prefix3;
-  /* 1 if the prefix byte corresponding to the entry is present; 0 if not */
+  /* true if the prefix byte corresponding to the entry is present; false if not */
   bool isPrefix26;
   bool isPrefix2e;
   bool isPrefix36;
@@ -605,7 +605,7 @@ typedef struct InternalInstruction {
   uint8_t                       sibScale;
   SIBBase                       sibBase;
   uint8_t                       numImmediatesConsumed;
-  /* 1 if the prefix byte, 0xf2 or 0xf3 is xacquire or xrelease */
+  /* true if the prefix byte, 0xf2 or 0xf3 is xacquire or xrelease */
   bool xAcquireRelease;
 
   /* The value of the vector extension prefix(EVEX/VEX/XOP), if present */
