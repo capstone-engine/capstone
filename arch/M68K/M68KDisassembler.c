@@ -145,13 +145,13 @@
 
 unsigned int m68k_read_disassembler_8(m68k_info *info, const uint64_t address)
 {
-	const uint64_t addr = address - info->baseAddress;
+	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
 	return info->code[addr];
 }
 
 unsigned int m68k_read_disassembler_16(m68k_info *info, const uint64_t address)
 {
-	const uint64_t addr = address - info->baseAddress;
+	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
 	uint16_t v0 = info->code[addr + 0];
 	uint16_t v1 = info->code[addr + 1];
 	return (v0 << 8) | v1; 
@@ -159,7 +159,7 @@ unsigned int m68k_read_disassembler_16(m68k_info *info, const uint64_t address)
 
 unsigned int m68k_read_disassembler_32(m68k_info *info, const uint64_t address)
 {
-	const uint64_t addr = address - info->baseAddress;
+	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
 	uint32_t v0 = info->code[addr + 0];
 	uint32_t v1 = info->code[addr + 1];
 	uint32_t v2 = info->code[addr + 2];
@@ -169,7 +169,7 @@ unsigned int m68k_read_disassembler_32(m68k_info *info, const uint64_t address)
 
 uint64_t m68k_read_disassembler_64(m68k_info *info, const uint64_t address)
 {
-	const uint64_t addr = address - info->baseAddress;
+	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
 	uint64_t v0 = info->code[addr + 0];
 	uint64_t v1 = info->code[addr + 1];
 	uint64_t v2 = info->code[addr + 2];
@@ -278,14 +278,14 @@ static m68k_insn s_trap_lut[] = {
 		}					\
 	} while (0)
 
-#define read_imm_8(info)  (m68k_read_disassembler_16((info), (((info)->pc+=2)-2)&(info)->address_mask)&0xff)
-#define read_imm_16(info) m68k_read_disassembler_16((info), (((info)->pc+=2)-2)&(info)->address_mask)
-#define read_imm_32(info) m68k_read_disassembler_32((info), (((info)->pc+=4)-4)&(info)->address_mask)
-#define read_imm_64(info) m68k_read_disassembler_64((info), (((info)->pc+=8)-8)&(info)->address_mask)
+#define read_imm_8(info)  (m68k_read_disassembler_16((info), (((info)->pc+=2)-2))&0xff)
+#define read_imm_16(info) m68k_read_disassembler_16((info), (((info)->pc+=2)-2))
+#define read_imm_32(info) m68k_read_disassembler_32((info), (((info)->pc+=4)-4))
+#define read_imm_64(info) m68k_read_disassembler_64((info), (((info)->pc+=8)-8))
 
-#define peek_imm_8(info)  (m68k_read_disassembler_16((info), (info)->pc & (info)->address_mask)&0xff)
-#define peek_imm_16(info) m68k_read_disassembler_16((info), (info)->pc & (info)->address_mask)
-#define peek_imm_32(info) m68k_read_disassembler_32((info), (info)->pc & (info)->address_mask)
+#define peek_imm_8(info)  (m68k_read_disassembler_16((info), (info)->pc)&0xff)
+#define peek_imm_16(info) m68k_read_disassembler_16((info), (info)->pc)
+#define peek_imm_32(info) m68k_read_disassembler_32((info), (info)->pc)
 
 /* Fake a split interface */
 #define get_ea_mode_str_8(instruction) get_ea_mode_str(instruction, 0)
