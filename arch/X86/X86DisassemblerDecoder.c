@@ -351,8 +351,7 @@ CONSUME_FUNC(consumeUInt64, uint64_t)
  */
 static void setPrefixPresent(struct InternalInstruction *insn, uint8_t prefix, uint64_t location)
 {
-	switch (prefix)
-	{
+	switch (prefix) {
 	case 0x26:
 		insn->isPrefix26 = true;
 		insn->prefix26 = location;
@@ -414,8 +413,7 @@ static void setPrefixPresent(struct InternalInstruction *insn, uint8_t prefix, u
 static bool isPrefixAtLocation(struct InternalInstruction *insn, uint8_t prefix,
 		uint64_t location)
 {
-	switch (prefix)
-	{
+	switch (prefix) {
 	case 0x26:
 		if (insn->isPrefix26 && insn->prefix26 == location)
 			return true;
