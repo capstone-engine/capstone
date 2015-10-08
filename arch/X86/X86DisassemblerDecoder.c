@@ -1307,9 +1307,9 @@ static int getID(struct InternalInstruction *insn)
 	 */
 	if (insn->opcodeType == ONEBYTE && ((insn->opcode & 0xFC) == 0xA0)) {
 		/* Make sure we observed the prefixes in any position. */
-		if (insn->prefixPresent[0x67])
+		if (insn->isPrefix67)
 			attrMask |= ATTR_ADSIZE;
-		if (insn->prefixPresent[0x66])
+		if (insn->isPrefix66)
 			attrMask |= ATTR_OPSIZE;
 
 		/* In 16-bit, invert the attributes. */
@@ -2119,7 +2119,7 @@ static int readOperands(struct InternalInstruction *insn)
 }
 
 // return True if instruction is illegal to use with prefixes
-// This also check & fix the prefixPresent[] when a prefix is irrelevant.
+// This also check & fix the isPrefixNN when a prefix is irrelevant.
 static bool checkPrefix(struct InternalInstruction *insn)
 {
 	// LOCK prefix
