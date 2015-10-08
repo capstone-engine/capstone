@@ -147,7 +147,7 @@ unsigned int m68k_read_disassembler_16(m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
 	if (addr > (info->code_len - 2)) {
-		return 0x0808;
+		return 0xaaaa;
 	}
 	uint16_t v0 = info->code[addr + 0];
 	uint16_t v1 = info->code[addr + 1];
@@ -158,7 +158,7 @@ unsigned int m68k_read_disassembler_32(m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
 	if (addr > (info->code_len - 4)) {
-		return 0x08080808;
+		return 0xaaaaaaaa;
 	}
 	uint32_t v0 = info->code[addr + 0];
 	uint32_t v1 = info->code[addr + 1];
@@ -171,7 +171,7 @@ uint64_t m68k_read_disassembler_64(m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
 	if (addr > (info->code_len - 8)) {
-		return 0x0808080808080808;
+		return 0xaaaaaaaaaaaaaaaa;
 	}
 	uint64_t v0 = info->code[addr + 0];
 	uint64_t v1 = info->code[addr + 1];
