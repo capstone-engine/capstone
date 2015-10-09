@@ -336,7 +336,9 @@ static void printImm(int syntax, SStream *O, int64_t imm, bool positive)
 		// always print this number in positive form
 		if (syntax == CS_OPT_SYNTAX_MASM) {
 			if (imm < 0) {
-				if (need_zero_prefix(imm))
+				if (imm == 0x8000000000000000)  // imm == -imm
+					SStream_concat0(O, "8000000000000000h");
+				else if (need_zero_prefix(imm))
 					SStream_concat(O, "0%"PRIx64"h", imm);
 				else
 					SStream_concat(O, "%"PRIx64"h", imm);
@@ -362,7 +364,9 @@ static void printImm(int syntax, SStream *O, int64_t imm, bool positive)
 	} else {
 		if (syntax == CS_OPT_SYNTAX_MASM) {
 			if (imm < 0) {
-				if (imm < -HEX_THRESHOLD) {
+				if (imm == 0x8000000000000000)  // imm == -imm
+					SStream_concat0(O, "8000000000000000h");
+				else if (imm < -HEX_THRESHOLD) {
 					if (need_zero_prefix(imm))
 						SStream_concat(O, "-0%"PRIx64"h", -imm);
 					else
@@ -380,7 +384,9 @@ static void printImm(int syntax, SStream *O, int64_t imm, bool positive)
 			}
 		} else {	// Intel syntax
 			if (imm < 0) {
-				if (imm < -HEX_THRESHOLD)
+				if (imm == 0x8000000000000000)  // imm == -imm
+					SStream_concat0(O, "0x8000000000000000");
+				else if (imm < -HEX_THRESHOLD)
 					SStream_concat(O, "-0x%"PRIx64, -imm);
 				else
 					SStream_concat(O, "-%"PRIu64, -imm);
