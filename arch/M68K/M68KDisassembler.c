@@ -116,6 +116,15 @@
 
 #define M68040_PLUS		TYPE_68040
 
+enum {
+	M68K_CPU_TYPE_INVALID,
+	M68K_CPU_TYPE_68000,
+	M68K_CPU_TYPE_68010,
+	M68K_CPU_TYPE_68EC020,
+	M68K_CPU_TYPE_68020,
+	M68K_CPU_TYPE_68030,	/* Supported by disassembler ONLY */
+	M68K_CPU_TYPE_68040		/* Supported by disassembler ONLY */
+};
 
 /* Extension word formats */
 #define EXT_8BIT_DISPLACEMENT(A)          ((A)&0xff)
@@ -143,7 +152,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-unsigned int m68k_read_disassembler_16(m68k_info *info, const uint64_t address)
+static unsigned int m68k_read_disassembler_16(m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
 	if (addr > (info->code_len - 2)) {
@@ -154,7 +163,7 @@ unsigned int m68k_read_disassembler_16(m68k_info *info, const uint64_t address)
 	return (v0 << 8) | v1; 
 }
 
-unsigned int m68k_read_disassembler_32(m68k_info *info, const uint64_t address)
+static unsigned int m68k_read_disassembler_32(m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
 	if (addr > (info->code_len - 4)) {
@@ -167,7 +176,7 @@ unsigned int m68k_read_disassembler_32(m68k_info *info, const uint64_t address)
 	return (v0 << 24) | (v1 << 16) | (v2 << 8) | v3;
 }
 
-uint64_t m68k_read_disassembler_64(m68k_info *info, const uint64_t address)
+static uint64_t m68k_read_disassembler_64(m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
 	if (addr > (info->code_len - 8)) {
@@ -188,16 +197,6 @@ uint64_t m68k_read_disassembler_64(m68k_info *info, const uint64_t address)
 /* ======================================================================== */
 /* =============================== PROTOTYPES ============================= */
 /* ======================================================================== */
-
-/* Read data at the PC and increment PC */
-uint  read_imm_8(m68k_info *info);
-uint  read_imm_16(m68k_info *info);
-uint  read_imm_32(m68k_info *info);
-
-/* Read data at the PC but don't imcrement the PC */
-uint  peek_imm_8(m68k_info *info);
-uint  peek_imm_16(m68k_info *info);
-uint  peek_imm_32(m68k_info *info);
 
 /* make signed integers 100% portably */
 static int make_int_8(int value);
