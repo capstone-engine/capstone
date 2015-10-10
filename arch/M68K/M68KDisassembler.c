@@ -152,44 +152,44 @@ enum {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static unsigned int m68k_read_disassembler_16(m68k_info *info, const uint64_t address)
+static unsigned int m68k_read_disassembler_16(const m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
 	if (addr > (info->code_len - 2)) {
 		return 0xaaaa;
 	}
-	uint16_t v0 = info->code[addr + 0];
-	uint16_t v1 = info->code[addr + 1];
+	const uint16_t v0 = info->code[addr + 0];
+	const uint16_t v1 = info->code[addr + 1];
 	return (v0 << 8) | v1; 
 }
 
-static unsigned int m68k_read_disassembler_32(m68k_info *info, const uint64_t address)
+static unsigned int m68k_read_disassembler_32(const m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
 	if (addr > (info->code_len - 4)) {
 		return 0xaaaaaaaa;
 	}
-	uint32_t v0 = info->code[addr + 0];
-	uint32_t v1 = info->code[addr + 1];
-	uint32_t v2 = info->code[addr + 2];
-	uint32_t v3 = info->code[addr + 3];
+	const uint32_t v0 = info->code[addr + 0];
+	const uint32_t v1 = info->code[addr + 1];
+	const uint32_t v2 = info->code[addr + 2];
+	const uint32_t v3 = info->code[addr + 3];
 	return (v0 << 24) | (v1 << 16) | (v2 << 8) | v3;
 }
 
-static uint64_t m68k_read_disassembler_64(m68k_info *info, const uint64_t address)
+static uint64_t m68k_read_disassembler_64(const m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
 	if (addr > (info->code_len - 8)) {
 		return 0xaaaaaaaaaaaaaaaa;
 	}
-	uint64_t v0 = info->code[addr + 0];
-	uint64_t v1 = info->code[addr + 1];
-	uint64_t v2 = info->code[addr + 2];
-	uint64_t v3 = info->code[addr + 3];
-	uint64_t v4 = info->code[addr + 4];
-	uint64_t v5 = info->code[addr + 5];
-	uint64_t v6 = info->code[addr + 6];
-	uint64_t v7 = info->code[addr + 7];
+	const uint64_t v0 = info->code[addr + 0];
+	const uint64_t v1 = info->code[addr + 1];
+	const uint64_t v2 = info->code[addr + 2];
+	const uint64_t v3 = info->code[addr + 3];
+	const uint64_t v4 = info->code[addr + 4];
+	const uint64_t v5 = info->code[addr + 5];
+	const uint64_t v6 = info->code[addr + 6];
+	const uint64_t v7 = info->code[addr + 7];
 
 	return (v0 << 56) | (v1 << 48) | (v2 << 40) | (v3 << 32) | (v4 << 24) | (v5 << 16) | (v6 << 8) | v7;
 }
@@ -280,15 +280,15 @@ static m68k_insn s_trap_lut[] = {
 		}					\
 	} while (0)
 
-static unsigned int peek_imm_8(m68k_info *info)  { return (m68k_read_disassembler_16((info), (info)->pc)&0xff); }
-static unsigned int peek_imm_16(m68k_info *info) { return m68k_read_disassembler_16((info), (info)->pc); }
-static unsigned int peek_imm_32(m68k_info *info) { return m68k_read_disassembler_32((info), (info)->pc); }
-static unsigned int peek_imm_64(m68k_info *info) { return m68k_read_disassembler_64((info), (info)->pc); }
+static unsigned int peek_imm_8(const m68k_info *info)  { return (m68k_read_disassembler_16((info), (info)->pc)&0xff); }
+static unsigned int peek_imm_16(const m68k_info *info) { return m68k_read_disassembler_16((info), (info)->pc); }
+static unsigned int peek_imm_32(const m68k_info *info) { return m68k_read_disassembler_32((info), (info)->pc); }
+static unsigned int peek_imm_64(const m68k_info *info) { return m68k_read_disassembler_64((info), (info)->pc); }
 
-static unsigned int read_imm_8(m68k_info *info)  { unsigned int value = peek_imm_8(info);  (info)->pc+=2; return value; }
-static unsigned int read_imm_16(m68k_info *info) { unsigned int value = peek_imm_16(info); (info)->pc+=2; return value; }
-static unsigned int read_imm_32(m68k_info *info) { unsigned int value = peek_imm_32(info); (info)->pc+=4; return value; }
-static unsigned int read_imm_64(m68k_info *info) { unsigned int value = peek_imm_64(info); (info)->pc+=8; return value; }
+static unsigned int read_imm_8(m68k_info *info)  { const unsigned int value = peek_imm_8(info);  (info)->pc+=2; return value; }
+static unsigned int read_imm_16(m68k_info *info) { const unsigned int value = peek_imm_16(info); (info)->pc+=2; return value; }
+static unsigned int read_imm_32(m68k_info *info) { const unsigned int value = peek_imm_32(info); (info)->pc+=4; return value; }
+static unsigned int read_imm_64(m68k_info *info) { const unsigned int value = peek_imm_64(info); (info)->pc+=8; return value; }
 
 /* Fake a split interface */
 #define get_ea_mode_str_8(instruction) get_ea_mode_str(instruction, 0)
