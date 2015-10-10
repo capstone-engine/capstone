@@ -280,15 +280,15 @@ static m68k_insn s_trap_lut[] = {
 		}					\
 	} while (0)
 
-#define peek_imm_8(info)  (m68k_read_disassembler_16((info), (info)->pc)&0xff)
-#define peek_imm_16(info) m68k_read_disassembler_16((info), (info)->pc)
-#define peek_imm_32(info) m68k_read_disassembler_32((info), (info)->pc)
-#define peek_imm_64(info) m68k_read_disassembler_64((info), (info)->pc)
+static unsigned int peek_imm_8(m68k_info *info)  { return (m68k_read_disassembler_16((info), (info)->pc)&0xff); }
+static unsigned int peek_imm_16(m68k_info *info) { return m68k_read_disassembler_16((info), (info)->pc); }
+static unsigned int peek_imm_32(m68k_info *info) { return m68k_read_disassembler_32((info), (info)->pc); }
+static unsigned int peek_imm_64(m68k_info *info) { return m68k_read_disassembler_64((info), (info)->pc); }
 
-#define read_imm_8(info)  ( { unsigned int value = peek_imm_8(info); (info)->pc+=2; value; } )
-#define read_imm_16(info) ( { unsigned int value = peek_imm_16(info); (info)->pc+=2; value; } )
-#define read_imm_32(info) ( { unsigned int value = peek_imm_32(info); (info)->pc+=4; value; } )
-#define read_imm_64(info) ( { unsigned int value = peek_imm_64(info); (info)->pc+=8; value; } )
+static unsigned int read_imm_8(m68k_info *info)  { unsigned int value = peek_imm_8(info);  (info)->pc+=2; return value; }
+static unsigned int read_imm_16(m68k_info *info) { unsigned int value = peek_imm_16(info); (info)->pc+=2; return value; }
+static unsigned int read_imm_32(m68k_info *info) { unsigned int value = peek_imm_32(info); (info)->pc+=4; return value; }
+static unsigned int read_imm_64(m68k_info *info) { unsigned int value = peek_imm_64(info); (info)->pc+=8; return value; }
 
 /* Fake a split interface */
 #define get_ea_mode_str_8(instruction) get_ea_mode_str(instruction, 0)
