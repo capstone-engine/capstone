@@ -344,10 +344,11 @@ endif
 endif
 
 PKGCFGF = $(BLDIR)/$(LIBNAME).pc
+SUPPORT = include/capstone/support.h
 
 .PHONY: all clean install uninstall dist
 
-all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF)
+all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF) $(SUPPORT)
 ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
 ifndef BUILDDIR
 	cd tests && $(MAKE)
@@ -358,6 +359,12 @@ ifeq ($(CAPSTONE_SHARED),yes)
 	$(INSTALL_DATA) $(LIBRARY) $(BLDIR)/tests/
 endif
 endif
+
+$(SUPPORT):
+	for a in $(CAPSTONE_ARCHS) ; do \
+		ARCH=$$(echo $$a|tr a-z A-Z); \
+		echo '#define CS_SUPPORT_ARCH_'$${ARCH} 1 >> $@ ; \
+	done
 
 ifeq ($(CAPSTONE_SHARED),yes)
 $(LIBRARY): $(LIBOBJ)
@@ -427,6 +434,7 @@ clean:
 	rm -f $(LIBOBJ)
 	rm -f $(BLDIR)/lib$(LIBNAME).* $(BLDIR)/$(LIBNAME).*
 	rm -f $(PKGCFGF)
+	rm -f $(SUPPORT)
 
 ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
 	cd tests && $(MAKE) clean
