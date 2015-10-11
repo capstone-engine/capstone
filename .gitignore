@@ -95,3 +95,6 @@ test_iter_benchmark
 
 
 *.s
+
+# include files
+include/capstone/support.h

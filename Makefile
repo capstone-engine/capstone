@@ -361,10 +361,13 @@ endif
 endif
 
 $(SUPPORT):
+	echo '#ifndef CAPSTONE_SUPPORT_H' > $@
+	echo '#define CAPSTONE_SUPPORT_H' >> $@
 	for a in $(CAPSTONE_ARCHS) ; do \
 		ARCH=$$(echo $$a|tr a-z A-Z); \
 		echo '#define CS_SUPPORT_ARCH_'$${ARCH} 1 >> $@ ; \
 	done
+	echo '#endif' >> $@
 
 ifeq ($(CAPSTONE_SHARED),yes)
 $(LIBRARY): $(LIBOBJ)
