@@ -152,23 +152,16 @@ enum {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static unsigned int m68k_read_disassembler_16(const m68k_info *info, const uint64_t address)
+
+static unsigned int m68k_read_disassembler_16(const m68k_info *info, const uint64_t addr)
 {
-	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
-	if (addr > (info->code_len - 2)) {
-		return 0xaaaa;
-	}
 	const uint16_t v0 = info->code[addr + 0];
 	const uint16_t v1 = info->code[addr + 1];
 	return (v0 << 8) | v1; 
 }
 
-static unsigned int m68k_read_disassembler_32(const m68k_info *info, const uint64_t address)
+static unsigned int m68k_read_disassembler_32(const m68k_info *info, const uint64_t addr)
 {
-	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
-	if (addr > (info->code_len - 4)) {
-		return 0xaaaaaaaa;
-	}
 	const uint32_t v0 = info->code[addr + 0];
 	const uint32_t v1 = info->code[addr + 1];
 	const uint32_t v2 = info->code[addr + 2];
@@ -176,12 +169,8 @@ static unsigned int m68k_read_disassembler_32(const m68k_info *info, const uint6
 	return (v0 << 24) | (v1 << 16) | (v2 << 8) | v3;
 }
 
-static uint64_t m68k_read_disassembler_64(const m68k_info *info, const uint64_t address)
+static uint64_t m68k_read_disassembler_64(const m68k_info *info, const uint64_t addr)
 {
-	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
-	if (addr > (info->code_len - 8)) {
-		return 0xaaaaaaaaaaaaaaaa;
-	}
 	const uint64_t v0 = info->code[addr + 0];
 	const uint64_t v1 = info->code[addr + 1];
 	const uint64_t v2 = info->code[addr + 2];
@@ -190,8 +179,34 @@ static uint64_t m68k_read_disassembler_64(const m68k_info *info, const uint64_t 
 	const uint64_t v5 = info->code[addr + 5];
 	const uint64_t v6 = info->code[addr + 6];
 	const uint64_t v7 = info->code[addr + 7];
-
 	return (v0 << 56) | (v1 << 48) | (v2 << 40) | (v3 << 32) | (v4 << 24) | (v5 << 16) | (v6 << 8) | v7;
+}
+
+static unsigned int m68k_read_safe_16(const m68k_info *info, const uint64_t address)
+{
+	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
+	if (addr > (info->code_len - 2)) {
+		return 0xaaaa;
+	}
+	return m68k_read_disassembler_16(info, addr);
+}
+
+static unsigned int m68k_read_safe_32(const m68k_info *info, const uint64_t address)
+{
+	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
+	if (addr > (info->code_len - 4)) {
+		return 0xaaaaaaaa;
+	}
+	return m68k_read_disassembler_32(info, addr);
+}
+
+static uint64_t m68k_read_safe_64(const m68k_info *info, const uint64_t address)
+{
+	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
+	if (addr > (info->code_len - 8)) {
+		return 0xaaaaaaaaaaaaaaaa;
+	}
+	return m68k_read_disassembler_64(info, addr);
 }
 
 /* ======================================================================== */
@@ -280,10 +295,10 @@ static m68k_insn s_trap_lut[] = {
 		}					\
 	} while (0)
 
-static unsigned int peek_imm_8(const m68k_info *info)  { return (m68k_read_disassembler_16((info), (info)->pc)&0xff); }
-static unsigned int peek_imm_16(const m68k_info *info) { return m68k_read_disassembler_16((info), (info)->pc); }
-static unsigned int peek_imm_32(const m68k_info *info) { return m68k_read_disassembler_32((info), (info)->pc); }
-static unsigned int peek_imm_64(const m68k_info *info) { return m68k_read_disassembler_64((info), (info)->pc); }
+static unsigned int peek_imm_8(const m68k_info *info)  { return (m68k_read_safe_16((info), (info)->pc)&0xff); }
+static unsigned int peek_imm_16(const m68k_info *info) { return m68k_read_safe_16((info), (info)->pc); }
+static unsigned int peek_imm_32(const m68k_info *info) { return m68k_read_safe_32((info), (info)->pc); }
+static unsigned int peek_imm_64(const m68k_info *info) { return m68k_read_safe_64((info), (info)->pc); }
 
 static unsigned int read_imm_8(m68k_info *info)  { const unsigned int value = peek_imm_8(info);  (info)->pc+=2; return value; }
 static unsigned int read_imm_16(m68k_info *info) { const unsigned int value = peek_imm_16(info); (info)->pc+=2; return value; }
