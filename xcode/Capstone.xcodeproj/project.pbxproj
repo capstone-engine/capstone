@@ -129,9 +129,6 @@
 		DC5BFF4719EE547F008CA585 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
 		DC5BFF4919EE54BE008CA585 /* test_iter.c in Sources */ = {isa = PBXBuildFile; fileRef = DC5BFF4819EE54BE008CA585 /* test_iter.c */; };
 		DC9921181BC2C227005BE5E3 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
-		DCA357801BC2C0290094BB3F /* M68KConf.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA3577A1BC2C0290094BB3F /* M68KConf.h */; settings = {ASSET_TAGS = (); }; };
-		DCA357811BC2C0290094BB3F /* M68KConf.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA3577A1BC2C0290094BB3F /* M68KConf.h */; settings = {ASSET_TAGS = (); }; };
-		DCA357821BC2C0290094BB3F /* M68KConf.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA3577A1BC2C0290094BB3F /* M68KConf.h */; settings = {ASSET_TAGS = (); }; };
 		DCA357831BC2C0290094BB3F /* M68KDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577B1BC2C0290094BB3F /* M68KDisassembler.c */; settings = {ASSET_TAGS = (); }; };
 		DCA357841BC2C0290094BB3F /* M68KDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577B1BC2C0290094BB3F /* M68KDisassembler.c */; settings = {ASSET_TAGS = (); }; };
 		DCA357851BC2C0290094BB3F /* M68KDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577B1BC2C0290094BB3F /* M68KDisassembler.c */; settings = {ASSET_TAGS = (); }; };
@@ -351,7 +348,6 @@
 		DC5BFF4019EE544E008CA585 /* test_iter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_iter; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC5BFF4819EE54BE008CA585 /* test_iter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_iter.c; path = ../tests/test_iter.c; sourceTree = "<group>"; };
 		DC696C5E1AD4600200A56306 /* myinttypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = myinttypes.h; path = ../myinttypes.h; sourceTree = "<group>"; };
-		DCA3577A1BC2C0290094BB3F /* M68KConf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M68KConf.h; sourceTree = "<group>"; };
 		DCA3577B1BC2C0290094BB3F /* M68KDisassembler.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = M68KDisassembler.c; sourceTree = "<group>"; };
 		DCA3577C1BC2C0290094BB3F /* M68KDisassembler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M68KDisassembler.h; sourceTree = "<group>"; };
 		DCA3577D1BC2C0290094BB3F /* M68KInstPrinter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = M68KInstPrinter.c; sourceTree = "<group>"; };
@@ -674,7 +670,6 @@
 		DCA357791BC2BFEB0094BB3F /* M68k */ = {
 			isa = PBXGroup;
 			children = (
-				DCA3577A1BC2C0290094BB3F /* M68KConf.h */,
 				DCA3577B1BC2C0290094BB3F /* M68KDisassembler.c */,
 				DCA3577C1BC2C0290094BB3F /* M68KDisassembler.h */,
 				DCA3577D1BC2C0290094BB3F /* M68KInstPrinter.c */,
@@ -968,7 +963,6 @@
 				DC474F8819DE6F6B00BCA449 /* systemz.h in Headers */,
 				DC474F8919DE6F6B00BCA449 /* x86.h in Headers */,
 				DCA3578E1BC2C0290094BB3F /* M68KInstPrinter.h in Headers */,
-				DCA357821BC2C0290094BB3F /* M68KConf.h in Headers */,
 				DC474F8A19DE6F6B00BCA449 /* xcore.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -979,7 +973,6 @@
 			files = (
 				DCA3578C1BC2C0290094BB3F /* M68KInstPrinter.h in Headers */,
 				DCA357861BC2C0290094BB3F /* M68KDisassembler.h in Headers */,
-				DCA357801BC2C0290094BB3F /* M68KConf.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -989,7 +982,6 @@
 			files = (
 				DCA3578D1BC2C0290094BB3F /* M68KInstPrinter.h in Headers */,
 				DCA357871BC2C0290094BB3F /* M68KDisassembler.h in Headers */,
-				DCA357811BC2C0290094BB3F /* M68KConf.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

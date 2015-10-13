@@ -128,8 +128,8 @@ endif
 
 
 DEP_M68K =
-DEP_M68K += arch/M68K/M68KConf.h
 DEP_M68K += arch/M68K/M68KDisassembler.h
+DEP_M68K += arch/M68K/M68KInstPrinter.h
 
 LIBOBJ_M68K =
 ifneq (,$(findstring m68k,$(CAPSTONE_ARCHS)))
