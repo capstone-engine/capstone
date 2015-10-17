@@ -1,5 +1,6 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 import sys
+from platform import system
 _python2 = sys.version_info[0] < 3
 if _python2:
     range = xrange
@@ -263,8 +264,23 @@ if _found == False:
             break
         except OSError:
             pass
-    if _found == False:
-        raise ImportError("ERROR: fail to load the dynamic library.")
+
+# Attempt Darwin specific load (10.11 specific),
+# since LD_LIBRARY_PATH is not guaranteed to exist
+if system() == 'Darwin':
+    _lib_path = '/usr/local/lib/'
+    for _lib in _all_libs:
+        try:
+            _lib_file = join(_lib_path, _lib)
+            # print "Trying to load:", _lib_file
+            _cs = ctypes.cdll.LoadLibrary(_lib_file)
+            _found = True
+            break
+        except OSError:
+            pass
+
+if _found == False:
+    raise ImportError("ERROR: fail to load the dynamic library.")
 
 
 # low-level structure for C code
