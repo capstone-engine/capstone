@@ -389,6 +389,27 @@ CAPSTONE_EXPORT
 cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle);
 
 /*
+ Initialize CS handle with the current system architecture.
+
+ NOTE: The definition is made available in capstone.h to allow users to define
+ CS_ARCH_CURRENT and CS_MODE_CURRENT in case the current architecture cannot be
+ detected with compiler macros.
+
+ @handle: pointer to handle, which will be updated at return time
+
+ @return CS_ERR_OK on success, or other value on failure (refer to cs_err enum
+ for detailed error).
+*/
+static inline cs_err cs_open_self_arch(csh *handle)
+{
+	if (CS_ARCH_CURRENT == -1)
+		return CS_ERR_ARCH;
+	if (CS_MODE_CURRENT == -1)
+		return CS_ERR_MODE;
+	return cs_open(CS_ARCH_CURRENT, CS_MODE_CURRENT, handle);
+}
+
+/*
  Close CS handle: MUST do to release the handle when it is not used anymore.
  NOTE: this must be only called when there is no longer usage of Capstone,
  not even access to cs_insn array. The reason is the this API releases some
