@@ -41893,19 +41893,19 @@ static insn_map insns[] = {	// reduce x86 instructions
 	{
 		X86_LOOP, X86_INS_LOOP,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 0, 0
+		{ 0 }, { 0 }, { 0 }, 1, 0
 #endif
 	},
 	{
 		X86_LOOPE, X86_INS_LOOPE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 0, 0
+		{ 0 }, { 0 }, { 0 }, 1, 0
 #endif
 	},
 	{
 		X86_LOOPNE, X86_INS_LOOPNE,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 0, 0
+		{ 0 }, { 0 }, { 0 }, 1, 0
 #endif
 	},
 	{
