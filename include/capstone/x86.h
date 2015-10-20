@@ -260,6 +260,23 @@ typedef struct cs_x86_op {
 		bool avx_zero_opmask;
 } cs_x86_op;
 
+typedef struct cs_x86_encode{
+	// ModR/M offset, or 0 when irrelevant
+	uint8_t modrm_offset;
+
+	// True if has disp in the current instruction,false otherwise.
+	bool	disp_vaild;
+	// Displacement offset,or 0 when irrelevant.
+	uint8_t disp_offset;
+	uint8_t disp_size;
+
+	// True if has immediate in the current instruction,false otherwise.
+	bool	imm_vaild;
+	// Immediate offset, or 0 when irrelevant.
+	uint8_t imm_offset;
+	uint8_t imm_size;
+
+}cs_x86_encode;
 // Instruction structure
 typedef struct cs_x86 {
 	// Instruction prefix, which can be up to 4 bytes.
@@ -284,21 +301,12 @@ typedef struct cs_x86 {
 
 	// ModR/M byte
 	uint8_t modrm;
-	// ModR/M offset, or 0 when irrelevant
-	uint8_t modrm_offset;
 
 	// SIB value, or 0 when irrelevant.
 	uint8_t sib;
 
 	// Displacement value
 	int32_t disp;
-	// Displacement offset,or 0 when irrelevant.
-	uint8_t disp_offset;
-	uint8_t disp_size;
-
-	// Immediate offset, or 0 when irrelevant.
-	uint8_t imm_offset;
-	uint8_t imm_size;
 
 	/* SIB state */
 	// SIB index register, or X86_REG_INVALID when irrelevant.
@@ -332,6 +340,8 @@ typedef struct cs_x86 {
 	uint8_t op_count;
 
 	cs_x86_op operands[8];	// operands for this instruction.
+
+	cs_x86_encode encode;  // encoding information
 } cs_x86;
 
 //> X86 instructions
