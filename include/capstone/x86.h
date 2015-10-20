@@ -284,12 +284,21 @@ typedef struct cs_x86 {
 
 	// ModR/M byte
 	uint8_t modrm;
+	// ModR/M offset, or 0 when irrelevant
+	uint8_t modrm_offset;
 
 	// SIB value, or 0 when irrelevant.
 	uint8_t sib;
 
-	// Displacement value, or 0 when irrelevant.
+	// Displacement value
 	int32_t disp;
+	// Displacement offset,or 0 when irrelevant.
+	uint8_t disp_offset;
+	uint8_t disp_size;
+
+	// Immediate offset, or 0 when irrelevant.
+	uint8_t imm_offset;
+	uint8_t imm_size;
 
 	/* SIB state */
 	// SIB index register, or X86_REG_INVALID when irrelevant.
