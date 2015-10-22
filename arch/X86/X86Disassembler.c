@@ -875,15 +875,15 @@ static void update_pub_insn(cs_insn *pub, InternalInstruction *inter, uint8_t *p
 	pub->detail->x86.disp = inter->displacement;
 	pub->detail->x86.encode.disp_offset = inter->displacementOffset;
 	pub->detail->x86.encode.disp_size = inter->displacementSize;
-	pub->detail->x86.encode.disp_vaild = false;
+	pub->detail->x86.encode.disp_valid = false;
 	if (inter->displacementOffset > 0)
-		pub->detail->x86.encode.disp_vaild = true;
+		pub->detail->x86.encode.disp_valid = true;
 
 	pub->detail->x86.encode.imm_offset = inter->immediateOffset;
 	pub->detail->x86.encode.imm_size = inter->immediateSize;
-	pub->detail->x86.encode.imm_vaild = false;
+	pub->detail->x86.encode.imm_valid = false;
 	if (inter->immediateOffset > 0)
-		pub->detail->x86.encode.imm_vaild = true;
+		pub->detail->x86.encode.imm_valid = true;
 
 	pub->detail->x86.sib_index = x86_map_sib_index(inter->sibIndex);
 	pub->detail->x86.sib_scale = inter->sibScale;
