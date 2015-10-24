@@ -55,8 +55,6 @@ bool MCOperand_isFPImm(const MCOperand *op);
 
 bool MCOperand_isInst(const MCOperand *op);
 
-void MCInst_clear(MCInst *m);
-
 /// getReg - Returns the register number.
 unsigned MCOperand_getReg(const MCOperand *op);
 
