@@ -129,22 +129,22 @@
 		DC5BFF4719EE547F008CA585 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
 		DC5BFF4919EE54BE008CA585 /* test_iter.c in Sources */ = {isa = PBXBuildFile; fileRef = DC5BFF4819EE54BE008CA585 /* test_iter.c */; };
 		DC9921181BC2C227005BE5E3 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
-		DCA357831BC2C0290094BB3F /* M68KDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577B1BC2C0290094BB3F /* M68KDisassembler.c */; settings = {ASSET_TAGS = (); }; };
-		DCA357841BC2C0290094BB3F /* M68KDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577B1BC2C0290094BB3F /* M68KDisassembler.c */; settings = {ASSET_TAGS = (); }; };
-		DCA357851BC2C0290094BB3F /* M68KDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577B1BC2C0290094BB3F /* M68KDisassembler.c */; settings = {ASSET_TAGS = (); }; };
-		DCA357861BC2C0290094BB3F /* M68KDisassembler.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA3577C1BC2C0290094BB3F /* M68KDisassembler.h */; settings = {ASSET_TAGS = (); }; };
-		DCA357871BC2C0290094BB3F /* M68KDisassembler.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA3577C1BC2C0290094BB3F /* M68KDisassembler.h */; settings = {ASSET_TAGS = (); }; };
-		DCA357881BC2C0290094BB3F /* M68KDisassembler.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA3577C1BC2C0290094BB3F /* M68KDisassembler.h */; settings = {ASSET_TAGS = (); }; };
-		DCA357891BC2C0290094BB3F /* M68KInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577D1BC2C0290094BB3F /* M68KInstPrinter.c */; settings = {ASSET_TAGS = (); }; };
-		DCA3578A1BC2C0290094BB3F /* M68KInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577D1BC2C0290094BB3F /* M68KInstPrinter.c */; settings = {ASSET_TAGS = (); }; };
-		DCA3578B1BC2C0290094BB3F /* M68KInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577D1BC2C0290094BB3F /* M68KInstPrinter.c */; settings = {ASSET_TAGS = (); }; };
-		DCA3578C1BC2C0290094BB3F /* M68KInstPrinter.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA3577E1BC2C0290094BB3F /* M68KInstPrinter.h */; settings = {ASSET_TAGS = (); }; };
-		DCA3578D1BC2C0290094BB3F /* M68KInstPrinter.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA3577E1BC2C0290094BB3F /* M68KInstPrinter.h */; settings = {ASSET_TAGS = (); }; };
-		DCA3578E1BC2C0290094BB3F /* M68KInstPrinter.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA3577E1BC2C0290094BB3F /* M68KInstPrinter.h */; settings = {ASSET_TAGS = (); }; };
-		DCA3578F1BC2C0290094BB3F /* M68KModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577F1BC2C0290094BB3F /* M68KModule.c */; settings = {ASSET_TAGS = (); }; };
-		DCA357901BC2C0290094BB3F /* M68KModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577F1BC2C0290094BB3F /* M68KModule.c */; settings = {ASSET_TAGS = (); }; };
-		DCA357911BC2C0290094BB3F /* M68KModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577F1BC2C0290094BB3F /* M68KModule.c */; settings = {ASSET_TAGS = (); }; };
-		DCA3579E1BC2C0EB0094BB3F /* test_m68k.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3579D1BC2C0EB0094BB3F /* test_m68k.c */; settings = {ASSET_TAGS = (); }; };
+		DCA357831BC2C0290094BB3F /* M68KDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577B1BC2C0290094BB3F /* M68KDisassembler.c */; };
+		DCA357841BC2C0290094BB3F /* M68KDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577B1BC2C0290094BB3F /* M68KDisassembler.c */; };
+		DCA357851BC2C0290094BB3F /* M68KDisassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577B1BC2C0290094BB3F /* M68KDisassembler.c */; };
+		DCA357861BC2C0290094BB3F /* M68KDisassembler.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA3577C1BC2C0290094BB3F /* M68KDisassembler.h */; };
+		DCA357871BC2C0290094BB3F /* M68KDisassembler.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA3577C1BC2C0290094BB3F /* M68KDisassembler.h */; };
+		DCA357881BC2C0290094BB3F /* M68KDisassembler.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA3577C1BC2C0290094BB3F /* M68KDisassembler.h */; };
+		DCA357891BC2C0290094BB3F /* M68KInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577D1BC2C0290094BB3F /* M68KInstPrinter.c */; };
+		DCA3578A1BC2C0290094BB3F /* M68KInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577D1BC2C0290094BB3F /* M68KInstPrinter.c */; };
+		DCA3578B1BC2C0290094BB3F /* M68KInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577D1BC2C0290094BB3F /* M68KInstPrinter.c */; };
+		DCA3578C1BC2C0290094BB3F /* M68KInstPrinter.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA3577E1BC2C0290094BB3F /* M68KInstPrinter.h */; };
+		DCA3578D1BC2C0290094BB3F /* M68KInstPrinter.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA3577E1BC2C0290094BB3F /* M68KInstPrinter.h */; };
+		DCA3578E1BC2C0290094BB3F /* M68KInstPrinter.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA3577E1BC2C0290094BB3F /* M68KInstPrinter.h */; };
+		DCA3578F1BC2C0290094BB3F /* M68KModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577F1BC2C0290094BB3F /* M68KModule.c */; };
+		DCA357901BC2C0290094BB3F /* M68KModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577F1BC2C0290094BB3F /* M68KModule.c */; };
+		DCA357911BC2C0290094BB3F /* M68KModule.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3577F1BC2C0290094BB3F /* M68KModule.c */; };
+		DCA3579E1BC2C0EB0094BB3F /* test_m68k.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA3579D1BC2C0EB0094BB3F /* test_m68k.c */; };
 		DCFE245519DDCD9200EF8EA9 /* AArch64BaseInfo.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23DE19DDCD8700EF8EA9 /* AArch64BaseInfo.c */; };
 		DCFE245619DDCD9200EF8EA9 /* AArch64Disassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23E019DDCD8700EF8EA9 /* AArch64Disassembler.c */; };
 		DCFE245719DDCD9200EF8EA9 /* AArch64InstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE23E719DDCD8700EF8EA9 /* AArch64InstPrinter.c */; };
@@ -1284,7 +1284,7 @@
 		DCFE239A19DDCB4900EF8EA9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0710;
 				TargetAttributes = {
 					DC3A28DA1AF29BEB00FC9913 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -2746,6 +2746,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.felixcloutier.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Capstone;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -2808,6 +2809,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.felixcloutier.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Capstone;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -2986,6 +2988,8 @@
 		DCFE239E19DDCB4900EF8EA9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
@@ -3012,6 +3016,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				EXECUTABLE_PREFIX = lib;
@@ -3069,6 +3074,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -3123,6 +3129,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -3183,6 +3190,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
