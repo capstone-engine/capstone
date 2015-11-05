@@ -73,3 +73,10 @@ CAPSTONE_STATIC ?= yes
 # a shared library.
 
 CAPSTONE_SHARED ?= yes
+
+################################################################################
+# Change 'CAPSTONE_HAS_OSXKERNEL = no' to 'CAPSTONE_HAS_OSXKERNEL = yes' to
+# enable OS X kernel embedding support. If 'CAPSTONE_USE_SYS_DYN_MEM = yes',
+# then kern_os_* functions are used for memory management.
+
+CAPSTONE_HAS_OSXKERNEL ?= no
