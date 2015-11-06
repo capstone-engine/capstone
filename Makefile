@@ -225,10 +225,9 @@ DEP_X86 += arch/X86/X86GenAsmWriter1$(X86_REDUCE).inc
 DEP_X86 += arch/X86/X86GenDisassemblerTables$(X86_REDUCE).inc
 DEP_X86 += arch/X86/X86GenInstrInfo$(X86_REDUCE).inc
 DEP_X86 += arch/X86/X86GenRegisterInfo.inc
-DEP_X86 += arch/X86/X86MappingInsn.inc
-DEP_X86 += arch/X86/X86MappingInsn_reduce.inc
-DEP_X86 += arch/X86/X86MappingInsnOp.inc
-DEP_X86 += arch/X86/X86MappingInsnOp_reduce.inc
+DEP_X86 += arch/X86/X86MappingInsn$(X86_REDUCE).inc
+DEP_X86 += arch/X86/X86MappingInsnOp$(X86_REDUCE).inc
+DEP_X86 += arch/X86/X86ImmSize.inc
 
 LIBOBJ_X86 =
 ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
