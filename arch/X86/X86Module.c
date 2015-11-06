@@ -71,7 +71,7 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 
 				case CS_OPT_SYNTAX_MASM:
 					handle->printer = X86_Intel_printInst;
-					handle->syntax = value;
+					handle->syntax = (int)value;
 					break;
 
 				case CS_OPT_SYNTAX_ATT:
