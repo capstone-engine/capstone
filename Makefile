@@ -59,7 +59,7 @@ else
 BLDIR = $(abspath $(BUILDDIR))
 OBJDIR = $(BLDIR)/obj
 endif
-INCDIR ?= $(DESTDIR)$(PREFIX)/include
+INCDIR ?= $(PREFIX)/include
 
 UNAME_S := $(shell uname -s)
 
@@ -67,7 +67,7 @@ LIBDIRARCH ?= lib
 # Uncomment the below line to installs x86_64 libs to lib64/ directory.
 # Or better, pass 'LIBDIRARCH=lib64' to 'make install/uninstall' via 'make.sh'.
 #LIBDIRARCH ?= lib64
-LIBDIR ?= $(DESTDIR)$(PREFIX)/$(LIBDIRARCH)
+LIBDIR ?= $(PREFIX)/$(LIBDIRARCH)
 
 LIBDATADIR ?= $(LIBDIR)
 
@@ -76,10 +76,10 @@ LIBDATADIR ?= $(LIBDIR)
 
 ifndef USE_GENERIC_LIBDATADIR
 ifeq ($(UNAME_S), FreeBSD)
-LIBDATADIR = $(DESTDIR)$(PREFIX)/libdata
+LIBDATADIR = $(PREFIX)/libdata
 endif
 ifeq ($(UNAME_S), DragonFly)
-LIBDATADIR = $(DESTDIR)$(PREFIX)/libdata
+LIBDATADIR = $(PREFIX)/libdata
 endif
 endif
 
@@ -401,27 +401,27 @@ else
 endif
 
 install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
-	mkdir -p $(LIBDIR)
+	mkdir -p $(DESTDIR)/$(LIBDIR)
 ifeq ($(CAPSTONE_SHARED),yes)
-	$(INSTALL_LIB) $(LIBRARY) $(LIBDIR)
+	$(INSTALL_LIB) $(LIBRARY) $(DESTDIR)/$(LIBDIR)
 ifneq ($(VERSION_EXT),)
-	cd $(LIBDIR) && \
+	cd $(DESTDIR)/$(LIBDIR) && \
 	mv lib$(LIBNAME).$(EXT) lib$(LIBNAME).$(VERSION_EXT) && \
 	ln -s lib$(LIBNAME).$(VERSION_EXT) lib$(LIBNAME).$(EXT)
 endif
 endif
 ifeq ($(CAPSTONE_STATIC),yes)
-	$(INSTALL_DATA) $(ARCHIVE) $(LIBDIR)
+	$(INSTALL_DATA) $(ARCHIVE) $(DESTDIR)/$(LIBDIR)
 endif
-	mkdir -p $(INCDIR)/$(LIBNAME)
-	$(INSTALL_DATA) include/capstone/*.h $(INCDIR)/$(LIBNAME)
-	mkdir -p $(PKGCFGDIR)
-	$(INSTALL_DATA) $(PKGCFGF) $(PKGCFGDIR)/
+	mkdir -p $(DESTDIR)/$(INCDIR)/$(LIBNAME)
+	$(INSTALL_DATA) include/capstone/*.h $(DESTDIR)/$(INCDIR)/$(LIBNAME)
+	mkdir -p $(DESTDIR)/$(PKGCFGDIR)
+	$(INSTALL_DATA) $(PKGCFGF) $(DESTDIR)/$(PKGCFGDIR)
 
 uninstall:
-	rm -rf $(INCDIR)/$(LIBNAME)
-	rm -f $(LIBDIR)/lib$(LIBNAME).*
-	rm -f $(PKGCFGDIR)/$(LIBNAME).pc
+	rm -rf $(DESTDIR)/$(INCDIR)/$(LIBNAME)
+	rm -f $(DESTDIR)/$(LIBDIR)/lib$(LIBNAME).*
+	rm -f $(DESTDIR)/$(PKGCFGDIR)/$(LIBNAME).pc
 
 clean:
 	rm -f $(LIBOBJ)
