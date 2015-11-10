@@ -881,8 +881,8 @@ static void update_pub_insn(cs_insn *pub, InternalInstruction *inter, uint8_t *p
 	pub->detail->x86.encoding.disp_size = inter->displacementSize;
 	
 	pub->detail->x86.encoding.imm_offset = inter->immediateOffset;
-	if (pub->detail->x86.encoding.imm_size == 0)
-		pub->detail->x86.encoding.imm_size = inter->immediateSize;
+	if (pub->detail->x86.encoding.imm_offset == 0)
+		pub->detail->x86.encoding.imm_size = 0;
 }
 
 void X86_init(MCRegisterInfo *MRI)
