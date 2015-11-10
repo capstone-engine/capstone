@@ -3262,7 +3262,7 @@ static struct size_id {
 };
 
 // given the instruction name, return the size of its immediate operand (or 0)
-int X86_immediate_size(unsigned int id)
+int X86_immediate_size(unsigned int id, int *enc_size)
 {
 #if 0
 	// linear searching
@@ -3284,7 +3284,11 @@ int X86_immediate_size(unsigned int id)
 	while(left <= right) {
 		m = (left + right) / 2;
 		if (id == x86_imm_size[m].id)
+		{
+			if (enc_size != NULL)
+				*enc_size = x86_imm_size[m].enc_size;
 			return x86_imm_size[m].size;
+		}
 
 		if (id < x86_imm_size[m].id)
 			right = m - 1;
