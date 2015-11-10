@@ -17,7 +17,7 @@
 #include "utils.h"
 #include "MCRegisterInfo.h"
 
-#ifdef CAPSTONE_USE_SYS_DYN_MEM
+#if !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(CAPSTONE_DIET)
 #define INSN_CACHE_SIZE 32
 #else
 // reduce stack variable size for kernel/firmware
