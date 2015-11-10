@@ -143,6 +143,7 @@ case "$TARGET" in
   "ios_armv7" ) build_iOS armv7 $*;;
   "ios_armv7s" ) build_iOS armv7s $*;;
   "ios_arm64" ) build_iOS arm64 $*;;
+  "osx-kernel" ) CAPSTONE_USE_SYS_DYN_MEM=yes CAPSTONE_HAS_OSXKERNEL=yes CAPSTONE_ARCHS=x86 CAPSTONE_SHARED=no CAPSTONE_BUILD_CORE_ONLY=yes build $*;;
   * )
     echo "Usage: $0 ["`grep '^  "' $0 | cut -d '"' -f 2 | tr "\\n" "|"`"]"
     exit 1;;
