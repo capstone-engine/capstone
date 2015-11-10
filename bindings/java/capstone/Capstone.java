@@ -4,6 +4,7 @@
 package capstone;
 
 import com.sun.jna.Library;
+import com.sun.jna.Memory;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLong;
 import com.sun.jna.ptr.NativeLongByReference;
@@ -11,6 +12,8 @@ import com.sun.jna.Structure;
 import com.sun.jna.Union;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;
+import com.sun.jna.ptr.ShortByReference;
+import com.sun.jna.ptr.ByteByReference;
 import com.sun.jna.ptr.IntByReference;
 
 import java.util.List;
@@ -128,6 +131,7 @@ public class Capstone {
         while (insn.op_str[lo++] != 0);
         mnemonic = new String(insn.mnemonic, 0, lm-1);
         opStr = new String(insn.op_str, 0, lo-1);
+        
       }
 
       cs = _cs;
@@ -135,17 +139,41 @@ public class Capstone {
       raw = insn;
       csh = _csh;
 
+
       if (insn.cs_detail != null) {
         if (!diet) {
-          regsRead = new short[insn.cs_detail.regs_read_count];
-          for (int i=0; i<regsRead.length; i++)
-            regsRead[i] = insn.cs_detail.regs_read[i];
-          regsWrite = new short[insn.cs_detail.regs_write_count];
-          for (int i=0; i<regsWrite.length; i++)
-            regsWrite[i] = insn.cs_detail.regs_write[i];
-          groups = new byte[insn.cs_detail.groups_count];
-          for (int i=0; i<groups.length; i++)
-            groups[i] = insn.cs_detail.groups[i];
+//          regsRead = new short[insn.cs_detail.regs_read_count];
+//          for (int i=0; i<regsRead.length; i++)
+//            regsRead[i] = insn.cs_detail.regs_read[i];
+//          regsWrite = new short[insn.cs_detail.regs_write_count];
+//          for (int i=0; i<regsWrite.length; i++)
+//            regsWrite[i] = insn.cs_detail.regs_write[i];
+            
+	    	// Allocating memory for array of registers
+	        Pointer regsReadArray = new Memory(16*64); 
+	        Pointer regsWriteArray = new Memory(16*64);
+	        
+	        // Create reference for sizes
+	  	  	ByteByReference regs_read_count = new ByteByReference();
+	  	  	ByteByReference regs_write_count = new ByteByReference();
+	
+	  	  	// get information
+	        cs.cs_regs_access(_csh, insn.getPointer(), regsReadArray, regs_read_count, regsWriteArray, regs_write_count);
+	        
+	        regsRead = new short[regs_read_count.getValue()];
+	        for (int i=0; i<regsRead.length; i++)
+	        	regsRead[i] = regsReadArray.getShort(i*2);
+	        
+	        regsWrite = new short[regs_write_count.getValue()];
+	        for (int i=0; i<regsWrite.length; i++)
+	        	regsWrite[i] = regsWriteArray.getShort(i*2);
+	
+	        regsReadArray = null;
+	        regsWriteArray = null;
+
+	        groups = new byte[insn.cs_detail.groups_count];
+	        for (int i=0; i<groups.length; i++)
+	        	groups[i] = insn.cs_detail.groups[i];
         }
 
         operands = getOptInfo(insn.cs_detail);
@@ -213,7 +241,7 @@ public class Capstone {
     public boolean regRead(int reg_id) {
       return cs.cs_reg_read(csh, raw.getPointer(), reg_id) != 0;
     }
-
+    
     public boolean regWrite(int reg_id) {
       return cs.cs_reg_write(csh, raw.getPointer(), reg_id) != 0;
     }
@@ -237,6 +265,8 @@ public class Capstone {
     public boolean group(int gid) {
       return cs.cs_insn_group(csh, raw.getPointer(), gid) != 0;
     }
+    
+    
 
   }
 
@@ -252,8 +282,10 @@ public class Capstone {
 
   private interface CS extends Library {
     public int cs_open(int arch, int mode, NativeLongByReference handle);
+    
     public NativeLong cs_disasm(NativeLong handle, byte[] code, NativeLong code_len,
         long addr, NativeLong count, PointerByReference insn);
+    
     public void cs_free(Pointer p, NativeLong count);
     public int cs_close(NativeLongByReference handle);
     public int cs_option(NativeLong handle, int option, NativeLong optionValue);
@@ -270,6 +302,9 @@ public class Capstone {
     public int cs_errno(NativeLong csh);
     public int cs_version(IntByReference major, IntByReference minor);
     public boolean cs_support(int query);
+    
+    //public int cs_regs_access(NativeLong csh, Pointer insn, ctypes.POINTER(ctypes.c_uint16*64), ctypes.POINTER(ctypes.c_uint8), ctypes.POINTER(ctypes.c_uint16*64), ctypes.POINTER(ctypes.c_uint8)) );
+    public int cs_regs_access(NativeLong csh, Pointer insn, Pointer regsRead, ByteByReference regsReadCount, Pointer regsWrite, ByteByReference regsWriteCount);
   }
 
   // Capstone API version
@@ -322,10 +357,13 @@ public class Capstone {
   public static final int CS_ERR_X86_ATT = 12;  //X86 AT&T syntax is unsupported (opt-out at compile time)
   public static final int CS_ERR_X86_INTEL = 13;  //X86 Intel syntax is unsupported (opt-out at compile time)
 
+  
   // Capstone option type
   public static final int CS_OPT_SYNTAX = 1;  // Intel X86 asm syntax (CS_ARCH_X86 arch)
   public static final int CS_OPT_DETAIL = 2;  // Break down instruction structure into details
   public static final int CS_OPT_MODE = 3;  // Change engine's mode at run-time
+  public static final int CS_OPT_SKIPDATA = 5;  // Skip data when disassembling
+  public static final int CS_OPT_SKIPDATA_SETUP = 6; //Setup user-defined function for SKIPDATA option
 
   // Capstone option value
   public static final int CS_OPT_OFF = 0;  // Turn OFF an option - default option of CS_OPT_DETAIL
@@ -372,6 +410,7 @@ public class Capstone {
   private int syntax;
   private int detail;
   private boolean diet;
+  private long skipData;
 
   public Capstone(int arch, int mode) {
     cs = (CS)Native.loadLibrary("capstone", CS.class);
@@ -414,6 +453,16 @@ public class Capstone {
       throw new RuntimeException("ERROR: Failed to set detail option");
     }
   }
+  
+  //set skipData option at run-time
+  public void setSkipData(int opt){
+	  if (cs.cs_option(ns.csh, CS_OPT_SKIPDATA, new NativeLong(opt)) == CS_ERR_OK) {
+	      this.skipData = opt;
+	    } else {
+	      throw new RuntimeException("ERROR: Failed to set detail option");
+	    }
+  }
+  
 
   // set mode option at run-time
   public void setMode(int opt) {
