@@ -260,23 +260,31 @@ typedef struct cs_x86_op {
 		bool avx_zero_opmask;
 } cs_x86_op;
 
-typedef struct cs_x86_encode{
+typedef struct cs_x86_encoding {
 	// ModR/M offset, or 0 when irrelevant
 	uint8_t modrm_offset;
+	// ModR/M byte
+	uint8_t modrm;
 
-	// True if has disp in the current instruction,false otherwise.
-	bool	disp_valid;
-	// Displacement offset,or 0 when irrelevant.
+	// SIB value, or 0 when irrelevant.
+	uint8_t sib;
+	// SIB index register, or X86_REG_INVALID when irrelevant.
+	x86_reg sib_index;
+	// SIB scale, only applicable if sib_index is valid.
+	int8_t sib_scale;
+	// SIB base register, or X86_REG_INVALID when irrelevant.
+	x86_reg sib_base;
+
+	// Displacement offset, or 0 when irrelevant.
 	uint8_t disp_offset;
 	uint8_t disp_size;
+	// Displacement value
+	int64_t disp;
 
-	// True if has immediate in the current instruction,false otherwise.
-	bool	imm_valid;
 	// Immediate offset, or 0 when irrelevant.
 	uint8_t imm_offset;
 	uint8_t imm_size;
-
-}cs_x86_encode;
+} cs_x86_encoding;
 
 // Instruction structure
 typedef struct cs_x86 {
@@ -299,23 +307,6 @@ typedef struct cs_x86 {
 
 	// Address size, which can be overrided with above prefix[5].
 	uint8_t addr_size;
-
-	// ModR/M byte
-	uint8_t modrm;
-
-	// SIB value, or 0 when irrelevant.
-	uint8_t sib;
-
-	// Displacement value
-	int32_t disp;
-
-	/* SIB state */
-	// SIB index register, or X86_REG_INVALID when irrelevant.
-	x86_reg sib_index;
-	// SIB scale. only applicable if sib_index is relavant.
-	int8_t sib_scale;
-	// SIB base register, or X86_REG_INVALID when irrelevant.
-	x86_reg sib_base;
 
 	// XOP Code Condition
 	x86_xop_cc xop_cc;
@@ -342,7 +333,7 @@ typedef struct cs_x86 {
 
 	cs_x86_op operands[8];	// operands for this instruction.
 
-	cs_x86_encode encode;  // encoding information
+	cs_x86_encoding encoding;  // encoding information
 } cs_x86;
 
 //> X86 instructions
