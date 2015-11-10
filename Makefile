@@ -45,6 +45,12 @@ endif
 
 ifeq ($(CAPSTONE_HAS_OSXKERNEL), yes)
 CFLAGS += -DCAPSTONE_HAS_OSXKERNEL
+SDKROOT ?= $(shell xcodebuild -version -sdk macosx Path)
+CFLAGS += -mmacosx-version-min=10.5 \
+		  -isysroot$(SDKROOT) \
+		  -I$(SDKROOT)/System/Library/Frameworks/Kernel.framework/Headers \
+		  -mkernel \
+		  -fno-builtin
 endif
 
 CFLAGS += $(foreach arch,$(LIBARCHS),-arch $(arch))
