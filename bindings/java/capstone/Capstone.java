@@ -141,14 +141,7 @@ public class Capstone {
 
 
       if (insn.cs_detail != null) {
-        if (!diet) {
-//          regsRead = new short[insn.cs_detail.regs_read_count];
-//          for (int i=0; i<regsRead.length; i++)
-//            regsRead[i] = insn.cs_detail.regs_read[i];
-//          regsWrite = new short[insn.cs_detail.regs_write_count];
-//          for (int i=0; i<regsWrite.length; i++)
-//            regsWrite[i] = insn.cs_detail.regs_write[i];
-            
+        if (!diet) {            
 	    	// Allocating memory for array of registers
 	        Pointer regsReadArray = new Memory(16*64); 
 	        Pointer regsWriteArray = new Memory(16*64);
@@ -303,7 +296,6 @@ public class Capstone {
     public int cs_version(IntByReference major, IntByReference minor);
     public boolean cs_support(int query);
     
-    //public int cs_regs_access(NativeLong csh, Pointer insn, ctypes.POINTER(ctypes.c_uint16*64), ctypes.POINTER(ctypes.c_uint8), ctypes.POINTER(ctypes.c_uint16*64), ctypes.POINTER(ctypes.c_uint8)) );
     public int cs_regs_access(NativeLong csh, Pointer insn, Pointer regsRead, ByteByReference regsReadCount, Pointer regsWrite, ByteByReference regsWriteCount);
   }
 
