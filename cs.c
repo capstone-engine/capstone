@@ -94,7 +94,8 @@ extern void* kern_os_malloc(size_t size);
 extern void kern_os_free(void* addr);
 extern void* kern_os_realloc(void* addr, size_t nsize);
 
-static void* cs_kern_os_calloc(size_t num, size_t size) {
+static void* cs_kern_os_calloc(size_t num, size_t size)
+{
 	return kern_os_malloc(num * size); // malloc bzeroes the buffer
 }
 
