@@ -742,7 +742,7 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 	MCOperand *Op = MCInst_getOperand(MI, OpNo);
 	if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op) + MI->flat_insn->size + MI->address;
-		int opsize = X86_immediate_size(MI->Opcode);
+		int opsize = X86_immediate_size(MI->Opcode, NULL);
 
 		// truncat imm for non-64bit
 		if (MI->csh->mode != CS_MODE_64) {
@@ -825,7 +825,8 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			MI->op1_size = MI->csh->regsize_map[reg];
 	} else if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op);
-		int opsize = X86_immediate_size(MCInst_getOpcode(MI));
+		int encsize;
+		int opsize = X86_immediate_size(MCInst_getOpcode(MI), &encsize);
 		if (opsize == 1)    // print 1 byte immediate in positive form
 			imm = imm & 0xff;
 
@@ -883,7 +884,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
 				if (opsize > 0)
+				{
 					MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = opsize;
+					MI->flat_insn->detail->x86.encoding.imm_size = encsize;
+				}
 				else if (MI->flat_insn->detail->x86.op_count > 0) {
 					if (MI->flat_insn->id != X86_INS_LCALL && MI->flat_insn->id != X86_INS_LJMP) {
 						MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size =

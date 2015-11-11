@@ -3254,14 +3254,15 @@ void X86_reg_access(const cs_insn *insn,
 
 // map immediate size to instruction id
 static struct size_id {
-	unsigned char size;
-	unsigned short id;
+	uint8_t		enc_size;
+	uint8_t		size;
+	uint16_t 	id;
 } x86_imm_size[] = {
 #include "X86ImmSize.inc"
 };
 
 // given the instruction name, return the size of its immediate operand (or 0)
-int X86_immediate_size(unsigned int id)
+int X86_immediate_size(unsigned int id, int *enc_size)
 {
 #if 0
 	// linear searching
@@ -3274,7 +3275,7 @@ int X86_immediate_size(unsigned int id)
 	}
 #endif
 
-	// binary searching since the IDs is sorted in order
+	// binary searching since the IDs are sorted in order
 	unsigned int left, right, m;
 
 	left = 0;
@@ -3283,7 +3284,11 @@ int X86_immediate_size(unsigned int id)
 	while(left <= right) {
 		m = (left + right) / 2;
 		if (id == x86_imm_size[m].id)
+		{
+			if (enc_size != NULL)
+				*enc_size = x86_imm_size[m].enc_size;
 			return x86_imm_size[m].size;
+		}
 
 		if (id < x86_imm_size[m].id)
 			right = m - 1;

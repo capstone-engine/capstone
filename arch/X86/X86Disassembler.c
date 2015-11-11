@@ -868,26 +868,21 @@ static void update_pub_insn(cs_insn *pub, InternalInstruction *inter, uint8_t *p
 
 	pub->detail->x86.addr_size = inter->addressSize;
 
-	pub->detail->x86.modrm = inter->orgModRM;
-	pub->detail->x86.encode.modrm_offset = inter->modRMOffset;
-	pub->detail->x86.sib = inter->sib;
+	pub->detail->x86.encoding.modrm = inter->orgModRM;
+	pub->detail->x86.encoding.modrm_offset = inter->modRMOffset;
 
-	pub->detail->x86.disp = inter->displacement;
-	pub->detail->x86.encode.disp_offset = inter->displacementOffset;
-	pub->detail->x86.encode.disp_size = inter->displacementSize;
-	pub->detail->x86.encode.disp_valid = false;
-	if (inter->displacementOffset > 0)
-		pub->detail->x86.encode.disp_valid = true;
+	pub->detail->x86.encoding.sib = inter->sib;
+	pub->detail->x86.encoding.sib_index = x86_map_sib_index(inter->sibIndex);
+	pub->detail->x86.encoding.sib_scale = inter->sibScale;
+	pub->detail->x86.encoding.sib_base = x86_map_sib_base(inter->sibBase);
 
-	pub->detail->x86.encode.imm_offset = inter->immediateOffset;
-	pub->detail->x86.encode.imm_size = inter->immediateSize;
-	pub->detail->x86.encode.imm_valid = false;
-	if (inter->immediateOffset > 0)
-		pub->detail->x86.encode.imm_valid = true;
-
-	pub->detail->x86.sib_index = x86_map_sib_index(inter->sibIndex);
-	pub->detail->x86.sib_scale = inter->sibScale;
-	pub->detail->x86.sib_base = x86_map_sib_base(inter->sibBase);
+	pub->detail->x86.encoding.disp = inter->displacement;
+	pub->detail->x86.encoding.disp_offset = inter->displacementOffset;
+	pub->detail->x86.encoding.disp_size = inter->displacementSize;
+	
+	pub->detail->x86.encoding.imm_offset = inter->immediateOffset;
+	if (pub->detail->x86.encoding.imm_size == 0)
+		pub->detail->x86.encoding.imm_size = inter->immediateSize;
 }
 
 void X86_init(MCRegisterInfo *MRI)
@@ -937,6 +932,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		memset(instr->flat_insn->detail->x86.prefix, 0, sizeof(instr->flat_insn->detail->x86.prefix));
 		memset(instr->flat_insn->detail->x86.opcode, 0, sizeof(instr->flat_insn->detail->x86.opcode));
 		memset(instr->flat_insn->detail->x86.operands, 0, sizeof(instr->flat_insn->detail->x86.operands));
+		memset(&instr->flat_insn->detail->x86.encoding, 0, sizeof(instr->flat_insn->detail->x86.encoding));
 	}
 
 	if (handle->mode & CS_MODE_16)

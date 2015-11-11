@@ -601,7 +601,7 @@ typedef struct InternalInstruction {
   uint8_t                       sib;
   /* The displacement, used for memory operands */
   bool                          consumedDisplacement;
-  int32_t                       displacement;
+  int64_t                       displacement;
   /* The value of the two-byte escape prefix (usually 0x0f) */
   uint8_t twoByteEscape;
   /* The value of the three-byte escape prefix (usually 0x38 or 0x3a) */
