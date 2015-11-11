@@ -263,23 +263,10 @@ typedef struct cs_x86_op {
 typedef struct cs_x86_encoding {
 	// ModR/M offset, or 0 when irrelevant
 	uint8_t modrm_offset;
-	// ModR/M byte
-	uint8_t modrm;
-
-	// SIB value, or 0 when irrelevant.
-	uint8_t sib;
-	// SIB index register, or X86_REG_INVALID when irrelevant.
-	x86_reg sib_index;
-	// SIB scale, only applicable if sib_index is valid.
-	int8_t sib_scale;
-	// SIB base register, or X86_REG_INVALID when irrelevant.
-	x86_reg sib_base;
 
 	// Displacement offset, or 0 when irrelevant.
 	uint8_t disp_offset;
 	uint8_t disp_size;
-	// Displacement value
-	int64_t disp;
 
 	// Immediate offset, or 0 when irrelevant.
 	uint8_t imm_offset;
@@ -307,6 +294,22 @@ typedef struct cs_x86 {
 
 	// Address size, which can be overrided with above prefix[5].
 	uint8_t addr_size;
+
+	// ModR/M byte
+	uint8_t modrm;
+
+	// SIB value, or 0 when irrelevant.
+	uint8_t sib;
+
+	// Displacement value, valid if encoding.disp_offset != 0
+	int64_t disp;
+
+	// SIB index register, or X86_REG_INVALID when irrelevant.
+	x86_reg sib_index;
+	// SIB scale, only applicable if sib_index is valid.
+	int8_t sib_scale;
+	// SIB base register, or X86_REG_INVALID when irrelevant.
+	x86_reg sib_base;
 
 	// XOP Code Condition
 	x86_xop_cc xop_cc;
