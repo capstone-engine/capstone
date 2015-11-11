@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F19AEDA1BF3A5CA005C217E /* X86IntelInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE244519DDCD8800EF8EA9 /* X86IntelInstPrinter.c */; };
+		2F19AEDF1BF3A5CA005C217E /* cs.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE249D19DDCDEE00EF8EA9 /* cs.c */; };
+		2F19AEE21BF3A5CA005C217E /* MCRegisterInfo.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE24A019DDCDEE00EF8EA9 /* MCRegisterInfo.c */; };
+		2F19AEE31BF3A5CA005C217E /* X86Module.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE244819DDCD8800EF8EA9 /* X86Module.c */; };
+		2F19AEE51BF3A5CA005C217E /* X86Mapping.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE244619DDCD8800EF8EA9 /* X86Mapping.c */; };
+		2F19AEE71BF3A5CA005C217E /* utils.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE24A219DDCDEE00EF8EA9 /* utils.c */; };
+		2F19AEEB1BF3A5CA005C217E /* MCInst.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE249E19DDCDEE00EF8EA9 /* MCInst.c */; };
+		2F19AEEF1BF3A5CA005C217E /* X86ATTInstPrinter.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE243419DDCD8800EF8EA9 /* X86ATTInstPrinter.c */; };
+		2F19AEF01BF3A5CA005C217E /* MCInstrDesc.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE249F19DDCDEE00EF8EA9 /* MCInstrDesc.c */; };
+		2F19AEF41BF3A5CA005C217E /* X86Disassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE243619DDCD8800EF8EA9 /* X86Disassembler.c */; };
+		2F19AEF91BF3A5CA005C217E /* X86DisassemblerDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE243819DDCD8800EF8EA9 /* X86DisassemblerDecoder.c */; };
+		2F19AEFE1BF3A5CA005C217E /* SStream.c in Sources */ = {isa = PBXBuildFile; fileRef = DCFE24A119DDCDEE00EF8EA9 /* SStream.c */; };
+		2F19AF061BF3A5CA005C217E /* M68KInstPrinter.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA3577E1BC2C0290094BB3F /* M68KInstPrinter.h */; };
+		2F19AF071BF3A5CA005C217E /* M68KDisassembler.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA3577C1BC2C0290094BB3F /* M68KDisassembler.h */; };
 		DC07A86E19F6061D00254FCF /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
 		DC3A28E31AF29C0100FC9913 /* test_customized_mnem.c in Sources */ = {isa = PBXBuildFile; fileRef = DC3A28E21AF29C0100FC9913 /* test_customized_mnem.c */; };
 		DC3A28E41AF29C4600FC9913 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
@@ -319,6 +333,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2F19AF0B1BF3A5CA005C217E /* libCapstoneOSXKernel.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCapstoneOSXKernel.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC3A28DB1AF29BEB00FC9913 /* test_customized_mnem */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_customized_mnem; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC3A28E21AF29C0100FC9913 /* test_customized_mnem.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_customized_mnem.c; path = ../tests/test_customized_mnem.c; sourceTree = "<group>"; };
 		DC474E6419DDEA5F00BCA449 /* test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -500,6 +515,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2F19AF041BF3A5CA005C217E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC3A28D81AF29BEB00FC9913 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -737,6 +759,7 @@
 				DC5BFF4019EE544E008CA585 /* test_iter */,
 				DC3A28DB1AF29BEB00FC9913 /* test_customized_mnem */,
 				DCA357961BC2C0930094BB3F /* test_m68k */,
+				2F19AF0B1BF3A5CA005C217E /* libCapstoneOSXKernel.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -948,6 +971,15 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		2F19AF051BF3A5CA005C217E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F19AF061BF3A5CA005C217E /* M68KInstPrinter.h in Headers */,
+				2F19AF071BF3A5CA005C217E /* M68KDisassembler.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC474F6519DE6F3B00BCA449 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -988,6 +1020,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		2F19AED51BF3A5CA005C217E /* CapstoneOSXKernel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2F19AF081BF3A5CA005C217E /* Build configuration list for PBXNativeTarget "CapstoneOSXKernel" */;
+			buildPhases = (
+				2F19AED61BF3A5CA005C217E /* Sources */,
+				2F19AF041BF3A5CA005C217E /* Frameworks */,
+				2F19AF051BF3A5CA005C217E /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CapstoneOSXKernel;
+			productName = CapstoneStatic;
+			productReference = 2F19AF0B1BF3A5CA005C217E /* libCapstoneOSXKernel.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		DC3A28DA1AF29BEB00FC9913 /* test_customized_mnem */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC3A28DF1AF29BEB00FC9913 /* Build configuration list for PBXNativeTarget "test_customized_mnem" */;
@@ -1353,6 +1402,7 @@
 			targets = (
 				DCFE23BC19DDCC2D00EF8EA9 /* CapstoneStatic */,
 				DCFE23CC19DDCC9500EF8EA9 /* CapstoneDynamic */,
+				2F19AED51BF3A5CA005C217E /* CapstoneOSXKernel */,
 				DC474F6719DE6F3B00BCA449 /* CapstoneFramework */,
 				DC474E6319DDEA5F00BCA449 /* test */,
 				DC474E8519DDEAA200BCA449 /* test_arm */,
@@ -1383,6 +1433,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2F19AED61BF3A5CA005C217E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F19AEDA1BF3A5CA005C217E /* X86IntelInstPrinter.c in Sources */,
+				2F19AEDF1BF3A5CA005C217E /* cs.c in Sources */,
+				2F19AEE21BF3A5CA005C217E /* MCRegisterInfo.c in Sources */,
+				2F19AEE31BF3A5CA005C217E /* X86Module.c in Sources */,
+				2F19AEE51BF3A5CA005C217E /* X86Mapping.c in Sources */,
+				2F19AEE71BF3A5CA005C217E /* utils.c in Sources */,
+				2F19AEEB1BF3A5CA005C217E /* MCInst.c in Sources */,
+				2F19AEEF1BF3A5CA005C217E /* X86ATTInstPrinter.c in Sources */,
+				2F19AEF01BF3A5CA005C217E /* MCInstrDesc.c in Sources */,
+				2F19AEF41BF3A5CA005C217E /* X86Disassembler.c in Sources */,
+				2F19AEF91BF3A5CA005C217E /* X86DisassemblerDecoder.c in Sources */,
+				2F19AEFE1BF3A5CA005C217E /* SStream.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC3A28D71AF29BEB00FC9913 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1654,6 +1723,111 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		2F19AF091BF3A5CA005C217E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_BUILTIN_FUNCTIONS = NO;
+				GCC_ENABLE_KERNEL_DEVELOPMENT = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CAPSTONE_HAS_OSXKERNEL=1",
+					"CAPSTONE_USE_SYS_DYN_MEM=1",
+					"DEBUG=1",
+					"$(inherited)",
+					"CAPSTONE_HAS_X86=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+					"$(SDKROOT)/System/Library/Frameworks/Kernel.framework/Headers",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = CapstoneOSXKernel;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		2F19AF0A1BF3A5CA005C217E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_BUILTIN_FUNCTIONS = NO;
+				GCC_ENABLE_KERNEL_DEVELOPMENT = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CAPSTONE_HAS_OSXKERNEL=1",
+					"CAPSTONE_USE_SYS_DYN_MEM=1",
+					"$(inherited)",
+					"CAPSTONE_HAS_X86=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../include",
+					"$(SDKROOT)/System/Library/Frameworks/Kernel.framework/Headers",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = CapstoneOSXKernel;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 		DC3A28E01AF29BEB00FC9913 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3234,6 +3408,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2F19AF081BF3A5CA005C217E /* Build configuration list for PBXNativeTarget "CapstoneOSXKernel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2F19AF091BF3A5CA005C217E /* Debug */,
+				2F19AF0A1BF3A5CA005C217E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DC3A28DF1AF29BEB00FC9913 /* Build configuration list for PBXNativeTarget "test_customized_mnem" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

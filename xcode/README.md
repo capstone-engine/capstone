@@ -7,6 +7,8 @@ targets, two of which are the most likely to be of interest:
 
 * CapstoneStatic, producing `libcapstone.a`, Capstone as a static library;
 * CapstoneDynamic, producing `libcapstone.dylib`, Capstone as a shared library;
+* CapstoneOSXKernel, producing `libCapstoneOSXKernel.a`, Capstone as a static
+    library for embedding into OS X kernel;
 * test, test_arm, test_arm64, test_detail, test_mips, test_ppc, test_skipdata,
 	test_sparc, test_systemz, test_xcore, testing all the things.
 
@@ -15,6 +17,9 @@ implementations of `malloc`, `calloc`, `realloc`, `free` and `vsnprintf`. This
 can be modified by editing the *Preprocessor Macros* build setting of either
 CapstoneStatic or CapstoneDynamic, whichever you plan to use. These settings are
 all at the target level: no specific overrides were used at the project level.
+CapstoneOSXKernel target does not use any size reduction build options by default,
+so they have to be added to the target's GCC_PREPROCESSOR_DEFINITIONS
+("Preprocessor macros") manually.
 
 ### A Word of Warning: Static vs. Shared Library
 
