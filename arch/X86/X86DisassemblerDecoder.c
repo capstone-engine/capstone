@@ -1547,7 +1547,6 @@ static int readDisplacement(struct InternalInstruction *insn)
 			break;
 	}
 
-	insn->consumedDisplacement = true;
 	return 0;
 }
 
@@ -2076,6 +2075,7 @@ static int readOperands(struct InternalInstruction *insn)
 				   to memory operand later. We want the encoding info to
 				   reflect that as well. */
 				insn->displacementOffset = insn->immediateOffset;
+				insn->consumedDisplacement = true;
 				insn->displacementSize = insn->immediateSize;
 				insn->displacement = insn->immediates[insn->numImmediatesConsumed - 1];
 				insn->immediateOffset = 0;
