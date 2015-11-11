@@ -237,27 +237,27 @@ typedef struct x86_op_mem {
 
 // Instruction operand
 typedef struct cs_x86_op {
-		x86_op_type type;	// operand type
-		union {
-			x86_reg reg;	  // register value for REG operand
-			int64_t imm;		// immediate value for IMM operand
-			double fp;		// floating point value for FP operand
-			x86_op_mem mem;		// base/index/scale/disp value for MEM operand
-		};
+	x86_op_type type;	// operand type
+	union {
+		x86_reg reg;	  // register value for REG operand
+		int64_t imm;		// immediate value for IMM operand
+		double fp;		// floating point value for FP operand
+		x86_op_mem mem;		// base/index/scale/disp value for MEM operand
+	};
 
-		// size of this operand (in bytes).
-		uint8_t size;
+	// size of this operand (in bytes).
+	uint8_t size;
 
-		// How is this operand accessed? (READ, WRITE or READ|WRITE)
-		// This field is combined of cs_ac_type.
-		// NOTE: this field is irrelevant if engine is compiled in DIET mode.
-		uint8_t access;
+	// How is this operand accessed? (READ, WRITE or READ|WRITE)
+	// This field is combined of cs_ac_type.
+	// NOTE: this field is irrelevant if engine is compiled in DIET mode.
+	uint8_t access;
 
-		// AVX broadcast type, or 0 if irrelevant
-		x86_avx_bcast avx_bcast;
+	// AVX broadcast type, or 0 if irrelevant
+	x86_avx_bcast avx_bcast;
 
-		// AVX zero opmask {z}
-		bool avx_zero_opmask;
+	// AVX zero opmask {z}
+	bool avx_zero_opmask;
 } cs_x86_op;
 
 typedef struct cs_x86_encoding {
