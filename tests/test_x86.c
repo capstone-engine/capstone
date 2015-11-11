@@ -151,18 +151,18 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 	printf("\trex: 0x%x\n", x86->rex);
 
 	printf("\taddr_size: %u\n", x86->addr_size);
-	printf("\tmodrm: 0x%x\n", x86->encoding.modrm);
-	printf("\tdisp: 0x%"PRIx64 "\n", x86->encoding.disp);
+	printf("\tmodrm: 0x%x\n", x86->modrm);
+	printf("\tdisp: 0x%"PRIx64 "\n", x86->disp);
 
 	// SIB is not available in 16-bit mode
 	if ((mode & CS_MODE_16) == 0) {
-		printf("\tsib: 0x%x\n", x86->encoding.sib);
-		if (x86->encoding.sib_base != X86_REG_INVALID)
-			printf("\t\tsib_base: %s\n", cs_reg_name(handle, x86->encoding.sib_base));
-		if (x86->encoding.sib_index != X86_REG_INVALID)
-			printf("\t\tsib_index: %s\n", cs_reg_name(handle, x86->encoding.sib_index));
-		if (x86->encoding.sib_scale != 0)
-			printf("\t\tsib_scale: %d\n", x86->encoding.sib_scale);
+		printf("\tsib: 0x%x\n", x86->sib);
+		if (x86->sib_base != X86_REG_INVALID)
+			printf("\t\tsib_base: %s\n", cs_reg_name(handle, x86->sib_base));
+		if (x86->sib_index != X86_REG_INVALID)
+			printf("\t\tsib_index: %s\n", cs_reg_name(handle, x86->sib_index));
+		if (x86->sib_scale != 0)
+			printf("\t\tsib_scale: %d\n", x86->sib_scale);
 	}
 
 	// XOP code condition
