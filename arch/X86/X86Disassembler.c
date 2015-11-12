@@ -877,11 +877,14 @@ static void update_pub_insn(cs_insn *pub, InternalInstruction *inter, uint8_t *p
 	pub->detail->x86.sib_base = x86_map_sib_base(inter->sibBase);
 
 	pub->detail->x86.disp = inter->displacement;
-	pub->detail->x86.encoding.disp_offset = inter->displacementOffset;
-	pub->detail->x86.encoding.disp_size = inter->displacementSize;
-	
+	if (inter->consumedDisplacement)
+	{
+		pub->detail->x86.encoding.disp_offset = inter->displacementOffset;
+		pub->detail->x86.encoding.disp_size = inter->displacementSize;
+	}
+
 	pub->detail->x86.encoding.imm_offset = inter->immediateOffset;
-	if (pub->detail->x86.encoding.imm_size == 0)
+	if (pub->detail->x86.encoding.imm_size == 0 && inter->immediateOffset != 0)
 		pub->detail->x86.encoding.imm_size = inter->immediateSize;
 }
 
