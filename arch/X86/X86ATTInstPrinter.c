@@ -639,6 +639,11 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				}
 				break;
 
+			case X86_INS_MOVABS:
+				// do not print number in negative form
+				SStream_concat(O, "$0x%"PRIx64, imm);
+				break;
+
 			case X86_INS_INT:
 				// do not print number in negative form
 				imm = imm & 0xff;

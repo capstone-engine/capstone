@@ -834,6 +834,11 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				printImm(MI->csh->syntax, O, imm, false);
 				break;
 
+			case X86_INS_MOVABS:
+				// do not print number in negative form
+				printImm(MI->csh->syntax, O, imm, true);
+				break;
+
 			case X86_INS_INT:
 				// do not print number in negative form
 				imm = imm & 0xff;
