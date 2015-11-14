@@ -460,11 +460,11 @@ public class Capstone {
     PointerByReference insnRef = new PointerByReference();
 
     NativeLong c = cs.cs_disasm(ns.csh, code, new NativeLong(code.length), address, new NativeLong(count), insnRef);
-    
+
     if (0 == c.intValue()) {
-    	return null;
+        return null;
     }
-    
+
     Pointer p = insnRef.getValue();
     _cs_insn byref = new _cs_insn(p);
 
