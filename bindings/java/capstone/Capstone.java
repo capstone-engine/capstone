@@ -358,6 +358,8 @@ public class Capstone {
       private NativeLongByReference handleRef;
   }
 
+  private static final CsInsn[] EMPTY_INSN = new CsInsn[0];
+
   protected NativeStruct ns; // for memory retention
   private CS cs;
   public int arch;
@@ -428,17 +430,36 @@ public class Capstone {
     return cs.cs_close(ns.handleRef);
   }
 
-  // disassemble until either no more code, or encounter broken insn.
+  /**
+   * Disassemble instructions from @code assumed to be located at @address,
+   * stop when encountering first broken instruction.
+   * 
+   * @param code The source machine code bytes.
+   * @param address The address of the first machine code byte.
+   * @return the array of successfully disassembled instructions, empty if no instruction could be disassembled.
+   */
   public CsInsn[] disasm(byte[] code, long address) {
     return disasm(code, address, 0);
   }
 
-  // disassemble maximum @count instructions, or until encounter broken insn.
+  /**
+   * Disassemble up to @count instructions from @code assumed to be located at @address,
+   * stop when encountering first broken instruction.
+   * 
+   * @param code The source machine code bytes.
+   * @param address The address of the first machine code byte.
+   * @param count The maximum number of instructions to disassemble, 0 for no maximum.
+   * @return the array of successfully disassembled instructions, empty if no instruction could be disassembled.
+   */
   public CsInsn[] disasm(byte[] code, long address, long count) {
     PointerByReference insnRef = new PointerByReference();
 
     NativeLong c = cs.cs_disasm(ns.csh, code, new NativeLong(code.length), address, new NativeLong(count), insnRef);
-
+    
+    if (0 == c.intValue()) {
+    	return EMPTY_INSN;
+    }
+    
     Pointer p = insnRef.getValue();
     _cs_insn byref = new _cs_insn(p);
 
