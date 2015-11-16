@@ -5951,51 +5951,51 @@
 },
 {	/* X86_XCHG16ar, X86_INS_XCHG: xchg{w}	ax, $src */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ | CS_AC_WRITE, 0 }
 },
 {	/* X86_XCHG16rm, X86_INS_XCHG: xchg{w}	$ptr, $val */
 	0,
-	{ CS_AC_READ, CS_AC_READ | CS_AC_WRITE, 0 }
+	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ | CS_AC_WRITE, 0 }
 },
 {	/* X86_XCHG16rr, X86_INS_XCHG: xchg{w}	$src, $val */
 	0,
-	{ CS_AC_READ, CS_AC_READ | CS_AC_WRITE, 0 }
+	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ | CS_AC_WRITE, 0 }
 },
 {	/* X86_XCHG32ar, X86_INS_XCHG: xchg{l}	eax, $src */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ | CS_AC_WRITE, 0 }
 },
 {	/* X86_XCHG32ar64, X86_INS_XCHG: xchg{l}	eax, $src */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ | CS_AC_WRITE, 0 }
 },
 {	/* X86_XCHG32rm, X86_INS_XCHG: xchg{l}	$ptr, $val */
 	0,
-	{ CS_AC_READ, CS_AC_READ | CS_AC_WRITE, 0 }
+	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ | CS_AC_WRITE, 0 }
 },
 {	/* X86_XCHG32rr, X86_INS_XCHG: xchg{l}	$src, $val */
 	0,
-	{ CS_AC_READ, CS_AC_READ | CS_AC_WRITE, 0 }
+	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ | CS_AC_WRITE, 0 }
 },
 {	/* X86_XCHG64ar, X86_INS_XCHG: xchg{q}	rax, $src */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ | CS_AC_WRITE, 0 }
 },
 {	/* X86_XCHG64rm, X86_INS_XCHG: xchg{q}	$ptr, $val */
 	0,
-	{ CS_AC_READ, CS_AC_READ | CS_AC_WRITE, 0 }
+	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ | CS_AC_WRITE, 0 }
 },
 {	/* X86_XCHG64rr, X86_INS_XCHG: xchg{q}	$src, $val */
 	0,
-	{ CS_AC_READ, CS_AC_READ | CS_AC_WRITE, 0 }
+	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ | CS_AC_WRITE, 0 }
 },
 {	/* X86_XCHG8rm, X86_INS_XCHG: xchg{b}	$ptr, $val */
 	0,
-	{ CS_AC_READ, CS_AC_READ | CS_AC_WRITE, 0 }
+	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ | CS_AC_WRITE, 0 }
 },
 {	/* X86_XCHG8rr, X86_INS_XCHG: xchg{b}	$src, $val */
 	0,
-	{ CS_AC_READ, CS_AC_READ | CS_AC_WRITE, 0 }
+	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ | CS_AC_WRITE, 0 }
 },
 {	/* X86_XCRYPTCBC, X86_INS_XCRYPTCBC: xcryptcbc */
 	0,
