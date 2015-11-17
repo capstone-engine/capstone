@@ -686,7 +686,6 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	char *mnem;
 	x86_reg reg, reg2;
-	uint8_t imm_sz = 0;
 
 	// Try to print any aliases first.
 	mnem = printAliasInstr(MI, O, Info);
@@ -695,7 +694,7 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 	else
 		printInstruction(MI, O, Info);
 
-	reg = X86_insn_reg_intel(MCInst_getOpcode(MI), &imm_sz);
+	reg = X86_insn_reg_intel(MCInst_getOpcode(MI));
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
 		uint8_t access[6];
@@ -710,7 +709,7 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 			MI->flat_insn->detail->x86.operands[0].type = X86_OP_REG;
 			MI->flat_insn->detail->x86.operands[0].reg = reg;
 			MI->flat_insn->detail->x86.operands[0].size = MI->csh->regsize_map[reg];
-			MI->flat_insn->detail->x86.operands[1].size = imm_sz ? imm_sz : MI->csh->regsize_map[reg];
+			MI->flat_insn->detail->x86.operands[1].size = MI->csh->regsize_map[reg];
 			MI->flat_insn->detail->x86.op_count++;
 		} else {
 			if (X86_insn_reg_intel2(MCInst_getOpcode(MI), &reg, &reg2)) {
