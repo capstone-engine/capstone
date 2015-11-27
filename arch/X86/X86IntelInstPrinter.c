@@ -829,6 +829,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		if (opsize == 1)    // print 1 byte immediate in positive form
 			imm = imm & 0xff;
 
+		// printf(">>> id = %u\n", MI->flat_insn->id);
 		switch(MI->flat_insn->id) {
 			default:
 				printImm(MI->csh->syntax, O, imm, false);
@@ -839,6 +840,8 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				printImm(MI->csh->syntax, O, imm, true);
 				break;
 
+			case X86_INS_IN:
+			case X86_INS_OUT:
 			case X86_INS_INT:
 				// do not print number in negative form
 				imm = imm & 0xff;
