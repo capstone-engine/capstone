@@ -363,8 +363,13 @@ class CsError(Exception):
     def __init__(self, errno):
         self.errno = errno
 
-    def __str__(self):
-        return _cs.cs_strerror(self.errno)
+    if _python2:
+        def __str__(self):
+            return _cs.cs_strerror(self.errno)
+
+    else:
+        def __str__(self):
+            return _cs.cs_strerror(self.errno).decode()
 
 
 # return the core's version
