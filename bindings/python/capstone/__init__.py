@@ -839,6 +839,12 @@ class Cs(object):
         self._skipdata = opt
 
 
+    @property
+    def skipdata_setup(self):
+        return
+
+
+    @skipdata_setup.setter
     def skipdata_setup(self, opt):
         _skipdata_opt = _cs_opt_skipdata()
         _mnem, _cb, _ud = opt
