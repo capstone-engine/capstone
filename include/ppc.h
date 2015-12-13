@@ -51,13 +51,13 @@ typedef enum ppc_op_type {
 // Instruction's operand referring to memory
 // This is associated with PPC_OP_MEM operand type above
 typedef struct ppc_op_mem {
-	unsigned int base;	// base register
+	ppc_reg base;	// base register
 	int32_t disp;	// displacement/offset value
 } ppc_op_mem;
 
 typedef struct ppc_op_crx {
 	unsigned int scale;
-	unsigned int reg;
+	ppc_reg reg;
 	ppc_bc cond;
 } ppc_op_crx;
 
@@ -65,7 +65,7 @@ typedef struct ppc_op_crx {
 typedef struct cs_ppc_op {
 	ppc_op_type type;	// operand type
 	union {
-		unsigned int reg;	// register value for REG operand
+		ppc_reg reg;	// register value for REG operand
 		int32_t imm;		// immediate value for IMM operand
 		ppc_op_mem mem;		// base/disp value for MEM operand
 		ppc_op_crx crx;		// operand with condition register

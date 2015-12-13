@@ -63,6 +63,10 @@ tests/test_basic
 tests/test_customized_mnem
 
 
+# regress binaries
+suite/regress/invalid_read_in_print_operand
+
+
 # vim tmp file
 *.swp
 *~
