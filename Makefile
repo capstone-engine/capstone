@@ -20,10 +20,10 @@ AR ?= ar
 RANLIB ?= ranlib
 STRIP ?= strip
 else
-CC ?= $(CROSS)gcc
-AR ?= $(CROSS)ar
-RANLIB ?= $(CROSS)ranlib
-STRIP ?= $(CROSS)strip
+CC = $(CROSS)gcc
+AR = $(CROSS)ar
+RANLIB = $(CROSS)ranlib
+STRIP = $(CROSS)strip
 endif
 
 ifneq (,$(findstring yes,$(CAPSTONE_DIET)))
