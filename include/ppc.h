@@ -39,56 +39,6 @@ typedef enum ppc_bh {
 	PPC_BH_MINUS,	// MINUS hint
 } ppc_bh;
 
-//> Operand type for instruction's operands
-typedef enum ppc_op_type {
-	PPC_OP_INVALID = 0, // = CS_OP_INVALID (Uninitialized).
-	PPC_OP_REG, // = CS_OP_REG (Register operand).
-	PPC_OP_IMM, // = CS_OP_IMM (Immediate operand).
-	PPC_OP_MEM, // = CS_OP_MEM (Memory operand).
-	PPC_OP_CRX = 64,	// Condition Register field
-} ppc_op_type;
-
-// Instruction's operand referring to memory
-// This is associated with PPC_OP_MEM operand type above
-typedef struct ppc_op_mem {
-	unsigned int base;	// base register
-	int32_t disp;	// displacement/offset value
-} ppc_op_mem;
-
-typedef struct ppc_op_crx {
-	unsigned int scale;
-	unsigned int reg;
-	ppc_bc cond;
-} ppc_op_crx;
-
-// Instruction operand
-typedef struct cs_ppc_op {
-	ppc_op_type type;	// operand type
-	union {
-		unsigned int reg;	// register value for REG operand
-		int32_t imm;		// immediate value for IMM operand
-		ppc_op_mem mem;		// base/disp value for MEM operand
-		ppc_op_crx crx;		// operand with condition register
-	};
-} cs_ppc_op;
-
-// Instruction structure
-typedef struct cs_ppc {
-	// branch code for branch instructions
-	ppc_bc bc;
-
-	// branch hint for branch instructions
-	ppc_bh bh;
-
-	// if update_cr0 = True, then this 'dot' insn updates CR0
-	bool update_cr0;
-
-	// Number of operands of this instruction, 
-	// or 0 when instruction has no operand.
-	uint8_t op_count;
-	cs_ppc_op operands[8]; // operands for this instruction.
-} cs_ppc;
-
 //> PPC registers
 typedef enum ppc_reg {
 	PPC_REG_INVALID = 0,
@@ -275,6 +225,57 @@ typedef enum ppc_reg {
 
 	PPC_REG_ENDING,   // <-- mark the end of the list of registers
 } ppc_reg;
+
+//> Operand type for instruction's operands
+typedef enum ppc_op_type {
+	PPC_OP_INVALID = 0, // = CS_OP_INVALID (Uninitialized).
+	PPC_OP_REG, // = CS_OP_REG (Register operand).
+	PPC_OP_IMM, // = CS_OP_IMM (Immediate operand).
+	PPC_OP_MEM, // = CS_OP_MEM (Memory operand).
+	PPC_OP_CRX = 64,	// Condition Register field
+} ppc_op_type;
+
+// Instruction's operand referring to memory
+// This is associated with PPC_OP_MEM operand type above
+typedef struct ppc_op_mem {
+	ppc_reg base;	// base register
+	int32_t disp;	// displacement/offset value
+} ppc_op_mem;
+
+typedef struct ppc_op_crx {
+	unsigned int scale;
+	ppc_reg reg;
+	ppc_bc cond;
+} ppc_op_crx;
+
+// Instruction operand
+typedef struct cs_ppc_op {
+	ppc_op_type type;	// operand type
+	union {
+		ppc_reg reg;	// register value for REG operand
+		int32_t imm;		// immediate value for IMM operand
+		ppc_op_mem mem;		// base/disp value for MEM operand
+		ppc_op_crx crx;		// operand with condition register
+	};
+} cs_ppc_op;
+
+// Instruction structure
+typedef struct cs_ppc {
+	// branch code for branch instructions
+	ppc_bc bc;
+
+	// branch hint for branch instructions
+	ppc_bh bh;
+
+	// if update_cr0 = True, then this 'dot' insn updates CR0
+	bool update_cr0;
+
+	// Number of operands of this instruction, 
+	// or 0 when instruction has no operand.
+	uint8_t op_count;
+	cs_ppc_op operands[8]; // operands for this instruction.
+} cs_ppc;
+
 
 //> PPC instruction
 typedef enum ppc_insn {
