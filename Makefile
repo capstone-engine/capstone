@@ -256,7 +256,7 @@ PKGCFGDIR ?= $(LIBDATADIR)/pkgconfig
 API_MAJOR=$(shell echo `grep -e CS_API_MAJOR include/capstone.h | grep -v = | awk '{print $$3}'` | awk '{print $$1}')
 VERSION_EXT =
 
-IS_APPLE := $(shell $(CC) -dM -E - < /dev/null | grep -e __apple_build_version__ -e __APPLE_CC__ | wc -l | tr -d " ")
+IS_APPLE := $(shell $(CC) -dM -E - < /dev/null | grep -cm 1 -e __apple_build_version__ -e __APPLE_CC__)
 ifeq ($(IS_APPLE),1)
 EXT = dylib
 VERSION_EXT = $(API_MAJOR).$(EXT)
