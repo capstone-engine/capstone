@@ -35,6 +35,10 @@ More bindings created & maintained by the community are available as followings.
 
 	https://github.com/9ee1/Capstone.NET
 
+- CapstoneJ: High level Java wrapper for Capstone-java.
+
+	https://github.com/kevemueller/capstonej
+
 - C# binding (by Matt Graeber). Note: this is only for Capstone v2.0.
 
 	https://github.com/mattifestation/capstone
