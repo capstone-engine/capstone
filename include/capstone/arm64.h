@@ -372,6 +372,11 @@ typedef struct cs_arm64_op {
 		arm64_prefetch_op prefetch;  // PRFM operation.
 		arm64_barrier_op barrier;  // Memory barrier operation (ISB/DMB/DSB instructions).
 	};
+
+	// How is this operand accessed? (READ, WRITE or READ|WRITE)
+	// This field is combined of cs_ac_type.
+	// NOTE: this field is irrelevant if engine is compiled in DIET mode.
+	cs_ac_type access;
 } cs_arm64_op;
 
 // Instruction structure
