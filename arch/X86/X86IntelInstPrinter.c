@@ -183,8 +183,19 @@ static void printi512mem(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printf32mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "dword ptr ");
-	MI->x86opsize = 4;
+    switch(MCInst_getOpcode(MI)) {
+        default:
+            SStream_concat0(O, "dword ptr ");
+            MI->x86opsize = 4;
+            break;
+        case X86_FBSTPm:
+        case X86_FBLDm:
+            // TODO: fix this in tablegen instead
+            SStream_concat0(O, "tbyte ptr ");
+            MI->x86opsize = 10;
+            break;
+    }
+
 	printMemReference(MI, OpNo, O);
 }
 
