@@ -289,6 +289,7 @@ typedef struct cs_insn {
 	// Size of this instruction
 	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
 	uint16_t size;
+
 	// Machine bytes of this instruction, with number of bytes indicated by @size above
 	// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
 	uint8_t bytes[16];
