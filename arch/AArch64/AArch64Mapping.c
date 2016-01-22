@@ -1005,7 +1005,7 @@ void arm64_op_addImm(MCInst *MI, int64_t imm)
 // map instruction to its characteristics
 typedef struct insn_op {
 	unsigned int eflags_update;	// how this instruction update status flags
-	cs_ac_type operands[5];
+	uint8_t access[5];
 } insn_op;
 
 static insn_op insn_ops[] = {
@@ -1018,11 +1018,11 @@ static insn_op insn_ops[] = {
 };
 
 // given internal insn id, return operand access info
-cs_ac_type *arm64_get_op_access(cs_struct *h, unsigned int id)
+uint8_t *AArch64_get_op_access(cs_struct *h, unsigned int id)
 {
 	int i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
 	if (i != 0) {
-		return insn_ops[i].operands;
+		return insn_ops[i].access;
 	}
 
 	return NULL;

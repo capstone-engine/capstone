@@ -12,7 +12,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2016 */
 
 #ifdef CAPSTONE_HAS_ARM64
 
@@ -48,7 +48,7 @@ static void printShifter(MCInst *MI, unsigned OpNum, SStream *O);
 static cs_ac_type get_op_access(cs_struct *h, unsigned int id, unsigned int index)
 {
 #ifndef CAPSTONE_DIET
-	cs_ac_type *arr = arm64_get_op_access(h, id);
+	uint8_t *arr = AArch64_get_op_access(h, id);
 
 	if (arr[index] == CS_AC_IGNORE)
 		return 0;
@@ -68,8 +68,8 @@ static void set_mem_access(MCInst *MI, bool status)
 
 	if (status) {
 #ifndef CAPSTONE_DIET
-                uint8_t access;
-                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm.op_count].access = access;
 		MI->ac_idx++;
 #endif
@@ -137,18 +137,18 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 
 				if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                                        uint8_t access;
-                                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                                        MI->ac_idx++;
+					uint8_t access;
+					access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+					MI->ac_idx++;
 #endif
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
 					MI->flat_insn->detail->arm64.op_count++;
 #ifndef CAPSTONE_DIET
-                                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                                        MI->ac_idx++;
+					access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+					MI->ac_idx++;
 #endif
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = getWRegFromXReg(MCOperand_getReg(Op1));
@@ -202,26 +202,26 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 
 				if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                                        uint8_t access;
-                                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                                        MI->ac_idx++;
+					uint8_t access;
+					access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+					MI->ac_idx++;
 #endif
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
 					MI->flat_insn->detail->arm64.op_count++;
 #ifndef CAPSTONE_DIET
-                                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                                        MI->ac_idx++;
+					access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+					MI->ac_idx++;
 #endif
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op1);
 					MI->flat_insn->detail->arm64.op_count++;
 #ifndef CAPSTONE_DIET
-                                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                                        MI->ac_idx++;
+					access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+					MI->ac_idx++;
 #endif
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = shift;
@@ -245,34 +245,34 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 
 			if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                                uint8_t access;
-                                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                                MI->ac_idx++;
+				uint8_t access;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
 #endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
 				MI->flat_insn->detail->arm64.op_count++;
 #ifndef CAPSTONE_DIET
-                                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                                MI->ac_idx++;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
 #endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op1);
 				MI->flat_insn->detail->arm64.op_count++;
 #ifndef CAPSTONE_DIET
-                                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                                MI->ac_idx++;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
 #endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (Is64Bit ? 64 : 32) - (int)MCOperand_getImm(Op2);
 				MI->flat_insn->detail->arm64.op_count++;
 #ifndef CAPSTONE_DIET
-                                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                                MI->ac_idx++;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
 #endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)MCOperand_getImm(Op3) + 1;
@@ -294,34 +294,34 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 
 		if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                        uint8_t access;
-                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                        MI->ac_idx++;
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
 #endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
 			MI->flat_insn->detail->arm64.op_count++;
 #ifndef CAPSTONE_DIET
-                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                        MI->ac_idx++;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
 #endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op1);
 			MI->flat_insn->detail->arm64.op_count++;
 #ifndef CAPSTONE_DIET
-                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                        MI->ac_idx++;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
 #endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)MCOperand_getImm(Op2);
 			MI->flat_insn->detail->arm64.op_count++;
 #ifndef CAPSTONE_DIET
-                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                        MI->ac_idx++;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
 #endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)MCOperand_getImm(Op3) - (int)MCOperand_getImm(Op2) + 1;
@@ -353,34 +353,34 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 
 			if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                                uint8_t access;
-                                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                                MI->ac_idx++;
+				uint8_t access;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
 #endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
 				MI->flat_insn->detail->arm64.op_count++;
 #ifndef CAPSTONE_DIET
-                                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                                MI->ac_idx++;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
 #endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op2);
 				MI->flat_insn->detail->arm64.op_count++;
 #ifndef CAPSTONE_DIET
-                                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                                MI->ac_idx++;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
 #endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = LSB;
 				MI->flat_insn->detail->arm64.op_count++;
 #ifndef CAPSTONE_DIET
-                                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                                MI->ac_idx++;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
 #endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Width;
@@ -403,34 +403,34 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 
 		if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                        uint8_t access;
-                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                        MI->ac_idx++;
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
 #endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
 			MI->flat_insn->detail->arm64.op_count++;
 #ifndef CAPSTONE_DIET
-                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                        MI->ac_idx++;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
 #endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op2);
 			MI->flat_insn->detail->arm64.op_count++;
 #ifndef CAPSTONE_DIET
-                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                        MI->ac_idx++;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
 #endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = LSB;
 			MI->flat_insn->detail->arm64.op_count++;
 #ifndef CAPSTONE_DIET
-                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                        MI->ac_idx++;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
 #endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Width;
@@ -697,10 +697,10 @@ static bool printSysAlias(MCInst *MI, SStream *O)
 		SStream_concat0(O, Asm);
 		if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                        uint8_t access;
-                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                        MI->ac_idx++;
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
 #endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_SYS;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].sys = op_ic + op_dc + op_at + op_tlbi;
@@ -712,10 +712,10 @@ static bool printSysAlias(MCInst *MI, SStream *O)
 			SStream_concat(O, ", %s", getRegisterName(Reg, AArch64_NoRegAltName));
 			if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                                uint8_t access;
-                                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                                MI->ac_idx++;
+				uint8_t access;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
 #endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
@@ -744,10 +744,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				}
 			} else {
 #ifndef CAPSTONE_DIET
-                                uint8_t access;
-                                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                                MI->ac_idx++;
+				uint8_t access;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
 #endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
@@ -772,10 +772,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int32_t)imm;
 			} else {
 #ifndef CAPSTONE_DIET
-                                uint8_t access;
-                                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                                MI->ac_idx++;
+				uint8_t access;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
 #endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = imm;
@@ -791,10 +791,10 @@ static void printHexImm(MCInst *MI, unsigned OpNo, SStream *O)
 	SStream_concat(O, "#%#llx", MCOperand_getImm(Op));
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                uint8_t access;
-                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                MI->ac_idx++;
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
 #endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)MCOperand_getImm(Op);
@@ -813,10 +813,10 @@ static void printPostIncOperand(MCInst *MI, unsigned OpNo,
 			printInt32Bang(O, Imm);
 			if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                                uint8_t access;
-                                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                                MI->ac_idx++;
+				uint8_t access;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
 #endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Imm;
@@ -826,10 +826,10 @@ static void printPostIncOperand(MCInst *MI, unsigned OpNo,
 			SStream_concat0(O, getRegisterName(Reg, AArch64_NoRegAltName));
 			if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                                uint8_t access;
-                                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                                MI->ac_idx++;
+				uint8_t access;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
 #endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
@@ -853,10 +853,10 @@ static void printVRegOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	SStream_concat0(O, getRegisterName(Reg, AArch64_vreg));
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                uint8_t access;
-                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                MI->ac_idx++;
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
 #endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = AArch64_map_vregister(Reg);
@@ -871,10 +871,10 @@ static void printSysCROperand(MCInst *MI, unsigned OpNo, SStream *O)
 	SStream_concat(O, "c%u", MCOperand_getImm(Op));
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                uint8_t access;
-                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                MI->ac_idx++;
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
 #endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_CIMM;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)MCOperand_getImm(Op);
@@ -894,10 +894,10 @@ static void printAddSubImm(MCInst *MI, unsigned OpNum, SStream *O)
 
 		if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                        uint8_t access;
-                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                        MI->ac_idx++;
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
 #endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
@@ -918,10 +918,10 @@ static void printLogicalImm32(MCInst *MI, unsigned OpNum, SStream *O)
 
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                uint8_t access;
-                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                MI->ac_idx++;
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
 #endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)Val;
@@ -952,10 +952,10 @@ static void printLogicalImm64(MCInst *MI, unsigned OpNum, SStream *O)
 
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                uint8_t access;
-                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                MI->ac_idx++;
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
 #endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)Val;
@@ -1005,10 +1005,10 @@ static void printShiftedRegister(MCInst *MI, unsigned OpNum, SStream *O)
 	SStream_concat0(O, getRegisterName(MCOperand_getReg(MCInst_getOperand(MI, OpNum)), AArch64_NoRegAltName));
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                uint8_t access;
-                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                MI->ac_idx++;
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
 #endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
@@ -1097,10 +1097,10 @@ static void printExtendedRegister(MCInst *MI, unsigned OpNum, SStream *O)
 	SStream_concat0(O, getRegisterName(Reg, AArch64_NoRegAltName));
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                uint8_t access;
-                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                MI->ac_idx++;
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
 #endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
@@ -1197,10 +1197,10 @@ static void printImmScale(MCInst *MI, unsigned OpNum, SStream *O, int Scale)
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int)val;
 		} else {
 #ifndef CAPSTONE_DIET
-                        uint8_t access;
-                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                        MI->ac_idx++;
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
 #endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)val;
@@ -1221,14 +1221,14 @@ static void printUImm12Offset(MCInst *MI, unsigned OpNum, unsigned Scale, SStrea
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int)val;
 			} else {
 #ifndef CAPSTONE_DIET
-                                uint8_t access;
-                                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                                MI->ac_idx++;
+				uint8_t access;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
 #endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)val;
-			MI->flat_insn->detail->arm64.op_count++;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)val;
+				MI->flat_insn->detail->arm64.op_count++;
 			}
 		}
 	}
@@ -1257,10 +1257,10 @@ static void printPrefetchOp(MCInst *MI, unsigned OpNum, SStream *O)
 		printInt32Bang(O, prfop);
 		if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                        uint8_t access;
-                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                        MI->ac_idx++;
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
 #endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = prfop;
@@ -1278,10 +1278,10 @@ static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	SStream_concat(O, "#%.8f", FPImm);
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                uint8_t access;
-                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                MI->ac_idx++;
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
 #endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_FP;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].fp = FPImm;
@@ -1375,10 +1375,10 @@ static void printVectorList(MCInst *MI, unsigned OpNum, SStream *O, char *Layout
 			SStream_concat0(O, ", ");
 		if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                        uint8_t access;
-                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                        MI->ac_idx++;
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
 #endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = AArch64_map_vregister(Reg);
@@ -1497,10 +1497,10 @@ static void printAlignedLabel(MCInst *MI, unsigned OpNum, SStream *O)
 		printUInt64Bang(O, imm);
 		if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                        uint8_t access;
-                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                        MI->ac_idx++;
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
 #endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = imm;
@@ -1525,10 +1525,10 @@ static void printAdrpLabel(MCInst *MI, unsigned OpNum, SStream *O)
 
 		if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                        uint8_t access;
-                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                        MI->ac_idx++;
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
 #endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = imm;
@@ -1554,10 +1554,10 @@ static void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
 		SStream_concat0(O, Name);
 		if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                        uint8_t access;
-                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                        MI->ac_idx++;
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
 #endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_BARRIER;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].barrier = Val;
@@ -1567,10 +1567,10 @@ static void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
 		printUInt32Bang(O, Val);
 		if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                        uint8_t access;
-                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                        MI->ac_idx++;
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
 #endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
@@ -1589,10 +1589,10 @@ static void printMRSSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 	SStream_concat0(O, Name);
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                uint8_t access;
-                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                MI->ac_idx++;
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
 #endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG_MRS;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Val;
@@ -1610,10 +1610,10 @@ static void printMSRSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 	SStream_concat0(O, Name);
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                uint8_t access;
-                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                MI->ac_idx++;
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
 #endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG_MSR;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Val;
@@ -1632,10 +1632,10 @@ static void printSystemPStateField(MCInst *MI, unsigned OpNo, SStream *O)
 		SStream_concat0(O, Name);
 		if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                        uint8_t access;
-                        access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                        MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                        MI->ac_idx++;
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
 #endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_PSTATE;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].pstate = Val;
@@ -1644,10 +1644,10 @@ static void printSystemPStateField(MCInst *MI, unsigned OpNo, SStream *O)
 	} else {
 		printInt32Bang(O, Val);
 #ifndef CAPSTONE_DIET
-                uint8_t access;
-                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                MI->ac_idx++;
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
 #endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
@@ -1662,10 +1662,10 @@ static void printSIMDType10Operand(MCInst *MI, unsigned OpNo, SStream *O)
 	SStream_concat(O, "#%#016llx", Val);
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-                uint8_t access;
-                access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-                MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-                MI->ac_idx++;
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
 #endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)Val;

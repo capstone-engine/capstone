@@ -32,7 +32,7 @@ void arm64_op_addFP(MCInst *MI, float fp);
 
 void arm64_op_addImm(MCInst *MI, int64_t imm);
 
-cs_ac_type *arm64_get_op_access(cs_struct *h, unsigned int id);
+uint8_t *AArch64_get_op_access(cs_struct *h, unsigned int id);
 
 void AArch64_reg_access(const cs_insn *insn,
 		cs_regs regs_read, uint8_t *regs_read_count,
