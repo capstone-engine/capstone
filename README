@@ -4,6 +4,8 @@ disasm engine for binary analysis and reversing in the security community.
 Created by Nguyen Anh Quynh, then developed and maintained by a small community,
 Capstone offers some unparalleled features:
 
+**THIS FORK EXPOSES LOWER LEVEL INSTRUCTION INFORMATION CRITICAL FOR CERTAIN APPLICATIONS**
+
 - Support multiple hardware architectures: ARM, ARM64 (ARMv8), Mips, PPC, Sparc,
   SystemZ, XCore and X86 (including X86_64).
 
