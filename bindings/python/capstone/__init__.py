@@ -196,37 +196,41 @@ _lib_path = split(__file__)[0]
 _all_libs = ['capstone.dll', 'libcapstone.so.3', 'libcapstone.so', 'libcapstone.dylib']
 _found = False
 
-for _lib in _all_libs:
-    try:
-        _lib_file = join(_lib_path, _lib)
-        # print "Trying to load:", _lib_file
-        _cs = ctypes.cdll.LoadLibrary(_lib_file)
-        _found = True
-        break
-    except OSError:
-        pass
-if _found == False:
-    # try loading from default paths
+if sys.platform.startswith('win'):
+	path = ["C:\\"+x for x in os.listdir("C:\\") if "Python" in x][0]
+	_found = True if os.listdir(path+"\Lib\site-packages\capstone") in _all_libs else False
+else:
     for _lib in _all_libs:
         try:
-            _cs = ctypes.cdll.LoadLibrary(_lib)
-            _found = True
-            break
-        except OSError:
-            pass
-
-if _found == False:
-    # last try: loading from python lib directory
-    _lib_path = distutils.sysconfig.get_python_lib()
-    for _lib in _all_libs:
-        try:
-            _lib_file = join(_lib_path, 'capstone', _lib)
+            _lib_file = join(_lib_path, _lib)
             # print "Trying to load:", _lib_file
             _cs = ctypes.cdll.LoadLibrary(_lib_file)
             _found = True
             break
         except OSError:
             pass
+    if _found == False:
+        # try loading from default paths
+        for _lib in _all_libs:
+            try:
+                _cs = ctypes.cdll.LoadLibrary(_lib)
+                _found = True
+                break
+            except OSError:
+                pass
+    
+    if _found == False:
+        # last try: loading from python lib directory
+        _lib_path = distutils.sysconfig.get_python_lib()
+        for _lib in _all_libs:
+            try:
+                _lib_file = join(_lib_path, 'capstone', _lib)
+                # print "Trying to load:", _lib_file
+                _cs = ctypes.cdll.LoadLibrary(_lib_file)
+                _found = True
+                break
+            except OSError:
+                pass
 
 # Attempt Darwin specific load (10.11 specific),
 # since LD_LIBRARY_PATH is not guaranteed to exist
