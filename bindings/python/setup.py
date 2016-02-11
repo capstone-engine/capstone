@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import glob
 import os
-import platform
 import shutil
 import stat
 import sys
@@ -9,8 +8,8 @@ import sys
 from distutils import log
 from distutils import dir_util
 from distutils.command.build_clib import build_clib
-from distutils.command.sdist import sdist
-from distutils.core import setup
+from setuptools.command.sdist import sdist
+from setuptools import setup
 from distutils.sysconfig import get_python_lib
 
 # prebuilt libraries for Windows - for sdist
@@ -55,6 +54,7 @@ def copy_sources():
 
     dir_util.copy_tree("../../arch", "src/arch/")
     dir_util.copy_tree("../../include", "src/include/")
+    dir_util.copy_tree("../../msvc/headers", "src/msvc/headers")
 
     src.extend(glob.glob("../../*.[ch]"))
     src.extend(glob.glob("../../*.mk"))
@@ -77,6 +77,12 @@ class custom_sdist(sdist):
     """Reshuffle files for distribution."""
 
     def run(self):
+        for filename in glob.glob("capstone/*.{dll,so}"):
+            try:
+                os.unlink(filename)
+            except Exception:
+                pass
+
         # if prebuilt libraries are existent, then do not copy source
         if os.path.exists(PATH_LIB64) and os.path.exists(PATH_LIB32):
             return sdist.run(self)
@@ -108,10 +114,10 @@ class custom_build_clib(build_clib):
         if SYSTEM in ("win32", "cygwin"):
             # if Windows prebuilt library is available, then include it
             if is_64bits and os.path.exists(PATH_LIB64):
-                SETUP_DATA_FILES.append(PATH_LIB64)
+                shutil.copy(PATH_LIB64, "capstone")
                 return
             elif os.path.exists(PATH_LIB32):
-                SETUP_DATA_FILES.append(PATH_LIB32)
+                shutil.copy(PATH_LIB32, "capstone")
                 return
 
         # build library from source if src/ is existent
@@ -152,13 +158,12 @@ class custom_build_clib(build_clib):
                         SETUP_DATA_FILES.append("src/libcapstone.so")
 
                 os.chdir("..")
-        except:
+        except Exception:
             pass
 
 
 def dummy_src():
     return []
-
 
 setup(
     provides=['capstone'],
@@ -186,6 +191,8 @@ setup(
             sources=dummy_src()
         ),
     )],
-
-    data_files=[(SITE_PACKAGES, SETUP_DATA_FILES)],
+    zip_safe=False,
+    package_data={
+        "capstone": ["*.dll"],
+    }
 )
