@@ -5,6 +5,11 @@ set(VERSION_MAJOR 3)
 set(VERSION_MINOR 0)
 set(VERSION_PATCH 4)
 
+if(POLICY CMP0042)
+  # http://www.cmake.org/cmake/help/v3.0/policy/CMP0042.html
+  cmake_policy(SET CMP0042 NEW)
+endif(POLICY CMP0042)
+
 # to configure the options specify them in in the command line or change them in the cmake UI.
 # Don't edit the makefile!
 option(CAPSTONE_BUILD_STATIC_RUNTIME "Embed static runtime" OFF)
@@ -14,17 +19,30 @@ option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
 option(CAPSTONE_BUILD_TESTS "Build tests" ON)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 
-option(CAPSTONE_ARM_SUPPORT "ARM support" ON)
-option(CAPSTONE_ARM64_SUPPORT "ARM64 support" ON)
-option(CAPSTONE_MIPS_SUPPORT "MIPS support" ON)
-option(CAPSTONE_PPC_SUPPORT "PowerPC support" ON)
-option(CAPSTONE_SPARC_SUPPORT "Sparc support" ON)
-option(CAPSTONE_SYSZ_SUPPORT "SystemZ support" ON)
-option(CAPSTONE_XCORE_SUPPORT "XCore support" ON)
-option(CAPSTONE_X86_SUPPORT "x86 support" ON)
 option(CAPSTONE_X86_REDUCE "x86 with reduce instruction sets to minimize library" OFF)
 option(CAPSTONE_X86_ATT_DISABLE "Disable x86 AT&T syntax" OFF)
 option(CAPSTONE_OSXKERNEL_SUPPORT "Support to embed Capstone into OS X Kernel extensions" OFF)
+
+set(SUPPORTED_ARCHITECTURES ARM ARM64 MIPS PPC SPARC SYSZ XCORE X86)
+set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 MIPS PowerPC Sparc SystemZ XCore x86)
+
+list(LENGTH SUPPORTED_ARCHITECTURES count)
+math(EXPR count "${count}-1")
+# create options controlling whether support for a particular architecture is needed
+foreach(i RANGE ${count})
+  list(GET SUPPORTED_ARCHITECTURES ${i} supported_architecture)
+  list(GET SUPPORTED_ARCHITECTURE_LABELS ${i} supported_architecture_label)
+  option("CAPSTONE_${supported_architecture}_SUPPORT" "${supported_architecture_label} support" ON)
+endforeach(i)
+
+# propagate achitecture support variables to preprocessor
+foreach(supported_architecture ${SUPPORTED_ARCHITECTURES})
+  set(option_name "CAPSTONE_${supported_architecture}_SUPPORT")
+  message("Enabling ${option_name}")
+  if(${option_name})
+    add_definitions("-D${option_name}")
+  endif()
+endforeach(supported_architecture)
 
 if (CAPSTONE_BUILD_DIET)
     add_definitions(-DCAPSTONE_DIET)
