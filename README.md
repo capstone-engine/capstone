@@ -1,4 +1,4 @@
-Capstone [![Build Status](https://travis-ci.org/aquynh/capstone.svg?branch=master)](https://travis-ci.org/aquynh/capstone)
+Capstone [![Build Status](https://travis-ci.org/aquynh/capstone.svg?branch=next)](https://travis-ci.org/aquynh/capstone)
 
 Capstone is a disassembly framework with the target of becoming the ultimate
 disasm engine for binary analysis and reversing in the security community.
