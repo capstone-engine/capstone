@@ -60,3 +60,4 @@ Vincent Bénony: Explicit registers accessed for X86.
 Adel Gadllah, Francisco Alonso & Stefan Cornelius: RPM package.
 Felix Gröbert (Google): fuzz testing harness.
 Daniel Collin & Nicolas Planel: M68K architecture.
+Pranith Kumar: Explicit registers accessed for Arm64.
