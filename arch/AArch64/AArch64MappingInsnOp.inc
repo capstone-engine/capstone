@@ -7720,35 +7720,35 @@
 },
 {    /* AArch64_TBLv16i8Four, ARM64_INS_TBL: tbl    $vd.16b, $vn, $vm.16b */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_TBLv16i8One, ARM64_INS_TBL: tbl    $vd.16b, $vn, $vm.16b */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_TBLv16i8Three, ARM64_INS_TBL: tbl    $vd.16b, $vn, $vm.16b */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_TBLv16i8Two, ARM64_INS_TBL: tbl    $vd.16b, $vn, $vm.16b */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_TBLv8i8Four, ARM64_INS_TBL: tbl    $vd.8b, $vn, $vm.8b */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_TBLv8i8One, ARM64_INS_TBL: tbl    $vd.8b, $vn, $vm.8b */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_TBLv8i8Three, ARM64_INS_TBL: tbl    $vd.8b, $vn, $vm.8b */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_TBLv8i8Two, ARM64_INS_TBL: tbl    $vd.8b, $vn, $vm.8b */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_TBNZW, ARM64_INS_TBNZ: tbnz    $rt, $bit_off, $target */
 	0,
@@ -7760,35 +7760,35 @@
 },
 {    /* AArch64_TBXv16i8Four, ARM64_INS_TBX: tbx    $vd.16b, $vn, $vm.16b */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_TBXv16i8One, ARM64_INS_TBX: tbx    $vd.16b, $vn, $vm.16b */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_TBXv16i8Three, ARM64_INS_TBX: tbx    $vd.16b, $vn, $vm.16b */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_TBXv16i8Two, ARM64_INS_TBX: tbx    $vd.16b, $vn, $vm.16b */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_TBXv8i8Four, ARM64_INS_TBX: tbx    $vd.8b, $vn, $vm.8b */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_TBXv8i8One, ARM64_INS_TBX: tbx    $vd.8b, $vn, $vm.8b */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_TBXv8i8Three, ARM64_INS_TBX: tbx    $vd.8b, $vn, $vm.8b */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_TBXv8i8Two, ARM64_INS_TBX: tbx    $vd.8b, $vn, $vm.8b */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_TBZW, ARM64_INS_TBZ: tbz    $rt, $bit_off, $target */
 	0,
