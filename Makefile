@@ -121,6 +121,7 @@ DEP_ARM64 += arch/AArch64/AArch64GenSubtargetInfo.inc
 DEP_ARM64 += arch/AArch64/AArch64GenDisassemblerTables.inc
 DEP_ARM64 += arch/AArch64/AArch64GenRegisterInfo.inc
 DEP_ARM64 += arch/AArch64/AArch64MappingInsn.inc
+DEP_ARM64 += arch/AArch64/AArch64MappingInsnOp.inc
 
 LIBOBJ_ARM64 =
 ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
