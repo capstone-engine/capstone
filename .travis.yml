@@ -5,6 +5,8 @@ before_install:
 script:
         - ./make.sh
         - make check
+        - cp libcapstone.so bindings/python/
+        - cd bindings/python && make check
 compiler:
         - clang
         - gcc
