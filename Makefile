@@ -462,9 +462,9 @@ dist:
 	git archive --format=zip --prefix=capstone-$(DIST_VERSION)/ $(TAG) > capstone-$(DIST_VERSION).zip
 
 
-TESTS = test test_detail test_arm test_arm64 test_m68k test_mips test_ppc test_sparc
+TESTS = test_basic test_detail test_arm test_arm64 test_m68k test_mips test_ppc test_sparc
 TESTS += test_systemz test_x86 test_xcore test_iter
-TESTS += test.static test_detail.static test_arm.static test_arm64.static
+TESTS += test_basic.static test_detail.static test_arm.static test_arm64.static
 TESTS += test_m68k.static test_mips.static test_ppc.static test_sparc.static
 TESTS += test_systemz.static test_x86.static test_xcore.static
 TESTS += test_skipdata test_skipdata.static test_iter.static
