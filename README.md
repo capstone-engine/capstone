@@ -1,4 +1,7 @@
-Capstone [![Build Status](https://travis-ci.org/aquynh/capstone.svg?branch=next)](https://travis-ci.org/aquynh/capstone)
+Capstone Engine
+===============
+
+[![Build Status](https://travis-ci.org/aquynh/capstone.svg?branch=next)](https://travis-ci.org/aquynh/capstone)
 
 Capstone is a disassembly framework with the target of becoming the ultimate
 disasm engine for binary analysis and reversing in the security community.
@@ -35,22 +38,26 @@ Capstone offers some unparalleled features:
 Further information is available at http://www.capstone-engine.org
 
 
-[Compile]
+Compile
+-------
 
 See COMPILE.TXT file for how to compile and install Capstone.
 
 
-[Documentation]
+Documentation
+-------------
 
 See docs/README for how to customize & program your own tools with Capstone.
 
 
-[Hack]
+Hack
+----
 
 See HACK.TXT file for the structure of the source code.
 
 
-[License]
+License
+-------
 
 This project is released under the BSD license. If you redistribute the binary
 or source code of Capstone, please attach file LICENSE.TXT with your products.
