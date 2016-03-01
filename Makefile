@@ -361,7 +361,7 @@ else
 	cd tests && $(MAKE) BUILDDIR=$(BLDIR)
 endif
 ifeq ($(CAPSTONE_SHARED),yes)
-	$(INSTALL_DATA) $(LIBRARY) $(BLDIR)/tests/
+	$(INSTALL_DATA) $(LIBRARY) $(BLDIR)/tests/lib$(LIBNAME).$(VERSION_EXT)
 endif
 endif
 

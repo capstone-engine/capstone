@@ -1,7 +1,7 @@
 language: cpp
 sudo: false
 before_install:
-        - export LD_LIBRARY_PATH=`pwd`:$LD_LIBRARY_PATH
+        - export LD_LIBRARY_PATH=`pwd`/tests/:$LD_LIBRARY_PATH
 script:
         - ./make.sh
         - make check
