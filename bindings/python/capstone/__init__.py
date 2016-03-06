@@ -91,6 +91,8 @@ __all__ = [
     'CS_GRP_IRET',
 
     'CsError',
+
+    '__version__',
 ]
 
 # Capstone C interface
@@ -98,6 +100,8 @@ __all__ = [
 # API version
 CS_API_MAJOR = 3
 CS_API_MINOR = 0
+
+__version__ = "%s.%s" %(CS_API_MAJOR, CS_API_MINOR)
 
 # architectures
 CS_ARCH_ARM = 0
