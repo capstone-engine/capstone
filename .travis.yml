@@ -5,8 +5,12 @@ before_install:
 script:
         - ./make.sh
         - make check
-        - cp libcapstone.so bindings/python/
+        - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cp libcapstone.so bindings/python/; fi
+        - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cp libcapstone.dylib bindings/python/; fi
         - cd bindings/python && make check
 compiler:
         - clang
         - gcc
+os:
+        - linux
+        - osx
