@@ -1644,7 +1644,7 @@ static void printSystemPStateField(MCInst *MI, unsigned OpNo, SStream *O)
 	} else {
 		printInt32Bang(O, Val);
 #ifndef CAPSTONE_DIET
-		uint8_t access;
+		unsigned char access;
 		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
 		MI->ac_idx++;
@@ -1662,7 +1662,7 @@ static void printSIMDType10Operand(MCInst *MI, unsigned OpNo, SStream *O)
 	SStream_concat(O, "#%#016llx", Val);
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-		uint8_t access;
+		unsigned char access;
 		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
 		MI->ac_idx++;
