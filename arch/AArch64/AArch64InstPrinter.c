@@ -70,7 +70,7 @@ static void set_mem_access(MCInst *MI, bool status)
 #ifndef CAPSTONE_DIET
 		uint8_t access;
 		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm.op_count].access = access;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
 		MI->ac_idx++;
 #endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_MEM;
