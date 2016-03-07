@@ -1721,7 +1721,7 @@ static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 
 static void printBankedRegOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	uint32_t Banked = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	uint32_t Banked = (uint32_t)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	uint32_t R = (Banked & 0x20) >> 5;
 	uint32_t SysM = Banked & 0x1f;
 	char *RegNames[] = {

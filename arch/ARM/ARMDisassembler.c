@@ -3353,8 +3353,8 @@ static DecodeStatus DecodeT2LoadShift(MCInst *Inst, unsigned Insn,
 	unsigned Rt = fieldFromInstruction_4(Insn, 12, 4);
 	unsigned Rn = fieldFromInstruction_4(Insn, 16, 4);
 	uint64_t featureBits = ARM_getFeatureBits(Inst->csh->mode);
-	bool hasMP = featureBits & ARM_FeatureMP;
-	bool hasV7Ops = featureBits & ARM_HasV7Ops;
+	bool hasMP = ((featureBits & ARM_FeatureMP) != 0);
+	bool hasV7Ops = ((featureBits & ARM_HasV7Ops) != 0);
 
 	if (Rn == 15) {
 		switch (MCInst_getOpcode(Inst)) {
@@ -3437,8 +3437,8 @@ static DecodeStatus DecodeT2LoadImm8(MCInst *Inst, unsigned Insn,
 	unsigned add = fieldFromInstruction_4(Insn, 9, 1);
 
 	uint64_t featureBits = ARM_getFeatureBits(Inst->csh->mode);
-	bool hasMP = featureBits & ARM_FeatureMP;
-	bool hasV7Ops = featureBits & ARM_HasV7Ops;
+	bool hasMP = ((featureBits & ARM_FeatureMP) != 0);
+	bool hasV7Ops = ((featureBits & ARM_HasV7Ops) != 0);
 
 	imm |= (U << 8);
 	imm |= (Rn << 9);
@@ -3517,8 +3517,8 @@ static DecodeStatus DecodeT2LoadImm12(MCInst *Inst, unsigned Insn,
 	unsigned Rt = fieldFromInstruction_4(Insn, 12, 4);
 	unsigned imm = fieldFromInstruction_4(Insn, 0, 12);
 	uint64_t featureBits = ARM_getFeatureBits(Inst->csh->mode);
-	bool hasMP = featureBits & ARM_FeatureMP;
-	bool hasV7Ops = featureBits & ARM_HasV7Ops;
+	bool hasMP = ((featureBits & ARM_FeatureMP) != 0);
+	bool hasV7Ops = ((featureBits & ARM_HasV7Ops) != 0);
 
 	imm |= (Rn << 13);
 
@@ -3636,7 +3636,7 @@ static DecodeStatus DecodeT2LoadLabel(MCInst *Inst, unsigned Insn,
 	unsigned U = fieldFromInstruction_4(Insn, 23, 1);
 	int imm = fieldFromInstruction_4(Insn, 0, 12);
 	uint64_t featureBits = ARM_getFeatureBits(Inst->csh->mode);
-	bool hasV7Ops = featureBits & ARM_HasV7Ops;
+	bool hasV7Ops = ((featureBits & ARM_HasV7Ops) != 0);
 
 	if (Rt == 15) {
 		switch (MCInst_getOpcode(Inst)) {

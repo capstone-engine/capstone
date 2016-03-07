@@ -298,7 +298,7 @@ static m68k_insn s_trap_lut[] = {
 static unsigned int peek_imm_8(const m68k_info *info)  { return (m68k_read_safe_16((info), (info)->pc)&0xff); }
 static unsigned int peek_imm_16(const m68k_info *info) { return m68k_read_safe_16((info), (info)->pc); }
 static unsigned int peek_imm_32(const m68k_info *info) { return m68k_read_safe_32((info), (info)->pc); }
-static unsigned int peek_imm_64(const m68k_info *info) { return m68k_read_safe_64((info), (info)->pc); }
+static unsigned int peek_imm_64(const m68k_info *info) { return (unsigned int)m68k_read_safe_64((info), (info)->pc); }
 
 static unsigned int read_imm_8(m68k_info *info)  { const unsigned int value = peek_imm_8(info);  (info)->pc+=2; return value; }
 static unsigned int read_imm_16(m68k_info *info) { const unsigned int value = peek_imm_16(info); (info)->pc+=2; return value; }
