@@ -1,3 +1,5 @@
+os: Visual Studio 2015
+
 build_script:
   - mkdir build
   - cd build
