@@ -1,3 +1,5 @@
+version: 4.0-{build}
+
 os:
   - Visual Studio 2015
 
