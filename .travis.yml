@@ -1,0 +1,16 @@
+language: cpp
+sudo: false
+before_install:
+        - export LD_LIBRARY_PATH=`pwd`/tests/:$LD_LIBRARY_PATH
+script:
+        - ./make.sh
+        - make check
+        - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cp libcapstone.so bindings/python/; fi
+        - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cp libcapstone.dylib bindings/python/; fi
+        - cd bindings/python && make check
+compiler:
+        - clang
+        - gcc
+os:
+        - linux
+        - osx
