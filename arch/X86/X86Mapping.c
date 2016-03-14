@@ -2489,7 +2489,7 @@ struct insn_reg {
 struct insn_reg2 {
 	uint16_t insn;
 	x86_reg reg1, reg2;
-    enum cs_ac_type access1, access2;
+	enum cs_ac_type access1, access2;
 };
 
 static struct insn_reg insn_regs_att[] = {
