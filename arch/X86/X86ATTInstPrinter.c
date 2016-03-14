@@ -849,7 +849,7 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 {
 	char *mnem;
 	x86_reg reg, reg2;
-    enum cs_ac_type access1, access2;
+	enum cs_ac_type access1, access2;
 	int i;
 
 	// Output CALLpcrel32 as "callq" in 64-bit mode.
@@ -889,7 +889,7 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 	if (MI->csh->detail) {
 		uint8_t access[6];
 
-        // some instructions need to supply immediate 1 in the first op
+		// some instructions need to supply immediate 1 in the first op
 		switch(MCInst_getOpcode(MI)) {
 			default:
 				break;
@@ -980,7 +980,7 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 			MI->flat_insn->detail->x86.operands[0].type = X86_OP_REG;
 			MI->flat_insn->detail->x86.operands[0].reg = reg;
 			MI->flat_insn->detail->x86.operands[0].size = MI->csh->regsize_map[reg];
-            MI->flat_insn->detail->x86.operands[0].access = access1;
+			MI->flat_insn->detail->x86.operands[0].access = access1;
 
 			MI->flat_insn->detail->x86.op_count++;
 		} else {
@@ -989,11 +989,11 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 				MI->flat_insn->detail->x86.operands[0].type = X86_OP_REG;
 				MI->flat_insn->detail->x86.operands[0].reg = reg;
 				MI->flat_insn->detail->x86.operands[0].size = MI->csh->regsize_map[reg];
-                MI->flat_insn->detail->x86.operands[0].access = access1;
+				MI->flat_insn->detail->x86.operands[0].access = access1;
 				MI->flat_insn->detail->x86.operands[1].type = X86_OP_REG;
 				MI->flat_insn->detail->x86.operands[1].reg = reg2;
 				MI->flat_insn->detail->x86.operands[1].size = MI->csh->regsize_map[reg2];
-                MI->flat_insn->detail->x86.operands[0].access = access2;
+				MI->flat_insn->detail->x86.operands[0].access = access2;
 				MI->flat_insn->detail->x86.op_count = 2;
 			}
 		}

@@ -697,7 +697,7 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	char *mnem;
 	x86_reg reg, reg2;
-    enum cs_ac_type access1, access2;
+	enum cs_ac_type access1, access2;
 
 	// Try to print any aliases first.
 	mnem = printAliasInstr(MI, O, Info);
@@ -721,18 +721,18 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 			MI->flat_insn->detail->x86.operands[0].type = X86_OP_REG;
 			MI->flat_insn->detail->x86.operands[0].reg = reg;
 			MI->flat_insn->detail->x86.operands[0].size = MI->csh->regsize_map[reg];
-            MI->flat_insn->detail->x86.operands[0].access = access1;
+			MI->flat_insn->detail->x86.operands[0].access = access1;
 			MI->flat_insn->detail->x86.op_count++;
 		} else {
 			if (X86_insn_reg_intel2(MCInst_getOpcode(MI), &reg, &access1, &reg2, &access2)) {
 				MI->flat_insn->detail->x86.operands[0].type = X86_OP_REG;
 				MI->flat_insn->detail->x86.operands[0].reg = reg;
 				MI->flat_insn->detail->x86.operands[0].size = MI->csh->regsize_map[reg];
-                MI->flat_insn->detail->x86.operands[0].access = access1;
+				MI->flat_insn->detail->x86.operands[0].access = access1;
 				MI->flat_insn->detail->x86.operands[1].type = X86_OP_REG;
 				MI->flat_insn->detail->x86.operands[1].reg = reg2;
 				MI->flat_insn->detail->x86.operands[1].size = MI->csh->regsize_map[reg2];
-                MI->flat_insn->detail->x86.operands[1].access = access2;
+				MI->flat_insn->detail->x86.operands[1].access = access2;
 				MI->flat_insn->detail->x86.op_count = 2;
 			}
 		}
