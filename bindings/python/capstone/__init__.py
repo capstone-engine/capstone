@@ -161,6 +161,7 @@ CS_OPT_MEM = 4       # Change engine's mode at run-time
 CS_OPT_SKIPDATA = 5  # Skip data when disassembling
 CS_OPT_SKIPDATA_SETUP = 6      # Setup user-defined function for SKIPDATA option
 CS_OPT_MNEMONIC = 7  # Customize instruction mnemonic
+CS_OPT_UNSIGNED = 8  # Print immediate in unsigned form
 
 # Capstone option value
 CS_OPT_OFF = 0             # Turn OFF an option - default option of CS_OPT_DETAIL
@@ -771,6 +772,7 @@ class Cs(object):
             self._syntax = None
 
         self._detail = False  # by default, do not produce instruction details
+        self._imm_unsigned = False  # by default, print immediate operands as signed numbers
         self._diet = cs_support(CS_SUPPORT_DIET)
         self._x86reduce = cs_support(CS_SUPPORT_X86_REDUCE)
 
@@ -898,6 +900,25 @@ class Cs(object):
             raise CsError(status)
         # save detail
         self._detail = opt
+
+
+    # is detail mode enable?
+    @property
+    def imm_unsigned(self):
+        return self._imm_unsigned
+
+
+    # modify detail mode.
+    @imm_unsigned.setter
+    def imm_unsigned(self, opt):  # opt is boolean type, so must be either 'True' or 'False'
+        if opt == False:
+            status = _cs.cs_option(self.csh, CS_OPT_UNSIGNED, CS_OPT_OFF)
+        else:
+            status = _cs.cs_option(self.csh, CS_OPT_UNSIGNED, CS_OPT_ON)
+        if status != CS_ERR_OK:
+            raise CsError(status)
+        # save detail
+        self._imm_unsigned = opt
 
 
     # return disassembly mode of this engine.
