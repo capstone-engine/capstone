@@ -151,11 +151,12 @@ typedef enum cs_opt_type {
 	CS_OPT_SKIPDATA, // Skip data when disassembling. Then engine is in SKIPDATA mode.
 	CS_OPT_SKIPDATA_SETUP, // Setup user-defined function for SKIPDATA option
 	CS_OPT_MNEMONIC, // Customize instruction mnemonic
+	CS_OPT_UNSIGNED, // print immediate operands in unsigned form
 } cs_opt_type;
 
 // Runtime option value (associated with option type above)
 typedef enum cs_opt_value {
-	CS_OPT_OFF = 0,  // Turn OFF an option - default option of CS_OPT_DETAIL, CS_OPT_SKIPDATA.
+	CS_OPT_OFF = 0,  // Turn OFF an option - default for CS_OPT_DETAIL, CS_OPT_SKIPDATA, CS_OPT_UNSIGNED.
 	CS_OPT_ON = 3, // Turn ON an option (CS_OPT_DETAIL, CS_OPT_SKIPDATA).
 	CS_OPT_SYNTAX_DEFAULT = 0, // Default asm syntax (CS_OPT_SYNTAX).
 	CS_OPT_SYNTAX_INTEL, // X86 Intel asm syntax - default on X86 (CS_OPT_SYNTAX).

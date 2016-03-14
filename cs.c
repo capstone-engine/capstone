@@ -423,6 +423,10 @@ cs_err cs_option(csh ud, cs_opt_type type, size_t value)
 		default:
 			break;
 
+		case CS_OPT_UNSIGNED:
+			handle->imm_unsigned = (cs_opt_value)value;
+			return CS_ERR_OK;
+
 		case CS_OPT_DETAIL:
 			handle->detail = (cs_opt_value)value;
 			return CS_ERR_OK;
