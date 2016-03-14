@@ -31,10 +31,10 @@ const char *X86_group_name(csh handle, unsigned int id);
 // return register of given instruction id
 // return 0 if not found
 // this is to handle instructions embedding accumulate registers into AsmStrs[]
-x86_reg X86_insn_reg_intel(unsigned int id, uint8_t * imm_size);
-x86_reg X86_insn_reg_att(unsigned int id);
-bool X86_insn_reg_intel2(unsigned int id, x86_reg *reg1, x86_reg *reg2);
-bool X86_insn_reg_att2(unsigned int id, x86_reg *reg1, x86_reg *reg2);
+x86_reg X86_insn_reg_intel(unsigned int id, enum cs_ac_type *access);
+x86_reg X86_insn_reg_att(unsigned int id, enum cs_ac_type *access);
+bool X86_insn_reg_intel2(unsigned int id, x86_reg *reg1, enum cs_ac_type *access1, x86_reg *reg2, enum cs_ac_type *access2);
+bool X86_insn_reg_att2(unsigned int id, x86_reg *reg1, enum cs_ac_type *access1, x86_reg *reg2, enum cs_ac_type *access2);
 
 extern uint64_t arch_masks[9];
 

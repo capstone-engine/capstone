@@ -2483,12 +2483,13 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 struct insn_reg {
 	uint16_t insn;
 	x86_reg reg;
-	uint8_t imm_size;
+	enum cs_ac_type access;
 };
 
 struct insn_reg2 {
 	uint16_t insn;
 	x86_reg reg1, reg2;
+    enum cs_ac_type access1, access2;
 };
 
 static struct insn_reg insn_regs_att[] = {
@@ -2604,163 +2605,163 @@ static struct insn_reg insn_regs_att[] = {
 };
 
 static struct insn_reg insn_regs_intel[] = {
-	{ X86_OUTSB, X86_REG_DX },
-	{ X86_OUTSW, X86_REG_DX },
-	{ X86_OUTSL, X86_REG_DX },
+	{ X86_OUTSB, X86_REG_DX, CS_AC_WRITE },
+	{ X86_OUTSW, X86_REG_DX, CS_AC_WRITE },
+	{ X86_OUTSL, X86_REG_DX, CS_AC_WRITE },
 
-	{ X86_MOV8ao16, X86_REG_AL, 2 },     // 16-bit A0 1020                  // mov     al, byte ptr [0x2010]
-	{ X86_MOV8ao32, X86_REG_AL, 4 },     // 32-bit A0 10203040              // mov     al, byte ptr [0x40302010]
-	{ X86_MOV8ao64, X86_REG_AL, 8 },     // 64-bit 66 A0 1020304050607080   // movabs  al, byte ptr [0x8070605040302010]
+	{ X86_MOV8ao16, X86_REG_AL, CS_AC_WRITE },     // 16-bit A0 1020                  // mov     al, byte ptr [0x2010]
+	{ X86_MOV8ao32, X86_REG_AL, CS_AC_WRITE },     // 32-bit A0 10203040              // mov     al, byte ptr [0x40302010]
+	{ X86_MOV8ao64, X86_REG_AL, CS_AC_WRITE },     // 64-bit 66 A0 1020304050607080   // movabs  al, byte ptr [0x8070605040302010]
 
-	{ X86_MOV16ao16, X86_REG_AX, 2 },    // 16-bit A1 1020                  // mov     ax, word ptr [0x2010]
-	{ X86_MOV16ao32, X86_REG_AX, 4 },    // 32-bit A1 10203040              // mov     ax, word ptr [0x40302010]
-	{ X86_MOV16ao64, X86_REG_AX, 8 },    // 64-bit 66 A1 1020304050607080   // movabs  ax, word ptr [0x8070605040302010]
+	{ X86_MOV16ao16, X86_REG_AX, CS_AC_WRITE },    // 16-bit A1 1020                  // mov     ax, word ptr [0x2010]
+	{ X86_MOV16ao32, X86_REG_AX, CS_AC_WRITE },    // 32-bit A1 10203040              // mov     ax, word ptr [0x40302010]
+	{ X86_MOV16ao64, X86_REG_AX, CS_AC_WRITE },    // 64-bit 66 A1 1020304050607080   // movabs  ax, word ptr [0x8070605040302010]
 
-	{ X86_MOV32ao16, X86_REG_EAX, 2 },   // 32-bit 67 A1 1020               // mov     eax, dword ptr [0x2010]
-	{ X86_MOV32ao32, X86_REG_EAX, 4 },   // 32-bit A1 10203040              // mov     eax, dword ptr [0x40302010]
-	{ X86_MOV32ao64, X86_REG_EAX, 8 },   // 64-bit A1 1020304050607080      // movabs  eax, dword ptr [0x8070605040302010]
+	{ X86_MOV32ao16, X86_REG_EAX, CS_AC_WRITE },   // 32-bit 67 A1 1020               // mov     eax, dword ptr [0x2010]
+	{ X86_MOV32ao32, X86_REG_EAX, CS_AC_WRITE },   // 32-bit A1 10203040              // mov     eax, dword ptr [0x40302010]
+	{ X86_MOV32ao64, X86_REG_EAX, CS_AC_WRITE },   // 64-bit A1 1020304050607080      // movabs  eax, dword ptr [0x8070605040302010]
 
-	{ X86_MOV64ao32, X86_REG_RAX, 4 },   // 64-bit 48 8B04 10203040         // mov     rax, qword ptr [0x40302010]
-	{ X86_MOV64ao64, X86_REG_RAX, 8 },   // 64-bit 48 A1 1020304050607080   // movabs  rax, qword ptr [0x8070605040302010]
+	{ X86_MOV64ao32, X86_REG_RAX, CS_AC_WRITE },   // 64-bit 48 8B04 10203040         // mov     rax, qword ptr [0x40302010]
+	{ X86_MOV64ao64, X86_REG_RAX, CS_AC_WRITE },   // 64-bit 48 A1 1020304050607080   // movabs  rax, qword ptr [0x8070605040302010]
 
-	{ X86_LODSQ, X86_REG_RAX },
-	{ X86_OR32i32, X86_REG_EAX },
-	{ X86_SUB32i32, X86_REG_EAX },
-	{ X86_TEST32i32, X86_REG_EAX },
-	{ X86_ADD32i32, X86_REG_EAX },
-	{ X86_XCHG64ar, X86_REG_RAX },
-	{ X86_LODSB, X86_REG_AL },
-	{ X86_AND32i32, X86_REG_EAX },
-	{ X86_IN16ri, X86_REG_AX },
-	{ X86_CMP64i32, X86_REG_RAX },
-	{ X86_XOR32i32, X86_REG_EAX },
-	{ X86_XCHG16ar, X86_REG_AX },
-	{ X86_LODSW, X86_REG_AX },
-	{ X86_AND16i16, X86_REG_AX },
-	{ X86_ADC16i16, X86_REG_AX },
-	{ X86_XCHG32ar64, X86_REG_EAX },
-	{ X86_ADC8i8, X86_REG_AL },
-	{ X86_CMP32i32, X86_REG_EAX },
-	{ X86_AND8i8, X86_REG_AL },
-	{ X86_SCASW, X86_REG_AX },
-	{ X86_XOR8i8, X86_REG_AL },
-	{ X86_SUB16i16, X86_REG_AX },
-	{ X86_OR16i16, X86_REG_AX },
-	{ X86_XCHG32ar, X86_REG_EAX },
-	{ X86_SBB8i8, X86_REG_AL },
-	{ X86_SCASQ, X86_REG_RAX },
-	{ X86_SBB32i32, X86_REG_EAX },
-	{ X86_XOR64i32, X86_REG_RAX },
-	{ X86_SUB64i32, X86_REG_RAX },
-	{ X86_ADD64i32, X86_REG_RAX },
-	{ X86_OR8i8, X86_REG_AL },
-	{ X86_TEST64i32, X86_REG_RAX },
-	{ X86_SBB16i16, X86_REG_AX },
-	{ X86_TEST8i8, X86_REG_AL },
-	{ X86_IN8ri, X86_REG_AL },
-	{ X86_TEST16i16, X86_REG_AX },
-	{ X86_SCASL, X86_REG_EAX },
-	{ X86_SUB8i8, X86_REG_AL },
-	{ X86_ADD8i8, X86_REG_AL },
-	{ X86_OR64i32, X86_REG_RAX },
-	{ X86_SCASB, X86_REG_AL },
-	{ X86_SBB64i32, X86_REG_RAX },
-	{ X86_ADD16i16, X86_REG_AX },
-	{ X86_XOR16i16, X86_REG_AX },
-	{ X86_AND64i32, X86_REG_RAX },
-	{ X86_LODSL, X86_REG_EAX },
-	{ X86_CMP8i8, X86_REG_AL },
-	{ X86_ADC64i32, X86_REG_RAX },
-	{ X86_CMP16i16, X86_REG_AX },
-	{ X86_ADC32i32, X86_REG_EAX },
-	{ X86_IN32ri, X86_REG_EAX },
+    { X86_LODSQ, X86_REG_RAX, CS_AC_WRITE },
+    { X86_OR32i32, X86_REG_EAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_SUB32i32, X86_REG_EAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_TEST32i32, X86_REG_EAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_ADD32i32, X86_REG_EAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_XCHG64ar, X86_REG_RAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_LODSB, X86_REG_AL, CS_AC_WRITE },
+    { X86_AND32i32, X86_REG_EAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_IN16ri, X86_REG_AX, CS_AC_WRITE },
+    { X86_CMP64i32, X86_REG_RAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_XOR32i32, X86_REG_EAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_XCHG16ar, X86_REG_AX, CS_AC_WRITE | CS_AC_READ },
+    { X86_LODSW, X86_REG_AX, CS_AC_WRITE },
+    { X86_AND16i16, X86_REG_AX, CS_AC_WRITE | CS_AC_READ },
+    { X86_ADC16i16, X86_REG_AX, CS_AC_WRITE | CS_AC_READ },
+    { X86_XCHG32ar64, X86_REG_EAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_ADC8i8, X86_REG_AL, CS_AC_WRITE | CS_AC_READ },
+    { X86_CMP32i32, X86_REG_EAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_AND8i8, X86_REG_AL, CS_AC_WRITE | CS_AC_READ },
+    { X86_SCASW, X86_REG_AX, CS_AC_WRITE | CS_AC_READ },
+    { X86_XOR8i8, X86_REG_AL, CS_AC_WRITE | CS_AC_READ },
+    { X86_SUB16i16, X86_REG_AX, CS_AC_WRITE | CS_AC_READ },
+    { X86_OR16i16, X86_REG_AX, CS_AC_WRITE | CS_AC_READ },
+    { X86_XCHG32ar, X86_REG_EAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_SBB8i8, X86_REG_AL, CS_AC_WRITE | CS_AC_READ },
+    { X86_SCASQ, X86_REG_RAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_SBB32i32, X86_REG_EAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_XOR64i32, X86_REG_RAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_SUB64i32, X86_REG_RAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_ADD64i32, X86_REG_RAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_OR8i8, X86_REG_AL, CS_AC_WRITE | CS_AC_READ },
+    { X86_TEST64i32, X86_REG_RAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_SBB16i16, X86_REG_AX, CS_AC_WRITE | CS_AC_READ },
+    { X86_TEST8i8, X86_REG_AL, CS_AC_WRITE | CS_AC_READ },
+    { X86_IN8ri, X86_REG_AL, CS_AC_WRITE },
+    { X86_TEST16i16, X86_REG_AX, CS_AC_WRITE | CS_AC_READ },
+    { X86_SCASL, X86_REG_EAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_SUB8i8, X86_REG_AL, CS_AC_WRITE | CS_AC_READ },
+    { X86_ADD8i8, X86_REG_AL, CS_AC_WRITE | CS_AC_READ },
+    { X86_OR64i32, X86_REG_RAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_SCASB, X86_REG_AL, CS_AC_WRITE | CS_AC_READ },
+    { X86_SBB64i32, X86_REG_RAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_ADD16i16, X86_REG_AX, CS_AC_WRITE | CS_AC_READ },
+    { X86_XOR16i16, X86_REG_AX, CS_AC_WRITE | CS_AC_READ },
+    { X86_AND64i32, X86_REG_RAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_LODSL, X86_REG_EAX, CS_AC_WRITE },
+    { X86_CMP8i8, X86_REG_AL, CS_AC_WRITE | CS_AC_READ },
+    { X86_ADC64i32, X86_REG_RAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_CMP16i16, X86_REG_AX, CS_AC_WRITE | CS_AC_READ },
+    { X86_ADC32i32, X86_REG_EAX, CS_AC_WRITE | CS_AC_READ },
+    { X86_IN32ri, X86_REG_EAX, CS_AC_WRITE },
 
-	{ X86_PUSHCS32, X86_REG_CS },
-	{ X86_PUSHDS32, X86_REG_DS },
-	{ X86_PUSHES32, X86_REG_ES },
-	{ X86_PUSHFS32, X86_REG_FS },
-	{ X86_PUSHGS32, X86_REG_GS },
-	{ X86_PUSHSS32, X86_REG_SS },
+    { X86_PUSHCS32, X86_REG_CS, CS_AC_READ },
+    { X86_PUSHDS32, X86_REG_DS, CS_AC_READ },
+    { X86_PUSHES32, X86_REG_ES, CS_AC_READ },
+    { X86_PUSHFS32, X86_REG_FS, CS_AC_READ },
+    { X86_PUSHGS32, X86_REG_GS, CS_AC_READ },
+    { X86_PUSHSS32, X86_REG_SS, CS_AC_READ },
 
-	{ X86_PUSHFS64, X86_REG_FS },
-	{ X86_PUSHGS64, X86_REG_GS },
+    { X86_PUSHFS64, X86_REG_FS, CS_AC_READ },
+    { X86_PUSHGS64, X86_REG_GS, CS_AC_READ },
 
-	{ X86_PUSHCS16, X86_REG_CS },
-	{ X86_PUSHDS16, X86_REG_DS },
-	{ X86_PUSHES16, X86_REG_ES },
-	{ X86_PUSHFS16, X86_REG_FS },
-	{ X86_PUSHGS16, X86_REG_GS },
-	{ X86_PUSHSS16, X86_REG_SS },
+    { X86_PUSHCS16, X86_REG_CS, CS_AC_READ },
+    { X86_PUSHDS16, X86_REG_DS, CS_AC_READ },
+    { X86_PUSHES16, X86_REG_ES, CS_AC_READ },
+    { X86_PUSHFS16, X86_REG_FS, CS_AC_READ },
+    { X86_PUSHGS16, X86_REG_GS, CS_AC_READ },
+    { X86_PUSHSS16, X86_REG_SS, CS_AC_READ },
 
-	{ X86_POPDS32, X86_REG_DS },
-	{ X86_POPES32, X86_REG_ES },
-	{ X86_POPFS32, X86_REG_FS },
-	{ X86_POPGS32, X86_REG_GS },
-	{ X86_POPSS32, X86_REG_SS },
+    { X86_POPDS32, X86_REG_DS, CS_AC_WRITE },
+    { X86_POPES32, X86_REG_ES, CS_AC_WRITE },
+    { X86_POPFS32, X86_REG_FS, CS_AC_WRITE },
+    { X86_POPGS32, X86_REG_GS, CS_AC_WRITE },
+    { X86_POPSS32, X86_REG_SS, CS_AC_WRITE },
 
-	{ X86_POPFS64, X86_REG_FS },
-	{ X86_POPGS64, X86_REG_GS },
+    { X86_POPFS64, X86_REG_FS, CS_AC_WRITE },
+    { X86_POPGS64, X86_REG_GS, CS_AC_WRITE },
 
-	{ X86_POPDS16, X86_REG_DS },
-	{ X86_POPES16, X86_REG_ES },
-	{ X86_POPFS16, X86_REG_FS },
-	{ X86_POPGS16, X86_REG_GS },
-	{ X86_POPSS16, X86_REG_SS },
+    { X86_POPDS16, X86_REG_DS, CS_AC_WRITE },
+    { X86_POPES16, X86_REG_ES, CS_AC_WRITE },
+    { X86_POPFS16, X86_REG_FS, CS_AC_WRITE },
+    { X86_POPGS16, X86_REG_GS, CS_AC_WRITE },
+    { X86_POPSS16, X86_REG_SS, CS_AC_WRITE },
 
 #ifndef CAPSTONE_X86_REDUCE
-	{ X86_SKINIT, X86_REG_EAX },
-	{ X86_VMRUN32, X86_REG_EAX },
-	{ X86_VMRUN64, X86_REG_RAX },
-	{ X86_VMLOAD32, X86_REG_EAX },
-	{ X86_VMLOAD64, X86_REG_RAX },
-	{ X86_VMSAVE32, X86_REG_EAX },
-	{ X86_VMSAVE64, X86_REG_RAX },
+    { X86_SKINIT, X86_REG_EAX, CS_AC_WRITE },
+    { X86_VMRUN32, X86_REG_EAX, CS_AC_WRITE },
+    { X86_VMRUN64, X86_REG_RAX, CS_AC_WRITE },
+    { X86_VMLOAD32, X86_REG_EAX, CS_AC_WRITE },
+    { X86_VMLOAD64, X86_REG_RAX, CS_AC_WRITE },
+    { X86_VMSAVE32, X86_REG_EAX, CS_AC_READ },
+    { X86_VMSAVE64, X86_REG_RAX, CS_AC_READ },
 
-	{ X86_FNSTSW16r, X86_REG_AX },
+    { X86_FNSTSW16r, X86_REG_AX, CS_AC_WRITE },
 
-	{ X86_CMOVB_F, X86_REG_ST0 },
-	{ X86_CMOVBE_F, X86_REG_ST0 },
-	{ X86_CMOVE_F, X86_REG_ST0 },
-	{ X86_CMOVP_F, X86_REG_ST0 },
-	{ X86_CMOVNB_F, X86_REG_ST0 },
-	{ X86_CMOVNBE_F, X86_REG_ST0 },
-	{ X86_CMOVNE_F, X86_REG_ST0 },
-	{ X86_CMOVNP_F, X86_REG_ST0 },
-	{ X86_ST_FXCHST0r, X86_REG_ST0 },
-	{ X86_ST_FXCHST0r_alt, X86_REG_ST0 },
-	{ X86_ST_FCOMST0r, X86_REG_ST0 },
-	{ X86_ST_FCOMPST0r, X86_REG_ST0 },
-	{ X86_ST_FCOMPST0r_alt, X86_REG_ST0 },
-	{ X86_ST_FPST0r, X86_REG_ST0 },
-	{ X86_ST_FPST0r_alt, X86_REG_ST0 },
-	{ X86_ST_FPNCEST0r, X86_REG_ST0 },
+    { X86_CMOVB_F, X86_REG_ST0, CS_AC_WRITE },
+    { X86_CMOVBE_F, X86_REG_ST0, CS_AC_WRITE },
+    { X86_CMOVE_F, X86_REG_ST0, CS_AC_WRITE },
+    { X86_CMOVP_F, X86_REG_ST0, CS_AC_WRITE },
+    { X86_CMOVNB_F, X86_REG_ST0, CS_AC_WRITE },
+    { X86_CMOVNBE_F, X86_REG_ST0, CS_AC_WRITE },
+    { X86_CMOVNE_F, X86_REG_ST0, CS_AC_WRITE },
+    { X86_CMOVNP_F, X86_REG_ST0, CS_AC_WRITE },
+    { X86_ST_FXCHST0r, X86_REG_ST0, CS_AC_WRITE },
+    { X86_ST_FXCHST0r_alt, X86_REG_ST0, CS_AC_WRITE },
+    { X86_ST_FCOMST0r, X86_REG_ST0, CS_AC_WRITE },
+    { X86_ST_FCOMPST0r, X86_REG_ST0, CS_AC_WRITE },
+    { X86_ST_FCOMPST0r_alt, X86_REG_ST0, CS_AC_WRITE },
+    { X86_ST_FPST0r, X86_REG_ST0, CS_AC_WRITE },
+    { X86_ST_FPST0r_alt, X86_REG_ST0, CS_AC_WRITE },
+    { X86_ST_FPNCEST0r, X86_REG_ST0, CS_AC_WRITE },
 #endif
 };
 
 static struct insn_reg2 insn_regs_intel2[] = {
-	{ X86_IN8rr, X86_REG_AL, X86_REG_DX },
-	{ X86_IN16rr, X86_REG_AX, X86_REG_DX },
-	{ X86_IN32rr, X86_REG_EAX, X86_REG_DX },
+	{ X86_IN8rr, X86_REG_AL, X86_REG_DX, CS_AC_WRITE, CS_AC_READ },
+	{ X86_IN16rr, X86_REG_AX, X86_REG_DX, CS_AC_WRITE, CS_AC_READ },
+	{ X86_IN32rr, X86_REG_EAX, X86_REG_DX, CS_AC_WRITE, CS_AC_READ },
 
-	{ X86_OUT8rr, X86_REG_DX, X86_REG_AL },
-	{ X86_OUT16rr, X86_REG_DX, X86_REG_AX },
-	{ X86_OUT32rr, X86_REG_DX, X86_REG_EAX },
+	{ X86_OUT8rr, X86_REG_DX, X86_REG_AL, CS_AC_READ, CS_AC_READ },
+	{ X86_OUT16rr, X86_REG_DX, X86_REG_AX, CS_AC_READ, CS_AC_READ },
+	{ X86_OUT32rr, X86_REG_DX, X86_REG_EAX, CS_AC_READ, CS_AC_READ },
 
-	{ X86_INVLPGA32, X86_REG_EAX, X86_REG_ECX },
-	{ X86_INVLPGA64, X86_REG_RAX, X86_REG_ECX },
+	{ X86_INVLPGA32, X86_REG_EAX, X86_REG_ECX, CS_AC_READ, CS_AC_READ },
+	{ X86_INVLPGA64, X86_REG_RAX, X86_REG_ECX, CS_AC_READ, CS_AC_READ },
 };
 
 // return register of given instruction id
 // return 0 if not found
 // this is to handle instructions embedding accumulate registers into AsmStrs[]
-x86_reg X86_insn_reg_intel(unsigned int id, uint8_t * imm_size)
+x86_reg X86_insn_reg_intel(unsigned int id, enum cs_ac_type *access)
 {
 	unsigned int i;
 
 	for (i = 0; i < ARR_SIZE(insn_regs_intel); i++) {
 		if (insn_regs_intel[i].insn == id) {
-			if (imm_size)
-				*imm_size = insn_regs_intel[i].imm_size;
+			if (access)
+				*access = insn_regs_intel[i].access;
 			return insn_regs_intel[i].reg;
 		}
 	}
@@ -2769,7 +2770,7 @@ x86_reg X86_insn_reg_intel(unsigned int id, uint8_t * imm_size)
 	return 0;
 }
 
-bool X86_insn_reg_intel2(unsigned int id, x86_reg *reg1, x86_reg *reg2)
+bool X86_insn_reg_intel2(unsigned int id, x86_reg *reg1, enum cs_ac_type *access1, x86_reg *reg2, enum cs_ac_type *access2)
 {
 	unsigned int i;
 
@@ -2777,6 +2778,10 @@ bool X86_insn_reg_intel2(unsigned int id, x86_reg *reg1, x86_reg *reg2)
 		if (insn_regs_intel2[i].insn == id) {
 			*reg1 = insn_regs_intel2[i].reg1;
 			*reg2 = insn_regs_intel2[i].reg2;
+            if (access1)
+                *access1 = insn_regs_intel2[i].access1;
+            if (access2)
+                *access2 = insn_regs_intel2[i].access2;
 			return true;
 		}
 	}
@@ -2786,7 +2791,7 @@ bool X86_insn_reg_intel2(unsigned int id, x86_reg *reg1, x86_reg *reg2)
 }
 
 // ATT just reuses Intel data, but with the order of registers reversed
-bool X86_insn_reg_att2(unsigned int id, x86_reg *reg1, x86_reg *reg2)
+bool X86_insn_reg_att2(unsigned int id, x86_reg *reg1, enum cs_ac_type *access1, x86_reg *reg2, enum cs_ac_type *access2)
 {
 	unsigned int i;
 
@@ -2795,6 +2800,10 @@ bool X86_insn_reg_att2(unsigned int id, x86_reg *reg1, x86_reg *reg2)
 			// reverse order of Intel syntax registers
 			*reg1 = insn_regs_intel2[i].reg2;
 			*reg2 = insn_regs_intel2[i].reg1;
+            if (access1)
+                *access1 = insn_regs_intel2[i].access2;
+            if (access2)
+                *access2 = insn_regs_intel2[i].access1;
 			return true;
 		}
 	}
@@ -2803,12 +2812,14 @@ bool X86_insn_reg_att2(unsigned int id, x86_reg *reg1, x86_reg *reg2)
 	return false;
 }
 
-x86_reg X86_insn_reg_att(unsigned int id)
+x86_reg X86_insn_reg_att(unsigned int id, enum cs_ac_type *access)
 {
 	unsigned int i;
 
 	for (i = 0; i < ARR_SIZE(insn_regs_att); i++) {
 		if (insn_regs_att[i].insn == id) {
+            if (access)
+                *access = insn_regs_intel[i].access;
 			return insn_regs_att[i].reg;
 		}
 	}
