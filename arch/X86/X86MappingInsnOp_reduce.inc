@@ -2871,7 +2871,7 @@
 },
 {	/* X86_MOV16ao64, X86_INS_MOVABS: movabs{w}	ax, $src */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV16mi, X86_INS_MOV: mov{w}	$dst, $src */
 	0,
@@ -2939,7 +2939,7 @@
 },
 {	/* X86_MOV32ao64, X86_INS_MOVABS: movabs{l}	eax, $src */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV32cr, X86_INS_MOV: mov{l}	$dst, $src */
 	0,
@@ -3019,7 +3019,7 @@
 },
 {	/* X86_MOV64ao64, X86_INS_MOVABS: movabs{q}	rax, $src */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV64cr, X86_INS_MOV: mov{q}	$dst, $src */
 	0,
@@ -3099,7 +3099,7 @@
 },
 {	/* X86_MOV8ao64, X86_INS_MOVABS: movabs{b}	al, $src */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV8mi, X86_INS_MOV: mov{b}	$dst, $src */
 	0,
