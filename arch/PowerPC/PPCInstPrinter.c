@@ -564,20 +564,20 @@ static void printBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	int imm;
+	int64_t imm;
 
 	if (!MCOperand_isImm(MCInst_getOperand(MI, OpNo))) {
 		printOperand(MI, OpNo, O);
 		return;
 	}
 
-	imm = ((int)MCOperand_getImm(MCInst_getOperand(MI, OpNo)) << 2);
+	imm = MCOperand_getImm(MCInst_getOperand(MI, OpNo)) << 2;
 
 	if (!PPC_abs_branch(MI->csh, MCInst_getOpcode(MI))) {
-		imm = (int)MI->address + imm;
+		imm = MI->address + imm;
 	}
 
-	SStream_concat(O, "0x%x", imm);
+	SStream_concat(O, "0x%"PRIx64, imm);
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
