@@ -1,5 +1,5 @@
 ifndef BUILDDIR
-OBJDIR = ./build
+OBJDIR = build
 else
 OBJDIR = $(abspath $(BUILDDIR))/obj/bindings/python
 endif
