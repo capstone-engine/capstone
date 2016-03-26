@@ -3,9 +3,40 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>capstoneengine</groupId>
+    <groupId>org.capstoneengine</groupId>
     <artifactId>capstone</artifactId>
-    <version>3.0-SNAPSHOT</version>
+    <version>3.0.4-SNAPSHOT</version>
+    
+    <name>Capstone Engine Java binding</name>
+    <description>Capstone is a lightweight multi-platform, multi-architecture disassembly framework. This Java wrapper allows to access the native libraries from Java, easily.</description>
+    <url>http://www.capstone-engine.org/</url>
+    <licenses>
+      <license>
+        <name>BSD license</name>
+        <url>https://github.com/aquynh/capstone/blob/master/LICENSE.TXT</url>
+      </license>
+    </licenses>
+    <developers>
+      <developer>
+        <name>Nguyen Anh Quynh</name>
+        <email>aquynh@gmail.com</email>
+        <organization>Capstone Engine</organization>
+        <organizationUrl>http://www.capstone-engine.org/</organizationUrl>
+      </developer>
+      <developer>
+        <name>Hoang-Vu Dang</name>
+        <email>danghvu@gmail.com</email>
+        <organization>VnSecurity</organization>
+        <organizationUrl>http://www.vnsecurity.net/</organizationUrl>
+      </developer>
+    </developers>
+    
+    <scm>
+      <connection>scm:git:git@github.com:aquynh/capstone.git</connection>
+      <developerConnection>scm:git:git@github.com:aquynh/capstone.git</developerConnection>
+      <url>git@github.com:aquynh/capstone.git</url>
+    </scm>
+    
     <dependencies>
         <dependency>
             <groupId>net.java.dev.jna</groupId>
