@@ -9,7 +9,8 @@
     <packaging>jar</packaging>
     
     <name>Capstone Engine Java binding</name>
-    <description>Capstone is a lightweight multi-platform, multi-architecture disassembly framework. This Java wrapper allows to access the native libraries from Java, easily.</description>
+    <description>Capstone is a lightweight multi-platform, multi-architecture disassembly framework. This
+    Java wrapper allows to access the native libraries from Java, easily.</description>
     <url>http://www.capstone-engine.org</url>
     <licenses>
       <license>
