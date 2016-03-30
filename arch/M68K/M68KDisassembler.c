@@ -905,8 +905,8 @@ static void build_movem_re(m68k_info *info, int opcode, int size)
 
 	get_ea_mode_op(info, op1, info->ir, size);
 
-        if (op1->address_mode == M68K_AM_REGI_ADDR_PRE_DEC)
-                op0->register_bits = reverse_bits(op0->register_bits);
+	if (op1->address_mode == M68K_AM_REGI_ADDR_PRE_DEC)
+		op0->register_bits = reverse_bits(op0->register_bits);
 }
 
 static void build_movem_er(m68k_info *info, int opcode, int size)
