@@ -1,5 +1,6 @@
 // Capstone Java binding
 // By Nguyen Anh Quynh & Dang Hoang Vu,  2013
+// Andreas "PAX" L&uuml;ck <onkelpax-git@yahoo.de>, 2016 
 package capstone;
 
 import static capstone.Mips_const.MIPS_OP_IMM;
