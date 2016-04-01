@@ -9,7 +9,7 @@
 // MSVC
 
 // stdbool.h
-#if (_MSC_VER < 1800)
+#if (_MSC_VER < 1800) || defined(_KERNEL_MODE)
 #ifndef __cplusplus
 typedef unsigned char bool;
 #define false 0
