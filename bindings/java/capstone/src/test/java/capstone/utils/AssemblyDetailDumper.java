@@ -77,6 +77,9 @@ public abstract class AssemblyDetailDumper {
 			dumper.printInstructionDetails(asm);
 		}
 
-		return dumper.getInstructionDetailsAndClose();
+		final String details= dumper.getInstructionDetailsAndClose();
+		System.out.println(details);
+		
+		return details;
 	}
 }
