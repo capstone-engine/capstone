@@ -76,7 +76,7 @@ public class TestSystemz extends TestTemplate {
 	}
 
 	@Test
-	public void test16bitIntelSyntax() throws Exception {
+	public void testSystemZNormalSyntax() throws Exception {
 		// SystemZ
 		CsInsn[] disassembly = createDisassembler(Capstone.CS_ARCH_SYSZ, 0, hexString2Byte(SYSZ_CODE));
 		assertDisassembly("/SystemZ/assembly_normal_syntax.asm", createDisassemblyDetails(disassembly));
