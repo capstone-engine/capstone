@@ -149,10 +149,10 @@ static void test()
 			printf("Disasm:\n");
 
 			for (j = 0; j < count; j++) {
-				printf("0x%"PRIx64":\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
+				printf("0x%" PRIx64 ":\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
 				print_insn_detail(&insn[j]);
 			}
-			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
+			printf("0x%" PRIx64 ":\n", insn[j-1].address + insn[j-1].size);
 
 			// free memory allocated by cs_disasm()
 			cs_free(insn, count);
