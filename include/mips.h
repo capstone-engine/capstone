@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-#include <stdint.h>
+#include "../myinttypes.h"
 #include "platform.h"
 
 // GCC MIPS toolchain has a default macro called "mips" which breaks
