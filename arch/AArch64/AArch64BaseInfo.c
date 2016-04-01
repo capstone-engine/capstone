@@ -642,7 +642,7 @@ void A64SysRegMapper_toString(A64SysRegMapper *S, uint32_t Bits, bool *Valid, ch
 	Op2S = utostr(Op2, false);
 
 	//printf("Op1S: %s, CRnS: %s, CRmS: %s, Op2S: %s\n", Op1S, CRnS, CRmS, Op2S);
-	dummy = sprintf(result, "s3_%s_c%s_c%s_%s", Op1S, CRnS, CRmS, Op2S);
+	dummy = cs_snprintf(result, 128, "s3_%s_c%s_c%s_%s", Op1S, CRnS, CRmS, Op2S);
 	(void)dummy;
 
 	cs_mem_free(Op1S);
