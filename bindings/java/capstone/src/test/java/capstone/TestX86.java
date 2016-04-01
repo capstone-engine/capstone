@@ -15,12 +15,12 @@ import capstone.Capstone.CsInsn;
 import capstone.utils.AssemblyDetailDumper;
 
 public class TestX86 extends TestTemplate {
-	private static final String X86_CODE64 = "55488b05b8130000";
-	
 	private static final String X86_CODE16 = "8d4c320801d881c6341200000523010000368b849123010000418d8439896700008d8789670000b4c6";
 	
 	private static final String X86_CODE32 = "8d4c320801d881c6341200000523010000368b849123010000418d8439896700008d8789670000b4c6";
 
+	private static final String X86_CODE64 = "55488b05b8130000";
+	
 	private static class X86DetailDumper extends AssemblyDetailDumper {
 		public X86DetailDumper(Capstone disassembler, CsInsn[] disassembly) {
 			super(disassembler, disassembly);
