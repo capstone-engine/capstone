@@ -75,8 +75,8 @@ public class TestPpc extends TestTemplate {
 	}
 
 	@Test
-	public void test16bitIntelSyntax() throws Exception {
-		// X86 16bit (Intel syntax)
+	public void testPPCBigEndianNormalSyntax() throws Exception {
+		// PPC-64
 		CsInsn[] disassembly = createDisassembler(Capstone.CS_ARCH_PPC, Capstone.CS_MODE_BIG_ENDIAN,
 				hexString2Byte(PPC_CODE));
 		assertDisassembly("/PPC/BigEndian/assembly_normal_syntax.asm", createDisassemblyDetails(disassembly));
