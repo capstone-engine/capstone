@@ -142,6 +142,7 @@ public class TestX86 extends TestTemplate {
 
 	@Test
 	public void test16bitIntelSyntax() throws Exception {
+		// X86 16bit (Intel syntax)
 		CsInsn[] disassembly = createDisassembler(Capstone.CS_ARCH_X86, Capstone.CS_MODE_16,
 				hexString2Byte(X86_CODE16));
 		assertDisassembly("/X86/16/assembly_intel_syntax.asm", createDisassemblyDetails(disassembly));
@@ -149,6 +150,7 @@ public class TestX86 extends TestTemplate {
 
 	@Test
 	public void test32bitAttSyntax() throws Exception {
+		// X86 32 (AT&T syntax)
 		CsInsn[] disassembly = createDisassembler(Capstone.CS_ARCH_X86, Capstone.CS_MODE_32, Capstone.CS_OPT_SYNTAX_ATT,
 				hexString2Byte(X86_CODE32));
 		assertDisassembly("/X86/32/assembly_att_syntax.asm", createDisassemblyDetails(disassembly));
@@ -156,6 +158,7 @@ public class TestX86 extends TestTemplate {
 
 	@Test
 	public void test32bitIntelSyntax() throws Exception {
+		// X86 32 (Intel syntax)
 		CsInsn[] disassembly = createDisassembler(Capstone.CS_ARCH_X86, Capstone.CS_MODE_32,
 				hexString2Byte(X86_CODE32));
 		assertDisassembly("/X86/32/assembly_intel_syntax.asm", createDisassemblyDetails(disassembly));
@@ -163,6 +166,7 @@ public class TestX86 extends TestTemplate {
 
 	@Test
 	public void test64bitIntelSyntax() throws Exception {
+		// X86 64 (Intel syntax)
 		CsInsn[] disassembly = createDisassembler(Capstone.CS_ARCH_X86, Capstone.CS_MODE_64,
 				hexString2Byte(X86_CODE64));
 		assertDisassembly("/X86/64/assembly_intel_syntax.asm", createDisassemblyDetails(disassembly));
