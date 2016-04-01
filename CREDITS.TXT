@@ -58,3 +58,4 @@ Michael Cohen & Nguyen Tan Cong: Python module installer.
 Adel Gadllah, Francisco Alonso & Stefan Cornelius: RPM package.
 Felix Gröbert (Google): fuzz testing harness.
 Xipiter LLC: Capstone logo redesigned.
+Andreas "PAX" Lück: Migration of Java binding into Maven project.
