@@ -3025,7 +3025,7 @@ static void d68000_roxr_r_32(m68k_info *info)
 
 static void d68000_roxr_ea(m68k_info *info)
 {
-	build_ea(info, M68K_INS_ROL, 2);
+	build_ea(info, M68K_INS_ROXR, 2);
 }
 
 static void d68000_roxl_s_8(m68k_info *info)
