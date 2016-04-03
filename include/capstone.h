@@ -22,8 +22,7 @@ extern "C" {
 #ifdef _MSC_VER
 #pragma warning(disable:4201)
 #pragma warning(disable:4100)
-#define CAPSTONE_API __stdcall
-#define CAPSTONE_CDECL __cdecl
+#define CAPSTONE_API __cdecl
 #ifdef CAPSTONE_SHARED
 #define CAPSTONE_EXPORT __declspec(dllexport)
 #else    // defined(CAPSTONE_STATIC)
@@ -31,7 +30,6 @@ extern "C" {
 #endif
 #else
 #define CAPSTONE_API
-#define CAPSTONE_CDECL
 #ifdef __GNUC__
 #define CAPSTONE_EXPORT __attribute__((visibility("default")))
 #else
@@ -103,11 +101,11 @@ typedef enum cs_mode {
 	CS_MODE_MIPS64 = CS_MODE_64,	// Mips64 ISA (Mips)
 } cs_mode;
 
-typedef void* (CAPSTONE_CDECL*cs_malloc_t)(size_t size);
-typedef void* (CAPSTONE_CDECL*cs_calloc_t)(size_t nmemb, size_t size);
-typedef void* (CAPSTONE_CDECL*cs_realloc_t)(void *ptr, size_t size);
-typedef void (CAPSTONE_CDECL*cs_free_t)(void *ptr);
-typedef int (CAPSTONE_CDECL*cs_vsnprintf_t)(char *str, size_t size, const char *format, va_list ap);
+typedef void* (CAPSTONE_API*cs_malloc_t)(size_t size);
+typedef void* (CAPSTONE_API*cs_calloc_t)(size_t nmemb, size_t size);
+typedef void* (CAPSTONE_API*cs_realloc_t)(void *ptr, size_t size);
+typedef void (CAPSTONE_API*cs_free_t)(void *ptr);
+typedef int (CAPSTONE_API*cs_vsnprintf_t)(char *str, size_t size, const char *format, va_list ap);
 
 
 // User-defined dynamic memory related functions: malloc/calloc/realloc/free/vsnprintf()
