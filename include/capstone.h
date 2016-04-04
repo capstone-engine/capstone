@@ -172,7 +172,7 @@ typedef enum cs_group_type {
 
  @return: return number of bytes to skip, or 0 to immediately stop disassembling.
 */
-typedef size_t (*cs_skipdata_cb_t)(const uint8_t *code, size_t code_size, size_t offset, void *user_data);
+typedef size_t (CAPSTONE_API*cs_skipdata_cb_t)(const uint8_t *code, size_t code_size, size_t offset, void *user_data);
 
 // User-customized setup for SKIPDATA option
 typedef struct cs_opt_skipdata {
