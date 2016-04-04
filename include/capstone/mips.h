@@ -27,31 +27,6 @@ typedef enum mips_op_type {
 	MIPS_OP_MEM, // = CS_OP_MEM (Memory operand).
 } mips_op_type;
 
-// Instruction's operand referring to memory
-// This is associated with MIPS_OP_MEM operand type above
-typedef struct mips_op_mem {
-	unsigned int base;	// base register
-	int64_t disp;	// displacement/offset value
-} mips_op_mem;
-
-// Instruction operand
-typedef struct cs_mips_op {
-	mips_op_type type;	// operand type
-	union {
-		unsigned int reg;	// register value for REG operand
-		int64_t imm;		// immediate value for IMM operand
-		mips_op_mem mem;	// base/index/scale/disp value for MEM operand
-	};
-} cs_mips_op;
-
-// Instruction structure
-typedef struct cs_mips {
-	// Number of operands of this instruction, 
-	// or 0 when instruction has no operand.
-	uint8_t op_count;
-	cs_mips_op operands[8]; // operands for this instruction.
-} cs_mips;
-
 //> MIPS registers
 typedef enum mips_reg {
 	MIPS_REG_INVALID = 0,
@@ -254,6 +229,31 @@ typedef enum mips_reg {
 	MIPS_REG_LO2 = MIPS_REG_HI2,
 	MIPS_REG_LO3 = MIPS_REG_HI3,
 } mips_reg;
+
+// Instruction's operand referring to memory
+// This is associated with MIPS_OP_MEM operand type above
+typedef struct mips_op_mem {
+	mips_reg base;	// base register
+	int64_t disp;	// displacement/offset value
+} mips_op_mem;
+
+// Instruction operand
+typedef struct cs_mips_op {
+	mips_op_type type;	// operand type
+	union {
+		mips_reg reg;		// register value for REG operand
+		int64_t imm;		// immediate value for IMM operand
+		mips_op_mem mem;	// base/index/scale/disp value for MEM operand
+	};
+} cs_mips_op;
+
+// Instruction structure
+typedef struct cs_mips {
+	// Number of operands of this instruction, 
+	// or 0 when instruction has no operand.
+	uint8_t op_count;
+	cs_mips_op operands[8]; // operands for this instruction.
+} cs_mips;
 
 //> MIPS instruction
 typedef enum mips_insn {
