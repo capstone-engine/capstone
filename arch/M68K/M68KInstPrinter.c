@@ -171,7 +171,7 @@ void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 			SStream_concat(O, "(");
 
 			if (op->address_mode == M68K_AM_PCI_INDEX_BASE_DISP) {
-			    SStream_concat(O, "pc,%s%s.%c", getRegName(op->mem.index_reg), s_spacing, op->mem.index_size ? 'l' : 'w');
+			    SStream_concat(O, "pc,%s.%c", getRegName(op->mem.index_reg), op->mem.index_size ? 'l' : 'w');
 			} else {
 				if (op->mem.base_reg != M68K_REG_INVALID)
 					SStream_concat(O, "a%d,%s", op->mem.base_reg - M68K_REG_A0, s_spacing);
