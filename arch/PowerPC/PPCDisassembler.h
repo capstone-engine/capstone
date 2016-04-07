@@ -4,8 +4,6 @@
 #ifndef CS_PPCDISASSEMBLER_H
 #define CS_PPCDISASSEMBLER_H
 
-#include <stdint.h>
-
 #include "capstone/capstone.h"
 #include "../../MCRegisterInfo.h"
 #include "../../MCInst.h"

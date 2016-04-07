@@ -25,8 +25,6 @@
 #ifndef CS_X86_DISASSEMBLERDECODERCOMMON_H
 #define CS_X86_DISASSEMBLERDECODERCOMMON_H
 
-#include <stdint.h>
-
 #define INSTRUCTIONS_SYM  x86DisassemblerInstrSpecifiers
 #define CONTEXTS_SYM      x86DisassemblerContexts
 #define ONEBYTE_SYM       x86DisassemblerOneByteOpcodes

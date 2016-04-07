@@ -4,8 +4,6 @@
 #ifndef CS_SYSZDISASSEMBLER_H
 #define CS_SYSZDISASSEMBLER_H
 
-#include <stdint.h>
-
 #include "capstone/capstone.h"
 #include "../../MCRegisterInfo.h"
 #include "../../MCInst.h"
