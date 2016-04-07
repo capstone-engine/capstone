@@ -180,7 +180,7 @@ typedef enum sparc_reg {
 // This is associated with SPARC_OP_MEM operand type above
 typedef struct sparc_op_mem {
 	uint8_t base;		// base register, can be safely interpreted as
-                                // a value of type `sparc_reg`, but it is only
+				// a value of type `sparc_reg`, but it is only
 				// one byte wide
 	uint8_t index;		// index register, same conditions apply here
 	int32_t disp;		// displacement/offset value
