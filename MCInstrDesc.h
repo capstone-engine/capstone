@@ -18,7 +18,6 @@
 #ifndef CS_LLVM_MC_MCINSTRDESC_H
 #define CS_LLVM_MC_MCINSTRDESC_H
 
-#include <stdint.h>
 #include "capstone/platform.h"
 
 //===----------------------------------------------------------------------===//

@@ -8,7 +8,6 @@
 extern "C" {
 #endif
 
-#include <stdint.h>
 #include <stdarg.h>
 #if defined(CAPSTONE_HAS_OSXKERNEL)
 #include <libkern/libkern.h>

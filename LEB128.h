@@ -18,7 +18,7 @@
 #ifndef CS_LLVM_SUPPORT_LEB128_H
 #define CS_LLVM_SUPPORT_LEB128_H
 
-#include <stdint.h>
+#include "include/capstone/capstone.h"
 
 /// Utility function to decode a ULEB128 value.
 static inline uint64_t decodeULEB128(const uint8_t *p, unsigned *n)

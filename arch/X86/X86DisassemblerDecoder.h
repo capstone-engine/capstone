@@ -24,7 +24,6 @@
 #else
 #include <stdio.h>
 #endif
-#include <stdint.h>
 
 #include "X86DisassemblerDecoderCommon.h"
 
