@@ -1,0 +1,13 @@
+# Object files
+*.obj
+
+# Libraries
+*.lib
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+
+# VisualStudio
+*.exp
+*.map
+*.pdb

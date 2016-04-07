@@ -5,7 +5,6 @@
 #define CS_M68KDISASSEMBLER_H
 
 #include "../../MCInst.h"
-#include <stdint.h>
 
 /* Private, For internal use only */
 typedef struct m68k_info {

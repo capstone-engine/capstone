@@ -5,6 +5,12 @@
 #ifndef CAPSTONE_PLATFORM_H
 #define CAPSTONE_PLATFORM_H
 
+#if defined(_WIN32_WCE) && (_WIN32_WCE < 0x800)
+#include "windowsce/stdint.h"
+#else // Platforms where stdint.h is provided
+#include <stdint.h>
+#endif
+
 #if !defined(__CYGWIN__) && !defined(__MINGW32__) && !defined(__MINGW64__) && (defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64))
 // MSVC
 
