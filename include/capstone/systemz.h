@@ -90,8 +90,10 @@ typedef enum sysz_reg {
 // Instruction's operand referring to memory
 // This is associated with SYSZ_OP_MEM operand type above
 typedef struct sysz_op_mem {
-	sysz_reg base;		// base register
-	sysz_reg index;		// index register
+	uint8_t base;		// base register, can be safely interpreted as
+                                // a value of type `sysz_reg`, but it is only
+				// one byte wide
+	uint8_t index;		// index register, same conditions apply here
 	uint64_t length;	// BDLAddr operand
 	int64_t disp;	// displacement/offset value
 } sysz_op_mem;
