@@ -30,7 +30,7 @@ static void print_string_hex(unsigned char *str, size_t len)
 	printf("\n");
 }
 
-static size_t CAPSTONE_API mycallback(const uint8_t *buffer, size_t buffer_size, size_t offset, void *p)
+static size_t mycallback(const uint8_t *buffer, size_t buffer_size, size_t offset, void *p)
 {
 	// always skip 2 bytes when encountering data
 	return 2;
@@ -72,7 +72,7 @@ static void test()
 			(unsigned char*)X86_CODE32,
 			sizeof(X86_CODE32) - 1,
 			"X86 32 (Intel syntax) - Skip data with custom mnemonic",
-			CS_OPT_NONE,
+			CS_OPT_INVALID,
 			CS_OPT_OFF,
 			CS_OPT_SKIPDATA_SETUP,
 			(size_t) &skipdata,
@@ -83,7 +83,7 @@ static void test()
 			(unsigned char*)RANDOM_CODE,
 			sizeof(RANDOM_CODE) - 1,
 			"Arm - Skip data with callback",
-			CS_OPT_NONE,
+			CS_OPT_INVALID,
 			CS_OPT_OFF,
 			CS_OPT_SKIPDATA_SETUP,
 			(size_t) &skipdata_callback,
