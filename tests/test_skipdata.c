@@ -30,7 +30,7 @@ static void print_string_hex(unsigned char *str, size_t len)
 	printf("\n");
 }
 
-static size_t mycallback(const uint8_t *buffer, size_t buffer_size, size_t offset, void *p)
+static size_t CAPSTONE_API mycallback(const uint8_t *buffer, size_t buffer_size, size_t offset, void *p)
 {
 	// always skip 2 bytes when encountering data
 	return 2;
