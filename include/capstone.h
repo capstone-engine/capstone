@@ -120,7 +120,7 @@ typedef struct cs_opt_mem {
 
 // Runtime option for the disassembled engine
 typedef enum cs_opt_type {
-	CS_OPT_NONE = 0,	// No opetion specified
+	CS_OPT_INVALID = 0,	// No opetion specified
 	CS_OPT_SYNTAX,	// Assembly output syntax
 	CS_OPT_DETAIL,	// Break down instruction structure into details
 	CS_OPT_MODE,	// Change engine's mode at run-time
@@ -172,7 +172,7 @@ typedef enum cs_group_type {
 
  @return: return number of bytes to skip, or 0 to immediately stop disassembling.
 */
-typedef size_t (CAPSTONE_API*cs_skipdata_cb_t)(const uint8_t *code, size_t code_size, size_t offset, void *user_data);
+typedef size_t (*cs_skipdata_cb_t)(const uint8_t *code, size_t code_size, size_t offset, void *user_data);
 
 // User-customized setup for SKIPDATA option
 typedef struct cs_opt_skipdata {
