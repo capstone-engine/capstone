@@ -101,11 +101,11 @@ typedef enum cs_mode {
 	CS_MODE_MIPS64 = CS_MODE_64,	// Mips64 ISA (Mips)
 } cs_mode;
 
-typedef void* (CAPSTONE_API*cs_malloc_t)(size_t size);
-typedef void* (CAPSTONE_API*cs_calloc_t)(size_t nmemb, size_t size);
-typedef void* (CAPSTONE_API*cs_realloc_t)(void *ptr, size_t size);
-typedef void (CAPSTONE_API*cs_free_t)(void *ptr);
-typedef int (CAPSTONE_API*cs_vsnprintf_t)(char *str, size_t size, const char *format, va_list ap);
+typedef void* (CAPSTONE_API *cs_malloc_t)(size_t size);
+typedef void* (CAPSTONE_API *cs_calloc_t)(size_t nmemb, size_t size);
+typedef void* (CAPSTONE_API *cs_realloc_t)(void *ptr, size_t size);
+typedef void (CAPSTONE_API *cs_free_t)(void *ptr);
+typedef int (CAPSTONE_API *cs_vsnprintf_t)(char *str, size_t size, const char *format, va_list ap);
 
 
 // User-defined dynamic memory related functions: malloc/calloc/realloc/free/vsnprintf()
@@ -172,7 +172,7 @@ typedef enum cs_group_type {
 
  @return: return number of bytes to skip, or 0 to immediately stop disassembling.
 */
-typedef size_t (CAPSTONE_API*cs_skipdata_cb_t)(const uint8_t *code, size_t code_size, size_t offset, void *user_data);
+typedef size_t (CAPSTONE_API *cs_skipdata_cb_t)(const uint8_t *code, size_t code_size, size_t offset, void *user_data);
 
 // User-customized setup for SKIPDATA option
 typedef struct cs_opt_skipdata {
