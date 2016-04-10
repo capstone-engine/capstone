@@ -30,7 +30,7 @@ static void print_string_hex(unsigned char *str, size_t len)
 	printf("\n");
 }
 
-static size_t mycallback(const uint8_t *buffer, size_t buffer_size, size_t offset, void *p)
+static size_t CAPSTONE_API mycallback(const uint8_t *buffer, size_t buffer_size, size_t offset, void *p)
 {
 	// always skip 2 bytes when encountering data
 	return 2;
@@ -72,7 +72,8 @@ static void test()
 			(unsigned char*)X86_CODE32,
 			sizeof(X86_CODE32) - 1,
 			"X86 32 (Intel syntax) - Skip data with custom mnemonic",
-			0, 0,
+			CS_OPT_INVALID,
+			CS_OPT_OFF,
 			CS_OPT_SKIPDATA_SETUP,
 			(size_t) &skipdata,
 		},
@@ -82,7 +83,8 @@ static void test()
 			(unsigned char*)RANDOM_CODE,
 			sizeof(RANDOM_CODE) - 1,
 			"Arm - Skip data with callback",
-			0, 0,
+			CS_OPT_INVALID,
+			CS_OPT_OFF,
 			CS_OPT_SKIPDATA_SETUP,
 			(size_t) &skipdata_callback,
 		},
@@ -119,12 +121,12 @@ static void test()
 			printf("Disasm:\n");
 
 			for (j = 0; j < count; j++) {
-				printf("0x%"PRIx64":\t%s\t\t%s\n",
+				printf("0x%" PRIx64 ":\t%s\t\t%s\n",
 						insn[j].address, insn[j].mnemonic, insn[j].op_str);
 			}
 
 			// print out the next offset, after the last insn
-			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
+			printf("0x%" PRIx64 ":\n", insn[j-1].address + insn[j-1].size);
 
 			// free memory allocated by cs_disasm()
 			cs_free(insn, count);

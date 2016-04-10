@@ -4,10 +4,10 @@
 #ifndef CS_MYINTTYPES_H
 #define CS_MYINTTYPES_H
 
-#if defined(CAPSTONE_HAS_OSXKERNEL) || (defined(_MSC_VER) && _MSC_VER <= 1700)
+#if defined(CAPSTONE_HAS_OSXKERNEL) || (defined(_MSC_VER) && (_MSC_VER <= 1700 || defined(_KERNEL_MODE)))
 // this system does not have inttypes.h
 
-#if defined(_MSC_VER) && _MSC_VER <= 1700
+#if defined(_MSC_VER) && (_MSC_VER <= 1700 || defined(_KERNEL_MODE))
 typedef signed char  int8_t;
 typedef signed short int16_t;
 typedef signed int   int32_t;
