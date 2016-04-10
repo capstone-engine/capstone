@@ -81,12 +81,16 @@ packages/freebsd/ports/devel/capstone/distinfo
 
 # VisualStudio
 Debug/
+Debug_WDK/
 Release/
+Release_WDK/
 ipch/
 *.sdf
 *.opensdf
 *.suo
 *.user
+*.VC.db
+*.VC.opendb
 
 # Xcode
 xcode/Capstone.xcodeproj/xcuserdata
