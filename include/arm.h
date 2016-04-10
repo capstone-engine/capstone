@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-#include "../myinttypes.h"
+#include <stdint.h>
 #include "platform.h"
 
 #ifdef _MSC_VER
