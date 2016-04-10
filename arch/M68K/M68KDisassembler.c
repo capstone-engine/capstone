@@ -28,7 +28,7 @@
  */
 
 /* The code bellow is based on MUSASHI but has been heavily modified for capstore by
- * Daniel Collin <daniel@collin.com> 2015 */
+ * Daniel Collin <daniel@collin.com> 2015-2016 */
 
 /* ======================================================================== */
 /* ================================ INCLUDES ============================== */
@@ -152,12 +152,11 @@ enum {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 static unsigned int m68k_read_disassembler_16(const m68k_info *info, const uint64_t addr)
 {
 	const uint16_t v0 = info->code[addr + 0];
 	const uint16_t v1 = info->code[addr + 1];
-	return (v0 << 8) | v1; 
+	return (v0 << 8) | v1;
 }
 
 static unsigned int m68k_read_disassembler_32(const m68k_info *info, const uint64_t addr)
@@ -380,7 +379,7 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op* op, uint in
 
 		if (preindex) {
 			op->address_mode = is_pc ? M68K_AM_PC_MEMI_PRE_INDEX : M68K_AM_MEMI_PRE_INDEX;
-		} else if (postindex) { 
+		} else if (postindex) {
 			op->address_mode = is_pc ? M68K_AM_PC_MEMI_POST_INDEX : M68K_AM_MEMI_POST_INDEX;
 		}
 
@@ -388,21 +387,21 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op* op, uint in
 	}
 
 	op->mem.index_reg = (EXT_INDEX_AR(extension) ? M68K_REG_A0 : M68K_REG_D0) + EXT_INDEX_REGISTER(extension);
-	op->mem.index_size = EXT_INDEX_LONG(extension) ? 1 : 0; 
+	op->mem.index_size = EXT_INDEX_LONG(extension) ? 1 : 0;
 
 	if (EXT_8BIT_DISPLACEMENT(extension) == 0) {
 		if (is_pc) {
-			op->mem.base_reg = M68K_REG_PC; 
+			op->mem.base_reg = M68K_REG_PC;
 			op->address_mode = M68K_AM_PCI_INDEX_BASE_DISP;
 		} else {
-			op->mem.base_reg = M68K_REG_A0 + (instruction & 7); 
+			op->mem.base_reg = M68K_REG_A0 + (instruction & 7);
 		}
 	} else {
 		if (is_pc) {
-			op->mem.base_reg = M68K_REG_PC; 
+			op->mem.base_reg = M68K_REG_PC;
 			op->address_mode = M68K_AM_PCI_INDEX_8_BIT_DISP;
 		} else {
-			op->mem.base_reg = M68K_REG_A0 + (instruction & 7); 
+			op->mem.base_reg = M68K_REG_A0 + (instruction & 7);
 			op->address_mode = M68K_AM_AREGI_INDEX_8_BIT_DISP;
 		}
 
@@ -507,6 +506,11 @@ void get_ea_mode_op(m68k_info *info, cs_m68k_op* op, uint instruction, uint size
 		default:
 			break;
 	}
+}
+
+static void set_insn_group(m68k_info *info, m68k_group_type group)
+{
+	info->groups[info->groups_count++] = (uint8_t)group;
 }
 
 static cs_m68k* build_init_op(m68k_info *info, int opcode, int count, int size)
@@ -621,7 +625,7 @@ static void build_imm_ea(m68k_info *info, int opcode, uint8_t size, int imm)
 
 	op0->type = M68K_OP_IMM;
 	op0->address_mode = M68K_AM_IMMIDIATE;
-	op0->imm = imm; 
+	op0->imm = imm;
 
 	get_ea_mode_op(info, op1, info->ir, size);
 }
@@ -745,10 +749,10 @@ static void build_imm_special_reg(m68k_info *info, int opcode, int imm, int size
 
 	op0->type = M68K_OP_IMM;
 	op0->address_mode = M68K_AM_IMMIDIATE;
-	op0->imm = imm; 
+	op0->imm = imm;
 
 	op1->address_mode = M68K_AM_NONE;
-	op1->reg = reg; 
+	op1->reg = reg;
 }
 
 static void build_bxx(m68k_info *info, int opcode, int size, int jump_offset)
@@ -761,6 +765,8 @@ static void build_bxx(m68k_info *info, int opcode, int size, int jump_offset)
 	op->type = M68K_OP_IMM;
 	op->address_mode = M68K_AM_IMMIDIATE;
 	op->imm = jump_offset;
+
+	set_insn_group(info, M68K_GRP_JUMP);
 }
 
 static void build_bcc(m68k_info *info, int size, int jump_offset)
@@ -788,6 +794,8 @@ static void build_dbxx(m68k_info *info, int opcode, int size, int jump_offset)
 	op1->type = M68K_OP_IMM;
 	op1->address_mode = M68K_AM_IMMIDIATE;
 	op1->imm = jump_offset;
+
+	set_insn_group(info, M68K_GRP_JUMP);
 }
 
 static void build_dbcc(m68k_info *info, int size, int jump_offset)
@@ -867,7 +875,7 @@ static uint16_t reverse_bits(uint v)
 	uint r = v; // r will be reversed bits of v; first get LSB of v
 	uint s = 16 - 1; // extra shift needed at end
 
-	for (v >>= 1; v; v >>= 1) {   
+	for (v >>= 1; v; v >>= 1) {
 		r <<= 1;
 		r |= v & 1;
 		s--;
@@ -881,7 +889,7 @@ static uint8_t reverse_bits_8(uint v)
 	uint r = v; // r will be reversed bits of v; first get LSB of v
 	uint s = 8 - 1; // extra shift needed at end
 
-	for (v >>= 1; v; v >>= 1) {   
+	for (v >>= 1; v; v >>= 1) {
 		r <<= 1;
 		r |= v & 1;
 		s--;
@@ -1056,7 +1064,7 @@ static void build_cpush_cinv(m68k_info *info, int op_offset)
 
 	switch ((info->ir >> 3) & 3) { // scope
 		// Invalid
-		case 0: 
+		case 0:
 			d68000_invalid(info);
 			return;
 			// Line
@@ -1868,11 +1876,11 @@ static void fmove_fpcr(m68k_info *info, uint extension)
 
 	get_ea_mode_op(info, op_ea, info->ir, 4);
 
-	if (regsel & 4) 
+	if (regsel & 4)
 		special->reg = M68K_REG_FPCR;
-	else if (regsel & 2) 
+	else if (regsel & 2)
 		special->reg = M68K_REG_FPSR;
-	else if (regsel & 1) 
+	else if (regsel & 1)
 		special->reg = M68K_REG_FPIAR;
 }
 
@@ -1903,7 +1911,7 @@ static void fmovem(m68k_info *info, uint extension)
 			op_reglist->reg = M68K_REG_D0 + ((reglist >> 4) & 7);
 			break;
 
-		case 0 : 
+		case 0 :
 			op_reglist->address_mode = M68K_AM_NONE;
 			op_reglist->type = M68K_OP_REG_BITS;
 			op_reglist->register_bits = reglist << 16;
@@ -2018,7 +2026,7 @@ static void d68020_cpgen(m68k_info *info)
 		case 0x28: MCInst_setOpcode(info->inst, M68K_INS_FSUB); supports_single_op = false; break;
 		case 0x38: MCInst_setOpcode(info->inst, M68K_INS_FCMP); supports_single_op = false; break;
 		case 0x3a: MCInst_setOpcode(info->inst, M68K_INS_FTST); break;
-		default:	
+		default:
 				   break;
 	}
 
@@ -2050,22 +2058,22 @@ static void d68020_cpgen(m68k_info *info)
 
 	if (rm == 1) {
 		switch (src) {
-			case 0x00 : 
+			case 0x00 :
 				ext->op_size.cpu_size = M68K_CPU_SIZE_LONG;
 				get_ea_mode_op(info, op0, info->ir, 4);
 				break;
 
-			case 0x06 : 
+			case 0x06 :
 				ext->op_size.cpu_size = M68K_CPU_SIZE_BYTE;
 				get_ea_mode_op(info, op0, info->ir, 1);
 				break;
 
-			case 0x04 : 
+			case 0x04 :
 				ext->op_size.cpu_size = M68K_CPU_SIZE_WORD;
 				get_ea_mode_op(info, op0, info->ir, 2);
 				break;
 
-			case 0x01 : 
+			case 0x01 :
 				ext->op_size.type = M68K_SIZE_TYPE_FPU;
 				ext->op_size.fpu_size = M68K_FPU_SIZE_SINGLE;
 				get_ea_mode_op(info, op0, info->ir, 4);
@@ -2339,12 +2347,14 @@ static void d68020_extb_32(m68k_info *info)
 
 static void d68000_jmp(m68k_info *info)
 {
+	set_insn_group(info, M68K_GRP_JUMP);
 	cs_m68k* ext = build_init_op(info, M68K_INS_JMP, 1, 0);
 	get_ea_mode_op(info, &ext->operands[0], info->ir, 4);
 }
 
 static void d68000_jsr(m68k_info *info)
 {
+	set_insn_group(info, M68K_GRP_JUMP);
 	cs_m68k* ext = build_init_op(info, M68K_INS_JSR, 1, 0);
 	get_ea_mode_op(info, &ext->operands[0], info->ir, 4);
 }
@@ -3065,12 +3075,14 @@ static void d68000_roxl_ea(m68k_info *info)
 
 static void d68010_rtd(m68k_info *info)
 {
+	set_insn_group(info, M68K_GRP_RET);
 	LIMIT_CPU_TYPES(info, M68010_PLUS);
 	build_bxx(info, M68K_INS_RTD, 0, read_imm_16(info));
 }
 
 static void d68000_rte(m68k_info *info)
 {
+	set_insn_group(info, M68K_GRP_IRET);
 	MCInst_setOpcode(info->inst, M68K_INS_RTE);
 }
 
@@ -3079,6 +3091,7 @@ static void d68020_rtm(m68k_info *info)
 	cs_m68k* ext;
 	cs_m68k_op* op;
 
+	set_insn_group(info, M68K_GRP_RET);
 
 	LIMIT_CPU_TYPES(info, M68020_ONLY);
 
@@ -3099,11 +3112,13 @@ static void d68020_rtm(m68k_info *info)
 
 static void d68000_rtr(m68k_info *info)
 {
+	set_insn_group(info, M68K_GRP_RET);
 	MCInst_setOpcode(info->inst, M68K_INS_RTR);
 }
 
 static void d68000_rts(m68k_info *info)
 {
+	set_insn_group(info, M68K_GRP_RET);
 	MCInst_setOpcode(info->inst, M68K_INS_RTS);
 }
 
@@ -3861,14 +3876,14 @@ static unsigned int m68k_disassemble(m68k_info *info, uint64_t pc)
 	MCInst *inst = info->inst;
 	cs_m68k* ext = &info->extension;
 	int i;
-	
+
 	inst->Opcode = M68K_INS_INVALID;
 
 	build_opcode_table();
 
 	memset(ext, 0, sizeof(cs_m68k));
 	ext->op_size.type = M68K_SIZE_TYPE_CPU;
-	
+
 	for (i = 0; i < M68K_OPERAND_COUNT; ++i)
 		ext->operands[i].type = M68K_OP_REG;
 
@@ -3889,7 +3904,7 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 	int s;
 	int cpu_type = M68K_CPU_TYPE_68000;
 	cs_struct* handle = instr->csh;
-	m68k_info *info = (m68k_info *)handle->printer_info;
+	m68k_info *info = (m68k_info*)handle->printer_info;
 
 	info->code = code;
 	info->code_len = code_len;
@@ -3919,7 +3934,7 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 	M68K_printInst(instr, &ss, info);
 #endif
 
-	// Make sure we always stay within range 
+	// Make sure we always stay within range
 	if (s > (int)code_len)
 		*size = (uint16_t)code_len;
 	else
