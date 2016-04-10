@@ -56,20 +56,24 @@ const char* s_addressing_modes[] = {
 	"Absolute Data Addressing  - Short",
 	"Absolute Data Addressing  - Long",
 	"Immidate value",
-}; 
+};
 
 static void print_insn_detail(cs_insn *ins)
 {
 	cs_m68k* m68k;
+	cs_detail* detail;
 	int i;
 
 	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
 	if (ins->detail == NULL)
 		return;
 
-	m68k = &(ins->detail->m68k);
+	detail = ins->detail;
+	m68k = &detail->m68k;
 	if (m68k->op_count)
 		printf("\top_count: %u\n", m68k->op_count);
+
+	printf("\tgroups_count: %u\n", detail->groups_count);
 
 	for (i = 0; i < m68k->op_count; i++) {
 		cs_m68k_op* op = &(m68k->operands[i]);
@@ -121,7 +125,7 @@ static void print_insn_detail(cs_insn *ins)
 
 static void test()
 {
-#define M68K_CODE "\xd4\x40\x87\x5a\x4e\x71\x02\xb4\xc0\xde\xc0\xde\x5c\x00\x1d\x80\x71\x12\x01\x23\xf2\x3c\x44\x22\x40\x49\x0e\x56\x54\xc5\xf2\x3c\x44\x00\x44\x7a\x00\x00\xf2\x00\x0a\x28"
+#define M68K_CODE "\xd4\x40\x87\x5a\x4e\x71\x02\xb4\xc0\xde\xc0\xde\x5c\x00\x1d\x80\x71\x12\x01\x23\xf2\x3c\x44\x22\x40\x49\x0e\x56\x54\xc5\xf2\x3c\x44\x00\x44\x7a\x00\x00\xf2\x00\x0a\x28\x4E\xB9\x00\x00\x00\x12\x4E\x75"
 
 	struct platform platforms[] = {
 		{
