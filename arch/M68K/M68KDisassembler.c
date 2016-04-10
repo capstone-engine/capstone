@@ -2027,7 +2027,7 @@ static void d68020_cpgen(m68k_info *info)
 		case 0x38: MCInst_setOpcode(info->inst, M68K_INS_FCMP); supports_single_op = false; break;
 		case 0x3a: MCInst_setOpcode(info->inst, M68K_INS_FTST); break;
 		default:
-				   break;
+			break;
 	}
 
 	// Some trickery here! It's not documented but if bit 6 is set this is a s/d opcode and then
@@ -2347,15 +2347,15 @@ static void d68020_extb_32(m68k_info *info)
 
 static void d68000_jmp(m68k_info *info)
 {
-	set_insn_group(info, M68K_GRP_JUMP);
 	cs_m68k* ext = build_init_op(info, M68K_INS_JMP, 1, 0);
+	set_insn_group(info, M68K_GRP_JUMP);
 	get_ea_mode_op(info, &ext->operands[0], info->ir, 4);
 }
 
 static void d68000_jsr(m68k_info *info)
 {
-	set_insn_group(info, M68K_GRP_JUMP);
 	cs_m68k* ext = build_init_op(info, M68K_INS_JSR, 1, 0);
+	set_insn_group(info, M68K_GRP_JUMP);
 	get_ea_mode_op(info, &ext->operands[0], info->ir, 4);
 }
 
@@ -3906,6 +3906,7 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 	cs_struct* handle = instr->csh;
 	m68k_info *info = (m68k_info*)handle->printer_info;
 
+	info->groups_count = 0;
 	info->code = code;
 	info->code_len = code_len;
 	info->baseAddress = address;

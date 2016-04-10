@@ -574,7 +574,7 @@ typedef enum m68k_group_type {
 	M68K_GRP_INVALID = 0,  // CS_GRUP_INVALID
 	M68K_GRP_JUMP,  // = CS_GRP_JUMP
 	M68K_GRP_RET = 3,  // = CS_GRP_RET
-	M68K_GRP_IRET, // = CS_GRP_IRET
+	M68K_GRP_IRET = 5, // = CS_GRP_IRET
 
 	M68K_GRP_ENDING,
 } m68k_group_type;
