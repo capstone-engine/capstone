@@ -75,34 +75,6 @@ typedef enum sparc_op_type {
 	SPARC_OP_MEM, // = CS_OP_MEM (Memory operand).
 } sparc_op_type;
 
-// Instruction's operand referring to memory
-// This is associated with SPARC_OP_MEM operand type above
-typedef struct sparc_op_mem {
-	uint8_t base;	// base register
-	uint8_t index;	// index register
-	int32_t disp;	// displacement/offset value
-} sparc_op_mem;
-
-// Instruction operand
-typedef struct cs_sparc_op {
-	sparc_op_type type;	// operand type
-	union {
-		unsigned int reg;	// register value for REG operand
-		int32_t imm;		// immediate value for IMM operand
-		sparc_op_mem mem;		// base/disp value for MEM operand
-	};
-} cs_sparc_op;
-
-// Instruction structure
-typedef struct cs_sparc {
-	sparc_cc cc;	// code condition for this insn
-	sparc_hint hint;	// branch hint: encoding as bitwise OR of sparc_hint.
-	// Number of operands of this instruction, 
-	// or 0 when instruction has no operand.
-	uint8_t op_count;
-	cs_sparc_op operands[4]; // operands for this instruction.
-} cs_sparc;
-
 //> SPARC registers
 typedef enum sparc_reg {
 	SPARC_REG_INVALID = 0,
@@ -203,6 +175,36 @@ typedef enum sparc_reg {
 	SPARC_REG_O6 = SPARC_REG_SP,
 	SPARC_REG_I6 = SPARC_REG_FP,
 } sparc_reg;
+
+// Instruction's operand referring to memory
+// This is associated with SPARC_OP_MEM operand type above
+typedef struct sparc_op_mem {
+	uint8_t base;		// base register, can be safely interpreted as
+				// a value of type `sparc_reg`, but it is only
+				// one byte wide
+	uint8_t index;		// index register, same conditions apply here
+	int32_t disp;		// displacement/offset value
+} sparc_op_mem;
+
+// Instruction operand
+typedef struct cs_sparc_op {
+	sparc_op_type type;	// operand type
+	union {
+		sparc_reg reg;	// register value for REG operand
+		int32_t imm;		// immediate value for IMM operand
+		sparc_op_mem mem;		// base/disp value for MEM operand
+	};
+} cs_sparc_op;
+
+// Instruction structure
+typedef struct cs_sparc {
+	sparc_cc cc;	// code condition for this insn
+	sparc_hint hint;	// branch hint: encoding as bitwise OR of sparc_hint.
+	// Number of operands of this instruction, 
+	// or 0 when instruction has no operand.
+	uint8_t op_count;
+	cs_sparc_op operands[4]; // operands for this instruction.
+} cs_sparc;
 
 //> SPARC instruction
 typedef enum sparc_insn {

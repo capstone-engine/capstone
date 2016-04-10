@@ -44,34 +44,6 @@ typedef enum sysz_op_type {
 	SYSZ_OP_ACREG = 64,	// Access register operand.
 } sysz_op_type;
 
-// Instruction's operand referring to memory
-// This is associated with SYSZ_OP_MEM operand type above
-typedef struct sysz_op_mem {
-	uint8_t base;	// base register
-	uint8_t index;	// index register
-	uint64_t length;	// BDLAddr operand
-	int64_t disp;	// displacement/offset value
-} sysz_op_mem;
-
-// Instruction operand
-typedef struct cs_sysz_op {
-	sysz_op_type type;	// operand type
-	union {
-		unsigned int reg;	// register value for REG operand
-		int64_t imm;		// immediate value for IMM operand
-		sysz_op_mem mem;		// base/disp value for MEM operand
-	};
-} cs_sysz_op;
-
-// Instruction structure
-typedef struct cs_sysz {
-	sysz_cc cc;		// Code condition
-	// Number of operands of this instruction, 
-	// or 0 when instruction has no operand.
-	uint8_t op_count;
-	cs_sysz_op operands[6]; // operands for this instruction.
-} cs_sysz;
-
 //> SystemZ registers
 typedef enum sysz_reg {
 	SYSZ_REG_INVALID = 0,
@@ -114,6 +86,36 @@ typedef enum sysz_reg {
 
 	SYSZ_REG_ENDING,
 } sysz_reg;
+
+// Instruction's operand referring to memory
+// This is associated with SYSZ_OP_MEM operand type above
+typedef struct sysz_op_mem {
+	uint8_t base;		// base register, can be safely interpreted as
+				// a value of type `sysz_reg`, but it is only
+				// one byte wide
+	uint8_t index;		// index register, same conditions apply here
+	uint64_t length;	// BDLAddr operand
+	int64_t disp;	// displacement/offset value
+} sysz_op_mem;
+
+// Instruction operand
+typedef struct cs_sysz_op {
+	sysz_op_type type;	// operand type
+	union {
+		sysz_reg reg;		// register value for REG operand
+		int64_t imm;		// immediate value for IMM operand
+		sysz_op_mem mem;	// base/disp value for MEM operand
+	};
+} cs_sysz_op;
+
+// Instruction structure
+typedef struct cs_sysz {
+	sysz_cc cc;		// Code condition
+	// Number of operands of this instruction, 
+	// or 0 when instruction has no operand.
+	uint8_t op_count;
+	cs_sysz_op operands[6]; // operands for this instruction.
+} cs_sysz;
 
 //> SystemZ instruction
 typedef enum sysz_insn {
