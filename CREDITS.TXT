@@ -59,3 +59,4 @@ Adel Gadllah, Francisco Alonso & Stefan Cornelius: RPM package.
 Felix Gröbert (Google): fuzz testing harness.
 Xipiter LLC: Capstone logo redesigned.
 Satoshi Tanda: Support Windows kernel driver.
+Andreas "PAX" Lück: Migration of Java binding into Maven project.

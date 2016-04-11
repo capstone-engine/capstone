@@ -1,0 +1,15 @@
+0x1000:	bx	lr
+
+0x1002:	mov	fp, sp
+
+0x1004:	sub	sp, #0xc
+
+0x1006:	ldr	r1, [r1, #0xc]
+
+0x1008:	cbz	r7, #0x1012
+
+0x100a:	wfi	
+
+0x100c:	cpsie.w	f
+	CPSI-mode: 2
+	CPSI-flag: 1

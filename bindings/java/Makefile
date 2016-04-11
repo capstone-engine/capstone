@@ -9,6 +9,8 @@ BLDIR = $(abspath $(BUILDDIR))/bindings/java
 OBJDIR = $(abspath $(BUILDDIR))/obj/bindings/java
 endif
 
+SRCDIR = capstone/src/main/java/capstone
+
 JNA = /usr/share/java/jna/jna.jar
 
 ifneq ($(wildcard $(JNA)),)
@@ -30,14 +32,14 @@ all: gen_const capstone tests
 
 capstone: capstone_class
 	@mkdir -p $(BLDIR)
-	cd $(OBJDIR) && jar cf $(BLDIR)/capstone.jar capstone/*.class
+	cd $(OBJDIR) && jar cf $(BLDIR)/capstone.jar $(SRCDIR)/*.class
 
 capstone_class: jna
 ifdef BUILDDIR
 	@mkdir -p $(OBJDIR)
-	cd capstone && javac -d $(OBJDIR) -classpath $(JNA) $(CAPSTONE_JAVA)
+	cd $(SRCDIR) && javac -d $(OBJDIR) -classpath $(JNA) $(CAPSTONE_JAVA)
 else
-	cd capstone && javac -classpath $(JNA) $(CAPSTONE_JAVA)
+	cd $(SRCDIR) && javac -classpath $(JNA) $(CAPSTONE_JAVA)
 endif
 
 tests: capstone_class jna
@@ -53,7 +55,7 @@ jna:
 	@if [ ! $(JNA) ]; then echo "*** Unable to find JNA ***"; exit 1; fi
 
 clean:
-	rm -rf $(OBJDIR)/capstone/*.class
+	rm -rf $(OBJDIR)/$(SRCDIR)/*.class
 	rm -rf $(OBJDIR)/*.class $(OBJDIR)/*.log $(BLDIR)/*.jar
 ifdef BUILDDIR
 	rm -rf $(BLDIR)
