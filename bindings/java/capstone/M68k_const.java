@@ -478,4 +478,12 @@ public class M68k_const {
 	public static final int M68K_INS_TST = 372;
 	public static final int M68K_INS_UNLK = 373;
 	public static final int M68K_INS_UNPK = 374;
+
+	// Group of M68K instructions
+
+	public static final int M68K_GRP_INVALID = 0;
+	public static final int M68K_GRP_JUMP = 1;
+	public static final int M68K_GRP_RET = 3;
+	public static final int M68K_GRP_IRET = 5;
+	public static final int M68K_GRP_ENDING = 6;
 }
