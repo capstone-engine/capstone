@@ -45,8 +45,7 @@ s_addressing_modes = {
 def print_insn_detail(insn):
     if len(insn.operands) > 0:
         print("\top_count: %u" % (len(insn.operands)))
-
-	print("\tgroups_count: %u" % len(insn.groups))
+        print("\tgroups_count: %u" % len(insn.groups))
 
     for i, op in enumerate(insn.operands):
         if op.type == M68K_OP_REG:
