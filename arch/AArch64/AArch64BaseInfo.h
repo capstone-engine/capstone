@@ -21,7 +21,6 @@
 #define CS_LLVM_AARCH64_BASEINFO_H
 
 #include <ctype.h>
-#include <stdint.h>
 #include <string.h>
 
 #ifndef __cplusplus

@@ -4,8 +4,6 @@
 #ifndef CS_M68KINSTPRINTER_H
 #define CS_M68KINSTPRINTER_H
 
-#include <stdint.h>
-
 #include "capstone/capstone.h"
 #include "../../MCRegisterInfo.h"
 #include "../../MCInst.h"
