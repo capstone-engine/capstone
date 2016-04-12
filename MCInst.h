@@ -19,8 +19,6 @@
 #ifndef CS_MCINST_H
 #define CS_MCINST_H
 
-#include <stdint.h>
-
 #include "include/capstone/capstone.h"
 
 typedef struct MCInst MCInst;

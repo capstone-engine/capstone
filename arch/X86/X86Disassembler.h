@@ -77,8 +77,6 @@
 #ifndef CS_X86_DISASSEMBLER_H
 #define CS_X86_DISASSEMBLER_H
 
-#include <stdint.h>
-
 #include "capstone/capstone.h"
 
 #include "../../MCInst.h"
