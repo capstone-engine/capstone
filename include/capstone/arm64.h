@@ -652,7 +652,7 @@ typedef struct cs_arm64_op {
 	// How is this operand accessed? (READ, WRITE or READ|WRITE)
 	// This field is combined of cs_ac_type.
 	// NOTE: this field is irrelevant if engine is compiled in DIET mode.
-	cs_ac_type access;
+	uint8_t access;
 } cs_arm64_op;
 
 // Instruction structure
