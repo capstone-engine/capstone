@@ -2,7 +2,7 @@
 #define CAPSTONE_M68K_H
 
 /* Capstone Disassembly Engine */
-/* By Daniel Collin <daniel@collin.com>, 2015 */
+/* By Daniel Collin <daniel@collin.com>, 2015-2016 */
 
 #ifdef __cplusplus
 extern "C" {
@@ -104,7 +104,7 @@ typedef enum m68k_address_mode {
 
 	M68K_AM_ABSOLUTE_DATA_SHORT,	// Absolute Data Addressing  - Short
 	M68K_AM_ABSOLUTE_DATA_LONG,		// Absolute Data Addressing  - Long
-	M68K_AM_IMMIDIATE,				// Immediate value
+	M68K_AM_IMMIDIATE,              // Immediate value
 } m68k_address_mode;
 
 //> Operand type for instruction's operands
@@ -128,8 +128,8 @@ typedef struct m68k_op_mem {
 	uint32_t out_disp;      // other displacement 
 	uint16_t disp;	        // displacement value
 	uint8_t scale;	        // scale for index register
-	uint8_t bitfield;       // set to true if the two values bellow should be used 
-	uint8_t width;	        // used for bf* instructions 
+	uint8_t bitfield;       // set to true if the two values below should be used
+	uint8_t width;	        // used for bf* instructions
 	uint8_t offset;	        // used for bf* instructions
 	uint8_t index_size;     // 0 = w, 1 = l
 } m68k_op_mem;
@@ -148,7 +148,7 @@ typedef struct cs_m68k_op {
 	m68k_address_mode address_mode;	// M68K addressing mode for this op
 } cs_m68k_op;
 
-// Operation size of the CPU instructions 
+// Operation size of the CPU instructions
 typedef enum m68k_cpu_size {
 	M68K_CPU_SIZE_NONE = 0,		// unsized or unspecified
 	M68K_CPU_SIZE_BYTE = 1,		// 1 byte in size
@@ -159,8 +159,8 @@ typedef enum m68k_cpu_size {
 // Operation size of the FPU instructions (Notice that FPU instruction can also use CPU sizes if needed)
 typedef enum m68k_fpu_size {
 	M68K_FPU_SIZE_NONE = 0,		// unsized like fsave/frestore
-	M68K_FPU_SIZE_SINGLE = 4,		// 4 byte in size (single float) 
-	M68K_FPU_SIZE_DOUBLE = 8,		// 8 byte in size (double) 
+	M68K_FPU_SIZE_SINGLE = 4,		// 4 byte in size (single float)
+	M68K_FPU_SIZE_DOUBLE = 8,		// 8 byte in size (double)
 	M68K_FPU_SIZE_EXTENDED = 12,	// 12 byte in size (extended real format)
 } m68k_fpu_size;
 
@@ -572,11 +572,14 @@ typedef enum m68k_insn {
 } m68k_insn;
 
 //> Group of M68K instructions
-typedef enum m68k_insn_group {
-	M68K_GRP_INVALID = 0, // = CS_GRP_INVALID
-	M68K_GRP_ENDING,// <-- mark the end of the list of groups
-} m68k_insn_group;
+typedef enum m68k_group_type {
+	M68K_GRP_INVALID = 0,  // CS_GRUP_INVALID
+	M68K_GRP_JUMP,  // = CS_GRP_JUMP
+	M68K_GRP_RET = 3,  // = CS_GRP_RET
+	M68K_GRP_IRET = 5, // = CS_GRP_IRET
 
+	M68K_GRP_ENDING,// <-- mark the end of the list of groups
+} m68k_group_type;
 
 #ifdef __cplusplus
 }
