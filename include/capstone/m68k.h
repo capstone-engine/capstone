@@ -104,7 +104,7 @@ typedef enum m68k_adress_mode {
 
 	M68K_AM_ABSOLUTE_DATA_SHORT,	// Absolute Data Addressing  - Short
 	M68K_AM_ABSOLUTE_DATA_LONG,		// Absolute Data Addressing  - Long
-	M68K_AM_IMMIDIATE,				// Immidate value
+	M68K_AM_IMMIDIATE,				// Immediate value
 } m68k_adress_mode; 
 
 //> Operand type for instruction's operands
@@ -114,7 +114,7 @@ typedef enum m68k_op_type {
 	M68K_OP_IMM,         // = CS_OP_IMM (Immediate operand).
 	M68K_OP_MEM,         // = CS_OP_MEM (Memory operand).
 	M68K_OP_FP,          // = CS_OP_FP  (Floating-Point operand)
-	M68K_OP_REG_BITS,    // Registes bits movem
+	M68K_OP_REG_BITS,    // Register bits move
 	M68K_OP_REG_PAIR,    // Register pair in the same op (upper 4 bits for first reg, lower for second) 
 } m68k_op_type;
 
@@ -125,7 +125,7 @@ typedef struct m68k_op_mem {
 	m68k_reg index_reg;     // index register (or M68K_REG_INVALID if irrelevant)
 	m68k_reg in_base_reg;   // indirect base register (or M68K_REG_INVALID if irrelevant)
 	uint32_t in_disp; 	    // indirect displacement 
-	uint32_t out_disp;      // outher displacement 
+	uint32_t out_disp;      // other displacement 
 	uint16_t disp;	        // displacement value
 	uint8_t scale;	        // scale for index register
 	uint8_t bitfield;       // set to true if the two values bellow should be used 
