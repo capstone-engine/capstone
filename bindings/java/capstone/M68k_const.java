@@ -483,5 +483,8 @@ public class M68k_const {
 	// Group of M68K instructions
 
 	public static final int M68K_GRP_INVALID = 0;
-	public static final int M68K_GRP_ENDING = 1;
+	public static final int M68K_GRP_JUMP = 1;
+	public static final int M68K_GRP_RET = 3;
+	public static final int M68K_GRP_IRET = 5;
+	public static final int M68K_GRP_ENDING = 6;
 }

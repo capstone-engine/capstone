@@ -480,4 +480,7 @@ let _M68K_INS_ENDING = 375;;
 (* Group of M68K instructions *)
 
 let _M68K_GRP_INVALID = 0;;
-let _M68K_GRP_ENDING = 1;;
+let _M68K_GRP_JUMP = 1;;
+let _M68K_GRP_RET = 3;;
+let _M68K_GRP_IRET = 5;;
+let _M68K_GRP_ENDING = 6;;
