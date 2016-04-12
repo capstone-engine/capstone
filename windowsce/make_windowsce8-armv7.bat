@@ -16,13 +16,10 @@ rem ***************************************************************************
 
 set SHARED=1
 set DIET_MODE=0
+set USE_SYS_DYN_MEM=1
 set X86_REDUCE=0
 set X86_ATT_DISABLE=0
-set USE_SYS_DYN_MEM=0
 set DISASM_ARCH_LIST=ARM ARM64 M68K MIPS POWERPC SPARC SYSZ X86 XCORE
-set DISASM_ARCH_DIRS=ARM AARCH64 M68K MIPS POWERPC SPARC SystemZ X86 XCORE
-rem set DISASM_ARCH_LIST=ARM
-rem set DISASM_ARCH_DIRS=ARM
 
 rem ***************************************************************************
 rem *                              SANITY CHECKS                              *
@@ -126,7 +123,7 @@ set ARFLAGS=-nologo -machine:%MACH% -subsystem:WINDOWSCE,%OS_VERSION% %LIBPATH% 
 
 set SOURCES=
 for %%f in (%SOURCES_ROOT%\*.c) do set SOURCES=!SOURCES! %%f
-for %%a in (%DISASM_ARCH_DIRS%) do for %%f in (%SOURCES_ROOT%\arch\%%a\*.c) do set SOURCES=!SOURCES! %%f
+for /d %%a in (%SOURCES_ROOT%\arch\*) do for %%f in (%%a\*.c) do set SOURCES=!SOURCES! %%f
 
 rem ***************************************************************************
 rem *                           COMPILATION COMMANDS                          *
