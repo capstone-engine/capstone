@@ -88,7 +88,11 @@ cs_malloc_t cs_mem_malloc = malloc;
 cs_calloc_t cs_mem_calloc = calloc;
 cs_realloc_t cs_mem_realloc = realloc;
 cs_free_t cs_mem_free = free;
+#if defined(_WIN32_WCE)
+cs_vsnprintf_t cs_vsnprintf = _vsnprintf;
+#else // !_WIN32_WCE
 cs_vsnprintf_t cs_vsnprintf = vsnprintf;
+#endif // _WIN32_WCE
 #else
 extern void* kern_os_malloc(size_t size);
 extern void kern_os_free(void* addr);
