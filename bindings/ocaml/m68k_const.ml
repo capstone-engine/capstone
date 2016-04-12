@@ -475,3 +475,9 @@ let _M68K_INS_TRAPLE = 371;;
 let _M68K_INS_TST = 372;;
 let _M68K_INS_UNLK = 373;;
 let _M68K_INS_UNPK = 374;;
+let _M68K_INS_ENDING = 375;;
+
+(* Group of M68K instructions *)
+
+let _M68K_GRP_INVALID = 0;;
+let _M68K_GRP_ENDING = 1;;
