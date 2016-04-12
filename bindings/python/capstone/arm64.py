@@ -38,6 +38,7 @@ class Arm64Op(ctypes.Structure):
         ('ext', ctypes.c_uint),
         ('type', ctypes.c_uint),
         ('value', Arm64OpValue),
+        ('access', ctypes.c_uint8),
     )
 
     @property
