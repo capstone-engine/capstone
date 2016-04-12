@@ -77,7 +77,7 @@ typedef enum m68k_reg {
 } m68k_reg;
 
 //> M68K Addressing Modes
-typedef enum m68k_adress_mode {
+typedef enum m68k_address_mode {
 	M68K_AM_NONE = 0,			// No address mode. 
 
 	M68K_AM_REG_DIRECT_DATA,		// Register Direct - Data
@@ -105,7 +105,7 @@ typedef enum m68k_adress_mode {
 	M68K_AM_ABSOLUTE_DATA_SHORT,	// Absolute Data Addressing  - Short
 	M68K_AM_ABSOLUTE_DATA_LONG,		// Absolute Data Addressing  - Long
 	M68K_AM_IMMIDIATE,				// Immidate value
-} m68k_adress_mode; 
+} m68k_address_mode;
 
 //> Operand type for instruction's operands
 typedef enum m68k_op_type {
@@ -145,7 +145,7 @@ typedef struct cs_m68k_op {
 		uint32_t register_bits; // register bits for movem/cas2/etc (always in d0-d7, a0-a7, fp0 - fp7 order)
 	};
 	m68k_op_type type;
-	m68k_adress_mode address_mode;	// M68K addressing mode for this op 
+	m68k_address_mode address_mode;	// M68K addressing mode for this op
 } cs_m68k_op;
 
 // Operation size of the CPU instructions 
