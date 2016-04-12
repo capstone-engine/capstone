@@ -7,6 +7,8 @@ To compile using CMake, see COMPILE_CMAKE.TXT.
 
 To compile using XCode on MacOSX, see xcode/README.md.
 
+To compile for Windows CE (a.k.a, Windows Embedded Compact), see windowsce/COMPILE.md.
+
                         *-*-*-*-*-*
 
 Capstone requires no prerequisite packages, so it is easy to compile & install.
