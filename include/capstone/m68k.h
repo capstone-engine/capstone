@@ -567,7 +567,16 @@ typedef enum m68k_insn {
 	M68K_INS_TST,
 	M68K_INS_UNLK,
 	M68K_INS_UNPK,
+	M68K_INS_ENDING,   // <-- mark the end of the list of instructions
+
 } m68k_insn;
+
+//> Group of M68K instructions
+typedef enum m68k_insn_group {
+	M68K_GRP_INVALID = 0, // = CS_GRP_INVALID
+	M68K_GRP_ENDING,// <-- mark the end of the list of groups
+} m68k_insn_group;
+
 
 #ifdef __cplusplus
 }
