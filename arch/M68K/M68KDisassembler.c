@@ -2523,16 +2523,12 @@ static void d68000_move_to_sr(m68k_info *info)
 {
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
-	cs_m68k* ext;
-
-	LIMIT_CPU_TYPES(info, M68010_PLUS);
-
-	ext = build_init_op(info, M68K_INS_MOVE, 2, 2);
+	cs_m68k* ext = build_init_op(info, M68K_INS_MOVE, 2, 2);
 
 	op0 = &ext->operands[0];
 	op1 = &ext->operands[1];
 
-	get_ea_mode_op(info, op0, info->ir, 1);
+	get_ea_mode_op(info, op0, info->ir, 2);
 
 	op1->address_mode = M68K_AM_NONE;
 	op1->reg = M68K_REG_SR;
