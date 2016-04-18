@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 # -*- mode: sh, indent-tabs-mode: t
 #
 # Capstone Disassembly Engine
@@ -28,21 +28,21 @@ function build_android {
 		echo "ERROR! Please set \$NDK to point at your Android NDK directory."
 		exit 1
 	fi
-	HOSTOS=$(uname -s | tr 'LD' 'ld')
-	HOSTARCH=$(uname -m)
+	HOSTOS="$(uname -s | tr LD ld)"
+	HOSTARCH="$(uname -m)"
 
 	TARGARCH="$1"
 	shift
 
 	case "$TARGARCH" in
 		arm)
-			[ -n "$APILEVEL" ] || APILEVEL="android-14"  # default to ICS
-			[ -n "$GCCVER" ] || GCCVER="4.8"
+			[ -z "$APILEVEL" ] && APILEVEL="android-14"  # default to ICS
+			[ -z "$GCCVER" ] && GCCVER="4.8"
 			CROSS=arm-linux-androideabi-
 			;;
 		arm64)
-			[ -n "$APILEVEL" ] || APILEVEL="android-21"  # first with arm64
-			[ -n "$GCCVER" ] || GCCVER="4.9"
+			[ -z "$APILEVEL" ] && APILEVEL="android-21"  # first with arm64
+			[ -z "$GCCVER" ] && GCCVER="4.9"
 			CROSS=aarch64-linux-android-
 			;;
 
