@@ -617,12 +617,12 @@ class CsInsn(object):
 
         attr = object.__getattribute__
         if not attr(self, '_cs')._detail:
-            return None
+            raise AttributeError(name)
         _dict = attr(self, '__dict__')
         if 'operands' not in _dict:
             self.__gen_detail()
         if name not in _dict:
-            return None
+            raise AttributeError(name)
         return _dict[name]
 
     # get the last error code
