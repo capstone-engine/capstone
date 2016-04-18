@@ -143,7 +143,7 @@ if [ "$(uname)" = "SunOS" ]; then
 	export CC=gcc
 fi
 
-if uname -s | grep BSD &>/dev/null; then
+if uname -s | grep -q BSD; then
 	export MAKE=gmake
 	export PREFIX=/usr/local
 fi
