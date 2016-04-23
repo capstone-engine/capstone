@@ -214,9 +214,6 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 			case X86_OP_IMM:
 				printf("\t\toperands[%u].type: IMM = 0x%"PRIx64 "\n", i, op->imm);
 				break;
-			case X86_OP_FP:
-				printf("\t\toperands[%u].type: FP = %f\n", i, op->fp);
-				break;
 			case X86_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
 				if (op->mem.segment != X86_REG_INVALID)
