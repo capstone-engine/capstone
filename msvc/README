@@ -16,7 +16,7 @@ NOTE:
     afterwards.
 
 (3) The capstone_static_winkernel and test_winkernel projects are for Windows
-    kernel drivers and unloaded from the solution by default. In order to
-    build them, you need to install Visual Studio 2013 or newer versions, and
-    Windows Driver Kit 8.1 Update 1 or newer versions, then reload the projects
-    from the Solution Explorer in Visual Studio.
+    kernel drivers and excluded from build by default. In order to build them,
+    you need to install Visual Studio 2013 or newer versions, and Windows Driver
+    Kit 8.1 Update 1 or newer versions, then check "Build" check boxes for those
+    projects on the Configuration Manager through the [Build] menu.
