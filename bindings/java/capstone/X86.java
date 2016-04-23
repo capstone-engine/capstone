@@ -29,12 +29,11 @@ public class X86 {
   public static class OpValue extends Union {
     public int reg;
     public long imm;
-    public double fp;
     public MemType mem;
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("reg", "imm", "fp", "mem");
+      return Arrays.asList("reg", "imm", "mem");
     }
   }
 
@@ -50,8 +49,6 @@ public class X86 {
       super.read();
       if (type == X86_OP_MEM)
         value.setType(MemType.class);
-      if (type == X86_OP_FP)
-        value.setType(Double.TYPE);
       if (type == X86_OP_IMM)
         value.setType(Long.TYPE);
       if (type == X86_OP_REG)

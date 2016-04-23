@@ -103,8 +103,6 @@ public class TestX86 {
           System.out.printf("\t\toperands[%d].type: REG = %s\n", c, ins.regName(i.value.reg));
         if (i.type == X86_OP_IMM)
           System.out.printf("\t\toperands[%d].type: IMM = 0x%x\n", c, i.value.imm);
-        if (i.type == X86_OP_FP)
-          System.out.printf("\t\toperands[%d].type: FP = %f\n", c, i.value.fp);
         if (i.type == X86_OP_MEM) {
           System.out.printf("\t\toperands[%d].type: MEM\n",c);
           String segment = ins.regName(i.value.mem.segment);
