@@ -17,7 +17,6 @@ class X86OpValue(ctypes.Union):
     _fields_ = (
         ('reg', ctypes.c_uint),
         ('imm', ctypes.c_int64),
-        ('fp', ctypes.c_double),
         ('mem', X86OpMem),
     )
 
@@ -38,10 +37,6 @@ class X86Op(ctypes.Structure):
     @property
     def reg(self):
         return self.value.reg
-
-    @property
-    def fp(self):
-        return self.value.fp
 
     @property
     def mem(self):

@@ -16,7 +16,6 @@ type x86_op_value =
 	| X86_OP_INVALID of int
 	| X86_OP_REG of int
 	| X86_OP_IMM of int
-	| X86_OP_FP of float
 	| X86_OP_MEM of x86_op_mem
 
 type x86_op = {
