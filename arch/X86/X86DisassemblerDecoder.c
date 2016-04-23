@@ -1708,8 +1708,8 @@ static int readModRM(struct InternalInstruction *insn)
 		} \
 		switch (type) {                                           \
 			default:                                              \
-				*valid = 0;                                           \
-				return 0;                                             \
+				*valid = 0;                                       \
+				return 0;                                         \
 			case TYPE_Rv:                                         \
 				return (uint8_t)(base + index);                   \
 			case TYPE_R8:                                         \
@@ -1737,20 +1737,24 @@ static int readModRM(struct InternalInstruction *insn)
 			case TYPE_VK1:                                        \
 			case TYPE_VK8:                                        \
 			case TYPE_VK16:                                       \
+				if (index > 7)                                    \
+					*valid = 0;                                   \
 				return prefix##_K0 + index;                       \
 			case TYPE_MM64:                                       \
 			case TYPE_MM32:                                       \
 			case TYPE_MM:                                         \
 				return prefix##_MM0 + (index & 7);                \
 			case TYPE_SEGMENTREG:                                 \
-				return prefix##_ES + (index & 7);                 \
+				if (index > 5)                                    \
+					*valid = 0;                                   \
+				return prefix##_ES + index;                       \
 			case TYPE_DEBUGREG:                                   \
 				if (index > 7)                                    \
 					*valid = 0;                                   \
 				return prefix##_DR0 + index;                      \
 			case TYPE_CONTROLREG:                                 \
 				return prefix##_CR0 + index;                      \
-		}                                                     \
+		}                                                         \
 	}
 
 /*
