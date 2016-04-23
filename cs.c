@@ -17,7 +17,11 @@
 #include "utils.h"
 #include "MCRegisterInfo.h"
 
-#if !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(CAPSTONE_DIET)
+#if defined(_KERNEL_MODE)
+#include "windows\winkernel_mm.h"
+#endif
+
+#if !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(CAPSTONE_DIET) && !defined(_KERNEL_MODE)
 #define INSN_CACHE_SIZE 32
 #else
 // reduce stack variable size for kernel/firmware
@@ -78,13 +82,19 @@ static void archs_enable(void)
 
 unsigned int all_arch = 0;
 
-#ifdef CAPSTONE_USE_SYS_DYN_MEM
-#ifndef CAPSTONE_HAS_OSXKERNEL
+#if defined(CAPSTONE_USE_SYS_DYN_MEM)
+#if !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(_KERNEL_MODE)
 cs_malloc_t cs_mem_malloc = malloc;
 cs_calloc_t cs_mem_calloc = calloc;
 cs_realloc_t cs_mem_realloc = realloc;
 cs_free_t cs_mem_free = free;
 cs_vsnprintf_t cs_vsnprintf = vsnprintf;
+#elif defined(_KERNEL_MODE)
+cs_malloc_t cs_mem_malloc = cs_winkernel_malloc;
+cs_calloc_t cs_mem_calloc = cs_winkernel_calloc;
+cs_realloc_t cs_mem_realloc = cs_winkernel_realloc;
+cs_free_t cs_mem_free = cs_winkernel_free;
+cs_vsnprintf_t cs_vsnprintf = cs_winkernel_vsnprintf;
 #else
 extern void* kern_os_malloc(size_t size);
 extern void kern_os_free(void* addr);
