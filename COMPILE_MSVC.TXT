@@ -23,9 +23,8 @@ versions, and Windows Driver Kit 8.1 Update 1 or newer versions are required.
   SystemZ, X86 & XCore), if you just need several selected archs, choose the ones
   you want to compile in by opening Visual Studio solution "msvc\capstone.sln",
   then directly editing the projects "capstone_static" & "capstone_dll" for static
-  and dynamic libraries, respectively. For compiling Capstone for a driver, reload
-  "capstone_static_winkernel" first and then edit the project. This must be done
-  before going to the next steps.
+  and dynamic libraries, respectively. This must be done before going to the next
+  steps.
 
   In VisualStudio interface, modify the preprocessor definitions via
   "Project Properties" -> "Configuration Propertis" -> "C/C++" -> "Preprocessor"
@@ -62,8 +61,11 @@ versions, and Windows Driver Kit 8.1 Update 1 or newer versions are required.
 (1) Compile from source on Windows with Visual Studio
 
   - Choose the configuration and the platform you want: Release/Debug & Win32/Win64.
-  - Build only the libraries, or the libraries along with all the tests. To build
-    tests for a driver, reload the "test_winkernel" project first and compile it.
+  - Build only the libraries, or the libraries along with all the tests.
+  - "capstone_static_winkernel" is for compiling Capstone for a driver and
+    "test_winkernel" is a test for a driver, and those are excluded from build by
+    default. To compile them, open the Configuration Manager through the [Build]
+    menu and check "Build" check boxes for those project.
 
 
 
