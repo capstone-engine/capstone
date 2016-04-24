@@ -64,6 +64,7 @@ static void set_mem_access(MCInst *MI, bool status)
 static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	// FIXME: do this with autogen
+	// printf(">>> ID = %u\n", MI->flat_insn->id);
 	switch(MI->flat_insn->id) {
 		default:
 			SStream_concat0(O, "ptr ");
@@ -72,6 +73,8 @@ static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 		case X86_INS_SIDT:
 		case X86_INS_LGDT:
 		case X86_INS_LIDT:
+		case X86_INS_FXRSTOR:
+		case X86_INS_FXSAVE:
 			// do not print "ptr"
 			break;
 	}
