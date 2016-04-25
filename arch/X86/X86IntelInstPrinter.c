@@ -75,6 +75,8 @@ static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 		case X86_INS_LIDT:
 		case X86_INS_FXRSTOR:
 		case X86_INS_FXSAVE:
+		case X86_INS_LJMP:
+		case X86_INS_LCALL:
 			// do not print "ptr"
 			break;
 	}
