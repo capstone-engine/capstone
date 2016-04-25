@@ -1,5 +1,5 @@
-/* Second-Best Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2016 */
+/* Capstone Disassembly Engine */
+/* By Satoshi Tanda <tanda.sat@gmail.com>, 2016 */
 #include <ntddk.h>
 #include <capstone.h>
 

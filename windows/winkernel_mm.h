@@ -1,5 +1,5 @@
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2016 */
+/* By Satoshi Tanda <tanda.sat@gmail.com>, 2016 */
 #ifndef CS_WINDOWS_WINKERNEL_MM_H_
 #define CS_WINDOWS_WINKERNEL_MM_H_
 
