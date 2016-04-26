@@ -60,7 +60,6 @@ set(HEADERS_ENGINE
     MCInstrDesc.h
     SStream.h
     cs_priv.h
-    myinttypes.h
     include/platform.h
     )
 

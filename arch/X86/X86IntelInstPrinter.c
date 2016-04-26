@@ -20,7 +20,7 @@
 #if !defined(CAPSTONE_HAS_OSXKERNEL)
 #include <ctype.h>
 #endif
-#include "../../myinttypes.h"
+#include <platform.h>
 #if defined(CAPSTONE_HAS_OSXKERNEL)
 #include <libkern/libkern.h>
 #else

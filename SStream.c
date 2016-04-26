@@ -12,7 +12,8 @@
 #endif
 #include <string.h>
 
-#include "myinttypes.h"
+#include <platform.h>
+
 #include "SStream.h"
 #include "cs_priv.h"
 #include "utils.h"
