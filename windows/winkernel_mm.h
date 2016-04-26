@@ -1,7 +1,7 @@
 /* Capstone Disassembly Engine */
 /* By Satoshi Tanda <tanda.sat@gmail.com>, 2016 */
-#ifndef CS_WINDOWS_WINKERNEL_MM_H_
-#define CS_WINDOWS_WINKERNEL_MM_H_
+#ifndef CS_WINDOWS_WINKERNEL_MM_H
+#define CS_WINDOWS_WINKERNEL_MM_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -19,4 +19,4 @@ int CAPSTONE_API cs_winkernel_vsnprintf(char *buffer, size_t count, const char *
 }
 #endif
 
-#endif  // CS_WINDOWS_WINKERNEL_MM_H_
+#endif  // CS_WINDOWS_WINKERNEL_MM_H

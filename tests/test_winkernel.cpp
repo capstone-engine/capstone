@@ -73,77 +73,80 @@ namespace xcore {
 #pragma warning(pop)
 
 // Exercises all existing regression tests
-static void test() {
-  KFLOATING_SAVE float_save;
-  NTSTATUS status;
+static void test()
+{
+	KFLOATING_SAVE float_save;
+	NTSTATUS status;
 
-  // Any of Capstone APIs cannot be called at IRQL higher than DISPATCH_LEVEL
-  // since our malloc implementation using ExAllocatePoolWithTag() is able to
-  // allocate memory only up to the DISPATCH_LEVEL level.
-  NT_ASSERT(KeGetCurrentIrql() <= DISPATCH_LEVEL);
+	// Any of Capstone APIs cannot be called at IRQL higher than DISPATCH_LEVEL
+	// since our malloc implementation using ExAllocatePoolWithTag() is able to
+	// allocate memory only up to the DISPATCH_LEVEL level.
+	NT_ASSERT(KeGetCurrentIrql() <= DISPATCH_LEVEL);
 
-  // On a 32bit driver, KeSaveFloatingPointState() is required before using any
-  // Capstone function because Capstone can access to the MMX/x87 registers and
-  // 32bit Windows requires drivers to use KeSaveFloatingPointState() before and
-  // KeRestoreFloatingPointState() after accesing to them. See "Using Floating
-  // Point or MMX in a WDM Driver" on MSDN for more details.
-  status = KeSaveFloatingPointState(&float_save);
-  if (!NT_SUCCESS(status)) {
-    printf("ERROR: Failed to save floating point state!\n");
-    return;
-  }
+	// On a 32bit driver, KeSaveFloatingPointState() is required before using any
+	// Capstone function because Capstone can access to the MMX/x87 registers and
+	// 32bit Windows requires drivers to use KeSaveFloatingPointState() before and
+	// KeRestoreFloatingPointState() after accesing to them. See "Using Floating
+	// Point or MMX in a WDM Driver" on MSDN for more details.
+	status = KeSaveFloatingPointState(&float_save);
+	if (!NT_SUCCESS(status)) {
+		printf("ERROR: Failed to save floating point state!\n");
+		return;
+	}
 
-  unnamed::test();
-  arm::test();
-  arm64::test();
-  detail::test();
-  iter::test();
-  mips::test();
-  ppc::test();
-  skipdata::test();
-  sparc::test();
-  systemz::test();
-  x86::test();
-  xcore::test();
+	unnamed::test();
+	arm::test();
+	arm64::test();
+	detail::test();
+	iter::test();
+	mips::test();
+	ppc::test();
+	skipdata::test();
+	sparc::test();
+	systemz::test();
+	x86::test();
+	xcore::test();
 
-  // Restores the nonvolatile floating-point context.
-  KeRestoreFloatingPointState(&float_save);
+	// Restores the nonvolatile floating-point context.
+	KeRestoreFloatingPointState(&float_save);
 }
 
 // Functional test for cs_winkernel_vsnprintf()
 static void cs_winkernel_vsnprintf_test()
 {
-  char buf[10];
-  bool ok = true;
-  ok = (ok && cs_snprintf(buf, sizeof(buf), "%s", "") == 0 && strcmp(buf, "") == 0);
-  ok = (ok && cs_snprintf(buf, sizeof(buf), "%s", "0") == 1 && strcmp(buf, "0") == 0);
-  ok = (ok && cs_snprintf(buf, sizeof(buf), "%s", "012345678") == 9 && strcmp(buf, "012345678") == 0);
-  ok = (ok && cs_snprintf(buf, sizeof(buf), "%s", "0123456789") == 10 && strcmp(buf, "012345678") == 0);
-  ok = (ok && cs_snprintf(buf, sizeof(buf), "%s", "01234567890") == 11 && strcmp(buf, "012345678") == 0);
-  ok = (ok && cs_snprintf(buf, sizeof(buf), "%s", "0123456789001234567890") == 22 && strcmp(buf, "012345678") == 0);
-  if (!ok) {
-    printf("ERROR: cs_winkernel_vsnprintf_test() did not produce expected results!\n");
-  }
+	char buf[10];
+	bool ok = true;
+	ok = (ok && cs_snprintf(buf, sizeof(buf), "%s", "") == 0 && strcmp(buf, "") == 0);
+	ok = (ok && cs_snprintf(buf, sizeof(buf), "%s", "0") == 1 && strcmp(buf, "0") == 0);
+	ok = (ok && cs_snprintf(buf, sizeof(buf), "%s", "012345678") == 9 && strcmp(buf, "012345678") == 0);
+	ok = (ok && cs_snprintf(buf, sizeof(buf), "%s", "0123456789") == 10 && strcmp(buf, "012345678") == 0);
+	ok = (ok && cs_snprintf(buf, sizeof(buf), "%s", "01234567890") == 11 && strcmp(buf, "012345678") == 0);
+	ok = (ok && cs_snprintf(buf, sizeof(buf), "%s", "0123456789001234567890") == 22 && strcmp(buf, "012345678") == 0);
+	if (!ok) {
+		printf("ERROR: cs_winkernel_vsnprintf_test() did not produce expected results!\n");
+	}
 }
 
 // Driver entry point
 EXTERN_C NTSTATUS DriverEntry(PDRIVER_OBJECT DriverObject,
-                              PUNICODE_STRING RegistryPath) {
-  UNREFERENCED_PARAMETER(DriverObject);
-  UNREFERENCED_PARAMETER(RegistryPath);
-  cs_winkernel_vsnprintf_test();
-  test();
-  return STATUS_CANCELLED;
+		PUNICODE_STRING RegistryPath)
+{
+	UNREFERENCED_PARAMETER(DriverObject);
+	UNREFERENCED_PARAMETER(RegistryPath);
+	cs_winkernel_vsnprintf_test();
+	test();
+	return STATUS_CANCELLED;
 }
 
 // This functions mimics printf() but does not return the same value as printf()
 // would do. printf() is required to exercise regression tests.
-int __cdecl printf(const char * format, ...) {
-  NTSTATUS status;
-  va_list args;
+int __cdecl printf(const char * format, ...)
+{
+	NTSTATUS status;
+	va_list args;
 
-  va_start(args, format);
-  status = vDbgPrintEx(DPFLTR_DEFAULT_ID, DPFLTR_ERROR_LEVEL, format, args);
-  va_end(args);
-  return NT_SUCCESS(status);
+	va_start(args, format);
+	status = vDbgPrintEx(DPFLTR_DEFAULT_ID, DPFLTR_ERROR_LEVEL, format, args);
+	va_end(args);
+	return NT_SUCCESS(status);
 }
