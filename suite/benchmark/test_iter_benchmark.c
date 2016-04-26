@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "../myinttypes.h"
 
+#include <platform.h>
 #include <capstone.h>
 
 static void test()
