@@ -563,7 +563,8 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 	handle->errnum = CS_ERR_OK;
 
 	// reset IT block of ARM structure
-	handle->ITBlock.size = 0;
+	if (handle->arch == CS_ARCH_ARM)
+		handle->ITBlock.size = 0;
 
 #ifdef CAPSTONE_USE_SYS_DYN_MEM
 	if (count > 0 && count <= INSN_CACHE_SIZE)
