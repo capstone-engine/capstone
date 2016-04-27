@@ -195,7 +195,7 @@ static void printOperand(MCInst *MI, int opNum, SStream *O)
 		// backward, so they need to be multiplied by 4
 		switch (MI->Opcode) {
 			case SP_CALL:
-				Imm = SignExtend32(Imm, 30);
+				// Imm = SignExtend32(Imm, 30);
 				Imm += (uint32_t)MI->address;
 				break;
 
