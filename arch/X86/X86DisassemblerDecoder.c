@@ -1646,6 +1646,7 @@ static int readModRM(struct InternalInstruction *insn)
 					break;
 				case 0x3:
 					insn->eaBase = (EABase)(insn->eaRegBase + rm);
+					insn->eaDisplacement = EA_DISP_NONE;
 					if (readDisplacement(insn))
 						return -1;
 					break;
