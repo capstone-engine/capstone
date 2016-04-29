@@ -509,7 +509,7 @@ cs_insn * CAPSTONE_API cs_malloc(csh handle);
  
  @handle: handle returned by cs_open()
  @code: buffer containing raw binary code to be disassembled
- @code_size: size of above code
+ @size: size of above code
  @address: address of the first insn in given raw code buffer
  @insn: pointer to instruction to be filled in by this API.
 
