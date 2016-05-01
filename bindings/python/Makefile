@@ -132,6 +132,6 @@ TESTS += test_ppc.py test_sparc.py test_systemz.py test_x86.py test_xcore.py tes
 check:
 	@for t in $(TESTS); do \
 		echo Check $$t ... ; \
-		./$$t > /dev/null && echo OK || echo FAILED; \
+		./$$t > /dev/null && echo OK || (echo FAILED; exit 1;) \
 	done
 
