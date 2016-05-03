@@ -83,6 +83,11 @@ arm64_dict = {
 
 mips_dict = {
     MIPS_GRP_JUMP: "jump",
+    MIPS_GRP_CALL: "call",
+    MIPS_GRP_RET: "ret",
+    MIPS_GRP_INT: "int",
+    MIPS_GRP_IRET: "iret",
+    MIPS_GRP_PRIVILEGE: "privilege",
     MIPS_GRP_BITCOUNT: "bitcount",
     MIPS_GRP_DSP: "dsp",
     MIPS_GRP_DSPR2: "dspr2",

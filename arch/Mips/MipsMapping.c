@@ -902,6 +902,9 @@ static name_map group_name_maps[] = {
 	// generic groups
 	{ MIPS_GRP_INVALID, NULL },
 	{ MIPS_GRP_JUMP, "jump" },
+	{ MIPS_GRP_CALL, "call" },
+	{ MIPS_GRP_RET, "ret" },
+	{ MIPS_GRP_INT, "int" },
 
 	// architecture-specific groups
 	{ MIPS_GRP_BITCOUNT, "bitcount" },
