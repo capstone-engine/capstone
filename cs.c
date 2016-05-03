@@ -178,7 +178,7 @@ bool CAPSTONE_API cs_support(int query)
 				(1 << CS_ARCH_MIPS) | (1 << CS_ARCH_X86) |
 				(1 << CS_ARCH_PPC) | (1 << CS_ARCH_SPARC) |
 				(1 << CS_ARCH_SYSZ) | (1 << CS_ARCH_XCORE) |
-				(1 << CS_ARCH_TMS320C64X));
+				(1 << CS_ARCH_M68K) | (1 << CS_ARCH_TMS320C64X));
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
@@ -1114,6 +1114,11 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 				if (insn->detail->xcore.operands[i].type == (xcore_op_type)op_type)
 					count++;
 			break;
+		case CS_ARCH_M68K:
+			for (i = 0; i < insn->detail->m68k.op_count; i++)
+				if (insn->detail->m68k.operands[i].type == (m68k_op_type)op_type)
+					count++;
+			break;
 		case CS_ARCH_TMS320C64X:
 			for (i = 0; i < insn->detail->tms320c64x.op_count; i++)
 				if (insn->detail->tms320c64x.operands[i].type == (tms320c64x_op_type)op_type)
@@ -1215,6 +1220,14 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 		case CS_ARCH_XCORE:
 			for (i = 0; i < insn->detail->xcore.op_count; i++) {
 				if (insn->detail->xcore.operands[i].type == (xcore_op_type)op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+			break;
+		case CS_ARCH_M68K:
+			for (i = 0; i < insn->detail->m68k.op_count; i++) {
+				if (insn->detail->m68k.operands[i].type == (m68k_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
