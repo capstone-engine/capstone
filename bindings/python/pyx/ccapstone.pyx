@@ -2,7 +2,7 @@
 
 cimport pyx.ccapstone as cc
 import capstone, ctypes
-from . import arm, x86, mips, ppc, arm64, sparc, systemz, xcore, CsError
+from . import arm, x86, mips, ppc, arm64, sparc, systemz, xcore, tms320c64x, CsError
 
 _diet = cc.cs_support(capstone.CS_SUPPORT_DIET)
 
@@ -45,6 +45,8 @@ class CsDetail(object):
             (self.cc, self.operands) = systemz.get_arch_info(detail.arch.sysz)
         elif arch == capstone.CS_ARCH_XCORE:
                 self.operands = xcore.get_arch_info(detail.arch.xcore)
+        elif arch == capstone.CS_ARCH_TMS320C64X:
+                (self.condition, self.funit, self.parallel, self.operands) = tms320c64x.get_arch_info(self._detail.arch.tms320c64x)
 
 
 cdef class CsInsn(object):
@@ -339,7 +341,7 @@ def debug():
     archs = { "arm": capstone.CS_ARCH_ARM, "arm64": capstone.CS_ARCH_ARM64, \
         "mips": capstone.CS_ARCH_MIPS, "ppc": capstone.CS_ARCH_PPC, \
         "sparc": capstone.CS_ARCH_SPARC, "sysz": capstone.CS_ARCH_SYSZ, \
-		"xcore": capstone.CS_ARCH_XCORE }
+		"xcore": capstone.CS_ARCH_XCORE, "tms320c64x": capstone.CS_ARCH_TMS320C64X }
 
     all_archs = ""
     keys = archs.keys()
