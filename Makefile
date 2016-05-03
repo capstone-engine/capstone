@@ -412,7 +412,7 @@ ifeq ($(CAPSTONE_SHARED),yes)
 	$(INSTALL_LIB) $(LIBRARY) $(DESTDIR)/$(LIBDIR)
 ifneq ($(VERSION_EXT),)
 	cd $(DESTDIR)/$(LIBDIR) && \
-	mv lib$(LIBNAME).$(EXT) lib$(LIBNAME).$(VERSION_EXT) && \
+	rm -f lib$(LIBNAME).$(EXT) && \
 	ln -s lib$(LIBNAME).$(VERSION_EXT) lib$(LIBNAME).$(EXT)
 endif
 endif
