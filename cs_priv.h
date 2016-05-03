@@ -56,7 +56,7 @@ struct cs_struct {
 	uint8_t *regsize_map;	// map to register size (x86-only for now)
 };
 
-#define MAX_ARCH 8
+#define MAX_ARCH 9
 
 // constructor initialization for all archs
 extern cs_err (*arch_init[MAX_ARCH]) (cs_struct *);
