@@ -4720,43 +4720,43 @@
 {
 	Mips_JALR, MIPS_INS_JALR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { MIPS_REG_RA, 0 }, { MIPS_GRP_STDENC, MIPS_GRP_NOTINMICROMIPS, 0 }, 0, 0
+	{ 0 }, { MIPS_REG_RA, 0 }, { MIPS_GRP_STDENC, MIPS_GRP_NOTINMICROMIPS, MIPS_GRP_CALL, 0 }, 0, 0
 #endif
 },
 {
 	Mips_JALR16_MM, MIPS_INS_JALR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { MIPS_REG_RA, 0 }, { MIPS_GRP_MICROMIPS, 0 }, 0, 0
+	{ 0 }, { MIPS_REG_RA, 0 }, { MIPS_GRP_MICROMIPS, MIPS_GRP_CALL, 0 }, 0, 0
 #endif
 },
 {
 	Mips_JALR64, MIPS_INS_JALR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { MIPS_REG_RA, 0 }, { MIPS_GRP_STDENC, 0 }, 0, 0
+	{ 0 }, { MIPS_REG_RA, 0 }, { MIPS_GRP_STDENC, MIPS_GRP_CALL, 0 }, 0, 0
 #endif
 },
 {
 	Mips_JALRS16_MM, MIPS_INS_JALRS16,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { MIPS_REG_RA, 0 }, { MIPS_GRP_MICROMIPS, 0 }, 0, 0
+	{ 0 }, { MIPS_REG_RA, 0 }, { MIPS_GRP_MICROMIPS, MIPS_GRP_CALL, 0 }, 0, 0
 #endif
 },
 {
 	Mips_JALRS_MM, MIPS_INS_JALRS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { MIPS_REG_RA, 0 }, { MIPS_GRP_MICROMIPS, 0 }, 0, 0
+	{ 0 }, { MIPS_REG_RA, 0 }, { MIPS_GRP_MICROMIPS, MIPS_GRP_CALL, 0 }, 0, 0
 #endif
 },
 {
 	Mips_JALR_HB, MIPS_INS_JALR_HB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { MIPS_GRP_STDENC, MIPS_GRP_MIPS32, 0 }, 0, 1
+	{ 0 }, { 0 }, { MIPS_GRP_STDENC, MIPS_GRP_MIPS32, MIPS_GRP_CALL, 0 }, 0, 1
 #endif
 },
 {
 	Mips_JALR_MM, MIPS_INS_JALR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { MIPS_REG_RA, 0 }, { MIPS_GRP_MICROMIPS, 0 }, 0, 0
+	{ 0 }, { MIPS_REG_RA, 0 }, { MIPS_GRP_MICROMIPS, MIPS_GRP_CALL, 0 }, 0, 0
 #endif
 },
 {
@@ -4876,7 +4876,7 @@
 {
 	Mips_JumpLinkReg16, MIPS_INS_JALRC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { MIPS_REG_RA, 0 }, { MIPS_GRP_MIPS16MODE, 0 }, 0, 0
+	{ 0 }, { MIPS_REG_RA, 0 }, { MIPS_GRP_MIPS16MODE, MIPS_GRP_CALL, 0 }, 0, 0
 #endif
 },
 {
@@ -8812,13 +8812,13 @@
 {
 	Mips_SYSCALL, MIPS_INS_SYSCALL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { MIPS_GRP_STDENC, 0 }, 0, 0
+	{ 0 }, { 0 }, { MIPS_GRP_STDENC, MIPS_GRP_INT, 0 }, 0, 0
 #endif
 },
 {
 	Mips_SYSCALL_MM, MIPS_INS_SYSCALL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { MIPS_GRP_MICROMIPS, 0 }, 0, 0
+	{ 0 }, { 0 }, { MIPS_GRP_MICROMIPS, MIPS_GRP_INT, 0 }, 0, 0
 #endif
 },
 {
