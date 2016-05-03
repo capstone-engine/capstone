@@ -75,6 +75,9 @@ static void test()
 #ifdef CAPSTONE_HAS_M68K
 #define M68K_CODE "\xd4\x40\x87\x5a\x4e\x71\x02\xb4\xc0\xde\xc0\xde\x5c\x00\x1d\x80\x71\x12\x01\x23\xf2\x3c\x44\x22\x40\x49\x0e\x56\x54\xc5\xf2\x3c\x44\x00\x44\x7a\x00\x00\xf2\x00\x0a\x28"
 #endif
+#ifdef CAPSTONE_HAS_TMS320C64X
+#define TMS320C64X_CODE "\x01\xac\x88\x40\x81\xac\x88\x43\x00\x00\x00\x00\x02\x90\x32\x96\x02\x80\x46\x9e\x05\x3c\x83\xe6\x0b\x0c\x8b\x24"
+#endif
 
 	struct platform {
 		cs_arch arch;
@@ -276,6 +279,15 @@ static void test()
 			(unsigned char*)M68K_CODE,
 			sizeof(M68K_CODE) - 1,
 			"M68K",
+		},
+#endif
+#ifdef CAPSTONE_HAS_TMS320C64X
+		{
+			CS_ARCH_TMS320C64X,
+			0,
+			(unsigned char*)TMS320C64X_CODE,
+			sizeof(TMS320C64X_CODE) - 1,
+			"TMS320C64x",
 		},
 #endif
 	};
