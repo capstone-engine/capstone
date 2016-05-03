@@ -4,7 +4,9 @@
 #ifndef CS_SPARCDISASSEMBLER_H
 #define CS_SPARCDISASSEMBLER_H
 
+#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
 #include <stdint.h>
+#endif
 
 #include "../../include/capstone.h"
 #include "../../MCRegisterInfo.h"
