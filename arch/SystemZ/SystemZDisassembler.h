@@ -4,7 +4,9 @@
 #ifndef CS_SYSZDISASSEMBLER_H
 #define CS_SYSZDISASSEMBLER_H
 
+#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
 #include <stdint.h>
+#endif
 
 #include "../../include/capstone.h"
 #include "../../MCRegisterInfo.h"

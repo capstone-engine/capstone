@@ -8,7 +8,10 @@
 extern "C" {
 #endif
 
+#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
 #include <stdint.h>
+#endif
+
 #include "platform.h"
 
 // GCC SPARC toolchain has a default macro called "sparc" which breaks
