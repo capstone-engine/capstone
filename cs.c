@@ -289,7 +289,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 #ifndef CAPSTONE_DIET
 	char *sp, *mnem;
 #endif
-	unsigned int copy_size = MIN(sizeof(insn->bytes), insn->size);
+	uint16_t copy_size = MIN(sizeof(insn->bytes), insn->size);
 
 	// fill the instruction bytes.
 	// we might skip some redundant bytes in front in the case of X86
