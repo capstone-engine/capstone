@@ -16,7 +16,7 @@
 
 #ifdef CAPSTONE_HAS_MIPS
 
-#include "../../myinttypes.h"
+#include <platform.h>
 #include <stdlib.h>
 #include <stdio.h>	// debug
 #include <string.h>

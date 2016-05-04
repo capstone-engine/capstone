@@ -2,8 +2,8 @@
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #include <stdio.h>
-#include "../myinttypes.h"
 
+#include <platform.h>
 #include <capstone.h>
 
 struct platform {
