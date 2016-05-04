@@ -255,7 +255,7 @@ static DecodeStatus DecodeMem(MCInst *MI, unsigned insn, uint64_t Address,
 	DecodeStatus status;
 	unsigned rd = fieldFromInstruction_4(insn, 25, 5);
 	unsigned rs1 = fieldFromInstruction_4(insn, 14, 5);
-	bool isImm = fieldFromInstruction_4(insn, 13, 1);
+	bool isImm = fieldFromInstruction_4(insn, 13, 1) != 0;
 	unsigned rs2 = 0;
 	unsigned simm13 = 0;
 

@@ -1175,9 +1175,9 @@ static DecodeStatus DecodeSignedLdStInstruction(MCInst *Inst,
 	DecodeGPR64spRegisterClass(Inst, Rn, Addr, Decoder);
 	MCOperand_CreateImm0(Inst, offset);
 
-	IsLoad = fieldFromInstruction(insn, 22, 1);
+	IsLoad = fieldFromInstruction(insn, 22, 1) != 0;
 	IsIndexed = fieldFromInstruction(insn, 10, 2) != 0;
-	IsFP = fieldFromInstruction(insn, 26, 1);
+	IsFP = fieldFromInstruction(insn, 26, 1) != 0;
 
 	// Cannot write back to a transfer register (but xzr != sp).
 	if (IsLoad && IsIndexed && !IsFP && Rn != 31 && Rt == Rn)
@@ -1270,7 +1270,7 @@ static DecodeStatus DecodePairLdStInstruction(MCInst *Inst, uint32_t insn,
 	unsigned Rn = fieldFromInstruction(insn, 5, 5);
 	unsigned Rt2 = fieldFromInstruction(insn, 10, 5);
 	int32_t offset = fieldFromInstruction(insn, 15, 7);
-	bool IsLoad = fieldFromInstruction(insn, 22, 1);
+	bool IsLoad = fieldFromInstruction(insn, 22, 1) != 0;
 	unsigned Opcode = MCInst_getOpcode(Inst);
 	bool NeedsDisjointWritebackTransfer = false;
 
