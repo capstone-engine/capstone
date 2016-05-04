@@ -493,7 +493,7 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	int opsize = 0;
+	uint8_t opsize = 0;
 	MCOperand *Op  = MCInst_getOperand(MI, OpNo);
 
 	if (MCOperand_isReg(Op)) {
