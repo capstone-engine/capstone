@@ -330,11 +330,11 @@ endif
 
 ifeq ($(CAPSTONE_SHARED),yes)
 ifeq ($(IS_MINGW),1)
-LIBRARY = $(BLDIR)/$(LIBNAME).$(EXT)
+LIBRARY = $(BLDIR)/$(LIBNAME).$(VERSION_EXT)
 else ifeq ($(IS_CYGWIN),1)
-LIBRARY = $(BLDIR)/$(LIBNAME).$(EXT)
+LIBRARY = $(BLDIR)/$(LIBNAME).$(VERSION_EXT)
 else	# *nix
-LIBRARY = $(BLDIR)/lib$(LIBNAME).$(EXT)
+LIBRARY = $(BLDIR)/lib$(LIBNAME).$(VERSION_EXT)
 CFLAGS += -fvisibility=hidden
 endif
 endif
@@ -412,7 +412,7 @@ ifeq ($(CAPSTONE_SHARED),yes)
 	$(INSTALL_LIB) $(LIBRARY) $(DESTDIR)/$(LIBDIR)
 ifneq ($(VERSION_EXT),)
 	cd $(DESTDIR)/$(LIBDIR) && \
-	mv lib$(LIBNAME).$(EXT) lib$(LIBNAME).$(VERSION_EXT) && \
+	rm -f lib$(LIBNAME).$(EXT) && \
 	ln -s lib$(LIBNAME).$(VERSION_EXT) lib$(LIBNAME).$(EXT)
 endif
 endif
