@@ -237,7 +237,7 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		ud->errnum = CS_ERR_OK;
 		ud->arch = arch;
 		ud->mode = mode;
-		ud->big_endian = mode & CS_MODE_BIG_ENDIAN;
+		ud->big_endian = (mode & CS_MODE_BIG_ENDIAN) != 0;
 		// by default, do not break instruction into details
 		ud->detail = CS_OPT_OFF;
 
