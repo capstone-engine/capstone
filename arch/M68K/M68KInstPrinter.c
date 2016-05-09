@@ -113,8 +113,8 @@ static void registerBits(SStream* O, const cs_m68k_op* op)
 
 static void registerPair(SStream* O, const cs_m68k_op* op)
 {
-	SStream_concat(O, "%s:%s", s_reg_names[M68K_REG_D0 + (op->register_bits >> 4)],
-			s_reg_names[M68K_REG_D0 + (op->register_bits & 0xf)]);
+	SStream_concat(O, "%s:%s", s_reg_names[M68K_REG_D0 + op->reg_pair.reg_0],
+			s_reg_names[M68K_REG_D0 + op->reg_pair.reg_1]);
 }
 
 void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
