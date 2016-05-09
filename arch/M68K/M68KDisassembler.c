@@ -2079,12 +2079,14 @@ static void d68020_cpgen(m68k_info *info)
 				ext->op_size.type = M68K_SIZE_TYPE_FPU;
 				ext->op_size.fpu_size = M68K_FPU_SIZE_SINGLE;
 				get_ea_mode_op(info, op0, info->ir, 4);
+				op0->type = M68K_OP_FP_SINGLE;
 				break;
 
 			case 0x05:
 				ext->op_size.type = M68K_SIZE_TYPE_FPU;
 				ext->op_size.fpu_size = M68K_FPU_SIZE_DOUBLE;
 				get_ea_mode_op(info, op0, info->ir, 8);
+				op0->type = M68K_OP_FP_DOUBLE;
 				break;
 
 			default :
