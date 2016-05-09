@@ -12,7 +12,7 @@ template = {
             'header': "// For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT\npackage capstone;\n\npublic class %s_const {\n",
             'footer': "}",
             'line_format': '\tpublic static final int %s = %s;\n',
-            'out_file': './java/capstone/%s_const.java',
+            'out_file': './java/capstone/src/main/java/capstone/%s_const.java',
             # prefixes for constant filenames of all archs - case sensitive
             'arm.h': 'Arm',
             'arm64.h': 'Arm64',
