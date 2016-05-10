@@ -8,11 +8,13 @@ BLDIR = .
 OBJDIR = .
 BINDIR = .
 TESTDIR = .
+NATIDIR = .
 else
 BLDIR = $(abspath $(BUILDDIR))
 OBJDIR = $(abspath $(BUILDDIR))/capstone/src/main/java/capstone
 BINDIR = $(abspath $(BUILDDIR))/capstone/bin
 TESTDIR = $(abspath $(BUILDDIR))/capstone/src/test/java/capstone
+NATIDIR = $(abspath $(BUILDDIR))/capstone/src/main/native
 endif
 
 ifneq ($(wildcard $(JNA)),)
@@ -34,7 +36,7 @@ CAPSTONE_TEST_JAVA = Test.java\
 		TestArm.java TestArm64.java TestMips.java TestX86.java TestXcore.java\
 		TestPpc.java TestSparc.java TestSystemz.java
 
-all: gen_const capstone
+all: gen_const capstone build_maven
 
 capstone: capstone_class
 ifdef BUILDDIR
@@ -52,6 +54,8 @@ else
 	cd $(OBJDIR) && javac -classpath $(JNA) $(CAPSTONE_JAVA)
 endif
 
+test_maven:
+	./run-tests.sh
 #tests: capstone_class jna
 #	@mkdir -p $(BINDIR)
 #	cd $(TESTDIR) && javac -d $(BINDIR) -classpath "$(JNA):$(BLDIR)/capstone.jar" $(CAPSTONE_TEST_JAVA)
@@ -62,12 +66,18 @@ gen_const:
 jna:
 	@if [ ! $(JNA) ]; then echo "*** Unable to find JNA ***"; exit 1; fi
 
+build_maven:
+	@mkdir -p $(NATIDIR)
+	cd ../.. && $(MAKE) && cp libcapstone.* $(NATIDIR)
+	./build-jar.sh
+
 clean:
-	rm -rf $(OBJDIR)/*.log $(OBJDIR)/*_const.java $(BLDIR)/capstone.jar
+	rm -rf $(BLDIR)/capstone/target $(BLDIR)/capstone.jar $(OBJDIR)/*.log
 ifdef BUILDDIR
 	rm -rf $(BINDIR)
+	rm -rf $(NATIDIR)
 else
-	rm -rf $(BINDIR)/*.class
+	rm -rf $(BINDIR)/*.class 
 endif
 
 #TESTS = test arm arm64 mips ppc sparc systemz x86 xcore
