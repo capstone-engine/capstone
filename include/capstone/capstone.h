@@ -8,10 +8,6 @@
 extern "C" {
 #endif
 
-#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
-#include <stdint.h>
-#endif
-
 #include <stdarg.h>
 
 #if defined(CAPSTONE_HAS_OSXKERNEL)

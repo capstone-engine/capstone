@@ -75,12 +75,34 @@ def print_insn_detail(insn):
             if i.vector_index != -1:
                 print("\t\t\tVector Index: %u" % i.vector_index)
 
+            if i.access == CS_AC_READ:
+                print("\t\toperands[%u].access: READ\n" % (c))
+            elif i.access == CS_AC_WRITE:
+                print("\t\toperands[%u].access: WRITE\n" % (c))
+            elif i.access == CS_AC_READ | CS_AC_WRITE:
+                print("\t\toperands[%u].access: READ | WRITE\n" % (c))
+
+
     if insn.writeback:
         print("\tWrite-back: True")
     if not insn.cc in [ARM64_CC_AL, ARM64_CC_INVALID]:
         print("\tCode-condition: %u" % insn.cc)
     if insn.update_flags:
         print("\tUpdate-flags: True")
+
+    (regs_read, regs_write) = insn.regs_access()
+
+    if len(regs_read) > 0:
+        print("\tRegisters read:", end="")
+        for r in regs_read:
+            print(" %s" %(insn.reg_name(r)), end="")
+        print("")
+
+    if len(regs_write) > 0:
+        print("\tRegisters modified:", end="")
+        for r in regs_write:
+            print(" %s" %(insn.reg_name(r)), end="")
+        print("")
 
 
 # ## Test class Cs

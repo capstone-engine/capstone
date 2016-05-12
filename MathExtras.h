@@ -17,12 +17,10 @@
 #ifndef CS_LLVM_SUPPORT_MATHEXTRAS_H
 #define CS_LLVM_SUPPORT_MATHEXTRAS_H
 
-#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
-#include <stdint.h>
-#endif
-
-#ifdef _MSC_VER
-# include <intrin.h>
+#if defined(_WIN32_WCE) && (_WIN32_WCE < 0x800)
+#include "windowsce/intrin.h"
+#elif defined(_MSC_VER)
+#include <intrin.h>
 #endif
 
 #ifndef __cplusplus

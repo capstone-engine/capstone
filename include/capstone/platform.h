@@ -4,6 +4,7 @@
 #ifndef CAPSTONE_PLATFORM_H
 #define CAPSTONE_PLATFORM_H
 
+
 // handle C99 issue (for pre-2013 VisualStudio)
 #if !defined(__CYGWIN__) && !defined(__MINGW32__) && !defined(__MINGW64__) && (defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64))
 // MSVC
@@ -15,20 +16,24 @@
 typedef unsigned char bool;
 #define false 0
 #define true 1
-#endif
+#endif  // __cplusplus
 
 #else
 // VisualStudio 2013+ -> C99 is supported
 #include <stdbool.h>
-#endif
+#endif  // (_MSC_VER < 1800) || defined(_KERNEL_MODE)
 
 #else
 // not MSVC -> C99 is supported
 #include <stdbool.h>
-#endif
+#endif  // !defined(__CYGWIN__) && !defined(__MINGW32__) && !defined(__MINGW64__) && (defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64))
 
 
-// handle C99 issue (for pre-2013 VisualStudio)
+// handle inttypes.h / stdint.h compatibility
+#if defined(_WIN32_WCE) && (_WIN32_WCE < 0x800)
+#include "windowsce/stdint.h"
+#endif  // defined(_WIN32_WCE) && (_WIN32_WCE < 0x800)
+
 #if defined(CAPSTONE_HAS_OSXKERNEL) || (defined(_MSC_VER) && (_MSC_VER <= 1700 || defined(_KERNEL_MODE)))
 // this system does not have inttypes.h
 
@@ -55,7 +60,7 @@ typedef unsigned long long uint64_t;
 #define UINT16_MAX       0xffffui16
 #define UINT32_MAX       0xffffffffui32
 #define UINT64_MAX       0xffffffffffffffffui64
-#endif
+#endif  // defined(_MSC_VER) && (_MSC_VER <= 1700 || defined(_KERNEL_MODE))
 
 #define __PRI_8_LENGTH_MODIFIER__ "hh"
 #define __PRI_64_LENGTH_MODIFIER__ "ll"
@@ -88,7 +93,7 @@ typedef unsigned long long uint64_t;
 #define PRIu32        "u"
 #define PRIx32        "x"
 #define PRIX32        "X"
-#endif
+#endif  // defined(_MSC_VER) && _MSC_VER <= 1700
 
 #define PRId64        __PRI_64_LENGTH_MODIFIER__ "d"
 #define PRIi64        __PRI_64_LENGTH_MODIFIER__ "i"
@@ -100,6 +105,6 @@ typedef unsigned long long uint64_t;
 #else
 // this system has inttypes.h by default
 #include <inttypes.h>
-#endif
+#endif  // defined(CAPSTONE_HAS_OSXKERNEL) || (defined(_MSC_VER) && (_MSC_VER <= 1700 || defined(_KERNEL_MODE)))
 
 #endif

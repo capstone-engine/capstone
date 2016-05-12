@@ -64,6 +64,7 @@ static void set_mem_access(MCInst *MI, bool status)
 static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	// FIXME: do this with autogen
+	// printf(">>> ID = %u\n", MI->flat_insn->id);
 	switch(MI->flat_insn->id) {
 		default:
 			SStream_concat0(O, "ptr ");
@@ -72,6 +73,10 @@ static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 		case X86_INS_SIDT:
 		case X86_INS_LGDT:
 		case X86_INS_LIDT:
+		case X86_INS_FXRSTOR:
+		case X86_INS_FXSAVE:
+		case X86_INS_LJMP:
+		case X86_INS_LCALL:
 			// do not print "ptr"
 			break;
 	}
@@ -193,6 +198,21 @@ static void printf32mem(MCInst *MI, unsigned OpNo, SStream *O)
 			// TODO: fix this in tablegen instead
 			SStream_concat0(O, "tbyte ptr ");
 			MI->x86opsize = 10;
+			break;
+		case X86_FSTENVm:
+		case X86_FLDENVm:
+			// TODO: fix this in tablegen instead
+			switch(MI->csh->mode) {
+				default:    // never reach
+					break;
+				case CS_MODE_16:
+					MI->x86opsize = 14;
+					break;
+				case CS_MODE_32:
+				case CS_MODE_64:
+					MI->x86opsize = 28;
+					break;
+			}
 			break;
 	}
 

@@ -300,7 +300,6 @@ X86_OP_INVALID = 0
 X86_OP_REG = 1
 X86_OP_IMM = 2
 X86_OP_MEM = 3
-X86_OP_FP = 4
 
 # XOP Code Condition type
 

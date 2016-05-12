@@ -4,10 +4,6 @@
 #ifndef CS_XCOREDISASSEMBLER_H
 #define CS_XCOREDISASSEMBLER_H
 
-#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
-#include <stdint.h>
-#endif
-
 #include "capstone/capstone.h"
 #include "../../MCRegisterInfo.h"
 #include "../../MCInst.h"
