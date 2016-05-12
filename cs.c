@@ -88,18 +88,27 @@ unsigned int all_arch = 0;
 
 #if defined(CAPSTONE_USE_SYS_DYN_MEM)
 #if !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(_KERNEL_MODE)
+// default
 cs_malloc_t cs_mem_malloc = malloc;
 cs_calloc_t cs_mem_calloc = calloc;
 cs_realloc_t cs_mem_realloc = realloc;
 cs_free_t cs_mem_free = free;
+#if defined(_WIN32_WCE)
+cs_vsnprintf_t cs_vsnprintf = _vsnprintf;
+#else
 cs_vsnprintf_t cs_vsnprintf = vsnprintf;
+#endif  // defined(_WIN32_WCE)
+
 #elif defined(_KERNEL_MODE)
+// Windows driver
 cs_malloc_t cs_mem_malloc = cs_winkernel_malloc;
 cs_calloc_t cs_mem_calloc = cs_winkernel_calloc;
 cs_realloc_t cs_mem_realloc = cs_winkernel_realloc;
 cs_free_t cs_mem_free = cs_winkernel_free;
 cs_vsnprintf_t cs_vsnprintf = cs_winkernel_vsnprintf;
+
 #else
+// OSX kernel
 extern void* kern_os_malloc(size_t size);
 extern void kern_os_free(void* addr);
 extern void* kern_os_realloc(void* addr, size_t nsize);
@@ -114,14 +123,17 @@ cs_calloc_t cs_mem_calloc = cs_kern_os_calloc;
 cs_realloc_t cs_mem_realloc = kern_os_realloc;
 cs_free_t cs_mem_free = kern_os_free;
 cs_vsnprintf_t cs_vsnprintf = vsnprintf;
-#endif
+
+#endif  // !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(_KERNEL_MODE)
 #else
+// User-defined
 cs_malloc_t cs_mem_malloc = NULL;
 cs_calloc_t cs_mem_calloc = NULL;
 cs_realloc_t cs_mem_realloc = NULL;
 cs_free_t cs_mem_free = NULL;
 cs_vsnprintf_t cs_vsnprintf = NULL;
-#endif
+
+#endif  // defined(CAPSTONE_USE_SYS_DYN_MEM)
 
 CAPSTONE_EXPORT
 unsigned int CAPSTONE_API cs_version(int *major, int *minor)
@@ -576,6 +588,10 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 	}
 
 	handle->errnum = CS_ERR_OK;
+
+	// reset IT block of ARM structure
+	if (handle->arch == CS_ARCH_ARM)
+		handle->ITBlock.size = 0;
 
 #ifdef CAPSTONE_USE_SYS_DYN_MEM
 	if (count > 0 && count <= INSN_CACHE_SIZE)

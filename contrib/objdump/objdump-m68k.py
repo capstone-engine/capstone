@@ -149,14 +149,14 @@ def dump_op_ea(insn, op):
 
     if op.address_mode in [ M68K_AM_PCI_INDEX_8_BIT_DISP, M68K_AM_AREGI_INDEX_8_BIT_DISP ]:
         disp = op.mem.disp
-        if op.mem.register_bits == 2:
+        if op.register_bits == 2:
             disp = extsign8(op.mem.disp)
-        if op.mem.register_bits == 4:
+        if op.register_bits == 4:
             disp = extsign1632(op.mem.disp)
             
         str = dump_op_reg(insn, op.mem.base_reg) + "@(" + "{0:016x}".format(disp) + "," + dump_op_reg(insn, op.mem.index_reg) + ":" + map_index_size_str[op.mem.index_size]
-        if op.mem.register_bits:
-            str += format(":%u" % (op.mem.register_bits))
+        if op.register_bits:
+            str += format(":%u" % (op.register_bits))
         return str + ")"
 
 
@@ -165,8 +165,8 @@ def dump_op_ea(insn, op):
         str += format("@(%016x)@(%016x" % (extsign1632(op.mem.in_disp), extsign1632(op.mem.out_disp)))
         if op.mem.index_reg:
             str += "," + dump_op_reg(insn, op.mem.index_reg) + ":" + map_index_size_str[op.mem.index_size]
-        if op.mem.register_bits:
-            str += format(":%u" % (op.mem.register_bits))
+        if op.register_bits:
+            str += format(":%u" % (op.register_bits))
         str += ")"
         return str
 

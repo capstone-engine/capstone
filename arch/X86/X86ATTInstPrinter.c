@@ -174,6 +174,21 @@ static void printf32mem(MCInst *MI, unsigned OpNo, SStream *O)
 			// TODO: fix this in tablegen instead
 			MI->x86opsize = 10;
 			break;
+		case X86_FSTENVm:
+		case X86_FLDENVm:
+			// TODO: fix this in tablegen instead
+			switch(MI->csh->mode) {
+				default:    // never reach
+					break;
+				case CS_MODE_16:
+					MI->x86opsize = 14;
+					break;
+				case CS_MODE_32:
+				case CS_MODE_64:
+					MI->x86opsize = 28;
+					break;
+			}
+			break;
 	}
 	printMemReference(MI, OpNo, O);
 }

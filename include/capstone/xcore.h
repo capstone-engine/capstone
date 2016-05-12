@@ -8,10 +8,6 @@
 extern "C" {
 #endif
 
-#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
-#include <stdint.h>
-#endif
-
 #include "platform.h"
 
 #ifdef _MSC_VER
@@ -25,33 +21,6 @@ typedef enum xcore_op_type {
 	XCORE_OP_IMM, // = CS_OP_IMM (Immediate operand).
 	XCORE_OP_MEM, // = CS_OP_MEM (Memory operand).
 } xcore_op_type;
-
-// Instruction's operand referring to memory
-// This is associated with XCORE_OP_MEM operand type above
-typedef struct xcore_op_mem {
-	uint8_t base;	// base register
-	uint8_t index;	// index register
-	int32_t disp;	// displacement/offset value
-	int     direct;	// +1: forward, -1: backward
-} xcore_op_mem;
-
-// Instruction operand
-typedef struct cs_xcore_op {
-	xcore_op_type type;	// operand type
-	union {
-		unsigned int reg;	// register value for REG operand
-		int32_t imm;		// immediate value for IMM operand
-		xcore_op_mem mem;		// base/disp value for MEM operand
-	};
-} cs_xcore_op;
-
-// Instruction structure
-typedef struct cs_xcore {
-	// Number of operands of this instruction, 
-	// or 0 when instruction has no operand.
-	uint8_t op_count;
-	cs_xcore_op operands[8]; // operands for this instruction.
-} cs_xcore;
 
 //> XCore registers
 typedef enum xcore_reg {
@@ -90,6 +59,35 @@ typedef enum xcore_reg {
 
 	XCORE_REG_ENDING,	// <-- mark the end of the list of registers
 } xcore_reg;
+
+// Instruction's operand referring to memory
+// This is associated with XCORE_OP_MEM operand type above
+typedef struct xcore_op_mem {
+	uint8_t base;		// base register, can be safely interpreted as
+				// a value of type `xcore_reg`, but it is only
+				// one byte wide
+	uint8_t index;		// index register, same conditions apply here
+	int32_t disp;	// displacement/offset value
+	int     direct;	// +1: forward, -1: backward
+} xcore_op_mem;
+
+// Instruction operand
+typedef struct cs_xcore_op {
+	xcore_op_type type;	// operand type
+	union {
+		xcore_reg reg;	// register value for REG operand
+		int32_t imm;		// immediate value for IMM operand
+		xcore_op_mem mem;		// base/disp value for MEM operand
+	};
+} cs_xcore_op;
+
+// Instruction structure
+typedef struct cs_xcore {
+	// Number of operands of this instruction, 
+	// or 0 when instruction has no operand.
+	uint8_t op_count;
+	cs_xcore_op operands[8]; // operands for this instruction.
+} cs_xcore;
 
 //> XCore instruction
 typedef enum xcore_insn {

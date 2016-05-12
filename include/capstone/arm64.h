@@ -8,10 +8,6 @@
 extern "C" {
 #endif
 
-#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
-#include <stdint.h>
-#endif
-
 #include "platform.h"
 
 #ifdef _MSC_VER
@@ -346,54 +342,6 @@ typedef enum arm64_prefetch_op {
 	ARM64_PRFM_PSTL3STRM = 0x15 + 1,
 } arm64_prefetch_op;
 
-// Instruction's operand referring to memory
-// This is associated with ARM64_OP_MEM operand type above
-typedef struct arm64_op_mem {
-	unsigned int base;	// base register
-	unsigned int index;	// index register
-	int32_t disp;	// displacement/offset value
-} arm64_op_mem;
-
-// Instruction operand
-typedef struct cs_arm64_op {
-	int vector_index;	// Vector Index for some vector operands (or -1 if irrelevant)
-	arm64_vas vas;		// Vector Arrangement Specifier
-	arm64_vess vess;	// Vector Element Size Specifier
-	struct {
-		arm64_shifter type;	// shifter type of this operand
-		unsigned int value;	// shifter value of this operand
-	} shift;
-	arm64_extender ext;		// extender type of this operand
-	arm64_op_type type;	// operand type
-	union {
-		unsigned int reg;	// register value for REG operand
-		int64_t imm;		// immediate value, or index for C-IMM or IMM operand
-		double fp;			// floating point value for FP operand
-		arm64_op_mem mem;		// base/index/scale/disp value for MEM operand
-		arm64_pstate pstate;		// PState field of MSR instruction.
-		unsigned int sys;  // IC/DC/AT/TLBI operation (see arm64_ic_op, arm64_dc_op, arm64_at_op, arm64_tlbi_op)
-		arm64_prefetch_op prefetch;  // PRFM operation.
-		arm64_barrier_op barrier;  // Memory barrier operation (ISB/DMB/DSB instructions).
-	};
-
-	// How is this operand accessed? (READ, WRITE or READ|WRITE)
-	// This field is combined of cs_ac_type.
-	// NOTE: this field is irrelevant if engine is compiled in DIET mode.
-	cs_ac_type access;
-} cs_arm64_op;
-
-// Instruction structure
-typedef struct cs_arm64 {
-	arm64_cc cc;	// conditional code for this insn
-	bool update_flags;	// does this insn update flags?
-	bool writeback;	// does this insn request writeback? 'True' means 'yes'
-
-	// Number of operands of this instruction,
-	// or 0 when instruction has no operand.
-	uint8_t op_count;
-
-	cs_arm64_op operands[8]; // operands for this instruction.
-} cs_arm64;
 
 //> ARM64 registers
 typedef enum arm64_reg {
@@ -669,6 +617,55 @@ typedef enum arm64_reg {
 	ARM64_REG_FP = ARM64_REG_X29,
 	ARM64_REG_LR = ARM64_REG_X30,
 } arm64_reg;
+
+// Instruction's operand referring to memory
+// This is associated with ARM64_OP_MEM operand type above
+typedef struct arm64_op_mem {
+	arm64_reg base;	// base register
+	arm64_reg index;	// index register
+	int32_t disp;	// displacement/offset value
+} arm64_op_mem;
+
+// Instruction operand
+typedef struct cs_arm64_op {
+	int vector_index;	// Vector Index for some vector operands (or -1 if irrelevant)
+	arm64_vas vas;		// Vector Arrangement Specifier
+	arm64_vess vess;	// Vector Element Size Specifier
+	struct {
+		arm64_shifter type;	// shifter type of this operand
+		unsigned int value;	// shifter value of this operand
+	} shift;
+	arm64_extender ext;		// extender type of this operand
+	arm64_op_type type;	// operand type
+	union {
+		arm64_reg reg;	// register value for REG operand
+		int64_t imm;		// immediate value, or index for C-IMM or IMM operand
+		double fp;			// floating point value for FP operand
+		arm64_op_mem mem;		// base/index/scale/disp value for MEM operand
+		arm64_pstate pstate;		// PState field of MSR instruction.
+		unsigned int sys;  // IC/DC/AT/TLBI operation (see arm64_ic_op, arm64_dc_op, arm64_at_op, arm64_tlbi_op)
+		arm64_prefetch_op prefetch;  // PRFM operation.
+		arm64_barrier_op barrier;  // Memory barrier operation (ISB/DMB/DSB instructions).
+	};
+
+	// How is this operand accessed? (READ, WRITE or READ|WRITE)
+	// This field is combined of cs_ac_type.
+	// NOTE: this field is irrelevant if engine is compiled in DIET mode.
+	uint8_t access;
+} cs_arm64_op;
+
+// Instruction structure
+typedef struct cs_arm64 {
+	arm64_cc cc;	// conditional code for this insn
+	bool update_flags;	// does this insn update flags?
+	bool writeback;	// does this insn request writeback? 'True' means 'yes'
+
+	// Number of operands of this instruction,
+	// or 0 when instruction has no operand.
+	uint8_t op_count;
+
+	cs_arm64_op operands[8]; // operands for this instruction.
+} cs_arm64;
 
 //> ARM64 instruction
 typedef enum arm64_insn {

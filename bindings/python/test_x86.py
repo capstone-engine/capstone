@@ -99,8 +99,6 @@ def print_insn_detail(mode, insn):
                 print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
             if i.type == X86_OP_IMM:
                 print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x(i.imm)))
-            if i.type == X86_OP_FP:
-                print("\t\toperands[%u].type: FP = %f" % (c, i.fp))
             if i.type == X86_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
                 if i.mem.segment != 0:

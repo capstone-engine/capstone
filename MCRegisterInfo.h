@@ -19,10 +19,6 @@
 #ifndef CS_LLVM_MC_MCREGISTERINFO_H
 #define CS_LLVM_MC_MCREGISTERINFO_H
 
-#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
-#include <stdint.h>
-#endif
-
 #include "capstone/platform.h"
 
 /// An unsigned integer type large enough to represent all physical registers,
