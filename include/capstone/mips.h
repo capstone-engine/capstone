@@ -8,13 +8,6 @@
 extern "C" {
 #endif
 
-<<<<<<< HEAD
-#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
-#include <stdint.h>
-#endif
-
-=======
->>>>>>> upstream/next
 #include "platform.h"
 
 // GCC MIPS toolchain has a default macro called "mips" which breaks
