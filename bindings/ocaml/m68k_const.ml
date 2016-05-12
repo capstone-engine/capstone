@@ -80,9 +80,10 @@ let _M68K_OP_INVALID = 0;;
 let _M68K_OP_REG = 1;;
 let _M68K_OP_IMM = 2;;
 let _M68K_OP_MEM = 3;;
-let _M68K_OP_FP = 4;;
-let _M68K_OP_REG_BITS = 5;;
-let _M68K_OP_REG_PAIR = 6;;
+let _M68K_OP_FP_SINGLE = 4;;
+let _M68K_OP_FP_DOUBLE = 5;;
+let _M68K_OP_REG_BITS = 6;;
+let _M68K_OP_REG_PAIR = 7;;
 
 let _M68K_CPU_SIZE_NONE = 0;;
 let _M68K_CPU_SIZE_BYTE = 1;;
