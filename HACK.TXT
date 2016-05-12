@@ -21,6 +21,7 @@ Capstone source is organized as followings.
 ├── include         <- API headers in C language (*.h)
 ├── msvc            <- Microsoft Visual Studio support (for Windows compile)
 ├── packages        <- Packages for Linux/OSX/BSD.
+├── windows         <- Windows support (for Windows kernel driver compile)
 ├── suite           <- Development test tools - for Capstone developers only
 ├── tests           <- Test code (in C language)
 └── xcode           <- Xcode support (for MacOSX compile)

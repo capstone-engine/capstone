@@ -19,7 +19,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../myinttypes.h"
 
 #include "PPCInstPrinter.h"
 #include "PPCPredicates.h"

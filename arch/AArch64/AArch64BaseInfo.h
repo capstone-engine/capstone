@@ -21,7 +21,9 @@
 #define CS_LLVM_AARCH64_BASEINFO_H
 
 #include <ctype.h>
+#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
 #include <stdint.h>
+#endif
 #include <string.h>
 
 #ifndef __cplusplus

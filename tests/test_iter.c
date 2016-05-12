@@ -4,8 +4,8 @@
 // This sample code demonstrates the APIs cs_malloc() & cs_disasm_iter().
 #include <stdio.h>
 #include <stdlib.h>
-#include "../myinttypes.h"
 
+#include <capstone/platform.h>
 #include <capstone/capstone.h>
 
 struct platform {
@@ -245,7 +245,7 @@ static void test()
 		while(cs_disasm_iter(handle, &code, &size, &address, insn)) {
 			int n;
 
-			printf("0x%"PRIx64":\t%s\t\t%s // insn-ID: %u, insn-mnem: %s\n",
+			printf("0x%" PRIx64 ":\t%s\t\t%s // insn-ID: %u, insn-mnem: %s\n",
 					insn->address, insn->mnemonic, insn->op_str,
 					insn->id, cs_insn_name(handle, insn->id));
 

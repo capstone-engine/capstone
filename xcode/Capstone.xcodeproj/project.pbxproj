@@ -347,7 +347,6 @@
 		DC474F6B19DE6F3B00BCA449 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC5BFF4019EE544E008CA585 /* test_iter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_iter; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC5BFF4819EE54BE008CA585 /* test_iter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_iter.c; path = ../tests/test_iter.c; sourceTree = "<group>"; };
-		DC696C5E1AD4600200A56306 /* myinttypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = myinttypes.h; path = ../myinttypes.h; sourceTree = "<group>"; };
 		DCA3577B1BC2C0290094BB3F /* M68KDisassembler.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = M68KDisassembler.c; sourceTree = "<group>"; };
 		DCA3577C1BC2C0290094BB3F /* M68KDisassembler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M68KDisassembler.h; sourceTree = "<group>"; };
 		DCA3577D1BC2C0290094BB3F /* M68KInstPrinter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = M68KInstPrinter.c; sourceTree = "<group>"; };
@@ -704,7 +703,6 @@
 				DCFE24B719DDCE1E00EF8EA9 /* MCInstrDesc.h */,
 				DCFE24A019DDCDEE00EF8EA9 /* MCRegisterInfo.c */,
 				DCFE24B819DDCE1E00EF8EA9 /* MCRegisterInfo.h */,
-				DC696C5E1AD4600200A56306 /* myinttypes.h */,
 				DCFE24A119DDCDEE00EF8EA9 /* SStream.c */,
 				DCFE24B919DDCE1E00EF8EA9 /* SStream.h */,
 				DCFE24A219DDCDEE00EF8EA9 /* utils.c */,
