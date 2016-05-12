@@ -19,6 +19,12 @@ class M68KOpMem(ctypes.Structure):
         ('index_size', ctypes.c_ubyte),
     )
 
+class M68KOpRegPair(ctypes.Structure):
+    _fields_ = (
+        ('reg_0', ctypes.c_uint),
+        ('reg_1', ctypes.c_uint),
+    )
+
 class M68KOpValue(ctypes.Union):
     _fields_ = (
         ('imm', ctypes.c_int64),
@@ -28,12 +34,6 @@ class M68KOpValue(ctypes.Union):
         ('reg_pair', M68KOpRegPair),
         ('mem', M68KOpMem),
         ('register_bits', ctypes.c_uint),
-    )
-
-class M68KOpRegPair(ctypes.Structure):
-    _fields_ = (
-        ('reg_0', ctypes.c_uint),
-        ('reg_1', ctypes.c_uint),
     )
 
 class M68KOp(ctypes.Structure):
