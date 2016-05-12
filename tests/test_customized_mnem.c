@@ -6,8 +6,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../myinttypes.h"
 
+#include <capstone/platform.h>
 #include <capstone/capstone.h>
 
 #define X86_CODE32 "\x75\x01"

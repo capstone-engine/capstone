@@ -5,7 +5,10 @@
 #define CS_M68KDISASSEMBLER_H
 
 #include "../../MCInst.h"
+
+#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
 #include <stdint.h>
+#endif
 
 /* Private, For internal use only */
 typedef struct m68k_info {

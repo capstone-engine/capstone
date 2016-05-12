@@ -2,8 +2,8 @@
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #include <stdio.h>
-#include "../myinttypes.h"
 
+#include <capstone/platform.h>
 #include <capstone/capstone.h>
 
 struct platform {
@@ -53,7 +53,7 @@ static void print_insn_detail(cs_insn *ins)
 				printf("\t\toperands[%u].type: ACREG = %u\n", i, op->reg);
 				break;
 			case SYSZ_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%"PRIx64"\n", i, op->imm);
+				printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->imm);
 				break;
 			case SYSZ_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
@@ -64,9 +64,9 @@ static void print_insn_detail(cs_insn *ins)
 					printf("\t\t\toperands[%u].mem.index: REG = %s\n",
 							i, cs_reg_name(handle, op->mem.index));
 				if (op->mem.length != 0)
-					printf("\t\t\toperands[%u].mem.length: 0x%"PRIx64"\n", i, op->mem.length);
+					printf("\t\t\toperands[%u].mem.length: 0x%" PRIx64 "\n", i, op->mem.length);
 				if (op->mem.disp != 0)
-					printf("\t\t\toperands[%u].mem.disp: 0x%"PRIx64"\n", i, op->mem.disp);
+					printf("\t\t\toperands[%u].mem.disp: 0x%" PRIx64 "\n", i, op->mem.disp);
 
 				break;
 		}
@@ -116,10 +116,10 @@ static void test()
 			printf("Disasm:\n");
 
 			for (j = 0; j < count; j++) {
-				printf("0x%"PRIx64":\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
+				printf("0x%" PRIx64 ":\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
 				print_insn_detail(&insn[j]);
 			}
-			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
+			printf("0x%" PRIx64 ":\n", insn[j-1].address + insn[j-1].size);
 
 			// free memory allocated by cs_disasm()
 			cs_free(insn, count);

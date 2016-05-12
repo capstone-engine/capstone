@@ -8,7 +8,9 @@
 extern "C" {
 #endif
 
+#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
 #include <stdint.h>
+#endif
 
 // Calculate relative address for X86-64, given cs_insn structure
 #define X86_REL_ADDR(insn) (insn.address + insn.size + insn.detail->x86.disp)

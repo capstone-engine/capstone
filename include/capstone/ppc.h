@@ -8,7 +8,10 @@
 extern "C" {
 #endif
 
+#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
 #include <stdint.h>
+#endif
+
 #include "platform.h"
 
 #ifdef _MSC_VER

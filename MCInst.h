@@ -19,7 +19,9 @@
 #ifndef CS_MCINST_H
 #define CS_MCINST_H
 
+#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
 #include <stdint.h>
+#endif
 
 #include "include/capstone/capstone.h"
 

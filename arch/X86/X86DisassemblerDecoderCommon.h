@@ -25,7 +25,9 @@
 #ifndef CS_X86_DISASSEMBLERDECODERCOMMON_H
 #define CS_X86_DISASSEMBLERDECODERCOMMON_H
 
+#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
 #include <stdint.h>
+#endif
 
 #define INSTRUCTIONS_SYM  x86DisassemblerInstrSpecifiers
 #define CONTEXTS_SYM      x86DisassemblerContexts

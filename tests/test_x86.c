@@ -3,8 +3,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../myinttypes.h"
 
+#include <capstone/platform.h>
 #include <capstone/capstone.h>
 
 static csh handle;
@@ -196,7 +196,7 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 		printf("\timm_count: %u\n", count);
 		for (i = 1; i < count + 1; i++) {
 			int index = cs_op_index(ud, ins, X86_OP_IMM, i);
-			printf("\t\timms[%u]: 0x%"PRIx64 "\n", i, x86->operands[index].imm);
+			printf("\t\timms[%u]: 0x%" PRIx64 "\n", i, x86->operands[index].imm);
 		}
 	}
 
@@ -212,7 +212,7 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;
 			case X86_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%"PRIx64 "\n", i, op->imm);
+				printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->imm);
 				break;
 			case X86_OP_FP:
 				printf("\t\toperands[%u].type: FP = %f\n", i, op->fp);
@@ -381,10 +381,10 @@ static void test()
 			printf("Disasm:\n");
 
 			for (j = 0; j < count; j++) {
-				printf("0x%"PRIx64":\t%s\t%s\n\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
+				printf("0x%" PRIx64 ":\t%s\t%s\n\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
 				print_insn_detail(handle, platforms[i].mode, &insn[j]);
 			}
-			printf("0x%"PRIx64":\n", insn[j-1].address + insn[j-1].size);
+			printf("0x%" PRIx64 ":\n", insn[j-1].address + insn[j-1].size);
 
 			// free memory allocated by cs_disasm()
 			cs_free(insn, count);
