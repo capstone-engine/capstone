@@ -983,19 +983,21 @@ static void build_cas2(m68k_info *info, int size)
 
 	op0->address_mode = M68K_AM_NONE;
 	op0->type = M68K_OP_REG_PAIR;
-	op0->register_bits = (((extension >> 16) & 7) << 4) | (extension & 7);
+	op0->reg_pair.reg_0 = (extension >> 16) & 7;
+	op0->reg_pair.reg_1 = extension & 7;
 
 	op1->address_mode = M68K_AM_NONE;
 	op1->type = M68K_OP_REG_PAIR;
-	op1->register_bits = (((extension >> 22) & 7) << 4) | ((extension >> 6) & 7);
+	op1->reg_pair.reg_0 = (extension >> 22) & 7;
+	op1->reg_pair.reg_1 = (extension >> 6) & 7;
 
 	reg_0 = (extension >> 28) & 7;
 	reg_1 = (extension >> 12) & 7;
 
 	op2->address_mode = M68K_AM_NONE;
 	op2->type = M68K_OP_REG_PAIR;
-	op2->register_bits = ((reg_0 + (BIT_1F(extension) ? 8 : 0)) << 4) |
-		(reg_1 + (BIT_F(extension) ? 8 : 0));
+	op2->reg_pair.reg_0 = reg_0 + (BIT_1F(extension) ? 8 : 0);
+	op2->reg_pair.reg_1 = reg_1 + (BIT_F(extension) ? 8 : 0);
 }
 
 static void build_chk2_cmp2(m68k_info *info, int size)
@@ -2081,12 +2083,14 @@ static void d68020_cpgen(m68k_info *info)
 				ext->op_size.type = M68K_SIZE_TYPE_FPU;
 				ext->op_size.fpu_size = M68K_FPU_SIZE_SINGLE;
 				get_ea_mode_op(info, op0, info->ir, 4);
+				op0->type = M68K_OP_FP_SINGLE;
 				break;
 
 			case 0x05:
 				ext->op_size.type = M68K_SIZE_TYPE_FPU;
 				ext->op_size.fpu_size = M68K_FPU_SIZE_DOUBLE;
 				get_ea_mode_op(info, op0, info->ir, 8);
+				op0->type = M68K_OP_FP_DOUBLE;
 				break;
 
 			default :
@@ -2248,7 +2252,8 @@ static void d68020_divl(m68k_info *info)
 
 	op1->address_mode = M68K_AM_NONE;
 	op1->type = M68K_OP_REG_PAIR;
-	op1->register_bits = (reg_0 << 4) | reg_1;
+	op1->reg_pair.reg_0 = reg_0;
+	op1->reg_pair.reg_1 = reg_1;
 
 	if ((reg_0 == reg_1) || !BIT_A(extension)) {
 		op1->type = M68K_OP_REG;
@@ -2793,7 +2798,8 @@ static void d68020_mull(m68k_info *info)
 
 	op1->address_mode = M68K_AM_NONE;
 	op1->type = M68K_OP_REG_PAIR;
-	op1->register_bits = (reg_0 << 4) | reg_1;
+	op1->reg_pair.reg_0 = reg_0;
+	op1->reg_pair.reg_1 = reg_1;
 
 	if (!BIT_A(extension)) {
 		op1->type = M68K_OP_REG;
