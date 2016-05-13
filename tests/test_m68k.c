@@ -115,6 +115,10 @@ static void print_insn_detail(cs_insn *ins)
 
 				printf("\t\taddress mode: %s\n", s_addressing_modes[op->address_mode]);
 				break;
+			case M68K_OP_FP_SINGLE:
+				printf("\t\toperands[%u].type: FP_SINGLE\n", i);
+				printf("\t\t\toperands[%u].simm: %f\n", i, op->simm);
+				break;
 		}
 	}
 
