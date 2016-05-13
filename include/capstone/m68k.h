@@ -112,7 +112,8 @@ typedef enum m68k_op_type {
 	M68K_OP_REG,         // = CS_OP_REG (Register operand).
 	M68K_OP_IMM,         // = CS_OP_IMM (Immediate operand).
 	M68K_OP_MEM,         // = CS_OP_MEM (Memory operand).
-	M68K_OP_FP,          // = CS_OP_FP  (Floating-Point operand)
+	M68K_OP_FP_SINGLE,   // single precision Floating-Point operand
+	M68K_OP_FP_DOUBLE,   // double precision Floating-Point operand
 	M68K_OP_REG_BITS,    // Register bits move
 	M68K_OP_REG_PAIR,    // Register pair in the same op (upper 4 bits for first reg, lower for second) 
 } m68k_op_type;
@@ -136,12 +137,16 @@ typedef struct m68k_op_mem {
 // Instruction operand
 typedef struct cs_m68k_op {
 	union {
-		uint64_t imm;           // immediate value for IMM operand
+		uint64_t imm;               // immediate value for IMM operand
 		double dimm; 		    // double imm
 		float simm; 		    // float imm
 		m68k_reg reg;		    // register value for REG operand
+		struct {		    // register pair in one operand
+			m68k_reg reg_0;
+			m68k_reg reg_1;
+		} reg_pair;
 		m68k_op_mem mem; 	    // data when operand is targeting memory
-		uint32_t register_bits; // register bits for movem/cas2/etc (always in d0-d7, a0-a7, fp0 - fp7 order)
+		uint32_t register_bits; // register bits for movem etc. (always in d0-d7, a0-a7, fp0 - fp7 order)
 	};
 	m68k_op_type type;
 	m68k_address_mode address_mode;	// M68K addressing mode for this op

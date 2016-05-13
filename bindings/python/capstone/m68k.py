@@ -19,12 +19,19 @@ class M68KOpMem(ctypes.Structure):
         ('index_size', ctypes.c_ubyte),
     )
 
+class M68KOpRegPair(ctypes.Structure):
+    _fields_ = (
+        ('reg_0', ctypes.c_uint),
+        ('reg_1', ctypes.c_uint),
+    )
+
 class M68KOpValue(ctypes.Union):
     _fields_ = (
         ('imm', ctypes.c_int64),
         ('dimm', ctypes.c_double),
         ('simm', ctypes.c_float),
         ('reg', ctypes.c_uint),
+        ('reg_pair', M68KOpRegPair),
         ('mem', M68KOpMem),
         ('register_bits', ctypes.c_uint),
     )
@@ -59,7 +66,7 @@ class M68KOp(ctypes.Structure):
     @property
     def register_bits(self):
         return self.value.register_bits
-    
+
 class M68KOpSize(ctypes.Structure):
     _fields_ = (
         ('type', ctypes.c_uint),
@@ -68,7 +75,7 @@ class M68KOpSize(ctypes.Structure):
 
     def get(a):
         return copy.deepcopy(type, size)
-    
+
 class CsM68K(ctypes.Structure):
     M68K_OPERAND_COUNT = 4
     _fields_ = (
