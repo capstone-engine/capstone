@@ -85,16 +85,6 @@ static void print_insn_detail(cs_insn *ins)
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;
 			case M68K_OP_IMM:
-				if (m68k->op_size.type == M68K_SIZE_TYPE_FPU) {
-					if (m68k->op_size.fpu_size == M68K_FPU_SIZE_SINGLE)
-						printf("\t\toperands[%u].type: IMM = %f\n", i, op->simm);
-					else if (m68k->op_size.fpu_size == M68K_FPU_SIZE_DOUBLE)
-						printf("\t\toperands[%u].type: IMM = %lf\n", i, op->dimm);
-					else
-						printf("\t\toperands[%u].type: IMM = <unsupported>\n", i);
-					break;
-				}
-
 				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, (int)op->imm);
 				break;
 			case M68K_OP_MEM:
@@ -118,6 +108,10 @@ static void print_insn_detail(cs_insn *ins)
 			case M68K_OP_FP_SINGLE:
 				printf("\t\toperands[%u].type: FP_SINGLE\n", i);
 				printf("\t\t\toperands[%u].simm: %f\n", i, op->simm);
+				break;
+			case M68K_OP_FP_DOUBLE:
+				printf("\t\toperands[%u].type: FP_DOUBLE\n", i);
+				printf("\t\t\toperands[%u].dimm: %lf\n", i, op->dimm);
 				break;
 		}
 	}
