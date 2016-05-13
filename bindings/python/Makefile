@@ -100,7 +100,7 @@ clean:
 
 
 TESTS = test.py test_detail.py test_arm.py test_arm64.py test_mips.py test_ppc.py
-TESTS += test_sparc.py test_systemz.py test_x86.py test_xcore.py test_skipdata.py
+TESTS += test_sparc.py test_systemz.py test_x86.py test_xcore.py test_tms320c64x.py test_skipdata.py
 check:
 	@for t in $(TESTS); do \
 		echo Check $$t ... ; \
