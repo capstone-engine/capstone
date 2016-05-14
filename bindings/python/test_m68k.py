@@ -50,19 +50,9 @@ def print_insn_detail(insn):
     for i, op in enumerate(insn.operands):
         if op.type == M68K_OP_REG:
             print("\t\toperands[%u].type: REG = %s" % (i, insn.reg_name(op.reg)))
-
-        if op.type == M68K_OP_IMM:
-            if insn.op_size.type == M68K_SIZE_TYPE_FPU:
-                if insn.op_size.size == M68K_FPU_SIZE_SINGLE:
-                    print("\t\toperands[%u].type: IMM = %f" % (i, op.simm))
-                elif insn.op_size.size == M68K_FPU_SIZE_DOUBLE:
-                    print("\t\toperands[%u].type: IMM = %lf" % (i, op.dimm))
-                else:
-                    print("\t\toperands[%u].type: IMM = <unsupported>" % (i))
-                continue
+        elif op.type == M68K_OP_IMM:
             print("\t\toperands[%u].type: IMM = 0x%x" % (i, op.imm & 0xffffffff))
-
-        if op.type == M68K_OP_MEM:
+        elif op.type == M68K_OP_MEM:
             print("\t\toperands[%u].type: MEM" % (i))
             if op.mem.base_reg != M68K_REG_INVALID:
                 print("\t\t\toperands[%u].mem.base: REG = %s" % (i, insn.reg_name(op.mem.base_reg)))
@@ -77,6 +67,12 @@ def print_insn_detail(insn):
             if op.mem.scale != 0:
                 print("\t\t\toperands[%u].mem.scale: %d" % (i, op.mem.scale))
             print("\t\taddress mode: %s" % (s_addressing_modes[op.address_mode]))
+        elif op.type == M68K_OP_FP_SINGLE:
+            print("\t\toperands[%u].type: FP_SINGLE" % i)
+            print("\t\ŧ\toperands[%u].simm: %f", i, op.simm)
+        elif op.type == M68K_OP_FP_DOUBLE:
+            print("\t\toperands[%u].type: FP_DOUBLE" % i)
+            print("\t\ŧ\toperands[%u].dimm: %lf", i, op.dimm)
     print()
 
 # ## Test class Cs
