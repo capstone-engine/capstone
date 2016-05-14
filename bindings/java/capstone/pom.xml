@@ -52,14 +52,14 @@
     </distributionManagement>
 
     <build>
-        <resources>
-            <resource>
+        <testResources>
+            <testResource>
                 <directory>src/main/native</directory>
-                <includes>
-                    <include>**/libcapstone.*</include>
-                </includes>
-            </resource>
-        </resources>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+        </testResources>
         
         <plugins>
             <plugin>
