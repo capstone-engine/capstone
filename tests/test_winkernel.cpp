@@ -13,9 +13,16 @@ extern "C" {
 }
 #endif
 
+EXTERN_C DRIVER_INITIALIZE DriverEntry;
+
 #pragma warning(push)
-#pragma warning(disable : 4005)  // 'identifier' : macro redefinition
-#pragma warning(disable : 4007)  // 'main': must be '__cdecl'
+#pragma warning(disable : 4005)   // 'identifier' : macro redefinition
+#pragma warning(disable : 4007)   // 'main': must be '__cdecl'
+
+// Drivers must protect floating point hardware state. See use of float simm:
+// Use KeSaveFloatingPointState/KeRestoreFloatingPointState around floating
+// point operations. Display Drivers should use the corresponding Eng... routines.
+#pragma warning(disable : 28110)  // Suppress this, as it is false positive.
 
 // "Import" existing tests into this file. All code is encaptured into unique
 // namespace so that the same name does not conflict. Beware that those code
@@ -26,6 +33,18 @@ namespace unnamed {
 #include "test.c"
 }  // namespace unnamed
 
+namespace detail {
+#include "test_detail.c"
+}  // namespace detail
+
+namespace skipdata {
+#include "test_skipdata.c"
+}  // namespace skipdata
+
+namespace iter {
+#include "test_iter.c"
+}  // namespace iter
+
 namespace arm {
 #include "test_arm.c"
 }  // namespace arm
@@ -34,14 +53,6 @@ namespace arm64 {
 #include "test_arm64.c"
 }  // namespace arm64
 
-namespace detail {
-#include "test_detail.c"
-}  // namespace detail
-
-namespace iter {
-#include "test_iter.c"
-}  // namespace iter
-
 namespace mips {
 #include "test_mips.c"
 }  // namespace mips
@@ -49,10 +60,6 @@ namespace mips {
 namespace ppc {
 #include "test_ppc.c"
 }  // namespace ppc
-
-namespace skipdata {
-#include "test_skipdata.c"
-}  // namespace skipdata
 
 namespace sparc {
 #include "test_sparc.c"
@@ -95,13 +102,13 @@ static void test()
 	}
 
 	unnamed::test();
+	detail::test();
+	skipdata::test();
+	iter::test();
 	arm::test();
 	arm64::test();
-	detail::test();
-	iter::test();
 	mips::test();
 	ppc::test();
-	skipdata::test();
 	sparc::test();
 	systemz::test();
 	x86::test();
@@ -128,8 +135,7 @@ static void cs_winkernel_vsnprintf_test()
 }
 
 // Driver entry point
-EXTERN_C NTSTATUS DriverEntry(PDRIVER_OBJECT DriverObject,
-		PUNICODE_STRING RegistryPath)
+EXTERN_C NTSTATUS DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING RegistryPath)
 {
 	UNREFERENCED_PARAMETER(DriverObject);
 	UNREFERENCED_PARAMETER(RegistryPath);
@@ -140,6 +146,7 @@ EXTERN_C NTSTATUS DriverEntry(PDRIVER_OBJECT DriverObject,
 
 // This functions mimics printf() but does not return the same value as printf()
 // would do. printf() is required to exercise regression tests.
+_Use_decl_annotations_
 int __cdecl printf(const char * format, ...)
 {
 	NTSTATUS status;
