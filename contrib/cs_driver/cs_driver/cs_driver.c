@@ -5,7 +5,7 @@
 // generate capstone_static_winkernel.lib. It can be done by adding the
 // capstone_static_winkernel project to your solution and compiling it first.
 //
-// Then, configure your drive project (cs_driver in this example) to locate to
+// Then, configure your driver project (cs_driver in this example) to locate to
 // capstone.h and capstone_static_winkernel.lib. To do it, open project
 // properties of the project and set Configuration to "All Configurations" and
 // Platform to "All Platforms". Then, add the following entries:
