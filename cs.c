@@ -340,7 +340,7 @@ static uint8_t skipdata_size(cs_struct *handle)
 	switch(handle->arch) {
 		default:
 			// should never reach
-			return -1;
+			return (uint8_t)-1;
 		case CS_ARCH_ARM:
 			// skip 2 bytes on Thumb mode.
 			if (handle->mode & CS_MODE_THUMB)

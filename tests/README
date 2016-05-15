@@ -24,4 +24,4 @@ This directory contains some test code to show how to use Capstone API.
   architecture.
 
 - test_winkernel.cpp
-  This code show how to use Capstone from a Windows driver.
+  This code shows how to use Capstone from a Windows driver.
