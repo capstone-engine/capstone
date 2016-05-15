@@ -81,9 +81,7 @@ packages/freebsd/ports/devel/capstone/distinfo
 
 # VisualStudio
 Debug/
-Debug_WDK/
 Release/
-Release_WDK/
 ipch/
 *.sdf
 *.opensdf

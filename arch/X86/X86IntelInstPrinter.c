@@ -20,7 +20,7 @@
 #if !defined(CAPSTONE_HAS_OSXKERNEL)
 #include <ctype.h>
 #endif
-#include "../../myinttypes.h"
+#include <platform.h>
 #if defined(CAPSTONE_HAS_OSXKERNEL)
 #include <libkern/libkern.h>
 #else
@@ -582,7 +582,7 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	int opsize = 0;
+	uint8_t opsize = 0;
 	MCOperand *Op  = MCInst_getOperand(MI, OpNo);
 
 	if (MCOperand_isReg(Op)) {

@@ -19,7 +19,7 @@
 #include <stdio.h>	// DEBUG
 #include <stdlib.h>
 #include <string.h>
-#include "../../myinttypes.h"
+#include <platform.h>
 
 #include "ARMInstPrinter.h"
 #include "ARMAddressingModes.h"

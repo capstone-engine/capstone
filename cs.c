@@ -17,7 +17,11 @@
 #include "utils.h"
 #include "MCRegisterInfo.h"
 
-#if !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(CAPSTONE_DIET)
+#if defined(_KERNEL_MODE)
+#include "windows\winkernel_mm.h"
+#endif
+
+#if !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(CAPSTONE_DIET) && !defined(_KERNEL_MODE)
 #define INSN_CACHE_SIZE 32
 #else
 // reduce stack variable size for kernel/firmware
@@ -78,13 +82,19 @@ static void archs_enable(void)
 
 unsigned int all_arch = 0;
 
-#ifdef CAPSTONE_USE_SYS_DYN_MEM
-#ifndef CAPSTONE_HAS_OSXKERNEL
+#if defined(CAPSTONE_USE_SYS_DYN_MEM)
+#if !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(_KERNEL_MODE)
 cs_malloc_t cs_mem_malloc = malloc;
 cs_calloc_t cs_mem_calloc = calloc;
 cs_realloc_t cs_mem_realloc = realloc;
 cs_free_t cs_mem_free = free;
 cs_vsnprintf_t cs_vsnprintf = vsnprintf;
+#elif defined(_KERNEL_MODE)
+cs_malloc_t cs_mem_malloc = cs_winkernel_malloc;
+cs_calloc_t cs_mem_calloc = cs_winkernel_calloc;
+cs_realloc_t cs_mem_realloc = cs_winkernel_realloc;
+cs_free_t cs_mem_free = cs_winkernel_free;
+cs_vsnprintf_t cs_vsnprintf = cs_winkernel_vsnprintf;
 #else
 extern void* kern_os_malloc(size_t size);
 extern void kern_os_free(void* addr);
@@ -223,7 +233,7 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		ud->errnum = CS_ERR_OK;
 		ud->arch = arch;
 		ud->mode = mode;
-		ud->big_endian = mode & CS_MODE_BIG_ENDIAN;
+		ud->big_endian = (mode & CS_MODE_BIG_ENDIAN) != 0;
 		// by default, do not break instruction into details
 		ud->detail = CS_OPT_OFF;
 
@@ -279,7 +289,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 #ifndef CAPSTONE_DIET
 	char *sp, *mnem;
 #endif
-	unsigned int copy_size = MIN(sizeof(insn->bytes), insn->size);
+	uint16_t copy_size = MIN(sizeof(insn->bytes), insn->size);
 
 	// fill the instruction bytes.
 	// we might skip some redundant bytes in front in the case of X86
@@ -330,7 +340,7 @@ static uint8_t skipdata_size(cs_struct *handle)
 	switch(handle->arch) {
 		default:
 			// should never reach
-			return -1;
+			return (uint8_t)-1;
 		case CS_ARCH_ARM:
 			// skip 2 bytes on Thumb mode.
 			if (handle->mode & CS_MODE_THUMB)
@@ -465,6 +475,10 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 	}
 
 	handle->errnum = CS_ERR_OK;
+
+	// reset IT block of ARM structure
+	if (handle->arch == CS_ARCH_ARM)
+		handle->ITBlock.size = 0;
 
 #ifdef CAPSTONE_USE_SYS_DYN_MEM
 	if (count > 0 && count <= INSN_CACHE_SIZE)

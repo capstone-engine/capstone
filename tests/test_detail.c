@@ -3,8 +3,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../myinttypes.h"
 
+#include <platform.h>
 #include <capstone.h>
 
 struct platform {
