@@ -22,7 +22,7 @@ typedef unsigned char bool;
 #include <stdbool.h>
 #endif
 
-#else 
+#else
 // not MSVC -> C99 is supported
 #include <stdbool.h>
 #endif
