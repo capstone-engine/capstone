@@ -21,6 +21,21 @@
 #include "windows\winkernel_mm.h"
 #endif
 
+// Issue #681: Windows kernel does not support formatting float point
+#if defined(_KERNEL_MODE) && !defined(CAPSTONE_DIET)
+#if defined(CAPSTONE_HAS_ARM) || defined(CAPSTONE_HAS_ARM64)
+#define CAPSTONE_STR_INTERNAL(x) #x
+#define CAPSTONE_STR(x) CAPSTONE_STR_INTERNAL(x)
+#define CAPSTONE_MSVC_WRANING_PREFIX __FILE__ "("CAPSTONE_STR(__LINE__)") : warning message : "
+
+#pragma message(CAPSTONE_MSVC_WRANING_PREFIX "Windows driver does not support full features for selected architecture(s). Define CAPSTONE_DIET to compile Capstone with only supported features. See issue #681 for details.")
+
+#undef CAPSTONE_MSVC_WRANING_PREFIX
+#undef CAPSTONE_STR
+#undef CAPSTONE_STR_INTERNAL
+#endif
+#endif	// defined(_KERNEL_MODE) && !defined(CAPSTONE_DIET)
+
 #if !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(CAPSTONE_DIET) && !defined(_KERNEL_MODE)
 #define INSN_CACHE_SIZE 32
 #else
