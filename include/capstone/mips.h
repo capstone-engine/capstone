@@ -898,6 +898,16 @@ typedef enum mips_insn_group {
 	//> Generic groups
 	// all jump instructions (conditional+direct+indirect jumps)
 	MIPS_GRP_JUMP,	// = CS_GRP_JUMP
+	// all call instructions
+	MIPS_GRP_CALL,	// = CS_GRP_CALL
+	// all return instructions
+	MIPS_GRP_RET,	// = CS_GRP_RET
+	// all interrupt instructions (int+syscall)
+	MIPS_GRP_INT,	// = CS_GRP_INT
+	// all interrupt return instructions
+	MIPS_GRP_IRET,	// = CS_GRP_IRET
+	// all privileged instructions
+	MIPS_GRP_PRIVILEGE,	// = CS_GRP_PRIVILEGE
 
 	//> Architecture-specific groups
 	MIPS_GRP_BITCOUNT = 128,

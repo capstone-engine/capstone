@@ -841,6 +841,11 @@ let _MIPS_GRP_INVALID = 0;;
 
 (* Generic groups *)
 let _MIPS_GRP_JUMP = 1;;
+let _MIPS_GRP_CALL = 2;;
+let _MIPS_GRP_RET = 3;;
+let _MIPS_GRP_INT = 4;;
+let _MIPS_GRP_IRET = 5;;
+let _MIPS_GRP_PRIVILEGE = 6;;
 
 (* Architecture-specific groups *)
 let _MIPS_GRP_BITCOUNT = 128;;
