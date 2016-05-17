@@ -86,6 +86,11 @@ static void print_insn_detail(cs_insn *ins)
 				break;
 			case M68K_OP_IMM:
 				if (m68k->op_size.type == M68K_SIZE_TYPE_FPU) {
+#if defined(_KERNEL_MODE)
+					// Issue #681: Windows kernel does not support formatting float point
+					printf("\t\toperands[%u].type: IMM = <float_point_unsupported>\n", i);
+					break;
+#else
 					if (m68k->op_size.fpu_size == M68K_FPU_SIZE_SINGLE)
 						printf("\t\toperands[%u].type: IMM = %f\n", i, op->simm);
 					else if (m68k->op_size.fpu_size == M68K_FPU_SIZE_DOUBLE)
@@ -93,6 +98,7 @@ static void print_insn_detail(cs_insn *ins)
 					else
 						printf("\t\toperands[%u].type: IMM = <unsupported>\n", i);
 					break;
+#endif
 				}
 
 				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, (int)op->imm);

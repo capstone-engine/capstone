@@ -1275,7 +1275,12 @@ static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	double FPImm = MCOperand_isFPImm(MO) ? MCOperand_getFPImm(MO) : AArch64_AM_getFPImmFloat((int)MCOperand_getImm(MO));
 
 	// 8 decimal places are enough to perfectly represent permitted floats.
+#if defined(_KERNEL_MODE)
+	// Issue #681: Windows kernel does not support formatting float point
+	SStream_concat(O, "#<float_point_unsupported>");
+#else
 	SStream_concat(O, "#%.8f", FPImm);
+#endif
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
 		uint8_t access;
