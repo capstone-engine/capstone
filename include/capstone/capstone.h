@@ -72,6 +72,14 @@ typedef size_t csh;
 
 /// Architecture type
 typedef enum cs_arch {
+	CS_ARCH_ARM = 0,	// ARM architecture (including Thumb, Thumb-2)
+	CS_ARCH_ARM64,		// ARM-64, also called AArch64
+	CS_ARCH_MIPS,		// Mips architecture
+	CS_ARCH_X86,		// X86 architecture (including x86 & x86-64)
+	CS_ARCH_PPC,		// PowerPC architecture
+	CS_ARCH_SPARC,		// Sparc architecture
+	CS_ARCH_SYSZ,		// SystemZ architecture
+	CS_ARCH_XCORE,		// XCore architecture
 	CS_ARCH_ARM = 0,	///< ARM architecture (including Thumb, Thumb-2)
 	CS_ARCH_ARM64,		///< ARM-64, also called AArch64
 	CS_ARCH_MIPS,		///< Mips architecture
@@ -89,6 +97,7 @@ typedef enum cs_arch {
 	CS_ARCH_BPF,		///< Berkeley Packet Filter architecture (including eBPF)
 	CS_ARCH_RISCV,          ///< RISCV architecture
 	CS_ARCH_SH,             ///< SH architecture
+	CS_ARCH_TRICORE,	// TriCore architecture
 	CS_ARCH_MAX,
 	CS_ARCH_ALL = 0xFFFF, // All architectures - for cs_support()
 } cs_arch;
@@ -151,7 +160,7 @@ typedef enum cs_mode {
 	CS_MODE_MOS65XX_65C02 = 1 << 2, ///< MOS65XXX WDC 65c02
 	CS_MODE_MOS65XX_W65C02 = 1 << 3, ///< MOS65XXX WDC W65c02
 	CS_MODE_MOS65XX_65816 = 1 << 4, ///< MOS65XXX WDC 65816, 8-bit m/x
-	CS_MODE_MOS65XX_65816_LONG_M = (1 << 5), ///< MOS65XXX WDC 65816, 16-bit m, 8-bit x 
+	CS_MODE_MOS65XX_65816_LONG_M = (1 << 5), ///< MOS65XXX WDC 65816, 16-bit m, 8-bit x
 	CS_MODE_MOS65XX_65816_LONG_X = (1 << 6), ///< MOS65XXX WDC 65816, 8-bit m, 16-bit x
 	CS_MODE_MOS65XX_65816_LONG_MX = CS_MODE_MOS65XX_65816_LONG_M | CS_MODE_MOS65XX_65816_LONG_X,
 	CS_MODE_SH2 = 1 << 1,    ///< SH2
@@ -289,6 +298,7 @@ typedef struct cs_opt_skipdata {
 	/// WASM:    1 bytes.
 	/// MOS65XX: 1 bytes.
 	/// BPF:     8 bytes.
+	/// TriCore: 2 bytes.
 	cs_skipdata_cb_t callback; 	// default value is NULL
 
 	/// User-defined data to be passed to @callback function pointer.
@@ -313,6 +323,7 @@ typedef struct cs_opt_skipdata {
 #include "mos65xx.h"
 #include "bpf.h"
 #include "sh.h"
+#include "tricore.h"
 
 /// NOTE: All information in cs_detail is only available when CS_OPT_DETAIL = CS_OPT_ON
 /// Initialized as memset(., 0, offsetof(cs_detail, ARCH)+sizeof(cs_ARCH))
@@ -348,6 +359,7 @@ typedef struct cs_detail {
 		cs_bpf bpf;	///< Berkeley Packet Filter architecture (including eBPF)
 		cs_riscv riscv; ///< RISCV architecture
 		cs_sh sh;        ///< SH architecture
+		cs_tricore tricore;	// XCore architecture
 	};
 } cs_detail;
 

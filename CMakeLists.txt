@@ -44,8 +44,8 @@ option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by defau
 option(CAPSTONE_DEBUG "Whether to enable extra debug assertions" OFF)
 option(CAPSTONE_INSTALL "Generate install target" ${PROJECT_IS_TOP_LEVEL})
 
-set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV SH)
-set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF RISCV SH)
+set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV SH TriCore)
+set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF RISCV SH TriCore)
 
 list(LENGTH SUPPORTED_ARCHITECTURES count)
 math(EXPR count "${count}-1")
@@ -135,6 +135,7 @@ set(HEADERS_COMMON
     include/capstone/bpf.h
     include/capstone/riscv.h
     include/capstone/sh.h
+    include/capstone/tricore.h
     include/capstone/platform.h
 )
 
@@ -533,7 +534,27 @@ if(CAPSTONE_SH_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_sh.c)
 endif()
 
-if(CAPSTONE_OSXKERNEL_SUPPORT)
+if (CAPSTONE_TRICORE_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_TRICORE)
+    set(SOURCES_TRICORE
+            arch/TriCore/TriCoreDisassembler.c
+            arch/TriCore/TriCoreInstPrinter.c
+            arch/TriCore/TriCoreMapping.c
+            arch/TriCore/TriCoreModule.c
+            )
+    set(HEADERS_TRICORE
+            arch/TriCore/TriCoreDisassembler.h
+            arch/TriCore/TriCoreGenAsmWriter.inc
+            arch/TriCore/TriCoreGenDisassemblerTables.inc
+            arch/TriCore/TriCoreGenInstrInfo.inc
+            arch/TriCore/TriCoreGenRegisterInfo.inc
+            arch/TriCore/TriCoreInstPrinter.h
+            arch/TriCore/TriCoreMapping.h
+            )
+    set(TEST_SOURCES ${TEST_SOURCES} test_tricore.c)
+endif ()
+
+if (CAPSTONE_OSXKERNEL_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_OSXKERNEL)
 endif()
 
@@ -556,6 +577,7 @@ set(ALL_SOURCES
     ${SOURCES_BPF}
     ${SOURCES_RISCV}
     ${SOURCES_SH}
+    ${SOURCES_TRICORE}
 )
 
 set(ALL_HEADERS
@@ -578,6 +600,7 @@ set(ALL_HEADERS
     ${HEADERS_BPF}
     ${HEADERS_RISCV}
     ${HEADERS_SH}
+    ${HEADERS_TRICORE}
 )
 
 ## properties
@@ -640,6 +663,7 @@ source_group("Source\\MOS65XX" FILES ${SOURCES_MOS65XX})
 source_group("Source\\BPF" FILES ${SOURCES_BPF})
 source_group("Source\\RISCV" FILES ${SOURCES_RISCV})
 source_group("Source\\SH" FILES ${SOURCES_SH})
+source_group("Source\\TriCore" FILES ${SOURCES_TRICORE})
 
 source_group("Include\\Common" FILES ${HEADERS_COMMON})
 source_group("Include\\Engine" FILES ${HEADERS_ENGINE})
@@ -660,6 +684,7 @@ source_group("Include\\MOS65XX" FILES ${HEADERS_MOS65XX})
 source_group("Include\\BPF" FILES ${HEADERS_BPF})
 source_group("Include\\RISCV" FILES ${HEADERS_RISCV})
 source_group("Include\\SH" FILES ${HEADERS_SH})
+source_group("Include\\TriCore" FILES ${HEADERS_TRICORE})
 
 ## installation
 if(CAPSTONE_INSTALL)

@@ -69,6 +69,7 @@
 #include "arch/MOS65XX/MOS65XXModule.h"
 #include "arch/BPF/BPFModule.h"
 #include "arch/SH/SHModule.h"
+#include "arch/TriCore/TriCoreModule.h"
 
 static const struct {
 	// constructor initialization
@@ -298,6 +299,9 @@ static const uint32_t all_arch = 0
 #ifdef CAPSTONE_HAS_SH
 	| (1 << CS_ARCH_SH)
 #endif
+#ifdef CAPSTONE_HAS_TRICORE
+	| (1 << CS_ARCH_TRICORE)
+#endif
 ;
 
 #if defined(CAPSTONE_USE_SYS_DYN_MEM)
@@ -368,9 +372,9 @@ bool CAPSTONE_API cs_support(int query)
 				    (1 << CS_ARCH_SYSZ)  | (1 << CS_ARCH_XCORE)      |
 				    (1 << CS_ARCH_M68K)  | (1 << CS_ARCH_TMS320C64X) |
 				    (1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM)        |
-				    (1 << CS_ARCH_RISCV) | (1 << CS_ARCH_MOS65XX)    | 
-				    (1 << CS_ARCH_WASM)  | (1 << CS_ARCH_BPF)        |
-				    (1 << CS_ARCH_SH));
+				    (1 << CS_ARCH_RISCV) | (1 << CS_ARCH_MOS65XX)    |
+				    (1 << CS_ARCH_WASM)  | (1 << CS_ARCH_BPF))       |
+				    (1 << CS_ARCH_SH)    | (1 << CS_ARCH_TRICORE);
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
@@ -673,6 +677,10 @@ static uint8_t skipdata_size(cs_struct *handle)
 				return 2;
 			return 4;
 		case CS_ARCH_SH:
+			return 2;
+		case CS_ARCH_TRICORE:
+			// TriCore instruction's length can be 2 or 4 bytes,
+			// so we just skip 2 bytes
 			return 2;
 	}
 }
@@ -1405,6 +1413,11 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 				if (insn->detail->riscv.operands[i].type == (riscv_op_type)op_type)
 					count++;
 			break;
+		case CS_ARCH_TRICORE:
+			for (i = 0; i < insn->detail->tricore.op_count; i++)
+				if (insn->detail->tricore.operands[i].type == (tricore_op_type)op_type)
+					count++;
+			break;
 	}
 
 	return count;
@@ -1501,6 +1514,14 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 		case CS_ARCH_XCORE:
 			for (i = 0; i < insn->detail->xcore.op_count; i++) {
 				if (insn->detail->xcore.operands[i].type == (xcore_op_type)op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+			break;
+		case CS_ARCH_TRICORE:
+			for (i = 0; i < insn->detail->tricore.op_count; i++) {
+				if (insn->detail->tricore.operands[i].type == (tricore_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
