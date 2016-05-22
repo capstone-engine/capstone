@@ -17,7 +17,11 @@
 #include "utils.h"
 #include "MCRegisterInfo.h"
 
-#if !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(CAPSTONE_DIET)
+#if defined(_KERNEL_MODE)
+#include "windows\winkernel_mm.h"
+#endif
+
+#if !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(CAPSTONE_DIET) && !defined(_KERNEL_MODE)
 #define INSN_CACHE_SIZE 32
 #else
 // reduce stack variable size for kernel/firmware
@@ -82,18 +86,29 @@ static void archs_enable(void)
 
 unsigned int all_arch = 0;
 
-#ifdef CAPSTONE_USE_SYS_DYN_MEM
-#ifndef CAPSTONE_HAS_OSXKERNEL
+#if defined(CAPSTONE_USE_SYS_DYN_MEM)
+#if !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(_KERNEL_MODE)
+// default
 cs_malloc_t cs_mem_malloc = malloc;
 cs_calloc_t cs_mem_calloc = calloc;
 cs_realloc_t cs_mem_realloc = realloc;
 cs_free_t cs_mem_free = free;
 #if defined(_WIN32_WCE)
 cs_vsnprintf_t cs_vsnprintf = _vsnprintf;
-#else // !_WIN32_WCE
-cs_vsnprintf_t cs_vsnprintf = vsnprintf;
-#endif // _WIN32_WCE
 #else
+cs_vsnprintf_t cs_vsnprintf = vsnprintf;
+#endif  // defined(_WIN32_WCE)
+
+#elif defined(_KERNEL_MODE)
+// Windows driver
+cs_malloc_t cs_mem_malloc = cs_winkernel_malloc;
+cs_calloc_t cs_mem_calloc = cs_winkernel_calloc;
+cs_realloc_t cs_mem_realloc = cs_winkernel_realloc;
+cs_free_t cs_mem_free = cs_winkernel_free;
+cs_vsnprintf_t cs_vsnprintf = cs_winkernel_vsnprintf;
+
+#else
+// OSX kernel
 extern void* kern_os_malloc(size_t size);
 extern void kern_os_free(void* addr);
 extern void* kern_os_realloc(void* addr, size_t nsize);
@@ -108,17 +123,20 @@ cs_calloc_t cs_mem_calloc = cs_kern_os_calloc;
 cs_realloc_t cs_mem_realloc = kern_os_realloc;
 cs_free_t cs_mem_free = kern_os_free;
 cs_vsnprintf_t cs_vsnprintf = vsnprintf;
-#endif
+
+#endif  // !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(_KERNEL_MODE)
 #else
+// User-defined
 cs_malloc_t cs_mem_malloc = NULL;
 cs_calloc_t cs_mem_calloc = NULL;
 cs_realloc_t cs_mem_realloc = NULL;
 cs_free_t cs_mem_free = NULL;
 cs_vsnprintf_t cs_vsnprintf = NULL;
-#endif
+
+#endif  // defined(CAPSTONE_USE_SYS_DYN_MEM)
 
 CAPSTONE_EXPORT
-unsigned int cs_version(int *major, int *minor)
+unsigned int CAPSTONE_API cs_version(int *major, int *minor)
 {
 	archs_enable();
 
@@ -131,7 +149,7 @@ unsigned int cs_version(int *major, int *minor)
 }
 
 CAPSTONE_EXPORT
-bool cs_support(int query)
+bool CAPSTONE_API cs_support(int query)
 {
 	archs_enable();
 
@@ -165,7 +183,7 @@ bool cs_support(int query)
 }
 
 CAPSTONE_EXPORT
-cs_err cs_errno(csh handle)
+cs_err CAPSTONE_API cs_errno(csh handle)
 {
 	struct cs_struct *ud;
 	if (!handle)
@@ -177,7 +195,7 @@ cs_err cs_errno(csh handle)
 }
 
 CAPSTONE_EXPORT
-const char *cs_strerror(cs_err code)
+const char * CAPSTONE_API cs_strerror(cs_err code)
 {
 	switch(code) {
 		default:
@@ -216,7 +234,7 @@ const char *cs_strerror(cs_err code)
 }
 
 CAPSTONE_EXPORT
-cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
+cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 {
 	cs_err err;
 	struct cs_struct *ud;
@@ -261,7 +279,7 @@ cs_err cs_open(cs_arch arch, cs_mode mode, csh *handle)
 }
 
 CAPSTONE_EXPORT
-cs_err cs_close(csh *handle)
+cs_err CAPSTONE_API cs_close(csh *handle)
 {
 	struct cs_struct *ud;
 	struct insn_mnem *next, *tmp;
@@ -302,7 +320,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 #ifndef CAPSTONE_DIET
 	char *sp, *mnem;
 #endif
-	unsigned int copy_size = MIN(sizeof(insn->bytes), insn->size);
+	uint16_t copy_size = MIN(sizeof(insn->bytes), insn->size);
 
 	// fill the instruction bytes.
 	// we might skip some redundant bytes in front in the case of X86
@@ -367,7 +385,7 @@ static uint8_t skipdata_size(cs_struct *handle)
 	switch(handle->arch) {
 		default:
 			// should never reach
-			return -1;
+			return (uint8_t)-1;
 		case CS_ARCH_ARM:
 			// skip 2 bytes on Thumb mode.
 			if (handle->mode & CS_MODE_THUMB)
@@ -398,7 +416,7 @@ static uint8_t skipdata_size(cs_struct *handle)
 }
 
 CAPSTONE_EXPORT
-cs_err cs_option(csh ud, cs_opt_type type, size_t value)
+cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, size_t value)
 {
 	struct cs_struct *handle;
 	cs_opt_mnem *opt;
@@ -516,25 +534,34 @@ static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
 	char *p = opstr;
 	int len;
 	size_t i;
+	size_t available = sizeof(((cs_insn*)NULL)->op_str);
 
 	if (!size) {
 		opstr[0] = '\0';
 		return;
 	}
 
-	len = sprintf(p, "0x%02x", buffer[0]);
+	len = cs_snprintf(p, available, "0x%02x", buffer[0]);
 	p+= len;
+	available -= len;
 
 	for(i = 1; i < size; i++) {
-		len = sprintf(p, ", 0x%02x", buffer[i]);
+		len = cs_snprintf(p, available, ", 0x%02x", buffer[i]);
+		if (len < 0) {
+			break;
+		}
+		if ((size_t)len > available - 1) {
+			break;
+		}
 		p+= len;
+		available -= len;
 	}
 }
 
 // dynamicly allocate memory to contain disasm insn
 // NOTE: caller must free() the allocated memory itself to avoid memory leaking
 CAPSTONE_EXPORT
-size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
+size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
 {
 	struct cs_struct *handle;
 	MCInst mci;
@@ -736,13 +763,13 @@ size_t cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, si
 
 CAPSTONE_EXPORT
 CAPSTONE_DEPRECATED
-size_t cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
+size_t CAPSTONE_API cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
 {
 	return cs_disasm(ud, buffer, size, offset, count, insn);
 }
 
 CAPSTONE_EXPORT
-void cs_free(cs_insn *insn, size_t count)
+void CAPSTONE_API cs_free(cs_insn *insn, size_t count)
 {
 	size_t i;
 
@@ -755,7 +782,7 @@ void cs_free(cs_insn *insn, size_t count)
 }
 
 CAPSTONE_EXPORT
-cs_insn *cs_malloc(csh ud)
+cs_insn * CAPSTONE_API cs_malloc(csh ud)
 {
 	cs_insn *insn;
 	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
@@ -783,7 +810,7 @@ cs_insn *cs_malloc(csh ud)
 
 // iterator for instruction "single-stepping"
 CAPSTONE_EXPORT
-bool cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
+bool CAPSTONE_API cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 		uint64_t *address, cs_insn *insn)
 {
 	struct cs_struct *handle;
@@ -870,7 +897,7 @@ bool cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 
 // return friendly name of regiser in a string
 CAPSTONE_EXPORT
-const char *cs_reg_name(csh ud, unsigned int reg)
+const char * CAPSTONE_API cs_reg_name(csh ud, unsigned int reg)
 {
 	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
 
@@ -882,7 +909,7 @@ const char *cs_reg_name(csh ud, unsigned int reg)
 }
 
 CAPSTONE_EXPORT
-const char *cs_insn_name(csh ud, unsigned int insn)
+const char * CAPSTONE_API cs_insn_name(csh ud, unsigned int insn)
 {
 	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
 
@@ -894,7 +921,7 @@ const char *cs_insn_name(csh ud, unsigned int insn)
 }
 
 CAPSTONE_EXPORT
-const char *cs_group_name(csh ud, unsigned int group)
+const char * CAPSTONE_API cs_group_name(csh ud, unsigned int group)
 {
 	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
 
@@ -906,7 +933,7 @@ const char *cs_group_name(csh ud, unsigned int group)
 }
 
 CAPSTONE_EXPORT
-bool cs_insn_group(csh ud, const cs_insn *insn, unsigned int group_id)
+bool CAPSTONE_API cs_insn_group(csh ud, const cs_insn *insn, unsigned int group_id)
 {
 	struct cs_struct *handle;
 	if (!ud)
@@ -933,7 +960,7 @@ bool cs_insn_group(csh ud, const cs_insn *insn, unsigned int group_id)
 }
 
 CAPSTONE_EXPORT
-bool cs_reg_read(csh ud, const cs_insn *insn, unsigned int reg_id)
+bool CAPSTONE_API cs_reg_read(csh ud, const cs_insn *insn, unsigned int reg_id)
 {
 	struct cs_struct *handle;
 	if (!ud)
@@ -960,7 +987,7 @@ bool cs_reg_read(csh ud, const cs_insn *insn, unsigned int reg_id)
 }
 
 CAPSTONE_EXPORT
-bool cs_reg_write(csh ud, const cs_insn *insn, unsigned int reg_id)
+bool CAPSTONE_API cs_reg_write(csh ud, const cs_insn *insn, unsigned int reg_id)
 {
 	struct cs_struct *handle;
 	if (!ud)
@@ -987,7 +1014,7 @@ bool cs_reg_write(csh ud, const cs_insn *insn, unsigned int reg_id)
 }
 
 CAPSTONE_EXPORT
-int cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
+int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 {
 	struct cs_struct *handle;
 	unsigned int count = 0, i;
@@ -1063,7 +1090,7 @@ int cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 }
 
 CAPSTONE_EXPORT
-int cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
+int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 		unsigned int post)
 {
 	struct cs_struct *handle;
@@ -1164,7 +1191,7 @@ int cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 }
 
 CAPSTONE_EXPORT
-cs_err cs_regs_access(csh ud, const cs_insn *insn,
+cs_err CAPSTONE_API cs_regs_access(csh ud, const cs_insn *insn,
 		cs_regs regs_read, uint8_t *regs_read_count,
 		cs_regs regs_write, uint8_t *regs_write_count)
 {

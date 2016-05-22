@@ -82,6 +82,8 @@ ipch/
 *.opensdf
 *.suo
 *.user
+*.VC.db
+*.VC.opendb
 
 # Xcode
 xcode/Capstone.xcodeproj/xcuserdata

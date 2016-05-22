@@ -3,8 +3,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../myinttypes.h"
 
+#include <capstone/platform.h>
 #include <capstone/capstone.h>
 
 struct platform {
@@ -253,7 +253,7 @@ static void test()
 #ifdef CAPSTONE_HAS_M68K
 		{
 			CS_ARCH_M68K,
-			CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040,
+			(cs_mode)(CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040),
 			(unsigned char*)M68K_CODE,
 			sizeof(M68K_CODE) - 1,
 			"M68K",
@@ -293,7 +293,7 @@ static void test()
 
 			for (j = 0; j < count; j++) {
 				cs_insn *in = &(all_insn[j]);
-				printf("0x%"PRIx64":\t%s\t\t%s // insn-ID: %u, insn-mnem: %s\n",
+				printf("0x%" PRIx64 ":\t%s\t\t%s // insn-ID: %u, insn-mnem: %s\n",
 						in->address, in->mnemonic, in->op_str,
 						in->id, cs_insn_name(handle, in->id));
 
@@ -328,7 +328,7 @@ static void test()
 			}
 
 			// print out the next offset, after the last insn
-			printf("0x%"PRIx64":\n", all_insn[j-1].address + all_insn[j-1].size);
+			printf("0x%" PRIx64 ":\n", all_insn[j-1].address + all_insn[j-1].size);
 
 			// free memory allocated by cs_disasm()
 			cs_free(all_insn, count);

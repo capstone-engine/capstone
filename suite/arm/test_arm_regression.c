@@ -9,8 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../myinttypes.h"
 
+#include <capstone/platform.h>
 #include <capstone/capstone.h>
 
 static csh handle;

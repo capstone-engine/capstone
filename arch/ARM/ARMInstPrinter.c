@@ -19,7 +19,7 @@
 #include <stdio.h>	// DEBUG
 #include <stdlib.h>
 #include <string.h>
-#include "../../myinttypes.h"
+#include <capstone/platform.h>
 
 #include "ARMInstPrinter.h"
 #include "ARMAddressingModes.h"
@@ -1792,7 +1792,7 @@ static void printNoHashImmediate(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MI->csh->detail) {
 		if (MI->csh->doing_mem) {
 			MI->flat_insn->detail->arm.op_count--;
-			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].neon_lane = tmp;
+			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].neon_lane = (int8_t)tmp;
 			MI->ac_idx--;	// consecutive operands share the same access right
 		} else {
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_IMM;

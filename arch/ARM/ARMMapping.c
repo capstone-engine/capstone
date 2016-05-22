@@ -915,26 +915,26 @@ void ARM_reg_access(const cs_insn *insn,
 		switch((int)op->type) {
 			case ARM_OP_REG:
 				if ((op->access & CS_AC_READ) && !arr_exist(regs_read, read_count, op->reg)) {
-					regs_read[read_count] = op->reg;
+					regs_read[read_count] = (uint16_t)op->reg;
 					read_count++;
 				}
 				if ((op->access & CS_AC_WRITE) && !arr_exist(regs_write, write_count, op->reg)) {
-					regs_write[write_count] = op->reg;
+					regs_write[write_count] = (uint16_t)op->reg;
 					write_count++;
 				}
 				break;
 			case ARM_OP_MEM:
 				// registers appeared in memory references always being read
 				if ((op->mem.base != ARM_REG_INVALID) && !arr_exist(regs_read, read_count, op->mem.base)) {
-					regs_read[read_count] = op->mem.base;
+					regs_read[read_count] = (uint16_t)op->mem.base;
 					read_count++;
 				}
 				if ((op->mem.index != ARM_REG_INVALID) && !arr_exist(regs_read, read_count, op->mem.index)) {
-					regs_read[read_count] = op->mem.index;
+					regs_read[read_count] = (uint16_t)op->mem.index;
 					read_count++;
 				}
 				if ((arm->writeback) && (op->mem.base != ARM_REG_INVALID) && !arr_exist(regs_write, write_count, op->mem.base)) {
-					regs_write[write_count] = op->mem.base;
+					regs_write[write_count] = (uint16_t)op->mem.base;
 					write_count++;
 				}
 			default:

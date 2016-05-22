@@ -16,7 +16,7 @@
 
 #ifdef CAPSTONE_HAS_ARM64
 
-#include "../../myinttypes.h"
+#include <capstone/platform.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -1659,7 +1659,7 @@ static void printSystemPStateField(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printSIMDType10Operand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	unsigned RawVal = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+	uint8_t RawVal = (uint8_t)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
 	uint64_t Val = AArch64_AM_decodeAdvSIMDModImmType10(RawVal);
 	SStream_concat(O, "#%#016llx", Val);
 	if (MI->csh->detail) {

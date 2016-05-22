@@ -20,7 +20,7 @@
 #if defined(_WIN32_WCE) && (_WIN32_WCE < 0x800)
 #include "windowsce/intrin.h"
 #elif defined(_MSC_VER)
-# include <intrin.h>
+#include <intrin.h>
 #endif
 
 #ifndef __cplusplus

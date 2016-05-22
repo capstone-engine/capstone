@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../myinttypes.h"
+#include <capstone/platform.h>
 
 #include "SystemZInstPrinter.h"
 #include "../../MCInst.h"
