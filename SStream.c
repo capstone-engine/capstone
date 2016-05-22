@@ -9,9 +9,10 @@
 #endif
 #include <string.h>
 
+#include <capstone/platform.h>
+
 #include "SStream.h"
 #include "cs_priv.h"
-#include "myinttypes.h"
 #include "utils.h"
 
 #ifdef _MSC_VER

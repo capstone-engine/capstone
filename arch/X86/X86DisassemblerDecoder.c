@@ -1094,7 +1094,7 @@ static int getIDWithAttrMask(uint16_t *instructionID,
 
 	hasModRMExtension = modRMRequired(insn->opcodeType,
 			instructionClass,
-			insn->opcode);
+			insn->opcode) != 0;
 
 	if (hasModRMExtension) {
 		if (readModRM(insn))

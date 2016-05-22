@@ -19,7 +19,7 @@
 
 #ifdef CAPSTONE_HAS_X86
 
-#include "../../myinttypes.h"	// debug
+#include <capstone/platform.h>
 #include <string.h>
 
 #include "../../cs_priv.h"

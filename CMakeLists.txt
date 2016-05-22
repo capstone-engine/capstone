@@ -88,7 +88,6 @@ set(HEADERS_ENGINE
     MCInst.h
     MCInstrDesc.h
     MCRegisterInfo.h
-    myinttypes.h
     SStream.h
     utils.h
     )

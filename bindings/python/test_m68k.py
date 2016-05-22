@@ -69,10 +69,10 @@ def print_insn_detail(insn):
             print("\t\taddress mode: %s" % (s_addressing_modes[op.address_mode]))
         elif op.type == M68K_OP_FP_SINGLE:
             print("\t\toperands[%u].type: FP_SINGLE" % i)
-            print("\t\ŧ\toperands[%u].simm: %f", i, op.simm)
+            print("\t\toperands[%u].simm: %f", i, op.simm)
         elif op.type == M68K_OP_FP_DOUBLE:
             print("\t\toperands[%u].type: FP_DOUBLE" % i)
-            print("\t\ŧ\toperands[%u].dimm: %lf", i, op.dimm)
+            print("\t\toperands[%u].dimm: %lf", i, op.dimm)
     print()
 
 # ## Test class Cs

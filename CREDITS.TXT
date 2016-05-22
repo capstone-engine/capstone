@@ -61,4 +61,6 @@ Adel Gadllah, Francisco Alonso & Stefan Cornelius: RPM package.
 Felix Gröbert (Google): fuzz testing harness.
 Daniel Collin & Nicolas Planel: M68K architecture.
 Pranith Kumar: Explicit registers accessed for Arm64.
+Xipiter LLC: Capstone logo redesigned.
+Satoshi Tanda: Support Windows kernel driver.
 Koutheir Attouchi: Support for Windows CE.
