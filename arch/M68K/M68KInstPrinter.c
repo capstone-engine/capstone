@@ -147,6 +147,11 @@ void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 		case M68K_AM_ABSOLUTE_DATA_LONG: SStream_concat(O, "$%x.l", op->imm); break;
 		case M68K_AM_IMMIDIATE:
 			 if (inst->op_size.type == M68K_SIZE_TYPE_FPU) {
+#if defined(_KERNEL_MODE)
+				 // Issue #681: Windows kernel does not support formatting float point
+				 SStream_concat(O, "#<float_point_unsupported>");
+				 break;
+#else
 				 if (inst->op_size.fpu_size == M68K_FPU_SIZE_SINGLE)
 					 SStream_concat(O, "#%f", op->simm);
 				 else if (inst->op_size.fpu_size == M68K_FPU_SIZE_DOUBLE)
@@ -154,6 +159,7 @@ void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 				 else
 					 SStream_concat(O, "#<unsupported>");
 				 break;
+#endif
 			 }
 			 SStream_concat(O, "#$%x", op->imm);
 			 break;
