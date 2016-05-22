@@ -96,7 +96,7 @@ static void print_insn_detail(cs_insn *ins)
 				break;
 		}
 
-		uint32_t access = op->access;
+		uint8_t access = op->access;
 		switch(access) {
 			default:
 				break;
