@@ -46,7 +46,7 @@ Documention of Capstone disassembly framework.
 
 * Sample application on how to embed Capstone into Windows kernel driver.
 
-	https://github.com/aquynh/KernelProject
+	https://github.com/aquynh/capstone/tree/master/contrib/cs_driver
 
 * Sample application on how to embed Capstone into Mac OSX Kext (kernel).
 
