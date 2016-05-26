@@ -459,8 +459,8 @@ static DecodeStatus DecodeSROInstruction(MCInst *Inst, unsigned Insn,
 	if (status != MCDisassembler_Success)
 		return status;
 
-	// Decode const4.
-	MCOperand_CreateImm0(Inst, const4);
+	// Decode off4.
+	MCOperand_CreateImm0(Inst, off4);
 
 	return MCDisassembler_Success;
 }
