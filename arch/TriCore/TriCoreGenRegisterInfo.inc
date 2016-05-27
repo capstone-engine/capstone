@@ -166,42 +166,42 @@ static MCRegisterDesc TriCoreRegDesc[] = { // Descriptors
 
   // AddrRegs Register Class...
   static MCPhysReg AddrRegs[] = {
-    TriCore_A15, TriCore_A2, TriCore_A3, TriCore_A4, TriCore_A5, TriCore_A6, TriCore_A7, TriCore_A12, TriCore_A13, TriCore_A14, TriCore_A10, TriCore_A11, TriCore_A0, TriCore_A1, TriCore_A8, TriCore_A9, 
+    TriCore_A15, TriCore_A2, TriCore_A3, TriCore_A4, TriCore_A5, TriCore_A6, TriCore_A7, TriCore_A12, TriCore_A13, TriCore_A14, TriCore_A10, TriCore_A11, TriCore_A0, TriCore_A1, TriCore_A8, TriCore_A9,
   };
 
   // AddrRegs Bit set.
   static uint8_t AddrRegsBits[] = {
-    0xe0, 0xff, 0x1f, 
+    0xe0, 0xff, 0x1f,
   };
 
   // DataRegs Register Class...
   static MCPhysReg DataRegs[] = {
-    TriCore_D15, TriCore_D2, TriCore_D3, TriCore_D4, TriCore_D5, TriCore_D6, TriCore_D7, TriCore_D8, TriCore_D9, TriCore_D10, TriCore_D11, TriCore_D12, TriCore_D13, TriCore_D14, TriCore_D0, TriCore_D1, 
+    TriCore_D15, TriCore_D2, TriCore_D3, TriCore_D4, TriCore_D5, TriCore_D6, TriCore_D7, TriCore_D8, TriCore_D9, TriCore_D10, TriCore_D11, TriCore_D12, TriCore_D13, TriCore_D14, TriCore_D0, TriCore_D1,
   };
 
   // DataRegs Bit set.
   static uint8_t DataRegsBits[] = {
-    0x00, 0x00, 0xe0, 0xff, 0x1f, 
+    0x00, 0x00, 0xe0, 0xff, 0x1f,
   };
 
   // PSRegs Register Class...
   static MCPhysReg PSRegs[] = {
-    TriCore_PSW, TriCore_PCXI, TriCore_PC, TriCore_FCX, 
+    TriCore_PSW, TriCore_PCXI, TriCore_PC, TriCore_FCX,
   };
 
   // PSRegs Bit set.
   static uint8_t PSRegsBits[] = {
-    0x1e, 
+    0x1e,
   };
 
   // ExtRegs Register Class...
   static MCPhysReg ExtRegs[] = {
-    TriCore_E2, TriCore_E4, TriCore_E6, TriCore_E8, TriCore_E10, TriCore_E12, TriCore_E14, TriCore_E0, 
+    TriCore_E2, TriCore_E4, TriCore_E6, TriCore_E8, TriCore_E10, TriCore_E12, TriCore_E14, TriCore_E0,
   };
 
   // ExtRegs Bit set.
   static uint8_t ExtRegsBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0xe0, 0x1f, 
+    0x00, 0x00, 0x00, 0x00, 0xe0, 0x1f,
   };
 
 static MCRegisterClass TriCoreMCRegisterClasses[] = {
