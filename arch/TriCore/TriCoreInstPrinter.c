@@ -29,7 +29,38 @@
 #include "../../MathExtras.h"
 #include "TriCoreMapping.h"
 
+// TODO: Implement all functions
+
 static char *getRegisterName(unsigned RegNo);
+static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
+static void printMemOperand(MCInst *MI, int opNum, SStream *O, const char *Modifier);
+static void printOperand(MCInst *MI, int opNum, SStream *O);
+
+static void TriCore_add_reg(MCInst *MI, unsigned int reg)
+{
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_REG;
+		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = reg;
+		MI->flat_insn->detail->tricore.op_count++;
+	}
+}
+
+static void set_mem_access(MCInst *MI, bool status)
+{
+	if (MI->csh->detail != CS_OPT_ON)
+		return;
+
+	MI->csh->doing_mem = status;
+
+	if (status) {
+		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_MEM;
+		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.base = TRICORE_REG_INVALID;
+		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.disp = 0;
+	} else {
+		// done, create the next operand slot
+		MI->flat_insn->detail->tricore.op_count++;
+	}
+}
 
 void TriCore_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 {
@@ -39,216 +70,28 @@ void TriCore_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 	 */
 }
 
-// stw sed, sp[3]
-void TriCore_insn_extract(MCInst *MI, const char *code)
+static void printRegName(SStream *OS, unsigned RegNo)
 {
-	int id;
-	char *p, *p2;
-	char tmp[128];
-
-// make MSVC shut up on strcpy()
-#ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable : 4996)
-#endif
-	strcpy(tmp, code); // safe because code is way shorter than 128 bytes
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif
-
-	// find the first space
-	p = strchr(tmp, ' ');
-	if (p) {
-		p++;
-		// find the next ','
-		p2 = strchr(p, ',');
-		if (p2) {
-			*p2 = '\0';
-			id = TriCore_reg_id(p);
-			if (id) {
-				// register
-				if (MI->csh->detail) {
-					MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_REG;
-					MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = id;
-					MI->flat_insn->detail->tricore.op_count++;
-				}
-			}
-			// next should be register, or memory?
-			// skip space
-			p2++;
-			while(*p2 && *p2 == ' ')
-				p2++;
-			if (*p2) {
-				// find '['
-				p = p2;
-				while(*p && *p != '[')
-					p++;
-				if (*p) {
-					// this is '['
-					*p = '\0';
-					id = TriCore_reg_id(p2);
-					if (id) {
-						// base register
-						if (MI->csh->detail) {
-							MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_MEM;
-							MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.base = (uint8_t)id;
-							MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.index = TRICORE_REG_INVALID;
-							MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.disp = 0;
-							MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.direct = 1;
-						}
-
-						p++;
-						p2 = p;
-						// until ']'
-						while(*p && *p != ']')
-							p++;
-						if (*p) {
-							*p = '\0';
-							// p2 is either index, or disp
-							id = TriCore_reg_id(p2);
-							if (id) {
-								// index register
-								if (MI->csh->detail) {
-									MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.index = (uint8_t)id;
-								}
-							} else {
-								// a number means disp
-								if (MI->csh->detail) {
-									MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.disp = atoi(p2);
-								}
-							}
-						}
-
-						if (MI->csh->detail) {
-							MI->flat_insn->detail->tricore.op_count++;
-						}
-					}
-				} else {
-					// a register?
-					id = TriCore_reg_id(p2);
-					if (id) {
-						// register
-						if (MI->csh->detail) {
-							MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_REG;
-							MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = id;
-							MI->flat_insn->detail->tricore.op_count++;
-						}
-					}
-				}
-			}
-		} else {
-			id = TriCore_reg_id(p);
-			if (id) {
-				// register
-				if (MI->csh->detail) {
-					MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_REG;
-					MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = id;
-					MI->flat_insn->detail->tricore.op_count++;
-				}
-			}
-		}
-	}
+	SStream_concat0(OS, "%");
+	SStream_concat0(OS, getRegisterName(RegNo));
 }
 
-static void set_mem_access(MCInst *MI, bool status, int reg)
+#define GET_INSTRINFO_ENUM
+#include "TriCoreGenInstrInfo.inc"
+
+#define GET_REGINFO_ENUM
+#include "TriCoreGenRegisterInfo.inc"
+
+void TriCore_printInst(MCInst *MI, SStream *O, void *Info)
 {
-	if (MI->csh->detail != CS_OPT_ON)
-		return;
-
-	MI->csh->doing_mem = status;
-	if (status) {
-		if (reg != 0xffff && reg != -0xffff) {
-			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_MEM;
-			if (reg) {
-				MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.base = (uint8_t)reg;
-			} else {
-				MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.base = TRICORE_REG_INVALID;
-			}
-			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.index = TRICORE_REG_INVALID;
-			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.disp = 0;
-			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.direct = 1;
-		} else {
-			// the last op should be the memory base
-			MI->flat_insn->detail->tricore.op_count--;
-			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_MEM;
-			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.base = (uint8_t)MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg;
-			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.index = TRICORE_REG_INVALID;
-			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.disp = 0;
-			if (reg > 0)
-				MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.direct = 1;
-			else
-				MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.direct = -1;
-		}
-	} else {
-		if (reg) {
-			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.index = (uint8_t)reg;
-			// done, create the next operand slot
-			MI->flat_insn->detail->tricore.op_count++;
-		}
-	}
-}
-
-static void _printOperand(MCInst *MI, MCOperand *MO, SStream *O)
-{
-	if (MCOperand_isReg(MO)) {
-		unsigned reg;
-
-		reg = MCOperand_getReg(MO);
-		SStream_concat0(O, getRegisterName(reg));
-
-		if (MI->csh->detail) {
-			if (MI->csh->doing_mem) {
-				if (MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.base == ARM_REG_INVALID)
-					MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.base = (uint8_t)reg;
-				else
-					MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.index = (uint8_t)reg;
-			} else {
-				MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_REG;
-				MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = reg;
-				MI->flat_insn->detail->tricore.op_count++;
-			}
-		}
-	} else if (MCOperand_isImm(MO)) {
-		int32_t Imm = (int32_t)MCOperand_getImm(MO);
-
-		if (Imm >= 0) {
-			if (Imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%x", Imm);
-			else
-				SStream_concat(O, "%u", Imm);
-		} else {
-			if (Imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%x", -Imm);
-			else
-				SStream_concat(O, "-%u", -Imm);
-		}
-
-		if (MI->csh->detail) {
-			if (MI->csh->doing_mem) {
-				MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.disp = Imm;
-			} else {
-				MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_IMM;
-				MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].imm = Imm;
-				MI->flat_insn->detail->tricore.op_count++;
-			}
-		}
-	}
+	printInstruction(MI, O, Info);
+	set_mem_access(MI, false);
 }
 
 static void printOperand(MCInst *MI, int OpNum, SStream *O)
 {
 	if (OpNum >= MI->size)
 		return;
-
-	_printOperand(MI, MCInst_getOperand(MI, OpNum), O);
-}
-
-static void printInlineJT(MCInst *MI, int OpNum, SStream *O)
-{
-}
-
-static void printInlineJT32(MCInst *MI, int OpNum, SStream *O)
-{
 }
 
 #define PRINT_ALIAS_INSTR
