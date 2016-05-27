@@ -26,6 +26,8 @@ else
   endif
 endif
 
+OS := $(shell uname)
+
 CAPSTONE_JAVA = Capstone.java Arm_const.java Arm64_const.java Mips_const.java \
 				X86_const.java Xcore_const.java Ppc_const.java Sparc_const.java\
 				Sysz_const.java \
@@ -68,8 +70,15 @@ jna:
 
 build_maven:
 	@mkdir -p $(NATIDIR)
+ifeq ($(OS), Windows_NT)
+	cd ../.. && $(MAKE) && cp capstone.dll $(NATIDIR)
+	./build-jar.sh
+else
 	cd ../.. && $(MAKE) && cp libcapstone.* $(NATIDIR)
 	./build-jar.sh
+endif
+
+	
 
 clean:
 	rm -rf $(BLDIR)/capstone/target $(BLDIR)/capstone.jar $(OBJDIR)/*.log
