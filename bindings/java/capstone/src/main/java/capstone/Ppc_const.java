@@ -23,14 +23,6 @@ public class Ppc_const {
 	public static final int PPC_BH_PLUS = 1;
 	public static final int PPC_BH_MINUS = 2;
 
-	// Operand type for instruction's operands
-
-	public static final int PPC_OP_INVALID = 0;
-	public static final int PPC_OP_REG = 1;
-	public static final int PPC_OP_IMM = 2;
-	public static final int PPC_OP_MEM = 3;
-	public static final int PPC_OP_CRX = 64;
-
 	// PPC registers
 
 	public static final int PPC_REG_INVALID = 0;
@@ -212,6 +204,14 @@ public class Ppc_const {
 	public static final int PPC_REG_LR8 = 176;
 	public static final int PPC_REG_CR1EQ = 177;
 	public static final int PPC_REG_ENDING = 178;
+
+	// Operand type for instruction's operands
+
+	public static final int PPC_OP_INVALID = 0;
+	public static final int PPC_OP_REG = 1;
+	public static final int PPC_OP_IMM = 2;
+	public static final int PPC_OP_MEM = 3;
+	public static final int PPC_OP_CRX = 64;
 
 	// PPC instruction
 
