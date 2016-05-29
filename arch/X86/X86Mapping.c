@@ -1547,7 +1547,7 @@ static name_map insn_name_maps[] = {
 	{ X86_INS_FTST, "ftst" },
 	{ X86_INS_TZCNT, "tzcnt" },
 	{ X86_INS_TZMSK, "tzmsk" },
-	{ X86_INS_FUCOMPI, "fucompi" },
+	{ X86_INS_FUCOMIP, "fucomip" },
 	{ X86_INS_FUCOMI, "fucomi" },
 	{ X86_INS_FUCOMPP, "fucompp" },
 	{ X86_INS_FUCOMP, "fucomp" },

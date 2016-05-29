@@ -1105,7 +1105,7 @@ public class X86_const {
 	public static final int X86_INS_FTST = 706;
 	public static final int X86_INS_TZCNT = 707;
 	public static final int X86_INS_TZMSK = 708;
-	public static final int X86_INS_FUCOMPI = 709;
+	public static final int X86_INS_FUCOMIP = 709;
 	public static final int X86_INS_FUCOMI = 710;
 	public static final int X86_INS_FUCOMPP = 711;
 	public static final int X86_INS_FUCOMP = 712;
