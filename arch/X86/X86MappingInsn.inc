@@ -2954,7 +2954,7 @@
 #endif
 },
 {
-	X86_COM_FIPr, X86_INS_FCOMPI,
+	X86_COM_FIPr, X86_INS_FCOMIP,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { X86_REG_EFLAGS, X86_REG_FPSW, 0 }, { 0 }, 0, 0
 #endif

@@ -947,7 +947,7 @@ static name_map insn_name_maps[] = {
 	{ X86_INS_COMISD, "comisd" },
 	{ X86_INS_COMISS, "comiss" },
 	{ X86_INS_FCOMP, "fcomp" },
-	{ X86_INS_FCOMPI, "fcompi" },
+	{ X86_INS_FCOMIP, "fcomip" },
 	{ X86_INS_FCOMI, "fcomi" },
 	{ X86_INS_FCOM, "fcom" },
 	{ X86_INS_FCOS, "fcos" },

@@ -1969,7 +1969,7 @@
 	X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ, 0 }
 },
-{	/* X86_COM_FIPr, X86_INS_FCOMPI: fcompi	$reg */
+{	/* X86_COM_FIPr, X86_INS_FCOMIP: fcomip	$reg */
 	0,
 	{ CS_AC_READ, 0 }
 },
