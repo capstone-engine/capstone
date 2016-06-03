@@ -6195,7 +6195,7 @@
 },
 {	/* X86_MOVSSmr, X86_INS_MOVSS: movss	$dst, $src */
 	X86_EFLAGS_TEST_DF,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOVSSrm, X86_INS_MOVSS: movss	$dst, $src */
 	X86_EFLAGS_TEST_DF,
