@@ -233,6 +233,9 @@ void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 }
 #endif
 
+#define m68k_sizeof_array(array) (int)(sizeof(array)/sizeof(array[0]))
+#define m68k_min(a, b) (a < b) ? a : b
+
 void M68K_printInst(MCInst* MI, SStream* O, void* PrinterInfo)
 {
 #ifndef CAPSTONE_DIET
@@ -243,11 +246,20 @@ void M68K_printInst(MCInst* MI, SStream* O, void* PrinterInfo)
 
 	detail = MI->flat_insn->detail;
 	if (detail) {
+		int regs_read_count = m68k_min(m68k_sizeof_array(detail->regs_read), info->regs_read_count);
+		int regs_write_count = m68k_min(m68k_sizeof_array(detail->regs_write), info->regs_write_count);
+		int groups_count = m68k_min(m68k_sizeof_array(detail->groups), info->groups_count);
+
 		memcpy(&detail->m68k, ext, sizeof(cs_m68k));
-		memcpy(&detail->groups, &info->groups, info->groups_count);
-		detail->groups_count = info->groups_count;
-		detail->regs_read_count = 0;
-		detail->regs_write_count = 0;
+
+		memcpy(&detail->regs_read, &info->regs_read, regs_read_count * sizeof(uint16_t));
+		detail->regs_read_count = regs_read_count;
+
+		memcpy(&detail->regs_write, &info->regs_write, regs_write_count * sizeof(uint16_t));
+		detail->regs_write_count = regs_write_count;
+
+		memcpy(&detail->groups, &info->groups, groups_count);
+		detail->groups_count = groups_count;
 	}
 
 	if (MI->Opcode == M68K_INS_INVALID) {

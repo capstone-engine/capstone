@@ -58,6 +58,25 @@ const char* s_addressing_modes[] = {
 	"Immidate value",
 };
 
+static void print_read_write_regs(cs_detail* detail)
+{
+	int i;
+
+	for (i = 0; i < detail->regs_read_count; ++i)
+	{
+		uint16_t reg_id = detail->regs_read[i];
+		const char* reg_name = cs_reg_name(handle, reg_id);
+		printf("\treading from reg: %s\n", reg_name);
+	}
+
+	for (i = 0; i < detail->regs_write_count; ++i)
+	{
+		uint16_t reg_id = detail->regs_write[i];
+		const char* reg_name = cs_reg_name(handle, reg_id);
+		printf("\twriting to reg:   %s\n", reg_name);
+	}
+}
+
 static void print_insn_detail(cs_insn *ins)
 {
 	cs_m68k* m68k;
@@ -72,6 +91,8 @@ static void print_insn_detail(cs_insn *ins)
 	m68k = &detail->m68k;
 	if (m68k->op_count)
 		printf("\top_count: %u\n", m68k->op_count);
+
+	print_read_write_regs(detail);
 
 	printf("\tgroups_count: %u\n", detail->groups_count);
 
@@ -119,12 +140,9 @@ static void print_insn_detail(cs_insn *ins)
 	printf("\n");
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static void test()
 {
-#define M68K_CODE "\xd4\x40\x87\x5a\x4e\x71\x02\xb4\xc0\xde\xc0\xde\x5c\x00\x1d\x80\x71\x12\x01\x23\xf2\x3c\x44\x22\x40\x49\x0e\x56\x54\xc5\xf2\x3c\x44\x00\x44\x7a\x00\x00\xf2\x00\x0a\x28\x4E\xB9\x00\x00\x00\x12\x4E\x75"
-
+#define M68K_CODE "\x4C\x00\x54\x04\x48\xe7\xe0\x30\x4C\xDF\x0C\x07\xd4\x40\x87\x5a\x4e\x71\x02\xb4\xc0\xde\xc0\xde\x5c\x00\x1d\x80\x71\x12\x01\x23\xf2\x3c\x44\x22\x40\x49\x0e\x56\x54\xc5\xf2\x3c\x44\x00\x44\x7a\x00\x00\xf2\x00\x0a\x28\x4E\xB9\x00\x00\x00\x12\x4E\x75"
 	struct platform platforms[] = {
 		{
 			CS_ARCH_M68K,

@@ -3833,6 +3833,135 @@ static int instruction_is_valid(m68k_info *info, const unsigned int word_check)
 	return 1;
 }
 
+static int exists_reg_list(uint16_t *regs, uint8_t count, m68k_reg reg)
+{
+	uint8_t i;
+
+	for (i = 0; i < count; ++i) {
+		if (regs[i] == (uint16_t)reg)
+			return 1;
+	}
+
+	return 0;
+}
+
+static void add_reg_to_rw_list(m68k_info *info, m68k_reg reg, int write)
+{
+	if (reg == M68K_REG_INVALID)
+		return;
+
+	if (write)
+	{
+		if (exists_reg_list(info->regs_write, info->regs_write_count, reg))
+			return;
+
+		info->regs_write[info->regs_write_count++] = (uint16_t)reg;
+	}
+	else
+	{
+		if (exists_reg_list(info->regs_read, info->regs_read_count, reg))
+			return;
+
+		info->regs_read[info->regs_read_count++] = (uint16_t)reg;
+	}
+}
+
+static void update_am_reg_list(m68k_info *info, cs_m68k_op *op, int write)
+{
+	switch (op->address_mode) {
+		case M68K_AM_REG_DIRECT_ADDR:
+		case M68K_AM_REG_DIRECT_DATA:
+			add_reg_to_rw_list(info, op->reg, write);
+			break;
+
+		case M68K_AM_REGI_ADDR_POST_INC:
+		case M68K_AM_REGI_ADDR_PRE_DEC:
+			add_reg_to_rw_list(info, op->reg, 1);
+			break;
+
+		case M68K_AM_REGI_ADDR:
+		case M68K_AM_REGI_ADDR_DISP:
+			add_reg_to_rw_list(info, op->reg, 0);
+			break;
+
+		case M68K_AM_AREGI_INDEX_8_BIT_DISP:
+		case M68K_AM_AREGI_INDEX_BASE_DISP:
+		case M68K_AM_MEMI_POST_INDEX:
+		case M68K_AM_MEMI_PRE_INDEX:
+		case M68K_AM_PCI_INDEX_8_BIT_DISP:
+		case M68K_AM_PCI_INDEX_BASE_DISP:
+		case M68K_AM_PC_MEMI_PRE_INDEX:
+		case M68K_AM_PC_MEMI_POST_INDEX:
+			add_reg_to_rw_list(info, op->mem.index_reg, 0);
+			add_reg_to_rw_list(info, op->mem.base_reg, 0);
+			break;
+
+		// no register(s) in the other addressing modes
+		default:
+			break;
+	}
+}
+
+static void update_bits_range(m68k_info *info, m68k_reg reg_start, uint8_t bits, int write)
+{
+	int i;
+
+	for (i = 0; i < 8; ++i) {
+		if (bits & (1 << i)) {
+			add_reg_to_rw_list(info, reg_start + i, write);
+		}
+	}
+}
+
+static void update_reg_list_regbits(m68k_info *info, cs_m68k_op *op, int write)
+{
+	uint32_t bits = op->register_bits;
+	update_bits_range(info, M68K_REG_D0, bits & 0xff, write);
+	update_bits_range(info, M68K_REG_A0, (bits >> 8) & 0xff, write);
+	update_bits_range(info, M68K_REG_FP0, (bits >> 16) & 0xff, write);
+}
+
+static void update_op_reg_list(m68k_info *info, cs_m68k_op *op, int write)
+{
+	switch ((int)op->type) {
+		case M68K_OP_REG:
+			add_reg_to_rw_list(info, op->reg, write);
+			break;
+
+		case M68K_OP_MEM:
+			update_am_reg_list(info, op, write);
+			break;
+
+		case M68K_OP_REG_BITS:
+			update_reg_list_regbits(info, op, write);
+			break;
+
+		case M68K_OP_REG_PAIR:
+			add_reg_to_rw_list(info, M68K_REG_D0 + op->reg_pair.reg_0, write);
+			add_reg_to_rw_list(info, M68K_REG_D0 + op->reg_pair.reg_1, write);
+			break;
+	}
+}
+
+static void build_regs_read_write_counts(m68k_info *info)
+{
+	int i;
+
+	if (!info->extension.op_count)
+		return;
+
+	if (info->extension.op_count == 1) {
+		update_op_reg_list(info, &info->extension.operands[0], 1);
+	} else {
+		// first operand is always read
+		update_op_reg_list(info, &info->extension.operands[0], 0);
+
+		// remaning write
+		for (i = 1; i < info->extension.op_count; ++i)
+			update_op_reg_list(info, &info->extension.operands[i], 1);
+	}
+}
+
 static void m68k_setup_internals(m68k_info* info, MCInst* inst, unsigned int pc, unsigned int cpu_type)
 {
 	info->inst = inst;
@@ -3913,6 +4042,8 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 	m68k_info *info = (m68k_info*)handle->printer_info;
 
 	info->groups_count = 0;
+	info->regs_read_count = 0;
+	info->regs_write_count = 0;
 	info->code = code;
 	info->code_len = code_len;
 	info->baseAddress = address;
@@ -3935,6 +4066,8 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 		*size = 2;
 		return false;
 	}
+
+	build_regs_read_write_counts(info);
 
 #ifdef M68K_DEBUG
 	SStream_Init(&ss);
