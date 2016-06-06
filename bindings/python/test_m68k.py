@@ -6,7 +6,7 @@ from capstone import *
 from capstone.m68k import *
 from xprint import to_hex, to_x
 
-M68K_CODE = b"\xd4\x40\x87\x5a\x4e\x71\x02\xb4\xc0\xde\xc0\xde\x5c\x00\x1d\x80\x71\x12\x01\x23\xf2\x3c\x44\x22\x40\x49\x0e\x56\x54\xc5\xf2\x3c\x44\x00\x44\x7a\x00\x00\xf2\x00\x0a\x28\x4E\xB9\x00\x00\x00\x12\x4E\x75"
+M68K_CODE = b"\x4c\x00\x54\x04\x48\xe7\xe0\x30\x4c\xdf\x0c\x07\xd4\x40\x87\x5a\x4e\x71\x02\xb4\xc0\xde\xc0\xde\x5c\x00\x1d\x80\x71\x12\x01\x23\xf2\x3c\x44\x22\x40\x49\x0e\x56\x54\xc5\xf2\x3c\x44\x00\x44\x7a\x00\x00\xf2\x00\x0a\x28\x4e\xb9\x00\x00\x00\x12\x4e\x75"
 
 all_tests = (
         (CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040, M68K_CODE, "M68K"),
@@ -42,10 +42,19 @@ s_addressing_modes = {
 	18: "Immidate value",
 }
 
+def print_read_write_regs(insn):
+    for m in insn.regs_read:
+        print("\treading from reg: %s" % insn.reg_name(m))
+
+    for m in insn.regs_write:
+        print("\twriting to reg:   %s" % insn.reg_name(m))
+
 def print_insn_detail(insn):
     if len(insn.operands) > 0:
         print("\top_count: %u" % (len(insn.operands)))
         print("\tgroups_count: %u" % len(insn.groups))
+
+    print_read_write_regs(insn)
 
     for i, op in enumerate(insn.operands):
         if op.type == M68K_OP_REG:
