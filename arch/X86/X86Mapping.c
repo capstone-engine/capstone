@@ -17,7 +17,7 @@ uint64_t arch_masks[9] = {
 	0,
 	0xffffffff,
 	0, 0, 0,
-	0xffffffffffffffff
+	0xffffffffffffffffLL
 };
 
 static x86_reg sib_base_map[] = {
