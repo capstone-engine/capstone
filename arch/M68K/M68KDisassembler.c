@@ -207,7 +207,7 @@ static uint64_t m68k_read_safe_64(const m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
 	if (addr > (info->code_len - 8)) {
-		return 0xaaaaaaaaaaaaaaaa;
+		return 0xaaaaaaaaaaaaaaaaLL;
 	}
 	return m68k_read_disassembler_64(info, addr);
 }
