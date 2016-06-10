@@ -1,6 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
-import ctypes, copy
+import ctypes
+from . import copy_ctypes_list
 from .x86_const import *
 
 # define the API
@@ -71,5 +72,5 @@ def get_arch_info(a):
     return (a.prefix[:], a.opcode[:], a.rex, a.addr_size, \
             a.modrm, a.sib, a.disp, a.sib_index, a.sib_scale, \
             a.sib_base, a.sse_cc, a.avx_cc, a.avx_sae, a.avx_rm, \
-            copy.deepcopy(a.operands[:a.op_count]))
+            copy_ctypes_list(a.operands[:a.op_count]))
 

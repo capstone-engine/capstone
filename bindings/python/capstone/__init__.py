@@ -4,7 +4,6 @@ from platform import system
 _python2 = sys.version_info[0] < 3
 if _python2:
     range = xrange
-from . import arm, arm64, mips, ppc, sparc, systemz, x86, xcore
 
 __all__ = [
     'Cs',
@@ -251,6 +250,19 @@ if _found == False:
 
 
 # low-level structure for C code
+
+def copy_ctypes(src):
+    """Returns a new ctypes object which is a bitwise copy of an existing one"""
+    dst = type(src)()
+    ctypes.memmove(ctypes.byref(dst), ctypes.byref(src), ctypes.sizeof(type(src)))
+    return dst
+
+def copy_ctypes_list(src):
+    return [copy_ctypes(n) for n in src]
+
+# Weird import placement because these modules are needed by the below code but need the above functions
+from . import arm, arm64, mips, ppc, sparc, systemz, x86, xcore
+
 class _cs_arch(ctypes.Union):
     _fields_ = (
         ('arm64', arm64.CsArm64),
@@ -433,14 +445,6 @@ def cs_disasm_lite(arch, mode, code, offset, count=0):
     status = _cs.cs_close(ctypes.byref(csh))
     if status != CS_ERR_OK:
         raise CsError(status)
-
-
-# alternately
-def copy_ctypes(src):
-    """Returns a new ctypes object which is a bitwise copy of an existing one"""
-    dst = type(src)()
-    ctypes.pointer(dst)[0] = src
-    return dst
 
 
 # Python-style class to disasm code
