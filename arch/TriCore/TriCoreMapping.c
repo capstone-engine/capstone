@@ -876,6 +876,25 @@ const char *TriCore_insn_name(csh handle, unsigned int id)
 #endif
 }
 
+#ifndef CAPSTONE_DIET
+static name_map group_name_maps[] = {
+	{ TRICORE_GRP_INVALID, NULL },
+	{ TRICORE_GRP_JUMP, "jump" },
+};
+#endif
+
+const char *TriCore_group_name(csh handle, unsigned int id)
+{
+#ifndef CAPSTONE_DIET
+	if (id >= TRICORE_GRP_ENDING)
+		return NULL;
+
+	return group_name_maps[id].name;
+#else
+	return NULL;
+#endif
+}
+
 // map internal raw register to 'public' register
 tricore_reg TriCore_map_register(unsigned int r)
 {
