@@ -70,7 +70,7 @@ void TriCore_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 
 static void printRegName(SStream *OS, unsigned RegNo)
 {
-	SStream_concat0(OS, "$");
+	SStream_concat0(OS, "%");
 	SStream_concat0(OS, getRegisterName(RegNo));
 }
 
@@ -194,6 +194,7 @@ static void printZExtImm(MCInst *MI, int opNum, SStream *O)
 // TODO: verify this function
 void printAddrModeMemSrc(const MCInst *MI, unsigned OpNum, raw_ostream &O) {
 
+	set_mem_access(MI, true);
 	MCOperand *Base = MCInst_getOperand(MI, opNum);
 
 	// Print register base field
@@ -205,6 +206,7 @@ void printAddrModeMemSrc(const MCInst *MI, unsigned OpNum, raw_ostream &O) {
 
 	SStream_concat(O, " ");
 	printOperand(MI, opNum+1, O); // Disp
+	set_mem_access(MI, false);
 }
 
 static void printCCOperand(MCInst *MI, int opNum, SStream *O)
