@@ -247,7 +247,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 2:
     // ANDsc, ORsc, SUBAsc
-    printZExtImm<8>(MI, 0, O);
+    printZExtImm(MI, 0, O);
     return;
     break;
   case 3:
@@ -291,7 +291,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 1:
     // ADDsrc
-    printSExtImm<4>(MI, 2, O);
+    printSExtImm(MI, 2, O);
     return;
     break;
   case 2:
@@ -300,7 +300,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 3:
     // IMASKrcpw
-    printZExtImm<4>(MI, 1, O);
+    printZExtImm(MI, 1, O);
     SStream_concat0(O, ", ");
     printOperand(MI, 2, O);
     SStream_concat0(O, ", ");
@@ -314,17 +314,17 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 5:
     // MOVUrlc
-    printZExtImm<16>(MI, 1, O);
+    printZExtImm(MI, 1, O);
     return;
     break;
   case 6:
     // MOVrlc
-    printSExtImm<16>(MI, 1, O);
+    printSExtImm(MI, 1, O);
     return;
     break;
   case 7:
     // MOVsrc
-    printSExtImm<4>(MI, 1, O);
+    printSExtImm(MI, 1, O);
     return;
     break;
   }
@@ -360,12 +360,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 1:
     // ADDCrc, ADDXrc, EQrc, GErc, LTrc, MULrc, NErc, RSUBrc, SHArc, SHrc
-    printSExtImm<9>(MI, 2, O);
+    printSExtImm(MI, 2, O);
     return;
     break;
   case 2:
     // AND_EQrc, AND_GErc, AND_LTrc, OR_GErc, OR_LTrc, OR_NErc
-    printSExtImm<9>(MI, 3, O);
+    printSExtImm(MI, 3, O);
     return;
     break;
   case 3:
@@ -375,12 +375,12 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 4:
     // AND_GEUrc, AND_LTUrc, OR_GEUrc, OR_LTUrc
-    printZExtImm<9>(MI, 3, O);
+    printZExtImm(MI, 3, O);
     return;
     break;
   case 5:
     // ANDrc, NANDrc, NORrc, ORrc, XORrc
-    printZExtImm<9>(MI, 2, O);
+    printZExtImm(MI, 2, O);
     return;
     break;
   }
