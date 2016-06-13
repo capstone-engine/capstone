@@ -20,8 +20,8 @@ all_tests = (
         (CS_ARCH_ARM, CS_MODE_THUMB, THUMB_CODE, "Thumb", None),
         (CS_ARCH_ARM, CS_MODE_THUMB, ARM_CODE2, "Thumb-mixed", None),
         (CS_ARCH_ARM, CS_MODE_THUMB, THUMB_CODE2, "Thumb-2 & register named with numbers", CS_OPT_SYNTAX_NOREGNAME),
-        (CS_ARCH_ARM, CS_MODE_THUMB + CS_MODE_MCLASS, THUMB_MCLASS, "Thumb-MClass", 0),
-        (CS_ARCH_ARM, CS_MODE_ARM + CS_MODE_V8, ARMV8, "Arm-V8", 0),
+        (CS_ARCH_ARM, CS_MODE_THUMB + CS_MODE_MCLASS, THUMB_MCLASS, "Thumb-MClass", None),
+        (CS_ARCH_ARM, CS_MODE_ARM + CS_MODE_V8, ARMV8, "Arm-V8", None),
         )
 
 
@@ -137,7 +137,7 @@ def test_class():
 
         try:
             md = Cs(arch, mode)
-            if syntax:
+            if syntax is not None:
                 md.syntax = syntax
             md.detail = True
             for insn in md.disasm(code, 0x1000):
