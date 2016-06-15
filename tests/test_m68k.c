@@ -55,7 +55,7 @@ const char* s_addressing_modes[] = {
 
 	"Absolute Data Addressing  - Short",
 	"Absolute Data Addressing  - Long",
-	"Immidate value",
+	"Immediate value",
 };
 
 static void print_insn_detail(cs_insn *ins)
