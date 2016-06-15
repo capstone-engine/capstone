@@ -75,7 +75,7 @@ public class M68k_const {
 	public static final int M68K_AM_PC_MEMI_PRE_INDEX = 15;
 	public static final int M68K_AM_ABSOLUTE_DATA_SHORT = 16;
 	public static final int M68K_AM_ABSOLUTE_DATA_LONG = 17;
-	public static final int M68K_AM_IMMIDIATE = 18;
+	public static final int M68K_AM_IMMEDIATE = 18;
 
 	// Operand type for instruction's operands
 

@@ -72,7 +72,7 @@ let _M68K_AM_PC_MEMI_POST_INDEX = 14;;
 let _M68K_AM_PC_MEMI_PRE_INDEX = 15;;
 let _M68K_AM_ABSOLUTE_DATA_SHORT = 16;;
 let _M68K_AM_ABSOLUTE_DATA_LONG = 17;;
-let _M68K_AM_IMMIDIATE = 18;;
+let _M68K_AM_IMMEDIATE = 18;;
 
 (* Operand type for instruction's operands *)
 

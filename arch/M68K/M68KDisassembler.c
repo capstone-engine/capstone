@@ -493,7 +493,7 @@ void get_ea_mode_op(m68k_info *info, cs_m68k_op* op, uint instruction, uint size
 			break;
 
 		case 0x3c:
-			op->address_mode = M68K_AM_IMMIDIATE;
+			op->address_mode = M68K_AM_IMMEDIATE;
 			op->type = M68K_OP_IMM;
 
 			if (size == 1)
@@ -597,7 +597,7 @@ static void build_rr(m68k_info *info, int opcode, uint8_t size, int imm)
 	if (imm > 0) {
 		ext->op_count = 3;
 		op2->type = M68K_OP_IMM;
-		op2->address_mode = M68K_AM_IMMIDIATE;
+		op2->address_mode = M68K_AM_IMMEDIATE;
 		op2->imm = imm;
 	}
 }
@@ -628,7 +628,7 @@ static void build_imm_ea(m68k_info *info, int opcode, uint8_t size, int imm)
 	op1 = &ext->operands[1];
 
 	op0->type = M68K_OP_IMM;
-	op0->address_mode = M68K_AM_IMMIDIATE;
+	op0->address_mode = M68K_AM_IMMEDIATE;
 	op0->imm = imm;
 
 	get_ea_mode_op(info, op1, info->ir, size);
@@ -644,7 +644,7 @@ static void build_3bit_d(m68k_info *info, int opcode, int size)
 	op1 = &ext->operands[1];
 
 	op0->type = M68K_OP_IMM;
-	op0->address_mode = M68K_AM_IMMIDIATE;
+	op0->address_mode = M68K_AM_IMMEDIATE;
 	op0->imm = g_3bit_qdata_table[(info->ir >> 9) & 7];
 
 	op1->address_mode = M68K_AM_REG_DIRECT_DATA;
@@ -661,7 +661,7 @@ static void build_3bit_ea(m68k_info *info, int opcode, int size)
 	op1 = &ext->operands[1];
 
 	op0->type = M68K_OP_IMM;
-	op0->address_mode = M68K_AM_IMMIDIATE;
+	op0->address_mode = M68K_AM_IMMEDIATE;
 	op0->imm = g_3bit_qdata_table[(info->ir >> 9) & 7];
 
 	get_ea_mode_op(info, op1, info->ir, size);
@@ -687,7 +687,7 @@ static void build_mm(m68k_info *info, int opcode, uint8_t size, int imm)
 	if (imm > 0) {
 		ext->op_count = 3;
 		op2->type = M68K_OP_IMM;
-		op2->address_mode = M68K_AM_IMMIDIATE;
+		op2->address_mode = M68K_AM_IMMEDIATE;
 		op2->imm = imm;
 	}
 }
@@ -752,7 +752,7 @@ static void build_imm_special_reg(m68k_info *info, int opcode, int imm, int size
 	op1 = &ext->operands[1];
 
 	op0->type = M68K_OP_IMM;
-	op0->address_mode = M68K_AM_IMMIDIATE;
+	op0->address_mode = M68K_AM_IMMEDIATE;
 	op0->imm = imm;
 
 	op1->address_mode = M68K_AM_NONE;
@@ -767,7 +767,7 @@ static void build_bxx(m68k_info *info, int opcode, int size, int jump_offset)
 	op = &ext->operands[0];
 
 	op->type = M68K_OP_IMM;
-	op->address_mode = M68K_AM_IMMIDIATE;
+	op->address_mode = M68K_AM_IMMEDIATE;
 	op->imm = jump_offset;
 
 	set_insn_group(info, M68K_GRP_JUMP);
@@ -796,7 +796,7 @@ static void build_dbxx(m68k_info *info, int opcode, int size, int jump_offset)
 	op0->reg = M68K_REG_D0 + (info->ir & 7);
 
 	op1->type = M68K_OP_IMM;
-	op1->address_mode = M68K_AM_IMMIDIATE;
+	op1->address_mode = M68K_AM_IMMEDIATE;
 	op1->imm = jump_offset;
 
 	set_insn_group(info, M68K_GRP_JUMP);
@@ -946,7 +946,7 @@ static void build_imm(m68k_info *info, int opcode, int data)
 	op = &ext->operands[0];
 
 	op->type = M68K_OP_IMM;
-	op->address_mode = M68K_AM_IMMIDIATE;
+	op->address_mode = M68K_AM_IMMEDIATE;
 	op->imm = data;
 }
 
@@ -1057,7 +1057,7 @@ static void build_link(m68k_info *info, int disp, int size)
 	op0->address_mode = M68K_AM_NONE;
 	op0->reg = M68K_REG_A0 + (info->ir & 7);
 
-	op1->address_mode = M68K_AM_IMMIDIATE;
+	op1->address_mode = M68K_AM_IMMEDIATE;
 	op1->type = M68K_OP_IMM;
 	op1->imm = disp;
 }
@@ -1091,7 +1091,7 @@ static void build_cpush_cinv(m68k_info *info, int op_offset)
 	op0 = &ext->operands[0];
 	op1 = &ext->operands[1];
 
-	op0->address_mode = M68K_AM_IMMIDIATE;
+	op0->address_mode = M68K_AM_IMMEDIATE;
 	op0->type = M68K_OP_IMM;
 	op0->imm = (info->ir >> 6) & 3;
 
@@ -1803,7 +1803,7 @@ static void d68020_cpbcc_16(m68k_info *info)
 	ext = build_init_op(info, M68K_INS_FBF, 1, 2);
 	op0 = &ext->operands[0];
 
-	op0->address_mode = M68K_AM_IMMIDIATE;
+	op0->address_mode = M68K_AM_IMMEDIATE;
 	op0->type = M68K_OP_IMM;
 	op0->imm = new_pc;
 }
@@ -1828,7 +1828,7 @@ static void d68020_cpbcc_32(m68k_info *info)
 	op0 = &ext->operands[0];
 
 	op0->type = M68K_OP_IMM;
-	op0->address_mode = M68K_AM_IMMIDIATE;
+	op0->address_mode = M68K_AM_IMMEDIATE;
 	op0->imm = new_pc;
 }
 
@@ -1856,7 +1856,7 @@ static void d68020_cpdbcc(m68k_info *info)
 
 	op0->reg = M68K_REG_D0 + (info->ir & 7);
 
-	op1->address_mode = M68K_AM_IMMIDIATE;
+	op1->address_mode = M68K_AM_IMMEDIATE;
 	op1->type = M68K_OP_IMM;
 	op1->imm = new_pc;
 }
@@ -1962,7 +1962,7 @@ static void d68020_cpgen(m68k_info *info)
 		op0 = &ext->operands[0];
 		op1 = &ext->operands[1];
 
-		op0->address_mode = M68K_AM_IMMIDIATE;
+		op0->address_mode = M68K_AM_IMMEDIATE;
 		op0->type = M68K_OP_IMM;
 		op0->imm = next & 0x3f;
 
@@ -2168,7 +2168,7 @@ static void d68020_cptrapcc_16(m68k_info *info)
 
 	op0 = &ext->operands[0];
 
-	op0->address_mode = M68K_AM_IMMIDIATE;
+	op0->address_mode = M68K_AM_IMMEDIATE;
 	op0->type = M68K_OP_IMM;
 	op0->imm = extension2;
 }
@@ -2191,7 +2191,7 @@ static void d68020_cptrapcc_32(m68k_info *info)
 
 	op0 = &ext->operands[0];
 
-	op0->address_mode = M68K_AM_IMMIDIATE;
+	op0->address_mode = M68K_AM_IMMEDIATE;
 	op0->type = M68K_OP_IMM;
 	op0->imm = extension2;
 }
@@ -2702,7 +2702,7 @@ static void d68000_moveq(m68k_info *info)
 	op1 = &ext->operands[1];
 
 	op0->type = M68K_OP_IMM;
-	op0->address_mode = M68K_AM_IMMIDIATE;
+	op0->address_mode = M68K_AM_IMMEDIATE;
 	op0->imm = (info->ir & 0xff);
 
 	op1->address_mode = M68K_AM_REG_DIRECT_DATA;

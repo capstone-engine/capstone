@@ -141,7 +141,7 @@ def dump_op_ea(insn, op):
         return format("0x%x" % (extsign1616(op.imm & 0xffff)))  
     if op.address_mode == M68K_AM_ABSOLUTE_DATA_LONG:
         return format("0x%x" % (op.imm & 0xffffffff))
-    if op.address_mode == M68K_AM_IMMIDIATE: 
+    if op.address_mode == M68K_AM_IMMEDIATE:
         if insn.op_size.type == M68K_SIZE_TYPE_FPU:
             map_fpu_size_str = { M68K_FPU_SIZE_SINGLE : op.simm, M68K_FPU_SIZE_DOUBLE : op.dimm }
             return format("#%f" % (insn.op_size.fpu_size[map_fpu_size_str]))
@@ -278,7 +278,7 @@ map_address_mode_str = {
     15 : "M68K_AM_PC_MEMI_PRE_INDEX",
     16 : "M68K_AM_ABSOLUTE_DATA_SHORT",
     17 : "M68K_AM_ABSOLUTE_DATA_LONG",
-    18 : "M68K_AM_IMMIDIATE",
+    18 : "M68K_AM_IMMEDIATE",
     }
 
 
