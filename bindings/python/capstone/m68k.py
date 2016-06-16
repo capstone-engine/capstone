@@ -1,6 +1,7 @@
 # Capstone Python bindings, by Nicolas PLANEL <nplanel@gmail.com>
 
-import ctypes, copy
+import ctypes
+from . import copy_ctypes_list
 from .m68k_const import *
 
 # define the API
@@ -74,7 +75,7 @@ class M68KOpSize(ctypes.Structure):
     )
 
     def get(a):
-        return copy.deepcopy(type, size)
+        return copy_ctypes_list(type, size)
 
 class CsM68K(ctypes.Structure):
     M68K_OPERAND_COUNT = 4
