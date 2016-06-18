@@ -3771,7 +3771,7 @@
 },
 {	/* X86_POP16rmm, X86_INS_POP: pop{w}	$dst */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 {	/* X86_POP16rmr, X86_INS_POP: pop{w}	$reg */
 	0,
@@ -3783,7 +3783,7 @@
 },
 {	/* X86_POP32rmm, X86_INS_POP: pop{l}	$dst */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 {	/* X86_POP32rmr, X86_INS_POP: pop{l}	$reg */
 	0,
@@ -3795,7 +3795,7 @@
 },
 {	/* X86_POP64rmm, X86_INS_POP: pop{q}	$dst */
 	0,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 {	/* X86_POP64rmr, X86_INS_POP: pop{q}	$reg */
 	0,
