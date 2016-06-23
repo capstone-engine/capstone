@@ -90,6 +90,9 @@ ipch/
 *.VC.db
 *.VC.opendb
 
+# CMake build directories
+build*/
+
 # Xcode
 xcode/Capstone.xcodeproj/xcuserdata
 xcode/Capstone.xcodeproj/project.xcworkspace/xcuserdata
