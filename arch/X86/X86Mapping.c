@@ -2690,6 +2690,8 @@ static struct insn_reg insn_regs_att[] = {
 	{ X86_MOV32o32a, X86_REG_EAX },
 	{ X86_MOV64o32a, X86_REG_EAX },
 	{ X86_MOV16o16a, X86_REG_AX },
+	{ X86_MOV16o32a, X86_REG_AX },
+	{ X86_MOV16o64a, X86_REG_AX },
 
 	{ X86_PUSHCS32, X86_REG_CS },
 	{ X86_PUSHDS32, X86_REG_DS },
