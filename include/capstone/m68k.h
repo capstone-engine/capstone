@@ -103,7 +103,7 @@ typedef enum m68k_address_mode {
 
 	M68K_AM_ABSOLUTE_DATA_SHORT,	// Absolute Data Addressing  - Short
 	M68K_AM_ABSOLUTE_DATA_LONG,		// Absolute Data Addressing  - Long
-	M68K_AM_IMMIDIATE,              // Immediate value
+	M68K_AM_IMMEDIATE,              // Immediate value
 } m68k_address_mode;
 
 //> Operand type for instruction's operands

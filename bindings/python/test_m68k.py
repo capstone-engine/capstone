@@ -39,7 +39,7 @@ s_addressing_modes = {
 
 	16: "Absolute Data Addressing  - Short",
 	17: "Absolute Data Addressing  - Long",
-	18: "Immidate value",
+	18: "Immediate value",
 }
 
 def print_insn_detail(insn):
