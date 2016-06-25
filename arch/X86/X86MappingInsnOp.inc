@@ -5711,7 +5711,7 @@
 },
 {	/* X86_MOV32o32a, X86_INS_MOV: mov{l}	$dst, eax */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV32o64a, X86_INS_MOVABS: movabs{l}	$dst, eax */
 	0,
