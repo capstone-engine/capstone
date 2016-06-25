@@ -5631,15 +5631,15 @@
 },
 {	/* X86_MOV16o16a, X86_INS_MOV: mov{w}	$dst, ax */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV16o32a, X86_INS_MOV: mov{w}	$dst, ax */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV16o64a, X86_INS_MOVABS: movabs{w}	$dst, ax */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV16ri, X86_INS_MOV: mov{w}	$dst, $src */
 	0,
@@ -5707,7 +5707,7 @@
 },
 {	/* X86_MOV32o16a, X86_INS_MOV: mov{l}	$dst, eax */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV32o32a, X86_INS_MOV: mov{l}	$dst, eax */
 	0,
@@ -5715,7 +5715,7 @@
 },
 {	/* X86_MOV32o64a, X86_INS_MOVABS: movabs{l}	$dst, eax */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV32rc, X86_INS_MOV: mov{l}	$dst, $src */
 	0,
@@ -5787,11 +5787,11 @@
 },
 {	/* X86_MOV64o32a, X86_INS_MOV: mov{q}	$dst, rax */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV64o64a, X86_INS_MOVABS: movabs{q}	$dst, rax */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV64rc, X86_INS_MOV: mov{q}	$dst, $src */
 	0,
@@ -5875,15 +5875,15 @@
 },
 {	/* X86_MOV8o16a, X86_INS_MOV: mov{b}	$dst, al */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV8o32a, X86_INS_MOV: mov{b}	$dst, al */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV8o64a, X86_INS_MOVABS: movabs{b}	$dst, al */
 	0,
-	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV8ri, X86_INS_MOV: mov{b}	$dst, $src */
 	0,
