@@ -727,6 +727,8 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 						SStream_concat(O, "%"PRIu64, DispVal);
 				}
 			}
+		} else {
+			SStream_concat0(O, "0");
 		}
 	}
 
