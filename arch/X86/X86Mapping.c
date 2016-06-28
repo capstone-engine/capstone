@@ -4,6 +4,7 @@
 #ifdef CAPSTONE_HAS_X86
 
 #include <string.h>
+#include <stdlib.h>
 
 #include "X86Mapping.h"
 #include "X86DisassemblerDecoder.h"
@@ -2753,39 +2754,12 @@ static struct insn_reg2 insn_regs_intel2[] = {
 
 struct insn_reg insn_regs_intel_sorted [ARR_SIZE(insn_regs_intel)];
 
-static int partition_regs(struct insn_reg a[], int l, int r);
-static void qsort_regs(struct insn_reg a[], int l, int r);
-
-static void qsort_regs(struct insn_reg a[], int l, int r)
+static void regs_cmp(const void *a, const void *b)
 {
-	int j;
-	if (l < r) {
-		j = partition_regs(a, l, r);
-		qsort_regs(a, l, j-1);
-		qsort_regs(a, j+1, r);
-	}
+	uint16_t l = ((struct insn_reg *)a)->insn;
+	uint16_t r = ((struct insn_reg *)b)->insn;
+	return (l - r);
 }
-
-static int partition_regs(struct insn_reg a[], int l, int r) {
-	struct insn_reg pivot, t;
-	int i, j;
-	pivot = a[l];
-	i = l;
-	j = r+1;
-	while(1) {
-		do ++i; while(a[i].insn <= pivot.insn && i <= r);
-		do --j; while(a[j].insn > pivot.insn);
-		if (i >= j) {
-			break;
-		}
-		t = a[i]; a[i] = a[j]; a[j] = t;
-	}
-	t = a[l];
-	a[l] = a[j];
-	a[j] = t;
-	return j;
-}
-
 
 static bool intel_resgs_sorted = false;
 // return register of given instruction id
@@ -2800,7 +2774,8 @@ x86_reg X86_insn_reg_intel(unsigned int id, enum cs_ac_type *access)
 	if (!intel_resgs_sorted) {
 		memcpy (insn_regs_intel_sorted, insn_regs_intel,
 				sizeof(insn_regs_intel_sorted));
-		qsort_regs (insn_regs_intel_sorted, first, last);
+		qsort ((void*)insn_regs_intel_sorted,
+				ARR_SIZE(insn_regs_intel_sorted), sizeof(struct insn_reg), regs_cmp);
 		intel_resgs_sorted = true;
 	}
 
