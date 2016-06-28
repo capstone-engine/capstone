@@ -2754,7 +2754,7 @@ static struct insn_reg2 insn_regs_intel2[] = {
 
 struct insn_reg insn_regs_intel_sorted [ARR_SIZE(insn_regs_intel)];
 
-static void regs_cmp(const void *a, const void *b)
+static int regs_cmp(const void *a, const void *b)
 {
 	uint16_t l = ((struct insn_reg *)a)->insn;
 	uint16_t r = ((struct insn_reg *)b)->insn;
@@ -2774,8 +2774,9 @@ x86_reg X86_insn_reg_intel(unsigned int id, enum cs_ac_type *access)
 	if (!intel_resgs_sorted) {
 		memcpy (insn_regs_intel_sorted, insn_regs_intel,
 				sizeof(insn_regs_intel_sorted));
-		qsort ((void*)insn_regs_intel_sorted,
-				ARR_SIZE(insn_regs_intel_sorted), sizeof(struct insn_reg), regs_cmp);
+		qsort (insn_regs_intel_sorted,
+				ARR_SIZE(insn_regs_intel_sorted),
+				sizeof(struct insn_reg), regs_cmp);
 		intel_resgs_sorted = true;
 	}
 
