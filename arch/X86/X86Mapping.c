@@ -2751,19 +2751,71 @@ static struct insn_reg2 insn_regs_intel2[] = {
 	{ X86_INVLPGA64, X86_REG_RAX, X86_REG_ECX, CS_AC_READ, CS_AC_READ },
 };
 
+struct insn_reg insn_regs_intel_sorted [ARR_SIZE(insn_regs_intel)];
+
+static int partition_regs(struct insn_reg a[], int l, int r);
+static void qsort_regs(struct insn_reg a[], int l, int r);
+
+static void qsort_regs(struct insn_reg a[], int l, int r)
+{
+	int j;
+	if (l < r) {
+		j = partition_regs(a, l, r);
+		qsort_regs(a, l, j-1);
+		qsort_regs(a, j+1, r);
+	}
+}
+
+static int partition_regs(struct insn_reg a[], int l, int r) {
+	struct insn_reg pivot, t;
+	int i, j;
+	pivot = a[l];
+	i = l;
+	j = r+1;
+	while(1) {
+		do ++i; while(a[i].insn <= pivot.insn && i <= r);
+		do --j; while(a[j].insn > pivot.insn);
+		if (i >= j) {
+			break;
+		}
+		t = a[i]; a[i] = a[j]; a[j] = t;
+	}
+	t = a[l];
+	a[l] = a[j];
+	a[j] = t;
+	return j;
+}
+
+
+static bool intel_resgs_sorted = false;
 // return register of given instruction id
 // return 0 if not found
 // this is to handle instructions embedding accumulate registers into AsmStrs[]
 x86_reg X86_insn_reg_intel(unsigned int id, enum cs_ac_type *access)
 {
-	unsigned int i;
+	unsigned int first = 0;
+	unsigned int last = ARR_SIZE(insn_regs_intel) - 1;
+	unsigned int mid = ARR_SIZE(insn_regs_intel) / 2;
 
-	for (i = 0; i < ARR_SIZE(insn_regs_intel); i++) {
-		if (insn_regs_intel[i].insn == id) {
-			if (access)
-				*access = insn_regs_intel[i].access;
-			return insn_regs_intel[i].reg;
+	if (!intel_resgs_sorted) {
+		memcpy (insn_regs_intel_sorted, insn_regs_intel,
+				sizeof(insn_regs_intel_sorted));
+		qsort_regs (insn_regs_intel_sorted, first, last);
+		intel_resgs_sorted = true;
+	}
+
+	while (first <= last) {
+		if (insn_regs_intel_sorted[mid].insn < id) {
+			first = mid + 1;
+		} else if (insn_regs_intel_sorted[mid].insn == id) {
+			if (access) {
+				*access = insn_regs_intel_sorted[mid].access;
+			}
+			return insn_regs_intel_sorted[mid].reg;
+		} else {
+			last = mid - 1;
 		}
+		mid = (first + last) / 2;
 	}
 
 	// not found
