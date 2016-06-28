@@ -254,7 +254,7 @@ static void printInlineJT32(MCInst *MI, int OpNum, SStream *O)
 #define PRINT_ALIAS_INSTR
 #include "XCoreGenAsmWriter.inc"
 
-void XCore_printInst(MCInst *MI, SStream *O, void *Info)
+void XCore_printInst(struct cs_struct* cs, MCInst *MI, SStream *O, void *Info)
 {
 	printInstruction(MI, O, Info);
 	set_mem_access(MI, false, 0);

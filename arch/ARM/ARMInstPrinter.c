@@ -424,7 +424,7 @@ void ARM_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 	}
 }
 
-void ARM_printInst(MCInst *MI, SStream *O, void *Info)
+void ARM_printInst(struct cs_struct* cs, MCInst *MI, SStream *O, void *Info)
 {
 	MCRegisterInfo *MRI = (MCRegisterInfo *)Info;
 	unsigned Opcode = MCInst_getOpcode(MI), tmp, i, pubOpcode;

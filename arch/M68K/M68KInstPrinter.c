@@ -233,7 +233,7 @@ void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 }
 #endif
 
-void M68K_printInst(MCInst* MI, SStream* O, void* PrinterInfo)
+void M68K_printInst(struct cs_struct* cs, MCInst* MI, SStream* O, void* PrinterInfo)
 {
 #ifndef CAPSTONE_DIET
 	m68k_info *info = (m68k_info *)PrinterInfo;

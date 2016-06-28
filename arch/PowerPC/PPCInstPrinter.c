@@ -95,7 +95,7 @@ static int isBOCTRBranch(unsigned int op)
 	return ((op >= PPC_BDNZ) && (op <= PPC_BDZp));
 }
 
-void PPC_printInst(MCInst *MI, SStream *O, void *Info)
+void PPC_printInst(struct cs_struct* cs, MCInst *MI, SStream *O, void *Info)
 {
 	char *mnem;
 

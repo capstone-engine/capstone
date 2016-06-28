@@ -8,7 +8,7 @@
 #include "../../MCRegisterInfo.h"
 #include "../../SStream.h"
 
-void PPC_printInst(MCInst *MI, SStream *O, void *Info);
+void PPC_printInst(struct cs_struct* cs, MCInst *MI, SStream *O, void *Info);
 
 void PPC_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci);
 

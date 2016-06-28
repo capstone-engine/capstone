@@ -355,7 +355,7 @@ static bool printGetPCX(MCInst *MI, unsigned opNum, SStream *O)
 #define PRINT_ALIAS_INSTR
 #include "SparcGenAsmWriter.inc"
 
-void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
+void Sparc_printInst(struct cs_struct* cs, MCInst *MI, SStream *O, void *Info)
 {
 	char *mnem, *p;
 	char instr[64];	// Sparc has no instruction this long

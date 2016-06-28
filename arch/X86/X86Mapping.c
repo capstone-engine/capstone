@@ -2751,21 +2751,66 @@ static struct insn_reg2 insn_regs_intel2[] = {
 	{ X86_INVLPGA64, X86_REG_RAX, X86_REG_ECX, CS_AC_READ, CS_AC_READ },
 };
 
+struct insn_reg_node_t* new_insn_reg_node(struct insn_reg* data) {
+       struct insn_reg_node_t* node =
+               (struct insn_reg_node_t*)calloc (1, sizeof (struct insn_reg_node_t));
+       node->insn = data->insn;
+       node->value = data;
+       node->left = NULL;
+       node->right = NULL;
+       return node;
+}
+
+struct insn_reg_node_t* regs_to_bst(struct insn_reg* arr, int start, int end) {
+       if (start > end) {
+               return NULL;
+       }
+       int mid = (start + end) / 2;
+       struct insn_reg_node_t* root = new_insn_reg_node(&arr[mid]);
+       root->left = regs_to_bst (arr, start, mid - 1);
+       root->right = regs_to_bst (arr, mid + 1, end);
+       return root;
+}
+
+struct insn_reg* insn_id_to_reg(struct insn_reg_node_t* bst, unsigned int id) {
+       if (bst == NULL) {
+               return NULL;
+       }
+       if (id == bst->insn) {
+               return bst->value;
+       } else {
+               if (id < bst->insn) {
+                       return insn_id_to_reg (bst->left, id);
+               } else {
+                       return insn_id_to_reg (bst->right, id);
+               }
+       }
+}
+
+void free_bst (struct insn_reg_node_t* node) {
+	if (node) {
+		free_bst (node->left);
+		free_bst (node->right);
+		free (node);
+		node = NULL;
+	}
+}
+
 // return register of given instruction id
 // return 0 if not found
 // this is to handle instructions embedding accumulate registers into AsmStrs[]
-x86_reg X86_insn_reg_intel(unsigned int id, enum cs_ac_type *access)
+x86_reg X86_insn_reg_intel(struct cs_struct* cs, unsigned int id, enum cs_ac_type *access)
 {
-	unsigned int i;
-
-	for (i = 0; i < ARR_SIZE(insn_regs_intel); i++) {
-		if (insn_regs_intel[i].insn == id) {
-			if (access)
-				*access = insn_regs_intel[i].access;
-			return insn_regs_intel[i].reg;
-		}
+	if (cs->intel_reg_bst == NULL) {
+		cs->intel_reg_bst = regs_to_bst ((struct insn_reg*)&insn_regs_intel, 0, ARR_SIZE(insn_regs_intel) - 1);
 	}
-
+	struct insn_reg* reg = insn_id_to_reg (cs->intel_reg_bst, id);
+	if (reg) {
+		if (access) {
+			*access = reg->access;
+		}
+		return reg->reg;
+	}
 	// not found
 	return 0;
 }

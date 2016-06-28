@@ -862,7 +862,7 @@ static void printRegName(SStream *OS, unsigned RegNo)
 	SStream_concat(OS, "%%%s", getRegisterName(RegNo));
 }
 
-void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
+void X86_ATT_printInst(struct cs_struct* cs, MCInst *MI, SStream *OS, void *info)
 {
 	char *mnem;
 	x86_reg reg, reg2;
