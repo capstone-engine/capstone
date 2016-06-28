@@ -273,6 +273,7 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		ud->big_endian = (mode & CS_MODE_BIG_ENDIAN) != 0;
 		// by default, do not break instruction into details
 		ud->detail = CS_OPT_OFF;
+		ud->intel_reg_bst = NULL;
 
 		// default skipdata setup
 		ud->skipdata_setup.mnemonic = SKIPDATA_MNEM;
@@ -304,6 +305,7 @@ cs_err CAPSTONE_API cs_close(csh *handle)
 		return CS_ERR_CSH;
 
 	ud = (struct cs_struct *)(*handle);
+	free_bst (ud->intel_reg_bst);
 
 	if (ud->printer_info)
 		cs_mem_free(ud->printer_info);
@@ -661,7 +663,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 			// map internal instruction opcode to public insn ID
 			handle->insn_id(handle, insn_cache, mci.Opcode);
 
-			handle->printer(&mci, &ss, handle->printer_info);
+			handle->printer(handle, &mci, &ss, handle->printer_info);
 
 			fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, buffer);
 
@@ -865,7 +867,7 @@ bool CAPSTONE_API cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 		// map internal instruction opcode to public insn ID
 		handle->insn_id(handle, insn, mci.Opcode);
 
-		handle->printer(&mci, &ss, handle->printer_info);
+		handle->printer(handle, &mci, &ss, handle->printer_info);
 
 		fill_insn(handle, insn, ss.buffer, &mci, handle->post_printer, *code);
 

@@ -83,7 +83,7 @@ static void set_mem_access(MCInst *MI, bool status)
 	}
 }
 
-void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
+void AArch64_printInst(struct cs_struct* cs, MCInst *MI, SStream *O, void *Info)
 {
 	// Check for special encodings and print the canonical alias instead.
 	unsigned Opcode = MCInst_getOpcode(MI);

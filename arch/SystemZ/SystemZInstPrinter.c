@@ -386,7 +386,7 @@ static void printCond4Operand(MCInst *MI, int OpNum, SStream *O)
 #define PRINT_ALIAS_INSTR
 #include "SystemZGenAsmWriter.inc"
 
-void SystemZ_printInst(MCInst *MI, SStream *O, void *Info)
+void SystemZ_printInst(struct cs_struct* cs, MCInst *MI, SStream *O, void *Info)
 {
 	printInstruction(MI, O, Info);
 }

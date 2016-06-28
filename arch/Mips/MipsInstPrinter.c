@@ -152,7 +152,7 @@ static void printRegName(SStream *OS, unsigned RegNo)
 	SStream_concat(OS, "$%s", getRegisterName(RegNo));
 }
 
-void Mips_printInst(MCInst *MI, SStream *O, void *info)
+void Mips_printInst(struct cs_struct* cs, MCInst *MI, SStream *O, void *info)
 {
 	char *mnem;
 

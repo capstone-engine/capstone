@@ -20,7 +20,7 @@
 #include "../../MCInst.h"
 #include "../../SStream.h"
 
-void X86_Intel_printInst(MCInst *MI, SStream *OS, void *Info);
-void X86_ATT_printInst(MCInst *MI, SStream *OS, void *Info);
+void X86_Intel_printInst(struct cs_struct* cs, MCInst *MI, SStream *OS, void *Info);
+void X86_ATT_printInst(struct cs_struct* cs, MCInst *MI, SStream *OS, void *Info);
 
 #endif

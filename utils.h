@@ -62,6 +62,6 @@ int cs_snprintf(char *buffer, size_t size, const char *fmt, ...);
 bool arr_exist8(unsigned char *arr, unsigned char max, unsigned int id);
 
 bool arr_exist(uint16_t *arr, unsigned char max, unsigned int id);
-
+void free_bst (struct insn_reg_node_t* node);
 #endif
 

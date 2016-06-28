@@ -9,7 +9,7 @@
 #include "MCInst.h"
 #include "SStream.h"
 
-typedef void (*Printer_t)(MCInst *MI, SStream *OS, void *info);
+typedef void (*Printer_t)(struct cs_struct* cs, MCInst *MI, SStream *OS, void *info);
 
 // function to be called after Printer_t
 // this is the best time to gather insn's characteristics
@@ -74,6 +74,7 @@ struct cs_struct {
 	uint8_t *regsize_map;	// map to register size (x86-only for now)
 	GetRegisterAccess_t reg_access;
 	struct insn_mnem *mnem_list;	// linked list of customized instruction mnemonic
+	struct insn_reg_node_t* intel_reg_bst;
 };
 
 #define MAX_ARCH 9

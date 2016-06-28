@@ -21,7 +21,7 @@
 #include "../../MCRegisterInfo.h"
 #include "../../SStream.h"
 
-void AArch64_printInst(MCInst *MI, SStream *O, void *);
+void AArch64_printInst(struct cs_struct* cs, MCInst *MI, SStream *O, void *);
 
 void AArch64_post_printer(csh handle, cs_insn *pub_insn, char *insn_asm, MCInst *mci);
 

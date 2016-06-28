@@ -713,7 +713,7 @@ static void printMemOffs64(MCInst *MI, unsigned OpNo, SStream *O)
 
 static char *printAliasInstr(MCInst *MI, SStream *OS, void *info);
 static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
-void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
+void X86_Intel_printInst(struct cs_struct* cs, MCInst *MI, SStream *O, void *Info)
 {
 	char *mnem;
 	x86_reg reg, reg2;
@@ -726,7 +726,7 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 	else
 		printInstruction(MI, O, Info);
 
-	reg = X86_insn_reg_intel(MCInst_getOpcode(MI), &access1);
+	reg = X86_insn_reg_intel(cs, MCInst_getOpcode(MI), &access1);
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
 		uint8_t access[6];

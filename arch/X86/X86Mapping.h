@@ -31,7 +31,7 @@ const char *X86_group_name(csh handle, unsigned int id);
 // return register of given instruction id
 // return 0 if not found
 // this is to handle instructions embedding accumulate registers into AsmStrs[]
-x86_reg X86_insn_reg_intel(unsigned int id, enum cs_ac_type *access);
+x86_reg X86_insn_reg_intel(struct cs_struct* cs, unsigned int id, enum cs_ac_type *access);
 x86_reg X86_insn_reg_att(unsigned int id, enum cs_ac_type *access);
 bool X86_insn_reg_intel2(unsigned int id, x86_reg *reg1, enum cs_ac_type *access1, x86_reg *reg2, enum cs_ac_type *access2);
 bool X86_insn_reg_att2(unsigned int id, x86_reg *reg1, enum cs_ac_type *access1, x86_reg *reg2, enum cs_ac_type *access2);
@@ -70,5 +70,17 @@ void X86_reg_access(const cs_insn *insn,
 
 // given the instruction id, return the size of its immediate operand (or 0)
 int X86_immediate_size(unsigned int id);
+
+struct insn_reg_node_t {
+       uint16_t insn;
+       struct insn_reg* value;
+       struct insn_reg_node_t* left;
+       struct insn_reg_node_t* right;
+};
+
+struct insn_reg_node_t* new_insn_reg_node(struct insn_reg* data);
+struct insn_reg_node_t* regs_to_bst(struct insn_reg* arr, int start, int end);
+struct insn_reg* insn_id_to_reg(struct insn_reg_node_t* bst, unsigned int id);
+//void free_bst (struct insn_reg_node_t* node);
 
 #endif
