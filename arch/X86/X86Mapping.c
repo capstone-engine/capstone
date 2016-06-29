@@ -4,6 +4,7 @@
 #ifdef CAPSTONE_HAS_X86
 
 #include <string.h>
+#include <stdlib.h>
 
 #include "X86Mapping.h"
 #include "X86DisassemblerDecoder.h"
@@ -2751,19 +2752,46 @@ static struct insn_reg2 insn_regs_intel2[] = {
 	{ X86_INVLPGA64, X86_REG_RAX, X86_REG_ECX, CS_AC_READ, CS_AC_READ },
 };
 
+static struct insn_reg insn_regs_intel_sorted [ARR_SIZE(insn_regs_intel)];
+
+static int regs_cmp(const void *a, const void *b)
+{
+	uint16_t l = ((struct insn_reg *)a)->insn;
+	uint16_t r = ((struct insn_reg *)b)->insn;
+	return (l - r);
+}
+
+static bool intel_regs_sorted = false;
 // return register of given instruction id
 // return 0 if not found
 // this is to handle instructions embedding accumulate registers into AsmStrs[]
 x86_reg X86_insn_reg_intel(unsigned int id, enum cs_ac_type *access)
 {
-	unsigned int i;
+	unsigned int first = 0;
+	unsigned int last = ARR_SIZE(insn_regs_intel) - 1;
+	unsigned int mid = ARR_SIZE(insn_regs_intel) / 2;
 
-	for (i = 0; i < ARR_SIZE(insn_regs_intel); i++) {
-		if (insn_regs_intel[i].insn == id) {
-			if (access)
-				*access = insn_regs_intel[i].access;
-			return insn_regs_intel[i].reg;
+	if (!intel_regs_sorted) {
+		memcpy (insn_regs_intel_sorted, insn_regs_intel,
+				sizeof(insn_regs_intel_sorted));
+		qsort (insn_regs_intel_sorted,
+				ARR_SIZE(insn_regs_intel_sorted),
+				sizeof(struct insn_reg), regs_cmp);
+		intel_regs_sorted = true;
+	}
+
+	while (first <= last) {
+		if (insn_regs_intel_sorted[mid].insn < id) {
+			first = mid + 1;
+		} else if (insn_regs_intel_sorted[mid].insn == id) {
+			if (access) {
+				*access = insn_regs_intel_sorted[mid].access;
+			}
+			return insn_regs_intel_sorted[mid].reg;
+		} else {
+			last = mid - 1;
 		}
+		mid = (first + last) / 2;
 	}
 
 	// not found
