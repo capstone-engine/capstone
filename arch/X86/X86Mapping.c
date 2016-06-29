@@ -2752,7 +2752,7 @@ static struct insn_reg2 insn_regs_intel2[] = {
 	{ X86_INVLPGA64, X86_REG_RAX, X86_REG_ECX, CS_AC_READ, CS_AC_READ },
 };
 
-struct insn_reg insn_regs_intel_sorted [ARR_SIZE(insn_regs_intel)];
+static struct insn_reg insn_regs_intel_sorted [ARR_SIZE(insn_regs_intel)];
 
 static int regs_cmp(const void *a, const void *b)
 {
@@ -2761,7 +2761,7 @@ static int regs_cmp(const void *a, const void *b)
 	return (l - r);
 }
 
-static bool intel_resgs_sorted = false;
+static bool intel_regs_sorted = false;
 // return register of given instruction id
 // return 0 if not found
 // this is to handle instructions embedding accumulate registers into AsmStrs[]
@@ -2771,13 +2771,13 @@ x86_reg X86_insn_reg_intel(unsigned int id, enum cs_ac_type *access)
 	unsigned int last = ARR_SIZE(insn_regs_intel) - 1;
 	unsigned int mid = ARR_SIZE(insn_regs_intel) / 2;
 
-	if (!intel_resgs_sorted) {
+	if (!intel_regs_sorted) {
 		memcpy (insn_regs_intel_sorted, insn_regs_intel,
 				sizeof(insn_regs_intel_sorted));
 		qsort (insn_regs_intel_sorted,
 				ARR_SIZE(insn_regs_intel_sorted),
 				sizeof(struct insn_reg), regs_cmp);
-		intel_resgs_sorted = true;
+		intel_regs_sorted = true;
 	}
 
 	while (first <= last) {
