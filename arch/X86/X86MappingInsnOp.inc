@@ -5851,11 +5851,11 @@
 },
 {	/* X86_MOV8ao16, X86_INS_MOV: mov{b}	al, $src */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV8ao32, X86_INS_MOV: mov{b}	al, $src */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV8ao64, X86_INS_MOVABS: movabs{b}	al, $src */
 	0,
