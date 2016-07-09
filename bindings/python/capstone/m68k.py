@@ -86,5 +86,4 @@ class CsM68K(ctypes.Structure):
     )
 
 def get_arch_info(a):
-    return (copy.deepcopy(a.operands[:a.op_count]), a.op_size)
-
+    return (copy_ctypes_list(a.operands[:a.op_count]), a.op_size)
