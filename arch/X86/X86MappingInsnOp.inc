@@ -5607,11 +5607,11 @@
 },
 {	/* X86_MOV16ao16, X86_INS_MOV: mov{w}	ax, $src */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV16ao32, X86_INS_MOV: mov{w}	ax, $src */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV16ao64, X86_INS_MOVABS: movabs{w}	ax, $src */
 	0,
@@ -5675,11 +5675,11 @@
 },
 {	/* X86_MOV32ao16, X86_INS_MOV: mov{l}	eax, $src */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV32ao32, X86_INS_MOV: mov{l}	eax, $src */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV32ao64, X86_INS_MOVABS: movabs{l}	eax, $src */
 	0,
@@ -5759,7 +5759,7 @@
 },
 {	/* X86_MOV64ao32, X86_INS_MOV: mov{q}	rax, $src */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV64ao64, X86_INS_MOVABS: movabs{q}	rax, $src */
 	0,
@@ -5851,11 +5851,11 @@
 },
 {	/* X86_MOV8ao16, X86_INS_MOV: mov{b}	al, $src */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV8ao32, X86_INS_MOV: mov{b}	al, $src */
 	0,
-	{ CS_AC_IGNORE, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOV8ao64, X86_INS_MOVABS: movabs{b}	al, $src */
 	0,
