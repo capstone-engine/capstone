@@ -225,7 +225,7 @@ static void printf512mem(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printSSECC(MCInst *MI, unsigned Op, SStream *OS)
 {
-	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 7;
+	uint8_t Imm = (uint8_t)(MCOperand_getImm(MCInst_getOperand(MI, Op)) & 7);
 	switch (Imm) {
 		default: break;	// never reach
 		case    0: SStream_concat0(OS, "eq"); op_addSseCC(MI, X86_SSE_CC_EQ); break;
@@ -237,11 +237,13 @@ static void printSSECC(MCInst *MI, unsigned Op, SStream *OS)
 		case    6: SStream_concat0(OS, "nle"); op_addSseCC(MI, X86_SSE_CC_NLE); break;
 		case    7: SStream_concat0(OS, "ord"); op_addSseCC(MI, X86_SSE_CC_ORD); break;
 	}
+
+	MI->popcode_adjust = Imm + 1;
 }
 
 static void printAVXCC(MCInst *MI, unsigned Op, SStream *O)
 {
-	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x1f;
+	uint8_t Imm = (uint8_t)(MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x1f);
 	switch (Imm) {
 		default: break;//printf("Invalid avxcc argument!\n"); break;
 		case    0: SStream_concat0(O, "eq"); op_addAvxCC(MI, X86_AVX_CC_EQ); break;
@@ -277,6 +279,8 @@ static void printAVXCC(MCInst *MI, unsigned Op, SStream *O)
 		case 0x1e: SStream_concat0(O, "gt_oq"); op_addAvxCC(MI, X86_AVX_CC_GT_OQ); break;
 		case 0x1f: SStream_concat0(O, "true_us"); op_addAvxCC(MI, X86_AVX_CC_TRUE_US); break;
 	}
+
+	MI->popcode_adjust = Imm + 1;
 }
 
 static void printXOPCC(MCInst *MI, unsigned Op, SStream *O)
