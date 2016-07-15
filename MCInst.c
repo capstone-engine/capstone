@@ -22,6 +22,7 @@ void MCInst_Init(MCInst *inst)
 	inst->op1_size = 0;
 	inst->writeback = false;
 	inst->ac_idx = 0;
+	inst->popcode_adjust = 0;
 }
 
 void MCInst_clear(MCInst *inst)
