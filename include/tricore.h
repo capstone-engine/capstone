@@ -167,6 +167,17 @@ typedef enum tricore_insn {
 	TRICORE_INS_ENDING,   // <-- mark the end of the list of instructions
 } tricore_insn;
 
+//> Group of TriCore instructions
+typedef enum tricore_insn_group {
+	TRICORE_GRP_INVALID = 0, // = CS_GRP_INVALID
+
+	//> Generic groups
+	// all jump instructions (conditional+direct+indirect jumps)
+	TRICORE_GRP_JUMP,	// = CS_GRP_JUMP
+
+	TRICORE_GRP_ENDING,   // <-- mark the end of the list of groups
+} tricore_insn_group;
+
 #ifdef __cplusplus
 }
 #endif

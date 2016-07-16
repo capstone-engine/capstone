@@ -25,6 +25,7 @@ static cs_err init(cs_struct *ud)
 	ud->reg_name = TriCore_reg_name;
 	ud->insn_id = TriCore_get_insn_id;
 	ud->insn_name = TriCore_insn_name;
+	ud->group_name = TriCore_group_name;
 
 	return CS_ERR_OK;
 }
