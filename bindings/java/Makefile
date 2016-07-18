@@ -72,12 +72,11 @@ build_maven:
 	@mkdir -p $(NATIDIR)
 ifeq ($(OS), Windows_NT)
 	cd ../.. && $(MAKE) && cp capstone.dll $(NATIDIR)
-	./build-jar.sh
+	build-jar.bat
 else
 	cd ../.. && $(MAKE) && cp libcapstone.* $(NATIDIR)
 	./build-jar.sh
 endif
-
 	
 
 clean:

@@ -4,7 +4,7 @@ maven_out=$(mvn clean package -f capstone/pom.xml | tee /dev/tty)
 
 case "$maven_out" in
 	*"[INFO] BUILD SUCCESS"*)
-		echo "Sucess"
+		echo "Success"
 		exit 0
 		;;
 	*)
