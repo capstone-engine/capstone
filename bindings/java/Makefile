@@ -2,19 +2,16 @@
 # By Nguyen Anh Quynh <aquynh@gmail.com>, 2013>
 
 BUILDDIR = .
+CURRENTDIR = $(abspath $(BUILDDIR))
 
-ifndef BUILDDIR
-BLDIR = .
-OBJDIR = .
-BINDIR = .
-TESTDIR = .
-NATIDIR = .
+OS = $(shell uname)
+
+ifneq (,$(findstring NT-,$(OS)))
+CYGWIN = $(firstword $(subst /, ,$(CURRENTDIR)))
+DISK_LETTER = $(word 2,$(subst /, ,$(CURRENTDIR)))
+BLDIR = $(subst /$(CYGWIN)/$(DISK_LETTER),$(DISK_LETTER):, $(CURRENTDIR))
 else
-BLDIR = $(abspath $(BUILDDIR))
-OBJDIR = $(abspath $(BUILDDIR))/capstone/src/main/java/capstone
-BINDIR = $(abspath $(BUILDDIR))/capstone/bin
-TESTDIR = $(abspath $(BUILDDIR))/capstone/src/test/java/capstone
-NATIDIR = $(abspath $(BUILDDIR))/capstone/src/main/native
+BLDIR = $(CURRENTDIR)
 endif
 
 ifneq ($(wildcard $(JNA)),)
@@ -26,7 +23,16 @@ else
   endif
 endif
 
-OS := $(shell uname)
+# FIRSTWORD_JNA = $(firstword $(subst /, ,$(JNA)))
+
+# ifeq ($(FIRSTWORD_JNA), 'cygwin')
+#     JNA = $(subst /$(CYGWIN)/$(DISK_LETTER),$(DISK_LETTER):, $(JNA))
+# endif
+
+OBJDIR = $(BLDIR)/capstone/src/main/java/capstone
+BINDIR = $(BLDIR)/capstone/bin
+TESTDIR = $(BLDIR)/capstone/src/test/java/capstone
+NATIDIR = $(BLDIR)/capstone/src/main/native
 
 CAPSTONE_JAVA = Capstone.java Arm_const.java Arm64_const.java Mips_const.java \
 				X86_const.java Xcore_const.java Ppc_const.java Sparc_const.java\
@@ -41,20 +47,12 @@ CAPSTONE_TEST_JAVA = Test.java\
 all: gen_const capstone build_maven
 
 capstone: capstone_class
-ifdef BUILDDIR
 	@mkdir -p $(BLDIR)
 	cd $(BLDIR) && jar cf $(BLDIR)/capstone.jar $(BINDIR)/capstone/*.class
-else
-	cd $(BLDIR) && jar cf $(BLDIR)/capstone.jar $(BINDIR)/*.class
-endif
 
 capstone_class: jna
-ifdef BUILDDIR
 	@mkdir -p $(BINDIR)
 	cd $(OBJDIR) && javac -d $(BINDIR) -classpath $(JNA) $(CAPSTONE_JAVA)
-else
-	cd $(OBJDIR) && javac -classpath $(JNA) $(CAPSTONE_JAVA)
-endif
 
 test_maven:
 	./run-tests.sh
@@ -70,9 +68,9 @@ jna:
 
 build_maven:
 	@mkdir -p $(NATIDIR)
-ifeq ($(OS), Windows_NT)
+ifneq (,$(findstring NT-,$(OS)))
 	cd ../.. && $(MAKE) && cp capstone.dll $(NATIDIR)
-	build-jar.bat
+	./build-jar.bat
 else
 	cd ../.. && $(MAKE) && cp libcapstone.* $(NATIDIR)
 	./build-jar.sh
@@ -81,12 +79,9 @@ endif
 
 clean:
 	rm -rf $(BLDIR)/capstone/target $(BLDIR)/capstone.jar $(OBJDIR)/*.log
-ifdef BUILDDIR
 	rm -rf $(BINDIR)
 	rm -rf $(NATIDIR)
-else
-	rm -rf $(BINDIR)/*.class 
-endif
+
 
 #TESTS = test arm arm64 mips ppc sparc systemz x86 xcore
 #check:
