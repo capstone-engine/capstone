@@ -120,7 +120,7 @@ def print_insn_detail(mode, insn):
 
             print("\t\toperands[%u].size: %u" % (c, i.size))
 
-
+import cPickle
 # ## Test class Cs
 def test_class():
 
@@ -141,6 +141,19 @@ def test_class():
                 print_insn_detail(mode, insn)
                 print ()
             print ("0x%x:\n" % (insn.address + insn.size))
+            pick = cPickle.dumps(md)
+            del md
+            md = cPickle.loads(pick)
+            for insn in md.disasm(code, 0x1000):
+                print_insn_detail(mode, insn)
+                print ()
+                pick = cPickle.dumps(insn)
+                del insn 
+                insn = cPickle.loads(pick)
+                print_insn_detail(mode, insn)
+                print ()
+            print ("0x%x:\n" % (insn.address + insn.size))
+
         except CsError as e:
             print("ERROR: %s" % e)
 

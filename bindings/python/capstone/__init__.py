@@ -297,6 +297,27 @@ class _cs_insn(ctypes.Structure):
         ('detail', ctypes.POINTER(_cs_detail)),
     )
 
+    def __setstate__(self,state):
+        self.id = state['id']
+        self.address = state['address']
+        self.size = state['size']
+        self.bytes[:] = state['bytes']
+        self.mnemonic = state['mnemonic']
+        self.op_str = state['op_str']
+        self.detail.contents = state['detail']
+
+    def __getstate__(self):
+        state = {}
+        state['id'] = self.id
+        state['address'] = self.address
+        state['size'] = self.size
+        state['bytes'] = self.bytes[:]
+        state['mnemonic'] = self.mnemonic
+        state['op_str'] = self.op_str
+        state['detail'] = self.detail[0]
+        return state
+
+
 # callback for SKIPDATA option
 CS_SKIPDATA_CALLBACK = ctypes.CFUNCTYPE(ctypes.c_size_t, ctypes.POINTER(ctypes.c_char), ctypes.c_size_t, ctypes.c_void_p)
 
@@ -455,6 +476,20 @@ class CsInsn(object):
         if self._cs._detail and self._raw.id != 0:
             # save detail
             self._detail = copy_ctypes(self._raw.detail.contents)
+
+    def __setstate__(self, state):
+        self._raw = _cs_insn()
+        self._raw.__setstate__(state['raw'])
+        self._cs = state['cs'] 
+        if self._cs._detail and self._raw.id != 0:
+            # save detail
+            self._detail = copy_ctypes(self._raw.detail.contents)
+
+    def __getstate__(self):
+        state = {}
+        state['raw'] = self._raw.__getstate__()
+        state['cs'] = self._cs
+        return state
 
     # return instruction's ID.
     @property
@@ -713,6 +748,61 @@ class Cs(object):
         self._diet = cs_support(CS_SUPPORT_DIET)
         self._x86reduce = cs_support(CS_SUPPORT_X86_REDUCE)
 
+        # default mnemonic for SKIPDATA
+        self._skipdata_mnem = ".byte"
+        self._skipdata = False
+
+        self._diet = cs_support(CS_SUPPORT_DIET)
+        self._x86reduce = cs_support(CS_SUPPORT_X86_REDUCE)
+
+        # default mnemonic for SKIPDATA
+        self._skipdata_mnem = ".byte"
+        self._skipdata = False
+
+    def __getstate__(self):
+        state = {}
+        state['CS_API_MAJOR'] = CS_API_MAJOR
+        state['CS_API_MINOR'] = CS_API_MINOR
+        state['arch'] = self.arch
+        state['mode'] = self._mode 
+        state['syntax'] = self._syntax
+        state['detail'] = self._detail
+        
+
+
+        if hasattr(self, '_skipdata_opt') or self.skipdata:
+            raise Exception("Serializing Cs not supported") 
+        return state
+
+    def __setstate__(self, state):
+        (major, minor, _combined) = cs_version()
+        self.csh = None
+        if major != CS_API_MAJOR or minor != CS_API_MINOR:
+            # our binding version is different from the core's API version
+            raise CsError(CS_ERR_VERSION)
+        if CS_API_MAJOR != state['CS_API_MAJOR'] or CS_API_MINOR != state['CS_API_MINOR']:
+            # our binding version is different from the core's API version
+            raise CsError(CS_ERR_VERSION)
+
+        self.arch, self._mode = state['arch'], state['mode']
+        self.csh = ctypes.c_size_t()
+        status = _cs.cs_open(self.arch, self.mode, ctypes.byref(self.csh))
+        if status != CS_ERR_OK:
+            self.csh = None
+            raise CsError(status)
+
+        try:
+            import ccapstone
+            # rewire disasm to use the faster version
+            self.disasm = ccapstone.Cs(self).disasm
+        except:
+            pass
+
+        self._diet = cs_support(CS_SUPPORT_DIET)
+        self._x86reduce = cs_support(CS_SUPPORT_X86_REDUCE)
+
+        self.syntax = state['syntax'] #todo assert valid
+        self.detail = state['detail']
         # default mnemonic for SKIPDATA
         self._skipdata_mnem = ".byte"
         self._skipdata = False
