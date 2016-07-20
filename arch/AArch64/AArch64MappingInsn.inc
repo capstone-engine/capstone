@@ -532,13 +532,13 @@
 {
 	AArch64_BL, ARM64_INS_BL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { ARM64_REG_LR, 0 }, { ARM64_GRP_CALL, 0 }, 0, 0
+	{ 0 }, { ARM64_REG_LR, 0 }, { ARM64_GRP_JUMP, 0 }, 1, 0
 #endif
 },
 {
 	AArch64_BLR, ARM64_INS_BLR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { ARM64_REG_LR, 0 }, { ARM64_GRP_CALL, 0 }, 0, 0
+	{ 0 }, { ARM64_REG_LR, 0 }, { ARM64_GRP_JUMP, 0 }, 1, 1
 #endif
 },
 {
