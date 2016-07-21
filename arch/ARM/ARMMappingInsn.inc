@@ -12952,13 +12952,13 @@
 {
 	ARM_tCBNZ, ARM_INS_CBNZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 1, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_JUMP, 0 }, 1, 0
 #endif
 },
 {
 	ARM_tCBZ, ARM_INS_CBZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 1, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_JUMP, 0 }, 1, 0
 #endif
 },
 {
