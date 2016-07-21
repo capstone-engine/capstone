@@ -299,12 +299,6 @@ void ARM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			insn->detail->groups_count = (uint8_t)count_positive8(insns[i].groups);
 
 			insn->detail->arm.update_flags = cs_reg_write((csh)&handle, insn, ARM_REG_CPSR);
-
-			if (insns[i].branch || insns[i].indirect_branch) {
-				// this insn also belongs to JUMP group. add JUMP group
-				insn->detail->groups[insn->detail->groups_count] = ARM_GRP_JUMP;
-				insn->detail->groups_count++;
-			}
 #endif
 		}
 	}
