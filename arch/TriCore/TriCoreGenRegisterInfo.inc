@@ -1,86 +1,88 @@
 /*===- TableGen'erated file -------------------------------------*- C++ -*-===*\
 |*                                                                            *|
-|* Target Register Enum Values                                                *|
+|*Target Register Enum Values                                                 *|
 |*                                                                            *|
 |* Automatically generated file, do not edit!                                 *|
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
+
+/* Capstone Disassembly Engine */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 
 #ifdef GET_REGINFO_ENUM
 #undef GET_REGINFO_ENUM
 
 enum {
-  NoRegister,
-  FCX = 1,
-  PC = 2,
-  PCXI = 3,
-  PSW = 4,
-  A0 = 5,
-  A1 = 6,
-  A2 = 7,
-  A3 = 8,
-  A4 = 9,
-  A5 = 10,
-  A6 = 11,
-  A7 = 12,
-  A8 = 13,
-  A9 = 14,
-  A10 = 15,
-  A11 = 16,
-  A12 = 17,
-  A13 = 18,
-  A14 = 19,
-  A15 = 20,
-  D0 = 21,
-  D1 = 22,
-  D2 = 23,
-  D3 = 24,
-  D4 = 25,
-  D5 = 26,
-  D6 = 27,
-  D7 = 28,
-  D8 = 29,
-  D9 = 30,
-  D10 = 31,
-  D11 = 32,
-  D12 = 33,
-  D13 = 34,
-  D14 = 35,
-  D15 = 36,
-  E0 = 37,
-  E2 = 38,
-  E4 = 39,
-  E6 = 40,
-  E8 = 41,
-  E10 = 42,
-  E12 = 43,
-  E14 = 44,
-  NUM_TARGET_REGS 	// 45
+  TriCore_NoRegister,
+  TriCore_FCX = 1,
+  TriCore_PC = 2,
+  TriCore_PCXI = 3,
+  TriCore_PSW = 4,
+  TriCore_A0 = 5,
+  TriCore_A1 = 6,
+  TriCore_A2 = 7,
+  TriCore_A3 = 8,
+  TriCore_A4 = 9,
+  TriCore_A5 = 10,
+  TriCore_A6 = 11,
+  TriCore_A7 = 12,
+  TriCore_A8 = 13,
+  TriCore_A9 = 14,
+  TriCore_A10 = 15,
+  TriCore_A11 = 16,
+  TriCore_A12 = 17,
+  TriCore_A13 = 18,
+  TriCore_A14 = 19,
+  TriCore_A15 = 20,
+  TriCore_D0 = 21,
+  TriCore_D1 = 22,
+  TriCore_D2 = 23,
+  TriCore_D3 = 24,
+  TriCore_D4 = 25,
+  TriCore_D5 = 26,
+  TriCore_D6 = 27,
+  TriCore_D7 = 28,
+  TriCore_D8 = 29,
+  TriCore_D9 = 30,
+  TriCore_D10 = 31,
+  TriCore_D11 = 32,
+  TriCore_D12 = 33,
+  TriCore_D13 = 34,
+  TriCore_D14 = 35,
+  TriCore_D15 = 36,
+  TriCore_E0 = 37,
+  TriCore_E2 = 38,
+  TriCore_E4 = 39,
+  TriCore_E6 = 40,
+  TriCore_E8 = 41,
+  TriCore_E10 = 42,
+  TriCore_E12 = 43,
+  TriCore_E14 = 44,
+  TriCore_NUM_TARGET_REGS 	// 45
 };
 
 // Register classes
 enum {
-  AddrRegsRegClassID = 0,
-  DataRegsRegClassID = 1,
-  PSRegsRegClassID = 2,
-  ExtRegsRegClassID = 3,
-
+  TriCore_AddrRegsRegClassID = 0,
+  TriCore_DataRegsRegClassID = 1,
+  TriCore_PSRegsRegClassID = 2,
+  TriCore_ExtRegsRegClassID = 3
 };
 
 // Subregister indices
 enum {
-  NoSubRegister,
-  subreg_even,	// 1
-  subreg_odd,	// 2
-  NUM_TARGET_SUBREGS
+  TriCore_NoSubRegister,
+  TriCore_subreg_even,	// 1
+  TriCore_subreg_odd,	// 2
+  TriCore_NUM_TARGET_SUBREGS
 };
 
 #endif // GET_REGINFO_ENUM
 
 /*===- TableGen'erated file -------------------------------------*- C++ -*-===*\
 |*                                                                            *|
-|* MC Register Information                                                    *|
+|*MC Register Information                                                     *|
 |*                                                                            *|
 |* Automatically generated file, do not edit!                                 *|
 |*                                                                            *|
@@ -210,5 +212,6 @@ static MCRegisterClass TriCoreMCRegisterClasses[] = {
   { "PSRegs", PSRegs, PSRegsBits, 4, sizeof(PSRegsBits), TriCore_PSRegsRegClassID, 4, 4, 1, 1 },
   { "ExtRegs", ExtRegs, ExtRegsBits, 8, sizeof(ExtRegsBits), TriCore_ExtRegsRegClassID, 8, 4, 1, 1 },
 };
+
 
 #endif // GET_REGINFO_MC_DESC
