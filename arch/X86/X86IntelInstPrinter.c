@@ -672,13 +672,24 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			case X86_TEST8mi:
 			case X86_TEST8mi_alt:
 			case X86_XOR8mi:
-			case X86_PUSH64i8:
-			case X86_CMP32ri8:
-			case X86_CMP64ri8:
 
 				imm = imm & 0xff;
 				opsize = 1;     // immediate of 1 byte
 				break;
+
+			case X86_PUSH64i8:
+			case X86_CMP64ri8:
+				imm = (int8_t)(imm & 0xff);
+				imm = imm & 0xffffffffffffffff;
+				opsize = 8;     // immediate of 8 bytes
+				break;
+
+			case X86_CMP32ri8:
+				imm = (int8_t)(imm & 0xff);
+				imm = imm & 0xffffffff;
+				opsize = 4;     // immediate of 4 bytes
+				break;
+
 		}
 
 		switch(MI->flat_insn->id) {
