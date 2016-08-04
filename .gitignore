@@ -62,6 +62,7 @@ tests/test_skipdata
 tests/test_sparc
 tests/test_systemz
 tests/test_xcore
+tests/test_tricore
 tests/*.static
 tests/test_customized_mnem
 tests/test_m68k
