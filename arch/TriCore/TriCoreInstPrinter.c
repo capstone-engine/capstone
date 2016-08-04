@@ -31,17 +31,7 @@
 
 static char *getRegisterName(unsigned RegNo);
 static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
-static void printMemOperand(MCInst *MI, int opNum, SStream *O, const char *Modifier);
-static void printOperand(MCInst *MI, int opNum, SStream *O);
-
-static void TriCore_add_reg(MCInst *MI, unsigned int reg)
-{
-	if (MI->csh->detail) {
-		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_REG;
-		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = reg;
-		MI->flat_insn->detail->tricore.op_count++;
-	}
-}
+static void printOperand(MCInst *MI, int OpNum, SStream *O);
 
 static void set_mem_access(MCInst *MI, bool status)
 {
@@ -80,20 +70,13 @@ static void printRegName(SStream *OS, unsigned RegNo)
 #define GET_REGINFO_ENUM
 #include "TriCoreGenRegisterInfo.inc"
 
-void TriCore_printInst(MCInst *MI, SStream *O, void *Info)
-{
-	printInstruction(MI, O, Info);
-	set_mem_access(MI, false);
-}
-
 static void printOperand(MCInst *MI, int OpNum, SStream *O)
 {
 	MCOperand *Op;
-
-	if (OpNo >= MI->size)
+	if (OpNum >= MI->size)
 		return;
 
-	Op = MCInst_getOperand(MI, OpNo);
+	Op = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isReg(Op)) {
 		unsigned int reg = MCOperand_getReg(Op);
 		printRegName(O, reg);
@@ -147,9 +130,9 @@ static void printOperand(MCInst *MI, int OpNum, SStream *O)
 	}
 }
 
-static void printSExtImm(MCInst *MI, int opNum, SStream *O)
+static void printSExtImm(MCInst *MI, int OpNum, SStream *O)
 {
-	MCOperand *MO = MCInst_getOperand(MI, opNum);
+	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
 		int64_t imm = MCOperand_getImm(MO);
 		if (imm >= 0) {
@@ -169,12 +152,12 @@ static void printSExtImm(MCInst *MI, int opNum, SStream *O)
 			MI->flat_insn->detail->tricore.op_count++;
 		}
 	} else
-		printOperand(MI, opNum, O);
+		printOperand(MI, OpNum, O);
 }
 
-static void printZExtImm(MCInst *MI, int opNum, SStream *O)
+static void printZExtImm(MCInst *MI, int OpNum, SStream *O)
 {
-	MCOperand *MO = MCInst_getOperand(MI, opNum);
+	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
 		unsigned imm = (unsigned)MCOperand_getImm(MO);
 		if (imm > HEX_THRESHOLD)
@@ -187,15 +170,28 @@ static void printZExtImm(MCInst *MI, int opNum, SStream *O)
 			MI->flat_insn->detail->tricore.op_count++;
 		}
 	} else
-		printOperand(MI, opNum, O);
+		printOperand(MI, OpNum, O);
+}
+
+static void printPCRelImmOperand(MCInst *MI, int OpNum, SStream *O) {
+	MCOperand *Op = MCInst_getOperand(MI, OpNum);
+	if (MCOperand_isImm(Op)) {
+		unsigned imm = (unsigned)MCOperand_getImm(Op);
+		if (imm > HEX_THRESHOLD)
+			SStream_concat(O, "0x%x", imm);
+		else
+			SStream_concat(O, "%u", imm);
+	}
+	else
+		printOperand(MI, OpNum, O);
 }
 
 // Print a 'memsrc' operand which is a (Register, Offset) pair.
 // TODO: verify this function
-void printAddrModeMemSrc(const MCInst *MI, unsigned OpNum, raw_ostream &O) {
+static void printAddrModeMemSrc(MCInst *MI, int OpNum, SStream *O) {
 
 	set_mem_access(MI, true);
-	MCOperand *Base = MCInst_getOperand(MI, opNum);
+	MCOperand *Base = MCInst_getOperand(MI, OpNum);
 
 	// Print register base field
 	if (MCOperand_isReg(Base)) {
@@ -205,13 +201,13 @@ void printAddrModeMemSrc(const MCInst *MI, unsigned OpNum, raw_ostream &O) {
 	}
 
 	SStream_concat(O, " ");
-	printOperand(MI, opNum+1, O); // Disp
+	printOperand(MI, OpNum+1, O); // Disp
 	set_mem_access(MI, false);
 }
 
-static void printCCOperand(MCInst *MI, int opNum, SStream *O)
+static void printCCOperand(MCInst *MI, int OpNum, SStream *O)
 {
-	MCOperand *MO = MCInst_getOperand(MI, opNum);
+	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	unsigned CC = MCOperand_getImm(MO);
 	switch (CC) {
 	default:	// unreachable
@@ -227,6 +223,7 @@ static void printCCOperand(MCInst *MI, int opNum, SStream *O)
 	case 2:
 		SStream_concat0(O, "ge");
 		break;
+	}
 }
 
 #define PRINT_ALIAS_INSTR
@@ -235,7 +232,7 @@ static void printCCOperand(MCInst *MI, int opNum, SStream *O)
 void TriCore_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	printInstruction(MI, O, Info);
-	set_mem_access(MI, false, 0);
+	set_mem_access(MI, false);
 }
 
 #endif

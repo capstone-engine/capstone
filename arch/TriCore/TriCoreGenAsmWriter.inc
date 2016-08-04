@@ -235,7 +235,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 
   if (strchr((const char *)AsmStrs+(Bits & 1023)-1, '[')) {
-    set_mem_access(MI, true, 0);
+    set_mem_access(MI, true);
   }
 
   // Fragment 0 encoded into 3 bits for 6 unique commands.
