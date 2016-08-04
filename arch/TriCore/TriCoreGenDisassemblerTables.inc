@@ -1,6 +1,6 @@
 /*===- TableGen'erated file -------------------------------------*- C++ -*-===*\
 |*                                                                            *|
-|* * TriCore Disassembler                                                    *|
+|* * TriCore Disassembler                                                     *|
 |*                                                                            *|
 |* Automatically generated file, do not edit!                                 *|
 |*                                                                            *|
@@ -313,6 +313,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
   case 13: \
     if (DecodeRCPWInstruction(MI, insn, Address, Decoder) == MCDisassembler_Fail) return MCDisassembler_Fail; \
     return S; \
+  } \
 }
 
 #define DecodeInstruction(fname, fieldname, decoder, InsnType) \
