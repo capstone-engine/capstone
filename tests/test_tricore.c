@@ -64,9 +64,6 @@ static void print_insn_detail(cs_insn *ins)
 							i, cs_reg_name(handle, op->mem.index));
 				if (op->mem.disp != 0)
 					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
-				if (op->mem.direct != 1)
-					printf("\t\t\toperands[%u].mem.direct: -1\n", i);
-
 
 				break;
 		}
@@ -77,7 +74,7 @@ static void print_insn_detail(cs_insn *ins)
 
 static void test()
 {
-#define TRICORE_CODE "\xfe\x0f\xfe\x17\x13\x17\xc6\xfe\xec\x17\x97\xf8\xec\x4f\x1f\xfd\xec\x37\x07\xf2\x45\x5b\xf9\xfa\x02\x06\x1b\x10\x09\xfd\xec\xa7"
+#define TRICORE_CODE "\x16\x01"
 
 	struct platform platforms[] = {
 		{
