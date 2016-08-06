@@ -359,7 +359,7 @@ typedef struct cs_detail {
 		cs_bpf bpf;	///< Berkeley Packet Filter architecture (including eBPF)
 		cs_riscv riscv; ///< RISCV architecture
 		cs_sh sh;        ///< SH architecture
-		cs_tricore tricore;	// XCore architecture
+		cs_tricore tricore; ///< TriCore architecture
 	};
 } cs_detail;
 

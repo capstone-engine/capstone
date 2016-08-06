@@ -1,7 +1,0 @@
-TODO
-
-TriCoreInstPrinter.c
-- Implement all related functions
-
-TriCoreGenAsmWriter.inc
-- Fix according to TriCoreInstPrinter.c
