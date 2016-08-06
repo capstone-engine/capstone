@@ -1,8 +1,6 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
-// TODO: This is just a copy of XCore. Implement for TriCore.
-
 #include <stdio.h>
 
 #include <platform.h>
@@ -74,7 +72,7 @@ static void print_insn_detail(cs_insn *ins)
 
 static void test()
 {
-#define TRICORE_CODE "\x16\x01"
+#define TRICORE_CODE "\x16\x01\x20\x01"
 
 	struct platform platforms[] = {
 		{

@@ -205,26 +205,6 @@ static void printAddrModeMemSrc(MCInst *MI, int OpNum, SStream *O) {
 	set_mem_access(MI, false);
 }
 
-static void printCCOperand(MCInst *MI, int OpNum, SStream *O)
-{
-	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	unsigned CC = MCOperand_getImm(MO);
-	switch (CC) {
-	default:	// unreachable
-	case 0:
-		SStream_concat0(O, "eq");
-		break;
-	case 1:
-		SStream_concat0(O, "ne");
-		break;
-	case 3:
-		SStream_concat0(O, "lt");
-		break;
-	case 2:
-		SStream_concat0(O, "ge");
-		break;
-	}
-}
 
 #define PRINT_ALIAS_INSTR
 #include "TriCoreGenAsmWriter.inc"
