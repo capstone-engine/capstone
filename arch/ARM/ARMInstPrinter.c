@@ -278,6 +278,7 @@ void ARM_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 		insn->detail->arm.writeback = true;
 	} else if (mci->csh->mode & CS_MODE_THUMB) {
 		// handle some special instructions with writeback
+        //printf(">> Opcode = %u\n", mci->Opcode);
 		switch(mci->Opcode) {
 			default:
 				break;
@@ -329,6 +330,7 @@ void ARM_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 		}
 	} else {	// ARM mode
 		// handle some special instructions with writeback
+        //printf(">> Opcode = %u\n", mci->Opcode);
 		switch(mci->Opcode) {
 			default:
 				break;
@@ -372,6 +374,7 @@ void ARM_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 
 			case ARM_LDRB_POST_IMM:
 			case ARM_LDR_POST_IMM:
+			case ARM_LDR_POST_REG:
 			case ARM_STRB_POST_IMM:
 			case ARM_STR_POST_IMM:
 
