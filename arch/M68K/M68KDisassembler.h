@@ -17,6 +17,10 @@ typedef struct m68k_info {
 	unsigned int type;
 	unsigned int address_mask; /* Address mask to simulate address lines */
 	cs_m68k extension;
+	uint16_t regs_read[12]; // list of implicit registers read by this insn
+	uint8_t regs_read_count; // number of implicit registers read by this insn
+	uint16_t regs_write[20]; // list of implicit registers modified by this insn
+	uint8_t regs_write_count; // number of implicit registers modified by this insn
 	uint8_t groups[8];
 	uint8_t groups_count;
 } m68k_info;
