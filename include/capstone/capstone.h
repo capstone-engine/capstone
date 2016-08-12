@@ -141,7 +141,7 @@ typedef struct cs_opt_mnem {
 	// ID of instruction to be customized.
 	unsigned int id;
 	// Customized instruction mnemonic.
-	char *mnemonic;
+	const char *mnemonic;
 } cs_opt_mnem;
 
 // Runtime option for the disassembled engine
