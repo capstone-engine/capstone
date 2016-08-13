@@ -281,6 +281,7 @@ static insn_map insns[] = {
 void ARM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
 	int i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
+	//printf(">> id = %u\n", id);
 	if (i != 0) {
 		insn->id = insns[i].mapid;
 
