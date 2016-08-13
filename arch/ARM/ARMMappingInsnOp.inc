@@ -314,7 +314,7 @@
 	{ CS_AC_READ, CS_AC_WRITE, 0 }
 },
 {	/* ARM_LDMIA_UPD, ARM_INS_LDM: ldm${p}	$rn!, $regs */
-	{ CS_AC_READ | CS_AC_WRITE, CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_WRITE, 0 }
 },
 {	/* ARM_LDMIB, ARM_INS_LDMIB: ldmib${p}	$rn, $regs */
 	{ CS_AC_READ, CS_AC_WRITE, 0 }
@@ -5564,7 +5564,7 @@
 	{ CS_AC_READ, CS_AC_WRITE, 0 }
 },
 {	/* ARM_t2LDMIA_UPD, ARM_INS_LDM: ldm${p}.w	$rn!, $regs */
-	{ CS_AC_READ | CS_AC_WRITE, CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_WRITE, 0 }
 },
 {	/* ARM_t2LDRBT, ARM_INS_LDRBT: ldrbt${p}	$rt, $addr */
 	{ CS_AC_WRITE, 0 }
@@ -6569,10 +6569,10 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_tPOP, ARM_INS_POP: pop${p}	$regs */
-	{ 0 }
+	{ CS_AC_WRITE, 0 }
 },
 {	/* ARM_tPUSH, ARM_INS_PUSH: push${p}	$regs */
-	{ 0 }
+	{ CS_AC_READ, 0 }
 },
 {	/* ARM_tREV, ARM_INS_REV: rev${p}	$rd, $rm */
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
