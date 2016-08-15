@@ -609,6 +609,14 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 							if (Opcode == ARM_t2STMDB_UPD)
 								SStream_concat0(O, ".w");
 							SStream_concat0(O, "\t");
+
+							if (MI->csh->detail) {
+								MI->flat_insn->detail->regs_read[MI->flat_insn->detail->regs_read_count] = ARM_REG_SP;
+								MI->flat_insn->detail->regs_read_count++;
+								MI->flat_insn->detail->regs_write[MI->flat_insn->detail->regs_write_count] = ARM_REG_SP;
+								MI->flat_insn->detail->regs_write_count++;
+							}
+
 							printRegisterList(MI, 4, O);
 							return;
 						}
