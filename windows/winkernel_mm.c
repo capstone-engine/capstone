@@ -31,7 +31,7 @@ void * CAPSTONE_API cs_winkernel_malloc(size_t size)
 	NT_ASSERT(size);
 
 	CS_WINKERNEL_MEMBLOCK *block = (CS_WINKERNEL_MEMBLOCK *)ExAllocatePoolWithTag(
-			NonPagedPoolNx, size + sizeof(CS_WINKERNEL_MEMBLOCK), CS_WINKERNEL_POOL_TAG);
+			NonPagedPool, size + sizeof(CS_WINKERNEL_MEMBLOCK), CS_WINKERNEL_POOL_TAG);
 	if (!block) {
 		return NULL;
 	}
