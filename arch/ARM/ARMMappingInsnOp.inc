@@ -314,7 +314,7 @@
 	{ CS_AC_READ, CS_AC_WRITE, 0 }
 },
 {	/* ARM_LDMIA_UPD, ARM_INS_LDM: ldm${p}	$rn!, $regs */
-	{ CS_AC_WRITE, CS_AC_WRITE, 0 }
+	{ CS_AC_READ | CS_AC_WRITE, CS_AC_WRITE, 0 }
 },
 {	/* ARM_LDMIB, ARM_INS_LDMIB: ldmib${p}	$rn, $regs */
 	{ CS_AC_READ, CS_AC_WRITE, 0 }
@@ -6506,7 +6506,7 @@
 	{ 0 }
 },
 {	/* ARM_tLDMIA, ARM_INS_LDM: ldm${p}	$rn, $regs */
-	{ CS_AC_READ, CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 {	/* ARM_tLDRBi, ARM_INS_LDRB: ldrb${p}	$rt, $addr */
 	{ CS_AC_WRITE, 0 }
