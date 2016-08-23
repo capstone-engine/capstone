@@ -304,12 +304,6 @@ static insn_map insns[] = {
 #include "AArch64MappingInsn.inc"
 };
 
-// some alias instruction only need to be defined locally to satisfy
-// some lookup functions
-// just make sure these IDs never reuse any other IDs ARM_INS_*
-#define ARM64_INS_NEGS (unsigned short)-1
-#define ARM64_INS_NGCS (unsigned short)-2
-
 // given internal insn id, return public instruction info
 void AArch64_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
