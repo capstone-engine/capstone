@@ -1026,7 +1026,9 @@ let _ARM64_INS_IC = 448;;
 let _ARM64_INS_DC = 449;;
 let _ARM64_INS_AT = 450;;
 let _ARM64_INS_TLBI = 451;;
-let _ARM64_INS_ENDING = 452;;
+let _ARM64_INS_NEGS = 452;;
+let _ARM64_INS_NGCS = 453;;
+let _ARM64_INS_ENDING = 454;;
 
 (* Group of ARM64 instructions *)
 

@@ -1129,6 +1129,9 @@ typedef enum arm64_insn {
 	ARM64_INS_AT,
 	ARM64_INS_TLBI,
 
+	ARM64_INS_NEGS,
+	ARM64_INS_NGCS,
+
 	ARM64_INS_ENDING,  // <-- mark the end of the list of insn
 } arm64_insn;
 
