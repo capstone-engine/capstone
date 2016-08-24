@@ -64,7 +64,7 @@ class CsX86(ctypes.Structure):
         ('addr_size', ctypes.c_uint8),
         ('modrm', ctypes.c_uint8),
         ('sib', ctypes.c_uint8),
-        ('disp', ctypes.c_int32),
+        ('disp', ctypes.c_int64),
         ('sib_index', ctypes.c_uint),
         ('sib_scale', ctypes.c_int8),
         ('sib_base', ctypes.c_uint),
