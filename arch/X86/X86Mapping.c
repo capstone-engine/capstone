@@ -2930,15 +2930,15 @@ static int regs_cmp(const void *a, const void *b)
 	return (l - r);
 }
 
-static bool intel_regs_sorted = false;
 // return register of given instruction id
 // return 0 if not found
 // this is to handle instructions embedding accumulate registers into AsmStrs[]
 x86_reg X86_insn_reg_intel(unsigned int id, enum cs_ac_type *access)
 {
+	static bool intel_regs_sorted = false;
 	unsigned int first = 0;
 	unsigned int last = ARR_SIZE(insn_regs_intel) - 1;
-	unsigned int mid = ARR_SIZE(insn_regs_intel) / 2;
+	unsigned int mid;
 
 	if (!intel_regs_sorted) {
 		memcpy(insn_regs_intel_sorted, insn_regs_intel,
@@ -2949,7 +2949,13 @@ x86_reg X86_insn_reg_intel(unsigned int id, enum cs_ac_type *access)
 		intel_regs_sorted = true;
 	}
 
+	if (insn_regs_intel_sorted[0].insn > id ||
+			insn_regs_intel_sorted[last].insn < id) {
+		return 0;
+	}
+
 	while (first <= last) {
+		mid = (first + last) / 2;
 		if (insn_regs_intel_sorted[mid].insn < id) {
 			first = mid + 1;
 		} else if (insn_regs_intel_sorted[mid].insn == id) {
@@ -2962,7 +2968,6 @@ x86_reg X86_insn_reg_intel(unsigned int id, enum cs_ac_type *access)
 				break;
 			last = mid - 1;
 		}
-		mid = (first + last) / 2;
 	}
 
 	// not found
