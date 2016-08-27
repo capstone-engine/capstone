@@ -2941,9 +2941,9 @@ x86_reg X86_insn_reg_intel(unsigned int id, enum cs_ac_type *access)
 	unsigned int mid = ARR_SIZE(insn_regs_intel) / 2;
 
 	if (!intel_regs_sorted) {
-		memcpy (insn_regs_intel_sorted, insn_regs_intel,
+		memcpy(insn_regs_intel_sorted, insn_regs_intel,
 				sizeof(insn_regs_intel_sorted));
-		qsort (insn_regs_intel_sorted,
+		qsort(insn_regs_intel_sorted,
 				ARR_SIZE(insn_regs_intel_sorted),
 				sizeof(struct insn_reg), regs_cmp);
 		intel_regs_sorted = true;
@@ -2958,6 +2958,8 @@ x86_reg X86_insn_reg_intel(unsigned int id, enum cs_ac_type *access)
 			}
 			return insn_regs_intel_sorted[mid].reg;
 		} else {
+			if (mid == 0)
+				break;
 			last = mid - 1;
 		}
 		mid = (first + last) / 2;
