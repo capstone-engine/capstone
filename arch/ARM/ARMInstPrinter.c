@@ -660,6 +660,8 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 							if (Opcode == ARM_t2LDMIA_UPD)
 								SStream_concat0(O, ".w");
 							SStream_concat0(O, "\t");
+							// unlike LDM, POP only write to registers, so skip the 1st access code
+							MI->ac_idx = 1;
 							if (MI->csh->detail) {
 								MI->flat_insn->detail->regs_read[MI->flat_insn->detail->regs_read_count] = ARM_REG_SP;
 								MI->flat_insn->detail->regs_read_count++;
