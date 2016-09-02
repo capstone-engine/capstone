@@ -501,7 +501,7 @@ public class X86_const {
 	public static final int X86_INS_COMISD = 102;
 	public static final int X86_INS_COMISS = 103;
 	public static final int X86_INS_FCOMP = 104;
-	public static final int X86_INS_FCOMPI = 105;
+	public static final int X86_INS_FCOMIP = 105;
 	public static final int X86_INS_FCOMI = 106;
 	public static final int X86_INS_FCOM = 107;
 	public static final int X86_INS_FCOS = 108;
@@ -1101,7 +1101,7 @@ public class X86_const {
 	public static final int X86_INS_FTST = 702;
 	public static final int X86_INS_TZCNT = 703;
 	public static final int X86_INS_TZMSK = 704;
-	public static final int X86_INS_FUCOMPI = 705;
+	public static final int X86_INS_FUCOMIP = 705;
 	public static final int X86_INS_FUCOMI = 706;
 	public static final int X86_INS_FUCOMPP = 707;
 	public static final int X86_INS_FUCOMP = 708;
