@@ -693,7 +693,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	int32_t imm;
+	uint32_t imm;
 	MCOperand *Op = MCInst_getOperand(MI, OpNo);
 	if (MCOperand_isReg(Op)) {
 		unsigned Reg = MCOperand_getReg(Op);
@@ -713,7 +713,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	} else if (MCOperand_isImm(Op)) {
 		unsigned int opc = MCInst_getOpcode(MI);
 
-		imm = (int32_t)MCOperand_getImm(Op);
+		imm = (uint32_t)MCOperand_getImm(Op);
 
 		// relative branch only has relative offset, so we have to update it
 		// to reflect absolute address. 
@@ -723,7 +723,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		if (ARM_rel_branch(MI->csh, opc)) {
 			// only do this for relative branch
 			if (MI->csh->mode & CS_MODE_THUMB) {
-				imm += (int32_t)MI->address + 4;
+				imm += (uint32_t)MI->address + 4;
 				if (ARM_blx_to_arm_mode(MI->csh, opc)) {
 					// here need to align down to the nearest 4-byte address
 #define _ALIGN_DOWN(v, align_width) ((v/align_width)*align_width)
@@ -731,7 +731,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 #undef _ALIGN_DOWN
 				}
 			} else {
-				imm += (int32_t)MI->address + 8;
+				imm += (uint32_t)MI->address + 8;
 			}
 
 			if (imm >= 0) {
