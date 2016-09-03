@@ -850,18 +850,20 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		// add 8 in ARM mode, or 4 in Thumb mode
 		// printf(">> opcode: %u\n", MCInst_getOpcode(MI));
 		if (ARM_rel_branch(MI->csh, opc)) {
+			uint32_t address;
+
 			// only do this for relative branch
 			if (MI->csh->mode & CS_MODE_THUMB) {
-				imm += (int32_t)MI->address + 4;
+				address = (uint32_t)MI->address + 4;
 				if (ARM_blx_to_arm_mode(MI->csh, opc)) {
 					// here need to align down to the nearest 4-byte address
-					imm &= ~3;
+					address &= ~3;
 				}
 			} else {
-				imm += (int32_t)MI->address + 8;
+				address = (uint32_t)MI->address + 8;
 			}
 
-			printUInt32Bang(O, imm);
+			printUInt32Bang(O, address + imm);
 		} else {
 			switch(MI->flat_insn->id) {
 				default:
