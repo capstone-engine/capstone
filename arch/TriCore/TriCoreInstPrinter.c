@@ -195,7 +195,7 @@ static void printAddrModeMemSrc(MCInst *MI, int OpNum, SStream *O) {
 
 	// Print register base field
 	if (MCOperand_isReg(Base)) {
-		SStream_concat(O, "[%");
+		SStream_concat(O, "[");
 		printRegName(O, MCOperand_getReg(Base));
 		SStream_concat(O, "]");
 	}
