@@ -36,6 +36,6 @@ def to_x(s):
 def to_x_32(s):
     from struct import pack
     if not s: return '0'
-    x = pack(">i", s)
+    x = pack(">i" if s < 0 else ">I", s)
     while x[0] in ('\0', 0): x = x[1:]
     return to_hex2(x)
