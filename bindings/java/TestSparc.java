@@ -67,16 +67,16 @@ public class TestSparc {
 
   public static void main(String argv[]) {
 
-    final Test.platform[] all_tests = {
-      new Test.platform(Capstone.CS_ARCH_SPARC, Capstone.CS_MODE_BIG_ENDIAN, hexString2Byte(SPARC_CODE), "Sparc"),
-      new Test.platform(Capstone.CS_ARCH_SPARC, Capstone.CS_MODE_BIG_ENDIAN + Capstone.CS_MODE_V9, hexString2Byte(SPARCV9_CODE), "SparcV9"),
+    final TestBasic.platform[] all_tests = {
+      new TestBasic.platform(Capstone.CS_ARCH_SPARC, Capstone.CS_MODE_BIG_ENDIAN, hexString2Byte(SPARC_CODE), "Sparc"),
+      new TestBasic.platform(Capstone.CS_ARCH_SPARC, Capstone.CS_MODE_BIG_ENDIAN + Capstone.CS_MODE_V9, hexString2Byte(SPARCV9_CODE), "SparcV9"),
     };
 
     for (int i=0; i<all_tests.length; i++) {
-      Test.platform test = all_tests[i];
+      TestBasic.platform test = all_tests[i];
       System.out.println(new String(new char[16]).replace("\0", "*"));
       System.out.println("Platform: " + test.comment);
-      System.out.println("Code: " + Test.stringToHex(test.code));
+      System.out.println("Code: " + TestBasic.stringToHex(test.code));
       System.out.println("Disasm:");
 
       cs = new Capstone(test.arch, test.mode);
