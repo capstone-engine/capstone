@@ -3,7 +3,7 @@
 
 import capstone.Capstone;
 
-public class Test {
+public class TestBasic {
   public static class platform {
     public int arch;
     public int mode;
