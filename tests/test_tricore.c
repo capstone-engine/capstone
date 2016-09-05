@@ -72,7 +72,7 @@ static void print_insn_detail(cs_insn *ins)
 
 static void test()
 {
-#define TRICORE_CODE "\x16\x01\x20\x01"
+#define TRICORE_CODE "\x16\x01\x20\x01\x1d\x00\x02\x00\x8f\x70\x00\x11"
 
 	struct platform platforms[] = {
 		{
