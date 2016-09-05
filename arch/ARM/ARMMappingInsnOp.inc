@@ -5564,7 +5564,7 @@
 	{ CS_AC_READ, CS_AC_WRITE, 0 }
 },
 {	/* ARM_t2LDMIA_UPD, ARM_INS_LDM: ldm${p}.w	$rn!, $regs */
-	{ CS_AC_WRITE, CS_AC_WRITE, 0 }
+	{ CS_AC_READ | CS_AC_WRITE, CS_AC_WRITE, 0 }
 },
 {	/* ARM_t2LDRBT, ARM_INS_LDRBT: ldrbt${p}	$rt, $addr */
 	{ CS_AC_WRITE, 0 }
