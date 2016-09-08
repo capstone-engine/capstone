@@ -159,6 +159,9 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 										tmp = caml_alloc(1, 7);
 										Store_field(tmp, 0, Val_int(insn[j-1].detail->arm.operands[i].setend));
 										break;
+									case ARM_OP_ADDR:
+										tmp = caml_alloc(1, 8);
+										Store_field(tmp, 0, caml_copy_int64(insn[j-1].detail->arm.operands[i].addr));
 									default: break;
 								}
 								tmp3 = caml_alloc(2, 0);

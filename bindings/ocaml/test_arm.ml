@@ -50,6 +50,7 @@ let print_op handle i op =
 			printf "\t\t\toperands[%u].mem.lshift: 0x%x\n" i mem.lshift;
 		);
 	| ARM_OP_SETEND sd -> printf "\t\top[%d]: SETEND = %u\n" i sd;
+	| ARM_OP_ADDR addr -> printf "\t\top[%d]: ADDR = 0x%Lx\n" i addr;
 	);
 
 	if op.shift.shift_type != _ARM_SFT_INVALID && op.shift.shift_value > 0 then

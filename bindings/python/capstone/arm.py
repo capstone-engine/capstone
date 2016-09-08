@@ -27,6 +27,7 @@ class ArmOpValue(ctypes.Union):
         ('fp', ctypes.c_double),
         ('mem', ArmOpMem),
         ('setend', ctypes.c_int),
+        ('addr', ctypes.c_uint32),
     )
 
 class ArmOp(ctypes.Structure):
@@ -59,6 +60,10 @@ class ArmOp(ctypes.Structure):
     @property
     def setend(self):
         return self.value.setend
+
+    @property
+    def addr(self):
+        return self.value.addr
 
 
 class CsArm(ctypes.Structure):

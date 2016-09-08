@@ -872,8 +872,14 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				address = (uint32_t)MI->address + 8;
 			}
 
-			imm += address;
-			printUInt32Bang(O, imm);
+			address += imm;
+			printUInt32Bang(O, address);
+
+			if (MI->csh->detail) {
+				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_ADDR;
+				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].addr = address;
+				MI->flat_insn->detail->arm.op_count++;
+			}
 		} else {
 			switch(MI->flat_insn->id) {
 				default:
@@ -891,15 +897,15 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					printUInt32Bang(O, imm);
 					break;
 			}
-		}
 
-		if (MI->csh->detail) {
-			if (MI->csh->doing_mem)
-				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = imm;
-			else {
-				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_IMM;
-				MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = imm;
-				MI->flat_insn->detail->arm.op_count++;
+			if (MI->csh->detail) {
+				if (MI->csh->doing_mem)
+					MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].mem.disp = imm;
+				else {
+					MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_IMM;
+					MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = imm;
+					MI->flat_insn->detail->arm.op_count++;
+				}
 			}
 		}
 	}

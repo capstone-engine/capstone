@@ -136,6 +136,7 @@ let _ARM_OP_CIMM = 64;;
 let _ARM_OP_PIMM = 65;;
 let _ARM_OP_SETEND = 66;;
 let _ARM_OP_SYSREG = 67;;
+let _ARM_OP_ADDR = 68;;
 
 let _ARM_SETEND_INVALID = 0;;
 let _ARM_SETEND_BE = 1;;

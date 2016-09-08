@@ -31,6 +31,7 @@ type arm_op_value =
 	| ARM_OP_FP of float
 	| ARM_OP_MEM of arm_op_mem
 	| ARM_OP_SETEND of int
+	| ARM_OP_ADDR of int64
 
 type arm_op = {
 	vector_index: int;

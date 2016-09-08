@@ -58,6 +58,8 @@ public class TestArm {
   				System.out.printf("\t\toperands[%d].type: SETEND = %s\n", c, i.value.setend == ARM_SETEND_BE? "be" : "le");
         if (i.type == ARM_OP_FP)
           System.out.printf("\t\toperands[%d].type: FP = %f\n", c, i.value.fp);
+	if (i.type == ARM_OP_ADDR)
+          System.out.printf("\t\toperands[%d].type: ADDR = 0x%x\n", c, i.value.addr);
         if (i.type == ARM_OP_MEM) {
           System.out.printf("\t\toperands[%d].type: MEM\n",c);
           String base = ins.regName(i.value.mem.base);

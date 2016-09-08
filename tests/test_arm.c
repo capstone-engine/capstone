@@ -93,6 +93,9 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 			case ARM_OP_SYSREG:
 				printf("\t\toperands[%u].type: SYSREG = %u\n", i, op->reg);
 				break;
+			case ARM_OP_ADDR:
+				printf("\t\toperands[%u].type: ADDR = 0x%x\n", i, op->addr);
+				break;
 		}
 
 		if (op->neon_lane != -1) {

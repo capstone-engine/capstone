@@ -71,6 +71,8 @@ def print_insn_detail(insn):
                 if i.mem.lshift != 0:
                     print("\t\t\toperands[%u].mem.lshift: 0x%s" \
                         % (c, to_x_32(i.mem.lshift)))
+            if i.type == ARM_OP_ADDR:
+                print("\t\toperands[%u].type: ADDR = 0x%s" % (c, to_x_32(i.addr)))
 
             if i.neon_lane != -1:
                 print("\t\toperands[%u].neon_lane = %u" % (c, i.neon_lane))

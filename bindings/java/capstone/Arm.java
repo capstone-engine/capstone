@@ -32,10 +32,11 @@ public class Arm {
     public double fp;
     public MemType mem;
     public int setend;
+    public int addr;
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("reg", "imm", "fp", "mem", "setend");
+      return Arrays.asList("reg", "imm", "fp", "mem", "setend", "addr");
     }
   }
 
@@ -65,7 +66,7 @@ public class Arm {
         value.setType(MemType.class);
       if (type == ARM_OP_FP)
         value.setType(Double.TYPE);
-      if (type == ARM_OP_PIMM || type == ARM_OP_IMM || type == ARM_OP_CIMM)
+      if (type == ARM_OP_PIMM || type == ARM_OP_IMM || type == ARM_OP_CIMM || type == ARM_OP_ADDR)
         value.setType(Integer.TYPE);
       if (type == ARM_OP_REG)
         value.setType(Integer.TYPE);

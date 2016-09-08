@@ -139,6 +139,7 @@ public class Arm_const {
 	public static final int ARM_OP_PIMM = 65;
 	public static final int ARM_OP_SETEND = 66;
 	public static final int ARM_OP_SYSREG = 67;
+	public static final int ARM_OP_ADDR = 68;
 
 	public static final int ARM_SETEND_INVALID = 0;
 	public static final int ARM_SETEND_BE = 1;
