@@ -1052,28 +1052,28 @@ static void printArithExtend(MCInst *MI, unsigned OpNum, SStream *O)
 		switch(ExtType) {
 			default:	// never reach
 			case AArch64_AM_UXTB:
-				ext = ARM64_EXT_UXTW;
+				ext = ARM64_EXT_UXTB;
 				break;
 			case AArch64_AM_UXTH:
-				ext = ARM64_EXT_UXTW;
+				ext = ARM64_EXT_UXTH;
 				break;
 			case AArch64_AM_UXTW:
 				ext = ARM64_EXT_UXTW;
 				break;
 			case AArch64_AM_UXTX:
-				ext = ARM64_EXT_UXTW;
+				ext = ARM64_EXT_UXTX;
 				break;
 			case AArch64_AM_SXTB:
-				ext = ARM64_EXT_UXTW;
+				ext = ARM64_EXT_SXTB;
 				break;
 			case AArch64_AM_SXTH:
-				ext = ARM64_EXT_UXTW;
+				ext = ARM64_EXT_SXTH;
 				break;
 			case AArch64_AM_SXTW:
-				ext = ARM64_EXT_UXTW;
+				ext = ARM64_EXT_SXTW;
 				break;
 			case AArch64_AM_SXTX:
-				ext = ARM64_EXT_UXTW;
+				ext = ARM64_EXT_SXTX;
 				break;
 		}
 
