@@ -360,9 +360,7 @@ ifndef BUILDDIR
 else
 	cd tests && $(MAKE) BUILDDIR=$(BLDIR)
 endif
-ifeq ($(CAPSTONE_SHARED),yes)
-	$(INSTALL_DATA) $(LIBRARY) $(BLDIR)/tests/lib$(LIBNAME).$(VERSION_EXT)
-endif
+	$(call install-library,$(BLDIR)/tests/)
 endif
 
 ifeq ($(CAPSTONE_SHARED),yes)
@@ -408,14 +406,7 @@ endif
 
 install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 	mkdir -p $(DESTDIR)/$(LIBDIR)
-ifeq ($(CAPSTONE_SHARED),yes)
-	$(INSTALL_LIB) $(LIBRARY) $(DESTDIR)/$(LIBDIR)
-ifneq ($(VERSION_EXT),)
-	cd $(DESTDIR)/$(LIBDIR) && \
-	rm -f lib$(LIBNAME).$(EXT) && \
-	ln -s lib$(LIBNAME).$(VERSION_EXT) lib$(LIBNAME).$(EXT)
-endif
-endif
+	$(call install-library,$(DESTDIR)/$(LIBDIR))
 ifeq ($(CAPSTONE_STATIC),yes)
 	$(INSTALL_DATA) $(ARCHIVE) $(DESTDIR)/$(LIBDIR)
 endif
@@ -471,7 +462,7 @@ TESTS += test_skipdata test_skipdata.static test_iter.static
 check:
 	@for t in $(TESTS); do \
 		echo Check $$t ... ; \
-		./tests/$$t > /dev/null && echo OK || echo FAILED; \
+		LD_LIBRARY_PATH=./tests ./tests/$$t > /dev/null && echo OK || echo FAILED; \
 	done
 
 $(OBJDIR)/%.o: %.c
@@ -481,6 +472,20 @@ ifeq ($(V),0)
 	@$(compile)
 else
 	$(compile)
+endif
+
+
+ifeq ($(CAPSTONE_SHARED),yes)
+define install-library
+	$(INSTALL_LIB) $(LIBRARY) $1
+	$(if $(VERSION_EXT),
+		cd $1 && \
+		rm -f lib$(LIBNAME).$(EXT) && \
+		ln -s lib$(LIBNAME).$(VERSION_EXT) lib$(LIBNAME).$(EXT))
+endef
+else
+define install-library
+endef
 endif
 
 
