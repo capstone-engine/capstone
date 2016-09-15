@@ -2,9 +2,9 @@
 /* By David Hogarty, 2014 */
 
 // the following must precede stdio (woo, thanks msft)
-#ifdef _MSC_VER
-//#define _CRT_SECURE_NO_WARNINGS
-//#define snprintf _snprintf
+#if defined(_MSC_VER) && _MSC_VER < 1900
+#define _CRT_SECURE_NO_WARNINGS
+#define snprintf _snprintf
 #endif
 #include <stdio.h>
 #include <stdlib.h>
