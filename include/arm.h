@@ -236,6 +236,7 @@ typedef struct cs_arm_op {
 		double fp;			// floating point value for FP operand
 		arm_op_mem mem;		// base/index/scale/disp value for MEM operand
 		arm_setend_type setend; // SETEND instruction's operand type
+		uint32_t addr;	// address constructed with PC-relative expression
 	};
 	// in some instructions, an operand can be subtracted or added to
 	// the base register,
