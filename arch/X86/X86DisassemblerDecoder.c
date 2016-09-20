@@ -1250,6 +1250,15 @@ static int getID(struct InternalInstruction *insn)
 	if (getIDWithAttrMask(&instructionID, insn, attrMask))
 		return -1;
 
+	/* Fixing CALL and JMP instruction when in 64bit mode and x66 prefix is used */
+	if (insn->mode == MODE_64BIT && insn->isPrefix66 &&
+	   (insn->opcode == 0xE8 || insn->opcode == 0xE9))
+	{
+		attrMask ^= ATTR_OPSIZE;
+		if (getIDWithAttrMask(&instructionID, insn, attrMask))
+			return -1;
+	}
+
 	/*
 	 * JCXZ/JECXZ need special handling for 16-bit mode because the meaning
 	 * of the AdSize prefix is inverted w.r.t. 32-bit mode.
@@ -2376,3 +2385,4 @@ int decodeInstruction(struct InternalInstruction *insn,
 }
 
 #endif
+
