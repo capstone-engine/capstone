@@ -321,15 +321,27 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		TriCore_JNZsb, TRICORE_INS_JNZ,
+#ifndef CAPSTONE_DIET
+		{ TRICORE_REG_PC, TRICORE_REG_D15, 0 }, { TRICORE_REG_PC, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
 		TriCore_JNZsbr, TRICORE_INS_JNZ,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 0, 0
+		{ TRICORE_REG_PC, 0 }, { TRICORE_REG_PC, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_JZsb, TRICORE_INS_JZ,
+#ifndef CAPSTONE_DIET
+		{ TRICORE_REG_PC, TRICORE_REG_D15, 0 }, { TRICORE_REG_PC, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
 		TriCore_JZsbr, TRICORE_INS_JZ,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 0, 0
+		{ TRICORE_REG_PC, 0 }, { TRICORE_REG_PC, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{

@@ -187,7 +187,6 @@ static void printPCRelImmOperand(MCInst *MI, int OpNum, SStream *O) {
 }
 
 // Print a 'memsrc' operand which is a (Register, Offset) pair.
-// TODO: verify this function
 static void printAddrModeMemSrc(MCInst *MI, int OpNum, SStream *O) {
 
 	set_mem_access(MI, true);
@@ -200,7 +199,6 @@ static void printAddrModeMemSrc(MCInst *MI, int OpNum, SStream *O) {
 		SStream_concat(O, "]");
 	}
 
-	SStream_concat(O, " ");
 	printOperand(MI, OpNum+1, O); // Disp
 	set_mem_access(MI, false);
 }

@@ -210,7 +210,7 @@ static MCRegisterClass TriCoreMCRegisterClasses[] = {
   { "AddrRegs", AddrRegs, AddrRegsBits, 16, sizeof(AddrRegsBits), TriCore_AddrRegsRegClassID, 4, 4, 1, 1 },
   { "DataRegs", DataRegs, DataRegsBits, 16, sizeof(DataRegsBits), TriCore_DataRegsRegClassID, 4, 4, 1, 1 },
   { "PSRegs", PSRegs, PSRegsBits, 4, sizeof(PSRegsBits), TriCore_PSRegsRegClassID, 4, 4, 1, 1 },
-  { "ExtRegs", ExtRegs, ExtRegsBits, 8, sizeof(ExtRegsBits), TriCore_ExtRegsRegClassID, 8, 4, 1, 1 },
+  { "ExtRegs", ExtRegs, ExtRegsBits, 8, sizeof(ExtRegsBits), TriCore_ExtRegsRegClassID, 8, 8, 1, 1 },
 };
 
 
