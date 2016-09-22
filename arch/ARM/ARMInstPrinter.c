@@ -863,7 +863,8 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				address = (uint32_t)MI->address + 8;
 			}
 
-			printUInt32Bang(O, address + imm);
+			imm = address + imm;
+			printUInt32Bang(O, imm);
 		} else {
 			switch(MI->flat_insn->id) {
 				default:
