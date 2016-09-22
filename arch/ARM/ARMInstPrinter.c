@@ -736,12 +736,12 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				address = (uint32_t)MI->address + 8;
 			}
 
-			address += imm;
+			imm += address;
 
-			if (address > HEX_THRESHOLD)
-				SStream_concat(O, "#0x%x", address);
+			if (imm > HEX_THRESHOLD)
+				SStream_concat(O, "#0x%x", imm);
 			else
-				SStream_concat(O, "#%u", address);
+				SStream_concat(O, "#%u", imm);
 		} else {
 			switch(MI->flat_insn->id) {
 				default:
