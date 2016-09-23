@@ -1,0 +1,4 @@
+This is a sample code for Capstone disassembly framework (www.capstone-engine.org)
+
+To compile, simply run "make" on commandline.
+This will generate the executable binary file "test1".
