@@ -921,6 +921,7 @@ static int readOpcode(struct InternalInstruction *insn)
 	// printf(">>> readOpcode() = %x\n", insn->readerCursor);
 
 	insn->opcodeType = ONEBYTE;
+	insn->firstByte = 0x00;
 
 	if (insn->vectorExtensionType == TYPE_EVEX) {
 		switch (mmFromEVEX2of4(insn->vectorExtensionPrefix[1])) {
