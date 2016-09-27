@@ -20,6 +20,10 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
+#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
+#pragma warning(disable:28719)		// disable MSVC's warning on strncpy()
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
