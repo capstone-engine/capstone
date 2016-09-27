@@ -1,7 +1,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 #if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
-#pragma warning(disable:4996)
+#pragma warning(disable:4996)			// disable MSVC's warning on strcpy()
+#pragma warning(disable:28719)		// disable MSVC's warning on strcpy()
 #endif
 #if defined(CAPSTONE_HAS_OSXKERNEL)
 #include <libkern/libkern.h>
