@@ -27,7 +27,7 @@ versions, and Windows Driver Kit 8.1 Update 1 or newer versions are required.
   steps.
 
   In VisualStudio interface, modify the preprocessor definitions via
-  "Project Properties" -> "Configuration Propertis" -> "C/C++" -> "Preprocessor"
+  "Project Properties" -> "Configuration Properties" -> "C/C++" -> "Preprocessor"
   to customize Capstone library, as followings.
 
   - CAPSTONE_HAS_ARM: support ARM. Delete this to remove ARM support.
