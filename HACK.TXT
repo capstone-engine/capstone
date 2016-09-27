@@ -35,7 +35,7 @@ the code and try to recompile/reinstall again. This can be done with:
 	$ sudo ./make.sh install
 
 At the same time, for Java/Ocaml/Python bindings, be sure to always use
-the bindings coming with the core to avoid potential incompatility issue
+the bindings coming with the core to avoid potential incompatibility issue
 with older versions.
 See bindings/<language>/README for detail instructions on how to compile &
 install the bindings.
