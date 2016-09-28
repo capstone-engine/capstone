@@ -6,6 +6,10 @@
 #ifndef _CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS
 #endif
+
+//Banned API Usage : strcat / sprintf is a Banned API as listed in dontuse.h for
+//security purposes.
+#pragma warning(disable:28719)
 #endif
 
 #include <stdio.h>	// DEBUG
