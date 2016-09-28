@@ -16,6 +16,11 @@
 
 #ifdef CAPSTONE_HAS_XCORE
 
+#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
+#pragma warning(disable : 4996)			// disable MSVC's warning on strcpy()
+#pragma warning(disable : 28719)		// disable MSVC's warning on strcpy()
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -46,15 +51,7 @@ void XCore_insn_extract(MCInst *MI, const char *code)
 	char *p, *p2;
 	char tmp[128];
 
-// make MSVC shut up on strcpy()
-#ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable : 4996)
-#endif
 	strcpy(tmp, code); // safe because code is way shorter than 128 bytes
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif
 
 	// find the first space
 	p = strchr(tmp, ' ');

@@ -1,5 +1,6 @@
 /* Capstone Disassembly Engine */
 /* By Satoshi Tanda <tanda.sat@gmail.com>, 2016 */
+
 #include "winkernel_mm.h"
 #include <ntddk.h>
 
@@ -30,6 +31,8 @@ void * CAPSTONE_API cs_winkernel_malloc(size_t size)
 	// in many cases, indicate a potential validation issue in the calling code.
 	NT_ASSERT(size);
 
+	// FP; a use of NonPagedPool is required for Windows 7 support
+#pragma prefast(suppress : 30030)		// Allocating executable POOL_TYPE memory
 	CS_WINKERNEL_MEMBLOCK *block = (CS_WINKERNEL_MEMBLOCK *)ExAllocatePoolWithTag(
 			NonPagedPool, size + sizeof(CS_WINKERNEL_MEMBLOCK), CS_WINKERNEL_POOL_TAG);
 	if (!block) {
@@ -77,27 +80,27 @@ void * CAPSTONE_API cs_winkernel_realloc(void *ptr, size_t size)
 	return new_ptr;
 }
 
-// vsnprintf(). _vsnprintf() is avaialable for drivers, but it differs from
-// vsnprintf() in a return value and when a null-terminater is set.
+// vsnprintf(). _vsnprintf() is available for drivers, but it differs from
+// vsnprintf() in a return value and when a null-terminator is set.
 // cs_winkernel_vsnprintf() takes care of those differences.
 #pragma warning(push)
-#pragma warning(disable : 28719)  // Banned API Usage : _vsnprintf is a Banned
-// API as listed in dontuse.h for security
-// purposes.
+// Banned API Usage : _vsnprintf is a Banned API as listed in dontuse.h for
+// security purposes.
+#pragma warning(disable : 28719)
 int CAPSTONE_API cs_winkernel_vsnprintf(char *buffer, size_t count, const char *format, va_list argptr)
 {
 	int result = _vsnprintf(buffer, count, format, argptr);
 
 	// _vsnprintf() returns -1 when a string is truncated, and returns "count"
 	// when an entire string is stored but without '\0' at the end of "buffer".
-	// In both cases, null-terminater needs to be added manually.
+	// In both cases, null-terminator needs to be added manually.
 	if (result == -1 || (size_t)result == count) {
 		buffer[count - 1] = '\0';
 	}
 
 	if (result == -1) {
 		// In case when -1 is returned, the function has to get and return a number
-		// of characters that would have been written. This attempts so by re-tring
+		// of characters that would have been written. This attempts so by retrying
 		// the same conversion with temp buffer that is most likely big enough to
 		// complete formatting and get a number of characters that would have been
 		// written.
