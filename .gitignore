@@ -77,6 +77,7 @@ _*
 packages/freebsd/ports/devel/capstone/distinfo
 
 # VisualStudio
+ProjectUpgradeLog.log
 Debug/
 Release/
 ipch/
@@ -84,6 +85,7 @@ ipch/
 *.opensdf
 *.suo
 *.user
+*.backup
 *.VC.db
 *.VC.opendb
 

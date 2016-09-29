@@ -2923,7 +2923,10 @@ static struct insn_reg2 insn_regs_intel2[] = {
 
 static struct insn_reg insn_regs_intel_sorted [ARR_SIZE(insn_regs_intel)];
 
-static int regs_cmp(const void *a, const void *b)
+// Explicitly specified calling convention with CAPSTONE_API so that it is always
+// compiled as __cdecl on MSVC and does not cause a compile error even when
+// default calling convention is __stdcall (eg. capstone_static_winkernel project)
+static int CAPSTONE_API regs_cmp(const void *a, const void *b)
 {
 	uint16_t l = ((struct insn_reg *)a)->insn;
 	uint16_t r = ((struct insn_reg *)b)->insn;
