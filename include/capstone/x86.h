@@ -269,15 +269,15 @@ typedef struct cs_x86 {
 	// prefix[3] indicates address-size override (X86_PREFIX_ADDRSIZE)
 	uint8_t prefix[4];
 
-	// Instruction opcode, wich can be from 1 to 4 bytes in size.
+	// Instruction opcode, which can be from 1 to 4 bytes in size.
 	// This contains VEX opcode as well.
 	// An trailing opcode byte gets value 0 when irrelevant.
 	uint8_t opcode[4];
 
-	// REX prefix: only a non-zero value is relavant for x86_64
+	// REX prefix: only a non-zero value is relevant for x86_64
 	uint8_t rex;
 
-	// Address size, which can be overrided with above prefix[5].
+	// Address size, which can be overridden with above prefix[5].
 	uint8_t addr_size;
 
 	// ModR/M byte
@@ -292,7 +292,7 @@ typedef struct cs_x86 {
 	/* SIB state */
 	// SIB index register, or X86_REG_INVALID when irrelevant.
 	x86_reg sib_index;
-	// SIB scale. only applicable if sib_index is relavant.
+	// SIB scale. only applicable if sib_index is relevant.
 	int8_t sib_scale;
 	// SIB base register, or X86_REG_INVALID when irrelevant.
 	x86_reg sib_base;

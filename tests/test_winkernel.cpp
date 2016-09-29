@@ -1,5 +1,6 @@
 /* Capstone Disassembly Engine */
 /* By Satoshi Tanda <tanda.sat@gmail.com>, 2016 */
+
 #include <ntddk.h>
 
 #include <capstone/platform.h>
@@ -21,7 +22,7 @@ EXTERN_C DRIVER_INITIALIZE DriverEntry;
 #pragma warning(disable : 4005)   // 'identifier' : macro redefinition
 #pragma warning(disable : 4007)   // 'main': must be '__cdecl'
 
-// Drivers must protect floating point hardware state. See use of float simm:
+// Drivers must protect floating point hardware state. See use of float.
 // Use KeSaveFloatingPointState/KeRestoreFloatingPointState around floating
 // point operations. Display Drivers should use the corresponding Eng... routines.
 #pragma warning(disable : 28110)  // Suppress this, as it is false positive.
@@ -103,7 +104,7 @@ static void test()
 	// On a 32bit driver, KeSaveFloatingPointState() is required before using any
 	// Capstone function because Capstone can access to the MMX/x87 registers and
 	// 32bit Windows requires drivers to use KeSaveFloatingPointState() before and
-	// KeRestoreFloatingPointState() after accesing to them. See "Using Floating
+	// KeRestoreFloatingPointState() after accessing them. See "Using Floating
 	// Point or MMX in a WDM Driver" on MSDN for more details.
 	status = KeSaveFloatingPointState(&float_save);
 	if (!NT_SUCCESS(status)) {
