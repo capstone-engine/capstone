@@ -298,7 +298,7 @@ class _cs_insn(ctypes.Structure):
     )
 
 # callback for SKIPDATA option
-CS_SKIPDATA_CALLBACK = ctypes.CFUNCTYPE(ctypes.c_size_t, ctypes.POINTER(ctypes.c_char), ctypes.c_size_t, ctypes.c_void_p)
+CS_SKIPDATA_CALLBACK = ctypes.CFUNCTYPE(ctypes.c_size_t, ctypes.POINTER(ctypes.c_char), ctypes.c_size_t, ctypes.c_size_t, ctypes.c_void_p)
 
 class _cs_opt_skipdata(ctypes.Structure):
     _fields_ = (
