@@ -74,7 +74,11 @@ static void usage(char * prog){
            cs_insn *insn;
            cs_err err;
            
-           
+           if(argc == 1 && !strcmp(argv[0],"cstool")){
+               usage(argv[0]);
+               return -1;
+               
+           }
            //cstool x64 "\x55\x48\x8b\x05\xb8\x13\x00\x00"
            
            if(argc == 3){
@@ -195,8 +199,9 @@ static void usage(char * prog){
                                          &insn);
            if(size>0){
                size_t j;
+               printf("\n");
                for(j=0;j<size;j++){
-                   printf("0x%"PRIx64":\t%s\t\t%s\n", insn[j].address, insn[j].mnemonic,insn[j].op_str);
+                   printf("\t%s\t%s\t%s\n", insn[j].bytes,insn[j].mnemonic,insn[j].op_str);
                }
             cs_free(insn, size);
            }
