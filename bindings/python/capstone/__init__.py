@@ -786,7 +786,7 @@ class Cs(object):
         _skipdata_opt = _cs_opt_skipdata()
         _mnem, _cb, _ud = opt
         _skipdata_opt.mnemonic = _mnem.encode()
-        _skipdata_opt.callback = ctypes.cast(_cb, CS_SKIPDATA_CALLBACK)
+        _skipdata_opt.callback = CS_SKIPDATA_CALLBACK(_cb)
         _skipdata_opt.user_data = ctypes.cast(_ud, ctypes.c_void_p)
         status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA_SETUP, ctypes.cast(ctypes.byref(_skipdata_opt), ctypes.c_void_p))
         if status != CS_ERR_OK:
