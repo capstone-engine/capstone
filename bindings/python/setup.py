@@ -33,6 +33,15 @@ if "--user" in sys.argv:
     except ImportError:
         pass
 
+# If building a wheel, the path listed in data_files is interpreted relative to
+# python's site-packages directory, even if it starts with a slash. So we need
+# to use only `/capstone` as path in this case.
+#
+# Note: using `capstone` does not work, since that for some reason is interpreted
+# relative to the the python installation prefix, not to the site-packages directory.
+if "bdist_wheel" in sys.argv:
+    SITE_PACKAGES = "/capstone"
+
 
 # adapted from commit e504b81 of Nguyen Tan Cong
 # Reference: https://docs.python.org/2/library/platform.html#cross-platform
