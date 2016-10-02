@@ -9,50 +9,40 @@ static uint8_t converth(char c)//convert cahr A of AB to 0xA0
 {
     uint8_t result,intc;
     intc = (int) c;
-    switch (intc){
-        case 97: result = 0xa0; break;
-        case 98: result = 0xb0; break;
-        case 99: result = 0xc0; break;
-        case 100: result = 0xd0; break;
-        case 101: result = 0xe0; break;
-        case 48: result = 0x00; break;
-        case 49: result = 0x10; break;
-        case 50: result = 0x20; break;
-        case 51: result = 0x30; break;
-        case 52: result = 0x40; break;
-        case 53: result = 0x50; break;
-        case 54: result = 0x60; break;
-        case 55: result = 0x70; break;
-        case 56: result = 0x80; break;
-        case 57: result = 0x90; break;
-        default: result = 0x00;
+    
+    if (intc >= '0' && intc <= '9') {
+        result = 16 * (intc - '0');
     }
+    
+    if (intc >= 'a' && intc <= 'f') {
+        result = 16 *(10 + intc - 'a');
+    }
+    
+    if (intc >= 'A' && intc <= 'F') {
+        result = 16 * (10 + intc - 'A');
+    }
+    
     printf("this high char is %c and the (int)c is %d, and the result is %x \n",c,intc,result);//just for testing
     return result;
 }
 
-static uint8_t convertl(char c)//convert char B of AB to 0xB 
+static uint8_t convertl(char c)//convert char B of AB to 0xB
 {
     uint8_t result,intc;
     intc = (int) c;
-    switch (intc) {
-        case 97: result = 0x0a; break;
-        case 98: result = 0x0b; break;
-        case 99: result = 0x0c; break;
-        case 100: result = 0x0d; break;
-        case 101: result = 0x0e; break;
-        case 48: result = 0x00; break;
-        case 49: result = 0x01; break;
-        case 50: result = 0x02; break;
-        case 51: result = 0x03; break;
-        case 52: result = 0x04; break;
-        case 53: result = 0x05; break;
-        case 54: result = 0x06; break;
-        case 55: result = 0x07; break;
-        case 56: result = 0x08; break;
-        case 57: result = 0x09; break;
-        default: result = 0x00;
+    
+    if (intc >= '0' && intc <= '9') {
+        result = intc - '0';
     }
+    
+    if (intc >= 'a' && intc <= 'f') {
+        result = 10 + intc - 'a';
+    }
+    
+    if (intc >= 'A' && intc <= 'F') {
+        result = 10 + intc - 'A';
+    }
+    
     printf("this low char is %c and the (int)c is %d,and the convert result is %x\n",c,intc,result);
     return result;
 }
@@ -60,15 +50,22 @@ static uint8_t convertl(char c)//convert char B of AB to 0xB
 static uint8_t * preprocess(char * code)
 {
     uint8_t * result;
-    result = (uint8_t *)malloc( strlen(code)*sizeof(uint8_t));
-    int i,j=0, high, low;
+    result = (uint8_t *)malloc(strlen(code));
+    int i,j=0;
+    uint8_t intc, high, low;
     
     for (i = 0; i<strlen(code); i++) {
-        if (i%3 == 0) {
-            high = converth(code[i]);
-            low = convertl(code[i+1]);
-            result[j] = high + low;
-            j++;
+        intc = (int)code[i];
+        if ((intc >= '0' && intc <= '9') || (intc >= 'a' && intc <= 'f') || (intc >= 'A' && intc <= 'F')) {//Skip the character not in set A = {'a'~'f','A'~'F','0'~'9'}.
+            printf("the %d code char is %c\n",i,code[i]);
+            uint8_t ints = (int)code[i+1];
+            if ((ints >= '0' && ints <= '9') || (ints >= 'a' && ints <= 'f') || (ints >= 'A' && ints <= 'F')) {//Valid hexadecimal must be AB, A can't represent 0A.
+                high = converth(code[i]);
+                low = convertl(code[i+1]);
+                result[j] = high + low;
+                j++;
+                i++;
+            }
         }
     }
 
@@ -144,6 +141,12 @@ int main(int argc, char ** argv)
     
     mode = argv[1];
     assembly = preprocess(argv[2]);
+    printf("strlen of assembly is %lu",strlen((char *)assembly));
+    
+    if (strlen((char *)assembly) == 0) {
+        printf("Please inpute complete hexadecimal number.\n");
+        return -1;
+    }
     
     if (!strcmp(mode,"arm")) {
         err = cs_open(CS_ARCH_ARM, CS_MODE_ARM, &handle);
@@ -237,10 +240,11 @@ int main(int argc, char ** argv)
     }
     //test
     int k;
+    printf("the result of converting is :");
     for (k=0;  k <= strlen((char *)assembly); k++) {
         printf("%x ",assembly[k]);
     }
-    printf("the strlen of assembly is %lu\n",strlen((char *)assembly));
+    printf("\n the strlen of assembly is %lu\n",strlen((char *)assembly));
     //end test
     size = cs_disasm(handle, assembly, strlen((char *)assembly),
                                          0x1000,//Is this address necessary?
