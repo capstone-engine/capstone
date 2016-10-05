@@ -168,7 +168,6 @@ static DecodeStatus DecodeExtRegsRegisterClass(MCInst *Inst, unsigned RegNo,
 static DecodeStatus DecodeSBInstruction(MCInst *Inst, unsigned Insn,
 		uint64_t Address, void *Decoder)
 {
-	DecodeStatus status;
 	unsigned disp8 = fieldFromInstruction_4(Insn, 8, 8);
 	unsigned is32Bit = fieldFromInstruction_4(Insn, 0, 1);
 
@@ -186,6 +185,7 @@ static DecodeStatus DecodeSBRInstruction(MCInst *Inst, unsigned Insn,
 {
 	DecodeStatus status;
 	unsigned s2 = fieldFromInstruction_4(Insn, 12, 4);
+	unsigned disp4 = fieldFromInstruction_4(Insn, 8, 4);
 	unsigned is32Bit = fieldFromInstruction_4(Insn, 0, 1);
 
 	if(is32Bit) // This instruction is 16-bit
@@ -195,6 +195,9 @@ static DecodeStatus DecodeSBRInstruction(MCInst *Inst, unsigned Insn,
 	status = DecodeDataRegsRegisterClass(Inst, s2, Address, Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
+
+	// Decode disp4.
+	MCOperand_CreateImm0(Inst, disp4);
 
 	return MCDisassembler_Success;
 }
@@ -226,6 +229,9 @@ static DecodeStatus DecodeSRInstruction(MCInst *Inst, unsigned Insn,
 
 	// Decode s1/d.
 	status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
+	if (status == MCDisassembler_Success)
+		status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
+
 	if (status != MCDisassembler_Success)
 		return status;
 
@@ -244,7 +250,16 @@ static DecodeStatus DecodeSRCInstruction(MCInst *Inst, unsigned Insn,
 		return MCDisassembler_Fail;
 
 	// Decode s1/d.
-	status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
+	switch(MCInst_getOpcode(Inst)) {
+		case TriCore_ADDsrc:
+			status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
+			if (status == MCDisassembler_Success)
+				status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
+			break;
+		default:
+			status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
+			break;
+	}
 	if (status != MCDisassembler_Success)
 		return status;
 
@@ -267,8 +282,17 @@ static DecodeStatus DecodeSRRInstruction(MCInst *Inst, unsigned Insn,
 
 	// Decode s1/d.
 	switch(MCInst_getOpcode(Inst)) {
-		case TriCore_MOVAAsrr:
+		case TriCore_MOV_AAsrr:
 			status = DecodeAddrRegsRegisterClass(Inst, s1_d, Address, Decoder);
+			break;
+		case TriCore_ADDsrr:
+		case TriCore_MULsrr:
+		case TriCore_ANDsrr:
+		case TriCore_ORsrr:
+		case TriCore_XORsrr:
+			status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
+			if (status == MCDisassembler_Success)
+				status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
 			break;
 		default:
 			status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
@@ -280,7 +304,7 @@ static DecodeStatus DecodeSRRInstruction(MCInst *Inst, unsigned Insn,
 
 	// Decode s2.
 	switch(MCInst_getOpcode(Inst)) {
-		case TriCore_MOVAAsrr:
+		case TriCore_MOV_AAsrr:
 			status = DecodeAddrRegsRegisterClass(Inst, s2, Address, Decoder);
 			break;
 		default:
@@ -329,11 +353,11 @@ static DecodeStatus DecodeBOInstruction(MCInst *Inst, unsigned Insn,
 
 	// Decode s1_d.
 	switch(MCInst_getOpcode(Inst)) {
-		case TriCore_STAbo:
+		case TriCore_ST_Abo:
 			status = DecodeAddrRegsRegisterClass(Inst, s1_d, Address, Decoder);
 			break;
-		case TriCore_LDDbo:
-		case TriCore_STDbo:
+		case TriCore_LD_Dbo:
+		case TriCore_ST_Dbo:
 			status = DecodeExtRegsRegisterClass(Inst, s1_d, Address, Decoder);
 			break;
 		default:
@@ -401,7 +425,33 @@ static DecodeStatus DecodeRCInstruction(MCInst *Inst, unsigned Insn,
 	return MCDisassembler_Fail;
 
 	// Decode d.
-	status = DecodeDataRegsRegisterClass(Inst, d, Address, Decoder);
+	switch(MCInst_getOpcode(Inst)) {
+		case TriCore_AND_EQrc:
+		case TriCore_AND_NErc:
+		case TriCore_AND_LTrc:
+		case TriCore_AND_LT_Urc:
+		case TriCore_AND_GErc:
+		case TriCore_AND_GE_Urc:
+		case TriCore_OR_EQrc:
+		case TriCore_OR_NErc:
+		case TriCore_OR_LTrc:
+		case TriCore_OR_LT_Urc:
+		case TriCore_OR_GErc:
+		case TriCore_OR_GE_Urc:
+		case TriCore_XOR_EQrc:
+		case TriCore_XOR_NErc:
+		case TriCore_XOR_LTrc:
+		case TriCore_XOR_LT_Urc:
+		case TriCore_XOR_GErc:
+		case TriCore_XOR_GE_Urc:
+			status = DecodeDataRegsRegisterClass(Inst, d, Address, Decoder);
+			if (status == MCDisassembler_Success)
+				status = DecodeDataRegsRegisterClass(Inst, d, Address, Decoder);
+			break;
+		default:
+			status = DecodeDataRegsRegisterClass(Inst, d, Address, Decoder);
+			break;
+	}
 	if (status != MCDisassembler_Success)
 		return status;
 
@@ -472,7 +522,15 @@ static DecodeStatus DecodeRLCInstruction(MCInst *Inst, unsigned Insn,
 		return status;
 
 	// Decode s1.
-	status = DecodeDataRegsRegisterClass(Inst, s1, Address, Decoder);
+	switch(MCInst_getOpcode(Inst)) {
+		default:
+			status = DecodeDataRegsRegisterClass(Inst, s1, Address, Decoder);
+			break;
+		case TriCore_MOVrlc:
+		case TriCore_MOV_Urlc:
+		case TriCore_MOVHrlc:
+			break;
+	}
 	if (status != MCDisassembler_Success)
 		return status;
 
@@ -498,11 +556,33 @@ static DecodeStatus DecodeRRInstruction(MCInst *Inst, unsigned Insn,
 
 	// Decode d.
 	switch(MCInst_getOpcode(Inst)) {
-		case TriCore_ADDArr:
-		case TriCore_SUBArr:
-		case TriCore_MOVArr:
-		case TriCore_MOVAArr:
+		case TriCore_ADD_Arr:
+		case TriCore_SUB_Arr:
+		case TriCore_MOV_Arr:
+		case TriCore_MOV_AArr:
 			status = DecodeAddrRegsRegisterClass(Inst, d, Address, Decoder);
+			break;
+		case TriCore_AND_EQrr:
+		case TriCore_AND_NErr:
+		case TriCore_AND_LTrr:
+		case TriCore_AND_LT_Urr:
+		case TriCore_AND_GErr:
+		case TriCore_AND_GE_Urr:
+		case TriCore_OR_EQrr:
+		case TriCore_OR_NErr:
+		case TriCore_OR_LTrr:
+		case TriCore_OR_LT_Urr:
+		case TriCore_OR_GErr:
+		case TriCore_OR_GE_Urr:
+		case TriCore_XOR_EQrr:
+		case TriCore_XOR_NErr:
+		case TriCore_XOR_LTrr:
+		case TriCore_XOR_LT_Urr:
+		case TriCore_XOR_GErr:
+		case TriCore_XOR_GE_Urr:
+			status = DecodeDataRegsRegisterClass(Inst, d, Address, Decoder);
+			if (status == MCDisassembler_Success)
+				status = DecodeDataRegsRegisterClass(Inst, d, Address, Decoder);
 			break;
 		default:
 			status = DecodeDataRegsRegisterClass(Inst, d, Address, Decoder);
@@ -513,8 +593,8 @@ static DecodeStatus DecodeRRInstruction(MCInst *Inst, unsigned Insn,
 
 	// Decode s1.
 	switch(MCInst_getOpcode(Inst)) {
-		case TriCore_ADDArr:
-		case TriCore_SUBArr:
+		case TriCore_ADD_Arr:
+		case TriCore_SUB_Arr:
 			status = DecodeAddrRegsRegisterClass(Inst, s1, Address, Decoder);
 			break;
 		default:
@@ -526,10 +606,10 @@ static DecodeStatus DecodeRRInstruction(MCInst *Inst, unsigned Insn,
 
 	// Decode s2.
 	switch(MCInst_getOpcode(Inst)) {
-		case TriCore_ADDArr:
-		case TriCore_SUBArr:
-		case TriCore_MOVDrr:
-		case TriCore_MOVAArr:
+		case TriCore_ADD_Arr:
+		case TriCore_SUB_Arr:
+		case TriCore_MOV_Drr:
+		case TriCore_MOV_AArr:
 			status = DecodeAddrRegsRegisterClass(Inst, s2, Address, Decoder);
 			break;
 		default:

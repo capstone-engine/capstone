@@ -97,7 +97,6 @@ static insn_map insns[] = {
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
-
 	{
 		TriCore_ABS, TRICORE_INS_ABS,
 #ifndef CAPSTONE_DIET
@@ -105,39 +104,39 @@ static insn_map insns[] = {
 #endif
 	},
 	{
-		TriCore_ADDArr, TRICORE_INS_ADD,
+		TriCore_ADDCrc, TRICORE_INS_ADDC,
+#ifndef CAPSTONE_DIET
+		{ TRICORE_REG_PSW, 0 }, { TRICORE_REG_PSW, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_ADDCrr, TRICORE_INS_ADDC,
+#ifndef CAPSTONE_DIET
+		{ TRICORE_REG_PSW, 0 }, { TRICORE_REG_PSW, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_ADDIrlc, TRICORE_INS_ADDI,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_ADDCrc, TRICORE_INS_ADD,
+		TriCore_ADDXrc, TRICORE_INS_ADDX,
 #ifndef CAPSTONE_DIET
 		{ TRICORE_REG_PSW, 0 }, { TRICORE_REG_PSW, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_ADDCrr, TRICORE_INS_ADD,
+		TriCore_ADDXrr, TRICORE_INS_ADDX,
 #ifndef CAPSTONE_DIET
 		{ TRICORE_REG_PSW, 0 }, { TRICORE_REG_PSW, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_ADDIrlc, TRICORE_INS_ADD,
+		TriCore_ADD_Arr, TRICORE_INS_ADD_A,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		TriCore_ADDXrc, TRICORE_INS_ADD,
-#ifndef CAPSTONE_DIET
-		{ TRICORE_REG_PSW, 0 }, { TRICORE_REG_PSW, 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		TriCore_ADDXrr, TRICORE_INS_ADD,
-#ifndef CAPSTONE_DIET
-		{ TRICORE_REG_PSW, 0 }, { TRICORE_REG_PSW, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
@@ -177,61 +176,85 @@ static insn_map insns[] = {
 #endif
 	},
 	{
-		TriCore_ANDNrc, TRICORE_INS_AND,
+		TriCore_ANDNrc, TRICORE_INS_ANDN,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_ANDNrc64, TRICORE_INS_AND,
+		TriCore_ANDNrc64, TRICORE_INS_ANDN,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_AND_EQrc, TRICORE_INS_AND,
+		TriCore_AND_EQrc, TRICORE_INS_AND_EQ,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_AND_EQrr, TRICORE_INS_AND,
+		TriCore_AND_EQrr, TRICORE_INS_AND_EQ,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_AND_GEUrc, TRICORE_INS_AND,
+		TriCore_AND_GE_Urc, TRICORE_INS_AND_GE_U,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_AND_GE_Urr, TRICORE_INS_AND,
+		TriCore_AND_GE_Urr, TRICORE_INS_AND_GE_U,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_AND_GErc, TRICORE_INS_AND,
+		TriCore_AND_GErc, TRICORE_INS_AND_GE,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_AND_LTUrc, TRICORE_INS_AND,
+		TriCore_AND_GErr, TRICORE_INS_AND_GE,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_AND_LT_Urr, TRICORE_INS_AND,
+		TriCore_AND_LT_Urc, TRICORE_INS_AND_LT_U,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_AND_LTrc, TRICORE_INS_AND,
+		TriCore_AND_LT_Urr, TRICORE_INS_AND_LT_U,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_AND_LTrc, TRICORE_INS_AND_LT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_AND_LTrr, TRICORE_INS_AND_LT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_AND_NErc, TRICORE_INS_AND_NE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_AND_NErr, TRICORE_INS_AND_NE,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -351,37 +374,37 @@ static insn_map insns[] = {
 #endif
 	},
 	{
-		TriCore_LDBUbo, TRICORE_INS_LDBU,
+		TriCore_LD_BUbo, TRICORE_INS_LD_BU,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_LDBbo, TRICORE_INS_LDB,
+		TriCore_LD_Bbo, TRICORE_INS_LD_B,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_LDDbo, TRICORE_INS_LDD,
+		TriCore_LD_Dbo, TRICORE_INS_LD_D,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_LDHUbo, TRICORE_INS_LDHU,
+		TriCore_LD_HUbo, TRICORE_INS_LD_HU,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_LDHbo, TRICORE_INS_LDH,
+		TriCore_LD_Hbo, TRICORE_INS_LD_H,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_LDWbo, TRICORE_INS_LDW,
+		TriCore_LD_Wbo, TRICORE_INS_LD_W,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -399,37 +422,37 @@ static insn_map insns[] = {
 #endif
 	},
 	{
-		TriCore_MOVAArr, TRICORE_INS_MOVAA,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		TriCore_MOVAAsrr, TRICORE_INS_MOVAA,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		TriCore_MOVArr, TRICORE_INS_MOVA,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		TriCore_MOVDrr, TRICORE_INS_MOVD,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
 		TriCore_MOVHrlc, TRICORE_INS_MOVH,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_MOVUrlc, TRICORE_INS_MOVU,
+		TriCore_MOV_AArr, TRICORE_INS_MOV_AA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_MOV_AAsrr, TRICORE_INS_MOV_AA,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_MOV_Arr, TRICORE_INS_MOV_A,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_MOV_Drr, TRICORE_INS_MOV_D,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_MOV_Urlc, TRICORE_INS_MOV_U,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -537,7 +560,26 @@ static insn_map insns[] = {
 #endif
 	},
 	{
-		TriCore_OR_GEUrc, TRICORE_INS_OR_GEU,
+		TriCore_OR_EQrc, TRICORE_INS_OR_EQ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_OR_EQrr, TRICORE_INS_OR_EQ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_OR_GE_Urc, TRICORE_INS_OR_GE_U,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	
+	},
+	{
+		TriCore_OR_GE_Urr, TRICORE_INS_OR_GE_U,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -556,7 +598,13 @@ static insn_map insns[] = {
 #endif
 	},
 	{
-		TriCore_OR_LTUrc, TRICORE_INS_OR_LTU,
+		TriCore_OR_LT_Urc, TRICORE_INS_OR_LT_U,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_OR_LT_Urr, TRICORE_INS_OR_LT_U,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -664,45 +712,33 @@ static insn_map insns[] = {
 #endif
 	},
 	{
-		TriCore_STAbo, TRICORE_INS_STA,
+		TriCore_ST_Abo, TRICORE_INS_ST_A,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_STBbo, TRICORE_INS_STB,
+		TriCore_ST_Bbo, TRICORE_INS_ST_B,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_STDbo, TRICORE_INS_STD,
+		TriCore_ST_Dbo, TRICORE_INS_ST_D,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_STHbo, TRICORE_INS_STH,
+		TriCore_ST_Hbo, TRICORE_INS_ST_H,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
-		TriCore_STWbo, TRICORE_INS_STW,
+		TriCore_ST_Wbo, TRICORE_INS_ST_W,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		TriCore_SUBArr, TRICORE_INS_SUBA,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-	},
-	{
-		TriCore_SUBAsc, TRICORE_INS_SUBA,
-#ifndef CAPSTONE_DIET
-		{ TRICORE_REG_A10, 0 }, { TRICORE_REG_A10, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
@@ -715,6 +751,18 @@ static insn_map insns[] = {
 		TriCore_SUBXrr, TRICORE_INS_SUBX,
 #ifndef CAPSTONE_DIET
 		{ TRICORE_REG_PSW, 0 }, { TRICORE_REG_PSW, 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_SUB_Arr, TRICORE_INS_SUB_A,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_SUB_Asc, TRICORE_INS_SUB_A,
+#ifndef CAPSTONE_DIET
+		{ TRICORE_REG_A10, 0 }, { TRICORE_REG_A10, 0 }, { 0 }, 0, 0
 #endif
 	},
 	{
@@ -731,6 +779,78 @@ static insn_map insns[] = {
 	},
 	{
 		TriCore_XNORrc, TRICORE_INS_XNOR,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_XOR_EQrc, TRICORE_INS_XOR_EQ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_XOR_EQrr, TRICORE_INS_XOR_EQ,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_XOR_GE_Urc, TRICORE_INS_XOR_GE_U,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_XOR_GE_Urr, TRICORE_INS_XOR_GE_U,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_XOR_GErc, TRICORE_INS_XOR_GE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_XOR_GErr, TRICORE_INS_XOR_GE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_XOR_LT_Urc, TRICORE_INS_XOR_LT_U,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_XOR_LT_Urr, TRICORE_INS_XOR_LT_U,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_XOR_LTrc, TRICORE_INS_XOR_LT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_XOR_LTrr, TRICORE_INS_XOR_LT,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_XOR_NErc, TRICORE_INS_XOR_NE,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
+		TriCore_XOR_NErr, TRICORE_INS_XOR_NE,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -808,7 +928,18 @@ static name_map insn_name_maps[] = {
 	{ TRICORE_INS_INVALID, NULL },
 
 	{ TRICORE_INS_ABS, "abs" },
+	{ TRICORE_INS_ADDC, "addc" },
+	{ TRICORE_INS_ADDI, "addi" },
+	{ TRICORE_INS_ADDX, "addx" },
+	{ TRICORE_INS_ADD_A, "add.a" },
 	{ TRICORE_INS_ADD, "add" },
+	{ TRICORE_INS_ANDN, "andn" },
+	{ TRICORE_INS_AND_EQ, "and.eq" },
+	{ TRICORE_INS_AND_GE_U, "and.ge.u" },
+	{ TRICORE_INS_AND_GE, "and.ge" },
+	{ TRICORE_INS_AND_LT_U, "and.lt.u" },
+	{ TRICORE_INS_AND_LT, "and.lt" },
+	{ TRICORE_INS_AND_NE, "and.ne" },
 	{ TRICORE_INS_AND, "and" },
 	{ TRICORE_INS_CALL, "call" },
 	{ TRICORE_INS_DEXTR, "dextr" },
@@ -819,18 +950,18 @@ static name_map insn_name_maps[] = {
 	{ TRICORE_INS_JNZ, "jnz" },
 	{ TRICORE_INS_JZ, "jz" },
 	{ TRICORE_INS_J, "j" },
-	{ TRICORE_INS_LDBU, "ldbu" },
-	{ TRICORE_INS_LDB, "ldb" },
-	{ TRICORE_INS_LDD, "ldd" },
-	{ TRICORE_INS_LDHU, "ldhu" },
-	{ TRICORE_INS_LDH, "ldh" },
-	{ TRICORE_INS_LDW, "ldw" },
+	{ TRICORE_INS_LD_BU, "ld.bu" },
+	{ TRICORE_INS_LD_B, "ld.b" },
+	{ TRICORE_INS_LD_D, "ld.d" },
+	{ TRICORE_INS_LD_HU, "ld.hu" },
+	{ TRICORE_INS_LD_H, "ld.h" },
+	{ TRICORE_INS_LD_W, "ld.w" },
 	{ TRICORE_INS_LT, "lt" },
-	{ TRICORE_INS_MOVAA, "movaa" },
-	{ TRICORE_INS_MOVA, "mova" },
-	{ TRICORE_INS_MOVD, "movd" },
 	{ TRICORE_INS_MOVH, "movh" },
-	{ TRICORE_INS_MOVU, "movu" },
+	{ TRICORE_INS_MOV_AA, "mov.aa" },
+	{ TRICORE_INS_MOV_A, "mov.a" },
+	{ TRICORE_INS_MOV_D, "mov.d" },
+	{ TRICORE_INS_MOV_U, "mov.u" },
 	{ TRICORE_INS_MOV, "mov" },
 	{ TRICORE_INS_MUL, "mul" },
 	{ TRICORE_INS_NAND, "nand" },
@@ -838,9 +969,9 @@ static name_map insn_name_maps[] = {
 	{ TRICORE_INS_NOR, "nor" },
 	{ TRICORE_INS_NOT, "not" },
 	{ TRICORE_INS_ORN, "orn" },
-	{ TRICORE_INS_OR_GEU, "or.geu" },
+	{ TRICORE_INS_OR_GE_U, "or.ge.u" },
 	{ TRICORE_INS_OR_GE, "or.ge" },
-	{ TRICORE_INS_OR_LTU, "or.ltu" },
+	{ TRICORE_INS_OR_LT_U, "or.lt.u" },
 	{ TRICORE_INS_OR_LT, "or.lt" },
 	{ TRICORE_INS_OR_NE, "or.ne" },
 	{ TRICORE_INS_OR, "or" },
@@ -848,17 +979,22 @@ static name_map insn_name_maps[] = {
 	{ TRICORE_INS_RSUB, "rsub" },
 	{ TRICORE_INS_SHA, "sha" },
 	{ TRICORE_INS_SH, "sh" },
-	{ TRICORE_INS_STA, "sta" },
-	{ TRICORE_INS_STB, "stb" },
-	{ TRICORE_INS_STD, "std" },
-	{ TRICORE_INS_STH, "sth" },
-	{ TRICORE_INS_STW, "stw" },
-	{ TRICORE_INS_SUBA, "suba" },
+	{ TRICORE_INS_ST_A, "st.a" },
+	{ TRICORE_INS_ST_B, "st.b" },
+	{ TRICORE_INS_ST_D, "st.d" },
+	{ TRICORE_INS_ST_H, "st.h" },
+	{ TRICORE_INS_ST_W, "st.w" },
 	{ TRICORE_INS_SUBC, "subc" },
 	{ TRICORE_INS_SUBX, "subx" },
+	{ TRICORE_INS_SUB_A, "sub.a" },	
 	{ TRICORE_INS_SUB, "sub" },
 	{ TRICORE_INS_Select8, "select8" },
 	{ TRICORE_INS_XNOR, "xnor" },
+	{ TRICORE_INS_XOR_GE_U, "xor.ge.u" },
+	{ TRICORE_INS_XOR_GE, "xor.ge" },
+	{ TRICORE_INS_XOR_LT_U, "xor.lt.u" },
+	{ TRICORE_INS_XOR_LT, "xor.lt" },
+	{ TRICORE_INS_XOR_NE, "xor.ne" },
 	{ TRICORE_INS_XOR, "xor" },
 };
 
