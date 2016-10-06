@@ -261,10 +261,6 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 #endif
 
 
-  if (strchr((const char *)AsmStrs+(Bits & 1023)-1, '[')) {
-    set_mem_access(MI, true);
-  }
-
   // Fragment 0 encoded into 3 bits for 5 unique commands.
   switch ((Bits >> 10) & 7) {
   default: // unreachable.

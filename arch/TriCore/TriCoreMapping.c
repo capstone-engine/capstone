@@ -13,6 +13,7 @@
 #define GET_INSTRINFO_ENUM
 #include "TriCoreGenInstrInfo.inc"
 
+#ifndef CAPSTONE_DIET
 static name_map reg_name_maps[] = {
 	{ TRICORE_REG_INVALID, NULL },
 
@@ -63,6 +64,7 @@ static name_map reg_name_maps[] = {
 	{ TRICORE_REG_PC, "pc" },
 	{ TRICORE_REG_FCX, "fcx" },
 };
+#endif
 
 const char *TriCore_reg_name(csh handle, unsigned int reg)
 {
@@ -74,19 +76,6 @@ const char *TriCore_reg_name(csh handle, unsigned int reg)
 #else
 	return NULL;
 #endif
-}
-
-tricore_reg TriCore_reg_id(char *name)
-{
-	int i;
-
-	for(i = 1; i < ARR_SIZE(reg_name_maps); i++) {
-		if (!strcmp(name, reg_name_maps[i].name))
-			return reg_name_maps[i].id;
-	}
-
-	// not found
-	return 0;
 }
 
 static insn_map insns[] = {

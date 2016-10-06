@@ -33,23 +33,6 @@ static char *getRegisterName(unsigned RegNo);
 static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 static void printOperand(MCInst *MI, int OpNum, SStream *O);
 
-static void set_mem_access(MCInst *MI, bool status)
-{
-	if (MI->csh->detail != CS_OPT_ON)
-		return;
-
-	MI->csh->doing_mem = status;
-
-	if (status) {
-		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_MEM;
-		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.base = TRICORE_REG_INVALID;
-		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.disp = 0;
-	} else {
-		// done, create the next operand slot
-		MI->flat_insn->detail->tricore.op_count++;
-	}
-}
-
 void TriCore_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 {
 	/*
@@ -77,55 +60,36 @@ static void printOperand(MCInst *MI, int OpNum, SStream *O)
 		return;
 
 	Op = MCInst_getOperand(MI, OpNum);
+
 	if (MCOperand_isReg(Op)) {
 		unsigned int reg = MCOperand_getReg(Op);
 		printRegName(O, reg);
 		reg = TriCore_map_register(reg);
+
 		if (MI->csh->detail) {
-			if (MI->csh->doing_mem) {
-				MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.base = reg;
-			} else {
-				MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_REG;
-				MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = reg;
-				MI->flat_insn->detail->tricore.op_count++;
-			}
+			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_REG;
+			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = reg;
+			MI->flat_insn->detail->tricore.op_count++;
 		}
 	} else if (MCOperand_isImm(Op)) {
-		int64_t imm = MCOperand_getImm(Op);
-		if (MI->csh->doing_mem) {
-			if (imm) {	// only print Imm offset if it is not 0
-				if (imm >= 0) {
-					if (imm > HEX_THRESHOLD)
-						SStream_concat(O, "0x%"PRIx64, imm);
-					else
-						SStream_concat(O, "%"PRIu64, imm);
-				} else {
-					if (imm < -HEX_THRESHOLD)
-						SStream_concat(O, "-0x%"PRIx64, -imm);
-					else
-						SStream_concat(O, "-%"PRIu64, -imm);
-				}
-			}
-			if (MI->csh->detail)
-				MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.disp = imm;
-		} else {
-			if (imm >= 0) {
-				if (imm > HEX_THRESHOLD)
-					SStream_concat(O, "0x%"PRIx64, imm);
-				else
-					SStream_concat(O, "%"PRIu64, imm);
-			} else {
-				if (imm < -HEX_THRESHOLD)
-					SStream_concat(O, "-0x%"PRIx64, -imm);
-				else
-					SStream_concat(O, "-%"PRIu64, -imm);
-			}
+		int64_t Imm = MCOperand_getImm(Op);
 
-			if (MI->csh->detail) {
-				MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_IMM;
-				MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].imm = imm;
-				MI->flat_insn->detail->tricore.op_count++;
-			}
+		if (Imm >= 0) {
+			if (Imm > HEX_THRESHOLD)
+				SStream_concat(O, "0x%"PRIx64, Imm);
+			else
+				SStream_concat(O, "%"PRIu64, Imm);
+		} else {
+			if (Imm < -HEX_THRESHOLD)
+				SStream_concat(O, "-0x%"PRIx64, -Imm);
+			else
+				SStream_concat(O, "-%"PRIu64, -Imm);
+		}
+
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_IMM;
+			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].imm = Imm;
+			MI->flat_insn->detail->tricore.op_count++;
 		}
 	}
 }
@@ -189,20 +153,25 @@ static void printPCRelImmOperand(MCInst *MI, int OpNum, SStream *O) {
 // Print a 'memsrc' operand which is a (Register, Offset) pair.
 static void printAddrModeMemSrc(MCInst *MI, int OpNum, SStream *O) {
 
-	set_mem_access(MI, true);
-	MCOperand *Base = MCInst_getOperand(MI, OpNum);
+	unsigned Base = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
+	uint64_t Disp = (uint64_t)MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
 
-	// Print register base field
-	if (MCOperand_isReg(Base)) {
-		SStream_concat(O, "[");
-		printRegName(O, MCOperand_getReg(Base));
-		SStream_concat(O, "]");
+	SStream_concat(O, "[");
+	printRegName(O, Base);
+	SStream_concat(O, "]");
+
+	if (Disp > HEX_THRESHOLD)
+		SStream_concat(O, "0x%"PRIx64, Disp);
+	else
+		SStream_concat(O, "%"PRIu64, Disp);
+
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_MEM;
+		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.base = (uint8_t)TriCore_map_register(Base);
+		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.disp = (int64_t)Disp;
+		MI->flat_insn->detail->tricore.op_count++;
 	}
-
-	printOperand(MI, OpNum+1, O); // Disp
-	set_mem_access(MI, false);
 }
-
 
 #define PRINT_ALIAS_INSTR
 #include "TriCoreGenAsmWriter.inc"
@@ -210,7 +179,6 @@ static void printAddrModeMemSrc(MCInst *MI, int OpNum, SStream *O) {
 void TriCore_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	printInstruction(MI, O, Info);
-	set_mem_access(MI, false);
 }
 
 #endif
