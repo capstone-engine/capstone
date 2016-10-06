@@ -47,7 +47,7 @@ static void print_insn_detail(cs_insn *ins)
 			default:
 				break;
 			case TRICORE_OP_REG:
-				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
+				printf("\t\toperands[%u].type: REG = %s, %d\n", i, cs_reg_name(handle, op->reg), op->reg);
 				break;
 			case TRICORE_OP_IMM:
 				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->imm);
