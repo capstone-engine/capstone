@@ -22,7 +22,6 @@ static uint8_t converth(char c)//convert cahr A of AB to 0xA0
         result = 16 * (10 + intc - 'A');
     }
     
-    printf("this high char is %c and the (int)c is %d, and the result is %x \n",c,intc,result);//just for testing
     return result;
 }
 
@@ -43,7 +42,6 @@ static uint8_t convertl(char c)//convert char B of AB to 0xB
         result = 10 + intc - 'A';
     }
     
-    printf("this low char is %c and the (int)c is %d,and the convert result is %x\n",c,intc,result);
     return result;
 }
 
@@ -54,19 +52,17 @@ static uint8_t * preprocess(char * code)
     int i,j=0;
     uint8_t intc, high, low;
     
-    for (i = 0; i<strlen(code); i++) {
-        intc = (int)code[i];
-        if ((intc >= '0' && intc <= '9') || (intc >= 'a' && intc <= 'f') || (intc >= 'A' && intc <= 'F')) {//Skip the character not in set A = {'a'~'f','A'~'F','0'~'9'}.
-            printf("the %d code char is %c\n",i,code[i]);
-            uint8_t ints = (int)code[i+1];
-            if ((ints >= '0' && ints <= '9') || (ints >= 'a' && ints <= 'f') || (ints >= 'A' && ints <= 'F')) {//Valid hexadecimal must be AB, A can't represent 0A.
-                high = converth(code[i]);
-                low = convertl(code[i+1]);
-                result[j] = high + low;
-                j++;
-                i++;
-            }
+    while (code[i] != '\0') {
+        
+        if (isxdigit(code[i]) && isxdigit(code[i+1])) {
+            high = converth(code[i]);
+            low = convertl(code[i+1]);
+            result[j] = high + low;
+            i++;
+            j++;
         }
+        
+        i++;
     }
 
     return result;
@@ -80,12 +76,12 @@ static void usage(char * prog)
     if (cs_support(CS_ARCH_ARM)) {
         printf("        arm:       32-bit ARM\n");
         printf("        armb:      arm + big endian\n");
-        printf("        thumb:     Thumb - little endian\n");
-        printf("        thumbbe:   Thumb - big endian\n");
+        printf("        thumb:     Thumb mode\n");
+        printf("        thumbbe:   Thumb + big endian\n");
     }
     
     if (cs_support(CS_ARCH_ARM64)) {
-         printf("        arm64:     AArch64 - little endian\n");
+         printf("        arm64:     AArch64 mode\n");
     }
     
     if (cs_support(CS_ARCH_MIPS)) {
@@ -141,8 +137,7 @@ int main(int argc, char ** argv)
     
     mode = argv[1];
     assembly = preprocess(argv[2]);
-    printf("strlen of assembly is %lu",strlen((char *)assembly));
-    
+   
     if (strlen((char *)assembly) == 0) {
         printf("Please inpute complete hexadecimal number.\n");
         return -1;
@@ -239,13 +234,13 @@ int main(int argc, char ** argv)
         return -1;
     }
     //test
-    int k;
-    printf("the result of converting is :");
-    for (k=0;  k <= strlen((char *)assembly); k++) {
-        printf("%x ",assembly[k]);
+    int i = 0;
+    
+    for (i=0;i<strlen((char *)assembly);i++) {
+        printf("%x ", assembly[i]);
     }
-    printf("\n the strlen of assembly is %lu\n",strlen((char *)assembly));
-    //end test
+    
+    printf("strlen of assembly is %lu \n",strlen((char *)assembly));
     size = cs_disasm(handle, assembly, strlen((char *)assembly),
                                          0x1000,//Is this address necessary?
                                          0,
