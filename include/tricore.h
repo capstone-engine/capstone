@@ -30,7 +30,6 @@ typedef enum tricore_op_type {
 // This is associated with TRICORE_OP_MEM operand type above
 typedef struct tricore_op_mem {
 	uint8_t base;	// base register
-	uint8_t index;	// index register
 	int32_t disp;	// displacement/offset value
 } tricore_op_mem;
 
