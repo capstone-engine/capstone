@@ -41,12 +41,6 @@ void TriCore_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 	 */
 }
 
-static void printRegName(SStream *OS, unsigned RegNo)
-{
-	SStream_concat0(OS, "%");
-	SStream_concat0(OS, getRegisterName(RegNo));
-}
-
 #define GET_INSTRINFO_ENUM
 #include "TriCoreGenInstrInfo.inc"
 
@@ -63,7 +57,7 @@ static void printOperand(MCInst *MI, int OpNum, SStream *O)
 
 	if (MCOperand_isReg(Op)) {
 		unsigned int reg = MCOperand_getReg(Op);
-		printRegName(O, reg);
+		SStream_concat(O, "%%%s", getRegisterName(reg));
 		reg = TriCore_map_register(reg);
 
 		if (MI->csh->detail) {
@@ -157,7 +151,7 @@ static void printAddrModeMemSrc(MCInst *MI, int OpNum, SStream *O) {
 	uint64_t Disp = (uint64_t)MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
 
 	SStream_concat(O, "[");
-	printRegName(O, Base);
+	SStream_concat(O, "%%%s", getRegisterName(Base));
 	SStream_concat(O, "]");
 
 	if (Disp > HEX_THRESHOLD)

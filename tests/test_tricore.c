@@ -47,7 +47,7 @@ static void print_insn_detail(cs_insn *ins)
 			default:
 				break;
 			case TRICORE_OP_REG:
-				printf("\t\toperands[%u].type: REG = %s, %d\n", i, cs_reg_name(handle, op->reg), op->reg);
+				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;
 			case TRICORE_OP_IMM:
 				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->imm);
@@ -57,9 +57,6 @@ static void print_insn_detail(cs_insn *ins)
 				if (op->mem.base != TRICORE_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.base: REG = %s\n",
 							i, cs_reg_name(handle, op->mem.base));
-				if (op->mem.index != TRICORE_REG_INVALID)
-					printf("\t\t\toperands[%u].mem.index: REG = %s\n",
-							i, cs_reg_name(handle, op->mem.index));
 				if (op->mem.disp != 0)
 					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
 
@@ -72,7 +69,7 @@ static void print_insn_detail(cs_insn *ins)
 
 static void test()
 {
-#define TRICORE_CODE "\x16\x01\x20\x01\x1d\x00\x02\x00\x8f\x70\x00\x11\x40\xae\x89\xee\x04\x09\x42\xf2\xe2\xf2"
+#define TRICORE_CODE "\x16\x01\x20\x01\x1d\x00\x02\x00\x8f\x70\x00\x11\x40\xae\x89\xee\x04\x09\x42\xf2\xe2\xf2\xc2\x11\x19\xff\xc0\x70\x19\xff\x20\x10"
 
 	struct platform platforms[] = {
 		{
