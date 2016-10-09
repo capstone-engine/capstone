@@ -1,4 +1,7 @@
-This is a sample code for Capstone disassembly framework (www.capstone-engine.org)
+This directory contains cstool of capstone engine.
+To compile, simply run "make" on commandline. And after that, you could use 
+./cstool <arch+mode> <assembler-string> [start-address-in-hex-format]
+to use directly capstone engine.
 
-To compile, simply run "make" on commandline.
-This will generate the executable binary file "test1".
+To see <arch+mode> options are supported, you could input ./cstool 
+

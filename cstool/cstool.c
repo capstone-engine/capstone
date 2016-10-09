@@ -1,68 +1,48 @@
+/* Tang Yuhang <1648200150@qq.com> 2016 */
 #include <stdio.h>
 #include <inttypes.h>
 #include <string.h>
-#include <stdlib.h>
+#include <ctype.h>
+#include <errno.h>
 
 #include <capstone/capstone.h>
 
-static uint8_t converth(char c)//convert cahr A of AB to 0xA0
+
+// convert hexchar to hexnum
+static uint8_t char_to_hexnum(char c)
 {
-    uint8_t result,intc;
-    intc = (int) c;
-    
-    if (intc >= '0' && intc <= '9') {
-        result = 16 * (intc - '0');
+    if (c >= '0' && c <= '9') {
+        return (uint8_t)(c - '0');
     }
     
-    if (intc >= 'a' && intc <= 'f') {
-        result = 16 *(10 + intc - 'a');
+    if (c >= 'a' && c <= 'f') {
+        return (uint8_t)(10 + c - 'a');
     }
     
-    if (intc >= 'A' && intc <= 'F') {
-        result = 16 * (10 + intc - 'A');
-    }
-    
-    return result;
+    //  c >= 'A' && c <= 'F'
+    return (uint8_t)(10 + c - 'A');
 }
 
-static uint8_t convertl(char c)//convert char B of AB to 0xB
+// convert user input (char[]) to uint8_t[], each element of which is valid hexadecimal, and return actual length of uint8_t[].
+static uint8_t *preprocess(char *code, size_t *size)
 {
-    uint8_t result,intc;
-    intc = (int) c;
-    
-    if (intc >= '0' && intc <= '9') {
-        result = intc - '0';
-    }
-    
-    if (intc >= 'a' && intc <= 'f') {
-        result = 10 + intc - 'a';
-    }
-    
-    if (intc >= 'A' && intc <= 'F') {
-        result = 10 + intc - 'A';
-    }
-    
-    return result;
-}
-
-static uint8_t * preprocess(char * code)
-{
-    uint8_t * result;
+    size_t i, j = 0;
+    uint8_t high, low;
+    uint8_t *result;
     result = (uint8_t *)malloc(strlen(code));
-    int i,j=0;
-    uint8_t intc, high, low;
     
-    while (code[i] != '\0') {
-        
-        if (isxdigit(code[i]) && isxdigit(code[i+1])) {
-            high = converth(code[i]);
-            low = convertl(code[i+1]);
-            result[j] = high + low;
+    if (result != NULL) {
+        while (code[i] != '\0') {
+            if (isxdigit(code[i]) && isxdigit(code[i+1])) {
+                high = 16 * char_to_hexnum(code[i]);
+                low = char_to_hexnum(code[i+1]);
+                result[j] = high + low;
+                i++;
+                j++;
+            }
             i++;
-            j++;
         }
-        
-        i++;
+        *size = j;
     }
 
     return result;
@@ -70,18 +50,20 @@ static uint8_t * preprocess(char * code)
 
 static void usage(char * prog)
 {
-    printf("Syntax: %s <arch+mode> <assembler-string>", prog);
+    printf("Syntax: %s <arch+mode> <assembler-string> [start-address-in-hex-format]\n", prog);
     printf("\nThe following <arch+mode> options are supported:\n");
     
     if (cs_support(CS_ARCH_ARM)) {
-        printf("        arm:       32-bit ARM\n");
+        printf("        arm:       arm\n");
         printf("        armb:      arm + big endian\n");
-        printf("        thumb:     Thumb mode\n");
-        printf("        thumbbe:   Thumb + big endian\n");
+        printf("        arml:      arm + little endian\n");
+        printf("        thumb:     thumb mode\n");
+        printf("        thumbbe:   thumb + big endian\n");
+        printf("        thumble:   thumb + billtle endian\n");
     }
     
     if (cs_support(CS_ARCH_ARM64)) {
-         printf("        arm64:     AArch64 mode\n");
+         printf("        arm64:     aarch64 mode\n");
     }
     
     if (cs_support(CS_ARCH_MIPS)) {
@@ -106,88 +88,119 @@ static void usage(char * prog)
     }
     
     if (cs_support(CS_ARCH_SPARC)) {
-        printf("        sparcv9:   sparcv9\n");
+        printf("        sparc:     sparc\n");
     }
     
     if (cs_support(CS_ARCH_SYSZ)) {
-       printf("        systemz:   SystemZ (S390x)\n");
+       printf("        systemz:   systemz (s390x)\n");
     }
     
     if (cs_support(CS_ARCH_XCORE)) {
-        printf("        xcore:     XCORE\n");
+        printf("        xcore:     xcore\n");
     }
     
     printf("\n");
 }
 
-int main(int argc, char ** argv)
+int main(int argc, char **argv)
 {
     csh handle;
     char *mode;
     uint8_t *assembly;
-    size_t size;
-    uint64_t *address;
+    size_t count, size;
+    uint64_t address = 0;
     cs_insn *insn;
     cs_err err;
-    
-    if (argc != 3) {
+
+    if (argc != 3 && argc != 4) {
         usage(argv[0]);
         return -1;
     }
     
+    /*if (argc == 4) {
+        // cstool <arch> <assembly> <address>
+        char *temp;
+        address = strtoull(argv[3], &temp, 16);
+        if (temp == argv[3] || *temp != '\0' || errno == ERANGE) {
+            printf("ERROR: invalid address argument, quit!\n");
+            return -2;
+        }
+    }*/
+    
     mode = argv[1];
-    assembly = preprocess(argv[2]);
-   
-    if (strlen((char *)assembly) == 0) {
-        printf("Please inpute complete hexadecimal number.\n");
-        return -1;
+    assembly = preprocess(argv[2], &size);
+    if (assembly == NULL) {
+        printf("ERROR: invalid assembler-string argument, quit!\n");
+        return -3;
     }
     
-    if (!strcmp(mode,"arm")) {
+    if (argc == 4) {
+        // cstool <arch> <assembly> <address>
+        char *temp;
+        address = strtoull(argv[3], &temp, 16);
+        if (temp == argv[3] || *temp != '\0' || errno == ERANGE) {
+            printf("ERROR: invalid address argument, quit!\n");
+            return -2;
+        }
+    }
+    
+    if (!strcmp(mode, "arm")) {
         err = cs_open(CS_ARCH_ARM, CS_MODE_ARM, &handle);
     }
     
-    if (!strcmp(mode,"armb")) {
-        err = cs_open(CS_ARCH_ARM, CS_MODE_ARM+CS_MODE_LITTLE_ENDIAN, &handle);
+    if (!strcmp(mode, "armb")) {
+        err = cs_open(CS_ARCH_ARM, CS_MODE_ARM + CS_MODE_BIG_ENDIAN, &handle);
     }
     
-    if (!strcmp(mode,"thumb")) {
-        err = cs_open(CS_ARCH_ARM, CS_MODE_THUMB+CS_MODE_LITTLE_ENDIAN, &handle);
+    if (!strcmp(mode, "arml")) {
+        err = cs_open(CS_ARCH_ARM, CS_MODE_ARM + CS_MODE_LITTLE_ENDIAN, &handle);
     }
     
-    if (!strcmp(mode,"thumbbe")) {
-        err = cs_open(CS_ARCH_ARM, CS_MODE_THUMB+CS_MODE_BIG_ENDIAN, &handle);
+    if (!strcmp(mode, "thumb")) {
+        err = cs_open(CS_ARCH_ARM, CS_MODE_THUMB + CS_MODE_LITTLE_ENDIAN, &handle);
     }
     
-    if (!strcmp(mode,"armb64")) {
+    if (!strcmp(mode, "thumbbe")) {
+        err = cs_open(CS_ARCH_ARM, CS_MODE_THUMB + CS_MODE_BIG_ENDIAN, &handle);
+    }
+    
+    if (!strcmp(mode, "thumble")) {
+        err = cs_open(CS_ARCH_ARM, CS_MODE_ARM + CS_MODE_LITTLE_ENDIAN, &handle);
+    }
+    
+    if (!strcmp(mode, "arm64")) {
         err = cs_open(CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, &handle);
     }
     
-    if (!strcmp(mode,"mips")) {
-        err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS32+CS_MODE_LITTLE_ENDIAN, &handle);
+    if (!strcmp(mode, "mips")) {
+        err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS32 + CS_MODE_LITTLE_ENDIAN, &handle);
     }
     
-    if (!strcmp(mode,"mipsbe")) {
-        err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN, &handle);
+    if (!strcmp(mode, "mipsbe")) {
+        err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS32 + CS_MODE_BIG_ENDIAN, &handle);
     }
     
-    if (!strcmp(mode,"mips64be")) {
-        err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN, &handle);
+    if (!strcmp(mode, "mips64")) {
+        err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS64 + CS_MODE_BIG_ENDIAN, &handle);
     }
     
-    if (!strcmp(mode,"x16")) {
+    if (!strcmp(mode, "mips64be")) {
+        err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS64 + CS_MODE_BIG_ENDIAN, &handle);
+    }
+    
+    if (!strcmp(mode, "x16")) {
         err = cs_open(CS_ARCH_X86, CS_MODE_16, &handle);
     }
     
-    if (!strcmp(mode,"x32")) {
+    if (!strcmp(mode, "x32")) {
         err = cs_open(CS_ARCH_X86, CS_MODE_32, &handle);
     }
     
-    if (!strcmp(mode,"x64")) {
+    if (!strcmp(mode, "x64")) {
         err = cs_open(CS_ARCH_X86, CS_MODE_64, &handle);
     }
     
-    if (!strcmp(mode,"x16att")) {
+    if (!strcmp(mode, "x16att")) {
         err = cs_open(CS_ARCH_X86, CS_MODE_16, &handle);
         if (!err) {
             cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
@@ -209,15 +222,15 @@ int main(int argc, char ** argv)
     }
     
     if (!strcmp(mode,"ppc64")) {
-        err = cs_open(CS_ARCH_PPC,CS_MODE_64+CS_MODE_LITTLE_ENDIAN,&handle);
+        err = cs_open(CS_ARCH_PPC, CS_MODE_64+CS_MODE_LITTLE_ENDIAN, &handle);
     }
     
     if (!strcmp(mode,"ppc64be")) {
-        err = cs_open(CS_ARCH_PPC,CS_MODE_64+CS_MODE_BIG_ENDIAN,&handle);
+        err = cs_open(CS_ARCH_PPC,CS_MODE_64+CS_MODE_BIG_ENDIAN, &handle);
     }
     
-    if (!strcmp(mode,"sparcv9")) {
-        err = cs_open(CS_ARCH_SPARC,CS_MODE_V9,&handle);
+    if (!strcmp(mode,"sparc")) {
+        err = cs_open(CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN, &handle);
     }
            
     if (!strcmp(mode, "systemz") || !strcmp(mode, "sysz") || !strcmp(mode, "s390x")) {
@@ -225,7 +238,7 @@ int main(int argc, char ** argv)
     }
     
     if (!strcmp(mode,"xcore")) {
-        err = cs_open(CS_ARCH_XCORE, CS_MODE_BIG_ENDIAN,&handle);
+        err = cs_open(CS_ARCH_XCORE, CS_MODE_BIG_ENDIAN, &handle);
     }
            
     if (err) {
@@ -233,25 +246,24 @@ int main(int argc, char ** argv)
         usage(argv[0]);
         return -1;
     }
-    //test
-    int i = 0;
-    
-    for (i=0;i<strlen((char *)assembly);i++) {
-        printf("%x ", assembly[i]);
-    }
-    
-    printf("strlen of assembly is %lu \n",strlen((char *)assembly));
-    size = cs_disasm(handle, assembly, strlen((char *)assembly),
-                                         0x1000,//Is this address necessary?
-                                         0,
-                                         &insn);
-    if (size>0) {
+
+    count = cs_disasm(handle, assembly, size, address, 0, &insn);
+    if (count > 0) {
         size_t j;
+        int i;
+        
         printf("\n");
-        for (j=0;j<size;j++) {
-            printf("\t%s\t%s\t%s\n", insn[j].bytes,insn[j].mnemonic,insn[j].op_str);
+        for (j = 0; j < count; j++) {
+            printf("%"PRIx64 "\t", insn[j].address);
+            for (i = 0; i < insn[j].size; i++) {
+                printf("%02x", insn[j].bytes[i]);
+            }
+            printf("\t%s\t%s\n", insn[j].mnemonic, insn[j].op_str);
         }
-        cs_free(insn, size);
+        cs_free(insn, count);
+    } else {
+        printf("ERROR: no any assembly instrution corresponding to your input, please check your input, quit!\n");
+        return(-4);
     }
            
     cs_close(&handle);
