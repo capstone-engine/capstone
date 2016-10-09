@@ -117,16 +117,6 @@ int main(int argc, char **argv)
         return -1;
     }
     
-    /*if (argc == 4) {
-        // cstool <arch> <assembly> <address>
-        char *temp;
-        address = strtoull(argv[3], &temp, 16);
-        if (temp == argv[3] || *temp != '\0' || errno == ERANGE) {
-            printf("ERROR: invalid address argument, quit!\n");
-            return -2;
-        }
-    }*/
-    
     mode = argv[1];
     assembly = preprocess(argv[2], &size);
     if (assembly == NULL) {
