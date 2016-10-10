@@ -5,7 +5,7 @@
 #include <ctype.h>
 #include <errno.h>
 
-#include <capstone.h>
+#include <capstone/capstone.h>
 
 #define VERSION "1.0"
 
