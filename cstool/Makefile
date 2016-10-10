@@ -12,9 +12,9 @@ LDFLAGS = -O3 -Wall -L.. -l$(LIBNAME)
 cstool: cstool.o
 ifeq ($(V),0)
 	$(call log,LINK,$@)
-	@${CC} $(LDFLAGS) $< -o $@
+	@${CC} $< $(LDFLAGS) -o $@
 else
-	${CC} $(LDFLAGS) $< -o $@
+	${CC} $< $(LDFLAGS) -o $@
 endif
 
 clean:
