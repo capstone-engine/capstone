@@ -1,0 +1,7 @@
+This directory contains cstool of capstone engine.
+To compile, simply run "make" on commandline. And after that, you could use 
+./cstool <arch+mode> <assembler-string> [start-address-in-hex-format]
+to use directly capstone engine.
+
+To see <arch+mode> options are supported, you could input ./cstool 
+
