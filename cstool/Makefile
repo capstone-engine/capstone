@@ -4,10 +4,10 @@ include ../functions.mk
 
 .PHONY: clean
 
+LIBNAME = capstone
+
 CFLAGS = -I../include
 LDFLAGS = -O3 -Wall -L.. -l$(LIBNAME)
-
-LIBNAME = capstone
 
 cstool: cstool.o
 ifeq ($(V),0)
