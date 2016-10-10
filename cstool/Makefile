@@ -4,14 +4,17 @@ include ../functions.mk
 
 .PHONY: clean
 
+CFLAGS = -I../include
+LDFLAGS = -O3 -Wall -L.. -l$(LIBNAME)
+
 LIBNAME = capstone
 
 cstool: cstool.o
 ifeq ($(V),0)
 	$(call log,LINK,$@)
-	@${CC} $< -O3 -Wall -L.. -l$(LIBNAME) -o $@
+	@${CC} $(LDFLAGS) $< -o $@
 else
-	${CC} $< -O3 -Wall -L.. -l$(LIBNAME) -o $@
+	${CC} $(LDFLAGS) $< -o $@
 endif
 
 clean:
@@ -20,7 +23,7 @@ clean:
 %.o: %.c
 ifeq ($(V),0)
 	$(call log,CC,$@)
-	@$(compile)
+	@${CC} $(CFLAGS) -c $< -o $@
 else
-	$(compile)
+	${CC} $(CFLAGS) -c $< -o $@
 endif
