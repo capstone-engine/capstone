@@ -101,3 +101,5 @@ test_iter_benchmark
 
 
 *.s
+
+cstool/cstool
