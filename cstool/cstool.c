@@ -28,7 +28,7 @@ static uint8_t char_to_hexnum(char c)
 // valid hexadecimal, and return actual length of uint8_t[] in @size.
 static uint8_t *preprocess(char *code, size_t *size)
 {
-	size_t i, j = 0;
+	size_t i = 0, j = 0;
 	uint8_t high, low;
 	uint8_t *result;
 
