@@ -114,6 +114,7 @@ int main(int argc, char **argv)
 	uint64_t address = 0;
 	cs_insn *insn;
 	cs_err err;
+	bool x86_arch = false;
 
 	if (argc != 3 && argc != 4) {
 		usage(argv[0]);
@@ -182,18 +183,22 @@ int main(int argc, char **argv)
 	}
 
 	if (!strcmp(mode, "x16")) {
+		x86_arch = true;
 		err = cs_open(CS_ARCH_X86, CS_MODE_16, &handle);
 	}
 
 	if (!strcmp(mode, "x32")) {
+		x86_arch = true;
 		err = cs_open(CS_ARCH_X86, CS_MODE_32, &handle);
 	}
 
 	if (!strcmp(mode, "x64")) {
+		x86_arch = true;
 		err = cs_open(CS_ARCH_X86, CS_MODE_64, &handle);
 	}
 
 	if (!strcmp(mode, "x16att")) {
+		x86_arch = true;
 		err = cs_open(CS_ARCH_X86, CS_MODE_16, &handle);
 		if (!err) {
 			cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
@@ -201,6 +206,7 @@ int main(int argc, char **argv)
 	}
 
 	if (!strcmp(mode,"x32att")) {
+		x86_arch = true;
 		err = cs_open(CS_ARCH_X86, CS_MODE_32, &handle);
 		if (!err) {
 			cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
@@ -208,6 +214,7 @@ int main(int argc, char **argv)
 	}
 
 	if (!strcmp(mode,"x64att")) {
+		x86_arch = true;
 		err = cs_open(CS_ARCH_X86, CS_MODE_64, &handle);
 		if (!err) {
 			cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
@@ -242,16 +249,22 @@ int main(int argc, char **argv)
 
 	count = cs_disasm(handle, assembly, size, address, 0, &insn);
 	if (count > 0) {
-		size_t j;
-		int i;
+		size_t i;
 
-		printf("\n");
-		for (j = 0; j < count; j++) {
-			printf("%"PRIx64 "\t", insn[j].address);
-			for (i = 0; i < insn[j].size; i++) {
-				printf("%02x", insn[j].bytes[i]);
+		for (i = 0; i < count; i++) {
+			int j;
+			printf("%"PRIx64"  ", insn[i].address);
+			for (j = 0; j < insn[i].size; j++) {
+				printf("%02x", insn[i].bytes[j]);
 			}
-			printf("\t%s\t%s\n", insn[j].mnemonic, insn[j].op_str);
+			// X86 instruction size is variable.
+			// align assembly instruction after the opcode
+			if (x86_arch) {
+				for (; j < 16; j++) {
+					printf("  ");
+				}
+			}
+			printf("  %s\t%s\n", insn[i].mnemonic, insn[i].op_str);
 		}
 		cs_free(insn, count);
 	} else {
