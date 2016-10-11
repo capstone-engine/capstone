@@ -1,4 +1,4 @@
-# Sample Makefile for Capstone Disassembly Engine
+# Makefile for Cstool of Capstone Disassembly Engine
 
 include ../functions.mk
 
