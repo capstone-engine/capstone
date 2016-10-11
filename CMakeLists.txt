@@ -449,3 +449,5 @@ if (CAPSTONE_BUILD_SHARED)
             LIBRARY DESTINATION lib
             ARCHIVE DESTINATION lib)
 endif ()
+
+add_subdirectory(cstool)
