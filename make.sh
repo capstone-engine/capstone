@@ -1,10 +1,10 @@
-#!/usr/bin/env bash
-
+#!/bin/bash
+# -*- mode: sh, indent-tabs-mode: t
+#
 # Capstone Disassembly Engine
 # By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014
-
+#
 # Note: to cross-compile "nix32" on Linux, package gcc-multilib is required.
-
 
 # build iOS lib for all iDevices, or only specific device
 function build_iOS {
@@ -13,7 +13,7 @@ function build_iOS {
 	IOS_CC=`xcrun --sdk iphoneos -f clang`
 	IOS_CFLAGS="-Os -Wimplicit -isysroot $IOS_SDK"
 	IOS_LDFLAGS="-isysroot $IOS_SDK"
-	if (( $# == 0 )); then
+	if [ $# -eq 0 ]; then
 		# build for all iDevices
 		IOS_ARCHS="armv7 armv7s arm64"
 	else
@@ -24,40 +24,40 @@ function build_iOS {
 
 # build Android lib for only one supported architecture
 function build_android {
-    if [ -z "$NDK" ]; then
-        echo "ERROR! Please set \$NDK to point at your Android NDK directory."
-        exit 1
-    fi
-    HOSTOS=$(uname -s | tr 'LD' 'ld')
-    HOSTARCH=$(uname -m)
+	if [ -z "$NDK" ]; then
+		echo "ERROR! Please set \$NDK to point at your Android NDK directory."
+		exit 1
+	fi
+	HOSTOS="$(uname -s | tr LD ld)"
+	HOSTARCH="$(uname -m)"
 
-    TARGARCH="$1"
-    shift
+	TARGARCH="$1"
+	shift
 
-    case "$TARGARCH" in
-      arm)
-          [ -n "$APILEVEL" ] || APILEVEL="android-14"  # default to ICS
-          [ -n "$GCCVER" ] || GCCVER="4.8"
-          CROSS=arm-linux-androideabi-
-          ;;
-      arm64)
-          [ -n "$APILEVEL" ] || APILEVEL="android-21"  # first with arm64
-          [ -n "$GCCVER" ] || GCCVER="4.9"
-          CROSS=aarch64-linux-android-
-          ;;
+	case "$TARGARCH" in
+		arm)
+			[ -z "$APILEVEL" ] && APILEVEL="android-14"  # default to ICS
+			[ -z "$GCCVER" ] && GCCVER="4.8"
+			CROSS=arm-linux-androideabi-
+			;;
+		arm64)
+			[ -z "$APILEVEL" ] && APILEVEL="android-21"  # first with arm64
+			[ -z "$GCCVER" ] && GCCVER="4.9"
+			CROSS=aarch64-linux-android-
+			;;
 
-      *)
-          echo "ERROR! Building for Android on $1 is not currently supported."
-          exit 1
-          ;;
-    esac
+		*)
+			echo "ERROR! Building for Android on $1 is not currently supported."
+			exit 1
+			;;
+	esac
 
-    TOOLCHAIN="$NDK/toolchains/$CROSS$GCCVER/prebuilt/$HOSTOS-$HOSTARCH"
-    PLATFORM="$NDK/platforms/$APILEVEL/arch-$TARGARCH"
+	TOOLCHAIN="$NDK/toolchains/$CROSS$GCCVER/prebuilt/$HOSTOS-$HOSTARCH"
+	PLATFORM="$NDK/platforms/$APILEVEL/arch-$TARGARCH"
 
 	${MAKE} clean
 
-    CROSS="$TOOLCHAIN/bin/$CROSS" CFLAGS="--sysroot=$PLATFORM" LDFLAGS="--sysroot=$PLATFORM" ${MAKE} $*
+	CROSS="$TOOLCHAIN/bin/$CROSS" CFLAGS="--sysroot=$PLATFORM" LDFLAGS="--sysroot=$PLATFORM" ${MAKE} "$@"
 }
 
 
@@ -69,9 +69,9 @@ function build {
 	${MAKE} clean
 
 	if [ -n "$CC" ]; then
-		${MAKE} CC="$CC" $*
+		${MAKE} CC="$CC" "$@"
 	else
-		${MAKE} $*
+		${MAKE} "$@"
 	fi
 }
 
@@ -118,9 +118,9 @@ function install {
 
 function uninstall {
 	# Mac OSX needs to find the right directory for pkgconfig
-	if [ "$(uname)" == "Darwin" ]; then
+	if [ "$(uname)" = "Darwin" ]; then
 		# find the directory automatically, so we can support both Macport & Brew
-		PKGCFGDIR="$(pkg-config --variable pc_path pkg-config | cut -d ':' -f 1)"
+		PKGCFGDIR="$(pkg-config --variable pc_path pkg-config | cut -d: -f1)"
 		export PREFIX=/usr/local
 		if [ ${PKGCFGDIR}x != x ]; then
 			${MAKE} PKGCFGDIR=$PKGCFGDIR uninstall
@@ -137,13 +137,13 @@ function uninstall {
 }
 
 MAKE=make
-if [ "$(uname)" == "SunOS" ]; then
+if [ "$(uname)" = "SunOS" ]; then
 	export MAKE=gmake
 	export INSTALL_BIN=ginstall
 	export CC=gcc
 fi
 
-if [[ "$(uname)" == *BSD* ]]; then
+if uname -s | grep -q BSD; then
 	export MAKE=gmake
 	export PREFIX=/usr/local
 fi
@@ -152,23 +152,23 @@ TARGET="$1"
 shift
 
 case "$TARGET" in
-  "" ) build $*;;
-  "default" ) build $*;;
-  "debug" ) CAPSTONE_USE_SYS_DYN_MEM=yes CAPSTONE_STATIC=yes CFLAGS='-O0 -g -fsanitize=address' LDFLAGS='-fsanitize=address' build $*;;
-  "install" ) install;;
-  "uninstall" ) uninstall;;
-  "nix32" ) CFLAGS=-m32 LDFLAGS=-m32 build $*;;
-  "cross-win32" ) CROSS=i686-w64-mingw32- build $*;;
-  "cross-win64" ) CROSS=x86_64-w64-mingw32- build $*;;
-  "cygwin-mingw32" ) CROSS=i686-pc-mingw32- build $*;;
-  "cygwin-mingw64" ) CROSS=x86_64-w64-mingw32- build $*;;
-  "cross-android" ) build_android $*;;
-  "clang" ) CC=clang build $*;;
-  "gcc" ) CC=gcc build $*;;
-  "ios" ) build_iOS $*;;
-  "ios_armv7" ) build_iOS armv7 $*;;
-  "ios_armv7s" ) build_iOS armv7s $*;;
-  "ios_arm64" ) build_iOS arm64 $*;;
-  "osx-kernel" ) CAPSTONE_USE_SYS_DYN_MEM=yes CAPSTONE_HAS_OSXKERNEL=yes CAPSTONE_ARCHS=x86 CAPSTONE_SHARED=no CAPSTONE_BUILD_CORE_ONLY=yes build $*;;
-  * ) echo "Usage: make.sh [nix32|cross-win32|cross-win64|cygwin-mingw32|cygwin-mingw64|ios|ios_armv7|ios_armv7s|ios_arm64|cross-android arm|cross-android arm64|clang|gcc|install|uninstall]"; exit 1;;
+	"" ) build $*;;
+	"default" ) build $*;;
+	"debug" ) CAPSTONE_USE_SYS_DYN_MEM=yes CAPSTONE_STATIC=yes CFLAGS='-O0 -g -fsanitize=address' LDFLAGS='-fsanitize=address' build $*;;
+	"install" ) install;;
+	"uninstall" ) uninstall;;
+	"nix32" ) CFLAGS=-m32 LDFLAGS=-m32 build $*;;
+	"cross-win32" ) CROSS=i686-w64-mingw32- build $*;;
+	"cross-win64" ) CROSS=x86_64-w64-mingw32- build $*;;
+	"cygwin-mingw32" ) CROSS=i686-pc-mingw32- build $*;;
+	"cygwin-mingw64" ) CROSS=x86_64-w64-mingw32- build $*;;
+	"cross-android" ) build_android $*;;
+	"clang" ) CC=clang build $*;;
+	"gcc" ) CC=gcc build $*;;
+	"ios" ) build_iOS $*;;
+	"ios_armv7" ) build_iOS armv7 $*;;
+	"ios_armv7s" ) build_iOS armv7s $*;;
+	"ios_arm64" ) build_iOS arm64 $*;;
+	"osx-kernel" ) CAPSTONE_USE_SYS_DYN_MEM=yes CAPSTONE_HAS_OSXKERNEL=yes CAPSTONE_ARCHS=x86 CAPSTONE_SHARED=no CAPSTONE_BUILD_CORE_ONLY=yes build $*;;
+	* ) echo "Usage: make.sh [nix32|cross-win32|cross-win64|cygwin-mingw32|cygwin-mingw64|ios|ios_armv7|ios_armv7s|ios_arm64|cross-android arm|cross-android arm64|clang|gcc|install|uninstall]"; exit 1;;
 esac
