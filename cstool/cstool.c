@@ -52,7 +52,7 @@ static uint8_t *preprocess(char *code, size_t *size)
 
 static void usage(char *prog)
 {
-	printf("Cstool v%s for Capstone Disassembler Engine (www.capstone-engine.org)\n", VERSION);
+	printf("Cstool v%s for Capstone Disassembler Engine (www.capstone-engine.org)\n\n", VERSION);
 	printf("Syntax: %s <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
 	printf("\nThe following <arch+mode> options are supported:\n");
 
