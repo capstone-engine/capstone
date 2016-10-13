@@ -407,22 +407,22 @@ else
 endif
 
 install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
-	mkdir -p $(DESTDIR)/$(LIBDIR)
-	$(call install-library,$(DESTDIR)/$(LIBDIR))
+	mkdir -p $(DESTDIR)$(LIBDIR)
+	$(call install-library,$(DESTDIR)$(LIBDIR))
 ifeq ($(CAPSTONE_STATIC),yes)
-	$(INSTALL_DATA) $(ARCHIVE) $(DESTDIR)/$(LIBDIR)
+	$(INSTALL_DATA) $(ARCHIVE) $(DESTDIR)$(LIBDIR)
 endif
-	mkdir -p $(DESTDIR)/$(INCDIR)/$(LIBNAME)
-	$(INSTALL_DATA) include/capstone/*.h $(DESTDIR)/$(INCDIR)/$(LIBNAME)
-	mkdir -p $(DESTDIR)/$(PKGCFGDIR)
-	$(INSTALL_DATA) $(PKGCFGF) $(DESTDIR)/$(PKGCFGDIR)
-	$(INSTALL_LIB) cstool/cstool $(DESTDIR)/$(BINDIR)
+	mkdir -p $(DESTDIR)$(INCDIR)/$(LIBNAME)
+	$(INSTALL_DATA) include/capstone/*.h $(DESTDIR)$(INCDIR)/$(LIBNAME)
+	mkdir -p $(DESTDIR)$(PKGCFGDIR)
+	$(INSTALL_DATA) $(PKGCFGF) $(DESTDIR)$(PKGCFGDIR)
+	$(INSTALL_LIB) cstool/cstool $(DESTDIR)$(BINDIR)
 
 uninstall:
-	rm -rf $(DESTDIR)/$(INCDIR)/$(LIBNAME)
-	rm -f $(DESTDIR)/$(LIBDIR)/lib$(LIBNAME).*
-	rm -f $(DESTDIR)/$(PKGCFGDIR)/$(LIBNAME).pc
-	rm -f $(DESTDIR)/$(BINDIR)/cstool
+	rm -rf $(DESTDIR)$(INCDIR)/$(LIBNAME)
+	rm -f $(DESTDIR)$(LIBDIR)/lib$(LIBNAME).*
+	rm -f $(DESTDIR)$(PKGCFGDIR)/$(LIBNAME).pc
+	rm -f $(DESTDIR)$(BINDIR)/cstool
 
 clean:
 	rm -f $(LIBOBJ)
