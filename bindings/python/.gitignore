@@ -1,3 +1,5 @@
 MANIFEST
 dist/
 src/
+capstone/lib
+capstone/include
