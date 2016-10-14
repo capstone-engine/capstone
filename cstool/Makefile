@@ -2,19 +2,25 @@
 
 include ../functions.mk
 
-.PHONY: clean
+.PHONY: clean all
 
 LIBNAME = capstone
 
 CFLAGS = -I../include
 LDFLAGS = -O3 -Wall -L.. -l$(LIBNAME)
 
-cstool: cstool.o
+TARGET = cstool
+SOURCES := $(wildcard *.c)
+OBJECTS := $(SOURCES:.c=.o)
+
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS)
 ifeq ($(V),0)
 	$(call log,LINK,$@)
-	@${CC} $< $(LDFLAGS) -o $@
+	@${CC} $(OBJECTS) $(LDFLAGS) -o $@
 else
-	${CC} $< $(LDFLAGS) -o $@
+	${CC} $(OBJECTS) $(LDFLAGS) -o $@
 endif
 
 clean:

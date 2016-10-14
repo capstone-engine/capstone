@@ -9,6 +9,8 @@
 
 #define VERSION "1.0"
 
+void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins);
+
 // convert hexchar to hexnum
 static uint8_t char_to_hexnum(char c)
 {
@@ -53,7 +55,7 @@ static uint8_t *preprocess(char *code, size_t *size)
 static void usage(char *prog)
 {
 	printf("Cstool v%s for Capstone Disassembler Engine (www.capstone-engine.org)\n\n", VERSION);
-	printf("Syntax: %s <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
+	printf("Syntax: %s [-d:print all debug information] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
 	printf("\nThe following <arch+mode> options are supported:\n");
 
 	if (cs_support(CS_ARCH_X86)) {
@@ -114,30 +116,55 @@ int main(int argc, char **argv)
 	uint64_t address = 0;
 	cs_insn *insn;
 	cs_err err;
-	bool x86_arch = false;
+    cs_mode md;
+    char *platform;
+    bool x86_arch = false, debug_flag = false;
 
-	if (argc != 3 && argc != 4) {
+	if (argc != 3 && argc != 4 && argc != 5) {
 		usage(argv[0]);
 		return -1;
 	}
 
-	mode = argv[1];
-	assembly = preprocess(argv[2], &size);
-	if (assembly == NULL) {
-		printf("ERROR: invalid assembler-string argument, quit!\n");
-		return -3;
-	}
-
-	if (argc == 4) {
-		// cstool <arch> <assembly> <address>
-		char *temp;
-		address = strtoull(argv[3], &temp, 16);
-		if (temp == argv[3] || *temp != '\0' || errno == ERANGE) {
-			printf("ERROR: invalid address argument, quit!\n");
-			return -2;
-		}
-	}
-
+    if (!strcmp(argv[1], "-d")) {
+        if (argc == 3) {
+            usage(argv[0]);
+            return -1;
+        }
+        debug_flag = true;
+        mode = argv[2];
+        assembly = preprocess(argv[3], &size);
+        if (argc == 5) {
+            char *temp;
+            address = strtoull(argv[4], &temp, 16);
+            if (temp == argv[4] || *temp != '\0' || errno == ERANGE) {
+                printf("ERROR: invalid address argument, quit!\n");
+                return -2;
+            }
+        }
+    } else {
+        if (argc == 5) {
+            usage(argv[0]);
+            return -1;
+        }
+        
+        mode = argv[1];
+        assembly = preprocess(argv[2], &size);
+        if (assembly == NULL) {
+            printf("ERROR: invalid assembler-string argument, quit!\n");
+            return -3;
+        }
+        
+        if (argc == 4) {
+            // cstool <arch> <assembly> <address>
+            char *temp;
+            address = strtoull(argv[3], &temp, 16);
+            if (temp == argv[3] || *temp != '\0' || errno == ERANGE) {
+                printf("ERROR: invalid address argument, quit!\n");
+                return -2;
+            }
+        }
+    }
+	
 	if (!strcmp(mode, "arm")) {
 		err = cs_open(CS_ARCH_ARM, CS_MODE_ARM, &handle);
 	}
@@ -188,6 +215,8 @@ int main(int argc, char **argv)
 	}
 
 	if (!strcmp(mode, "x32")) {
+        md = CS_MODE_32;
+        platform = "x32";
 		x86_arch = true;
 		err = cs_open(CS_ARCH_X86, CS_MODE_32, &handle);
 	}
@@ -247,7 +276,11 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	count = cs_disasm(handle, assembly, size, address, 0, &insn);
+    if (debug_flag) {
+        cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+    }
+
+    count = cs_disasm(handle, assembly, size, address, 0, &insn);
 	if (count > 0) {
 		size_t i;
 
@@ -265,6 +298,11 @@ int main(int argc, char **argv)
 				}
 			}
 			printf("  %s\t%s\n", insn[i].mnemonic, insn[i].op_str);
+            if (debug_flag) {
+                if (x86_arch) {
+                    print_insn_detail_x86(handle, md, &insn[i]);
+                }
+            }
 		}
 		cs_free(insn, count);
 	} else {
