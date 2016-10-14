@@ -1,51 +1,46 @@
 #!/usr/bin/env python
+
 import glob
 import os
 import shutil
 import stat
 import sys
+import platform
 
 from distutils import log
-from distutils import dir_util
-from distutils.command.build_clib import build_clib
-from setuptools.command.sdist import sdist
 from setuptools import setup
-from distutils.sysconfig import get_python_lib
+from distutils.util import get_platform
+from distutils.command.build import build
+from distutils.command.sdist import sdist
+from setuptools.command.bdist_egg import bdist_egg
 
-# prebuilt libraries for Windows - for sdist
-PATH_LIB64 = "prebuilt/win64/capstone.dll"
-PATH_LIB32 = "prebuilt/win32/capstone.dll"
-
-# package name can be 'capstone' or 'capstone-windows'
-PKG_NAME = 'capstone'
-if os.path.exists(PATH_LIB64) and os.path.exists(PATH_LIB32):
-    PKG_NAME = 'capstone-windows'
-
-VERSION = '3.0.4'
 SYSTEM = sys.platform
-
-# virtualenv breaks import, but get_python_lib() will work.
-SITE_PACKAGES = os.path.join(get_python_lib(), "capstone")
-if "--user" in sys.argv:
-    try:
-        from site import getusersitepackages
-        SITE_PACKAGES = os.path.join(getusersitepackages(), "capstone")
-    except ImportError:
-        pass
-
-# If building a wheel, the path listed in data_files is interpreted relative to
-# python's site-packages directory, even if it starts with a slash. So we need
-# to use only `/capstone` as path in this case.
-#
-# Note: using `capstone` does not work, since that for some reason is interpreted
-# relative to the the python installation prefix, not to the site-packages directory.
-if "bdist_wheel" in sys.argv:
-    SITE_PACKAGES = "/capstone"
-
+VERSION = '3.0.4'
 
 # adapted from commit e504b81 of Nguyen Tan Cong
 # Reference: https://docs.python.org/2/library/platform.html#cross-platform
-is_64bits = sys.maxsize > 2**32
+IS_64BITS = sys.maxsize > 2**32
+
+# are we building from the repository or from a source distribution?
+ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
+LIBS_DIR = os.path.join(ROOT_DIR, 'capstone', 'lib')
+HEADERS_DIR = os.path.join(ROOT_DIR, 'capstone', 'include')
+SRC_DIR = os.path.join(ROOT_DIR, 'src')
+BUILD_DIR = SRC_DIR if os.path.exists(SRC_DIR) else os.path.join(ROOT_DIR, '../..')
+
+if SYSTEM == 'darwin':
+    LIBRARY_FILE = "libcapstone.dylib"
+    STATIC_LIBRARY_FILE = 'libcapstone.a'
+elif SYSTEM in ('win32', 'cygwin'):
+    LIBRARY_FILE = "capstone.dll"
+    STATIC_LIBRARY_FILE = None
+else:
+    LIBRARY_FILE = "libcapstone.so"
+    STATIC_LIBRARY_FILE = 'libcapstone.a'
+
+def clean_bins():
+    shutil.rmtree(LIBS_DIR, ignore_errors=True)
+    shutil.rmtree(HEADERS_DIR, ignore_errors=True)
 
 def copy_sources():
     """Copy the C sources into the source directory.
@@ -55,128 +50,128 @@ def copy_sources():
     src = []
 
     try:
-        dir_util.remove_tree("src/")
+        shutil.rmtree("src/")
     except (IOError, OSError):
         pass
 
-    dir_util.copy_tree("../../arch", "src/arch/")
-    dir_util.copy_tree("../../include", "src/include/")
-#    dir_util.copy_tree("../../msvc/headers", "src/msvc/headers")
+    shutil.copytree(os.path.join(BUILD_DIR, "arch"), os.path.join(SRC_DIR, "arch"))
+	shutil.copytree(os.path.join(BUILD_DIR, "include"), os.path.join(SRC_DIR, "include"))
 
-    src.extend(glob.glob("../../*.[ch]"))
-    src.extend(glob.glob("../../*.mk"))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "*.[ch]")))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "*.mk"))
 
-    src.extend(glob.glob("../../Makefile"))
-    src.extend(glob.glob("../../LICENSE*"))
-    src.extend(glob.glob("../../README"))
-    src.extend(glob.glob("../../*.TXT"))
-    src.extend(glob.glob("../../RELEASE_NOTES"))
-    src.extend(glob.glob("../../make.sh"))
-    src.extend(glob.glob("../../CMakeLists.txt"))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "Makefile"))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "LICENSE*"))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "README"))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "*.TXT"))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "RELEASE_NOTES"))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "make.sh"))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "CMakeLists.txt"))
 
     for filename in src:
-        outpath = os.path.join("./src/", os.path.basename(filename))
+        outpath = os.path.join(SRC_DIR, os.path.basename(filename))
         log.info("%s -> %s" % (filename, outpath))
         shutil.copy(filename, outpath)
 
+def build_libraries():
+    """
+    Prepare the capstone directory for a binary distribution or installation.
+    Builds shared libraries and copies header files.
+
+    Will use a src/ dir if one exists in the current directory, otherwise assumes it's in the repo
+    """
+    cwd = os.getcwd()
+    clean_bins()
+    os.mkdir(HEADERS_DIR)
+    os.mkdir(LIBS_DIR)
+
+    # copy public headers
+    shutil.copytree(os.path.join(BUILD_DIR, 'include'), os.path.join(HEADERS_DIR, 'capstone'))
+
+    os.chdir(BUILD_DIR)
+
+    # platform description refers at https://docs.python.org/2/library/sys.html#sys.platform
+    if SYSTEM == "win32":
+        # Windows build: this process requires few things:
+        #    - CMake + MSVC installed
+        #    - Run this command in an environment setup for MSVC
+        if not os.path.exists("build"): os.mkdir("build")
+        os.chdir("build")
+        # Do not build tests & static library
+        os.system('cmake -DCMAKE_BUILD_TYPE=RELEASE -DCAPSTONE_BUILD_TESTS=0 -DCAPSTONE_BUILD_STATIC=0 -G "NMake Makefiles" ..')
+        os.system("nmake")
+    elif SYSTEM == "cygwin":
+        os.chmod("make.sh", stat.S_IREAD|stat.S_IEXEC)
+        if is_64bits:
+            os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh cygwin-mingw64")
+        else:
+            os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh cygwin-mingw32")
+
+        so = "capstone.dll"
+    else:   # Unix
+        os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh")
+
+    shutil.copy(LIBRARY_FILE, LIBS_DIR)
+    if STATIC_LIBRARY_FILE: shutil.copy(STATIC_LIBRARY_FILE, LIBS_DIR)
+    os.chdir(cwd)
+
 
 class custom_sdist(sdist):
-    """Reshuffle files for distribution."""
-
     def run(self):
-        for filename in (glob.glob("capstone/*.dll")
-                         + glob.glob("capstone/*.so")
-                         + glob.glob("capstone/*.dylib")):
-            try:
-                os.unlink(filename)
-            except Exception:
-                pass
-
-        # if prebuilt libraries are existent, then do not copy source
-        if os.path.exists(PATH_LIB64) and os.path.exists(PATH_LIB32):
-            return sdist.run(self)
+        clean_bins()
         copy_sources()
         return sdist.run(self)
 
 
-class custom_build_clib(build_clib):
-    """Customized build_clib command."""
-
+class custom_build(build):
     def run(self):
-        log.info('running custom_build_clib')
-        build_clib.run(self)
+        log.info('Building C extensions')
+        build_libraries()
+        return build.run(self)
 
-    def finalize_options(self):
-        # We want build-clib to default to build-lib as defined by the "build"
-        # command.  This is so the compiled library will be put in the right
-        # place along side the python code.
-        self.set_undefined_options('build',
-                                   ('build_lib', 'build_clib'),
-                                   ('build_temp', 'build_temp'),
-                                   ('compiler', 'compiler'),
-                                   ('debug', 'debug'),
-                                   ('force', 'force'))
 
-        build_clib.finalize_options(self)
-
-    def build_libraries(self, libraries):
-        if SYSTEM in ("win32", "cygwin"):
-            # if Windows prebuilt library is available, then include it
-            if is_64bits and os.path.exists(PATH_LIB64):
-                shutil.copy(PATH_LIB64, "capstone")
-                return
-            elif os.path.exists(PATH_LIB32):
-                shutil.copy(PATH_LIB32, "capstone")
-                return
-
-        # build library from source if src/ is existent
-        if not os.path.exists('src'):
-            return
-
-        for (lib_name, build_info) in libraries:
-            log.info("building '%s' library", lib_name)
-
-            os.chdir("src")
-
-            # platform description refers at https://docs.python.org/2/library/sys.html#sys.platform
-            if SYSTEM == "win32":
-                # Windows build: this process requires few things:
-                #    - CMake + MSVC installed
-                #    - Run this command in an environment setup for MSVC
-                os.mkdir("build")
-                os.chdir("build")
-                # Do not build tests & static library
-                os.system('cmake -DCMAKE_BUILD_TYPE=RELEASE -DCAPSTONE_BUILD_TESTS=0 -DCAPSTONE_BUILD_STATIC=0 -G "NMake Makefiles" ..')
-                os.system("nmake")
-                os.chdir("..")
-                so = "src/build/capstone.dll"
-            elif SYSTEM == "cygwin":
-                os.chmod("make.sh", stat.S_IREAD|stat.S_IEXEC)
-                if is_64bits:
-                    os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh cygwin-mingw64")
-                else:
-                    os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh cygwin-mingw32")
-
-                so = "src/capstone.dll"
-            else:   # Unix
-                os.chmod("make.sh", stat.S_IREAD|stat.S_IEXEC)
-                os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh")
-                if SYSTEM == "darwin":
-                    so = "src/libcapstone.dylib"
-                else:   # Non-OSX
-                    so = "src/libcapstone.so"
-
-            os.chdir("..")
-            shutil.copy(so, "capstone")
-
+class custom_bdist_egg(bdist_egg):
+    def run(self):
+        self.run_command('build')
+        return bdist_egg.run(self)
 
 def dummy_src():
     return []
 
+cmdclass = {}
+cmdclass['build'] = custom_build
+cmdclass['sdist'] = custom_sdist
+cmdclass['bdist_egg'] = custom_bdist_egg
+
+try:
+    from setuptools.command.develop import develop
+    class custom_develop(develop):
+        def run(self):
+            log.info("Building C extensions")
+            build_libraries()
+            return develop.run(self)
+
+    cmdclass['develop'] = custom_develop
+except ImportError:
+    print "Proper 'develop' support unavailable."
+
+if 'bdist_wheel' in sys.argv and '--plat-name' not in sys.argv:
+    sys.argv.append('--plat-name')
+    name = get_platform()
+    if 'linux' in name:
+        # linux_* platform tags are disallowed because the python ecosystem is fubar
+        # linux builds should be built in the centos 5 vm for maximum compatibility
+        # see https://github.com/pypa/manylinux
+        # see also https://github.com/angr/angr-dev/blob/master/bdist.sh
+        sys.argv.append('manylinux1_' + platform.machine())
+    else:
+        # https://www.python.org/dev/peps/pep-0425/
+        sys.argv.append(name.replace('.', '_').replace('-', '_'))
+
 setup(
     provides=['capstone'],
     packages=['capstone'],
-    name=PKG_NAME,
+    name='capstone',
     version=VERSION,
     author='Nguyen Anh Quynh',
     author_email='aquynh@gmail.com',
@@ -188,20 +183,10 @@ setup(
         'Programming Language :: Python :: 3',
     ],
     requires=['ctypes'],
-    cmdclass=dict(
-        build_clib=custom_build_clib,
-        sdist=custom_sdist,
-    ),
-
-    libraries=[(
-        'capstone', dict(
-            package='capstone',
-            sources=dummy_src()
-        ),
-    )],
-    zip_safe=False,
+    cmdclass=cmdclass,
+    zip_safe=True,
     include_package_data=True,
     package_data={
-        "capstone": ["*.so", "*.dll", "*.dylib"],
+        "capstone": ["lib/*", "include/capstone/*"],
     }
 )
