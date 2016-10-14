@@ -233,66 +233,57 @@ CS_MODE  = {v:k for k,v in locals().items() if k.startswith('CS_MODE_')}
 CS_OP    = {v:k for k,v in locals().items() if k.startswith('CS_OP_')}
 CS_OPT   = {v:k for k,v in locals().items() if k.startswith('CS_OPT_')}
 
-import ctypes, ctypes.util, sys
+import ctypes, ctypes.util
 from os.path import split, join, dirname
 import distutils.sysconfig
-
+import pkg_resources
 
 import inspect
 if not hasattr(sys.modules[__name__], '__file__'):
     __file__ = inspect.getfile(inspect.currentframe())
 
-_lib_path = split(__file__)[0]
-_all_libs = ['capstone.dll', 'libcapstone.so', 'libcapstone.dylib']
+if sys.platform == 'darwin':
+    _lib = "libcapstone.dylib"
+elif sys.platform in ('win32', 'cygwin'):
+    _lib = "capstone.dll"
+else:
+    _lib = "libcapstone.so"
+
+_all_libs = ['capstone.dll', 'libcapstone.so.3', 'libcapstone.so', 'libcapstone.dylib']
 _found = False
 
-for _lib in _all_libs:
+def _load_lib(path):
+    lib_file = join(path, _lib)
     try:
-        _lib_file = join(_lib_path, _lib)
-        # print "Trying to load:", _lib_file
-        _cs = ctypes.cdll.LoadLibrary(_lib_file)
-        _found = True
-        break
+        return ctypes.cdll.LoadLibrary(lib_file)
     except OSError:
-        pass
-if _found == False:
-    # try loading from default paths
-    for _lib in _all_libs:
-        try:
-            _cs = ctypes.cdll.LoadLibrary(_lib)
-            _found = True
-            break
-        except OSError:
-            pass
+        # if we're on linux, try again with .so.3 extension
+        if lib_file.endswith('.so'):
+            try:
+                return ctypes.cdll.LoadLibrary(lib_file)
+            except OSError:
+                return None
+        return None
 
-if _found == False:
-    # last try: loading from python lib directory
-    _lib_path = distutils.sysconfig.get_python_lib()
-    for _lib in _all_libs:
-        try:
-            _lib_file = join(_lib_path, 'capstone', _lib)
-            # print "Trying to load:", _lib_file
-            _cs = ctypes.cdll.LoadLibrary(_lib_file)
-            _found = True
-            break
-        except OSError:
-            pass
+_cs = None
 
-# Attempt Darwin specific load (10.11 specific),
-# since LD_LIBRARY_PATH is not guaranteed to exist
-if (_found == False) and (system() == 'Darwin'):
-    _lib_path = '/usr/local/lib/'
-    for _lib in _all_libs:
-        try:
-            _lib_file = join(_lib_path, _lib)
-            # print "Trying to load:", _lib_file
-            _cs = ctypes.cdll.LoadLibrary(_lib_file)
-            _found = True
-            break
-        except OSError:
-            pass
+# Loading attempts, in order
+# - pkg_resources can get us the path to the local libraries
+# - we can get the path to the local libraries by parsing our filename
+# - global load
+# - python's lib directory
+# - last-gasp attempt at some hardcoded paths on darwin and linux
 
-if _found == False:
+_path_list = [pkg_resources.resource_filename(__name__, 'lib'),
+              join(split(__file__)[0], 'lib'),
+              '',
+              distutils.sysconfig.get_python_lib(),
+              "/usr/local/lib/" if sys.platform == 'darwin' else '/usr/lib64']
+
+for _path in _path_list:
+    _cs = _load_lib(_path)
+    if _cs is not None: break
+else:
     raise ImportError("ERROR: fail to load the dynamic library.")
 
 

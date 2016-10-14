@@ -1,5 +1,3 @@
-recursive-include capstone *
 recursive-include src *
-recursive-include prebuilt *
 include LICENSE.TXT
 include README
