@@ -10,6 +10,13 @@
 #define VERSION "1.0"
 
 void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins);
+void print_insn_detail_arm(csh handle, cs_insn *ins);
+void print_insn_detail_arm64(csh handle, cs_insn *ins);
+void print_insn_detail_mips(csh handle, cs_insn *ins);
+void print_insn_detail_ppc(csh handle, cs_insn *ins);
+void print_insn_detail_sparc(csh handle, cs_insn *ins);
+void print_insn_detail_sysz(csh handle, cs_insn *ins);
+void print_insn_detail_xcore(csh handle, cs_insn *ins);
 
 // convert hexchar to hexnum
 static uint8_t char_to_hexnum(char c)
@@ -117,8 +124,8 @@ int main(int argc, char **argv)
 	cs_insn *insn;
 	cs_err err;
     cs_mode md;
-    char *platform;
-    bool x86_arch = false, debug_flag = false;
+    char *arch;
+    bool debug_flag = false;
 
 	if (argc != 3 && argc != 4 && argc != 5) {
 		usage(argv[0]);
@@ -166,68 +173,80 @@ int main(int argc, char **argv)
     }
 	
 	if (!strcmp(mode, "arm")) {
+        arch = "arm";
 		err = cs_open(CS_ARCH_ARM, CS_MODE_ARM, &handle);
 	}
 
 	if (!strcmp(mode, "armb")) {
+        arch = "arm";
 		err = cs_open(CS_ARCH_ARM, CS_MODE_ARM + CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "arml")) {
+        arch = "arm";
 		err = cs_open(CS_ARCH_ARM, CS_MODE_ARM + CS_MODE_LITTLE_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "thumb")) {
-		err = cs_open(CS_ARCH_ARM, CS_MODE_THUMB + CS_MODE_LITTLE_ENDIAN, &handle);
+        arch = "arm";
+        err = cs_open(CS_ARCH_ARM, CS_MODE_THUMB + CS_MODE_LITTLE_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "thumbbe")) {
+        arch = "arm";
 		err = cs_open(CS_ARCH_ARM, CS_MODE_THUMB + CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "thumble")) {
+        arch = "arm";
 		err = cs_open(CS_ARCH_ARM, CS_MODE_ARM + CS_MODE_LITTLE_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "arm64")) {
+        arch = "arm64";
 		err = cs_open(CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "mips")) {
+        arch = "mips";
 		err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS32 + CS_MODE_LITTLE_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "mipsbe")) {
+        arch = "mips";
 		err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS32 + CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "mips64")) {
+        arch = "mips";
 		err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS64 + CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "mips64be")) {
+        arch = "mips";
 		err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS64 + CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "x16")) {
-		x86_arch = true;
+		arch = "x86";
 		err = cs_open(CS_ARCH_X86, CS_MODE_16, &handle);
 	}
 
 	if (!strcmp(mode, "x32")) {
         md = CS_MODE_32;
-        platform = "x32";
-		x86_arch = true;
+		arch = "x86";
 		err = cs_open(CS_ARCH_X86, CS_MODE_32, &handle);
 	}
 
 	if (!strcmp(mode, "x64")) {
-		x86_arch = true;
+        md = CS_MODE_64;
+        arch = "x86";
 		err = cs_open(CS_ARCH_X86, CS_MODE_64, &handle);
 	}
 
 	if (!strcmp(mode, "x16att")) {
-		x86_arch = true;
+        md = CS_MODE_16;
+        arch = "x86";
 		err = cs_open(CS_ARCH_X86, CS_MODE_16, &handle);
 		if (!err) {
 			cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
@@ -235,7 +254,8 @@ int main(int argc, char **argv)
 	}
 
 	if (!strcmp(mode,"x32att")) {
-		x86_arch = true;
+        md = CS_MODE_32;
+        arch = "x86";
 		err = cs_open(CS_ARCH_X86, CS_MODE_32, &handle);
 		if (!err) {
 			cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
@@ -243,7 +263,8 @@ int main(int argc, char **argv)
 	}
 
 	if (!strcmp(mode,"x64att")) {
-		x86_arch = true;
+        md = CS_MODE_64;
+        arch = "x86";
 		err = cs_open(CS_ARCH_X86, CS_MODE_64, &handle);
 		if (!err) {
 			cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
@@ -251,22 +272,27 @@ int main(int argc, char **argv)
 	}
 
 	if (!strcmp(mode,"ppc64")) {
+        arch = "ppc";
 		err = cs_open(CS_ARCH_PPC, CS_MODE_64+CS_MODE_LITTLE_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode,"ppc64be")) {
+         arch = "ppc";
 		err = cs_open(CS_ARCH_PPC,CS_MODE_64+CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode,"sparc")) {
+        arch = "sparc";
 		err = cs_open(CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "systemz") || !strcmp(mode, "sysz") || !strcmp(mode, "s390x")) {
+        arch = "sysz";
 		err = cs_open(CS_ARCH_SYSZ, CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode,"xcore")) {
+        arch = "xcore";
 		err = cs_open(CS_ARCH_XCORE, CS_MODE_BIG_ENDIAN, &handle);
 	}
 
@@ -292,15 +318,43 @@ int main(int argc, char **argv)
 			}
 			// X86 instruction size is variable.
 			// align assembly instruction after the opcode
-			if (x86_arch) {
+			if (!strcmp(arch, "x86")) {
 				for (; j < 16; j++) {
 					printf("  ");
 				}
 			}
 			printf("  %s\t%s\n", insn[i].mnemonic, insn[i].op_str);
-            if (debug_flag) {
-                if (x86_arch) {
+            if (debug_flag) {//different mode should call different print functions
+                if (!strcmp(arch, "x86")) {
                     print_insn_detail_x86(handle, md, &insn[i]);
+                }
+                
+                if (!strcmp(arch, "arm")) {
+                    print_insn_detail_arm(handle, &insn[i]);
+                }
+                
+                if (!strcmp(arch,"arm64")) {
+                    print_insn_detail_arm64(handle,&insn[i]);
+                }
+                
+                if (!strcmp(arch, "mips")) {
+                    print_insn_detail_mips(handle, &insn[i]);
+                }
+                
+                if (!strcmp(arch, "ppc")) {
+                    print_insn_detail_ppc(handle, &insn[i]);
+                }
+                
+                if (!strcmp(arch, "sparc")) {
+                    print_insn_detail_sparc(handle, &insn[i]);
+                }
+                
+                if (!strcmp(arch, "sysz")) {
+                    print_insn_detail_sysz(handle, &insn[i]);
+                }
+                
+                if (!strcmp(arch, "xcore")) {
+                    print_insn_detail_xcore(handle, &insn[i]);
                 }
             }
 		}
