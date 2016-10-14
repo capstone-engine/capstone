@@ -1,8 +1,4 @@
-ifndef BUILDDIR
-OBJDIR = build
-else
-OBJDIR = $(abspath $(BUILDDIR))/obj/bindings/python
-endif
+PYX_BUILDDIR=build_pyx
 
 .PHONY: gen_const install install3 install_cython clean
 
@@ -10,81 +6,53 @@ gen_const:
 	cd .. && python const_generator.py python
 
 install:
-	rm -rf $(OBJDIR) src/
+	rm -rf src/
 	rm -rf prebuilt/win64/capstone.dll
 	rm -rf prebuilt/win32/capstone.dll
 	if test -n "${DESTDIR}"; then \
-		python setup.py build -b $(OBJDIR) install --root="${DESTDIR}"; \
+		python setup.py build install --root="${DESTDIR}"; \
 	else \
-		python setup.py build -b $(OBJDIR) install; \
+		python setup.py build install; \
 	fi
 
 install3:
-	rm -rf $(OBJDIR) src/
+	rm -rf src/
 	rm -rf prebuilt/win64/capstone.dll
 	rm -rf prebuilt/win32/capstone.dll
 	if test -n "${DESTDIR}"; then \
-		python3 setup.py build -b $(OBJDIR) install --root="${DESTDIR}"; \
+		python3 setup.py build install --root="${DESTDIR}"; \
 	else \
-		python3 setup.py build -b $(OBJDIR) install; \
+		python3 setup.py build install; \
 	fi
 
 # NOTE: Newer cython can be installed by: sudo pip install --upgrade cython
 install_cython:
-	rm -rf $(OBJDIR) src/ dist/
+	rm -rf src/ dist/
 	rm -rf prebuilt/win64/capstone.dll
 	rm -rf prebuilt/win32/capstone.dll
-	mkdir -p $(OBJDIR)/pyx
-	cp setup_cython.py $(OBJDIR)
-	cp pyx/ccapstone* $(OBJDIR)/pyx/
-	cp capstone/__init__.py $(OBJDIR)/pyx/__init__.py
-	cp capstone/arm.py $(OBJDIR)/pyx/arm.pyx
-	cp capstone/arm_const.py $(OBJDIR)/pyx/arm_const.pyx
-	cp capstone/arm64.py $(OBJDIR)/pyx/arm64.pyx
-	cp capstone/arm64_const.py $(OBJDIR)/pyx/arm64_const.pyx
-	cp capstone/m68k.py $(OBJDIR)/pyx/m68k.pyx
-	cp capstone/m68k_const.py $(OBJDIR)/pyx/m68k_const.pyx
-	cp capstone/mips.py $(OBJDIR)/pyx/mips.pyx
-	cp capstone/mips_const.py $(OBJDIR)/pyx/mips_const.pyx
-	cp capstone/ppc.py $(OBJDIR)/pyx/ppc.pyx
-	cp capstone/ppc_const.py $(OBJDIR)/pyx/ppc_const.pyx
-	cp capstone/sparc.py $(OBJDIR)/pyx/sparc.pyx
-	cp capstone/sparc_const.py $(OBJDIR)/pyx/sparc_const.pyx
-	cp capstone/systemz.py $(OBJDIR)/pyx/systemz.pyx
-	cp capstone/sysz_const.py $(OBJDIR)/pyx/sysz_const.pyx
-	cp capstone/x86.py $(OBJDIR)/pyx/x86.pyx
-	cp capstone/x86_const.py $(OBJDIR)/pyx/x86_const.pyx
-	cp capstone/xcore.py $(OBJDIR)/pyx/xcore.pyx
-	cp capstone/xcore_const.py $(OBJDIR)/pyx/xcore_const.pyx
-	cd $(OBJDIR) && python setup_cython.py build -b ./tmp install --home=$(OBJDIR)
-	mv $(OBJDIR)/build/lib/python/capstone/* capstone
-	cd $(OBJDIR) && python setup_cython.py build -b ./tmp install
-
-build_cython:
-	rm -rf $(OBJDIR) src/ dist/
-	mkdir -p $(OBJDIR)/pyx
-	cp setup_cython.py $(OBJDIR)
-	cp pyx/ccapstone* $(OBJDIR)/pyx/
-	cp capstone/__init__.py $(OBJDIR)/pyx/__init__.py
-	cp capstone/arm.py $(OBJDIR)/pyx/arm.pyx
-	cp capstone/arm_const.py $(OBJDIR)/pyx/arm_const.pyx
-	cp capstone/arm64.py $(OBJDIR)/pyx/arm64.pyx
-	cp capstone/arm64_const.py $(OBJDIR)/pyx/arm64_const.pyx
-	cp capstone/m68k.py $(OBJDIR)/pyx/m68k.pyx
-	cp capstone/m68k_const.py $(OBJDIR)/pyx/m68k_const.pyx
-	cp capstone/mips.py $(OBJDIR)/pyx/mips.pyx
-	cp capstone/mips_const.py $(OBJDIR)/pyx/mips_const.pyx
-	cp capstone/ppc.py $(OBJDIR)/pyx/ppc.pyx
-	cp capstone/ppc_const.py $(OBJDIR)/pyx/ppc_const.pyx
-	cp capstone/sparc.py $(OBJDIR)/pyx/sparc.pyx
-	cp capstone/sparc_const.py $(OBJDIR)/pyx/sparc_const.pyx
-	cp capstone/systemz.py $(OBJDIR)/pyx/systemz.pyx
-	cp capstone/sysz_const.py $(OBJDIR)/pyx/sysz_const.pyx
-	cp capstone/x86.py $(OBJDIR)/pyx/x86.pyx
-	cp capstone/x86_const.py $(OBJDIR)/pyx/x86_const.pyx
-	cp capstone/xcore.py $(OBJDIR)/pyx/xcore.pyx
-	cp capstone/xcore_const.py $(OBJDIR)/pyx/xcore_const.pyx
-	cd $(OBJDIR) && python setup_cython.py build
+	mkdir -p $(PYX_BUILDDIR)/pyx
+	cp setup_cython.py $(PYX_BUILDDIR)
+	cp pyx/ccapstone* $(PYX_BUILDDIR)/pyx/
+	cp capstone/__init__.py $(PYX_BUILDDIR)/pyx/__init__.py
+	cp capstone/arm.py $(PYX_BUILDDIR)/pyx/arm.pyx
+	cp capstone/arm_const.py $(PYX_BUILDDIR)/pyx/arm_const.pyx
+	cp capstone/arm64.py $(PYX_BUILDDIR)/pyx/arm64.pyx
+	cp capstone/arm64_const.py $(PYX_BUILDDIR)/pyx/arm64_const.pyx
+	cp capstone/mips.py $(PYX_BUILDDIR)/pyx/mips.pyx
+	cp capstone/mips_const.py $(PYX_BUILDDIR)/pyx/mips_const.pyx
+	cp capstone/ppc.py $(PYX_BUILDDIR)/pyx/ppc.pyx
+	cp capstone/ppc_const.py $(PYX_BUILDDIR)/pyx/ppc_const.pyx
+	cp capstone/sparc.py $(PYX_BUILDDIR)/pyx/sparc.pyx
+	cp capstone/sparc_const.py $(PYX_BUILDDIR)/pyx/sparc_const.pyx
+	cp capstone/systemz.py $(PYX_BUILDDIR)/pyx/systemz.pyx
+	cp capstone/sysz_const.py $(PYX_BUILDDIR)/pyx/sysz_const.pyx
+	cp capstone/x86.py $(PYX_BUILDDIR)/pyx/x86.pyx
+	cp capstone/x86_const.py $(PYX_BUILDDIR)/pyx/x86_const.pyx
+	cp capstone/xcore.py $(PYX_BUILDDIR)/pyx/xcore.pyx
+	cp capstone/xcore_const.py $(PYX_BUILDDIR)/pyx/xcore_const.pyx
+	cd $(PYX_BUILDDIR) && python setup_cython.py build -b ./tmp install --home=$(PYX_BUILDDIR)
+	mv $(PYX_BUILDDIR)/build/lib/python/capstone/* capstone
+	cd $(PYX_BUILDDIR) && python setup_cython.py build -b ./tmp install
 
 # build & upload PyPi package with source code of the core
 sdist:
@@ -121,8 +89,8 @@ sdist3_win:
 	python3 setup.py sdist register upload
 
 clean:
-	rm -rf $(OBJDIR) src/ dist/ README
-	rm -f capstone/*.so
+	rm -rf $(PYX_BUILDDIR) build/ src/ dist/ *.egg-info README
+	rm -rf capstone/lib capstone/include
 	rm -rf prebuilt/win64/capstone.dll
 	rm -rf prebuilt/win32/capstone.dll
 
