@@ -228,6 +228,7 @@ int main(int argc, char **argv)
 	}
 
 	if (!strcmp(mode, "x16")) {
+        md = CS_MODE_64;
 		arch = "x86";
 		err = cs_open(CS_ARCH_X86, CS_MODE_16, &handle);
 	}
