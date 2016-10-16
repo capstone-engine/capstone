@@ -324,7 +324,7 @@ int main(int argc, char **argv)
 				}
 			}
 			printf("  %s\t%s\n", insn[i].mnemonic, insn[i].op_str);
-            if (debug_flag) {//different mode should call different print functions
+            if (debug_flag) {
                 if (!strcmp(arch, "x86")) {
                     print_insn_detail_x86(handle, md, &insn[i]);
                 }
