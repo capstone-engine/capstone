@@ -449,3 +449,10 @@ if (CAPSTONE_BUILD_SHARED)
             LIBRARY DESTINATION lib
             ARCHIVE DESTINATION lib)
 endif ()
+
+if (CAPSTONE_BUILD_SHARED)
+add_executable(cstool "cstool/cstool.c")
+target_link_libraries(cstool ${default-target})
+
+install(TARGETS cstool DESTINATION bin)
+endif ()
