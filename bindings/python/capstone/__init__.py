@@ -503,7 +503,7 @@ class CsInsn(object):
         if self._cs._detail and self._raw.id != 0:
             # save detail
             self._raw.detail = ctypes.pointer(all_info.detail._type_())
-            ctypes.pointer(self._raw.detail[0])[0] = all_info.detail[0]
+            ctypes.memmove(ctypes.byref(self._raw.detail[0]), ctypes.byref(all_info.detail[0]), ctypes.sizeof(type(all_info.detail[0])))
 
     # return instruction's ID.
     @property
@@ -976,6 +976,10 @@ class Cs(object):
             print(code)
             code = code.encode()
             print(code)'''
+        # Hack, unicorn's memory accessors give you back bytearrays, but they
+        # cause TypeErrors when you hand them into Capstone.
+        if isinstance(code, bytearray):
+            code = bytes(code)
         res = _cs.cs_disasm(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
         if res > 0:
             try:

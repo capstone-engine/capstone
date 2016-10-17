@@ -74,6 +74,7 @@ LIBDIRARCH ?= lib
 # Or better, pass 'LIBDIRARCH=lib64' to 'make install/uninstall' via 'make.sh'.
 #LIBDIRARCH ?= lib64
 LIBDIR ?= $(PREFIX)/$(LIBDIRARCH)
+BINDIR = $(PREFIX)/bin
 
 LIBDATADIR ?= $(LIBDIR)
 
@@ -355,6 +356,7 @@ PKGCFGF = $(BLDIR)/$(LIBNAME).pc
 
 all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF)
 ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
+	@V=$(V) $(MAKE) -C cstool
 ifndef BUILDDIR
 	cd tests && $(MAKE)
 else
@@ -405,25 +407,28 @@ else
 endif
 
 install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
-	mkdir -p $(DESTDIR)/$(LIBDIR)
-	$(call install-library,$(DESTDIR)/$(LIBDIR))
+	mkdir -p $(DESTDIR)$(LIBDIR)
+	$(call install-library,$(DESTDIR)$(LIBDIR))
 ifeq ($(CAPSTONE_STATIC),yes)
-	$(INSTALL_DATA) $(ARCHIVE) $(DESTDIR)/$(LIBDIR)
+	$(INSTALL_DATA) $(ARCHIVE) $(DESTDIR)$(LIBDIR)
 endif
-	mkdir -p $(DESTDIR)/$(INCDIR)/$(LIBNAME)
-	$(INSTALL_DATA) include/capstone/*.h $(DESTDIR)/$(INCDIR)/$(LIBNAME)
-	mkdir -p $(DESTDIR)/$(PKGCFGDIR)
-	$(INSTALL_DATA) $(PKGCFGF) $(DESTDIR)/$(PKGCFGDIR)
+	mkdir -p $(DESTDIR)$(INCDIR)/$(LIBNAME)
+	$(INSTALL_DATA) include/capstone/*.h $(DESTDIR)$(INCDIR)/$(LIBNAME)
+	mkdir -p $(DESTDIR)$(PKGCFGDIR)
+	$(INSTALL_DATA) $(PKGCFGF) $(DESTDIR)$(PKGCFGDIR)
+	$(INSTALL_LIB) cstool/cstool $(DESTDIR)$(BINDIR)
 
 uninstall:
-	rm -rf $(DESTDIR)/$(INCDIR)/$(LIBNAME)
-	rm -f $(DESTDIR)/$(LIBDIR)/lib$(LIBNAME).*
-	rm -f $(DESTDIR)/$(PKGCFGDIR)/$(LIBNAME).pc
+	rm -rf $(DESTDIR)$(INCDIR)/$(LIBNAME)
+	rm -f $(DESTDIR)$(LIBDIR)/lib$(LIBNAME).*
+	rm -f $(DESTDIR)$(PKGCFGDIR)/$(LIBNAME).pc
+	rm -f $(DESTDIR)$(BINDIR)/cstool
 
 clean:
 	rm -f $(LIBOBJ)
 	rm -f $(BLDIR)/lib$(LIBNAME).* $(BLDIR)/$(LIBNAME).*
 	rm -f $(PKGCFGF)
+	$(MAKE) -C cstool clean
 
 ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
 	cd tests && $(MAKE) clean

@@ -1,0 +1,26 @@
+This directory contains cstool of Capstone Engine.
+
+Cstool is a command-line tool to disassemble assembly hex-string.
+For example, to decode a hexcode string for Intel 32bit, run:
+
+	$ cstool x32 "90 91"
+
+	0	90	nop
+	1	91	xchg	eax, ecx
+
+Cstool disassembles the input and prints out the assembly instructions.
+On each line, the first column is the instruction offset, the second
+column is opcodes, and the rest is the instruction itself.
+
+Cstool is flexible enough to accept all kind of hexcode format. The following
+inputs have the same output with the example above.
+
+	$ cstool x32 "0x90 0x91"
+	$ cstool x32 "\x90\x91"
+	$ cstool x32 "90,91"
+	$ cstool x32 "90;91"
+	$ cstool x32 "90+91"
+	$ cstool x32 "90:91"
+
+To see all the supported options, run ./cstool
+
