@@ -3,9 +3,7 @@
 
 #include <stdio.h>
 
-#include <platform.h>
 #include <capstone.h>
-
 
 static void print_string_hex(char *comment, unsigned char *str, size_t len)
 {
