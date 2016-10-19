@@ -11,6 +11,8 @@
 
 		$ sudo make install3
 
+   To control the install destination, set the DESTDIR environment variable.
+
 2. For better Python performance, install cython-based binding with:
 
 		$ sudo make install_cython

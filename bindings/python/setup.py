@@ -3,7 +3,6 @@
 import glob
 import os
 import shutil
-import stat
 import sys
 import platform
 
@@ -55,18 +54,18 @@ def copy_sources():
         pass
 
     shutil.copytree(os.path.join(BUILD_DIR, "arch"), os.path.join(SRC_DIR, "arch"))
-	shutil.copytree(os.path.join(BUILD_DIR, "include"), os.path.join(SRC_DIR, "include"))
+    shutil.copytree(os.path.join(BUILD_DIR, "include"), os.path.join(SRC_DIR, "include"))
 
     src.extend(glob.glob(os.path.join(BUILD_DIR, "*.[ch]")))
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "*.mk"))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "*.mk")))
 
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "Makefile"))
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "LICENSE*"))
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "README"))
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "*.TXT"))
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "RELEASE_NOTES"))
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "make.sh"))
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "CMakeLists.txt"))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "Makefile")))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "LICENSE*")))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "README")))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "*.TXT")))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "RELEASE_NOTES")))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "make.sh")))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "CMakeLists.txt")))
 
     for filename in src:
         outpath = os.path.join(SRC_DIR, os.path.basename(filename))
@@ -101,15 +100,12 @@ def build_libraries():
         os.system('cmake -DCMAKE_BUILD_TYPE=RELEASE -DCAPSTONE_BUILD_TESTS=0 -DCAPSTONE_BUILD_STATIC=0 -G "NMake Makefiles" ..')
         os.system("nmake")
     elif SYSTEM == "cygwin":
-        os.chmod("make.sh", stat.S_IREAD|stat.S_IEXEC)
-        if is_64bits:
-            os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh cygwin-mingw64")
+        if IS_64BITS:
+            os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh cygwin-mingw64")
         else:
-            os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh cygwin-mingw32")
-
-        so = "capstone.dll"
+            os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh cygwin-mingw32")
     else:   # Unix
-        os.system("CAPSTONE_BUILD_CORE_ONLY=yes ./make.sh")
+        os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh")
 
     shutil.copy(LIBRARY_FILE, LIBS_DIR)
     if STATIC_LIBRARY_FILE: shutil.copy(STATIC_LIBRARY_FILE, LIBS_DIR)
@@ -153,7 +149,7 @@ try:
 
     cmdclass['develop'] = custom_develop
 except ImportError:
-    print "Proper 'develop' support unavailable."
+    print("Proper 'develop' support unavailable.")
 
 if 'bdist_wheel' in sys.argv and '--plat-name' not in sys.argv:
     idx = sys.argv.index('bdist_wheel') + 1
