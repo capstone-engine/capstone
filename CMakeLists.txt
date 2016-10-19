@@ -451,7 +451,8 @@ if (CAPSTONE_BUILD_SHARED)
 endif ()
 
 if (CAPSTONE_BUILD_SHARED)
-add_executable(cstool "cstool/cstool.c")
+FILE(GLOB CSTOOL_SRC cstool/*.c)
+add_executable(cstool ${CSTOOL_SRC})
 target_link_libraries(cstool ${default-target})
 
 install(TARGETS cstool DESTINATION bin)
