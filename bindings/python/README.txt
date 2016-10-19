@@ -1,7 +1,7 @@
 To install capstone, you should run `pip install capstone`.
 
 If you would like to build capstone with just the source distribution, without
-pip, just run `python setup.py install` in the same folder as this text file.
+pip, just run `python setup.py install` in the folder with setup.py in it.
 
 In order to use this source distribution, you will need an environment that can
 compile C code. On linux, this is usually easy, but on windows, this involves
