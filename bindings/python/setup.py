@@ -156,17 +156,18 @@ except ImportError:
     print "Proper 'develop' support unavailable."
 
 if 'bdist_wheel' in sys.argv and '--plat-name' not in sys.argv:
-    sys.argv.append('--plat-name')
+    idx = sys.argv.index('bdist_wheel') + 1
+    sys.argv.insert(idx, '--plat-name')
     name = get_platform()
     if 'linux' in name:
         # linux_* platform tags are disallowed because the python ecosystem is fubar
         # linux builds should be built in the centos 5 vm for maximum compatibility
         # see https://github.com/pypa/manylinux
         # see also https://github.com/angr/angr-dev/blob/master/bdist.sh
-        sys.argv.append('manylinux1_' + platform.machine())
+        sys.argv.insert(idx + 1, 'manylinux1_' + platform.machine())
     else:
         # https://www.python.org/dev/peps/pep-0425/
-        sys.argv.append(name.replace('.', '_').replace('-', '_'))
+        sys.argv.insert(idx + 1, name.replace('.', '_').replace('-', '_'))
 
 setup(
     provides=['capstone'],
