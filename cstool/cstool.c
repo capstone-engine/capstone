@@ -1,4 +1,4 @@
-/* Tang Yuhang <1648200150@qq.com> 2016 */
+/* Tang Yuhang <tyh000011112222@gmail.com> 2016 */
 #include <stdio.h>
 #include <inttypes.h>
 #include <string.h>
@@ -7,7 +7,7 @@
 
 #include <capstone/capstone.h>
 
-#define VERSION "1.0"
+#define VERSION "2.0"
 
 void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins);
 void print_insn_detail_arm(csh handle, cs_insn *ins);
@@ -22,7 +22,7 @@ void print_insn_detail_xcore(csh handle, cs_insn *ins);
 static uint8_t char_to_hexnum(char c)
 {
 	if (c >= '0' && c <= '9') {
-		return (uint8_t)(c - '0');
+        return (uint8_t)(c - '0');
 	}
 
 	if (c >= 'a' && c <= 'f') {
@@ -37,7 +37,7 @@ static uint8_t char_to_hexnum(char c)
 // valid hexadecimal, and return actual length of uint8_t[] in @size.
 static uint8_t *preprocess(char *code, size_t *size)
 {
-	size_t i = 0, j = 0;
+    size_t i = 0, j = 0;
 	uint8_t high, low;
 	uint8_t *result;
 
@@ -174,17 +174,17 @@ int main(int argc, char **argv)
 	
 	if (!strcmp(mode, "arm")) {
         arch = "arm";
-		err = cs_open(CS_ARCH_ARM, CS_MODE_ARM, &handle);
+        err = cs_open(CS_ARCH_ARM, CS_MODE_ARM, &handle);
 	}
 
 	if (!strcmp(mode, "armb")) {
         arch = "arm";
-		err = cs_open(CS_ARCH_ARM, CS_MODE_ARM + CS_MODE_BIG_ENDIAN, &handle);
+        err = cs_open(CS_ARCH_ARM, CS_MODE_ARM + CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "arml")) {
         arch = "arm";
-		err = cs_open(CS_ARCH_ARM, CS_MODE_ARM + CS_MODE_LITTLE_ENDIAN, &handle);
+        err = cs_open(CS_ARCH_ARM, CS_MODE_ARM + CS_MODE_LITTLE_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "thumb")) {
@@ -194,49 +194,49 @@ int main(int argc, char **argv)
 
 	if (!strcmp(mode, "thumbbe")) {
         arch = "arm";
-		err = cs_open(CS_ARCH_ARM, CS_MODE_THUMB + CS_MODE_BIG_ENDIAN, &handle);
+        err = cs_open(CS_ARCH_ARM, CS_MODE_THUMB + CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "thumble")) {
         arch = "arm";
-		err = cs_open(CS_ARCH_ARM, CS_MODE_ARM + CS_MODE_LITTLE_ENDIAN, &handle);
+        err = cs_open(CS_ARCH_ARM, CS_MODE_ARM + CS_MODE_LITTLE_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "arm64")) {
         arch = "arm64";
-		err = cs_open(CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, &handle);
+        err = cs_open(CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "mips")) {
         arch = "mips";
-		err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS32 + CS_MODE_LITTLE_ENDIAN, &handle);
+        err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS32 + CS_MODE_LITTLE_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "mipsbe")) {
         arch = "mips";
-		err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS32 + CS_MODE_BIG_ENDIAN, &handle);
+        err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS32 + CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "mips64")) {
         arch = "mips";
-		err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS64 + CS_MODE_BIG_ENDIAN, &handle);
+        err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS64 + CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "mips64be")) {
         arch = "mips";
-		err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS64 + CS_MODE_BIG_ENDIAN, &handle);
+        err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS64 + CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "x16")) {
-        md = CS_MODE_64;
-		arch = "x86";
-		err = cs_open(CS_ARCH_X86, CS_MODE_16, &handle);
+        md = CS_MODE_16;
+        arch = "x86";
+        err = cs_open(CS_ARCH_X86, CS_MODE_16, &handle);
 	}
 
 	if (!strcmp(mode, "x32")) {
         md = CS_MODE_32;
-		arch = "x86";
-		err = cs_open(CS_ARCH_X86, CS_MODE_32, &handle);
+        arch = "x86";
+        err = cs_open(CS_ARCH_X86, CS_MODE_32, &handle);
 	}
 
 	if (!strcmp(mode, "x64")) {
@@ -248,9 +248,9 @@ int main(int argc, char **argv)
 	if (!strcmp(mode, "x16att")) {
         md = CS_MODE_16;
         arch = "x86";
-		err = cs_open(CS_ARCH_X86, CS_MODE_16, &handle);
-		if (!err) {
-			cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
+        err = cs_open(CS_ARCH_X86, CS_MODE_16, &handle);
+        if (!err) {
+            cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
 		}
 	}
 
@@ -278,8 +278,8 @@ int main(int argc, char **argv)
 	}
 
 	if (!strcmp(mode,"ppc64be")) {
-         arch = "ppc";
-		err = cs_open(CS_ARCH_PPC,CS_MODE_64+CS_MODE_BIG_ENDIAN, &handle);
+        arch = "ppc";
+        err = cs_open(CS_ARCH_PPC,CS_MODE_64+CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode,"sparc")) {

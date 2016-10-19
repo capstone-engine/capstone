@@ -3,7 +3,6 @@
 
 #include <stdio.h>
 
-#include <platform.h>
 #include <capstone.h>
 
 static csh handle;
