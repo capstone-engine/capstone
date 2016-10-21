@@ -18,6 +18,18 @@ void print_insn_detail_sparc(csh handle, cs_insn *ins);
 void print_insn_detail_sysz(csh handle, cs_insn *ins);
 void print_insn_detail_xcore(csh handle, cs_insn *ins);
 
+void print_string_hex(char *comment, unsigned char *str, size_t len)
+{
+	unsigned char *c;
+
+	printf("%s", comment);
+	for (c = str; c < str + len; c++) {
+		printf("0x%02x ", *c & 0xff);
+	}
+
+	printf("\n");
+}
+
 // convert hexchar to hexnum
 static uint8_t char_to_hexnum(char c)
 {
@@ -62,7 +74,7 @@ static uint8_t *preprocess(char *code, size_t *size)
 static void usage(char *prog)
 {
 	printf("Cstool v%s for Capstone Disassembler Engine (www.capstone-engine.org)\n\n", VERSION);
-	printf("Syntax: %s [-d:print all debug information] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
+	printf("Syntax: %s [-d:print all detail information] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
 	printf("\nThe following <arch+mode> options are supported:\n");
 
 	if (cs_support(CS_ARCH_X86)) {
@@ -124,8 +136,8 @@ int main(int argc, char **argv)
 	cs_insn *insn;
 	cs_err err;
 	cs_mode md;
-	char *arch;
-	bool debug_flag = false;
+	cs_arch arch;
+	bool detail_flag = false;
 
 	if (argc != 3 && argc != 4 && argc != 5) {
 		usage(argv[0]);
@@ -133,11 +145,11 @@ int main(int argc, char **argv)
 	}
 
 	if (!strcmp(argv[1], "-d")) {
-			if (argc == 3) {
-				usage(argv[0]);
-				return -1;
-	}
-		debug_flag = true;
+		if (argc == 3) {
+			usage(argv[0]);
+			return -1;
+		}
+		detail_flag = true;
 		mode = argv[2];
 		assembly = preprocess(argv[3], &size);
 		if (argc == 5) {
@@ -160,7 +172,7 @@ int main(int argc, char **argv)
 			printf("ERROR: invalid assembler-string argument, quit!\n");
 			return -3;
 		}
-		
+
 		if (argc == 4) {
 			// cstool <arch> <assembly> <address>
 			char *temp;
@@ -171,83 +183,83 @@ int main(int argc, char **argv)
 			}
 		}
 	}
-	
+
 	if (!strcmp(mode, "arm")) {
-		arch = "arm";
+		arch = CS_ARCH_ARM;
 		err = cs_open(CS_ARCH_ARM, CS_MODE_ARM, &handle);
 	}
 
 	if (!strcmp(mode, "armb")) {
-		arch = "arm";
+		arch = CS_ARCH_ARM;
 		err = cs_open(CS_ARCH_ARM, CS_MODE_ARM + CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "arml")) {
-		arch = "arm";
+		arch = CS_ARCH_ARM;
 		err = cs_open(CS_ARCH_ARM, CS_MODE_ARM + CS_MODE_LITTLE_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "thumb")) {
-		arch = "arm";
+		arch = CS_ARCH_ARM;
 		err = cs_open(CS_ARCH_ARM, CS_MODE_THUMB + CS_MODE_LITTLE_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "thumbbe")) {
-		arch = "arm";
+		arch = CS_ARCH_ARM;
 		err = cs_open(CS_ARCH_ARM, CS_MODE_THUMB + CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "thumble")) {
-		arch = "arm";
+		arch = CS_ARCH_ARM;
 		err = cs_open(CS_ARCH_ARM, CS_MODE_ARM + CS_MODE_LITTLE_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "arm64")) {
-		arch = "arm64";
+		arch = CS_ARCH_ARM64;
 		err = cs_open(CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "mips")) {
-		arch = "mips";
+		arch = CS_ARCH_MIPS;
 		err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS32 + CS_MODE_LITTLE_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "mipsbe")) {
-		arch = "mips";
+		arch = CS_ARCH_MIPS;
 		err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS32 + CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "mips64")) {
-		arch = "mips";
+		arch = CS_ARCH_MIPS;
 		err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS64 + CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "mips64be")) {
-		arch = "mips";
+		arch = CS_ARCH_MIPS;
 		err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS64 + CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "x16")) {
 		md = CS_MODE_16;
-		arch = "x86";
+		arch = CS_ARCH_X86;
 		err = cs_open(CS_ARCH_X86, CS_MODE_16, &handle);
 	}
 
 	if (!strcmp(mode, "x32")) {
 		md = CS_MODE_32;
-		arch = "x86";
+		arch = CS_ARCH_X86;
 		err = cs_open(CS_ARCH_X86, CS_MODE_32, &handle);
 	}
 
 	if (!strcmp(mode, "x64")) {
 		md = CS_MODE_64;
-		arch = "x86";
+		arch = CS_ARCH_X86;
 		err = cs_open(CS_ARCH_X86, CS_MODE_64, &handle);
 	}
 
 	if (!strcmp(mode, "x16att")) {
 		md = CS_MODE_16;
-		arch = "x86";
+		arch = CS_ARCH_X86;
 		err = cs_open(CS_ARCH_X86, CS_MODE_16, &handle);
 		if (!err) {
 			cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
@@ -256,7 +268,7 @@ int main(int argc, char **argv)
 
 	if (!strcmp(mode,"x32att")) {
 		md = CS_MODE_32;
-		arch = "x86";
+		arch = CS_ARCH_X86;
 		err = cs_open(CS_ARCH_X86, CS_MODE_32, &handle);
 		if (!err) {
 			cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
@@ -265,7 +277,7 @@ int main(int argc, char **argv)
 
 	if (!strcmp(mode,"x64att")) {
 		md = CS_MODE_64;
-		arch = "x86";
+		arch = CS_ARCH_X86;
 		err = cs_open(CS_ARCH_X86, CS_MODE_64, &handle);
 		if (!err) {
 			cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
@@ -273,27 +285,27 @@ int main(int argc, char **argv)
 	}
 
 	if (!strcmp(mode,"ppc64")) {
-		arch = "ppc";
+		arch = CS_ARCH_PPC;
 		err = cs_open(CS_ARCH_PPC, CS_MODE_64+CS_MODE_LITTLE_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode,"ppc64be")) {
-		arch = "ppc";
+		arch = CS_ARCH_PPC;
 		err = cs_open(CS_ARCH_PPC,CS_MODE_64+CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode,"sparc")) {
-		arch = "sparc";
+		arch = CS_ARCH_SPARC;
 		err = cs_open(CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "systemz") || !strcmp(mode, "sysz") || !strcmp(mode, "s390x")) {
-		arch = "sysz";
+		arch = CS_ARCH_SYSZ;
 		err = cs_open(CS_ARCH_SYSZ, CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode,"xcore")) {
-		arch = "xcore";
+		arch = CS_ARCH_XCORE;
 		err = cs_open(CS_ARCH_XCORE, CS_MODE_BIG_ENDIAN, &handle);
 	}
 
@@ -303,7 +315,7 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	if (debug_flag) {
+	if (detail_flag) {
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 	}
 
@@ -319,42 +331,45 @@ int main(int argc, char **argv)
 			}
 			// X86 instruction size is variable.
 			// align assembly instruction after the opcode
-			if (!strcmp(arch, "x86")) {
+			if (arch == CS_ARCH_X86) {
+
 				for (; j < 16; j++) {
 					printf("  ");
 				}
 			}
+
 			printf("  %s\t%s\n", insn[i].mnemonic, insn[i].op_str);
-			if (debug_flag) {
-				if (!strcmp(arch, "x86")) {
+
+			if (detail_flag) {
+				if (arch == CS_ARCH_X86) {
 					print_insn_detail_x86(handle, md, &insn[i]);
 				}
 
-				if (!strcmp(arch, "arm")) {
+				if (arch == CS_ARCH_ARM) {
 					print_insn_detail_arm(handle, &insn[i]);
 				}
 
-				if (!strcmp(arch,"arm64")) {
+				if (arch == CS_ARCH_ARM64) {
 					print_insn_detail_arm64(handle,&insn[i]);
 				}
 
-				if (!strcmp(arch, "mips")) {
+				if (arch == CS_ARCH_MIPS) {
 					print_insn_detail_mips(handle, &insn[i]);
 				}
 
-				if (!strcmp(arch, "ppc")) {
+				if (arch == CS_ARCH_PPC) {
 					print_insn_detail_ppc(handle, &insn[i]);
 				}
 
-				if (!strcmp(arch, "sparc")) {
+				if (arch == CS_ARCH_SPARC) {
 					print_insn_detail_sparc(handle, &insn[i]);
 				}
 
-				if (!strcmp(arch, "sysz")) {
+				if (arch == CS_ARCH_SYSZ) {
 					print_insn_detail_sysz(handle, &insn[i]);
 				}
 
-				if (!strcmp(arch, "xcore")) {
+				if (arch == CS_ARCH_XCORE) {
 					print_insn_detail_xcore(handle, &insn[i]);
 				}
 			}
@@ -369,5 +384,3 @@ int main(int argc, char **argv)
 
 	return 0;
 }
-
-
