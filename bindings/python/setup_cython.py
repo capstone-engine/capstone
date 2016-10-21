@@ -90,13 +90,7 @@ def build_libraries():
         # Do not build tests & static library
         os.system('cmake -DCMAKE_BUILD_TYPE=RELEASE -DCAPSTONE_BUILD_TESTS=0 -DCAPSTONE_BUILD_STATIC=0 -G "NMake Makefiles" ..')
         os.system("nmake")
-    elif SYSTEM == "cygwin":
-        if IS_64BITS:
-            os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh cygwin-mingw64")
-        else:
-            os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh cygwin-mingw32")
-
-    else:   # Unix
+    else:   # Unix incl. cygwin
         os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh")
 
     shutil.copy(LIBRARY_FILE, LIBS_DIR)
