@@ -20,14 +20,6 @@ PPC_BH_INVALID = 0
 PPC_BH_PLUS = 1
 PPC_BH_MINUS = 2
 
-# Operand type for instruction's operands
-
-PPC_OP_INVALID = 0
-PPC_OP_REG = 1
-PPC_OP_IMM = 2
-PPC_OP_MEM = 3
-PPC_OP_CRX = 64
-
 # PPC registers
 
 PPC_REG_INVALID = 0
@@ -209,6 +201,14 @@ PPC_REG_CTR8 = 175
 PPC_REG_LR8 = 176
 PPC_REG_CR1EQ = 177
 PPC_REG_ENDING = 178
+
+# Operand type for instruction's operands
+
+PPC_OP_INVALID = 0
+PPC_OP_REG = 1
+PPC_OP_IMM = 2
+PPC_OP_MEM = 3
+PPC_OP_CRX = 64
 
 # PPC instruction
 
