@@ -1,17 +1,18 @@
-To install capstone, you should run `pip install capstone`.
+To install Capstone, you should run `pip install capstone`.
 
-If you would like to build capstone with just the source distribution, without
+If you would like to build Capstone with just the source distribution, without
 pip, just run `python setup.py install` in the folder with setup.py in it.
 
 In order to use this source distribution, you will need an environment that can
-compile C code. On linux, this is usually easy, but on windows, this involves
+compile C code. On Linux, this is usually easy, but on Windows, this involves
 installing Visual Studio and using the "Developer Command Prompt" to perform the
 installation. See BUILDING.txt for more information.
 
-If you don't want to build your own copy of capstone, you can use a precompiled
-binary distribution frm PyPI. Saying `pip install capstone` should automatically
-obtain an appropriate copy for your system. If it does not, please inform
-<andrew@andrewdutcher.com> - they will fix this, probably.
+If you don't want to build your own copy of Capstone, you can use a precompiled
+binary distribution from PyPI. Saying `pip install capstone` should
+automatically obtain an appropriate copy for your system. If it does not, please
+open an issue at https://github.com/aquynh/capstone and tag @rhelmot - they
+will fix this, probably!
 
 --------------------------------------------------------------------------------
 
