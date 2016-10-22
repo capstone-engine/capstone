@@ -346,7 +346,7 @@ else
 endif
 endif
 
-$(LIBOBJ): config.mk
+$(LIBOBJ): *.h include/*.h config.mk
 
 $(LIBOBJ_ARM): $(DEP_ARM)
 $(LIBOBJ_ARM64): $(DEP_ARM64)
