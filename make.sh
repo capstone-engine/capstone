@@ -8,7 +8,6 @@
 
 # build iOS lib for all iDevices, or only specific device
 function build_iOS {
-	${MAKE} clean
 	IOS_SDK=`xcrun --sdk iphoneos --show-sdk-path`
 	IOS_CC=`xcrun --sdk iphoneos -f clang`
 	IOS_CFLAGS="-Os -Wimplicit -isysroot $IOS_SDK"
@@ -55,8 +54,6 @@ function build_android {
     TOOLCHAIN="$NDK/toolchains/$CROSS$GCCVER/prebuilt/$HOSTOS-$HOSTARCH"
     PLATFORM="$NDK/platforms/$APILEVEL/arch-$TARGARCH"
 
-	${MAKE} clean
-
     CROSS="$TOOLCHAIN/bin/$CROSS" CFLAGS="--sysroot=$PLATFORM" LDFLAGS="--sysroot=$PLATFORM" ${MAKE} $*
 }
 
@@ -65,8 +62,6 @@ function build {
 	if [ $(uname -s) = Darwin ]; then
 		export LIBARCHS="i386 x86_64"
 	fi
-
-	${MAKE} clean
 
 	if [ -n "$CC" ]; then
 		${MAKE} CC="$CC" $*
