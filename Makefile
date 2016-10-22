@@ -375,7 +375,7 @@ else
 endif
 endif
 
-$(LIBOBJ): config.mk
+$(LIBOBJ): config.mk *.h include/capstone/*.h
 
 $(LIBOBJ_ARM): $(DEP_ARM)
 $(LIBOBJ_ARM64): $(DEP_ARM64)
