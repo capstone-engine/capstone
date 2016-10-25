@@ -54,6 +54,11 @@ extern "C" {
 #define CS_API_MAJOR 3
 #define CS_API_MINOR 0
 
+// Capstone package version
+#define CS_VERSION_MAJOR CS_API_MAJOR
+#define CS_VERSION_MINOR CS_API_MINOR
+#define CS_VERSION_EXTRA 5
+
 // Macro to create combined version which can be compared to
 // result of cs_version() API.
 #define CS_MAKE_VERSION(major, minor) ((major << 8) + minor)
