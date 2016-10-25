@@ -20,14 +20,6 @@ let _PPC_BH_INVALID = 0;;
 let _PPC_BH_PLUS = 1;;
 let _PPC_BH_MINUS = 2;;
 
-(* Operand type for instruction's operands *)
-
-let _PPC_OP_INVALID = 0;;
-let _PPC_OP_REG = 1;;
-let _PPC_OP_IMM = 2;;
-let _PPC_OP_MEM = 3;;
-let _PPC_OP_CRX = 64;;
-
 (* PPC registers *)
 
 let _PPC_REG_INVALID = 0;;
@@ -209,6 +201,14 @@ let _PPC_REG_CTR8 = 175;;
 let _PPC_REG_LR8 = 176;;
 let _PPC_REG_CR1EQ = 177;;
 let _PPC_REG_ENDING = 178;;
+
+(* Operand type for instruction's operands *)
+
+let _PPC_OP_INVALID = 0;;
+let _PPC_OP_REG = 1;;
+let _PPC_OP_IMM = 2;;
+let _PPC_OP_MEM = 3;;
+let _PPC_OP_CRX = 64;;
 
 (* PPC instruction *)
 
