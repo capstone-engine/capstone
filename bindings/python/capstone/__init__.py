@@ -19,6 +19,10 @@ __all__ = [
     'CS_API_MAJOR',
     'CS_API_MINOR',
 
+    'CS_VERSION_MAJOR',
+    'CS_VERSION_MINOR',
+    'CS_VERSION_EXTRA',
+
     'CS_ARCH_ARM',
     'CS_ARCH_ARM64',
     'CS_ARCH_MIPS',
@@ -100,7 +104,12 @@ __all__ = [
 CS_API_MAJOR = 3
 CS_API_MINOR = 0
 
-__version__ = "%s.%s" %(CS_API_MAJOR, CS_API_MINOR)
+# Package version
+CS_VERSION_MAJOR = CS_API_MAJOR
+CS_VERSION_MINOR = CS_API_MINOR
+CS_VERSION_EXTRA = 5
+
+__version__ = "%u.%u.%u" %(CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA)
 
 # architectures
 CS_ARCH_ARM = 0
