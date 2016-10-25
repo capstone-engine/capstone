@@ -249,7 +249,6 @@ elif sys.platform in ('win32', 'cygwin'):
 else:
     _lib = "libcapstone.so"
 
-_all_libs = ['capstone.dll', 'libcapstone.so.3', 'libcapstone.so', 'libcapstone.dylib']
 _found = False
 
 def _load_lib(path):
@@ -260,7 +259,7 @@ def _load_lib(path):
         # if we're on linux, try again with .so.3 extension
         if lib_file.endswith('.so'):
             try:
-                return ctypes.cdll.LoadLibrary(lib_file)
+                return ctypes.cdll.LoadLibrary(lib_file + '.3')
             except OSError:
                 return None
         return None
