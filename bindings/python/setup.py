@@ -85,7 +85,7 @@ def build_libraries():
     os.mkdir(LIBS_DIR)
 
     # copy public headers
-    shutil.copytree(os.path.join(BUILD_DIR, 'include'), os.path.join(HEADERS_DIR, 'capstone'))
+    shutil.copytree(os.path.join(BUILD_DIR, 'include', 'capstone'), os.path.join(HEADERS_DIR, 'capstone'))
 
     os.chdir(BUILD_DIR)
 
@@ -102,7 +102,10 @@ def build_libraries():
     else:   # Unix incl. cygwin
         os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh")
 
-    shutil.copy(LIBRARY_FILE, LIBS_DIR)
+    if LIBRARY_FILE.endswith('.so'):
+        shutil.copy(LIBRARY_FILE + '.4', os.path.join(LIBS_DIR, LIBRARY_FILE))
+    else:
+        shutil.copy(LIBRARY_FILE, LIBS_DIR)
     if STATIC_LIBRARY_FILE: shutil.copy(STATIC_LIBRARY_FILE, LIBS_DIR)
     os.chdir(cwd)
 

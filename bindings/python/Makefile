@@ -62,6 +62,7 @@ clean:
 	rm -f pyx/*.c pyx/__init__.py
 	for f in capstone/*.py; do rm -f pyx/$$(basename $$f)x; done
 	rm -f MANIFEST
+	rm -f *.pyc capstone/*.pyc
 
 
 TESTS = test_basic.py test_detail.py test_arm.py test_arm64.py test_m68k.py test_mips.py
