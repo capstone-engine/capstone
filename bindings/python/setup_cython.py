@@ -9,7 +9,7 @@ from Cython.Distutils import build_ext
 
 
 SYSTEM = sys.platform
-VERSION = '3.0.4'
+VERSION = '3.0.5'
 
 # adapted from commit e504b81 of Nguyen Tan Cong
 # Reference: https://docs.python.org/2/library/platform.html#cross-platform
