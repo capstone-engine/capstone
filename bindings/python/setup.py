@@ -14,7 +14,7 @@ from distutils.command.sdist import sdist
 from setuptools.command.bdist_egg import bdist_egg
 
 SYSTEM = sys.platform
-VERSION = '3.0.4'
+VERSION = '3.0.5'
 
 # adapted from commit e504b81 of Nguyen Tan Cong
 # Reference: https://docs.python.org/2/library/platform.html#cross-platform
