@@ -1,12 +1,15 @@
+import os
+import sys
+import shutil
+
+from distutils import log
 from distutils.core import setup
 from distutils.extension import Extension
 from distutils.command.build import build
 from Cython.Distutils import build_ext
 
 VERSION = '4.0'
-
 SYSTEM = sys.platform
-VERSION = '3.0.4'
 
 # adapted from commit e504b81 of Nguyen Tan Cong
 # Reference: https://docs.python.org/2/library/platform.html#cross-platform
@@ -34,7 +37,7 @@ else:
 compile_args = ['-O3', '-fomit-frame-pointer', '-I' + HEADERS_DIR]
 link_args = ['-L' + LIBS_DIR]
 
-ext_module_names = ['arm', 'arm_const', 'arm64', 'arm64_const', 'mips', 'mips_const', 'ppc', 'ppc_const', 'x86', 'x86_const', 'sparc', 'sparc_const', 'systemz', 'sysz_const', 'xcore', 'xcore_const']
+ext_module_names = ['arm', 'arm_const', 'arm64', 'arm64_const', 'm68k', 'm68k_const', 'mips', 'mips_const', 'ppc', 'ppc_const', 'x86', 'x86_const', 'sparc', 'sparc_const', 'systemz', 'sysz_const', 'xcore', 'xcore_const']
 ext_modules = [Extension("capstone.ccapstone",
                          ["pyx/ccapstone.pyx"],
                          libraries=["capstone"],
@@ -73,7 +76,7 @@ def build_libraries():
     os.mkdir(LIBS_DIR)
 
     # copy public headers
-    shutil.copytree(os.path.join(BUILD_DIR, 'include'), os.path.join(HEADERS_DIR, 'capstone'))
+    shutil.copytree(os.path.join(BUILD_DIR, 'include', 'capstone'), os.path.join(HEADERS_DIR, 'capstone'))
 
     os.chdir(BUILD_DIR)
 
@@ -90,7 +93,10 @@ def build_libraries():
     else:   # Unix incl. cygwin
         os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh")
 
-    shutil.copy(LIBRARY_FILE, LIBS_DIR)
+    if LIBRARY_FILE.endswith('.so'):
+        shutil.copy(LIBRARY_FILE + '.4', os.path.join(LIBS_DIR, LIBRARY_FILE))
+    else:
+        shutil.copy(LIBRARY_FILE, LIBS_DIR)
     if STATIC_LIBRARY_FILE: shutil.copy(STATIC_LIBRARY_FILE, LIBS_DIR)
     os.chdir(cwd)
 

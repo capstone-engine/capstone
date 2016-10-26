@@ -256,10 +256,10 @@ def _load_lib(path):
     try:
         return ctypes.cdll.LoadLibrary(lib_file)
     except OSError:
-        # if we're on linux, try again with .so.3 extension
+        # if we're on linux, try again with .so.4 extension
         if lib_file.endswith('.so'):
             try:
-                return ctypes.cdll.LoadLibrary(lib_file + '.3')
+                return ctypes.cdll.LoadLibrary(lib_file + '.4')
             except OSError:
                 return None
         return None
