@@ -15046,13 +15046,13 @@
 {
 	X86_STC, X86_INS_STC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_EFLAGS, 0 }, { X86_GRP_PRIVILEGE, 0 }, 0, 0
+	{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 },
 {
 	X86_STD, X86_INS_STD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 },
 {
