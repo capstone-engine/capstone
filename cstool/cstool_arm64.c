@@ -12,15 +12,17 @@ void print_insn_detail_arm64(csh handle, cs_insn *ins)
 {
 	cs_arm64 *arm64;
 	int i;
-
+	cs_regs regs_read, regs_write;
+	uint8_t regs_read_count, regs_write_count;
+	
 	// detail can be NULL if SKIPDATA option is turned ON
 	if (ins->detail == NULL)
 		return;
-
+	
 	arm64 = &(ins->detail->arm64);
 	if (arm64->op_count)
 		printf("\top_count: %u\n", arm64->op_count);
-
+	
 	for (i = 0; i < arm64->op_count; i++) {
 		cs_arm64_op *op = &(arm64->operands[i]);
 		switch(op->type) {
@@ -48,7 +50,7 @@ void print_insn_detail_arm64(csh handle, cs_insn *ins)
 					printf("\t\t\toperands[%u].mem.index: REG = %s\n", i, cs_reg_name(handle, op->mem.index));
 				if (op->mem.disp != 0)
 					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
-
+				
 				break;
 			case ARM64_OP_CIMM:
 				printf("\t\toperands[%u].type: C-IMM = %u\n", i, (int)op->imm);
@@ -72,33 +74,69 @@ void print_insn_detail_arm64(csh handle, cs_insn *ins)
 				printf("\t\toperands[%u].type: BARRIER = 0x%x\n", i, op->barrier);
 				break;
 		}
-
+		
+		uint8_t access = op->access;
+		switch(access) {
+			default:
+				break;
+			case CS_AC_READ:
+				printf("\t\toperands[%u].access: READ\n", i);
+				break;
+			case CS_AC_WRITE:
+				printf("\t\toperands[%u].access: WRITE\n", i);
+				break;
+			case CS_AC_READ | CS_AC_WRITE:
+				printf("\t\toperands[%u].access: READ | WRITE\n", i);
+				break;
+		}
+		
 		if (op->shift.type != ARM64_SFT_INVALID &&
-				op->shift.value)
+			op->shift.value)
 			printf("\t\t\tShift: type = %u, value = %u\n",
-					op->shift.type, op->shift.value);
-
+				   op->shift.type, op->shift.value);
+		
 		if (op->ext != ARM64_EXT_INVALID)
 			printf("\t\t\tExt: %u\n", op->ext);
-
+		
 		if (op->vas != ARM64_VAS_INVALID)
 			printf("\t\t\tVector Arrangement Specifier: 0x%x\n", op->vas);
-
+		
 		if (op->vess != ARM64_VESS_INVALID)
 			printf("\t\t\tVector Element Size Specifier: %u\n", op->vess);
-
+		
 		if (op->vector_index != -1)
 			printf("\t\t\tVector Index: %u\n", op->vector_index);
 	}
-
+	
 	if (arm64->update_flags)
 		printf("\tUpdate-flags: True\n");
-
+	
 	if (arm64->writeback)
 		printf("\tWrite-back: True\n");
-
+	
 	if (arm64->cc)
 		printf("\tCode-condition: %u\n", arm64->cc);
-
+	
+	// Print out all registers accessed by this instruction (either implicit or explicit)
+	if (!cs_regs_access(handle, ins,
+						regs_read, &regs_read_count,
+						regs_write, &regs_write_count)) {
+		if (regs_read_count) {
+			printf("\tRegisters read:");
+			for(i = 0; i < regs_read_count; i++) {
+				printf(" %s", cs_reg_name(handle, regs_read[i]));
+			}
+			printf("\n");
+		}
+		
+		if (regs_write_count) {
+			printf("\tRegisters modified:");
+			for(i = 0; i < regs_write_count; i++) {
+				printf(" %s", cs_reg_name(handle, regs_write[i]));
+			}
+			printf("\n");
+		}
+	}
+	
 	printf("\n");
 }
