@@ -1852,13 +1852,13 @@
 {
 	X86_CLC, X86_INS_CLC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 },
 {
 	X86_CLD, X86_INS_CLD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 },
 {
@@ -1900,7 +1900,7 @@
 {
 	X86_CMC, X86_INS_CMC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 },
 {
