@@ -1,4 +1,3 @@
-/* Second-Best Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
 #include <stdio.h>
