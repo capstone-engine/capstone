@@ -125,7 +125,7 @@ static void usage(char *prog)
 	}
 	
 	if (cs_support(CS_ARCH_M68K)) {
-		printf("        m68kb:     m68k+big endian\n");
+		printf("        m68k:      m68k + big endian\n");
 		printf("        m68k40:    m68k_040\n");
 	}
 
@@ -315,7 +315,7 @@ int main(int argc, char **argv)
 		err = cs_open(CS_ARCH_XCORE, CS_MODE_BIG_ENDIAN, &handle);
 	}
 	
-	if (!strcmp(mode,"m68kb")) {
+	if (!strcmp(mode,"m68k")) {
 		arch = CS_ARCH_M68K;
 		err = cs_open(CS_ARCH_M68K, CS_MODE_BIG_ENDIAN, &handle);
 	}
