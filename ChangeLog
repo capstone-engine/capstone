@@ -7,6 +7,10 @@ This file details the changelog of Capstone.
 - Fix a bug where Arm.OpInfo.memBarrier and Arm.OpInfo.op is wrongly
   calculated
 
+[ Bindings ]
+
+- Java; add Capstone.strerror() and CsInsn.regsAccess().
+
 ---------------------------------
 Version 3.0.2: March 11th, 2015
 
