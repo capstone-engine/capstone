@@ -17,6 +17,7 @@ void print_insn_detail_ppc(csh handle, cs_insn *ins);
 void print_insn_detail_sparc(csh handle, cs_insn *ins);
 void print_insn_detail_sysz(csh handle, cs_insn *ins);
 void print_insn_detail_xcore(csh handle, cs_insn *ins);
+void print_insn_detail_m68k(csh handle, cs_insn *ins);
 
 void print_string_hex(char *comment, unsigned char *str, size_t len)
 {
@@ -121,6 +122,11 @@ static void usage(char *prog)
 
 	if (cs_support(CS_ARCH_XCORE)) {
 		printf("        xcore:     xcore\n");
+	}
+	
+	if (cs_support(CS_ARCH_M68K)) {
+		printf("        m68kb:     m68k+big endian\n");
+		printf("        m68k40:    m68k_040\n");
 	}
 
 	printf("\n");
@@ -308,6 +314,17 @@ int main(int argc, char **argv)
 		arch = CS_ARCH_XCORE;
 		err = cs_open(CS_ARCH_XCORE, CS_MODE_BIG_ENDIAN, &handle);
 	}
+	
+	if (!strcmp(mode,"m68kb")) {
+		arch = CS_ARCH_M68K;
+		err = cs_open(CS_ARCH_M68K, CS_MODE_BIG_ENDIAN, &handle);
+	}
+	
+	if (!strcmp(mode,"m68k40")) {
+		arch = CS_ARCH_M68K;
+		err = cs_open(CS_ARCH_M68K, CS_MODE_M68K_040, &handle);
+	}
+
 
 	if (err) {
 		printf("ERROR: Failed on cs_open(), quit!\n");
@@ -371,6 +388,10 @@ int main(int argc, char **argv)
 
 				if (arch == CS_ARCH_XCORE) {
 					print_insn_detail_xcore(handle, &insn[i]);
+				}
+				
+				if (arch == CS_ARCH_M68K) {
+					print_insn_detail_m68k(handle, &insn[i]);
 				}
 			}
 		}
