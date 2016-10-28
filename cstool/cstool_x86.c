@@ -118,19 +118,16 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
 	if (ins->detail == NULL)
 		return;
-	
+
 	x86 = &(ins->detail->x86);
-	
+
 	print_string_hex("\tPrefix:", x86->prefix, 4);
-	
 	print_string_hex("\tOpcode:", x86->opcode, 4);
-	
 	printf("\trex: 0x%x\n", x86->rex);
-	
 	printf("\taddr_size: %u\n", x86->addr_size);
 	printf("\tmodrm: 0x%x\n", x86->modrm);
 	printf("\tdisp: 0x%x\n", x86->disp);
-	
+
 	// SIB is not available in 16-bit mode
 	if ((mode & CS_MODE_16) == 0) {
 		printf("\tsib: 0x%x\n", x86->sib);
@@ -141,32 +138,32 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 		if (x86->sib_scale != 0)
 			printf("\t\tsib_scale: %d\n", x86->sib_scale);
 	}
-	
+
 	// XOP code condition
 	if (x86->xop_cc != X86_XOP_CC_INVALID) {
 		printf("\txop_cc: %u\n", x86->xop_cc);
 	}
-	
+
 	// SSE code condition
 	if (x86->sse_cc != X86_SSE_CC_INVALID) {
 		printf("\tsse_cc: %u\n", x86->sse_cc);
 	}
-	
+
 	// AVX code condition
 	if (x86->avx_cc != X86_AVX_CC_INVALID) {
 		printf("\tavx_cc: %u\n", x86->avx_cc);
 	}
-	
+
 	// AVX Suppress All Exception
 	if (x86->avx_sae) {
 		printf("\tavx_sae: %u\n", x86->avx_sae);
 	}
-	
+
 	// AVX Rounding Mode
 	if (x86->avx_rm != X86_AVX_RM_INVALID) {
 		printf("\tavx_rm: %u\n", x86->avx_rm);
 	}
-	
+
 	// Print out all immediate operands
 	count = cs_op_count(ud, ins, X86_OP_IMM);
 	if (count) {
@@ -176,14 +173,14 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 			printf("\t\timms[%u]: 0x%" PRIx64 "\n", i, x86->operands[index].imm);
 		}
 	}
-	
+
 	if (x86->op_count)
 		printf("\top_count: %u\n", x86->op_count);
-	
+
 	// Print out all operands
 	for (i = 0; i < x86->op_count; i++) {
 		cs_x86_op *op = &(x86->operands[i]);
-		
+
 		switch((int)op->type) {
 			case X86_OP_REG:
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(ud, op->reg));
@@ -207,17 +204,17 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 			default:
 				break;
 		}
-		
+
 		// AVX broadcast type
 		if (op->avx_bcast != X86_AVX_BCAST_INVALID)
 			printf("\t\toperands[%u].avx_bcast: %u\n", i, op->avx_bcast);
-		
+
 		// AVX zero opmask {z}
 		if (op->avx_zero_opmask != false)
 			printf("\t\toperands[%u].avx_zero_opmask: TRUE\n", i);
-		
+
 		printf("\t\toperands[%u].size: %u\n", i, op->size);
-		
+
 		switch(op->access) {
 			default:
 				break;
@@ -232,7 +229,7 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 				break;
 		}
 	}
-	
+
 	// Print out all registers accessed by this instruction (either implicit or explicit)
 	if (!cs_regs_access(ud, ins,
 						regs_read, &regs_read_count,
@@ -244,7 +241,7 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 			}
 			printf("\n");
 		}
-		
+
 		if (regs_write_count) {
 			printf("\tRegisters modified:");
 			for(i = 0; i < regs_write_count; i++) {
@@ -253,7 +250,7 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 			printf("\n");
 		}
 	}
-	
+
 	if (x86->eflags) {
 		printf("\tEFLAGS:");
 		for(i = 0; i <= 45; i++)
@@ -262,6 +259,6 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 			}
 		printf("\n");
 	}
-	
+
 	printf("\n");
 }

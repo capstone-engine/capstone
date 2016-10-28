@@ -18,11 +18,11 @@ void print_insn_detail_arm64(csh handle, cs_insn *ins)
 	// detail can be NULL if SKIPDATA option is turned ON
 	if (ins->detail == NULL)
 		return;
-	
+
 	arm64 = &(ins->detail->arm64);
 	if (arm64->op_count)
 		printf("\top_count: %u\n", arm64->op_count);
-	
+
 	for (i = 0; i < arm64->op_count; i++) {
 		cs_arm64_op *op = &(arm64->operands[i]);
 		switch(op->type) {
@@ -50,7 +50,7 @@ void print_insn_detail_arm64(csh handle, cs_insn *ins)
 					printf("\t\t\toperands[%u].mem.index: REG = %s\n", i, cs_reg_name(handle, op->mem.index));
 				if (op->mem.disp != 0)
 					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
-				
+
 				break;
 			case ARM64_OP_CIMM:
 				printf("\t\toperands[%u].type: C-IMM = %u\n", i, (int)op->imm);
@@ -94,29 +94,29 @@ void print_insn_detail_arm64(csh handle, cs_insn *ins)
 			op->shift.value)
 			printf("\t\t\tShift: type = %u, value = %u\n",
 				   op->shift.type, op->shift.value);
-		
+
 		if (op->ext != ARM64_EXT_INVALID)
 			printf("\t\t\tExt: %u\n", op->ext);
-		
+
 		if (op->vas != ARM64_VAS_INVALID)
 			printf("\t\t\tVector Arrangement Specifier: 0x%x\n", op->vas);
-		
+
 		if (op->vess != ARM64_VESS_INVALID)
 			printf("\t\t\tVector Element Size Specifier: %u\n", op->vess);
-		
+
 		if (op->vector_index != -1)
 			printf("\t\t\tVector Index: %u\n", op->vector_index);
 	}
-	
+
 	if (arm64->update_flags)
 		printf("\tUpdate-flags: True\n");
-	
+
 	if (arm64->writeback)
 		printf("\tWrite-back: True\n");
-	
+
 	if (arm64->cc)
 		printf("\tCode-condition: %u\n", arm64->cc);
-	
+
 	// Print out all registers accessed by this instruction (either implicit or explicit)
 	if (!cs_regs_access(handle, ins,
 						regs_read, &regs_read_count,
