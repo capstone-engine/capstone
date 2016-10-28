@@ -17,7 +17,7 @@ void print_insn_detail_ppc(csh handle, cs_insn *ins);
 void print_insn_detail_sparc(csh handle, cs_insn *ins);
 void print_insn_detail_sysz(csh handle, cs_insn *ins);
 void print_insn_detail_xcore(csh handle, cs_insn *ins);
-void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins);
+void print_insn_detail_m68k(csh handle, cs_insn *ins);
 
 void print_string_hex(char *comment, unsigned char *str, size_t len)
 {
@@ -127,7 +127,6 @@ static void usage(char *prog)
 	if (cs_support(CS_ARCH_M68K)) {
 		printf("        m68kb:     m68k+big endian\n");
 		printf("        m68k40:    m68k_040\n");
-		
 	}
 
 	printf("\n");

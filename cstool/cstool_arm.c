@@ -15,12 +15,12 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
 	if (ins->detail == NULL)
 		return;
-	
+
 	arm = &(ins->detail->arm);
-	
+
 	if (arm->op_count)
 		printf("\top_count: %u\n", arm->op_count);
-	
+
 	for (i = 0; i < arm->op_count; i++) {
 		cs_arm_op *op = &(arm->operands[i]);
 		switch((int)op->type) {
@@ -95,44 +95,44 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 			else
 				// shift with register
 				printf("\t\t\tShift: %u = %s\n", op->shift.type,
-					   cs_reg_name(handle, op->shift.value));
+					cs_reg_name(handle, op->shift.value));
 		}
-		
+
 		if (op->vector_index != -1) {
 			printf("\t\toperands[%u].vector_index = %u\n", i, op->vector_index);
 		}
-		
+
 		if (op->subtracted)
 			printf("\t\tSubtracted: True\n");
 	}
-	
+
 	if (arm->cc != ARM_CC_AL && arm->cc != ARM_CC_INVALID)
 		printf("\tCode condition: %u\n", arm->cc);
-	
+
 	if (arm->update_flags)
 		printf("\tUpdate-flags: True\n");
-	
+
 	if (arm->writeback)
 		printf("\tWrite-back: True\n");
-	
+
 	if (arm->cps_mode)
 		printf("\tCPSI-mode: %u\n", arm->cps_mode);
-	
+
 	if (arm->cps_flag)
 		printf("\tCPSI-flag: %u\n", arm->cps_flag);
-	
+
 	if (arm->vector_data)
 		printf("\tVector-data: %u\n", arm->vector_data);
-	
+
 	if (arm->vector_size)
 		printf("\tVector-size: %u\n", arm->vector_size);
-	
+
 	if (arm->usermode)
 		printf("\tUser-mode: True\n");
-	
+
 	if (arm->mem_barrier)
 		printf("\tMemory-barrier: %u\n", arm->mem_barrier);
-	
+
 	// Print out all registers accessed by this instruction (either implicit or explicit)
 	if (!cs_regs_access(handle, ins,
 						regs_read, &regs_read_count,

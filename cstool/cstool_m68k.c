@@ -11,9 +11,9 @@
 
 void print_string_hex(char *comment, unsigned char *str, size_t len);
 
-const char* s_addressing_modes[] = {
+static const char* s_addressing_modes[] = {
 	"<invalid mode>",
-	
+
 	"Register Direct - Data",
 	"Register Direct - Address",
 	
@@ -41,19 +41,17 @@ const char* s_addressing_modes[] = {
 	"Immediate value",
 };
 
-void print_read_write_regs(cs_detail* detail, csh handle)
+static void print_read_write_regs(cs_detail* detail, csh handle)
 {
 	int i;
-	
-	for (i = 0; i < detail->regs_read_count; ++i)
-	{
+
+	for (i = 0; i < detail->regs_read_count; ++i) {
 		uint16_t reg_id = detail->regs_read[i];
 		const char* reg_name = cs_reg_name(handle, reg_id);
 		printf("\treading from reg: %s\n", reg_name);
 	}
-	
-	for (i = 0; i < detail->regs_write_count; ++i)
-	{
+
+	for (i = 0; i < detail->regs_write_count; ++i) {
 		uint16_t reg_id = detail->regs_write[i];
 		const char* reg_name = cs_reg_name(handle, reg_id);
 		printf("\twriting to reg:   %s\n", reg_name);
@@ -65,7 +63,7 @@ void print_insn_detail_m68k(csh handle, cs_insn *ins)
 	cs_m68k* m68k;
 	cs_detail* detail;
 	int i;
-	
+
 	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
 	if (ins->detail == NULL)
 		return;
@@ -119,7 +117,7 @@ void print_insn_detail_m68k(csh handle, cs_insn *ins)
 				break;
 		}
 	}
-	
+
 	printf("\n");
 }
 
