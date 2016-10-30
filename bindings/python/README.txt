@@ -1,16 +1,18 @@
-NOTE: This PyPi package "capstone" includes source code of the core of Capstone.
-So installing this would also compile the core with C compiler (either "gcc" or
-"msvc" on Windows).
+To install Capstone, you should run `pip install capstone`.
 
-On Windows, MSVC needs compiler environmental setup, you would need to either
-run "pip install capstone" or "python setup.py install" from "Developer Command
-Prompt".
+If you would like to build Capstone with just the source distribution, without
+pip, just run `python setup.py install` in the folder with setup.py in it.
 
-For Windows, if you do not want to compile the core, try the "capstone-windows"
-package instead, which already includes the prebuilt "capstone.dll" inside.
+In order to use this source distribution, you will need an environment that can
+compile C code. On Linux, this is usually easy, but on Windows, this involves
+installing Visual Studio and using the "Developer Command Prompt" to perform the
+installation. See BUILDING.txt for more information.
 
-
-    https://pypi.python.org/pypi/capstone-windows
+If you don't want to build your own copy of Capstone, you can use a precompiled
+binary distribution from PyPI. Saying `pip install capstone` should
+automatically obtain an appropriate copy for your system. If it does not, please
+open an issue at https://github.com/aquynh/capstone and tag @rhelmot - they
+will fix this, probably!
 
 --------------------------------------------------------------------------------
 
