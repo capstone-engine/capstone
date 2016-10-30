@@ -1,5 +1,5 @@
-recursive-include capstone *
 recursive-include src *
-recursive-include prebuilt *
 include LICENSE.TXT
-include README
+include README.txt
+include BUILDING.txt
+include Makefile
