@@ -55,8 +55,8 @@ public class Arm {
     public int type;
     public OpValue value;
     public boolean subtracted;
-    public int access;
-    public int neon_lane;
+    public byte access;
+    public byte neon_lane;
 
     public void read() {
       readField("vector_index");
