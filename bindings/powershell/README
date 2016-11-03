@@ -1,13 +1,19 @@
+# Usage
+
 Invoke-Capstone is ready for use, there are two options to access the capstone library from PowerShell:
 
-* Script dot sourcing:
+  * Script dot sourcing:
 
     PS C:\> . .\Invoke-Capstone.ps1 
 
-* PowerShell module directories:
+  * Adding the script to one of the PowerShell module directories:
 
-    # Global PSModulePath path
-    %Windir%\System32\WindowsPowerShell\v1.0\Modules
+     # Global PSModulePath path
+     %Windir%\System32\WindowsPowerShell\v1.0\Modules
 
-    # User PSModulePath path
-    %UserProfile%\Documents\WindowsPowerShell\Modules
+     # User PSModulePath path
+     %UserProfile%\Documents\WindowsPowerShell\Modules
+
+# Notes
+
+Invoke-Capstone drops the Capstone DLL, x32/64 respectively, to the user's temporary folder the first time it runs.
