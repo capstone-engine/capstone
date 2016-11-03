@@ -51,3 +51,7 @@ More bindings created & maintained by the community are available as followings.
 
 	https://github.com/mattifestation/capstone
 
+- PowerShell binding (by Ruben Boonen).
+
+	https://github.com/aquynh/capstone/tree/master/bindings/powershell
+
