@@ -371,6 +371,18 @@ int main(int argc, char **argv)
 				if (arch == CS_ARCH_XCORE) {
 					print_insn_detail_xcore(handle, &insn[i]);
 				}
+
+				if (insn[i].detail->groups_count) {
+					int j;
+
+					printf("\tGroups: ");
+					for(j = 0; j < insn[i].detail->groups_count; j++) {
+						printf("%s ", cs_group_name(handle, insn[i].detail->groups[j]));
+					}
+					printf("\n");
+				}
+
+				printf("\n");
 			}
 		}
 		cs_free(insn, count);
