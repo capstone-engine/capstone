@@ -108,6 +108,4 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 
 		printf("\t\toperands[%u].size: %u\n", i, op->size);
 	}
-
-	printf("\n");
 }

@@ -110,6 +110,4 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 
 	if (arm->mem_barrier)
 		printf("\tMemory-barrier: %u\n", arm->mem_barrier);
-
-	printf("\n");
 }

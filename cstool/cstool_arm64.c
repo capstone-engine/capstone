@@ -99,6 +99,4 @@ void print_insn_detail_arm64(csh handle, cs_insn *ins)
 
 	if (arm64->cc)
 		printf("\tCode-condition: %u\n", arm64->cc);
-
-	printf("\n");
 }
