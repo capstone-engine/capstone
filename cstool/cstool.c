@@ -356,43 +356,41 @@ int main(int argc, char **argv)
 			printf("  %s\t%s\n", insn[i].mnemonic, insn[i].op_str);
 
 			if (detail_flag) {
-				if (arch == CS_ARCH_X86) {
-					print_insn_detail_x86(handle, md, &insn[i]);
-				}
+				switch(arch) {
+					default: break;
 
-				if (arch == CS_ARCH_ARM) {
-					print_insn_detail_arm(handle, &insn[i]);
-				}
+					case CS_ARCH_X86:
+							 print_insn_detail_x86(handle, md, &insn[i]);
+							 break;
 
-				if (arch == CS_ARCH_ARM64) {
-					print_insn_detail_arm64(handle,&insn[i]);
-				}
-
-				if (arch == CS_ARCH_MIPS) {
-					print_insn_detail_mips(handle, &insn[i]);
-				}
-
-				if (arch == CS_ARCH_PPC) {
-					print_insn_detail_ppc(handle, &insn[i]);
-				}
-
-				if (arch == CS_ARCH_SPARC) {
-					print_insn_detail_sparc(handle, &insn[i]);
-				}
-
-				if (arch == CS_ARCH_SYSZ) {
-					print_insn_detail_sysz(handle, &insn[i]);
-				}
-
-				if (arch == CS_ARCH_XCORE) {
-					print_insn_detail_xcore(handle, &insn[i]);
-				}
-				
-				if (arch == CS_ARCH_M68K) {
-					print_insn_detail_m68k(handle, &insn[i]);
+					case CS_ARCH_ARM:
+							 print_insn_detail_arm(handle, &insn[i]);
+							 break;
+					case CS_ARCH_ARM64:
+							 print_insn_detail_arm64(handle,&insn[i]);
+							 break;
+					case CS_ARCH_MIPS:
+							 print_insn_detail_mips(handle, &insn[i]);
+							 break;
+					case CS_ARCH_PPC:
+							 print_insn_detail_ppc(handle, &insn[i]);
+							 break;
+					case CS_ARCH_SPARC:
+							 print_insn_detail_sparc(handle, &insn[i]);
+							 break;
+					case CS_ARCH_SYSZ:
+							 print_insn_detail_sysz(handle, &insn[i]);
+							 break;
+					case CS_ARCH_XCORE:
+							 print_insn_detail_xcore(handle, &insn[i]);
+							 break;
+					case CS_ARCH_M68K:
+							 print_insn_detail_m68k(handle, &insn[i]);
+							 break;
 				}
 			}
 		}
+
 		cs_free(insn, count);
 	} else {
 		printf("ERROR: invalid assembly code\n");
