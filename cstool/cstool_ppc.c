@@ -87,6 +87,4 @@ void print_insn_detail_ppc(csh handle, cs_insn *ins)
 
 	if (ppc->update_cr0)
 		printf("\tUpdate-CR0: True\n");
-
-	printf("\n");
 }

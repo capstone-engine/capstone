@@ -388,6 +388,18 @@ int main(int argc, char **argv)
 							 print_insn_detail_m68k(handle, &insn[i]);
 							 break;
 				}
+
+				if (insn[i].detail->groups_count) {
+					int j;
+
+					printf("\tGroups: ");
+					for(j = 0; j < insn[i].detail->groups_count; j++) {
+						printf("%s ", cs_group_name(handle, insn[i].detail->groups[j]));
+					}
+					printf("\n");
+				}
+
+				printf("\n");
 			}
 		}
 

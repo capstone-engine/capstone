@@ -117,7 +117,5 @@ void print_insn_detail_m68k(csh handle, cs_insn *ins)
 				break;
 		}
 	}
-
-	printf("\n");
 }
 

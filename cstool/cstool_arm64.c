@@ -137,6 +137,4 @@ void print_insn_detail_arm64(csh handle, cs_insn *ins)
 			printf("\n");
 		}
 	}
-	
-	printf("\n");
 }
