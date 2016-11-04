@@ -28,12 +28,15 @@ SRC_DIR = os.path.join(ROOT_DIR, 'src')
 BUILD_DIR = SRC_DIR if os.path.exists(SRC_DIR) else os.path.join(ROOT_DIR, '../..')
 
 if SYSTEM == 'darwin':
+    VERSIONED_LIBRARY_FILE = "libcapstone.4.dylib"
     LIBRARY_FILE = "libcapstone.dylib"
     STATIC_LIBRARY_FILE = 'libcapstone.a'
 elif SYSTEM in ('win32', 'cygwin'):
+    VERSIONED_LIBRARY_FILE = "capstone.dll"
     LIBRARY_FILE = "capstone.dll"
     STATIC_LIBRARY_FILE = None
 else:
+    VERSIONED_LIBRARY_FILE = "libcapstone.so.4"
     LIBRARY_FILE = "libcapstone.so"
     STATIC_LIBRARY_FILE = 'libcapstone.a'
 
@@ -102,10 +105,7 @@ def build_libraries():
     else:   # Unix incl. cygwin
         os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh")
 
-    if LIBRARY_FILE.endswith('.so'):
-        shutil.copy(LIBRARY_FILE + '.4', os.path.join(LIBS_DIR, LIBRARY_FILE))
-    else:
-        shutil.copy(LIBRARY_FILE, LIBS_DIR)
+    shutil.copy(VERSIONED_LIBRARY_FILE, os.path.join(LIBS_DIR, LIBRARY_FILE))
     if STATIC_LIBRARY_FILE: shutil.copy(STATIC_LIBRARY_FILE, LIBS_DIR)
     os.chdir(cwd)
 
