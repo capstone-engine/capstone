@@ -53,6 +53,4 @@ void print_insn_detail_sysz(csh handle, cs_insn *ins)
 
 	if (sysz->cc != 0)
 		printf("\tCode condition: %u\n", sysz->cc);
-
-	printf("\n");
 }
