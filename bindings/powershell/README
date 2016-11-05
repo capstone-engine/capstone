@@ -1,7 +1,14 @@
 Usage
 
-Invoke-Capstone is ready for use, there are two options to access the capstone
-library from PowerShell:
+Invoke-Capstone requires an architecture appropriate (x32/64) compiled Capstone DLL.
+A pre-compiled version can be found on the Capstone download page at the following
+URL:
+
+  * http://www.capstone-engine.org/download.html
+
+Once downloaded, the DLL should be placed in a directory which is part of the SafeDllSearchMode search order. In practice, any folder which is part of the Windows PATH environment variable will work.
+
+The Invoke-Capstone function itself can be initialized using one of the following methods:
 
   * Script dot sourcing:
 
@@ -14,16 +21,3 @@ library from PowerShell:
 
      # User PSModulePath path
      %UserProfile%\Documents\WindowsPowerShell\Modules
-
-Notes
-
-  * Invoke-Capstone drops the Capstone DLL, x32/64 respectively, to the user's
-    temporary folder the first time it runs. Further runs will use this cached DLL.
-
-  * The "Out-UnmanagedDll" script can be used to generate a compressed DLL which
-    allows for easy integration with Invoke-Capstone. This script is based on
-    @mattifestation’s post here
-    http://www.exploit-monday.com/2012/12/in-memory-dll-loading.html.
-
-     # Redirect script output to file
-     PS C:\> Out-UnmanagedDll -FilePath C:\Some\Path\capstone.dll
