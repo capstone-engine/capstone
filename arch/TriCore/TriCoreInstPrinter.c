@@ -56,13 +56,12 @@ static void printOperand(MCInst *MI, int OpNum, SStream *O)
 	Op = MCInst_getOperand(MI, OpNum);
 
 	if (MCOperand_isReg(Op)) {
-		unsigned int reg = MCOperand_getReg(Op);
+		unsigned reg = MCOperand_getReg(Op);
 		SStream_concat(O, "%%%s", getRegisterName(reg));
-		reg = TriCore_map_register(reg);
 
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_REG;
-			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = reg;
+			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = (uint8_t)TriCore_map_register(reg);
 			MI->flat_insn->detail->tricore.op_count++;
 		}
 	} else if (MCOperand_isImm(Op)) {
@@ -162,7 +161,7 @@ static void printAddrModeMemSrc(MCInst *MI, int OpNum, SStream *O) {
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_MEM;
 		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.base = (uint8_t)TriCore_map_register(Base);
-		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.disp = (int64_t)Disp;
+		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.disp = Disp;
 		MI->flat_insn->detail->tricore.op_count++;
 	}
 }
