@@ -399,6 +399,12 @@ static insn_map insns[] = {
 #endif
 	},
 	{
+		TriCore_LD_Wbol, TRICORE_INS_LD_W,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
+	{
 		TriCore_LTrc, TRICORE_INS_LT,
 #ifndef CAPSTONE_DIET
 		{ 0 }, { 0 }, { 0 }, 0, 0
@@ -958,6 +964,7 @@ static name_map insn_name_maps[] = {
 	{ TRICORE_INS_NOR, "nor" },
 	{ TRICORE_INS_NOT, "not" },
 	{ TRICORE_INS_ORN, "orn" },
+	{ TRICORE_INS_OR_EQ, "or.eq" },
 	{ TRICORE_INS_OR_GE_U, "or.ge.u" },
 	{ TRICORE_INS_OR_GE, "or.ge" },
 	{ TRICORE_INS_OR_LT_U, "or.lt.u" },
@@ -979,6 +986,7 @@ static name_map insn_name_maps[] = {
 	{ TRICORE_INS_SUB, "sub" },
 	{ TRICORE_INS_Select8, "select8" },
 	{ TRICORE_INS_XNOR, "xnor" },
+	{ TRICORE_INS_XOR_EQ, "xor.eq" },
 	{ TRICORE_INS_XOR_GE_U, "xor.ge.u" },
 	{ TRICORE_INS_XOR_GE, "xor.ge" },
 	{ TRICORE_INS_XOR_LT_U, "xor.lt.u" },
