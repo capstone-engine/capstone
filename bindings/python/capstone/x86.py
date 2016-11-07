@@ -56,9 +56,7 @@ class CsX86Encoding(ctypes.Structure):
         ('imm_size', ctypes.c_uint8),
     )
 
-"""
 
-"""
 class CsX86(ctypes.Structure):
     _fields_ = (
         ('prefix', ctypes.c_uint8 * 4),
