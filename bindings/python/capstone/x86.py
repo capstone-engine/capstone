@@ -56,6 +56,9 @@ class CsX86Encoding(ctypes.Structure):
         ('imm_size', ctypes.c_uint8),
     )
 
+"""
+
+"""
 class CsX86(ctypes.Structure):
     _fields_ = (
         ('prefix', ctypes.c_uint8 * 4),
@@ -83,5 +86,5 @@ def get_arch_info(a):
     return (a.prefix[:], a.opcode[:], a.rex, a.addr_size, \
             a.modrm, a.sib, a.disp, a.sib_index, a.sib_scale, \
             a.sib_base, a.xop_cc, a.sse_cc, a.avx_cc, a.avx_sae, a.avx_rm, a.eflags, \
-            copy.deepcopy(a.operands[:a.op_count]))
+            copy.deepcopy(a.operands[:a.op_count]), copy.deepcopy(a.encoding))
 

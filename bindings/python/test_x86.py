@@ -33,6 +33,9 @@ def print_insn_detail(mode, insn):
     if insn.id == 0:
         return
 
+     # print instruction raw bytes
+    print_string_hex("\tBytes: ", insn.bytes)
+
     # print instruction prefix
     print_string_hex("\tPrefix:", insn.prefix)
 
@@ -48,8 +51,20 @@ def print_insn_detail(mode, insn):
     # print modRM byte
     print("\tmodrm: 0x%x" % (insn.modrm))
 
+    # print offse of modRM byte
+    print("\tmodrm offset: %u" % (insn.encoding.modrm_offset))
+
     # print displacement value
     print("\tdisp: 0x%s" % to_x_32(insn.disp))
+
+     # print offset of displacement value
+    print("\tdisp offset: %u" % insn.encoding.disp_offset)
+
+     # print displacement value
+    print("\timm offset: %u" % insn.encoding.imm_offset)
+
+     # print offset of displacement value
+    print("\timm size: %u" % insn.encoding.imm_size)
 
     # SIB is not available in 16-bit mode
     if (mode & CS_MODE_16 == 0):
@@ -104,15 +119,15 @@ def print_insn_detail(mode, insn):
             if i.type == X86_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
                 if i.mem.segment != 0:
-                    print("\t\t\toperands[%u].mem.segment: REG = %s" % (c, insn.reg_name(i.mem.segment)))
+                    print("\t\toperands[%u].mem.segment: REG = %s" % (c, insn.reg_name(i.mem.segment)))
                 if i.mem.base != 0:
-                    print("\t\t\toperands[%u].mem.base: REG = %s" % (c, insn.reg_name(i.mem.base)))
+                    print("\t\toperands[%u].mem.base: REG = %s" % (c, insn.reg_name(i.mem.base)))
                 if i.mem.index != 0:
-                    print("\t\t\toperands[%u].mem.index: REG = %s" % (c, insn.reg_name(i.mem.index)))
+                    print("\t\toperands[%u].mem.index: REG = %s" % (c, insn.reg_name(i.mem.index)))
                 if i.mem.scale != 1:
-                    print("\t\t\toperands[%u].mem.scale: %u" % (c, i.mem.scale))
+                    print("\t\toperands[%u].mem.scale: %u" % (c, i.mem.scale))
                 if i.mem.disp != 0:
-                    print("\t\t\toperands[%u].mem.disp: 0x%s" % (c, to_x(i.mem.disp)))
+                    print("\t\toperands[%u].mem.disp: 0x%s" % (c, to_x(i.mem.disp)))
 
             # AVX broadcast type
             if i.avx_bcast != X86_AVX_BCAST_INVALID:
