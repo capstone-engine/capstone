@@ -19242,10 +19242,17 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   if (!X86_lockrep(MI, O)) {
 #ifndef CAPSTONE_DIET
     // HACK TODO
-    if (opcode == X86_MOV32sm) {
-      SStream_concat0(O, "movw\t");
-    } else
-      SStream_concat0(O, AsmStrs+(Bits & 16383)-1);
+    switch(opcode) {
+      default:
+        SStream_concat0(O, AsmStrs+(Bits & 16383)-1);
+        break;
+      case X86_MOV32sm:
+        SStream_concat0(O, "movw\t");
+        break;
+      case X86_ROL32r1:
+        SStream_concat0(O, "rol\t$1, ");
+        break;
+    }
 #endif
   }
 
