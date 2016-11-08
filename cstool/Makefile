@@ -24,7 +24,7 @@ else
 endif
 
 clean:
-	${RM} -rf *.o cstool
+	${RM} -rf *.o $(TARGET)
 
 %.o: %.c
 ifeq ($(V),0)
