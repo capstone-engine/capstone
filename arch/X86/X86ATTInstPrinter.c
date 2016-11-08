@@ -803,7 +803,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 				}
 			}
 		} else {
-			SStream_concat0(O, "0");
+			//SStream_concat0(O, "0");
 		}
 	}
 
