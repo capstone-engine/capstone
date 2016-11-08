@@ -14184,6 +14184,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
       case X86_LGS64rm:
         SStream_concat0(O, "lgs\t");
         break;
+      case X86_SLDT64m:
+        SStream_concat0(O, "sldt\t");
+        break;
     }
 #endif
   }
