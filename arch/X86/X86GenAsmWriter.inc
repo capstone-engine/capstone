@@ -19252,6 +19252,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
       case X86_ROL32r1:
         SStream_concat0(O, "rol\t$1, ");
         break;
+      case X86_LGS64rm:
+        SStream_concat0(O, "lgs\t");
+        break;
     }
 #endif
   }
