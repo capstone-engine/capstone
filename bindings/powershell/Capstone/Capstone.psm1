@@ -1,11 +1,7 @@
-function Invoke-Capstone {
+function Get-CapstoneDisassembly {
 <#
 .SYNOPSIS
-	Powershell wrapper for Capstone v3 (using inline C#). The only Capstone feature
-	which has not been implemented is the extended architecture-dependent information.
-	
-	In effect the function directly parses the Capstone dll so it can support any
-	features implemented by Capstone so long as function calls are prototyped in C#.
+	Powershell wrapper for Capstone (using inline C#).
 
 .DESCRIPTION
 	Author: Ruben Boonen (@FuzzySec)
@@ -13,20 +9,31 @@ function Invoke-Capstone {
 	Required Dependencies: None
 	Optional Dependencies: None
 
+.PARAMETER Architecture
+	Architecture type.
+
+.PARAMETER Mode
+	Mode type.
+
+.PARAMETER Bytes
+	Byte array to be disassembled.
+
+.PARAMETER Syntax
+	Syntax for output assembly.
+
+.PARAMETER Address
+	Assign address for the first instruction to be disassembled.
+
+.PARAMETER Detailed
+	Return detailed output.
+
+.PARAMETER Version
+	Print ASCII version banner.
+
 .EXAMPLE
 
-	# x86 Assembly
-	C:\PS> $Bytes = [Byte[]] @(0x90,0x90)
-	C:\PS> Invoke-Capstone -Architecture X86 -Mode 32 -Bytes $Bytes
-	
-	nop
-	nop
-
-.EXAMPLE
-
-	# ARM Assembly
 	C:\PS> $Bytes = [Byte[]] @( 0x10, 0xf1, 0x10, 0xe7, 0x11, 0xf2, 0x31, 0xe7, 0xdc, 0xa1, 0x2e, 0xf3, 0xe8, 0x4e, 0x62, 0xf3 )
-	C:\PS> Invoke-Capstone -Architecture ARM -Mode ARM -Bytes $Bytes
+	C:\PS> Get-CapstoneDisassembly -Architecture CS_ARCH_ARM -Mode CS_MODE_ARM -Bytes $Bytes
 	
 	sdiv r0, r0, r1
 	udiv r1, r1, r2
@@ -37,7 +44,7 @@ function Invoke-Capstone {
 
 	# Detailed mode & ATT syntax
 	C:\PS> $Bytes = [Byte[]] @( 0xB8, 0x0A, 0x00, 0x00, 0x00, 0xF7, 0xF3 )
-	C:\PS> Invoke-Capstone -Architecture X86 -Mode 32 -Bytes $Bytes -Syntax ATT -Detailed
+	C:\PS> Get-CapstoneDisassembly -Architecture CS_ARCH_X86 -Mode CS_MODE_32 -Bytes $Bytes -Syntax ATT -Detailed
 	
 	Size     : 5
 	Address  : 0x100000
@@ -57,9 +64,9 @@ function Invoke-Capstone {
 
 .EXAMPLE
 
-	# Invoke-Capstone emits objects
+	# Get-CapstoneDisassembly emits objects
 	C:\PS> $Bytes = [Byte[]] @( 0xB8, 0x0A, 0x00, 0x00, 0x00, 0xF7, 0xF3 )
-	C:\PS> $Object = Invoke-Capstone -Architecture X86 -Mode 32 -Bytes $Bytes -Detailed
+	C:\PS> $Object = Get-CapstoneDisassembly -Architecture CS_ARCH_X86 -Mode CS_MODE_32 -Bytes $Bytes -Detailed
 	C:\PS> $Object |Select-Object Size,Mnemonic,Operands
 
 	Size Mnemonic Operands
@@ -70,56 +77,84 @@ function Invoke-Capstone {
 #>
 
 	param(
-        [Parameter(Mandatory = $True)]
-        [ValidateSet(
-			'ARM',
-			'ARM64',
-			'MIPS',
-			'X86',
-			'PPC',
-			'SPARC',
-			'SYSZ',
-			'XCORE',
-			'MAX',
-			'ALL')
+		[Parameter(ParameterSetName='Capstone', Mandatory = $True)]
+		[ValidateSet(
+			'CS_ARCH_ARM',
+			'CS_ARCH_ARM64',
+			'CS_ARCH_MIPS',
+			'CS_ARCH_X86',
+			'CS_ARCH_PPC',
+			'CS_ARCH_SPARC',
+			'CS_ARCH_SYSZ',
+			'CS_ARCH_XCORE',
+			'CS_ARCH_MAX',
+			'CS_ARCH_ALL')
 		]
-        [String]$Architecture,
+		[String]$Architecture,
 		
-        [Parameter(Mandatory = $True)]
-        [ValidateSet(
-			'Little_Endian',
-			'ARM',
-			'16',
-			'32',
-			'64',
-			'THUMB',
-			'MCLASS',
-			'V8',
-			'MICRO',
-			'MIPS3',
-			'MIPS32R6',
-			'MIPSGP64',
-			'V9',
-			'Big_Endian',
-			'MIPS32',
-			'MIPS64')
+		[Parameter(ParameterSetName='Capstone', Mandatory = $True)]
+		[ValidateSet(
+			'CS_MODE_LITTLE_ENDIAN',
+			'CS_MODE_ARM',
+			'CS_MODE_16',
+			'CS_MODE_32',
+			'CS_MODE_64',
+			'CS_MODE_THUMB',
+			'CS_MODE_MCLASS',
+			'CS_MODE_V8',
+			'CS_MODE_MICRO',
+			'CS_MODE_MIPS3',
+			'CS_MODE_MIPS32R6',
+			'CS_MODE_MIPSGP64',
+			'CS_MODE_V9',
+			'CS_MODE_BIG_ENDIAN',
+			'CS_MODE_MIPS32',
+			'CS_MODE_MIPS64')
 		]
-        [String]$Mode,
+		[String]$Mode,
 		
-		[Parameter(Mandatory = $True)]
+		[Parameter(ParameterSetName='Capstone', Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[Byte[]]$Bytes,
-
-		[Parameter(Mandatory = $False)]
+		
+		[Parameter(ParameterSetName='Capstone', Mandatory = $False)]
+		[ValidateSet(
+			'Intel',
+			'ATT')
+		]
 		[String]$Syntax = "Intel",
 
-		[Parameter(Mandatory = $False)]
+		[Parameter(ParameterSetName='Capstone', Mandatory = $False)]
 		[Int]$Address = 0x100000,
 
-		[Parameter(Mandatory = $False)]
-		[switch]$Detailed = $null
+		[Parameter(ParameterSetName='Capstone', Mandatory = $False)]
+		[switch]$Detailed = $null,
+		
+		[Parameter(ParameterSetName='Version', Mandatory = $False)]
+		[switch]$Version = $null
     )
 
+	# Compatibility for PS v2 / PS v3+
+	if(!$PSScriptRoot) {
+		$PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
+	}
+	
+	# Set the capstone DLL path
+	$DllPath = $($PSScriptRoot + '\Lib\Capstone\capstone.dll').Replace('\','\\')
+
+	# Make sure the user didn't forget the DLL
+	if (![IO.File]::Exists($DllPath)) {
+		echo "`n[!] Missing Capstone DLL"
+		echo "[>] Quitting!`n"
+		Return
+	}
+
+	# Load C# constants
+	$cs_err = Select-String "CS_ERR_" $($PSScriptRoot + '\Const\capstone_h.cs') |select -exp line
+	$cs_arch = Select-String "CS_ARCH_" $($PSScriptRoot + '\Const\capstone_h.cs') |select -exp line
+	$cs_mode = Select-String "CS_MODE_" $($PSScriptRoot + '\Const\capstone_h.cs') |select -exp line
+
+	# Inline C# to parse the unmanaged capstone DLL
 	Add-Type -TypeDefinition @"
 	using System;
 	using System.Diagnostics;
@@ -156,34 +191,30 @@ function Invoke-Capstone {
 		public byte groups_count;
 	}
 
-	[Flags]
 	public enum cs_err : int
 	{
-		CS_ERR_OK = 0,    /// No error: everything was fine
-		CS_ERR_MEM,       /// Out-Of-Memory error: cs_open(), cs_disasm(), cs_disasm_iter()
-		CS_ERR_ARCH,      /// Unsupported architecture: cs_open()
-		CS_ERR_HANDLE,    /// Invalid handle: cs_op_count(), cs_op_index()
-		CS_ERR_CSH,	      /// Invalid csh argument: cs_close(), cs_errno(), cs_option()
-		CS_ERR_MODE,      /// Invalid/unsupported mode: cs_open()
-		CS_ERR_OPTION,    /// Invalid/unsupported option: cs_option()
-		CS_ERR_DETAIL,    /// Information is unavailable because detail option is OFF
-		CS_ERR_MEMSETUP,  /// Dynamic memory management uninitialized (see CS_OPT_MEM)
-		CS_ERR_VERSION,   /// Unsupported version (bindings)
-		CS_ERR_DIET,      /// Access irrelevant data in "diet" engine
-		CS_ERR_SKIPDATA,  /// Access irrelevant data for "data" instruction in SKIPDATA mode
-		CS_ERR_X86_ATT,   /// X86 AT&T syntax is unsupported (opt-out at compile time)
-		CS_ERR_X86_INTEL, /// X86 Intel syntax is unsupported (opt-out at compile time)
+		$cs_err
+	}
+
+	public enum cs_arch : int
+	{
+		$cs_arch
+	}
+
+	public enum cs_mode : int
+	{
+		$cs_mode
 	}
 	
 	public static class Capstone
 	{
-		[DllImport("capstone.dll")]
+		[DllImport("$DllPath")]
 		public static extern cs_err cs_open(
-			int arch,
-			int mode,
+			cs_arch arch,
+			cs_mode mode,
 			ref IntPtr handle);
 
-		[DllImport("capstone.dll")]
+		[DllImport("$DllPath")]
 		public static extern UInt32 cs_disasm(
 			IntPtr handle,
 			byte[] code,
@@ -192,77 +223,67 @@ function Invoke-Capstone {
 			int count,
 			ref IntPtr insn);
 
-		[DllImport("capstone.dll")]
+		[DllImport("$DllPath")]
 		public static extern bool cs_free(
 			IntPtr insn,
 			int count);
 
-		[DllImport("capstone.dll")]
+		[DllImport("$DllPath")]
 		public static extern cs_err cs_close(
 			IntPtr handle);
 
-		[DllImport("capstone.dll")]
+		[DllImport("$DllPath")]
 		public static extern cs_err cs_option(
 			IntPtr handle,
 			int type,
 			int value);
 
-		[DllImport("capstone.dll", CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("$DllPath", CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr cs_reg_name(
 			IntPtr handle,
 			uint reg_id);
+
+		[DllImport("$DllPath")]
+		public static extern int cs_version(
+			uint major,
+			uint minor);
 	}
 "@
 
-	# Architecture -> int
-	New-Variable -Option Constant -Name cs_arch -Value @{
-		"ARM"   = 0
-		"ARM64" = 1
-		"MIPS"  = 2
-		"X86"   = 3
-		"PPC"   = 4
-		"SPARC" = 5
-		"SYSZ"  = 6
-		"XCORE" = 7
-		"MAX"   = 8
-		"ALL"   = 0xFFFF
-	}
+	if ($Version){
+		$VerCount = [System.BitConverter]::GetBytes($([Capstone]::cs_version($null,$null)))
+		$Banner = @"
 
-	# Mode -> int
-	New-Variable -Option Constant -Name cs_mode -Value @{
-		"Little_Endian" = 0
-		"ARM"           = 0
-		"16"            = 2
-		"32"            = 4
-		"64"            = 8
-		"THUMB"         = 16
-		"MCLASS"        = 32
-		"V8"            = 64
-		"MICRO"         = 16
-		"MIPS3"         = 32
-		"MIPS32R6"      = 64
-		"MIPSGP64"      = 128
-		"V9"            = 16
-		"Big_Endian"    = -2147483648
-		"MIPS32"        = 4
-		"MIPS64"        = 8
+                 (((;                
+              (; "((((\              
+           ;((((((; "((((;           
+          ((((""\(((( "((((          
+        ((((" ((\ "(((( "(((\        
+      ;(((/ ((((((( "(((( \(((       
+     ((((" (((* "(((( \(((;"(((\     
+    ((((";((("/(( \(((;"(((\"(((\    
+   (((( (((( ((((" "(((\ ((() (((\   
+  ;((("(((( (((*     **"" ((()"(((;  
+  (((" ((( (((( ((((((((((((((:*(((  
+ (((( (((*)((( ********"""" ;;(((((; 
+ (((* ((( (((((((((((((((((((((*"" ( 
+ ((("(((( """***********"""" ;;((((( 
+  "" (((((((((((((((((((((((((((*""  
+         """****(((((****"""         
+
+     -=[Capstone Engine v$($VerCount[1]).$($VerCount[0])]=-
+
+"@
+		# Mmm ASCII version banner!
+		$Banner
+		Return
 	}
 	
 	# Disasm Handle
 	$DisAsmHandle = [IntPtr]::Zero
 	
 	# Initialize Capstone with cs_open()
-	try {
-		$CallResult = [Capstone]::cs_open($cs_arch[$Architecture],$cs_mode[$Mode],[ref]$DisAsmHandle)
-	} catch {
-		if ($Error[0].FullyQualifiedErrorId -eq "DllNotFoundException") {
-			echo "`n[!] Missing Capstone DLL"
-		} else {
-			echo "`n[!] Exception: $($Error[0].FullyQualifiedErrorId)"
-		}
-		echo "[>] Quitting..`n"
-		Return
-	}
+	$CallResult = [Capstone]::cs_open($Architecture,$Mode,[ref]$DisAsmHandle)
 	if ($CallResult -ne "CS_ERR_OK") {
 		if ($CallResult -eq "CS_ERR_MODE"){
 			echo "`n[!] Invalid Architecture/Mode combination"
