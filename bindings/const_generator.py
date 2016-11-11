@@ -8,16 +8,6 @@ INCL_DIR = '../include/'
 include = [ 'arm.h', 'arm64.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h' ]
 
 template = {
-    'powershell': {
-            'header': "# For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [%s_h.cs]\n",
-            'footer': "",
-            'line_format': '%s = %s\n',
-            'out_file': './powershell/Capstone/Const/%s_h.cs',
-            # only capstone.h required, but it is not included above on line 8?
-            'capstone.h': 'capstone',
-            'comment_open': '///',
-            'comment_close': '',
-        },
     'java': {
             'header': "// For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT\npackage capstone;\n\npublic class %s_const {\n",
             'footer': "}",
