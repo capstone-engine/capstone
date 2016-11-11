@@ -18,7 +18,6 @@ all:
 	cd python && $(MAKE) gen_const
 	cd java && $(MAKE) gen_const
 	cd ocaml && $(MAKE) gen_const
-	python const_generator.py powershell
 
 tests: expected python java #oclma ruby
 
