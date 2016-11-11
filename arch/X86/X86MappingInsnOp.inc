@@ -5915,7 +5915,7 @@
 },
 {	/* X86_MOVAPDmr, X86_INS_MOVAPD: movapd	$dst, $src */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOVAPDrm, X86_INS_MOVAPD: movapd	$dst, $src */
 	0,
@@ -5931,7 +5931,7 @@
 },
 {	/* X86_MOVAPSmr, X86_INS_MOVAPS: movaps	$dst, $src */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOVAPSrm, X86_INS_MOVAPS: movaps	$dst, $src */
 	0,
