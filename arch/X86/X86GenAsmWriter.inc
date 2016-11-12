@@ -14168,12 +14168,28 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   uint64_t Bits2 = OpInfo2[opcode];
   uint64_t Bits = (Bits2 << 32) | Bits1;
   // assert(Bits != 0 && "Cannot print this instruction.");
-  if (!X86_lockrep(MI, O))
+  if (!X86_lockrep(MI, O)) {
 #ifndef CAPSTONE_DIET
-    SStream_concat0(O, AsmStrs+(Bits & 16383)-1);
-#else
-	;
+    // HACK TODO
+    switch(opcode) {
+      default:
+        SStream_concat0(O, AsmStrs+(Bits & 16383)-1);
+        break;
+      case X86_MOV32sm:
+        SStream_concat0(O, "movw\t");
+        break;
+      case X86_ROL32r1:
+        SStream_concat0(O, "rol\t$1, ");
+        break;
+      case X86_LGS64rm:
+        SStream_concat0(O, "lgs\t");
+        break;
+      case X86_SLDT64m:
+        SStream_concat0(O, "sldt\t");
+        break;
+    }
 #endif
+  }
 
 
   // Fragment 0 encoded into 7 bits for 79 unique commands.

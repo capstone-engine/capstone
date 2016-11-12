@@ -51,6 +51,4 @@ void print_insn_detail_sparc(csh handle, cs_insn *ins)
 
 	if (sparc->hint != 0)
 		printf("\tHint code: %u\n", sparc->hint);
-
-	printf("\n");
 }

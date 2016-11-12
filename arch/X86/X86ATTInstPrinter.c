@@ -728,7 +728,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 				}
 			}
 		} else {
-			SStream_concat0(O, "0");
+			//SStream_concat0(O, "0");
 		}
 	}
 
@@ -798,6 +798,15 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 		cs_mem_free(mnem);
 	else
 		printInstruction(MI, OS, info);
+
+	// HACK TODO: fix this in machine description
+	switch(MI->flat_insn->id) {
+		default: break;
+		case X86_INS_SYSEXIT:
+				 SStream_Init(OS);
+				 SStream_concat0(OS, "sysexit");
+				 break;
+	}
 
 	if (MI->has_imm) {
 		// if op_count > 1, then this operand's size is taken from the destination op
