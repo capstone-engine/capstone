@@ -7,7 +7,6 @@
 
 #include <capstone.h>
 
-#define VERSION "2.0"
 
 void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins);
 void print_insn_detail_arm(csh handle, cs_insn *ins);
@@ -73,7 +72,7 @@ static uint8_t *preprocess(char *code, size_t *size)
 
 static void usage(char *prog)
 {
-	printf("Cstool v%s for Capstone Disassembler Engine (core v%u.%u.%u)\n\n", VERSION, CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA);
+	printf("Cstool for Capstone Disassembler Engine v%u.%u.%u\n\n", CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA);
 	printf("Syntax: %s [-d] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
 	printf("\nThe following <arch+mode> options are supported:\n");
 
@@ -372,6 +371,18 @@ int main(int argc, char **argv)
 				if (arch == CS_ARCH_XCORE) {
 					print_insn_detail_xcore(handle, &insn[i]);
 				}
+
+				if (insn[i].detail->groups_count) {
+					int j;
+
+					printf("\tGroups: ");
+					for(j = 0; j < insn[i].detail->groups_count; j++) {
+						printf("%s ", cs_group_name(handle, insn[i].detail->groups[j]));
+					}
+					printf("\n");
+				}
+
+				printf("\n");
 			}
 		}
 		cs_free(insn, count);
