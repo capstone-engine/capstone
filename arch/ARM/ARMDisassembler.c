@@ -758,10 +758,10 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 	memcpy(bytes, code, 4);
 
 	if (ud->big_endian)
-		insn32 = (bytes[3] <<  24) |
-			(bytes[2] <<  16) |
-			(bytes[1] << 8) |
-			(bytes[0] << 0);
+		insn32 = (bytes[3] <<  0) |
+			(bytes[2] <<  8) |
+			(bytes[1] << 16) |
+			(bytes[0] << 24);
 	else
 		insn32 = (bytes[3] <<  8) |
 			(bytes[2] <<  0) |
