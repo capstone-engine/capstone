@@ -125,7 +125,7 @@ function Get-CapstoneDisassembly {
 		[String]$Syntax = "Intel",
 
 		[Parameter(ParameterSetName='Capstone', Mandatory = $False)]
-		[Int]$Address = 0x100000,
+		[UInt64]$Address = 0x100000,
 
 		[Parameter(ParameterSetName='Capstone', Mandatory = $False)]
 		[switch]$Detailed = $null,
