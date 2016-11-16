@@ -374,8 +374,10 @@ if (CAPSTONE_BUILD_STATIC_RUNTIME)
 	CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_DEBUG_INIT
 	CMAKE_CXX_FLAGS_RELEASE  CMAKE_CXX_FLAGS_RELWITHDEBINFO
 	CMAKE_CXX_FLAGS_DEBUG  CMAKE_CXX_FLAGS_DEBUG_INIT)
-	STRING(REPLACE "/MD"  "/MT" "${flag}" "${${flag}}")
-	SET("${flag}" "${${flag}} /EHsc")
+	if (MSVC)
+	    STRING(REPLACE "/MD"  "/MT" "${flag}" "${${flag}}")
+	    SET("${flag}" "${${flag}} /EHsc")
+	endif (MSVC)
     ENDFOREACH()
 endif ()
 
