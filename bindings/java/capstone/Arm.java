@@ -93,7 +93,7 @@ public class Arm {
     public int cc;
     public byte update_flags;
     public byte writeback;
-    public byte mem_barrier;
+    public int mem_barrier;
     public byte op_count;
 
     public Operand [] op;

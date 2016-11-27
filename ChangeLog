@@ -4,6 +4,8 @@ This file details the changelog of Capstone.
 
 - Fix a bug where Arm.Operand is wrongly calculated for the second and
   following operands
+- Fix a bug where Arm.OpInfo.memBarrier and Arm.OpInfo.op is wrongly
+  calculated
 
 ---------------------------------
 Version 3.0.2: March 11th, 2015
