@@ -4,8 +4,10 @@
 package capstone;
 
 import com.sun.jna.Library;
+import com.sun.jna.Memory;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLong;
+import com.sun.jna.ptr.ByteByReference;
 import com.sun.jna.ptr.NativeLongByReference;
 import com.sun.jna.Structure;
 import com.sun.jna.Union;
@@ -238,6 +240,38 @@ public class Capstone {
       return cs.cs_insn_group(csh, raw.getPointer(), gid) != 0;
     }
 
+    public CsRegsAccess regsAccess() {
+      Memory regsReadMemory = new Memory(64*2);
+      ByteByReference regsReadCountRef = new ByteByReference();
+      Memory regsWriteMemory = new Memory(64*2);
+      ByteByReference regsWriteCountRef = new ByteByReference();
+
+      int c = cs.cs_regs_access(csh, raw.getPointer(), regsReadMemory, regsReadCountRef, regsWriteMemory, regsWriteCountRef);
+      if (c != CS_ERR_OK) {
+        return null;
+      }
+
+      byte regsReadCount = regsReadCountRef.getValue();
+      byte regsWriteCount = regsWriteCountRef.getValue();
+
+      short[] regsRead = new short[regsReadCount];
+      regsReadMemory.read(0, regsRead, 0, regsReadCount);
+
+      short[] regsWrite = new short[regsWriteCount];
+      regsWriteMemory.read(0, regsWrite, 0, regsWriteCount);
+
+      return new CsRegsAccess(regsRead, regsWrite);
+    }
+  }
+
+  public static class CsRegsAccess {
+    public short[] regsRead;
+    public short[] regsWrite;
+
+    public CsRegsAccess(short[] regsRead, short[] regsWrite) {
+      this.regsRead = regsRead;
+      this.regsWrite = regsWrite;
+    }
   }
 
   private CsInsn[] fromArrayRaw(_cs_insn[] arr_raw) {
@@ -270,6 +304,8 @@ public class Capstone {
     public int cs_errno(NativeLong csh);
     public int cs_version(IntByReference major, IntByReference minor);
     public boolean cs_support(int query);
+    public String cs_strerror(int code);
+    public int cs_regs_access(NativeLong handle, Pointer insn, Pointer regs_read, ByteByReference regs_read_count, Pointer regs_write, ByteByReference regs_write_count);
   }
 
   // Capstone API version
@@ -477,5 +513,9 @@ public class Capstone {
     // FIXME(danghvu): Can't free because memory is still inside CsInsn
 
     return allInsn;
+  }
+
+  public String strerror(int code) {
+    return cs.cs_strerror(code);
   }
 }
