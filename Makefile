@@ -416,6 +416,7 @@ endif
 	$(INSTALL_DATA) include/capstone/*.h $(DESTDIR)$(INCDIR)/$(LIBNAME)
 	mkdir -p $(DESTDIR)$(PKGCFGDIR)
 	$(INSTALL_DATA) $(PKGCFGF) $(DESTDIR)$(PKGCFGDIR)
+	mkdir -p $(DESTDIR)$(BINDIR)
 	$(INSTALL_LIB) cstool/cstool $(DESTDIR)$(BINDIR)
 
 uninstall:
