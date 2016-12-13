@@ -148,7 +148,7 @@
 {
 	ARM_BL, ARM_INS_BL,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_CALL, ARM_GRP_ARM, 0 }, 1, 0
+	{ ARM_REG_PC, 0 }, { ARM_REG_LR, ARM_REG_PC, 0 }, { ARM_GRP_CALL, ARM_GRP_ARM, 0 }, 1, 0
 #endif
 },
 {
@@ -202,7 +202,7 @@
 {
 	ARM_Bcc, ARM_INS_B,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 1, 0
+	{ ARM_REG_PC, 0 }, { ARM_REG_PC, 0 }, { ARM_GRP_ARM, 0 }, 1, 0
 #endif
 },
 {
