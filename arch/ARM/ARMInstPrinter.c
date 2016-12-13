@@ -418,10 +418,10 @@ void ARM_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 		case ARM_MOVPCLR:
 			insn->detail->arm.operands[0].type = ARM_OP_REG;
 			insn->detail->arm.operands[0].reg = ARM_REG_PC;
-			insn->detail->arm.operands[0].access = CS_AC_READ;
+			insn->detail->arm.operands[0].access = CS_AC_WRITE;
 			insn->detail->arm.operands[1].type = ARM_OP_REG;
 			insn->detail->arm.operands[1].reg = ARM_REG_LR;
-			insn->detail->arm.operands[1].access = CS_AC_WRITE;
+			insn->detail->arm.operands[1].access = CS_AC_READ;
 			insn->detail->arm.op_count = 2;
 			break;
 	}
