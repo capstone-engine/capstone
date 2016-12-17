@@ -81,6 +81,7 @@ ProjectUpgradeLog.log
 Debug/
 Release/
 ipch/
+build*/
 *.sdf
 *.opensdf
 *.suo

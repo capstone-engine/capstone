@@ -460,6 +460,9 @@ all_tests = (
         (CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_INTEL, 0x649123ffe1, b"\x0f\x01\x1d\xa0\x90\x04\x08", "lidt [rip + 0x80490a0]"),
         (CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_INTEL, 0x9123ffe1, b"\x0f\x01\x1d\xa0\x90\x04\x08", "lidt [0x80490a0]"),
         (CS_ARCH_X86, CS_MODE_16, CS_OPT_SYNTAX_INTEL, 0xffe1, b"\x0f\x01\x1d", "lidt [di]"),
+
+        # issues 702 https://github.com/aquynh/capstone/issues/702
+        (CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_INTEL, 0, b"\x85\xC8", "test eax, ecx")
 )
 
 _python3 = sys.version_info.major == 3
