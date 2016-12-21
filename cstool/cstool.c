@@ -1,6 +1,4 @@
 /* Tang Yuhang <tyh000011112222@gmail.com> 2016 */
-#include <stdio.h>
-#include <inttypes.h>
 #include <string.h>
 #include <ctype.h>
 #include <errno.h>
