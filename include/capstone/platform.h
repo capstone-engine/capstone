@@ -95,6 +95,11 @@ typedef unsigned long long uint64_t;
 #define PRIX32        "X"
 #endif  // defined(_MSC_VER) && _MSC_VER <= 1700
 
+#if defined(_MSC_VER) && _MSC_VER <= 1700
+// redefine functions from inttypes.h used in cstool
+#define strtoull _strtoui64
+#endif
+
 #define PRId64        __PRI_64_LENGTH_MODIFIER__ "d"
 #define PRIi64        __PRI_64_LENGTH_MODIFIER__ "i"
 #define PRIo64        __PRI_64_LENGTH_MODIFIER__ "o"
