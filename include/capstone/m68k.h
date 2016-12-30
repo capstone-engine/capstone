@@ -126,7 +126,7 @@ typedef struct m68k_op_mem {
 	m68k_reg in_base_reg;   // indirect base register (or M68K_REG_INVALID if irrelevant)
 	uint32_t in_disp; 	    // indirect displacement 
 	uint32_t out_disp;      // other displacement 
-	uint16_t disp;	        // displacement value
+	int16_t disp;	        // displacement value
 	uint8_t scale;	        // scale for index register
 	uint8_t bitfield;       // set to true if the two values below should be used
 	uint8_t width;	        // used for bf* instructions
@@ -579,7 +579,8 @@ typedef enum m68k_insn {
 typedef enum m68k_group_type {
 	M68K_GRP_INVALID = 0,  // CS_GRUP_INVALID
 	M68K_GRP_JUMP,  // = CS_GRP_JUMP
-	M68K_GRP_RET = 3,  // = CS_GRP_RET
+	M68K_GRP_JSR, // = CS_GRP_CALL
+	M68K_GRP_RET,  // = CS_GRP_RET
 	M68K_GRP_IRET = 5, // = CS_GRP_IRET
 
 	M68K_GRP_ENDING,// <-- mark the end of the list of groups

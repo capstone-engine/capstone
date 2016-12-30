@@ -461,7 +461,7 @@ void get_ea_mode_op(m68k_info *info, cs_m68k_op* op, uint instruction, uint size
 			/* address register indirect with displacement*/
 			op->address_mode = M68K_AM_REGI_ADDR_DISP;
 			op->mem.base_reg = M68K_REG_A0 + (instruction & 7);
-			op->mem.disp = (uint16_t)read_imm_16(info);
+			op->mem.disp = (int16_t)read_imm_16(info);
 			break;
 
 		case 0x30: case 0x31: case 0x32: case 0x33: case 0x34: case 0x35: case 0x36: case 0x37:
@@ -484,7 +484,7 @@ void get_ea_mode_op(m68k_info *info, cs_m68k_op* op, uint instruction, uint size
 		case 0x3a:
 			/* program counter with displacement */
 			op->address_mode = M68K_AM_PCI_DISP;
-			op->mem.disp = (uint16_t)read_imm_16(info);
+			op->mem.disp = (int16_t)read_imm_16(info);
 			break;
 
 		case 0x3b:
@@ -1114,7 +1114,7 @@ static void build_movep_re(m68k_info *info, int size)
 	op1->address_mode = M68K_AM_REGI_ADDR_DISP;
 	op1->type = M68K_OP_MEM;
 	op1->mem.base_reg = M68K_REG_A0 + (info->ir & 7);
-	op1->mem.disp = (uint16_t)read_imm_16(info);
+	op1->mem.disp = (int16_t)read_imm_16(info);
 }
 
 static void build_movep_er(m68k_info *info, int size)
@@ -1129,7 +1129,7 @@ static void build_movep_er(m68k_info *info, int size)
 	op0->address_mode = M68K_AM_REGI_ADDR_DISP;
 	op0->type = M68K_OP_MEM;
 	op0->mem.base_reg = M68K_REG_A0 + (info->ir & 7);
-	op0->mem.disp = (uint16_t)read_imm_16(info);
+	op0->mem.disp = (int16_t)read_imm_16(info);
 
 	op1->reg = M68K_REG_D0 + ((info->ir >> 9) & 7);
 }
@@ -2364,7 +2364,7 @@ static void d68000_jmp(m68k_info *info)
 static void d68000_jsr(m68k_info *info)
 {
 	cs_m68k* ext = build_init_op(info, M68K_INS_JSR, 1, 0);
-	set_insn_group(info, M68K_GRP_JUMP);
+	set_insn_group(info, M68K_GRP_JSR);
 	get_ea_mode_op(info, &ext->operands[0], info->ir, 4);
 }
 
