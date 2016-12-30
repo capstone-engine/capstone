@@ -2364,7 +2364,7 @@ static void d68000_jmp(m68k_info *info)
 static void d68000_jsr(m68k_info *info)
 {
 	cs_m68k* ext = build_init_op(info, M68K_INS_JSR, 1, 0);
-	set_insn_group(info, M68K_GRP_JSR);
+	set_insn_group(info, M68K_GRP_JUMP);
 	get_ea_mode_op(info, &ext->operands[0], info->ir, 4);
 }
 
