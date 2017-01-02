@@ -8684,7 +8684,7 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1671] = 
     /* TEST16rm */
   },
   { /* 1518 */
-    53,
+    57,
     /* TEST16rr */
   },
   { /* 1519 */
@@ -8712,7 +8712,7 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1671] = 
     /* TEST32rm */
   },
   { /* 1525 */
-    53,
+    57,
     /* TEST32rr */
   },
   { /* 1526 */
@@ -8740,7 +8740,7 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1671] = 
     /* TEST64rm */
   },
   { /* 1532 */
-    33,
+    60,
     /* TEST64rr */
   },
   { /* 1533 */
@@ -8772,7 +8772,7 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1671] = 
     /* TEST8rm */
   },
   { /* 1540 */
-    72,
+    71,
     /* TEST8rr */
   },
   { /* 1541 */
