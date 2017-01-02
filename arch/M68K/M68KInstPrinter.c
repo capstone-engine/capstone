@@ -145,8 +145,8 @@ void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 		case M68K_AM_REGI_ADDR: SStream_concat(O, "(a%d)", (op->reg - M68K_REG_A0)); break;
 		case M68K_AM_REGI_ADDR_POST_INC: SStream_concat(O, "(a%d)+", (op->reg - M68K_REG_A0)); break;
 		case M68K_AM_REGI_ADDR_PRE_DEC: SStream_concat(O, "-(a%d)", (op->reg - M68K_REG_A0)); break;
-		case M68K_AM_REGI_ADDR_DISP: SStream_concat(O, "$%x(a%d)", op->mem.disp, (op->reg - M68K_REG_A0)); break;
-		case M68K_AM_PCI_DISP: SStream_concat(O, "$%x(pc)", op->mem.disp); break;
+		case M68K_AM_REGI_ADDR_DISP: SStream_concat(O, "%s$%x(a%d)", op->mem.disp < 0 ? "-" : "", abs(op->mem.disp), (op->reg - M68K_REG_A0)); break;
+		case M68K_AM_PCI_DISP: SStream_concat(O, "%s$%x(pc)", op->mem.disp < 0 ? "-" : "", abs(op->mem.disp)); break;
 		case M68K_AM_ABSOLUTE_DATA_SHORT: SStream_concat(O, "$%x.w", op->imm); break;
 		case M68K_AM_ABSOLUTE_DATA_LONG: SStream_concat(O, "$%x.l", op->imm); break;
 		case M68K_AM_IMMEDIATE:
@@ -168,10 +168,10 @@ void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 			 SStream_concat(O, "#$%x", op->imm);
 			 break;
 		case M68K_AM_PCI_INDEX_8_BIT_DISP:
-			SStream_concat(O, "$%x(pc,%s%s.%c)", op->mem.disp, s_spacing, getRegName(op->mem.index_reg), op->mem.index_size ? 'l' : 'w');
+			SStream_concat(O, "%s$%x(pc,%s%s.%c)", op->mem.disp < 0 ? "-" : "", abs(op->mem.disp), s_spacing, getRegName(op->mem.index_reg), op->mem.index_size ? 'l' : 'w');
 			break;
 		case M68K_AM_AREGI_INDEX_8_BIT_DISP:
-			SStream_concat(O, "$%x(%s,%s%s.%c)", op->mem.disp, getRegName(op->mem.base_reg), s_spacing, getRegName(op->mem.index_reg), op->mem.index_size ? 'l' : 'w');
+			SStream_concat(O, "%s$%x(%s,%s%s.%c)", op->mem.disp < 0 ? "-" : "", abs(op->mem.disp), getRegName(op->mem.base_reg), s_spacing, getRegName(op->mem.index_reg), op->mem.index_size ? 'l' : 'w');
 			break;
 		case M68K_AM_PCI_INDEX_BASE_DISP:
 		case M68K_AM_AREGI_INDEX_BASE_DISP:
