@@ -13418,7 +13418,7 @@ static insn_map insns[] = {
 	{
 		ARM_tSETEND, ARM_INS_SETEND,
 #ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { ARM_GRP_NOTMCLASS, 0 }, 0, 0
+		{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_V6, ARM_GRP_NOTMCLASS, 0}, 0, 0
 #endif
 	},
 	{
