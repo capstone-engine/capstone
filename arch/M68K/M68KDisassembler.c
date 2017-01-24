@@ -409,7 +409,7 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op* op, uint in
 			op->address_mode = M68K_AM_AREGI_INDEX_8_BIT_DISP;
 		}
 
-		op->mem.disp = extension & 0xff;
+		op->mem.disp = (int8_t)(extension & 0xff);
 	}
 
 	if (EXT_INDEX_SCALE(extension)) {
