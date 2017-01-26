@@ -958,7 +958,7 @@ static void printLogicalImm64(MCInst *MI, unsigned OpNum, SStream *O)
 		MI->ac_idx++;
 #endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)Val;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int64_t)Val;
 		MI->flat_insn->detail->arm64.op_count++;
 	}
 }
