@@ -49,6 +49,8 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 				handle->disasm = ARM_getInstruction;
 
 			handle->mode = (cs_mode)value;
+			handle->big_endian = ((handle->mode & CS_MODE_BIG_ENDIAN) != 0);
+
 			break;
 		case CS_OPT_SYNTAX:
 			ARM_getRegName(handle, (int)value);
