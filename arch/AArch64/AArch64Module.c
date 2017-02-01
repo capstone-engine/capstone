@@ -35,6 +35,10 @@ static cs_err init(cs_struct *ud)
 
 static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 {
+	if (type == CS_OPT_MODE) {
+		handle->big_endian = (((cs_mode)value & CS_MODE_BIG_ENDIAN) != 0);
+	}
+
 	return CS_ERR_OK;
 }
 
