@@ -14,7 +14,6 @@ from distutils.command.sdist import sdist
 from setuptools.command.bdist_egg import bdist_egg
 
 SYSTEM = sys.platform
-VERSION = '3.0.5'
 
 # adapted from commit e504b81 of Nguyen Tan Cong
 # Reference: https://docs.python.org/2/library/platform.html#cross-platform
@@ -26,6 +25,36 @@ LIBS_DIR = os.path.join(ROOT_DIR, 'capstone', 'lib')
 HEADERS_DIR = os.path.join(ROOT_DIR, 'capstone', 'include')
 SRC_DIR = os.path.join(ROOT_DIR, 'src')
 BUILD_DIR = SRC_DIR if os.path.exists(SRC_DIR) else os.path.join(ROOT_DIR, '../..')
+
+# Parse version from pkgconfig.mk
+VERSION_DATA = {}
+with open(os.path.join(BUILD_DIR, 'pkgconfig.mk')) as fp:
+    lines = fp.readlines()
+    for line in lines:
+        line = line.strip()
+        if len(line) == 0:
+            continue
+        if line.startswith('#'):
+            continue
+        if '=' not in line:
+            continue
+
+        k, v = line.split('=', 1)
+        k = k.strip()
+        v = v.strip()
+        if len(k) == 0 or len(v) == 0:
+            continue
+        VERSION_DATA[k] = v
+
+if 'PKG_MAJOR' not in VERSION_DATA or \
+        'PKG_MINOR' not in VERSION_DATA or \
+        'PKG_EXTRA' not in VERSION_DATA:
+    raise Exception("Malformed pkgconfig.mk")
+
+if 'PKG_TAG' in VERSION_DATA:
+    VERSION = '{PKG_MAJOR}.{PKG_MINOR}.{PKG_EXTRA}.{PKG_TAG}'.format(**VERSION_DATA)
+else:
+    VERSION = '{PKG_MAJOR}.{PKG_MINOR}.{PKG_EXTRA}'.format(**VERSION_DATA)
 
 if SYSTEM == 'darwin':
     LIBRARY_FILE = "libcapstone.dylib"
@@ -66,6 +95,7 @@ def copy_sources():
     src.extend(glob.glob(os.path.join(BUILD_DIR, "RELEASE_NOTES")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "make.sh")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "CMakeLists.txt")))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "pkgconfig.mk")))
 
     for filename in src:
         outpath = os.path.join(SRC_DIR, os.path.basename(filename))
