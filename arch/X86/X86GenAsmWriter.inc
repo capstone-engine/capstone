@@ -14164,6 +14164,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
   // Emit the opcode for the instruction.
   unsigned int opcode = MCInst_getOpcode(MI);
+  //printf("> opcode = %u\n", opcode);
   uint64_t Bits1 = OpInfo[opcode];
   uint64_t Bits2 = OpInfo2[opcode];
   uint64_t Bits = (Bits2 << 32) | Bits1;
