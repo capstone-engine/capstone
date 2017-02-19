@@ -468,9 +468,6 @@ static void printS16ImmOperand_Mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	if (MCOperand_isImm(MCInst_getOperand(MI, OpNo))) {
 		short Imm = (short)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
-		// Do not print zero offset
-		if (Imm == 0)
-			return;
 
 		if (Imm >= 0) {
 			if (Imm > HEX_THRESHOLD)
