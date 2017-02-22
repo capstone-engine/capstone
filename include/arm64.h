@@ -65,7 +65,7 @@ typedef enum arm64_cc {
 } arm64_cc;
 
 //> System registers
-typedef enum arm64_mrs_reg {
+typedef enum arm64_sysreg {
 	//> System registers for MRS
 	ARM64_SYSREG_INVALID           = 0,
 	ARM64_SYSREG_MDCCSR_EL0        = 0x9808, // 10  011  0000  0001  000
