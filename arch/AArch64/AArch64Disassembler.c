@@ -1006,7 +1006,7 @@ static DecodeStatus DecodeSignedLdStInstruction(MCInst *Inst,
 	bool IsFP;
 	unsigned Rt = fieldFromInstruction(insn, 0, 5);
 	unsigned Rn = fieldFromInstruction(insn, 5, 5);
-	int32_t offset = fieldFromInstruction(insn, 12, 9);
+	int64_t offset = fieldFromInstruction(insn, 12, 9);
 
 	// offset is a 9-bit signed immediate, so sign extend it to
 	// fill the unsigned.
@@ -1269,7 +1269,7 @@ static DecodeStatus DecodePairLdStInstruction(MCInst *Inst, uint32_t insn,
 	unsigned Rt = fieldFromInstruction(insn, 0, 5);
 	unsigned Rn = fieldFromInstruction(insn, 5, 5);
 	unsigned Rt2 = fieldFromInstruction(insn, 10, 5);
-	int32_t offset = fieldFromInstruction(insn, 15, 7);
+	int64_t offset = fieldFromInstruction(insn, 15, 7);
 	bool IsLoad = fieldFromInstruction(insn, 22, 1) != 0;
 	unsigned Opcode = MCInst_getOpcode(Inst);
 	bool NeedsDisjointWritebackTransfer = false;
@@ -1547,8 +1547,7 @@ static DecodeStatus DecodeAdrInstruction(MCInst *Inst, uint32_t insn,
 		uint64_t Addr, void *Decoder)
 {
 	unsigned Rd = fieldFromInstruction(insn, 0, 5);
-	int32_t imm = fieldFromInstruction(insn, 5, 19) << 2;
-
+	int64_t imm = fieldFromInstruction(insn, 5, 19) << 2;
 	imm |= fieldFromInstruction(insn, 29, 2);
 
 	// Sign-extend the 21-bit immediate.
@@ -1601,7 +1600,7 @@ static DecodeStatus DecodeUnconditionalBranch(MCInst *Inst, uint32_t insn,
 		uint64_t Addr,
 		void *Decoder)
 {
-	int32_t imm = fieldFromInstruction(insn, 0, 26);
+	int64_t imm = fieldFromInstruction(insn, 0, 26);
 
 	// Sign-extend the 26-bit immediate.
 	if (imm & (1 << (26 - 1)))
@@ -1617,11 +1616,11 @@ static DecodeStatus DecodeSystemPStateInstruction(MCInst *Inst,
 		uint32_t insn, uint64_t Addr,
 		void *Decoder)
 {
-	uint32_t op1 = fieldFromInstruction(insn, 16, 3);
-	uint32_t op2 = fieldFromInstruction(insn, 5, 3);
-	uint32_t crm = fieldFromInstruction(insn, 8, 4);
+	uint64_t op1 = fieldFromInstruction(insn, 16, 3);
+	uint64_t op2 = fieldFromInstruction(insn, 5, 3);
+	uint64_t crm = fieldFromInstruction(insn, 8, 4);
 	bool ValidNamed;
-	uint32_t pstate_field = (op1 << 3) | op2;
+	uint64_t pstate_field = (op1 << 3) | op2;
 
 	MCOperand_CreateImm0(Inst, pstate_field);
 	MCOperand_CreateImm0(Inst, crm);
@@ -1634,9 +1633,9 @@ static DecodeStatus DecodeSystemPStateInstruction(MCInst *Inst,
 static DecodeStatus DecodeTestAndBranch(MCInst *Inst, uint32_t insn,
 		uint64_t Addr, void *Decoder)
 {
-	uint32_t Rt = fieldFromInstruction(insn, 0, 5);
-	uint32_t bit = fieldFromInstruction(insn, 31, 1) << 5;
-	int32_t dst = fieldFromInstruction(insn, 5, 14);
+	uint64_t Rt = fieldFromInstruction(insn, 0, 5);
+	uint64_t bit = fieldFromInstruction(insn, 31, 1) << 5;
+	int64_t dst = fieldFromInstruction(insn, 5, 14);
 
 	bit |= fieldFromInstruction(insn, 19, 5);
 

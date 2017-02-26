@@ -1466,7 +1466,7 @@ static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	MCOperand *Op = MCInst_getOperand(MI, OpNum);
 	unsigned SpecRegRBit = (unsigned)MCOperand_getImm(Op) >> 4;
-	unsigned Mask = MCOperand_getImm(Op) & 0xf;
+	unsigned Mask = (unsigned)MCOperand_getImm(Op) & 0xf;
 	unsigned reg;
 
 	if (ARM_getFeatureBits(MI->csh->mode) & ARM_FeatureMClass) {

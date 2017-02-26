@@ -136,8 +136,8 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 		if (MCOperand_isImm(Op2) && MCOperand_isImm(Op3)) {
 			char *AsmMnemonic = NULL;
 			int shift = 0;
-			int immr = (int)MCOperand_getImm(Op2);
-			int imms = (int)MCOperand_getImm(Op3);
+			int64_t immr = MCOperand_getImm(Op2);
+			int64_t imms = MCOperand_getImm(Op3);
 
 			if (Opcode == AArch64_UBFMWri && imms != 0x1F && ((imms + 1) == immr)) {
 				AsmMnemonic = "lsl";
@@ -207,7 +207,7 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (Is64Bit ? 64 : 32) - (int)MCOperand_getImm(Op2);
 				MI->flat_insn->detail->arm64.op_count++;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)MCOperand_getImm(Op3) + 1;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = MCOperand_getImm(Op3) + 1;
 				MI->flat_insn->detail->arm64.op_count++;
 			}
 
@@ -232,10 +232,10 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op1);
 			MI->flat_insn->detail->arm64.op_count++;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)MCOperand_getImm(Op2);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = MCOperand_getImm(Op2);
 			MI->flat_insn->detail->arm64.op_count++;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)MCOperand_getImm(Op3) - (int)MCOperand_getImm(Op2) + 1;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = MCOperand_getImm(Op3) - MCOperand_getImm(Op2) + 1;
 			MI->flat_insn->detail->arm64.op_count++;
 		}
 
@@ -631,7 +631,7 @@ static void printHexImm(MCInst *MI, unsigned OpNo, SStream *O)
 	SStream_concat(O, "#%#llx", MCOperand_getImm(Op));
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)MCOperand_getImm(Op);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = MCOperand_getImm(Op);
 		MI->flat_insn->detail->arm64.op_count++;
 	}
 }
@@ -687,7 +687,7 @@ static void printSysCROperand(MCInst *MI, unsigned OpNo, SStream *O)
 	SStream_concat(O, "c%u", MCOperand_getImm(Op));
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_CIMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)MCOperand_getImm(Op);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = MCOperand_getImm(Op);
 		MI->flat_insn->detail->arm64.op_count++;
 	}
 }
@@ -715,14 +715,14 @@ static void printAddSubImm(MCInst *MI, unsigned OpNum, SStream *O)
 
 static void printLogicalImm32(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	int64_t Val = (int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	int64_t Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 
 	Val = AArch64_AM_decodeLogicalImmediate(Val, 32);
 	printUInt32Bang(O, (int)Val);
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)Val;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
 		MI->flat_insn->detail->arm64.op_count++;
 	}
 }
@@ -750,7 +750,7 @@ static void printLogicalImm64(MCInst *MI, unsigned OpNum, SStream *O)
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)Val;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
 		MI->flat_insn->detail->arm64.op_count++;
 	}
 }
@@ -974,10 +974,10 @@ static void printImmScale(MCInst *MI, unsigned OpNum, SStream *O, int Scale)
 
 	if (MI->csh->detail) {
 		if (MI->csh->doing_mem) {
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int)val;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = val;
 		} else {
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)val;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = val;
 			MI->flat_insn->detail->arm64.op_count++;
 		}
 	}
@@ -992,10 +992,10 @@ static void printUImm12Offset(MCInst *MI, unsigned OpNum, unsigned Scale, SStrea
 		printInt64Bang(O, val);
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int)val;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = val;
 			} else {
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)val;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = val;
 			MI->flat_insn->detail->arm64.op_count++;
 			}
 		}
@@ -1375,7 +1375,7 @@ static void printSIMDType10Operand(MCInst *MI, unsigned OpNo, SStream *O)
 	SStream_concat(O, "#%#016llx", Val);
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)Val;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
 		MI->flat_insn->detail->arm64.op_count++;
 	}
 }
