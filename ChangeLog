@@ -1,6 +1,77 @@
 This file details the changelog of Capstone.
 
 ---------------------------------
+Version 3.0.5-rc2: March 2nd, 2017
+
+
+[ Core ]
+
+- Fix build for Visual Studio 2012
+- Fix X86_REL_ADDR macro
+- Add CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA
+- Better support for embedding Capstone into Windows kernel drivers
+- Support to embedded Capstone into MacOS kernel
+- Support MacOS 10.11 and up
+- Better support for Cygwin
+- Support build packages for FreeBSD & DragonflyBSD
+- Add a command-line tool "cstool"
+- Properly handle switching to Endian mode at run-time for Arm, Arm64, Mips & Sparc
+
+
+[ X86 ]
+
+- Some random 16-bit code can be handled wrongly.
+- Remove abundant operand type X86_OP_FP
+- Fix instructions MOVQ, LOOP, LOOPE, LOOPNE, CALL/JMP rel16, REPNE LODSD, MOV *AX, MOFFS, FAR JMP/CALL
+- Add X86_REG_EFLAGS for STC and STD
+- Fix instruction attributes for SYSEXIT, MOVW, ROL, LGS, SLDT
+- Rename registers ST0-ST7 to be consistent with asm output
+
+
+[ ARM ]
+
+- Properly handle IT instruction
+- Fix LDRSB
+- Fix writeback for LDR
+- Fix Thumb BigEndian setup
+
+
+[ ARM64 ]
+
+- Fix arith extender
+- Fix writeback for LDR
+- Rename enum arm64_mrs_reg to arm64_sysreg
+
+
+[ PowerPC ]
+
+- Print 0 offset for memory operand
+
+
+[ Sparc ]
+
+- Fix POPC instruction
+
+
+[ Python binding ]
+
+- Better PyPy support
+- Add __version__
+- Better support for Python 3
+- Fix CS_SKIPDATA_CALLBACK prototype
+- Cast skipdata function inside binding to simplify the API
+
+
+[ Java binding ]
+
+- Better handle input with invalid code
+
+
+[ PowerShell ]
+
+- New binding
+
+---------------------------------
 Version 3.0.4: July 15th, 2015
 
 
