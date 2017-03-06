@@ -32,7 +32,7 @@ typedef unsigned char bool;
 #if defined(CAPSTONE_HAS_OSXKERNEL) || (defined(_MSC_VER) && (_MSC_VER <= 1700 || defined(_KERNEL_MODE)))
 // this system does not have inttypes.h
 
-#if defined(_MSC_VER) && (_MSC_VER <= 1700 || defined(_KERNEL_MODE))
+#if defined(_MSC_VER) && (_MSC_VER < 1600 || defined(_KERNEL_MODE))
 // this system does not have stdint.h
 typedef signed char  int8_t;
 typedef signed short int16_t;
