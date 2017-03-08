@@ -354,7 +354,6 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 #ifndef CAPSTONE_DIET
 	// fill in mnemonic & operands
 	// find first space or tab
-	sp = buffer;
 	mnem = insn->mnemonic;
 	for (sp = buffer; *sp; sp++) {
 		if (*sp == ' '|| *sp == '\t')
