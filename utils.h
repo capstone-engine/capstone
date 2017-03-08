@@ -4,8 +4,12 @@
 #ifndef CS_UTILS_H
 #define CS_UTILS_H
 
+#if defined(CAPSTONE_HAS_OSXKERNEL)
+#include <libkern/libkern.h>
+#else
 #include <stddef.h>
 #include "include/capstone/capstone.h"
+#endif
 #include "cs_priv.h"
 
 // threshold number, so above this number will be printed in hexa mode
