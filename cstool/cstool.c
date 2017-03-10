@@ -85,11 +85,9 @@ static void usage(char *prog)
 
 	if (cs_support(CS_ARCH_ARM)) {
 		printf("        arm:       arm\n");
-		printf("        armb:      arm + big endian\n");
-		printf("        arml:      arm + little endian\n");
+		printf("        armbe:     arm + big endian\n");
 		printf("        thumb:     thumb mode\n");
 		printf("        thumbbe:   thumb + big endian\n");
-		printf("        thumble:   thumb + billtle endian\n");
 	}
 
 	if (cs_support(CS_ARCH_ARM64)) {
@@ -186,7 +184,7 @@ int main(int argc, char **argv)
 		err = cs_open(CS_ARCH_ARM, CS_MODE_ARM, &handle);
 	}
 
-	if (!strcmp(mode, "armb")) {
+	if (!strcmp(mode, "armb") || !strcmp(mode, "armbe") ) {
 		arch = CS_ARCH_ARM;
 		err = cs_open(CS_ARCH_ARM, CS_MODE_ARM + CS_MODE_BIG_ENDIAN, &handle);
 	}
