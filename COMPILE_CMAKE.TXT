@@ -56,10 +56,9 @@ Get CMake for free from http://www.cmake.org.
 
       mkdir build
       cd build
-      cmake -DCMAKE_BUILD_TYPE=RELEASE -G "NMake Makefiles" ..
-      nmake
+      ..\nmake.bat
 
-  After this, find the samples test*.exe, libcapstone_static.lib & libcapstone.dll
+  After this, find the samples test*.exe, capstone.lib & capstone.dll
   in the same directory.
 
 
