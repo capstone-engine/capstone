@@ -3,6 +3,7 @@
 
 #include "winkernel_mm.h"
 #include <ntddk.h>
+#include <Ntintsafe.h>
 
 // A pool tag for memory allocation
 static const ULONG CS_WINKERNEL_POOL_TAG = 'kwsC';
@@ -33,8 +34,16 @@ void * CAPSTONE_API cs_winkernel_malloc(size_t size)
 
 	// FP; a use of NonPagedPool is required for Windows 7 support
 #pragma prefast(suppress : 30030)		// Allocating executable POOL_TYPE memory
-	CS_WINKERNEL_MEMBLOCK *block = (CS_WINKERNEL_MEMBLOCK *)ExAllocatePoolWithTag(
-			NonPagedPool, size + sizeof(CS_WINKERNEL_MEMBLOCK), CS_WINKERNEL_POOL_TAG);
+	size_t number_of_bytes = 0;
+	CS_WINKERNEL_MEMBLOCK *block = NULL;
+	// A specially crafted size value can trigger the overflow.
+	// If the sum in a value that overflows or underflows the capacity of the type,
+	// the function returns NULL.
+	if (!NT_SUCCESS(RtlSizeTAdd(size, sizeof(CS_WINKERNEL_MEMBLOCK), &number_of_bytes))) {
+		return NULL;
+	}
+	block = (CS_WINKERNEL_MEMBLOCK *)ExAllocatePoolWithTag(
+			NonPagedPool, number_of_bytes, CS_WINKERNEL_POOL_TAG);
 	if (!block) {
 		return NULL;
 	}
