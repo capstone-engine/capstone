@@ -5,6 +5,7 @@
 
 #include "libc.h"
 #include <memory>
+#include <Ntintsafe.h>
 
 #pragma warning(push)               
 #pragma warning (disable : 4565)
