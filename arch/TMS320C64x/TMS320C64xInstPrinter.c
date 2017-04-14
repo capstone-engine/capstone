@@ -6,8 +6,6 @@
 #include <ctype.h>
 #include <string.h>
 
-#include "../../myinttypes.h"
-
 #include "TMS320C64xInstPrinter.h"
 #include "../../MCInst.h"
 #include "../../utils.h"

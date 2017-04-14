@@ -2,7 +2,6 @@
 /* TMS320C64x Backend by Fotis Loukos <me@fotisl.com> 2016 */
 
 #include <stdio.h>
-#include "../myinttypes.h"
 
 #include <capstone/capstone.h>
 
