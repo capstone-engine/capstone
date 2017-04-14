@@ -219,7 +219,7 @@ static inline uint64_t AArch64_AM_decodeAdvSIMDModImmType10(uint8_t Imm)
 		0xff000000, 0xff0000ff, 0xff00ff00, 0xff00ffff, 
 		0xffff0000, 0xffff00ff, 0xffffff00, 0xffffffff
         };
-	return lookup[Imm & 0x0f] | ((uint64_t)lookup[Imm >> 4]) << 32);
+	return lookup[Imm & 0x0f] | ((uint64_t)lookup[Imm >> 4] << 32);
 }
 
 #endif
