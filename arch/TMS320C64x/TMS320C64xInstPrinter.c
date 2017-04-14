@@ -68,12 +68,17 @@ void TMS320C64x_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 
 		SStream_concat0(&ss, insn_asm);
 		if((p != NULL) && (((p2 = strchr(p, '[')) != NULL) || ((p2 = strchr(p, '(')) != NULL))) {
-			while((*p2 != 'A') && (*p2 != 'B'))
+			while((p2 > p) && ((*p2 != 'A') && (*p2 != 'B')))
 				p2--;
-			if(*p2 == 'A')
-				strcpy(tmp, "1T");
-			else
-				strcpy(tmp, "2T");
+            if(p2 == p) {
+                strcpy(insn_asm, "Invalid!");
+                return;
+            } else {
+			    if(*p2 == 'A')
+				    strcpy(tmp, "1T");
+			    else
+				    strcpy(tmp, "2T");
+            }
 		} else {
 			tmp[0] = '\0';
 		}
