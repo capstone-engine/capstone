@@ -300,7 +300,7 @@ def copy_ctypes_list(src):
     return [copy_ctypes(n) for n in src]
 
 # Weird import placement because these modules are needed by the below code but need the above functions
-from . import arm, arm64, m68k, mips, ppc, sparc, systemz, x86, xcore
+from . import arm, arm64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x
 
 class _cs_arch(ctypes.Union):
     _fields_ = (
