@@ -281,6 +281,9 @@ ifeq ($(PKG_EXTRA),)
 PKGCFGDIR = $(LIBDATADIR)/pkgconfig
 else
 PKGCFGDIR ?= $(LIBDATADIR)/pkgconfig
+ifeq ($(PKGCFGDIR),)
+PKGCFGDIR = $(LIBDATADIR)/pkgconfig
+endif
 endif
 
 API_MAJOR=$(shell echo `grep -e CS_API_MAJOR include/capstone/capstone.h | grep -v = | awk '{print $$3}'` | awk '{print $$1}')
