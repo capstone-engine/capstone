@@ -917,7 +917,7 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 	}
 
 	if (MI->csh->detail) {
-		uint8_t access[6];
+		uint8_t access[6] = {0};
 
 		// some instructions need to supply immediate 1 in the first op
 		switch(MCInst_getOpcode(MI)) {
