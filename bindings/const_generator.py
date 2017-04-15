@@ -5,7 +5,7 @@ import sys, re
 
 INCL_DIR = '../include/capstone/'
 
-include = [ 'arm.h', 'arm64.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h' ]
+include = [ 'arm.h', 'arm64.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h', 'tms320c64x.h' ]
 
 template = {
     'java': {
@@ -23,6 +23,7 @@ template = {
             'sparc.h': 'Sparc',
             'systemz.h': 'Sysz',
             'xcore.h': 'Xcore',
+            'tms320c64x.h': 'TMS320C64x',
             'comment_open': '\t//',
             'comment_close': '',
         },
@@ -41,6 +42,7 @@ template = {
             'sparc.h': 'sparc',
             'systemz.h': 'sysz',
             'xcore.h': 'xcore',
+            'tms320c64x.h': 'tms320c64x',
             'comment_open': '#',
             'comment_close': '',
         },
@@ -59,6 +61,7 @@ template = {
             'sparc.h': 'sparc',
             'systemz.h': 'sysz',
             'xcore.h': 'xcore',
+            'tms320c64x.h': 'tms320c64x',
             'comment_open': '(*',
             'comment_close': ' *)',
         },
