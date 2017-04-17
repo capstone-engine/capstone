@@ -14,6 +14,7 @@ void print_insn_detail_sparc(csh handle, cs_insn *ins);
 void print_insn_detail_sysz(csh handle, cs_insn *ins);
 void print_insn_detail_xcore(csh handle, cs_insn *ins);
 void print_insn_detail_m68k(csh handle, cs_insn *ins);
+void print_insn_detail_tms320c64x(csh handle, cs_insn *ins);
 
 void print_string_hex(char *comment, unsigned char *str, size_t len)
 {
@@ -121,6 +122,10 @@ static void usage(char *prog)
 	if (cs_support(CS_ARCH_M68K)) {
 		printf("        m68k:      m68k + big endian\n");
 		printf("        m68k40:    m68k_040\n");
+	}
+
+	if (cs_support(CS_ARCH_TMS320C64X)) {
+		printf("        tms320c64x:TMS320C64x\n");
 	}
 
 	printf("\n");
@@ -319,6 +324,11 @@ int main(int argc, char **argv)
 		err = cs_open(CS_ARCH_M68K, CS_MODE_M68K_040, &handle);
 	}
 
+	if (!strcmp(mode,"tms320c64x")) {
+		arch = CS_ARCH_TMS320C64X;
+		err = cs_open(CS_ARCH_TMS320C64X, CS_MODE_BIG_ENDIAN, &handle);
+	}
+
 
 	if (err) {
 		printf("ERROR: Failed on cs_open(), quit!\n");
@@ -382,6 +392,9 @@ int main(int argc, char **argv)
 							 break;
 					case CS_ARCH_M68K:
 							 print_insn_detail_m68k(handle, &insn[i]);
+							 break;
+					case CS_ARCH_TMS320C64X:
+							 print_insn_detail_tms320c64x(handle, &insn[i]);
 							 break;
 				}
 
