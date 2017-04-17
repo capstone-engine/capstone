@@ -733,7 +733,7 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 	reg = X86_insn_reg_intel(MCInst_getOpcode(MI), &access1);
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
-		uint8_t access[6];
+		uint8_t access[6] = {0};
 #endif
 
 		// first op can be embedded in the asm by llvm.
