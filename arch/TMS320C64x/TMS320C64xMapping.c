@@ -1766,8 +1766,15 @@ static name_map group_name_maps[] = {
 const char *TMS320C64x_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
+	unsigned int i;
+
 	if (id >= TMS320C64X_GRP_ENDING)
 		return NULL;
+
+	for (i = 0; i < ARR_SIZE(group_name_maps); i++) {
+		if (group_name_maps[i].id == id)
+			return group_name_maps[i].name;
+	}
 
 	return group_name_maps[id].name;
 #else
