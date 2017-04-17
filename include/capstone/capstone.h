@@ -81,6 +81,7 @@ typedef enum cs_arch {
 	CS_ARCH_SYSZ,		// SystemZ architecture
 	CS_ARCH_XCORE,		// XCore architecture
 	CS_ARCH_M68K,		// 68K architecture
+	CS_ARCH_TMS320C64X,	// TMS320C64x architecture
 	CS_ARCH_MAX,
 	CS_ARCH_ALL = 0xFFFF, // All architectures - for cs_support()
 } cs_arch;
@@ -255,6 +256,7 @@ typedef struct cs_opt_skipdata {
 #include "systemz.h"
 #include "x86.h"
 #include "xcore.h"
+#include "tms320c64x.h"
 
 // NOTE: All information in cs_detail is only available when CS_OPT_DETAIL = CS_OPT_ON
 typedef struct cs_detail {
@@ -278,6 +280,7 @@ typedef struct cs_detail {
 		cs_sparc sparc;	// Sparc architecture
 		cs_sysz sysz;	// SystemZ architecture
 		cs_xcore xcore;	// XCore architecture
+		cs_tms320c64x tms320c64x;	// TMS320C64x architecture
 	};
 } cs_detail;
 
