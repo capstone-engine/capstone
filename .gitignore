@@ -63,6 +63,7 @@ tests/test_xcore
 tests/*.static
 tests/test_customized_mnem
 tests/test_m68k
+tests/test_tms320c64x
 
 # vim tmp file
 *.swp
