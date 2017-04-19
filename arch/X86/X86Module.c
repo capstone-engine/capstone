@@ -17,7 +17,11 @@ static cs_err init(cs_struct *ud)
 	if (ud->mode & ~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | CS_MODE_16))
 		return CS_ERR_MODE;
 
+#ifndef CAPSTONE_STATIC_X86_ONLY
 	mri = cs_mem_malloc(sizeof(*mri));
+#else   // CAPSTONE_STATIC_X86_ONLY
+	mri = &ud->printer_info_alloc;
+#endif  // CAPSTONE_STATIC_X86_ONLY
 
 	X86_init(mri);
 

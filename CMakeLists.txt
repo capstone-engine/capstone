@@ -26,6 +26,9 @@ option(CAPSTONE_X86_REDUCE "x86 with reduce instruction sets to minimize library
 option(CAPSTONE_X86_ATT_DISABLE "Disable x86 AT&T syntax" OFF)
 option(CAPSTONE_OSXKERNEL_SUPPORT "Support to embed Capstone into OS X Kernel extensions" OFF)
 
+# @HADEAN@ Hack to completely remove dynamic memory allocation
+option(CAPSTONE_STATIC_X86_ONLY "Do not use any dynamic memory allocation (X86 only)" OFF)
+
 if (CAPSTONE_BUILD_DIET)
     add_definitions(-DCAPSTONE_DIET)
 endif ()
@@ -40,6 +43,10 @@ endif ()
 
 if (CAPSTONE_X86_ATT_DISABLE)
     add_definitions(-DCAPSTONE_X86_ATT_DISABLE)
+endif ()
+
+if (CAPSTONE_STATIC_X86_ONLY)
+    add_definitions(-DCAPSTONE_STATIC_X86_ONLY)
 endif ()
 
 ## sources

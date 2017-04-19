@@ -494,10 +494,12 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 	x86_reg reg, reg2;
 
 	// Try to print any aliases first.
+#ifndef CAPSTONE_STATIC_X86_ONLY
 	mnem = printAliasInstr(MI, O, Info);
 	if (mnem)
 		cs_mem_free(mnem);
 	else
+#endif CAPSTONE_STATIC_X86_ONLY
 		printInstruction(MI, O, Info);
 
 	reg = X86_insn_reg_intel(MCInst_getOpcode(MI));
@@ -851,7 +853,9 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 #define GET_REGINFO_ENUM
 #include "X86GenRegisterInfo.inc"
 
+#ifndef CAPSTONE_STATIC_X86_ONLY
 #define PRINT_ALIAS_INSTR
+#endif  // CAPSTONE_STATIC_X86_ONLY
 #ifdef CAPSTONE_X86_REDUCE
 #include "X86GenAsmWriter1_reduce.inc"
 #else

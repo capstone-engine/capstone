@@ -100,10 +100,12 @@ unsigned int all_arch = 0;
 
 #if defined(CAPSTONE_USE_SYS_DYN_MEM)
 #if !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(_KERNEL_MODE)
+#ifndef CAPSTONE_STATIC_X86_ONLY
 cs_malloc_t cs_mem_malloc = malloc;
 cs_calloc_t cs_mem_calloc = calloc;
 cs_realloc_t cs_mem_realloc = realloc;
 cs_free_t cs_mem_free = free;
+#endif  // CAPSTONE_STATIC_X86_ONLY
 cs_vsnprintf_t cs_vsnprintf = vsnprintf;
 #elif defined(_KERNEL_MODE)
 cs_malloc_t cs_mem_malloc = cs_winkernel_malloc;
@@ -232,15 +234,23 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 {
 	cs_err err;
 	struct cs_struct *ud;
+#ifndef CAPSTONE_STATIC_X86_ONLY
 	if (!cs_mem_malloc || !cs_mem_calloc || !cs_mem_realloc || !cs_mem_free || !cs_vsnprintf)
 		// Error: before cs_open(), dynamic memory management must be initialized
 		// with cs_option(CS_OPT_MEM)
 		return CS_ERR_MEMSETUP;
+#endif  // CAPSTONE_STATIC_X86_ONLY
 
 	archs_enable();
 
 	if (arch < CS_ARCH_MAX && arch_init[arch]) {
+#ifndef CAPSTONE_STATIC_X86_ONLY
 		ud = cs_mem_calloc(1, sizeof(*ud));
+#else   // CAPSTONE_STATIC_X86_ONLY
+    // Assume the handle points to pre-allocated memory.
+    ud = (struct cs_struct *)(*handle);
+#endif  // CAPSTONE_STATIC_X86_ONLY
+
 		if (!ud) {
 			// memory insufficient
 			return CS_ERR_MEM;
@@ -258,16 +268,22 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 
 		err = arch_init[ud->arch](ud);
 		if (err) {
+#ifndef CAPSTONE_STATIC_X86_ONLY
 			cs_mem_free(ud);
 			*handle = 0;
+#endif  // CAPSTONE_STATIC_X86_ONLY
 			return err;
 		}
 
+#ifndef CAPSTONE_STATIC_X86_ONLY
 		*handle = (uintptr_t)ud;
+#endif  // CAPSTONE_STATIC_X86_ONLY
 
 		return CS_ERR_OK;
 	} else {
+#ifndef CAPSTONE_STATIC_X86_ONLY
 		*handle = 0;
+#endif  // CAPSTONE_STATIC_X86_ONLY
 		return CS_ERR_ARCH;
 	}
 }
@@ -275,12 +291,15 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 CAPSTONE_EXPORT
 cs_err CAPSTONE_API cs_close(csh *handle)
 {
+#ifndef CAPSTONE_STATIC_X86_ONLY
 	struct cs_struct *ud;
+#endif  // CAPSTONE_STATIC_X86_ONLY
 
 	if (*handle == 0)
 		// invalid handle
 		return CS_ERR_CSH;
 
+#ifndef CAPSTONE_STATIC_X86_ONLY
 	ud = (struct cs_struct *)(*handle);
 
 	if (ud->printer_info)
@@ -294,6 +313,7 @@ cs_err CAPSTONE_API cs_close(csh *handle)
 	// invalidate this handle by ZERO out its value.
 	// this is to make sure it is unusable after cs_close()
 	*handle = 0;
+#endif  // CAPSTONE_STATIC_X86_ONLY
 
 	return CS_ERR_OK;
 }
@@ -394,10 +414,12 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, size_t value)
 	if (type == CS_OPT_MEM) {
 		cs_opt_mem *mem = (cs_opt_mem *)value;
 
+#ifndef CAPSTONE_STATIC_X86_ONLY
 		cs_mem_malloc = mem->malloc;
 		cs_mem_calloc = mem->calloc;
 		cs_mem_realloc = mem->realloc;
 		cs_mem_free = mem->free;
+#endif  // CAPSTONE_STATIC_X86_ONLY
 		cs_vsnprintf = mem->vsnprintf;
 
 		return CS_ERR_OK;
@@ -460,6 +482,8 @@ static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
 		available -= len;
 	}
 }
+
+#ifndef CAPSTONE_STATIC_X86_ONLY
 
 // dynamicly allocate memory to contain disasm insn
 // NOTE: caller must free() the allocated memory itself to avoid memory leaking
@@ -710,6 +734,8 @@ cs_insn * CAPSTONE_API cs_malloc(csh ud)
 
 	return insn;
 }
+
+#endif  // CAPSTONE_STATIC_X86_ONLY
 
 // iterator for instruction "single-stepping"
 CAPSTONE_EXPORT
