@@ -215,6 +215,7 @@ _found = False
 
 def _load_lib(path):
     lib_file = join(path, _lib)
+    #print("Trying to load %s" %lib_file)
     try:
         return ctypes.cdll.LoadLibrary(lib_file)
     except OSError:
