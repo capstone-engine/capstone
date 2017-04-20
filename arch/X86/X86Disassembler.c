@@ -901,7 +901,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		MCInst *instr, uint16_t *size, uint64_t address, void *_info)
 {
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
-	InternalInstruction insn;
+	InternalInstruction insn = {0};
 	struct reader_info info;
 	int ret;
 	bool result;
@@ -909,8 +909,6 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	info.code = code;
 	info.size = code_len;
 	info.offset = address;
-
-	memset(&insn, 0, offsetof(InternalInstruction, reader));
 
 	if (instr->flat_insn->detail) {
 		instr->flat_insn->detail->x86.op_count = 0;
