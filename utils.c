@@ -19,7 +19,7 @@ static unsigned short *make_id2insn(insn_map *insns, unsigned int size)
 
 	unsigned short *cache = (unsigned short *)cs_mem_malloc(sizeof(*cache) * (max_id + 1));
 
-	for (i = 1; i < size; i++)
+	for (i = 0; i < size; i++)
 		cache[insns[i].id] = i;
 
 	return cache;
