@@ -220,7 +220,9 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 				case X86_VPCOMUQmi: NewOpc = X86_VPCOMUQmi_alt; break;
 			}
 			// Switch opcode to the one that doesn't get special printing.
-			MCInst_setOpcode(mcInst, NewOpc);
+			if (NewOpc != 0) {
+				MCInst_setOpcode(mcInst, NewOpc);
+			}
 		}
 #endif
 	} else if (type == TYPE_IMM5) {
@@ -386,7 +388,9 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 				case X86_VPCMPWZrrik:      NewOpc = X86_VPCMPWZrrik_alt;      break;
 			}
 			// Switch opcode to the one that doesn't get special printing.
-			MCInst_setOpcode(mcInst, NewOpc);
+			if (NewOpc != 0) {
+				MCInst_setOpcode(mcInst, NewOpc);
+			}
 		}
 #endif
 	}
