@@ -93,6 +93,7 @@ static void usage(char *prog)
 
 	if (cs_support(CS_ARCH_ARM64)) {
 		printf("        arm64:     aarch64 mode\n");
+		printf("        arm64be:   aarch64 + big endian\n");
 	}
 
 	if (cs_support(CS_ARCH_MIPS)) {
@@ -222,6 +223,11 @@ int main(int argc, char **argv)
 	if (!strcmp(mode, "arm64")) {
 		arch = CS_ARCH_ARM64;
 		err = cs_open(CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, &handle);
+	}
+
+	if (!strcmp(mode, "arm64be")) {
+		arch = CS_ARCH_ARM64;
+		err = cs_open(CS_ARCH_ARM64, CS_MODE_BIG_ENDIAN, &handle);
 	}
 
 	if (!strcmp(mode, "mips")) {
