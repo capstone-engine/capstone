@@ -800,7 +800,7 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 	if (mnem)
 		cs_mem_free(mnem);
 	else
-#endif CAPSTONE_STATIC_X86_ONLY
+#endif  // CAPSTONE_STATIC_X86_ONLY
 		printInstruction(MI, OS, info);
 
 	// HACK TODO: fix this in machine description

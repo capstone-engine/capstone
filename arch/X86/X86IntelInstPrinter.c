@@ -499,7 +499,7 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 	if (mnem)
 		cs_mem_free(mnem);
 	else
-#endif CAPSTONE_STATIC_X86_ONLY
+#endif  // CAPSTONE_STATIC_X86_ONLY
 		printInstruction(MI, O, Info);
 
 	reg = X86_insn_reg_intel(MCInst_getOpcode(MI));
