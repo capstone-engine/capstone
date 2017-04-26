@@ -1159,7 +1159,7 @@ static void printPostIdxImm8s4Operand(MCInst *MI, unsigned OpNum, SStream *O)
 	}
 
 	if (MI->csh->detail) {
-		int v = (Imm & 256) ? ((Imm & 0xff) << 2) : -((Imm & 0xff) << 2);
+		int v = (Imm & 256) ? ((Imm & 0xff) << 2) : -((((int)Imm) & 0xff) << 2);
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_IMM;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].imm = v;
 		MI->flat_insn->detail->arm.op_count++;
