@@ -462,6 +462,7 @@ source_group("Include\\TMS320C64x" FILES ${HEADERS_TMS320C64X})
 
 ## installation
 install(FILES ${HEADERS_COMMON} DESTINATION include/capstone)
+configure_file(capstone.pc.in capstone.pc)
 
 if (CAPSTONE_BUILD_STATIC)
     install(TARGETS capstone-static
@@ -483,4 +484,5 @@ add_executable(cstool ${CSTOOL_SRC})
 target_link_libraries(cstool ${default-target})
 
 install(TARGETS cstool DESTINATION bin)
+install(FILES ${CMAKE_BINARY_DIR}/capstone.pc DESTINATION lib/pkgconfig)
 endif ()
