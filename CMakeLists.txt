@@ -381,7 +381,6 @@ include_directories("${PROJECT_SOURCE_DIR}/include")
 ## properties
 # version info
 set_property(GLOBAL PROPERTY VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
-set_property(GLOBAL PROPERTY SOVERSION SOVERSION ${VERSION_MAJOR})
 
 ## targets
 if (CAPSTONE_BUILD_STATIC)
@@ -411,6 +410,10 @@ if (CAPSTONE_BUILD_SHARED)
 
     if (MSVC)
         set_target_properties(capstone-shared PROPERTIES IMPORT_SUFFIX _dll.lib)
+    else()
+        set_target_properties(capstone-shared PROPERTIES
+	    VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
+	    SOVERSION ${VERSION_MAJOR})
     endif ()
 
     if(NOT DEFINED default-target)      # honor `capstone-static` for tests first.
