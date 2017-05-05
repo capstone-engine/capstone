@@ -688,7 +688,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 								if (MI->csh->detail) {
 									MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 									MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, 0));
-									MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = CS_AC_READ;
+									MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = CS_AC_WRITE;
 									MI->flat_insn->detail->arm.op_count++;
                                     // this instruction implicitly read/write SP register
                                     MI->flat_insn->detail->regs_read[MI->flat_insn->detail->regs_read_count] = ARM_REG_SP;
