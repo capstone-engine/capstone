@@ -447,7 +447,7 @@ uninstall:
 
 clean:
 	rm -f $(LIBOBJ)
-	rm -f $(BLDIR)/lib$(LIBNAME).* $(BLDIR)/$(LIBNAME).*
+	rm -f $(BLDIR)/lib$(LIBNAME).* $(BLDIR)/$(LIBNAME).pc
 	rm -f $(PKGCFGF)
 	$(MAKE) -C cstool clean
 
