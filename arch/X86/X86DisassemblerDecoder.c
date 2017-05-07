@@ -415,6 +415,55 @@ static bool isPrefixAtLocation(struct InternalInstruction *insn, uint8_t prefix,
 {
 	switch (prefix) {
 	case 0x26:
+		if (insn->isPrefix26)
+			return true;
+		break;
+	case 0x2e:
+		if (insn->isPrefix2e)
+			return true;
+		break;
+	case 0x36:
+		if (insn->isPrefix36)
+			return true;
+		break;
+	case 0x3e:
+		if (insn->isPrefix3e)
+			return true;
+		break;
+	case 0x64:
+		if (insn->isPrefix64)
+			return true;
+		break;
+	case 0x65:
+		if (insn->isPrefix65)
+			return true;
+		break;
+	case 0x66:
+		if (insn->isPrefix66)
+			return true;
+		break;
+	case 0x67:
+		if (insn->isPrefix67)
+			return true;
+		break;
+	case 0xf0:
+		if (insn->isPrefixf0)
+			return true;
+		break;
+	case 0xf2:
+		if (insn->isPrefixf2)
+			return true;
+		break;
+	case 0xf3:
+		if (insn->isPrefixf3)
+			return true;
+		break;
+	default:
+		break;
+	}
+	/*
+	switch (prefix) {
+	case 0x26:
 		if (insn->isPrefix26 && insn->prefix26 == location)
 			return true;
 		break;
@@ -461,6 +510,7 @@ static bool isPrefixAtLocation(struct InternalInstruction *insn, uint8_t prefix,
 	default:
 		break;
 	}
+	*/
 	return false;
 }
 
@@ -917,7 +967,7 @@ static int readOpcode(struct InternalInstruction *insn)
 	/* Determine the length of the primary opcode */
 	uint8_t current;
 
-	// printf(">>> readOpcode() = %x\n", insn->readerCursor);
+	//printf(">>> readOpcode() = %llx\n", insn->readerCursor);
 
 	insn->opcodeType = ONEBYTE;
 	insn->firstByte = 0x00;
