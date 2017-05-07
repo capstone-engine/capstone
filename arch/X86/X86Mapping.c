@@ -2346,6 +2346,8 @@ static name_map insn_name_maps[] = {
 	{ X86_INS_VCMPGE_OQPD, "vcmpge_oqpd" },
 	{ X86_INS_VCMPGT_OQPD, "vcmpgt_oqpd" },
 	{ X86_INS_VCMPTRUE_USPD, "vcmptrue_uspd" },
+
+	{ X86_INS_UD0, "ud0" },
 };
 #endif
 

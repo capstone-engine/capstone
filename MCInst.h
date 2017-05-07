@@ -108,6 +108,7 @@ struct MCInst {
 	// operand access index for list of registers sharing the same access right (for ARM)
 	uint8_t ac_idx;
 	uint8_t popcode_adjust;   // Pseudo X86 instruction adjust
+	char assembly[8];	// for special instruction, so that we dont need printer
 };
 
 void MCInst_Init(MCInst *inst);

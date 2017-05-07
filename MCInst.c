@@ -23,6 +23,7 @@ void MCInst_Init(MCInst *inst)
 	inst->writeback = false;
 	inst->ac_idx = 0;
 	inst->popcode_adjust = 0;
+	inst->assembly[0] = '\0';
 }
 
 void MCInst_clear(MCInst *inst)

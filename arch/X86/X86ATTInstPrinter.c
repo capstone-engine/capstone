@@ -342,8 +342,13 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 // convert Intel access info to AT&T access info
 static void get_op_access(cs_struct *h, unsigned int id, uint8_t *access, uint64_t *eflags)
 {
-	uint8_t *arr = X86_get_op_access(h, id, eflags);
 	uint8_t count, i;
+	uint8_t *arr = X86_get_op_access(h, id, eflags);
+
+	if (!arr) {
+		access[0] = 0;
+		return;
+	}
 
 	// find the non-zero last entry
 	for(count = 0; arr[count]; count++);
@@ -873,6 +878,12 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 	x86_reg reg, reg2;
 	enum cs_ac_type access1, access2;
 	int i;
+
+	// perhaps this instruction does not need printer
+	if (MI->assembly[0]) {
+		strncpy(OS->buffer, MI->assembly, sizeof(MI->assembly));
+		return;
+	}
 
 	// Output CALLpcrel32 as "callq" in 64-bit mode.
 	// In Intel annotation it's always emitted as "call".

@@ -946,6 +946,25 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 
 	if (ret) {
 		*size = (uint16_t)(insn.readerCursor - address);
+		// handle some special cases here.
+		// FIXME: fix this in the next major update.
+		if (*size  == 2) {
+			unsigned char b1, b2;
+
+			reader(&info, &b1, address);
+			reader(&info, &b2, address + 1);
+			if (b1 == 0x0f && b2 == 0xff) {
+				instr->OpcodePub = X86_INS_UD0;
+				strncpy(instr->assembly, "ud0", 4);
+				if (instr->flat_insn->detail) {
+					instr->flat_insn->detail->x86.opcode[0] = b1;
+					instr->flat_insn->detail->x86.opcode[1] = b2;
+				}
+				return true;
+			}
+
+			return false;
+		}
 
 		return false;
 	} else {
