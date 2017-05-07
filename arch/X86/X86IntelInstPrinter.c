@@ -453,8 +453,13 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 static void get_op_access(cs_struct *h, unsigned int id, uint8_t *access, uint64_t *eflags)
 {
 #ifndef CAPSTONE_DIET
-	uint8_t *arr = X86_get_op_access(h, id, eflags);
 	uint8_t i;
+	uint8_t *arr = X86_get_op_access(h, id, eflags);
+
+	if (!arr) {
+		access[0] = 0;
+		return;
+	}
 
 	// copy to access but zero out CS_AC_IGNORE
 	for(i = 0; arr[i]; i++) {
@@ -722,6 +727,12 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 	char *mnem;
 	x86_reg reg, reg2;
 	enum cs_ac_type access1, access2;
+
+	// perhaps this instruction does not need printer
+	if (MI->assembly[0]) {
+		strncpy(O->buffer, MI->assembly, sizeof(MI->assembly));
+		return;
+	}
 
 	// Try to print any aliases first.
 	mnem = printAliasInstr(MI, O, Info);

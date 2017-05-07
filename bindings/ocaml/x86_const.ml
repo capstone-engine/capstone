@@ -1891,7 +1891,8 @@ let _X86_INS_VCMPNEQ_OSPD = 1494;;
 let _X86_INS_VCMPGE_OQPD = 1495;;
 let _X86_INS_VCMPGT_OQPD = 1496;;
 let _X86_INS_VCMPTRUE_USPD = 1497;;
-let _X86_INS_ENDING = 1498;;
+let _X86_INS_UD0 = 1498;;
+let _X86_INS_ENDING = 1499;;
 
 (* Group of X86 instructions *)
 
