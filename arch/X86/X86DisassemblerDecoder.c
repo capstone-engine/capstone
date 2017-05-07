@@ -2133,6 +2133,9 @@ static bool checkPrefix(struct InternalInstruction *insn)
 				// invalid LOCK
 				return true;
 
+			// nop dword [rax]
+			case X86_NOOPL:
+
 			// DEC
 			case X86_DEC16m:
 			case X86_DEC32m:
