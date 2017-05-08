@@ -836,10 +836,14 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		result = (!translateInstruction(instr, &insn)) ?  true : false;
 		if (result) {
 			// quick fix for #904. TODO: fix this properly in the next update
-			if (handle->mode & CS_MODE_64 &&
-				(instr->Opcode == X86_LES16rm || instr->Opcode == X86_LES32rm))
-				// LES is invalid in x64
-				return false;
+			if (handle->mode & CS_MODE_64) {
+				if (instr->Opcode == X86_LES16rm || instr->Opcode == X86_LES32rm)
+					// LES is invalid in x64
+					return false;
+				if (instr->Opcode == X86_LDS16rm || instr->Opcode == X86_LDS32rm)
+					// LDS is invalid in x64
+					return false;
+			}
 
 			instr->imm_size = insn.immSize;
 			if (handle->detail) {
