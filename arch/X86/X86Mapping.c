@@ -3469,7 +3469,7 @@ void op_addAvxBroadcast(MCInst *MI, x86_avx_bcast v)
 typedef struct insn_op {
 	union{
 		uint64_t eflags;	// how this instruction update EFLAGS
-		uint64_t fpuflags;
+		uint64_t fpu_flags;
 	};
 	uint8_t access[6];
 } insn_op;
