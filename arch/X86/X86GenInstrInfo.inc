@@ -8867,7 +8867,8 @@ enum {
     X86_XTEST	= 8850,
     X86_fdisi8087_nop	= 8851,
     X86_feni8087_nop	= 8852,
-    X86_INSTRUCTION_LIST_END = 8853
+    X86_UD0	= 8853,
+    X86_INSTRUCTION_LIST_END = 8854
 };
 
 #endif // GET_INSTRINFO_ENUM

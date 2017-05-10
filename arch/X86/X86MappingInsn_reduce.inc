@@ -9349,3 +9349,9 @@
 	{ X86_REG_RDX, X86_REG_RDI, 0 }, { X86_REG_RAX, X86_REG_RDI, 0 }, { 0 }, 0, 0
 #endif
 },
+{
+	X86_UD0, X86_INS_UD0,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+},
