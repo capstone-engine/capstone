@@ -4,8 +4,8 @@
 LIB = capstone
 FLAGS = '-Wall -Wextra -Wwrite-strings'
 
-all: arm_const.cmxa arm64_const.cmxa mips_const.cmxa ppc_const.cmxa sparc_const.cmxa sysz_const.cmxa x86_const.cmxa xcore_const.cmxa arm.cmxa arm64.cmxa mips.cmxa ppc.cmxa x86.cmxa sparc.cmxa systemz.cmxa xcore.cmxa capstone.cmxa test.cmx test_detail.cmx test_x86.cmx test_arm.cmx test_arm64.cmx test_mips.cmx test_ppc.cmx test_sparc.cmx test_systemz.cmx test_xcore.cmx ocaml.o
-	ocamlopt -o test -ccopt $(FLAGS) ocaml.o capstone.cmx test.cmx -cclib -l$(LIB)
+all: arm_const.cmxa arm64_const.cmxa mips_const.cmxa ppc_const.cmxa sparc_const.cmxa sysz_const.cmxa x86_const.cmxa xcore_const.cmxa arm.cmxa arm64.cmxa mips.cmxa ppc.cmxa x86.cmxa sparc.cmxa systemz.cmxa xcore.cmxa capstone.cmxa test_basic.cmx test_detail.cmx test_x86.cmx test_arm.cmx test_arm64.cmx test_mips.cmx test_ppc.cmx test_sparc.cmx test_systemz.cmx test_xcore.cmx ocaml.o
+	ocamlopt -o test_basic -ccopt $(FLAGS) ocaml.o capstone.cmx test_basic.cmx -cclib -l$(LIB)
 	ocamlopt -o test_detail -ccopt $(FLAGS) capstone.cmx ocaml.o test_detail.cmx -cclib -l$(LIB)
 	ocamlopt -o test_x86 -ccopt $(FLAGS) capstone.cmx ocaml.o x86.cmx x86_const.cmx test_x86.cmx -cclib -l$(LIB)
 	ocamlopt -o test_arm -ccopt $(FLAGS) capstone.cmx ocaml.o arm.cmx arm_const.cmx test_arm.cmx -cclib -l$(LIB)
@@ -17,7 +17,7 @@ all: arm_const.cmxa arm64_const.cmxa mips_const.cmxa ppc_const.cmxa sparc_const.
 	ocamlopt -o test_xcore -ccopt $(FLAGS) capstone.cmx ocaml.o xcore.cmx xcore_const.cmx test_xcore.cmx -cclib -l$(LIB)
 
 
-test.cmx: test.ml
+test_basic.cmx: test_basic.ml
 	ocamlopt -ccopt $(FLAGS) -c $< -cclib -l$(LIB)
 
 test_detail.cmx: test_detail.ml
@@ -255,12 +255,12 @@ xcore_const.cmxa: xcore_const.cmx
 	ocamlopt -ccopt $(FLAGS) -a -o $@ $<
 
 clean:
-	rm -f *.[oa] *.so *.cm[ixoa] *.cmxa *.mli test test_detail test_x86 test_arm test_arm64 test_mips test_ppc test_sparc test_systemz test_xcore
+	rm -f *.[oa] *.so *.cm[ixoa] *.cmxa *.mli test_basic test_detail test_x86 test_arm test_arm64 test_mips test_ppc test_sparc test_systemz test_xcore
 
 gen_const:
 	cd .. && python const_generator.py ocaml
 
-TESTS = test test_detail test_arm test_arm64 test_mips test_ppc
+TESTS = test_basic test_detail test_arm test_arm64 test_mips test_ppc
 TESTS += test_sparc test_systemz test_x86 test_xcore
 check:
 	@for t in $(TESTS); do \

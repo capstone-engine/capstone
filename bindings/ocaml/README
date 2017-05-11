@@ -8,7 +8,7 @@ To compile Ocaml binding, simply run "make" on the command line.
 
 This directory also contains some test code to show how to use Capstone API.
 
-- test.ml
+- test_basic.ml
   This code shows the most simple form of API where we only want to get basic
   information out of disassembled instruction, such as address, mnemonic and
   operand string.

@@ -77,7 +77,7 @@ set(HEADERS_COMMON
     )
 
 
-set(TEST_SOURCES test.c test_detail.c test_skipdata.c test_iter.c)
+set(TEST_SOURCES test_basic.c test_detail.c test_skipdata.c test_iter.c)
 
 ## architecture support
 if (CAPSTONE_ARM_SUPPORT)

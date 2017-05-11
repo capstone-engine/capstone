@@ -22,7 +22,7 @@
     <ProjectGuid>{B291E0D9-4B39-4AF8-971D-A015B78D54A1}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>capstonetest</RootNamespace>
-    <ProjectName>test</ProjectName>
+    <ProjectName>test_basic</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -156,7 +156,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\tests\test.c" />
+    <ClCompile Include="..\..\tests\test_basic.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
