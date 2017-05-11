@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-import test, test_arm, test_arm64, test_detail, test_lite, test_mips, test_ppc, \
+import test_basic, test_arm, test_arm64, test_detail, test_lite, test_mips, test_ppc, \
     test_x86, test_skipdata, test_sparc, test_systemz
 
 
-test.test_class()
+test_basic.test_class()
 test_arm.test_class()
 test_arm64.test_class()
 test_detail.test_class()
