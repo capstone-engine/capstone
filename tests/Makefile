@@ -64,7 +64,7 @@ endif
 
 .PHONY: all clean
 
-SOURCES = test.c test_detail.c test_skipdata.c test_iter.c
+SOURCES = test_basic.c test_detail.c test_skipdata.c test_iter.c
 ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))
 SOURCES += test_arm.c
 endif
