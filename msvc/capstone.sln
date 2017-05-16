@@ -72,6 +72,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_winkernel", "test_wink
 		{FE197816-EF84-4E8D-B29D-E0A6BA2B144B} = {FE197816-EF84-4E8D-B29D-E0A6BA2B144B}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cstool", "cstool\cstool.vcxproj", "{A5AB9988-6B03-4F0D-8D40-9440BBC8B03D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5B01D900-2359-44CA-9914-6B0C6AFB7BE7} = {5B01D900-2359-44CA-9914-6B0C6AFB7BE7}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -200,6 +205,14 @@ Global
 		{C6E4974C-2CAF-499A-802A-FB906F86B4C8}.Debug|x64.ActiveCfg = Debug|x64
 		{C6E4974C-2CAF-499A-802A-FB906F86B4C8}.Release|Win32.ActiveCfg = Release|Win32
 		{C6E4974C-2CAF-499A-802A-FB906F86B4C8}.Release|x64.ActiveCfg = Release|x64
+		{A5AB9988-6B03-4F0D-8D40-9440BBC8B03D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A5AB9988-6B03-4F0D-8D40-9440BBC8B03D}.Debug|Win32.Build.0 = Debug|Win32
+		{A5AB9988-6B03-4F0D-8D40-9440BBC8B03D}.Debug|x64.ActiveCfg = Debug|x64
+		{A5AB9988-6B03-4F0D-8D40-9440BBC8B03D}.Debug|x64.Build.0 = Debug|x64
+		{A5AB9988-6B03-4F0D-8D40-9440BBC8B03D}.Release|Win32.ActiveCfg = Release|Win32
+		{A5AB9988-6B03-4F0D-8D40-9440BBC8B03D}.Release|Win32.Build.0 = Release|Win32
+		{A5AB9988-6B03-4F0D-8D40-9440BBC8B03D}.Release|x64.ActiveCfg = Release|x64
+		{A5AB9988-6B03-4F0D-8D40-9440BBC8B03D}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
