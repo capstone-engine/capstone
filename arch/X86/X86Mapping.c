@@ -3473,7 +3473,7 @@ typedef struct insn_op {
 
 static insn_op insn_ops[] = {
 	{	/* NULL item  */
-		{ 0 },
+		0 ,
 		{ 0 }
 	},
 
