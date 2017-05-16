@@ -28,7 +28,7 @@
 {
 	X86_ABS_F, X86_INS_FABS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -1840,7 +1840,7 @@
 {
 	X86_CHS_F, X86_INS_FCHS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -2974,7 +2974,7 @@
 {
 	X86_COS_F, X86_INS_FCOS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -3676,7 +3676,7 @@
 {
 	X86_F2XM1, X86_INS_F2XM1,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -3742,13 +3742,13 @@
 {
 	X86_FBLDm, X86_INS_FBLD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	X86_FBSTPm, X86_INS_FBSTP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -3784,7 +3784,7 @@
 {
 	X86_FDECSTP, X86_INS_FDECSTP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -3796,7 +3796,7 @@
 {
 	X86_FFREE, X86_INS_FFREE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { X86_GRP_FPU,0 }, 0, 0
 #endif
 },
 {
@@ -3826,13 +3826,13 @@
 {
 	X86_FINCSTP, X86_INS_FINCSTP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	X86_FLDCW16m, X86_INS_FLDCW,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -3886,7 +3886,7 @@
 {
 	X86_FNOP, X86_INS_FNOP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -3910,25 +3910,25 @@
 {
 	X86_FPATAN, X86_INS_FPATAN,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	X86_FPREM, X86_INS_FPREM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	X86_FPREM1, X86_INS_FPREM1,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	X86_FPTAN, X86_INS_FPTAN,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -3940,7 +3940,7 @@
 {
 	X86_FRNDINT, X86_INS_FRNDINT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -3958,7 +3958,7 @@
 {
 	X86_FSCALE, X86_INS_FSCALE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -3970,7 +3970,7 @@
 {
 	X86_FSINCOS, X86_INS_FSINCOS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -3982,7 +3982,7 @@
 {
 	X86_FXAM, X86_INS_FXAM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -4012,19 +4012,19 @@
 {
 	X86_FXTRACT, X86_INS_FXTRACT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	X86_FYL2X, X86_INS_FYL2X,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	X86_FYL2XP1, X86_INS_FYL2XP1,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -4354,19 +4354,19 @@
 {
 	X86_ILD_F16m, X86_INS_FILD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	X86_ILD_F32m, X86_INS_FILD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	X86_ILD_F64m, X86_INS_FILD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -4768,19 +4768,19 @@
 {
 	X86_ISTT_FP16m, X86_INS_FISTTP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, { X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	X86_ISTT_FP32m, X86_INS_FISTTP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	X86_ISTT_FP64m, X86_INS_FISTTP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -6244,31 +6244,31 @@
 {
 	X86_LD_F0, X86_INS_FLDZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	X86_LD_F1, X86_INS_FLD1,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	X86_LD_F32m, X86_INS_FLD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	X86_LD_F64m, X86_INS_FLD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	X86_LD_F80m, X86_INS_FLD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -14896,7 +14896,7 @@
 {
 	X86_SIN_F, X86_INS_FSIN,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -15034,7 +15034,7 @@
 {
 	X86_SQRT_F, X86_INS_FSQRT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -15196,13 +15196,13 @@
 {
 	X86_ST_FXCHST0r, X86_INS_FXCH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	X86_ST_FXCHST0r_alt, X86_INS_FXCH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -15826,7 +15826,7 @@
 {
 	X86_TST_F, X86_INS_FTST,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -50488,7 +50488,7 @@
 {
 	X86_XCH_F, X86_INS_FXCH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_FPSW, 0 }, {X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
