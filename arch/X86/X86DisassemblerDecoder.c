@@ -1238,9 +1238,9 @@ static int getID(struct InternalInstruction *insn)
 			attrMask |= ATTR_OPSIZE;
 		} else if (isPrefixAtLocation(insn, 0x67, insn->necessaryPrefixLocation)) {
 			attrMask |= ATTR_ADSIZE;
-		} else if (isPrefixAtLocation(insn, 0xf3, insn->necessaryPrefixLocation)) {
+		} else if (insn->mode != MODE_16BIT && isPrefixAtLocation(insn, 0xf3, insn->necessaryPrefixLocation)) {
 			attrMask |= ATTR_XS;
-		} else if (isPrefixAtLocation(insn, 0xf2, insn->necessaryPrefixLocation)) {
+		} else if (insn->mode != MODE_16BIT && isPrefixAtLocation(insn, 0xf2, insn->necessaryPrefixLocation)) {
 			attrMask |= ATTR_XD;
 		}
 	}
@@ -1250,6 +1250,16 @@ static int getID(struct InternalInstruction *insn)
 
 	if (getIDWithAttrMask(&instructionID, insn, attrMask))
 		return -1;
+
+	/* Fixing CALL and JMP instruction when in 64bit mode and x66 prefix is used */
+	if (insn->mode == MODE_64BIT && insn->isPrefix66 &&
+	   (insn->opcode == 0xE8 || insn->opcode == 0xE9))
+	{
+		attrMask ^= ATTR_OPSIZE;
+		if (getIDWithAttrMask(&instructionID, insn, attrMask))
+			return -1;
+	}
+
 
 	/*
 	 * JCXZ/JECXZ need special handling for 16-bit mode because the meaning
@@ -2123,6 +2133,9 @@ static bool checkPrefix(struct InternalInstruction *insn)
 				// invalid LOCK
 				return true;
 
+			// nop dword [rax]
+			case X86_NOOPL:
+
 			// DEC
 			case X86_DEC16m:
 			case X86_DEC32m:
@@ -2377,3 +2390,4 @@ int decodeInstruction(struct InternalInstruction *insn,
 }
 
 #endif
+

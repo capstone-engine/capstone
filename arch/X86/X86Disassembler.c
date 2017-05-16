@@ -230,7 +230,9 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 				case X86_CMPSSrr:  NewOpc = X86_CMPSSrr_alt;  break;
 			}
 			// Switch opcode to the one that doesn't get special printing.
-			MCInst_setOpcode(mcInst, NewOpc);
+			if (NewOpc != 0) {
+				MCInst_setOpcode(mcInst, NewOpc);
+			}
 		}
 #endif
 	} else if (type == TYPE_IMM5) {
@@ -263,7 +265,9 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 				case X86_VCMPSSZrr:  NewOpc = X86_VCMPSSZrri_alt; break;
 			}
 			// Switch opcode to the one that doesn't get special printing.
-			MCInst_setOpcode(mcInst, NewOpc);
+			if (NewOpc != 0) {
+				MCInst_setOpcode(mcInst, NewOpc);
+			}
 		}
 #endif
 	}
@@ -831,6 +835,16 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 
 		result = (!translateInstruction(instr, &insn)) ?  true : false;
 		if (result) {
+			// quick fix for #904. TODO: fix this properly in the next update
+			if (handle->mode & CS_MODE_64) {
+				if (instr->Opcode == X86_LES16rm || instr->Opcode == X86_LES32rm)
+					// LES is invalid in x64
+					return false;
+				if (instr->Opcode == X86_LDS16rm || instr->Opcode == X86_LDS32rm)
+					// LDS is invalid in x64
+					return false;
+			}
+
 			instr->imm_size = insn.immSize;
 			if (handle->detail) {
 				update_pub_insn(instr->flat_insn, &insn, instr->x86_prefix);

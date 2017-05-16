@@ -1,0 +1,7 @@
+Name: capstone
+Description: Capstone disassembly engine
+Version: @VERSION_MAJOR@.@VERSION_MINOR@.@VERSION_PATCH@
+URL: http://www.capstone-engine.org
+archive=@CMAKE_INSTALL_PREFIX@/lib/libcapstone.a
+Libs: -L@CMAKE_INSTALL_PREFIX@/lib -lcapstone
+Cflags: -I@CMAKE_INSTALL_PREFIX@/include/capstone
