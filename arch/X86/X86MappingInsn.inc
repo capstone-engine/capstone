@@ -50899,3 +50899,9 @@
 	{ 0 }, { X86_REG_FPSW, 0 }, { 0 }, 0, 0
 #endif
 },
+{
+	X86_UD0, X86_INS_UD0,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+},
