@@ -407,11 +407,9 @@ static void setPrefixPresent(struct InternalInstruction *insn, uint8_t prefix, u
  *
  * @param insn      - The instruction to be queried.
  * @param prefix    - The prefix.
- * @param location  - The location to query.
  * @return          - Whether the prefix is at that location.
  */
-static bool isPrefixAtLocation(struct InternalInstruction *insn, uint8_t prefix,
-		uint64_t location)
+static bool isPrefixAtLocation(struct InternalInstruction *insn, uint8_t prefix)
 {
 	switch (prefix) {
 	case 0x26:
@@ -461,56 +459,7 @@ static bool isPrefixAtLocation(struct InternalInstruction *insn, uint8_t prefix,
 	default:
 		break;
 	}
-	/*
-	switch (prefix) {
-	case 0x26:
-		if (insn->isPrefix26 && insn->prefix26 == location)
-			return true;
-		break;
-	case 0x2e:
-		if (insn->isPrefix2e && insn->prefix2e == location)
-			return true;
-		break;
-	case 0x36:
-		if (insn->isPrefix36 && insn->prefix36 == location)
-			return true;
-		break;
-	case 0x3e:
-		if (insn->isPrefix3e && insn->prefix3e == location)
-			return true;
-		break;
-	case 0x64:
-		if (insn->isPrefix64 && insn->prefix64 == location)
-			return true;
-		break;
-	case 0x65:
-		if (insn->isPrefix65 && insn->prefix65 == location)
-			return true;
-		break;
-	case 0x66:
-		if (insn->isPrefix66 && insn->prefix66 == location)
-			return true;
-		break;
-	case 0x67:
-		if (insn->isPrefix67 && insn->prefix67 == location)
-			return true;
-		break;
-	case 0xf0:
-		if (insn->isPrefixf0 && insn->prefixf0 == location)
-			return true;
-		break;
-	case 0xf2:
-		if (insn->isPrefixf2 && insn->prefixf2 == location)
-			return true;
-		break;
-	case 0xf3:
-		if (insn->isPrefixf3 && insn->prefixf3 == location)
-			return true;
-		break;
-	default:
-		break;
-	}
-	*/
+
 	return false;
 }
 
@@ -747,7 +696,6 @@ static int readPrefixes(struct InternalInstruction *insn)
 			} else {
 				unconsumeByte(insn); /* unconsume byte1 */
 				unconsumeByte(insn); /* unconsume byte  */
-				insn->necessaryPrefixLocation = insn->readerCursor - 2;
 			}
 
 			if (insn->vectorExtensionType == TYPE_EVEX) {
@@ -792,10 +740,8 @@ static int readPrefixes(struct InternalInstruction *insn)
 
 		if (insn->mode == MODE_64BIT || (byte1 & 0xc0) == 0xc0) {
 			insn->vectorExtensionType = TYPE_VEX_3B;
-			insn->necessaryPrefixLocation = insn->readerCursor - 1;
 		} else {
 			unconsumeByte(insn);
-			insn->necessaryPrefixLocation = insn->readerCursor - 1;
 		}
 
 		if (insn->vectorExtensionType == TYPE_VEX_3B) {
@@ -857,10 +803,8 @@ static int readPrefixes(struct InternalInstruction *insn)
 
 		if ((byte1 & 0x38) != 0x0) { /* 0 in these 3 bits is a POP instruction. */
 			insn->vectorExtensionType = TYPE_XOP;
-			insn->necessaryPrefixLocation = insn->readerCursor - 1;
 		} else {
 			unconsumeByte(insn);
-			insn->necessaryPrefixLocation = insn->readerCursor - 1;
 		}
 
 		if (insn->vectorExtensionType == TYPE_XOP) {
@@ -904,15 +848,12 @@ static int readPrefixes(struct InternalInstruction *insn)
 				}
 
 				insn->rexPrefix = byte;
-				insn->necessaryPrefixLocation = insn->readerCursor - 2;
 				// dbgprintf(insn, "Found REX prefix 0x%hhx", byte);
 			} else {
 				unconsumeByte(insn);
-				insn->necessaryPrefixLocation = insn->readerCursor - 1;
 			}
 		} else {
 			unconsumeByte(insn);
-			insn->necessaryPrefixLocation = insn->readerCursor - 1;
 		}
 	}
 
@@ -1292,13 +1233,13 @@ static int getID(struct InternalInstruction *insn)
 			return -1;
 		}
 	} else {
-		if (insn->mode != MODE_16BIT && isPrefixAtLocation(insn, 0x66, insn->necessaryPrefixLocation)) {
+		if (insn->mode != MODE_16BIT && isPrefixAtLocation(insn, 0x66)) {
 			attrMask |= ATTR_OPSIZE;
-		} else if (isPrefixAtLocation(insn, 0x67, insn->necessaryPrefixLocation)) {
+		} else if (isPrefixAtLocation(insn, 0x67)) {
 			attrMask |= ATTR_ADSIZE;
-		} else if (insn->mode != MODE_16BIT && isPrefixAtLocation(insn, 0xf3, insn->necessaryPrefixLocation)) {
+		} else if (insn->mode != MODE_16BIT && isPrefixAtLocation(insn, 0xf3)) {
 			attrMask |= ATTR_XS;
-		} else if (insn->mode != MODE_16BIT && isPrefixAtLocation(insn, 0xf2, insn->necessaryPrefixLocation)) {
+		} else if (insn->mode != MODE_16BIT && isPrefixAtLocation(insn, 0xf2)) {
 			attrMask |= ATTR_XD;
 		}
 	}
