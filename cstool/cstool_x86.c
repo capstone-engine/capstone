@@ -44,6 +44,8 @@ static char *get_eflag_name(uint64_t flag)
 			return "RESET_DF";
 		case X86_EFLAGS_RESET_IF:
 			return "RESET_IF";
+		case X86_EFLAGS_RESET_ZF:
+			return "RESET_ZF";
 		case X86_EFLAGS_TEST_OF:
 			return "TEST_OF";
 		case X86_EFLAGS_TEST_SF:
@@ -104,9 +106,70 @@ static char *get_eflag_name(uint64_t flag)
 			return "SET_DF";
 		case X86_EFLAGS_SET_IF:
 			return "SET_IF";
+		case X86_EFLAGS_SET_OF:
+			return "SET_OF";
+		case X86_EFLAGS_SET_SF:
+			return "SET_SF";
+		case X86_EFLAGS_SET_ZF:
+			return "SET_ZF";
+		case X86_EFLAGS_SET_AF:
+			return "SET_AF";
+		case X86_EFLAGS_SET_PF:
+			return "SET_PF";
+		case X86_EFLAGS_TEST_AF:
+			return "TEST_AF";
+		case X86_EFLAGS_TEST_TF:
+			return "TEST_TF";
+		case X86_EFLAGS_TEST_RF:
+			return "TEST_RF";
 	}
 }
-
+static char *get_fpu_flag_name(uint64_t flag) {
+	switch (flag) {
+		case X86_FPU_FLAGS_MODIFY_C0:
+			return "MOD_C0";
+		case X86_FPU_FLAGS_MODIFY_C1:
+			return "MOD_C1";
+		case X86_FPU_FLAGS_MODIFY_C2:
+			return "MOD_C2";
+		case X86_FPU_FLAGS_MODIFY_C3:
+			return "MOD_C3";
+		case X86_FPU_FLAGS_RESET_C0:
+			return "RESET_C0";
+		case X86_FPU_FLAGS_RESET_C1:
+			return "RESET_C1";
+		case X86_FPU_FLAGS_RESET_C2:
+			return "RESET_C2";
+		case X86_FPU_FLAGS_RESET_C3:
+			return "RESET_C3";
+		case X86_FPU_FLAGS_SET_C0:
+			return "SET_C0";
+		case X86_FPU_FLAGS_SET_C1:
+			return "SET_C1";
+		case X86_FPU_FLAGS_SET_C2:
+			return "SET_C2";
+		case X86_FPU_FLAGS_SET_C3:
+			return "SET_C3";
+		case X86_FPU_FLAGS_UNDEFINED_C0:
+			return "UNDEF_C0";
+		case X86_FPU_FLAGS_UNDEFINED_C1:
+			return "UNDEF_C1";
+		case X86_FPU_FLAGS_UNDEFINED_C2:
+			return "UNDEF_C2";
+		case X86_FPU_FLAGS_UNDEFINED_C3:
+			return "UNDEF_C3";
+		case X86_FPU_FLAGS_TEST_C0:
+			return "TEST_C0";
+		case X86_FPU_FLAGS_TEST_C1:
+			return "TEST_C1";
+		case X86_FPU_FLAGS_TEST_C2:
+			return "TEST_C2";
+		case X86_FPU_FLAGS_TEST_C3:
+			return "TEST_C3";
+		default:
+			return NULL;
+	}
+}
 void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 {
 	int count, i;
@@ -249,13 +312,34 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 			printf("\n");
 		}
 	}
-
 	if (x86->eflags) {
+		i = 0;
+		while (ins->detail->groups[i] != X86_GRP_FPU && ins->detail->groups[i] != 0) {
+			i++;
+		}
+		if (ins->detail->groups[i] == 0) {
+			printf("\tEFLAGS:");
+			for(i = 0; i <= 56; i++)
+				if (x86->eflags & ((uint64_t)1 << i)) {
+					printf(" %s", get_eflag_name((uint64_t)1 << i));
+				}
+			printf("\n");
+		} else {
+			printf("\tFPU_FLAGS:");
+			for(i = 0; i <= 15; i++)
+				if (x86->eflags & ((uint64_t)1 << i)) {
+					printf(" %s", get_fpu_flag_name((uint64_t)1 << i));
+				}
+			printf("\n");
+		}
+	}
+	
+	/*if (x86->eflags) {
 		printf("\tEFLAGS:");
 		for(i = 0; i <= 45; i++)
 			if (x86->eflags & ((uint64_t)1 << i)) {
 				printf(" %s", get_eflag_name((uint64_t)1 << i));
 			}
 		printf("\n");
-	}
+	}*/
 }
