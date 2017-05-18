@@ -312,7 +312,7 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 			printf("\n");
 		}
 	}
-	if (x86->eflags) {
+	if (x86->eflags || x86->fpu_flags) {
 		i = 0;
 		while (ins->detail->groups[i] != X86_GRP_FPU && ins->detail->groups[i] != 0) {
 			i++;

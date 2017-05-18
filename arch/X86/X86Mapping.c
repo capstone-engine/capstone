@@ -2416,6 +2416,7 @@ static name_map group_name_maps[] = {
 	{ X86_GRP_VLX,	"vlx" },
 	{ X86_GRP_SMAP,	"smap" },
 	{ X86_GRP_NOVLX, "novlx" },
+	{ X86_GRP_FPU, "fpu" },
 };
 #endif
 
