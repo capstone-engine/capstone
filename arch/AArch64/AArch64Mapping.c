@@ -842,6 +842,9 @@ static name_map group_name_maps[] = {
 	{ ARM64_GRP_FPARMV8, "fparmv8" },
 	{ ARM64_GRP_NEON, "neon" },
 	{ ARM64_GRP_CRC, "crc" },
+	
+	{ ARM64_GRP_BASE , "base" },
+	{ ARM64_GRP_FPSIMD, "simd&fp"},
 };
 #endif
 
