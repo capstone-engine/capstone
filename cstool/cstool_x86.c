@@ -124,8 +124,12 @@ static char *get_eflag_name(uint64_t flag)
 			return "TEST_RF";
 	}
 }
-static char *get_fpu_flag_name(uint64_t flag) {
+
+static char *get_fpu_flag_name(uint64_t flag)
+{
 	switch (flag) {
+		default:
+			return NULL;
 		case X86_FPU_FLAGS_MODIFY_C0:
 			return "MOD_C0";
 		case X86_FPU_FLAGS_MODIFY_C1:
@@ -166,10 +170,9 @@ static char *get_fpu_flag_name(uint64_t flag) {
 			return "TEST_C2";
 		case X86_FPU_FLAGS_TEST_C3:
 			return "TEST_C3";
-		default:
-			return NULL;
 	}
 }
+
 void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 {
 	int count, i;
@@ -312,34 +315,27 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 			printf("\n");
 		}
 	}
+
 	if (x86->eflags || x86->fpu_flags) {
-		i = 0;
-		while (ins->detail->groups[i] != X86_GRP_FPU && ins->detail->groups[i] != 0) {
-			i++;
+		for(i = 0; i < ins->detail->groups_count; i++) {
+			if (ins->detail->groups[i] == X86_GRP_FPU) {
+				printf("\tFPU_FLAGS:");
+				for(i = 0; i <= 63; i++)
+					if (x86->eflags & ((uint64_t)1 << i)) {
+						printf(" %s", get_fpu_flag_name((uint64_t)1 << i));
+					}
+				printf("\n");
+				break;
+			}
 		}
-		if (ins->detail->groups[i] == 0) {
+
+		if (i == ins->detail->groups_count) {
 			printf("\tEFLAGS:");
-			for(i = 0; i <= 56; i++)
+			for(i = 0; i <= 63; i++)
 				if (x86->eflags & ((uint64_t)1 << i)) {
 					printf(" %s", get_eflag_name((uint64_t)1 << i));
 				}
 			printf("\n");
-		} else {
-			printf("\tFPU_FLAGS:");
-			for(i = 0; i <= 15; i++)
-				if (x86->eflags & ((uint64_t)1 << i)) {
-					printf(" %s", get_fpu_flag_name((uint64_t)1 << i));
-				}
-			printf("\n");
 		}
 	}
-	
-	/*if (x86->eflags) {
-		printf("\tEFLAGS:");
-		for(i = 0; i <= 45; i++)
-			if (x86->eflags & ((uint64_t)1 << i)) {
-				printf(" %s", get_eflag_name((uint64_t)1 << i));
-			}
-		printf("\n");
-	}*/
 }

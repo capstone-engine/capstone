@@ -129,6 +129,7 @@ typedef enum x86_reg {
 #define X86_EFLAGS_SET_ZF (1ULL << 54)
 #define X86_EFLAGS_SET_AF (1ULL << 55)
 #define X86_EFLAGS_SET_PF (1ULL << 56)
+
 #define X86_FPU_FLAGS_MODIFY_C0 (1ULL<<0)
 #define X86_FPU_FLAGS_MODIFY_C1 (1ULL<<1)
 #define X86_FPU_FLAGS_MODIFY_C2 (1ULL<<2)
