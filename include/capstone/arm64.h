@@ -1152,10 +1152,6 @@ typedef enum arm64_insn_group {
 	ARM64_GRP_FPARMV8,
 	ARM64_GRP_NEON,
 	ARM64_GRP_CRC,
-	
-	ARM64_GRP_BASE,//Base Instructions
-	ARM64_GRP_FPSIMD,//SIMP&FP Instructions
-	
 
 	ARM64_GRP_ENDING,  // <-- mark the end of the list of groups
 } arm64_insn_group;
