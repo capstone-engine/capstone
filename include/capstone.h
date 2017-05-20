@@ -27,17 +27,21 @@ extern "C" {
 #pragma warning(disable:4201)
 #pragma warning(disable:4100)
 #define CAPSTONE_API __cdecl
+#ifndef CAPSTONE_EXPORT
 #ifdef CAPSTONE_SHARED
 #define CAPSTONE_EXPORT __declspec(dllexport)
 #else    // defined(CAPSTONE_STATIC)
 #define CAPSTONE_EXPORT
 #endif
+#endif
 #else
 #define CAPSTONE_API
+#ifndef CAPSTONE_EXPORT
 #if defined(__GNUC__) && defined(CAPSTONE_SHARED)
 #define CAPSTONE_EXPORT __attribute__((visibility("default")))
 #else    // defined(CAPSTONE_STATIC)
 #define CAPSTONE_EXPORT
+#endif
 #endif
 #endif
 
