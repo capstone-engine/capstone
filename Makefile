@@ -307,10 +307,17 @@ VERSION_EXT =
 
 IS_APPLE := $(shell $(CC) -dM -E - < /dev/null 2> /dev/null | grep __apple_build_version__ | wc -l | tr -d " ")
 ifeq ($(IS_APPLE),1)
+# must be installed to /usr/local/lib, if installed to /usr/lib it will not work with latest Xcode versions
+# this is because xcode looks up stuff in the SDK root dir passed to -syslibroot
+LIBDIR = /usr/local/lib
+INCDIR = /usr/local/include
 EXT = dylib
 VERSION_EXT = $(API_MAJOR).$(EXT)
-$(LIBNAME)_LDFLAGS += -dynamiclib -install_name lib$(LIBNAME).$(VERSION_EXT) -current_version $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA) -compatibility_version $(PKG_MAJOR).$(PKG_MINOR)
+# the install_name must be fixed to the install path
+$(LIBNAME)_LDFLAGS += -dynamiclib -install_name $(LIBDIR)/lib$(LIBNAME).2.dylib -current_version $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA) -compatibility_version $(PKG_MAJOR).$(PKG_MINOR)
 AR_EXT = a
+# compile fat arch for x86
+CFLAGS += -arch i386 -arch x86_64
 # Homebrew wants to make sure its formula does not disable FORTIFY_SOURCE
 # However, this is not really necessary because 'CAPSTONE_USE_SYS_DYN_MEM=yes' by default
 ifneq ($(HOMEBREW_CAPSTONE),1)
@@ -388,9 +395,17 @@ ifeq ($(CAPSTONE_SHARED),yes)
 $(LIBRARY): $(LIBOBJ)
 ifeq ($(V),0)
 	$(call log,LINK,$(@:$(BLDIR)/%=%))
+ifeq ($(IS_APPLE),1)
+	@$(create-library-mac)
+else
 	@$(create-library)
+endif
+else
+ifeq ($(IS_APPLE),1)
+	$(create-library-mac)
 else
 	$(create-library)
+endif
 endif
 endif
 
@@ -523,6 +538,12 @@ endef
 
 define create-library
 	$(CC) $(LDFLAGS) $($(LIBNAME)_LDFLAGS) $(LIBOBJ) -o $(LIBRARY)
+endef
+
+define create-library-mac
+        $(CC) -arch i386 $(LDFLAGS) $($(LIBNAME)_LDFLAGS) $(LIBOBJ) -o $(LIBRARY).i386
+        $(CC) -arch x86_64 $(LDFLAGS) $($(LIBNAME)_LDFLAGS) $(LIBOBJ) -o $(LIBRARY).x86_64
+        lipo -create $(LIBRARY).i386 $(LIBRARY).x86_64 -output $(LIBRARY)	
 endef
 
 
