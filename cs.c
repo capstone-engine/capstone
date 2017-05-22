@@ -414,8 +414,12 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, size_t value)
 		default:
 			break;
 		case CS_OPT_DETAIL:
+#ifndef CAPSTONE_NO_DETAIL
 			handle->detail = (cs_opt_value)value;
 			return CS_ERR_OK;
+#else
+			return CS_ERR_OPTION;
+#endif
 		case CS_OPT_SKIPDATA:
 			handle->skipdata = (value == CS_OPT_ON);
 			if (handle->skipdata) {
@@ -555,7 +559,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 
 			handle->insn_id(handle, insn_cache, mci.Opcode);
 
-  			handle->printer(&mci, &ss, handle->printer_info);
+			handle->printer(&mci, &ss, handle->printer_info);
 
 			fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, buffer);
 

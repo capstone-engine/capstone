@@ -45,7 +45,7 @@
 
 #include "X86BaseInfo.h"
 
-#ifndef CAPSTONE_DIET
+#ifndef CAPSTONE_NO_DETAIL
 
 static void printMemReference(MCInst *MI, unsigned Op, SStream *O);
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
@@ -488,7 +488,9 @@ static void printMemOffs64(MCInst *MI, unsigned OpNo, SStream *O)
 	printMemOffset(MI, OpNo, O);
 }
 
+#ifndef CAPSTONE_DIET
 static char *printAliasInstr(MCInst *MI, SStream *OS, void *info);
+#endif
 static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 
 #endif
@@ -496,7 +498,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	x86_reg reg, reg2;
-
+#ifndef CAPSTONE_NO_DETAIL
 #ifndef CAPSTONE_DIET
 	char *mnem;
 	
@@ -505,6 +507,7 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 	if (mnem)
 		cs_mem_free(mnem);
 	else
+#endif
 		printInstruction(MI, O, Info);
 #endif
 
@@ -538,7 +541,7 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 		MI->op1_size = MI->csh->regsize_map[reg];
 }
 
-#ifndef CAPSTONE_DIET
+#ifndef CAPSTONE_NO_DETAIL
 
 /// printPCRelImm - This is used to print an immediate value that ends up
 /// being encoded as a pc-relative value.
