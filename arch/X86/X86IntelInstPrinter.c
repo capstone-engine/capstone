@@ -45,8 +45,6 @@
 
 #include "X86BaseInfo.h"
 
-#ifndef CAPSTONE_NO_DETAIL
-
 static void printMemReference(MCInst *MI, unsigned Op, SStream *O);
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 
@@ -493,12 +491,9 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info);
 #endif
 static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 
-#endif
-
 void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	x86_reg reg, reg2;
-#ifndef CAPSTONE_NO_DETAIL
 #ifndef CAPSTONE_DIET
 	char *mnem;
 	
@@ -509,7 +504,6 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 	else
 #endif
 		printInstruction(MI, O, Info);
-#endif
 
 	reg = X86_insn_reg_intel(MCInst_getOpcode(MI));
 	if (MI->csh->detail) {
@@ -540,8 +534,6 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 	if (MI->op1_size == 0 && reg)
 		MI->op1_size = MI->csh->regsize_map[reg];
 }
-
-#ifndef CAPSTONE_NO_DETAIL
 
 /// printPCRelImm - This is used to print an immediate value that ends up
 /// being encoded as a pc-relative value.
@@ -860,8 +852,6 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	if (MI->op1_size == 0)
 		MI->op1_size = MI->x86opsize;
 }
-
-#endif
 
 #define GET_REGINFO_ENUM
 #include "X86GenRegisterInfo.inc"

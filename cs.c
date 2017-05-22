@@ -414,12 +414,8 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, size_t value)
 		default:
 			break;
 		case CS_OPT_DETAIL:
-#ifndef CAPSTONE_NO_DETAIL
 			handle->detail = (cs_opt_value)value;
 			return CS_ERR_OK;
-#else
-			return CS_ERR_OPTION;
-#endif
 		case CS_OPT_SKIPDATA:
 			handle->skipdata = (value == CS_OPT_ON);
 			if (handle->skipdata) {
