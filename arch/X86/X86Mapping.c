@@ -2416,6 +2416,7 @@ static name_map group_name_maps[] = {
 	{ X86_GRP_VLX,	"vlx" },
 	{ X86_GRP_SMAP,	"smap" },
 	{ X86_GRP_NOVLX, "novlx" },
+	{ X86_GRP_FPU, "fpu" },
 };
 #endif
 
@@ -3467,16 +3468,13 @@ void op_addAvxBroadcast(MCInst *MI, x86_avx_bcast v)
 #ifndef CAPSTONE_DIET
 // map instruction to its characteristics
 typedef struct insn_op {
-	union{
-		uint64_t eflags;	// how this instruction update EFLAGS
-		uint64_t fpuflags;
-	};
+	uint64_t flags;	// how this instruction update EFLAGS(arithmetic instrcutions) of FPU FLAGS(for FPU instructions)
 	uint8_t access[6];
 } insn_op;
 
 static insn_op insn_ops[] = {
 	{	/* NULL item  */
-		{ 0 },
+		0,
 		{ 0 }
 	},
 
@@ -3492,7 +3490,7 @@ uint8_t *X86_get_op_access(cs_struct *h, unsigned int id, uint64_t *eflags)
 {
 	int i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
 	if (i != 0) {
-		*eflags = insn_ops[i].eflags;
+		*eflags = insn_ops[i].flags;
 		return insn_ops[i].access;
 	}
 
