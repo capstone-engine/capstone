@@ -9,6 +9,10 @@
 #include "MCInst.h"
 #include "SStream.h"
 
+#ifdef CAPSTONE_STATIC_X86_ONLY
+#include "MCRegisterInfo.h"
+#endif  // CAPSTONE_STATIC_X86_ONLY
+
 typedef void (*Printer_t)(MCInst *MI, SStream *OS, void *info);
 
 // function to be called after Printer_t
@@ -35,6 +39,9 @@ struct cs_struct {
 	cs_mode mode;
 	Printer_t printer;	// asm printer
 	void *printer_info; // aux info for printer
+#ifdef CAPSTONE_STATIC_X86_ONLY
+	MCRegisterInfo printer_info_alloc;
+#endif  // CAPSTONE_STATIC_X86_ONLY
 	Disasm_t disasm;	// disassembler
 	void *getinsn_info; // auxiliary info for printer
 	bool big_endian;

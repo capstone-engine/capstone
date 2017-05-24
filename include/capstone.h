@@ -63,9 +63,6 @@ extern "C" {
 // result of cs_version() API.
 #define CS_MAKE_VERSION(major, minor) ((major << 8) + minor)
 
-// Handle using with all API
-typedef size_t csh;
-
 // Architecture type
 typedef enum cs_arch {
 	CS_ARCH_ARM = 0,	// ARM architecture (including Thumb, Thumb-2)
@@ -309,6 +306,15 @@ typedef enum cs_err {
 	CS_ERR_X86_ATT,  // X86 AT&T syntax is unsupported (opt-out at compile time)
 	CS_ERR_X86_INTEL, // X86 Intel syntax is unsupported (opt-out at compile time)
 } cs_err;
+
+// Handle using with all API
+#ifndef CAPSTONE_STATIC_X86_ONLY
+typedef size_t csh;
+#else   // CAPSTONE_STATIC_X86_ONLY
+typedef struct cs_struct* csh;
+typedef struct cs_struct csh_alloc;
+#include "../cs_priv.h"
+#endif  // CAPSTONE_STATIC_X86_ONLY
 
 /*
  Return combined API version & major and minor version numbers.

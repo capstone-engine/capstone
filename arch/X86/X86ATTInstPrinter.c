@@ -762,7 +762,9 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 #include "X86GenRegisterInfo.inc"
 
 // Include the auto-generated portion of the assembly writer.
+#ifndef CAPSTONE_STATIC_X86_ONLY
 #define PRINT_ALIAS_INSTR
+#endif  // CAPSTONE_STATIC_X86_ONLY
 #ifdef CAPSTONE_X86_REDUCE
 #include "X86GenAsmWriter_reduce.inc"
 #else
@@ -794,10 +796,12 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 	}
 
 	// Try to print any aliases first.
+#ifndef CAPSTONE_STATIC_X86_ONLY
 	mnem = printAliasInstr(MI, OS, info);
 	if (mnem)
 		cs_mem_free(mnem);
 	else
+#endif  // CAPSTONE_STATIC_X86_ONLY
 		printInstruction(MI, OS, info);
 
 	// HACK TODO: fix this in machine description

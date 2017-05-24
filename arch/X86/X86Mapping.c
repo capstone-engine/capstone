@@ -47035,6 +47035,26 @@ static insn_map insns[] = {	// reduce x86 instructions
 };
 #endif
 
+#ifndef CAPSTONE_STATIC_X86_ONLY
+static inline unsigned short **get_insn_cache(cs_struct *h) { return &h->insn_cache; }
+#else   // CAPSTONE_STATIC_X86_ONLY
+static unsigned short insn_cache[/* id of last insn mapping */ X86_XTEST + 1];
+static unsigned short *insn_cache_ptr = NULL;
+static inline unsigned short **get_insn_cache(cs_struct *h) {
+	if (insn_cache_ptr == NULL) {
+		if (ARR_SIZE(insn_cache) != insns[ARR_SIZE(insns)-1].id + 1) {
+			// Cache not large enough to fit all the instruction IDs.
+			__builtin_trap();
+		}
+		for (unsigned short i = 1; i < ARR_SIZE(insns); i++) {
+			insn_cache[insns[i].id] = i;
+		}
+		insn_cache_ptr = insn_cache;
+	}
+	return &insn_cache_ptr;
+}
+#endif  // CAPSTONE_STATIC_X86_ONLY
+
 #ifndef CAPSTONE_DIET
 // replace r1 = r2
 static void arr_replace(uint8_t *arr, uint8_t max, x86_reg r1, x86_reg r2)
@@ -47053,7 +47073,7 @@ static void arr_replace(uint8_t *arr, uint8_t max, x86_reg r1, x86_reg r2)
 // given internal insn id, return public instruction info
 void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
-	int i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
+	int i = insn_find(insns, ARR_SIZE(insns), id, get_insn_cache(h));
 	if (i != 0) {
 		insn->id = insns[i].mapid;
 
@@ -47553,7 +47573,7 @@ x86_reg X86_insn_reg_att(unsigned int id)
 static bool valid_repne(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	int i = insn_find(insns, ARR_SIZE(insns), opcode, &h->insn_cache);
+	int i = insn_find(insns, ARR_SIZE(insns), opcode, get_insn_cache(h));
 	if (i != 0) {
 		id = insns[i].mapid;
 		switch(id) {
@@ -47658,7 +47678,7 @@ static bool valid_bnd(cs_struct *h, unsigned int opcode)
 static bool valid_rep(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	int i = insn_find(insns, ARR_SIZE(insns), opcode, &h->insn_cache);
+	int i = insn_find(insns, ARR_SIZE(insns), opcode, get_insn_cache(h));
 	if (i != 0) {
 		id = insns[i].mapid;
 		switch(id) {
@@ -47713,7 +47733,7 @@ static bool valid_rep(cs_struct *h, unsigned int opcode)
 static bool valid_repe(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	int i = insn_find(insns, ARR_SIZE(insns), opcode, &h->insn_cache);
+	int i = insn_find(insns, ARR_SIZE(insns), opcode, get_insn_cache(h));
 	if (i != 0) {
 		id = insns[i].mapid;
 		switch(id) {

@@ -10,6 +10,8 @@
 
 #include "utils.h"
 
+#ifndef CAPSTONE_STATIC_X86_ONLY
+
 // create a cache for fast id lookup
 static unsigned short *make_id2insn(insn_map *insns, unsigned int size)
 {
@@ -25,6 +27,8 @@ static unsigned short *make_id2insn(insn_map *insns, unsigned int size)
 	return cache;
 }
 
+#endif  // CAPSTONE_STATIC_X86_ONLY
+
 // look for @id in @insns, given its size in @max. first time call will update @cache.
 // return 0 if not found
 unsigned short insn_find(insn_map *insns, unsigned int max, unsigned int id, unsigned short **cache)
@@ -32,8 +36,10 @@ unsigned short insn_find(insn_map *insns, unsigned int max, unsigned int id, uns
 	if (id > insns[max - 1].id)
 		return 0;
 
+#ifndef CAPSTONE_STATIC_X86_ONLY
 	if (*cache == NULL)
 		*cache = make_id2insn(insns, max);
+#endif  // CAPSTONE_STATIC_X86_ONLY
 
 	return (*cache)[id];
 }
@@ -63,6 +69,7 @@ unsigned int count_positive(unsigned char *list)
 	return c;
 }
 
+#ifndef CAPSTONE_STATIC_X86_ONLY
 char *cs_strdup(const char *str)
 {
 	size_t len = strlen(str)+ 1;
@@ -73,6 +80,7 @@ char *cs_strdup(const char *str)
 
 	return (char *)memmove(new, str, len);
 }
+#endif  // CAPSTONE_STATIC_X86_ONLY
 
 // we need this since Windows doesnt have snprintf()
 int cs_snprintf(char *buffer, size_t size, const char *fmt, ...)

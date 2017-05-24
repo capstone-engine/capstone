@@ -22,11 +22,12 @@
 #if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
 #include <stdint.h>
 #endif
-#include "include/capstone.h"
 
 typedef struct MCInst MCInst;
 typedef struct cs_struct cs_struct;
 typedef struct MCOperand MCOperand;
+
+#include "include/capstone.h"
 
 /// MCOperand - Instances of this class represent operands of the MCInst class.
 /// This is a simple discriminated union.
