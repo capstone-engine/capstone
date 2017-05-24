@@ -47611,6 +47611,7 @@ static bool valid_repne(cs_struct *h, unsigned int opcode)
 
 // given MCInst's id, find out if this insn is valid for BND prefix
 // BND prefix is valid for CALL/JMP/RET
+#ifndef CAPSTONE_DIET
 static bool valid_bnd(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
@@ -47653,6 +47654,7 @@ static bool valid_bnd(cs_struct *h, unsigned int opcode)
 	// not found
 	return false;
 }
+#endif
 
 // given MCInst's id, find out if this insn is valid for REP prefix
 static bool valid_rep(cs_struct *h, unsigned int opcode)

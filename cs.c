@@ -45,7 +45,11 @@
 #endif
 
 // default SKIPDATA mnemonic
+#ifndef CAPSTONE_DIET
 #define SKIPDATA_MNEM ".byte"
+#else // No printing is available in diet mode
+#define SKIPDATA_MNEM NULL
+#endif
 
 cs_err (*arch_init[MAX_ARCH])(cs_struct *) = { NULL };
 cs_err (*arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = { NULL };
@@ -431,6 +435,7 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, size_t value)
 }
 
 // generate @op_str for data instruction of SKIPDATA
+#ifndef CAPSTONE_DIET
 static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
 {
 	char *p = opstr;
@@ -459,6 +464,7 @@ static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
 		available -= len;
 	}
 }
+#endif
 
 // dynamicly allocate memory to contain disasm insn
 // NOTE: caller must free() the allocated memory itself to avoid memory leaking
@@ -546,6 +552,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 			mci.flat_insn->size = insn_size;
 
 			// map internal instruction opcode to public insn ID
+
 			handle->insn_id(handle, insn_cache, mci.Opcode);
 
 			handle->printer(&mci, &ss, handle->printer_info);
@@ -584,9 +591,14 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 			insn_cache->address = offset;
 			insn_cache->size = (uint16_t)skipdata_bytes;
 			memcpy(insn_cache->bytes, buffer, skipdata_bytes);
+#ifdef CAPSTONE_DIET
+ 			insn_cache->mnemonic[0] = '\0';
+			insn_cache->op_str[0] = '\0';
+#else
 			strncpy(insn_cache->mnemonic, handle->skipdata_setup.mnemonic,
-					sizeof(insn_cache->mnemonic) - 1);
-			skipdata_opstr(insn_cache->op_str, buffer, skipdata_bytes);
+  					sizeof(insn_cache->mnemonic) - 1);
+  			skipdata_opstr(insn_cache->op_str, buffer, skipdata_bytes);
+#endif
 			insn_cache->detail = NULL;
 
 			next_offset = skipdata_bytes;
@@ -785,9 +797,14 @@ bool CAPSTONE_API cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 		insn->address = *address;
 		insn->size = (uint16_t)skipdata_bytes;
 		memcpy(insn->bytes, *code, skipdata_bytes);
+#ifdef CAPSTONE_DIET
+		insn->mnemonic[0] = '\0';
+		insn->op_str[0] = '\0';
+#else
 		strncpy(insn->mnemonic, handle->skipdata_setup.mnemonic,
 				sizeof(insn->mnemonic) - 1);
 		skipdata_opstr(insn->op_str, *code, skipdata_bytes);
+#endif
 
 		*code += skipdata_bytes;
 		*size -= skipdata_bytes;
