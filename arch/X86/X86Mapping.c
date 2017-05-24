@@ -6,6 +6,8 @@
 #include <string.h>
 #ifndef CAPSTONE_HAS_OSXKERNEL
 #include <stdlib.h>
+#else
+#include "qsort.h"
 #endif
 
 #include "X86Mapping.h"
