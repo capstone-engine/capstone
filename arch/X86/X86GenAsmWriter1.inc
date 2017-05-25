@@ -20484,6 +20484,8 @@ static char *getRegisterName(unsigned RegNo)
 #ifdef PRINT_ALIAS_INSTR
 #undef PRINT_ALIAS_INSTR
 
+#ifndef CAPSTONE_DIET
+
 static void printCustomAliasOperand(MCInst *MI, unsigned OpIdx,
   unsigned PrintMethodIdx, SStream *OS)
 {
@@ -20572,5 +20574,7 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
   }
   return tmp;
 }
+
+#endif
 
 #endif // PRINT_ALIAS_INSTR
