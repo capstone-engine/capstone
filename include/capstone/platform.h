@@ -62,6 +62,11 @@ typedef unsigned long long uint64_t;
 #define UINT64_MAX       0xffffffffffffffffui64
 #endif  // defined(_MSC_VER) && (_MSC_VER <= 1700 || defined(_KERNEL_MODE))
 
+#ifdef CAPSTONE_HAS_OSXKERNEL
+// this system has stdint.h
+#include <stdint.h>
+#endif
+
 #define __PRI_8_LENGTH_MODIFIER__ "hh"
 #define __PRI_64_LENGTH_MODIFIER__ "ll"
 
