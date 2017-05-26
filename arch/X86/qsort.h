@@ -62,6 +62,10 @@
  *	@(#)qsort.c	8.1 (Berkeley) 6/4/93
  */
 
+/*
+ * Grabbed from XNU source code with minor modifications:
+ * https://opensource.apple.com/source/xnu/xnu-3248.60.10/bsd/kern/qsort.c
+ */
 #ifndef CS_QSORT_H
 #define CS_QSORT_H
 
