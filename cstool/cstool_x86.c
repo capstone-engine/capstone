@@ -325,7 +325,7 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 			if (ins->detail->groups[i] == X86_GRP_FPU) {
 				printf("\tFPU_FLAGS:");
 				for(i = 0; i <= 63; i++)
-					if (x86->eflags & ((uint64_t)1 << i)) {
+					if (x86->fpu_flags & ((uint64_t)1 << i)) {
 						printf(" %s", get_fpu_flag_name((uint64_t)1 << i));
 					}
 				printf("\n");
