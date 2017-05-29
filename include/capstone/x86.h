@@ -118,6 +118,41 @@ typedef enum x86_reg {
 #define X86_EFLAGS_UNDEFINED_PF (1ULL << 43)
 #define X86_EFLAGS_UNDEFINED_AF (1ULL << 44)
 #define X86_EFLAGS_UNDEFINED_CF (1ULL << 45)
+#define X86_EFLAGS_RESET_RF (1ULL << 46)
+#define X86_EFLAGS_TEST_RF (1ULL << 47)
+#define X86_EFLAGS_TEST_IF (1ULL << 48)
+#define X86_EFLAGS_TEST_TF (1ULL << 49)
+#define X86_EFLAGS_TEST_AF (1ULL << 50)
+#define X86_EFLAGS_RESET_ZF (1ULL << 51)
+#define X86_EFLAGS_SET_OF (1ULL << 52)
+#define X86_EFLAGS_SET_SF (1ULL << 53)
+#define X86_EFLAGS_SET_ZF (1ULL << 54)
+#define X86_EFLAGS_SET_AF (1ULL << 55)
+#define X86_EFLAGS_SET_PF (1ULL << 56)
+#define X86_EFLAGS_RESET_0F (1ULL << 57)
+#define X86_EFLAGS_RESET_AC (1ULL << 58)
+
+#define X86_FPU_FLAGS_MODIFY_C0 (1ULL<<0)
+#define X86_FPU_FLAGS_MODIFY_C1 (1ULL<<1)
+#define X86_FPU_FLAGS_MODIFY_C2 (1ULL<<2)
+#define X86_FPU_FLAGS_MODIFY_C3 (1ULL<<3)
+#define X86_FPU_FLAGS_RESET_C0 (1ULL<<4)
+#define X86_FPU_FLAGS_RESET_C1 (1ULL<<5)
+#define X86_FPU_FLAGS_RESET_C2 (1ULL<<6)
+#define X86_FPU_FLAGS_RESET_C3 (1ULL<<7)
+#define X86_FPU_FLAGS_SET_C0 (1ULL<<8)
+#define X86_FPU_FLAGS_SET_C1 (1ULL<<9)
+#define X86_FPU_FLAGS_SET_C2 (1ULL<<10)
+#define X86_FPU_FLAGS_SET_C3 (1ULL<<11)
+#define X86_FPU_FLAGS_UNDEFINED_C0 (1ULL<<12)
+#define X86_FPU_FLAGS_UNDEFINED_C1 (1ULL<<13)
+#define X86_FPU_FLAGS_UNDEFINED_C2 (1ULL<<14)
+#define X86_FPU_FLAGS_UNDEFINED_C3 (1ULL<<15)
+#define X86_FPU_FLAGS_TEST_C0 (1ULL<<16)
+#define X86_FPU_FLAGS_TEST_C1 (1ULL<<17)
+#define X86_FPU_FLAGS_TEST_C2 (1ULL<<18)
+#define X86_FPU_FLAGS_TEST_C3 (1ULL<<19)
+
 
 //> Operand type for instruction's operands
 typedef enum x86_op_type {
@@ -314,9 +349,15 @@ typedef struct cs_x86 {
 	// AVX static rounding mode
 	x86_avx_rm avx_rm;
 
-	// EFLAGS updated by this instruction.
-	// This can be formed from OR combination of X86_EFLAGS_* symbols in x86.h
-	uint64_t eflags;
+	
+	union {
+		// EFLAGS updated by this instruction.
+		// This can be formed from OR combination of X86_EFLAGS_* symbols in x86.h
+		uint64_t eflags;
+		// FPU_FLAGS updated by this instruction.
+		// This can be formed from OR combination of X86_FPU_FLAGS_* symbols in x86.h
+		uint64_t fpu_flags;
+	};
 
 	// Number of operands of this instruction,
 	// or 0 when instruction has no operand.
@@ -1901,6 +1942,7 @@ typedef enum  x86_insn_group {
 	X86_GRP_VLX,
 	X86_GRP_SMAP,
 	X86_GRP_NOVLX,
+	X86_GRP_FPU,
 
 	X86_GRP_ENDING
 } x86_insn_group;
