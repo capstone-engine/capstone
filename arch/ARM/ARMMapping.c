@@ -14117,7 +14117,7 @@ bool ARM_rel_branch(cs_struct *h, unsigned int id)
 {
 	int i;
 
-	for (i = 0; insn_rel[i]; i++) {
+	for (i = 0; insn_rel[i]; ++i) {
 		if (id == insn_rel[i]) {
 			return true;
 		}
