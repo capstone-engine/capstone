@@ -309,26 +309,26 @@ public class X86_const {
 	public static final int X86_EFLAGS_SET_PF = 1<<56;
 	public static final int X86_EFLAGS_RESET_0F = 1<<57;
 	public static final int X86_EFLAGS_RESET_AC = 1<<58;
-	public static final int X86_FPU_FLAGS_MODIFY_C0 = (1ULL<<0);
-	public static final int X86_FPU_FLAGS_MODIFY_C1 = (1ULL<<1);
-	public static final int X86_FPU_FLAGS_MODIFY_C2 = (1ULL<<2);
-	public static final int X86_FPU_FLAGS_MODIFY_C3 = (1ULL<<3);
-	public static final int X86_FPU_FLAGS_RESET_C0 = (1ULL<<4);
-	public static final int X86_FPU_FLAGS_RESET_C1 = (1ULL<<5);
-	public static final int X86_FPU_FLAGS_RESET_C2 = (1ULL<<6);
-	public static final int X86_FPU_FLAGS_RESET_C3 = (1ULL<<7);
-	public static final int X86_FPU_FLAGS_SET_C0 = (1ULL<<8);
-	public static final int X86_FPU_FLAGS_SET_C1 = (1ULL<<9);
-	public static final int X86_FPU_FLAGS_SET_C2 = (1ULL<<10);
-	public static final int X86_FPU_FLAGS_SET_C3 = (1ULL<<11);
-	public static final int X86_FPU_FLAGS_UNDEFINED_C0 = (1ULL<<12);
-	public static final int X86_FPU_FLAGS_UNDEFINED_C1 = (1ULL<<13);
-	public static final int X86_FPU_FLAGS_UNDEFINED_C2 = (1ULL<<14);
-	public static final int X86_FPU_FLAGS_UNDEFINED_C3 = (1ULL<<15);
-	public static final int X86_FPU_FLAGS_TEST_C0 = (1ULL<<16);
-	public static final int X86_FPU_FLAGS_TEST_C1 = (1ULL<<17);
-	public static final int X86_FPU_FLAGS_TEST_C2 = (1ULL<<18);
-	public static final int X86_FPU_FLAGS_TEST_C3 = (1ULL<<19);
+	public static final int X86_FPU_FLAGS_MODIFY_C0 = 1<<0;
+	public static final int X86_FPU_FLAGS_MODIFY_C1 = 1<<1;
+	public static final int X86_FPU_FLAGS_MODIFY_C2 = 1<<2;
+	public static final int X86_FPU_FLAGS_MODIFY_C3 = 1<<3;
+	public static final int X86_FPU_FLAGS_RESET_C0 = 1<<4;
+	public static final int X86_FPU_FLAGS_RESET_C1 = 1<<5;
+	public static final int X86_FPU_FLAGS_RESET_C2 = 1<<6;
+	public static final int X86_FPU_FLAGS_RESET_C3 = 1<<7;
+	public static final int X86_FPU_FLAGS_SET_C0 = 1<<8;
+	public static final int X86_FPU_FLAGS_SET_C1 = 1<<9;
+	public static final int X86_FPU_FLAGS_SET_C2 = 1<<10;
+	public static final int X86_FPU_FLAGS_SET_C3 = 1<<11;
+	public static final int X86_FPU_FLAGS_UNDEFINED_C0 = 1<<12;
+	public static final int X86_FPU_FLAGS_UNDEFINED_C1 = 1<<13;
+	public static final int X86_FPU_FLAGS_UNDEFINED_C2 = 1<<14;
+	public static final int X86_FPU_FLAGS_UNDEFINED_C3 = 1<<15;
+	public static final int X86_FPU_FLAGS_TEST_C0 = 1<<16;
+	public static final int X86_FPU_FLAGS_TEST_C1 = 1<<17;
+	public static final int X86_FPU_FLAGS_TEST_C2 = 1<<18;
+	public static final int X86_FPU_FLAGS_TEST_C3 = 1<<19;
 
 	// Operand type for instruction's operands
 
