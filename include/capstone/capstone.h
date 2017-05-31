@@ -109,6 +109,7 @@ typedef enum cs_mode {
 	CS_MODE_MICRO = 1 << 4, // MicroMips mode (MIPS)
 	CS_MODE_MIPS3 = 1 << 5, // Mips III ISA
 	CS_MODE_MIPS32R6 = 1 << 6, // Mips32r6 ISA
+	CS_MODE_MIPS2 = 1 << 7, // Mips II ISA
 	CS_MODE_V9 = 1 << 4, // SparcV9 mode (Sparc)
 	CS_MODE_QPX = 1 << 4, // Quad Processing eXtensions mode (PPC)
 	CS_MODE_M68K_000 = 1 << 1, // M68K 68000 mode

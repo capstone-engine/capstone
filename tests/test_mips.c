@@ -82,35 +82,50 @@ static void test()
 #define MIPS_CODE2 "\x56\x34\x21\x34\xc2\x17\x01\x00"
 #define MIPS_32R6M "\x00\x07\x00\x07\x00\x11\x93\x7c\x01\x8c\x8b\x7c\x00\xc7\x48\xd0"
 #define MIPS_32R6 "\xec\x80\x00\x19\x7c\x43\x22\xa0"
+#define MIPS_64SD "\x70\x00\xb2\xff"
 
 	struct platform platforms[] = {
 		{
 			CS_ARCH_MIPS,
-			(cs_mode)(CS_MODE_MIPS32 + CS_MODE_BIG_ENDIAN),
+			(cs_mode)(CS_MODE_MIPS32 | CS_MODE_BIG_ENDIAN),
 			(unsigned char *)MIPS_CODE,
 			sizeof(MIPS_CODE) - 1,
 			"MIPS-32 (Big-endian)"
 		},
 		{
 			CS_ARCH_MIPS,
-			(cs_mode)(CS_MODE_MIPS64 + CS_MODE_LITTLE_ENDIAN),
+			(cs_mode)(CS_MODE_MIPS64 | CS_MODE_LITTLE_ENDIAN),
 			(unsigned char *)MIPS_CODE2,
 			sizeof(MIPS_CODE2) - 1,
 			"MIPS-64-EL (Little-endian)"
 		},
 		{
 			CS_ARCH_MIPS,
-			(cs_mode)(CS_MODE_MIPS32R6 + CS_MODE_MICRO + CS_MODE_BIG_ENDIAN),
+			(cs_mode)(CS_MODE_MIPS32R6 | CS_MODE_MICRO + CS_MODE_BIG_ENDIAN),
 			(unsigned char*)MIPS_32R6M,
 			sizeof(MIPS_32R6M) - 1,
 			"MIPS-32R6 | Micro (Big-endian)"
 		},
 		{
 			CS_ARCH_MIPS,
-			(cs_mode)(CS_MODE_MIPS32R6 + CS_MODE_BIG_ENDIAN),
+			(cs_mode)(CS_MODE_MIPS32R6 | CS_MODE_BIG_ENDIAN),
 			(unsigned char*)MIPS_32R6,
 			sizeof(MIPS_32R6) - 1,
 			"MIPS-32R6 (Big-endian)"
+		},
+		{
+			CS_ARCH_MIPS,
+			(cs_mode)(CS_MODE_MIPS64 | CS_MODE_MIPS2 | CS_MODE_LITTLE_ENDIAN),
+			(unsigned char *)MIPS_64SD,
+			sizeof(MIPS_64SD) - 1,
+			"MIPS-64-EL + Mips II (Little-endian)"
+		},
+		{
+			CS_ARCH_MIPS,
+			(cs_mode)(CS_MODE_MIPS64 | CS_MODE_LITTLE_ENDIAN),
+			(unsigned char *)MIPS_64SD,
+			sizeof(MIPS_64SD) - 1,
+			"MIPS-64-EL (Little-endian)"
 		},
 	};
 
