@@ -421,11 +421,8 @@ static void printImm(int syntax, SStream *O, int64_t imm, bool positive)
 			if (imm < 0) {
 				if (imm == 0x8000000000000000LL)  // imm == -imm
 					SStream_concat0(O, "0x8000000000000000");
-				else if (imm < -HEX_THRESHOLD)
-					SStream_concat(O, "-0x%"PRIx64, -imm);
-				else
-					SStream_concat(O, "-%"PRIu64, -imm);
-
+                                else
+					SStream_concat(O, "0x%"PRIx64, imm);
 			} else {
 				if (imm > HEX_THRESHOLD)
 					SStream_concat(O, "0x%"PRIx64, imm);
