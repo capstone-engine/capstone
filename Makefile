@@ -375,7 +375,7 @@ PKGCFGF = $(BLDIR)/$(LIBNAME).pc
 
 all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF)
 ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
-	@V=$(V) $(MAKE) -C cstool
+	@V=$(V) CC=$(CC) $(MAKE) -C cstool
 ifndef BUILDDIR
 	cd tests && $(MAKE)
 else
