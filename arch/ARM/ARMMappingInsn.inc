@@ -154,19 +154,19 @@
 {
 	ARM_BLX, ARM_INS_BLX,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_CALL, ARM_GRP_V5T, 0 }, 0, 1
+	{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_CALL, ARM_GRP_V5T, ARM_GRP_USAGEFAULT, 0 }, 0, 1
 #endif
 },
 {
 	ARM_BLX_pred, ARM_INS_BLX,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_CALL, ARM_GRP_ARM, ARM_GRP_V5T, 0 }, 0, 1
+	{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_CALL, ARM_GRP_ARM, ARM_GRP_V5T, ARM_GRP_USAGEFAULT, 0 }, 0, 1
 #endif
 },
 {
 	ARM_BLXi, ARM_INS_BLX,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_CALL, ARM_GRP_ARM, ARM_GRP_V5T, 0 }, 1, 0
+	{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_CALL, ARM_GRP_ARM, ARM_GRP_V5T, ARM_GRP_USAGEFAULT, 0 }, 1, 0
 #endif
 },
 {
@@ -178,7 +178,7 @@
 {
 	ARM_BX, ARM_INS_BX,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_V4T, 0 }, 0, 1
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_V4T, ARM_GRP_USAGEFAULT, 0 }, 0, 1
 #endif
 },
 {
@@ -190,13 +190,13 @@
 {
 	ARM_BX_RET, ARM_INS_BX,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_V4T, 0 }, 0, 1
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_V4T, ARM_GRP_USAGEFAULT, 0 }, 0, 1
 #endif
 },
 {
 	ARM_BX_pred, ARM_INS_BX,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_V4T, 0 }, 0, 1
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_V4T, ARM_GRP_USAGEFAULT, 0 }, 0, 1
 #endif
 },
 {
@@ -208,13 +208,13 @@
 {
 	ARM_CDP, ARM_INS_CDP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_PREV8, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_CDP2, ARM_INS_CDP2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_PREV8, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
@@ -382,13 +382,13 @@
 {
 	ARM_FCONSTD, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP3, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP3, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_FCONSTS, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP3, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP3, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -412,7 +412,7 @@
 {
 	ARM_FMSTAT, ARM_INS_VMRS,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_FPSCR_NZCV, 0 }, { ARM_REG_CPSR, 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ ARM_REG_FPSCR_NZCV, 0 }, { ARM_REG_CPSR, 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -502,403 +502,403 @@
 {
 	ARM_LDC2L_OFFSET, ARM_INS_LDC2L,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDC2L_OPTION, ARM_INS_LDC2L,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDC2L_POST, ARM_INS_LDC2L,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDC2L_PRE, ARM_INS_LDC2L,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDC2_OFFSET, ARM_INS_LDC2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDC2_OPTION, ARM_INS_LDC2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDC2_POST, ARM_INS_LDC2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDC2_PRE, ARM_INS_LDC2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDCL_OFFSET, ARM_INS_LDCL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDCL_OPTION, ARM_INS_LDCL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDCL_POST, ARM_INS_LDCL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDCL_PRE, ARM_INS_LDCL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDC_OFFSET, ARM_INS_LDC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDC_OPTION, ARM_INS_LDC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDC_POST, ARM_INS_LDC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDC_PRE, ARM_INS_LDC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDMDA, ARM_INS_LDMDA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDMDA_UPD, ARM_INS_LDMDA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDMDB, ARM_INS_LDMDB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDMDB_UPD, ARM_INS_LDMDB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDMIA, ARM_INS_LDM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDMIA_UPD, ARM_INS_LDM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDMIB, ARM_INS_LDMIB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDMIB_UPD, ARM_INS_LDMIB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRBT_POST_IMM, ARM_INS_LDRBT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRBT_POST_REG, ARM_INS_LDRBT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRB_POST_IMM, ARM_INS_LDRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRB_POST_REG, ARM_INS_LDRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRB_PRE_IMM, ARM_INS_LDRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRB_PRE_REG, ARM_INS_LDRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRBi12, ARM_INS_LDRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRBrs, ARM_INS_LDRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRD, ARM_INS_LDRD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_V5TE, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_V5TE, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRD_POST, ARM_INS_LDRD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRD_PRE, ARM_INS_LDRD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDREX, ARM_INS_LDREX,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDREXB, ARM_INS_LDREXB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDREXD, ARM_INS_LDREXD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDREXH, ARM_INS_LDREXH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRH, ARM_INS_LDRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRHTi, ARM_INS_LDRHT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRHTr, ARM_INS_LDRHT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRH_POST, ARM_INS_LDRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRH_PRE, ARM_INS_LDRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRSB, ARM_INS_LDRSB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRSBTi, ARM_INS_LDRSBT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRSBTr, ARM_INS_LDRSBT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRSB_POST, ARM_INS_LDRSB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRSB_PRE, ARM_INS_LDRSB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRSH, ARM_INS_LDRSH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRSHTi, ARM_INS_LDRSHT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRSHTr, ARM_INS_LDRSHT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRSH_POST, ARM_INS_LDRSH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRSH_PRE, ARM_INS_LDRSH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRT_POST_IMM, ARM_INS_LDRT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRT_POST_REG, ARM_INS_LDRT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDR_POST_IMM, ARM_INS_LDR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDR_POST_REG, ARM_INS_LDR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDR_PRE_IMM, ARM_INS_LDR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDR_PRE_REG, ARM_INS_LDR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRcp, ARM_INS_LDR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRi12, ARM_INS_LDR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_LDRrs, ARM_INS_LDR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_MCR, ARM_INS_MCR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_ARM, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_MCR2, ARM_INS_MCR2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_PREV8, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_MCRR, ARM_INS_MCRR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_ARM, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_MCRR2, ARM_INS_MCRR2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_PREV8, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
@@ -1354,7 +1354,7 @@
 {
 	ARM_SDIV, ARM_INS_SDIV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_USAGEFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
@@ -1768,97 +1768,97 @@
 {
 	ARM_STC2L_OFFSET, ARM_INS_STC2L,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STC2L_OPTION, ARM_INS_STC2L,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STC2L_POST, ARM_INS_STC2L,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STC2L_PRE, ARM_INS_STC2L,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STC2_OFFSET, ARM_INS_STC2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STC2_OPTION, ARM_INS_STC2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STC2_POST, ARM_INS_STC2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STC2_PRE, ARM_INS_STC2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STCL_OFFSET, ARM_INS_STCL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STCL_OPTION, ARM_INS_STCL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STCL_POST, ARM_INS_STCL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STCL_PRE, ARM_INS_STCL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STC_OFFSET, ARM_INS_STC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STC_OPTION, ARM_INS_STC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STC_POST, ARM_INS_STC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STC_PRE, ARM_INS_STC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
@@ -1906,241 +1906,241 @@
 {
 	ARM_STMDA, ARM_INS_STMDA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STMDA_UPD, ARM_INS_STMDA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STMDB, ARM_INS_STMDB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STMDB_UPD, ARM_INS_STMDB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STMIA, ARM_INS_STM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STMIA_UPD, ARM_INS_STM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STMIB, ARM_INS_STMIB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STMIB_UPD, ARM_INS_STMIB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRBT_POST_IMM, ARM_INS_STRBT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRBT_POST_REG, ARM_INS_STRBT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRB_POST_IMM, ARM_INS_STRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRB_POST_REG, ARM_INS_STRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRB_PRE_IMM, ARM_INS_STRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRB_PRE_REG, ARM_INS_STRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRBi12, ARM_INS_STRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRBrs, ARM_INS_STRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRD, ARM_INS_STRD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_V5TE, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_V5TE, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRD_POST, ARM_INS_STRD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRD_PRE, ARM_INS_STRD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STREX, ARM_INS_STREX,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STREXB, ARM_INS_STREXB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STREXD, ARM_INS_STREXD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STREXH, ARM_INS_STREXH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRH, ARM_INS_STRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRHTi, ARM_INS_STRHT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRHTr, ARM_INS_STRHT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRH_POST, ARM_INS_STRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRH_PRE, ARM_INS_STRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRT_POST_IMM, ARM_INS_STRT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRT_POST_REG, ARM_INS_STRT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STR_POST_IMM, ARM_INS_STR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STR_POST_REG, ARM_INS_STR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STR_PRE_IMM, ARM_INS_STR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STR_PRE_REG, ARM_INS_STR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRi12, ARM_INS_STR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_STRrs, ARM_INS_STR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_SUBri, ARM_INS_SUB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_SUBrr, ARM_INS_SUB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_SUBrsi, ARM_INS_SUB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_SUBrsr, ARM_INS_SUB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -2290,7 +2290,7 @@
 {
 	ARM_UDIV, ARM_INS_UDIV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_USAGEFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
@@ -2692,61 +2692,61 @@
 {
 	ARM_VABSD, ARM_INS_VABS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VABSS, ARM_INS_VABS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VABSfd, ARM_INS_VABS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VABSfq, ARM_INS_VABS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VABSv16i8, ARM_INS_VABS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VABSv2i32, ARM_INS_VABS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VABSv4i16, ARM_INS_VABS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VABSv4i32, ARM_INS_VABS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VABSv8i16, ARM_INS_VABS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VABSv8i8, ARM_INS_VABS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -2776,7 +2776,7 @@
 {
 	ARM_VADDD, ARM_INS_VADD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -2836,7 +2836,7 @@
 {
 	ARM_VADDS, ARM_INS_VADD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -2878,61 +2878,61 @@
 {
 	ARM_VADDfd, ARM_INS_VADD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VADDfq, ARM_INS_VADD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VADDv16i8, ARM_INS_VADD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VADDv1i64, ARM_INS_VADD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VADDv2i32, ARM_INS_VADD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VADDv2i64, ARM_INS_VADD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VADDv4i16, ARM_INS_VADD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VADDv4i32, ARM_INS_VADD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VADDv8i16, ARM_INS_VADD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VADDv8i8, ARM_INS_VADD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -3550,49 +3550,49 @@
 {
 	ARM_VCMPD, ARM_INS_VCMP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCMPED, ARM_INS_VCMPE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCMPES, ARM_INS_VCMPE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCMPEZD, ARM_INS_VCMPE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCMPEZS, ARM_INS_VCMPE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCMPS, ARM_INS_VCMP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCMPZD, ARM_INS_VCMP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCMPZS, ARM_INS_VCMP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { ARM_REG_FPSCR_NZCV, 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -3610,373 +3610,373 @@
 {
 	ARM_VCVTANSD, ARM_INS_VCVTA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTANSQ, ARM_INS_VCVTA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTANUD, ARM_INS_VCVTA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTANUQ, ARM_INS_VCVTA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTASD, ARM_INS_VCVTA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTASS, ARM_INS_VCVTA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTAUD, ARM_INS_VCVTA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTAUS, ARM_INS_VCVTA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTBDH, ARM_INS_VCVTB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTBHD, ARM_INS_VCVTB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTBHS, ARM_INS_VCVTB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTBSH, ARM_INS_VCVTB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTDS, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTMNSD, ARM_INS_VCVTM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTMNSQ, ARM_INS_VCVTM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTMNUD, ARM_INS_VCVTM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTMNUQ, ARM_INS_VCVTM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTMSD, ARM_INS_VCVTM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTMSS, ARM_INS_VCVTM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTMUD, ARM_INS_VCVTM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTMUS, ARM_INS_VCVTM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTNNSD, ARM_INS_VCVTN,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTNNSQ, ARM_INS_VCVTN,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTNNUD, ARM_INS_VCVTN,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTNNUQ, ARM_INS_VCVTN,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTNSD, ARM_INS_VCVTN,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTNSS, ARM_INS_VCVTN,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTNUD, ARM_INS_VCVTN,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTNUS, ARM_INS_VCVTN,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTPNSD, ARM_INS_VCVTP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTPNSQ, ARM_INS_VCVTP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTPNUD, ARM_INS_VCVTP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTPNUQ, ARM_INS_VCVTP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTPSD, ARM_INS_VCVTP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTPSS, ARM_INS_VCVTP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTPUD, ARM_INS_VCVTP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTPUS, ARM_INS_VCVTP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTSD, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTTDH, ARM_INS_VCVTT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTTHD, ARM_INS_VCVTT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTTHS, ARM_INS_VCVTT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTTSH, ARM_INS_VCVTT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTf2h, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTf2sd, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTf2sq, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTf2ud, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTf2uq, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTf2xsd, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTf2xsq, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTf2xud, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTf2xuq, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTh2f, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTs2fd, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTs2fq, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTu2fd, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTu2fq, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTxs2fd, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTxs2fq, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTxu2fd, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VCVTxu2fq, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VDIVD, ARM_INS_VDIV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VDIVS, ARM_INS_VDIV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -4108,103 +4108,103 @@
 {
 	ARM_VFMAD, ARM_INS_VFMA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP4, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP4, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VFMAS, ARM_INS_VFMA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP4, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP4, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VFMAfd, ARM_INS_VFMA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_VFP4, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_VFP4, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VFMAfq, ARM_INS_VFMA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_VFP4, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_VFP4, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VFMSD, ARM_INS_VFMS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP4, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP4, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VFMSS, ARM_INS_VFMS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP4, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP4, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VFMSfd, ARM_INS_VFMS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_VFP4, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_VFP4, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VFMSfq, ARM_INS_VFMS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_VFP4, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_VFP4, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VFNMAD, ARM_INS_VFNMA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP4, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP4, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VFNMAS, ARM_INS_VFNMA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP4, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP4, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VFNMSD, ARM_INS_VFNMS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP4, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP4, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VFNMSS, ARM_INS_VFNMS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP4, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP4, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VGETLNi32, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VGETLNs16, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VGETLNs8, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VGETLNu16, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VGETLNu8, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -5524,73 +5524,73 @@
 {
 	ARM_VLDMDDB_UPD, ARM_INS_VLDMDB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VLDMDIA, ARM_INS_VLDMIA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VLDMDIA_UPD, ARM_INS_VLDMIA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VLDMSDB_UPD, ARM_INS_VLDMDB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VLDMSIA, ARM_INS_VLDMIA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VLDMSIA_UPD, ARM_INS_VLDMIA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VLDRD, ARM_INS_VLDR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VLDRS, ARM_INS_VLDR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMAXNMD, ARM_INS_VMAXNM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMAXNMND, ARM_INS_VMAXNM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMAXNMNQ, ARM_INS_VMAXNM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMAXNMS, ARM_INS_VMAXNM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -5680,25 +5680,25 @@
 {
 	ARM_VMINNMD, ARM_INS_VMINNM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMINNMND, ARM_INS_VMINNM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMINNMNQ, ARM_INS_VMINNM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMINNMS, ARM_INS_VMINNM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -5788,7 +5788,7 @@
 {
 	ARM_VMLAD, ARM_INS_VMLA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPVMLX, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPVMLX, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -5854,97 +5854,97 @@
 {
 	ARM_VMLAS, ARM_INS_VMLA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPVMLX, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPVMLX, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLAfd, ARM_INS_VMLA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPVMLX, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPVMLX, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLAfq, ARM_INS_VMLA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPVMLX, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPVMLX, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLAslfd, ARM_INS_VMLA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPVMLX, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPVMLX, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLAslfq, ARM_INS_VMLA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPVMLX, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPVMLX, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLAslv2i32, ARM_INS_VMLA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLAslv4i16, ARM_INS_VMLA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLAslv4i32, ARM_INS_VMLA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLAslv8i16, ARM_INS_VMLA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLAv16i8, ARM_INS_VMLA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLAv2i32, ARM_INS_VMLA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLAv4i16, ARM_INS_VMLA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLAv4i32, ARM_INS_VMLA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLAv8i16, ARM_INS_VMLA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLAv8i8, ARM_INS_VMLA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLSD, ARM_INS_VMLS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPVMLX, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPVMLX, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -6010,103 +6010,103 @@
 {
 	ARM_VMLSS, ARM_INS_VMLS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPVMLX, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPVMLX, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLSfd, ARM_INS_VMLS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPVMLX, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPVMLX, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLSfq, ARM_INS_VMLS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPVMLX, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPVMLX, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLSslfd, ARM_INS_VMLS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPVMLX, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPVMLX, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLSslfq, ARM_INS_VMLS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPVMLX, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPVMLX, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLSslv2i32, ARM_INS_VMLS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLSslv4i16, ARM_INS_VMLS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLSslv4i32, ARM_INS_VMLS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLSslv8i16, ARM_INS_VMLS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLSv16i8, ARM_INS_VMLS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLSv2i32, ARM_INS_VMLS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLSv4i16, ARM_INS_VMLS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON,ARM_GRP_FPU,  0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLSv4i32, ARM_INS_VMLS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLSv8i16, ARM_INS_VMLS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMLSv8i8, ARM_INS_VMLS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMOVD, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMOVDRR, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -6166,181 +6166,181 @@
 {
 	ARM_VMOVRRD, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMOVRRS, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMOVRS, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMOVS, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMOVSR, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMOVSRR, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMOVv16i8, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMOVv1i64, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMOVv2f32, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMOVv2i32, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMOVv2i64, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMOVv4f32, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMOVv4i16, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMOVv4i32, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMOVv8i16, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMOVv8i8, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMRS, ARM_INS_VMRS,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMRS_FPEXC, ARM_INS_VMRS,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMRS_FPINST, ARM_INS_VMRS,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMRS_FPINST2, ARM_INS_VMRS,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMRS_FPSID, ARM_INS_VMRS,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMRS_MVFR0, ARM_INS_VMRS,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMRS_MVFR1, ARM_INS_VMRS,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMRS_MVFR2, ARM_INS_VMRS,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMSR, ARM_INS_VMSR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { ARM_REG_FPSCR, 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { ARM_REG_FPSCR, 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMSR_FPEXC, ARM_INS_VMSR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { ARM_REG_FPSCR, 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { ARM_REG_FPSCR, 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMSR_FPINST, ARM_INS_VMSR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { ARM_REG_FPSCR, 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { ARM_REG_FPSCR, 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMSR_FPINST2, ARM_INS_VMSR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { ARM_REG_FPSCR, 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { ARM_REG_FPSCR, 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMSR_FPSID, ARM_INS_VMSR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { ARM_REG_FPSCR, 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { ARM_REG_FPSCR, 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMULD, ARM_INS_VMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -6418,103 +6418,103 @@
 {
 	ARM_VMULS, ARM_INS_VMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMULfd, ARM_INS_VMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMULfq, ARM_INS_VMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMULpd, ARM_INS_VMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMULpq, ARM_INS_VMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMULslfd, ARM_INS_VMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMULslfq, ARM_INS_VMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMULslv2i32, ARM_INS_VMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMULslv4i16, ARM_INS_VMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMULslv4i32, ARM_INS_VMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMULslv8i16, ARM_INS_VMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMULv16i8, ARM_INS_VMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMULv2i32, ARM_INS_VMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMULv4i16, ARM_INS_VMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMULv4i32, ARM_INS_VMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMULv8i16, ARM_INS_VMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VMULv8i8, ARM_INS_VMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -6556,97 +6556,97 @@
 {
 	ARM_VNEGD, ARM_INS_VNEG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VNEGS, ARM_INS_VNEG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VNEGf32q, ARM_INS_VNEG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VNEGfd, ARM_INS_VNEG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VNEGs16d, ARM_INS_VNEG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VNEGs16q, ARM_INS_VNEG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VNEGs32d, ARM_INS_VNEG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VNEGs32q, ARM_INS_VNEG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VNEGs8d, ARM_INS_VNEG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VNEGs8q, ARM_INS_VNEG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VNMLAD, ARM_INS_VNMLA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPVMLX, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPVMLX, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VNMLAS, ARM_INS_VNMLA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPVMLX, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPVMLX, ARM_GRP_FPU, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VNMLSD, ARM_INS_VNMLS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPVMLX, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPVMLX, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VNMLSS, ARM_INS_VNMLS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPVMLX, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPVMLX, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VNMULD, ARM_INS_VNMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VNMULS, ARM_INS_VNMUL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -8080,157 +8080,157 @@
 {
 	ARM_VRINTAD, ARM_INS_VRINTA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTAND, ARM_INS_VRINTA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTANQ, ARM_INS_VRINTA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTAS, ARM_INS_VRINTA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTMD, ARM_INS_VRINTM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTMND, ARM_INS_VRINTM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTMNQ, ARM_INS_VRINTM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTMS, ARM_INS_VRINTM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTND, ARM_INS_VRINTN,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTNND, ARM_INS_VRINTN,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTNNQ, ARM_INS_VRINTN,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTNS, ARM_INS_VRINTN,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTPD, ARM_INS_VRINTP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTPND, ARM_INS_VRINTP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTPNQ, ARM_INS_VRINTP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTPS, ARM_INS_VRINTP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTRD, ARM_INS_VRINTR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTRS, ARM_INS_VRINTR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTXD, ARM_INS_VRINTX,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTXND, ARM_INS_VRINTX,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTXNQ, ARM_INS_VRINTX,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTXS, ARM_INS_VRINTX,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTZD, ARM_INS_VRINTZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTZND, ARM_INS_VRINTZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTZNQ, ARM_INS_VRINTZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_V8, ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VRINTZS, ARM_INS_VRINTZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -8596,67 +8596,67 @@
 {
 	ARM_VSELEQD, ARM_INS_VSELEQ,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VSELEQS, ARM_INS_VSELEQ,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VSELGED, ARM_INS_VSELGE,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VSELGES, ARM_INS_VSELGE,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VSELGTD, ARM_INS_VSELGT,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VSELGTS, ARM_INS_VSELGT,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VSELVSD, ARM_INS_VSELVS,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VSELVSS, ARM_INS_VSELVS,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
+	{ ARM_REG_CPSR, 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VSETLNi16, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VSETLNi32, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VSETLNi8, ARM_INS_VMOV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_NEON, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -8974,25 +8974,25 @@
 {
 	ARM_VSHTOD, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VSHTOS, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VSITOD, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VSITOS, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -9046,13 +9046,13 @@
 {
 	ARM_VSLTOD, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VSLTOS, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -10294,97 +10294,97 @@
 {
 	ARM_VTOSHD, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VTOSHS, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VTOSIRD, ARM_INS_VCVTR,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VTOSIRS, ARM_INS_VCVTR,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VTOSIZD, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VTOSIZS, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VTOSLD, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VTOSLS, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VTOUHD, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VTOUHS, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VTOUIRD, ARM_INS_VCVTR,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VTOUIRS, ARM_INS_VCVTR,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ ARM_REG_FPSCR, 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VTOUIZD, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VTOUIZS, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VTOULD, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VTOULS, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -10462,37 +10462,37 @@
 {
 	ARM_VUHTOD, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VUHTOS, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VUITOD, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VUITOS, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VULTOD, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_DPVFP, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_VULTOS, ARM_INS_VCVT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_VFP2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_VFP2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -10558,97 +10558,97 @@
 {
 	ARM_sysLDMDA, ARM_INS_LDMDA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_sysLDMDA_UPD, ARM_INS_LDMDA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_sysLDMDB, ARM_INS_LDMDB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_sysLDMDB_UPD, ARM_INS_LDMDB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_sysLDMIA, ARM_INS_LDM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_sysLDMIA_UPD, ARM_INS_LDM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_sysLDMIB, ARM_INS_LDMIB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_sysLDMIB_UPD, ARM_INS_LDMIB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_sysSTMDA, ARM_INS_STMDA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_sysSTMDA_UPD, ARM_INS_STMDA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_sysSTMDB, ARM_INS_STMDB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_sysSTMDB_UPD, ARM_INS_STMDB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_sysSTMIA, ARM_INS_STM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_sysSTMIA_UPD, ARM_INS_STM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_sysSTMIB, ARM_INS_STMIB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_sysSTMIB_UPD, ARM_INS_STMIB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_ARM, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
@@ -10780,13 +10780,13 @@
 {
 	ARM_t2CDP, ARM_INS_CDP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, ARM_GRP_PREV8, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2CDP2, ARM_INS_CDP2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, ARM_GRP_PREV8, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
@@ -11014,373 +11014,373 @@
 {
 	ARM_t2LDC2L_OFFSET, ARM_INS_LDC2L,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDC2L_OPTION, ARM_INS_LDC2L,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDC2L_POST, ARM_INS_LDC2L,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDC2L_PRE, ARM_INS_LDC2L,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDC2_OFFSET, ARM_INS_LDC2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDC2_OPTION, ARM_INS_LDC2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDC2_POST, ARM_INS_LDC2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDC2_PRE, ARM_INS_LDC2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDCL_OFFSET, ARM_INS_LDCL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDCL_OPTION, ARM_INS_LDCL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDCL_POST, ARM_INS_LDCL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDCL_PRE, ARM_INS_LDCL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDC_OFFSET, ARM_INS_LDC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDC_OPTION, ARM_INS_LDC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDC_POST, ARM_INS_LDC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDC_PRE, ARM_INS_LDC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDMDB, ARM_INS_LDMDB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDMDB_UPD, ARM_INS_LDMDB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDMIA, ARM_INS_LDM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDMIA_UPD, ARM_INS_LDM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRBT, ARM_INS_LDRBT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRB_POST, ARM_INS_LDRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRB_PRE, ARM_INS_LDRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRBi12, ARM_INS_LDRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRBi8, ARM_INS_LDRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRBpci, ARM_INS_LDRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRBs, ARM_INS_LDRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRD_POST, ARM_INS_LDRD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRD_PRE, ARM_INS_LDRD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRDi8, ARM_INS_LDRD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDREX, ARM_INS_LDREX,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDREXB, ARM_INS_LDREXB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDREXD, ARM_INS_LDREXD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDREXH, ARM_INS_LDREXH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRHT, ARM_INS_LDRHT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRH_POST, ARM_INS_LDRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRH_PRE, ARM_INS_LDRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRHi12, ARM_INS_LDRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRHi8, ARM_INS_LDRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRHpci, ARM_INS_LDRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRHs, ARM_INS_LDRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRSBT, ARM_INS_LDRSBT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRSB_POST, ARM_INS_LDRSB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRSB_PRE, ARM_INS_LDRSB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRSBi12, ARM_INS_LDRSB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRSBi8, ARM_INS_LDRSB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRSBpci, ARM_INS_LDRSB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRSBs, ARM_INS_LDRSB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRSHT, ARM_INS_LDRSHT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRSH_POST, ARM_INS_LDRSH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRSH_PRE, ARM_INS_LDRSH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRSHi12, ARM_INS_LDRSH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRSHi8, ARM_INS_LDRSH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRSHpci, ARM_INS_LDRSH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRSHs, ARM_INS_LDRSH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRT, ARM_INS_LDRT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDR_POST, ARM_INS_LDR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDR_PRE, ARM_INS_LDR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRi12, ARM_INS_LDR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRi8, ARM_INS_LDR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRpci, ARM_INS_LDR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2LDRs, ARM_INS_LDR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
@@ -11410,25 +11410,25 @@
 {
 	ARM_t2MCR, ARM_INS_MCR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2MCR2, ARM_INS_MCR2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, ARM_GRP_PREV8, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2MCRR, ARM_INS_MCRR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2MCRR2, ARM_INS_MCRR2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, ARM_GRP_PREV8, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PRIVILEGE, ARM_GRP_THUMB2, ARM_GRP_PREV8, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
@@ -11872,7 +11872,7 @@
 {
 	ARM_t2SDIV, ARM_INS_SDIV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_DIVIDE, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_DIVIDE, ARM_GRP_THUMB2, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
@@ -12196,97 +12196,97 @@
 {
 	ARM_t2STC2L_OFFSET, ARM_INS_STC2L,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STC2L_OPTION, ARM_INS_STC2L,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STC2L_POST, ARM_INS_STC2L,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STC2L_PRE, ARM_INS_STC2L,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STC2_OFFSET, ARM_INS_STC2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STC2_OPTION, ARM_INS_STC2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STC2_POST, ARM_INS_STC2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STC2_PRE, ARM_INS_STC2,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_PREV8, ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STCL_OFFSET, ARM_INS_STCL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STCL_OPTION, ARM_INS_STCL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STCL_POST, ARM_INS_STCL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STCL_PRE, ARM_INS_STCL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STC_OFFSET, ARM_INS_STC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STC_OPTION, ARM_INS_STC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STC_POST, ARM_INS_STC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STC_PRE, ARM_INS_STC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
@@ -12334,187 +12334,187 @@
 {
 	ARM_t2STMDB, ARM_INS_STMDB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STMDB_UPD, ARM_INS_STMDB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STMIA, ARM_INS_STM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STMIA_UPD, ARM_INS_STM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STRBT, ARM_INS_STRBT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STRB_POST, ARM_INS_STRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STRB_PRE, ARM_INS_STRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STRBi12, ARM_INS_STRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STRBi8, ARM_INS_STRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STRBs, ARM_INS_STRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STRD_POST, ARM_INS_STRD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STRD_PRE, ARM_INS_STRD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STRDi8, ARM_INS_STRD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STREX, ARM_INS_STREX,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STREXB, ARM_INS_STREXB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STREXD, ARM_INS_STREXD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STREXH, ARM_INS_STREXH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STRHT, ARM_INS_STRHT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STRH_POST, ARM_INS_STRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STRH_PRE, ARM_INS_STRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STRHi12, ARM_INS_STRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STRHi8, ARM_INS_STRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STRHs, ARM_INS_STRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STRT, ARM_INS_STRT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STR_POST, ARM_INS_STR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STR_PRE, ARM_INS_STR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STRi12, ARM_INS_STR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STRi8, ARM_INS_STR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2STRs, ARM_INS_STR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2SUBS_PC_LR, ARM_INS_SUB,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_SPSR, ARM_REG_LR, ARM_REG_PC, 0 }, { ARM_REG_CPSR, ARM_REG_PC, 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, 0 }, 0, 0
+	{ ARM_REG_SPSR, ARM_REG_LR, ARM_REG_PC, 0 }, { ARM_REG_CPSR, ARM_REG_PC, 0 }, { ARM_GRP_THUMB2, ARM_GRP_NOTMCLASS, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2SUBri, ARM_INS_SUB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -12526,13 +12526,13 @@
 {
 	ARM_t2SUBrr, ARM_INS_SUB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_t2SUBrs, ARM_INS_SUB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
@@ -12574,13 +12574,13 @@
 {
 	ARM_t2TBB, ARM_INS_TBB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 1
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 1
 #endif
 },
 {
 	ARM_t2TBH, ARM_INS_TBH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 0, 1
+	{ 0 }, { 0 }, { ARM_GRP_THUMB2, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 1
 #endif
 },
 {
@@ -12652,7 +12652,7 @@
 {
 	ARM_t2UDIV, ARM_INS_UDIV,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_DIVIDE, ARM_GRP_THUMB2, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_DIVIDE, ARM_GRP_THUMB2, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
@@ -12928,19 +12928,19 @@
 {
 	ARM_tBLXi, ARM_INS_BLX,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_THUMB, ARM_GRP_V5T, ARM_GRP_NOTMCLASS, ARM_GRP_CALL, 0 }, 1, 0
+	{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_THUMB, ARM_GRP_V5T, ARM_GRP_NOTMCLASS, ARM_GRP_CALL, ARM_GRP_USAGEFAULT, 0 }, 1, 0
 #endif
 },
 {
 	ARM_tBLXr, ARM_INS_BLX,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_THUMB, ARM_GRP_V5T, ARM_GRP_CALL, 0 }, 0, 1
+	{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_THUMB, ARM_GRP_V5T, ARM_GRP_CALL, ARM_GRP_USAGEFAULT, 0 }, 0, 1
 #endif
 },
 {
 	ARM_tBX, ARM_INS_BX,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, 0 }, 0, 1
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_USAGEFAULT, 0 }, 0, 1
 #endif
 },
 {
@@ -13012,67 +13012,67 @@
 {
 	ARM_tLDMIA, ARM_INS_LDM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tLDRBi, ARM_INS_LDRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tLDRBr, ARM_INS_LDRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tLDRHi, ARM_INS_LDRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tLDRHr, ARM_INS_LDRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tLDRSB, ARM_INS_LDRSB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tLDRSH, ARM_INS_LDRSH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tLDRi, ARM_INS_LDR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tLDRpci, ARM_INS_LDR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tLDRr, ARM_INS_LDR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tLDRspi, ARM_INS_LDR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
@@ -13138,13 +13138,13 @@
 {
 	ARM_tPOP, ARM_INS_POP,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_SP, 0 }, { ARM_REG_SP, 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ ARM_REG_SP, 0 }, { ARM_REG_SP, 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tPUSH, ARM_INS_PUSH,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_SP, 0 }, { ARM_REG_SP, 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ ARM_REG_SP, 0 }, { ARM_REG_SP, 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
@@ -13192,73 +13192,73 @@
 {
 	ARM_tSTMIA_UPD, ARM_INS_STM,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tSTRBi, ARM_INS_STRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tSTRBr, ARM_INS_STRB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY,ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT,  0 }, 0, 0
 #endif
 },
 {
 	ARM_tSTRHi, ARM_INS_STRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tSTRHr, ARM_INS_STRH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tSTRi, ARM_INS_STR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tSTRr, ARM_INS_STR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tSTRspi, ARM_INS_STR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_MEMMANAGE, ARM_GRP_BUSFAULT, ARM_GRP_USAGEFAULT, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tSUBi3, ARM_INS_SUB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tSUBi8, ARM_INS_SUB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tSUBrr, ARM_INS_SUB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
 	ARM_tSUBspi, ARM_INS_SUB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_FPU, 0 }, 0, 0
 #endif
 },
 {
