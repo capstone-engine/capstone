@@ -804,12 +804,12 @@ static name_map group_name_maps[] = {
 	{ ARM_GRP_MULOPS, "mulops" },
 	{ ARM_GRP_CRC, "crc" },
 	{ ARM_GRP_DPVFP, "dpvfp" },
+	{ ARM_GRP_VIRTUALIZATION, "virtualization" },
 	{ ARM_GRP_V6M, "v6m" },
 	{ ARM_GRP_MEMMANAGE, "memmanage" },
 	{ ARM_GRP_BUSFAULT, "busfault" },
 	{ ARM_GRP_USAGEFAULT, "usagefault" },
 	{ ARM_GRP_FPU, "fpu" },
-	{ ARM_GRP_VIRTUALIZATION, "virtualization" },
 };
 #endif
 
