@@ -720,11 +720,16 @@ static void printMemOffs64(MCInst *MI, unsigned OpNo, SStream *O)
 	printMemOffset(MI, OpNo, O);
 }
 
+#ifndef CAPSTONE_DIET
 static char *printAliasInstr(MCInst *MI, SStream *OS, void *info);
+#endif
 static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
+
 void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 {
+#ifndef CAPSTONE_DIET
 	char *mnem;
+#endif
 	x86_reg reg, reg2;
 	enum cs_ac_type access1, access2;
 
@@ -734,11 +739,13 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 		return;
 	}
 
+#ifndef CAPSTONE_DIET
 	// Try to print any aliases first.
 	mnem = printAliasInstr(MI, O, Info);
 	if (mnem)
 		cs_mem_free(mnem);
 	else
+#endif
 		printInstruction(MI, O, Info);
 
 	reg = X86_insn_reg_intel(MCInst_getOpcode(MI), &access1);

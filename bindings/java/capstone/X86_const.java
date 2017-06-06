@@ -296,6 +296,39 @@ public class X86_const {
 	public static final int X86_EFLAGS_UNDEFINED_PF = 1<<43;
 	public static final int X86_EFLAGS_UNDEFINED_AF = 1<<44;
 	public static final int X86_EFLAGS_UNDEFINED_CF = 1<<45;
+	public static final int X86_EFLAGS_RESET_RF = 1<<46;
+	public static final int X86_EFLAGS_TEST_RF = 1<<47;
+	public static final int X86_EFLAGS_TEST_IF = 1<<48;
+	public static final int X86_EFLAGS_TEST_TF = 1<<49;
+	public static final int X86_EFLAGS_TEST_AF = 1<<50;
+	public static final int X86_EFLAGS_RESET_ZF = 1<<51;
+	public static final int X86_EFLAGS_SET_OF = 1<<52;
+	public static final int X86_EFLAGS_SET_SF = 1<<53;
+	public static final int X86_EFLAGS_SET_ZF = 1<<54;
+	public static final int X86_EFLAGS_SET_AF = 1<<55;
+	public static final int X86_EFLAGS_SET_PF = 1<<56;
+	public static final int X86_EFLAGS_RESET_0F = 1<<57;
+	public static final int X86_EFLAGS_RESET_AC = 1<<58;
+	public static final int X86_FPU_FLAGS_MODIFY_C0 = 1<<0;
+	public static final int X86_FPU_FLAGS_MODIFY_C1 = 1<<1;
+	public static final int X86_FPU_FLAGS_MODIFY_C2 = 1<<2;
+	public static final int X86_FPU_FLAGS_MODIFY_C3 = 1<<3;
+	public static final int X86_FPU_FLAGS_RESET_C0 = 1<<4;
+	public static final int X86_FPU_FLAGS_RESET_C1 = 1<<5;
+	public static final int X86_FPU_FLAGS_RESET_C2 = 1<<6;
+	public static final int X86_FPU_FLAGS_RESET_C3 = 1<<7;
+	public static final int X86_FPU_FLAGS_SET_C0 = 1<<8;
+	public static final int X86_FPU_FLAGS_SET_C1 = 1<<9;
+	public static final int X86_FPU_FLAGS_SET_C2 = 1<<10;
+	public static final int X86_FPU_FLAGS_SET_C3 = 1<<11;
+	public static final int X86_FPU_FLAGS_UNDEFINED_C0 = 1<<12;
+	public static final int X86_FPU_FLAGS_UNDEFINED_C1 = 1<<13;
+	public static final int X86_FPU_FLAGS_UNDEFINED_C2 = 1<<14;
+	public static final int X86_FPU_FLAGS_UNDEFINED_C3 = 1<<15;
+	public static final int X86_FPU_FLAGS_TEST_C0 = 1<<16;
+	public static final int X86_FPU_FLAGS_TEST_C1 = 1<<17;
+	public static final int X86_FPU_FLAGS_TEST_C2 = 1<<18;
+	public static final int X86_FPU_FLAGS_TEST_C3 = 1<<19;
 
 	// Operand type for instruction's operands
 
@@ -1951,5 +1984,6 @@ public class X86_const {
 	public static final int X86_GRP_VLX = 166;
 	public static final int X86_GRP_SMAP = 167;
 	public static final int X86_GRP_NOVLX = 168;
-	public static final int X86_GRP_ENDING = 169;
+	public static final int X86_GRP_FPU = 169;
+	public static final int X86_GRP_ENDING = 170;
 }

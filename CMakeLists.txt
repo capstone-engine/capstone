@@ -20,7 +20,7 @@ endif()
 
 # to configure the options specify them in in the command line or change them in the cmake UI.
 # Don't edit the makefile!
-option(CAPSTONE_BUILD_STATIC_RUNTIME "Embed static runtime" OFF)
+option(CAPSTONE_BUILD_STATIC_RUNTIME "Embed static runtime" ON)
 option(CAPSTONE_BUILD_STATIC "Build static library" ON)
 option(CAPSTONE_BUILD_SHARED "Build shared library" ON)
 option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
