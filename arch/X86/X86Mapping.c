@@ -4,7 +4,11 @@
 #ifdef CAPSTONE_HAS_X86
 
 #include <string.h>
+#ifndef CAPSTONE_HAS_OSXKERNEL
 #include <stdlib.h>
+#else
+#include "qsort.h"
+#endif
 
 #include "X86Mapping.h"
 #include "X86DisassemblerDecoder.h"
@@ -3129,6 +3133,7 @@ static bool valid_repne(cs_struct *h, unsigned int opcode)
 
 // given MCInst's id, find out if this insn is valid for BND prefix
 // BND prefix is valid for CALL/JMP/RET
+#ifndef CAPSTONE_DIET
 static bool valid_bnd(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
@@ -3140,31 +3145,30 @@ static bool valid_bnd(cs_struct *h, unsigned int opcode)
 				return false;
 
 			case X86_INS_JAE:
-            case X86_INS_JA:
-            case X86_INS_JBE:
-            case X86_INS_JB:
-            case X86_INS_JCXZ:
-            case X86_INS_JECXZ:
-            case X86_INS_JE:
-            case X86_INS_JGE:
-            case X86_INS_JG:
-            case X86_INS_JLE:
-            case X86_INS_JL:
-            case X86_INS_JMP:
-            case X86_INS_JNE:
-            case X86_INS_JNO:
-            case X86_INS_JNP:
-            case X86_INS_JNS:
-            case X86_INS_JO:
-            case X86_INS_JP:
-            case X86_INS_JRCXZ:
-            case X86_INS_JS:
+			case X86_INS_JA:
+			case X86_INS_JBE:
+			case X86_INS_JB:
+			case X86_INS_JCXZ:
+			case X86_INS_JECXZ:
+			case X86_INS_JE:
+			case X86_INS_JGE:
+			case X86_INS_JG:
+			case X86_INS_JLE:
+			case X86_INS_JL:
+			case X86_INS_JMP:
+			case X86_INS_JNE:
+			case X86_INS_JNO:
+			case X86_INS_JNP:
+			case X86_INS_JNS:
+			case X86_INS_JO:
+			case X86_INS_JP:
+			case X86_INS_JRCXZ:
+			case X86_INS_JS:
 
-            case X86_INS_CALL:
-            case X86_INS_RET:
-            case X86_INS_RETF:
-            case X86_INS_RETFQ:
-
+			case X86_INS_CALL:
+			case X86_INS_RET:
+			case X86_INS_RETF:
+			case X86_INS_RETFQ:
 				return true;
 		}
 	}
@@ -3172,6 +3176,7 @@ static bool valid_bnd(cs_struct *h, unsigned int opcode)
 	// not found
 	return false;
 }
+#endif
 
 // given MCInst's id, find out if this insn is valid for REP prefix
 static bool valid_rep(cs_struct *h, unsigned int opcode)
