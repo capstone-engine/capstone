@@ -72,7 +72,7 @@ static uint8_t *preprocess(char *code, size_t *size)
 static void usage(char *prog)
 {
 	printf("Cstool for Capstone Disassembler Engine v%u.%u.%u\n\n", CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA);
-	printf("Syntax: %s [-d] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
+	printf("Syntax: %s [-u|-d] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
 	printf("\nThe following <arch+mode> options are supported:\n");
 
 	if (cs_support(CS_ARCH_X86)) {
@@ -144,18 +144,23 @@ int main(int argc, char **argv)
 	cs_mode md;
 	cs_arch arch;
 	bool detail_flag = false;
+	bool unsigned_flag = false;
 
 	if (argc != 3 && argc != 4 && argc != 5) {
 		usage(argv[0]);
 		return -1;
 	}
 
-	if (!strcmp(argv[1], "-d")) {
+	if (!strcmp(argv[1], "-d") || !strcmp(argv[1], "-u")) {
 		if (argc == 3) {
 			usage(argv[0]);
 			return -1;
 		}
-		detail_flag = true;
+		if (argv[1][1] == 'd') {
+			detail_flag = true;
+		} else {
+			unsigned_flag = true;
+		}
 		mode = argv[2];
 		assembly = preprocess(argv[3], &size);
 		if (argc == 5) {
@@ -344,6 +349,9 @@ int main(int argc, char **argv)
 
 	if (detail_flag) {
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+	}
+	if (unsigned_flag) {
+		cs_option(handle, CS_OPT_UNSIGNED, CS_OPT_ON);
 	}
 
 	count = cs_disasm(handle, assembly, size, address, 0, &insn);
