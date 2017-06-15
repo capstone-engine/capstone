@@ -444,7 +444,7 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		printRegName(O, MCOperand_getReg(Op));
 	} else if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op);
-		printImm(MI->csh->syntax, O, imm, false);
+		printImm(MI->csh->syntax, O, imm, MI->csh->imm_unsigned);
 	}
 }
 
@@ -887,7 +887,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		// printf(">>> id = %u\n", MI->flat_insn->id);
 		switch(MI->flat_insn->id) {
 			default:
-				printImm(MI->csh->syntax, O, imm, false);
+				printImm(MI->csh->syntax, O, imm, MI->csh->imm_unsigned);
 				break;
 
 			case X86_INS_MOVABS:
