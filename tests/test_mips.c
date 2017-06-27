@@ -101,7 +101,7 @@ static void test()
 		},
 		{
 			CS_ARCH_MIPS,
-			(cs_mode)(CS_MODE_MIPS32R6 | CS_MODE_MICRO + CS_MODE_BIG_ENDIAN),
+			(cs_mode)(CS_MODE_MIPS32R6 | CS_MODE_MICRO | CS_MODE_BIG_ENDIAN),
 			(unsigned char*)MIPS_32R6M,
 			sizeof(MIPS_32R6M) - 1,
 			"MIPS-32R6 | Micro (Big-endian)"
