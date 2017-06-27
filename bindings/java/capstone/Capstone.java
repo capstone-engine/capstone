@@ -336,6 +336,7 @@ public class Capstone {
   public static final int CS_MODE_MICRO = 1 << 4;	  // MicroMips mode (Mips arch)
   public static final int CS_MODE_MIPS3 = 1 << 5;     // Mips III ISA
   public static final int CS_MODE_MIPS32R6 = 1 << 6;  // Mips32r6 ISA
+  public static final int CS_MODE_MIPS2 = 1 << 7;  // Mips II ISA
   public static final int CS_MODE_BIG_ENDIAN = 1 << 31; // big-endian mode
   public static final int CS_MODE_V9 = 1 << 4;	      // SparcV9 mode (Sparc arch)
   public static final int CS_MODE_MIPS32 = CS_MODE_32; // Mips32 ISA

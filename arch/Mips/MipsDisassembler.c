@@ -451,7 +451,7 @@ static DecodeStatus MipsDisassembler_getInstruction(int mode, MCInst *instr,
 
 	readInstruction32((unsigned char*)code, &Insn, isBigEndian, false);
 
-	if (((mode & CS_MODE_MIPS32) == 0) && ((mode & CS_MODE_MIPS3) == 0)) {
+	if ((mode & CS_MODE_MIPS2) && ((mode & CS_MODE_MIPS3) == 0)) {
 		// DEBUG(dbgs() << "Trying COP3_ table (32-bit opcodes):\n");
 		Result = decodeInstruction(DecoderTableCOP3_32, instr, Insn, Address, MRI, mode);
 		if (Result != MCDisassembler_Fail) {
