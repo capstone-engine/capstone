@@ -12,7 +12,7 @@ static struct {
 	const char *name;
 	cs_arch arch;
 	cs_mode mode;
-} Arch[] = {
+} all_archs[] = {
 	{ "arm", CS_ARCH_ARM, CS_MODE_ARM },
 	{ "armb", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_BIG_ENDIAN },
 	{ "armbe", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_BIG_ENDIAN },
@@ -117,8 +117,6 @@ static void usage(char *prog)
 	printf("Cstool for Capstone Disassembler Engine v%u.%u.%u\n\n", CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA);
 	printf("Syntax: %s [-u|-d] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
 	printf("\nThe following <arch+mode> options are supported:\n");
-	printf("\n -d show detailed information of the instructions\n");
-	printf("\n -u show immediates as unsigned\n");
 
 	if (cs_support(CS_ARCH_X86)) {
 		printf("        x16:       16-bit mode (X86)\n");
@@ -174,7 +172,9 @@ static void usage(char *prog)
 		printf("        tms320c64x:TMS320C64x\n");
 	}
 
-	printf("\n");
+	printf("\nExtra options:\n");
+	printf("        -d show detailed information of the instructions\n");
+	printf("        -u show immediates as unsigned\n\n");
 }
 
 static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
@@ -240,6 +240,7 @@ int main(int argc, char **argv)
 	cs_arch arch = -1;
 	bool detail_flag = false;
 	bool unsigned_flag = false;
+	int args_left;
 
 	while ((c = getopt (argc, argv, "udhv")) != -1) {
 		switch (c) {
@@ -260,7 +261,8 @@ int main(int argc, char **argv)
 			return -1;
 		}
 	}
-	int args_left = argc - optind;
+
+	args_left = argc - optind;
 	if (args_left < 2 || args_left > 3) {
 		usage(argv[0]);
 		return -1;
@@ -268,6 +270,7 @@ int main(int argc, char **argv)
 
 	mode = argv[optind];
 	assembly = preprocess(argv[optind + 1], &size);
+
 	if (args_left == 3) {
 		char *temp, *src = argv[optind + 2];
 		address = strtoull(src, &temp, 16);
@@ -277,12 +280,12 @@ int main(int argc, char **argv)
 		}
 	}
 
-	for (i = 0; Arch[i].name; i++) {
-		if (!strcmp(Arch[i].name, mode)) {
-			arch = Arch[i].arch;
-			err = cs_open(Arch[i].arch, Arch[i].mode, &handle);
+	for (i = 0; all_archs[i].name; i++) {
+		if (!strcmp(all_archs[i].name, mode)) {
+			arch = all_archs[i].arch;
+			err = cs_open(all_archs[i].arch, all_archs[i].mode, &handle);
 			if (!err) {
-				md = Arch[i].mode;
+				md = all_archs[i].mode;
 				if (strstr (mode, "att")) {
 					cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
 				}
@@ -290,7 +293,6 @@ int main(int argc, char **argv)
 			break;
 		}
 	}
-
 
 	if (err) {
 		printf("ERROR: Failed on cs_open(), quit!\n");
@@ -301,6 +303,7 @@ int main(int argc, char **argv)
 	if (detail_flag) {
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 	}
+
 	if (unsigned_flag) {
 		cs_option(handle, CS_OPT_UNSIGNED, CS_OPT_ON);
 	}
@@ -311,6 +314,7 @@ int main(int argc, char **argv)
 
 		for (i = 0; i < count; i++) {
 			int j;
+
 			printf("%"PRIx64"  ", insn[i].address);
 			for (j = 0; j < insn[i].size; j++) {
 				printf("%02x", insn[i].bytes[j]);
@@ -318,7 +322,6 @@ int main(int argc, char **argv)
 			// X86 instruction size is variable.
 			// align assembly instruction after the opcode
 			if (arch == CS_ARCH_X86) {
-
 				for (; j < 16; j++) {
 					printf("  ");
 				}
