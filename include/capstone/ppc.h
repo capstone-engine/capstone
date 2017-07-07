@@ -1436,6 +1436,10 @@ typedef enum ppc_insn_group {
 	//> Generic groups
 	// all jump instructions (conditional+direct+indirect jumps)
 	PPC_GRP_JUMP,	// = CS_GRP_JUMP
+	// relative and absolute branch groups
+	PPC_GRP_BRANCH,		// = CS_GRP_BRANCH
+	// indirect branch groups
+	PPC_GRP_BRANCH_INDIRECT,	// = CS_GRP_BRANCH_INDIRECT
 
 	//> Architecture-specific groups
 	PPC_GRP_ALTIVEC = 128,

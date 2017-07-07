@@ -332,6 +332,10 @@ typedef enum tms320c64x_insn_group {
 	TMS320C64X_GRP_INVALID = 0, // = CS_GRP_INVALID
 
 	TMS320C64X_GRP_JUMP,	// = CS_GRP_JUMP
+	// relative and absolute branch groups
+	TMS320C64X_GRP_BRANCH,		// = CS_GRP_BRANCH
+	// indirect branch groups
+	TMS320C64X_GRP_BRANCH_INDIRECT,	// = CS_GRP_BRANCH_INDIRECT
 
 	TMS320C64X_GRP_FUNIT_D = 128,
 	TMS320C64X_GRP_FUNIT_L,

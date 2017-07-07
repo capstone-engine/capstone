@@ -812,6 +812,10 @@ typedef enum sysz_insn_group {
 	//> Generic groups
 	// all jump instructions (conditional+direct+indirect jumps)
 	SYSZ_GRP_JUMP,	// = CS_GRP_JUMP
+	// relative and absolute branch groups
+	SYSZ_GRP_BRANCH,		// = CS_GRP_BRANCH
+	// indirect branch groups
+	SYSZ_GRP_BRANCH_INDIRECT,	// = CS_GRP_BRANCH_INDIRECT
 
 	//> Architecture-specific groups
 	SYSZ_GRP_DISTINCTOPS = 128,

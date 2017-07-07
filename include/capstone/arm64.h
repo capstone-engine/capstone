@@ -1146,6 +1146,10 @@ typedef enum arm64_insn_group {
 	ARM64_GRP_RET,
 	ARM64_GRP_INT,
 	ARM64_GRP_PRIVILEGE = 6, // = CS_GRP_PRIVILEGE
+	// relative and absolute branch groups
+	ARM64_GRP_BRANCH,		// = CS_GRP_BRANCH
+	// indirect branch groups
+	ARM64_GRP_BRANCH_INDIRECT,	// = CS_GRP_BRANCH_INDIRECT
 
 	//> Architecture-specific groups
 	ARM64_GRP_CRYPTO = 128,

@@ -310,7 +310,6 @@ void AArch64_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 	int i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
 	if (i != 0) {
 		insn->id = insns[i].mapid;
-
 		if (h->detail) {
 #ifndef CAPSTONE_DIET
 			cs_struct handle;
@@ -326,6 +325,17 @@ void AArch64_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			insn->detail->groups_count = (uint8_t)count_positive8(insns[i].groups);
 
 			insn->detail->arm64.update_flags = cs_reg_write((csh)&handle, insn, ARM64_REG_NZCV);
+
+			// relative or absolute branch group
+			if (insns[i].branch) {
+				insn->detail->groups[insn->detail->groups_count] = ARM64_GRP_BRANCH;
+				insn->detail->groups_count++;
+			}
+			// indirect branch group
+			if (insns[i].branch_indirect) {
+				insn->detail->groups[insn->detail->groups_count] = ARM64_GRP_BRANCH_INDIRECT;
+				insn->detail->groups_count++;
+			}
 #endif
 		}
 	}
@@ -836,6 +846,8 @@ static name_map group_name_maps[] = {
 	{ ARM64_GRP_RET, "return" },
 	{ ARM64_GRP_PRIVILEGE, "privilege" },
 	{ ARM64_GRP_INT, "int" },
+	{ ARM64_GRP_BRANCH, "branch" },
+	{ ARM64_GRP_BRANCH_INDIRECT, "branch_indirect" },
 
 	// architecture-specific groups
 	{ ARM64_GRP_CRYPTO, "crypto" },
