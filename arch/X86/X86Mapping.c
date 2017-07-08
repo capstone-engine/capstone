@@ -47353,6 +47353,7 @@ static struct insn_reg insn_regs_intel[] = {
 	{ X86_OUTSW, X86_REG_DX },
 	{ X86_OUTSL, X86_REG_DX },
 
+	{ X86_MOV8o8a, X86_REG_AL },   // a02857887c = mov al, byte ptr[0x7c885728]
 	{ X86_MOV32o32a, X86_REG_EAX },
 	{ X86_MOV16o16a, X86_REG_AX },
 	{ X86_MOV64o64a, X86_REG_RAX },
