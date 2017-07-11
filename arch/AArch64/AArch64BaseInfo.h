@@ -249,7 +249,9 @@ enum A64PStateValues {
 	A64PState_Invalid = -1,
 	A64PState_SPSel = 0x05,
 	A64PState_DAIFSet = 0x1e,
-	A64PState_DAIFClr = 0x1f
+	A64PState_DAIFClr = 0x1f,
+	A64PState_PAN	= 0x4,
+	A64PState_UAO	= 0x3
 };
 
 typedef enum A64SE_ShiftExtSpecifiers {
@@ -436,6 +438,8 @@ enum A64SysRegWOValues {
 
 enum A64SysRegValues {
 	A64SysReg_Invalid = -1,               // Op0 Op1  CRn   CRm   Op2
+	A64SysReg_PAN								= 0xc213, // 11  000  0100  0010  011
+	A64SysReg_UAO								= 0xc214, // 11  000  0100  0010  100
 	A64SysReg_OSDTRRX_EL1       = 0x8002, // 10  000  0000  0000  010
 	A64SysReg_OSDTRTX_EL1       = 0x801a, // 10  000  0000  0011  010
 	A64SysReg_TEECR32_EL1       = 0x9000, // 10  010  0000  0000  000
@@ -620,6 +624,7 @@ enum A64SysRegValues {
 	A64SysReg_RMR_EL3           = 0xf602, // 11  110  1100  0000  010
 	A64SysReg_CONTEXTIDR_EL1    = 0xc681, // 11  000  1101  0000  001
   A64SysReg_CONTEXTIDR_EL12   = 0xee81, // 11  101  1101  0000  001
+	A64SysReg_CONTEXTIDR_EL2		= 0xe681, // 11  100  1101  0000  001
 	A64SysReg_TPIDR_EL0         = 0xde82, // 11  011  1101  0000  010
 	A64SysReg_TPIDR_EL2         = 0xe682, // 11  100  1101  0000  010
 	A64SysReg_TPIDR_EL3         = 0xf682, // 11  110  1101  0000  010

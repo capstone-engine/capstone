@@ -99,6 +99,8 @@ static char *utostr(uint64_t X, bool isNeg)
 }
 
 static A64NamedImmMapper_Mapping SysRegPairs[] = {
+	{"pan", A64SysReg_PAN},
+	{"uao", A64SysReg_UAO},
 	{"osdtrrx_el1", A64SysReg_OSDTRRX_EL1},
 	{"osdtrtx_el1",  A64SysReg_OSDTRTX_EL1},
 	{"teecr32_el1", A64SysReg_TEECR32_EL1},
@@ -283,6 +285,7 @@ static A64NamedImmMapper_Mapping SysRegPairs[] = {
 	{"rmr_el3", A64SysReg_RMR_EL3},
 	{"contextidr_el1", A64SysReg_CONTEXTIDR_EL1},
 	{"contextidr_el12", A64SysReg_CONTEXTIDR_EL12},
+	{"contextidr_el2", A64SysReg_CONTEXTIDR_EL2},
 	{"tpidr_el0", A64SysReg_TPIDR_EL0},
 	{"tpidr_el2", A64SysReg_TPIDR_EL2},
 	{"tpidr_el3", A64SysReg_TPIDR_EL3},
@@ -833,7 +836,9 @@ A64NamedImmMapper A64PRFM_PRFMMapper = {
 static A64NamedImmMapper_Mapping PStatePairs[] = {
 	{"spsel", A64PState_SPSel},
 	{"daifset", A64PState_DAIFSet},
-	{"daifclr", A64PState_DAIFClr}
+	{"daifclr", A64PState_DAIFClr},
+	{"pan", A64PState_PAN},
+	{"uao", A64PState_UAO}
 };
 
 A64NamedImmMapper A64PState_PStateMapper = {
