@@ -606,7 +606,20 @@ static A64NamedImmMapper_Mapping SysRegPairs[] = {
 	{"ich_lr12_el2", A64SysReg_ICH_LR12_EL2},
 	{"ich_lr13_el2", A64SysReg_ICH_LR13_EL2},
 	{"ich_lr14_el2", A64SysReg_ICH_LR14_EL2},
-	{"ich_lr15_el2", A64SysReg_ICH_LR15_EL2}
+	{"ich_lr15_el2", A64SysReg_ICH_LR15_EL2},
+
+	// Statistical profiling registers
+	{"pmblimitr_el1", A64SysReg_PMBLIMITR_EL1},
+	{"pmbptr_el1", A64SysReg_PMBPTR_EL1},
+	{"pmbsr_el1", A64SysReg_PMBSR_EL1},
+	{"pmscr_el1", A64SysReg_PMSCR_EL1},
+	{"pmscr_el12", A64SysReg_PMSCR_EL12},
+	{"pmscr_el2", A64SysReg_PMSCR_EL2},
+	{"pmsicr_el1", A64SysReg_PMSICR_EL1},
+	{"pmsirr_el1", A64SysReg_PMSIRR_EL1},
+	{"pmsfcr_el1", A64SysReg_PMSFCR_EL1},
+	{"pmsevfr_el1", A64SysReg_PMSEVFR_EL1},
+	{"pmslatfr_el1", A64SysReg_PMSLATFR_EL1}
 };
 
 static A64NamedImmMapper_Mapping CycloneSysRegPairs[] = {
@@ -737,7 +750,7 @@ static A64NamedImmMapper_Mapping ATPairs[] = {
 	{"s12e1r", A64AT_S12E1R},
 	{"s12e1w", A64AT_S12E1W},
 	{"s12e0r", A64AT_S12E0R},
-	{"s12e0w", A64AT_S12E0W},
+	{"s12e0w", A64AT_S12E0W}
 };
 
 A64NamedImmMapper A64AT_ATMapper = {
@@ -946,7 +959,11 @@ static A64NamedImmMapper_Mapping MRSPairs[] = {
 	{"icc_rpr_el1", A64SysReg_ICC_RPR_EL1},
 	{"ich_vtr_el2", A64SysReg_ICH_VTR_EL2},
 	{"ich_eisr_el2", A64SysReg_ICH_EISR_EL2},
-	{"ich_elsr_el2", A64SysReg_ICH_ELSR_EL2}
+	{"ich_elsr_el2", A64SysReg_ICH_ELSR_EL2},
+
+	// Statistical profiling registers
+	{"pmsidr_el1", A64SysReg_PMSIDR_EL1},
+	{"pmbidr_el1", A64SysReg_PMBIDR_EL1}
 };
 
 A64SysRegMapper AArch64_MRSMapper = {
