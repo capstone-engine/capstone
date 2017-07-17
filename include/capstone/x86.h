@@ -1899,6 +1899,8 @@ typedef enum  x86_insn_group {
 	X86_GRP_IRET,	// = CS_GRP_IRET
 	// all privileged instructions
 	X86_GRP_PRIVILEGE,	// = CS_GRP_PRIVILEGE
+	// all relative branching instructions
+	X86_GRP_RELATIVE_BRANCH, // = CS_GRP_RELATIVE_BRANCH
 
 	//> Architecture-specific groups
 	X86_GRP_VM = 128,	// all virtualization instructions (VT-x + AMD-V)
