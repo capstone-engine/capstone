@@ -380,7 +380,7 @@ source_group("Include\\XCore" FILES ${HEADERS_XCORE})
 ### test library 64bit routine:
 get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
 
-if ("${LIB64}" STREQUAL "TRUE")
+if (NOT APPLE AND "${LIB64}" STREQUAL "TRUE")
     set(LIBSUFFIX 64)
 else()
     set(LIBSUFFIX "")
