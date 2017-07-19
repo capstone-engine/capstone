@@ -944,19 +944,19 @@ enum A64SysRegValues {
 	A64SysReg_ICH_LR15_EL2      = 0xe66f, // 11  100  1100  1101  111
 
 	// Statistical profiling registers
-	A64SysReg_PMSIDR_EL1				= 0xc4cf, // 11  000  1001  1001  111
-	A64SysReg_PMBIDR_EL1				= 0xc4d7, // 11  000  1001  1010  111
-	A64SysReg_PMBLIMITR_EL1			= 0xc4d0, // 11  000  1001  1010  000
-	A64SysReg_PMBPTR_EL1				= 0xc4d1, // 11  000  1001  1010  001
-	A64SysReg_PMBSR_EL1					= 0xc4d3, // 11  000  1001  1010  011
-	A64SysReg_PMSCR_EL1					= 0xc4c8, // 11  000  1001  1001  000
-	A64SysReg_PMSCR_EL12				= 0xecc8, // 11  101  1001  1001  000
-	A64SysReg_PMSCR_EL2					= 0xe4c8, // 11  100  1001  1001  000
-	A64SysReg_PMSICR_EL1				= 0xc4ca, // 11  000  1001  1001  010
-	A64SysReg_PMSIRR_EL1				= 0xc4cb, // 11  000  1001  1001  011
-	A64SysReg_PMSFCR_EL1				= 0xc4cc, // 11  000  1001  1001  100
-	A64SysReg_PMSEVFR_EL1				= 0xc4cd, // 11  000  1001  1001  101
-	A64SysReg_PMSLATFR_EL1			= 0xc4ce  // 11  000  1001  1001  110
+	A64SysReg_PMSIDR_EL1        = 0xc4cf, // 11  000  1001  1001  111
+	A64SysReg_PMBIDR_EL1        = 0xc4d7, // 11  000  1001  1010  111
+	A64SysReg_PMBLIMITR_EL1     = 0xc4d0, // 11  000  1001  1010  000
+	A64SysReg_PMBPTR_EL1        = 0xc4d1, // 11  000  1001  1010  001
+	A64SysReg_PMBSR_EL1         = 0xc4d3, // 11  000  1001  1010  011
+	A64SysReg_PMSCR_EL1         = 0xc4c8, // 11  000  1001  1001  000
+	A64SysReg_PMSCR_EL12        = 0xecc8, // 11  101  1001  1001  000
+	A64SysReg_PMSCR_EL2         = 0xe4c8, // 11  100  1001  1001  000
+	A64SysReg_PMSICR_EL1        = 0xc4ca, // 11  000  1001  1001  010
+	A64SysReg_PMSIRR_EL1        = 0xc4cb, // 11  000  1001  1001  011
+	A64SysReg_PMSFCR_EL1        = 0xc4cc, // 11  000  1001  1001  100
+	A64SysReg_PMSEVFR_EL1       = 0xc4cd, // 11  000  1001  1001  101
+	A64SysReg_PMSLATFR_EL1      = 0xc4ce  // 11  000  1001  1001  110
 };
 
 // Cyclone specific system registers
