@@ -94,6 +94,9 @@ static uint8_t *preprocess(char *code, size_t *size)
 	uint8_t high, low;
 	uint8_t *result;
 
+	if (strlen(code) == 0)
+		return NULL;
+
 	result = (uint8_t *)malloc(strlen(code));
 	if (result != NULL) {
 		while (code[i] != '\0') {
@@ -270,6 +273,10 @@ int main(int argc, char **argv)
 
 	mode = argv[optind];
 	assembly = preprocess(argv[optind + 1], &size);
+	if (!assembly) {
+		usage(argv[0]);
+		return -1;
+	}
 
 	if (args_left == 3) {
 		char *temp, *src = argv[optind + 2];
