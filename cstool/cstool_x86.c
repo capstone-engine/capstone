@@ -235,7 +235,7 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 
 	// Print out all immediate operands
 	count = cs_op_count(ud, ins, X86_OP_IMM);
-	if (count) {
+	if (count > 0) {
 		printf("\timm_count: %u\n", count);
 		for (i = 1; i < count + 1; i++) {
 			int index = cs_op_index(ud, ins, X86_OP_IMM, i);
