@@ -99,6 +99,8 @@ static char *utostr(uint64_t X, bool isNeg)
 }
 
 static A64NamedImmMapper_Mapping SysRegPairs[] = {
+	{"pan", A64SysReg_PAN},
+	{"uao", A64SysReg_UAO},
 	{"osdtrrx_el1", A64SysReg_OSDTRRX_EL1},
 	{"osdtrtx_el1",  A64SysReg_OSDTRTX_EL1},
 	{"teecr32_el1", A64SysReg_TEECR32_EL1},
@@ -180,12 +182,14 @@ static A64NamedImmMapper_Mapping SysRegPairs[] = {
 	{"vpidr_el2", A64SysReg_VPIDR_EL2},
 	{"vmpidr_el2", A64SysReg_VMPIDR_EL2},
 	{"sctlr_el1", A64SysReg_SCTLR_EL1},
+	{"sctlr_el12", A64SysReg_SCTLR_EL12},
 	{"sctlr_el2", A64SysReg_SCTLR_EL2},
 	{"sctlr_el3", A64SysReg_SCTLR_EL3},
 	{"actlr_el1", A64SysReg_ACTLR_EL1},
 	{"actlr_el2", A64SysReg_ACTLR_EL2},
 	{"actlr_el3", A64SysReg_ACTLR_EL3},
 	{"cpacr_el1", A64SysReg_CPACR_EL1},
+	{"cpacr_el12", A64SysReg_CPACR_EL12},
 	{"hcr_el2", A64SysReg_HCR_EL2},
 	{"scr_el3", A64SysReg_SCR_EL3},
 	{"mdcr_el2", A64SysReg_MDCR_EL2},
@@ -196,19 +200,25 @@ static A64NamedImmMapper_Mapping SysRegPairs[] = {
 	{"hacr_el2", A64SysReg_HACR_EL2},
 	{"mdcr_el3", A64SysReg_MDCR_EL3},
 	{"ttbr0_el1", A64SysReg_TTBR0_EL1},
+	{"ttbr0_el12", A64SysReg_TTBR0_EL12},
 	{"ttbr0_el2", A64SysReg_TTBR0_EL2},
 	{"ttbr0_el3", A64SysReg_TTBR0_EL3},
 	{"ttbr1_el1", A64SysReg_TTBR1_EL1},
+	{"ttbr1_el12", A64SysReg_TTBR1_EL12},
+	{"ttbr1_el2", A64SysReg_TTBR1_EL2},
 	{"tcr_el1", A64SysReg_TCR_EL1},
+	{"tcr_el12", A64SysReg_TCR_EL12},
 	{"tcr_el2", A64SysReg_TCR_EL2},
 	{"tcr_el3", A64SysReg_TCR_EL3},
 	{"vttbr_el2", A64SysReg_VTTBR_EL2},
 	{"vtcr_el2", A64SysReg_VTCR_EL2},
 	{"dacr32_el2", A64SysReg_DACR32_EL2},
 	{"spsr_el1", A64SysReg_SPSR_EL1},
+	{"spsr_el12", A64SysReg_SPSR_EL12},
 	{"spsr_el2", A64SysReg_SPSR_EL2},
 	{"spsr_el3", A64SysReg_SPSR_EL3},
 	{"elr_el1", A64SysReg_ELR_EL1},
+	{"elr_el12", A64SysReg_ELR_EL12},
 	{"elr_el2", A64SysReg_ELR_EL2},
 	{"elr_el3", A64SysReg_ELR_EL3},
 	{"sp_el0", A64SysReg_SP_EL0},
@@ -228,16 +238,20 @@ static A64NamedImmMapper_Mapping SysRegPairs[] = {
 	{"dlr_el0", A64SysReg_DLR_EL0},
 	{"ifsr32_el2", A64SysReg_IFSR32_EL2},
 	{"afsr0_el1", A64SysReg_AFSR0_EL1},
+	{"afsr0_el12", A64SysReg_AFSR0_EL12},
 	{"afsr0_el2", A64SysReg_AFSR0_EL2},
 	{"afsr0_el3", A64SysReg_AFSR0_EL3},
 	{"afsr1_el1", A64SysReg_AFSR1_EL1},
+	{"afsr1_el12", A64SysReg_AFSR1_EL12},
 	{"afsr1_el2", A64SysReg_AFSR1_EL2},
 	{"afsr1_el3", A64SysReg_AFSR1_EL3},
 	{"esr_el1", A64SysReg_ESR_EL1},
+	{"esr_el12", A64SysReg_ESR_EL12},
 	{"esr_el2", A64SysReg_ESR_EL2},
 	{"esr_el3", A64SysReg_ESR_EL3},
 	{"fpexc32_el2", A64SysReg_FPEXC32_EL2},
 	{"far_el1", A64SysReg_FAR_EL1},
+	{"far_el12", A64SysReg_FAR_EL12},
 	{"far_el2", A64SysReg_FAR_EL2},
 	{"far_el3", A64SysReg_FAR_EL3},
 	{"hpfar_el2", A64SysReg_HPFAR_EL2},
@@ -255,18 +269,23 @@ static A64NamedImmMapper_Mapping SysRegPairs[] = {
 	{"pmintenclr_el1", A64SysReg_PMINTENCLR_EL1},
 	{"pmovsset_el0", A64SysReg_PMOVSSET_EL0},
 	{"mair_el1", A64SysReg_MAIR_EL1},
+	{"mair_el12", A64SysReg_MAIR_EL12},
 	{"mair_el2", A64SysReg_MAIR_EL2},
 	{"mair_el3", A64SysReg_MAIR_EL3},
 	{"amair_el1", A64SysReg_AMAIR_EL1},
+	{"amair_el12", A64SysReg_AMAIR_EL12},
 	{"amair_el2", A64SysReg_AMAIR_EL2},
 	{"amair_el3", A64SysReg_AMAIR_EL3},
 	{"vbar_el1", A64SysReg_VBAR_EL1},
+	{"vbar_el12", A64SysReg_VBAR_EL12},
 	{"vbar_el2", A64SysReg_VBAR_EL2},
 	{"vbar_el3", A64SysReg_VBAR_EL3},
 	{"rmr_el1", A64SysReg_RMR_EL1},
 	{"rmr_el2", A64SysReg_RMR_EL2},
 	{"rmr_el3", A64SysReg_RMR_EL3},
 	{"contextidr_el1", A64SysReg_CONTEXTIDR_EL1},
+	{"contextidr_el12", A64SysReg_CONTEXTIDR_EL12},
+	{"contextidr_el2", A64SysReg_CONTEXTIDR_EL2},
 	{"tpidr_el0", A64SysReg_TPIDR_EL0},
 	{"tpidr_el2", A64SysReg_TPIDR_EL2},
 	{"tpidr_el3", A64SysReg_TPIDR_EL3},
@@ -275,19 +294,28 @@ static A64NamedImmMapper_Mapping SysRegPairs[] = {
 	{"cntfrq_el0", A64SysReg_CNTFRQ_EL0},
 	{"cntvoff_el2", A64SysReg_CNTVOFF_EL2},
 	{"cntkctl_el1", A64SysReg_CNTKCTL_EL1},
+	{"cntkctl_el12", A64SysReg_CNTKCTL_EL12},
 	{"cnthctl_el2", A64SysReg_CNTHCTL_EL2},
 	{"cntp_tval_el0", A64SysReg_CNTP_TVAL_EL0},
+	{"cntp_tval_el02", A64SysReg_CNTP_TVAL_EL02},
 	{"cnthp_tval_el2", A64SysReg_CNTHP_TVAL_EL2},
 	{"cntps_tval_el1", A64SysReg_CNTPS_TVAL_EL1},
 	{"cntp_ctl_el0", A64SysReg_CNTP_CTL_EL0},
 	{"cnthp_ctl_el2", A64SysReg_CNTHP_CTL_EL2},
+	{"cnthv_ctl_el2", A64SysReg_CNTHVCTL_EL2},
+	{"cnthv_cval_el2", A64SysReg_CNTHV_CVAL_EL2},
+	{"cnthv_tval_el2", A64SysReg_CNTHV_TVAL_EL2},
 	{"cntps_ctl_el1", A64SysReg_CNTPS_CTL_EL1},
 	{"cntp_cval_el0", A64SysReg_CNTP_CVAL_EL0},
+	{"cntp_cval_el02", A64SysReg_CNTP_CVAL_EL02},
 	{"cnthp_cval_el2", A64SysReg_CNTHP_CVAL_EL2},
 	{"cntps_cval_el1", A64SysReg_CNTPS_CVAL_EL1},
 	{"cntv_tval_el0", A64SysReg_CNTV_TVAL_EL0},
+	{"cntv_tval_el02", A64SysReg_CNTV_TVAL_EL02},
 	{"cntv_ctl_el0", A64SysReg_CNTV_CTL_EL0},
+	{"cntv_ctl_el02", A64SysReg_CNTV_CTL_EL02},
 	{"cntv_cval_el0", A64SysReg_CNTV_CVAL_EL0},
+	{"cntv_cval_el02", A64SysReg_CNTV_CVAL_EL02},
 	{"pmevcntr0_el0", A64SysReg_PMEVCNTR0_EL0},
 	{"pmevcntr1_el0", A64SysReg_PMEVCNTR1_EL0},
 	{"pmevcntr2_el0", A64SysReg_PMEVCNTR2_EL0},
@@ -351,6 +379,10 @@ static A64NamedImmMapper_Mapping SysRegPairs[] = {
 	{"pmevtyper28_el0", A64SysReg_PMEVTYPER28_EL0},
 	{"pmevtyper29_el0", A64SysReg_PMEVTYPER29_EL0},
 	{"pmevtyper30_el0", A64SysReg_PMEVTYPER30_EL0},
+	{"lorc_el1", A64SysReg_LORC_EL1},
+	{"lorea_el1", A64SysReg_LOREA_EL1},
+	{"lorn_el1", A64SysReg_LORN_EL1},
+	{"lorsa_el1", A64SysReg_LORSA_EL1},
 
 	// Trace registers
 	{"trcprgctlr", A64SysReg_TRCPRGCTLR},
@@ -574,7 +606,20 @@ static A64NamedImmMapper_Mapping SysRegPairs[] = {
 	{"ich_lr12_el2", A64SysReg_ICH_LR12_EL2},
 	{"ich_lr13_el2", A64SysReg_ICH_LR13_EL2},
 	{"ich_lr14_el2", A64SysReg_ICH_LR14_EL2},
-	{"ich_lr15_el2", A64SysReg_ICH_LR15_EL2}
+	{"ich_lr15_el2", A64SysReg_ICH_LR15_EL2},
+
+	// Statistical profiling registers
+	{"pmblimitr_el1", A64SysReg_PMBLIMITR_EL1},
+	{"pmbptr_el1", A64SysReg_PMBPTR_EL1},
+	{"pmbsr_el1", A64SysReg_PMBSR_EL1},
+	{"pmscr_el1", A64SysReg_PMSCR_EL1},
+	{"pmscr_el12", A64SysReg_PMSCR_EL12},
+	{"pmscr_el2", A64SysReg_PMSCR_EL2},
+	{"pmsicr_el1", A64SysReg_PMSICR_EL1},
+	{"pmsirr_el1", A64SysReg_PMSIRR_EL1},
+	{"pmsfcr_el1", A64SysReg_PMSFCR_EL1},
+	{"pmsevfr_el1", A64SysReg_PMSEVFR_EL1},
+	{"pmslatfr_el1", A64SysReg_PMSLATFR_EL1}
 };
 
 static A64NamedImmMapper_Mapping CycloneSysRegPairs[] = {
@@ -705,7 +750,7 @@ static A64NamedImmMapper_Mapping ATPairs[] = {
 	{"s12e1r", A64AT_S12E1R},
 	{"s12e1w", A64AT_S12E1W},
 	{"s12e0r", A64AT_S12E0R},
-	{"s12e0w", A64AT_S12E0W},
+	{"s12e0w", A64AT_S12E0W}
 };
 
 A64NamedImmMapper A64AT_ATMapper = {
@@ -804,7 +849,9 @@ A64NamedImmMapper A64PRFM_PRFMMapper = {
 static A64NamedImmMapper_Mapping PStatePairs[] = {
 	{"spsel", A64PState_SPSel},
 	{"daifset", A64PState_DAIFSet},
-	{"daifclr", A64PState_DAIFClr}
+	{"daifclr", A64PState_DAIFClr},
+	{"pan", A64PState_PAN},
+	{"uao", A64PState_UAO}
 };
 
 A64NamedImmMapper A64PState_PStateMapper = {
@@ -837,6 +884,7 @@ static A64NamedImmMapper_Mapping MRSPairs[] = {
 	{"id_mmfr1_el1", A64SysReg_ID_MMFR1_EL1},
 	{"id_mmfr2_el1", A64SysReg_ID_MMFR2_EL1},
 	{"id_mmfr3_el1", A64SysReg_ID_MMFR3_EL1},
+	{"id_mmfr4_el1", A64SysReg_ID_MMFR4_EL1},
 	{"id_isar0_el1", A64SysReg_ID_ISAR0_EL1},
 	{"id_isar1_el1", A64SysReg_ID_ISAR1_EL1},
 	{"id_isar2_el1", A64SysReg_ID_ISAR2_EL1},
@@ -853,6 +901,8 @@ static A64NamedImmMapper_Mapping MRSPairs[] = {
 	{"id_aa64isar1_el1", A64SysReg_ID_A64ISAR1_EL1},
 	{"id_aa64mmfr0_el1", A64SysReg_ID_A64MMFR0_EL1},
 	{"id_aa64mmfr1_el1", A64SysReg_ID_A64MMFR1_EL1},
+	{"id_aa64mmfr2_el1", A64SysReg_ID_A64MMFR2_EL1},
+	{"lorid_el1", A64SysReg_LORID_EL1},
 	{"mvfr0_el1", A64SysReg_MVFR0_EL1},
 	{"mvfr1_el1", A64SysReg_MVFR1_EL1},
 	{"mvfr2_el1", A64SysReg_MVFR2_EL1},
@@ -909,7 +959,11 @@ static A64NamedImmMapper_Mapping MRSPairs[] = {
 	{"icc_rpr_el1", A64SysReg_ICC_RPR_EL1},
 	{"ich_vtr_el2", A64SysReg_ICH_VTR_EL2},
 	{"ich_eisr_el2", A64SysReg_ICH_EISR_EL2},
-	{"ich_elsr_el2", A64SysReg_ICH_ELSR_EL2}
+	{"ich_elsr_el2", A64SysReg_ICH_ELSR_EL2},
+
+	// Statistical profiling registers
+	{"pmsidr_el1", A64SysReg_PMSIDR_EL1},
+	{"pmbidr_el1", A64SysReg_PMBIDR_EL1}
 };
 
 A64SysRegMapper AArch64_MRSMapper = {
