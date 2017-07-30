@@ -770,6 +770,7 @@ public class Arm_const {
 	public static final int ARM_GRP_CALL = 2;
 	public static final int ARM_GRP_INT = 4;
 	public static final int ARM_GRP_PRIVILEGE = 6;
+	public static final int ARM_GRP_BRANCH_RELATIVE = 7;
 
 	// Architecture-specific groups
 	public static final int ARM_GRP_CRYPTO = 128;

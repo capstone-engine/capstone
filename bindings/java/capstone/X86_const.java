@@ -1941,6 +1941,7 @@ public class X86_const {
 	public static final int X86_GRP_INT = 4;
 	public static final int X86_GRP_IRET = 5;
 	public static final int X86_GRP_PRIVILEGE = 6;
+	public static final int X86_GRP_BRANCH_RELATIVE = 7;
 
 	// Architecture-specific groups
 	public static final int X86_GRP_VM = 128;

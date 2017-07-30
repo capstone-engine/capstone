@@ -487,5 +487,6 @@ public class M68k_const {
 	public static final int M68K_GRP_JUMP = 1;
 	public static final int M68K_GRP_RET = 3;
 	public static final int M68K_GRP_IRET = 5;
-	public static final int M68K_GRP_ENDING = 6;
+	public static final int M68K_GRP_BRANCH_RELATIVE = 7;
+	public static final int M68K_GRP_ENDING = 8;
 }
