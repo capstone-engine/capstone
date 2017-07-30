@@ -1040,6 +1040,7 @@ let _ARM64_GRP_CALL = 2;;
 let _ARM64_GRP_RET = 3;;
 let _ARM64_GRP_INT = 4;;
 let _ARM64_GRP_PRIVILEGE = 6;;
+let _ARM64_GRP_BRANCH_RELATIVE = 7;;
 
 (* Architecture-specific groups *)
 let _ARM64_GRP_CRYPTO = 128;;

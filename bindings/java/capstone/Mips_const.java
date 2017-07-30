@@ -849,6 +849,7 @@ public class Mips_const {
 	public static final int MIPS_GRP_INT = 4;
 	public static final int MIPS_GRP_IRET = 5;
 	public static final int MIPS_GRP_PRIVILEGE = 6;
+	public static final int MIPS_GRP_BRANCH_RELATIVE = 7;
 
 	// Architecture-specific groups
 	public static final int MIPS_GRP_BITCOUNT = 128;

@@ -846,6 +846,7 @@ let _MIPS_GRP_RET = 3;;
 let _MIPS_GRP_INT = 4;;
 let _MIPS_GRP_IRET = 5;;
 let _MIPS_GRP_PRIVILEGE = 6;;
+let _MIPS_GRP_BRANCH_RELATIVE = 7;;
 
 (* Architecture-specific groups *)
 let _MIPS_GRP_BITCOUNT = 128;;

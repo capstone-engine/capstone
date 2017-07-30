@@ -767,6 +767,7 @@ let _ARM_GRP_JUMP = 1;;
 let _ARM_GRP_CALL = 2;;
 let _ARM_GRP_INT = 4;;
 let _ARM_GRP_PRIVILEGE = 6;;
+let _ARM_GRP_BRANCH_RELATIVE = 7;;
 
 (* Architecture-specific groups *)
 let _ARM_GRP_CRYPTO = 128;;

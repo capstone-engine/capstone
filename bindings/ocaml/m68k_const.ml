@@ -484,4 +484,5 @@ let _M68K_GRP_INVALID = 0;;
 let _M68K_GRP_JUMP = 1;;
 let _M68K_GRP_RET = 3;;
 let _M68K_GRP_IRET = 5;;
-let _M68K_GRP_ENDING = 6;;
+let _M68K_GRP_BRANCH_RELATIVE = 7;;
+let _M68K_GRP_ENDING = 8;;
