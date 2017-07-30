@@ -148,7 +148,7 @@
 {
 	ARM_BL, ARM_INS_BL,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_PC, 0 }, { ARM_REG_LR, ARM_REG_PC, 0 }, { ARM_GRP_CALL, ARM_GRP_ARM, 0 }, 1, 0
+	{ ARM_REG_PC, 0 }, { ARM_REG_LR, ARM_REG_PC, 0 }, { ARM_GRP_CALL, ARM_GRP_BRANCH_RELATIVE, ARM_GRP_ARM, 0 }, 1, 0
 #endif
 },
 {
@@ -166,13 +166,13 @@
 {
 	ARM_BLXi, ARM_INS_BLX,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_CALL, ARM_GRP_ARM, ARM_GRP_V5T, 0 }, 1, 0
+	{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_CALL, ARM_GRP_BRANCH_RELATIVE, ARM_GRP_ARM, ARM_GRP_V5T, 0 }, 1, 0
 #endif
 },
 {
 	ARM_BL_pred, ARM_INS_BL,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_CALL, ARM_GRP_ARM, 0 }, 1, 0
+	{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_CALL, ARM_GRP_BRANCH_RELATIVE, ARM_GRP_ARM, 0 }, 1, 0
 #endif
 },
 {
@@ -202,7 +202,7 @@
 {
 	ARM_Bcc, ARM_INS_B,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_PC, 0 }, { ARM_REG_PC, 0 }, { ARM_GRP_ARM, 0 }, 1, 0
+	{ ARM_REG_PC, 0 }, { ARM_REG_PC, 0 }, { ARM_GRP_BRANCH_RELATIVE, ARM_GRP_ARM, 0 }, 1, 0
 #endif
 },
 {
@@ -10732,7 +10732,7 @@
 {
 	ARM_t2B, ARM_INS_B,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 1, 0
+	{ 0 }, { 0 }, { ARM_GRP_BRANCH_RELATIVE, ARM_GRP_THUMB2, 0 }, 1, 0
 #endif
 },
 {
@@ -10774,7 +10774,7 @@
 {
 	ARM_t2Bcc, ARM_INS_B,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 1, 0
+	{ 0 }, { 0 }, { ARM_GRP_BRANCH_RELATIVE, ARM_GRP_THUMB2, 0 }, 1, 0
 #endif
 },
 {
@@ -12904,7 +12904,7 @@
 {
 	ARM_tB, ARM_INS_B,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 1, 0
+	{ 0 }, { 0 }, { ARM_GRP_BRANCH_RELATIVE, ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 1, 0
 #endif
 },
 {
@@ -12922,13 +12922,13 @@
 {
 	ARM_tBL, ARM_INS_BL,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_THUMB, ARM_GRP_CALL, 0 }, 1, 0
+	{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_BRANCH_RELATIVE, ARM_GRP_THUMB, ARM_GRP_CALL, 0 }, 1, 0
 #endif
 },
 {
 	ARM_tBLXi, ARM_INS_BLX,
 #ifndef CAPSTONE_DIET
-	{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_THUMB, ARM_GRP_V5T, ARM_GRP_NOTMCLASS, ARM_GRP_CALL, 0 }, 1, 0
+	{ ARM_REG_PC, 0 }, { ARM_REG_LR, 0 }, { ARM_GRP_BRANCH_RELATIVE, ARM_GRP_THUMB, ARM_GRP_V5T, ARM_GRP_NOTMCLASS, ARM_GRP_CALL, 0 }, 1, 0
 #endif
 },
 {
@@ -12946,19 +12946,19 @@
 {
 	ARM_tBcc, ARM_INS_B,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 1, 0
+	{ 0 }, { 0 }, { ARM_GRP_BRANCH_RELATIVE, ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, 0 }, 1, 0
 #endif
 },
 {
 	ARM_tCBNZ, ARM_INS_CBNZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 1, 0
+	{ 0 }, { 0 }, { ARM_GRP_BRANCH_RELATIVE, ARM_GRP_THUMB2, 0 }, 1, 0
 #endif
 },
 {
 	ARM_tCBZ, ARM_INS_CBZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_THUMB2, 0 }, 1, 0
+	{ 0 }, { 0 }, { ARM_GRP_BRANCH_RELATIVE, ARM_GRP_THUMB2, 0 }, 1, 0
 #endif
 },
 {

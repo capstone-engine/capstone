@@ -771,6 +771,7 @@ static void build_bxx(m68k_info *info, int opcode, int size, int jump_offset)
 	op->imm = jump_offset;
 
 	set_insn_group(info, M68K_GRP_JUMP);
+	set_insn_group(info, M68K_GRP_BRANCH_RELATIVE);
 }
 
 static void build_bcc(m68k_info *info, int size, int jump_offset)
@@ -800,6 +801,7 @@ static void build_dbxx(m68k_info *info, int opcode, int size, int jump_offset)
 	op1->imm = jump_offset;
 
 	set_insn_group(info, M68K_GRP_JUMP);
+	set_insn_group(info, M68K_GRP_BRANCH_RELATIVE);
 }
 
 static void build_dbcc(m68k_info *info, int size, int jump_offset)
@@ -1806,6 +1808,8 @@ static void d68020_cpbcc_16(m68k_info *info)
 	op0->address_mode = M68K_AM_IMMEDIATE;
 	op0->type = M68K_OP_IMM;
 	op0->imm = new_pc;
+
+	set_insn_group(info, M68K_GRP_BRANCH_RELATIVE);
 }
 
 static void d68020_cpbcc_32(m68k_info *info)
@@ -1830,6 +1834,8 @@ static void d68020_cpbcc_32(m68k_info *info)
 	op0->type = M68K_OP_IMM;
 	op0->address_mode = M68K_AM_IMMEDIATE;
 	op0->imm = new_pc;
+
+	set_insn_group(info, M68K_GRP_BRANCH_RELATIVE);
 }
 
 static void d68020_cpdbcc(m68k_info *info)
@@ -1859,6 +1865,8 @@ static void d68020_cpdbcc(m68k_info *info)
 	op1->address_mode = M68K_AM_IMMEDIATE;
 	op1->type = M68K_OP_IMM;
 	op1->imm = new_pc;
+
+	set_insn_group(info, M68K_GRP_BRANCH_RELATIVE);
 }
 
 static void fmove_fpcr(m68k_info *info, uint extension)
