@@ -240,6 +240,8 @@ static name_map insn_update_flgs[] = {
 	{ ARM_INS_SUB, "subs" },
 	{ ARM_INS_UMLAL, "umlals" },
 	{ ARM_INS_UMULL, "umulls" },
+
+	{ ARM_INS_UADD8, "uadd8" },
 };
 
 void ARM_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
