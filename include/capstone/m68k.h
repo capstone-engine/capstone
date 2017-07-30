@@ -581,6 +581,7 @@ typedef enum m68k_group_type {
 	M68K_GRP_JUMP,  // = CS_GRP_JUMP
 	M68K_GRP_RET = 3,  // = CS_GRP_RET
 	M68K_GRP_IRET = 5, // = CS_GRP_IRET
+	M68K_GRP_BRANCH_RELATIVE = 7, // = CS_GRP_BRANCH_RELATIVE
 
 	M68K_GRP_ENDING,// <-- mark the end of the list of groups
 } m68k_group_type;
