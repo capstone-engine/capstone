@@ -249,7 +249,9 @@ enum A64PStateValues {
 	A64PState_Invalid = -1,
 	A64PState_SPSel = 0x05,
 	A64PState_DAIFSet = 0x1e,
-	A64PState_DAIFClr = 0x1f
+	A64PState_DAIFClr = 0x1f,
+	A64PState_PAN	= 0x4,
+	A64PState_UAO	= 0x3
 };
 
 typedef enum A64SE_ShiftExtSpecifiers {
@@ -334,6 +336,7 @@ enum A64SysRegROValues {
 	A64SysReg_ID_MMFR1_EL1      = 0xc00d, // 11  000  0000  0001  101
 	A64SysReg_ID_MMFR2_EL1      = 0xc00e, // 11  000  0000  0001  110
 	A64SysReg_ID_MMFR3_EL1      = 0xc00f, // 11  000  0000  0001  111
+	A64SysReg_ID_MMFR4_EL1      = 0xc016, // 11  000  0000  0010  110
 	A64SysReg_ID_ISAR0_EL1      = 0xc010, // 11  000  0000  0010  000
 	A64SysReg_ID_ISAR1_EL1      = 0xc011, // 11  000  0000  0010  001
 	A64SysReg_ID_ISAR2_EL1      = 0xc012, // 11  000  0000  0010  010
@@ -350,6 +353,12 @@ enum A64SysRegROValues {
 	A64SysReg_ID_A64ISAR1_EL1  = 0xc031, // 11  000  0000  0110  001
 	A64SysReg_ID_A64MMFR0_EL1  = 0xc038, // 11  000  0000  0111  000
 	A64SysReg_ID_A64MMFR1_EL1  = 0xc039, // 11  000  0000  0111  001
+	A64SysReg_ID_A64MMFR2_EL1  = 0xC03A, // 11  000  0000  0111  010
+  	A64SysReg_LORC_EL1         = 0xc523, // 11  000  1010  0100  011
+  	A64SysReg_LOREA_EL1        = 0xc521, // 11  000  1010  0100  001
+  	A64SysReg_LORID_EL1        = 0xc527, // 11  000  1010  0100  111
+  	A64SysReg_LORN_EL1         = 0xc522, // 11  000  1010  0100  010
+  	A64SysReg_LORSA_EL1        = 0xc520, // 11  000  1010  0100  000
 	A64SysReg_MVFR0_EL1         = 0xc018, // 11  000  0000  0011  000
 	A64SysReg_MVFR1_EL1         = 0xc019, // 11  000  0000  0011  001
 	A64SysReg_MVFR2_EL1         = 0xc01a, // 11  000  0000  0011  010
@@ -429,6 +438,8 @@ enum A64SysRegWOValues {
 
 enum A64SysRegValues {
 	A64SysReg_Invalid = -1,               // Op0 Op1  CRn   CRm   Op2
+	A64SysReg_PAN               = 0xc213, // 11  000  0100  0010  011
+	A64SysReg_UAO               = 0xc214, // 11  000  0100  0010  100
 	A64SysReg_OSDTRRX_EL1       = 0x8002, // 10  000  0000  0000  010
 	A64SysReg_OSDTRTX_EL1       = 0x801a, // 10  000  0000  0011  010
 	A64SysReg_TEECR32_EL1       = 0x9000, // 10  010  0000  0000  000
@@ -510,7 +521,9 @@ enum A64SysRegValues {
 	A64SysReg_VPIDR_EL2         = 0xe000, // 11  100  0000  0000  000
 	A64SysReg_VMPIDR_EL2        = 0xe005, // 11  100  0000  0000  101
 	A64SysReg_CPACR_EL1         = 0xc082, // 11  000  0001  0000  010
+  	A64SysReg_CPACR_EL12        = 0xe882, // 11  101  0001  0000  010
 	A64SysReg_SCTLR_EL1         = 0xc080, // 11  000  0001  0000  000
+  	A64SysReg_SCTLR_EL12        = 0xe880, // 11  101  0001  0000  000
 	A64SysReg_SCTLR_EL2         = 0xe080, // 11  100  0001  0000  000
 	A64SysReg_SCTLR_EL3         = 0xf080, // 11  110  0001  0000  000
 	A64SysReg_ACTLR_EL1         = 0xc081, // 11  000  0001  0000  001
@@ -526,19 +539,25 @@ enum A64SysRegValues {
 	A64SysReg_HACR_EL2          = 0xe08f, // 11  100  0001  0001  111
 	A64SysReg_MDCR_EL3          = 0xf099, // 11  110  0001  0011  001
 	A64SysReg_TTBR0_EL1         = 0xc100, // 11  000  0010  0000  000
+  	A64SysReg_TTBR0_EL12        = 0xe900, // 11  101  0010  0000  000
 	A64SysReg_TTBR0_EL2         = 0xe100, // 11  100  0010  0000  000
 	A64SysReg_TTBR0_EL3         = 0xf100, // 11  110  0010  0000  000
 	A64SysReg_TTBR1_EL1         = 0xc101, // 11  000  0010  0000  001
+  	A64SysReg_TTBR1_EL12        = 0xe901, // 11  101  0010  0000  001
+  	A64SysReg_TTBR1_EL2         = 0xe101, // 11  100  0010  0000  001
 	A64SysReg_TCR_EL1           = 0xc102, // 11  000  0010  0000  010
+  	A64SysReg_TCR_EL12          = 0xe902, // 11  101  0010  0000  010
 	A64SysReg_TCR_EL2           = 0xe102, // 11  100  0010  0000  010
 	A64SysReg_TCR_EL3           = 0xf102, // 11  110  0010  0000  010
 	A64SysReg_VTTBR_EL2         = 0xe108, // 11  100  0010  0001  000
 	A64SysReg_VTCR_EL2          = 0xe10a, // 11  100  0010  0001  010
 	A64SysReg_DACR32_EL2        = 0xe180, // 11  100  0011  0000  000
 	A64SysReg_SPSR_EL1          = 0xc200, // 11  000  0100  0000  000
+  	A64SysReg_SPSR_EL12         = 0xea00, // 11  101  0100  0000  000
 	A64SysReg_SPSR_EL2          = 0xe200, // 11  100  0100  0000  000
 	A64SysReg_SPSR_EL3          = 0xf200, // 11  110  0100  0000  000
 	A64SysReg_ELR_EL1           = 0xc201, // 11  000  0100  0000  001
+  	A64SysReg_ELR_EL12          = 0xea01, // 11  101  0100  0000  001
 	A64SysReg_ELR_EL2           = 0xe201, // 11  100  0100  0000  001
 	A64SysReg_ELR_EL3           = 0xf201, // 11  110  0100  0000  001
 	A64SysReg_SP_EL0            = 0xc208, // 11  000  0100  0001  000
@@ -558,16 +577,20 @@ enum A64SysRegValues {
 	A64SysReg_DLR_EL0           = 0xda29, // 11  011  0100  0101  001
 	A64SysReg_IFSR32_EL2        = 0xe281, // 11  100  0101  0000  001
 	A64SysReg_AFSR0_EL1         = 0xc288, // 11  000  0101  0001  000
+  	A64SysReg_AFSR0_EL12        = 0xea88, // 11  101  0101  0001  000
 	A64SysReg_AFSR0_EL2         = 0xe288, // 11  100  0101  0001  000
 	A64SysReg_AFSR0_EL3         = 0xf288, // 11  110  0101  0001  000
 	A64SysReg_AFSR1_EL1         = 0xc289, // 11  000  0101  0001  001
+ 	A64SysReg_AFSR1_EL12        = 0xea89, // 11  101  0101  0001  001
 	A64SysReg_AFSR1_EL2         = 0xe289, // 11  100  0101  0001  001
 	A64SysReg_AFSR1_EL3         = 0xf289, // 11  110  0101  0001  001
 	A64SysReg_ESR_EL1           = 0xc290, // 11  000  0101  0010  000
+	A64SysReg_ESR_EL12          = 0xea90, // 11  101  0101  0010  000
 	A64SysReg_ESR_EL2           = 0xe290, // 11  100  0101  0010  000
 	A64SysReg_ESR_EL3           = 0xf290, // 11  110  0101  0010  000
 	A64SysReg_FPEXC32_EL2       = 0xe298, // 11  100  0101  0011  000
 	A64SysReg_FAR_EL1           = 0xc300, // 11  000  0110  0000  000
+	A64SysReg_FAR_EL12          = 0xeb00, // 11  101  0110  0000  000
 	A64SysReg_FAR_EL2           = 0xe300, // 11  100  0110  0000  000
 	A64SysReg_FAR_EL3           = 0xf300, // 11  110  0110  0000  000
 	A64SysReg_HPFAR_EL2         = 0xe304, // 11  100  0110  0000  100
@@ -585,18 +608,23 @@ enum A64SysRegValues {
 	A64SysReg_PMINTENCLR_EL1    = 0xc4f2, // 11  000  1001  1110  010
 	A64SysReg_PMOVSSET_EL0      = 0xdcf3, // 11  011  1001  1110  011
 	A64SysReg_MAIR_EL1          = 0xc510, // 11  000  1010  0010  000
+	A64SysReg_MAIR_EL12         = 0xed10, // 11  101  1010  0010  000
 	A64SysReg_MAIR_EL2          = 0xe510, // 11  100  1010  0010  000
 	A64SysReg_MAIR_EL3          = 0xf510, // 11  110  1010  0010  000
 	A64SysReg_AMAIR_EL1         = 0xc518, // 11  000  1010  0011  000
+	A64SysReg_AMAIR_EL12        = 0xed18, // 11  101  1010  0011  000
 	A64SysReg_AMAIR_EL2         = 0xe518, // 11  100  1010  0011  000
 	A64SysReg_AMAIR_EL3         = 0xf518, // 11  110  1010  0011  000
 	A64SysReg_VBAR_EL1          = 0xc600, // 11  000  1100  0000  000
+	A64SysReg_VBAR_EL12         = 0xee00, // 11  101  1100  0000  000
 	A64SysReg_VBAR_EL2          = 0xe600, // 11  100  1100  0000  000
 	A64SysReg_VBAR_EL3          = 0xf600, // 11  110  1100  0000  000
 	A64SysReg_RMR_EL1           = 0xc602, // 11  000  1100  0000  010
 	A64SysReg_RMR_EL2           = 0xe602, // 11  100  1100  0000  010
 	A64SysReg_RMR_EL3           = 0xf602, // 11  110  1100  0000  010
 	A64SysReg_CONTEXTIDR_EL1    = 0xc681, // 11  000  1101  0000  001
+	A64SysReg_CONTEXTIDR_EL12   = 0xee81, // 11  101  1101  0000  001
+	A64SysReg_CONTEXTIDR_EL2    = 0xe681, // 11  100  1101  0000  001
 	A64SysReg_TPIDR_EL0         = 0xde82, // 11  011  1101  0000  010
 	A64SysReg_TPIDR_EL2         = 0xe682, // 11  100  1101  0000  010
 	A64SysReg_TPIDR_EL3         = 0xf682, // 11  110  1101  0000  010
@@ -605,19 +633,28 @@ enum A64SysRegValues {
 	A64SysReg_CNTFRQ_EL0        = 0xdf00, // 11  011  1110  0000  000
 	A64SysReg_CNTVOFF_EL2       = 0xe703, // 11  100  1110  0000  011
 	A64SysReg_CNTKCTL_EL1       = 0xc708, // 11  000  1110  0001  000
+	A64SysReg_CNTKCTL_EL12      = 0xef08, // 11  101  1110  0001  000
 	A64SysReg_CNTHCTL_EL2       = 0xe708, // 11  100  1110  0001  000
+	A64SysReg_CNTHVCTL_EL2      = 0xe719, // 11  100  1110  0011  001
+	A64SysReg_CNTHV_CVAL_EL2    = 0xe71a, // 11  100  1110  0011  010
+	A64SysReg_CNTHV_TVAL_EL2    = 0xe718, // 11  100  1110  0011  000
 	A64SysReg_CNTP_TVAL_EL0     = 0xdf10, // 11  011  1110  0010  000
+	A64SysReg_CNTP_TVAL_EL02    = 0xef10, // 11  101  1110  0010  000
 	A64SysReg_CNTHP_TVAL_EL2    = 0xe710, // 11  100  1110  0010  000
 	A64SysReg_CNTPS_TVAL_EL1    = 0xff10, // 11  111  1110  0010  000
 	A64SysReg_CNTP_CTL_EL0      = 0xdf11, // 11  011  1110  0010  001
 	A64SysReg_CNTHP_CTL_EL2     = 0xe711, // 11  100  1110  0010  001
 	A64SysReg_CNTPS_CTL_EL1     = 0xff11, // 11  111  1110  0010  001
 	A64SysReg_CNTP_CVAL_EL0     = 0xdf12, // 11  011  1110  0010  010
+	A64SysReg_CNTP_CVAL_EL02    = 0xef12, // 11  101  1110  0010  010
 	A64SysReg_CNTHP_CVAL_EL2    = 0xe712, // 11  100  1110  0010  010
 	A64SysReg_CNTPS_CVAL_EL1    = 0xff12, // 11  111  1110  0010  010
 	A64SysReg_CNTV_TVAL_EL0     = 0xdf18, // 11  011  1110  0011  000
+	A64SysReg_CNTV_TVAL_EL02    = 0xef18, // 11  101  1110  0011  000
 	A64SysReg_CNTV_CTL_EL0      = 0xdf19, // 11  011  1110  0011  001
+	A64SysReg_CNTV_CTL_EL02	    = 0xef19, // 11  101  1110  0011  001
 	A64SysReg_CNTV_CVAL_EL0     = 0xdf1a, // 11  011  1110  0011  010
+	A64SysReg_CNTV_CVAL_EL02    = 0xef1a, // 11  101  1110  0011  010
 	A64SysReg_PMEVCNTR0_EL0     = 0xdf40, // 11  011  1110  1000  000
 	A64SysReg_PMEVCNTR1_EL0     = 0xdf41, // 11  011  1110  1000  001
 	A64SysReg_PMEVCNTR2_EL0     = 0xdf42, // 11  011  1110  1000  010
@@ -904,7 +941,22 @@ enum A64SysRegValues {
 	A64SysReg_ICH_LR12_EL2      = 0xe66c, // 11  100  1100  1101  100
 	A64SysReg_ICH_LR13_EL2      = 0xe66d, // 11  100  1100  1101  101
 	A64SysReg_ICH_LR14_EL2      = 0xe66e, // 11  100  1100  1101  110
-	A64SysReg_ICH_LR15_EL2      = 0xe66f  // 11  100  1100  1101  111
+	A64SysReg_ICH_LR15_EL2      = 0xe66f, // 11  100  1100  1101  111
+
+	// Statistical profiling registers
+	A64SysReg_PMSIDR_EL1        = 0xc4cf, // 11  000  1001  1001  111
+	A64SysReg_PMBIDR_EL1        = 0xc4d7, // 11  000  1001  1010  111
+	A64SysReg_PMBLIMITR_EL1     = 0xc4d0, // 11  000  1001  1010  000
+	A64SysReg_PMBPTR_EL1        = 0xc4d1, // 11  000  1001  1010  001
+	A64SysReg_PMBSR_EL1         = 0xc4d3, // 11  000  1001  1010  011
+	A64SysReg_PMSCR_EL1         = 0xc4c8, // 11  000  1001  1001  000
+	A64SysReg_PMSCR_EL12        = 0xecc8, // 11  101  1001  1001  000
+	A64SysReg_PMSCR_EL2         = 0xe4c8, // 11  100  1001  1001  000
+	A64SysReg_PMSICR_EL1        = 0xc4ca, // 11  000  1001  1001  010
+	A64SysReg_PMSIRR_EL1        = 0xc4cb, // 11  000  1001  1001  011
+	A64SysReg_PMSFCR_EL1        = 0xc4cc, // 11  000  1001  1001  100
+	A64SysReg_PMSEVFR_EL1       = 0xc4cd, // 11  000  1001  1001  101
+	A64SysReg_PMSLATFR_EL1      = 0xc4ce  // 11  000  1001  1001  110
 };
 
 // Cyclone specific system registers

@@ -377,6 +377,18 @@ source_group("Include\\SystemZ" FILES ${HEADERS_SYSZ})
 source_group("Include\\X86" FILES ${HEADERS_X86})
 source_group("Include\\XCore" FILES ${HEADERS_XCORE})
 
+### test library 64bit routine:
+get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
+
+if (NOT APPLE AND "${LIB64}" STREQUAL "TRUE")
+    set(LIBSUFFIX 64)
+else()
+    set(LIBSUFFIX "")
+endif()
+
+set(INSTALL_LIB_DIR     lib${LIBSUFFIX} CACHE PATH "Installation directory for libraries")
+mark_as_advanced(INSTALL_LIB_DIR)
+
 ## installation
 install(FILES ${HEADERS_COMMON} DESTINATION include/capstone)
 configure_file(capstone.pc.in capstone.pc)
@@ -384,15 +396,15 @@ configure_file(capstone.pc.in capstone.pc)
 if (CAPSTONE_BUILD_STATIC)
     install(TARGETS capstone-static
             RUNTIME DESTINATION bin
-            LIBRARY DESTINATION lib
-            ARCHIVE DESTINATION lib)
+            LIBRARY DESTINATION ${INSTALL_LIB_DIR}
+            ARCHIVE DESTINATION ${INSTALL_LIB_DIR})
 endif ()
 
 if (CAPSTONE_BUILD_SHARED)
     install(TARGETS capstone-shared
             RUNTIME DESTINATION bin
-            LIBRARY DESTINATION lib
-            ARCHIVE DESTINATION lib)
+            LIBRARY DESTINATION ${INSTALL_LIB_DIR}
+            ARCHIVE DESTINATION ${INSTALL_LIB_DIR})
 endif ()
 
 if (CAPSTONE_BUILD_SHARED)
