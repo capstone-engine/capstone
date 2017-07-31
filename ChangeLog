@@ -1,6 +1,57 @@
 This file details the changelog of Capstone.
 
 ---------------------------------
+Version 3.0.5-rc3: July 31st, 2017
+
+
+[ Core ]
+
+- Fix compilation for MacOS kernel extension
+- cstool to support armbe and arm64be modes
+- Add nmake.bat for Windows build
+- Fix an integer overflow for Windows kernel driver
+- Support to embedded Capstone into MacOS kernel
+- cstool: fix mips64 mode
+- Fix a compiling error in MS Visual Studio 2015
+- Install pkgconfig file with CMake build
+- Fix SOVERSION property of CMake build
+- Properly handle switching to Endian mode at run-time for Arm, Arm64, Mips & Sparc
+- Fix MingW build
+- Better handle CMake installation for Linux 64bit
+
+
+[ X86 ]
+
+- Support BND prefix of Intel MPX extension
+- Correct operand size for CALL/JMP in 64bit mode with prefix 0x66
+- LOCK NOP is a valid instruction
+- Fix ATT syntax for instruction with zero offset segment register
+- LES/LDS are invalid in 64bit mode
+- Fix number of operands for some MOV instructions
+
+
+[ ARM ]
+
+- Fix POP reg to update SP register
+- Update flags for UADD8 instruction
+
+
+[ ARM64 ]
+
+- Better performance with new lookup table
+- Handle system registers added in ARMv8.1/2
+
+
+[ Java binding ]
+
+- Better handle input with invalid code
+
+
+[ Visual Basic binding ]
+
+- New binding
+
+---------------------------------
 Version 3.0.5-rc2: March 2nd, 2017
 
 
