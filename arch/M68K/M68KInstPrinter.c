@@ -350,6 +350,7 @@ static name_map group_name_maps[] = {
 	{ M68K_GRP_JUMP, "jump" },
 	{ M68K_GRP_RET , "ret" },
 	{ M68K_GRP_IRET, "iret" },
+	{ M68K_GRP_BRANCH_RELATIVE, "branch_relative" },
 };
 #endif
 

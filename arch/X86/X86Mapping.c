@@ -2377,6 +2377,7 @@ static name_map group_name_maps[] = {
 	{ X86_GRP_INT, "int" },
 	{ X86_GRP_IRET,	"iret" },
 	{ X86_GRP_PRIVILEGE, "privilege" },
+	{ X86_GRP_BRANCH_RELATIVE, "branch_relative" },
 
 	// architecture-specific groups
 	{ X86_GRP_VM, "vm" },
