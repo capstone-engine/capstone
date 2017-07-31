@@ -500,6 +500,8 @@ typedef enum sparc_insn_group {
 	//> Generic groups
 	// all jump instructions (conditional+direct+indirect jumps)
 	SPARC_GRP_JUMP,	// = CS_GRP_JUMP
+	// all relative branching instructions
+	SPARC_GRP_BRANCH_RELATIVE = 7, // = CS_GRP_BRANCH_RELATIVE
 
 	//> Architecture-specific groups
 	SPARC_GRP_HARDQUAD = 128,

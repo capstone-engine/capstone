@@ -172,19 +172,19 @@
 {
 	SP_BA, SPARC_INS_B,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	SP_BCOND, SPARC_INS_B,
 #ifndef CAPSTONE_DIET
-	{ SPARC_REG_ICC, 0 }, { 0 }, { 0 }, 1, 0
+	{ SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	SP_BCONDA, SPARC_INS_B,
 #ifndef CAPSTONE_DIET
-	{ SPARC_REG_ICC, 0 }, { 0 }, { 0 }, 1, 0
+	{ SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
@@ -208,217 +208,217 @@
 {
 	SP_BPFCC, SPARC_INS_FB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_V9, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_V9, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPFCCA, SPARC_INS_FB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_V9, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_V9, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPFCCANT, SPARC_INS_FB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_V9, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_V9, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPFCCNT, SPARC_INS_FB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_V9, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_V9, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPGEZapn, SPARC_INS_BRGEZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPGEZapt, SPARC_INS_BRGEZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPGEZnapn, SPARC_INS_BRGEZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPGEZnapt, SPARC_INS_BRGEZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPGZapn, SPARC_INS_BRGZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPGZapt, SPARC_INS_BRGZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPGZnapn, SPARC_INS_BRGZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPGZnapt, SPARC_INS_BRGZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPICC, SPARC_INS_B,
 #ifndef CAPSTONE_DIET
-	{ SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_V9, 0 }, 1, 0
+	{ SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_V9, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPICCA, SPARC_INS_B,
 #ifndef CAPSTONE_DIET
-	{ SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_V9, 0 }, 1, 0
+	{ SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_V9, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPICCANT, SPARC_INS_B,
 #ifndef CAPSTONE_DIET
-	{ SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_V9, 0 }, 1, 0
+	{ SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_V9, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPICCNT, SPARC_INS_B,
 #ifndef CAPSTONE_DIET
-	{ SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_V9, 0 }, 1, 0
+	{ SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_V9, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPLEZapn, SPARC_INS_BRLEZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPLEZapt, SPARC_INS_BRLEZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPLEZnapn, SPARC_INS_BRLEZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPLEZnapt, SPARC_INS_BRLEZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPLZapn, SPARC_INS_BRLZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPLZapt, SPARC_INS_BRLZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPLZnapn, SPARC_INS_BRLZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPLZnapt, SPARC_INS_BRLZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPNZapn, SPARC_INS_BRNZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPNZapt, SPARC_INS_BRNZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPNZnapn, SPARC_INS_BRNZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPNZnapt, SPARC_INS_BRNZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPXCC, SPARC_INS_B,
 #ifndef CAPSTONE_DIET
-	{ SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPXCCA, SPARC_INS_B,
 #ifndef CAPSTONE_DIET
-	{ SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPXCCANT, SPARC_INS_B,
 #ifndef CAPSTONE_DIET
-	{ SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPXCCNT, SPARC_INS_B,
 #ifndef CAPSTONE_DIET
-	{ SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPZapn, SPARC_INS_BRZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPZapt, SPARC_INS_BRZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPZnapn, SPARC_INS_BRZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
 	SP_BPZnapt, SPARC_INS_BRZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { SPARC_GRP_64BIT, 0 }, 1, 0
+	{ 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, SPARC_GRP_64BIT, 0 }, 1, 0
 #endif
 },
 {
@@ -430,19 +430,19 @@
 {
 	SP_CALL, SPARC_INS_CALL,
 #ifndef CAPSTONE_DIET
-	{ SPARC_REG_O6, 0 }, { 0 }, { 0 }, 0, 0
+	{ SPARC_REG_O6, 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SP_CALLri, SPARC_INS_CALL,
 #ifndef CAPSTONE_DIET
-	{ SPARC_REG_O6, 0 }, { 0 }, { 0 }, 0, 0
+	{ SPARC_REG_O6, 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SP_CALLrr, SPARC_INS_CALL,
 #ifndef CAPSTONE_DIET
-	{ SPARC_REG_O6, 0 }, { 0 }, { 0 }, 0, 0
+	{ SPARC_REG_O6, 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -640,13 +640,13 @@
 {
 	SP_FBCOND, SPARC_INS_FB,
 #ifndef CAPSTONE_DIET
-	{ SPARC_REG_FCC0, 0 }, { 0 }, { 0 }, 1, 0
+	{ SPARC_REG_FCC0, 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	SP_FBCONDA, SPARC_INS_FB,
 #ifndef CAPSTONE_DIET
-	{ SPARC_REG_FCC0, 0 }, { 0 }, { 0 }, 1, 0
+	{ SPARC_REG_FCC0, 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
@@ -2362,7 +2362,7 @@
 {
 	SP_TLS_CALL, SPARC_INS_CALL,
 #ifndef CAPSTONE_DIET
-	{ SPARC_REG_O6, 0 }, { 0 }, { 0 }, 0, 0
+	{ SPARC_REG_O6, 0 }, { 0 }, { SPARC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
