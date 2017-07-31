@@ -289,7 +289,7 @@ static DecodeStatus DecodeMemOperandSc(MCInst *Inst, unsigned Val,
 			if((offset >= TMS320C64X_REG_A0) && (offset <= TMS320C64X_REG_A31))
 				offset = (offset - TMS320C64X_REG_A0 + TMS320C64X_REG_B0);
 			else if((offset >= TMS320C64X_REG_B0) && (offset <= TMS320C64X_REG_B31))
-				offset = (base - TMS320C64X_REG_B0 + TMS320C64X_REG_A0);
+				offset = (offset - TMS320C64X_REG_B0 + TMS320C64X_REG_A0);
 			offsetreg = getReg(GPRegsDecoderTable, offset);
 			MCOperand_CreateImm0(Inst, (scaled << 19) | (basereg << 12) | (offsetreg << 5) | (mode << 1) | unit);
 			break;
