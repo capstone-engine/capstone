@@ -262,61 +262,61 @@
 {
 	SystemZ_AsmBRC, SYSZ_INS_BRC,
 #ifndef CAPSTONE_DIET
-	{ SYSZ_REG_CC, 0 }, { 0 }, { 0 }, 1, 0
+	{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	SystemZ_AsmBRCL, SYSZ_INS_BRCL,
 #ifndef CAPSTONE_DIET
-	{ SYSZ_REG_CC, 0 }, { 0 }, { 0 }, 1, 0
+	{ SYSZ_REG_CC, 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	SystemZ_AsmCGIJ, SYSZ_INS_CGIJ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 1, 0
+	{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	SystemZ_AsmCGRJ, SYSZ_INS_CGRJ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 1, 0
+	{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	SystemZ_AsmCIJ, SYSZ_INS_CIJ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 1, 0
+	{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	SystemZ_AsmCLGIJ, SYSZ_INS_CLGIJ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 1, 0
+	{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	SystemZ_AsmCLGRJ, SYSZ_INS_CLGRJ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 1, 0
+	{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	SystemZ_AsmCLIJ, SYSZ_INS_CLIJ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 1, 0
+	{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	SystemZ_AsmCLRJ, SYSZ_INS_CLRJ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 1, 0
+	{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	SystemZ_AsmCRJ, SYSZ_INS_CRJ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 1, 0
+	{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
@@ -328,13 +328,13 @@
 {
 	SystemZ_AsmEJ, SYSZ_INS_JE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmEJG, SYSZ_INS_JGE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -388,13 +388,13 @@
 {
 	SystemZ_AsmHEJ, SYSZ_INS_JHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmHEJG, SYSZ_INS_JGHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -436,13 +436,13 @@
 {
 	SystemZ_AsmHJ, SYSZ_INS_JH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmHJG, SYSZ_INS_JGH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -484,577 +484,577 @@
 {
 	SystemZ_AsmJEAltCGI, SYSZ_INS_CGIJNLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJEAltCGR, SYSZ_INS_CGRJNLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJEAltCI, SYSZ_INS_CIJNLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJEAltCLGI, SYSZ_INS_CLGIJNLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJEAltCLGR, SYSZ_INS_CLGRJNLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJEAltCLI, SYSZ_INS_CLIJNLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJEAltCLR, SYSZ_INS_CLRJNLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJEAltCR, SYSZ_INS_CRJNLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJECGI, SYSZ_INS_CGIJE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJECGR, SYSZ_INS_CGRJE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJECI, SYSZ_INS_CIJE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJECLGI, SYSZ_INS_CLGIJE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJECLGR, SYSZ_INS_CLGRJE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJECLI, SYSZ_INS_CLIJE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJECLR, SYSZ_INS_CLRJE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJECR, SYSZ_INS_CRJE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHAltCGI, SYSZ_INS_CGIJNLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHAltCGR, SYSZ_INS_CGRJNLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHAltCI, SYSZ_INS_CIJNLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHAltCLGI, SYSZ_INS_CLGIJNLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHAltCLGR, SYSZ_INS_CLGRJNLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHAltCLI, SYSZ_INS_CLIJNLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHAltCLR, SYSZ_INS_CLRJNLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHAltCR, SYSZ_INS_CRJNLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHCGI, SYSZ_INS_CGIJH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHCGR, SYSZ_INS_CGRJH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHCI, SYSZ_INS_CIJH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHCLGI, SYSZ_INS_CLGIJH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHCLGR, SYSZ_INS_CLGRJH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHCLI, SYSZ_INS_CLIJH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHCLR, SYSZ_INS_CLRJH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHCR, SYSZ_INS_CRJH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHEAltCGI, SYSZ_INS_CGIJNL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHEAltCGR, SYSZ_INS_CGRJNL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHEAltCI, SYSZ_INS_CIJNL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHEAltCLGI, SYSZ_INS_CLGIJNL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHEAltCLGR, SYSZ_INS_CLGRJNL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHEAltCLI, SYSZ_INS_CLIJNL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHEAltCLR, SYSZ_INS_CLRJNL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHEAltCR, SYSZ_INS_CRJNL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHECGI, SYSZ_INS_CGIJHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHECGR, SYSZ_INS_CGRJHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHECI, SYSZ_INS_CIJHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHECLGI, SYSZ_INS_CLGIJHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHECLGR, SYSZ_INS_CLGRJHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHECLI, SYSZ_INS_CLIJHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHECLR, SYSZ_INS_CLRJHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJHECR, SYSZ_INS_CRJHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLAltCGI, SYSZ_INS_CGIJNHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLAltCGR, SYSZ_INS_CGRJNHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLAltCI, SYSZ_INS_CIJNHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLAltCLGI, SYSZ_INS_CLGIJNHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLAltCLGR, SYSZ_INS_CLGRJNHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLAltCLI, SYSZ_INS_CLIJNHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLAltCLR, SYSZ_INS_CLRJNHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLAltCR, SYSZ_INS_CRJNHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLCGI, SYSZ_INS_CGIJL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLCGR, SYSZ_INS_CGRJL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLCI, SYSZ_INS_CIJL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLCLGI, SYSZ_INS_CLGIJL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLCLGR, SYSZ_INS_CLGRJL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLCLI, SYSZ_INS_CLIJL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLCLR, SYSZ_INS_CLRJL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLCR, SYSZ_INS_CRJL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLEAltCGI, SYSZ_INS_CGIJNH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLEAltCGR, SYSZ_INS_CGRJNH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLEAltCI, SYSZ_INS_CIJNH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLEAltCLGI, SYSZ_INS_CLGIJNH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLEAltCLGR, SYSZ_INS_CLGRJNH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLEAltCLI, SYSZ_INS_CLIJNH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLEAltCLR, SYSZ_INS_CLRJNH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLEAltCR, SYSZ_INS_CRJNH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLECGI, SYSZ_INS_CGIJLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLECGR, SYSZ_INS_CGRJLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLECI, SYSZ_INS_CIJLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLECLGI, SYSZ_INS_CLGIJLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLECLGR, SYSZ_INS_CLGRJLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLECLI, SYSZ_INS_CLIJLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLECLR, SYSZ_INS_CLRJLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLECR, SYSZ_INS_CRJLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLHAltCGI, SYSZ_INS_CGIJNE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLHAltCGR, SYSZ_INS_CGRJNE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLHAltCI, SYSZ_INS_CIJNE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLHAltCLGI, SYSZ_INS_CLGIJNE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLHAltCLGR, SYSZ_INS_CLGRJNE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLHAltCLI, SYSZ_INS_CLIJNE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLHAltCLR, SYSZ_INS_CLRJNE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLHAltCR, SYSZ_INS_CRJNE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLHCGI, SYSZ_INS_CGIJLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLHCGR, SYSZ_INS_CGRJLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLHCI, SYSZ_INS_CIJLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLHCLGI, SYSZ_INS_CLGIJLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLHCLGR, SYSZ_INS_CLGRJLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLHCLI, SYSZ_INS_CLIJLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLHCLR, SYSZ_INS_CLRJLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmJLHCR, SYSZ_INS_CRJLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -1072,13 +1072,13 @@
 {
 	SystemZ_AsmLEJ, SYSZ_INS_JLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmLEJG, SYSZ_INS_JGLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -1126,13 +1126,13 @@
 {
 	SystemZ_AsmLHJ, SYSZ_INS_JLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmLHJG, SYSZ_INS_JGLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -1174,13 +1174,13 @@
 {
 	SystemZ_AsmLJ, SYSZ_INS_JL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmLJG, SYSZ_INS_JGL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -1252,13 +1252,13 @@
 {
 	SystemZ_AsmNEJ, SYSZ_INS_JNE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmNEJG, SYSZ_INS_JGNE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -1312,13 +1312,13 @@
 {
 	SystemZ_AsmNHEJ, SYSZ_INS_JNHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmNHEJG, SYSZ_INS_JGNHE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -1360,13 +1360,13 @@
 {
 	SystemZ_AsmNHJ, SYSZ_INS_JNH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmNHJG, SYSZ_INS_JGNH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -1420,13 +1420,13 @@
 {
 	SystemZ_AsmNLEJ, SYSZ_INS_JNLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmNLEJG, SYSZ_INS_JGNLE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -1474,13 +1474,13 @@
 {
 	SystemZ_AsmNLHJ, SYSZ_INS_JNLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmNLHJG, SYSZ_INS_JGNLH,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -1522,13 +1522,13 @@
 {
 	SystemZ_AsmNLJ, SYSZ_INS_JNL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmNLJG, SYSZ_INS_JGNL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -1576,13 +1576,13 @@
 {
 	SystemZ_AsmNOJ, SYSZ_INS_JNO,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmNOJG, SYSZ_INS_JGNO,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -1630,13 +1630,13 @@
 {
 	SystemZ_AsmOJ, SYSZ_INS_JO,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_AsmOJG, SYSZ_INS_JGO,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -1696,43 +1696,43 @@
 {
 	SystemZ_BR, SYSZ_INS_BR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 1
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 1
 #endif
 },
 {
 	SystemZ_BRAS, SYSZ_INS_BRAS,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_BRASL, SYSZ_INS_BRASL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	SystemZ_BRC, SYSZ_INS_J,
 #ifndef CAPSTONE_DIET
-	{ SYSZ_REG_CC, 0 }, { 0 }, { 0 }, 1, 0
+	{ SYSZ_REG_CC, 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, { 0 }, 1, 0
 #endif
 },
 {
 	SystemZ_BRCL, SYSZ_INS_JG,
 #ifndef CAPSTONE_DIET
-	{ SYSZ_REG_CC, 0 }, { 0 }, { 0 }, 1, 0
+	{ SYSZ_REG_CC, 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, { 0 }, 1, 0
 #endif
 },
 {
 	SystemZ_BRCT, SYSZ_INS_BRCT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 1, 0
+	{ 0 }, { SYSZ_REG_CC, SYSZ_GRP_BRANCH_RELATIVE, 0 }, { 0 }, 1, 0
 #endif
 },
 {
 	SystemZ_BRCTG, SYSZ_INS_BRCTG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 1, 0
+	{ 0 }, { SYSZ_REG_CC, SYSZ_GRP_BRANCH_RELATIVE, 0 }, { 0 }, 1, 0
 #endif
 },
 {
@@ -1906,7 +1906,7 @@
 {
 	SystemZ_CGIJ, SYSZ_INS_CGIJ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 1, 0
+	{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
@@ -1918,7 +1918,7 @@
 {
 	SystemZ_CGRJ, SYSZ_INS_CGRJ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 1, 0
+	{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
@@ -1984,7 +1984,7 @@
 {
 	SystemZ_CIJ, SYSZ_INS_CIJ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 1, 0
+	{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
@@ -2086,7 +2086,7 @@
 {
 	SystemZ_CLGIJ, SYSZ_INS_CLGIJ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 1, 0
+	{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
@@ -2098,7 +2098,7 @@
 {
 	SystemZ_CLGRJ, SYSZ_INS_CLGRJ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 1, 0
+	{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
@@ -2146,7 +2146,7 @@
 {
 	SystemZ_CLIJ, SYSZ_INS_CLIJ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 1, 0
+	{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
@@ -2164,7 +2164,7 @@
 {
 	SystemZ_CLRJ, SYSZ_INS_CLRJ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 1, 0
+	{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
@@ -2218,7 +2218,7 @@
 {
 	SystemZ_CRJ, SYSZ_INS_CRJ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { SYSZ_REG_CC, 0 }, { 0 }, 1, 0
+	{ 0 }, { SYSZ_REG_CC, 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
@@ -2476,13 +2476,13 @@
 {
 	SystemZ_J, SYSZ_INS_J,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	SystemZ_JG, SYSZ_INS_JG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { SYSZ_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
