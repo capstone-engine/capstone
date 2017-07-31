@@ -262,7 +262,7 @@
 {
 	PPC_B, PPC_INS_B,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
@@ -274,13 +274,13 @@
 {
 	PPC_BC, PPC_INS_BC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	PPC_BCC, PPC_INS_B,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
@@ -316,7 +316,7 @@
 {
 	PPC_BCCL, PPC_INS_BL,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+	{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -388,7 +388,7 @@
 {
 	PPC_BCL, PPC_INS_BCL,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+	{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -418,13 +418,13 @@
 {
 	PPC_BCLalways, PPC_INS_BCL,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+	{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	PPC_BCLn, PPC_INS_BCL,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+	{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -460,19 +460,19 @@
 {
 	PPC_BCn, PPC_INS_BC,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	PPC_BDNZ, PPC_INS_BDNZ,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+	{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	PPC_BDNZ8, PPC_INS_BDNZ,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_CTR8, 0 }, { PPC_REG_CTR8, 0 }, { 0 }, 1, 0
+	{ PPC_REG_CTR8, 0 }, { PPC_REG_CTR8, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
@@ -496,7 +496,7 @@
 {
 	PPC_BDNZL, PPC_INS_BDNZL,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+	{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -562,37 +562,37 @@
 {
 	PPC_BDNZLm, PPC_INS_BDNZL,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+	{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	PPC_BDNZLp, PPC_INS_BDNZL,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+	{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	PPC_BDNZm, PPC_INS_BDNZ,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+	{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	PPC_BDNZp, PPC_INS_BDNZ,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+	{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	PPC_BDZ, PPC_INS_BDZ,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+	{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	PPC_BDZ8, PPC_INS_BDZ,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_CTR8, 0 }, { PPC_REG_CTR8, 0 }, { 0 }, 1, 0
+	{ PPC_REG_CTR8, 0 }, { PPC_REG_CTR8, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
@@ -616,7 +616,7 @@
 {
 	PPC_BDZL, PPC_INS_BDZL,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+	{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -682,61 +682,61 @@
 {
 	PPC_BDZLm, PPC_INS_BDZL,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+	{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	PPC_BDZLp, PPC_INS_BDZL,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+	{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	PPC_BDZm, PPC_INS_BDZ,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+	{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	PPC_BDZp, PPC_INS_BDZ,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 1, 0
+	{ PPC_REG_CTR, 0 }, { PPC_REG_CTR, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	PPC_BL, PPC_INS_BL,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0
+	{ PPC_REG_RM, 0 }, { PPC_REG_LR, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	PPC_BL8, PPC_INS_BL,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0
+	{ PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	PPC_BL8_NOP, PPC_INS_BL,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0
+	{ PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	PPC_BL8_NOP_TLS, PPC_INS_BL,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0
+	{ PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	PPC_BL8_TLS, PPC_INS_BL,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0
+	{ PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
 	PPC_BL8_TLS_, PPC_INS_BL,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { 0 }, 0, 0
+	{ PPC_REG_RM, 0 }, { PPC_REG_LR8, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -5776,13 +5776,13 @@
 {
 	PPC_TAILB, PPC_INS_B,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 1, 0
+	{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	PPC_TAILB8, PPC_INS_B,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_RM, 0 }, { 0 }, { 0 }, 1, 0
+	{ PPC_REG_RM, 0 }, { 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
@@ -8008,7 +8008,7 @@
 {
 	PPC_gBC, PPC_INS_BC,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0
+	{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
@@ -8032,7 +8032,7 @@
 {
 	PPC_gBCL, PPC_INS_BCL,
 #ifndef CAPSTONE_DIET
-	{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_LR, PPC_REG_CTR, 0 }, { 0 }, 0, 0
+	{ PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_LR, PPC_REG_CTR, 0 }, { PPC_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 {
