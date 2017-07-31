@@ -826,6 +826,7 @@ static name_map group_name_maps[] = {
 	// generic groups
 	{ SYSZ_GRP_INVALID, NULL },
 	{ SYSZ_GRP_JUMP, "jump" },
+	{ SYSZ_GRP_BRANCH_RELATIVE, "branch_relative" },
 
 	// architecture-specific groups
 	{ SYSZ_GRP_DISTINCTOPS, "distinctops" },

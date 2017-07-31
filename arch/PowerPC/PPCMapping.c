@@ -1440,6 +1440,7 @@ static name_map group_name_maps[] = {
 	// generic groups
 	{ PPC_GRP_INVALID, NULL },
 	{ PPC_GRP_JUMP,	"jump" },
+	{ PPC_GRP_BRANCH_RELATIVE, "branch_relative" },
 
 	// architecture-specific groups
 	{ PPC_GRP_ALTIVEC, "altivec" },

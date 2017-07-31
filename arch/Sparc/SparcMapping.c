@@ -511,6 +511,7 @@ static name_map group_name_maps[] = {
 	// generic groups
 	{ SPARC_GRP_INVALID, NULL },
 	{ SPARC_GRP_JUMP, "jump" },
+	{ SPARC_GRP_BRANCH_RELATIVE, "branch_relative" },
 
 	// architecture-specific groups
 	{ SPARC_GRP_HARDQUAD, "hardquad" },
