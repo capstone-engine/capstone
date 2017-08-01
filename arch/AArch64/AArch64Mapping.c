@@ -836,6 +836,7 @@ static name_map group_name_maps[] = {
 	{ ARM64_GRP_RET, "return" },
 	{ ARM64_GRP_PRIVILEGE, "privilege" },
 	{ ARM64_GRP_INT, "int" },
+	{ ARM64_GRP_BRANCH_RELATIVE, "branch_relative" },
 
 	// architecture-specific groups
 	{ ARM64_GRP_CRYPTO, "crypto" },

@@ -772,6 +772,7 @@ static name_map group_name_maps[] = {
 	{ ARM_GRP_CALL,	"call" },
 	{ ARM_GRP_INT,	"int" },
 	{ ARM_GRP_PRIVILEGE, "privilege" },
+	{ ARM_GRP_BRANCH_RELATIVE, "branch_relative" },
 
 	// architecture-specific groups
 	{ ARM_GRP_CRYPTO, "crypto" },

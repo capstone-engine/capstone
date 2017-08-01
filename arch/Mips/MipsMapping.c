@@ -907,6 +907,7 @@ static name_map group_name_maps[] = {
 	{ MIPS_GRP_INT, "int" },
 	{ MIPS_GRP_IRET, "iret" },
 	{ MIPS_GRP_PRIVILEGE, "privileged" },
+	{ MIPS_GRP_BRANCH_RELATIVE, "branch_relative" },
 
 	// architecture-specific groups
 	{ MIPS_GRP_BITCOUNT, "bitcount" },
