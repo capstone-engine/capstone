@@ -12578,7 +12578,15 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info)
   if (*AsmOps) {
     SStream_concat0(OS, "\t");
     for (c = AsmOps; *c; c++) {
-      if (*c == '$') {
+      if (*c == '[') {
+        SStream_concat0(OS, "[");
+        set_mem_access(MI, true);
+      }
+      else if (*c == ']') {
+        SStream_concat0(OS, "]");
+        set_mem_access(MI, false);
+      }
+      else if (*c == '$') {
         c += 1;
         if (*c == (char)0xff) {
           c += 1;
