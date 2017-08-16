@@ -949,7 +949,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		// handle some special cases here.
 		// FIXME: fix this in the next major update.
 		if (*size  == 2) {
-			unsigned char b1, b2;
+			unsigned char b1 = 0, b2 = 0;
 
 			reader(&info, &b1, address);
 			reader(&info, &b2, address + 1);
