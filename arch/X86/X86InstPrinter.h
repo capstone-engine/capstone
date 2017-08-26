@@ -22,5 +22,6 @@
 
 void X86_Intel_printInst(MCInst *MI, SStream *OS, void *Info);
 void X86_ATT_printInst(MCInst *MI, SStream *OS, void *Info);
+void X86_Nasm_printInst(MCInst *MI, SStream *OS, void *Info);
 
 #endif
