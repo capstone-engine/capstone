@@ -66,7 +66,7 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 					handle->syntax = CS_OPT_SYNTAX_INTEL;
 					break;
 				case CS_OPT_SYNTAX_NASM:
-					handle->printer = X86_Nasm_printInst;
+					handle->printer = X86_Intel_printInst;
 					handle->syntax = CS_OPT_SYNTAX_NASM;
 					break;
 
