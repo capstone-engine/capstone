@@ -63,7 +63,14 @@ static void set_mem_access(MCInst *MI, bool status)
 
 static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , " ");
+			break;
+		default:
+			SStream_concat0(O , "ptr ");
+			break;
+	}
 
 	switch(MI->csh->mode) {
 		case CS_MODE_16:
@@ -93,7 +100,14 @@ static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printi8mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "byte ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "byte ");
+			break;
+		default:
+			SStream_concat0(O , "byte ptr ");
+			break;
+	}
 	MI->x86opsize = 1;
 	printMemReference(MI, OpNo, O);
 }
@@ -101,27 +115,55 @@ static void printi8mem(MCInst *MI, unsigned OpNo, SStream *O)
 static void printi16mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	MI->x86opsize = 2;
-	SStream_concat0(O, "word ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "word ");
+			break;
+		default:
+			SStream_concat0(O , "word ptr ");
+			break;
+	}
 	printMemReference(MI, OpNo, O);
 }
 
 static void printi32mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	MI->x86opsize = 4;
-	SStream_concat0(O, "dword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "dword ");
+			break;
+		default:
+			SStream_concat0(O , "dword ptr ");
+			break;
+	}
 	printMemReference(MI, OpNo, O);
 }
 
 static void printi64mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "qword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "qword ");
+			break;
+		default:
+			SStream_concat0(O , "qword ptr ");
+			break;
+	}
 	MI->x86opsize = 8;
 	printMemReference(MI, OpNo, O);
 }
 
 static void printi128mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "xmmword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "xmmword ");
+			break;
+		default:
+			SStream_concat0(O , "xmmword ptr ");
+			break;
+	}
 	MI->x86opsize = 16;
 	printMemReference(MI, OpNo, O);
 }
@@ -129,56 +171,112 @@ static void printi128mem(MCInst *MI, unsigned OpNo, SStream *O)
 #ifndef CAPSTONE_X86_REDUCE
 static void printi256mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "ymmword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "ymmword ");
+			break;
+		default:
+			SStream_concat0(O , "ymmword ptr ");
+			break;
+	}
 	MI->x86opsize = 32;
 	printMemReference(MI, OpNo, O);
 }
 
 static void printi512mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "zmmword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "zmmword ");
+			break;
+		default:
+			SStream_concat0(O , "zmmword ptr ");
+			break;
+	}
 	MI->x86opsize = 64;
 	printMemReference(MI, OpNo, O);
 }
 
 static void printf32mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "dword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "dword ");
+			break;
+		default:
+			SStream_concat0(O , "dword ptr ");
+			break;
+	}
 	MI->x86opsize = 4;
 	printMemReference(MI, OpNo, O);
 }
 
 static void printf64mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "qword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "qword ");
+			break;
+		default:
+			SStream_concat0(O , "qword ptr ");
+			break;
+	}
 	MI->x86opsize = 8;
 	printMemReference(MI, OpNo, O);
 }
 
 static void printf80mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "xword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "xword ptr ");
+			break;
+		default:
+			SStream_concat0(O , "xword ptr ");
+			break;
+	}
 	MI->x86opsize = 10;
 	printMemReference(MI, OpNo, O);
 }
 
 static void printf128mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "xmmword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "xmmword ");
+			break;
+		default:
+			SStream_concat0(O , "xmmword ptr ");
+			break;
+	}
 	MI->x86opsize = 16;
 	printMemReference(MI, OpNo, O);
 }
 
 static void printf256mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "ymmword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "ymmword ");
+			break;
+		default:
+			SStream_concat0(O , "ymmword ptr ");
+			break;
+	}
 	MI->x86opsize = 32;
 	printMemReference(MI, OpNo, O);
 }
 
 static void printf512mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "zmmword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "zmmword ");
+			break;
+		default:
+			SStream_concat0(O , "zmmword ptr ");
+			break;
+	}
 	MI->x86opsize = 64;
 	printMemReference(MI, OpNo, O);
 }
@@ -277,13 +375,27 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		int64_t imm = MCOperand_getImm(Op);
 		if (imm < 0) {
 			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%"PRIx64, -imm);
+				switch (MI->csh->syntax) {
+					case CS_OPT_SYNTAX_NASM:
+						SStream_concat(O , "-0%"PRIx64"h" , -imm);
+						break;
+					default:
+						SStream_concat(O , "-0x%"PRIx64 , -imm);
+						break;
+				}
 			else
 				SStream_concat(O, "-%"PRIu64, -imm);
 
 		} else {
 			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%"PRIx64, imm);
+				switch (MI->csh->syntax) {
+					case CS_OPT_SYNTAX_NASM:
+						SStream_concat(O , "0%"PRIx64"h" , imm);
+						break;
+					default:
+						SStream_concat(O , "0x%"PRIx64 , imm);
+						break;
+				}
 			else
 				SStream_concat(O, "%"PRIu64, imm);
 		}
@@ -353,56 +465,112 @@ static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 
 void printSrcIdx8(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "byte ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "byte ");
+			break;
+		default:
+			SStream_concat0(O , "byte ptr ");
+			break;
+	}
 	MI->x86opsize = 1;
 	printSrcIdx(MI, OpNo, O);
 }
 
 void printSrcIdx16(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "word ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "word ");
+			break;
+		default:
+			SStream_concat0(O , "word ptr ");
+			break;
+	}
 	MI->x86opsize = 2;
 	printSrcIdx(MI, OpNo, O);
 }
 
 void printSrcIdx32(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "dword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "dword ");
+			break;
+		default:
+			SStream_concat0(O , "dword ptr ");
+			break;
+	}
 	MI->x86opsize = 4;
 	printSrcIdx(MI, OpNo, O);
 }
 
 void printSrcIdx64(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "qword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "qword ");
+			break;
+		default:
+			SStream_concat0(O , "qword ptr ");
+			break;
+	}
 	MI->x86opsize = 8;
 	printSrcIdx(MI, OpNo, O);
 }
 
 void printDstIdx8(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "byte ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "byte ");
+			break;
+		default:
+			SStream_concat0(O , "byte ptr ");
+			break;
+	}
 	MI->x86opsize = 1;
 	printDstIdx(MI, OpNo, O);
 }
 
 void printDstIdx16(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "word ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "word ");
+			break;
+		default:
+			SStream_concat0(O , "word ptr ");
+			break;
+	}
 	MI->x86opsize = 2;
 	printDstIdx(MI, OpNo, O);
 }
 
 void printDstIdx32(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "dword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "dword ");
+			break;
+		default:
+			SStream_concat0(O , "dword ptr ");
+			break;
+	}
 	MI->x86opsize = 4;
 	printDstIdx(MI, OpNo, O);
 }
 
 void printDstIdx64(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "qword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "qword ");
+			break;
+		default:
+			SStream_concat0(O , "qword ptr ");
+			break;
+	}
 	MI->x86opsize = 8;
 	printDstIdx(MI, OpNo, O);
 }
@@ -440,10 +608,24 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 		if (MI->csh->detail)
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = imm;
 		if (imm < 0) {
-			SStream_concat(O, "0x%"PRIx64, arch_masks[MI->csh->mode] & imm);
+			switch (MI->csh->syntax) {
+				case CS_OPT_SYNTAX_NASM:
+					SStream_concat(O , "0%"PRIx64"h" , arch_masks[MI->csh->mode] & imm);
+					break;
+				default:
+					SStream_concat(O , "0x%"PRIx64 , arch_masks[MI->csh->mode] & imm);
+					break;
+			}
 		} else {
 			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%"PRIx64, imm);
+				switch (MI->csh->syntax) {
+					case CS_OPT_SYNTAX_NASM:
+						SStream_concat(O , "0%"PRIx64"h" , imm);
+						break;
+					default:
+						SStream_concat(O , "0x%"PRIx64 , imm);
+						break;
+				}
 			else
 				SStream_concat(O, "%"PRIu64, imm);
 		}
@@ -460,28 +642,56 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 
 static void printMemOffs8(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "byte ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "byte ");
+			break;
+		default:
+			SStream_concat0(O , "byte ptr ");
+			break;
+	}
 	MI->x86opsize = 1;
 	printMemOffset(MI, OpNo, O);
 }
 
 static void printMemOffs16(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "word ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "word ");
+			break;
+		default:
+			SStream_concat0(O , "word ptr ");
+			break;
+	}
 	MI->x86opsize = 2;
 	printMemOffset(MI, OpNo, O);
 }
 
 static void printMemOffs32(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "dword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "dword ");
+			break;
+		default:
+			SStream_concat0(O , "dword ptr ");
+			break;
+	}
 	MI->x86opsize = 4;
 	printMemOffset(MI, OpNo, O);
 }
 
 static void printMemOffs64(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "qword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "qword ");
+			break;
+		default:
+			SStream_concat0(O , "qword ptr ");
+			break;
+	}
 	MI->x86opsize = 8;
 	printMemOffset(MI, OpNo, O);
 }
@@ -562,10 +772,24 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 			imm = imm & 0xffff;
 
 		if (imm < 0) {
-			SStream_concat(O, "0x%"PRIx64, imm);
+			switch (MI->csh->syntax) {
+				case CS_OPT_SYNTAX_NASM:
+					SStream_concat(O , "0%"PRIx64"h" , imm);
+					break;
+				default:
+					SStream_concat(O , "0x%"PRIx64 , imm);
+					break;
+			}
 		} else {
 			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%"PRIx64, imm);
+				switch (MI->csh->syntax) {
+					case CS_OPT_SYNTAX_NASM:
+						SStream_concat(O , "0%"PRIx64"h" , imm);
+						break;
+					default:
+						SStream_concat(O , "0x%"PRIx64 , imm);
+						break;
+				}
 			else
 				SStream_concat(O, "%"PRIu64, imm);
 		}
@@ -690,12 +914,26 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			default:
 				if (imm >= 0) {
 					if (imm > HEX_THRESHOLD)
-						SStream_concat(O, "0x%"PRIx64, imm);
+						switch (MI->csh->syntax) {
+							case CS_OPT_SYNTAX_NASM:
+								SStream_concat(O , "0%"PRIx64"h" , imm);
+								break;
+							default:
+								SStream_concat(O , "0x%"PRIx64 , imm);
+								break;
+						}
 					else
 						SStream_concat(O, "%"PRIu64, imm);
 				} else {
 					if (imm < -HEX_THRESHOLD)
-						SStream_concat(O, "-0x%"PRIx64, -imm);
+						switch (MI->csh->syntax) {
+							case CS_OPT_SYNTAX_NASM:
+								SStream_concat(O , "-0%"PRIx64"h" , -imm);
+								break;
+							default:
+								SStream_concat(O , "-0x%"PRIx64 , -imm);
+								break;
+						}
 					else
 						SStream_concat(O, "-%"PRIu64, -imm);
 				}
@@ -710,7 +948,14 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					opsize = 2;
 				}
 				if (imm > HEX_THRESHOLD)
-					SStream_concat(O, "0x%"PRIx64, imm);
+					switch (MI->csh->syntax) {
+						case CS_OPT_SYNTAX_NASM:
+							SStream_concat(O , "0%"PRIx64"h" , imm);
+							break;
+						default:
+							SStream_concat(O , "0x%"PRIx64 , imm);
+							break;
+					}
 				else
 					SStream_concat(O, "%"PRIu64, imm);
 				break;
@@ -723,7 +968,14 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					SStream_concat(O, "%u", imm);
 				else {
 					imm = arch_masks[MI->op1_size? MI->op1_size : MI->imm_size] & imm;
-					SStream_concat(O, "0x%"PRIx64, imm);
+					switch (MI->csh->syntax) {
+						case CS_OPT_SYNTAX_NASM:
+							SStream_concat(O , "0%"PRIx64"h" , imm);
+							break;
+						default:
+							SStream_concat(O , "0x%"PRIx64 , imm);
+							break;
+					}
 				}
 				break;
 			case X86_INS_RET:
@@ -732,7 +984,14 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					SStream_concat(O, "%u", imm);
 				else {
 					imm = 0xffff & imm;
-					SStream_concat(O, "0x%x", 0xffff & imm);
+					switch (MI->csh->syntax) {
+						case CS_OPT_SYNTAX_NASM:
+							SStream_concat(O , "0%xh" , 0xffff & imm);
+							break;
+						default:
+							SStream_concat(O , "0x%x" , 0xffff & imm);
+							break;
+					}
 				}
 				break;
 		}
@@ -816,22 +1075,50 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 			if (NeedPlus) {
 				if (DispVal < 0) {
 					if (DispVal <  -HEX_THRESHOLD)
-						SStream_concat(O, " - 0x%"PRIx64, -DispVal);
+					switch (MI->csh->syntax) {
+						case CS_OPT_SYNTAX_NASM:
+							SStream_concat(O , " - 0%"PRIx64"h" , -DispVal);
+							break;
+						default:
+							SStream_concat(O , " - 0x%"PRIx64 , -DispVal);
+							break;
+					}
 					else
 						SStream_concat(O, " - %"PRIu64, -DispVal);
 				} else {
 					if (DispVal > HEX_THRESHOLD)
-						SStream_concat(O, " + 0x%"PRIx64, DispVal);
+					switch (MI->csh->syntax) {
+						case CS_OPT_SYNTAX_NASM:
+							SStream_concat(O , " + 0%"PRIx64"h" , DispVal);
+							break;
+						default:
+							SStream_concat(O , " + 0x%"PRIx64 , DispVal);
+							break;
+					}
 					else
 						SStream_concat(O, " + %"PRIu64, DispVal);
 				}
 			} else {
 				// memory reference to an immediate address
 				if (DispVal < 0) {
-					SStream_concat(O, "0x%"PRIx64, arch_masks[MI->csh->mode] & DispVal);
+					switch (MI->csh->syntax) {
+						case CS_OPT_SYNTAX_NASM:
+							SStream_concat(O , "0%"PRIx64"h" , arch_masks[MI->csh->mode] & DispVal);
+							break;
+						default:
+							SStream_concat(O , "0x%"PRIx64 , arch_masks[MI->csh->mode] & DispVal);
+							break;
+					}
 				} else {
 					if (DispVal > HEX_THRESHOLD)
-						SStream_concat(O, "0x%"PRIx64, DispVal);
+						switch (MI->csh->syntax) {
+							case CS_OPT_SYNTAX_NASM:
+								SStream_concat(O , "0%"PRIx64"h" , DispVal);
+								break;
+							default:
+								SStream_concat(O , "0x%"PRIx64 , DispVal);
+								break;
+						}
 					else
 						SStream_concat(O, "%"PRIu64, DispVal);
 				}
