@@ -24,7 +24,7 @@ typedef struct insn_map {
 	uint16_t regs_mod[20]; // list of implicit registers modified by this instruction
 	unsigned char groups[8]; // list of group this instruction belong to
 	bool branch;	// branch instruction?
-	bool indirect_branch;	// indirect branch instruction?
+	bool branch_indirect;	// indirect branch instruction?
 #endif
 } insn_map;
 

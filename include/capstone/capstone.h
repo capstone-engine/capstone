@@ -201,7 +201,9 @@ typedef enum cs_group_type {
 	CS_GRP_INT,     // all interrupt instructions (int+syscall)
 	CS_GRP_IRET,    // all interrupt return instructions
 	CS_GRP_PRIVILEGE,    // all privileged instructions
-	CS_GRP_BRANCH_RELATIVE, // all relative branching instructions
+	CS_GRP_BRANCH,       // all branch instructions
+	CS_GRP_BRANCH_RELATIVE,	 // all relative branching instructions
+	CS_GRP_BRANCH_INDIRECT,  // all indirect branch instructions
 } cs_group_type;
 
 /*
