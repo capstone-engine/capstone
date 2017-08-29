@@ -6,9 +6,8 @@ include ../functions.mk
 
 LIBNAME = capstone
 
-CFLAGS = -I../include
-CFLAGS += -I.
-LDFLAGS = -O3 -Wall -L.. -l$(LIBNAME)
+CFLAGS += -I../include -I.
+LDFLAGS += -O3 -Wall -L.. -l$(LIBNAME)
 
 TARGET = cstool
 SOURCES := $(wildcard *.c)
