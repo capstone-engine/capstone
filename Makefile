@@ -53,9 +53,6 @@ CFLAGS += -mmacosx-version-min=10.5 \
 		  -fno-builtin
 endif
 
-CFLAGS += $(foreach arch,$(LIBARCHS),-arch $(arch))
-LDFLAGS += $(foreach arch,$(LIBARCHS),-arch $(arch))
-
 PREFIX ?= /usr
 DESTDIR ?=
 ifndef BUILDDIR
@@ -259,6 +256,12 @@ VERSION_EXT =
 
 IS_APPLE := $(shell $(CC) -dM -E - < /dev/null | grep -cm 1 -e __apple_build_version__ -e __APPLE_CC__)
 ifeq ($(IS_APPLE),1)
+# on MacOS, compile in Universal format by default
+MACOS_UNIVERSAL ?= yes
+ifeq ($(MACOS_UNIVERSAL),yes)
+CFLAGS += $(foreach arch,$(LIBARCHS),-arch $(arch))
+LDFLAGS += $(foreach arch,$(LIBARCHS),-arch $(arch))
+endif
 EXT = dylib
 VERSION_EXT = $(API_MAJOR).$(EXT)
 $(LIBNAME)_LDFLAGS += -dynamiclib -install_name lib$(LIBNAME).$(VERSION_EXT) -current_version $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA) -compatibility_version $(PKG_MAJOR).$(PKG_MINOR)
@@ -272,6 +275,8 @@ CFLAGS += -D_FORTIFY_SOURCE=0
 endif
 endif
 else
+CFLAGS += $(foreach arch,$(LIBARCHS),-arch $(arch))
+LDFLAGS += $(foreach arch,$(LIBARCHS),-arch $(arch))
 $(LIBNAME)_LDFLAGS += -shared
 # Cygwin?
 IS_CYGWIN := $(shell $(CC) -dumpmachine | grep -i cygwin | wc -l)
