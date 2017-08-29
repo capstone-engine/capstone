@@ -301,10 +301,20 @@ void ARM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 
 			insn->detail->arm.update_flags = cs_reg_write((csh)&handle, insn, ARM_REG_CPSR);
 
-			if (insns[i].branch || insns[i].indirect_branch) {
+			if (insns[i].branch || insns[i].branch_indirect) {
 				// this insn also belongs to JUMP group. add JUMP group
 				insn->detail->groups[insn->detail->groups_count] = ARM_GRP_JUMP;
 				insn->detail->groups_count++;
+				// relative or absolute branch group
+				if (insns[i].branch) {
+					insn->detail->groups[insn->detail->groups_count] = ARM_GRP_BRANCH;
+					insn->detail->groups_count++;
+				}
+				// indirect branch group
+				if (insns[i].branch_indirect) {
+					insn->detail->groups[insn->detail->groups_count] = ARM_GRP_BRANCH_INDIRECT;
+					insn->detail->groups_count++;
+				}
 			}
 #endif
 		}
@@ -772,7 +782,9 @@ static name_map group_name_maps[] = {
 	{ ARM_GRP_CALL,	"call" },
 	{ ARM_GRP_INT,	"int" },
 	{ ARM_GRP_PRIVILEGE, "privilege" },
+	{ ARM_GRP_BRANCH, "branch" },
 	{ ARM_GRP_BRANCH_RELATIVE, "branch_relative" },
+	{ ARM_GRP_BRANCH_INDIRECT, "branch_indirect" },
 
 	// architecture-specific groups
 	{ ARM_GRP_CRYPTO, "crypto" },
@@ -820,7 +832,7 @@ const char *ARM_group_name(csh handle, unsigned int id)
 }
 
 // list all relative branch instructions
-// ie: insns[i].branch && !insns[i].indirect_branch
+// ie: insns[i].branch && !insns[i].branch_indirect
 static unsigned int insn_rel[] = {
 	ARM_BL,
 	ARM_BLX_pred,

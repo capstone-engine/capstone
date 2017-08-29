@@ -2377,7 +2377,9 @@ static name_map group_name_maps[] = {
 	{ X86_GRP_INT, "int" },
 	{ X86_GRP_IRET,	"iret" },
 	{ X86_GRP_PRIVILEGE, "privilege" },
+	{ X86_GRP_BRANCH, "branch" },
 	{ X86_GRP_BRANCH_RELATIVE, "branch_relative" },
+	{ X86_GRP_BRANCH_INDIRECT, "branch_indirect" },
 
 	// architecture-specific groups
 	{ X86_GRP_VM, "vm" },
@@ -2648,10 +2650,21 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			memcpy(insn->detail->groups, insns[i].groups, sizeof(insns[i].groups));
 			insn->detail->groups_count = (uint8_t)count_positive8(insns[i].groups);
 
-			if (insns[i].branch || insns[i].indirect_branch) {
+			if (insns[i].branch || insns[i].branch_indirect) {
+				// this code for compatibility.
 				// this insn also belongs to JUMP group. add JUMP group
 				insn->detail->groups[insn->detail->groups_count] = X86_GRP_JUMP;
 				insn->detail->groups_count++;
+				// relative or absolute branch group
+				if (insns[i].branch) {
+					insn->detail->groups[insn->detail->groups_count] = X86_GRP_BRANCH;
+					insn->detail->groups_count++;
+				} 
+				// indirect branch group
+				if (insns[i].branch_indirect) {
+					insn->detail->groups[insn->detail->groups_count] = X86_GRP_BRANCH_INDIRECT;
+					insn->detail->groups_count++;
+				}
 			}
 
 			switch (insns[i].id) {
