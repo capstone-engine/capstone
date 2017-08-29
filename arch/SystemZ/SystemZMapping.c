@@ -98,10 +98,20 @@ void SystemZ_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			memcpy(insn->detail->groups, insns[i].groups, sizeof(insns[i].groups));
 			insn->detail->groups_count = (uint8_t)count_positive8(insns[i].groups);
 
-			if (insns[i].branch || insns[i].indirect_branch) {
+			if (insns[i].branch || insns[i].branch_indirect) {
 				// this insn also belongs to JUMP group. add JUMP group
 				insn->detail->groups[insn->detail->groups_count] = SYSZ_GRP_JUMP;
 				insn->detail->groups_count++;
+				// relative or absolute branch group
+				if (insns[i].branch) {
+					insn->detail->groups[insn->detail->groups_count] = SYSZ_GRP_BRANCH;
+					insn->detail->groups_count++;
+				}
+				// indirect branch group
+				if (insns[i].branch_indirect) {
+					insn->detail->groups[insn->detail->groups_count] = SYSZ_GRP_BRANCH_INDIRECT;
+					insn->detail->groups_count++;
+				}
 			}
 #endif
 		}
@@ -826,6 +836,9 @@ static name_map group_name_maps[] = {
 	// generic groups
 	{ SYSZ_GRP_INVALID, NULL },
 	{ SYSZ_GRP_JUMP, "jump" },
+	{ SYSZ_GRP_BRANCH, "branch" },
+	{ SYSZ_GRP_BRANCH_RELATIVE, "branch_relative" },
+	{ SYSZ_GRP_BRANCH_INDIRECT, "branch_indirect" },
 
 	// architecture-specific groups
 	{ SYSZ_GRP_DISTINCTOPS, "distinctops" },
