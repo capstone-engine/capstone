@@ -1,7 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes
-from . import copy_ctypes_list
+from . import copy_ctypes, copy_ctypes_list
 from .x86_const import *
 
 # define the API
