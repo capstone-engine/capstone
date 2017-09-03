@@ -69,6 +69,10 @@ cs_err X86_option(cs_struct *handle, cs_opt_type type, size_t value)
 					handle->printer = X86_Intel_printInst;
 					handle->syntax = (int)value;
 					break;
+				case CS_OPT_SYNTAX_NASM:
+					handle->printer = X86_Intel_printInst;
+					handle->syntax = CS_OPT_SYNTAX_NASM;
+					break;
 
 				case CS_OPT_SYNTAX_ATT:
 #if !defined(CAPSTONE_DIET) && !defined(CAPSTONE_X86_ATT_DISABLE)

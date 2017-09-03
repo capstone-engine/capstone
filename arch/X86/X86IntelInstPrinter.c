@@ -75,7 +75,14 @@ static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 	// printf(">>> ID = %u\n", MI->flat_insn->id);
 	switch(MI->flat_insn->id) {
 		default:
-			SStream_concat0(O, "ptr ");
+			switch (MI->csh->syntax) {
+				case CS_OPT_SYNTAX_NASM:
+					SStream_concat0(O, " ");
+					break;
+				default:
+					SStream_concat0(O, "ptr ");
+					break;
+			}
 			break;
 		case X86_INS_SGDT:
 		case X86_INS_SIDT:
@@ -146,7 +153,14 @@ static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printi8mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "byte ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "byte ");
+			break;
+		default:
+			SStream_concat0(O , "byte ptr ");
+			break;
+	}
 	MI->x86opsize = 1;
 	printMemReference(MI, OpNo, O);
 }
@@ -154,27 +168,55 @@ static void printi8mem(MCInst *MI, unsigned OpNo, SStream *O)
 static void printi16mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	MI->x86opsize = 2;
-	SStream_concat0(O, "word ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "word ");
+			break;
+		default:
+			SStream_concat0(O , "word ptr ");
+			break;
+	}
 	printMemReference(MI, OpNo, O);
 }
 
 static void printi32mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	MI->x86opsize = 4;
-	SStream_concat0(O, "dword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "dword ");
+			break;
+		default:
+			SStream_concat0(O , "dword ptr ");
+			break;
+	}
 	printMemReference(MI, OpNo, O);
 }
 
 static void printi64mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "qword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "qword ");
+			break;
+		default:
+			SStream_concat0(O , "qword ptr ");
+			break;
+	}
 	MI->x86opsize = 8;
 	printMemReference(MI, OpNo, O);
 }
 
 static void printi128mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "xmmword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "xmmword ");
+			break;
+		default:
+			SStream_concat0(O , "xmmword ptr ");
+			break;
+	}
 	MI->x86opsize = 16;
 	printMemReference(MI, OpNo, O);
 }
@@ -182,14 +224,28 @@ static void printi128mem(MCInst *MI, unsigned OpNo, SStream *O)
 #ifndef CAPSTONE_X86_REDUCE
 static void printi256mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "ymmword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "ymmword ");
+			break;
+		default:
+			SStream_concat0(O , "ymmword ptr ");
+			break;
+	}
 	MI->x86opsize = 32;
 	printMemReference(MI, OpNo, O);
 }
 
 static void printi512mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "zmmword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "zmmword ");
+			break;
+		default:
+			SStream_concat0(O , "zmmword ptr ");
+			break;
+	}
 	MI->x86opsize = 64;
 	printMemReference(MI, OpNo, O);
 }
@@ -198,13 +254,27 @@ static void printf32mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	switch(MCInst_getOpcode(MI)) {
 		default:
-			SStream_concat0(O, "dword ptr ");
+			switch (MI->csh->syntax) {
+				case CS_OPT_SYNTAX_NASM:
+					SStream_concat0(O , "dword ");
+					break;
+				default:
+					SStream_concat0(O , "dword ptr ");
+					break;
+			}
 			MI->x86opsize = 4;
 			break;
 		case X86_FBSTPm:
 		case X86_FBLDm:
 			// TODO: fix this in tablegen instead
-			SStream_concat0(O, "tbyte ptr ");
+			switch (MI->csh->syntax) {
+				case CS_OPT_SYNTAX_NASM:
+					SStream_concat0(O , "tbyte ");
+					break;
+				default:
+					SStream_concat0(O , "tbyte ptr ");
+					break;
+			}
 			MI->x86opsize = 10;
 			break;
 		case X86_FSTENVm:
@@ -229,35 +299,70 @@ static void printf32mem(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printf64mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "qword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "qword ");
+			break;
+		default:
+			SStream_concat0(O , "qword ptr ");
+			break;
+	}
 	MI->x86opsize = 8;
 	printMemReference(MI, OpNo, O);
 }
 
 static void printf80mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "xword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "xword ptr ");
+			break;
+		default:
+			SStream_concat0(O , "xword ptr ");
+			break;
+	}
 	MI->x86opsize = 10;
 	printMemReference(MI, OpNo, O);
 }
 
 static void printf128mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "xmmword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "xmmword ");
+			break;
+		default:
+			SStream_concat0(O , "xmmword ptr ");
+			break;
+	}
 	MI->x86opsize = 16;
 	printMemReference(MI, OpNo, O);
 }
 
 static void printf256mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "ymmword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "ymmword ");
+			break;
+		default:
+			SStream_concat0(O , "ymmword ptr ");
+			break;
+	}
 	MI->x86opsize = 32;
 	printMemReference(MI, OpNo, O);
 }
 
 static void printf512mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "zmmword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "zmmword ");
+			break;
+		default:
+			SStream_concat0(O , "zmmword ptr ");
+			break;
+	}
 	MI->x86opsize = 64;
 	printMemReference(MI, OpNo, O);
 }
@@ -581,7 +686,14 @@ static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 
 	// DI accesses are always ES-based on non-64bit mode
 	if (MI->csh->mode != CS_MODE_64) {
-		SStream_concat(O, "es:[");
+		switch (MI->csh->syntax) {
+			case CS_OPT_SYNTAX_NASM:
+				SStream_concat(O, "[es:");
+				break;
+			default:
+				SStream_concat(O, "es:[");
+				break;
+		}		
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_ES;
 		}
@@ -596,56 +708,112 @@ static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 
 static void printSrcIdx8(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "byte ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "byte ");
+			break;
+		default:
+			SStream_concat0(O , "byte ptr ");
+			break;
+	}
 	MI->x86opsize = 1;
 	printSrcIdx(MI, OpNo, O);
 }
 
 static void printSrcIdx16(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "word ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "word ");
+			break;
+		default:
+			SStream_concat0(O , "word ptr ");
+			break;
+	}
 	MI->x86opsize = 2;
 	printSrcIdx(MI, OpNo, O);
 }
 
 static void printSrcIdx32(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "dword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "dword ");
+			break;
+		default:
+			SStream_concat0(O , "dword ptr ");
+			break;
+	}
 	MI->x86opsize = 4;
 	printSrcIdx(MI, OpNo, O);
 }
 
 static void printSrcIdx64(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "qword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "qword ");
+			break;
+		default:
+			SStream_concat0(O , "qword ptr ");
+			break;
+	}
 	MI->x86opsize = 8;
 	printSrcIdx(MI, OpNo, O);
 }
 
 static void printDstIdx8(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "byte ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "byte ");
+			break;
+		default:
+			SStream_concat0(O , "byte ptr ");
+			break;
+	}
 	MI->x86opsize = 1;
 	printDstIdx(MI, OpNo, O);
 }
 
 static void printDstIdx16(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "word ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "word ");
+			break;
+		default:
+			SStream_concat0(O , "word ptr ");
+			break;
+	}
 	MI->x86opsize = 2;
 	printDstIdx(MI, OpNo, O);
 }
 
 static void printDstIdx32(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "dword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "dword ");
+			break;
+		default:
+			SStream_concat0(O , "dword ptr ");
+			break;
+	}
 	MI->x86opsize = 4;
 	printDstIdx(MI, OpNo, O);
 }
 
 static void printDstIdx64(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "qword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "qword ");
+			break;
+		default:
+			SStream_concat0(O , "qword ptr ");
+			break;
+	}
 	MI->x86opsize = 8;
 	printDstIdx(MI, OpNo, O);
 }
@@ -735,28 +903,56 @@ static void printU8Imm(MCInst *MI, unsigned Op, SStream *O)
 
 static void printMemOffs8(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "byte ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "byte ");
+			break;
+		default:
+			SStream_concat0(O , "byte ptr ");
+			break;
+	}
 	MI->x86opsize = 1;
 	printMemOffset(MI, OpNo, O);
 }
 
 static void printMemOffs16(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "word ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "word ");
+			break;
+		default:
+			SStream_concat0(O , "word ptr ");
+			break;
+	}
 	MI->x86opsize = 2;
 	printMemOffset(MI, OpNo, O);
 }
 
 static void printMemOffs32(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "dword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "dword ");
+			break;
+		default:
+			SStream_concat0(O , "dword ptr ");
+			break;
+	}
 	MI->x86opsize = 4;
 	printMemOffset(MI, OpNo, O);
 }
 
 static void printMemOffs64(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "qword ptr ");
+	switch (MI->csh->syntax) {
+		case CS_OPT_SYNTAX_NASM:
+			SStream_concat0(O , "qword ");
+			break;
+		default:
+			SStream_concat0(O , "qword ptr ");
+			break;
+	}
 	MI->x86opsize = 8;
 	printMemOffset(MI, OpNo, O);
 }
@@ -1053,7 +1249,14 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	}
 
 	SStream_concat0(O, "[");
-
+	if (strstr(O->buffer , "s:[") != NULL && MI->csh->syntax == CS_OPT_SYNTAX_NASM) {
+		char c_a = O->buffer[O->index - 4];
+		char c_b = O->buffer[O->index - 3];
+		O->buffer[O->index - 4] = '[';
+		O->buffer[O->index - 3] = c_a;
+		O->buffer[O->index - 2] = c_b;
+		O->buffer[O->index - 1] = ':';
+	}
 	if (MCOperand_getReg(BaseReg)) {
 		_printOperand(MI, Op + X86_AddrBaseReg, O);
 		NeedPlus = true;
