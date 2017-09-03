@@ -983,10 +983,12 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	}
 
 	SStream_concat0(O, "[");
-	if (strstr(O->buffer , "es:[") != NULL && MI->csh->syntax == CS_OPT_SYNTAX_NASM) {
+	if (strstr(O->buffer , "s:[") != NULL && MI->csh->syntax == CS_OPT_SYNTAX_NASM) {
+		char c_a = O->buffer[O->index - 4];
+		char c_b = O->buffer[O->index - 3];
 		O->buffer[O->index - 4] = '[';
-		O->buffer[O->index - 3] = 'e';
-		O->buffer[O->index - 2] = 's';
+		O->buffer[O->index - 3] = c_a;
+		O->buffer[O->index - 2] = c_b;
 		O->buffer[O->index - 1] = ':';
 	}
 	if (MCOperand_getReg(BaseReg)) {
