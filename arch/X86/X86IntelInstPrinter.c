@@ -436,7 +436,14 @@ static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 
 	// DI accesses are always ES-based on non-64bit mode
 	if (MI->csh->mode != CS_MODE_64) {
-		SStream_concat(O, "es:[");
+		switch (MI->csh->syntax) {
+			case CS_OPT_SYNTAX_NASM:
+				SStream_concat(O, "[es:");
+				break;
+			default:
+				SStream_concat(O, "es:[");
+				break;
+		}		
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_ES;
 		}
