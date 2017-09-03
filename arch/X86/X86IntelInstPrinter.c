@@ -375,27 +375,13 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		int64_t imm = MCOperand_getImm(Op);
 		if (imm < 0) {
 			if (imm < -HEX_THRESHOLD)
-				switch (MI->csh->syntax) {
-					case CS_OPT_SYNTAX_NASM:
-						SStream_concat(O , "-0%"PRIx64"h" , -imm);
-						break;
-					default:
-						SStream_concat(O , "-0x%"PRIx64 , -imm);
-						break;
-				}
+				SStream_concat(O, "-0x%"PRIx64, -imm);
 			else
 				SStream_concat(O, "-%"PRIu64, -imm);
 
 		} else {
 			if (imm > HEX_THRESHOLD)
-				switch (MI->csh->syntax) {
-					case CS_OPT_SYNTAX_NASM:
-						SStream_concat(O , "0%"PRIx64"h" , imm);
-						break;
-					default:
-						SStream_concat(O , "0x%"PRIx64 , imm);
-						break;
-				}
+				SStream_concat(O, "0x%"PRIx64, imm);
 			else
 				SStream_concat(O, "%"PRIu64, imm);
 		}
@@ -608,24 +594,10 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 		if (MI->csh->detail)
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = imm;
 		if (imm < 0) {
-			switch (MI->csh->syntax) {
-				case CS_OPT_SYNTAX_NASM:
-					SStream_concat(O , "0%"PRIx64"h" , arch_masks[MI->csh->mode] & imm);
-					break;
-				default:
-					SStream_concat(O , "0x%"PRIx64 , arch_masks[MI->csh->mode] & imm);
-					break;
-			}
+			SStream_concat(O, "0x%"PRIx64, arch_masks[MI->csh->mode] & imm);
 		} else {
 			if (imm > HEX_THRESHOLD)
-				switch (MI->csh->syntax) {
-					case CS_OPT_SYNTAX_NASM:
-						SStream_concat(O , "0%"PRIx64"h" , imm);
-						break;
-					default:
-						SStream_concat(O , "0x%"PRIx64 , imm);
-						break;
-				}
+				SStream_concat(O, "0x%"PRIx64, imm);
 			else
 				SStream_concat(O, "%"PRIu64, imm);
 		}
@@ -772,24 +744,10 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 			imm = imm & 0xffff;
 
 		if (imm < 0) {
-			switch (MI->csh->syntax) {
-				case CS_OPT_SYNTAX_NASM:
-					SStream_concat(O , "0%"PRIx64"h" , imm);
-					break;
-				default:
-					SStream_concat(O , "0x%"PRIx64 , imm);
-					break;
-			}
+			SStream_concat(O, "0x%"PRIx64, imm);
 		} else {
 			if (imm > HEX_THRESHOLD)
-				switch (MI->csh->syntax) {
-					case CS_OPT_SYNTAX_NASM:
-						SStream_concat(O , "0%"PRIx64"h" , imm);
-						break;
-					default:
-						SStream_concat(O , "0x%"PRIx64 , imm);
-						break;
-				}
+				SStream_concat(O, "0x%"PRIx64, imm);
 			else
 				SStream_concat(O, "%"PRIu64, imm);
 		}
@@ -914,26 +872,12 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			default:
 				if (imm >= 0) {
 					if (imm > HEX_THRESHOLD)
-						switch (MI->csh->syntax) {
-							case CS_OPT_SYNTAX_NASM:
-								SStream_concat(O , "0%"PRIx64"h" , imm);
-								break;
-							default:
-								SStream_concat(O , "0x%"PRIx64 , imm);
-								break;
-						}
+						SStream_concat(O, "0x%"PRIx64, imm);
 					else
 						SStream_concat(O, "%"PRIu64, imm);
 				} else {
 					if (imm < -HEX_THRESHOLD)
-						switch (MI->csh->syntax) {
-							case CS_OPT_SYNTAX_NASM:
-								SStream_concat(O , "-0%"PRIx64"h" , -imm);
-								break;
-							default:
-								SStream_concat(O , "-0x%"PRIx64 , -imm);
-								break;
-						}
+						SStream_concat(O, "-0x%"PRIx64, -imm);
 					else
 						SStream_concat(O, "-%"PRIu64, -imm);
 				}
@@ -948,14 +892,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					opsize = 2;
 				}
 				if (imm > HEX_THRESHOLD)
-					switch (MI->csh->syntax) {
-						case CS_OPT_SYNTAX_NASM:
-							SStream_concat(O , "0%"PRIx64"h" , imm);
-							break;
-						default:
-							SStream_concat(O , "0x%"PRIx64 , imm);
-							break;
-					}
+					SStream_concat(O, "0x%"PRIx64, imm);
 				else
 					SStream_concat(O, "%"PRIu64, imm);
 				break;
@@ -968,14 +905,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					SStream_concat(O, "%u", imm);
 				else {
 					imm = arch_masks[MI->op1_size? MI->op1_size : MI->imm_size] & imm;
-					switch (MI->csh->syntax) {
-						case CS_OPT_SYNTAX_NASM:
-							SStream_concat(O , "0%"PRIx64"h" , imm);
-							break;
-						default:
-							SStream_concat(O , "0x%"PRIx64 , imm);
-							break;
-					}
+					SStream_concat(O, "0x%"PRIx64, imm);
 				}
 				break;
 			case X86_INS_RET:
@@ -984,14 +914,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					SStream_concat(O, "%u", imm);
 				else {
 					imm = 0xffff & imm;
-					switch (MI->csh->syntax) {
-						case CS_OPT_SYNTAX_NASM:
-							SStream_concat(O , "0%xh" , 0xffff & imm);
-							break;
-						default:
-							SStream_concat(O , "0x%x" , 0xffff & imm);
-							break;
-					}
+					SStream_concat(O, "0x%x", 0xffff & imm);
 				}
 				break;
 		}
@@ -1075,50 +998,22 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 			if (NeedPlus) {
 				if (DispVal < 0) {
 					if (DispVal <  -HEX_THRESHOLD)
-					switch (MI->csh->syntax) {
-						case CS_OPT_SYNTAX_NASM:
-							SStream_concat(O , " - 0%"PRIx64"h" , -DispVal);
-							break;
-						default:
-							SStream_concat(O , " - 0x%"PRIx64 , -DispVal);
-							break;
-					}
+						SStream_concat(O, " - 0x%"PRIx64, -DispVal);
 					else
 						SStream_concat(O, " - %"PRIu64, -DispVal);
 				} else {
 					if (DispVal > HEX_THRESHOLD)
-					switch (MI->csh->syntax) {
-						case CS_OPT_SYNTAX_NASM:
-							SStream_concat(O , " + 0%"PRIx64"h" , DispVal);
-							break;
-						default:
-							SStream_concat(O , " + 0x%"PRIx64 , DispVal);
-							break;
-					}
+						SStream_concat(O, " + 0x%"PRIx64, DispVal);
 					else
 						SStream_concat(O, " + %"PRIu64, DispVal);
 				}
 			} else {
 				// memory reference to an immediate address
 				if (DispVal < 0) {
-					switch (MI->csh->syntax) {
-						case CS_OPT_SYNTAX_NASM:
-							SStream_concat(O , "0%"PRIx64"h" , arch_masks[MI->csh->mode] & DispVal);
-							break;
-						default:
-							SStream_concat(O , "0x%"PRIx64 , arch_masks[MI->csh->mode] & DispVal);
-							break;
-					}
+					SStream_concat(O, "0x%"PRIx64, arch_masks[MI->csh->mode] & DispVal);
 				} else {
 					if (DispVal > HEX_THRESHOLD)
-						switch (MI->csh->syntax) {
-							case CS_OPT_SYNTAX_NASM:
-								SStream_concat(O , "0%"PRIx64"h" , DispVal);
-								break;
-							default:
-								SStream_concat(O , "0x%"PRIx64 , DispVal);
-								break;
-						}
+						SStream_concat(O, "0x%"PRIx64, DispVal);
 					else
 						SStream_concat(O, "%"PRIu64, DispVal);
 				}
