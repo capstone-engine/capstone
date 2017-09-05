@@ -1194,7 +1194,7 @@ static void printImmScale(MCInst *MI, unsigned OpNum, SStream *O, int Scale)
 
 	if (MI->csh->detail) {
 		if (MI->csh->doing_mem) {
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int)val;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int32_t)val;
 		} else {
 #ifndef CAPSTONE_DIET
 			uint8_t access;
@@ -1218,7 +1218,7 @@ static void printUImm12Offset(MCInst *MI, unsigned OpNum, unsigned Scale, SStrea
 		printInt64Bang(O, val);
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int)val;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int32_t)val;
 			} else {
 #ifndef CAPSTONE_DIET
 				uint8_t access;
