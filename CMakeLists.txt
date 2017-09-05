@@ -27,8 +27,8 @@ option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
 option(CAPSTONE_BUILD_TESTS "Build tests" ON)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 
-set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X)
-set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x)
+set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X)
+set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x)
 
 list(LENGTH SUPPORTED_ARCHITECTURES count)
 math(EXPR count "${count}-1")
@@ -104,6 +104,7 @@ set(HEADERS_COMMON
     include/capstone/xcore.h
     include/capstone/m68k.h
     include/capstone/tms320c64x.h
+    include/capstone/m680x.h
     include/capstone/platform.h
     )
 
@@ -343,6 +344,19 @@ if (CAPSTONE_TMS320C64X_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_tms320c64x.c)
 endif ()
 
+if (CAPSTONE_M680X_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_M680X)
+    set(SOURCES_M680X
+		arch/M680X/M680XDisassembler.c
+		arch/M680X/M680XInstPrinter.c
+		arch/M680X/M680XModule.c
+    )
+    set(HEADERS_M680X
+		arch/M680X/M680XDisassembler.h
+        )
+    set(TEST_SOURCES ${TEST_SOURCES} test_m680x.c)
+endif ()
+
 if (CAPSTONE_OSXKERNEL_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_OSXKERNEL)
 endif ()
@@ -359,6 +373,7 @@ set(ALL_SOURCES
     ${SOURCES_XCORE}
     ${SOURCES_M68K}
     ${SOURCES_TMS320C64X}
+    ${SOURCES_M680X}
     )
 
 set(ALL_HEADERS
@@ -374,6 +389,7 @@ set(ALL_HEADERS
     ${HEADERS_XCORE}
     ${HEADERS_M68K}
     ${HEADERS_TMS320C64X}
+    ${HEADERS_M680X}
     )
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
@@ -449,6 +465,7 @@ source_group("Source\\X86" FILES ${SOURCES_X86})
 source_group("Source\\XCore" FILES ${SOURCES_XCORE})
 source_group("Source\\M68K" FILES ${SOURCES_M68K})
 source_group("Source\\TMS320C64x" FILES ${SOURCES_TMS320C64X})
+source_group("Source\\M680X" FILES ${SOURCES_M680X})
 
 source_group("Include\\Common" FILES ${HEADERS_COMMON})
 source_group("Include\\Engine" FILES ${HEADERS_ENGINE})
@@ -462,6 +479,7 @@ source_group("Include\\X86" FILES ${HEADERS_X86})
 source_group("Include\\XCore" FILES ${HEADERS_XCORE})
 source_group("Include\\M68K" FILES ${HEADERS_M68K})
 source_group("Include\\TMS320C64x" FILES ${HEADERS_TMS320C64X})
+source_group("Include\\M680X" FILES ${HEADERS_MC680X})
 
 ### test library 64bit routine:
 get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
