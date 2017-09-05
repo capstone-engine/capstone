@@ -136,8 +136,8 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 		if (MCOperand_isImm(Op2) && MCOperand_isImm(Op3)) {
 			char *AsmMnemonic = NULL;
 			int shift = 0;
-			int64_t immr = MCOperand_getImm(Op2);
-			int64_t imms = MCOperand_getImm(Op3);
+			int immr = (int)MCOperand_getImm(Op2);
+			int imms = (int)MCOperand_getImm(Op3);
 
 			if (Opcode == AArch64_UBFMWri && imms != 0x1F && ((imms + 1) == immr)) {
 				AsmMnemonic = "lsl";
@@ -974,7 +974,7 @@ static void printImmScale(MCInst *MI, unsigned OpNum, SStream *O, int Scale)
 
 	if (MI->csh->detail) {
 		if (MI->csh->doing_mem) {
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = val;
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int32_t)val;
 		} else {
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = val;
@@ -992,7 +992,7 @@ static void printUImm12Offset(MCInst *MI, unsigned OpNum, unsigned Scale, SStrea
 		printInt64Bang(O, val);
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = val;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int32_t)val;
 			} else {
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = val;
