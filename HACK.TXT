@@ -5,14 +5,14 @@ Capstone source is organized as followings.
 ├── arch            <- code handling disasm engine for each arch
 │   ├── AArch64     <- ARM64 (aka ARMv8) engine
 │   ├── ARM         <- ARM engine
+│   ├── M680X       <- M680X engine
 │   ├── M68K        <- M68K engine
 │   ├── Mips        <- Mips engine
 │   ├── PowerPC     <- PowerPC engine
 │   ├── Sparc       <- Sparc engine
 │   ├── SystemZ     <- SystemZ engine
 │   ├── X86         <- X86 engine
-│   ├── XCore       <- XCore engine
-│   └── M680X       <- M680X engine
+│   └── XCore       <- XCore engine
 ├── bindings        <- all bindings are under this dir
 │   ├── java        <- Java bindings + test code
 │   ├── ocaml       <- Ocaml bindings + test code

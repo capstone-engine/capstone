@@ -18,7 +18,7 @@ const char *M680X_reg_name(csh handle, unsigned int reg);
 const char *M680X_insn_name(csh handle, unsigned int id);
 const char *M680X_group_name(csh handle, unsigned int id);
 void M680X_post_printer(csh handle, cs_insn *flat_insn, char *insn_asm,
-                        MCInst *mci);
+	MCInst *mci);
 
 #endif
 
