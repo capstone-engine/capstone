@@ -19,6 +19,103 @@ all_tests = (
         )
 
 
+def get_eflag_name(eflag):
+    if eflag == X86_EFLAGS_UNDEFINED_OF:
+        return "UNDEF_OF"
+    elif eflag == X86_EFLAGS_UNDEFINED_SF:
+        return "UNDEF_SF"
+    elif eflag == X86_EFLAGS_UNDEFINED_ZF:
+        return "UNDEF_ZF"
+    elif eflag == X86_EFLAGS_MODIFY_AF:
+        return "MOD_AF"
+    elif eflag == X86_EFLAGS_UNDEFINED_PF:
+        return "UNDEF_PF"
+    elif eflag == X86_EFLAGS_MODIFY_CF:
+        return "MOD_CF"
+    elif eflag == X86_EFLAGS_MODIFY_SF:
+        return "MOD_SF"
+    elif eflag == X86_EFLAGS_MODIFY_ZF:
+        return "MOD_ZF"
+    elif eflag == X86_EFLAGS_UNDEFINED_AF:
+        return "UNDEF_AF"
+    elif eflag == X86_EFLAGS_MODIFY_PF:
+        return "MOD_PF"
+    elif eflag == X86_EFLAGS_UNDEFINED_CF:
+        return "UNDEF_CF"
+    elif eflag == X86_EFLAGS_MODIFY_OF:
+        return "MOD_OF"
+    elif eflag == X86_EFLAGS_RESET_OF:
+        return "RESET_OF"
+    elif eflag == X86_EFLAGS_RESET_CF:
+        return "RESET_CF"
+    elif eflag == X86_EFLAGS_RESET_DF:
+        return "RESET_DF"
+    elif eflag == X86_EFLAGS_RESET_IF:
+        return "RESET_IF"
+    elif eflag == X86_EFLAGS_TEST_OF:
+        return "TEST_OF"
+    elif eflag == X86_EFLAGS_TEST_SF:
+        return "TEST_SF"
+    elif eflag == X86_EFLAGS_TEST_ZF:
+        return "TEST_ZF"
+    elif eflag == X86_EFLAGS_TEST_PF:
+        return "TEST_PF"
+    elif eflag == X86_EFLAGS_TEST_CF:
+        return "TEST_CF"
+    elif eflag == X86_EFLAGS_RESET_SF:
+        return "RESET_SF"
+    elif eflag == X86_EFLAGS_RESET_AF:
+        return "RESET_AF"
+    elif eflag == X86_EFLAGS_RESET_TF:
+        return "RESET_TF"
+    elif eflag == X86_EFLAGS_RESET_NT:
+        return "RESET_NT"
+    elif eflag == X86_EFLAGS_PRIOR_OF:
+        return "PRIOR_OF"
+    elif eflag == X86_EFLAGS_PRIOR_SF:
+        return "PRIOR_SF"
+    elif eflag == X86_EFLAGS_PRIOR_ZF:
+        return "PRIOR_ZF"
+    elif eflag == X86_EFLAGS_PRIOR_AF:
+        return "PRIOR_AF"
+    elif eflag == X86_EFLAGS_PRIOR_PF:
+        return "PRIOR_PF"
+    elif eflag == X86_EFLAGS_PRIOR_CF:
+        return "PRIOR_CF"
+    elif eflag == X86_EFLAGS_PRIOR_TF:
+        return "PRIOR_TF"
+    elif eflag == X86_EFLAGS_PRIOR_IF:
+        return "PRIOR_IF"
+    elif eflag == X86_EFLAGS_PRIOR_DF:
+        return "PRIOR_DF"
+    elif eflag == X86_EFLAGS_TEST_NT:
+        return "TEST_NT"
+    elif eflag == X86_EFLAGS_TEST_DF:
+        return "TEST_DF"
+    elif eflag == X86_EFLAGS_RESET_PF:
+        return "RESET_PF"
+    elif eflag == X86_EFLAGS_PRIOR_NT:
+        return "PRIOR_NT"
+    elif eflag == X86_EFLAGS_MODIFY_TF:
+        return "MOD_TF"
+    elif eflag == X86_EFLAGS_MODIFY_IF:
+        return "MOD_IF"
+    elif eflag == X86_EFLAGS_MODIFY_DF:
+        return "MOD_DF"
+    elif eflag == X86_EFLAGS_MODIFY_NT:
+        return "MOD_NT"
+    elif eflag == X86_EFLAGS_MODIFY_RF:
+        return "MOD_RF"
+    elif eflag == X86_EFLAGS_SET_CF:
+        return "SET_CF"
+    elif eflag == X86_EFLAGS_SET_DF:
+        return "SET_DF"
+    elif eflag == X86_EFLAGS_SET_IF:
+        return "SET_IF"
+    else: 
+        return None
+
+
 def print_insn_detail(mode, insn):
     def print_string_hex(comment, str):
         print(comment, end=' '),
@@ -142,7 +239,14 @@ def print_insn_detail(mode, insn):
         for r in regs_write:
             print(" %s" %(insn.reg_name(r)), end="")
         print("")
-
+        
+    if insn.eflags:
+        updated_flags = []
+        for i in range(0,46):
+            if insn.eflags & (1 << i):
+                updated_flags.append(get_eflag_name(1 << i))
+        print("\tEFLAGS: %s" % (','.join(p for p in updated_flags)))
+        
 
 # ## Test class Cs
 def test_class():
