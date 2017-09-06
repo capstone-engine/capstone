@@ -328,6 +328,8 @@ int main(int argc, char **argv)
 			int j;
 			printf("%"PRIx64"  ", insn[i].address);
 			for (j = 0; j < insn[i].size; j++) {
+				if (j > 0)
+					putchar(' ');
 				printf("%02x", insn[i].bytes[j]);
 			}
 			// X86 instruction size is variable.
