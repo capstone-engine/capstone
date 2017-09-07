@@ -532,7 +532,8 @@ typedef enum {
 typedef enum {
 	MODE_16BIT,
 	MODE_32BIT,
-	MODE_64BIT
+	MODE_64BIT,
+	MODE_64BIT_AMD = (MODE_64BIT << 1) | MODE_64BIT
 } DisassemblerMode;
 
 #endif

@@ -14,7 +14,7 @@ static cs_err init(cs_struct *ud)
 	MCRegisterInfo *mri;
 
 	// verify if requested mode is valid
-	if (ud->mode & ~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | CS_MODE_16))
+	if (ud->mode & ~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | CS_MODE_64_AMD | CS_MODE_16))
 		return CS_ERR_MODE;
 
 	mri = cs_mem_malloc(sizeof(*mri));
@@ -32,7 +32,7 @@ static cs_err init(cs_struct *ud)
 	ud->group_name = X86_group_name;
 	ud->post_printer = NULL;;
 
-	if (ud->mode == CS_MODE_64)
+	if (ud->mode == CS_MODE_64 || ud->mode == CS_MODE_64_AMD)
 		ud->regsize_map = regsize_map_64;
 	else
 		ud->regsize_map = regsize_map_32;

@@ -97,6 +97,8 @@ typedef enum cs_mode {
 	CS_MODE_16 = 1 << 1,	// 16-bit mode (X86)
 	CS_MODE_32 = 1 << 2,	// 32-bit mode (X86)
 	CS_MODE_64 = 1 << 3,	// 64-bit mode (X86, PPC)
+	CS_MODE_64_INTEL = CS_MODE_64,// default 64-bit mode (X86)
+	CS_MODE_64_AMD = 1 << 4 || 1<<3, // necassary for 66 jmp/call dissassembly
 	CS_MODE_THUMB = 1 << 4,	// ARM's Thumb mode, including Thumb-2
 	CS_MODE_MCLASS = 1 << 5,	// ARM's Cortex-M series
 	CS_MODE_V8 = 1 << 6,	// ARMv8 A32 encodings for ARM

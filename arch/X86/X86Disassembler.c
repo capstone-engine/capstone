@@ -93,7 +93,7 @@ static bool translateSrcIndex(MCInst *mcInst, InternalInstruction *insn)
 {
 	unsigned baseRegNo;
 
-	if (insn->mode == MODE_64BIT)
+	if (insn->mode & MODE_64BIT)
 		baseRegNo = insn->isPrefix67 ? X86_ESI : X86_RSI;
 	else if (insn->mode == MODE_32BIT)
 		baseRegNo = insn->isPrefix67 ? X86_SI : X86_ESI;
@@ -117,7 +117,7 @@ static bool translateDstIndex(MCInst *mcInst, InternalInstruction *insn)
 {
 	unsigned baseRegNo;
 
-	if (insn->mode == MODE_64BIT)
+	if (insn->mode & MODE_64BIT)
 		baseRegNo = insn->isPrefix67 ? X86_EDI : X86_RDI;
 	else if (insn->mode == MODE_32BIT)
 		baseRegNo = insn->isPrefix67 ? X86_DI : X86_EDI;
@@ -471,7 +471,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 					//debug("EA_BASE_NONE and EA_DISP_NONE for ModR/M base");
 					return true;
 				}
-				if (insn->mode == MODE_64BIT) {
+				if (insn->mode & MODE_64BIT) {
 					if (insn->prefix3 == 0x67)	// address-size prefix overrides RIP relative addressing
 						MCOperand_CreateReg0(mcInst, X86_EIP);
 					else
@@ -824,7 +824,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		ret = decodeInstruction(&insn,
 				reader, &info,
 				address,
-				MODE_64BIT);
+				(handle->mode == CS_MODE_64_AMD) ? MODE_64BIT_AMD : MODE_64BIT);
 
 	if (ret) {
 		*size = (uint16_t)(insn.readerCursor - address);
