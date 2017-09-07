@@ -188,8 +188,12 @@ static void usage(char *prog)
 	}
 
         if (cs_support(CS_ARCH_M680X)) {
-     // TODO
-                printf("        m680x:     m680x\n");
+                printf("        m6800:     M6800/2\n");
+                printf("        m6801:     M6801/3\n");
+                printf("        m6805:     M6805\n");
+                printf("        m6809:     M6809\n");
+                printf("        hd6301:    HD6301/3\n");
+                printf("        hd6309:    HD6309\n");
         }
 
 	printf("\nExtra options:\n");
