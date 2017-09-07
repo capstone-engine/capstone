@@ -325,6 +325,12 @@ int main(int argc, char **argv)
 		}
 	}
 
+	if (arch == -1) {
+		printf("ERROR: Invalid <arch+mode>: \"%s\", quit!\n", mode);
+		usage(argv[0]);
+		return -1;
+	}
+
 	if (err) {
 		printf("ERROR: Failed on cs_open(), quit!\n");
 		usage(argv[0]);
