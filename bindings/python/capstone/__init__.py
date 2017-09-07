@@ -33,6 +33,7 @@ __all__ = [
     'CS_ARCH_XCORE',
     'CS_ARCH_M68K',
     'CS_ARCH_TMS320C64X',
+    'CS_ARCH_M680X',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
@@ -58,6 +59,12 @@ __all__ = [
     'CS_MODE_M68K_060',
     'CS_MODE_MIPS32',
     'CS_MODE_MIPS64',
+    'CS_MODE_M680X_6800',
+    'CS_MODE_M680X_6801',
+    'CS_MODE_M680X_6805',
+    'CS_MODE_M680X_6809',
+    'CS_MODE_M680X_6301',
+    'CS_MODE_M680X_6309',
 
     'CS_OPT_SYNTAX',
     'CS_OPT_SYNTAX_DEFAULT',
@@ -137,7 +144,8 @@ CS_ARCH_SYSZ = 6
 CS_ARCH_XCORE = 7
 CS_ARCH_M68K = 8
 CS_ARCH_TMS320C64X = 9
-CS_ARCH_MAX = 10
+CS_ARCH_M680X = 10
+CS_ARCH_MAX = 11
 CS_ARCH_ALL = 0xFFFF
 
 # disasm mode
@@ -164,6 +172,12 @@ CS_MODE_M68K_060 = (1 << 6)    # M68K 68060 mode
 CS_MODE_BIG_ENDIAN = (1 << 31) # big-endian mode
 CS_MODE_MIPS32 = CS_MODE_32    # Mips32 ISA
 CS_MODE_MIPS64 = CS_MODE_64    # Mips64 ISA
+CS_MODE_M680X_6800 = (1 << 1)  # M680X M6800/2 mode
+CS_MODE_M680X_6801 = (1 << 2)  # M680X M6801/3 mode
+CS_MODE_M680X_6805 = (1 << 3)  # M680X M6805 mode
+CS_MODE_M680X_6809 = (1 << 4)  # M680X M6809 mode
+CS_MODE_M680X_6301 = (1 << 5)  # M680X HD6301/3 mode
+CS_MODE_M680X_6309 = (1 << 6)  # M680X HD6309 mode
 
 # Capstone option type
 CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
@@ -302,7 +316,7 @@ def copy_ctypes_list(src):
     return [copy_ctypes(n) for n in src]
 
 # Weird import placement because these modules are needed by the below code but need the above functions
-from . import arm, arm64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x
+from . import arm, arm64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x
 
 class _cs_arch(ctypes.Union):
     _fields_ = (
@@ -316,6 +330,7 @@ class _cs_arch(ctypes.Union):
         ('sysz', systemz.CsSysz),
         ('xcore', xcore.CsXcore),
         ('tms320c64x', tms320c64x.CsTMS320C64x),
+        ('m680x', m680x.CsM680x),
     )
 
 class _cs_detail(ctypes.Structure):
@@ -620,6 +635,8 @@ class CsInsn(object):
             (self.operands) = xcore.get_arch_info(self._raw.detail.contents.arch.xcore)
         elif arch == CS_ARCH_TMS320C64X:
             (self.condition, self.funit, self.parallel, self.operands) = tms320c64x.get_arch_info(self._raw.detail.contents.arch.tms320c64x)
+        elif arch == CS_ARCH_M680X:
+            (self.address_mode, self.flags, self.operands) = m680x.get_arch_info(self._raw.detail.contents.arch.m680x)
 
 
     def __getattr__(self, name):
@@ -1043,7 +1060,8 @@ def debug():
 
     archs = { "arm": CS_ARCH_ARM, "arm64": CS_ARCH_ARM64, "m68k": CS_ARCH_M68K, \
         "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "sparc": CS_ARCH_SPARC, \
-        "sysz": CS_ARCH_SYSZ, 'xcore': CS_ARCH_XCORE, "tms320c64x": CS_ARCH_TMS320C64X }
+        "sysz": CS_ARCH_SYSZ, 'xcore': CS_ARCH_XCORE, "tms320c64x": CS_ARCH_TMS320C64X, \
+        "m680x": CS_ARCH_M680X }
 
     all_archs = ""
     keys = archs.keys()
