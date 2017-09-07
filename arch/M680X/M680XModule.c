@@ -12,33 +12,53 @@
 static cs_err init(cs_struct *ud)
 {
 	m680x_info *info;
-	cs_err errcode = CS_ERR_OK;
+	cs_err errcode;
+
+	/* Do some validation checks */
+	errcode = M680X_disassembler_init(ud);
+	if (errcode != CS_ERR_OK)
+		return errcode;
+
+	errcode =  M680X_instprinter_init(ud);
+	if (errcode != CS_ERR_OK)
+		return errcode;
+
+	// verify if requested mode is valid
+	if (ud->mode & ~(CS_MODE_M680X_6800 | CS_MODE_M680X_6801 |
+			CS_MODE_M680X_6805 | CS_MODE_M680X_6809 |
+			CS_MODE_M680X_6301 | CS_MODE_M680X_6309))
+	{
+		// At least one mode is not supported by M680X
+                return CS_ERR_MODE;
+	}
+	if (!(ud->mode & (CS_MODE_M680X_6800 | CS_MODE_M680X_6801 |
+			CS_MODE_M680X_6805 | CS_MODE_M680X_6809 |
+			CS_MODE_M680X_6301 | CS_MODE_M680X_6309)))
+	{
+		// At least the cpu type has to be selected. No default.
+                return CS_ERR_MODE;
+	}
 
 	info = cs_mem_malloc(sizeof(m680x_info));
 
-	if (!info) {
+	if (!info)
 		return CS_ERR_MEM;
-	}
 
 	ud->printer = M680X_printInst;
 	ud->printer_info = info;
 	ud->getinsn_info = NULL;
 	ud->disasm = M680X_getInstruction;
-	ud->skipdata_size = 1;
-	ud->post_printer = NULL;
-
 	ud->reg_name = M680X_reg_name;
 	ud->insn_id = M680X_get_insn_id;
 	ud->insn_name = M680X_insn_name;
 	ud->group_name = M680X_group_name;
+	ud->skipdata_size = 1;
+	ud->post_printer = NULL;
+#ifndef CAPSTONE_DIET
+        ud->reg_access = M680X_reg_access;
+#endif
 
-	/* Do some validation checks */
-	errcode = M680X_disassembler_init(ud);
-
-	if (errcode != CS_ERR_OK)
-		return errcode;
-
-	return M680X_instprinter_init(ud);
+	return CS_ERR_OK;
 }
 
 static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)

@@ -66,21 +66,22 @@ typedef enum m680x_op_type {
 	M680X_OP_INVALID = 0, // = CS_OP_INVALID (Uninitialized).
 	M680X_OP_REGISTER,    // = Register operand.
 	M680X_OP_IMMEDIATE,   // = Immediate operand.
-	M6800_OP_INDEXED,     // = M6800/1/2/3 Indexed addressing operand.
-	M6809_OP_INDEXED,     // = M6809/M6309 Indexed addressing operand.
+	M680X_OP_INDEXED_00,  // = M6800/1/2/3 Indexed addressing operand.
+	M680X_OP_INDEXED_09,  // = M6809/M6309 Indexed addressing operand.
 	M680X_OP_EXTENDED,    // = Extended addressing operand.
 	M680X_OP_DIRECT,      // = Direct addressing operand.
 	M680X_OP_RELATIVE,    // = Relative addressing operand.
 } m680x_op_type;
 
-// possible values for mem.inc_dec
+//> Supported values for mem.idx.inc_dec
 #define M680X_POST_INC_2 +2
 #define M680X_POST_INC_1 +1
 #define M680X_NO_INC_DEC  0
 #define M680X_PRE_DEC_1  -1
 #define M680X_PRE_DEC_2  -2
 
-// possible bit values for mem.offset_bits
+//> Supported bit values for mem.idx.offset_bits
+#define M680X_OFFSET_NONE      0
 #define M680X_OFFSET_BITS_5    5
 #define M680X_OFFSET_BITS_8    8
 #define M680X_OFFSET_BITS_16  16
@@ -89,9 +90,10 @@ typedef enum m680x_op_type {
 typedef struct m680x_op_idx {
 	m680x_reg base_reg;	// base register (or M680X_REG_INVALID if
 				// irrelevant)
-	m680x_reg offset_reg;	// offset register (or M680X_REG_INVALID if irrelev.)
+	m680x_reg offset_reg;	// offset register (or M680X_REG_INVALID if
+				// irrelevant)
 	int16_t offset;		// 5-,8- or 16-bit offset. See also offset_bits.
-	uint16_t offset_addr;	// = offset addr. if base_reg == M680X_REG_PC
+	uint16_t offset_addr;	// = offset addr. if base_reg == M680X_REG_PC.
 				// calculated as offset + PC
 	uint8_t offset_bits;	// offset width in bits for indexed addressing
 	int8_t inc_dec;		// pre-dec. or post-inc. value (0 if irrelevant)
@@ -126,6 +128,40 @@ typedef struct cs_m680x_op {
 	uint8_t size;			// size of this operand in byte
 } cs_m680x_op;
 
+//> Group of M680X instructions
+typedef enum m680x_group_type {
+	M680X_GRP_INVALID = 0,	// = CS_GRP_INVALID
+	//> Generic groups
+	// all jump instructions (conditional+direct+indirect jumps)
+	M680X_GRP_JUMP,		// = CS_GRP_JUMP
+	// all call instructions
+	M680X_GRP_CALL,		// = CS_GRP_CALL
+	// all return instructions
+	M680X_GRP_RET,		// = CS_GRP_RET
+	// all interrupt instructions (int+syscall)
+	M680X_GRP_INT,		// = CS_GRP_INT
+	// all interrupt return instructions
+	M680X_GRP_IRET,		// = CS_GRP_IRET
+	// all privileged instructions
+	M680X_GRP_PRIV,		// = CS_GRP_PRIVILEDGE; not used
+	// all relative branching instructions
+	M680X_GRP_BRAREL,	// = CS_GRP_BRANCH_RELATIVE
+
+	//> Architecture-specific groups
+	M680X_GRP_ENDING,	// <-- mark the end of the list of groups
+} m680x_group_type;
+
+//> M680X instruction flags:
+#define FIRST_OP_IN_MNEM   1	// The first (register) operand is part of the
+				// instruction mnemonic
+
+//> The M680X instruction and it's operands
+typedef struct cs_m680x {
+	m680x_address_mode address_mode;// M680X addressing mode for this inst.
+	uint8_t flags;		// See: M680X instruction flags
+	uint8_t op_count;	// number of operands for the instruction or 0
+	cs_m680x_op operands[M680X_OPERAND_COUNT]; // operands for this insn.
+} cs_m680x;
 
 //> M680X instruction IDs
 typedef enum m680x_insn {
@@ -383,43 +419,6 @@ typedef enum m680x_insn {
 	M680X_INS_XGDX, // HD6301
 	M680X_INS_ENDING,   // <-- mark the end of the list of instructions
 } m680x_insn;
-
-//> Group of M680X instructions
-typedef enum m680x_group_type {
-	M680X_GRP_INVALID = 0,	// = CS_GRP_INVALID
-	//> Generic groups
-	// all jump instructions (conditional+direct+indirect jumps)
-	M680X_GRP_JUMP,		// = CS_GRP_JUMP
-	// all call instructions
-	M680X_GRP_CALL,		// = CS_GRP_CALL
-	// all return instructions
-	M680X_GRP_RET,		// = CS_GRP_RET
-	// all interrupt instructions (int+syscall)
-	M680X_GRP_INT,		// = CS_GRP_INT
-	// all interrupt return instructions
-	M680X_GRP_IRET,		// = CS_GRP_IRET
-	// all privileged instructions
-	M680X_GRP_PRIV,		// = CS_GRP_PRIVILEDGE; not used
-	// all relative branching instructions
-	M680X_GRP_BRAREL,	// = CS_GRP_BRANCH_RELATIVE
-
-	//> Architecture-specific groups
-	M680X_GRP__ENDING,	// <-- mark the end of the list of groups
-} m680x_group_type;
-
-// M680X instruction flags:
-#define FIRST_OP_IN_MNEM   1	// The first (register) operand is part of the
-				// instruction mnemonic
-
-// The M680X instruction and it's operands
-typedef struct cs_m680x {
-	m680x_address_mode address_mode;	// M680X addressing mode for this inst.
-	m680x_insn insn;	// instruction ID
-	cs_m680x_op operands[M680X_OPERAND_COUNT]; // operands for this insn.
-	uint8_t insn_size;	// Size of instruction in bytes
-	uint8_t op_count;	// number of operands for the instruction or 0
-	uint8_t flags;
-} cs_m680x;
 
 #ifdef __cplusplus
 }

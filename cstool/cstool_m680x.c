@@ -101,7 +101,7 @@ void print_insn_detail_m680x(csh handle, cs_insn *ins)
 				op->rel.address);
 			break;
 
-		case M6800_OP_INDEXED:
+		case M680X_OP_INDEXED_00:
 			printf("\t\toperands[%u].type: INDEXED_M6800\n", i);
 
 			if (op->idx.base_reg != M680X_REG_INVALID)
@@ -117,7 +117,7 @@ void print_insn_detail_m680x(csh handle, cs_insn *ins)
 
 			break;
 
-		case M6809_OP_INDEXED:
+		case M680X_OP_INDEXED_09:
 			printf("\t\toperands[%u].type: INDEXED_M6809 %s\n", i,
 				op->idx.indirect ? "INDIRECT" : "");
 

@@ -125,36 +125,27 @@ static void print_read_write_regs(cs_detail *detail)
 	int i;
 
 	if (detail->regs_read_count > 0) {
-		printf("\treading from regs: ");
+		printf("\tRegisters read:");
 
-		for (i = 0; i < detail->regs_read_count; ++i) {
-			if (i > 0)
-				printf(", ");
-
-			printf("%s", cs_reg_name(handle, detail->regs_read[i]));
-		}
-
+		for (i = 0; i < detail->regs_read_count; ++i)
+			printf(" %s",
+				cs_reg_name(handle, detail->regs_read[i]));
 		printf("\n");
 	}
 
 	if (detail->regs_write_count > 0) {
-		printf("\twriting to regs: ");
+		printf("\tRegisters modified:");
 
-		for (i = 0; i < detail->regs_write_count; ++i) {
-			if (i > 0)
-				printf(", ");
-
-			printf("%s", cs_reg_name(handle,
-					detail->regs_write[i]));
-		}
-
+		for (i = 0; i < detail->regs_write_count; ++i)
+			printf(" %s",
+				cs_reg_name(handle, detail->regs_write[i]));
 		printf("\n");
 	}
 }
 
-static void print_insn_detail(cs_insn *ins)
+static void print_insn_detail(cs_insn *insn)
 {
-	cs_detail *detail = ins->detail;
+	cs_detail *detail = insn->detail;
 	cs_m680x *m680x = NULL;
 	int i;
 
@@ -167,7 +158,7 @@ static void print_insn_detail(cs_insn *ins)
 	printf("\taddress_mode: %s\n", s_addressing_modes[m680x->address_mode]);
 
 	if (m680x->op_count)
-		printf("\toperand_count: %u\n", m680x->op_count);
+		printf("\top_count: %u\n", m680x->op_count);
 
 	for (i = 0; i < m680x->op_count; i++) {
 		cs_m680x_op *op = &(m680x->operands[i]);
@@ -202,7 +193,7 @@ static void print_insn_detail(cs_insn *ins)
 				op->rel.address);
 			break;
 
-		case M6800_OP_INDEXED:
+		case M680X_OP_INDEXED_00:
 			printf("\t\toperands[%u].type: INDEXED_M6800\n", i);
 
 			if (op->idx.base_reg != M680X_REG_INVALID)
@@ -217,8 +208,8 @@ static void print_insn_detail(cs_insn *ins)
 
 			break;
 
-		case M6809_OP_INDEXED:
-			printf("\t\toperands[%u].type: INDEXED %s\n", i,
+		case M680X_OP_INDEXED_09:
+			printf("\t\toperands[%u].type: INDEXED_M6809 %s\n", i,
 				op->idx.indirect ? "INDIRECT" : "");
 
 			if (op->idx.base_reg != M680X_REG_INVALID)
@@ -238,7 +229,7 @@ static void print_insn_detail(cs_insn *ins)
 					printf("\t\t\toffset address: 0x%X\n",
 						op->idx.offset_addr);
 
-				printf("\t\t\toffset bits: %d\n",
+				printf("\t\t\toffset bits: %u\n",
 					op->idx.offset_bits);
 			}
 
@@ -355,7 +346,7 @@ static void test()
 		if (count) {
 			size_t j;
 
-			printf("****************\n");
+			printf("********************\n");
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code: ", platforms[i].code,
 				platforms[i].size);

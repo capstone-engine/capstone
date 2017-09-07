@@ -39,6 +39,8 @@ typedef struct m680x_info {
 	e_cpu_type cpu_type;	// The CPU type to be used for disassembling
 	cs_m680x m680x;		// M680X specific properties
 	cpu_tables cpu;
+	m680x_insn insn;	// Instruction ID
+	uint8_t insn_size;	// byte size of instruction
 } m680x_info;
 
 extern cs_err M680X_disassembler_init(cs_struct *ud);

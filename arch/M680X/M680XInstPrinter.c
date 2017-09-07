@@ -110,7 +110,7 @@ static void printOperand(MCInst *MI, SStream *O, cs_m680x_op *op)
 
 		break;
 
-	case M6800_OP_INDEXED:
+	case M680X_OP_INDEXED_00:
 		if (op->idx.offset_bits > 0 && op->idx.offset != 0)
 			SStream_concat(O, "%d", op->idx.offset);
 
@@ -119,7 +119,7 @@ static void printOperand(MCInst *MI, SStream *O, cs_m680x_op *op)
 		printRegName(MI->csh, O, op->idx.base_reg);
 		break;
 
-	case M6809_OP_INDEXED:
+	case M680X_OP_INDEXED_09:
 		if (op->idx.indirect)
 			SStream_concat(O, "[");
 
@@ -191,8 +191,9 @@ static const char *getDelimiter(cs_m680x *m680x)
 
 	if (m680x->op_count > 1) {
 		for (i  = 0; i < m680x->op_count; ++i) {
-			if ((m680x->operands[i].type == M6800_OP_INDEXED) ||
-				(m680x->operands[i].type == M6809_OP_INDEXED))
+			if ((m680x->operands[i].type == M680X_OP_INDEXED_00) ||
+				(m680x->operands[i].type ==
+					M680X_OP_INDEXED_00))
 				indexed = true;
 
 			if (m680x->operands[i].type != M680X_OP_REGISTER)
@@ -215,7 +216,7 @@ void M680X_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 	if (detail != NULL)
 		memcpy(&detail->m680x, m680x, sizeof(cs_m680x));
 
-	if (m680x->insn == M680X_INS_INVLD || m680x->insn == M680X_INS_ILLGL) {
+	if (info->insn == M680X_INS_INVLD || info->insn == M680X_INS_ILLGL) {
 		if (m680x->op_count)
 			SStream_concat(O, "FCB $%02X", m680x->operands[0].imm);
 		else
@@ -224,7 +225,7 @@ void M680X_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 		return;
 	}
 
-	printInstructionName(MI->csh, O, m680x->insn);
+	printInstructionName(MI->csh, O, info->insn);
 	SStream_concat(O, " ");
 
 	is_reg_in_opcode = (m680x->flags & FIRST_OP_IN_MNEM) != 0;
@@ -293,7 +294,7 @@ cs_err M680X_instprinter_init(cs_struct *ud)
 		return CS_ERR_MODE;
 	}
 
-	if (M680X_GRP__ENDING != ARR_SIZE(s_group_names)) {
+	if (M680X_GRP_ENDING != ARR_SIZE(s_group_names)) {
 		fprintf(stderr, "Internal error: Size mismatch in enum "
 			"m680x_group_type and s_group_names\n");
 

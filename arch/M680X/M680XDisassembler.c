@@ -1173,7 +1173,7 @@ void M680X_get_insn_id(cs_struct *handle, cs_insn *insn, unsigned int id)
 static void add_insn_group(cs_detail *detail, m680x_group_type group)
 {
 	if (detail != NULL &&
-		(group != M680X_GRP_INVALID) && (group != M680X_GRP__ENDING))
+		(group != M680X_GRP_INVALID) && (group != M680X_GRP_ENDING))
 		detail->groups[detail->groups_count++] = (uint8_t)group;
 }
 
@@ -1237,11 +1237,11 @@ static void update_am_reg_list(MCInst *MI, cs_m680x_op *op, access_type access)
 		add_reg_to_rw_list(MI, op->reg, access);
 		break;
 
-	case M6800_OP_INDEXED:
+	case M680X_OP_INDEXED_00:
 		add_reg_to_rw_list(MI, op->idx.base_reg, READ);
 		break;
 
-	case M6809_OP_INDEXED:
+	case M680X_OP_INDEXED_09:
 		add_reg_to_rw_list(MI, op->idx.base_reg, READ);
 
 		if (op->idx.offset_reg != M680X_REG_INVALID)
@@ -1352,9 +1352,9 @@ static void m6800_set_changed_regs_read_write_counts(MCInst *MI,
 		return;
 
 	for (i = 0; i < ARR_SIZE(changed_regs); ++i) {
-		if (m680x->insn == changed_regs[i].insn) {
+		if (info->insn == changed_regs[i].insn) {
 			e_access_mode reg_access_mode =
-				g_insn_props[m680x->insn].access_mode;
+				g_insn_props[info->insn].access_mode;
 
 			for (j = 0; changed_regs[i].regs[j] !=
 				M680X_REG_INVALID; ++j) {
@@ -1427,9 +1427,9 @@ static void m6809_set_changed_regs_read_write_counts(MCInst *MI,
 		return;
 
 	for (i = 0; i < ARR_SIZE(changed_regs); ++i) {
-		if (m680x->insn == changed_regs[i].insn) {
+		if (info->insn == changed_regs[i].insn) {
 			e_access_mode reg_access_mode =
-				g_insn_props[m680x->insn].access_mode;
+				g_insn_props[info->insn].access_mode;
 
 			for (j = 0; changed_regs[i].regs[j] !=
 				M680X_REG_INVALID; ++j) {
@@ -1658,7 +1658,7 @@ static void illegal_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	cs_m680x_op *op0 = &info->m680x.operands[info->m680x.op_count++];
 	uint8_t temp8;
 
-	m680x->insn = M680X_INS_ILLGL;
+	info->insn = M680X_INS_ILLGL;
 	read_byte(info, &temp8, (*address)++);
 	op0->imm = (int32_t)temp8 & 0xff;
 	op0->type = M680X_OP_IMMEDIATE;
@@ -1723,8 +1723,8 @@ static void reg_bits_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 			"%d\n", op0->reg);
 	}
 
-	if ((m680x->insn == M680X_INS_PULU ||
-			(m680x->insn == M680X_INS_PULS)) &&
+	if ((info->insn == M680X_INS_PULU ||
+			(info->insn == M680X_INS_PULS)) &&
 		((reg_bits & 0x80) != 0))
 		// PULS xxx,PC or PULU xxx,PC which is like return from subroutine (RTS)
 		add_insn_group(MI->flat_insn->detail, M680X_GRP_RET);
@@ -1814,7 +1814,7 @@ static void m6800_indexed_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	read_byte(info, &offset, (*address)++);
 
-	op->type = M6800_OP_INDEXED;
+	op->type = M680X_OP_INDEXED_00;
 	op->idx.base_reg = M680X_REG_X;
 	op->idx.offset_reg = M680X_REG_INVALID;
 	op->idx.offset = (uint16_t)offset;
@@ -1834,7 +1834,7 @@ static void m6809_indexed_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	read_byte(info, &post_byte, (*address)++);
 
-	op->type = M6809_OP_INDEXED;
+	op->type = M680X_OP_INDEXED_09;
 	op->idx.base_reg = g_rr5_to_reg_ids[(post_byte >> 5) & 0x03];
 	op->idx.offset_reg = M680X_REG_INVALID;
 
@@ -1939,10 +1939,10 @@ static void m6809_indexed_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 		}
 	}
 
-	if (((m680x->insn == M680X_INS_LEAU) ||
-			(m680x->insn == M680X_INS_LEAS) ||
-			(m680x->insn == M680X_INS_LEAX) ||
-			(m680x->insn == M680X_INS_LEAY)) &&
+	if (((info->insn == M680X_INS_LEAU) ||
+			(info->insn == M680X_INS_LEAS) ||
+			(info->insn == M680X_INS_LEAX) ||
+			(info->insn == M680X_INS_LEAY)) &&
 		(m680x->operands[0].reg == M680X_REG_X ||
 			(m680x->operands[0].reg == M680X_REG_Y)))
 		// Only LEAX and LEAY modify CC register
@@ -1988,7 +1988,7 @@ static void immediate_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	op->type = M680X_OP_IMMEDIATE;
 
-	if (m680x->insn != M680X_INS_CWAI)
+	if (info->insn != M680X_INS_CWAI)
 		imm_size = g_reg_byte_size[op0->reg];
 	else
 		imm_size = 1; // Special case for CWAI (no register involved)
@@ -2016,7 +2016,7 @@ static void immediate_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	*address += imm_size;
 
-	if (m680x->insn == M680X_INS_CWAI)
+	if (info->insn == M680X_INS_CWAI)
 		m6809_set_changed_regs_read_write_counts(MI, info);
 }
 
@@ -2035,7 +2035,7 @@ static void hd630x_imm_indexed_hdlr(MCInst *MI, m680x_info *info,
 	op0->imm = (int32_t)(uint16_t)tmp;
 
 	read_byte(info, &tmp, *(address++));
-	op1->type = M6800_OP_INDEXED;
+	op1->type = M680X_OP_INDEXED_00;
 	op1->idx.base_reg = M680X_REG_X;
 	op1->idx.offset = (uint16_t)tmp;
 	op1->idx.offset_bits = M680X_OFFSET_BITS_8;
@@ -2098,7 +2098,7 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 
 	memset(&insn_description, 0, sizeof(insn_description));
 	memset(m680x, 0, sizeof(*m680x));
-	m680x->insn_size = 1;
+	info->insn_size = 1;
 
 	for (i = 0; i < M680X_OPERAND_COUNT; ++i)
 		m680x->operands[i].type = M680X_OP_REGISTER;
@@ -2109,14 +2109,14 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 		else
 			address++; // 8-bit opcode only
 
-		m680x->insn = insn_description.insn;
+		info->insn = insn_description.insn;
 
 		MCInst_setOpcode(MI, insn_description.opcode);
 
 		e_access_mode reg_access_mode =
-			g_insn_props[m680x->insn].access_mode;
+			g_insn_props[info->insn].access_mode;
 
-		add_insn_group(detail, g_insn_props[m680x->insn].group);
+		add_insn_group(detail, g_insn_props[info->insn].group);
 
 		if (insn_description.reg0 != M680X_REG_INVALID) {
 			cs_m680x_op *op0 = &m680x->operands[m680x->op_count++];
@@ -2127,16 +2127,16 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 			m680x->flags |= FIRST_OP_IN_MNEM;
 		}
 
-		if (g_insn_props[m680x->insn].cc_modified)
+		if (g_insn_props[info->insn].cc_modified)
 			add_reg_to_rw_list(MI, M680X_REG_CC, MODIFY);
 
 		(g_inst_handler[insn_description.handler_id])(MI, info,
 			&address);
 		build_regs_read_write_counts(MI, info, reg_access_mode);
 
-		m680x->insn_size = insn_description.insn_size;
+		info->insn_size = insn_description.insn_size;
 
-		return m680x->insn_size;
+		return info->insn_size;
 	}
 
 	// Illegal instruction
@@ -2203,7 +2203,7 @@ bool M680X_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	MCInst *MI, uint16_t *size, uint64_t address, void *inst_info)
 {
 	unsigned int insn_size = 0;
-	e_cpu_type cpu_type = M680X_CPU_TYPE_6309; // default CPU type
+	e_cpu_type cpu_type = M680X_CPU_TYPE_INVALID; // No default CPU type
 	cs_struct *handle = (cs_struct *)ud;
 	m680x_info *info = (m680x_info *)handle->printer_info;
 
@@ -2227,8 +2227,9 @@ bool M680X_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	if (handle->mode & CS_MODE_M680X_6309)
 		cpu_type = M680X_CPU_TYPE_6309;
 
-	if (m680x_setup_internals(info, cpu_type, (uint16_t)address, code,
-			code_len))
+	if (cpu_type != M680X_CPU_TYPE_INVALID &&
+		m680x_setup_internals(info, cpu_type, (uint16_t)address, code,
+					code_len))
 		insn_size = m680x_disassemble(MI, info, (uint16_t)address);
 
 	if (insn_size == 0) {
@@ -2279,6 +2280,27 @@ cs_err M680X_disassembler_init(cs_struct *ud)
 
 	return CS_ERR_OK;
 }
+
+#ifndef CAPSTONE_DIET
+void M680X_reg_access(const cs_insn *insn,
+		cs_regs regs_read, uint8_t *regs_read_count,
+		cs_regs regs_write, uint8_t *regs_write_count)
+{
+	if (insn->detail == NULL) {
+		*regs_read_count = 0;
+		*regs_write_count = 0;
+	} else {
+		*regs_read_count = insn->detail->regs_read_count;
+		*regs_write_count = insn->detail->regs_write_count;
+
+		memcpy(regs_read, insn->detail->regs_read,
+			*regs_read_count * sizeof(insn->detail->regs_read[0]));
+		memcpy(regs_write, insn->detail->regs_write,
+			*regs_write_count *
+				sizeof(insn->detail->regs_write[0]));
+	}
+}
+#endif
 
 #endif
 
