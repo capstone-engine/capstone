@@ -39,3 +39,6 @@ def to_x_32(s):
     x = pack(">i", s)
     while x[0] in ('\0', 0): x = x[1:]
     return to_hex2(x)
+
+def to_hex_short(byte_array):
+    return "".join("%02X" % b for b in byte_array)

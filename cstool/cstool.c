@@ -44,6 +44,12 @@ static struct {
 	{ "m68k40", CS_ARCH_M68K, CS_MODE_M68K_040 },
 	{ "tms320c64x", CS_ARCH_TMS320C64X, CS_MODE_BIG_ENDIAN },
 	{ "tms320c64x", CS_ARCH_TMS320C64X, CS_MODE_BIG_ENDIAN },
+	{ "m6800", CS_ARCH_M680X, CS_MODE_M680X_6800 },
+	{ "m6801", CS_ARCH_M680X, CS_MODE_M680X_6801 },
+	{ "m6805", CS_ARCH_M680X, CS_MODE_M680X_6805 },
+	{ "m6809", CS_ARCH_M680X, CS_MODE_M680X_6809 },
+	{ "hd6301", CS_ARCH_M680X, CS_MODE_M680X_6301 },
+	{ "hd6309", CS_ARCH_M680X, CS_MODE_M680X_6309 },
 	{ NULL }
 };
 
@@ -57,6 +63,7 @@ void print_insn_detail_sysz(csh handle, cs_insn *ins);
 void print_insn_detail_xcore(csh handle, cs_insn *ins);
 void print_insn_detail_m68k(csh handle, cs_insn *ins);
 void print_insn_detail_tms320c64x(csh handle, cs_insn *ins);
+void print_insn_detail_m680x(csh handle, cs_insn *ins);
 static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins);
 
 void print_string_hex(char *comment, unsigned char *str, size_t len)
@@ -66,6 +73,11 @@ void print_string_hex(char *comment, unsigned char *str, size_t len)
 	printf("%s", comment);
 	for (c = str; c < str + len; c++) {
 		printf("0x%02x ", *c & 0xff);
+	}
+
+	if (cs_support(CS_ARCH_M680X)) {
+    // TODO
+		printf("        m680x:     m680x\n");
 	}
 
 	printf("\n");
@@ -175,6 +187,15 @@ static void usage(char *prog)
 		printf("        tms320c64x:TMS320C64x\n");
 	}
 
+        if (cs_support(CS_ARCH_M680X)) {
+                printf("        m6800:     M6800/2\n");
+                printf("        m6801:     M6801/3\n");
+                printf("        m6805:     M6805\n");
+                printf("        m6809:     M6809\n");
+                printf("        hd6301:    HD6301/3\n");
+                printf("        hd6309:    HD6309\n");
+        }
+
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
 	printf("        -u show immediates as unsigned\n\n");
@@ -212,6 +233,9 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 			break;
 		case CS_ARCH_TMS320C64X:
 			print_insn_detail_tms320c64x(handle, ins);
+			break;
+                case CS_ARCH_M680X:
+                        print_insn_detail_m680x(handle, ins);
 			break;
 		default: break;
 	}
@@ -299,6 +323,12 @@ int main(int argc, char **argv)
 			}
 			break;
 		}
+	}
+
+	if (arch == -1) {
+		printf("ERROR: Invalid <arch+mode>: \"%s\", quit!\n", mode);
+		usage(argv[0]);
+		return -1;
 	}
 
 	if (err) {

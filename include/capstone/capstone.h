@@ -82,6 +82,7 @@ typedef enum cs_arch {
 	CS_ARCH_XCORE,		// XCore architecture
 	CS_ARCH_M68K,		// 68K architecture
 	CS_ARCH_TMS320C64X,	// TMS320C64x architecture
+	CS_ARCH_M680X,		// 680X architecture
 	CS_ARCH_MAX,
 	CS_ARCH_ALL = 0xFFFF, // All architectures - for cs_support()
 } cs_arch;
@@ -121,6 +122,12 @@ typedef enum cs_mode {
 	CS_MODE_BIG_ENDIAN = 1 << 31,	// big-endian mode
 	CS_MODE_MIPS32 = CS_MODE_32,	// Mips32 ISA (Mips)
 	CS_MODE_MIPS64 = CS_MODE_64,	// Mips64 ISA (Mips)
+	CS_MODE_M680X_6800 = 1 << 1, // M680X Motorola 6800,6802 mode
+	CS_MODE_M680X_6801 = 1 << 2, // M680X Motorola 6801,6803 mode
+	CS_MODE_M680X_6805 = 1 << 3, // M680X Motorola 6805 mode
+	CS_MODE_M680X_6809 = 1 << 4, // M680X Motorola 6809 mode
+	CS_MODE_M680X_6301 = 1 << 5, // M680X Hitachi 6301,6303 mode
+	CS_MODE_M680X_6309 = 1 << 6, // M680X Hitachi 6309 mode
 } cs_mode;
 
 typedef void* (CAPSTONE_API *cs_malloc_t)(size_t size);
@@ -237,6 +244,7 @@ typedef struct cs_opt_skipdata {
 	// Arm:     2 bytes (Thumb mode) or 4 bytes.
 	// Arm64:   4 bytes.
 	// Mips:    4 bytes.
+	// M680x:   1 byte.
 	// PowerPC: 4 bytes.
 	// Sparc:   4 bytes.
 	// SystemZ: 2 bytes.
@@ -259,6 +267,7 @@ typedef struct cs_opt_skipdata {
 #include "x86.h"
 #include "xcore.h"
 #include "tms320c64x.h"
+#include "m680x.h"
 
 // NOTE: All information in cs_detail is only available when CS_OPT_DETAIL = CS_OPT_ON
 typedef struct cs_detail {
@@ -283,6 +292,7 @@ typedef struct cs_detail {
 		cs_sysz sysz;	// SystemZ architecture
 		cs_xcore xcore;	// XCore architecture
 		cs_tms320c64x tms320c64x;	// TMS320C64x architecture
+		cs_m680x m680x;	// M680X architecture
 	};
 } cs_detail;
 

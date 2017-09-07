@@ -76,6 +76,9 @@ static void test()
 #ifdef CAPSTONE_HAS_XCORE
 #define XCORE_CODE "\xfe\x0f\xfe\x17\x13\x17\xc6\xfe\xec\x17\x97\xf8\xec\x4f\x1f\xfd\xec\x37\x07\xf2\x45\x5b\xf9\xfa\x02\x06\x1b\x10"
 #endif
+#ifdef CAPSTONE_HAS_M680X
+#define M680X_CODE "\x06\x10\x19\x1a\x55\x1e\x01\x23\xe9\x31\x06\x34\x55\xa6\x81\xa7\x89\x7f\xff\xa6\x9d\x10\x00\xa7\x91\xa6\x9f\x10\x00\x11\xac\x99\x10\x00\x39"
+#endif
 
 	struct platform platforms[] = {
 #ifdef CAPSTONE_HAS_X86
@@ -206,6 +209,15 @@ static void test()
 			(unsigned char*)XCORE_CODE,
 			sizeof(XCORE_CODE) - 1,
 			"XCore"
+		},
+#endif
+#ifdef CAPSTONE_HAS_M680X
+		{
+			CS_ARCH_M680X,
+			(cs_mode)CS_MODE_M680X_6809,
+			(unsigned char*)M680X_CODE,
+			sizeof(M680X_CODE) - 1,
+			"M680X_6809"
 		},
 #endif
 	};
