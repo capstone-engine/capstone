@@ -363,7 +363,7 @@ static void test()
 				printf("%.*s", 1 + (5 - slen), nine_spaces);
 				printf("%s\n", insn[j].op_str);
 				printf("\tinsn id: %s\n",
-					&s_insn_ids[insn[j].id]);
+					(char *)&s_insn_ids[insn[j].id]);
 				print_insn_detail(&insn[j]);
 			}
 

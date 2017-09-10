@@ -788,258 +788,258 @@ static const inst_pageX g_m6809_inst_page3_table[] = {
 };
 
 static const insn_props g_insn_props[] = {
-	M680X_GRP_INVALID, uuuu, false, // INVLD
-	M680X_GRP_INVALID, mrrr, true, // ABA
-	M680X_GRP_INVALID, mrrr, false, // ABX
-	M680X_GRP_INVALID, mrrr, true, // ADCA
-	M680X_GRP_INVALID, mrrr, true, // ADCB
-	M680X_GRP_INVALID, mrrr, true, // ADCD
-	M680X_GRP_INVALID, mrrr, true, // ADDA
-	M680X_GRP_INVALID, mrrr, true, // ADDB
-	M680X_GRP_INVALID, mrrr, true, // ADDD
-	M680X_GRP_INVALID, mrrr, true, // ADDE
-	M680X_GRP_INVALID, mrrr, true, // ADDF
-	M680X_GRP_INVALID, mrrr, true, // ADDR
-	M680X_GRP_INVALID, mrrr, true, // ADDW
-	M680X_GRP_INVALID, rmmm, true, // AIM
-	M680X_GRP_INVALID, mrrr, true, // ANDA
-	M680X_GRP_INVALID, mrrr, true, // ANDB
-	M680X_GRP_INVALID, mrrr, true, // ANDCC
-	M680X_GRP_INVALID, mrrr, true, // ANDD
-	M680X_GRP_INVALID, rmmm, true, // ANDR
-	M680X_GRP_INVALID, mrrr, true, // ASL
-	M680X_GRP_INVALID, mrrr, true, // ASLA
-	M680X_GRP_INVALID, mrrr, true, // ASLB
-	M680X_GRP_INVALID, mrrr, true, // ASLD
-	M680X_GRP_INVALID, mrrr, true, // ASR
-	M680X_GRP_INVALID, mrrr, true, // ASRA
-	M680X_GRP_INVALID, mrrr, true, // ASRB
-	M680X_GRP_INVALID, mrrr, false, // BAND
-	M680X_GRP_JUMP, uuuu, false, // BCC
-	M680X_GRP_JUMP, uuuu, false, // BCS
-	M680X_GRP_INVALID, mrrr, false, // BEOR
-	M680X_GRP_JUMP, uuuu, false, // BEQ
-	M680X_GRP_JUMP, uuuu, false, // BGE
-	M680X_GRP_JUMP, uuuu, false, // BGT
-	M680X_GRP_JUMP, uuuu, false, // BHI
-	M680X_GRP_INVALID, mrrr, false, // BIAND
-	M680X_GRP_INVALID, mrrr, false, // BIEOR
-	M680X_GRP_INVALID, mrrr, false, // BIOR
-	M680X_GRP_INVALID, rrrr, true, // BITA
-	M680X_GRP_INVALID, rrrr, true, // BITB
-	M680X_GRP_INVALID, rrrr, true, // BITD
-	M680X_GRP_INVALID, rrrr, true, // BITMD
-	M680X_GRP_JUMP, uuuu, false, // BLE
-	M680X_GRP_JUMP, uuuu, false, // BLS
-	M680X_GRP_JUMP, uuuu, false, // BLT
-	M680X_GRP_JUMP, uuuu, false, // BMI
-	M680X_GRP_JUMP, uuuu, false, // BNE
-	M680X_GRP_JUMP, mrrr, false, // BOR
-	M680X_GRP_JUMP, uuuu, false, // BPL
-	M680X_GRP_JUMP, uuuu, false, // BRA
-	M680X_GRP_INVALID, uuuu, false, // BRN never branches
-	M680X_GRP_CALL, uuuu, false, // BSR
-	M680X_GRP_INVALID, uuuu, false, // BVC
-	M680X_GRP_INVALID, uuuu, false, // BVS
-	M680X_GRP_INVALID, rrrr, true, // CBA
-	M680X_GRP_INVALID, uuuu, true, // CLC
-	M680X_GRP_INVALID, uuuu, true, // CLI
-	M680X_GRP_INVALID, wrrr, true, // CLR
-	M680X_GRP_INVALID, wrrr, true, // CLRA
-	M680X_GRP_INVALID, wrrr, true, // CLRB
-	M680X_GRP_INVALID, wrrr, true, // CLRD
-	M680X_GRP_INVALID, wrrr, true, // CLRE
-	M680X_GRP_INVALID, wrrr, true, // CLRF
-	M680X_GRP_INVALID, wrrr, true, // CLRW
-	M680X_GRP_INVALID, uuuu, true, // CLV
-	M680X_GRP_INVALID, rrrr, true, // CMPA
-	M680X_GRP_INVALID, rrrr, true, // CMPB
-	M680X_GRP_INVALID, rrrr, true, // CMPD
-	M680X_GRP_INVALID, rrrr, true, // CMPE
-	M680X_GRP_INVALID, rrrr, true, // CMPF
-	M680X_GRP_INVALID, rrrr, true, // CMPR
-	M680X_GRP_INVALID, rrrr, true, // CMPS
-	M680X_GRP_INVALID, rrrr, true, // CMPU
-	M680X_GRP_INVALID, rrrr, true, // CMPW
-	M680X_GRP_INVALID, rrrr, true, // CMPX
-	M680X_GRP_INVALID, rrrr, true, // CMPY
-	M680X_GRP_INVALID, mmmm, true, // COM
-	M680X_GRP_INVALID, mrrr, true, // COMA
-	M680X_GRP_INVALID, mrrr, true, // COMB
-	M680X_GRP_INVALID, mrrr, true, // COMD
-	M680X_GRP_INVALID, mrrr, true, // COME
-	M680X_GRP_INVALID, mrrr, true, // COMF
-	M680X_GRP_INVALID, mrrr, true, // COMW
-	M680X_GRP_INVALID, rrrr, true, // CPX
-	M680X_GRP_INVALID, mrrr, true, // CWAI
-	M680X_GRP_INVALID, mrrr, true, // DAA
-	M680X_GRP_INVALID, mrrr, true, // DEC
-	M680X_GRP_INVALID, mrrr, true, // DECA
-	M680X_GRP_INVALID, mrrr, true, // DECB
-	M680X_GRP_INVALID, mrrr, true, // DECD
-	M680X_GRP_INVALID, mrrr, true, // DECE
-	M680X_GRP_INVALID, mrrr, true, // DECF
-	M680X_GRP_INVALID, mrrr, true, // DECW
-	M680X_GRP_INVALID, mrrr, false, // DES
-	M680X_GRP_INVALID, mrrr, true, // DEX
-	M680X_GRP_INVALID, mrrr, true, // DIVD
-	M680X_GRP_INVALID, mrrr, true, // DIVQ
-	M680X_GRP_INVALID, mrrr, true, // EIM
-	M680X_GRP_INVALID, mrrr, true, // EORA
-	M680X_GRP_INVALID, mrrr, true, // EORB
-	M680X_GRP_INVALID, mrrr, true, // EORD
-	M680X_GRP_INVALID, rwww, true, // EORR
-	M680X_GRP_INVALID, wwww, false, // EXG
-	M680X_GRP_INVALID, uuuu, false, // ILLGL
-	M680X_GRP_INVALID, mrrr, true, // INC
-	M680X_GRP_INVALID, mrrr, true, // INCA
-	M680X_GRP_INVALID, mrrr, true, // INCB
-	M680X_GRP_INVALID, mrrr, true, // INCD
-	M680X_GRP_INVALID, mrrr, true, // INCE
-	M680X_GRP_INVALID, mrrr, true, // INCF
-	M680X_GRP_INVALID, mrrr, true, // INCW
-	M680X_GRP_INVALID, mrrr, false, // INS
-	M680X_GRP_INVALID, mrrr, true, // INX
-	M680X_GRP_JUMP, uuuu, false, // JMP
-	M680X_GRP_CALL, uuuu, false, // JSR
-	M680X_GRP_JUMP, uuuu, false, // LBCC
-	M680X_GRP_JUMP, uuuu, false, // LBCS
-	M680X_GRP_JUMP, uuuu, false, // LBEQ
-	M680X_GRP_JUMP, uuuu, false, // LBGE
-	M680X_GRP_JUMP, uuuu, false, // LBGT
-	M680X_GRP_JUMP, uuuu, false, // LBHI
-	M680X_GRP_JUMP, uuuu, false, // LBLE
-	M680X_GRP_JUMP, uuuu, false, // LBLS
-	M680X_GRP_JUMP, uuuu, false, // LBLT
-	M680X_GRP_JUMP, uuuu, false, // LBMI
-	M680X_GRP_JUMP, uuuu, false, // LBNE
-	M680X_GRP_JUMP, uuuu, false, // LBPL
-	M680X_GRP_JUMP, uuuu, false, // LBRA
-	M680X_GRP_INVALID, uuuu, false, // LBRN never branches
-	M680X_GRP_CALL, uuuu, false, // LBSR
-	M680X_GRP_INVALID, uuuu, false, // LBVC
-	M680X_GRP_INVALID, uuuu, false, // LBVS
-	M680X_GRP_INVALID, wrrr, true, // LDA
-	M680X_GRP_INVALID, wrrr, true, // LDAA
-	M680X_GRP_INVALID, wrrr, true, // LDAB
-	M680X_GRP_INVALID, wrrr, true, // LDB
-	M680X_GRP_INVALID, mrrr, false, // LDBT
-	M680X_GRP_INVALID, wrrr, true, // LDD
-	M680X_GRP_INVALID, wrrr, true, // LDE
-	M680X_GRP_INVALID, wrrr, true, // LDF
-	M680X_GRP_INVALID, mrrr, false, // LDMD
-	M680X_GRP_INVALID, wrrr, true, // LDQ
-	M680X_GRP_INVALID, wrrr, true, // LDS
-	M680X_GRP_INVALID, wrrr, true, // LDU
-	M680X_GRP_INVALID, wrrr, true, // LDW
-	M680X_GRP_INVALID, wrrr, true, // LDX
-	M680X_GRP_INVALID, wrrr, true, // LDY
-	M680X_GRP_INVALID, wrrr, false, // LEAS
-	M680X_GRP_INVALID, wrrr, false, // LEAU
-	M680X_GRP_INVALID, wrrr, false, // LEAX
-	M680X_GRP_INVALID, wrrr, false, // LEAY
-	M680X_GRP_INVALID, mrrr, true, // LSL
-	M680X_GRP_INVALID, mrrr, true, // LSLA
-	M680X_GRP_INVALID, mrrr, true, // LSLB
-	M680X_GRP_INVALID, mrrr, true, // LSR
-	M680X_GRP_INVALID, mrrr, true, // LSRA
-	M680X_GRP_INVALID, mrrr, true, // LSRB
-	M680X_GRP_INVALID, mrrr, true, // LSRD
-	M680X_GRP_INVALID, mrrr, true, // LSRW
-	M680X_GRP_INVALID, mmmm, true, // MUL
-	M680X_GRP_INVALID, mwrr, true, // MULD
-	M680X_GRP_INVALID, mrrr, true, // NEG
-	M680X_GRP_INVALID, mrrr, true, // NEGA
-	M680X_GRP_INVALID, mrrr, true, // NEGB
-	M680X_GRP_INVALID, mrrr, true, // NEGD
-	M680X_GRP_INVALID, uuuu, false, // NOP
-	M680X_GRP_INVALID, mrrr, true, // OIM
-	M680X_GRP_INVALID, mrrr, true, // ORA
-	M680X_GRP_INVALID, mrrr, true, // ORAA
-	M680X_GRP_INVALID, mrrr, true, // ORAB
-	M680X_GRP_INVALID, mrrr, true, // ORB
-	M680X_GRP_INVALID, mrrr, true, // ORCC
-	M680X_GRP_INVALID, mrrr, true, // ORD
-	M680X_GRP_INVALID, rmmm, true, // ORR
-	M680X_GRP_INVALID, mrrr, false, // PSHA
-	M680X_GRP_INVALID, mrrr, false, // PSHB
-	M680X_GRP_INVALID, mrrr, false, // PSHS
-	M680X_GRP_INVALID, mrrr, false, // PSHSW
-	M680X_GRP_INVALID, mrrr, false, // PSHU
-	M680X_GRP_INVALID, mrrr, false, // PSHUW
-	M680X_GRP_INVALID, mrrr, false, // PSHX
-	M680X_GRP_INVALID, mwww, false, // PULA
-	M680X_GRP_INVALID, mwww, false, // PULB
-	M680X_GRP_INVALID, mwww, false, // PULS
-	M680X_GRP_INVALID, mwww, false, // PULSW
-	M680X_GRP_INVALID, mwww, false, // PULU
-	M680X_GRP_INVALID, mwww, false, // PULUW
-	M680X_GRP_INVALID, mwww, false, // PULX
-	M680X_GRP_INVALID, mrrr, true, // ROL
-	M680X_GRP_INVALID, mrrr, true, // ROLA
-	M680X_GRP_INVALID, mrrr, true, // ROLB
-	M680X_GRP_INVALID, mrrr, true, // ROLD
-	M680X_GRP_INVALID, mrrr, true, // ROLW
-	M680X_GRP_INVALID, mrrr, true, // ROR
-	M680X_GRP_INVALID, mrrr, true, // RORA
-	M680X_GRP_INVALID, mrrr, true, // RORB
-	M680X_GRP_INVALID, mrrr, true, // RORD
-	M680X_GRP_INVALID, mrrr, true, // RORW
-	M680X_GRP_IRET, mwww, false, // RTI
-	M680X_GRP_RET, mwww, false, // RTS
-	M680X_GRP_INVALID, mrrr, true, // SBA
-	M680X_GRP_INVALID, mrrr, true, // SBCA
-	M680X_GRP_INVALID, mrrr, true, // SBCB
-	M680X_GRP_INVALID, mrrr, true, // SBCD
-	M680X_GRP_INVALID, rmmm, true, // SBCR
-	M680X_GRP_INVALID, uuuu, true, // SEC
-	M680X_GRP_INVALID, uuuu, true, // SEI
-	M680X_GRP_INVALID, uuuu, true, // SEV
-	M680X_GRP_INVALID, wrrr, true, // SEX
-	M680X_GRP_INVALID, wrrr, true, // SEXW
-	M680X_GRP_INVALID, rwww, true, // STA
-	M680X_GRP_INVALID, rwww, true, // STAA
-	M680X_GRP_INVALID, rwww, true, // STAB
-	M680X_GRP_INVALID, rwww, true, // STB
-	M680X_GRP_INVALID, rrrw, true, // STBT
-	M680X_GRP_INVALID, rwww, true, // STD
-	M680X_GRP_INVALID, rwww, true, // STE
-	M680X_GRP_INVALID, rwww, true, // STF
-	M680X_GRP_INVALID, rwww, true, // STQ
-	M680X_GRP_INVALID, rwww, true, // STS
-	M680X_GRP_INVALID, rwww, true, // STU
-	M680X_GRP_INVALID, rwww, true, // STW
-	M680X_GRP_INVALID, rwww, true, // STX
-	M680X_GRP_INVALID, rwww, true, // STY
-	M680X_GRP_INVALID, mrrr, true, // SUBA
-	M680X_GRP_INVALID, mrrr, true, // SUBB
-	M680X_GRP_INVALID, mrrr, true, // SUBD
-	M680X_GRP_INVALID, mrrr, true, // SUBE
-	M680X_GRP_INVALID, mrrr, true, // SUBF
-	M680X_GRP_INVALID, rwww, true, // SUBR
-	M680X_GRP_INVALID, mrrr, true, // SUBW
-	M680X_GRP_INT, mrrr, true, // SWI
-	M680X_GRP_INT, mrrr, true, // SWI2
-	M680X_GRP_INT, mrrr, true, // SWI3
-	M680X_GRP_INVALID, uuuu, false, // SYNC
-	M680X_GRP_INVALID, rwww, true, // TAB
-	M680X_GRP_INVALID, rwww, false, // TAP
-	M680X_GRP_INVALID, rwww, true, // TBA
-	M680X_GRP_INVALID, rwww, false, // TPA
-	M680X_GRP_INVALID, rwww, false, // TFM
-	M680X_GRP_INVALID, rwww, false, // TFR
-	M680X_GRP_INVALID, rrrr, true, // TIM
-	M680X_GRP_INVALID, rrrr, true, // TST
-	M680X_GRP_INVALID, rrrr, true, // TSTA
-	M680X_GRP_INVALID, rrrr, true, // TSTB
-	M680X_GRP_INVALID, rrrr, true, // TSTD
-	M680X_GRP_INVALID, rrrr, true, // TSTE
-	M680X_GRP_INVALID, rrrr, true, // TSTF
-	M680X_GRP_INVALID, rrrr, true, // TSTW
-	M680X_GRP_INVALID, rwww, false, // TSX
-	M680X_GRP_INVALID, rwww, false, // TXS
-	M680X_GRP_INVALID, mrrr, true, // WAI
-	M680X_GRP_INVALID, mmmm, false, // XGDX
+	{ M680X_GRP_INVALID, uuuu, false }, // INVLD
+	{ M680X_GRP_INVALID, mrrr, true }, // ABA
+	{ M680X_GRP_INVALID, mrrr, false }, // ABX
+	{ M680X_GRP_INVALID, mrrr, true }, // ADCA
+	{ M680X_GRP_INVALID, mrrr, true }, // ADCB
+	{ M680X_GRP_INVALID, mrrr, true }, // ADCD
+	{ M680X_GRP_INVALID, mrrr, true }, // ADDA
+	{ M680X_GRP_INVALID, mrrr, true }, // ADDB
+	{ M680X_GRP_INVALID, mrrr, true }, // ADDD
+	{ M680X_GRP_INVALID, mrrr, true }, // ADDE
+	{ M680X_GRP_INVALID, mrrr, true }, // ADDF
+	{ M680X_GRP_INVALID, mrrr, true }, // ADDR
+	{ M680X_GRP_INVALID, mrrr, true }, // ADDW
+	{ M680X_GRP_INVALID, rmmm, true }, // AIM
+	{ M680X_GRP_INVALID, mrrr, true }, // ANDA
+	{ M680X_GRP_INVALID, mrrr, true }, // ANDB
+	{ M680X_GRP_INVALID, mrrr, true }, // ANDCC
+	{ M680X_GRP_INVALID, mrrr, true }, // ANDD
+	{ M680X_GRP_INVALID, rmmm, true }, // ANDR
+	{ M680X_GRP_INVALID, mrrr, true }, // ASL
+	{ M680X_GRP_INVALID, mrrr, true }, // ASLA
+	{ M680X_GRP_INVALID, mrrr, true }, // ASLB
+	{ M680X_GRP_INVALID, mrrr, true }, // ASLD
+	{ M680X_GRP_INVALID, mrrr, true }, // ASR
+	{ M680X_GRP_INVALID, mrrr, true }, // ASRA
+	{ M680X_GRP_INVALID, mrrr, true }, // ASRB
+	{ M680X_GRP_INVALID, mrrr, false }, // BAND
+	{ M680X_GRP_JUMP, uuuu, false }, // BCC
+	{ M680X_GRP_JUMP, uuuu, false }, // BCS
+	{ M680X_GRP_INVALID, mrrr, false }, // BEOR
+	{ M680X_GRP_JUMP, uuuu, false }, // BEQ
+	{ M680X_GRP_JUMP, uuuu, false }, // BGE
+	{ M680X_GRP_JUMP, uuuu, false }, // BGT
+	{ M680X_GRP_JUMP, uuuu, false }, // BHI
+	{ M680X_GRP_INVALID, mrrr, false }, // BIAND
+	{ M680X_GRP_INVALID, mrrr, false }, // BIEOR
+	{ M680X_GRP_INVALID, mrrr, false }, // BIOR
+	{ M680X_GRP_INVALID, rrrr, true }, // BITA
+	{ M680X_GRP_INVALID, rrrr, true }, // BITB
+	{ M680X_GRP_INVALID, rrrr, true }, // BITD
+	{ M680X_GRP_INVALID, rrrr, true }, // BITMD
+	{ M680X_GRP_JUMP, uuuu, false }, // BLE
+	{ M680X_GRP_JUMP, uuuu, false }, // BLS
+	{ M680X_GRP_JUMP, uuuu, false }, // BLT
+	{ M680X_GRP_JUMP, uuuu, false }, // BMI
+	{ M680X_GRP_JUMP, uuuu, false }, // BNE
+	{ M680X_GRP_JUMP, mrrr, false }, // BOR
+	{ M680X_GRP_JUMP, uuuu, false }, // BPL
+	{ M680X_GRP_JUMP, uuuu, false }, // BRA
+	{ M680X_GRP_INVALID, uuuu, false }, // BRN never branches
+	{ M680X_GRP_CALL, uuuu, false }, // BSR
+	{ M680X_GRP_INVALID, uuuu, false }, // BVC
+	{ M680X_GRP_INVALID, uuuu, false }, // BVS
+	{ M680X_GRP_INVALID, rrrr, true }, // CBA
+	{ M680X_GRP_INVALID, uuuu, true }, // CLC
+	{ M680X_GRP_INVALID, uuuu, true }, // CLI
+	{ M680X_GRP_INVALID, wrrr, true }, // CLR
+	{ M680X_GRP_INVALID, wrrr, true }, // CLRA
+	{ M680X_GRP_INVALID, wrrr, true }, // CLRB
+	{ M680X_GRP_INVALID, wrrr, true }, // CLRD
+	{ M680X_GRP_INVALID, wrrr, true }, // CLRE
+	{ M680X_GRP_INVALID, wrrr, true }, // CLRF
+	{ M680X_GRP_INVALID, wrrr, true }, // CLRW
+	{ M680X_GRP_INVALID, uuuu, true }, // CLV
+	{ M680X_GRP_INVALID, rrrr, true }, // CMPA
+	{ M680X_GRP_INVALID, rrrr, true }, // CMPB
+	{ M680X_GRP_INVALID, rrrr, true }, // CMPD
+	{ M680X_GRP_INVALID, rrrr, true }, // CMPE
+	{ M680X_GRP_INVALID, rrrr, true }, // CMPF
+	{ M680X_GRP_INVALID, rrrr, true }, // CMPR
+	{ M680X_GRP_INVALID, rrrr, true }, // CMPS
+	{ M680X_GRP_INVALID, rrrr, true }, // CMPU
+	{ M680X_GRP_INVALID, rrrr, true }, // CMPW
+	{ M680X_GRP_INVALID, rrrr, true }, // CMPX
+	{ M680X_GRP_INVALID, rrrr, true }, // CMPY
+	{ M680X_GRP_INVALID, mmmm, true }, // COM
+	{ M680X_GRP_INVALID, mrrr, true }, // COMA
+	{ M680X_GRP_INVALID, mrrr, true }, // COMB
+	{ M680X_GRP_INVALID, mrrr, true }, // COMD
+	{ M680X_GRP_INVALID, mrrr, true }, // COME
+	{ M680X_GRP_INVALID, mrrr, true }, // COMF
+	{ M680X_GRP_INVALID, mrrr, true }, // COMW
+	{ M680X_GRP_INVALID, rrrr, true }, // CPX
+	{ M680X_GRP_INVALID, mrrr, true }, // CWAI
+	{ M680X_GRP_INVALID, mrrr, true }, // DAA
+	{ M680X_GRP_INVALID, mrrr, true }, // DEC
+	{ M680X_GRP_INVALID, mrrr, true }, // DECA
+	{ M680X_GRP_INVALID, mrrr, true }, // DECB
+	{ M680X_GRP_INVALID, mrrr, true }, // DECD
+	{ M680X_GRP_INVALID, mrrr, true }, // DECE
+	{ M680X_GRP_INVALID, mrrr, true }, // DECF
+	{ M680X_GRP_INVALID, mrrr, true }, // DECW
+	{ M680X_GRP_INVALID, mrrr, false }, // DES
+	{ M680X_GRP_INVALID, mrrr, true }, // DEX
+	{ M680X_GRP_INVALID, mrrr, true }, // DIVD
+	{ M680X_GRP_INVALID, mrrr, true }, // DIVQ
+	{ M680X_GRP_INVALID, mrrr, true }, // EIM
+	{ M680X_GRP_INVALID, mrrr, true }, // EORA
+	{ M680X_GRP_INVALID, mrrr, true }, // EORB
+	{ M680X_GRP_INVALID, mrrr, true }, // EORD
+	{ M680X_GRP_INVALID, rwww, true }, // EORR
+	{ M680X_GRP_INVALID, wwww, false }, // EXG
+	{ M680X_GRP_INVALID, uuuu, false }, // ILLGL
+	{ M680X_GRP_INVALID, mrrr, true }, // INC
+	{ M680X_GRP_INVALID, mrrr, true }, // INCA
+	{ M680X_GRP_INVALID, mrrr, true }, // INCB
+	{ M680X_GRP_INVALID, mrrr, true }, // INCD
+	{ M680X_GRP_INVALID, mrrr, true }, // INCE
+	{ M680X_GRP_INVALID, mrrr, true }, // INCF
+	{ M680X_GRP_INVALID, mrrr, true }, // INCW
+	{ M680X_GRP_INVALID, mrrr, false }, // INS
+	{ M680X_GRP_INVALID, mrrr, true }, // INX
+	{ M680X_GRP_JUMP, uuuu, false }, // JMP
+	{ M680X_GRP_CALL, uuuu, false }, // JSR
+	{ M680X_GRP_JUMP, uuuu, false }, // LBCC
+	{ M680X_GRP_JUMP, uuuu, false }, // LBCS
+	{ M680X_GRP_JUMP, uuuu, false }, // LBEQ
+	{ M680X_GRP_JUMP, uuuu, false }, // LBGE
+	{ M680X_GRP_JUMP, uuuu, false }, // LBGT
+	{ M680X_GRP_JUMP, uuuu, false }, // LBHI
+	{ M680X_GRP_JUMP, uuuu, false }, // LBLE
+	{ M680X_GRP_JUMP, uuuu, false }, // LBLS
+	{ M680X_GRP_JUMP, uuuu, false }, // LBLT
+	{ M680X_GRP_JUMP, uuuu, false }, // LBMI
+	{ M680X_GRP_JUMP, uuuu, false }, // LBNE
+	{ M680X_GRP_JUMP, uuuu, false }, // LBPL
+	{ M680X_GRP_JUMP, uuuu, false }, // LBRA
+	{ M680X_GRP_INVALID, uuuu, false }, // LBRN never branches
+	{ M680X_GRP_CALL, uuuu, false }, // LBSR
+	{ M680X_GRP_INVALID, uuuu, false }, // LBVC
+	{ M680X_GRP_INVALID, uuuu, false }, // LBVS
+	{ M680X_GRP_INVALID, wrrr, true }, // LDA
+	{ M680X_GRP_INVALID, wrrr, true }, // LDAA
+	{ M680X_GRP_INVALID, wrrr, true }, // LDAB
+	{ M680X_GRP_INVALID, wrrr, true }, // LDB
+	{ M680X_GRP_INVALID, mrrr, false }, // LDBT
+	{ M680X_GRP_INVALID, wrrr, true }, // LDD
+	{ M680X_GRP_INVALID, wrrr, true }, // LDE
+	{ M680X_GRP_INVALID, wrrr, true }, // LDF
+	{ M680X_GRP_INVALID, mrrr, false }, // LDMD
+	{ M680X_GRP_INVALID, wrrr, true }, // LDQ
+	{ M680X_GRP_INVALID, wrrr, true }, // LDS
+	{ M680X_GRP_INVALID, wrrr, true }, // LDU
+	{ M680X_GRP_INVALID, wrrr, true }, // LDW
+	{ M680X_GRP_INVALID, wrrr, true }, // LDX
+	{ M680X_GRP_INVALID, wrrr, true }, // LDY
+	{ M680X_GRP_INVALID, wrrr, false }, // LEAS
+	{ M680X_GRP_INVALID, wrrr, false }, // LEAU
+	{ M680X_GRP_INVALID, wrrr, false }, // LEAX
+	{ M680X_GRP_INVALID, wrrr, false }, // LEAY
+	{ M680X_GRP_INVALID, mrrr, true }, // LSL
+	{ M680X_GRP_INVALID, mrrr, true }, // LSLA
+	{ M680X_GRP_INVALID, mrrr, true }, // LSLB
+	{ M680X_GRP_INVALID, mrrr, true }, // LSR
+	{ M680X_GRP_INVALID, mrrr, true }, // LSRA
+	{ M680X_GRP_INVALID, mrrr, true }, // LSRB
+	{ M680X_GRP_INVALID, mrrr, true }, // LSRD
+	{ M680X_GRP_INVALID, mrrr, true }, // LSRW
+	{ M680X_GRP_INVALID, mmmm, true }, // MUL
+	{ M680X_GRP_INVALID, mwrr, true }, // MULD
+	{ M680X_GRP_INVALID, mrrr, true }, // NEG
+	{ M680X_GRP_INVALID, mrrr, true }, // NEGA
+	{ M680X_GRP_INVALID, mrrr, true }, // NEGB
+	{ M680X_GRP_INVALID, mrrr, true }, // NEGD
+	{ M680X_GRP_INVALID, uuuu, false }, // NOP
+	{ M680X_GRP_INVALID, mrrr, true }, // OIM
+	{ M680X_GRP_INVALID, mrrr, true }, // ORA
+	{ M680X_GRP_INVALID, mrrr, true }, // ORAA
+	{ M680X_GRP_INVALID, mrrr, true }, // ORAB
+	{ M680X_GRP_INVALID, mrrr, true }, // ORB
+	{ M680X_GRP_INVALID, mrrr, true }, // ORCC
+	{ M680X_GRP_INVALID, mrrr, true }, // ORD
+	{ M680X_GRP_INVALID, rmmm, true }, // ORR
+	{ M680X_GRP_INVALID, mrrr, false }, // PSHA
+	{ M680X_GRP_INVALID, mrrr, false }, // PSHB
+	{ M680X_GRP_INVALID, mrrr, false }, // PSHS
+	{ M680X_GRP_INVALID, mrrr, false }, // PSHSW
+	{ M680X_GRP_INVALID, mrrr, false }, // PSHU
+	{ M680X_GRP_INVALID, mrrr, false }, // PSHUW
+	{ M680X_GRP_INVALID, mrrr, false }, // PSHX
+	{ M680X_GRP_INVALID, mwww, false }, // PULA
+	{ M680X_GRP_INVALID, mwww, false }, // PULB
+	{ M680X_GRP_INVALID, mwww, false }, // PULS
+	{ M680X_GRP_INVALID, mwww, false }, // PULSW
+	{ M680X_GRP_INVALID, mwww, false }, // PULU
+	{ M680X_GRP_INVALID, mwww, false }, // PULUW
+	{ M680X_GRP_INVALID, mwww, false }, // PULX
+	{ M680X_GRP_INVALID, mrrr, true }, // ROL
+	{ M680X_GRP_INVALID, mrrr, true }, // ROLA
+	{ M680X_GRP_INVALID, mrrr, true }, // ROLB
+	{ M680X_GRP_INVALID, mrrr, true }, // ROLD
+	{ M680X_GRP_INVALID, mrrr, true }, // ROLW
+	{ M680X_GRP_INVALID, mrrr, true }, // ROR
+	{ M680X_GRP_INVALID, mrrr, true }, // RORA
+	{ M680X_GRP_INVALID, mrrr, true }, // RORB
+	{ M680X_GRP_INVALID, mrrr, true }, // RORD
+	{ M680X_GRP_INVALID, mrrr, true }, // RORW
+	{ M680X_GRP_IRET, mwww, false }, // RTI
+	{ M680X_GRP_RET, mwww, false }, // RTS
+	{ M680X_GRP_INVALID, mrrr, true }, // SBA
+	{ M680X_GRP_INVALID, mrrr, true }, // SBCA
+	{ M680X_GRP_INVALID, mrrr, true }, // SBCB
+	{ M680X_GRP_INVALID, mrrr, true }, // SBCD
+	{ M680X_GRP_INVALID, rmmm, true }, // SBCR
+	{ M680X_GRP_INVALID, uuuu, true }, // SEC
+	{ M680X_GRP_INVALID, uuuu, true }, // SEI
+	{ M680X_GRP_INVALID, uuuu, true }, // SEV
+	{ M680X_GRP_INVALID, wrrr, true }, // SEX
+	{ M680X_GRP_INVALID, wrrr, true }, // SEXW
+	{ M680X_GRP_INVALID, rwww, true }, // STA
+	{ M680X_GRP_INVALID, rwww, true }, // STAA
+	{ M680X_GRP_INVALID, rwww, true }, // STAB
+	{ M680X_GRP_INVALID, rwww, true }, // STB
+	{ M680X_GRP_INVALID, rrrw, true }, // STBT
+	{ M680X_GRP_INVALID, rwww, true }, // STD
+	{ M680X_GRP_INVALID, rwww, true }, // STE
+	{ M680X_GRP_INVALID, rwww, true }, // STF
+	{ M680X_GRP_INVALID, rwww, true }, // STQ
+	{ M680X_GRP_INVALID, rwww, true }, // STS
+	{ M680X_GRP_INVALID, rwww, true }, // STU
+	{ M680X_GRP_INVALID, rwww, true }, // STW
+	{ M680X_GRP_INVALID, rwww, true }, // STX
+	{ M680X_GRP_INVALID, rwww, true }, // STY
+	{ M680X_GRP_INVALID, mrrr, true }, // SUBA
+	{ M680X_GRP_INVALID, mrrr, true }, // SUBB
+	{ M680X_GRP_INVALID, mrrr, true }, // SUBD
+	{ M680X_GRP_INVALID, mrrr, true }, // SUBE
+	{ M680X_GRP_INVALID, mrrr, true }, // SUBF
+	{ M680X_GRP_INVALID, rwww, true }, // SUBR
+	{ M680X_GRP_INVALID, mrrr, true }, // SUBW
+	{ M680X_GRP_INT, mrrr, true }, // SWI
+	{ M680X_GRP_INT, mrrr, true }, // SWI2
+	{ M680X_GRP_INT, mrrr, true }, // SWI3
+	{ M680X_GRP_INVALID, uuuu, false }, // SYNC
+	{ M680X_GRP_INVALID, rwww, true }, // TAB
+	{ M680X_GRP_INVALID, rwww, false }, // TAP
+	{ M680X_GRP_INVALID, rwww, true }, // TBA
+	{ M680X_GRP_INVALID, rwww, false }, // TPA
+	{ M680X_GRP_INVALID, rwww, false }, // TFM
+	{ M680X_GRP_INVALID, rwww, false }, // TFR
+	{ M680X_GRP_INVALID, rrrr, true }, // TIM
+	{ M680X_GRP_INVALID, rrrr, true }, // TST
+	{ M680X_GRP_INVALID, rrrr, true }, // TSTA
+	{ M680X_GRP_INVALID, rrrr, true }, // TSTB
+	{ M680X_GRP_INVALID, rrrr, true }, // TSTD
+	{ M680X_GRP_INVALID, rrrr, true }, // TSTE
+	{ M680X_GRP_INVALID, rrrr, true }, // TSTF
+	{ M680X_GRP_INVALID, rrrr, true }, // TSTW
+	{ M680X_GRP_INVALID, rwww, false }, // TSX
+	{ M680X_GRP_INVALID, rwww, false }, // TXS
+	{ M680X_GRP_INVALID, mrrr, true }, // WAI
+	{ M680X_GRP_INVALID, mmmm, false }, // XGDX
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1084,17 +1084,17 @@ static bool read_word(const m680x_info *info, uint16_t *word, uint16_t address)
 	return true;
 }
 
-static bool read_dword(const m680x_info *info, uint32_t *dword,
+static bool read_sdword(const m680x_info *info, int32_t *sdword,
 	uint16_t address)
 {
 	if (address + 3 - info->offset >= info->size)
 		// out of code buffer range
 		return false;
 
-	*dword = (uint32_t)info->code[address - info->offset] << 24;
-	*dword |= (uint32_t)info->code[address + 1 - info->offset] << 16;
-	*dword |= (uint32_t)info->code[address + 2 - info->offset] << 8;
-	*dword |= (uint32_t)info->code[address + 3 - info->offset];
+	*sdword = (uint32_t)info->code[address - info->offset] << 24;
+	*sdword |= (uint32_t)info->code[address + 1 - info->offset] << 16;
+	*sdword |= (uint32_t)info->code[address + 2 - info->offset] << 8;
+	*sdword |= (uint32_t)info->code[address + 3 - info->offset];
 
 	return true;
 }
@@ -1345,7 +1345,6 @@ static void m6800_set_changed_regs_read_write_counts(MCInst *MI,
 		{M680X_INS_XGDX, {M680X_REG_D, M680X_REG_X, M680X_REG_INVALID}},
 	};
 
-	cs_m680x *m680x = &info->m680x;
 	int i, j;
 
 	if (MI->flat_insn->detail == NULL)
@@ -1420,7 +1419,6 @@ static void m6809_set_changed_regs_read_write_counts(MCInst *MI,
 		},
 	};
 
-	cs_m680x *m680x = &info->m680x;
 	int i, j;
 
 	if (MI->flat_insn->detail == NULL)
@@ -1654,9 +1652,8 @@ static bool decode_insn(const m680x_info *info, uint16_t address,
 
 static void illegal_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
 	cs_m680x_op *op0 = &info->m680x.operands[info->m680x.op_count++];
-	uint8_t temp8;
+	uint8_t temp8 = 0;
 
 	info->insn = M680X_INS_ILLGL;
 	read_byte(info, &temp8, (*address)++);
@@ -1701,7 +1698,7 @@ static void reg_bits_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	cs_m680x *m680x = &info->m680x;
 	cs_m680x_op *op0 = &m680x->operands[0];
-	uint8_t reg_bits;
+	uint8_t reg_bits = 0;
 	uint16_t bit_index;
 	const m680x_reg *reg_to_reg_ids;
 
@@ -1721,6 +1718,7 @@ static void reg_bits_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	default:
 		fprintf(stderr, "Internal error: Unexpected operand0 register "
 			"%d\n", op0->reg);
+		abort();
 	}
 
 	if ((info->insn == M680X_INS_PULU ||
@@ -1748,7 +1746,7 @@ static const m680x_reg g_tfr_exg_reg_ids[] = {
 static void reg_reg_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	cs_m680x *m680x = &info->m680x;
-	uint8_t regs;
+	uint8_t regs = 0;
 
 	m680x->address_mode = M680X_AM_REGISTER;
 
@@ -1770,7 +1768,7 @@ static void bcc_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	cs_m680x *m680x = &info->m680x;
 	cs_m680x_op *op0 = &m680x->operands[m680x->op_count++];
-	int16_t offset;
+	int16_t offset = 0;
 
 	m680x->address_mode = M680X_AM_RELATIVE;
 
@@ -1786,7 +1784,7 @@ static void lbcc_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	cs_m680x *m680x = &info->m680x;
 	cs_m680x_op *op0 = &m680x->operands[m680x->op_count++];
-	uint16_t offset;
+	uint16_t offset = 0;
 
 	m680x->address_mode = M680X_AM_RELATIVE;
 
@@ -1795,7 +1793,7 @@ static void lbcc_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	op0->type = M680X_OP_RELATIVE;
 	op0->size = 2;
-	op0->rel.offset = offset;
+	op0->rel.offset = (int16_t)offset;
 	op0->rel.address = *address + offset;
 }
 
@@ -1808,7 +1806,7 @@ static void m6800_indexed_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	cs_m680x *m680x = &info->m680x;
 	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
-	uint8_t offset;
+	uint8_t offset = 0;
 
 	m680x->address_mode = M680X_AM_INDEXED;
 
@@ -1827,8 +1825,8 @@ static void m6809_indexed_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	cs_m680x *m680x = &info->m680x;
 	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
-	uint8_t post_byte;
-	int16_t offset = 0;
+	uint8_t post_byte = 0;
+	uint16_t offset = 0;
 
 	m680x->address_mode = M680X_AM_INDEXED;
 
@@ -1908,7 +1906,7 @@ static void m6809_indexed_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 			read_word(info, &offset, *address);
 			*address += 2;
 			op->idx.offset_addr = offset + *address;
-			op->idx.offset = offset;
+			op->idx.offset = (int16_t)offset;
 			op->idx.offset_bits = M680X_OFFSET_BITS_16;
 			break;
 
@@ -1916,7 +1914,7 @@ static void m6809_indexed_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 		case 0x09: // n16,R
 			read_word(info, &offset, *address);
 			*address += 2;
-			op->idx.offset = offset;
+			op->idx.offset = (int16_t)offset;
 			op->idx.offset_bits = M680X_OFFSET_BITS_16;
 			break;
 
@@ -1982,7 +1980,7 @@ static void immediate_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	cs_m680x_op *op0 = &m680x->operands[0];
 	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
 	unsigned int imm_size;
-	int16_t word;
+	uint16_t word = 0;
 
 	m680x->address_mode = M680X_AM_IMMEDIATE;
 
@@ -2001,11 +1999,11 @@ static void immediate_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	case 2:
 		read_word(info, &word, *address);
-		op->imm = (int32_t)word;
+		op->imm = (int16_t)word;
 		break;
 
 	case 4:
-		read_dword(info, &op->imm, *address);
+		read_sdword(info, &op->imm, *address);
 		break;
 
 	default:
@@ -2026,7 +2024,7 @@ static void hd630x_imm_indexed_hdlr(MCInst *MI, m680x_info *info,
 	cs_m680x *m680x = &info->m680x;
 	cs_m680x_op *op0 = &m680x->operands[m680x->op_count++];
 	cs_m680x_op *op1 = &m680x->operands[m680x->op_count++];
-	uint8_t tmp;
+	uint8_t tmp = 0;
 
 	m680x->address_mode = M680X_AM_IMM_INDEXED;
 
@@ -2047,7 +2045,7 @@ static void hd630x_imm_direct_hdlr(MCInst *MI, m680x_info *info,
 	cs_m680x *m680x = &info->m680x;
 	cs_m680x_op *op0 = &m680x->operands[m680x->op_count++];
 	cs_m680x_op *op1 = &m680x->operands[m680x->op_count++];
-	uint8_t tmp;
+	uint8_t tmp = 0;
 
 	m680x->address_mode = M680X_AM_IMM_DIRECT;
 
