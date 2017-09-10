@@ -283,10 +283,22 @@ ifneq (,$(findstring tms320c64x,$(CAPSTONE_ARCHS)))
 	LIBOBJ_TMS320C64X += $(OBJDIR)/arch/TMS320C64x/TMS320C64xModule.o
 endif
 
+DEP_M680X =
+DEP_M680X += arch/M680X/M680XInstPrinter.h
+DEP_M680X += arch/M680X/M680XDisassembler.h
+DEP_M680X += arch/M680X/M680XDisassemblerInternals.h
+
+LIBOBJ_M680X =
+ifneq (,$(findstring m680x,$(CAPSTONE_ARCHS)))
+	CFLAGS += -DCAPSTONE_HAS_M680X
+	LIBOBJ_M680X += $(OBJDIR)/arch/M680X/M680XDisassembler.o
+	LIBOBJ_M680X += $(OBJDIR)/arch/M680X/M680XInstPrinter.o
+	LIBOBJ_M680X += $(OBJDIR)/arch/M680X/M680XModule.o
+endif
 
 LIBOBJ =
 LIBOBJ += $(OBJDIR)/cs.o $(OBJDIR)/utils.o $(OBJDIR)/SStream.o $(OBJDIR)/MCInstrDesc.o $(OBJDIR)/MCRegisterInfo.o
-LIBOBJ += $(LIBOBJ_ARM) $(LIBOBJ_ARM64) $(LIBOBJ_M68K) $(LIBOBJ_MIPS) $(LIBOBJ_PPC) $(LIBOBJ_SPARC) $(LIBOBJ_SYSZ) $(LIBOBJ_X86) $(LIBOBJ_XCORE) $(LIBOBJ_TMS320C64X)
+LIBOBJ += $(LIBOBJ_ARM) $(LIBOBJ_ARM64) $(LIBOBJ_M68K) $(LIBOBJ_MIPS) $(LIBOBJ_PPC) $(LIBOBJ_SPARC) $(LIBOBJ_SYSZ) $(LIBOBJ_X86) $(LIBOBJ_XCORE) $(LIBOBJ_TMS320C64X) $(LIBOBJ_M680X)
 LIBOBJ += $(OBJDIR)/MCInst.o
 
 
@@ -411,6 +423,7 @@ $(LIBOBJ_SYSZ): $(DEP_SYSZ)
 $(LIBOBJ_X86): $(DEP_X86)
 $(LIBOBJ_XCORE): $(DEP_XCORE)
 $(LIBOBJ_TMS320C64X): $(DEP_TMS320C64X)
+$(LIBOBJ_M680X): $(DEP_M680X)
 
 ifeq ($(CAPSTONE_STATIC),yes)
 $(ARCHIVE): $(LIBOBJ)
@@ -488,7 +501,7 @@ TESTS = test_basic test_detail test_arm test_arm64 test_m68k test_mips test_ppc 
 TESTS += test_systemz test_x86 test_xcore test_iter
 TESTS += test_basic.static test_detail.static test_arm.static test_arm64.static
 TESTS += test_m68k.static test_mips.static test_ppc.static test_sparc.static
-TESTS += test_systemz.static test_x86.static test_xcore.static
+TESTS += test_systemz.static test_x86.static test_xcore.static test_m680x.static
 TESTS += test_skipdata test_skipdata.static test_iter.static
 check:
 	@for t in $(TESTS); do \

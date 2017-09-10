@@ -66,7 +66,7 @@ clean:
 
 
 TESTS = test_basic.py test_detail.py test_arm.py test_arm64.py test_m68k.py test_mips.py
-TESTS += test_ppc.py test_sparc.py test_systemz.py test_x86.py test_xcore.py test_tms320c64x.py test_skipdata.py
+TESTS += test_ppc.py test_sparc.py test_systemz.py test_x86.py test_xcore.py test_tms320c64x.py test_m680x.py test_skipdata.py
 check:
 	@for t in $(TESTS); do \
 		echo Check $$t ... ; \

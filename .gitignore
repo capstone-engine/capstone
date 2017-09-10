@@ -45,6 +45,7 @@ bindings/ocaml/test_ppc
 bindings/ocaml/test_sparc
 bindings/ocaml/test_systemz
 bindings/ocaml/test_xcore
+bindings/ocaml/test_m680x
 
 
 # test binaries
@@ -64,6 +65,7 @@ tests/*.static
 tests/test_customized_mnem
 tests/test_m68k
 tests/test_tms320c64x
+tests/test_m680x
 
 # vim tmp file
 *.swp

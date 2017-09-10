@@ -352,7 +352,9 @@ if (CAPSTONE_M680X_SUPPORT)
 		arch/M680X/M680XModule.c
     )
     set(HEADERS_M680X
+		arch/M680X/M680XInstPrinter.h
 		arch/M680X/M680XDisassembler.h
+		arch/M680X/M680XDisassemblerInternals.h
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_m680x.c)
 endif ()
