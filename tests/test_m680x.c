@@ -367,15 +367,11 @@ static void test()
 				print_insn_detail(&insn[j]);
 			}
 
-			uint16_t next_address = insn[j - 1].address +
-				insn[j - 1].size;
-			printf("0x%04X\n", next_address);
-
 			// free memory allocated by cs_disasm()
 			cs_free(insn, count);
 		}
 		else {
-			printf("****************\n");
+			printf("********************\n");
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code:", platforms[i].code,
 				platforms[i].size);
