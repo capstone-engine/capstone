@@ -1827,6 +1827,7 @@ static void m6809_indexed_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
 	uint8_t post_byte = 0;
 	uint16_t offset = 0;
+	int16_t soffset = 0;
 
 	m680x->address_mode = M680X_AM_INDEXED;
 
@@ -1887,16 +1888,16 @@ static void m6809_indexed_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 		case 0x1c: // [n8,PCR]
 		case 0x0c: // n8,PCR
 			op->idx.base_reg = M680X_REG_PC;
-			read_byte_sign_extended(info, &offset, (*address)++);
+			read_byte_sign_extended(info, &soffset, (*address)++);
 			op->idx.offset_addr = offset + *address;
-			op->idx.offset = offset;
+			op->idx.offset = soffset;
 			op->idx.offset_bits = M680X_OFFSET_BITS_8;
 			break;
 
 		case 0x18: // [n8,R]
 		case 0x08: // n8,R
-			read_byte_sign_extended(info, &offset, (*address)++);
-			op->idx.offset = offset;
+			read_byte_sign_extended(info, &soffset, (*address)++);
+			op->idx.offset = soffset;
 			op->idx.offset_bits = M680X_OFFSET_BITS_8;
 			break;
 
@@ -1981,6 +1982,7 @@ static void immediate_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
 	unsigned int imm_size;
 	uint16_t word = 0;
+	int16_t sword = 0;
 
 	m680x->address_mode = M680X_AM_IMMEDIATE;
 
@@ -1993,8 +1995,8 @@ static void immediate_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	switch (imm_size) {
 	case 1:
-		read_byte_sign_extended(info, &word, *address);
-		op->imm = (int32_t)word;
+		read_byte_sign_extended(info, &sword, *address);
+		op->imm = sword;
 		break;
 
 	case 2:

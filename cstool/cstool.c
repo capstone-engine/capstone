@@ -264,7 +264,7 @@ int main(int argc, char **argv)
 	cs_insn *insn;
 	cs_err err;
 	cs_mode md;
-	cs_arch arch = -1;
+	cs_arch arch = ~0;
 	bool detail_flag = false;
 	bool unsigned_flag = false;
 	int args_left;
@@ -325,7 +325,7 @@ int main(int argc, char **argv)
 		}
 	}
 
-	if (arch == -1) {
+	if (arch == ~0) {
 		printf("ERROR: Invalid <arch+mode>: \"%s\", quit!\n", mode);
 		usage(argv[0]);
 		return -1;
