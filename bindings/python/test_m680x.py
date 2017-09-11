@@ -208,7 +208,6 @@ def test_class():
             for insn in md.disasm(code, 0x1000):
                 print_insn_detail(insn)
                 print ()
-            print ()
         except CsError as e:
             print("ERROR: %s" % e)
 

@@ -250,8 +250,6 @@ static void print_insn_detail(cs_insn *insn)
 	if (detail->groups_count) {
 		printf("\tgroups_count: %u\n", detail->groups_count);
 	}
-
-	printf("\n");
 }
 
 static bool consistency_checks()
@@ -365,6 +363,7 @@ static void test()
 				printf("\tinsn id: %s\n",
 					(char *)&s_insn_ids[insn[j].id]);
 				print_insn_detail(&insn[j]);
+				printf("\n");
 			}
 
 			// free memory allocated by cs_disasm()
@@ -378,8 +377,6 @@ static void test()
 			printf("ERROR: Failed to disasm given code!\n");
 			abort();
 		}
-
-		printf("\n");
 
 		cs_close(&handle);
 	}
