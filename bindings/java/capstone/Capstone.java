@@ -35,6 +35,7 @@ public class Capstone {
     public Sparc.UnionOpInfo sparc;
     public Systemz.UnionOpInfo sysz;
     public Xcore.UnionOpInfo xcore;
+    public M680x.UnionOpInfo m680x;
   }
 
   protected static class _cs_insn extends Structure {
@@ -106,6 +107,8 @@ public class Capstone {
     public long address;
     // instruction size.
     public short size;
+    // Machine bytes of this instruction, with number of bytes indicated by size above
+    public byte[] bytes;
     // instruction mnemonic. NOTE: irrelevant for diet engine.
     public String mnemonic;
     // instruction operands. NOTE: irrelevant for diet engine.
@@ -130,6 +133,7 @@ public class Capstone {
         while (insn.op_str[lo++] != 0);
         mnemonic = new String(insn.mnemonic, 0, lm-1);
         opStr = new String(insn.op_str, 0, lo-1);
+        bytes = Arrays.copyOf(insn.bytes, insn.size);
       }
 
       cs = _cs;
@@ -197,6 +201,11 @@ public class Capstone {
           detail.arch.setType(Xcore.UnionOpInfo.class);
           detail.arch.read();
           op_info = new Xcore.OpInfo((Xcore.UnionOpInfo) detail.arch.xcore);
+          break;
+        case CS_ARCH_M680X:
+          detail.arch.setType(M680x.UnionOpInfo.class);
+          detail.arch.read();
+          op_info = new M680x.OpInfo((M680x.UnionOpInfo) detail.arch.m680x);
           break;
         default:
       }
@@ -321,7 +330,10 @@ public class Capstone {
   public static final int CS_ARCH_SPARC = 5;
   public static final int CS_ARCH_SYSZ = 6;
   public static final int CS_ARCH_XCORE = 7;
-  public static final int CS_ARCH_MAX = 8;
+  public static final int CS_ARCH_M68K = 8;
+  public static final int CS_ARCH_TMS320C64X = 9;
+  public static final int CS_ARCH_M680X = 10;
+  public static final int CS_ARCH_MAX = 11;
   public static final int CS_ARCH_ALL = 0xFFFF; // query id for cs_support()
 
   // disasm mode
@@ -342,6 +354,12 @@ public class Capstone {
   public static final int CS_MODE_MIPS32 = CS_MODE_32; // Mips32 ISA
   public static final int CS_MODE_MIPS64 = CS_MODE_64; // Mips64 ISA
   public static final int CS_MODE_QPX = 1 << 4; // Quad Processing eXtensions mode (PPC)
+  public static final int CS_MODE_M680X_6800 = 1 << 1; // M680X Motorola 6800,6802 mode
+  public static final int CS_MODE_M680X_6801 = 1 << 2; // M680X Motorola 6801,6803 mode
+  public static final int CS_MODE_M680X_6805 = 1 << 3; // M680X Motorola 6805 mode
+  public static final int CS_MODE_M680X_6809 = 1 << 4; // M680X Motorola 6809 mode
+  public static final int CS_MODE_M680X_6301 = 1 << 5; // M680X Hitachi 6301,6303 mode
+  public static final int CS_MODE_M680X_6309 = 1 << 6; // M680X Hitachi 6309 mode
 
   // Capstone error
   public static final int CS_ERR_OK = 0;
