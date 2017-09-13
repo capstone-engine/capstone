@@ -121,26 +121,42 @@ let print_op handle flags i op =
 		if (i == 0) && (bit_set flags _M680X_FIRST_OP_IN_MNEM) then
 			printf " (in mnemonic)";
 		printf "\n";
+		printf "\t\t\tsize: %d\n" op.size;
 		);
-	| M680X_OP_IMMEDIATE imm -> printf "\t\toperands[%d].type: IMMEDIATE = #%d\n" i imm;
-	| M680X_OP_DIRECT direct_addr -> printf "\t\toperands[%d].type: DIRECT = 0x%02X\n" i direct_addr;
-	| M680X_OP_EXTENDED ext -> ( printf "\t\toperands[%d].type: EXTENDED " i;
+	| M680X_OP_IMMEDIATE imm -> (
+		printf "\t\toperands[%d].type: IMMEDIATE = #%d\n" i imm;
+		printf "\t\t\tsize: %d\n" op.size;
+		);
+	| M680X_OP_DIRECT direct_addr -> (
+		printf "\t\toperands[%d].type: DIRECT = 0x%02X\n" i direct_addr;
+		printf "\t\t\tsize: %d\n" op.size;
+		);
+	| M680X_OP_EXTENDED ext -> (
+		printf "\t\toperands[%d].type: EXTENDED " i;
 		if ext.indirect then
 			printf "INDIRECT";
 		printf " = 0x%04X\n" ext.addr_ext;
+		printf "\t\t\tsize: %d\n" op.size;
 		);
-	| M680X_OP_RELATIVE rel -> printf "\t\toperands[%d].type: RELATIVE = 0x%04X\n" i rel.addr_rel;
-	| M680X_OP_INDEXED_00 idx -> ( printf "\t\toperands[%d].type: INDEXED_M6800\n" i;
+	| M680X_OP_RELATIVE rel -> (
+		printf "\t\toperands[%d].type: RELATIVE = 0x%04X\n" i rel.addr_rel;
+		printf "\t\t\tsize: %d\n" op.size;
+		);
+	| M680X_OP_INDEXED_00 idx -> (
+		printf "\t\toperands[%d].type: INDEXED_M6800\n" i;
+		printf "\t\t\tsize: %d\n" op.size;
 		if idx.base_reg != 0 then
 			printf "\t\t\tbase register: %s\n" (cs_reg_name handle idx.base_reg);
 		if idx.offset_bits != 0 then
 			printf "\t\t\toffset: %u\n" idx.offset;
 			printf "\t\t\toffset bits: %u\n" idx.offset_bits;
 		);
-	| M680X_OP_INDEXED_09 idx -> ( printf "\t\toperands[%d].type: INDEXED_M6809" i;
+	| M680X_OP_INDEXED_09 idx -> (
+		printf "\t\toperands[%d].type: INDEXED_M6809" i;
 		if idx.indirect then
 			printf " INDIRECT";
 		printf "\n";
+		printf "\t\t\tsize: %d\n" op.size;
 		if idx.base_reg != _M680X_REG_INVALID then
 			printf "\t\t\tbase register: %s\n" (cs_reg_name handle idx.base_reg);
 		if idx.offset_reg != _M680X_REG_INVALID then

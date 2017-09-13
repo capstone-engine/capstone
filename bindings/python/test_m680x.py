@@ -137,20 +137,26 @@ def print_insn_detail(insn):
                     comment = " (in mnemonic)";
                 print("\t\toperands[%u].type: REGISTER = %s%s" % (c,
                     insn.reg_name(i.reg), comment))
+                print("\t\t\tsize: %d" % i.size)
             if i.type == M680X_OP_IMMEDIATE:
                 print("\t\toperands[%u].type: IMMEDIATE = #%s" % (c, i.imm))
+                print("\t\t\tsize: %d" % i.size)
             if i.type == M680X_OP_DIRECT:
                 print("\t\toperands[%u].type: DIRECT = 0x%02X" % (c, i.imm))
+                print("\t\t\tsize: %d" % i.size)
             if i.type == M680X_OP_EXTENDED:
                 if i.ext.indirect:
                     indirect = "INDIRECT"
                 else:
                     indirect = ""
                 print("\t\toperands[%u].type: EXTENDED %s = 0x%04X" % (c, indirect, i.ext.address))
+                print("\t\t\tsize: %d" % i.size)
             if i.type == M680X_OP_RELATIVE:
                 print("\t\toperands[%u].type: RELATIVE = 0x%04X" % (c, i.rel.address))
+                print("\t\t\tsize: %d" % i.size)
             if i.type == M680X_OP_INDEXED_00:
                 print("\t\toperands[%u].type: INDEXED_M6800" % c)
+                print("\t\t\tsize: %d" % i.size)
                 if i.idx.base_reg != M680X_REG_INVALID:
                     print("\t\t\tbase register: %s" % insn.reg_name(i.idx.base_reg))
                 if i.idx.offset_bits != 0:
@@ -162,6 +168,7 @@ def print_insn_detail(insn):
                 else:
                     indirect = ""
                 print("\t\toperands[%u].type: INDEXED_M6809 %s" % (c, indirect))
+                print("\t\t\tsize: %d" % i.size)
                 if i.idx.base_reg != M680X_REG_INVALID:
                     print("\t\t\tbase register: %s" % insn.reg_name(i.idx.base_reg))
                 if i.idx.offset_reg != M680X_REG_INVALID:

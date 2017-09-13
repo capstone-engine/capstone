@@ -174,31 +174,37 @@ static void print_insn_detail(cs_insn *insn)
 				comment = " (in mnemonic)";
 			printf("\t\toperands[%u].type: REGISTER = %s%s\n", i,
 				cs_reg_name(handle, op->reg), comment);
+			printf("\t\t\tsize: %u\n", op->size);
 			break;
 
 		case M680X_OP_IMMEDIATE:
 			printf("\t\toperands[%u].type: IMMEDIATE = #%d\n", i,
 				op->imm);
+			printf("\t\t\tsize: %u\n", op->size);
 			break;
 
 		case M680X_OP_DIRECT:
 			printf("\t\toperands[%u].type: DIRECT = 0x%02X\n", i,
 				op->direct_addr);
+			printf("\t\t\tsize: %u\n", op->size);
 			break;
 
 		case M680X_OP_EXTENDED:
 			printf("\t\toperands[%u].type: EXTENDED %s = 0x%04X\n",
 				i, op->ext.indirect ? "INDIRECT" : "",
 				op->ext.address);
+			printf("\t\t\tsize: %u\n", op->size);
 			break;
 
 		case M680X_OP_RELATIVE:
 			printf("\t\toperands[%u].type: RELATIVE = 0x%04X\n", i,
 				op->rel.address);
+			printf("\t\t\tsize: %u\n", op->size);
 			break;
 
 		case M680X_OP_INDEXED_00:
 			printf("\t\toperands[%u].type: INDEXED_M6800\n", i);
+			printf("\t\t\tsize: %u\n", op->size);
 
 			if (op->idx.base_reg != M680X_REG_INVALID)
 				printf("\t\t\tbase register: %s\n",
@@ -215,6 +221,7 @@ static void print_insn_detail(cs_insn *insn)
 		case M680X_OP_INDEXED_09:
 			printf("\t\toperands[%u].type: INDEXED_M6809 %s\n", i,
 				op->idx.indirect ? "INDIRECT" : "");
+			printf("\t\t\tsize: %u\n", op->size);
 
 			if (op->idx.base_reg != M680X_REG_INVALID)
 				printf("\t\t\tbase register: %s\n",

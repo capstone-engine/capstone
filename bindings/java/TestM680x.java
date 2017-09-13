@@ -147,18 +147,28 @@ public class TestM680x {
           if (c == 0 && ((operands.flags & M680X_FIRST_OP_IN_MNEM) != 0))
             comment = " (in mnemonic)";
           System.out.printf("\t\toperands[%d].type: REGISTER = %s%s\n", c, ins.regName(i.value.reg), comment);
+          System.out.printf("\t\t\tsize: %d\n", i.size);
         }
-        if (i.type == M680X_OP_IMMEDIATE)
+        if (i.type == M680X_OP_IMMEDIATE) {
           System.out.printf("\t\toperands[%d].type: IMMEDIATE = #%d\n", c, i.value.imm);
-        if (i.type == M680X_OP_DIRECT)
+          System.out.printf("\t\t\tsize: %d\n", i.size);
+        }
+        if (i.type == M680X_OP_DIRECT) {
           System.out.printf("\t\toperands[%d].type: DIRECT = 0x%02X\n", c, i.value.direct_addr);
-        if (i.type == M680X_OP_EXTENDED)
+          System.out.printf("\t\t\tsize: %d\n", i.size);
+        }
+        if (i.type == M680X_OP_EXTENDED) {
           System.out.printf("\t\toperands[%d].type: EXTENDED %s = 0x%04X\n", c,
             i.value.ext.indirect != 0 ? "INDIRECT" : "", i.value.ext.address);
-        if (i.type == M680X_OP_RELATIVE)
+          System.out.printf("\t\t\tsize: %d\n", i.size);
+        }
+        if (i.type == M680X_OP_RELATIVE) {
           System.out.printf("\t\toperands[%d].type: RELATIVE = 0x%04X\n", c, i.value.rel.address );
+          System.out.printf("\t\t\tsize: %d\n", i.size);
+        }
         if (i.type == M680X_OP_INDEXED_00) {
           System.out.printf("\t\toperands[%d].type: INDEXED_M6800\n", c);
+          System.out.printf("\t\t\tsize: %d\n", i.size);
           if (i.value.idx.base_reg != M680X_REG_INVALID) {
             String base = ins.regName(i.value.idx.base_reg);
             if (base != null)
@@ -172,6 +182,7 @@ public class TestM680x {
         if (i.type == M680X_OP_INDEXED_09) {
           System.out.printf("\t\toperands[%d].type: INDEXED_M6809 %s\n", c,
             i.value.idx.indirect != 0 ? "INDIRECT" : "");
+          System.out.printf("\t\t\tsize: %d\n", i.size);
           if (i.value.idx.base_reg != M680X_REG_INVALID) {
             String regName = ins.regName(i.value.idx.base_reg);
             if (regName != null)
@@ -195,20 +206,6 @@ public class TestM680x {
           if (i.value.idx.inc_dec < 0)
             System.out.printf("\t\t\tpre decrement: %d\n", i.value.idx.inc_dec);
         }
-// ****************************************************
-/*
-          System.out.printf("\t\t\t********** operand[%d] ******************\n", c);
-          String regn = ins.regName(i.value.idx.base_reg);
-          System.out.printf("\t\t\tbase register: %s\n", regn);
-          regn = ins.regName(i.value.idx.offset_reg);
-          System.out.printf("\t\t\toffset register: %s\n", regn);
-          System.out.printf("\t\t\toffset: 0x%X\n", i.value.idx.offset);
-          System.out.printf("\t\t\toffset_addr: 0x%X\n", i.value.idx.offset_addr);
-          System.out.printf("\t\t\toffset_bits: 0x%X\n", i.value.idx.offset_bits);
-          System.out.printf("\t\t\tinc_dec: 0x%X\n", i.value.idx.inc_dec);
-          System.out.printf("\t\t\tindirect: %d\n", i.value.idx.indirect); */
-// ****************************************************
-
       }
     }
 
