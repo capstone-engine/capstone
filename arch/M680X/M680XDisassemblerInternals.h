@@ -22,7 +22,7 @@ struct inst_page0;
 struct inst_pageX;
 
 typedef struct {
-	const struct inst_page0 *inst_page0_table;
+	const struct inst_page1 *inst_page1_table;
 	const struct inst_pageX *inst_overlay_table[2];
 	unsigned int overlay_table_size[2];
 	uint8_t pageX_prefix[2];
