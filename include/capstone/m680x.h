@@ -125,7 +125,11 @@ typedef struct cs_m680x_op {
 		m680x_op_ext ext;	// Extended address
 		uint8_t direct_addr;	// Direct address (lower 8-bit)
 	};
-	uint8_t size;			// size of this operand in byte
+	uint8_t size;			// size of this operand (in bytes)
+	// How is this operand accessed? (READ, WRITE or READ|WRITE)
+	// This field is combined of cs_ac_type.
+	// NOTE: this field is irrelevant if engine is compiled in DIET 
+	uint8_t access;
 } cs_m680x_op;
 
 //> Group of M680X instructions

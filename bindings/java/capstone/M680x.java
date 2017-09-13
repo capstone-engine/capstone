@@ -66,6 +66,7 @@ public class M680x {
     public int type;
     public OpValue value;
     public byte size;
+    public byte access;
 
     public void read() {
       readField("type");
@@ -85,11 +86,12 @@ public class M680x {
         return;
       readField("value");
       readField("size");
+      readField("access");
     }
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("type", "value", "size");
+      return Arrays.asList("type", "value", "size", "access");
     }
   }
 

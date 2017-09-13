@@ -38,6 +38,7 @@ type m680x_op_value =
 type m680x_op = {
 	value: m680x_op_value;
 	size: int;
+	access: int;
 }
 
 type cs_m680x = {

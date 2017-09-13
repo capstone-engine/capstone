@@ -617,7 +617,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						if (lcount > 0) {
 							array = caml_alloc(lcount, 0);
 							for (i = 0; i < lcount; i++) {
-								tmp2 = caml_alloc(2, 0); // m680x_op
+								tmp2 = caml_alloc(3, 0); // m680x_op
 								switch(insn[j-1].detail->m680x.operands[i].type) {
 									case M680X_OP_IMMEDIATE:
 										tmp = caml_alloc(1, 1);
@@ -673,6 +673,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 								}
 								Store_field(tmp2, 0, tmp); // add union
 								Store_field(tmp2, 1, Val_int(insn[j-1].detail->m680x.operands[i].size));
+								Store_field(tmp2, 2, Val_int(insn[j-1].detail->m680x.operands[i].access));
 								Store_field(array, i, tmp2); // add operand to operand array
 							}
 						} else // empty list
