@@ -2124,7 +2124,7 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 			op0->reg = insn_description.reg0;
 			// First operand is a register which is part of the
 			// mnemonic
-			m680x->flags |= FIRST_OP_IN_MNEM;
+			m680x->flags |= M680X_FIRST_OP_IN_MNEM;
 		}
 
 		if (g_insn_props[info->insn].cc_modified)

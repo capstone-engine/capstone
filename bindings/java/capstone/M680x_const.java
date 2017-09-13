@@ -83,8 +83,7 @@ public class M680x_const {
 	public static final int M680X_GRP_ENDING = 8;
 
 	// M680X instruction flags:
-
-	// The M680X instruction and it's operands
+	public static final int M680X_FIRST_OP_IN_MNEM = 1;
 
 	// M680X instruction IDs
 

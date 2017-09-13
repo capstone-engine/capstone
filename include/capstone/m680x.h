@@ -152,10 +152,12 @@ typedef enum m680x_group_type {
 } m680x_group_type;
 
 //> M680X instruction flags:
-#define FIRST_OP_IN_MNEM   1	// The first (register) operand is part of the
-				// instruction mnemonic
 
-//> The M680X instruction and it's operands
+// The first (register) operand is part of the
+// instruction mnemonic
+#define M680X_FIRST_OP_IN_MNEM   1
+
+// The M680X instruction and it's operands
 typedef struct cs_m680x {
 	m680x_address_mode address_mode;// M680X addressing mode for this inst.
 	uint8_t flags;		// See: M680X instruction flags

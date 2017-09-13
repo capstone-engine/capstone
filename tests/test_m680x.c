@@ -162,14 +162,18 @@ static void print_insn_detail(cs_insn *insn)
 
 	for (i = 0; i < m680x->op_count; i++) {
 		cs_m680x_op *op = &(m680x->operands[i]);
+		char *comment;
 
 		switch ((int)op->type) {
 		default:
 			break;
 
 		case M680X_OP_REGISTER:
-			printf("\t\toperands[%u].type: REGISTER = %s\n", i,
-				cs_reg_name(handle, op->reg));
+			comment = "";
+			if (i == 0 && m680x->flags & M680X_FIRST_OP_IN_MNEM)
+				comment = " (in mnemonic)";
+			printf("\t\toperands[%u].type: REGISTER = %s%s\n", i,
+				cs_reg_name(handle, op->reg), comment);
 			break;
 
 		case M680X_OP_IMMEDIATE:

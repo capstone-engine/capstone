@@ -228,7 +228,7 @@ void M680X_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 	printInstructionName(MI->csh, O, info->insn);
 	SStream_concat(O, " ");
 
-	is_reg_in_opcode = (m680x->flags & FIRST_OP_IN_MNEM) != 0;
+	is_reg_in_opcode = (m680x->flags & M680X_FIRST_OP_IN_MNEM) != 0;
 
 	for (i  = 0; i < m680x->op_count; ++i) {
 		if (i > 0 || (i == 0 && !is_reg_in_opcode)) {

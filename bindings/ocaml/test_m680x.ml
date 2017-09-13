@@ -103,6 +103,8 @@ let _M6801_CODE = "\x04\x05\x3c\x3d\x38\x93\x10\xec\x10\xed\x10\x39";;
 let _HD6301_CODE = "\x6b\x10\x00\x71\x10\x00\x72\x10\x10\x39";;
 let _M6809_CODE = "\x06\x10\x19\x1a\x55\x1e\x01\x23\xe9\x31\x06\x34\x55\xa6\x81\xa7\x89\x7f\xff\xa6\x9d\x10\x00\xa7\x91\xa6\x9f\x10\x00\x11\xac\x99\x10\x00\x39\xA6\x07\xA6\x27\xA6\x47\xA6\x67\xA6\x0F\xA6\x10\xA6\x80\xA6\x81\xA6\x82\xA6\x83\xA6\x84\xA6\x85\xA6\x86\xA6\x88\x7F\xA6\x88\x80\xA6\x89\x7F\xFF\xA6\x89\x80\x00\xA6\x8B\xA6\x8C\x10\xA6\x8D\x10\x00\xA6\x91\xA6\x93\xA6\x94\xA6\x95\xA6\x96\xA6\x98\x7F\xA6\x98\x80\xA6\x99\x7F\xFF\xA6\x99\x80\x00\xA6\x9B\xA6\x9C\x10\xA6\x9D\x10\x00\xA6\x9F\x10\x00";;
 
+let bit_set value mask =
+	value land mask != 0
 
 let all_tests = [
         (CS_ARCH_M680X, [CS_MODE_M680X_6800], _M6800_CODE, "M680X_M6800");
@@ -111,10 +113,15 @@ let all_tests = [
         (CS_ARCH_M680X, [CS_MODE_M680X_6809], _M6809_CODE, "M680X_M6809");
 ];;
 
-let print_op handle i op =
+let print_op handle flags i op =
 	( match op.value with
 	| M680X_OP_INVALID _ -> ();	(* this would never happens *)
-	| M680X_OP_REGISTER reg -> printf "\t\toperands[%d].type: REGISTER = %s\n" i (cs_reg_name handle reg);
+	| M680X_OP_REGISTER reg -> (
+		printf "\t\toperands[%d].type: REGISTER = %s" i (cs_reg_name handle reg);
+		if (i == 0) && (bit_set flags _M680X_FIRST_OP_IN_MNEM) then
+			printf " (in mnemonic)";
+		printf "\n";
+		);
 	| M680X_OP_IMMEDIATE imm -> printf "\t\toperands[%d].type: IMMEDIATE = #%d\n" i imm;
 	| M680X_OP_DIRECT direct_addr -> printf "\t\toperands[%d].type: DIRECT = 0x%02X\n" i direct_addr;
 	| M680X_OP_EXTENDED ext -> ( printf "\t\toperands[%d].type: EXTENDED " i;
@@ -162,7 +169,7 @@ let print_detail handle insn =
 			(* print all operands info (type & value) *)
 			if (Array.length m680x.operands) > 0 then (
 				printf "\top_count: %d\n" (Array.length m680x.operands);
-				Array.iteri (print_op handle) m680x.operands;
+				Array.iteri (print_op handle m680x.flags) m680x.operands;
 			);
 			);
 	| _ -> ();
