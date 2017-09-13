@@ -2119,7 +2119,6 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 	cs_detail *detail = MI->flat_insn->detail;
 	uint16_t base_address = address;
 	insn_desc insn_description;
-	int i;
 
 	if (detail != NULL) {
 		detail->regs_read_count = 0;
