@@ -89,11 +89,11 @@ typedef enum access_type {
 } access_type;
 
 /* Properties of one instruction in PAGE1 (without prefix) */
-typedef struct inst_page0 {
+typedef struct inst_page1 {
 	m680x_insn insn : 8;
 	m680x_reg reg0 : 5;
 	insn_hdlr_id handler_id : 5; /* instruction handler id */
-} inst_page0;
+} inst_page1;
 
 /* Properties of one instruction in any other PAGE X */
 typedef struct inst_pageX {
@@ -110,7 +110,7 @@ typedef struct insn_props {
 } insn_props;
 
 // M6800/2 instructions
-static const inst_page0 g_m6800_inst_page0_table[256] = {
+static const inst_page1 g_m6800_inst_page1_table[256] = {
 	// 0x0x, inherent instructions
 	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
 	{ M680X_INS_NOP, M680X_REG_INVALID, inherent_hdlr_id },
@@ -437,7 +437,7 @@ static const inst_pageX g_hd630x_inst_overlay_table[] = {
 };
 
 // M6809/HD6309 PAGE1 instructions
-static const inst_page0 g_m6809_inst_page0_table[256] = {
+static const inst_page1 g_m6809_inst_page1_table[256] = {
 	// 0x0x, direct instructions
 	{ M680X_INS_NEG, M680X_REG_INVALID, direct_hdlr_id },
 	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
@@ -1099,7 +1099,7 @@ static bool read_sdword(const m680x_info *info, int32_t *sdword,
 	return true;
 }
 
-// For PAGE2 and PAGE3 opcodes when using an an array of inst_page0 most
+// For PAGE2 and PAGE3 opcodes when using an an array of inst_page1 most
 // entries have M680X_INS_ILLGL. To avoid wasting memory an inst_pageX is
 // used which contains the opcode. Using a binary search for the right opcode
 // is much faster (= O(log n) ) in comparison to a linear search ( = O(n) ).
@@ -1167,7 +1167,7 @@ void M680X_get_insn_id(cs_struct *handle, cs_insn *insn, unsigned int id)
 	}
 
 	if (!insn_found)
-		insn->id = cpu->inst_page0_table[id].insn;
+		insn->id = cpu->inst_page1_table[id].insn;
 }
 
 static void add_insn_group(cs_detail *detail, m680x_group_type group)
@@ -1638,10 +1638,10 @@ static bool decode_insn(const m680x_info *info, uint16_t address,
 		}
 
 		if (!insn_found) {
-			// Get page0 insn description
-			insn_description->handler_id = cpu->inst_page0_table[ir].handler_id;
-			insn_description->insn = cpu->inst_page0_table[ir].insn;
-			insn_description->reg0 = cpu->inst_page0_table[ir].reg0;
+			// Get page1 insn description
+			insn_description->handler_id = cpu->inst_page1_table[ir].handler_id;
+			insn_description->insn = cpu->inst_page1_table[ir].insn;
+			insn_description->reg0 = cpu->inst_page1_table[ir].reg0;
 		}
 	}
 
@@ -2162,17 +2162,17 @@ static bool m680x_setup_internals(m680x_info *info, e_cpu_type cpu_type,
 
 	switch (info->cpu_type) {
 	case M680X_CPU_TYPE_6800:
-		info->cpu.inst_page0_table = &g_m6800_inst_page0_table[0];
+		info->cpu.inst_page1_table = &g_m6800_inst_page1_table[0];
 		break;
 
 	case M680X_CPU_TYPE_6801:
-		info->cpu.inst_page0_table = &g_m6800_inst_page0_table[0];
+		info->cpu.inst_page1_table = &g_m6800_inst_page1_table[0];
 		info->cpu.inst_overlay_table[0] = &g_m6801_inst_overlay_table[0];
 		info->cpu.overlay_table_size[0] = ARR_SIZE(g_m6801_inst_overlay_table);
 		break;
 
 	case M680X_CPU_TYPE_6301:
-		info->cpu.inst_page0_table = &g_m6800_inst_page0_table[0];
+		info->cpu.inst_page1_table = &g_m6800_inst_page1_table[0];
 		info->cpu.inst_overlay_table[0] = &g_m6801_inst_overlay_table[0];
 		info->cpu.overlay_table_size[0] = ARR_SIZE(g_m6801_inst_overlay_table);
 		info->cpu.inst_overlay_table[1] = &g_hd630x_inst_overlay_table[0];
@@ -2180,7 +2180,7 @@ static bool m680x_setup_internals(m680x_info *info, e_cpu_type cpu_type,
 		break;
 
 	case M680X_CPU_TYPE_6809:
-		info->cpu.inst_page0_table = &g_m6809_inst_page0_table[0];
+		info->cpu.inst_page1_table = &g_m6809_inst_page1_table[0];
 		info->cpu.pageX_prefix[0] = 0x10; // PAGE2 prefix
 		info->cpu.pageX_prefix[1] = 0x11; // PAGE3 prefix
 		info->cpu.inst_pageX_table[0] = &g_m6809_inst_page2_table[0];
