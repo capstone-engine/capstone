@@ -58,8 +58,8 @@ typedef enum insn_hdlr_id {
 	HANDLER_ID_ENDING,
 } insn_hdlr_id;
 
-// access modes for the first 4 register operands. If there are more than
-// four registers they use the access mode of the 4th register.
+// Access modes for the first 4 operands. If there are more than
+// four operands they use the same access mode as the 4th operand.
 //
 // u: unchanged
 // r: (r)read access
@@ -79,14 +79,16 @@ typedef enum e_access_mode {
 	mwww,
 	mmmm,
 	mwrr,
+	ACCESS_MODE_ENDING,
 } e_access_mode;
 
-typedef enum access_type {
-	UNCHANGED,
-	READ,
-	WRITE,
-	MODIFY,
-} access_type;
+// Access type values are compatible with enum cs_ac_type:
+typedef enum e_access {
+	UNCHANGED = CS_AC_INVALID,
+	READ = CS_AC_READ,
+	WRITE = CS_AC_WRITE,
+	MODIFY = (CS_AC_READ | CS_AC_WRITE),
+} e_access;
 
 /* Properties of one instruction in PAGE1 (without prefix) */
 typedef struct inst_page1 {
@@ -863,7 +865,7 @@ static const insn_props g_insn_props[] = {
 	{ M680X_GRP_INVALID, rrrr, true }, // CMPW
 	{ M680X_GRP_INVALID, rrrr, true }, // CMPX
 	{ M680X_GRP_INVALID, rrrr, true }, // CMPY
-	{ M680X_GRP_INVALID, mmmm, true }, // COM
+	{ M680X_GRP_INVALID, mrrr, true }, // COM
 	{ M680X_GRP_INVALID, mrrr, true }, // COMA
 	{ M680X_GRP_INVALID, mrrr, true }, // COMB
 	{ M680X_GRP_INVALID, mrrr, true }, // COMD
@@ -884,11 +886,11 @@ static const insn_props g_insn_props[] = {
 	{ M680X_GRP_INVALID, mrrr, true }, // DEX
 	{ M680X_GRP_INVALID, mrrr, true }, // DIVD
 	{ M680X_GRP_INVALID, mrrr, true }, // DIVQ
-	{ M680X_GRP_INVALID, mrrr, true }, // EIM
+	{ M680X_GRP_INVALID, rmmm, true }, // EIM
 	{ M680X_GRP_INVALID, mrrr, true }, // EORA
 	{ M680X_GRP_INVALID, mrrr, true }, // EORB
 	{ M680X_GRP_INVALID, mrrr, true }, // EORD
-	{ M680X_GRP_INVALID, rwww, true }, // EORR
+	{ M680X_GRP_INVALID, rmmm, true }, // EORR
 	{ M680X_GRP_INVALID, wwww, false }, // EXG
 	{ M680X_GRP_INVALID, uuuu, false }, // ILLGL
 	{ M680X_GRP_INVALID, mrrr, true }, // INC
@@ -953,7 +955,7 @@ static const insn_props g_insn_props[] = {
 	{ M680X_GRP_INVALID, mrrr, true }, // NEGB
 	{ M680X_GRP_INVALID, mrrr, true }, // NEGD
 	{ M680X_GRP_INVALID, uuuu, false }, // NOP
-	{ M680X_GRP_INVALID, mrrr, true }, // OIM
+	{ M680X_GRP_INVALID, rmmm, true }, // OIM
 	{ M680X_GRP_INVALID, mrrr, true }, // ORA
 	{ M680X_GRP_INVALID, mrrr, true }, // ORAA
 	{ M680X_GRP_INVALID, mrrr, true }, // ORAB
@@ -1016,7 +1018,7 @@ static const insn_props g_insn_props[] = {
 	{ M680X_GRP_INVALID, mrrr, true }, // SUBD
 	{ M680X_GRP_INVALID, mrrr, true }, // SUBE
 	{ M680X_GRP_INVALID, mrrr, true }, // SUBF
-	{ M680X_GRP_INVALID, rwww, true }, // SUBR
+	{ M680X_GRP_INVALID, rmmm, true }, // SUBR
 	{ M680X_GRP_INVALID, mrrr, true }, // SUBW
 	{ M680X_GRP_INT, mrrr, true }, // SWI
 	{ M680X_GRP_INT, mrrr, true }, // SWI2
@@ -1189,7 +1191,7 @@ static bool exists_reg_list(uint16_t *regs, uint8_t count, m680x_reg reg)
 	return false;
 }
 
-static void add_reg_to_rw_list(MCInst *MI, m680x_reg reg, access_type access)
+static void add_reg_to_rw_list(MCInst *MI, m680x_reg reg, e_access access)
 {
 	cs_detail *detail = MI->flat_insn->detail;
 
@@ -1227,7 +1229,8 @@ static void add_reg_to_rw_list(MCInst *MI, m680x_reg reg, access_type access)
 	}
 }
 
-static void update_am_reg_list(MCInst *MI, cs_m680x_op *op, access_type access)
+static void update_am_reg_list(MCInst *MI, cs_m680x_op *op,
+				e_access access)
 {
 	if (MI->flat_insn->detail == NULL)
 		return;
@@ -1257,7 +1260,7 @@ static void update_am_reg_list(MCInst *MI, cs_m680x_op *op, access_type access)
 	}
 }
 
-static const access_type mode_to_access_type[4][11] = {
+static const e_access g_access_mode_to_access[4][11] = {
 	{
 		UNCHANGED, READ, WRITE, READ,  READ, READ,   WRITE, MODIFY,
 		MODIFY, MODIFY, MODIFY
@@ -1276,20 +1279,44 @@ static const access_type mode_to_access_type[4][11] = {
 	},
 };
 
+static e_access get_access(int operator_index, e_access_mode access_mode)
+{
+	int idx = (operator_index > 3) ? 3 : operator_index;
+
+	return g_access_mode_to_access[idx][access_mode];
+}
+
 static void build_regs_read_write_counts(MCInst *MI, m680x_info *info,
-	e_access_mode reg_access_mode)
+					e_access_mode access_mode)
 {
 	cs_m680x *m680x = &info->m680x;
 	int i;
 
-	if (MI->flat_insn->detail == NULL || (!m680x->op_count))
+	if (MI->flat_insn->detail == NULL || (!m680x->op_count) ||
+		(access_mode == uuuu))
 		return;
 
 	for (i = 0; i < m680x->op_count; ++i) {
-		int idx = i > 3 ? 3 : i;
 
-		access_type access = mode_to_access_type[idx][reg_access_mode];
+		e_access access = get_access(i, access_mode);
 		update_am_reg_list(MI, &m680x->operands[i], access);
+	}
+}
+
+static void add_operators_access(MCInst *MI, m680x_info *info,
+				e_access_mode access_mode)
+{
+	cs_m680x *m680x = &info->m680x;
+	int i;
+
+	if (MI->flat_insn->detail == NULL || (!m680x->op_count) ||
+		(access_mode == uuuu))
+		return;
+
+	for (i = 0; i < m680x->op_count; ++i) {
+
+		e_access access = get_access(i, access_mode);
+		m680x->operands[i].access = access;
 	}
 }
 
@@ -1352,16 +1379,13 @@ static void m6800_set_changed_regs_read_write_counts(MCInst *MI,
 
 	for (i = 0; i < ARR_SIZE(changed_regs); ++i) {
 		if (info->insn == changed_regs[i].insn) {
-			e_access_mode reg_access_mode =
+			e_access_mode access_mode =
 				g_insn_props[info->insn].access_mode;
 
 			for (j = 0; changed_regs[i].regs[j] !=
 				M680X_REG_INVALID; ++j) {
 				m680x_reg reg = changed_regs[i].regs[j];
-				int idx = j > 3 ? 3 : j;
-
-				access_type access =
-					mode_to_access_type[idx][reg_access_mode];
+				e_access access = get_access(j, access_mode);
 				add_reg_to_rw_list(MI, reg, access);
 			}
 		}
@@ -1426,16 +1450,13 @@ static void m6809_set_changed_regs_read_write_counts(MCInst *MI,
 
 	for (i = 0; i < ARR_SIZE(changed_regs); ++i) {
 		if (info->insn == changed_regs[i].insn) {
-			e_access_mode reg_access_mode =
+			e_access_mode access_mode =
 				g_insn_props[info->insn].access_mode;
 
 			for (j = 0; changed_regs[i].regs[j] !=
 				M680X_REG_INVALID; ++j) {
 				m680x_reg reg = changed_regs[i].regs[j];
-				int idx = j > 3 ? 3 : j;
-
-				access_type access =
-					mode_to_access_type[idx][reg_access_mode];
+				e_access access = get_access(j, access_mode);
 				add_reg_to_rw_list(MI, reg, access);
 			}
 		}
@@ -1488,17 +1509,10 @@ static bool is_indexed_post_byte_valid(const m680x_info *info, uint16_t address,
 	// no additional bytes have to be read.
 }
 
-// Table to check for a valid register nibble on the M6809 CPU
-// used for TFR and EXG instruction.
-static const bool g_m6809_reg_valid[16] = {
-	true, true, true, true, true,  true,  false, false,  // 16-bit registers
-	true, true, true, true, false, false, false, false,  // 8-bit registers
-};
-
-static bool is_reg_valid(const m680x_info *info, uint8_t reg_nibble)
+static bool is_tfr_reg_valid(const m680x_info *info, uint8_t reg_nibble)
 {
-	if (info->cpu.reg_valid != NULL)
-		return info->cpu.reg_valid[reg_nibble];
+	if (info->cpu.tfr_reg_valid != NULL)
+		return info->cpu.tfr_reg_valid[reg_nibble];
 
 	return true; // e.g. for the M6309 all registers are valid
 }
@@ -1558,8 +1572,8 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 		if (!read_byte(info, &ir, address))
 			return false;
 
-		return is_reg_valid(info, (ir >> 4) & 0x0F) &&
-			is_reg_valid(info, ir & 0x0F);
+		return is_tfr_reg_valid(info, (ir >> 4) & 0x0F) &&
+			is_tfr_reg_valid(info, ir & 0x0F);
 
 	case hd630x_imm_direct_hdlr_id:
 	case hd630x_imm_indexed_hdlr_id:
@@ -2140,9 +2154,6 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 
 		MCInst_setOpcode(MI, insn_description.opcode);
 
-		e_access_mode reg_access_mode =
-			g_insn_props[info->insn].access_mode;
-
 		add_insn_group(detail, g_insn_props[info->insn].group);
 
 		if (insn_description.reg0 != M680X_REG_INVALID) {
@@ -2157,7 +2168,11 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 
 		(g_inst_handler[insn_description.handler_id])(MI, info,
 			&address);
-		build_regs_read_write_counts(MI, info, reg_access_mode);
+
+		e_access_mode access_mode =
+			g_insn_props[info->insn].access_mode;
+		build_regs_read_write_counts(MI, info, access_mode);
+		add_operators_access(MI, info, access_mode);
 
 		info->insn_size = insn_description.insn_size;
 
@@ -2178,6 +2193,13 @@ static bool m680x_setup_internals(m680x_info *info, e_cpu_type cpu_type,
 	uint16_t address,
 	const uint8_t *code, uint16_t code_len)
 {
+// Table to check for a valid register nibble on the M6809 CPU
+// used for TFR and EXG instruction.
+static const bool m6809_tfr_reg_valid[16] = {
+	true, true, true, true, true,  true,  false, false,
+	true, true, true, true, false, false, false, false,
+};
+
 	info->code = code;
 	info->size = code_len;
 	info->offset = address;
@@ -2212,7 +2234,7 @@ static bool m680x_setup_internals(m680x_info *info, e_cpu_type cpu_type,
 		info->cpu.inst_pageX_table[1] = &g_m6809_inst_page3_table[0];
 		info->cpu.pageX_table_size[0] = ARR_SIZE(g_m6809_inst_page2_table);
 		info->cpu.pageX_table_size[1] = ARR_SIZE(g_m6809_inst_page3_table);
-		info->cpu.reg_valid = &g_m6809_reg_valid[0];
+		info->cpu.tfr_reg_valid = &m6809_tfr_reg_valid[0];
 		break;
 
 	default:
@@ -2276,29 +2298,36 @@ bool M680X_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 cs_err M680X_disassembler_init(cs_struct *ud)
 {
 	if (M680X_REG_ENDING != ARR_SIZE(g_reg_byte_size)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum m680x_reg "
-			"and g_reg_byte_size\n");
+		fprintf(stderr, "Internal error: Size mismatch in enum "
+			"m680x_reg and g_reg_byte_size\n");
 
 		return CS_ERR_MODE;
 	}
 
 	if (M680X_INS_ENDING != ARR_SIZE(g_insn_props)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum m680x_insn "
-			"and g_insn_props\n");
+		fprintf(stderr, "Internal error: Size mismatch in enum "
+			"m680x_insn and g_insn_props\n");
 
 		return CS_ERR_MODE;
 	}
 
 	if (M680X_CPU_TYPE_ENDING != ARR_SIZE(s_cpu_type)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum e_cpu_type "
-			"and s_cpu_type\n");
+		fprintf(stderr, "Internal error: Size mismatch in enum "
+			"e_cpu_type and s_cpu_type\n");
 
 		return CS_ERR_MODE;
 	}
 
 	if (HANDLER_ID_ENDING != ARR_SIZE(g_inst_handler)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum insn_hdlr_id "
-			"and g_inst_handler\n");
+		fprintf(stderr, "Internal error: Size mismatch in enum "
+			"insn_hdlr_id and g_inst_handler\n");
+
+		return CS_ERR_MODE;
+	}
+
+	if (ACCESS_MODE_ENDING !=  MATRIX_SIZE(g_access_mode_to_access)) {
+		fprintf(stderr, "Internal error: Size mismatch in enum "
+			"e_access_mode and g_access_mode_to_access\n");
 
 		return CS_ERR_MODE;
 	}

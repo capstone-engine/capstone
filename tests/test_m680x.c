@@ -9,6 +9,7 @@
 
 #define ARR_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
+#define WITH_DETAILS
 
 struct platform {
 	cs_arch arch;
@@ -17,8 +18,6 @@ struct platform {
 	size_t size;
 	char *comment;
 };
-
-static csh handle;
 
 static void print_string_hex(char *comment, unsigned char *str, size_t len)
 {
@@ -40,8 +39,9 @@ static void print_string_hex_short(unsigned char *str, size_t len)
 		printf("%02X", *c & 0xff);
 }
 
+#ifdef WITH_DETAILS
 // string representation for all addressing modes defined in m680x_address_mode
-const char *s_addressing_modes[] = {
+static const char *s_addressing_modes[] = {
 	"M680X_AM_NONE",
 	"M680X_AM_INHERENT",
 	"M680X_AM_REGISTER",
@@ -54,7 +54,7 @@ const char *s_addressing_modes[] = {
 	"M680X_AM_IMM_INDEXED",
 };
 
-const char s_insn_ids[][16] = {
+static const char s_insn_ids[][16] = {
 	"M680X_INS_INVLD", "M680X_INS_ABA", "M680X_INS_ABX", "M680X_INS_ADCA",
 	"M680X_INS_ADCB", "M680X_INS_ADCD", "M680X_INS_ADDA", "M680X_INS_ADDB",
 	"M680X_INS_ADDD", "M680X_INS_ADDE", "M680X_INS_ADDF", "M680X_INS_ADDR",
@@ -119,8 +119,13 @@ const char s_insn_ids[][16] = {
 	"M680X_INS_TSTD", "M680X_INS_TSTE", "M680X_INS_TSTF", "M680X_INS_TSTW",
 	"M680X_INS_TSX", "M680X_INS_TXS", "M680X_INS_WAI", "M680X_INS_XGDX",
 };
+#endif
 
-static void print_read_write_regs(cs_detail *detail)
+static const char *s_access[] = {
+	"UNCHANGED", "READ", "WRITE", "READ | WRITE",
+};
+
+static void print_read_write_regs(csh handle, cs_detail *detail)
 {
 	int i;
 
@@ -143,7 +148,7 @@ static void print_read_write_regs(cs_detail *detail)
 	}
 }
 
-static void print_insn_detail(cs_insn *insn)
+static void print_insn_detail(csh handle, cs_insn *insn)
 {
 	cs_detail *detail = insn->detail;
 	cs_m680x *m680x = NULL;
@@ -155,7 +160,11 @@ static void print_insn_detail(cs_insn *insn)
 
 	m680x = &detail->m680x;
 
+	printf("\tinsn id: %s\n", (char *)&s_insn_ids[insn->id]);
+
+#ifdef WITH_DETAILS
 	printf("\taddress_mode: %s\n", s_addressing_modes[m680x->address_mode]);
+#endif
 
 	if (m680x->op_count)
 		printf("\top_count: %u\n", m680x->op_count);
@@ -174,37 +183,31 @@ static void print_insn_detail(cs_insn *insn)
 				comment = " (in mnemonic)";
 			printf("\t\toperands[%u].type: REGISTER = %s%s\n", i,
 				cs_reg_name(handle, op->reg), comment);
-			printf("\t\t\tsize: %u\n", op->size);
 			break;
 
 		case M680X_OP_IMMEDIATE:
 			printf("\t\toperands[%u].type: IMMEDIATE = #%d\n", i,
 				op->imm);
-			printf("\t\t\tsize: %u\n", op->size);
 			break;
 
 		case M680X_OP_DIRECT:
 			printf("\t\toperands[%u].type: DIRECT = 0x%02X\n", i,
 				op->direct_addr);
-			printf("\t\t\tsize: %u\n", op->size);
 			break;
 
 		case M680X_OP_EXTENDED:
 			printf("\t\toperands[%u].type: EXTENDED %s = 0x%04X\n",
 				i, op->ext.indirect ? "INDIRECT" : "",
 				op->ext.address);
-			printf("\t\t\tsize: %u\n", op->size);
 			break;
 
 		case M680X_OP_RELATIVE:
 			printf("\t\toperands[%u].type: RELATIVE = 0x%04X\n", i,
 				op->rel.address);
-			printf("\t\t\tsize: %u\n", op->size);
 			break;
 
 		case M680X_OP_INDEXED_00:
 			printf("\t\toperands[%u].type: INDEXED_M6800\n", i);
-			printf("\t\t\tsize: %u\n", op->size);
 
 			if (op->idx.base_reg != M680X_REG_INVALID)
 				printf("\t\t\tbase register: %s\n",
@@ -221,7 +224,6 @@ static void print_insn_detail(cs_insn *insn)
 		case M680X_OP_INDEXED_09:
 			printf("\t\toperands[%u].type: INDEXED_M6809 %s\n", i,
 				op->idx.indirect ? "INDIRECT" : "");
-			printf("\t\t\tsize: %u\n", op->size);
 
 			if (op->idx.base_reg != M680X_REG_INVALID)
 				printf("\t\t\tbase register: %s\n",
@@ -254,17 +256,26 @@ static void print_insn_detail(cs_insn *insn)
 
 			break;
 		}
+
+		if (op->size != 0)
+			printf("\t\t\tsize: %u\n", op->size);
+		if (op->access != CS_AC_INVALID)
+			printf("\t\t\taccess: %s\n", s_access[op->access]);
+
 	}
 
-	print_read_write_regs(detail);
+	print_read_write_regs(handle, detail);
 
 	if (detail->groups_count) {
 		printf("\tgroups_count: %u\n", detail->groups_count);
 	}
+
+	printf("\n");
 }
 
 static bool consistency_checks()
 {
+#ifdef WITH_DETAILS
 	if (M680X_AM_ENDING != ARR_SIZE(s_addressing_modes)) {
 		fprintf(stderr, "Internal error: Size mismatch in enum "
 			" m680x_address_mode and s_addressing_modes\n");
@@ -276,6 +287,7 @@ static bool consistency_checks()
 			" enum m680x_insn and s_insn_ids\n");
 		return false;
 	}
+#endif
 
 	return true;
 }
@@ -339,6 +351,7 @@ static void test()
 	};
 
 	uint64_t address = 0x1000;
+	csh handle;
 	cs_insn *insn;
 	int i;
 	size_t count;
@@ -357,7 +370,9 @@ static void test()
 			abort();
 		}
 
+#ifdef WITH_DETAILS
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+#endif
 
 		count = cs_disasm(handle, platforms[i].code, platforms[i].size,
 				address, 0, &insn);
@@ -381,10 +396,9 @@ static void test()
 				int slen = (int)strlen(insn[j].mnemonic);
 				printf("%.*s", 1 + (5 - slen), nine_spaces);
 				printf("%s\n", insn[j].op_str);
-				printf("\tinsn id: %s\n",
-					(char *)&s_insn_ids[insn[j].id]);
-				print_insn_detail(&insn[j]);
-				printf("\n");
+#ifdef WITH_DETAILS
+				print_insn_detail(handle, &insn[j]);
+#endif
 			}
 
 			// free memory allocated by cs_disasm()

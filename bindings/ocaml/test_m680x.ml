@@ -98,6 +98,9 @@ let s_insn_ids = [
         "M680X_INS_TSTD"; "M680X_INS_TSTE"; "M680X_INS_TSTF"; "M680X_INS_TSTW";
         "M680X_INS_TSX"; "M680X_INS_TXS"; "M680X_INS_WAI"; "M680X_INS_XGDX" ];;
 
+let s_access = [
+	"UNCHANGED"; "READ"; "WRITE"; "READ | WRITE" ];;
+
 let _M6800_CODE = "\x01\x09\x36\x64\x7f\x74\x10\x00\x90\x10\xA4\x10\xb6\x10\x00\x39";;
 let _M6801_CODE = "\x04\x05\x3c\x3d\x38\x93\x10\xec\x10\xed\x10\x39";;
 let _HD6301_CODE = "\x6b\x10\x00\x71\x10\x00\x72\x10\x10\x39";;
@@ -121,30 +124,24 @@ let print_op handle flags i op =
 		if (i == 0) && (bit_set flags _M680X_FIRST_OP_IN_MNEM) then
 			printf " (in mnemonic)";
 		printf "\n";
-		printf "\t\t\tsize: %d\n" op.size;
 		);
 	| M680X_OP_IMMEDIATE imm -> (
 		printf "\t\toperands[%d].type: IMMEDIATE = #%d\n" i imm;
-		printf "\t\t\tsize: %d\n" op.size;
 		);
 	| M680X_OP_DIRECT direct_addr -> (
 		printf "\t\toperands[%d].type: DIRECT = 0x%02X\n" i direct_addr;
-		printf "\t\t\tsize: %d\n" op.size;
 		);
 	| M680X_OP_EXTENDED ext -> (
 		printf "\t\toperands[%d].type: EXTENDED " i;
 		if ext.indirect then
 			printf "INDIRECT";
 		printf " = 0x%04X\n" ext.addr_ext;
-		printf "\t\t\tsize: %d\n" op.size;
 		);
 	| M680X_OP_RELATIVE rel -> (
 		printf "\t\toperands[%d].type: RELATIVE = 0x%04X\n" i rel.addr_rel;
-		printf "\t\t\tsize: %d\n" op.size;
 		);
 	| M680X_OP_INDEXED_00 idx -> (
 		printf "\t\toperands[%d].type: INDEXED_M6800\n" i;
-		printf "\t\t\tsize: %d\n" op.size;
 		if idx.base_reg != 0 then
 			printf "\t\t\tbase register: %s\n" (cs_reg_name handle idx.base_reg);
 		if idx.offset_bits != 0 then
@@ -156,7 +153,6 @@ let print_op handle flags i op =
 		if idx.indirect then
 			printf " INDIRECT";
 		printf "\n";
-		printf "\t\t\tsize: %d\n" op.size;
 		if idx.base_reg != _M680X_REG_INVALID then
 			printf "\t\t\tbase register: %s\n" (cs_reg_name handle idx.base_reg);
 		if idx.offset_reg != _M680X_REG_INVALID then
@@ -173,6 +169,10 @@ let print_op handle flags i op =
 			printf "\t\t\tpre decrement: %d\n" idx.inc_dec;
 		);
 	);
+	if op.size != 0 then
+		printf "\t\t\tsize: %d\n" op.size;
+	if op.access != _CS_AC_INVALID then
+		printf "\t\t\taccess: %s\n" (List.nth s_access op.access);
 
 	();;
 

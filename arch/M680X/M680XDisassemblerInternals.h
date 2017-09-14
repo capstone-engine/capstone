@@ -28,7 +28,7 @@ typedef struct {
 	uint8_t pageX_prefix[2];
 	const struct inst_pageX *inst_pageX_table[2];
 	unsigned int pageX_table_size[2];
-	const bool *reg_valid;
+	const bool *tfr_reg_valid;
 } cpu_tables;
 
 /* Private, For internal use only */

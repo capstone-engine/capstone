@@ -19,6 +19,10 @@ static const char *s_addressing_modes[] = {
 	"M680X_AM_IMM_INDEXED",
 };
 
+static const char *s_access[] = {
+	"UNCHANGED", "READ", "WRITE", "READ | WRITE",
+};
+
 void print_read_write_regs(csh handle, cs_detail *detail)
 {
 	int i;
@@ -50,14 +54,14 @@ void print_read_write_regs(csh handle, cs_detail *detail)
 	}
 }
 
-void print_insn_detail_m680x(csh handle, cs_insn *ins)
+void print_insn_detail_m680x(csh handle, cs_insn *insn)
 {
-	cs_detail *detail = ins->detail;
+	cs_detail *detail = insn->detail;
 	cs_m680x *m680x = NULL;
 	int i;
 
 	// detail can be NULL on "data" instruction if SKIPDATA option is
-        //  turned ON
+	// turned ON
 	if (detail == NULL)
 		return;
 
@@ -66,34 +70,38 @@ void print_insn_detail_m680x(csh handle, cs_insn *ins)
 	printf("\taddress_mode: %s\n", s_addressing_modes[m680x->address_mode]);
 
 	if (m680x->op_count)
-		printf("\toperand_count: %u\n", m680x->op_count);
+		printf("\top_count: %u\n", m680x->op_count);
 
 	for (i = 0; i < m680x->op_count; i++) {
 		cs_m680x_op *op = &(m680x->operands[i]);
+		char *comment;
 
 		switch ((int)op->type) {
 		default:
 			break;
 
 		case M680X_OP_REGISTER:
-			printf("\t\toperands[%u].type: REGISTER = %s\n", i,
-				cs_reg_name(handle, op->reg));
+			comment = "";
+			if (i == 0 && m680x->flags & M680X_FIRST_OP_IN_MNEM)
+				comment = " (in mnemonic)";
+			printf("\t\toperands[%u].type: REGISTER = %s%s\n", i,
+				cs_reg_name(handle, op->reg), comment);
 			break;
 
 		case M680X_OP_IMMEDIATE:
 			printf("\t\toperands[%u].type: IMMEDIATE = #%d\n", i,
-                               op->imm);
+				op->imm);
 			break;
 
 		case M680X_OP_DIRECT:
 			printf("\t\toperands[%u].type: DIRECT = 0x%02X\n", i,
-                           op->direct_addr);
+				op->direct_addr);
 			break;
 
 		case M680X_OP_EXTENDED:
 			printf("\t\toperands[%u].type: EXTENDED %s = 0x%04X\n",
-                                i, op->ext.indirect ? "INDIRECT" : "",
-                                op->ext.address);
+				i, op->ext.indirect ? "INDIRECT" : "",
+				op->ext.address);
 			break;
 
 		case M680X_OP_RELATIVE:
@@ -106,13 +114,12 @@ void print_insn_detail_m680x(csh handle, cs_insn *ins)
 
 			if (op->idx.base_reg != M680X_REG_INVALID)
 				printf("\t\t\tbase register: %s\n",
-                                                cs_reg_name(handle,
-						op->idx.base_reg));
+					cs_reg_name(handle, op->idx.base_reg));
 
 			if (op->idx.offset_bits != 0) {
 				printf("\t\t\toffset: %u\n", op->idx.offset);
 				printf("\t\t\toffset bits: %u\n",
-                                       op->idx.offset_bits);
+					op->idx.offset_bits);
 			}
 
 			break;
@@ -123,11 +130,11 @@ void print_insn_detail_m680x(csh handle, cs_insn *ins)
 
 			if (op->idx.base_reg != M680X_REG_INVALID)
 				printf("\t\t\tbase register: %s\n",
-                                       cs_reg_name(handle, op->idx.base_reg));
+					cs_reg_name(handle, op->idx.base_reg));
 
 			if (op->idx.offset_reg != M680X_REG_INVALID)
 				printf("\t\t\toffset register: %s\n",
-                                       cs_reg_name(handle, op->idx.offset_reg));
+					cs_reg_name(handle, op->idx.offset_reg));
 
 			if ((op->idx.offset_bits != 0) &&
 				(op->idx.offset_reg == M680X_REG_INVALID) &&
@@ -136,29 +143,29 @@ void print_insn_detail_m680x(csh handle, cs_insn *ins)
 
 				if (op->idx.base_reg == M680X_REG_PC)
 					printf("\t\t\toffset address: 0x%X\n",
-                                               op->idx.offset_addr);
+						op->idx.offset_addr);
 
-				printf("\t\t\toffset bits: %d\n",
-                                       op->idx.offset_bits);
+				printf("\t\t\toffset bits: %u\n",
+					op->idx.offset_bits);
 			}
 
 			if (op->idx.inc_dec > 0)
 				printf("\t\t\tpost increment: %d\n",
-                                       op->idx.inc_dec);
+					op->idx.inc_dec);
 
 			if (op->idx.inc_dec < 0)
 				printf("\t\t\tpre decrement: %d\n",
-                                        op->idx.inc_dec);
+					op->idx.inc_dec);
 
 			break;
 		}
+
+		if (op->size != 0)
+			printf("\t\t\tsize: %u\n", op->size);
+		if (op->access != CS_AC_INVALID)
+			printf("\t\t\taccess: %s\n", s_access[op->access]);
 	}
 
 	print_read_write_regs(handle, detail);
-
-	if (detail->groups_count)
-		printf("\tgroups_count: %u\n", detail->groups_count);
-
-	printf("\n");
 }
 
