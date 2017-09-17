@@ -2064,37 +2064,36 @@ static void reg_reg_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	}
 }
 
-static void bcc_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+static void add_rel_operand(m680x_info *info, int16_t offset, uint16_t address)
 {
 	cs_m680x *m680x = &info->m680x;
-	cs_m680x_op *op0 = &m680x->operands[m680x->op_count++];
-	int16_t offset = 0;
+	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
 
 	m680x->address_mode = M680X_AM_RELATIVE;
 
-	read_byte_sign_extended(info, &offset, (*address)++);
+	op->type = M680X_OP_RELATIVE;
+	op->size = 0;
+	op->rel.offset = offset;
+	op->rel.address = address;
+}
 
-	op0->type = M680X_OP_RELATIVE;
-	op0->size = 0;
-	op0->rel.offset = offset;
-	op0->rel.address = *address + offset;
+static void bcc_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	int16_t offset = 0;
+
+	read_byte_sign_extended(info, &offset, (*address)++);
+	add_rel_operand(info, offset, *address + offset);
+	add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
 }
 
 static void lbcc_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
-	cs_m680x_op *op0 = &m680x->operands[m680x->op_count++];
 	uint16_t offset = 0;
-
-	m680x->address_mode = M680X_AM_RELATIVE;
 
 	read_word(info, &offset, *address);
 	*address += 2;
-
-	op0->type = M680X_OP_RELATIVE;
-	op0->size = 0;
-	op0->rel.offset = (int16_t)offset;
-	op0->rel.address = *address + offset;
+	add_rel_operand(info, (int16_t)offset, *address + offset);
+	add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
 }
 
 static const m680x_reg g_rr5_to_reg_ids[] = {
