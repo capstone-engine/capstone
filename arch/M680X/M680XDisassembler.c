@@ -1268,7 +1268,7 @@ static const insn_props g_insn_props[] = {
 	{ NOG, uuuu, NOR, NOR, true, false }, // SEI
 	{ NOG, uuuu, NOR, NOR, true, false }, // SEV
 	{ NOG, wrrr, NOR, NOR, true, true }, // SEX
-	{ NOG, rwww, M680X_REG_W, NOR, true, false }, // SEXW
+	{ NOG, rwww, M680X_REG_W, NOR, true, true }, // SEXW
 	{ NOG, rwww, M680X_REG_A, NOR, true, false }, // STA
 	{ NOG, rwww, M680X_REG_A, NOR, true, false }, // STAA
 	{ NOG, rwww, M680X_REG_B, NOR, true, false }, // STAB
