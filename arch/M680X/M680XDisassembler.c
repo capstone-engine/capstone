@@ -2094,7 +2094,7 @@ static void lbcc_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	read_word(info, &offset, *address);
 	*address += 2;
 	add_rel_operand(info, (int16_t)offset, *address + offset);
-	if (info->insn != M680X_INS_BRN)
+	if (info->insn != M680X_INS_LBRN)
 		add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
 }
 
