@@ -1106,8 +1106,8 @@ static const insn_props g_insn_props[] = {
 	{ M680X_GRP_JUMP, uuuu, false, false }, // BRA
 	{ M680X_GRP_INVALID, uuuu, false, false }, // BRN never branches
 	{ M680X_GRP_CALL, uuuu, false, false }, // BSR
-	{ M680X_GRP_INVALID, uuuu, false, false }, // BVC
-	{ M680X_GRP_INVALID, uuuu, false, false }, // BVS
+	{ M680X_GRP_JUMP, uuuu, false, false }, // BVC
+	{ M680X_GRP_JUMP, uuuu, false, false }, // BVS
 	{ M680X_GRP_INVALID, rrrr, true, true }, // CBA
 	{ M680X_GRP_INVALID, uuuu, true, false }, // CLC
 	{ M680X_GRP_INVALID, uuuu, true, false }, // CLI
@@ -1184,8 +1184,8 @@ static const insn_props g_insn_props[] = {
 	{ M680X_GRP_JUMP, uuuu, false, false }, // LBRA
 	{ M680X_GRP_INVALID, uuuu, false, false }, // LBRN never branches
 	{ M680X_GRP_CALL, uuuu, false, false }, // LBSR
-	{ M680X_GRP_INVALID, uuuu, false, false }, // LBVC
-	{ M680X_GRP_INVALID, uuuu, false, false }, // LBVS
+	{ M680X_GRP_JUMP, uuuu, false, false }, // LBVC
+	{ M680X_GRP_JUMP, uuuu, false, false }, // LBVS
 	{ M680X_GRP_INVALID, wrrr, true, false }, // LDA
 	{ M680X_GRP_INVALID, wrrr, true, false }, // LDAA
 	{ M680X_GRP_INVALID, wrrr, true, false }, // LDAB
@@ -2083,7 +2083,8 @@ static void bcc_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	read_byte_sign_extended(info, &offset, (*address)++);
 	add_rel_operand(info, offset, *address + offset);
-	add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
+	if (info->insn != M680X_INS_BRN)
+		add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
 }
 
 static void lbcc_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -2093,7 +2094,8 @@ static void lbcc_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	read_word(info, &offset, *address);
 	*address += 2;
 	add_rel_operand(info, (int16_t)offset, *address + offset);
-	add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
+	if (info->insn != M680X_INS_BRN)
+		add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
 }
 
 static const m680x_reg g_rr5_to_reg_ids[] = {
