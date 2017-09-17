@@ -75,11 +75,6 @@ void print_string_hex(char *comment, unsigned char *str, size_t len)
 		printf("0x%02x ", *c & 0xff);
 	}
 
-	if (cs_support(CS_ARCH_M680X)) {
-    // TODO
-		printf("        m680x:     m680x\n");
-	}
-
 	printf("\n");
 }
 
