@@ -2410,7 +2410,6 @@ static void hd6309_tfm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 		M680X_NO_INC_DEC, M680X_POST_INC_1,
 	};
 	cs_m680x *m680x = &info->m680x;
-	cs_m680x_op *op;
 	uint8_t regs = 0;
 	uint8_t index = (MI->Opcode & 0xff) - 0x38;
 
