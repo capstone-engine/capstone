@@ -161,7 +161,8 @@ public class TestM680x {
         M680x.Operand i = (M680x.Operand) operands.op[c];
         if (i.type == M680X_OP_REGISTER) {
           String comment = "";
-          if (c == 0 && ((operands.flags & M680X_FIRST_OP_IN_MNEM) != 0))
+          if ((c == 0 && ((operands.flags & M680X_FIRST_OP_IN_MNEM) != 0)) ||
+              (c == 1 && ((operands.flags & M680X_SECOND_OP_IN_MNEM) != 0)))
             comment = " (in mnemonic)";
           System.out.printf("\t\toperands[%d].type: REGISTER = %s%s\n", c, ins.regName(i.value.reg), comment);
         }

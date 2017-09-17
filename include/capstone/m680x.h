@@ -172,7 +172,10 @@ typedef enum m680x_group_type {
 
 // The first (register) operand is part of the
 // instruction mnemonic
-#define M680X_FIRST_OP_IN_MNEM   1
+#define M680X_FIRST_OP_IN_MNEM    1
+// The second (register) operand is part of the
+// instruction mnemonic
+#define M680X_SECOND_OP_IN_MNEM   2
 
 // The M680X instruction and it's operands
 typedef struct cs_m680x {

@@ -152,7 +152,8 @@ def print_insn_detail(insn):
         for i in insn.operands:
             if i.type == M680X_OP_REGISTER:
                 comment = "";
-                if ((c == 0) and (insn.flags & M680X_FIRST_OP_IN_MNEM)):
+                if (((c == 0) and (insn.flags & M680X_FIRST_OP_IN_MNEM)) or
+                    ((c == 1) and (insn.flags & M680X_SECOND_OP_IN_MNEM))):
                     comment = " (in mnemonic)";
                 print("\t\toperands[%u].type: REGISTER = %s%s" % (c,
                     insn.reg_name(i.reg), comment))

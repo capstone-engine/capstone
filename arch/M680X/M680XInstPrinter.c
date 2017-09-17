@@ -214,7 +214,7 @@ void M680X_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 	m680x_info *info = (m680x_info *)PrinterInfo;
 	cs_m680x *m680x = &info->m680x;
 	cs_detail *detail = MI->flat_insn->detail;
-	bool is_reg_in_opcode = false;
+	int suppress_operands = 0;
 	const char *delimiter = getDelimiter(m680x);
 	int i;
 
@@ -233,10 +233,13 @@ void M680X_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 	printInstructionName(MI->csh, O, info->insn);
 	SStream_concat(O, " ");
 
-	is_reg_in_opcode = (m680x->flags & M680X_FIRST_OP_IN_MNEM) != 0;
+	if ((m680x->flags & M680X_FIRST_OP_IN_MNEM) != 0)
+		suppress_operands++;
+	if ((m680x->flags & M680X_SECOND_OP_IN_MNEM) != 0)
+		suppress_operands++;
 
 	for (i  = 0; i < m680x->op_count; ++i) {
-		if (i > 0 || (i == 0 && !is_reg_in_opcode)) {
+		if (i >= suppress_operands) {
 			printOperand(MI, O, &m680x->operands[i]);
 
 			if ((i + 1) != m680x->op_count)

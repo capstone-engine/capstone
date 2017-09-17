@@ -97,7 +97,6 @@ typedef enum e_access {
 /* Properties of one instruction in PAGE1 (without prefix) */
 typedef struct inst_page1 {
 	m680x_insn insn : 8;
-	m680x_reg reg0 : 5;
 	insn_hdlr_id handler_id : 5; /* instruction handler id */
 } inst_page1;
 
@@ -105,13 +104,14 @@ typedef struct inst_page1 {
 typedef struct inst_pageX {
 	unsigned opcode : 8;
 	m680x_insn insn : 8;
-	m680x_reg reg0 : 5;
 	insn_hdlr_id handler_id : 5; /* instruction handler id */
 } inst_pageX;
 
 typedef struct insn_props {
 	unsigned group : 4;
 	e_access_mode access_mode : 5;
+	m680x_reg reg0 : 5;
+	m680x_reg reg1 : 5;
 	bool cc_modified : 1;
 	bool update_reg_access : 1;
 } insn_props;
@@ -119,604 +119,604 @@ typedef struct insn_props {
 // M6800/2 instructions
 static const inst_page1 g_m6800_inst_page1_table[256] = {
 	// 0x0x, inherent instructions
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_NOP, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_TAP, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_TPA, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_INX, M680X_REG_X, inherent_hdlr_id },
-	{ M680X_INS_DEX, M680X_REG_X, inherent_hdlr_id },
-	{ M680X_INS_CLV, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_SEV, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_CLC, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_SEC, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_CLI, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_SEI, M680X_REG_INVALID, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_NOP, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_TAP, inherent_hdlr_id },
+	{ M680X_INS_TPA, inherent_hdlr_id },
+	{ M680X_INS_INX, inherent_hdlr_id },
+	{ M680X_INS_DEX, inherent_hdlr_id },
+	{ M680X_INS_CLV, inherent_hdlr_id },
+	{ M680X_INS_SEV, inherent_hdlr_id },
+	{ M680X_INS_CLC, inherent_hdlr_id },
+	{ M680X_INS_SEC, inherent_hdlr_id },
+	{ M680X_INS_CLI, inherent_hdlr_id },
+	{ M680X_INS_SEI, inherent_hdlr_id },
 	// 0x1x, inherent instructions
-	{ M680X_INS_SBA, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_CBA, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_TAB, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_TBA, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_DAA, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ABA, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
+	{ M680X_INS_SBA, inherent_hdlr_id },
+	{ M680X_INS_CBA, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_TAB, inherent_hdlr_id },
+	{ M680X_INS_TBA, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_DAA, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ABA, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
 	// 0x2x, relative branch instructions
-	{ M680X_INS_BRA, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_BHI, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BLS, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BCC, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BCS, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BNE, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BEQ, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BVC, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BVS, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BPL, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BMI, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BGE, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BLT, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BGT, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BLE, M680X_REG_INVALID, bcc_hdlr_id },
+	{ M680X_INS_BRA, bcc_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_BHI, bcc_hdlr_id },
+	{ M680X_INS_BLS, bcc_hdlr_id },
+	{ M680X_INS_BCC, bcc_hdlr_id },
+	{ M680X_INS_BCS, bcc_hdlr_id },
+	{ M680X_INS_BNE, bcc_hdlr_id },
+	{ M680X_INS_BEQ, bcc_hdlr_id },
+	{ M680X_INS_BVC, bcc_hdlr_id },
+	{ M680X_INS_BVS, bcc_hdlr_id },
+	{ M680X_INS_BPL, bcc_hdlr_id },
+	{ M680X_INS_BMI, bcc_hdlr_id },
+	{ M680X_INS_BGE, bcc_hdlr_id },
+	{ M680X_INS_BLT, bcc_hdlr_id },
+	{ M680X_INS_BGT, bcc_hdlr_id },
+	{ M680X_INS_BLE, bcc_hdlr_id },
 	// 0x3x, inherent instructions
-	{ M680X_INS_TSX, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_INS, M680X_REG_S, inherent_hdlr_id },
-	{ M680X_INS_PULA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_PULB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_DES, M680X_REG_S, inherent_hdlr_id },
-	{ M680X_INS_TXS, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_PSHA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_PSHB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_RTS, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_RTI, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_WAI, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_SWI, M680X_REG_INVALID, inherent_hdlr_id },
+	{ M680X_INS_TSX, inherent_hdlr_id },
+	{ M680X_INS_INS, inherent_hdlr_id },
+	{ M680X_INS_PULA, inherent_hdlr_id },
+	{ M680X_INS_PULB, inherent_hdlr_id },
+	{ M680X_INS_DES, inherent_hdlr_id },
+	{ M680X_INS_TXS, inherent_hdlr_id },
+	{ M680X_INS_PSHA, inherent_hdlr_id },
+	{ M680X_INS_PSHB, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_RTS, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_RTI, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_WAI, inherent_hdlr_id },
+	{ M680X_INS_SWI, inherent_hdlr_id },
 	// 0x4x, Register A instructions
-	{ M680X_INS_NEGA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_COMA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_LSRA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_RORA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_ASRA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_ASLA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_ROLA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_DECA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_INCA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_TSTA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_CLRA, M680X_REG_A, inherent_hdlr_id },
+	{ M680X_INS_NEGA, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_COMA, inherent_hdlr_id },
+	{ M680X_INS_LSRA, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_RORA, inherent_hdlr_id },
+	{ M680X_INS_ASRA, inherent_hdlr_id },
+	{ M680X_INS_ASLA, inherent_hdlr_id },
+	{ M680X_INS_ROLA, inherent_hdlr_id },
+	{ M680X_INS_DECA, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_INCA, inherent_hdlr_id },
+	{ M680X_INS_TSTA, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_CLRA, inherent_hdlr_id },
 	// 0x5x, Register B instructions
-	{ M680X_INS_NEGB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_COMB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_LSRB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_RORB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_ASRB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_ASLB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_ROLB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_DECB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_INCB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_TSTB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_CLRB, M680X_REG_B, inherent_hdlr_id },
+	{ M680X_INS_NEGB, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_COMB, inherent_hdlr_id },
+	{ M680X_INS_LSRB, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_RORB, inherent_hdlr_id },
+	{ M680X_INS_ASRB, inherent_hdlr_id },
+	{ M680X_INS_ASLB, inherent_hdlr_id },
+	{ M680X_INS_ROLB, inherent_hdlr_id },
+	{ M680X_INS_DECB, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_INCB, inherent_hdlr_id },
+	{ M680X_INS_TSTB, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_CLRB, inherent_hdlr_id },
 	// 0x6x, indexed instructions
-	{ M680X_INS_NEG, M680X_REG_INVALID, m6800_indexed_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_COM, M680X_REG_INVALID, m6800_indexed_hdlr_id },
-	{ M680X_INS_LSR, M680X_REG_INVALID, m6800_indexed_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ROR, M680X_REG_INVALID, m6800_indexed_hdlr_id },
-	{ M680X_INS_ASR, M680X_REG_INVALID, m6800_indexed_hdlr_id },
-	{ M680X_INS_ASL, M680X_REG_INVALID, m6800_indexed_hdlr_id },
-	{ M680X_INS_ROL, M680X_REG_INVALID, m6800_indexed_hdlr_id },
-	{ M680X_INS_DEC, M680X_REG_INVALID, m6800_indexed_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_INC, M680X_REG_INVALID, m6800_indexed_hdlr_id },
-	{ M680X_INS_TST, M680X_REG_INVALID, m6800_indexed_hdlr_id },
-	{ M680X_INS_JMP, M680X_REG_INVALID, m6800_indexed_hdlr_id },
-	{ M680X_INS_CLR, M680X_REG_INVALID, m6800_indexed_hdlr_id },
+	{ M680X_INS_NEG, m6800_indexed_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_COM, m6800_indexed_hdlr_id },
+	{ M680X_INS_LSR, m6800_indexed_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ROR, m6800_indexed_hdlr_id },
+	{ M680X_INS_ASR, m6800_indexed_hdlr_id },
+	{ M680X_INS_ASL, m6800_indexed_hdlr_id },
+	{ M680X_INS_ROL, m6800_indexed_hdlr_id },
+	{ M680X_INS_DEC, m6800_indexed_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_INC, m6800_indexed_hdlr_id },
+	{ M680X_INS_TST, m6800_indexed_hdlr_id },
+	{ M680X_INS_JMP, m6800_indexed_hdlr_id },
+	{ M680X_INS_CLR, m6800_indexed_hdlr_id },
 	// 0x7x, extended instructions
-	{ M680X_INS_NEG, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_COM, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_LSR, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ROR, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_ASR, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_ASL, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_ROL, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_DEC, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_INC, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_TST, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_JMP, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_CLR, M680X_REG_INVALID, extended_hdlr_id },
+	{ M680X_INS_NEG, extended_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_COM, extended_hdlr_id },
+	{ M680X_INS_LSR, extended_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ROR, extended_hdlr_id },
+	{ M680X_INS_ASR, extended_hdlr_id },
+	{ M680X_INS_ASL, extended_hdlr_id },
+	{ M680X_INS_ROL, extended_hdlr_id },
+	{ M680X_INS_DEC, extended_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_INC, extended_hdlr_id },
+	{ M680X_INS_TST, extended_hdlr_id },
+	{ M680X_INS_JMP, extended_hdlr_id },
+	{ M680X_INS_CLR, extended_hdlr_id },
 	// 0x8x, immediate instructions with Register A,X,S
-	{ M680X_INS_SUBA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_CMPA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_SBCA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ANDA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_BITA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_LDAA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_EORA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_ADCA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_ORAA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_ADDA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_CPX, M680X_REG_X, immediate16_hdlr_id },
-	{ M680X_INS_BSR, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_LDS, M680X_REG_S, immediate16_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
+	{ M680X_INS_SUBA, immediate8_hdlr_id },
+	{ M680X_INS_CMPA, immediate8_hdlr_id },
+	{ M680X_INS_SBCA, immediate8_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ANDA, immediate8_hdlr_id },
+	{ M680X_INS_BITA, immediate8_hdlr_id },
+	{ M680X_INS_LDAA, immediate8_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_EORA, immediate8_hdlr_id },
+	{ M680X_INS_ADCA, immediate8_hdlr_id },
+	{ M680X_INS_ORAA, immediate8_hdlr_id },
+	{ M680X_INS_ADDA, immediate8_hdlr_id },
+	{ M680X_INS_CPX, immediate16_hdlr_id },
+	{ M680X_INS_BSR, bcc_hdlr_id },
+	{ M680X_INS_LDS, immediate16_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
 	// 0x9x, direct instructions with register A,X,S
-	{ M680X_INS_SUBA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_CMPA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_SBCA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ANDA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_BITA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_LDAA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_STAA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_EORA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_ADCA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_ORAA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_ADDA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_CPX, M680X_REG_X, direct_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_LDS, M680X_REG_S, direct_hdlr_id },
-	{ M680X_INS_STS, M680X_REG_S, direct_hdlr_id },
+	{ M680X_INS_SUBA, direct_hdlr_id },
+	{ M680X_INS_CMPA, direct_hdlr_id },
+	{ M680X_INS_SBCA, direct_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ANDA, direct_hdlr_id },
+	{ M680X_INS_BITA, direct_hdlr_id },
+	{ M680X_INS_LDAA, direct_hdlr_id },
+	{ M680X_INS_STAA, direct_hdlr_id },
+	{ M680X_INS_EORA, direct_hdlr_id },
+	{ M680X_INS_ADCA, direct_hdlr_id },
+	{ M680X_INS_ORAA, direct_hdlr_id },
+	{ M680X_INS_ADDA, direct_hdlr_id },
+	{ M680X_INS_CPX, direct_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_LDS, direct_hdlr_id },
+	{ M680X_INS_STS, direct_hdlr_id },
 	// 0xAx, indexed instructions with Register A,X
-	{ M680X_INS_SUBA, M680X_REG_A, m6800_indexed_hdlr_id },
-	{ M680X_INS_CMPA, M680X_REG_A, m6800_indexed_hdlr_id },
-	{ M680X_INS_SBCA, M680X_REG_A, m6800_indexed_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ANDA, M680X_REG_A, m6800_indexed_hdlr_id },
-	{ M680X_INS_BITA, M680X_REG_A, m6800_indexed_hdlr_id },
-	{ M680X_INS_LDAA, M680X_REG_A, m6800_indexed_hdlr_id },
-	{ M680X_INS_STAA, M680X_REG_A, m6800_indexed_hdlr_id },
-	{ M680X_INS_EORA, M680X_REG_A, m6800_indexed_hdlr_id },
-	{ M680X_INS_ADCA, M680X_REG_A, m6800_indexed_hdlr_id },
-	{ M680X_INS_ORAA, M680X_REG_A, m6800_indexed_hdlr_id },
-	{ M680X_INS_ADDA, M680X_REG_A, m6800_indexed_hdlr_id },
-	{ M680X_INS_CPX, M680X_REG_X, m6800_indexed_hdlr_id },
-	{ M680X_INS_JSR, M680X_REG_INVALID, m6800_indexed_hdlr_id },
-	{ M680X_INS_LDS, M680X_REG_S, m6800_indexed_hdlr_id },
-	{ M680X_INS_STS, M680X_REG_S, m6800_indexed_hdlr_id },
+	{ M680X_INS_SUBA, m6800_indexed_hdlr_id },
+	{ M680X_INS_CMPA, m6800_indexed_hdlr_id },
+	{ M680X_INS_SBCA, m6800_indexed_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ANDA, m6800_indexed_hdlr_id },
+	{ M680X_INS_BITA, m6800_indexed_hdlr_id },
+	{ M680X_INS_LDAA, m6800_indexed_hdlr_id },
+	{ M680X_INS_STAA, m6800_indexed_hdlr_id },
+	{ M680X_INS_EORA, m6800_indexed_hdlr_id },
+	{ M680X_INS_ADCA, m6800_indexed_hdlr_id },
+	{ M680X_INS_ORAA, m6800_indexed_hdlr_id },
+	{ M680X_INS_ADDA, m6800_indexed_hdlr_id },
+	{ M680X_INS_CPX, m6800_indexed_hdlr_id },
+	{ M680X_INS_JSR, m6800_indexed_hdlr_id },
+	{ M680X_INS_LDS, m6800_indexed_hdlr_id },
+	{ M680X_INS_STS, m6800_indexed_hdlr_id },
 	// 0xBx, extended instructions with register A,X,S
-	{ M680X_INS_SUBA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_CMPA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_SBCA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ANDA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_BITA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_LDAA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_STAA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_EORA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_ADCA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_ORAA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_ADDA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_CPX, M680X_REG_X, extended_hdlr_id },
-	{ M680X_INS_JSR, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_LDS, M680X_REG_S, extended_hdlr_id },
-	{ M680X_INS_STS, M680X_REG_S, extended_hdlr_id },
+	{ M680X_INS_SUBA, extended_hdlr_id },
+	{ M680X_INS_CMPA, extended_hdlr_id },
+	{ M680X_INS_SBCA, extended_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ANDA, extended_hdlr_id },
+	{ M680X_INS_BITA, extended_hdlr_id },
+	{ M680X_INS_LDAA, extended_hdlr_id },
+	{ M680X_INS_STAA, extended_hdlr_id },
+	{ M680X_INS_EORA, extended_hdlr_id },
+	{ M680X_INS_ADCA, extended_hdlr_id },
+	{ M680X_INS_ORAA, extended_hdlr_id },
+	{ M680X_INS_ADDA, extended_hdlr_id },
+	{ M680X_INS_CPX, extended_hdlr_id },
+	{ M680X_INS_JSR, extended_hdlr_id },
+	{ M680X_INS_LDS, extended_hdlr_id },
+	{ M680X_INS_STS, extended_hdlr_id },
 	// 0xCx, immediate instructions with register B,X
-	{ M680X_INS_SUBB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_CMPB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_SBCB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ANDB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_BITB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_LDAB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_EORB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_ADCB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_ORAB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_ADDB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_LDX, M680X_REG_X, immediate16_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
+	{ M680X_INS_SUBB, immediate8_hdlr_id },
+	{ M680X_INS_CMPB, immediate8_hdlr_id },
+	{ M680X_INS_SBCB, immediate8_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ANDB, immediate8_hdlr_id },
+	{ M680X_INS_BITB, immediate8_hdlr_id },
+	{ M680X_INS_LDAB, immediate8_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_EORB, immediate8_hdlr_id },
+	{ M680X_INS_ADCB, immediate8_hdlr_id },
+	{ M680X_INS_ORAB, immediate8_hdlr_id },
+	{ M680X_INS_ADDB, immediate8_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_LDX, immediate16_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
 	// 0xDx direct instructions with register B,X
-	{ M680X_INS_SUBB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_CMPB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_SBCB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ANDB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_BITB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_LDAB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_STAB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_EORB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_ADCB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_ORAB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_ADDB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_LDX, M680X_REG_X, direct_hdlr_id },
-	{ M680X_INS_STX, M680X_REG_X, direct_hdlr_id },
+	{ M680X_INS_SUBB, direct_hdlr_id },
+	{ M680X_INS_CMPB, direct_hdlr_id },
+	{ M680X_INS_SBCB, direct_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ANDB, direct_hdlr_id },
+	{ M680X_INS_BITB, direct_hdlr_id },
+	{ M680X_INS_LDAB, direct_hdlr_id },
+	{ M680X_INS_STAB, direct_hdlr_id },
+	{ M680X_INS_EORB, direct_hdlr_id },
+	{ M680X_INS_ADCB, direct_hdlr_id },
+	{ M680X_INS_ORAB, direct_hdlr_id },
+	{ M680X_INS_ADDB, direct_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_LDX, direct_hdlr_id },
+	{ M680X_INS_STX, direct_hdlr_id },
 	// 0xEx, indexed instruction with register B,X
-	{ M680X_INS_SUBB, M680X_REG_B, m6800_indexed_hdlr_id },
-	{ M680X_INS_CMPB, M680X_REG_B, m6800_indexed_hdlr_id },
-	{ M680X_INS_SBCB, M680X_REG_B, m6800_indexed_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ANDB, M680X_REG_B, m6800_indexed_hdlr_id },
-	{ M680X_INS_BITB, M680X_REG_B, m6800_indexed_hdlr_id },
-	{ M680X_INS_LDAB, M680X_REG_B, m6800_indexed_hdlr_id },
-	{ M680X_INS_STAB, M680X_REG_B, m6800_indexed_hdlr_id },
-	{ M680X_INS_EORB, M680X_REG_B, m6800_indexed_hdlr_id },
-	{ M680X_INS_ADCB, M680X_REG_B, m6800_indexed_hdlr_id },
-	{ M680X_INS_ORAB, M680X_REG_B, m6800_indexed_hdlr_id },
-	{ M680X_INS_ADDB, M680X_REG_B, m6800_indexed_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_LDX, M680X_REG_X, m6800_indexed_hdlr_id },
-	{ M680X_INS_STX, M680X_REG_X, m6800_indexed_hdlr_id },
+	{ M680X_INS_SUBB, m6800_indexed_hdlr_id },
+	{ M680X_INS_CMPB, m6800_indexed_hdlr_id },
+	{ M680X_INS_SBCB, m6800_indexed_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ANDB, m6800_indexed_hdlr_id },
+	{ M680X_INS_BITB, m6800_indexed_hdlr_id },
+	{ M680X_INS_LDAB, m6800_indexed_hdlr_id },
+	{ M680X_INS_STAB, m6800_indexed_hdlr_id },
+	{ M680X_INS_EORB, m6800_indexed_hdlr_id },
+	{ M680X_INS_ADCB, m6800_indexed_hdlr_id },
+	{ M680X_INS_ORAB, m6800_indexed_hdlr_id },
+	{ M680X_INS_ADDB, m6800_indexed_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_LDX, m6800_indexed_hdlr_id },
+	{ M680X_INS_STX, m6800_indexed_hdlr_id },
 	// 0xFx, extended instructions with register B,U
-	{ M680X_INS_SUBB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_CMPB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_SBCB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ANDB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_BITB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_LDAB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_STAB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_EORB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_ADCB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_ORAB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_ADDB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_LDX, M680X_REG_X, extended_hdlr_id },
-	{ M680X_INS_STX, M680X_REG_X, extended_hdlr_id },
+	{ M680X_INS_SUBB, extended_hdlr_id },
+	{ M680X_INS_CMPB, extended_hdlr_id },
+	{ M680X_INS_SBCB, extended_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ANDB, extended_hdlr_id },
+	{ M680X_INS_BITB, extended_hdlr_id },
+	{ M680X_INS_LDAB, extended_hdlr_id },
+	{ M680X_INS_STAB, extended_hdlr_id },
+	{ M680X_INS_EORB, extended_hdlr_id },
+	{ M680X_INS_ADCB, extended_hdlr_id },
+	{ M680X_INS_ORAB, extended_hdlr_id },
+	{ M680X_INS_ADDB, extended_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_LDX, extended_hdlr_id },
+	{ M680X_INS_STX, extended_hdlr_id },
 };
 
 // Additional instructions only supported on M6801/3
 static const inst_pageX g_m6801_inst_overlay_table[] = {
 	// 0x0x, inherent instructions
-	{ 0x04, M680X_INS_LSRD, M680X_REG_D, inherent_hdlr_id },
-	{ 0x05, M680X_INS_ASLD, M680X_REG_D, inherent_hdlr_id },
+	{ 0x04, M680X_INS_LSRD, inherent_hdlr_id },
+	{ 0x05, M680X_INS_ASLD, inherent_hdlr_id },
 	// 0x2x, relative branch instructions
-	{ 0x21, M680X_INS_BRN, M680X_REG_INVALID, bcc_hdlr_id },
+	{ 0x21, M680X_INS_BRN, bcc_hdlr_id },
 	// 0x3x, inherent instructions
-	{ 0x38, M680X_INS_PULX, M680X_REG_X, inherent_hdlr_id },
-	{ 0x3A, M680X_INS_ABX, M680X_REG_INVALID, inherent_hdlr_id },
-	{ 0x3C, M680X_INS_PSHX, M680X_REG_X, inherent_hdlr_id },
-	{ 0x3D, M680X_INS_MUL, M680X_REG_INVALID, inherent_hdlr_id  },
+	{ 0x38, M680X_INS_PULX, inherent_hdlr_id },
+	{ 0x3A, M680X_INS_ABX, inherent_hdlr_id },
+	{ 0x3C, M680X_INS_PSHX, inherent_hdlr_id },
+	{ 0x3D, M680X_INS_MUL, inherent_hdlr_id  },
 	// 0x8x, immediate instructions with Register D
-	{ 0x83, M680X_INS_SUBD, M680X_REG_D, immediate16_hdlr_id },
+	{ 0x83, M680X_INS_SUBD, immediate16_hdlr_id },
 	// 0x9x, direct instructions with register D
-	{ 0x93, M680X_INS_SUBD, M680X_REG_D, direct_hdlr_id },
-	{ 0x9D, M680X_INS_JSR, M680X_REG_INVALID, direct_hdlr_id },
+	{ 0x93, M680X_INS_SUBD, direct_hdlr_id },
+	{ 0x9D, M680X_INS_JSR, direct_hdlr_id },
 	// 0xAx, indexed instructions with Register D
-	{ 0xA3, M680X_INS_SUBD, M680X_REG_D, m6800_indexed_hdlr_id },
+	{ 0xA3, M680X_INS_SUBD, m6800_indexed_hdlr_id },
 	// 0xBx, extended instructions with register D
-	{ 0xB3, M680X_INS_SUBD, M680X_REG_D, extended_hdlr_id },
+	{ 0xB3, M680X_INS_SUBD, extended_hdlr_id },
 	// 0xCx, immediate instructions with register D
-	{ 0xC3, M680X_INS_ADDD, M680X_REG_D, immediate16_hdlr_id },
-	{ 0xCC, M680X_INS_LDD, M680X_REG_D, immediate16_hdlr_id },
+	{ 0xC3, M680X_INS_ADDD, immediate16_hdlr_id },
+	{ 0xCC, M680X_INS_LDD, immediate16_hdlr_id },
 	// 0xDx direct instructions with register D
-	{ 0xD3, M680X_INS_ADDD, M680X_REG_D, direct_hdlr_id },
-	{ 0xDC, M680X_INS_LDD, M680X_REG_D, direct_hdlr_id },
-	{ 0xDD, M680X_INS_STD, M680X_REG_D, direct_hdlr_id },
+	{ 0xD3, M680X_INS_ADDD, direct_hdlr_id },
+	{ 0xDC, M680X_INS_LDD, direct_hdlr_id },
+	{ 0xDD, M680X_INS_STD, direct_hdlr_id },
 	// 0xEx, indexed instruction with register D
-	{ 0xE3, M680X_INS_ADDD, M680X_REG_D, m6800_indexed_hdlr_id },
-	{ 0xEC, M680X_INS_LDD, M680X_REG_D, m6800_indexed_hdlr_id },
-	{ 0xED, M680X_INS_STD, M680X_REG_D, m6800_indexed_hdlr_id },
+	{ 0xE3, M680X_INS_ADDD, m6800_indexed_hdlr_id },
+	{ 0xEC, M680X_INS_LDD, m6800_indexed_hdlr_id },
+	{ 0xED, M680X_INS_STD, m6800_indexed_hdlr_id },
 	// 0xFx, extended instructions with register D
-	{ 0xF3, M680X_INS_ADDD, M680X_REG_D, extended_hdlr_id },
-	{ 0xFC, M680X_INS_LDD, M680X_REG_D, extended_hdlr_id },
-	{ 0xFD, M680X_INS_STD, M680X_REG_D, extended_hdlr_id },
+	{ 0xF3, M680X_INS_ADDD, extended_hdlr_id },
+	{ 0xFC, M680X_INS_LDD, extended_hdlr_id },
+	{ 0xFD, M680X_INS_STD, extended_hdlr_id },
 };
 
 // Additional instructions only supported on HD6301/3
 static const inst_pageX g_hd6301_inst_overlay_table[] = {
-	{ 0x1B, M680X_INS_XGDX, M680X_REG_INVALID, inherent_hdlr_id },
-	{ 0x61, M680X_INS_AIM, M680X_REG_INVALID, hd6301_imm_indexed_hdlr_id },
-	{ 0x62, M680X_INS_OIM, M680X_REG_INVALID, hd6301_imm_indexed_hdlr_id },
-	{ 0x65, M680X_INS_EIM, M680X_REG_INVALID, hd6301_imm_indexed_hdlr_id },
-	{ 0x6B, M680X_INS_TIM, M680X_REG_INVALID, hd6301_imm_indexed_hdlr_id },
-	{ 0x71, M680X_INS_AIM, M680X_REG_INVALID, hd630x_imm_direct_hdlr_id },
-	{ 0x72, M680X_INS_OIM, M680X_REG_INVALID, hd630x_imm_direct_hdlr_id },
-	{ 0x75, M680X_INS_EIM, M680X_REG_INVALID, hd630x_imm_direct_hdlr_id },
-	{ 0x7B, M680X_INS_TIM, M680X_REG_INVALID, hd630x_imm_direct_hdlr_id },
+	{ 0x1B, M680X_INS_XGDX, inherent_hdlr_id },
+	{ 0x61, M680X_INS_AIM, hd6301_imm_indexed_hdlr_id },
+	{ 0x62, M680X_INS_OIM, hd6301_imm_indexed_hdlr_id },
+	{ 0x65, M680X_INS_EIM, hd6301_imm_indexed_hdlr_id },
+	{ 0x6B, M680X_INS_TIM, hd6301_imm_indexed_hdlr_id },
+	{ 0x71, M680X_INS_AIM, hd630x_imm_direct_hdlr_id },
+	{ 0x72, M680X_INS_OIM, hd630x_imm_direct_hdlr_id },
+	{ 0x75, M680X_INS_EIM, hd630x_imm_direct_hdlr_id },
+	{ 0x7B, M680X_INS_TIM, hd630x_imm_direct_hdlr_id },
 };
 
 // M6809/HD6309 PAGE1 instructions
 static const inst_page1 g_m6809_inst_page1_table[256] = {
 	// 0x0x, direct instructions
-	{ M680X_INS_NEG, M680X_REG_INVALID, direct_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_COM, M680X_REG_INVALID, direct_hdlr_id },
-	{ M680X_INS_LSR, M680X_REG_INVALID, direct_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ROR, M680X_REG_INVALID, direct_hdlr_id },
-	{ M680X_INS_ASR, M680X_REG_INVALID, direct_hdlr_id },
-	{ M680X_INS_LSL, M680X_REG_INVALID, direct_hdlr_id },
-	{ M680X_INS_ROL, M680X_REG_INVALID, direct_hdlr_id },
-	{ M680X_INS_DEC, M680X_REG_INVALID, direct_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_INC, M680X_REG_INVALID, direct_hdlr_id },
-	{ M680X_INS_TST, M680X_REG_INVALID, direct_hdlr_id },
-	{ M680X_INS_JMP, M680X_REG_INVALID, direct_hdlr_id },
-	{ M680X_INS_CLR, M680X_REG_INVALID, direct_hdlr_id },
+	{ M680X_INS_NEG, direct_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_COM, direct_hdlr_id },
+	{ M680X_INS_LSR, direct_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ROR, direct_hdlr_id },
+	{ M680X_INS_ASR, direct_hdlr_id },
+	{ M680X_INS_LSL, direct_hdlr_id },
+	{ M680X_INS_ROL, direct_hdlr_id },
+	{ M680X_INS_DEC, direct_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_INC, direct_hdlr_id },
+	{ M680X_INS_TST, direct_hdlr_id },
+	{ M680X_INS_JMP, direct_hdlr_id },
+	{ M680X_INS_CLR, direct_hdlr_id },
 	// 0x1x, misc instructions
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id }, // PAGE2
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id }, // PAGE3
-	{ M680X_INS_NOP, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_SYNC, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_LBRA, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ M680X_INS_LBSR, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_DAA, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_ORCC, M680X_REG_CC, immediate8_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ANDCC, M680X_REG_CC, immediate8_hdlr_id },
-	{ M680X_INS_SEX, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_EXG, M680X_REG_INVALID, reg_reg_hdlr_id },
-	{ M680X_INS_TFR, M680X_REG_INVALID, reg_reg_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id }, // PAGE2
+	{ M680X_INS_ILLGL, illegal_hdlr_id }, // PAGE3
+	{ M680X_INS_NOP, inherent_hdlr_id },
+	{ M680X_INS_SYNC, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_LBRA, lbcc_hdlr_id },
+	{ M680X_INS_LBSR, lbcc_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_DAA, inherent_hdlr_id },
+	{ M680X_INS_ORCC, immediate8_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ANDCC, immediate8_hdlr_id },
+	{ M680X_INS_SEX, inherent_hdlr_id },
+	{ M680X_INS_EXG, reg_reg_hdlr_id },
+	{ M680X_INS_TFR, reg_reg_hdlr_id },
 	// 0x2x, relative branch instructions
-	{ M680X_INS_BRA, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BRN, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BHI, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BLS, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BCC, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BCS, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BNE, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BEQ, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BVC, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BVS, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BPL, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BMI, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BGE, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BLT, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BGT, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_BLE, M680X_REG_INVALID, bcc_hdlr_id },
+	{ M680X_INS_BRA, bcc_hdlr_id },
+	{ M680X_INS_BRN, bcc_hdlr_id },
+	{ M680X_INS_BHI, bcc_hdlr_id },
+	{ M680X_INS_BLS, bcc_hdlr_id },
+	{ M680X_INS_BCC, bcc_hdlr_id },
+	{ M680X_INS_BCS, bcc_hdlr_id },
+	{ M680X_INS_BNE, bcc_hdlr_id },
+	{ M680X_INS_BEQ, bcc_hdlr_id },
+	{ M680X_INS_BVC, bcc_hdlr_id },
+	{ M680X_INS_BVS, bcc_hdlr_id },
+	{ M680X_INS_BPL, bcc_hdlr_id },
+	{ M680X_INS_BMI, bcc_hdlr_id },
+	{ M680X_INS_BGE, bcc_hdlr_id },
+	{ M680X_INS_BLT, bcc_hdlr_id },
+	{ M680X_INS_BGT, bcc_hdlr_id },
+	{ M680X_INS_BLE, bcc_hdlr_id },
 	// 0x3x, misc instructions
-	{ M680X_INS_LEAX, M680X_REG_X, m6809_indexed_hdlr_id },
-	{ M680X_INS_LEAY, M680X_REG_Y, m6809_indexed_hdlr_id },
-	{ M680X_INS_LEAS, M680X_REG_S, m6809_indexed_hdlr_id },
-	{ M680X_INS_LEAU, M680X_REG_U, m6809_indexed_hdlr_id },
-	{ M680X_INS_PSHS, M680X_REG_S, reg_bits_hdlr_id },
-	{ M680X_INS_PULS, M680X_REG_S, reg_bits_hdlr_id },
-	{ M680X_INS_PSHU, M680X_REG_U, reg_bits_hdlr_id },
-	{ M680X_INS_PULU, M680X_REG_U, reg_bits_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_RTS, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_ABX, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_RTI, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_CWAI, M680X_REG_INVALID, immediate8_hdlr_id },
-	{ M680X_INS_MUL, M680X_REG_INVALID, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_SWI, M680X_REG_INVALID, inherent_hdlr_id },
+	{ M680X_INS_LEAX, m6809_indexed_hdlr_id },
+	{ M680X_INS_LEAY, m6809_indexed_hdlr_id },
+	{ M680X_INS_LEAS, m6809_indexed_hdlr_id },
+	{ M680X_INS_LEAU, m6809_indexed_hdlr_id },
+	{ M680X_INS_PSHS, reg_bits_hdlr_id },
+	{ M680X_INS_PULS, reg_bits_hdlr_id },
+	{ M680X_INS_PSHU, reg_bits_hdlr_id },
+	{ M680X_INS_PULU, reg_bits_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_RTS, inherent_hdlr_id },
+	{ M680X_INS_ABX, inherent_hdlr_id },
+	{ M680X_INS_RTI, inherent_hdlr_id },
+	{ M680X_INS_CWAI, immediate8_hdlr_id },
+	{ M680X_INS_MUL, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_SWI, inherent_hdlr_id },
 	// 0x4x, Register A instructions
-	{ M680X_INS_NEGA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_COMA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_LSRA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_RORA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_ASRA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_LSLA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_ROLA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_DECA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_INCA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_TSTA, M680X_REG_A, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_CLRA, M680X_REG_A, inherent_hdlr_id },
+	{ M680X_INS_NEGA, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_COMA, inherent_hdlr_id },
+	{ M680X_INS_LSRA, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_RORA, inherent_hdlr_id },
+	{ M680X_INS_ASRA, inherent_hdlr_id },
+	{ M680X_INS_LSLA, inherent_hdlr_id },
+	{ M680X_INS_ROLA, inherent_hdlr_id },
+	{ M680X_INS_DECA, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_INCA, inherent_hdlr_id },
+	{ M680X_INS_TSTA, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_CLRA, inherent_hdlr_id },
 	// 0x5x, Register B instructions
-	{ M680X_INS_NEGB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_COMB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_LSRB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_RORB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_ASRB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_LSLB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_ROLB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_DECB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_INCB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_TSTB, M680X_REG_B, inherent_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_CLRB, M680X_REG_B, inherent_hdlr_id },
+	{ M680X_INS_NEGB, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_COMB, inherent_hdlr_id },
+	{ M680X_INS_LSRB, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_RORB, inherent_hdlr_id },
+	{ M680X_INS_ASRB, inherent_hdlr_id },
+	{ M680X_INS_LSLB, inherent_hdlr_id },
+	{ M680X_INS_ROLB, inherent_hdlr_id },
+	{ M680X_INS_DECB, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_INCB, inherent_hdlr_id },
+	{ M680X_INS_TSTB, inherent_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_CLRB, inherent_hdlr_id },
 	// 0x6x, indexed instructions
-	{ M680X_INS_NEG, M680X_REG_INVALID, m6809_indexed_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_COM, M680X_REG_INVALID, m6809_indexed_hdlr_id },
-	{ M680X_INS_LSR, M680X_REG_INVALID, m6809_indexed_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ROR, M680X_REG_INVALID, m6809_indexed_hdlr_id },
-	{ M680X_INS_ASR, M680X_REG_INVALID, m6809_indexed_hdlr_id },
-	{ M680X_INS_LSL, M680X_REG_INVALID, m6809_indexed_hdlr_id },
-	{ M680X_INS_ROL, M680X_REG_INVALID, m6809_indexed_hdlr_id },
-	{ M680X_INS_DEC, M680X_REG_INVALID, m6809_indexed_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_INC, M680X_REG_INVALID, m6809_indexed_hdlr_id },
-	{ M680X_INS_TST, M680X_REG_INVALID, m6809_indexed_hdlr_id },
-	{ M680X_INS_JMP, M680X_REG_INVALID, m6809_indexed_hdlr_id },
-	{ M680X_INS_CLR, M680X_REG_INVALID, m6809_indexed_hdlr_id },
+	{ M680X_INS_NEG, m6809_indexed_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_COM, m6809_indexed_hdlr_id },
+	{ M680X_INS_LSR, m6809_indexed_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ROR, m6809_indexed_hdlr_id },
+	{ M680X_INS_ASR, m6809_indexed_hdlr_id },
+	{ M680X_INS_LSL, m6809_indexed_hdlr_id },
+	{ M680X_INS_ROL, m6809_indexed_hdlr_id },
+	{ M680X_INS_DEC, m6809_indexed_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_INC, m6809_indexed_hdlr_id },
+	{ M680X_INS_TST, m6809_indexed_hdlr_id },
+	{ M680X_INS_JMP, m6809_indexed_hdlr_id },
+	{ M680X_INS_CLR, m6809_indexed_hdlr_id },
 	// 0x7x, extended instructions
-	{ M680X_INS_NEG, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_COM, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_LSR, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_ROR, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_ASR, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_LSL, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_ROL, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_DEC, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_INC, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_TST, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_JMP, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_CLR, M680X_REG_INVALID, extended_hdlr_id },
+	{ M680X_INS_NEG, extended_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_COM, extended_hdlr_id },
+	{ M680X_INS_LSR, extended_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_ROR, extended_hdlr_id },
+	{ M680X_INS_ASR, extended_hdlr_id },
+	{ M680X_INS_LSL, extended_hdlr_id },
+	{ M680X_INS_ROL, extended_hdlr_id },
+	{ M680X_INS_DEC, extended_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_INC, extended_hdlr_id },
+	{ M680X_INS_TST, extended_hdlr_id },
+	{ M680X_INS_JMP, extended_hdlr_id },
+	{ M680X_INS_CLR, extended_hdlr_id },
 	// 0x8x, immediate instructions with Register A,D,X
-	{ M680X_INS_SUBA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_CMPA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_SBCA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_SUBD, M680X_REG_D, immediate16_hdlr_id },
-	{ M680X_INS_ANDA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_BITA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_LDA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_EORA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_ADCA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_ORA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_ADDA, M680X_REG_A, immediate8_hdlr_id },
-	{ M680X_INS_CMPX, M680X_REG_X, immediate16_hdlr_id },
-	{ M680X_INS_BSR, M680X_REG_INVALID, bcc_hdlr_id },
-	{ M680X_INS_LDX, M680X_REG_X, immediate16_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
+	{ M680X_INS_SUBA, immediate8_hdlr_id },
+	{ M680X_INS_CMPA, immediate8_hdlr_id },
+	{ M680X_INS_SBCA, immediate8_hdlr_id },
+	{ M680X_INS_SUBD, immediate16_hdlr_id },
+	{ M680X_INS_ANDA, immediate8_hdlr_id },
+	{ M680X_INS_BITA, immediate8_hdlr_id },
+	{ M680X_INS_LDA, immediate8_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_EORA, immediate8_hdlr_id },
+	{ M680X_INS_ADCA, immediate8_hdlr_id },
+	{ M680X_INS_ORA, immediate8_hdlr_id },
+	{ M680X_INS_ADDA, immediate8_hdlr_id },
+	{ M680X_INS_CMPX, immediate16_hdlr_id },
+	{ M680X_INS_BSR, bcc_hdlr_id },
+	{ M680X_INS_LDX, immediate16_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
 	// 0x9x, direct instructions with register A,D,X
-	{ M680X_INS_SUBA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_CMPA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_SBCA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_SUBD, M680X_REG_D, direct_hdlr_id },
-	{ M680X_INS_ANDA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_BITA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_LDA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_STA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_EORA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_ADCA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_ORA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_ADDA, M680X_REG_A, direct_hdlr_id },
-	{ M680X_INS_CMPX, M680X_REG_X, direct_hdlr_id },
-	{ M680X_INS_JSR, M680X_REG_INVALID, direct_hdlr_id },
-	{ M680X_INS_LDX, M680X_REG_X, direct_hdlr_id },
-	{ M680X_INS_STX, M680X_REG_X, direct_hdlr_id },
+	{ M680X_INS_SUBA, direct_hdlr_id },
+	{ M680X_INS_CMPA, direct_hdlr_id },
+	{ M680X_INS_SBCA, direct_hdlr_id },
+	{ M680X_INS_SUBD, direct_hdlr_id },
+	{ M680X_INS_ANDA, direct_hdlr_id },
+	{ M680X_INS_BITA, direct_hdlr_id },
+	{ M680X_INS_LDA, direct_hdlr_id },
+	{ M680X_INS_STA, direct_hdlr_id },
+	{ M680X_INS_EORA, direct_hdlr_id },
+	{ M680X_INS_ADCA, direct_hdlr_id },
+	{ M680X_INS_ORA, direct_hdlr_id },
+	{ M680X_INS_ADDA, direct_hdlr_id },
+	{ M680X_INS_CMPX, direct_hdlr_id },
+	{ M680X_INS_JSR, direct_hdlr_id },
+	{ M680X_INS_LDX, direct_hdlr_id },
+	{ M680X_INS_STX, direct_hdlr_id },
 	// 0xAx, indexed instructions with Register A,D,X
-	{ M680X_INS_SUBA, M680X_REG_A, m6809_indexed_hdlr_id },
-	{ M680X_INS_CMPA, M680X_REG_A, m6809_indexed_hdlr_id },
-	{ M680X_INS_SBCA, M680X_REG_A, m6809_indexed_hdlr_id },
-	{ M680X_INS_SUBD, M680X_REG_D, m6809_indexed_hdlr_id },
-	{ M680X_INS_ANDA, M680X_REG_A, m6809_indexed_hdlr_id },
-	{ M680X_INS_BITA, M680X_REG_A, m6809_indexed_hdlr_id },
-	{ M680X_INS_LDA, M680X_REG_A, m6809_indexed_hdlr_id },
-	{ M680X_INS_STA, M680X_REG_A, m6809_indexed_hdlr_id },
-	{ M680X_INS_EORA, M680X_REG_A, m6809_indexed_hdlr_id },
-	{ M680X_INS_ADCA, M680X_REG_A, m6809_indexed_hdlr_id },
-	{ M680X_INS_ORA, M680X_REG_A, m6809_indexed_hdlr_id },
-	{ M680X_INS_ADDA, M680X_REG_A, m6809_indexed_hdlr_id },
-	{ M680X_INS_CMPX, M680X_REG_X, m6809_indexed_hdlr_id },
-	{ M680X_INS_JSR, M680X_REG_INVALID, m6809_indexed_hdlr_id },
-	{ M680X_INS_LDX, M680X_REG_X, m6809_indexed_hdlr_id },
-	{ M680X_INS_STX, M680X_REG_X, m6809_indexed_hdlr_id },
+	{ M680X_INS_SUBA, m6809_indexed_hdlr_id },
+	{ M680X_INS_CMPA, m6809_indexed_hdlr_id },
+	{ M680X_INS_SBCA, m6809_indexed_hdlr_id },
+	{ M680X_INS_SUBD, m6809_indexed_hdlr_id },
+	{ M680X_INS_ANDA, m6809_indexed_hdlr_id },
+	{ M680X_INS_BITA, m6809_indexed_hdlr_id },
+	{ M680X_INS_LDA, m6809_indexed_hdlr_id },
+	{ M680X_INS_STA, m6809_indexed_hdlr_id },
+	{ M680X_INS_EORA, m6809_indexed_hdlr_id },
+	{ M680X_INS_ADCA, m6809_indexed_hdlr_id },
+	{ M680X_INS_ORA, m6809_indexed_hdlr_id },
+	{ M680X_INS_ADDA, m6809_indexed_hdlr_id },
+	{ M680X_INS_CMPX, m6809_indexed_hdlr_id },
+	{ M680X_INS_JSR, m6809_indexed_hdlr_id },
+	{ M680X_INS_LDX, m6809_indexed_hdlr_id },
+	{ M680X_INS_STX, m6809_indexed_hdlr_id },
 	// 0xBx, extended instructions with register A,D,X
-	{ M680X_INS_SUBA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_CMPA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_SBCA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_SUBD, M680X_REG_D, extended_hdlr_id },
-	{ M680X_INS_ANDA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_BITA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_LDA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_STA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_EORA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_ADCA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_ORA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_ADDA, M680X_REG_A, extended_hdlr_id },
-	{ M680X_INS_CMPX, M680X_REG_X, extended_hdlr_id },
-	{ M680X_INS_JSR, M680X_REG_INVALID, extended_hdlr_id },
-	{ M680X_INS_LDX, M680X_REG_X, extended_hdlr_id },
-	{ M680X_INS_STX, M680X_REG_X, extended_hdlr_id },
+	{ M680X_INS_SUBA, extended_hdlr_id },
+	{ M680X_INS_CMPA, extended_hdlr_id },
+	{ M680X_INS_SBCA, extended_hdlr_id },
+	{ M680X_INS_SUBD, extended_hdlr_id },
+	{ M680X_INS_ANDA, extended_hdlr_id },
+	{ M680X_INS_BITA, extended_hdlr_id },
+	{ M680X_INS_LDA, extended_hdlr_id },
+	{ M680X_INS_STA, extended_hdlr_id },
+	{ M680X_INS_EORA, extended_hdlr_id },
+	{ M680X_INS_ADCA, extended_hdlr_id },
+	{ M680X_INS_ORA, extended_hdlr_id },
+	{ M680X_INS_ADDA, extended_hdlr_id },
+	{ M680X_INS_CMPX, extended_hdlr_id },
+	{ M680X_INS_JSR, extended_hdlr_id },
+	{ M680X_INS_LDX, extended_hdlr_id },
+	{ M680X_INS_STX, extended_hdlr_id },
 	// 0xCx, immediate instructions with register B,D,U
-	{ M680X_INS_SUBB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_CMPB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_SBCB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_ADDD, M680X_REG_D, immediate16_hdlr_id },
-	{ M680X_INS_ANDB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_BITB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_LDB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_EORB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_ADCB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_ORB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_ADDB, M680X_REG_B, immediate8_hdlr_id },
-	{ M680X_INS_LDD, M680X_REG_D, immediate16_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
-	{ M680X_INS_LDU, M680X_REG_U, immediate16_hdlr_id },
-	{ M680X_INS_ILLGL, M680X_REG_INVALID, illegal_hdlr_id },
+	{ M680X_INS_SUBB, immediate8_hdlr_id },
+	{ M680X_INS_CMPB, immediate8_hdlr_id },
+	{ M680X_INS_SBCB, immediate8_hdlr_id },
+	{ M680X_INS_ADDD, immediate16_hdlr_id },
+	{ M680X_INS_ANDB, immediate8_hdlr_id },
+	{ M680X_INS_BITB, immediate8_hdlr_id },
+	{ M680X_INS_LDB, immediate8_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_EORB, immediate8_hdlr_id },
+	{ M680X_INS_ADCB, immediate8_hdlr_id },
+	{ M680X_INS_ORB, immediate8_hdlr_id },
+	{ M680X_INS_ADDB, immediate8_hdlr_id },
+	{ M680X_INS_LDD, immediate16_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
+	{ M680X_INS_LDU, immediate16_hdlr_id },
+	{ M680X_INS_ILLGL, illegal_hdlr_id },
 	// 0xDx direct instructions with register B,D,U
-	{ M680X_INS_SUBB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_CMPB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_SBCB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_ADDD, M680X_REG_D, direct_hdlr_id },
-	{ M680X_INS_ANDB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_BITB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_LDB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_STB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_EORB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_ADCB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_ORB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_ADDB, M680X_REG_B, direct_hdlr_id },
-	{ M680X_INS_LDD, M680X_REG_D, direct_hdlr_id },
-	{ M680X_INS_STD, M680X_REG_D, direct_hdlr_id },
-	{ M680X_INS_LDU, M680X_REG_U, direct_hdlr_id },
-	{ M680X_INS_STU, M680X_REG_U, direct_hdlr_id },
+	{ M680X_INS_SUBB, direct_hdlr_id },
+	{ M680X_INS_CMPB, direct_hdlr_id },
+	{ M680X_INS_SBCB, direct_hdlr_id },
+	{ M680X_INS_ADDD, direct_hdlr_id },
+	{ M680X_INS_ANDB, direct_hdlr_id },
+	{ M680X_INS_BITB, direct_hdlr_id },
+	{ M680X_INS_LDB, direct_hdlr_id },
+	{ M680X_INS_STB, direct_hdlr_id },
+	{ M680X_INS_EORB, direct_hdlr_id },
+	{ M680X_INS_ADCB, direct_hdlr_id },
+	{ M680X_INS_ORB, direct_hdlr_id },
+	{ M680X_INS_ADDB, direct_hdlr_id },
+	{ M680X_INS_LDD, direct_hdlr_id },
+	{ M680X_INS_STD, direct_hdlr_id },
+	{ M680X_INS_LDU, direct_hdlr_id },
+	{ M680X_INS_STU, direct_hdlr_id },
 	// 0xEx, indexed instruction with register B,D,U
-	{ M680X_INS_SUBB, M680X_REG_B, m6809_indexed_hdlr_id },
-	{ M680X_INS_CMPB, M680X_REG_B, m6809_indexed_hdlr_id },
-	{ M680X_INS_SBCB, M680X_REG_B, m6809_indexed_hdlr_id },
-	{ M680X_INS_ADDD, M680X_REG_D, m6809_indexed_hdlr_id },
-	{ M680X_INS_ANDB, M680X_REG_B, m6809_indexed_hdlr_id },
-	{ M680X_INS_BITB, M680X_REG_B, m6809_indexed_hdlr_id },
-	{ M680X_INS_LDB, M680X_REG_B, m6809_indexed_hdlr_id },
-	{ M680X_INS_STB, M680X_REG_B, m6809_indexed_hdlr_id },
-	{ M680X_INS_EORB, M680X_REG_B, m6809_indexed_hdlr_id },
-	{ M680X_INS_ADCB, M680X_REG_B, m6809_indexed_hdlr_id },
-	{ M680X_INS_ORB, M680X_REG_B, m6809_indexed_hdlr_id },
-	{ M680X_INS_ADDB, M680X_REG_B, m6809_indexed_hdlr_id },
-	{ M680X_INS_LDD, M680X_REG_D, m6809_indexed_hdlr_id },
-	{ M680X_INS_STD, M680X_REG_D, m6809_indexed_hdlr_id },
-	{ M680X_INS_LDU, M680X_REG_U, m6809_indexed_hdlr_id },
-	{ M680X_INS_STU, M680X_REG_U, m6809_indexed_hdlr_id },
+	{ M680X_INS_SUBB, m6809_indexed_hdlr_id },
+	{ M680X_INS_CMPB, m6809_indexed_hdlr_id },
+	{ M680X_INS_SBCB, m6809_indexed_hdlr_id },
+	{ M680X_INS_ADDD, m6809_indexed_hdlr_id },
+	{ M680X_INS_ANDB, m6809_indexed_hdlr_id },
+	{ M680X_INS_BITB, m6809_indexed_hdlr_id },
+	{ M680X_INS_LDB, m6809_indexed_hdlr_id },
+	{ M680X_INS_STB, m6809_indexed_hdlr_id },
+	{ M680X_INS_EORB, m6809_indexed_hdlr_id },
+	{ M680X_INS_ADCB, m6809_indexed_hdlr_id },
+	{ M680X_INS_ORB, m6809_indexed_hdlr_id },
+	{ M680X_INS_ADDB, m6809_indexed_hdlr_id },
+	{ M680X_INS_LDD, m6809_indexed_hdlr_id },
+	{ M680X_INS_STD, m6809_indexed_hdlr_id },
+	{ M680X_INS_LDU, m6809_indexed_hdlr_id },
+	{ M680X_INS_STU, m6809_indexed_hdlr_id },
 	// 0xFx, extended instructions with register B,D,U
-	{ M680X_INS_SUBB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_CMPB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_SBCB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_ADDD, M680X_REG_D, extended_hdlr_id },
-	{ M680X_INS_ANDB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_BITB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_LDB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_STB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_EORB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_ADCB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_ORB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_ADDB, M680X_REG_B, extended_hdlr_id },
-	{ M680X_INS_LDD, M680X_REG_D, extended_hdlr_id },
-	{ M680X_INS_STD, M680X_REG_D, extended_hdlr_id },
-	{ M680X_INS_LDU, M680X_REG_U, extended_hdlr_id },
-	{ M680X_INS_STU, M680X_REG_U, extended_hdlr_id },
+	{ M680X_INS_SUBB, extended_hdlr_id },
+	{ M680X_INS_CMPB, extended_hdlr_id },
+	{ M680X_INS_SBCB, extended_hdlr_id },
+	{ M680X_INS_ADDD, extended_hdlr_id },
+	{ M680X_INS_ANDB, extended_hdlr_id },
+	{ M680X_INS_BITB, extended_hdlr_id },
+	{ M680X_INS_LDB, extended_hdlr_id },
+	{ M680X_INS_STB, extended_hdlr_id },
+	{ M680X_INS_EORB, extended_hdlr_id },
+	{ M680X_INS_ADCB, extended_hdlr_id },
+	{ M680X_INS_ORB, extended_hdlr_id },
+	{ M680X_INS_ADDB, extended_hdlr_id },
+	{ M680X_INS_LDD, extended_hdlr_id },
+	{ M680X_INS_STD, extended_hdlr_id },
+	{ M680X_INS_LDU, extended_hdlr_id },
+	{ M680X_INS_STU, extended_hdlr_id },
 };
 
 // The following array has to be sorted by increasing
@@ -725,53 +725,53 @@ static const inst_page1 g_m6809_inst_page1_table[256] = {
 // M6809 PAGE2 instructions (with prefix 0x10)
 static const inst_pageX g_m6809_inst_page2_table[] = {
 	// 0x2x, relative long branch instructions
-	{ 0x21, M680X_INS_LBRN, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x22, M680X_INS_LBHI, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x23, M680X_INS_LBLS, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x24, M680X_INS_LBCC, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x25, M680X_INS_LBCS, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x26, M680X_INS_LBNE, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x27, M680X_INS_LBEQ, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x28, M680X_INS_LBVC, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x29, M680X_INS_LBVS, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x2a, M680X_INS_LBPL, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x2b, M680X_INS_LBMI, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x2c, M680X_INS_LBGE, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x2d, M680X_INS_LBLT, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x2e, M680X_INS_LBGT, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x2f, M680X_INS_LBLE, M680X_REG_INVALID, lbcc_hdlr_id },
+	{ 0x21, M680X_INS_LBRN, lbcc_hdlr_id },
+	{ 0x22, M680X_INS_LBHI, lbcc_hdlr_id },
+	{ 0x23, M680X_INS_LBLS, lbcc_hdlr_id },
+	{ 0x24, M680X_INS_LBCC, lbcc_hdlr_id },
+	{ 0x25, M680X_INS_LBCS, lbcc_hdlr_id },
+	{ 0x26, M680X_INS_LBNE, lbcc_hdlr_id },
+	{ 0x27, M680X_INS_LBEQ, lbcc_hdlr_id },
+	{ 0x28, M680X_INS_LBVC, lbcc_hdlr_id },
+	{ 0x29, M680X_INS_LBVS, lbcc_hdlr_id },
+	{ 0x2a, M680X_INS_LBPL, lbcc_hdlr_id },
+	{ 0x2b, M680X_INS_LBMI, lbcc_hdlr_id },
+	{ 0x2c, M680X_INS_LBGE, lbcc_hdlr_id },
+	{ 0x2d, M680X_INS_LBLT, lbcc_hdlr_id },
+	{ 0x2e, M680X_INS_LBGT, lbcc_hdlr_id },
+	{ 0x2f, M680X_INS_LBLE, lbcc_hdlr_id },
 	// 0x3x
-	{ 0x3f, M680X_INS_SWI2, M680X_REG_INVALID, inherent_hdlr_id },
+	{ 0x3f, M680X_INS_SWI2, inherent_hdlr_id },
 	// 0x8x, immediate instructions with register D,Y
-	{ 0x83, M680X_INS_CMPD, M680X_REG_D, immediate16_hdlr_id },
-	{ 0x8c, M680X_INS_CMPY, M680X_REG_Y, immediate16_hdlr_id },
-	{ 0x8e, M680X_INS_LDY, M680X_REG_Y, immediate16_hdlr_id },
+	{ 0x83, M680X_INS_CMPD, immediate16_hdlr_id },
+	{ 0x8c, M680X_INS_CMPY, immediate16_hdlr_id },
+	{ 0x8e, M680X_INS_LDY, immediate16_hdlr_id },
 	// 0x9x, direct instructions with register D,Y
-	{ 0x93, M680X_INS_CMPD, M680X_REG_D, direct_hdlr_id },
-	{ 0x9c, M680X_INS_CMPY, M680X_REG_Y, direct_hdlr_id },
-	{ 0x9e, M680X_INS_LDY, M680X_REG_Y, direct_hdlr_id },
-	{ 0x9f, M680X_INS_STY, M680X_REG_Y, direct_hdlr_id },
+	{ 0x93, M680X_INS_CMPD, direct_hdlr_id },
+	{ 0x9c, M680X_INS_CMPY, direct_hdlr_id },
+	{ 0x9e, M680X_INS_LDY, direct_hdlr_id },
+	{ 0x9f, M680X_INS_STY, direct_hdlr_id },
 	// 0xAx, indexed instructions with register D,Y
-	{ 0xa3, M680X_INS_CMPD, M680X_REG_D, m6809_indexed_hdlr_id },
-	{ 0xac, M680X_INS_CMPY, M680X_REG_Y, m6809_indexed_hdlr_id },
-	{ 0xae, M680X_INS_LDY, M680X_REG_Y, m6809_indexed_hdlr_id },
-	{ 0xaf, M680X_INS_STY, M680X_REG_Y, m6809_indexed_hdlr_id },
+	{ 0xa3, M680X_INS_CMPD, m6809_indexed_hdlr_id },
+	{ 0xac, M680X_INS_CMPY, m6809_indexed_hdlr_id },
+	{ 0xae, M680X_INS_LDY, m6809_indexed_hdlr_id },
+	{ 0xaf, M680X_INS_STY, m6809_indexed_hdlr_id },
 	// 0xBx, extended instructions with register D,Y
-	{ 0xb3, M680X_INS_CMPD, M680X_REG_D, extended_hdlr_id },
-	{ 0xbc, M680X_INS_CMPY, M680X_REG_Y, extended_hdlr_id },
-	{ 0xbe, M680X_INS_LDY, M680X_REG_Y, extended_hdlr_id },
-	{ 0xbf, M680X_INS_STY, M680X_REG_Y, extended_hdlr_id },
+	{ 0xb3, M680X_INS_CMPD, extended_hdlr_id },
+	{ 0xbc, M680X_INS_CMPY, extended_hdlr_id },
+	{ 0xbe, M680X_INS_LDY, extended_hdlr_id },
+	{ 0xbf, M680X_INS_STY, extended_hdlr_id },
 	// 0xCx, immediate instructions with register S
-	{ 0xce, M680X_INS_LDS, M680X_REG_S, immediate16_hdlr_id },
+	{ 0xce, M680X_INS_LDS, immediate16_hdlr_id },
 	// 0xDx, direct instructions with register S
-	{ 0xde, M680X_INS_LDS, M680X_REG_S, direct_hdlr_id },
-	{ 0xdf, M680X_INS_STS, M680X_REG_S, direct_hdlr_id },
+	{ 0xde, M680X_INS_LDS, direct_hdlr_id },
+	{ 0xdf, M680X_INS_STS, direct_hdlr_id },
 	// 0xEx, indexed instructions with register S
-	{ 0xee, M680X_INS_LDS, M680X_REG_S, m6809_indexed_hdlr_id },
-	{ 0xef, M680X_INS_STS, M680X_REG_S, m6809_indexed_hdlr_id },
+	{ 0xee, M680X_INS_LDS, m6809_indexed_hdlr_id },
+	{ 0xef, M680X_INS_STS, m6809_indexed_hdlr_id },
 	// 0xFx, extended instructions with register S
-	{ 0xfe, M680X_INS_LDS, M680X_REG_S, extended_hdlr_id },
-	{ 0xff, M680X_INS_STS, M680X_REG_S, extended_hdlr_id },
+	{ 0xfe, M680X_INS_LDS, extended_hdlr_id },
+	{ 0xff, M680X_INS_STS, extended_hdlr_id },
 };
 
 // The following array has to be sorted by increasing
@@ -779,19 +779,19 @@ static const inst_pageX g_m6809_inst_page2_table[] = {
 //
 // M6809 PAGE3 instructions (with prefix 0x11)
 static const inst_pageX g_m6809_inst_page3_table[] = {
-	{ 0x3f, M680X_INS_SWI3, M680X_REG_INVALID, inherent_hdlr_id },
+	{ 0x3f, M680X_INS_SWI3, inherent_hdlr_id },
 	// 0x8x, immediate instructions with register U,S
-	{ 0x83, M680X_INS_CMPU, M680X_REG_U, immediate16_hdlr_id },
-	{ 0x8c, M680X_INS_CMPS, M680X_REG_S, immediate16_hdlr_id },
+	{ 0x83, M680X_INS_CMPU, immediate16_hdlr_id },
+	{ 0x8c, M680X_INS_CMPS, immediate16_hdlr_id },
 	// 0x9x, direct instructions with register U,S
-	{ 0x93, M680X_INS_CMPU, M680X_REG_U, direct_hdlr_id },
-	{ 0x9c, M680X_INS_CMPS, M680X_REG_S, direct_hdlr_id },
+	{ 0x93, M680X_INS_CMPU, direct_hdlr_id },
+	{ 0x9c, M680X_INS_CMPS, direct_hdlr_id },
 	// 0xAx, indexed instructions with register U,S
-	{ 0xa3, M680X_INS_CMPU, M680X_REG_U, m6809_indexed_hdlr_id },
-	{ 0xac, M680X_INS_CMPS, M680X_REG_S, m6809_indexed_hdlr_id },
+	{ 0xa3, M680X_INS_CMPU, m6809_indexed_hdlr_id },
+	{ 0xac, M680X_INS_CMPS, m6809_indexed_hdlr_id },
 	// 0xBx, extended instructions with register U,S
-	{ 0xb3, M680X_INS_CMPU, M680X_REG_U, extended_hdlr_id },
-	{ 0xbc, M680X_INS_CMPS, M680X_REG_S, extended_hdlr_id },
+	{ 0xb3, M680X_INS_CMPU, extended_hdlr_id },
+	{ 0xbc, M680X_INS_CMPS, extended_hdlr_id },
 };
 
 // The following array has to be sorted by increasing
@@ -799,20 +799,20 @@ static const inst_pageX g_m6809_inst_page3_table[] = {
 //
 // Additional instructions only supported on HD6309 PAGE1
 static const inst_pageX g_hd6309_inst_overlay_table[] = {
-	{ 0x01, M680X_INS_OIM, M680X_REG_INVALID, hd630x_imm_direct_hdlr_id },
-	{ 0x02, M680X_INS_AIM, M680X_REG_INVALID, hd630x_imm_direct_hdlr_id },
-	{ 0x05, M680X_INS_EIM, M680X_REG_INVALID, hd630x_imm_direct_hdlr_id },
-	{ 0x0B, M680X_INS_TIM, M680X_REG_INVALID, hd630x_imm_direct_hdlr_id },
-	{ 0x14, M680X_INS_SEXW, M680X_REG_INVALID, inherent_hdlr_id },
-	{ 0x61, M680X_INS_OIM, M680X_REG_INVALID, hd6309_imm_indexed_hdlr_id },
-	{ 0x62, M680X_INS_AIM, M680X_REG_INVALID, hd6309_imm_indexed_hdlr_id },
-	{ 0x65, M680X_INS_EIM, M680X_REG_INVALID, hd6309_imm_indexed_hdlr_id },
-	{ 0x6B, M680X_INS_TIM, M680X_REG_INVALID, hd6309_imm_indexed_hdlr_id },
-	{ 0x71, M680X_INS_OIM, M680X_REG_INVALID, hd630x_imm_extended_hdlr_id },
-	{ 0x72, M680X_INS_AIM, M680X_REG_INVALID, hd630x_imm_extended_hdlr_id },
-	{ 0x75, M680X_INS_EIM, M680X_REG_INVALID, hd630x_imm_extended_hdlr_id },
-	{ 0x7B, M680X_INS_TIM, M680X_REG_INVALID, hd630x_imm_extended_hdlr_id },
-	{ 0xCD, M680X_INS_LDQ, M680X_REG_Q, immediate32_hdlr_id },
+	{ 0x01, M680X_INS_OIM, hd630x_imm_direct_hdlr_id },
+	{ 0x02, M680X_INS_AIM, hd630x_imm_direct_hdlr_id },
+	{ 0x05, M680X_INS_EIM, hd630x_imm_direct_hdlr_id },
+	{ 0x0B, M680X_INS_TIM, hd630x_imm_direct_hdlr_id },
+	{ 0x14, M680X_INS_SEXW, inherent_hdlr_id },
+	{ 0x61, M680X_INS_OIM, hd6309_imm_indexed_hdlr_id },
+	{ 0x62, M680X_INS_AIM, hd6309_imm_indexed_hdlr_id },
+	{ 0x65, M680X_INS_EIM, hd6309_imm_indexed_hdlr_id },
+	{ 0x6B, M680X_INS_TIM, hd6309_imm_indexed_hdlr_id },
+	{ 0x71, M680X_INS_OIM, hd630x_imm_extended_hdlr_id },
+	{ 0x72, M680X_INS_AIM, hd630x_imm_extended_hdlr_id },
+	{ 0x75, M680X_INS_EIM, hd630x_imm_extended_hdlr_id },
+	{ 0x7B, M680X_INS_TIM, hd630x_imm_extended_hdlr_id },
+	{ 0xCD, M680X_INS_LDQ, immediate32_hdlr_id },
 };
 
 // The following array has to be sorted by increasing
@@ -821,135 +821,135 @@ static const inst_pageX g_hd6309_inst_overlay_table[] = {
 // HD6309 PAGE2 instructions (with prefix 0x10)
 static const inst_pageX g_hd6309_inst_page2_table[] = {
 	// 0x2x, relative long branch instructions
-	{ 0x21, M680X_INS_LBRN, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x22, M680X_INS_LBHI, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x23, M680X_INS_LBLS, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x24, M680X_INS_LBCC, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x25, M680X_INS_LBCS, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x26, M680X_INS_LBNE, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x27, M680X_INS_LBEQ, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x28, M680X_INS_LBVC, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x29, M680X_INS_LBVS, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x2a, M680X_INS_LBPL, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x2b, M680X_INS_LBMI, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x2c, M680X_INS_LBGE, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x2d, M680X_INS_LBLT, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x2e, M680X_INS_LBGT, M680X_REG_INVALID, lbcc_hdlr_id },
-	{ 0x2f, M680X_INS_LBLE, M680X_REG_INVALID, lbcc_hdlr_id },
+	{ 0x21, M680X_INS_LBRN, lbcc_hdlr_id },
+	{ 0x22, M680X_INS_LBHI, lbcc_hdlr_id },
+	{ 0x23, M680X_INS_LBLS, lbcc_hdlr_id },
+	{ 0x24, M680X_INS_LBCC, lbcc_hdlr_id },
+	{ 0x25, M680X_INS_LBCS, lbcc_hdlr_id },
+	{ 0x26, M680X_INS_LBNE, lbcc_hdlr_id },
+	{ 0x27, M680X_INS_LBEQ, lbcc_hdlr_id },
+	{ 0x28, M680X_INS_LBVC, lbcc_hdlr_id },
+	{ 0x29, M680X_INS_LBVS, lbcc_hdlr_id },
+	{ 0x2a, M680X_INS_LBPL, lbcc_hdlr_id },
+	{ 0x2b, M680X_INS_LBMI, lbcc_hdlr_id },
+	{ 0x2c, M680X_INS_LBGE, lbcc_hdlr_id },
+	{ 0x2d, M680X_INS_LBLT, lbcc_hdlr_id },
+	{ 0x2e, M680X_INS_LBGT, lbcc_hdlr_id },
+	{ 0x2f, M680X_INS_LBLE, lbcc_hdlr_id },
 	// 0x3x
-	{ 0x30, M680X_INS_ADDR, M680X_REG_INVALID, reg_reg_hdlr_id },
-	{ 0x31, M680X_INS_ADCR, M680X_REG_INVALID, reg_reg_hdlr_id },
-	{ 0x32, M680X_INS_SUBR, M680X_REG_INVALID, reg_reg_hdlr_id },
-	{ 0x33, M680X_INS_SBCR, M680X_REG_INVALID, reg_reg_hdlr_id },
-	{ 0x34, M680X_INS_ANDR, M680X_REG_INVALID, reg_reg_hdlr_id },
-	{ 0x35, M680X_INS_ORR, M680X_REG_INVALID, reg_reg_hdlr_id },
-	{ 0x36, M680X_INS_EORR, M680X_REG_INVALID, reg_reg_hdlr_id },
-	{ 0x37, M680X_INS_CMPR, M680X_REG_INVALID, reg_reg_hdlr_id },
-	{ 0x38, M680X_INS_PSHSW, M680X_REG_INVALID, inherent_hdlr_id },
-	{ 0x39, M680X_INS_PULSW, M680X_REG_INVALID, inherent_hdlr_id },
-	{ 0x3a, M680X_INS_PSHUW, M680X_REG_INVALID, inherent_hdlr_id },
-	{ 0x3b, M680X_INS_PULUW, M680X_REG_INVALID, inherent_hdlr_id },
-	{ 0x3f, M680X_INS_SWI2, M680X_REG_INVALID, inherent_hdlr_id },
+	{ 0x30, M680X_INS_ADDR, reg_reg_hdlr_id },
+	{ 0x31, M680X_INS_ADCR, reg_reg_hdlr_id },
+	{ 0x32, M680X_INS_SUBR, reg_reg_hdlr_id },
+	{ 0x33, M680X_INS_SBCR, reg_reg_hdlr_id },
+	{ 0x34, M680X_INS_ANDR, reg_reg_hdlr_id },
+	{ 0x35, M680X_INS_ORR, reg_reg_hdlr_id },
+	{ 0x36, M680X_INS_EORR, reg_reg_hdlr_id },
+	{ 0x37, M680X_INS_CMPR, reg_reg_hdlr_id },
+	{ 0x38, M680X_INS_PSHSW, inherent_hdlr_id },
+	{ 0x39, M680X_INS_PULSW, inherent_hdlr_id },
+	{ 0x3a, M680X_INS_PSHUW, inherent_hdlr_id },
+	{ 0x3b, M680X_INS_PULUW, inherent_hdlr_id },
+	{ 0x3f, M680X_INS_SWI2, inherent_hdlr_id },
 	// 0x4x, Register D instructions
-	{ 0x40, M680X_INS_NEGD, M680X_REG_D, inherent_hdlr_id },
-	{ 0x43, M680X_INS_COMD, M680X_REG_D, inherent_hdlr_id },
-	{ 0x44, M680X_INS_LSRD, M680X_REG_D, inherent_hdlr_id },
-	{ 0x46, M680X_INS_RORD, M680X_REG_D, inherent_hdlr_id },
-	{ 0x47, M680X_INS_ASRD, M680X_REG_D, inherent_hdlr_id },
-	{ 0x48, M680X_INS_LSLD, M680X_REG_D, inherent_hdlr_id },
-	{ 0x49, M680X_INS_ROLD, M680X_REG_D, inherent_hdlr_id },
-	{ 0x4a, M680X_INS_DECD, M680X_REG_D, inherent_hdlr_id },
-	{ 0x4c, M680X_INS_INCD, M680X_REG_D, inherent_hdlr_id },
-	{ 0x4d, M680X_INS_TSTD, M680X_REG_D, inherent_hdlr_id },
-	{ 0x4f, M680X_INS_CLRD, M680X_REG_D, inherent_hdlr_id },
+	{ 0x40, M680X_INS_NEGD, inherent_hdlr_id },
+	{ 0x43, M680X_INS_COMD, inherent_hdlr_id },
+	{ 0x44, M680X_INS_LSRD, inherent_hdlr_id },
+	{ 0x46, M680X_INS_RORD, inherent_hdlr_id },
+	{ 0x47, M680X_INS_ASRD, inherent_hdlr_id },
+	{ 0x48, M680X_INS_LSLD, inherent_hdlr_id },
+	{ 0x49, M680X_INS_ROLD, inherent_hdlr_id },
+	{ 0x4a, M680X_INS_DECD, inherent_hdlr_id },
+	{ 0x4c, M680X_INS_INCD, inherent_hdlr_id },
+	{ 0x4d, M680X_INS_TSTD, inherent_hdlr_id },
+	{ 0x4f, M680X_INS_CLRD, inherent_hdlr_id },
 	// 0x5x, Register W instructions
-	{ 0x53, M680X_INS_COMW, M680X_REG_W, inherent_hdlr_id },
-	{ 0x54, M680X_INS_LSRW, M680X_REG_W, inherent_hdlr_id },
-	{ 0x56, M680X_INS_RORW, M680X_REG_W, inherent_hdlr_id },
-	{ 0x59, M680X_INS_ROLW, M680X_REG_W, inherent_hdlr_id },
-	{ 0x5a, M680X_INS_DECW, M680X_REG_W, inherent_hdlr_id },
-	{ 0x5c, M680X_INS_INCW, M680X_REG_W, inherent_hdlr_id },
-	{ 0x5d, M680X_INS_TSTW, M680X_REG_W, inherent_hdlr_id },
-	{ 0x5f, M680X_INS_CLRW, M680X_REG_W, inherent_hdlr_id },
+	{ 0x53, M680X_INS_COMW, inherent_hdlr_id },
+	{ 0x54, M680X_INS_LSRW, inherent_hdlr_id },
+	{ 0x56, M680X_INS_RORW, inherent_hdlr_id },
+	{ 0x59, M680X_INS_ROLW, inherent_hdlr_id },
+	{ 0x5a, M680X_INS_DECW, inherent_hdlr_id },
+	{ 0x5c, M680X_INS_INCW, inherent_hdlr_id },
+	{ 0x5d, M680X_INS_TSTW, inherent_hdlr_id },
+	{ 0x5f, M680X_INS_CLRW, inherent_hdlr_id },
 	// 0x8x, immediate instructionY with register D,W,Y
-	{ 0x80, M680X_INS_SUBW, M680X_REG_W, immediate16_hdlr_id },
-	{ 0x81, M680X_INS_CMPW, M680X_REG_W, immediate16_hdlr_id },
-	{ 0x82, M680X_INS_SBCD, M680X_REG_D, immediate16_hdlr_id },
-	{ 0x83, M680X_INS_CMPD, M680X_REG_D, immediate16_hdlr_id },
-	{ 0x84, M680X_INS_ANDD, M680X_REG_D, immediate16_hdlr_id },
-	{ 0x85, M680X_INS_BITD, M680X_REG_D, immediate16_hdlr_id },
-	{ 0x86, M680X_INS_LDW, M680X_REG_W, immediate16_hdlr_id },
-	{ 0x88, M680X_INS_EORD, M680X_REG_D, immediate16_hdlr_id },
-	{ 0x89, M680X_INS_ADCD, M680X_REG_D, immediate16_hdlr_id },
-	{ 0x8a, M680X_INS_ORD, M680X_REG_D, immediate16_hdlr_id },
-	{ 0x8b, M680X_INS_ADDW, M680X_REG_W, immediate16_hdlr_id },
-	{ 0x8c, M680X_INS_CMPY, M680X_REG_Y, immediate16_hdlr_id },
-	{ 0x8e, M680X_INS_LDY, M680X_REG_Y, immediate16_hdlr_id },
+	{ 0x80, M680X_INS_SUBW, immediate16_hdlr_id },
+	{ 0x81, M680X_INS_CMPW, immediate16_hdlr_id },
+	{ 0x82, M680X_INS_SBCD, immediate16_hdlr_id },
+	{ 0x83, M680X_INS_CMPD, immediate16_hdlr_id },
+	{ 0x84, M680X_INS_ANDD, immediate16_hdlr_id },
+	{ 0x85, M680X_INS_BITD, immediate16_hdlr_id },
+	{ 0x86, M680X_INS_LDW, immediate16_hdlr_id },
+	{ 0x88, M680X_INS_EORD, immediate16_hdlr_id },
+	{ 0x89, M680X_INS_ADCD, immediate16_hdlr_id },
+	{ 0x8a, M680X_INS_ORD, immediate16_hdlr_id },
+	{ 0x8b, M680X_INS_ADDW, immediate16_hdlr_id },
+	{ 0x8c, M680X_INS_CMPY, immediate16_hdlr_id },
+	{ 0x8e, M680X_INS_LDY, immediate16_hdlr_id },
 	// 0x9x, direct instructions with register D,W,Y
-	{ 0x90, M680X_INS_SUBW, M680X_REG_W, direct_hdlr_id },
-	{ 0x91, M680X_INS_CMPW, M680X_REG_W, direct_hdlr_id },
-	{ 0x92, M680X_INS_SBCD, M680X_REG_D, direct_hdlr_id },
-	{ 0x93, M680X_INS_CMPD, M680X_REG_D, direct_hdlr_id },
-	{ 0x94, M680X_INS_ANDD, M680X_REG_D, direct_hdlr_id },
-	{ 0x95, M680X_INS_BITD, M680X_REG_D, direct_hdlr_id },
-	{ 0x96, M680X_INS_LDW, M680X_REG_W, direct_hdlr_id },
-	{ 0x97, M680X_INS_STW, M680X_REG_W, direct_hdlr_id },
-	{ 0x98, M680X_INS_EORD, M680X_REG_D, direct_hdlr_id },
-	{ 0x99, M680X_INS_ADCD, M680X_REG_D, direct_hdlr_id },
-	{ 0x9a, M680X_INS_ORD, M680X_REG_D, direct_hdlr_id },
-	{ 0x9b, M680X_INS_ADDW, M680X_REG_W, direct_hdlr_id },
-	{ 0x9c, M680X_INS_CMPY, M680X_REG_Y, direct_hdlr_id },
-	{ 0x9e, M680X_INS_LDY, M680X_REG_Y, direct_hdlr_id },
-	{ 0x9f, M680X_INS_STY, M680X_REG_Y, direct_hdlr_id },
+	{ 0x90, M680X_INS_SUBW, direct_hdlr_id },
+	{ 0x91, M680X_INS_CMPW, direct_hdlr_id },
+	{ 0x92, M680X_INS_SBCD, direct_hdlr_id },
+	{ 0x93, M680X_INS_CMPD, direct_hdlr_id },
+	{ 0x94, M680X_INS_ANDD, direct_hdlr_id },
+	{ 0x95, M680X_INS_BITD, direct_hdlr_id },
+	{ 0x96, M680X_INS_LDW, direct_hdlr_id },
+	{ 0x97, M680X_INS_STW, direct_hdlr_id },
+	{ 0x98, M680X_INS_EORD, direct_hdlr_id },
+	{ 0x99, M680X_INS_ADCD, direct_hdlr_id },
+	{ 0x9a, M680X_INS_ORD, direct_hdlr_id },
+	{ 0x9b, M680X_INS_ADDW, direct_hdlr_id },
+	{ 0x9c, M680X_INS_CMPY, direct_hdlr_id },
+	{ 0x9e, M680X_INS_LDY, direct_hdlr_id },
+	{ 0x9f, M680X_INS_STY, direct_hdlr_id },
 	// 0xAx, indexed instructions with register D,W,Y
-	{ 0xa0, M680X_INS_SUBW, M680X_REG_W, m6809_indexed_hdlr_id },
-	{ 0xa1, M680X_INS_CMPW, M680X_REG_W, m6809_indexed_hdlr_id },
-	{ 0xa2, M680X_INS_SBCD, M680X_REG_D, m6809_indexed_hdlr_id },
-	{ 0xa3, M680X_INS_CMPD, M680X_REG_D, m6809_indexed_hdlr_id },
-	{ 0xa4, M680X_INS_ANDD, M680X_REG_D, m6809_indexed_hdlr_id },
-	{ 0xa5, M680X_INS_BITD, M680X_REG_D, m6809_indexed_hdlr_id },
-	{ 0xa6, M680X_INS_LDW, M680X_REG_W, m6809_indexed_hdlr_id },
-	{ 0xa7, M680X_INS_STW, M680X_REG_W, m6809_indexed_hdlr_id },
-	{ 0xa8, M680X_INS_EORD, M680X_REG_D, m6809_indexed_hdlr_id },
-	{ 0xa9, M680X_INS_ADCD, M680X_REG_D, m6809_indexed_hdlr_id },
-	{ 0xaa, M680X_INS_ORD, M680X_REG_D, m6809_indexed_hdlr_id },
-	{ 0xab, M680X_INS_ADDW, M680X_REG_W, m6809_indexed_hdlr_id },
-	{ 0xac, M680X_INS_CMPY, M680X_REG_Y, m6809_indexed_hdlr_id },
-	{ 0xae, M680X_INS_LDY, M680X_REG_Y, m6809_indexed_hdlr_id },
-	{ 0xaf, M680X_INS_STY, M680X_REG_Y, m6809_indexed_hdlr_id },
+	{ 0xa0, M680X_INS_SUBW, m6809_indexed_hdlr_id },
+	{ 0xa1, M680X_INS_CMPW, m6809_indexed_hdlr_id },
+	{ 0xa2, M680X_INS_SBCD, m6809_indexed_hdlr_id },
+	{ 0xa3, M680X_INS_CMPD, m6809_indexed_hdlr_id },
+	{ 0xa4, M680X_INS_ANDD, m6809_indexed_hdlr_id },
+	{ 0xa5, M680X_INS_BITD, m6809_indexed_hdlr_id },
+	{ 0xa6, M680X_INS_LDW, m6809_indexed_hdlr_id },
+	{ 0xa7, M680X_INS_STW, m6809_indexed_hdlr_id },
+	{ 0xa8, M680X_INS_EORD, m6809_indexed_hdlr_id },
+	{ 0xa9, M680X_INS_ADCD, m6809_indexed_hdlr_id },
+	{ 0xaa, M680X_INS_ORD, m6809_indexed_hdlr_id },
+	{ 0xab, M680X_INS_ADDW, m6809_indexed_hdlr_id },
+	{ 0xac, M680X_INS_CMPY, m6809_indexed_hdlr_id },
+	{ 0xae, M680X_INS_LDY, m6809_indexed_hdlr_id },
+	{ 0xaf, M680X_INS_STY, m6809_indexed_hdlr_id },
 	// 0xBx, extended instructions with register D,W,Y
-	{ 0xb0, M680X_INS_SUBW, M680X_REG_W, extended_hdlr_id },
-	{ 0xb1, M680X_INS_CMPW, M680X_REG_W, extended_hdlr_id },
-	{ 0xb2, M680X_INS_SBCD, M680X_REG_D, extended_hdlr_id },
-	{ 0xb3, M680X_INS_CMPD, M680X_REG_D, extended_hdlr_id },
-	{ 0xb4, M680X_INS_ANDD, M680X_REG_D, extended_hdlr_id },
-	{ 0xb5, M680X_INS_BITD, M680X_REG_D, extended_hdlr_id },
-	{ 0xb6, M680X_INS_LDW, M680X_REG_W, extended_hdlr_id },
-	{ 0xb7, M680X_INS_STW, M680X_REG_W, extended_hdlr_id },
-	{ 0xb8, M680X_INS_EORD, M680X_REG_D, extended_hdlr_id },
-	{ 0xb9, M680X_INS_ADCD, M680X_REG_D, extended_hdlr_id },
-	{ 0xba, M680X_INS_ORD, M680X_REG_D, extended_hdlr_id },
-	{ 0xbb, M680X_INS_ADDW, M680X_REG_W, extended_hdlr_id },
-	{ 0xbc, M680X_INS_CMPY, M680X_REG_Y, extended_hdlr_id },
-	{ 0xbe, M680X_INS_LDY, M680X_REG_Y, extended_hdlr_id },
-	{ 0xbf, M680X_INS_STY, M680X_REG_Y, extended_hdlr_id },
+	{ 0xb0, M680X_INS_SUBW, extended_hdlr_id },
+	{ 0xb1, M680X_INS_CMPW, extended_hdlr_id },
+	{ 0xb2, M680X_INS_SBCD, extended_hdlr_id },
+	{ 0xb3, M680X_INS_CMPD, extended_hdlr_id },
+	{ 0xb4, M680X_INS_ANDD, extended_hdlr_id },
+	{ 0xb5, M680X_INS_BITD, extended_hdlr_id },
+	{ 0xb6, M680X_INS_LDW, extended_hdlr_id },
+	{ 0xb7, M680X_INS_STW, extended_hdlr_id },
+	{ 0xb8, M680X_INS_EORD, extended_hdlr_id },
+	{ 0xb9, M680X_INS_ADCD, extended_hdlr_id },
+	{ 0xba, M680X_INS_ORD, extended_hdlr_id },
+	{ 0xbb, M680X_INS_ADDW, extended_hdlr_id },
+	{ 0xbc, M680X_INS_CMPY, extended_hdlr_id },
+	{ 0xbe, M680X_INS_LDY, extended_hdlr_id },
+	{ 0xbf, M680X_INS_STY, extended_hdlr_id },
 	// 0xCx, immediate instructions with register S
-	{ 0xce, M680X_INS_LDS, M680X_REG_S, immediate16_hdlr_id },
+	{ 0xce, M680X_INS_LDS, immediate16_hdlr_id },
 	// 0xDx, direct instructions with register S,Q
-	{ 0xdc, M680X_INS_LDQ, M680X_REG_Q, direct_hdlr_id },
-	{ 0xdd, M680X_INS_STQ, M680X_REG_Q, direct_hdlr_id },
-	{ 0xde, M680X_INS_LDS, M680X_REG_S, direct_hdlr_id },
-	{ 0xdf, M680X_INS_STS, M680X_REG_S, direct_hdlr_id },
+	{ 0xdc, M680X_INS_LDQ, direct_hdlr_id },
+	{ 0xdd, M680X_INS_STQ, direct_hdlr_id },
+	{ 0xde, M680X_INS_LDS, direct_hdlr_id },
+	{ 0xdf, M680X_INS_STS, direct_hdlr_id },
 	// 0xEx, indexed instructions with register S,Q
-	{ 0xec, M680X_INS_LDQ, M680X_REG_Q, m6809_indexed_hdlr_id },
-	{ 0xed, M680X_INS_STQ, M680X_REG_Q, m6809_indexed_hdlr_id },
-	{ 0xee, M680X_INS_LDS, M680X_REG_S, m6809_indexed_hdlr_id },
-	{ 0xef, M680X_INS_STS, M680X_REG_S, m6809_indexed_hdlr_id },
+	{ 0xec, M680X_INS_LDQ, m6809_indexed_hdlr_id },
+	{ 0xed, M680X_INS_STQ, m6809_indexed_hdlr_id },
+	{ 0xee, M680X_INS_LDS, m6809_indexed_hdlr_id },
+	{ 0xef, M680X_INS_STS, m6809_indexed_hdlr_id },
 	// 0xFx, extended instructions with register S,Q
-	{ 0xfc, M680X_INS_LDQ, M680X_REG_Q, extended_hdlr_id },
-	{ 0xfd, M680X_INS_STQ, M680X_REG_Q, extended_hdlr_id },
-	{ 0xfe, M680X_INS_LDS, M680X_REG_S, extended_hdlr_id },
-	{ 0xff, M680X_INS_STS, M680X_REG_S, extended_hdlr_id },
+	{ 0xfc, M680X_INS_LDQ, extended_hdlr_id },
+	{ 0xfd, M680X_INS_STQ, extended_hdlr_id },
+	{ 0xfe, M680X_INS_LDS, extended_hdlr_id },
+	{ 0xff, M680X_INS_STS, extended_hdlr_id },
 };
 
 // The following array has to be sorted by increasing
@@ -957,358 +957,364 @@ static const inst_pageX g_hd6309_inst_page2_table[] = {
 //
 // HD6309 PAGE3 instructions (with prefix 0x11)
 static const inst_pageX g_hd6309_inst_page3_table[] = {
-	{ 0x30, M680X_INS_BAND, M680X_REG_INVALID, hd6309_bit_move_hdlr_id },
-	{ 0x31, M680X_INS_BIAND, M680X_REG_INVALID, hd6309_bit_move_hdlr_id },
-	{ 0x32, M680X_INS_BOR, M680X_REG_INVALID, hd6309_bit_move_hdlr_id },
-	{ 0x33, M680X_INS_BIOR, M680X_REG_INVALID, hd6309_bit_move_hdlr_id },
-	{ 0x34, M680X_INS_BEOR, M680X_REG_INVALID, hd6309_bit_move_hdlr_id },
-	{ 0x35, M680X_INS_BIEOR, M680X_REG_INVALID, hd6309_bit_move_hdlr_id },
-	{ 0x36, M680X_INS_LDBT, M680X_REG_INVALID, hd6309_bit_move_hdlr_id },
-	{ 0x37, M680X_INS_STBT, M680X_REG_INVALID, hd6309_bit_move_hdlr_id },
-	{ 0x38, M680X_INS_TFM, M680X_REG_INVALID, hd6309_tfm_hdlr_id },
-	{ 0x39, M680X_INS_TFM, M680X_REG_INVALID, hd6309_tfm_hdlr_id },
-	{ 0x3a, M680X_INS_TFM, M680X_REG_INVALID, hd6309_tfm_hdlr_id },
-	{ 0x3b, M680X_INS_TFM, M680X_REG_INVALID, hd6309_tfm_hdlr_id },
-	{ 0x3c, M680X_INS_BITMD, M680X_REG_MD, immediate8_hdlr_id },
-	{ 0x3d, M680X_INS_LDMD, M680X_REG_MD, immediate8_hdlr_id },
-	{ 0x3f, M680X_INS_SWI3, M680X_REG_INVALID, inherent_hdlr_id },
+	{ 0x30, M680X_INS_BAND, hd6309_bit_move_hdlr_id },
+	{ 0x31, M680X_INS_BIAND, hd6309_bit_move_hdlr_id },
+	{ 0x32, M680X_INS_BOR, hd6309_bit_move_hdlr_id },
+	{ 0x33, M680X_INS_BIOR, hd6309_bit_move_hdlr_id },
+	{ 0x34, M680X_INS_BEOR, hd6309_bit_move_hdlr_id },
+	{ 0x35, M680X_INS_BIEOR, hd6309_bit_move_hdlr_id },
+	{ 0x36, M680X_INS_LDBT, hd6309_bit_move_hdlr_id },
+	{ 0x37, M680X_INS_STBT, hd6309_bit_move_hdlr_id },
+	{ 0x38, M680X_INS_TFM, hd6309_tfm_hdlr_id },
+	{ 0x39, M680X_INS_TFM, hd6309_tfm_hdlr_id },
+	{ 0x3a, M680X_INS_TFM, hd6309_tfm_hdlr_id },
+	{ 0x3b, M680X_INS_TFM, hd6309_tfm_hdlr_id },
+	{ 0x3c, M680X_INS_BITMD, immediate8_hdlr_id },
+	{ 0x3d, M680X_INS_LDMD, immediate8_hdlr_id },
+	{ 0x3f, M680X_INS_SWI3, inherent_hdlr_id },
 	// 0x4x, Register E instructions
-	{ 0x43, M680X_INS_COME, M680X_REG_E, inherent_hdlr_id },
-	{ 0x4a, M680X_INS_DECE, M680X_REG_E, inherent_hdlr_id },
-	{ 0x4c, M680X_INS_INCE, M680X_REG_E, inherent_hdlr_id },
-	{ 0x4d, M680X_INS_TSTE, M680X_REG_E, inherent_hdlr_id },
-	{ 0x4f, M680X_INS_CLRE, M680X_REG_E, inherent_hdlr_id },
+	{ 0x43, M680X_INS_COME, inherent_hdlr_id },
+	{ 0x4a, M680X_INS_DECE, inherent_hdlr_id },
+	{ 0x4c, M680X_INS_INCE, inherent_hdlr_id },
+	{ 0x4d, M680X_INS_TSTE, inherent_hdlr_id },
+	{ 0x4f, M680X_INS_CLRE, inherent_hdlr_id },
 	// 0x5x, Register F instructions
-	{ 0x53, M680X_INS_COMF, M680X_REG_E, inherent_hdlr_id },
-	{ 0x5a, M680X_INS_DECF, M680X_REG_E, inherent_hdlr_id },
-	{ 0x5c, M680X_INS_INCF, M680X_REG_E, inherent_hdlr_id },
-	{ 0x5d, M680X_INS_TSTF, M680X_REG_E, inherent_hdlr_id },
-	{ 0x5f, M680X_INS_CLRF, M680X_REG_E, inherent_hdlr_id },
+	{ 0x53, M680X_INS_COMF, inherent_hdlr_id },
+	{ 0x5a, M680X_INS_DECF, inherent_hdlr_id },
+	{ 0x5c, M680X_INS_INCF, inherent_hdlr_id },
+	{ 0x5d, M680X_INS_TSTF, inherent_hdlr_id },
+	{ 0x5f, M680X_INS_CLRF, inherent_hdlr_id },
 	// 0x8x, immediate instructions with register U,S,E
-	{ 0x80, M680X_INS_SUBE, M680X_REG_E, immediate8_hdlr_id },
-	{ 0x81, M680X_INS_CMPE, M680X_REG_E, immediate8_hdlr_id },
-	{ 0x83, M680X_INS_CMPU, M680X_REG_U, immediate16_hdlr_id },
-	{ 0x86, M680X_INS_LDE, M680X_REG_E, immediate8_hdlr_id },
-	{ 0x8b, M680X_INS_ADDE, M680X_REG_E, immediate8_hdlr_id },
-	{ 0x8c, M680X_INS_CMPS, M680X_REG_S, immediate16_hdlr_id },
-	{ 0x8d, M680X_INS_DIVD, M680X_REG_D, immediate8_hdlr_id },
-	{ 0x8e, M680X_INS_DIVQ, M680X_REG_Q, immediate16_hdlr_id },
-	{ 0x8f, M680X_INS_MULD, M680X_REG_D, immediate16_hdlr_id },
+	{ 0x80, M680X_INS_SUBE, immediate8_hdlr_id },
+	{ 0x81, M680X_INS_CMPE, immediate8_hdlr_id },
+	{ 0x83, M680X_INS_CMPU, immediate16_hdlr_id },
+	{ 0x86, M680X_INS_LDE, immediate8_hdlr_id },
+	{ 0x8b, M680X_INS_ADDE, immediate8_hdlr_id },
+	{ 0x8c, M680X_INS_CMPS, immediate16_hdlr_id },
+	{ 0x8d, M680X_INS_DIVD, immediate8_hdlr_id },
+	{ 0x8e, M680X_INS_DIVQ, immediate16_hdlr_id },
+	{ 0x8f, M680X_INS_MULD, immediate16_hdlr_id },
 	// 0x9x, direct instructions with register U,S,E,Q
-	{ 0x90, M680X_INS_SUBE, M680X_REG_E, direct_hdlr_id },
-	{ 0x91, M680X_INS_CMPE, M680X_REG_E, direct_hdlr_id },
-	{ 0x93, M680X_INS_CMPU, M680X_REG_U, direct_hdlr_id },
-	{ 0x96, M680X_INS_LDE, M680X_REG_E, direct_hdlr_id },
-	{ 0x97, M680X_INS_STE, M680X_REG_E, direct_hdlr_id },
-	{ 0x9b, M680X_INS_ADDE, M680X_REG_E, direct_hdlr_id },
-	{ 0x9c, M680X_INS_CMPS, M680X_REG_S, direct_hdlr_id },
-	{ 0x9d, M680X_INS_DIVD, M680X_REG_D, direct_hdlr_id },
-	{ 0x9e, M680X_INS_DIVQ, M680X_REG_Q, direct_hdlr_id },
-	{ 0x9f, M680X_INS_MULD, M680X_REG_D, direct_hdlr_id },
+	{ 0x90, M680X_INS_SUBE, direct_hdlr_id },
+	{ 0x91, M680X_INS_CMPE, direct_hdlr_id },
+	{ 0x93, M680X_INS_CMPU, direct_hdlr_id },
+	{ 0x96, M680X_INS_LDE, direct_hdlr_id },
+	{ 0x97, M680X_INS_STE, direct_hdlr_id },
+	{ 0x9b, M680X_INS_ADDE, direct_hdlr_id },
+	{ 0x9c, M680X_INS_CMPS, direct_hdlr_id },
+	{ 0x9d, M680X_INS_DIVD, direct_hdlr_id },
+	{ 0x9e, M680X_INS_DIVQ, direct_hdlr_id },
+	{ 0x9f, M680X_INS_MULD, direct_hdlr_id },
 	// 0xAx, indexed instructions with register U,S,D,Q
-	{ 0xa0, M680X_INS_SUBE, M680X_REG_E, m6809_indexed_hdlr_id },
-	{ 0xa1, M680X_INS_CMPE, M680X_REG_E, m6809_indexed_hdlr_id },
-	{ 0xa3, M680X_INS_CMPU, M680X_REG_U, m6809_indexed_hdlr_id },
-	{ 0xa6, M680X_INS_LDE, M680X_REG_E, m6809_indexed_hdlr_id },
-	{ 0xa7, M680X_INS_STE, M680X_REG_E, m6809_indexed_hdlr_id },
-	{ 0xab, M680X_INS_ADDE, M680X_REG_E, m6809_indexed_hdlr_id },
-	{ 0xac, M680X_INS_CMPS, M680X_REG_S, m6809_indexed_hdlr_id },
-	{ 0xad, M680X_INS_DIVD, M680X_REG_D, m6809_indexed_hdlr_id },
-	{ 0xae, M680X_INS_DIVQ, M680X_REG_Q, m6809_indexed_hdlr_id },
-	{ 0xaf, M680X_INS_MULD, M680X_REG_D, m6809_indexed_hdlr_id },
+	{ 0xa0, M680X_INS_SUBE, m6809_indexed_hdlr_id },
+	{ 0xa1, M680X_INS_CMPE, m6809_indexed_hdlr_id },
+	{ 0xa3, M680X_INS_CMPU, m6809_indexed_hdlr_id },
+	{ 0xa6, M680X_INS_LDE, m6809_indexed_hdlr_id },
+	{ 0xa7, M680X_INS_STE, m6809_indexed_hdlr_id },
+	{ 0xab, M680X_INS_ADDE, m6809_indexed_hdlr_id },
+	{ 0xac, M680X_INS_CMPS, m6809_indexed_hdlr_id },
+	{ 0xad, M680X_INS_DIVD, m6809_indexed_hdlr_id },
+	{ 0xae, M680X_INS_DIVQ, m6809_indexed_hdlr_id },
+	{ 0xaf, M680X_INS_MULD, m6809_indexed_hdlr_id },
 	// 0xBx, extended instructions with register U,S,D,Q
-	{ 0xb0, M680X_INS_SUBE, M680X_REG_E, extended_hdlr_id },
-	{ 0xb1, M680X_INS_CMPE, M680X_REG_E, extended_hdlr_id },
-	{ 0xb3, M680X_INS_CMPU, M680X_REG_U, extended_hdlr_id },
-	{ 0xb6, M680X_INS_LDE, M680X_REG_E, extended_hdlr_id },
-	{ 0xb7, M680X_INS_STE, M680X_REG_E, extended_hdlr_id },
-	{ 0xbb, M680X_INS_ADDE, M680X_REG_E, extended_hdlr_id },
-	{ 0xbc, M680X_INS_CMPS, M680X_REG_S, extended_hdlr_id },
-	{ 0xbd, M680X_INS_DIVD, M680X_REG_D, extended_hdlr_id },
-	{ 0xbe, M680X_INS_DIVQ, M680X_REG_Q, extended_hdlr_id },
-	{ 0xbf, M680X_INS_MULD, M680X_REG_D, extended_hdlr_id },
+	{ 0xb0, M680X_INS_SUBE, extended_hdlr_id },
+	{ 0xb1, M680X_INS_CMPE, extended_hdlr_id },
+	{ 0xb3, M680X_INS_CMPU, extended_hdlr_id },
+	{ 0xb6, M680X_INS_LDE, extended_hdlr_id },
+	{ 0xb7, M680X_INS_STE, extended_hdlr_id },
+	{ 0xbb, M680X_INS_ADDE, extended_hdlr_id },
+	{ 0xbc, M680X_INS_CMPS, extended_hdlr_id },
+	{ 0xbd, M680X_INS_DIVD, extended_hdlr_id },
+	{ 0xbe, M680X_INS_DIVQ, extended_hdlr_id },
+	{ 0xbf, M680X_INS_MULD, extended_hdlr_id },
 	// 0xCx, immediate instructions with register F
-	{ 0xc0, M680X_INS_SUBF, M680X_REG_F, immediate8_hdlr_id },
-	{ 0xc1, M680X_INS_CMPF, M680X_REG_F, immediate8_hdlr_id },
-	{ 0xc6, M680X_INS_LDF, M680X_REG_F, immediate8_hdlr_id },
-	{ 0xcb, M680X_INS_ADDF, M680X_REG_F, immediate8_hdlr_id },
+	{ 0xc0, M680X_INS_SUBF, immediate8_hdlr_id },
+	{ 0xc1, M680X_INS_CMPF, immediate8_hdlr_id },
+	{ 0xc6, M680X_INS_LDF, immediate8_hdlr_id },
+	{ 0xcb, M680X_INS_ADDF, immediate8_hdlr_id },
 	// 0xDx, direct instructions with register F
-	{ 0xd0, M680X_INS_SUBF, M680X_REG_F, direct_hdlr_id },
-	{ 0xd1, M680X_INS_CMPF, M680X_REG_F, direct_hdlr_id },
-	{ 0xd6, M680X_INS_LDF, M680X_REG_F, direct_hdlr_id },
-	{ 0xd7, M680X_INS_STF, M680X_REG_F, direct_hdlr_id },
-	{ 0xdb, M680X_INS_ADDF, M680X_REG_F, direct_hdlr_id },
+	{ 0xd0, M680X_INS_SUBF, direct_hdlr_id },
+	{ 0xd1, M680X_INS_CMPF, direct_hdlr_id },
+	{ 0xd6, M680X_INS_LDF, direct_hdlr_id },
+	{ 0xd7, M680X_INS_STF, direct_hdlr_id },
+	{ 0xdb, M680X_INS_ADDF, direct_hdlr_id },
 	// 0xEx, indexed instructions with register F
-	{ 0xe0, M680X_INS_SUBF, M680X_REG_F, m6809_indexed_hdlr_id },
-	{ 0xe1, M680X_INS_CMPF, M680X_REG_F, m6809_indexed_hdlr_id },
-	{ 0xe6, M680X_INS_LDF, M680X_REG_F, m6809_indexed_hdlr_id },
-	{ 0xe7, M680X_INS_STF, M680X_REG_F, m6809_indexed_hdlr_id },
-	{ 0xeb, M680X_INS_ADDF, M680X_REG_F, m6809_indexed_hdlr_id },
+	{ 0xe0, M680X_INS_SUBF, m6809_indexed_hdlr_id },
+	{ 0xe1, M680X_INS_CMPF, m6809_indexed_hdlr_id },
+	{ 0xe6, M680X_INS_LDF, m6809_indexed_hdlr_id },
+	{ 0xe7, M680X_INS_STF, m6809_indexed_hdlr_id },
+	{ 0xeb, M680X_INS_ADDF, m6809_indexed_hdlr_id },
 	// 0xFx, extended instructions with register F
-	{ 0xf0, M680X_INS_SUBF, M680X_REG_F, extended_hdlr_id },
-	{ 0xf1, M680X_INS_CMPF, M680X_REG_F, extended_hdlr_id },
-	{ 0xf6, M680X_INS_LDF, M680X_REG_F, extended_hdlr_id },
-	{ 0xf7, M680X_INS_STF, M680X_REG_F, extended_hdlr_id },
-	{ 0xfb, M680X_INS_ADDF, M680X_REG_F, extended_hdlr_id },
+	{ 0xf0, M680X_INS_SUBF, extended_hdlr_id },
+	{ 0xf1, M680X_INS_CMPF, extended_hdlr_id },
+	{ 0xf6, M680X_INS_LDF, extended_hdlr_id },
+	{ 0xf7, M680X_INS_STF, extended_hdlr_id },
+	{ 0xfb, M680X_INS_ADDF, extended_hdlr_id },
 };
 
+// These temporary defines keep the following table short and handy.
+#define NOG M680X_GRP_INVALID
+#define NOR M680X_REG_INVALID
+
 static const insn_props g_insn_props[] = {
-	{ M680X_GRP_INVALID, uuuu, false, false }, // INVLD
-	{ M680X_GRP_INVALID, rmmm, true, true }, // ABA
-	{ M680X_GRP_INVALID, rmmm, false, true }, // ABX
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ADCA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ADCB
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ADCD
-	{ M680X_GRP_INVALID, rmmm, true, false }, // ADCR
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ADDA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ADDB
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ADDD
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ADDE
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ADDF
-	{ M680X_GRP_INVALID, rmmm, true, false }, // ADDR
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ADDW
-	{ M680X_GRP_INVALID, rmmm, true, false }, // AIM
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ANDA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ANDB
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ANDCC
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ANDD
-	{ M680X_GRP_INVALID, rmmm, true, false }, // ANDR
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ASL
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ASLA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ASLB
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ASLD
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ASR
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ASRA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ASRB
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ASRD
-	{ M680X_GRP_INVALID, mrrr, false, false }, // BAND
-	{ M680X_GRP_JUMP, uuuu, false, false }, // BCC
-	{ M680X_GRP_JUMP, uuuu, false, false }, // BCS
-	{ M680X_GRP_INVALID, mrrr, false, false }, // BEOR
-	{ M680X_GRP_JUMP, uuuu, false, false }, // BEQ
-	{ M680X_GRP_JUMP, uuuu, false, false }, // BGE
-	{ M680X_GRP_JUMP, uuuu, false, false }, // BGT
-	{ M680X_GRP_JUMP, uuuu, false, false }, // BHI
-	{ M680X_GRP_INVALID, mrrr, false, false }, // BIAND
-	{ M680X_GRP_INVALID, mrrr, false, false }, // BIEOR
-	{ M680X_GRP_INVALID, mrrr, false, false }, // BIOR
-	{ M680X_GRP_INVALID, rrrr, true, false }, // BITA
-	{ M680X_GRP_INVALID, rrrr, true, false }, // BITB
-	{ M680X_GRP_INVALID, rrrr, true, false }, // BITD
-	{ M680X_GRP_INVALID, rrrr, true, false }, // BITMD
-	{ M680X_GRP_JUMP, uuuu, false, false }, // BLE
-	{ M680X_GRP_JUMP, uuuu, false, false }, // BLS
-	{ M680X_GRP_JUMP, uuuu, false, false }, // BLT
-	{ M680X_GRP_JUMP, uuuu, false, false }, // BMI
-	{ M680X_GRP_JUMP, uuuu, false, false }, // BNE
-	{ M680X_GRP_INVALID, mrrr, false, false }, // BOR
-	{ M680X_GRP_JUMP, uuuu, false, false }, // BPL
-	{ M680X_GRP_JUMP, uuuu, false, false }, // BRA
-	{ M680X_GRP_INVALID, uuuu, false, false }, // BRN never branches
-	{ M680X_GRP_CALL, uuuu, false, false }, // BSR
-	{ M680X_GRP_JUMP, uuuu, false, false }, // BVC
-	{ M680X_GRP_JUMP, uuuu, false, false }, // BVS
-	{ M680X_GRP_INVALID, rrrr, true, true }, // CBA
-	{ M680X_GRP_INVALID, uuuu, true, false }, // CLC
-	{ M680X_GRP_INVALID, uuuu, true, false }, // CLI
-	{ M680X_GRP_INVALID, wrrr, true, false }, // CLR
-	{ M680X_GRP_INVALID, wrrr, true, false }, // CLRA
-	{ M680X_GRP_INVALID, wrrr, true, false }, // CLRB
-	{ M680X_GRP_INVALID, wrrr, true, false }, // CLRD
-	{ M680X_GRP_INVALID, wrrr, true, false }, // CLRE
-	{ M680X_GRP_INVALID, wrrr, true, false }, // CLRF
-	{ M680X_GRP_INVALID, wrrr, true, false }, // CLRW
-	{ M680X_GRP_INVALID, uuuu, true, false }, // CLV
-	{ M680X_GRP_INVALID, rrrr, true, false }, // CMPA
-	{ M680X_GRP_INVALID, rrrr, true, false }, // CMPB
-	{ M680X_GRP_INVALID, rrrr, true, false }, // CMPD
-	{ M680X_GRP_INVALID, rrrr, true, false }, // CMPE
-	{ M680X_GRP_INVALID, rrrr, true, false }, // CMPF
-	{ M680X_GRP_INVALID, rrrr, true, false }, // CMPR
-	{ M680X_GRP_INVALID, rrrr, true, false }, // CMPS
-	{ M680X_GRP_INVALID, rrrr, true, false }, // CMPU
-	{ M680X_GRP_INVALID, rrrr, true, false }, // CMPW
-	{ M680X_GRP_INVALID, rrrr, true, false }, // CMPX
-	{ M680X_GRP_INVALID, rrrr, true, false }, // CMPY
-	{ M680X_GRP_INVALID, mrrr, true, false }, // COM
-	{ M680X_GRP_INVALID, mrrr, true, false }, // COMA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // COMB
-	{ M680X_GRP_INVALID, mrrr, true, false }, // COMD
-	{ M680X_GRP_INVALID, mrrr, true, false }, // COME
-	{ M680X_GRP_INVALID, mrrr, true, false }, // COMF
-	{ M680X_GRP_INVALID, mrrr, true, false }, // COMW
-	{ M680X_GRP_INVALID, rrrr, true, false }, // CPX
-	{ M680X_GRP_INVALID, mrrr, true, true }, // CWAI
-	{ M680X_GRP_INVALID, mrrr, true, true }, // DAA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // DEC
-	{ M680X_GRP_INVALID, mrrr, true, false }, // DECA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // DECB
-	{ M680X_GRP_INVALID, mrrr, true, false }, // DECD
-	{ M680X_GRP_INVALID, mrrr, true, false }, // DECE
-	{ M680X_GRP_INVALID, mrrr, true, false }, // DECF
-	{ M680X_GRP_INVALID, mrrr, true, false }, // DECW
-	{ M680X_GRP_INVALID, mrrr, false, false }, // DES
-	{ M680X_GRP_INVALID, mrrr, true, false }, // DEX
-	{ M680X_GRP_INVALID, mrrr, true, false }, // DIVD
-	{ M680X_GRP_INVALID, mrrr, true, false }, // DIVQ
-	{ M680X_GRP_INVALID, rmmm, true, false }, // EIM
-	{ M680X_GRP_INVALID, mrrr, true, false }, // EORA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // EORB
-	{ M680X_GRP_INVALID, mrrr, true, false }, // EORD
-	{ M680X_GRP_INVALID, rmmm, true, false }, // EORR
-	{ M680X_GRP_INVALID, wwww, false, false }, // EXG
-	{ M680X_GRP_INVALID, uuuu, false, false }, // ILLGL
-	{ M680X_GRP_INVALID, mrrr, true, false }, // INC
-	{ M680X_GRP_INVALID, mrrr, true, false }, // INCA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // INCB
-	{ M680X_GRP_INVALID, mrrr, true, false }, // INCD
-	{ M680X_GRP_INVALID, mrrr, true, false }, // INCE
-	{ M680X_GRP_INVALID, mrrr, true, false }, // INCF
-	{ M680X_GRP_INVALID, mrrr, true, false }, // INCW
-	{ M680X_GRP_INVALID, mrrr, false, false }, // INS
-	{ M680X_GRP_INVALID, mrrr, true, false }, // INX
-	{ M680X_GRP_JUMP, uuuu, false, false }, // JMP
-	{ M680X_GRP_CALL, uuuu, false, false }, // JSR
-	{ M680X_GRP_JUMP, uuuu, false, false }, // LBCC
-	{ M680X_GRP_JUMP, uuuu, false, false }, // LBCS
-	{ M680X_GRP_JUMP, uuuu, false, false }, // LBEQ
-	{ M680X_GRP_JUMP, uuuu, false, false }, // LBGE
-	{ M680X_GRP_JUMP, uuuu, false, false }, // LBGT
-	{ M680X_GRP_JUMP, uuuu, false, false }, // LBHI
-	{ M680X_GRP_JUMP, uuuu, false, false }, // LBLE
-	{ M680X_GRP_JUMP, uuuu, false, false }, // LBLS
-	{ M680X_GRP_JUMP, uuuu, false, false }, // LBLT
-	{ M680X_GRP_JUMP, uuuu, false, false }, // LBMI
-	{ M680X_GRP_JUMP, uuuu, false, false }, // LBNE
-	{ M680X_GRP_JUMP, uuuu, false, false }, // LBPL
-	{ M680X_GRP_JUMP, uuuu, false, false }, // LBRA
-	{ M680X_GRP_INVALID, uuuu, false, false }, // LBRN never branches
-	{ M680X_GRP_CALL, uuuu, false, false }, // LBSR
-	{ M680X_GRP_JUMP, uuuu, false, false }, // LBVC
-	{ M680X_GRP_JUMP, uuuu, false, false }, // LBVS
-	{ M680X_GRP_INVALID, wrrr, true, false }, // LDA
-	{ M680X_GRP_INVALID, wrrr, true, false }, // LDAA
-	{ M680X_GRP_INVALID, wrrr, true, false }, // LDAB
-	{ M680X_GRP_INVALID, wrrr, true, false }, // LDB
-	{ M680X_GRP_INVALID, mrrr, false, false }, // LDBT
-	{ M680X_GRP_INVALID, wrrr, true, false }, // LDD
-	{ M680X_GRP_INVALID, wrrr, true, false }, // LDE
-	{ M680X_GRP_INVALID, wrrr, true, false }, // LDF
-	{ M680X_GRP_INVALID, mrrr, false, false }, // LDMD
-	{ M680X_GRP_INVALID, wrrr, true, false }, // LDQ
-	{ M680X_GRP_INVALID, wrrr, true, false }, // LDS
-	{ M680X_GRP_INVALID, wrrr, true, false }, // LDU
-	{ M680X_GRP_INVALID, wrrr, true, false }, // LDW
-	{ M680X_GRP_INVALID, wrrr, true, false }, // LDX
-	{ M680X_GRP_INVALID, wrrr, true, false }, // LDY
-	{ M680X_GRP_INVALID, wrrr, false, false }, // LEAS
-	{ M680X_GRP_INVALID, wrrr, false, false }, // LEAU
-	{ M680X_GRP_INVALID, wrrr, false, false }, // LEAX
-	{ M680X_GRP_INVALID, wrrr, false, false }, // LEAY
-	{ M680X_GRP_INVALID, mrrr, true, false }, // LSL
-	{ M680X_GRP_INVALID, mrrr, true, false }, // LSLA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // LSLB
-	{ M680X_GRP_INVALID, mrrr, true, false }, // LSLD
-	{ M680X_GRP_INVALID, mrrr, true, false }, // LSR
-	{ M680X_GRP_INVALID, mrrr, true, false }, // LSRA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // LSRB
-	{ M680X_GRP_INVALID, mrrr, true, false }, // LSRD
-	{ M680X_GRP_INVALID, mrrr, true, false }, // LSRW
-	{ M680X_GRP_INVALID, mmmm, true, true }, // MUL
-	{ M680X_GRP_INVALID, mwrr, true, true }, // MULD
-	{ M680X_GRP_INVALID, mrrr, true, false }, // NEG
-	{ M680X_GRP_INVALID, mrrr, true, false }, // NEGA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // NEGB
-	{ M680X_GRP_INVALID, mrrr, true, false }, // NEGD
-	{ M680X_GRP_INVALID, uuuu, false, false }, // NOP
-	{ M680X_GRP_INVALID, rmmm, true, false }, // OIM
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ORA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ORAA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ORAB
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ORB
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ORCC
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ORD
-	{ M680X_GRP_INVALID, rmmm, true, false }, // ORR
-	{ M680X_GRP_INVALID, rmmm, false, true }, // PSHA
-	{ M680X_GRP_INVALID, rmmm, false, true }, // PSHB
-	{ M680X_GRP_INVALID, mrrr, false, false }, // PSHS
-	{ M680X_GRP_INVALID, mrrr, false, true }, // PSHSW
-	{ M680X_GRP_INVALID, mrrr, false, false }, // PSHU
-	{ M680X_GRP_INVALID, mrrr, false, true }, // PSHUW
-	{ M680X_GRP_INVALID, rmmm, false, true }, // PSHX
-	{ M680X_GRP_INVALID, wmmm, false, true }, // PULA
-	{ M680X_GRP_INVALID, wmmm, false, true }, // PULB
-	{ M680X_GRP_INVALID, mwww, false, false }, // PULS
-	{ M680X_GRP_INVALID, mwww, false, true }, // PULSW
-	{ M680X_GRP_INVALID, mwww, false, false }, // PULU
-	{ M680X_GRP_INVALID, mwww, false, true }, // PULUW
-	{ M680X_GRP_INVALID, wmmm, false, true }, // PULX
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ROL
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ROLA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ROLB
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ROLD
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ROLW
-	{ M680X_GRP_INVALID, mrrr, true, false }, // ROR
-	{ M680X_GRP_INVALID, mrrr, true, false }, // RORA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // RORB
-	{ M680X_GRP_INVALID, mrrr, true, false }, // RORD
-	{ M680X_GRP_INVALID, mrrr, true, false }, // RORW
-	{ M680X_GRP_IRET, mwww, false, true }, // RTI
-	{ M680X_GRP_RET, mwww, false, true }, // RTS
-	{ M680X_GRP_INVALID, rmmm, true, true }, // SBA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // SBCA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // SBCB
-	{ M680X_GRP_INVALID, mrrr, true, false }, // SBCD
-	{ M680X_GRP_INVALID, rmmm, true, false }, // SBCR
-	{ M680X_GRP_INVALID, uuuu, true, false }, // SEC
-	{ M680X_GRP_INVALID, uuuu, true, false }, // SEI
-	{ M680X_GRP_INVALID, uuuu, true, false }, // SEV
-	{ M680X_GRP_INVALID, wrrr, true, true }, // SEX
-	{ M680X_GRP_INVALID, wrrr, true, true }, // SEXW
-	{ M680X_GRP_INVALID, rwww, true, false }, // STA
-	{ M680X_GRP_INVALID, rwww, true, false }, // STAA
-	{ M680X_GRP_INVALID, rwww, true, false }, // STAB
-	{ M680X_GRP_INVALID, rwww, true, false }, // STB
-	{ M680X_GRP_INVALID, rrrm, false, false }, // STBT
-	{ M680X_GRP_INVALID, rwww, true, false }, // STD
-	{ M680X_GRP_INVALID, rwww, true, false }, // STE
-	{ M680X_GRP_INVALID, rwww, true, false }, // STF
-	{ M680X_GRP_INVALID, rwww, true, false }, // STQ
-	{ M680X_GRP_INVALID, rwww, true, false }, // STS
-	{ M680X_GRP_INVALID, rwww, true, false }, // STU
-	{ M680X_GRP_INVALID, rwww, true, false }, // STW
-	{ M680X_GRP_INVALID, rwww, true, false }, // STX
-	{ M680X_GRP_INVALID, rwww, true, false }, // STY
-	{ M680X_GRP_INVALID, mrrr, true, false }, // SUBA
-	{ M680X_GRP_INVALID, mrrr, true, false }, // SUBB
-	{ M680X_GRP_INVALID, mrrr, true, false }, // SUBD
-	{ M680X_GRP_INVALID, mrrr, true, false }, // SUBE
-	{ M680X_GRP_INVALID, mrrr, true, false }, // SUBF
-	{ M680X_GRP_INVALID, rmmm, true, false }, // SUBR
-	{ M680X_GRP_INVALID, mrrr, true, false }, // SUBW
-	{ M680X_GRP_INT, mmrr, true, true }, // SWI
-	{ M680X_GRP_INT, mmrr, true, true }, // SWI2
-	{ M680X_GRP_INT, mmrr, true, true }, // SWI3
-	{ M680X_GRP_INVALID, uuuu, false, false }, // SYNC
-	{ M680X_GRP_INVALID, rwww, true, true }, // TAB
-	{ M680X_GRP_INVALID, rwww, false, true }, // TAP
-	{ M680X_GRP_INVALID, rwww, true, true }, // TBA
-	{ M680X_GRP_INVALID, rwww, false, true }, // TPA
-	{ M680X_GRP_INVALID, rwww, false, false }, // TFM
-	{ M680X_GRP_INVALID, rwww, false, false }, // TFR
-	{ M680X_GRP_INVALID, rrrr, true, false }, // TIM
-	{ M680X_GRP_INVALID, rrrr, true, false }, // TST
-	{ M680X_GRP_INVALID, rrrr, true, false }, // TSTA
-	{ M680X_GRP_INVALID, rrrr, true, false }, // TSTB
-	{ M680X_GRP_INVALID, rrrr, true, false }, // TSTD
-	{ M680X_GRP_INVALID, rrrr, true, false }, // TSTE
-	{ M680X_GRP_INVALID, rrrr, true, false }, // TSTF
-	{ M680X_GRP_INVALID, rrrr, true, false }, // TSTW
-	{ M680X_GRP_INVALID, rwww, false, true }, // TSX
-	{ M680X_GRP_INVALID, rwww, false, true }, // TXS
-	{ M680X_GRP_INVALID, mrrr, true, true }, // WAI
-	{ M680X_GRP_INVALID, mmmm, false, true }, // XGDX
+	{ NOG, uuuu, NOR, NOR, false, false }, // INVLD
+	{ NOG, rmmm, M680X_REG_B, M680X_REG_A, true, false }, // ABA
+	{ NOG, rmmm, M680X_REG_B, M680X_REG_X, false, false }, // ABX
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // ADCA
+	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // ADCB
+	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // ADCD
+	{ NOG, rmmm, NOR, NOR, true, false }, // ADCR
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // ADDA
+	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // ADDB
+	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // ADDD
+	{ NOG, mrrr, M680X_REG_E, NOR, true, false }, // ADDE
+	{ NOG, mrrr, M680X_REG_F, NOR, true, false }, // ADDF
+	{ NOG, rmmm, NOR, NOR, true, false }, // ADDR
+	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // ADDW
+	{ NOG, rmmm, NOR, NOR, true, false }, // AIM
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // ANDA
+	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // ANDB
+	{ NOG, mrrr, M680X_REG_CC, NOR, true, false }, // ANDCC
+	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // ANDD
+	{ NOG, rmmm, NOR, NOR, true, false }, // ANDR
+	{ NOG, mrrr, NOR, NOR, true, false }, // ASL
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // ASLA
+	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // ASLB
+	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // ASLD
+	{ NOG, mrrr, NOR, NOR, true, false }, // ASR
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // ASRA
+	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // ASRB
+	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // ASRD
+	{ NOG, mrrr, NOR, NOR, false, false }, // BAND
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BCC
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BCS
+	{ NOG, mrrr, NOR, NOR, false, false }, // BEOR
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BEQ
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BGE
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BGT
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BHI
+	{ NOG, mrrr, NOR, NOR, false, false }, // BIAND
+	{ NOG, mrrr, NOR, NOR, false, false }, // BIEOR
+	{ NOG, mrrr, NOR, NOR, false, false }, // BIOR
+	{ NOG, rrrr, M680X_REG_A, NOR, true, false }, // BITA
+	{ NOG, rrrr, M680X_REG_B, NOR, true, false }, // BITB
+	{ NOG, rrrr, M680X_REG_D, NOR, true, false }, // BITD
+	{ NOG, rrrr, M680X_REG_MD, NOR, true, false }, // BITMD
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BLE
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BLS
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BLT
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BMI
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BNE
+	{ NOG, mrrr, NOR, NOR, false, false }, // BOR
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BPL
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BRA
+	{ NOG, uuuu, NOR, NOR, false, false }, // BRN never branches
+	{ M680X_GRP_CALL, uuuu, NOR, NOR, false, false }, // BSR
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BVC
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BVS
+	{ NOG, rrrr, M680X_REG_B, M680X_REG_A, true, false }, // CBA
+	{ NOG, uuuu, NOR, NOR, true, false }, // CLC
+	{ NOG, uuuu, NOR, NOR, true, false }, // CLI
+	{ NOG, wrrr, NOR, NOR, true, false }, // CLR
+	{ NOG, wrrr, M680X_REG_A, NOR, true, false }, // CLRA
+	{ NOG, wrrr, M680X_REG_B, NOR, true, false }, // CLRB
+	{ NOG, wrrr, M680X_REG_D, NOR, true, false }, // CLRD
+	{ NOG, wrrr, M680X_REG_E, NOR, true, false }, // CLRE
+	{ NOG, wrrr, M680X_REG_F, NOR, true, false }, // CLRF
+	{ NOG, wrrr, M680X_REG_W, NOR, true, false }, // CLRW
+	{ NOG, uuuu, NOR, NOR, true, false }, // CLV
+	{ NOG, rrrr, M680X_REG_A, NOR, true, false }, // CMPA
+	{ NOG, rrrr, M680X_REG_B, NOR, true, false }, // CMPB
+	{ NOG, rrrr, M680X_REG_D, NOR, true, false }, // CMPD
+	{ NOG, rrrr, M680X_REG_E, NOR, true, false }, // CMPE
+	{ NOG, rrrr, M680X_REG_F, NOR, true, false }, // CMPF
+	{ NOG, rrrr, NOR, NOR, true, false }, // CMPR
+	{ NOG, rrrr, M680X_REG_S, NOR, true, false }, // CMPS
+	{ NOG, rrrr, M680X_REG_U, NOR, true, false }, // CMPU
+	{ NOG, rrrr, M680X_REG_W, NOR, true, false }, // CMPW
+	{ NOG, rrrr, M680X_REG_X, NOR, true, false }, // CMPX
+	{ NOG, rrrr, M680X_REG_Y, NOR, true, false }, // CMPY
+	{ NOG, mrrr, NOR, NOR, true, false }, // COM
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // COMA
+	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // COMB
+	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // COMD
+	{ NOG, mrrr, M680X_REG_E, NOR, true, false }, // COME
+	{ NOG, mrrr, M680X_REG_F, NOR, true, false }, // COMF
+	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // COMW
+	{ NOG, rrrr, M680X_REG_X, NOR, true, false }, // CPX
+	{ NOG, mrrr, NOR, NOR, true, true }, // CWAI
+	{ NOG, mrrr, NOR, NOR, true, true }, // DAA
+	{ NOG, mrrr, NOR, NOR, true, false }, // DEC
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // DECA
+	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // DECB
+	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // DECD
+	{ NOG, mrrr, M680X_REG_E, NOR, true, false }, // DECE
+	{ NOG, mrrr, M680X_REG_F, NOR, true, false }, // DECF
+	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // DECW
+	{ NOG, mrrr, M680X_REG_S, NOR, false, false }, // DES
+	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // DEX
+	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // DIVD
+	{ NOG, mrrr, M680X_REG_Q, NOR, true, false }, // DIVQ
+	{ NOG, rmmm, NOR, NOR, true, false }, // EIM
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // EORA
+	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // EORB
+	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // EORD
+	{ NOG, rmmm, NOR, NOR, true, false }, // EORR
+	{ NOG, wwww, NOR, NOR, false, false }, // EXG
+	{ NOG, uuuu, NOR, NOR, false, false }, // ILLGL
+	{ NOG, mrrr, NOR, NOR, true, false }, // INC
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // INCA
+	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // INCB
+	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // INCD
+	{ NOG, mrrr, M680X_REG_E, NOR, true, false }, // INCE
+	{ NOG, mrrr, M680X_REG_F, NOR, true, false }, // INCF
+	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // INCW
+	{ NOG, mrrr, M680X_REG_S, NOR, false, false }, // INS
+	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // INX
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // JMP
+	{ M680X_GRP_CALL, uuuu, NOR, NOR, false, false }, // JSR
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBCC
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBCS
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBEQ
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBGE
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBGT
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBHI
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBLE
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBLS
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBLT
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBMI
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBNE
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBPL
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBRA
+	{ NOG, uuuu, NOR, NOR, false, false }, // LBRN never branches
+	{ M680X_GRP_CALL, uuuu, NOR, NOR, false, false }, // LBSR
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBVC
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBVS
+	{ NOG, wrrr, M680X_REG_A, NOR, true, false }, // LDA
+	{ NOG, wrrr, M680X_REG_A, NOR, true, false }, // LDAA
+	{ NOG, wrrr, M680X_REG_B, NOR, true, false }, // LDAB
+	{ NOG, wrrr, M680X_REG_B, NOR, true, false }, // LDB
+	{ NOG, mrrr, NOR, NOR, false, false }, // LDBT
+	{ NOG, wrrr, M680X_REG_D, NOR, true, false }, // LDD
+	{ NOG, wrrr, M680X_REG_E, NOR, true, false }, // LDE
+	{ NOG, wrrr, M680X_REG_F, NOR, true, false }, // LDF
+	{ NOG, mrrr, M680X_REG_MD, NOR, false, false }, // LDMD
+	{ NOG, wrrr, M680X_REG_Q, NOR, true, false }, // LDQ
+	{ NOG, wrrr, M680X_REG_S, NOR, true, false }, // LDS
+	{ NOG, wrrr, M680X_REG_U, NOR, true, false }, // LDU
+	{ NOG, wrrr, M680X_REG_W, NOR, true, false }, // LDW
+	{ NOG, wrrr, M680X_REG_X, NOR, true, false }, // LDX
+	{ NOG, wrrr, M680X_REG_Y, NOR, true, false }, // LDY
+	{ NOG, wrrr, M680X_REG_S, NOR, false, false }, // LEAS
+	{ NOG, wrrr, M680X_REG_U, NOR, false, false }, // LEAU
+	{ NOG, wrrr, M680X_REG_X, NOR, false, false }, // LEAX
+	{ NOG, wrrr, M680X_REG_Y, NOR, false, false }, // LEAY
+	{ NOG, mrrr, NOR, NOR, true, false }, // LSL
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // LSLA
+	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // LSLB
+	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // LSLD
+	{ NOG, mrrr, NOR, NOR, true, false }, // LSR
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // LSRA
+	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // LSRB
+	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // LSRD
+	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // LSRW
+	{ NOG, mmmm, NOR, NOR, true, true }, // MUL
+	{ NOG, mwrr, M680X_REG_D, NOR, true, true }, // MULD
+	{ NOG, mrrr, NOR, NOR, true, false }, // NEG
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // NEGA
+	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // NEGB
+	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // NEGD
+	{ NOG, uuuu, NOR, NOR, false, false }, // NOP
+	{ NOG, rmmm, NOR, NOR, true, false }, // OIM
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // ORA
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // ORAA
+	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // ORAB
+	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // ORB
+	{ NOG, mrrr, M680X_REG_CC, NOR, true, false }, // ORCC
+	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // ORD
+	{ NOG, rmmm, NOR, NOR, true, false }, // ORR
+	{ NOG, rmmm, M680X_REG_A, NOR, false, true }, // PSHA
+	{ NOG, rmmm, M680X_REG_B, NOR, false, true }, // PSHB
+	{ NOG, mrrr, M680X_REG_S, NOR, false, false }, // PSHS
+	{ NOG, mrrr, M680X_REG_S, M680X_REG_W, false, false }, // PSHSW
+	{ NOG, mrrr, M680X_REG_U, NOR, false, false }, // PSHU
+	{ NOG, mrrr, M680X_REG_U, M680X_REG_W, false, false }, // PSHUW
+	{ NOG, rmmm, M680X_REG_X, NOR, false, true }, // PSHX
+	{ NOG, wmmm, M680X_REG_A, NOR, false, true }, // PULA
+	{ NOG, wmmm, M680X_REG_B, NOR, false, true }, // PULB
+	{ NOG, mwww, M680X_REG_S, NOR, false, false }, // PULS
+	{ NOG, mwww, M680X_REG_S, M680X_REG_W, false, false }, // PULSW
+	{ NOG, mwww, M680X_REG_U, NOR, false, false }, // PULU
+	{ NOG, mwww, M680X_REG_U, M680X_REG_W, false, false }, // PULUW
+	{ NOG, wmmm, M680X_REG_X, NOR, false, true }, // PULX
+	{ NOG, mrrr, NOR, NOR, true, false }, // ROL
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // ROLA
+	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // ROLB
+	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // ROLD
+	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // ROLW
+	{ NOG, mrrr, NOR, NOR, true, false }, // ROR
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // RORA
+	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // RORB
+	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // RORD
+	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // RORW
+	{ M680X_GRP_IRET, mwww, NOR, NOR, false, true }, // RTI
+	{ M680X_GRP_RET, mwww, NOR, NOR, false, true }, // RTS
+	{ NOG, rmmm, M680X_REG_B, M680X_REG_A, true, false }, // SBA
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // SBCA
+	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // SBCB
+	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // SBCD
+	{ NOG, rmmm, NOR, NOR, true, false }, // SBCR
+	{ NOG, uuuu, NOR, NOR, true, false }, // SEC
+	{ NOG, uuuu, NOR, NOR, true, false }, // SEI
+	{ NOG, uuuu, NOR, NOR, true, false }, // SEV
+	{ NOG, wrrr, NOR, NOR, true, true }, // SEX
+	{ NOG, rwww, M680X_REG_W, NOR, true, false }, // SEXW
+	{ NOG, rwww, M680X_REG_A, NOR, true, false }, // STA
+	{ NOG, rwww, M680X_REG_A, NOR, true, false }, // STAA
+	{ NOG, rwww, M680X_REG_B, NOR, true, false }, // STAB
+	{ NOG, rwww, M680X_REG_B, NOR, true, false }, // STB
+	{ NOG, rrrm, NOR, NOR, false, false }, // STBT
+	{ NOG, rwww, M680X_REG_D, NOR, true, false }, // STD
+	{ NOG, rwww, M680X_REG_E, NOR, true, false }, // STE
+	{ NOG, rwww, M680X_REG_F, NOR, true, false }, // STF
+	{ NOG, rwww, M680X_REG_Q, NOR, true, false }, // STQ
+	{ NOG, rwww, M680X_REG_S, NOR, true, false }, // STS
+	{ NOG, rwww, M680X_REG_U, NOR, true, false }, // STU
+	{ NOG, rwww, M680X_REG_W, NOR, true, false }, // STW
+	{ NOG, rwww, M680X_REG_X, NOR, true, false }, // STX
+	{ NOG, rwww, M680X_REG_Y, NOR, true, false }, // STY
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // SUBA
+	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // SUBB
+	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // SUBD
+	{ NOG, mrrr, M680X_REG_E, NOR, true, false }, // SUBE
+	{ NOG, mrrr, M680X_REG_F, NOR, true, false }, // SUBF
+	{ NOG, rmmm, NOR, NOR, true, false }, // SUBR
+	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // SUBW
+	{ M680X_GRP_INT, mmrr, NOR, NOR, true, true }, // SWI
+	{ M680X_GRP_INT, mmrr, NOR, NOR, true, true }, // SWI2
+	{ M680X_GRP_INT, mmrr, NOR, NOR, true, true }, // SWI3
+	{ NOG, uuuu, NOR, NOR, false, false }, // SYNC
+	{ NOG, rwww, M680X_REG_A, M680X_REG_B, true, false }, // TAB
+	{ NOG, rwww, M680X_REG_A, M680X_REG_CC, false, false }, // TAP
+	{ NOG, rwww, M680X_REG_B, M680X_REG_A, true, false }, // TBA
+	{ NOG, rwww, M680X_REG_CC, M680X_REG_A, false, false }, // TPA
+	{ NOG, rwww, NOR, NOR, false, false }, // TFM
+	{ NOG, rwww, NOR, NOR, false, false }, // TFR
+	{ NOG, rrrr, NOR, NOR, true, false }, // TIM
+	{ NOG, rrrr, NOR, NOR, true, false }, // TST
+	{ NOG, rrrr, M680X_REG_A, NOR, true, false }, // TSTA
+	{ NOG, rrrr, M680X_REG_B, NOR, true, false }, // TSTB
+	{ NOG, rrrr, M680X_REG_D, NOR, true, false }, // TSTD
+	{ NOG, rrrr, M680X_REG_E, NOR, true, false }, // TSTE
+	{ NOG, rrrr, M680X_REG_F, NOR, true, false }, // TSTF
+	{ NOG, rrrr, M680X_REG_W, NOR, true, false }, // TSTW
+	{ NOG, rwww, M680X_REG_S, M680X_REG_X, false, false }, // TSX
+	{ NOG, rwww, M680X_REG_X, M680X_REG_S, false, false }, // TXS
+	{ NOG, mrrr, NOR, NOR, true, true }, // WAI
+	{ NOG, mmmm, M680X_REG_D, M680X_REG_X, false, true }, // XGDX
 };
+#undef NOR
+#undef NOG
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -1578,6 +1584,7 @@ static void add_operators_access(MCInst *MI, m680x_info *info,
 				e_access_mode access_mode)
 {
 	cs_m680x *m680x = &info->m680x;
+	int offset = 0;
 	int i;
 
 	if (MI->flat_insn->detail == NULL || (!m680x->op_count) ||
@@ -1586,7 +1593,11 @@ static void add_operators_access(MCInst *MI, m680x_info *info,
 
 	for (i = 0; i < m680x->op_count; ++i) {
 
-		e_access access = get_access(i, access_mode);
+		// Ugly fix: MULD has a register operand, an immediate operand
+		// AND an implicitly changed register W
+		if (info->insn == M680X_INS_MULD && (i == 1))
+			offset = 1;
+		e_access access = get_access(i + offset, access_mode);
 		m680x->operands[i].access = access;
 	}
 }
@@ -1599,9 +1610,6 @@ typedef struct insn_to_changed_regs {
 static void set_changed_regs_read_write_counts(MCInst *MI, m680x_info *info)
 {
 	static const insn_to_changed_regs changed_regs[] = {
-		{M680X_INS_ABA, {M680X_REG_B, M680X_REG_A, M680X_REG_INVALID}},
-		{M680X_INS_ABX, {M680X_REG_A, M680X_REG_X, M680X_REG_INVALID}},
-		{M680X_INS_CBA, {M680X_REG_B, M680X_REG_A, M680X_REG_INVALID}},
 		{
 			M680X_INS_CWAI, {
 				M680X_REG_S, M680X_REG_PC, M680X_REG_U,
@@ -1615,12 +1623,8 @@ static void set_changed_regs_read_write_counts(MCInst *MI, m680x_info *info)
 		{M680X_INS_PULA, {M680X_REG_A, M680X_REG_S, M680X_REG_INVALID}},
 		{M680X_INS_PULB, {M680X_REG_B, M680X_REG_S, M680X_REG_INVALID}},
 		{M680X_INS_PULX, {M680X_REG_X, M680X_REG_S, M680X_REG_INVALID}},
-		{M680X_INS_PULSW,{M680X_REG_S, M680X_REG_W, M680X_REG_INVALID}},
-		{M680X_INS_PULUW,{M680X_REG_U, M680X_REG_W, M680X_REG_INVALID}},
 		{M680X_INS_PSHA, {M680X_REG_A, M680X_REG_S, M680X_REG_INVALID}},
 		{M680X_INS_PSHB, {M680X_REG_B, M680X_REG_S, M680X_REG_INVALID}},
-		{M680X_INS_PSHSW,{M680X_REG_S, M680X_REG_W, M680X_REG_INVALID}},
-		{M680X_INS_PSHUW,{M680X_REG_U, M680X_REG_W, M680X_REG_INVALID}},
 		{M680X_INS_PSHX, {M680X_REG_X, M680X_REG_S, M680X_REG_INVALID}},
 		{
 			M680X_INS_RTI, {
@@ -1631,9 +1635,8 @@ static void set_changed_regs_read_write_counts(MCInst *MI, m680x_info *info)
 			},
 		},
 		{M680X_INS_RTS, {M680X_REG_S, M680X_REG_PC, M680X_REG_INVALID}},
-		{M680X_INS_SBA, {M680X_REG_B, M680X_REG_A, M680X_REG_INVALID}},
 		{M680X_INS_SEX, {M680X_REG_A, M680X_REG_B, M680X_REG_INVALID}},
-		{M680X_INS_SEXW, {M680X_REG_D, M680X_REG_W, M680X_REG_INVALID}},
+		{M680X_INS_SEXW, {M680X_REG_W, M680X_REG_D, M680X_REG_INVALID}},
 		{
 			M680X_INS_SWI, {
 				M680X_REG_S, M680X_REG_PC, M680X_REG_U,
@@ -1658,12 +1661,6 @@ static void set_changed_regs_read_write_counts(MCInst *MI, m680x_info *info)
 				M680X_REG_INVALID
 			},
 		},
-		{M680X_INS_TAB, {M680X_REG_A, M680X_REG_B, M680X_REG_INVALID}},
-		{M680X_INS_TAP, {M680X_REG_A, M680X_REG_CC, M680X_REG_INVALID}},
-		{M680X_INS_TBA, {M680X_REG_B, M680X_REG_A, M680X_REG_INVALID}},
-		{M680X_INS_TPA, {M680X_REG_CC, M680X_REG_A, M680X_REG_INVALID}},
-		{M680X_INS_TSX, {M680X_REG_S, M680X_REG_X, M680X_REG_INVALID}},
-		{M680X_INS_TXS, {M680X_REG_X, M680X_REG_S, M680X_REG_INVALID}},
 		{
 			M680X_INS_WAI, {
 				M680X_REG_S, M680X_REG_PC, M680X_REG_X,
@@ -1671,7 +1668,6 @@ static void set_changed_regs_read_write_counts(MCInst *MI, m680x_info *info)
 				M680X_REG_INVALID
 			}
 		},
-		{M680X_INS_XGDX, {M680X_REG_D, M680X_REG_X, M680X_REG_INVALID}},
 	};
 
 	int i, j;
@@ -1699,7 +1695,6 @@ static void set_changed_regs_read_write_counts(MCInst *MI, m680x_info *info)
 typedef struct insn_desc {
 	uint32_t opcode;
 	m680x_insn insn;
-	m680x_reg reg0;
 	insn_hdlr_id handler_id;
 	uint16_t insn_size;
 } insn_desc;
@@ -1904,7 +1899,6 @@ static bool decode_insn(const m680x_info *info, uint16_t address,
 
 		insn_description->handler_id = inst_table[index].handler_id;
 		insn_description->insn = inst_table[index].insn;
-		insn_description->reg0 = inst_table[index].reg0;
 	}
 	else {
 		bool insn_found = false;
@@ -1921,7 +1915,6 @@ static bool decode_insn(const m680x_info *info, uint16_t address,
 			if ((index = binary_search(inst_table, table_size, ir)) >= 0) {
 				insn_description->handler_id = inst_table[index].handler_id;
 				insn_description->insn = inst_table[index].insn;
-				insn_description->reg0 = inst_table[index].reg0;
 				insn_found = true;
 			}
 		}
@@ -1930,7 +1923,6 @@ static bool decode_insn(const m680x_info *info, uint16_t address,
 			// Get page1 insn description
 			insn_description->handler_id = cpu->inst_page1_table[ir].handler_id;
 			insn_description->insn = cpu->inst_page1_table[ir].insn;
-			insn_description->reg0 = cpu->inst_page1_table[ir].reg0;
 		}
 	}
 
@@ -2468,6 +2460,8 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 	info->insn_size = 1;
 
 	if (decode_insn(info, address, &insn_description)) {
+		m680x_reg reg;
+
 		if (insn_description.opcode > 0xff)
 			address += 2; // 8-bit opcode + page prefix
 		else
@@ -2479,11 +2473,17 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 
 		add_insn_group(detail, g_insn_props[info->insn].group);
 
-		if (insn_description.reg0 != M680X_REG_INVALID) {
-			add_reg_operand(m680x, insn_description.reg0);
-			// First operand is a register which is part of the
-			// mnemonic
+		reg = g_insn_props[info->insn].reg0;
+		if (reg != M680X_REG_INVALID) {
+			add_reg_operand(m680x, reg);
+			// First (or second) operand is a register which is
+			// part of the mnemonic
 			m680x->flags |= M680X_FIRST_OP_IN_MNEM;
+			reg = g_insn_props[info->insn].reg1;
+			if (reg != M680X_REG_INVALID) {
+				add_reg_operand(m680x, reg);
+				m680x->flags |= M680X_SECOND_OP_IN_MNEM;
+			}
 		}
 
 		if (g_insn_props[info->insn].cc_modified)

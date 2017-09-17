@@ -92,6 +92,7 @@ M680X_GRP_ENDING = 8
 
 # M680X instruction flags:
 M680X_FIRST_OP_IN_MNEM = 1
+M680X_SECOND_OP_IN_MNEM = 2
 
 # M680X instruction IDs
 

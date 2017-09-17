@@ -95,6 +95,7 @@ public class M680x_const {
 
 	// M680X instruction flags:
 	public static final int M680X_FIRST_OP_IN_MNEM = 1;
+	public static final int M680X_SECOND_OP_IN_MNEM = 2;
 
 	// M680X instruction IDs
 

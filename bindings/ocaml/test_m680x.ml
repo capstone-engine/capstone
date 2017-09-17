@@ -134,7 +134,8 @@ let print_op handle flags i op =
 	| M680X_OP_INVALID _ -> ();	(* this would never happens *)
 	| M680X_OP_REGISTER reg -> (
 		printf "\t\toperands[%d].type: REGISTER = %s" i (cs_reg_name handle reg);
-		if (i == 0) && (bit_set flags _M680X_FIRST_OP_IN_MNEM) then
+		if (((i == 0) && (bit_set flags _M680X_FIRST_OP_IN_MNEM)) ||
+		    ((i == 1) && (bit_set flags _M680X_SECOND_OP_IN_MNEM))) then
 			printf " (in mnemonic)";
 		printf "\n";
 		);
