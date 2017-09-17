@@ -9,11 +9,11 @@ class M680xOpIdx(ctypes.Structure):
     _fields_ = (
         ('base_reg', ctypes.c_uint),
         ('offset_reg', ctypes.c_uint),
+        ('inc_dec', ctypes.c_uint),
         ('offset', ctypes.c_int16),
         ('offset_addr', ctypes.c_uint16),
         ('offset_bits', ctypes.c_uint8),
-        ('inc_dec', ctypes.c_int8),
-        ('indirect', ctypes.c_bool),
+        ('flags', ctypes.c_uint8),
     )
 
 class M680xOpRel(ctypes.Structure):
@@ -36,6 +36,7 @@ class M680xOpValue(ctypes.Union):
         ('rel', M680xOpRel),
         ('ext', M680xOpExt),
         ('direct_addr', ctypes.c_uint8),
+        ('index', ctypes.c_uint8),
     )
 
 class M680xOp(ctypes.Structure):
@@ -69,6 +70,10 @@ class M680xOp(ctypes.Structure):
     @property
     def direct_addr(self):
         return self.value.direct_addr
+
+    @property
+    def index(self):
+        return self.value.index
 
 
 class CsM680x(ctypes.Structure):

@@ -58,6 +58,9 @@ typedef enum m680x_address_mode {
 	M680X_AM_RELATIVE,   // relative address, e.g: BRA $F02D, LBSR TARGET
 	M680X_AM_IMM_DIRECT, // HD6301/9: imm. + direct op, e.g. AIM #55,$10
 	M680X_AM_IMM_INDEXED,// HD6301/9: imm. + index op, e.g. AIM #55;$8,X
+	M680X_AM_IMM_EXTENDED,// HD6309: imm. + extended op, e.g. AIM #55,$8002
+	M680X_AM_BIT_MOVE,   // HD6309: bit move op, e.g. BAND A,5,1,<$40
+	M680X_AM_INDEXED2,   // HD6309: TFM insn, e.g. TFM X+,Y+
 	M680X_AM_ENDING      // This should be the last entry in this enum
 } m680x_address_mode;
 
@@ -71,14 +74,18 @@ typedef enum m680x_op_type {
 	M680X_OP_EXTENDED,    // = Extended addressing operand.
 	M680X_OP_DIRECT,      // = Direct addressing operand.
 	M680X_OP_RELATIVE,    // = Relative addressing operand.
+	M680X_OP_INDEX,       // = index operand (Displayed as number only).
 } m680x_op_type;
 
 //> Supported values for mem.idx.inc_dec
-#define M680X_POST_INC_2 +2
-#define M680X_POST_INC_1 +1
-#define M680X_NO_INC_DEC  0
-#define M680X_PRE_DEC_1  -1
-#define M680X_PRE_DEC_2  -2
+typedef enum m680x_inc_dec {
+	M680X_NO_INC_DEC = 0,
+	M680X_PRE_DEC_1,     // ,-X
+	M680X_PRE_DEC_2,     // ,--X
+	M680X_POST_INC_1,    // ,X+
+	M680X_POST_INC_2,    // ,X++
+	M680X_POST_DEC_1,    // ,X-
+} m680x_inc_dec;
 
 //> Supported bit values for mem.idx.offset_bits
 #define M680X_OFFSET_NONE      0
@@ -86,18 +93,23 @@ typedef enum m680x_op_type {
 #define M680X_OFFSET_BITS_8    8
 #define M680X_OFFSET_BITS_16  16
 
+//> Supported bit flags for mem.idx.flags
+//> These flags can be comined
+#define M680X_IDX_INDIRECT     1
+#define M680X_IDX_NO_COMMA     2
+
 // Instruction's operand referring to indexed addressing
 typedef struct m680x_op_idx {
 	m680x_reg base_reg;	// base register (or M680X_REG_INVALID if
 				// irrelevant)
 	m680x_reg offset_reg;	// offset register (or M680X_REG_INVALID if
 				// irrelevant)
+	m680x_inc_dec inc_dec;	// pre-dec. or post-inc. value (0 if irrelevant)
 	int16_t offset;		// 5-,8- or 16-bit offset. See also offset_bits.
 	uint16_t offset_addr;	// = offset addr. if base_reg == M680X_REG_PC.
 				// calculated as offset + PC
 	uint8_t offset_bits;	// offset width in bits for indexed addressing
-	int8_t inc_dec;		// pre-dec. or post-inc. value (0 if irrelevant)
-	bool indirect;		// true if indexed indirect addressing
+	uint8_t flags;		// 8-bit flags (see above)
 } m680x_op_idx;
 
 // Instruction's memory operand referring to relative addressing (Bcc/LBcc)
@@ -124,6 +136,7 @@ typedef struct cs_m680x_op {
 		m680x_op_rel rel;	// Relative address. operand (Bcc/LBcc)
 		m680x_op_ext ext;	// Extended address
 		uint8_t direct_addr;	// Direct address (lower 8-bit)
+		uint8_t index;		// index value
 	};
 	uint8_t size;			// size of this operand (in bytes)
 	// How is this operand accessed? (READ, WRITE or READ|WRITE)
@@ -177,6 +190,7 @@ typedef enum m680x_insn {
 	M680X_INS_ADCA,
 	M680X_INS_ADCB,
 	M680X_INS_ADCD,
+	M680X_INS_ADCR,
 	M680X_INS_ADDA,
 	M680X_INS_ADDB,
 	M680X_INS_ADDD,
@@ -197,6 +211,7 @@ typedef enum m680x_insn {
 	M680X_INS_ASR,
 	M680X_INS_ASRA,
 	M680X_INS_ASRB,
+	M680X_INS_ASRD,
 	M680X_INS_BAND,
 	M680X_INS_BCC, // or BHS
 	M680X_INS_BCS, // or BLO
@@ -324,6 +339,7 @@ typedef enum m680x_insn {
 	M680X_INS_LSL,
 	M680X_INS_LSLA,
 	M680X_INS_LSLB,
+	M680X_INS_LSLD,
 	M680X_INS_LSR,
 	M680X_INS_LSRA,
 	M680X_INS_LSRB,

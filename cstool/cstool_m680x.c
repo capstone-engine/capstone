@@ -17,10 +17,19 @@ static const char *s_addressing_modes[] = {
 	"M680X_AM_RELATIVE",
 	"M680X_AM_IMM_DIRECT",
 	"M680X_AM_IMM_INDEXED",
+	"M680X_AM_IMM_EXTENDED",
+	"M680X_AM_BIT_MOVE",
+	"M680X_AM_INDEXED2",
 };
 
 static const char *s_access[] = {
 	"UNCHANGED", "READ", "WRITE", "READ | WRITE",
+};
+
+static const char *s_inc_dec[] = {
+	"no inc-/decrement",
+	"pre decrement: 1", "pre decrement: 2", "post increment: 1",
+	"post increment: 2", "post decrement: 1"
 };
 
 void print_read_write_regs(csh handle, cs_detail *detail)
@@ -88,6 +97,11 @@ void print_insn_detail_m680x(csh handle, cs_insn *insn)
 				cs_reg_name(handle, op->reg), comment);
 			break;
 
+		case M680X_OP_INDEX:
+			printf("\t\toperands[%u].type: INDEX = %u\n", i,
+				op->index);
+			break;
+
 		case M680X_OP_IMMEDIATE:
 			printf("\t\toperands[%u].type: IMMEDIATE = #%d\n", i,
 				op->imm);
@@ -126,7 +140,8 @@ void print_insn_detail_m680x(csh handle, cs_insn *insn)
 
 		case M680X_OP_INDEXED_09:
 			printf("\t\toperands[%u].type: INDEXED_M6809 %s\n", i,
-				op->idx.indirect ? "INDIRECT" : "");
+				(op->idx.flags & M680X_IDX_INDIRECT) ?
+					"INDIRECT" : "");
 
 			if (op->idx.base_reg != M680X_REG_INVALID)
 				printf("\t\t\tbase register: %s\n",
@@ -138,7 +153,7 @@ void print_insn_detail_m680x(csh handle, cs_insn *insn)
 
 			if ((op->idx.offset_bits != 0) &&
 				(op->idx.offset_reg == M680X_REG_INVALID) &&
-				(op->idx.inc_dec == 0)) {
+				(op->idx.inc_dec == M680X_NO_INC_DEC)) {
 				printf("\t\t\toffset: %d\n", op->idx.offset);
 
 				if (op->idx.base_reg == M680X_REG_PC)
@@ -149,13 +164,9 @@ void print_insn_detail_m680x(csh handle, cs_insn *insn)
 					op->idx.offset_bits);
 			}
 
-			if (op->idx.inc_dec > 0)
-				printf("\t\t\tpost increment: %d\n",
-					op->idx.inc_dec);
-
-			if (op->idx.inc_dec < 0)
-				printf("\t\t\tpre decrement: %d\n",
-					op->idx.inc_dec);
+			if (op->idx.inc_dec != M680X_NO_INC_DEC) 
+                                printf("\t\t\t%s\n",
+                                        s_inc_dec[op->idx.inc_dec]);
 
 			break;
 		}

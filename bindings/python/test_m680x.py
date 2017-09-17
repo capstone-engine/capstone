@@ -20,16 +20,21 @@ address_modes = (
 	"M680X_AM_RELATIVE",
 	"M680X_AM_IMM_DIRECT",
 	"M680X_AM_IMM_INDEXED",
+	"M680X_AM_IMM_EXTENDED",
+	"M680X_AM_BIT_MOVE",
+	"M680X_AM_INDEXED2",
 	)
 
 insn_ids = (
 	"M680X_INS_INVLD", "M680X_INS_ABA", "M680X_INS_ABX", "M680X_INS_ADCA",
-	"M680X_INS_ADCB", "M680X_INS_ADCD", "M680X_INS_ADDA", "M680X_INS_ADDB",
+	"M680X_INS_ADCB", "M680X_INS_ADCD", "M680X_INS_ADCR", "M680X_INS_ADDA",
+        "M680X_INS_ADDB",
 	"M680X_INS_ADDD", "M680X_INS_ADDE", "M680X_INS_ADDF", "M680X_INS_ADDR",
 	"M680X_INS_ADDW", "M680X_INS_AIM", "M680X_INS_ANDA", "M680X_INS_ANDB",
 	"M680X_INS_ANDCC", "M680X_INS_ANDD", "M680X_INS_ANDR", "M680X_INS_ASL",
 	"M680X_INS_ASLA", "M680X_INS_ASLB", "M680X_INS_ASLD", "M680X_INS_ASR",
-	"M680X_INS_ASRA", "M680X_INS_ASRB", "M680X_INS_BAND", "M680X_INS_BCC",
+	"M680X_INS_ASRA", "M680X_INS_ASRB", "M680X_INS_ASRD", "M680X_INS_BAND",
+        "M680X_INS_BCC",
 	"M680X_INS_BCS", "M680X_INS_BEOR", "M680X_INS_BEQ", "M680X_INS_BGE",
 	"M680X_INS_BGT", "M680X_INS_BHI", "M680X_INS_BIAND", "M680X_INS_BIEOR",
 	"M680X_INS_BIOR", "M680X_INS_BITA", "M680X_INS_BITB", "M680X_INS_BITD",
@@ -61,7 +66,8 @@ insn_ids = (
 	"M680X_INS_LDQ", "M680X_INS_LDS", "M680X_INS_LDU", "M680X_INS_LDW",
 	"M680X_INS_LDX", "M680X_INS_LDY", "M680X_INS_LEAS", "M680X_INS_LEAU",
 	"M680X_INS_LEAX", "M680X_INS_LEAY", "M680X_INS_LSL", "M680X_INS_LSLA",
-	"M680X_INS_LSLB", "M680X_INS_LSR", "M680X_INS_LSRA", "M680X_INS_LSRB",
+	"M680X_INS_LSLB", "M680X_INS_LSLD", "M680X_INS_LSR", "M680X_INS_LSRA",
+        "M680X_INS_LSRB",
 	"M680X_INS_LSRD", "M680X_INS_LSRW", "M680X_INS_MUL", "M680X_INS_MULD",
 	"M680X_INS_NEG", "M680X_INS_NEGA", "M680X_INS_NEGB", "M680X_INS_NEGD",
 	"M680X_INS_NOP", "M680X_INS_OIM", "M680X_INS_ORA", "M680X_INS_ORAA",
@@ -92,6 +98,12 @@ s_access = (
 	"UNCHANGED", "READ", "WRITE", "READ | WRITE",
 	)
 
+s_inc_dec = (
+	"no inc-/decrement",
+	"pre decrement: 1", "pre decrement: 2", "post increment: 1",
+	"post increment: 2", "post decrement: 1"
+	)
+
 M6800_CODE = b"\x01\x09\x36\x64\x7f\x74\x10\x00\x90\x10\xA4\x10\xb6\x10\x00\x39"
 
 M6801_CODE = b"\x04\x05\x3c\x3d\x38\x93\x10\xec\x10\xed\x10\x39"
@@ -100,11 +112,14 @@ HD6301_CODE = b"\x6b\x10\x00\x71\x10\x00\x72\x10\x10\x39"
 
 M6809_CODE = b"\x06\x10\x19\x1a\x55\x1e\x01\x23\xe9\x31\x06\x34\x55\xa6\x81\xa7\x89\x7f\xff\xa6\x9d\x10\x00\xa7\x91\xa6\x9f\x10\x00\x11\xac\x99\x10\x00\x39\xA6\x07\xA6\x27\xA6\x47\xA6\x67\xA6\x0F\xA6\x10\xA6\x80\xA6\x81\xA6\x82\xA6\x83\xA6\x84\xA6\x85\xA6\x86\xA6\x88\x7F\xA6\x88\x80\xA6\x89\x7F\xFF\xA6\x89\x80\x00\xA6\x8B\xA6\x8C\x10\xA6\x8D\x10\x00\xA6\x91\xA6\x93\xA6\x94\xA6\x95\xA6\x96\xA6\x98\x7F\xA6\x98\x80\xA6\x99\x7F\xFF\xA6\x99\x80\x00\xA6\x9B\xA6\x9C\x10\xA6\x9D\x10\x00\xA6\x9F\x10\x00"
 
+HD6309_CODE = b"\x01\x10\x10\x62\x10\x10\x7b\x10\x10\x00\xcd\x49\x96\x02\xd2\x10\x30\x23\x10\x38\x10\x3b\x10\x53\x10\x5d\x11\x30\x43\x10\x11\x37\x25\x10\x11\x38\x12\x11\x39\x23\x11\x3b\x34\x11\x8e\x10\x00\x11\xaf\x10\x11\xab\x10\x11\xf6\x80\x00"
+
 all_tests = (
         (CS_ARCH_M680X, CS_MODE_M680X_6800, M6800_CODE, "M680X_M6800", None),
         (CS_ARCH_M680X, CS_MODE_M680X_6801, M6801_CODE, "M680X_M6801", None),
         (CS_ARCH_M680X, CS_MODE_M680X_6301, HD6301_CODE, "M680X_HD6301", None),
         (CS_ARCH_M680X, CS_MODE_M680X_6809, M6809_CODE, "M680X_M6809", None),
+        (CS_ARCH_M680X, CS_MODE_M680X_6309, HD6309_CODE, "M680X_HD6309", None),
         )
 
 # print hex dump from string all upper case
@@ -141,10 +156,12 @@ def print_insn_detail(insn):
                     comment = " (in mnemonic)";
                 print("\t\toperands[%u].type: REGISTER = %s%s" % (c,
                     insn.reg_name(i.reg), comment))
+            if i.type == M680X_OP_INDEX:
+                print("\t\toperands[%u].type: INDEX = %u" % (c, i.index))
             if i.type == M680X_OP_IMMEDIATE:
-                print("\t\toperands[%u].type: IMMEDIATE = #%s" % (c, i.imm))
+                print("\t\toperands[%u].type: IMMEDIATE = #%d" % (c, i.imm))
             if i.type == M680X_OP_DIRECT:
-                print("\t\toperands[%u].type: DIRECT = 0x%02X" % (c, i.imm))
+                print("\t\toperands[%u].type: DIRECT = 0x%02X" % (c, i.direct_addr))
             if i.type == M680X_OP_EXTENDED:
                 if i.ext.indirect:
                     indirect = "INDIRECT"
@@ -161,7 +178,7 @@ def print_insn_detail(insn):
                     print("\t\t\toffset: %u" % i.idx.offset)
                     print("\t\t\toffset bits: %u" % i.idx.offset_bits)
             if i.type == M680X_OP_INDEXED_09:
-                if i.idx.indirect:
+                if (i.idx.flags & M680X_IDX_INDIRECT):
                     indirect = "INDIRECT"
                 else:
                     indirect = ""
@@ -170,15 +187,13 @@ def print_insn_detail(insn):
                     print("\t\t\tbase register: %s" % insn.reg_name(i.idx.base_reg))
                 if i.idx.offset_reg != M680X_REG_INVALID:
                     print("\t\t\toffset register: %s" % insn.reg_name(i.idx.offset_reg))
-                if (i.idx.offset_bits != 0) and (i.idx.offset_reg == M680X_REG_INVALID) and (i.idx.inc_dec == 0):
+                if (i.idx.offset_bits != 0) and (i.idx.offset_reg == M680X_REG_INVALID) and (i.idx.inc_dec == M680X_NO_INC_DEC):
                     print("\t\t\toffset: %u" % i.idx.offset)
                     if i.idx.base_reg == M680X_REG_PC:
                         print("\t\t\toffset address: 0x%04X" % i.idx.offset_addr)
                     print("\t\t\toffset bits: %u" % i.idx.offset_bits)
-                if i.idx.inc_dec > 0:
-                    print("\t\t\tpost increment: %d" % i.idx.inc_dec)
-                if i.idx.inc_dec < 0:
-                    print("\t\t\tpre decrement: %d" % i.idx.inc_dec)
+                if i.idx.inc_dec != M680X_NO_INC_DEC:
+                    print("\t\t\t%s" % s_inc_dec[i.idx.inc_dec])
             if (i.size != 0):
                 print("\t\t\tsize: %d" % i.size)
             if (i.access != CS_AC_INVALID):

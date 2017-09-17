@@ -31,16 +31,21 @@ let s_address_modes = [
         "M680X_AM_DIRECT";
         "M680X_AM_RELATIVE";
         "M680X_AM_IMM_DIRECT";
-        "M680X_AM_IMM_INDEXED" ];;
+        "M680X_AM_IMM_INDEXED";
+        "M680X_AM_IMM_EXTENDED";
+        "M680X_AM_BIT_MOVE";
+        "M680X_AM_INDEXED2" ];;
 
 let s_insn_ids = [
         "M680X_INS_INVLD"; "M680X_INS_ABA"; "M680X_INS_ABX"; "M680X_INS_ADCA";
-        "M680X_INS_ADCB"; "M680X_INS_ADCD"; "M680X_INS_ADDA"; "M680X_INS_ADDB";
+        "M680X_INS_ADCB"; "M680X_INS_ADCD"; "M680X_INS_ADCR"; "M680X_INS_ADDA";
+        "M680X_INS_ADDB";
         "M680X_INS_ADDD"; "M680X_INS_ADDE"; "M680X_INS_ADDF"; "M680X_INS_ADDR";
         "M680X_INS_ADDW"; "M680X_INS_AIM"; "M680X_INS_ANDA"; "M680X_INS_ANDB";
         "M680X_INS_ANDCC"; "M680X_INS_ANDD"; "M680X_INS_ANDR"; "M680X_INS_ASL";
         "M680X_INS_ASLA"; "M680X_INS_ASLB"; "M680X_INS_ASLD"; "M680X_INS_ASR";
-        "M680X_INS_ASRA"; "M680X_INS_ASRB"; "M680X_INS_BAND"; "M680X_INS_BCC";
+        "M680X_INS_ASRA"; "M680X_INS_ASRB"; "M680X_INS_ASRD"; "M680X_INS_BAND";
+        "M680X_INS_BCC";
         "M680X_INS_BCS"; "M680X_INS_BEOR"; "M680X_INS_BEQ"; "M680X_INS_BGE";
         "M680X_INS_BGT"; "M680X_INS_BHI"; "M680X_INS_BIAND"; "M680X_INS_BIEOR";
         "M680X_INS_BIOR"; "M680X_INS_BITA"; "M680X_INS_BITB"; "M680X_INS_BITD";
@@ -72,7 +77,8 @@ let s_insn_ids = [
         "M680X_INS_LDQ"; "M680X_INS_LDS"; "M680X_INS_LDU"; "M680X_INS_LDW";
         "M680X_INS_LDX"; "M680X_INS_LDY"; "M680X_INS_LEAS"; "M680X_INS_LEAU";
         "M680X_INS_LEAX"; "M680X_INS_LEAY"; "M680X_INS_LSL"; "M680X_INS_LSLA";
-        "M680X_INS_LSLB"; "M680X_INS_LSR"; "M680X_INS_LSRA"; "M680X_INS_LSRB";
+        "M680X_INS_LSLB"; "M680X_INS_LSLD"; "M680X_INS_LSR"; "M680X_INS_LSRA";
+        "M680X_INS_LSRB";
         "M680X_INS_LSRD"; "M680X_INS_LSRW"; "M680X_INS_MUL"; "M680X_INS_MULD";
         "M680X_INS_NEG"; "M680X_INS_NEGA"; "M680X_INS_NEGB"; "M680X_INS_NEGD";
         "M680X_INS_NOP"; "M680X_INS_OIM"; "M680X_INS_ORA"; "M680X_INS_ORAA";
@@ -101,10 +107,16 @@ let s_insn_ids = [
 let s_access = [
 	"UNCHANGED"; "READ"; "WRITE"; "READ | WRITE" ];;
 
+let s_inc_dec = [
+	"no inc-/decrement";
+        "pre decrement: 1"; "pre decrement: 2"; "post increment: 1";
+        "post increment: 2"; "post decrement: 1" ];;
+
 let _M6800_CODE = "\x01\x09\x36\x64\x7f\x74\x10\x00\x90\x10\xA4\x10\xb6\x10\x00\x39";;
 let _M6801_CODE = "\x04\x05\x3c\x3d\x38\x93\x10\xec\x10\xed\x10\x39";;
 let _HD6301_CODE = "\x6b\x10\x00\x71\x10\x00\x72\x10\x10\x39";;
 let _M6809_CODE = "\x06\x10\x19\x1a\x55\x1e\x01\x23\xe9\x31\x06\x34\x55\xa6\x81\xa7\x89\x7f\xff\xa6\x9d\x10\x00\xa7\x91\xa6\x9f\x10\x00\x11\xac\x99\x10\x00\x39\xA6\x07\xA6\x27\xA6\x47\xA6\x67\xA6\x0F\xA6\x10\xA6\x80\xA6\x81\xA6\x82\xA6\x83\xA6\x84\xA6\x85\xA6\x86\xA6\x88\x7F\xA6\x88\x80\xA6\x89\x7F\xFF\xA6\x89\x80\x00\xA6\x8B\xA6\x8C\x10\xA6\x8D\x10\x00\xA6\x91\xA6\x93\xA6\x94\xA6\x95\xA6\x96\xA6\x98\x7F\xA6\x98\x80\xA6\x99\x7F\xFF\xA6\x99\x80\x00\xA6\x9B\xA6\x9C\x10\xA6\x9D\x10\x00\xA6\x9F\x10\x00";;
+let _HD6309_CODE = "\x01\x10\x10\x62\x10\x10\x7b\x10\x10\x00\xcd\x49\x96\x02\xd2\x10\x30\x23\x10\x38\x10\x3b\x10\x53\x10\x5d\x11\x30\x43\x10\x11\x37\x25\x10\x11\x38\x12\x11\x39\x23\x11\x3b\x34\x11\x8e\x10\x00\x11\xaf\x10\x11\xab\x10\x11\xf6\x80\x00";;
 
 let bit_set value mask =
 	value land mask != 0
@@ -114,6 +126,7 @@ let all_tests = [
         (CS_ARCH_M680X, [CS_MODE_M680X_6801], _M6801_CODE, "M680X_M6801");
         (CS_ARCH_M680X, [CS_MODE_M680X_6301], _HD6301_CODE, "M680X_HD6301");
         (CS_ARCH_M680X, [CS_MODE_M680X_6809], _M6809_CODE, "M680X_M6809");
+        (CS_ARCH_M680X, [CS_MODE_M680X_6309], _HD6309_CODE, "M680X_HD6309");
 ];;
 
 let print_op handle flags i op =
@@ -150,23 +163,24 @@ let print_op handle flags i op =
 		);
 	| M680X_OP_INDEXED_09 idx -> (
 		printf "\t\toperands[%d].type: INDEXED_M6809" i;
-		if idx.indirect then
+		if (bit_set idx.flags _M680X_IDX_INDIRECT) then
 			printf " INDIRECT";
 		printf "\n";
 		if idx.base_reg != _M680X_REG_INVALID then
 			printf "\t\t\tbase register: %s\n" (cs_reg_name handle idx.base_reg);
 		if idx.offset_reg != _M680X_REG_INVALID then
 			printf "\t\t\toffset register: %s\n" (cs_reg_name handle idx.offset_reg);
-		if idx.offset_bits != 0 && idx.offset_reg == 0 && idx.inc_dec == 0 then begin
+		if idx.offset_bits != 0 && idx.offset_reg == 0 && idx.inc_dec == _M680X_NO_INC_DEC then begin
 			printf "\t\t\toffset: %d\n" idx.offset;
 			if idx.base_reg == _M680X_REG_PC then
 				printf "\t\t\toffset address: 0x%X\n" idx.offset_addr;
 			printf "\t\t\toffset bits: %u\n" idx.offset_bits;
 		end;
-		if idx.inc_dec > 0 then
-			printf "\t\t\tpost increment: %d\n" idx.inc_dec;
-		if idx.inc_dec < 0 then
-			printf "\t\t\tpre decrement: %d\n" idx.inc_dec;
+		if idx.inc_dec != _M680X_NO_INC_DEC then
+			printf "\t\t\t%s\n" (List.nth s_inc_dec idx.inc_dec);
+		);
+	| M680X_OP_INDEX index -> (
+		printf "\t\toperands[%d].type: INDEX = %d\n" i index;
 		);
 	);
 	if op.size != 0 then

@@ -22,11 +22,11 @@ static const char s_reg_names[][10] = {
 };
 
 static const char s_instruction_names[][6] = {
-	"INVLD", "ABA", "ABX", "ADCA", "ADCB", "ADCD",
+	"INVLD", "ABA", "ABX", "ADCA", "ADCB", "ADCD", "ADCR",
 	"ADDA", "ADDB", "ADDD", "ADDE", "ADDF", "ADDR", "ADDW",
 	"AIM", "ANDA", "ANDB", "ANDCC", "ANDD", "ANDR",
 	"ASL", "ASLA", "ASLB", "ASLD",
-	"ASR", "ASRA", "ASRB",
+	"ASR", "ASRA", "ASRB", "ASRD",
 	"BAND",
 	"BCC", "BCS", "BEOR", "BEQ", "BGE", "BGT", "BHI", "BIAND", "BIEOR",
 	"BIOR", "BITA", "BITB", "BITD", "BITMD", "BLE", "BLS", "BLT", "BMI",
@@ -49,7 +49,7 @@ static const char s_instruction_names[][6] = {
 	"LDA", "LDAA", "LDAB", "LDB", "LDBT", "LDD", "LDE", "LDF", "LDMD",
 	"LDQ", "LDS", "LDU", "LDW", "LDX", "LDY",
 	"LEAS", "LEAU", "LEAX", "LEAY",
-	"LSL", "LSLA", "LSLB",
+	"LSL", "LSLA", "LSLB", "LSLD",
 	"LSR", "LSRA", "LSRB", "LSRD", "LSRW",
 	"MUL", "MULD",
 	"NEG", "NEGA", "NEGB", "NEGD",
@@ -80,6 +80,14 @@ static name_map s_group_names[] = {
 };
 #endif
 
+static const char s_pre_operation {
+	"", "-", "--", "", "", "",
+};
+
+static const char s_post_operation {
+	"", "", "", "+", "++", "-",
+};
+
 static void printRegName(cs_struct *handle, SStream *OS, unsigned int reg)
 {
 #ifndef CAPSTONE_DIET
@@ -102,11 +110,15 @@ static void printOperand(MCInst *MI, SStream *O, cs_m680x_op *op)
 		printRegName(MI->csh, O, op->reg);
 		break;
 
+	case M680X_OP_INDEX:
+		SStream_concat(O, "%u", op->index);
+		break;
+
 	case M680X_OP_IMMEDIATE:
 		if (MI->csh->imm_unsigned)
-			SStream_concat(O, "#%u", op->imm);
+			SStream_concat(O, "#%u", (uint32_t)op->imm);
 		else
-			SStream_concat(O, "#%d", (int16_t)op->imm);
+			SStream_concat(O, "#%d", op->imm);
 
 		break;
 
@@ -120,7 +132,7 @@ static void printOperand(MCInst *MI, SStream *O, cs_m680x_op *op)
 		break;
 
 	case M680X_OP_INDEXED_09:
-		if (op->idx.indirect)
+		if (op->idx.flags & M680X_IDX_INDIRECT)
 			SStream_concat(O, "[");
 
 		if (op->idx.offset_reg != M680X_REG_INVALID)
@@ -132,25 +144,19 @@ static void printOperand(MCInst *MI, SStream *O, cs_m680x_op *op)
 				SStream_concat(O, "%d", op->idx.offset);
 		}
 
-		SStream_concat(O, ",");
+		if (!(op->idx.flags & M680X_IDX_NO_COMMA))
+			SStream_concat(O, ",");
 
-		if (op->idx.inc_dec == M680X_PRE_DEC_1)
-			SStream_concat(O, "-");
-		else if (op->idx.inc_dec == M680X_PRE_DEC_2)
-			SStream_concat(O, "--");
+		SStream_concat(O, s_pre_operation[op->idx.inc_dec]);
 
 		printRegName(MI->csh, O, op->idx.base_reg);
 
 		if (op->idx.base_reg == M680X_REG_PC)
 			SStream_concat(O, "R");
 
-		if (op->idx.inc_dec == M680X_POST_INC_1)
-			SStream_concat(O, "+");
+		SStream_concat(O, s_post_operation[op->idx.inc_dec]);
 
-		else if (op->idx.inc_dec == M680X_POST_INC_2)
-			SStream_concat(O, "++");
-
-		if (op->idx.indirect)
+		if (op->idx.flags & M680X_IDX_INDIRECT)
 			SStream_concat(O, "]");
 
 		break;
@@ -192,16 +198,15 @@ static const char *getDelimiter(cs_m680x *m680x)
 	if (m680x->op_count > 1) {
 		for (i  = 0; i < m680x->op_count; ++i) {
 			if ((m680x->operands[i].type == M680X_OP_INDEXED_00) ||
-				(m680x->operands[i].type ==
-					M680X_OP_INDEXED_00))
+			    (m680x->operands[i].type == M680X_OP_INDEXED_09))
 				indexed = true;
 
-			if (m680x->operands[i].type != M680X_OP_REGISTER)
+			else if (m680x->operands[i].type != M680X_OP_REGISTER)
 				count++;
 		}
 	}
 
-	return (indexed && (count > 1)) ? ";" : ",";
+	return (indexed && (count >= 1)) ? ";" : ",";
 };
 
 void M680X_printInst(MCInst *MI, SStream *O, void *PrinterInfo)

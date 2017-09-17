@@ -19,16 +19,21 @@ public class TestM680x {
     "M680X_AM_RELATIVE",
     "M680X_AM_IMM_DIRECT",
     "M680X_AM_IMM_INDEXED",
+    "M680X_AM_IMM_EXTENDED",
+    "M680X_AM_BIT_MOVE",
+    "M680X_AM_INDEXED2",
   };
 
   static final String sInsnIds[] = {
     "M680X_INS_INVLD", "M680X_INS_ABA", "M680X_INS_ABX", "M680X_INS_ADCA",
-    "M680X_INS_ADCB", "M680X_INS_ADCD", "M680X_INS_ADDA", "M680X_INS_ADDB",
+    "M680X_INS_ADCB", "M680X_INS_ADCD", "M680X_INS_ADCR", "M680X_INS_ADDA",
+    "M680X_INS_ADDB",
     "M680X_INS_ADDD", "M680X_INS_ADDE", "M680X_INS_ADDF", "M680X_INS_ADDR",
     "M680X_INS_ADDW", "M680X_INS_AIM", "M680X_INS_ANDA", "M680X_INS_ANDB",
     "M680X_INS_ANDCC", "M680X_INS_ANDD", "M680X_INS_ANDR", "M680X_INS_ASL",
     "M680X_INS_ASLA", "M680X_INS_ASLB", "M680X_INS_ASLD", "M680X_INS_ASR",
-    "M680X_INS_ASRA", "M680X_INS_ASRB", "M680X_INS_BAND", "M680X_INS_BCC",
+    "M680X_INS_ASRA", "M680X_INS_ASRB", "M680X_INS_ASRD", "M680X_INS_BAND",
+    "M680X_INS_BCC",
     "M680X_INS_BCS", "M680X_INS_BEOR", "M680X_INS_BEQ", "M680X_INS_BGE",
     "M680X_INS_BGT", "M680X_INS_BHI", "M680X_INS_BIAND", "M680X_INS_BIEOR",
     "M680X_INS_BIOR", "M680X_INS_BITA", "M680X_INS_BITB", "M680X_INS_BITD",
@@ -60,7 +65,8 @@ public class TestM680x {
     "M680X_INS_LDQ", "M680X_INS_LDS", "M680X_INS_LDU", "M680X_INS_LDW",
     "M680X_INS_LDX", "M680X_INS_LDY", "M680X_INS_LEAS", "M680X_INS_LEAU",
     "M680X_INS_LEAX", "M680X_INS_LEAY", "M680X_INS_LSL", "M680X_INS_LSLA",
-    "M680X_INS_LSLB", "M680X_INS_LSR", "M680X_INS_LSRA", "M680X_INS_LSRB",
+    "M680X_INS_LSLB", "M680X_INS_LSLD", "M680X_INS_LSR", "M680X_INS_LSRA",
+    "M680X_INS_LSRB",
     "M680X_INS_LSRD", "M680X_INS_LSRW", "M680X_INS_MUL", "M680X_INS_MULD",
     "M680X_INS_NEG", "M680X_INS_NEGA", "M680X_INS_NEGB", "M680X_INS_NEGD",
     "M680X_INS_NOP", "M680X_INS_OIM", "M680X_INS_ORA", "M680X_INS_ORAA",
@@ -91,10 +97,17 @@ public class TestM680x {
     "UNCHANGED", "READ", "WRITE", "READ | WRITE",
   };
 
+  static final String sIncDec[] = {
+    "no inc-/decrement",
+    "pre decrement: 1", "pre decrement: 2", "post increment: 1",
+    "post increment: 2", "post decrement: 1"
+  };
+
   static final String M6800_CODE = "010936647f7410009010A410b6100039";
   static final String M6801_CODE = "04053c3d389310ec10ed1039";
   static final String HD6301_CODE = "6b100071100072101039";
   static final String M6809_CODE = "0610191a551e0123e931063455a681a7897fffa69d1000a791a69f100011ac99100039A607A627A647A667A60FA610A680A681A682A683A684A685A686A6887FA68880A6897FFFA6898000A68BA68C10A68D1000A691A693A694A695A696A6987FA69880A6997FFFA6998000A69BA69C10A69D1000A69F1000";
+  static final String HD6309_CODE = "0110106210107b101000cd499602d21030231038103b1053105d1130431011372510113812113923113b34118e100011af1011ab1011f68000";
 
   static byte[] hexString2Byte(String s) {
     // from http://stackoverflow.com/questions/140131/convert-a-string-representation-of-a-hex-dump-to-a-byte-array-using-java
@@ -152,6 +165,8 @@ public class TestM680x {
             comment = " (in mnemonic)";
           System.out.printf("\t\toperands[%d].type: REGISTER = %s%s\n", c, ins.regName(i.value.reg), comment);
         }
+        if (i.type == M680X_OP_INDEX)
+          System.out.printf("\t\toperands[%d].type: INDEX = %d\n", c, i.value.index);
         if (i.type == M680X_OP_IMMEDIATE)
           System.out.printf("\t\toperands[%d].type: IMMEDIATE = #%d\n", c, i.value.imm);
         if (i.type == M680X_OP_DIRECT)
@@ -175,7 +190,7 @@ public class TestM680x {
         }
         if (i.type == M680X_OP_INDEXED_09) {
           System.out.printf("\t\toperands[%d].type: INDEXED_M6809 %s\n", c,
-            i.value.idx.indirect != 0 ? "INDIRECT" : "");
+            (i.value.idx.flags & M680X_IDX_INDIRECT) != 0 ? "INDIRECT" : "");
           if (i.value.idx.base_reg != M680X_REG_INVALID) {
             String regName = ins.regName(i.value.idx.base_reg);
             if (regName != null)
@@ -188,16 +203,14 @@ public class TestM680x {
           }
           if ((i.value.idx.offset_bits != 0) &&
               (i.value.idx.offset_reg == M680X_REG_INVALID) &&
-              (i.value.idx.inc_dec == 0)) {
+              (i.value.idx.inc_dec == M680X_NO_INC_DEC)) {
             System.out.printf("\t\t\toffset: %d\n", i.value.idx.offset);
             if (i.value.idx.base_reg == M680X_REG_PC)
               System.out.printf("\t\t\toffset address: 0x%04X\n", i.value.idx.offset_addr);
             System.out.printf("\t\t\toffset bits: %d\n", i.value.idx.offset_bits);
           }
-          if (i.value.idx.inc_dec > 0)
-            System.out.printf("\t\t\tpost increment: %d\n", i.value.idx.inc_dec);
-          if (i.value.idx.inc_dec < 0)
-            System.out.printf("\t\t\tpre decrement: %d\n", i.value.idx.inc_dec);
+          if (i.value.idx.inc_dec != M680X_NO_INC_DEC)
+            System.out.printf("\t\t\t%s\n", sIncDec[i.value.idx.inc_dec]);
         }
         if (i.size != 0)
           System.out.printf("\t\t\tsize: %d\n", i.size);
@@ -241,6 +254,9 @@ public class TestM680x {
       new TestBasic.platform(Capstone.CS_ARCH_M680X,
           Capstone.CS_MODE_M680X_6809,
           hexString2Byte(M6809_CODE), "M680X_M6809"),
+      new TestBasic.platform(Capstone.CS_ARCH_M680X,
+          Capstone.CS_MODE_M680X_6309,
+          hexString2Byte(HD6309_CODE), "M680X_HD6309"),
     };
 
     for (int i=0; i<all_tests.length; i++) {

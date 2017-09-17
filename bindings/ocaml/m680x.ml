@@ -8,11 +8,11 @@ open M680x_const
 type m680x_op_idx = {
 	base_reg: int;
 	offset_reg: int;
+	inc_dec: int;
 	offset: int;
 	offset_addr: int;
 	offset_bits: int;
-	inc_dec: int;
-	indirect: bool;
+	flags: int;
 }
 
 type m680x_op_rel = {
@@ -34,6 +34,7 @@ type m680x_op_value =
 	| M680X_OP_RELATIVE of m680x_op_rel
 	| M680X_OP_EXTENDED of m680x_op_ext
 	| M680X_OP_DIRECT of int
+	| M680X_OP_INDEX of int
 
 type m680x_op = {
 	value: m680x_op_value;

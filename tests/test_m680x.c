@@ -52,16 +52,21 @@ static const char *s_addressing_modes[] = {
 	"M680X_AM_RELATIVE",
 	"M680X_AM_IMM_DIRECT",
 	"M680X_AM_IMM_INDEXED",
+	"M680X_AM_IMM_EXTENDED",
+	"M680X_AM_BIT_MOVE",
+	"M680X_AM_INDEXED2",
 };
 
 static const char s_insn_ids[][16] = {
 	"M680X_INS_INVLD", "M680X_INS_ABA", "M680X_INS_ABX", "M680X_INS_ADCA",
-	"M680X_INS_ADCB", "M680X_INS_ADCD", "M680X_INS_ADDA", "M680X_INS_ADDB",
+	"M680X_INS_ADCB", "M680X_INS_ADCD", "M680X_INS_ADCR", "M680X_INS_ADDA",
+	"M680X_INS_ADDB",
 	"M680X_INS_ADDD", "M680X_INS_ADDE", "M680X_INS_ADDF", "M680X_INS_ADDR",
 	"M680X_INS_ADDW", "M680X_INS_AIM", "M680X_INS_ANDA", "M680X_INS_ANDB",
 	"M680X_INS_ANDCC", "M680X_INS_ANDD", "M680X_INS_ANDR", "M680X_INS_ASL",
 	"M680X_INS_ASLA", "M680X_INS_ASLB", "M680X_INS_ASLD", "M680X_INS_ASR",
-	"M680X_INS_ASRA", "M680X_INS_ASRB", "M680X_INS_BAND", "M680X_INS_BCC",
+	"M680X_INS_ASRA", "M680X_INS_ASRB", "M680X_INS_ASRD", "M680X_INS_BAND",
+	"M680X_INS_BCC",
 	"M680X_INS_BCS", "M680X_INS_BEOR", "M680X_INS_BEQ", "M680X_INS_BGE",
 	"M680X_INS_BGT", "M680X_INS_BHI", "M680X_INS_BIAND", "M680X_INS_BIEOR",
 	"M680X_INS_BIOR", "M680X_INS_BITA", "M680X_INS_BITB", "M680X_INS_BITD",
@@ -93,7 +98,8 @@ static const char s_insn_ids[][16] = {
 	"M680X_INS_LDQ", "M680X_INS_LDS", "M680X_INS_LDU", "M680X_INS_LDW",
 	"M680X_INS_LDX", "M680X_INS_LDY", "M680X_INS_LEAS", "M680X_INS_LEAU",
 	"M680X_INS_LEAX", "M680X_INS_LEAY", "M680X_INS_LSL", "M680X_INS_LSLA",
-	"M680X_INS_LSLB", "M680X_INS_LSR", "M680X_INS_LSRA", "M680X_INS_LSRB",
+	"M680X_INS_LSLB", "M680X_INS_LSLD", "M680X_INS_LSR", "M680X_INS_LSRA",
+	"M680X_INS_LSRB",
 	"M680X_INS_LSRD", "M680X_INS_LSRW", "M680X_INS_MUL", "M680X_INS_MULD",
 	"M680X_INS_NEG", "M680X_INS_NEGA", "M680X_INS_NEGB", "M680X_INS_NEGD",
 	"M680X_INS_NOP", "M680X_INS_OIM", "M680X_INS_ORA", "M680X_INS_ORAA",
@@ -123,6 +129,12 @@ static const char s_insn_ids[][16] = {
 
 static const char *s_access[] = {
 	"UNCHANGED", "READ", "WRITE", "READ | WRITE",
+};
+
+static const char *s_inc_dec[] = {
+	"no inc-/decrement",
+        "pre decrement: 1", "pre decrement: 2", "post increment: 1",
+        "post increment: 2", "post decrement: 1"
 };
 
 static void print_read_write_regs(csh handle, cs_detail *detail)
@@ -185,6 +197,11 @@ static void print_insn_detail(csh handle, cs_insn *insn)
 				cs_reg_name(handle, op->reg), comment);
 			break;
 
+		case M680X_OP_INDEX:
+			printf("\t\toperands[%u].type: INDEX = %u\n", i,
+				op->index);
+			break;
+
 		case M680X_OP_IMMEDIATE:
 			printf("\t\toperands[%u].type: IMMEDIATE = #%d\n", i,
 				op->imm);
@@ -223,7 +240,8 @@ static void print_insn_detail(csh handle, cs_insn *insn)
 
 		case M680X_OP_INDEXED_09:
 			printf("\t\toperands[%u].type: INDEXED_M6809 %s\n", i,
-				op->idx.indirect ? "INDIRECT" : "");
+				(op->idx.flags & M680X_IDX_INDIRECT) ?
+					 "INDIRECT" : "");
 
 			if (op->idx.base_reg != M680X_REG_INVALID)
 				printf("\t\t\tbase register: %s\n",
@@ -235,7 +253,7 @@ static void print_insn_detail(csh handle, cs_insn *insn)
 
 			if ((op->idx.offset_bits != 0) &&
 				(op->idx.offset_reg == M680X_REG_INVALID) &&
-				(op->idx.inc_dec == 0)) {
+				(op->idx.inc_dec == M680X_NO_INC_DEC)) {
 				printf("\t\t\toffset: %d\n", op->idx.offset);
 
 				if (op->idx.base_reg == M680X_REG_PC)
@@ -246,13 +264,9 @@ static void print_insn_detail(csh handle, cs_insn *insn)
 					op->idx.offset_bits);
 			}
 
-			if (op->idx.inc_dec > 0)
-				printf("\t\t\tpost increment: %d\n",
-					op->idx.inc_dec);
-
-			if (op->idx.inc_dec < 0)
-				printf("\t\t\tpre decrement: %d\n",
-					op->idx.inc_dec);
+			if (op->idx.inc_dec != M680X_NO_INC_DEC)
+				printf("\t\t\t%s\n",
+					s_inc_dec[op->idx.inc_dec]);
 
 			break;
 		}
@@ -318,6 +332,11 @@ static void test()
   "\xA6\x9B\xA6\x9C\x10\xA6\x9D\x10\x00\xA6\x9F\x10\x00"
 
 
+#define HD6309_CODE \
+  "\x01\x10\x10\x62\x10\x10\x7b\x10\x10\x00\xcd\x49\x96\x02\xd2" \
+  "\x10\x30\x23\x10\x38\x10\x3b\x10\x53\x10\x5d" \
+  "\x11\x30\x43\x10\x11\x37\x25\x10\x11\x38\x12\x11\x39\x23\x11\x3b\x34" \
+  "\x11\x8e\x10\x00\x11\xaf\x10\x11\xab\x10\x11\xf6\x80\x00"
 
 	struct platform platforms[] = {
 		{
@@ -347,6 +366,13 @@ static void test()
 			(unsigned char *)M6809_CODE,
 			sizeof(M6809_CODE) - 1,
 			"M680X_M6809",
+		},
+		{
+			CS_ARCH_M680X,
+			(cs_mode)(CS_MODE_M680X_6309),
+			(unsigned char *)HD6309_CODE,
+			sizeof(HD6309_CODE) - 1,
+			"M680X_HD6309",
 		},
 	};
 

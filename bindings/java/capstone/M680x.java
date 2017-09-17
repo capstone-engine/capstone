@@ -16,15 +16,15 @@ public class M680x {
   public static class OpIndexed extends Structure {
     public int base_reg;
     public int offset_reg;
+    public int inc_dec;
     public short offset;
     public short offset_addr;
     public byte offset_bits;
-    public byte inc_dec;
-    public byte indirect;
+    public byte flags;
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("base_reg", "offset_reg", "offset", "offset_addr", "offset_bits", "inc_dec", "indirect");
+      return Arrays.asList("base_reg", "offset_reg", "inc_dec", "offset", "offset_addr", "offset_bits", "flags");
     }
   }
 
@@ -55,10 +55,11 @@ public class M680x {
     public OpRelative rel;
     public OpExtended ext;
     public byte direct_addr;
+    public byte index;
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("imm", "reg", "idx", "rel", "ext", "direct_addr");
+      return Arrays.asList("imm", "reg", "idx", "rel", "ext", "direct_addr", "index");
     }
   }
 
