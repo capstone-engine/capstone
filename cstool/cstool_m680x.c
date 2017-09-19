@@ -95,7 +95,8 @@ void print_insn_detail_m680x(csh handle, cs_insn *insn)
 
 		case M680X_OP_REGISTER:
 			comment = "";
-			if (i==0 && m680x->flags & M680X_FIRST_OP_IN_MNEM)
+			if ((i==0 && m680x->flags & M680X_FIRST_OP_IN_MNEM) ||
+			    (i==1 && m680x->flags & M680X_SECOND_OP_IN_MNEM))
 				comment = " (in mnemonic)";
 			printf("\t\toperands[%u].type: REGISTER = %s%s\n", i,
 				cs_reg_name(handle, op->reg), comment);
