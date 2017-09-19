@@ -107,6 +107,16 @@ static void printInstructionName(cs_struct *handle, SStream *OS,
 #endif
 }
 
+static uint32_t get_unsigned(int32_t value, int byte_size)
+{
+	switch(byte_size) {
+		case 1: return (uint32_t)(value & 0xff);
+		case 2: return (uint32_t)(value & 0xffff);
+		default:
+		case 4: return (uint32_t)value;
+	}
+}
+
 static void printOperand(MCInst *MI, SStream *O, cs_m680x_op *op)
 {
 	switch (op->type) {
@@ -120,7 +130,8 @@ static void printOperand(MCInst *MI, SStream *O, cs_m680x_op *op)
 
 	case M680X_OP_IMMEDIATE:
 		if (MI->csh->imm_unsigned)
-			SStream_concat(O, "#%u", (uint32_t)op->imm);
+			SStream_concat(O, "#%u",
+				get_unsigned(op->imm, op->size));
 		else
 			SStream_concat(O, "#%d", op->imm);
 
