@@ -2215,6 +2215,8 @@ static void bcc_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	read_byte_sign_extended(info, &offset, (*address)++);
 	add_rel_operand(info, offset, *address + offset);
 	add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
+
+	add_reg_to_rw_list(MI, M680X_REG_CC, READ);
 }
 
 static void lbcc_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -2225,6 +2227,8 @@ static void lbcc_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	*address += 2;
 	add_rel_operand(info, (int16_t)offset, *address + offset);
 	add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
+
+	add_reg_to_rw_list(MI, M680X_REG_CC, READ);
 }
 
 static const m680x_reg g_rr5_to_reg_ids[] = {
