@@ -1224,7 +1224,7 @@ static const insn_props g_insn_props[] = {
 	{ M680X_GRP_JUMP, rruu, NOR, NOR, false, false }, // BRCLR
 	{ M680X_GRP_JUMP, rruu, NOR, NOR, false, false }, // BRSET
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BRA
-	{ NOG, uuuu, NOR, NOR, false, false }, // BRN never branches
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BRN never branches
 	{ NOG, rruu, NOR, NOR, true, false }, // BSET
 	{ M680X_GRP_CALL, uuuu, NOR, NOR, false, false }, // BSR
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BVC
@@ -1309,7 +1309,7 @@ static const insn_props g_insn_props[] = {
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBNE
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBPL
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBRA
-	{ NOG, uuuu, NOR, NOR, false, false }, // LBRN never branches
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBRN never branches
 	{ M680X_GRP_CALL, uuuu, NOR, NOR, false, false }, // LBSR
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBVC
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // LBVS
@@ -2214,8 +2214,7 @@ static void bcc_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	read_byte_sign_extended(info, &offset, (*address)++);
 	add_rel_operand(info, offset, *address + offset);
-	if (info->insn != M680X_INS_BRN)
-		add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
+	add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
 }
 
 static void lbcc_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -2225,8 +2224,7 @@ static void lbcc_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	read_word(info, &offset, *address);
 	*address += 2;
 	add_rel_operand(info, (int16_t)offset, *address + offset);
-	if (info->insn != M680X_INS_LBRN)
-		add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
+	add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
 }
 
 static const m680x_reg g_rr5_to_reg_ids[] = {
