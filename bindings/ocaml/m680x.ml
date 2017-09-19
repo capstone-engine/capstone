@@ -29,8 +29,7 @@ type m680x_op_value =
 	| M680X_OP_INVALID of int
 	| M680X_OP_IMMEDIATE of int
 	| M680X_OP_REGISTER of int
-	| M680X_OP_INDEXED_00 of m680x_op_idx
-	| M680X_OP_INDEXED_09 of m680x_op_idx
+	| M680X_OP_INDEXED of m680x_op_idx
 	| M680X_OP_RELATIVE of m680x_op_rel
 	| M680X_OP_EXTENDED of m680x_op_ext
 	| M680X_OP_DIRECT of int

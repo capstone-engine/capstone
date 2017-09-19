@@ -360,6 +360,7 @@ public class Capstone {
   public static final int CS_MODE_M680X_6809 = 1 << 4; // M680X Motorola 6809 mode
   public static final int CS_MODE_M680X_6301 = 1 << 5; // M680X Hitachi 6301,6303 mode
   public static final int CS_MODE_M680X_6309 = 1 << 6; // M680X Hitachi 6309 mode
+  public static final int CS_MODE_M680X_6811 = 1 << 7; // M680X Motorola/Freescale 68HC11 mode
 
   // Capstone error
   public static final int CS_ERR_OK = 0;

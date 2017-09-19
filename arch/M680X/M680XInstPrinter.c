@@ -22,31 +22,34 @@ static const char s_reg_names[][10] = {
 };
 
 static const char s_instruction_names[][6] = {
-	"INVLD", "ABA", "ABX", "ADCA", "ADCB", "ADCD", "ADCR",
+	"INVLD", "ABA", "ABX", "ABY", "ADCA", "ADCB", "ADCD", "ADCR",
 	"ADDA", "ADDB", "ADDD", "ADDE", "ADDF", "ADDR", "ADDW",
 	"AIM", "ANDA", "ANDB", "ANDCC", "ANDD", "ANDR",
 	"ASL", "ASLA", "ASLB", "ASLD",
 	"ASR", "ASRA", "ASRB", "ASRD",
 	"BAND",
-	"BCC", "BCS", "BEOR", "BEQ", "BGE", "BGT", "BHI", "BIAND", "BIEOR",
+	"BCC", "BCLR", "BCS", "BEOR", "BEQ", "BGE", "BGT", "BHI",
+	"BIAND", "BIEOR",
 	"BIOR", "BITA", "BITB", "BITD", "BITMD", "BLE", "BLS", "BLT", "BMI",
-	"BNE", "BOR", "BPL", "BRA", "BRN", "BSR", "BVC", "BVS",
+	"BNE", "BOR", "BPL", "BRCLR", "BRSET", "BRA", "BRN", "BSET", "BSR",
+	"BVC", "BVS",
 	"CBA", "CLC", "CLI",
 	"CLR", "CLRA", "CLRB", "CLRD", "CLRE", "CLRF", "CLRW",
 	"CLV",
 	"CMPA", "CMPB", "CMPD", "CMPE", "CMPF", "CMPR", "CMPS", "CMPU", "CMPW",
 	"CMPX", "CMPY",
-	"COM", "COMA", "COMB", "COMD", "COME", "COMF", "COMW",
-	"CPX",
+	"COM", "COMA", "COMB", "COMD", "COME", "COMF", "COMW", "CPD",
+	"CPX", "CPY",
 	"CWAI", "DAA", "DEC", "DECA", "DECB", "DECD", "DECE", "DECF", "DECW",
-	"DES", "DEX",
+	"DES", "DEX", "DEY",
 	"DIVD", "DIVQ", "EIM", "EORA", "EORB", "EORD", "EORR",
-	"EXG", "ILLGL", "INC", "INCA", "INCB", "INCD", "INCE", "INCF", "INCW",
-	"INS", "INX",
+	"EXG", "FDIV", "IDIV", "ILLGL", "INC", "INCA", "INCB",
+	"INCD", "INCE", "INCF", "INCW",
+	"INS", "INX", "INY",
 	"JMP", "JSR",
 	"LBCC", "LBCS", "LBEQ", "LBGE", "LBGT", "LBHI", "LBLE", "LBLS", "LBLT",
 	"LBMI", "LBNE", "LBPL", "LBRA", "LBRN", "LBSR", "LBVC", "LBVS",
-	"LDA", "LDAA", "LDAB", "LDB", "LDBT", "LDD", "LDE", "LDF", "LDMD",
+	 "LDA", "LDAA", "LDAB", "LDB", "LDBT", "LDD", "LDE", "LDF", "LDMD",
 	"LDQ", "LDS", "LDU", "LDW", "LDX", "LDY",
 	"LEAS", "LEAU", "LEAX", "LEAY",
 	"LSL", "LSLA", "LSLB", "LSLD",
@@ -54,18 +57,19 @@ static const char s_instruction_names[][6] = {
 	"MUL", "MULD",
 	"NEG", "NEGA", "NEGB", "NEGD",
 	"NOP", "OIM", "ORA", "ORAA", "ORAB", "ORB", "ORCC", "ORD", "ORR",
-	"PSHA", "PSHB", "PSHS", "PSHSW", "PSHU", "PSHUW", "PSHX",
-	"PULA", "PULB", "PULS", "PULSW", "PULU", "PULUW", "PULX",
+	"PSHA", "PSHB", "PSHS", "PSHSW", "PSHU", "PSHUW", "PSHX", "PSHY",
+	 "PULA", "PULB", "PULS", "PULSW", "PULU", "PULUW", "PULX", "PULY",
 	"ROL", "ROLA", "ROLB", "ROLD", "ROLW",
 	"ROR", "RORA", "RORB", "RORD", "RORW",
 	"RTI", "RTS", "SBA", "SBCA", "SBCB", "SBCD", "SBCR",
 	"SEC", "SEI", "SEV", "SEX", "SEXW", "STA", "STAA", "STAB", "STB",
-	"STBT", "STD", "STE", "STF", "STQ", "STS", "STU", "STW", "STX", "STY",
+	"STBT", "STD", "STE", "STF", "STOP",
+	"STQ", "STS", "STU", "STW", "STX", "STY",
 	"SUBA", "SUBB", "SUBD", "SUBE", "SUBF", "SUBR", "SUBW",
 	"SWI", "SWI2", "SWI3",
-	"SYNC", "TAB", "TAP", "TBA", "TPA", "TFM", "TFR", "TIM",
+	"SYNC", "TAB", "TAP", "TBA", "TEST", "TFM", "TFR", "TIM", "TPA",
 	"TST", "TSTA", "TSTB", "TSTD", "TSTE", "TSTF", "TSTW",
-	"TSX", "TXS", "WAI", "XGDX",
+	"TSX", "TSY", "TXS", "TYS", "WAI", "XGDX", "XGDY",
 };
 
 static name_map s_group_names[] = {
@@ -122,16 +126,7 @@ static void printOperand(MCInst *MI, SStream *O, cs_m680x_op *op)
 
 		break;
 
-	case M680X_OP_INDEXED_00:
-		if (op->idx.offset_bits > 0 && op->idx.offset != 0)
-			SStream_concat(O, "%d", op->idx.offset);
-
-		SStream_concat(O, ",", op->idx.offset);
-
-		printRegName(MI->csh, O, op->idx.base_reg);
-		break;
-
-	case M680X_OP_INDEXED_09:
+	case M680X_OP_INDEXED:
 		if (op->idx.flags & M680X_IDX_INDIRECT)
 			SStream_concat(O, "[");
 
@@ -197,8 +192,7 @@ static const char *getDelimiter(cs_m680x *m680x)
 
 	if (m680x->op_count > 1) {
 		for (i  = 0; i < m680x->op_count; ++i) {
-			if ((m680x->operands[i].type == M680X_OP_INDEXED_00) ||
-			    (m680x->operands[i].type == M680X_OP_INDEXED_09))
+			if (m680x->operands[i].type == M680X_OP_INDEXED)
 				indexed = true;
 
 			else if (m680x->operands[i].type != M680X_OP_REGISTER)

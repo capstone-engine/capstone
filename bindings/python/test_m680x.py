@@ -23,6 +23,10 @@ address_modes = (
 	"M680X_AM_IMM_EXTENDED",
 	"M680X_AM_BIT_MOVE",
 	"M680X_AM_INDEXED2",
+	"M680X_AM_DIR_IMM_REL",
+	"M680X_AM_IDX_IMM_REL",
+	"M680X_AM_DIRECT_IMM",
+	"M680X_AM_INDEXED_IMM",
 	)
 
 s_access = (
@@ -42,6 +46,7 @@ M6801_CODE = b"\x04\x05\x3c\x3d\x38\x93\x10\xec\x10\xed\x10\x39"
 HD6301_CODE = b"\x6b\x10\x00\x71\x10\x00\x72\x10\x10\x39"
 
 M6809_CODE = b"\x06\x10\x19\x1a\x55\x1e\x01\x23\xe9\x31\x06\x34\x55\xa6\x81\xa7\x89\x7f\xff\xa6\x9d\x10\x00\xa7\x91\xa6\x9f\x10\x00\x11\xac\x99\x10\x00\x39\xA6\x07\xA6\x27\xA6\x47\xA6\x67\xA6\x0F\xA6\x10\xA6\x80\xA6\x81\xA6\x82\xA6\x83\xA6\x84\xA6\x85\xA6\x86\xA6\x88\x7F\xA6\x88\x80\xA6\x89\x7F\xFF\xA6\x89\x80\x00\xA6\x8B\xA6\x8C\x10\xA6\x8D\x10\x00\xA6\x91\xA6\x93\xA6\x94\xA6\x95\xA6\x96\xA6\x98\x7F\xA6\x98\x80\xA6\x99\x7F\xFF\xA6\x99\x80\x00\xA6\x9B\xA6\x9C\x10\xA6\x9D\x10\x00\xA6\x9F\x10\x00"
+M6811_CODE = b"\x02\x03\x12\x7f\x10\x00\x13\x99\x08\x00\x14\x7f\x02\x15\x7f\x01\x1e\x7f\x20\x00\x8f\xcf\x18\x08\x18\x30\x18\x3c\x18\x67\x18\x8c\x10\x00\x18\x8f\x18\xce\x10\x00\x18\xff\x10\x00\x1a\xa3\x7f\x1a\xac\x1a\xee\x7f\x1a\xef\x7f\xcd\xac\x7f"
 
 HD6309_CODE = b"\x01\x10\x10\x62\x10\x10\x7b\x10\x10\x00\xcd\x49\x96\x02\xd2\x10\x30\x23\x10\x38\x10\x3b\x10\x53\x10\x5d\x11\x30\x43\x10\x11\x37\x25\x10\x11\x38\x12\x11\x39\x23\x11\x3b\x34\x11\x8e\x10\x00\x11\xaf\x10\x11\xab\x10\x11\xf6\x80\x00"
 
@@ -51,6 +56,7 @@ all_tests = (
         (CS_ARCH_M680X, CS_MODE_M680X_6301, HD6301_CODE, "M680X_HD6301", None),
         (CS_ARCH_M680X, CS_MODE_M680X_6809, M6809_CODE, "M680X_M6809", None),
         (CS_ARCH_M680X, CS_MODE_M680X_6309, HD6309_CODE, "M680X_HD6309", None),
+        (CS_ARCH_M680X, CS_MODE_M680X_6811, M6811_CODE, "M680X_M68HC11", None),
         )
 
 # print hex dump from string all upper case
@@ -101,19 +107,12 @@ def print_insn_detail(insn):
                 print("\t\toperands[%u].type: EXTENDED %s = 0x%04X" % (c, indirect, i.ext.address))
             if i.type == M680X_OP_RELATIVE:
                 print("\t\toperands[%u].type: RELATIVE = 0x%04X" % (c, i.rel.address))
-            if i.type == M680X_OP_INDEXED_00:
-                print("\t\toperands[%u].type: INDEXED_M6800" % c)
-                if i.idx.base_reg != M680X_REG_INVALID:
-                    print("\t\t\tbase register: %s" % insn.reg_name(i.idx.base_reg))
-                if i.idx.offset_bits != 0:
-                    print("\t\t\toffset: %u" % i.idx.offset)
-                    print("\t\t\toffset bits: %u" % i.idx.offset_bits)
-            if i.type == M680X_OP_INDEXED_09:
+            if i.type == M680X_OP_INDEXED:
                 if (i.idx.flags & M680X_IDX_INDIRECT):
-                    indirect = "INDIRECT"
+                    indirect = " INDIRECT"
                 else:
                     indirect = ""
-                print("\t\toperands[%u].type: INDEXED_M6809 %s" % (c, indirect))
+                print("\t\toperands[%u].type: INDEXED%s" % (c, indirect))
                 if i.idx.base_reg != M680X_REG_INVALID:
                     print("\t\t\tbase register: %s" % insn.reg_name(i.idx.base_reg))
                 if i.idx.offset_reg != M680X_REG_INVALID:

@@ -55,6 +55,10 @@ static const char *s_addressing_modes[] = {
 	"M680X_AM_IMM_EXTENDED",
 	"M680X_AM_BIT_MOVE",
 	"M680X_AM_INDEXED2",
+	"M680X_AM_DIR_IMM_REL",
+	"M680X_AM_IDX_IMM_REL",
+	"M680X_AM_DIRECT_IMM",
+	"M680X_AM_INDEXED_IMM",
 };
 #endif
 
@@ -153,25 +157,10 @@ static void print_insn_detail(csh handle, cs_insn *insn)
 				op->rel.address);
 			break;
 
-		case M680X_OP_INDEXED_00:
-			printf("\t\toperands[%u].type: INDEXED_M6800\n", i);
-
-			if (op->idx.base_reg != M680X_REG_INVALID)
-				printf("\t\t\tbase register: %s\n",
-					cs_reg_name(handle, op->idx.base_reg));
-
-			if (op->idx.offset_bits != 0) {
-				printf("\t\t\toffset: %u\n", op->idx.offset);
-				printf("\t\t\toffset bits: %u\n",
-					op->idx.offset_bits);
-			}
-
-			break;
-
-		case M680X_OP_INDEXED_09:
-			printf("\t\toperands[%u].type: INDEXED_M6809 %s\n", i,
+		case M680X_OP_INDEXED:
+			printf("\t\toperands[%u].type: INDEXED%s\n", i,
 				(op->idx.flags & M680X_IDX_INDIRECT) ?
-					 "INDIRECT" : "");
+					 " INDIRECT" : "");
 
 			if (op->idx.base_reg != M680X_REG_INVALID)
 				printf("\t\t\tbase register: %s\n",
@@ -238,6 +227,13 @@ static void test()
 #define M6801_CODE \
   "\x04\x05\x3c\x3d\x38\x93\x10\xec\x10\xed\x10\x39"
 
+#define M6811_CODE \
+  "\x02\x03\x12\x7f\x10\x00\x13\x99\x08\x00\x14\x7f\x02\x15\x7f\x01" \
+  "\x1e\x7f\x20\x00\x8f\xcf" \
+  "\x18\x08\x18\x30\x18\x3c\x18\x67\x18\x8c\x10\x00\x18\x8f" \
+  "\x18\xce\x10\x00\x18\xff\x10\x00" \
+  "\x1a\xa3\x7f\x1a\xac\x1a\xee\x7f\x1a\xef\x7f\xcd\xac\x7f"
+
 #define HD6301_CODE \
   "\x6b\x10\x00\x71\x10\x00\x72\x10\x10\x39"
 
@@ -297,6 +293,13 @@ static void test()
 			(unsigned char *)HD6309_CODE,
 			sizeof(HD6309_CODE) - 1,
 			"M680X_HD6309",
+		},
+		{
+			CS_ARCH_M680X,
+			(cs_mode)(CS_MODE_M680X_6811),
+			(unsigned char *)M6811_CODE,
+			sizeof(M6811_CODE) - 1,
+			"M680X_M68HC11",
 		},
 	};
 

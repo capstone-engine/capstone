@@ -627,7 +627,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 										tmp = caml_alloc(1, 2); // reg
 										Store_field(tmp, 0, Val_int(insn[j-1].detail->m680x.operands[i].reg));
 										break;
-									case M680X_OP_INDEXED_00:
+									case M680X_OP_INDEXED:
 										tmp = caml_alloc(1, 3);
 										tmp3 = caml_alloc(7, 0); // m680x_op_idx
 										Store_field(tmp3, 0, Val_int(insn[j-1].detail->m680x.operands[i].idx.base_reg));
@@ -639,38 +639,26 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 										Store_field(tmp3, 6, Val_int(insn[j-1].detail->m680x.operands[i].idx.flags));
 										Store_field(tmp, 0, tmp3);
 										break;
-									case M680X_OP_INDEXED_09:
-										tmp = caml_alloc(1, 4);
-										tmp3 = caml_alloc(7, 0); // m680x_op_idx
-										Store_field(tmp3, 0, Val_int(insn[j-1].detail->m680x.operands[i].idx.base_reg));
-										Store_field(tmp3, 1, Val_int(insn[j-1].detail->m680x.operands[i].idx.offset_reg));
-										Store_field(tmp3, 2, Val_int(insn[j-1].detail->m680x.operands[i].idx.inc_dec));
-										Store_field(tmp3, 3, Val_int(insn[j-1].detail->m680x.operands[i].idx.offset));
-										Store_field(tmp3, 4, Val_int(insn[j-1].detail->m680x.operands[i].idx.offset_addr));
-										Store_field(tmp3, 5, Val_int(insn[j-1].detail->m680x.operands[i].idx.offset_bits));
-										Store_field(tmp3, 6, Val_int(insn[j-1].detail->m680x.operands[i].idx.flags));
-										Store_field(tmp, 0, tmp3);
-										break;
 									case M680X_OP_RELATIVE:
-										tmp = caml_alloc(1, 5);
+										tmp = caml_alloc(1, 4);
 										tmp3 = caml_alloc(2, 0); // m680x_op_rel
 										Store_field(tmp3, 0, Val_int(insn[j-1].detail->m680x.operands[i].rel.address));
 										Store_field(tmp3, 1, Val_int(insn[j-1].detail->m680x.operands[i].rel.offset));
 										Store_field(tmp, 0, tmp3);
 										break;
 									case M680X_OP_EXTENDED:
-										tmp = caml_alloc(1, 6);
+										tmp = caml_alloc(1, 5);
 										tmp3 = caml_alloc(2, 0); // m680x_op_ext
 										Store_field(tmp3, 0, Val_int(insn[j-1].detail->m680x.operands[i].ext.address));
 										Store_field(tmp3, 1, Val_bool(insn[j-1].detail->m680x.operands[i].ext.indirect));
 										Store_field(tmp, 0, tmp3);
 										break;
 									case M680X_OP_DIRECT:
-										tmp = caml_alloc(1, 7); // direct_addr
+										tmp = caml_alloc(1, 6); // direct_addr
 										Store_field(tmp, 0, Val_int(insn[j-1].detail->m680x.operands[i].direct_addr));
 										break;
 									case M680X_OP_INDEX:
-										tmp = caml_alloc(1, 8); // index
+										tmp = caml_alloc(1, 7); // index
 										Store_field(tmp, 0, Val_int(insn[j-1].detail->m680x.operands[i].index));
 										break;
 									default: break;
@@ -829,6 +817,9 @@ CAMLprim value ocaml_cs_disasm(value _arch, value _mode, value _code, value _add
 				break;
 			case 22:
 				mode |= CS_MODE_M680X_6309;
+				break;
+			case 23:
+				mode |= CS_MODE_M680X_6811;
 				break;
 			default:
 				caml_invalid_argument("Invalid mode");
@@ -990,6 +981,9 @@ CAMLprim value ocaml_open(value _arch, value _mode)
 				break;
 			case 22:
 				mode |= CS_MODE_M680X_6309;
+				break;
+			case 23:
+				mode |= CS_MODE_M680X_6811;
 				break;
 			default:
 				caml_invalid_argument("Invalid mode");

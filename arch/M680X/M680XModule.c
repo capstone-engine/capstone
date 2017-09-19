@@ -26,6 +26,7 @@ static cs_err init(cs_struct *ud)
 	// verify if requested mode is valid
 	if (ud->mode & ~(CS_MODE_M680X_6800 | CS_MODE_M680X_6801 |
 			CS_MODE_M680X_6805 | CS_MODE_M680X_6809 |
+			CS_MODE_M680X_6811 |
 			CS_MODE_M680X_6301 | CS_MODE_M680X_6309))
 	{
 		// At least one mode is not supported by M680X
@@ -33,6 +34,7 @@ static cs_err init(cs_struct *ud)
 	}
 	if (!(ud->mode & (CS_MODE_M680X_6800 | CS_MODE_M680X_6801 |
 			CS_MODE_M680X_6805 | CS_MODE_M680X_6809 |
+			CS_MODE_M680X_6811 |
 			CS_MODE_M680X_6301 | CS_MODE_M680X_6309)))
 	{
 		// At least the cpu type has to be selected. No default.

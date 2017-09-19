@@ -20,6 +20,10 @@ static const char *s_addressing_modes[] = {
 	"M680X_AM_IMM_EXTENDED",
 	"M680X_AM_BIT_MOVE",
 	"M680X_AM_INDEXED2",
+	"M680X_AM_DIR_IMM_REL",
+	"M680X_AM_IDX_IMM_REL",
+	"M680X_AM_DIRECT_IMM",
+	"M680X_AM_INDEXED_IMM",
 };
 
 static const char *s_access[] = {
@@ -91,7 +95,7 @@ void print_insn_detail_m680x(csh handle, cs_insn *insn)
 
 		case M680X_OP_REGISTER:
 			comment = "";
-			if (i == 0 && m680x->flags & M680X_FIRST_OP_IN_MNEM)
+			if (i==0 && m680x->flags & M680X_FIRST_OP_IN_MNEM)
 				comment = " (in mnemonic)";
 			printf("\t\toperands[%u].type: REGISTER = %s%s\n", i,
 				cs_reg_name(handle, op->reg), comment);
@@ -123,25 +127,10 @@ void print_insn_detail_m680x(csh handle, cs_insn *insn)
 				op->rel.address);
 			break;
 
-		case M680X_OP_INDEXED_00:
-			printf("\t\toperands[%u].type: INDEXED_M6800\n", i);
-
-			if (op->idx.base_reg != M680X_REG_INVALID)
-				printf("\t\t\tbase register: %s\n",
-					cs_reg_name(handle, op->idx.base_reg));
-
-			if (op->idx.offset_bits != 0) {
-				printf("\t\t\toffset: %u\n", op->idx.offset);
-				printf("\t\t\toffset bits: %u\n",
-					op->idx.offset_bits);
-			}
-
-			break;
-
-		case M680X_OP_INDEXED_09:
-			printf("\t\toperands[%u].type: INDEXED_M6809 %s\n", i,
+		case M680X_OP_INDEXED:
+			printf("\t\toperands[%u].type: INDEXED%s\n", i,
 				(op->idx.flags & M680X_IDX_INDIRECT) ?
-					"INDIRECT" : "");
+					" INDIRECT" : "");
 
 			if (op->idx.base_reg != M680X_REG_INVALID)
 				printf("\t\t\tbase register: %s\n",

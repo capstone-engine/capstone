@@ -51,6 +51,7 @@ type mode =
   |	CS_MODE_M680X_6809	(* M680X Motorola 6809 mode *)
   |	CS_MODE_M680X_6301	(* M680X Hitachi 6301,6303 mode *)
   |	CS_MODE_M680X_6309	(* M680X Hitachi 6309 mode *)
+  |	CS_MODE_M680X_6811	(* M680X Motorola/Freescale 68HC11 mode *)
 
 
 

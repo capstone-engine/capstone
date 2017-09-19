@@ -13,21 +13,22 @@ typedef enum e_cpu_type {
 	M680X_CPU_TYPE_6801,	// M680X Motorola 6801,6803 mode
 	M680X_CPU_TYPE_6805,	// M680X Motorola 6805 mode
 	M680X_CPU_TYPE_6809,	// M680X Motorola 6809 mode
+	M680X_CPU_TYPE_6811,	// M680X Motorola/Freescale M68HC11 mode
 	M680X_CPU_TYPE_6301,	// M680X Hitachi HD6301,HD6303 mode
 	M680X_CPU_TYPE_6309,	// M680X Hitachi HD6309 mode
 	M680X_CPU_TYPE_ENDING,
 } e_cpu_type;
 
-struct inst_page0;
+struct inst_page1;
 struct inst_pageX;
 
 typedef struct {
 	const struct inst_page1 *inst_page1_table;
 	const struct inst_pageX *inst_overlay_table[2];
 	size_t overlay_table_size[2];
-	uint8_t pageX_prefix[2];
-	const struct inst_pageX *inst_pageX_table[2];
-	size_t pageX_table_size[2];
+	uint8_t pageX_prefix[3];
+	const struct inst_pageX *inst_pageX_table[3];
+	size_t pageX_table_size[3];
 	const bool *reg_valid;
 	const bool *tfr_reg_valid;
 } cpu_tables;

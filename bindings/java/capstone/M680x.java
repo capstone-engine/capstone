@@ -75,7 +75,7 @@ public class M680x {
         value.setType(Integer.TYPE);
       if (type == M680X_OP_REGISTER)
         value.setType(Integer.TYPE);
-      if (type == M680X_OP_INDEXED_00 || type == M680X_OP_INDEXED_09)
+      if (type == M680X_OP_INDEXED)
         value.setType(OpIndexed.class);
       if (type == M680X_OP_RELATIVE)
         value.setType(OpRelative.class);

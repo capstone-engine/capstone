@@ -65,6 +65,7 @@ __all__ = [
     'CS_MODE_M680X_6809',
     'CS_MODE_M680X_6301',
     'CS_MODE_M680X_6309',
+    'CS_MODE_M680X_6811',
 
     'CS_OPT_SYNTAX',
     'CS_OPT_SYNTAX_DEFAULT',
@@ -178,6 +179,7 @@ CS_MODE_M680X_6805 = (1 << 3)  # M680X M6805 mode
 CS_MODE_M680X_6809 = (1 << 4)  # M680X M6809 mode
 CS_MODE_M680X_6301 = (1 << 5)  # M680X HD6301/3 mode
 CS_MODE_M680X_6309 = (1 << 6)  # M680X HD6309 mode
+CS_MODE_M680X_6811 = (1 << 7)  # M680X M68HC11 mode
 
 # Capstone option type
 CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
