@@ -175,7 +175,7 @@ static void printOperand(MCInst *MI, SStream *O, cs_m680x_op *op)
 		break;
 
 	case M680X_OP_DIRECT:
-		SStream_concat(O, "<$%02X", op->direct_addr);
+		SStream_concat(O, "$%02X", op->direct_addr);
 		break;
 
 	case M680X_OP_EXTENDED:
