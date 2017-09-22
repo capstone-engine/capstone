@@ -59,6 +59,8 @@ static const char *s_addressing_modes[] = {
 	"M680X_AM_IDX_IMM_REL",
 	"M680X_AM_DIRECT_IMM",
 	"M680X_AM_INDEXED_IMM",
+	"M680X_AM_IDX_DIR_REL",
+	"M680X_AM_IDX_DIRECT",
 };
 #endif
 
@@ -227,6 +229,10 @@ static void test()
 #define M6801_CODE \
   "\x04\x05\x3c\x3d\x38\x93\x10\xec\x10\xed\x10\x39"
 
+#define M6805_CODE \
+  "\x04\x7f\x00\x17\x22\x28\x00\x2e\x00\x40\x42\x5a\x70\x8e\x97\x9c" \
+  "\xa0\x15\xad\x00\xc3\x10\x00\xda\x12\x34\xe5\x7f\xfe"
+
 #define M6811_CODE \
   "\x02\x03\x12\x7f\x10\x00\x13\x99\x08\x00\x14\x7f\x02\x15\x7f\x01" \
   "\x1e\x7f\x20\x00\x8f\xcf" \
@@ -272,6 +278,13 @@ static void test()
 			(unsigned char *)M6801_CODE,
 			sizeof(M6801_CODE) - 1,
 			"M680X_M6801",
+		},
+		{
+			CS_ARCH_M680X,
+			(cs_mode)(CS_MODE_M680X_6805),
+			(unsigned char *)M6805_CODE,
+			sizeof(M6805_CODE) - 1,
+			"M680X_M68HC05",
 		},
 		{
 			CS_ARCH_M680X,

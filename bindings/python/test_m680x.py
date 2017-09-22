@@ -27,6 +27,8 @@ address_modes = (
 	"M680X_AM_IDX_IMM_REL",
 	"M680X_AM_DIRECT_IMM",
 	"M680X_AM_INDEXED_IMM",
+	"M680X_AM_IDX_DIR_REL",
+	"M680X_AM_IDX_DIRECT",
 	)
 
 s_access = (
@@ -42,6 +44,7 @@ s_inc_dec = (
 M6800_CODE = b"\x01\x09\x36\x64\x7f\x74\x10\x00\x90\x10\xA4\x10\xb6\x10\x00\x39"
 
 M6801_CODE = b"\x04\x05\x3c\x3d\x38\x93\x10\xec\x10\xed\x10\x39"
+M6805_CODE = b"\x04\x7f\x00\x17\x22\x28\x00\x2e\x00\x40\x42\x5a\x70\x8e\x97\x9c\xa0\x15\xad\x00\xc3\x10\x00\xda\x12\x34\xe5\x7f\xfe"
 
 HD6301_CODE = b"\x6b\x10\x00\x71\x10\x00\x72\x10\x10\x39"
 
@@ -53,6 +56,7 @@ HD6309_CODE = b"\x01\x10\x10\x62\x10\x10\x7b\x10\x10\x00\xcd\x49\x96\x02\xd2\x10
 all_tests = (
         (CS_ARCH_M680X, CS_MODE_M680X_6800, M6800_CODE, "M680X_M6800", None),
         (CS_ARCH_M680X, CS_MODE_M680X_6801, M6801_CODE, "M680X_M6801", None),
+        (CS_ARCH_M680X, CS_MODE_M680X_6805, M6805_CODE, "M680X_M68HC05", None),
         (CS_ARCH_M680X, CS_MODE_M680X_6301, HD6301_CODE, "M680X_HD6301", None),
         (CS_ARCH_M680X, CS_MODE_M680X_6809, M6809_CODE, "M680X_M6809", None),
         (CS_ARCH_M680X, CS_MODE_M680X_6309, HD6309_CODE, "M680X_HD6309", None),

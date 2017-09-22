@@ -29,7 +29,7 @@ typedef struct {
 	uint8_t pageX_prefix[3];
 	const struct inst_pageX *inst_pageX_table[3];
 	size_t pageX_table_size[3];
-	const bool *reg_valid;
+	const uint8_t *reg_byte_size;
 	const bool *tfr_reg_valid;
 } cpu_tables;
 
