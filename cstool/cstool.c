@@ -52,6 +52,7 @@ static struct {
 	{ "m6811", CS_ARCH_M680X, CS_MODE_M680X_6811 },
 	{ "hd6301", CS_ARCH_M680X, CS_MODE_M680X_6301 },
 	{ "hd6309", CS_ARCH_M680X, CS_MODE_M680X_6309 },
+	{ "hcs08", CS_ARCH_M680X, CS_MODE_M680X_HCS08 },
 	{ NULL }
 };
 
@@ -193,6 +194,7 @@ static void usage(char *prog)
                 printf("        m6811:     M68HC11\n");
                 printf("        hd6301:    HD6301/3\n");
                 printf("        hd6309:    HD6309\n");
+                printf("        hcs08:     HCS08\n");
         }
 
 	printf("\nExtra options:\n");

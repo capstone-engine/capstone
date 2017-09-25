@@ -824,6 +824,9 @@ CAMLprim value ocaml_cs_disasm(value _arch, value _mode, value _code, value _add
 			case 24:
 				mode |= CS_MODE_M680X_6811;
 				break;
+			case 25:
+				mode |= CS_MODE_M680X_HCS08;
+				break;
 			default:
 				caml_invalid_argument("Invalid mode");
 				return Val_emptylist;
@@ -990,6 +993,9 @@ CAMLprim value ocaml_open(value _arch, value _mode)
 				break;
 			case 24:
 				mode |= CS_MODE_M680X_6811;
+				break;
+			case 25:
+				mode |= CS_MODE_M680X_HCS08;
 				break;
 			default:
 				caml_invalid_argument("Invalid mode");

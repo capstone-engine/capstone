@@ -130,6 +130,7 @@ typedef enum cs_mode {
 	CS_MODE_M680X_6808 = 1 << 6, // M680X Motorola/Freescale 6808 mode
 	CS_MODE_M680X_6809 = 1 << 7, // M680X Motorola 6809 mode
 	CS_MODE_M680X_6811 = 1 << 8, // M680X Motorola/Freescale 68HC11 mode
+	CS_MODE_M680X_HCS08 = 1 << 9, // M680X Freescale HCS08 mode
 } cs_mode;
 
 typedef void* (CAPSTONE_API *cs_malloc_t)(size_t size);

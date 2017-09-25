@@ -893,7 +893,7 @@ static const inst_pageX g_m6808_inst_overlay_table[] = {
 	{ 0xaf, M680X_INS_AIX, immediate8_hdlr_id },
 };
 
-// M68HC08 PAGE2 instructions (previx 0x9E)
+// M68HC08 PAGE2 instructions (prefix 0x9E)
 static const inst_pageX g_m6808_inst_page2_table[] = {
 	{ 0x60, M680X_INS_NEG, indexedS_hdlr_id },
 	{ 0x61, M680X_INS_CBEQ, indexedS_rel_hdlr_id },
@@ -936,6 +936,65 @@ static const inst_pageX g_m6808_inst_page2_table[] = {
 	{ 0xeb, M680X_INS_ADD, indexedS_hdlr_id },
 	{ 0xee, M680X_INS_LDX, indexedS_hdlr_id },
 	{ 0xef, M680X_INS_STX, indexedS_hdlr_id },
+};
+
+// Additional instructions only supported on HCS08
+static const inst_pageX g_hcs08_inst_overlay_table[] = {
+	{ 0x32, M680X_INS_LDHX, extended_hdlr_id },
+	{ 0x3e, M680X_INS_CPHX, extended_hdlr_id },
+	{ 0x82, M680X_INS_BGND, inherent_hdlr_id },
+	{ 0x96, M680X_INS_STHX, extended_hdlr_id },
+};
+
+// HCS08 PAGE2 instructions (prefix 0x9E)
+static const inst_pageX g_hcs08_inst_page2_table[] = {
+	{ 0x60, M680X_INS_NEG, indexedS_hdlr_id },
+	{ 0x61, M680X_INS_CBEQ, indexedS_rel_hdlr_id },
+	{ 0x63, M680X_INS_COM, indexedS_hdlr_id },
+	{ 0x64, M680X_INS_LSR, indexedS_hdlr_id },
+	{ 0x66, M680X_INS_ROR, indexedS_hdlr_id },
+	{ 0x67, M680X_INS_ASR, indexedS_hdlr_id },
+	{ 0x68, M680X_INS_LSL, indexedS_hdlr_id },
+	{ 0x69, M680X_INS_ROL, indexedS_hdlr_id },
+	{ 0x6a, M680X_INS_DEC, indexedS_hdlr_id },
+	{ 0x6b, M680X_INS_DBNZ, indexedS_rel_hdlr_id },
+	{ 0x6c, M680X_INS_INC, indexedS_hdlr_id },
+	{ 0x6d, M680X_INS_TST, indexedS_hdlr_id },
+	{ 0x6f, M680X_INS_CLR, indexedS_hdlr_id },
+	{ 0xae, M680X_INS_LDHX, indexedX0_hdlr_id },
+	{ 0xbe, M680X_INS_LDHX, indexedX16_hdlr_id },
+	{ 0xce, M680X_INS_LDHX, indexedX_hdlr_id },
+	{ 0xd0, M680X_INS_SUB, indexedS16_hdlr_id },
+	{ 0xd1, M680X_INS_CMP, indexedS16_hdlr_id },
+	{ 0xd2, M680X_INS_SBC, indexedS16_hdlr_id },
+	{ 0xd3, M680X_INS_CPX, indexedS16_hdlr_id },
+	{ 0xd4, M680X_INS_AND, indexedS16_hdlr_id },
+	{ 0xd5, M680X_INS_BIT, indexedS16_hdlr_id },
+	{ 0xd6, M680X_INS_LDA, indexedS16_hdlr_id },
+	{ 0xd7, M680X_INS_STA, indexedS16_hdlr_id },
+	{ 0xd8, M680X_INS_EOR, indexedS16_hdlr_id },
+	{ 0xd9, M680X_INS_ADC, indexedS16_hdlr_id },
+	{ 0xda, M680X_INS_ORA, indexedS16_hdlr_id },
+	{ 0xdb, M680X_INS_ADD, indexedS16_hdlr_id },
+	{ 0xde, M680X_INS_LDX, indexedS16_hdlr_id },
+	{ 0xdf, M680X_INS_STX, indexedS16_hdlr_id },
+	{ 0xe0, M680X_INS_SUB, indexedS_hdlr_id },
+	{ 0xe1, M680X_INS_CMP, indexedS_hdlr_id },
+	{ 0xe2, M680X_INS_SBC, indexedS_hdlr_id },
+	{ 0xe3, M680X_INS_CPX, indexedS_hdlr_id },
+	{ 0xe4, M680X_INS_AND, indexedS_hdlr_id },
+	{ 0xe5, M680X_INS_BIT, indexedS_hdlr_id },
+	{ 0xe6, M680X_INS_LDA, indexedS_hdlr_id },
+	{ 0xe7, M680X_INS_STA, indexedS_hdlr_id },
+	{ 0xe8, M680X_INS_EOR, indexedS_hdlr_id },
+	{ 0xe9, M680X_INS_ADC, indexedS_hdlr_id },
+	{ 0xea, M680X_INS_ORA, indexedS_hdlr_id },
+	{ 0xeb, M680X_INS_ADD, indexedS_hdlr_id },
+	{ 0xee, M680X_INS_LDX, indexedS_hdlr_id },
+	{ 0xef, M680X_INS_STX, indexedS_hdlr_id },
+	{ 0xf3, M680X_INS_CPHX, indexedS_hdlr_id },
+	{ 0xfe, M680X_INS_LDHX, indexedS_hdlr_id },
+	{ 0xff, M680X_INS_STHX, indexedS_hdlr_id },
 };
 
 // M6809/HD6309 PAGE1 instructions
@@ -1594,6 +1653,7 @@ static const insn_props g_insn_props[] = {
 	{ NOG, mrrr, NOR, NOR, false, false }, // BEOR
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BEQ
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BGE
+	{ NOG, uuuu, NOR, NOR, false, false }, // BGND
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BGT
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BHCC
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BHCS
@@ -3433,7 +3493,7 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 
 static const char *s_cpu_type[] = {
 	"INVALID", "6301", "6309", "6800", "6801", "6805", "6808",
-	"6809", "6811",
+	"6809", "6811", "HCS08",
 };
 
 // Tables to get the byte size of a register on the CPU
@@ -3524,6 +3584,20 @@ static bool m680x_setup_internals(m680x_info *info, e_cpu_type cpu_type,
 		cpu->reg_byte_size = &g_m6808_reg_byte_size[0];
 		break;
 
+	case M680X_CPU_TYPE_HCS08:
+		cpu->inst_page1_table = &g_m6805_inst_page1_table[0];
+		cpu->pageX_prefix[0] = 0x9E; // PAGE2 prefix
+		cpu->inst_pageX_table[0] = &g_hcs08_inst_page2_table[0];
+		cpu->pageX_table_size[0] = ARR_SIZE(g_hcs08_inst_page2_table);
+		cpu->inst_overlay_table[0] = &g_m6808_inst_overlay_table[0];
+		table_size = ARR_SIZE(g_m6808_inst_overlay_table);
+		cpu->overlay_table_size[0] = table_size;
+		cpu->inst_overlay_table[1] = &g_hcs08_inst_overlay_table[0];
+		table_size = ARR_SIZE(g_hcs08_inst_overlay_table);
+		cpu->overlay_table_size[1] = table_size;
+		cpu->reg_byte_size = &g_m6808_reg_byte_size[0];
+		break;
+
 	case M680X_CPU_TYPE_6301:
 		cpu->inst_page1_table = &g_m6800_inst_page1_table[0];
 		cpu->inst_overlay_table[0] = &g_m6801_inst_overlay_table[0];
@@ -3611,6 +3685,9 @@ bool M680X_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 
 	if (handle->mode & CS_MODE_M680X_6808)
 		cpu_type = M680X_CPU_TYPE_6808;
+
+	if (handle->mode & CS_MODE_M680X_HCS08)
+		cpu_type = M680X_CPU_TYPE_HCS08;
 
 	if (handle->mode & CS_MODE_M680X_6809)
 		cpu_type = M680X_CPU_TYPE_6809;

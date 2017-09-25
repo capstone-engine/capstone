@@ -54,6 +54,7 @@ public class TestM680x {
   static final String M6809_CODE = "0610191a551e0123e931063455a681a7897fffa69d1000a791a69f100011ac99100039A607A627A647A667A60FA610A680A681A682A683A684A685A686A6887FA68880A6897FFFA6898000A68BA68C10A68D1000A691A693A694A695A696A6987FA69880A6997FFFA6998000A69BA69C10A69D1000A69F1000";
   static final String M6811_CODE = "0203127f100013990800147f02157f011e7f20008fcf18081830183c1867188c1000188f18ce100018ff10001aa37f1aac1aee7f1aef7fcdac7f";
   static final String HD6309_CODE = "0110106210107b101000cd499602d21030231038103b1053105d1130431011372510113812113923113b34118e100011af1011ab1011f68000";
+  static final String HCS08_CODE = "3210009eae9ece7f9ebe10009efe7f3e10009ef37f9610009eff7f82";
 
   static byte[] hexString2Byte(String s) {
     // from http://stackoverflow.com/questions/140131/convert-a-string-representation-of-a-hex-dump-to-a-byte-array-using-java
@@ -200,6 +201,9 @@ public class TestM680x {
       new TestBasic.platform(Capstone.CS_ARCH_M680X,
           Capstone.CS_MODE_M680X_6811,
           hexString2Byte(M6811_CODE), "M680X_M68HC11"),
+      new TestBasic.platform(Capstone.CS_ARCH_M680X,
+          Capstone.CS_MODE_M680X_HCS08,
+          hexString2Byte(HCS08_CODE), "M680X_HCS08"),
     };
 
     for (int i=0; i<all_tests.length; i++) {
