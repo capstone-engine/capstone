@@ -45,12 +45,13 @@ type mode =
   |	CS_MODE_MIPS32		(* Mips32 mode (for Mips) *)
   |	CS_MODE_MIPS64		(* Mips64 mode (for Mips) *)
   |	CS_MODE_QPX         (* Quad Processing eXtensions mode (PowerPC) *)
+  |	CS_MODE_M680X_6301	(* M680X Hitachi 6301,6303 mode *)
+  |	CS_MODE_M680X_6309	(* M680X Hitachi 6309 mode *)
   |	CS_MODE_M680X_6800	(* M680X Motorola 6800,6802 mode *)
   |	CS_MODE_M680X_6801	(* M680X Motorola 6801,6803 mode *)
   |	CS_MODE_M680X_6805	(* M680X Motorola 6805 mode *)
+  |	CS_MODE_M680X_6808	(* M680X Motorola 6808 mode *)
   |	CS_MODE_M680X_6809	(* M680X Motorola 6809 mode *)
-  |	CS_MODE_M680X_6301	(* M680X Hitachi 6301,6303 mode *)
-  |	CS_MODE_M680X_6309	(* M680X Hitachi 6309 mode *)
   |	CS_MODE_M680X_6811	(* M680X Motorola/Freescale 68HC11 mode *)
 
 

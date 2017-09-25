@@ -61,6 +61,13 @@ static const char *s_addressing_modes[] = {
 	"M680X_AM_INDEXED_IMM",
 	"M680X_AM_IDX_DIR_REL",
 	"M680X_AM_IDX_DIRECT",
+	"M680X_AM_IMM_REL",
+	"M680X_AM_DIRECT_REL",
+	"M680X_AM_INDEXED_REL",
+	"M680X_AM_DIRECT_IDX",
+	"M680X_AM_DIRECT2",
+	"M680X_AM_INDEXED_DIR",
+
 };
 #endif
 
@@ -233,6 +240,11 @@ static void test()
   "\x04\x7f\x00\x17\x22\x28\x00\x2e\x00\x40\x42\x5a\x70\x8e\x97\x9c" \
   "\xa0\x15\xad\x00\xc3\x10\x00\xda\x12\x34\xe5\x7f\xfe"
 
+#define M6808_CODE \
+  "\x31\x22\x00\x35\x22\x45\x10\x00\x4b\x00\x51\x10\x52\x5e\x22\x62" \
+  "\x65\x12\x34\x72\x84\x85\x86\x87\x8a\x8b\x8c\x94\x95\xa7\x10\xaf\x10" \
+  "\x9e\x60\x7f\x9e\x6b\x7f\x00\x9e\xd6\x10\x00\x9e\xe6\x7f"
+
 #define M6811_CODE \
   "\x02\x03\x12\x7f\x10\x00\x13\x99\x08\x00\x14\x7f\x02\x15\x7f\x01" \
   "\x1e\x7f\x20\x00\x8f\xcf" \
@@ -267,6 +279,20 @@ static void test()
 	struct platform platforms[] = {
 		{
 			CS_ARCH_M680X,
+			(cs_mode)(CS_MODE_M680X_6301),
+			(unsigned char *)HD6301_CODE,
+			sizeof(HD6301_CODE) - 1,
+			"M680X_HD6301",
+		},
+		{
+			CS_ARCH_M680X,
+			(cs_mode)(CS_MODE_M680X_6309),
+			(unsigned char *)HD6309_CODE,
+			sizeof(HD6309_CODE) - 1,
+			"M680X_HD6309",
+		},
+		{
+			CS_ARCH_M680X,
 			(cs_mode)(CS_MODE_M680X_6800),
 			(unsigned char *)M6800_CODE,
 			sizeof(M6800_CODE) - 1,
@@ -288,10 +314,10 @@ static void test()
 		},
 		{
 			CS_ARCH_M680X,
-			(cs_mode)(CS_MODE_M680X_6301),
-			(unsigned char *)HD6301_CODE,
-			sizeof(HD6301_CODE) - 1,
-			"M680X_HD6301",
+			(cs_mode)(CS_MODE_M680X_6808),
+			(unsigned char *)M6808_CODE,
+			sizeof(M6808_CODE) - 1,
+			"M680X_M68HC08",
 		},
 		{
 			CS_ARCH_M680X,
@@ -299,13 +325,6 @@ static void test()
 			(unsigned char *)M6809_CODE,
 			sizeof(M6809_CODE) - 1,
 			"M680X_M6809",
-		},
-		{
-			CS_ARCH_M680X,
-			(cs_mode)(CS_MODE_M680X_6309),
-			(unsigned char *)HD6309_CODE,
-			sizeof(HD6309_CODE) - 1,
-			"M680X_HD6309",
 		},
 		{
 			CS_ARCH_M680X,

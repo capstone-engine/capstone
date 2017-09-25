@@ -9,13 +9,14 @@
 
 typedef enum e_cpu_type {
 	M680X_CPU_TYPE_INVALID,
-	M680X_CPU_TYPE_6800,	// M680X Motorola 6800,6802 mode
-	M680X_CPU_TYPE_6801,	// M680X Motorola 6801,6803 mode
-	M680X_CPU_TYPE_6805,	// M680X Motorola 6805 mode
-	M680X_CPU_TYPE_6809,	// M680X Motorola 6809 mode
-	M680X_CPU_TYPE_6811,	// M680X Motorola/Freescale M68HC11 mode
 	M680X_CPU_TYPE_6301,	// M680X Hitachi HD6301,HD6303 mode
 	M680X_CPU_TYPE_6309,	// M680X Hitachi HD6309 mode
+	M680X_CPU_TYPE_6800,	// M680X Motorola 6800,6802 mode
+	M680X_CPU_TYPE_6801,	// M680X Motorola 6801,6803 mode
+	M680X_CPU_TYPE_6805,	// M680X Motorola/Freescale M68HC05 mode
+	M680X_CPU_TYPE_6808,	// M680X Motorola/Freescale M68HC08 mode
+	M680X_CPU_TYPE_6809,	// M680X Motorola 6809 mode
+	M680X_CPU_TYPE_6811,	// M680X Motorola/Freescale M68HC11 mode
 	M680X_CPU_TYPE_ENDING,
 } e_cpu_type;
 

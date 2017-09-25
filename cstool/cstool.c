@@ -47,6 +47,7 @@ static struct {
 	{ "m6800", CS_ARCH_M680X, CS_MODE_M680X_6800 },
 	{ "m6801", CS_ARCH_M680X, CS_MODE_M680X_6801 },
 	{ "m6805", CS_ARCH_M680X, CS_MODE_M680X_6805 },
+	{ "m6808", CS_ARCH_M680X, CS_MODE_M680X_6808 },
 	{ "m6809", CS_ARCH_M680X, CS_MODE_M680X_6809 },
 	{ "m6811", CS_ARCH_M680X, CS_MODE_M680X_6811 },
 	{ "hd6301", CS_ARCH_M680X, CS_MODE_M680X_6301 },
@@ -187,6 +188,7 @@ static void usage(char *prog)
                 printf("        m6800:     M6800/2\n");
                 printf("        m6801:     M6801/3\n");
                 printf("        m6805:     M6805\n");
+                printf("        m6808:     M68HC08\n");
                 printf("        m6809:     M6809\n");
                 printf("        m6811:     M68HC11\n");
                 printf("        hd6301:    HD6301/3\n");

@@ -122,13 +122,14 @@ typedef enum cs_mode {
 	CS_MODE_BIG_ENDIAN = 1 << 31,	// big-endian mode
 	CS_MODE_MIPS32 = CS_MODE_32,	// Mips32 ISA (Mips)
 	CS_MODE_MIPS64 = CS_MODE_64,	// Mips64 ISA (Mips)
-	CS_MODE_M680X_6800 = 1 << 1, // M680X Motorola 6800,6802 mode
-	CS_MODE_M680X_6801 = 1 << 2, // M680X Motorola 6801,6803 mode
-	CS_MODE_M680X_6805 = 1 << 3, // M680X Motorola 6805 mode
-	CS_MODE_M680X_6809 = 1 << 4, // M680X Motorola 6809 mode
-	CS_MODE_M680X_6301 = 1 << 5, // M680X Hitachi 6301,6303 mode
-	CS_MODE_M680X_6309 = 1 << 6, // M680X Hitachi 6309 mode
-	CS_MODE_M680X_6811 = 1 << 7, // M680X Motorola/Freescale 68HC11 mode
+	CS_MODE_M680X_6301 = 1 << 1, // M680X Hitachi 6301,6303 mode
+	CS_MODE_M680X_6309 = 1 << 2, // M680X Hitachi 6309 mode
+	CS_MODE_M680X_6800 = 1 << 3, // M680X Motorola 6800,6802 mode
+	CS_MODE_M680X_6801 = 1 << 4, // M680X Motorola 6801,6803 mode
+	CS_MODE_M680X_6805 = 1 << 5, // M680X Motorola/Freescale 6805 mode
+	CS_MODE_M680X_6808 = 1 << 6, // M680X Motorola/Freescale 6808 mode
+	CS_MODE_M680X_6809 = 1 << 7, // M680X Motorola 6809 mode
+	CS_MODE_M680X_6811 = 1 << 8, // M680X Motorola/Freescale 68HC11 mode
 } cs_mode;
 
 typedef void* (CAPSTONE_API *cs_malloc_t)(size_t size);

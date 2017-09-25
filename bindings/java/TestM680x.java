@@ -28,6 +28,12 @@ public class TestM680x {
     "M680X_AM_INDEXED_IMM",
     "M680X_AM_IDX_DIR_REL",
     "M680X_AM_IDX_DIRECT",
+    "M680X_AM_IMM_REL",
+    "M680X_AM_DIRECT_REL",
+    "M680X_AM_INDEXED_REL",
+    "M680X_AM_DIRECT_IDX",
+    "M680X_AM_DIRECT2",
+    "M680X_AM_INDEXED_DIR",
   };
 
   static final String sAccess[] = {
@@ -43,6 +49,7 @@ public class TestM680x {
   static final String M6800_CODE = "010936647f7410009010A410b6100039";
   static final String M6801_CODE = "04053c3d389310ec10ed1039";
   static final String M6805_CODE = "047f00172228002e0040425a708e979ca015ad00c31000da1234e57ffe";
+  static final String M6808_CODE = "31220035224510004b005110525e226265123472848586878a8b8c9495a710af109e607f9e6b7f009ed610009ee67f";
   static final String HD6301_CODE = "6b100071100072101039";
   static final String M6809_CODE = "0610191a551e0123e931063455a681a7897fffa69d1000a791a69f100011ac99100039A607A627A647A667A60FA610A680A681A682A683A684A685A686A6887FA68880A6897FFFA6898000A68BA68C10A68D1000A691A693A694A695A696A6987FA69880A6997FFFA6998000A69BA69C10A69D1000A69F1000";
   static final String M6811_CODE = "0203127f100013990800147f02157f011e7f20008fcf18081830183c1867188c1000188f18ce100018ff10001aa37f1aac1aee7f1aef7fcdac7f";
@@ -170,6 +177,12 @@ public class TestM680x {
 
     final TestBasic.platform[] all_tests = {
       new TestBasic.platform(Capstone.CS_ARCH_M680X,
+          Capstone.CS_MODE_M680X_6301,
+          hexString2Byte(HD6301_CODE), "M680X_HD6301"),
+      new TestBasic.platform(Capstone.CS_ARCH_M680X,
+          Capstone.CS_MODE_M680X_6309,
+          hexString2Byte(HD6309_CODE), "M680X_HD6309"),
+      new TestBasic.platform(Capstone.CS_ARCH_M680X,
           Capstone.CS_MODE_M680X_6800,
           hexString2Byte(M6800_CODE), "M680X_M6800"),
       new TestBasic.platform(Capstone.CS_ARCH_M680X,
@@ -179,14 +192,11 @@ public class TestM680x {
           Capstone.CS_MODE_M680X_6805,
           hexString2Byte(M6805_CODE), "M680X_M68HC05"),
       new TestBasic.platform(Capstone.CS_ARCH_M680X,
-          Capstone.CS_MODE_M680X_6301,
-          hexString2Byte(HD6301_CODE), "M680X_HD6301"),
+          Capstone.CS_MODE_M680X_6808,
+          hexString2Byte(M6808_CODE), "M680X_M68HC08"),
       new TestBasic.platform(Capstone.CS_ARCH_M680X,
           Capstone.CS_MODE_M680X_6809,
           hexString2Byte(M6809_CODE), "M680X_M6809"),
-      new TestBasic.platform(Capstone.CS_ARCH_M680X,
-          Capstone.CS_MODE_M680X_6309,
-          hexString2Byte(HD6309_CODE), "M680X_HD6309"),
       new TestBasic.platform(Capstone.CS_ARCH_M680X,
           Capstone.CS_MODE_M680X_6811,
           hexString2Byte(M6811_CODE), "M680X_M68HC11"),

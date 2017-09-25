@@ -68,6 +68,18 @@ typedef enum insn_hdlr_id {
 	opidx_direct_hdlr_id,
 	indexedX0_hdlr_id,
 	indexedX16_hdlr_id,
+        imm_rel_hdlr_id,
+        direct_rel_hdlr_id,
+        indexedS_hdlr_id,
+        indexedS16_hdlr_id,
+        indexedS_rel_hdlr_id,
+        indexedX_rel_hdlr_id,
+        indexedX0_rel_hdlr_id,
+        indexedXp_rel_hdlr_id,
+        idxX0p_rel_hdlr_id,
+        idxX0p_direct_hdlr_id,
+        direct_direct_hdlr_id,
+        direct_idxX0p_hdlr_id,
 	HANDLER_ID_ENDING,
 } insn_hdlr_id;
 
@@ -95,6 +107,7 @@ typedef enum e_access_mode {
 	mmrr,
 	wmmm,
 	rruu,
+	muuu,
 	ACCESS_MODE_ENDING,
 } e_access_mode;
 
@@ -109,14 +122,14 @@ typedef enum e_access {
 /* Properties of one instruction in PAGE1 (without prefix) */
 typedef struct inst_page1 {
 	m680x_insn insn : 9;
-	insn_hdlr_id handler_id : 5; /* instruction handler id */
+	insn_hdlr_id handler_id : 6; /* instruction handler id */
 } inst_page1;
 
 /* Properties of one instruction in any other PAGE X */
 typedef struct inst_pageX {
 	unsigned opcode : 8;
 	m680x_insn insn : 9;
-	insn_hdlr_id handler_id : 5; /* instruction handler id */
+	insn_hdlr_id handler_id : 6; /* instruction handler id */
 } inst_pageX;
 
 typedef struct insn_props {
@@ -835,6 +848,96 @@ static const inst_page1 g_m6805_inst_page1_table[256] = {
 	{ M680X_INS_STX, indexedX0_hdlr_id },
 };
 
+// Additional instructions only supported on M68HC08
+static const inst_pageX g_m6808_inst_overlay_table[] = {
+	{ 0x31, M680X_INS_CBEQ, direct_rel_hdlr_id },
+	{ 0x35, M680X_INS_STHX, direct_hdlr_id },
+	{ 0x3b, M680X_INS_DBNZ, direct_rel_hdlr_id },
+	{ 0x41, M680X_INS_CBEQA, imm_rel_hdlr_id },
+	{ 0x45, M680X_INS_LDHX, immediate16_hdlr_id },
+	{ 0x4b, M680X_INS_DBNZA, relative8_hdlr_id },
+	{ 0x4e, M680X_INS_MOV, direct_direct_hdlr_id },
+	{ 0x51, M680X_INS_CBEQX, imm_rel_hdlr_id },
+	{ 0x52, M680X_INS_DIV, inherent_hdlr_id },
+	{ 0x55, M680X_INS_LDHX, direct_hdlr_id },
+	{ 0x5b, M680X_INS_DBNZX, relative8_hdlr_id },
+	{ 0x5e, M680X_INS_MOV, direct_idxX0p_hdlr_id },
+	{ 0x61, M680X_INS_CBEQ, indexedXp_rel_hdlr_id },
+	{ 0x62, M680X_INS_NSA, inherent_hdlr_id },
+	{ 0x65, M680X_INS_CPHX, immediate16_hdlr_id },
+	{ 0x6b, M680X_INS_DBNZ, indexedX_rel_hdlr_id },
+	{ 0x6e, M680X_INS_MOV, imm_direct_hdlr_id },
+	{ 0x71, M680X_INS_CBEQ, idxX0p_rel_hdlr_id },
+	{ 0x72, M680X_INS_DAA, inherent_hdlr_id },
+	{ 0x75, M680X_INS_CPHX, direct_hdlr_id },
+	{ 0x7b, M680X_INS_DBNZ, indexedX0_rel_hdlr_id },
+	{ 0x7e, M680X_INS_MOV, idxX0p_direct_hdlr_id },
+	{ 0x84, M680X_INS_TAP, inherent_hdlr_id },
+	{ 0x85, M680X_INS_TPA, inherent_hdlr_id },
+	{ 0x86, M680X_INS_PULA, inherent_hdlr_id },
+	{ 0x87, M680X_INS_PSHA, inherent_hdlr_id },
+	{ 0x88, M680X_INS_PULX, inherent_hdlr_id },
+	{ 0x89, M680X_INS_PSHX, inherent_hdlr_id },
+	{ 0x8a, M680X_INS_PULH, inherent_hdlr_id },
+	{ 0x8b, M680X_INS_PSHH, inherent_hdlr_id },
+	{ 0x8c, M680X_INS_CLRH, inherent_hdlr_id },
+	{ 0x90, M680X_INS_BGE, relative8_hdlr_id },
+	{ 0x91, M680X_INS_BLT, relative8_hdlr_id },
+	{ 0x92, M680X_INS_BGT, relative8_hdlr_id },
+	{ 0x93, M680X_INS_BLE, relative8_hdlr_id },
+	{ 0x94, M680X_INS_TXS, inherent_hdlr_id },
+	{ 0x95, M680X_INS_TSX, inherent_hdlr_id },
+	{ 0x97, M680X_INS_TAX, inherent_hdlr_id },
+	{ 0x9f, M680X_INS_TXA, inherent_hdlr_id },
+	{ 0xa7, M680X_INS_AIS, immediate8_hdlr_id },
+	{ 0xaf, M680X_INS_AIX, immediate8_hdlr_id },
+};
+
+// M68HC08 PAGE2 instructions (previx 0x9E)
+static const inst_pageX g_m6808_inst_page2_table[] = {
+	{ 0x60, M680X_INS_NEG, indexedS_hdlr_id },
+	{ 0x61, M680X_INS_CBEQ, indexedS_rel_hdlr_id },
+	{ 0x63, M680X_INS_COM, indexedS_hdlr_id },
+	{ 0x64, M680X_INS_LSR, indexedS_hdlr_id },
+	{ 0x66, M680X_INS_ROR, indexedS_hdlr_id },
+	{ 0x67, M680X_INS_ASR, indexedS_hdlr_id },
+	{ 0x68, M680X_INS_LSL, indexedS_hdlr_id },
+	{ 0x69, M680X_INS_ROL, indexedS_hdlr_id },
+	{ 0x6a, M680X_INS_DEC, indexedS_hdlr_id },
+	{ 0x6b, M680X_INS_DBNZ, indexedS_rel_hdlr_id },
+	{ 0x6c, M680X_INS_INC, indexedS_hdlr_id },
+	{ 0x6d, M680X_INS_TST, indexedS_hdlr_id },
+	{ 0x6f, M680X_INS_CLR, indexedS_hdlr_id },
+	{ 0xd0, M680X_INS_SUB, indexedS16_hdlr_id },
+	{ 0xd1, M680X_INS_CMP, indexedS16_hdlr_id },
+	{ 0xd2, M680X_INS_SBC, indexedS16_hdlr_id },
+	{ 0xd3, M680X_INS_CPX, indexedS16_hdlr_id },
+	{ 0xd4, M680X_INS_AND, indexedS16_hdlr_id },
+	{ 0xd5, M680X_INS_BIT, indexedS16_hdlr_id },
+	{ 0xd6, M680X_INS_LDA, indexedS16_hdlr_id },
+	{ 0xd7, M680X_INS_STA, indexedS16_hdlr_id },
+	{ 0xd8, M680X_INS_EOR, indexedS16_hdlr_id },
+	{ 0xd9, M680X_INS_ADC, indexedS16_hdlr_id },
+	{ 0xda, M680X_INS_ORA, indexedS16_hdlr_id },
+	{ 0xdb, M680X_INS_ADD, indexedS16_hdlr_id },
+	{ 0xde, M680X_INS_LDX, indexedS16_hdlr_id },
+	{ 0xdf, M680X_INS_STX, indexedS16_hdlr_id },
+	{ 0xe0, M680X_INS_SUB, indexedS_hdlr_id },
+	{ 0xe1, M680X_INS_CMP, indexedS_hdlr_id },
+	{ 0xe2, M680X_INS_SBC, indexedS_hdlr_id },
+	{ 0xe3, M680X_INS_CPX, indexedS_hdlr_id },
+	{ 0xe4, M680X_INS_AND, indexedS_hdlr_id },
+	{ 0xe5, M680X_INS_BIT, indexedS_hdlr_id },
+	{ 0xe6, M680X_INS_LDA, indexedS_hdlr_id },
+	{ 0xe7, M680X_INS_STA, indexedS_hdlr_id },
+	{ 0xe8, M680X_INS_EOR, indexedS_hdlr_id },
+	{ 0xe9, M680X_INS_ADC, indexedS_hdlr_id },
+	{ 0xea, M680X_INS_ORA, indexedS_hdlr_id },
+	{ 0xeb, M680X_INS_ADD, indexedS_hdlr_id },
+	{ 0xee, M680X_INS_LDX, indexedS_hdlr_id },
+	{ 0xef, M680X_INS_STX, indexedS_hdlr_id },
+};
+
 // M6809/HD6309 PAGE1 instructions
 static const inst_page1 g_m6809_inst_page1_table[256] = {
 	// 0x0x, direct instructions
@@ -1453,12 +1556,12 @@ static const insn_props g_insn_props[] = {
 	{ NOG, rmmm, M680X_REG_B, M680X_REG_A, true, false }, // ABA
 	{ NOG, rmmm, M680X_REG_B, M680X_REG_X, false, false }, // ABX
 	{ NOG, rmmm, M680X_REG_B, M680X_REG_Y, false, false }, // ABY
-	{ NOG, rrrr, NOR, NOR, true, true }, // ADC
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // ADC
 	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // ADCA
 	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // ADCB
 	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // ADCD
 	{ NOG, rmmm, NOR, NOR, true, false }, // ADCR
-	{ NOG, rrrr, NOR, NOR, true, true }, // ADD
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // ADD
 	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // ADDA
 	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // ADDB
 	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // ADDD
@@ -1467,7 +1570,9 @@ static const insn_props g_insn_props[] = {
 	{ NOG, rmmm, NOR, NOR, true, false }, // ADDR
 	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // ADDW
 	{ NOG, rmmm, NOR, NOR, true, false }, // AIM
-	{ NOG, rrrr, NOR, NOR, true, true }, // AND
+	{ NOG, mrrr, M680X_REG_S, NOR, false, false }, // AIS
+	{ NOG, mrrr, M680X_REG_HX, NOR, false, false }, // AIX
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // AND
 	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // ANDA
 	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // ANDB
 	{ NOG, mrrr, M680X_REG_CC, NOR, true, false }, // ANDCC
@@ -1498,7 +1603,7 @@ static const insn_props g_insn_props[] = {
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BIH
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BIL
 	{ NOG, mrrr, NOR, NOR, false, false }, // BIOR
-	{ NOG, rrrr, NOR, NOR, true, true }, // BIT
+	{ NOG, rrrr, M680X_REG_A, NOR, true, false }, // BIT
 	{ NOG, rrrr, M680X_REG_A, NOR, true, false }, // BITA
 	{ NOG, rrrr, M680X_REG_B, NOR, true, false }, // BITB
 	{ NOG, rrrr, M680X_REG_D, NOR, true, false }, // BITD
@@ -1521,6 +1626,9 @@ static const insn_props g_insn_props[] = {
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BVC
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BVS
 	{ NOG, rrrr, M680X_REG_B, M680X_REG_A, true, false }, // CBA
+	{ M680X_GRP_JUMP, rruu, M680X_REG_A, NOR, false, false }, // CBEQ
+	{ M680X_GRP_JUMP, rruu, M680X_REG_A, NOR, false, false }, // CBEQA
+	{ M680X_GRP_JUMP, rruu, M680X_REG_X, NOR, false, false }, // CBEQX
 	{ NOG, uuuu, NOR, NOR, true, false }, // CLC
 	{ NOG, uuuu, NOR, NOR, true, false }, // CLI
 	{ NOG, wrrr, NOR, NOR, true, false }, // CLR
@@ -1529,10 +1637,11 @@ static const insn_props g_insn_props[] = {
 	{ NOG, wrrr, M680X_REG_D, NOR, true, false }, // CLRD
 	{ NOG, wrrr, M680X_REG_E, NOR, true, false }, // CLRE
 	{ NOG, wrrr, M680X_REG_F, NOR, true, false }, // CLRF
+	{ NOG, wrrr, M680X_REG_H, NOR, true, false }, // CLRH
 	{ NOG, wrrr, M680X_REG_W, NOR, true, false }, // CLRW
 	{ NOG, wrrr, M680X_REG_X, NOR, true, false }, // CLRX
 	{ NOG, uuuu, NOR, NOR, true, false }, // CLV
-	{ NOG, rrrr, NOR, NOR, true, true }, // CMP
+	{ NOG, rrrr, M680X_REG_A, NOR, true, false }, // CMP
 	{ NOG, rrrr, M680X_REG_A, NOR, true, false }, // CMPA
 	{ NOG, rrrr, M680X_REG_B, NOR, true, false }, // CMPB
 	{ NOG, rrrr, M680X_REG_D, NOR, true, false }, // CMPD
@@ -1553,10 +1662,14 @@ static const insn_props g_insn_props[] = {
 	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // COMW
 	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // COMX
 	{ NOG, rrrr, M680X_REG_D, NOR, true, false }, // CPD
+	{ NOG, rrrr, M680X_REG_HX, NOR, true, false }, // CPHX
 	{ NOG, rrrr, M680X_REG_X, NOR, true, false }, // CPX
 	{ NOG, rrrr, M680X_REG_Y, NOR, true, false }, // CPY
 	{ NOG, mrrr, NOR, NOR, true, true }, // CWAI
 	{ NOG, mrrr, NOR, NOR, true, true }, // DAA
+	{ M680X_GRP_JUMP, muuu, NOR, NOR, false, false }, // DBNZ
+	{ M680X_GRP_JUMP, muuu, M680X_REG_A, NOR, false, false }, // DBNZA
+	{ M680X_GRP_JUMP, muuu, M680X_REG_X, NOR, false, false }, // DBNZX
 	{ NOG, mrrr, NOR, NOR, true, false }, // DEC
 	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // DECA
 	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // DECB
@@ -1568,10 +1681,11 @@ static const insn_props g_insn_props[] = {
 	{ NOG, mrrr, M680X_REG_S, NOR, false, false }, // DES
 	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // DEX
 	{ NOG, mrrr, M680X_REG_Y, NOR, true, false }, // DEY
+	{ NOG, mmrr, NOR, NOR, true, true }, // DIV
 	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // DIVD
 	{ NOG, mrrr, M680X_REG_Q, NOR, true, false }, // DIVQ
 	{ NOG, rmmm, NOR, NOR, true, false }, // EIM
-	{ NOG, rrrr, NOR, NOR, true, true }, // EOR
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // EOR
 	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // EORA
 	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // EORB
 	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // EORD
@@ -1618,6 +1732,7 @@ static const insn_props g_insn_props[] = {
 	{ NOG, wrrr, M680X_REG_D, NOR, true, false }, // LDD
 	{ NOG, wrrr, M680X_REG_E, NOR, true, false }, // LDE
 	{ NOG, wrrr, M680X_REG_F, NOR, true, false }, // LDF
+	{ NOG, wrrr, M680X_REG_HX, NOR, true, false }, // LDHX
 	{ NOG, mrrr, M680X_REG_MD, NOR, false, false }, // LDMD
 	{ NOG, wrrr, M680X_REG_Q, NOR, true, false }, // LDQ
 	{ NOG, wrrr, M680X_REG_S, NOR, true, false }, // LDS
@@ -1640,6 +1755,7 @@ static const insn_props g_insn_props[] = {
 	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // LSRD
 	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // LSRW
 	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // LSRX
+	{ NOG, rwww, NOR, NOR, true, false }, // MOV
 	{ NOG, mmmm, NOR, NOR, true, true }, // MUL
 	{ NOG, mwrr, M680X_REG_D, NOR, true, true }, // MULD
 	{ NOG, mrrr, NOR, NOR, true, false }, // NEG
@@ -1648,6 +1764,7 @@ static const insn_props g_insn_props[] = {
 	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // NEGD
 	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // NEGX
 	{ NOG, uuuu, NOR, NOR, false, false }, // NOP
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // NSA
 	{ NOG, rmmm, NOR, NOR, true, false }, // OIM
 	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // ORA
 	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // ORAA
@@ -1658,6 +1775,7 @@ static const insn_props g_insn_props[] = {
 	{ NOG, rmmm, NOR, NOR, true, false }, // ORR
 	{ NOG, rmmm, M680X_REG_A, NOR, false, true }, // PSHA
 	{ NOG, rmmm, M680X_REG_B, NOR, false, true }, // PSHB
+	{ NOG, rmmm, M680X_REG_H, NOR, false, true }, // PSHH
 	{ NOG, mrrr, M680X_REG_S, NOR, false, false }, // PSHS
 	{ NOG, mrrr, M680X_REG_S, M680X_REG_W, false, false }, // PSHSW
 	{ NOG, mrrr, M680X_REG_U, NOR, false, false }, // PSHU
@@ -1666,6 +1784,7 @@ static const insn_props g_insn_props[] = {
 	{ NOG, rmmm, M680X_REG_Y, NOR, false, true }, // PSHY
 	{ NOG, wmmm, M680X_REG_A, NOR, false, true }, // PULA
 	{ NOG, wmmm, M680X_REG_B, NOR, false, true }, // PULB
+	{ NOG, wmmm, M680X_REG_H, NOR, false, true }, // PULH
 	{ NOG, mwww, M680X_REG_S, NOR, false, false }, // PULS
 	{ NOG, mwww, M680X_REG_S, M680X_REG_W, false, false }, // PULSW
 	{ NOG, mwww, M680X_REG_U, NOR, false, false }, // PULU
@@ -1688,7 +1807,7 @@ static const insn_props g_insn_props[] = {
 	{ M680X_GRP_IRET, mwww, NOR, NOR, false, true }, // RTI
 	{ M680X_GRP_RET, mwww, NOR, NOR, false, true }, // RTS
 	{ NOG, rmmm, M680X_REG_B, M680X_REG_A, true, false }, // SBA
-	{ NOG, rrrr, NOR, NOR, true, true }, // SBC
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // SBC
 	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // SBCA
 	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // SBCB
 	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // SBCD
@@ -1707,13 +1826,14 @@ static const insn_props g_insn_props[] = {
 	{ NOG, rwww, M680X_REG_E, NOR, true, false }, // STE
 	{ NOG, rwww, M680X_REG_F, NOR, true, false }, // STF
 	{ NOG, uuuu, NOR, NOR, false, false }, // STOP
+	{ NOG, rwww, M680X_REG_HX, NOR, true, false }, // STHX
 	{ NOG, rwww, M680X_REG_Q, NOR, true, false }, // STQ
 	{ NOG, rwww, M680X_REG_S, NOR, true, false }, // STS
 	{ NOG, rwww, M680X_REG_U, NOR, true, false }, // STU
 	{ NOG, rwww, M680X_REG_W, NOR, true, false }, // STW
 	{ NOG, rwww, M680X_REG_X, NOR, true, false }, // STX
 	{ NOG, rwww, M680X_REG_Y, NOR, true, false }, // STY
-	{ NOG, rrrr, NOR, NOR, true, true }, // SUB
+	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // SUB
 	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // SUBA
 	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // SUBB
 	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // SUBD
@@ -1742,10 +1862,10 @@ static const insn_props g_insn_props[] = {
 	{ NOG, rrrr, M680X_REG_F, NOR, true, false }, // TSTF
 	{ NOG, rrrr, M680X_REG_W, NOR, true, false }, // TSTW
 	{ NOG, rrrr, M680X_REG_X, NOR, true, false }, // TSTX
-	{ NOG, rwww, M680X_REG_S, M680X_REG_X, false, false }, // TSX
+	{ NOG, rwww, M680X_REG_S, M680X_REG_HX, false, false }, // TSX
 	{ NOG, rwww, M680X_REG_S, M680X_REG_Y, false, false }, // TSY
 	{ NOG, rwww, M680X_REG_X, M680X_REG_A, false, false }, // TXA
-	{ NOG, rwww, M680X_REG_X, M680X_REG_S, false, false }, // TXS
+	{ NOG, rwww, M680X_REG_HX, M680X_REG_S, false, false }, // TXS
 	{ NOG, rwww, M680X_REG_Y, M680X_REG_S, false, false }, // TYS
 	{ NOG, mrrr, NOR, NOR, true, true }, // WAI
 	{ NOG, uuuu, NOR, NOR, true, false }, // WAIT
@@ -1946,7 +2066,7 @@ static void add_reg_to_rw_list(MCInst *MI, m680x_reg reg, e_access access)
 	}
 }
 
-static void update_am_reg_list(MCInst *MI, cs_m680x_op *op,
+static void update_am_reg_list(MCInst *MI, m680x_info *info, cs_m680x_op *op,
 				e_access access)
 {
 	if (MI->flat_insn->detail == NULL)
@@ -1959,12 +2079,20 @@ static void update_am_reg_list(MCInst *MI, cs_m680x_op *op,
 
 	case M680X_OP_INDEXED:
 		add_reg_to_rw_list(MI, op->idx.base_reg, READ);
+		if (op->idx.base_reg == M680X_REG_X &&
+		    info->cpu.reg_byte_size[M680X_REG_H])
+			add_reg_to_rw_list(MI, M680X_REG_H, READ);
+
 
 		if (op->idx.offset_reg != M680X_REG_INVALID)
 			add_reg_to_rw_list(MI, op->idx.offset_reg, READ);
 
-		if (op->idx.inc_dec != M680X_NO_INC_DEC)
+		if (op->idx.inc_dec != M680X_NO_INC_DEC) {
 			add_reg_to_rw_list(MI, op->idx.base_reg, WRITE);
+			if (op->idx.base_reg == M680X_REG_X &&
+			    info->cpu.reg_byte_size[M680X_REG_H])
+				add_reg_to_rw_list(MI, M680X_REG_H, WRITE);
+		}
 
 		break;
 
@@ -1973,22 +2101,22 @@ static void update_am_reg_list(MCInst *MI, cs_m680x_op *op,
 	}
 }
 
-static const e_access g_access_mode_to_access[4][14] = {
+static const e_access g_access_mode_to_access[4][15] = {
 	{
 		UNCHANGED, READ, WRITE, READ,  READ, READ,   WRITE, MODIFY,
-		MODIFY, MODIFY, MODIFY, MODIFY, WRITE, READ,
+		MODIFY, MODIFY, MODIFY, MODIFY, WRITE, READ, MODIFY,
 	},
 	{
 		UNCHANGED, READ, WRITE, WRITE, READ, MODIFY, READ,  READ,
-		WRITE, MODIFY, WRITE, MODIFY, MODIFY, READ,
+		WRITE, MODIFY, WRITE, MODIFY, MODIFY, READ, UNCHANGED,
 	},
 	{
 		UNCHANGED, READ, WRITE, WRITE, READ, MODIFY, READ,  READ,
-		WRITE, MODIFY, READ, READ, MODIFY, UNCHANGED,
+		WRITE, MODIFY, READ, READ, MODIFY, UNCHANGED, UNCHANGED,
 	},
 	{
 		UNCHANGED, READ, WRITE, WRITE, MODIFY, MODIFY, READ, READ,
-		WRITE, MODIFY, READ, READ, MODIFY, UNCHANGED,
+		WRITE, MODIFY, READ, READ, MODIFY, UNCHANGED, UNCHANGED,
 	},
 };
 
@@ -2011,7 +2139,7 @@ static void build_regs_read_write_counts(MCInst *MI, m680x_info *info,
 	for (i = 0; i < m680x->op_count; ++i) {
 
 		e_access access = get_access(i, access_mode);
-		update_am_reg_list(MI, &m680x->operands[i], access);
+		update_am_reg_list(MI, info, &m680x->operands[i], access);
 	}
 }
 
@@ -2048,11 +2176,6 @@ static void set_changed_regs_read_write_counts(MCInst *MI, m680x_info *info)
 #define NONE UNCHANGED
 #define EOL M680X_REG_INVALID
 	static const insn_to_changed_regs changed_regs[] = {
-		{ M680X_INS_ADC, MODIFY, { M680X_REG_A, EOL } },
-		{ M680X_INS_ADD, MODIFY, { M680X_REG_A, EOL } },
-		{ M680X_INS_AND, MODIFY, { M680X_REG_A, EOL } },
-		{ M680X_INS_BIT, READ, { M680X_REG_A, EOL } },
-		{ M680X_INS_CMP, READ, { M680X_REG_A, EOL } },
 		{
 			M680X_INS_CWAI, NONE, {
 				M680X_REG_S, M680X_REG_PC, M680X_REG_U,
@@ -2061,17 +2184,22 @@ static void set_changed_regs_read_write_counts(MCInst *MI, m680x_info *info)
 			},
 		},
 		{ M680X_INS_DAA, NONE, { M680X_REG_A, EOL } },
-		{ M680X_INS_EOR, MODIFY, { M680X_REG_A, EOL } },
+		{ M680X_INS_DIV, NONE, {
+			M680X_REG_A, M680X_REG_H, M680X_REG_X, EOL
+			}
+		},
 		{ M680X_INS_IDIV, NONE, { M680X_REG_D, M680X_REG_X, EOL } },
 		{ M680X_INS_FDIV, NONE, { M680X_REG_D, M680X_REG_X, EOL } },
 		{ M680X_INS_MUL, NONE, { M680X_REG_A, M680X_REG_B, EOL } },
 		{ M680X_INS_MULD, NONE, { M680X_REG_D, M680X_REG_W, EOL } },
 		{ M680X_INS_PSHA, NONE, { M680X_REG_A, M680X_REG_S, EOL } },
 		{ M680X_INS_PSHB, NONE, { M680X_REG_B, M680X_REG_S, EOL } },
+		{ M680X_INS_PSHH, NONE, { M680X_REG_H, M680X_REG_S, EOL } },
 		{ M680X_INS_PSHX, NONE, { M680X_REG_X, M680X_REG_S, EOL } },
 		{ M680X_INS_PSHY, NONE, { M680X_REG_Y, M680X_REG_S, EOL } },
 		{ M680X_INS_PULA, NONE, { M680X_REG_A, M680X_REG_S, EOL } },
 		{ M680X_INS_PULB, NONE, { M680X_REG_B, M680X_REG_S, EOL } },
+		{ M680X_INS_PULH, NONE, { M680X_REG_H, M680X_REG_S, EOL } },
 		{ M680X_INS_PULX, NONE, { M680X_REG_X, M680X_REG_S, EOL } },
 		{ M680X_INS_PULY, NONE, { M680X_REG_Y, M680X_REG_S, EOL } },
 		{
@@ -2083,10 +2211,8 @@ static void set_changed_regs_read_write_counts(MCInst *MI, m680x_info *info)
 			},
 		},
 		{ M680X_INS_RTS, NONE, { M680X_REG_S, M680X_REG_PC, EOL } },
-		{ M680X_INS_SBC, MODIFY, { M680X_REG_A, EOL } },
 		{ M680X_INS_SEX, NONE, { M680X_REG_A, M680X_REG_B, EOL } },
 		{ M680X_INS_SEXW, NONE, { M680X_REG_W, M680X_REG_D, EOL } },
-		{ M680X_INS_SUB, MODIFY, { M680X_REG_A, EOL } },
 		{
 			M680X_INS_SWI, NONE, {
 				M680X_REG_S, M680X_REG_PC, M680X_REG_U,
@@ -2218,6 +2344,7 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 	uint8_t ir;
 
 	switch (insn_description->handler_id) {
+
 	case immediate32_hdlr_id:
 		// Check for sufficient code size for additional four bytes
 		insn_description->insn_size += 4;
@@ -2226,6 +2353,20 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 	case lrelative8_hdlr_id:
 	case extended_hdlr_id:
 	case immediate16_hdlr_id:
+        case imm_rel_hdlr_id:
+        case direct_rel_hdlr_id:
+	case imm_direct_hdlr_id:
+	case imm_indexedX_hdlr_id:
+	case direct_imm_hdlr_id:
+	case idxX_imm_hdlr_id:
+	case idxY_imm_hdlr_id:
+	case opidx_dir_rel_hdlr_id:
+	case indexedX16_hdlr_id:
+	case indexedS16_hdlr_id:
+	case indexedX_rel_hdlr_id:
+	case indexedXp_rel_hdlr_id:
+	case indexedS_rel_hdlr_id:
+	case direct_direct_hdlr_id:
 		insn_description->insn_size += 2;
 		// Check for sufficient code size for additional two bytes
 		return read_byte(info, &ir, address + 1);
@@ -2235,6 +2376,13 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 	case reg_bits_hdlr_id:
 	case immediate8_hdlr_id:
 	case opidx_direct_hdlr_id:
+	case indexedX_hdlr_id:
+	case indexedY_hdlr_id:
+	case indexedS_hdlr_id:
+	case indexedX0_rel_hdlr_id:
+	case idxX0p_rel_hdlr_id:
+	case idxX0p_direct_hdlr_id:
+	case direct_idxX0p_hdlr_id:
 		insn_description->insn_size += 1;
 		// Check for sufficient code size for an additional byte
 		return read_byte(info, &ir, address);
@@ -2243,12 +2391,6 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 	case inherent_hdlr_id:
 	case indexedX0_hdlr_id:
 		return true;
-
-	case indexedX_hdlr_id:
-	case indexedY_hdlr_id:
-		insn_description->insn_size += 1;
-		// Check for sufficient code size for an additional byte
-		return read_byte(info, &ir, address);
 
 	case m6809_indexed_hdlr_id:
 		insn_description->insn_size += 1;
@@ -2279,16 +2421,6 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 
 		return is_tfr_reg_valid(info, (ir >> 4) & 0x0F) &&
 			is_tfr_reg_valid(info, ir & 0x0F);
-
-	case imm_direct_hdlr_id:
-	case imm_indexedX_hdlr_id:
-	case direct_imm_hdlr_id:
-	case idxX_imm_hdlr_id:
-	case idxY_imm_hdlr_id:
-	case opidx_dir_rel_hdlr_id:
-	case indexedX16_hdlr_id:
-		insn_description->insn_size += 2;
-		return read_byte(info, &ir, address + 1);
 
 	case bit_move_hdlr_id:
 		insn_description->insn_size += 2;
@@ -2437,7 +2569,9 @@ static void set_operand_size(m680x_info *info, cs_m680x_op *op,
 
 	if (info->insn == M680X_INS_JMP || info->insn == M680X_INS_JSR)
 		op->size = 0;
-	else if (info->insn == M680X_INS_DIVD)
+	else if (info->insn == M680X_INS_DIVD ||
+		((info->insn == M680X_INS_AIS || info->insn == M680X_INS_AIX) &&
+		   op->type != M680X_OP_REGISTER))
 		op->size = 1;
 	else if (info->insn == M680X_INS_DIVQ)
 		op->size = 2;
@@ -3042,7 +3176,132 @@ static void indexedX16_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	m680x->address_mode = M680X_AM_INDEXED;
 }
 
-void (*const g_inst_handler[])(MCInst *, m680x_info *, uint16_t *) = {
+static void imm_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	immediate_hdlr(MI, info, address);
+	relative8_hdlr(MI, info, address);
+
+	info->m680x.address_mode = M680X_AM_IMM_REL;
+}
+
+static void direct_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	direct_hdlr(MI, info, address);
+	relative8_hdlr(MI, info, address);
+
+	info->m680x.address_mode = M680X_AM_DIRECT_REL;
+}
+
+static void indexedS_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	uint8_t offset = 0;
+
+	info->m680x.address_mode = M680X_AM_INDEXED;
+
+	read_byte(info, &offset, (*address)++);
+
+	add_indexed_operand(info, M680X_REG_S, M680X_NO_INC_DEC,
+			 M680X_OFFSET_BITS_8, (uint16_t)offset, false);
+}
+
+static void indexedS16_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	uint16_t offset = 0;
+
+	info->m680x.address_mode = M680X_AM_INDEXED;
+
+	read_word(info, &offset, *address);
+	address += 2;
+
+	add_indexed_operand(info, M680X_REG_S, M680X_NO_INC_DEC,
+			 M680X_OFFSET_BITS_16, offset, false);
+}
+
+static void indexedX0p_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	info->m680x.address_mode = M680X_AM_INDEXED;
+
+	add_indexed_operand(info, M680X_REG_X, M680X_POST_INC_1,
+			 M680X_OFFSET_NONE, 0, true);
+}
+
+static void indexedXp_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	uint8_t offset = 0;
+
+	info->m680x.address_mode = M680X_AM_INDEXED;
+
+	read_byte(info, &offset, (*address)++);
+
+	add_indexed_operand(info, M680X_REG_X, M680X_POST_INC_1,
+			 M680X_OFFSET_BITS_8, (uint16_t)offset, false);
+}
+
+static void indexedS_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	indexedS_hdlr(MI, info, address);
+	relative8_hdlr(MI, info, address);
+
+	info->m680x.address_mode = M680X_AM_INDEXED_REL;
+}
+
+static void indexedX_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	indexedX_hdlr(MI, info, address);
+	relative8_hdlr(MI, info, address);
+
+	info->m680x.address_mode = M680X_AM_INDEXED_REL;
+}
+
+static void indexedX0_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	indexedX0_hdlr(MI, info, address);
+	relative8_hdlr(MI, info, address);
+
+	info->m680x.address_mode = M680X_AM_INDEXED_REL;
+}
+
+static void indexedXp_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	indexedXp_hdlr(MI, info, address);
+	relative8_hdlr(MI, info, address);
+
+	info->m680x.address_mode = M680X_AM_INDEXED_REL;
+}
+
+static void idxX0p_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	indexedX0p_hdlr(MI, info, address);
+	relative8_hdlr(MI, info, address);
+
+	info->m680x.address_mode = M680X_AM_INDEXED_REL;
+}
+
+static void idxX0p_direct_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	indexedX0p_hdlr(MI, info, address);
+	direct_hdlr(MI, info, address);
+
+	info->m680x.address_mode = M680X_AM_INDEXED_DIR;
+}
+
+static void direct_direct_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	direct_hdlr(MI, info, address);
+	direct_hdlr(MI, info, address);
+
+	info->m680x.address_mode = M680X_AM_DIRECT2;
+}
+
+static void direct_idxX0p_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	direct_hdlr(MI, info, address);
+	indexedX0p_hdlr(MI, info, address);
+
+	info->m680x.address_mode = M680X_AM_DIRECT_IDX;
+}
+
+static void (*const g_inst_handler[])(MCInst *, m680x_info *, uint16_t *) = {
 	illegal_hdlr,
 	relative8_hdlr,
 	lrelative8_hdlr,
@@ -3073,6 +3332,18 @@ void (*const g_inst_handler[])(MCInst *, m680x_info *, uint16_t *) = {
 	opidx_direct_hdlr,
 	indexedX0_hdlr,
 	indexedX16_hdlr,
+        imm_rel_hdlr,
+        direct_rel_hdlr,
+        indexedS_hdlr,
+        indexedS16_hdlr,
+        indexedS_rel_hdlr,
+        indexedX_rel_hdlr,
+        indexedX0_rel_hdlr,
+        indexedXp_rel_hdlr,
+        idxX0p_rel_hdlr,
+        idxX0p_direct_hdlr,
+        direct_direct_hdlr,
+        direct_idxX0p_hdlr,
 }; /* handler function pointers */
 
 /* Disasemble one instruction at address and store in str_buff */
@@ -3110,12 +3381,18 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 
 		reg = g_insn_props[info->insn].reg0;
 		if (reg != M680X_REG_INVALID) {
+			if (!info->cpu.reg_byte_size[reg] &&
+			   reg == M680X_REG_HX)
+				reg = M680X_REG_X;
 			add_reg_operand(info, reg);
 			// First (or second) operand is a register which is
 			// part of the mnemonic
 			m680x->flags |= M680X_FIRST_OP_IN_MNEM;
 			reg = g_insn_props[info->insn].reg1;
 			if (reg != M680X_REG_INVALID) {
+				if (!info->cpu.reg_byte_size[reg] &&
+				    reg == M680X_REG_HX)
+					reg = M680X_REG_X;
 				add_reg_operand(info, reg);
 				m680x->flags |= M680X_SECOND_OP_IN_MNEM;
 			}
@@ -3155,40 +3432,46 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 }
 
 static const char *s_cpu_type[] = {
-	"INVALID", "6800", "6801", "6805", "6809", "6811", "6301", "6309",
+	"INVALID", "6301", "6309", "6800", "6801", "6805", "6808",
+	"6809", "6811",
 };
 
 // Tables to get the byte size of a register on the CPU
 // based on an enum m680x_reg value.
 // Invalid registers return 0.
-static const uint8_t g_m6800_reg_byte_size[18] = {
-	// A  B  E  F  0  D  W  CC DP MD X  Y  S  U  V  Q  PC
-	0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 2, 0, 0, 0, 2
+static const uint8_t g_m6800_reg_byte_size[20] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H X  Y  S  U  V  Q  PC
+	0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 2
 };
 
-static const uint8_t g_m6805_reg_byte_size[18] = {
-	// A  B  E  F  0  D  W  CC DP MD X  Y  S  U  V  Q  PC
-	0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 2, 0, 0, 0, 2
+static const uint8_t g_m6805_reg_byte_size[20] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H X  Y  S  U  V  Q  PC
+	0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 2
 };
 
-static const uint8_t g_m6801_reg_byte_size[18] = {
-	// A  B  E  F  0  D  W  CC DP MD X  Y  S  U  V  Q  PC
-	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 2, 0, 2, 0, 0, 0, 2
+static const uint8_t g_m6808_reg_byte_size[20] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H X  Y  S  U  V  Q  PC
+	0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 1, 1, 0, 2, 0, 0, 0, 2
 };
 
-static const uint8_t g_m6811_reg_byte_size[18] = {
-	// A  B  E  F  0  D  W  CC DP MD X  Y  S  U  V  Q  PC
-	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 2, 2, 2, 0, 0, 0, 2
+static const uint8_t g_m6801_reg_byte_size[20] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H X  Y  S  U  V  Q  PC
+	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 2
 };
 
-static const uint8_t g_m6809_reg_byte_size[18] = {
-	// A  B  E  F  0  D  W  CC DP MD X  Y  S  U  V  Q  PC
-	0, 1, 1, 0, 0, 0, 2, 0, 1, 1, 0, 2, 2, 2, 2, 0, 0, 2
+static const uint8_t g_m6811_reg_byte_size[20] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H X  Y  S  U  V  Q  PC
+	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2
 };
 
-static const uint8_t g_hd6309_reg_byte_size[18] = {
-	// A  B  E  F  0  D  W  CC DP MD X  Y  S  U  V  Q  PC
-	0, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 2, 2, 2, 2, 2, 4, 2
+static const uint8_t g_m6809_reg_byte_size[20] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H X  Y  S  U  V  Q  PC
+	0, 1, 1, 0, 0, 0, 2, 0, 1, 1, 0, 0, 0, 2, 2, 2, 2, 0, 0, 2
+};
+
+static const uint8_t g_hd6309_reg_byte_size[20] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H X  Y  S  U  V  Q  PC
+	0, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0, 0, 2, 2, 2, 2, 2, 4, 2
 };
 
 static bool m680x_setup_internals(m680x_info *info, e_cpu_type cpu_type,
@@ -3228,6 +3511,17 @@ static bool m680x_setup_internals(m680x_info *info, e_cpu_type cpu_type,
 	case M680X_CPU_TYPE_6805:
 		cpu->inst_page1_table = &g_m6805_inst_page1_table[0];
 		cpu->reg_byte_size = &g_m6805_reg_byte_size[0];
+		break;
+
+	case M680X_CPU_TYPE_6808:
+		cpu->inst_page1_table = &g_m6805_inst_page1_table[0];
+		cpu->pageX_prefix[0] = 0x9E; // PAGE2 prefix
+		cpu->inst_pageX_table[0] = &g_m6808_inst_page2_table[0];
+		cpu->pageX_table_size[0] = ARR_SIZE(g_m6808_inst_page2_table);
+		cpu->inst_overlay_table[0] = &g_m6808_inst_overlay_table[0];
+		table_size = ARR_SIZE(g_m6808_inst_overlay_table);
+		cpu->overlay_table_size[0] = table_size;
+		cpu->reg_byte_size = &g_m6808_reg_byte_size[0];
 		break;
 
 	case M680X_CPU_TYPE_6301:
@@ -3315,6 +3609,9 @@ bool M680X_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	if (handle->mode & CS_MODE_M680X_6805)
 		cpu_type = M680X_CPU_TYPE_6805;
 
+	if (handle->mode & CS_MODE_M680X_6808)
+		cpu_type = M680X_CPU_TYPE_6808;
+
 	if (handle->mode & CS_MODE_M680X_6809)
 		cpu_type = M680X_CPU_TYPE_6809;
 
@@ -3360,6 +3657,20 @@ cs_err M680X_disassembler_init(cs_struct *ud)
 	if (M680X_REG_ENDING != ARR_SIZE(g_m6801_reg_byte_size)) {
 		fprintf(stderr, "Internal error: Size mismatch in enum "
 			"m680x_reg and g_m6801_reg_byte_size\n");
+
+		return CS_ERR_MODE;
+	}
+
+	if (M680X_REG_ENDING != ARR_SIZE(g_m6805_reg_byte_size)) {
+		fprintf(stderr, "Internal error: Size mismatch in enum "
+			"m680x_reg and g_m6805_reg_byte_size\n");
+
+		return CS_ERR_MODE;
+	}
+
+	if (M680X_REG_ENDING != ARR_SIZE(g_m6808_reg_byte_size)) {
+		fprintf(stderr, "Internal error: Size mismatch in enum "
+			"m680x_reg and g_m6808_reg_byte_size\n");
 
 		return CS_ERR_MODE;
 	}

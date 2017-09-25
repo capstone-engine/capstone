@@ -801,24 +801,27 @@ CAMLprim value ocaml_cs_disasm(value _arch, value _mode, value _code, value _add
 				mode |= CS_MODE_QPX;
 				break;
 			case 17:
-				mode |= CS_MODE_M680X_6800;
-				break;
-			case 18:
-				mode |= CS_MODE_M680X_6801;
-				break;
-			case 19:
-				mode |= CS_MODE_M680X_6805;
-				break;
-			case 20:
-				mode |= CS_MODE_M680X_6809;
-				break;
-			case 21:
 				mode |= CS_MODE_M680X_6301;
 				break;
-			case 22:
+			case 18:
 				mode |= CS_MODE_M680X_6309;
 				break;
+			case 19:
+				mode |= CS_MODE_M680X_6800;
+				break;
+			case 20:
+				mode |= CS_MODE_M680X_6801;
+				break;
+			case 21:
+				mode |= CS_MODE_M680X_6805;
+				break;
+			case 22:
+				mode |= CS_MODE_M680X_6808;
+				break;
 			case 23:
+				mode |= CS_MODE_M680X_6809;
+				break;
+			case 24:
 				mode |= CS_MODE_M680X_6811;
 				break;
 			default:
@@ -965,24 +968,27 @@ CAMLprim value ocaml_open(value _arch, value _mode)
 				mode |= CS_MODE_QPX;
 				break;
 			case 17:
-				mode |= CS_MODE_M680X_6800;
-				break;
-			case 18:
-				mode |= CS_MODE_M680X_6801;
-				break;
-			case 19:
-				mode |= CS_MODE_M680X_6805;
-				break;
-			case 20:
-				mode |= CS_MODE_M680X_6809;
-				break;
-			case 21:
 				mode |= CS_MODE_M680X_6301;
 				break;
-			case 22:
+			case 18:
 				mode |= CS_MODE_M680X_6309;
 				break;
+			case 19:
+				mode |= CS_MODE_M680X_6800;
+				break;
+			case 20:
+				mode |= CS_MODE_M680X_6801;
+				break;
+			case 21:
+				mode |= CS_MODE_M680X_6805;
+				break;
+			case 22:
+				mode |= CS_MODE_M680X_6808;
+				break;
 			case 23:
+				mode |= CS_MODE_M680X_6809;
+				break;
+			case 24:
 				mode |= CS_MODE_M680X_6811;
 				break;
 			default:
