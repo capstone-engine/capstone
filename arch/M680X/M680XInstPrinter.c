@@ -83,11 +83,11 @@ static name_map s_group_names[] = {
 	{ M680X_GRP_INVALID, "<invalid>" },
 	{ M680X_GRP_JUMP,  "JUMP" },
 	{ M680X_GRP_CALL,  "CALL" },
-	{ M680X_GRP_RET, "RET" },
-	{ M680X_GRP_INT, "INT" },
-	{ M680X_GRP_IRET,  "IRET" },
+	{ M680X_GRP_RET, "RETURN" },
+	{ M680X_GRP_INT, "INTERRUPT" },
+	{ M680X_GRP_IRET,  "INTERRUPT_RETURN" },
 	{ M680X_GRP_PRIV,  "PRIVILEGED" },
-	{ M680X_GRP_BRAREL,  "BRANCH RELATIVE" },
+	{ M680X_GRP_BRAREL,  "BRANCH_RELATIVE" },
 };
 #endif
 
