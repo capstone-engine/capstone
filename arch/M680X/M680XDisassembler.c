@@ -48,12 +48,12 @@ typedef enum insn_hdlr_id {
 	extended_hdlr_id,
 	indexedX_hdlr_id,
 	indexedY_hdlr_id,
-	indexedXYUS_hdlr_id,
+	indexed09_hdlr_id,
 	inherent_hdlr_id,
-	reg_reg_hdlr_id,
+	reg_reg09_hdlr_id,
 	reg_bits_hdlr_id,
 	imm_indexedX_hdlr_id,
-	imm_indexed_hdlr_id,
+	imm_indexed09_hdlr_id,
 	imm_direct_hdlr_id,
 	imm_extended_hdlr_id,
 	bit_move_hdlr_id,
@@ -1031,8 +1031,8 @@ static const inst_page1 g_m6809_inst_page1_table[256] = {
 	{ M680X_INS_ILLGL, illegal_hdlr_id },
 	{ M680X_INS_ANDCC, immediate8_hdlr_id },
 	{ M680X_INS_SEX, inherent_hdlr_id },
-	{ M680X_INS_EXG, reg_reg_hdlr_id },
-	{ M680X_INS_TFR, reg_reg_hdlr_id },
+	{ M680X_INS_EXG, reg_reg09_hdlr_id },
+	{ M680X_INS_TFR, reg_reg09_hdlr_id },
 	// 0x2x, relative branch instructions
 	{ M680X_INS_BRA, relative8_hdlr_id },
 	{ M680X_INS_BRN, relative8_hdlr_id },
@@ -1051,10 +1051,10 @@ static const inst_page1 g_m6809_inst_page1_table[256] = {
 	{ M680X_INS_BGT, relative8_hdlr_id },
 	{ M680X_INS_BLE, relative8_hdlr_id },
 	// 0x3x, misc instructions
-	{ M680X_INS_LEAX, indexedXYUS_hdlr_id },
-	{ M680X_INS_LEAY, indexedXYUS_hdlr_id },
-	{ M680X_INS_LEAS, indexedXYUS_hdlr_id },
-	{ M680X_INS_LEAU, indexedXYUS_hdlr_id },
+	{ M680X_INS_LEAX, indexed09_hdlr_id },
+	{ M680X_INS_LEAY, indexed09_hdlr_id },
+	{ M680X_INS_LEAS, indexed09_hdlr_id },
+	{ M680X_INS_LEAU, indexed09_hdlr_id },
 	{ M680X_INS_PSHS, reg_bits_hdlr_id },
 	{ M680X_INS_PULS, reg_bits_hdlr_id },
 	{ M680X_INS_PSHU, reg_bits_hdlr_id },
@@ -1102,22 +1102,22 @@ static const inst_page1 g_m6809_inst_page1_table[256] = {
 	{ M680X_INS_ILLGL, illegal_hdlr_id },
 	{ M680X_INS_CLRB, inherent_hdlr_id },
 	// 0x6x, indexed instructions
-	{ M680X_INS_NEG, indexedXYUS_hdlr_id },
+	{ M680X_INS_NEG, indexed09_hdlr_id },
 	{ M680X_INS_ILLGL, illegal_hdlr_id },
 	{ M680X_INS_ILLGL, illegal_hdlr_id },
-	{ M680X_INS_COM, indexedXYUS_hdlr_id },
-	{ M680X_INS_LSR, indexedXYUS_hdlr_id },
+	{ M680X_INS_COM, indexed09_hdlr_id },
+	{ M680X_INS_LSR, indexed09_hdlr_id },
 	{ M680X_INS_ILLGL, illegal_hdlr_id },
-	{ M680X_INS_ROR, indexedXYUS_hdlr_id },
-	{ M680X_INS_ASR, indexedXYUS_hdlr_id },
-	{ M680X_INS_LSL, indexedXYUS_hdlr_id },
-	{ M680X_INS_ROL, indexedXYUS_hdlr_id },
-	{ M680X_INS_DEC, indexedXYUS_hdlr_id },
+	{ M680X_INS_ROR, indexed09_hdlr_id },
+	{ M680X_INS_ASR, indexed09_hdlr_id },
+	{ M680X_INS_LSL, indexed09_hdlr_id },
+	{ M680X_INS_ROL, indexed09_hdlr_id },
+	{ M680X_INS_DEC, indexed09_hdlr_id },
 	{ M680X_INS_ILLGL, illegal_hdlr_id },
-	{ M680X_INS_INC, indexedXYUS_hdlr_id },
-	{ M680X_INS_TST, indexedXYUS_hdlr_id },
-	{ M680X_INS_JMP, indexedXYUS_hdlr_id },
-	{ M680X_INS_CLR, indexedXYUS_hdlr_id },
+	{ M680X_INS_INC, indexed09_hdlr_id },
+	{ M680X_INS_TST, indexed09_hdlr_id },
+	{ M680X_INS_JMP, indexed09_hdlr_id },
+	{ M680X_INS_CLR, indexed09_hdlr_id },
 	// 0x7x, extended instructions
 	{ M680X_INS_NEG, extended_hdlr_id },
 	{ M680X_INS_ILLGL, illegal_hdlr_id },
@@ -1170,22 +1170,22 @@ static const inst_page1 g_m6809_inst_page1_table[256] = {
 	{ M680X_INS_LDX, direct_hdlr_id },
 	{ M680X_INS_STX, direct_hdlr_id },
 	// 0xAx, indexed instructions with Register A,D,X
-	{ M680X_INS_SUBA, indexedXYUS_hdlr_id },
-	{ M680X_INS_CMPA, indexedXYUS_hdlr_id },
-	{ M680X_INS_SBCA, indexedXYUS_hdlr_id },
-	{ M680X_INS_SUBD, indexedXYUS_hdlr_id },
-	{ M680X_INS_ANDA, indexedXYUS_hdlr_id },
-	{ M680X_INS_BITA, indexedXYUS_hdlr_id },
-	{ M680X_INS_LDA, indexedXYUS_hdlr_id },
-	{ M680X_INS_STA, indexedXYUS_hdlr_id },
-	{ M680X_INS_EORA, indexedXYUS_hdlr_id },
-	{ M680X_INS_ADCA, indexedXYUS_hdlr_id },
-	{ M680X_INS_ORA, indexedXYUS_hdlr_id },
-	{ M680X_INS_ADDA, indexedXYUS_hdlr_id },
-	{ M680X_INS_CMPX, indexedXYUS_hdlr_id },
-	{ M680X_INS_JSR, indexedXYUS_hdlr_id },
-	{ M680X_INS_LDX, indexedXYUS_hdlr_id },
-	{ M680X_INS_STX, indexedXYUS_hdlr_id },
+	{ M680X_INS_SUBA, indexed09_hdlr_id },
+	{ M680X_INS_CMPA, indexed09_hdlr_id },
+	{ M680X_INS_SBCA, indexed09_hdlr_id },
+	{ M680X_INS_SUBD, indexed09_hdlr_id },
+	{ M680X_INS_ANDA, indexed09_hdlr_id },
+	{ M680X_INS_BITA, indexed09_hdlr_id },
+	{ M680X_INS_LDA, indexed09_hdlr_id },
+	{ M680X_INS_STA, indexed09_hdlr_id },
+	{ M680X_INS_EORA, indexed09_hdlr_id },
+	{ M680X_INS_ADCA, indexed09_hdlr_id },
+	{ M680X_INS_ORA, indexed09_hdlr_id },
+	{ M680X_INS_ADDA, indexed09_hdlr_id },
+	{ M680X_INS_CMPX, indexed09_hdlr_id },
+	{ M680X_INS_JSR, indexed09_hdlr_id },
+	{ M680X_INS_LDX, indexed09_hdlr_id },
+	{ M680X_INS_STX, indexed09_hdlr_id },
 	// 0xBx, extended instructions with register A,D,X
 	{ M680X_INS_SUBA, extended_hdlr_id },
 	{ M680X_INS_CMPA, extended_hdlr_id },
@@ -1238,22 +1238,22 @@ static const inst_page1 g_m6809_inst_page1_table[256] = {
 	{ M680X_INS_LDU, direct_hdlr_id },
 	{ M680X_INS_STU, direct_hdlr_id },
 	// 0xEx, indexed instruction with register B,D,U
-	{ M680X_INS_SUBB, indexedXYUS_hdlr_id },
-	{ M680X_INS_CMPB, indexedXYUS_hdlr_id },
-	{ M680X_INS_SBCB, indexedXYUS_hdlr_id },
-	{ M680X_INS_ADDD, indexedXYUS_hdlr_id },
-	{ M680X_INS_ANDB, indexedXYUS_hdlr_id },
-	{ M680X_INS_BITB, indexedXYUS_hdlr_id },
-	{ M680X_INS_LDB, indexedXYUS_hdlr_id },
-	{ M680X_INS_STB, indexedXYUS_hdlr_id },
-	{ M680X_INS_EORB, indexedXYUS_hdlr_id },
-	{ M680X_INS_ADCB, indexedXYUS_hdlr_id },
-	{ M680X_INS_ORB, indexedXYUS_hdlr_id },
-	{ M680X_INS_ADDB, indexedXYUS_hdlr_id },
-	{ M680X_INS_LDD, indexedXYUS_hdlr_id },
-	{ M680X_INS_STD, indexedXYUS_hdlr_id },
-	{ M680X_INS_LDU, indexedXYUS_hdlr_id },
-	{ M680X_INS_STU, indexedXYUS_hdlr_id },
+	{ M680X_INS_SUBB, indexed09_hdlr_id },
+	{ M680X_INS_CMPB, indexed09_hdlr_id },
+	{ M680X_INS_SBCB, indexed09_hdlr_id },
+	{ M680X_INS_ADDD, indexed09_hdlr_id },
+	{ M680X_INS_ANDB, indexed09_hdlr_id },
+	{ M680X_INS_BITB, indexed09_hdlr_id },
+	{ M680X_INS_LDB, indexed09_hdlr_id },
+	{ M680X_INS_STB, indexed09_hdlr_id },
+	{ M680X_INS_EORB, indexed09_hdlr_id },
+	{ M680X_INS_ADCB, indexed09_hdlr_id },
+	{ M680X_INS_ORB, indexed09_hdlr_id },
+	{ M680X_INS_ADDB, indexed09_hdlr_id },
+	{ M680X_INS_LDD, indexed09_hdlr_id },
+	{ M680X_INS_STD, indexed09_hdlr_id },
+	{ M680X_INS_LDU, indexed09_hdlr_id },
+	{ M680X_INS_STU, indexed09_hdlr_id },
 	// 0xFx, extended instructions with register B,D,U
 	{ M680X_INS_SUBB, extended_hdlr_id },
 	{ M680X_INS_CMPB, extended_hdlr_id },
@@ -1306,10 +1306,10 @@ static const inst_pageX g_m6809_inst_page2_table[] = {
 	{ 0x9e, M680X_INS_LDY, direct_hdlr_id },
 	{ 0x9f, M680X_INS_STY, direct_hdlr_id },
 	// 0xAx, indexed instructions with register D,Y
-	{ 0xa3, M680X_INS_CMPD, indexedXYUS_hdlr_id },
-	{ 0xac, M680X_INS_CMPY, indexedXYUS_hdlr_id },
-	{ 0xae, M680X_INS_LDY, indexedXYUS_hdlr_id },
-	{ 0xaf, M680X_INS_STY, indexedXYUS_hdlr_id },
+	{ 0xa3, M680X_INS_CMPD, indexed09_hdlr_id },
+	{ 0xac, M680X_INS_CMPY, indexed09_hdlr_id },
+	{ 0xae, M680X_INS_LDY, indexed09_hdlr_id },
+	{ 0xaf, M680X_INS_STY, indexed09_hdlr_id },
 	// 0xBx, extended instructions with register D,Y
 	{ 0xb3, M680X_INS_CMPD, extended_hdlr_id },
 	{ 0xbc, M680X_INS_CMPY, extended_hdlr_id },
@@ -1321,8 +1321,8 @@ static const inst_pageX g_m6809_inst_page2_table[] = {
 	{ 0xde, M680X_INS_LDS, direct_hdlr_id },
 	{ 0xdf, M680X_INS_STS, direct_hdlr_id },
 	// 0xEx, indexed instructions with register S
-	{ 0xee, M680X_INS_LDS, indexedXYUS_hdlr_id },
-	{ 0xef, M680X_INS_STS, indexedXYUS_hdlr_id },
+	{ 0xee, M680X_INS_LDS, indexed09_hdlr_id },
+	{ 0xef, M680X_INS_STS, indexed09_hdlr_id },
 	// 0xFx, extended instructions with register S
 	{ 0xfe, M680X_INS_LDS, extended_hdlr_id },
 	{ 0xff, M680X_INS_STS, extended_hdlr_id },
@@ -1341,8 +1341,8 @@ static const inst_pageX g_m6809_inst_page3_table[] = {
 	{ 0x93, M680X_INS_CMPU, direct_hdlr_id },
 	{ 0x9c, M680X_INS_CMPS, direct_hdlr_id },
 	// 0xAx, indexed instructions with register U,S
-	{ 0xa3, M680X_INS_CMPU, indexedXYUS_hdlr_id },
-	{ 0xac, M680X_INS_CMPS, indexedXYUS_hdlr_id },
+	{ 0xa3, M680X_INS_CMPU, indexed09_hdlr_id },
+	{ 0xac, M680X_INS_CMPS, indexed09_hdlr_id },
 	// 0xBx, extended instructions with register U,S
 	{ 0xb3, M680X_INS_CMPU, extended_hdlr_id },
 	{ 0xbc, M680X_INS_CMPS, extended_hdlr_id },
@@ -1358,10 +1358,10 @@ static const inst_pageX g_hd6309_inst_overlay_table[] = {
 	{ 0x05, M680X_INS_EIM, imm_direct_hdlr_id },
 	{ 0x0B, M680X_INS_TIM, imm_direct_hdlr_id },
 	{ 0x14, M680X_INS_SEXW, inherent_hdlr_id },
-	{ 0x61, M680X_INS_OIM, imm_indexed_hdlr_id },
-	{ 0x62, M680X_INS_AIM, imm_indexed_hdlr_id },
-	{ 0x65, M680X_INS_EIM, imm_indexed_hdlr_id },
-	{ 0x6B, M680X_INS_TIM, imm_indexed_hdlr_id },
+	{ 0x61, M680X_INS_OIM, imm_indexed09_hdlr_id },
+	{ 0x62, M680X_INS_AIM, imm_indexed09_hdlr_id },
+	{ 0x65, M680X_INS_EIM, imm_indexed09_hdlr_id },
+	{ 0x6B, M680X_INS_TIM, imm_indexed09_hdlr_id },
 	{ 0x71, M680X_INS_OIM, imm_extended_hdlr_id },
 	{ 0x72, M680X_INS_AIM, imm_extended_hdlr_id },
 	{ 0x75, M680X_INS_EIM, imm_extended_hdlr_id },
@@ -1391,14 +1391,14 @@ static const inst_pageX g_hd6309_inst_page2_table[] = {
 	{ 0x2e, M680X_INS_LBGT, relative16_hdlr_id },
 	{ 0x2f, M680X_INS_LBLE, relative16_hdlr_id },
 	// 0x3x
-	{ 0x30, M680X_INS_ADDR, reg_reg_hdlr_id },
-	{ 0x31, M680X_INS_ADCR, reg_reg_hdlr_id },
-	{ 0x32, M680X_INS_SUBR, reg_reg_hdlr_id },
-	{ 0x33, M680X_INS_SBCR, reg_reg_hdlr_id },
-	{ 0x34, M680X_INS_ANDR, reg_reg_hdlr_id },
-	{ 0x35, M680X_INS_ORR, reg_reg_hdlr_id },
-	{ 0x36, M680X_INS_EORR, reg_reg_hdlr_id },
-	{ 0x37, M680X_INS_CMPR, reg_reg_hdlr_id },
+	{ 0x30, M680X_INS_ADDR, reg_reg09_hdlr_id },
+	{ 0x31, M680X_INS_ADCR, reg_reg09_hdlr_id },
+	{ 0x32, M680X_INS_SUBR, reg_reg09_hdlr_id },
+	{ 0x33, M680X_INS_SBCR, reg_reg09_hdlr_id },
+	{ 0x34, M680X_INS_ANDR, reg_reg09_hdlr_id },
+	{ 0x35, M680X_INS_ORR, reg_reg09_hdlr_id },
+	{ 0x36, M680X_INS_EORR, reg_reg09_hdlr_id },
+	{ 0x37, M680X_INS_CMPR, reg_reg09_hdlr_id },
 	{ 0x38, M680X_INS_PSHSW, inherent_hdlr_id },
 	{ 0x39, M680X_INS_PULSW, inherent_hdlr_id },
 	{ 0x3a, M680X_INS_PSHUW, inherent_hdlr_id },
@@ -1456,21 +1456,21 @@ static const inst_pageX g_hd6309_inst_page2_table[] = {
 	{ 0x9e, M680X_INS_LDY, direct_hdlr_id },
 	{ 0x9f, M680X_INS_STY, direct_hdlr_id },
 	// 0xAx, indexed instructions with register D,W,Y
-	{ 0xa0, M680X_INS_SUBW, indexedXYUS_hdlr_id },
-	{ 0xa1, M680X_INS_CMPW, indexedXYUS_hdlr_id },
-	{ 0xa2, M680X_INS_SBCD, indexedXYUS_hdlr_id },
-	{ 0xa3, M680X_INS_CMPD, indexedXYUS_hdlr_id },
-	{ 0xa4, M680X_INS_ANDD, indexedXYUS_hdlr_id },
-	{ 0xa5, M680X_INS_BITD, indexedXYUS_hdlr_id },
-	{ 0xa6, M680X_INS_LDW, indexedXYUS_hdlr_id },
-	{ 0xa7, M680X_INS_STW, indexedXYUS_hdlr_id },
-	{ 0xa8, M680X_INS_EORD, indexedXYUS_hdlr_id },
-	{ 0xa9, M680X_INS_ADCD, indexedXYUS_hdlr_id },
-	{ 0xaa, M680X_INS_ORD, indexedXYUS_hdlr_id },
-	{ 0xab, M680X_INS_ADDW, indexedXYUS_hdlr_id },
-	{ 0xac, M680X_INS_CMPY, indexedXYUS_hdlr_id },
-	{ 0xae, M680X_INS_LDY, indexedXYUS_hdlr_id },
-	{ 0xaf, M680X_INS_STY, indexedXYUS_hdlr_id },
+	{ 0xa0, M680X_INS_SUBW, indexed09_hdlr_id },
+	{ 0xa1, M680X_INS_CMPW, indexed09_hdlr_id },
+	{ 0xa2, M680X_INS_SBCD, indexed09_hdlr_id },
+	{ 0xa3, M680X_INS_CMPD, indexed09_hdlr_id },
+	{ 0xa4, M680X_INS_ANDD, indexed09_hdlr_id },
+	{ 0xa5, M680X_INS_BITD, indexed09_hdlr_id },
+	{ 0xa6, M680X_INS_LDW, indexed09_hdlr_id },
+	{ 0xa7, M680X_INS_STW, indexed09_hdlr_id },
+	{ 0xa8, M680X_INS_EORD, indexed09_hdlr_id },
+	{ 0xa9, M680X_INS_ADCD, indexed09_hdlr_id },
+	{ 0xaa, M680X_INS_ORD, indexed09_hdlr_id },
+	{ 0xab, M680X_INS_ADDW, indexed09_hdlr_id },
+	{ 0xac, M680X_INS_CMPY, indexed09_hdlr_id },
+	{ 0xae, M680X_INS_LDY, indexed09_hdlr_id },
+	{ 0xaf, M680X_INS_STY, indexed09_hdlr_id },
 	// 0xBx, extended instructions with register D,W,Y
 	{ 0xb0, M680X_INS_SUBW, extended_hdlr_id },
 	{ 0xb1, M680X_INS_CMPW, extended_hdlr_id },
@@ -1495,10 +1495,10 @@ static const inst_pageX g_hd6309_inst_page2_table[] = {
 	{ 0xde, M680X_INS_LDS, direct_hdlr_id },
 	{ 0xdf, M680X_INS_STS, direct_hdlr_id },
 	// 0xEx, indexed instructions with register S,Q
-	{ 0xec, M680X_INS_LDQ, indexedXYUS_hdlr_id },
-	{ 0xed, M680X_INS_STQ, indexedXYUS_hdlr_id },
-	{ 0xee, M680X_INS_LDS, indexedXYUS_hdlr_id },
-	{ 0xef, M680X_INS_STS, indexedXYUS_hdlr_id },
+	{ 0xec, M680X_INS_LDQ, indexed09_hdlr_id },
+	{ 0xed, M680X_INS_STQ, indexed09_hdlr_id },
+	{ 0xee, M680X_INS_LDS, indexed09_hdlr_id },
+	{ 0xef, M680X_INS_STS, indexed09_hdlr_id },
 	// 0xFx, extended instructions with register S,Q
 	{ 0xfc, M680X_INS_LDQ, extended_hdlr_id },
 	{ 0xfd, M680X_INS_STQ, extended_hdlr_id },
@@ -1560,16 +1560,16 @@ static const inst_pageX g_hd6309_inst_page3_table[] = {
 	{ 0x9e, M680X_INS_DIVQ, direct_hdlr_id },
 	{ 0x9f, M680X_INS_MULD, direct_hdlr_id },
 	// 0xAx, indexed instructions with register U,S,D,Q
-	{ 0xa0, M680X_INS_SUBE, indexedXYUS_hdlr_id },
-	{ 0xa1, M680X_INS_CMPE, indexedXYUS_hdlr_id },
-	{ 0xa3, M680X_INS_CMPU, indexedXYUS_hdlr_id },
-	{ 0xa6, M680X_INS_LDE, indexedXYUS_hdlr_id },
-	{ 0xa7, M680X_INS_STE, indexedXYUS_hdlr_id },
-	{ 0xab, M680X_INS_ADDE, indexedXYUS_hdlr_id },
-	{ 0xac, M680X_INS_CMPS, indexedXYUS_hdlr_id },
-	{ 0xad, M680X_INS_DIVD, indexedXYUS_hdlr_id },
-	{ 0xae, M680X_INS_DIVQ, indexedXYUS_hdlr_id },
-	{ 0xaf, M680X_INS_MULD, indexedXYUS_hdlr_id },
+	{ 0xa0, M680X_INS_SUBE, indexed09_hdlr_id },
+	{ 0xa1, M680X_INS_CMPE, indexed09_hdlr_id },
+	{ 0xa3, M680X_INS_CMPU, indexed09_hdlr_id },
+	{ 0xa6, M680X_INS_LDE, indexed09_hdlr_id },
+	{ 0xa7, M680X_INS_STE, indexed09_hdlr_id },
+	{ 0xab, M680X_INS_ADDE, indexed09_hdlr_id },
+	{ 0xac, M680X_INS_CMPS, indexed09_hdlr_id },
+	{ 0xad, M680X_INS_DIVD, indexed09_hdlr_id },
+	{ 0xae, M680X_INS_DIVQ, indexed09_hdlr_id },
+	{ 0xaf, M680X_INS_MULD, indexed09_hdlr_id },
 	// 0xBx, extended instructions with register U,S,D,Q
 	{ 0xb0, M680X_INS_SUBE, extended_hdlr_id },
 	{ 0xb1, M680X_INS_CMPE, extended_hdlr_id },
@@ -1593,11 +1593,11 @@ static const inst_pageX g_hd6309_inst_page3_table[] = {
 	{ 0xd7, M680X_INS_STF, direct_hdlr_id },
 	{ 0xdb, M680X_INS_ADDF, direct_hdlr_id },
 	// 0xEx, indexed instructions with register F
-	{ 0xe0, M680X_INS_SUBF, indexedXYUS_hdlr_id },
-	{ 0xe1, M680X_INS_CMPF, indexedXYUS_hdlr_id },
-	{ 0xe6, M680X_INS_LDF, indexedXYUS_hdlr_id },
-	{ 0xe7, M680X_INS_STF, indexedXYUS_hdlr_id },
-	{ 0xeb, M680X_INS_ADDF, indexedXYUS_hdlr_id },
+	{ 0xe0, M680X_INS_SUBF, indexed09_hdlr_id },
+	{ 0xe1, M680X_INS_CMPF, indexed09_hdlr_id },
+	{ 0xe6, M680X_INS_LDF, indexed09_hdlr_id },
+	{ 0xe7, M680X_INS_STF, indexed09_hdlr_id },
+	{ 0xeb, M680X_INS_ADDF, indexed09_hdlr_id },
 	// 0xFx, extended instructions with register F
 	{ 0xf0, M680X_INS_SUBF, extended_hdlr_id },
 	{ 0xf1, M680X_INS_CMPF, extended_hdlr_id },
@@ -2346,8 +2346,8 @@ typedef struct insn_desc {
 	uint16_t insn_size;
 } insn_desc;
 
-static bool is_indexed_post_byte_valid(const m680x_info *info, uint16_t address,
-	uint8_t ir, insn_desc *insn_description)
+static bool is_indexed09_post_byte_valid(const m680x_info *info,
+	uint16_t address, uint8_t ir, insn_desc *insn_description)
 {
 	switch (ir & 0x9F) {
 	case 0x87:
@@ -2384,7 +2384,8 @@ static bool is_indexed_post_byte_valid(const m680x_info *info, uint16_t address,
 	// no additional bytes have to be read.
 }
 
-static bool is_tfr_reg_valid(const m680x_info *info, uint8_t reg_nibble)
+// Check for M6809/HD6309 TFR instruction for valid register
+static bool is_tfr09_reg_valid(const m680x_info *info, uint8_t reg_nibble)
 {
 	if (info->cpu.tfr_reg_valid != NULL)
 		return info->cpu.tfr_reg_valid[reg_nibble];
@@ -2452,14 +2453,14 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 	case indexedX0_hdlr_id:
 		return true;
 
-	case indexedXYUS_hdlr_id:
+	case indexed09_hdlr_id:
 		insn_description->insn_size += 1;
 
 		// Check for sufficient code size for an additional byte
 		if (!read_byte(info, &ir, address))
 			return false;
 
-		return is_indexed_post_byte_valid(info, address, ir,
+		return is_indexed09_post_byte_valid(info, address, ir,
 				insn_description);
 
 	case tfm_hdlr_id:
@@ -2472,15 +2473,15 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 		return is_tfm_reg_valid(info, (ir >> 4) & 0x0F) &&
 			is_tfm_reg_valid(info, ir & 0x0F);
 
-	case reg_reg_hdlr_id:
+	case reg_reg09_hdlr_id:
 		insn_description->insn_size += 1;
 
 		// Check for sufficient code size for an additional byte
 		if (!read_byte(info, &ir, address))
 			return false;
 
-		return is_tfr_reg_valid(info, (ir >> 4) & 0x0F) &&
-			is_tfr_reg_valid(info, ir & 0x0F);
+		return is_tfr09_reg_valid(info, (ir >> 4) & 0x0F) &&
+			is_tfr09_reg_valid(info, ir & 0x0F);
 
 	case bit_move_hdlr_id:
 		insn_description->insn_size += 2;
@@ -2490,7 +2491,7 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 			return false; // Invalid register specified
 		return read_byte(info, &ir, address + 1);
 
-	case imm_indexed_hdlr_id:
+	case imm_indexed09_hdlr_id:
 		insn_description->insn_size += 1;
 		// Check for sufficient code for immediate value
 		if (!read_byte(info, &ir, address))
@@ -2502,7 +2503,7 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 		if (!read_byte(info, &ir, address))
 			return false;
 
-		return is_indexed_post_byte_valid(info, address, ir,
+		return is_indexed09_post_byte_valid(info, address, ir,
 				insn_description);
 
 	case imm_extended_hdlr_id:
@@ -2701,7 +2702,7 @@ static const m680x_reg g_tfr_exg_reg_ids[] = {
 	M680X_REG_0, M680X_REG_0,  M680X_REG_E,  M680X_REG_F,
 };
 
-static void reg_reg_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+static void reg_reg09_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	cs_m680x *m680x = &info->m680x;
 	uint8_t regs = 0;
@@ -2809,7 +2810,7 @@ static void indexedY_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 }
 
 // M6809/M6309 indexed mode handler
-static void indexedXYUS_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+static void indexed09_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	cs_m680x *m680x = &info->m680x;
 	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
@@ -3023,12 +3024,12 @@ static void imm_indexedX_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 }
 
 // handler for immediate,indexed addr. mode. Used by HD6309
-static void imm_indexed_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+static void imm_indexed09_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	cs_m680x *m680x = &info->m680x;
 
 	immediate_hdlr(MI, info, address);
-	indexedXYUS_hdlr(MI, info, address);
+	indexed09_hdlr(MI, info, address);
 
 	m680x->address_mode = M680X_AM_IMM_INDEXED;
 }
@@ -3373,12 +3374,12 @@ static void (*const g_inst_handler[])(MCInst *, m680x_info *, uint16_t *) = {
 	extended_hdlr,
 	indexedX_hdlr,
 	indexedY_hdlr,
-	indexedXYUS_hdlr,
+	indexed09_hdlr,
 	inherent_hdlr,
-	reg_reg_hdlr,
+	reg_reg09_hdlr,
 	reg_bits_hdlr,
 	imm_indexedX_hdlr,
-	imm_indexed_hdlr,
+	imm_indexed09_hdlr,
 	imm_direct_hdlr,
 	imm_extended_hdlr,
 	bit_move_hdlr,
