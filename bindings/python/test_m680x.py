@@ -41,12 +41,6 @@ s_access = (
 	"UNCHANGED", "READ", "WRITE", "READ | WRITE",
 	)
 
-s_inc_dec = (
-	"no inc-/decrement",
-	"pre decrement: 1", "pre decrement: 2", "post increment: 1",
-	"post increment: 2", "post decrement: 1"
-	)
-
 M6800_CODE = b"\x01\x09\x36\x64\x7f\x74\x10\x00\x90\x10\xA4\x10\xb6\x10\x00\x39"
 
 M6801_CODE = b"\x04\x05\x3c\x3d\x38\x93\x10\xec\x10\xed\x10\x39"
@@ -128,13 +122,22 @@ def print_insn_detail(insn):
                     print("\t\t\tbase register: %s" % insn.reg_name(i.idx.base_reg))
                 if i.idx.offset_reg != M680X_REG_INVALID:
                     print("\t\t\toffset register: %s" % insn.reg_name(i.idx.offset_reg))
-                if (i.idx.offset_bits != 0) and (i.idx.offset_reg == M680X_REG_INVALID) and (i.idx.inc_dec == M680X_NO_INC_DEC):
+                if (i.idx.offset_bits != 0) and (i.idx.offset_reg == M680X_REG_INVALID) and (i.idx.inc_dec == 0):
                     print("\t\t\toffset: %u" % i.idx.offset)
                     if i.idx.base_reg == M680X_REG_PC:
                         print("\t\t\toffset address: 0x%04X" % i.idx.offset_addr)
                     print("\t\t\toffset bits: %u" % i.idx.offset_bits)
-                if i.idx.inc_dec != M680X_NO_INC_DEC:
-                    print("\t\t\t%s" % s_inc_dec[i.idx.inc_dec])
+                if i.idx.inc_dec != 0:
+                    if i.idx.flags & M680X_IDX_POST_INC_DEC:
+                       s_post_pre = "post"
+                    else:
+                       s_post_pre = "pre"
+                    if i.idx.inc_dec > 0:
+                        s_inc_dec = "increment"
+                    else:
+                        s_inc_dec = "decrement"
+                    print("\t\t\t%s %s: %d" %
+			(s_post_pre, s_inc_dec, abs(i.idx.inc_dec)))
             if (i.size != 0):
                 print("\t\t\tsize: %d" % i.size)
             if (i.access != CS_AC_INVALID):

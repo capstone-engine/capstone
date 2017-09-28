@@ -1,6 +1,7 @@
 // Capstone Java binding
 /* M680X Backend by Wolfgang Schwotzer <wolfgang.schwotzer@gmx.net> 2017 */
 
+import java.lang.*;
 import capstone.Capstone;
 import capstone.M680x;
 
@@ -38,12 +39,6 @@ public class TestM680x {
 
   static final String sAccess[] = {
     "UNCHANGED", "READ", "WRITE", "READ | WRITE",
-  };
-
-  static final String sIncDec[] = {
-    "no inc-/decrement",
-    "pre decrement: 1", "pre decrement: 2", "post increment: 1",
-    "post increment: 2", "post decrement: 1"
   };
 
   static final String M6800_CODE = "010936647f7410009010A410b6100039";
@@ -138,14 +133,22 @@ public class TestM680x {
           }
           if ((i.value.idx.offset_bits != 0) &&
               (i.value.idx.offset_reg == M680X_REG_INVALID) &&
-              (i.value.idx.inc_dec == M680X_NO_INC_DEC)) {
+              (i.value.idx.inc_dec == 0)) {
             System.out.printf("\t\t\toffset: %d\n", i.value.idx.offset);
             if (i.value.idx.base_reg == M680X_REG_PC)
               System.out.printf("\t\t\toffset address: 0x%04X\n", i.value.idx.offset_addr);
             System.out.printf("\t\t\toffset bits: %d\n", i.value.idx.offset_bits);
           }
-          if (i.value.idx.inc_dec != M680X_NO_INC_DEC)
-            System.out.printf("\t\t\t%s\n", sIncDec[i.value.idx.inc_dec]);
+          if (i.value.idx.inc_dec != 0) {
+            String post_pre =
+               (i.value.idx.flags & M680X_IDX_POST_INC_DEC) != 0 ?
+		"post" : "pre";
+            String inc_dec =
+               i.value.idx.inc_dec > 0 ? "increment" : "decrement";
+
+            System.out.printf("\t\t\t%s %s: %d\n", post_pre, inc_dec,
+			Math.abs(i.value.idx.inc_dec));
+          }
         }
         if (i.size != 0)
           System.out.printf("\t\t\tsize: %d\n", i.size);

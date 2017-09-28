@@ -2147,7 +2147,7 @@ static void update_am_reg_list(MCInst *MI, m680x_info *info, cs_m680x_op *op,
 		if (op->idx.offset_reg != M680X_REG_INVALID)
 			add_reg_to_rw_list(MI, op->idx.offset_reg, READ);
 
-		if (op->idx.inc_dec != M680X_NO_INC_DEC) {
+		if (op->idx.inc_dec) {
 			add_reg_to_rw_list(MI, op->idx.base_reg, WRITE);
 			if (op->idx.base_reg == M680X_REG_X &&
 			    info->cpu.reg_byte_size[M680X_REG_H])
@@ -2760,8 +2760,8 @@ static const m680x_reg g_rr5_to_reg_ids[] = {
 };
 
 static void add_indexed_operand(m680x_info *info, m680x_reg base_reg,
-	m680x_inc_dec inc_dec, uint8_t offset_bits, uint16_t offset,
-	bool no_comma)
+	bool post_inc_dec, uint8_t inc_dec, uint8_t offset_bits,
+	uint16_t offset, bool no_comma)
 {
 	cs_m680x *m680x = &info->m680x;
 	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
@@ -2771,6 +2771,8 @@ static void add_indexed_operand(m680x_info *info, m680x_reg base_reg,
 	op->idx.base_reg = base_reg;
 	op->idx.offset_reg = M680X_REG_INVALID;
 	op->idx.inc_dec = inc_dec;
+	if (inc_dec && post_inc_dec)
+		op->idx.flags |= M680X_IDX_POST_INC_DEC;
 	if (offset_bits != M680X_OFFSET_NONE) {
 		op->idx.offset = offset;
 		op->idx.offset_addr = 0;
@@ -2789,8 +2791,8 @@ static void indexedX_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	read_byte(info, &offset, (*address)++);
 
-	add_indexed_operand(info, M680X_REG_X, M680X_NO_INC_DEC,
-			 M680X_OFFSET_BITS_8, (uint16_t)offset, false);
+	add_indexed_operand(info, M680X_REG_X, false, 0, M680X_OFFSET_BITS_8,
+				 (uint16_t)offset, false);
 }
 
 static void indexedY_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -2802,10 +2804,9 @@ static void indexedY_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	read_byte(info, &offset, (*address)++);
 
-	add_indexed_operand(info, M680X_REG_Y, M680X_NO_INC_DEC,
-			 M680X_OFFSET_BITS_8, (uint16_t)offset, false);
+	add_indexed_operand(info, M680X_REG_Y, false, 0, M680X_OFFSET_BITS_8,
+				 (uint16_t)offset, false);
 }
-
 
 // M6809/M6309 indexed mode handler
 static void indexedXYUS_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -2842,21 +2843,23 @@ static void indexedXYUS_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 		// indexed addressing
 		switch (post_byte & 0x1f) {
 		case 0x00: // ,R+
-			op->idx.inc_dec = M680X_POST_INC_1;
+			op->idx.inc_dec = 1;
+			op->idx.flags |= M680X_IDX_POST_INC_DEC;
 			break;
 
 		case 0x11: // [,R++]
 		case 0x01: // ,R++
-			op->idx.inc_dec = M680X_POST_INC_2;
+			op->idx.inc_dec = 2;
+			op->idx.flags |= M680X_IDX_POST_INC_DEC;
 			break;
 
 		case 0x02: // ,-R
-			op->idx.inc_dec = M680X_PRE_DEC_1;
+			op->idx.inc_dec = -1;
 			break;
 
 		case 0x13: // [,--R]
 		case 0x03: // ,--R
-			op->idx.inc_dec = M680X_PRE_DEC_2;
+			op->idx.inc_dec = -2;
 			break;
 
 		case 0x14: // [,R]
@@ -3076,13 +3079,11 @@ static void bit_move_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 // handler for TFM instruction, e.g: TFM X+,Y+  Used by HD6309
 static void tfm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	static const m680x_inc_dec inc_dec_r0[] = {
-		M680X_POST_INC_1, M680X_POST_DEC_1,
-		M680X_POST_INC_1, M680X_NO_INC_DEC,
+	static const uint8_t inc_dec_r0[] = {
+		1, -1, 1, 0,
 	};
-	static const m680x_inc_dec inc_dec_r1[] = {
-		M680X_POST_INC_1, M680X_POST_DEC_1,
-		M680X_NO_INC_DEC, M680X_POST_INC_1,
+	static const uint8_t inc_dec_r1[] = {
+		1, -1, 0, 1,
 	};
 	cs_m680x *m680x = &info->m680x;
 	uint8_t regs = 0;
@@ -3090,9 +3091,9 @@ static void tfm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	read_byte(info, &regs, *address);
 
-	add_indexed_operand(info, g_tfr_exg_reg_ids[regs >> 4], 
+	add_indexed_operand(info, g_tfr_exg_reg_ids[regs >> 4], true,
 				inc_dec_r0[index], M680X_OFFSET_NONE, 0, true);
-	add_indexed_operand(info, g_tfr_exg_reg_ids[regs & 0x0f], 
+	add_indexed_operand(info, g_tfr_exg_reg_ids[regs & 0x0f], true,
 				inc_dec_r1[index], M680X_OFFSET_NONE, 0, true);
 
 	m680x->address_mode = M680X_AM_INDEXED2;
@@ -3217,8 +3218,8 @@ static void indexedX0_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	cs_m680x *m680x = &info->m680x;
 
-	add_indexed_operand(info, M680X_REG_X, M680X_NO_INC_DEC,
-			 M680X_OFFSET_NONE, 0, false);
+	add_indexed_operand(info, M680X_REG_X, false, 0, M680X_OFFSET_NONE,
+				 0, false);
 
 	m680x->address_mode = M680X_AM_INDEXED;
 }
@@ -3230,8 +3231,8 @@ static void indexedX16_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	read_word(info, &offset, *address);
 	*address += 2;
-	add_indexed_operand(info, M680X_REG_X, M680X_NO_INC_DEC,
-			 M680X_OFFSET_BITS_16, offset, false);
+	add_indexed_operand(info, M680X_REG_X, false, 0, M680X_OFFSET_BITS_16,
+				offset, false);
 
 	m680x->address_mode = M680X_AM_INDEXED;
 }
@@ -3260,8 +3261,8 @@ static void indexedS_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	read_byte(info, &offset, (*address)++);
 
-	add_indexed_operand(info, M680X_REG_S, M680X_NO_INC_DEC,
-			 M680X_OFFSET_BITS_8, (uint16_t)offset, false);
+	add_indexed_operand(info, M680X_REG_S, false, 0, M680X_OFFSET_BITS_8,
+				 (uint16_t)offset, false);
 }
 
 static void indexedS16_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -3273,16 +3274,16 @@ static void indexedS16_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	read_word(info, &offset, *address);
 	address += 2;
 
-	add_indexed_operand(info, M680X_REG_S, M680X_NO_INC_DEC,
-			 M680X_OFFSET_BITS_16, offset, false);
+	add_indexed_operand(info, M680X_REG_S, false, 0, M680X_OFFSET_BITS_16,
+				 offset, false);
 }
 
 static void indexedX0p_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	info->m680x.address_mode = M680X_AM_INDEXED;
 
-	add_indexed_operand(info, M680X_REG_X, M680X_POST_INC_1,
-			 M680X_OFFSET_NONE, 0, true);
+	add_indexed_operand(info, M680X_REG_X, true, 1, M680X_OFFSET_NONE,
+				 0, true);
 }
 
 static void indexedXp_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -3293,8 +3294,8 @@ static void indexedXp_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	read_byte(info, &offset, (*address)++);
 
-	add_indexed_operand(info, M680X_REG_X, M680X_POST_INC_1,
-			 M680X_OFFSET_BITS_8, (uint16_t)offset, false);
+	add_indexed_operand(info, M680X_REG_X, true, 1, M680X_OFFSET_BITS_8,
+				 (uint16_t)offset, false);
 }
 
 static void indexedS_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)

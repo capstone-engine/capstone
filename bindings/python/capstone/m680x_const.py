@@ -65,15 +65,6 @@ M680X_OP_DIRECT = 5
 M680X_OP_RELATIVE = 6
 M680X_OP_INDEX = 7
 
-# Supported values for mem.idx.inc_dec
-
-M680X_NO_INC_DEC = 0
-M680X_PRE_DEC_1 = 1
-M680X_PRE_DEC_2 = 2
-M680X_POST_INC_1 = 3
-M680X_POST_INC_2 = 4
-M680X_POST_DEC_1 = 5
-
 # Supported bit values for mem.idx.offset_bits
 
 M680X_OFFSET_NONE = 0
@@ -86,6 +77,7 @@ M680X_OFFSET_BITS_16 = 16
 # These flags can be comined
 M680X_IDX_INDIRECT = 1
 M680X_IDX_NO_COMMA = 2
+M680X_IDX_POST_INC_DEC = 4
 
 # Group of M680X instructions
 

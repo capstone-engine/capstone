@@ -51,11 +51,6 @@ let s_address_modes = [
 let s_access = [
 	"UNCHANGED"; "READ"; "WRITE"; "READ | WRITE" ];;
 
-let s_inc_dec = [
-	"no inc-/decrement";
-        "pre decrement: 1"; "pre decrement: 2"; "post increment: 1";
-        "post increment: 2"; "post decrement: 1" ];;
-
 let _M6800_CODE = "\x01\x09\x36\x64\x7f\x74\x10\x00\x90\x10\xA4\x10\xb6\x10\x00\x39";;
 let _M6801_CODE = "\x04\x05\x3c\x3d\x38\x93\x10\xec\x10\xed\x10\x39";;
 let _M6805_CODE = "\x04\x7f\x00\x17\x22\x28\x00\x2e\x00\x40\x42\x5a\x70\x8e\x97\x9c\xa0\x15\xad\x00\xc3\x10\x00\xda\x12\x34\xe5\x7f\xfe";;
@@ -81,6 +76,16 @@ let all_tests = [
         (CS_ARCH_M680X, [CS_MODE_M680X_HCS08], _HCS08_CODE, "M680X_HCS08");
 ];;
 
+let print_inc_dec inc_dec is_post = (
+	printf "\t\t\t";
+	if is_post then printf "post" else printf "pre";
+	if inc_dec > 0 then
+		printf " increment: %d\n" inc_dec
+	else
+		printf " decrement: %d\n" (abs inc_dec);
+	);
+	();;
+
 let print_op handle flags i op =
 	( match op.value with
 	| M680X_OP_INVALID _ -> ();	(* this would never happens *)
@@ -91,21 +96,18 @@ let print_op handle flags i op =
 			printf " (in mnemonic)";
 		printf "\n";
 		);
-	| M680X_OP_IMMEDIATE imm -> (
+	| M680X_OP_IMMEDIATE imm ->
 		printf "\t\toperands[%d].type: IMMEDIATE = #%d\n" i imm;
-		);
-	| M680X_OP_DIRECT direct_addr -> (
+	| M680X_OP_DIRECT direct_addr ->
 		printf "\t\toperands[%d].type: DIRECT = 0x%02X\n" i direct_addr;
-		);
 	| M680X_OP_EXTENDED ext -> (
 		printf "\t\toperands[%d].type: EXTENDED " i;
 		if ext.indirect then
 			printf "INDIRECT";
 		printf " = 0x%04X\n" ext.addr_ext;
 		);
-	| M680X_OP_RELATIVE rel -> (
+	| M680X_OP_RELATIVE rel ->
 		printf "\t\toperands[%d].type: RELATIVE = 0x%04X\n" i rel.addr_rel;
-		);
 	| M680X_OP_INDEXED idx -> (
 		printf "\t\toperands[%d].type: INDEXED" i;
 		if (bit_set idx.flags _M680X_IDX_INDIRECT) then
@@ -115,24 +117,23 @@ let print_op handle flags i op =
 			printf "\t\t\tbase register: %s\n" (cs_reg_name handle idx.base_reg);
 		if idx.offset_reg != _M680X_REG_INVALID then
 			printf "\t\t\toffset register: %s\n" (cs_reg_name handle idx.offset_reg);
-		if idx.offset_bits != 0 && idx.offset_reg == 0 && idx.inc_dec == _M680X_NO_INC_DEC then begin
+		if idx.offset_bits != 0 && idx.offset_reg == 0 && idx.inc_dec == 0 then begin
 			printf "\t\t\toffset: %d\n" idx.offset;
 			if idx.base_reg == _M680X_REG_PC then
 				printf "\t\t\toffset address: 0x%X\n" idx.offset_addr;
 			printf "\t\t\toffset bits: %u\n" idx.offset_bits;
 		end;
-		if idx.inc_dec != _M680X_NO_INC_DEC then
-			printf "\t\t\t%s\n" (List.nth s_inc_dec idx.inc_dec);
+		if idx.inc_dec != 0 then
+			print_inc_dec idx.inc_dec (bit_set idx.flags _M680X_IDX_POST_INC_DEC);
 		);
-	| M680X_OP_INDEX index -> (
+	| M680X_OP_INDEX index ->
 		printf "\t\toperands[%d].type: INDEX = %d\n" i index;
-		);
 	);
+
 	if op.size != 0 then
 		printf "\t\t\tsize: %d\n" op.size;
 	if op.access != _CS_AC_INVALID then
 		printf "\t\t\taccess: %s\n" (List.nth s_access op.access);
-
 	();;
 
 

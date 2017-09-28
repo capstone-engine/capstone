@@ -91,12 +91,8 @@ static name_map s_group_names[] = {
 };
 #endif
 
-static const char s_pre_operation[][3] = {
-	"", "-", "--", "", "", "",
-};
-
-static const char s_post_operation[][3] = {
-	"", "", "", "+", "++", "-",
+static const char s_inc_dec[][3] = {
+	"--", "-", "", "+", "++"
 };
 
 static void printRegName(cs_struct *handle, SStream *OS, unsigned int reg)
@@ -160,14 +156,16 @@ static void printOperand(MCInst *MI, SStream *O, cs_m680x_op *op)
 		if (!(op->idx.flags & M680X_IDX_NO_COMMA))
 			SStream_concat(O, ",");
 
-		SStream_concat(O, (char *)s_pre_operation[op->idx.inc_dec]);
+		if (!(op->idx.flags & M680X_IDX_POST_INC_DEC))
+			SStream_concat(O, (char *)s_inc_dec[op->idx.inc_dec+2]);
 
 		printRegName(MI->csh, O, op->idx.base_reg);
 
 		if (op->idx.base_reg == M680X_REG_PC)
 			SStream_concat(O, "R");
 
-		SStream_concat(O, (char *)s_post_operation[op->idx.inc_dec]);
+		if (op->idx.flags & M680X_IDX_POST_INC_DEC)
+			SStream_concat(O, (char *)s_inc_dec[op->idx.inc_dec+2]);
 
 		if (op->idx.flags & M680X_IDX_INDIRECT)
 			SStream_concat(O, "]");

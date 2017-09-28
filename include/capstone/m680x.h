@@ -90,16 +90,6 @@ typedef enum m680x_op_type {
 	M680X_OP_INDEX,       // = index operand (Displayed as number only).
 } m680x_op_type;
 
-//> Supported values for mem.idx.inc_dec
-typedef enum m680x_inc_dec {
-	M680X_NO_INC_DEC = 0,
-	M680X_PRE_DEC_1,     // ,-X
-	M680X_PRE_DEC_2,     // ,--X
-	M680X_POST_INC_1,    // ,X+
-	M680X_POST_INC_2,    // ,X++
-	M680X_POST_DEC_1,    // ,X-
-} m680x_inc_dec;
-
 //> Supported bit values for mem.idx.offset_bits
 #define M680X_OFFSET_NONE      0
 #define M680X_OFFSET_BITS_5    5
@@ -110,6 +100,7 @@ typedef enum m680x_inc_dec {
 //> These flags can be comined
 #define M680X_IDX_INDIRECT     1
 #define M680X_IDX_NO_COMMA     2
+#define M680X_IDX_POST_INC_DEC 4
 
 // Instruction's operand referring to indexed addressing
 typedef struct m680x_op_idx {
@@ -117,11 +108,16 @@ typedef struct m680x_op_idx {
 				// irrelevant)
 	m680x_reg offset_reg;	// offset register (or M680X_REG_INVALID if
 				// irrelevant)
-	m680x_inc_dec inc_dec;	// pre-dec. or post-inc. value (0 if irrelevant)
 	int16_t offset;		// 5-,8- or 16-bit offset. See also offset_bits.
 	uint16_t offset_addr;	// = offset addr. if base_reg == M680X_REG_PC.
 				// calculated as offset + PC
 	uint8_t offset_bits;	// offset width in bits for indexed addressing
+	int8_t inc_dec;		// inc. or dec. value:
+				//    0: no inc-/decrement
+				//    1 .. 2: increment by 1 .. 2
+				//    -1 .. -2: decrement by 1 .. 2
+				// if flag M680X_IDX_POST_INC_DEC set it is post
+				// inc-/decrement otherwise pre inc-/decrement
 	uint8_t flags;		// 8-bit flags (see above)
 } m680x_op_idx;
 

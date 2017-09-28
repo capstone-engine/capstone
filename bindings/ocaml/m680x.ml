@@ -8,10 +8,10 @@ open M680x_const
 type m680x_op_idx = {
 	base_reg: int;
 	offset_reg: int;
-	inc_dec: int;
 	offset: int;
 	offset_addr: int;
 	offset_bits: int;
+	inc_dec: int;
 	flags: int;
 }
 

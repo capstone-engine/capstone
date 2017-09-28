@@ -65,15 +65,6 @@ let _M680X_OP_DIRECT = 5;;
 let _M680X_OP_RELATIVE = 6;;
 let _M680X_OP_INDEX = 7;;
 
-(* Supported values for mem.idx.inc_dec *)
-
-let _M680X_NO_INC_DEC = 0;;
-let _M680X_PRE_DEC_1 = 1;;
-let _M680X_PRE_DEC_2 = 2;;
-let _M680X_POST_INC_1 = 3;;
-let _M680X_POST_INC_2 = 4;;
-let _M680X_POST_DEC_1 = 5;;
-
 (* Supported bit values for mem.idx.offset_bits *)
 
 let _M680X_OFFSET_NONE = 0;;
@@ -86,6 +77,7 @@ let _M680X_OFFSET_BITS_16 = 16;;
 (* These flags can be comined *)
 let _M680X_IDX_INDIRECT = 1;;
 let _M680X_IDX_NO_COMMA = 2;;
+let _M680X_IDX_POST_INC_DEC = 4;;
 
 (* Group of M680X instructions *)
 

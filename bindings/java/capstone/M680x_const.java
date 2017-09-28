@@ -68,15 +68,6 @@ public class M680x_const {
 	public static final int M680X_OP_RELATIVE = 6;
 	public static final int M680X_OP_INDEX = 7;
 
-	// Supported values for mem.idx.inc_dec
-
-	public static final int M680X_NO_INC_DEC = 0;
-	public static final int M680X_PRE_DEC_1 = 1;
-	public static final int M680X_PRE_DEC_2 = 2;
-	public static final int M680X_POST_INC_1 = 3;
-	public static final int M680X_POST_INC_2 = 4;
-	public static final int M680X_POST_DEC_1 = 5;
-
 	// Supported bit values for mem.idx.offset_bits
 
 	public static final int M680X_OFFSET_NONE = 0;
@@ -89,6 +80,7 @@ public class M680x_const {
 	// These flags can be comined
 	public static final int M680X_IDX_INDIRECT = 1;
 	public static final int M680X_IDX_NO_COMMA = 2;
+	public static final int M680X_IDX_POST_INC_DEC = 4;
 
 	// Group of M680X instructions
 
