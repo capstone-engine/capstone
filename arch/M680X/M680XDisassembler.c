@@ -2951,7 +2951,7 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 
 	case indexed09_hdlr_id:
 		insn_description->insn_size += 1;
-		if (!read_byte(info, &ir, address))
+		if (!read_byte(info, &ir, address++))
 			return false;
 
 		return is_indexed09_post_byte_valid(info, address, ir,
