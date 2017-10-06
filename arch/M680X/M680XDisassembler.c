@@ -3338,7 +3338,7 @@ static void reg_reg12_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	if (regs & 0x80)
 		info->insn = M680X_INS_EXG;
 	else
-		info->insn == M680X_INS_TFR;
+		info->insn = M680X_INS_TFR;
 
 	add_reg_operand(info, g_tfr_exg12_reg0_ids[(regs >> 4) & 0x07]);
 	add_reg_operand(info, g_tfr_exg12_reg1_ids[regs & 0x07]);
@@ -3586,8 +3586,6 @@ static void indexed12_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
 	uint8_t post_byte = 0;
 	uint8_t offset8 = 0;
-	uint16_t offset = 0;
-	int16_t soffset = 0;
 
 	m680x->address_mode = M680X_AM_INDEXED;
 
