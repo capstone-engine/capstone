@@ -2614,96 +2614,94 @@ static void add_operators_access(MCInst *MI, m680x_info *info,
 
 typedef struct insn_to_changed_regs {
 	m680x_insn insn;
-	e_access access;
+	e_access_mode access_mode;
 	m680x_reg regs[10];
 } insn_to_changed_regs;
 
 static void set_changed_regs_read_write_counts(MCInst *MI, m680x_info *info)
 {
 //TABLE
-#define NONE UNCHANGED
 #define EOL M680X_REG_INVALID
 	static const insn_to_changed_regs changed_regs[] = {
-		{ M680X_INS_BSR, MODIFY, { M680X_REG_S, EOL } },
-		{ M680X_INS_CALL, MODIFY, { M680X_REG_S, EOL } },
+		{ M680X_INS_BSR, mmmm, { M680X_REG_S, EOL } },
+		{ M680X_INS_CALL, mmmm, { M680X_REG_S, EOL } },
 		{
-			M680X_INS_CWAI, NONE, {
+			M680X_INS_CWAI, mrrr, {
 				M680X_REG_S, M680X_REG_PC, M680X_REG_U,
 				M680X_REG_Y, M680X_REG_X, M680X_REG_DP,
 				M680X_REG_D, M680X_REG_CC, EOL
 			},
 		},
-		{ M680X_INS_DAA, NONE, { M680X_REG_A, EOL } },
-		{ M680X_INS_DIV, NONE, {
+		{ M680X_INS_DAA, mrrr, { M680X_REG_A, EOL } },
+		{ M680X_INS_DIV, mmrr, {
 			M680X_REG_A, M680X_REG_H, M680X_REG_X, EOL
 			}
 		},
-		{ M680X_INS_EDIV, NONE, {
+		{ M680X_INS_EDIV, mmrr, {
 			M680X_REG_D, M680X_REG_Y, M680X_REG_X, EOL
 			}
 		},
-		{ M680X_INS_EDIVS, NONE, {
+		{ M680X_INS_EDIVS, mmrr, {
 			M680X_REG_D, M680X_REG_Y, M680X_REG_X, EOL
 			}
 		},
-		{ M680X_INS_EMACS, NONE, { M680X_REG_X, M680X_REG_Y, EOL } },
-		{ M680X_INS_EMAXM, READ, { M680X_REG_D, EOL } },
-		{ M680X_INS_EMINM, READ, { M680X_REG_D, EOL } },
-		{ M680X_INS_EMUL, NONE, { M680X_REG_D, M680X_REG_Y, EOL } },
-		{ M680X_INS_EMULS, NONE, { M680X_REG_D, M680X_REG_Y, EOL } },
-		// TODO: A => WRITE, B => MODIFY
-		{ M680X_INS_ETBL, READ, { M680X_REG_A, M680X_REG_B, EOL } },
-		{ M680X_INS_FDIV, NONE, { M680X_REG_D, M680X_REG_X, EOL } },
-		{ M680X_INS_IDIV, NONE, { M680X_REG_D, M680X_REG_X, EOL } },
-		{ M680X_INS_IDIVS, NONE, { M680X_REG_D, M680X_REG_X, EOL } },
-		{ M680X_INS_JSR, MODIFY, { M680X_REG_S, EOL } },
-		{ M680X_INS_LBSR, MODIFY, { M680X_REG_S, EOL } },
-		{ M680X_INS_MAXM, READ, { M680X_REG_A, EOL } },
-		{ M680X_INS_MINM, READ, { M680X_REG_A, EOL } },
-		{ M680X_INS_MEM, NONE, {
+		{ M680X_INS_EMACS, mrrr, { M680X_REG_X, M680X_REG_Y, EOL } },
+		{ M680X_INS_EMAXM, rrrr, { M680X_REG_D, EOL } },
+		{ M680X_INS_EMINM, rrrr, { M680X_REG_D, EOL } },
+		{ M680X_INS_EMUL, mmrr, { M680X_REG_D, M680X_REG_Y, EOL } },
+		{ M680X_INS_EMULS, mmrr, { M680X_REG_D, M680X_REG_Y, EOL } },
+		{ M680X_INS_ETBL, wmmm, { M680X_REG_A, M680X_REG_B, EOL } },
+		{ M680X_INS_FDIV, mmmm, { M680X_REG_D, M680X_REG_X, EOL } },
+		{ M680X_INS_IDIV, mmmm, { M680X_REG_D, M680X_REG_X, EOL } },
+		{ M680X_INS_IDIVS, mmmm, { M680X_REG_D, M680X_REG_X, EOL } },
+		{ M680X_INS_JSR, mmmm, { M680X_REG_S, EOL } },
+		{ M680X_INS_LBSR, mmmm, { M680X_REG_S, EOL } },
+		{ M680X_INS_MAXM, rrrr, { M680X_REG_A, EOL } },
+		{ M680X_INS_MINM, rrrr, { M680X_REG_A, EOL } },
+		{ M680X_INS_MEM, mmrr, {
 			M680X_REG_X, M680X_REG_Y, M680X_REG_A, EOL
 			}
 		},
-		{ M680X_INS_MUL, NONE, { M680X_REG_A, M680X_REG_B, EOL } },
-		{ M680X_INS_MULD, NONE, { M680X_REG_D, M680X_REG_W, EOL } },
-		{ M680X_INS_PSHA, NONE, { M680X_REG_A, M680X_REG_S, EOL } },
-		{ M680X_INS_PSHB, NONE, { M680X_REG_B, M680X_REG_S, EOL } },
-		{ M680X_INS_PSHC, NONE, { M680X_REG_CC, M680X_REG_S, EOL } },
-		{ M680X_INS_PSHD, NONE, { M680X_REG_D, M680X_REG_S, EOL } },
-		{ M680X_INS_PSHH, NONE, { M680X_REG_H, M680X_REG_S, EOL } },
-		{ M680X_INS_PSHX, NONE, { M680X_REG_X, M680X_REG_S, EOL } },
-		{ M680X_INS_PSHY, NONE, { M680X_REG_Y, M680X_REG_S, EOL } },
-		{ M680X_INS_PULA, NONE, { M680X_REG_A, M680X_REG_S, EOL } },
-		{ M680X_INS_PULB, NONE, { M680X_REG_B, M680X_REG_S, EOL } },
-		{ M680X_INS_PULC, NONE, { M680X_REG_CC, M680X_REG_S, EOL } },
-		{ M680X_INS_PULD, NONE, { M680X_REG_D, M680X_REG_S, EOL } },
-		{ M680X_INS_PULH, NONE, { M680X_REG_H, M680X_REG_S, EOL } },
-		{ M680X_INS_PULX, NONE, { M680X_REG_X, M680X_REG_S, EOL } },
-		{ M680X_INS_PULY, NONE, { M680X_REG_Y, M680X_REG_S, EOL } },
+		{ M680X_INS_MUL, mmmm, { M680X_REG_A, M680X_REG_B, EOL } },
+		{ M680X_INS_MULD, mwrr, { M680X_REG_D, M680X_REG_W, EOL } },
+		{ M680X_INS_PSHA, rmmm, { M680X_REG_A, M680X_REG_S, EOL } },
+		{ M680X_INS_PSHB, rmmm, { M680X_REG_B, M680X_REG_S, EOL } },
+		{ M680X_INS_PSHC, rmmm, { M680X_REG_CC, M680X_REG_S, EOL } },
+		{ M680X_INS_PSHD, rmmm, { M680X_REG_D, M680X_REG_S, EOL } },
+		{ M680X_INS_PSHH, rmmm, { M680X_REG_H, M680X_REG_S, EOL } },
+		{ M680X_INS_PSHX, rmmm, { M680X_REG_X, M680X_REG_S, EOL } },
+		{ M680X_INS_PSHY, rmmm, { M680X_REG_Y, M680X_REG_S, EOL } },
+		{ M680X_INS_PULA, wmmm, { M680X_REG_A, M680X_REG_S, EOL } },
+		{ M680X_INS_PULB, wmmm, { M680X_REG_B, M680X_REG_S, EOL } },
+		{ M680X_INS_PULC, wmmm, { M680X_REG_CC, M680X_REG_S, EOL } },
+		{ M680X_INS_PULD, wmmm, { M680X_REG_D, M680X_REG_S, EOL } },
+		{ M680X_INS_PULH, wmmm, { M680X_REG_H, M680X_REG_S, EOL } },
+		{ M680X_INS_PULX, wmmm, { M680X_REG_X, M680X_REG_S, EOL } },
+		{ M680X_INS_PULY, wmmm, { M680X_REG_Y, M680X_REG_S, EOL } },
 		{
-			M680X_INS_REV, NONE, {
+			M680X_INS_REV, mmrr, {
 				M680X_REG_A, M680X_REG_X, M680X_REG_Y, EOL
 			}
 		},
 		{
-			M680X_INS_REVW, NONE, {
+			M680X_INS_REVW, mmmm, {
 				M680X_REG_A, M680X_REG_X, M680X_REG_Y, EOL
 			}
 		},
-		{ M680X_INS_RTC, NONE, { M680X_REG_S, M680X_REG_PC, EOL } },
+		{ M680X_INS_RTC, mwww, { M680X_REG_S, M680X_REG_PC, EOL } },
 		{
-			M680X_INS_RTI, NONE, {
+			M680X_INS_RTI, mwww, {
 				M680X_REG_S, M680X_REG_CC, M680X_REG_B,
 				M680X_REG_A, M680X_REG_DP, M680X_REG_X,
 				M680X_REG_Y, M680X_REG_U, M680X_REG_PC,
 				EOL
 			},
 		},
-		{ M680X_INS_RTS, NONE, { M680X_REG_S, M680X_REG_PC, EOL } },
-		{ M680X_INS_SEX, NONE, { M680X_REG_A, M680X_REG_B, EOL } },
-		{ M680X_INS_SEXW, NONE, { M680X_REG_W, M680X_REG_D, EOL } },
+		{ M680X_INS_RTS, mwww, { M680X_REG_S, M680X_REG_PC, EOL } },
+		{ M680X_INS_SEX, wrrr, { M680X_REG_A, M680X_REG_B, EOL } },
+		{ M680X_INS_SEXW, rwww, { M680X_REG_W, M680X_REG_D, EOL } },
 		{
-			M680X_INS_SWI, NONE, {
+			M680X_INS_SWI, mmrr, {
 				M680X_REG_S, M680X_REG_PC, M680X_REG_U,
 				M680X_REG_Y, M680X_REG_X, M680X_REG_DP,
 				M680X_REG_A, M680X_REG_B, M680X_REG_CC,
@@ -2711,7 +2709,7 @@ static void set_changed_regs_read_write_counts(MCInst *MI, m680x_info *info)
 			}
 		},
 		{
-			M680X_INS_SWI2, NONE, {
+			M680X_INS_SWI2, mmrr, {
 				M680X_REG_S, M680X_REG_PC, M680X_REG_U,
 				M680X_REG_Y, M680X_REG_X, M680X_REG_DP,
 				M680X_REG_A, M680X_REG_B, M680X_REG_CC,
@@ -2719,30 +2717,31 @@ static void set_changed_regs_read_write_counts(MCInst *MI, m680x_info *info)
 			},
 		},
 		{
-			M680X_INS_SWI3, NONE, {
+			M680X_INS_SWI3, mmrr, {
 				M680X_REG_S, M680X_REG_PC, M680X_REG_U,
 				M680X_REG_Y, M680X_REG_X, M680X_REG_DP,
 				M680X_REG_A, M680X_REG_B, M680X_REG_CC,
 				EOL
 			},
 		},
-		// TODO: A => WRITE, B => READ
-		{ M680X_INS_TBL, READ, { M680X_REG_A, M680X_REG_B, EOL } },
+		{ M680X_INS_TBL, wrrr, { M680X_REG_A, M680X_REG_B, EOL } },
 		{
-			M680X_INS_WAI, NONE, {
+			M680X_INS_WAI, mrrr, {
 				M680X_REG_S, M680X_REG_PC, M680X_REG_X,
 				M680X_REG_A, M680X_REG_B, M680X_REG_CC,
 				EOL
 			}
 		},
 		{
-			M680X_INS_WAV, MODIFY, {
-				M680X_REG_D, M680X_REG_X, M680X_REG_Y, EOL
+			M680X_INS_WAV, rmmm, {
+				M680X_REG_A, M680X_REG_B, M680X_REG_X,
+				M680X_REG_Y, EOL
 			}
 		},
 		{
-			M680X_INS_WAVR, MODIFY, {
-				M680X_REG_D, M680X_REG_X, M680X_REG_Y, EOL
+			M680X_INS_WAVR, rmmm, {
+				M680X_REG_A, M680X_REG_B, M680X_REG_X,
+				M680X_REG_Y, EOL
 			}
 		},
 	};
@@ -2754,8 +2753,7 @@ static void set_changed_regs_read_write_counts(MCInst *MI, m680x_info *info)
 
 	for (i = 0; i < ARR_SIZE(changed_regs); ++i) {
 		if (info->insn == changed_regs[i].insn) {
-			e_access_mode access_mode =
-				g_insn_props[info->insn].access_mode;
+			e_access_mode access_mode = changed_regs[i].access_mode;
 
 			for (j = 0; changed_regs[i].regs[j] != EOL; ++j) {
 				e_access access;
@@ -2768,16 +2766,12 @@ static void set_changed_regs_read_write_counts(MCInst *MI, m680x_info *info)
 					// Hack for M68HC05: MUL uses reg. A,X
 					reg = M680X_REG_X;
 				}
-				if (changed_regs[i].access == NONE)
-					access = get_access(j, access_mode);
-				else
-					access = changed_regs[i].access;
+				access = get_access(j, access_mode);
 				add_reg_to_rw_list(MI, reg, access);
 			}
 		}
 	}
 #undef EOL
-#undef NONE
 }
 
 typedef struct insn_desc {
