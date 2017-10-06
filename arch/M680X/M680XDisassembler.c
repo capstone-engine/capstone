@@ -3183,7 +3183,9 @@ static bool decode_insn(const m680x_info *info, uint16_t address,
 
 	insn_description->insn_size = address - base_address;
 
-	return is_sufficient_code_size(info, address, insn_description);
+	return (insn_description->insn != M680X_INS_INVLD) &&
+		(insn_description->insn != M680X_INS_ILLGL) &&
+		is_sufficient_code_size(info, address, insn_description);
 }
 
 static void illegal_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -4251,8 +4253,6 @@ static void loop_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	m680x->address_mode = M680X_AM_REG_RELATIVE;
 }
 
-//TODO
-//ADDRMODE
 static void (*const g_inst_handler[])(MCInst *, m680x_info *, uint16_t *) = {
 	illegal_hdlr,
 	relative8_hdlr,
