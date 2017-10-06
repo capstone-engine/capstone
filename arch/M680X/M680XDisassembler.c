@@ -3365,7 +3365,10 @@ static void relative8_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	add_rel_operand(info, offset, *address + offset);
 	add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
 
-	add_reg_to_rw_list(MI, M680X_REG_CC, READ);
+	if ((info->insn != M680X_INS_BRA) &&
+		(info->insn != M680X_INS_BSR) &&
+		(info->insn != M680X_INS_BRN))
+		add_reg_to_rw_list(MI, M680X_REG_CC, READ);
 }
 
 static void relative16_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -3377,7 +3380,10 @@ static void relative16_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	add_rel_operand(info, (int16_t)offset, *address + offset);
 	add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
 
-	add_reg_to_rw_list(MI, M680X_REG_CC, READ);
+	if ((info->insn != M680X_INS_LBRA) &&
+		(info->insn != M680X_INS_LBSR) &&
+		(info->insn != M680X_INS_LBRN))
+		add_reg_to_rw_list(MI, M680X_REG_CC, READ);
 }
 
 static const m680x_reg g_rr5_to_reg_ids[] = {
