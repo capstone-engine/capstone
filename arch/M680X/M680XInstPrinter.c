@@ -18,7 +18,7 @@
 #ifndef CAPSTONE_DIET
 static const char s_reg_names[][10] = {
 	"<invalid>", "A", "B", "E", "F", "0", "D", "W", "CC", "DP", "MD",
-	"HX", "H", "X", "Y", "S", "U", "V", "Q", "PC",
+	"HX", "H", "X", "Y", "S", "U", "V", "Q", "PC", "TMP1", "TMP2", "TMP3",
 };
 
 static const char s_instruction_names[][6] = {
@@ -36,19 +36,21 @@ static const char s_instruction_names[][6] = {
 	"BMI", "BMS",
 	"BNE", "BOR", "BPL", "BRCLR", "BRSET", "BRA", "BRN", "BSET", "BSR",
 	"BVC", "BVS",
-	"CBA", "CBEQ", "CBEQA", "CBEQX", "CLC", "CLI",
+	"CALL", "CBA", "CBEQ", "CBEQA", "CBEQX", "CLC", "CLI",
 	"CLR", "CLRA", "CLRB", "CLRD", "CLRE", "CLRF", "CLRH", "CLRW", "CLRX",
 	"CLV", "CMP",
 	"CMPA", "CMPB", "CMPD", "CMPE", "CMPF", "CMPR", "CMPS", "CMPU", "CMPW",
 	"CMPX", "CMPY",
 	"COM", "COMA", "COMB", "COMD", "COME", "COMF", "COMW", "COMX", "CPD",
-	"CPHX", "CPX", "CPY",
-	"CWAI", "DAA", "DBNZ", "DBNZA", "DBNZX",
+	"CPHX", "CPS", "CPX", "CPY",
+	"CWAI", "DAA", "DBEQ", "DBNE", "DBNZ", "DBNZA", "DBNZX",
 	"DEC", "DECA", "DECB", "DECD", "DECE", "DECF", "DECW",
 	"DECX", "DES", "DEX", "DEY",
-	"DIV", "DIVD", "DIVQ", "EIM", "EOR", "EORA", "EORB", "EORD", "EORR",
-	"EXG", "FDIV", "IDIV", "ILLGL", "INC", "INCA", "INCB",
-	"INCD", "INCE", "INCF", "INCW", "INCX",
+	"DIV", "DIVD", "DIVQ", "EDIV", "EDIVS", "EIM", "EMACS", "EMAXD",
+	"EMAXM", "EMIND", "EMINM", "EMUL", "EMULS",
+	"EOR", "EORA", "EORB", "EORD", "EORR", "ETBL",
+	"EXG", "FDIV", "IBEQ", "IBNE", "IDIV", "IDIVS", "ILLGL",
+	"INC", "INCA", "INCB", "INCD", "INCE", "INCF", "INCW", "INCX",
 	"INS", "INX", "INY",
 	"JMP", "JSR",
 	"LBCC", "LBCS", "LBEQ", "LBGE", "LBGT", "LBHI", "LBLE", "LBLS", "LBLT",
@@ -59,24 +61,29 @@ static const char s_instruction_names[][6] = {
 	"LEAS", "LEAU", "LEAX", "LEAY",
 	"LSL", "LSLA", "LSLB", "LSLD", "LSLX",
 	"LSR", "LSRA", "LSRB", "LSRD", "LSRW", "LSRX",
-	"MOV", "MUL", "MULD",
+	"MAXA", "MAXM", "MEM", "MINA", "MINM", "MOV", "MOVB", "MOVW", "MUL",
+	"MULD",
 	"NEG", "NEGA", "NEGB", "NEGD", "NEGX",
 	"NOP", "NSA", "OIM", "ORA", "ORAA", "ORAB", "ORB", "ORCC", "ORD", "ORR",
-	"PSHA", "PSHB", "PSHH", "PSHS", "PSHSW", "PSHU", "PSHUW",
-	"PSHX", "PSHY",
-	"PULA", "PULB", "PULH", "PULS", "PULSW", "PULU", "PULUW",
-	"PULX", "PULY",
+	"PSHA", "PSHB", "PSHC", "PSHD", "PSHH", "PSHS", "PSHSW", "PSHU",
+	"PSHUW", "PSHX", "PSHY",
+	"PULA", "PULB", "PULC", "PULD", "PULH", "PULS", "PULSW", "PULU",
+	"PULUW", "PULX", "PULY", "REV", "REVW",
 	"ROL", "ROLA", "ROLB", "ROLD", "ROLW", "ROLX",
 	"ROR", "RORA", "RORB", "RORD", "RORW", "RORX",
-	"RSP", "RTI", "RTS", "SBA", "SBC", "SBCA", "SBCB", "SBCD", "SBCR",
+	"RSP", "RTC", "RTI", "RTS", "SBA", "SBC", "SBCA", "SBCB", "SBCD",
+	"SBCR",
 	"SEC", "SEI", "SEV", "SEX", "SEXW", "STA", "STAA", "STAB", "STB",
 	"STBT", "STD", "STE", "STF", "STOP", "STHX",
 	"STQ", "STS", "STU", "STW", "STX", "STY",
 	"SUB", "SUBA", "SUBB", "SUBD", "SUBE", "SUBF", "SUBR", "SUBW",
 	"SWI", "SWI2", "SWI3",
-	"SYNC", "TAB", "TAP", "TAX", "TBA", "TEST", "TFM", "TFR", "TIM", "TPA",
+	"SYNC", "TAB", "TAP", "TAX", "TBA", "TBEQ", "TBL", "TBNE", "TEST",
+	"TFM", "TFR",
+	"TIM", "TPA",
 	"TST", "TSTA", "TSTB", "TSTD", "TSTE", "TSTF", "TSTW", "TSTX",
-	"TSX", "TSY", "TXA", "TXS", "TYS", "WAI", "WAIT", "XGDX", "XGDY",
+	"TSX", "TSY", "TXA", "TXS", "TYS", "WAI", "WAIT", "WAV", "WAVR",
+	"XGDX", "XGDY",
 };
 
 static name_map s_group_names[] = {
@@ -90,10 +97,6 @@ static name_map s_group_names[] = {
 	{ M680X_GRP_BRAREL,  "BRANCH_RELATIVE" },
 };
 #endif
-
-static const char s_inc_dec[][3] = {
-	"--", "-", "", "+", "++"
-};
 
 static void printRegName(cs_struct *handle, SStream *OS, unsigned int reg)
 {
@@ -120,7 +123,29 @@ static uint32_t get_unsigned(int32_t value, int byte_size)
 	}
 }
 
-static void printOperand(MCInst *MI, SStream *O, cs_m680x_op *op)
+static void printIncDec(bool isPost, SStream *O, m680x_info *info,
+			cs_m680x_op *op)
+{
+	static const char s_inc_dec[][3] = { "--", "-", "", "+", "++" };
+
+	if (!op->idx.inc_dec)
+		return;
+
+	if ((!isPost && !(op->idx.flags & M680X_IDX_POST_INC_DEC)) ||
+		(isPost && (op->idx.flags & M680X_IDX_POST_INC_DEC))) {
+		char *prePostfix = "";
+
+		if (info->cpu_type == M680X_CPU_TYPE_CPU12)
+			prePostfix = (op->idx.inc_dec < 0) ? "-" : "+";
+		else if (op->idx.inc_dec >= -2 && (op->idx.inc_dec <= 2)) {
+			prePostfix = (char *)s_inc_dec[op->idx.inc_dec+2];
+		}
+		SStream_concat(O, prePostfix);
+	}
+}
+
+static void printOperand(MCInst *MI, SStream *O, m680x_info *info,
+			cs_m680x_op *op)
 {
 	switch (op->type) {
 	case M680X_OP_REGISTER:
@@ -151,21 +176,21 @@ static void printOperand(MCInst *MI, SStream *O, cs_m680x_op *op)
 				SStream_concat(O, "$%04X", op->idx.offset_addr);
 			else
 				SStream_concat(O, "%d", op->idx.offset);
-		}
+		} else if (op->idx.inc_dec != 0 &&
+		   info->cpu_type == M680X_CPU_TYPE_CPU12)
+			SStream_concat(O, "%d", abs(op->idx.inc_dec));
 
 		if (!(op->idx.flags & M680X_IDX_NO_COMMA))
 			SStream_concat(O, ",");
 
-		if (!(op->idx.flags & M680X_IDX_POST_INC_DEC))
-			SStream_concat(O, (char *)s_inc_dec[op->idx.inc_dec+2]);
+		printIncDec(false, O, info, op);
 
 		printRegName(MI->csh, O, op->idx.base_reg);
 
-		if (op->idx.base_reg == M680X_REG_PC)
+		if (op->idx.base_reg == M680X_REG_PC && (op->idx.offset_bits>0))
 			SStream_concat(O, "R");
 
-		if (op->idx.flags & M680X_IDX_POST_INC_DEC)
-			SStream_concat(O, (char *)s_inc_dec[op->idx.inc_dec+2]);
+		printIncDec(true, O, info, op);
 
 		if (op->idx.flags & M680X_IDX_INDIRECT)
 			SStream_concat(O, "]");
@@ -200,18 +225,21 @@ static void printOperand(MCInst *MI, SStream *O, cs_m680x_op *op)
 	}
 }
 
-static const char *getDelimiter(cs_m680x *m680x)
+static const char *getDelimiter(m680x_info *info, cs_m680x *m680x)
 {
 	bool indexed = false;
 	int count = 0;
 	int i;
+
+	if (info->insn == M680X_INS_TFM)
+		return ",";
 
 	if (m680x->op_count > 1) {
 		for (i  = 0; i < m680x->op_count; ++i) {
 			if (m680x->operands[i].type == M680X_OP_INDEXED)
 				indexed = true;
 
-			else if (m680x->operands[i].type != M680X_OP_REGISTER)
+			if (m680x->operands[i].type != M680X_OP_REGISTER)
 				count++;
 		}
 	}
@@ -225,7 +253,7 @@ void M680X_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 	cs_m680x *m680x = &info->m680x;
 	cs_detail *detail = MI->flat_insn->detail;
 	int suppress_operands = 0;
-	const char *delimiter = getDelimiter(m680x);
+	const char *delimiter = getDelimiter(info, m680x);
 	int i;
 
 	if (detail != NULL)
@@ -250,7 +278,7 @@ void M680X_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 
 	for (i  = 0; i < m680x->op_count; ++i) {
 		if (i >= suppress_operands) {
-			printOperand(MI, O, &m680x->operands[i]);
+			printOperand(MI, O, info, &m680x->operands[i]);
 
 			if ((i + 1) != m680x->op_count)
 				SStream_concat(O, delimiter);

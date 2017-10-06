@@ -32,6 +32,12 @@ static const char *s_addressing_modes[] = {
 	"M680X_AM_DIRECT_IDX",
 	"M680X_AM_DIRECT2",
 	"M680X_AM_INDEXED_DIR",
+	"M680X_AM_EXTENDED_IMM",
+	"M680X_AM_EXT_IMM_REL",
+	"M680X_AM_EXT_PAGE",
+	"M680X_AM_IDX_PAGE",
+	"M680X_AM_REG_RELATIVE",
+	"M680X_AM_EXT_EXT",
 };
 
 static const char *s_access[] = {

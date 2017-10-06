@@ -825,6 +825,9 @@ CAMLprim value ocaml_cs_disasm(value _arch, value _mode, value _code, value _add
 				mode |= CS_MODE_M680X_6811;
 				break;
 			case 25:
+				mode |= CS_MODE_M680X_CPU12;
+				break;
+			case 26:
 				mode |= CS_MODE_M680X_HCS08;
 				break;
 			default:
@@ -995,6 +998,9 @@ CAMLprim value ocaml_open(value _arch, value _mode)
 				mode |= CS_MODE_M680X_6811;
 				break;
 			case 25:
+				mode |= CS_MODE_M680X_CPU12;
+				break;
+			case 26:
 				mode |= CS_MODE_M680X_HCS08;
 				break;
 			default:

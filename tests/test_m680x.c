@@ -67,7 +67,14 @@ static const char *s_addressing_modes[] = {
 	"M680X_AM_DIRECT_IDX",
 	"M680X_AM_DIRECT2",
 	"M680X_AM_INDEXED_DIR",
-
+	"M680X_AM_EXTENDED_IMM",
+	"M680X_AM_EXT_IMM_REL",
+	"M680X_AM_EXT_PAGE",
+	"M680X_AM_IDX_PAGE",
+	"M680X_AM_REG_RELATIVE",
+	"M680X_AM_EXT_EXT",
+	"M680X_AM_INDEXED_EXT",
+	"M680X_AM_EXT_INDEXED",
 };
 #endif
 
@@ -256,6 +263,13 @@ static void test()
   "\x18\xce\x10\x00\x18\xff\x10\x00" \
   "\x1a\xa3\x7f\x1a\xac\x1a\xee\x7f\x1a\xef\x7f\xcd\xac\x7f"
 
+#define CPU12_CODE \
+  "\x00\x04\x01\x00\x0c\x00\x80\x0e\x00\x80\x00\x11\x1e\x10\x00\x80\x00" \
+  "\x3b\x4a\x10\x00\x04\x4b\x01\x04\x4f\x7f\x80\x00\x8f\x10\x00\xb7\x52" \
+  "\xb7\xb1\xa6\x67\xa6\xfe\xa6\xf7\x18\x02\xe2\x30\x39\xe2\x10\x00" \
+  "\x18\x0c\x30\x39\x10\x00\x18\x11\x18\x12\x10\x00\x18\x19\x00\x18\x1e\x00" \
+  "\x18\x3e\x18\x3f\x00"
+
 #define HD6301_CODE \
   "\x6b\x10\x00\x71\x10\x00\x72\x10\x10\x39"
 
@@ -336,6 +350,13 @@ static void test()
 			(unsigned char *)M6811_CODE,
 			sizeof(M6811_CODE) - 1,
 			"M680X_M68HC11",
+		},
+		{
+			CS_ARCH_M680X,
+			(cs_mode)(CS_MODE_M680X_CPU12),
+			(unsigned char *)CPU12_CODE,
+			sizeof(CPU12_CODE) - 1,
+			"M680X_CPU12",
 		},
 		{
 			CS_ARCH_M680X,

@@ -53,6 +53,7 @@ type mode =
   |	CS_MODE_M680X_6808	(* M680X Motorola 6808 mode *)
   |	CS_MODE_M680X_6809	(* M680X Motorola 6809 mode *)
   |	CS_MODE_M680X_6811	(* M680X Motorola/Freescale 68HC11 mode *)
+  |	CS_MODE_M680X_CPU12	(* M680X Motorola/Freescale/NXP CPU12 mode *)
   |	CS_MODE_M680X_HCS08	(* M680X Freescale HCS08 mode *)
 
 
