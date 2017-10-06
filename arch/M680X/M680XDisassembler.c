@@ -4352,8 +4352,6 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 
 		MCInst_setOpcode(MI, insn_description.opcode);
 
-		add_insn_group(detail, g_insn_props[info->insn].group);
-
 		reg = g_insn_props[info->insn].reg0;
 		if (reg != M680X_REG_INVALID) {
 			if (!info->cpu.reg_byte_size[reg] &&
@@ -4373,12 +4371,14 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 			}
 		}
 
-		if (g_insn_props[info->insn].cc_modified)
-			add_reg_to_rw_list(MI, M680X_REG_CC, MODIFY);
-
 		// Call addressing mode specific instruction handler
 		(g_inst_handler[insn_description.handler_id])(MI, info,
 			&address);
+
+		add_insn_group(detail, g_insn_props[info->insn].group);
+
+		if (g_insn_props[info->insn].cc_modified)
+			add_reg_to_rw_list(MI, M680X_REG_CC, MODIFY);
 
 		e_access_mode access_mode =
 			g_insn_props[info->insn].access_mode;
