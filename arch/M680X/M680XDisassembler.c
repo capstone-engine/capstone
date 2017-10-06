@@ -2031,7 +2031,7 @@ static void extended_imm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 static void ext_index_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	cs_m680x *m680x = &info->m680x;
-	uint8_t index;
+	uint8_t index = 0;
 
 	extended_hdlr(MI, info, address);
 
@@ -2049,7 +2049,7 @@ static void ext_index_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 static void idx12_index_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	cs_m680x *m680x = &info->m680x;
-	uint8_t index;
+	uint8_t index = 0;
 
 	indexed12_hdlr(MI, info, address);
 
