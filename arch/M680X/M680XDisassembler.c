@@ -1045,7 +1045,7 @@ static void illegal_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 static void inherent_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	info->m680x.address_mode = M680X_AM_INHERENT;
+	// There is nothing to do here :-)
 }
 
 static void add_reg_operand(m680x_info *info, m680x_reg reg)
@@ -1093,13 +1093,10 @@ static const m680x_reg reg_u_reg_ids[] = {
 
 static void reg_bits_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
-	cs_m680x_op *op0 = &m680x->operands[0];
+	cs_m680x_op *op0 = &info->m680x.operands[0];
 	uint8_t reg_bits = 0;
 	uint16_t bit_index;
 	const m680x_reg *reg_to_reg_ids;
-
-	m680x->address_mode = M680X_AM_REGISTER;
 
 	read_byte(info, &reg_bits, (*address)++);
 
@@ -1142,10 +1139,7 @@ static const m680x_reg g_tfr_exg_reg_ids[] = {
 
 static void reg_reg09_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
 	uint8_t regs = 0;
-
-	m680x->address_mode = M680X_AM_REGISTER;
 
 	read_byte(info, &regs, (*address)++);
 
@@ -1169,10 +1163,7 @@ static void reg_reg12_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 		M680X_REG_A, M680X_REG_B,  M680X_REG_CC,  M680X_REG_TMP2,
 		M680X_REG_D, M680X_REG_X, M680X_REG_Y,  M680X_REG_S,
 	};
-	cs_m680x *m680x = &info->m680x;
 	uint8_t regs = 0;
-
-	m680x->address_mode = M680X_AM_REGISTER;
 
 	read_byte(info, &regs, (*address)++);
 
@@ -1191,8 +1182,6 @@ static void add_rel_operand(m680x_info *info, int16_t offset, uint16_t address)
 {
 	cs_m680x *m680x = &info->m680x;
 	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
-
-	m680x->address_mode = M680X_AM_RELATIVE;
 
 	op->type = M680X_OP_RELATIVE;
 	op->size = 0;
@@ -1258,10 +1247,7 @@ static void add_indexed_operand(m680x_info *info, m680x_reg base_reg,
 // M6800/1/2/3 indexed mode handler
 static void indexedX_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
 	uint8_t offset = 0;
-
-	m680x->address_mode = M680X_AM_INDEXED;
 
 	read_byte(info, &offset, (*address)++);
 
@@ -1271,10 +1257,7 @@ static void indexedX_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 static void indexedY_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
 	uint8_t offset = 0;
-
-	m680x->address_mode = M680X_AM_INDEXED;
 
 	read_byte(info, &offset, (*address)++);
 
@@ -1290,8 +1273,6 @@ static void indexed09_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	uint8_t post_byte = 0;
 	uint16_t offset = 0;
 	int16_t soffset = 0;
-
-	m680x->address_mode = M680X_AM_INDEXED;
 
 	read_byte(info, &post_byte, (*address)++);
 
@@ -1390,7 +1371,6 @@ static void indexed09_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 			break;
 
 		case 0x1f: // [n16]
-			m680x->address_mode = M680X_AM_EXTENDED;
 			op->type = M680X_OP_EXTENDED;
 			op->ext.indirect = true;
 			read_word(info, &op->ext.address, *address);
@@ -1429,8 +1409,6 @@ static void indexed12_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
 	uint8_t post_byte = 0;
 	uint8_t offset8 = 0;
-
-	m680x->address_mode = M680X_AM_INDEXED;
 
 	read_byte(info, &post_byte, (*address)++);
 
@@ -1506,8 +1484,6 @@ static void direct_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	cs_m680x *m680x = &info->m680x;
 	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
 
-	m680x->address_mode = M680X_AM_DIRECT;
-
 	op->type = M680X_OP_DIRECT;
 	set_operand_size(info, op, 1);
 	read_byte(info, &op->direct_addr, (*address)++);
@@ -1517,8 +1493,6 @@ static void extended_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	cs_m680x *m680x = &info->m680x;
 	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
-
-	m680x->address_mode = M680X_AM_EXTENDED;
 
 	op->type = M680X_OP_EXTENDED;
 	set_operand_size(info, op, 1);
@@ -1532,8 +1506,6 @@ static void immediate_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
 	uint16_t word = 0;
 	int16_t sword = 0;
-
-	m680x->address_mode = M680X_AM_IMMEDIATE;
 
 	op->type = M680X_OP_IMMEDIATE;
 	set_operand_size(info, op, 1);
@@ -1565,55 +1537,35 @@ static void immediate_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 // handler for immediate,direct addr. mode. Used by HD6301/9
 static void imm_direct_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
-
 	immediate_hdlr(MI, info, address);
 	direct_hdlr(MI, info, address);
-
-	m680x->address_mode = M680X_AM_IMM_DIRECT;
 }
 
 // handler for immediate,indexed addr. mode. Used by HD6301
 static void imm_indexedX_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
-
 	immediate_hdlr(MI, info, address);
 	indexedX_hdlr(MI, info, address);
-
-	m680x->address_mode = M680X_AM_IMM_INDEXED;
 }
 
 // handler for immediate,indexed addr. mode. Used by HD6309
 static void imm_indexed09_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
-
 	immediate_hdlr(MI, info, address);
 	indexed09_hdlr(MI, info, address);
-
-	m680x->address_mode = M680X_AM_IMM_INDEXED;
 }
 
 // handler for immediate,extended addr. mode. Used by HD6309, CPU12
 static void imm_extended_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
-
 	immediate_hdlr(MI, info, address);
 	extended_hdlr(MI, info, address);
-
-	m680x->address_mode = M680X_AM_IMM_EXTENDED;
 }
 
 static void ext_ext_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
-
 	extended_hdlr(MI, info, address);
 	extended_hdlr(MI, info, address);
-
-	m680x->address_mode = M680X_AM_EXT_EXT;
 }
 
 // handler for bit move instructions, e.g: BAND A,5,1,$40  Used by HD6309
@@ -1644,8 +1596,6 @@ static void bit_move_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	op->index = post_byte & 0x07;
 
 	direct_hdlr(MI, info, address);
-
-	m680x->address_mode = M680X_AM_BIT_MOVE;
 }
 
 // handler for TFM instruction, e.g: TFM X+,Y+  Used by HD6309
@@ -1657,7 +1607,6 @@ static void tfm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	static const uint8_t inc_dec_r1[] = {
 		1, -1, 0, 1,
 	};
-	cs_m680x *m680x = &info->m680x;
 	uint8_t regs = 0;
 	uint8_t index = (MI->Opcode & 0xff) - 0x38;
 
@@ -1668,87 +1617,61 @@ static void tfm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	add_indexed_operand(info, g_tfr_exg_reg_ids[regs & 0x0f], true,
 				inc_dec_r1[index], M680X_OFFSET_NONE, 0, true);
 
-	m680x->address_mode = M680X_AM_INDEXED2;
-
 	add_reg_to_rw_list(MI, M680X_REG_W, READ | WRITE);
 }
 
 // handler for direct,immediate,relative addr. mode. Used by M6811
 static void dir_imm_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
-
 	direct_hdlr(MI, info, address);
 	immediate_hdlr(MI, info, address);
 	relative8_hdlr(MI, info, address);
-
-	m680x->address_mode = M680X_AM_DIR_IMM_REL;
 }
 
 // handler for indexed(X),immediate,relative addr. mode. Used by M6811
 static void idxX_imm_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
-
 	indexedX_hdlr(MI, info, address);
 	immediate_hdlr(MI, info, address);
 	relative8_hdlr(MI, info, address);
-
-	m680x->address_mode = M680X_AM_IDX_IMM_REL;
 }
 
 // handler for indexed(Y),immediate,relative addr. mode. Used by M6811
 static void idxY_imm_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
-
 	indexedY_hdlr(MI, info, address);
 	immediate_hdlr(MI, info, address);
 	relative8_hdlr(MI, info, address);
-
-	m680x->address_mode = M680X_AM_IDX_IMM_REL;
 }
 
 // handler for direct,immediate addr. mode. Used by M6811
 // example BSET 5,$20
 static void direct_imm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
-
 	direct_hdlr(MI, info, address);
 	immediate_hdlr(MI, info, address);
 
 	add_reg_to_rw_list(MI, M680X_REG_CC, MODIFY);
-
-	m680x->address_mode = M680X_AM_DIRECT_IMM;
 }
 
 // handler for indexed(X),immediate addr. mode. Used by M6811
 // example BSET 5,16,X
 static void idxX_imm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
-
 	indexedX_hdlr(MI, info, address);
 	immediate_hdlr(MI, info, address);
 
 	add_reg_to_rw_list(MI, M680X_REG_CC, MODIFY);
-
-	m680x->address_mode = M680X_AM_INDEXED_IMM;
 }
 
 // handler for indexed(Y),immediate addr. mode. Used by M6811
 // example BSET 5,16,Y
 static void idxY_imm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
-
 	indexedY_hdlr(MI, info, address);
 	immediate_hdlr(MI, info, address);
 
 	add_reg_to_rw_list(MI, M680X_REG_CC, MODIFY);
-
-	m680x->address_mode = M680X_AM_INDEXED_IMM;
 }
 
 // handler for bit test and branch instruction. Used by M6805.
@@ -1766,8 +1689,6 @@ static void opidx_dir_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	relative8_hdlr(MI, info, address);
 
 	add_reg_to_rw_list(MI, M680X_REG_CC, MODIFY);
-
-	m680x->address_mode = M680X_AM_INDEX_DIR_REL;
 }
 
 // handler for bit test instruction. Used by M6805.
@@ -1782,54 +1703,39 @@ static void opidx_direct_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	op->type = M680X_OP_INDEX;
 	op->index = (MI->Opcode & 0x0e) >> 1;
 	direct_hdlr(MI, info, address);
-
-	m680x->address_mode = M680X_AM_INDEX_DIRECT;
 }
 
 static void indexedX0_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
-
 	add_indexed_operand(info, M680X_REG_X, false, 0, M680X_OFFSET_NONE,
 				 0, false);
-
-	m680x->address_mode = M680X_AM_INDEXED;
 }
 
 static void indexedX16_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
 	uint16_t offset = 0;
 
 	read_word(info, &offset, *address);
 	*address += 2;
 	add_indexed_operand(info, M680X_REG_X, false, 0, M680X_OFFSET_BITS_16,
 				offset, false);
-
-	m680x->address_mode = M680X_AM_INDEXED;
 }
 
 static void imm_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	immediate_hdlr(MI, info, address);
 	relative8_hdlr(MI, info, address);
-
-	info->m680x.address_mode = M680X_AM_IMM_REL;
 }
 
 static void direct_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	direct_hdlr(MI, info, address);
 	relative8_hdlr(MI, info, address);
-
-	info->m680x.address_mode = M680X_AM_DIRECT_REL;
 }
 
 static void indexedS_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	uint8_t offset = 0;
-
-	info->m680x.address_mode = M680X_AM_INDEXED;
 
 	read_byte(info, &offset, (*address)++);
 
@@ -1841,8 +1747,6 @@ static void indexedS16_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	uint16_t offset = 0;
 
-	info->m680x.address_mode = M680X_AM_INDEXED;
-
 	read_word(info, &offset, *address);
 	address += 2;
 
@@ -1852,8 +1756,6 @@ static void indexedS16_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 static void indexedX0p_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	info->m680x.address_mode = M680X_AM_INDEXED;
-
 	add_indexed_operand(info, M680X_REG_X, true, 1, M680X_OFFSET_NONE,
 				 0, true);
 }
@@ -1861,8 +1763,6 @@ static void indexedX0p_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 static void indexedXp_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	uint8_t offset = 0;
-
-	info->m680x.address_mode = M680X_AM_INDEXED;
 
 	read_byte(info, &offset, (*address)++);
 
@@ -1874,72 +1774,54 @@ static void indexedS_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	indexedS_hdlr(MI, info, address);
 	relative8_hdlr(MI, info, address);
-
-	info->m680x.address_mode = M680X_AM_INDEXED_REL;
 }
 
 static void indexedX_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	indexedX_hdlr(MI, info, address);
 	relative8_hdlr(MI, info, address);
-
-	info->m680x.address_mode = M680X_AM_INDEXED_REL;
 }
 
 static void indexedX0_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	indexedX0_hdlr(MI, info, address);
 	relative8_hdlr(MI, info, address);
-
-	info->m680x.address_mode = M680X_AM_INDEXED_REL;
 }
 
 static void indexedXp_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	indexedXp_hdlr(MI, info, address);
 	relative8_hdlr(MI, info, address);
-
-	info->m680x.address_mode = M680X_AM_INDEXED_REL;
 }
 
 static void idxX0p_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	indexedX0p_hdlr(MI, info, address);
 	relative8_hdlr(MI, info, address);
-
-	info->m680x.address_mode = M680X_AM_INDEXED_REL;
 }
 
 static void idxX0p_direct_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	indexedX0p_hdlr(MI, info, address);
 	direct_hdlr(MI, info, address);
-
-	info->m680x.address_mode = M680X_AM_INDEXED_DIR;
 }
 
 static void direct_direct_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	direct_hdlr(MI, info, address);
 	direct_hdlr(MI, info, address);
-
-	info->m680x.address_mode = M680X_AM_DIRECT2;
 }
 
 static void direct_idxX0p_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	direct_hdlr(MI, info, address);
 	indexedX0p_hdlr(MI, info, address);
-
-	info->m680x.address_mode = M680X_AM_DIRECT_IDX;
 }
 
 static void indexed12_imm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	indexed12_hdlr(MI, info, address);
 	immediate_hdlr(MI, info, address);
-
-	info->m680x.address_mode = M680X_AM_INDEXED_IMM;
 }
 
 static void idx12_imm_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -1947,8 +1829,6 @@ static void idx12_imm_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	indexed12_hdlr(MI, info, address);
 	immediate_hdlr(MI, info, address);
 	relative8_hdlr(MI, info, address);
-
-	info->m680x.address_mode = M680X_AM_IDX_IMM_REL;
 }
 
 static void ext_imm_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -1956,26 +1836,18 @@ static void ext_imm_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	extended_hdlr(MI, info, address);
 	immediate_hdlr(MI, info, address);
 	relative8_hdlr(MI, info, address);
-
-	info->m680x.address_mode = M680X_AM_EXT_IMM_REL;
 }
 
 static void idx12_idx12_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	cs_m680x *m680x = &info->m680x;
-
 	indexed12_hdlr(MI, info, address);
 	indexed12_hdlr(MI, info, address);
-
-	m680x->address_mode = M680X_AM_INDEXED2;
 }
 
 static void idx12_ext_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	indexed12_hdlr(MI, info, address);
 	extended_hdlr(MI, info, address);
-
-	info->m680x.address_mode = M680X_AM_INDEXED_EXT;
 }
 
 static void imm_idx12_x_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -1999,8 +1871,6 @@ static void imm_idx12_x_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 		op->size = 1;
 	}
 	set_operand_size(info, op, 1);
-
-	m680x->address_mode = M680X_AM_IMM_INDEXED;
 }
 
 static void ext_idx12_x_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -2014,16 +1884,12 @@ static void ext_idx12_x_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	op0->type = M680X_OP_EXTENDED;
 	op0->imm = (int16_t)imm16;
 	set_operand_size(info, op0, 1);
-
-	m680x->address_mode = M680X_AM_IMM_INDEXED;
 }
 
 static void extended_imm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	extended_hdlr(MI, info, address);
 	immediate_hdlr(MI, info, address);
-
-	info->m680x.address_mode = M680X_AM_EXTENDED_IMM;
 }
 
 // handler for CPU12 CALL instruction.
@@ -2040,8 +1906,6 @@ static void ext_index_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	op->type = M680X_OP_INDEX;
 	op->index = index;
-
-	m680x->address_mode = M680X_AM_EXT_PAGE;
 }
 
 // handler for CPU12 CALL instruction.
@@ -2058,8 +1922,6 @@ static void idx12_index_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	op->type = M680X_OP_INDEX;
 	op->index = index;
-
-	m680x->address_mode = M680X_AM_EXT_PAGE;
 }
 
 // handler for CPU12 DBEQ/DNBE/IBEQ/IBNE/TBEQ/TBNE instructions.
@@ -2077,6 +1939,7 @@ static void loop_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	cs_m680x *m680x = &info->m680x;
 	uint8_t post_byte = 0;
 	uint8_t rel = 0;
+
 	read_byte(info, &post_byte, (*address)++);
 
 	info->insn = index_to_insn_id[(post_byte >> 5) & 0x07];
@@ -2096,8 +1959,6 @@ static void loop_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	op->rel.address = *address + op->rel.offset;
 
 	add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
-
-	m680x->address_mode = M680X_AM_REG_RELATIVE;
 }
 
 static void (*const g_inst_handler[])(MCInst *, m680x_info *, uint16_t *) = {

@@ -21,41 +21,6 @@ let print_string_hex comment str =
 let print_array_hex_short arr =
 	Array.iter print_int_hex_short arr
 
-let s_address_modes = [
-        "M680X_AM_NONE";
-        "M680X_AM_INHERENT";
-        "M680X_AM_REGISTER";
-        "M680X_AM_IMMEDIATE";
-        "M680X_AM_INDEXED";
-        "M680X_AM_EXTENDED";
-        "M680X_AM_DIRECT";
-        "M680X_AM_RELATIVE";
-        "M680X_AM_IMM_DIRECT";
-        "M680X_AM_IMM_INDEXED";
-        "M680X_AM_IMM_EXTENDED";
-        "M680X_AM_BIT_MOVE";
-        "M680X_AM_INDEXED2";
-        "M680X_AM_DIR_IMM_REL";
-        "M680X_AM_IDX_IMM_REL";
-        "M680X_AM_DIRECT_IMM";
-        "M680X_AM_INDEXED_IMM";
-        "M680X_AM_IDX_DIR_REL";
-        "M680X_AM_IDX_DIRECT";
-	"M680X_AM_IMM_REL";
-	"M680X_AM_DIRECT_REL";
-	"M680X_AM_INDEXED_REL";
-	"M680X_AM_DIRECT_IDX";
-	"M680X_AM_DIRECT2";
-	"M680X_AM_INDEXED_DIR";
-        "M680X_AM_EXTENDED_IMM";
-        "M680X_AM_EXT_IMM_REL";
-        "M680X_AM_EXT_PAGE";
-        "M680X_AM_IDX_PAGE";
-        "M680X_AM_REG_RELATIVE";
-        "M680X_AM_EXT_EXT";
-        "M680X_AM_INDEXED_EXT";
-        "M680X_AM_EXT_INDEXED" ];;
-
 let s_access = [
 	"UNCHANGED"; "READ"; "WRITE"; "READ | WRITE" ];;
 
@@ -150,7 +115,6 @@ let print_op handle flags i op =
 let print_detail handle insn =
 	match insn.arch with
 	| CS_INFO_M680X m680x -> (
-			printf "\taddress_mode: %s\n" (List.nth s_address_modes m680x.address_mode);
 			(* print all operands info (type & value) *)
 			if (Array.length m680x.operands) > 0 then (
 				printf "\top_count: %d\n" (Array.length m680x.operands);

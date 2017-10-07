@@ -31,43 +31,6 @@ public class M680x_const {
 	public static final int M680X_REG_TMP3 = 22;
 	public static final int M680X_REG_ENDING = 23;
 
-	// M680X Addressing Modes
-
-	public static final int M680X_AM_NONE = 0;
-	public static final int M680X_AM_INHERENT = 1;
-	public static final int M680X_AM_REGISTER = 2;
-	public static final int M680X_AM_IMMEDIATE = 3;
-	public static final int M680X_AM_INDEXED = 4;
-	public static final int M680X_AM_EXTENDED = 5;
-	public static final int M680X_AM_DIRECT = 6;
-	public static final int M680X_AM_RELATIVE = 7;
-	public static final int M680X_AM_IMM_DIRECT = 8;
-	public static final int M680X_AM_IMM_INDEXED = 9;
-	public static final int M680X_AM_IMM_EXTENDED = 10;
-	public static final int M680X_AM_BIT_MOVE = 11;
-	public static final int M680X_AM_INDEXED2 = 12;
-	public static final int M680X_AM_DIR_IMM_REL = 13;
-	public static final int M680X_AM_IDX_IMM_REL = 14;
-	public static final int M680X_AM_DIRECT_IMM = 15;
-	public static final int M680X_AM_INDEXED_IMM = 16;
-	public static final int M680X_AM_INDEX_DIR_REL = 17;
-	public static final int M680X_AM_INDEX_DIRECT = 18;
-	public static final int M680X_AM_IMM_REL = 19;
-	public static final int M680X_AM_DIRECT_REL = 20;
-	public static final int M680X_AM_INDEXED_REL = 21;
-	public static final int M680X_AM_DIRECT_IDX = 22;
-	public static final int M680X_AM_DIRECT2 = 23;
-	public static final int M680X_AM_INDEXED_DIR = 24;
-	public static final int M680X_AM_EXTENDED_IMM = 25;
-	public static final int M680X_AM_EXT_IMM_REL = 26;
-	public static final int M680X_AM_EXT_PAGE = 27;
-	public static final int M680X_AM_IDX_PAGE = 28;
-	public static final int M680X_AM_REG_RELATIVE = 29;
-	public static final int M680X_AM_EXT_EXT = 30;
-	public static final int M680X_AM_INDEXED_EXT = 31;
-	public static final int M680X_AM_EXT_INDEXED = 32;
-	public static final int M680X_AM_ENDING = 33;
-
 	// Operand type for instruction's operands
 
 	public static final int M680X_OP_INVALID = 0;

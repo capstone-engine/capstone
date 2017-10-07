@@ -39,45 +39,6 @@ static void print_string_hex_short(unsigned char *str, size_t len)
 		printf("%02X", *c & 0xff);
 }
 
-#ifdef WITH_DETAILS
-// string representation for all addressing modes defined in m680x_address_mode
-static const char *s_addressing_modes[] = {
-	"M680X_AM_NONE",
-	"M680X_AM_INHERENT",
-	"M680X_AM_REGISTER",
-	"M680X_AM_IMMEDIATE",
-	"M680X_AM_INDEXED",
-	"M680X_AM_EXTENDED",
-	"M680X_AM_DIRECT",
-	"M680X_AM_RELATIVE",
-	"M680X_AM_IMM_DIRECT",
-	"M680X_AM_IMM_INDEXED",
-	"M680X_AM_IMM_EXTENDED",
-	"M680X_AM_BIT_MOVE",
-	"M680X_AM_INDEXED2",
-	"M680X_AM_DIR_IMM_REL",
-	"M680X_AM_IDX_IMM_REL",
-	"M680X_AM_DIRECT_IMM",
-	"M680X_AM_INDEXED_IMM",
-	"M680X_AM_IDX_DIR_REL",
-	"M680X_AM_IDX_DIRECT",
-	"M680X_AM_IMM_REL",
-	"M680X_AM_DIRECT_REL",
-	"M680X_AM_INDEXED_REL",
-	"M680X_AM_DIRECT_IDX",
-	"M680X_AM_DIRECT2",
-	"M680X_AM_INDEXED_DIR",
-	"M680X_AM_EXTENDED_IMM",
-	"M680X_AM_EXT_IMM_REL",
-	"M680X_AM_EXT_PAGE",
-	"M680X_AM_IDX_PAGE",
-	"M680X_AM_REG_RELATIVE",
-	"M680X_AM_EXT_EXT",
-	"M680X_AM_INDEXED_EXT",
-	"M680X_AM_EXT_INDEXED",
-};
-#endif
-
 static const char *s_access[] = {
 	"UNCHANGED", "READ", "WRITE", "READ | WRITE",
 };
@@ -116,10 +77,6 @@ static void print_insn_detail(csh handle, cs_insn *insn)
 		return;
 
 	m680x = &detail->m680x;
-
-#ifdef WITH_DETAILS
-	printf("\taddress_mode: %s\n", s_addressing_modes[m680x->address_mode]);
-#endif
 
 	if (m680x->op_count)
 		printf("\top_count: %u\n", m680x->op_count);
@@ -224,14 +181,6 @@ static void print_insn_detail(csh handle, cs_insn *insn)
 
 static bool consistency_checks()
 {
-#ifdef WITH_DETAILS
-	if (M680X_AM_ENDING != ARR_SIZE(s_addressing_modes)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum "
-			" m680x_address_mode and s_addressing_modes\n");
-		return false;
-	}
-#endif
-
 	return true;
 }
 

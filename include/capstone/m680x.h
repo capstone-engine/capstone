@@ -52,44 +52,6 @@ typedef enum m680x_reg {
 	M680X_REG_ENDING,   // <-- mark the end of the list of registers
 } m680x_reg;
 
-//> M680X Addressing Modes
-typedef enum m680x_address_mode {
-	M680X_AM_NONE = 0,   // No address mode.
-	M680X_AM_INHERENT,   // Opcode contains all adress information
-	M680X_AM_REGISTER,   // e.g. TFR X,Y; EXG A,B; PSHS A,B,X; PULU A,X,Y,D
-	M680X_AM_IMMEDIATE,  // Immediate value, #$FE, #$E020, #TARGET
-	M680X_AM_INDEXED,    // indexed addressing mode, e.g: 4,X; ,X++
-	M680X_AM_EXTENDED,   // 16-bit absolute address, >$F02D, >TARGET
-	M680X_AM_DIRECT,     // direct addressing using DP reg. as hi-byte, <$33
-	M680X_AM_RELATIVE,   // relative address, e.g: BRA $F02D, LBSR TARGET
-	M680X_AM_IMM_DIRECT, // HD6301/9: imm. + direct op, e.g. AIM #55,$10
-	M680X_AM_IMM_INDEXED,// HD6301/9: imm. + index op, e.g. AIM #55;$8,X
-	M680X_AM_IMM_EXTENDED,// HD6309: imm. + extended op, e.g. AIM #55,$8002
-	M680X_AM_BIT_MOVE,   // HD6309: bit move op, e.g. BAND A,5,1,<$40
-	M680X_AM_INDEXED2,   // HD6309: TFM insn, e.g. TFM X+,Y+
-	M680X_AM_DIR_IMM_REL,// M68HC11: BRSET/CLR insn, e.g. BRSET <$10,#7,$87F
-	M680X_AM_IDX_IMM_REL,// M68HC11: BRSET/CLR insn, e.g. BRSET 4,X;#7;$8002
-	M680X_AM_DIRECT_IMM, // M68HC11: BSET/CLR insn, e.g. BSET <$10,#127
-	M680X_AM_INDEXED_IMM,// M68HC11: BSET/CLR insn, e.g. BSET 4,X;#127
-	M680X_AM_INDEX_DIR_REL,// M68HC05: BRSET/CLR insn,e.g.BRSET 4,<$40,$8002
-	M680X_AM_INDEX_DIRECT, // M68HC05: BSET/CLR insn, e.g. BSET 4,<$40
-	M680X_AM_IMM_REL,    // M68HC08: CBEQA/X insn, e.g. CBEQA #4,$8002
-	M680X_AM_DIRECT_REL, // M68HC08: CBEQ insn, e.g. CBEQ $22,$8002
-	M680X_AM_INDEXED_REL,// M68HC08: CBEQ insn, e.g. CBEQ ,X+,$8002
-	M680X_AM_DIRECT_IDX, // M68HC08: MOV insn, e.g. MOV $22,,X+
-	M680X_AM_DIRECT2,    // M68HC08: MOV insn, e.g. MOV $22,$23
-	M680X_AM_INDEXED_DIR,// M68HC08: MOV insn, e.g. MOV ,X+,$22
-	M680X_AM_EXTENDED_IMM,// CPU12: BSET/CLR insn, e.g. BSET $1000,#127
-	M680X_AM_EXT_IMM_REL,// CPU12: BRSET/CLR insn, e.g. BRSET $1000,4,$802
-	M680X_AM_EXT_PAGE,   // CPU12: CALL insn, e.g. CALL $1000,4
-	M680X_AM_IDX_PAGE,   // CPU12: CALL insn, e.g. CALL 4,Y;4
-	M680X_AM_REG_RELATIVE,// CPU12: loop insn, e.g. DBNE A,$1000
-	M680X_AM_EXT_EXT,    // CPU12: MOVB/W insn, e.g. MOVW $1000,$1002
-	M680X_AM_INDEXED_EXT,// CPU12: MOVB/W insn, e.g. MOVW 4,X;$1000
-	M680X_AM_EXT_INDEXED,// CPU12: MOVB/W insn, e.g. MOVW 4,X;$1000
-	M680X_AM_ENDING      // This should be the last entry in this enum
-} m680x_address_mode;
-
 //> Operand type for instruction's operands
 typedef enum m680x_op_type {
 	M680X_OP_INVALID = 0, // = CS_OP_INVALID (Uninitialized).
@@ -201,7 +163,6 @@ typedef enum m680x_group_type {
 
 // The M680X instruction and it's operands
 typedef struct cs_m680x {
-	m680x_address_mode address_mode;// M680X addressing mode for this inst.
 	uint8_t flags;		// See: M680X instruction flags
 	uint8_t op_count;	// number of operands for the instruction or 0
 	cs_m680x_op operands[M680X_OPERAND_COUNT]; // operands for this insn.

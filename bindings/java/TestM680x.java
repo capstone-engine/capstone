@@ -9,42 +9,6 @@ import static capstone.M680x_const.*;
 
 public class TestM680x {
 
-  static final String sAddressingModes[] = {
-    "M680X_AM_NONE",
-    "M680X_AM_INHERENT",
-    "M680X_AM_REGISTER",
-    "M680X_AM_IMMEDIATE",
-    "M680X_AM_INDEXED",
-    "M680X_AM_EXTENDED",
-    "M680X_AM_DIRECT",
-    "M680X_AM_RELATIVE",
-    "M680X_AM_IMM_DIRECT",
-    "M680X_AM_IMM_INDEXED",
-    "M680X_AM_IMM_EXTENDED",
-    "M680X_AM_BIT_MOVE",
-    "M680X_AM_INDEXED2",
-    "M680X_AM_DIR_IMM_REL",
-    "M680X_AM_IDX_IMM_REL",
-    "M680X_AM_DIRECT_IMM",
-    "M680X_AM_INDEXED_IMM",
-    "M680X_AM_IDX_DIR_REL",
-    "M680X_AM_IDX_DIRECT",
-    "M680X_AM_IMM_REL",
-    "M680X_AM_DIRECT_REL",
-    "M680X_AM_INDEXED_REL",
-    "M680X_AM_DIRECT_IDX",
-    "M680X_AM_DIRECT2",
-    "M680X_AM_INDEXED_DIR",
-    "M680X_AM_EXTENDED_IMM",
-    "M680X_AM_EXT_IMM_REL",
-    "M680X_AM_EXT_PAGE",
-    "M680X_AM_IDX_PAGE",
-    "M680X_AM_REG_RELATIVE",
-    "M680X_AM_EXT_EXT",
-    "M680X_AM_INDEXED_EXT",
-    "M680X_AM_EXT_INDEXED",
-  };
-
   static final String sAccess[] = {
     "UNCHANGED", "READ", "WRITE", "READ | WRITE",
   };
@@ -102,8 +66,6 @@ public class TestM680x {
     System.out.printf("0x%04X:\t%s\t%s\t%s\n", ins.address, bytes, ins.mnemonic, ins.opStr);
 
     M680x.OpInfo operands = (M680x.OpInfo) ins.operands;
-
-    System.out.printf("\taddress_mode: %s\n", sAddressingModes[operands.addressMode]);
 
     if (operands.op.length != 0) {
       System.out.printf("\top_count: %d\n", operands.op.length);
