@@ -41,7 +41,7 @@ static const insn_props g_insn_props[] = {
 	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // ASRX
 	{ NOG, mrrr, NOR, NOR, false, false }, // BAND
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BCC
-	{ NOG, mrrr, NOR, NOR, false, false }, // BCLR
+	{ NOG, mrrr, NOR, NOR, true, false }, // BCLR
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BCS
 	{ NOG, mrrr, NOR, NOR, false, false }, // BEOR
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BEQ
@@ -74,7 +74,7 @@ static const insn_props g_insn_props[] = {
 	{ M680X_GRP_JUMP, rruu, NOR, NOR, false, false }, // BRSET
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BRA
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BRN never branches
-	{ NOG, mrrr, NOR, NOR, false, false }, // BSET
+	{ NOG, mrrr, NOR, NOR, true, false }, // BSET
 	{ M680X_GRP_CALL, uuuu, NOR, NOR, false, true }, // BSR
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BVC
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BVS

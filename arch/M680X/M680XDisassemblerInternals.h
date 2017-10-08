@@ -35,6 +35,7 @@ typedef struct {
 	size_t pageX_table_size[3];
 	const uint8_t *reg_byte_size;
 	const bool *tfr_reg_valid;
+	m680x_insn insn_cc_not_modified[2];
 } cpu_tables;
 
 /* Private, For internal use only */

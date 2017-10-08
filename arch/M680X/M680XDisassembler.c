@@ -1650,8 +1650,6 @@ static void direct_imm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	direct_hdlr(MI, info, address);
 	immediate_hdlr(MI, info, address);
-
-	add_reg_to_rw_list(MI, M680X_REG_CC, MODIFY);
 }
 
 // handler for indexed(X),immediate addr. mode. Used by M6811
@@ -1660,8 +1658,6 @@ static void idxX_imm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	indexedX_hdlr(MI, info, address);
 	immediate_hdlr(MI, info, address);
-
-	add_reg_to_rw_list(MI, M680X_REG_CC, MODIFY);
 }
 
 // handler for indexed(Y),immediate addr. mode. Used by M6811
@@ -1670,8 +1666,6 @@ static void idxY_imm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	indexedY_hdlr(MI, info, address);
 	immediate_hdlr(MI, info, address);
-
-	add_reg_to_rw_list(MI, M680X_REG_CC, MODIFY);
 }
 
 // handler for bit test and branch instruction. Used by M6805.
@@ -2079,16 +2073,17 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 
 		add_insn_group(detail, g_insn_props[info->insn].group);
 
-		if (g_insn_props[info->insn].cc_modified)
+		if (g_insn_props[info->insn].cc_modified &&
+			(info->cpu.insn_cc_not_modified[0] != info->insn) &&
+			(info->cpu.insn_cc_not_modified[1] != info->insn))
 			add_reg_to_rw_list(MI, M680X_REG_CC, MODIFY);
 
 		e_access_mode access_mode =
 			g_insn_props[info->insn].access_mode;
 		// Fix for M6805 BSET/BCLR. It has a differnt operand order
 		// in comparison to the M6811
-		if (info->cpu_type == M680X_CPU_TYPE_6805 &&
-			((info->insn == M680X_INS_BSET) ||
-			 (info->insn == M680X_INS_BCLR)))
+		if ((info->cpu.insn_cc_not_modified[0] == info->insn) ||
+		   (info->cpu.insn_cc_not_modified[1] == info->insn))
 			access_mode = rmmm;
 		build_regs_read_write_counts(MI, info, access_mode);
 		add_operators_access(MI, info, access_mode);
@@ -2193,6 +2188,8 @@ static bool m680x_setup_internals(m680x_info *info, e_cpu_type cpu_type,
 	case M680X_CPU_TYPE_6805:
 		cpu->inst_page1_table = &g_m6805_inst_page1_table[0];
 		cpu->reg_byte_size = &g_m6805_reg_byte_size[0];
+		cpu->insn_cc_not_modified[0] = M680X_INS_BCLR;
+		cpu->insn_cc_not_modified[1] = M680X_INS_BSET;
 		break;
 
 	case M680X_CPU_TYPE_6808:
@@ -2204,6 +2201,8 @@ static bool m680x_setup_internals(m680x_info *info, e_cpu_type cpu_type,
 		table_size = ARR_SIZE(g_m6808_inst_overlay_table);
 		cpu->overlay_table_size[0] = table_size;
 		cpu->reg_byte_size = &g_m6808_reg_byte_size[0];
+		cpu->insn_cc_not_modified[0] = M680X_INS_BCLR;
+		cpu->insn_cc_not_modified[1] = M680X_INS_BSET;
 		break;
 
 	case M680X_CPU_TYPE_HCS08:
@@ -2218,6 +2217,8 @@ static bool m680x_setup_internals(m680x_info *info, e_cpu_type cpu_type,
 		table_size = ARR_SIZE(g_hcs08_inst_overlay_table);
 		cpu->overlay_table_size[1] = table_size;
 		cpu->reg_byte_size = &g_m6808_reg_byte_size[0];
+		cpu->insn_cc_not_modified[0] = M680X_INS_BCLR;
+		cpu->insn_cc_not_modified[1] = M680X_INS_BSET;
 		break;
 
 	case M680X_CPU_TYPE_6301:
