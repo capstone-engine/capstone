@@ -77,7 +77,7 @@ typedef enum m68k_reg {
 
 //> M68K Addressing Modes
 typedef enum m68k_address_mode {
-	M68K_AM_NONE = 0,			// No address mode. 
+	M68K_AM_NONE = 0,			// No address mode.
 
 	M68K_AM_REG_DIRECT_DATA,		// Register Direct - Data
 	M68K_AM_REG_DIRECT_ADDR,		// Register Direct - Address
@@ -115,7 +115,7 @@ typedef enum m68k_op_type {
 	M68K_OP_FP_SINGLE,   // single precision Floating-Point operand
 	M68K_OP_FP_DOUBLE,   // double precision Floating-Point operand
 	M68K_OP_REG_BITS,    // Register bits move
-	M68K_OP_REG_PAIR,    // Register pair in the same op (upper 4 bits for first reg, lower for second) 
+	M68K_OP_REG_PAIR,    // Register pair in the same op (upper 4 bits for first reg, lower for second)
 } m68k_op_type;
 
 // Instruction's operand referring to memory
@@ -124,8 +124,8 @@ typedef struct m68k_op_mem {
 	m68k_reg base_reg;      // base register (or M68K_REG_INVALID if irrelevant)
 	m68k_reg index_reg;     // index register (or M68K_REG_INVALID if irrelevant)
 	m68k_reg in_base_reg;   // indirect base register (or M68K_REG_INVALID if irrelevant)
-	uint32_t in_disp; 	    // indirect displacement 
-	uint32_t out_disp;      // other displacement 
+	uint32_t in_disp; 	    // indirect displacement
+	uint32_t out_disp;      // other displacement
 	int16_t disp;	        // displacement value
 	uint8_t scale;	        // scale for index register
 	uint8_t bitfield;       // set to true if the two values below should be used
@@ -145,9 +145,10 @@ typedef struct cs_m68k_op {
 			m68k_reg reg_0;
 			m68k_reg reg_1;
 		} reg_pair;
-		m68k_op_mem mem; 	    // data when operand is targeting memory
-		uint32_t register_bits; // register bits for movem etc. (always in d0-d7, a0-a7, fp0 - fp7 order)
 	};
+
+	m68k_op_mem mem; 	    // data when operand is targeting memory
+	uint32_t register_bits; // register bits for movem etc. (always in d0-d7, a0-a7, fp0 - fp7 order)
 	m68k_op_type type;
 	m68k_address_mode address_mode;	// M68K addressing mode for this op
 } cs_m68k_op;

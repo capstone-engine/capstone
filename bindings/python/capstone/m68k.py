@@ -33,14 +33,14 @@ class M68KOpValue(ctypes.Union):
         ('simm', ctypes.c_float),
         ('reg', ctypes.c_uint),
         ('reg_pair', M68KOpRegPair),
-        ('mem', M68KOpMem),
-        ('register_bits', ctypes.c_uint),
     )
 
 class M68KOp(ctypes.Structure):
     _fields_ = (
         ('value', M68KOpValue),
         ('type', ctypes.c_uint),
+        ('mem', M68KOpMem),
+        ('register_bits', ctypes.c_uint),
         ('address_mode', ctypes.c_uint),
     )
 
@@ -62,11 +62,11 @@ class M68KOp(ctypes.Structure):
 
     @property
     def mem(self):
-        return self.value.mem
+        return self.mem
 
     @property
     def register_bits(self):
-        return self.value.register_bits
+        return self.register_bits
 
 class M68KOpSize(ctypes.Structure):
     _fields_ = (
