@@ -9,15 +9,6 @@
 #include "MipsInstPrinter.h"
 #include "MipsMapping.h"
 
-// Returns mode value with implied bits set
-static inline cs_mode updated_mode(cs_mode mode)
-{
-	if (mode & CS_MODE_MIPS32R6) {
-		mode |= CS_MODE_32;
-	}
-
-	return mode;
-}
 
 static cs_err init(cs_struct *ud)
 {
@@ -40,11 +31,7 @@ static cs_err init(cs_struct *ud)
 	ud->insn_name = Mips_insn_name;
 	ud->group_name = Mips_group_name;
 
-	ud->mode = updated_mode(ud->mode);
-	if (ud->mode & CS_MODE_32)
-		ud->disasm = Mips_getInstruction;
-	else
-		ud->disasm = Mips64_getInstruction;
+	ud->disasm = Mips_getInstruction;
 
 	return CS_ERR_OK;
 }
@@ -52,12 +39,6 @@ static cs_err init(cs_struct *ud)
 static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_MODE) {
-		value = updated_mode(value);
-		if (value & CS_MODE_32)
-			handle->disasm = Mips_getInstruction;
-		else
-			handle->disasm = Mips64_getInstruction;
-
 		handle->mode = (cs_mode)value;
 		handle->big_endian = ((handle->mode & CS_MODE_BIG_ENDIAN) != 0);
 		return CS_ERR_OK;
