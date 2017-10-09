@@ -18,7 +18,7 @@
 #ifndef CAPSTONE_DIET
 static const char s_reg_names[][10] = {
 	"<invalid>", "A", "B", "E", "F", "0", "D", "W", "CC", "DP", "MD",
-	"HX", "H", "X", "Y", "S", "U", "V", "Q", "PC", "TMP1", "TMP2", "TMP3",
+	"HX", "H", "X", "Y", "S", "U", "V", "Q", "PC", "TMP2", "TMP3",
 };
 
 static const char s_instruction_names[][6] = {

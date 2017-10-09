@@ -45,7 +45,6 @@ typedef enum m680x_reg {
 
 	M680X_REG_PC, // M6800/1/2/3/9, M6301/9
 
-	M680X_REG_TMP1, // CPU12
 	M680X_REG_TMP2, // CPU12
 	M680X_REG_TMP3, // CPU12
 

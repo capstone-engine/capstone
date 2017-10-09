@@ -2111,44 +2111,44 @@ static const char *s_cpu_type[] = {
 // Tables to get the byte size of a register on the CPU
 // based on an enum m680x_reg value.
 // Invalid registers return 0.
-static const uint8_t g_m6800_reg_byte_size[23] = {
-	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T1 T2 T3
-	0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 2, 0, 0, 0
+static const uint8_t g_m6800_reg_byte_size[22] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T2 T3
+	0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 2, 0, 0
 };
 
-static const uint8_t g_m6805_reg_byte_size[23] = {
-	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T1 T2 T3
-	0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 2, 0, 0, 0
+static const uint8_t g_m6805_reg_byte_size[22] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T2 T3
+	0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 2, 0, 0
 };
 
-static const uint8_t g_m6808_reg_byte_size[23] = {
-	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T1 T2 T3
-	0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 1, 1, 0, 2, 0, 0, 0, 2, 0, 0, 0
+static const uint8_t g_m6808_reg_byte_size[22] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T2 T3
+	0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 1, 1, 0, 2, 0, 0, 0, 2, 0, 0
 };
 
-static const uint8_t g_m6801_reg_byte_size[23] = {
-	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T1 T2 T3
-	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 2, 0, 0, 0
+static const uint8_t g_m6801_reg_byte_size[22] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T2 T3
+	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 2, 0, 0
 };
 
-static const uint8_t g_m6811_reg_byte_size[23] = {
-	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T1 T2 T3
-	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2, 0, 0, 0
+static const uint8_t g_m6811_reg_byte_size[22] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T2 T3
+	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2, 0, 0
 };
 
-static const uint8_t g_cpu12_reg_byte_size[23] = {
-	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T1 T2 T3
-	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2, 2, 2, 2
+static const uint8_t g_cpu12_reg_byte_size[22] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T2 T3
+	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2, 2, 2
 };
 
-static const uint8_t g_m6809_reg_byte_size[23] = {
-	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T1 T2 T3
-	0, 1, 1, 0, 0, 0, 2, 0, 1, 1, 0, 0, 0, 2, 2, 2, 2, 0, 0, 2, 0, 0, 0
+static const uint8_t g_m6809_reg_byte_size[22] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T2 T3
+	0, 1, 1, 0, 0, 0, 2, 0, 1, 1, 0, 0, 0, 2, 2, 2, 2, 0, 0, 2, 0, 0
 };
 
-static const uint8_t g_hd6309_reg_byte_size[23] = {
-	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T1 T2 T3
-	0, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0, 0, 2, 2, 2, 2, 2, 4, 2, 0, 0, 0
+static const uint8_t g_hd6309_reg_byte_size[22] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T2 T3
+	0, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0, 0, 2, 2, 2, 2, 2, 4, 2, 0, 0
 };
 
 static bool m680x_setup_internals(m680x_info *info, e_cpu_type cpu_type,
