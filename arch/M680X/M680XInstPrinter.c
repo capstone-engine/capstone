@@ -73,7 +73,7 @@ static const char s_instruction_names[][6] = {
 	"ROR", "RORA", "RORB", "RORD", "RORW", "RORX",
 	"RSP", "RTC", "RTI", "RTS", "SBA", "SBC", "SBCA", "SBCB", "SBCD",
 	"SBCR",
-	"SEC", "SEI", "SEV", "SEX", "SEXW", "STA", "STAA", "STAB", "STB",
+	"SEC", "SEI", "SEV", "SEX", "SEXW", "SLP", "STA", "STAA", "STAB", "STB",
 	"STBT", "STD", "STE", "STF", "STOP", "STHX",
 	"STQ", "STS", "STU", "STW", "STX", "STY",
 	"SUB", "SUBA", "SUBB", "SUBD", "SUBE", "SUBF", "SUBR", "SUBW",

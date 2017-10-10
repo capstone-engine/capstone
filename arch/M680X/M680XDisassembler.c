@@ -263,9 +263,10 @@ void M680X_get_insn_id(cs_struct *handle, cs_insn *insn, unsigned int id)
 	const m680x_info *const info = (const m680x_info *)handle->printer_info;
 	const cpu_tables *cpu = &info->cpu;
 	uint8_t insn_prefix = (id >> 8) & 0xff;
-	bool insn_found = false;
 	int index;
 	int i;
+
+	insn->id = M680X_INS_ILLGL;
 
 	for (i = 0; i < ARR_SIZE(cpu->pageX_prefix); ++i) {
 		if (cpu->pageX_table_size[i] == 0 ||
@@ -282,10 +283,12 @@ void M680X_get_insn_id(cs_struct *handle, cs_insn *insn, unsigned int id)
 		}
 	}
 
-	if (insn_prefix != 0) {
-		insn->id = M680X_INS_ILLGL;
+	if (insn_prefix != 0)
 		return;
-	}
+
+	insn->id = cpu->inst_page1_table[id].insn;
+	if (insn->id != M680X_INS_ILLGL)
+		return;
 
 	// Check if opcode byte is present in an overlay table
 	for (i = 0; i < ARR_SIZE(cpu->overlay_table_size); ++i) {
@@ -297,12 +300,9 @@ void M680X_get_insn_id(cs_struct *handle, cs_insn *insn, unsigned int id)
 						cpu->overlay_table_size[i],
 						id & 0xff)) >= 0) {
 			insn->id = cpu->inst_overlay_table[i][index].insn;
-			insn_found = true;
+			return;
 		}
 	}
-
-	if (!insn_found)
-		insn->id = cpu->inst_page1_table[id].insn;
 }
 
 static void add_insn_group(cs_detail *detail, m680x_group_type group)
@@ -971,6 +971,7 @@ static bool decode_insn(const m680x_info *info, uint16_t address,
 	if (!read_byte(info, &ir, address++))
 		return false;
 
+	insn_description->insn = M680X_INS_ILLGL;
 	insn_description->opcode = ir;
 
 	// Check if a page prefix byte is present
@@ -980,27 +981,35 @@ static bool decode_insn(const m680x_info *info, uint16_t address,
 			break;
 
 		if ((cpu->pageX_prefix[i] == ir)) {
+			// Get pageX instruction and handler id.
+			// Abort for illegal instr.
 			inst_table = cpu->inst_pageX_table[i];
 			table_size = cpu->pageX_table_size[i];
+			if (!read_byte(info, &ir, address++))
+				return false;
+
+			insn_description->opcode =
+				(insn_description->opcode << 8) | ir;
+
+			if ((index = binary_search(
+				inst_table, table_size, ir)) < 0)
+				return false;
+
+			insn_description->handler_id =
+				inst_table[index].handler_id;
+			insn_description->insn = inst_table[index].insn;
+			break;
 		}
 	}
 
-	if (inst_table != NULL) {
-		// Get pageX instruction and handler id. Abort for illegal instr.
-		if (!read_byte(info, &ir, address++))
-			return false;
-
-		insn_description->opcode = (insn_description->opcode << 8) | ir;
-
-		if ((index = binary_search(inst_table, table_size, ir)) < 0)
-			return false;
-
-		insn_description->handler_id = inst_table[index].handler_id;
-		insn_description->insn = inst_table[index].insn;
+	if (insn_description->insn == M680X_INS_ILLGL) {
+		// Get page1 insn description
+		insn_description->insn = cpu->inst_page1_table[ir].insn;
+		insn_description->handler_id =
+			cpu->inst_page1_table[ir].handler_id;
 	}
-	else {
-		bool insn_found = false;
 
+	if (insn_description->insn == M680X_INS_ILLGL) {
 		// Check if opcode byte is present in an overlay table
 		for (i = 0; i < ARR_SIZE(cpu->overlay_table_size); ++i) {
 			if (cpu->overlay_table_size[i] == 0 ||
@@ -1010,24 +1019,20 @@ static bool decode_insn(const m680x_info *info, uint16_t address,
 			inst_table = cpu->inst_overlay_table[i];
 			table_size = cpu->overlay_table_size[i];
 
-			if ((index = binary_search(inst_table, table_size, ir)) >= 0) {
-				insn_description->handler_id = inst_table[index].handler_id;
+			if ((index = binary_search(
+					inst_table, table_size, ir)) >= 0) {
+				insn_description->handler_id =
+					inst_table[index].handler_id;
 				insn_description->insn = inst_table[index].insn;
-				insn_found = true;
+				break;
 			}
-		}
-
-		if (!insn_found) {
-			// Get page1 insn description
-			insn_description->handler_id = cpu->inst_page1_table[ir].handler_id;
-			insn_description->insn = cpu->inst_page1_table[ir].insn;
 		}
 	}
 
 	insn_description->insn_size = address - base_address;
 
-	return (insn_description->insn != M680X_INS_INVLD) &&
-		(insn_description->insn != M680X_INS_ILLGL) &&
+	return (insn_description->insn != M680X_INS_ILLGL) &&
+		(insn_description->insn != M680X_INS_INVLD) &&
 		is_sufficient_code_size(info, address, insn_description);
 }
 
@@ -2050,8 +2055,8 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 
 		reg = g_insn_props[info->insn].reg0;
 		if (reg != M680X_REG_INVALID) {
-			if (!info->cpu.reg_byte_size[reg] &&
-			   reg == M680X_REG_HX)
+			if (reg == M680X_REG_HX &&
+			    (!info->cpu.reg_byte_size[reg]))
 				reg = M680X_REG_X;
 			add_reg_operand(info, reg);
 			// First (or second) operand is a register which is
@@ -2059,8 +2064,8 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 			m680x->flags |= M680X_FIRST_OP_IN_MNEM;
 			reg = g_insn_props[info->insn].reg1;
 			if (reg != M680X_REG_INVALID) {
-				if (!info->cpu.reg_byte_size[reg] &&
-				    reg == M680X_REG_HX)
+				if (reg == M680X_REG_HX &&
+				    (!info->cpu.reg_byte_size[reg]))
 					reg = M680X_REG_X;
 				add_reg_operand(info, reg);
 				m680x->flags |= M680X_SECOND_OP_IN_MNEM;
@@ -2308,31 +2313,31 @@ bool M680X_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	if (handle->mode & CS_MODE_M680X_6800)
 		cpu_type = M680X_CPU_TYPE_6800;
 
-	if (handle->mode & CS_MODE_M680X_6801)
+	else if (handle->mode & CS_MODE_M680X_6801)
 		cpu_type = M680X_CPU_TYPE_6801;
 
-	if (handle->mode & CS_MODE_M680X_6805)
+	else if (handle->mode & CS_MODE_M680X_6805)
 		cpu_type = M680X_CPU_TYPE_6805;
 
-	if (handle->mode & CS_MODE_M680X_6808)
+	else if (handle->mode & CS_MODE_M680X_6808)
 		cpu_type = M680X_CPU_TYPE_6808;
 
-	if (handle->mode & CS_MODE_M680X_HCS08)
+	else if (handle->mode & CS_MODE_M680X_HCS08)
 		cpu_type = M680X_CPU_TYPE_HCS08;
 
-	if (handle->mode & CS_MODE_M680X_6809)
+	else if (handle->mode & CS_MODE_M680X_6809)
 		cpu_type = M680X_CPU_TYPE_6809;
 
-	if (handle->mode & CS_MODE_M680X_6301)
+	else if (handle->mode & CS_MODE_M680X_6301)
 		cpu_type = M680X_CPU_TYPE_6301;
 
-	if (handle->mode & CS_MODE_M680X_6309)
+	else if (handle->mode & CS_MODE_M680X_6309)
 		cpu_type = M680X_CPU_TYPE_6309;
 
-	if (handle->mode & CS_MODE_M680X_6811)
+	else if (handle->mode & CS_MODE_M680X_6811)
 		cpu_type = M680X_CPU_TYPE_6811;
 
-	if (handle->mode & CS_MODE_M680X_CPU12)
+	else if (handle->mode & CS_MODE_M680X_CPU12)
 		cpu_type = M680X_CPU_TYPE_CPU12;
 
 	if (cpu_type != M680X_CPU_TYPE_INVALID &&
