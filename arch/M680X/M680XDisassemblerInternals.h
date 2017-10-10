@@ -45,7 +45,7 @@ typedef struct m680x_info {
 	uint16_t offset;	// address offset of first byte in code buffer
 	e_cpu_type cpu_type;	// The CPU type to be used for disassembling
 	cs_m680x m680x;		// M680X specific properties
-	cpu_tables cpu;
+	const cpu_tables *cpu;
 	m680x_insn insn;	// Instruction ID
 	uint8_t insn_size;	// byte size of instruction
 } m680x_info;

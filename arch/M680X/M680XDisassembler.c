@@ -261,7 +261,7 @@ static int binary_search(const inst_pageX *const inst_pageX_table,
 void M680X_get_insn_id(cs_struct *handle, cs_insn *insn, unsigned int id)
 {
 	const m680x_info *const info = (const m680x_info *)handle->printer_info;
-	const cpu_tables *cpu = &info->cpu;
+	const cpu_tables *cpu = info->cpu;
 	uint8_t insn_prefix = (id >> 8) & 0xff;
 	int index;
 	int i;
@@ -376,7 +376,7 @@ static void update_am_reg_list(MCInst *MI, m680x_info *info, cs_m680x_op *op,
 	case M680X_OP_INDEXED:
 		add_reg_to_rw_list(MI, op->idx.base_reg, READ);
 		if (op->idx.base_reg == M680X_REG_X &&
-		    info->cpu.reg_byte_size[M680X_REG_H])
+		    info->cpu->reg_byte_size[M680X_REG_H])
 			add_reg_to_rw_list(MI, M680X_REG_H, READ);
 
 
@@ -386,7 +386,7 @@ static void update_am_reg_list(MCInst *MI, m680x_info *info, cs_m680x_op *op,
 		if (op->idx.inc_dec) {
 			add_reg_to_rw_list(MI, op->idx.base_reg, WRITE);
 			if (op->idx.base_reg == M680X_REG_X &&
-			    info->cpu.reg_byte_size[M680X_REG_H])
+			    info->cpu->reg_byte_size[M680X_REG_H])
 				add_reg_to_rw_list(MI, M680X_REG_H, WRITE);
 		}
 
@@ -608,7 +608,7 @@ static void set_changed_regs_read_write_counts(MCInst *MI, m680x_info *info)
 				e_access access;
 
 				m680x_reg reg = changed_regs[i].regs[j];
-				if (!info->cpu.reg_byte_size[reg])
+				if (!info->cpu->reg_byte_size[reg])
 				{
 					if (info->insn != M680X_INS_MUL)
 						continue;
@@ -710,8 +710,8 @@ static bool is_indexed12_post_byte_valid(const m680x_info *info,
 // Check for M6809/HD6309 TFR/EXG instruction for valid register
 static bool is_tfr09_reg_valid(const m680x_info *info, uint8_t reg_nibble)
 {
-	if (info->cpu.tfr_reg_valid != NULL)
-		return info->cpu.tfr_reg_valid[reg_nibble];
+	if (info->cpu->tfr_reg_valid != NULL)
+		return info->cpu->tfr_reg_valid[reg_nibble];
 
 	return true; // e.g. for the M6309 all registers are valid
 }
@@ -961,7 +961,7 @@ static bool decode_insn(const m680x_info *info, uint16_t address,
 	insn_desc *insn_description)
 {
 	const inst_pageX *inst_table = NULL;
-	const cpu_tables *cpu = &info->cpu;
+	const cpu_tables *cpu = info->cpu;
 	int table_size = 0;
 	uint16_t base_address = address;
 	uint8_t ir; // instruction register
@@ -1060,7 +1060,7 @@ static void add_reg_operand(m680x_info *info, m680x_reg reg)
 
 	op->type = M680X_OP_REGISTER;
 	op->reg = reg;
-	op->size = info->cpu.reg_byte_size[reg];
+	op->size = info->cpu->reg_byte_size[reg];
 }
 
 static void set_operand_size(m680x_info *info, cs_m680x_op *op,
@@ -2056,7 +2056,7 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 		reg = g_insn_props[info->insn].reg0;
 		if (reg != M680X_REG_INVALID) {
 			if (reg == M680X_REG_HX &&
-			    (!info->cpu.reg_byte_size[reg]))
+			    (!info->cpu->reg_byte_size[reg]))
 				reg = M680X_REG_X;
 			add_reg_operand(info, reg);
 			// First (or second) operand is a register which is
@@ -2065,7 +2065,7 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 			reg = g_insn_props[info->insn].reg1;
 			if (reg != M680X_REG_INVALID) {
 				if (reg == M680X_REG_HX &&
-				    (!info->cpu.reg_byte_size[reg]))
+				    (!info->cpu->reg_byte_size[reg]))
 					reg = M680X_REG_X;
 				add_reg_operand(info, reg);
 				m680x->flags |= M680X_SECOND_OP_IN_MNEM;
@@ -2079,16 +2079,16 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 		add_insn_group(detail, g_insn_props[info->insn].group);
 
 		if (g_insn_props[info->insn].cc_modified &&
-			(info->cpu.insn_cc_not_modified[0] != info->insn) &&
-			(info->cpu.insn_cc_not_modified[1] != info->insn))
+			(info->cpu->insn_cc_not_modified[0] != info->insn) &&
+			(info->cpu->insn_cc_not_modified[1] != info->insn))
 			add_reg_to_rw_list(MI, M680X_REG_CC, MODIFY);
 
 		e_access_mode access_mode =
 			g_insn_props[info->insn].access_mode;
 		// Fix for M6805 BSET/BCLR. It has a differnt operand order
 		// in comparison to the M6811
-		if ((info->cpu.insn_cc_not_modified[0] == info->insn) ||
-		   (info->cpu.insn_cc_not_modified[1] == info->insn))
+		if ((info->cpu->insn_cc_not_modified[0] == info->insn) ||
+		   (info->cpu->insn_cc_not_modified[1] == info->insn))
 			access_mode = rmmm;
 		build_regs_read_write_counts(MI, info, access_mode);
 		add_operators_access(MI, info, access_mode);
@@ -2107,11 +2107,6 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 	illegal_hdlr(MI, info, &address);
 	return 1;
 }
-
-static const char *s_cpu_type[] = {
-	"INVALID", "6301", "6309", "6800", "6801", "6805", "6808",
-	"6809", "6811", "CPU12", "HCS08",
-};
 
 // Tables to get the byte size of a register on the CPU
 // based on an enum m680x_reg value.
@@ -2156,146 +2151,195 @@ static const uint8_t g_hd6309_reg_byte_size[22] = {
 	0, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0, 0, 2, 2, 2, 2, 2, 4, 2, 0, 0
 };
 
+// Table to check for a valid register nibble on the M6809 CPU
+// used for TFR and EXG instruction.
+static const bool m6809_tfr_reg_valid[16] = {
+	true, true, true, true, true,  true,  false, false,
+	true, true, true, true, false, false, false, false,
+};
+
+static const cpu_tables g_cpu_tables[] = {
+{
+	// M680X_CPU_TYPE_INVALID
+	NULL,
+	{ NULL, NULL },
+	{ 0, 0 },
+	{ 0x00, 0x00, 0x00 },
+	{ NULL, NULL, NULL },
+	{ 0, 0, 0 },
+	NULL,
+	NULL,
+	{ M680X_INS_INVLD, M680X_INS_INVLD }
+},
+{
+	// M680X_CPU_TYPE_6301
+	&g_m6800_inst_page1_table[0],
+	{ &g_m6801_inst_overlay_table[0], &g_hd6301_inst_overlay_table[0] },
+	{
+		ARR_SIZE(g_m6801_inst_overlay_table),
+		ARR_SIZE(g_hd6301_inst_overlay_table)
+	},
+	{ 0x00, 0x00, 0x00 },
+	{ NULL, NULL, NULL },
+	{ 0, 0, 0 },
+	&g_m6801_reg_byte_size[0],
+	NULL,
+	{ M680X_INS_INVLD, M680X_INS_INVLD }
+},
+{
+	// M680X_CPU_TYPE_6309
+	&g_m6809_inst_page1_table[0],
+	{ &g_hd6309_inst_overlay_table[0], NULL },
+	{ ARR_SIZE(g_hd6309_inst_overlay_table), 0 },
+	{ 0x10, 0x11, 0x00 },
+	{ &g_hd6309_inst_page2_table[0], &g_hd6309_inst_page3_table[0], NULL },
+	{
+		ARR_SIZE(g_hd6309_inst_page2_table),
+		ARR_SIZE(g_hd6309_inst_page3_table),
+		0
+	},
+	&g_hd6309_reg_byte_size[0],
+	NULL,
+	{ M680X_INS_INVLD, M680X_INS_INVLD }
+},
+{
+	// M680X_CPU_TYPE_6800
+	&g_m6800_inst_page1_table[0],
+	{ NULL, NULL },
+	{ 0, 0 },
+	{ 0x00, 0x00, 0x00 },
+	{ NULL, NULL, NULL },
+	{ 0, 0, 0 },
+	&g_m6800_reg_byte_size[0],
+	NULL,
+	{ M680X_INS_INVLD, M680X_INS_INVLD }
+},
+{
+	// M680X_CPU_TYPE_6801
+	&g_m6800_inst_page1_table[0],
+	{ &g_m6801_inst_overlay_table[0], NULL },
+	{ ARR_SIZE(g_m6801_inst_overlay_table), 0 },
+	{ 0x00, 0x00, 0x00 },
+	{ NULL, NULL, NULL },
+	{ 0, 0, 0 },
+	&g_m6801_reg_byte_size[0],
+	NULL,
+	{ M680X_INS_INVLD, M680X_INS_INVLD }
+},
+{
+	// M680X_CPU_TYPE_6805
+	&g_m6805_inst_page1_table[0],
+	{ NULL, NULL },
+	{ 0, 0 },
+	{ 0x00, 0x00, 0x00 },
+	{ NULL, NULL, NULL },
+	{ 0, 0, 0 },
+	&g_m6805_reg_byte_size[0],
+	NULL,
+	{ M680X_INS_BCLR, M680X_INS_BSET }
+},
+{
+	// M680X_CPU_TYPE_6808
+	&g_m6805_inst_page1_table[0],
+	{ &g_m6808_inst_overlay_table[0], NULL },
+	{ ARR_SIZE(g_m6808_inst_overlay_table), 0 },
+	{ 0x9E, 0x00, 0x00 },
+	{ &g_m6808_inst_page2_table[0], NULL, NULL },
+	{ ARR_SIZE(g_m6808_inst_page2_table), 0, 0 },
+	&g_m6808_reg_byte_size[0],
+	NULL,
+	{ M680X_INS_BCLR, M680X_INS_BSET }
+},
+{
+	// M680X_CPU_TYPE_6809
+	&g_m6809_inst_page1_table[0],
+	{ NULL, NULL },
+	{ 0, 0 },
+	{ 0x10, 0x11, 0x00 },
+	{ &g_m6809_inst_page2_table[0], &g_m6809_inst_page3_table[0], NULL },
+	{
+		ARR_SIZE(g_m6809_inst_page2_table),
+		ARR_SIZE(g_m6809_inst_page3_table),
+		0
+	},
+	&g_m6809_reg_byte_size[0],
+	&m6809_tfr_reg_valid[0],
+	{ M680X_INS_INVLD, M680X_INS_INVLD }
+},
+{
+	// M680X_CPU_TYPE_6811
+	&g_m6800_inst_page1_table[0],
+	{ &g_m6801_inst_overlay_table[0], &g_m6811_inst_overlay_table[0] },
+	{
+		ARR_SIZE(g_m6801_inst_overlay_table),
+		ARR_SIZE(g_m6811_inst_overlay_table)
+	},
+	{ 0x18, 0x1A, 0xCD },
+	{
+		&g_m6811_inst_page2_table[0],
+		&g_m6811_inst_page3_table[0],
+		&g_m6811_inst_page4_table[0]
+	},
+	{
+		ARR_SIZE(g_m6811_inst_page2_table),
+		ARR_SIZE(g_m6811_inst_page3_table),
+		ARR_SIZE(g_m6811_inst_page4_table)
+	},
+	&g_m6811_reg_byte_size[0],
+	NULL,
+	{ M680X_INS_INVLD, M680X_INS_INVLD }
+},
+{
+	// M680X_CPU_TYPE_CPU12
+	&g_cpu12_inst_page1_table[0],
+	{ NULL, NULL },
+	{ 0, 0 },
+	{ 0x18, 0x00, 0x00 },
+	{ &g_cpu12_inst_page2_table[0], NULL, NULL },
+	{ ARR_SIZE(g_cpu12_inst_page2_table), 0, 0 },
+	&g_cpu12_reg_byte_size[0],
+	NULL,
+	{ M680X_INS_INVLD, M680X_INS_INVLD }
+},
+{
+	// M680X_CPU_TYPE_HCS08
+	&g_m6805_inst_page1_table[0],
+	{ &g_m6808_inst_overlay_table[0], &g_hcs08_inst_overlay_table[0] },
+	{
+		ARR_SIZE(g_m6808_inst_overlay_table),
+		ARR_SIZE(g_hcs08_inst_overlay_table)
+	},
+	{ 0x9E, 0x00, 0x00 },
+	{ &g_hcs08_inst_page2_table[0], NULL, NULL },
+	{ ARR_SIZE(g_hcs08_inst_page2_table), 0, 0 },
+	&g_m6808_reg_byte_size[0],
+	NULL,
+	{ M680X_INS_BCLR, M680X_INS_BSET }
+},
+};
+
+static const char *s_cpu_type[] = {
+	"INVALID", "6301", "6309", "6800", "6801", "6805", "6808",
+	"6809", "6811", "CPU12", "HCS08",
+};
+
 static bool m680x_setup_internals(m680x_info *info, e_cpu_type cpu_type,
 	uint16_t address,
 	const uint8_t *code, uint16_t code_len)
 {
-	// Table to check for a valid register nibble on the M6809 CPU
-	// used for TFR and EXG instruction.
-	static const bool m6809_tfr_reg_valid[16] = {
-		true, true, true, true, true,  true,  false, false,
-		true, true, true, true, false, false, false, false,
-	};
-	cpu_tables *cpu = &info->cpu;
-	size_t table_size;
+	if (cpu_type == M680X_CPU_TYPE_INVALID)
+	{
+		fprintf(stderr, "M680X_CPU_TYPE_%s is not suppported\n",
+			s_cpu_type[cpu_type]);
+		return false;
+	}
 
 	info->code = code;
 	info->size = code_len;
 	info->offset = address;
 	info->cpu_type = cpu_type;
 
-	memset(cpu, 0, sizeof(*cpu));
-
-	switch (info->cpu_type) {
-	case M680X_CPU_TYPE_6800:
-		cpu->inst_page1_table = &g_m6800_inst_page1_table[0];
-		cpu->reg_byte_size = &g_m6800_reg_byte_size[0];
-		break;
-
-	case M680X_CPU_TYPE_6801:
-		cpu->inst_page1_table = &g_m6800_inst_page1_table[0];
-		cpu->inst_overlay_table[0] = &g_m6801_inst_overlay_table[0];
-		table_size = ARR_SIZE(g_m6801_inst_overlay_table);
-		cpu->overlay_table_size[0] = table_size;
-		cpu->reg_byte_size = &g_m6801_reg_byte_size[0];
-		break;
-
-	case M680X_CPU_TYPE_6805:
-		cpu->inst_page1_table = &g_m6805_inst_page1_table[0];
-		cpu->reg_byte_size = &g_m6805_reg_byte_size[0];
-		cpu->insn_cc_not_modified[0] = M680X_INS_BCLR;
-		cpu->insn_cc_not_modified[1] = M680X_INS_BSET;
-		break;
-
-	case M680X_CPU_TYPE_6808:
-		cpu->inst_page1_table = &g_m6805_inst_page1_table[0];
-		cpu->pageX_prefix[0] = 0x9E; // PAGE2 prefix
-		cpu->inst_pageX_table[0] = &g_m6808_inst_page2_table[0];
-		cpu->pageX_table_size[0] = ARR_SIZE(g_m6808_inst_page2_table);
-		cpu->inst_overlay_table[0] = &g_m6808_inst_overlay_table[0];
-		table_size = ARR_SIZE(g_m6808_inst_overlay_table);
-		cpu->overlay_table_size[0] = table_size;
-		cpu->reg_byte_size = &g_m6808_reg_byte_size[0];
-		cpu->insn_cc_not_modified[0] = M680X_INS_BCLR;
-		cpu->insn_cc_not_modified[1] = M680X_INS_BSET;
-		break;
-
-	case M680X_CPU_TYPE_HCS08:
-		cpu->inst_page1_table = &g_m6805_inst_page1_table[0];
-		cpu->pageX_prefix[0] = 0x9E; // PAGE2 prefix
-		cpu->inst_pageX_table[0] = &g_hcs08_inst_page2_table[0];
-		cpu->pageX_table_size[0] = ARR_SIZE(g_hcs08_inst_page2_table);
-		cpu->inst_overlay_table[0] = &g_m6808_inst_overlay_table[0];
-		table_size = ARR_SIZE(g_m6808_inst_overlay_table);
-		cpu->overlay_table_size[0] = table_size;
-		cpu->inst_overlay_table[1] = &g_hcs08_inst_overlay_table[0];
-		table_size = ARR_SIZE(g_hcs08_inst_overlay_table);
-		cpu->overlay_table_size[1] = table_size;
-		cpu->reg_byte_size = &g_m6808_reg_byte_size[0];
-		cpu->insn_cc_not_modified[0] = M680X_INS_BCLR;
-		cpu->insn_cc_not_modified[1] = M680X_INS_BSET;
-		break;
-
-	case M680X_CPU_TYPE_6301:
-		cpu->inst_page1_table = &g_m6800_inst_page1_table[0];
-		cpu->inst_overlay_table[0] = &g_m6801_inst_overlay_table[0];
-		table_size = ARR_SIZE(g_m6801_inst_overlay_table);
-		cpu->overlay_table_size[0] = table_size;
-		cpu->inst_overlay_table[1] = &g_hd6301_inst_overlay_table[0];
-		table_size = ARR_SIZE(g_hd6301_inst_overlay_table);
-		cpu->overlay_table_size[1] = table_size;
-		cpu->reg_byte_size = &g_m6801_reg_byte_size[0];
-		break;
-
-	case M680X_CPU_TYPE_6809:
-		cpu->inst_page1_table = &g_m6809_inst_page1_table[0];
-		cpu->pageX_prefix[0] = 0x10; // PAGE2 prefix
-		cpu->pageX_prefix[1] = 0x11; // PAGE3 prefix
-		cpu->inst_pageX_table[0] = &g_m6809_inst_page2_table[0];
-		cpu->inst_pageX_table[1] = &g_m6809_inst_page3_table[0];
-		cpu->pageX_table_size[0] = ARR_SIZE(g_m6809_inst_page2_table);
-		cpu->pageX_table_size[1] = ARR_SIZE(g_m6809_inst_page3_table);
-		cpu->reg_byte_size = &g_m6809_reg_byte_size[0];
-		cpu->tfr_reg_valid = &m6809_tfr_reg_valid[0];
-		break;
-
-	case M680X_CPU_TYPE_6309:
-		cpu->inst_page1_table = &g_m6809_inst_page1_table[0];
-		cpu->inst_overlay_table[0] = &g_hd6309_inst_overlay_table[0];
-		table_size = ARR_SIZE(g_hd6309_inst_overlay_table);
-		cpu->overlay_table_size[0] = table_size;
-		cpu->pageX_prefix[0] = 0x10; // PAGE2 prefix
-		cpu->pageX_prefix[1] = 0x11; // PAGE3 prefix
-		cpu->inst_pageX_table[0] = &g_hd6309_inst_page2_table[0];
-		cpu->inst_pageX_table[1] = &g_hd6309_inst_page3_table[0];
-		cpu->pageX_table_size[0] = ARR_SIZE(g_hd6309_inst_page2_table);
-		cpu->pageX_table_size[1] = ARR_SIZE(g_hd6309_inst_page3_table);
-		cpu->reg_byte_size = &g_hd6309_reg_byte_size[0];
-		break;
-
-	case M680X_CPU_TYPE_6811:
-		cpu->inst_page1_table = &g_m6800_inst_page1_table[0];
-		cpu->pageX_prefix[0] = 0x18; // PAGE2 prefix
-		cpu->pageX_prefix[1] = 0x1A; // PAGE3 prefix
-		cpu->pageX_prefix[2] = 0xCD; // PAGE4 prefix
-		cpu->inst_pageX_table[0] = &g_m6811_inst_page2_table[0];
-		cpu->inst_pageX_table[1] = &g_m6811_inst_page3_table[0];
-		cpu->inst_pageX_table[2] = &g_m6811_inst_page4_table[0];
-		cpu->pageX_table_size[0] = ARR_SIZE(g_m6811_inst_page2_table);
-		cpu->pageX_table_size[1] = ARR_SIZE(g_m6811_inst_page3_table);
-		cpu->pageX_table_size[2] = ARR_SIZE(g_m6811_inst_page4_table);
-		cpu->inst_overlay_table[0] = &g_m6801_inst_overlay_table[0];
-		table_size = ARR_SIZE(g_m6801_inst_overlay_table);
-		cpu->overlay_table_size[0] = table_size;
-		cpu->inst_overlay_table[1] = &g_m6811_inst_overlay_table[0];
-		table_size = ARR_SIZE(g_m6811_inst_overlay_table);
-		cpu->overlay_table_size[1] = table_size;
-		cpu->reg_byte_size = &g_m6811_reg_byte_size[0];
-		break;
-
-	case M680X_CPU_TYPE_CPU12:
-		cpu->inst_page1_table = &g_cpu12_inst_page1_table[0];
-		cpu->pageX_prefix[0] = 0x18; // PAGE2 prefix
-		cpu->inst_pageX_table[0] = &g_cpu12_inst_page2_table[0];
-		cpu->pageX_table_size[0] = ARR_SIZE(g_cpu12_inst_page2_table);
-		cpu->reg_byte_size = &g_cpu12_reg_byte_size[0];
-		break;
-
-	default:
-		fprintf(stderr, "M680X_CPU_TYPE_%s is not suppported yet\n",
-			s_cpu_type[cpu_type]);
-		return false;
-	}
+	info->cpu = &g_cpu_tables[info->cpu_type];
 
 	return true;
 }
@@ -2422,6 +2466,13 @@ cs_err M680X_disassembler_init(cs_struct *ud)
 	if (M680X_CPU_TYPE_ENDING != ARR_SIZE(s_cpu_type)) {
 		fprintf(stderr, "Internal error: Size mismatch in enum "
 			"e_cpu_type and s_cpu_type\n");
+
+		return CS_ERR_MODE;
+	}
+
+	if (M680X_CPU_TYPE_ENDING != ARR_SIZE(g_cpu_tables)) {
+		fprintf(stderr, "Internal error: Size mismatch in enum "
+			"e_cpu_type and g_cpu_tables\n");
 
 		return CS_ERR_MODE;
 	}
