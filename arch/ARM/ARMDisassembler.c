@@ -462,7 +462,7 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t
 
 	memcpy(bytes, code, 4);
 
-	if (ud->big_endian)
+	if (MODE_IS_BIG_ENDIAN(ud->mode))
 		insn = (bytes[3] << 0) |
 			(bytes[2] << 8) |
 			(bytes[1] <<  16) |
@@ -704,7 +704,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 
 	memcpy(bytes, code, 2);
 
-	if (ud->big_endian)
+	if (MODE_IS_BIG_ENDIAN(ud->mode))
 		insn16 = (bytes[0] << 8) | bytes[1];
 	else
 		insn16 = (bytes[1] << 8) | bytes[0];
@@ -757,7 +757,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 
 	memcpy(bytes, code, 4);
 
-	if (ud->big_endian)
+	if (MODE_IS_BIG_ENDIAN(ud->mode))
 		insn32 = (bytes[3] <<  0) |
 			(bytes[2] <<  8) |
 			(bytes[1] << 16) |
