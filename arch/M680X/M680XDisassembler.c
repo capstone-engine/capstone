@@ -38,65 +38,39 @@
 /* ======================================================================== */
 
 typedef enum insn_hdlr_id {
-	illegal_hdlr_id,
-	relative8_hdlr_id,
-	relative16_hdlr_id,
-	immediate8_hdlr_id,
-	immediate16_hdlr_id,
-	immediate32_hdlr_id,
-	direct_hdlr_id,
-	extended_hdlr_id,
-	indexedX_hdlr_id,
-	indexedY_hdlr_id,
-	indexed09_hdlr_id,
-	inherent_hdlr_id,
-	reg_reg09_hdlr_id,
-	reg_bits_hdlr_id,
-	imm_indexedX_hdlr_id,
-	imm_indexed09_hdlr_id,
-	imm_direct_hdlr_id,
-	imm8_extended_hdlr_id,
-	imm16_extended_hdlr_id,
-	bit_move_hdlr_id,
-	tfm_hdlr_id,
-	dir_imm_rel_hdlr_id,
-	idxX_imm_rel_hdlr_id,
-	idxY_imm_rel_hdlr_id,
-	direct_imm_hdlr_id,
-	idxX_imm_hdlr_id,
-	idxY_imm_hdlr_id,
-	opidx_dir_rel_hdlr_id,
-	opidx_direct_hdlr_id,
-	indexedX0_hdlr_id,
-	indexedX16_hdlr_id,
-        imm_rel_hdlr_id,
-        direct_rel_hdlr_id,
-        indexedS_hdlr_id,
-        indexedS16_hdlr_id,
-        indexedS_rel_hdlr_id,
-        indexedX_rel_hdlr_id,
-        indexedX0_rel_hdlr_id,
-        indexedXp_rel_hdlr_id,
-        idxX0p_rel_hdlr_id,
-        idxX0p_direct_hdlr_id,
-        direct_direct_hdlr_id,
-        direct_idxX0p_hdlr_id,
-        indexed12_hdlr_id,
-        indexed12s_hdlr_id,
-        indexed12_imm_hdlr_id,
-	idx12_imm_rel_hdlr_id,
-	ext_imm_rel_hdlr_id,
-	extended_imm_hdlr_id,
-	ext_index_hdlr_id,
-	idx12_index_hdlr_id,
-	reg_reg12_hdlr_id,
-	loop_hdlr_id,
-	ext_ext_hdlr_id,
-	idx12_idx12_hdlr_id,
-	idx12_ext_hdlr_id,
-	imm8_idx12_x_hdlr_id,
-	imm16_idx12_x_hdlr_id,
-	ext_idx12_x_hdlr_id,
+	illgl_hid,
+	rel8_hid,
+	rel16_hid,
+	imm8_hid,
+	imm16_hid,
+	imm32_hid,
+	dir_hid,
+	ext_hid,
+	idxX_hid,
+	idxY_hid,
+	idx09_hid,
+	inh_hid,
+	rr09_hid,
+	rbits_hid,
+	bitmv_hid,
+	tfm_hid,
+	opidx_hid,
+	opidxdr_hid,
+	idxX0_hid,
+	idxX16_hid,
+        imm8rel_hid,
+        idxS_hid,
+        idxS16_hid,
+        idxXp_hid,
+        idxX0p_hid,
+        idx12_hid,
+        idx12s_hid,
+	rr12_hid,
+	loop_hid,
+	index_hid,
+	imm8i12x_hid,
+	imm16i12x_hid,
+	exti12x_hid,
 	HANDLER_ID_ENDING,
 } insn_hdlr_id;
 
@@ -139,14 +113,16 @@ typedef enum e_access {
 /* Properties of one instruction in PAGE1 (without prefix) */
 typedef struct inst_page1 {
 	m680x_insn insn : 9;
-	insn_hdlr_id handler_id : 6; /* instruction handler id */
+	insn_hdlr_id handler_id1 : 6; /* first instruction handler id */
+	insn_hdlr_id handler_id2 : 6; /* second instruction handler id */
 } inst_page1;
 
 /* Properties of one instruction in any other PAGE X */
 typedef struct inst_pageX {
 	unsigned opcode : 8;
 	m680x_insn insn : 9;
-	insn_hdlr_id handler_id : 6; /* instruction handler id */
+	insn_hdlr_id handler_id1 : 6; /* first instruction handler id */
+	insn_hdlr_id handler_id2 : 6; /* second instruction handler id */
 } inst_pageX;
 
 typedef struct insn_props {
@@ -626,14 +602,15 @@ static void set_changed_regs_read_write_counts(MCInst *MI, m680x_info *info)
 typedef struct insn_desc {
 	uint32_t opcode;
 	m680x_insn insn;
-	insn_hdlr_id handler_id;
+	insn_hdlr_id hid[2];
 	uint16_t insn_size;
 } insn_desc;
 
 static bool is_indexed09_post_byte_valid(const m680x_info *info,
-	uint16_t address, uint8_t post_byte, insn_desc *insn_description)
+	uint16_t *address, uint8_t post_byte, insn_desc *insn_description)
 {
-	uint8_t ir;
+	uint8_t ir = 0;
+	bool retval;
 
 	switch (post_byte & 0x9F) {
 	case 0x87:
@@ -652,19 +629,23 @@ static bool is_indexed09_post_byte_valid(const m680x_info *info,
 	case 0x98: // [n8,R]
 	case 0x9C: // [n8,PCR]
 		insn_description->insn_size++;
-		return read_byte(info, &ir, address);
+		return read_byte(info, &ir, (*address)++);
 
 	case 0x89: // n16,R
 	case 0x8D: // n16,PCR
 	case 0x99: // [n16,R]
 	case 0x9D: // [n16,PCR]
 		insn_description->insn_size += 2;
-		return read_byte(info, &ir, address + 1);
+		retval = read_byte(info, &ir, *address + 1);
+		address += 2;
+		return retval;
 
 	case 0x9F: // [n]
 		insn_description->insn_size += 2;
-		return (post_byte & 0x60) == 0 &&
-			read_byte(info, &ir, address + 1);
+		retval = (post_byte & 0x60) == 0 &&
+			read_byte(info, &ir, *address + 1);
+		address += 2;
+		return retval;
 	}
 
 	return true; // Any other indexed post byte is valid and
@@ -738,221 +719,164 @@ static bool is_loop_post_byte_valid(const m680x_info *info, uint8_t post_byte)
 }
 
 static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
-	insn_desc *insn_description)
+					insn_desc *insn_description)
 {
-	uint8_t ir;
+	int i;
+	bool retval;
+
+	for (i = 0; i < 2; i++)
+	{
+	uint8_t ir = 0;
 	bool is_subset = false;
 
-	switch (insn_description->handler_id) {
+	switch (insn_description->hid[i]) {
 
-	case immediate32_hdlr_id:
-	case ext_imm_rel_hdlr_id:
-	case imm16_extended_hdlr_id:
-	case ext_ext_hdlr_id:
+	case imm32_hid:
 		insn_description->insn_size += 4;
-		return read_byte(info, &ir, address + 3);
+		retval = read_byte(info, &ir, address + 3);
+		address += 4;
+		break;
 
-	case relative16_hdlr_id:
-	case extended_hdlr_id:
-	case immediate16_hdlr_id:
-        case imm_rel_hdlr_id:
-        case direct_rel_hdlr_id:
-	case imm_direct_hdlr_id:
-	case imm_indexedX_hdlr_id:
-	case direct_imm_hdlr_id:
-	case idxX_imm_hdlr_id:
-	case idxY_imm_hdlr_id:
-	case opidx_dir_rel_hdlr_id:
-	case indexedX16_hdlr_id:
-	case indexedS16_hdlr_id:
-	case indexedX_rel_hdlr_id:
-	case indexedXp_rel_hdlr_id:
-	case indexedS_rel_hdlr_id:
-	case direct_direct_hdlr_id:
+	case ext_hid:
+	case imm16_hid:
+	case rel16_hid:
+        case imm8rel_hid:
+	case opidxdr_hid:
+	case idxX16_hid:
+	case idxS16_hid:
 		insn_description->insn_size += 2;
-		return read_byte(info, &ir, address + 1);
+		retval = read_byte(info, &ir, address + 1);
+		address += 2;
+		break;
 
-	case relative8_hdlr_id:
-	case direct_hdlr_id:
-	case reg_bits_hdlr_id:
-	case immediate8_hdlr_id:
-	case opidx_direct_hdlr_id:
-	case indexedX_hdlr_id:
-	case indexedY_hdlr_id:
-	case indexedS_hdlr_id:
-	case indexedX0_rel_hdlr_id:
-	case idxX0p_rel_hdlr_id:
-	case idxX0p_direct_hdlr_id:
-	case direct_idxX0p_hdlr_id:
+	case rel8_hid:
+	case dir_hid:
+	case rbits_hid:
+	case imm8_hid:
+	case idxX_hid:
+	case idxXp_hid:
+	case idxY_hid:
+	case idxS_hid:
+	case index_hid:
 		insn_description->insn_size += 1;
-		return read_byte(info, &ir, address);
+		retval = read_byte(info, &ir, address++);
+		break;
 
-	case illegal_hdlr_id:
-	case inherent_hdlr_id:
-	case indexedX0_hdlr_id:
-		return true;
+	case illgl_hid:
+	case inh_hid:
+	case idxX0_hid:
+	case idxX0p_hid:
+	case opidx_hid:
+		retval = true;
+		break;
 
-	case indexed09_hdlr_id:
+	case idx09_hid:
 		insn_description->insn_size += 1;
 		if (!read_byte(info, &ir, address++))
-			return false;
+			retval = false;
+		else
+			retval = is_indexed09_post_byte_valid(info, &address,
+						ir, insn_description);
+		break;
 
-		return is_indexed09_post_byte_valid(info, address, ir,
-				insn_description);
-
-	case indexed12s_hdlr_id:
+	case idx12s_hid:
 		is_subset = true;
 		// intentionally fall through
 
-	case indexed12_hdlr_id:
+	case idx12_hid:
 		insn_description->insn_size += 1;
 		if (!read_byte(info, &ir, address++))
-			return false;
+			retval = false;
+		else
+			retval = is_indexed12_post_byte_valid(info, &address,
+					 ir, insn_description, is_subset);
+		break;
 
-		return is_indexed12_post_byte_valid(info, &address, ir,
-				insn_description, is_subset);
-
-	case indexed12_imm_hdlr_id:
+	case exti12x_hid:
+	case imm16i12x_hid:
 		insn_description->insn_size += 1;
 		if (!read_byte(info, &ir, address++))
-			return false;
-
-		if (!is_indexed12_post_byte_valid(info, &address, ir,
+			retval = false;
+		else if (!is_indexed12_post_byte_valid(info, &address, ir,
 				insn_description, false))
-			return false;
+			retval = false;
+		else {
+			insn_description->insn_size += 2;
+			retval = read_byte(info, &ir, address + 1);
+			address += 2;
+		}
+		break;
 
-		insn_description->insn_size += 1;
-		return read_byte(info, &ir, address++);
-
-	case ext_idx12_x_hdlr_id:
-	case imm16_idx12_x_hdlr_id:
-	case idx12_ext_hdlr_id:
+	case imm8i12x_hid:
 		insn_description->insn_size += 1;
 		if (!read_byte(info, &ir, address++))
-			return false;
-
-		if (!is_indexed12_post_byte_valid(info, &address, ir,
+			retval = false;
+		else if (!is_indexed12_post_byte_valid(info, &address, ir,
 				insn_description, false))
-			return false;
+			retval = false;
+		else {
+			insn_description->insn_size += 1;
+			retval = read_byte(info, &ir, address++); // index value
+		}
+		break;
 
+	case tfm_hid:
+		insn_description->insn_size += 1;
+		if (!read_byte(info, &ir, address++))
+			retval = false;
+		else
+			retval = is_tfm_reg_valid(info, (ir >> 4) & 0x0F) &&
+					is_tfm_reg_valid(info, ir & 0x0F);
+		break;
+
+	case rr09_hid:
+		insn_description->insn_size += 1;
+		if (!read_byte(info, &ir, address++))
+			retval = false;
+		else
+			retval = is_tfr09_reg_valid(info, (ir >> 4) & 0x0F) &&
+				is_tfr09_reg_valid(info, ir & 0x0F);
+		break;
+
+	case rr12_hid:
+		insn_description->insn_size += 1;
+		if (!read_byte(info, &ir, address++))
+			retval = false;
+		else
+			retval = is_exg_tfr12_post_byte_valid(info, ir);
+		break;
+
+	case bitmv_hid:
 		insn_description->insn_size += 2;
-		return read_byte(info, &ir, address + 1);
-
-	case idx12_imm_rel_hdlr_id:
-		insn_description->insn_size += 1;
 		if (!read_byte(info, &ir, address++))
-			return false;
+			retval = false;
+		else if ((ir & 0xc0) == 0xc0)
+			retval = false; // Invalid register specified
+		else
+			retval = read_byte(info, &ir, address++);
+		break;
 
-		if (!is_indexed12_post_byte_valid(info, &address, ir,
-				insn_description, false))
-			return false;
-
-		insn_description->insn_size += 1;
-		if (!read_byte(info, &ir, address++)) // immediate8 value
-			return false;
-
-		insn_description->insn_size += 1;
-		return read_byte(info, &ir, address++); // relative8 value
-
-	case imm8_idx12_x_hdlr_id:
-	case idx12_index_hdlr_id:
-		insn_description->insn_size += 1;
-		if (!read_byte(info, &ir, address++))
-			return false;
-
-		if (!is_indexed12_post_byte_valid(info, &address, ir,
-				insn_description, false))
-			return false;
-
-		insn_description->insn_size += 1;
-		return read_byte(info, &ir, address++); // index value
-
-	case idx12_idx12_hdlr_id:
-		insn_description->insn_size += 1;
-		if (!read_byte(info, &ir, address++))
-			return false;
-
-		if (!is_indexed12_post_byte_valid(info, &address, ir,
-				insn_description, false))
-			return false;
-
-		insn_description->insn_size += 1;
-		if (!read_byte(info, &ir, address++))
-			return false;
-
-		return is_indexed12_post_byte_valid(info, &address, ir,
-				insn_description, false);
-
-	case tfm_hdlr_id:
-		insn_description->insn_size += 1;
-		if (!read_byte(info, &ir, address))
-			return false;
-
-		return is_tfm_reg_valid(info, (ir >> 4) & 0x0F) &&
-			is_tfm_reg_valid(info, ir & 0x0F);
-
-	case reg_reg09_hdlr_id:
-		insn_description->insn_size += 1;
-		if (!read_byte(info, &ir, address))
-			return false;
-
-		return is_tfr09_reg_valid(info, (ir >> 4) & 0x0F) &&
-			is_tfr09_reg_valid(info, ir & 0x0F);
-
-	case reg_reg12_hdlr_id:
-		insn_description->insn_size += 1;
-		if (!read_byte(info, &ir, address))
-			return false;
-
-		return is_exg_tfr12_post_byte_valid(info, ir);
-
-	case bit_move_hdlr_id:
+	case loop_hid:
 		insn_description->insn_size += 2;
-		if (!read_byte(info, &ir, address))
-			return false;
-		if ((ir & 0xc0) == 0xc0)
-			return false; // Invalid register specified
-		return read_byte(info, &ir, address + 1);
-
-	case imm_indexed09_hdlr_id:
-		insn_description->insn_size += 1;
-		// Check for sufficient code for immediate value
-		if (!read_byte(info, &ir, address))
-			return false;
-
-		// Check for sufficient code for indexed post byte value
-		address++;
-		insn_description->insn_size += 1;
-		if (!read_byte(info, &ir, address))
-			return false;
-
-		return is_indexed09_post_byte_valid(info, address, ir,
-				insn_description);
-
-	case imm8_extended_hdlr_id:
-	case dir_imm_rel_hdlr_id:
-	case idxX_imm_rel_hdlr_id:
-	case idxY_imm_rel_hdlr_id:
-	case extended_imm_hdlr_id:
-	case ext_index_hdlr_id:
-		insn_description->insn_size += 3;
-		return read_byte(info, &ir, address + 2);
-
-	case loop_hdlr_id:
-		insn_description->insn_size += 2;
-		if (!read_byte(info, &ir, address))
-			return false;
-		if (!is_loop_post_byte_valid(info, ir))
-			return false;
-		return read_byte(info, &ir, address + 1);
+		if (!read_byte(info, &ir, address++))
+			retval = false;
+		else if (!is_loop_post_byte_valid(info, ir))
+			retval = false;
+		else
+			retval = read_byte(info, &ir, address++);
+		break;
 
 	default:
 		fprintf(stderr, "Internal error: Unexpected instruction "
-			"handler id %d\n",
-			insn_description->handler_id);
+			"handler id %d\n", insn_description->hid[i]);
+		retval = false;
+		break;
+	}
+	if (!retval)
+		return false;
 	}
 
-	return false;
+	return retval;
 }
 
 // Check for a valid M680X instruction AND for enough bytes in the code buffer
@@ -995,8 +919,10 @@ static bool decode_insn(const m680x_info *info, uint16_t address,
 				inst_table, table_size, ir)) < 0)
 				return false;
 
-			insn_description->handler_id =
-				inst_table[index].handler_id;
+			insn_description->hid[0]=
+				inst_table[index].handler_id1;
+			insn_description->hid[1]=
+				inst_table[index].handler_id2;
 			insn_description->insn = inst_table[index].insn;
 			break;
 		}
@@ -1005,8 +931,10 @@ static bool decode_insn(const m680x_info *info, uint16_t address,
 	if (insn_description->insn == M680X_INS_ILLGL) {
 		// Get page1 insn description
 		insn_description->insn = cpu->inst_page1_table[ir].insn;
-		insn_description->handler_id =
-			cpu->inst_page1_table[ir].handler_id;
+		insn_description->hid[0] =
+			cpu->inst_page1_table[ir].handler_id1;
+		insn_description->hid[1] =
+			cpu->inst_page1_table[ir].handler_id2;
 	}
 
 	if (insn_description->insn == M680X_INS_ILLGL) {
@@ -1021,8 +949,10 @@ static bool decode_insn(const m680x_info *info, uint16_t address,
 
 			if ((index = binary_search(
 					inst_table, table_size, ir)) >= 0) {
-				insn_description->handler_id =
-					inst_table[index].handler_id;
+				insn_description->hid[0] =
+					inst_table[index].handler_id1;
+				insn_description->hid[1] =
+					inst_table[index].handler_id2;
 				insn_description->insn = inst_table[index].insn;
 				break;
 			}
@@ -1484,6 +1414,15 @@ static void indexed12_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	}
 }
 
+static void index_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	cs_m680x *m680x = &info->m680x;
+	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
+
+	op->type = M680X_OP_INDEX;
+	read_byte(info, &op->index, (*address)++);
+};
+
 static void direct_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	cs_m680x *m680x = &info->m680x;
@@ -1539,40 +1478,6 @@ static void immediate_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	*address += op->size;
 }
 
-// handler for immediate,direct addr. mode. Used by HD6301/9
-static void imm_direct_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	immediate_hdlr(MI, info, address);
-	direct_hdlr(MI, info, address);
-}
-
-// handler for immediate,indexed addr. mode. Used by HD6301
-static void imm_indexedX_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	immediate_hdlr(MI, info, address);
-	indexedX_hdlr(MI, info, address);
-}
-
-// handler for immediate,indexed addr. mode. Used by HD6309
-static void imm_indexed09_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	immediate_hdlr(MI, info, address);
-	indexed09_hdlr(MI, info, address);
-}
-
-// handler for immediate,extended addr. mode. Used by HD6309, CPU12
-static void imm_extended_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	immediate_hdlr(MI, info, address);
-	extended_hdlr(MI, info, address);
-}
-
-static void ext_ext_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	extended_hdlr(MI, info, address);
-	extended_hdlr(MI, info, address);
-}
-
 // handler for bit move instructions, e.g: BAND A,5,1,$40  Used by HD6309
 static void bit_move_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
@@ -1625,52 +1530,14 @@ static void tfm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	add_reg_to_rw_list(MI, M680X_REG_W, READ | WRITE);
 }
 
-// handler for direct,immediate,relative addr. mode. Used by M6811
-static void dir_imm_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+static void opidx_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	direct_hdlr(MI, info, address);
-	immediate_hdlr(MI, info, address);
-	relative8_hdlr(MI, info, address);
-}
+	cs_m680x *m680x = &info->m680x;
+	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
 
-// handler for indexed(X),immediate,relative addr. mode. Used by M6811
-static void idxX_imm_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	indexedX_hdlr(MI, info, address);
-	immediate_hdlr(MI, info, address);
-	relative8_hdlr(MI, info, address);
-}
-
-// handler for indexed(Y),immediate,relative addr. mode. Used by M6811
-static void idxY_imm_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	indexedY_hdlr(MI, info, address);
-	immediate_hdlr(MI, info, address);
-	relative8_hdlr(MI, info, address);
-}
-
-// handler for direct,immediate addr. mode. Used by M6811
-// example BSET 5,$20
-static void direct_imm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	direct_hdlr(MI, info, address);
-	immediate_hdlr(MI, info, address);
-}
-
-// handler for indexed(X),immediate addr. mode. Used by M6811
-// example BSET 5,16,X
-static void idxX_imm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	indexedX_hdlr(MI, info, address);
-	immediate_hdlr(MI, info, address);
-}
-
-// handler for indexed(Y),immediate addr. mode. Used by M6811
-// example BSET 5,16,Y
-static void idxY_imm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	indexedY_hdlr(MI, info, address);
-	immediate_hdlr(MI, info, address);
+	// bit index is coded in Opcode
+	op->type = M680X_OP_INDEX;
+	op->index = (MI->Opcode & 0x0e) >> 1;
 }
 
 // handler for bit test and branch instruction. Used by M6805.
@@ -1688,20 +1555,6 @@ static void opidx_dir_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	relative8_hdlr(MI, info, address);
 
 	add_reg_to_rw_list(MI, M680X_REG_CC, MODIFY);
-}
-
-// handler for bit test instruction. Used by M6805.
-// The bit index is part of the opcode.
-// Example: BSET 3,<$40
-static void opidx_direct_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	cs_m680x *m680x = &info->m680x;
-	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
-
-	// bit index is coded in Opcode
-	op->type = M680X_OP_INDEX;
-	op->index = (MI->Opcode & 0x0e) >> 1;
-	direct_hdlr(MI, info, address);
 }
 
 static void indexedX0_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -1723,12 +1576,6 @@ static void indexedX16_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 static void imm_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	immediate_hdlr(MI, info, address);
-	relative8_hdlr(MI, info, address);
-}
-
-static void direct_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	direct_hdlr(MI, info, address);
 	relative8_hdlr(MI, info, address);
 }
 
@@ -1769,86 +1616,6 @@ static void indexedXp_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 				 (uint16_t)offset, false);
 }
 
-static void indexedS_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	indexedS_hdlr(MI, info, address);
-	relative8_hdlr(MI, info, address);
-}
-
-static void indexedX_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	indexedX_hdlr(MI, info, address);
-	relative8_hdlr(MI, info, address);
-}
-
-static void indexedX0_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	indexedX0_hdlr(MI, info, address);
-	relative8_hdlr(MI, info, address);
-}
-
-static void indexedXp_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	indexedXp_hdlr(MI, info, address);
-	relative8_hdlr(MI, info, address);
-}
-
-static void idxX0p_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	indexedX0p_hdlr(MI, info, address);
-	relative8_hdlr(MI, info, address);
-}
-
-static void idxX0p_direct_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	indexedX0p_hdlr(MI, info, address);
-	direct_hdlr(MI, info, address);
-}
-
-static void direct_direct_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	direct_hdlr(MI, info, address);
-	direct_hdlr(MI, info, address);
-}
-
-static void direct_idxX0p_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	direct_hdlr(MI, info, address);
-	indexedX0p_hdlr(MI, info, address);
-}
-
-static void indexed12_imm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	indexed12_hdlr(MI, info, address);
-	immediate_hdlr(MI, info, address);
-}
-
-static void idx12_imm_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	indexed12_hdlr(MI, info, address);
-	immediate_hdlr(MI, info, address);
-	relative8_hdlr(MI, info, address);
-}
-
-static void ext_imm_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	extended_hdlr(MI, info, address);
-	immediate_hdlr(MI, info, address);
-	relative8_hdlr(MI, info, address);
-}
-
-static void idx12_idx12_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	indexed12_hdlr(MI, info, address);
-	indexed12_hdlr(MI, info, address);
-}
-
-static void idx12_ext_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	indexed12_hdlr(MI, info, address);
-	extended_hdlr(MI, info, address);
-}
-
 static void imm_idx12_x_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	cs_m680x *m680x = &info->m680x;
@@ -1883,44 +1650,6 @@ static void ext_idx12_x_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	op0->type = M680X_OP_EXTENDED;
 	op0->imm = (int16_t)imm16;
 	set_operand_size(info, op0, 1);
-}
-
-static void extended_imm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	extended_hdlr(MI, info, address);
-	immediate_hdlr(MI, info, address);
-}
-
-// handler for CPU12 CALL instruction.
-// Example: CALL $8002,4
-static void ext_index_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	cs_m680x *m680x = &info->m680x;
-	uint8_t index = 0;
-
-	extended_hdlr(MI, info, address);
-
-	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
-	read_byte(info, &index, (*address)++);
-
-	op->type = M680X_OP_INDEX;
-	op->index = index;
-}
-
-// handler for CPU12 CALL instruction.
-// Example: CALL 8,Y;4
-static void idx12_index_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
-{
-	cs_m680x *m680x = &info->m680x;
-	uint8_t index = 0;
-
-	indexed12_hdlr(MI, info, address);
-
-	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
-	read_byte(info, &index, (*address)++);
-
-	op->type = M680X_OP_INDEX;
-	op->index = index;
 }
 
 // handler for CPU12 DBEQ/DNBE/IBEQ/IBNE/TBEQ/TBNE instructions.
@@ -1960,7 +1689,7 @@ static void loop_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
 }
 
-static void (*const g_inst_handler[])(MCInst *, m680x_info *, uint16_t *) = {
+static void (*const g_insn_handler[])(MCInst *, m680x_info *, uint16_t *) = {
 	illegal_hdlr,
 	relative8_hdlr,
 	relative16_hdlr,
@@ -1975,48 +1704,22 @@ static void (*const g_inst_handler[])(MCInst *, m680x_info *, uint16_t *) = {
 	inherent_hdlr,
 	reg_reg09_hdlr,
 	reg_bits_hdlr,
-	imm_indexedX_hdlr,
-	imm_indexed09_hdlr,
-	imm_direct_hdlr,
-	imm_extended_hdlr, // 8-bit
-	imm_extended_hdlr, // 16-bit
 	bit_move_hdlr,
 	tfm_hdlr,
-	dir_imm_rel_hdlr,
-	idxX_imm_rel_hdlr,
-	idxY_imm_rel_hdlr,
-	direct_imm_hdlr,
-	idxX_imm_hdlr,
-	idxY_imm_hdlr,
+	opidx_hdlr,
 	opidx_dir_rel_hdlr,
-	opidx_direct_hdlr,
 	indexedX0_hdlr,
 	indexedX16_hdlr,
         imm_rel_hdlr,
-        direct_rel_hdlr,
         indexedS_hdlr,
         indexedS16_hdlr,
-        indexedS_rel_hdlr,
-        indexedX_rel_hdlr,
-        indexedX0_rel_hdlr,
-        indexedXp_rel_hdlr,
-        idxX0p_rel_hdlr,
-        idxX0p_direct_hdlr,
-        direct_direct_hdlr,
-        direct_idxX0p_hdlr,
+        indexedXp_hdlr,
+        indexedX0p_hdlr,
         indexed12_hdlr,
         indexed12_hdlr, // subset of indexed12
-        indexed12_imm_hdlr,
-	idx12_imm_rel_hdlr,
-        ext_imm_rel_hdlr,
-        extended_imm_hdlr,
-        ext_index_hdlr,
-        idx12_index_hdlr,
         reg_reg12_hdlr,
 	loop_hdlr,
-	ext_ext_hdlr,
-	idx12_idx12_hdlr,
-	idx12_ext_hdlr,
+	index_hdlr,
 	imm_idx12_x_hdlr,
 	imm_idx12_x_hdlr,
 	ext_idx12_x_hdlr,
@@ -2073,7 +1776,9 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 		}
 
 		// Call addressing mode specific instruction handler
-		(g_inst_handler[insn_description.handler_id])(MI, info,
+		(g_insn_handler[insn_description.hid[0]])(MI, info,
+			&address);
+		(g_insn_handler[insn_description.hid[1]])(MI, info,
 			&address);
 
 		add_insn_group(detail, g_insn_props[info->insn].group);
@@ -2477,9 +2182,9 @@ cs_err M680X_disassembler_init(cs_struct *ud)
 		return CS_ERR_MODE;
 	}
 
-	if (HANDLER_ID_ENDING != ARR_SIZE(g_inst_handler)) {
+	if (HANDLER_ID_ENDING != ARR_SIZE(g_insn_handler)) {
 		fprintf(stderr, "Internal error: Size mismatch in enum "
-			"insn_hdlr_id and g_inst_handler\n");
+			"insn_hdlr_id and g_insn_handler\n");
 
 		return CS_ERR_MODE;
 	}
