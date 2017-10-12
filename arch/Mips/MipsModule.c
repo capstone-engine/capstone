@@ -9,6 +9,7 @@
 #include "MipsInstPrinter.h"
 #include "MipsMapping.h"
 
+
 static cs_err init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
@@ -29,6 +30,7 @@ static cs_err init(cs_struct *ud)
 	ud->insn_id = Mips_get_insn_id;
 	ud->insn_name = Mips_insn_name;
 	ud->group_name = Mips_group_name;
+
 	ud->disasm = Mips_getInstruction;
 
 	return CS_ERR_OK;
