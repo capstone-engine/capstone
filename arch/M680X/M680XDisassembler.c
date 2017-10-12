@@ -1419,8 +1419,8 @@ static void index_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	cs_m680x *m680x = &info->m680x;
 	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
 
-	op->type = M680X_OP_INDEX;
-	read_byte(info, &op->index, (*address)++);
+	op->type = M680X_OP_CONSTANT;
+	read_byte(info, &op->const_val, (*address)++);
 };
 
 static void direct_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -1497,13 +1497,13 @@ static void bit_move_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	// operand[1] = bit index in source operand
 	op = &m680x->operands[m680x->op_count++];
-	op->type = M680X_OP_INDEX;
-	op->index = (post_byte >> 3) & 0x07;
+	op->type = M680X_OP_CONSTANT;
+	op->const_val = (post_byte >> 3) & 0x07;
 
 	// operand[2] = bit index in destination operand
 	op = &m680x->operands[m680x->op_count++];
-	op->type = M680X_OP_INDEX;
-	op->index = post_byte & 0x07;
+	op->type = M680X_OP_CONSTANT;
+	op->const_val = post_byte & 0x07;
 
 	direct_hdlr(MI, info, address);
 }
@@ -1536,8 +1536,8 @@ static void opidx_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
 
 	// bit index is coded in Opcode
-	op->type = M680X_OP_INDEX;
-	op->index = (MI->Opcode & 0x0e) >> 1;
+	op->type = M680X_OP_CONSTANT;
+	op->const_val = (MI->Opcode & 0x0e) >> 1;
 }
 
 // handler for bit test and branch instruction. Used by M6805.
@@ -1549,8 +1549,8 @@ static void opidx_dir_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
 
 	// bit index is coded in Opcode
-	op->type = M680X_OP_INDEX;
-	op->index = (MI->Opcode & 0x0e) >> 1;
+	op->type = M680X_OP_CONSTANT;
+	op->const_val = (MI->Opcode & 0x0e) >> 1;
 	direct_hdlr(MI, info, address);
 	relative8_hdlr(MI, info, address);
 

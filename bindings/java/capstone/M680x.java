@@ -55,11 +55,11 @@ public class M680x {
     public OpRelative rel;
     public OpExtended ext;
     public byte direct_addr;
-    public byte index;
+    public byte const_val;
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("imm", "reg", "idx", "rel", "ext", "direct_addr", "index");
+      return Arrays.asList("imm", "reg", "idx", "rel", "ext", "direct_addr", "const_val");
     }
   }
 
@@ -97,7 +97,6 @@ public class M680x {
   }
 
   public static class UnionOpInfo extends Capstone.UnionOpInfo {
-    public int address_mode;
     public byte flags;
     public byte op_count;
 
@@ -108,7 +107,6 @@ public class M680x {
     }
 
     public void read() {
-      readField("address_mode");
       readField("flags");
       readField("op_count");
       op = new Operand[op_count];
@@ -118,17 +116,15 @@ public class M680x {
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("address_mode", "flags", "op_count", "op");
+      return Arrays.asList("flags", "op_count", "op");
     }
   }
 
   public static class OpInfo extends Capstone.OpInfo {
-    public int addressMode;
     public byte flags;
     public Operand [] op = null;
 
     public OpInfo(UnionOpInfo op_info) {
-      addressMode = op_info.address_mode;
       flags = op_info.flags;
       op = op_info.op;
     }

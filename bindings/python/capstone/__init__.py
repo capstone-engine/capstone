@@ -644,7 +644,7 @@ class CsInsn(object):
         elif arch == CS_ARCH_TMS320C64X:
             (self.condition, self.funit, self.parallel, self.operands) = tms320c64x.get_arch_info(self._raw.detail.contents.arch.tms320c64x)
         elif arch == CS_ARCH_M680X:
-            (self.address_mode, self.flags, self.operands) = m680x.get_arch_info(self._raw.detail.contents.arch.m680x)
+            (self.flags, self.operands) = m680x.get_arch_info(self._raw.detail.contents.arch.m680x)
 
 
     def __getattr__(self, name):

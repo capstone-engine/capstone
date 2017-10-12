@@ -74,9 +74,9 @@ void print_insn_detail_m680x(csh handle, cs_insn *insn)
 				cs_reg_name(handle, op->reg), comment);
 			break;
 
-		case M680X_OP_INDEX:
-			printf("\t\toperands[%u].type: INDEX = %u\n", i,
-				op->index);
+		case M680X_OP_CONSTANT:
+			printf("\t\toperands[%u].type: CONSTANT = %u\n", i,
+				op->const_val);
 			break;
 
 		case M680X_OP_IMMEDIATE:

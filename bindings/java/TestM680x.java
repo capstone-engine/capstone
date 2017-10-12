@@ -78,8 +78,8 @@ public class TestM680x {
             comment = " (in mnemonic)";
           System.out.printf("\t\toperands[%d].type: REGISTER = %s%s\n", c, ins.regName(i.value.reg), comment);
         }
-        if (i.type == M680X_OP_INDEX)
-          System.out.printf("\t\toperands[%d].type: INDEX = %d\n", c, i.value.index);
+        if (i.type == M680X_OP_CONSTANT)
+          System.out.printf("\t\toperands[%d].type: CONSTANT = %d\n", c, i.value.const_val);
         if (i.type == M680X_OP_IMMEDIATE)
           System.out.printf("\t\toperands[%d].type: IMMEDIATE = #%d\n", c, i.value.imm);
         if (i.type == M680X_OP_DIRECT)

@@ -152,8 +152,8 @@ static void printOperand(MCInst *MI, SStream *O, m680x_info *info,
 		printRegName(MI->csh, O, op->reg);
 		break;
 
-	case M680X_OP_INDEX:
-		SStream_concat(O, "%u", op->index);
+	case M680X_OP_CONSTANT:
+		SStream_concat(O, "%u", op->const_val);
 		break;
 
 	case M680X_OP_IMMEDIATE:

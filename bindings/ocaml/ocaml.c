@@ -609,9 +609,8 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 					case CS_ARCH_M680X:
 						arch_info = caml_alloc(1, 8);
 
-						op_info_val = caml_alloc(3, 0); // struct cs_m680x
-						Store_field(op_info_val, 0, Val_int(insn[j-1].detail->m680x.address_mode));
-						Store_field(op_info_val, 1, Val_int(insn[j-1].detail->m680x.flags));
+						op_info_val = caml_alloc(2, 0); // struct cs_m680x
+						Store_field(op_info_val, 0, Val_int(insn[j-1].detail->m680x.flags));
 
 						lcount = insn[j-1].detail->m680x.op_count;
 						if (lcount > 0) {
@@ -657,9 +656,9 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 										tmp = caml_alloc(1, 6); // direct_addr
 										Store_field(tmp, 0, Val_int(insn[j-1].detail->m680x.operands[i].direct_addr));
 										break;
-									case M680X_OP_INDEX:
-										tmp = caml_alloc(1, 7); // index
-										Store_field(tmp, 0, Val_int(insn[j-1].detail->m680x.operands[i].index));
+									case M680X_OP_CONSTANT:
+										tmp = caml_alloc(1, 7); // const_val
+										Store_field(tmp, 0, Val_int(insn[j-1].detail->m680x.operands[i].const_val));
 										break;
 									default: break;
 								}
@@ -671,7 +670,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						} else // empty list
 							array = Atom(0);
 
-						Store_field(op_info_val, 2, array);
+						Store_field(op_info_val, 1, array);
 
 						// finally, insert this into arch_info
 						Store_field(arch_info, 0, op_info_val);

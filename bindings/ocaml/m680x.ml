@@ -33,7 +33,7 @@ type m680x_op_value =
 	| M680X_OP_RELATIVE of m680x_op_rel
 	| M680X_OP_EXTENDED of m680x_op_ext
 	| M680X_OP_DIRECT of int
-	| M680X_OP_INDEX of int
+	| M680X_OP_CONSTANT of int
 
 type m680x_op = {
 	value: m680x_op_value;
@@ -42,7 +42,6 @@ type m680x_op = {
 }
 
 type cs_m680x = {
-	address_mode: int;
 	flags: int;
 	operands: m680x_op array;
 }

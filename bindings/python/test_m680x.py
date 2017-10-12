@@ -70,8 +70,8 @@ def print_insn_detail(insn):
                     comment = " (in mnemonic)";
                 print("\t\toperands[%u].type: REGISTER = %s%s" % (c,
                     insn.reg_name(i.reg), comment))
-            if i.type == M680X_OP_INDEX:
-                print("\t\toperands[%u].type: INDEX = %u" % (c, i.index))
+            if i.type == M680X_OP_CONSTANT:
+                print("\t\toperands[%u].type: CONSTANT = %u" % (c, i.const_val))
             if i.type == M680X_OP_IMMEDIATE:
                 print("\t\toperands[%u].type: IMMEDIATE = #%d" % (c, i.imm))
             if i.type == M680X_OP_DIRECT:

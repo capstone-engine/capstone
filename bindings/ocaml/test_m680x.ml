@@ -101,8 +101,8 @@ let print_op handle flags i op =
 		if idx.inc_dec != 0 then
 			print_inc_dec idx.inc_dec (bit_set idx.flags _M680X_IDX_POST_INC_DEC);
 		);
-	| M680X_OP_INDEX index ->
-		printf "\t\toperands[%d].type: INDEX = %d\n" i index;
+	| M680X_OP_CONSTANT const_val ->
+		printf "\t\toperands[%d].type: CONSTANT = %d\n" i const_val;
 	);
 
 	if op.size != 0 then

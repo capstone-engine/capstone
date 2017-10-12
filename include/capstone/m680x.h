@@ -60,7 +60,8 @@ typedef enum m680x_op_type {
 	M680X_OP_EXTENDED,    // = Extended addressing operand.
 	M680X_OP_DIRECT,      // = Direct addressing operand.
 	M680X_OP_RELATIVE,    // = Relative addressing operand.
-	M680X_OP_INDEX,       // = index operand (Displayed as number only).
+	M680X_OP_CONSTANT,    // = constant operand (Displayed as number only).
+				// Used e.g. for a bit index or page number.
 } m680x_op_type;
 
 //> Supported bit values for mem.idx.offset_bits
@@ -119,7 +120,7 @@ typedef struct cs_m680x_op {
 		m680x_op_rel rel;	// Relative address. operand (Bcc/LBcc)
 		m680x_op_ext ext;	// Extended address
 		uint8_t direct_addr;	// Direct address (lower 8-bit)
-		uint8_t index;		// index value
+		uint8_t const_val;	// constant value (bit index, page nr.)
 	};
 	uint8_t size;			// size of this operand (in bytes)
 	// How is this operand accessed? (READ, WRITE or READ|WRITE)

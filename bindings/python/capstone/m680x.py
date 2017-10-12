@@ -36,7 +36,7 @@ class M680xOpValue(ctypes.Union):
         ('rel', M680xOpRel),
         ('ext', M680xOpExt),
         ('direct_addr', ctypes.c_uint8),
-        ('index', ctypes.c_uint8),
+        ('const_val', ctypes.c_uint8),
     )
 
 class M680xOp(ctypes.Structure):
@@ -72,18 +72,17 @@ class M680xOp(ctypes.Structure):
         return self.value.direct_addr
 
     @property
-    def index(self):
-        return self.value.index
+    def const_val(self):
+        return self.value.const_val
 
 
 class CsM680x(ctypes.Structure):
     _fields_ = (
-        ('address_mode', ctypes.c_uint),
         ('flags', ctypes.c_uint8),
         ('op_count', ctypes.c_uint8),
         ('operands', M680xOp * 9),
     )
 
 def get_arch_info(a):
-    return (a.address_mode, a.flags, copy_ctypes_list(a.operands[:a.op_count]))
+    return (a.flags, copy_ctypes_list(a.operands[:a.op_count]))
 
