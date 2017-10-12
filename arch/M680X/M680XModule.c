@@ -16,10 +16,12 @@ static cs_err init(cs_struct *ud)
 
 	/* Do some validation checks */
 	errcode = M680X_disassembler_init(ud);
+
 	if (errcode != CS_ERR_OK)
 		return errcode;
 
 	errcode =  M680X_instprinter_init(ud);
+
 	if (errcode != CS_ERR_OK)
 		return errcode;
 
@@ -28,19 +30,18 @@ static cs_err init(cs_struct *ud)
 			CS_MODE_M680X_6805 | CS_MODE_M680X_6808 |
 			CS_MODE_M680X_6809 | CS_MODE_M680X_6811 |
 			CS_MODE_M680X_6301 | CS_MODE_M680X_6309 |
-			CS_MODE_M680X_CPU12 | CS_MODE_M680X_HCS08))
-	{
+			CS_MODE_M680X_CPU12 | CS_MODE_M680X_HCS08)) {
 		// At least one mode is not supported by M680X
-                return CS_ERR_MODE;
+		return CS_ERR_MODE;
 	}
+
 	if (!(ud->mode & (CS_MODE_M680X_6800 | CS_MODE_M680X_6801 |
-			CS_MODE_M680X_6805 | CS_MODE_M680X_6808 |
-			CS_MODE_M680X_6809 | CS_MODE_M680X_6811 |
-			CS_MODE_M680X_6301 | CS_MODE_M680X_6309 |
-			CS_MODE_M680X_CPU12 | CS_MODE_M680X_HCS08)))
-	{
+				CS_MODE_M680X_6805 | CS_MODE_M680X_6808 |
+				CS_MODE_M680X_6809 | CS_MODE_M680X_6811 |
+				CS_MODE_M680X_6301 | CS_MODE_M680X_6309 |
+				CS_MODE_M680X_CPU12 | CS_MODE_M680X_HCS08))) {
 		// At least the cpu type has to be selected. No default.
-                return CS_ERR_MODE;
+		return CS_ERR_MODE;
 	}
 
 	info = cs_mem_malloc(sizeof(m680x_info));
@@ -59,7 +60,7 @@ static cs_err init(cs_struct *ud)
 	ud->skipdata_size = 1;
 	ud->post_printer = NULL;
 #ifndef CAPSTONE_DIET
-        ud->reg_access = M680X_reg_access;
+	ud->reg_access = M680X_reg_access;
 #endif
 
 	return CS_ERR_OK;

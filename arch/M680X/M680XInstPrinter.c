@@ -115,16 +115,21 @@ static void printInstructionName(cs_struct *handle, SStream *OS,
 
 static uint32_t get_unsigned(int32_t value, int byte_size)
 {
-	switch(byte_size) {
-		case 1: return (uint32_t)(value & 0xff);
-		case 2: return (uint32_t)(value & 0xffff);
-		default:
-		case 4: return (uint32_t)value;
+	switch (byte_size) {
+	case 1:
+		return (uint32_t)(value & 0xff);
+
+	case 2:
+		return (uint32_t)(value & 0xffff);
+
+	default:
+	case 4:
+		return (uint32_t)value;
 	}
 }
 
 static void printIncDec(bool isPost, SStream *O, m680x_info *info,
-			cs_m680x_op *op)
+	cs_m680x_op *op)
 {
 	static const char s_inc_dec[][3] = { "--", "-", "", "+", "++" };
 
@@ -138,14 +143,15 @@ static void printIncDec(bool isPost, SStream *O, m680x_info *info,
 		if (info->cpu_type == M680X_CPU_TYPE_CPU12)
 			prePostfix = (op->idx.inc_dec < 0) ? "-" : "+";
 		else if (op->idx.inc_dec >= -2 && (op->idx.inc_dec <= 2)) {
-			prePostfix = (char *)s_inc_dec[op->idx.inc_dec+2];
+			prePostfix = (char *)s_inc_dec[op->idx.inc_dec + 2];
 		}
+
 		SStream_concat(O, prePostfix);
 	}
 }
 
 static void printOperand(MCInst *MI, SStream *O, m680x_info *info,
-			cs_m680x_op *op)
+	cs_m680x_op *op)
 {
 	switch (op->type) {
 	case M680X_OP_REGISTER:
@@ -176,8 +182,9 @@ static void printOperand(MCInst *MI, SStream *O, m680x_info *info,
 				SStream_concat(O, "$%04X", op->idx.offset_addr);
 			else
 				SStream_concat(O, "%d", op->idx.offset);
-		} else if (op->idx.inc_dec != 0 &&
-		   info->cpu_type == M680X_CPU_TYPE_CPU12)
+		}
+		else if (op->idx.inc_dec != 0 &&
+			info->cpu_type == M680X_CPU_TYPE_CPU12)
 			SStream_concat(O, "%d", abs(op->idx.inc_dec));
 
 		if (!(op->idx.flags & M680X_IDX_NO_COMMA))
@@ -187,7 +194,8 @@ static void printOperand(MCInst *MI, SStream *O, m680x_info *info,
 
 		printRegName(MI->csh, O, op->idx.base_reg);
 
-		if (op->idx.base_reg == M680X_REG_PC && (op->idx.offset_bits>0))
+		if (op->idx.base_reg == M680X_REG_PC &&
+			(op->idx.offset_bits > 0))
 			SStream_concat(O, "R");
 
 		printIncDec(true, O, info, op);
@@ -273,6 +281,7 @@ void M680X_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 
 	if ((m680x->flags & M680X_FIRST_OP_IN_MNEM) != 0)
 		suppress_operands++;
+
 	if ((m680x->flags & M680X_SECOND_OP_IN_MNEM) != 0)
 		suppress_operands++;
 
