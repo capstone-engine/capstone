@@ -149,8 +149,9 @@ typedef struct insn_props {
 
 //////////////////////////////////////////////////////////////////////////////
 
-// M680X instuctions have 1 up to 5 bytes. A reader is needed to read
-// a byte or word from a given memory address. See also X86 reader(...)
+// M680X instuctions have 1 up to 8 bytes (CPU12: MOVW IDX2,IDX2).
+// A reader is needed to read a byte or word from a given memory address.
+// See also X86 reader(...)
 static bool read_byte(const m680x_info *info, uint8_t *byte, uint16_t address)
 {
 	if (address - info->offset >= info->size)
