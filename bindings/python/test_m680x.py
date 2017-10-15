@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
+# Capstone Python bindings, by Wolfgang Schwotzer <wolfgang.schwotzer@gmx.net>
 
 from __future__ import print_function
 import sys

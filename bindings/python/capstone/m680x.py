@@ -1,4 +1,4 @@
-# Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
+# Capstone Python bindings, by Wolfgang Schwotzer <wolfgang.schwotzer@gmx.net>
 
 import ctypes
 from . import copy_ctypes_list
