@@ -18,9 +18,9 @@ matrix:
   include:
     - if: branch = master
       os: osx
-      script: brew install --HEAD capstone && brew test capstone
+      script: brew update && brew install --HEAD capstone && brew test capstone
       compiler: gcc
     - if: branch = master
       os: osx
-      script: brew install --HEAD capstone && brew test capstone
+      script: brew update && brew install --HEAD capstone && brew test capstone
       compiler: clang
