@@ -95,13 +95,7 @@ LIBNAME = capstone
 
 
 DEP_ARM =
-DEP_ARM += arch/ARM/ARMGenAsmWriter.inc
-DEP_ARM += arch/ARM/ARMGenDisassemblerTables.inc
-DEP_ARM += arch/ARM/ARMGenInstrInfo.inc
-DEP_ARM += arch/ARM/ARMGenRegisterInfo.inc
-DEP_ARM += arch/ARM/ARMGenSubtargetInfo.inc
-DEP_ARM += arch/ARM/ARMMappingInsn.inc
-DEP_ARM += arch/ARM/ARMMappingInsnOp.inc
+DEP_ARM += $(wildcard arch/ARM/ARM*.inc)
 
 LIBOBJ_ARM =
 ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))
@@ -113,13 +107,7 @@ ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))
 endif
 
 DEP_ARM64 =
-DEP_ARM64 += arch/AArch64/AArch64GenAsmWriter.inc
-DEP_ARM64 += arch/AArch64/AArch64GenInstrInfo.inc
-DEP_ARM64 += arch/AArch64/AArch64GenSubtargetInfo.inc
-DEP_ARM64 += arch/AArch64/AArch64GenDisassemblerTables.inc
-DEP_ARM64 += arch/AArch64/AArch64GenRegisterInfo.inc
-DEP_ARM64 += arch/AArch64/AArch64MappingInsn.inc
-DEP_ARM64 += arch/AArch64/AArch64MappingInsnOp.inc
+DEP_ARM64 += $(wildcard arch/AArch64/AArch64*.inc)
 
 LIBOBJ_ARM64 =
 ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
@@ -133,8 +121,7 @@ endif
 
 
 DEP_M68K =
-DEP_M68K += arch/M68K/M68KDisassembler.h
-DEP_M68K += arch/M68K/M68KInstPrinter.h
+DEP_M68K += $(wildcard arch/M68K/M68K*.h)
 
 LIBOBJ_M68K =
 ifneq (,$(findstring m68k,$(CAPSTONE_ARCHS)))
@@ -145,12 +132,7 @@ ifneq (,$(findstring m68k,$(CAPSTONE_ARCHS)))
 endif
 
 DEP_MIPS =
-DEP_MIPS += arch/Mips/MipsGenAsmWriter.inc
-DEP_MIPS += arch/Mips/MipsGenDisassemblerTables.inc
-DEP_MIPS += arch/Mips/MipsGenInstrInfo.inc
-DEP_MIPS += arch/Mips/MipsGenRegisterInfo.inc
-DEP_MIPS += arch/Mips/MipsGenSubtargetInfo.inc
-DEP_MIPS += arch/Mips/MipsMappingInsn.inc
+DEP_MIPS += $(wildcard arch/Mips/Mips*.inc)
 
 LIBOBJ_MIPS =
 ifneq (,$(findstring mips,$(CAPSTONE_ARCHS)))
@@ -163,12 +145,7 @@ endif
 
 
 DEP_PPC =
-DEP_PPC += arch/PowerPC/PPCGenAsmWriter.inc
-DEP_PPC += arch/PowerPC/PPCGenInstrInfo.inc
-DEP_PPC += arch/PowerPC/PPCGenSubtargetInfo.inc
-DEP_PPC += arch/PowerPC/PPCGenDisassemblerTables.inc
-DEP_PPC += arch/PowerPC/PPCGenRegisterInfo.inc
-DEP_PPC += arch/PowerPC/PPCMappingInsn.inc
+DEP_PPC += $(wildcard arch/PowerPC/PPC*.inc)
 
 LIBOBJ_PPC =
 ifneq (,$(findstring powerpc,$(CAPSTONE_ARCHS)))
@@ -181,12 +158,7 @@ endif
 
 
 DEP_SPARC =
-DEP_SPARC += arch/Sparc/SparcGenAsmWriter.inc
-DEP_SPARC += arch/Sparc/SparcGenInstrInfo.inc
-DEP_SPARC += arch/Sparc/SparcGenSubtargetInfo.inc
-DEP_SPARC += arch/Sparc/SparcGenDisassemblerTables.inc
-DEP_SPARC += arch/Sparc/SparcGenRegisterInfo.inc
-DEP_SPARC += arch/Sparc/SparcMappingInsn.inc
+DEP_SPARC += $(wildcard arch/Sparc/Sparc*.inc)
 
 LIBOBJ_SPARC =
 ifneq (,$(findstring sparc,$(CAPSTONE_ARCHS)))
@@ -199,12 +171,7 @@ endif
 
 
 DEP_SYSZ =
-DEP_SYSZ += arch/SystemZ/SystemZGenAsmWriter.inc
-DEP_SYSZ += arch/SystemZ/SystemZGenInstrInfo.inc
-DEP_SYSZ += arch/SystemZ/SystemZGenSubtargetInfo.inc
-DEP_SYSZ += arch/SystemZ/SystemZGenDisassemblerTables.inc
-DEP_SYSZ += arch/SystemZ/SystemZGenRegisterInfo.inc
-DEP_SYSZ += arch/SystemZ/SystemZMappingInsn.inc
+DEP_SYSZ += $(wildcard arch/SystemZ/SystemZ*.inc)
 
 LIBOBJ_SYSZ =
 ifneq (,$(findstring systemz,$(CAPSTONE_ARCHS)))
@@ -252,11 +219,7 @@ endif
 
 
 DEP_XCORE =
-DEP_XCORE += arch/XCore/XCoreGenAsmWriter.inc
-DEP_XCORE += arch/XCore/XCoreGenInstrInfo.inc
-DEP_XCORE += arch/XCore/XCoreGenDisassemblerTables.inc
-DEP_XCORE += arch/XCore/XCoreGenRegisterInfo.inc
-DEP_XCORE += arch/XCore/XCoreMappingInsn.inc
+DEP_XCORE += $(wildcard arch/XCore/XCore*.inc)
 
 LIBOBJ_XCORE =
 ifneq (,$(findstring xcore,$(CAPSTONE_ARCHS)))
@@ -269,10 +232,7 @@ endif
 
 
 DEP_TMS320C64X =
-DEP_TMS320C64X += arch/TMS320C64x/TMS320C64xGenAsmWriter.inc
-DEP_TMS320C64X += arch/TMS320C64x/TMS320C64xGenInstrInfo.inc
-DEP_TMS320C64X += arch/TMS320C64x/TMS320C64xGenDisassemblerTables.inc
-DEP_TMS320C64X += arch/TMS320C64x/TMS320C64xGenRegisterInfo.inc
+DEP_TMS320C64X += $(wildcard arch/TMS320C64x/TMS320C64x*.inc)
 
 LIBOBJ_TMS320C64X =
 ifneq (,$(findstring tms320c64x,$(CAPSTONE_ARCHS)))
