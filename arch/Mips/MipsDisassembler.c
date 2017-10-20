@@ -398,7 +398,7 @@ bool Mips_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *i
 	DecodeStatus status = MipsDisassembler_getInstruction(handle->mode, instr,
 			code, code_len,
 			size,
-			address, handle->big_endian, (MCRegisterInfo *)info);
+			address, MODE_IS_BIG_ENDIAN(handle->mode), (MCRegisterInfo *)info);
 
 	return status == MCDisassembler_Success;
 }
@@ -450,9 +450,8 @@ bool Mips64_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst 
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 
 	DecodeStatus status = Mips64Disassembler_getInstruction(handle->mode, instr,
-			code, code_len,
-			size,
-			address, handle->big_endian, (MCRegisterInfo *)info);
+			code, code_len, size, address,
+			MODE_IS_BIG_ENDIAN(handle->mode), (MCRegisterInfo *)info);
 
 	return status == MCDisassembler_Success;
 }
