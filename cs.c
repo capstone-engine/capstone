@@ -54,6 +54,7 @@
 cs_err (*arch_init[MAX_ARCH])(cs_struct *) = { NULL };
 cs_err (*arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = { NULL };
 void (*arch_destroy[MAX_ARCH]) (cs_struct *) = { NULL };
+cs_mode arch_disallowed_mode_mask[MAX_ARCH] = { 0 };
 
 extern void ARM_enable(void);
 extern void AArch64_enable(void);
@@ -244,6 +245,12 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 	archs_enable();
 
 	if (arch < CS_ARCH_MAX && arch_init[arch]) {
+		// verify if requested mode is valid
+		if (mode & arch_disallowed_mode_mask[arch]) {
+			*handle = 0;
+			return CS_ERR_MODE;
+		}
+
 		ud = cs_mem_calloc(1, sizeof(*ud));
 		if (!ud) {
 			// memory insufficient
@@ -253,7 +260,6 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		ud->errnum = CS_ERR_OK;
 		ud->arch = arch;
 		ud->mode = mode;
-		ud->big_endian = (mode & CS_MODE_BIG_ENDIAN) != 0;
 		// by default, do not break instruction into details
 		ud->detail = CS_OPT_OFF;
 
@@ -429,6 +435,12 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, size_t value)
 			if (value)
 				handle->skipdata_setup = *((cs_opt_skipdata *)value);
 			return CS_ERR_OK;
+		case CS_OPT_MODE:
+			// verify if requested mode is valid
+			if (value & arch_disallowed_mode_mask[handle->arch]) {
+				return CS_ERR_OPTION;
+			}
+			break;
 	}
 
 	return arch_option[handle->arch](handle, type, value);

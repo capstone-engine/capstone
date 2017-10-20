@@ -238,7 +238,7 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 			MI->flat_insn->detail->arm64.operands[i].vector_index = -1;
 	}
 
-	if (ud->big_endian)
+	if (MODE_IS_BIG_ENDIAN(ud->mode))
 		insn = (code[3] << 0) | (code[2] << 8) |
 			(code[1] <<  16) | (code[0] <<  24);
 	else
