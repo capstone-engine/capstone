@@ -57,6 +57,7 @@ void (*arch_destroy[MAX_ARCH]) (cs_struct *) = { NULL };
 
 extern void ARM_enable(void);
 extern void AArch64_enable(void);
+extern void M680X_enable(void);
 extern void M68K_enable(void);
 extern void Mips_enable(void);
 extern void X86_enable(void);
@@ -78,6 +79,9 @@ static void archs_enable(void)
 #endif
 #ifdef CAPSTONE_HAS_ARM64
 	AArch64_enable();
+#endif
+#ifdef CAPSTONE_HAS_M680X
+	M680X_enable();
 #endif
 #ifdef CAPSTONE_HAS_M68K
 	M68K_enable();
@@ -182,7 +186,8 @@ bool CAPSTONE_API cs_support(int query)
 				(1 << CS_ARCH_MIPS) | (1 << CS_ARCH_X86) |
 				(1 << CS_ARCH_PPC) | (1 << CS_ARCH_SPARC) |
 				(1 << CS_ARCH_SYSZ) | (1 << CS_ARCH_XCORE) |
-				(1 << CS_ARCH_M68K) | (1 << CS_ARCH_TMS320C64X));
+				(1 << CS_ARCH_M68K) | (1 << CS_ARCH_TMS320C64X) |
+				(1 << CS_ARCH_M680X));
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
@@ -439,6 +444,9 @@ static uint8_t skipdata_size(cs_struct *handle)
 		case CS_ARCH_TMS320C64X:
 			// TMS320C64x alignment is 4.
 			return 4;
+		case CS_ARCH_M680X:
+			// M680X alignment is 1.
+			return 1;
 	}
 }
 
@@ -1140,6 +1148,11 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 				if (insn->detail->tms320c64x.operands[i].type == (tms320c64x_op_type)op_type)
 					count++;
 			break;
+		case CS_ARCH_M680X:
+			for (i = 0; i < insn->detail->m680x.op_count; i++)
+				if (insn->detail->m680x.operands[i].type == (m680x_op_type)op_type)
+					count++;
+			break;
 	}
 
 	return count;
@@ -1252,6 +1265,14 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 		case CS_ARCH_TMS320C64X:
 			for (i = 0; i < insn->detail->tms320c64x.op_count; i++) {
 				if (insn->detail->tms320c64x.operands[i].type == (tms320c64x_op_type)op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+			break;
+		case CS_ARCH_M680X:
+			for (i = 0; i < insn->detail->m680x.op_count; i++) {
+				if (insn->detail->m680x.operands[i].type == (m680x_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
