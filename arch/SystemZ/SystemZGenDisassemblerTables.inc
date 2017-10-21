@@ -24,7 +24,7 @@ static InsnType fname(InsnType insn, unsigned startBit, unsigned numBits) \
   return (insn & fieldMask) >> startBit; \
 }
 
-static uint8_t DecoderTable16[] = {
+static const uint8_t DecoderTable16[] = {
 /* 0 */       MCD_OPC_ExtractField, 8, 8,  // Inst{15-8} ...
 /* 3 */       MCD_OPC_FilterValue, 7, 127, 0, // Skip to: 134
 /* 7 */       MCD_OPC_ExtractField, 4, 4,  // Inst{7-4} ...
@@ -97,7 +97,7 @@ static uint8_t DecoderTable16[] = {
   0
 };
 
-static uint8_t DecoderTable32[] = {
+static const uint8_t DecoderTable32[] = {
 /* 0 */       MCD_OPC_ExtractField, 24, 8,  // Inst{31-24} ...
 /* 3 */       MCD_OPC_FilterValue, 64, 4, 0, // Skip to: 11
 /* 7 */       MCD_OPC_Decode, 216, 6, 7, // Opcode: STH
@@ -833,7 +833,7 @@ static uint8_t DecoderTable32[] = {
   0
 };
 
-static uint8_t DecoderTable48[] = {
+static const uint8_t DecoderTable48[] = {
 /* 0 */       MCD_OPC_ExtractField, 40, 8,  // Inst{47-40} ...
 /* 3 */       MCD_OPC_FilterValue, 192, 1, 238, 0, // Skip to: 246
 /* 8 */       MCD_OPC_ExtractField, 32, 4,  // Inst{35-32} ...
@@ -1697,7 +1697,7 @@ static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
 
 #define DecodeToMCInst(fname,fieldname, InsnType) \
 static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *MI, \
-                uint64_t Address, void *Decoder) \
+                uint64_t Address, const void *Decoder) \
 { \
   InsnType tmp; \
   switch (Idx) { \
@@ -2936,11 +2936,11 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
 } 
 
 #define DecodeInstruction(fname, fieldname, decoder, InsnType) \
-static DecodeStatus fname(uint8_t DecodeTable[], MCInst *MI, \
-           InsnType insn, uint64_t Address, MCRegisterInfo *MRI, int feature) \
+static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
+           InsnType insn, uint64_t Address, const MCRegisterInfo *MRI, int feature) \
 { \
   uint64_t Bits = getFeatureBits(feature); \
-  uint8_t *Ptr = DecodeTable; \
+  const uint8_t *Ptr = DecodeTable; \
   uint32_t CurFieldValue = 0, ExpectedValue; \
   DecodeStatus S = MCDisassembler_Success; \
   unsigned Start, Len, NumToSkip, PIdx, Opc, DecodeIdx; \
