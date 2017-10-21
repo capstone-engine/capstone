@@ -24,7 +24,7 @@ static InsnType fname(InsnType insn, unsigned startBit, unsigned numBits) \
   return (insn & fieldMask) >> startBit; \
 }
 
-static uint8_t DecoderTable16[] = {
+static const uint8_t DecoderTable16[] = {
 /* 0 */       MCD_OPC_ExtractField, 11, 5,  // Inst{15-11} ...
 /* 3 */       MCD_OPC_FilterValue, 0, 108, 0, // Skip to: 115
 /* 7 */       MCD_OPC_ExtractField, 0, 11,  // Inst{10-0} ...
@@ -355,7 +355,7 @@ static uint8_t DecoderTable16[] = {
   0
 };
 
-static uint8_t DecoderTable32[] = {
+static const uint8_t DecoderTable32[] = {
 /* 0 */       MCD_OPC_ExtractField, 27, 5,  // Inst{31-27} ...
 /* 3 */       MCD_OPC_FilterValue, 0, 89, 0, // Skip to: 96
 /* 7 */       MCD_OPC_ExtractField, 11, 5,  // Inst{15-11} ...
@@ -606,7 +606,7 @@ static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
 
 #define DecodeToMCInst(fname,fieldname, InsnType) \
 static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *MI, \
-                uint64_t Address, void *Decoder) \
+                uint64_t Address, const void *Decoder) \
 { \
   InsnType tmp; \
   switch (Idx) { \
@@ -766,11 +766,11 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
 } 
 
 #define DecodeInstruction(fname, fieldname, decoder, InsnType) \
-static DecodeStatus fname(uint8_t DecodeTable[], MCInst *MI, \
-           InsnType insn, uint64_t Address, MCRegisterInfo *MRI, int feature) \
+static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
+           InsnType insn, uint64_t Address, const MCRegisterInfo *MRI, int feature) \
 { \
   uint64_t Bits = getFeatureBits(feature); \
-  uint8_t *Ptr = DecodeTable; \
+  const uint8_t *Ptr = DecodeTable; \
   uint32_t CurFieldValue = 0, ExpectedValue; \
   DecodeStatus S = MCDisassembler_Success; \
   unsigned Start, Len, NumToSkip, PIdx, Opc, DecodeIdx; \
