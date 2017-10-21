@@ -82,8 +82,8 @@ typedef enum Mips_CondCode {
 #define GET_INSTRINFO_ENUM
 #include "MipsGenInstrInfo.inc"
 
-static char *getRegisterName(unsigned RegNo);
-static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
+static const char *getRegisterName(unsigned RegNo);
+static void printInstruction(MCInst *MI, SStream *O, const MCRegisterInfo *MRI);
 
 static void set_mem_access(MCInst *MI, bool status)
 {

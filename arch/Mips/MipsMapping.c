@@ -14,7 +14,7 @@
 #include "MipsGenInstrInfo.inc"
 
 #ifndef CAPSTONE_DIET
-static name_map reg_name_maps[] = {
+static const name_map reg_name_maps[] = {
 	{ MIPS_REG_INVALID, NULL },
 
 	//{ MIPS_REG_0, "0"},
@@ -208,7 +208,7 @@ const char *Mips_reg_name(csh handle, unsigned int reg)
 #endif
 }
 
-static insn_map insns[] = {
+static const insn_map insns[] = {
 	// dummy item
 	{
 		0, 0,
@@ -9243,7 +9243,7 @@ void Mips_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 	}
 }
 
-static name_map insn_name_maps[] = {
+static const name_map insn_name_maps[] = {
 	{ MIPS_INS_INVALID, NULL },
 
 	{ MIPS_INS_ABSQ_S, "absq_s" },
@@ -9849,7 +9849,7 @@ const char *Mips_insn_name(csh handle, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map group_name_maps[] = {
+static const name_map group_name_maps[] = {
 	// generic groups
 	{ MIPS_GRP_INVALID, NULL },
 	{ MIPS_GRP_JUMP, "jump" },
@@ -9931,7 +9931,7 @@ mips_reg Mips_map_register(unsigned int r)
 	// for some reasons different Mips modes can map different register number to
 	// the same Mips register. this function handles the issue for exposing Mips
 	// operands by mapping internal registers to 'public' register.
-	unsigned int map[] = { 0,
+	static const unsigned int map[] = { 0,
 		MIPS_REG_AT, MIPS_REG_DSPCCOND, MIPS_REG_DSPCARRY, MIPS_REG_DSPEFI, MIPS_REG_DSPOUTFLAG,
 		MIPS_REG_DSPPOS, MIPS_REG_DSPSCOUNT, MIPS_REG_FP, MIPS_REG_GP, MIPS_REG_2,
 		MIPS_REG_1, MIPS_REG_0, MIPS_REG_6, MIPS_REG_4, MIPS_REG_5,
