@@ -144,28 +144,28 @@ typedef struct A64NamedImmMapper_Mapping {
 } A64NamedImmMapper_Mapping;
 
 typedef struct A64NamedImmMapper {
-	A64NamedImmMapper_Mapping *Pairs;
+	const A64NamedImmMapper_Mapping *Pairs;
 	size_t NumPairs;
 	uint32_t TooBigImm;
 } A64NamedImmMapper;
 
 typedef struct A64SysRegMapper {
-	A64NamedImmMapper_Mapping *SysRegPairs;
-	A64NamedImmMapper_Mapping *InstPairs;
+	const A64NamedImmMapper_Mapping *SysRegPairs;
+	const A64NamedImmMapper_Mapping *InstPairs;
 	size_t NumInstPairs;
 } A64SysRegMapper;
 
-extern A64SysRegMapper AArch64_MSRMapper;
-extern A64SysRegMapper AArch64_MRSMapper;
+extern const A64SysRegMapper AArch64_MSRMapper;
+extern const A64SysRegMapper AArch64_MRSMapper;
 
-extern A64NamedImmMapper A64DB_DBarrierMapper;
-extern A64NamedImmMapper A64AT_ATMapper;
-extern A64NamedImmMapper A64DC_DCMapper;
-extern A64NamedImmMapper A64IC_ICMapper;
-extern A64NamedImmMapper A64ISB_ISBMapper;
-extern A64NamedImmMapper A64PRFM_PRFMMapper;
-extern A64NamedImmMapper A64PState_PStateMapper;
-extern A64NamedImmMapper A64TLBI_TLBIMapper;
+extern const A64NamedImmMapper A64DB_DBarrierMapper;
+extern const A64NamedImmMapper A64AT_ATMapper;
+extern const A64NamedImmMapper A64DC_DCMapper;
+extern const A64NamedImmMapper A64IC_ICMapper;
+extern const A64NamedImmMapper A64ISB_ISBMapper;
+extern const A64NamedImmMapper A64PRFM_PRFMMapper;
+extern const A64NamedImmMapper A64PState_PStateMapper;
+extern const A64NamedImmMapper A64TLBI_TLBIMapper;
 
 enum {
 	A64AT_Invalid = -1,    // Op0 Op1  CRn   CRm   Op2
@@ -1002,12 +1002,12 @@ enum A64TLBIValues {
 
 bool A64Imms_isLogicalImmBits(unsigned RegWidth, uint32_t Bits, uint64_t *Imm);
 
-const char *A64NamedImmMapper_toString(A64NamedImmMapper *N, uint32_t Value, bool *Valid);
+const char *A64NamedImmMapper_toString(const A64NamedImmMapper *N, uint32_t Value, bool *Valid);
 
-uint32_t A64NamedImmMapper_fromString(A64NamedImmMapper *N, char *Name, bool *Valid);
+uint32_t A64NamedImmMapper_fromString(const A64NamedImmMapper *N, char *Name, bool *Valid);
 
-bool A64NamedImmMapper_validImm(A64NamedImmMapper *N, uint32_t Value);
+bool A64NamedImmMapper_validImm(const A64NamedImmMapper *N, uint32_t Value);
 
-void A64SysRegMapper_toString(A64SysRegMapper *S, uint32_t Bits, bool *Valid, char *result);
+void A64SysRegMapper_toString(const A64SysRegMapper *S, uint32_t Bits, bool *Valid, char *result);
 
 #endif

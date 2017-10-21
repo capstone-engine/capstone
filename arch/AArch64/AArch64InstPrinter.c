@@ -38,7 +38,7 @@
 #include "AArch64GenInstrInfo.inc"
 
 
-static char *getRegisterName(unsigned RegNo, int AltIdx);
+static const char *getRegisterName(unsigned RegNo, int AltIdx);
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 static bool printSysAlias(MCInst *MI, SStream *O);
 static char *printAliasInstr(MCInst *MI, SStream *OS, void *info);
