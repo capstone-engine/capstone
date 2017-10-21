@@ -56,7 +56,7 @@ static bool readInstruction32(const uint8_t *code, size_t code_len, uint32_t *in
 
 static unsigned getReg(MCRegisterInfo *MRI, unsigned RC, unsigned RegNo)
 {
-	MCRegisterClass *rc = MCRegisterInfo_getRegClass(MRI, RC);
+	const MCRegisterClass *rc = MCRegisterInfo_getRegClass(MRI, RC);
 	return rc->RegsBegin[RegNo];
 }
 

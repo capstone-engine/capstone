@@ -1126,7 +1126,7 @@ static void printVectorList(MCInst *MI, unsigned OpNum, SStream *O, char *Layout
 	// If it's a D-reg, we need to promote it to the equivalent Q-reg before
 	// printing (otherwise getRegisterName fails).
 	if (GETREGCLASS_CONTAIN0(AArch64_FPR64RegClassID, Reg)) {
-		MCRegisterClass *FPR128RC = MCRegisterInfo_getRegClass(MRI, AArch64_FPR128RegClassID);
+		const MCRegisterClass *FPR128RC = MCRegisterInfo_getRegClass(MRI, AArch64_FPR128RegClassID);
 		Reg = MCRegisterInfo_getMatchingSuperReg(MRI, Reg, AArch64_dsub, FPR128RC);
 	}
 

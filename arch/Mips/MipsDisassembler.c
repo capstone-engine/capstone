@@ -460,7 +460,7 @@ static unsigned getReg(MCRegisterInfo *MRI, unsigned RC, unsigned RegNo)
 {
 	//MipsDisassemblerBase *Dis = static_cast<const MipsDisassemblerBase*>(D);
 	//return *(Dis->getRegInfo()->getRegClass(RC).begin() + RegNo);
-	MCRegisterClass *rc = MCRegisterInfo_getRegClass(MRI, RC);
+	const MCRegisterClass *rc = MCRegisterInfo_getRegClass(MRI, RC);
 	return rc->RegsBegin[RegNo];
 }
 
