@@ -11,7 +11,7 @@ Created by Nguyen Anh Quynh, then developed and maintained by a small community,
 Capstone offers some unparalleled features:
 
 - Support multiple hardware architectures: ARM, ARM64 (ARMv8), M68K, Mips, PPC,
-  Sparc, SystemZ, TMS320C64X, XCore and X86 (including X86_64).
+  Sparc, SystemZ, TMS320C64X, M680X, XCore and X86 (including X86_64).
 
 - Having clean/simple/lightweight/intuitive architecture-neutral API.
 

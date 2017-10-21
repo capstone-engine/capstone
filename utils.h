@@ -52,6 +52,7 @@ unsigned int count_positive(uint16_t *list);
 unsigned int count_positive8(unsigned char *list);
 
 #define ARR_SIZE(a) (sizeof(a)/sizeof(a[0]))
+#define MATRIX_SIZE(a) (sizeof(a[0])/sizeof(a[0][0]))
 
 char *cs_strdup(const char *str);
 

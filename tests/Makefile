@@ -105,6 +105,10 @@ ifneq (,$(findstring tms320c64x,$(CAPSTONE_ARCHS)))
 CFLAGS += -DCAPSTONE_HAS_TMS320C64X
 SOURCES += test_tms320c64x.c
 endif
+ifneq (,$(findstring m680x,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_M680X
+SOURCES += test_m680x.c
+endif
 
 OBJS = $(addprefix $(OBJDIR)/,$(SOURCES:.c=.o))
 BINARY = $(addprefix $(TESTDIR)/,$(SOURCES:.c=$(BIN_EXT)))

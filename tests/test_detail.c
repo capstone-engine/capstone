@@ -83,6 +83,10 @@ static void test()
 #ifdef CAPSTONE_HAS_M68K
 #define M68K_CODE "\xd4\x40\x87\x5a\x4e\x71\x02\xb4\xc0\xde\xc0\xde\x5c\x00\x1d\x80\x71\x12\x01\x23\xf2\x3c\x44\x22\x40\x49\x0e\x56\x54\xc5\xf2\x3c\x44\x00\x44\x7a\x00\x00\xf2\x00\x0a\x28"
 #endif
+#ifdef CAPSTONE_HAS_M680X
+#define M680X_CODE "\x06\x10\x19\x1a\x55\x1e\x01\x23\xe9\x31\x06\x34\x55\xa6\x81\xa7\x89\x7f\xff\xa6\x9d\x10\x00\xa7\x91\xa6\x9f\x10\x00\x11\xac\x99\x10\x00\x39"
+#endif
+
 
 	struct platform platforms[] = {
 #ifdef CAPSTONE_HAS_X86
@@ -257,6 +261,15 @@ static void test()
 			(unsigned char*)M68K_CODE,
 			sizeof(M68K_CODE) - 1,
 			"M68K",
+		},
+#endif
+#ifdef CAPSTONE_HAS_M680X
+		{
+			CS_ARCH_M680X,
+			(cs_mode)(CS_MODE_M680X_6809),
+			(unsigned char*)M680X_CODE,
+			sizeof(M680X_CODE) - 1,
+			"M680X_M6809",
 		},
 #endif
 	};
