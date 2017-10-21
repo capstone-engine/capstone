@@ -28,7 +28,7 @@ static InsnType fname(InsnType insn, unsigned startBit, \
 // FieldFromInstruction(fieldFromInstruction_2, uint16_t)
 FieldFromInstruction(fieldFromInstruction_4, uint32_t)
 
-static uint8_t DecoderTable32[] = {
+static const uint8_t DecoderTable32[] = {
 /* 0 */       MCD_OPC_ExtractField, 26, 6,  // Inst{31-26} ...
 /* 3 */       MCD_OPC_FilterValue, 2, 4, 0, // Skip to: 11
 /* 7 */       MCD_OPC_Decode, 161, 7, 0, // Opcode: TDI
