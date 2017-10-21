@@ -100,10 +100,8 @@ DEP_ARM += $(wildcard arch/ARM/ARM*.inc)
 LIBOBJ_ARM =
 ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_ARM
-	LIBOBJ_ARM += $(OBJDIR)/arch/ARM/ARMDisassembler.o
-	LIBOBJ_ARM += $(OBJDIR)/arch/ARM/ARMInstPrinter.o
-	LIBOBJ_ARM += $(OBJDIR)/arch/ARM/ARMMapping.o
-	LIBOBJ_ARM += $(OBJDIR)/arch/ARM/ARMModule.o
+	LIBSRC_ARM += $(wildcard arch/ARM/ARM*.c)
+	LIBOBJ_ARM += $(LIBSRC_ARM:%.c=$(OBJDIR)/%.o)
 endif
 
 DEP_ARM64 =
@@ -112,11 +110,8 @@ DEP_ARM64 += $(wildcard arch/AArch64/AArch64*.inc)
 LIBOBJ_ARM64 =
 ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_ARM64
-	LIBOBJ_ARM64 += $(OBJDIR)/arch/AArch64/AArch64BaseInfo.o
-	LIBOBJ_ARM64 += $(OBJDIR)/arch/AArch64/AArch64Disassembler.o
-	LIBOBJ_ARM64 += $(OBJDIR)/arch/AArch64/AArch64InstPrinter.o
-	LIBOBJ_ARM64 += $(OBJDIR)/arch/AArch64/AArch64Mapping.o
-	LIBOBJ_ARM64 += $(OBJDIR)/arch/AArch64/AArch64Module.o
+	LIBSRC_ARM64 += $(wildcard arch/AArch64/AArch64*.c)
+	LIBOBJ_ARM64 += $(LIBSRC_ARM64:%.c=$(OBJDIR)/%.o)
 endif
 
 
@@ -126,9 +121,8 @@ DEP_M68K += $(wildcard arch/M68K/M68K*.h)
 LIBOBJ_M68K =
 ifneq (,$(findstring m68k,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_M68K
-	LIBOBJ_M68K += $(OBJDIR)/arch/M68K/M68KInstPrinter.o
-	LIBOBJ_M68K += $(OBJDIR)/arch/M68K/M68KDisassembler.o
-	LIBOBJ_M68K += $(OBJDIR)/arch/M68K/M68KModule.o
+	LIBSRC_M68K += $(wildcard arch/M68K/M68K*.c)
+	LIBOBJ_M68K += $(LIBSRC_M68K:%.c=$(OBJDIR)/%.o)
 endif
 
 DEP_MIPS =
@@ -137,10 +131,8 @@ DEP_MIPS += $(wildcard arch/Mips/Mips*.inc)
 LIBOBJ_MIPS =
 ifneq (,$(findstring mips,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_MIPS
-	LIBOBJ_MIPS += $(OBJDIR)/arch/Mips/MipsDisassembler.o
-	LIBOBJ_MIPS += $(OBJDIR)/arch/Mips/MipsInstPrinter.o
-	LIBOBJ_MIPS += $(OBJDIR)/arch/Mips/MipsMapping.o
-	LIBOBJ_MIPS += $(OBJDIR)/arch/Mips/MipsModule.o
+	LIBSRC_MIPS += $(wildcard arch/Mips/Mips*.c)
+	LIBOBJ_MIPS += $(LIBSRC_MIPS:%.c=$(OBJDIR)/%.o)
 endif
 
 
@@ -150,10 +142,8 @@ DEP_PPC += $(wildcard arch/PowerPC/PPC*.inc)
 LIBOBJ_PPC =
 ifneq (,$(findstring powerpc,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_POWERPC
-	LIBOBJ_PPC += $(OBJDIR)/arch/PowerPC/PPCDisassembler.o
-	LIBOBJ_PPC += $(OBJDIR)/arch/PowerPC/PPCInstPrinter.o
-	LIBOBJ_PPC += $(OBJDIR)/arch/PowerPC/PPCMapping.o
-	LIBOBJ_PPC += $(OBJDIR)/arch/PowerPC/PPCModule.o
+	LIBSRC_PPC += $(wildcard arch/PowerPC/PPC*.c)
+	LIBOBJ_PPC += $(LIBSRC_PPC:%.c=$(OBJDIR)/%.o)
 endif
 
 
@@ -163,10 +153,8 @@ DEP_SPARC += $(wildcard arch/Sparc/Sparc*.inc)
 LIBOBJ_SPARC =
 ifneq (,$(findstring sparc,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_SPARC
-	LIBOBJ_SPARC += $(OBJDIR)/arch/Sparc/SparcDisassembler.o
-	LIBOBJ_SPARC += $(OBJDIR)/arch/Sparc/SparcInstPrinter.o
-	LIBOBJ_SPARC += $(OBJDIR)/arch/Sparc/SparcMapping.o
-	LIBOBJ_SPARC += $(OBJDIR)/arch/Sparc/SparcModule.o
+	LIBSRC_SPARC += $(wildcard arch/Sparc/Sparc*.c)
+	LIBOBJ_SPARC += $(LIBSRC_SPARC:%.c=$(OBJDIR)/%.o)
 endif
 
 
@@ -176,11 +164,8 @@ DEP_SYSZ += $(wildcard arch/SystemZ/SystemZ*.inc)
 LIBOBJ_SYSZ =
 ifneq (,$(findstring systemz,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_SYSZ
-	LIBOBJ_SYSZ += $(OBJDIR)/arch/SystemZ/SystemZDisassembler.o
-	LIBOBJ_SYSZ += $(OBJDIR)/arch/SystemZ/SystemZInstPrinter.o
-	LIBOBJ_SYSZ += $(OBJDIR)/arch/SystemZ/SystemZMapping.o
-	LIBOBJ_SYSZ += $(OBJDIR)/arch/SystemZ/SystemZModule.o
-	LIBOBJ_SYSZ += $(OBJDIR)/arch/SystemZ/SystemZMCTargetDesc.o
+	LIBSRC_SYSZ += $(wildcard arch/SystemZ/SystemZ*.c)
+	LIBOBJ_SYSZ += $(LIBSRC_SYSZ:%.c=$(OBJDIR)/%.o)
 endif
 
 
@@ -224,10 +209,8 @@ DEP_XCORE += $(wildcard arch/XCore/XCore*.inc)
 LIBOBJ_XCORE =
 ifneq (,$(findstring xcore,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_XCORE
-	LIBOBJ_XCORE += $(OBJDIR)/arch/XCore/XCoreDisassembler.o
-	LIBOBJ_XCORE += $(OBJDIR)/arch/XCore/XCoreInstPrinter.o
-	LIBOBJ_XCORE += $(OBJDIR)/arch/XCore/XCoreMapping.o
-	LIBOBJ_XCORE += $(OBJDIR)/arch/XCore/XCoreModule.o
+	LIBSRC_XCORE += $(wildcard arch/XCore/XCore*.c)
+	LIBOBJ_XCORE += $(LIBSRC_XCORE:%.c=$(OBJDIR)/%.o)
 endif
 
 
@@ -237,10 +220,8 @@ DEP_TMS320C64X += $(wildcard arch/TMS320C64x/TMS320C64x*.inc)
 LIBOBJ_TMS320C64X =
 ifneq (,$(findstring tms320c64x,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_TMS320C64X
-	LIBOBJ_TMS320C64X += $(OBJDIR)/arch/TMS320C64x/TMS320C64xDisassembler.o
-	LIBOBJ_TMS320C64X += $(OBJDIR)/arch/TMS320C64x/TMS320C64xInstPrinter.o
-	LIBOBJ_TMS320C64X += $(OBJDIR)/arch/TMS320C64x/TMS320C64xMapping.o
-	LIBOBJ_TMS320C64X += $(OBJDIR)/arch/TMS320C64x/TMS320C64xModule.o
+	LIBSRC_TMS320C64X += $(wildcard arch/TMS320C64x/TMS320C64x*.c)
+	LIBOBJ_TMS320C64X += $(LIBSRC_TMS320C64X:%.c=$(OBJDIR)/%.o)
 endif
 
 DEP_M680X =
