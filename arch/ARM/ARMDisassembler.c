@@ -554,7 +554,7 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t
 // that as a post-pass.
 static void AddThumb1SBit(MCInst *MI, bool InITBlock)
 {
-	MCOperandInfo *OpInfo = ARMInsts[MCInst_getOpcode(MI)].OpInfo;
+	const MCOperandInfo *OpInfo = ARMInsts[MCInst_getOpcode(MI)].OpInfo;
 	unsigned short NumOps = ARMInsts[MCInst_getOpcode(MI)].NumOperands;
 	unsigned i;
 
@@ -578,7 +578,7 @@ static void AddThumb1SBit(MCInst *MI, bool InITBlock)
 static DecodeStatus AddThumbPredicate(cs_struct *ud, MCInst *MI)
 {
 	DecodeStatus S = MCDisassembler_Success;
-	MCOperandInfo *OpInfo;
+	const MCOperandInfo *OpInfo;
 	unsigned short NumOps;
 	unsigned int i;
 	unsigned CC;
@@ -658,7 +658,7 @@ static void UpdateThumbVFPPredicate(cs_struct *ud, MCInst *MI)
 {
 	unsigned CC;
 	unsigned short NumOps;
-	MCOperandInfo *OpInfo;
+	const MCOperandInfo *OpInfo;
 	unsigned i;
 
 	CC = ITStatus_getITCC(&(ud->ITBlock));

@@ -22,7 +22,7 @@ typedef const char *(*GetName_t)(csh handle, unsigned int id);
 typedef void (*GetID_t)(cs_struct *h, cs_insn *insn, unsigned int id);
 
 // return register name, given register ID
-typedef char *(*GetRegisterName_t)(unsigned RegNo);
+typedef const char *(*GetRegisterName_t)(unsigned RegNo);
 
 // for ARM only
 typedef struct ARM_ITStatus {

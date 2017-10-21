@@ -24,7 +24,7 @@ static InsnType fname(InsnType insn, unsigned startBit, unsigned numBits) \
   return (insn & fieldMask) >> startBit; \
 }
 
-static uint8_t DecoderTableARM32[] = {
+static const uint8_t DecoderTableARM32[] = {
 /* 0 */       MCD_OPC_ExtractField, 25, 3,  // Inst{27-25} ...
 /* 3 */       MCD_OPC_FilterValue, 0, 160, 11, // Skip to: 2983
 /* 7 */       MCD_OPC_ExtractField, 21, 1,  // Inst{21} ...
@@ -1870,7 +1870,7 @@ static uint8_t DecoderTableARM32[] = {
   0
 };
 
-static uint8_t DecoderTableNEONData32[] = {
+static const uint8_t DecoderTableNEONData32[] = {
 /* 0 */       MCD_OPC_ExtractField, 4, 1,  // Inst{4} ...
 /* 3 */       MCD_OPC_FilterValue, 0, 207, 30, // Skip to: 7894
 /* 7 */       MCD_OPC_ExtractField, 20, 2,  // Inst{21-20} ...
@@ -5413,7 +5413,7 @@ static uint8_t DecoderTableNEONData32[] = {
   0
 };
 
-static uint8_t DecoderTableNEONDup32[] = {
+static const uint8_t DecoderTableNEONDup32[] = {
 /* 0 */       MCD_OPC_ExtractField, 22, 6,  // Inst{27-22} ...
 /* 3 */       MCD_OPC_FilterValue, 56, 105, 0, // Skip to: 112
 /* 7 */       MCD_OPC_ExtractField, 0, 6,  // Inst{5-0} ...
@@ -5506,7 +5506,7 @@ static uint8_t DecoderTableNEONDup32[] = {
   0
 };
 
-static uint8_t DecoderTableNEONLoadStore32[] = {
+static const uint8_t DecoderTableNEONLoadStore32[] = {
 /* 0 */       MCD_OPC_ExtractField, 8, 4,  // Inst{11-8} ...
 /* 3 */       MCD_OPC_FilterValue, 0, 17, 1, // Skip to: 280
 /* 7 */       MCD_OPC_ExtractField, 20, 2,  // Inst{21-20} ...
@@ -6893,7 +6893,7 @@ static uint8_t DecoderTableNEONLoadStore32[] = {
   0
 };
 
-static uint8_t DecoderTableThumb16[] = {
+static const uint8_t DecoderTableThumb16[] = {
 /* 0 */       MCD_OPC_ExtractField, 12, 4,  // Inst{15-12} ...
 /* 3 */       MCD_OPC_FilterValue, 0, 15, 0, // Skip to: 22
 /* 7 */       MCD_OPC_CheckPredicate, 19, 210, 3, // Skip to: 989
@@ -7130,7 +7130,7 @@ static uint8_t DecoderTableThumb16[] = {
   0
 };
 
-static uint8_t DecoderTableThumb32[] = {
+static const uint8_t DecoderTableThumb32[] = {
 /* 0 */       MCD_OPC_ExtractField, 12, 1,  // Inst{12} ...
 /* 3 */       MCD_OPC_FilterValue, 0, 27, 0, // Skip to: 34
 /* 7 */       MCD_OPC_CheckPredicate, 26, 48, 0, // Skip to: 59
@@ -7147,7 +7147,7 @@ static uint8_t DecoderTableThumb32[] = {
   0
 };
 
-static uint8_t DecoderTableThumb216[] = {
+static const uint8_t DecoderTableThumb216[] = {
 /* 0 */       MCD_OPC_CheckPredicate, 22, 12, 0, // Skip to: 16
 /* 4 */       MCD_OPC_CheckField, 8, 8, 191, 1, 5, 0, // Skip to: 16
 /* 11 */      MCD_OPC_Decode, 163, 18, 230, 1, // Opcode: t2IT
@@ -7155,7 +7155,7 @@ static uint8_t DecoderTableThumb216[] = {
   0
 };
 
-static uint8_t DecoderTableThumb232[] = {
+static const uint8_t DecoderTableThumb232[] = {
 /* 0 */       MCD_OPC_ExtractField, 27, 5,  // Inst{31-27} ...
 /* 3 */       MCD_OPC_FilterValue, 29, 25, 8, // Skip to: 2080
 /* 7 */       MCD_OPC_ExtractField, 24, 3,  // Inst{26-24} ...
@@ -8727,7 +8727,7 @@ static uint8_t DecoderTableThumb232[] = {
   0
 };
 
-static uint8_t DecoderTableThumbSBit16[] = {
+static const uint8_t DecoderTableThumbSBit16[] = {
 /* 0 */       MCD_OPC_ExtractField, 11, 5,  // Inst{15-11} ...
 /* 3 */       MCD_OPC_FilterValue, 0, 9, 0, // Skip to: 16
 /* 7 */       MCD_OPC_CheckPredicate, 19, 49, 1, // Skip to: 316
@@ -8806,7 +8806,7 @@ static uint8_t DecoderTableThumbSBit16[] = {
   0
 };
 
-static uint8_t DecoderTableVFP32[] = {
+static const uint8_t DecoderTableVFP32[] = {
 /* 0 */       MCD_OPC_ExtractField, 20, 2,  // Inst{21-20} ...
 /* 3 */       MCD_OPC_FilterValue, 0, 83, 1, // Skip to: 346
 /* 7 */       MCD_OPC_ExtractField, 24, 4,  // Inst{27-24} ...
@@ -9435,7 +9435,7 @@ static uint8_t DecoderTableVFP32[] = {
   0
 };
 
-static uint8_t DecoderTableVFPV832[] = {
+static const uint8_t DecoderTableVFPV832[] = {
 /* 0 */       MCD_OPC_ExtractField, 20, 2,  // Inst{21-20} ...
 /* 3 */       MCD_OPC_FilterValue, 0, 160, 0, // Skip to: 167
 /* 7 */       MCD_OPC_ExtractField, 6, 1,  // Inst{6} ...
@@ -9657,7 +9657,7 @@ static uint8_t DecoderTableVFPV832[] = {
   0
 };
 
-static uint8_t DecoderTablev8Crypto32[] = {
+static const uint8_t DecoderTablev8Crypto32[] = {
 /* 0 */       MCD_OPC_ExtractField, 20, 2,  // Inst{21-20} ...
 /* 3 */       MCD_OPC_FilterValue, 0, 65, 0, // Skip to: 72
 /* 7 */       MCD_OPC_ExtractField, 23, 9,  // Inst{31-23} ...
@@ -9758,7 +9758,7 @@ static uint8_t DecoderTablev8Crypto32[] = {
   0
 };
 
-static uint8_t DecoderTablev8NEON32[] = {
+static const uint8_t DecoderTablev8NEON32[] = {
 /* 0 */       MCD_OPC_ExtractField, 8, 4,  // Inst{11-8} ...
 /* 3 */       MCD_OPC_FilterValue, 0, 127, 0, // Skip to: 134
 /* 7 */       MCD_OPC_ExtractField, 6, 2,  // Inst{7-6} ...
@@ -10088,7 +10088,7 @@ static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
 
 #define DecodeToMCInst(fname,fieldname, InsnType) \
 static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *MI, \
-                uint64_t Address, void *Decoder) \
+                uint64_t Address, const void *Decoder) \
 { \
   InsnType tmp; \
   switch (Idx) { \
@@ -13452,11 +13452,11 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
 } 
 
 #define DecodeInstruction(fname, fieldname, decoder, InsnType) \
-static DecodeStatus fname(uint8_t DecodeTable[], MCInst *MI, \
-           InsnType insn, uint64_t Address, MCRegisterInfo *MRI, int feature) \
+static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
+           InsnType insn, uint64_t Address, const MCRegisterInfo *MRI, int feature) \
 { \
   uint64_t Bits = ARM_getFeatureBits(feature); \
-  uint8_t *Ptr = DecodeTable; \
+  const uint8_t *Ptr = DecodeTable; \
   uint32_t CurFieldValue = 0, ExpectedValue; \
   DecodeStatus S = MCDisassembler_Success; \
   unsigned Start, Len, NumToSkip, PIdx, Opc, DecodeIdx; \

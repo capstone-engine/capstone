@@ -210,7 +210,7 @@ static void printRegName(cs_struct *h, SStream *OS, unsigned RegNo)
 #endif
 }
 
-static name_map insn_update_flgs[] = {
+static const name_map insn_update_flgs[] = {
 	{ ARM_INS_CMN, "cmn" },
 	{ ARM_INS_CMP, "cmp" },
 	{ ARM_INS_TEQ, "teq" },

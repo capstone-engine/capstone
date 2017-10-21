@@ -489,7 +489,7 @@ enum {
 #ifdef GET_REGINFO_MC_DESC
 #undef GET_REGINFO_MC_DESC
 
-static MCPhysReg ARMRegDiffLists[] = {
+static const MCPhysReg ARMRegDiffLists[] = {
   /* 0 */ 64924, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
   /* 17 */ 32, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
   /* 32 */ 36, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
@@ -847,7 +847,7 @@ static MCPhysReg ARMRegDiffLists[] = {
   /* 4184 */ 65535, 0,
 };
 
-static uint16_t ARMSubRegIdxLists[] = {
+static const uint16_t ARMSubRegIdxLists[] = {
   /* 0 */ 1, 2, 0,
   /* 3 */ 1, 17, 18, 2, 0,
   /* 8 */ 1, 3, 0,
@@ -883,7 +883,7 @@ static uint16_t ARMSubRegIdxLists[] = {
   /* 474 */ 11, 13, 1, 17, 18, 2, 19, 20, 14, 3, 21, 22, 4, 23, 24, 33, 34, 35, 36, 37, 12, 15, 5, 31, 32, 6, 29, 30, 16, 7, 27, 28, 8, 25, 26, 51, 52, 53, 54, 55, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 56, 0,
 };
 
-static MCRegisterDesc ARMRegDesc[] = { // Descriptors
+static const MCRegisterDesc ARMRegDesc[] = { // Descriptors
   { 12, 0, 0, 0, 0 },
   { 1235, 16, 16, 2, 66945 },
   { 1268, 16, 16, 2, 66945 },
@@ -1176,1006 +1176,1006 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
 };
 
   // SPR Register Class...
-  static uint16_t SPR[] = {
+  static const uint16_t SPR[] = {
     ARM_S0, ARM_S2, ARM_S4, ARM_S6, ARM_S8, ARM_S10, ARM_S12, ARM_S14, ARM_S16, ARM_S18, ARM_S20, ARM_S22, ARM_S24, ARM_S26, ARM_S28, ARM_S30, ARM_S1, ARM_S3, ARM_S5, ARM_S7, ARM_S9, ARM_S11, ARM_S13, ARM_S15, ARM_S17, ARM_S19, ARM_S21, ARM_S23, ARM_S25, ARM_S27, ARM_S29, ARM_S31, 
   };
 
   // SPR Bit set.
-  static uint8_t SPRBits[] = {
+  static const uint8_t SPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xff, 0xff, 0xff, 0x7f, 
   };
 
   // GPR Register Class...
-  static uint16_t GPR[] = {
+  static const uint16_t GPR[] = {
     ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR, ARM_PC, 
   };
 
   // GPR Bit set.
-  static uint8_t GPRBits[] = {
+  static const uint8_t GPRBits[] = {
     0x00, 0x1c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x7f, 
   };
 
   // GPRwithAPSR Register Class...
-  static uint16_t GPRwithAPSR[] = {
+  static const uint16_t GPRwithAPSR[] = {
     ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR, ARM_APSR_NZCV, 
   };
 
   // GPRwithAPSR Bit set.
-  static uint8_t GPRwithAPSRBits[] = {
+  static const uint8_t GPRwithAPSRBits[] = {
     0x04, 0x14, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x7f, 
   };
 
   // SPR_8 Register Class...
-  static uint16_t SPR_8[] = {
+  static const uint16_t SPR_8[] = {
     ARM_S0, ARM_S1, ARM_S2, ARM_S3, ARM_S4, ARM_S5, ARM_S6, ARM_S7, ARM_S8, ARM_S9, ARM_S10, ARM_S11, ARM_S12, ARM_S13, ARM_S14, ARM_S15, 
   };
 
   // SPR_8 Bit set.
-  static uint8_t SPR_8Bits[] = {
+  static const uint8_t SPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xff, 0x7f, 
   };
 
   // GPRnopc Register Class...
-  static uint16_t GPRnopc[] = {
+  static const uint16_t GPRnopc[] = {
     ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR, 
   };
 
   // GPRnopc Bit set.
-  static uint8_t GPRnopcBits[] = {
+  static const uint8_t GPRnopcBits[] = {
     0x00, 0x14, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x7f, 
   };
 
   // rGPR Register Class...
-  static uint16_t rGPR[] = {
+  static const uint16_t rGPR[] = {
     ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_LR, 
   };
 
   // rGPR Bit set.
-  static uint8_t rGPRBits[] = {
+  static const uint8_t rGPRBits[] = {
     0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x7f, 
   };
 
   // hGPR Register Class...
-  static uint16_t hGPR[] = {
+  static const uint16_t hGPR[] = {
     ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR, ARM_PC, 
   };
 
   // hGPR Bit set.
-  static uint8_t hGPRBits[] = {
+  static const uint8_t hGPRBits[] = {
     0x00, 0x1c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7c, 
   };
 
   // tGPR Register Class...
-  static uint16_t tGPR[] = {
+  static const uint16_t tGPR[] = {
     ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, 
   };
 
   // tGPR Bit set.
-  static uint8_t tGPRBits[] = {
+  static const uint8_t tGPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
   // GPRnopc_and_hGPR Register Class...
-  static uint16_t GPRnopc_and_hGPR[] = {
+  static const uint16_t GPRnopc_and_hGPR[] = {
     ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR, 
   };
 
   // GPRnopc_and_hGPR Bit set.
-  static uint8_t GPRnopc_and_hGPRBits[] = {
+  static const uint8_t GPRnopc_and_hGPRBits[] = {
     0x00, 0x14, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7c, 
   };
 
   // hGPR_and_rGPR Register Class...
-  static uint16_t hGPR_and_rGPR[] = {
+  static const uint16_t hGPR_and_rGPR[] = {
     ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_LR, 
   };
 
   // hGPR_and_rGPR Bit set.
-  static uint8_t hGPR_and_rGPRBits[] = {
+  static const uint8_t hGPR_and_rGPRBits[] = {
     0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7c, 
   };
 
   // tcGPR Register Class...
-  static uint16_t tcGPR[] = {
+  static const uint16_t tcGPR[] = {
     ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R12, 
   };
 
   // tcGPR Bit set.
-  static uint8_t tcGPRBits[] = {
+  static const uint8_t tcGPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3c, 0x40, 
   };
 
   // tGPR_and_tcGPR Register Class...
-  static uint16_t tGPR_and_tcGPR[] = {
+  static const uint16_t tGPR_and_tcGPR[] = {
     ARM_R0, ARM_R1, ARM_R2, ARM_R3, 
   };
 
   // tGPR_and_tcGPR Bit set.
-  static uint8_t tGPR_and_tcGPRBits[] = {
+  static const uint8_t tGPR_and_tcGPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3c, 
   };
 
   // CCR Register Class...
-  static uint16_t CCR[] = {
+  static const uint16_t CCR[] = {
     ARM_CPSR, 
   };
 
   // CCR Bit set.
-  static uint8_t CCRBits[] = {
+  static const uint8_t CCRBits[] = {
     0x08, 
   };
 
   // GPRsp Register Class...
-  static uint16_t GPRsp[] = {
+  static const uint16_t GPRsp[] = {
     ARM_SP, 
   };
 
   // GPRsp Bit set.
-  static uint8_t GPRspBits[] = {
+  static const uint8_t GPRspBits[] = {
     0x00, 0x10, 
   };
 
   // hGPR_and_tcGPR Register Class...
-  static uint16_t hGPR_and_tcGPR[] = {
+  static const uint16_t hGPR_and_tcGPR[] = {
     ARM_R12, 
   };
 
   // hGPR_and_tcGPR Bit set.
-  static uint8_t hGPR_and_tcGPRBits[] = {
+  static const uint8_t hGPR_and_tcGPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 
   };
 
   // DPR Register Class...
-  static uint16_t DPR[] = {
+  static const uint16_t DPR[] = {
     ARM_D0, ARM_D1, ARM_D2, ARM_D3, ARM_D4, ARM_D5, ARM_D6, ARM_D7, ARM_D8, ARM_D9, ARM_D10, ARM_D11, ARM_D12, ARM_D13, ARM_D14, ARM_D15, ARM_D16, ARM_D17, ARM_D18, ARM_D19, ARM_D20, ARM_D21, ARM_D22, ARM_D23, ARM_D24, ARM_D25, ARM_D26, ARM_D27, ARM_D28, ARM_D29, ARM_D30, ARM_D31, 
   };
 
   // DPR Bit set.
-  static uint8_t DPRBits[] = {
+  static const uint8_t DPRBits[] = {
     0x00, 0xc0, 0xff, 0xff, 0xff, 0x3f, 
   };
 
   // DPR_VFP2 Register Class...
-  static uint16_t DPR_VFP2[] = {
+  static const uint16_t DPR_VFP2[] = {
     ARM_D0, ARM_D1, ARM_D2, ARM_D3, ARM_D4, ARM_D5, ARM_D6, ARM_D7, ARM_D8, ARM_D9, ARM_D10, ARM_D11, ARM_D12, ARM_D13, ARM_D14, ARM_D15, 
   };
 
   // DPR_VFP2 Bit set.
-  static uint8_t DPR_VFP2Bits[] = {
+  static const uint8_t DPR_VFP2Bits[] = {
     0x00, 0xc0, 0xff, 0x3f, 
   };
 
   // DPR_8 Register Class...
-  static uint16_t DPR_8[] = {
+  static const uint16_t DPR_8[] = {
     ARM_D0, ARM_D1, ARM_D2, ARM_D3, ARM_D4, ARM_D5, ARM_D6, ARM_D7, 
   };
 
   // DPR_8 Bit set.
-  static uint8_t DPR_8Bits[] = {
+  static const uint8_t DPR_8Bits[] = {
     0x00, 0xc0, 0x3f, 
   };
 
   // GPRPair Register Class...
-  static uint16_t GPRPair[] = {
+  static const uint16_t GPRPair[] = {
     ARM_R0_R1, ARM_R2_R3, ARM_R4_R5, ARM_R6_R7, ARM_R8_R9, ARM_R10_R11, ARM_R12_SP, 
   };
 
   // GPRPair Bit set.
-  static uint8_t GPRPairBits[] = {
+  static const uint8_t GPRPairBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 
   };
 
   // GPRPair_with_gsub_1_in_rGPR Register Class...
-  static uint16_t GPRPair_with_gsub_1_in_rGPR[] = {
+  static const uint16_t GPRPair_with_gsub_1_in_rGPR[] = {
     ARM_R0_R1, ARM_R2_R3, ARM_R4_R5, ARM_R6_R7, ARM_R8_R9, ARM_R10_R11, 
   };
 
   // GPRPair_with_gsub_1_in_rGPR Bit set.
-  static uint8_t GPRPair_with_gsub_1_in_rGPRBits[] = {
+  static const uint8_t GPRPair_with_gsub_1_in_rGPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 
   };
 
   // GPRPair_with_gsub_0_in_tGPR Register Class...
-  static uint16_t GPRPair_with_gsub_0_in_tGPR[] = {
+  static const uint16_t GPRPair_with_gsub_0_in_tGPR[] = {
     ARM_R0_R1, ARM_R2_R3, ARM_R4_R5, ARM_R6_R7, 
   };
 
   // GPRPair_with_gsub_0_in_tGPR Bit set.
-  static uint8_t GPRPair_with_gsub_0_in_tGPRBits[] = {
+  static const uint8_t GPRPair_with_gsub_0_in_tGPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3c, 
   };
 
   // GPRPair_with_gsub_0_in_hGPR Register Class...
-  static uint16_t GPRPair_with_gsub_0_in_hGPR[] = {
+  static const uint16_t GPRPair_with_gsub_0_in_hGPR[] = {
     ARM_R8_R9, ARM_R10_R11, ARM_R12_SP, 
   };
 
   // GPRPair_with_gsub_0_in_hGPR Bit set.
-  static uint8_t GPRPair_with_gsub_0_in_hGPRBits[] = {
+  static const uint8_t GPRPair_with_gsub_0_in_hGPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc2, 
   };
 
   // GPRPair_with_gsub_0_in_tcGPR Register Class...
-  static uint16_t GPRPair_with_gsub_0_in_tcGPR[] = {
+  static const uint16_t GPRPair_with_gsub_0_in_tcGPR[] = {
     ARM_R0_R1, ARM_R2_R3, ARM_R12_SP, 
   };
 
   // GPRPair_with_gsub_0_in_tcGPR Bit set.
-  static uint8_t GPRPair_with_gsub_0_in_tcGPRBits[] = {
+  static const uint8_t GPRPair_with_gsub_0_in_tcGPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0e, 
   };
 
   // GPRPair_with_gsub_1_in_hGPR_and_rGPR Register Class...
-  static uint16_t GPRPair_with_gsub_1_in_hGPR_and_rGPR[] = {
+  static const uint16_t GPRPair_with_gsub_1_in_hGPR_and_rGPR[] = {
     ARM_R8_R9, ARM_R10_R11, 
   };
 
   // GPRPair_with_gsub_1_in_hGPR_and_rGPR Bit set.
-  static uint8_t GPRPair_with_gsub_1_in_hGPR_and_rGPRBits[] = {
+  static const uint8_t GPRPair_with_gsub_1_in_hGPR_and_rGPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 
   };
 
   // GPRPair_with_gsub_1_in_tcGPR Register Class...
-  static uint16_t GPRPair_with_gsub_1_in_tcGPR[] = {
+  static const uint16_t GPRPair_with_gsub_1_in_tcGPR[] = {
     ARM_R0_R1, ARM_R2_R3, 
   };
 
   // GPRPair_with_gsub_1_in_tcGPR Bit set.
-  static uint8_t GPRPair_with_gsub_1_in_tcGPRBits[] = {
+  static const uint8_t GPRPair_with_gsub_1_in_tcGPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0c, 
   };
 
   // GPRPair_with_gsub_1_in_GPRsp Register Class...
-  static uint16_t GPRPair_with_gsub_1_in_GPRsp[] = {
+  static const uint16_t GPRPair_with_gsub_1_in_GPRsp[] = {
     ARM_R12_SP, 
   };
 
   // GPRPair_with_gsub_1_in_GPRsp Bit set.
-  static uint8_t GPRPair_with_gsub_1_in_GPRspBits[] = {
+  static const uint8_t GPRPair_with_gsub_1_in_GPRspBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 
   };
 
   // DPairSpc Register Class...
-  static uint16_t DPairSpc[] = {
+  static const uint16_t DPairSpc[] = {
     ARM_D0_D2, ARM_D1_D3, ARM_D2_D4, ARM_D3_D5, ARM_D4_D6, ARM_D5_D7, ARM_D6_D8, ARM_D7_D9, ARM_D8_D10, ARM_D9_D11, ARM_D10_D12, ARM_D11_D13, ARM_D12_D14, ARM_D13_D15, ARM_D14_D16, ARM_D15_D17, ARM_D16_D18, ARM_D17_D19, ARM_D18_D20, ARM_D19_D21, ARM_D20_D22, ARM_D21_D23, ARM_D22_D24, ARM_D23_D25, ARM_D24_D26, ARM_D25_D27, ARM_D26_D28, ARM_D27_D29, ARM_D28_D30, ARM_D29_D31, 
   };
 
   // DPairSpc Bit set.
-  static uint8_t DPairSpcBits[] = {
+  static const uint8_t DPairSpcBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xff, 0xff, 0xff, 0x1f, 
   };
 
   // DPairSpc_with_ssub_0 Register Class...
-  static uint16_t DPairSpc_with_ssub_0[] = {
+  static const uint16_t DPairSpc_with_ssub_0[] = {
     ARM_D0_D2, ARM_D1_D3, ARM_D2_D4, ARM_D3_D5, ARM_D4_D6, ARM_D5_D7, ARM_D6_D8, ARM_D7_D9, ARM_D8_D10, ARM_D9_D11, ARM_D10_D12, ARM_D11_D13, ARM_D12_D14, ARM_D13_D15, ARM_D14_D16, ARM_D15_D17, 
   };
 
   // DPairSpc_with_ssub_0 Bit set.
-  static uint8_t DPairSpc_with_ssub_0Bits[] = {
+  static const uint8_t DPairSpc_with_ssub_0Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xff, 0x7f, 
   };
 
   // DPairSpc_with_dsub_2_then_ssub_0 Register Class...
-  static uint16_t DPairSpc_with_dsub_2_then_ssub_0[] = {
+  static const uint16_t DPairSpc_with_dsub_2_then_ssub_0[] = {
     ARM_D0_D2, ARM_D1_D3, ARM_D2_D4, ARM_D3_D5, ARM_D4_D6, ARM_D5_D7, ARM_D6_D8, ARM_D7_D9, ARM_D8_D10, ARM_D9_D11, ARM_D10_D12, ARM_D11_D13, ARM_D12_D14, ARM_D13_D15, 
   };
 
   // DPairSpc_with_dsub_2_then_ssub_0 Bit set.
-  static uint8_t DPairSpc_with_dsub_2_then_ssub_0Bits[] = {
+  static const uint8_t DPairSpc_with_dsub_2_then_ssub_0Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xff, 0x1f, 
   };
 
   // DPairSpc_with_dsub_0_in_DPR_8 Register Class...
-  static uint16_t DPairSpc_with_dsub_0_in_DPR_8[] = {
+  static const uint16_t DPairSpc_with_dsub_0_in_DPR_8[] = {
     ARM_D0_D2, ARM_D1_D3, ARM_D2_D4, ARM_D3_D5, ARM_D4_D6, ARM_D5_D7, ARM_D6_D8, ARM_D7_D9, 
   };
 
   // DPairSpc_with_dsub_0_in_DPR_8 Bit set.
-  static uint8_t DPairSpc_with_dsub_0_in_DPR_8Bits[] = {
+  static const uint8_t DPairSpc_with_dsub_0_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x7f, 
   };
 
   // DPairSpc_with_dsub_2_in_DPR_8 Register Class...
-  static uint16_t DPairSpc_with_dsub_2_in_DPR_8[] = {
+  static const uint16_t DPairSpc_with_dsub_2_in_DPR_8[] = {
     ARM_D0_D2, ARM_D1_D3, ARM_D2_D4, ARM_D3_D5, ARM_D4_D6, ARM_D5_D7, 
   };
 
   // DPairSpc_with_dsub_2_in_DPR_8 Bit set.
-  static uint8_t DPairSpc_with_dsub_2_in_DPR_8Bits[] = {
+  static const uint8_t DPairSpc_with_dsub_2_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x1f, 
   };
 
   // DPair Register Class...
-  static uint16_t DPair[] = {
+  static const uint16_t DPair[] = {
     ARM_Q0, ARM_D1_D2, ARM_Q1, ARM_D3_D4, ARM_Q2, ARM_D5_D6, ARM_Q3, ARM_D7_D8, ARM_Q4, ARM_D9_D10, ARM_Q5, ARM_D11_D12, ARM_Q6, ARM_D13_D14, ARM_Q7, ARM_D15_D16, ARM_Q8, ARM_D17_D18, ARM_Q9, ARM_D19_D20, ARM_Q10, ARM_D21_D22, ARM_Q11, ARM_D23_D24, ARM_Q12, ARM_D25_D26, ARM_Q13, ARM_D27_D28, ARM_Q14, ARM_D29_D30, ARM_Q15, 
   };
 
   // DPair Bit set.
-  static uint8_t DPairBits[] = {
+  static const uint8_t DPairBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0x07, 
   };
 
   // DPair_with_ssub_0 Register Class...
-  static uint16_t DPair_with_ssub_0[] = {
+  static const uint16_t DPair_with_ssub_0[] = {
     ARM_Q0, ARM_D1_D2, ARM_Q1, ARM_D3_D4, ARM_Q2, ARM_D5_D6, ARM_Q3, ARM_D7_D8, ARM_Q4, ARM_D9_D10, ARM_Q5, ARM_D11_D12, ARM_Q6, ARM_D13_D14, ARM_Q7, ARM_D15_D16, 
   };
 
   // DPair_with_ssub_0 Bit set.
-  static uint8_t DPair_with_ssub_0Bits[] = {
+  static const uint8_t DPair_with_ssub_0Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x0f, 
   };
 
   // QPR Register Class...
-  static uint16_t QPR[] = {
+  static const uint16_t QPR[] = {
     ARM_Q0, ARM_Q1, ARM_Q2, ARM_Q3, ARM_Q4, ARM_Q5, ARM_Q6, ARM_Q7, ARM_Q8, ARM_Q9, ARM_Q10, ARM_Q11, ARM_Q12, ARM_Q13, ARM_Q14, ARM_Q15, 
   };
 
   // QPR Bit set.
-  static uint8_t QPRBits[] = {
+  static const uint8_t QPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 
   };
 
   // DPair_with_ssub_2 Register Class...
-  static uint16_t DPair_with_ssub_2[] = {
+  static const uint16_t DPair_with_ssub_2[] = {
     ARM_Q0, ARM_D1_D2, ARM_Q1, ARM_D3_D4, ARM_Q2, ARM_D5_D6, ARM_Q3, ARM_D7_D8, ARM_Q4, ARM_D9_D10, ARM_Q5, ARM_D11_D12, ARM_Q6, ARM_D13_D14, ARM_Q7, 
   };
 
   // DPair_with_ssub_2 Bit set.
-  static uint8_t DPair_with_ssub_2Bits[] = {
+  static const uint8_t DPair_with_ssub_2Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x07, 
   };
 
   // DPair_with_dsub_0_in_DPR_8 Register Class...
-  static uint16_t DPair_with_dsub_0_in_DPR_8[] = {
+  static const uint16_t DPair_with_dsub_0_in_DPR_8[] = {
     ARM_Q0, ARM_D1_D2, ARM_Q1, ARM_D3_D4, ARM_Q2, ARM_D5_D6, ARM_Q3, ARM_D7_D8, 
   };
 
   // DPair_with_dsub_0_in_DPR_8 Bit set.
-  static uint8_t DPair_with_dsub_0_in_DPR_8Bits[] = {
+  static const uint8_t DPair_with_dsub_0_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 
   };
 
   // QPR_VFP2 Register Class...
-  static uint16_t QPR_VFP2[] = {
+  static const uint16_t QPR_VFP2[] = {
     ARM_Q0, ARM_Q1, ARM_Q2, ARM_Q3, ARM_Q4, ARM_Q5, ARM_Q6, ARM_Q7, 
   };
 
   // QPR_VFP2 Bit set.
-  static uint8_t QPR_VFP2Bits[] = {
+  static const uint8_t QPR_VFP2Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
   // DPair_with_dsub_1_in_DPR_8 Register Class...
-  static uint16_t DPair_with_dsub_1_in_DPR_8[] = {
+  static const uint16_t DPair_with_dsub_1_in_DPR_8[] = {
     ARM_Q0, ARM_D1_D2, ARM_Q1, ARM_D3_D4, ARM_Q2, ARM_D5_D6, ARM_Q3, 
   };
 
   // DPair_with_dsub_1_in_DPR_8 Bit set.
-  static uint8_t DPair_with_dsub_1_in_DPR_8Bits[] = {
+  static const uint8_t DPair_with_dsub_1_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x70, 
   };
 
   // QPR_8 Register Class...
-  static uint16_t QPR_8[] = {
+  static const uint16_t QPR_8[] = {
     ARM_Q0, ARM_Q1, ARM_Q2, ARM_Q3, 
   };
 
   // QPR_8 Bit set.
-  static uint8_t QPR_8Bits[] = {
+  static const uint8_t QPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3c, 
   };
 
   // DTriple Register Class...
-  static uint16_t DTriple[] = {
+  static const uint16_t DTriple[] = {
     ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8, ARM_D7_D8_D9, ARM_D8_D9_D10, ARM_D9_D10_D11, ARM_D10_D11_D12, ARM_D11_D12_D13, ARM_D12_D13_D14, ARM_D13_D14_D15, ARM_D14_D15_D16, ARM_D15_D16_D17, ARM_D16_D17_D18, ARM_D17_D18_D19, ARM_D18_D19_D20, ARM_D19_D20_D21, ARM_D20_D21_D22, ARM_D21_D22_D23, ARM_D22_D23_D24, ARM_D23_D24_D25, ARM_D24_D25_D26, ARM_D25_D26_D27, ARM_D26_D27_D28, ARM_D27_D28_D29, ARM_D28_D29_D30, ARM_D29_D30_D31, 
   };
 
   // DTriple Bit set.
-  static uint8_t DTripleBits[] = {
+  static const uint8_t DTripleBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0x3f, 
   };
 
   // DTripleSpc Register Class...
-  static uint16_t DTripleSpc[] = {
+  static const uint16_t DTripleSpc[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, ARM_D12_D14_D16, ARM_D13_D15_D17, ARM_D14_D16_D18, ARM_D15_D17_D19, ARM_D16_D18_D20, ARM_D17_D19_D21, ARM_D18_D20_D22, ARM_D19_D21_D23, ARM_D20_D22_D24, ARM_D21_D23_D25, ARM_D22_D24_D26, ARM_D23_D25_D27, ARM_D24_D26_D28, ARM_D25_D27_D29, ARM_D26_D28_D30, ARM_D27_D29_D31, 
   };
 
   // DTripleSpc Bit set.
-  static uint8_t DTripleSpcBits[] = {
+  static const uint8_t DTripleSpcBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0xff, 0xff, 0x03, 
   };
 
   // DTripleSpc_with_ssub_0 Register Class...
-  static uint16_t DTripleSpc_with_ssub_0[] = {
+  static const uint16_t DTripleSpc_with_ssub_0[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, ARM_D12_D14_D16, ARM_D13_D15_D17, ARM_D14_D16_D18, ARM_D15_D17_D19, 
   };
 
   // DTripleSpc_with_ssub_0 Bit set.
-  static uint8_t DTripleSpc_with_ssub_0Bits[] = {
+  static const uint8_t DTripleSpc_with_ssub_0Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0x3f, 
   };
 
   // DTriple_with_ssub_0 Register Class...
-  static uint16_t DTriple_with_ssub_0[] = {
+  static const uint16_t DTriple_with_ssub_0[] = {
     ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8, ARM_D7_D8_D9, ARM_D8_D9_D10, ARM_D9_D10_D11, ARM_D10_D11_D12, ARM_D11_D12_D13, ARM_D12_D13_D14, ARM_D13_D14_D15, ARM_D14_D15_D16, ARM_D15_D16_D17, 
   };
 
   // DTriple_with_ssub_0 Bit set.
-  static uint8_t DTriple_with_ssub_0Bits[] = {
+  static const uint8_t DTriple_with_ssub_0Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 
   };
 
   // DTriple_with_dsub_1_dsub_2_in_QPR Register Class...
-  static uint16_t DTriple_with_dsub_1_dsub_2_in_QPR[] = {
+  static const uint16_t DTriple_with_dsub_1_dsub_2_in_QPR[] = {
     ARM_D1_D2_D3, ARM_D3_D4_D5, ARM_D5_D6_D7, ARM_D7_D8_D9, ARM_D9_D10_D11, ARM_D11_D12_D13, ARM_D13_D14_D15, ARM_D15_D16_D17, ARM_D17_D18_D19, ARM_D19_D20_D21, ARM_D21_D22_D23, ARM_D23_D24_D25, ARM_D25_D26_D27, ARM_D27_D28_D29, ARM_D29_D30_D31, 
   };
 
   // DTriple_with_dsub_1_dsub_2_in_QPR Bit set.
-  static uint8_t DTriple_with_dsub_1_dsub_2_in_QPRBits[] = {
+  static const uint8_t DTriple_with_dsub_1_dsub_2_in_QPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xaa, 0xaa, 0xaa, 0x2a, 
   };
 
   // DTriple_with_qsub_0_in_QPR Register Class...
-  static uint16_t DTriple_with_qsub_0_in_QPR[] = {
+  static const uint16_t DTriple_with_qsub_0_in_QPR[] = {
     ARM_D0_D1_D2, ARM_D2_D3_D4, ARM_D4_D5_D6, ARM_D6_D7_D8, ARM_D8_D9_D10, ARM_D10_D11_D12, ARM_D12_D13_D14, ARM_D14_D15_D16, ARM_D16_D17_D18, ARM_D18_D19_D20, ARM_D20_D21_D22, ARM_D22_D23_D24, ARM_D24_D25_D26, ARM_D26_D27_D28, ARM_D28_D29_D30, 
   };
 
   // DTriple_with_qsub_0_in_QPR Bit set.
-  static uint8_t DTriple_with_qsub_0_in_QPRBits[] = {
+  static const uint8_t DTriple_with_qsub_0_in_QPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x55, 0x55, 0x15, 
   };
 
   // DTriple_with_ssub_2 Register Class...
-  static uint16_t DTriple_with_ssub_2[] = {
+  static const uint16_t DTriple_with_ssub_2[] = {
     ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8, ARM_D7_D8_D9, ARM_D8_D9_D10, ARM_D9_D10_D11, ARM_D10_D11_D12, ARM_D11_D12_D13, ARM_D12_D13_D14, ARM_D13_D14_D15, ARM_D14_D15_D16, 
   };
 
   // DTriple_with_ssub_2 Bit set.
-  static uint8_t DTriple_with_ssub_2Bits[] = {
+  static const uint8_t DTriple_with_ssub_2Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0x7f, 
   };
 
   // DTripleSpc_with_dsub_2_then_ssub_0 Register Class...
-  static uint16_t DTripleSpc_with_dsub_2_then_ssub_0[] = {
+  static const uint16_t DTripleSpc_with_dsub_2_then_ssub_0[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, ARM_D12_D14_D16, ARM_D13_D15_D17, 
   };
 
   // DTripleSpc_with_dsub_2_then_ssub_0 Bit set.
-  static uint8_t DTripleSpc_with_dsub_2_then_ssub_0Bits[] = {
+  static const uint8_t DTripleSpc_with_dsub_2_then_ssub_0Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0x0f, 
   };
 
   // DTriple_with_dsub_2_then_ssub_0 Register Class...
-  static uint16_t DTriple_with_dsub_2_then_ssub_0[] = {
+  static const uint16_t DTriple_with_dsub_2_then_ssub_0[] = {
     ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8, ARM_D7_D8_D9, ARM_D8_D9_D10, ARM_D9_D10_D11, ARM_D10_D11_D12, ARM_D11_D12_D13, ARM_D12_D13_D14, ARM_D13_D14_D15, 
   };
 
   // DTriple_with_dsub_2_then_ssub_0 Bit set.
-  static uint8_t DTriple_with_dsub_2_then_ssub_0Bits[] = {
+  static const uint8_t DTriple_with_dsub_2_then_ssub_0Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0x3f, 
   };
 
   // DTripleSpc_with_dsub_4_then_ssub_0 Register Class...
-  static uint16_t DTripleSpc_with_dsub_4_then_ssub_0[] = {
+  static const uint16_t DTripleSpc_with_dsub_4_then_ssub_0[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, 
   };
 
   // DTripleSpc_with_dsub_4_then_ssub_0 Bit set.
-  static uint8_t DTripleSpc_with_dsub_4_then_ssub_0Bits[] = {
+  static const uint8_t DTripleSpc_with_dsub_4_then_ssub_0Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0x03, 
   };
 
   // DTripleSpc_with_dsub_0_in_DPR_8 Register Class...
-  static uint16_t DTripleSpc_with_dsub_0_in_DPR_8[] = {
+  static const uint16_t DTripleSpc_with_dsub_0_in_DPR_8[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, 
   };
 
   // DTripleSpc_with_dsub_0_in_DPR_8 Bit set.
-  static uint8_t DTripleSpc_with_dsub_0_in_DPR_8Bits[] = {
+  static const uint8_t DTripleSpc_with_dsub_0_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0x3f, 
   };
 
   // DTriple_with_dsub_0_in_DPR_8 Register Class...
-  static uint16_t DTriple_with_dsub_0_in_DPR_8[] = {
+  static const uint16_t DTriple_with_dsub_0_in_DPR_8[] = {
     ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8, ARM_D7_D8_D9, 
   };
 
   // DTriple_with_dsub_0_in_DPR_8 Bit set.
-  static uint8_t DTriple_with_dsub_0_in_DPR_8Bits[] = {
+  static const uint8_t DTriple_with_dsub_0_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 
   };
 
   // DTriple_with_qsub_0_in_QPR_VFP2 Register Class...
-  static uint16_t DTriple_with_qsub_0_in_QPR_VFP2[] = {
+  static const uint16_t DTriple_with_qsub_0_in_QPR_VFP2[] = {
     ARM_D0_D1_D2, ARM_D2_D3_D4, ARM_D4_D5_D6, ARM_D6_D7_D8, ARM_D8_D9_D10, ARM_D10_D11_D12, ARM_D12_D13_D14, ARM_D14_D15_D16, 
   };
 
   // DTriple_with_qsub_0_in_QPR_VFP2 Bit set.
-  static uint8_t DTriple_with_qsub_0_in_QPR_VFP2Bits[] = {
+  static const uint8_t DTriple_with_qsub_0_in_QPR_VFP2Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x55, 
   };
 
   // DTriple_with_ssub_0_and_DTriple_with_dsub_1_dsub_2_in_QPR Register Class...
-  static uint16_t DTriple_with_ssub_0_and_DTriple_with_dsub_1_dsub_2_in_QPR[] = {
+  static const uint16_t DTriple_with_ssub_0_and_DTriple_with_dsub_1_dsub_2_in_QPR[] = {
     ARM_D1_D2_D3, ARM_D3_D4_D5, ARM_D5_D6_D7, ARM_D7_D8_D9, ARM_D9_D10_D11, ARM_D11_D12_D13, ARM_D13_D14_D15, ARM_D15_D16_D17, 
   };
 
   // DTriple_with_ssub_0_and_DTriple_with_dsub_1_dsub_2_in_QPR Bit set.
-  static uint8_t DTriple_with_ssub_0_and_DTriple_with_dsub_1_dsub_2_in_QPRBits[] = {
+  static const uint8_t DTriple_with_ssub_0_and_DTriple_with_dsub_1_dsub_2_in_QPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xaa, 0xaa, 
   };
 
   // DTriple_with_dsub_1_dsub_2_in_QPR_VFP2 Register Class...
-  static uint16_t DTriple_with_dsub_1_dsub_2_in_QPR_VFP2[] = {
+  static const uint16_t DTriple_with_dsub_1_dsub_2_in_QPR_VFP2[] = {
     ARM_D1_D2_D3, ARM_D3_D4_D5, ARM_D5_D6_D7, ARM_D7_D8_D9, ARM_D9_D10_D11, ARM_D11_D12_D13, ARM_D13_D14_D15, 
   };
 
   // DTriple_with_dsub_1_dsub_2_in_QPR_VFP2 Bit set.
-  static uint8_t DTriple_with_dsub_1_dsub_2_in_QPR_VFP2Bits[] = {
+  static const uint8_t DTriple_with_dsub_1_dsub_2_in_QPR_VFP2Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xaa, 0x2a, 
   };
 
   // DTriple_with_dsub_1_in_DPR_8 Register Class...
-  static uint16_t DTriple_with_dsub_1_in_DPR_8[] = {
+  static const uint16_t DTriple_with_dsub_1_in_DPR_8[] = {
     ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8, 
   };
 
   // DTriple_with_dsub_1_in_DPR_8 Bit set.
-  static uint8_t DTriple_with_dsub_1_in_DPR_8Bits[] = {
+  static const uint8_t DTriple_with_dsub_1_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7f, 
   };
 
   // DTriple_with_dsub_2_then_ssub_0_and_DTriple_with_qsub_0_in_QPR Register Class...
-  static uint16_t DTriple_with_dsub_2_then_ssub_0_and_DTriple_with_qsub_0_in_QPR[] = {
+  static const uint16_t DTriple_with_dsub_2_then_ssub_0_and_DTriple_with_qsub_0_in_QPR[] = {
     ARM_D0_D1_D2, ARM_D2_D3_D4, ARM_D4_D5_D6, ARM_D6_D7_D8, ARM_D8_D9_D10, ARM_D10_D11_D12, ARM_D12_D13_D14, 
   };
 
   // DTriple_with_dsub_2_then_ssub_0_and_DTriple_with_qsub_0_in_QPR Bit set.
-  static uint8_t DTriple_with_dsub_2_then_ssub_0_and_DTriple_with_qsub_0_in_QPRBits[] = {
+  static const uint8_t DTriple_with_dsub_2_then_ssub_0_and_DTriple_with_qsub_0_in_QPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x15, 
   };
 
   // DTripleSpc_with_dsub_2_in_DPR_8 Register Class...
-  static uint16_t DTripleSpc_with_dsub_2_in_DPR_8[] = {
+  static const uint16_t DTripleSpc_with_dsub_2_in_DPR_8[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, 
   };
 
   // DTripleSpc_with_dsub_2_in_DPR_8 Bit set.
-  static uint8_t DTripleSpc_with_dsub_2_in_DPR_8Bits[] = {
+  static const uint8_t DTripleSpc_with_dsub_2_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0x0f, 
   };
 
   // DTriple_with_dsub_2_in_DPR_8 Register Class...
-  static uint16_t DTriple_with_dsub_2_in_DPR_8[] = {
+  static const uint16_t DTriple_with_dsub_2_in_DPR_8[] = {
     ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, 
   };
 
   // DTriple_with_dsub_2_in_DPR_8 Bit set.
-  static uint8_t DTriple_with_dsub_2_in_DPR_8Bits[] = {
+  static const uint8_t DTriple_with_dsub_2_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3f, 
   };
 
   // DTripleSpc_with_dsub_4_in_DPR_8 Register Class...
-  static uint16_t DTripleSpc_with_dsub_4_in_DPR_8[] = {
+  static const uint16_t DTripleSpc_with_dsub_4_in_DPR_8[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, 
   };
 
   // DTripleSpc_with_dsub_4_in_DPR_8 Bit set.
-  static uint8_t DTripleSpc_with_dsub_4_in_DPR_8Bits[] = {
+  static const uint8_t DTripleSpc_with_dsub_4_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0x03, 
   };
 
   // DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_dsub_1_dsub_2_in_QPR Register Class...
-  static uint16_t DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_dsub_1_dsub_2_in_QPR[] = {
+  static const uint16_t DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_dsub_1_dsub_2_in_QPR[] = {
     ARM_D1_D2_D3, ARM_D3_D4_D5, ARM_D5_D6_D7, ARM_D7_D8_D9, 
   };
 
   // DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_dsub_1_dsub_2_in_QPR Bit set.
-  static uint8_t DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_dsub_1_dsub_2_in_QPRBits[] = {
+  static const uint8_t DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_dsub_1_dsub_2_in_QPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xaa, 
   };
 
   // DTriple_with_qsub_0_in_QPR_8 Register Class...
-  static uint16_t DTriple_with_qsub_0_in_QPR_8[] = {
+  static const uint16_t DTriple_with_qsub_0_in_QPR_8[] = {
     ARM_D0_D1_D2, ARM_D2_D3_D4, ARM_D4_D5_D6, ARM_D6_D7_D8, 
   };
 
   // DTriple_with_qsub_0_in_QPR_8 Bit set.
-  static uint8_t DTriple_with_qsub_0_in_QPR_8Bits[] = {
+  static const uint8_t DTriple_with_qsub_0_in_QPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 
   };
 
   // DTriple_with_dsub_1_dsub_2_in_QPR_8 Register Class...
-  static uint16_t DTriple_with_dsub_1_dsub_2_in_QPR_8[] = {
+  static const uint16_t DTriple_with_dsub_1_dsub_2_in_QPR_8[] = {
     ARM_D1_D2_D3, ARM_D3_D4_D5, ARM_D5_D6_D7, 
   };
 
   // DTriple_with_dsub_1_dsub_2_in_QPR_8 Bit set.
-  static uint8_t DTriple_with_dsub_1_dsub_2_in_QPR_8Bits[] = {
+  static const uint8_t DTriple_with_dsub_1_dsub_2_in_QPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2a, 
   };
 
   // DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_QPR Register Class...
-  static uint16_t DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_QPR[] = {
+  static const uint16_t DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_QPR[] = {
     ARM_D0_D1_D2, ARM_D2_D3_D4, ARM_D4_D5_D6, 
   };
 
   // DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_QPR Bit set.
-  static uint8_t DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_QPRBits[] = {
+  static const uint8_t DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_QPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x15, 
   };
 
   // DQuadSpc Register Class...
-  static uint16_t DQuadSpc[] = {
+  static const uint16_t DQuadSpc[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, ARM_D12_D14_D16, ARM_D13_D15_D17, ARM_D14_D16_D18, ARM_D15_D17_D19, ARM_D16_D18_D20, ARM_D17_D19_D21, ARM_D18_D20_D22, ARM_D19_D21_D23, ARM_D20_D22_D24, ARM_D21_D23_D25, ARM_D22_D24_D26, ARM_D23_D25_D27, ARM_D24_D26_D28, ARM_D25_D27_D29, ARM_D26_D28_D30, ARM_D27_D29_D31, 
   };
 
   // DQuadSpc Bit set.
-  static uint8_t DQuadSpcBits[] = {
+  static const uint8_t DQuadSpcBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0xff, 0xff, 0x03, 
   };
 
   // DQuadSpc_with_ssub_0 Register Class...
-  static uint16_t DQuadSpc_with_ssub_0[] = {
+  static const uint16_t DQuadSpc_with_ssub_0[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, ARM_D12_D14_D16, ARM_D13_D15_D17, ARM_D14_D16_D18, ARM_D15_D17_D19, 
   };
 
   // DQuadSpc_with_ssub_0 Bit set.
-  static uint8_t DQuadSpc_with_ssub_0Bits[] = {
+  static const uint8_t DQuadSpc_with_ssub_0Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0x3f, 
   };
 
   // DQuadSpc_with_dsub_2_then_ssub_0 Register Class...
-  static uint16_t DQuadSpc_with_dsub_2_then_ssub_0[] = {
+  static const uint16_t DQuadSpc_with_dsub_2_then_ssub_0[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, ARM_D12_D14_D16, ARM_D13_D15_D17, 
   };
 
   // DQuadSpc_with_dsub_2_then_ssub_0 Bit set.
-  static uint8_t DQuadSpc_with_dsub_2_then_ssub_0Bits[] = {
+  static const uint8_t DQuadSpc_with_dsub_2_then_ssub_0Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0x0f, 
   };
 
   // DQuadSpc_with_dsub_4_then_ssub_0 Register Class...
-  static uint16_t DQuadSpc_with_dsub_4_then_ssub_0[] = {
+  static const uint16_t DQuadSpc_with_dsub_4_then_ssub_0[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, 
   };
 
   // DQuadSpc_with_dsub_4_then_ssub_0 Bit set.
-  static uint8_t DQuadSpc_with_dsub_4_then_ssub_0Bits[] = {
+  static const uint8_t DQuadSpc_with_dsub_4_then_ssub_0Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0x03, 
   };
 
   // DQuadSpc_with_dsub_0_in_DPR_8 Register Class...
-  static uint16_t DQuadSpc_with_dsub_0_in_DPR_8[] = {
+  static const uint16_t DQuadSpc_with_dsub_0_in_DPR_8[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, 
   };
 
   // DQuadSpc_with_dsub_0_in_DPR_8 Bit set.
-  static uint8_t DQuadSpc_with_dsub_0_in_DPR_8Bits[] = {
+  static const uint8_t DQuadSpc_with_dsub_0_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0x3f, 
   };
 
   // DQuadSpc_with_dsub_2_in_DPR_8 Register Class...
-  static uint16_t DQuadSpc_with_dsub_2_in_DPR_8[] = {
+  static const uint16_t DQuadSpc_with_dsub_2_in_DPR_8[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, 
   };
 
   // DQuadSpc_with_dsub_2_in_DPR_8 Bit set.
-  static uint8_t DQuadSpc_with_dsub_2_in_DPR_8Bits[] = {
+  static const uint8_t DQuadSpc_with_dsub_2_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0x0f, 
   };
 
   // DQuadSpc_with_dsub_4_in_DPR_8 Register Class...
-  static uint16_t DQuadSpc_with_dsub_4_in_DPR_8[] = {
+  static const uint16_t DQuadSpc_with_dsub_4_in_DPR_8[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, 
   };
 
   // DQuadSpc_with_dsub_4_in_DPR_8 Bit set.
-  static uint8_t DQuadSpc_with_dsub_4_in_DPR_8Bits[] = {
+  static const uint8_t DQuadSpc_with_dsub_4_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0x03, 
   };
 
   // DQuad Register Class...
-  static uint16_t DQuad[] = {
+  static const uint16_t DQuad[] = {
     ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, ARM_D7_D8_D9_D10, ARM_Q4_Q5, ARM_D9_D10_D11_D12, ARM_Q5_Q6, ARM_D11_D12_D13_D14, ARM_Q6_Q7, ARM_D13_D14_D15_D16, ARM_Q7_Q8, ARM_D15_D16_D17_D18, ARM_Q8_Q9, ARM_D17_D18_D19_D20, ARM_Q9_Q10, ARM_D19_D20_D21_D22, ARM_Q10_Q11, ARM_D21_D22_D23_D24, ARM_Q11_Q12, ARM_D23_D24_D25_D26, ARM_Q12_Q13, ARM_D25_D26_D27_D28, ARM_Q13_Q14, ARM_D27_D28_D29_D30, ARM_Q14_Q15, 
   };
 
   // DQuad Bit set.
-  static uint8_t DQuadBits[] = {
+  static const uint8_t DQuadBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x01, 
   };
 
   // DQuad_with_ssub_0 Register Class...
-  static uint16_t DQuad_with_ssub_0[] = {
+  static const uint16_t DQuad_with_ssub_0[] = {
     ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, ARM_D7_D8_D9_D10, ARM_Q4_Q5, ARM_D9_D10_D11_D12, ARM_Q5_Q6, ARM_D11_D12_D13_D14, ARM_Q6_Q7, ARM_D13_D14_D15_D16, ARM_Q7_Q8, ARM_D15_D16_D17_D18, 
   };
 
   // DQuad_with_ssub_0 Bit set.
-  static uint8_t DQuad_with_ssub_0Bits[] = {
+  static const uint8_t DQuad_with_ssub_0Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x07, 
   };
 
   // DQuad_with_ssub_2 Register Class...
-  static uint16_t DQuad_with_ssub_2[] = {
+  static const uint16_t DQuad_with_ssub_2[] = {
     ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, ARM_D7_D8_D9_D10, ARM_Q4_Q5, ARM_D9_D10_D11_D12, ARM_Q5_Q6, ARM_D11_D12_D13_D14, ARM_Q6_Q7, ARM_D13_D14_D15_D16, ARM_Q7_Q8, 
   };
 
   // DQuad_with_ssub_2 Bit set.
-  static uint8_t DQuad_with_ssub_2Bits[] = {
+  static const uint8_t DQuad_with_ssub_2Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x03, 
   };
 
   // QQPR Register Class...
-  static uint16_t QQPR[] = {
+  static const uint16_t QQPR[] = {
     ARM_Q0_Q1, ARM_Q1_Q2, ARM_Q2_Q3, ARM_Q3_Q4, ARM_Q4_Q5, ARM_Q5_Q6, ARM_Q6_Q7, ARM_Q7_Q8, ARM_Q8_Q9, ARM_Q9_Q10, ARM_Q10_Q11, ARM_Q11_Q12, ARM_Q12_Q13, ARM_Q13_Q14, ARM_Q14_Q15, 
   };
 
   // QQPR Bit set.
-  static uint8_t QQPRBits[] = {
+  static const uint8_t QQPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0x0f, 
   };
 
   // DQuad_with_dsub_1_dsub_2_in_QPR Register Class...
-  static uint16_t DQuad_with_dsub_1_dsub_2_in_QPR[] = {
+  static const uint16_t DQuad_with_dsub_1_dsub_2_in_QPR[] = {
     ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, ARM_D5_D6_D7_D8, ARM_D7_D8_D9_D10, ARM_D9_D10_D11_D12, ARM_D11_D12_D13_D14, ARM_D13_D14_D15_D16, ARM_D15_D16_D17_D18, ARM_D17_D18_D19_D20, ARM_D19_D20_D21_D22, ARM_D21_D22_D23_D24, ARM_D23_D24_D25_D26, ARM_D25_D26_D27_D28, ARM_D27_D28_D29_D30, 
   };
 
   // DQuad_with_dsub_1_dsub_2_in_QPR Bit set.
-  static uint8_t DQuad_with_dsub_1_dsub_2_in_QPRBits[] = {
+  static const uint8_t DQuad_with_dsub_1_dsub_2_in_QPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x01, 
   };
 
   // DQuad_with_dsub_2_then_ssub_0 Register Class...
-  static uint16_t DQuad_with_dsub_2_then_ssub_0[] = {
+  static const uint16_t DQuad_with_dsub_2_then_ssub_0[] = {
     ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, ARM_D7_D8_D9_D10, ARM_Q4_Q5, ARM_D9_D10_D11_D12, ARM_Q5_Q6, ARM_D11_D12_D13_D14, ARM_Q6_Q7, ARM_D13_D14_D15_D16, 
   };
 
   // DQuad_with_dsub_2_then_ssub_0 Bit set.
-  static uint8_t DQuad_with_dsub_2_then_ssub_0Bits[] = {
+  static const uint8_t DQuad_with_dsub_2_then_ssub_0Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x03, 
   };
 
   // DQuad_with_dsub_3_then_ssub_0 Register Class...
-  static uint16_t DQuad_with_dsub_3_then_ssub_0[] = {
+  static const uint16_t DQuad_with_dsub_3_then_ssub_0[] = {
     ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, ARM_D7_D8_D9_D10, ARM_Q4_Q5, ARM_D9_D10_D11_D12, ARM_Q5_Q6, ARM_D11_D12_D13_D14, ARM_Q6_Q7, 
   };
 
   // DQuad_with_dsub_3_then_ssub_0 Bit set.
-  static uint8_t DQuad_with_dsub_3_then_ssub_0Bits[] = {
+  static const uint8_t DQuad_with_dsub_3_then_ssub_0Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x01, 
   };
 
   // DQuad_with_dsub_0_in_DPR_8 Register Class...
-  static uint16_t DQuad_with_dsub_0_in_DPR_8[] = {
+  static const uint16_t DQuad_with_dsub_0_in_DPR_8[] = {
     ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, ARM_D7_D8_D9_D10, 
   };
 
   // DQuad_with_dsub_0_in_DPR_8 Bit set.
-  static uint8_t DQuad_with_dsub_0_in_DPR_8Bits[] = {
+  static const uint8_t DQuad_with_dsub_0_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x78, 
   };
 
   // DQuad_with_qsub_0_in_QPR_VFP2 Register Class...
-  static uint16_t DQuad_with_qsub_0_in_QPR_VFP2[] = {
+  static const uint16_t DQuad_with_qsub_0_in_QPR_VFP2[] = {
     ARM_Q0_Q1, ARM_Q1_Q2, ARM_Q2_Q3, ARM_Q3_Q4, ARM_Q4_Q5, ARM_Q5_Q6, ARM_Q6_Q7, ARM_Q7_Q8, 
   };
 
   // DQuad_with_qsub_0_in_QPR_VFP2 Bit set.
-  static uint8_t DQuad_with_qsub_0_in_QPR_VFP2Bits[] = {
+  static const uint8_t DQuad_with_qsub_0_in_QPR_VFP2Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x1f, 
   };
 
   // DQuad_with_ssub_0_and_DQuad_with_dsub_1_dsub_2_in_QPR Register Class...
-  static uint16_t DQuad_with_ssub_0_and_DQuad_with_dsub_1_dsub_2_in_QPR[] = {
+  static const uint16_t DQuad_with_ssub_0_and_DQuad_with_dsub_1_dsub_2_in_QPR[] = {
     ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, ARM_D5_D6_D7_D8, ARM_D7_D8_D9_D10, ARM_D9_D10_D11_D12, ARM_D11_D12_D13_D14, ARM_D13_D14_D15_D16, ARM_D15_D16_D17_D18, 
   };
 
   // DQuad_with_ssub_0_and_DQuad_with_dsub_1_dsub_2_in_QPR Bit set.
-  static uint8_t DQuad_with_ssub_0_and_DQuad_with_dsub_1_dsub_2_in_QPRBits[] = {
+  static const uint8_t DQuad_with_ssub_0_and_DQuad_with_dsub_1_dsub_2_in_QPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x07, 
   };
 
   // DQuad_with_dsub_1_dsub_2_in_QPR_VFP2 Register Class...
-  static uint16_t DQuad_with_dsub_1_dsub_2_in_QPR_VFP2[] = {
+  static const uint16_t DQuad_with_dsub_1_dsub_2_in_QPR_VFP2[] = {
     ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, ARM_D5_D6_D7_D8, ARM_D7_D8_D9_D10, ARM_D9_D10_D11_D12, ARM_D11_D12_D13_D14, ARM_D13_D14_D15_D16, 
   };
 
   // DQuad_with_dsub_1_dsub_2_in_QPR_VFP2 Bit set.
-  static uint8_t DQuad_with_dsub_1_dsub_2_in_QPR_VFP2Bits[] = {
+  static const uint8_t DQuad_with_dsub_1_dsub_2_in_QPR_VFP2Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x03, 
   };
 
   // DQuad_with_dsub_1_in_DPR_8 Register Class...
-  static uint16_t DQuad_with_dsub_1_in_DPR_8[] = {
+  static const uint16_t DQuad_with_dsub_1_in_DPR_8[] = {
     ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, 
   };
 
   // DQuad_with_dsub_1_in_DPR_8 Bit set.
-  static uint8_t DQuad_with_dsub_1_in_DPR_8Bits[] = {
+  static const uint8_t DQuad_with_dsub_1_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x38, 
   };
 
   // DQuad_with_qsub_1_in_QPR_VFP2 Register Class...
-  static uint16_t DQuad_with_qsub_1_in_QPR_VFP2[] = {
+  static const uint16_t DQuad_with_qsub_1_in_QPR_VFP2[] = {
     ARM_Q0_Q1, ARM_Q1_Q2, ARM_Q2_Q3, ARM_Q3_Q4, ARM_Q4_Q5, ARM_Q5_Q6, ARM_Q6_Q7, 
   };
 
   // DQuad_with_qsub_1_in_QPR_VFP2 Bit set.
-  static uint8_t DQuad_with_qsub_1_in_QPR_VFP2Bits[] = {
+  static const uint8_t DQuad_with_qsub_1_in_QPR_VFP2Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x0f, 
   };
 
   // DQuad_with_dsub_2_in_DPR_8 Register Class...
-  static uint16_t DQuad_with_dsub_2_in_DPR_8[] = {
+  static const uint16_t DQuad_with_dsub_2_in_DPR_8[] = {
     ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, 
   };
 
   // DQuad_with_dsub_2_in_DPR_8 Bit set.
-  static uint8_t DQuad_with_dsub_2_in_DPR_8Bits[] = {
+  static const uint8_t DQuad_with_dsub_2_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x38, 
   };
 
   // DQuad_with_dsub_3_then_ssub_0_and_DQuad_with_dsub_1_dsub_2_in_QPR Register Class...
-  static uint16_t DQuad_with_dsub_3_then_ssub_0_and_DQuad_with_dsub_1_dsub_2_in_QPR[] = {
+  static const uint16_t DQuad_with_dsub_3_then_ssub_0_and_DQuad_with_dsub_1_dsub_2_in_QPR[] = {
     ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, ARM_D5_D6_D7_D8, ARM_D7_D8_D9_D10, ARM_D9_D10_D11_D12, ARM_D11_D12_D13_D14, 
   };
 
   // DQuad_with_dsub_3_then_ssub_0_and_DQuad_with_dsub_1_dsub_2_in_QPR Bit set.
-  static uint8_t DQuad_with_dsub_3_then_ssub_0_and_DQuad_with_dsub_1_dsub_2_in_QPRBits[] = {
+  static const uint8_t DQuad_with_dsub_3_then_ssub_0_and_DQuad_with_dsub_1_dsub_2_in_QPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x01, 
   };
 
   // DQuad_with_dsub_3_in_DPR_8 Register Class...
-  static uint16_t DQuad_with_dsub_3_in_DPR_8[] = {
+  static const uint16_t DQuad_with_dsub_3_in_DPR_8[] = {
     ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, 
   };
 
   // DQuad_with_dsub_3_in_DPR_8 Bit set.
-  static uint8_t DQuad_with_dsub_3_in_DPR_8Bits[] = {
+  static const uint8_t DQuad_with_dsub_3_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 
   };
 
   // DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_dsub_1_dsub_2_in_QPR Register Class...
-  static uint16_t DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_dsub_1_dsub_2_in_QPR[] = {
+  static const uint16_t DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_dsub_1_dsub_2_in_QPR[] = {
     ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, ARM_D5_D6_D7_D8, ARM_D7_D8_D9_D10, 
   };
 
   // DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_dsub_1_dsub_2_in_QPR Bit set.
-  static uint8_t DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_dsub_1_dsub_2_in_QPRBits[] = {
+  static const uint8_t DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_dsub_1_dsub_2_in_QPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x78, 
   };
 
   // DQuad_with_qsub_0_in_QPR_8 Register Class...
-  static uint16_t DQuad_with_qsub_0_in_QPR_8[] = {
+  static const uint16_t DQuad_with_qsub_0_in_QPR_8[] = {
     ARM_Q0_Q1, ARM_Q1_Q2, ARM_Q2_Q3, ARM_Q3_Q4, 
   };
 
   // DQuad_with_qsub_0_in_QPR_8 Bit set.
-  static uint8_t DQuad_with_qsub_0_in_QPR_8Bits[] = {
+  static const uint8_t DQuad_with_qsub_0_in_QPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x01, 
   };
 
   // DQuad_with_dsub_1_dsub_2_in_QPR_8 Register Class...
-  static uint16_t DQuad_with_dsub_1_dsub_2_in_QPR_8[] = {
+  static const uint16_t DQuad_with_dsub_1_dsub_2_in_QPR_8[] = {
     ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, ARM_D5_D6_D7_D8, 
   };
 
   // DQuad_with_dsub_1_dsub_2_in_QPR_8 Bit set.
-  static uint8_t DQuad_with_dsub_1_dsub_2_in_QPR_8Bits[] = {
+  static const uint8_t DQuad_with_dsub_1_dsub_2_in_QPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x38, 
   };
 
   // DQuad_with_qsub_1_in_QPR_8 Register Class...
-  static uint16_t DQuad_with_qsub_1_in_QPR_8[] = {
+  static const uint16_t DQuad_with_qsub_1_in_QPR_8[] = {
     ARM_Q0_Q1, ARM_Q1_Q2, ARM_Q2_Q3, 
   };
 
   // DQuad_with_qsub_1_in_QPR_8 Bit set.
-  static uint8_t DQuad_with_qsub_1_in_QPR_8Bits[] = {
+  static const uint8_t DQuad_with_qsub_1_in_QPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 
   };
 
   // DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_dsub_1_dsub_2_in_QPR Register Class...
-  static uint16_t DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_dsub_1_dsub_2_in_QPR[] = {
+  static const uint16_t DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_dsub_1_dsub_2_in_QPR[] = {
     ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, 
   };
 
   // DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_dsub_1_dsub_2_in_QPR Bit set.
-  static uint8_t DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_dsub_1_dsub_2_in_QPRBits[] = {
+  static const uint8_t DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_dsub_1_dsub_2_in_QPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 
   };
 
   // QQQQPR Register Class...
-  static uint16_t QQQQPR[] = {
+  static const uint16_t QQQQPR[] = {
     ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6, ARM_Q4_Q5_Q6_Q7, ARM_Q5_Q6_Q7_Q8, ARM_Q6_Q7_Q8_Q9, ARM_Q7_Q8_Q9_Q10, ARM_Q8_Q9_Q10_Q11, ARM_Q9_Q10_Q11_Q12, ARM_Q10_Q11_Q12_Q13, ARM_Q11_Q12_Q13_Q14, ARM_Q12_Q13_Q14_Q15, 
   };
 
   // QQQQPR Bit set.
-  static uint8_t QQQQPRBits[] = {
+  static const uint8_t QQQQPRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0x01, 
   };
 
   // QQQQPR_with_ssub_0 Register Class...
-  static uint16_t QQQQPR_with_ssub_0[] = {
+  static const uint16_t QQQQPR_with_ssub_0[] = {
     ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6, ARM_Q4_Q5_Q6_Q7, ARM_Q5_Q6_Q7_Q8, ARM_Q6_Q7_Q8_Q9, ARM_Q7_Q8_Q9_Q10, 
   };
 
   // QQQQPR_with_ssub_0 Bit set.
-  static uint8_t QQQQPR_with_ssub_0Bits[] = {
+  static const uint8_t QQQQPR_with_ssub_0Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x0f, 
   };
 
   // QQQQPR_with_dsub_2_then_ssub_0 Register Class...
-  static uint16_t QQQQPR_with_dsub_2_then_ssub_0[] = {
+  static const uint16_t QQQQPR_with_dsub_2_then_ssub_0[] = {
     ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6, ARM_Q4_Q5_Q6_Q7, ARM_Q5_Q6_Q7_Q8, ARM_Q6_Q7_Q8_Q9, 
   };
 
   // QQQQPR_with_dsub_2_then_ssub_0 Bit set.
-  static uint8_t QQQQPR_with_dsub_2_then_ssub_0Bits[] = {
+  static const uint8_t QQQQPR_with_dsub_2_then_ssub_0Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x07, 
   };
 
   // QQQQPR_with_dsub_5_then_ssub_0 Register Class...
-  static uint16_t QQQQPR_with_dsub_5_then_ssub_0[] = {
+  static const uint16_t QQQQPR_with_dsub_5_then_ssub_0[] = {
     ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6, ARM_Q4_Q5_Q6_Q7, ARM_Q5_Q6_Q7_Q8, 
   };
 
   // QQQQPR_with_dsub_5_then_ssub_0 Bit set.
-  static uint8_t QQQQPR_with_dsub_5_then_ssub_0Bits[] = {
+  static const uint8_t QQQQPR_with_dsub_5_then_ssub_0Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x03, 
   };
 
   // QQQQPR_with_dsub_7_then_ssub_0 Register Class...
-  static uint16_t QQQQPR_with_dsub_7_then_ssub_0[] = {
+  static const uint16_t QQQQPR_with_dsub_7_then_ssub_0[] = {
     ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6, ARM_Q4_Q5_Q6_Q7, 
   };
 
   // QQQQPR_with_dsub_7_then_ssub_0 Bit set.
-  static uint8_t QQQQPR_with_dsub_7_then_ssub_0Bits[] = {
+  static const uint8_t QQQQPR_with_dsub_7_then_ssub_0Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x01, 
   };
 
   // QQQQPR_with_dsub_0_in_DPR_8 Register Class...
-  static uint16_t QQQQPR_with_dsub_0_in_DPR_8[] = {
+  static const uint16_t QQQQPR_with_dsub_0_in_DPR_8[] = {
     ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6, 
   };
 
   // QQQQPR_with_dsub_0_in_DPR_8 Bit set.
-  static uint8_t QQQQPR_with_dsub_0_in_DPR_8Bits[] = {
+  static const uint8_t QQQQPR_with_dsub_0_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 
   };
 
   // QQQQPR_with_dsub_2_in_DPR_8 Register Class...
-  static uint16_t QQQQPR_with_dsub_2_in_DPR_8[] = {
+  static const uint16_t QQQQPR_with_dsub_2_in_DPR_8[] = {
     ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, 
   };
 
   // QQQQPR_with_dsub_2_in_DPR_8 Bit set.
-  static uint8_t QQQQPR_with_dsub_2_in_DPR_8Bits[] = {
+  static const uint8_t QQQQPR_with_dsub_2_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x70, 
   };
 
   // QQQQPR_with_dsub_4_in_DPR_8 Register Class...
-  static uint16_t QQQQPR_with_dsub_4_in_DPR_8[] = {
+  static const uint16_t QQQQPR_with_dsub_4_in_DPR_8[] = {
     ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, 
   };
 
   // QQQQPR_with_dsub_4_in_DPR_8 Bit set.
-  static uint8_t QQQQPR_with_dsub_4_in_DPR_8Bits[] = {
+  static const uint8_t QQQQPR_with_dsub_4_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x30, 
   };
 
   // QQQQPR_with_dsub_6_in_DPR_8 Register Class...
-  static uint16_t QQQQPR_with_dsub_6_in_DPR_8[] = {
+  static const uint16_t QQQQPR_with_dsub_6_in_DPR_8[] = {
     ARM_Q0_Q1_Q2_Q3, 
   };
 
   // QQQQPR_with_dsub_6_in_DPR_8 Bit set.
-  static uint8_t QQQQPR_with_dsub_6_in_DPR_8Bits[] = {
+  static const uint8_t QQQQPR_with_dsub_6_in_DPR_8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 
   };
 
-static MCRegisterClass ARMMCRegisterClasses[] = {
+static const MCRegisterClass ARMMCRegisterClasses[] = {
   { "SPR", SPR, SPRBits, 32, sizeof(SPRBits), ARM_SPRRegClassID, 4, 4, 1, 1 },
   { "GPR", GPR, GPRBits, 16, sizeof(GPRBits), ARM_GPRRegClassID, 4, 4, 1, 1 },
   { "GPRwithAPSR", GPRwithAPSR, GPRwithAPSRBits, 16, sizeof(GPRwithAPSRBits), ARM_GPRwithAPSRRegClassID, 4, 4, 1, 1 },
