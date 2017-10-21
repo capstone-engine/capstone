@@ -86,7 +86,7 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 		bool Is64Bit = (Opcode == AArch64_SBFMXri || Opcode == AArch64_UBFMXri);
 
 		if (MCOperand_isImm(Op2) && MCOperand_getImm(Op2) == 0 && MCOperand_isImm(Op3)) {
-			char *AsmMnemonic = NULL;
+			const char *AsmMnemonic = NULL;
 
 			switch (MCOperand_getImm(Op3)) {
 				default:
@@ -134,7 +134,7 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 		// instruction. In all cases the immediate shift amount shift must be in
 		// the range 0 to (reg.size -1).
 		if (MCOperand_isImm(Op2) && MCOperand_isImm(Op3)) {
-			char *AsmMnemonic = NULL;
+			const char *AsmMnemonic = NULL;
 			int shift = 0;
 			int immr = (int)MCOperand_getImm(Op2);
 			int imms = (int)MCOperand_getImm(Op3);
@@ -323,7 +323,7 @@ static bool printSysAlias(MCInst *MI, SStream *O)
 	// unsigned Opcode = MCInst_getOpcode(MI);
 	//assert(Opcode == AArch64_SYSxt && "Invalid opcode for SYS alias!");
 
-	char *Asm = NULL;
+	const char *Asm = NULL;
 	MCOperand *Op1 = MCInst_getOperand(MI, 0);
 	MCOperand *Cn = MCInst_getOperand(MI, 1);
 	MCOperand *Cm = MCInst_getOperand(MI, 2);
@@ -1011,7 +1011,7 @@ static void printPrefetchOp(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	unsigned prfop = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	bool Valid;
-	char *Name = A64NamedImmMapper_toString(&A64PRFM_PRFMMapper, prfop, &Valid);
+	const char *Name = A64NamedImmMapper_toString(&A64PRFM_PRFMMapper, prfop, &Valid);
 
 	if (Valid) {
 		SStream_concat0(O, Name);
@@ -1286,7 +1286,7 @@ static void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
 	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
 	unsigned Opcode = MCInst_getOpcode(MI);
 	bool Valid;
-	char *Name;
+	const char *Name;
 
 	if (Opcode == AArch64_ISB)
 		Name = A64NamedImmMapper_toString(&A64ISB_ISBMapper, Val, &Valid);
@@ -1350,7 +1350,7 @@ static void printSystemPStateField(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
 	bool Valid;
-	char *Name;
+	const char *Name;
 
 	Name = A64NamedImmMapper_toString(&A64PState_PStateMapper, Val, &Valid);
 	if (Valid) {

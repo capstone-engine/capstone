@@ -35,7 +35,7 @@ unsigned short insn_find(insn_map *m, unsigned int max, unsigned int id, unsigne
 // map id to string
 typedef struct name_map {
 	unsigned int id;
-	char *name;
+	const char *name;
 } name_map;
 
 // map a name to its ID

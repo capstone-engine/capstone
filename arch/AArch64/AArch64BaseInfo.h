@@ -98,7 +98,7 @@ typedef enum A64CC_CondCode { // Meaning (integer)     Meaning (floating-point)
 	A64CC_Invalid
 } A64CC_CondCode;
 
-inline static char *getCondCodeName(A64CC_CondCode CC)
+inline static const char *getCondCodeName(A64CC_CondCode CC)
 {
 	switch (CC) {
 		default: return NULL;	// never reach
@@ -139,7 +139,7 @@ inline static A64CC_CondCode getInvertedCondCode(A64CC_CondCode Code)
 /// might even be optimal to just reorder the tables for the common instructions
 /// rather than changing the algorithm.
 typedef struct A64NamedImmMapper_Mapping {
-	char *Name;
+	const char *Name;
 	uint32_t Value;
 } A64NamedImmMapper_Mapping;
 
@@ -293,7 +293,7 @@ typedef enum A64Layout_VectorLayout {
 	A64Layout_VL_D
 } A64Layout_VectorLayout;
 
-inline static char *A64VectorLayoutToString(A64Layout_VectorLayout Layout)
+inline static const char *A64VectorLayoutToString(A64Layout_VectorLayout Layout)
 {
 	switch (Layout) {
 		case A64Layout_VL_8B:  return ".8b";
@@ -1002,7 +1002,7 @@ enum A64TLBIValues {
 
 bool A64Imms_isLogicalImmBits(unsigned RegWidth, uint32_t Bits, uint64_t *Imm);
 
-char *A64NamedImmMapper_toString(A64NamedImmMapper *N, uint32_t Value, bool *Valid);
+const char *A64NamedImmMapper_toString(A64NamedImmMapper *N, uint32_t Value, bool *Valid);
 
 uint32_t A64NamedImmMapper_fromString(A64NamedImmMapper *N, char *Name, bool *Valid);
 

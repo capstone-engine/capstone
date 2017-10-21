@@ -28,7 +28,7 @@
 
 #include "AArch64BaseInfo.h"
 
-char *A64NamedImmMapper_toString(A64NamedImmMapper *N, uint32_t Value, bool *Valid)
+const char *A64NamedImmMapper_toString(A64NamedImmMapper *N, uint32_t Value, bool *Valid)
 {
 	unsigned i;
 	for (i = 0; i < N->NumPairs; ++i) {
@@ -44,7 +44,7 @@ char *A64NamedImmMapper_toString(A64NamedImmMapper *N, uint32_t Value, bool *Val
 
 // compare s1 with lower(s2)
 // return true if s1 == lower(f2), and false otherwise
-static bool compare_lower_str(char *s1, char *s2)
+static bool compare_lower_str(const char *s1, const char *s2)
 {
 	bool res;
 	char *lower = cs_strdup(s2), *c;

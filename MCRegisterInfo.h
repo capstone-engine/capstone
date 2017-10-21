@@ -30,7 +30,7 @@ typedef uint16_t MCPhysReg;
 typedef MCPhysReg* iterator;
 
 typedef struct MCRegisterClass {
-	char *Name;
+	const char *Name;
 	iterator RegsBegin;
 	uint8_t *RegSet;
 	uint16_t RegsSize;
