@@ -225,16 +225,14 @@ ifneq (,$(findstring tms320c64x,$(CAPSTONE_ARCHS)))
 endif
 
 DEP_M680X =
-DEP_M680X += arch/M680X/M680XInstPrinter.h
-DEP_M680X += arch/M680X/M680XDisassembler.h
-DEP_M680X += arch/M680X/M680XDisassemblerInternals.h
+DEP_M680X += $(wildcard arch/M680X/*.inc)
+DEP_M680X += $(wildcard arch/M680X/M680X*.h)
 
 LIBOBJ_M680X =
 ifneq (,$(findstring m680x,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_M680X
-	LIBOBJ_M680X += $(OBJDIR)/arch/M680X/M680XDisassembler.o
-	LIBOBJ_M680X += $(OBJDIR)/arch/M680X/M680XInstPrinter.o
-	LIBOBJ_M680X += $(OBJDIR)/arch/M680X/M680XModule.o
+	LIBSRC_M680X += $(wildcard arch/M680X/*.c)
+	LIBOBJ_M680X += $(LIBSRC_M680X:%.c=$(OBJDIR)/%.o)
 endif
 
 LIBOBJ =
