@@ -14,7 +14,7 @@
 #include "PPCGenInstrInfo.inc"
 
 #ifndef CAPSTONE_DIET
-static name_map reg_name_maps[] = {
+static const name_map reg_name_maps[] = {
 	{ PPC_REG_INVALID, NULL },
 
 	{ PPC_REG_CARRY, "ca" },
@@ -211,7 +211,7 @@ const char *PPC_reg_name(csh handle, unsigned int reg)
 #endif
 }
 
-static insn_map insns[] = {
+static const insn_map insns[] = {
 	// dummy item
 	{
 		0, 0,
@@ -6924,7 +6924,7 @@ void PPC_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map insn_name_maps[] = {
+static const name_map insn_name_maps[] = {
 	{ PPC_INS_INVALID, NULL },
 
 	{ PPC_INS_ADD, "add" },
@@ -7865,7 +7865,7 @@ static name_map insn_name_maps[] = {
 };
 
 // special alias insn
-static name_map alias_insn_names[] = {
+static const name_map alias_insn_names[] = {
 	{ 0, NULL }
 };
 #endif
@@ -7891,7 +7891,7 @@ const char *PPC_insn_name(csh handle, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map group_name_maps[] = {
+static const name_map group_name_maps[] = {
 	// generic groups
 	{ PPC_GRP_INVALID, NULL },
 	{ PPC_GRP_JUMP,	"jump" },
@@ -7930,7 +7930,7 @@ const char *PPC_group_name(csh handle, unsigned int id)
 // map internal raw register to 'public' register
 ppc_reg PPC_map_register(unsigned int r)
 {
-	static unsigned int map[] = { 0,
+	static const unsigned int map[] = { 0,
 		0, PPC_REG_CARRY, PPC_REG_CC, PPC_REG_CTR, 0,
 		PPC_REG_LR, 0, PPC_REG_VRSAVE, PPC_REG_R0, 0,
 		PPC_REG_CR0, PPC_REG_CR1, PPC_REG_CR2, PPC_REG_CR3, PPC_REG_CR4,
@@ -7995,7 +7995,7 @@ ppc_reg PPC_map_register(unsigned int r)
 	return 0;
 }
 
-static struct ppc_alias alias_insn_name_maps[] = {
+static const struct ppc_alias alias_insn_name_maps[] = {
 	//{ PPC_INS_BTA, "bta" },
 	{ PPC_INS_B, PPC_BC_LT, "blt" },
 	{ PPC_INS_B, PPC_BC_LE, "ble" },
@@ -8117,7 +8117,7 @@ bool PPC_alias_insn(const char *name, struct ppc_alias *alias)
 }
 
 // list all relative branch instructions
-static unsigned int insn_abs[] = {
+static const unsigned int insn_abs[] = {
 	PPC_BA,
 	PPC_BCCA,
 	PPC_BCCLA,

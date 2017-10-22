@@ -14,7 +14,7 @@
 #include "AArch64GenInstrInfo.inc"
 
 #ifndef CAPSTONE_DIET
-static name_map reg_name_maps[] = {
+static const name_map reg_name_maps[] = {
 	{ ARM64_REG_INVALID, NULL },
 
 	{ ARM64_REG_X29, "x29"},
@@ -292,7 +292,7 @@ const char *AArch64_reg_name(csh handle, unsigned int reg)
 #endif
 }
 
-static insn_map insns[] = {
+static const insn_map insns[] = {
 	// dummy item
 	{
 		0, 0,
@@ -14304,7 +14304,7 @@ void AArch64_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 	}
 }
 
-static name_map insn_name_maps[] = {
+static const name_map insn_name_maps[] = {
 	{ ARM64_INS_INVALID, NULL },
 
 	{ ARM64_INS_ABS, "abs" },
@@ -14726,7 +14726,7 @@ static name_map insn_name_maps[] = {
 };
 
 // map *S & alias instructions back to original id
-static name_map alias_insn_name_maps[] = {
+static const name_map alias_insn_name_maps[] = {
 	{ ARM64_INS_ADC, "adcs" },
 	{ ARM64_INS_AND, "ands" },
 	{ ARM64_INS_ADD, "adds" },
@@ -14801,7 +14801,7 @@ const char *AArch64_insn_name(csh handle, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map group_name_maps[] = {
+static const name_map group_name_maps[] = {
 	// generic groups
 	{ ARM64_GRP_INVALID, NULL },
 	{ ARM64_GRP_JUMP, "jump" },
@@ -14851,7 +14851,7 @@ arm64_reg AArch64_map_vregister(unsigned int r)
 	// for some reasons different Arm64 can map different register number to
 	// the same register. this function handles the issue for exposing Mips
 	// operands by mapping internal registers to 'public' register.
-	unsigned int map[] = { 0,
+	static const unsigned int map[] = { 0,
 		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0,

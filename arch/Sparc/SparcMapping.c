@@ -14,7 +14,7 @@
 #include "SparcGenInstrInfo.inc"
 
 #ifndef CAPSTONE_DIET
-static name_map reg_name_maps[] = {
+static const name_map reg_name_maps[] = {
 	{ SPARC_REG_INVALID, NULL },
 
 	{ SPARC_REG_F0, "f0"},
@@ -121,7 +121,7 @@ const char *Sparc_reg_name(csh handle, unsigned int reg)
 #endif
 }
 
-static insn_map insns[] = {
+static const insn_map insns[] = {
 	// dummy item
 	{
 		0, 0,
@@ -2775,7 +2775,7 @@ static insn_map insns[] = {
 static struct hint_map {
 	unsigned int id;
 	uint8_t hints;
-} insn_hints[] = {
+} const insn_hints[] = {
 	{ SP_BPGEZapn, SPARC_HINT_A | SPARC_HINT_PN },
 	{ SP_BPGEZapt, SPARC_HINT_A | SPARC_HINT_PT },
 	{ SP_BPGEZnapn, SPARC_HINT_PN },
@@ -2833,7 +2833,7 @@ void Sparc_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 	}
 }
 
-static name_map insn_name_maps[] = {
+static const name_map insn_name_maps[] = {
 	{ SPARC_INS_INVALID, NULL },
 
 	{ SPARC_INS_ADDCC, "addcc" },
@@ -3120,7 +3120,7 @@ static name_map insn_name_maps[] = {
 
 #ifndef CAPSTONE_DIET
 // special alias insn
-static name_map alias_insn_names[] = {
+static const name_map alias_insn_names[] = {
 	{ 0, NULL }
 };
 #endif
@@ -3146,7 +3146,7 @@ const char *Sparc_insn_name(csh handle, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map group_name_maps[] = {
+static const name_map group_name_maps[] = {
 	// generic groups
 	{ SPARC_GRP_INVALID, NULL },
 	{ SPARC_GRP_JUMP, "jump" },
@@ -3182,7 +3182,7 @@ const char *Sparc_group_name(csh handle, unsigned int id)
 // map internal raw register to 'public' register
 sparc_reg Sparc_map_register(unsigned int r)
 {
-	static unsigned int map[] = { 0,
+	static const unsigned int map[] = { 0,
 		SPARC_REG_ICC, SPARC_REG_Y, SPARC_REG_F0, SPARC_REG_F2, SPARC_REG_F4,
 		SPARC_REG_F6, SPARC_REG_F8, SPARC_REG_F10, SPARC_REG_F12, SPARC_REG_F14,
 		SPARC_REG_F16, SPARC_REG_F18, SPARC_REG_F20, SPARC_REG_F22, SPARC_REG_F24,
@@ -3229,7 +3229,7 @@ sparc_reg Sparc_map_insn(const char *name)
 
 // NOTE: put strings in the order of string length since
 // we are going to compare with mnemonic to find out CC
-static name_map alias_icc_maps[] = {
+static const name_map alias_icc_maps[] = {
 	{ SPARC_CC_ICC_LEU, "leu" },
 	{ SPARC_CC_ICC_POS, "pos" },
 	{ SPARC_CC_ICC_NEG, "neg" },
@@ -3248,7 +3248,7 @@ static name_map alias_icc_maps[] = {
 	{ SPARC_CC_ICC_L, "l" },
 };
 
-static name_map alias_fcc_maps[] = {
+static const name_map alias_fcc_maps[] = {
 	{ SPARC_CC_FCC_UGE, "uge" },
 	{ SPARC_CC_FCC_ULE, "ule" },
 	{ SPARC_CC_FCC_UG, "ug" },
@@ -3286,7 +3286,7 @@ sparc_cc Sparc_map_FCC(const char *name)
 	return (i != -1)? i : SPARC_CC_INVALID;
 }
 
-static name_map hint_maps[] = {
+static const name_map hint_maps[] = {
 	{ SPARC_HINT_A, ",a" },
 	{ SPARC_HINT_A | SPARC_HINT_PN, ",a,pn" },
 	{ SPARC_HINT_PN, ",pn" },

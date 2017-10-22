@@ -14,7 +14,7 @@
 #include "SystemZGenInstrInfo.inc"
 
 #ifndef CAPSTONE_DIET
-static name_map reg_name_maps[] = {
+static const name_map reg_name_maps[] = {
 	{ SYSZ_REG_INVALID, NULL },
 
 	{ SYSZ_REG_0, "0"},
@@ -66,7 +66,7 @@ const char *SystemZ_reg_name(csh handle, unsigned int reg)
 #endif
 }
 
-static insn_map insns[] = {
+static const insn_map insns[] = {
 	// dummy item
 	{
 		0, 0,
@@ -4344,7 +4344,7 @@ void SystemZ_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map insn_name_maps[] = {
+static const name_map insn_name_maps[] = {
 	{ SYSZ_INS_INVALID, NULL },
 
 	{ SYSZ_INS_A, "a" },
@@ -5031,7 +5031,7 @@ static name_map insn_name_maps[] = {
 };
 
 // special alias insn
-static name_map alias_insn_names[] = {
+static const name_map alias_insn_names[] = {
 	{ 0, NULL }
 };
 #endif
@@ -5057,7 +5057,7 @@ const char *SystemZ_insn_name(csh handle, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map group_name_maps[] = {
+static const name_map group_name_maps[] = {
 	// generic groups
 	{ SYSZ_GRP_INVALID, NULL },
 	{ SYSZ_GRP_JUMP, "jump" },
@@ -5091,7 +5091,7 @@ const char *SystemZ_group_name(csh handle, unsigned int id)
 // map internal raw register to 'public' register
 sysz_reg SystemZ_map_register(unsigned int r)
 {
-	static unsigned int map[] = { 0,
+	static const unsigned int map[] = { 0,
 		SYSZ_REG_CC, SYSZ_REG_F0, SYSZ_REG_F1, SYSZ_REG_F2, SYSZ_REG_F3,
 		SYSZ_REG_F4, SYSZ_REG_F5, SYSZ_REG_F6, SYSZ_REG_F7, SYSZ_REG_F8,
 		SYSZ_REG_F9, SYSZ_REG_F10, SYSZ_REG_F11, SYSZ_REG_F12, SYSZ_REG_F13,

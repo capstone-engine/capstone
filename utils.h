@@ -30,21 +30,21 @@ typedef struct insn_map {
 
 // look for @id in @m, given its size in @max. first time call will update @cache.
 // return 0 if not found
-unsigned short insn_find(insn_map *m, unsigned int max, unsigned int id, unsigned short **cache);
+unsigned short insn_find(const insn_map *m, unsigned int max, unsigned int id, unsigned short **cache);
 
 // map id to string
 typedef struct name_map {
 	unsigned int id;
-	char *name;
+	const char *name;
 } name_map;
 
 // map a name to its ID
 // return 0 if not found
-int name2id(name_map* map, int max, const char *name);
+int name2id(const name_map* map, int max, const char *name);
 
 // count number of positive members in a list.
 // NOTE: list must be guaranteed to end in 0
-unsigned int count_positive(unsigned char *list);
+unsigned int count_positive(const unsigned char *list);
 
 #define ARR_SIZE(a) (sizeof(a)/sizeof(a[0]))
 

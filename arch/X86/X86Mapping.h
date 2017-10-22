@@ -36,15 +36,15 @@ x86_reg X86_insn_reg_att(unsigned int id);
 bool X86_insn_reg_intel2(unsigned int id, x86_reg *reg1, x86_reg *reg2);
 bool X86_insn_reg_att2(unsigned int id, x86_reg *reg1, x86_reg *reg2);
 
-extern uint64_t arch_masks[9];
+extern const uint64_t arch_masks[9];
 
 // handle LOCK/REP/REPNE prefixes
 // return True if we patch mnemonic, like in MULPD case
 bool X86_lockrep(MCInst *MI, SStream *O);
 
 // map registers to sizes
-extern uint8_t regsize_map_32[];
-extern uint8_t regsize_map_64[];
+extern const uint8_t regsize_map_32[];
+extern const uint8_t regsize_map_64[];
 
 void op_addReg(MCInst *MI, int reg);
 void op_addImm(MCInst *MI, int v);

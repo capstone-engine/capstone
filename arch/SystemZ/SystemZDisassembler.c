@@ -302,7 +302,7 @@ bool SystemZ_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst
 {
 	uint64_t Inst;
 	uint8_t Bytes[6];
-	uint8_t *Table;
+	const uint8_t *Table;
 	uint16_t I; 
 
 	// The top 2 bits of the first byte specify the size.

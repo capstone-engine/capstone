@@ -28,7 +28,7 @@ void SStream_Init(SStream *ss)
 	ss->buffer[0] = '\0';
 }
 
-void SStream_concat0(SStream *ss, char *s)
+void SStream_concat0(SStream *ss, const char *s)
 {
 #ifndef CAPSTONE_DIET
 	unsigned int len = (unsigned int) strlen(s);

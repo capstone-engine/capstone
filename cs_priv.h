@@ -22,7 +22,7 @@ typedef const char *(*GetName_t)(csh handle, unsigned int id);
 typedef void (*GetID_t)(cs_struct *h, cs_insn *insn, unsigned int id);
 
 // return register name, given register ID
-typedef char *(*GetRegisterName_t)(unsigned RegNo);
+typedef const char *(*GetRegisterName_t)(unsigned RegNo);
 
 // for ARM only
 typedef struct ARM_ITStatus {
@@ -52,7 +52,7 @@ struct cs_struct {
 	bool skipdata;	// set this to True if we skip data when disassembling
 	uint8_t skipdata_size;	// how many bytes to skip
 	cs_opt_skipdata skipdata_setup;	// user-defined skipdata setup
-	uint8_t *regsize_map;	// map to register size (x86-only for now)
+	const uint8_t *regsize_map;	// map to register size (x86-only for now)
 };
 
 #define MAX_ARCH 8

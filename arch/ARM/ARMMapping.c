@@ -14,7 +14,7 @@
 #include "ARMGenInstrInfo.inc"
 
 #ifndef CAPSTONE_DIET
-static name_map reg_name_maps[] = {
+static const name_map reg_name_maps[] = {
 	{ ARM_REG_INVALID, NULL },
 	{ ARM_REG_APSR, "apsr"},
 	{ ARM_REG_APSR_NZCV, "apsr_nzcv"},
@@ -127,7 +127,7 @@ static name_map reg_name_maps[] = {
 	{ ARM_REG_S30, "s30"},
 	{ ARM_REG_S31, "s31"},
 };
-static name_map reg_name_maps2[] = {
+static const name_map reg_name_maps2[] = {
 	{ ARM_REG_INVALID, NULL },
 	{ ARM_REG_APSR, "apsr"},
 	{ ARM_REG_APSR_NZCV, "apsr_nzcv"},
@@ -266,7 +266,7 @@ const char *ARM_reg_name2(csh handle, unsigned int reg)
 #endif
 }
 
-static insn_map insns[] = {
+static const insn_map insns[] = {
 	// dummy item
 	{
 		0, 0,
@@ -13576,7 +13576,7 @@ void ARM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map insn_name_maps[] = {
+static const name_map insn_name_maps[] = {
 	{ ARM_INS_INVALID, NULL },
 
 	{ ARM_INS_ADC, "adc" },
@@ -14031,7 +14031,7 @@ const char *ARM_insn_name(csh handle, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map group_name_maps[] = {
+static const name_map group_name_maps[] = {
 	// generic groups
 	{ ARM_GRP_INVALID, NULL },
 	{ ARM_GRP_JUMP,	"jump" },
@@ -14090,7 +14090,7 @@ const char *ARM_group_name(csh handle, unsigned int id)
 
 // list all relative branch instructions
 // ie: insns[i].branch && !insns[i].indirect_branch
-static unsigned int insn_rel[] = {
+static const unsigned int insn_rel[] = {
 	ARM_BL,
 	ARM_BLX_pred,
 	ARM_Bcc,
@@ -14107,7 +14107,7 @@ static unsigned int insn_rel[] = {
 	0
 };
 
-static unsigned int insn_blx_rel_to_arm[] = {
+static const unsigned int insn_blx_rel_to_arm[] = {
 	ARM_tBLXi,
 	0
 };

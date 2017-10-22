@@ -82,8 +82,8 @@ typedef enum Mips_CondCode {
 #define GET_INSTRINFO_ENUM
 #include "MipsGenInstrInfo.inc"
 
-static char *getRegisterName(unsigned RegNo);
-static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
+static const char *getRegisterName(unsigned RegNo);
+static void printInstruction(MCInst *MI, SStream *O, const MCRegisterInfo *MRI);
 
 static void set_mem_access(MCInst *MI, bool status)
 {
@@ -108,7 +108,7 @@ static bool isReg(MCInst *MI, unsigned OpNo, unsigned R)
 			MCOperand_getReg(MCInst_getOperand(MI, OpNo)) == R);
 }
 
-static char* MipsFCCToString(Mips_CondCode CC)
+static const char* MipsFCCToString(Mips_CondCode CC)
 {
 	switch (CC) {
 		default: return 0;	// never reach
@@ -315,14 +315,14 @@ static void printFCCOperand(MCInst *MI, int opNum, SStream *O)
 	SStream_concat0(O, MipsFCCToString((Mips_CondCode)MCOperand_getImm(MO)));
 }
 
-static char *printAlias1(char *Str, MCInst *MI, unsigned OpNo, SStream *OS)
+static char *printAlias1(const char *Str, MCInst *MI, unsigned OpNo, SStream *OS)
 {
 	SStream_concat(OS, "%s\t", Str);
 	printOperand(MI, OpNo, OS);
 	return cs_strdup(Str);
 }
 
-static char *printAlias2(char *Str, MCInst *MI,
+static char *printAlias2(const char *Str, MCInst *MI,
 		unsigned OpNo0, unsigned OpNo1, SStream *OS)
 {
 	char *tmp;
