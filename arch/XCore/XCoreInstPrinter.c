@@ -34,7 +34,7 @@
 #include "../../MathExtras.h"
 #include "XCoreMapping.h"
 
-static char *getRegisterName(unsigned RegNo);
+static const char *getRegisterName(unsigned RegNo);
 
 void XCore_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 {

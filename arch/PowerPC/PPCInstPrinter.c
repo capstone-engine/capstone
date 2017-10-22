@@ -30,11 +30,11 @@
 #include "PPCMapping.h"
 
 #ifndef CAPSTONE_DIET
-static char *getRegisterName(unsigned RegNo);
+static const char *getRegisterName(unsigned RegNo);
 #endif
 
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
-static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
+static void printInstruction(MCInst *MI, SStream *O, const MCRegisterInfo *MRI);
 static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O);
 static char *printAliasInstr(MCInst *MI, SStream *OS, void *info);
 static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info);
@@ -624,7 +624,7 @@ static void printTLSCall(MCInst *MI, unsigned OpNo, SStream *O)
 #ifndef CAPSTONE_DIET
 /// stripRegisterPrefix - This method strips the character prefix from a
 /// register name so that only the number is left.  Used by for linux asm.
-static char *stripRegisterPrefix(char *RegName)
+static const char *stripRegisterPrefix(const char *RegName)
 {
 	switch (RegName[0]) {
 		case 'r':
@@ -648,7 +648,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	if (MCOperand_isReg(Op)) {
 		unsigned reg = MCOperand_getReg(Op);
 #ifndef CAPSTONE_DIET
-		char *RegName = getRegisterName(reg);
+		const char *RegName = getRegisterName(reg);
 #endif
 		// map to public register
 		reg = PPC_map_register(reg);

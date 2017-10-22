@@ -38,8 +38,8 @@
 
 #include "Sparc.h"
 
-static char *getRegisterName(unsigned RegNo);
-static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
+static const char *getRegisterName(unsigned RegNo);
+static void printInstruction(MCInst *MI, SStream *O, const MCRegisterInfo *MRI);
 static void printMemOperand(MCInst *MI, int opNum, SStream *O, const char *Modifier);
 static void printOperand(MCInst *MI, int opNum, SStream *O);
 

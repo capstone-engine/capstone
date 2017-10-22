@@ -65,7 +65,7 @@ enum {
 static void translateRegister(MCInst *mcInst, Reg reg)
 {
 #define ENTRY(x) X86_##x,
-	uint8_t llvmRegnums[] = {
+	static const uint8_t llvmRegnums[] = {
 		ALL_REGS
 			0
 	};

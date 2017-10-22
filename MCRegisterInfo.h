@@ -27,12 +27,12 @@
 /// An unsigned integer type large enough to represent all physical registers,
 /// but not necessarily virtual registers.
 typedef uint16_t MCPhysReg;
-typedef MCPhysReg* iterator;
+typedef const MCPhysReg* iterator;
 
 typedef struct MCRegisterClass {
-	char *Name;
+	const char *Name;
 	iterator RegsBegin;
-	uint8_t *RegSet;
+	const uint8_t *RegSet;
 	uint16_t RegsSize;
 	uint16_t RegSetSize;
 	uint16_t ID;
@@ -75,42 +75,42 @@ typedef struct MCRegisterDesc {
 /// virtual methods.
 ///
 typedef struct MCRegisterInfo {
-	MCRegisterDesc *Desc;                 // Pointer to the descriptor array
+	const MCRegisterDesc *Desc;                 // Pointer to the descriptor array
 	unsigned NumRegs;                           // Number of entries in the array
 	unsigned RAReg;                             // Return address register
 	unsigned PCReg;                             // Program counter register
-	MCRegisterClass *Classes;             // Pointer to the regclass array
+	const MCRegisterClass *Classes;             // Pointer to the regclass array
 	unsigned NumClasses;                        // Number of entries in the array
 	unsigned NumRegUnits;                       // Number of regunits.
 	uint16_t (*RegUnitRoots)[2];          // Pointer to regunit root table.
-	MCPhysReg *DiffLists;                 // Pointer to the difflists array
-	char *RegStrings;                     // Pointer to the string table.
-	uint16_t *SubRegIndices;              // Pointer to the subreg lookup
+	const MCPhysReg *DiffLists;                 // Pointer to the difflists array
+	const char *RegStrings;                     // Pointer to the string table.
+	const uint16_t *SubRegIndices;              // Pointer to the subreg lookup
 	// array.
 	unsigned NumSubRegIndices;                  // Number of subreg indices.
-	uint16_t *RegEncodingTable;           // Pointer to array of register
+	const uint16_t *RegEncodingTable;           // Pointer to array of register
 	// encodings.
 } MCRegisterInfo;
 
 void MCRegisterInfo_InitMCRegisterInfo(MCRegisterInfo *RI,
-		MCRegisterDesc *D, unsigned NR, unsigned RA,
+		const MCRegisterDesc *D, unsigned NR, unsigned RA,
 		unsigned PC,
-		MCRegisterClass *C, unsigned NC,
+		const MCRegisterClass *C, unsigned NC,
 		uint16_t (*RURoots)[2],
 		unsigned NRU,
-		MCPhysReg *DL,
-		char *Strings,
-		uint16_t *SubIndices,
+		const MCPhysReg *DL,
+		const char *Strings,
+		const uint16_t *SubIndices,
 		unsigned NumIndices,
-		uint16_t *RET);
+		const uint16_t *RET);
 
 
-unsigned MCRegisterInfo_getMatchingSuperReg(MCRegisterInfo *RI, unsigned Reg, unsigned SubIdx, MCRegisterClass *RC);
+unsigned MCRegisterInfo_getMatchingSuperReg(const MCRegisterInfo *RI, unsigned Reg, unsigned SubIdx, const MCRegisterClass *RC);
 
-unsigned MCRegisterInfo_getSubReg(MCRegisterInfo *RI, unsigned Reg, unsigned Idx);
+unsigned MCRegisterInfo_getSubReg(const MCRegisterInfo *RI, unsigned Reg, unsigned Idx);
 
-MCRegisterClass* MCRegisterInfo_getRegClass(MCRegisterInfo *RI, unsigned i);
+const MCRegisterClass* MCRegisterInfo_getRegClass(const MCRegisterInfo *RI, unsigned i);
 
-bool MCRegisterClass_contains(MCRegisterClass *c, unsigned Reg);
+bool MCRegisterClass_contains(const MCRegisterClass *c, unsigned Reg);
 
 #endif

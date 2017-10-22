@@ -35,12 +35,12 @@ typedef enum ARM_AM_AddrOpc {
 	ARM_AM_add
 } ARM_AM_AddrOpc;
 
-static inline char *ARM_AM_getAddrOpcStr(ARM_AM_AddrOpc Op)
+static inline const char *ARM_AM_getAddrOpcStr(ARM_AM_AddrOpc Op)
 {
 	return Op == ARM_AM_sub ? "-" : "";
 }
 
-static inline char *ARM_AM_getShiftOpcStr(ARM_AM_ShiftOpc Op)
+static inline const char *ARM_AM_getShiftOpcStr(ARM_AM_ShiftOpc Op)
 {
 	switch (Op) {
 		default: return "";	//llvm_unreachable("Unknown shift opc!");

@@ -497,7 +497,7 @@ enum {
 #ifdef GET_REGINFO_MC_DESC
 #undef GET_REGINFO_MC_DESC
 
-static MCPhysReg MipsRegDiffLists[] = {
+static const MCPhysReg MipsRegDiffLists[] = {
   /* 0 */ 0, 0,
   /* 2 */ 4, 1, 1, 1, 1, 0,
   /* 8 */ 364, 65286, 1, 1, 1, 0,
@@ -590,14 +590,14 @@ static MCPhysReg MipsRegDiffLists[] = {
   /* 251 */ 65535, 0,
 };
 
-static uint16_t MipsSubRegIdxLists[] = {
+static const uint16_t MipsSubRegIdxLists[] = {
   /* 0 */ 1, 0,
   /* 2 */ 3, 4, 5, 6, 7, 0,
   /* 8 */ 2, 9, 8, 0,
   /* 12 */ 9, 1, 8, 10, 11, 0,
 };
 
-static MCRegisterDesc MipsRegDesc[] = { // Descriptors
+static const MCRegisterDesc MipsRegDesc[] = { // Descriptors
   { 6, 0, 0, 0, 0 },
   { 2007, 1, 82, 1, 4017 },
   { 2010, 1, 1, 1, 4017 },
@@ -994,486 +994,486 @@ static MCRegisterDesc MipsRegDesc[] = { // Descriptors
   { 977, 156, 1, 0, 2273 },
 };
 
-  static MCPhysReg OddSP[] = {
+  static const MCPhysReg OddSP[] = {
     Mips_F1, Mips_F3, Mips_F5, Mips_F7, Mips_F9, Mips_F11, Mips_F13, Mips_F15, Mips_F17, Mips_F19, Mips_F21, Mips_F23, Mips_F25, Mips_F27, Mips_F29, Mips_F31, Mips_F_HI1, Mips_F_HI3, Mips_F_HI5, Mips_F_HI7, Mips_F_HI9, Mips_F_HI11, Mips_F_HI13, Mips_F_HI15, Mips_F_HI17, Mips_F_HI19, Mips_F_HI21, Mips_F_HI23, Mips_F_HI25, Mips_F_HI27, Mips_F_HI29, Mips_F_HI31, Mips_D1, Mips_D3, Mips_D5, Mips_D7, Mips_D9, Mips_D11, Mips_D13, Mips_D15, Mips_D1_64, Mips_D3_64, Mips_D5_64, Mips_D7_64, Mips_D9_64, Mips_D11_64, Mips_D13_64, Mips_D15_64, Mips_D17_64, Mips_D19_64, Mips_D21_64, Mips_D23_64, Mips_D25_64, Mips_D27_64, Mips_D29_64, Mips_D31_64, 
   };
 
   // OddSP Bit set.
-  static uint8_t OddSPBits[] = {
+  static const uint8_t OddSPBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x55, 0x50, 0x55, 0x55, 0x55, 0x05, 0x00, 0x00, 0x00, 0x00, 0xa0, 0xaa, 0xaa, 0xaa, 0x0a, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x54, 0x55, 0x55, 0x55, 0x01, 
   };
 
   // CCR Register Class...
-  static MCPhysReg CCR[] = {
+  static const MCPhysReg CCR[] = {
     Mips_FCR0, Mips_FCR1, Mips_FCR2, Mips_FCR3, Mips_FCR4, Mips_FCR5, Mips_FCR6, Mips_FCR7, Mips_FCR8, Mips_FCR9, Mips_FCR10, Mips_FCR11, Mips_FCR12, Mips_FCR13, Mips_FCR14, Mips_FCR15, Mips_FCR16, Mips_FCR17, Mips_FCR18, Mips_FCR19, Mips_FCR20, Mips_FCR21, Mips_FCR22, Mips_FCR23, Mips_FCR24, Mips_FCR25, Mips_FCR26, Mips_FCR27, Mips_FCR28, Mips_FCR29, Mips_FCR30, Mips_FCR31, 
   };
 
   // CCR Bit set.
-  static uint8_t CCRBits[] = {
+  static const uint8_t CCRBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0xff, 0xff, 0x07, 
   };
 
   // COP2 Register Class...
-  static MCPhysReg COP2[] = {
+  static const MCPhysReg COP2[] = {
     Mips_COP20, Mips_COP21, Mips_COP22, Mips_COP23, Mips_COP24, Mips_COP25, Mips_COP26, Mips_COP27, Mips_COP28, Mips_COP29, Mips_COP210, Mips_COP211, Mips_COP212, Mips_COP213, Mips_COP214, Mips_COP215, Mips_COP216, Mips_COP217, Mips_COP218, Mips_COP219, Mips_COP220, Mips_COP221, Mips_COP222, Mips_COP223, Mips_COP224, Mips_COP225, Mips_COP226, Mips_COP227, Mips_COP228, Mips_COP229, Mips_COP230, Mips_COP231, 
   };
 
   // COP2 Bit set.
-  static uint8_t COP2Bits[] = {
+  static const uint8_t COP2Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x80, 0xff, 0x01, 0xf8, 0xff, 0xff, 0x01, 
   };
 
   // COP3 Register Class...
-  static MCPhysReg COP3[] = {
+  static const MCPhysReg COP3[] = {
     Mips_COP30, Mips_COP31, Mips_COP32, Mips_COP33, Mips_COP34, Mips_COP35, Mips_COP36, Mips_COP37, Mips_COP38, Mips_COP39, Mips_COP310, Mips_COP311, Mips_COP312, Mips_COP313, Mips_COP314, Mips_COP315, Mips_COP316, Mips_COP317, Mips_COP318, Mips_COP319, Mips_COP320, Mips_COP321, Mips_COP322, Mips_COP323, Mips_COP324, Mips_COP325, Mips_COP326, Mips_COP327, Mips_COP328, Mips_COP329, Mips_COP330, Mips_COP331, 
   };
 
   // COP3 Bit set.
-  static uint8_t COP3Bits[] = {
+  static const uint8_t COP3Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x07, 0x00, 0x00, 0xfe, 0xff, 0x7f, 
   };
 
   // DSPR Register Class...
-  static MCPhysReg DSPR[] = {
+  static const MCPhysReg DSPR[] = {
     Mips_ZERO, Mips_AT, Mips_V0, Mips_V1, Mips_A0, Mips_A1, Mips_A2, Mips_A3, Mips_T0, Mips_T1, Mips_T2, Mips_T3, Mips_T4, Mips_T5, Mips_T6, Mips_T7, Mips_S0, Mips_S1, Mips_S2, Mips_S3, Mips_S4, Mips_S5, Mips_S6, Mips_S7, Mips_T8, Mips_T9, Mips_K0, Mips_K1, Mips_GP, Mips_SP, Mips_FP, Mips_RA, 
   };
 
   // DSPR Bit set.
-  static uint8_t DSPRBits[] = {
+  static const uint8_t DSPRBits[] = {
     0x02, 0x03, 0xf8, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0xc0, 0xbf, 0xff, 0x07, 
   };
 
   // FGR32 Register Class...
-  static MCPhysReg FGR32[] = {
+  static const MCPhysReg FGR32[] = {
     Mips_F0, Mips_F1, Mips_F2, Mips_F3, Mips_F4, Mips_F5, Mips_F6, Mips_F7, Mips_F8, Mips_F9, Mips_F10, Mips_F11, Mips_F12, Mips_F13, Mips_F14, Mips_F15, Mips_F16, Mips_F17, Mips_F18, Mips_F19, Mips_F20, Mips_F21, Mips_F22, Mips_F23, Mips_F24, Mips_F25, Mips_F26, Mips_F27, Mips_F28, Mips_F29, Mips_F30, Mips_F31, 
   };
 
   // FGR32 Bit set.
-  static uint8_t FGR32Bits[] = {
+  static const uint8_t FGR32Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0xff, 0xff, 0x07, 
   };
 
   // FGRCC Register Class...
-  static MCPhysReg FGRCC[] = {
+  static const MCPhysReg FGRCC[] = {
     Mips_F0, Mips_F1, Mips_F2, Mips_F3, Mips_F4, Mips_F5, Mips_F6, Mips_F7, Mips_F8, Mips_F9, Mips_F10, Mips_F11, Mips_F12, Mips_F13, Mips_F14, Mips_F15, Mips_F16, Mips_F17, Mips_F18, Mips_F19, Mips_F20, Mips_F21, Mips_F22, Mips_F23, Mips_F24, Mips_F25, Mips_F26, Mips_F27, Mips_F28, Mips_F29, Mips_F30, Mips_F31, 
   };
 
   // FGRCC Bit set.
-  static uint8_t FGRCCBits[] = {
+  static const uint8_t FGRCCBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0xff, 0xff, 0x07, 
   };
 
   // FGRH32 Register Class...
-  static MCPhysReg FGRH32[] = {
+  static const MCPhysReg FGRH32[] = {
     Mips_F_HI0, Mips_F_HI1, Mips_F_HI2, Mips_F_HI3, Mips_F_HI4, Mips_F_HI5, Mips_F_HI6, Mips_F_HI7, Mips_F_HI8, Mips_F_HI9, Mips_F_HI10, Mips_F_HI11, Mips_F_HI12, Mips_F_HI13, Mips_F_HI14, Mips_F_HI15, Mips_F_HI16, Mips_F_HI17, Mips_F_HI18, Mips_F_HI19, Mips_F_HI20, Mips_F_HI21, Mips_F_HI22, Mips_F_HI23, Mips_F_HI24, Mips_F_HI25, Mips_F_HI26, Mips_F_HI27, Mips_F_HI28, Mips_F_HI29, Mips_F_HI30, Mips_F_HI31, 
   };
 
   // FGRH32 Bit set.
-  static uint8_t FGRH32Bits[] = {
+  static const uint8_t FGRH32Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0xff, 0xff, 0x0f, 
   };
 
   // GPR32 Register Class...
-  static MCPhysReg GPR32[] = {
+  static const MCPhysReg GPR32[] = {
     Mips_ZERO, Mips_AT, Mips_V0, Mips_V1, Mips_A0, Mips_A1, Mips_A2, Mips_A3, Mips_T0, Mips_T1, Mips_T2, Mips_T3, Mips_T4, Mips_T5, Mips_T6, Mips_T7, Mips_S0, Mips_S1, Mips_S2, Mips_S3, Mips_S4, Mips_S5, Mips_S6, Mips_S7, Mips_T8, Mips_T9, Mips_K0, Mips_K1, Mips_GP, Mips_SP, Mips_FP, Mips_RA, 
   };
 
   // GPR32 Bit set.
-  static uint8_t GPR32Bits[] = {
+  static const uint8_t GPR32Bits[] = {
     0x02, 0x03, 0xf8, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0xc0, 0xbf, 0xff, 0x07, 
   };
 
   // HWRegs Register Class...
-  static MCPhysReg HWRegs[] = {
+  static const MCPhysReg HWRegs[] = {
     Mips_HWR0, Mips_HWR1, Mips_HWR2, Mips_HWR3, Mips_HWR4, Mips_HWR5, Mips_HWR6, Mips_HWR7, Mips_HWR8, Mips_HWR9, Mips_HWR10, Mips_HWR11, Mips_HWR12, Mips_HWR13, Mips_HWR14, Mips_HWR15, Mips_HWR16, Mips_HWR17, Mips_HWR18, Mips_HWR19, Mips_HWR20, Mips_HWR21, Mips_HWR22, Mips_HWR23, Mips_HWR24, Mips_HWR25, Mips_HWR26, Mips_HWR27, Mips_HWR28, Mips_HWR29, Mips_HWR30, Mips_HWR31, 
   };
 
   // HWRegs Bit set.
-  static uint8_t HWRegsBits[] = {
+  static const uint8_t HWRegsBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0xff, 0xff, 0xff, 0x01, 
   };
 
   // OddSP_with_sub_hi Register Class...
-  static MCPhysReg OddSP_with_sub_hi[] = {
+  static const MCPhysReg OddSP_with_sub_hi[] = {
     Mips_D1, Mips_D3, Mips_D5, Mips_D7, Mips_D9, Mips_D11, Mips_D13, Mips_D15, Mips_D1_64, Mips_D3_64, Mips_D5_64, Mips_D7_64, Mips_D9_64, Mips_D11_64, Mips_D13_64, Mips_D15_64, Mips_D17_64, Mips_D19_64, Mips_D21_64, Mips_D23_64, Mips_D25_64, Mips_D27_64, Mips_D29_64, Mips_D31_64, 
   };
 
   // OddSP_with_sub_hi Bit set.
-  static uint8_t OddSP_with_sub_hiBits[] = {
+  static const uint8_t OddSP_with_sub_hiBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x55, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x54, 0x55, 0x55, 0x55, 0x01, 
   };
 
   // FGR32_and_OddSP Register Class...
-  static MCPhysReg FGR32_and_OddSP[] = {
+  static const MCPhysReg FGR32_and_OddSP[] = {
     Mips_F1, Mips_F3, Mips_F5, Mips_F7, Mips_F9, Mips_F11, Mips_F13, Mips_F15, Mips_F17, Mips_F19, Mips_F21, Mips_F23, Mips_F25, Mips_F27, Mips_F29, Mips_F31, 
   };
 
   // FGR32_and_OddSP Bit set.
-  static uint8_t FGR32_and_OddSPBits[] = {
+  static const uint8_t FGR32_and_OddSPBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x50, 0x55, 0x55, 0x55, 0x05, 
   };
 
   // FGRH32_and_OddSP Register Class...
-  static MCPhysReg FGRH32_and_OddSP[] = {
+  static const MCPhysReg FGRH32_and_OddSP[] = {
     Mips_F_HI1, Mips_F_HI3, Mips_F_HI5, Mips_F_HI7, Mips_F_HI9, Mips_F_HI11, Mips_F_HI13, Mips_F_HI15, Mips_F_HI17, Mips_F_HI19, Mips_F_HI21, Mips_F_HI23, Mips_F_HI25, Mips_F_HI27, Mips_F_HI29, Mips_F_HI31, 
   };
 
   // FGRH32_and_OddSP Bit set.
-  static uint8_t FGRH32_and_OddSPBits[] = {
+  static const uint8_t FGRH32_and_OddSPBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xa0, 0xaa, 0xaa, 0xaa, 0x0a, 
   };
 
   // OddSP_with_sub_hi_with_sub_hi_in_FGRH32 Register Class...
-  static MCPhysReg OddSP_with_sub_hi_with_sub_hi_in_FGRH32[] = {
+  static const MCPhysReg OddSP_with_sub_hi_with_sub_hi_in_FGRH32[] = {
     Mips_D1_64, Mips_D3_64, Mips_D5_64, Mips_D7_64, Mips_D9_64, Mips_D11_64, Mips_D13_64, Mips_D15_64, Mips_D17_64, Mips_D19_64, Mips_D21_64, Mips_D23_64, Mips_D25_64, Mips_D27_64, Mips_D29_64, Mips_D31_64, 
   };
 
   // OddSP_with_sub_hi_with_sub_hi_in_FGRH32 Bit set.
-  static uint8_t OddSP_with_sub_hi_with_sub_hi_in_FGRH32Bits[] = {
+  static const uint8_t OddSP_with_sub_hi_with_sub_hi_in_FGRH32Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x54, 0x55, 0x55, 0x55, 0x01, 
   };
 
   // CPU16RegsPlusSP Register Class...
-  static MCPhysReg CPU16RegsPlusSP[] = {
+  static const MCPhysReg CPU16RegsPlusSP[] = {
     Mips_V0, Mips_V1, Mips_A0, Mips_A1, Mips_A2, Mips_A3, Mips_S0, Mips_S1, Mips_SP, 
   };
 
   // CPU16RegsPlusSP Bit set.
-  static uint8_t CPU16RegsPlusSPBits[] = {
+  static const uint8_t CPU16RegsPlusSPBits[] = {
     0x00, 0x00, 0xd0, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0x00, 0x00, 0x06, 
   };
 
   // CC Register Class...
-  static MCPhysReg CC[] = {
+  static const MCPhysReg CC[] = {
     Mips_CC0, Mips_CC1, Mips_CC2, Mips_CC3, Mips_CC4, Mips_CC5, Mips_CC6, Mips_CC7, 
   };
 
   // CC Bit set.
-  static uint8_t CCBits[] = {
+  static const uint8_t CCBits[] = {
     0x00, 0x00, 0x00, 0x80, 0x7f, 
   };
 
   // CPU16Regs Register Class...
-  static MCPhysReg CPU16Regs[] = {
+  static const MCPhysReg CPU16Regs[] = {
     Mips_V0, Mips_V1, Mips_A0, Mips_A1, Mips_A2, Mips_A3, Mips_S0, Mips_S1, 
   };
 
   // CPU16Regs Bit set.
-  static uint8_t CPU16RegsBits[] = {
+  static const uint8_t CPU16RegsBits[] = {
     0x00, 0x00, 0xc0, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0x00, 0x00, 0x06, 
   };
 
   // FCC Register Class...
-  static MCPhysReg FCC[] = {
+  static const MCPhysReg FCC[] = {
     Mips_FCC0, Mips_FCC1, Mips_FCC2, Mips_FCC3, Mips_FCC4, Mips_FCC5, Mips_FCC6, Mips_FCC7, 
   };
 
   // FCC Bit set.
-  static uint8_t FCCBits[] = {
+  static const uint8_t FCCBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x07, 
   };
 
   // MSACtrl Register Class...
-  static MCPhysReg MSACtrl[] = {
+  static const MCPhysReg MSACtrl[] = {
     Mips_MSAIR, Mips_MSACSR, Mips_MSAAccess, Mips_MSASave, Mips_MSAModify, Mips_MSARequest, Mips_MSAMap, Mips_MSAUnmap, 
   };
 
   // MSACtrl Bit set.
-  static uint8_t MSACtrlBits[] = {
+  static const uint8_t MSACtrlBits[] = {
     0x00, 0xfc, 0x03, 
   };
 
   // OddSP_with_sub_hi_with_sub_hi_in_FGR32 Register Class...
-  static MCPhysReg OddSP_with_sub_hi_with_sub_hi_in_FGR32[] = {
+  static const MCPhysReg OddSP_with_sub_hi_with_sub_hi_in_FGR32[] = {
     Mips_D1, Mips_D3, Mips_D5, Mips_D7, Mips_D9, Mips_D11, Mips_D13, Mips_D15, 
   };
 
   // OddSP_with_sub_hi_with_sub_hi_in_FGR32 Bit set.
-  static uint8_t OddSP_with_sub_hi_with_sub_hi_in_FGR32Bits[] = {
+  static const uint8_t OddSP_with_sub_hi_with_sub_hi_in_FGR32Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x55, 
   };
 
   // HI32DSP Register Class...
-  static MCPhysReg HI32DSP[] = {
+  static const MCPhysReg HI32DSP[] = {
     Mips_HI0, Mips_HI1, Mips_HI2, Mips_HI3, 
   };
 
   // HI32DSP Bit set.
-  static uint8_t HI32DSPBits[] = {
+  static const uint8_t HI32DSPBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x01, 
   };
 
   // LO32DSP Register Class...
-  static MCPhysReg LO32DSP[] = {
+  static const MCPhysReg LO32DSP[] = {
     Mips_LO0, Mips_LO1, Mips_LO2, Mips_LO3, 
   };
 
   // LO32DSP Bit set.
-  static uint8_t LO32DSPBits[] = {
+  static const uint8_t LO32DSPBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x78, 
   };
 
   // CPURAReg Register Class...
-  static MCPhysReg CPURAReg[] = {
+  static const MCPhysReg CPURAReg[] = {
     Mips_RA, 
   };
 
   // CPURAReg Bit set.
-  static uint8_t CPURARegBits[] = {
+  static const uint8_t CPURARegBits[] = {
     0x00, 0x00, 0x08, 
   };
 
   // CPUSPReg Register Class...
-  static MCPhysReg CPUSPReg[] = {
+  static const MCPhysReg CPUSPReg[] = {
     Mips_SP, 
   };
 
   // CPUSPReg Bit set.
-  static uint8_t CPUSPRegBits[] = {
+  static const uint8_t CPUSPRegBits[] = {
     0x00, 0x00, 0x10, 
   };
 
   // DSPCC Register Class...
-  static MCPhysReg DSPCC[] = {
+  static const MCPhysReg DSPCC[] = {
     Mips_DSPCCond, 
   };
 
   // DSPCC Bit set.
-  static uint8_t DSPCCBits[] = {
+  static const uint8_t DSPCCBits[] = {
     0x04, 
   };
 
   // HI32 Register Class...
-  static MCPhysReg HI32[] = {
+  static const MCPhysReg HI32[] = {
     Mips_HI0, 
   };
 
   // HI32 Bit set.
-  static uint8_t HI32Bits[] = {
+  static const uint8_t HI32Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 
   };
 
   // LO32 Register Class...
-  static MCPhysReg LO32[] = {
+  static const MCPhysReg LO32[] = {
     Mips_LO0, 
   };
 
   // LO32 Bit set.
-  static uint8_t LO32Bits[] = {
+  static const uint8_t LO32Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 
   };
 
   // FGR64 Register Class...
-  static MCPhysReg FGR64[] = {
+  static const MCPhysReg FGR64[] = {
     Mips_D0_64, Mips_D1_64, Mips_D2_64, Mips_D3_64, Mips_D4_64, Mips_D5_64, Mips_D6_64, Mips_D7_64, Mips_D8_64, Mips_D9_64, Mips_D10_64, Mips_D11_64, Mips_D12_64, Mips_D13_64, Mips_D14_64, Mips_D15_64, Mips_D16_64, Mips_D17_64, Mips_D18_64, Mips_D19_64, Mips_D20_64, Mips_D21_64, Mips_D22_64, Mips_D23_64, Mips_D24_64, Mips_D25_64, Mips_D26_64, Mips_D27_64, Mips_D28_64, Mips_D29_64, Mips_D30_64, Mips_D31_64, 
   };
 
   // FGR64 Bit set.
-  static uint8_t FGR64Bits[] = {
+  static const uint8_t FGR64Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0xff, 0xff, 0xff, 0x01, 
   };
 
   // GPR64 Register Class...
-  static MCPhysReg GPR64[] = {
+  static const MCPhysReg GPR64[] = {
     Mips_ZERO_64, Mips_AT_64, Mips_V0_64, Mips_V1_64, Mips_A0_64, Mips_A1_64, Mips_A2_64, Mips_A3_64, Mips_T0_64, Mips_T1_64, Mips_T2_64, Mips_T3_64, Mips_T4_64, Mips_T5_64, Mips_T6_64, Mips_T7_64, Mips_S0_64, Mips_S1_64, Mips_S2_64, Mips_S3_64, Mips_S4_64, Mips_S5_64, Mips_S6_64, Mips_S7_64, Mips_T8_64, Mips_T9_64, Mips_K0_64, Mips_K1_64, Mips_GP_64, Mips_SP_64, Mips_FP_64, Mips_RA_64, 
   };
 
   // GPR64 Bit set.
-  static uint8_t GPR64Bits[] = {
+  static const uint8_t GPR64Bits[] = {
     0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x00, 0x00, 0x00, 0x00, 0xd8, 0xff, 0xff, 0x03, 
   };
 
   // AFGR64 Register Class...
-  static MCPhysReg AFGR64[] = {
+  static const MCPhysReg AFGR64[] = {
     Mips_D0, Mips_D1, Mips_D2, Mips_D3, Mips_D4, Mips_D5, Mips_D6, Mips_D7, Mips_D8, Mips_D9, Mips_D10, Mips_D11, Mips_D12, Mips_D13, Mips_D14, Mips_D15, 
   };
 
   // AFGR64 Bit set.
-  static uint8_t AFGR64Bits[] = {
+  static const uint8_t AFGR64Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xff, 0x7f, 
   };
 
   // FGR64_and_OddSP Register Class...
-  static MCPhysReg FGR64_and_OddSP[] = {
+  static const MCPhysReg FGR64_and_OddSP[] = {
     Mips_D1_64, Mips_D3_64, Mips_D5_64, Mips_D7_64, Mips_D9_64, Mips_D11_64, Mips_D13_64, Mips_D15_64, Mips_D17_64, Mips_D19_64, Mips_D21_64, Mips_D23_64, Mips_D25_64, Mips_D27_64, Mips_D29_64, Mips_D31_64, 
   };
 
   // FGR64_and_OddSP Bit set.
-  static uint8_t FGR64_and_OddSPBits[] = {
+  static const uint8_t FGR64_and_OddSPBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x54, 0x55, 0x55, 0x55, 0x01, 
   };
 
   // GPR64_with_sub_32_in_CPU16RegsPlusSP Register Class...
-  static MCPhysReg GPR64_with_sub_32_in_CPU16RegsPlusSP[] = {
+  static const MCPhysReg GPR64_with_sub_32_in_CPU16RegsPlusSP[] = {
     Mips_V0_64, Mips_V1_64, Mips_A0_64, Mips_A1_64, Mips_A2_64, Mips_A3_64, Mips_S0_64, Mips_S1_64, Mips_SP_64, 
   };
 
   // GPR64_with_sub_32_in_CPU16RegsPlusSP Bit set.
-  static uint8_t GPR64_with_sub_32_in_CPU16RegsPlusSPBits[] = {
+  static const uint8_t GPR64_with_sub_32_in_CPU16RegsPlusSPBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x00, 0x00, 0x00, 0x00, 0xc0, 0x00, 0x00, 0x03, 
   };
 
   // AFGR64_and_OddSP Register Class...
-  static MCPhysReg AFGR64_and_OddSP[] = {
+  static const MCPhysReg AFGR64_and_OddSP[] = {
     Mips_D1, Mips_D3, Mips_D5, Mips_D7, Mips_D9, Mips_D11, Mips_D13, Mips_D15, 
   };
 
   // AFGR64_and_OddSP Bit set.
-  static uint8_t AFGR64_and_OddSPBits[] = {
+  static const uint8_t AFGR64_and_OddSPBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x55, 
   };
 
   // GPR64_with_sub_32_in_CPU16Regs Register Class...
-  static MCPhysReg GPR64_with_sub_32_in_CPU16Regs[] = {
+  static const MCPhysReg GPR64_with_sub_32_in_CPU16Regs[] = {
     Mips_V0_64, Mips_V1_64, Mips_A0_64, Mips_A1_64, Mips_A2_64, Mips_A3_64, Mips_S0_64, Mips_S1_64, 
   };
 
   // GPR64_with_sub_32_in_CPU16Regs Bit set.
-  static uint8_t GPR64_with_sub_32_in_CPU16RegsBits[] = {
+  static const uint8_t GPR64_with_sub_32_in_CPU16RegsBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x00, 0x00, 0x00, 0x00, 0xc0, 0x00, 0x00, 0x03, 
   };
 
   // ACC64DSP Register Class...
-  static MCPhysReg ACC64DSP[] = {
+  static const MCPhysReg ACC64DSP[] = {
     Mips_AC0, Mips_AC1, Mips_AC2, Mips_AC3, 
   };
 
   // ACC64DSP Bit set.
-  static uint8_t ACC64DSPBits[] = {
+  static const uint8_t ACC64DSPBits[] = {
     0x00, 0x00, 0x00, 0x3c, 
   };
 
   // OCTEON_MPL Register Class...
-  static MCPhysReg OCTEON_MPL[] = {
+  static const MCPhysReg OCTEON_MPL[] = {
     Mips_MPL0, Mips_MPL1, Mips_MPL2, 
   };
 
   // OCTEON_MPL Bit set.
-  static uint8_t OCTEON_MPLBits[] = {
+  static const uint8_t OCTEON_MPLBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x03, 
   };
 
   // OCTEON_P Register Class...
-  static MCPhysReg OCTEON_P[] = {
+  static const MCPhysReg OCTEON_P[] = {
     Mips_P0, Mips_P1, Mips_P2, 
   };
 
   // OCTEON_P Bit set.
-  static uint8_t OCTEON_PBits[] = {
+  static const uint8_t OCTEON_PBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1c, 
   };
 
   // ACC64 Register Class...
-  static MCPhysReg ACC64[] = {
+  static const MCPhysReg ACC64[] = {
     Mips_AC0, 
   };
 
   // ACC64 Bit set.
-  static uint8_t ACC64Bits[] = {
+  static const uint8_t ACC64Bits[] = {
     0x00, 0x00, 0x00, 0x04, 
   };
 
   // GPR64_with_sub_32_in_CPURAReg Register Class...
-  static MCPhysReg GPR64_with_sub_32_in_CPURAReg[] = {
+  static const MCPhysReg GPR64_with_sub_32_in_CPURAReg[] = {
     Mips_RA_64, 
   };
 
   // GPR64_with_sub_32_in_CPURAReg Bit set.
-  static uint8_t GPR64_with_sub_32_in_CPURARegBits[] = {
+  static const uint8_t GPR64_with_sub_32_in_CPURARegBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 
   };
 
   // GPR64_with_sub_32_in_CPUSPReg Register Class...
-  static MCPhysReg GPR64_with_sub_32_in_CPUSPReg[] = {
+  static const MCPhysReg GPR64_with_sub_32_in_CPUSPReg[] = {
     Mips_SP_64, 
   };
 
   // GPR64_with_sub_32_in_CPUSPReg Bit set.
-  static uint8_t GPR64_with_sub_32_in_CPUSPRegBits[] = {
+  static const uint8_t GPR64_with_sub_32_in_CPUSPRegBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 
   };
 
   // HI64 Register Class...
-  static MCPhysReg HI64[] = {
+  static const MCPhysReg HI64[] = {
     Mips_HI0_64, 
   };
 
   // HI64 Bit set.
-  static uint8_t HI64Bits[] = {
+  static const uint8_t HI64Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 
   };
 
   // LO64 Register Class...
-  static MCPhysReg LO64[] = {
+  static const MCPhysReg LO64[] = {
     Mips_LO0_64, 
   };
 
   // LO64 Bit set.
-  static uint8_t LO64Bits[] = {
+  static const uint8_t LO64Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 
   };
 
   // MSA128B Register Class...
-  static MCPhysReg MSA128B[] = {
+  static const MCPhysReg MSA128B[] = {
     Mips_W0, Mips_W1, Mips_W2, Mips_W3, Mips_W4, Mips_W5, Mips_W6, Mips_W7, Mips_W8, Mips_W9, Mips_W10, Mips_W11, Mips_W12, Mips_W13, Mips_W14, Mips_W15, Mips_W16, Mips_W17, Mips_W18, Mips_W19, Mips_W20, Mips_W21, Mips_W22, Mips_W23, Mips_W24, Mips_W25, Mips_W26, Mips_W27, Mips_W28, Mips_W29, Mips_W30, Mips_W31, 
   };
 
   // MSA128B Bit set.
-  static uint8_t MSA128BBits[] = {
+  static const uint8_t MSA128BBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0xff, 0xff, 0x07, 
   };
 
   // MSA128D Register Class...
-  static MCPhysReg MSA128D[] = {
+  static const MCPhysReg MSA128D[] = {
     Mips_W0, Mips_W1, Mips_W2, Mips_W3, Mips_W4, Mips_W5, Mips_W6, Mips_W7, Mips_W8, Mips_W9, Mips_W10, Mips_W11, Mips_W12, Mips_W13, Mips_W14, Mips_W15, Mips_W16, Mips_W17, Mips_W18, Mips_W19, Mips_W20, Mips_W21, Mips_W22, Mips_W23, Mips_W24, Mips_W25, Mips_W26, Mips_W27, Mips_W28, Mips_W29, Mips_W30, Mips_W31, 
   };
 
   // MSA128D Bit set.
-  static uint8_t MSA128DBits[] = {
+  static const uint8_t MSA128DBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0xff, 0xff, 0x07, 
   };
 
   // MSA128H Register Class...
-  static MCPhysReg MSA128H[] = {
+  static const MCPhysReg MSA128H[] = {
     Mips_W0, Mips_W1, Mips_W2, Mips_W3, Mips_W4, Mips_W5, Mips_W6, Mips_W7, Mips_W8, Mips_W9, Mips_W10, Mips_W11, Mips_W12, Mips_W13, Mips_W14, Mips_W15, Mips_W16, Mips_W17, Mips_W18, Mips_W19, Mips_W20, Mips_W21, Mips_W22, Mips_W23, Mips_W24, Mips_W25, Mips_W26, Mips_W27, Mips_W28, Mips_W29, Mips_W30, Mips_W31, 
   };
 
   // MSA128H Bit set.
-  static uint8_t MSA128HBits[] = {
+  static const uint8_t MSA128HBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0xff, 0xff, 0x07, 
   };
 
   // MSA128W Register Class...
-  static MCPhysReg MSA128W[] = {
+  static const MCPhysReg MSA128W[] = {
     Mips_W0, Mips_W1, Mips_W2, Mips_W3, Mips_W4, Mips_W5, Mips_W6, Mips_W7, Mips_W8, Mips_W9, Mips_W10, Mips_W11, Mips_W12, Mips_W13, Mips_W14, Mips_W15, Mips_W16, Mips_W17, Mips_W18, Mips_W19, Mips_W20, Mips_W21, Mips_W22, Mips_W23, Mips_W24, Mips_W25, Mips_W26, Mips_W27, Mips_W28, Mips_W29, Mips_W30, Mips_W31, 
   };
 
   // MSA128W Bit set.
-  static uint8_t MSA128WBits[] = {
+  static const uint8_t MSA128WBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0xff, 0xff, 0x07, 
   };
 
   // MSA128B_with_sub_64_in_OddSP Register Class...
-  static MCPhysReg MSA128B_with_sub_64_in_OddSP[] = {
+  static const MCPhysReg MSA128B_with_sub_64_in_OddSP[] = {
     Mips_W1, Mips_W3, Mips_W5, Mips_W7, Mips_W9, Mips_W11, Mips_W13, Mips_W15, Mips_W17, Mips_W19, Mips_W21, Mips_W23, Mips_W25, Mips_W27, Mips_W29, Mips_W31, 
   };
 
   // MSA128B_with_sub_64_in_OddSP Bit set.
-  static uint8_t MSA128B_with_sub_64_in_OddSPBits[] = {
+  static const uint8_t MSA128B_with_sub_64_in_OddSPBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x50, 0x55, 0x55, 0x55, 0x05, 
   };
 
   // ACC128 Register Class...
-  static MCPhysReg ACC128[] = {
+  static const MCPhysReg ACC128[] = {
     Mips_AC0_64, 
   };
 
   // ACC128 Bit set.
-  static uint8_t ACC128Bits[] = {
+  static const uint8_t ACC128Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 
   };
 
-static MCRegisterClass MipsMCRegisterClasses[] = {
+static const MCRegisterClass MipsMCRegisterClasses[] = {
   { "OddSP", OddSP, OddSPBits, 56, sizeof(OddSPBits), Mips_OddSPRegClassID, 4, 4, 1, 0 },
   { "CCR", CCR, CCRBits, 32, sizeof(CCRBits), Mips_CCRRegClassID, 4, 4, 1, 0 },
   { "COP2", COP2, COP2Bits, 32, sizeof(COP2Bits), Mips_COP2RegClassID, 4, 4, 1, 0 },

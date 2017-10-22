@@ -261,7 +261,7 @@ static void printRoundingControl(MCInst *MI, unsigned Op, SStream *O)
 
 #endif
 
-static char *getRegisterName(unsigned RegNo);
+static const char *getRegisterName(unsigned RegNo);
 static void printRegName(SStream *OS, unsigned RegNo)
 {
 	SStream_concat0(OS, getRegisterName(RegNo));

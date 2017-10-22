@@ -157,7 +157,7 @@ enum {
 #ifdef GET_REGINFO_MC_DESC
 #undef GET_REGINFO_MC_DESC
 
-static MCPhysReg SystemZRegDiffLists[] = {
+static const MCPhysReg SystemZRegDiffLists[] = {
   /* 0 */ 65193, 1, 1, 1, 0,
   /* 5 */ 65469, 1, 0,
   /* 8 */ 65519, 2, 0,
@@ -205,13 +205,13 @@ static MCPhysReg SystemZRegDiffLists[] = {
   /* 171 */ 65535, 0,
 };
 
-static uint16_t SystemZSubRegIdxLists[] = {
+static const uint16_t SystemZSubRegIdxLists[] = {
   /* 0 */ 5, 1, 0,
   /* 3 */ 6, 1, 2, 3, 0,
   /* 8 */ 6, 5, 1, 2, 4, 3, 0,
 };
 
-static MCRegisterDesc SystemZRegDesc[] = { // Descriptors
+static const MCRegisterDesc SystemZRegDesc[] = { // Descriptors
   { 2, 0, 0, 0, 0 },
   { 0, 4, 4, 2, 2737 },
   { 13, 38, 33, 1, 2737 },
@@ -313,126 +313,126 @@ static MCRegisterDesc SystemZRegDesc[] = { // Descriptors
 };
 
   // GRX32Bit Register Class...
-  static MCPhysReg GRX32Bit[] = {
+  static const MCPhysReg GRX32Bit[] = {
     SystemZ_R0L, SystemZ_R1L, SystemZ_R2L, SystemZ_R3L, SystemZ_R4L, SystemZ_R5L, SystemZ_R0H, SystemZ_R1H, SystemZ_R2H, SystemZ_R3H, SystemZ_R4H, SystemZ_R5H, SystemZ_R15L, SystemZ_R15H, SystemZ_R14L, SystemZ_R14H, SystemZ_R13L, SystemZ_R13H, SystemZ_R12L, SystemZ_R12H, SystemZ_R11L, SystemZ_R11H, SystemZ_R10L, SystemZ_R10H, SystemZ_R9L, SystemZ_R9H, SystemZ_R8L, SystemZ_R8H, SystemZ_R7L, SystemZ_R7H, SystemZ_R6L, SystemZ_R6H, 
   };
 
   // GRX32Bit Bit set.
-  static uint8_t GRX32BitBits[] = {
+  static const uint8_t GRX32BitBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0xff, 0xff, 0x03, 
   };
 
   // FP32Bit Register Class...
-  static MCPhysReg FP32Bit[] = {
+  static const MCPhysReg FP32Bit[] = {
     SystemZ_F0S, SystemZ_F1S, SystemZ_F2S, SystemZ_F3S, SystemZ_F4S, SystemZ_F5S, SystemZ_F6S, SystemZ_F7S, SystemZ_F8S, SystemZ_F9S, SystemZ_F10S, SystemZ_F11S, SystemZ_F12S, SystemZ_F13S, SystemZ_F14S, SystemZ_F15S, 
   };
 
   // FP32Bit Bit set.
-  static uint8_t FP32BitBits[] = {
+  static const uint8_t FP32BitBits[] = {
     0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 
   };
 
   // GR32Bit Register Class...
-  static MCPhysReg GR32Bit[] = {
+  static const MCPhysReg GR32Bit[] = {
     SystemZ_R0L, SystemZ_R1L, SystemZ_R2L, SystemZ_R3L, SystemZ_R4L, SystemZ_R5L, SystemZ_R15L, SystemZ_R14L, SystemZ_R13L, SystemZ_R12L, SystemZ_R11L, SystemZ_R10L, SystemZ_R9L, SystemZ_R8L, SystemZ_R7L, SystemZ_R6L, 
   };
 
   // GR32Bit Bit set.
-  static uint8_t GR32BitBits[] = {
+  static const uint8_t GR32BitBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 
   };
 
   // GRH32Bit Register Class...
-  static MCPhysReg GRH32Bit[] = {
+  static const MCPhysReg GRH32Bit[] = {
     SystemZ_R0H, SystemZ_R1H, SystemZ_R2H, SystemZ_R3H, SystemZ_R4H, SystemZ_R5H, SystemZ_R15H, SystemZ_R14H, SystemZ_R13H, SystemZ_R12H, SystemZ_R11H, SystemZ_R10H, SystemZ_R9H, SystemZ_R8H, SystemZ_R7H, SystemZ_R6H, 
   };
 
   // GRH32Bit Bit set.
-  static uint8_t GRH32BitBits[] = {
+  static const uint8_t GRH32BitBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 
   };
 
   // ADDR32Bit Register Class...
-  static MCPhysReg ADDR32Bit[] = {
+  static const MCPhysReg ADDR32Bit[] = {
     SystemZ_R1L, SystemZ_R2L, SystemZ_R3L, SystemZ_R4L, SystemZ_R5L, SystemZ_R15L, SystemZ_R14L, SystemZ_R13L, SystemZ_R12L, SystemZ_R11L, SystemZ_R10L, SystemZ_R9L, SystemZ_R8L, SystemZ_R7L, SystemZ_R6L, 
   };
 
   // ADDR32Bit Bit set.
-  static uint8_t ADDR32BitBits[] = {
+  static const uint8_t ADDR32BitBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x03, 
   };
 
   // CCRegs Register Class...
-  static MCPhysReg CCRegs[] = {
+  static const MCPhysReg CCRegs[] = {
     SystemZ_CC, 
   };
 
   // CCRegs Bit set.
-  static uint8_t CCRegsBits[] = {
+  static const uint8_t CCRegsBits[] = {
     0x02, 
   };
 
   // FP64Bit Register Class...
-  static MCPhysReg FP64Bit[] = {
+  static const MCPhysReg FP64Bit[] = {
     SystemZ_F0D, SystemZ_F1D, SystemZ_F2D, SystemZ_F3D, SystemZ_F4D, SystemZ_F5D, SystemZ_F6D, SystemZ_F7D, SystemZ_F8D, SystemZ_F9D, SystemZ_F10D, SystemZ_F11D, SystemZ_F12D, SystemZ_F13D, SystemZ_F14D, SystemZ_F15D, 
   };
 
   // FP64Bit Bit set.
-  static uint8_t FP64BitBits[] = {
+  static const uint8_t FP64BitBits[] = {
     0xfc, 0xff, 0x03, 
   };
 
   // GR64Bit Register Class...
-  static MCPhysReg GR64Bit[] = {
+  static const MCPhysReg GR64Bit[] = {
     SystemZ_R0D, SystemZ_R1D, SystemZ_R2D, SystemZ_R3D, SystemZ_R4D, SystemZ_R5D, SystemZ_R15D, SystemZ_R14D, SystemZ_R13D, SystemZ_R12D, SystemZ_R11D, SystemZ_R10D, SystemZ_R9D, SystemZ_R8D, SystemZ_R7D, SystemZ_R6D, 
   };
 
   // GR64Bit Bit set.
-  static uint8_t GR64BitBits[] = {
+  static const uint8_t GR64BitBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 
   };
 
   // ADDR64Bit Register Class...
-  static MCPhysReg ADDR64Bit[] = {
+  static const MCPhysReg ADDR64Bit[] = {
     SystemZ_R1D, SystemZ_R2D, SystemZ_R3D, SystemZ_R4D, SystemZ_R5D, SystemZ_R15D, SystemZ_R14D, SystemZ_R13D, SystemZ_R12D, SystemZ_R11D, SystemZ_R10D, SystemZ_R9D, SystemZ_R8D, SystemZ_R7D, SystemZ_R6D, 
   };
 
   // ADDR64Bit Bit set.
-  static uint8_t ADDR64BitBits[] = {
+  static const uint8_t ADDR64BitBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x03, 
   };
 
   // FP128Bit Register Class...
-  static MCPhysReg FP128Bit[] = {
+  static const MCPhysReg FP128Bit[] = {
     SystemZ_F0Q, SystemZ_F1Q, SystemZ_F4Q, SystemZ_F5Q, SystemZ_F8Q, SystemZ_F9Q, SystemZ_F12Q, SystemZ_F13Q, 
   };
 
   // FP128Bit Bit set.
-  static uint8_t FP128BitBits[] = {
+  static const uint8_t FP128BitBits[] = {
     0x00, 0x00, 0xfc, 0x03, 
   };
 
   // GR128Bit Register Class...
-  static MCPhysReg GR128Bit[] = {
+  static const MCPhysReg GR128Bit[] = {
     SystemZ_R0Q, SystemZ_R2Q, SystemZ_R4Q, SystemZ_R12Q, SystemZ_R10Q, SystemZ_R8Q, SystemZ_R6Q, SystemZ_R14Q, 
   };
 
   // GR128Bit Bit set.
-  static uint8_t GR128BitBits[] = {
+  static const uint8_t GR128BitBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
   // ADDR128Bit Register Class...
-  static MCPhysReg ADDR128Bit[] = {
+  static const MCPhysReg ADDR128Bit[] = {
     SystemZ_R2Q, SystemZ_R4Q, SystemZ_R12Q, SystemZ_R10Q, SystemZ_R8Q, SystemZ_R6Q, SystemZ_R14Q, 
   };
 
   // ADDR128Bit Bit set.
-  static uint8_t ADDR128BitBits[] = {
+  static const uint8_t ADDR128BitBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x03, 
   };
 
-static MCRegisterClass SystemZMCRegisterClasses[] = {
+static const MCRegisterClass SystemZMCRegisterClasses[] = {
   { "GRX32Bit", GRX32Bit, GRX32BitBits, 32, sizeof(GRX32BitBits), SystemZ_GRX32BitRegClassID, 4, 4, 1, 1 },
   { "FP32Bit", FP32Bit, FP32BitBits, 16, sizeof(FP32BitBits), SystemZ_FP32BitRegClassID, 4, 4, 1, 1 },
   { "GR32Bit", GR32Bit, GR32BitBits, 16, sizeof(GR32BitBits), SystemZ_GR32BitRegClassID, 4, 4, 1, 1 },

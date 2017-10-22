@@ -130,7 +130,7 @@ typedef struct MCInstrDesc {
 	uint64_t        TSFlags;       // Target Specific Flag values
 	char ImplicitUses;  // Registers implicitly read by this instr
 	char ImplicitDefs;  // Registers implicitly defined by this instr
-	MCOperandInfo *OpInfo;   // 'NumOperands' entries about operands
+	const MCOperandInfo *OpInfo;   // 'NumOperands' entries about operands
 	uint64_t DeprecatedFeatureMask;// Feature bits that this is deprecated on, if any     
 	// A complex method to determine is a certain is deprecated or not, and return        
 	// the reason for deprecation.
@@ -138,8 +138,8 @@ typedef struct MCInstrDesc {
 	unsigned char ComplexDeprecationInfo;	// dummy field, just to satisfy initializer
 } MCInstrDesc;
 
-bool MCOperandInfo_isPredicate(MCOperandInfo *m);
+bool MCOperandInfo_isPredicate(const MCOperandInfo *m);
 
-bool MCOperandInfo_isOptionalDef(MCOperandInfo *m);
+bool MCOperandInfo_isOptionalDef(const MCOperandInfo *m);
 
 #endif
