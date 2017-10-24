@@ -355,7 +355,7 @@ int main(int argc, char **argv)
 		for (i = 0; i < count; i++) {
 			int j;
 
-			printf("%"PRIx64"  ", insn[i].address);
+			printf("%2"PRIx64"  ", insn[i].address);
 			for (j = 0; j < insn[i].size; j++) {
 				if (j > 0)
 					putchar(' ');
@@ -365,7 +365,7 @@ int main(int argc, char **argv)
 			// align assembly instruction after the opcode
 			if (arch == CS_ARCH_X86) {
 				for (; j < 16; j++) {
-					printf("  ");
+					printf("   ");
 				}
 			}
 
