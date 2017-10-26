@@ -29,7 +29,7 @@ More bindings created & maintained by the community are available as followings.
 
 - Capstone-RS: Rust binding (by Richo Healey).
 
-	https://github.com/richo/capstone-rs
+	https://github.com/capstone-rust/capstone-rs
 
 - Capstone.NET: .NET framework binding (by Ahmed Garhy).
 
