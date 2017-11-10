@@ -60,4 +60,6 @@ void op_addAvxSae(MCInst *MI);
 
 void op_addAvxRoundingMode(MCInst *MI, int v);
 
+int X86_immediate_size(unsigned int id);
+
 #endif

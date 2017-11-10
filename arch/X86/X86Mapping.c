@@ -47942,4 +47942,36 @@ void op_addAvxBroadcast(MCInst *MI, x86_avx_bcast v)
 	}
 }
 
+// map immediate size to instruction id
+static struct size_id {
+	unsigned char size;
+	unsigned short id;
+} x86_imm_size[] = {
+#include "X86ImmSize.inc"
+};
+
+// given the instruction name, return the size of its immediate operand (or 0)
+int X86_immediate_size(unsigned int id)
+{
+	// binary searching since the IDs is sorted in order
+	unsigned int left, right, m;
+
+	left = 0;
+	right = ARR_SIZE(x86_imm_size) - 1;
+
+	while(left <= right) {
+		m = (left + right) / 2;
+		if (id == x86_imm_size[m].id)
+			return x86_imm_size[m].size;
+
+		if (id < x86_imm_size[m].id)
+			right = m - 1;
+		else
+			left = m + 1;
+	}
+
+	// not found
+	return 0;
+}
+
 #endif
