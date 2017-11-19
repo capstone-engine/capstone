@@ -37,7 +37,7 @@ else:
 compile_args = ['-O3', '-fomit-frame-pointer', '-I' + HEADERS_DIR]
 link_args = ['-L' + LIBS_DIR]
 
-ext_module_names = ['arm', 'arm_const', 'arm64', 'arm64_const', 'mips', 'mips_const', 'ppc', 'ppc_const', 'x86', 'x86_const', 'sparc', 'sparc_const', 'systemz', 'sysz_const', 'xcore', 'xcore_const']
+ext_module_names = ['arm', 'arm_const', 'arm64', 'arm64_const', 'mips', 'mips_const', 'ppc', 'ppc_const', 'x86', 'x86_const', 'sparc', 'sparc_const', 'systemz', 'sysz_const', 'xcore', 'xcore_const', 'tms320c64x', 'tms320c64x_const']
 ext_modules = [Extension("capstone.ccapstone",
                          ["pyx/ccapstone.pyx"],
                          libraries=["capstone"],
