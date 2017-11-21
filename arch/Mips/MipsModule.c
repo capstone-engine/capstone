@@ -45,7 +45,7 @@ static cs_err init(cs_struct *ud)
 static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_MODE) {
-		value = updated_mode(value);
+		value = updated_mode((cs_mode)value);
 		if (value & CS_MODE_32)
 			handle->disasm = Mips_getInstruction;
 		else
