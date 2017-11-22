@@ -282,6 +282,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		05C355F01FC4AB0C00C89728 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		DC474E6419DDEA5F00BCA449 /* test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = test; path = test_basic; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC474E6C19DDEA9500BCA449 /* test_arm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_arm.c; path = ../tests/test_arm.c; sourceTree = "<group>"; };
 		DC474E6D19DDEA9500BCA449 /* test_arm64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_arm64.c; path = ../tests/test_arm64.c; sourceTree = "<group>"; };
@@ -595,6 +596,7 @@
 		DC474F6919DE6F3B00BCA449 /* framework */ = {
 			isa = PBXGroup;
 			children = (
+				05C355F01FC4AB0C00C89728 /* module.modulemap */,
 				DC474F6B19DE6F3B00BCA449 /* Info.plist */,
 			);
 			name = framework;
@@ -2489,6 +2491,7 @@
 				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MODULEMAP_FILE = "$(SRCROOT)/CapstoneFramework/module.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = Capstone;
@@ -2551,6 +2554,7 @@
 				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MODULEMAP_FILE = "$(SRCROOT)/CapstoneFramework/module.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = Capstone;
 				SDKROOT = macosx;
