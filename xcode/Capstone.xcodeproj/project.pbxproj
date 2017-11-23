@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0537EAAA1FC6284F00F06BF9 /* tms320c64x.h in Headers */ = {isa = PBXBuildFile; fileRef = 0537EAA91FC6284E00F06BF9 /* tms320c64x.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0537EAAC1FC6286300F06BF9 /* m680x.h in Headers */ = {isa = PBXBuildFile; fileRef = 0537EAAB1FC6286300F06BF9 /* m680x.h */; };
 		DC07A86E19F6061D00254FCF /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
 		DC3A28E31AF29C0100FC9913 /* test_customized_mnem.c in Sources */ = {isa = PBXBuildFile; fileRef = DC3A28E21AF29C0100FC9913 /* test_customized_mnem.c */; };
 		DC3A28E41AF29C4600FC9913 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
@@ -319,6 +321,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0537EAA91FC6284E00F06BF9 /* tms320c64x.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tms320c64x.h; sourceTree = "<group>"; };
+		0537EAAB1FC6286300F06BF9 /* m680x.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = m680x.h; sourceTree = "<group>"; };
 		DC3A28DB1AF29BEB00FC9913 /* test_customized_mnem */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_customized_mnem; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC3A28E21AF29C0100FC9913 /* test_customized_mnem.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_customized_mnem.c; path = ../tests/test_customized_mnem.c; sourceTree = "<group>"; };
 		DC474E6419DDEA5F00BCA449 /* test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -932,11 +936,13 @@
 				DCFE24BD19DDCE2F00EF8EA9 /* arm64.h */,
 				DCFE24BE19DDCE2F00EF8EA9 /* capstone.h */,
 				DCA3579F1BC2C14E0094BB3F /* m68k.h */,
+				0537EAAB1FC6286300F06BF9 /* m680x.h */,
 				DCFE24BF19DDCE2F00EF8EA9 /* mips.h */,
 				DCFE24C019DDCE2F00EF8EA9 /* platform.h */,
 				DCFE24C119DDCE2F00EF8EA9 /* ppc.h */,
 				DCFE24C219DDCE2F00EF8EA9 /* sparc.h */,
 				DCFE24C319DDCE2F00EF8EA9 /* systemz.h */,
+				0537EAA91FC6284E00F06BF9 /* tms320c64x.h */,
 				DCFE24C419DDCE2F00EF8EA9 /* x86.h */,
 				DCFE24C519DDCE2F00EF8EA9 /* xcore.h */,
 			);
@@ -960,7 +966,9 @@
 				DC474F8719DE6F6B00BCA449 /* sparc.h in Headers */,
 				DC474F8819DE6F6B00BCA449 /* systemz.h in Headers */,
 				DC474F8919DE6F6B00BCA449 /* x86.h in Headers */,
+				0537EAAC1FC6286300F06BF9 /* m680x.h in Headers */,
 				DCA3578E1BC2C0290094BB3F /* M68KInstPrinter.h in Headers */,
+				0537EAAA1FC6284F00F06BF9 /* tms320c64x.h in Headers */,
 				DC474F8A19DE6F6B00BCA449 /* xcore.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1282,7 +1290,7 @@
 		DCFE239A19DDCB4900EF8EA9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0910;
 				TargetAttributes = {
 					DC3A28DA1AF29BEB00FC9913 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -2986,7 +2994,30 @@
 		DCFE239E19DDCB4900EF8EA9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
@@ -2994,6 +3025,29 @@
 		DCFE239F19DDCB4900EF8EA9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 			};
 			name = Release;
 		};
