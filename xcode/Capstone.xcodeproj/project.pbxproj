@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05354FA41FC62FCC00920005 /* m68k.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA3579F1BC2C14E0094BB3F /* m68k.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0537EAAA1FC6284F00F06BF9 /* tms320c64x.h in Headers */ = {isa = PBXBuildFile; fileRef = 0537EAA91FC6284E00F06BF9 /* tms320c64x.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0537EAAC1FC6286300F06BF9 /* m680x.h in Headers */ = {isa = PBXBuildFile; fileRef = 0537EAAB1FC6286300F06BF9 /* m680x.h */; };
+		0537EAAC1FC6286300F06BF9 /* m680x.h in Headers */ = {isa = PBXBuildFile; fileRef = 0537EAAB1FC6286300F06BF9 /* m680x.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DC07A86E19F6061D00254FCF /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
 		DC3A28E31AF29C0100FC9913 /* test_customized_mnem.c in Sources */ = {isa = PBXBuildFile; fileRef = DC3A28E21AF29C0100FC9913 /* test_customized_mnem.c */; };
 		DC3A28E41AF29C4600FC9913 /* libcapstone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFE23BD19DDCC2D00EF8EA9 /* libcapstone.a */; };
@@ -321,6 +322,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		05354FA51FC6305300920005 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		0537EAA91FC6284E00F06BF9 /* tms320c64x.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tms320c64x.h; sourceTree = "<group>"; };
 		0537EAAB1FC6286300F06BF9 /* m680x.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = m680x.h; sourceTree = "<group>"; };
 		DC3A28DB1AF29BEB00FC9913 /* test_customized_mnem */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_customized_mnem; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -664,6 +666,7 @@
 		DC474F6919DE6F3B00BCA449 /* framework */ = {
 			isa = PBXGroup;
 			children = (
+				05354FA51FC6305300920005 /* module.modulemap */,
 				DC474F6B19DE6F3B00BCA449 /* Info.plist */,
 			);
 			name = framework;
@@ -956,6 +959,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05354FA41FC62FCC00920005 /* m68k.h in Headers */,
 				DCA357881BC2C0290094BB3F /* M68KDisassembler.h in Headers */,
 				DC474F8119DE6F6B00BCA449 /* arm.h in Headers */,
 				DC474F8219DE6F6B00BCA449 /* arm64.h in Headers */,
@@ -2750,6 +2754,7 @@
 				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MODULEMAP_FILE = "$(SRCROOT)/CapstoneFramework/module.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.felixcloutier.$(PRODUCT_NAME:rfc1034identifier)";
@@ -2814,6 +2819,7 @@
 				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MODULEMAP_FILE = "$(SRCROOT)/CapstoneFramework/module.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.felixcloutier.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Capstone;
