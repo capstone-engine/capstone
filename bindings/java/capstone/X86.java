@@ -80,7 +80,7 @@ public class X86 {
     public int avx_cc;
     public byte avx_sae;
     public int avx_rm;
-    public int eflags;
+    public long eflags;
 
     public byte op_count;
 
@@ -118,7 +118,7 @@ public class X86 {
     public int avxCC;
     public boolean avxSae;
     public int avxRm;
-    public int eflags;
+    public long eflags;
 
     public Operand[] op;
 
