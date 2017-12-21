@@ -570,8 +570,8 @@ public class Arm64_const {
 	public static final int ARM64_REG_ENDING = 260;
 
 	// alias registers
-	public static final int ARM64_REG_IP1 = ARM64_REG_X16;
-	public static final int ARM64_REG_IP0 = ARM64_REG_X17;
+	public static final int ARM64_REG_IP0 = ARM64_REG_X16;
+	public static final int ARM64_REG_IP1 = ARM64_REG_X17;
 	public static final int ARM64_REG_FP = ARM64_REG_X29;
 	public static final int ARM64_REG_LR = ARM64_REG_X30;
 
