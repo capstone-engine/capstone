@@ -5402,19 +5402,19 @@
 	{ 0 }
 },
 {	/* X86_STOSB, X86_INS_STOSB: stosb	$dst, al */
-	0,
+	X86_EFLAGS_TEST_DF,
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_STOSL, X86_INS_STOSD: stos{l|d}	{%eax, $dst|$dst, eax} */
-	0,
+	X86_EFLAGS_TEST_DF,
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_STOSQ, X86_INS_STOSQ: stosq	$dst, rax */
-	0,
+	X86_EFLAGS_TEST_DF,
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_STOSW, X86_INS_STOSW: stosw	$dst, ax */
-	0,
+	X86_EFLAGS_TEST_DF,
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_STR16r, X86_INS_STR: str{w}	$dst */
