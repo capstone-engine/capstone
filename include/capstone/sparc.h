@@ -190,7 +190,7 @@ typedef struct cs_sparc_op {
 	sparc_op_type type;	// operand type
 	union {
 		sparc_reg reg;	// register value for REG operand
-		int32_t imm;		// immediate value for IMM operand
+		int64_t imm;		// immediate value for IMM operand
 		sparc_op_mem mem;		// base/disp value for MEM operand
 	};
 } cs_sparc_op;
