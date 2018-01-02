@@ -38,9 +38,9 @@ class M68KOpValue(ctypes.Union):
 class M68KOp(ctypes.Structure):
     _fields_ = (
         ('value', M68KOpValue),
-        ('type', ctypes.c_uint),
         ('mem', M68KOpMem),
         ('register_bits', ctypes.c_uint),
+        ('type', ctypes.c_uint),
         ('address_mode', ctypes.c_uint),
     )
 
