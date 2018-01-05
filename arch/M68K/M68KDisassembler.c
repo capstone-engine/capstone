@@ -4018,6 +4018,7 @@ static unsigned int m68k_disassemble(m68k_info *info, uint64_t pc)
 	MCInst *inst = info->inst;
 	cs_m68k* ext = &info->extension;
 	int i;
+	unsigned int size;
 
 	inst->Opcode = M68K_INS_INVALID;
 
@@ -4035,7 +4036,10 @@ static unsigned int m68k_disassemble(m68k_info *info, uint64_t pc)
 		g_instruction_table[info->ir].instruction(info);
 	}
 
-	return info->pc - (unsigned int)pc;
+	size = info->pc - (unsigned int)pc;
+	info->pc = (unsigned int)pc;
+
+	return size;
 }
 
 bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* instr, uint16_t* size, uint64_t address, void* inst_info)
