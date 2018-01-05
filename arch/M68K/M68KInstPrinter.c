@@ -121,7 +121,7 @@ static void registerPair(SStream* O, const cs_m68k_op* op)
 			s_reg_names[M68K_REG_D0 + op->reg_pair.reg_1]);
 }
 
-void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
+void printAddressingMode(SStream* O, unsigned int pc, const cs_m68k* inst, const cs_m68k_op* op)
 {
 	switch (op->address_mode) {
 		case M68K_AM_NONE:
@@ -228,6 +228,8 @@ void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 
 			SStream_concat(O, ")");
 			break;
+		case M68K_AM_BRANCH_DISPLACEMENT:
+			SStream_concat(O, "$%x", pc + op->br_disp.disp);
 		default:
 			break;
 	}
@@ -305,8 +307,8 @@ void M68K_printInst(MCInst* MI, SStream* O, void* PrinterInfo)
 
 	if (MI->Opcode == M68K_INS_CAS2) {
 		int reg_value_0, reg_value_1;
-		printAddressingMode(O, ext, &ext->operands[0]); SStream_concat0(O, ",");
-		printAddressingMode(O, ext, &ext->operands[1]); SStream_concat0(O, ",");
+		printAddressingMode(O, info->pc, ext, &ext->operands[0]); SStream_concat0(O, ",");
+		printAddressingMode(O, info->pc, ext, &ext->operands[1]); SStream_concat0(O, ",");
 		reg_value_0 = ext->operands[2].register_bits >> 4;
 		reg_value_1 = ext->operands[2].register_bits & 0xf;
 		SStream_concat(O, "(%s):(%s)", s_reg_names[M68K_REG_D0 + reg_value_0], s_reg_names[M68K_REG_D0 + reg_value_1]);
@@ -314,7 +316,7 @@ void M68K_printInst(MCInst* MI, SStream* O, void* PrinterInfo)
 	}
 
 	for (i  = 0; i < ext->op_count; ++i) {
-		printAddressingMode(O, ext, &ext->operands[i]);
+		printAddressingMode(O, info->pc, ext, &ext->operands[i]);
 		if ((i + 1) != ext->op_count)
 			SStream_concat(O, ",%s", s_spacing);
 	}

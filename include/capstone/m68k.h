@@ -104,6 +104,9 @@ typedef enum m68k_address_mode {
 	M68K_AM_ABSOLUTE_DATA_SHORT,	// Absolute Data Addressing  - Short
 	M68K_AM_ABSOLUTE_DATA_LONG,		// Absolute Data Addressing  - Long
 	M68K_AM_IMMEDIATE,              // Immediate value
+
+	M68K_AM_BRANCH_DISPLACEMENT,    // Address as displacement from (PC+2) used by branches
+
 } m68k_address_mode;
 
 //> Operand type for instruction's operands
@@ -116,6 +119,7 @@ typedef enum m68k_op_type {
 	M68K_OP_FP_DOUBLE,   // double precision Floating-Point operand
 	M68K_OP_REG_BITS,    // Register bits move
 	M68K_OP_REG_PAIR,    // Register pair in the same op (upper 4 bits for first reg, lower for second)
+	M68K_OP_BR_DISP,     // Branch displacement
 } m68k_op_type;
 
 // Instruction's operand referring to memory
@@ -134,6 +138,19 @@ typedef struct m68k_op_mem {
 	uint8_t index_size;     // 0 = w, 1 = l
 } m68k_op_mem;
 
+//> Operand type for instruction's operands
+typedef enum m68k_op_br_disp_size {
+	M68K_OP_BR_DISP_SIZE_INVALID = 0, // = CS_OP_INVALID (Uninitialized).
+	M68K_OP_BR_DISP_SIZE_BYTE = 1,    // signed 8-bit displacement
+	M68K_OP_BR_DISP_SIZE_WORD = 2,    // signed 16-bit displacement
+	M68K_OP_BR_DISP_SIZE_LONG = 4,    // signed 32-bit displacement
+} m68k_op_br_disp_size;
+
+typedef struct m68k_op_br_disp {
+	int32_t disp;	        // displacement value
+	uint8_t disp_size;		// Size from m68k_op_br_disp_size type above
+} m68k_op_br_disp;
+
 // Instruction operand
 typedef struct cs_m68k_op {
 	union {
@@ -148,6 +165,7 @@ typedef struct cs_m68k_op {
 	};
 
 	m68k_op_mem mem; 	    // data when operand is targeting memory
+	m68k_op_br_disp br_disp; // data when operand is a branch displacement
 	uint32_t register_bits; // register bits for movem etc. (always in d0-d7, a0-a7, fp0 - fp7 order)
 	m68k_op_type type;
 	m68k_address_mode address_mode;	// M68K addressing mode for this op
