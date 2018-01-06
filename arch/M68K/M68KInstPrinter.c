@@ -178,8 +178,7 @@ void printAddressingMode(SStream* O, unsigned int pc, const cs_m68k* inst, const
 
 			if (op->address_mode == M68K_AM_PCI_INDEX_BASE_DISP) {
 				SStream_concat(O, "$%x", pc + 2 + op->mem.in_disp);
-			}
-			else {
+			} else {
 				if (op->mem.in_disp > 0)
 					SStream_concat(O, "$%x", op->mem.in_disp);
 			}

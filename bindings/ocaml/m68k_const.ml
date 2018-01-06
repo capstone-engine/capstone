@@ -73,6 +73,7 @@ let _M68K_AM_PC_MEMI_PRE_INDEX = 15;;
 let _M68K_AM_ABSOLUTE_DATA_SHORT = 16;;
 let _M68K_AM_ABSOLUTE_DATA_LONG = 17;;
 let _M68K_AM_IMMEDIATE = 18;;
+let _M68K_AM_BRANCH_DISPLACEMENT = 19;;
 
 (* Operand type for instruction's operands *)
 
@@ -84,6 +85,14 @@ let _M68K_OP_FP_SINGLE = 4;;
 let _M68K_OP_FP_DOUBLE = 5;;
 let _M68K_OP_REG_BITS = 6;;
 let _M68K_OP_REG_PAIR = 7;;
+let _M68K_OP_BR_DISP = 8;;
+
+(* Operand type for instruction's operands *)
+
+let _M68K_OP_BR_DISP_SIZE_INVALID = 0;;
+let _M68K_OP_BR_DISP_SIZE_BYTE = 1;;
+let _M68K_OP_BR_DISP_SIZE_WORD = 2;;
+let _M68K_OP_BR_DISP_SIZE_LONG = 4;;
 
 let _M68K_CPU_SIZE_NONE = 0;;
 let _M68K_CPU_SIZE_BYTE = 1;;
