@@ -40,6 +40,8 @@ s_addressing_modes = {
 	16: "Absolute Data Addressing  - Short",
 	17: "Absolute Data Addressing  - Long",
 	18: "Immediate value",
+    
+    19: "Branch Displacement",
 }
 
 def print_read_write_regs(insn):
@@ -82,6 +84,9 @@ def print_insn_detail(insn):
         elif op.type == M68K_OP_FP_DOUBLE:
             print("\t\toperands[%u].type: FP_DOUBLE" % i)
             print("\t\toperands[%u].dimm: %lf", i, op.dimm)
+        elif op.type == M68K_OP_BR_DISP:
+            print("\t\toperands[%u].br_disp.disp: 0x%x" % (i, op.br_disp.disp))
+            print("\t\toperands[%u].br_disp.disp_size: %d" % (i, op.br_disp.disp_size))
     print()
 
 # ## Test class Cs

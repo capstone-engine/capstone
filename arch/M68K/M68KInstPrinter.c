@@ -121,7 +121,7 @@ static void registerPair(SStream* O, const cs_m68k_op* op)
 			s_reg_names[M68K_REG_D0 + op->reg_pair.reg_1]);
 }
 
-void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
+void printAddressingMode(SStream* O, unsigned int pc, const cs_m68k* inst, const cs_m68k_op* op)
 {
 	switch (op->address_mode) {
 		case M68K_AM_NONE:
@@ -146,7 +146,7 @@ void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 		case M68K_AM_REGI_ADDR_POST_INC: SStream_concat(O, "(a%d)+", (op->reg - M68K_REG_A0)); break;
 		case M68K_AM_REGI_ADDR_PRE_DEC: SStream_concat(O, "-(a%d)", (op->reg - M68K_REG_A0)); break;
 		case M68K_AM_REGI_ADDR_DISP: SStream_concat(O, "%s$%x(a%d)", op->mem.disp < 0 ? "-" : "", abs(op->mem.disp), (op->mem.base_reg - M68K_REG_A0)); break;
-		case M68K_AM_PCI_DISP: SStream_concat(O, "%s$%x(pc)", op->mem.disp < 0 ? "-" : "", abs(op->mem.disp)); break;
+		case M68K_AM_PCI_DISP: SStream_concat(O, "$%x(pc)", pc + 2 + op->mem.disp); break;
 		case M68K_AM_ABSOLUTE_DATA_SHORT: SStream_concat(O, "$%x.w", op->imm); break;
 		case M68K_AM_ABSOLUTE_DATA_LONG: SStream_concat(O, "$%x.l", op->imm); break;
 		case M68K_AM_IMMEDIATE:
@@ -168,15 +168,21 @@ void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 			 SStream_concat(O, "#$%x", op->imm);
 			 break;
 		case M68K_AM_PCI_INDEX_8_BIT_DISP:
-			SStream_concat(O, "%s$%x(pc,%s%s.%c)", op->mem.disp < 0 ? "-" : "", abs(op->mem.disp), s_spacing, getRegName(op->mem.index_reg), op->mem.index_size ? 'l' : 'w');
+			SStream_concat(O, "$%x(pc,%s%s.%c)", pc + 2 + op->mem.disp, s_spacing, getRegName(op->mem.index_reg), op->mem.index_size ? 'l' : 'w');
 			break;
 		case M68K_AM_AREGI_INDEX_8_BIT_DISP:
 			SStream_concat(O, "%s$%x(%s,%s%s.%c)", op->mem.disp < 0 ? "-" : "", abs(op->mem.disp), getRegName(op->mem.base_reg), s_spacing, getRegName(op->mem.index_reg), op->mem.index_size ? 'l' : 'w');
 			break;
 		case M68K_AM_PCI_INDEX_BASE_DISP:
 		case M68K_AM_AREGI_INDEX_BASE_DISP:
-			if (op->mem.in_disp > 0)
-			    SStream_concat(O, "$%x", op->mem.in_disp);
+
+			if (op->address_mode == M68K_AM_PCI_INDEX_BASE_DISP) {
+				SStream_concat(O, "$%x", pc + 2 + op->mem.in_disp);
+			}
+			else {
+				if (op->mem.in_disp > 0)
+					SStream_concat(O, "$%x", op->mem.in_disp);
+			}
 
 			SStream_concat(O, "(");
 
@@ -201,8 +207,13 @@ void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 		case M68K_AM_MEMI_PRE_INDEX:
 		case M68K_AM_MEMI_POST_INDEX:
 			SStream_concat(O, "([");
-			if (op->mem.in_disp > 0)
-			    SStream_concat(O, "$%x", op->mem.in_disp);
+
+			if (op->address_mode == M68K_AM_PC_MEMI_POST_INDEX || op->address_mode == M68K_AM_PC_MEMI_PRE_INDEX) {
+				SStream_concat(O, "$%x", pc + 2 + op->mem.in_disp);
+			} else {
+				if (op->mem.in_disp > 0)
+					SStream_concat(O, "$%x", op->mem.in_disp);
+			}
 
 			if (op->mem.base_reg != M68K_REG_INVALID) {
 				if (op->mem.in_disp > 0)
@@ -228,6 +239,8 @@ void printAddressingMode(SStream* O, const cs_m68k* inst, const cs_m68k_op* op)
 
 			SStream_concat(O, ")");
 			break;
+		case M68K_AM_BRANCH_DISPLACEMENT:
+			SStream_concat(O, "$%x", pc + 2 + op->br_disp.disp);
 		default:
 			break;
 	}
@@ -305,8 +318,8 @@ void M68K_printInst(MCInst* MI, SStream* O, void* PrinterInfo)
 
 	if (MI->Opcode == M68K_INS_CAS2) {
 		int reg_value_0, reg_value_1;
-		printAddressingMode(O, ext, &ext->operands[0]); SStream_concat0(O, ",");
-		printAddressingMode(O, ext, &ext->operands[1]); SStream_concat0(O, ",");
+		printAddressingMode(O, info->pc, ext, &ext->operands[0]); SStream_concat0(O, ",");
+		printAddressingMode(O, info->pc, ext, &ext->operands[1]); SStream_concat0(O, ",");
 		reg_value_0 = ext->operands[2].register_bits >> 4;
 		reg_value_1 = ext->operands[2].register_bits & 0xf;
 		SStream_concat(O, "(%s):(%s)", s_reg_names[M68K_REG_D0 + reg_value_0], s_reg_names[M68K_REG_D0 + reg_value_1]);
@@ -314,7 +327,7 @@ void M68K_printInst(MCInst* MI, SStream* O, void* PrinterInfo)
 	}
 
 	for (i  = 0; i < ext->op_count; ++i) {
-		printAddressingMode(O, ext, &ext->operands[i]);
+		printAddressingMode(O, info->pc, ext, &ext->operands[i]);
 		if ((i + 1) != ext->op_count)
 			SStream_concat(O, ",%s", s_spacing);
 	}
