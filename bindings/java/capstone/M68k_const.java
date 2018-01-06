@@ -76,6 +76,7 @@ public class M68k_const {
 	public static final int M68K_AM_ABSOLUTE_DATA_SHORT = 16;
 	public static final int M68K_AM_ABSOLUTE_DATA_LONG = 17;
 	public static final int M68K_AM_IMMEDIATE = 18;
+	public static final int M68K_AM_BRANCH_DISPLACEMENT = 19;
 
 	// Operand type for instruction's operands
 
@@ -87,6 +88,14 @@ public class M68k_const {
 	public static final int M68K_OP_FP_DOUBLE = 5;
 	public static final int M68K_OP_REG_BITS = 6;
 	public static final int M68K_OP_REG_PAIR = 7;
+	public static final int M68K_OP_BR_DISP = 8;
+
+	// Operand type for instruction's operands
+
+	public static final int M68K_OP_BR_DISP_SIZE_INVALID = 0;
+	public static final int M68K_OP_BR_DISP_SIZE_BYTE = 1;
+	public static final int M68K_OP_BR_DISP_SIZE_WORD = 2;
+	public static final int M68K_OP_BR_DISP_SIZE_LONG = 4;
 
 	public static final int M68K_CPU_SIZE_NONE = 0;
 	public static final int M68K_CPU_SIZE_BYTE = 1;

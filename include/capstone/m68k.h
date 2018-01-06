@@ -106,7 +106,6 @@ typedef enum m68k_address_mode {
 	M68K_AM_IMMEDIATE,              // Immediate value
 
 	M68K_AM_BRANCH_DISPLACEMENT,    // Address as displacement from (PC+2) used by branches
-
 } m68k_address_mode;
 
 //> Operand type for instruction's operands
@@ -591,7 +590,6 @@ typedef enum m68k_insn {
 	M68K_INS_UNLK,
 	M68K_INS_UNPK,
 	M68K_INS_ENDING,   // <-- mark the end of the list of instructions
-
 } m68k_insn;
 
 //> Group of M68K instructions
