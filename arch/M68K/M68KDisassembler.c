@@ -759,7 +759,23 @@ static void build_imm_special_reg(m68k_info *info, int opcode, int imm, int size
 	op1->reg = reg;
 }
 
-static void build_bxx(m68k_info *info, int opcode, int size, int jump_offset)
+static void build_relative_branch(m68k_info *info, int opcode, int size, int displacement)
+{
+	cs_m68k_op* op;
+	cs_m68k* ext = build_init_op(info, opcode, 1, size);
+
+	op = &ext->operands[0];
+
+	op->type = M68K_OP_BR_DISP;
+	op->address_mode = M68K_AM_BRANCH_DISPLACEMENT;
+	op->br_disp.disp = displacement;
+	op->br_disp.disp_size = size;
+
+	set_insn_group(info, M68K_GRP_JUMP);
+	set_insn_group(info, M68K_GRP_BRANCH_RELATIVE);
+}
+
+static void build_absolute_jump_with_immediate(m68k_info *info, int opcode, int size, int immediate)
 {
 	cs_m68k_op* op;
 	cs_m68k* ext = build_init_op(info, opcode, 1, size);
@@ -768,23 +784,22 @@ static void build_bxx(m68k_info *info, int opcode, int size, int jump_offset)
 
 	op->type = M68K_OP_IMM;
 	op->address_mode = M68K_AM_IMMEDIATE;
-	op->imm = jump_offset;
+	op->imm = immediate;
 
 	set_insn_group(info, M68K_GRP_JUMP);
-	set_insn_group(info, M68K_GRP_BRANCH_RELATIVE);
 }
 
-static void build_bcc(m68k_info *info, int size, int jump_offset)
+static void build_bcc(m68k_info *info, int size, int displacement)
 {
-	build_bxx(info, s_branch_lut[(info->ir >> 8) & 0xf], size, jump_offset);
+	build_relative_branch(info, s_branch_lut[(info->ir >> 8) & 0xf], size, displacement);
 }
 
-static void build_trap(m68k_info *info, int size, int jump_offset)
+static void build_trap(m68k_info *info, int size, int immediate)
 {
-	build_bxx(info, s_trap_lut[(info->ir >> 8) & 0xf], size, jump_offset);
+	build_absolute_jump_with_immediate(info, s_trap_lut[(info->ir >> 8) & 0xf], size, immediate);
 }
 
-static void build_dbxx(m68k_info *info, int opcode, int size, int jump_offset)
+static void build_dbxx(m68k_info *info, int opcode, int size, int displacement)
 {
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
@@ -796,17 +811,18 @@ static void build_dbxx(m68k_info *info, int opcode, int size, int jump_offset)
 	op0->address_mode = M68K_AM_REG_DIRECT_DATA;
 	op0->reg = M68K_REG_D0 + (info->ir & 7);
 
-	op1->type = M68K_OP_IMM;
-	op1->address_mode = M68K_AM_IMMEDIATE;
-	op1->imm = jump_offset;
+	op1->type = M68K_OP_BR_DISP;
+	op1->address_mode = M68K_AM_BRANCH_DISPLACEMENT;
+	op1->br_disp.disp = displacement;
+	op1->br_disp.disp_size = M68K_OP_BR_DISP_SIZE_LONG;
 
 	set_insn_group(info, M68K_GRP_JUMP);
 	set_insn_group(info, M68K_GRP_BRANCH_RELATIVE);
 }
 
-static void build_dbcc(m68k_info *info, int size, int jump_offset)
+static void build_dbcc(m68k_info *info, int size, int displacement)
 {
-	build_dbxx(info, s_dbcc_lut[(info->ir >> 8) & 0xf], size, jump_offset);
+	build_dbxx(info, s_dbcc_lut[(info->ir >> 8) & 0xf], size, displacement);
 }
 
 static void build_d_d_ea(m68k_info *info, int opcode, int size)
@@ -1456,21 +1472,18 @@ static void d68000_asl_ea(m68k_info *info)
 
 static void d68000_bcc_8(m68k_info *info)
 {
-	uint temp_pc = info->pc;
-	build_bcc(info, 1, temp_pc + make_int_8(info->ir));
+	build_bcc(info, 1, make_int_8(info->ir));
 }
 
 static void d68000_bcc_16(m68k_info *info)
 {
-	uint temp_pc = info->pc;
-	build_bcc(info, 2, temp_pc + make_int_16(read_imm_16(info)));
+	build_bcc(info, 2, make_int_16(read_imm_16(info)));
 }
 
 static void d68020_bcc_32(m68k_info *info)
 {
-	uint temp_pc = info->pc;
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
-	build_bcc(info, 4, temp_pc + read_imm_32(info));
+	build_bcc(info, 4, read_imm_32(info));
 }
 
 static void d68000_bchg_r(m68k_info *info)
@@ -1496,7 +1509,7 @@ static void d68000_bclr_s(m68k_info *info)
 static void d68010_bkpt(m68k_info *info)
 {
 	LIMIT_CPU_TYPES(info, M68010_PLUS);
-	build_bxx(info, M68K_INS_BKPT, 0, info->ir & 7);
+	build_absolute_jump_with_immediate(info, M68K_INS_BKPT, 0, info->ir & 7);
 }
 
 static void d68020_bfchg(m68k_info *info)
@@ -1558,21 +1571,18 @@ static void d68020_bftst(m68k_info *info)
 
 static void d68000_bra_8(m68k_info *info)
 {
-	uint temp_pc = info->pc;
-	build_bxx(info, M68K_INS_BRA, 1, temp_pc + make_int_8(info->ir));
+	build_relative_branch(info, M68K_INS_BRA, 1, make_int_8(info->ir));
 }
 
 static void d68000_bra_16(m68k_info *info)
 {
-	uint temp_pc = info->pc;
-	build_bxx(info, M68K_INS_BRA, 2, temp_pc + make_int_16(read_imm_16(info)));
+	build_relative_branch(info, M68K_INS_BRA, 2, make_int_16(read_imm_16(info)));
 }
 
 static void d68020_bra_32(m68k_info *info)
 {
-	uint temp_pc = info->pc;
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
-	build_bxx(info, M68K_INS_BRA, 4, temp_pc + read_imm_32(info));
+	build_relative_branch(info, M68K_INS_BRA, 4, read_imm_32(info));
 }
 
 static void d68000_bset_r(m68k_info *info)
@@ -1587,21 +1597,18 @@ static void d68000_bset_s(m68k_info *info)
 
 static void d68000_bsr_8(m68k_info *info)
 {
-	uint temp_pc = info->pc;
-	build_bxx(info, M68K_INS_BSR, 1, temp_pc + make_int_8(info->ir));
+	build_relative_branch(info, M68K_INS_BSR, 1, make_int_8(info->ir));
 }
 
 static void d68000_bsr_16(m68k_info *info)
 {
-	uint temp_pc = info->pc;
-	build_bxx(info, M68K_INS_BSR, 2, temp_pc + make_int_16(read_imm_16(info)));
+	build_relative_branch(info, M68K_INS_BSR, 2, make_int_16(read_imm_16(info)));
 }
 
 static void d68020_bsr_32(m68k_info *info)
 {
-	uint temp_pc = info->pc;
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
-	build_bxx(info, M68K_INS_BSR, 4, temp_pc + peek_imm_32(info));
+	build_relative_branch(info, M68K_INS_BSR, 4, peek_imm_32(info));
 }
 
 static void d68000_btst_r(m68k_info *info)
@@ -1789,15 +1796,19 @@ static void d68000_cmpm_32(m68k_info *info)
 	build_pi_pi(info, M68K_INS_CMPM, 4);
 }
 
+static void make_cpbcc_operand(cs_m68k_op* op, int size, int displacement)
+{
+	op->address_mode = M68K_AM_BRANCH_DISPLACEMENT;
+	op->type = M68K_OP_BR_DISP;
+	op->br_disp.disp = displacement;
+	op->br_disp.disp_size = size;
+}
+
 static void d68020_cpbcc_16(m68k_info *info)
 {
 	cs_m68k_op* op0;
 	cs_m68k* ext;
-	uint new_pc;
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
-
-	new_pc = info->pc;
-	new_pc += make_int_16(read_imm_16(info));
 
 	// these are all in row with the extension so just doing a add here is fine
 	info->inst->Opcode += (info->ir & 0x2f);
@@ -1805,10 +1816,9 @@ static void d68020_cpbcc_16(m68k_info *info)
 	ext = build_init_op(info, M68K_INS_FBF, 1, 2);
 	op0 = &ext->operands[0];
 
-	op0->address_mode = M68K_AM_IMMEDIATE;
-	op0->type = M68K_OP_IMM;
-	op0->imm = new_pc;
-
+	make_cpbcc_operand(op0, M68K_OP_BR_DISP_SIZE_WORD, make_int_16(read_imm_16(info)));
+	
+	set_insn_group(info, M68K_GRP_JUMP);
 	set_insn_group(info, M68K_GRP_BRANCH_RELATIVE);
 }
 
@@ -1816,14 +1826,10 @@ static void d68020_cpbcc_32(m68k_info *info)
 {
 	cs_m68k* ext;
 	cs_m68k_op* op0;
-	uint new_pc;
 
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
 
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
-
-	new_pc = info->pc;
-	new_pc += read_imm_32(info);
 
 	// these are all in row with the extension so just doing a add here is fine
 	info->inst->Opcode += (info->ir & 0x2f);
@@ -1831,10 +1837,9 @@ static void d68020_cpbcc_32(m68k_info *info)
 	ext = build_init_op(info, M68K_INS_FBF, 1, 4);
 	op0 = &ext->operands[0];
 
-	op0->type = M68K_OP_IMM;
-	op0->address_mode = M68K_AM_IMMEDIATE;
-	op0->imm = new_pc;
+	make_cpbcc_operand(op0, M68K_OP_BR_DISP_SIZE_LONG, read_imm_32(info));
 
+	set_insn_group(info, M68K_GRP_JUMP);
 	set_insn_group(info, M68K_GRP_BRANCH_RELATIVE);
 }
 
@@ -1843,15 +1848,12 @@ static void d68020_cpdbcc(m68k_info *info)
 	cs_m68k* ext;
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
-	uint new_pc, ext1, ext2;
+	uint ext1, ext2;
 
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
 
-	new_pc = info->pc;
 	ext1 = read_imm_16(info);
 	ext2 = read_imm_16(info);
-	new_pc += make_int_16(ext2) + 2;
-
 
 	// these are all in row with the extension so just doing a add here is fine
 	info->inst->Opcode += (ext1 & 0x2f);
@@ -1862,10 +1864,9 @@ static void d68020_cpdbcc(m68k_info *info)
 
 	op0->reg = M68K_REG_D0 + (info->ir & 7);
 
-	op1->address_mode = M68K_AM_IMMEDIATE;
-	op1->type = M68K_OP_IMM;
-	op1->imm = new_pc;
+	make_cpbcc_operand(op1, M68K_OP_BR_DISP_SIZE_WORD, make_int_16(ext2) + 2);
 
+	set_insn_group(info, M68K_GRP_JUMP);
 	set_insn_group(info, M68K_GRP_BRANCH_RELATIVE);
 }
 
@@ -2212,14 +2213,12 @@ static void d68040_cpush(m68k_info *info)
 
 static void d68000_dbra(m68k_info *info)
 {
-	uint temp_pc = info->pc;
-	build_dbxx(info, M68K_INS_DBRA, 0, temp_pc + make_int_16(read_imm_16(info)));
+	build_dbxx(info, M68K_INS_DBRA, 0, make_int_16(read_imm_16(info)));
 }
 
 static void d68000_dbcc(m68k_info *info)
 {
-	uint temp_pc = info->pc;
-	build_dbcc(info, 0, temp_pc + make_int_16(read_imm_16(info)));
+	build_dbcc(info, 0, make_int_16(read_imm_16(info)));
 }
 
 static void d68000_divs(m68k_info *info)
@@ -3091,7 +3090,7 @@ static void d68010_rtd(m68k_info *info)
 {
 	set_insn_group(info, M68K_GRP_RET);
 	LIMIT_CPU_TYPES(info, M68010_PLUS);
-	build_bxx(info, M68K_INS_RTD, 0, read_imm_16(info));
+	build_absolute_jump_with_immediate(info, M68K_INS_RTD, 0, read_imm_16(info));
 }
 
 static void d68000_rte(m68k_info *info)
@@ -3109,7 +3108,7 @@ static void d68020_rtm(m68k_info *info)
 
 	LIMIT_CPU_TYPES(info, M68020_ONLY);
 
-	build_bxx(info, M68K_INS_RTM, 0, 0);
+	build_absolute_jump_with_immediate(info, M68K_INS_RTM, 0, 0);
 
 	ext = &info->extension;
 	op = &ext->operands[0];
@@ -3154,7 +3153,7 @@ static void d68000_scc(m68k_info *info)
 
 static void d68000_stop(m68k_info *info)
 {
-	build_bxx(info, M68K_INS_STOP, 0, read_imm_16(info));
+	build_absolute_jump_with_immediate(info, M68K_INS_STOP, 0, read_imm_16(info));
 }
 
 static void d68000_sub_er_8(m68k_info *info)
@@ -3269,7 +3268,7 @@ static void d68000_tas(m68k_info *info)
 
 static void d68000_trap(m68k_info *info)
 {
-	build_bxx(info, M68K_INS_TRAP, 0, info->ir&0xf);
+	build_absolute_jump_with_immediate(info, M68K_INS_TRAP, 0, info->ir&0xf);
 }
 
 static void d68020_trapcc_0(m68k_info *info)
@@ -4019,6 +4018,7 @@ static unsigned int m68k_disassemble(m68k_info *info, uint64_t pc)
 	MCInst *inst = info->inst;
 	cs_m68k* ext = &info->extension;
 	int i;
+	unsigned int size;
 
 	inst->Opcode = M68K_INS_INVALID;
 
@@ -4036,7 +4036,10 @@ static unsigned int m68k_disassemble(m68k_info *info, uint64_t pc)
 		g_instruction_table[info->ir].instruction(info);
 	}
 
-	return info->pc - (unsigned int)pc;
+	size = info->pc - (unsigned int)pc;
+	info->pc = (unsigned int)pc;
+
+	return size;
 }
 
 bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* instr, uint16_t* size, uint64_t address, void* inst_info)
