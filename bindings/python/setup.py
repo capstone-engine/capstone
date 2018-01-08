@@ -144,7 +144,8 @@ def build_libraries():
         os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh")
 
     shutil.copy(VERSIONED_LIBRARY_FILE, os.path.join(LIBS_DIR, LIBRARY_FILE))
-    if STATIC_LIBRARY_FILE: shutil.copy(STATIC_LIBRARY_FILE, LIBS_DIR)
+    if STATIC_LIBRARY_FILE and os.path.exists(STATIC_LIBRARY_FILE):
+        shutil.copy(STATIC_LIBRARY_FILE, LIBS_DIR)
     os.chdir(cwd)
 
 
