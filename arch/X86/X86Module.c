@@ -20,6 +20,7 @@ static cs_err init(cs_struct *ud)
 	ud->printer = X86_Intel_printInst;
 	ud->syntax = CS_OPT_SYNTAX_INTEL;
 	ud->printer_info = mri;
+	ud->operand_printer = X86_Intel_printOperand;
 	ud->disasm = X86_getInstruction;
 	ud->reg_name = X86_reg_name;
 	ud->insn_id = X86_get_insn_id;

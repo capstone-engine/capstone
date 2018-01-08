@@ -10,6 +10,7 @@
 #include "SStream.h"
 
 typedef void (*Printer_t)(MCInst *MI, SStream *OS, void *info);
+typedef void (*OperandPrinter_t)(MCInst *MI, unsigned OpNo, SStream *O);
 
 // function to be called after Printer_t
 // this is the best time to gather insn's characteristics
@@ -35,6 +36,7 @@ struct cs_struct {
 	cs_mode mode;
 	Printer_t printer;	// asm printer
 	void *printer_info; // aux info for printer
+	OperandPrinter_t print_operand(MCInst *MI, unsigned OpNo, SStream *O);
 	Disasm_t disasm;	// disassembler
 	void *getinsn_info; // auxiliary info for printer
 	GetName_t reg_name;
