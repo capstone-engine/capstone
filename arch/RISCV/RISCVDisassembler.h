@@ -1,8 +1,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
-#ifndef CS_MIPSDISASSEMBLER_H
-#define CS_MIPSDISASSEMBLER_H
+#ifndef CS_RISCVDISASSEMBLER_H
+#define CS_RISCVDISASSEMBLER_H
 
 #include "../../include/capstone.h"
 
