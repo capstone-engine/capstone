@@ -15,6 +15,18 @@ filter Add-TypeName {
 
 <#
 .SYNOPSIS
+	Get Capstone version as Version object
+#>
+function Get-CapstoneVersion {
+	New-Object -TypeName version -ArgumentList @(
+		[System.BitConverter]::GetBytes(
+			[Capstone]::cs_version($null,$null)
+		)
+	)
+}
+
+<#
+.SYNOPSIS
 	Create C# bindings for capstone.dll
 
 .PARAMETER DllPath
@@ -252,7 +264,7 @@ function Get-CapstoneDisassembly {
 	   2 div      ebx
 
 #>
-
+	[CmdletBinding(DefaultParameterSetName = 'Capstone')]
 	param(
 		[Parameter(ParameterSetName='Capstone', Mandatory = $True)]
 		[ValidateSet(
@@ -312,7 +324,6 @@ function Get-CapstoneDisassembly {
     )
 
 	if ($Version){
-		$VerCount = [System.BitConverter]::GetBytes($([Capstone]::cs_version($null,$null)))
 		$Banner = @"
 
                  (((;
@@ -332,11 +343,12 @@ function Get-CapstoneDisassembly {
   "" (((((((((((((((((((((((((((*""
          """****(((((****"""
 
-     -=[Capstone Engine v$($VerCount[1]).$($VerCount[0])]=-
+     -=[Capstone Engine v{0}]=-
 
-"@
+"@ -f (Get-CapstoneVersion)
 		# Mmm ASCII version banner!
 		$Banner
+		return
 	}
 
 	# Disasm Handle
