@@ -30,7 +30,7 @@ function Get-CapstoneVersion {
 	Create C# bindings for capstone.dll
 
 .PARAMETER DllPath
-	Path capstone.dll
+	Path to capstone.dll
 #>
 function Initialize-Capstone {
 	[CmdletBinding()]
@@ -463,6 +463,7 @@ function Get-CapstoneDisassembly {
 	# Free Buffer Handle
 	$CallResult = [Capstone]::cs_free($InsnHandle, $Count)
 }
+
 #region Init
 
 # Compatibility for PS v2 / PS v3+
