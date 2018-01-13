@@ -317,13 +317,10 @@ function Get-CapstoneDisassembly {
 	$CallResult = [Capstone]::cs_open($Architecture,$Mode,[ref]$DisAsmHandle)
 	if ($CallResult -ne "CS_ERR_OK") {
 		if ($CallResult -eq "CS_ERR_MODE"){
-			echo "`n[!] Invalid Architecture/Mode combination"
-			echo "[>] Quitting..`n"
+			throw "Invalid Architecture/Mode combination: $Architecture/$Mode"
 		} else {
-			echo "`n[!] cs_open error: $CallResult"
-			echo "[>] Quitting..`n"
+			throw "cs_open error: $CallResult"
 		}
-		Return
 	}
 
 	# Set disassembly syntax
@@ -339,10 +336,8 @@ function Get-CapstoneDisassembly {
 	}
 	$CallResult = [Capstone]::cs_option($DisAsmHandle, 1, $CS_OPT_SYNTAX)
 	if ($CallResult -ne "CS_ERR_OK") {
-		echo "`n[!] cs_option error: $CallResult"
-		echo "[>] Quitting..`n"
 		$CallResult = [Capstone]::cs_close([ref]$DisAsmHandle)
-		Return
+		throw "cs_option error: $CallResult"
 	}
 
 	# Set disassembly detail
@@ -358,10 +353,8 @@ function Get-CapstoneDisassembly {
 	}
 	$CallResult = [Capstone]::cs_option($DisAsmHandle, 2, $CS_OPT)
 	if ($CallResult -ne "CS_ERR_OK") {
-		echo "`n[!] cs_option error: $CallResult"
-		echo "[>] Quitting..`n"
 		$CallResult = [Capstone]::cs_close([ref]$DisAsmHandle)
-		Return
+		throw "cs_option error: $CallResult"
 	}
 
 	# Out Buffer Handle
