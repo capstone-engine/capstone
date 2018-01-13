@@ -34,7 +34,7 @@ function Get-CapstoneDisassembly {
 
 	C:\PS> $Bytes = [Byte[]] @( 0x10, 0xf1, 0x10, 0xe7, 0x11, 0xf2, 0x31, 0xe7, 0xdc, 0xa1, 0x2e, 0xf3, 0xe8, 0x4e, 0x62, 0xf3 )
 	C:\PS> Get-CapstoneDisassembly -Architecture CS_ARCH_ARM -Mode CS_MODE_ARM -Bytes $Bytes
-	
+
 	sdiv r0, r0, r1
 	udiv r1, r1, r2
 	vbit q5, q15, q6
@@ -45,7 +45,7 @@ function Get-CapstoneDisassembly {
 	# Detailed mode & ATT syntax
 	C:\PS> $Bytes = [Byte[]] @( 0xB8, 0x0A, 0x00, 0x00, 0x00, 0xF7, 0xF3 )
 	C:\PS> Get-CapstoneDisassembly -Architecture CS_ARCH_X86 -Mode CS_MODE_32 -Bytes $Bytes -Syntax ATT -Detailed
-	
+
 	Size     : 5
 	Address  : 0x100000
 	Mnemonic : movl
@@ -53,7 +53,7 @@ function Get-CapstoneDisassembly {
 	Bytes    : {184, 10, 0, 0...}
 	RegRead  :
 	RegWrite :
-	
+
 	Size     : 2
 	Address  : 0x100005
 	Mnemonic : divl
@@ -91,7 +91,7 @@ function Get-CapstoneDisassembly {
 			'CS_ARCH_ALL')
 		]
 		[String]$Architecture,
-		
+
 		[Parameter(ParameterSetName='Capstone', Mandatory = $True)]
 		[ValidateSet(
 			'CS_MODE_LITTLE_ENDIAN',
@@ -112,11 +112,11 @@ function Get-CapstoneDisassembly {
 			'CS_MODE_MIPS64')
 		]
 		[String]$Mode,
-		
+
 		[Parameter(ParameterSetName='Capstone', Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[Byte[]]$Bytes,
-		
+
 		[Parameter(ParameterSetName='Capstone', Mandatory = $False)]
 		[ValidateSet(
 			'Intel',
@@ -129,7 +129,7 @@ function Get-CapstoneDisassembly {
 
 		[Parameter(ParameterSetName='Capstone', Mandatory = $False)]
 		[switch]$Detailed = $null,
-		
+
 		[Parameter(ParameterSetName='Version', Mandatory = $False)]
 		[switch]$Version = $null
     )
@@ -138,7 +138,7 @@ function Get-CapstoneDisassembly {
 	if(!$PSScriptRoot) {
 		$PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 	}
-	
+
 	# Set the capstone DLL path
 	$DllPath = $($PSScriptRoot + '\Lib\Capstone\capstone.dll').Replace('\','\\')
 
@@ -155,7 +155,7 @@ function Get-CapstoneDisassembly {
 	using System.Diagnostics;
 	using System.Runtime.InteropServices;
 	using System.Security.Principal;
-	
+
 	[StructLayout(LayoutKind.Sequential)]
 	public struct cs_insn
 	{
@@ -235,7 +235,7 @@ function Get-CapstoneDisassembly {
 		CS_MODE_MIPS32 = CS_MODE_32,  /// Mips32 ISA (Mips)
 		CS_MODE_MIPS64 = CS_MODE_64,  /// Mips64 ISA (Mips)
 	}
-	
+
 	public static class Capstone
 	{
 		[DllImport("$DllPath")]
@@ -284,22 +284,22 @@ function Get-CapstoneDisassembly {
 		$VerCount = [System.BitConverter]::GetBytes($([Capstone]::cs_version($null,$null)))
 		$Banner = @"
 
-                 (((;                
-              (; "((((\              
-           ;((((((; "((((;           
-          ((((""\(((( "((((          
-        ((((" ((\ "(((( "(((\        
-      ;(((/ ((((((( "(((( \(((       
-     ((((" (((* "(((( \(((;"(((\     
-    ((((";((("/(( \(((;"(((\"(((\    
-   (((( (((( ((((" "(((\ ((() (((\   
-  ;((("(((( (((*     **"" ((()"(((;  
-  (((" ((( (((( ((((((((((((((:*(((  
- (((( (((*)((( ********"""" ;;(((((; 
- (((* ((( (((((((((((((((((((((*"" ( 
- ((("(((( """***********"""" ;;((((( 
-  "" (((((((((((((((((((((((((((*""  
-         """****(((((****"""         
+                 (((;
+              (; "((((\
+           ;((((((; "((((;
+          ((((""\(((( "((((
+        ((((" ((\ "(((( "(((\
+      ;(((/ ((((((( "(((( \(((
+     ((((" (((* "(((( \(((;"(((\
+    ((((";((("/(( \(((;"(((\"(((\
+   (((( (((( ((((" "(((\ ((() (((\
+  ;((("(((( (((*     **"" ((()"(((;
+  (((" ((( (((( ((((((((((((((:*(((
+ (((( (((*)((( ********"""" ;;(((((;
+ (((* ((( (((((((((((((((((((((*"" (
+ ((("(((( """***********"""" ;;(((((
+  "" (((((((((((((((((((((((((((*""
+         """****(((((****"""
 
      -=[Capstone Engine v$($VerCount[1]).$($VerCount[0])]=-
 
@@ -308,10 +308,10 @@ function Get-CapstoneDisassembly {
 		$Banner
 		Return
 	}
-	
+
 	# Disasm Handle
 	$DisAsmHandle = [IntPtr]::Zero
-	
+
 	# Initialize Capstone with cs_open()
 	$CallResult = [Capstone]::cs_open($Architecture,$Mode,[ref]$DisAsmHandle)
 	if ($CallResult -ne "CS_ERR_OK") {
@@ -368,7 +368,7 @@ function Get-CapstoneDisassembly {
 
 	# Disassemble bytes
 	$Count = [Capstone]::cs_disasm($DisAsmHandle, $Bytes, $Bytes.Count, $Address, 0, [ref]$InsnHandle)
-	
+
 	if ($Count -gt 0) {
 		# Result Array
 		$Disasm = @()
@@ -381,15 +381,15 @@ function Get-CapstoneDisassembly {
 		# Result detail struct
 		$cs_detail = New-Object cs_detail
 		$cs_detail = $cs_detail.GetType()
-	
+
 		# Result buffer offset
 		$BuffOffset = $InsnHandle.ToInt64()
-	
+
 		for ($i=0; $i -lt $Count; $i++) {
 			# Cast Offset to cs_insn
 			$InsnPointer = New-Object System.Intptr -ArgumentList $BuffOffset
 			$Cast = [system.runtime.interopservices.marshal]::PtrToStructure($InsnPointer,[type]$cs_insn)
-	
+
 			if ($CS_OPT -eq 0) {
 				$HashTable = @{
 					Address = echo "0x$("{0:X}" -f $Cast.address)"
@@ -433,10 +433,10 @@ function Get-CapstoneDisassembly {
 		$CallResult = [Capstone]::cs_close([ref]$DisAsmHandle)
 		Return
 	}
-	
+
 	# Print result
 	$Disasm
-	
+
 	# Free Buffer Handle
 	$CallResult = [Capstone]::cs_free($InsnHandle, $Count)
 }
