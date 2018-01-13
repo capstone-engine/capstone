@@ -1,3 +1,18 @@
+<#
+.Synopsis
+	Add TypeName to piped object
+
+.Parameter TypeName
+	TypeName as string
+#>
+filter Add-TypeName {
+	Param (
+		[string]$TypeName
+	)
+    $_.PSObject.TypeNames.Insert(0, $TypeName)
+    $_
+}
+
 function Get-CapstoneDisassembly {
 <#
 .SYNOPSIS
@@ -385,10 +400,10 @@ function Get-CapstoneDisassembly {
 
 			if ($CS_OPT -eq 0) {
 				$HashTable = @{
-					Address = echo "0x$("{0:X}" -f $Cast.address)"
-					Instruction = echo "$($Cast.mnemonic) $($Cast.operands)"
+					Address = $Cast.address
+					Instruction = $Cast.mnemonic, $Cast.operands -join ' '
 				}
-				New-Object PSObject -Property $HashTable | Select-Object Address,Instruction
+				New-Object PSObject -Property $HashTable | Select-Object Address,Instruction | Add-TypeName 'CapstoneDisassembly.Simple'
 			} else {
 				$DetailCast = [system.runtime.interopservices.marshal]::PtrToStructure($Cast.detail,[type]$cs_detail)
 				if($DetailCast.regs_read_count -gt 0) {
@@ -404,7 +419,7 @@ function Get-CapstoneDisassembly {
 					}
 				}
 				$HashTable = @{
-					Address = echo "0x$("{0:X}" -f $Cast.address)"
+					Address = $Cast.address
 					Mnemonic = $Cast.mnemonic
 					Operands = $Cast.operands
 					Bytes = $Cast.bytes
@@ -412,7 +427,7 @@ function Get-CapstoneDisassembly {
 					RegRead = $RegRead
 					RegWrite = $RegWrite
 				}
-				New-Object PSObject -Property $HashTable | Select-Object Size,Address,Mnemonic,Operands,Bytes,RegRead,RegWrite
+				New-Object PSObject -Property $HashTable | Select-Object Size,Address,Mnemonic,Operands,Bytes,RegRead,RegWrite | Add-TypeName 'CapstoneDisassembly.Detailed'
 			}
 			$BuffOffset = $BuffOffset + $cs_insn_size
 		}

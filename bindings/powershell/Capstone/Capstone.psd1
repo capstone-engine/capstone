@@ -22,4 +22,8 @@ PowerShellVersion = '2.0'
 
 # Functions to export from this module
 FunctionsToExport = '*'
+
+# Format files (.ps1xml) to be loaded when importing this module
+FormatsToProcess = @('Capstone.Format.ps1xml')
+
 }
