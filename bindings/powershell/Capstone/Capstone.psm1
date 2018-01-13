@@ -307,7 +307,6 @@ function Get-CapstoneDisassembly {
 "@
 		# Mmm ASCII version banner!
 		$Banner
-		Return
 	}
 
 	# Disasm Handle
