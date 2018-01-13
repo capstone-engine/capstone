@@ -370,9 +370,6 @@ function Get-CapstoneDisassembly {
 	$Count = [Capstone]::cs_disasm($DisAsmHandle, $Bytes, $Bytes.Count, $Address, 0, [ref]$InsnHandle)
 
 	if ($Count -gt 0) {
-		# Result Array
-		$Disasm = @()
-
 		# Result struct
 		$cs_insn = New-Object cs_insn
 		$cs_insn_size = [System.Runtime.InteropServices.Marshal]::SizeOf($cs_insn)
@@ -395,22 +392,19 @@ function Get-CapstoneDisassembly {
 					Address = echo "0x$("{0:X}" -f $Cast.address)"
 					Instruction = echo "$($Cast.mnemonic) $($Cast.operands)"
 				}
-				$Object = New-Object PSObject -Property $HashTable
-				$Disasm += $Object |Select-Object Address,Instruction
+				New-Object PSObject -Property $HashTable | Select-Object Address,Instruction
 			} else {
 				$DetailCast = [system.runtime.interopservices.marshal]::PtrToStructure($Cast.detail,[type]$cs_detail)
 				if($DetailCast.regs_read_count -gt 0) {
-					$RegRead = @()
-					for ($r=0; $r -lt $DetailCast.regs_read_count; $r++) {
+					$RegRead = for ($r=0; $r -lt $DetailCast.regs_read_count; $r++) {
 						$NamePointer = [Capstone]::cs_reg_name($DisAsmHandle, $DetailCast.regs_read[$r])
-						$RegRead += [System.Runtime.InteropServices.Marshal]::PtrToStringAnsi($NamePointer)
+						[System.Runtime.InteropServices.Marshal]::PtrToStringAnsi($NamePointer)
 					}
 				}
 				if ($DetailCast.regs_write_count -gt 0) {
-					$RegWrite = @()
-					for ($r=0; $r -lt $DetailCast.regs_write_count; $r++) {
+					$RegWrite = for ($r=0; $r -lt $DetailCast.regs_write_count; $r++) {
 						$NamePointer = [Capstone]::cs_reg_name($DisAsmHandle, $DetailCast.regs_write[$r])
-						$RegWrite += [System.Runtime.InteropServices.Marshal]::PtrToStringAnsi($NamePointer)
+						[System.Runtime.InteropServices.Marshal]::PtrToStringAnsi($NamePointer)
 					}
 				}
 				$HashTable = @{
@@ -422,8 +416,7 @@ function Get-CapstoneDisassembly {
 					RegRead = $RegRead
 					RegWrite = $RegWrite
 				}
-				$Object = New-Object PSObject -Property $HashTable
-				$Disasm += $Object |Select-Object Size,Address,Mnemonic,Operands,Bytes,RegRead,RegWrite
+				New-Object PSObject -Property $HashTable | Select-Object Size,Address,Mnemonic,Operands,Bytes,RegRead,RegWrite
 			}
 			$BuffOffset = $BuffOffset + $cs_insn_size
 		}
@@ -433,9 +426,6 @@ function Get-CapstoneDisassembly {
 		$CallResult = [Capstone]::cs_close([ref]$DisAsmHandle)
 		Return
 	}
-
-	# Print result
-	$Disasm
 
 	# Free Buffer Handle
 	$CallResult = [Capstone]::cs_free($InsnHandle, $Count)
