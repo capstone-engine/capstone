@@ -183,7 +183,7 @@ function Initialize-Capstone {
 		}
 "@
 	} else {
-		Write-Verbose "C# bindings are already compiled"
+		Write-Verbose 'C# bindings are already compiled'
 	}
 }
 
@@ -311,7 +311,7 @@ function Get-CapstoneDisassembly {
 			'Intel',
 			'ATT')
 		]
-		[String]$Syntax = "Intel",
+		[String]$Syntax = 'Intel',
 
 		[Parameter(ParameterSetName='Capstone', Mandatory = $False)]
 		[UInt64]$Address = 0x100000,
@@ -356,8 +356,8 @@ function Get-CapstoneDisassembly {
 
 	# Initialize Capstone with cs_open()
 	$CallResult = [Capstone]::cs_open($Architecture,$Mode,[ref]$DisAsmHandle)
-	if ($CallResult -ne "CS_ERR_OK") {
-		if ($CallResult -eq "CS_ERR_MODE"){
+	if ($CallResult -ne 'CS_ERR_OK') {
+		if ($CallResult -eq 'CS_ERR_MODE'){
 			throw "Invalid Architecture/Mode combination: $Architecture/$Mode"
 		} else {
 			throw "cs_open error: $CallResult"
@@ -370,13 +370,13 @@ function Get-CapstoneDisassembly {
 	#---
 	# cs_opt_value -> CS_OPT_SYNTAX_INTEL = 1
 	#              -> CS_OPT_SYNTAX_ATT   = 2
-	if ($Syntax -eq "Intel") {
+	if ($Syntax -eq 'Intel') {
 		$CS_OPT_SYNTAX = 1
 	} else {
 		$CS_OPT_SYNTAX = 2
 	}
 	$CallResult = [Capstone]::cs_option($DisAsmHandle, 1, $CS_OPT_SYNTAX)
-	if ($CallResult -ne "CS_ERR_OK") {
+	if ($CallResult -ne 'CS_ERR_OK') {
 		$CallResult = [Capstone]::cs_close([ref]$DisAsmHandle)
 		throw "cs_option error: $CallResult"
 	}
@@ -393,7 +393,7 @@ function Get-CapstoneDisassembly {
 		$CS_OPT = 0
 	}
 	$CallResult = [Capstone]::cs_option($DisAsmHandle, 2, $CS_OPT)
-	if ($CallResult -ne "CS_ERR_OK") {
+	if ($CallResult -ne 'CS_ERR_OK') {
 		$CallResult = [Capstone]::cs_close([ref]$DisAsmHandle)
 		throw "cs_option error: $CallResult"
 	}
