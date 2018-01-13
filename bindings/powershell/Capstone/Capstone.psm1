@@ -415,10 +415,8 @@ function Get-CapstoneDisassembly {
 			$BuffOffset = $BuffOffset + $cs_insn_size
 		}
 	} else {
-		echo "`n[!] Disassembly Failed"
-		echo "[>] Quitting..`n"
 		$CallResult = [Capstone]::cs_close([ref]$DisAsmHandle)
-		Return
+		throw 'Disassembly Failed'
 	}
 
 	# Free Buffer Handle
