@@ -135,18 +135,16 @@ function Get-CapstoneDisassembly {
     )
 
 	# Compatibility for PS v2 / PS v3+
-	if(!$PSScriptRoot) {
+	if(-not $PSScriptRoot) {
 		$PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 	}
 
 	# Set the capstone DLL path
-	$DllPath = $($PSScriptRoot + '\Lib\Capstone\capstone.dll').Replace('\','\\')
+	$DllPath = Join-Path -Path $PSScriptRoot -ChildPath 'Lib\Capstone\capstone.dll'
 
 	# Make sure the user didn't forget the DLL
-	if (![IO.File]::Exists($DllPath)) {
-		echo "`n[!] Missing Capstone DLL"
-		echo "[>] Quitting!`n"
-		Return
+	if (-not (Test-Path -Path $DllPath -PathType Leaf)) {
+		throw "Capstone DLL is missing: $DllPath"
 	}
 
 	# Inline C# to parse the unmanaged capstone DLL
