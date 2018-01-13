@@ -147,6 +147,9 @@ function Get-CapstoneDisassembly {
 		throw "Capstone DLL is missing: $DllPath"
 	}
 
+	# If capstone DLL is found, escape its path for use in inline C#
+	$DllPath = $DllPath.Replace('\', '\\')
+
 	# Inline C# to parse the unmanaged capstone DLL
 	# http://stackoverflow.com/questions/16552801/how-do-i-conditionally-add-a-class-with-add-type-typedefinition-if-it-isnt-add
 	if (-not ([System.Management.Automation.PSTypeName]'Capstone').Type) {
