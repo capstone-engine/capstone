@@ -19,6 +19,11 @@
 
 #ifdef CAPSTONE_HAS_X86
 
+#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
+#pragma warning(disable:4996)			// disable MSVC's warning on strncpy()
+#pragma warning(disable:28719)		// disable MSVC's warning on strncpy()
+#endif
+
 #include <capstone/platform.h>
 #include <string.h>
 
