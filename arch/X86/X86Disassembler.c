@@ -787,7 +787,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		MCInst *instr, uint16_t *size, uint64_t address, void *_info)
 {
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
-	InternalInstruction insn;
+	InternalInstruction* insn;
 	struct reader_info info;
 	int ret;
 	bool result;
@@ -796,7 +796,12 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	info.size = code_len;
 	info.offset = address;
 
-	memset(&insn, 0, offsetof(InternalInstruction, reader));
+	insn = (InternalInstruction *)cs_mem_malloc(sizeof(InternalInstruction));
+	if (!insn) {
+		return false;
+	}
+
+	memset(insn, 0, offsetof(InternalInstruction, reader));
 
 	if (instr->flat_insn->detail) {
 		instr->flat_insn->detail->x86.op_count = 0;
@@ -811,29 +816,30 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	}
 
 	if (handle->mode & CS_MODE_16)
-		ret = decodeInstruction(&insn,
+		ret = decodeInstruction(insn,
 				reader, &info,
 				address,
 				MODE_16BIT);
 	else if (handle->mode & CS_MODE_32)
-		ret = decodeInstruction(&insn,
+		ret = decodeInstruction(insn,
 				reader, &info,
 				address,
 				MODE_32BIT);
 	else
-		ret = decodeInstruction(&insn,
+		ret = decodeInstruction(insn,
 				reader, &info,
 				address,
 				MODE_64BIT);
 
 	if (ret) {
-		*size = (uint16_t)(insn.readerCursor - address);
+		*size = (uint16_t)(insn->readerCursor - address);
+		cs_mem_free(insn);
 
 		return false;
 	} else {
-		*size = (uint16_t)insn.length;
+		*size = (uint16_t)insn->length;
 
-		result = (!translateInstruction(instr, &insn)) ?  true : false;
+		result = (!translateInstruction(instr, insn)) ?  true : false;
 		if (result) {
 			// quick fix for #904. TODO: fix this properly in the next update
 			if (handle->mode & CS_MODE_64) {
@@ -847,16 +853,17 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 
 			instr->imm_size = insn.immSize;
 			if (handle->detail) {
-				update_pub_insn(instr->flat_insn, &insn, instr->x86_prefix);
+				update_pub_insn(instr->flat_insn, insn, instr->x86_prefix);
 			} else {
 				// still copy all prefixes
-				instr->x86_prefix[0] = insn.prefix0;
-				instr->x86_prefix[1] = insn.prefix1;
-				instr->x86_prefix[2] = insn.prefix2;
-				instr->x86_prefix[3] = insn.prefix3;
+				instr->x86_prefix[0] = insn->prefix0;
+				instr->x86_prefix[1] = insn->prefix1;
+				instr->x86_prefix[2] = insn->prefix2;
+				instr->x86_prefix[3] = insn->prefix3;
 			}
 		}
 
+		cs_mem_free(insn);
 		return result;
 	}
 }
