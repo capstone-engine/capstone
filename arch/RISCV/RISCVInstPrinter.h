@@ -18,7 +18,7 @@
 #include "../../SStream.h"
 
 void RISCV_printInst(MCInst *MI, SStream *O, void *info);
-//TODO: verify if these other functions are required. MIPS does not include them, but TriDis and Arm do.
+//TODO_rod: verify if these other functions are required. MIPS does not include them, but TriDis and Arm do.
 
 class MCOperand;
 
