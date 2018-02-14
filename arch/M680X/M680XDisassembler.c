@@ -431,13 +431,14 @@ static void add_operators_access(MCInst *MI, m680x_info *info,
 		return;
 
 	for (i = 0; i < m680x->op_count; ++i) {
+		e_access access;
 
 		// Ugly fix: MULD has a register operand, an immediate operand
 		// AND an implicitly changed register W
 		if (info->insn == M680X_INS_MULD && (i == 1))
 			offset = 1;
 
-		e_access access = get_access(i + offset, access_mode);
+		access = get_access(i + offset, access_mode);
 		m680x->operands[i].access = access;
 	}
 }
@@ -1727,6 +1728,7 @@ static void loop_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	cs_m680x *m680x = &info->m680x;
 	uint8_t post_byte = 0;
 	uint8_t rel = 0;
+	cs_m680x_op *op;
 
 	read_byte(info, &post_byte, (*address)++);
 
@@ -1742,7 +1744,7 @@ static void loop_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	add_reg_operand(info, index_to_reg_id[post_byte & 0x07]);
 
-	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
+	op = &m680x->operands[m680x->op_count++];
 
 	op->type = M680X_OP_RELATIVE;
 
@@ -1797,6 +1799,7 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 	cs_detail *detail = MI->flat_insn->detail;
 	uint16_t base_address = address;
 	insn_desc insn_description;
+	e_access_mode access_mode;
 
 	if (detail != NULL) {
 		detail->regs_read_count = 0;
@@ -1856,8 +1859,7 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 			(info->cpu->insn_cc_not_modified[1] != info->insn))
 			add_reg_to_rw_list(MI, M680X_REG_CC, MODIFY);
 
-		e_access_mode access_mode =
-			g_insn_props[info->insn].access_mode;
+		access_mode = g_insn_props[info->insn].access_mode;
 
 		// Fix for M6805 BSET/BCLR. It has a differnt operand order
 		// in comparison to the M6811
