@@ -34,7 +34,8 @@ static void print_insn_detail(cs_insn *ins)
 	cs_arm64 *arm64;
 	int i;
 	cs_regs regs_read, regs_write;
-	uint8_t regs_read_count, regs_write_count;
+	unsigned char regs_read_count, regs_write_count;
+	unsigned char access;
 
 	// detail can be NULL if SKIPDATA option is turned ON
 	if (ins->detail == NULL)
@@ -96,7 +97,7 @@ static void print_insn_detail(cs_insn *ins)
 				break;
 		}
 
-		uint8_t access = op->access;
+		access = op->access;
 		switch(access) {
 			default:
 				break;

@@ -360,13 +360,14 @@ static void test()
 			printf("Disasm:\n");
 
 			for (j = 0; j < count; j++) {
+				int slen;
 				printf("0x%04X: ", (uint16_t)insn[j].address);
 				print_string_hex_short(insn[j].bytes,
 					insn[j].size);
 				printf("%.*s", 1 + ((5 - insn[j].size) * 2),
 					nine_spaces);
 				printf("%s", insn[j].mnemonic);
-				int slen = (int)strlen(insn[j].mnemonic);
+				slen = (int)strlen(insn[j].mnemonic);
 				printf("%.*s", 1 + (5 - slen), nine_spaces);
 				printf("%s\n", insn[j].op_str);
 #ifdef WITH_DETAILS

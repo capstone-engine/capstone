@@ -1,7 +1,6 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
-#include <inttypes.h>
 #include <stdio.h>
 
 #include <capstone/capstone.h>
