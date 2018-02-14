@@ -14,6 +14,7 @@ void print_insn_detail_arm64(csh handle, cs_insn *ins)
 	int i;
 	cs_regs regs_read, regs_write;
 	uint8_t regs_read_count, regs_write_count;
+	uint8_t access;
 	
 	// detail can be NULL if SKIPDATA option is turned ON
 	if (ins->detail == NULL)
@@ -75,7 +76,7 @@ void print_insn_detail_arm64(csh handle, cs_insn *ins)
 				break;
 		}
 		
-		uint8_t access = op->access;
+		access = op->access;
 		switch(access) {
 			default:
 				break;
