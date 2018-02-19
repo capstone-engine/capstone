@@ -8,10 +8,18 @@ compile C code. On Linux, this is usually easy, but on Windows, this involves
 installing Visual Studio and using the "Developer Command Prompt" to perform the
 installation. See BUILDING.txt for more information.
 
+By default, attempting to install the python bindings will trigger a build of
+the capstone native core. If this is undesirable for whatever reason, for
+instance, you already have a globally installed copy of libcapstone, you may
+inhibit the build by setting the environment variable LIBCAPSTONE_PATH. The
+exact value is not checked, just setting it will inhibit the build. During
+execution, this variable may be set to the path of a directory containing a
+specific version of libcapstone you would like to use.
+
 If you don't want to build your own copy of Capstone, you can use a precompiled
 binary distribution from PyPI. Saying `pip install capstone` should
 automatically obtain an appropriate copy for your system. If it does not, please
-open an issue at https://github.com/aquynh/capstone and tag @rhelmot - they
+open an issue at https://github.com/aquynh/capstone and tag @rhelmot - she
 will fix this, probably!
 
 --------------------------------------------------------------------------------
