@@ -45,7 +45,7 @@ static void test()
 #endif
 #define RANDOM_CODE "\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x00\x07\xf7\xeb\x2a\xff\xff\x7f\x57\xe3\x01\xff\xff\x7f\x57\xeb\x00\xf0\x00\x00\x24\xb2\x4f\x00\x78"
 
-#if defined(CAPSTONE_HAS_X86) || defined(CAPSTONE_HAS_ARM)
+#if defined(CAPSTONE_HAS_X86)
 	cs_opt_skipdata skipdata = {
 		// rename default "data" instruction from ".byte" to "db"
 		"db",
