@@ -156,8 +156,11 @@ class custom_sdist(sdist):
 
 class custom_build(build):
     def run(self):
-        log.info('Building C extensions')
-        build_libraries()
+        if 'LIBCAPSTONE_PATH' in os.environ:
+            log.info('Skipping building C extensions since LIBCAPSTONE_PATH is set')
+        else:
+            log.info('Building C extensions')
+            build_libraries()
         return build.run(self)
 
 

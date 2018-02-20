@@ -230,19 +230,22 @@ def _load_lib(path):
 _cs = None
 
 # Loading attempts, in order
+# - user-provided environment variable
 # - pkg_resources can get us the path to the local libraries
 # - we can get the path to the local libraries by parsing our filename
 # - global load
 # - python's lib directory
 # - last-gasp attempt at some hardcoded paths on darwin and linux
 
-_path_list = [pkg_resources.resource_filename(__name__, 'lib'),
+_path_list = [os.getenv('LIBCAPSTONE_PATH', None),
+              pkg_resources.resource_filename(__name__, 'lib'),
               join(split(__file__)[0], 'lib'),
               '',
               distutils.sysconfig.get_python_lib(),
               "/usr/local/lib/" if sys.platform == 'darwin' else '/usr/lib64']
 
 for _path in _path_list:
+    if _path is None: continue
     _cs = _load_lib(_path)
     if _cs is not None: break
 else:
