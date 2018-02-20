@@ -1,5 +1,5 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
-import sys
+import os, sys
 from platform import system
 _python2 = sys.version_info[0] < 3
 if _python2:
