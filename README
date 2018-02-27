@@ -48,6 +48,13 @@ See docs/README for how to customize & program your own tools with Capstone.
 
 See HACK.TXT file for the structure of the source code.
 
+[BUILD]
+
+execute bash my_builder.sh
+--> watch out it will compile and install the python bindings
+	so execute at your own risk
+
+
 
 [License]
 
