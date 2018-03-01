@@ -15,7 +15,6 @@
 
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
-
 #ifdef CAPSTONE_HAS_X86
 
 #include <stdarg.h>   /* for va_*()       */
@@ -411,8 +410,7 @@ static void setPrefixPresent(struct InternalInstruction *insn,
  * @param location  - The location to query.
  * @return          - Whether the prefix is at that location.
  */
-static bool isPrefixAtLocation(struct InternalInstruction *insn, uint8_t prefix,
-		uint64_t location)
+static bool isPrefixAtLocation(struct InternalInstruction *insn, uint8_t prefix, uint64_t location)
 {
 	switch (prefix) {
 	case 0x26:
@@ -1056,10 +1054,10 @@ static int readOpcode(struct InternalInstruction *insn)
 		}
 	}
 
-	/*
-	 * At this point we have consumed the full opcode.
-	 * Anything we consume from here on must be unconsumed.
-	 */
+   /*
+    * At this point we have consumed the full opcode.
+    * Anything we consume from here on must be unconsumed.
+    */
 
 	insn->opcode = current;
 
@@ -1110,6 +1108,7 @@ static int getIDWithAttrMask(uint16_t *instructionID,
 	hasModRMExtension = modRMRequired(insn->opcodeType,
 			instructionClass,
 			insn->opcode) != 0;
+
 
 	if (hasModRMExtension) {
 		if (readModRM(insn))
@@ -1165,8 +1164,6 @@ static int getID(struct InternalInstruction *insn)
 	uint16_t attrMask;
 	uint16_t instructionID;
 	const struct InstructionSpecifier *spec;
-
-	// printf(">>> getID()\n");
 	attrMask = ATTR_NONE;
 
 	if (insn->mode == MODE_64BIT)
@@ -1263,17 +1260,22 @@ static int getID(struct InternalInstruction *insn)
 
 	if (getIDWithAttrMask(&instructionID, insn, attrMask))
 		return -1;
+	
+	/* Fixing CALL and JMP instruction when in 64bit mode and x66 prefix is used 
+	 * this is the first par of 64-bit 0x66 Prefix handling, which is based on prior work
+	 * but was extended to make it whole
+	 * */
+      if (insn->mode == MODE_64BIT && insn->isPrefix66 && 
+	  				(insn->opcode == 0xE8 || insn->opcode == 0xE9 
+					|| insn->opcode == 0xFF
+					|| insn->opcode >= 0x70 && insn->opcode <= 0x7f   
+					|| (insn->opcodeType == TWOBYTE  &&  insn->opcode >= 0x80 && insn->opcode <= 0x8f )  ))
 
-	/* Fixing CALL and JMP instruction when in 64bit mode and x66 prefix is used */
-	if (insn->mode == MODE_64BIT && insn->isPrefix66 &&
-	   (insn->opcode == 0xE8 || insn->opcode == 0xE9))
 	{
 		attrMask ^= ATTR_OPSIZE;
 		if (getIDWithAttrMask(&instructionID, insn, attrMask))
 			return -1;
 	}
-
-
 	/*
 	 * JCXZ/JECXZ need special handling for 16-bit mode because the meaning
 	 * of the AdSize prefix is inverted w.r.t. 32-bit mode.
@@ -1370,8 +1372,7 @@ static int getID(struct InternalInstruction *insn)
 
 	insn->instructionID = instructionID;
 	insn->spec = specifierForUID(insn->instructionID);
-
-	return 0;
+  	return 0;
 }
 
 /*
@@ -1917,7 +1918,7 @@ static int readImmediate(struct InternalInstruction *insn, uint8_t size)
 	uint32_t imm32;
 	uint64_t imm64;
 
-	// dbgprintf(insn, "readImmediate()");
+	uint8_t local_size = size;
 
 	if (insn->numImmediatesConsumed == 2) {
 		//debug("Already consumed two immediates");
@@ -1930,7 +1931,23 @@ static int readImmediate(struct InternalInstruction *insn, uint8_t size)
 		insn->immediateSize = size;
 	insn->immediateOffset = (uint8_t)(insn->readerCursor - insn->startLocation);
 
-	switch (size) {
+// for Intel CPU instruction decoder certain opcodes always have 64-bit operands : CALL, JMP, Jcc are among them
+// e9 rel32 jump near, relative, RIP = RIP + 32-bit displacement sign extended to 64-bits
+// e9 jmp rel 16 is invalid in 64 bit
+      if (insn->mode == MODE_64BIT && insn->isPrefix66 && (insn->opcode == 0xE8 || insn->opcode == 0xE9 || insn->opcode == 0xFF  || 
+			      (insn->opcodeType == TWOBYTE  &&  insn->opcode >= 0x80 && insn->opcode <= 0x8f )  )){
+        local_size = 4;
+        insn->immSize = 8;
+        insn->displacementSize = 4;
+    }
+
+	if (insn->mode == MODE_64BIT && insn->isPrefix66 && insn->opcode >=0x70 && insn->opcode <= 0x7f) {
+		local_size = 1;
+        insn->immSize = 8;
+        insn->displacementSize = 1;
+	}
+
+	switch (local_size) {
 		case 1:
 			if (consumeByte(insn, &imm8))
 				return -1;
@@ -2022,14 +2039,13 @@ static int readOperands(struct InternalInstruction *insn)
 	int hasVVVV, needVVVV;
 	int sawRegImm = 0;
 
-	// printf(">>> readOperands()\n");
 	/* If non-zero vvvv specified, need to make sure one of the operands
 	   uses it. */
 	hasVVVV = !readVVVV(insn);
+
 	needVVVV = hasVVVV && (insn->vvvv != 0);
 
 	for (index = 0; index < X86_MAX_OPERANDS; ++index) {
-		//printf(">>> encoding[%u] = %u\n", index, x86OperandSets[insn->spec->operands][index].encoding);
 		switch (x86OperandSets[insn->spec->operands][index].encoding) {
 			case ENCODING_NONE:
 			case ENCODING_SI:
@@ -2358,12 +2374,12 @@ int decodeInstruction(struct InternalInstruction *insn,
 	insn->readerCursor = startLoc;
 	insn->mode = mode;
 
-	if (readPrefixes(insn)       ||
-			readOpcode(insn)         ||
-			getID(insn)      ||
-			insn->instructionID == 0 ||
-			checkPrefix(insn) ||
-			readOperands(insn))
+	if (readPrefixes(insn) 
+		|| readOpcode(insn)
+		|| getID(insn)      
+		|| insn->instructionID == 0 
+		|| checkPrefix(insn) 
+		|| readOperands(insn) )
 		return -1;
 
 	insn->length = (size_t)(insn->readerCursor - insn->startLocation);
@@ -2377,8 +2393,6 @@ int decodeInstruction(struct InternalInstruction *insn,
 
 	insn->operands = &x86OperandSets[insn->spec->operands][0];
 
-	// dbgprintf(insn, "Read from 0x%llx to 0x%llx: length %zu",
-	// 		startLoc, insn->readerCursor, insn->length);
 
 	//if (insn->length > 15)
 	//	dbgprintf(insn, "Instruction exceeds 15-byte limit");
