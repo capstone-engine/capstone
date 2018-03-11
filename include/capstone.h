@@ -76,6 +76,7 @@ typedef enum cs_arch {
 	CS_ARCH_SPARC,		// Sparc architecture
 	CS_ARCH_SYSZ,		// SystemZ architecture
 	CS_ARCH_XCORE,		// XCore architecture
+	CS_ARCH_RISCV,		// RISCV architecture											
 	CS_ARCH_MAX,
 	CS_ARCH_ALL = 0xFFFF, // All architectures - for cs_support()
 } cs_arch;
@@ -205,6 +206,7 @@ typedef struct cs_opt_skipdata {
 	// SystemZ: 2 bytes.
 	// X86:     1 bytes.
 	// XCore:   2 bytes.
+	// RISCV:   4 bytes.
 	cs_skipdata_cb_t callback; 	// default value is NULL
 
 	// User-defined data to be passed to @callback function pointer.
@@ -220,6 +222,7 @@ typedef struct cs_opt_skipdata {
 #include "systemz.h"
 #include "x86.h"
 #include "xcore.h"
+#include "riscv.h"					
 
 // NOTE: All information in cs_detail is only available when CS_OPT_DETAIL = CS_OPT_ON
 typedef struct cs_detail {
@@ -242,6 +245,7 @@ typedef struct cs_detail {
 		cs_sparc sparc;	// Sparc architecture
 		cs_sysz sysz;	// SystemZ architecture
 		cs_xcore xcore;	// XCore architecture
+		cs_riscv riscv;	// RISCV architecture												   
 	};
 } cs_detail;
 

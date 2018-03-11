@@ -64,6 +64,7 @@ extern void PPC_enable(void);
 extern void Sparc_enable(void);
 extern void SystemZ_enable(void);
 extern void XCore_enable(void);
+extern void RISCV_enable(void);
 
 static void archs_enable(void)
 {
@@ -95,6 +96,9 @@ static void archs_enable(void)
 #endif
 #ifdef CAPSTONE_HAS_XCORE
 	XCore_enable();
+#endif
+#ifdef CAPSTONE_HAS_RISCV
+	RISCV_enable();
 #endif
 
 
@@ -162,7 +166,8 @@ bool CAPSTONE_API cs_support(int query)
 		return all_arch == ((1 << CS_ARCH_ARM) | (1 << CS_ARCH_ARM64) |
 				(1 << CS_ARCH_MIPS) | (1 << CS_ARCH_X86) |
 				(1 << CS_ARCH_PPC) | (1 << CS_ARCH_SPARC) |
-				(1 << CS_ARCH_SYSZ) | (1 << CS_ARCH_XCORE));
+				(1 << CS_ARCH_SYSZ) | (1 << CS_ARCH_XCORE) |
+				(1 << CS_ARCH_RISCV));
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
@@ -389,6 +394,10 @@ static uint8_t skipdata_size(cs_struct *handle)
 			// XCore instruction's length can be 2 or 4 bytes,
 			// so we just skip 2 bytes
 			return 2;
+		case CS_ARCH_RISCV:
+			// RISCV instruction's length is 4 bytes,
+			// skip 4 bytes
+			return 4;
 	}
 }
 
@@ -1027,6 +1036,11 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 				if (insn->detail->xcore.operands[i].type == (xcore_op_type)op_type)
 					count++;
 			break;
+		case CS_ARCH_RISCV:
+			for (i = 0; i < insn->detail->riscv.op_count; i++)
+				if (insn->detail->riscv.operands[i].type == (riscv_op_type)op_type)
+					count++;
+			break;
 	}
 
 	return count;
@@ -1123,6 +1137,14 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 		case CS_ARCH_XCORE:
 			for (i = 0; i < insn->detail->xcore.op_count; i++) {
 				if (insn->detail->xcore.operands[i].type == (xcore_op_type)op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+			break;
+		case CS_ARCH_RISCV:
+			for (i = 0; i < insn->detail->riscv.op_count; i++) {
+				if (insn->detail->riscv.operands[i].type == (riscv_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;

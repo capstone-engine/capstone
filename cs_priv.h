@@ -55,7 +55,7 @@ struct cs_struct {
 	const uint8_t *regsize_map;	// map to register size (x86-only for now)
 };
 
-#define MAX_ARCH 8
+#define MAX_ARCH 9
 
 // Returns a bool (0 or 1) whether big endian is enabled for a mode
 #define MODE_IS_BIG_ENDIAN(mode) (((mode) & CS_MODE_BIG_ENDIAN) != 0)
