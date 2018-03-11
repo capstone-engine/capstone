@@ -15,9 +15,9 @@ const char *RISCV_insn_name(csh handle, unsigned int id);
 const char *RISCV_group_name(csh handle, unsigned int id);
 
 // map instruction name to instruction ID
-mips_reg RISCV_map_insn(const char *name);
+riscv_reg RISCV_map_insn(const char *name);
 
 // map internal raw register to 'public' register
-mips_reg RISCV_map_register(unsigned int r);
+riscv_reg RISCV_map_register(unsigned int r);
 
 #endif

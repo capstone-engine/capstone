@@ -1024,11 +1024,11 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   }
 
-
+  //TODO_rod: Comenting calls to printFRMArg - Need to add it later.
   // Fragment 4 encoded into 1 bits for 2 unique commands.
   if ((Bits >> 18) & 1) {
     // FCVT_D_L, FCVT_D_LU, FCVT_LU_D, FCVT_LU_S, FCVT_L_D, FCVT_L_S, FCVT_S_...
-    printFRMArg(MI, 2, O);
+    //printFRMArg(MI, 2, O);
     return;
   } else {
     // ADD, ADDI, ADDIW, ADDW, AND, ANDI, BEQ, BGE, BGEU, BLT, BLTU, BNE, CSR...
@@ -1051,11 +1051,11 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     // FMADD_D, FMADD_S, FMSUB_D, FMSUB_S, FNMADD_D, FNMADD_S, FNMSUB_D, FNMS...
     printOperand(MI, 3, O);
     SStream_concat0(O, ", "); 
-    printFRMArg(MI, 4, O);
+    //printFRMArg(MI, 4, O);
     return;
   } else {
     // FADD_D, FADD_S, FDIV_D, FDIV_S, FMUL_D, FMUL_S, FSUB_D, FSUB_S
-    printFRMArg(MI, 3, O);
+    //printFRMArg(MI, 3, O);
     return;
   }
 

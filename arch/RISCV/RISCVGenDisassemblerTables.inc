@@ -892,7 +892,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 15, 5); \
     if (DecodeGPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 20, 12); \
-    if (decodeSImmOperand(MI, tmp, Address, Decoder, 12 == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
+    if (decodeSImmOperand(MI, tmp, Address, Decoder, 12) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     return S; \
   case 1: \
     tmp = fieldname(insn, 7, 5); \
