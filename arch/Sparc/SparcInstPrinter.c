@@ -269,7 +269,8 @@ static void printOperand(MCInst *MI, int opNum, SStream *O)
 				SStream_concat(O, "%u", Imm);
 		} else {
 			if (Imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%x", (unsigned int)-Imm);
+				//cast first, then negate
+				SStream_concat(O, "-0x%x", -(uint32_t)Imm);
 			else
 				SStream_concat(O, "-%u", -Imm);
 		}
