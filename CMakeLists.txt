@@ -391,7 +391,7 @@ mark_as_advanced(INSTALL_LIB_DIR)
 
 ## installation
 install(FILES ${HEADERS_COMMON} DESTINATION include/capstone)
-configure_file(capstone.pc.in capstone.pc)
+configure_file(capstone.pc.in capstone.pc @ONLY)
 
 if (CAPSTONE_BUILD_STATIC)
     install(TARGETS capstone-static
