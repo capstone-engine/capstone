@@ -88,6 +88,8 @@ static void usage(char *prog)
 		printf("        armbe:     arm + big endian\n");
 		printf("        thumb:     thumb mode\n");
 		printf("        thumbbe:   thumb + big endian\n");
+		printf("        cortexm:   thumb + cortex-m extensions\n");
+
 	}
 
 	if (cs_support(CS_ARCH_ARM64)) {
@@ -193,6 +195,9 @@ int main(int argc, char **argv)
 	} else if (!strcmp(mode, "thumbbe")) {
 		arch = CS_ARCH_ARM;
 		md = CS_MODE_THUMB | CS_MODE_BIG_ENDIAN;
+	} else if (!strcmp(mode, "cortexm")) {
+		arch = CS_ARCH_ARM;
+		md = CS_MODE_THUMB | CS_MODE_MCLASS | CS_MODE_LITTLE_ENDIAN;
 	} else if (!strcmp(mode, "arm64")) {
 		arch = CS_ARCH_ARM64;
 		md = CS_MODE_LITTLE_ENDIAN;
