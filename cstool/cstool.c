@@ -88,6 +88,8 @@ static void usage(char *prog)
 		printf("        armbe:     arm + big endian\n");
 		printf("        thumb:     thumb mode\n");
 		printf("        thumbbe:   thumb + big endian\n");
+		printf("        cortexm:   thumb + cortex-m extensions\n");
+
 	}
 
 	if (cs_support(CS_ARCH_ARM64)) {
@@ -134,6 +136,7 @@ int main(int argc, char **argv)
 	cs_mode md;
 	cs_arch arch;
 	bool detail_flag = false;
+	bool x86_att_syntax = false;
 
 	if (argc != 3 && argc != 4 && argc != 5) {
 		usage(argv[0]);
@@ -180,140 +183,91 @@ int main(int argc, char **argv)
 		}
 	}
 
-	if (!strcmp(mode, "arm")) {
+	if (!strcmp(mode, "arm") || !strcmp(mode, "arml") || !strcmp(mode, "armle")) {
 		arch = CS_ARCH_ARM;
-		err = cs_open(CS_ARCH_ARM, CS_MODE_ARM, &handle);
-	}
-
-	if (!strcmp(mode, "armb") || !strcmp(mode, "armbe") ) {
+		md = CS_MODE_ARM | CS_MODE_LITTLE_ENDIAN;
+	} else if (!strcmp(mode, "armb") || !strcmp(mode, "armbe") ) {
 		arch = CS_ARCH_ARM;
-		err = cs_open(CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_BIG_ENDIAN, &handle);
-	}
-
-	if (!strcmp(mode, "arml")) {
+		md = CS_MODE_ARM | CS_MODE_BIG_ENDIAN;
+	} else if (!strcmp(mode, "thumb") || !strcmp(mode, "thumble")) {
 		arch = CS_ARCH_ARM;
-		err = cs_open(CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_LITTLE_ENDIAN, &handle);
-	}
-
-	if (!strcmp(mode, "thumb")) {
+		md = CS_MODE_THUMB | CS_MODE_LITTLE_ENDIAN;
+	} else if (!strcmp(mode, "thumbbe")) {
 		arch = CS_ARCH_ARM;
-		err = cs_open(CS_ARCH_ARM, CS_MODE_THUMB | CS_MODE_LITTLE_ENDIAN, &handle);
-	}
-
-	if (!strcmp(mode, "thumbbe")) {
+		md = CS_MODE_THUMB | CS_MODE_BIG_ENDIAN;
+	} else if (!strcmp(mode, "cortexm")) {
 		arch = CS_ARCH_ARM;
-		err = cs_open(CS_ARCH_ARM, CS_MODE_THUMB | CS_MODE_BIG_ENDIAN, &handle);
-	}
-
-	if (!strcmp(mode, "thumble")) {
-		arch = CS_ARCH_ARM;
-		err = cs_open(CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_LITTLE_ENDIAN, &handle);
-	}
-
-	if (!strcmp(mode, "arm64")) {
+		md = CS_MODE_THUMB | CS_MODE_MCLASS | CS_MODE_LITTLE_ENDIAN;
+	} else if (!strcmp(mode, "arm64")) {
 		arch = CS_ARCH_ARM64;
-		err = cs_open(CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, &handle);
-	}
-
-	if (!strcmp(mode, "arm64be")) {
+		md = CS_MODE_LITTLE_ENDIAN;
+	} else if (!strcmp(mode, "arm64be")) {
 		arch = CS_ARCH_ARM64;
-		err = cs_open(CS_ARCH_ARM64, CS_MODE_BIG_ENDIAN, &handle);
-	}
-
-	if (!strcmp(mode, "mips")) {
+		md = CS_MODE_BIG_ENDIAN;
+	} else if (!strcmp(mode, "mips")) {
 		arch = CS_ARCH_MIPS;
-		err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS32 | CS_MODE_LITTLE_ENDIAN, &handle);
-	}
-
-	if (!strcmp(mode, "mipsbe")) {
+		md = CS_MODE_MIPS32 | CS_MODE_LITTLE_ENDIAN;
+	} else if (!strcmp(mode, "mipsbe")) {
 		arch = CS_ARCH_MIPS;
-		err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS32 | CS_MODE_BIG_ENDIAN, &handle);
-	}
-
-	if (!strcmp(mode, "mips64")) {
+		md = CS_MODE_MIPS32 | CS_MODE_BIG_ENDIAN;
+	} else if (!strcmp(mode, "mips64")) {
 		arch = CS_ARCH_MIPS;
-		err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS64 | CS_MODE_LITTLE_ENDIAN, &handle);
-	}
-
-	if (!strcmp(mode, "mips64be")) {
+		md = CS_MODE_MIPS64 | CS_MODE_LITTLE_ENDIAN;
+	} else if (!strcmp(mode, "mips64be")) {
 		arch = CS_ARCH_MIPS;
-		err = cs_open(CS_ARCH_MIPS, CS_MODE_MIPS64 | CS_MODE_BIG_ENDIAN, &handle);
-	}
-
-	if (!strcmp(mode, "x16")) {
+		md = CS_MODE_MIPS64 | CS_MODE_BIG_ENDIAN;
+	} else if (!strcmp(mode, "x16")) {
+		arch = CS_ARCH_X86;
 		md = CS_MODE_16;
+	} else if (!strcmp(mode, "x32")) {
 		arch = CS_ARCH_X86;
-		err = cs_open(CS_ARCH_X86, CS_MODE_16, &handle);
-	}
-
-	if (!strcmp(mode, "x32")) {
 		md = CS_MODE_32;
+	} else if (!strcmp(mode, "x64")) {
 		arch = CS_ARCH_X86;
-		err = cs_open(CS_ARCH_X86, CS_MODE_32, &handle);
-	}
-
-	if (!strcmp(mode, "x64")) {
 		md = CS_MODE_64;
+	} else if (!strcmp(mode, "x16att")) {
 		arch = CS_ARCH_X86;
-		err = cs_open(CS_ARCH_X86, CS_MODE_64, &handle);
-	}
-
-	if (!strcmp(mode, "x16att")) {
 		md = CS_MODE_16;
+		x86_att_syntax = true;
+	} else if (!strcmp(mode,"x32att")) {
 		arch = CS_ARCH_X86;
-		err = cs_open(CS_ARCH_X86, CS_MODE_16, &handle);
-		if (!err) {
-			cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
-		}
-	}
-
-	if (!strcmp(mode,"x32att")) {
 		md = CS_MODE_32;
+		x86_att_syntax = true;
+	} else if (!strcmp(mode,"x64att")) {
 		arch = CS_ARCH_X86;
-		err = cs_open(CS_ARCH_X86, CS_MODE_32, &handle);
-		if (!err) {
-			cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
-		}
-	}
-
-	if (!strcmp(mode,"x64att")) {
 		md = CS_MODE_64;
-		arch = CS_ARCH_X86;
-		err = cs_open(CS_ARCH_X86, CS_MODE_64, &handle);
-		if (!err) {
-			cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
-		}
-	}
-
-	if (!strcmp(mode,"ppc64")) {
+		x86_att_syntax = true;
+	} else if (!strcmp(mode,"ppc64")) {
 		arch = CS_ARCH_PPC;
-		err = cs_open(CS_ARCH_PPC, CS_MODE_64 | CS_MODE_LITTLE_ENDIAN, &handle);
-	}
-
-	if (!strcmp(mode,"ppc64be")) {
+		md = CS_MODE_64 | CS_MODE_LITTLE_ENDIAN;
+	} else if (!strcmp(mode,"ppc64be")) {
 		arch = CS_ARCH_PPC;
-		err = cs_open(CS_ARCH_PPC,CS_MODE_64 | CS_MODE_BIG_ENDIAN, &handle);
-	}
-
-	if (!strcmp(mode,"sparc")) {
+		md = CS_MODE_64 | CS_MODE_BIG_ENDIAN;
+	} else if (!strcmp(mode,"sparc")) {
 		arch = CS_ARCH_SPARC;
-		err = cs_open(CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN, &handle);
-	}
-
-	if (!strcmp(mode, "systemz") || !strcmp(mode, "sysz") || !strcmp(mode, "s390x")) {
+		md = CS_MODE_BIG_ENDIAN;
+	} else if (!strcmp(mode, "systemz") || !strcmp(mode, "sysz") || !strcmp(mode, "s390x")) {
 		arch = CS_ARCH_SYSZ;
-		err = cs_open(CS_ARCH_SYSZ, CS_MODE_BIG_ENDIAN, &handle);
+		md = CS_MODE_BIG_ENDIAN;
+	} else if (!strcmp(mode,"xcore")) {
+		arch = CS_ARCH_XCORE;
+		md = CS_MODE_BIG_ENDIAN;
+	} else {
+		printf("ERROR: unknown architecture '%s'!\n", mode);
+		usage(argv[0]);
+		return -1;
 	}
 
-	if (!strcmp(mode,"xcore")) {
-		arch = CS_ARCH_XCORE;
-		err = cs_open(CS_ARCH_XCORE, CS_MODE_BIG_ENDIAN, &handle);
-	}
+	err = cs_open(arch, md, &handle);
 
 	if (err) {
 		printf("ERROR: Failed on cs_open(), quit!\n");
 		usage(argv[0]);
 		return -1;
+	}
+
+	if (arch == CS_ARCH_X86 && x86_att_syntax) {
+		cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
 	}
 
 	if (detail_flag) {
