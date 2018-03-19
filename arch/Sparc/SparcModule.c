@@ -47,10 +47,10 @@ static void destroy(cs_struct *handle)
 
 void Sparc_enable(void)
 {
-	arch_init[CS_ARCH_SPARC] = init;
-	arch_option[CS_ARCH_SPARC] = option;
-	arch_destroy[CS_ARCH_SPARC] = destroy;
-	arch_disallowed_mode_mask[CS_ARCH_SPARC] =
+	cs_arch_init[CS_ARCH_SPARC] = init;
+	cs_arch_option[CS_ARCH_SPARC] = option;
+	cs_arch_destroy[CS_ARCH_SPARC] = destroy;
+	cs_arch_disallowed_mode_mask[CS_ARCH_SPARC] =
 		~(CS_MODE_BIG_ENDIAN | CS_MODE_V9);
 
 	// support this arch

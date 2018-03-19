@@ -62,10 +62,10 @@ static void destroy(cs_struct *handle)
 
 void ARM_enable(void)
 {
-	arch_init[CS_ARCH_ARM] = init;
-	arch_option[CS_ARCH_ARM] = option;
-	arch_destroy[CS_ARCH_ARM] = destroy;
-	arch_disallowed_mode_mask[CS_ARCH_ARM] = ~(CS_MODE_LITTLE_ENDIAN |
+	cs_arch_init[CS_ARCH_ARM] = init;
+	cs_arch_option[CS_ARCH_ARM] = option;
+	cs_arch_destroy[CS_ARCH_ARM] = destroy;
+	cs_arch_disallowed_mode_mask[CS_ARCH_ARM] = ~(CS_MODE_LITTLE_ENDIAN |
 		CS_MODE_ARM | CS_MODE_V8 | CS_MODE_MCLASS | CS_MODE_THUMB |
 		CS_MODE_BIG_ENDIAN);
 

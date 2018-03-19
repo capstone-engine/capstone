@@ -62,10 +62,10 @@ static void destroy(cs_struct *handle)
 
 void Mips_enable(void)
 {
-	arch_init[CS_ARCH_MIPS] = init;
-	arch_option[CS_ARCH_MIPS] = option;
-	arch_destroy[CS_ARCH_MIPS] = destroy;
-	arch_disallowed_mode_mask[CS_ARCH_MIPS] = ~(CS_MODE_LITTLE_ENDIAN |
+	cs_arch_init[CS_ARCH_MIPS] = init;
+	cs_arch_option[CS_ARCH_MIPS] = option;
+	cs_arch_destroy[CS_ARCH_MIPS] = destroy;
+	cs_arch_disallowed_mode_mask[CS_ARCH_MIPS] = ~(CS_MODE_LITTLE_ENDIAN |
 		CS_MODE_32 | CS_MODE_64 | CS_MODE_MICRO | CS_MODE_MIPS32R6 |
 		CS_MODE_MIPSGP64 | CS_MODE_BIG_ENDIAN);
 
