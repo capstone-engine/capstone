@@ -46,10 +46,10 @@ static void destroy(cs_struct *handle)
 
 void SystemZ_enable(void)
 {
-	arch_init[CS_ARCH_SYSZ] = init;
-	arch_option[CS_ARCH_SYSZ] = option;
-	arch_destroy[CS_ARCH_SYSZ] = destroy;
-	arch_disallowed_mode_mask[CS_ARCH_SYSZ] = ~CS_MODE_BIG_ENDIAN;
+	cs_arch_init[CS_ARCH_SYSZ] = init;
+	cs_arch_option[CS_ARCH_SYSZ] = option;
+	cs_arch_destroy[CS_ARCH_SYSZ] = destroy;
+	cs_arch_disallowed_mode_mask[CS_ARCH_SYSZ] = ~CS_MODE_BIG_ENDIAN;
 
 	// support this arch
 	all_arch |= (1 << CS_ARCH_SYSZ);

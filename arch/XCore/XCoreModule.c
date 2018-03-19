@@ -43,10 +43,10 @@ static void destroy(cs_struct *handle)
 
 void XCore_enable(void)
 {
-	arch_init[CS_ARCH_XCORE] = init;
-	arch_option[CS_ARCH_XCORE] = option;
-	arch_destroy[CS_ARCH_XCORE] = destroy;
-	arch_disallowed_mode_mask[CS_ARCH_XCORE] = ~CS_MODE_BIG_ENDIAN;
+	cs_arch_init[CS_ARCH_XCORE] = init;
+	cs_arch_option[CS_ARCH_XCORE] = option;
+	cs_arch_destroy[CS_ARCH_XCORE] = destroy;
+	cs_arch_disallowed_mode_mask[CS_ARCH_XCORE] = ~CS_MODE_BIG_ENDIAN;
 
 	// support this arch
 	all_arch |= (1 << CS_ARCH_XCORE);
