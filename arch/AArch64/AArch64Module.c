@@ -43,10 +43,10 @@ static void destroy(cs_struct *handle)
 
 void AArch64_enable(void)
 {
-	arch_init[CS_ARCH_ARM64] = init;
-	arch_option[CS_ARCH_ARM64] = option;
-	arch_destroy[CS_ARCH_ARM64] = destroy;
-	arch_disallowed_mode_mask[CS_ARCH_ARM64] = ~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_BIG_ENDIAN);
+	cs_arch_init[CS_ARCH_ARM64] = init;
+	cs_arch_option[CS_ARCH_ARM64] = option;
+	cs_arch_destroy[CS_ARCH_ARM64] = destroy;
+	cs_arch_disallowed_mode_mask[CS_ARCH_ARM64] = ~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_BIG_ENDIAN);
 
 	// support this arch
 	all_arch |= (1 << CS_ARCH_ARM64);
