@@ -14,7 +14,6 @@ extern "C" {
 
 #include "platform.h"
 
-	//TODO_rod - Verify if this undefine is needed or not.
 // GCC MIPS toolchain has a default macro called "mips" which breaks
 // compilation
 //#undef riscv
@@ -426,3 +425,4 @@ typedef enum riscv_insn_group {
 #endif
 
 #endif
+

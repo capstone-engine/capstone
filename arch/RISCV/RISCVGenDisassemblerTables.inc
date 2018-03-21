@@ -855,7 +855,7 @@ static bool getbool(uint64_t b)
 {
 	return b != 0;
 }
-    //TODO_rod:  include RISCVGenSubtargetInfo.inc in the RISCVDisassembler.c file --So far the Bits param will have all ones since it comes from getFeatures and this returns all 1s. SO so far this function is always true. 
+
 static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits) {
   switch (Idx) {
   default: //llvm_unreachable("Invalid index!");

@@ -128,7 +128,6 @@ const char *RISCV_reg_name(csh handle, unsigned int reg)
 #endif
 }
 
-//TODO_rod: Include all the other instructions in the mapping.
 static const insn_map insns[] = {
 	// dummy item
 	{
@@ -1799,7 +1798,6 @@ riscv_reg RISCV_map_insn(const char *name)
 // map internal raw register to 'public' register
 riscv_reg RISCV_map_register(unsigned int r)
 {
-	//TODO_rod: Need to verify if this mapping is correct, so far it is using the same order as defined in riscv.h -> riscv_reg. And actually this functions is not being called from PrintInst.c, if needed then need to fix this one too.
 	static const unsigned int map[] = { 0,
 		RISCV_REG_X0, 
 		RISCV_REG_X1, 

@@ -28,7 +28,6 @@
 
 //#include "RISCVDisassembler.h"
 
-//TODO_rod: Verify for the constant RISCV_ABIRegAltName, if I need to include RISCVGenRegisterInfo.inc. and define the macro GET_REGINFO_ENUM
 #define GET_REGINFO_ENUM
 #include "RISCVGenRegisterInfo.inc"
 #define GET_INSTRINFO_ENUM
@@ -51,7 +50,6 @@ static const char *getRegisterName(unsigned RegNo,
 #define PRINT_ALIAS_INSTR
 #include "RISCVGenAsmWriter.inc"
 
-//Todo_rod: THis function only needed to fix manually special instructions. Maybe not needed.
 void RISCV_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 {
 	/*
@@ -90,7 +88,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
   if (MCOperand_isReg(MO)) {
 	reg = MCOperand_getReg(MO);
 	printRegName(O, reg);  	  
-	//TODO_rod: Other archs check also for "if (MI->csh->doing_mem)". Tricore is not. Verify if it is needed. **cs_riscv riscv should be defined in capstone.h
+	//TODO_rod: Other archs check also for "if (MI->csh->doing_mem)". Tricore is not. Verify if it is needed. 
 	  //Sparc and tricore use this function "reg = Sparc_map_register(reg);" from SparcMapping.c - Check if it is needed or if the reg obtained before matches.
 	if (MI->csh->detail) {
 			MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].type = RISCV_OP_REG;
@@ -102,7 +100,6 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
   }
 
   if (MCOperand_isImm(MO)) {
-	//TODO_rod: Confirm: Depending on the type of Imm, Different archs call SStream_concat in a different way. Verify if this way is correct.
 	int64_t Imm = MCOperand_getImm(MO);
 	if (Imm >= 0) {
 		if (Imm > HEX_THRESHOLD)
