@@ -28,7 +28,7 @@
 
 #define GET_SUBTARGETINFO_ENUM
 #include "RISCVGenSubtargetInfo.inc"
-//TODO_rod: When testing, this function may need to include the supported features. So far, it supports everything.
+
 static uint64_t getFeatureBits(int mode)
 {
 	// support everything
@@ -61,8 +61,6 @@ static DecodeStatus decodeSImmOperandAndLsl1(MCInst *Inst, uint64_t Imm,
 #define GET_INSTRINFO_ENUM
 #include "RISCVGenInstrInfo.inc"
 
-//ToDo_rod: Confirm the values for the RISCV_init, refer to RISCVGenRegisterInfo.inc file (in capstone arch/ ) and MCRegisterInfo.h from capstone
-//Specifically confirm the values for RISCVRegUnitRoots, 64,
 void RISCV_init(MCRegisterInfo *MRI)
 {
 	/*InitMCRegisterInfo(RISCVRegDesc, 97, RA, PC,
@@ -112,8 +110,6 @@ static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
   }
 
   // Get the four bytes of the instruction.
-//TODO_rod: CHeck Endian.h for the read32le instruction to know what it returns and how I can replace it. In MIPS and ARM they read it directly from the Bytes array. In C they do it by reading either direcly from the *code, or by using a memcpy into a bytes array. see the cpp and c files for ARM and MIPS. --So far I impleneted directly as little endian.
- // uint32_t Inst = support::endian::read32le(Bytes.data());
 	//Encoded as little endian 32 bits.
 	uint32_t Inst = (code[0] << 0) | 
 					(code[1] << 8) |

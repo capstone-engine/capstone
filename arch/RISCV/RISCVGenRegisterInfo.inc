@@ -323,7 +323,7 @@ static const MCRegisterDesc RISCVRegDesc[] = { // Descriptors
     0x00, 0x00, 0x00, 0x00, 0x54, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x01, 
   };
 
-//Todo_rod: Comparing with the definition of MCRegisterClass of MCRegisterInfo.h of llvm and Capstone, Keep in mind that Capstone uses a new value Alignment, which I am using with the same value as RegSize (PhysRegSize in llvm).
+//NOTE_rod: Comparing with the definition of MCRegisterClass of MCRegisterInfo.h of llvm and Capstone, Keep in mind that Capstone uses a new value Alignment, which I am using with the same value as RegSize (PhysRegSize in llvm).
 static const MCRegisterClass RISCVMCRegisterClasses[] = {
   { "FPR32", FPR32, FPR32Bits, 32, sizeof(FPR32Bits), RISCV_FPR32RegClassID, 4, 4, 1, 1 },
   { "GPR", GPR, GPRBits, 32, sizeof(GPRBits), RISCV_GPRRegClassID, 0, 0, 1, 1 },
