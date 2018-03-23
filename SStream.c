@@ -152,13 +152,18 @@ void printUInt32(SStream *O, uint32_t val)
    {
    SStream ss;
    int64_t i;
+   
    SStream_Init(&ss);
+   
    SStream_concat(&ss, "hello ");
    SStream_concat(&ss, "%d - 0x%x", 200, 16);
+   
    i = 123;
    SStream_concat(&ss, " + %ld", i);
    SStream_concat(&ss, "%s", "haaaaa");
+   
    printf("%s\n", ss.buffer);
+   
    return 0;
    }
  */
