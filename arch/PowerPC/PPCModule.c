@@ -49,8 +49,8 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 
 void PPC_enable(void)
 {
-	arch_init[CS_ARCH_PPC] = init;
-	arch_option[CS_ARCH_PPC] = option;
+	cs_arch_init[CS_ARCH_PPC] = init;
+	cs_arch_option[CS_ARCH_PPC] = option;
 
 	// support this arch
 	all_arch |= (1 << CS_ARCH_PPC);

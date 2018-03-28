@@ -40,8 +40,8 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 
 void SystemZ_enable(void)
 {
-	arch_init[CS_ARCH_SYSZ] = init;
-	arch_option[CS_ARCH_SYSZ] = option;
+	cs_arch_init[CS_ARCH_SYSZ] = init;
+	cs_arch_option[CS_ARCH_SYSZ] = option;
 
 	// support this arch
 	all_arch |= (1 << CS_ARCH_SYSZ);
