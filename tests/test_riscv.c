@@ -121,8 +121,6 @@ static void test()
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code:", platforms[i].code, platforms[i].size);
-			printf("\tPlatforms.size: %zu\n", platforms[i].size);
-			printf("\tVar count: %zu\n", count);
 			printf("Disasm:\n");
 
 			for (j = 0; j < count; j++) {
