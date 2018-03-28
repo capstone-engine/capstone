@@ -245,7 +245,7 @@ typedef struct cs_detail {
 		cs_sparc sparc;	// Sparc architecture
 		cs_sysz sysz;	// SystemZ architecture
 		cs_xcore xcore;	// XCore architecture
-		cs_riscv riscv;	// RISCV architecture												   
+		cs_riscv riscv;	// RISCV architecture  
 	};
 } cs_detail;
 
