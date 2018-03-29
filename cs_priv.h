@@ -79,10 +79,10 @@ struct cs_struct {
 #define MAX_ARCH CS_ARCH_MAX
 
 // constructor initialization for all archs
-extern cs_err (*arch_init[MAX_ARCH]) (cs_struct *);
+extern cs_err (*cs_arch_init[MAX_ARCH]) (cs_struct *);
 
 // support cs_option() for all archs
-extern cs_err (*arch_option[MAX_ARCH]) (cs_struct*, cs_opt_type, size_t value);
+extern cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct*, cs_opt_type, size_t value);
 
 extern unsigned int all_arch;
 

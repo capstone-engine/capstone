@@ -37,8 +37,8 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 
 void TMS320C64x_enable(void)
 {
-	arch_init[CS_ARCH_TMS320C64X] = init;
-	arch_option[CS_ARCH_TMS320C64X] = option;
+	cs_arch_init[CS_ARCH_TMS320C64X] = init;
+	cs_arch_option[CS_ARCH_TMS320C64X] = option;
 
 	all_arch |= (1 << CS_ARCH_TMS320C64X);
 }

@@ -39,8 +39,8 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 
 void M68K_enable(void)
 {
-	arch_init[CS_ARCH_M68K] = init;
-	arch_option[CS_ARCH_M68K] = option;
+	cs_arch_init[CS_ARCH_M68K] = init;
+	cs_arch_option[CS_ARCH_M68K] = option;
 
 	// support this arch
 	all_arch |= (1 << CS_ARCH_M68K);
