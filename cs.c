@@ -51,9 +51,9 @@
 #define SKIPDATA_MNEM NULL
 #endif
 
-cs_err (*arch_init[MAX_ARCH])(cs_struct *) = { NULL };
-cs_err (*arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = { NULL };
-void (*arch_destroy[MAX_ARCH]) (cs_struct *) = { NULL };
+cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = { NULL };
+cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = { NULL };
+void (*cs_arch_destroy[MAX_ARCH]) (cs_struct *) = { NULL };
 
 extern void ARM_enable(void);
 extern void AArch64_enable(void);
@@ -275,7 +275,7 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 
 	archs_enable();
 
-	if (arch < CS_ARCH_MAX && arch_init[arch]) {
+	if (arch < CS_ARCH_MAX && cs_arch_init[arch]) {
 		ud = cs_mem_calloc(1, sizeof(*ud));
 		if (!ud) {
 			// memory insufficient
@@ -292,7 +292,7 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		// default skipdata setup
 		ud->skipdata_setup.mnemonic = SKIPDATA_MNEM;
 
-		err = arch_init[ud->arch](ud);
+		err = cs_arch_init[ud->arch](ud);
 		if (err) {
 			cs_mem_free(ud);
 			*handle = 0;
@@ -560,7 +560,7 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, size_t value)
 			return CS_ERR_OK;
 	}
 
-	return arch_option[handle->arch](handle, type, value);
+	return cs_arch_option[handle->arch](handle, type, value);
 }
 
 // generate @op_str for data instruction of SKIPDATA

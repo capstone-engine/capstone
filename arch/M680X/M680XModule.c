@@ -74,8 +74,8 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 
 void M680X_enable(void)
 {
-	arch_init[CS_ARCH_M680X] = init;
-	arch_option[CS_ARCH_M680X] = option;
+	cs_arch_init[CS_ARCH_M680X] = init;
+	cs_arch_option[CS_ARCH_M680X] = option;
 
 	// support this arch
 	all_arch |= (1 << CS_ARCH_M680X);

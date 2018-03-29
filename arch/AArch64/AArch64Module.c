@@ -47,8 +47,8 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 
 void AArch64_enable(void)
 {
-	arch_init[CS_ARCH_ARM64] = init;
-	arch_option[CS_ARCH_ARM64] = option;
+	cs_arch_init[CS_ARCH_ARM64] = init;
+	cs_arch_option[CS_ARCH_ARM64] = option;
 
 	// support this arch
 	all_arch |= (1 << CS_ARCH_ARM64);
