@@ -67,6 +67,7 @@ tests/test_customized_mnem
 tests/test_m68k
 tests/test_tms320c64x
 tests/test_m680x
+tests/test_evm
 
 # vim tmp file
 *.swp

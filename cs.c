@@ -66,6 +66,7 @@ extern void Sparc_enable(void);
 extern void SystemZ_enable(void);
 extern void XCore_enable(void);
 extern void TMS320C64x_enable(void);
+extern void EVM_enable(void);
 
 static void archs_enable(void)
 {
@@ -106,6 +107,9 @@ static void archs_enable(void)
 #endif
 #ifdef CAPSTONE_HAS_TMS320C64X
 	TMS320C64x_enable();
+#endif
+#ifdef CAPSTONE_HAS_EVM
+	EVM_enable();
 #endif
 
 
@@ -187,7 +191,7 @@ bool CAPSTONE_API cs_support(int query)
 				(1 << CS_ARCH_PPC) | (1 << CS_ARCH_SPARC) |
 				(1 << CS_ARCH_SYSZ) | (1 << CS_ARCH_XCORE) |
 				(1 << CS_ARCH_M68K) | (1 << CS_ARCH_TMS320C64X) |
-				(1 << CS_ARCH_M680X));
+				(1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM));
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
@@ -446,6 +450,9 @@ static uint8_t skipdata_size(cs_struct *handle)
 			return 4;
 		case CS_ARCH_M680X:
 			// M680X alignment is 1.
+			return 1;
+		case CS_ARCH_EVM:
+			// EVM alignment is 1.
 			return 1;
 	}
 }
@@ -1153,6 +1160,13 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 				if (insn->detail->m680x.operands[i].type == (m680x_op_type)op_type)
 					count++;
 			break;
+		case CS_ARCH_EVM:
+#if 0
+			for (i = 0; i < insn->detail->evm.op_count; i++)
+				if (insn->detail->evm.operands[i].type == (evm_op_type)op_type)
+					count++;
+#endif
+			break;
 	}
 
 	return count;
@@ -1277,6 +1291,16 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 				if (count == post)
 					return i;
 			}
+			break;
+		case CS_ARCH_EVM:
+#if 0
+			for (i = 0; i < insn->detail->evm.op_count; i++) {
+				if (insn->detail->evm.operands[i].type == (evm_op_type)op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+#endif
 			break;
 	}
 
