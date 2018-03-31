@@ -83,6 +83,7 @@ typedef enum cs_arch {
 	CS_ARCH_M68K,		// 68K architecture
 	CS_ARCH_TMS320C64X,	// TMS320C64x architecture
 	CS_ARCH_M680X,		// 680X architecture
+	CS_ARCH_EVM,		// Ethereum architecture
 	CS_ARCH_MAX,
 	CS_ARCH_ALL = 0xFFFF, // All architectures - for cs_support()
 } cs_arch;
@@ -255,6 +256,7 @@ typedef struct cs_opt_skipdata {
 	// SystemZ: 2 bytes.
 	// X86:     1 bytes.
 	// XCore:   2 bytes.
+	// EVM:     1 bytes.
 	cs_skipdata_cb_t callback; 	// default value is NULL
 
 	// User-defined data to be passed to @callback function pointer.
@@ -273,6 +275,7 @@ typedef struct cs_opt_skipdata {
 #include "xcore.h"
 #include "tms320c64x.h"
 #include "m680x.h"
+#include "evm.h"
 
 // NOTE: All information in cs_detail is only available when CS_OPT_DETAIL = CS_OPT_ON
 typedef struct cs_detail {
@@ -287,17 +290,18 @@ typedef struct cs_detail {
 
 	// Architecture-specific instruction info
 	union {
-		cs_x86 x86;	// X86 architecture, including 16-bit, 32-bit & 64-bit mode
-		cs_arm64 arm64;	// ARM64 architecture (aka AArch64)
-		cs_arm arm;		// ARM architecture (including Thumb/Thumb2)
-		cs_m68k m68k;	// M68K architecture
-		cs_mips mips;	// MIPS architecture
-		cs_ppc ppc;	// PowerPC architecture
-		cs_sparc sparc;	// Sparc architecture
-		cs_sysz sysz;	// SystemZ architecture
-		cs_xcore xcore;	// XCore architecture
-		cs_tms320c64x tms320c64x;	// TMS320C64x architecture
-		cs_m680x m680x;	// M680X architecture
+		cs_x86 x86;     // X86 architecture, including 16-bit, 32-bit & 64-bit mode
+		cs_arm64 arm64; // ARM64 architecture (aka AArch64)
+		cs_arm arm;     // ARM architecture (including Thumb/Thumb2)
+		cs_m68k m68k;   // M68K architecture
+		cs_mips mips;   // MIPS architecture
+		cs_ppc ppc;	    // PowerPC architecture
+		cs_sparc sparc; // Sparc architecture
+		cs_sysz sysz;   // SystemZ architecture
+		cs_xcore xcore; // XCore architecture
+		cs_tms320c64x tms320c64x;  // TMS320C64x architecture
+		cs_m680x m680x; // M680X architecture
+		cs_evm evm;	    // Ethereum architecture
 	};
 } cs_detail;
 

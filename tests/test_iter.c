@@ -1,5 +1,5 @@
 /* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013 */
 
 // This sample code demonstrates the APIs cs_malloc() & cs_disasm_iter().
 #include <stdio.h>

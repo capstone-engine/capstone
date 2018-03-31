@@ -27,8 +27,8 @@ option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
 option(CAPSTONE_BUILD_TESTS "Build tests" ON)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 
-set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X)
-set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x)
+set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM)
+set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM)
 
 list(LENGTH SUPPORTED_ARCHITECTURES count)
 math(EXPR count "${count}-1")
@@ -364,6 +364,23 @@ if (CAPSTONE_M680X_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_m680x.c)
 endif ()
 
+if (CAPSTONE_EVM_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_EVM)
+    set(SOURCES_EVM
+        arch/EVM/EVMDisassembler.c
+        arch/EVM/EVMInstPrinter.c
+        arch/EVM/EVMMapping.c
+        arch/EVM/EVMModule.c
+    )
+    set(HEADERS_EVM
+        arch/EVM/EVMDisassembler.h
+        arch/EVM/EVMInstPrinter.h
+        arch/EVM/EVMMapping.h
+        arch/EVM/EVMMappingInsn.inc
+        )
+    set(TEST_SOURCES ${TEST_SOURCES} test_evm.c)
+endif ()
+
 if (CAPSTONE_OSXKERNEL_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_OSXKERNEL)
 endif ()
@@ -381,6 +398,7 @@ set(ALL_SOURCES
     ${SOURCES_M68K}
     ${SOURCES_TMS320C64X}
     ${SOURCES_M680X}
+    ${SOURCES_EVM}
     )
 
 set(ALL_HEADERS
@@ -397,6 +415,7 @@ set(ALL_HEADERS
     ${HEADERS_M68K}
     ${HEADERS_TMS320C64X}
     ${HEADERS_M680X}
+    ${HEADERS_EVM}
     )
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
@@ -473,6 +492,7 @@ source_group("Source\\XCore" FILES ${SOURCES_XCORE})
 source_group("Source\\M68K" FILES ${SOURCES_M68K})
 source_group("Source\\TMS320C64x" FILES ${SOURCES_TMS320C64X})
 source_group("Source\\M680X" FILES ${SOURCES_M680X})
+source_group("Source\\EVM" FILES ${SOURCES_EVM})
 
 source_group("Include\\Common" FILES ${HEADERS_COMMON})
 source_group("Include\\Engine" FILES ${HEADERS_ENGINE})
@@ -487,6 +507,7 @@ source_group("Include\\XCore" FILES ${HEADERS_XCORE})
 source_group("Include\\M68K" FILES ${HEADERS_M68K})
 source_group("Include\\TMS320C64x" FILES ${HEADERS_TMS320C64X})
 source_group("Include\\M680X" FILES ${HEADERS_MC680X})
+source_group("Include\\EVM" FILES ${HEADERS_EVM})
 
 ### test library 64bit routine:
 get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)

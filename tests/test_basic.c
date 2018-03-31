@@ -1,5 +1,5 @@
 /* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013 */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -80,6 +80,9 @@ static void test()
 #endif
 #ifdef CAPSTONE_HAS_M680X
 #define M680X_CODE "\x06\x10\x19\x1a\x55\x1e\x01\x23\xe9\x31\x06\x34\x55\xa6\x81\xa7\x89\x7f\xff\xa6\x9d\x10\x00\xa7\x91\xa6\x9f\x10\x00\x11\xac\x99\x10\x00\x39"
+#endif
+#ifdef CAPSTONE_HAS_EVM
+#define EVM_CODE "\x60\x61"
 #endif
 
 
@@ -301,6 +304,15 @@ static void test()
 			(unsigned char*)M680X_CODE,
 			sizeof(M680X_CODE) - 1,
 			"M680X_M6809",
+		},
+#endif
+#ifdef CAPSTONE_HAS_EVM
+		{
+			CS_ARCH_EVM,
+			0,
+			(unsigned char*)EVM_CODE,
+			sizeof(EVM_CODE) - 1,
+			"EVM",
 		},
 #endif
 	};
