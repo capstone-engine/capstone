@@ -263,10 +263,11 @@ static void printOperand(MCInst *MI, int opNum, SStream *O)
 				break;
 		}
 		
-		if(Imm == INT_MIN) {
-                   printf("ERROR: invalid Imm value\n");
-                   return;
-                }
+		if (Imm == INT_MIN) {
+			// printf("ERROR: invalid Imm value\n");
+			return;
+		}
+
 		if (Imm >= 0) {
 			if (Imm > HEX_THRESHOLD)
 				SStream_concat(O, "0x%x", Imm);
