@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 #include <platform.h>
 
 #include "SystemZInstPrinter.h"
@@ -295,6 +296,11 @@ static void printPCRelOperand(MCInst *MI, int OpNum, SStream *O)
 
 	if (MCOperand_isImm(MO)) {
 		imm = (int32_t)MCOperand_getImm(MO);
+		if (imm == INT_MIN) {
+			// printf("ERROR: invalid Imm value\n");
+			return;
+		}
+
 		if (imm >= 0) {
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "0x%x", imm);
