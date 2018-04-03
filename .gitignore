@@ -62,6 +62,10 @@ tests/*.static
 tests/test_basic
 tests/test_customized_mnem
 
+tests/test_m680x
+tests/test_m68k
+tests/test_tms320c64x
+tests/test_evm
 
 # regress binaries
 suite/regress/invalid_read_in_print_operand
