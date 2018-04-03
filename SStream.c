@@ -11,6 +11,7 @@
 #include <stdio.h>
 #endif
 #include <string.h>
+#include <limits.h>
 
 #include <platform.h>
 
