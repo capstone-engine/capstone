@@ -108,6 +108,10 @@ static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
     *Size = 0;
     return MCDisassembler_Fail;
   }
+  
+  if (MI->flat_insn->detail) {
+		memset(MI->flat_insn->detail, 0, sizeof(cs_detail));
+  }
 
   // Get the four bytes of the instruction.
 	//Encoded as little endian 32 bits.

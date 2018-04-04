@@ -80,9 +80,9 @@ static void printRegName(SStream *OS, unsigned RegNo)
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
   unsigned reg;
-  //TODO_rod: test if this check is needed:
-	//if (OpNo >= MI->size)
-		//return;	
+  
+	if (OpNo >= MI->size)
+		return;	
   MCOperand *MO = MCInst_getOperand(MI, OpNo);
 
   if (MCOperand_isReg(MO)) {
