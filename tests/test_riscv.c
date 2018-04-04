@@ -48,7 +48,7 @@ static void print_insn_detail(cs_insn *ins)
 		cs_riscv_op *op = &(riscv->operands[i]);
 		switch((int)op->type) {
 			default:
-				//printf("\terror in opt_type: %u\n", (int)op->type);
+				printf("\terror in opt_type: %u\n", (int)op->type);
 				break;
 			case RISCV_OP_REG:
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
