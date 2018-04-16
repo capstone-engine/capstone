@@ -920,17 +920,8 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	info.offset = address;
 
 	if (instr->flat_insn->detail) {
-		instr->flat_insn->detail->x86.op_count = 0;
-		instr->flat_insn->detail->x86.sse_cc = X86_SSE_CC_INVALID;
-		instr->flat_insn->detail->x86.avx_cc = X86_AVX_CC_INVALID;
-		instr->flat_insn->detail->x86.avx_sae = false;
-		instr->flat_insn->detail->x86.avx_rm = X86_AVX_RM_INVALID;
-		instr->flat_insn->detail->x86.xop_cc = X86_XOP_CC_INVALID;
-		instr->flat_insn->detail->x86.eflags = 0;
-
-		memset(instr->flat_insn->detail->x86.prefix, 0, sizeof(instr->flat_insn->detail->x86.prefix));
-		memset(instr->flat_insn->detail->x86.opcode, 0, sizeof(instr->flat_insn->detail->x86.opcode));
-		memset(instr->flat_insn->detail->x86.operands, 0, sizeof(instr->flat_insn->detail->x86.operands));
+		// partial init of (cs_detail) instr->flat_insn->detail
+		memset(instr->flat_insn->detail, 0, offsetof(cs_detail, x86)+offsetof(cs_x86, operands));
 	}
 
 	if (handle->mode & CS_MODE_16)
