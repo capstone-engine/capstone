@@ -3510,13 +3510,19 @@ void X86_reg_access(const cs_insn *insn,
 	uint8_t i;
 	uint8_t read_count, write_count;
 	cs_x86 *x86 = &(insn->detail->x86);
+	size_t regs_cpy_bytes;
 
 	read_count = insn->detail->regs_read_count;
 	write_count = insn->detail->regs_write_count;
 
 	// implicit registers
-	memcpy(regs_read, insn->detail->regs_read, read_count * sizeof(insn->detail->regs_read[0]));
-	memcpy(regs_write, insn->detail->regs_write, write_count * sizeof(insn->detail->regs_write[0]));
+	regs_cpy_bytes = read_count * sizeof(insn->detail->regs_read[0]);
+	regs_cpy_bytes = min(regs_cpy_bytes, sizeof(cs_regs));
+	memcpy(regs_read, insn->detail->regs_read, regs_cpy_bytes);
+
+	regs_cpy_bytes = write_count * sizeof(insn->detail->regs_write[0]);
+	regs_cpy_bytes = min(regs_cpy_bytes, sizeof(cs_regs));
+	memcpy(regs_write, insn->detail->regs_write, regs_cpy_bytes);
 
 	// explicit registers
 	for (i = 0; i < x86->op_count; i++) {
