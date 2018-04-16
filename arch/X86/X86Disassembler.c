@@ -959,6 +959,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			reader(&info, &b1, address);
 			reader(&info, &b2, address + 1);
 			if (b1 == 0x0f && b2 == 0xff) {
+				instr->Opcode = X86_UD0;
 				instr->OpcodePub = X86_INS_UD0;
 				strncpy(instr->assembly, "ud0", 4);
 				if (instr->flat_insn->detail) {
