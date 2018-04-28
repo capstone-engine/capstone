@@ -44,3 +44,16 @@ the bindings coming with the core to avoid potential incompatibility issue
 with older versions.
 See bindings/<language>/README for detail instructions on how to compile &
 install the bindings.
+
+Capstone also includes the tests/run_tests.sh script to compare test output
+with known results.
+
+	$ cd tests
+	$ ./run_tests.sh
+
+To update the expected output, run the script with the UPDATE_EXPECTED
+environment variable set. In bash, you can run:
+
+	$ UPDATE_EXPECTED=1 ./run_tests.sh
+
+For more details, consult run_tests.sh
