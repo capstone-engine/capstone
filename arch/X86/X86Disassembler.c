@@ -920,17 +920,25 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	info.offset = address;
 
 	if (instr->flat_insn->detail) {
-		instr->flat_insn->detail->x86.op_count = 0;
-		instr->flat_insn->detail->x86.sse_cc = X86_SSE_CC_INVALID;
-		instr->flat_insn->detail->x86.avx_cc = X86_AVX_CC_INVALID;
-		instr->flat_insn->detail->x86.avx_sae = false;
-		instr->flat_insn->detail->x86.avx_rm = X86_AVX_RM_INVALID;
-		instr->flat_insn->detail->x86.xop_cc = X86_XOP_CC_INVALID;
-		instr->flat_insn->detail->x86.eflags = 0;
+		// instr->flat_insn->detail initialization: 3 alternatives
 
-		memset(instr->flat_insn->detail->x86.prefix, 0, sizeof(instr->flat_insn->detail->x86.prefix));
-		memset(instr->flat_insn->detail->x86.opcode, 0, sizeof(instr->flat_insn->detail->x86.opcode));
-		memset(instr->flat_insn->detail->x86.operands, 0, sizeof(instr->flat_insn->detail->x86.operands));
+
+		// 1. The whole structure, this is how it's done in other arch disassemblers
+		// Probably overkill since cs_detail is huge because of the 36 operands of ARM
+		
+		//memset(instr->flat_insn->detail, 0, sizeof(cs_detail));
+
+
+		// 2. Only the part relevant to x86
+
+		memset(instr->flat_insn->detail, 0, offsetof(cs_detail, x86)+sizeof(cs_x86));
+
+
+		// 3. The relevant part except for x86.operands
+		// sizeof(cs_x86) is 0x1c0, sizeof(x86.operands) is 0x180
+		// marginally faster, should be okay since x86.op_count is set to 0
+
+		//memset(instr->flat_insn->detail, 0, offsetof(cs_detail, x86)+offsetof(cs_x86, operands));
 	}
 
 	if (handle->mode & CS_MODE_16)
