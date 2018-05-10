@@ -188,7 +188,7 @@ static uint64_t m68k_read_disassembler_64(const m68k_info *info, const uint64_t 
 static unsigned int m68k_read_safe_16(const m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
-	if (addr > (info->code_len - 2)) {
+	if (info->code_len < 2) {
 		return 0xaaaa;
 	}
 	return m68k_read_disassembler_16(info, addr);
@@ -197,7 +197,7 @@ static unsigned int m68k_read_safe_16(const m68k_info *info, const uint64_t addr
 static unsigned int m68k_read_safe_32(const m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
-	if (addr > (info->code_len - 4)) {
+	if (info->code_len < 4) {
 		return 0xaaaaaaaa;
 	}
 	return m68k_read_disassembler_32(info, addr);
@@ -206,7 +206,7 @@ static unsigned int m68k_read_safe_32(const m68k_info *info, const uint64_t addr
 static uint64_t m68k_read_safe_64(const m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
-	if (addr > (info->code_len - 8)) {
+	if (info->code_len < 8) {
 		return 0xaaaaaaaaaaaaaaaaLL;
 	}
 	return m68k_read_disassembler_64(info, addr);
@@ -4052,6 +4052,13 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 	cs_struct* handle = instr->csh;
 	m68k_info *info = (m68k_info*)handle->printer_info;
 
+	// code len has to be at least 2 bytes to be valid m68k
+
+	if (code_len < 2) {
+		*size = 0;
+		return false;
+	}
+
 	info->groups_count = 0;
 	info->regs_read_count = 0;
 	info->regs_write_count = 0;
@@ -4093,182 +4100,4 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 
 	return true;
 }
-
-#if 0
-
-// Currently not used
-
-/* Check if the instruction is a valid one */
-unsigned int m68k_is_valid_instruction(unsigned int instruction, unsigned int cpu_type)
-{
-	build_opcode_table();
-
-	instruction &= 0xffff;
-	if (g_instruction_table[instruction] == d68000_invalid)
-		return 0;
-
-	switch(cpu_type) {
-		case M68K_CPU_TYPE_68000:
-			if (g_instruction_table[instruction] == d68010_bkpt)
-				return 0;
-			if (g_instruction_table[instruction] == d68010_move_fr_ccr)
-				return 0;
-			if (g_instruction_table[instruction] == d68010_movec)
-				return 0;
-			if (g_instruction_table[instruction] == d68010_moves_8)
-				return 0;
-			if (g_instruction_table[instruction] == d68010_moves_16)
-				return 0;
-			if (g_instruction_table[instruction] == d68010_moves_32)
-				return 0;
-			if (g_instruction_table[instruction] == d68010_rtd)
-				return 0;
-		case M68K_CPU_TYPE_68010:
-			if (g_instruction_table[instruction] == d68020_bcc_32)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_bfchg)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_bfclr)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_bfexts)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_bfextu)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_bfffo)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_bfins)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_bfset)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_bftst)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_bra_32)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_bsr_32)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_callm)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cas_8)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cas_16)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cas_32)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cas2_16)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cas2_32)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_chk_32)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_chk2_cmp2_8)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_chk2_cmp2_16)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_chk2_cmp2_32)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cmpi_pcdi_8)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cmpi_pcix_8)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cmpi_pcdi_16)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cmpi_pcix_16)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cmpi_pcdi_32)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cmpi_pcix_32)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cpbcc_16)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cpbcc_32)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cpdbcc)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cpgen)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cprestore)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cpsave)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cpscc)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cptrapcc_0)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cptrapcc_16)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_cptrapcc_32)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_divl)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_extb_32)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_link_32)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_mull)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_pack_rr)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_pack_mm)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_rtm)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_trapcc_0)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_trapcc_16)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_trapcc_32)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_tst_pcdi_8)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_tst_pcix_8)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_tst_i_8)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_tst_a_16)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_tst_pcdi_16)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_tst_pcix_16)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_tst_i_16)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_tst_a_32)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_tst_pcdi_32)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_tst_pcix_32)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_tst_i_32)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_unpk_rr)
-				return 0;
-			if (g_instruction_table[instruction] == d68020_unpk_mm)
-				return 0;
-		case M68K_CPU_TYPE_68EC020:
-		case M68K_CPU_TYPE_68020:
-		case M68K_CPU_TYPE_68030:
-			if (g_instruction_table[instruction] == d68040_cinv)
-				return 0;
-			if (g_instruction_table[instruction] == d68040_cpush)
-				return 0;
-			if (g_instruction_table[instruction] == d68040_move16_pi_pi)
-				return 0;
-			if (g_instruction_table[instruction] == d68040_move16_pi_al)
-				return 0;
-			if (g_instruction_table[instruction] == d68040_move16_al_pi)
-				return 0;
-			if (g_instruction_table[instruction] == d68040_move16_ai_al)
-				return 0;
-			if (g_instruction_table[instruction] == d68040_move16_al_ai)
-				return 0;
-	}
-
-	if (cpu_type != M68K_CPU_TYPE_68020 && cpu_type != M68K_CPU_TYPE_68EC020 &&
-			(g_instruction_table[instruction] == d68020_callm ||
-			 g_instruction_table[instruction] == d68020_rtm))
-		return 0;
-
-	return 1;
-}
-#endif
 
