@@ -345,9 +345,9 @@ all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF)
 ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
 	@V=$(V) CC=$(CC) $(MAKE) -C cstool
 ifndef BUILDDIR
-	cd tests && $(MAKE)
+	$(MAKE) -C tests
 else
-	cd tests && $(MAKE) BUILDDIR=$(BLDIR)
+	$(MAKE) -C tests BUILDDIR=$(BLDIR)
 endif
 	$(call install-library,$(BLDIR)/tests/)
 endif
@@ -422,7 +422,7 @@ clean:
 	$(MAKE) -C cstool clean
 
 ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
-	cd tests && $(MAKE) clean
+	$(MAKE) -C tests clean
 	rm -f $(BLDIR)/tests/lib$(LIBNAME).$(EXT)
 endif
 
@@ -431,9 +431,9 @@ ifdef BUILDDIR
 endif
 
 ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
-	cd bindings/python && $(MAKE) clean
-	cd bindings/java && $(MAKE) clean
-	cd bindings/ocaml && $(MAKE) clean
+	$(MAKE) -C bindings/python clean
+	$(MAKE) -C bindings/java clean
+	$(MAKE) -C bindings/ocaml clean
 endif
 
 
