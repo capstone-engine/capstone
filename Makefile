@@ -8,6 +8,12 @@ include functions.mk
 # Verbose output?
 V ?= 0
 
+OS := $(shell uname)
+ifeq ($(OS),Darwin)
+LIBARCHS = i386 x86_64
+PREFIX ?= /usr/local
+endif
+
 ifeq ($(PKG_EXTRA),)
 PKG_VERSION = $(PKG_MAJOR).$(PKG_MINOR)
 else
@@ -15,10 +21,7 @@ PKG_VERSION = $(PKG_MAJOR).$(PKG_MINOR).$(PKG_EXTRA)
 endif
 
 ifeq ($(CROSS),)
-CC ?= cc
-AR ?= ar
 RANLIB ?= ranlib
-STRIP ?= strip
 else
 CC = $(CROSS)gcc
 AR = $(CROSS)ar

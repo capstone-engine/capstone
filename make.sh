@@ -58,26 +58,12 @@ function build_android {
 }
 
 
-function build {
-	if [ $(uname -s) = Darwin ]; then
-		export LIBARCHS="i386 x86_64"
-	fi
-
-	if [ -n "$CC" ]; then
-		${MAKE} CC="$CC" $*
-	else
-		${MAKE} $*
-	fi
-}
-
 function install {
 	# Mac OSX needs to find the right directory for pkgconfig
 	if [ "$(uname)" == "Darwin" ]; then
 		# we are going to install into /usr/local, so remove old installs under /usr
 		rm -rf /usr/lib/libcapstone.*
 		rm -rf /usr/include/capstone
-		# install into /usr/local
-		export PREFIX=/usr/local
 		# find the directory automatically, so we can support both Macport & Brew
 		PKGCFGDIR="$(pkg-config --variable pc_path pkg-config | cut -d ':' -f 1)"
 		# set PKGCFGDIR only in non-Brew environment & pkg-config is available
@@ -116,7 +102,6 @@ function uninstall {
 	if [ "$(uname)" == "Darwin" ]; then
 		# find the directory automatically, so we can support both Macport & Brew
 		PKGCFGDIR="$(pkg-config --variable pc_path pkg-config | cut -d ':' -f 1)"
-		export PREFIX=/usr/local
 		if [ ${PKGCFGDIR}x != x ]; then
 			${MAKE} PKGCFGDIR=$PKGCFGDIR uninstall
 		else
@@ -147,24 +132,24 @@ TARGET="$1"
 shift
 
 case "$TARGET" in
-  "" ) build $*;;
-  "default" ) build $*;;
-  "debug" ) CAPSTONE_USE_SYS_DYN_MEM=yes CAPSTONE_STATIC=yes CFLAGS='-O0 -g -fsanitize=address' LDFLAGS='-fsanitize=address' build $*;;
+  "" ) ${MAKE} $*;;
+  "default" ) ${MAKE} $*;;
+  "debug" ) CAPSTONE_USE_SYS_DYN_MEM=yes CAPSTONE_STATIC=yes CFLAGS='-O0 -g -fsanitize=address' LDFLAGS='-fsanitize=address' ${MAKE} $*;;
   "install" ) install;;
   "uninstall" ) uninstall;;
-  "nix32" ) CFLAGS=-m32 LDFLAGS=-m32 build $*;;
-  "cross-win32" ) CROSS=i686-w64-mingw32- build $*;;
-  "cross-win64" ) CROSS=x86_64-w64-mingw32- build $*;;
-  "cygwin-mingw32" ) CROSS=i686-pc-mingw32- build $*;;
-  "cygwin-mingw64" ) CROSS=x86_64-w64-mingw32- build $*;;
+  "nix32" ) CFLAGS=-m32 LDFLAGS=-m32 ${MAKE} $*;;
+  "cross-win32" ) CROSS=i686-w64-mingw32- ${MAKE} $*;;
+  "cross-win64" ) CROSS=x86_64-w64-mingw32- ${MAKE} $*;;
+  "cygwin-mingw32" ) CROSS=i686-pc-mingw32- ${MAKE} $*;;
+  "cygwin-mingw64" ) CROSS=x86_64-w64-mingw32- ${MAKE} $*;;
   "cross-android" ) build_android $*;;
-  "clang" ) CC=clang build $*;;
-  "gcc" ) CC=gcc build $*;;
+  "clang" ) CC=clang ${MAKE} $*;;
+  "gcc" ) CC=gcc ${MAKE} $*;;
   "ios" ) build_iOS $*;;
   "ios_armv7" ) build_iOS armv7 $*;;
   "ios_armv7s" ) build_iOS armv7s $*;;
   "ios_arm64" ) build_iOS arm64 $*;;
-  "osx-kernel" ) CAPSTONE_USE_SYS_DYN_MEM=yes CAPSTONE_HAS_OSXKERNEL=yes CAPSTONE_ARCHS=x86 CAPSTONE_SHARED=no CAPSTONE_BUILD_CORE_ONLY=yes build $*;;
+  "osx-kernel" ) CAPSTONE_USE_SYS_DYN_MEM=yes CAPSTONE_HAS_OSXKERNEL=yes CAPSTONE_ARCHS=x86 CAPSTONE_SHARED=no CAPSTONE_BUILD_CORE_ONLY=yes ${MAKE} $*;;
   "mac-universal-no" ) MACOS_UNIVERSAL=no ${MAKE} $*;;
   * ) echo "Usage: make.sh [nix32|cross-win32|cross-win64|cygwin-mingw32|cygwin-mingw64|ios|ios_armv7|ios_armv7s|ios_arm64|cross-android arm|cross-android arm64|clang|gcc|install|uninstall|mac-universal-no]"; exit 1;;
 esac
