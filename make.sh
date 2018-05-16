@@ -77,7 +77,7 @@ function install {
 		rm -rf /usr/lib/libcapstone.*
 		rm -rf /usr/include/capstone
 		# install into /usr/local
-		export PREFIX=/usr/local
+		export PREFIX?=/usr/local
 		# find the directory automatically, so we can support both Macport & Brew
 		PKGCFGDIR="$(pkg-config --variable pc_path pkg-config | cut -d ':' -f 1)"
 		# set PKGCFGDIR only in non-Brew environment & pkg-config is available
