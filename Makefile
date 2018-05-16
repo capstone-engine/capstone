@@ -455,11 +455,9 @@ TESTS += test_basic.static test_detail.static test_arm.static test_arm64.static
 TESTS += test_m68k.static test_mips.static test_ppc.static test_sparc.static
 TESTS += test_systemz.static test_x86.static test_xcore.static test_m680x.static
 TESTS += test_skipdata test_skipdata.static test_iter.static
-check:
-	@for t in $(TESTS); do \
-		echo Check $$t ... ; \
-		LD_LIBRARY_PATH=./tests ./tests/$$t > /dev/null && echo OK || echo FAILED; \
-	done
+check: $(TESTS)
+test_%:
+	./tests/$@ > /dev/null && echo OK || echo FAILED
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(@D)
