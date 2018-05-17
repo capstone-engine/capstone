@@ -4,6 +4,7 @@ env:
   global:
     - LD_LIBRARY_PATH=$TRAVIS_BUILD_DIR/tests/:$TRAVIS_BUILD_DIR:$LD_LIBRARY_PATH
     - DYLD_LIBRARY_PATH=$TRAVIS_BUILD_DIR/tests/:$TRAVIS_BUILD_DIR:$DYLD_LIBRARY_PATH
+install: if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew bundle; fi
 script:
   - ./make.sh
   - make check
