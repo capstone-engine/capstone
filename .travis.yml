@@ -3,9 +3,9 @@ sudo: false
 env:
   global:
     - LD_LIBRARY_PATH=$TRAVIS_BUILD_DIR/tests/:$TRAVIS_BUILD_DIR:$LD_LIBRARY_PATH
-    - DYLD_LIBRARY_PATH=$TRAVIS_BUILD_DIR/tests/:$TRAVIS_BUILD_DIR:$DYLD_LIBRARY_PATH
 script:
   - ./make.sh
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./make.sh install; fi
   - make check
   - cd bindings/python && make check
 compiler:
