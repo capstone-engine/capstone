@@ -360,6 +360,9 @@ if (CAPSTONE_BUILD_TESTS)
         add_executable(${ARM_REGRESS_BIN} "suite/arm/${ARM_REGRESS_TEST}")
         target_link_libraries(${ARM_REGRESS_BIN} ${default-target})
     endif()
+    # fuzz target built with the tests
+    add_executable(fuzz_disasm suite/fuzz/onefile.c suite/fuzz/fuzz_disasm.c)
+    target_link_libraries(fuzz_disasm ${default-target})
 endif ()
 
 source_group("Source\\Engine" FILES ${SOURCES_ENGINE})
