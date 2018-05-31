@@ -1196,7 +1196,7 @@ static DecodeStatus DecodeMemMMReglistImm4Lsl2(MCInst *Inst,
 		return MCDisassembler_Fail;
 
 	MCOperand_CreateReg0(Inst, Mips_SP);
-	MCOperand_CreateImm0(Inst, Offset << 2);
+	MCOperand_CreateImm0(Inst, Offset * 4);
 
 	return MCDisassembler_Success;
 }
