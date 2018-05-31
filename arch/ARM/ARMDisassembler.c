@@ -486,9 +486,9 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t
 		insn = (code[3] << 0) |
 			(code[2] << 8) |
 			(code[1] <<  16) |
-			(code[0] <<  24);
+			((uint32_t) code[0] << 24);
 	else
-		insn = (code[3] << 24) |
+		insn = ((uint32_t) code[3] << 24) |
 			(code[2] << 16) |
 			(code[1] <<  8) |
 			(code[0] <<  0);
@@ -780,11 +780,11 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 		insn32 = (code[3] <<  0) |
 			(code[2] <<  8) |
 			(code[1] << 16) |
-			(code[0] << 24);
+			((uint32_t) code[0] << 24);
 	else
 		insn32 = (code[3] <<  8) |
 			(code[2] <<  0) |
-			(code[1] << 24) |
+			((uint32_t) code[1] << 24) |
 			(code[0] << 16);
 
 	MCInst_clear(MI);
