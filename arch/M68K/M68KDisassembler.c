@@ -3862,14 +3862,16 @@ static void add_reg_to_rw_list(m68k_info *info, m68k_reg reg, int write)
 		if (exists_reg_list(info->regs_write, info->regs_write_count, reg))
 			return;
 
-		info->regs_write[info->regs_write_count++] = (uint16_t)reg;
+		info->regs_write[info->regs_write_count] = (uint16_t)reg;
+		info->regs_write_count++;
 	}
 	else
 	{
 		if (exists_reg_list(info->regs_read, info->regs_read_count, reg))
 			return;
 
-		info->regs_read[info->regs_read_count++] = (uint16_t)reg;
+		info->regs_read[info->regs_read_count] = (uint16_t)reg;
+		info->regs_read_count++;
 	}
 }
 
