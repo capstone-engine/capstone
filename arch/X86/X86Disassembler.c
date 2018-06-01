@@ -957,23 +957,62 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		*size = (uint16_t)(insn.readerCursor - address);
 		// handle some special cases here.
 		// FIXME: fix this in the next major update.
-		if (*size  == 2) {
-			unsigned char b1 = 0, b2 = 0;
+		switch(*size) {
+			default:
+				break;
+			case 2: {
+						unsigned char b1 = 0, b2 = 0;
 
-			reader(&info, &b1, address);
-			reader(&info, &b2, address + 1);
-			if (b1 == 0x0f && b2 == 0xff) {
-				instr->Opcode = X86_UD0;
-				instr->OpcodePub = X86_INS_UD0;
-				strncpy(instr->assembly, "ud0", 4);
-				if (instr->flat_insn->detail) {
-					instr->flat_insn->detail->x86.opcode[0] = b1;
-					instr->flat_insn->detail->x86.opcode[1] = b2;
+						reader(&info, &b1, address);
+						reader(&info, &b2, address + 1);
+						if (b1 == 0x0f && b2 == 0xff) {
+							instr->Opcode = X86_UD0;
+							instr->OpcodePub = X86_INS_UD0;
+							strncpy(instr->assembly, "ud0", 4);
+							if (instr->flat_insn->detail) {
+								instr->flat_insn->detail->x86.opcode[0] = b1;
+								instr->flat_insn->detail->x86.opcode[1] = b2;
+							}
+							return true;
+						}
 				}
-				return true;
-			}
+				return false;
+			case 4: {
+						unsigned char b1 = 0, b2 = 0, b3 = 0, b4 = 0;
 
-			return false;
+						reader(&info, &b1, address);
+						reader(&info, &b2, address + 1);
+						reader(&info, &b3, address + 2);
+						reader(&info, &b4, address + 3);
+						if (handle->mode & CS_MODE_64) {
+							if (b1 == 0xf3 && b2 == 0x0f && b3 == 0x1e && b4 == 0xfa) {
+								instr->Opcode = X86_ENDBR64;
+								instr->OpcodePub = X86_INS_ENDBR64;
+								strncpy(instr->assembly, "endbr64", 8);
+								if (instr->flat_insn->detail) {
+									instr->flat_insn->detail->x86.opcode[0] = b1;
+									instr->flat_insn->detail->x86.opcode[1] = b2;
+									instr->flat_insn->detail->x86.opcode[2] = b3;
+									instr->flat_insn->detail->x86.opcode[3] = b4;
+								}
+								return true;
+							}
+						} else if (handle->mode & CS_MODE_32) {
+							if (b1 == 0xf3 && b2 == 0x0f && b3 == 0x1e && b4 == 0xfb) {
+								instr->Opcode = X86_ENDBR32;
+								instr->OpcodePub = X86_INS_ENDBR32;
+								strncpy(instr->assembly, "endbr32", 8);
+								if (instr->flat_insn->detail) {
+									instr->flat_insn->detail->x86.opcode[0] = b1;
+									instr->flat_insn->detail->x86.opcode[1] = b2;
+									instr->flat_insn->detail->x86.opcode[2] = b3;
+									instr->flat_insn->detail->x86.opcode[3] = b4;
+								}
+								return true;
+							}
+						}
+				}
+				return false;
 		}
 
 		return false;
