@@ -1928,7 +1928,9 @@ public class X86_const {
 	public static final int X86_INS_VCMPGT_OQPD = 1496;
 	public static final int X86_INS_VCMPTRUE_USPD = 1497;
 	public static final int X86_INS_UD0 = 1498;
-	public static final int X86_INS_ENDING = 1499;
+	public static final int X86_INS_ENDBR32 = 1499;
+	public static final int X86_INS_ENDBR64 = 1500;
+	public static final int X86_INS_ENDING = 1501;
 
 	// Group of X86 instructions
 
