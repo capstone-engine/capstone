@@ -188,7 +188,7 @@ static uint64_t m68k_read_disassembler_64(const m68k_info *info, const uint64_t 
 static unsigned int m68k_read_safe_16(const m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
-	if (info->code_len < 2) {
+	if (info->code_len < addr + 2) {
 		return 0xaaaa;
 	}
 	return m68k_read_disassembler_16(info, addr);
@@ -197,7 +197,7 @@ static unsigned int m68k_read_safe_16(const m68k_info *info, const uint64_t addr
 static unsigned int m68k_read_safe_32(const m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
-	if (info->code_len < 4) {
+	if (info->code_len < addr + 4) {
 		return 0xaaaaaaaa;
 	}
 	return m68k_read_disassembler_32(info, addr);
@@ -206,7 +206,7 @@ static unsigned int m68k_read_safe_32(const m68k_info *info, const uint64_t addr
 static uint64_t m68k_read_safe_64(const m68k_info *info, const uint64_t address)
 {
 	const uint64_t addr = (address - info->baseAddress) & info->address_mask;
-	if (info->code_len < 8) {
+	if (info->code_len < addr + 8) {
 		return 0xaaaaaaaaaaaaaaaaLL;
 	}
 	return m68k_read_disassembler_64(info, addr);
@@ -3862,14 +3862,16 @@ static void add_reg_to_rw_list(m68k_info *info, m68k_reg reg, int write)
 		if (exists_reg_list(info->regs_write, info->regs_write_count, reg))
 			return;
 
-		info->regs_write[info->regs_write_count++] = (uint16_t)reg;
+		info->regs_write[info->regs_write_count] = (uint16_t)reg;
+		info->regs_write_count++;
 	}
 	else
 	{
 		if (exists_reg_list(info->regs_read, info->regs_read_count, reg))
 			return;
 
-		info->regs_read[info->regs_read_count++] = (uint16_t)reg;
+		info->regs_read[info->regs_read_count] = (uint16_t)reg;
+		info->regs_read_count++;
 	}
 }
 
