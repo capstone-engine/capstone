@@ -1196,7 +1196,7 @@ static DecodeStatus DecodeMemMMReglistImm4Lsl2(MCInst *Inst,
 		return MCDisassembler_Fail;
 
 	MCOperand_CreateReg0(Inst, Mips_SP);
-	MCOperand_CreateImm0(Inst, Offset << 2);
+	MCOperand_CreateImm0(Inst, Offset * 4);
 
 	return MCDisassembler_Success;
 }
@@ -1533,7 +1533,7 @@ static DecodeStatus DecodeBranchTarget26(MCInst *Inst,
 static DecodeStatus DecodeBranchTarget7MM(MCInst *Inst,
 		unsigned Offset, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	int32_t BranchOffset = SignExtend32(Offset, 7) << 1;
+	int32_t BranchOffset = SignExtend32(Offset, 7) * 2;
 	MCOperand_CreateImm0(Inst, BranchOffset);
 	return MCDisassembler_Success;
 }
@@ -1541,7 +1541,7 @@ static DecodeStatus DecodeBranchTarget7MM(MCInst *Inst,
 static DecodeStatus DecodeBranchTarget10MM(MCInst *Inst,
 		unsigned Offset, uint64_t Address, MCRegisterInfo *Decoder)
 {
-	int32_t BranchOffset = SignExtend32(Offset, 10) << 1;
+	int32_t BranchOffset = SignExtend32(Offset, 10) * 2;
 	MCOperand_CreateImm0(Inst, BranchOffset);
 	return MCDisassembler_Success;
 }
