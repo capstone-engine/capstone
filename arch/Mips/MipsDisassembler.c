@@ -1786,7 +1786,7 @@ static DecodeStatus DecodeMovePRegPair(MCInst *Inst, unsigned Insn,
 static DecodeStatus DecodeSimm23Lsl2(MCInst *Inst, unsigned Insn,
 		uint64_t Address, MCRegisterInfo *Decoder)
 {
-	MCOperand_CreateImm0(Inst, SignExtend32(Insn, 23) << 2);
+	MCOperand_CreateImm0(Inst, SignExtend32(Insn, 23) * 4);
 	return MCDisassembler_Success;
 }
 
