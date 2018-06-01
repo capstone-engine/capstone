@@ -279,13 +279,13 @@ typedef struct cs_opt_skipdata {
 
 // NOTE: All information in cs_detail is only available when CS_OPT_DETAIL = CS_OPT_ON
 typedef struct cs_detail {
-	uint16_t regs_read[12]; // list of implicit registers read by this insn
+	// beware of fields order
+	// struct initialized with memset( ., 0, offsetof(cs_detail, x86)+offsetof(cs_***, last_initialized_field));
+	// only done for x86 so far
+
+	// corresponding arrays moved at the end of struct to improve partial initialization
 	uint8_t regs_read_count; // number of implicit registers read by this insn
-
-	uint16_t regs_write[20]; // list of implicit registers modified by this insn
 	uint8_t regs_write_count; // number of implicit registers modified by this insn
-
-	uint8_t groups[8]; // list of group this instruction belong to
 	uint8_t groups_count; // number of groups this insn belongs to
 
 	// Architecture-specific instruction info
@@ -303,6 +303,11 @@ typedef struct cs_detail {
 		cs_m680x m680x; // M680X architecture
 		cs_evm evm;	    // Ethereum architecture
 	};
+
+	uint16_t regs_read[12]; // list of implicit registers read by this insn
+	uint16_t regs_write[20]; // list of implicit registers modified by this insn
+	uint8_t groups[8]; // list of group this instruction belong to
+
 } cs_detail;
 
 // Detail information of disassembled instruction
