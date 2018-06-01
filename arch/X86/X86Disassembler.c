@@ -922,17 +922,13 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	if (instr->flat_insn->detail) {
 		// instr->flat_insn->detail initialization: 3 alternatives
 
-
 		// 1. The whole structure, this is how it's done in other arch disassemblers
 		// Probably overkill since cs_detail is huge because of the 36 operands of ARM
 		
 		//memset(instr->flat_insn->detail, 0, sizeof(cs_detail));
 
-
 		// 2. Only the part relevant to x86
-
-		memset(instr->flat_insn->detail, 0, offsetof(cs_detail, x86)+sizeof(cs_x86));
-
+		memset(instr->flat_insn->detail, 0, offsetof(cs_detail, x86) + sizeof(cs_x86));
 
 		// 3. The relevant part except for x86.operands
 		// sizeof(cs_x86) is 0x1c0, sizeof(x86.operands) is 0x180
