@@ -240,9 +240,9 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 
 	if (MODE_IS_BIG_ENDIAN(ud->mode))
 		insn = (code[3] << 0) | (code[2] << 8) |
-			(code[1] <<  16) | (code[0] <<  24);
+			(code[1] <<  16) | (((uint32_t) code[0]) << 24);
 	else
-		insn = (code[3] << 24) | (code[2] << 16) |
+		insn = (((uint32_t) code[3]) << 24) | (code[2] << 16) |
 			(code[1] <<  8) | (code[0] <<  0);
 
 	// Calling the auto-generated decoder function.

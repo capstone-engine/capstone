@@ -295,7 +295,7 @@ static DecodeStatus readInstruction32(unsigned char *code, uint32_t *insn, bool 
 		*insn = (code[3] <<  0) |
 			(code[2] <<  8) |
 			(code[1] << 16) |
-			(code[0] << 24);
+			(((uint32_t) code[0]) << 24);
 	} else {
 		// Encoded as a small-endian 32-bit word in the stream.
 		// Little-endian byte ordering:
@@ -305,12 +305,12 @@ static DecodeStatus readInstruction32(unsigned char *code, uint32_t *insn, bool 
 			*insn = (code[2] <<  0) |
 				(code[3] <<  8) |
 				(code[0] << 16) |
-				(code[1] << 24);
+				(((uint32_t) code[1]) << 24);
 		} else {
 			*insn = (code[0] <<  0) |
 				(code[1] <<  8) |
 				(code[2] << 16) |
-				(code[3] << 24);
+				(((uint32_t) code[3]) << 24);
 		}
 	}
 
