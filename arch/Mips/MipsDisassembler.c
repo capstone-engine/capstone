@@ -391,14 +391,14 @@ static void readInstruction32(unsigned char *code, uint32_t *insn, bool isBigEnd
 	if (isBigEndian) {
 		// Encoded as a big-endian 32-bit word in the stream.
 		*insn =
-			(code[3] << 0) | (code[2] << 8) | (code[1] << 16) | (code[0] << 24);
+			(code[3] << 0) | (code[2] << 8) | (code[1] << 16) | ((uint32_t) code[0] << 24);
 	} else {
 		if (isMicroMips) {
 			*insn = (code[2] << 0) | (code[3] << 8) | (code[0] << 16) |
-				(code[1] << 24);
+				((uint32_t) code[1] << 24);
 		} else {
 			*insn = (code[0] << 0) | (code[1] << 8) | (code[2] << 16) |
-				(code[3] << 24);
+				((uint32_t) code[3] << 24);
 		}
 	}
 }
@@ -1786,7 +1786,7 @@ static DecodeStatus DecodeMovePRegPair(MCInst *Inst, unsigned Insn,
 static DecodeStatus DecodeSimm23Lsl2(MCInst *Inst, unsigned Insn,
 		uint64_t Address, MCRegisterInfo *Decoder)
 {
-	MCOperand_CreateImm0(Inst, SignExtend32(Insn, 23) << 2);
+	MCOperand_CreateImm0(Inst, SignExtend32(Insn, 23) * 4);
 	return MCDisassembler_Success;
 }
 
