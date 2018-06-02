@@ -56,10 +56,6 @@ void SStream_concat(SStream *ss, const char *fmt, ...)
 // print number with prefix #
 void printInt64Bang(SStream *O, int64_t val)
 {
-	if (val == LONG_MIN) {
-		return;
-	}
-
 	if (val >= 0) {
 		if (val > HEX_THRESHOLD)
 			SStream_concat(O, "#0x%"PRIx64, val);
@@ -67,7 +63,10 @@ void printInt64Bang(SStream *O, int64_t val)
 			SStream_concat(O, "#%"PRIu64, val);
 	} else {
 		if (val <- HEX_THRESHOLD)
-			SStream_concat(O, "#-0x%"PRIx64, -val);
+			if (val == LONG_MIN)
+				SStream_concat(O, "#-0x%"PRIx64, val);
+			else
+				SStream_concat(O, "#-0x%"PRIx64, -val);
 		else
 			SStream_concat(O, "#-%"PRIu64, -val);
 	}
@@ -84,10 +83,6 @@ void printUInt64Bang(SStream *O, uint64_t val)
 // print number
 void printInt64(SStream *O, int64_t val)
 {
-	if (val == LONG_MIN) {
-		return;
-	}
-
 	if (val >= 0) {
 		if (val > HEX_THRESHOLD)
 			SStream_concat(O, "0x%"PRIx64, val);
@@ -95,7 +90,10 @@ void printInt64(SStream *O, int64_t val)
 			SStream_concat(O, "%"PRIu64, val);
 	} else {
 		if (val <- HEX_THRESHOLD)
-			SStream_concat(O, "-0x%"PRIx64, -val);
+			if (val == LONG_MIN)
+				SStream_concat(O, "-0x%"PRIx64, val);
+			else
+				SStream_concat(O, "-0x%"PRIx64, -val);
 		else
 			SStream_concat(O, "-%"PRIu64, -val);
 	}
@@ -104,22 +102,17 @@ void printInt64(SStream *O, int64_t val)
 // print number in decimal mode
 void printInt32BangDec(SStream *O, int32_t val)
 {
-	if (val == INT_MIN) {
-		return;
-	}
-
 	if (val >= 0)
 		SStream_concat(O, "#%u", val);
 	else
-		SStream_concat(O, "#-%u", -val);
+		if (val == INT_MIN)
+			SStream_concat(O, "#-%u", val);
+		else
+			SStream_concat(O, "#-%u", -val);
 }
 
 void printInt32Bang(SStream *O, int32_t val)
 {
-	if (val == INT_MIN) {
-		return;
-	}
-
 	if (val >= 0) {
 		if (val > HEX_THRESHOLD)
 			SStream_concat(O, "#0x%x", val);
@@ -127,7 +120,10 @@ void printInt32Bang(SStream *O, int32_t val)
 			SStream_concat(O, "#%u", val);
 	} else {
 		if (val <- HEX_THRESHOLD)
-			SStream_concat(O, "#-0x%x", -val);
+			if (val == INT_MIN)
+				SStream_concat(O, "#-0x%x", val);
+			else
+				SStream_concat(O, "#-0x%x", -val);
 		else
 			SStream_concat(O, "#-%u", -val);
 	}
@@ -135,10 +131,6 @@ void printInt32Bang(SStream *O, int32_t val)
 
 void printInt32(SStream *O, int32_t val)
 {
-	if (val == INT_MIN) {
-		return;
-	}
-
 	if (val >= 0) {
 		if (val > HEX_THRESHOLD)
 			SStream_concat(O, "0x%x", val);
@@ -146,7 +138,10 @@ void printInt32(SStream *O, int32_t val)
 			SStream_concat(O, "%u", val);
 	} else {
 		if (val <- HEX_THRESHOLD)
-			SStream_concat(O, "-0x%x", -val);
+			if (val == INT_MIN)
+				SStream_concat(O, "-0x%x", val);
+			else
+				SStream_concat(O, "-0x%x", -val);
 		else
 			SStream_concat(O, "-%u", -val);
 	}
