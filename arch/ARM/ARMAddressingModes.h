@@ -658,7 +658,7 @@ static inline float getFPImmFloat(unsigned Imm)
 	// where B = NOT(b);
 
 	FPUnion.I = 0;
-	FPUnion.I |= Sign << 31;
+	FPUnion.I |= ((uint32_t) Sign) << 31;
 	FPUnion.I |= ((Exp & 0x4) != 0 ? 0 : 1) << 30;
 	FPUnion.I |= ((Exp & 0x4) != 0 ? 0x1f : 0) << 25;
 	FPUnion.I |= (Exp & 0x3) << 23;
