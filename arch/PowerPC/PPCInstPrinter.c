@@ -533,7 +533,7 @@ static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		return;
 	}
 
-	imm = ((int)MCOperand_getImm(MCInst_getOperand(MI, OpNo)) << 2);
+	imm = ((int)MCOperand_getImm(MCInst_getOperand(MI, OpNo)) * 4);
 
 	if (!PPC_abs_branch(MI->csh, MCInst_getOpcode(MI))) {
 		imm = (int)MI->address + imm;
