@@ -1248,7 +1248,7 @@ static void printAlignedLabel(MCInst *MI, unsigned OpNum, SStream *O)
 	// If the label has already been resolved to an immediate offset (say, when
 	// we're running the disassembler), just print the immediate.
 	if (MCOperand_isImm(Op)) {
-		uint64_t imm = (MCOperand_getImm(Op) << 2) + MI->address;
+		uint64_t imm = (MCOperand_getImm(Op) * 4) + MI->address;
 		printUInt64Bang(O, imm);
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
