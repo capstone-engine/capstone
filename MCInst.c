@@ -16,11 +16,12 @@
 
 void MCInst_Init(MCInst *inst)
 {
-	int i;
+	unsigned int i;
 
-	for (i = 0; i < 48; i++){
+	for (i = 0; i < 48; i++) {
 		inst->Operands[i].Kind = kInvalid;
 	}
+
 	inst->Opcode = 0;
 	inst->OpcodePub = 0;
 	inst->size = 0;
