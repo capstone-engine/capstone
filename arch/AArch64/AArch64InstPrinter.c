@@ -1266,7 +1266,7 @@ static void printAdrpLabel(MCInst *MI, unsigned OpNum, SStream *O)
 	if (MCOperand_isImm(Op)) {
 		// ADRP sign extends a 21-bit offset, shifts it left by 12
 		// and adds it to the value of the PC with its bottom 12 bits cleared
-		uint64_t imm = (MCOperand_getImm(Op) << 12) + (MI->address & ~0xfff);
+		uint64_t imm = (MCOperand_getImm(Op) * 0x1000) + (MI->address & ~0xfff);
 		if (imm > HEX_THRESHOLD)
 			SStream_concat(O, "#0x%"PRIx64, imm);
 		else
