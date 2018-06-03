@@ -425,14 +425,17 @@ static inline int64_t SignExtend64(uint64_t X, unsigned B) {
 ///   valid arguments.
 static inline unsigned int countLeadingZeros(int x)
 {
-	unsigned count = 0;
 	int i;
 	const unsigned bits = sizeof(x) * 8;
+	unsigned count = bits;
 
+	if (x < 0) {
+		return 0;
+	}
 	for (i = bits; --i; ) {
-		if (x < 0) break;
-		count++;
-		x <<= 1;
+		if (x == 0) break;
+		count--;
+		x >>= 1;
 	}
 
 	return count;
