@@ -388,17 +388,7 @@ static void printS5ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	int Value = (int)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
 	Value = SignExtend32(Value, 5);
 
-	if (Value >= 0) {
-		if (Value > HEX_THRESHOLD)
-			SStream_concat(O, "0x%x", Value);
-		else
-			SStream_concat(O, "%u", Value);
-	} else {
-		if (Value < -HEX_THRESHOLD)
-			SStream_concat(O, "-0x%x", -Value);
-		else
-			SStream_concat(O, "-%u", -Value);
-	}
+	printInt32(O, Value);
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
@@ -411,10 +401,7 @@ static void printU5ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	unsigned int Value = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
 	//assert(Value <= 31 && "Invalid u5imm argument!");
-	if (Value > HEX_THRESHOLD)
-		SStream_concat(O, "0x%x", Value);
-	else
-		SStream_concat(O, "%u", Value);
+	printUInt32(O, Value);
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
@@ -427,10 +414,7 @@ static void printU6ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	unsigned int Value = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
 	//assert(Value <= 63 && "Invalid u6imm argument!");
-	if (Value > HEX_THRESHOLD)
-		SStream_concat(O, "0x%x", Value);
-	else
-		SStream_concat(O, "%u", Value);
+	printUInt32(O, Value);
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
@@ -675,17 +659,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 	if (MCOperand_isImm(Op)) {
 		int32_t imm = (int32_t)MCOperand_getImm(Op);
-		if (imm >= 0) {
-			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%x", imm);
-			else
-				SStream_concat(O, "%u", imm);
-		} else {
-			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%x", -imm);
-			else
-				SStream_concat(O, "-%u", -imm);
-		}
+		printInt32(O, imm);
 
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {

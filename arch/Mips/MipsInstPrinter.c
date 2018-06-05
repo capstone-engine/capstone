@@ -206,32 +206,12 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		int64_t imm = MCOperand_getImm(Op);
 		if (MI->csh->doing_mem) {
 			if (imm) {	// only print Imm offset if it is not 0
-				if (imm >= 0) {
-					if (imm > HEX_THRESHOLD)
-						SStream_concat(O, "0x%"PRIx64, imm);
-					else
-						SStream_concat(O, "%"PRIu64, imm);
-				} else {
-					if (imm < -HEX_THRESHOLD)
-						SStream_concat(O, "-0x%"PRIx64, -imm);
-					else
-						SStream_concat(O, "-%"PRIu64, -imm);
-				}
+				printInt64(O, imm);
 			}
 			if (MI->csh->detail)
 				MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].mem.disp = imm;
 		} else {
-			if (imm >= 0) {
-				if (imm > HEX_THRESHOLD)
-					SStream_concat(O, "0x%"PRIx64, imm);
-				else
-					SStream_concat(O, "%"PRIu64, imm);
-			} else {
-				if (imm < -HEX_THRESHOLD)
-					SStream_concat(O, "-0x%"PRIx64, -imm);
-				else
-					SStream_concat(O, "-%"PRIu64, -imm);
-			}
+			printInt64(O, imm);
 
 			if (MI->csh->detail) {
 				MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].type = MIPS_OP_IMM;
@@ -247,17 +227,8 @@ static void printUnsignedImm(MCInst *MI, int opNum, SStream *O)
 	MCOperand *MO = MCInst_getOperand(MI, opNum);
 	if (MCOperand_isImm(MO)) {
 		int64_t imm = MCOperand_getImm(MO);
-		if (imm >= 0) {
-			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%x", (unsigned short int)imm);
-			else
-				SStream_concat(O, "%u", (unsigned short int)imm);
-		} else {
-			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%x", (short int)-imm);
-			else
-				SStream_concat(O, "-%u", (short int)-imm);
-		}
+		printInt64(O, imm);
+
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].type = MIPS_OP_IMM;
 			MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].imm = (unsigned short int)imm;
