@@ -42,17 +42,7 @@ void SystemZ_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 
 static void printAddress(MCInst *MI, unsigned Base, int64_t Disp, unsigned Index, SStream *O)
 {
-	if (Disp >= 0) {
-		if (Disp > HEX_THRESHOLD)
-			SStream_concat(O, "0x%"PRIx64, Disp);
-		else
-			SStream_concat(O, "%"PRIu64, Disp);
-	} else {
-		if (Disp < -HEX_THRESHOLD)
-			SStream_concat(O, "-0x%"PRIx64, -Disp);
-		else
-			SStream_concat(O, "-%"PRIu64, -Disp);
-	}
+	printInt64(O, Disp);
 
 	if (Base) {
 		SStream_concat0(O, "(");
@@ -93,17 +83,7 @@ static void _printOperand(MCInst *MI, MCOperand *MO, SStream *O)
 	} else if (MCOperand_isImm(MO)) {
 		int64_t Imm = MCOperand_getImm(MO);
 
-		if (Imm >= 0) {
-			if (Imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%"PRIx64, Imm);
-			else
-				SStream_concat(O, "%"PRIu64, Imm);
-		} else {
-			if (Imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%"PRIx64, -Imm);
-			else
-				SStream_concat(O, "-%"PRIu64, -Imm);
-		}
+		printInt64(O, Imm);
 
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
@@ -117,17 +97,7 @@ static void printU4ImmOperand(MCInst *MI, int OpNum, SStream *O)
 {
 	int64_t Value = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	// assert(isUInt<4>(Value) && "Invalid u4imm argument");
-	if (Value >= 0) {
-		if (Value > HEX_THRESHOLD)
-			SStream_concat(O, "0x%"PRIx64, Value);
-		else
-			SStream_concat(O, "%"PRIu64, Value);
-	} else {
-		if (Value < -HEX_THRESHOLD)
-			SStream_concat(O, "-0x%"PRIx64, -Value);
-		else
-			SStream_concat(O, "-%"PRIu64, -Value);
-	}
+	printInt64(O, Value);
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
@@ -141,10 +111,7 @@ static void printU6ImmOperand(MCInst *MI, int OpNum, SStream *O)
 	uint32_t Value = (uint32_t)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	// assert(isUInt<6>(Value) && "Invalid u6imm argument");
 
-	if (Value > HEX_THRESHOLD)
-		SStream_concat(O, "0x%x", Value);
-	else
-		SStream_concat(O, "%u", Value);
+	printUInt32(O, Value);
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
@@ -254,10 +221,7 @@ static void printU32ImmOperand(MCInst *MI, int OpNum, SStream *O)
 	uint32_t Value = (uint32_t)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	// assert(isUInt<32>(Value) && "Invalid u32imm argument");
 
-	if (Value > HEX_THRESHOLD)
-		SStream_concat(O, "0x%x", Value);
-	else
-		SStream_concat(O, "%u", Value);
+	printUInt32(O, Value);
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
@@ -286,23 +250,8 @@ static void printPCRelOperand(MCInst *MI, int OpNum, SStream *O)
 
 	if (MCOperand_isImm(MO)) {
 		imm = (int32_t)MCOperand_getImm(MO);
-		if (imm == INT_MIN) {
-			// printf("ERROR: invalid Imm value\n");
-			return;
-		}
 
-		if (imm >= 0) {
-			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%x", imm);
-			else
-				SStream_concat(O, "%u", imm);
-		} else {
-			if (imm < -HEX_THRESHOLD)
-				//cast first, then negate
-				SStream_concat(O, "-0x%x", -(uint32_t)imm);
-			else
-				SStream_concat(O, "-%u", -imm);
-		}
+		printInt32(O, imm);
 
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
