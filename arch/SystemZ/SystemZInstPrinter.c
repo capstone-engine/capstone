@@ -240,17 +240,7 @@ static void printS32ImmOperand(MCInst *MI, int OpNum, SStream *O)
 	int32_t Value = (int32_t)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	// assert(isInt<32>(Value) && "Invalid s32imm argument");
 
-	if (Value >= 0) {
-		if (Value > HEX_THRESHOLD)
-			SStream_concat(O, "0x%x", Value);
-		else
-			SStream_concat(O, "%u", Value);
-	} else {
-		if (Value < -HEX_THRESHOLD)
-			SStream_concat(O, "-0x%x", -Value);
-		else
-			SStream_concat(O, "-%u", -Value);
-	}
+	printInt32(O, Value);
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
