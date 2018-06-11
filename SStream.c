@@ -7,11 +7,12 @@
 #include <stdarg.h>
 #if defined(CAPSTONE_HAS_OSXKERNEL)
 #include <libkern/libkern.h>
+#include <i386/limits.h>
 #else
 #include <stdio.h>
+#include <limits.h>
 #endif
 #include <string.h>
-#include <limits.h>
 
 #include <platform.h>
 
