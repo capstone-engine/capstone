@@ -8,8 +8,9 @@
 #include "X86Disassembler.h"
 #include "X86InstPrinter.h"
 #include "X86Mapping.h"
+#include "X86Module.h"
 
-static cs_err init(cs_struct *ud)
+cs_err X86_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
 	mri = cs_mem_malloc(sizeof(*mri));
@@ -35,7 +36,7 @@ static cs_err init(cs_struct *ud)
 	return CS_ERR_OK;
 }
 
-static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
+cs_err X86_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	switch(type) {
 		default:
@@ -82,20 +83,8 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 	return CS_ERR_OK;
 }
 
-static void destroy(cs_struct *handle)
+void X86_destroy(cs_struct *handle)
 {
-}
-
-void X86_enable(void)
-{
-	cs_arch_init[CS_ARCH_X86] = init;
-	cs_arch_option[CS_ARCH_X86] = option;
-	cs_arch_destroy[CS_ARCH_X86] = destroy;
-	cs_arch_disallowed_mode_mask[CS_ARCH_X86] = ~(CS_MODE_LITTLE_ENDIAN |
-		CS_MODE_32 | CS_MODE_64 | CS_MODE_16);
-
-	// support this arch
-	all_arch |= (1 << CS_ARCH_X86);
 }
 
 #endif

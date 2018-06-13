@@ -8,8 +8,9 @@
 #include "PPCDisassembler.h"
 #include "PPCInstPrinter.h"
 #include "PPCMapping.h"
+#include "PPCModule.h"
 
-static cs_err init(cs_struct *ud)
+cs_err PPC_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
 	mri = (MCRegisterInfo *) cs_mem_malloc(sizeof(*mri));
@@ -29,7 +30,7 @@ static cs_err init(cs_struct *ud)
 	return CS_ERR_OK;
 }
 
-static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
+cs_err PPC_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_SYNTAX)
 		handle->syntax = (int) value;
@@ -41,20 +42,8 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 	return CS_ERR_OK;
 }
 
-static void destroy(cs_struct *handle)
+void PPC_destroy(cs_struct *handle)
 {
-}
-
-void PPC_enable(void)
-{
-	cs_arch_init[CS_ARCH_PPC] = init;
-	cs_arch_option[CS_ARCH_PPC] = option;
-	cs_arch_destroy[CS_ARCH_PPC] = destroy;
-	cs_arch_disallowed_mode_mask[CS_ARCH_PPC] = ~(CS_MODE_LITTLE_ENDIAN |
-		CS_MODE_32 | CS_MODE_64 | CS_MODE_BIG_ENDIAN);
-
-	// support this arch
-	all_arch |= (1 << CS_ARCH_PPC);
 }
 
 #endif
