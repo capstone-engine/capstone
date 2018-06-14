@@ -3,6 +3,7 @@
 
 #include <stdarg.h>
 #if defined(CAPSTONE_HAS_OSXKERNEL)
+#include <Availability.h>
 #include <libkern/libkern.h>
 #include <i386/limits.h>
 #else
