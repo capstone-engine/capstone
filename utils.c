@@ -2,6 +2,7 @@
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
 #if defined(CAPSTONE_HAS_OSXKERNEL)
+#include <Availability.h>
 #include <libkern/libkern.h>
 #else
 #include <stdlib.h>

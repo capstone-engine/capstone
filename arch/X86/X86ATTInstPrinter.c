@@ -23,6 +23,7 @@
 #endif
 #include <platform.h>
 #if defined(CAPSTONE_HAS_OSXKERNEL)
+#include <Availability.h>
 #include <libkern/libkern.h>
 #else
 #include <stdio.h>
