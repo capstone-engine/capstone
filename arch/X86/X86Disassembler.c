@@ -25,6 +25,11 @@
 #endif
 
 #include <capstone/platform.h>
+
+#if defined(CAPSTONE_HAS_OSXKERNEL)
+#include <Availability.h>
+#endif
+
 #include <string.h>
 
 #include "../../cs_priv.h"
