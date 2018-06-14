@@ -5,6 +5,7 @@
 #pragma warning(disable:28719)		// disable MSVC's warning on strcpy()
 #endif
 #if defined(CAPSTONE_HAS_OSXKERNEL)
+#include <Availability.h>
 #include <libkern/libkern.h>
 #else
 #include <stddef.h>
