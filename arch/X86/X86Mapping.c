@@ -3,6 +3,10 @@
 
 #ifdef CAPSTONE_HAS_X86
 
+#if defined(CAPSTONE_HAS_OSXKERNEL)
+#include <Availability.h>
+#endif
+
 #include <string.h>
 
 #include "X86Mapping.h"
