@@ -135,6 +135,9 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
     if (Size < 1) {
         // 1 byte for arch choice
         return 0;
+    } else if (Size > 0x1000) {
+        //limit input to 4kb
+        Size = 0x1000;
     }
     if (outfile == NULL) {
         // we compute the output
