@@ -299,6 +299,8 @@ bool EVM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		memset(&MI->flat_insn->detail->evm, 0, sizeof(cs_evm));
 		EVM_get_insn_id((cs_struct *)ud, MI->flat_insn, opcode);
 
+		MI->flat_insn->detail->regs_read_count = 0;
+		MI->flat_insn->detail->regs_write_count = 0;
 		MI->flat_insn->detail->groups_count = 0;
 
 		if (MI->flat_insn->detail->evm.pop) {
