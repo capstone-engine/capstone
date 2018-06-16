@@ -240,6 +240,7 @@
 { 0, 0, 0xffffffff }, // unused
 { 0, 0, 0xffffffff }, // unused
 { 0, 0, 0xffffffff }, // unused
+{ 0, 0, 0xffffffff }, // unused
 { 3, 1, 32000 }, // CREATE
 { 7, 1, 40 }, // CALL
 { 7, 1, 40 }, // CALLCODE
