@@ -251,7 +251,7 @@ typedef struct cs_mips {
 	// Number of operands of this instruction, 
 	// or 0 when instruction has no operand.
 	uint8_t op_count;
-	cs_mips_op operands[8]; // operands for this instruction.
+	cs_mips_op operands[10]; // operands for this instruction.
 } cs_mips;
 
 //> MIPS instruction
