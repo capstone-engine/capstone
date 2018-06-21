@@ -41,8 +41,4 @@ cs_err SystemZ_option(cs_struct *handle, cs_opt_type type, size_t value)
 	return CS_ERR_OK;
 }
 
-void SystemZ_destroy(cs_struct *handle)
-{
-}
-
 #endif

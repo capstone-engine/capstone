@@ -60,21 +60,6 @@ struct cs_struct {
 // Returns a bool (0 or 1) whether big endian is enabled for a mode
 #define MODE_IS_BIG_ENDIAN(mode) (((mode) & CS_MODE_BIG_ENDIAN) != 0)
 
-// constructor initialization for all archs
-extern cs_err (*cs_arch_init[MAX_ARCH]) (cs_struct *);
-
-// support cs_option() for all archs
-extern cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct*, cs_opt_type, size_t value);
-
-// deinitialized functions: to be called when cs_close() is called
-extern void (*cs_arch_destroy[MAX_ARCH]) (cs_struct*);
-
-// bitmask for finding disallowed modes for an arch:
-// to be called in cs_open()/cs_option()
-extern cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH];
-
-extern unsigned int all_arch;
-
 extern cs_malloc_t cs_mem_malloc;
 extern cs_calloc_t cs_mem_calloc;
 extern cs_realloc_t cs_mem_realloc;

@@ -62,7 +62,8 @@
 #include "arch/XCore/XCoreModule.h"
 
 
-cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = {
+// constructor initialization for all archs
+static cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = {
 #ifdef CAPSTONE_HAS_ARM
 	ARM_global_init,
 #else
@@ -105,7 +106,8 @@ cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = {
 #endif
 };
 
-cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = {
+// support cs_option() for all archs
+static cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = {
 #ifdef CAPSTONE_HAS_ARM
 	ARM_option,
 #else
@@ -148,49 +150,8 @@ cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = {
 #endif
 };
 
-void (*cs_arch_destroy[MAX_ARCH]) (cs_struct *) = {
-#ifdef CAPSTONE_HAS_ARM
-	ARM_destroy,
-#else
-	NULL,
-#endif
-#ifdef CAPSTONE_HAS_ARM64
-	AArch64_destroy,
-#else
-	NULL,
-#endif
-#ifdef CAPSTONE_HAS_MIPS
-	Mips_destroy,
-#else
-	NULL,
-#endif
-#ifdef CAPSTONE_HAS_X86
-	X86_destroy,
-#else
-	NULL,
-#endif
-#ifdef CAPSTONE_HAS_POWERPC
-	PPC_destroy,
-#else
-	NULL,
-#endif
-#ifdef CAPSTONE_HAS_SPARC
-	Sparc_destroy,
-#else
-	NULL,
-#endif
-#ifdef CAPSTONE_HAS_SYSZ
-	SystemZ_destroy,
-#else
-	NULL,
-#endif
-#ifdef CAPSTONE_HAS_XCORE
-	XCore_destroy,
-#else
-	NULL,
-#endif
-};
-
+// bitmask for finding disallowed modes for an arch:
+// to be called in cs_open()/cs_option()
 cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH] = {
 #ifdef CAPSTONE_HAS_ARM
 	~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_V8 | CS_MODE_MCLASS | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN),
@@ -235,7 +196,7 @@ cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH] = {
 #endif
 };
 
-unsigned int all_arch =
+static unsigned int all_arch =
 #ifdef CAPSTONE_HAS_ARM
 	(1 << CS_ARCH_ARM)
 #else

@@ -57,8 +57,4 @@ cs_err Mips_option(cs_struct *handle, cs_opt_type type, size_t value)
 	return CS_ERR_OK;
 }
 
-void Mips_destroy(cs_struct *handle)
-{
-}
-
 #endif

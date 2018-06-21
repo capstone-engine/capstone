@@ -83,8 +83,4 @@ cs_err X86_option(cs_struct *handle, cs_opt_type type, size_t value)
 	return CS_ERR_OK;
 }
 
-void X86_destroy(cs_struct *handle)
-{
-}
-
 #endif

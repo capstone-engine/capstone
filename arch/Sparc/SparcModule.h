@@ -8,6 +8,5 @@
 
 cs_err Sparc_global_init(cs_struct *ud);
 cs_err Sparc_option(cs_struct *handle, cs_opt_type type, size_t value);
-void Sparc_destroy(cs_struct *handle);
 
 #endif
