@@ -8,9 +8,10 @@
 #include "MipsDisassembler.h"
 #include "MipsInstPrinter.h"
 #include "MipsMapping.h"
+#include "MipsModule.h"
 
 
-static cs_err init(cs_struct *ud)
+cs_err Mips_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
 
@@ -36,7 +37,7 @@ static cs_err init(cs_struct *ud)
 	return CS_ERR_OK;
 }
 
-static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
+cs_err Mips_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_MODE) {
 		handle->mode = (cs_mode)value;
@@ -45,15 +46,6 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 	}
 
 	return CS_ERR_OPTION;
-}
-
-void Mips_enable(void)
-{
-	cs_arch_init[CS_ARCH_MIPS] = init;
-	cs_arch_option[CS_ARCH_MIPS] = option;
-
-	// support this arch
-	all_arch |= (1 << CS_ARCH_MIPS);
 }
 
 #endif
