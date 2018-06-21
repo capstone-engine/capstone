@@ -8,6 +8,5 @@
 
 cs_err ARM_global_init(cs_struct *ud);
 cs_err ARM_option(cs_struct *handle, cs_opt_type type, size_t value);
-void ARM_destroy(cs_struct *handle);
 
 #endif

@@ -8,6 +8,5 @@
 
 cs_err SystemZ_global_init(cs_struct *ud);
 cs_err SystemZ_option(cs_struct *handle, cs_opt_type type, size_t value);
-void SystemZ_destroy(cs_struct *handle);
 
 #endif
