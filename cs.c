@@ -65,7 +65,8 @@
 #include "arch/X86/X86Module.h"
 #include "arch/XCore/XCoreModule.h"
 
-cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = {
+// constructor initialization for all archs
+static cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = {
 #ifdef CAPSTONE_HAS_ARM
 	ARM_global_init,
 #else
@@ -128,7 +129,8 @@ cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = {
 #endif
 };
 
-cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = {
+// support cs_option() for all archs
+static cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = {
 #ifdef CAPSTONE_HAS_ARM
 	ARM_option,
 #else
@@ -191,7 +193,9 @@ cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = {
 #endif
 };
 
-cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH] = {
+// bitmask for finding disallowed modes for an arch:
+// to be called in cs_open()/cs_option()
+static cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH] = {
 #ifdef CAPSTONE_HAS_ARM
 	~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_V8 | CS_MODE_MCLASS
 	  | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN),
@@ -261,7 +265,8 @@ cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH] = {
 #endif
 };
 
-unsigned int all_arch = 0
+// bitmask of enabled architectures
+static uint32_t all_arch = 0
 #ifdef CAPSTONE_HAS_ARM
 	| (1 << CS_ARCH_ARM)
 #endif
