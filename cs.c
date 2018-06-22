@@ -191,80 +191,114 @@ cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = {
 #endif
 };
 
-unsigned int all_arch =
+cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH] = {
 #ifdef CAPSTONE_HAS_ARM
-	(1 << CS_ARCH_ARM)
+	~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_V8 | CS_MODE_MCLASS
+	  | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN),
 #else
-	0
+	0,
 #endif
-	|
 #ifdef CAPSTONE_HAS_ARM64
-	(1 << CS_ARCH_ARM64)
+	~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_BIG_ENDIAN),
 #else
-	0
+	0,
 #endif
-	|
 #ifdef CAPSTONE_HAS_MIPS
-	(1 << CS_ARCH_MIPS)
+	~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | CS_MODE_MICRO
+	  | CS_MODE_MIPS32R6 | CS_MODE_BIG_ENDIAN | CS_MODE_MIPS2 | CS_MODE_MIPS3),
 #else
-	0
+	0,
 #endif
-	|
 #ifdef CAPSTONE_HAS_X86
-	(1 << CS_ARCH_X86)
+	~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | CS_MODE_16),
 #else
-	0
+	0,
 #endif
-	|
 #ifdef CAPSTONE_HAS_POWERPC
-	(1 << CS_ARCH_PPC)
+	~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | CS_MODE_BIG_ENDIAN
+	  | CS_MODE_QPX),
 #else
-	0
+	0,
 #endif
-	|
 #ifdef CAPSTONE_HAS_SPARC
-	(1 << CS_ARCH_SPARC)
+	~(CS_MODE_BIG_ENDIAN | CS_MODE_V9),
 #else
-	0
+	0,
 #endif
-	|
 #ifdef CAPSTONE_HAS_SYSZ
-	(1 << CS_ARCH_SYSZ)
+	~(CS_MODE_BIG_ENDIAN),
 #else
-	0
+	0,
 #endif
-	|
 #ifdef CAPSTONE_HAS_XCORE
-	(1 << CS_ARCH_XCORE)
+	~(CS_MODE_BIG_ENDIAN),
 #else
-	0
+	0,
 #endif
-	|
 #ifdef CAPSTONE_HAS_M68K
-	(1 << CS_ARCH_M68K)
+	~(CS_MODE_BIG_ENDIAN | CS_MODE_M68K_000 | CS_MODE_M68K_010 | CS_MODE_M68K_020
+	  | CS_MODE_M68K_030 | CS_MODE_M68K_040 | CS_MODE_M68K_060),
 #else
-	0
+	0,
 #endif
-	|
 #ifdef CAPSTONE_HAS_TMS320C64X
-	(1 << CS_ARCH_TMS320C64X)
+	~(CS_MODE_BIG_ENDIAN),
 #else
-	0
+	0,
 #endif
-	|
 #ifdef CAPSTONE_HAS_M680X
-	(1 << CS_ARCH_M680X)
+	~(CS_MODE_M680X_6301 | CS_MODE_M680X_6309 | CS_MODE_M680X_6800
+	  | CS_MODE_M680X_6801 | CS_MODE_M680X_6805 | CS_MODE_M680X_6808
+	  | CS_MODE_M680X_6809 | CS_MODE_M680X_6811 | CS_MODE_M680X_CPU12
+	  | CS_MODE_M680X_HCS08),
 #else
-	0
+	0,
 #endif
-	|
 #ifdef CAPSTONE_HAS_EVM
-	(1 << CS_ARCH_EVM)
+	0,
 #else
-	0
+	0,
+#endif
+};
+
+unsigned int all_arch = 0
+#ifdef CAPSTONE_HAS_ARM
+	| (1 << CS_ARCH_ARM)
+#endif
+#ifdef CAPSTONE_HAS_ARM64
+	| (1 << CS_ARCH_ARM64)
+#endif
+#ifdef CAPSTONE_HAS_MIPS
+	| (1 << CS_ARCH_MIPS)
+#endif
+#ifdef CAPSTONE_HAS_X86
+	| (1 << CS_ARCH_X86)
+#endif
+#ifdef CAPSTONE_HAS_POWERPC
+	| (1 << CS_ARCH_PPC)
+#endif
+#ifdef CAPSTONE_HAS_SPARC
+	| (1 << CS_ARCH_SPARC)
+#endif
+#ifdef CAPSTONE_HAS_SYSZ
+	| (1 << CS_ARCH_SYSZ)
+#endif
+#ifdef CAPSTONE_HAS_XCORE
+	| (1 << CS_ARCH_XCORE)
+#endif
+#ifdef CAPSTONE_HAS_M68K
+	| (1 << CS_ARCH_M68K)
+#endif
+#ifdef CAPSTONE_HAS_TMS320C64X
+	| (1 << CS_ARCH_TMS320C64X)
+#endif
+#ifdef CAPSTONE_HAS_M680X
+	| (1 << CS_ARCH_M680X)
+#endif
+#ifdef CAPSTONE_HAS_EVM
+	| (1 << CS_ARCH_EVM)
 #endif
 ;
-
 
 
 #if defined(CAPSTONE_USE_SYS_DYN_MEM)
@@ -423,6 +457,12 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		return CS_ERR_MEMSETUP;
 
 	if (arch < CS_ARCH_MAX && cs_arch_init[arch]) {
+		// verify if requested mode is valid
+		if (mode & cs_arch_disallowed_mode_mask[arch]) {
+			*handle = 0;
+			return CS_ERR_MODE;
+		}
+
 		ud = cs_mem_calloc(1, sizeof(*ud));
 		if (!ud) {
 			// memory insufficient
@@ -432,7 +472,6 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		ud->errnum = CS_ERR_OK;
 		ud->arch = arch;
 		ud->mode = mode;
-		ud->big_endian = (mode & CS_MODE_BIG_ENDIAN) != 0;
 		// by default, do not break instruction into details
 		ud->detail = CS_OPT_OFF;
 
@@ -706,6 +745,13 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, size_t value)
 				}
 			}
 			return CS_ERR_OK;
+
+		case CS_OPT_MODE:
+			// verify if requested mode is valid
+			if (value & cs_arch_disallowed_mode_mask[handle->arch]) {
+				return CS_ERR_OPTION;
+			}
+			break;
 	}
 
 	return cs_arch_option[handle->arch](handle, type, value);

@@ -13,7 +13,6 @@
 cs_err SystemZ_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
-
 	mri = cs_mem_malloc(sizeof(*mri));
 
 	SystemZ_init(mri);
@@ -35,6 +34,9 @@ cs_err SystemZ_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_SYNTAX)
 		handle->syntax = (int) value;
+
+	// Do not set mode because only CS_MODE_BIG_ENDIAN is valid; we cannot
+	// test for CS_MODE_LITTLE_ENDIAN because it is 0
 
 	return CS_ERR_OK;
 }

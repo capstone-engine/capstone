@@ -10,17 +10,20 @@
 #include "MipsMapping.h"
 #include "MipsModule.h"
 
+// Returns mode value with implied bits set
+static inline cs_mode updated_mode(cs_mode mode)
+{
+	if (mode & CS_MODE_MIPS32R6) {
+		mode |= CS_MODE_32;
+	}
+
+	return mode;
+}
+
 
 cs_err Mips_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
-
-	// verify if requested mode is valid
-	if (ud->mode & ~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 |
-				CS_MODE_MICRO | CS_MODE_MIPS32R6 | CS_MODE_BIG_ENDIAN |
-				CS_MODE_MIPS2 | CS_MODE_MIPS3))
-		return CS_ERR_MODE;
-
 	mri = cs_mem_malloc(sizeof(*mri));
 
 	Mips_init(mri);
@@ -40,8 +43,7 @@ cs_err Mips_global_init(cs_struct *ud)
 cs_err Mips_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_MODE) {
-		handle->mode = (cs_mode)value;
-		handle->big_endian = ((handle->mode & CS_MODE_BIG_ENDIAN) != 0);
+		handle->mode = updated_mode(value);
 		return CS_ERR_OK;
 	}
 

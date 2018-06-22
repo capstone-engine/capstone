@@ -13,12 +13,6 @@
 cs_err PPC_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
-
-	// verify if requested mode is valid
-	if (ud->mode & ~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 |
-				CS_MODE_BIG_ENDIAN | CS_MODE_QPX))
-		return CS_ERR_MODE;
-
 	mri = (MCRegisterInfo *) cs_mem_malloc(sizeof(*mri));
 
 	PPC_init(mri);
@@ -42,7 +36,7 @@ cs_err PPC_option(cs_struct *handle, cs_opt_type type, size_t value)
 		handle->syntax = (int) value;
 
 	if (type == CS_OPT_MODE) {
-		handle->big_endian = (((cs_mode)value & CS_MODE_BIG_ENDIAN) != 0);
+		handle->mode = (cs_mode)value;
 	}
 
 	return CS_ERR_OK;

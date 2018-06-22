@@ -13,12 +13,6 @@
 cs_err ARM_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
-
-	// verify if requested mode is valid
-	if (ud->mode & ~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_V8 |
-				CS_MODE_MCLASS | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN))
-		return CS_ERR_MODE;
-
 	mri = cs_mem_malloc(sizeof(*mri));
 
 	ARM_init(mri);
@@ -53,7 +47,6 @@ cs_err ARM_option(cs_struct *handle, cs_opt_type type, size_t value)
 				handle->disasm = ARM_getInstruction;
 
 			handle->mode = (cs_mode)value;
-			handle->big_endian = ((handle->mode & CS_MODE_BIG_ENDIAN) != 0);
 
 			break;
 		case CS_OPT_SYNTAX:
