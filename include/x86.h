@@ -205,7 +205,7 @@ typedef struct cs_x86_op {
 
 typedef struct cs_x86_encoding {
 	// ModR/M offset, or 0 when irrelevant
-	//uint8_t modrm_offset;
+	uint8_t modrm_offset;
 
 	// Displacement offset, or 0 when irrelevant.
 	uint8_t disp_offset;

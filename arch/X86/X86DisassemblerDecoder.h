@@ -680,6 +680,9 @@ typedef struct InternalInstruction {
      all memory operands */
   uint8_t                       modRM;
 
+  /* contains the location (for use with the reader) of the modRM byte */
+  uint64_t                      modRMLocation;
+
   // special data to handle MOVcr, MOVdr, MOVrc, MOVrd
   uint8_t                       firstByte;     // save the first byte in stream
 

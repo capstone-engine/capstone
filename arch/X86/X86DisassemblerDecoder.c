@@ -1535,6 +1535,8 @@ static int readModRM(struct InternalInstruction *insn)
 	if (insn->consumedModRM)
 		return 0;
 
+	insn->modRMLocation = insn->readerCursor;
+
 	if (consumeByte(insn, &insn->modRM))
 		return -1;
 
@@ -2362,6 +2364,7 @@ int decodeInstruction(struct InternalInstruction *insn,
 	insn->reader = reader;
 	insn->readerArg = readerArg;
 	insn->startLocation = startLoc;
+	insn->modRMLocation = 0;
 	insn->readerCursor = startLoc;
 	insn->mode = mode;
 
