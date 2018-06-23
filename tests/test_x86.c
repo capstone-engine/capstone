@@ -50,7 +50,10 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 
 	printf("\taddr_size: %u\n", x86->addr_size);
 	printf("\tmodrm: 0x%x\n", x86->modrm);
+	printf("\tmodrm_offset: 0x%x\n", x86->encoding.modrm_offset);
 	printf("\tdisp: 0x%x\n", x86->disp);
+	printf("\tdisp_offset: 0x%x\n", x86->encoding.disp_offset);
+	printf("\tdisp_size: 0x%x\n", x86->encoding.disp_size);
 
 	// SIB is not available in 16-bit mode
 	if ((mode & CS_MODE_16) == 0) {
@@ -89,6 +92,8 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 		for (i = 1; i < count + 1; i++) {
 			int index = cs_op_index(ud, ins, X86_OP_IMM, i);
 			printf("\t\timms[%u]: 0x%" PRIx64 "\n", i, x86->operands[index].imm);
+			printf("\timm_offset: 0x%x\n", x86->encoding.imm_offset);
+			printf("\timm_size: 0x%x\n", x86->encoding.imm_size);
 		}
 	}
 
@@ -150,7 +155,7 @@ static void test()
 
 #define X86_CODE16 "\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x05\x23\x01\x00\x00\x36\x8b\x84\x91\x23\x01\x00\x00\x41\x8d\x84\x39\x89\x67\x00\x00\x8d\x87\x89\x67\x00\x00\xb4\xc6"
 //#define X86_CODE16 "\x67\x00\x18"
-#define X86_CODE32 "\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x05\x23\x01\x00\x00\x36\x8b\x84\x91\x23\x01\x00\x00\x41\x8d\x84\x39\x89\x67\x00\x00\x8d\x87\x89\x67\x00\x00\xb4\xc6"
+#define X86_CODE32 "\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x05\x23\x01\x00\x00\x36\x8b\x84\x91\x23\x01\x00\x00\x41\x8d\x84\x39\x89\x67\x00\x00\x8d\x87\x89\x67\x00\x00\xb4\xc6\xe9\xea\xbe\xad\xde\xff\xa0\x23\x01\x00\x00\xe8\xdf\xbe\xad\xde"
 //#define X86_CODE32 "\x0f\xa7\xc0"	// xstorerng
 //#define X86_CODE32 "\x64\xa1\x18\x00\x00\x00"	// mov eax, dword ptr fs:[18]
 //#define X86_CODE32 "\x64\xa3\x00\x00\x00\x00"	// mov [fs:0x0], eax
