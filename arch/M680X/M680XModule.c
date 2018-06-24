@@ -8,8 +8,9 @@
 #include "M680XDisassembler.h"
 #include "M680XDisassemblerInternals.h"
 #include "M680XInstPrinter.h"
+#include "M680XModule.h"
 
-static cs_err init(cs_struct *ud)
+cs_err M680X_global_init(cs_struct *ud)
 {
 	m680x_info *info;
 	cs_err errcode;
@@ -66,19 +67,10 @@ static cs_err init(cs_struct *ud)
 	return CS_ERR_OK;
 }
 
-static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
+cs_err M680X_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	//TODO
 	return CS_ERR_OK;
-}
-
-void M680X_enable(void)
-{
-	cs_arch_init[CS_ARCH_M680X] = init;
-	cs_arch_option[CS_ARCH_M680X] = option;
-
-	// support this arch
-	all_arch |= (1 << CS_ARCH_M680X);
 }
 
 #endif
