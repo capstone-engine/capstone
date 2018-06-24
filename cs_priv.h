@@ -55,7 +55,6 @@ struct cs_struct {
 	void *printer_info; // aux info for printer
 	Disasm_t disasm;	// disassembler
 	void *getinsn_info; // auxiliary info for printer
-	bool big_endian;
 	GetName_t reg_name;
 	GetName_t insn_name;
 	GetName_t group_name;
@@ -78,13 +77,8 @@ struct cs_struct {
 
 #define MAX_ARCH CS_ARCH_MAX
 
-// constructor initialization for all archs
-extern cs_err (*cs_arch_init[MAX_ARCH]) (cs_struct *);
-
-// support cs_option() for all archs
-extern cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct*, cs_opt_type, size_t value);
-
-extern unsigned int all_arch;
+// Returns a bool (0 or 1) whether big endian is enabled for a mode
+#define MODE_IS_BIG_ENDIAN(mode) (((mode) & CS_MODE_BIG_ENDIAN) != 0)
 
 extern cs_malloc_t cs_mem_malloc;
 extern cs_calloc_t cs_mem_calloc;

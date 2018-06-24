@@ -52,72 +52,259 @@
 #define SKIPDATA_MNEM NULL
 #endif
 
-cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = { NULL };
-cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = { NULL };
-void (*cs_arch_destroy[MAX_ARCH]) (cs_struct *) = { NULL };
+#include "arch/AArch64/AArch64Module.h"
+#include "arch/ARM/ARMModule.h"
+#include "arch/EVM/EVMModule.h"
+#include "arch/M680X/M680XModule.h"
+#include "arch/M68K/M68KModule.h"
+#include "arch/Mips/MipsModule.h"
+#include "arch/PowerPC/PPCModule.h"
+#include "arch/Sparc/SparcModule.h"
+#include "arch/SystemZ/SystemZModule.h"
+#include "arch/TMS320C64x/TMS320C64xModule.h"
+#include "arch/X86/X86Module.h"
+#include "arch/XCore/XCoreModule.h"
 
-extern void ARM_enable(void);
-extern void AArch64_enable(void);
-extern void M680X_enable(void);
-extern void M68K_enable(void);
-extern void Mips_enable(void);
-extern void X86_enable(void);
-extern void PPC_enable(void);
-extern void Sparc_enable(void);
-extern void SystemZ_enable(void);
-extern void XCore_enable(void);
-extern void TMS320C64x_enable(void);
-extern void EVM_enable(void);
-
-static void archs_enable(void)
-{
-	static bool initialized = false;
-
-	if (initialized)
-		return;
-
+// constructor initialization for all archs
+static cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = {
 #ifdef CAPSTONE_HAS_ARM
-	ARM_enable();
+	ARM_global_init,
+#else
+	NULL,
 #endif
 #ifdef CAPSTONE_HAS_ARM64
-	AArch64_enable();
-#endif
-#ifdef CAPSTONE_HAS_M680X
-	M680X_enable();
-#endif
-#ifdef CAPSTONE_HAS_M68K
-	M68K_enable();
+	AArch64_global_init,
+#else
+	NULL,
 #endif
 #ifdef CAPSTONE_HAS_MIPS
-	Mips_enable();
-#endif
-#ifdef CAPSTONE_HAS_POWERPC
-	PPC_enable();
-#endif
-#ifdef CAPSTONE_HAS_SPARC
-	Sparc_enable();
-#endif
-#ifdef CAPSTONE_HAS_SYSZ
-	SystemZ_enable();
+	Mips_global_init,
+#else
+	NULL,
 #endif
 #ifdef CAPSTONE_HAS_X86
-	X86_enable();
+	X86_global_init,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_POWERPC
+	PPC_global_init,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_SPARC
+	Sparc_global_init,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_SYSZ
+	SystemZ_global_init,
+#else
+	NULL,
 #endif
 #ifdef CAPSTONE_HAS_XCORE
-	XCore_enable();
+	XCore_global_init,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_M68K
+	M68K_global_init,
+#else
+	NULL,
 #endif
 #ifdef CAPSTONE_HAS_TMS320C64X
-	TMS320C64x_enable();
+	TMS320C64x_global_init,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_M680X
+	M680X_global_init,
+#else
+	NULL,
 #endif
 #ifdef CAPSTONE_HAS_EVM
-	EVM_enable();
+	EVM_global_init,
+#else
+	NULL,
 #endif
+};
 
+// support cs_option() for all archs
+static cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t value) = {
+#ifdef CAPSTONE_HAS_ARM
+	ARM_option,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_ARM64
+	AArch64_option,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_MIPS
+	Mips_option,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_X86
+	X86_option,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_POWERPC
+	PPC_option,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_SPARC
+	Sparc_option,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_SYSZ
+	SystemZ_option,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_XCORE
+	XCore_option,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_M68K
+	M68K_option,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_TMS320C64X
+	TMS320C64x_option,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_M680X
+	M680X_option,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_EVM
+	EVM_option,
+#else
+	NULL,
+#endif
+};
 
-	initialized = true;
-}
+// bitmask for finding disallowed modes for an arch:
+// to be called in cs_open()/cs_option()
+static cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH] = {
+#ifdef CAPSTONE_HAS_ARM
+	~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_V8 | CS_MODE_MCLASS
+	  | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN),
+#else
+	0,
+#endif
+#ifdef CAPSTONE_HAS_ARM64
+	~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_BIG_ENDIAN),
+#else
+	0,
+#endif
+#ifdef CAPSTONE_HAS_MIPS
+	~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | CS_MODE_MICRO
+	  | CS_MODE_MIPS32R6 | CS_MODE_BIG_ENDIAN | CS_MODE_MIPS2 | CS_MODE_MIPS3),
+#else
+	0,
+#endif
+#ifdef CAPSTONE_HAS_X86
+	~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | CS_MODE_16),
+#else
+	0,
+#endif
+#ifdef CAPSTONE_HAS_POWERPC
+	~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | CS_MODE_BIG_ENDIAN
+	  | CS_MODE_QPX),
+#else
+	0,
+#endif
+#ifdef CAPSTONE_HAS_SPARC
+	~(CS_MODE_BIG_ENDIAN | CS_MODE_V9),
+#else
+	0,
+#endif
+#ifdef CAPSTONE_HAS_SYSZ
+	~(CS_MODE_BIG_ENDIAN),
+#else
+	0,
+#endif
+#ifdef CAPSTONE_HAS_XCORE
+	~(CS_MODE_BIG_ENDIAN),
+#else
+	0,
+#endif
+#ifdef CAPSTONE_HAS_M68K
+	~(CS_MODE_BIG_ENDIAN | CS_MODE_M68K_000 | CS_MODE_M68K_010 | CS_MODE_M68K_020
+	  | CS_MODE_M68K_030 | CS_MODE_M68K_040 | CS_MODE_M68K_060),
+#else
+	0,
+#endif
+#ifdef CAPSTONE_HAS_TMS320C64X
+	~(CS_MODE_BIG_ENDIAN),
+#else
+	0,
+#endif
+#ifdef CAPSTONE_HAS_M680X
+	~(CS_MODE_M680X_6301 | CS_MODE_M680X_6309 | CS_MODE_M680X_6800
+	  | CS_MODE_M680X_6801 | CS_MODE_M680X_6805 | CS_MODE_M680X_6808
+	  | CS_MODE_M680X_6809 | CS_MODE_M680X_6811 | CS_MODE_M680X_CPU12
+	  | CS_MODE_M680X_HCS08),
+#else
+	0,
+#endif
+#ifdef CAPSTONE_HAS_EVM
+	0,
+#else
+	0,
+#endif
+};
 
-unsigned int all_arch = 0;
+// bitmask of enabled architectures
+static uint32_t all_arch = 0
+#ifdef CAPSTONE_HAS_ARM
+	| (1 << CS_ARCH_ARM)
+#endif
+#ifdef CAPSTONE_HAS_ARM64
+	| (1 << CS_ARCH_ARM64)
+#endif
+#ifdef CAPSTONE_HAS_MIPS
+	| (1 << CS_ARCH_MIPS)
+#endif
+#ifdef CAPSTONE_HAS_X86
+	| (1 << CS_ARCH_X86)
+#endif
+#ifdef CAPSTONE_HAS_POWERPC
+	| (1 << CS_ARCH_PPC)
+#endif
+#ifdef CAPSTONE_HAS_SPARC
+	| (1 << CS_ARCH_SPARC)
+#endif
+#ifdef CAPSTONE_HAS_SYSZ
+	| (1 << CS_ARCH_SYSZ)
+#endif
+#ifdef CAPSTONE_HAS_XCORE
+	| (1 << CS_ARCH_XCORE)
+#endif
+#ifdef CAPSTONE_HAS_M68K
+	| (1 << CS_ARCH_M68K)
+#endif
+#ifdef CAPSTONE_HAS_TMS320C64X
+	| (1 << CS_ARCH_TMS320C64X)
+#endif
+#ifdef CAPSTONE_HAS_M680X
+	| (1 << CS_ARCH_M680X)
+#endif
+#ifdef CAPSTONE_HAS_EVM
+	| (1 << CS_ARCH_EVM)
+#endif
+;
+
 
 #if defined(CAPSTONE_USE_SYS_DYN_MEM)
 #if !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(_KERNEL_MODE)
@@ -171,8 +358,6 @@ cs_vsnprintf_t cs_vsnprintf = NULL;
 CAPSTONE_EXPORT
 unsigned int CAPSTONE_API cs_version(int *major, int *minor)
 {
-	archs_enable();
-
 	if (major != NULL && minor != NULL) {
 		*major = CS_API_MAJOR;
 		*minor = CS_API_MINOR;
@@ -184,8 +369,6 @@ unsigned int CAPSTONE_API cs_version(int *major, int *minor)
 CAPSTONE_EXPORT
 bool CAPSTONE_API cs_support(int query)
 {
-	archs_enable();
-
 	if (query == CS_ARCH_ALL)
 		return all_arch == ((1 << CS_ARCH_ARM) | (1 << CS_ARCH_ARM64) |
 				(1 << CS_ARCH_MIPS) | (1 << CS_ARCH_X86) |
@@ -278,9 +461,13 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		// with cs_option(CS_OPT_MEM)
 		return CS_ERR_MEMSETUP;
 
-	archs_enable();
-
 	if (arch < CS_ARCH_MAX && cs_arch_init[arch]) {
+		// verify if requested mode is valid
+		if (mode & cs_arch_disallowed_mode_mask[arch]) {
+			*handle = 0;
+			return CS_ERR_MODE;
+		}
+
 		ud = cs_mem_calloc(1, sizeof(*ud));
 		if (!ud) {
 			// memory insufficient
@@ -290,7 +477,6 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		ud->errnum = CS_ERR_OK;
 		ud->arch = arch;
 		ud->mode = mode;
-		ud->big_endian = (mode & CS_MODE_BIG_ENDIAN) != 0;
 		// by default, do not break instruction into details
 		ud->detail = CS_OPT_OFF;
 
@@ -464,8 +650,6 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, size_t value)
 	struct cs_struct *handle;
 	cs_opt_mnem *opt;
 
-	archs_enable();
-
 	// cs_option() can be called with NULL handle just for CS_OPT_MEM
 	// This is supposed to be executed before all other APIs (even cs_open())
 	if (type == CS_OPT_MEM) {
@@ -566,6 +750,13 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, size_t value)
 				}
 			}
 			return CS_ERR_OK;
+
+		case CS_OPT_MODE:
+			// verify if requested mode is valid
+			if (value & cs_arch_disallowed_mode_mask[handle->arch]) {
+				return CS_ERR_OPTION;
+			}
+			break;
 	}
 
 	return cs_arch_option[handle->arch](handle, type, value);

@@ -7,8 +7,9 @@
 #include "EVMDisassembler.h"
 #include "EVMInstPrinter.h"
 #include "EVMMapping.h"
+#include "EVMModule.h"
 
-static cs_err init(cs_struct *ud)
+cs_err EVM_global_init(cs_struct *ud)
 {
 	// verify if requested mode is valid
 	if (ud->mode)
@@ -24,18 +25,9 @@ static cs_err init(cs_struct *ud)
 	return CS_ERR_OK;
 }
 
-static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
+cs_err EVM_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	return CS_ERR_OK;
-}
-
-void EVM_enable(void)
-{
-	cs_arch_init[CS_ARCH_EVM] = init;
-	cs_arch_option[CS_ARCH_EVM] = option;
-
-	// support this arch
-	all_arch |= (1 << CS_ARCH_EVM);
 }
 
 #endif

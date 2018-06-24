@@ -8,8 +8,9 @@
 #include "TMS320C64xDisassembler.h"
 #include "TMS320C64xInstPrinter.h"
 #include "TMS320C64xMapping.h"
+#include "TMS320C64xModule.h"
 
-static cs_err init(cs_struct *ud)
+cs_err TMS320C64x_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
 
@@ -30,17 +31,9 @@ static cs_err init(cs_struct *ud)
 	return CS_ERR_OK;
 }
 
-static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
+cs_err TMS320C64x_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	return CS_ERR_OK;
-}
-
-void TMS320C64x_enable(void)
-{
-	cs_arch_init[CS_ARCH_TMS320C64X] = init;
-	cs_arch_option[CS_ARCH_TMS320C64X] = option;
-
-	all_arch |= (1 << CS_ARCH_TMS320C64X);
 }
 
 #endif

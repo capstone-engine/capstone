@@ -8,15 +8,11 @@
 #include "SparcDisassembler.h"
 #include "SparcInstPrinter.h"
 #include "SparcMapping.h"
+#include "SparcModule.h"
 
-static cs_err init(cs_struct *ud)
+cs_err Sparc_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
-
-	// verify if requested mode is valid
-	if (ud->mode & ~(CS_MODE_BIG_ENDIAN | CS_MODE_V9))
-		return CS_ERR_MODE;
-
 	mri = cs_mem_malloc(sizeof(*mri));
 
 	Sparc_init(mri);
@@ -34,25 +30,16 @@ static cs_err init(cs_struct *ud)
 	return CS_ERR_OK;
 }
 
-static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
+cs_err Sparc_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_SYNTAX)
 		handle->syntax = (int) value;
 
 	if (type == CS_OPT_MODE) {
-		handle->big_endian = (((cs_mode)value & CS_MODE_BIG_ENDIAN) != 0);
+		handle->mode = (cs_mode)value;
 	}
 
 	return CS_ERR_OK;
-}
-
-void Sparc_enable(void)
-{
-	cs_arch_init[CS_ARCH_SPARC] = init;
-	cs_arch_option[CS_ARCH_SPARC] = option;
-
-	// support this arch
-	all_arch |= (1 << CS_ARCH_SPARC);
 }
 
 #endif

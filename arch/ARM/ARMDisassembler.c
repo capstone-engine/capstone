@@ -482,7 +482,7 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t
 		}
 	}
 
-	if (ud->big_endian)
+	if (MODE_IS_BIG_ENDIAN(ud->mode))
 		insn = (code[3] << 0) |
 			(code[2] << 8) |
 			(code[1] <<  16) |
@@ -725,7 +725,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 		}
 	}
 
-	if (ud->big_endian)
+	if (MODE_IS_BIG_ENDIAN(ud->mode))
 		insn16 = (code[0] << 8) | code[1];
 	else
 		insn16 = (code[1] << 8) | code[0];
@@ -776,7 +776,7 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 		// not enough data
 		return MCDisassembler_Fail;
 
-	if (ud->big_endian)
+	if (MODE_IS_BIG_ENDIAN(ud->mode))
 		insn32 = (code[3] <<  0) |
 			(code[2] <<  8) |
 			(code[1] << 16) |

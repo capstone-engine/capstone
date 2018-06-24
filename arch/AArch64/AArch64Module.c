@@ -8,15 +8,11 @@
 #include "AArch64Disassembler.h"
 #include "AArch64InstPrinter.h"
 #include "AArch64Mapping.h"
+#include "AArch64Module.h"
 
-static cs_err init(cs_struct *ud)
+cs_err AArch64_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
-
-	// verify if requested mode is valid
-	if (ud->mode & ~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_BIG_ENDIAN))
-		return CS_ERR_MODE;
-
 	mri = cs_mem_malloc(sizeof(*mri));
 
 	AArch64_init(mri);
@@ -36,22 +32,13 @@ static cs_err init(cs_struct *ud)
 	return CS_ERR_OK;
 }
 
-static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
+cs_err AArch64_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_MODE) {
-		handle->big_endian = (((cs_mode)value & CS_MODE_BIG_ENDIAN) != 0);
+		handle->mode = (cs_mode)value;
 	}
 
 	return CS_ERR_OK;
-}
-
-void AArch64_enable(void)
-{
-	cs_arch_init[CS_ARCH_ARM64] = init;
-	cs_arch_option[CS_ARCH_ARM64] = option;
-
-	// support this arch
-	all_arch |= (1 << CS_ARCH_ARM64);
 }
 
 #endif
