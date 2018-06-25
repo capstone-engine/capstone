@@ -484,7 +484,7 @@ static int readPrefixes(struct InternalInstruction *insn)
 	bool hasOpSize = false;
 
 	//initialize to an impossible value
-	insn->necessaryPrefixLocation = -1;
+	insn->necessaryPrefixLocation = insn->readerCursor - 1;
 	while (isPrefix) {
 		if (insn->mode == MODE_64BIT) {
 			// eliminate consecutive redundant REX bytes in front
