@@ -251,6 +251,6 @@ static void test()
 int main()
 {
 	test();
-	getchar();
+
 	return 0;
 }
