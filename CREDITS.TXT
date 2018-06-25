@@ -63,3 +63,4 @@ Tang Yuhang: cstool.
 Andrew Dutcher: better Python setup.
 Ruben Boonen: PowerShell binding.
 David Zimmer: VB6 binding.
+Philippe Antoine: Integration with oss-fuzz and various fixes.
