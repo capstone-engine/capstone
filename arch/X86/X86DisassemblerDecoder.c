@@ -2089,8 +2089,8 @@ static int readOperands(struct InternalInstruction *insn)
 				if (readImmediate(insn, insn->addressSize))
 					return -1;
 				/* Direct memory-offset (moffset) immediate will get mapped
-								   to memory operand later. We want the encoding info to
-								   reflect that as well. */
+				   to memory operand later. We want the encoding info to
+				   reflect that as well. */
 				insn->displacementOffset = insn->immediateOffset;
 				insn->displacementSize = insn->immediateSize;
 				insn->displacement = insn->immediates[insn->numImmediatesConsumed - 1];
