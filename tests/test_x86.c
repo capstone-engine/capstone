@@ -50,10 +50,19 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 
 	printf("\taddr_size: %u\n", x86->addr_size);
 	printf("\tmodrm: 0x%x\n", x86->modrm);
-	printf("\tmodrm_offset: 0x%x\n", x86->encoding.modrm_offset);
+	if (x86->encoding.modrm_offset != 0) {
+	    printf("\tmodrm_offset: 0x%x\n", x86->encoding.modrm_offset);
+	}
+	
 	printf("\tdisp: 0x%x\n", x86->disp);
-	printf("\tdisp_offset: 0x%x\n", x86->encoding.disp_offset);
-	printf("\tdisp_size: 0x%x\n", x86->encoding.disp_size);
+	
+	if (x86->encoding.disp_offset != 0) {
+	    printf("\tdisp_offset: 0x%x\n", x86->encoding.disp_offset);
+	}
+	
+	if (x86->encoding.disp_size != 0) {
+	    printf("\tdisp_size: 0x%x\n", x86->encoding.disp_size);
+	}
 
 	// SIB is not available in 16-bit mode
 	if ((mode & CS_MODE_16) == 0) {
@@ -92,8 +101,14 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 		for (i = 1; i < count + 1; i++) {
 			int index = cs_op_index(ud, ins, X86_OP_IMM, i);
 			printf("\t\timms[%u]: 0x%" PRIx64 "\n", i, x86->operands[index].imm);
-			printf("\timm_offset: 0x%x\n", x86->encoding.imm_offset);
-			printf("\timm_size: 0x%x\n", x86->encoding.imm_size);
+			
+			if (x86->encoding.imm_offset != 0) {
+			    printf("\timm_offset: 0x%x\n", x86->encoding.imm_offset);
+			}
+			
+			if (x86->encoding.imm_size != 0) {
+			    printf("\timm_size: 0x%x\n", x86->encoding.imm_size);
+			}
 		}
 	}
 
