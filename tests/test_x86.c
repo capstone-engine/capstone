@@ -51,13 +51,13 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 	printf("\taddr_size: %u\n", x86->addr_size);
 	printf("\tmodrm: 0x%x\n", x86->modrm);
 	if (x86->encoding.modrm_offset != 0) {
-	    printf("\tmodrm_offset: 0x%x\n", x86->encoding.modrm_offset);
+		printf("\tmodrm_offset: 0x%x\n", x86->encoding.modrm_offset);
 	}
 	
 	printf("\tdisp: 0x%x\n", x86->disp);
 	
 	if (x86->encoding.disp_offset != 0) {
-	    printf("\tdisp_offset: 0x%x\n", x86->encoding.disp_offset);
+		printf("\tdisp_offset: 0x%x\n", x86->encoding.disp_offset);
 	}
 	
 	if (x86->encoding.disp_size != 0) {
@@ -103,11 +103,11 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 			printf("\t\timms[%u]: 0x%" PRIx64 "\n", i, x86->operands[index].imm);
 			
 			if (x86->encoding.imm_offset != 0) {
-			    printf("\timm_offset: 0x%x\n", x86->encoding.imm_offset);
+				printf("\timm_offset: 0x%x\n", x86->encoding.imm_offset);
 			}
 			
 			if (x86->encoding.imm_size != 0) {
-			    printf("\timm_size: 0x%x\n", x86->encoding.imm_size);
+				printf("\timm_size: 0x%x\n", x86->encoding.imm_size);
 			}
 		}
 	}

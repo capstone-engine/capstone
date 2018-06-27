@@ -49,7 +49,7 @@ def print_insn_detail(mode, insn):
     print("\tmodrm: 0x%x" % (insn.modrm))
     
     # print modRM offset
-	if insn.modrm_offset != 0:
+    if insn.modrm_offset != 0:
         print("\tmodrm_offset: 0x%x" % (insn.modrm_offset))
     
     # print displacement value
