@@ -281,16 +281,14 @@ _found = False
 
 def _load_lib(path):
     lib_file = join(path, _lib)
-    try:
+    if os.path.exists(lib_file):
         return ctypes.cdll.LoadLibrary(lib_file)
-    except OSError:
+    else:
         # if we're on linux, try again with .so.4 extension
         if lib_file.endswith('.so'):
-            try:
+            if os.path.exists(lib_file + '.4'):
                 return ctypes.cdll.LoadLibrary(lib_file + '.4')
-            except OSError:
-                return None
-        return None
+    return None
 
 _cs = None
 
