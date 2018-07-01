@@ -594,7 +594,7 @@ typedef struct InternalInstruction {
   uint8_t                       sib;
   /* The displacement, used for memory operands */
   bool                          consumedDisplacement;
-  int32_t                       displacement;
+  int64_t                       displacement;
   /* The value of the two-byte escape prefix (usually 0x0f) */
   uint8_t twoByteEscape;
   /* The value of the three-byte escape prefix (usually 0x38 or 0x3a) */
@@ -609,6 +609,12 @@ typedef struct InternalInstruction {
 
   /* The value of the vector extension prefix(EVEX/VEX/XOP), if present */
   uint8_t vectorExtensionPrefix[4];
+
+  /* Offsets from the start of the instruction to the pieces of data, which is
+     needed to find relocation entries for adding symbolic operands */
+  uint8_t displacementOffset;
+  uint8_t immediateOffset;
+  uint8_t modRMOffset;
 
   // end-of-zero-members
 
@@ -650,11 +656,6 @@ typedef struct InternalInstruction {
   uint8_t immediateSize;
 
   uint8_t immSize;	// immediate size for X86_OP_IMM operand
-
-  /* Offsets from the start of the instruction to the pieces of data, which is
-     needed to find relocation entries for adding symbolic operands */
-  uint8_t displacementOffset;
-  uint8_t immediateOffset;
 
   /* opcode state */
 
