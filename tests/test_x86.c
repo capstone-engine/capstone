@@ -156,7 +156,7 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 		printf("\tmodrm_offset: 0x%x\n", x86->encoding.modrm_offset);
 	}
 	
-	printf("\tdisp: 0x%x\n", x86->disp);
+	printf("\tdisp: 0x%" PRIx64 "\n", x86->disp);
 	if (x86->encoding.disp_offset != 0) {
 		printf("\tdisp_offset: 0x%x\n", x86->encoding.disp_offset);
 	}
