@@ -162,7 +162,7 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 	}
 	
 	if (x86->encoding.disp_size != 0) {
-	    printf("\tdisp_size: 0x%x\n", x86->encoding.disp_size);
+		printf("\tdisp_size: 0x%x\n", x86->encoding.disp_size);
 	}
 	
 	// SIB is not available in 16-bit mode
