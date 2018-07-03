@@ -657,7 +657,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	} else if (MCOperand_isImm(Op)) {
 		// Print X86 immediates as signed values.
 		int64_t imm = MCOperand_getImm(Op);
-		int encsize;
+		uint8_t encsize;
 		int opsize = X86_immediate_size(MCInst_getOpcode(MI), &encsize);
 		if (opsize == 1)    // print 1 byte immediate in positive form
 			imm = imm & 0xff;
