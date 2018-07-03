@@ -589,7 +589,7 @@ typedef struct InternalInstruction {
   uint8_t                       sib;
   /* The displacement, used for memory operands */
   bool                          consumedDisplacement;
-  int64_t                       displacement;
+  int32_t                       displacement;
   /* The value of the two-byte escape prefix (usually 0x0f) */
   uint8_t twoByteEscape;
   /* The value of the three-byte escape prefix (usually 0x38 or 0x3a) */
@@ -679,9 +679,6 @@ typedef struct InternalInstruction {
   /* The ModR/M byte, which contains most register operands and some portion of
      all memory operands */
   uint8_t                       modRM;
-
-  /* contains the location (for use with the reader) of the modRM byte */
-  uint64_t                      modRMLocation;
 
   // special data to handle MOVcr, MOVdr, MOVrc, MOVrd
   uint8_t                       firstByte;     // save the first byte in stream

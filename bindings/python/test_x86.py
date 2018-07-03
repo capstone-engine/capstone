@@ -7,9 +7,9 @@ from capstone.x86 import *
 from xprint import to_hex, to_x, to_x_32
 
 
-X86_CODE64 = b"\x55\x48\x8b\x05\xb8\x13\x00\x00\xe9\xea\xbe\xad\xde\xff\x25\x23\x01\x00\x00\xe8\xdf\xbe\xad\xde\x74\xff"
-X86_CODE16 = b"\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x05\x23\x01\x00\x00\x36\x8b\x84\x91\x23\x01\x00\x00\x41\x8d\x84\x39\x89\x67\x00\x00\x8d\x87\x89\x67\x00\x00\xb4\xc6\x66\xe9\xb8\x00\x00\x00\x67\xff\xa0\x23\x01\x00\x00\x66\xe8\xcb\x00\x00\x00\x74\xfc"
-X86_CODE32 = b"\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x05\x23\x01\x00\x00\x36\x8b\x84\x91\x23\x01\x00\x00\x41\x8d\x84\x39\x89\x67\x00\x00\x8d\x87\x89\x67\x00\x00\xb4\xc6\xe9\xea\xbe\xad\xde\xff\xa0\x23\x01\x00\x00\xe8\xdf\xbe\xad\xde\x74\xff"
+X86_CODE64 = b"\x55\x48\x8b\x05\xb8\x13\x00\x00"
+X86_CODE16 = b"\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x05\x23\x01\x00\x00\x36\x8b\x84\x91\x23\x01\x00\x00\x41\x8d\x84\x39\x89\x67\x00\x00\x8d\x87\x89\x67\x00\x00\xb4\xc6"
+X86_CODE32 = b"\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x05\x23\x01\x00\x00\x36\x8b\x84\x91\x23\x01\x00\x00\x41\x8d\x84\x39\x89\x67\x00\x00\x8d\x87\x89\x67\x00\x00\xb4\xc6"
 
 all_tests = (
         (CS_ARCH_X86, CS_MODE_16, X86_CODE16, "X86 16bit (Intel syntax)", 0),
@@ -47,22 +47,10 @@ def print_insn_detail(mode, insn):
 
     # print modRM byte
     print("\tmodrm: 0x%x" % (insn.modrm))
-    
-    # print modRM offset
-    if insn.modrm_offset != 0:
-        print("\tmodrm_offset: 0x%x" % (insn.modrm_offset))
-    
+
     # print displacement value
     print("\tdisp: 0x%s" % to_x_32(insn.disp))
 
-    # print displacement offset (offset into instruction bytes)
-    if insn.disp_offset != 0:
-        print("\tdisp_offset: 0x%x" % (insn.disp_offset))
-    
-    # print displacement size
-    if insn.disp_size != 0:
-        print("\tdisp_size: 0x%x" % (insn.disp_size))
-    
     # SIB is not available in 16-bit mode
     if (mode & CS_MODE_16 == 0):
         # print SIB byte
@@ -97,10 +85,6 @@ def print_insn_detail(mode, insn):
         for i in range(count):
             op = insn.op_find(X86_OP_IMM, i + 1)
             print("\t\timms[%u]: 0x%s" % (i + 1, to_x(op.imm)))
-            if insn.imm_offset != 0:
-                print("\timm_offset: 0x%x" % (insn.imm_offset))
-            if insn.imm_size != 0:
-                print("\timm_size: 0x%x" % (insn.imm_size))
 
     if len(insn.operands) > 0:
         print("\top_count: %u" % len(insn.operands))
