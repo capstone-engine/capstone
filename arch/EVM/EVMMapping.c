@@ -35,7 +35,7 @@ void EVM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
 	insn->id = id;
 #ifndef CAPSTONE_DIET
-	if (evm_insn_find(insns, ARR_SIZE(insns), id)) > 0 {
+	if (evm_insn_find(insns, ARR_SIZE(insns), id) > 0) {
 		if (h->detail) {
 			memcpy(&insn->detail->evm, &insns[id], sizeof(insns[id]));
 		}
