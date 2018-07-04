@@ -67,4 +67,6 @@ Koutheir Attouchi: Support for Windows CE.
 Fotis Loukos: TMS320C64x architecture.
 Wolfgang Schwotzer: M680X architecture.
 Philippe Antoine: Integration with oss-fuzz and various fixes.
+Martin (obs1dium): x86 encoding features
+Stephen Eckels (stevemk14ebr): x86 encoding features
 
