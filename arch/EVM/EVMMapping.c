@@ -16,8 +16,8 @@ static cs_evm insns[256] = {
 };
 #endif
 
-// look for @id in @insns, given its size in @max. first time call will update @cache.
-// return 0 if not found
+// look for @id in @insns, given its size in @max.
+// return -1 if not found
 static int evm_insn_find(cs_evm *insns, unsigned int max, unsigned int id)
 {
 	if (id >= max)
