@@ -803,7 +803,7 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 	MCOperand *Op = MCInst_getOperand(MI, OpNo);
 	if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op) + MI->flat_insn->size + MI->address;
-		int opsize = X86_immediate_size(MI->Opcode, NULL);
+		uint8_t opsize = X86_immediate_size(MI->Opcode, NULL);
 
 		// truncat imm for non-64bit
 		if (MI->csh->mode != CS_MODE_64) {
@@ -835,7 +835,7 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 			if (MI->flat_insn->detail->x86.op_count > 0)
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->flat_insn->detail->x86.operands[0].size;
 			else if (opsize > 0)
-				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = (uint8_t)opsize;
+				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = opsize;
 			else
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->imm_size;
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = imm;
@@ -887,7 +887,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	} else if (MCOperand_isImm(Op)) {
 		uint8_t encsize;
 		int64_t imm = MCOperand_getImm(Op);
-		int opsize = X86_immediate_size(MCInst_getOpcode(MI), &encsize);
+		uint8_t opsize = X86_immediate_size(MCInst_getOpcode(MI), &encsize);
 		if (opsize == 1)    // print 1 byte immediate in positive form
 			imm = imm & 0xff;
 
