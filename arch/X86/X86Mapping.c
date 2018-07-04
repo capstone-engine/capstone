@@ -3593,10 +3593,10 @@ int X86_immediate_size(unsigned int id, uint8_t *enc_size)
 
 	while(left <= right) {
 		m = (left + right) / 2;
-		if (id == x86_imm_size[m].id)
-		{
+		if (id == x86_imm_size[m].id) {
 			if (enc_size != NULL)
 				*enc_size = x86_imm_size[m].enc_size;
+
 			return x86_imm_size[m].size;
 		}
 

@@ -891,8 +891,7 @@ static void update_pub_insn(cs_insn *pub, InternalInstruction *inter, uint8_t *p
 	pub->detail->x86.sib_base = x86_map_sib_base(inter->sibBase);
 
 	pub->detail->x86.disp = inter->displacement;
-	if (inter->consumedDisplacement)
-	{
+	if (inter->consumedDisplacement) {
 		pub->detail->x86.encoding.disp_offset = inter->displacementOffset;
 		pub->detail->x86.encoding.disp_size = inter->displacementSize;
 	}
