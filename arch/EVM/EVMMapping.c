@@ -323,8 +323,6 @@ static name_map group_name_maps[] = {
 	{ EVM_GRP_JUMP,	"jump" },
 	// special groups
 	{ EVM_GRP_MATH,	"math" },
-
-	{ EVM_GRP_MATH,	"math" },
 	{ EVM_GRP_STACK_WRITE, "stack_write" },
 	{ EVM_GRP_STACK_READ, "stack_read" },
 	{ EVM_GRP_MEM_WRITE, "mem_write" },
