@@ -1,7 +1,7 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh, 2018 */
 
-#ifdef CAPSTONE_HAS_ARM
+#ifdef CAPSTONE_HAS_EVM
 
 #include "../../cs_priv.h"
 #include "EVMDisassembler.h"
