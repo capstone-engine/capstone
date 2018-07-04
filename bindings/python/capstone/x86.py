@@ -44,6 +44,15 @@ class X86Op(ctypes.Structure):
         return self.value.mem
 
 
+class CsX86Encoding(ctypes.Structure):
+    _fields_ = (
+        ('modrm_offset', ctypes.c_uint8),
+        ('disp_offset', ctypes.c_uint8),
+        ('disp_size', ctypes.c_uint8),
+        ('imm_offset', ctypes.c_uint8),
+        ('imm_size', ctypes.c_uint8),
+    )
+
 class CsX86(ctypes.Structure):
     _fields_ = (
         ('prefix', ctypes.c_uint8 * 4),
@@ -52,7 +61,7 @@ class CsX86(ctypes.Structure):
         ('addr_size', ctypes.c_uint8),
         ('modrm', ctypes.c_uint8),
         ('sib', ctypes.c_uint8),
-        ('disp', ctypes.c_int32),
+        ('disp', ctypes.c_int64),
         ('sib_index', ctypes.c_uint),
         ('sib_scale', ctypes.c_int8),
         ('sib_base', ctypes.c_uint),
@@ -64,11 +73,13 @@ class CsX86(ctypes.Structure):
         ('eflags', ctypes.c_uint64),
         ('op_count', ctypes.c_uint8),
         ('operands', X86Op * 8),
+        ('encoding', CsX86Encoding),
     )
 
 def get_arch_info(a):
     return (a.prefix[:], a.opcode[:], a.rex, a.addr_size, \
             a.modrm, a.sib, a.disp, a.sib_index, a.sib_scale, \
             a.sib_base, a.xop_cc, a.sse_cc, a.avx_cc, a.avx_sae, a.avx_rm, a.eflags, \
+            a.encoding.modrm_offset, a.encoding.disp_offset, a.encoding.disp_size, a.encoding.imm_offset, a.encoding.imm_size, \
             copy_ctypes_list(a.operands[:a.op_count]))
 
