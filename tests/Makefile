@@ -113,6 +113,11 @@ ifneq (,$(findstring evm,$(CAPSTONE_ARCHS)))
 CFLAGS += -DCAPSTONE_HAS_EVM
 SOURCES += test_evm.c
 endif
+ifneq (,$(findstring neo,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_NEO
+SOURCES += test_neo.c
+endif
+
 
 OBJS = $(addprefix $(OBJDIR)/,$(SOURCES:.c=.o))
 BINARY = $(addprefix $(TESTDIR)/,$(SOURCES:.c=$(BIN_EXT)))
