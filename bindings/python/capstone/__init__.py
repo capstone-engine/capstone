@@ -657,7 +657,7 @@ class CsInsn(object):
         elif arch == CS_ARCH_EVM:
             (self.pop, self.push, self.fee) = evm.get_arch_info(self._raw.detail.contents.arch.evm)
         elif arch == CS_ARCH_NEO:
-            (self.pop, self.push, self.fee) = neo.get_arch_info(self._raw.detail.contents.arch.neo)
+            (self.op_size, self.pop, self.push, self.fee) = neo.get_arch_info(self._raw.detail.contents.arch.neo)
 
 
     def __getattr__(self, name):
