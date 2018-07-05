@@ -17,4 +17,3 @@
 #define RISCV_FeatureStdExtM (1ULL << 4)
 
 #endif // GET_SUBTARGETINFO_ENUM
-
