@@ -315,6 +315,8 @@ bool EVM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 
 		// setup groups
 		switch(opcode) {
+			default:
+				break;
 			case EVM_INS_ADD:
 			case EVM_INS_MUL:
 			case EVM_INS_SUB:
