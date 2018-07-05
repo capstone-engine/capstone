@@ -39,6 +39,9 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 
 	neo = &(ins->detail->neo);
 
+	if (neo->op_size)
+		printf("\tOp_size: %u\n", neo->op_size);
+
 	if (neo->pop)
 		printf("\tPop:     %u\n", neo->pop);
 
