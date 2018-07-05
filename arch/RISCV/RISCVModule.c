@@ -10,13 +10,12 @@
 #include "RISCVMapping.h"
 #include "RISCVModule.h"
 
-cs_err
-RISCV_global_init (cs_struct * ud)
+cs_err RISCV_global_init(cs_struct * ud)
 {
 	MCRegisterInfo *mri;
-	mri = cs_mem_malloc (sizeof (*mri));
+	mri = cs_mem_malloc(sizeof(*mri));
 
-	RISCV_init (mri);
+	RISCV_init(mri);
 	ud->printer = RISCV_printInst;
 	ud->printer_info = mri;
 	ud->getinsn_info = mri;
@@ -31,22 +30,19 @@ RISCV_global_init (cs_struct * ud)
 	return CS_ERR_OK;
 }
 
-cs_err
-RISCV_option (cs_struct * handle, cs_opt_type type, size_t value)
+cs_err RISCV_option(cs_struct * handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_SYNTAX)
-		handle->syntax = (int) value;
+		handle->syntax = (int)value;
 
-	if (type == CS_OPT_MODE)
-	  {
-		  handle->mode = (cs_mode) value;
-	  }
+	if (type == CS_OPT_MODE) {
+		handle->mode = (cs_mode) value;
+	}
 
 	return CS_ERR_OK;
 }
 
-static void
-destroy (cs_struct * handle)
+static void destroy(cs_struct * handle)
 {
 }
 

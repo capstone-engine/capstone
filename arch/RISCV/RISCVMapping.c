@@ -116,8 +116,7 @@ static const name_map reg_name_maps[] = {
 };
 #endif
 
-const char *
-RISCV_reg_name (csh handle, unsigned int reg)
+const char *RISCV_reg_name(csh handle, unsigned int reg)
 {
 #ifndef CAPSTONE_DIET
 	if (reg >= RISCV_REG_ENDING)
@@ -1474,50 +1473,41 @@ static const insn_map insns[] = {
 };
 
 // given internal insn id, return public instruction info
-void
-RISCV_get_insn_id (cs_struct * h, cs_insn * insn, unsigned int id)
+void RISCV_get_insn_id(cs_struct * h, cs_insn * insn, unsigned int id)
 {
 	unsigned int i;
 
-	i = insn_find (insns, ARR_SIZE (insns), id, &h->insn_cache);
-	if (i != 0)
-	  {
-		  insn->id = insns[i].mapid;
+	i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
+	if (i != 0) {
+		insn->id = insns[i].mapid;
 
-		  if (h->detail)
-		    {
+		if (h->detail) {
 #ifndef CAPSTONE_DIET
-			    memcpy (insn->detail->regs_read,
-				    insns[i].regs_use,
-				    sizeof (insns[i].regs_use));
-			    insn->detail->regs_read_count =
-				    (uint8_t) count_positive (insns[i].
-							      regs_use);
+			memcpy(insn->detail->regs_read,
+			       insns[i].regs_use, sizeof(insns[i].regs_use));
+			insn->detail->regs_read_count =
+			    (uint8_t) count_positive(insns[i].regs_use);
 
-			    memcpy (insn->detail->regs_write,
-				    insns[i].regs_mod,
-				    sizeof (insns[i].regs_mod));
-			    insn->detail->regs_write_count =
-				    (uint8_t) count_positive (insns[i].
-							      regs_mod);
+			memcpy(insn->detail->regs_write,
+			       insns[i].regs_mod, sizeof(insns[i].regs_mod));
+			insn->detail->regs_write_count =
+			    (uint8_t) count_positive(insns[i].regs_mod);
 
-			    memcpy (insn->detail->groups, insns[i].groups,
-				    sizeof (insns[i].groups));
-			    insn->detail->groups_count =
-				    (uint8_t) count_positive (insns[i].
-							      groups);
+			memcpy(insn->detail->groups, insns[i].groups,
+			       sizeof(insns[i].groups));
+			insn->detail->groups_count =
+			    (uint8_t) count_positive(insns[i].groups);
 
-			    if (insns[i].branch || insns[i].indirect_branch)
-			      {
-				      // this insn also belongs to JUMP group. add JUMP group
-				      insn->detail->groups[insn->detail->
-							   groups_count] =
-					      RISCV_GRP_JUMP;
-				      insn->detail->groups_count++;
-			      }
+			if (insns[i].branch || insns[i].indirect_branch) {
+				// this insn also belongs to JUMP group. add JUMP group
+				insn->detail->groups[insn->detail->
+						     groups_count] =
+				    RISCV_GRP_JUMP;
+				insn->detail->groups_count++;
+			}
 #endif
-		    }
-	  }
+		}
+	}
 }
 
 static const name_map insn_name_maps[] = {
@@ -1752,8 +1742,7 @@ static const name_map insn_name_maps[] = {
 
 };
 
-const char *
-RISCV_insn_name (csh handle, unsigned int id)
+const char *RISCV_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
 	if (id >= RISCV_INS_ENDING)
@@ -1785,8 +1774,7 @@ static const name_map group_name_maps[] = {
 };
 #endif
 
-const char *
-RISCV_group_name (csh handle, unsigned int id)
+const char *RISCV_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
 	// verify group id
@@ -1805,21 +1793,19 @@ RISCV_group_name (csh handle, unsigned int id)
 }
 
 // map instruction name to public instruction ID
-riscv_reg
-RISCV_map_insn (const char *name)
+riscv_reg RISCV_map_insn(const char *name)
 {
 	// handle special alias first
 	unsigned int i;
 
 	// NOTE: skip first NULL name in insn_name_maps
-	i = name2id (&insn_name_maps[1], ARR_SIZE (insn_name_maps) - 1, name);
+	i = name2id(&insn_name_maps[1], ARR_SIZE(insn_name_maps) - 1, name);
 
 	return (i != -1) ? i : RISCV_REG_INVALID;
 }
 
 // map internal raw register to 'public' register
-riscv_reg
-RISCV_map_register (unsigned int r)
+riscv_reg RISCV_map_register(unsigned int r)
 {
 	static const unsigned int map[] = { 0,
 		RISCV_REG_X0,
@@ -1922,7 +1908,7 @@ RISCV_map_register (unsigned int r)
 		RISCV_REG_F31_64,
 	};
 
-	if (r < ARR_SIZE (map))
+	if (r < ARR_SIZE(map))
 		return map[r];
 
 	// cannot find this register

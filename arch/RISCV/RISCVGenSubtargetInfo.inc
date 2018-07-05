@@ -6,7 +6,6 @@
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
 
-
 #ifdef GET_SUBTARGETINFO_ENUM
 #undef GET_SUBTARGETINFO_ENUM
 
@@ -16,4 +15,4 @@
 #define RISCV_FeatureStdExtF (1ULL << 3)
 #define RISCV_FeatureStdExtM (1ULL << 4)
 
-#endif // GET_SUBTARGETINFO_ENUM
+#endif				// GET_SUBTARGETINFO_ENUM

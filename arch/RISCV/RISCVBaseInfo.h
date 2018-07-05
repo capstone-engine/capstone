@@ -18,8 +18,7 @@
 
 // RISCVII - This namespace holds all of the target specific flags that
 // instruction info tracks. All definitions must match RISCVInstrFormats.td.
-enum
-{
+enum {
 	RISCVII_InstFormatPseudo = 0,
 	RISCVII_InstFormatR = 1,
 	RISCVII_InstFormatR4 = 2,
@@ -33,8 +32,7 @@ enum
 	RISCVII_InstFormatMask = 15
 };
 
-enum
-{
+enum {
 	RISCVII_MO_None,
 	RISCVII_MO_LO,
 	RISCVII_MO_HI,
@@ -42,8 +40,7 @@ enum
 };
 
 // Describes the predecessor/successor bits used in the FENCE instruction.
-enum FenceField
-{
+enum FenceField {
 	RISCVFenceField_I = 8,
 	RISCVFenceField_O = 4,
 	RISCVFenceField_R = 2,
@@ -54,45 +51,46 @@ enum FenceField
 // Describes the supported floating point rounding mode encodings.
 /*namespace RISCVFPRndMode {
 enum RoundingMode {
-  RISCVFPRndMode_RNE = 0,
-  RISCVFPRndMode_RTZ = 1,
-  RISCVFPRndMode_RDN = 2,
-  RISCVFPRndMode_RUP = 3,
-  RISCVFPRndMode_RMM = 4,
-  RISCVFPRndMode_DYN = 7,
-  RISCVFPRndMode_Invalid
+	RISCVFPRndMode_RNE = 0,
+	RISCVFPRndMode_RTZ = 1,
+	RISCVFPRndMode_RDN = 2,
+	RISCVFPRndMode_RUP = 3,
+	RISCVFPRndMode_RMM = 4,
+	RISCVFPRndMode_DYN = 7,
+	RISCVFPRndMode_Invalid
 };
 
-inline static StringRef roundingModeToString(RoundingMode RndMode) {
-  switch (RndMode) {
-  default:
-    llvm_unreachable("Unknown floating point rounding mode");
-  case RISCVFPRndMode::RNE:
-    return "rne";
-  case RISCVFPRndMode::RTZ:
-    return "rtz";
-  case RISCVFPRndMode::RDN:
-    return "rdn";
-  case RISCVFPRndMode::RUP:
-    return "rup";
-  case RISCVFPRndMode::RMM:
-    return "rmm";
-  case RISCVFPRndMode::DYN:
-    return "dyn";
-  }
-}
+inline static StringRef roundingModeToString(RoundingMode RndMode) 
+{	
+	switch (RndMode) {
+		default:
+			llvm_unreachable("Unknown floating point rounding mode");
+		case RISCVFPRndMode::RNE:
+			return "rne";
+		case RISCVFPRndMode::RTZ:
+			return "rtz";
+		case RISCVFPRndMode::RDN:
+			return "rdn";
+		case RISCVFPRndMode::RUP:
+			return "rup";
+		case RISCVFPRndMode::RMM:
+			return "rmm";
+		case RISCVFPRndMode::DYN:
+			return "dyn";
+	}
+} 
 
-inline static RoundingMode stringToRoundingMode(StringRef Str) {
-  return StringSwitch<RoundingMode>(Str)
-      .Case("rne", RISCVFPRndMode::RNE)
-      .Case("rtz", RISCVFPRndMode::RTZ)
-      .Case("rdn", RISCVFPRndMode::RDN)
-      .Case("rup", RISCVFPRndMode::RUP)
-      .Case("rmm", RISCVFPRndMode::RMM)
-      .Case("dyn", RISCVFPRndMode::DYN)
-      .Default(RISCVFPRndMode::Invalid);
+inline static RoundingMode stringToRoundingMode(StringRef Str) 
+{
+	return StringSwitch <RoundingMode>(Str)
+	    .Case("rne", RISCVFPRndMode::RNE)
+	    .Case("rtz", RISCVFPRndMode::RTZ)
+	    .Case("rdn", RISCVFPRndMode::RDN)
+	    .Case("rup", RISCVFPRndMode::RUP)
+	    .Case("rmm", RISCVFPRndMode::RMM)
+	    .Case("dyn", RISCVFPRndMode::DYN)
+	    .Default(RISCVFPRndMode::Invalid);
 }
-} // namespace RISCVFPRndMode
+}				// namespace RISCVFPRndMode
 */
-
 #endif

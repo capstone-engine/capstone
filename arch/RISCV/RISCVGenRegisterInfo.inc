@@ -6,12 +6,10 @@
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
 
-
 #ifdef GET_REGINFO_ENUM
 #undef GET_REGINFO_ENUM
 
-enum
-{
+enum {
 	RISCV_NoRegister,
 	RISCV_X0 = 1,
 	RISCV_X1 = 2,
@@ -114,35 +112,30 @@ enum
 
 // Register classes
 
-enum
-{
+enum {
 	RISCV_FPR32RegClassID = 0,
 	RISCV_GPRRegClassID = 1,
 	RISCV_FPR64RegClassID = 2,
 
 };
 
-
 // Register alternate name indices
 
-enum
-{
+enum {
 	RISCV_ABIRegAltName,	// 0
 	RISCV_NoRegAltName,	// 1
 	RISCV_NUM_TARGET_REG_ALT_NAMES = 2
 };
 
-
 // Subregister indices
 
-enum
-{
+enum {
 	RISCV_NoSubRegister,
 	RISCV_sub_32,		// 1
 	RISCV_NUM_TARGET_SUBREGS
 };
 
-#endif // GET_REGINFO_ENUM
+#endif				// GET_REGINFO_ENUM
 
 /*===- TableGen'erated file -------------------------------------*- C++ -*-===*\
 |*                                                                            *|
@@ -151,7 +144,6 @@ enum
 |* Automatically generated file, do not edit!                                 *|
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
-
 
 #ifdef GET_REGINFO_MC_DESC
 #undef GET_REGINFO_MC_DESC
@@ -300,29 +292,29 @@ static const MCRegisterDesc RISCVRegDesc[] = {	// Descriptors
   // FPR32 Register Class...
 static const MCPhysReg FPR32[] = {
 	RISCV_F0_32, RISCV_F1_32, RISCV_F2_32, RISCV_F3_32, RISCV_F4_32,
-		RISCV_F5_32, RISCV_F6_32, RISCV_F7_32, RISCV_F10_32,
-		RISCV_F11_32, RISCV_F12_32, RISCV_F13_32, RISCV_F14_32,
-		RISCV_F15_32, RISCV_F16_32, RISCV_F17_32, RISCV_F28_32,
-		RISCV_F29_32, RISCV_F30_32, RISCV_F31_32, RISCV_F8_32,
-		RISCV_F9_32, RISCV_F18_32, RISCV_F19_32, RISCV_F20_32,
-		RISCV_F21_32, RISCV_F22_32, RISCV_F23_32, RISCV_F24_32,
-		RISCV_F25_32, RISCV_F26_32, RISCV_F27_32,
+	RISCV_F5_32, RISCV_F6_32, RISCV_F7_32, RISCV_F10_32,
+	RISCV_F11_32, RISCV_F12_32, RISCV_F13_32, RISCV_F14_32,
+	RISCV_F15_32, RISCV_F16_32, RISCV_F17_32, RISCV_F28_32,
+	RISCV_F29_32, RISCV_F30_32, RISCV_F31_32, RISCV_F8_32,
+	RISCV_F9_32, RISCV_F18_32, RISCV_F19_32, RISCV_F20_32,
+	RISCV_F21_32, RISCV_F22_32, RISCV_F23_32, RISCV_F24_32,
+	RISCV_F25_32, RISCV_F26_32, RISCV_F27_32,
 };
 
   // FPR32 Bit set.
 static const uint8_t FPR32Bits[] = {
 	0x00, 0x00, 0x00, 0x00, 0xaa, 0xaa, 0xaa, 0xaa, 0xaa, 0xaa, 0xaa,
-		0xaa,
+	0xaa,
 };
 
   // GPR Register Class...
 static const MCPhysReg GPR[] = {
 	RISCV_X10, RISCV_X11, RISCV_X12, RISCV_X13, RISCV_X14, RISCV_X15,
-		RISCV_X16, RISCV_X17, RISCV_X5, RISCV_X6, RISCV_X7, RISCV_X28,
-		RISCV_X29, RISCV_X30, RISCV_X31, RISCV_X8, RISCV_X9,
-		RISCV_X18, RISCV_X19, RISCV_X20, RISCV_X21, RISCV_X22,
-		RISCV_X23, RISCV_X24, RISCV_X25, RISCV_X26, RISCV_X27,
-		RISCV_X0, RISCV_X1, RISCV_X2, RISCV_X3, RISCV_X4,
+	RISCV_X16, RISCV_X17, RISCV_X5, RISCV_X6, RISCV_X7, RISCV_X28,
+	RISCV_X29, RISCV_X30, RISCV_X31, RISCV_X8, RISCV_X9,
+	RISCV_X18, RISCV_X19, RISCV_X20, RISCV_X21, RISCV_X22,
+	RISCV_X23, RISCV_X24, RISCV_X25, RISCV_X26, RISCV_X27,
+	RISCV_X0, RISCV_X1, RISCV_X2, RISCV_X3, RISCV_X4,
 };
 
   // GPR Bit set.
@@ -333,31 +325,31 @@ static const uint8_t GPRBits[] = {
   // FPR64 Register Class...
 static const MCPhysReg FPR64[] = {
 	RISCV_F0_64, RISCV_F1_64, RISCV_F2_64, RISCV_F3_64, RISCV_F4_64,
-		RISCV_F5_64, RISCV_F6_64, RISCV_F7_64, RISCV_F10_64,
-		RISCV_F11_64, RISCV_F12_64, RISCV_F13_64, RISCV_F14_64,
-		RISCV_F15_64, RISCV_F16_64, RISCV_F17_64, RISCV_F28_64,
-		RISCV_F29_64, RISCV_F30_64, RISCV_F31_64, RISCV_F8_64,
-		RISCV_F9_64, RISCV_F18_64, RISCV_F19_64, RISCV_F20_64,
-		RISCV_F21_64, RISCV_F22_64, RISCV_F23_64, RISCV_F24_64,
-		RISCV_F25_64, RISCV_F26_64, RISCV_F27_64,
+	RISCV_F5_64, RISCV_F6_64, RISCV_F7_64, RISCV_F10_64,
+	RISCV_F11_64, RISCV_F12_64, RISCV_F13_64, RISCV_F14_64,
+	RISCV_F15_64, RISCV_F16_64, RISCV_F17_64, RISCV_F28_64,
+	RISCV_F29_64, RISCV_F30_64, RISCV_F31_64, RISCV_F8_64,
+	RISCV_F9_64, RISCV_F18_64, RISCV_F19_64, RISCV_F20_64,
+	RISCV_F21_64, RISCV_F22_64, RISCV_F23_64, RISCV_F24_64,
+	RISCV_F25_64, RISCV_F26_64, RISCV_F27_64,
 };
 
   // FPR64 Bit set.
 static const uint8_t FPR64Bits[] = {
 	0x00, 0x00, 0x00, 0x00, 0x54, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55,
-		0x55, 0x01,
+	0x55, 0x01,
 };
 
 //NOTE_rod: Comparing with the definition of MCRegisterClass of MCRegisterInfo.h of llvm and Capstone, Keep in mind that Capstone uses a new value Alignment, which I am using with the same value as RegSize (PhysRegSize in llvm).
 static const MCRegisterClass RISCVMCRegisterClasses[] = {
-	{FPR32, FPR32Bits, 32, sizeof (FPR32Bits), RISCV_FPR32RegClassID, 4,
+	{FPR32, FPR32Bits, 32, sizeof(FPR32Bits), RISCV_FPR32RegClassID, 4,
 	 4, 1, 1}
 	,
-	{GPR, GPRBits, 32, sizeof (GPRBits), RISCV_GPRRegClassID, 0, 0, 1, 1}
+	{GPR, GPRBits, 32, sizeof(GPRBits), RISCV_GPRRegClassID, 0, 0, 1, 1}
 	,
-	{FPR64, FPR64Bits, 32, sizeof (FPR64Bits), RISCV_FPR64RegClassID, 8,
+	{FPR64, FPR64Bits, 32, sizeof(FPR64Bits), RISCV_FPR64RegClassID, 8,
 	 8, 1, 1}
 	,
 };
 
-#endif // GET_REGINFO_MC_DESC
+#endif				// GET_REGINFO_MC_DESC

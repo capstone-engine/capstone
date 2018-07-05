@@ -9,8 +9,7 @@
 #ifdef GET_INSTRINFO_ENUM
 #undef GET_INSTRINFO_ENUM
 
-enum
-{
+enum {
 	RISCV_PHI = 0,
 	RISCV_INLINEASM = 1,
 	RISCV_CFI_INSTRUCTION = 2,
@@ -370,4 +369,4 @@ enum
 //  };
 //} // end Sched namespace
 
-#endif // GET_INSTRINFO_ENUM
+#endif				// GET_INSTRINFO_ENUM
