@@ -64,6 +64,7 @@
 #include "arch/TMS320C64x/TMS320C64xModule.h"
 #include "arch/X86/X86Module.h"
 #include "arch/XCore/XCoreModule.h"
+#include "arch/RISCV/RISCVModule.h"
 
 // constructor initialization for all archs
 static cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = {
@@ -124,6 +125,11 @@ static cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = {
 #endif
 #ifdef CAPSTONE_HAS_EVM
 	EVM_global_init,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_RISCV
+	RISCV_global_init,
 #else
 	NULL,
 #endif
@@ -188,6 +194,11 @@ static cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t valu
 #endif
 #ifdef CAPSTONE_HAS_EVM
 	EVM_option,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_RISCV
+	RISCV_option,
 #else
 	NULL,
 #endif
@@ -263,6 +274,12 @@ static cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH] = {
 #else
 	0,
 #endif
+#ifdef CAPSTONE_HAS_RISCV
+        0,
+#else
+        0,
+#endif
+
 };
 
 // bitmask of enabled architectures
@@ -302,6 +319,9 @@ static uint32_t all_arch = 0
 #endif
 #ifdef CAPSTONE_HAS_EVM
 	| (1 << CS_ARCH_EVM)
+#endif
+#ifdef CAPSTONE_HAS_RISCV
+	| (1 << CS_ARCH_RISCV)
 #endif
 ;
 

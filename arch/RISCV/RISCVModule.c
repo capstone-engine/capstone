@@ -8,8 +8,9 @@
 #include "RISCVDisassembler.h"
 #include "RISCVInstPrinter.h"
 #include "RISCVMapping.h"
+#include "RISCVModule.h"
 
-static cs_err init(cs_struct *ud)
+cs_err RISCV_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
 	mri = cs_mem_malloc(sizeof(*mri));
@@ -29,7 +30,7 @@ static cs_err init(cs_struct *ud)
 	return CS_ERR_OK;
 }
 
-static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
+cs_err RISCV_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_SYNTAX)
 		handle->syntax = (int) value;
@@ -43,18 +44,6 @@ static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
 
 static void destroy(cs_struct *handle)
 {
-}
-
-void RISCV_enable(void)
-{
-	arch_init[CS_ARCH_RISCV] = init;
-	arch_option[CS_ARCH_RISCV] = option;
-	arch_destroy[CS_ARCH_RISCV] = destroy;
-	arch_disallowed_mode_mask[CS_ARCH_RISCV] =
-		~(CS_MODE_LITTLE_ENDIAN);
-
-	// support this arch
-	all_arch |= (1 << CS_ARCH_RISCV);
 }
 
 #endif
