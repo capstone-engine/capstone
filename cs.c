@@ -58,6 +58,7 @@
 #include "arch/M680X/M680XModule.h"
 #include "arch/M68K/M68KModule.h"
 #include "arch/Mips/MipsModule.h"
+#include "arch/NEO/NEOModule.h"
 #include "arch/PowerPC/PPCModule.h"
 #include "arch/Sparc/SparcModule.h"
 #include "arch/SystemZ/SystemZModule.h"
@@ -127,6 +128,11 @@ static cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = {
 #else
 	NULL,
 #endif
+#ifdef CAPSTONE_HAS_NEO
+	NEO_global_init,
+#else
+	NULL,
+#endif
 };
 
 // support cs_option() for all archs
@@ -188,6 +194,11 @@ static cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t valu
 #endif
 #ifdef CAPSTONE_HAS_EVM
 	EVM_option,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_NEO
+	NEO_option,
 #else
 	NULL,
 #endif
@@ -263,6 +274,11 @@ static cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH] = {
 #else
 	0,
 #endif
+#ifdef CAPSTONE_HAS_NEO
+	0,
+#else
+	0,
+#endif
 };
 
 // bitmask of enabled architectures
@@ -302,6 +318,9 @@ static uint32_t all_arch = 0
 #endif
 #ifdef CAPSTONE_HAS_EVM
 	| (1 << CS_ARCH_EVM)
+#endif
+#ifdef CAPSTONE_HAS_NEO
+	| (1 << CS_ARCH_NEO)
 #endif
 ;
 
@@ -375,7 +394,8 @@ bool CAPSTONE_API cs_support(int query)
 				(1 << CS_ARCH_PPC) | (1 << CS_ARCH_SPARC) |
 				(1 << CS_ARCH_SYSZ) | (1 << CS_ARCH_XCORE) |
 				(1 << CS_ARCH_M68K) | (1 << CS_ARCH_TMS320C64X) |
-				(1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM));
+				(1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM) |
+				(1 << CS_ARCH_NEO));
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
@@ -640,6 +660,9 @@ static uint8_t skipdata_size(cs_struct *handle)
 			return 1;
 		case CS_ARCH_EVM:
 			// EVM alignment is 1.
+			return 1;
+		case CS_ARCH_NEO:
+			// NEO alignment is 1.
 			return 1;
 	}
 }
@@ -1359,6 +1382,13 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 					count++;
 #endif
 			break;
+		case CS_ARCH_NEO:
+#if 0
+			for (i = 0; i < insn->detail->neo.op_count; i++)
+				if (insn->detail->neo.operands[i].type == (neo_op_type)op_type)
+					count++;
+#endif
+			break;
 	}
 
 	return count;
@@ -1488,6 +1518,16 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 #if 0
 			for (i = 0; i < insn->detail->evm.op_count; i++) {
 				if (insn->detail->evm.operands[i].type == (evm_op_type)op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+#endif
+			break;
+		case CS_ARCH_NEO:
+#if 0
+			for (i = 0; i < insn->detail->neo.op_count; i++) {
+				if (insn->detail->neo.operands[i].type == (neo_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;

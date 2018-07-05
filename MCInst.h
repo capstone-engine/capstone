@@ -110,6 +110,7 @@ struct MCInst {
 	uint8_t popcode_adjust;   // Pseudo X86 instruction adjust
 	char assembly[8];	// for special instruction, so that we dont need printer
 	unsigned char evm_data[32];	// for EVM PUSH operand
+	unsigned char neo_data[80];	// for NEO instructions with operands
 };
 
 void MCInst_Init(MCInst *inst);
