@@ -5,7 +5,7 @@ import sys, re
 
 INCL_DIR = '../include/capstone/'
 
-include = [ 'arm.h', 'arm64.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h', 'tms320c64x.h', 'm680x.h', 'evm.h' ]
+include = [ 'arm.h', 'arm64.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h', 'tms320c64x.h', 'm680x.h', 'evm.h', 'neo.h' ]
 
 template = {
     'java': {
@@ -26,6 +26,7 @@ template = {
             'tms320c64x.h': 'TMS320C64x',
             'm680x.h': 'M680x',
             'evm.h': 'Evm',
+            'neo.h': 'Neo',
             'comment_open': '\t//',
             'comment_close': '',
         },
@@ -47,6 +48,7 @@ template = {
             'tms320c64x.h': 'tms320c64x',
             'm680x.h': 'm680x',
             'evm.h': 'evm',
+            'neo.h': 'neo',
             'comment_open': '#',
             'comment_close': '',
         },
@@ -68,6 +70,7 @@ template = {
             'tms320c64x.h': 'tms320c64x',
             'm680x.h': 'm680x',
             'evm.h': 'evm',
+            'neo.h': 'neo',
             'comment_open': '(*',
             'comment_close': ' *)',
         },
