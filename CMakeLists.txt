@@ -112,7 +112,6 @@ set(HEADERS_COMMON
     include/capstone/m68k.h
     include/capstone/tms320c64x.h
     include/capstone/m680x.h
-    include/riscv.h
     include/capstone/platform.h
     )
 
