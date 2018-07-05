@@ -195,7 +195,7 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 	printf("\trex: 0x%x\n", x86->rex);
 	printf("\taddr_size: %u\n", x86->addr_size);
 	printf("\tmodrm: 0x%x\n", x86->modrm);
-	printf("\tdisp: 0x%x\n", x86->disp);
+	printf("\tdisp: 0x%" PRIx64 "\n", x86->disp);
 
 	// SIB is not available in 16-bit mode
 	if ((mode & CS_MODE_16) == 0) {
