@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <platform.h>
-#include <capstone.h>
+#include <capstone/platform.h>
+#include <capstone/capstone.h>
 
 struct platform {
 	cs_arch arch;

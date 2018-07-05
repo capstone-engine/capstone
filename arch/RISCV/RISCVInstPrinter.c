@@ -16,7 +16,7 @@
 #include <stdio.h>	// DEBUG
 #include <stdlib.h>
 #include <string.h>
-#include <platform.h>
+#include <capstone/platform.h>
 
 #include "RISCVInstPrinter.h"
 #include "RISCVBaseInfo.h"
