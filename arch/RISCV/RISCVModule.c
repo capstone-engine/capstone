@@ -42,8 +42,4 @@ cs_err RISCV_option(cs_struct * handle, cs_opt_type type, size_t value)
 	return CS_ERR_OK;
 }
 
-static void destroy(cs_struct * handle)
-{
-}
-
 #endif

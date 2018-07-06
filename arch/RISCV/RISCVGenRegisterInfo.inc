@@ -116,7 +116,6 @@ enum {
 	RISCV_FPR32RegClassID = 0,
 	RISCV_GPRRegClassID = 1,
 	RISCV_FPR64RegClassID = 2,
-
 };
 
 // Register alternate name indices
@@ -343,13 +342,10 @@ static const uint8_t FPR64Bits[] = {
 //NOTE_rod: Comparing with the definition of MCRegisterClass of MCRegisterInfo.h of llvm and Capstone, Keep in mind that Capstone uses a new value Alignment, which I am using with the same value as RegSize (PhysRegSize in llvm).
 static const MCRegisterClass RISCVMCRegisterClasses[] = {
 	{FPR32, FPR32Bits, 32, sizeof(FPR32Bits), RISCV_FPR32RegClassID, 4,
-	 4, 1, 1}
-	,
-	{GPR, GPRBits, 32, sizeof(GPRBits), RISCV_GPRRegClassID, 0, 0, 1, 1}
-	,
+	 4, 1, 1},
+	{GPR, GPRBits, 32, sizeof(GPRBits), RISCV_GPRRegClassID, 0, 0, 1, 1},
 	{FPR64, FPR64Bits, 32, sizeof(FPR64Bits), RISCV_FPR64RegClassID, 8,
-	 8, 1, 1}
-	,
+	 8, 1, 1},
 };
 
 #endif				// GET_REGINFO_MC_DESC

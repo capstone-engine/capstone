@@ -90,14 +90,8 @@ static void printOperand(MCInst * MI, unsigned OpNo, SStream * O)
 		//TODO_rod: Other archs check also for "if (MI->csh->doing_mem)". Tricore is not. Verify if it is needed. 
 		//Sparc and tricore use this function "reg = Sparc_map_register(reg);" from SparcMapping.c - Check if it is needed or if the reg obtained before matches.
 		if (MI->csh->detail) {
-			MI->flat_insn->detail->riscv.operands[MI->flat_insn->
-							      detail->riscv.
-							      op_count].type =
-			    RISCV_OP_REG;
-			MI->flat_insn->detail->riscv.operands[MI->flat_insn->
-							      detail->riscv.
-							      op_count].reg =
-			    reg;
+			MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].type = RISCV_OP_REG;
+			MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].reg = reg;
 			MI->flat_insn->detail->riscv.op_count++;
 		}
 
@@ -119,14 +113,8 @@ static void printOperand(MCInst * MI, unsigned OpNo, SStream * O)
 		}
 
 		if (MI->csh->detail) {
-			MI->flat_insn->detail->riscv.operands[MI->flat_insn->
-							      detail->riscv.
-							      op_count].type =
-			    RISCV_OP_IMM;
-			MI->flat_insn->detail->riscv.operands[MI->flat_insn->
-							      detail->riscv.
-							      op_count].imm =
-			    Imm;
+			MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].type = RISCV_OP_IMM;
+			MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].imm = Imm;
 			MI->flat_insn->detail->riscv.op_count++;
 		}
 		return;
