@@ -230,7 +230,6 @@ static void test()
 			(unsigned char *)RISCV_CODE,
 			sizeof(RISCV_CODE) - 1,
 			"RISCV"
-
 		},
 #endif
 	};
