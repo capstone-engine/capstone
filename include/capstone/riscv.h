@@ -2,7 +2,8 @@
 #define CAPSTONE_RISCV_H
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Rodrigo Cortes Porto <porto703@gmail.com>, 2018 */
+/* By Shawn Chang <citypw@gmail.com>, HardenedLinux@2018 */
 
 #ifdef __cplusplus
 extern "C" {

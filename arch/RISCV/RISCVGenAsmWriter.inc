@@ -1026,7 +1026,6 @@ static void printInstruction(MCInst * MI, SStream * O, MCRegisterInfo * MRI)
 	case 0:
 		// DBG_VALUE, BUNDLE, LIFETIME_START, LIFETIME_END, FENTRY_CALL, PATCHABL...
 		return;
-		break;
 	case 1:
 		// ADD, ADDI, ADDIW, ADDW, AMOADD_D, AMOADD_D_AQ, AMOADD_D_AQ_RL, AMOADD_...
 		printOperand(MI, 0, O);
@@ -1037,7 +1036,6 @@ static void printInstruction(MCInst * MI, SStream * O, MCRegisterInfo * MRI)
 		SStream_concat0(O, ", ");
 		printFenceArg(MI, 1, O);
 		return;
-		break;
 	}
 
 	// Fragment 1 encoded into 1 bits for 2 unique commands.
@@ -1074,18 +1072,15 @@ static void printInstruction(MCInst * MI, SStream * O, MCRegisterInfo * MRI)
 		printOperand(MI, 1, O);
 		SStream_concat0(O, ")");
 		return;
-		break;
 	case 2:
 		// AUIPC, FCLASS_D, FCLASS_S, FCVT_D_S, FCVT_D_W, FCVT_D_WU, FMV_D_X, FMV...
 		return;
-		break;
 	case 3:
 		// FLD, FLW, FSD, FSW, LB, LBU, LD, LH, LHU, LW, LWU, SB, SD, SH, SW
 		SStream_concat0(O, "(");
 		printOperand(MI, 1, O);
 		SStream_concat0(O, ")");
 		return;
-		break;
 	}
 
 	//TODO_rod: Comenting calls to printFRMArg - Need to add it later.

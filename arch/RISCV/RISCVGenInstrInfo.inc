@@ -362,11 +362,4 @@ enum {
 	RISCV_INSTRUCTION_LIST_END = 349
 };
 
-//namespace Sched {
-//  enum {
-//    NoInstrModel      = 0,
-//    SCHED_LIST_END = 1
-//  };
-//} // end Sched namespace
-
 #endif				// GET_INSTRINFO_ENUM
