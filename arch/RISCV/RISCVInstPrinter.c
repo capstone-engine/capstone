@@ -78,6 +78,7 @@ static void printRegName(SStream * OS, unsigned RegNo)
 static void printOperand(MCInst * MI, unsigned OpNo, SStream * O)
 {
 	unsigned reg;
+	int64_t Imm = 0;
 
 	if (OpNo >= MI->size)
 		return;
@@ -104,7 +105,7 @@ static void printOperand(MCInst * MI, unsigned OpNo, SStream * O)
 	}
 
 	if (MCOperand_isImm(MO)) {
-		int64_t Imm = MCOperand_getImm(MO);
+		Imm = MCOperand_getImm(MO);
 		if (Imm >= 0) {
 			if (Imm > HEX_THRESHOLD)
 				SStream_concat(O, "0x%" PRIx64, Imm);
