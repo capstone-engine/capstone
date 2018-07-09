@@ -4061,6 +4061,10 @@ bool M68K_getInstruction(csh ud, const uint8_t* code, size_t code_len, MCInst* i
 		return false;
 	}
 
+	if (instr->flat_insn->detail) {
+		memset(instr->flat_insn->detail, 0, offsetof(cs_detail, m68k)+sizeof(cs_m68k));
+	}
+
 	info->groups_count = 0;
 	info->regs_read_count = 0;
 	info->regs_write_count = 0;
