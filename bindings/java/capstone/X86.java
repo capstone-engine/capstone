@@ -25,6 +25,19 @@ public class X86 {
       return Arrays.asList("segment", "base", "index", "scale", "disp");
     }
   }
+  
+  public static class Encoding extends Structure {
+    public byte modrmOffset;
+    public byte dispOffset;
+    public byte dispSize;
+    public byte immOffset;
+    public byte immSize;
+
+    @Override
+    public List getFieldOrder() {
+      return Arrays.asList("modrmOffset", "dispOffset", "dispSize", "immOffset", "immSize");
+    }
+  }
 
   public static class OpValue extends Union {
     public int reg;
@@ -71,7 +84,7 @@ public class X86 {
     public byte addr_size;
     public byte modrm;
     public byte sib;
-    public int disp;
+    public long disp;
     public int sib_index;
     public byte sib_scale;
     public int sib_base;
@@ -85,6 +98,8 @@ public class X86 {
     public byte op_count;
 
     public Operand [] op;
+    
+    public Encoding encoding;
 
     public UnionOpInfo() {
       op = new Operand[8];
@@ -95,7 +110,7 @@ public class X86 {
     @Override
     public List getFieldOrder() {
       return Arrays.asList("prefix", "opcode", "rex", "addr_size",
-          "modrm", "sib", "disp", "sib_index", "sib_scale", "sib_base", "xop_cc", "sse_cc", "avx_cc", "avx_sae", "avx_rm", "eflags", "op_count", "op");
+          "modrm", "sib", "disp", "sib_index", "sib_scale", "sib_base", "xop_cc", "sse_cc", "avx_cc", "avx_sae", "avx_rm", "eflags", "op_count", "op", "encoding");
     }
   }
 
@@ -109,7 +124,7 @@ public class X86 {
     public byte immSize;
     public byte modrm;
     public byte sib;
-    public int disp;
+    public long disp;
     public int sibIndex;
     public byte sibScale;
     public int sibBase;
@@ -121,6 +136,8 @@ public class X86 {
     public long eflags;
 
     public Operand[] op;
+    
+    public Encoding encoding;
 
     public OpInfo(UnionOpInfo e) {
       prefix = e.prefix;
@@ -142,6 +159,7 @@ public class X86 {
       op = new Operand[e.op_count];
       for (int i=0; i<e.op_count; i++)
         op[i] = e.op[i];
+      encoding = e.encoding;
     }
   }
 }
