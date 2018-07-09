@@ -228,7 +228,7 @@ bool Sparc_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *
 		return false;
 
 	if (MI->flat_insn->detail) {
-		memset(MI->flat_insn->detail, 0, sizeof(cs_detail));
+		memset(MI->flat_insn->detail, 0, offsetof(cs_detail, sparc)+sizeof(cs_sparc));
 	}
 
 	Result = decodeInstruction_4(DecoderTableSparc32, MI, Insn, address,
