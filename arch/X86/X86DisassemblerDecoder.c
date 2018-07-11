@@ -1516,7 +1516,6 @@ static int readDisplacement(struct InternalInstruction *insn)
 			break;
 	}
 
-	insn->consumedDisplacement = true;
 	return 0;
 }
 
