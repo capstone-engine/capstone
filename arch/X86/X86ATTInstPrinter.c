@@ -573,6 +573,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				break;
 
 			case X86_INS_RET:
+			case X86_INS_RETF:
 				// RET imm16
 				if (imm >= 0 && imm <= HEX_THRESHOLD)
 					SStream_concat(O, "$%u", imm);
