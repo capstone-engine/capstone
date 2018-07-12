@@ -75,7 +75,7 @@ public class TestX86 {
     }
 
     //print displacement size
-    if(operands.encoding.dispSize != 0) {
+    if (operands.encoding.dispSize != 0) {
       System.out.printf("\tdisp size: 0x%x\n", operands.encoding.dispSize);
     }
 
