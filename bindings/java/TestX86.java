@@ -62,16 +62,22 @@ public class TestX86 {
     System.out.printf("\tmodrm: 0x%x\n", operands.modrm);
 
     // print modRM offset
-    System.out.printf("\tmodrm offset: 0x%x\n", operands.encoding.modrmOffset);
+    if (operands.encoding.modrmOffset != 0) {
+      System.out.printf("\tmodrm offset: 0x%x\n", operands.encoding.modrmOffset);
+    }
 
     // print displacement value
     System.out.printf("\tdisp: 0x%x\n", operands.disp);
 
     // print displacement offset
-    System.out.printf("\tdisp offset: 0x%x\n", operands.encoding.dispOffset);
+    if (operands.encoding.dispOffset != 0) {
+      System.out.printf("\tdisp offset: 0x%x\n", operands.encoding.dispOffset);
+    }
 
     //print displacement size
-    System.out.printf("\tdisp size: 0x%x\n", operands.encoding.dispSize);
+    if(operands.encoding.dispSize != 0) {
+      System.out.printf("\tdisp size: 0x%x\n", operands.encoding.dispSize);
+    }
 
     // SIB is not available in 16-bit mode
     if ( (cs.mode & Capstone.CS_MODE_16) == 0) {
@@ -160,21 +166,21 @@ public class TestX86 {
 
       // Print out all registers accessed by this instruction (either implicit or explicit)
       CsRegsAccess regsAccess = ins.regsAccess();
-      if(regsAccess != null) {
+      if (regsAccess != null) {
         short[] regsRead = regsAccess.regsRead;
         short[] regsWrite = regsAccess.regsWrite;
 
-        if(regsRead.length > 0) {
+        if (regsRead.length > 0) {
           System.out.printf("\tRegisters read:");
-          for(int i = 0; i < regsRead.length; i++) {
+          for (int i = 0; i < regsRead.length; i++) {
             System.out.printf(" %s", ins.regName(regsRead[i]));
           }
           System.out.print("\n");
         }
 
-        if(regsWrite.length > 0) {
+        if (regsWrite.length > 0) {
           System.out.printf("\tRegister modified:");
-          for(int i = 0; i < regsWrite.length; i++) {
+          for (int i = 0; i < regsWrite.length; i++) {
             System.out.printf(" %s", ins.regName(regsWrite[i]));
           }
           System.out.print("\n");
