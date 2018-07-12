@@ -412,7 +412,7 @@ static DecodeStatus MipsDisassembler_getInstruction(int mode, MCInst *instr,
 	DecodeStatus Result;
 
 	if (instr->flat_insn->detail) {
-		memset(instr->flat_insn->detail, 0, sizeof(cs_detail));
+		memset(instr->flat_insn->detail, 0, offsetof(cs_detail, mips)+sizeof(cs_mips));
 	}
 
 	if (mode & CS_MODE_MICRO) {

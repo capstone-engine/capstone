@@ -233,7 +233,7 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 	}
 
 	if (MI->flat_insn->detail) {
-		memset(MI->flat_insn->detail, 0, sizeof(cs_detail));
+		memset(MI->flat_insn->detail, 0, offsetof(cs_detail, arm64)+sizeof(cs_arm64));
 		for (i = 0; i < ARR_SIZE(MI->flat_insn->detail->arm64.operands); i++)
 			MI->flat_insn->detail->arm64.operands[i].vector_index = -1;
 	}
