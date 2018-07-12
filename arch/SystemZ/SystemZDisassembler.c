@@ -321,7 +321,7 @@ bool SystemZ_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst
 		return false;
 
 	if (MI->flat_insn->detail) {
-		memset(MI->flat_insn->detail, 0, sizeof(cs_detail));
+		memset(MI->flat_insn->detail, 0, offsetof(cs_detail, sysz)+sizeof(cs_sysz));
 	}
 
 	// Construct the instruction.

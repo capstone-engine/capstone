@@ -1802,9 +1802,7 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 	e_access_mode access_mode;
 
 	if (detail != NULL) {
-		detail->regs_read_count = 0;
-		detail->regs_write_count = 0;
-		detail->groups_count = 0;
+		memset(detail, 0, offsetof(cs_detail, m680x)+sizeof(cs_m680x));
 	}
 
 	memset(&insn_description, 0, sizeof(insn_description));

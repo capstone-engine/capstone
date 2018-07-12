@@ -278,6 +278,10 @@ typedef struct cs_opt_skipdata {
 #include "evm.h"
 
 // NOTE: All information in cs_detail is only available when CS_OPT_DETAIL = CS_OPT_ON
+// Initialized as memset(., 0, offsetof(cs_detail, ARCH)+sizeof(cs_ARCH))
+// by ARCH_getInstruction in arch/ARCH/ARCHDisassembler.c
+// if cs_detail changes, in particular if a field is added after the union,
+// then update arch/ARCH/ARCHDisassembler.c accordingly
 typedef struct cs_detail {
 	uint16_t regs_read[12]; // list of implicit registers read by this insn
 	uint8_t regs_read_count; // number of implicit registers read by this insn

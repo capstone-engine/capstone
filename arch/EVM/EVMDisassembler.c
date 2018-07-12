@@ -2,6 +2,8 @@
 /* By Nguyen Anh Quynh, 2018 */
 
 #include <string.h>
+#include <stddef.h> // offsetof macro
+                    // alternatively #include "../../utils.h" like everyone else
 
 #include "EVMDisassembler.h"
 #include "EVMMapping.h"
@@ -296,12 +298,8 @@ bool EVM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		*size = 1;
 
 	if (MI->flat_insn->detail) {
-		memset(&MI->flat_insn->detail->evm, 0, sizeof(cs_evm));
+		memset(MI->flat_insn->detail, 0, offsetof(cs_detail, evm)+sizeof(cs_evm));
 		EVM_get_insn_id((cs_struct *)ud, MI->flat_insn, opcode);
-
-		MI->flat_insn->detail->regs_read_count = 0;
-		MI->flat_insn->detail->regs_write_count = 0;
-		MI->flat_insn->detail->groups_count = 0;
 
 		if (MI->flat_insn->detail->evm.pop) {
 			MI->flat_insn->detail->groups[MI->flat_insn->detail->groups_count] = EVM_GRP_STACK_READ;
