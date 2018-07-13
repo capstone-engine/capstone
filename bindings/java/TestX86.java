@@ -2,6 +2,9 @@
 // By Nguyen Anh Quynh & Dang Hoang Vu,  2013
 
 import capstone.Capstone;
+import static capstone.Capstone.CS_AC_READ;
+import static capstone.Capstone.CS_AC_WRITE;
+import capstone.Capstone.CsRegsAccess;
 import capstone.X86;
 
 import static capstone.X86_const.*;
@@ -58,8 +61,23 @@ public class TestX86 {
     // print modRM byte
     System.out.printf("\tmodrm: 0x%x\n", operands.modrm);
 
+    // print modRM offset
+    if (operands.encoding.modrmOffset != 0) {
+      System.out.printf("\tmodrm offset: 0x%x\n", operands.encoding.modrmOffset);
+    }
+
     // print displacement value
     System.out.printf("\tdisp: 0x%x\n", operands.disp);
+
+    // print displacement offset
+    if (operands.encoding.dispOffset != 0) {
+      System.out.printf("\tdisp offset: 0x%x\n", operands.encoding.dispOffset);
+    }
+
+    //print displacement size
+    if (operands.encoding.dispSize != 0) {
+      System.out.printf("\tdisp size: 0x%x\n", operands.encoding.dispSize);
+    }
 
     // SIB is not available in 16-bit mode
     if ( (cs.mode & Capstone.CS_MODE_16) == 0) {
@@ -88,6 +106,8 @@ public class TestX86 {
     int count = ins.opCount(X86_OP_IMM);
     if (count > 0) {
       System.out.printf("\timm_count: %d\n", count);
+      System.out.printf("\timm offset: 0x%x\n", operands.encoding.immOffset);
+      System.out.printf("\timm size: 0x%x\n", operands.encoding.immSize);
       for (int i=0; i<count; i++) {
         int index = ins.opIndex(X86_OP_IMM, i + 1);
         System.out.printf("\t\timms[%d]: 0x%x\n", i+1, (operands.op[index].value.imm));
@@ -131,6 +151,40 @@ public class TestX86 {
         }
 
         System.out.printf("\t\toperands[%d].size: %d\n", c, i.size);
+        switch(i.access) {
+          case CS_AC_READ:
+            System.out.printf("\t\toperands[%d].access: READ\n", c);
+            break;
+          case CS_AC_WRITE:
+            System.out.printf("\t\toperands[%d].access: WRITE\n", c);
+            break;
+          case CS_AC_READ | CS_AC_WRITE:
+            System.out.printf("\t\toperands[%d].access: READ | WRITE\n", c);
+            break;
+        }
+      }
+
+      // Print out all registers accessed by this instruction (either implicit or explicit)
+      CsRegsAccess regsAccess = ins.regsAccess();
+      if (regsAccess != null) {
+        short[] regsRead = regsAccess.regsRead;
+        short[] regsWrite = regsAccess.regsWrite;
+
+        if (regsRead.length > 0) {
+          System.out.printf("\tRegisters read:");
+          for (int i = 0; i < regsRead.length; i++) {
+            System.out.printf(" %s", ins.regName(regsRead[i]));
+          }
+          System.out.print("\n");
+        }
+
+        if (regsWrite.length > 0) {
+          System.out.printf("\tRegister modified:");
+          for (int i = 0; i < regsWrite.length; i++) {
+            System.out.printf(" %s", ins.regName(regsWrite[i]));
+          }
+          System.out.print("\n");
+        }
       }
     }
   }
