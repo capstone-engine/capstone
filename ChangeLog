@@ -1,6 +1,61 @@
 This file details the changelog of Capstone.
 
 ---------------------------------
+Version 3.0.5: July 1xth, 2018
+
+
+[ Core ]
+
+- Fix the include path for Android builds when building cstool.
+- Add posibility to disable universal build for Mac OS.
+- cstool: Separate instruction bytes by spaces.
+- Fix code path of pkg-config in Cmake.
+- Update XCode project for XCode 9.1.
+- Add Cortex-M support to cstool.
+- Cmake forces to be build using MT with MSVC.
+- Better support for Mac OS kernel.
+
+
+[ X86 ]
+
+- Fix some issues in handling EVEX & VEX3 instructions.
+- Fix immediate operand for AND instruction in ATT mode.
+- Fix ATT syntax when imm operand is 0.
+- Better handle XACQUIRE/XRELEASE.
+- Fix imm operand of RETF.
+
+
+[ ARM ]
+
+- Fix an integer overlow bug.
+
+
+[ ARM64 ]
+
+- Bug fix for incorrect operand type in certain load/store instructions.
+
+
+[ Mips ]
+
+- Mode CS_MODE_MIPS32R6 automatically sets CS_MODE_32
+
+
+[ PPC ]
+
+- Fix endian check.
+
+
+[ Sparc ]
+
+- Fix an integer overlow bug.
+
+
+[ SystemZ ]
+
+- Fix an integer overlow bug.
+
+
+---------------------------------
 Version 3.0.5-rc3: July 31st, 2017
 
 
