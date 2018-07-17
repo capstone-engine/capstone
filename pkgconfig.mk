@@ -9,4 +9,4 @@ PKG_MINOR = 0
 PKG_EXTRA = 5
 
 # version tag. Examples: rc1, b2, post1
-PKG_TAG = rc3
+PKG_TAG =
