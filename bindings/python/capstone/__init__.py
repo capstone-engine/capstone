@@ -620,6 +620,10 @@ class CsInsn(object):
         raise CsError(CS_ERR_DETAIL)
 
     def __gen_detail(self):
+        if self._raw.id == 0:
+            # do nothing in skipdata mode
+            return
+
         arch = self._cs.arch
         if arch == CS_ARCH_ARM:
             (self.usermode, self.vector_size, self.vector_data, self.cps_mode, self.cps_flag, self.cc, self.update_flags, \
@@ -666,6 +670,8 @@ class CsInsn(object):
         if 'operands' not in _dict:
             self.__gen_detail()
         if name not in _dict:
+            if self._raw.id == 0:
+                raise CsError(CS_ERR_SKIPDATA)
             raise AttributeError(name)
         return _dict[name]
 
