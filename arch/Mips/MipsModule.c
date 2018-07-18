@@ -11,7 +11,7 @@
 #include "MipsModule.h"
 
 // Returns mode value with implied bits set
-static inline cs_mode updated_mode(cs_mode mode)
+static cs_mode updated_mode(cs_mode mode)
 {
 	if (mode & CS_MODE_MIPS32R6) {
 		mode |= CS_MODE_32;
