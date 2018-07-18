@@ -55,6 +55,11 @@ Version 3.0.5: July 1xth, 2018
 - Fix an integer overlow bug.
 
 
+[ Python binding ]
+
+- Raise error on accessing irrelevant data fields if skipdata & detail modes are enable.
+
+
 ---------------------------------
 Version 3.0.5-rc3: July 31st, 2017
 
