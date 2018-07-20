@@ -60,16 +60,16 @@ public class TestMips {
 
   public static void main(String argv[]) {
 
-    final Test.platform[] all_tests = {
-      new Test.platform(Capstone.CS_ARCH_MIPS, Capstone.CS_MODE_MIPS32 + Capstone.CS_MODE_BIG_ENDIAN, hexString2Byte(MIPS_CODE), "MIPS-32 (Big-endian)"),
-      new Test.platform(Capstone.CS_ARCH_MIPS, Capstone.CS_MODE_MIPS64 + Capstone.CS_MODE_LITTLE_ENDIAN, hexString2Byte(MIPS_CODE2), "MIPS-64-EL (Little-endian)"),
+    final TestBasic.platform[] all_tests = {
+      new TestBasic.platform(Capstone.CS_ARCH_MIPS, Capstone.CS_MODE_MIPS32 + Capstone.CS_MODE_BIG_ENDIAN, hexString2Byte(MIPS_CODE), "MIPS-32 (Big-endian)"),
+      new TestBasic.platform(Capstone.CS_ARCH_MIPS, Capstone.CS_MODE_MIPS64 + Capstone.CS_MODE_LITTLE_ENDIAN, hexString2Byte(MIPS_CODE2), "MIPS-64-EL (Little-endian)"),
     };
 
     for (int i=0; i<all_tests.length; i++) {
-      Test.platform test = all_tests[i];
+      TestBasic.platform test = all_tests[i];
       System.out.println(new String(new char[16]).replace("\0", "*"));
       System.out.println("Platform: " + test.comment);
-      System.out.println("Code: " + Test.stringToHex(test.code));
+      System.out.println("Code: " + TestBasic.stringToHex(test.code));
       System.out.println("Disasm:");
 
       cs = new Capstone(test.arch, test.mode);

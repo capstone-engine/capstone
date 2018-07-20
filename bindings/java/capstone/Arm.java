@@ -18,10 +18,11 @@ public class Arm {
     public int index;
     public int scale;
     public int disp;
+    public int lshift;
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("base", "index", "scale", "disp");
+      return Arrays.asList("base", "index", "scale", "disp", "lshift");
     }
   }
 
@@ -54,6 +55,8 @@ public class Arm {
     public int type;
     public OpValue value;
     public boolean subtracted;
+    public byte access;
+    public byte neon_lane;
 
     public void read() {
       readField("vector_index");
@@ -71,11 +74,13 @@ public class Arm {
       readField("value");
       readField("shift");
       readField("subtracted");
+      readField("access");
+      readField("neon_lane");
     }
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("vector_index", "shift", "type", "value", "subtracted");
+      return Arrays.asList("vector_index", "shift", "type", "value", "subtracted", "access", "neon_lane");
     }
   }
 
@@ -88,7 +93,7 @@ public class Arm {
     public int cc;
     public byte update_flags;
     public byte writeback;
-    public byte mem_barrier;
+    public int mem_barrier;
     public byte op_count;
 
     public Operand [] op;

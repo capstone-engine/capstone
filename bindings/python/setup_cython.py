@@ -1,15 +1,15 @@
 import os
 import sys
 import shutil
+
 from distutils import log
 from distutils.core import setup
 from distutils.extension import Extension
 from distutils.command.build import build
 from Cython.Distutils import build_ext
 
-
 SYSTEM = sys.platform
-VERSION = '3.0.5'
+VERSION = '4.0.0'
 
 # adapted from commit e504b81 of Nguyen Tan Cong
 # Reference: https://docs.python.org/2/library/platform.html#cross-platform
@@ -25,19 +25,23 @@ PYPACKAGE_DIR = os.path.join(ROOT_DIR, 'capstone')
 CYPACKAGE_DIR = os.path.join(ROOT_DIR, 'pyx')
 
 if SYSTEM == 'darwin':
+    VERSIONED_LIBRARY_FILE = "libcapstone.4.dylib"
     LIBRARY_FILE = "libcapstone.dylib"
     STATIC_LIBRARY_FILE = 'libcapstone.a'
 elif SYSTEM in ('win32', 'cygwin'):
+    VERSIONED_LIBRARY_FILE = "capstone.dll"
     LIBRARY_FILE = "capstone.dll"
     STATIC_LIBRARY_FILE = None
 else:
+    VERSIONED_LIBRARY_FILE = "libcapstone.so.4"
     LIBRARY_FILE = "libcapstone.so"
     STATIC_LIBRARY_FILE = 'libcapstone.a'
 
 compile_args = ['-O3', '-fomit-frame-pointer', '-I' + HEADERS_DIR]
 link_args = ['-L' + LIBS_DIR]
 
-ext_module_names = ['arm', 'arm_const', 'arm64', 'arm64_const', 'mips', 'mips_const', 'ppc', 'ppc_const', 'x86', 'x86_const', 'sparc', 'sparc_const', 'systemz', 'sysz_const', 'xcore', 'xcore_const']
+ext_module_names = ['arm', 'arm_const', 'arm64', 'arm64_const', 'm68k', 'm68k_const', 'm680x', 'm680x_const', 'mips', 'mips_const', 'ppc', 'ppc_const', 'x86', 'x86_const', 'sparc', 'sparc_const', 'systemz', 'sysz_const', 'xcore', 'xcore_const', 'tms320c64x', 'tms320c64x_const', 'evm', 'evm_const' ]
+
 ext_modules = [Extension("capstone.ccapstone",
                          ["pyx/ccapstone.pyx"],
                          libraries=["capstone"],
@@ -76,7 +80,7 @@ def build_libraries():
     os.mkdir(LIBS_DIR)
 
     # copy public headers
-    shutil.copytree(os.path.join(BUILD_DIR, 'include'), os.path.join(HEADERS_DIR, 'capstone'))
+    shutil.copytree(os.path.join(BUILD_DIR, 'include', 'capstone'), os.path.join(HEADERS_DIR, 'capstone'))
 
     os.chdir(BUILD_DIR)
 
@@ -93,7 +97,7 @@ def build_libraries():
     else:   # Unix incl. cygwin
         os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh")
 
-    shutil.copy(LIBRARY_FILE, LIBS_DIR)
+    shutil.copy(VERSIONED_LIBRARY_FILE, os.path.join(LIBS_DIR, LIBRARY_FILE))
     if STATIC_LIBRARY_FILE: shutil.copy(STATIC_LIBRARY_FILE, LIBS_DIR)
     os.chdir(cwd)
 

@@ -28,6 +28,9 @@
     <ClCompile Include="..\..\arch\ARM\ARMInstPrinter.c" />
     <ClCompile Include="..\..\arch\ARM\ARMMapping.c" />
     <ClCompile Include="..\..\arch\ARM\ARMModule.c" />
+    <ClCompile Include="..\..\arch\M68K\M68KDisassembler.c" />
+    <ClCompile Include="..\..\arch\M68K\M68KInstPrinter.c" />
+    <ClCompile Include="..\..\arch\M68K\M68KModule.c" />
     <ClCompile Include="..\..\arch\Mips\MipsDisassembler.c" />
     <ClCompile Include="..\..\arch\Mips\MipsInstPrinter.c" />
     <ClCompile Include="..\..\arch\Mips\MipsMapping.c" />
@@ -125,7 +128,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>CAPSTONE_X86_ATT_DISABLE_NO;CAPSTONE_DIET_NO;CAPSTONE_X86_REDUCE_NO;CAPSTONE_HAS_ARM;CAPSTONE_HAS_ARM64;CAPSTONE_HAS_MIPS;CAPSTONE_HAS_POWERPC;CAPSTONE_HAS_SPARC;CAPSTONE_HAS_SYSZ;CAPSTONE_HAS_X86;CAPSTONE_HAS_XCORE;CAPSTONE_USE_SYS_DYN_MEM;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CAPSTONE_X86_ATT_DISABLE_NO;CAPSTONE_DIET_NO;CAPSTONE_X86_REDUCE_NO;CAPSTONE_HAS_ARM;CAPSTONE_HAS_ARM64;CAPSTONE_HAS_M68K;CAPSTONE_HAS_MIPS;CAPSTONE_HAS_POWERPC;CAPSTONE_HAS_SPARC;CAPSTONE_HAS_SYSZ;CAPSTONE_HAS_X86;CAPSTONE_HAS_XCORE;CAPSTONE_USE_SYS_DYN_MEM;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\include;..\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -141,7 +144,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>CAPSTONE_X86_ATT_DISABLE_NO;CAPSTONE_DIET_NO;CAPSTONE_X86_REDUCE_NO;CAPSTONE_HAS_ARM;CAPSTONE_HAS_ARM64;CAPSTONE_HAS_MIPS;CAPSTONE_HAS_POWERPC;CAPSTONE_HAS_SPARC;CAPSTONE_HAS_SYSZ;CAPSTONE_HAS_X86;CAPSTONE_HAS_XCORE;CAPSTONE_USE_SYS_DYN_MEM;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CAPSTONE_X86_ATT_DISABLE_NO;CAPSTONE_DIET_NO;CAPSTONE_X86_REDUCE_NO;CAPSTONE_HAS_ARM;CAPSTONE_HAS_ARM64;CAPSTONE_HAS_M68K;CAPSTONE_HAS_MIPS;CAPSTONE_HAS_POWERPC;CAPSTONE_HAS_SPARC;CAPSTONE_HAS_SYSZ;CAPSTONE_HAS_X86;CAPSTONE_HAS_XCORE;CAPSTONE_USE_SYS_DYN_MEM;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\include;..\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -159,7 +162,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>CAPSTONE_X86_ATT_DISABLE_NO;CAPSTONE_DIET_NO;CAPSTONE_X86_REDUCE_NO;CAPSTONE_HAS_ARM;CAPSTONE_HAS_ARM64;CAPSTONE_HAS_MIPS;CAPSTONE_HAS_POWERPC;CAPSTONE_HAS_SPARC;CAPSTONE_HAS_SYSZ;CAPSTONE_HAS_X86;CAPSTONE_HAS_XCORE;CAPSTONE_USE_SYS_DYN_MEM;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CAPSTONE_X86_ATT_DISABLE_NO;CAPSTONE_DIET_NO;CAPSTONE_X86_REDUCE_NO;CAPSTONE_HAS_ARM;CAPSTONE_HAS_ARM64;CAPSTONE_HAS_M68K;CAPSTONE_HAS_MIPS;CAPSTONE_HAS_POWERPC;CAPSTONE_HAS_SPARC;CAPSTONE_HAS_SYSZ;CAPSTONE_HAS_X86;CAPSTONE_HAS_XCORE;CAPSTONE_USE_SYS_DYN_MEM;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\include;..\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -179,7 +182,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>CAPSTONE_X86_ATT_DISABLE_NO;CAPSTONE_DIET_NO;CAPSTONE_X86_REDUCE_NO;CAPSTONE_HAS_ARM;CAPSTONE_HAS_ARM64;CAPSTONE_HAS_MIPS;CAPSTONE_HAS_POWERPC;CAPSTONE_HAS_SPARC;CAPSTONE_HAS_SYSZ;CAPSTONE_HAS_X86;CAPSTONE_HAS_XCORE;CAPSTONE_USE_SYS_DYN_MEM;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CAPSTONE_X86_ATT_DISABLE_NO;CAPSTONE_DIET_NO;CAPSTONE_X86_REDUCE_NO;CAPSTONE_HAS_ARM;CAPSTONE_HAS_ARM64;CAPSTONE_HAS_M68K;CAPSTONE_HAS_MIPS;CAPSTONE_HAS_POWERPC;CAPSTONE_HAS_SPARC;CAPSTONE_HAS_SYSZ;CAPSTONE_HAS_X86;CAPSTONE_HAS_XCORE;CAPSTONE_USE_SYS_DYN_MEM;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\include;..\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>

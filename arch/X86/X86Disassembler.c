@@ -15,9 +15,16 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifdef CAPSTONE_HAS_X86
+
+#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
+#pragma warning(disable:4996)			// disable MSVC's warning on strncpy()
+#pragma warning(disable:28719)		// disable MSVC's warning on strncpy()
+#endif
+
+#include <capstone/platform.h>
 
 #if defined(CAPSTONE_HAS_OSXKERNEL)
 #include <Availability.h>
@@ -172,38 +179,12 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 	else if (type == TYPE_IMM8 || type == TYPE_IMM16 || type == TYPE_IMM32 ||
 			type == TYPE_IMM64 || type == TYPE_IMMv) {
 
-		uint32_t Opcode = MCInst_getOpcode(mcInst);
-		bool check_opcode;
-
 		switch (operand->encoding) {
 			default:
 				break;
 			case ENCODING_IB:
-				// Special case those X86 instructions that use the imm8 as a set of
-				// bits, bit count, etc. and are not sign-extend.
-				check_opcode = (Opcode != X86_INT);
-#ifndef CAPSTONE_X86_REDUCE
-        check_opcode = ((Opcode != X86_BLENDPSrri &&
-						            Opcode != X86_BLENDPDrri &&
-						            Opcode != X86_PBLENDWrri &&
-						            Opcode != X86_MPSADBWrri &&
-						            Opcode != X86_DPPSrri &&
-						            Opcode != X86_DPPDrri &&
-						            Opcode != X86_INSERTPSrr &&
-						            Opcode != X86_VBLENDPSYrri &&
-						            Opcode != X86_VBLENDPSYrmi &&
-						            Opcode != X86_VBLENDPDYrri &&
-						            Opcode != X86_VBLENDPDYrmi &&
-						            Opcode != X86_VPBLENDWrri &&
-						            Opcode != X86_VMPSADBWrri &&
-						            Opcode != X86_VDPPSYrri &&
-						            Opcode != X86_VDPPSYrmi &&
-						            Opcode != X86_VDPPDrri &&
-						            Opcode != X86_VINSERTPSrr) && check_opcode);
-#endif
-				if (check_opcode)
-						if(immediate & 0x80)
-							immediate |= ~(0xffull);
+				if(immediate & 0x80)
+					immediate |= ~(0xffull);
 				break;
 			case ENCODING_IW:
 				if(immediate & 0x8000)
@@ -224,14 +205,30 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 
 			switch (MCInst_getOpcode(mcInst)) {
 				default: break;	// never reach
-				case X86_CMPPDrmi: NewOpc = X86_CMPPDrmi_alt; break;
-				case X86_CMPPDrri: NewOpc = X86_CMPPDrri_alt; break;
-				case X86_CMPPSrmi: NewOpc = X86_CMPPSrmi_alt; break;
-				case X86_CMPPSrri: NewOpc = X86_CMPPSrri_alt; break;
-				case X86_CMPSDrm:  NewOpc = X86_CMPSDrm_alt;  break;
-				case X86_CMPSDrr:  NewOpc = X86_CMPSDrr_alt;  break;
-				case X86_CMPSSrm:  NewOpc = X86_CMPSSrm_alt;  break;
-				case X86_CMPSSrr:  NewOpc = X86_CMPSSrr_alt;  break;
+				case X86_CMPPDrmi:  NewOpc = X86_CMPPDrmi_alt;  break;
+				case X86_CMPPDrri:  NewOpc = X86_CMPPDrri_alt;  break;
+				case X86_CMPPSrmi:  NewOpc = X86_CMPPSrmi_alt;  break;
+				case X86_CMPPSrri:  NewOpc = X86_CMPPSrri_alt;  break;
+				case X86_CMPSDrm:   NewOpc = X86_CMPSDrm_alt;   break;
+				case X86_CMPSDrr:   NewOpc = X86_CMPSDrr_alt;   break;
+				case X86_CMPSSrm:   NewOpc = X86_CMPSSrm_alt;   break;
+				case X86_CMPSSrr:   NewOpc = X86_CMPSSrr_alt;   break;
+				case X86_VPCOMBri:  NewOpc = X86_VPCOMBri_alt;  break;
+				case X86_VPCOMBmi:  NewOpc = X86_VPCOMBmi_alt;  break;
+				case X86_VPCOMWri:  NewOpc = X86_VPCOMWri_alt;  break;
+				case X86_VPCOMWmi:  NewOpc = X86_VPCOMWmi_alt;  break;
+				case X86_VPCOMDri:  NewOpc = X86_VPCOMDri_alt;  break;
+				case X86_VPCOMDmi:  NewOpc = X86_VPCOMDmi_alt;  break;
+				case X86_VPCOMQri:  NewOpc = X86_VPCOMQri_alt;  break;
+				case X86_VPCOMQmi:  NewOpc = X86_VPCOMQmi_alt;  break;
+				case X86_VPCOMUBri: NewOpc = X86_VPCOMUBri_alt; break;
+				case X86_VPCOMUBmi: NewOpc = X86_VPCOMUBmi_alt; break;
+				case X86_VPCOMUWri: NewOpc = X86_VPCOMUWri_alt; break;
+				case X86_VPCOMUWmi: NewOpc = X86_VPCOMUWmi_alt; break;
+				case X86_VPCOMUDri: NewOpc = X86_VPCOMUDri_alt; break;
+				case X86_VPCOMUDmi: NewOpc = X86_VPCOMUDmi_alt; break;
+				case X86_VPCOMUQri: NewOpc = X86_VPCOMUQri_alt; break;
+				case X86_VPCOMUQmi: NewOpc = X86_VPCOMUQmi_alt; break;
 			}
 			// Switch opcode to the one that doesn't get special printing.
 			if (NewOpc != 0) {
@@ -247,26 +244,161 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 
 			switch (MCInst_getOpcode(mcInst)) {
 				default: break; // unexpected opcode
-				case X86_VCMPPDrmi:  NewOpc = X86_VCMPPDrmi_alt;  break;
-				case X86_VCMPPDrri:  NewOpc = X86_VCMPPDrri_alt;  break;
-				case X86_VCMPPSrmi:  NewOpc = X86_VCMPPSrmi_alt;  break;
-				case X86_VCMPPSrri:  NewOpc = X86_VCMPPSrri_alt;  break;
-				case X86_VCMPSDrm:   NewOpc = X86_VCMPSDrm_alt;   break;
-				case X86_VCMPSDrr:   NewOpc = X86_VCMPSDrr_alt;   break;
-				case X86_VCMPSSrm:   NewOpc = X86_VCMPSSrm_alt;   break;
-				case X86_VCMPSSrr:   NewOpc = X86_VCMPSSrr_alt;   break;
-				case X86_VCMPPDYrmi: NewOpc = X86_VCMPPDYrmi_alt; break;
-				case X86_VCMPPDYrri: NewOpc = X86_VCMPPDYrri_alt; break;
-				case X86_VCMPPSYrmi: NewOpc = X86_VCMPPSYrmi_alt; break;
-				case X86_VCMPPSYrri: NewOpc = X86_VCMPPSYrri_alt; break;
-				case X86_VCMPPDZrmi: NewOpc = X86_VCMPPDZrmi_alt; break;
-				case X86_VCMPPDZrri: NewOpc = X86_VCMPPDZrri_alt; break;
-				case X86_VCMPPSZrmi: NewOpc = X86_VCMPPSZrmi_alt; break;
-				case X86_VCMPPSZrri: NewOpc = X86_VCMPPSZrri_alt; break;
-				case X86_VCMPSDZrm:  NewOpc = X86_VCMPSDZrmi_alt; break;
-				case X86_VCMPSDZrr:  NewOpc = X86_VCMPSDZrri_alt; break;
-				case X86_VCMPSSZrm:  NewOpc = X86_VCMPSSZrmi_alt; break;
-				case X86_VCMPSSZrr:  NewOpc = X86_VCMPSSZrri_alt; break;
+				case X86_VCMPPDrmi:   NewOpc = X86_VCMPPDrmi_alt;   break;
+				case X86_VCMPPDrri:   NewOpc = X86_VCMPPDrri_alt;   break;
+				case X86_VCMPPSrmi:   NewOpc = X86_VCMPPSrmi_alt;   break;
+				case X86_VCMPPSrri:   NewOpc = X86_VCMPPSrri_alt;   break;
+				case X86_VCMPSDrm:    NewOpc = X86_VCMPSDrm_alt;    break;
+				case X86_VCMPSDrr:    NewOpc = X86_VCMPSDrr_alt;    break;
+				case X86_VCMPSSrm:    NewOpc = X86_VCMPSSrm_alt;    break;
+				case X86_VCMPSSrr:    NewOpc = X86_VCMPSSrr_alt;    break;
+				case X86_VCMPPDYrmi:  NewOpc = X86_VCMPPDYrmi_alt;  break;
+				case X86_VCMPPDYrri:  NewOpc = X86_VCMPPDYrri_alt;  break;
+				case X86_VCMPPSYrmi:  NewOpc = X86_VCMPPSYrmi_alt;  break;
+				case X86_VCMPPSYrri:  NewOpc = X86_VCMPPSYrri_alt;  break;
+				case X86_VCMPPDZrmi:  NewOpc = X86_VCMPPDZrmi_alt;  break;
+				case X86_VCMPPDZrri:  NewOpc = X86_VCMPPDZrri_alt;  break;
+				case X86_VCMPPDZrrib: NewOpc = X86_VCMPPDZrrib_alt; break;
+				case X86_VCMPPSZrmi:  NewOpc = X86_VCMPPSZrmi_alt;  break;
+				case X86_VCMPPSZrri:  NewOpc = X86_VCMPPSZrri_alt;  break;
+				case X86_VCMPPSZrrib: NewOpc = X86_VCMPPSZrrib_alt; break;
+				case X86_VCMPSDZrm:   NewOpc = X86_VCMPSDZrmi_alt;  break;
+				case X86_VCMPSDZrr:   NewOpc = X86_VCMPSDZrri_alt;  break;
+				case X86_VCMPSSZrm:   NewOpc = X86_VCMPSSZrmi_alt;  break;
+				case X86_VCMPSSZrr:   NewOpc = X86_VCMPSSZrri_alt;  break;
+			}
+			// Switch opcode to the one that doesn't get special printing.
+			if (NewOpc != 0) {
+				MCInst_setOpcode(mcInst, NewOpc);
+			}
+		}
+#endif
+	} else if (type == TYPE_AVX512ICC) {
+#ifndef CAPSTONE_X86_REDUCE
+		if (immediate >= 8 || ((immediate & 0x3) == 3)) {
+			unsigned NewOpc = 0;
+			switch (MCInst_getOpcode(mcInst)) {
+				default: // llvm_unreachable("unexpected opcode");
+				case X86_VPCMPBZ128rmi:    NewOpc = X86_VPCMPBZ128rmi_alt;    break;
+				case X86_VPCMPBZ128rmik:   NewOpc = X86_VPCMPBZ128rmik_alt;   break;
+				case X86_VPCMPBZ128rri:    NewOpc = X86_VPCMPBZ128rri_alt;    break;
+				case X86_VPCMPBZ128rrik:   NewOpc = X86_VPCMPBZ128rrik_alt;   break;
+				case X86_VPCMPBZ256rmi:    NewOpc = X86_VPCMPBZ256rmi_alt;    break;
+				case X86_VPCMPBZ256rmik:   NewOpc = X86_VPCMPBZ256rmik_alt;   break;
+				case X86_VPCMPBZ256rri:    NewOpc = X86_VPCMPBZ256rri_alt;    break;
+				case X86_VPCMPBZ256rrik:   NewOpc = X86_VPCMPBZ256rrik_alt;   break;
+				case X86_VPCMPBZrmi:       NewOpc = X86_VPCMPBZrmi_alt;       break;
+				case X86_VPCMPBZrmik:      NewOpc = X86_VPCMPBZrmik_alt;      break;
+				case X86_VPCMPBZrri:       NewOpc = X86_VPCMPBZrri_alt;       break;
+				case X86_VPCMPBZrrik:      NewOpc = X86_VPCMPBZrrik_alt;      break;
+				case X86_VPCMPDZ128rmi:    NewOpc = X86_VPCMPDZ128rmi_alt;    break;
+				case X86_VPCMPDZ128rmib:   NewOpc = X86_VPCMPDZ128rmib_alt;   break;
+				case X86_VPCMPDZ128rmibk:  NewOpc = X86_VPCMPDZ128rmibk_alt;  break;
+				case X86_VPCMPDZ128rmik:   NewOpc = X86_VPCMPDZ128rmik_alt;   break;
+				case X86_VPCMPDZ128rri:    NewOpc = X86_VPCMPDZ128rri_alt;    break;
+				case X86_VPCMPDZ128rrik:   NewOpc = X86_VPCMPDZ128rrik_alt;   break;
+				case X86_VPCMPDZ256rmi:    NewOpc = X86_VPCMPDZ256rmi_alt;    break;
+				case X86_VPCMPDZ256rmib:   NewOpc = X86_VPCMPDZ256rmib_alt;   break;
+				case X86_VPCMPDZ256rmibk:  NewOpc = X86_VPCMPDZ256rmibk_alt;  break;
+				case X86_VPCMPDZ256rmik:   NewOpc = X86_VPCMPDZ256rmik_alt;   break;
+				case X86_VPCMPDZ256rri:    NewOpc = X86_VPCMPDZ256rri_alt;    break;
+				case X86_VPCMPDZ256rrik:   NewOpc = X86_VPCMPDZ256rrik_alt;   break;
+				case X86_VPCMPDZrmi:       NewOpc = X86_VPCMPDZrmi_alt;       break;
+				case X86_VPCMPDZrmib:      NewOpc = X86_VPCMPDZrmib_alt;      break;
+				case X86_VPCMPDZrmibk:     NewOpc = X86_VPCMPDZrmibk_alt;     break;
+				case X86_VPCMPDZrmik:      NewOpc = X86_VPCMPDZrmik_alt;      break;
+				case X86_VPCMPDZrri:       NewOpc = X86_VPCMPDZrri_alt;       break;
+				case X86_VPCMPDZrrik:      NewOpc = X86_VPCMPDZrrik_alt;      break;
+				case X86_VPCMPQZ128rmi:    NewOpc = X86_VPCMPQZ128rmi_alt;    break;
+				case X86_VPCMPQZ128rmib:   NewOpc = X86_VPCMPQZ128rmib_alt;   break;
+				case X86_VPCMPQZ128rmibk:  NewOpc = X86_VPCMPQZ128rmibk_alt;  break;
+				case X86_VPCMPQZ128rmik:   NewOpc = X86_VPCMPQZ128rmik_alt;   break;
+				case X86_VPCMPQZ128rri:    NewOpc = X86_VPCMPQZ128rri_alt;    break;
+				case X86_VPCMPQZ128rrik:   NewOpc = X86_VPCMPQZ128rrik_alt;   break;
+				case X86_VPCMPQZ256rmi:    NewOpc = X86_VPCMPQZ256rmi_alt;    break;
+				case X86_VPCMPQZ256rmib:   NewOpc = X86_VPCMPQZ256rmib_alt;   break;
+				case X86_VPCMPQZ256rmibk:  NewOpc = X86_VPCMPQZ256rmibk_alt;  break;
+				case X86_VPCMPQZ256rmik:   NewOpc = X86_VPCMPQZ256rmik_alt;   break;
+				case X86_VPCMPQZ256rri:    NewOpc = X86_VPCMPQZ256rri_alt;    break;
+				case X86_VPCMPQZ256rrik:   NewOpc = X86_VPCMPQZ256rrik_alt;   break;
+				case X86_VPCMPQZrmi:       NewOpc = X86_VPCMPQZrmi_alt;       break;
+				case X86_VPCMPQZrmib:      NewOpc = X86_VPCMPQZrmib_alt;      break;
+				case X86_VPCMPQZrmibk:     NewOpc = X86_VPCMPQZrmibk_alt;     break;
+				case X86_VPCMPQZrmik:      NewOpc = X86_VPCMPQZrmik_alt;      break;
+				case X86_VPCMPQZrri:       NewOpc = X86_VPCMPQZrri_alt;       break;
+				case X86_VPCMPQZrrik:      NewOpc = X86_VPCMPQZrrik_alt;      break;
+				case X86_VPCMPUBZ128rmi:   NewOpc = X86_VPCMPUBZ128rmi_alt;   break;
+				case X86_VPCMPUBZ128rmik:  NewOpc = X86_VPCMPUBZ128rmik_alt;  break;
+				case X86_VPCMPUBZ128rri:   NewOpc = X86_VPCMPUBZ128rri_alt;   break;
+				case X86_VPCMPUBZ128rrik:  NewOpc = X86_VPCMPUBZ128rrik_alt;  break;
+				case X86_VPCMPUBZ256rmi:   NewOpc = X86_VPCMPUBZ256rmi_alt;   break;
+				case X86_VPCMPUBZ256rmik:  NewOpc = X86_VPCMPUBZ256rmik_alt;  break;
+				case X86_VPCMPUBZ256rri:   NewOpc = X86_VPCMPUBZ256rri_alt;   break;
+				case X86_VPCMPUBZ256rrik:  NewOpc = X86_VPCMPUBZ256rrik_alt;  break;
+				case X86_VPCMPUBZrmi:      NewOpc = X86_VPCMPUBZrmi_alt;      break;
+				case X86_VPCMPUBZrmik:     NewOpc = X86_VPCMPUBZrmik_alt;     break;
+				case X86_VPCMPUBZrri:      NewOpc = X86_VPCMPUBZrri_alt;      break;
+				case X86_VPCMPUBZrrik:     NewOpc = X86_VPCMPUBZrrik_alt;     break;
+				case X86_VPCMPUDZ128rmi:   NewOpc = X86_VPCMPUDZ128rmi_alt;   break;
+				case X86_VPCMPUDZ128rmib:  NewOpc = X86_VPCMPUDZ128rmib_alt;  break;
+				case X86_VPCMPUDZ128rmibk: NewOpc = X86_VPCMPUDZ128rmibk_alt; break;
+				case X86_VPCMPUDZ128rmik:  NewOpc = X86_VPCMPUDZ128rmik_alt;  break;
+				case X86_VPCMPUDZ128rri:   NewOpc = X86_VPCMPUDZ128rri_alt;   break;
+				case X86_VPCMPUDZ128rrik:  NewOpc = X86_VPCMPUDZ128rrik_alt;  break;
+				case X86_VPCMPUDZ256rmi:   NewOpc = X86_VPCMPUDZ256rmi_alt;   break;
+				case X86_VPCMPUDZ256rmib:  NewOpc = X86_VPCMPUDZ256rmib_alt;  break;
+				case X86_VPCMPUDZ256rmibk: NewOpc = X86_VPCMPUDZ256rmibk_alt; break;
+				case X86_VPCMPUDZ256rmik:  NewOpc = X86_VPCMPUDZ256rmik_alt;  break;
+				case X86_VPCMPUDZ256rri:   NewOpc = X86_VPCMPUDZ256rri_alt;   break;
+				case X86_VPCMPUDZ256rrik:  NewOpc = X86_VPCMPUDZ256rrik_alt;  break;
+				case X86_VPCMPUDZrmi:      NewOpc = X86_VPCMPUDZrmi_alt;      break;
+				case X86_VPCMPUDZrmib:     NewOpc = X86_VPCMPUDZrmib_alt;     break;
+				case X86_VPCMPUDZrmibk:    NewOpc = X86_VPCMPUDZrmibk_alt;    break;
+				case X86_VPCMPUDZrmik:     NewOpc = X86_VPCMPUDZrmik_alt;     break;
+				case X86_VPCMPUDZrri:      NewOpc = X86_VPCMPUDZrri_alt;      break;
+				case X86_VPCMPUDZrrik:     NewOpc = X86_VPCMPUDZrrik_alt;     break;
+				case X86_VPCMPUQZ128rmi:   NewOpc = X86_VPCMPUQZ128rmi_alt;   break;
+				case X86_VPCMPUQZ128rmib:  NewOpc = X86_VPCMPUQZ128rmib_alt;  break;
+				case X86_VPCMPUQZ128rmibk: NewOpc = X86_VPCMPUQZ128rmibk_alt; break;
+				case X86_VPCMPUQZ128rmik:  NewOpc = X86_VPCMPUQZ128rmik_alt;  break;
+				case X86_VPCMPUQZ128rri:   NewOpc = X86_VPCMPUQZ128rri_alt;   break;
+				case X86_VPCMPUQZ128rrik:  NewOpc = X86_VPCMPUQZ128rrik_alt;  break;
+				case X86_VPCMPUQZ256rmi:   NewOpc = X86_VPCMPUQZ256rmi_alt;   break;
+				case X86_VPCMPUQZ256rmib:  NewOpc = X86_VPCMPUQZ256rmib_alt;  break;
+				case X86_VPCMPUQZ256rmibk: NewOpc = X86_VPCMPUQZ256rmibk_alt; break;
+				case X86_VPCMPUQZ256rmik:  NewOpc = X86_VPCMPUQZ256rmik_alt;  break;
+				case X86_VPCMPUQZ256rri:   NewOpc = X86_VPCMPUQZ256rri_alt;   break;
+				case X86_VPCMPUQZ256rrik:  NewOpc = X86_VPCMPUQZ256rrik_alt;  break;
+				case X86_VPCMPUQZrmi:      NewOpc = X86_VPCMPUQZrmi_alt;      break;
+				case X86_VPCMPUQZrmib:     NewOpc = X86_VPCMPUQZrmib_alt;     break;
+				case X86_VPCMPUQZrmibk:    NewOpc = X86_VPCMPUQZrmibk_alt;    break;
+				case X86_VPCMPUQZrmik:     NewOpc = X86_VPCMPUQZrmik_alt;     break;
+				case X86_VPCMPUQZrri:      NewOpc = X86_VPCMPUQZrri_alt;      break;
+				case X86_VPCMPUQZrrik:     NewOpc = X86_VPCMPUQZrrik_alt;     break;
+				case X86_VPCMPUWZ128rmi:   NewOpc = X86_VPCMPUWZ128rmi_alt;   break;
+				case X86_VPCMPUWZ128rmik:  NewOpc = X86_VPCMPUWZ128rmik_alt;  break;
+				case X86_VPCMPUWZ128rri:   NewOpc = X86_VPCMPUWZ128rri_alt;   break;
+				case X86_VPCMPUWZ128rrik:  NewOpc = X86_VPCMPUWZ128rrik_alt;  break;
+				case X86_VPCMPUWZ256rmi:   NewOpc = X86_VPCMPUWZ256rmi_alt;   break;
+				case X86_VPCMPUWZ256rmik:  NewOpc = X86_VPCMPUWZ256rmik_alt;  break;
+				case X86_VPCMPUWZ256rri:   NewOpc = X86_VPCMPUWZ256rri_alt;   break;
+				case X86_VPCMPUWZ256rrik:  NewOpc = X86_VPCMPUWZ256rrik_alt;  break;
+				case X86_VPCMPUWZrmi:      NewOpc = X86_VPCMPUWZrmi_alt;      break;
+				case X86_VPCMPUWZrmik:     NewOpc = X86_VPCMPUWZrmik_alt;     break;
+				case X86_VPCMPUWZrri:      NewOpc = X86_VPCMPUWZrri_alt;      break;
+				case X86_VPCMPUWZrrik:     NewOpc = X86_VPCMPUWZrrik_alt;     break;
+				case X86_VPCMPWZ128rmi:    NewOpc = X86_VPCMPWZ128rmi_alt;    break;
+				case X86_VPCMPWZ128rmik:   NewOpc = X86_VPCMPWZ128rmik_alt;   break;
+				case X86_VPCMPWZ128rri:    NewOpc = X86_VPCMPWZ128rri_alt;    break;
+				case X86_VPCMPWZ128rrik:   NewOpc = X86_VPCMPWZ128rrik_alt;   break;
+				case X86_VPCMPWZ256rmi:    NewOpc = X86_VPCMPWZ256rmi_alt;    break;
+				case X86_VPCMPWZ256rmik:   NewOpc = X86_VPCMPWZ256rmik_alt;   break;
+				case X86_VPCMPWZ256rri:    NewOpc = X86_VPCMPWZ256rri_alt;    break;
+				case X86_VPCMPWZ256rrik:   NewOpc = X86_VPCMPWZ256rrik_alt;   break;
+				case X86_VPCMPWZrmi:       NewOpc = X86_VPCMPWZrmi_alt;       break;
+				case X86_VPCMPWZrmik:      NewOpc = X86_VPCMPWZrmik_alt;      break;
+				case X86_VPCMPWZrri:       NewOpc = X86_VPCMPWZrri_alt;       break;
+				case X86_VPCMPWZrrik:      NewOpc = X86_VPCMPWZrrik_alt;      break;
 			}
 			// Switch opcode to the one that doesn't get special printing.
 			if (NewOpc != 0) {
@@ -555,8 +687,6 @@ static bool translateRM(MCInst *mcInst, const OperandSpecifier *operand,
 		case TYPE_R32:
 		case TYPE_R64:
 		case TYPE_Rv:
-		case TYPE_MM:
-		case TYPE_MM32:
 		case TYPE_MM64:
 		case TYPE_XMM:
 		case TYPE_XMM32:
@@ -582,9 +712,6 @@ static bool translateRM(MCInst *mcInst, const OperandSpecifier *operand,
 		case TYPE_M32FP:
 		case TYPE_M64FP:
 		case TYPE_M80FP:
-		case TYPE_M16INT:
-		case TYPE_M32INT:
-		case TYPE_M64INT:
 		case TYPE_M1616:
 		case TYPE_M1632:
 		case TYPE_M1664:
@@ -759,12 +886,22 @@ static void update_pub_insn(cs_insn *pub, InternalInstruction *inter, uint8_t *p
 	pub->detail->x86.addr_size = inter->addressSize;
 
 	pub->detail->x86.modrm = inter->orgModRM;
-	pub->detail->x86.sib = inter->sib;
-	pub->detail->x86.disp = inter->displacement;
+	pub->detail->x86.encoding.modrm_offset = inter->modRMOffset;
 
+	pub->detail->x86.sib = inter->sib;
 	pub->detail->x86.sib_index = x86_map_sib_index(inter->sibIndex);
 	pub->detail->x86.sib_scale = inter->sibScale;
 	pub->detail->x86.sib_base = x86_map_sib_base(inter->sibBase);
+
+	pub->detail->x86.disp = inter->displacement;
+	if (inter->consumedDisplacement) {
+		pub->detail->x86.encoding.disp_offset = inter->displacementOffset;
+		pub->detail->x86.encoding.disp_size = inter->displacementSize;
+	}
+
+	pub->detail->x86.encoding.imm_offset = inter->immediateOffset;
+	if (pub->detail->x86.encoding.imm_size == 0 && inter->immediateOffset != 0)
+		pub->detail->x86.encoding.imm_size = inter->immediateSize;
 }
 
 void X86_init(MCRegisterInfo *MRI)
@@ -791,7 +928,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		MCInst *instr, uint16_t *size, uint64_t address, void *_info)
 {
 	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
-	InternalInstruction insn;
+	InternalInstruction insn = {0};
 	struct reader_info info;
 	int ret;
 	bool result;
@@ -800,18 +937,22 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	info.size = code_len;
 	info.offset = address;
 
-	memset(&insn, 0, offsetof(InternalInstruction, reader));
-
 	if (instr->flat_insn->detail) {
-		instr->flat_insn->detail->x86.op_count = 0;
-		instr->flat_insn->detail->x86.sse_cc = X86_SSE_CC_INVALID;
-		instr->flat_insn->detail->x86.avx_cc = X86_AVX_CC_INVALID;
-		instr->flat_insn->detail->x86.avx_sae = false;
-		instr->flat_insn->detail->x86.avx_rm = X86_AVX_RM_INVALID;
+		// instr->flat_insn->detail initialization: 3 alternatives
 
-		memset(instr->flat_insn->detail->x86.prefix, 0, sizeof(instr->flat_insn->detail->x86.prefix));
-		memset(instr->flat_insn->detail->x86.opcode, 0, sizeof(instr->flat_insn->detail->x86.opcode));
-		memset(instr->flat_insn->detail->x86.operands, 0, sizeof(instr->flat_insn->detail->x86.operands));
+		// 1. The whole structure, this is how it's done in other arch disassemblers
+		// Probably overkill since cs_detail is huge because of the 36 operands of ARM
+		
+		//memset(instr->flat_insn->detail, 0, sizeof(cs_detail));
+
+		// 2. Only the part relevant to x86
+		memset(instr->flat_insn->detail, 0, offsetof(cs_detail, x86) + sizeof(cs_x86));
+
+		// 3. The relevant part except for x86.operands
+		// sizeof(cs_x86) is 0x1c0, sizeof(x86.operands) is 0x180
+		// marginally faster, should be okay since x86.op_count is set to 0
+
+		//memset(instr->flat_insn->detail, 0, offsetof(cs_detail, x86)+offsetof(cs_x86, operands));
 	}
 
 	if (handle->mode & CS_MODE_16)
@@ -832,6 +973,65 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 
 	if (ret) {
 		*size = (uint16_t)(insn.readerCursor - address);
+		// handle some special cases here.
+		// FIXME: fix this in the next major update.
+		switch(*size) {
+			default:
+				break;
+			case 2: {
+						unsigned char b1 = 0, b2 = 0;
+
+						reader(&info, &b1, address);
+						reader(&info, &b2, address + 1);
+						if (b1 == 0x0f && b2 == 0xff) {
+							instr->Opcode = X86_UD0;
+							instr->OpcodePub = X86_INS_UD0;
+							strncpy(instr->assembly, "ud0", 4);
+							if (instr->flat_insn->detail) {
+								instr->flat_insn->detail->x86.opcode[0] = b1;
+								instr->flat_insn->detail->x86.opcode[1] = b2;
+							}
+							return true;
+						}
+				}
+				return false;
+			case 4: {
+						unsigned char b1 = 0, b2 = 0, b3 = 0, b4 = 0;
+
+						reader(&info, &b1, address);
+						reader(&info, &b2, address + 1);
+						reader(&info, &b3, address + 2);
+						reader(&info, &b4, address + 3);
+						if (handle->mode & CS_MODE_64) {
+							if (b1 == 0xf3 && b2 == 0x0f && b3 == 0x1e && b4 == 0xfa) {
+								instr->Opcode = X86_ENDBR64;
+								instr->OpcodePub = X86_INS_ENDBR64;
+								strncpy(instr->assembly, "endbr64", 8);
+								if (instr->flat_insn->detail) {
+									instr->flat_insn->detail->x86.opcode[0] = b1;
+									instr->flat_insn->detail->x86.opcode[1] = b2;
+									instr->flat_insn->detail->x86.opcode[2] = b3;
+									instr->flat_insn->detail->x86.opcode[3] = b4;
+								}
+								return true;
+							}
+						} else if (handle->mode & CS_MODE_32) {
+							if (b1 == 0xf3 && b2 == 0x0f && b3 == 0x1e && b4 == 0xfb) {
+								instr->Opcode = X86_ENDBR32;
+								instr->OpcodePub = X86_INS_ENDBR32;
+								strncpy(instr->assembly, "endbr32", 8);
+								if (instr->flat_insn->detail) {
+									instr->flat_insn->detail->x86.opcode[0] = b1;
+									instr->flat_insn->detail->x86.opcode[1] = b2;
+									instr->flat_insn->detail->x86.opcode[2] = b3;
+									instr->flat_insn->detail->x86.opcode[3] = b4;
+								}
+								return true;
+							}
+						}
+				}
+				return false;
+		}
 
 		return false;
 	} else {

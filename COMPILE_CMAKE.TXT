@@ -16,20 +16,25 @@ Get CMake for free from http://www.cmake.org.
 
 (0) Tailor Capstone to your need.
 
-  Out of 8 archtitectures supported by Capstone (Arm, Arm64, Mips, PPC, Sparc,
-  SystemZ, X86 & XCore), if you just need several selected archs, run "cmake"
-  with the unwanted archs disabled (set to 0) as followings.
+  Out of 12 archtitectures supported by Capstone (Arm, Arm64, M68K, Mips, PPC,
+  Sparc, SystemZ, X86, XCore, M680X, TMS320C64x & EVM), if you just need several selected archs,
+  run "cmake" with the unwanted archs disabled (set to 0) as followings.
 
   - CAPSTONE_ARM_SUPPORT: support ARM. Run cmake with -DCAPSTONE_ARM_SUPPORT=0 to remove ARM.
   - CAPSTONE_ARM64_SUPPORT: support ARM64. Run cmake with -DCAPSTONE_ARM64_SUPPORT=0 to remove ARM64.
+  - CAPSTONE_M680X_SUPPORT: support M680X. Run cmake with -DCAPSTONE_M680X_SUPPORT=0 to remove M680X.
+  - CAPSTONE_M68K_SUPPORT: support M68K. Run cmake with -DCAPSTONE_M68K_SUPPORT=0 to remove M68K.
   - CAPSTONE_MIPS_SUPPORT: support Mips. Run cmake with -DCAPSTONE_MIPS_SUPPORT=0 to remove Mips.
   - CAPSTONE_PPC_SUPPORT: support PPC. Run cmake with -DCAPSTONE_PPC_SUPPORT=0 to remove PPC.
   - CAPSTONE_SPARC_SUPPORT: support Sparc. Run cmake with -DCAPSTONE_SPARC_SUPPORT=0 to remove Sparc.
   - CAPSTONE_SYSZ_SUPPORT: support SystemZ. Run cmake with -DCAPSTONE_SYSZ_SUPPORT=0 to remove SystemZ.
   - CAPSTONE_XCORE_SUPPORT: support XCore. Run cmake with -DCAPSTONE_XCORE_SUPPORT=0 to remove XCore.
   - CAPSTONE_X86_SUPPORT: support X86. Run cmake with -DCAPSTONE_X86_SUPPORT=0 to remove X86.
+  - CAPSTONE_X86_TMS320C64X: support TMS320C64X. Run cmake with -DCAPSTONE_TMS320C64X_SUPPORT=0 to remove TMS320C64X.
+  - CAPSTONE_X86_M680X: support M680X. Run cmake with -DCAPSTONE_M680X_SUPPORT=0 to remove M680X.
+  - CAPSTONE_X86_EVM: support EVM. Run cmake with -DCAPSTONE_EVM_SUPPORT=0 to remove EVM.
 
-  By default, all 8 architectures are compiled in.
+  By default, all 10 architectures are compiled in.
 
 
   Besides, Capstone also allows some more customization via following macros.

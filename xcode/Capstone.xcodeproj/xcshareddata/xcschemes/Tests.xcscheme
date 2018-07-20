@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DC474E6319DDEA5F00BCA449"
-               BuildableName = "test_basic"
-               BlueprintName = "test_basic"
+               BuildableName = "test"
+               BlueprintName = "test"
                ReferencedContainer = "container:Capstone.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,6 +45,20 @@
                BlueprintIdentifier = "DC474EE919DDEAE400BCA449"
                BuildableName = "test_arm64"
                BlueprintName = "test_arm64"
+               ReferencedContainer = "container:Capstone.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DC3A28DA1AF29BEB00FC9913"
+               BuildableName = "test_customized_mnem"
+               BlueprintName = "test_customized_mnem"
                ReferencedContainer = "container:Capstone.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -188,8 +202,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DC474E6319DDEA5F00BCA449"
-            BuildableName = "test_basic"
-            BlueprintName = "test_basic"
+            BuildableName = "test"
+            BlueprintName = "test"
             ReferencedContainer = "container:Capstone.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -211,8 +225,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DC474E6319DDEA5F00BCA449"
-            BuildableName = "test_basic"
-            BlueprintName = "test_basic"
+            BuildableName = "test"
+            BlueprintName = "test"
             ReferencedContainer = "container:Capstone.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -229,8 +243,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DC474E6319DDEA5F00BCA449"
-            BuildableName = "test_basic"
-            BlueprintName = "test_basic"
+            BuildableName = "test"
+            BlueprintName = "test"
             ReferencedContainer = "container:Capstone.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

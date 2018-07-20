@@ -12,11 +12,11 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2016 */
 
 #ifdef CAPSTONE_HAS_ARM64
 
-#include <platform.h>
+#include <capstone/platform.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -45,14 +45,34 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info);
 static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 static void printShifter(MCInst *MI, unsigned OpNum, SStream *O);
 
+static cs_ac_type get_op_access(cs_struct *h, unsigned int id, unsigned int index)
+{
+#ifndef CAPSTONE_DIET
+	uint8_t *arr = AArch64_get_op_access(h, id);
+
+	if (arr[index] == CS_AC_IGNORE)
+		return 0;
+
+	return arr[index];
+#else
+	return 0;
+#endif
+}
+
 static void set_mem_access(MCInst *MI, bool status)
 {
+	MI->csh->doing_mem = status;
+
 	if (MI->csh->detail != CS_OPT_ON)
 		return;
 
-	MI->csh->doing_mem = status;
-
 	if (status) {
+#ifndef CAPSTONE_DIET
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
+#endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_MEM;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.base = ARM64_REG_INVALID;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.index = ARM64_REG_INVALID;
@@ -116,9 +136,20 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 						getRegisterName(getWRegFromXReg(MCOperand_getReg(Op1)), AArch64_NoRegAltName));
 
 				if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+					uint8_t access;
+					access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+					MI->ac_idx++;
+#endif
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
 					MI->flat_insn->detail->arm64.op_count++;
+#ifndef CAPSTONE_DIET
+					access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+					MI->ac_idx++;
+#endif
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = getWRegFromXReg(MCOperand_getReg(Op1));
 					MI->flat_insn->detail->arm64.op_count++;
@@ -170,12 +201,28 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 				MCInst_setOpcodePub(MI, AArch64_map_insn(AsmMnemonic));
 
 				if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+					uint8_t access;
+					access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+					MI->ac_idx++;
+#endif
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
 					MI->flat_insn->detail->arm64.op_count++;
+#ifndef CAPSTONE_DIET
+					access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+					MI->ac_idx++;
+#endif
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op1);
 					MI->flat_insn->detail->arm64.op_count++;
+#ifndef CAPSTONE_DIET
+					access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+					MI->ac_idx++;
+#endif
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = shift;
 					MI->flat_insn->detail->arm64.op_count++;
@@ -197,15 +244,36 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 			MCInst_setOpcodePub(MI, AArch64_map_insn(IsSigned ? "sbfiz" : "ubfiz"));
 
 			if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+				uint8_t access;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
+#endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
 				MI->flat_insn->detail->arm64.op_count++;
+#ifndef CAPSTONE_DIET
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
+#endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op1);
 				MI->flat_insn->detail->arm64.op_count++;
+#ifndef CAPSTONE_DIET
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
+#endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (Is64Bit ? 64 : 32) - (int)MCOperand_getImm(Op2);
 				MI->flat_insn->detail->arm64.op_count++;
+#ifndef CAPSTONE_DIET
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
+#endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = MCOperand_getImm(Op3) + 1;
 				MI->flat_insn->detail->arm64.op_count++;
@@ -225,15 +293,36 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 		MCInst_setOpcodePub(MI, AArch64_map_insn(IsSigned ? "sbfx" : "ubfx"));
 
 		if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
+#endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
 			MI->flat_insn->detail->arm64.op_count++;
+#ifndef CAPSTONE_DIET
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
+#endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op1);
 			MI->flat_insn->detail->arm64.op_count++;
+#ifndef CAPSTONE_DIET
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
+#endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = MCOperand_getImm(Op2);
 			MI->flat_insn->detail->arm64.op_count++;
+#ifndef CAPSTONE_DIET
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
+#endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = MCOperand_getImm(Op3) - MCOperand_getImm(Op2) + 1;
 			MI->flat_insn->detail->arm64.op_count++;
@@ -263,15 +352,36 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 			MCInst_setOpcodePub(MI, AArch64_map_insn("bfi"));
 
 			if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+				uint8_t access;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
+#endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
 				MI->flat_insn->detail->arm64.op_count++;
+#ifndef CAPSTONE_DIET
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
+#endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op2);
 				MI->flat_insn->detail->arm64.op_count++;
+#ifndef CAPSTONE_DIET
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
+#endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = LSB;
 				MI->flat_insn->detail->arm64.op_count++;
+#ifndef CAPSTONE_DIET
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
+#endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Width;
 				MI->flat_insn->detail->arm64.op_count++;
@@ -292,15 +402,36 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 		MCInst_setOpcodePub(MI, AArch64_map_insn("bfxil"));
 
 		if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
+#endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
 			MI->flat_insn->detail->arm64.op_count++;
+#ifndef CAPSTONE_DIET
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
+#endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op2);
 			MI->flat_insn->detail->arm64.op_count++;
+#ifndef CAPSTONE_DIET
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
+#endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = LSB;
 			MI->flat_insn->detail->arm64.op_count++;
+#ifndef CAPSTONE_DIET
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
+#endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Width;
 			MI->flat_insn->detail->arm64.op_count++;
@@ -565,6 +696,12 @@ static bool printSysAlias(MCInst *MI, SStream *O)
 		MCInst_setOpcodePub(MI, insn_id);
 		SStream_concat0(O, Asm);
 		if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
+#endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_SYS;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].sys = op_ic + op_dc + op_at + op_tlbi;
 			MI->flat_insn->detail->arm64.op_count++;
@@ -574,6 +711,12 @@ static bool printSysAlias(MCInst *MI, SStream *O)
 			unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, 4));
 			SStream_concat(O, ", %s", getRegisterName(Reg, AArch64_NoRegAltName));
 			if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+				uint8_t access;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
+#endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
 				MI->flat_insn->detail->arm64.op_count++;
@@ -600,6 +743,12 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.index = Reg;
 				}
 			} else {
+#ifndef CAPSTONE_DIET
+				uint8_t access;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
+#endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
 				MI->flat_insn->detail->arm64.op_count++;
@@ -611,12 +760,23 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		if (MI->Opcode == AArch64_ADR) {
 			imm += MI->address;
 			printUInt64Bang(O, imm);
-		} else
-			printUInt64Bang(O, imm);
+		} else {
+			if (MI->csh->doing_mem)
+				printInt64Bang(O, imm);
+			else
+				printUInt64Bang(O, imm);
+		}
+
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int32_t)imm;
 			} else {
+#ifndef CAPSTONE_DIET
+				uint8_t access;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
+#endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = imm;
 				MI->flat_insn->detail->arm64.op_count++;
@@ -630,6 +790,12 @@ static void printHexImm(MCInst *MI, unsigned OpNo, SStream *O)
 	MCOperand *Op = MCInst_getOperand(MI, OpNo);
 	SStream_concat(O, "#%#llx", MCOperand_getImm(Op));
 	if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
+#endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = MCOperand_getImm(Op);
 		MI->flat_insn->detail->arm64.op_count++;
@@ -646,6 +812,12 @@ static void printPostIncOperand(MCInst *MI, unsigned OpNo,
 		if (Reg == AArch64_XZR) {
 			printInt32Bang(O, Imm);
 			if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+				uint8_t access;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
+#endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Imm;
 				MI->flat_insn->detail->arm64.op_count++;
@@ -653,6 +825,12 @@ static void printPostIncOperand(MCInst *MI, unsigned OpNo,
 		} else {
 			SStream_concat0(O, getRegisterName(Reg, AArch64_NoRegAltName));
 			if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+				uint8_t access;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
+#endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
 				MI->flat_insn->detail->arm64.op_count++;
@@ -674,6 +852,12 @@ static void printVRegOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	unsigned Reg = MCOperand_getReg(Op);
 	SStream_concat0(O, getRegisterName(Reg, AArch64_vreg));
 	if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
+#endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = AArch64_map_vregister(Reg);
 		MI->flat_insn->detail->arm64.op_count++;
@@ -686,6 +870,12 @@ static void printSysCROperand(MCInst *MI, unsigned OpNo, SStream *O)
 	//assert(Op.isImm() && "System instruction C[nm] operands must be immediates!");
 	SStream_concat(O, "c%u", MCOperand_getImm(Op));
 	if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
+#endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_CIMM;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = MCOperand_getImm(Op);
 		MI->flat_insn->detail->arm64.op_count++;
@@ -703,6 +893,12 @@ static void printAddSubImm(MCInst *MI, unsigned OpNum, SStream *O)
 		printInt32Bang(O, Val);
 
 		if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
+#endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
 			MI->flat_insn->detail->arm64.op_count++;
@@ -721,6 +917,12 @@ static void printLogicalImm32(MCInst *MI, unsigned OpNum, SStream *O)
 	printUInt32Bang(O, (int)Val);
 
 	if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
+#endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
 		MI->flat_insn->detail->arm64.op_count++;
@@ -749,8 +951,14 @@ static void printLogicalImm64(MCInst *MI, unsigned OpNum, SStream *O)
 	}
 
 	if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
+#endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int64_t)Val;
 		MI->flat_insn->detail->arm64.op_count++;
 	}
 }
@@ -796,6 +1004,12 @@ static void printShiftedRegister(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	SStream_concat0(O, getRegisterName(MCOperand_getReg(MCInst_getOperand(MI, OpNum)), AArch64_NoRegAltName));
 	if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
+#endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
 		MI->flat_insn->detail->arm64.op_count++;
@@ -882,6 +1096,12 @@ static void printExtendedRegister(MCInst *MI, unsigned OpNum, SStream *O)
 
 	SStream_concat0(O, getRegisterName(Reg, AArch64_NoRegAltName));
 	if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
+#endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
 		MI->flat_insn->detail->arm64.op_count++;
@@ -976,6 +1196,12 @@ static void printImmScale(MCInst *MI, unsigned OpNum, SStream *O, int Scale)
 		if (MI->csh->doing_mem) {
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int32_t)val;
 		} else {
+#ifndef CAPSTONE_DIET
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
+#endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = val;
 			MI->flat_insn->detail->arm64.op_count++;
@@ -994,9 +1220,15 @@ static void printUImm12Offset(MCInst *MI, unsigned OpNum, unsigned Scale, SStrea
 			if (MI->csh->doing_mem) {
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int32_t)val;
 			} else {
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = val;
-			MI->flat_insn->detail->arm64.op_count++;
+#ifndef CAPSTONE_DIET
+				uint8_t access;
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
+#endif
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)val;
+				MI->flat_insn->detail->arm64.op_count++;
 			}
 		}
 	}
@@ -1024,6 +1256,12 @@ static void printPrefetchOp(MCInst *MI, unsigned OpNum, SStream *O)
 	} else {
 		printInt32Bang(O, prfop);
 		if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
+#endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = prfop;
 			MI->flat_insn->detail->arm64.op_count++;
@@ -1044,6 +1282,12 @@ static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	SStream_concat(O, "#%.8f", FPImm);
 #endif
 	if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
+#endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_FP;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].fp = FPImm;
 		MI->flat_insn->detail->arm64.op_count++;
@@ -1135,6 +1379,12 @@ static void printVectorList(MCInst *MI, unsigned OpNum, SStream *O, char *Layout
 		if (i + 1 != NumRegs)
 			SStream_concat0(O, ", ");
 		if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
+#endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = AArch64_map_vregister(Reg);
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].vas = vas;
@@ -1251,6 +1501,12 @@ static void printAlignedLabel(MCInst *MI, unsigned OpNum, SStream *O)
 		uint64_t imm = (MCOperand_getImm(Op) * 4) + MI->address;
 		printUInt64Bang(O, imm);
 		if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
+#endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = imm;
 			MI->flat_insn->detail->arm64.op_count++;
@@ -1270,6 +1526,12 @@ static void printAdrpLabel(MCInst *MI, unsigned OpNum, SStream *O)
 		printUInt64Bang(O, imm);
 
 		if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
+#endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = imm;
 			MI->flat_insn->detail->arm64.op_count++;
@@ -1293,6 +1555,12 @@ static void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
 	if (Valid) {
 		SStream_concat0(O, Name);
 		if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
+#endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_BARRIER;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].barrier = Val;
 			MI->flat_insn->detail->arm64.op_count++;
@@ -1300,6 +1568,12 @@ static void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
 	} else {
 		printUInt32Bang(O, Val);
 		if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
+#endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
 			MI->flat_insn->detail->arm64.op_count++;
@@ -1310,36 +1584,42 @@ static void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
 static void printMRSSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
-	bool Valid;
 	char Name[128];
 
-	A64SysRegMapper_toString(&AArch64_MRSMapper, Val, &Valid, Name);
+	A64SysRegMapper_toString(&AArch64_MRSMapper, Val, Name);
 
-	if (Valid) {
-		SStream_concat0(O, Name);
-		if (MI->csh->detail) {
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG_MRS;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Val;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
+	SStream_concat0(O, Name);
+	if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
+#endif
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG_MRS;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Val;
+		MI->flat_insn->detail->arm64.op_count++;
 	}
 }
 
 static void printMSRSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
-	bool Valid;
 	char Name[128];
 
-	A64SysRegMapper_toString(&AArch64_MSRMapper, Val, &Valid, Name);
+	A64SysRegMapper_toString(&AArch64_MSRMapper, Val, Name);
 
-	if (Valid) {
-		SStream_concat0(O, Name);
-		if (MI->csh->detail) {
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG_MSR;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Val;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
+	SStream_concat0(O, Name);
+	if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
+#endif
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG_MSR;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Val;
+		MI->flat_insn->detail->arm64.op_count++;
 	}
 }
 
@@ -1353,12 +1633,26 @@ static void printSystemPStateField(MCInst *MI, unsigned OpNo, SStream *O)
 	if (Valid) {
 		SStream_concat0(O, Name);
 		if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+			uint8_t access;
+			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+			MI->ac_idx++;
+#endif
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_PSTATE;
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].pstate = Val;
 			MI->flat_insn->detail->arm64.op_count++;
 		}
 	} else {
+#ifndef CAPSTONE_DIET
+		unsigned char access;
+#endif
 		printInt32Bang(O, Val);
+#ifndef CAPSTONE_DIET
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
+#endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
 		MI->flat_insn->detail->arm64.op_count++;
@@ -1371,6 +1665,12 @@ static void printSIMDType10Operand(MCInst *MI, unsigned OpNo, SStream *O)
 	uint64_t Val = AArch64_AM_decodeAdvSIMDModImmType10(RawVal);
 	SStream_concat(O, "#%#016llx", Val);
 	if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+		unsigned char access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
+#endif
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
 		MI->flat_insn->detail->arm64.op_count++;
@@ -1386,9 +1686,253 @@ void AArch64_post_printer(csh handle, cs_insn *flat_insn, char *insn_asm, MCInst
 	if (((cs_struct *)handle)->detail != CS_OPT_ON)
 		return;
 
-	// check if this insn requests write-back
-	if (strrchr(insn_asm, '!') != NULL)
-		flat_insn->detail->arm64.writeback = true;
+	if (mci->csh->detail) {
+		unsigned opcode = MCInst_getOpcode(mci);
+		switch (opcode) {
+			default:
+				break;
+			case AArch64_LD1Fourv16b_POST:
+			case AArch64_LD1Fourv1d_POST:
+			case AArch64_LD1Fourv2d_POST:
+			case AArch64_LD1Fourv2s_POST:
+			case AArch64_LD1Fourv4h_POST:
+			case AArch64_LD1Fourv4s_POST:
+			case AArch64_LD1Fourv8b_POST:
+			case AArch64_LD1Fourv8h_POST:
+			case AArch64_LD1Onev16b_POST:
+			case AArch64_LD1Onev1d_POST:
+			case AArch64_LD1Onev2d_POST:
+			case AArch64_LD1Onev2s_POST:
+			case AArch64_LD1Onev4h_POST:
+			case AArch64_LD1Onev4s_POST:
+			case AArch64_LD1Onev8b_POST:
+			case AArch64_LD1Onev8h_POST:
+			case AArch64_LD1Rv16b_POST:
+			case AArch64_LD1Rv1d_POST:
+			case AArch64_LD1Rv2d_POST:
+			case AArch64_LD1Rv2s_POST:
+			case AArch64_LD1Rv4h_POST:
+			case AArch64_LD1Rv4s_POST:
+			case AArch64_LD1Rv8b_POST:
+			case AArch64_LD1Rv8h_POST:
+			case AArch64_LD1Threev16b_POST:
+			case AArch64_LD1Threev1d_POST:
+			case AArch64_LD1Threev2d_POST:
+			case AArch64_LD1Threev2s_POST:
+			case AArch64_LD1Threev4h_POST:
+			case AArch64_LD1Threev4s_POST:
+			case AArch64_LD1Threev8b_POST:
+			case AArch64_LD1Threev8h_POST:
+			case AArch64_LD1Twov16b_POST:
+			case AArch64_LD1Twov1d_POST:
+			case AArch64_LD1Twov2d_POST:
+			case AArch64_LD1Twov2s_POST:
+			case AArch64_LD1Twov4h_POST:
+			case AArch64_LD1Twov4s_POST:
+			case AArch64_LD1Twov8b_POST:
+			case AArch64_LD1Twov8h_POST:
+			case AArch64_LD1i16_POST:
+			case AArch64_LD1i32_POST:
+			case AArch64_LD1i64_POST:
+			case AArch64_LD1i8_POST:
+			case AArch64_LD2Rv16b_POST:
+			case AArch64_LD2Rv1d_POST:
+			case AArch64_LD2Rv2d_POST:
+			case AArch64_LD2Rv2s_POST:
+			case AArch64_LD2Rv4h_POST:
+			case AArch64_LD2Rv4s_POST:
+			case AArch64_LD2Rv8b_POST:
+			case AArch64_LD2Rv8h_POST:
+			case AArch64_LD2Twov16b_POST:
+			case AArch64_LD2Twov2d_POST:
+			case AArch64_LD2Twov2s_POST:
+			case AArch64_LD2Twov4h_POST:
+			case AArch64_LD2Twov4s_POST:
+			case AArch64_LD2Twov8b_POST:
+			case AArch64_LD2Twov8h_POST:
+			case AArch64_LD2i16_POST:
+			case AArch64_LD2i32_POST:
+			case AArch64_LD2i64_POST:
+			case AArch64_LD2i8_POST:
+			case AArch64_LD3Rv16b_POST:
+			case AArch64_LD3Rv1d_POST:
+			case AArch64_LD3Rv2d_POST:
+			case AArch64_LD3Rv2s_POST:
+			case AArch64_LD3Rv4h_POST:
+			case AArch64_LD3Rv4s_POST:
+			case AArch64_LD3Rv8b_POST:
+			case AArch64_LD3Rv8h_POST:
+			case AArch64_LD3Threev16b_POST:
+			case AArch64_LD3Threev2d_POST:
+			case AArch64_LD3Threev2s_POST:
+			case AArch64_LD3Threev4h_POST:
+			case AArch64_LD3Threev4s_POST:
+			case AArch64_LD3Threev8b_POST:
+			case AArch64_LD3Threev8h_POST:
+			case AArch64_LD3i16_POST:
+			case AArch64_LD3i32_POST:
+			case AArch64_LD3i64_POST:
+			case AArch64_LD3i8_POST:
+			case AArch64_LD4Fourv16b_POST:
+			case AArch64_LD4Fourv2d_POST:
+			case AArch64_LD4Fourv2s_POST:
+			case AArch64_LD4Fourv4h_POST:
+			case AArch64_LD4Fourv4s_POST:
+			case AArch64_LD4Fourv8b_POST:
+			case AArch64_LD4Fourv8h_POST:
+			case AArch64_LD4Rv16b_POST:
+			case AArch64_LD4Rv1d_POST:
+			case AArch64_LD4Rv2d_POST:
+			case AArch64_LD4Rv2s_POST:
+			case AArch64_LD4Rv4h_POST:
+			case AArch64_LD4Rv4s_POST:
+			case AArch64_LD4Rv8b_POST:
+			case AArch64_LD4Rv8h_POST:
+			case AArch64_LD4i16_POST:
+			case AArch64_LD4i32_POST:
+			case AArch64_LD4i64_POST:
+			case AArch64_LD4i8_POST:
+			case AArch64_LDPDpost:
+			case AArch64_LDPDpre:
+			case AArch64_LDPQpost:
+			case AArch64_LDPQpre:
+			case AArch64_LDPSWpost:
+			case AArch64_LDPSWpre:
+			case AArch64_LDPSpost:
+			case AArch64_LDPSpre:
+			case AArch64_LDPWpost:
+			case AArch64_LDPWpre:
+			case AArch64_LDPXpost:
+			case AArch64_LDPXpre:
+			case AArch64_LDRBBpost:
+			case AArch64_LDRBBpre:
+			case AArch64_LDRBpost:
+			case AArch64_LDRBpre:
+			case AArch64_LDRDpost:
+			case AArch64_LDRDpre:
+			case AArch64_LDRHHpost:
+			case AArch64_LDRHHpre:
+			case AArch64_LDRHpost:
+			case AArch64_LDRHpre:
+			case AArch64_LDRQpost:
+			case AArch64_LDRQpre:
+			case AArch64_LDRSBWpost:
+			case AArch64_LDRSBWpre:
+			case AArch64_LDRSBXpost:
+			case AArch64_LDRSBXpre:
+			case AArch64_LDRSHWpost:
+			case AArch64_LDRSHWpre:
+			case AArch64_LDRSHXpost:
+			case AArch64_LDRSHXpre:
+			case AArch64_LDRSWpost:
+			case AArch64_LDRSWpre:
+			case AArch64_LDRSpost:
+			case AArch64_LDRSpre:
+			case AArch64_LDRWpost:
+			case AArch64_LDRWpre:
+			case AArch64_LDRXpost:
+			case AArch64_LDRXpre:
+			case AArch64_ST1Fourv16b_POST:
+			case AArch64_ST1Fourv1d_POST:
+			case AArch64_ST1Fourv2d_POST:
+			case AArch64_ST1Fourv2s_POST:
+			case AArch64_ST1Fourv4h_POST:
+			case AArch64_ST1Fourv4s_POST:
+			case AArch64_ST1Fourv8b_POST:
+			case AArch64_ST1Fourv8h_POST:
+			case AArch64_ST1Onev16b_POST:
+			case AArch64_ST1Onev1d_POST:
+			case AArch64_ST1Onev2d_POST:
+			case AArch64_ST1Onev2s_POST:
+			case AArch64_ST1Onev4h_POST:
+			case AArch64_ST1Onev4s_POST:
+			case AArch64_ST1Onev8b_POST:
+			case AArch64_ST1Onev8h_POST:
+			case AArch64_ST1Threev16b_POST:
+			case AArch64_ST1Threev1d_POST:
+			case AArch64_ST1Threev2d_POST:
+			case AArch64_ST1Threev2s_POST:
+			case AArch64_ST1Threev4h_POST:
+			case AArch64_ST1Threev4s_POST:
+			case AArch64_ST1Threev8b_POST:
+			case AArch64_ST1Threev8h_POST:
+			case AArch64_ST1Twov16b_POST:
+			case AArch64_ST1Twov1d_POST:
+			case AArch64_ST1Twov2d_POST:
+			case AArch64_ST1Twov2s_POST:
+			case AArch64_ST1Twov4h_POST:
+			case AArch64_ST1Twov4s_POST:
+			case AArch64_ST1Twov8b_POST:
+			case AArch64_ST1Twov8h_POST:
+			case AArch64_ST1i16_POST:
+			case AArch64_ST1i32_POST:
+			case AArch64_ST1i64_POST:
+			case AArch64_ST1i8_POST:
+			case AArch64_ST2Twov16b_POST:
+			case AArch64_ST2Twov2d_POST:
+			case AArch64_ST2Twov2s_POST:
+			case AArch64_ST2Twov4h_POST:
+			case AArch64_ST2Twov4s_POST:
+			case AArch64_ST2Twov8b_POST:
+			case AArch64_ST2Twov8h_POST:
+			case AArch64_ST2i16_POST:
+			case AArch64_ST2i32_POST:
+			case AArch64_ST2i64_POST:
+			case AArch64_ST2i8_POST:
+			case AArch64_ST3Threev16b_POST:
+			case AArch64_ST3Threev2d_POST:
+			case AArch64_ST3Threev2s_POST:
+			case AArch64_ST3Threev4h_POST:
+			case AArch64_ST3Threev4s_POST:
+			case AArch64_ST3Threev8b_POST:
+			case AArch64_ST3Threev8h_POST:
+			case AArch64_ST3i16_POST:
+			case AArch64_ST3i32_POST:
+			case AArch64_ST3i64_POST:
+			case AArch64_ST3i8_POST:
+			case AArch64_ST4Fourv16b_POST:
+			case AArch64_ST4Fourv2d_POST:
+			case AArch64_ST4Fourv2s_POST:
+			case AArch64_ST4Fourv4h_POST:
+			case AArch64_ST4Fourv4s_POST:
+			case AArch64_ST4Fourv8b_POST:
+			case AArch64_ST4Fourv8h_POST:
+			case AArch64_ST4i16_POST:
+			case AArch64_ST4i32_POST:
+			case AArch64_ST4i64_POST:
+			case AArch64_ST4i8_POST:
+			case AArch64_STPDpost:
+			case AArch64_STPDpre:
+			case AArch64_STPQpost:
+			case AArch64_STPQpre:
+			case AArch64_STPSpost:
+			case AArch64_STPSpre:
+			case AArch64_STPWpost:
+			case AArch64_STPWpre:
+			case AArch64_STPXpost:
+			case AArch64_STPXpre:
+			case AArch64_STRBBpost:
+			case AArch64_STRBBpre:
+			case AArch64_STRBpost:
+			case AArch64_STRBpre:
+			case AArch64_STRDpost:
+			case AArch64_STRDpre:
+			case AArch64_STRHHpost:
+			case AArch64_STRHHpre:
+			case AArch64_STRHpost:
+			case AArch64_STRHpre:
+			case AArch64_STRQpost:
+			case AArch64_STRQpre:
+			case AArch64_STRSpost:
+			case AArch64_STRSpre:
+			case AArch64_STRWpost:
+			case AArch64_STRWpre:
+			case AArch64_STRXpost:
+			case AArch64_STRXpre:
+				flat_insn->detail->arm64.writeback = true;
+				break;
+		}
+	}
 }
 
 #endif

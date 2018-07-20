@@ -15,15 +15,12 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifndef CS_LLVM_AARCH64_BASEINFO_H
 #define CS_LLVM_AARCH64_BASEINFO_H
 
 #include <ctype.h>
-#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
-#include <stdint.h>
-#endif
 #include <string.h>
 
 #ifndef __cplusplus
@@ -1008,6 +1005,6 @@ uint32_t A64NamedImmMapper_fromString(const A64NamedImmMapper *N, char *Name, bo
 
 bool A64NamedImmMapper_validImm(const A64NamedImmMapper *N, uint32_t Value);
 
-void A64SysRegMapper_toString(const A64SysRegMapper *S, uint32_t Bits, bool *Valid, char *result);
+void A64SysRegMapper_toString(const A64SysRegMapper *S, uint32_t Bits, char *result);
 
 #endif

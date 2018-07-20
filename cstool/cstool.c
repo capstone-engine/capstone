@@ -1,10 +1,63 @@
 /* Tang Yuhang <tyh000011112222@gmail.com> 2016 */
+/* pancake <pancake@nopcode.org> 2017 */
+
 #include <string.h>
 #include <ctype.h>
 #include <errno.h>
+#include "getopt.h"
 
-#include <capstone.h>
+#include <capstone/capstone.h>
 
+static struct {
+	const char *name;
+	cs_arch arch;
+	cs_mode mode;
+} all_archs[] = {
+	{ "arm", CS_ARCH_ARM, CS_MODE_ARM },
+	{ "armb", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_BIG_ENDIAN },
+	{ "armbe", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_BIG_ENDIAN },
+	{ "arml", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_LITTLE_ENDIAN },
+	{ "armle", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_LITTLE_ENDIAN },
+	{ "cortexm", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_MCLASS },
+	{ "thumb", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB },
+	{ "thumbbe", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN },
+	{ "thumble", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_LITTLE_ENDIAN },
+	{ "arm64", CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN },
+	{ "arm64be", CS_ARCH_ARM64, CS_MODE_BIG_ENDIAN },
+	{ "mips", CS_ARCH_MIPS, CS_MODE_MIPS32 | CS_MODE_LITTLE_ENDIAN },
+	{ "mipsbe", CS_ARCH_MIPS, CS_MODE_MIPS32 | CS_MODE_BIG_ENDIAN },
+	{ "mips64", CS_ARCH_MIPS, CS_MODE_MIPS64 | CS_MODE_LITTLE_ENDIAN },
+	{ "mips64be", CS_ARCH_MIPS, CS_MODE_MIPS64 | CS_MODE_BIG_ENDIAN },
+	{ "x16", CS_ARCH_X86, CS_MODE_16 }, // CS_MODE_16
+	{ "x16att", CS_ARCH_X86, CS_MODE_16 }, // CS_MODE_16 , CS_OPT_SYNTAX_ATT
+	{ "x32", CS_ARCH_X86, CS_MODE_32 }, // CS_MODE_32
+	{ "x32att", CS_ARCH_X86, CS_MODE_32 }, // CS_MODE_32, CS_OPT_SYNTAX_ATT
+	{ "x64", CS_ARCH_X86, CS_MODE_64 }, // CS_MODE_64
+	{ "x64att", CS_ARCH_X86, CS_MODE_64 }, // CS_MODE_64, CS_OPT_SYNTAX_ATT
+	{ "ppc64", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_LITTLE_ENDIAN },
+	{ "ppc64be", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN },
+	{ "sparc", CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN },
+	{ "systemz", CS_ARCH_SYSZ, CS_MODE_BIG_ENDIAN },
+	{ "sysz", CS_ARCH_SYSZ, CS_MODE_BIG_ENDIAN },
+	{ "s390x", CS_ARCH_SYSZ, CS_MODE_BIG_ENDIAN },
+	{ "xcore", CS_ARCH_XCORE, CS_MODE_BIG_ENDIAN },
+	{ "m68k", CS_ARCH_M68K, CS_MODE_BIG_ENDIAN },
+	{ "m68k40", CS_ARCH_M68K, CS_MODE_M68K_040 },
+	{ "tms320c64x", CS_ARCH_TMS320C64X, CS_MODE_BIG_ENDIAN },
+	{ "tms320c64x", CS_ARCH_TMS320C64X, CS_MODE_BIG_ENDIAN },
+	{ "m6800", CS_ARCH_M680X, CS_MODE_M680X_6800 },
+	{ "m6801", CS_ARCH_M680X, CS_MODE_M680X_6801 },
+	{ "m6805", CS_ARCH_M680X, CS_MODE_M680X_6805 },
+	{ "m6808", CS_ARCH_M680X, CS_MODE_M680X_6808 },
+	{ "m6809", CS_ARCH_M680X, CS_MODE_M680X_6809 },
+	{ "m6811", CS_ARCH_M680X, CS_MODE_M680X_6811 },
+	{ "cpu12", CS_ARCH_M680X, CS_MODE_M680X_CPU12 },
+	{ "hd6301", CS_ARCH_M680X, CS_MODE_M680X_6301 },
+	{ "hd6309", CS_ARCH_M680X, CS_MODE_M680X_6309 },
+	{ "hcs08", CS_ARCH_M680X, CS_MODE_M680X_HCS08 },
+	{ "evm", CS_ARCH_EVM, 0 },
+	{ NULL }
+};
 
 void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins);
 void print_insn_detail_arm(csh handle, cs_insn *ins);
@@ -14,6 +67,12 @@ void print_insn_detail_ppc(csh handle, cs_insn *ins);
 void print_insn_detail_sparc(csh handle, cs_insn *ins);
 void print_insn_detail_sysz(csh handle, cs_insn *ins);
 void print_insn_detail_xcore(csh handle, cs_insn *ins);
+void print_insn_detail_m68k(csh handle, cs_insn *ins);
+void print_insn_detail_tms320c64x(csh handle, cs_insn *ins);
+void print_insn_detail_m680x(csh handle, cs_insn *ins);
+void print_insn_detail_evm(csh handle, cs_insn *ins);
+
+static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins);
 
 void print_string_hex(char *comment, unsigned char *str, size_t len)
 {
@@ -50,6 +109,9 @@ static uint8_t *preprocess(char *code, size_t *size)
 	uint8_t high, low;
 	uint8_t *result;
 
+	if (strlen(code) == 0)
+		return NULL;
+
 	result = (uint8_t *)malloc(strlen(code));
 	if (result != NULL) {
 		while (code[i] != '\0') {
@@ -71,7 +133,7 @@ static uint8_t *preprocess(char *code, size_t *size)
 static void usage(char *prog)
 {
 	printf("Cstool for Capstone Disassembler Engine v%u.%u.%u\n\n", CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA);
-	printf("Syntax: %s [-d] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
+	printf("Syntax: %s [-u|-d] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
 	printf("\nThe following <arch+mode> options are supported:\n");
 
 	if (cs_support(CS_ARCH_X86)) {
@@ -89,7 +151,6 @@ static void usage(char *prog)
 		printf("        thumb:     thumb mode\n");
 		printf("        thumbbe:   thumb + big endian\n");
 		printf("        cortexm:   thumb + cortex-m extensions\n");
-
 	}
 
 	if (cs_support(CS_ARCH_ARM64)) {
@@ -121,144 +182,169 @@ static void usage(char *prog)
 		printf("        xcore:     xcore\n");
 	}
 
+	if (cs_support(CS_ARCH_M68K)) {
+		printf("        m68k:      m68k + big endian\n");
+		printf("        m68k40:    m68k_040\n");
+	}
+
+	if (cs_support(CS_ARCH_TMS320C64X)) {
+		printf("        tms320c64x:TMS320C64x\n");
+	}
+
+	if (cs_support(CS_ARCH_M680X)) {
+		printf("        m6800:     M6800/2\n");
+		printf("        m6801:     M6801/3\n");
+		printf("        m6805:     M6805\n");
+		printf("        m6808:     M68HC08\n");
+		printf("        m6809:     M6809\n");
+		printf("        m6811:     M68HC11\n");
+		printf("        cpu12:     M68HC12/HCS12\n");
+		printf("        hd6301:    HD6301/3\n");
+		printf("        hd6309:    HD6309\n");
+		printf("        hcs08:     HCS08\n");
+	}
+
+	if (cs_support(CS_ARCH_EVM)) {
+		printf("        evm:       Ethereum Virtual Machine\n");
+	}
+
+	printf("\nExtra options:\n");
+	printf("        -d show detailed information of the instructions\n");
+	printf("        -u show immediates as unsigned\n\n");
+}
+
+static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
+{
+	switch(arch) {
+		case CS_ARCH_X86:
+			print_insn_detail_x86(handle, md, ins);
+			break;
+		case CS_ARCH_ARM:
+			print_insn_detail_arm(handle, ins);
+			break;
+		case CS_ARCH_ARM64:
+			print_insn_detail_arm64(handle, ins);
+			break;
+		case CS_ARCH_MIPS:
+			print_insn_detail_mips(handle, ins);
+			break;
+		case CS_ARCH_PPC:
+			print_insn_detail_ppc(handle, ins);
+			break;
+		case CS_ARCH_SPARC:
+			print_insn_detail_sparc(handle, ins);
+			break;
+		case CS_ARCH_SYSZ:
+			print_insn_detail_sysz(handle, ins);
+			break;
+		case CS_ARCH_XCORE:
+			print_insn_detail_xcore(handle, ins);
+			break;
+		case CS_ARCH_M68K:
+			print_insn_detail_m68k(handle, ins);
+			break;
+		case CS_ARCH_TMS320C64X:
+			print_insn_detail_tms320c64x(handle, ins);
+			break;
+		case CS_ARCH_M680X:
+			print_insn_detail_m680x(handle, ins);
+			break;
+		case CS_ARCH_EVM:
+			print_insn_detail_evm(handle, ins);
+			break;
+		default: break;
+	}
+
+	if (ins->detail->groups_count) {
+		int j;
+
+		printf("\tGroups: ");
+		for(j = 0; j < ins->detail->groups_count; j++) {
+			printf("%s ", cs_group_name(handle, ins->detail->groups[j]));
+		}
+		printf("\n");
+	}
+
 	printf("\n");
 }
 
 int main(int argc, char **argv)
 {
+	int i, c;
 	csh handle;
 	char *mode;
 	uint8_t *assembly;
 	size_t count, size;
-	uint64_t address = 0;
+	uint64_t address = 0LL;
 	cs_insn *insn;
 	cs_err err;
 	cs_mode md;
-	cs_arch arch;
+	cs_arch arch = CS_ARCH_ALL;
 	bool detail_flag = false;
-	bool x86_att_syntax = false;
+	bool unsigned_flag = false;
+	int args_left;
 
-	if (argc != 3 && argc != 4 && argc != 5) {
+	while ((c = getopt (argc, argv, "udhv")) != -1) {
+		switch (c) {
+			case 'u':
+				unsigned_flag = true;
+				break;
+			case 'd':
+				detail_flag = true;
+				break;
+			case 'v':
+				printf("%u.%u.%u\n", CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA);
+				return 0;
+			case 'h':
+				usage(argv[0]);
+				return 0;
+			default:
+				usage(argv[0]);
+				return -1;
+		}
+	}
+
+	args_left = argc - optind;
+	if (args_left < 2 || args_left > 3) {
 		usage(argv[0]);
 		return -1;
 	}
 
-	if (!strcmp(argv[1], "-d")) {
-		if (argc == 3) {
-			usage(argv[0]);
-			return -1;
-		}
-		detail_flag = true;
-		mode = argv[2];
-		assembly = preprocess(argv[3], &size);
-		if (argc == 5) {
-			char *temp;
-			address = strtoull(argv[4], &temp, 16);
-			if (temp == argv[4] || *temp != '\0' || errno == ERANGE) {
-				printf("ERROR: invalid address argument, quit!\n");
-				return -2;
-			}
-		}
-	} else {
-		if (argc == 5) {
-			usage(argv[0]);
-			return -1;
-		}
-
-		mode = argv[1];
-		assembly = preprocess(argv[2], &size);
-		if (assembly == NULL) {
-			printf("ERROR: invalid assembler-string argument, quit!\n");
-			return -3;
-		}
-
-		if (argc == 4) {
-			// cstool <arch> <assembly> <address>
-			char *temp;
-			address = strtoull(argv[3], &temp, 16);
-			if (temp == argv[3] || *temp != '\0' || errno == ERANGE) {
-				printf("ERROR: invalid address argument, quit!\n");
-				return -2;
-			}
-		}
-	}
-
-	if (!strcmp(mode, "arm") || !strcmp(mode, "arml") || !strcmp(mode, "armle")) {
-		arch = CS_ARCH_ARM;
-		md = CS_MODE_ARM | CS_MODE_LITTLE_ENDIAN;
-	} else if (!strcmp(mode, "armb") || !strcmp(mode, "armbe") ) {
-		arch = CS_ARCH_ARM;
-		md = CS_MODE_ARM | CS_MODE_BIG_ENDIAN;
-	} else if (!strcmp(mode, "thumb") || !strcmp(mode, "thumble")) {
-		arch = CS_ARCH_ARM;
-		md = CS_MODE_THUMB | CS_MODE_LITTLE_ENDIAN;
-	} else if (!strcmp(mode, "thumbbe")) {
-		arch = CS_ARCH_ARM;
-		md = CS_MODE_THUMB | CS_MODE_BIG_ENDIAN;
-	} else if (!strcmp(mode, "cortexm")) {
-		arch = CS_ARCH_ARM;
-		md = CS_MODE_THUMB | CS_MODE_MCLASS | CS_MODE_LITTLE_ENDIAN;
-	} else if (!strcmp(mode, "arm64")) {
-		arch = CS_ARCH_ARM64;
-		md = CS_MODE_LITTLE_ENDIAN;
-	} else if (!strcmp(mode, "arm64be")) {
-		arch = CS_ARCH_ARM64;
-		md = CS_MODE_BIG_ENDIAN;
-	} else if (!strcmp(mode, "mips")) {
-		arch = CS_ARCH_MIPS;
-		md = CS_MODE_MIPS32 | CS_MODE_LITTLE_ENDIAN;
-	} else if (!strcmp(mode, "mipsbe")) {
-		arch = CS_ARCH_MIPS;
-		md = CS_MODE_MIPS32 | CS_MODE_BIG_ENDIAN;
-	} else if (!strcmp(mode, "mips64")) {
-		arch = CS_ARCH_MIPS;
-		md = CS_MODE_MIPS64 | CS_MODE_LITTLE_ENDIAN;
-	} else if (!strcmp(mode, "mips64be")) {
-		arch = CS_ARCH_MIPS;
-		md = CS_MODE_MIPS64 | CS_MODE_BIG_ENDIAN;
-	} else if (!strcmp(mode, "x16")) {
-		arch = CS_ARCH_X86;
-		md = CS_MODE_16;
-	} else if (!strcmp(mode, "x32")) {
-		arch = CS_ARCH_X86;
-		md = CS_MODE_32;
-	} else if (!strcmp(mode, "x64")) {
-		arch = CS_ARCH_X86;
-		md = CS_MODE_64;
-	} else if (!strcmp(mode, "x16att")) {
-		arch = CS_ARCH_X86;
-		md = CS_MODE_16;
-		x86_att_syntax = true;
-	} else if (!strcmp(mode,"x32att")) {
-		arch = CS_ARCH_X86;
-		md = CS_MODE_32;
-		x86_att_syntax = true;
-	} else if (!strcmp(mode,"x64att")) {
-		arch = CS_ARCH_X86;
-		md = CS_MODE_64;
-		x86_att_syntax = true;
-	} else if (!strcmp(mode,"ppc64")) {
-		arch = CS_ARCH_PPC;
-		md = CS_MODE_64 | CS_MODE_LITTLE_ENDIAN;
-	} else if (!strcmp(mode,"ppc64be")) {
-		arch = CS_ARCH_PPC;
-		md = CS_MODE_64 | CS_MODE_BIG_ENDIAN;
-	} else if (!strcmp(mode,"sparc")) {
-		arch = CS_ARCH_SPARC;
-		md = CS_MODE_BIG_ENDIAN;
-	} else if (!strcmp(mode, "systemz") || !strcmp(mode, "sysz") || !strcmp(mode, "s390x")) {
-		arch = CS_ARCH_SYSZ;
-		md = CS_MODE_BIG_ENDIAN;
-	} else if (!strcmp(mode,"xcore")) {
-		arch = CS_ARCH_XCORE;
-		md = CS_MODE_BIG_ENDIAN;
-	} else {
-		printf("ERROR: unknown architecture '%s'!\n", mode);
+	mode = argv[optind];
+	assembly = preprocess(argv[optind + 1], &size);
+	if (!assembly) {
 		usage(argv[0]);
 		return -1;
 	}
 
-	err = cs_open(arch, md, &handle);
+	if (args_left == 3) {
+		char *temp, *src = argv[optind + 2];
+		address = strtoull(src, &temp, 16);
+		if (temp == src || *temp != '\0' || errno == ERANGE) {
+			printf("ERROR: invalid address argument, quit!\n");
+			return -2;
+		}
+	}
+
+	for (i = 0; all_archs[i].name; i++) {
+		if (!strcmp(all_archs[i].name, mode)) {
+			arch = all_archs[i].arch;
+			err = cs_open(all_archs[i].arch, all_archs[i].mode, &handle);
+			if (!err) {
+				md = all_archs[i].mode;
+				if (strstr (mode, "att")) {
+					cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
+				}
+			}
+			break;
+		}
+	}
+
+	if (arch == CS_ARCH_ALL) {
+		printf("ERROR: Invalid <arch+mode>: \"%s\", quit!\n", mode);
+		usage(argv[0]);
+		return -1;
+	}
 
 	if (err) {
 		printf("ERROR: Failed on cs_open(), quit!\n");
@@ -266,12 +352,12 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	if (arch == CS_ARCH_X86 && x86_att_syntax) {
-		cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
-	}
-
 	if (detail_flag) {
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+	}
+
+	if (unsigned_flag) {
+		cs_option(handle, CS_OPT_UNSIGNED, CS_OPT_ON);
 	}
 
 	count = cs_disasm(handle, assembly, size, address, 0, &insn);
@@ -280,7 +366,8 @@ int main(int argc, char **argv)
 
 		for (i = 0; i < count; i++) {
 			int j;
-			printf("%"PRIx64"  ", insn[i].address);
+
+			printf("%2"PRIx64"  ", insn[i].address);
 			for (j = 0; j < insn[i].size; j++) {
 				if (j > 0)
 					putchar(' ');
@@ -289,60 +376,18 @@ int main(int argc, char **argv)
 			// X86 instruction size is variable.
 			// align assembly instruction after the opcode
 			if (arch == CS_ARCH_X86) {
-
 				for (; j < 16; j++) {
-					printf("  ");
+					printf("   ");
 				}
 			}
 
 			printf("  %s\t%s\n", insn[i].mnemonic, insn[i].op_str);
 
 			if (detail_flag) {
-				if (arch == CS_ARCH_X86) {
-					print_insn_detail_x86(handle, md, &insn[i]);
-				}
-
-				if (arch == CS_ARCH_ARM) {
-					print_insn_detail_arm(handle, &insn[i]);
-				}
-
-				if (arch == CS_ARCH_ARM64) {
-					print_insn_detail_arm64(handle,&insn[i]);
-				}
-
-				if (arch == CS_ARCH_MIPS) {
-					print_insn_detail_mips(handle, &insn[i]);
-				}
-
-				if (arch == CS_ARCH_PPC) {
-					print_insn_detail_ppc(handle, &insn[i]);
-				}
-
-				if (arch == CS_ARCH_SPARC) {
-					print_insn_detail_sparc(handle, &insn[i]);
-				}
-
-				if (arch == CS_ARCH_SYSZ) {
-					print_insn_detail_sysz(handle, &insn[i]);
-				}
-
-				if (arch == CS_ARCH_XCORE) {
-					print_insn_detail_xcore(handle, &insn[i]);
-				}
-
-				if (insn[i].detail->groups_count) {
-					int j;
-
-					printf("\tGroups: ");
-					for(j = 0; j < insn[i].detail->groups_count; j++) {
-						printf("%s ", cs_group_name(handle, insn[i].detail->groups[j]));
-					}
-					printf("\n");
-				}
-
-				printf("\n");
+				print_details(handle, arch, md, &insn[i]);
 			}
 		}
+
 		cs_free(insn, count);
 	} else {
 		printf("ERROR: invalid assembly code\n");

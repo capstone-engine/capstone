@@ -57,12 +57,15 @@ else:
     VERSION = '{PKG_MAJOR}.{PKG_MINOR}.{PKG_EXTRA}'.format(**VERSION_DATA)
 
 if SYSTEM == 'darwin':
+    VERSIONED_LIBRARY_FILE = "libcapstone.4.dylib"
     LIBRARY_FILE = "libcapstone.dylib"
     STATIC_LIBRARY_FILE = 'libcapstone.a'
 elif SYSTEM in ('win32', 'cygwin'):
+    VERSIONED_LIBRARY_FILE = "capstone.dll"
     LIBRARY_FILE = "capstone.dll"
     STATIC_LIBRARY_FILE = None
 else:
+    VERSIONED_LIBRARY_FILE = "libcapstone.so.4"
     LIBRARY_FILE = "libcapstone.so"
     STATIC_LIBRARY_FILE = 'libcapstone.a'
 
@@ -115,7 +118,7 @@ def build_libraries():
     os.mkdir(LIBS_DIR)
 
     # copy public headers
-    shutil.copytree(os.path.join(BUILD_DIR, 'include'), os.path.join(HEADERS_DIR, 'capstone'))
+    shutil.copytree(os.path.join(BUILD_DIR, 'include', 'capstone'), os.path.join(HEADERS_DIR, 'capstone'))
 
     # if prebuilt libraries are available, use those and cancel build
     if os.path.exists(os.path.join(ROOT_DIR, 'prebuilt', LIBRARY_FILE)) and \
@@ -140,7 +143,8 @@ def build_libraries():
     else:   # Unix incl. cygwin
         os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh")
 
-    shutil.copy(LIBRARY_FILE, LIBS_DIR)
+    shutil.copy(VERSIONED_LIBRARY_FILE, os.path.join(LIBS_DIR, LIBRARY_FILE))
+
     # only copy static library if it exists (it's a build option)
     if STATIC_LIBRARY_FILE and os.path.exists(STATIC_LIBRARY_FILE):
         shutil.copy(STATIC_LIBRARY_FILE, LIBS_DIR)

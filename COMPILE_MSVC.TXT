@@ -19,9 +19,9 @@ versions, and Windows Driver Kit 8.1 Update 1 or newer versions are required.
 
 (0) Tailor Capstone to your need.
 
-  Out of 8 archtitectures supported by Capstone (Arm, Arm64, Mips, PPC, Sparc,
-  SystemZ, X86 & XCore), if you just need several selected archs, choose the ones
-  you want to compile in by opening Visual Studio solution "msvc\capstone.sln",
+  Out of 9 archtitectures supported by Capstone (Arm, Arm64, M68K, Mips, PPC,
+  Sparc, SystemZ, X86 & XCore), if you just need several selected archs, choose
+  the ones you want to compile in by opening Visual Studio solution "msvc\capstone.sln",
   then directly editing the projects "capstone_static" & "capstone_dll" for static
   and dynamic libraries, respectively. This must be done before going to the next
   steps.
@@ -32,6 +32,7 @@ versions, and Windows Driver Kit 8.1 Update 1 or newer versions are required.
 
   - CAPSTONE_HAS_ARM: support ARM. Delete this to remove ARM support.
   - CAPSTONE_HAS_ARM64: support ARM64. Delete this to remove ARM64 support.
+  - CAPSTONE_HAS_M68K: support M68K. Delete this to remove M68K support.
   - CAPSTONE_HAS_MIPS: support Mips. Delete this to remove Mips support.
   - CAPSTONE_HAS_PPC: support PPC. Delete this to remove PPC support.
   - CAPSTONE_HAS_SPARC: support Sparc. Delete this to remove Sparc support.
@@ -39,7 +40,7 @@ versions, and Windows Driver Kit 8.1 Update 1 or newer versions are required.
   - CAPSTONE_HAS_X86: support X86. Delete this to remove X86 support.
   - CAPSTONE_HAS_XCORE: support XCore. Delete this to remove XCore support.
 
-  By default, all 8 architectures are compiled in.
+  By default, all 9 architectures are compiled in.
 
 
   Besides, Capstone also allows some more customization via following macros.

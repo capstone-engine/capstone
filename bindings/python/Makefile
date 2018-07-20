@@ -62,13 +62,16 @@ clean:
 	rm -f pyx/*.c pyx/__init__.py
 	for f in capstone/*.py; do rm -f pyx/$$(basename $$f)x; done
 	rm -f MANIFEST
+	rm -f *.pyc capstone/*.pyc
 
 
-TESTS = test_basic.py test_detail.py test_arm.py test_arm64.py test_mips.py test_ppc.py
-TESTS += test_sparc.py test_systemz.py test_x86.py test_xcore.py test_skipdata.py
+TESTS = test_basic.py test_detail.py test_arm.py test_arm64.py test_m68k.py test_mips.py
+TESTS += test_ppc.py test_sparc.py test_systemz.py test_x86.py test_xcore.py test_tms320c64x.py test_m680x.py test_skipdata.py
+
 check:
 	@for t in $(TESTS); do \
 		echo Check $$t ... ; \
-		./$$t > /dev/null && echo OK || echo FAILED; \
+		./$$t > /dev/null; \
+		if [ $$? -eq 0 ]; then echo OK; else echo FAILED; exit 1; fi \
 	done
 

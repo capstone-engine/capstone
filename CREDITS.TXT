@@ -49,7 +49,7 @@ Axel "0vercl0k" Souchet (@0vercl0k) & Alex Ionescu: port to MSVC.
 Daniel Pistelli: Cmake support.
 Peter Hlavaty: integrate Capstone for Windows kernel drivers.
 Guillaume Jeanne: Ocaml binding.
-Martin Tofall, Obsidium Software: Optimize X86 performance & size.
+Martin Tofall, Obsidium Software: Optimize X86 performance & size + x86 encoding features.
 David Martínez Moreno & Hilko Bengen: Debian package.
 Félix Cloutier: Xcode project.
 Benoit Lecocq: OpenBSD package.
@@ -64,3 +64,16 @@ Andrew Dutcher: better Python setup.
 Ruben Boonen: PowerShell binding.
 David Zimmer: VB6 binding.
 Philippe Antoine: Integration with oss-fuzz and various fixes.
+Bui Dinh Cuong: Explicit registers accessed for Arm64.
+Vincent Bénony: Explicit registers accessed for X86.
+Adel Gadllah, Francisco Alonso & Stefan Cornelius: RPM package.
+Felix Gröbert (Google): fuzz testing harness.
+Daniel Collin & Nicolas Planel: M68K architecture.
+Pranith Kumar: Explicit registers accessed for Arm64.
+Xipiter LLC: Capstone logo redesigned.
+Satoshi Tanda: Support Windows kernel driver.
+Koutheir Attouchi: Support for Windows CE.
+Fotis Loukos: TMS320C64x architecture.
+Wolfgang Schwotzer: M680X architecture.
+Philippe Antoine: Integration with oss-fuzz and various fixes.
+Stephen Eckels (stevemk14ebr): x86 encoding features

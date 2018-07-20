@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <capstone.h>
+#include <capstone/capstone.h>
 
 void print_string_hex(char *comment, unsigned char *str, size_t len);
 
@@ -12,7 +12,10 @@ void print_insn_detail_arm64(csh handle, cs_insn *ins)
 {
 	cs_arm64 *arm64;
 	int i;
-
+	cs_regs regs_read, regs_write;
+	uint8_t regs_read_count, regs_write_count;
+	uint8_t access;
+	
 	// detail can be NULL if SKIPDATA option is turned ON
 	if (ins->detail == NULL)
 		return;
@@ -72,11 +75,26 @@ void print_insn_detail_arm64(csh handle, cs_insn *ins)
 				printf("\t\toperands[%u].type: BARRIER = 0x%x\n", i, op->barrier);
 				break;
 		}
-
+		
+		access = op->access;
+		switch(access) {
+			default:
+				break;
+			case CS_AC_READ:
+				printf("\t\toperands[%u].access: READ\n", i);
+				break;
+			case CS_AC_WRITE:
+				printf("\t\toperands[%u].access: WRITE\n", i);
+				break;
+			case CS_AC_READ | CS_AC_WRITE:
+				printf("\t\toperands[%u].access: READ | WRITE\n", i);
+				break;
+		}
+		
 		if (op->shift.type != ARM64_SFT_INVALID &&
-				op->shift.value)
+			op->shift.value)
 			printf("\t\t\tShift: type = %u, value = %u\n",
-					op->shift.type, op->shift.value);
+				   op->shift.type, op->shift.value);
 
 		if (op->ext != ARM64_EXT_INVALID)
 			printf("\t\t\tExt: %u\n", op->ext);
@@ -99,4 +117,25 @@ void print_insn_detail_arm64(csh handle, cs_insn *ins)
 
 	if (arm64->cc)
 		printf("\tCode-condition: %u\n", arm64->cc);
+
+	// Print out all registers accessed by this instruction (either implicit or explicit)
+	if (!cs_regs_access(handle, ins,
+						regs_read, &regs_read_count,
+						regs_write, &regs_write_count)) {
+		if (regs_read_count) {
+			printf("\tRegisters read:");
+			for(i = 0; i < regs_read_count; i++) {
+				printf(" %s", cs_reg_name(handle, regs_read[i]));
+			}
+			printf("\n");
+		}
+		
+		if (regs_write_count) {
+			printf("\tRegisters modified:");
+			for(i = 0; i < regs_write_count; i++) {
+				printf(" %s", cs_reg_name(handle, regs_write[i]));
+			}
+			printf("\n");
+		}
+	}
 }

@@ -1,10 +1,10 @@
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifndef CS_PRIV_H
 #define CS_PRIV_H
 
-#include <capstone.h>
+#include <capstone/capstone.h>
 
 #include "MCInst.h"
 #include "SStream.h"
@@ -24,11 +24,29 @@ typedef void (*GetID_t)(cs_struct *h, cs_insn *insn, unsigned int id);
 // return register name, given register ID
 typedef const char *(*GetRegisterName_t)(unsigned RegNo);
 
+// return registers accessed by instruction
+typedef void (*GetRegisterAccess_t)(const cs_insn *insn,
+		cs_regs regs_read, uint8_t *regs_read_count,
+		cs_regs regs_write, uint8_t *regs_write_count);
+
 // for ARM only
 typedef struct ARM_ITStatus {
 	unsigned char ITStates[8];
 	unsigned int size;
 } ARM_ITStatus;
+
+// Customize mnemonic for instructions with alternative name.
+struct customized_mnem {
+	// ID of instruction to be customized.
+	unsigned int id;
+	// Customized instruction mnemonic.
+	char mnemonic[CS_MNEMONIC_SIZE];
+};
+
+struct insn_mnem {
+	struct customized_mnem insn;
+	struct insn_mnem *next;	// linked list of customized mnemonics
+};
 
 struct cs_struct {
 	cs_arch arch;
@@ -44,7 +62,7 @@ struct cs_struct {
 	PostPrinter_t post_printer;
 	cs_err errnum;
 	ARM_ITStatus ITBlock;	// for Arm only
-	cs_opt_value detail;
+	cs_opt_value detail, imm_unsigned;
 	int syntax;	// asm syntax for simple printer such as ARM, Mips & PPC
 	bool doing_mem;	// handling memory operand in InstPrinter code
 	unsigned short *insn_cache;	// index caching for mapping.c
@@ -53,9 +71,11 @@ struct cs_struct {
 	uint8_t skipdata_size;	// how many bytes to skip
 	cs_opt_skipdata skipdata_setup;	// user-defined skipdata setup
 	const uint8_t *regsize_map;	// map to register size (x86-only for now)
+	GetRegisterAccess_t reg_access;
+	struct insn_mnem *mnem_list;	// linked list of customized instruction mnemonic
 };
 
-#define MAX_ARCH 8
+#define MAX_ARCH CS_ARCH_MAX
 
 // Returns a bool (0 or 1) whether big endian is enabled for a mode
 #define MODE_IS_BIG_ENDIAN(mode) (((mode) & CS_MODE_BIG_ENDIAN) != 0)

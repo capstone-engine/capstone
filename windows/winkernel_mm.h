@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-#include <capstone.h>
+#include <capstone/capstone.h>
 
 void CAPSTONE_API cs_winkernel_free(void *ptr);
 void * CAPSTONE_API cs_winkernel_malloc(size_t size);

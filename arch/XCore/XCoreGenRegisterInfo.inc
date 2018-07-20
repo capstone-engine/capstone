@@ -7,7 +7,7 @@
 \*===----------------------------------------------------------------------===*/
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 
 #ifdef GET_REGINFO_ENUM
@@ -62,24 +62,24 @@ static const uint16_t XCoreSubRegIdxLists[] = {
   /* 0 */ 0,
 };
 
-static const MCRegisterDesc XCoreRegDesc[] = { // Descriptors
-  { 3, 0, 0, 0, 0 },
-  { 38, 1, 1, 0, 1 },
-  { 41, 1, 1, 0, 1 },
-  { 47, 1, 1, 0, 1 },
-  { 44, 1, 1, 0, 1 },
-  { 4, 1, 1, 0, 1 },
-  { 11, 1, 1, 0, 1 },
-  { 14, 1, 1, 0, 1 },
-  { 17, 1, 1, 0, 1 },
-  { 20, 1, 1, 0, 1 },
-  { 23, 1, 1, 0, 1 },
-  { 26, 1, 1, 0, 1 },
-  { 29, 1, 1, 0, 1 },
-  { 32, 1, 1, 0, 1 },
-  { 35, 1, 1, 0, 1 },
-  { 0, 1, 1, 0, 1 },
-  { 7, 1, 1, 0, 1 },
+static MCRegisterDesc XCoreRegDesc[] = { // Descriptors
+  { 3, 0, 0, 0, 0, 0 },
+  { 38, 1, 1, 0, 1, 0 },
+  { 41, 1, 1, 0, 1, 0 },
+  { 47, 1, 1, 0, 1, 0 },
+  { 44, 1, 1, 0, 1, 0 },
+  { 4, 1, 1, 0, 1, 0 },
+  { 11, 1, 1, 0, 1, 0 },
+  { 14, 1, 1, 0, 1, 0 },
+  { 17, 1, 1, 0, 1, 0 },
+  { 20, 1, 1, 0, 1, 0 },
+  { 23, 1, 1, 0, 1, 0 },
+  { 26, 1, 1, 0, 1, 0 },
+  { 29, 1, 1, 0, 1, 0 },
+  { 32, 1, 1, 0, 1, 0 },
+  { 35, 1, 1, 0, 1, 0 },
+  { 0, 1, 1, 0, 1, 0 },
+  { 7, 1, 1, 0, 1, 0 },
 };
 
   // RRegs Register Class...
@@ -102,9 +102,9 @@ static const MCRegisterDesc XCoreRegDesc[] = { // Descriptors
     0xe0, 0xff, 0x01, 
   };
 
-static const MCRegisterClass XCoreMCRegisterClasses[] = {
-  { "RRegs", RRegs, RRegsBits, 16, sizeof(RRegsBits), XCore_RRegsRegClassID, 4, 4, 1, 0 },
-  { "GRRegs", GRRegs, GRRegsBits, 12, sizeof(GRRegsBits), XCore_GRRegsRegClassID, 4, 4, 1, 1 },
+static MCRegisterClass XCoreMCRegisterClasses[] = {
+  { RRegs, RRegsBits, 1, 16, sizeof(RRegsBits), XCore_RRegsRegClassID, 4, 4, 1, 0 },
+  { GRRegs, GRRegsBits, 0, 12, sizeof(GRRegsBits), XCore_GRRegsRegClassID, 4, 4, 1, 1 },
 };
 
 #endif // GET_REGINFO_MC_DESC
