@@ -9,6 +9,7 @@ open X86
 open Sparc
 open Systemz
 open Xcore
+open M680x
 open Printf	(* debug *)
 
 (* Hardware architectures *)
@@ -21,6 +22,9 @@ type arch =
   | CS_ARCH_SPARC
   | CS_ARCH_SYSZ
   | CS_ARCH_XCORE
+  | CS_ARCH_M68K
+  | CS_ARCH_TMS320C64X
+  | CS_ARCH_M680X
 
 (* Hardware modes *)
 type mode =
@@ -35,11 +39,23 @@ type mode =
   |	CS_MODE_MICRO		(* MicroMips mode (MIPS architecture) *)
   |	CS_MODE_MIPS3		(* Mips3 mode (MIPS architecture) *)
   |	CS_MODE_MIPS32R6	(* Mips32-R6 mode (MIPS architecture) *)
-  |	CS_MODE_MIPSGP64	(* MipsGP64 mode (MIPS architecture) *)
+  |	CS_MODE_MIPS2	    (* Mips2 mode (MIPS architecture) *)
   |	CS_MODE_V9			(* SparcV9 mode (Sparc architecture) *)
   |	CS_MODE_BIG_ENDIAN	(* big-endian mode *)
   |	CS_MODE_MIPS32		(* Mips32 mode (for Mips) *)
   |	CS_MODE_MIPS64		(* Mips64 mode (for Mips) *)
+  |	CS_MODE_QPX         (* Quad Processing eXtensions mode (PowerPC) *)
+  |	CS_MODE_M680X_6301	(* M680X Hitachi 6301,6303 mode *)
+  |	CS_MODE_M680X_6309	(* M680X Hitachi 6309 mode *)
+  |	CS_MODE_M680X_6800	(* M680X Motorola 6800,6802 mode *)
+  |	CS_MODE_M680X_6801	(* M680X Motorola 6801,6803 mode *)
+  |	CS_MODE_M680X_6805	(* M680X Motorola 6805 mode *)
+  |	CS_MODE_M680X_6808	(* M680X Motorola 6808 mode *)
+  |	CS_MODE_M680X_6809	(* M680X Motorola 6809 mode *)
+  |	CS_MODE_M680X_6811	(* M680X Motorola/Freescale 68HC11 mode *)
+  |	CS_MODE_M680X_CPU12	(* M680X Motorola/Freescale/NXP CPU12 mode *)
+  |	CS_MODE_M680X_HCS08	(* M680X Freescale HCS08 mode *)
+
 
 
 (* Runtime option for the disassembled engine *)
@@ -51,6 +67,12 @@ type opt_type =
   |	CS_OPT_SKIPDATA		(* Skip data when disassembling. Then engine is in SKIPDATA mode. *)
   |	CS_OPT_SKIPDATA_SETUP 	(* Setup user-defined function for SKIPDATA option *)
 
+
+(* Common instruction operand access types - to be consistent across all architectures. *)
+(* It is possible to combine access types, for example: CS_AC_READ | CS_AC_WRITE *)
+let _CS_AC_INVALID = 0;;	(* Uninitialized/invalid access type. *)
+let _CS_AC_READ    = 1 lsl 0;; (* Operand read from memory or register. *)
+let _CS_AC_WRITE   = 1 lsl 1;; (* Operand write to memory or register. *)
 
 (* Runtime option value (associated with option type above) *)
 let _CS_OPT_OFF = 0L;; (* Turn OFF an option - default option of CS_OPT_DETAIL, CS_OPT_SKIPDATA. *)
@@ -74,6 +96,7 @@ let _CS_GRP_CALL    = 2;;  (* all call instructions *)
 let _CS_GRP_RET     = 3;;  (* all return instructions *)
 let _CS_GRP_INT     = 4;;  (* all interrupt instructions (int+syscall) *)
 let _CS_GRP_IRET    = 5;;  (* all interrupt return instructions *)
+let _CS_GRP_PRIVILEGE = 6;;  (* all privileged instructions *)
 
 type cs_arch =
 	| CS_INFO_ARM of cs_arm
@@ -84,6 +107,7 @@ type cs_arch =
 	| CS_INFO_SPARC of cs_sparc
 	| CS_INFO_SYSZ of cs_sysz
 	| CS_INFO_XCORE of cs_xcore
+	| CS_INFO_M680X of cs_m680x
 
 
 type csh = {

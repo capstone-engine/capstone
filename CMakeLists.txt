@@ -1,13 +1,26 @@
 cmake_minimum_required(VERSION 2.6)
 project(capstone)
 
-set(VERSION_MAJOR 3)
+set(VERSION_MAJOR 4)
 set(VERSION_MINOR 0)
-set(VERSION_PATCH 5)
+set(VERSION_PATCH 0)
+
+if(POLICY CMP0042)
+  # http://www.cmake.org/cmake/help/v3.0/policy/CMP0042.html
+  cmake_policy(SET CMP0042 NEW)
+endif(POLICY CMP0042)
+
+if (POLICY CMP0048)
+  # use old policy to honor version set using VERSION_* variables to preserve backwards
+  # compatibility. change OLD to NEW when minimum cmake version is updated to 3.* and
+  # set VERSION using project(capstone VERSION 4.0.0).
+  # http://www.cmake.org/cmake/help/v3.0/policy/CMP0048.html
+  cmake_policy (SET CMP0048 OLD)
+endif()
 
 # to configure the options specify them in in the command line or change them in the cmake UI.
 # Don't edit the makefile!
-option(CAPSTONE_BUILD_STATIC_RUNTIME "Embed static runtime" OFF)
+option(CAPSTONE_BUILD_STATIC_RUNTIME "Embed static runtime" ON)
 option(CAPSTONE_BUILD_STATIC "Build static library" ON)
 option(CAPSTONE_BUILD_SHARED "Build shared library" ON)
 option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
@@ -15,14 +28,27 @@ option(CAPSTONE_BUILD_TESTS "Build tests" ON)
 option(CAPSTONE_BUILD_CSTOOL "Build cstool" ON)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 
-option(CAPSTONE_ARM_SUPPORT "ARM support" ON)
-option(CAPSTONE_ARM64_SUPPORT "ARM64 support" ON)
-option(CAPSTONE_MIPS_SUPPORT "MIPS support" ON)
-option(CAPSTONE_PPC_SUPPORT "PowerPC support" ON)
-option(CAPSTONE_SPARC_SUPPORT "Sparc support" ON)
-option(CAPSTONE_SYSZ_SUPPORT "SystemZ support" ON)
-option(CAPSTONE_XCORE_SUPPORT "XCore support" ON)
-option(CAPSTONE_X86_SUPPORT "x86 support" ON)
+set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM)
+set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM)
+
+list(LENGTH SUPPORTED_ARCHITECTURES count)
+math(EXPR count "${count}-1")
+# create options controlling whether support for a particular architecture is needed
+foreach(i RANGE ${count})
+  list(GET SUPPORTED_ARCHITECTURES ${i} supported_architecture)
+  list(GET SUPPORTED_ARCHITECTURE_LABELS ${i} supported_architecture_label)
+  option("CAPSTONE_${supported_architecture}_SUPPORT" "${supported_architecture_label} support" ON)
+endforeach(i)
+
+# propagate achitecture support variables to preprocessor
+foreach(supported_architecture ${SUPPORTED_ARCHITECTURES})
+  set(option_name "CAPSTONE_${supported_architecture}_SUPPORT")
+  if(${option_name})
+    message("Enabling ${option_name}")
+    add_definitions("-D${option_name}")
+  endif()
+endforeach(supported_architecture)
+
 option(CAPSTONE_X86_REDUCE "x86 with reduce instruction sets to minimize library" OFF)
 option(CAPSTONE_X86_ATT_DISABLE "Disable x86 AT&T syntax" OFF)
 option(CAPSTONE_OSXKERNEL_SUPPORT "Support to embed Capstone into OS X Kernel extensions" OFF)
@@ -31,6 +57,8 @@ if (MSVC)
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 endif ()
+
+enable_testing()
 
 if (CAPSTONE_BUILD_DIET)
     add_definitions(-DCAPSTONE_DIET)
@@ -56,32 +84,36 @@ set(SOURCES_ENGINE
     MCRegisterInfo.c
     SStream.c
     utils.c
-    )
-
+)
 set(HEADERS_ENGINE
-    include/capstone.h
-    utils.h
-    MCRegisterInfo.h
+    cs_priv.h
+    LEB128.h
+    MathExtras.h
+    MCDisassembler.h
+    MCFixedLenDisassembler.h
     MCInst.h
     MCInstrDesc.h
+    MCRegisterInfo.h
     SStream.h
-    cs_priv.h
-    include/platform.h
+    utils.h
     )
 
 set(HEADERS_COMMON
-    include/arm64.h
-    include/arm.h
-    include/capstone.h
-    include/mips.h
-    include/ppc.h
-    include/x86.h
-    include/sparc.h
-    include/systemz.h
-    include/xcore.h
-    include/platform.h
+    include/capstone/arm64.h
+    include/capstone/arm.h
+    include/capstone/capstone.h
+    include/capstone/evm.h
+    include/capstone/mips.h
+    include/capstone/ppc.h
+    include/capstone/x86.h
+    include/capstone/sparc.h
+    include/capstone/systemz.h
+    include/capstone/xcore.h
+    include/capstone/m68k.h
+    include/capstone/tms320c64x.h
+    include/capstone/m680x.h
+    include/capstone/platform.h
     )
-
 
 set(TEST_SOURCES test_basic.c test_detail.c test_skipdata.c test_iter.c)
 
@@ -93,6 +125,20 @@ if (CAPSTONE_ARM_SUPPORT)
         arch/ARM/ARMInstPrinter.c
         arch/ARM/ARMMapping.c
         arch/ARM/ARMModule.c
+    )
+    set(HEADERS_ARM
+        arch/ARM/ARMAddressingModes.h
+        arch/ARM/ARMBaseInfo.h
+        arch/ARM/ARMDisassembler.h
+        arch/ARM/ARMGenAsmWriter.inc
+        arch/ARM/ARMGenDisassemblerTables.inc
+        arch/ARM/ARMGenInstrInfo.inc
+        arch/ARM/ARMGenRegisterInfo.inc
+        arch/ARM/ARMGenSubtargetInfo.inc
+        arch/ARM/ARMInstPrinter.h
+        arch/ARM/ARMMapping.h
+        arch/ARM/ARMMappingInsn.inc
+        arch/ARM/ARMMappingInsnOp.inc
         )
     set(HEADERS_ARM
         arch/ARM/ARMAddressingModes.h
@@ -117,6 +163,19 @@ if (CAPSTONE_ARM64_SUPPORT)
         arch/AArch64/AArch64InstPrinter.c
         arch/AArch64/AArch64Mapping.c
         arch/AArch64/AArch64Module.c
+    )
+    set(HEADERS_ARM64
+        arch/AArch64/AArch64AddressingModes.h
+        arch/AArch64/AArch64BaseInfo.h
+        arch/AArch64/AArch64Disassembler.h
+        arch/AArch64/AArch64GenAsmWriter.inc
+        arch/AArch64/AArch64GenDisassemblerTables.inc
+        arch/AArch64/AArch64GenInstrInfo.inc
+        arch/AArch64/AArch64GenRegisterInfo.inc
+        arch/AArch64/AArch64GenSubtargetInfo.inc
+        arch/AArch64/AArch64InstPrinter.h
+        arch/AArch64/AArch64Mapping.h
+        arch/AArch64/AArch64MappingInsn.inc
         )
     set(HEADERS_ARM64
         arch/AArch64/AArch64AddressingModes.h
@@ -140,6 +199,17 @@ if (CAPSTONE_MIPS_SUPPORT)
         arch/Mips/MipsInstPrinter.c
         arch/Mips/MipsMapping.c
         arch/Mips/MipsModule.c
+    )
+    set(HEADERS_MIPS
+        arch/Mips/MipsDisassembler.h
+        arch/Mips/MipsGenAsmWriter.inc
+        arch/Mips/MipsGenDisassemblerTables.inc
+        arch/Mips/MipsGenInstrInfo.inc
+        arch/Mips/MipsGenRegisterInfo.inc
+        arch/Mips/MipsGenSubtargetInfo.inc
+        arch/Mips/MipsInstPrinter.h
+        arch/Mips/MipsMapping.h
+        arch/Mips/MipsMappingInsn.inc
         )
     set(HEADERS_MIPS
         arch/Mips/MipsDisassembler.h
@@ -161,6 +231,18 @@ if (CAPSTONE_PPC_SUPPORT)
         arch/PowerPC/PPCInstPrinter.c
         arch/PowerPC/PPCMapping.c
         arch/PowerPC/PPCModule.c
+    )
+    set(HEADERS_PPC
+        arch/PowerPC/PPCDisassembler.h
+        arch/PowerPC/PPCGenAsmWriter.inc
+        arch/PowerPC/PPCGenDisassemblerTables.inc
+        arch/PowerPC/PPCGenInstrInfo.inc
+        arch/PowerPC/PPCGenRegisterInfo.inc
+        arch/PowerPC/PPCGenSubtargetInfo.inc
+        arch/PowerPC/PPCInstPrinter.h
+        arch/PowerPC/PPCMapping.h
+        arch/PowerPC/PPCMappingInsn.inc
+        arch/PowerPC/PPCPredicates.h
         )
     set(HEADERS_PPC
         arch/PowerPC/PPCDisassembler.h
@@ -184,6 +266,27 @@ if (CAPSTONE_X86_SUPPORT)
         arch/X86/X86IntelInstPrinter.c
         arch/X86/X86Mapping.c
         arch/X86/X86Module.c
+    )
+    set(HEADERS_X86
+        arch/X86/X86BaseInfo.h
+        arch/X86/X86Disassembler.h
+        arch/X86/X86DisassemblerDecoder.h
+        arch/X86/X86DisassemblerDecoderCommon.h
+        arch/X86/X86GenAsmWriter.inc
+        arch/X86/X86GenAsmWriter1.inc
+        arch/X86/X86GenAsmWriter1_reduce.inc
+        arch/X86/X86GenAsmWriter_reduce.inc
+        arch/X86/X86GenDisassemblerTables.inc
+        arch/X86/X86GenDisassemblerTables_reduce.inc
+        arch/X86/X86GenInstrInfo.inc
+        arch/X86/X86GenInstrInfo_reduce.inc
+        arch/X86/X86GenRegisterInfo.inc
+        arch/X86/X86InstPrinter.h
+        arch/X86/X86Mapping.h
+        arch/X86/X86MappingInsn.inc
+        arch/X86/X86MappingInsnOp.inc
+        arch/X86/X86MappingInsnOp_reduce.inc
+        arch/X86/X86MappingInsn_reduce.inc
         )
     set(HEADERS_X86
         arch/X86/X86BaseInfo.h
@@ -205,7 +308,7 @@ if (CAPSTONE_X86_SUPPORT)
     if (NOT CAPSTONE_BUILD_DIET)
         set(SOURCES_X86 ${SOURCES_X86} arch/X86/X86ATTInstPrinter.c)
     endif ()
-    set(TEST_SOURCES ${TEST_SOURCES} test_x86.c)
+    set(TEST_SOURCES ${TEST_SOURCES} test_x86.c test_customized_mnem.c)
 endif ()
 
 if (CAPSTONE_SPARC_SUPPORT)
@@ -226,6 +329,7 @@ if (CAPSTONE_SPARC_SUPPORT)
         arch/Sparc/SparcGenSubtargetInfo.inc
         arch/Sparc/SparcInstPrinter.h
         arch/Sparc/SparcMapping.h
+        arch/Sparc/SparcMappingInsn.inc
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_sparc.c)
 endif ()
@@ -247,8 +351,9 @@ if (CAPSTONE_SYSZ_SUPPORT)
         arch/SystemZ/SystemZGenRegisterInfo.inc
         arch/SystemZ/SystemZGenSubtargetInfo.inc
         arch/SystemZ/SystemZInstPrinter.h
-        arch/SystemZ/SystemZMCTargetDesc.h
         arch/SystemZ/SystemZMapping.h
+        arch/SystemZ/SystemZMappingInsn.inc
+        arch/SystemZ/SystemZMCTargetDesc.h
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_systemz.c)
 endif ()
@@ -269,8 +374,74 @@ if (CAPSTONE_XCORE_SUPPORT)
         arch/XCore/XCoreGenRegisterInfo.inc
         arch/XCore/XCoreInstPrinter.h
         arch/XCore/XCoreMapping.h
+        arch/XCore/XCoreMappingInsn.inc
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_xcore.c)
+endif ()
+
+if (CAPSTONE_M68K_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_M68K)
+    set(SOURCES_M68K
+		arch/M68K/M68KDisassembler.c
+		arch/M68K/M68KInstPrinter.c
+		arch/M68K/M68KModule.c
+    )
+    set(HEADERS_M68K
+		arch/M68K/M68KDisassembler.h
+        )
+    set(TEST_SOURCES ${TEST_SOURCES} test_m68k.c)
+endif ()
+
+if (CAPSTONE_TMS320C64X_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_TMS320C64X)
+    set(SOURCES_TMS320C64X
+        arch/TMS320C64x/TMS320C64xDisassembler.c
+        arch/TMS320C64x/TMS320C64xInstPrinter.c
+        arch/TMS320C64x/TMS320C64xMapping.c
+        arch/TMS320C64x/TMS320C64xModule.c
+        )
+    set(HEADERS_TMS320C64X
+        arch/TMS320C64x/TMS320C64xDisassembler.h
+        arch/TMS320C64x/TMS320C64xGenAsmWriter.inc
+        arch/TMS320C64x/TMS320C64xGenDisassemblerTables.inc
+        arch/TMS320C64x/TMS320C64xGenInstrInfo.inc
+        arch/TMS320C64x/TMS320C64xGenRegisterInfo.inc
+        arch/TMS320C64x/TMS320C64xInstPrinter.h
+        arch/TMS320C64x/TMS320C64xMapping.h
+        )
+    set(TEST_SOURCES ${TEST_SOURCES} test_tms320c64x.c)
+endif ()
+
+if (CAPSTONE_M680X_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_M680X)
+    set(SOURCES_M680X
+		arch/M680X/M680XDisassembler.c
+		arch/M680X/M680XInstPrinter.c
+		arch/M680X/M680XModule.c
+    )
+    set(HEADERS_M680X
+		arch/M680X/M680XInstPrinter.h
+		arch/M680X/M680XDisassembler.h
+		arch/M680X/M680XDisassemblerInternals.h
+        )
+    set(TEST_SOURCES ${TEST_SOURCES} test_m680x.c)
+endif ()
+
+if (CAPSTONE_EVM_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_EVM)
+    set(SOURCES_EVM
+        arch/EVM/EVMDisassembler.c
+        arch/EVM/EVMInstPrinter.c
+        arch/EVM/EVMMapping.c
+        arch/EVM/EVMModule.c
+    )
+    set(HEADERS_EVM
+        arch/EVM/EVMDisassembler.h
+        arch/EVM/EVMInstPrinter.h
+        arch/EVM/EVMMapping.h
+        arch/EVM/EVMMappingInsn.inc
+        )
+    set(TEST_SOURCES ${TEST_SOURCES} test_evm.c)
 endif ()
 
 if (CAPSTONE_OSXKERNEL_SUPPORT)
@@ -287,6 +458,10 @@ set(ALL_SOURCES
     ${SOURCES_SPARC}
     ${SOURCES_SYSZ}
     ${SOURCES_XCORE}
+    ${SOURCES_M68K}
+    ${SOURCES_TMS320C64X}
+    ${SOURCES_M680X}
+    ${SOURCES_EVM}
     )
 
 set(ALL_HEADERS
@@ -300,6 +475,10 @@ set(ALL_HEADERS
     ${HEADERS_SPARC}
     ${HEADERS_SYSZ}
     ${HEADERS_XCORE}
+    ${HEADERS_M68K}
+    ${HEADERS_TMS320C64X}
+    ${HEADERS_M680X}
+    ${HEADERS_EVM}
     )
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
@@ -318,14 +497,14 @@ endif ()
 # Force static runtime libraries
 if (CAPSTONE_BUILD_STATIC_RUNTIME)
     FOREACH(flag
-        CMAKE_C_FLAGS_RELEASE CMAKE_C_FLAGS_RELWITHDEBINFO
-        CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_DEBUG_INIT
-        CMAKE_CXX_FLAGS_RELEASE  CMAKE_CXX_FLAGS_RELWITHDEBINFO
-        CMAKE_CXX_FLAGS_DEBUG  CMAKE_CXX_FLAGS_DEBUG_INIT)
-        if (MSVC)
-            STRING(REPLACE "/MD"  "/MT" "${flag}" "${${flag}}")
-            SET("${flag}" "${${flag}} /EHsc")
-        endif (MSVC)
+	CMAKE_C_FLAGS_RELEASE CMAKE_C_FLAGS_RELWITHDEBINFO
+	CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_DEBUG_INIT
+	CMAKE_CXX_FLAGS_RELEASE  CMAKE_CXX_FLAGS_RELWITHDEBINFO
+	CMAKE_CXX_FLAGS_DEBUG  CMAKE_CXX_FLAGS_DEBUG_INIT)
+	if (MSVC)
+	    STRING(REPLACE "/MD"  "/MT" "${flag}" "${${flag}}")
+	    SET("${flag}" "${${flag}} /EHsc")
+	endif (MSVC)
     ENDFOREACH()
 endif ()
 
@@ -353,12 +532,14 @@ if (CAPSTONE_BUILD_TESTS)
         STRING(REGEX REPLACE ".c$" "" TBIN ${TSRC})
         add_executable(${TBIN} "tests/${TSRC}")
         target_link_libraries(${TBIN} ${default-target})
+        add_test(NAME "capstone_${TBIN}" COMMAND ${TBIN})
     endforeach ()
     if (CAPSTONE_ARM_SUPPORT)
         set(ARM_REGRESS_TEST test_arm_regression.c)
         STRING(REGEX REPLACE ".c$" "" ARM_REGRESS_BIN ${ARM_REGRESS_TEST})
         add_executable(${ARM_REGRESS_BIN} "suite/arm/${ARM_REGRESS_TEST}")
         target_link_libraries(${ARM_REGRESS_BIN} ${default-target})
+        add_test(NAME "capstone_${ARM_REGRESS_BIN}" COMMAND ${ARM_REGRESS_BIN})
     endif()
     # fuzz target built with the tests
     add_executable(fuzz_disasm suite/fuzz/onefile.c suite/fuzz/fuzz_disasm.c)
@@ -374,6 +555,10 @@ source_group("Source\\Sparc" FILES ${SOURCES_SPARC})
 source_group("Source\\SystemZ" FILES ${SOURCES_SYSZ})
 source_group("Source\\X86" FILES ${SOURCES_X86})
 source_group("Source\\XCore" FILES ${SOURCES_XCORE})
+source_group("Source\\M68K" FILES ${SOURCES_M68K})
+source_group("Source\\TMS320C64x" FILES ${SOURCES_TMS320C64X})
+source_group("Source\\M680X" FILES ${SOURCES_M680X})
+source_group("Source\\EVM" FILES ${SOURCES_EVM})
 
 source_group("Include\\Common" FILES ${HEADERS_COMMON})
 source_group("Include\\Engine" FILES ${HEADERS_ENGINE})
@@ -385,6 +570,10 @@ source_group("Include\\Sparc" FILES ${HEADERS_SPARC})
 source_group("Include\\SystemZ" FILES ${HEADERS_SYSZ})
 source_group("Include\\X86" FILES ${HEADERS_X86})
 source_group("Include\\XCore" FILES ${HEADERS_XCORE})
+source_group("Include\\M68K" FILES ${HEADERS_M68K})
+source_group("Include\\TMS320C64x" FILES ${HEADERS_TMS320C64X})
+source_group("Include\\M680X" FILES ${HEADERS_MC680X})
+source_group("Include\\EVM" FILES ${HEADERS_EVM})
 
 ### test library 64bit routine:
 get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)

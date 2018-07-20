@@ -64,30 +64,54 @@ endif
 
 .PHONY: all clean
 
-SOURCES = test_basic.c test_detail.c test_skipdata.c test_iter.c
+SOURCES = test_basic.c test_detail.c test_skipdata.c test_iter.c test_customized_mnem.c
 ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_ARM
 SOURCES += test_arm.c
 endif
 ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_ARM64
 SOURCES += test_arm64.c
 endif
+ifneq (,$(findstring m68k,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_M68K
+SOURCES += test_m68k.c
+endif
 ifneq (,$(findstring mips,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_MIPS
 SOURCES += test_mips.c
 endif
 ifneq (,$(findstring powerpc,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_POWERPC
 SOURCES += test_ppc.c
 endif
 ifneq (,$(findstring sparc,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_SPARC
 SOURCES += test_sparc.c
 endif
 ifneq (,$(findstring systemz,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_SYSZ
 SOURCES += test_systemz.c
 endif
 ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_X86
 SOURCES += test_x86.c
 endif
 ifneq (,$(findstring xcore,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_XCORE
 SOURCES += test_xcore.c
+endif
+ifneq (,$(findstring tms320c64x,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_TMS320C64X
+SOURCES += test_tms320c64x.c
+endif
+ifneq (,$(findstring m680x,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_M680X
+SOURCES += test_m680x.c
+endif
+ifneq (,$(findstring evm,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_EVM
+SOURCES += test_evm.c
 endif
 
 OBJS = $(addprefix $(OBJDIR)/,$(SOURCES:.c=.o))
@@ -97,6 +121,8 @@ all: $(BINARY)
 
 clean:
 	rm -rf $(OBJS) $(BINARY) $(TESTDIR)/*.exe $(TESTDIR)/*.static $(OBJDIR)/lib$(LIBNAME).* $(OBJDIR)/$(LIBNAME).*
+	# remove orphan files due to renaming from test.c to test_basic.c
+	rm -rf $(TESTDIR)/test.o $(TESTDIR)/test.exe $(TESTDIR)/test.static $(TESTDIR)/test
 
 $(BINARY): $(OBJS)
 

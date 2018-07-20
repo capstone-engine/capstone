@@ -4,8 +4,10 @@
 package capstone;
 
 import com.sun.jna.Library;
+import com.sun.jna.Memory;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLong;
+import com.sun.jna.ptr.ByteByReference;
 import com.sun.jna.ptr.NativeLongByReference;
 import com.sun.jna.Structure;
 import com.sun.jna.Union;
@@ -33,6 +35,7 @@ public class Capstone {
     public Sparc.UnionOpInfo sparc;
     public Systemz.UnionOpInfo sysz;
     public Xcore.UnionOpInfo xcore;
+    public M680x.UnionOpInfo m680x;
   }
 
   protected static class _cs_insn extends Structure {
@@ -75,10 +78,10 @@ public class Capstone {
     public static class ByReference extends _cs_detail implements Structure.ByReference {};
 
     // list of all implicit registers being read.
-    public byte[] regs_read = new byte[12];
+    public short[] regs_read = new short[12];
     public byte regs_read_count;
     // list of all implicit registers being written.
-    public byte[] regs_write = new byte[20];
+    public short[] regs_write = new short[20];
     public byte regs_write_count;
     // list of semantic groups this instruction belongs to.
     public byte[] groups = new byte[8];
@@ -104,14 +107,16 @@ public class Capstone {
     public long address;
     // instruction size.
     public short size;
+    // Machine bytes of this instruction, with number of bytes indicated by size above
+    public byte[] bytes;
     // instruction mnemonic. NOTE: irrelevant for diet engine.
     public String mnemonic;
     // instruction operands. NOTE: irrelevant for diet engine.
     public String opStr;
     // list of all implicit registers being read.
-    public byte[] regsRead;
+    public short[] regsRead;
     // list of all implicit registers being written.
-    public byte[] regsWrite;
+    public short[] regsWrite;
     // list of semantic groups this instruction belongs to.
     public byte[] groups;
     public OpInfo operands;
@@ -128,6 +133,7 @@ public class Capstone {
         while (insn.op_str[lo++] != 0);
         mnemonic = new String(insn.mnemonic, 0, lm-1);
         opStr = new String(insn.op_str, 0, lo-1);
+        bytes = Arrays.copyOf(insn.bytes, insn.size);
       }
 
       cs = _cs;
@@ -137,10 +143,10 @@ public class Capstone {
 
       if (insn.cs_detail != null) {
         if (!diet) {
-          regsRead = new byte[insn.cs_detail.regs_read_count];
+          regsRead = new short[insn.cs_detail.regs_read_count];
           for (int i=0; i<regsRead.length; i++)
             regsRead[i] = insn.cs_detail.regs_read[i];
-          regsWrite = new byte[insn.cs_detail.regs_write_count];
+          regsWrite = new short[insn.cs_detail.regs_write_count];
           for (int i=0; i<regsWrite.length; i++)
             regsWrite[i] = insn.cs_detail.regs_write[i];
           groups = new byte[insn.cs_detail.groups_count];
@@ -196,6 +202,11 @@ public class Capstone {
           detail.arch.read();
           op_info = new Xcore.OpInfo((Xcore.UnionOpInfo) detail.arch.xcore);
           break;
+        case CS_ARCH_M680X:
+          detail.arch.setType(M680x.UnionOpInfo.class);
+          detail.arch.read();
+          op_info = new M680x.OpInfo((M680x.UnionOpInfo) detail.arch.m680x);
+          break;
         default:
       }
 
@@ -238,6 +249,38 @@ public class Capstone {
       return cs.cs_insn_group(csh, raw.getPointer(), gid) != 0;
     }
 
+    public CsRegsAccess regsAccess() {
+      Memory regsReadMemory = new Memory(64*2);
+      ByteByReference regsReadCountRef = new ByteByReference();
+      Memory regsWriteMemory = new Memory(64*2);
+      ByteByReference regsWriteCountRef = new ByteByReference();
+
+      int c = cs.cs_regs_access(csh, raw.getPointer(), regsReadMemory, regsReadCountRef, regsWriteMemory, regsWriteCountRef);
+      if (c != CS_ERR_OK) {
+        return null;
+      }
+
+      byte regsReadCount = regsReadCountRef.getValue();
+      byte regsWriteCount = regsWriteCountRef.getValue();
+
+      short[] regsRead = new short[regsReadCount];
+      regsReadMemory.read(0, regsRead, 0, regsReadCount);
+
+      short[] regsWrite = new short[regsWriteCount];
+      regsWriteMemory.read(0, regsWrite, 0, regsWriteCount);
+
+      return new CsRegsAccess(regsRead, regsWrite);
+    }
+  }
+
+  public static class CsRegsAccess {
+    public short[] regsRead;
+    public short[] regsWrite;
+
+    public CsRegsAccess(short[] regsRead, short[] regsWrite) {
+      this.regsRead = regsRead;
+      this.regsWrite = regsWrite;
+    }
   }
 
   private CsInsn[] fromArrayRaw(_cs_insn[] arr_raw) {
@@ -270,10 +313,12 @@ public class Capstone {
     public int cs_errno(NativeLong csh);
     public int cs_version(IntByReference major, IntByReference minor);
     public boolean cs_support(int query);
+    public String cs_strerror(int code);
+    public int cs_regs_access(NativeLong handle, Pointer insn, Pointer regs_read, ByteByReference regs_read_count, Pointer regs_write, ByteByReference regs_write_count);
   }
 
   // Capstone API version
-  public static final int CS_API_MAJOR = 3;
+  public static final int CS_API_MAJOR = 4;
   public static final int CS_API_MINOR = 0;
 
   // architectures
@@ -285,7 +330,10 @@ public class Capstone {
   public static final int CS_ARCH_SPARC = 5;
   public static final int CS_ARCH_SYSZ = 6;
   public static final int CS_ARCH_XCORE = 7;
-  public static final int CS_ARCH_MAX = 8;
+  public static final int CS_ARCH_M68K = 8;
+  public static final int CS_ARCH_TMS320C64X = 9;
+  public static final int CS_ARCH_M680X = 10;
+  public static final int CS_ARCH_MAX = 11;
   public static final int CS_ARCH_ALL = 0xFFFF; // query id for cs_support()
 
   // disasm mode
@@ -300,11 +348,22 @@ public class Capstone {
   public static final int CS_MODE_MICRO = 1 << 4;	  // MicroMips mode (Mips arch)
   public static final int CS_MODE_MIPS3 = 1 << 5;     // Mips III ISA
   public static final int CS_MODE_MIPS32R6 = 1 << 6;  // Mips32r6 ISA
-  public static final int CS_MODE_MIPSGP64 = 1 << 7;  // General Purpose Registers are 64-bit wide (MIPS arch)
+  public static final int CS_MODE_MIPS2 = 1 << 7;  // Mips II ISA
   public static final int CS_MODE_BIG_ENDIAN = 1 << 31; // big-endian mode
   public static final int CS_MODE_V9 = 1 << 4;	      // SparcV9 mode (Sparc arch)
   public static final int CS_MODE_MIPS32 = CS_MODE_32; // Mips32 ISA
   public static final int CS_MODE_MIPS64 = CS_MODE_64; // Mips64 ISA
+  public static final int CS_MODE_QPX = 1 << 4; // Quad Processing eXtensions mode (PPC)
+  public static final int CS_MODE_M680X_6301 = 1 << 1; // M680X Hitachi 6301,6303 mode
+  public static final int CS_MODE_M680X_6309 = 1 << 2; // M680X Hitachi 6309 mode
+  public static final int CS_MODE_M680X_6800 = 1 << 3; // M680X Motorola 6800,6802 mode
+  public static final int CS_MODE_M680X_6801 = 1 << 4; // M680X Motorola 6801,6803 mode
+  public static final int CS_MODE_M680X_6805 = 1 << 5; // M680X Motorola 6805 mode
+  public static final int CS_MODE_M680X_6808 = 1 << 6; // M680X Motorola 6808 mode
+  public static final int CS_MODE_M680X_6809 = 1 << 7; // M680X Motorola 6809 mode
+  public static final int CS_MODE_M680X_6811 = 1 << 8; // M680X Motorola/Freescale 68HC11 mode
+  public static final int CS_MODE_M680X_CPU12 = 1 << 9; // M680X Motorola/Freescale/NXP CPU12 mode
+  public static final int CS_MODE_M680X_HCS08 = 1 << 10; // M680X Freescale HCS08 mode
 
   // Capstone error
   public static final int CS_ERR_OK = 0;
@@ -341,6 +400,12 @@ public class Capstone {
   public static final int CS_OP_MEM = 3;
   public static final int CS_OP_FP  = 4;
 
+  // Common instruction operand access types - to be consistent across all architectures.
+  // It is possible to combine access types, for example: CS_AC_READ | CS_AC_WRITE
+  public static final int CS_AC_INVALID = 0;
+  public static final int CS_AC_READ = 1 << 0;
+  public static final int CS_AC_WRITE = 1 << 1;
+
   // Common instruction groups - to be consistent across all architectures.
   public static final int CS_GRP_INVALID = 0;  // uninitialized/invalid group.
   public static final int CS_GRP_JUMP    = 1;  // all jump instructions (conditional+direct+indirect jumps)
@@ -348,6 +413,7 @@ public class Capstone {
   public static final int CS_GRP_RET     = 3;  // all return instructions
   public static final int CS_GRP_INT     = 4;  // all interrupt instructions (int+syscall)
   public static final int CS_GRP_IRET    = 5;  // all interrupt return instructions
+  public static final int CS_GRP_PRIVILEGE = 6;  // all privileged instructions
 
   // Query id for cs_support()
   public static final int CS_SUPPORT_DIET = CS_ARCH_ALL+1;	  // diet mode
@@ -470,5 +536,9 @@ public class Capstone {
     // FIXME(danghvu): Can't free because memory is still inside CsInsn
 
     return allInsn;
+  }
+
+  public String strerror(int code) {
+    return cs.cs_strerror(code);
   }
 }

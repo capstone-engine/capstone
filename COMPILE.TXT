@@ -7,6 +7,8 @@ To compile using CMake, see COMPILE_CMAKE.TXT.
 
 To compile using XCode on MacOSX, see xcode/README.md.
 
+To compile for Windows CE (a.k.a, Windows Embedded Compact), see windowsce/COMPILE.md.
+
                         *-*-*-*-*-*
 
 Capstone requires no prerequisite packages, so it is easy to compile & install.
@@ -15,11 +17,12 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 (0) Tailor Capstone to your need.
 
-  Out of 8 archtitectures supported by Capstone (Arm, Arm64, Mips, PPC, Sparc,
-  SystemZ, XCore & X86), if you just need several selected archs, choose which
-  ones you want to compile in by editing "config.mk" before going to next steps.
+  Out of 12 archtitectures supported by Capstone (Arm, Arm64, M68K, Mips, PPC,
+  Sparc, SystemZ, XCore, X86, M680X, TMS320C64x & EVM), if you just need several
+  selected archs, choose the ones you want to compile in by editing "config.mk"
+  before going to next steps.
 
-  By default, all 8 architectures are compiled.
+  By default, all 12 architectures are compiled.
 
   The other way of customize Capstone without having to edit config.mk is to
   pass the desired options on the commandline to ./make.sh. Currently,
@@ -84,10 +87,14 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 	/usr/include/capstone/x86.h
 	/usr/include/capstone/arm.h
 	/usr/include/capstone/arm64.h
+	/usr/include/capstone/evm.h
+	/usr/include/capstone/m68k.h
+	/usr/include/capstone/m680x.h
 	/usr/include/capstone/mips.h
 	/usr/include/capstone/ppc.h
 	/usr/include/capstone/sparc.h
 	/usr/include/capstone/systemz.h
+	/usr/include/capstone/tms320c64x.h
 	/usr/include/capstone/xcore.h
 	/usr/include/capstone/platform.h
 	/usr/lib/libcapstone.so (for Linux/*nix), or /usr/lib/libcapstone.dylib (OSX)
@@ -139,9 +146,9 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
   To cross-compile for Android (smartphone/tablet), Android NDK is required.
   NOTE: Only ARM and ARM64 are currently supported.
 
-       $ NDK=/android/android-ndk-r10e ./make.sh cross-android arm
-       or
-       $ NDK=/android/android-ndk-r10e ./make.sh cross-android arm64
+	$ NDK=/android/android-ndk-r10e ./make.sh cross-android arm
+  or
+	$ NDK=/android/android-ndk-r10e ./make.sh cross-android arm64
 
   Resulted files libcapstone.so, libcapstone.a & tests/test* can then
   be used on Android devices.

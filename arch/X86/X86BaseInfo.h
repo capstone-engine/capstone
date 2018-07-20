@@ -18,7 +18,7 @@
 #define CS_X86_BASEINFO_H
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 // Enums for memory operand decoding.  Each memory operand is represented with
 // a 5 operand sequence in the form:

@@ -13,15 +13,21 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 // this code is only relevant when DIET mode is disable
 #if defined(CAPSTONE_HAS_X86) && !defined(CAPSTONE_DIET) && !defined(CAPSTONE_X86_ATT_DISABLE)
 
+#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
+#pragma warning(disable:4996)			// disable MSVC's warning on strncpy()
+#pragma warning(disable:28719)		// disable MSVC's warning on strncpy()
+#endif
+
 #if !defined(CAPSTONE_HAS_OSXKERNEL)
 #include <ctype.h>
 #endif
-#include <platform.h>
+#include <capstone/platform.h>
+
 #if defined(CAPSTONE_HAS_OSXKERNEL)
 #include <Availability.h>
 #include <libkern/libkern.h>
@@ -66,13 +72,51 @@ static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	switch(MI->csh->mode) {
 		case CS_MODE_16:
-			MI->x86opsize = 2;
+			switch(MI->flat_insn->id) {
+				default:
+					MI->x86opsize = 2;
+					break;
+				case X86_INS_LJMP:
+				case X86_INS_LCALL:
+					MI->x86opsize = 4;
+					break;
+				case X86_INS_SGDT:
+				case X86_INS_SIDT:
+				case X86_INS_LGDT:
+				case X86_INS_LIDT:
+					MI->x86opsize = 6;
+					break;
+			}
 			break;
 		case CS_MODE_32:
-			MI->x86opsize = 4;
+			switch(MI->flat_insn->id) {
+				default:
+					MI->x86opsize = 4;
+					break;
+				case X86_INS_LJMP:
+				case X86_INS_LCALL:
+				case X86_INS_SGDT:
+				case X86_INS_SIDT:
+				case X86_INS_LGDT:
+				case X86_INS_LIDT:
+					MI->x86opsize = 6;
+					break;
+			}
 			break;
 		case CS_MODE_64:
-			MI->x86opsize = 8;
+			switch(MI->flat_insn->id) {
+				default:
+					MI->x86opsize = 8;
+					break;
+				case X86_INS_LJMP:
+				case X86_INS_LCALL:
+				case X86_INS_SGDT:
+				case X86_INS_SIDT:
+				case X86_INS_LGDT:
+				case X86_INS_LIDT:
+					MI->x86opsize = 10;
+					break;
+			}
 			break;
 		default:	// never reach
 			break;
@@ -128,7 +172,31 @@ static void printi512mem(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printf32mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	MI->x86opsize = 4;
+	switch(MCInst_getOpcode(MI)) {
+		default:
+			MI->x86opsize = 4;
+			break;
+		case X86_FBSTPm:
+		case X86_FBLDm:
+			// TODO: fix this in tablegen instead
+			MI->x86opsize = 10;
+			break;
+		case X86_FSTENVm:
+		case X86_FLDENVm:
+			// TODO: fix this in tablegen instead
+			switch(MI->csh->mode) {
+				default:    // never reach
+					break;
+				case CS_MODE_16:
+					MI->x86opsize = 14;
+					break;
+				case CS_MODE_32:
+				case CS_MODE_64:
+					MI->x86opsize = 28;
+					break;
+			}
+			break;
+	}
 	printMemReference(MI, OpNo, O);
 }
 
@@ -164,7 +232,7 @@ static void printf512mem(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printSSECC(MCInst *MI, unsigned Op, SStream *OS)
 {
-	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 7;
+	uint8_t Imm = (uint8_t)(MCOperand_getImm(MCInst_getOperand(MI, Op)) & 7);
 	switch (Imm) {
 		default: break;	// never reach
 		case    0: SStream_concat0(OS, "eq"); op_addSseCC(MI, X86_SSE_CC_EQ); break;
@@ -175,20 +243,14 @@ static void printSSECC(MCInst *MI, unsigned Op, SStream *OS)
 		case    5: SStream_concat0(OS, "nlt"); op_addSseCC(MI, X86_SSE_CC_NLT); break;
 		case    6: SStream_concat0(OS, "nle"); op_addSseCC(MI, X86_SSE_CC_NLE); break;
 		case    7: SStream_concat0(OS, "ord"); op_addSseCC(MI, X86_SSE_CC_ORD); break;
-		case    8: SStream_concat0(OS, "eq_uq"); op_addSseCC(MI, X86_SSE_CC_EQ_UQ); break;
-		case    9: SStream_concat0(OS, "nge"); op_addSseCC(MI, X86_SSE_CC_NGE); break;
-		case  0xa: SStream_concat0(OS, "ngt"); op_addSseCC(MI, X86_SSE_CC_NGT); break;
-		case  0xb: SStream_concat0(OS, "false"); op_addSseCC(MI, X86_SSE_CC_FALSE); break;
-		case  0xc: SStream_concat0(OS, "neq_oq"); op_addSseCC(MI, X86_SSE_CC_NEQ_OQ); break;
-		case  0xd: SStream_concat0(OS, "ge"); op_addSseCC(MI, X86_SSE_CC_GE); break;
-		case  0xe: SStream_concat0(OS, "gt"); op_addSseCC(MI, X86_SSE_CC_GT); break;
-		case  0xf: SStream_concat0(OS, "true"); op_addSseCC(MI, X86_SSE_CC_TRUE); break;
 	}
+
+	MI->popcode_adjust = Imm + 1;
 }
 
 static void printAVXCC(MCInst *MI, unsigned Op, SStream *O)
 {
-	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x1f;
+	uint8_t Imm = (uint8_t)(MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x1f);
 	switch (Imm) {
 		default: break;//printf("Invalid avxcc argument!\n"); break;
 		case    0: SStream_concat0(O, "eq"); op_addAvxCC(MI, X86_AVX_CC_EQ); break;
@@ -223,6 +285,25 @@ static void printAVXCC(MCInst *MI, unsigned Op, SStream *O)
 		case 0x1d: SStream_concat0(O, "ge_oq"); op_addAvxCC(MI, X86_AVX_CC_GE_OQ); break;
 		case 0x1e: SStream_concat0(O, "gt_oq"); op_addAvxCC(MI, X86_AVX_CC_GT_OQ); break;
 		case 0x1f: SStream_concat0(O, "true_us"); op_addAvxCC(MI, X86_AVX_CC_TRUE_US); break;
+	}
+
+	MI->popcode_adjust = Imm + 1;
+}
+
+static void printXOPCC(MCInst *MI, unsigned Op, SStream *O)
+{
+	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op));
+
+	switch (Imm) {
+		default: // llvm_unreachable("Invalid xopcc argument!");
+		case 0: SStream_concat0(O, "lt"); op_addXopCC(MI, X86_XOP_CC_LT); break;
+		case 1: SStream_concat0(O, "le"); op_addXopCC(MI, X86_XOP_CC_LE); break;
+		case 2: SStream_concat0(O, "gt"); op_addXopCC(MI, X86_XOP_CC_GT); break;
+		case 3: SStream_concat0(O, "ge"); op_addXopCC(MI, X86_XOP_CC_GE); break;
+		case 4: SStream_concat0(O, "eq"); op_addXopCC(MI, X86_XOP_CC_EQ); break;
+		case 5: SStream_concat0(O, "neq"); op_addXopCC(MI, X86_XOP_CC_NEQ); break;
+		case 6: SStream_concat0(O, "false"); op_addXopCC(MI, X86_XOP_CC_FALSE); break;
+		case 7: SStream_concat0(O, "true"); op_addXopCC(MI, X86_XOP_CC_TRUE); break;
 	}
 }
 
@@ -265,12 +346,41 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
+// convert Intel access info to AT&T access info
+static void get_op_access(cs_struct *h, unsigned int id, uint8_t *access, uint64_t *eflags)
+{
+	uint8_t count, i;
+	uint8_t *arr = X86_get_op_access(h, id, eflags);
+
+	if (!arr) {
+		access[0] = 0;
+		return;
+	}
+
+	// find the non-zero last entry
+	for(count = 0; arr[count]; count++);
+
+	if (count == 0)
+		return;
+
+	// copy in reverse order this access array from Intel syntax -> AT&T syntax
+	count--;
+	for(i = 0; i <= count; i++) {
+		if (arr[count - i] != CS_AC_IGNORE)
+			access[i] = arr[count - i];
+		else
+			access[i] = 0;
+	}
+}
+
 static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 {
 	MCOperand *SegReg;
 	int reg;
 
 	if (MI->csh->detail) {
+		uint8_t access[6];
+
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_INVALID;
@@ -278,6 +388,9 @@ static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = X86_REG_INVALID;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = 1;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
+
+		get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].access = access[MI->flat_insn->detail->x86.op_count];
 	}
 
 	SegReg = MCInst_getOperand(MI, Op+1);
@@ -305,6 +418,8 @@ static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 {
 	if (MI->csh->detail) {
+		uint8_t access[6];
+
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_INVALID;
@@ -312,6 +427,9 @@ static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = X86_REG_INVALID;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = 1;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
+
+		get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].access = access[MI->flat_insn->detail->x86.op_count];
 	}
 
 	// DI accesses are always ES-based on non-64bit mode
@@ -386,6 +504,8 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 	int reg;
 
 	if (MI->csh->detail) {
+		uint8_t access[6];
+
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_INVALID;
@@ -393,6 +513,9 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = X86_REG_INVALID;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = 1;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
+
+		get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].access = access[MI->flat_insn->detail->x86.op_count];
 	}
 
 	// If this has a segment register, print it.
@@ -422,6 +545,24 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 	if (MI->csh->detail)
 		MI->flat_insn->detail->x86.op_count++;
 }
+
+#ifndef CAPSTONE_X86_REDUCE
+static void printU8Imm(MCInst *MI, unsigned Op, SStream *O)
+{
+	uint8_t val = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0xff;
+
+	if (val > HEX_THRESHOLD)
+		SStream_concat(O, "$0x%x", val);
+	else
+		SStream_concat(O, "$%u", val);
+
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = val;
+		MI->flat_insn->detail->x86.op_count++;
+	}
+}
+#endif
 
 static void printMemOffs8(MCInst *MI, unsigned OpNo, SStream *O)
 {
@@ -502,17 +643,24 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			if (MI->csh->doing_mem) {
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.base = reg;
 			} else {
+				uint8_t access[6];
+
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_REG;
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].reg = reg;
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->csh->regsize_map[reg];
+
+				get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].access = access[MI->flat_insn->detail->x86.op_count];
 
 				MI->flat_insn->detail->x86.op_count++;
 			}
 		}
 	} else if (MCOperand_isImm(Op)) {
 		// Print X86 immediates as signed values.
+		uint8_t encsize;
 		int64_t imm = MCOperand_getImm(Op);
-		int opsize = X86_immediate_size(MCInst_getOpcode(MI));
+		uint8_t opsize = X86_immediate_size(MCInst_getOpcode(MI), &encsize);
+
 		if (opsize == 1)    // print 1 byte immediate in positive form
 			imm = imm & 0xff;
 
@@ -593,9 +741,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				MI->has_imm = true;
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = imm;
 
-				if (opsize > 0)
-					MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = (uint8_t)opsize;
-				else if (MI->op1_size > 0)
+				if (opsize > 0) {
+					MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = opsize;
+					MI->flat_insn->detail->x86.encoding.imm_size = encsize;
+				} else if (MI->op1_size > 0)
 					MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->op1_size;
 				else
 					MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->imm_size;
@@ -616,6 +765,8 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	int segreg;
 
 	if (MI->csh->detail) {
+		uint8_t access[6];
+
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_INVALID;
@@ -623,6 +774,9 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = MCOperand_getReg(IndexReg);
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = 1;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
+
+		get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].access = access[MI->flat_insn->detail->x86.op_count];
 	}
 
 	// If this has a segment register, print it.
@@ -682,6 +836,24 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.op_count++;
 }
 
+static void printanymem(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	switch(MI->Opcode) {
+		default: break;
+		case X86_LEA16r:
+				 MI->x86opsize = 2;
+				 break;
+		case X86_LEA32r:
+		case X86_LEA64_32r:
+				 MI->x86opsize = 4;
+				 break;
+		case X86_LEA64r:
+				 MI->x86opsize = 8;
+				 break;
+	}
+	printMemReference(MI, OpNo, O);
+}
+
 #include "X86InstPrinter.h"
 
 #define GET_REGINFO_ENUM
@@ -704,7 +876,14 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 {
 	char *mnem;
 	x86_reg reg, reg2;
+	enum cs_ac_type access1, access2;
 	int i;
+
+	// perhaps this instruction does not need printer
+	if (MI->assembly[0]) {
+		strncpy(OS->buffer, MI->assembly, sizeof(MI->assembly));
+		return;
+	}
 
 	// Output CALLpcrel32 as "callq" in 64-bit mode.
 	// In Intel annotation it's always emitted as "call".
@@ -750,87 +929,92 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 	}
 
 	if (MI->csh->detail) {
-        // some instructions need to supply immediate 1 in the first op
-        switch(MCInst_getOpcode(MI)) {
-            default:
-                break;
-            case X86_SHL8r1:
-            case X86_SHL16r1:
-            case X86_SHL32r1:
-            case X86_SHL64r1:
-            case X86_SAL8r1:
-            case X86_SAL16r1:
-            case X86_SAL32r1:
-            case X86_SAL64r1:
-            case X86_SHR8r1:
-            case X86_SHR16r1:
-            case X86_SHR32r1:
-            case X86_SHR64r1:
-            case X86_SAR8r1:
-            case X86_SAR16r1:
-            case X86_SAR32r1:
-            case X86_SAR64r1:
-            case X86_RCL8r1:
-            case X86_RCL16r1:
-            case X86_RCL32r1:
-            case X86_RCL64r1:
-            case X86_RCR8r1:
-            case X86_RCR16r1:
-            case X86_RCR32r1:
-            case X86_RCR64r1:
-            case X86_ROL8r1:
-            case X86_ROL16r1:
-            case X86_ROL32r1:
-            case X86_ROL64r1:
-            case X86_ROR8r1:
-            case X86_ROR16r1:
-            case X86_ROR32r1:
-            case X86_ROR64r1:
-            case X86_SHL8m1:
-            case X86_SHL16m1:
-            case X86_SHL32m1:
-            case X86_SHL64m1:
-            case X86_SAL8m1:
-            case X86_SAL16m1:
-            case X86_SAL32m1:
-            case X86_SAL64m1:
-            case X86_SHR8m1:
-            case X86_SHR16m1:
-            case X86_SHR32m1:
-            case X86_SHR64m1:
-            case X86_SAR8m1:
-            case X86_SAR16m1:
-            case X86_SAR32m1:
-            case X86_SAR64m1:
-            case X86_RCL8m1:
-            case X86_RCL16m1:
-            case X86_RCL32m1:
-            case X86_RCL64m1:
-            case X86_RCR8m1:
-            case X86_RCR16m1:
-            case X86_RCR32m1:
-            case X86_RCR64m1:
-            case X86_ROL8m1:
-            case X86_ROL16m1:
-            case X86_ROL32m1:
-            case X86_ROL64m1:
-            case X86_ROR8m1:
-            case X86_ROR16m1:
-            case X86_ROR32m1:
-            case X86_ROR64m1:
-                // shift all the ops right to leave 1st slot for this new register op
-                memmove(&(MI->flat_insn->detail->x86.operands[1]), &(MI->flat_insn->detail->x86.operands[0]),
-                        sizeof(MI->flat_insn->detail->x86.operands[0]) * (ARR_SIZE(MI->flat_insn->detail->x86.operands) - 1));
-                MI->flat_insn->detail->x86.operands[0].type = X86_OP_IMM;
-                MI->flat_insn->detail->x86.operands[0].imm = 1;
-                MI->flat_insn->detail->x86.operands[0].size = 1;
-                MI->flat_insn->detail->x86.op_count++;
-        }
+		uint8_t access[6] = {0};
+
+		// some instructions need to supply immediate 1 in the first op
+		switch(MCInst_getOpcode(MI)) {
+			default:
+				break;
+			case X86_SHL8r1:
+			case X86_SHL16r1:
+			case X86_SHL32r1:
+			case X86_SHL64r1:
+			case X86_SAL8r1:
+			case X86_SAL16r1:
+			case X86_SAL32r1:
+			case X86_SAL64r1:
+			case X86_SHR8r1:
+			case X86_SHR16r1:
+			case X86_SHR32r1:
+			case X86_SHR64r1:
+			case X86_SAR8r1:
+			case X86_SAR16r1:
+			case X86_SAR32r1:
+			case X86_SAR64r1:
+			case X86_RCL8r1:
+			case X86_RCL16r1:
+			case X86_RCL32r1:
+			case X86_RCL64r1:
+			case X86_RCR8r1:
+			case X86_RCR16r1:
+			case X86_RCR32r1:
+			case X86_RCR64r1:
+			case X86_ROL8r1:
+			case X86_ROL16r1:
+			case X86_ROL32r1:
+			case X86_ROL64r1:
+			case X86_ROR8r1:
+			case X86_ROR16r1:
+			case X86_ROR32r1:
+			case X86_ROR64r1:
+			case X86_SHL8m1:
+			case X86_SHL16m1:
+			case X86_SHL32m1:
+			case X86_SHL64m1:
+			case X86_SAL8m1:
+			case X86_SAL16m1:
+			case X86_SAL32m1:
+			case X86_SAL64m1:
+			case X86_SHR8m1:
+			case X86_SHR16m1:
+			case X86_SHR32m1:
+			case X86_SHR64m1:
+			case X86_SAR8m1:
+			case X86_SAR16m1:
+			case X86_SAR32m1:
+			case X86_SAR64m1:
+			case X86_RCL8m1:
+			case X86_RCL16m1:
+			case X86_RCL32m1:
+			case X86_RCL64m1:
+			case X86_RCR8m1:
+			case X86_RCR16m1:
+			case X86_RCR32m1:
+			case X86_RCR64m1:
+			case X86_ROL8m1:
+			case X86_ROL16m1:
+			case X86_ROL32m1:
+			case X86_ROL64m1:
+			case X86_ROR8m1:
+			case X86_ROR16m1:
+			case X86_ROR32m1:
+			case X86_ROR64m1:
+				// shift all the ops right to leave 1st slot for this new register op
+				memmove(&(MI->flat_insn->detail->x86.operands[1]), &(MI->flat_insn->detail->x86.operands[0]),
+						sizeof(MI->flat_insn->detail->x86.operands[0]) * (ARR_SIZE(MI->flat_insn->detail->x86.operands) - 1));
+				MI->flat_insn->detail->x86.operands[0].type = X86_OP_IMM;
+				MI->flat_insn->detail->x86.operands[0].imm = 1;
+				MI->flat_insn->detail->x86.operands[0].size = 1;
+				MI->flat_insn->detail->x86.op_count++;
+		}
 
 		// special instruction needs to supply register op
 		// first op can be embedded in the asm by llvm.
 		// so we have to add the missing register as the first operand
-		reg = X86_insn_reg_att(MCInst_getOpcode(MI));
+
+		//printf(">>> opcode = %u\n", MCInst_getOpcode(MI));
+
+		reg = X86_insn_reg_att(MCInst_getOpcode(MI), &access1);
 		if (reg) {
 			// shift all the ops right to leave 1st slot for this new register op
 			memmove(&(MI->flat_insn->detail->x86.operands[1]), &(MI->flat_insn->detail->x86.operands[0]),
@@ -838,18 +1022,29 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 			MI->flat_insn->detail->x86.operands[0].type = X86_OP_REG;
 			MI->flat_insn->detail->x86.operands[0].reg = reg;
 			MI->flat_insn->detail->x86.operands[0].size = MI->csh->regsize_map[reg];
+			MI->flat_insn->detail->x86.operands[0].access = access1;
+
 			MI->flat_insn->detail->x86.op_count++;
 		} else {
-			if (X86_insn_reg_att2(MCInst_getOpcode(MI), &reg, &reg2)) {
+			if (X86_insn_reg_att2(MCInst_getOpcode(MI), &reg, &access1, &reg2, &access2)) {
+
 				MI->flat_insn->detail->x86.operands[0].type = X86_OP_REG;
 				MI->flat_insn->detail->x86.operands[0].reg = reg;
 				MI->flat_insn->detail->x86.operands[0].size = MI->csh->regsize_map[reg];
+				MI->flat_insn->detail->x86.operands[0].access = access1;
 				MI->flat_insn->detail->x86.operands[1].type = X86_OP_REG;
 				MI->flat_insn->detail->x86.operands[1].reg = reg2;
 				MI->flat_insn->detail->x86.operands[1].size = MI->csh->regsize_map[reg2];
+				MI->flat_insn->detail->x86.operands[0].access = access2;
 				MI->flat_insn->detail->x86.op_count = 2;
 			}
 		}
+
+#ifndef CAPSTONE_DIET
+		get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
+		MI->flat_insn->detail->x86.operands[0].access = access[0];
+		MI->flat_insn->detail->x86.operands[1].access = access[1];
+#endif
 	}
 }
 

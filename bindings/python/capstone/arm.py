@@ -11,6 +11,7 @@ class ArmOpMem(ctypes.Structure):
         ('index', ctypes.c_uint),
         ('scale', ctypes.c_int),
         ('disp', ctypes.c_int),
+        ('lshift', ctypes.c_int),
     )
 
 class ArmOpShift(ctypes.Structure):
@@ -35,6 +36,8 @@ class ArmOp(ctypes.Structure):
         ('type', ctypes.c_uint),
         ('value', ArmOpValue),
         ('subtracted', ctypes.c_bool),
+        ('access', ctypes.c_uint8),
+        ('neon_lane', ctypes.c_int8),
     )
 
     @property

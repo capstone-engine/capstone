@@ -4,7 +4,7 @@ fuzz_harness: fuzz_harness.o
 	${CC} $< -O3 -Wall -l$(LIBNAME) -o $@
 
 %.o: %.c
-	${CC} -c -I../../include $< -o $@
+	${CC} -c -I../../include/capstone $< -o $@
 
 clean:
 	rm -rf *.o fuzz_harness
