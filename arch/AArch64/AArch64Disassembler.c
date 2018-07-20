@@ -1626,7 +1626,7 @@ static DecodeStatus DecodeTestAndBranch(MCInst *Inst, uint32_t insn,
 {
 	uint32_t Rt = fieldFromInstruction(insn, 0, 5);
 	uint32_t bit = fieldFromInstruction(insn, 31, 1) << 5;
-	uint32_t dst = fieldFromInstruction(insn, 5, 14);
+	uint64_t dst = fieldFromInstruction(insn, 5, 14);
 
 	bit |= fieldFromInstruction(insn, 19, 5);
 
