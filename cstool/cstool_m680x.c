@@ -60,7 +60,7 @@ void print_insn_detail_m680x(csh handle, cs_insn *insn)
 
 	for (i = 0; i < m680x->op_count; i++) {
 		cs_m680x_op *op = &(m680x->operands[i]);
-		char *comment;
+		const char *comment;
 
 		switch ((int)op->type) {
 		default:
@@ -131,9 +131,9 @@ void print_insn_detail_m680x(csh handle, cs_insn *insn)
 			}
 
 			if (op->idx.inc_dec) {
-				char *post_pre = op->idx.flags &
+				const char *post_pre = op->idx.flags &
 					M680X_IDX_POST_INC_DEC ? "post" : "pre";
-				char *inc_dec = (op->idx.inc_dec > 0) ?
+				const char *inc_dec = (op->idx.inc_dec > 0) ?
 					"increment" : "decrement";
 
 				printf("\t\t\t%s %s: %d\n", post_pre, inc_dec,

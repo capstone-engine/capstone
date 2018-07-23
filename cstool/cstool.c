@@ -74,7 +74,7 @@ void print_insn_detail_evm(csh handle, cs_insn *ins);
 
 static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins);
 
-void print_string_hex(char *comment, unsigned char *str, size_t len)
+void print_string_hex(const char *comment, unsigned char *str, size_t len)
 {
 	unsigned char *c;
 
