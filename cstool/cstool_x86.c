@@ -5,9 +5,9 @@
 
 #include <capstone/capstone.h>
 
-void print_string_hex(char *comment, unsigned char *str, size_t len);
+void print_string_hex(const char *comment, unsigned char *str, size_t len);
 
-static char *get_eflag_name(uint64_t flag)
+static const char *get_eflag_name(uint64_t flag)
 {
 	switch(flag) {
 		default:
@@ -129,7 +129,7 @@ static char *get_eflag_name(uint64_t flag)
 	}
 }
 
-static char *get_fpu_flag_name(uint64_t flag)
+static const char *get_fpu_flag_name(uint64_t flag)
 {
 	switch (flag) {
 		default:

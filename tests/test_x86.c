@@ -14,12 +14,12 @@ struct platform {
 	cs_mode mode;
 	unsigned char *code;
 	size_t size;
-	char *comment;
+	const char *comment;
 	cs_opt_type opt_type;
 	cs_opt_value opt_value;
 };
 
-static void print_string_hex(char *comment, unsigned char *str, size_t len)
+static void print_string_hex(const char *comment, unsigned char *str, size_t len)
 {
 	unsigned char *c;
 
@@ -31,7 +31,7 @@ static void print_string_hex(char *comment, unsigned char *str, size_t len)
 	printf("\n");
 }
 
-static char *get_eflag_name(uint64_t flag)
+static const char *get_eflag_name(uint64_t flag)
 {
 	switch(flag) {
 		default:
