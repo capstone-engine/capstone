@@ -8,7 +8,6 @@ void print_string_hex(char *comment, unsigned char *str, size_t len);
 void print_insn_detail_evm(csh handle, cs_insn *ins)
 {
 	cs_evm *evm;
-	int i;
 
 	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
 	if (ins->detail == NULL)
