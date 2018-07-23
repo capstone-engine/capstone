@@ -80,6 +80,13 @@ def test_file(fname):
         ("CS_ARCH_SPARC", "CS_MODE_BIG_ENDIAN+CS_MODE_V9"): 16,
         ("CS_ARCH_SYSZ", "0"): 17,
         ("CS_ARCH_XCORE", "0"): 18,
+        ("CS_ARCH_MIPS", "CS_MODE_MIPS32R6+CS_MODE_BIG_ENDIAN"): 19,
+        ("CS_ARCH_MIPS", "CS_MODE_MIPS32R6+CS_MODE_MICRO+CS_MODE_BIG_ENDIAN"): 20,
+        ("CS_ARCH_MIPS", "CS_MODE_MIPS32R6"): 21,
+        ("CS_ARCH_MIPS", "CS_MODE_MIPS32R6+CS_MODE_MICRO"): 22,
+        ("CS_ARCH_M68K", "0"): 23,
+        ("CS_ARCH_M680X", "CS_MODE_M680X_6809"): 24,
+        ("CS_ARCH_EVM", "0"): 25,
     }
 
     #if not option in ('', 'None'):

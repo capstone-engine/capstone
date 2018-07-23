@@ -12,7 +12,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifdef CAPSTONE_HAS_POWERPC
 
@@ -40,6 +40,22 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, void *info);
 static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info);
 static void printCustomAliasOperand(MCInst *MI, unsigned OpIdx,
 		unsigned PrintMethodIdx, SStream *OS);
+
+#if 0
+static void printRegName(SStream *OS, unsigned RegNo)
+{
+	char *RegName = getRegisterName(RegNo);
+
+	if (RegName[0] == 'q' /* QPX */) {
+		// The system toolchain on the BG/Q does not understand QPX register names
+		// in .cfi_* directives, so print the name of the floating-point
+		// subregister instead.
+		RegName[0] = 'f';
+	}
+
+	SStream_concat0(OS, RegName);
+}
+#endif
 
 static void set_mem_access(MCInst *MI, bool status)
 {
@@ -423,6 +439,24 @@ static void printU6ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
+static void printU12ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	unsigned short Value = (unsigned short)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+
+	// assert(Value <= 4095 && "Invalid u12imm argument!");
+
+	if (Value > HEX_THRESHOLD)
+		SStream_concat(O, "0x%x", Value);
+	else
+		SStream_concat(O, "%u", Value);
+
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].imm = Value;
+		MI->flat_insn->detail->ppc.op_count++;
+	}
+}
+
 static void printS16ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	if (MCOperand_isImm(MCInst_getOperand(MI, OpNo))) {
@@ -510,20 +544,20 @@ static void printBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	int imm;
+	int64_t imm;
 
 	if (!MCOperand_isImm(MCInst_getOperand(MI, OpNo))) {
 		printOperand(MI, OpNo, O);
 		return;
 	}
 
-	imm = ((int)MCOperand_getImm(MCInst_getOperand(MI, OpNo)) * 4);
+	imm = MCOperand_getImm(MCInst_getOperand(MI, OpNo)) * 4;
 
 	if (!PPC_abs_branch(MI->csh, MCInst_getOpcode(MI))) {
-		imm = (int)MI->address + imm;
+		imm = MI->address + imm;
 	}
 
-	SStream_concat(O, "0x%x", imm);
+	SStream_concat(O, "0x%"PRIx64, imm);
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
@@ -613,6 +647,7 @@ static const char *stripRegisterPrefix(const char *RegName)
 	switch (RegName[0]) {
 		case 'r':
 		case 'f':
+		case 'q': // for QPX
 		case 'v':
 			if (RegName[1] == 's')
 				return RegName + 2;
@@ -663,7 +698,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
-				MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].mem.disp = imm;
+				MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].mem.disp = (int32_t)imm;
 			} else {
 				MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
 				MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].imm = imm;

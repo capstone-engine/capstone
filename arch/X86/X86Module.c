@@ -27,6 +27,9 @@ cs_err X86_global_init(cs_struct *ud)
 	ud->insn_name = X86_insn_name;
 	ud->group_name = X86_group_name;
 	ud->post_printer = NULL;;
+#ifndef CAPSTONE_DIET
+	ud->reg_access = X86_reg_access;
+#endif
 
 	if (ud->mode == CS_MODE_64)
 		ud->regsize_map = regsize_map_64;
@@ -58,8 +61,13 @@ cs_err X86_option(cs_struct *handle, cs_opt_type type, size_t value)
 
 				case CS_OPT_SYNTAX_DEFAULT:
 				case CS_OPT_SYNTAX_INTEL:
-					handle->printer = X86_Intel_printInst;
 					handle->syntax = CS_OPT_SYNTAX_INTEL;
+					handle->printer = X86_Intel_printInst;
+					break;
+
+				case CS_OPT_SYNTAX_MASM:
+					handle->printer = X86_Intel_printInst;
+					handle->syntax = (int)value;
 					break;
 
 				case CS_OPT_SYNTAX_ATT:

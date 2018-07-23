@@ -13,15 +13,12 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifndef CS_LLVM_MC_MCINSTRDESC_H
 #define CS_LLVM_MC_MCINSTRDESC_H
 
-#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
-#include <stdint.h>
-#endif
-#include "include/platform.h"
+#include "capstone/platform.h"
 
 //===----------------------------------------------------------------------===//
 // Machine Operand Flags and Description
@@ -113,6 +110,8 @@ enum {
 	MCID_ExtraSrcRegAllocReq,
 	MCID_ExtraDefRegAllocReq,
 	MCID_RegSequence,
+	MCID_ExtractSubreg,
+	MCID_InsertSubreg
 };
 
 /// MCInstrDesc - Describe properties that are true of each instruction in the

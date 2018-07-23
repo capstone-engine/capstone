@@ -14,15 +14,12 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifndef CS_LLVM_MC_MCREGISTERINFO_H
 #define CS_LLVM_MC_MCREGISTERINFO_H
 
-#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
-#include <stdint.h>
-#endif
-#include "include/platform.h"
+#include "capstone/platform.h"
 
 /// An unsigned integer type large enough to represent all physical registers,
 /// but not necessarily virtual registers.
@@ -30,9 +27,9 @@ typedef uint16_t MCPhysReg;
 typedef const MCPhysReg* iterator;
 
 typedef struct MCRegisterClass {
-	const char *Name;
 	iterator RegsBegin;
 	const uint8_t *RegSet;
+	uint32_t NameIdx;
 	uint16_t RegsSize;
 	uint16_t RegSetSize;
 	uint16_t ID;
@@ -60,6 +57,10 @@ typedef struct MCRegisterDesc {
 	// RegUnits - Points to the list of register units. The low 4 bits holds the
 	// Scale, the high bits hold an offset into DiffLists. See MCRegUnitIterator.
 	uint32_t RegUnits;
+
+	/// Index into list with lane mask sequences. The sequence contains a lanemask
+	/// for every register unit.
+	uint16_t RegUnitLaneMasks;
 } MCRegisterDesc;
 
 /// MCRegisterInfo base class - We assume that the target defines a static
@@ -103,7 +104,6 @@ void MCRegisterInfo_InitMCRegisterInfo(MCRegisterInfo *RI,
 		const uint16_t *SubIndices,
 		unsigned NumIndices,
 		const uint16_t *RET);
-
 
 unsigned MCRegisterInfo_getMatchingSuperReg(const MCRegisterInfo *RI, unsigned Reg, unsigned SubIdx, const MCRegisterClass *RC);
 

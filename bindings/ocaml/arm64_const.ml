@@ -1026,7 +1026,9 @@ let _ARM64_INS_IC = 448;;
 let _ARM64_INS_DC = 449;;
 let _ARM64_INS_AT = 450;;
 let _ARM64_INS_TLBI = 451;;
-let _ARM64_INS_ENDING = 452;;
+let _ARM64_INS_NEGS = 452;;
+let _ARM64_INS_NGCS = 453;;
+let _ARM64_INS_ENDING = 454;;
 
 (* Group of ARM64 instructions *)
 
@@ -1034,6 +1036,11 @@ let _ARM64_GRP_INVALID = 0;;
 
 (* Generic groups *)
 let _ARM64_GRP_JUMP = 1;;
+let _ARM64_GRP_CALL = 2;;
+let _ARM64_GRP_RET = 3;;
+let _ARM64_GRP_INT = 4;;
+let _ARM64_GRP_PRIVILEGE = 6;;
+let _ARM64_GRP_BRANCH_RELATIVE = 7;;
 
 (* Architecture-specific groups *)
 let _ARM64_GRP_CRYPTO = 128;;

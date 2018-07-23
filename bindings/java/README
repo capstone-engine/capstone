@@ -18,11 +18,11 @@ Arch Linux-3.11, 64-bit.
 
 This directory contains some test code to show how to use Capstone API.
 
-- Test.java
+- TestBasic.java
   This code shows the most simple form of API where we only want to get basic
   information out of disassembled instruction, such as address, mnemonic and
   operand string.
 
-- Test_<arch>.java
+- Test<arch>.java
   These code show how to retrieve architecture-specific information for each
   architecture.

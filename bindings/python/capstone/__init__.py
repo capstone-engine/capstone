@@ -31,6 +31,10 @@ __all__ = [
     'CS_ARCH_SPARC',
     'CS_ARCH_SYSZ',
     'CS_ARCH_XCORE',
+    'CS_ARCH_M68K',
+    'CS_ARCH_TMS320C64X',
+    'CS_ARCH_M680X',
+    'CS_ARCH_EVM',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
@@ -44,17 +48,35 @@ __all__ = [
     'CS_MODE_MICRO',
     'CS_MODE_MIPS3',
     'CS_MODE_MIPS32R6',
-    'CS_MODE_MIPSGP64',
+    'CS_MODE_MIPS2',
     'CS_MODE_V8',
     'CS_MODE_V9',
+    'CS_MODE_QPX',
+    'CS_MODE_M68K_000',
+    'CS_MODE_M68K_010',
+    'CS_MODE_M68K_020',
+    'CS_MODE_M68K_030',
+    'CS_MODE_M68K_040',
+    'CS_MODE_M68K_060',
     'CS_MODE_MIPS32',
     'CS_MODE_MIPS64',
+    'CS_MODE_M680X_6301',
+    'CS_MODE_M680X_6309',
+    'CS_MODE_M680X_6800',
+    'CS_MODE_M680X_6801',
+    'CS_MODE_M680X_6805',
+    'CS_MODE_M680X_6808',
+    'CS_MODE_M680X_6809',
+    'CS_MODE_M680X_6811',
+    'CS_MODE_M680X_CPU12',
+    'CS_MODE_M680X_HCS08',
 
     'CS_OPT_SYNTAX',
     'CS_OPT_SYNTAX_DEFAULT',
     'CS_OPT_SYNTAX_INTEL',
     'CS_OPT_SYNTAX_ATT',
     'CS_OPT_SYNTAX_NOREGNAME',
+    'CS_OPT_SYNTAX_MASM',
 
     'CS_OPT_DETAIL',
     'CS_OPT_MODE',
@@ -92,6 +114,11 @@ __all__ = [
     'CS_GRP_RET',
     'CS_GRP_INT',
     'CS_GRP_IRET',
+    'CS_GRP_PRIVILEGE',
+
+    'CS_AC_INVALID',
+    'CS_AC_READ',
+    'CS_AC_WRITE',
 
     'CsError',
 
@@ -101,13 +128,13 @@ __all__ = [
 # Capstone C interface
 
 # API version
-CS_API_MAJOR = 3
+CS_API_MAJOR = 4
 CS_API_MINOR = 0
 
 # Package version
 CS_VERSION_MAJOR = CS_API_MAJOR
 CS_VERSION_MINOR = CS_API_MINOR
-CS_VERSION_EXTRA = 5
+CS_VERSION_EXTRA = 0
 
 __version__ = "%u.%u.%u" %(CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA)
 
@@ -120,7 +147,11 @@ CS_ARCH_PPC = 4
 CS_ARCH_SPARC = 5
 CS_ARCH_SYSZ = 6
 CS_ARCH_XCORE = 7
-CS_ARCH_MAX = 8
+CS_ARCH_M68K = 8
+CS_ARCH_TMS320C64X = 9
+CS_ARCH_M680X = 10
+CS_ARCH_EVM = 11
+CS_ARCH_MAX = 12
 CS_ARCH_ALL = 0xFFFF
 
 # disasm mode
@@ -135,11 +166,28 @@ CS_MODE_V8 = (1 << 6)          # ARMv8 A32 encodings for ARM
 CS_MODE_MICRO = (1 << 4)       # MicroMips mode (MIPS architecture)
 CS_MODE_MIPS3 = (1 << 5)       # Mips III ISA
 CS_MODE_MIPS32R6 = (1 << 6)    # Mips32r6 ISA
-CS_MODE_MIPSGP64 = (1 << 7)    # General Purpose Registers are 64-bit wide (MIPS arch)
+CS_MODE_MIPS2 = (1 << 7)       # Mips II ISA
 CS_MODE_V9 = (1 << 4)          # Sparc V9 mode (for Sparc)
+CS_MODE_QPX = (1 << 4)         # Quad Processing eXtensions mode (PPC)
+CS_MODE_M68K_000 = (1 << 1)    # M68K 68000 mode
+CS_MODE_M68K_010 = (1 << 2)    # M68K 68010 mode
+CS_MODE_M68K_020 = (1 << 3)    # M68K 68020 mode
+CS_MODE_M68K_030 = (1 << 4)    # M68K 68030 mode
+CS_MODE_M68K_040 = (1 << 5)    # M68K 68040 mode
+CS_MODE_M68K_060 = (1 << 6)    # M68K 68060 mode
 CS_MODE_BIG_ENDIAN = (1 << 31) # big-endian mode
 CS_MODE_MIPS32 = CS_MODE_32    # Mips32 ISA
 CS_MODE_MIPS64 = CS_MODE_64    # Mips64 ISA
+CS_MODE_M680X_6301 = (1 << 1)  # M680X HD6301/3 mode
+CS_MODE_M680X_6309 = (1 << 2)  # M680X HD6309 mode
+CS_MODE_M680X_6800 = (1 << 3)  # M680X M6800/2 mode
+CS_MODE_M680X_6801 = (1 << 4)  # M680X M6801/3 mode
+CS_MODE_M680X_6805 = (1 << 5)  # M680X M6805 mode
+CS_MODE_M680X_6808 = (1 << 6)  # M680X M68HC08 mode
+CS_MODE_M680X_6809 = (1 << 7)  # M680X M6809 mode
+CS_MODE_M680X_6811 = (1 << 8)  # M680X M68HC11 mode
+CS_MODE_M680X_CPU12 = (1 << 9)  # M680X CPU12 mode
+CS_MODE_M680X_HCS08 = (1 << 10)  # M680X HCS08 mode
 
 # Capstone option type
 CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
@@ -148,6 +196,8 @@ CS_OPT_MODE = 3      # Change engine's mode at run-time
 CS_OPT_MEM = 4       # Change engine's mode at run-time
 CS_OPT_SKIPDATA = 5  # Skip data when disassembling
 CS_OPT_SKIPDATA_SETUP = 6      # Setup user-defined function for SKIPDATA option
+CS_OPT_MNEMONIC = 7  # Customize instruction mnemonic
+CS_OPT_UNSIGNED = 8  # Print immediate in unsigned form
 
 # Capstone option value
 CS_OPT_OFF = 0             # Turn OFF an option - default option of CS_OPT_DETAIL
@@ -167,12 +217,19 @@ CS_GRP_CALL    = 2  # all call instructions
 CS_GRP_RET     = 3  # all return instructions
 CS_GRP_INT     = 4  # all interrupt instructions (int+syscall)
 CS_GRP_IRET    = 5  # all interrupt return instructions
+CS_GRP_PRIVILEGE = 6  # all privileged instructions
+
+# Access types for instruction operands.
+CS_AC_INVALID  = 0        # Invalid/unitialized access type.
+CS_AC_READ     = (1 << 0) # Operand that is read from.
+CS_AC_WRITE    = (1 << 1) # Operand that is written to.
 
 # Capstone syntax value
 CS_OPT_SYNTAX_DEFAULT = 0    # Default assembly syntax of all platforms (CS_OPT_SYNTAX)
 CS_OPT_SYNTAX_INTEL = 1    # Intel X86 asm syntax - default syntax on X86 (CS_OPT_SYNTAX, CS_ARCH_X86)
 CS_OPT_SYNTAX_ATT = 2      # ATT asm syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
 CS_OPT_SYNTAX_NOREGNAME = 3   # Asm syntax prints register name with only number - (CS_OPT_SYNTAX, CS_ARCH_PPC, CS_ARCH_ARM)
+CS_OPT_SYNTAX_MASM = 4      # MASM syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
 
 # Capstone error type
 CS_ERR_OK = 0      # No error: everything was fine
@@ -189,11 +246,20 @@ CS_ERR_DIET = 10   # Information irrelevant in diet engine
 CS_ERR_SKIPDATA = 11 # Access irrelevant data for "data" instruction in SKIPDATA mode
 CS_ERR_X86_ATT = 12 # X86 AT&T syntax is unsupported (opt-out at compile time)
 CS_ERR_X86_INTEL = 13 # X86 Intel syntax is unsupported (opt-out at compile time)
+CS_ERR_X86_MASM = 14 # X86 Intel syntax is unsupported (opt-out at compile time)
 
 # query id for cs_support()
 CS_SUPPORT_DIET = CS_ARCH_ALL + 1
 CS_SUPPORT_X86_REDUCE = CS_ARCH_ALL+2
 
+# Capstone reverse lookup
+CS_AC    = {v:k for k,v in locals().items() if k.startswith('CS_AC_')}
+CS_ARCH  = {v:k for k,v in locals().items() if k.startswith('CS_ARCH_')}
+CS_ERR   = {v:k for k,v in locals().items() if k.startswith('CS_ERR_')}
+CS_GRP   = {v:k for k,v in locals().items() if k.startswith('CS_GRP_')}
+CS_MODE  = {v:k for k,v in locals().items() if k.startswith('CS_MODE_')}
+CS_OP    = {v:k for k,v in locals().items() if k.startswith('CS_OP_')}
+CS_OPT   = {v:k for k,v in locals().items() if k.startswith('CS_OPT_')}
 
 import ctypes, ctypes.util
 from os.path import split, join, dirname
@@ -215,14 +281,13 @@ _found = False
 
 def _load_lib(path):
     lib_file = join(path, _lib)
-    #print("Trying to load %s" %lib_file)
     if os.path.exists(lib_file):
         return ctypes.cdll.LoadLibrary(lib_file)
     else:
-        # if we're on linux, try again with .so.3 extension
+        # if we're on linux, try again with .so.4 extension
         if lib_file.endswith('.so'):
-            if os.path.exists(lib_file + '.3'):
-                return ctypes.cdll.LoadLibrary(lib_file + '.3')
+            if os.path.exists(lib_file + '.4'):
+                return ctypes.cdll.LoadLibrary(lib_file + '.4')
     return None
 
 _cs = None
@@ -262,25 +327,29 @@ def copy_ctypes_list(src):
     return [copy_ctypes(n) for n in src]
 
 # Weird import placement because these modules are needed by the below code but need the above functions
-from . import arm, arm64, mips, ppc, sparc, systemz, x86, xcore
+from . import arm, arm64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm
 
 class _cs_arch(ctypes.Union):
     _fields_ = (
         ('arm64', arm64.CsArm64),
         ('arm', arm.CsArm),
+        ('m68k', m68k.CsM68K),
         ('mips', mips.CsMips),
         ('x86', x86.CsX86),
         ('ppc', ppc.CsPpc),
         ('sparc', sparc.CsSparc),
         ('sysz', systemz.CsSysz),
         ('xcore', xcore.CsXcore),
+        ('tms320c64x', tms320c64x.CsTMS320C64x),
+        ('m680x', m680x.CsM680x),
+        ('evm', evm.CsEvm),
     )
 
 class _cs_detail(ctypes.Structure):
     _fields_ = (
-        ('regs_read', ctypes.c_ubyte * 12),
+        ('regs_read', ctypes.c_uint16 * 12),
         ('regs_read_count', ctypes.c_ubyte),
-        ('regs_write', ctypes.c_ubyte * 20),
+        ('regs_write', ctypes.c_uint16 * 20),
         ('regs_write_count', ctypes.c_ubyte),
         ('groups', ctypes.c_ubyte * 8),
         ('groups_count', ctypes.c_ubyte),
@@ -308,6 +377,11 @@ class _cs_opt_skipdata(ctypes.Structure):
         ('user_data', ctypes.c_void_p),
     )
 
+class _cs_opt_mnem(ctypes.Structure):
+    _fields_ = (
+        ('id', ctypes.c_uint),
+        ('mnemonic', ctypes.c_char_p),
+    )
 
 # setup all the function prototype
 def _setup_prototype(lib, fname, restype, *argtypes):
@@ -329,6 +403,7 @@ _setup_prototype(_cs, "cs_option", ctypes.c_int, ctypes.c_size_t, ctypes.c_int, 
 _setup_prototype(_cs, "cs_version", ctypes.c_int, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
 _setup_prototype(_cs, "cs_support", ctypes.c_bool, ctypes.c_int)
 _setup_prototype(_cs, "cs_strerror", ctypes.c_char_p, ctypes.c_int)
+_setup_prototype(_cs, "cs_regs_access", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.POINTER(ctypes.c_uint16*64), ctypes.POINTER(ctypes.c_uint8), ctypes.POINTER(ctypes.c_uint16*64), ctypes.POINTER(ctypes.c_uint8))
 
 
 # access to error code via @errno of CsError
@@ -447,6 +522,9 @@ def cs_disasm_lite(arch, mode, code, offset, count=0):
     if status != CS_ERR_OK:
         raise CsError(status)
 
+def _ascii_name_or_default(name, default):
+    return default if name is None else name.decode('ascii')
+
 
 # Python-style class to disasm code
 class CsInsn(object):
@@ -455,7 +533,8 @@ class CsInsn(object):
         self._cs = cs
         if self._cs._detail and self._raw.id != 0:
             # save detail
-            self._detail = copy_ctypes(self._raw.detail.contents)
+            self._raw.detail = ctypes.pointer(all_info.detail._type_())
+            ctypes.memmove(ctypes.byref(self._raw.detail[0]), ctypes.byref(all_info.detail[0]), ctypes.sizeof(type(all_info.detail[0])))
 
     # return instruction's ID.
     @property
@@ -506,7 +585,7 @@ class CsInsn(object):
             raise CsError(CS_ERR_DIET)
 
         if self._cs._detail:
-            return self._detail.regs_read[:self._detail.regs_read_count]
+            return self._raw.detail.contents.regs_read[:self._raw.detail.contents.regs_read_count]
 
         raise CsError(CS_ERR_DETAIL)
 
@@ -521,7 +600,7 @@ class CsInsn(object):
             raise CsError(CS_ERR_DIET)
 
         if self._cs._detail:
-            return self._detail.regs_write[:self._detail.regs_write_count]
+            return self._raw.detail.contents.regs_write[:self._raw.detail.contents.regs_write_count]
 
         raise CsError(CS_ERR_DETAIL)
 
@@ -536,7 +615,7 @@ class CsInsn(object):
             raise CsError(CS_ERR_DIET)
 
         if self._cs._detail:
-            return self._detail.groups[:self._detail.groups_count]
+            return self._raw.detail.contents.groups[:self._raw.detail.contents.groups_count]
 
         raise CsError(CS_ERR_DETAIL)
 
@@ -548,26 +627,36 @@ class CsInsn(object):
         arch = self._cs.arch
         if arch == CS_ARCH_ARM:
             (self.usermode, self.vector_size, self.vector_data, self.cps_mode, self.cps_flag, self.cc, self.update_flags, \
-            self.writeback, self.mem_barrier, self.operands) = arm.get_arch_info(self._detail.arch.arm)
+            self.writeback, self.mem_barrier, self.operands) = arm.get_arch_info(self._raw.detail.contents.arch.arm) 
         elif arch == CS_ARCH_ARM64:
             (self.cc, self.update_flags, self.writeback, self.operands) = \
-                arm64.get_arch_info(self._detail.arch.arm64)
+                arm64.get_arch_info(self._raw.detail.contents.arch.arm64)
         elif arch == CS_ARCH_X86:
             (self.prefix, self.opcode, self.rex, self.addr_size, \
                 self.modrm, self.sib, self.disp, \
-                self.sib_index, self.sib_scale, self.sib_base, self.sse_cc, \
-                self.avx_cc, self.avx_sae, self.avx_rm, self.operands) = x86.get_arch_info(self._detail.arch.x86)
+                self.sib_index, self.sib_scale, self.sib_base, self.xop_cc, self.sse_cc, \
+                self.avx_cc, self.avx_sae, self.avx_rm, self.eflags, \
+                self.modrm_offset, self.disp_offset, self.disp_size, self.imm_offset, self.imm_size, \
+                self.operands) = x86.get_arch_info(self._raw.detail.contents.arch.x86)
+        elif arch == CS_ARCH_M68K:
+                (self.operands, self.op_size) = m68k.get_arch_info(self._raw.detail.contents.arch.m68k)
         elif arch == CS_ARCH_MIPS:
-                self.operands = mips.get_arch_info(self._detail.arch.mips)
+                self.operands = mips.get_arch_info(self._raw.detail.contents.arch.mips)
         elif arch == CS_ARCH_PPC:
             (self.bc, self.bh, self.update_cr0, self.operands) = \
-                ppc.get_arch_info(self._detail.arch.ppc)
+                ppc.get_arch_info(self._raw.detail.contents.arch.ppc)
         elif arch == CS_ARCH_SPARC:
-            (self.cc, self.hint, self.operands) = sparc.get_arch_info(self._detail.arch.sparc)
+            (self.cc, self.hint, self.operands) = sparc.get_arch_info(self._raw.detail.contents.arch.sparc)
         elif arch == CS_ARCH_SYSZ:
-            (self.cc, self.operands) = systemz.get_arch_info(self._detail.arch.sysz)
+            (self.cc, self.operands) = systemz.get_arch_info(self._raw.detail.contents.arch.sysz)
         elif arch == CS_ARCH_XCORE:
-            (self.operands) = xcore.get_arch_info(self._detail.arch.xcore)
+            (self.operands) = xcore.get_arch_info(self._raw.detail.contents.arch.xcore)
+        elif arch == CS_ARCH_TMS320C64X:
+            (self.condition, self.funit, self.parallel, self.operands) = tms320c64x.get_arch_info(self._raw.detail.contents.arch.tms320c64x)
+        elif arch == CS_ARCH_M680X:
+            (self.flags, self.operands) = m680x.get_arch_info(self._raw.detail.contents.arch.m680x)
+        elif arch == CS_ARCH_EVM:
+            (self.pop, self.push, self.fee) = evm.get_arch_info(self._raw.detail.contents.arch.evm)
 
 
     def __getattr__(self, name):
@@ -591,43 +680,31 @@ class CsInsn(object):
         return _cs.cs_errno(self._cs.csh)
 
     # get the register name, given the register ID
-    def reg_name(self, reg_id):
-        if self._raw.id == 0:
-            raise CsError(CS_ERR_SKIPDATA)
-
+    def reg_name(self, reg_id, default=None):
         if self._cs._diet:
             # Diet engine cannot provide register name
             raise CsError(CS_ERR_DIET)
 
-        if reg_id == 0:
-            return "(invalid)"
-
-        return _cs.cs_reg_name(self._cs.csh, reg_id).decode('ascii')
+        return _ascii_name_or_default(_cs.cs_reg_name(self._cs.csh, reg_id), default)
 
     # get the instruction name
-    def insn_name(self):
+    def insn_name(self, default=None):
         if self._cs._diet:
             # Diet engine cannot provide instruction name
             raise CsError(CS_ERR_DIET)
 
         if self._raw.id == 0:
-            return "(invalid)"
+            return default
 
-        return _cs.cs_insn_name(self._cs.csh, self.id).decode('ascii')
+        return _ascii_name_or_default(_cs.cs_insn_name(self._cs.csh, self.id), default)
 
     # get the group name
-    def group_name(self, group_id):
-        if self._raw.id == 0:
-            raise CsError(CS_ERR_SKIPDATA)
-
+    def group_name(self, group_id, default=None):
         if self._cs._diet:
-            # Diet engine cannot provide register name
+            # Diet engine cannot provide group name
             raise CsError(CS_ERR_DIET)
 
-        if group_id == 0:
-            return "(invalid)"
-
-        return _cs.cs_group_name(self._cs.csh, group_id).decode('ascii')
+        return _ascii_name_or_default(_cs.cs_group_name(self._cs.csh, group_id), default)
 
 
     # verify if this insn belong to group with id as @group_id
@@ -686,6 +763,34 @@ class CsInsn(object):
             if c == position:
                 return op
 
+    # Return (list-of-registers-read, list-of-registers-modified) by this instructions.
+    # This includes all the implicit & explicit registers.
+    def regs_access(self):
+        if self._raw.id == 0:
+            raise CsError(CS_ERR_SKIPDATA)
+
+        regs_read = (ctypes.c_uint16 * 64)()
+        regs_read_count = ctypes.c_uint8()
+        regs_write = (ctypes.c_uint16 * 64)()
+        regs_write_count = ctypes.c_uint8()
+
+        status = _cs.cs_regs_access(self._cs.csh, self._raw, ctypes.byref(regs_read), ctypes.byref(regs_read_count), ctypes.byref(regs_write), ctypes.byref(regs_write_count))
+        if status != CS_ERR_OK:
+            raise CsError(status)
+
+        if regs_read_count.value > 0:
+            regs_read = regs_read[:regs_read_count.value]
+        else:
+            regs_read = ()
+
+        if regs_write_count.value > 0:
+            regs_write = regs_write[:regs_write_count.value]
+        else:
+            regs_write = ()
+
+        return (regs_read, regs_write)
+
+
 
 class Cs(object):
     def __init__(self, arch, mode):
@@ -717,6 +822,7 @@ class Cs(object):
             self._syntax = None
 
         self._detail = False  # by default, do not produce instruction details
+        self._imm_unsigned = False  # by default, print immediate operands as signed numbers
         self._diet = cs_support(CS_SUPPORT_DIET)
         self._x86reduce = cs_support(CS_SUPPORT_X86_REDUCE)
 
@@ -789,6 +895,12 @@ class Cs(object):
         self._skipdata = opt
 
 
+    @property
+    def skipdata_setup(self):
+        return
+
+
+    @skipdata_setup.setter
     def skipdata_setup(self, opt):
         _skipdata_opt = _cs_opt_skipdata()
         _mnem, _cb, _ud = opt
@@ -800,6 +912,19 @@ class Cs(object):
             raise CsError(status)
 
         self._skipdata_opt = _skipdata_opt
+
+
+    # customize instruction mnemonic
+    def mnemonic_setup(self, id, mnem):
+        _mnem_opt = _cs_opt_mnem()
+        _mnem_opt.id = id
+        if mnem:
+            _mnem_opt.mnemonic = mnem.encode()
+        else:
+            _mnem_opt.mnemonic = mnem
+        status = _cs.cs_option(self.csh, CS_OPT_MNEMONIC, ctypes.cast(ctypes.byref(_mnem_opt), ctypes.c_void_p))
+        if status != CS_ERR_OK:
+            raise CsError(status)
 
 
     # check to see if this engine supports a particular arch,
@@ -827,6 +952,25 @@ class Cs(object):
         self._detail = opt
 
 
+    # is detail mode enable?
+    @property
+    def imm_unsigned(self):
+        return self._imm_unsigned
+
+
+    # modify detail mode.
+    @imm_unsigned.setter
+    def imm_unsigned(self, opt):  # opt is boolean type, so must be either 'True' or 'False'
+        if opt == False:
+            status = _cs.cs_option(self.csh, CS_OPT_UNSIGNED, CS_OPT_OFF)
+        else:
+            status = _cs.cs_option(self.csh, CS_OPT_UNSIGNED, CS_OPT_ON)
+        if status != CS_ERR_OK:
+            raise CsError(status)
+        # save detail
+        self._imm_unsigned = opt
+
+
     # return disassembly mode of this engine.
     @property
     def mode(self):
@@ -842,6 +986,33 @@ class Cs(object):
         # save mode
         self._mode = opt
 
+    # get the last error code
+    def errno(self):
+        return _cs.cs_errno(self.csh)
+
+    # get the register name, given the register ID
+    def reg_name(self, reg_id, default=None):
+        if self._diet:
+            # Diet engine cannot provide register name
+            raise CsError(CS_ERR_DIET)
+
+        return _ascii_name_or_default(_cs.cs_reg_name(self.csh, reg_id), default)
+
+    # get the instruction name, given the instruction ID
+    def insn_name(self, insn_id, default=None):
+        if self._diet:
+            # Diet engine cannot provide instruction name
+            raise CsError(CS_ERR_DIET)
+
+        return _ascii_name_or_default(_cs.cs_insn_name(self.csh, insn_id), default)
+
+    # get the group name
+    def group_name(self, group_id, default=None):
+        if self._diet:
+            # Diet engine cannot provide group name
+            raise CsError(CS_ERR_DIET)
+
+        return _ascii_name_or_default(_cs.cs_group_name(self.csh, group_id), default)
 
     # Disassemble binary & return disassembled instructions in CsInsn objects
     def disasm(self, code, offset, count=0):
@@ -909,9 +1080,10 @@ def debug():
     else:
         diet = "standard"
 
-    archs = { "arm": CS_ARCH_ARM, "arm64": CS_ARCH_ARM64, \
+    archs = { "arm": CS_ARCH_ARM, "arm64": CS_ARCH_ARM64, "m68k": CS_ARCH_M68K, \
         "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "sparc": CS_ARCH_SPARC, \
-        "sysz": CS_ARCH_SYSZ, 'xcore': CS_ARCH_XCORE }
+        "sysz": CS_ARCH_SYSZ, 'xcore': CS_ARCH_XCORE, "tms320c64x": CS_ARCH_TMS320C64X, \
+        "m680x": CS_ARCH_M680X, 'evm': CS_ARCH_EVM }
 
     all_archs = ""
     keys = archs.keys()

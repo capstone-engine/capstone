@@ -14,15 +14,12 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifndef CS_MCINST_H
 #define CS_MCINST_H
 
-#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
-#include <stdint.h>
-#endif
-#include "include/capstone.h"
+#include "include/capstone/capstone.h"
 
 typedef struct MCInst MCInst;
 typedef struct cs_struct cs_struct;
@@ -106,6 +103,11 @@ struct MCInst {
 	uint8_t x86_prefix[4];
 	uint8_t imm_size;	// immediate size for X86_OP_IMM operand
 	bool writeback;	// writeback for ARM
+	// operand access index for list of registers sharing the same access right (for ARM)
+	uint8_t ac_idx;
+	uint8_t popcode_adjust;   // Pseudo X86 instruction adjust
+	char assembly[8];	// for special instruction, so that we dont need printer
+	unsigned char evm_data[32];	// for EVM PUSH operand
 };
 
 void MCInst_Init(MCInst *inst);

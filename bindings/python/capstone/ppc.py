@@ -21,7 +21,7 @@ class PpcOpCrx(ctypes.Structure):
 class PpcOpValue(ctypes.Union):
     _fields_ = (
         ('reg', ctypes.c_uint),
-        ('imm', ctypes.c_int32),
+        ('imm', ctypes.c_int64),
         ('mem', PpcOpMem),
         ('crx', PpcOpCrx),
     )

@@ -70,6 +70,8 @@ public class TestArm {
             System.out.printf("\t\t\toperands[%d].mem.scale: %d\n", c, (i.value.mem.scale));
           if (i.value.mem.disp != 0)
             System.out.printf("\t\t\toperands[%d].mem.disp: 0x%x\n", c, (i.value.mem.disp));
+          if (i.value.mem.lshift != 0)
+            System.out.printf("\t\t\toperands[%d].mem.lshift: 0x%x\n", c, (i.value.mem.lshift));
         }
         if (i.vector_index > 0)
           System.out.printf("\t\t\toperands[%d].vector_index = %d\n", c, (i.vector_index));
@@ -106,18 +108,18 @@ public class TestArm {
 
   public static void main(String argv[]) {
 
-    final Test.platform[] all_tests = {
-      new Test.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_ARM, hexString2Byte(ARM_CODE), "ARM"),
-      new Test.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_THUMB, hexString2Byte(THUMB_CODE), "Thumb"),
-      new Test.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_THUMB, hexString2Byte(ARM_CODE2), "Thumb-mixed"),
-      new Test.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_THUMB, Capstone.CS_OPT_SYNTAX_NOREGNAME, hexString2Byte(THUMB_CODE2), "Thumb-2 & register named with numbers"),
+    final TestBasic.platform[] all_tests = {
+      new TestBasic.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_ARM, hexString2Byte(ARM_CODE), "ARM"),
+      new TestBasic.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_THUMB, hexString2Byte(THUMB_CODE), "Thumb"),
+      new TestBasic.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_THUMB, hexString2Byte(ARM_CODE2), "Thumb-mixed"),
+      new TestBasic.platform(Capstone.CS_ARCH_ARM, Capstone.CS_MODE_THUMB, Capstone.CS_OPT_SYNTAX_NOREGNAME, hexString2Byte(THUMB_CODE2), "Thumb-2 & register named with numbers"),
     };
 
     for (int i=0; i<all_tests.length; i++) {
-      Test.platform test = all_tests[i];
+      TestBasic.platform test = all_tests[i];
       System.out.println(new String(new char[16]).replace("\0", "*"));
       System.out.println("Platform: " + test.comment);
-      System.out.println("Code: " + Test.stringToHex(test.code));
+      System.out.println("Code: " + TestBasic.stringToHex(test.code));
       System.out.println("Disasm:");
 
       cs = new Capstone(test.arch, test.mode);

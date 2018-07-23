@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
-#include <capstone.h>
+#include <capstone/capstone.h>
 
 
 struct platform {
@@ -157,7 +157,24 @@ struct platform platforms[] = {
         (cs_mode)(CS_MODE_MIPS32R6 + CS_MODE_MICRO),
         "MIPS-32R6 (Micro+Little-endian)"
     },
-
+    {
+        //item 23
+        CS_ARCH_M68K,
+        (cs_mode)0,
+        "M68K"
+    },
+    {
+        //item 24
+        CS_ARCH_M680X,
+        (cs_mode)CS_MODE_M680X_6809,
+        "M680X_M6809"
+    },
+    {
+        //item 25
+        CS_ARCH_EVM,
+        (cs_mode)0,
+        "EVM"
+    },
 };
 
 int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {

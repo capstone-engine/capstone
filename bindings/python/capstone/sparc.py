@@ -15,7 +15,7 @@ class SparcOpMem(ctypes.Structure):
 class SparcOpValue(ctypes.Union):
     _fields_ = (
         ('reg', ctypes.c_uint),
-        ('imm', ctypes.c_int32),
+        ('imm', ctypes.c_int64),
         ('mem', SparcOpMem),
     )
 

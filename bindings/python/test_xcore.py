@@ -5,7 +5,7 @@
 from __future__ import print_function
 from capstone import *
 from capstone.xcore import *
-from xprint import to_x, to_hex, to_x_32
+from xprint import to_x, to_hex
 
 
 XCORE_CODE = b"\xfe\x0f\xfe\x17\x13\x17\xc6\xfe\xec\x17\x97\xf8\xec\x4f\x1f\xfd\xec\x37\x07\xf2\x45\x5b\xf9\xfa\x02\x06\x1b\x10\x09\xfd\xec\xa7"

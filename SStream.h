@@ -1,8 +1,10 @@
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifndef CS_SSTREAM_H_
 #define CS_SSTREAM_H_
+
+#include "include/capstone/platform.h"
 
 typedef struct SStream {
 	char buffer[512];

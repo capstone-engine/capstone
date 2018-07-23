@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <capstone.h>
+#include <capstone/capstone.h>
 
 void print_string_hex(char *comment, unsigned char *str, size_t len);
 
@@ -34,9 +34,9 @@ void print_insn_detail_mips(csh handle, cs_insn *ins)
 				break;
 			case MIPS_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
-				if (op->mem.base != X86_REG_INVALID)
+				if (op->mem.base != MIPS_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.base: REG = %s\n",
-							i, cs_reg_name(handle, op->mem.base));
+						   i, cs_reg_name(handle, op->mem.base));
 				if (op->mem.disp != 0)
 					printf("\t\t\toperands[%u].mem.disp: 0x%" PRIx64 "\n", i, op->mem.disp);
 
