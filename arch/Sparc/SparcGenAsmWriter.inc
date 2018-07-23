@@ -1202,6 +1202,9 @@ static const char *getRegisterName(unsigned RegNo)
   //for (i = 0; i < sizeof(RegAsmOffset)/2; i++)
   //     printf("%s = %u\n", AsmStrs+RegAsmOffset[i], i + 1);
   //printf("*************************\n");
+if (RegNo < 1 || RegNo > sizeof (RegAsmOffset) / sizeof (*RegAsmOffset)) {
+  return NULL;
+}
   return AsmStrs+RegAsmOffset[RegNo-1];
 #else
   return NULL;
