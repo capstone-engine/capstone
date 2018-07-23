@@ -8,14 +8,14 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifdef CAPSTONE_HAS_ARM
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <platform.h>
+#include <capstone/platform.h>
 
 #include "ARMAddressingModes.h"
 #include "ARMBaseInfo.h"
@@ -161,8 +161,6 @@ static DecodeStatus DecodePredicateOperand(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder);
 static DecodeStatus DecodeCCOutOperand(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder);
-static DecodeStatus DecodeSOImmOperand(MCInst *Inst, unsigned Val,
-		uint64_t Address, const void *Decoder);
 static DecodeStatus DecodeRegListOperand(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder);
 static DecodeStatus DecodeSPRRegListOperand(MCInst *Inst, unsigned Val,
@@ -250,6 +248,8 @@ static DecodeStatus DecodeMemBarrierOption(MCInst *Inst, unsigned Insn,
 static DecodeStatus DecodeInstSyncBarrierOption(MCInst *Inst, unsigned Insn,
 		uint64_t Address, const void *Decoder);
 static DecodeStatus DecodeMSRMask(MCInst *Inst, unsigned Insn,
+		uint64_t Address, const void *Decoder);
+static DecodeStatus DecodeBankedReg(MCInst *Inst, unsigned Insn,
 		uint64_t Address, const void *Decoder);
 static DecodeStatus DecodeDoubleRegLoad(MCInst *Inst, unsigned Insn,
 		uint64_t Address, const void *Decoder);
@@ -443,11 +443,31 @@ void ARM_init(MCRegisterInfo *MRI)
 			0);
 }
 
+// Post-decoding checks
+static DecodeStatus checkDecodedInstruction(MCInst *MI,
+		uint32_t Insn,
+		DecodeStatus Result)
+{
+	switch (MCInst_getOpcode(MI)) {
+		case ARM_HVC: {
+			  // HVC is undefined if condition = 0xf otherwise upredictable
+			  // if condition != 0xe
+			  uint32_t Cond = (Insn >> 28) & 0xF;
+			  if (Cond == 0xF)
+				  return MCDisassembler_Fail;
+			  if (Cond != 0xE)
+				  return MCDisassembler_SoftFail;
+			  return Result;
+		  }
+		default:
+			   return Result;
+	}
+}
+
 static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t *code, size_t code_len,
 		uint16_t *Size, uint64_t Address)
 {
 	uint32_t insn, i;
-	uint8_t bytes[4];
 	DecodeStatus result;
 
 	if (code_len < 4)
@@ -455,28 +475,30 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t
 		return MCDisassembler_Fail;
 
 	if (MI->flat_insn->detail) {
-		memset(&MI->flat_insn->detail->arm, 0, sizeof(cs_arm));
-		for (i = 0; i < ARR_SIZE(MI->flat_insn->detail->arm.operands); i++)
+		memset(MI->flat_insn->detail, 0, offsetof(cs_detail, arm)+sizeof(cs_arm));
+		for (i = 0; i < ARR_SIZE(MI->flat_insn->detail->arm.operands); i++) {
 			MI->flat_insn->detail->arm.operands[i].vector_index = -1;
+			MI->flat_insn->detail->arm.operands[i].neon_lane = -1;
+		}
 	}
 
-	memcpy(bytes, code, 4);
-
 	if (MODE_IS_BIG_ENDIAN(ud->mode))
-		insn = (bytes[3] << 0) |
-			(bytes[2] << 8) |
-			(bytes[1] <<  16) |
-			(((uint32_t) bytes[0]) << 24);
+		insn = (code[3] << 0) |
+			(code[2] << 8) |
+			(code[1] <<  16) |
+			((uint32_t) code[0] << 24);
 	else
-		insn = (((uint32_t) bytes[3]) << 24) |
-			(bytes[2] << 16) |
-			(bytes[1] <<  8) |
-			(bytes[0] <<  0);
+		insn = ((uint32_t) code[3] << 24) |
+			(code[2] << 16) |
+			(code[1] <<  8) |
+			(code[0] <<  0);
 
 	// Calling the auto-generated decoder function.
 	result = decodeInstruction_4(DecoderTableARM32, MI, insn, Address, NULL, ud->mode);
 	if (result != MCDisassembler_Fail) {
-		*Size = 4;
+		result = checkDecodedInstruction(MI, insn, result);
+		if (result != MCDisassembler_Fail)
+			*Size = 4;
 		return result;
 	}
 
@@ -683,7 +705,6 @@ static void UpdateThumbVFPPredicate(cs_struct *ud, MCInst *MI)
 static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t *code, size_t code_len,
 		uint16_t *Size, uint64_t Address)
 {
-	uint8_t bytes[4];
 	uint16_t insn16;
 	DecodeStatus result;
 	bool InITBlock;
@@ -697,17 +718,17 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 		return MCDisassembler_Fail;
 
 	if (MI->flat_insn->detail) {
-		memset(&MI->flat_insn->detail->arm, 0, sizeof(cs_arm));
-		for (i = 0; i < ARR_SIZE(MI->flat_insn->detail->arm.operands); i++)
+		memset(MI->flat_insn->detail, 0, offsetof(cs_detail, arm)+sizeof(cs_arm));
+		for (i = 0; i < ARR_SIZE(MI->flat_insn->detail->arm.operands); i++) {
 			MI->flat_insn->detail->arm.operands[i].vector_index = -1;
+			MI->flat_insn->detail->arm.operands[i].neon_lane = -1;
+		}
 	}
 
-	memcpy(bytes, code, 2);
-
 	if (MODE_IS_BIG_ENDIAN(ud->mode))
-		insn16 = (bytes[0] << 8) | bytes[1];
+		insn16 = (code[0] << 8) | code[1];
 	else
-		insn16 = (bytes[1] << 8) | bytes[0];
+		insn16 = (code[1] << 8) | code[0];
 
 	result = decodeInstruction_2(DecoderTableThumb16, MI, insn16, Address, NULL, ud->mode);
 	if (result != MCDisassembler_Fail) {
@@ -755,18 +776,16 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 		// not enough data
 		return MCDisassembler_Fail;
 
-	memcpy(bytes, code, 4);
-
 	if (MODE_IS_BIG_ENDIAN(ud->mode))
-		insn32 = (bytes[3] <<  0) |
-			(bytes[2] <<  8) |
-			(bytes[1] << 16) |
-			(((uint32_t) bytes[0]) << 24);
+		insn32 = (code[3] <<  0) |
+			(code[2] <<  8) |
+			(code[1] << 16) |
+			((uint32_t) code[0] << 24);
 	else
-		insn32 = (bytes[3] <<  8) |
-			(bytes[2] <<  0) |
-			(((uint32_t) bytes[1]) << 24) |
-			(bytes[0] << 16);
+		insn32 = (code[3] <<  8) |
+			(code[2] <<  0) |
+			((uint32_t) code[1] << 24) |
+			(code[0] << 16);
 
 	MCInst_clear(MI);
 	result = decodeInstruction_4(DecoderTableThumb32, MI, insn32, Address, NULL, ud->mode);
@@ -1046,12 +1065,18 @@ static const uint16_t DPRDecoderTable[] = {
 static DecodeStatus DecodeDPRRegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address, const void *Decoder)
 {
-	unsigned Register = 0;
+	unsigned Register;
+
+	//uint64_t featureBits = ARM_getFeatureBits(Inst->csh->mode);
+	//bool hasD16 = featureBits & ARM_FeatureD16;
+
+	//if (RegNo > 31 || (hasD16 && RegNo > 15))	// FIXME
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
 	Register = DPRDecoderTable[RegNo];
 	MCOperand_CreateReg0(Inst, Register);
+
 	return MCDisassembler_Success;
 }
 
@@ -1143,16 +1168,6 @@ static DecodeStatus DecodeCCOutOperand(MCInst *Inst, unsigned Val,
 		MCOperand_CreateReg0(Inst, ARM_CPSR);
 	else
 		MCOperand_CreateReg0(Inst, 0);
-	return MCDisassembler_Success;
-}
-
-static DecodeStatus DecodeSOImmOperand(MCInst *Inst, unsigned Val,
-		uint64_t Address, const void *Decoder)
-{
-	uint32_t imm = Val & 0xFF;
-	uint32_t rot = (Val & 0xF00) >> 7;
-	uint32_t rot_imm = (imm >> rot) | (imm << ((32-rot) & 0x1F));
-	MCOperand_CreateImm0(Inst, rot_imm);
 	return MCDisassembler_Success;
 }
 
@@ -3337,6 +3352,9 @@ static DecodeStatus DecodeT2LoadShift(MCInst *Inst, unsigned Insn,
 	unsigned addrmode;
 	unsigned Rt = fieldFromInstruction_4(Insn, 12, 4);
 	unsigned Rn = fieldFromInstruction_4(Insn, 16, 4);
+	uint64_t featureBits = ARM_getFeatureBits(Inst->csh->mode);
+	bool hasMP = ((featureBits & ARM_FeatureMP) != 0);
+	bool hasV7Ops = ((featureBits & ARM_HasV7Ops) != 0);
 
 	if (Rn == 15) {
 		switch (MCInst_getOpcode(Inst)) {
@@ -3373,11 +3391,10 @@ static DecodeStatus DecodeT2LoadShift(MCInst *Inst, unsigned Insn,
 			case ARM_t2LDRSHs:
 				return MCDisassembler_Fail;
 			case ARM_t2LDRHs:
-				// FIXME: this instruction is only available with MP extensions,
-				// this should be checked first but we don't have access to the
-				// feature bits here.
 				MCInst_setOpcode(Inst, ARM_t2PLDWs);
 				break;
+			case ARM_t2LDRSBs:
+				MCInst_setOpcode(Inst, ARM_t2PLIs);
 			default:
 				break;
 		}
@@ -3385,8 +3402,14 @@ static DecodeStatus DecodeT2LoadShift(MCInst *Inst, unsigned Insn,
 
 	switch (MCInst_getOpcode(Inst)) {
 		case ARM_t2PLDs:
-		case ARM_t2PLDWs:
+			break;
 		case ARM_t2PLIs:
+			if (!hasV7Ops)
+				return MCDisassembler_Fail;
+			break;
+		case ARM_t2PLDWs:
+			if (!hasV7Ops || !hasMP)
+				return MCDisassembler_Fail;
 			break;
 		default:
 			if (!Check(&S, DecodeGPRRegisterClass(Inst, Rt, Address, Decoder)))
@@ -3411,9 +3434,14 @@ static DecodeStatus DecodeT2LoadImm8(MCInst *Inst, unsigned Insn,
 	unsigned Rt = fieldFromInstruction_4(Insn, 12, 4);
 	unsigned U = fieldFromInstruction_4(Insn, 9, 1);
 	unsigned imm = fieldFromInstruction_4(Insn, 0, 8);
+	unsigned add = fieldFromInstruction_4(Insn, 9, 1);
+
+	uint64_t featureBits = ARM_getFeatureBits(Inst->csh->mode);
+	bool hasMP = ((featureBits & ARM_FeatureMP) != 0);
+	bool hasV7Ops = ((featureBits & ARM_HasV7Ops) != 0);
+
 	imm |= (U << 8);
 	imm |= (Rn << 9);
-
 	if (Rn == 15) {
 		switch (MCInst_getOpcode(Inst)) {
 			case ARM_t2LDRi8:
@@ -3447,6 +3475,13 @@ static DecodeStatus DecodeT2LoadImm8(MCInst *Inst, unsigned Insn,
 		switch (MCInst_getOpcode(Inst)) {
 			case ARM_t2LDRSHi8:
 				return MCDisassembler_Fail;
+			case ARM_t2LDRHi8:
+				if (!add)
+					MCInst_setOpcode(Inst, ARM_t2PLDWi8);
+				break;
+			case ARM_t2LDRSBi8:
+				MCInst_setOpcode(Inst, ARM_t2PLIi8);
+				break;
 			default:
 				break;
 		}
@@ -3454,8 +3489,14 @@ static DecodeStatus DecodeT2LoadImm8(MCInst *Inst, unsigned Insn,
 
 	switch (MCInst_getOpcode(Inst)) {
 		case ARM_t2PLDi8:
+			break;
 		case ARM_t2PLIi8:
+			if (!hasV7Ops)
+				return MCDisassembler_Fail;
+			break;
 		case ARM_t2PLDWi8:
+			if (!hasV7Ops || !hasMP)
+				return MCDisassembler_Fail;
 			break;
 		default:
 			if (!Check(&S, DecodeGPRRegisterClass(Inst, Rt, Address, Decoder)))
@@ -3475,6 +3516,10 @@ static DecodeStatus DecodeT2LoadImm12(MCInst *Inst, unsigned Insn,
 	unsigned Rn = fieldFromInstruction_4(Insn, 16, 4);
 	unsigned Rt = fieldFromInstruction_4(Insn, 12, 4);
 	unsigned imm = fieldFromInstruction_4(Insn, 0, 12);
+	uint64_t featureBits = ARM_getFeatureBits(Inst->csh->mode);
+	bool hasMP = ((featureBits & ARM_FeatureMP) != 0);
+	bool hasV7Ops = ((featureBits & ARM_HasV7Ops) != 0);
+
 	imm |= (Rn << 13);
 
 	if (Rn == 15) {
@@ -3511,7 +3556,10 @@ static DecodeStatus DecodeT2LoadImm12(MCInst *Inst, unsigned Insn,
 			case ARM_t2LDRSHi12:
 				return MCDisassembler_Fail;
 			case ARM_t2LDRHi12:
-				MCInst_setOpcode(Inst, ARM_t2PLDi12);
+				MCInst_setOpcode(Inst, ARM_t2PLDWi12);
+				break;
+			case ARM_t2LDRSBi12:
+				MCInst_setOpcode(Inst, ARM_t2PLIi12);
 				break;
 			default:
 				break;
@@ -3520,8 +3568,14 @@ static DecodeStatus DecodeT2LoadImm12(MCInst *Inst, unsigned Insn,
 
 	switch (MCInst_getOpcode(Inst)) {
 		case ARM_t2PLDi12:
-		case ARM_t2PLDWi12:
+			break;
 		case ARM_t2PLIi12:
+			if (!hasV7Ops)
+				return MCDisassembler_Fail;
+			break;
+		case ARM_t2PLDWi12:
+			if (!hasV7Ops || !hasMP)
+				return MCDisassembler_Fail;
 			break;
 		default:
 			if (!Check(&S, DecodeGPRRegisterClass(Inst, Rt, Address, Decoder)))
@@ -3581,6 +3635,8 @@ static DecodeStatus DecodeT2LoadLabel(MCInst *Inst, unsigned Insn,
 	unsigned Rt = fieldFromInstruction_4(Insn, 12, 4);
 	unsigned U = fieldFromInstruction_4(Insn, 23, 1);
 	int imm = fieldFromInstruction_4(Insn, 0, 12);
+	uint64_t featureBits = ARM_getFeatureBits(Inst->csh->mode);
+	bool hasV7Ops = ((featureBits & ARM_HasV7Ops) != 0);
 
 	if (Rt == 15) {
 		switch (MCInst_getOpcode(Inst)) {
@@ -3600,7 +3656,10 @@ static DecodeStatus DecodeT2LoadLabel(MCInst *Inst, unsigned Insn,
 
 	switch(MCInst_getOpcode(Inst)) {
 		case ARM_t2PLDpci:
+			break;
 		case ARM_t2PLIpci:
+			if (!hasV7Ops)
+				return MCDisassembler_Fail;
 			break;
 		default:
 			if (!Check(&S, DecodeGPRRegisterClass(Inst, Rt, Address, Decoder)))
@@ -4053,6 +4112,7 @@ static DecodeStatus DecodeInstSyncBarrierOption(MCInst *Inst, unsigned Val,
 static DecodeStatus DecodeMSRMask(MCInst *Inst, unsigned Val,
 		uint64_t Address, const void *Decoder)
 {
+	DecodeStatus S = MCDisassembler_Success;
 	uint64_t FeatureBits = ARM_getFeatureBits(Inst->csh->mode);
 	if (FeatureBits & ARM_FeatureMClass) {
 		unsigned ValLow = Val & 0xff;
@@ -4082,22 +4142,54 @@ static DecodeStatus DecodeMSRMask(MCInst *Inst, unsigned Val,
 				return MCDisassembler_Fail;
 		}
 
-		// The ARMv7-M architecture has an additional 2-bit mask value in the MSR
-		// instruction (bits {11,10}). The mask is used only with apsr, iapsr,
-		// eapsr and xpsr, it has to be 0b10 in other cases. Bit mask{1} indicates
-		// if the NZCVQ bits should be moved by the instruction. Bit mask{0}
-		// indicates the move for the GE{3:0} bits, the mask{0} bit can be set
-		// only if the processor includes the DSP extension.
-		if ((FeatureBits & ARM_HasV7Ops) && MCInst_getOpcode(Inst) == ARM_t2MSR_M) {
-			unsigned Mask = (Val >> 10) & 3;
-			if (Mask == 0 || (Mask != 2 && ValLow > 3) ||
-					(!(FeatureBits & ARM_FeatureDSPThumb2) && Mask == 1))
-				return MCDisassembler_Fail;
+		if (MCInst_getOpcode(Inst) == ARM_t2MSR_M) {
+			unsigned Mask = fieldFromInstruction_4(Val, 10, 2);
+			if (!(FeatureBits & ARM_HasV7Ops)) {
+				// The ARMv6-M MSR bits {11-10} can be only 0b10, other values are
+				// unpredictable.
+				if (Mask != 2)
+					S = MCDisassembler_SoftFail;
+			}
+			else {
+				// The ARMv7-M architecture stores an additional 2-bit mask value in
+				// MSR bits {11-10}. The mask is used only with apsr, iapsr, eapsr and
+				// xpsr, it has to be 0b10 in other cases. Bit mask{1} indicates if
+				// the NZCVQ bits should be moved by the instruction. Bit mask{0}
+				// indicates the move for the GE{3:0} bits, the mask{0} bit can be set
+				// only if the processor includes the DSP extension.
+				if (Mask == 0 || (Mask != 2 && ValLow > 3) ||
+						(!(FeatureBits & ARM_FeatureDSPThumb2) && (Mask & 1)))
+					S = MCDisassembler_SoftFail;
+			}
 		}
 	} else {
 		// A/R class
 		if (Val == 0)
 			return MCDisassembler_Fail;
+	}
+
+	MCOperand_CreateImm0(Inst, Val);
+	return S;
+}
+
+static DecodeStatus DecodeBankedReg(MCInst *Inst, unsigned Val,
+		uint64_t Address, const void *Decoder)
+{
+
+	unsigned R = fieldFromInstruction_4(Val, 5, 1);
+	unsigned SysM = fieldFromInstruction_4(Val, 0, 5);
+
+	// The table of encodings for these banked registers comes from B9.2.3 of the
+	// ARM ARM. There are patterns, but nothing regular enough to make this logic
+	// neater. So by fiat, these values are UNPREDICTABLE:
+	if (!R) {
+		if (SysM == 0x7 || SysM == 0xf || SysM == 0x18 || SysM == 0x19 ||
+				SysM == 0x1a || SysM == 0x1b)
+			return MCDisassembler_SoftFail;
+	} else {
+		if (SysM != 0xe && SysM != 0x10 && SysM != 0x12 && SysM != 0x14 &&
+				SysM != 0x16 && SysM != 0x1c && SysM != 0x1e)
+			return MCDisassembler_SoftFail;
 	}
 
 	MCOperand_CreateImm0(Inst, Val);
@@ -4961,8 +5053,10 @@ static DecodeStatus DecodeT2ShifterImmOperand(MCInst *Inst, uint32_t Val,
 	DecodeStatus S = MCDisassembler_Success;
 
 	// Shift of "asr #32" is not allowed in Thumb2 mode.
-	if (Val == 0x20) S = MCDisassembler_SoftFail;
+	if (Val == 0x20)
+		S = MCDisassembler_Fail;
 	MCOperand_CreateImm0(Inst, Val);
+
 	return S;
 }
 

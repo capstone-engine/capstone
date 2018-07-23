@@ -15,12 +15,12 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifndef CS_ARMBASEINFO_H
 #define CS_ARMBASEINFO_H
 
-#include "../../include/arm.h"
+#include "capstone/arm.h"
 
 // Defines symbolic names for ARM registers.  This defines a mapping from
 // register name to register number.

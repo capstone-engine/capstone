@@ -1,3 +1,5 @@
+.DS_Store
+
 # Object files
 *.o
 *.ko
@@ -36,6 +38,7 @@ bindings/ocaml/*.mli
 bindings/ocaml/test
 bindings/ocaml/test_arm
 bindings/ocaml/test_arm64
+bindings/ocaml/test_basic
 bindings/ocaml/test_mips
 bindings/ocaml/test_x86
 bindings/ocaml/test_detail
@@ -43,10 +46,11 @@ bindings/ocaml/test_ppc
 bindings/ocaml/test_sparc
 bindings/ocaml/test_systemz
 bindings/ocaml/test_xcore
+bindings/ocaml/test_m680x
 
 
 # test binaries
-tests/test
+tests/test_basic
 tests/test_detail
 tests/test_iter
 tests/test_arm
@@ -59,17 +63,14 @@ tests/test_sparc
 tests/test_systemz
 tests/test_xcore
 tests/*.static
-tests/test_basic
 tests/test_customized_mnem
-
-tests/test_m680x
 tests/test_m68k
 tests/test_tms320c64x
+tests/test_m680x
 tests/test_evm
 
 # regress binaries
 suite/regress/invalid_read_in_print_operand
-
 
 # vim tmp file
 *.swp
@@ -88,6 +89,7 @@ ProjectUpgradeLog.log
 Debug/
 Release/
 ipch/
+build*/
 *.sdf
 *.opensdf
 *.suo

@@ -6,11 +6,17 @@ import sys
 _python3 = sys.version_info.major == 3
 
 
-def to_hex(s):
+def to_hex(s, prefix_0x = True):
     if _python3:
-        return " ".join("0x{0:02x}".format(c) for c in s)  # <-- Python 3 is OK
+        if prefix_0x:
+            return " ".join("0x{0:02x}".format(c) for c in s)  # <-- Python 3 is OK
+        else:
+            return " ".join("{0:02x}".format(c) for c in s)  # <-- Python 3 is OK
     else:
-        return " ".join("0x{0:02x}".format(ord(c)) for c in s)
+        if prefix_0x:
+            return " ".join("0x{0:02x}".format(ord(c)) for c in s)
+        else:
+            return " ".join("{0:02x}".format(ord(c)) for c in s)
 
 def to_hex2(s):
     if _python3:

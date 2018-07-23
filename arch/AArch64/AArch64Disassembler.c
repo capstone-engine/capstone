@@ -14,7 +14,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifdef CAPSTONE_HAS_ARM64
 
@@ -233,16 +233,16 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 	}
 
 	if (MI->flat_insn->detail) {
-		memset(MI->flat_insn->detail, 0, sizeof(cs_detail));
+		memset(MI->flat_insn->detail, 0, offsetof(cs_detail, arm64)+sizeof(cs_arm64));
 		for (i = 0; i < ARR_SIZE(MI->flat_insn->detail->arm64.operands); i++)
 			MI->flat_insn->detail->arm64.operands[i].vector_index = -1;
 	}
 
 	if (MODE_IS_BIG_ENDIAN(ud->mode))
 		insn = (code[3] << 0) | (code[2] << 8) |
-			(code[1] <<  16) | (((uint32_t) code[0]) << 24);
+			(code[1] <<  16) | ((uint32_t) code[0] << 24);
 	else
-		insn = (((uint32_t) code[3]) << 24) | (code[2] << 16) |
+		insn = ((uint32_t) code[3] << 24) | (code[2] << 16) |
 			(code[1] <<  8) | (code[0] <<  0);
 
 	// Calling the auto-generated decoder function.
@@ -703,30 +703,20 @@ static DecodeStatus DecodeMemExtend(MCInst *Inst, unsigned Imm,
 static DecodeStatus DecodeMRSSystemRegister(MCInst *Inst, unsigned Imm,
 		uint64_t Address, const void *Decoder)
 {
-	bool ValidNamed;
-	char result[128];
-
-	Imm |= 0x8000;
 	MCOperand_CreateImm0(Inst, Imm);
 
-	A64SysRegMapper_toString(&AArch64_MRSMapper, Imm, &ValidNamed, result);
-
-	return ValidNamed ? Success : Fail;
+	// Every system register in the encoding space is valid with the syntax
+	// S<op0>_<op1>_<Cn>_<Cm>_<op2>, so decoding system registers always succeeds.
+	return Success;
 }
 
 static DecodeStatus DecodeMSRSystemRegister(MCInst *Inst, unsigned Imm,
 		uint64_t Address,
 		const void *Decoder)
 {
-	bool ValidNamed;
-	char result[128];
-
-	Imm |= 0x8000;
 	MCOperand_CreateImm0(Inst, Imm);
 
-	A64SysRegMapper_toString(&AArch64_MSRMapper, Imm, &ValidNamed, result);
-
-	return ValidNamed ? Success : Fail;
+	return Success;
 }
 
 static DecodeStatus DecodeFMOVLaneInstruction(MCInst *Inst, unsigned Insn,
@@ -1269,7 +1259,7 @@ static DecodeStatus DecodePairLdStInstruction(MCInst *Inst, uint32_t insn,
 	unsigned Rt = fieldFromInstruction(insn, 0, 5);
 	unsigned Rn = fieldFromInstruction(insn, 5, 5);
 	unsigned Rt2 = fieldFromInstruction(insn, 10, 5);
-	int64_t offset = fieldFromInstruction(insn, 15, 7);
+	int32_t offset = fieldFromInstruction(insn, 15, 7);
 	bool IsLoad = fieldFromInstruction(insn, 22, 1) != 0;
 	unsigned Opcode = MCInst_getOpcode(Inst);
 	bool NeedsDisjointWritebackTransfer = false;
@@ -1635,7 +1625,7 @@ static DecodeStatus DecodeTestAndBranch(MCInst *Inst, uint32_t insn,
 {
 	uint32_t Rt = fieldFromInstruction(insn, 0, 5);
 	uint32_t bit = fieldFromInstruction(insn, 31, 1) << 5;
-	uint32_t dst = fieldFromInstruction(insn, 5, 14);
+	uint64_t dst = fieldFromInstruction(insn, 5, 14);
 
 	bit |= fieldFromInstruction(insn, 19, 5);
 

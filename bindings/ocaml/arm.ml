@@ -18,7 +18,8 @@ type arm_op_mem = {
 	base: int;
 	index: int;
 	scale: int;
-	disp: int
+	disp: int;
+	lshift: int;
 }
 
 type arm_op_value =
@@ -36,6 +37,8 @@ type arm_op = {
 	shift: arm_op_shift;
 	value: arm_op_value;
 	subtracted: bool;
+	access: int;
+	neon_lane: int;
 }
 
 type cs_arm = {

@@ -1,26 +1,16 @@
 language: cpp
 sudo: false
-env:
-  global:
-    - LD_LIBRARY_PATH=$TRAVIS_BUILD_DIR/tests/:$TRAVIS_BUILD_DIR:$LD_LIBRARY_PATH
+before_install:
+        - export LD_LIBRARY_PATH=`pwd`/tests/:$LD_LIBRARY_PATH
 script:
-  - ./make.sh
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./make.sh install; fi
-  - make check
-  - cd bindings/python && make check
+        - ./make.sh
+        - make check
+        - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cp libcapstone.so.* bindings/python/libcapstone.so; fi
+        - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cp libcapstone.*.dylib bindings/python/libcapstone.dylib; fi
+        - cd bindings/python && make check
 compiler:
-  - clang
-  - gcc
+        - clang
+        - gcc
 os:
-  - linux
-  - osx
-matrix:
-  include:
-    - if: branch = master
-      os: osx
-      script: brew update && brew install --HEAD capstone && brew test capstone
-      compiler: gcc
-    - if: branch = master
-      os: osx
-      script: brew update && brew install --HEAD capstone && brew test capstone
-      compiler: clang
+        - linux
+        - osx
