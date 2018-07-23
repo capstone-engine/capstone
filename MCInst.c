@@ -18,20 +18,10 @@
 void MCInst_Init(MCInst *inst)
 {
 	unsigned int i;
-
+	memset (inst, 0, sizeof (MCInst));
 	for (i = 0; i < 48; i++) {
 		inst->Operands[i].Kind = kInvalid;
 	}
-
-	inst->Opcode = 0;
-	inst->OpcodePub = 0;
-	inst->size = 0;
-	inst->has_imm = false;
-	inst->op1_size = 0;
-	inst->writeback = false;
-	inst->ac_idx = 0;
-	inst->popcode_adjust = 0;
-	inst->assembly[0] = '\0';
 }
 
 void MCInst_clear(MCInst *inst)
