@@ -960,8 +960,8 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 				handle->errnum = CS_ERR_MEM;
 				return 0;
 			}
-			memset ((char *)total + old_size, 0, (total_size - old_size));
 			total = tmp;
+			memset ((char *)total + old_size, 0, (total_size - old_size));
 			// continue to fill in the cache after the last instruction
 			insn_cache = (cs_insn *)((char *)total + sizeof(cs_insn) * c);
 
