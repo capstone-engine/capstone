@@ -828,7 +828,7 @@ const char *X86_reg_name(csh handle, unsigned int reg)
 #ifndef CAPSTONE_DIET
 	cs_struct *ud = (cs_struct *)handle;
 
-	if (reg >= X86_REG_ENDING)
+	if (reg >= ARR_SIZE(reg_name_maps))
 		return NULL;
 
 	if (reg == X86_REG_EFLAGS) {

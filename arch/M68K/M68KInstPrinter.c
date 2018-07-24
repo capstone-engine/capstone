@@ -338,6 +338,9 @@ const char* M68K_reg_name(csh handle, unsigned int reg)
 #ifdef CAPSTONE_DIET
 	return NULL;
 #else
+	if (reg >= ARR_SIZE(s_reg_names)) {
+		return NULL;
+	}
 	return s_reg_names[(int)reg];
 #endif
 }

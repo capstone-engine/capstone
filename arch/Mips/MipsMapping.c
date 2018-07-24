@@ -201,7 +201,7 @@ static name_map reg_name_maps[] = {
 const char *Mips_reg_name(csh handle, unsigned int reg)
 {
 #ifndef CAPSTONE_DIET
-	if (reg >= MIPS_REG_ENDING)
+	if (reg >= ARR_SIZE(reg_name_maps))
 		return NULL;
 
 	return reg_name_maps[reg].name;
