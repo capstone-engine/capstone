@@ -28,8 +28,7 @@
 #ifndef CAPSTONE_DIET
 static const char* s_spacing = " ";
 
-#define S_REG_NAMES_COUNT 47
-static const char* s_reg_names[S_REG_NAMES_COUNT] = {
+static const char* s_reg_names[] = {
 	"invalid",
 	"d0", "d1", "d2", "d3", "d4", "d5", "d6", "d7",
 	"a0", "a1", "a2", "a3", "a4", "a5", "a6", "a7",
@@ -339,7 +338,7 @@ const char* M68K_reg_name(csh handle, unsigned int reg)
 #ifdef CAPSTONE_DIET
 	return NULL;
 #else
-	if (reg >= S_REG_NAMES_COUNT) {
+	if (reg >= ARR_SIZE(s_reg_names)) {
 		return NULL;
 	}
 	return s_reg_names[(int)reg];
