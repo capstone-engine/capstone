@@ -838,7 +838,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 	size_org = size;
 
 	total_size = sizeof(cs_insn) * cache_size;
-	total = cs_mem_malloc(total_size);
+	total = cs_mem_calloc(1, total_size);
 	if (total == NULL) {
 		// insufficient memory
 		handle->errnum = CS_ERR_MEM;
@@ -856,7 +856,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 
 		if (handle->detail) {
 			// allocate memory for @detail pointer
-			insn_cache->detail = cs_mem_malloc(sizeof(cs_detail));
+			insn_cache->detail = cs_mem_calloc(1, sizeof(cs_detail));
 		} else {
 			insn_cache->detail = NULL;
 		}
@@ -945,6 +945,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 		if (f == cache_size) {
 			// full cache, so expand the cache to contain incoming insns
 			cache_size = cache_size * 8 / 5; // * 1.6 ~ golden ratio
+			unsigned int old_size = total_size;
 			total_size += (sizeof(cs_insn) * cache_size);
 			tmp = cs_mem_realloc(total, total_size);
 			if (tmp == NULL) {	// insufficient memory
@@ -959,8 +960,8 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 				handle->errnum = CS_ERR_MEM;
 				return 0;
 			}
-
 			total = tmp;
+			memset ((char *)total + old_size, 0, (total_size - old_size));
 			// continue to fill in the cache after the last instruction
 			insn_cache = (cs_insn *)((char *)total + sizeof(cs_insn) * c);
 
