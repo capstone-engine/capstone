@@ -245,7 +245,7 @@ static const name_map reg_name_maps2[] = {
 const char *ARM_reg_name(csh handle, unsigned int reg)
 {
 #ifndef CAPSTONE_DIET
-	if (reg >= ARM_REG_ENDING)
+	if (reg >= ARR_SIZE(reg_name_maps))
 		return NULL;
 
 	return reg_name_maps[reg].name;
@@ -257,7 +257,7 @@ const char *ARM_reg_name(csh handle, unsigned int reg)
 const char *ARM_reg_name2(csh handle, unsigned int reg)
 {
 #ifndef CAPSTONE_DIET
-	if (reg >= ARM_REG_ENDING)
+	if (reg >= ARR_SIZE(reg_name_maps2))
 		return NULL;
 
 	return reg_name_maps2[reg].name;
