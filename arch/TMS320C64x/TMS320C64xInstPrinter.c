@@ -30,10 +30,10 @@ void TMS320C64x_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 	int i;
 	cs_tms320c64x *tms320c64x;
 
-	if(mci->csh->detail) {
+	if (mci->csh->detail) {
 		tms320c64x = &mci->flat_insn->detail->tms320c64x;
 
-		for(i = 0; i < insn->detail->groups_count; i++) {
+		for (i = 0; i < insn->detail->groups_count; i++) {
 			switch(insn->detail->groups[i]) {
 				case TMS320C64X_GRP_FUNIT_D:
 					unit = TMS320C64X_FUNIT_D;
@@ -51,30 +51,30 @@ void TMS320C64x_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 					unit = TMS320C64X_FUNIT_NO;
 					break;
 			}
-			if(unit != 0)
+			if (unit != 0)
 				break;
 		}
 		tms320c64x->funit.unit = unit;
 
 		SStream_Init(&ss);
-		if(tms320c64x->condition.reg != TMS320C64X_REG_INVALID)
+		if (tms320c64x->condition.reg != TMS320C64X_REG_INVALID)
 			SStream_concat(&ss, "[%c%s]|", (tms320c64x->condition.zero == 1) ? '!' : '|', cs_reg_name(ud, tms320c64x->condition.reg));
 		else
 			SStream_concat0(&ss, "||||||");
 
 		p = strchr(insn_asm, '\t');
-		if(p != NULL)
+		if (p != NULL)
 			*p++ = '\0';
 
 		SStream_concat0(&ss, insn_asm);
-		if((p != NULL) && (((p2 = strchr(p, '[')) != NULL) || ((p2 = strchr(p, '(')) != NULL))) {
-			while((p2 > p) && ((*p2 != 'A') && (*p2 != 'B')))
+		if ((p != NULL) && (((p2 = strchr(p, '[')) != NULL) || ((p2 = strchr(p, '(')) != NULL))) {
+			while ((p2 > p) && ((*p2 != 'A') && (*p2 != 'B')))
 				p2--;
-			if(p2 <= p) {
+			if (p2 <= p) {
 				strcpy(insn_asm, "Invalid!");
 				return;
 			}
-			if(*p2 == 'A')
+			if (*p2 == 'A')
 				strcpy(tmp, "1T");
 			else
 				strcpy(tmp, "2T");
@@ -95,13 +95,13 @@ void TMS320C64x_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 				SStream_concat(&ss, ".S%s%u", tmp, tms320c64x->funit.side);
 				break;
 		}
-		if(tms320c64x->funit.crosspath > 0)
+		if (tms320c64x->funit.crosspath > 0)
 			SStream_concat0(&ss, "X");
 
-		if(p != NULL)
+		if (p != NULL)
 			SStream_concat(&ss, "\t%s", p);
 
-		if(tms320c64x->parallel != 0)
+		if (tms320c64x->parallel != 0)
 			SStream_concat(&ss, "\t||");
 
 		/* insn_asm is a buffer from an SStream, so there should be enough space */
@@ -120,9 +120,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	MCOperand *Op = MCInst_getOperand(MI, OpNo);
 	unsigned reg;
 
-	if(MCOperand_isReg(Op)) {
+	if (MCOperand_isReg(Op)) {
 		reg = MCOperand_getReg(Op);
-		if((MCInst_getOpcode(MI) == TMS320C64x_MVC_s1_rr) && (OpNo == 1)) {
+		if ((MCInst_getOpcode(MI) == TMS320C64x_MVC_s1_rr) && (OpNo == 1)) {
 			switch(reg) {
 				case TMS320C64X_REG_EFR:
 					SStream_concat0(O, "EFR");
@@ -138,7 +138,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			SStream_concat0(O, getRegisterName(reg));
 		}
 
-		if(MI->csh->detail) {
+		if (MI->csh->detail) {
 			MI->flat_insn->detail->tms320c64x.operands[MI->flat_insn->detail->tms320c64x.op_count].type = TMS320C64X_OP_REG;
 			MI->flat_insn->detail->tms320c64x.operands[MI->flat_insn->detail->tms320c64x.op_count].reg = reg;
 			MI->flat_insn->detail->tms320c64x.op_count++;
@@ -146,19 +146,19 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	} else if (MCOperand_isImm(Op)) {
 		int64_t Imm = MCOperand_getImm(Op);
 
-		if(Imm >= 0) {
-			if(Imm > HEX_THRESHOLD)
+		if (Imm >= 0) {
+			if (Imm > HEX_THRESHOLD)
 				SStream_concat(O, "0x%"PRIx64, Imm);
 			else
 				SStream_concat(O, "%"PRIu64, Imm);
 		} else {
-			if(Imm < -HEX_THRESHOLD)
+			if (Imm < -HEX_THRESHOLD)
 				SStream_concat(O, "-0x%"PRIx64, -Imm);
 			else
 				SStream_concat(O, "-%"PRIu64, -Imm);
 		}
 
-		if(MI->csh->detail) {
+		if (MI->csh->detail) {
 			MI->flat_insn->detail->tms320c64x.operands[MI->flat_insn->detail->tms320c64x.op_count].type = TMS320C64X_OP_IMM;
 			MI->flat_insn->detail->tms320c64x.operands[MI->flat_insn->detail->tms320c64x.op_count].imm = Imm;
 			MI->flat_insn->detail->tms320c64x.op_count++;
@@ -180,7 +180,7 @@ static void printMemOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	mode = (Val >> 1) & 0xf;
 	unit = Val & 1;
 
-	if(scaled) {
+	if (scaled) {
 		st = '[';
 		nd = ']';
 	} else {
@@ -227,7 +227,7 @@ static void printMemOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			break;
 	}
 
-	if(MI->csh->detail) {
+	if (MI->csh->detail) {
 		tms320c64x = &MI->flat_insn->detail->tms320c64x;
 
 		tms320c64x->operands[tms320c64x->op_count].type = TMS320C64X_OP_MEM;
@@ -313,7 +313,7 @@ static void printMemOperand2(MCInst *MI, unsigned OpNo, SStream *O)
 	offset = (Val >> 7) & 0x7fff;
 	SStream_concat(O, "*+%s[0x%x]", getRegisterName(basereg), offset);
 
-	if(MI->csh->detail) {
+	if (MI->csh->detail) {
 		tms320c64x = &MI->flat_insn->detail->tms320c64x;
 
 		tms320c64x->operands[tms320c64x->op_count].type = TMS320C64X_OP_MEM;
@@ -335,7 +335,7 @@ static void printRegPair(MCInst *MI, unsigned OpNo, SStream *O)
 
 	SStream_concat(O, "%s:%s", getRegisterName(reg + 1), getRegisterName(reg));
 
-	if(MI->csh->detail) {
+	if (MI->csh->detail) {
 		tms320c64x = &MI->flat_insn->detail->tms320c64x;
 
 		tms320c64x->operands[tms320c64x->op_count].type = TMS320C64X_OP_REGPAIR;
@@ -357,7 +357,7 @@ static bool printAliasInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 		case TMS320C64x_ADD_l1_ipp:
 		/* ADD.S -i, x, y -> SUB.S x, i, y */
 		case TMS320C64x_ADD_s1_irr:
-			if((MCInst_getNumOperands(MI) == 3) &&
+			if ((MCInst_getNumOperands(MI) == 3) &&
 				MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
 				MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
 				MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
@@ -392,7 +392,7 @@ static bool printAliasInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 		case TMS320C64x_ADD_s1_irr:
 		/* OR.S 0, x, y -> MV.S x, y */
 		case TMS320C64x_OR_s1_irr:
-			if((MCInst_getNumOperands(MI) == 3) &&
+			if ((MCInst_getNumOperands(MI) == 3) &&
 				MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
 				MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
 				MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
@@ -417,7 +417,7 @@ static bool printAliasInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 		case TMS320C64x_XOR_l1_irr:
 		/* XOR.S -1, x, y -> NOT.S x, y */
 		case TMS320C64x_XOR_s1_irr:
-			if((MCInst_getNumOperands(MI) == 3) &&
+			if ((MCInst_getNumOperands(MI) == 3) &&
 				MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
 				MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
 				MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
@@ -440,7 +440,7 @@ static bool printAliasInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 		case TMS320C64x_MVK_d1_rr:
 		/* MVK.L 0, x -> ZERO.L x */
 		case TMS320C64x_MVK_l2_ir:
-			if((MCInst_getNumOperands(MI) == 2) &&
+			if ((MCInst_getNumOperands(MI) == 2) &&
 				MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
 				MCOperand_isImm(MCInst_getOperand(MI, 1)) &&
 				(MCOperand_getImm(MCInst_getOperand(MI, 1)) == 0)) {
@@ -460,7 +460,7 @@ static bool printAliasInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 		case TMS320C64x_SUB_l1_rrp_x1:
 		/* SUB.S x, x, y -> ZERO.S y */
 		case TMS320C64x_SUB_s1_rrr:
-			if((MCInst_getNumOperands(MI) == 3) &&
+			if ((MCInst_getNumOperands(MI) == 3) &&
 				MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
 				MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
 				MCOperand_isReg(MCInst_getOperand(MI, 2)) &&
@@ -482,7 +482,7 @@ static bool printAliasInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 		case TMS320C64x_SUB_l1_ipp:
 		/* SUB.S 0, x, y -> NEG.S x, y */
 		case TMS320C64x_SUB_s1_irr:
-			if((MCInst_getNumOperands(MI) == 3) &&
+			if ((MCInst_getNumOperands(MI) == 3) &&
 				MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
 				MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
 				MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
@@ -505,7 +505,7 @@ static bool printAliasInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 		case TMS320C64x_PACKLH2_l1_rrr_x2:
 		/* PACKLH2.S x, x, y -> SWAP2.S x, y */
 		case TMS320C64x_PACKLH2_s1_rrr:
-			if((MCInst_getNumOperands(MI) == 3) &&
+			if ((MCInst_getNumOperands(MI) == 3) &&
 				MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
 				MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
 				MCOperand_isReg(MCInst_getOperand(MI, 2)) &&
@@ -527,7 +527,7 @@ static bool printAliasInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 		/* NOP 16 -> IDLE */
 		/* NOP 1 -> NOP */
 		case TMS320C64x_NOP_n:
-			if((MCInst_getNumOperands(MI) == 1) &&
+			if ((MCInst_getNumOperands(MI) == 1) &&
 				MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
 				(MCOperand_getReg(MCInst_getOperand(MI, 0)) == 16)) {
 
@@ -538,7 +538,7 @@ static bool printAliasInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 				return true;
 			}
-			if((MCInst_getNumOperands(MI) == 1) &&
+			if ((MCInst_getNumOperands(MI) == 1) &&
 				MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
 				(MCOperand_getReg(MCInst_getOperand(MI, 0)) == 1)) {
 
@@ -556,7 +556,7 @@ static bool printAliasInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 void TMS320C64x_printInst(MCInst *MI, SStream *O, void *Info)
 {
-	if(!printAliasInstruction(MI, O, Info))
+	if (!printAliasInstruction(MI, O, Info))
 		printInstruction(MI, O, Info);
 }
 
