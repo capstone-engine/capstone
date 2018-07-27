@@ -299,7 +299,7 @@ const char *M680X_reg_name(csh handle, unsigned int reg)
 {
 #ifndef CAPSTONE_DIET
 
-	if (reg >= M680X_REG_ENDING)
+	if (reg >= ARR_SIZE(s_reg_names))
 		return NULL;
 
 	return s_reg_names[(int)reg];

@@ -263,8 +263,6 @@ static void printOperand(MCInst *MI, int opNum, SStream *O)
 				break;
 		}
 		
-		printInt32(O, Imm);
-
 		printInt64(O, Imm);
 
 		if (MI->csh->detail) {
