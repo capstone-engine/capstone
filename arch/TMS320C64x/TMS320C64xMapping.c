@@ -110,7 +110,7 @@ static name_map reg_name_maps[] = {
 const char *TMS320C64x_reg_name(csh handle, unsigned int reg)
 {
 #ifndef CAPSTONE_DIET
-	if (reg >= TMS320C64X_REG_ENDING)
+	if (reg >= ARR_SIZE(reg_name_maps))
 		return NULL;
 
 	return reg_name_maps[reg].name;
