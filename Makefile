@@ -270,8 +270,8 @@ VERSION_EXT =
 
 IS_APPLE := $(shell $(CC) -dM -E - < /dev/null 2> /dev/null | grep __apple_build_version__ | wc -l | tr -d " ")
 ifeq ($(IS_APPLE),1)
-# on MacOS, compile in Universal format by default
-MACOS_UNIVERSAL ?= yes
+# on MacOS, do not build in Universal format by default
+MACOS_UNIVERSAL ?= no
 ifeq ($(MACOS_UNIVERSAL),yes)
 CFLAGS += $(foreach arch,$(LIBARCHS),-arch $(arch))
 LDFLAGS += $(foreach arch,$(LIBARCHS),-arch $(arch))
