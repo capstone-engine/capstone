@@ -44,7 +44,7 @@ void EVM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map insn_name_maps[] = {
+static name_map insn_name_maps[256] = {
 	{ EVM_INS_STOP, "stop" },
 	{ EVM_INS_ADD, "add" },
 	{ EVM_INS_MUL, "mul" },
