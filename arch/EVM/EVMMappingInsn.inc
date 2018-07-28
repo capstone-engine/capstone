@@ -32,6 +32,7 @@
 { 0, 0, 0xffffffff }, // unused
 { 0, 0, 0xffffffff }, // unused
 { 0, 0, 0xffffffff }, // unused
+{ 0, 0, 0xffffffff }, // unused
 { 2, 1, 30 }, // SHA3
 { 0, 0, 0xffffffff }, // unused
 { 0, 0, 0xffffffff }, // unused
@@ -165,7 +166,6 @@
 { 4, 0, 1125 }, // LOG2
 { 5, 0, 1500 }, // LOG3
 { 6, 0, 1875 }, // LOG4
-{ 0, 0, 0xffffffff }, // unused
 { 0, 0, 0xffffffff }, // unused
 { 0, 0, 0xffffffff }, // unused
 { 0, 0, 0xffffffff }, // unused
