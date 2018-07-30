@@ -70,7 +70,7 @@ void TMS320C64x_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 		if ((p != NULL) && (((p2 = strchr(p, '[')) != NULL) || ((p2 = strchr(p, '(')) != NULL))) {
 			while ((p2 > p) && ((*p2 != 'A') && (*p2 != 'B')))
 				p2--;
-			if (p2 <= p) {
+			if (p2 == p) {
 				strcpy(insn_asm, "Invalid!");
 				return;
 			}
