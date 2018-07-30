@@ -824,6 +824,9 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 		if (MI->Opcode == X86_CALLpcrel16 || MI->Opcode == X86_JMP_2)
 			imm = imm & 0xffff;
 
+		if (MI->csh->mode == CS_MODE_16)
+			SStream_concat(O, "cs:");
+
 		printImm(MI->csh->syntax, O, imm, true);
 
 		if (MI->csh->detail) {
