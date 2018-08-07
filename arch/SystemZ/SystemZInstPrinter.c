@@ -92,6 +92,45 @@ static void _printOperand(MCInst *MI, MCOperand *MO, SStream *O)
 	}
 }
 
+static void printU1ImmOperand(MCInst *MI, int OpNum, SStream *O)
+{
+	int64_t Value = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	// assert(isUInt<1>(Value) && "Invalid u1imm argument");
+	printInt64(O, Value);
+
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = Value;
+		MI->flat_insn->detail->sysz.op_count++;
+	}
+}
+
+static void printU2ImmOperand(MCInst *MI, int OpNum, SStream *O)
+{
+	int64_t Value = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	// assert(isUInt<2>(Value) && "Invalid u2imm argument");
+	printInt64(O, Value);
+
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = Value;
+		MI->flat_insn->detail->sysz.op_count++;
+	}
+}
+
+static void printU3ImmOperand(MCInst *MI, int OpNum, SStream *O)
+{
+	int64_t Value = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	// assert(isUInt<3>(Value) && "Invalid u4imm argument");
+	printInt64(O, Value);
+
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = Value;
+		MI->flat_insn->detail->sysz.op_count++;
+	}
+}
+
 static void printU4ImmOperand(MCInst *MI, int OpNum, SStream *O)
 {
 	int64_t Value = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
@@ -156,6 +195,19 @@ static void printU8ImmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = (int64_t)Value;
+		MI->flat_insn->detail->sysz.op_count++;
+	}
+}
+
+static void printU12ImmOperand(MCInst *MI, int OpNum, SStream *O)
+{
+	int64_t Value = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	// assert(isUInt<12>(Value) && "Invalid u12imm argument");
+	printInt64(O, Value);
+
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = Value;
 		MI->flat_insn->detail->sysz.op_count++;
 	}
 }
@@ -229,15 +281,15 @@ static void printU32ImmOperand(MCInst *MI, int OpNum, SStream *O)
 	}
 }
 
-static void printAccessRegOperand(MCInst *MI, int OpNum, SStream *O)
+static void printU48ImmOperand(MCInst *MI, int OpNum, SStream *O)
 {
 	int64_t Value = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	// assert(Value < 16 && "Invalid access register number");
-	SStream_concat(O, "%%a%u", (unsigned int)Value);
+	// assert(isUInt<48>(Value) && "Invalid u48imm argument");
+	printInt64(O, Value);
 
 	if (MI->csh->detail) {
-		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_ACREG;
-		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].reg = (unsigned int)Value;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = Value;
 		MI->flat_insn->detail->sysz.op_count++;
 	}
 }
@@ -311,6 +363,40 @@ static void printBDLAddrOperand(MCInst *MI, int OpNum, SStream *O)
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.disp = (int64_t)Disp;
 		MI->flat_insn->detail->sysz.op_count++;
 	}
+}
+
+static void printBDRAddrOperand(MCInst *MI, int OpNum, SStream *O)
+{
+	unsigned Base = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
+	uint64_t Disp = (uint64_t)MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
+	uint64_t Length = MCOperand_getReg(MCInst_getOperand(MI, OpNum + 2));
+
+	if (Disp > HEX_THRESHOLD)
+		SStream_concat(O, "0x%"PRIx64, Disp);
+	else
+		SStream_concat(O, "%"PRIu64, Disp);
+
+	SStream_concat0(O, "(");
+	SStream_concat(O, "%%%s", getRegisterName(Length));
+
+	if (Base)
+		SStream_concat(O, ", %%%s", getRegisterName(Base));
+	SStream_concat0(O, ")");
+
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_MEM;
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.base = (uint8_t)SystemZ_map_register(Base);
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.length = (uint8_t)SystemZ_map_register(Length);
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.disp = (int64_t)Disp;
+		MI->flat_insn->detail->sysz.op_count++;
+	}
+}
+
+static void printBDVAddrOperand(MCInst *MI, int OpNum, SStream *O)
+{
+	printAddress(MI, MCOperand_getReg(MCInst_getOperand(MI, OpNum)),
+			MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1)),
+			MCOperand_getReg(MCInst_getOperand(MI, OpNum + 2)), O);
 }
 
 static void printCond4Operand(MCInst *MI, int OpNum, SStream *O)
