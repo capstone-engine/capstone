@@ -317,10 +317,10 @@ function Get-CapstoneDisassembly {
 		[UInt64]$Address = 0x100000,
 
 		[Parameter(ParameterSetName='Capstone', Mandatory = $False)]
-		[switch]$Detailed = $null,
+		[switch]$Detailed,
 
 		[Parameter(ParameterSetName='Version', Mandatory = $False)]
-		[switch]$Version = $null
+		[switch]$Version
     )
 
 	if ($Version){
