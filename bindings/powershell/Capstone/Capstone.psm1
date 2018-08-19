@@ -324,7 +324,7 @@ function Get-CapstoneDisassembly {
     )
 
 	if ($Version){
-		$Banner = @"
+		$Banner = @'
 
                  (((;
               (; "((((\
@@ -345,7 +345,7 @@ function Get-CapstoneDisassembly {
 
      -=[Capstone Engine v{0}]=-
 
-"@ -f (Get-CapstoneVersion)
+'@ -f (Get-CapstoneVersion)
 		# Mmm ASCII version banner!
 		return $Banner
 	}
