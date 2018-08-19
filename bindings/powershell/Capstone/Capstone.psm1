@@ -20,7 +20,7 @@ filter Add-TypeName {
 function Get-CapstoneVersion {
 	New-Object -TypeName version -ArgumentList @(
 		[System.BitConverter]::GetBytes(
-			[Capstone]::cs_version($null,$null)
+			[Capstone]::cs_version($null, $null)
 		)
 	)
 }
@@ -256,7 +256,7 @@ function Get-CapstoneDisassembly {
 	# Get-CapstoneDisassembly emits objects
 	C:\PS> $Bytes = [Byte[]] @( 0xB8, 0x0A, 0x00, 0x00, 0x00, 0xF7, 0xF3 )
 	C:\PS> $Object = Get-CapstoneDisassembly -Architecture CS_ARCH_X86 -Mode CS_MODE_32 -Bytes $Bytes -Detailed
-	C:\PS> $Object |Select-Object Size,Mnemonic,Operands
+	C:\PS> $Object |Select-Object Size, Mnemonic, Operands
 
 	Size Mnemonic Operands
 	---- -------- --------
@@ -354,7 +354,7 @@ function Get-CapstoneDisassembly {
 	$DisAsmHandle = [IntPtr]::Zero
 
 	# Initialize Capstone with cs_open()
-	$CallResult = [Capstone]::cs_open($Architecture,$Mode,[ref]$DisAsmHandle)
+	$CallResult = [Capstone]::cs_open($Architecture, $Mode, [ref]$DisAsmHandle)
 	if ($CallResult -ne 'CS_ERR_OK') {
 		if ($CallResult -eq 'CS_ERR_MODE'){
 			throw "Invalid Architecture/Mode combination: $Architecture/$Mode"
@@ -419,16 +419,16 @@ function Get-CapstoneDisassembly {
 		for ($i=0; $i -lt $Count; $i++) {
 			# Cast Offset to cs_insn
 			$InsnPointer = New-Object System.Intptr -ArgumentList $BuffOffset
-			$Cast = [system.runtime.interopservices.marshal]::PtrToStructure($InsnPointer,[type]$cs_insn)
+			$Cast = [system.runtime.interopservices.marshal]::PtrToStructure($InsnPointer, [type]$cs_insn)
 
 			if ($CS_OPT -eq 0) {
 				$HashTable = @{
 					Address = $Cast.address
 					Instruction = $Cast.mnemonic, $Cast.operands -join ' '
 				}
-				New-Object PSObject -Property $HashTable | Select-Object Address,Instruction | Add-TypeName 'CapstoneDisassembly.Simple'
+				New-Object PSObject -Property $HashTable | Select-Object Address, Instruction | Add-TypeName 'CapstoneDisassembly.Simple'
 			} else {
-				$DetailCast = [system.runtime.interopservices.marshal]::PtrToStructure($Cast.detail,[type]$cs_detail)
+				$DetailCast = [system.runtime.interopservices.marshal]::PtrToStructure($Cast.detail, [type]$cs_detail)
 				if($DetailCast.regs_read_count -gt 0) {
 					$RegRead = for ($r=0; $r -lt $DetailCast.regs_read_count; $r++) {
 						$NamePointer = [Capstone]::cs_reg_name($DisAsmHandle, $DetailCast.regs_read[$r])
@@ -450,7 +450,7 @@ function Get-CapstoneDisassembly {
 					RegRead = $RegRead
 					RegWrite = $RegWrite
 				}
-				New-Object PSObject -Property $HashTable | Select-Object Size,Address,Mnemonic,Operands,Bytes,RegRead,RegWrite | Add-TypeName 'CapstoneDisassembly.Detailed'
+				New-Object PSObject -Property $HashTable | Select-Object Size, Address, Mnemonic, Operands, Bytes, RegRead, RegWrite | Add-TypeName 'CapstoneDisassembly.Detailed'
 			}
 			$BuffOffset = $BuffOffset + $cs_insn_size
 		}
