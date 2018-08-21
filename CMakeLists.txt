@@ -347,6 +347,7 @@ if (CAPSTONE_SYSZ_SUPPORT)
         arch/SystemZ/SystemZDisassembler.h
         arch/SystemZ/SystemZGenAsmWriter.inc
         arch/SystemZ/SystemZGenDisassemblerTables.inc
+        arch/SystemZ/SystemZGenInsnNameMaps.inc
         arch/SystemZ/SystemZGenInstrInfo.inc
         arch/SystemZ/SystemZGenRegisterInfo.inc
         arch/SystemZ/SystemZGenSubtargetInfo.inc
