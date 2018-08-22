@@ -18,7 +18,7 @@ Copyright = 'BSD 3-Clause'
 Description = 'Capstone Engine Binding Module'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '2.0'
+PowerShellVersion = '3.0'
 
 # Functions to export from this module
 FunctionsToExport = '*'

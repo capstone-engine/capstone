@@ -1,19 +1,4 @@
 <#
-.Synopsis
-	Add TypeName to piped object
-
-.Parameter TypeName
-	TypeName as string
-#>
-filter Add-TypeName {
-	Param (
-		[string]$TypeName
-	)
-    $_.PSObject.TypeNames.Insert(0, $TypeName)
-    $_
-}
-
-<#
 .SYNOPSIS
 	Get Capstone version as Version object
 #>
@@ -418,15 +403,17 @@ function Get-CapstoneDisassembly {
 
 		for ($i=0; $i -lt $Count; $i++) {
 			# Cast Offset to cs_insn
-			$InsnPointer = New-Object System.Intptr -ArgumentList $BuffOffset
-			$Cast = [system.runtime.interopservices.marshal]::PtrToStructure($InsnPointer, [type]$cs_insn)
+			$Cast = [system.runtime.interopservices.marshal]::PtrToStructure([System.Intptr]$BuffOffset, [type]$cs_insn)
 
 			if ($CS_OPT -eq 0) {
-				$HashTable = @{
+				$Disassembly = [PSCustomObject]@{
 					Address = $Cast.address
-					Instruction = $Cast.mnemonic, $Cast.operands -join ' '
+					Instruction = '{0} {1}' -f $Cast.mnemonic, $Cast.operands
 				}
-				New-Object PSObject -Property $HashTable | Select-Object Address, Instruction | Add-TypeName 'CapstoneDisassembly.Simple'
+
+				# Add TypeName for PS formatting and output result
+				$Disassembly.PSObject.TypeNames.Insert(0, 'CapstoneDisassembly.Simple')
+				$Disassembly
 			} else {
 				$DetailCast = [system.runtime.interopservices.marshal]::PtrToStructure($Cast.detail, [type]$cs_detail)
 				if($DetailCast.regs_read_count -gt 0) {
@@ -441,7 +428,7 @@ function Get-CapstoneDisassembly {
 						[System.Runtime.InteropServices.Marshal]::PtrToStringAnsi($NamePointer)
 					}
 				}
-				$HashTable = @{
+				$Disassembly = [PSCustomObject]@{
 					Address = $Cast.address
 					Mnemonic = $Cast.mnemonic
 					Operands = $Cast.operands
@@ -450,7 +437,10 @@ function Get-CapstoneDisassembly {
 					RegRead = $RegRead
 					RegWrite = $RegWrite
 				}
-				New-Object PSObject -Property $HashTable | Select-Object Size, Address, Mnemonic, Operands, Bytes, RegRead, RegWrite | Add-TypeName 'CapstoneDisassembly.Detailed'
+
+				# Add TypeName for PS formatting and output result
+				$Disassembly.PSObject.TypeNames.Insert(0, 'CapstoneDisassembly.Detailed')
+				$Disassembly
 			}
 			$BuffOffset = $BuffOffset + $cs_insn_size
 		}
