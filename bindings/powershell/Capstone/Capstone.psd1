@@ -1,6 +1,6 @@
 @{
 # Script module or binary module file associated with this manifest.
-ModuleToProcess = 'Capstone.psm1'
+RootModule = 'Capstone.psm1'
 
 # Version number of this module.
 ModuleVersion = '0.0.0.1'
@@ -21,9 +21,9 @@ Description = 'Capstone Engine Binding Module'
 PowerShellVersion = '3.0'
 
 # Functions to export from this module
-FunctionsToExport = '*'
+FunctionsToExport = 'Get-CapstoneVersion', 'Get-CapstoneDisassembly'
 
 # Format files (.ps1xml) to be loaded when importing this module
-FormatsToProcess = @('Capstone.Format.ps1xml')
+FormatsToProcess = 'Capstone.Format.ps1xml'
 
 }
