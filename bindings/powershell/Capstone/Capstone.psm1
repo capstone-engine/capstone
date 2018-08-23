@@ -457,6 +457,6 @@ function Get-CapstoneDisassembly {
 
 Initialize-Capstone -DllPath (
 	Join-Path -Path $PSScriptRoot -ChildPath 'Lib\Capstone\capstone.dll'
-)
+) -ErrorAction Stop
 
 #endregion
