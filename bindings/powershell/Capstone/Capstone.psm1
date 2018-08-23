@@ -455,11 +455,6 @@ function Get-CapstoneDisassembly {
 
 #region Init
 
-# Compatibility for PS v2 / PS v3+
-if(-not $PSScriptRoot) {
-	$PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
-}
-
 Initialize-Capstone -DllPath (
 	Join-Path -Path $PSScriptRoot -ChildPath 'Lib\Capstone\capstone.dll'
 )
