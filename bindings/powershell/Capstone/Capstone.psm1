@@ -336,7 +336,7 @@ function Get-CapstoneDisassembly {
 	}
 
 	# Disasm Handle
-	$DisAsmHandle = [IntPtr]::Zero
+	$DisAsmHandle = [System.IntPtr]::Zero
 
 	# Initialize Capstone with cs_open()
 	$CallResult = [Capstone]::cs_open($Architecture, $Mode, [ref]$DisAsmHandle)
@@ -383,19 +383,19 @@ function Get-CapstoneDisassembly {
 	}
 
 	# Out Buffer Handle
-	$InsnHandle = [IntPtr]::Zero
+	$InsnHandle = [System.IntPtr]::Zero
 
 	# Disassemble bytes
 	$Count = [Capstone]::cs_disasm($DisAsmHandle, $Bytes, $Bytes.Count, $Address, 0, [ref]$InsnHandle)
 
 	if ($Count -gt 0) {
 		# Result struct
-		$cs_insn = New-Object cs_insn
+		$cs_insn = New-Object -TypeName cs_insn
 		$cs_insn_size = [System.Runtime.InteropServices.Marshal]::SizeOf($cs_insn)
 		$cs_insn = $cs_insn.GetType()
 
 		# Result detail struct
-		$cs_detail = New-Object cs_detail
+		$cs_detail = New-Object -TypeName cs_detail
 		$cs_detail = $cs_detail.GetType()
 
 		# Result buffer offset
@@ -403,7 +403,7 @@ function Get-CapstoneDisassembly {
 
 		for ($i=0; $i -lt $Count; $i++) {
 			# Cast Offset to cs_insn
-			$Cast = [system.runtime.interopservices.marshal]::PtrToStructure([System.Intptr]$BuffOffset, [type]$cs_insn)
+			$Cast = [System.Runtime.InteropServices.Marshal]::PtrToStructure([System.Intptr]$BuffOffset, [type]$cs_insn)
 
 			if ($CS_OPT -eq 0) {
 				$Disassembly = [PSCustomObject]@{
@@ -415,7 +415,7 @@ function Get-CapstoneDisassembly {
 				$Disassembly.PSObject.TypeNames.Insert(0, 'CapstoneDisassembly.Simple')
 				$Disassembly
 			} else {
-				$DetailCast = [system.runtime.interopservices.marshal]::PtrToStructure($Cast.detail, [type]$cs_detail)
+				$DetailCast = [System.Runtime.InteropServices.Marshal]::PtrToStructure($Cast.detail, [type]$cs_detail)
 				if($DetailCast.regs_read_count -gt 0) {
 					$RegRead = for ($r=0; $r -lt $DetailCast.regs_read_count; $r++) {
 						$NamePointer = [Capstone]::cs_reg_name($DisAsmHandle, $DetailCast.regs_read[$r])
