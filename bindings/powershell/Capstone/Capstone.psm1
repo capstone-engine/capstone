@@ -3,10 +3,15 @@
 	Get Capstone version as Version object
 #>
 function Get-CapstoneVersion {
+	$Version = [System.BitConverter]::GetBytes(
+		[Capstone]::cs_version($null, $null)
+	)
+
 	New-Object -TypeName version -ArgumentList @(
-		[System.BitConverter]::GetBytes(
-			[Capstone]::cs_version($null, $null)
-		)
+		$Version[1]
+		$Version[0]
+		0
+		0
 	)
 }
 
@@ -330,7 +335,7 @@ function Get-CapstoneDisassembly {
 
      -=[Capstone Engine v{0}]=-
 
-'@ -f (Get-CapstoneVersion)
+'@ -f (Get-CapstoneVersion).ToString(2)
 		# Mmm ASCII version banner!
 		return $Banner
 	}
