@@ -432,7 +432,7 @@ function Get-CapstoneDisassembly {
 					Address = $Cast.address
 					Mnemonic = $Cast.mnemonic
 					Operands = $Cast.operands
-					Bytes = $Cast.bytes
+					Bytes = $Cast.bytes[0..($Cast.size - 1)]
 					Size = $Cast.size
 					RegRead = $RegRead
 					RegWrite = $RegWrite
