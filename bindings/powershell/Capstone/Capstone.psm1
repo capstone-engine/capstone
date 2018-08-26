@@ -212,48 +212,54 @@ function Get-CapstoneDisassembly {
 
 .EXAMPLE
 
-	C:\PS> $Bytes = [Byte[]] @( 0x10, 0xf1, 0x10, 0xe7, 0x11, 0xf2, 0x31, 0xe7, 0xdc, 0xa1, 0x2e, 0xf3, 0xe8, 0x4e, 0x62, 0xf3 )
+	C:\PS> $Bytes = [byte[]] @( 0x10, 0xf1, 0x10, 0xe7, 0x11, 0xf2, 0x31, 0xe7, 0xdc, 0xa1, 0x2e, 0xf3, 0xe8, 0x4e, 0x62, 0xf3 )
 	C:\PS> Get-CapstoneDisassembly -Architecture CS_ARCH_ARM -Mode CS_MODE_ARM -Bytes $Bytes
 
-	sdiv r0, r0, r1
-	udiv r1, r1, r2
-	vbit q5, q15, q6
-	vcgt.f32 q10, q9, q12
+	Address     : 0x100000
+	Instruction : sdiv r0, r0, r1
+
+	Address     : 0x100004
+	Instruction : udiv r1, r1, r2
+
+	Address     : 0x100008
+	Instruction : vbit q5, q15, q6
+
+	Address     : 0x10000C
+	Instruction : vcgt.f32 q10, q9, q12
 
 .EXAMPLE
 
 	# Detailed mode & ATT syntax
-	C:\PS> $Bytes = [Byte[]] @( 0xB8, 0x0A, 0x00, 0x00, 0x00, 0xF7, 0xF3 )
+	C:\PS> $Bytes = [byte[]] @( 0xB8, 0x0A, 0x00, 0x00, 0x00, 0xF7, 0xF3 )
 	C:\PS> Get-CapstoneDisassembly -Architecture CS_ARCH_X86 -Mode CS_MODE_32 -Bytes $Bytes -Syntax ATT -Detailed
 
-	Size     : 5
 	Address  : 0x100000
 	Mnemonic : movl
 	Operands : $0xa, %eax
 	Bytes    : {184, 10, 0, 0...}
+	Size     : 5
 	RegRead  :
 	RegWrite :
 
-	Size     : 2
 	Address  : 0x100005
 	Mnemonic : divl
 	Operands : %ebx
-	Bytes    : {247, 243, 0, 0...}
+	Bytes    : {247, 243}
+	Size     : 2
 	RegRead  : {eax, edx}
 	RegWrite : {eax, edx, eflags}
 
 .EXAMPLE
 
 	# Get-CapstoneDisassembly emits objects
-	C:\PS> $Bytes = [Byte[]] @( 0xB8, 0x0A, 0x00, 0x00, 0x00, 0xF7, 0xF3 )
+	C:\PS> $Bytes = [byte[]] @( 0xB8, 0x0A, 0x00, 0x00, 0x00, 0xF7, 0xF3 )
 	C:\PS> $Object = Get-CapstoneDisassembly -Architecture CS_ARCH_X86 -Mode CS_MODE_32 -Bytes $Bytes -Detailed
-	C:\PS> $Object |Select-Object Size, Mnemonic, Operands
+	C:\PS> $Object | Select-Object -Property Size, Mnemonic, Operands
 
 	Size Mnemonic Operands
 	---- -------- --------
-	   5 mov      eax, 0xa
-	   2 div      ebx
-
+	5 mov      eax, 0xa
+	2 div      ebx
 #>
     [CmdletBinding(DefaultParameterSetName = 'Capstone')]
     param(
