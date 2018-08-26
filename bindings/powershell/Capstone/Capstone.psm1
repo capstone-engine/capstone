@@ -296,20 +296,20 @@ function Get-CapstoneDisassembly {
 		[ValidateNotNullOrEmpty()]
 		[byte[]]$Bytes,
 
-		[Parameter(ParameterSetName='Capstone', Mandatory = $False)]
+		[Parameter(ParameterSetName='Capstone')]
 		[ValidateSet(
 			'Intel',
 			'ATT')
 		]
 		[string]$Syntax = 'Intel',
 
-		[Parameter(ParameterSetName='Capstone', Mandatory = $False)]
+		[Parameter(ParameterSetName='Capstone')]
 		[uint64]$Address = 0x100000,
 
-		[Parameter(ParameterSetName='Capstone', Mandatory = $False)]
+		[Parameter(ParameterSetName='Capstone')]
 		[switch]$Detailed,
 
-		[Parameter(ParameterSetName='Version', Mandatory = $False)]
+		[Parameter(ParameterSetName='Version')]
 		[switch]$Version
     )
 
