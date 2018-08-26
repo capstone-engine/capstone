@@ -3,16 +3,16 @@
 	Get Capstone version as Version object
 #>
 function Get-CapstoneVersion {
-	$Version = [System.BitConverter]::GetBytes(
-		[Capstone]::cs_version($null, $null)
-	)
+    $Version = [System.BitConverter]::GetBytes(
+        [Capstone]::cs_version($null, $null)
+    )
 
-	New-Object -TypeName version -ArgumentList @(
-		$Version[1]
-		$Version[0]
-		0
-		0
-	)
+    New-Object -TypeName version -ArgumentList @(
+        $Version[1]
+        $Version[0]
+        0
+        0
+    )
 }
 
 <#
@@ -23,27 +23,28 @@ function Get-CapstoneVersion {
 	Path to capstone.dll
 #>
 function Initialize-Capstone {
-	[CmdletBinding()]
-	Param (
-		[Parameter(Mandatory = $true)]
-		[ValidateScript({
-			try {
-				Test-Path -Path $_ -PathType Leaf -ErrorAction Stop
-			} catch {
-				throw "Capstone DLL is missing: $DllPath"
-			}
-		})]
-		[ValidateNotNullOrEmpty()]
-		[string]$DllPath
-	)
+    [CmdletBinding()]
+    Param (
+        [Parameter(Mandatory = $true)]
+        [ValidateScript( {
+                try {
+                    Test-Path -Path $_ -PathType Leaf -ErrorAction Stop
+                }
+                catch {
+                    throw "Capstone DLL is missing: $DllPath"
+                }
+            })]
+        [ValidateNotNullOrEmpty()]
+        [string]$DllPath
+    )
 
-	# Escape path for use in inline C#
-	$DllPath = $DllPath.Replace('\', '\\')
+    # Escape path for use in inline C#
+    $DllPath = $DllPath.Replace('\', '\\')
 
-	# Inline C# to parse the unmanaged capstone DLL
-	# http://stackoverflow.com/questions/16552801/how-do-i-conditionally-add-a-class-with-add-type-typedefinition-if-it-isnt-add
-	if (-not ([System.Management.Automation.PSTypeName]'Capstone').Type) {
-	Add-Type -TypeDefinition @"
+    # Inline C# to parse the unmanaged capstone DLL
+    # http://stackoverflow.com/questions/16552801/how-do-i-conditionally-add-a-class-with-add-type-typedefinition-if-it-isnt-add
+    if (-not ([System.Management.Automation.PSTypeName]'Capstone').Type) {
+        Add-Type -TypeDefinition @"
 		using System;
 		using System.Diagnostics;
 		using System.Runtime.InteropServices;
@@ -172,9 +173,9 @@ function Initialize-Capstone {
 				uint minor);
 		}
 "@
-	} else {
-		Write-Verbose 'C# bindings are already compiled'
-	}
+    } else {
+        Write-Verbose 'C# bindings are already compiled'
+    }
 }
 
 function Get-CapstoneDisassembly {
@@ -254,67 +255,67 @@ function Get-CapstoneDisassembly {
 	   2 div      ebx
 
 #>
-	[CmdletBinding(DefaultParameterSetName = 'Capstone')]
-	param(
-		[Parameter(ParameterSetName = 'Capstone', Mandatory = $true)]
-		[ValidateSet(
-			'CS_ARCH_ARM',
-			'CS_ARCH_ARM64',
-			'CS_ARCH_MIPS',
-			'CS_ARCH_X86',
-			'CS_ARCH_PPC',
-			'CS_ARCH_SPARC',
-			'CS_ARCH_SYSZ',
-			'CS_ARCH_XCORE',
-			'CS_ARCH_MAX',
-			'CS_ARCH_ALL')
-		]
-		[string]$Architecture,
+    [CmdletBinding(DefaultParameterSetName = 'Capstone')]
+    param(
+        [Parameter(ParameterSetName = 'Capstone', Mandatory = $true)]
+        [ValidateSet(
+            'CS_ARCH_ARM',
+            'CS_ARCH_ARM64',
+            'CS_ARCH_MIPS',
+            'CS_ARCH_X86',
+            'CS_ARCH_PPC',
+            'CS_ARCH_SPARC',
+            'CS_ARCH_SYSZ',
+            'CS_ARCH_XCORE',
+            'CS_ARCH_MAX',
+            'CS_ARCH_ALL')
+        ]
+        [string]$Architecture,
 
-		[Parameter(ParameterSetName = 'Capstone', Mandatory = $true)]
-		[ValidateSet(
-			'CS_MODE_LITTLE_ENDIAN',
-			'CS_MODE_ARM',
-			'CS_MODE_16',
-			'CS_MODE_32',
-			'CS_MODE_64',
-			'CS_MODE_THUMB',
-			'CS_MODE_MCLASS',
-			'CS_MODE_V8',
-			'CS_MODE_MICRO',
-			'CS_MODE_MIPS3',
-			'CS_MODE_MIPS32R6',
-			'CS_MODE_MIPSGP64',
-			'CS_MODE_V9',
-			'CS_MODE_BIG_ENDIAN',
-			'CS_MODE_MIPS32',
-			'CS_MODE_MIPS64')
-		]
-		[string]$Mode,
+        [Parameter(ParameterSetName = 'Capstone', Mandatory = $true)]
+        [ValidateSet(
+            'CS_MODE_LITTLE_ENDIAN',
+            'CS_MODE_ARM',
+            'CS_MODE_16',
+            'CS_MODE_32',
+            'CS_MODE_64',
+            'CS_MODE_THUMB',
+            'CS_MODE_MCLASS',
+            'CS_MODE_V8',
+            'CS_MODE_MICRO',
+            'CS_MODE_MIPS3',
+            'CS_MODE_MIPS32R6',
+            'CS_MODE_MIPSGP64',
+            'CS_MODE_V9',
+            'CS_MODE_BIG_ENDIAN',
+            'CS_MODE_MIPS32',
+            'CS_MODE_MIPS64')
+        ]
+        [string]$Mode,
 
-		[Parameter(ParameterSetName = 'Capstone', Mandatory = $true)]
-		[ValidateNotNullOrEmpty()]
-		[byte[]]$Bytes,
+        [Parameter(ParameterSetName = 'Capstone', Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [byte[]]$Bytes,
 
-		[Parameter(ParameterSetName = 'Capstone')]
-		[ValidateSet(
-			'Intel',
-			'ATT')
-		]
-		[string]$Syntax = 'Intel',
+        [Parameter(ParameterSetName = 'Capstone')]
+        [ValidateSet(
+            'Intel',
+            'ATT')
+        ]
+        [string]$Syntax = 'Intel',
 
-		[Parameter(ParameterSetName = 'Capstone')]
-		[uint64]$Address = 0x100000,
+        [Parameter(ParameterSetName = 'Capstone')]
+        [uint64]$Address = 0x100000,
 
-		[Parameter(ParameterSetName = 'Capstone')]
-		[switch]$Detailed,
+        [Parameter(ParameterSetName = 'Capstone')]
+        [switch]$Detailed,
 
-		[Parameter(ParameterSetName = 'Version')]
-		[switch]$Version
+        [Parameter(ParameterSetName = 'Version')]
+        [switch]$Version
     )
 
-	if ($Version){
-		$Banner = @'
+    if ($Version) {
+        $Banner = @'
 
                  (((;
               (; "((((\
@@ -336,132 +337,137 @@ function Get-CapstoneDisassembly {
      -=[Capstone Engine v{0}]=-
 
 '@ -f (Get-CapstoneVersion).ToString(2)
-		# Mmm ASCII version banner!
-		return $Banner
+        # Mmm ASCII version banner!
+        return $Banner
+    }
+
+    # Disasm Handle
+    $DisAsmHandle = [System.IntPtr]::Zero
+
+    # Initialize Capstone with cs_open()
+    $CallResult = [Capstone]::cs_open($Architecture, $Mode, [ref]$DisAsmHandle)
+    if ($CallResult -ne 'CS_ERR_OK') {
+        if ($CallResult -eq 'CS_ERR_MODE') {
+            throw "Invalid Architecture/Mode combination: $Architecture/$Mode"
+        } else {
+            throw "cs_open error: $CallResult"
+        }
+    }
+
+    # Set disassembly syntax
+    #---
+    # cs_opt_type  -> CS_OPT_SYNTAX = 1
+    #---
+    # cs_opt_value -> CS_OPT_SYNTAX_INTEL = 1
+    #              -> CS_OPT_SYNTAX_ATT   = 2
+    if ($Syntax -eq 'Intel') {
+        $CS_OPT_SYNTAX = 1
+    } else {
+        $CS_OPT_SYNTAX = 2
 	}
 
-	# Disasm Handle
-	$DisAsmHandle = [System.IntPtr]::Zero
+    $CallResult = [Capstone]::cs_option($DisAsmHandle, 1, $CS_OPT_SYNTAX)
+    if ($CallResult -ne 'CS_ERR_OK') {
+        $CallResult = [Capstone]::cs_close([ref]$DisAsmHandle)
+        throw "cs_option error: $CallResult"
+    }
 
-	# Initialize Capstone with cs_open()
-	$CallResult = [Capstone]::cs_open($Architecture, $Mode, [ref]$DisAsmHandle)
-	if ($CallResult -ne 'CS_ERR_OK') {
-		if ($CallResult -eq 'CS_ERR_MODE'){
-			throw "Invalid Architecture/Mode combination: $Architecture/$Mode"
-		} else {
-			throw "cs_open error: $CallResult"
-		}
+    # Set disassembly detail
+    #---
+    # cs_opt_type  -> CS_OPT_DETAIL = 2
+    #---
+    # cs_opt_value -> CS_OPT_ON  = 3
+    #              -> CS_OPT_OFF = 0
+    if ($Detailed) {
+        $CS_OPT = 3
+    } else {
+        $CS_OPT = 0
 	}
 
-	# Set disassembly syntax
-	#---
-	# cs_opt_type  -> CS_OPT_SYNTAX = 1
-	#---
-	# cs_opt_value -> CS_OPT_SYNTAX_INTEL = 1
-	#              -> CS_OPT_SYNTAX_ATT   = 2
-	if ($Syntax -eq 'Intel') {
-		$CS_OPT_SYNTAX = 1
-	} else {
-		$CS_OPT_SYNTAX = 2
-	}
-	$CallResult = [Capstone]::cs_option($DisAsmHandle, 1, $CS_OPT_SYNTAX)
-	if ($CallResult -ne 'CS_ERR_OK') {
-		$CallResult = [Capstone]::cs_close([ref]$DisAsmHandle)
-		throw "cs_option error: $CallResult"
-	}
+    $CallResult = [Capstone]::cs_option($DisAsmHandle, 2, $CS_OPT)
+    if ($CallResult -ne 'CS_ERR_OK') {
+        $CallResult = [Capstone]::cs_close([ref]$DisAsmHandle)
+        throw "cs_option error: $CallResult"
+    }
 
-	# Set disassembly detail
-	#---
-	# cs_opt_type  -> CS_OPT_DETAIL = 2
-	#---
-	# cs_opt_value -> CS_OPT_ON  = 3
-	#              -> CS_OPT_OFF = 0
-	if ($Detailed) {
-		$CS_OPT = 3
-	} else {
-		$CS_OPT = 0
-	}
-	$CallResult = [Capstone]::cs_option($DisAsmHandle, 2, $CS_OPT)
-	if ($CallResult -ne 'CS_ERR_OK') {
-		$CallResult = [Capstone]::cs_close([ref]$DisAsmHandle)
-		throw "cs_option error: $CallResult"
-	}
+    # Out Buffer Handle
+    $InsnHandle = [System.IntPtr]::Zero
 
-	# Out Buffer Handle
-	$InsnHandle = [System.IntPtr]::Zero
+    # Disassemble bytes
+    $Count = [Capstone]::cs_disasm($DisAsmHandle, $Bytes, $Bytes.Count, $Address, 0, [ref]$InsnHandle)
 
-	# Disassemble bytes
-	$Count = [Capstone]::cs_disasm($DisAsmHandle, $Bytes, $Bytes.Count, $Address, 0, [ref]$InsnHandle)
+    if ($Count -gt 0) {
+        # Result struct
+        $cs_insn = New-Object -TypeName cs_insn
+        $cs_insn_size = [System.Runtime.InteropServices.Marshal]::SizeOf($cs_insn)
+        $cs_insn = $cs_insn.GetType()
 
-	if ($Count -gt 0) {
-		# Result struct
-		$cs_insn = New-Object -TypeName cs_insn
-		$cs_insn_size = [System.Runtime.InteropServices.Marshal]::SizeOf($cs_insn)
-		$cs_insn = $cs_insn.GetType()
+        # Result detail struct
+        $cs_detail = New-Object -TypeName cs_detail
+        $cs_detail = $cs_detail.GetType()
 
-		# Result detail struct
-		$cs_detail = New-Object -TypeName cs_detail
-		$cs_detail = $cs_detail.GetType()
+        # Result buffer offset
+        $BuffOffset = $InsnHandle.ToInt64()
 
-		# Result buffer offset
-		$BuffOffset = $InsnHandle.ToInt64()
+        for ($i = 0 ; $i -lt $Count ; $i++) {
+            # Cast Offset to cs_insn
+            $Cast = [System.Runtime.InteropServices.Marshal]::PtrToStructure([System.Intptr]$BuffOffset, [type]$cs_insn)
 
-		for ($i = 0 ; $i -lt $Count ; $i++) {
-			# Cast Offset to cs_insn
-			$Cast = [System.Runtime.InteropServices.Marshal]::PtrToStructure([System.Intptr]$BuffOffset, [type]$cs_insn)
+            if ($CS_OPT -eq 0) {
+                $Disassembly = [pscustomobject]@{
+                    Address     = $Cast.address
+                    Instruction = '{0} {1}' -f $Cast.mnemonic, $Cast.operands
+                }
 
-			if ($CS_OPT -eq 0) {
-				$Disassembly = [pscustomobject]@{
-					Address = $Cast.address
-					Instruction = '{0} {1}' -f $Cast.mnemonic, $Cast.operands
-				}
-
-				# Add TypeName for PS formatting and output result
-				$Disassembly.PSObject.TypeNames.Insert(0, 'CapstoneDisassembly.Simple')
+                # Add TypeName for PS formatting and output result
+                $Disassembly.PSObject.TypeNames.Insert(0, 'CapstoneDisassembly.Simple')
 				$Disassembly
-			} else {
-				$DetailCast = [System.Runtime.InteropServices.Marshal]::PtrToStructure($Cast.detail, [type]$cs_detail)
-				if($DetailCast.regs_read_count -gt 0) {
-					$RegRead = for ($r = 0 ; $r -lt $DetailCast.regs_read_count ; $r++) {
-						$NamePointer = [Capstone]::cs_reg_name($DisAsmHandle, $DetailCast.regs_read[$r])
-						[System.Runtime.InteropServices.Marshal]::PtrToStringAnsi($NamePointer)
-					}
-				}
-				if ($DetailCast.regs_write_count -gt 0) {
-					$RegWrite = for ($r = 0 ; $r -lt $DetailCast.regs_write_count ; $r++) {
-						$NamePointer = [Capstone]::cs_reg_name($DisAsmHandle, $DetailCast.regs_write[$r])
-						[System.Runtime.InteropServices.Marshal]::PtrToStringAnsi($NamePointer)
-					}
-				}
-				$Disassembly = [pscustomobject]@{
-					Address = $Cast.address
-					Mnemonic = $Cast.mnemonic
-					Operands = $Cast.operands
-					Bytes = $Cast.bytes[0..($Cast.size - 1)]
-					Size = $Cast.size
-					RegRead = $RegRead
-					RegWrite = $RegWrite
+
+            } else {
+                $DetailCast = [System.Runtime.InteropServices.Marshal]::PtrToStructure($Cast.detail, [type]$cs_detail)
+                if ($DetailCast.regs_read_count -gt 0) {
+                    $RegRead = for ($r = 0 ; $r -lt $DetailCast.regs_read_count ; $r++) {
+                        $NamePointer = [Capstone]::cs_reg_name($DisAsmHandle, $DetailCast.regs_read[$r])
+                        [System.Runtime.InteropServices.Marshal]::PtrToStringAnsi($NamePointer)
+                    }
 				}
 
-				# Add TypeName for PS formatting and output result
-				$Disassembly.PSObject.TypeNames.Insert(0, 'CapstoneDisassembly.Detailed')
-				$Disassembly
-			}
-			$BuffOffset = $BuffOffset + $cs_insn_size
-		}
-	} else {
-		$CallResult = [Capstone]::cs_close([ref]$DisAsmHandle)
-		throw 'Disassembly Failed'
-	}
+                if ($DetailCast.regs_write_count -gt 0) {
+                    $RegWrite = for ($r = 0 ; $r -lt $DetailCast.regs_write_count ; $r++) {
+                        $NamePointer = [Capstone]::cs_reg_name($DisAsmHandle, $DetailCast.regs_write[$r])
+                        [System.Runtime.InteropServices.Marshal]::PtrToStringAnsi($NamePointer)
+                    }
+				}
 
-	# Free Buffer Handle
-	$CallResult = [Capstone]::cs_free($InsnHandle, $Count)
+                $Disassembly = [pscustomobject]@{
+                    Address  = $Cast.address
+                    Mnemonic = $Cast.mnemonic
+                    Operands = $Cast.operands
+                    Bytes    = $Cast.bytes[0..($Cast.size - 1)]
+                    Size     = $Cast.size
+                    RegRead  = $RegRead
+                    RegWrite = $RegWrite
+                }
+
+                # Add TypeName for PS formatting and output result
+                $Disassembly.PSObject.TypeNames.Insert(0, 'CapstoneDisassembly.Detailed')
+                $Disassembly
+            }
+            $BuffOffset = $BuffOffset + $cs_insn_size
+        }
+    } else {
+        $CallResult = [Capstone]::cs_close([ref]$DisAsmHandle)
+        throw 'Disassembly Failed'
+    }
+
+    # Free Buffer Handle
+    $CallResult = [Capstone]::cs_free($InsnHandle, $Count)
 }
 
 #region Init
 
 Initialize-Capstone -DllPath (
-	Join-Path -Path $PSScriptRoot -ChildPath 'Lib\Capstone\capstone.dll'
+    Join-Path -Path $PSScriptRoot -ChildPath 'Lib\Capstone\capstone.dll'
 ) -ErrorAction Stop
 
 #endregion
