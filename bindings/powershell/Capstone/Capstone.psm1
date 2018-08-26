@@ -256,7 +256,7 @@ function Get-CapstoneDisassembly {
 #>
 	[CmdletBinding(DefaultParameterSetName = 'Capstone')]
 	param(
-		[Parameter(ParameterSetName='Capstone', Mandatory = $True)]
+		[Parameter(ParameterSetName = 'Capstone', Mandatory = $True)]
 		[ValidateSet(
 			'CS_ARCH_ARM',
 			'CS_ARCH_ARM64',
@@ -271,7 +271,7 @@ function Get-CapstoneDisassembly {
 		]
 		[string]$Architecture,
 
-		[Parameter(ParameterSetName='Capstone', Mandatory = $True)]
+		[Parameter(ParameterSetName = 'Capstone', Mandatory = $True)]
 		[ValidateSet(
 			'CS_MODE_LITTLE_ENDIAN',
 			'CS_MODE_ARM',
@@ -292,24 +292,24 @@ function Get-CapstoneDisassembly {
 		]
 		[string]$Mode,
 
-		[Parameter(ParameterSetName='Capstone', Mandatory = $True)]
+		[Parameter(ParameterSetName = 'Capstone', Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[byte[]]$Bytes,
 
-		[Parameter(ParameterSetName='Capstone')]
+		[Parameter(ParameterSetName = 'Capstone')]
 		[ValidateSet(
 			'Intel',
 			'ATT')
 		]
 		[string]$Syntax = 'Intel',
 
-		[Parameter(ParameterSetName='Capstone')]
+		[Parameter(ParameterSetName = 'Capstone')]
 		[uint64]$Address = 0x100000,
 
-		[Parameter(ParameterSetName='Capstone')]
+		[Parameter(ParameterSetName = 'Capstone')]
 		[switch]$Detailed,
 
-		[Parameter(ParameterSetName='Version')]
+		[Parameter(ParameterSetName = 'Version')]
 		[switch]$Version
     )
 
@@ -406,7 +406,7 @@ function Get-CapstoneDisassembly {
 		# Result buffer offset
 		$BuffOffset = $InsnHandle.ToInt64()
 
-		for ($i=0; $i -lt $Count; $i++) {
+		for ($i = 0 ; $i -lt $Count ; $i++) {
 			# Cast Offset to cs_insn
 			$Cast = [System.Runtime.InteropServices.Marshal]::PtrToStructure([System.Intptr]$BuffOffset, [type]$cs_insn)
 
@@ -422,13 +422,13 @@ function Get-CapstoneDisassembly {
 			} else {
 				$DetailCast = [System.Runtime.InteropServices.Marshal]::PtrToStructure($Cast.detail, [type]$cs_detail)
 				if($DetailCast.regs_read_count -gt 0) {
-					$RegRead = for ($r=0; $r -lt $DetailCast.regs_read_count; $r++) {
+					$RegRead = for ($r = 0 ; $r -lt $DetailCast.regs_read_count ; $r++) {
 						$NamePointer = [Capstone]::cs_reg_name($DisAsmHandle, $DetailCast.regs_read[$r])
 						[System.Runtime.InteropServices.Marshal]::PtrToStringAnsi($NamePointer)
 					}
 				}
 				if ($DetailCast.regs_write_count -gt 0) {
-					$RegWrite = for ($r=0; $r -lt $DetailCast.regs_write_count; $r++) {
+					$RegWrite = for ($r = 0 ; $r -lt $DetailCast.regs_write_count ; $r++) {
 						$NamePointer = [Capstone]::cs_reg_name($DisAsmHandle, $DetailCast.regs_write[$r])
 						[System.Runtime.InteropServices.Marshal]::PtrToStringAnsi($NamePointer)
 					}
