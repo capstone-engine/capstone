@@ -269,7 +269,7 @@ function Get-CapstoneDisassembly {
 			'CS_ARCH_MAX',
 			'CS_ARCH_ALL')
 		]
-		[String]$Architecture,
+		[string]$Architecture,
 
 		[Parameter(ParameterSetName='Capstone', Mandatory = $True)]
 		[ValidateSet(
@@ -290,21 +290,21 @@ function Get-CapstoneDisassembly {
 			'CS_MODE_MIPS32',
 			'CS_MODE_MIPS64')
 		]
-		[String]$Mode,
+		[string]$Mode,
 
 		[Parameter(ParameterSetName='Capstone', Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
-		[Byte[]]$Bytes,
+		[byte[]]$Bytes,
 
 		[Parameter(ParameterSetName='Capstone', Mandatory = $False)]
 		[ValidateSet(
 			'Intel',
 			'ATT')
 		]
-		[String]$Syntax = 'Intel',
+		[string]$Syntax = 'Intel',
 
 		[Parameter(ParameterSetName='Capstone', Mandatory = $False)]
-		[UInt64]$Address = 0x100000,
+		[uint64]$Address = 0x100000,
 
 		[Parameter(ParameterSetName='Capstone', Mandatory = $False)]
 		[switch]$Detailed,
@@ -411,7 +411,7 @@ function Get-CapstoneDisassembly {
 			$Cast = [System.Runtime.InteropServices.Marshal]::PtrToStructure([System.Intptr]$BuffOffset, [type]$cs_insn)
 
 			if ($CS_OPT -eq 0) {
-				$Disassembly = [PSCustomObject]@{
+				$Disassembly = [pscustomobject]@{
 					Address = $Cast.address
 					Instruction = '{0} {1}' -f $Cast.mnemonic, $Cast.operands
 				}
@@ -433,7 +433,7 @@ function Get-CapstoneDisassembly {
 						[System.Runtime.InteropServices.Marshal]::PtrToStringAnsi($NamePointer)
 					}
 				}
-				$Disassembly = [PSCustomObject]@{
+				$Disassembly = [pscustomobject]@{
 					Address = $Cast.address
 					Mnemonic = $Cast.mnemonic
 					Operands = $Cast.operands
