@@ -262,7 +262,7 @@ function Get-CapstoneDisassembly {
 	2 div      ebx
 #>
     [CmdletBinding(DefaultParameterSetName = 'Capstone')]
-    param(
+    Param (
         [Parameter(ParameterSetName = 'Capstone', Mandatory = $true)]
         [ValidateSet(
             'CS_ARCH_ARM',
@@ -274,8 +274,8 @@ function Get-CapstoneDisassembly {
             'CS_ARCH_SYSZ',
             'CS_ARCH_XCORE',
             'CS_ARCH_MAX',
-            'CS_ARCH_ALL')
-        ]
+            'CS_ARCH_ALL'
+		)]
         [string]$Architecture,
 
         [Parameter(ParameterSetName = 'Capstone', Mandatory = $true)]
@@ -295,8 +295,8 @@ function Get-CapstoneDisassembly {
             'CS_MODE_V9',
             'CS_MODE_BIG_ENDIAN',
             'CS_MODE_MIPS32',
-            'CS_MODE_MIPS64')
-        ]
+            'CS_MODE_MIPS64'
+		)]
         [string]$Mode,
 
         [Parameter(ParameterSetName = 'Capstone', Mandatory = $true)]
@@ -306,8 +306,8 @@ function Get-CapstoneDisassembly {
         [Parameter(ParameterSetName = 'Capstone')]
         [ValidateSet(
             'Intel',
-            'ATT')
-        ]
+            'ATT'
+		)]
         [string]$Syntax = 'Intel',
 
         [Parameter(ParameterSetName = 'Capstone')]
@@ -404,12 +404,12 @@ function Get-CapstoneDisassembly {
 
     if ($Count -gt 0) {
         # Result struct
-        $cs_insn = New-Object -TypeName cs_insn
+        $cs_insn = [cs_insn]@{}
         $cs_insn_size = [System.Runtime.InteropServices.Marshal]::SizeOf($cs_insn)
         $cs_insn = $cs_insn.GetType()
 
         # Result detail struct
-        $cs_detail = New-Object -TypeName cs_detail
+        $cs_detail = [cs_detail]@{}
         $cs_detail = $cs_detail.GetType()
 
         # Result buffer offset
