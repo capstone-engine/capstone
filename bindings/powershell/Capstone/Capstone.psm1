@@ -256,7 +256,7 @@ function Get-CapstoneDisassembly {
 #>
 	[CmdletBinding(DefaultParameterSetName = 'Capstone')]
 	param(
-		[Parameter(ParameterSetName = 'Capstone', Mandatory = $True)]
+		[Parameter(ParameterSetName = 'Capstone', Mandatory = $true)]
 		[ValidateSet(
 			'CS_ARCH_ARM',
 			'CS_ARCH_ARM64',
@@ -271,7 +271,7 @@ function Get-CapstoneDisassembly {
 		]
 		[string]$Architecture,
 
-		[Parameter(ParameterSetName = 'Capstone', Mandatory = $True)]
+		[Parameter(ParameterSetName = 'Capstone', Mandatory = $true)]
 		[ValidateSet(
 			'CS_MODE_LITTLE_ENDIAN',
 			'CS_MODE_ARM',
@@ -292,7 +292,7 @@ function Get-CapstoneDisassembly {
 		]
 		[string]$Mode,
 
-		[Parameter(ParameterSetName = 'Capstone', Mandatory = $True)]
+		[Parameter(ParameterSetName = 'Capstone', Mandatory = $true)]
 		[ValidateNotNullOrEmpty()]
 		[byte[]]$Bytes,
 
