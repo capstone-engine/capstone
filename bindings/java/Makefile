@@ -20,6 +20,8 @@ else
   endif
 endif
 
+PYTHON2 = python
+
 CAPSTONE_JAVA = Capstone.java Arm_const.java Arm64_const.java Mips_const.java \
 				X86_const.java Xcore_const.java Ppc_const.java Sparc_const.java\
 				Sysz_const.java M680x_const.java \
@@ -47,7 +49,7 @@ tests: capstone_class jna
 		TestPpc.java TestSparc.java TestSystemz.java TestM680x.java
 
 gen_const:
-	cd ../ && python const_generator.py java
+	cd ../ && $(PYTHON2) const_generator.py java
 
 jna:
 	@if [ ! $(JNA) ]; then echo "*** Unable to find JNA ***"; exit 1; fi
