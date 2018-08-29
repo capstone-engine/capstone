@@ -13,6 +13,8 @@ TEST_SYSZ = $(TMPDIR)/test_systemz
 TEST_X86 = $(TMPDIR)/test_x86
 TEST_XCORE = $(TMPDIR)/test_xcore
 
+PYTHON2 = python
+
 .PHONY: all expected python java ocaml
 
 all:
@@ -41,16 +43,16 @@ expected:
 
 python: FORCE
 	cd python && $(MAKE)
-	python python/test.py > $(TEST)_o
-	python python/test_arm.py > $(TEST_ARM)_o
-	python python/test_arm64.py > $(TEST_ARM64)_o
-	python python/test_m68k.py > $(TEST_M68K)_o
-	python python/test_mips.py > $(TEST_MIPS)_o
-	python python/test_ppc.py > $(TEST_PPC)_o
-	python python/test_sparc.py > $(TEST_SPARC)_o
-	python python/test_systemz.py > $(TEST_SYSZ)_o
-	python python/test_x86.py > $(TEST_X86)_o
-	python python/test_xcore.py > $(TEST_XCORE)_o
+	$(PYTHON2) python/test.py > $(TEST)_o
+	$(PYTHON2) python/test_arm.py > $(TEST_ARM)_o
+	$(PYTHON2) python/test_arm64.py > $(TEST_ARM64)_o
+	$(PYTHON2) python/test_m68k.py > $(TEST_M68K)_o
+	$(PYTHON2) python/test_mips.py > $(TEST_MIPS)_o
+	$(PYTHON2) python/test_ppc.py > $(TEST_PPC)_o
+	$(PYTHON2) python/test_sparc.py > $(TEST_SPARC)_o
+	$(PYTHON2) python/test_systemz.py > $(TEST_SYSZ)_o
+	$(PYTHON2) python/test_x86.py > $(TEST_X86)_o
+	$(PYTHON2) python/test_xcore.py > $(TEST_XCORE)_o
 	$(MAKE) test_diff
 
 java: FORCE
