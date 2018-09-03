@@ -881,7 +881,7 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 
 	// perhaps this instruction does not need printer
 	if (MI->assembly[0]) {
-		strncpy(OS->buffer, MI->assembly, sizeof(MI->assembly));
+		strncpy(OS->buffer, MI->assembly, sizeof(OS->buffer));
 		return;
 	}
 
