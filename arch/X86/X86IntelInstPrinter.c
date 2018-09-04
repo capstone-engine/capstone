@@ -742,7 +742,7 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 
 	// perhaps this instruction does not need printer
 	if (MI->assembly[0]) {
-		strncpy(O->buffer, MI->assembly, sizeof(MI->assembly));
+		strncpy(O->buffer, MI->assembly, sizeof(O->buffer));
 		return;
 	}
 
