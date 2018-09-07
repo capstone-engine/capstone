@@ -29,8 +29,7 @@ function Initialize-Capstone {
         [ValidateScript( {
                 try {
                     Test-Path -Path $_ -PathType Leaf -ErrorAction Stop
-                }
-                catch {
+                } catch {
                     throw "Capstone DLL is missing: $DllPath"
                 }
             })]
@@ -404,12 +403,21 @@ function Get-CapstoneDisassembly {
 
     if ($Count -gt 0) {
         # Result struct
-        $cs_insn = [cs_insn]@{}
+        $cs_insn = if ($PSVersionTable.PSVersion.Major -gt 2) {
+            [cs_insn]@{}
+        } else {
+            New-Object -TypeName cs_insn
+        }
+
         $cs_insn_size = [System.Runtime.InteropServices.Marshal]::SizeOf($cs_insn)
         $cs_insn = $cs_insn.GetType()
 
         # Result detail struct
-        $cs_detail = [cs_detail]@{}
+        $cs_detail = if ($PSVersionTable.PSVersion.Major -gt 2) {
+            [cs_detail]@{}
+        } else {
+            New-Object -TypeName cs_detail
+        }
         $cs_detail = $cs_detail.GetType()
 
         # Result buffer offset
@@ -420,15 +428,21 @@ function Get-CapstoneDisassembly {
             $Cast = [System.Runtime.InteropServices.Marshal]::PtrToStructure([System.Intptr]$BuffOffset, [type]$cs_insn)
 
             if ($CS_OPT -eq 0) {
-                $Disassembly = [pscustomobject]@{
+                $Disassembly = @{
                     Address     = $Cast.address
                     Instruction = '{0} {1}' -f $Cast.mnemonic, $Cast.operands
                 }
 
-                # Add TypeName for PS formatting and output result
-                $Disassembly.PSObject.TypeNames.Insert(0, 'CapstoneDisassembly.Simple')
-				$Disassembly
-
+                if ($PSVersionTable.PSVersion.Major -gt 2) {
+                    # Add TypeName for PS formatting and output result
+                    $Disassembly.PSTypeName ='CapstoneDisassembly.Simple'
+                    [pscustomobject]$Disassembly
+                } else {
+                    $Disassembly = New-Object -TypeName PSObject -Property $Disassembly
+                    # Add TypeName for PS formatting and output result
+                    $Disassembly.PSObject.TypeNames.Insert(0, 'CapstoneDisassembly.Simple')
+                    $Disassembly
+                }
             } else {
                 $DetailCast = [System.Runtime.InteropServices.Marshal]::PtrToStructure($Cast.detail, [type]$cs_detail)
                 if ($DetailCast.regs_read_count -gt 0) {
@@ -445,19 +459,26 @@ function Get-CapstoneDisassembly {
                     }
 				}
 
-                $Disassembly = [pscustomobject]@{
-                    Address  = $Cast.address
-                    Mnemonic = $Cast.mnemonic
-                    Operands = $Cast.operands
-                    Bytes    = $Cast.bytes[0..($Cast.size - 1)]
-                    Size     = $Cast.size
-                    RegRead  = $RegRead
-                    RegWrite = $RegWrite
+                $Disassembly = @{
+                    Address    = $Cast.address
+                    Mnemonic   = $Cast.mnemonic
+                    Operands   = $Cast.operands
+                    Bytes      = $Cast.bytes[0..($Cast.size - 1)]
+                    Size       = $Cast.size
+                    RegRead    = $RegRead
+                    RegWrite   = $RegWrite
                 }
 
-                # Add TypeName for PS formatting and output result
-                $Disassembly.PSObject.TypeNames.Insert(0, 'CapstoneDisassembly.Detailed')
-                $Disassembly
+                if ($PSVersionTable.PSVersion.Major -gt 2) {
+                    # Add TypeName for PS formatting and output result
+                    $Disassembly.PSTypeName = 'CapstoneDisassembly.Detailed'
+                    [pscustomobject]$Disassembly
+                } else {
+                    $Disassembly = New-Object -TypeName PSObject -Property $Disassembly
+                    # Add TypeName for PS formatting and output result
+                    $Disassembly.PSObject.TypeNames.Insert(0, 'CapstoneDisassembly.Detailed')
+                    $Disassembly
+                }
             }
             $BuffOffset = $BuffOffset + $cs_insn_size
         }

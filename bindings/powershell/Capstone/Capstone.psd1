@@ -5,7 +5,7 @@
 @{
 
 # Script module or binary module file associated with this manifest.
-RootModule = 'Capstone.psm1'
+ModuleToProcess = 'Capstone.psm1'
 
 # Version number of this module.
 ModuleVersion = '0.0.0.2'
@@ -29,7 +29,7 @@ Copyright = 'BSD 3-Clause'
 Description = 'Capstone Engine Binding Module'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '3.0'
+PowerShellVersion = '2.0'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
