@@ -183,7 +183,7 @@ function Get-CapstoneDisassembly {
     Powershell wrapper for Capstone (using inline C#).
 
 .DESCRIPTION
-    Author: Ruben Boonen (@FuzzySec)
+    Author: Ruben Boonen (@FuzzySec), @beatcracker
     License: BSD 3-Clause
     Required Dependencies: None
     Optional Dependencies: None

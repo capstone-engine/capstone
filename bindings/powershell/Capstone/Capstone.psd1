@@ -17,7 +17,7 @@ ModuleVersion = '0.0.0.2'
 GUID = 'd34db33f-9958-436d-a2d8-a77844a2bda5'
 
 # Author of this module
-Author = 'Ruben Boonen'
+Author = 'Ruben Boonen, beatcracker'
 
 # Company or vendor of this module
 # CompanyName = 'Unknown'
