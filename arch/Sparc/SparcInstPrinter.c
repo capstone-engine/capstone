@@ -358,8 +358,8 @@ void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
 	mnem = printAliasInstr(MI, O, Info);
 	if (mnem) {
 		// fixup instruction id due to the change in alias instruction
-		strncpy(instr, mnem, strlen(mnem));
-		instr[strlen(mnem)] = '\0';
+		strncpy(instr, mnem, sizeof(instr));
+		instr[sizeof(instr) - 1] = '\0';
 		// does this contains hint with a coma?
 		p = strchr(instr, ',');
 		if (p)
