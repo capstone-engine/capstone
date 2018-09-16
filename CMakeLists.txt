@@ -40,7 +40,7 @@ foreach(i RANGE ${count})
   option("CAPSTONE_${supported_architecture}_SUPPORT" "${supported_architecture_label} support" ON)
 endforeach(i)
 
-# propagate achitecture support variables to preprocessor
+# propagate architecture support variables to preprocessor
 foreach(supported_architecture ${SUPPORTED_ARCHITECTURES})
   set(option_name "CAPSTONE_${supported_architecture}_SUPPORT")
   if(${option_name})

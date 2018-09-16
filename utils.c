@@ -100,7 +100,7 @@ char *cs_strdup(const char *str)
 	return (char *)memmove(new, str, len);
 }
 
-// we need this since Windows doesnt have snprintf()
+// we need this since Windows doesn't have snprintf()
 int cs_snprintf(char *buffer, size_t size, const char *fmt, ...)
 {
 	int ret;
