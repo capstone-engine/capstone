@@ -51,7 +51,7 @@ extern "C" {
 #define CS_API_MINOR 0
 
 // Version for bleeding edge code of the Github's "next" branch.
-// Use this if you want the absolutely latest developement code.
+// Use this if you want the absolutely latest development code.
 // This version number will be bumped up whenever we have a new major change.
 #define CS_NEXT_VERSION 4
 
@@ -487,7 +487,7 @@ const char * CAPSTONE_API cs_strerror(cs_err code);
  Disassemble binary code, given the code buffer, size, address and number
  of instructions to be decoded.
  This API dynamically allocate memory to contain disassembled instruction.
- Resulted instructions will be put into @*insn
+ Resulting instructions will be put into @*insn
 
  NOTE 1: this API will automatically determine memory needed to contain
  output disassembled instructions in @insn.
@@ -560,7 +560,7 @@ cs_insn * CAPSTONE_API cs_malloc(csh handle);
 /*
  Fast API to disassemble binary code, given the code buffer, size, address
  and number of instructions to be decoded.
- This API put the resulted instruction into a given cache in @insn.
+ This API puts the resulting instruction into a given cache in @insn.
  See tests/test_iter.c for sample code demonstrating this API.
 
  NOTE 1: this API will update @code, @size & @address to point to the next
@@ -657,7 +657,7 @@ const char * CAPSTONE_API cs_group_name(csh handle, unsigned int group_id);
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_iter()
  @group_id: group that you want to check if this instruction belong to.
 
- @return: true if this instruction indeed belongs to aboved group, or false otherwise.
+ @return: true if this instruction indeed belongs to the given group, or false otherwise.
 */
 CAPSTONE_EXPORT
 bool CAPSTONE_API cs_insn_group(csh handle, const cs_insn *insn, unsigned int group_id);
@@ -675,7 +675,7 @@ bool CAPSTONE_API cs_insn_group(csh handle, const cs_insn *insn, unsigned int gr
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_iter()
  @reg_id: register that you want to check if this instruction used it.
 
- @return: true if this instruction indeed implicitly used aboved register, or false otherwise.
+ @return: true if this instruction indeed implicitly used the given register, or false otherwise.
 */
 CAPSTONE_EXPORT
 bool CAPSTONE_API cs_reg_read(csh handle, const cs_insn *insn, unsigned int reg_id);
@@ -693,7 +693,7 @@ bool CAPSTONE_API cs_reg_read(csh handle, const cs_insn *insn, unsigned int reg_
  @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_iter()
  @reg_id: register that you want to check if this instruction modified it.
 
- @return: true if this instruction indeed implicitly modified aboved register, or false otherwise.
+ @return: true if this instruction indeed implicitly modified the given register, or false otherwise.
 */
 CAPSTONE_EXPORT
 bool CAPSTONE_API cs_reg_write(csh handle, const cs_insn *insn, unsigned int reg_id);
