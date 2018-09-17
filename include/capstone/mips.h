@@ -18,18 +18,18 @@ extern "C" {
 #pragma warning(disable:4201)
 #endif
 
-//> Operand type for instruction's operands
+/// Operand type for instruction's operands
 typedef enum mips_op_type {
-	MIPS_OP_INVALID = 0, // = CS_OP_INVALID (Uninitialized).
-	MIPS_OP_REG, // = CS_OP_REG (Register operand).
-	MIPS_OP_IMM, // = CS_OP_IMM (Immediate operand).
-	MIPS_OP_MEM, // = CS_OP_MEM (Memory operand).
+	MIPS_OP_INVALID = 0, ///< = CS_OP_INVALID (Uninitialized).
+	MIPS_OP_REG, ///< = CS_OP_REG (Register operand).
+	MIPS_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
+	MIPS_OP_MEM, ///< = CS_OP_MEM (Memory operand).
 } mips_op_type;
 
-//> MIPS registers
+/// MIPS registers
 typedef enum mips_reg {
 	MIPS_REG_INVALID = 0,
-	//> General purpose registers
+	// General purpose registers
 	MIPS_REG_PC,
 
 	MIPS_REG_0,
@@ -65,7 +65,7 @@ typedef enum mips_reg {
 	MIPS_REG_30,
 	MIPS_REG_31,
 
-	//> DSP registers
+	// DSP registers
 	MIPS_REG_DSPCCOND,
 	MIPS_REG_DSPCARRY,
 	MIPS_REG_DSPEFI,
@@ -78,13 +78,13 @@ typedef enum mips_reg {
 	MIPS_REG_DSPPOS,
 	MIPS_REG_DSPSCOUNT,
 
-	//> ACC registers
+	// ACC registers
 	MIPS_REG_AC0,
 	MIPS_REG_AC1,
 	MIPS_REG_AC2,
 	MIPS_REG_AC3,
 
-	//> COP registers
+	// COP registers
 	MIPS_REG_CC0,
 	MIPS_REG_CC1,
 	MIPS_REG_CC2,
@@ -94,7 +94,7 @@ typedef enum mips_reg {
 	MIPS_REG_CC6,
 	MIPS_REG_CC7,
 
-	//> FPU registers
+	// FPU registers
 	MIPS_REG_F0,
 	MIPS_REG_F1,
 	MIPS_REG_F2,
@@ -137,7 +137,7 @@ typedef enum mips_reg {
 	MIPS_REG_FCC6,
 	MIPS_REG_FCC7,
 
-	//> AFPR128
+	// AFPR128
 	MIPS_REG_W0,
 	MIPS_REG_W1,
 	MIPS_REG_W2,
@@ -229,32 +229,32 @@ typedef enum mips_reg {
 	MIPS_REG_LO3 = MIPS_REG_HI3,
 } mips_reg;
 
-// Instruction's operand referring to memory
-// This is associated with MIPS_OP_MEM operand type above
+/// Instruction's operand referring to memory
+/// This is associated with MIPS_OP_MEM operand type above
 typedef struct mips_op_mem {
-	mips_reg base;	// base register
-	int64_t disp;	// displacement/offset value
+	mips_reg base;	///< base register
+	int64_t disp;	///< displacement/offset value
 } mips_op_mem;
 
-// Instruction operand
+/// Instruction operand
 typedef struct cs_mips_op {
-	mips_op_type type;	// operand type
+	mips_op_type type;	///< operand type
 	union {
-		mips_reg reg;		// register value for REG operand
-		int64_t imm;		// immediate value for IMM operand
-		mips_op_mem mem;	// base/index/scale/disp value for MEM operand
+		mips_reg reg;		///< register value for REG operand
+		int64_t imm;		///< immediate value for IMM operand
+		mips_op_mem mem;	///< base/index/scale/disp value for MEM operand
 	};
 } cs_mips_op;
 
-// Instruction structure
+/// Instruction structure
 typedef struct cs_mips {
-	// Number of operands of this instruction, 
-	// or 0 when instruction has no operand.
+	/// Number of operands of this instruction,
+	/// or 0 when instruction has no operand.
 	uint8_t op_count;
-	cs_mips_op operands[10]; // operands for this instruction.
+	cs_mips_op operands[10]; ///< operands for this instruction.
 } cs_mips;
 
-//> MIPS instruction
+/// MIPS instruction
 typedef enum mips_insn {
 	MIPS_INS_INVALID = 0,
 
@@ -891,27 +891,27 @@ typedef enum mips_insn {
 	MIPS_INS_ENDING,
 } mips_insn;
 
-//> Group of MIPS instructions
+/// Group of MIPS instructions
 typedef enum mips_insn_group {
-	MIPS_GRP_INVALID = 0, // = CS_GRP_INVALID
+	MIPS_GRP_INVALID = 0, ///< = CS_GRP_INVALID
 
-	//> Generic groups
+	// Generic groups
 	// all jump instructions (conditional+direct+indirect jumps)
-	MIPS_GRP_JUMP,	// = CS_GRP_JUMP
+	MIPS_GRP_JUMP,	///< = CS_GRP_JUMP
 	// all call instructions
-	MIPS_GRP_CALL,	// = CS_GRP_CALL
+	MIPS_GRP_CALL,	///< = CS_GRP_CALL
 	// all return instructions
-	MIPS_GRP_RET,	// = CS_GRP_RET
+	MIPS_GRP_RET,	///< = CS_GRP_RET
 	// all interrupt instructions (int+syscall)
-	MIPS_GRP_INT,	// = CS_GRP_INT
+	MIPS_GRP_INT,	///< = CS_GRP_INT
 	// all interrupt return instructions
-	MIPS_GRP_IRET,	// = CS_GRP_IRET
+	MIPS_GRP_IRET,	///< = CS_GRP_IRET
 	// all privileged instructions
-	MIPS_GRP_PRIVILEGE,	// = CS_GRP_PRIVILEGE
+	MIPS_GRP_PRIVILEGE,	///< = CS_GRP_PRIVILEGE
 	// all relative branching instructions
-	MIPS_GRP_BRANCH_RELATIVE, // = CS_GRP_BRANCH_RELATIVE
+	MIPS_GRP_BRANCH_RELATIVE, ///< = CS_GRP_BRANCH_RELATIVE
 
-	//> Architecture-specific groups
+	// Architecture-specific groups
 	MIPS_GRP_BITCOUNT = 128,
 	MIPS_GRP_DSP,
 	MIPS_GRP_DSPR2,
