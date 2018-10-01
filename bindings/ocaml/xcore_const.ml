@@ -1,13 +1,9 @@
 (* For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [xcore_const.ml] *)
 
-(* Operand type for instruction's operands *)
-
 let _XCORE_OP_INVALID = 0;;
 let _XCORE_OP_REG = 1;;
 let _XCORE_OP_IMM = 2;;
 let _XCORE_OP_MEM = 3;;
-
-(* XCore registers *)
 
 let _XCORE_REG_INVALID = 0;;
 let _XCORE_REG_CP = 1;;
@@ -26,8 +22,6 @@ let _XCORE_REG_R8 = 13;;
 let _XCORE_REG_R9 = 14;;
 let _XCORE_REG_R10 = 15;;
 let _XCORE_REG_R11 = 16;;
-
-(* pseudo registers *)
 let _XCORE_REG_PC = 17;;
 let _XCORE_REG_SCP = 18;;
 let _XCORE_REG_SSR = 19;;
@@ -38,8 +32,6 @@ let _XCORE_REG_KEP = 23;;
 let _XCORE_REG_KSP = 24;;
 let _XCORE_REG_ID = 25;;
 let _XCORE_REG_ENDING = 26;;
-
-(* XCore instruction *)
 
 let _XCORE_INS_INVALID = 0;;
 let _XCORE_INS_ADD = 1;;
@@ -164,10 +156,6 @@ let _XCORE_INS_XOR = 119;;
 let _XCORE_INS_ZEXT = 120;;
 let _XCORE_INS_ENDING = 121;;
 
-(* Group of XCore instructions *)
-
 let _XCORE_GRP_INVALID = 0;;
-
-(* Generic groups *)
 let _XCORE_GRP_JUMP = 1;;
 let _XCORE_GRP_ENDING = 2;;

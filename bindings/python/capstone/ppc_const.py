@@ -1,7 +1,5 @@
 # For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [ppc_const.py]
 
-# PPC branch codes for some branch instructions
-
 PPC_BC_INVALID = 0
 PPC_BC_LT = (0<<5)|12
 PPC_BC_LE = (1<<5)|4
@@ -14,21 +12,15 @@ PPC_BC_NU = (3<<5)|4
 PPC_BC_SO = (4<<5)|12
 PPC_BC_NS = (4<<5)|4
 
-# PPC branch hint for some branch instructions
-
 PPC_BH_INVALID = 0
 PPC_BH_PLUS = 1
 PPC_BH_MINUS = 2
-
-# Operand type for instruction's operands
 
 PPC_OP_INVALID = 0
 PPC_OP_REG = 1
 PPC_OP_IMM = 2
 PPC_OP_MEM = 3
 PPC_OP_CRX = 64
-
-# PPC registers
 
 PPC_REG_INVALID = 0
 PPC_REG_CARRY = 1
@@ -241,8 +233,6 @@ PPC_REG_LR8 = 207
 PPC_REG_CR1EQ = 208
 PPC_REG_X2 = 209
 PPC_REG_ENDING = 210
-
-# PPC instruction
 
 PPC_INS_INVALID = 0
 PPC_INS_ADD = 1
@@ -1356,14 +1346,8 @@ PPC_INS_QVFNAND = 1108
 PPC_INS_QVFSET = 1109
 PPC_INS_ENDING = 1110
 
-# Group of PPC instructions
-
 PPC_GRP_INVALID = 0
-
-# Generic groups
 PPC_GRP_JUMP = 1
-
-# Architecture-specific groups
 PPC_GRP_ALTIVEC = 128
 PPC_GRP_MODE32 = 129
 PPC_GRP_MODE64 = 130

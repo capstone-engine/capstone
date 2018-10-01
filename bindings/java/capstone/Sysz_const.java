@@ -3,8 +3,6 @@ package capstone;
 
 public class Sysz_const {
 
-	// Enums corresponding to SystemZ condition codes
-
 	public static final int SYSZ_CC_INVALID = 0;
 	public static final int SYSZ_CC_O = 1;
 	public static final int SYSZ_CC_H = 2;
@@ -21,15 +19,11 @@ public class Sysz_const {
 	public static final int SYSZ_CC_NH = 13;
 	public static final int SYSZ_CC_NO = 14;
 
-	// Operand type for instruction's operands
-
 	public static final int SYSZ_OP_INVALID = 0;
 	public static final int SYSZ_OP_REG = 1;
 	public static final int SYSZ_OP_IMM = 2;
 	public static final int SYSZ_OP_MEM = 3;
 	public static final int SYSZ_OP_ACREG = 64;
-
-	// SystemZ registers
 
 	public static final int SYSZ_REG_INVALID = 0;
 	public static final int SYSZ_REG_0 = 1;
@@ -67,8 +61,6 @@ public class Sysz_const {
 	public static final int SYSZ_REG_F15 = 33;
 	public static final int SYSZ_REG_R0L = 34;
 	public static final int SYSZ_REG_ENDING = 35;
-
-	// SystemZ instruction
 
 	public static final int SYSZ_INS_INVALID = 0;
 	public static final int SYSZ_INS_A = 1;
@@ -754,14 +746,8 @@ public class Sysz_const {
 	public static final int SYSZ_INS_XY = 681;
 	public static final int SYSZ_INS_ENDING = 682;
 
-	// Group of SystemZ instructions
-
 	public static final int SYSZ_GRP_INVALID = 0;
-
-	// Generic groups
 	public static final int SYSZ_GRP_JUMP = 1;
-
-	// Architecture-specific groups
 	public static final int SYSZ_GRP_DISTINCTOPS = 128;
 	public static final int SYSZ_GRP_FPEXTENSION = 129;
 	public static final int SYSZ_GRP_HIGHWORD = 130;

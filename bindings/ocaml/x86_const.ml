@@ -1,7 +1,5 @@
 (* For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [x86_const.ml] *)
 
-(* X86 registers *)
-
 let _X86_REG_INVALID = 0;;
 let _X86_REG_AH = 1;;
 let _X86_REG_AL = 2;;
@@ -245,8 +243,6 @@ let _X86_REG_R13W = 239;;
 let _X86_REG_R14W = 240;;
 let _X86_REG_R15W = 241;;
 let _X86_REG_ENDING = 242;;
-
-(* Sub-flags of EFLAGS *)
 let _X86_EFLAGS_MODIFY_AF = 1 lsl 0;;
 let _X86_EFLAGS_MODIFY_CF = 1 lsl 1;;
 let _X86_EFLAGS_MODIFY_SF = 1 lsl 2;;
@@ -327,14 +323,10 @@ let _X86_FPU_FLAGS_TEST_C1 = 1 lsl 17;;
 let _X86_FPU_FLAGS_TEST_C2 = 1 lsl 18;;
 let _X86_FPU_FLAGS_TEST_C3 = 1 lsl 19;;
 
-(* Operand type for instruction's operands *)
-
 let _X86_OP_INVALID = 0;;
 let _X86_OP_REG = 1;;
 let _X86_OP_IMM = 2;;
 let _X86_OP_MEM = 3;;
-
-(* XOP Code Condition type *)
 
 let _X86_XOP_CC_INVALID = 0;;
 let _X86_XOP_CC_LT = 1;;
@@ -346,15 +338,11 @@ let _X86_XOP_CC_NEQ = 6;;
 let _X86_XOP_CC_FALSE = 7;;
 let _X86_XOP_CC_TRUE = 8;;
 
-(* AVX broadcast type *)
-
 let _X86_AVX_BCAST_INVALID = 0;;
 let _X86_AVX_BCAST_2 = 1;;
 let _X86_AVX_BCAST_4 = 2;;
 let _X86_AVX_BCAST_8 = 3;;
 let _X86_AVX_BCAST_16 = 4;;
-
-(* SSE Code Condition type *)
 
 let _X86_SSE_CC_INVALID = 0;;
 let _X86_SSE_CC_EQ = 1;;
@@ -365,8 +353,6 @@ let _X86_SSE_CC_NEQ = 5;;
 let _X86_SSE_CC_NLT = 6;;
 let _X86_SSE_CC_NLE = 7;;
 let _X86_SSE_CC_ORD = 8;;
-
-(* AVX Code Condition type *)
 
 let _X86_AVX_CC_INVALID = 0;;
 let _X86_AVX_CC_EQ = 1;;
@@ -402,15 +388,11 @@ let _X86_AVX_CC_GE_OQ = 30;;
 let _X86_AVX_CC_GT_OQ = 31;;
 let _X86_AVX_CC_TRUE_US = 32;;
 
-(* AVX static rounding mode type *)
-
 let _X86_AVX_RM_INVALID = 0;;
 let _X86_AVX_RM_RN = 1;;
 let _X86_AVX_RM_RD = 2;;
 let _X86_AVX_RM_RU = 3;;
 let _X86_AVX_RM_RZ = 4;;
-
-(* Instruction prefixes - to be used in cs_x86.prefix[] *)
 let _X86_PREFIX_LOCK = 0xf0;;
 let _X86_PREFIX_REP = 0xf3;;
 let _X86_PREFIX_REPE = 0xf3;;
@@ -423,8 +405,6 @@ let _X86_PREFIX_FS = 0x64;;
 let _X86_PREFIX_GS = 0x65;;
 let _X86_PREFIX_OPSIZE = 0x66;;
 let _X86_PREFIX_ADDRSIZE = 0x67;;
-
-(* X86 instructions *)
 
 let _X86_INS_INVALID = 0;;
 let _X86_INS_AAA = 1;;
@@ -1929,11 +1909,7 @@ let _X86_INS_ENDBR32 = 1499;;
 let _X86_INS_ENDBR64 = 1500;;
 let _X86_INS_ENDING = 1501;;
 
-(* Group of X86 instructions *)
-
 let _X86_GRP_INVALID = 0;;
-
-(* Generic groups *)
 let _X86_GRP_JUMP = 1;;
 let _X86_GRP_CALL = 2;;
 let _X86_GRP_RET = 3;;
@@ -1941,8 +1917,6 @@ let _X86_GRP_INT = 4;;
 let _X86_GRP_IRET = 5;;
 let _X86_GRP_PRIVILEGE = 6;;
 let _X86_GRP_BRANCH_RELATIVE = 7;;
-
-(* Architecture-specific groups *)
 let _X86_GRP_VM = 128;;
 let _X86_GRP_3DNOW = 129;;
 let _X86_GRP_AES = 130;;

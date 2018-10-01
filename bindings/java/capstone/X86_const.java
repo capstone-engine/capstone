@@ -3,8 +3,6 @@ package capstone;
 
 public class X86_const {
 
-	// X86 registers
-
 	public static final int X86_REG_INVALID = 0;
 	public static final int X86_REG_AH = 1;
 	public static final int X86_REG_AL = 2;
@@ -248,8 +246,6 @@ public class X86_const {
 	public static final int X86_REG_R14W = 240;
 	public static final int X86_REG_R15W = 241;
 	public static final int X86_REG_ENDING = 242;
-
-	// Sub-flags of EFLAGS
 	public static final int X86_EFLAGS_MODIFY_AF = 1<<0;
 	public static final int X86_EFLAGS_MODIFY_CF = 1<<1;
 	public static final int X86_EFLAGS_MODIFY_SF = 1<<2;
@@ -330,14 +326,10 @@ public class X86_const {
 	public static final int X86_FPU_FLAGS_TEST_C2 = 1<<18;
 	public static final int X86_FPU_FLAGS_TEST_C3 = 1<<19;
 
-	// Operand type for instruction's operands
-
 	public static final int X86_OP_INVALID = 0;
 	public static final int X86_OP_REG = 1;
 	public static final int X86_OP_IMM = 2;
 	public static final int X86_OP_MEM = 3;
-
-	// XOP Code Condition type
 
 	public static final int X86_XOP_CC_INVALID = 0;
 	public static final int X86_XOP_CC_LT = 1;
@@ -349,15 +341,11 @@ public class X86_const {
 	public static final int X86_XOP_CC_FALSE = 7;
 	public static final int X86_XOP_CC_TRUE = 8;
 
-	// AVX broadcast type
-
 	public static final int X86_AVX_BCAST_INVALID = 0;
 	public static final int X86_AVX_BCAST_2 = 1;
 	public static final int X86_AVX_BCAST_4 = 2;
 	public static final int X86_AVX_BCAST_8 = 3;
 	public static final int X86_AVX_BCAST_16 = 4;
-
-	// SSE Code Condition type
 
 	public static final int X86_SSE_CC_INVALID = 0;
 	public static final int X86_SSE_CC_EQ = 1;
@@ -368,8 +356,6 @@ public class X86_const {
 	public static final int X86_SSE_CC_NLT = 6;
 	public static final int X86_SSE_CC_NLE = 7;
 	public static final int X86_SSE_CC_ORD = 8;
-
-	// AVX Code Condition type
 
 	public static final int X86_AVX_CC_INVALID = 0;
 	public static final int X86_AVX_CC_EQ = 1;
@@ -405,15 +391,11 @@ public class X86_const {
 	public static final int X86_AVX_CC_GT_OQ = 31;
 	public static final int X86_AVX_CC_TRUE_US = 32;
 
-	// AVX static rounding mode type
-
 	public static final int X86_AVX_RM_INVALID = 0;
 	public static final int X86_AVX_RM_RN = 1;
 	public static final int X86_AVX_RM_RD = 2;
 	public static final int X86_AVX_RM_RU = 3;
 	public static final int X86_AVX_RM_RZ = 4;
-
-	// Instruction prefixes - to be used in cs_x86.prefix[]
 	public static final int X86_PREFIX_LOCK = 0xf0;
 	public static final int X86_PREFIX_REP = 0xf3;
 	public static final int X86_PREFIX_REPE = 0xf3;
@@ -426,8 +408,6 @@ public class X86_const {
 	public static final int X86_PREFIX_GS = 0x65;
 	public static final int X86_PREFIX_OPSIZE = 0x66;
 	public static final int X86_PREFIX_ADDRSIZE = 0x67;
-
-	// X86 instructions
 
 	public static final int X86_INS_INVALID = 0;
 	public static final int X86_INS_AAA = 1;
@@ -1932,11 +1912,7 @@ public class X86_const {
 	public static final int X86_INS_ENDBR64 = 1500;
 	public static final int X86_INS_ENDING = 1501;
 
-	// Group of X86 instructions
-
 	public static final int X86_GRP_INVALID = 0;
-
-	// Generic groups
 	public static final int X86_GRP_JUMP = 1;
 	public static final int X86_GRP_CALL = 2;
 	public static final int X86_GRP_RET = 3;
@@ -1944,8 +1920,6 @@ public class X86_const {
 	public static final int X86_GRP_IRET = 5;
 	public static final int X86_GRP_PRIVILEGE = 6;
 	public static final int X86_GRP_BRANCH_RELATIVE = 7;
-
-	// Architecture-specific groups
 	public static final int X86_GRP_VM = 128;
 	public static final int X86_GRP_3DNOW = 129;
 	public static final int X86_GRP_AES = 130;
