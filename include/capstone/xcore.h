@@ -14,15 +14,15 @@ extern "C" {
 #pragma warning(disable:4201)
 #endif
 
-//> Operand type for instruction's operands
+/// Operand type for instruction's operands
 typedef enum xcore_op_type {
-	XCORE_OP_INVALID = 0, // = CS_OP_INVALID (Uninitialized).
-	XCORE_OP_REG, // = CS_OP_REG (Register operand).
-	XCORE_OP_IMM, // = CS_OP_IMM (Immediate operand).
-	XCORE_OP_MEM, // = CS_OP_MEM (Memory operand).
+	XCORE_OP_INVALID = 0, ///< = CS_OP_INVALID (Uninitialized).
+	XCORE_OP_REG, ///< = CS_OP_REG (Register operand).
+	XCORE_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
+	XCORE_OP_MEM, ///< = CS_OP_MEM (Memory operand).
 } xcore_op_type;
 
-//> XCore registers
+/// XCore registers
 typedef enum xcore_reg {
 	XCORE_REG_INVALID = 0,
 
@@ -43,53 +43,53 @@ typedef enum xcore_reg {
 	XCORE_REG_R10,
 	XCORE_REG_R11,
 
-	//> pseudo registers
-	XCORE_REG_PC,	// pc
+	// pseudo registers
+	XCORE_REG_PC,	///< pc
 
 	// internal thread registers
 	// see The-XMOS-XS1-Architecture(X7879A).pdf
-	XCORE_REG_SCP,	// save pc
-	XCORE_REG_SSR,	// save status
-	XCORE_REG_ET,	// exception type
-	XCORE_REG_ED,	// exception data
-	XCORE_REG_SED,	// save exception data
-	XCORE_REG_KEP,	// kernel entry pointer
-	XCORE_REG_KSP,	// kernel stack pointer
-	XCORE_REG_ID,	// thread ID
+	XCORE_REG_SCP,	///< save pc
+	XCORE_REG_SSR,	//< save status
+	XCORE_REG_ET,	//< exception type
+	XCORE_REG_ED,	//< exception data
+	XCORE_REG_SED,	//< save exception data
+	XCORE_REG_KEP,	//< kernel entry pointer
+	XCORE_REG_KSP,	//< kernel stack pointer
+	XCORE_REG_ID,	//< thread ID
 
 	XCORE_REG_ENDING,	// <-- mark the end of the list of registers
 } xcore_reg;
 
-// Instruction's operand referring to memory
-// This is associated with XCORE_OP_MEM operand type above
+/// Instruction's operand referring to memory
+/// This is associated with XCORE_OP_MEM operand type above
 typedef struct xcore_op_mem {
-	uint8_t base;		// base register, can be safely interpreted as
-				// a value of type `xcore_reg`, but it is only
-				// one byte wide
-	uint8_t index;		// index register, same conditions apply here
-	int32_t disp;	// displacement/offset value
-	int     direct;	// +1: forward, -1: backward
+	uint8_t base;		///< base register, can be safely interpreted as
+				///< a value of type `xcore_reg`, but it is only
+				///< one byte wide
+	uint8_t index;		///< index register, same conditions apply here
+	int32_t disp;	///< displacement/offset value
+	int     direct;	///< +1: forward, -1: backward
 } xcore_op_mem;
 
-// Instruction operand
+/// Instruction operand
 typedef struct cs_xcore_op {
-	xcore_op_type type;	// operand type
+	xcore_op_type type;	///< operand type
 	union {
-		xcore_reg reg;	// register value for REG operand
-		int32_t imm;		// immediate value for IMM operand
-		xcore_op_mem mem;		// base/disp value for MEM operand
+		xcore_reg reg;	///< register value for REG operand
+		int32_t imm;		///< immediate value for IMM operand
+		xcore_op_mem mem;		///< base/disp value for MEM operand
 	};
 } cs_xcore_op;
 
-// Instruction structure
+/// Instruction structure
 typedef struct cs_xcore {
-	// Number of operands of this instruction, 
-	// or 0 when instruction has no operand.
+	/// Number of operands of this instruction,
+	/// or 0 when instruction has no operand.
 	uint8_t op_count;
-	cs_xcore_op operands[8]; // operands for this instruction.
+	cs_xcore_op operands[8]; ///< operands for this instruction.
 } cs_xcore;
 
-//> XCore instruction
+/// XCore instruction
 typedef enum xcore_insn {
 	XCORE_INS_INVALID = 0,
 
@@ -217,13 +217,13 @@ typedef enum xcore_insn {
 	XCORE_INS_ENDING,   // <-- mark the end of the list of instructions
 } xcore_insn;
 
-//> Group of XCore instructions
+/// Group of XCore instructions
 typedef enum xcore_insn_group {
-	XCORE_GRP_INVALID = 0, // = CS_GRP_INVALID
+	XCORE_GRP_INVALID = 0, ///< = CS_GRP_INVALID
 
-	//> Generic groups
+	// Generic groups
 	// all jump instructions (conditional+direct+indirect jumps)
-	XCORE_GRP_JUMP,	// = CS_GRP_JUMP
+	XCORE_GRP_JUMP,	///< = CS_GRP_JUMP
 
 	XCORE_GRP_ENDING,   // <-- mark the end of the list of groups
 } xcore_insn_group;

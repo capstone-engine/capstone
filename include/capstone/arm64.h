@@ -14,7 +14,7 @@ extern "C" {
 #pragma warning(disable:4201)
 #endif
 
-//> ARM64 shift type
+/// ARM64 shift type
 typedef enum arm64_shifter {
 	ARM64_SFT_INVALID = 0,
 	ARM64_SFT_LSL = 1,
@@ -24,7 +24,7 @@ typedef enum arm64_shifter {
 	ARM64_SFT_ROR = 5,
 } arm64_shifter;
 
-//> ARM64 extender type
+/// ARM64 extender type
 typedef enum arm64_extender {
 	ARM64_EXT_INVALID = 0,
 	ARM64_EXT_UXTB = 1,
@@ -37,32 +37,32 @@ typedef enum arm64_extender {
 	ARM64_EXT_SXTX = 8,
 } arm64_extender;
 
-//> ARM64 condition code
+/// ARM64 condition code
 typedef enum arm64_cc {
 	ARM64_CC_INVALID = 0,
-	ARM64_CC_EQ = 1,     // Equal
-	ARM64_CC_NE = 2,     // Not equal:                 Not equal, or unordered
-	ARM64_CC_HS = 3,     // Unsigned higher or same:   >, ==, or unordered
-	ARM64_CC_LO = 4,     // Unsigned lower or same:    Less than
-	ARM64_CC_MI = 5,     // Minus, negative:           Less than
-	ARM64_CC_PL = 6,     // Plus, positive or zero:    >, ==, or unordered
-	ARM64_CC_VS = 7,     // Overflow:                  Unordered
-	ARM64_CC_VC = 8,     // No overflow:               Ordered
-	ARM64_CC_HI = 9,     // Unsigned higher:           Greater than, or unordered
-	ARM64_CC_LS = 10,     // Unsigned lower or same:    Less than or equal
-	ARM64_CC_GE = 11,     // Greater than or equal:     Greater than or equal
-	ARM64_CC_LT = 12,     // Less than:                 Less than, or unordered
-	ARM64_CC_GT = 13,     // Signed greater than:       Greater than
-	ARM64_CC_LE = 14,     // Signed less than or equal: <, ==, or unordered
-	ARM64_CC_AL = 15,     // Always (unconditional):    Always (unconditional)
-	ARM64_CC_NV = 16,     // Always (unconditional):   Always (unconditional)
-	// Note the NV exists purely to disassemble 0b1111. Execution
-	// is "always".
+	ARM64_CC_EQ = 1,     ///< Equal
+	ARM64_CC_NE = 2,     ///< Not equal:                 Not equal, or unordered
+	ARM64_CC_HS = 3,     ///< Unsigned higher or same:   >, ==, or unordered
+	ARM64_CC_LO = 4,     ///< Unsigned lower or same:    Less than
+	ARM64_CC_MI = 5,     ///< Minus, negative:           Less than
+	ARM64_CC_PL = 6,     ///< Plus, positive or zero:    >, ==, or unordered
+	ARM64_CC_VS = 7,     ///< Overflow:                  Unordered
+	ARM64_CC_VC = 8,     ///< No overflow:               Ordered
+	ARM64_CC_HI = 9,     ///< Unsigned higher:           Greater than, or unordered
+	ARM64_CC_LS = 10,     ///< Unsigned lower or same:    Less than or equal
+	ARM64_CC_GE = 11,     ///< Greater than or equal:     Greater than or equal
+	ARM64_CC_LT = 12,     ///< Less than:                 Less than, or unordered
+	ARM64_CC_GT = 13,     ///< Signed greater than:       Greater than
+	ARM64_CC_LE = 14,     ///< Signed less than or equal: <, ==, or unordered
+	ARM64_CC_AL = 15,     ///< Always (unconditional):    Always (unconditional)
+	ARM64_CC_NV = 16,     ///< Always (unconditional):   Always (unconditional)
+	//< Note the NV exists purely to disassemble 0b1111. Execution
+	//< is "always".
 } arm64_cc;
 
-//> System registers
+/// System registers
 typedef enum arm64_sysreg {
-	//> System registers for MRS
+	// System registers for MRS
 	ARM64_SYSREG_INVALID           = 0,
 	ARM64_SYSREG_MDCCSR_EL0        = 0x9808, // 10  011  0000  0001  000
 	ARM64_SYSREG_DBGDTRRX_EL0      = 0x9828, // 10  011  0000  0101  000
@@ -163,7 +163,7 @@ typedef enum arm64_sysreg {
 } arm64_sysreg;
 
 typedef enum arm64_msr_reg {
-	//> System registers for MSR
+	// System registers for MSR
 	ARM64_SYSREG_DBGDTRTX_EL0      = 0x9828, // 10  011  0000  0101  000
 	ARM64_SYSREG_OSLAR_EL1         = 0x8084, // 10  000  0001  0000  100
 	ARM64_SYSREG_PMSWINC_EL0       = 0xdce4,  // 11  011  1001  1100  100
@@ -181,7 +181,7 @@ typedef enum arm64_msr_reg {
 	ARM64_SYSREG_ICC_SGI0R_EL1     = 0xc65f, // 11  000  1100  1011  111
 } arm64_msr_reg;
 
-//> System PState Field (MSR instruction)
+/// System PState Field (MSR instruction)
 typedef enum arm64_pstate {
 	ARM64_PSTATE_INVALID = 0,
 	ARM64_PSTATE_SPSEL = 0x05,
@@ -189,7 +189,7 @@ typedef enum arm64_pstate {
 	ARM64_PSTATE_DAIFCLR = 0x1f
 } arm64_pstate;
 
-//> Vector arrangement specifier (for FloatingPoint/Advanced SIMD insn)
+/// Vector arrangement specifier (for FloatingPoint/Advanced SIMD insn)
 typedef enum arm64_vas {
 	ARM64_VAS_INVALID = 0,
 	ARM64_VAS_8B,
@@ -203,7 +203,7 @@ typedef enum arm64_vas {
 	ARM64_VAS_1Q,
 } arm64_vas;
 
-//> Vector element size specifier
+/// Vector element size specifier
 typedef enum arm64_vess {
 	ARM64_VESS_INVALID = 0,
 	ARM64_VESS_B,
@@ -212,7 +212,7 @@ typedef enum arm64_vess {
 	ARM64_VESS_D,
 } arm64_vess;
 
-//> Memory barrier operands
+/// Memory barrier operands
 typedef enum arm64_barrier_op {
 	ARM64_BARRIER_INVALID = 0,
 	ARM64_BARRIER_OSHLD = 0x1,
@@ -229,23 +229,23 @@ typedef enum arm64_barrier_op {
 	ARM64_BARRIER_SY =    0xf
 } arm64_barrier_op;
 
-//> Operand type for instruction's operands
+/// Operand type for instruction's operands
 typedef enum arm64_op_type {
-	ARM64_OP_INVALID = 0, // = CS_OP_INVALID (Uninitialized).
-	ARM64_OP_REG, // = CS_OP_REG (Register operand).
-	ARM64_OP_IMM, // = CS_OP_IMM (Immediate operand).
-	ARM64_OP_MEM, // = CS_OP_MEM (Memory operand).
-	ARM64_OP_FP,  // = CS_OP_FP (Floating-Point operand).
-	ARM64_OP_CIMM = 64, // C-Immediate
-	ARM64_OP_REG_MRS, // MRS register operand.
-	ARM64_OP_REG_MSR, // MSR register operand.
-	ARM64_OP_PSTATE, // PState operand.
-	ARM64_OP_SYS, // SYS operand for IC/DC/AT/TLBI instructions.
-	ARM64_OP_PREFETCH, // Prefetch operand (PRFM).
-	ARM64_OP_BARRIER, // Memory barrier operand (ISB/DMB/DSB instructions).
+	ARM64_OP_INVALID = 0, ///< = CS_OP_INVALID (Uninitialized).
+	ARM64_OP_REG, ///< = CS_OP_REG (Register operand).
+	ARM64_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
+	ARM64_OP_MEM, ///< = CS_OP_MEM (Memory operand).
+	ARM64_OP_FP,  ///< = CS_OP_FP (Floating-Point operand).
+	ARM64_OP_CIMM = 64, ///< C-Immediate
+	ARM64_OP_REG_MRS, ///< MRS register operand.
+	ARM64_OP_REG_MSR, ///< MSR register operand.
+	ARM64_OP_PSTATE, ///< PState operand.
+	ARM64_OP_SYS, ///< SYS operand for IC/DC/AT/TLBI instructions.
+	ARM64_OP_PREFETCH, ///< Prefetch operand (PRFM).
+	ARM64_OP_BARRIER, ///< Memory barrier operand (ISB/DMB/DSB instructions).
 } arm64_op_type;
 
-//> TLBI operations
+/// TLBI operations
 typedef enum arm64_tlbi_op {
 	ARM64_TLBI_INVALID = 0,
 	ARM64_TLBI_VMALLE1IS,
@@ -282,7 +282,7 @@ typedef enum arm64_tlbi_op {
 	ARM64_TLBI_VALE3,
 } arm64_tlbi_op;
 
-//> AT operations
+/// AT operations
 typedef enum arm64_at_op {
 	ARM64_AT_S1E1R,
 	ARM64_AT_S1E1W,
@@ -298,7 +298,7 @@ typedef enum arm64_at_op {
 	ARM64_AT_S1E3W,
 } arm64_at_op;
 
-//> DC operations
+/// DC operations
 typedef enum arm64_dc_op {
 	ARM64_DC_INVALID = 0,
 	ARM64_DC_ZVA,
@@ -311,7 +311,7 @@ typedef enum arm64_dc_op {
 	ARM64_DC_CISW,
 } arm64_dc_op;
 
-//> IC operations
+/// IC operations
 typedef enum arm64_ic_op {
 	ARM64_IC_INVALID = 0,
 	ARM64_IC_IALLUIS,
@@ -319,7 +319,7 @@ typedef enum arm64_ic_op {
 	ARM64_IC_IVAU,
 } arm64_ic_op;
 
-//> Prefetch operations (PRFM)
+/// Prefetch operations (PRFM)
 typedef enum arm64_prefetch_op {
 	ARM64_PRFM_INVALID = 0,
 	ARM64_PRFM_PLDL1KEEP = 0x00 + 1,
@@ -343,7 +343,7 @@ typedef enum arm64_prefetch_op {
 } arm64_prefetch_op;
 
 
-//> ARM64 registers
+/// ARM64 registers
 typedef enum arm64_reg {
 	ARM64_REG_INVALID = 0,
 
@@ -610,7 +610,7 @@ typedef enum arm64_reg {
 
 	ARM64_REG_ENDING,		// <-- mark the end of the list of registers
 
-	//> alias registers
+	// alias registers
 
 	ARM64_REG_IP0 = ARM64_REG_X16,
 	ARM64_REG_IP1 = ARM64_REG_X17,
@@ -618,56 +618,56 @@ typedef enum arm64_reg {
 	ARM64_REG_LR = ARM64_REG_X30,
 } arm64_reg;
 
-// Instruction's operand referring to memory
-// This is associated with ARM64_OP_MEM operand type above
+/// Instruction's operand referring to memory
+/// This is associated with ARM64_OP_MEM operand type above
 typedef struct arm64_op_mem {
-	arm64_reg base;	// base register
-	arm64_reg index;	// index register
-	int32_t disp;	// displacement/offset value
+	arm64_reg base;	///< base register
+	arm64_reg index;	///< index register
+	int32_t disp;	///< displacement/offset value
 } arm64_op_mem;
 
-// Instruction operand
+/// Instruction operand
 typedef struct cs_arm64_op {
-	int vector_index;	// Vector Index for some vector operands (or -1 if irrelevant)
-	arm64_vas vas;		// Vector Arrangement Specifier
-	arm64_vess vess;	// Vector Element Size Specifier
+	int vector_index;	///< Vector Index for some vector operands (or -1 if irrelevant)
+	arm64_vas vas;		///< Vector Arrangement Specifier
+	arm64_vess vess;	///< Vector Element Size Specifier
 	struct {
-		arm64_shifter type;	// shifter type of this operand
-		unsigned int value;	// shifter value of this operand
+		arm64_shifter type;	///< shifter type of this operand
+		unsigned int value;	///< shifter value of this operand
 	} shift;
-	arm64_extender ext;		// extender type of this operand
-	arm64_op_type type;	// operand type
+	arm64_extender ext;		///< extender type of this operand
+	arm64_op_type type;	///< operand type
 	union {
-		arm64_reg reg;	// register value for REG operand
-		int64_t imm;		// immediate value, or index for C-IMM or IMM operand
-		double fp;			// floating point value for FP operand
-		arm64_op_mem mem;		// base/index/scale/disp value for MEM operand
-		arm64_pstate pstate;		// PState field of MSR instruction.
-		unsigned int sys;  // IC/DC/AT/TLBI operation (see arm64_ic_op, arm64_dc_op, arm64_at_op, arm64_tlbi_op)
-		arm64_prefetch_op prefetch;  // PRFM operation.
-		arm64_barrier_op barrier;  // Memory barrier operation (ISB/DMB/DSB instructions).
+		arm64_reg reg;	///< register value for REG operand
+		int64_t imm;		///< immediate value, or index for C-IMM or IMM operand
+		double fp;			///< floating point value for FP operand
+		arm64_op_mem mem;		///< base/index/scale/disp value for MEM operand
+		arm64_pstate pstate;		///< PState field of MSR instruction.
+		unsigned int sys;  ///< IC/DC/AT/TLBI operation (see arm64_ic_op, arm64_dc_op, arm64_at_op, arm64_tlbi_op)
+		arm64_prefetch_op prefetch;  ///< PRFM operation.
+		arm64_barrier_op barrier;  ///< Memory barrier operation (ISB/DMB/DSB instructions).
 	};
 
-	// How is this operand accessed? (READ, WRITE or READ|WRITE)
-	// This field is combined of cs_ac_type.
-	// NOTE: this field is irrelevant if engine is compiled in DIET mode.
+	/// How is this operand accessed? (READ, WRITE or READ|WRITE)
+	/// This field is combined of cs_ac_type.
+	/// NOTE: this field is irrelevant if engine is compiled in DIET mode.
 	uint8_t access;
 } cs_arm64_op;
 
-// Instruction structure
+/// Instruction structure
 typedef struct cs_arm64 {
-	arm64_cc cc;	// conditional code for this insn
-	bool update_flags;	// does this insn update flags?
-	bool writeback;	// does this insn request writeback? 'True' means 'yes'
+	arm64_cc cc;	///< conditional code for this insn
+	bool update_flags;	///< does this insn update flags?
+	bool writeback;	///< does this insn request writeback? 'True' means 'yes'
 
-	// Number of operands of this instruction,
-	// or 0 when instruction has no operand.
+	/// Number of operands of this instruction,
+	/// or 0 when instruction has no operand.
 	uint8_t op_count;
 
-	cs_arm64_op operands[8]; // operands for this instruction.
+	cs_arm64_op operands[8]; ///< operands for this instruction.
 } cs_arm64;
 
-//> ARM64 instruction
+/// ARM64 instruction
 typedef enum arm64_insn {
 	ARM64_INS_INVALID = 0,
 
@@ -1135,20 +1135,20 @@ typedef enum arm64_insn {
 	ARM64_INS_ENDING,  // <-- mark the end of the list of insn
 } arm64_insn;
 
-//> Group of ARM64 instructions
+/// Group of ARM64 instructions
 typedef enum arm64_insn_group {
-	ARM64_GRP_INVALID = 0, // = CS_GRP_INVALID
+	ARM64_GRP_INVALID = 0, ///< = CS_GRP_INVALID
 
-	//> Generic groups
+	// Generic groups
 	// all jump instructions (conditional+direct+indirect jumps)
-	ARM64_GRP_JUMP,	// = CS_GRP_JUMP
+	ARM64_GRP_JUMP,	///< = CS_GRP_JUMP
 	ARM64_GRP_CALL,
 	ARM64_GRP_RET,
 	ARM64_GRP_INT,
-	ARM64_GRP_PRIVILEGE = 6, // = CS_GRP_PRIVILEGE
-	ARM64_GRP_BRANCH_RELATIVE, // = CS_GRP_BRANCH_RELATIVE
+	ARM64_GRP_PRIVILEGE = 6, ///< = CS_GRP_PRIVILEGE
+	ARM64_GRP_BRANCH_RELATIVE, ///< = CS_GRP_BRANCH_RELATIVE
 
-	//> Architecture-specific groups
+	// Architecture-specific groups
 	ARM64_GRP_CRYPTO = 128,
 	ARM64_GRP_FPARMV8,
 	ARM64_GRP_NEON,
