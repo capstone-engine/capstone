@@ -16,11 +16,11 @@ extern "C" {
 #endif
 
 typedef enum tms320c64x_op_type {
-	TMS320C64X_OP_INVALID = 0, // = CS_OP_INVALID (Uninitialized).
-	TMS320C64X_OP_REG, // = CS_OP_REG (Register operand).
-	TMS320C64X_OP_IMM, // = CS_OP_IMM (Immediate operand).
-	TMS320C64X_OP_MEM, // = CS_OP_MEM (Memory operand).
-	TMS320C64X_OP_REGPAIR = 64, // Register pair for double word ops
+	TMS320C64X_OP_INVALID = 0, ///< = CS_OP_INVALID (Uninitialized).
+	TMS320C64X_OP_REG, ///< = CS_OP_REG (Register operand).
+	TMS320C64X_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
+	TMS320C64X_OP_MEM, ///< = CS_OP_MEM (Memory operand).
+	TMS320C64X_OP_REGPAIR = 64, ///< Register pair for double word ops
 } tms320c64x_op_type;
 
 typedef enum tms320c64x_mem_disp {
@@ -43,27 +43,27 @@ typedef enum tms320c64x_mem_mod {
 } tms320c64x_mem_mod;
 
 typedef struct tms320c64x_op_mem {
-	unsigned int	base;	// base register
-	unsigned int	disp;	// displacement/offset value
-	unsigned int	unit;	// unit of base and offset register
-	unsigned int	scaled;	// offset scaled
-	unsigned int	disptype;	// displacement type
-	unsigned int	direction;	// direction
-	unsigned int	modify;	// modification
+	unsigned int	base;	///< base register
+	unsigned int	disp;	///< displacement/offset value
+	unsigned int	unit;	///< unit of base and offset register
+	unsigned int	scaled;	///< offset scaled
+	unsigned int	disptype;	///< displacement type
+	unsigned int	direction;	///< direction
+	unsigned int	modify;	///< modification
 } tms320c64x_op_mem;
 
 typedef struct cs_tms320c64x_op {
-	tms320c64x_op_type type;	// operand type
+	tms320c64x_op_type type;	///< operand type
 	union {
-		unsigned int reg;	// register value for REG operand or first register for REGPAIR operand
-		int32_t imm;		// immediate value for IMM operand
-		tms320c64x_op_mem mem;		// base/disp value for MEM operand
+		unsigned int reg;	///< register value for REG operand or first register for REGPAIR operand
+		int32_t imm;		///< immediate value for IMM operand
+		tms320c64x_op_mem mem;		///< base/disp value for MEM operand
 	};
 } cs_tms320c64x_op;
 
 typedef struct cs_tms320c64x {
 	uint8_t op_count;
-	cs_tms320c64x_op operands[8]; // operands for this instruction.
+	cs_tms320c64x_op operands[8]; ///< operands for this instruction.
 	struct {
 		unsigned int reg;
 		unsigned int zero;
@@ -329,9 +329,9 @@ typedef enum tms320c64x_insn {
 } tms320c64x_insn;
 
 typedef enum tms320c64x_insn_group {
-	TMS320C64X_GRP_INVALID = 0, // = CS_GRP_INVALID
+	TMS320C64X_GRP_INVALID = 0, ///< = CS_GRP_INVALID
 
-	TMS320C64X_GRP_JUMP,	// = CS_GRP_JUMP
+	TMS320C64X_GRP_JUMP,	///< = CS_GRP_JUMP
 
 	TMS320C64X_GRP_FUNIT_D = 128,
 	TMS320C64X_GRP_FUNIT_L,
