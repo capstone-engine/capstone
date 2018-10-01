@@ -1,7 +1,5 @@
 (* For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [sysz_const.ml] *)
 
-(* Enums corresponding to SystemZ condition codes *)
-
 let _SYSZ_CC_INVALID = 0;;
 let _SYSZ_CC_O = 1;;
 let _SYSZ_CC_H = 2;;
@@ -18,15 +16,11 @@ let _SYSZ_CC_LE = 12;;
 let _SYSZ_CC_NH = 13;;
 let _SYSZ_CC_NO = 14;;
 
-(* Operand type for instruction's operands *)
-
 let _SYSZ_OP_INVALID = 0;;
 let _SYSZ_OP_REG = 1;;
 let _SYSZ_OP_IMM = 2;;
 let _SYSZ_OP_MEM = 3;;
 let _SYSZ_OP_ACREG = 64;;
-
-(* SystemZ registers *)
 
 let _SYSZ_REG_INVALID = 0;;
 let _SYSZ_REG_0 = 1;;
@@ -64,8 +58,6 @@ let _SYSZ_REG_F14 = 32;;
 let _SYSZ_REG_F15 = 33;;
 let _SYSZ_REG_R0L = 34;;
 let _SYSZ_REG_ENDING = 35;;
-
-(* SystemZ instruction *)
 
 let _SYSZ_INS_INVALID = 0;;
 let _SYSZ_INS_A = 1;;
@@ -751,14 +743,8 @@ let _SYSZ_INS_XRK = 680;;
 let _SYSZ_INS_XY = 681;;
 let _SYSZ_INS_ENDING = 682;;
 
-(* Group of SystemZ instructions *)
-
 let _SYSZ_GRP_INVALID = 0;;
-
-(* Generic groups *)
 let _SYSZ_GRP_JUMP = 1;;
-
-(* Architecture-specific groups *)
 let _SYSZ_GRP_DISTINCTOPS = 128;;
 let _SYSZ_GRP_FPEXTENSION = 129;;
 let _SYSZ_GRP_HIGHWORD = 130;;

@@ -1,7 +1,5 @@
 (* For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [evm_const.ml] *)
 
-(* EVM instruction *)
-
 let _EVM_INS_STOP = 0;;
 let _EVM_INS_ADD = 1;;
 let _EVM_INS_MUL = 2;;
@@ -139,8 +137,6 @@ let _EVM_INS_REVERT = 253;;
 let _EVM_INS_SUICIDE = 255;;
 let _EVM_INS_INVALID = 512;;
 let _EVM_INS_ENDING = 513;;
-
-(* Group of EVM instructions *)
 
 let _EVM_GRP_INVALID = 0;;
 let _EVM_GRP_JUMP = 1;;

@@ -3,8 +3,6 @@ package capstone;
 
 public class Arm_const {
 
-	// ARM shift type
-
 	public static final int ARM_SFT_INVALID = 0;
 	public static final int ARM_SFT_ASR = 1;
 	public static final int ARM_SFT_LSL = 2;
@@ -16,8 +14,6 @@ public class Arm_const {
 	public static final int ARM_SFT_LSR_REG = 8;
 	public static final int ARM_SFT_ROR_REG = 9;
 	public static final int ARM_SFT_RRX_REG = 10;
-
-	// ARM condition code
 
 	public static final int ARM_CC_INVALID = 0;
 	public static final int ARM_CC_EQ = 1;
@@ -35,8 +31,6 @@ public class Arm_const {
 	public static final int ARM_CC_GT = 13;
 	public static final int ARM_CC_LE = 14;
 	public static final int ARM_CC_AL = 15;
-
-	// Special registers for MSR
 
 	public static final int ARM_SYSREG_INVALID = 0;
 	public static final int ARM_SYSREG_SPSR_C = 1;
@@ -107,10 +101,6 @@ public class Arm_const {
 	public static final int ARM_SYSREG_SPSR_MON = 313;
 	public static final int ARM_SYSREG_SPSR_HYP = 314;
 
-	// The memory barrier constants map directly to the 4-bit encoding of
-
-	// the option field for Memory Barrier operations.
-
 	public static final int ARM_MB_INVALID = 0;
 	public static final int ARM_MB_RESERVED_0 = 1;
 	public static final int ARM_MB_OSHLD = 2;
@@ -129,8 +119,6 @@ public class Arm_const {
 	public static final int ARM_MB_ST = 15;
 	public static final int ARM_MB_SY = 16;
 
-	// Operand type for instruction's operands
-
 	public static final int ARM_OP_INVALID = 0;
 	public static final int ARM_OP_REG = 1;
 	public static final int ARM_OP_IMM = 2;
@@ -141,8 +129,6 @@ public class Arm_const {
 	public static final int ARM_OP_SETEND = 66;
 	public static final int ARM_OP_SYSREG = 67;
 
-	// Operand type for SETEND instruction
-
 	public static final int ARM_SETEND_INVALID = 0;
 	public static final int ARM_SETEND_BE = 1;
 	public static final int ARM_SETEND_LE = 2;
@@ -151,15 +137,11 @@ public class Arm_const {
 	public static final int ARM_CPSMODE_IE = 2;
 	public static final int ARM_CPSMODE_ID = 3;
 
-	// Operand type for SETEND instruction
-
 	public static final int ARM_CPSFLAG_INVALID = 0;
 	public static final int ARM_CPSFLAG_F = 1;
 	public static final int ARM_CPSFLAG_I = 2;
 	public static final int ARM_CPSFLAG_A = 4;
 	public static final int ARM_CPSFLAG_NONE = 16;
-
-	// Data type for elements of vector instructions.
 
 	public static final int ARM_VECTORDATA_INVALID = 0;
 	public static final int ARM_VECTORDATA_I8 = 1;
@@ -199,8 +181,6 @@ public class Arm_const {
 	public static final int ARM_VECTORDATA_F64U16 = 35;
 	public static final int ARM_VECTORDATA_F32U16 = 36;
 	public static final int ARM_VECTORDATA_F64U32 = 37;
-
-	// ARM registers
 
 	public static final int ARM_REG_INVALID = 0;
 	public static final int ARM_REG_APSR = 1;
@@ -314,8 +294,6 @@ public class Arm_const {
 	public static final int ARM_REG_S30 = 109;
 	public static final int ARM_REG_S31 = 110;
 	public static final int ARM_REG_ENDING = 111;
-
-	// alias registers
 	public static final int ARM_REG_R13 = ARM_REG_SP;
 	public static final int ARM_REG_R14 = ARM_REG_LR;
 	public static final int ARM_REG_R15 = ARM_REG_PC;
@@ -323,8 +301,6 @@ public class Arm_const {
 	public static final int ARM_REG_SL = ARM_REG_R10;
 	public static final int ARM_REG_FP = ARM_REG_R11;
 	public static final int ARM_REG_IP = ARM_REG_R12;
-
-	// ARM instruction
 
 	public static final int ARM_INS_INVALID = 0;
 	public static final int ARM_INS_ADC = 1;
@@ -761,18 +737,12 @@ public class Arm_const {
 	public static final int ARM_INS_VPOP = 432;
 	public static final int ARM_INS_ENDING = 433;
 
-	// Group of ARM instructions
-
 	public static final int ARM_GRP_INVALID = 0;
-
-	// Generic groups
 	public static final int ARM_GRP_JUMP = 1;
 	public static final int ARM_GRP_CALL = 2;
 	public static final int ARM_GRP_INT = 4;
 	public static final int ARM_GRP_PRIVILEGE = 6;
 	public static final int ARM_GRP_BRANCH_RELATIVE = 7;
-
-	// Architecture-specific groups
 	public static final int ARM_GRP_CRYPTO = 128;
 	public static final int ARM_GRP_DATABARRIER = 129;
 	public static final int ARM_GRP_DIVIDE = 130;

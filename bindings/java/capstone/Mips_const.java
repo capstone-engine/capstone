@@ -3,18 +3,12 @@ package capstone;
 
 public class Mips_const {
 
-	// Operand type for instruction's operands
-
 	public static final int MIPS_OP_INVALID = 0;
 	public static final int MIPS_OP_REG = 1;
 	public static final int MIPS_OP_IMM = 2;
 	public static final int MIPS_OP_MEM = 3;
 
-	// MIPS registers
-
 	public static final int MIPS_REG_INVALID = 0;
-
-	// General purpose registers
 	public static final int MIPS_REG_PC = 1;
 	public static final int MIPS_REG_0 = 2;
 	public static final int MIPS_REG_1 = 3;
@@ -48,8 +42,6 @@ public class Mips_const {
 	public static final int MIPS_REG_29 = 31;
 	public static final int MIPS_REG_30 = 32;
 	public static final int MIPS_REG_31 = 33;
-
-	// DSP registers
 	public static final int MIPS_REG_DSPCCOND = 34;
 	public static final int MIPS_REG_DSPCARRY = 35;
 	public static final int MIPS_REG_DSPEFI = 36;
@@ -61,14 +53,10 @@ public class Mips_const {
 	public static final int MIPS_REG_DSPOUTFLAG23 = 42;
 	public static final int MIPS_REG_DSPPOS = 43;
 	public static final int MIPS_REG_DSPSCOUNT = 44;
-
-	// ACC registers
 	public static final int MIPS_REG_AC0 = 45;
 	public static final int MIPS_REG_AC1 = 46;
 	public static final int MIPS_REG_AC2 = 47;
 	public static final int MIPS_REG_AC3 = 48;
-
-	// COP registers
 	public static final int MIPS_REG_CC0 = 49;
 	public static final int MIPS_REG_CC1 = 50;
 	public static final int MIPS_REG_CC2 = 51;
@@ -77,8 +65,6 @@ public class Mips_const {
 	public static final int MIPS_REG_CC5 = 54;
 	public static final int MIPS_REG_CC6 = 55;
 	public static final int MIPS_REG_CC7 = 56;
-
-	// FPU registers
 	public static final int MIPS_REG_F0 = 57;
 	public static final int MIPS_REG_F1 = 58;
 	public static final int MIPS_REG_F2 = 59;
@@ -119,8 +105,6 @@ public class Mips_const {
 	public static final int MIPS_REG_FCC5 = 94;
 	public static final int MIPS_REG_FCC6 = 95;
 	public static final int MIPS_REG_FCC7 = 96;
-
-	// AFPR128
 	public static final int MIPS_REG_W0 = 97;
 	public static final int MIPS_REG_W1 = 98;
 	public static final int MIPS_REG_W2 = 99;
@@ -203,8 +187,6 @@ public class Mips_const {
 	public static final int MIPS_REG_LO1 = MIPS_REG_HI1;
 	public static final int MIPS_REG_LO2 = MIPS_REG_HI2;
 	public static final int MIPS_REG_LO3 = MIPS_REG_HI3;
-
-	// MIPS instruction
 
 	public static final int MIPS_INS_INVALID = 0;
 	public static final int MIPS_INS_ABSQ_S = 1;
@@ -838,11 +820,7 @@ public class Mips_const {
 	public static final int MIPS_INS_JR_HB = 625;
 	public static final int MIPS_INS_ENDING = 626;
 
-	// Group of MIPS instructions
-
 	public static final int MIPS_GRP_INVALID = 0;
-
-	// Generic groups
 	public static final int MIPS_GRP_JUMP = 1;
 	public static final int MIPS_GRP_CALL = 2;
 	public static final int MIPS_GRP_RET = 3;
@@ -850,8 +828,6 @@ public class Mips_const {
 	public static final int MIPS_GRP_IRET = 5;
 	public static final int MIPS_GRP_PRIVILEGE = 6;
 	public static final int MIPS_GRP_BRANCH_RELATIVE = 7;
-
-	// Architecture-specific groups
 	public static final int MIPS_GRP_BITCOUNT = 128;
 	public static final int MIPS_GRP_DSP = 129;
 	public static final int MIPS_GRP_DSPR2 = 130;

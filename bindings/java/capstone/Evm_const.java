@@ -3,8 +3,6 @@ package capstone;
 
 public class Evm_const {
 
-	// EVM instruction
-
 	public static final int EVM_INS_STOP = 0;
 	public static final int EVM_INS_ADD = 1;
 	public static final int EVM_INS_MUL = 2;
@@ -142,8 +140,6 @@ public class Evm_const {
 	public static final int EVM_INS_SUICIDE = 255;
 	public static final int EVM_INS_INVALID = 512;
 	public static final int EVM_INS_ENDING = 513;
-
-	// Group of EVM instructions
 
 	public static final int EVM_GRP_INVALID = 0;
 	public static final int EVM_GRP_JUMP = 1;

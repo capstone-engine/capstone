@@ -3,8 +3,6 @@ package capstone;
 
 public class Ppc_const {
 
-	// PPC branch codes for some branch instructions
-
 	public static final int PPC_BC_INVALID = 0;
 	public static final int PPC_BC_LT = (0<<5)|12;
 	public static final int PPC_BC_LE = (1<<5)|4;
@@ -17,21 +15,15 @@ public class Ppc_const {
 	public static final int PPC_BC_SO = (4<<5)|12;
 	public static final int PPC_BC_NS = (4<<5)|4;
 
-	// PPC branch hint for some branch instructions
-
 	public static final int PPC_BH_INVALID = 0;
 	public static final int PPC_BH_PLUS = 1;
 	public static final int PPC_BH_MINUS = 2;
-
-	// Operand type for instruction's operands
 
 	public static final int PPC_OP_INVALID = 0;
 	public static final int PPC_OP_REG = 1;
 	public static final int PPC_OP_IMM = 2;
 	public static final int PPC_OP_MEM = 3;
 	public static final int PPC_OP_CRX = 64;
-
-	// PPC registers
 
 	public static final int PPC_REG_INVALID = 0;
 	public static final int PPC_REG_CARRY = 1;
@@ -244,8 +236,6 @@ public class Ppc_const {
 	public static final int PPC_REG_CR1EQ = 208;
 	public static final int PPC_REG_X2 = 209;
 	public static final int PPC_REG_ENDING = 210;
-
-	// PPC instruction
 
 	public static final int PPC_INS_INVALID = 0;
 	public static final int PPC_INS_ADD = 1;
@@ -1359,14 +1349,8 @@ public class Ppc_const {
 	public static final int PPC_INS_QVFSET = 1109;
 	public static final int PPC_INS_ENDING = 1110;
 
-	// Group of PPC instructions
-
 	public static final int PPC_GRP_INVALID = 0;
-
-	// Generic groups
 	public static final int PPC_GRP_JUMP = 1;
-
-	// Architecture-specific groups
 	public static final int PPC_GRP_ALTIVEC = 128;
 	public static final int PPC_GRP_MODE32 = 129;
 	public static final int PPC_GRP_MODE64 = 130;
