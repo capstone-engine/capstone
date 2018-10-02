@@ -72,7 +72,7 @@ typedef enum m680x_op_type {
 #define M680X_OFFSET_BITS_16  16
 
 // Supported bit flags for mem.idx.flags
-// These flags can be comined
+// These flags can be combined
 #define M680X_IDX_INDIRECT     1
 #define M680X_IDX_NO_COMMA     2
 #define M680X_IDX_POST_INC_DEC 4
