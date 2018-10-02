@@ -5995,7 +5995,7 @@
 },
 {	/* X86_MOVDQAmr, X86_INS_MOVDQA: movdqa	$dst, $src */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* X86_MOVDQArm, X86_INS_MOVDQA: movdqa	$dst, $src */
 	0,
