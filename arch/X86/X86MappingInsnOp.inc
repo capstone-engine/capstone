@@ -9415,7 +9415,7 @@
 },
 {	/* X86_SETEm, X86_INS_SETE: sete	$dst */
 	X86_EFLAGS_TEST_ZF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 {	/* X86_SETEr, X86_INS_SETE: sete	$dst */
 	X86_EFLAGS_TEST_ZF,
@@ -9455,7 +9455,7 @@
 },
 {	/* X86_SETNEm, X86_INS_SETNE: setne	$dst */
 	X86_EFLAGS_TEST_ZF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 {	/* X86_SETNEr, X86_INS_SETNE: setne	$dst */
 	X86_EFLAGS_TEST_ZF,
