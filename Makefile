@@ -10,7 +10,7 @@ V ?= 0
 
 OS := $(shell uname)
 ifeq ($(OS),Darwin)
-LIBARCHS = i386 x86_64
+LIBARCHS = x86_64
 PREFIX ?= /usr/local
 endif
 
