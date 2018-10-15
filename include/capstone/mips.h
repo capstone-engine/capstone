@@ -908,8 +908,12 @@ typedef enum mips_insn_group {
 	MIPS_GRP_IRET,	// = CS_GRP_IRET
 	// all privileged instructions
 	MIPS_GRP_PRIVILEGE,	// = CS_GRP_PRIVILEGE
+	// relative and absolute branch groups
+	MIPS_GRP_BRANCH,		// = CS_GRP_BRANCH
 	// all relative branching instructions
-	MIPS_GRP_BRANCH_RELATIVE, // = CS_GRP_BRANCH_RELATIVE
+	MIPS_GRP_BRANCH_RELATIVE, 	// = CS_GRP_BRANCH_RELATIVE
+	// indirect branch groups
+	MIPS_GRP_BRANCH_INDIRECT,	// = CS_GRP_BRANCH_INDIRECT
 
 	//> Architecture-specific groups
 	MIPS_GRP_BITCOUNT = 128,

@@ -1708,7 +1708,7 @@ void TMS320C64x_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			memcpy(insn->detail->groups, insns[i].groups, sizeof(insns[i].groups));
 			insn->detail->groups_count = (uint8_t)count_positive8(insns[i].groups);
 
-			if (insns[i].branch || insns[i].indirect_branch) {
+			if (insns[i].branch || insns[i].branch_indirect) {
 				insn->detail->groups[insn->detail->groups_count] = TMS320C64X_GRP_JUMP;
 				insn->detail->groups_count++;
 			}

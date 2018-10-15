@@ -224,6 +224,12 @@ typedef enum xcore_insn_group {
 	//> Generic groups
 	// all jump instructions (conditional+direct+indirect jumps)
 	XCORE_GRP_JUMP,	// = CS_GRP_JUMP
+	// branch groups
+	XCORE_GRP_BRANCH,		// = CS_GRP_BRANCH
+	// relative branch groups
+	XCORE_GRP_BRANCH_RELATIVE,	// = CS_GRP_BRANCH_RELATIVE
+	// indirect branch groups
+	XCORE_GRP_BRANCH_INDIRECT,	// = CS_GRP_BRANCH_INDIRECT
 
 	XCORE_GRP_ENDING,   // <-- mark the end of the list of groups
 } xcore_insn_group;
