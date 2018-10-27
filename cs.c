@@ -1004,6 +1004,12 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 	return c;
 }
 
+CAPSTONE_EXPORT size_t CAPSTONE_API cs_disasm2(csh handle, const uint8_t *code,size_t code_offset,
+                                               size_t code_size,uint64_t address,size_t count,cs_insn **insn)
+{
+	return cs_disasm(handle,(const uint8_t *)(code+code_offset),code_size-code_offset,address,count,insn);
+}
+
 CAPSTONE_EXPORT
 CAPSTONE_DEPRECATED
 size_t CAPSTONE_API cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)

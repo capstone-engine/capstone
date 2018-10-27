@@ -524,6 +524,17 @@ size_t CAPSTONE_API cs_disasm(csh handle,
 		cs_insn **insn);
 
 /**
+cs_disasm with offset
+@ code_offset: the offset of code in the @code.
+**/
+CAPSTONE_EXPORT
+size_t CAPSTONE_API cs_disasm2(csh handle, 
+        const uint8_t *code,size_t code_offset,
+		size_t code_size,uint64_t address,
+        size_t count,
+        cs_insn **insn);
+
+/**
   Deprecated function - to be retired in the next version!
   Use cs_disasm() instead of cs_disasm_ex()
 */
