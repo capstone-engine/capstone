@@ -19247,6 +19247,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
       default:
         SStream_concat0(O, AsmStrs+(Bits & 16383)-1);
         break;
+      case X86_MOV32ms:
       case X86_MOV32sm:
         SStream_concat0(O, "movw\t");
         break;

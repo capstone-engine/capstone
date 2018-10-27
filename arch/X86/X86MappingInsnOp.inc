@@ -9415,7 +9415,7 @@
 },
 {	/* X86_SETEm, X86_INS_SETE: sete	$dst */
 	X86_EFLAGS_TEST_ZF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 {	/* X86_SETEr, X86_INS_SETE: sete	$dst */
 	X86_EFLAGS_TEST_ZF,
@@ -9455,7 +9455,7 @@
 },
 {	/* X86_SETNEm, X86_INS_SETNE: setne	$dst */
 	X86_EFLAGS_TEST_ZF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 {	/* X86_SETNEr, X86_INS_SETNE: setne	$dst */
 	X86_EFLAGS_TEST_ZF,
@@ -10111,7 +10111,7 @@
 },
 {	/* X86_ST_FP80m, X86_INS_FSTP: fstp{t}	$dst */
 	X86_FPU_FLAGS_MODIFY_C1 | X86_FPU_FLAGS_UNDEFINED_C0 | X86_FPU_FLAGS_UNDEFINED_C2 | X86_FPU_FLAGS_UNDEFINED_C3,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 {	/* X86_ST_FPNCEST0r, X86_INS_FSTPNCE: fstpnce	$op, st(0) */
 	0,
