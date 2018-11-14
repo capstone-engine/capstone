@@ -750,7 +750,7 @@ static const name_map insn_name_maps[] = {
 	{ ARM64_INS_XTN, "xtn" },
 	{ ARM64_INS_ZIP1, "zip1" },
 	{ ARM64_INS_ZIP2, "zip2" },
-	// These pointer authentication isntructions require armv8. 3a
+	// These pointer authentication isntructions require armv8.3a
 	{ ARM64_INS_IA, "ia" },
 	{ ARM64_INS_IB, "ib" },
 	{ ARM64_INS_DA, "da" },
@@ -766,7 +766,7 @@ static const name_map insn_name_maps[] = {
  	{ ARM64_INS_XPACI, "xpaci" },
 	{ ARM64_INS_XPACD, "xpacd" },
 	{ ARM64_INS_PACGA, "pacga" },
-	// Combined Instructio ns
+	// Combined Instructions
 	{ ARM64_INS_BRAA, "braa" },
 	{ ARM64_INS_BRAB, "brab" },
 	{ ARM64_INS_BLRAA, "blraa" },
@@ -784,7 +784,7 @@ static const name_map insn_name_maps[] = {
 
  	{ ARM64_INS_LDRAA, "ldraa" },
 	{ ARM64_INS_LDRAB, "ldrab" },
-	// v8.3a floating point conversion for javascri pt
+	// v8.3a floating point conversion for javascript
 	{ ARM64_INS_FJCVTZS, "fjcvtzs" },
 };
 
