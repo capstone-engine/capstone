@@ -750,6 +750,30 @@ static const name_map insn_name_maps[] = {
 	{ ARM64_INS_XTN, "xtn" },
 	{ ARM64_INS_ZIP1, "zip1" },
 	{ ARM64_INS_ZIP2, "zip2" },
+	// v8.3 Release Consistent Processor Consistent support, optional in v8.2.
+	{ ARM64_INS_LDAPR, "ldapr" },
+	// v8.3a complex add and multiply-accumulate.
+	{ ARM64_INS_FCMLA, "fcmla" },
+	{ ARM64_INS_FCADD, "fcadd" },
+	// v8.3a Pointer Authentication
+	// These instructions inhabit part of the hint space and so can be used for
+	// armv8 targets
+	{ ARM64_INS_PACIAZ, "paciaz" },
+	{ ARM64_INS_PACIBZ, "pacibz" },
+	{ ARM64_INS_AUTIAZ, "autiaz" },
+	{ ARM64_INS_AUTIBZ, "autibz" },
+
+	{ ARM64_INS_PACIASP, "paciasp" },
+	{ ARM64_INS_PACIBSP, "pacibsp" },
+	{ ARM64_INS_AUTIASP, "autiasp" },
+	{ ARM64_INS_AUTIBSP, "autibsp" },
+
+	{ ARM64_INS_PACIA1716, "pacia1716" },
+	{ ARM64_INS_PACIB1716, "pacib1716" },
+	{ ARM64_INS_AUTIA1716, "autia1716" },
+	{ ARM64_INS_AUTIB1716, "autib1716" },
+
+	{ ARM64_INS_XPACLRI, "xpaclri" },
 	// These pointer authentication instructions require armv8.3a
 	{ ARM64_INS_IA, "ia" },
 	{ ARM64_INS_IB, "ib" },
@@ -758,10 +782,10 @@ static const name_map insn_name_maps[] = {
 	{ ARM64_INS_IZA, "iza" },
 	{ ARM64_INS_DZA, "dza" },
 	{ ARM64_INS_IZB, "izb" },
-	{ ARM64_INS_DZB, "dzb" } ,
+	{ ARM64_INS_DZB, "dzb" },
 
  	{ ARM64_INS_PAC, "pac" },
-	{ ARM64_INS_AUT, "aut" } ,
+	{ ARM64_INS_AUT, "aut" },
 
  	{ ARM64_INS_XPACI, "xpaci" },
 	{ ARM64_INS_XPACD, "xpacd" },
@@ -770,17 +794,17 @@ static const name_map insn_name_maps[] = {
 	{ ARM64_INS_BRAA, "braa" },
 	{ ARM64_INS_BRAB, "brab" },
 	{ ARM64_INS_BLRAA, "blraa" },
-	{ ARM64_INS_BLRAB, "blrab" } ,
+	{ ARM64_INS_BLRAB, "blrab" },
 
  	{ ARM64_INS_BRAAZ, "braaz" },
 	{ ARM64_INS_BRABZ, "brabz" },
 	{ ARM64_INS_BLRAAZ, "blraaz" },
-	{ ARM64_INS_BLRABZ, "blrabz" } ,
+	{ ARM64_INS_BLRABZ, "blrabz" },
 
  	{ ARM64_INS_RETAA, "retaa" },
 	{ ARM64_INS_RETAB, "retab" },
 	{ ARM64_INS_ERETAA, "eretaa" },
-	{ ARM64_INS_ERETAB, "eretab" } ,
+	{ ARM64_INS_ERETAB, "eretab" },
 
  	{ ARM64_INS_LDRAA, "ldraa" },
 	{ ARM64_INS_LDRAB, "ldrab" },
@@ -806,10 +830,6 @@ static const name_map insn_name_maps[] = {
 	{ ARM64_INS_AXFLAG, "axflag" },
 	// Armv8.5-A speculation barrier
 	{ ARM64_INS_SB, "sb" },
-	{ ARM64_INS_CLREX, "clrex" },
-	{ ARM64_INS_ISB, "isb" },
-	{ ARM64_INS_SSBB, "ssbb" },
-	{ ARM64_INS_PSSBB, "pssbb" },
 	// v8.5 Memory Tagging Extension
 	{ ARM64_INS_IRG, "irg" },
 	{ ARM64_INS_GMI, "gmi" },
@@ -822,7 +842,6 @@ static const name_map insn_name_maps[] = {
 	{ ARM64_INS_STGV, "stgv" },
 	{ ARM64_INS_STG, "stg" },
 	{ ARM64_INS_STZG, "stzg" },
-	{ ARM64_INS_STGV, "stgv" },
 	{ ARM64_INS_ST2G, "st2g" },
 	{ ARM64_INS_STZ2G, "stz2g" },
 	{ ARM64_INS_STGP, "stgp" },
@@ -877,6 +896,11 @@ static const name_map alias_insn_name_maps[] = {
 	{ ARM64_INS_DC, "dc" },
 	{ ARM64_INS_AT, "at" },
 	{ ARM64_INS_TLBI, "tlbi" },
+
+	{ ARM64_INS_CLREX, "clrex" },
+	{ ARM64_INS_ISB, "isb" },
+	{ ARM64_INS_SSBB, "ssbb" },
+	{ ARM64_INS_PSSBB, "pssbb" },
 };
 
 const char *AArch64_insn_name(csh handle, unsigned int id)
