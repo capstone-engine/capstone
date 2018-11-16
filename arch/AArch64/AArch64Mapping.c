@@ -750,7 +750,7 @@ static const name_map insn_name_maps[] = {
 	{ ARM64_INS_XTN, "xtn" },
 	{ ARM64_INS_ZIP1, "zip1" },
 	{ ARM64_INS_ZIP2, "zip2" },
-	// These pointer authentication isntructions require armv8.3a
+	// These pointer authentication instructions require armv8.3a
 	{ ARM64_INS_IA, "ia" },
 	{ ARM64_INS_IB, "ib" },
 	{ ARM64_INS_DA, "da" },
@@ -786,6 +786,46 @@ static const name_map insn_name_maps[] = {
 	{ ARM64_INS_LDRAB, "ldrab" },
 	// v8.3a floating point conversion for javascript
 	{ ARM64_INS_FJCVTZS, "fjcvtzs" },
+	// v8.4 Flag manipulation instructions
+	{ ARM64_INS_CFINV, "cfinv" },
+	{ ARM64_INS_SETF8, "setf8" },
+	{ ARM64_INS_SETF16, "setf16" },
+	{ ARM64_INS_RMIF, "rmif" },
+	// Armv8.4 LDAPR & STLR with Immediate Offset instruction
+	{ ARM64_INS_STLURB, "stlurb" },
+	{ ARM64_INS_STLURH, "stlurh" },
+	{ ARM64_INS_STLUR, "stlur" },
+	{ ARM64_INS_LDAPURB, "ldapurb" },
+	{ ARM64_INS_LDAPURSB, "ldapursb" },
+	{ ARM64_INS_LDAPURH, "ldapurh" },
+	{ ARM64_INS_LDAPURSH, "ldapursh" },
+	{ ARM64_INS_LDAPUR, "ldapur" },
+	{ ARM64_INS_LDAPURSW, "ldapursw" },
+	// v8.5 flag manipulation instructions
+	{ ARM64_INS_XAFLAG, "xaflag" },
+	{ ARM64_INS_AXFLAG, "axflag" },
+	// Armv8.5-A speculation barrier
+	{ ARM64_INS_SB, "sb" },
+	{ ARM64_INS_CLREX, "clrex" },
+	{ ARM64_INS_ISB, "isb" },
+	{ ARM64_INS_SSBB, "ssbb" },
+	{ ARM64_INS_PSSBB, "pssbb" },
+	// v8.5 Memory Tagging Extension
+	{ ARM64_INS_IRG, "irg" },
+	{ ARM64_INS_GMI, "gmi" },
+	{ ARM64_INS_ADDG, "addg" },
+	{ ARM64_INS_SUBG, "subg" },
+	{ ARM64_INS_SUBP, "subp" },
+	{ ARM64_INS_SUBPS, "subps" },
+	{ ARM64_INS_LDG, "ldg" },
+	{ ARM64_INS_LDGV, "ldgv" },
+	{ ARM64_INS_STGV, "stgv" },
+	{ ARM64_INS_STG, "stg" },
+	{ ARM64_INS_STZG, "stzg" },
+	{ ARM64_INS_STGV, "stgv" },
+	{ ARM64_INS_ST2G, "st2g" },
+	{ ARM64_INS_STZ2G, "stz2g" },
+	{ ARM64_INS_STGP, "stgp" },
 };
 
 // map *S & alias instructions back to original id
