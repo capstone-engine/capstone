@@ -12,10 +12,12 @@ ifndef BUILDDIR
 TESTDIR = .
 OBJDIR = .
 LIBDIR = ..
+FUZZDIR = ../suite/fuzz/
 else
 TESTDIR = $(BUILDDIR)/tests
 OBJDIR = $(BUILDDIR)/obj/tests
 LIBDIR = $(BUILDDIR)
+FUZZDIR = $(BUILDDIR)/suite/fuzz/
 endif
 
 ifeq ($(CROSS),)
@@ -117,14 +119,21 @@ endif
 OBJS = $(addprefix $(OBJDIR)/,$(SOURCES:.c=.o))
 BINARY = $(addprefix $(TESTDIR)/,$(SOURCES:.c=$(BIN_EXT)))
 
-all: $(BINARY)
+FUZZSRC = $(FUZZDIR)/fuzz_disasm.c $(FUZZDIR)/drivermc.c
+FUZZOBJS = $(addprefix $(OBJDIR)/,$(FUZZSRC:.c=.o))
+FUZZBIN = $(addprefix $(FUZZDIR)/,fuzz_disasm)
+
+all: $(BINARY) $(FUZZBIN)
 
 clean:
-	rm -rf $(OBJS) $(BINARY) $(TESTDIR)/*.exe $(TESTDIR)/*.static $(OBJDIR)/lib$(LIBNAME).* $(OBJDIR)/$(LIBNAME).*
+	rm -rf $(OBJS) $(BINARY) $(FUZZOBJS) $(FUZZBIN) $(TESTDIR)/*.exe $(TESTDIR)/*.static $(OBJDIR)/lib$(LIBNAME).* $(OBJDIR)/$(LIBNAME).*
 	# remove orphan files due to renaming from test.c to test_basic.c
 	rm -rf $(TESTDIR)/test.o $(TESTDIR)/test.exe $(TESTDIR)/test.static $(TESTDIR)/test
 
 $(BINARY): $(OBJS)
+
+$(FUZZBIN): $(FUZZOBJS)
+	$(CC) $(LDFLAGS) $< $(FUZZDIR)/drivermc.o $(ARCHIVE) -o $(call staticname,$@)
 
 $(TESTDIR)/%$(BIN_EXT): $(OBJDIR)/%.o
 	@mkdir -p $(@D)

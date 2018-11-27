@@ -458,9 +458,14 @@ TESTS += test_basic.static test_detail.static test_arm.static test_arm64.static
 TESTS += test_m68k.static test_mips.static test_ppc.static test_sparc.static
 TESTS += test_systemz.static test_x86.static test_xcore.static test_m680x.static
 TESTS += test_skipdata test_skipdata.static test_iter.static test_evm.static
-check: $(TESTS)
+check: $(TESTS) fuzztest
 test_%:
 	./tests/$@ > /dev/null && echo OK || echo FAILED
+
+FUZZ_INPUTS = $(shell find suite/MC -type f -name '*.cs')
+
+fuzztest:
+	./suite/fuzz/fuzz_disasm.static $(FUZZ_INPUTS) > /dev/null && echo OK || echo FAILED
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(@D)
