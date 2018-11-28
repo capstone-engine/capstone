@@ -465,7 +465,7 @@ test_%:
 FUZZ_INPUTS = $(shell find suite/MC -type f -name '*.cs')
 
 fuzztest:
-	./suite/fuzz/fuzz_disasm.static $(FUZZ_INPUTS) > /dev/null && echo OK || echo FAILED
+	./suite/fuzz/fuzz_disasm.static $(FUZZ_INPUTS)
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(@D)
