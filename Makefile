@@ -349,8 +349,10 @@ ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
 	@V=$(V) CC=$(CC) $(MAKE) -C cstool
 ifndef BUILDDIR
 	$(MAKE) -C tests
+	$(MAKE) -C suite/fuzz
 else
 	$(MAKE) -C tests BUILDDIR=$(BLDIR)
+	$(MAKE) -C suite/fuzz BUILDDIR=$(BLDIR)
 endif
 	$(call install-library,$(BLDIR)/tests/)
 endif
@@ -426,6 +428,7 @@ clean:
 
 ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
 	$(MAKE) -C tests clean
+	$(MAKE) -C suite/fuzz clean
 	rm -f $(BLDIR)/tests/lib$(LIBNAME).$(EXT)
 endif
 
