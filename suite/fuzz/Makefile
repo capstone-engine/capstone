@@ -1,5 +1,5 @@
 # Capstone Disassembler Engine
-# By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2018
+# By Philippe Antoine <contact@catenacyber.fr>, 2018
 
 include ../../config.mk
 include ../../functions.mk
@@ -38,16 +38,16 @@ ARCHIVE = $(LIBDIR)/lib$(LIBNAME).$(AR_EXT)
 
 .PHONY: all clean
 
-SOURCES = fuzz_disasm.c drivermc.c
+SOURCES = fuzz_disasm.c drivermc.c fuzz_harness.c
 OBJS = $(addprefix $(OBJDIR)/,$(SOURCES:.c=.o))
 BINARY = $(addprefix $(TESTDIR)/,fuzz_disasm$(BIN_EXT))
 
 all: $(BINARY)
 
 clean:
-	rm -rf $(OBJS) $(BINARY) $(OBJDIR)/lib$(LIBNAME).* $(OBJDIR)/$(LIBNAME).*
+	rm -rf fuzz_harness $(OBJS) $(BINARY) $(OBJDIR)/lib$(LIBNAME).* $(OBJDIR)/$(LIBNAME).*
 
-$(BINARY): $(OBJS)
+$(BINARY): fuzz_disasm.o drivermc.o
 	@mkdir -p $(@D)
 ifeq ($(V),0)
 	$(call log,LINK,$(notdir $@))
@@ -70,3 +70,6 @@ endif
 define link-static
 	$(CC) $(LDFLAGS) $^ $(ARCHIVE) -o $@
 endef
+
+fuzz_harness: fuzz_harness.o
+	${CC} $< -O3 -Wall -l$(LIBNAME) -o $@

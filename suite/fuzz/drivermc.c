@@ -95,9 +95,9 @@ int main(int argc, char** argv)
                     Data[0] = 25;
                 } else {
                     printf("Unknown mode\n");
+                    //fail instead of continue
                     return 1;
                 }
-                continue;
             }
             if (Data[0] == 0xFF) {
                 fclose(fp);
@@ -105,9 +105,18 @@ int main(int argc, char** argv)
                 return 1;
             }
             Size = 1;
-            while (sscanf(line+Size*5, "0x%02x", &value) == 1) {
+            // we start line at offset 0 and Data buffer at offset 1
+            // since Data[0] is option : arch + mode
+            while (sscanf(line+(Size-1)*5, "0x%02x", &value) == 1) {
                 Data[Size] = value;
                 Size++;
+                if (line[(Size-1)*5-1] != ',') {
+                    //end of pattern
+                    break;
+                } else if (MAX_LINE_SIZE < (Size-1)*5) {
+                    printf("Line overflow\n");
+                    return 1;
+                }
             }
             //lauch fuzzer
             LLVMFuzzerTestOneInput(Data, Size);
