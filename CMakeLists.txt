@@ -606,7 +606,7 @@ if (CAPSTONE_BUILD_SHARED)
 endif ()
 
 if (CAPSTONE_BUILD_SHARED AND CAPSTONE_BUILD_CSTOOL)
-FILE(GLOB CSTOOL_SRC cstool/*.c)
+FILE(GLOB CSTOOL_SRC cstool-src/*.c)
 add_executable(cstool ${CSTOOL_SRC})
 target_link_libraries(cstool ${default-target})
 
