@@ -8,6 +8,7 @@ Capstone source is organized as followings.
 │   ├── M680X       <- M680X engine
 │   ├── M68K        <- M68K engine
 │   ├── Mips        <- Mips engine
+│   ├── MOS65XX     <- MOS65XX engine
 │   ├── PowerPC     <- PowerPC engine
 │   ├── Sparc       <- Sparc engine
 │   ├── SystemZ     <- SystemZ engine
