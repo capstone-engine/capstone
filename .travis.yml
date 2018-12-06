@@ -2,6 +2,9 @@ language: cpp
 sudo: false
 before_install:
         - export LD_LIBRARY_PATH=`pwd`/tests/:$LD_LIBRARY_PATH
+before_script:
+        - wget https://catenacyber.fr/capstone_corpus.zip
+        - unzip capstone_corpus.zip -d suite/fuzz
 script:
         - ./make.sh
         - make check
