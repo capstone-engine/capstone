@@ -26,11 +26,24 @@ extern "C" int LLVMFuzzerReturnOneInput(const uint8_t *Data, size_t Size, char *
                 abort();
             }
             break;
+        case 1:
+            Ctx = LLVMCreateDisasmCPUFeatures("x86_64", "", "", nullptr, 0, nullptr, nullptr);
+            if (LLVMSetDisasmOptions(Ctx, LLVMDisassembler_Option_AsmPrinterVariant) == 0) {
+                abort();
+            }
+            break;
+        case 2:
+            Ctx = LLVMCreateDisasmCPUFeatures("armv7", "", "", nullptr, 0, nullptr, nullptr);
+            break;
             //TODO other cases
         default:
             return 1;
     }
     assert(Ctx);
+    /*if (LLVMSetDisasmOptions(Ctx, LLVMDisassembler_Option_PrintImmHex) == 0) {
+        abort();
+    }*/
+
 
     if (LLVMDisasmInstruction(Ctx, p+1, Size-1, 0, AssemblyText, 80) > 0) {
         r = 0;

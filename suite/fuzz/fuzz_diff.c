@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <inttypes.h>
 #include <assert.h>
+#include <string.h>
 
 #include <capstone/capstone.h>
 
@@ -174,6 +175,61 @@ struct platform platforms[] = {
     },
 };
 
+static void normalize_hex(char *s) {
+    size_t i = 0;
+    size_t j = 0;
+    //magic limit with dangerous sprintf
+    char scopy[80];
+    int state = 0;
+    size_t hex = 0;
+
+    while (s[i] != 0) {
+        switch(state) {
+            case 0:
+                if (s[i] == '0') {
+                    state = 1;
+                } else {
+                    scopy[j] = s[i];
+                    j++;
+                }
+                break;
+            case 1:
+                if (s[i] == 'x') {
+                    state = 2;
+                } else {
+                    state = 0;
+                    scopy[j] = '0';
+                    scopy[j+1] = s[i];
+                    j+=2;
+                }
+                break;
+            case 2:
+                if (s[i] >= '0' && s[i] <= '9') {
+                    hex = 16*hex + s[i] - '0';
+                } else if (s[i] >= 'A' && s[i] <= 'F') {
+                    hex = 16*hex + s[i] + 10 - 'A';
+                } else if (s[i] >= 'a' && s[i] <= 'f') {
+                    hex = 16*hex + s[i] + 10 - 'a';
+                } else {
+                    j += sprintf(scopy+j, "%zu", hex);
+                    scopy[j] = s[i];
+                    j++;
+                    state = 0;
+                    hex = 0;
+                }
+                break;
+        }
+        i++;
+    }
+    if (state == 2) {
+        sprintf(scopy+j, "%zu", hex);
+        scopy[j] = s[i];
+        j++;
+    }
+    scopy[j] = 0;
+    strcpy(s, scopy);
+}
+
 void LLVMFuzzerInit();
 int LLVMFuzzerReturnOneInput(const uint8_t *Data, size_t Size, char * AssemblyText);
 
@@ -216,18 +272,30 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
         return 0;
     }
 
+    /*if (Data[0] == 3) {
+         cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_NOREGNAME);
+    }*/
+
     insn = cs_malloc(handle);
     Data++;
     Size--;
     assert(insn);
         if (cs_disasm_iter(handle, Datap, Sizep, &address, insn)) {
-            snprintf(CapstoneAssemblyText, 80, "\t%s\t%s", insn->mnemonic, insn->op_str);
+            if (insn->op_str[0] == 0) {
+                snprintf(CapstoneAssemblyText, 80, "\t%s", insn->mnemonic);
+            } else {
+                snprintf(CapstoneAssemblyText, 80, "\t%s\t%s", insn->mnemonic, insn->op_str);
+            }
+            //TODO normalize_hex
+            normalize_hex(CapstoneAssemblyText);
             if (strcmp(CapstoneAssemblyText, LLVMAssemblyText) != 0) {
-                printf("capstone %s != llvm %s", CapstoneAssemblyText, LLVMAssemblyText);
+                printf("capstone %s != llvm %s\n", CapstoneAssemblyText, LLVMAssemblyText);
                 abort();
+            } else {
+                printf("capstone %s == llvm %s\n", CapstoneAssemblyText, LLVMAssemblyText);
             }
         } else {
-            printf("capstone failed with llvm %s", LLVMAssemblyText);
+            printf("capstone failed with llvm %s\n", LLVMAssemblyText);
             abort();
         }
     cs_free(insn, 1);
