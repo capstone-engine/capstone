@@ -3,8 +3,8 @@ sudo: false
 before_install:
         - export LD_LIBRARY_PATH=`pwd`/tests/:$LD_LIBRARY_PATH
 before_script:
-        - wget https://catenacyber.fr/capstone_corpus.zip
-        - unzip capstone_corpus.zip -d suite/fuzz
+        - wget https://github.com/groundx/capstonefuzz/raw/master/corpus/corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip
+        - unzip corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip -d suite/fuzz
 script:
         - ./make.sh
         - make check
