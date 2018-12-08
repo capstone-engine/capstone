@@ -144,6 +144,7 @@ def build_libraries():
         os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh")
 
     shutil.copy(VERSIONED_LIBRARY_FILE, os.path.join(LIBS_DIR, LIBRARY_FILE))
+
     # only copy static library if it exists (it's a build option)
     if STATIC_LIBRARY_FILE and os.path.exists(STATIC_LIBRARY_FILE):
         shutil.copy(STATIC_LIBRARY_FILE, LIBS_DIR)
@@ -215,10 +216,16 @@ setup(
     author_email='aquynh@gmail.com',
     description='Capstone disassembly engine',
     url='http://www.capstone-engine.org',
+    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
     classifiers=[
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     requires=['ctypes'],
     cmdclass=cmdclass,

@@ -23,8 +23,8 @@ versions, and Windows Driver Kit 8.1 Update 1 or newer versions are required.
   Sparc, SystemZ, X86 & XCore), if you just need several selected archs, choose
   the ones you want to compile in by opening Visual Studio solution "msvc\capstone.sln",
   then directly editing the projects "capstone_static" & "capstone_dll" for static
-  and dynamic libraries, respectively. This must be done before going to the
-  next steps.
+  and dynamic libraries, respectively. This must be done before going to the next
+  steps.
 
   In VisualStudio interface, modify the preprocessor definitions via
   "Project Properties" -> "Configuration Properties" -> "C/C++" -> "Preprocessor"

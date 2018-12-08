@@ -3,6 +3,7 @@
 
 LIB = capstone
 FLAGS = '-Wall -Wextra -Wwrite-strings'
+PYTHON2 = python
 
 all: arm_const.cmxa arm64_const.cmxa m680x_const.cmxa mips_const.cmxa ppc_const.cmxa sparc_const.cmxa sysz_const.cmxa x86_const.cmxa xcore_const.cmxa arm.cmxa arm64.cmxa m680x.cmxa mips.cmxa ppc.cmxa x86.cmxa sparc.cmxa systemz.cmxa xcore.cmxa capstone.cmxa test_basic.cmx test_detail.cmx test_x86.cmx test_arm.cmx test_arm64.cmx test_mips.cmx test_ppc.cmx test_sparc.cmx test_systemz.cmx test_xcore.cmx test_m680x.cmx ocaml.o
 	ocamlopt -o test_basic -ccopt $(FLAGS) ocaml.o capstone.cmx test_basic.cmx -cclib -l$(LIB)
@@ -286,7 +287,7 @@ clean:
 	rm -f *.[oa] *.so *.cm[ixoa] *.cmxa *.mli test_basic test_detail test_x86 test_arm test_arm64 test_mips test_ppc test_sparc test_systemz test_xcore test_m680x
 
 gen_const:
-	cd .. && python const_generator.py ocaml
+	cd .. && $(PYTHON2) const_generator.py ocaml
 
 TESTS = test_basic test_detail test_arm test_arm64 test_m680x test_mips test_ppc
 TESTS += test_sparc test_systemz test_x86 test_xcore

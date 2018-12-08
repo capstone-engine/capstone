@@ -14,7 +14,7 @@ extern "C" {
 #pragma warning(disable:4201)
 #endif
 
-//> PPC branch codes for some branch instructions
+/// PPC branch codes for some branch instructions
 typedef enum ppc_bc {
 	PPC_BC_INVALID  = 0,
 	PPC_BC_LT       = (0 << 5) | 12,
@@ -27,27 +27,27 @@ typedef enum ppc_bc {
 	PPC_BC_NU       = (3 << 5) |  4,
 
 	// extra conditions
-	PPC_BC_SO = (4 << 5) | 12,	// summary overflow
-	PPC_BC_NS = (4 << 5) | 4,	// not summary overflow
+	PPC_BC_SO = (4 << 5) | 12,	///< summary overflow
+	PPC_BC_NS = (4 << 5) | 4,	///< not summary overflow
 } ppc_bc;
 
-//> PPC branch hint for some branch instructions
+/// PPC branch hint for some branch instructions
 typedef enum ppc_bh {
-	PPC_BH_INVALID = 0,	// no hint
-	PPC_BH_PLUS,	// PLUS hint
-	PPC_BH_MINUS,	// MINUS hint
+	PPC_BH_INVALID = 0,	///< no hint
+	PPC_BH_PLUS,	///< PLUS hint
+	PPC_BH_MINUS,	///< MINUS hint
 } ppc_bh;
 
-//> Operand type for instruction's operands
+/// Operand type for instruction's operands
 typedef enum ppc_op_type {
-	PPC_OP_INVALID = 0, // = CS_OP_INVALID (Uninitialized).
-	PPC_OP_REG, // = CS_OP_REG (Register operand).
-	PPC_OP_IMM, // = CS_OP_IMM (Immediate operand).
-	PPC_OP_MEM, // = CS_OP_MEM (Memory operand).
-	PPC_OP_CRX = 64,	// Condition Register field
+	PPC_OP_INVALID = 0, ///< = CS_OP_INVALID (Uninitialized).
+	PPC_OP_REG, ///< = CS_OP_REG (Register operand).
+	PPC_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
+	PPC_OP_MEM, ///< = CS_OP_MEM (Memory operand).
+	PPC_OP_CRX = 64,	///< Condition Register field
 } ppc_op_type;
 
-//> PPC registers
+/// PPC registers
 typedef enum ppc_reg {
 	PPC_REG_INVALID = 0,
 
@@ -266,11 +266,11 @@ typedef enum ppc_reg {
 	PPC_REG_ENDING,   // <-- mark the end of the list of registers
 } ppc_reg;
 
-// Instruction's operand referring to memory
-// This is associated with PPC_OP_MEM operand type above
+/// Instruction's operand referring to memory
+/// This is associated with PPC_OP_MEM operand type above
 typedef struct ppc_op_mem {
-	ppc_reg base;	// base register
-	int32_t disp;	// displacement/offset value
+	ppc_reg base;	///< base register
+	int32_t disp;	///< displacement/offset value
 } ppc_op_mem;
 
 typedef struct ppc_op_crx {
@@ -279,35 +279,35 @@ typedef struct ppc_op_crx {
 	ppc_bc cond;
 } ppc_op_crx;
 
-// Instruction operand
+/// Instruction operand
 typedef struct cs_ppc_op {
-	ppc_op_type type;	// operand type
+	ppc_op_type type;	///< operand type
 	union {
-		ppc_reg reg;	// register value for REG operand
-		int64_t imm;		// immediate value for IMM operand
-		ppc_op_mem mem;		// base/disp value for MEM operand
-		ppc_op_crx crx;		// operand with condition register
+		ppc_reg reg;	///< register value for REG operand
+		int64_t imm;		///< immediate value for IMM operand
+		ppc_op_mem mem;		///< base/disp value for MEM operand
+		ppc_op_crx crx;		///< operand with condition register
 	};
 } cs_ppc_op;
 
-// Instruction structure
+/// Instruction structure
 typedef struct cs_ppc {
-	// branch code for branch instructions
+	/// branch code for branch instructions
 	ppc_bc bc;
 
-	// branch hint for branch instructions
+	/// branch hint for branch instructions
 	ppc_bh bh;
 
-	// if update_cr0 = True, then this 'dot' insn updates CR0
+	/// if update_cr0 = True, then this 'dot' insn updates CR0
 	bool update_cr0;
 
-	// Number of operands of this instruction, 
-	// or 0 when instruction has no operand.
+	/// Number of operands of this instruction,
+	/// or 0 when instruction has no operand.
 	uint8_t op_count;
-	cs_ppc_op operands[8]; // operands for this instruction.
+	cs_ppc_op operands[8]; ///< operands for this instruction.
 } cs_ppc;
 
-//> PPC instruction
+/// PPC instruction
 typedef enum ppc_insn {
 	PPC_INS_INVALID = 0,
 
@@ -1429,15 +1429,15 @@ typedef enum ppc_insn {
 	PPC_INS_ENDING,   // <-- mark the end of the list of instructions
 } ppc_insn;
 
-//> Group of PPC instructions
+/// Group of PPC instructions
 typedef enum ppc_insn_group {
-	PPC_GRP_INVALID = 0, // = CS_GRP_INVALID
+	PPC_GRP_INVALID = 0, ///< = CS_GRP_INVALID
 
-	//> Generic groups
+	// Generic groups
 	// all jump instructions (conditional+direct+indirect jumps)
-	PPC_GRP_JUMP,	// = CS_GRP_JUMP
+	PPC_GRP_JUMP,	///< = CS_GRP_JUMP
 
-	//> Architecture-specific groups
+	// Architecture-specific groups
 	PPC_GRP_ALTIVEC = 128,
 	PPC_GRP_MODE32,
 	PPC_GRP_MODE64,

@@ -1,7 +1,5 @@
 # For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [sysz_const.py]
 
-# Enums corresponding to SystemZ condition codes
-
 SYSZ_CC_INVALID = 0
 SYSZ_CC_O = 1
 SYSZ_CC_H = 2
@@ -18,15 +16,11 @@ SYSZ_CC_LE = 12
 SYSZ_CC_NH = 13
 SYSZ_CC_NO = 14
 
-# Operand type for instruction's operands
-
 SYSZ_OP_INVALID = 0
 SYSZ_OP_REG = 1
 SYSZ_OP_IMM = 2
 SYSZ_OP_MEM = 3
 SYSZ_OP_ACREG = 64
-
-# SystemZ registers
 
 SYSZ_REG_INVALID = 0
 SYSZ_REG_0 = 1
@@ -64,8 +58,6 @@ SYSZ_REG_F14 = 32
 SYSZ_REG_F15 = 33
 SYSZ_REG_R0L = 34
 SYSZ_REG_ENDING = 35
-
-# SystemZ instruction
 
 SYSZ_INS_INVALID = 0
 SYSZ_INS_A = 1
@@ -751,14 +743,8 @@ SYSZ_INS_XRK = 680
 SYSZ_INS_XY = 681
 SYSZ_INS_ENDING = 682
 
-# Group of SystemZ instructions
-
 SYSZ_GRP_INVALID = 0
-
-# Generic groups
 SYSZ_GRP_JUMP = 1
-
-# Architecture-specific groups
 SYSZ_GRP_DISTINCTOPS = 128
 SYSZ_GRP_FPEXTENSION = 129
 SYSZ_GRP_HIGHWORD = 130

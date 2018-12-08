@@ -40,7 +40,7 @@ foreach(i RANGE ${count})
   option("CAPSTONE_${supported_architecture}_SUPPORT" "${supported_architecture_label} support" ON)
 endforeach(i)
 
-# propagate achitecture support variables to preprocessor
+# propagate architecture support variables to preprocessor
 foreach(supported_architecture ${SUPPORTED_ARCHITECTURES})
   set(option_name "CAPSTONE_${supported_architecture}_SUPPORT")
   if(${option_name})
@@ -102,6 +102,7 @@ set(HEADERS_COMMON
     include/capstone/arm64.h
     include/capstone/arm.h
     include/capstone/capstone.h
+    include/capstone/evm.h
     include/capstone/mips.h
     include/capstone/ppc.h
     include/capstone/x86.h
@@ -113,7 +114,6 @@ set(HEADERS_COMMON
     include/capstone/m680x.h
     include/capstone/platform.h
     )
-
 
 set(TEST_SOURCES test_basic.c test_detail.c test_skipdata.c test_iter.c)
 
@@ -140,6 +140,18 @@ if (CAPSTONE_ARM_SUPPORT)
         arch/ARM/ARMMappingInsn.inc
         arch/ARM/ARMMappingInsnOp.inc
         )
+    set(HEADERS_ARM
+        arch/ARM/ARMAddressingModes.h
+        arch/ARM/ARMBaseInfo.h
+        arch/ARM/ARMDisassembler.h
+        arch/ARM/ARMGenAsmWriter.inc
+        arch/ARM/ARMGenDisassemblerTables.inc
+        arch/ARM/ARMGenInstrInfo.inc
+        arch/ARM/ARMGenRegisterInfo.inc
+        arch/ARM/ARMGenSubtargetInfo.inc
+        arch/ARM/ARMInstPrinter.h
+        arch/ARM/ARMMapping.h
+        )
     set(TEST_SOURCES ${TEST_SOURCES} test_arm.c)
 endif ()
 
@@ -165,6 +177,18 @@ if (CAPSTONE_ARM64_SUPPORT)
         arch/AArch64/AArch64Mapping.h
         arch/AArch64/AArch64MappingInsn.inc
         )
+    set(HEADERS_ARM64
+        arch/AArch64/AArch64AddressingModes.h
+        arch/AArch64/AArch64BaseInfo.h
+        arch/AArch64/AArch64Disassembler.h
+        arch/AArch64/AArch64GenAsmWriter.inc
+        arch/AArch64/AArch64GenDisassemblerTables.inc
+        arch/AArch64/AArch64GenInstrInfo.inc
+        arch/AArch64/AArch64GenRegisterInfo.inc
+        arch/AArch64/AArch64GenSubtargetInfo.inc
+        arch/AArch64/AArch64InstPrinter.h
+        arch/AArch64/AArch64Mapping.h
+        )
     set(TEST_SOURCES ${TEST_SOURCES} test_arm64.c)
 endif ()
 
@@ -187,6 +211,16 @@ if (CAPSTONE_MIPS_SUPPORT)
         arch/Mips/MipsMapping.h
         arch/Mips/MipsMappingInsn.inc
         )
+    set(HEADERS_MIPS
+        arch/Mips/MipsDisassembler.h
+        arch/Mips/MipsGenAsmWriter.inc
+        arch/Mips/MipsGenDisassemblerTables.inc
+        arch/Mips/MipsGenInstrInfo.inc
+        arch/Mips/MipsGenRegisterInfo.inc
+        arch/Mips/MipsGenSubtargetInfo.inc
+        arch/Mips/MipsInstPrinter.h
+        arch/Mips/MipsMapping.h
+        )
     set(TEST_SOURCES ${TEST_SOURCES} test_mips.c)
 endif ()
 
@@ -208,6 +242,17 @@ if (CAPSTONE_PPC_SUPPORT)
         arch/PowerPC/PPCInstPrinter.h
         arch/PowerPC/PPCMapping.h
         arch/PowerPC/PPCMappingInsn.inc
+        arch/PowerPC/PPCPredicates.h
+        )
+    set(HEADERS_PPC
+        arch/PowerPC/PPCDisassembler.h
+        arch/PowerPC/PPCGenAsmWriter.inc
+        arch/PowerPC/PPCGenDisassemblerTables.inc
+        arch/PowerPC/PPCGenInstrInfo.inc
+        arch/PowerPC/PPCGenRegisterInfo.inc
+        arch/PowerPC/PPCGenSubtargetInfo.inc
+        arch/PowerPC/PPCInstPrinter.h
+        arch/PowerPC/PPCMapping.h
         arch/PowerPC/PPCPredicates.h
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_ppc.c)
@@ -243,6 +288,23 @@ if (CAPSTONE_X86_SUPPORT)
         arch/X86/X86MappingInsnOp_reduce.inc
         arch/X86/X86MappingInsn_reduce.inc
         )
+    set(HEADERS_X86
+        arch/X86/X86BaseInfo.h
+        arch/X86/X86Disassembler.h
+        arch/X86/X86DisassemblerDecoder.h
+        arch/X86/X86DisassemblerDecoderCommon.h
+        arch/X86/X86GenAsmWriter.inc
+        arch/X86/X86GenAsmWriter1.inc
+        arch/X86/X86GenAsmWriter1_reduce.inc
+        arch/X86/X86GenAsmWriter_reduce.inc
+        arch/X86/X86GenDisassemblerTables.inc
+        arch/X86/X86GenDisassemblerTables_reduce.inc
+        arch/X86/X86GenInstrInfo.inc
+        arch/X86/X86GenInstrInfo_reduce.inc
+        arch/X86/X86GenRegisterInfo.inc
+        arch/X86/X86InstPrinter.h
+        arch/X86/X86Mapping.h
+        )
     if (NOT CAPSTONE_BUILD_DIET)
         set(SOURCES_X86 ${SOURCES_X86} arch/X86/X86ATTInstPrinter.c)
     endif ()
@@ -256,7 +318,7 @@ if (CAPSTONE_SPARC_SUPPORT)
         arch/Sparc/SparcInstPrinter.c
         arch/Sparc/SparcMapping.c
         arch/Sparc/SparcModule.c
-    )
+        )
     set(HEADERS_SPARC
         arch/Sparc/Sparc.h
         arch/Sparc/SparcDisassembler.h
@@ -278,9 +340,9 @@ if (CAPSTONE_SYSZ_SUPPORT)
         arch/SystemZ/SystemZDisassembler.c
         arch/SystemZ/SystemZInstPrinter.c
         arch/SystemZ/SystemZMapping.c
-        arch/SystemZ/SystemZMCTargetDesc.c
         arch/SystemZ/SystemZModule.c
-    )
+        arch/SystemZ/SystemZMCTargetDesc.c
+        )
     set(HEADERS_SYSZ
         arch/SystemZ/SystemZDisassembler.h
         arch/SystemZ/SystemZGenAsmWriter.inc
@@ -303,7 +365,7 @@ if (CAPSTONE_XCORE_SUPPORT)
         arch/XCore/XCoreInstPrinter.c
         arch/XCore/XCoreMapping.c
         arch/XCore/XCoreModule.c
-    )
+        )
     set(HEADERS_XCORE
         arch/XCore/XCoreDisassembler.h
         arch/XCore/XCoreGenAsmWriter.inc
@@ -460,8 +522,8 @@ if (CAPSTONE_BUILD_SHARED)
     endif ()
 
     if(NOT DEFINED default-target)      # honor `capstone-static` for tests first.
-	set(default-target capstone-shared)
-	add_definitions(-DCAPSTONE_SHARED)
+        set(default-target capstone-shared)
+        add_definitions(-DCAPSTONE_SHARED)
     endif ()
 endif ()
 
@@ -527,7 +589,7 @@ mark_as_advanced(INSTALL_LIB_DIR)
 
 ## installation
 install(FILES ${HEADERS_COMMON} DESTINATION include/capstone)
-configure_file(capstone.pc.in capstone.pc @ONLY)
+configure_file(capstone.pc.in ${CMAKE_BINARY_DIR}/capstone.pc @ONLY)
 
 if (CAPSTONE_BUILD_STATIC)
     install(TARGETS capstone-static

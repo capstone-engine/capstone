@@ -29,11 +29,23 @@ More bindings created & maintained by the community are available as followings.
 
 - Capstone-RS: Rust binding (by Richo Healey).
 
-	https://github.com/richo/capstone-rs
+	https://github.com/capstone-rust/capstone-rs
 
 - Capstone.NET: .NET framework binding (by Ahmed Garhy).
 
 	https://github.com/9ee1/Capstone.NET
+
+- CapstoneJ: High level Java wrapper for Capstone-java (by Keve Müller).
+
+	https://github.com/kevemueller/capstonej
+
+- Hapstone: Haskell binding (by ibabushkin)
+
+    https://github.com/ibabushkin/hapstone
+
+- Emacs-capstone: Emacs (elisp) binding (by Bas Alberts)
+
+    https://github.com/collarchoke/emacs-capstone
 
 - C# binding (by Matt Graeber). Note: this is only for Capstone v2.0.
 
@@ -46,3 +58,7 @@ More bindings created & maintained by the community are available as followings.
 - PHP binding (by Fadhil Mandaga).
 
 	https://github.com/firodj/php-capstone
+	
+- capstone-d: D binding (by Dimitri Bohlender)
+
+	https://github.com/bohlender/capstone-d

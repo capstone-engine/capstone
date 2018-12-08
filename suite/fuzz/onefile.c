@@ -38,11 +38,13 @@ int main(int argc, char** argv)
     }
     if (fread(Data, Size, 1, fp) != 1) {
         fclose(fp);
+        free(Data);
         return 2;
     }
 
     //lauch fuzzer
     LLVMFuzzerTestOneInput(Data, Size);
+    free(Data);
     fclose(fp);
     return 0;
 }

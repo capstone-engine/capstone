@@ -69,6 +69,9 @@ tests/test_tms320c64x
 tests/test_m680x
 tests/test_evm
 
+# regress binaries
+suite/regress/invalid_read_in_print_operand
+
 # vim tmp file
 *.swp
 *~
@@ -95,6 +98,9 @@ build*/
 *.VC.db
 *.VC.opendb
 
+# CMake build directories
+build*/
+
 # Xcode
 xcode/Capstone.xcodeproj/xcuserdata
 xcode/Capstone.xcodeproj/project.xcworkspace/xcuserdata
@@ -107,5 +113,6 @@ test_iter_benchmark
 
 
 *.s
+.DS_Store
 
 cstool/cstool

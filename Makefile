@@ -10,7 +10,7 @@ V ?= 0
 
 OS := $(shell uname)
 ifeq ($(OS),Darwin)
-LIBARCHS = i386 x86_64
+LIBARCHS = x86_64
 PREFIX ?= /usr/local
 endif
 
@@ -40,7 +40,7 @@ ifneq (,$(findstring yes,$(CAPSTONE_X86_ATT_DISABLE)))
 CFLAGS += -DCAPSTONE_X86_ATT_DISABLE
 endif
 
-CFLAGS += -fPIC -Wall -Iinclude
+CFLAGS += -fPIC -Wall -Wwrite-strings -Iinclude
 
 ifeq ($(CAPSTONE_USE_SYS_DYN_MEM),yes)
 CFLAGS += -DCAPSTONE_USE_SYS_DYN_MEM
@@ -73,10 +73,10 @@ LIBDIRARCH ?= lib
 # Uncomment the below line to installs x86_64 libs to lib64/ directory.
 # Or better, pass 'LIBDIRARCH=lib64' to 'make install/uninstall' via 'make.sh'.
 #LIBDIRARCH ?= lib64
-LIBDIR ?= $(PREFIX)/$(LIBDIRARCH)
-BINDIR = $(PREFIX)/bin
+LIBDIR = $(DESTDIR)$(PREFIX)/$(LIBDIRARCH)
+BINDIR = $(DESTDIR)$(PREFIX)/bin
 
-LIBDATADIR ?= $(LIBDIR)
+LIBDATADIR = $(LIBDIR)
 
 # Don't redefine $LIBDATADIR when global environment variable
 # USE_GENERIC_LIBDATADIR is set. This is used by the pkgsrc framework.
@@ -302,7 +302,7 @@ CFLAGS := $(CFLAGS:-fPIC=)
 # On Windows we need the shared library to be executable
 else
 # mingw?
-IS_MINGW := $(shell $(CC) --version 2>/dev/null | grep -i mingw | wc -l)
+IS_MINGW := $(shell $(CC) --version 2>/dev/null | grep -i "\(mingw\|MSYS\)" | wc -l)
 ifeq ($(IS_MINGW),1)
 EXT = dll
 AR_EXT = lib
@@ -349,8 +349,10 @@ ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
 	@V=$(V) CC=$(CC) $(MAKE) -C cstool
 ifndef BUILDDIR
 	$(MAKE) -C tests
+	$(MAKE) -C suite/fuzz
 else
 	$(MAKE) -C tests BUILDDIR=$(BLDIR)
+	$(MAKE) -C suite/fuzz BUILDDIR=$(BLDIR)
 endif
 	$(call install-library,$(BLDIR)/tests/)
 endif
@@ -426,6 +428,7 @@ clean:
 
 ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
 	$(MAKE) -C tests clean
+	$(MAKE) -C suite/fuzz clean
 	rm -f $(BLDIR)/tests/lib$(LIBNAME).$(EXT)
 endif
 
@@ -453,14 +456,19 @@ dist:
 
 
 TESTS = test_basic test_detail test_arm test_arm64 test_m68k test_mips test_ppc test_sparc
-TESTS += test_systemz test_x86 test_xcore test_iter
+TESTS += test_systemz test_x86 test_xcore test_iter test_evm
 TESTS += test_basic.static test_detail.static test_arm.static test_arm64.static
 TESTS += test_m68k.static test_mips.static test_ppc.static test_sparc.static
 TESTS += test_systemz.static test_x86.static test_xcore.static test_m680x.static
-TESTS += test_skipdata test_skipdata.static test_iter.static
-check: $(TESTS)
+TESTS += test_skipdata test_skipdata.static test_iter.static test_evm.static
+check: $(TESTS) fuzztest
 test_%:
 	./tests/$@ > /dev/null && echo OK || echo FAILED
+
+FUZZ_INPUTS = $(shell find suite/MC -type f -name '*.cs')
+
+fuzztest:
+	./suite/fuzz/fuzz_disasm $(FUZZ_INPUTS)
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(@D)

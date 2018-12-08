@@ -78,6 +78,7 @@ MARKUP = '//>'
 
 def gen(lang):
     global include, INCL_DIR
+    print('Generating bindings for', lang)
     templ = template[lang]
     print('Generating bindings for', lang)
     for target in include:
@@ -123,7 +124,7 @@ def gen(lang):
                 f = re.split('\s+', t)
 
                 if f[0].startswith(prefix.upper()):
-                    if len(f) > 1 and f[1] not in '//=':
+                    if len(f) > 1 and f[1] not in ('//', '///<', '='):
                         print("Error: Unable to convert %s" % f)
                         continue
                     elif len(f) > 1 and f[1] == '=':

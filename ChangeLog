@@ -102,6 +102,364 @@ Version 3.0.1: February 03rd, 2015
 - Export generic operand types & groups (CS_OP_xxx & CS_GRP_xxx).
 
 ---------------------------------
+Version 3.0.5: July 18th, 2018
+
+
+[ Core ]
+
+- Fix the include path for Android builds when building cstool.
+- Add posibility to disable universal build for Mac OS.
+- cstool: Separate instruction bytes by spaces.
+- Fix code path of pkg-config in Cmake.
+- Update XCode project for XCode 9.1.
+- Add Cortex-M support to cstool.
+- Cmake forces to be build using MT with MSVC.
+- Better support for Mac OS kernel.
+
+
+[ X86 ]
+
+- Fix some issues in handling EVEX & VEX3 instructions.
+- Fix immediate operand for AND instruction in ATT mode.
+- Fix ATT syntax when imm operand is 0.
+- Better handle XACQUIRE/XRELEASE.
+- Fix imm operand of RETF.
+
+
+[ ARM ]
+
+- Fix an integer overlow bug.
+
+
+[ ARM64 ]
+
+- Bug fix for incorrect operand type in certain load/store instructions.
+
+
+[ Mips ]
+
+- Mode CS_MODE_MIPS32R6 automatically sets CS_MODE_32
+
+
+[ PPC ]
+
+- Fix endian check.
+
+
+[ Sparc ]
+
+- Fix an integer overlow bug.
+
+
+[ SystemZ ]
+
+- Fix an integer overlow bug.
+
+
+[ Python binding ]
+
+- Raise error on accessing irrelevant data fields if skipdata & detail modes are enable.
+
+
+---------------------------------
+Version 3.0.5-rc3: July 31st, 2017
+
+
+[ Core ]
+
+- Fix compilation for MacOS kernel extension
+- cstool to support armbe and arm64be modes
+- Add nmake.bat for Windows build
+- Fix an integer overflow for Windows kernel driver
+- Support to embedded Capstone into MacOS kernel
+- cstool: fix mips64 mode
+- Fix a compiling error in MS Visual Studio 2015
+- Install pkgconfig file with CMake build
+- Fix SOVERSION property of CMake build
+- Properly handle switching to Endian mode at run-time for Arm, Arm64, Mips & Sparc
+- Fix MingW build
+- Better handle CMake installation for Linux 64bit
+
+
+[ X86 ]
+
+- Support BND prefix of Intel MPX extension
+- Correct operand size for CALL/JMP in 64bit mode with prefix 0x66
+- LOCK NOP is a valid instruction
+- Fix ATT syntax for instruction with zero offset segment register
+- LES/LDS are invalid in 64bit mode
+- Fix number of operands for some MOV instructions
+
+
+[ ARM ]
+
+- Fix POP reg to update SP register
+- Update flags for UADD8 instruction
+
+
+[ ARM64 ]
+
+- Better performance with new lookup table
+- Handle system registers added in ARMv8.1/2
+
+
+[ Java binding ]
+
+- Better handle input with invalid code
+
+
+[ Visual Basic binding ]
+
+- New binding
+
+---------------------------------
+Version 3.0.5-rc2: March 2nd, 2017
+
+
+[ Core ]
+
+- Fix build for Visual Studio 2012
+- Fix X86_REL_ADDR macro
+- Add CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA
+- Better support for embedding Capstone into Windows kernel drivers
+- Support to embedded Capstone into MacOS kernel
+- Support MacOS 10.11 and up
+- Better support for Cygwin
+- Support build packages for FreeBSD & DragonflyBSD
+- Add a command-line tool "cstool"
+- Properly handle switching to Endian mode at run-time for Arm, Arm64, Mips & Sparc
+
+
+[ X86 ]
+
+- Some random 16-bit code can be handled wrongly.
+- Remove abundant operand type X86_OP_FP
+- Fix instructions MOVQ, LOOP, LOOPE, LOOPNE, CALL/JMP rel16, REPNE LODSD, MOV *AX, MOFFS, FAR JMP/CALL
+- Add X86_REG_EFLAGS for STC and STD
+- Fix instruction attributes for SYSEXIT, MOVW, ROL, LGS, SLDT
+- Rename registers ST0-ST7 to be consistent with asm output
+
+
+[ ARM ]
+
+- Properly handle IT instruction
+- Fix LDRSB
+- Fix writeback for LDR
+- Fix Thumb BigEndian setup
+
+
+[ ARM64 ]
+
+- Fix arith extender
+- Fix writeback for LDR
+- Rename enum arm64_mrs_reg to arm64_sysreg
+
+
+[ PowerPC ]
+
+- Print 0 offset for memory operand
+
+
+[ Sparc ]
+
+- Fix POPC instruction
+
+
+[ Python binding ]
+
+- Better PyPy support
+- Add __version__
+- Better support for Python 3
+- Fix CS_SKIPDATA_CALLBACK prototype
+- Cast skipdata function inside binding to simplify the API
+
+
+[ Java binding ]
+
+- Better handle input with invalid code
+
+
+[ PowerShell ]
+
+- New binding
+
+---------------------------------
+Version 3.0.4: July 15th, 2015
+
+
+[ Library ]
+
+- Improve cross-compile for Android using Android NDK.
+- Support cross-compile for AArch64 Android (with Linux GCC).
+- Removed osxkernel_inttypes.h that is incompatible with BSD license.
+- Make it possible to compile with CC having a space inside (like "ccache gcc").
+
+
+[ X86 ]
+
+- Fix a null pointer dereference bug on handling code with special prefixes.
+- Properly handle AL/AX/EAX operand for OUT instruction in AT&T syntax.
+- Print immediate operand in positive form in some algorithm instructions.
+- Properly decode some SSE instructions.
+
+
+[ PowerPC ]
+
+- Fixed a memory corruption bug.
+- Fixed a memory corruption bug for the engine built in DIET mode.
+
+
+[ Mips ]
+
+- Fixed instruction ID of SUBU instruction.
+- Fixed a memory corruption bug.
+
+
+[ Arm ]
+
+- Fixed a memory corruption bug on IT instruction.
+
+
+[ XCore ]
+
+- Fixed a memory corruption bug when instruction has a memory operand.
+
+
+[ Python ]
+
+- Support Virtualenv.
+- setup.py supports option --user if not in a virtualenv to allow for local usage.
+- Properly handle the destruction of Cs object in the case the shared library
+  was already unloaded.
+
+---------------------------------
+Version 3.0.3: May 08th, 2015
+
+
+[ Library ]
+
+- Support to embed into Mac OS X kernel extensions.
+- Now it is possible to compile Capstone with older C compilers, such as
+  GCC 4.8 on Ubuntu 12.04.
+- Add "test_iter" to MSVC project.
+
+
+[ X86 ]
+
+- All shifted instructions SHL, SHR, SAL, SAR, RCL, RCR, ROL & ROR now support
+  $1 as first operand in *AT&T* syntax (so we have "rcll $1, %edx" instead of
+  "rcll %edx").
+- CMPXCHG16B is a valid instruction with LOCK prefix.
+- Fixed a segfault on the input of 0xF3.
+
+
+[ Arm ]
+
+- BLX instruction modifies PC & LR registers.
+
+
+[ Sparc ]
+
+- Improved displacement decoding for sparc banching instructions.
+
+
+[ Python binding ]
+
+- Fix for Cython so it can properly initialize.
+- X86Op.avx_zero_mask now has c_bool type, but not c_uint8 type.
+- Properly support compile with Cygwin & install binding (setup.py).
+
+---------------------------------
+Version 3.0.2: March 11th, 2015
+
+
+[ Library ]
+
+- On *nix, only export symbols that are part of the API (instead of all
+  the internal symbols).
+
+
+[ X86 ]
+
+- Do not consider 0xF2 as REPNE prefix if it is a part of instruction encoding.
+- Fix implicit registers read/written & instruction groups of some instructions.
+- More flexible on the order of prefixes, so better handle some tricky
+  instructions.
+- REPNE prefix can go with STOS & MOVS instructions.
+- Fix a compilation bug for X86_REDUCE mode.
+- Fix operand size of instructions with operand PTR []
+
+
+[ Arm ]
+
+- Fix a bug where arm_op_mem.disp is wrongly calculated (in DETAIL mode).
+- Fix a bug on handling the If-Then block.
+
+
+[ Mips ]
+
+- Sanity check for the input size for MIPS64 mode.
+
+
+[ MSVC ]
+
+- Compile capstone.dll with static runtime MSVCR built in.
+
+
+[ Python binding ]
+
+- Fix a compiling issue of Cython binding with gcc 4.9.
+
+---------------------------------
+Version 3.0.1: February 03rd, 2015
+
+[ X86 ]
+
+- Properly handle LOCK, REP, REPE & REPNE prefixes.
+- Handle undocumented immediates for SSE's (V)CMPPS/PD/SS/SD instructions.
+- Print LJUMP/LCALL without * as prefix for Intel syntax.
+- Handle REX prefix properly for segment/MMX related instructions (x86_64).
+- Instruction with length > 15 is consider invalid.
+- Handle some tricky encodings for instructions MOVSXD, FXCH, FCOM, FCOMP,
+  FSTP, FSTPNCE, NOP.
+- Handle some tricky code for some X86_64 instructions with REX prefix.
+- Add missing operands in detail mode for PUSH , POP , IN/OUT reg, reg
+- MOV32ms & MOV32sm should reference word rather than dword.
+
+
+[ Arm64 ]
+
+- BL & BLR instructions do not read SP register.
+- Print absolute (rather than relative) address for instructions B, BL,
+  CBNZ, ADR.
+
+
+[ Arm ]
+
+- Instructions ADC & SBC do not update flags.
+- BL & BLX do not read SP, but PC register.
+- Alias LDR instruction with operands [sp], 4 to POP.
+- Print immediate operand of MVN instruction in positive hexadecimal form.
+
+
+[ PowerPC ]
+
+- Fix some compilation bugs when DIET mode is enable.
+- Populate SLWI/SRWI instruction details with SH operand.
+
+
+[ Python binding ]
+
+- Fix a Cython bug when CsInsn.bytes returns a shorten array of bytes.
+- Fixed a memory leak for Cython disasm functions when we immaturely quit
+  the enumeration of disassembled instructions.
+- Fix a NULL memory access issue when SKIPDATA & Detail modes are enable
+  at the same time.
+- Fix a memory leaking bug when when we stop enumeration over the disassembled
+  instructions prematurely.
+- Export generic operand types & groups (CS_OP_xxx & CS_GRP_xxx).
+
+---------------------------------
 Version 3.0: November 19th, 2014
 
 [ API ]
