@@ -30,11 +30,11 @@
 #include "PPCMapping.h"
 
 #ifndef CAPSTONE_DIET
-static char *getRegisterName(unsigned RegNo);
+static const char *getRegisterName(unsigned RegNo);
 #endif
 
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
-static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
+static void printInstruction(MCInst *MI, SStream *O, const MCRegisterInfo *MRI);
 static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O);
 static char *printAliasInstr(MCInst *MI, SStream *OS, void *info);
 static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info);
@@ -404,17 +404,7 @@ static void printS5ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	int Value = (int)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
 	Value = SignExtend32(Value, 5);
 
-	if (Value >= 0) {
-		if (Value > HEX_THRESHOLD)
-			SStream_concat(O, "0x%x", Value);
-		else
-			SStream_concat(O, "%u", Value);
-	} else {
-		if (Value < -HEX_THRESHOLD)
-			SStream_concat(O, "-0x%x", -Value);
-		else
-			SStream_concat(O, "-%u", -Value);
-	}
+	printInt32(O, Value);
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
@@ -427,10 +417,7 @@ static void printU5ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	unsigned int Value = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
 	//assert(Value <= 31 && "Invalid u5imm argument!");
-	if (Value > HEX_THRESHOLD)
-		SStream_concat(O, "0x%x", Value);
-	else
-		SStream_concat(O, "%u", Value);
+	printUInt32(O, Value);
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
@@ -443,10 +430,7 @@ static void printU6ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	unsigned int Value = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
 	//assert(Value <= 63 && "Invalid u6imm argument!");
-	if (Value > HEX_THRESHOLD)
-		SStream_concat(O, "0x%x", Value);
-	else
-		SStream_concat(O, "%u", Value);
+	printUInt32(O, Value);
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
@@ -476,18 +460,11 @@ static void printU12ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 static void printS16ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	if (MCOperand_isImm(MCInst_getOperand(MI, OpNo))) {
-		short Imm = (short)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
-		if (Imm >= 0) {
-			if (Imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%x", Imm);
-			else
-				SStream_concat(O, "%u", Imm);
-		} else {
-			if (Imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%x", -Imm);
-			else
-				SStream_concat(O, "-%u", -Imm);
-		}
+		unsigned short Imm = (unsigned short)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+        if (Imm > HEX_THRESHOLD)
+            SStream_concat(O, "0x%x", Imm);
+        else
+            SStream_concat(O, "%u", Imm);
 
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
@@ -658,7 +635,7 @@ static void printTLSCall(MCInst *MI, unsigned OpNo, SStream *O)
 #ifndef CAPSTONE_DIET
 /// stripRegisterPrefix - This method strips the character prefix from a
 /// register name so that only the number is left.  Used by for linux asm.
-static char *stripRegisterPrefix(char *RegName)
+static const char *stripRegisterPrefix(const char *RegName)
 {
 	switch (RegName[0]) {
 		case 'r':
@@ -683,7 +660,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	if (MCOperand_isReg(Op)) {
 		unsigned reg = MCOperand_getReg(Op);
 #ifndef CAPSTONE_DIET
-		char *RegName = getRegisterName(reg);
+		const char *RegName = getRegisterName(reg);
 #endif
 		// map to public register
 		reg = PPC_map_register(reg);
@@ -709,18 +686,8 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 
 	if (MCOperand_isImm(Op)) {
-		int64_t imm = MCOperand_getImm(Op);
-		if (imm >= 0) {
-			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%" PRIx64, imm);
-			else
-				SStream_concat(O, "%" PRIu64 , imm);
-		} else {
-			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%" PRIx64 , -imm);
-			else
-				SStream_concat(O, "-%" PRIu64 , -imm);
-		}
+		int32_t imm = (int32_t)MCOperand_getImm(Op);
+		printInt32(O, imm);
 
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {

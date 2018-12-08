@@ -326,7 +326,6 @@ cs_calloc_t cs_mem_calloc = cs_winkernel_calloc;
 cs_realloc_t cs_mem_realloc = cs_winkernel_realloc;
 cs_free_t cs_mem_free = cs_winkernel_free;
 cs_vsnprintf_t cs_vsnprintf = cs_winkernel_vsnprintf;
-
 #else
 // OSX kernel
 extern void* kern_os_malloc(size_t size);
@@ -343,7 +342,6 @@ cs_calloc_t cs_mem_calloc = cs_kern_os_calloc;
 cs_realloc_t cs_mem_realloc = kern_os_realloc;
 cs_free_t cs_mem_free = kern_os_free;
 cs_vsnprintf_t cs_vsnprintf = vsnprintf;
-
 #endif  // !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(_KERNEL_MODE)
 #else
 // User-defined
@@ -880,6 +878,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 			mci.flat_insn->size = insn_size;
 
 			// map internal instruction opcode to public insn ID
+
 			handle->insn_id(handle, insn_cache, mci.Opcode);
 
 			handle->printer(&mci, &ss, handle->printer_info);

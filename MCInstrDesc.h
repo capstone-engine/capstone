@@ -121,24 +121,24 @@ enum {
 /// this struct directly to describe itself.
 typedef struct MCInstrDesc {
 	unsigned short  Opcode;        // The opcode number
-	unsigned short  NumOperands;   // Num of args (may be more if variable_ops)
-	unsigned short  NumDefs;       // Num of args that are definitions
+	unsigned char  NumOperands;   // Num of args (may be more if variable_ops)
+	unsigned char  NumDefs;       // Num of args that are definitions
 	unsigned short  SchedClass;    // enum identifying instr sched class
-	unsigned short  Size;          // Number of bytes in encoding.
+	unsigned char  Size;          // Number of bytes in encoding.
 	unsigned        Flags;         // Flags identifying machine instr class
 	uint64_t        TSFlags;       // Target Specific Flag values
-	uint16_t *ImplicitUses;  // Registers implicitly read by this instr
-	uint16_t *ImplicitDefs;  // Registers implicitly defined by this instr
-	MCOperandInfo *OpInfo;   // 'NumOperands' entries about operands
+	char ImplicitUses;  // Registers implicitly read by this instr
+	char ImplicitDefs;  // Registers implicitly defined by this instr
+	const MCOperandInfo *OpInfo;   // 'NumOperands' entries about operands
 	uint64_t DeprecatedFeatureMask;// Feature bits that this is deprecated on, if any     
 	// A complex method to determine is a certain is deprecated or not, and return        
 	// the reason for deprecation.
 	//bool (*ComplexDeprecationInfo)(MCInst &, MCSubtargetInfo &, std::string &);           
-	unsigned ComplexDeprecationInfo;	// dummy field, just to satisfy initializer
+	unsigned char ComplexDeprecationInfo;	// dummy field, just to satisfy initializer
 } MCInstrDesc;
 
-bool MCOperandInfo_isPredicate(MCOperandInfo *m);
+bool MCOperandInfo_isPredicate(const MCOperandInfo *m);
 
-bool MCOperandInfo_isOptionalDef(MCOperandInfo *m);
+bool MCOperandInfo_isOptionalDef(const MCOperandInfo *m);
 
 #endif

@@ -20,7 +20,7 @@
 #include "../../utils.h"
 
 
-uint64_t arch_masks[9] = {
+const uint64_t arch_masks[9] = {
 	0, 0xff,
 	0xffff,
 	0,
@@ -29,7 +29,7 @@ uint64_t arch_masks[9] = {
 	0xffffffffffffffffLL
 };
 
-static x86_reg sib_base_map[] = {
+static const x86_reg sib_base_map[] = {
 	X86_REG_INVALID,
 #define ENTRY(x) X86_REG_##x,
 	ALL_SIB_BASES
@@ -48,7 +48,7 @@ enum {
 	X86_REG_sib64 = 505
 };
 
-static x86_reg sib_index_map[] = {
+static const x86_reg sib_index_map[] = {
 	X86_REG_INVALID,
 #define ENTRY(x) X86_REG_##x,
 	ALL_EA_BASES
@@ -58,7 +58,7 @@ static x86_reg sib_index_map[] = {
 #undef ENTRY
 };
 
-static x86_reg segment_map[] = {
+static const x86_reg segment_map[] = {
 	X86_REG_INVALID,
 	X86_REG_CS,
 	X86_REG_SS,
@@ -84,7 +84,7 @@ x86_reg x86_map_segment(int r)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map reg_name_maps[] = {
+static const name_map reg_name_maps[] = {
 	{ X86_REG_INVALID, NULL },
 
 	{ X86_REG_AH, "ah" },
@@ -200,7 +200,7 @@ static name_map reg_name_maps[] = {
 	{ X86_REG_R13, "r13" },
 	{ X86_REG_R14, "r14" },
 	{ X86_REG_R15, "r15" },
-	{ X86_REG_ST0, "st(0" },
+	{ X86_REG_ST0, "st(0)" },
 	{ X86_REG_ST1, "st(1)" },
 	{ X86_REG_ST2, "st(2)" },
 	{ X86_REG_ST3, "st(3)" },
@@ -332,7 +332,7 @@ static name_map reg_name_maps[] = {
 #endif
 
 // register size in non-64bit mode
-uint8_t regsize_map_32 [] = {
+const uint8_t regsize_map_32 [] = {
 	0,	// 	{ X86_REG_INVALID, NULL },
 	1,	// { X86_REG_AH, "ah" },
 	1,	// { X86_REG_AL, "al" },
@@ -578,7 +578,7 @@ uint8_t regsize_map_32 [] = {
 };
 
 // register size in 64bit mode
-uint8_t regsize_map_64 [] = {
+const uint8_t regsize_map_64 [] = {
 	0,	// 	{ X86_REG_INVALID, NULL },
 	1,	// { X86_REG_AH, "ah" },
 	1,	// { X86_REG_AL, "al" },
@@ -845,7 +845,7 @@ const char *X86_reg_name(csh handle, unsigned int reg)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map insn_name_maps[] = {
+static const name_map insn_name_maps[] = {
 	{ X86_INS_INVALID, NULL },
 
 	{ X86_INS_AAA, "aaa" },
@@ -2374,7 +2374,7 @@ const char *X86_insn_name(csh handle, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map group_name_maps[] = {
+static const name_map group_name_maps[] = {
 	// generic groups
 	{ X86_GRP_INVALID, NULL },
 	{ X86_GRP_JUMP,	"jump" },
@@ -2448,7 +2448,7 @@ const char *X86_group_name(csh handle, unsigned int id)
 #endif
 
 #ifndef CAPSTONE_X86_REDUCE
-static insn_map insns[] = {	// full x86 instructions
+static const insn_map insns[] = {	// full x86 instructions
 	// dummy item
 	{
 		0, 0,

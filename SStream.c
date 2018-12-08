@@ -28,7 +28,7 @@ void SStream_Init(SStream *ss)
 	ss->buffer[0] = '\0';
 }
 
-void SStream_concat0(SStream *ss, char *s)
+void SStream_concat0(SStream *ss, const char *s)
 {
 #ifndef CAPSTONE_DIET
 	unsigned int len = (unsigned int) strlen(s);
@@ -106,7 +106,10 @@ void printInt32BangDec(SStream *O, int32_t val)
 	if (val >= 0)
 		SStream_concat(O, "#%u", val);
 	else
-		SStream_concat(O, "#-%u", (uint32_t)-val);
+		if (val == INT_MIN)
+			SStream_concat(O, "#-%u", val);
+		else
+			SStream_concat(O, "#-%u", (uint32_t)-val);
 }
 
 void printInt32Bang(SStream *O, int32_t val)

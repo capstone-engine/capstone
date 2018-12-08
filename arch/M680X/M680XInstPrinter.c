@@ -138,7 +138,7 @@ static void printIncDec(bool isPost, SStream *O, m680x_info *info,
 
 	if ((!isPost && !(op->idx.flags & M680X_IDX_POST_INC_DEC)) ||
 		(isPost && (op->idx.flags & M680X_IDX_POST_INC_DEC))) {
-		char *prePostfix = "";
+		const char *prePostfix = "";
 
 		if (info->cpu_type == M680X_CPU_TYPE_CPU12)
 			prePostfix = (op->idx.inc_dec < 0) ? "-" : "+";

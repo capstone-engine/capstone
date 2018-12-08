@@ -76,7 +76,7 @@ enum {
 static void translateRegister(MCInst *mcInst, Reg reg)
 {
 #define ENTRY(x) X86_##x,
-	uint8_t llvmRegnums[] = {
+	static const uint8_t llvmRegnums[] = {
 		ALL_REGS
 			0
 	};
@@ -178,6 +178,7 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 	} // By default sign-extend all X86 immediates based on their encoding.
 	else if (type == TYPE_IMM8 || type == TYPE_IMM16 || type == TYPE_IMM32 ||
 			type == TYPE_IMM64 || type == TYPE_IMMv) {
+
 		switch (operand->encoding) {
 			default:
 				break;
@@ -267,7 +268,9 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 				case X86_VCMPSSZrr:   NewOpc = X86_VCMPSSZrri_alt;  break;
 			}
 			// Switch opcode to the one that doesn't get special printing.
-			MCInst_setOpcode(mcInst, NewOpc);
+			if (NewOpc != 0) {
+				MCInst_setOpcode(mcInst, NewOpc);
+			}
 		}
 #endif
 	} else if (type == TYPE_AVX512ICC) {
@@ -486,12 +489,12 @@ static bool translateRMRegister(MCInst *mcInst, InternalInstruction *insn)
 static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 {
 	// Addresses in an MCInst are represented as five operands:
-	//   1. basereg       (register)  The R/M base, or (if there is a SIB) the 
+	//   1. basereg       (register)  The R/M base, or (if there is a SIB) the
 	//                                SIB base
-	//   2. scaleamount   (immediate) 1, or (if there is a SIB) the specified 
+	//   2. scaleamount   (immediate) 1, or (if there is a SIB) the specified
 	//                                scale amount
 	//   3. indexreg      (register)  x86_registerNONE, or (if there is a SIB)
-	//                                the index (which is multiplied by the 
+	//                                the index (which is multiplied by the
 	//                                scale amount)
 	//   4. displacement  (immediate) 0, or the displacement if there is one
 	//   5. segmentreg    (register)  x86_registerNONE for now, but could be set
@@ -643,7 +646,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 						//   placeholders to keep the compiler happy.
 #define ENTRY(x)                                        \
 					case EA_BASE_##x:                                 \
-						  MCOperand_CreateReg0(mcInst, X86_##x); break; 
+						  MCOperand_CreateReg0(mcInst, X86_##x); break;
 						ALL_EA_BASES
 #undef ENTRY
 #define ENTRY(x) case EA_REG_##x:
@@ -677,7 +680,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 /// @return             - 0 on success; nonzero otherwise
 static bool translateRM(MCInst *mcInst, const OperandSpecifier *operand,
 		InternalInstruction *insn)
-{  
+{
 	switch (operand->type) {
 		case TYPE_R8:
 		case TYPE_R16:
@@ -748,7 +751,7 @@ static bool translateMaskRegister(MCInst *mcInst, uint8_t maskRegNum)
 	return false;
 }
 
-/// translateOperand - Translates an operand stored in an internal instruction 
+/// translateOperand - Translates an operand stored in an internal instruction
 ///   to LLVM's format and appends it to an MCInst.
 ///
 /// @param mcInst       - The MCInst to append to.

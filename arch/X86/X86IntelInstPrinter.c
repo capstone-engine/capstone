@@ -26,6 +26,7 @@
 #include <ctype.h>
 #endif
 #include <capstone/platform.h>
+
 #if defined(CAPSTONE_HAS_OSXKERNEL)
 #include <Availability.h>
 #include <libkern/libkern.h>
@@ -351,7 +352,7 @@ static void printRoundingControl(MCInst *MI, unsigned Op, SStream *O)
 
 #endif
 
-static char *getRegisterName(unsigned RegNo);
+static const char *getRegisterName(unsigned RegNo);
 static void printRegName(SStream *OS, unsigned RegNo)
 {
 	SStream_concat0(OS, getRegisterName(RegNo));
@@ -741,7 +742,7 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 
 	// perhaps this instruction does not need printer
 	if (MI->assembly[0]) {
-		strncpy(O->buffer, MI->assembly, sizeof(MI->assembly));
+		strncpy(O->buffer, MI->assembly, sizeof(O->buffer));
 		return;
 	}
 
@@ -888,6 +889,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		uint8_t encsize;
 		int64_t imm = MCOperand_getImm(Op);
 		uint8_t opsize = X86_immediate_size(MCInst_getOpcode(MI), &encsize);
+
 		if (opsize == 1)    // print 1 byte immediate in positive form
 			imm = imm & 0xff;
 

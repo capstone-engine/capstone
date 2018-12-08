@@ -45,4 +45,3 @@ To print out instruction details, run Cstool with -d option, like below.
 	EFLAGS: MOD_AF MOD_CF MOD_SF MOD_ZF MOD_PF MOD_OF
 
 To see all the supported options, run ./cstool
-

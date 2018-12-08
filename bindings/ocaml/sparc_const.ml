@@ -1,10 +1,6 @@
 (* For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [sparc_const.ml] *)
 
-(* Enums corresponding to Sparc condition codes, both icc's and fcc's. *)
-
 let _SPARC_CC_INVALID = 0;;
-
-(* Integer condition codes *)
 let _SPARC_CC_ICC_A = 8+256;;
 let _SPARC_CC_ICC_N = 0+256;;
 let _SPARC_CC_ICC_NE = 9+256;;
@@ -21,8 +17,6 @@ let _SPARC_CC_ICC_POS = 14+256;;
 let _SPARC_CC_ICC_NEG = 6+256;;
 let _SPARC_CC_ICC_VC = 15+256;;
 let _SPARC_CC_ICC_VS = 7+256;;
-
-(* Floating condition codes *)
 let _SPARC_CC_FCC_A = 8+16+256;;
 let _SPARC_CC_FCC_N = 0+16+256;;
 let _SPARC_CC_FCC_U = 7+16+256;;
@@ -40,21 +34,15 @@ let _SPARC_CC_FCC_LE = 13+16+256;;
 let _SPARC_CC_FCC_ULE = 14+16+256;;
 let _SPARC_CC_FCC_O = 15+16+256;;
 
-(* Branch hint *)
-
 let _SPARC_HINT_INVALID = 0;;
 let _SPARC_HINT_A = 1 lsl 0;;
 let _SPARC_HINT_PT = 1 lsl 1;;
 let _SPARC_HINT_PN = 1 lsl 2;;
 
-(* Operand type for instruction's operands *)
-
 let _SPARC_OP_INVALID = 0;;
 let _SPARC_OP_REG = 1;;
 let _SPARC_OP_IMM = 2;;
 let _SPARC_OP_MEM = 3;;
-
-(* SPARC registers *)
 
 let _SPARC_REG_INVALID = 0;;
 let _SPARC_REG_F0 = 1;;
@@ -147,8 +135,6 @@ let _SPARC_REG_XCC = 87;;
 let _SPARC_REG_ENDING = 88;;
 let _SPARC_REG_O6 = _SPARC_REG_SP;;
 let _SPARC_REG_I6 = _SPARC_REG_FP;;
-
-(* SPARC instruction *)
 
 let _SPARC_INS_INVALID = 0;;
 let _SPARC_INS_ADDCC = 1;;
@@ -431,14 +417,8 @@ let _SPARC_INS_RET = 277;;
 let _SPARC_INS_RETL = 278;;
 let _SPARC_INS_ENDING = 279;;
 
-(* Group of SPARC instructions *)
-
 let _SPARC_GRP_INVALID = 0;;
-
-(* Generic groups *)
 let _SPARC_GRP_JUMP = 1;;
-
-(* Architecture-specific groups *)
 let _SPARC_GRP_HARDQUAD = 128;;
 let _SPARC_GRP_V9 = 129;;
 let _SPARC_GRP_VIS = 130;;

@@ -20,7 +20,6 @@ static cs_mode updated_mode(cs_mode mode)
 	return mode;
 }
 
-
 cs_err Mips_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;

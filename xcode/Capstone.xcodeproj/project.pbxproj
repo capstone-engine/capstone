@@ -1017,7 +1017,7 @@
 		};
 		DC474E6319DDEA5F00BCA449 /* test */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DC474E6A19DDEA5F00BCA449 /* Build configuration list for PBXNativeTarget "test" */;
+			buildConfigurationList = DC474E6A19DDEA5F00BCA449 /* Build configuration list for PBXNativeTarget "test_basic" */;
 			buildPhases = (
 				DC474E6019DDEA5F00BCA449 /* Sources */,
 				DC474E6119DDEA5F00BCA449 /* Frameworks */,
@@ -1027,8 +1027,8 @@
 			);
 			dependencies = (
 			);
-			name = test;
-			productName = test;
+			name = test_basic;
+			productName = test_basic;
 			productReference = DC474E6419DDEA5F00BCA449 /* test */;
 			productType = "com.apple.product-type.tool";
 		};
@@ -1364,7 +1364,7 @@
 				DCFE23BC19DDCC2D00EF8EA9 /* CapstoneStatic */,
 				DCFE23CC19DDCC9500EF8EA9 /* CapstoneDynamic */,
 				DC474F6719DE6F3B00BCA449 /* CapstoneFramework */,
-				DC474E6319DDEA5F00BCA449 /* test */,
+				DC474E6319DDEA5F00BCA449 /* test_basic */,
 				DC474E8519DDEAA200BCA449 /* test_arm */,
 				DC474EE919DDEAE400BCA449 /* test_arm64 */,
 				DC3A28DA1AF29BEB00FC9913 /* test_customized_mnem */,

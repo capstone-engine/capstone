@@ -82,8 +82,8 @@ typedef enum Mips_CondCode {
 #define GET_INSTRINFO_ENUM
 #include "MipsGenInstrInfo.inc"
 
-static char *getRegisterName(unsigned RegNo);
-static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
+static const char *getRegisterName(unsigned RegNo);
+static void printInstruction(MCInst *MI, SStream *O, const MCRegisterInfo *MRI);
 
 static void set_mem_access(MCInst *MI, bool status)
 {
@@ -108,7 +108,7 @@ static bool isReg(MCInst *MI, unsigned OpNo, unsigned R)
 			MCOperand_getReg(MCInst_getOperand(MI, OpNo)) == R);
 }
 
-static char* MipsFCCToString(Mips_CondCode CC)
+static const char* MipsFCCToString(Mips_CondCode CC)
 {
 	switch (CC) {
 		default: return 0;	// never reach
@@ -206,32 +206,12 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		int64_t imm = MCOperand_getImm(Op);
 		if (MI->csh->doing_mem) {
 			if (imm) {	// only print Imm offset if it is not 0
-				if (imm >= 0) {
-					if (imm > HEX_THRESHOLD)
-						SStream_concat(O, "0x%"PRIx64, imm);
-					else
-						SStream_concat(O, "%"PRIu64, imm);
-				} else {
-					if (imm < -HEX_THRESHOLD)
-						SStream_concat(O, "-0x%"PRIx64, -imm);
-					else
-						SStream_concat(O, "-%"PRIu64, -imm);
-				}
+				printInt64(O, imm);
 			}
 			if (MI->csh->detail)
 				MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].mem.disp = imm;
 		} else {
-			if (imm >= 0) {
-				if (imm > HEX_THRESHOLD)
-					SStream_concat(O, "0x%"PRIx64, imm);
-				else
-					SStream_concat(O, "%"PRIu64, imm);
-			} else {
-				if (imm < -HEX_THRESHOLD)
-					SStream_concat(O, "-0x%"PRIx64, -imm);
-				else
-					SStream_concat(O, "-%"PRIu64, -imm);
-			}
+			printInt64(O, imm);
 
 			if (MI->csh->detail) {
 				MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].type = MIPS_OP_IMM;
@@ -247,17 +227,8 @@ static void printUnsignedImm(MCInst *MI, int opNum, SStream *O)
 	MCOperand *MO = MCInst_getOperand(MI, opNum);
 	if (MCOperand_isImm(MO)) {
 		int64_t imm = MCOperand_getImm(MO);
-		if (imm >= 0) {
-			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%x", (unsigned short int)imm);
-			else
-				SStream_concat(O, "%u", (unsigned short int)imm);
-		} else {
-			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%x", (short int)-imm);
-			else
-				SStream_concat(O, "-%u", (short int)-imm);
-		}
+		printInt64(O, imm);
+
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].type = MIPS_OP_IMM;
 			MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].imm = (unsigned short int)imm;
@@ -334,14 +305,14 @@ static void printRegisterPair(MCInst *MI, int opNum, SStream *O)
 	printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, opNum)));
 }
 
-static char *printAlias1(char *Str, MCInst *MI, unsigned OpNo, SStream *OS)
+static char *printAlias1(const char *Str, MCInst *MI, unsigned OpNo, SStream *OS)
 {
 	SStream_concat(OS, "%s\t", Str);
 	printOperand(MI, OpNo, OS);
 	return cs_strdup(Str);
 }
 
-static char *printAlias2(char *Str, MCInst *MI,
+static char *printAlias2(const char *Str, MCInst *MI,
 		unsigned OpNo0, unsigned OpNo1, SStream *OS)
 {
 	char *tmp;

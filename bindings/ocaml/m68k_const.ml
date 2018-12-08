@@ -1,8 +1,6 @@
 (* For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [m68k_const.ml] *)
 let _M68K_OPERAND_COUNT = 4;;
 
-(* M68K registers and special registers *)
-
 let _M68K_REG_INVALID = 0;;
 let _M68K_REG_D0 = 1;;
 let _M68K_REG_D1 = 2;;
@@ -52,8 +50,6 @@ let _M68K_REG_FPSR = 45;;
 let _M68K_REG_FPIAR = 46;;
 let _M68K_REG_ENDING = 47;;
 
-(* M68K Addressing Modes *)
-
 let _M68K_AM_NONE = 0;;
 let _M68K_AM_REG_DIRECT_DATA = 1;;
 let _M68K_AM_REG_DIRECT_ADDR = 2;;
@@ -75,8 +71,6 @@ let _M68K_AM_ABSOLUTE_DATA_LONG = 17;;
 let _M68K_AM_IMMEDIATE = 18;;
 let _M68K_AM_BRANCH_DISPLACEMENT = 19;;
 
-(* Operand type for instruction's operands *)
-
 let _M68K_OP_INVALID = 0;;
 let _M68K_OP_REG = 1;;
 let _M68K_OP_IMM = 2;;
@@ -86,8 +80,6 @@ let _M68K_OP_FP_DOUBLE = 5;;
 let _M68K_OP_REG_BITS = 6;;
 let _M68K_OP_REG_PAIR = 7;;
 let _M68K_OP_BR_DISP = 8;;
-
-(* Operand type for instruction's operands *)
 
 let _M68K_OP_BR_DISP_SIZE_INVALID = 0;;
 let _M68K_OP_BR_DISP_SIZE_BYTE = 1;;
@@ -107,8 +99,6 @@ let _M68K_FPU_SIZE_EXTENDED = 12;;
 let _M68K_SIZE_TYPE_INVALID = 0;;
 let _M68K_SIZE_TYPE_CPU = 1;;
 let _M68K_SIZE_TYPE_FPU = 2;;
-
-(* M68K instruction *)
 
 let _M68K_INS_INVALID = 0;;
 let _M68K_INS_ABCD = 1;;
@@ -486,8 +476,6 @@ let _M68K_INS_TST = 372;;
 let _M68K_INS_UNLK = 373;;
 let _M68K_INS_UNPK = 374;;
 let _M68K_INS_ENDING = 375;;
-
-(* Group of M68K instructions *)
 
 let _M68K_GRP_INVALID = 0;;
 let _M68K_GRP_JUMP = 1;;

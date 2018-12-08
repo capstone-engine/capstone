@@ -1,7 +1,5 @@
 # For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [arm_const.py]
 
-# ARM shift type
-
 ARM_SFT_INVALID = 0
 ARM_SFT_ASR = 1
 ARM_SFT_LSL = 2
@@ -13,8 +11,6 @@ ARM_SFT_LSL_REG = 7
 ARM_SFT_LSR_REG = 8
 ARM_SFT_ROR_REG = 9
 ARM_SFT_RRX_REG = 10
-
-# ARM condition code
 
 ARM_CC_INVALID = 0
 ARM_CC_EQ = 1
@@ -32,8 +28,6 @@ ARM_CC_LT = 12
 ARM_CC_GT = 13
 ARM_CC_LE = 14
 ARM_CC_AL = 15
-
-# Special registers for MSR
 
 ARM_SYSREG_INVALID = 0
 ARM_SYSREG_SPSR_C = 1
@@ -104,10 +98,6 @@ ARM_SYSREG_SPSR_UND = 312
 ARM_SYSREG_SPSR_MON = 313
 ARM_SYSREG_SPSR_HYP = 314
 
-# The memory barrier constants map directly to the 4-bit encoding of
-
-# the option field for Memory Barrier operations.
-
 ARM_MB_INVALID = 0
 ARM_MB_RESERVED_0 = 1
 ARM_MB_OSHLD = 2
@@ -126,8 +116,6 @@ ARM_MB_LD = 14
 ARM_MB_ST = 15
 ARM_MB_SY = 16
 
-# Operand type for instruction's operands
-
 ARM_OP_INVALID = 0
 ARM_OP_REG = 1
 ARM_OP_IMM = 2
@@ -138,8 +126,6 @@ ARM_OP_PIMM = 65
 ARM_OP_SETEND = 66
 ARM_OP_SYSREG = 67
 
-# Operand type for SETEND instruction
-
 ARM_SETEND_INVALID = 0
 ARM_SETEND_BE = 1
 ARM_SETEND_LE = 2
@@ -148,15 +134,11 @@ ARM_CPSMODE_INVALID = 0
 ARM_CPSMODE_IE = 2
 ARM_CPSMODE_ID = 3
 
-# Operand type for SETEND instruction
-
 ARM_CPSFLAG_INVALID = 0
 ARM_CPSFLAG_F = 1
 ARM_CPSFLAG_I = 2
 ARM_CPSFLAG_A = 4
 ARM_CPSFLAG_NONE = 16
-
-# Data type for elements of vector instructions.
 
 ARM_VECTORDATA_INVALID = 0
 ARM_VECTORDATA_I8 = 1
@@ -196,8 +178,6 @@ ARM_VECTORDATA_U32F64 = 34
 ARM_VECTORDATA_F64U16 = 35
 ARM_VECTORDATA_F32U16 = 36
 ARM_VECTORDATA_F64U32 = 37
-
-# ARM registers
 
 ARM_REG_INVALID = 0
 ARM_REG_APSR = 1
@@ -311,8 +291,6 @@ ARM_REG_S29 = 108
 ARM_REG_S30 = 109
 ARM_REG_S31 = 110
 ARM_REG_ENDING = 111
-
-# alias registers
 ARM_REG_R13 = ARM_REG_SP
 ARM_REG_R14 = ARM_REG_LR
 ARM_REG_R15 = ARM_REG_PC
@@ -320,8 +298,6 @@ ARM_REG_SB = ARM_REG_R9
 ARM_REG_SL = ARM_REG_R10
 ARM_REG_FP = ARM_REG_R11
 ARM_REG_IP = ARM_REG_R12
-
-# ARM instruction
 
 ARM_INS_INVALID = 0
 ARM_INS_ADC = 1
@@ -758,18 +734,12 @@ ARM_INS_VPUSH = 431
 ARM_INS_VPOP = 432
 ARM_INS_ENDING = 433
 
-# Group of ARM instructions
-
 ARM_GRP_INVALID = 0
-
-# Generic groups
 ARM_GRP_JUMP = 1
 ARM_GRP_CALL = 2
 ARM_GRP_INT = 4
 ARM_GRP_PRIVILEGE = 6
 ARM_GRP_BRANCH_RELATIVE = 7
-
-# Architecture-specific groups
 ARM_GRP_CRYPTO = 128
 ARM_GRP_DATABARRIER = 129
 ARM_GRP_DIVIDE = 130

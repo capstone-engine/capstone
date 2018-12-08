@@ -10,12 +10,12 @@ extern "C" {
 
 #include "platform.h"
 
-// Calculate relative address for X86-64, given cs_insn structure
+/// Calculate relative address for X86-64, given cs_insn structure
 #define X86_REL_ADDR(insn) (((insn).detail->x86.operands[0].type == X86_OP_IMM) \
 	? (uint64_t)((insn).detail->x86.operands[0].imm) \
 	: (((insn).address + (insn).size) + (uint64_t)(insn).detail->x86.disp))
 
-//> X86 registers
+/// X86 registers
 typedef enum x86_reg {
 	X86_REG_INVALID = 0,
 	X86_REG_AH, X86_REG_AL, X86_REG_AX, X86_REG_BH, X86_REG_BL,
@@ -71,7 +71,7 @@ typedef enum x86_reg {
 	X86_REG_ENDING		// <-- mark the end of the list of registers
 } x86_reg;
 
-//> Sub-flags of EFLAGS
+// Sub-flags of EFLAGS
 #define X86_EFLAGS_MODIFY_AF (1ULL << 0)
 #define X86_EFLAGS_MODIFY_CF (1ULL << 1)
 #define X86_EFLAGS_MODIFY_SF (1ULL << 2)
@@ -154,17 +154,17 @@ typedef enum x86_reg {
 #define X86_FPU_FLAGS_TEST_C3 (1ULL << 19)
 
 
-//> Operand type for instruction's operands
+/// Operand type for instruction's operands
 typedef enum x86_op_type {
-	X86_OP_INVALID = 0, // = CS_OP_INVALID (Uninitialized).
-	X86_OP_REG, // = CS_OP_REG (Register operand).
-	X86_OP_IMM, // = CS_OP_IMM (Immediate operand).
-	X86_OP_MEM, // = CS_OP_MEM (Memory operand).
+	X86_OP_INVALID = 0, ///< = CS_OP_INVALID (Uninitialized).
+	X86_OP_REG, ///< = CS_OP_REG (Register operand).
+	X86_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
+	X86_OP_MEM, ///< = CS_OP_MEM (Memory operand).
 } x86_op_type;
 
-//> XOP Code Condition type
+/// XOP Code Condition type
 typedef enum x86_xop_cc {
-	X86_XOP_CC_INVALID = 0,	// Uninitialized.
+	X86_XOP_CC_INVALID = 0,	///< Uninitialized.
 	X86_XOP_CC_LT,
 	X86_XOP_CC_LE,
 	X86_XOP_CC_GT,
@@ -175,18 +175,18 @@ typedef enum x86_xop_cc {
 	X86_XOP_CC_TRUE,
 } x86_xop_cc;
 
-//> AVX broadcast type
+/// AVX broadcast type
 typedef enum x86_avx_bcast {
-	X86_AVX_BCAST_INVALID = 0,	// Uninitialized.
-	X86_AVX_BCAST_2,	// AVX512 broadcast type {1to2}
-	X86_AVX_BCAST_4,	// AVX512 broadcast type {1to4}
-	X86_AVX_BCAST_8,	// AVX512 broadcast type {1to8}
-	X86_AVX_BCAST_16,	// AVX512 broadcast type {1to16}
+	X86_AVX_BCAST_INVALID = 0,	///< Uninitialized.
+	X86_AVX_BCAST_2,	///< AVX512 broadcast type {1to2}
+	X86_AVX_BCAST_4,	///< AVX512 broadcast type {1to4}
+	X86_AVX_BCAST_8,	///< AVX512 broadcast type {1to8}
+	X86_AVX_BCAST_16,	///< AVX512 broadcast type {1to16}
 } x86_avx_bcast;
 
-//> SSE Code Condition type
+/// SSE Code Condition type
 typedef enum x86_sse_cc {
-	X86_SSE_CC_INVALID = 0,	// Uninitialized.
+	X86_SSE_CC_INVALID = 0,	///< Uninitialized.
 	X86_SSE_CC_EQ,
 	X86_SSE_CC_LT,
 	X86_SSE_CC_LE,
@@ -197,9 +197,9 @@ typedef enum x86_sse_cc {
 	X86_SSE_CC_ORD,
 } x86_sse_cc;
 
-//> AVX Code Condition type
+/// AVX Code Condition type
 typedef enum x86_avx_cc {
-	X86_AVX_CC_INVALID = 0,	// Uninitialized.
+	X86_AVX_CC_INVALID = 0,	///< Uninitialized.
 	X86_AVX_CC_EQ,
 	X86_AVX_CC_LT,
 	X86_AVX_CC_LE,
@@ -234,153 +234,153 @@ typedef enum x86_avx_cc {
 	X86_AVX_CC_TRUE_US,
 } x86_avx_cc;
 
-//> AVX static rounding mode type
+/// AVX static rounding mode type
 typedef enum x86_avx_rm {
-	X86_AVX_RM_INVALID = 0,	// Uninitialized.
-	X86_AVX_RM_RN,	// Round to nearest
-	X86_AVX_RM_RD,	// Round down
-	X86_AVX_RM_RU,	// Round up
-	X86_AVX_RM_RZ,	// Round toward zero
+	X86_AVX_RM_INVALID = 0,	///< Uninitialized.
+	X86_AVX_RM_RN,	///< Round to nearest
+	X86_AVX_RM_RD,	///< Round down
+	X86_AVX_RM_RU,	///< Round up
+	X86_AVX_RM_RZ,	///< Round toward zero
 } x86_avx_rm;
 
-//> Instruction prefixes - to be used in cs_x86.prefix[]
+/// Instruction prefixes - to be used in cs_x86.prefix[]
 typedef enum x86_prefix {
-	X86_PREFIX_LOCK		= 	0xf0,	// lock (cs_x86.prefix[0]
-	X86_PREFIX_REP		= 	0xf3,	// rep (cs_x86.prefix[0]
-	X86_PREFIX_REPE		= 	0xf3,	// repe/repz (cs_x86.prefix[0]
-	X86_PREFIX_REPNE	= 	0xf2,	// repne/repnz (cs_x86.prefix[0]
+	X86_PREFIX_LOCK		= 	0xf0,	///< lock (cs_x86.prefix[0]
+	X86_PREFIX_REP		= 	0xf3,	///< rep (cs_x86.prefix[0]
+	X86_PREFIX_REPE		= 	0xf3,	///< repe/repz (cs_x86.prefix[0]
+	X86_PREFIX_REPNE	= 	0xf2,	///< repne/repnz (cs_x86.prefix[0]
 
-	X86_PREFIX_CS		= 	0x2e,	// segment override CS (cs_x86.prefix[1]
-	X86_PREFIX_SS		= 	0x36,	// segment override SS (cs_x86.prefix[1]
-	X86_PREFIX_DS		= 	0x3e,	// segment override DS (cs_x86.prefix[1]
-	X86_PREFIX_ES		= 	0x26,	// segment override ES (cs_x86.prefix[1]
-	X86_PREFIX_FS		= 	0x64,	// segment override FS (cs_x86.prefix[1]
-	X86_PREFIX_GS		= 	0x65,	// segment override GS (cs_x86.prefix[1]
+	X86_PREFIX_CS		= 	0x2e,	///< segment override CS (cs_x86.prefix[1]
+	X86_PREFIX_SS		= 	0x36,	///< segment override SS (cs_x86.prefix[1]
+	X86_PREFIX_DS		= 	0x3e,	///< segment override DS (cs_x86.prefix[1]
+	X86_PREFIX_ES		= 	0x26,	///< segment override ES (cs_x86.prefix[1]
+	X86_PREFIX_FS		= 	0x64,	///< segment override FS (cs_x86.prefix[1]
+	X86_PREFIX_GS		= 	0x65,	///< segment override GS (cs_x86.prefix[1]
 
-	X86_PREFIX_OPSIZE	=	0x66,	// operand-size override (cs_x86.prefix[2]
-	X86_PREFIX_ADDRSIZE	=	0x67,	// address-size override (cs_x86.prefix[3]
+	X86_PREFIX_OPSIZE	=	0x66,	///< operand-size override (cs_x86.prefix[2]
+	X86_PREFIX_ADDRSIZE	=	0x67,	///< address-size override (cs_x86.prefix[3]
 } x86_prefix;
 
-// Instruction's operand referring to memory
-// This is associated with X86_OP_MEM operand type above
+/// Instruction's operand referring to memory
+/// This is associated with X86_OP_MEM operand type above
 typedef struct x86_op_mem {
-	x86_reg segment; // segment register (or X86_REG_INVALID if irrelevant)
-	x86_reg base;	// base register (or X86_REG_INVALID if irrelevant)
-	x86_reg index;	// index register (or X86_REG_INVALID if irrelevant)
-	int scale;	// scale for index register
-	int64_t disp;	// displacement value
+	x86_reg segment; ///< segment register (or X86_REG_INVALID if irrelevant)
+	x86_reg base;	///< base register (or X86_REG_INVALID if irrelevant)
+	x86_reg index;	///< index register (or X86_REG_INVALID if irrelevant)
+	int scale;	///< scale for index register
+	int64_t disp;	///< displacement value
 } x86_op_mem;
 
-// Instruction operand
+/// Instruction operand
 typedef struct cs_x86_op {
-		x86_op_type type;	// operand type
+		x86_op_type type;	///< operand type
 		union {
-			x86_reg reg;	  // register value for REG operand
-			int64_t imm;		// immediate value for IMM operand
-			x86_op_mem mem;		// base/index/scale/disp value for MEM operand
+			x86_reg reg;	  ///< register value for REG operand
+			int64_t imm;		///< immediate value for IMM operand
+			x86_op_mem mem;		///< base/index/scale/disp value for MEM operand
 		};
 
-		// size of this operand (in bytes).
+		/// size of this operand (in bytes).
 		uint8_t size;
 
-		// How is this operand accessed? (READ, WRITE or READ|WRITE)
-		// This field is combined of cs_ac_type.
-		// NOTE: this field is irrelevant if engine is compiled in DIET mode.
+		/// How is this operand accessed? (READ, WRITE or READ|WRITE)
+		/// This field is combined of cs_ac_type.
+		/// NOTE: this field is irrelevant if engine is compiled in DIET mode.
 		uint8_t access;
 
-		// AVX broadcast type, or 0 if irrelevant
+		/// AVX broadcast type, or 0 if irrelevant
 		x86_avx_bcast avx_bcast;
 
-		// AVX zero opmask {z}
+		/// AVX zero opmask {z}
 		bool avx_zero_opmask;
 } cs_x86_op;
 
 typedef struct cs_x86_encoding {
-	// ModR/M offset, or 0 when irrelevant
+	/// ModR/M offset, or 0 when irrelevant
 	uint8_t modrm_offset;
 
-	// Displacement offset, or 0 when irrelevant.
+	/// Displacement offset, or 0 when irrelevant.
 	uint8_t disp_offset;
 	uint8_t disp_size;
 
-	// Immediate offset, or 0 when irrelevant.
+	/// Immediate offset, or 0 when irrelevant.
 	uint8_t imm_offset;
 	uint8_t imm_size;
 } cs_x86_encoding;
 
-// Instruction structure
+/// Instruction structure
 typedef struct cs_x86 {
-	// Instruction prefix, which can be up to 4 bytes.
-	// A prefix byte gets value 0 when irrelevant.
-	// prefix[0] indicates REP/REPNE/LOCK prefix (See X86_PREFIX_REP/REPNE/LOCK above)
-	// prefix[1] indicates segment override (irrelevant for x86_64):
-	// See X86_PREFIX_CS/SS/DS/ES/FS/GS above.
-	// prefix[2] indicates operand-size override (X86_PREFIX_OPSIZE)
-	// prefix[3] indicates address-size override (X86_PREFIX_ADDRSIZE)
+	/// Instruction prefix, which can be up to 4 bytes.
+	/// A prefix byte gets value 0 when irrelevant.
+	/// prefix[0] indicates REP/REPNE/LOCK prefix (See X86_PREFIX_REP/REPNE/LOCK above)
+	/// prefix[1] indicates segment override (irrelevant for x86_64):
+	/// See X86_PREFIX_CS/SS/DS/ES/FS/GS above.
+	/// prefix[2] indicates operand-size override (X86_PREFIX_OPSIZE)
+	/// prefix[3] indicates address-size override (X86_PREFIX_ADDRSIZE)
 	uint8_t prefix[4];
 
-	// Instruction opcode, which can be from 1 to 4 bytes in size.
-	// This contains VEX opcode as well.
-	// An trailing opcode byte gets value 0 when irrelevant.
+	/// Instruction opcode, which can be from 1 to 4 bytes in size.
+	/// This contains VEX opcode as well.
+	/// An trailing opcode byte gets value 0 when irrelevant.
 	uint8_t opcode[4];
 
-	// REX prefix: only a non-zero value is relevant for x86_64
+	/// REX prefix: only a non-zero value is relevant for x86_64
 	uint8_t rex;
 
-	// Address size, which can be overridden with above prefix[5].
+	/// Address size, which can be overridden with above prefix[5].
 	uint8_t addr_size;
 
-	// ModR/M byte
+	/// ModR/M byte
 	uint8_t modrm;
 
-	// SIB value, or 0 when irrelevant.
+	/// SIB value, or 0 when irrelevant.
 	uint8_t sib;
 
-	// Displacement value, valid if encoding.disp_offset != 0
+	/// Displacement value, valid if encoding.disp_offset != 0
 	int64_t disp;
 
-	// SIB index register, or X86_REG_INVALID when irrelevant.
+	/// SIB index register, or X86_REG_INVALID when irrelevant.
 	x86_reg sib_index;
-	// SIB scale, only applicable if sib_index is valid.
+	/// SIB scale, only applicable if sib_index is valid.
 	int8_t sib_scale;
-	// SIB base register, or X86_REG_INVALID when irrelevant.
+	/// SIB base register, or X86_REG_INVALID when irrelevant.
 	x86_reg sib_base;
 
-	// XOP Code Condition
+	/// XOP Code Condition
 	x86_xop_cc xop_cc;
 
-	// SSE Code Condition
+	/// SSE Code Condition
 	x86_sse_cc sse_cc;
 
-	// AVX Code Condition
+	/// AVX Code Condition
 	x86_avx_cc avx_cc;
 
-	// AVX Suppress all Exception
+	/// AVX Suppress all Exception
 	bool avx_sae;
 
-	// AVX static rounding mode
+	/// AVX static rounding mode
 	x86_avx_rm avx_rm;
 
 	
 	union {
-		// EFLAGS updated by this instruction.
-		// This can be formed from OR combination of X86_EFLAGS_* symbols in x86.h
+		/// EFLAGS updated by this instruction.
+		/// This can be formed from OR combination of X86_EFLAGS_* symbols in x86.h
 		uint64_t eflags;
-		// FPU_FLAGS updated by this instruction.
-		// This can be formed from OR combination of X86_FPU_FLAGS_* symbols in x86.h
+		/// FPU_FLAGS updated by this instruction.
+		/// This can be formed from OR combination of X86_FPU_FLAGS_* symbols in x86.h
 		uint64_t fpu_flags;
 	};
 
-	// Number of operands of this instruction,
-	// or 0 when instruction has no operand.
+	/// Number of operands of this instruction,
+	/// or 0 when instruction has no operand.
 	uint8_t op_count;
 
-	cs_x86_op operands[8];	// operands for this instruction.
+	cs_x86_op operands[8];	///< operands for this instruction.
 
-	cs_x86_encoding encoding;  // encoding information
+	cs_x86_encoding encoding;  ///< encoding information
 } cs_x86;
 
-//> X86 instructions
+/// X86 instructions
 typedef enum x86_insn {
 	X86_INS_INVALID = 0,
 
@@ -1898,28 +1898,28 @@ typedef enum x86_insn {
 	X86_INS_ENDING, // mark the end of the list of insn
 } x86_insn;
 
-//> Group of X86 instructions
+/// Group of X86 instructions
 typedef enum  x86_insn_group {
-	X86_GRP_INVALID = 0, // = CS_GRP_INVALID
+	X86_GRP_INVALID = 0, ///< = CS_GRP_INVALID
 
-	//> Generic groups
+	// Generic groups
 	// all jump instructions (conditional+direct+indirect jumps)
-	X86_GRP_JUMP,	// = CS_GRP_JUMP
+	X86_GRP_JUMP,	///< = CS_GRP_JUMP
 	// all call instructions
-	X86_GRP_CALL,	// = CS_GRP_CALL
+	X86_GRP_CALL,	///< = CS_GRP_CALL
 	// all return instructions
-	X86_GRP_RET,	// = CS_GRP_RET
+	X86_GRP_RET,	///< = CS_GRP_RET
 	// all interrupt instructions (int+syscall)
-	X86_GRP_INT,	// = CS_GRP_INT
+	X86_GRP_INT,	///< = CS_GRP_INT
 	// all interrupt return instructions
-	X86_GRP_IRET,	// = CS_GRP_IRET
+	X86_GRP_IRET,	///< = CS_GRP_IRET
 	// all privileged instructions
-	X86_GRP_PRIVILEGE,	// = CS_GRP_PRIVILEGE
+	X86_GRP_PRIVILEGE,	///< = CS_GRP_PRIVILEGE
 	// all relative branching instructions
-	X86_GRP_BRANCH_RELATIVE, // = CS_GRP_BRANCH_RELATIVE
+	X86_GRP_BRANCH_RELATIVE, ///< = CS_GRP_BRANCH_RELATIVE
 
-	//> Architecture-specific groups
-	X86_GRP_VM = 128,	// all virtualization instructions (VT-x + AMD-V)
+	// Architecture-specific groups
+	X86_GRP_VM = 128,	///< all virtualization instructions (VT-x + AMD-V)
 	X86_GRP_3DNOW,
 	X86_GRP_AES,
 	X86_GRP_ADX,

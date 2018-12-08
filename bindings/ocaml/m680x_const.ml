@@ -1,8 +1,6 @@
 (* For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [m680x_const.ml] *)
 let _M680X_OPERAND_COUNT = 9;;
 
-(* M680X registers and special registers *)
-
 let _M680X_REG_INVALID = 0;;
 let _M680X_REG_A = 1;;
 let _M680X_REG_B = 2;;
@@ -27,8 +25,6 @@ let _M680X_REG_TMP2 = 20;;
 let _M680X_REG_TMP3 = 21;;
 let _M680X_REG_ENDING = 22;;
 
-(* Operand type for instruction's operands *)
-
 let _M680X_OP_INVALID = 0;;
 let _M680X_OP_REGISTER = 1;;
 let _M680X_OP_IMMEDIATE = 2;;
@@ -38,26 +34,16 @@ let _M680X_OP_DIRECT = 5;;
 let _M680X_OP_RELATIVE = 6;;
 let _M680X_OP_CONSTANT = 7;;
 
-(* Supported bit values for mem.idx.offset_bits *)
-
 let _M680X_OFFSET_NONE = 0;;
 let _M680X_OFFSET_BITS_5 = 5;;
 let _M680X_OFFSET_BITS_8 = 8;;
 let _M680X_OFFSET_BITS_9 = 9;;
 let _M680X_OFFSET_BITS_16 = 16;;
-
-(* Supported bit flags for mem.idx.flags *)
-
-(* These flags can be comined *)
 let _M680X_IDX_INDIRECT = 1;;
 let _M680X_IDX_NO_COMMA = 2;;
 let _M680X_IDX_POST_INC_DEC = 4;;
 
-(* Group of M680X instructions *)
-
 let _M680X_GRP_INVALID = 0;;
-
-(* Generic groups *)
 let _M680X_GRP_JUMP = 1;;
 let _M680X_GRP_CALL = 2;;
 let _M680X_GRP_RET = 3;;
@@ -65,15 +51,9 @@ let _M680X_GRP_INT = 4;;
 let _M680X_GRP_IRET = 5;;
 let _M680X_GRP_PRIV = 6;;
 let _M680X_GRP_BRAREL = 7;;
-
-(* Architecture-specific groups *)
 let _M680X_GRP_ENDING = 8;;
-
-(* M680X instruction flags: *)
 let _M680X_FIRST_OP_IN_MNEM = 1;;
 let _M680X_SECOND_OP_IN_MNEM = 2;;
-
-(* M680X instruction IDs *)
 
 let _M680X_INS_INVLD = 0;;
 let _M680X_INS_ABA = 1;;

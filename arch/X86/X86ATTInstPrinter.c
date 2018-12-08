@@ -27,6 +27,7 @@
 #include <ctype.h>
 #endif
 #include <capstone/platform.h>
+
 #if defined(CAPSTONE_HAS_OSXKERNEL)
 #include <Availability.h>
 #include <libkern/libkern.h>
@@ -659,6 +660,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		uint8_t encsize;
 		int64_t imm = MCOperand_getImm(Op);
 		uint8_t opsize = X86_immediate_size(MCInst_getOpcode(MI), &encsize);
+
 		if (opsize == 1)    // print 1 byte immediate in positive form
 			imm = imm & 0xff;
 
@@ -794,17 +796,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = DispVal;
 		if (DispVal) {
 			if (MCOperand_getReg(IndexReg) || MCOperand_getReg(BaseReg)) {
-				if (DispVal < 0) {
-					if (DispVal <  -HEX_THRESHOLD)
-						SStream_concat(O, "-0x%"PRIx64, -DispVal);
-					else
-						SStream_concat(O, "-%"PRIu64, -DispVal);
-				} else {
-					if (DispVal > HEX_THRESHOLD)
-						SStream_concat(O, "0x%"PRIx64, DispVal);
-					else
-						SStream_concat(O, "%"PRIu64, DispVal);
-				}
+				printInt64(O, DispVal);
 			} else {
 				// only immediate as address of memory
 				if (DispVal < 0) {
@@ -889,7 +881,7 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 
 	// perhaps this instruction does not need printer
 	if (MI->assembly[0]) {
-		strncpy(OS->buffer, MI->assembly, sizeof(MI->assembly));
+		strncpy(OS->buffer, MI->assembly, sizeof(OS->buffer));
 		return;
 	}
 
