@@ -286,18 +286,20 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
             } else {
                 snprintf(CapstoneAssemblyText, 80, "\t%s\t%s", insn->mnemonic, insn->op_str);
             }
-            //TODO normalize_hex
             normalize_hex(CapstoneAssemblyText);
             if (strcmp(CapstoneAssemblyText, LLVMAssemblyText) != 0) {
                 printf("capstone %s != llvm %s\n", CapstoneAssemblyText, LLVMAssemblyText);
                 abort();
             } else {
+                //TODO remove
                 printf("capstone %s == llvm %s\n", CapstoneAssemblyText, LLVMAssemblyText);
             }
-        } else {
+        } /* llvm accepts perfix only such as repne to be valid instructions
+           see https://bugs.llvm.org/show_bug.cgi?id=39915
+        else {
             printf("capstone failed with llvm %s\n", LLVMAssemblyText);
             abort();
-        }
+        } */
     cs_free(insn, 1);
     cs_close(&handle);
 
