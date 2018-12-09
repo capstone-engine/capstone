@@ -222,9 +222,7 @@ static void normalize_hex(char *s) {
         i++;
     }
     if (state == 2) {
-        sprintf(scopy+j, "%zu", hex);
-        scopy[j] = s[i];
-        j++;
+        j += sprintf(scopy+j, "%zu", hex);
     }
     scopy[j] = 0;
     strcpy(s, scopy);
