@@ -85,6 +85,10 @@ static void test()
 #define EVM_CODE "\x60\x61"
 #endif
 
+#ifdef CAPSTONE_HAS_MOS65XX
+#define MOS65XX_CODE "\x0d\x34\x12\x00\x81\x65\x87\x6c\x01\x00\x85\xFF\x10\x00\x19\x42\x42\x00\x49\x42"
+#endif
+
 
 	struct platform {
 		cs_arch arch;
@@ -313,6 +317,15 @@ static void test()
 			(unsigned char*)EVM_CODE,
 			sizeof(EVM_CODE) - 1,
 			"EVM",
+		},
+#endif
+#ifdef CAPSTONE_HAS_MOS65XX
+		{
+			CS_ARCH_MOS65XX,
+			0,
+			(unsigned char *)MOS65XX_CODE,
+			sizeof(MOS65XX_CODE) - 1,
+			"MOS65XX"
 		},
 #endif
 	};
