@@ -38,16 +38,26 @@ ARCHIVE = $(LIBDIR)/lib$(LIBNAME).$(AR_EXT)
 
 .PHONY: all clean
 
-SOURCES = fuzz_disasm.c drivermc.c fuzz_harness.c
+SOURCES = fuzz_disasm.c drivermc.c fuzz_harness.c driverbin.c
 OBJS = $(addprefix $(OBJDIR)/,$(SOURCES:.c=.o))
 BINARY = $(addprefix $(TESTDIR)/,fuzz_disasm$(BIN_EXT))
+BINARYBIN = $(addprefix $(TESTDIR)/,fuzz_bindisasm$(BIN_EXT))
 
-all: $(BINARY)
+all: $(BINARY) $(BINARYBIN)
 
 clean:
-	rm -rf fuzz_harness $(OBJS) $(BINARY) $(OBJDIR)/lib$(LIBNAME).* $(OBJDIR)/$(LIBNAME).*
+	rm -rf fuzz_harness $(OBJS) $(BINARY) $(BINARYBIN) $(OBJDIR)/lib$(LIBNAME).* $(OBJDIR)/$(LIBNAME).*
 
 $(BINARY): fuzz_disasm.o drivermc.o
+	@mkdir -p $(@D)
+ifeq ($(V),0)
+	$(call log,LINK,$(notdir $@))
+	@$(link-static)
+else
+	$(link-static)
+endif
+
+$(BINARYBIN): fuzz_disasm.o driverbin.o
 	@mkdir -p $(@D)
 ifeq ($(V),0)
 	$(call log,LINK,$(notdir $@))
