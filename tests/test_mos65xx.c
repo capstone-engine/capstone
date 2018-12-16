@@ -76,7 +76,7 @@ static void print_insn_detail(cs_insn *ins)
 
 	mos65xx = &(ins->detail->mos65xx);
 
-	printf("insn_detail\n");
+	// printf("insn_detail\n");
 	printf("\taddress mode: %s\n", get_am_name(mos65xx->am));
 	printf("\tmodifies flags: %s\n", mos65xx->modifies_flags ? "true": "false");
 
