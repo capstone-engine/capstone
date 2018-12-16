@@ -130,7 +130,7 @@ __all__ = [
 
 # API version
 CS_API_MAJOR = 4
-CS_API_MINOR = 0
+CS_API_MINOR = 1
 
 # Package version
 CS_VERSION_MAJOR = CS_API_MAJOR
