@@ -12,6 +12,7 @@ Capstone source is organized as followings.
 │   ├── PowerPC     <- PowerPC engine
 │   ├── Sparc       <- Sparc engine
 │   ├── SystemZ     <- SystemZ engine
+│   ├── TMS320C64x  <- TMS320C64x engine
 │   ├── X86         <- X86 engine
 │   └── XCore       <- XCore engine
 ├── bindings        <- all bindings are under this dir
