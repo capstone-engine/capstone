@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.6)
 project(capstone)
 
 set(VERSION_MAJOR 4)
-set(VERSION_MINOR 0)
+set(VERSION_MINOR 1)
 set(VERSION_PATCH 0)
 
 if(POLICY CMP0042)
