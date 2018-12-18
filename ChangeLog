@@ -1,6 +1,57 @@
 This file details the changelog of Capstone.
 
 ---------------------------------
+Version 4.0: December 18th, 2018
+
+
+[ Core ]
+
+- New APIs: cs_regs_access()
+- Add new options for cs_option(): CS_OPT_MNEMONIC & CS_OPT_UNSIGNED & CS_OPT_SYNTAX_MASM.
+- Various updates & bugfixes for all architectures.
+- Add 4 new architectures: EVM, M68K, M680X & TMS320C64x.
+- Add new group types: CS_GRP_PRIVILEGE & CS_GRP_BRANCH_RELATIVE.
+- Add new error types: CS_ERR_X86_MASM.
+
+
+[ X86 ]
+
+- Add XOP code condition type in x86_xop_cc.
+- Add some info on encoding to cs_x86 in cs_x86_encoding.
+- Add register flags update in cs_x86.{eflags, fpu_flags}
+- Change cs_x86.disp type from int32_t to int64_t.
+- Add new groups: X86_GRP_VM & X86_GRP_FPU.
+- Lots of new instructions (AVX)
+
+
+[ ARM64 ]
+
+- Add instruction ARM64_INS_NEGS & ARM64_INS_NGCS.
+
+
+[ Mips ]
+
+- Add mode CS_MODE_MIPS2.
+
+
+[ PPC ]
+
+- Change cs_ppc_op.imm type from int32_t to int64_t.
+- Add new groups: PPC_GRP_ICBT, PPC_GRP_P8ALTIVEC, PPC_GRP_P8VECTOR & PPC_GRP_QPX.
+- Lots of new instructions (QPX among them)
+
+
+[ Sparc ]
+
+- Change cs_sparc_op.imm type from int32_t to int64_t.
+
+
+[ Binding ]
+
+- New bindings: PowerShell & VB6
+
+
+---------------------------------
 Version 3.0.5: July 18th, 2018
 
 
