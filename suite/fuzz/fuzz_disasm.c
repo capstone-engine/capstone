@@ -175,6 +175,14 @@ struct platform platforms[] = {
         (cs_mode)0,
         "EVM"
     },
+#ifdef CAPSTONE_HAS_MOS65XX
+    {
+        //item 26
+        CS_ARCH_MOS65XX,
+        (cs_mode)0,
+        "MOS65XX"
+    },
+#endif
 };
 
 int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
