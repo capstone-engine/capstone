@@ -17,8 +17,8 @@
 
 #ifndef CAPSTONE_DIET
 static const char s_reg_names[][10] = {
-	"<invalid>", "A", "B", "E", "F", "0", "D", "W", "CC", "DP", "MD",
-	"HX", "H", "X", "Y", "S", "U", "V", "Q", "PC", "TMP2", "TMP3",
+	"<invalid>", "a", "b", "e", "f", "0", "d", "w", "cc", "dp", "md",
+	"hx", "h", "x", "y", "s", "u", "v", "q", "pc", "tmp2", "tmp3",
 };
 
 static const char s_instruction_names[][6] = {
@@ -269,9 +269,9 @@ void M680X_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 
 	if (info->insn == M680X_INS_INVLD || info->insn == M680X_INS_ILLGL) {
 		if (m680x->op_count)
-			SStream_concat(O, "FCB $%02X", m680x->operands[0].imm);
+			SStream_concat(O, "fcb $%02X", m680x->operands[0].imm);
 		else
-			SStream_concat(O, "FCB $<unknown>");
+			SStream_concat(O, "fcb $<unknown>");
 
 		return;
 	}
