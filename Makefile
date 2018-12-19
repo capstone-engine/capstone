@@ -402,10 +402,10 @@ else
 endif
 
 install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
-	mkdir -p $(DESTDIR)$(LIBDIR)
-	$(call install-library,$(DESTDIR)$(LIBDIR))
+	mkdir -p $(LIBDIR)
+	$(call install-library,$(LIBDIR))
 ifeq ($(CAPSTONE_STATIC),yes)
-	$(INSTALL_DATA) $(ARCHIVE) $(DESTDIR)$(LIBDIR)
+	$(INSTALL_DATA) $(ARCHIVE) $(LIBDIR)
 endif
 	mkdir -p $(DESTDIR)$(INCDIR)/$(LIBNAME)
 	$(INSTALL_DATA) include/capstone/*.h $(DESTDIR)$(INCDIR)/$(LIBNAME)
