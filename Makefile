@@ -485,7 +485,11 @@ fuzztest:
 	./suite/fuzz/fuzz_disasm $(FUZZ_INPUTS)
 
 fuzzallcorp:
+ifneq ($(wildcard suite/fuzz/corpus-libFuzzer-capstone_fuzz_disasmnext-latest),)
 	./suite/fuzz/fuzz_bindisasm suite/fuzz/corpus-libFuzzer-capstone_fuzz_disasmnext-latest/
+else
+	@echo "Skipping tests on whole corpus"
+endif
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(@D)
