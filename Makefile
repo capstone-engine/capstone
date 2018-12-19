@@ -418,7 +418,7 @@ uninstall:
 	rm -rf $(DESTDIR)$(INCDIR)/$(LIBNAME)
 	rm -f $(DESTDIR)$(LIBDIR)/lib$(LIBNAME).*
 	rm -f $(PKGCFGDIR)/$(LIBNAME).pc
-	rm -f $(DESTDIR)$(BINDIR)/cstool
+	rm -f $(BINDIR)/cstool
 
 clean:
 	rm -f $(LIBOBJ)
