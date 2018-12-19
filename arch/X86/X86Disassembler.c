@@ -996,13 +996,14 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 				}
 				return false;
 			case 4: {
-						unsigned char b1 = 0, b2 = 0, b3 = 0, b4 = 0;
+						if (handle->mode != CS_MODE_16) {
+							unsigned char b1 = 0, b2 = 0, b3 = 0, b4 = 0;
 
-						reader(&info, &b1, address);
-						reader(&info, &b2, address + 1);
-						reader(&info, &b3, address + 2);
-						reader(&info, &b4, address + 3);
-						if (handle->mode & CS_MODE_64) {
+							reader(&info, &b1, address);
+							reader(&info, &b2, address + 1);
+							reader(&info, &b3, address + 2);
+							reader(&info, &b4, address + 3);
+
 							if (b1 == 0xf3 && b2 == 0x0f && b3 == 0x1e && b4 == 0xfa) {
 								instr->Opcode = X86_ENDBR64;
 								instr->OpcodePub = X86_INS_ENDBR64;
@@ -1014,9 +1015,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 									instr->flat_insn->detail->x86.opcode[3] = b4;
 								}
 								return true;
-							}
-						} else if (handle->mode & CS_MODE_32) {
-							if (b1 == 0xf3 && b2 == 0x0f && b3 == 0x1e && b4 == 0xfb) {
+							} else if (b1 == 0xf3 && b2 == 0x0f && b3 == 0x1e && b4 == 0xfb) {
 								instr->Opcode = X86_ENDBR32;
 								instr->OpcodePub = X86_INS_ENDBR32;
 								strncpy(instr->assembly, "endbr32", 8);
