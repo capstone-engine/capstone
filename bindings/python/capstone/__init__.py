@@ -916,6 +916,29 @@ class Cs(object):
         self._skipdata_cb = (_cb, _ud)
 
 
+    @property
+    def skipdata_mnem(self):
+        return self._skipdata_mnem
+
+
+    @skipdata_mnem.setter
+    def skipdata_mnem(self, mnem):
+        self.skipdata_setup = (mnem,) + self._skipdata_cb
+
+
+    @property
+    def skipdata_cb(self):
+        return self._skipdata_cb
+
+
+    @skipdata_cb.setter
+    def skipdata_cb(self, val):
+        if not isinstance(val, tuple):
+            val = (val, None)
+        func, data = val
+        self.skipdata_setup = (self._skipdata_mnem, func, data)
+
+
     # customize instruction mnemonic
     def mnemonic_setup(self, id, mnem):
         _mnem_opt = _cs_opt_mnem()
