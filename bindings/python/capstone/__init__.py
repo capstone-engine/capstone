@@ -828,6 +828,7 @@ class Cs(object):
 
         # default mnemonic for SKIPDATA
         self._skipdata_mnem = ".byte"
+        self._skipdata_cb = (None, None)
         self._skipdata = False
 
 
@@ -897,7 +898,7 @@ class Cs(object):
 
     @property
     def skipdata_setup(self):
-        return
+        return (self._skipdata_mnem,) + self._skipdata_cb
 
 
     @skipdata_setup.setter
@@ -911,7 +912,8 @@ class Cs(object):
         if status != CS_ERR_OK:
             raise CsError(status)
 
-        self._skipdata_opt = _skipdata_opt
+        self._skipdata_mnem = _mnem
+        self._skipdata_cb = (_cb, _ud)
 
 
     # customize instruction mnemonic
