@@ -39,13 +39,13 @@ def test_class():
 
             md.skipdata = True
 
-            # Default "data" instruction's name is ".byte". To rename it to "db", just uncomment
+            # Default "data" instruction's name is ".byte". To rename it to "db", just use
             # the code below.
-            # md.skipdata_setup = ("db", None, None)
+            md.skipdata_setup = ("db", None, None)
             # NOTE: This example ignores SKIPDATA's callback (first None) & user_data (second None)
 
-            # To customize the SKIPDATA callback, uncomment the line below.
-            # md.skipdata_setup = (".db", testcb, None)
+            # To customize the SKIPDATA callback, use the line below.
+            md.skipdata_setup = (".db", testcb, None)
 
             for insn in md.disasm(code, 0x1000):
                 #bytes = binascii.hexlify(insn.bytes)
