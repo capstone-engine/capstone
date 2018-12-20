@@ -44,7 +44,7 @@ BIN_EXT = .exe
 AR_EXT = lib
 else
 # mingw?
-IS_MINGW := $(shell $(CC) --version | grep -i mingw | wc -l)
+IS_MINGW := $(shell $(CC) --version 2>/dev/null | grep -i "\(mingw\|MSYS\)" | wc -l)
 ifeq ($(IS_MINGW),1)
 CFLAGS := $(CFLAGS:-fPIC=)
 BIN_EXT = .exe
