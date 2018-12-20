@@ -43,9 +43,15 @@ def test_class():
             # the code below.
             md.skipdata_setup = ("db", None, None)
             # NOTE: This example ignores SKIPDATA's callback (first None) & user_data (second None)
+            # Can also use dedicated setter
+            md.skipdata_mnem = 'db'
 
             # To customize the SKIPDATA callback, use the line below.
             md.skipdata_setup = (".db", testcb, None)
+            # Or use dedicated setter
+            md.skipdata_cb = testcb
+            # Or with custom parameter
+            md.skipdata_cb = (testcb, 42)
 
             for insn in md.disasm(code, 0x1000):
                 #bytes = binascii.hexlify(insn.bytes)
