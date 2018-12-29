@@ -110,6 +110,8 @@ test_arm_regression
 test_arm_regression.o
 fuzz_harness
 test_iter_benchmark
+fuzz_bindisasm
+fuzz_disasm
 
 
 *.s

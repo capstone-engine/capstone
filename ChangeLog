@@ -1,105 +1,55 @@
 This file details the changelog of Capstone.
 
-[ Arm ]
-
-- Fix a bug where Arm.Operand is wrongly calculated for the second and
-  following operands
-- Fix a bug where Arm.OpInfo.memBarrier and Arm.OpInfo.op is wrongly
-  calculated
-
-[ Bindings ]
-
-- Java; add Capstone.strerror() and CsInsn.regsAccess().
-
 ---------------------------------
-Version 3.0.2: March 11th, 2015
+Version 4.0: December 18th, 2018
 
 
-[ Library ]
+[ Core ]
 
-- On *nix, only export symbols that are part of the API (instead of all
-  the internal symbols).
+- New APIs: cs_regs_access()
+- Add new options for cs_option(): CS_OPT_MNEMONIC & CS_OPT_UNSIGNED & CS_OPT_SYNTAX_MASM.
+- Various updates & bugfixes for all architectures.
+- Add 4 new architectures: EVM, M68K, M680X & TMS320C64x.
+- Add new group types: CS_GRP_PRIVILEGE & CS_GRP_BRANCH_RELATIVE.
+- Add new error types: CS_ERR_X86_MASM.
 
 
 [ X86 ]
 
-- Do not consider 0xF2 as REPNE prefix if it is a part of instruction encoding.
-- Fix implicit registers read/written & instruction groups of some instructions.
-- More flexible on the order of prefixes, so better handle some tricky
-  instructions.
-- REPNE prefix can go with STOS & MOVS instructions.
-- Fix a compilation bug for X86_REDUCE mode.
-- Fix operand size of instructions with operand PTR []
+- Add XOP code condition type in x86_xop_cc.
+- Add some info on encoding to cs_x86 in cs_x86_encoding.
+- Add register flags update in cs_x86.{eflags, fpu_flags}
+- Change cs_x86.disp type from int32_t to int64_t.
+- Add new groups: X86_GRP_VM & X86_GRP_FPU.
+- Lots of new instructions (AVX)
 
 
-[ Arm ]
+[ ARM64 ]
 
-- Fix a bug where arm_op_mem.disp is wrongly calculated (in DETAIL mode).
-- Fix a bug on handling the If-Then block.
+- Add instruction ARM64_INS_NEGS & ARM64_INS_NGCS.
 
 
 [ Mips ]
 
-- Sanity check for the input size for MIPS64 mode.
+- Add mode CS_MODE_MIPS2.
 
 
-[ MSVC ]
+[ PPC ]
 
-- Compile capstone.dll with static runtime MSVCR built in.
-
-
-[ Python binding ]
-
-- Fix a compiling issue of Cython binding with gcc 4.9.
-
----------------------------------
-Version 3.0.1: February 03rd, 2015
-
-[ X86 ]
-
-- Properly handle LOCK, REP, REPE & REPNE prefixes.
-- Handle undocumented immediates for SSE's (V)CMPPS/PD/SS/SD instructions.
-- Print LJUMP/LCALL without * as prefix for Intel syntax.
-- Handle REX prefix properly for segment/MMX related instructions (x86_64).
-- Instruction with length > 15 is consider invalid.
-- Handle some tricky encodings for instructions MOVSXD, FXCH, FCOM, FCOMP,
-  FSTP, FSTPNCE, NOP.
-- Handle some tricky code for some X86_64 instructions with REX prefix.
-- Add missing operands in detail mode for PUSH , POP , IN/OUT reg, reg
-- MOV32ms & MOV32sm should reference word rather than dword.
+- Change cs_ppc_op.imm type from int32_t to int64_t.
+- Add new groups: PPC_GRP_ICBT, PPC_GRP_P8ALTIVEC, PPC_GRP_P8VECTOR & PPC_GRP_QPX.
+- Lots of new instructions (QPX among them)
 
 
-[ Arm64 ]
+[ Sparc ]
 
-- BL & BLR instructions do not read SP register.
-- Print absolute (rather than relative) address for instructions B, BL,
-  CBNZ, ADR.
+- Change cs_sparc_op.imm type from int32_t to int64_t.
 
 
-[ Arm ]
+[ Binding ]
 
-- Instructions ADC & SBC do not update flags.
-- BL & BLX do not read SP, but PC register.
-- Alias LDR instruction with operands [sp], 4 to POP.
-- Print immediate operand of MVN instruction in positive hexadecimal form.
+- New bindings: PowerShell & VB6
 
-
-[ PowerPC ]
-
-- Fix some compilation bugs when DIET mode is enable.
-- Populate SLWI/SRWI instruction details with SH operand.
-
-
-[ Python binding ]
-
-- Fix a Cython bug when CsInsn.bytes returns a shorten array of bytes.
-- Fixed a memory leak for Cython disasm functions when we immaturely quit
-  the enumeration of disassembled instructions.
-- Fix a NULL memory access issue when SKIPDATA & Detail modes are enable
-  at the same time.
-- Fix a memory leaking bug when when we stop enumeration over the disassembled
-  instructions prematurely.
-- Export generic operand types & groups (CS_OP_xxx & CS_GRP_xxx).
 
 ---------------------------------
 Version 3.0.5: July 18th, 2018
