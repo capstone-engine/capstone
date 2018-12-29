@@ -379,7 +379,91 @@ else
 endif
 endif
 
-$(LIBOBJ): config.mk *.h include/capstone/*.h
+ICH=include/capstone/config.h
+
+$(LIBOBJ): config.mk *.h include/capstone/*.h $(ICH)
+
+.PHONY: $(ICH)
+
+$(ICH):
+	@echo "#ifndef CS_CONFIG_H" > $(ICH)
+	@echo "#define CS_CONFIG_H" >> $(ICH)
+ifeq ($(CAPSTONE_HAS_OSXKERNEL), yes)
+	@echo "#define CS_HAS_OSXKERNEL 1" >> $(ICH)
+else
+	@echo "#define CS_HAS_OSXKERNEL 0" >> $(ICH)
+endif
+ifeq ($(CAPSTONE_USE_SYS_DYN_MEM), yes)
+	@echo "#define CS_HAS_DYN_MEM 1" >> $(ICH)
+else
+	@echo "#define CS_HAS_DYN_MEM 0" >> $(ICH)
+endif
+ifneq (,$(findstring arm,$(CAPSTONE_ARCHS)))
+	@echo "#define CS_HAS_ARM 1" >> $(ICH)
+else
+	@echo "#define CS_HAS_ARM 0" >> $(ICH)
+endif
+ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
+	@echo "#define CS_HAS_ARM64 1" >> $(ICH)
+else
+	@echo "#define CS_HAS_ARM64 0" >> $(ICH)
+endif
+ifneq (,$(findstring m68k,$(CAPSTONE_ARCHS)))
+	@echo "#define CS_HAS_M68K 1" >> $(ICH)
+else
+	@echo "#define CS_HAS_M68K 0" >> $(ICH)
+endif
+ifneq (,$(findstring mips,$(CAPSTONE_ARCHS)))
+	@echo "#define CS_HAS_MIPS 1" >> $(ICH)
+else
+	@echo "#define CS_HAS_MIPS 0" >> $(ICH)
+endif
+ifneq (,$(findstring powerpc,$(CAPSTONE_ARCHS)))
+	@echo "#define CS_HAS_PPC 1" >> $(ICH)
+else
+	@echo "#define CS_HAS_PPC 0" >> $(ICH)
+endif
+ifneq (,$(findstring sparc,$(CAPSTONE_ARCHS)))
+	@echo "#define CS_HAS_SPARC 1" >> $(ICH)
+else
+	@echo "#define CS_HAS_SPARC 0" >> $(ICH)
+endif
+ifneq (,$(findstring sysz,$(CAPSTONE_ARCHS)))
+	@echo "#define CS_HAS_SYSZ 1" >> $(ICH)
+else
+	@echo "#define CS_HAS_SYSZ 0" >> $(ICH)
+endif
+ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
+	@echo "#define CS_HAS_X86 1" >> $(ICH)
+else
+	@echo "#define CS_HAS_X86 0" >> $(ICH)
+endif
+ifneq (,$(findstring xcore,$(CAPSTONE_ARCHS)))
+	@echo "#define CS_HAS_XCORE 1" >> $(ICH)
+else
+	@echo "#define CS_HAS_XCORE 0" >> $(ICH)
+endif
+ifneq (,$(findstring tms320,$(CAPSTONE_ARCHS)))
+	@echo "#define CS_HAS_TMS320C64X 1" >> $(ICH)
+else
+	@echo "#define CS_HAS_TMS320C64X 0" >> $(ICH)
+endif
+ifneq (,$(findstring m680x,$(CAPSTONE_ARCHS)))
+	@echo "#define CS_HAS_M680X 1" >> $(ICH)
+else
+	@echo "#define CS_HAS_M680X 0" >> $(ICH)
+endif
+ifneq (,$(findstring evm,$(CAPSTONE_ARCHS)))
+	@echo "#define CS_HAS_EVM 1" >> $(ICH)
+else
+	@echo "#define CS_HAS_EVM 0" >> $(ICH)
+endif
+ifneq (,$(findstring mos65xx,$(CAPSTONE_ARCHS)))
+	@echo "#define CS_HAS_MOS65XX 1" >> $(ICH)
+else
+	@echo "#define CS_HAS_MOS65XX 0" >> $(ICH)
+endif
+	@echo "#endif" >> $(ICH)
 
 $(LIBOBJ_ARM): $(DEP_ARM)
 $(LIBOBJ_ARM64): $(DEP_ARM64)
