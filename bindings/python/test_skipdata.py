@@ -49,11 +49,11 @@ def test_class():
             # To customize the SKIPDATA callback, use the line below.
             md.skipdata_setup = (".db", testcb, None)
             # Or use dedicated setter with custom parameter
-            md.skipdata_cb = (testcb, 42)
+            md.skipdata_callback = (testcb, 42)
             # Or provide just a function
-            md.skipdata_cb = testcb
+            md.skipdata_callback = testcb
             # Note that reading this property will always return a tuple
-            assert md.skipdata_cb == (testcb, None)
+            assert md.skipdata_callback == (testcb, None)
 
             for insn in md.disasm(code, 0x1000):
                 #bytes = binascii.hexlify(insn.bytes)
