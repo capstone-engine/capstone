@@ -927,12 +927,12 @@ class Cs(object):
 
 
     @property
-    def skipdata_cb(self):
+    def skipdata_callback(self):
         return self._skipdata_cb
 
 
-    @skipdata_cb.setter
-    def skipdata_cb(self, val):
+    @skipdata_callback.setter
+    def skipdata_callback(self, val):
         if not isinstance(val, tuple):
             val = (val, None)
         func, data = val
