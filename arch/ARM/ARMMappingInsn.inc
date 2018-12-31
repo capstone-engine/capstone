@@ -12940,7 +12940,7 @@
 {
 	ARM_tBX, ARM_INS_BX,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { ARM_REG_PC, 0 }, { ARM_GRP_THUMB, ARM_REG_PC, 0 }, 0, 1
+	{ 0 }, { ARM_REG_PC, 0 }, { ARM_GRP_THUMB, 0 }, 0, 1
 #endif
 },
 {
