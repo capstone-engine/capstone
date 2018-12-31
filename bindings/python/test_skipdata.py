@@ -53,7 +53,7 @@ def test_class():
             # Or provide just a function
             md.skipdata_cb = testcb
             # Note that reading this property will always return a tuple
-            assert md.skipdata_cb == (testcb, None), md.skipdata_cb
+            assert md.skipdata_cb == (testcb, None)
 
             for insn in md.disasm(code, 0x1000):
                 #bytes = binascii.hexlify(insn.bytes)
