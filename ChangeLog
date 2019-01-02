@@ -9,6 +9,11 @@ Version 4.x: **SETDATE**
 - Fix 4.0 regression: the `tbh [r0, r1, lsl #1]` instruction sets the operand.shift.value back again (see #1317)
 
 
+[ X86 ]
+
+- Fix: endbr32 and endbr64 instructions are now properly decoded in both CS_MODE_32 and CS_MODE_64  (#1129)
+
+
 ---------------------------------
 Version 4.0: December 18th, 2018
 
