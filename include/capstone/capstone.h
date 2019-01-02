@@ -329,7 +329,7 @@ typedef struct cs_insn {
 
 	/// Machine bytes of this instruction, with number of bytes indicated by @size above
 	/// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
-	uint8_t bytes[16];
+	uint8_t bytes[24];
 
 	/// Ascii text of instruction mnemonic
 	/// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
