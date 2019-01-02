@@ -373,6 +373,8 @@ static int getInstructionLength(mos65xx_address_mode am)
 		case MOS65XX_AM_INDY:
 		case MOS65XX_AM_IND:
 			return 3;
+		default:
+			return 1;
 	}
 }
 
