@@ -283,7 +283,7 @@ typedef struct cs_opt_skipdata {
 /// if cs_detail changes, in particular if a field is added after the union,
 /// then update arch/ARCH/ARCHDisassembler.c accordingly
 typedef struct cs_detail {
-	uint16_t regs_read[12]; ///< list of implicit registers read by this insn
+	uint16_t regs_read[16]; ///< list of implicit registers read by this insn
 	uint8_t regs_read_count; ///< number of implicit registers read by this insn
 
 	uint16_t regs_write[20]; ///< list of implicit registers modified by this insn
