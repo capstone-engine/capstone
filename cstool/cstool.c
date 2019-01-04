@@ -133,7 +133,7 @@ static uint8_t *preprocess(char *code, size_t *size)
 static void usage(char *prog)
 {
 	printf("Cstool for Capstone Disassembler Engine v%u.%u.%u\n\n", CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA);
-	printf("Syntax: %s [-u|-d] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
+	printf("Syntax: %s [-u|-d|-s] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
 	printf("\nThe following <arch+mode> options are supported:\n");
 
 	if (cs_support(CS_ARCH_X86)) {
@@ -210,7 +210,8 @@ static void usage(char *prog)
 
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
-	printf("        -u show immediates as unsigned\n\n");
+	printf("        -u show immediates as unsigned\n");
+	printf("        -s decode in SKIPDATA mode\n\n");
 }
 
 static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
@@ -282,10 +283,14 @@ int main(int argc, char **argv)
 	cs_arch arch = CS_ARCH_ALL;
 	bool detail_flag = false;
 	bool unsigned_flag = false;
+	bool skipdata = false;
 	int args_left;
 
-	while ((c = getopt (argc, argv, "udhv")) != -1) {
+	while ((c = getopt (argc, argv, "sudhv")) != -1) {
 		switch (c) {
+			case 's':
+				skipdata = true;
+				break;
 			case 'u':
 				unsigned_flag = true;
 				break;
@@ -335,6 +340,10 @@ int main(int argc, char **argv)
 				if (strstr (mode, "att")) {
 					cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
 				}
+
+				// turn on SKIPDATA mode
+				if (skipdata)
+					cs_option(handle, CS_OPT_SKIPDATA, CS_OPT_ON);
 			}
 			break;
 		}
