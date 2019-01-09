@@ -53,7 +53,7 @@ extern "C" {
 // Version for bleeding edge code of the Github's "next" branch.
 // Use this if you want the absolutely latest development code.
 // This version number will be bumped up whenever we have a new major change.
-#define CS_NEXT_VERSION 4
+#define CS_NEXT_VERSION 5
 
 // Capstone package version
 #define CS_VERSION_MAJOR CS_API_MAJOR
