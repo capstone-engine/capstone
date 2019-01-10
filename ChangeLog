@@ -1,17 +1,39 @@
 This file details the changelog of Capstone.
 
 ---------------------------------
-Version 4.0.1: **SETDATE**
+Version 4.0.1: January 10th, 2019
+
+
+[ Core ]
+
+- Fix some issues for packaging (Debian, Gentoo).
+- Better support for building with Mingw.
+- cstool has new option -s to turn on skipdata mode.
+- cstool -v now report build settings of the core.
+- Add suite/capstone_get_setup.c so users can integrate with their own code
+  to retrieve Capstone settings at build time.
 
 
 [ Arm ]
 
 - Fix 4.0 regression: the `tbh [r0, r1, lsl #1]` instruction sets the operand.shift.value back again (see #1317)
+- Remove ARM_REG_PC group for BX instruction.
 
 
 [ X86 ]
 
 - Fix: endbr32 and endbr64 instructions are now properly decoded in both CS_MODE_32 and CS_MODE_64  (#1129)
+
+
+[ M680X ]
+
+- Fix some issues reported by clang-analyzer (#1329).
+
+
+[ Python ]
+
+- Fix skipdata setup.
+- Add getter/setter for skipdata_mnem, skipdata_callback.
 
 
 ---------------------------------
