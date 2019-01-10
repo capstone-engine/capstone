@@ -57,7 +57,7 @@ else:
     VERSION = '{PKG_MAJOR}.{PKG_MINOR}.{PKG_EXTRA}'.format(**VERSION_DATA)
 
 if SYSTEM == 'darwin':
-    VERSIONED_LIBRARY_FILE = "libcapstone.4.dylib"
+    VERSIONED_LIBRARY_FILE = "libcapstone.{PKG_MAJOR}.dylib".format(**VERSION_DATA)
     LIBRARY_FILE = "libcapstone.dylib"
     STATIC_LIBRARY_FILE = 'libcapstone.a'
 elif SYSTEM in ('win32', 'cygwin'):
@@ -65,7 +65,7 @@ elif SYSTEM in ('win32', 'cygwin'):
     LIBRARY_FILE = "capstone.dll"
     STATIC_LIBRARY_FILE = None
 else:
-    VERSIONED_LIBRARY_FILE = "libcapstone.so.4"
+    VERSIONED_LIBRARY_FILE = "libcapstone.so.{PKG_MAJOR}".format(**VERSION_DATA)
     LIBRARY_FILE = "libcapstone.so"
     STATIC_LIBRARY_FILE = 'libcapstone.a'
 
