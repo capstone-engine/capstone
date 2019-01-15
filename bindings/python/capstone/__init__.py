@@ -128,14 +128,14 @@ __all__ = [
 
 # Capstone C interface
 
-# API version
-CS_API_MAJOR = 5
-CS_API_MINOR = 0
-
 # Package version
 __version__ = pkg_resources.get_distribution("capstone").version
 
 CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA = __version__.split('.')
+
+# API version
+CS_API_MAJOR = CS_VERSION_MAJOR
+CS_API_MINOR = CS_VERSION_MINOR
 
 # architectures
 CS_ARCH_ARM = 0
