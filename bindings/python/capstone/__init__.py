@@ -1,5 +1,5 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
-import os, sys
+import os, sys, pkg_resources
 from platform import system
 _python2 = sys.version_info[0] < 3
 if _python2:
@@ -133,11 +133,9 @@ CS_API_MAJOR = 5
 CS_API_MINOR = 0
 
 # Package version
-CS_VERSION_MAJOR = CS_API_MAJOR
-CS_VERSION_MINOR = CS_API_MINOR
-CS_VERSION_EXTRA = 0
+__version__ = pkg_resources.get_distribution("capstone").version
 
-__version__ = "%u.%u.%u" %(CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA)
+CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA = __version__.split('.')
 
 # architectures
 CS_ARCH_ARM = 0
