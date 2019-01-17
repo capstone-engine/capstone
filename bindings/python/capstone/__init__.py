@@ -134,7 +134,7 @@ CS_API_MINOR = 0
 # Package version
 CS_VERSION_MAJOR = CS_API_MAJOR
 CS_VERSION_MINOR = CS_API_MINOR
-CS_VERSION_EXTRA = 0
+CS_VERSION_EXTRA = 1
 
 __version__ = "%u.%u.%u" %(CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA)
 
@@ -828,6 +828,7 @@ class Cs(object):
 
         # default mnemonic for SKIPDATA
         self._skipdata_mnem = ".byte"
+        self._skipdata_cb = (None, None)
         self._skipdata = False
 
 
@@ -897,7 +898,7 @@ class Cs(object):
 
     @property
     def skipdata_setup(self):
-        return
+        return (self._skipdata_mnem,) + self._skipdata_cb
 
 
     @skipdata_setup.setter
@@ -905,13 +906,37 @@ class Cs(object):
         _skipdata_opt = _cs_opt_skipdata()
         _mnem, _cb, _ud = opt
         _skipdata_opt.mnemonic = _mnem.encode()
-        _skipdata_opt.callback = CS_SKIPDATA_CALLBACK(_cb)
+        _skipdata_opt.callback = CS_SKIPDATA_CALLBACK(_cb or 0)
         _skipdata_opt.user_data = ctypes.cast(_ud, ctypes.c_void_p)
         status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA_SETUP, ctypes.cast(ctypes.byref(_skipdata_opt), ctypes.c_void_p))
         if status != CS_ERR_OK:
             raise CsError(status)
 
-        self._skipdata_opt = _skipdata_opt
+        self._skipdata_mnem = _mnem
+        self._skipdata_cb = (_cb, _ud)
+
+
+    @property
+    def skipdata_mnem(self):
+        return self._skipdata_mnem
+
+
+    @skipdata_mnem.setter
+    def skipdata_mnem(self, mnem):
+        self.skipdata_setup = (mnem,) + self._skipdata_cb
+
+
+    @property
+    def skipdata_callback(self):
+        return self._skipdata_cb
+
+
+    @skipdata_callback.setter
+    def skipdata_callback(self, val):
+        if not isinstance(val, tuple):
+            val = (val, None)
+        func, data = val
+        self.skipdata_setup = (self._skipdata_mnem, func, data)
 
 
     # customize instruction mnemonic

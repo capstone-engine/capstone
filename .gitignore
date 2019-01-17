@@ -110,9 +110,11 @@ test_arm_regression
 test_arm_regression.o
 fuzz_harness
 test_iter_benchmark
+fuzz_bindisasm
+fuzz_disasm
+capstone_get_setup
 
 
 *.s
-.DS_Store
 
 cstool/cstool

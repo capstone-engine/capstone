@@ -349,8 +349,10 @@ ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
 	@V=$(V) CC=$(CC) $(MAKE) -C cstool
 ifndef BUILDDIR
 	$(MAKE) -C tests
+	$(MAKE) -C suite/fuzz
 else
 	$(MAKE) -C tests BUILDDIR=$(BLDIR)
+	$(MAKE) -C suite/fuzz BUILDDIR=$(BLDIR)
 endif
 	$(call install-library,$(BLDIR)/tests/)
 endif
@@ -400,23 +402,23 @@ else
 endif
 
 install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
-	mkdir -p $(DESTDIR)$(LIBDIR)
-	$(call install-library,$(DESTDIR)$(LIBDIR))
+	mkdir -p $(LIBDIR)
+	$(call install-library,$(LIBDIR))
 ifeq ($(CAPSTONE_STATIC),yes)
-	$(INSTALL_DATA) $(ARCHIVE) $(DESTDIR)$(LIBDIR)
+	$(INSTALL_DATA) $(ARCHIVE) $(LIBDIR)
 endif
 	mkdir -p $(DESTDIR)$(INCDIR)/$(LIBNAME)
 	$(INSTALL_DATA) include/capstone/*.h $(DESTDIR)$(INCDIR)/$(LIBNAME)
-	mkdir -p $(DESTDIR)$(PKGCFGDIR)
-	$(INSTALL_DATA) $(PKGCFGF) $(DESTDIR)$(PKGCFGDIR)
-	mkdir -p $(DESTDIR)$(BINDIR)
-	$(INSTALL_LIB) cstool/cstool $(DESTDIR)$(BINDIR)
+	mkdir -p $(PKGCFGDIR)
+	$(INSTALL_DATA) $(PKGCFGF) $(PKGCFGDIR)
+	mkdir -p $(BINDIR)
+	$(INSTALL_LIB) cstool/cstool $(BINDIR)
 
 uninstall:
 	rm -rf $(DESTDIR)$(INCDIR)/$(LIBNAME)
-	rm -f $(DESTDIR)$(LIBDIR)/lib$(LIBNAME).*
-	rm -f $(DESTDIR)$(PKGCFGDIR)/$(LIBNAME).pc
-	rm -f $(DESTDIR)$(BINDIR)/cstool
+	rm -f $(LIBDIR)/lib$(LIBNAME).*
+	rm -f $(PKGCFGDIR)/$(LIBNAME).pc
+	rm -f $(BINDIR)/cstool
 
 clean:
 	rm -f $(LIBOBJ)
@@ -426,6 +428,7 @@ clean:
 
 ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
 	$(MAKE) -C tests clean
+	$(MAKE) -C suite/fuzz clean
 	rm -f $(BLDIR)/tests/lib$(LIBNAME).$(EXT)
 endif
 
@@ -458,9 +461,17 @@ TESTS += test_basic.static test_detail.static test_arm.static test_arm64.static
 TESTS += test_m68k.static test_mips.static test_ppc.static test_sparc.static
 TESTS += test_systemz.static test_x86.static test_xcore.static test_m680x.static
 TESTS += test_skipdata test_skipdata.static test_iter.static test_evm.static
-check: $(TESTS)
+check: $(TESTS) fuzztest fuzzallcorp
 test_%:
 	./tests/$@ > /dev/null && echo OK || echo FAILED
+
+FUZZ_INPUTS = $(shell find suite/MC -type f -name '*.cs')
+
+fuzztest:
+	./suite/fuzz/fuzz_disasm $(FUZZ_INPUTS)
+
+fuzzallcorp:
+	./suite/fuzz/fuzz_bindisasm suite/fuzz/corpus-libFuzzer-capstone_fuzz_disasmnext-latest/
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(@D)
@@ -503,7 +514,7 @@ define generate-pkgcfg
 	echo 'Description: Capstone disassembly engine' >> $(PKGCFGF)
 	echo 'Version: $(PKG_VERSION)' >> $(PKGCFGF)
 	echo 'libdir=$(LIBDIR)' >> $(PKGCFGF)
-	echo 'includedir=$(INCDIR)' >> $(PKGCFGF)
+	echo 'includedir=$(INCDIR)/capstone' >> $(PKGCFGF)
 	echo 'archive=$${libdir}/libcapstone.a' >> $(PKGCFGF)
 	echo 'Libs: -L$${libdir} -lcapstone' >> $(PKGCFGF)
 	echo 'Cflags: -I$${includedir}' >> $(PKGCFGF)

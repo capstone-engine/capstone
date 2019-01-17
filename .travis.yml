@@ -2,15 +2,32 @@ language: cpp
 sudo: false
 before_install:
         - export LD_LIBRARY_PATH=`pwd`/tests/:$LD_LIBRARY_PATH
+before_script:
+        - wget https://github.com/groundx/capstonefuzz/raw/master/corpus/corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip
+        - unzip -q corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip -d suite/fuzz
 script:
         - ./make.sh
         - make check
         - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cp libcapstone.so.* bindings/python/libcapstone.so; fi
         - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cp libcapstone.*.dylib bindings/python/libcapstone.dylib; fi
-        - cd bindings/python && make check
+        - if [[ "$NOPYTEST" != "true" ]]; then cd bindings/python && make check; fi
 compiler:
         - clang
         - gcc
 os:
         - linux
         - osx
+matrix:
+    include:
+        - name: fuzza
+          env: ASAN_OPTIONS=detect_leaks=0 CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address" LDFLAGS="-fsanitize=address" NOPYTEST=true
+          compiler: clang
+          os: linux
+        - name: fuzzm
+          env: CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=memory" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=memory" LDFLAGS="-fsanitize=memory" NOPYTEST=true
+          compiler: clang
+          os: linux
+        - name: fuzzu
+          env: CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=undefined" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=undefined -fno-sanitize-recover=undefined,integer" LDFLAGS="-fsanitize=undefined" NOPYTEST=true
+          compiler: clang
+          os: linux
