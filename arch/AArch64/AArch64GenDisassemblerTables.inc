@@ -17864,7 +17864,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (!Check(S, DecodeVecShiftL64Imm(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
   case 17: \
-    if (!Check(S, DecodeSVELogicalImmInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; }
+    if (!Check(S, DecodeSVELogicalImmInstruction(MI, insn, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
   case 18: \
     tmp = fieldname(insn, 0, 5); \
