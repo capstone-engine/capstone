@@ -17864,7 +17864,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (!Check(S, DecodeVecShiftL64Imm(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
   case 17: \
-    if (!Check(S, DecodeSVELogicalImmInstruction(MI, insn, Address, Decoder))) return MCDisassembler_Fail; \
+    if (!Check(S, DecodeSVELogicalImmInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 18: \
     tmp = fieldname(insn, 0, 5); \
@@ -17910,7 +17910,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 4); \
     if (!Check(S, DecodePPRRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 5, 8); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 23: \
     tmp = fieldname(insn, 0, 5); \
@@ -17966,7 +17966,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 10, 3) << 0; \
     tmp |= fieldname(insn, 16, 5) << 3; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 29: \
     tmp = fieldname(insn, 0, 5); \
@@ -17974,7 +17974,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeZPRRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 22, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 30: \
     tmp = fieldname(insn, 0, 5); \
@@ -17984,7 +17984,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 20, 1) << 0; \
     tmp |= fieldname(insn, 22, 2) << 1; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 31: \
     tmp = fieldname(insn, 0, 5); \
@@ -17994,7 +17994,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 19, 2) << 0; \
     tmp |= fieldname(insn, 22, 2) << 2; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 32: \
     tmp = fieldname(insn, 0, 5); \
@@ -18004,7 +18004,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 18, 3) << 0; \
     tmp |= fieldname(insn, 22, 2) << 3; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 33: \
     tmp = fieldname(insn, 0, 5); \
@@ -18014,7 +18014,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 17, 4) << 0; \
     tmp |= fieldname(insn, 22, 2) << 4; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 34: \
     tmp = fieldname(insn, 0, 5); \
@@ -18374,7 +18374,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 5, 5); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 16, 4); \
     if (!Check(S, DecodeSVEIncDecImm(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -18384,7 +18384,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 5, 5); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 16, 4); \
     if (!Check(S, DecodeSVEIncDecImm(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -18394,7 +18394,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 5, 5); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 16, 4); \
     if (!Check(S, DecodeSVEIncDecImm(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -18404,7 +18404,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeZPRRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 5, 5); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 16, 4); \
     if (!Check(S, DecodeSVEIncDecImm(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -18436,7 +18436,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeZPRRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 14, 7); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 83: \
     tmp = fieldname(insn, 0, 4); \
@@ -18498,7 +18498,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 4); \
     if (!Check(S, DecodePPRRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 5, 5); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 90: \
     tmp = fieldname(insn, 0, 4); \
@@ -18572,7 +18572,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeZPRRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 5, 8); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 101: \
     tmp = fieldname(insn, 0, 5); \
@@ -18612,7 +18612,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeZPRRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 5, 8); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 107: \
     tmp = fieldname(insn, 5, 5); \
@@ -18674,7 +18674,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 3); \
     if (!Check(S, DecodeZPR_3bRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 19, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 115: \
     tmp = fieldname(insn, 0, 5); \
@@ -18686,7 +18686,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 4); \
     if (!Check(S, DecodeZPR_4bRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 20, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 116: \
     tmp = fieldname(insn, 0, 5); \
@@ -18700,7 +18700,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeZPRRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 13, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 117: \
     tmp = fieldname(insn, 0, 5); \
@@ -18714,7 +18714,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 19, 2) << 0; \
     tmp |= fieldname(insn, 22, 1) << 2; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 118: \
     tmp = fieldname(insn, 0, 5); \
@@ -18726,7 +18726,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 19, 2) << 0; \
     tmp |= fieldname(insn, 22, 1) << 2; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 119: \
     tmp = fieldname(insn, 0, 5); \
@@ -18738,7 +18738,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeZPRRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 120: \
     tmp = fieldname(insn, 0, 5); \
@@ -18750,9 +18750,9 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 3); \
     if (!Check(S, DecodeZPR_3bRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 19, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 10, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 121: \
     tmp = fieldname(insn, 0, 5); \
@@ -18762,7 +18762,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 3); \
     if (!Check(S, DecodeZPR_3bRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 19, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 122: \
     tmp = fieldname(insn, 0, 5); \
@@ -18774,9 +18774,9 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 4); \
     if (!Check(S, DecodeZPR_4bRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 20, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 10, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 123: \
     tmp = fieldname(insn, 0, 5); \
@@ -18786,7 +18786,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 4); \
     if (!Check(S, DecodeZPR_4bRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 20, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 124: \
     tmp = fieldname(insn, 0, 4); \
@@ -18804,7 +18804,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeZPRRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 3); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 126: \
     tmp = fieldname(insn, 0, 5); \
@@ -18814,7 +18814,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeZPRRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 5, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 127: \
     tmp = fieldname(insn, 0, 5); \
@@ -18828,7 +18828,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     return S; \
   case 128: \
     tmp = fieldname(insn, 0, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 10, 3); \
     if (!Check(S, DecodePPR_3bRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 5, 5); \
@@ -18848,7 +18848,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     return S; \
   case 130: \
     tmp = fieldname(insn, 0, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 10, 3); \
     if (!Check(S, DecodePPR_3bRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 5, 5); \
@@ -18874,7 +18874,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeZPRRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 133: \
     tmp = fieldname(insn, 0, 5); \
@@ -18884,11 +18884,11 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 6); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 134: \
     tmp = fieldname(insn, 0, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 10, 3); \
     if (!Check(S, DecodePPR_3bRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 5, 5); \
@@ -18898,13 +18898,13 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     return S; \
   case 135: \
     tmp = fieldname(insn, 0, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 10, 3); \
     if (!Check(S, DecodePPR_3bRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeZPRRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 136: \
     tmp = fieldname(insn, 0, 5); \
@@ -18997,7 +18997,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (!Check(S, DecodeSImm<4>(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
   case 145: \
-    if (!Check(S, DecodeExclusiveLdStInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; }
+    if (!Check(S, DecodeExclusiveLdStInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 146: \
     tmp = fieldname(insn, 16, 5); \
@@ -19020,13 +19020,13 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
   case 148: \
-    if (!Check(S, DecodeThreeAddrSRegInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; }
+    if (!Check(S, DecodeThreeAddrSRegInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 149: \
-    if (!Check(S, DecodeAddSubERegInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; }
+    if (!Check(S, DecodeAddSubERegInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 150: \
-    if (!Check(S, DecodePairLdStInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; }
+    if (!Check(S, DecodePairLdStInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 151: \
     tmp = fieldname(insn, 16, 5); \
@@ -19182,7 +19182,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 10, 3) << 0; \
     tmp |= fieldname(insn, 30, 1) << 3; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19192,7 +19192,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 10, 3) << 0; \
     tmp |= fieldname(insn, 30, 1) << 3; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19202,7 +19202,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 2) << 0; \
     tmp |= fieldname(insn, 30, 1) << 2; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19212,7 +19212,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 2) << 0; \
     tmp |= fieldname(insn, 30, 1) << 2; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19222,7 +19222,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 12, 1) << 0; \
     tmp |= fieldname(insn, 30, 1) << 1; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19230,7 +19230,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 30, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19240,7 +19240,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 12, 1) << 0; \
     tmp |= fieldname(insn, 30, 1) << 1; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19248,7 +19248,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeQQQRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 30, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19258,7 +19258,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 10, 3) << 0; \
     tmp |= fieldname(insn, 30, 1) << 3; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19268,7 +19268,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 10, 3) << 0; \
     tmp |= fieldname(insn, 30, 1) << 3; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19278,7 +19278,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 2) << 0; \
     tmp |= fieldname(insn, 30, 1) << 2; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19288,7 +19288,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 2) << 0; \
     tmp |= fieldname(insn, 30, 1) << 2; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19298,7 +19298,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 12, 1) << 0; \
     tmp |= fieldname(insn, 30, 1) << 1; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19306,7 +19306,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeQQRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 30, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19316,7 +19316,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 12, 1) << 0; \
     tmp |= fieldname(insn, 30, 1) << 1; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19324,7 +19324,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeQQQQRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 30, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19336,7 +19336,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 10, 3) << 0; \
     tmp |= fieldname(insn, 30, 1) << 3; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19348,7 +19348,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 10, 3) << 0; \
     tmp |= fieldname(insn, 30, 1) << 3; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19360,7 +19360,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 2) << 0; \
     tmp |= fieldname(insn, 30, 1) << 2; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19372,7 +19372,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 2) << 0; \
     tmp |= fieldname(insn, 30, 1) << 2; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19384,7 +19384,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 12, 1) << 0; \
     tmp |= fieldname(insn, 30, 1) << 1; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19394,7 +19394,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 30, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19406,7 +19406,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 12, 1) << 0; \
     tmp |= fieldname(insn, 30, 1) << 1; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19416,7 +19416,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeQQQRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 30, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19428,7 +19428,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 10, 3) << 0; \
     tmp |= fieldname(insn, 30, 1) << 3; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19440,7 +19440,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 10, 3) << 0; \
     tmp |= fieldname(insn, 30, 1) << 3; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19452,7 +19452,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 2) << 0; \
     tmp |= fieldname(insn, 30, 1) << 2; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19464,7 +19464,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 2) << 0; \
     tmp |= fieldname(insn, 30, 1) << 2; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19476,7 +19476,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 12, 1) << 0; \
     tmp |= fieldname(insn, 30, 1) << 1; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19486,7 +19486,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeQQRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 30, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19498,7 +19498,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 12, 1) << 0; \
     tmp |= fieldname(insn, 30, 1) << 1; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19508,7 +19508,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeQQQQRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 30, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -19520,7 +19520,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 10, 3) << 0; \
     tmp |= fieldname(insn, 30, 1) << 3; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19534,7 +19534,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 10, 3) << 0; \
     tmp |= fieldname(insn, 30, 1) << 3; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19548,7 +19548,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 10, 3) << 0; \
     tmp |= fieldname(insn, 30, 1) << 3; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19562,7 +19562,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 10, 3) << 0; \
     tmp |= fieldname(insn, 30, 1) << 3; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19576,7 +19576,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 2) << 0; \
     tmp |= fieldname(insn, 30, 1) << 2; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19590,7 +19590,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 2) << 0; \
     tmp |= fieldname(insn, 30, 1) << 2; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19604,7 +19604,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 2) << 0; \
     tmp |= fieldname(insn, 30, 1) << 2; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19618,7 +19618,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 2) << 0; \
     tmp |= fieldname(insn, 30, 1) << 2; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19632,7 +19632,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 12, 1) << 0; \
     tmp |= fieldname(insn, 30, 1) << 1; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19646,7 +19646,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 12, 1) << 0; \
     tmp |= fieldname(insn, 30, 1) << 1; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19658,7 +19658,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 30, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19670,7 +19670,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeQQRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 30, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19684,7 +19684,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 12, 1) << 0; \
     tmp |= fieldname(insn, 30, 1) << 1; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19698,7 +19698,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 12, 1) << 0; \
     tmp |= fieldname(insn, 30, 1) << 1; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19710,7 +19710,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeQQQRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 30, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19722,7 +19722,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeQQQQRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 30, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19738,7 +19738,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 10, 3) << 0; \
     tmp |= fieldname(insn, 30, 1) << 3; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19754,7 +19754,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 10, 3) << 0; \
     tmp |= fieldname(insn, 30, 1) << 3; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19770,7 +19770,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 10, 3) << 0; \
     tmp |= fieldname(insn, 30, 1) << 3; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19786,7 +19786,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 10, 3) << 0; \
     tmp |= fieldname(insn, 30, 1) << 3; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19802,7 +19802,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 2) << 0; \
     tmp |= fieldname(insn, 30, 1) << 2; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19818,7 +19818,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 2) << 0; \
     tmp |= fieldname(insn, 30, 1) << 2; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19834,7 +19834,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 2) << 0; \
     tmp |= fieldname(insn, 30, 1) << 2; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19850,7 +19850,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 2) << 0; \
     tmp |= fieldname(insn, 30, 1) << 2; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19866,7 +19866,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 12, 1) << 0; \
     tmp |= fieldname(insn, 30, 1) << 1; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19882,7 +19882,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 12, 1) << 0; \
     tmp |= fieldname(insn, 30, 1) << 1; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19896,7 +19896,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 30, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19910,7 +19910,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeQQRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 30, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19926,7 +19926,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 12, 1) << 0; \
     tmp |= fieldname(insn, 30, 1) << 1; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19942,7 +19942,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 12, 1) << 0; \
     tmp |= fieldname(insn, 30, 1) << 1; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19956,7 +19956,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeQQQRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 30, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19970,7 +19970,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeQQQQRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 30, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -19998,7 +19998,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 19, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 236: \
     tmp = fieldname(insn, 0, 5); \
@@ -20006,7 +20006,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 18, 3); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 237: \
     tmp = fieldname(insn, 0, 5); \
@@ -20014,7 +20014,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 17, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 238: \
     tmp = fieldname(insn, 0, 5); \
@@ -20074,7 +20074,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 18, 3); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 246: \
     tmp = fieldname(insn, 0, 5); \
@@ -20082,7 +20082,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 17, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 247: \
     tmp = fieldname(insn, 0, 5); \
@@ -20114,7 +20114,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 19, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 251: \
     tmp = fieldname(insn, 0, 5); \
@@ -20200,7 +20200,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 11, 3); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 261: \
     tmp = fieldname(insn, 0, 5); \
@@ -20216,7 +20216,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 20, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 263: \
     tmp = fieldname(insn, 0, 5); \
@@ -20224,7 +20224,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 19, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 264: \
     tmp = fieldname(insn, 0, 5); \
@@ -20232,7 +20232,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 18, 3); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 265: \
     tmp = fieldname(insn, 0, 5); \
@@ -20240,7 +20240,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 17, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 266: \
     tmp = fieldname(insn, 0, 5); \
@@ -20276,7 +20276,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 20, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -20286,7 +20286,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 19, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -20296,7 +20296,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 18, 3); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -20306,7 +20306,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 17, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -20332,7 +20332,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 19, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 277: \
     tmp = fieldname(insn, 0, 5); \
@@ -20340,7 +20340,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 18, 3); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 278: \
     tmp = fieldname(insn, 0, 5); \
@@ -20348,7 +20348,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 17, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 279: \
     tmp = fieldname(insn, 0, 5); \
@@ -20372,7 +20372,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 20, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 282: \
     tmp = fieldname(insn, 0, 5); \
@@ -20424,7 +20424,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 11, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 288: \
     tmp = fieldname(insn, 0, 5); \
@@ -20438,11 +20438,11 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 20, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 14, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 290: \
     tmp = fieldname(insn, 0, 5); \
@@ -20450,11 +20450,11 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 19, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 13, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 291: \
     tmp = fieldname(insn, 0, 5); \
@@ -20462,11 +20462,11 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 18, 3); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 12, 3); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 292: \
     tmp = fieldname(insn, 0, 5); \
@@ -20474,11 +20474,11 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 17, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 11, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 293: \
     tmp = fieldname(insn, 0, 5); \
@@ -20506,7 +20506,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 11, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 296: \
     tmp = fieldname(insn, 0, 5); \
@@ -20516,7 +20516,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 12, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 297: \
     tmp = fieldname(insn, 0, 5); \
@@ -20528,7 +20528,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 11, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 298: \
     tmp = fieldname(insn, 0, 5); \
@@ -20538,7 +20538,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 12, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 299: \
     tmp = fieldname(insn, 0, 5); \
@@ -20550,7 +20550,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 12, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 300: \
     tmp = fieldname(insn, 0, 5); \
@@ -20560,7 +20560,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 10, 6); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 301: \
     tmp = fieldname(insn, 0, 5); \
@@ -20582,7 +20582,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 2; \
     tmp |= fieldname(insn, 20, 2) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 303: \
     tmp = fieldname(insn, 0, 5); \
@@ -20594,10 +20594,10 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 2; \
     tmp |= fieldname(insn, 20, 2) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 304: \
-    if (!Check(S, DecodeModImmInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; }
+    if (!Check(S, DecodeModImmInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 305: \
     tmp = fieldname(insn, 0, 5); \
@@ -20624,7 +20624,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (!Check(S, DecodeVecShiftR32Imm(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
   case 308: \
-    if (!Check(S, DecodeModImmTiedInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; }
+    if (!Check(S, DecodeModImmTiedInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 309: \
     tmp = fieldname(insn, 0, 5); \
@@ -20770,7 +20770,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 2; \
     tmp |= fieldname(insn, 20, 2) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 325: \
     tmp = fieldname(insn, 0, 5); \
@@ -20782,7 +20782,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 2; \
     tmp |= fieldname(insn, 20, 2) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 326: \
     tmp = fieldname(insn, 0, 5); \
@@ -20934,7 +20934,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 2; \
     tmp |= fieldname(insn, 20, 2) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 342: \
     tmp = fieldname(insn, 0, 5); \
@@ -20946,7 +20946,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 2; \
     tmp |= fieldname(insn, 20, 2) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 343: \
     tmp = fieldname(insn, 0, 5); \
@@ -20958,9 +20958,9 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 21, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 13, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 344: \
     tmp = fieldname(insn, 0, 5); \
@@ -21000,9 +21000,9 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 1; \
     tmp |= fieldname(insn, 21, 1) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 13, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 348: \
     tmp = fieldname(insn, 0, 5); \
@@ -21026,7 +21026,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 1; \
     tmp |= fieldname(insn, 21, 1) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 350: \
     tmp = fieldname(insn, 0, 5); \
@@ -21040,7 +21040,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 1; \
     tmp |= fieldname(insn, 21, 1) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 351: \
     tmp = fieldname(insn, 0, 5); \
@@ -21052,7 +21052,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 1; \
     tmp |= fieldname(insn, 21, 1) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 352: \
     tmp = fieldname(insn, 0, 5); \
@@ -21064,7 +21064,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 1; \
     tmp |= fieldname(insn, 21, 1) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 353: \
     tmp = fieldname(insn, 0, 5); \
@@ -21078,7 +21078,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 1; \
     tmp |= fieldname(insn, 21, 1) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 354: \
     tmp = fieldname(insn, 0, 5); \
@@ -21090,7 +21090,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 1; \
     tmp |= fieldname(insn, 21, 1) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 355: \
     tmp = fieldname(insn, 0, 5); \
@@ -21102,9 +21102,9 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 11, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 13, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 356: \
     tmp = fieldname(insn, 0, 5); \
@@ -21116,7 +21116,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 11, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 357: \
     tmp = fieldname(insn, 0, 5); \
@@ -21126,19 +21126,19 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 11, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 358: \
-    if (!Check(S, DecodeAdrInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; }
+    if (!Check(S, DecodeAdrInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 359: \
-    if (!Check(S, DecodeBaseAddSubImm(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; }
+    if (!Check(S, DecodeBaseAddSubImm(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 360: \
-    if (!Check(S, DecodeLogicalImmInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; }
+    if (!Check(S, DecodeLogicalImmInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 361: \
-    if (!Check(S, DecodeMoveImmInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; }
+    if (!Check(S, DecodeMoveImmInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 362: \
     tmp = fieldname(insn, 0, 5); \
@@ -21146,9 +21146,9 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 10, 5); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 363: \
     tmp = fieldname(insn, 0, 5); \
@@ -21158,7 +21158,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 10, 5); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 364: \
     tmp = fieldname(insn, 0, 5); \
@@ -21168,9 +21168,9 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 10, 5); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 365: \
     tmp = fieldname(insn, 0, 5); \
@@ -21178,9 +21178,9 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 6); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 10, 6); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 366: \
     tmp = fieldname(insn, 0, 5); \
@@ -21190,7 +21190,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 10, 6); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 367: \
     tmp = fieldname(insn, 0, 5); \
@@ -21200,12 +21200,12 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 6); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 10, 6); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 368: \
-    if (!Check(S, DecodeUnconditionalBranch(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; }
+    if (!Check(S, DecodeUnconditionalBranch(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 369: \
     tmp = fieldname(insn, 0, 5); \
@@ -21214,11 +21214,11 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (!Check(S, DecodePCRelLabel19(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
   case 370: \
-    if (!Check(S, DecodeTestAndBranch(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; }
+    if (!Check(S, DecodeTestAndBranch(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 371: \
     tmp = fieldname(insn, 0, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 19); \
     if (!Check(S, DecodePCRelLabel19(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -21230,28 +21230,28 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     return S; \
   case 373: \
     tmp = fieldname(insn, 5, 16); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 374: \
     tmp = fieldname(insn, 8, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 375: \
     tmp = fieldname(insn, 5, 7); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 376: \
-    if (!Check(S, DecodeSystemPStateInstruction(MI, insn, Address, Decoder))) { DecodeComplete = false; return MCDisassembler_Fail; }
+    if (!Check(S, DecodeSystemPStateInstruction(MI, insn, Address, Decoder))) { DecodeComplete = false; return MCDisassembler_Fail; } \
     return S; \
   case 377: \
     tmp = fieldname(insn, 16, 3); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 12, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 8, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 3); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -21265,13 +21265,13 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 3); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 12, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 8, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 3); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 380: \
     tmp = fieldname(insn, 0, 5); \
@@ -21290,7 +21290,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
   case 383: \
-    if (!Check(S, DecodeSignedLdStInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; }
+    if (!Check(S, DecodeSignedLdStInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 384: \
     tmp = fieldname(insn, 0, 5); \
@@ -21308,7 +21308,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 12, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 386: \
     tmp = fieldname(insn, 0, 5); \
@@ -21383,7 +21383,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (!Check(S, DecodeMemExtend(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
   case 393: \
-    if (!Check(S, DecodeUnsignedLdStInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; }
+    if (!Check(S, DecodeUnsignedLdStInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 394: \
     tmp = fieldname(insn, 5, 5); \
@@ -21395,19 +21395,19 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 0, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 12, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 396: \
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 0, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 12, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 397: \
     tmp = fieldname(insn, 0, 5); \
@@ -21431,7 +21431,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 12, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 400: \
     tmp = fieldname(insn, 0, 5); \
@@ -21473,9 +21473,9 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 15, 6); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 0, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 405: \
     tmp = fieldname(insn, 5, 5); \
@@ -21483,23 +21483,23 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 0, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 12, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 406: \
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 0, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 12, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 407: \
     tmp = fieldname(insn, 0, 5); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 19); \
     if (!Check(S, DecodePCRelLabel19(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
@@ -21551,7 +21551,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     return S; \
   case 414: \
     tmp = fieldname(insn, 0, 5); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -21563,7 +21563,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     return S; \
   case 415: \
     tmp = fieldname(insn, 0, 5); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeGPR64spRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 16, 5); \
@@ -21639,7 +21639,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 13, 8); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 427: \
     tmp = fieldname(insn, 5, 5); \
@@ -21647,9 +21647,9 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 0, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 12, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 428: \
     tmp = fieldname(insn, 0, 5); \
@@ -21667,7 +21667,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR32RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 12, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 430: \
     tmp = fieldname(insn, 0, 5); \
@@ -21705,7 +21705,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 13, 8); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 436: \
     tmp = fieldname(insn, 5, 5); \
@@ -21713,9 +21713,9 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 0, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 12, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 437: \
     tmp = fieldname(insn, 0, 5); \
@@ -21725,7 +21725,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 12, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 438: \
     tmp = fieldname(insn, 0, 5); \
@@ -21787,7 +21787,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 13, 8); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 448: \
     tmp = fieldname(insn, 5, 5); \
@@ -21795,9 +21795,9 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 0, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     tmp = fieldname(insn, 12, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 449: \
     tmp = fieldname(insn, 0, 5); \
@@ -21815,7 +21815,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR16RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 12, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 451: \
     tmp = fieldname(insn, 0, 5); \
@@ -21917,7 +21917,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 20, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 461: \
     tmp = fieldname(insn, 0, 5); \
@@ -21925,7 +21925,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 19, 2); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 462: \
     tmp = fieldname(insn, 0, 5); \
@@ -21933,7 +21933,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 18, 3); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 463: \
     tmp = fieldname(insn, 0, 5); \
@@ -21941,7 +21941,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 17, 4); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 464: \
     tmp = fieldname(insn, 0, 5); \
@@ -22043,7 +22043,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 2; \
     tmp |= fieldname(insn, 20, 2) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 476: \
     tmp = fieldname(insn, 0, 5); \
@@ -22067,7 +22067,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 1; \
     tmp |= fieldname(insn, 21, 1) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 478: \
     tmp = fieldname(insn, 0, 5); \
@@ -22079,7 +22079,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 11, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 479: \
     tmp = fieldname(insn, 0, 5); \
@@ -22093,7 +22093,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 2; \
     tmp |= fieldname(insn, 20, 2) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 480: \
     tmp = fieldname(insn, 0, 5); \
@@ -22107,7 +22107,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 1; \
     tmp |= fieldname(insn, 21, 1) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 481: \
     tmp = fieldname(insn, 0, 5); \
@@ -22151,7 +22151,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 2; \
     tmp |= fieldname(insn, 20, 2) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 486: \
     tmp = fieldname(insn, 0, 5); \
@@ -22187,7 +22187,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 1; \
     tmp |= fieldname(insn, 21, 1) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 490: \
     tmp = fieldname(insn, 0, 5); \
@@ -22197,7 +22197,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 5); \
     if (!Check(S, DecodeFPR128RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 11, 1); \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 491: \
     tmp = fieldname(insn, 0, 5); \
@@ -22209,7 +22209,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 2; \
     tmp |= fieldname(insn, 20, 2) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 492: \
     tmp = fieldname(insn, 0, 5); \
@@ -22221,7 +22221,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0; \
     tmp |= fieldname(insn, 11, 1) << 1; \
     tmp |= fieldname(insn, 21, 1) << 0; \
-    MI.addOperand(MCOperand::createImm(tmp)); \
+    MI.addOperand(MCOperand::createImm(tmp));
     return S; \
   case 493: \
     tmp = fieldname(insn, 0, 5); \
@@ -22356,7 +22356,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (!Check(S, DecodeGPR64RegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     return S; \
   case 509: \
-    if (!Check(S, DecodeFMOVLaneInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; }
+    if (!Check(S, DecodeFMOVLaneInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 510: \
     tmp = fieldname(insn, 0, 5); \
