@@ -17910,7 +17910,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 16, 4); \
     if (!Check(S, DecodePPRRegisterClass(MI, tmp, Address, Decoder))) return MCDisassembler_Fail; \
     tmp = fieldname(insn, 5, 8); \
-    MI.addOperand(MCOperand::createImm(tmp));
+    MI.addOperand(MCOperand::createImm(tmp)); \
     return S; \
   case 23: \
     tmp = fieldname(insn, 0, 5); \
