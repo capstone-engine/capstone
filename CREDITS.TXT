@@ -79,3 +79,4 @@ Philippe Antoine: Integration with oss-fuzz and various fixes.
 Stephen Eckels (stevemk14ebr): x86 encoding features
 Sebastian Macke: MOS65XX architecture
 Ilya Leoshkevich: SystemZ architecture improvements.
+Josh "blacktop" Maine: Arm64 architecture improvements.

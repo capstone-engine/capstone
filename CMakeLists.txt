@@ -171,6 +171,7 @@ if (CAPSTONE_ARM64_SUPPORT)
         arch/AArch64/AArch64Disassembler.h
         arch/AArch64/AArch64GenAsmWriter.inc
         arch/AArch64/AArch64GenDisassemblerTables.inc
+        arch/AArch64/AArch64GenInsnNameMaps.inc
         arch/AArch64/AArch64GenInstrInfo.inc
         arch/AArch64/AArch64GenRegisterInfo.inc
         arch/AArch64/AArch64GenSubtargetInfo.inc
@@ -184,6 +185,7 @@ if (CAPSTONE_ARM64_SUPPORT)
         arch/AArch64/AArch64Disassembler.h
         arch/AArch64/AArch64GenAsmWriter.inc
         arch/AArch64/AArch64GenDisassemblerTables.inc
+        arch/AArch64/AArch64GenInsnNameMaps.inc
         arch/AArch64/AArch64GenInstrInfo.inc
         arch/AArch64/AArch64GenRegisterInfo.inc
         arch/AArch64/AArch64GenSubtargetInfo.inc
