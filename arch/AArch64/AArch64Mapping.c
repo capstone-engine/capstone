@@ -338,9 +338,55 @@ static const name_map insn_name_maps[] = {
 #include "AArch64GenInsnNameMaps.inc"
 };
 
-// special alias insn
-static const name_map alias_insn_names[] = {
-	{ 0, NULL }
+// map *S & alias instructions back to original id
+static const name_map alias_insn_name_maps[] = {
+	{ ARM64_INS_ADC, "adcs" },
+	{ ARM64_INS_AND, "ands" },
+	{ ARM64_INS_ADD, "adds" },
+	{ ARM64_INS_BIC, "bics" },
+	{ ARM64_INS_SBC, "sbcs" },
+	{ ARM64_INS_SUB, "subs" },
+
+	// alias insn
+	{ ARM64_INS_MNEG, "mneg" },
+	{ ARM64_INS_UMNEGL, "umnegl" },
+	{ ARM64_INS_SMNEGL, "smnegl" },
+	{ ARM64_INS_NOP, "nop" },
+	{ ARM64_INS_YIELD, "yield" },
+	{ ARM64_INS_WFE, "wfe" },
+	{ ARM64_INS_WFI, "wfi" },
+	{ ARM64_INS_SEV, "sev" },
+	{ ARM64_INS_SEVL, "sevl" },
+	{ ARM64_INS_NGC, "ngc" },
+	{ ARM64_INS_NGCS, "ngcs" },
+	{ ARM64_INS_NEGS, "negs" },
+
+	{ ARM64_INS_SBFIZ, "sbfiz" },
+	{ ARM64_INS_UBFIZ, "ubfiz" },
+	{ ARM64_INS_SBFX, "sbfx" },
+	{ ARM64_INS_UBFX, "ubfx" },
+	{ ARM64_INS_BFI, "bfi" },
+	{ ARM64_INS_BFXIL, "bfxil" },
+	{ ARM64_INS_CMN, "cmn" },
+	{ ARM64_INS_MVN, "mvn" },
+	{ ARM64_INS_TST, "tst" },
+	{ ARM64_INS_CSET, "cset" },
+	{ ARM64_INS_CINC, "cinc" },
+	{ ARM64_INS_CSETM, "csetm" },
+	{ ARM64_INS_CINV, "cinv" },
+	{ ARM64_INS_CNEG, "cneg" },
+	{ ARM64_INS_SXTB, "sxtb" },
+	{ ARM64_INS_SXTH, "sxth" },
+	{ ARM64_INS_SXTW, "sxtw" },
+	{ ARM64_INS_CMP, "cmp" },
+	{ ARM64_INS_UXTB, "uxtb" },
+	{ ARM64_INS_UXTH, "uxth" },
+	{ ARM64_INS_UXTW, "uxtw" },
+
+	{ ARM64_INS_IC, "ic" },
+	{ ARM64_INS_DC, "dc" },
+	{ ARM64_INS_AT, "at" },
+	{ ARM64_INS_TLBI, "tlbi" },
 };
 #endif
 
