@@ -350,7 +350,7 @@ class _cs_arch(ctypes.Union):
 
 class _cs_detail(ctypes.Structure):
     _fields_ = (
-        ('regs_read', ctypes.c_uint16 * 12),
+        ('regs_read', ctypes.c_uint16 * 16),
         ('regs_read_count', ctypes.c_ubyte),
         ('regs_write', ctypes.c_uint16 * 20),
         ('regs_write_count', ctypes.c_ubyte),
@@ -364,7 +364,7 @@ class _cs_insn(ctypes.Structure):
         ('id', ctypes.c_uint),
         ('address', ctypes.c_uint64),
         ('size', ctypes.c_uint16),
-        ('bytes', ctypes.c_ubyte * 16),
+        ('bytes', ctypes.c_ubyte * 24),
         ('mnemonic', ctypes.c_char * 32),
         ('op_str', ctypes.c_char * 160),
         ('detail', ctypes.POINTER(_cs_detail)),
