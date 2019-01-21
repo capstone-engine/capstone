@@ -55,7 +55,7 @@ public class Capstone {
     public _cs_detail.ByReference cs_detail;
 
     public _cs_insn() {
-      bytes = new byte[16];
+      bytes = new byte[24];
       mnemonic = new byte[32];
       op_str = new byte[160];
       java.util.Arrays.fill(mnemonic, (byte) 0);
@@ -78,7 +78,7 @@ public class Capstone {
     public static class ByReference extends _cs_detail implements Structure.ByReference {};
 
     // list of all implicit registers being read.
-    public short[] regs_read = new short[12];
+    public short[] regs_read = new short[16];
     public byte regs_read_count;
     // list of all implicit registers being written.
     public short[] regs_write = new short[20];
