@@ -20,7 +20,7 @@ cdef extern from "<capstone/capstone.h>":
         unsigned int id
         uint64_t address
         uint16_t size
-        uint8_t bytes[16]
+        uint8_t bytes[24]
         char mnemonic[32]
         char op_str[160]
         cs_detail *detail
