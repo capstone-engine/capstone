@@ -19,6 +19,8 @@
 #include "../../cs_priv.h"
 #include "../../utils.h"
 
+#include "SparcDisassembler.h"
+
 #include "../../MCInst.h"
 #include "../../MCInstrDesc.h"
 #include "../../MCFixedLenDisassembler.h"
