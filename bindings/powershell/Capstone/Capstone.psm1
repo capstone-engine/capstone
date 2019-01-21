@@ -55,7 +55,7 @@ function Initialize-Capstone {
             public uint id;
             public ulong address;
             public ushort size;
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 24)]
             public byte[] bytes;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
             public string mnemonic;
@@ -68,7 +68,7 @@ function Initialize-Capstone {
         [StructLayout(LayoutKind.Sequential)]
         public struct cs_detail
         {
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
             public byte[] regs_read;
             public byte regs_read_count;
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 20)]
