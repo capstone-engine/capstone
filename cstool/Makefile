@@ -6,7 +6,7 @@ include ../functions.mk
 
 LIBNAME = capstone
 
-CFLAGS += -I../include
+CFLAGS += -I../include -I.
 LDFLAGS += -O3 -Wall -L.. -l$(LIBNAME)
 
 TARGET = cstool
@@ -19,7 +19,7 @@ IS_CYGWIN := $(shell $(CC) -dumpmachine 2>/dev/null | grep -i cygwin | wc -l)
 ifeq ($(IS_CYGWIN),1)
 LIBCAPSTONE = capstone.lib
 else
-IS_MINGW := $(shell $(CC) --version 2>/dev/null | grep -i mingw | wc -l)
+IS_MINGW := $(shell $(CC) --version 2>/dev/null | grep -i "\(mingw\|MSYS\)" | wc -l)
 ifeq ($(IS_MINGW),1)
 LIBCAPSTONE = capstone.lib
 endif

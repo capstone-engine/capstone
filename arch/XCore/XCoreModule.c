@@ -1,5 +1,5 @@
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifdef CAPSTONE_HAS_XCORE
 
@@ -8,8 +8,9 @@
 #include "XCoreDisassembler.h"
 #include "XCoreInstPrinter.h"
 #include "XCoreMapping.h"
+#include "XCoreModule.h"
 
-static cs_err init(cs_struct *ud)
+cs_err XCore_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
 	mri = cs_mem_malloc(sizeof(*mri));
@@ -29,27 +30,12 @@ static cs_err init(cs_struct *ud)
 	return CS_ERR_OK;
 }
 
-static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
+cs_err XCore_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	// Do not set mode because only CS_MODE_BIG_ENDIAN is valid; we cannot
 	// test for CS_MODE_LITTLE_ENDIAN because it is 0
 
 	return CS_ERR_OK;
-}
-
-static void destroy(cs_struct *handle)
-{
-}
-
-void XCore_enable(void)
-{
-	arch_init[CS_ARCH_XCORE] = init;
-	arch_option[CS_ARCH_XCORE] = option;
-	arch_destroy[CS_ARCH_XCORE] = destroy;
-	arch_disallowed_mode_mask[CS_ARCH_XCORE] = ~CS_MODE_BIG_ENDIAN;
-
-	// support this arch
-	all_arch |= (1 << CS_ARCH_XCORE);
 }
 
 #endif

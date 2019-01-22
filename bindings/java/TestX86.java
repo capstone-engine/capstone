@@ -2,6 +2,9 @@
 // By Nguyen Anh Quynh & Dang Hoang Vu,  2013
 
 import capstone.Capstone;
+import static capstone.Capstone.CS_AC_READ;
+import static capstone.Capstone.CS_AC_WRITE;
+import capstone.Capstone.CsRegsAccess;
 import capstone.X86;
 
 import static capstone.X86_const.*;
@@ -58,8 +61,23 @@ public class TestX86 {
     // print modRM byte
     System.out.printf("\tmodrm: 0x%x\n", operands.modrm);
 
+    // print modRM offset
+    if (operands.encoding.modrmOffset != 0) {
+      System.out.printf("\tmodrm offset: 0x%x\n", operands.encoding.modrmOffset);
+    }
+
     // print displacement value
     System.out.printf("\tdisp: 0x%x\n", operands.disp);
+
+    // print displacement offset
+    if (operands.encoding.dispOffset != 0) {
+      System.out.printf("\tdisp offset: 0x%x\n", operands.encoding.dispOffset);
+    }
+
+    //print displacement size
+    if (operands.encoding.dispSize != 0) {
+      System.out.printf("\tdisp size: 0x%x\n", operands.encoding.dispSize);
+    }
 
     // SIB is not available in 16-bit mode
     if ( (cs.mode & Capstone.CS_MODE_16) == 0) {
@@ -69,6 +87,9 @@ public class TestX86 {
         System.out.printf("\t\tsib_base: %s\n\t\tsib_index: %s\n\t\tsib_scale: %d\n",
           ins.regName(operands.sibBase), ins.regName(operands.sibIndex), operands.sibScale);
     }
+
+    if (operands.xopCC != 0)
+        System.out.printf("\txop_cc: %u\n", operands.xopCC);
 
     if (operands.sseCC != 0)
         System.out.printf("\tsse_cc: %u\n", operands.sseCC);
@@ -85,6 +106,8 @@ public class TestX86 {
     int count = ins.opCount(X86_OP_IMM);
     if (count > 0) {
       System.out.printf("\timm_count: %d\n", count);
+      System.out.printf("\timm offset: 0x%x\n", operands.encoding.immOffset);
+      System.out.printf("\timm size: 0x%x\n", operands.encoding.immSize);
       for (int i=0; i<count; i++) {
         int index = ins.opIndex(X86_OP_IMM, i + 1);
         System.out.printf("\t\timms[%d]: 0x%x\n", i+1, (operands.op[index].value.imm));
@@ -100,8 +123,6 @@ public class TestX86 {
           System.out.printf("\t\toperands[%d].type: REG = %s\n", c, ins.regName(i.value.reg));
         if (i.type == X86_OP_IMM)
           System.out.printf("\t\toperands[%d].type: IMM = 0x%x\n", c, i.value.imm);
-        if (i.type == X86_OP_FP)
-          System.out.printf("\t\toperands[%d].type: FP = %f\n", c, i.value.fp);
         if (i.type == X86_OP_MEM) {
           System.out.printf("\t\toperands[%d].type: MEM\n",c);
           String segment = ins.regName(i.value.mem.segment);
@@ -130,24 +151,58 @@ public class TestX86 {
         }
 
         System.out.printf("\t\toperands[%d].size: %d\n", c, i.size);
+        switch(i.access) {
+          case CS_AC_READ:
+            System.out.printf("\t\toperands[%d].access: READ\n", c);
+            break;
+          case CS_AC_WRITE:
+            System.out.printf("\t\toperands[%d].access: WRITE\n", c);
+            break;
+          case CS_AC_READ | CS_AC_WRITE:
+            System.out.printf("\t\toperands[%d].access: READ | WRITE\n", c);
+            break;
+        }
+      }
+
+      // Print out all registers accessed by this instruction (either implicit or explicit)
+      CsRegsAccess regsAccess = ins.regsAccess();
+      if (regsAccess != null) {
+        short[] regsRead = regsAccess.regsRead;
+        short[] regsWrite = regsAccess.regsWrite;
+
+        if (regsRead.length > 0) {
+          System.out.printf("\tRegisters read:");
+          for (int i = 0; i < regsRead.length; i++) {
+            System.out.printf(" %s", ins.regName(regsRead[i]));
+          }
+          System.out.print("\n");
+        }
+
+        if (regsWrite.length > 0) {
+          System.out.printf("\tRegister modified:");
+          for (int i = 0; i < regsWrite.length; i++) {
+            System.out.printf(" %s", ins.regName(regsWrite[i]));
+          }
+          System.out.print("\n");
+        }
       }
     }
   }
 
   public static void main(String argv[]) {
 
-    final Test.platform[] all_tests = {
-      new Test.platform(Capstone.CS_ARCH_X86, Capstone.CS_MODE_16, hexString2Byte(X86_CODE16), "X86 16bit (Intel syntax)"),
-      new Test.platform(Capstone.CS_ARCH_X86, Capstone.CS_MODE_32, Capstone.CS_OPT_SYNTAX_ATT, hexString2Byte(X86_CODE32), "X86 32 (AT&T syntax)"),
-      new Test.platform(Capstone.CS_ARCH_X86, Capstone.CS_MODE_32, hexString2Byte(X86_CODE32), "X86 32 (Intel syntax)"),
-      new Test.platform(Capstone.CS_ARCH_X86, Capstone.CS_MODE_64, hexString2Byte(X86_CODE64), "X86 64 (Intel syntax)"),
+    final TestBasic.platform[] all_tests = {
+      new TestBasic.platform(Capstone.CS_ARCH_X86, Capstone.CS_MODE_16, hexString2Byte(X86_CODE16), "X86 16bit (Intel syntax)"),
+      new TestBasic.platform(Capstone.CS_ARCH_X86, Capstone.CS_MODE_32, Capstone.CS_OPT_SYNTAX_ATT, hexString2Byte(X86_CODE32), "X86 32 (AT&T syntax)"),
+      new TestBasic.platform(Capstone.CS_ARCH_X86, Capstone.CS_MODE_32, hexString2Byte(X86_CODE32), "X86 32 (Intel syntax)"),
+      new TestBasic.platform(Capstone.CS_ARCH_X86, Capstone.CS_MODE_64, hexString2Byte(X86_CODE64), "X86 64 (Intel syntax)"),
     };
 
     for (int i=0; i<all_tests.length; i++) {
-      Test.platform test = all_tests[i];
+      TestBasic.platform test = all_tests[i];
       System.out.println(new String(new char[16]).replace("\0", "*"));
       System.out.println("Platform: " + test.comment);
-      System.out.println("Code: " + Test.stringToHex(test.code));
+      System.out.println("Code: " + TestBasic.stringToHex(test.code));
       System.out.println("Disasm:");
 
       cs = new Capstone(test.arch, test.mode);

@@ -58,4 +58,7 @@ More bindings created & maintained by the community are available as followings.
 - PHP binding (by Fadhil Mandaga).
 
 	https://github.com/firodj/php-capstone
+	
+- capstone-d: D binding (by Dimitri Bohlender)
 
+	https://github.com/bohlender/capstone-d

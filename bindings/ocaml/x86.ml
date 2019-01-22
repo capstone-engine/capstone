@@ -16,12 +16,12 @@ type x86_op_value =
 	| X86_OP_INVALID of int
 	| X86_OP_REG of int
 	| X86_OP_IMM of int
-	| X86_OP_FP of float
 	| X86_OP_MEM of x86_op_mem
 
 type x86_op = {
 	value: x86_op_value;
 	size: int;
+	access: int;
 	avx_bcast: int;
 	avx_zero_opmask: int;
 }
@@ -37,9 +37,11 @@ type cs_x86 = {
 	sib_index: int;
 	sib_scale: int;
 	sib_base: int;
+	xop_cc: int;
 	sse_cc: int;
 	avx_cc: int;
 	avx_sae: int;
 	avx_rm: int;
+	eflags: int;
 	operands: x86_op array;
 }

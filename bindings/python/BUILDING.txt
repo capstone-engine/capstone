@@ -2,11 +2,11 @@
    from source. If you want to install it from a PyPi package (recommended if
    you are on Windows), see README.txt.
 
-1. To install capstone and the python bindings on *nix, run the command below:
+1. To install Capstone and the Python bindings on *nix, run the command below:
 
 		$ sudo make install
 
-   To install capstone for python 3, run the command below:
+   To install Capstone for Python 3, run the command below:
    (Note: this requires python3 installed in your machine)
 
 		$ sudo make install3
@@ -60,7 +60,7 @@
 
 - test_lite.py
   Similarly to test_basic.py, but this code shows how to use disasm_lite(), a lighter
-  method to disassemble binary. Unlike disasm() API (used by test.py), which returns
+  method to disassemble binary. Unlike disasm() API (used by test_basic.py), which returns
   CsInsn objects, this API just returns tuples of (address, size, mnemonic, op_str).
 
   The main reason for using this API is better performance: disasm_lite() is at least

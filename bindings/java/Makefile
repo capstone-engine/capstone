@@ -20,11 +20,13 @@ else
   endif
 endif
 
+PYTHON2 = python
+
 CAPSTONE_JAVA = Capstone.java Arm_const.java Arm64_const.java Mips_const.java \
 				X86_const.java Xcore_const.java Ppc_const.java Sparc_const.java\
-				Sysz_const.java \
+				Sysz_const.java M680x_const.java \
 				Arm.java Arm64.java Mips.java X86.java Xcore.java Ppc.java\
-				Sparc.java Systemz.java
+				Sparc.java Systemz.java M680x.java
 
 all: gen_const capstone tests
 
@@ -42,12 +44,12 @@ endif
 
 tests: capstone_class jna
 	@mkdir -p $(OBJDIR)
-	javac -d $(OBJDIR) -classpath "$(JNA):$(BLDIR)/capstone.jar" Test.java\
+	javac -d $(OBJDIR) -classpath "$(JNA):$(BLDIR)/capstone.jar" TestBasic.java\
 		TestArm.java TestArm64.java TestMips.java TestX86.java TestXcore.java\
-		TestPpc.java TestSparc.java TestSystemz.java
+		TestPpc.java TestSparc.java TestSystemz.java TestM680x.java
 
 gen_const:
-	cd ../ && python const_generator.py java
+	cd ../ && $(PYTHON2) const_generator.py java
 
 jna:
 	@if [ ! $(JNA) ]; then echo "*** Unable to find JNA ***"; exit 1; fi
@@ -60,7 +62,7 @@ ifdef BUILDDIR
 	rm -rf $(OBJDIR)
 endif
 
-TESTS = test arm arm64 mips ppc sparc systemz x86 xcore
+TESTS = testbasic arm arm64 m680x mips ppc sparc systemz x86 xcore
 check:
 	@for t in $(TESTS); do \
 		echo Check $$t ... ; \

@@ -2,7 +2,7 @@
 
 cimport pyx.ccapstone as cc
 import capstone, ctypes
-from . import arm, x86, mips, ppc, arm64, sparc, systemz, xcore, CsError
+from . import arm, x86, mips, ppc, arm64, sparc, systemz, xcore, tms320c64x, CsError
 
 _diet = cc.cs_support(capstone.CS_SUPPORT_DIET)
 
@@ -32,8 +32,8 @@ class CsDetail(object):
             (self.prefix, self.opcode, self.rex, self.addr_size, \
                 self.modrm, self.sib, self.disp, \
                 self.sib_index, self.sib_scale, self.sib_base, \
-                self.sse_cc, self.avx_cc, self.avx_sae, self.avx_rm, \
-                self.operands) = x86.get_arch_info(detail.arch.x86)
+                self.xop_cc, self.sse_cc, self.avx_cc, self.avx_sae, self.avx_rm, \
+                self.eflags, self.operands) = x86.get_arch_info(detail.arch.x86)
         elif arch == capstone.CS_ARCH_MIPS:
                 self.operands = mips.get_arch_info(detail.arch.mips)
         elif arch == capstone.CS_ARCH_PPC:
@@ -45,6 +45,8 @@ class CsDetail(object):
             (self.cc, self.operands) = systemz.get_arch_info(detail.arch.sysz)
         elif arch == capstone.CS_ARCH_XCORE:
                 self.operands = xcore.get_arch_info(detail.arch.xcore)
+        elif arch == capstone.CS_ARCH_TMS320C64X:
+                (self.condition, self.funit, self.parallel, self.operands) = tms320c64x.get_arch_info(self._detail.arch.tms320c64x)
 
 
 cdef class CsInsn(object):
@@ -241,6 +243,27 @@ cdef class CsInsn(object):
             if c == position:
                 return op
 
+    # Return (list-of-registers-read, list-of-registers-modified) by this instructions.
+    # This includes all the implicit & explicit registers.
+    def regs_access(self):
+        if self._raw.id == 0:
+            raise CsError(capstone.CS_ERR_SKIPDATA)
+
+        cdef cc.uint16_t regs_read[64], regs_write[64]
+        cdef cc.uint8_t read_count, write_count
+
+        status = cc.cs_regs_access(self._cs.csh, &self._raw, regs_read, &read_count, regs_write, &write_count)
+        if status != capstone.CS_ERR_OK:
+            raise CsError(status)
+
+        r1 = []
+        for i from 0 <= i < read_count: r1.append(regs_read[i])
+
+        w1 = []
+        for i from 0 <= i < write_count: w1.append(regs_write[i])
+
+        return (r1, w1)
+
 
 cdef class Cs(object):
 
@@ -318,7 +341,7 @@ def debug():
     archs = { "arm": capstone.CS_ARCH_ARM, "arm64": capstone.CS_ARCH_ARM64, \
         "mips": capstone.CS_ARCH_MIPS, "ppc": capstone.CS_ARCH_PPC, \
         "sparc": capstone.CS_ARCH_SPARC, "sysz": capstone.CS_ARCH_SYSZ, \
-		"xcore": capstone.CS_ARCH_XCORE }
+		"xcore": capstone.CS_ARCH_XCORE, "tms320c64x": capstone.CS_ARCH_TMS320C64X }
 
     all_archs = ""
     keys = archs.keys()

@@ -1,22 +1,22 @@
 /* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013 */
 
 #include <stdio.h>
 
-#include <platform.h>
-#include <capstone.h>
+#include <capstone/platform.h>
+#include <capstone/capstone.h>
 
 struct platform {
 	cs_arch arch;
 	cs_mode mode;
 	unsigned char *code;
 	size_t size;
-	char *comment;
+	const char *comment;
 };
 
 static csh handle;
 
-static void print_string_hex(char *comment, unsigned char *str, size_t len)
+static void print_string_hex(const char *comment, unsigned char *str, size_t len)
 {
 	unsigned char *c;
 
@@ -79,7 +79,7 @@ static void print_insn_detail(cs_insn *ins)
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;
 			case PPC_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->imm);
+				printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->imm);
 				break;
 			case PPC_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
@@ -114,6 +114,7 @@ static void print_insn_detail(cs_insn *ins)
 static void test()
 {
 #define PPC_CODE "\x43\x20\x0c\x07\x41\x56\xff\x17\x80\x20\x00\x00\x80\x3f\x00\x00\x10\x43\x23\x0e\xd0\x44\x00\x80\x4c\x43\x22\x02\x2d\x03\x00\x80\x7c\x43\x20\x14\x7c\x43\x20\x93\x4f\x20\x00\x21\x4c\xc8\x00\x21\x40\x82\x00\x14"
+#define PPC_CODE2 "\x10\x60\x2a\x10\x10\x64\x28\x88\x7c\x4a\x5d\x0f"
 
 	struct platform platforms[] = {
 		{
@@ -122,7 +123,14 @@ static void test()
 			(unsigned char*)PPC_CODE,
 			sizeof(PPC_CODE) - 1,
 			"PPC-64",
-		}
+		},
+		{
+			CS_ARCH_PPC,
+			(cs_mode)(CS_MODE_BIG_ENDIAN + CS_MODE_QPX),
+			(unsigned char*)PPC_CODE2,
+			sizeof(PPC_CODE2) - 1,
+			"PPC-64 + QPX",
+		},
 	};
 
 	uint64_t address = 0x1000;
@@ -134,7 +142,7 @@ static void test()
 		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
 		if (err) {
 			printf("Failed on cs_open() with error returned: %u\n", err);
-			continue;
+			abort();
 		}
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
@@ -161,6 +169,7 @@ static void test()
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code:", platforms[i].code, platforms[i].size);
 			printf("ERROR: Failed to disasm given code!\n");
+			abort();
 		}
 
 		printf("\n");

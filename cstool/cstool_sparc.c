@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-#include <capstone.h>
+#include <capstone/capstone.h>
 
 void print_string_hex(char *comment, unsigned char *str, size_t len);
 
@@ -29,7 +29,7 @@ void print_insn_detail_sparc(csh handle, cs_insn *ins)
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;
 			case SPARC_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->imm);
+				printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->imm);
 				break;
 			case SPARC_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);

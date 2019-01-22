@@ -88,7 +88,7 @@ End Enum
 
 'NOTE: All information in cs_detail is only available when CS_OPT_DETAIL = CS_OPT_ON
 Public Type cs_detail
-    regs_read(0 To 11) As Byte      ' list of implicit registers read by this insn UNSIGNED
+    regs_read(0 To 15) As Byte      ' list of implicit registers read by this insn UNSIGNED
     regs_read_count As Byte         ' number of implicit registers read by this insn UNSIGNED
     regs_write(0 To 19) As Byte     ' list of implicit registers modified by this insn UNSIGNED
     regs_write_count As Byte        ' number of implicit registers modified by this insn UNSIGNED
@@ -97,7 +97,7 @@ Public Type cs_detail
 End Type
 
 'typedef struct cs_detail {
-'    uint8_t regs_read[12]; // list of implicit registers read by this insn
+'    uint8_t regs_read[16]; // list of implicit registers read by this insn
 '    uint8_t regs_read_count; // number of implicit registers read by this insn
 '
 '    uint8_t regs_write[20]; // list of implicit registers modified by this insn
@@ -131,7 +131,7 @@ Public Type cs_insn
     align As Long             'not sure why it needs this..but it does..
     address As Currency       ' Address (EIP) of this instruction available even when CS_OPT_DETAIL = CS_OPT_OFF UNSIGNED
     size As Integer           ' Size of this instruction available even when CS_OPT_DETAIL = CS_OPT_OFF UNSIGNED
-    bytes(0 To 15) As Byte    ' Machine bytes of this instruction, with number of bytes indicated by @size above available even when CS_OPT_DETAIL = CS_OPT_OFF
+    bytes(0 To 23) As Byte    ' Machine bytes of this instruction, with number of bytes indicated by @size above available even when CS_OPT_DETAIL = CS_OPT_OFF
     mnemonic(0 To 31) As Byte ' Ascii text of instruction mnemonic available even when CS_OPT_DETAIL = CS_OPT_OFF
     op_str(0 To 159) As Byte  ' Ascii text of instruction operands available even when CS_OPT_DETAIL = CS_OPT_OFF
                             
@@ -293,7 +293,7 @@ Public Declare Function cs_strerror Lib "vbCapstone.dll" Alias "bs_strerror" (By
 ' Disassemble binary code, given the code buffer, size, address and number
 ' of instructions to be decoded.
 ' This API dynamically allocate memory to contain disassembled instruction.
-' Resulted instructions will be put into @*insn
+' Resulting instructions will be put into @*insn
 '
 ' NOTE 1: this API will automatically determine memory needed to contain
 ' output disassembled instructions in @insn.
@@ -388,7 +388,7 @@ Public Declare Function cs_malloc Lib "vbCapstone.dll" Alias "bs_malloc" (ByVal 
 '/*
 ' Fast API to disassemble binary code, given the code buffer, size, address
 ' and number of instructions to be decoded.
-' This API put the resulted instruction into a given cache in @insn.
+' This API puts the resulting instruction into a given cache in @insn.
 ' See tests/test_iter.c for sample code demonstrating this API.
 '
 ' NOTE 1: this API will update @code, @size & @address to point to the next
@@ -496,7 +496,7 @@ Public Declare Function cs_group_name Lib "vbCapstone.dll" Alias "bs_group_name"
 ' @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_iter()
 ' @group_id: group that you want to check if this instruction belong to.
 '
-' @return: true if this instruction indeed belongs to aboved group, or false otherwise.
+' @return: true if this instruction indeed belongs to the given group, or false otherwise.
 '*/
 'CAPSTONE_EXPORT
 'bool cs_insn_group(csh handle, const cs_insn *insn, unsigned int group_id);
@@ -517,7 +517,7 @@ Public Declare Function cs_insn_group Lib "vbCapstone.dll" Alias "bs_insn_group"
 ' @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_iter()
 ' @reg_id: register that you want to check if this instruction used it.
 '
-' @return: true if this instruction indeed implicitly used aboved register, or false otherwise.
+' @return: true if this instruction indeed implicitly used the given register, or false otherwise.
 '*/
 'CAPSTONE_EXPORT
 'bool cs_reg_read(csh handle, const cs_insn *insn, unsigned int reg_id);
@@ -538,7 +538,7 @@ Public Declare Function cs_reg_read Lib "vbCapstone.dll" Alias "bs_reg_read" (By
 ' @insn: disassembled instruction structure received from cs_disasm() or cs_disasm_iter()
 ' @reg_id: register that you want to check if this instruction modified it.
 '
-' @return: true if this instruction indeed implicitly modified aboved register, or false otherwise.
+' @return: true if this instruction indeed implicitly modified the given register, or false otherwise.
 '*/
 'CAPSTONE_EXPORT
 'bool cs_reg_write(csh handle, const cs_insn *insn, unsigned int reg_id);

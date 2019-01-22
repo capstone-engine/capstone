@@ -20,7 +20,7 @@ cdef extern from "<capstone/capstone.h>":
         unsigned int id
         uint64_t address
         uint16_t size
-        uint8_t bytes[16]
+        uint8_t bytes[24]
         char mnemonic[32]
         char op_str[160]
         cs_detail *detail
@@ -65,5 +65,8 @@ cdef extern from "<capstone/capstone.h>":
 
     int cs_op_count(csh handle, cs_insn *insn, unsigned int op_type)
 
+    cs_err cs_regs_access(csh handle, cs_insn *insn, uint16_t *regs_read, uint8_t *read_count, uint16_t *regs_write, uint8_t *write_count)
+
     int cs_op_index(csh handle, cs_insn *insn, unsigned int op_type,
         unsigned int position)
+

@@ -12,7 +12,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifdef CAPSTONE_HAS_XCORE
 
@@ -24,7 +24,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <platform.h>
+#include <capstone/platform.h>
 
 #include "XCoreInstPrinter.h"
 #include "../../MCInst.h"
@@ -208,17 +208,7 @@ static void _printOperand(MCInst *MI, MCOperand *MO, SStream *O)
 	} else if (MCOperand_isImm(MO)) {
 		int32_t Imm = (int32_t)MCOperand_getImm(MO);
 
-		if (Imm >= 0) {
-			if (Imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%x", Imm);
-			else
-				SStream_concat(O, "%u", Imm);
-		} else {
-			if (Imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%x", -Imm);
-			else
-				SStream_concat(O, "-%u", -Imm);
-		}
+		printInt32(O, Imm);
 
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {

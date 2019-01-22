@@ -1,10 +1,11 @@
 # Capstone Disassembler Engine
-# By Nguyen Anh Quynh <aquynh@gmail.com>, 2013>
+# By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015
 
 LIB = capstone
 FLAGS = '-Wall -Wextra -Wwrite-strings'
+PYTHON2 = python
 
-all: arm_const.cmxa arm64_const.cmxa mips_const.cmxa ppc_const.cmxa sparc_const.cmxa sysz_const.cmxa x86_const.cmxa xcore_const.cmxa arm.cmxa arm64.cmxa mips.cmxa ppc.cmxa x86.cmxa sparc.cmxa systemz.cmxa xcore.cmxa capstone.cmxa test_basic.cmx test_detail.cmx test_x86.cmx test_arm.cmx test_arm64.cmx test_mips.cmx test_ppc.cmx test_sparc.cmx test_systemz.cmx test_xcore.cmx ocaml.o
+all: arm_const.cmxa arm64_const.cmxa m680x_const.cmxa mips_const.cmxa ppc_const.cmxa sparc_const.cmxa sysz_const.cmxa x86_const.cmxa xcore_const.cmxa arm.cmxa arm64.cmxa m680x.cmxa mips.cmxa ppc.cmxa x86.cmxa sparc.cmxa systemz.cmxa xcore.cmxa capstone.cmxa test_basic.cmx test_detail.cmx test_x86.cmx test_arm.cmx test_arm64.cmx test_mips.cmx test_ppc.cmx test_sparc.cmx test_systemz.cmx test_xcore.cmx test_m680x.cmx ocaml.o
 	ocamlopt -o test_basic -ccopt $(FLAGS) ocaml.o capstone.cmx test_basic.cmx -cclib -l$(LIB)
 	ocamlopt -o test_detail -ccopt $(FLAGS) capstone.cmx ocaml.o test_detail.cmx -cclib -l$(LIB)
 	ocamlopt -o test_x86 -ccopt $(FLAGS) capstone.cmx ocaml.o x86.cmx x86_const.cmx test_x86.cmx -cclib -l$(LIB)
@@ -15,6 +16,7 @@ all: arm_const.cmxa arm64_const.cmxa mips_const.cmxa ppc_const.cmxa sparc_const.
 	ocamlopt -o test_sparc -ccopt $(FLAGS) capstone.cmx ocaml.o sparc.cmx sparc_const.cmx test_sparc.cmx -cclib -l$(LIB)
 	ocamlopt -o test_systemz -ccopt $(FLAGS) capstone.cmx ocaml.o systemz.cmx sysz_const.cmx test_systemz.cmx -cclib -l$(LIB)
 	ocamlopt -o test_xcore -ccopt $(FLAGS) capstone.cmx ocaml.o xcore.cmx xcore_const.cmx test_xcore.cmx -cclib -l$(LIB)
+	ocamlopt -o test_m680x -ccopt $(FLAGS) capstone.cmx ocaml.o m680x.cmx m680x_const.cmx test_m680x.cmx -cclib -l$(LIB)
 
 
 test_basic.cmx: test_basic.ml
@@ -45,6 +47,9 @@ test_systemz.cmx: test_systemz.ml
 	ocamlopt -ccopt $(FLAGS) -c $< -cclib -l$(LIB)
 
 test_xcore.cmx: test_xcore.ml
+	ocamlopt -ccopt $(FLAGS) -c $< -cclib -l$(LIB)
+
+test_m680x.cmx: test_m680x.ml
 	ocamlopt -ccopt $(FLAGS) -c $< -cclib -l$(LIB)
 
 ocaml.o: ocaml.c
@@ -132,6 +137,30 @@ arm64_const.cmx: arm64_const.ml arm64_const.cmi
 	ocamlopt -ccopt $(FLAGS) -c $<
 
 arm64_const.cmxa: arm64_const.cmx
+	ocamlopt -ccopt $(FLAGS) -a -o $@ $<
+
+m680x.mli: m680x.ml
+	ocamlc -ccopt $(FLAGS) -i $< > $@
+
+m680x.cmi: m680x.mli
+	ocamlc -ccopt $(FLAGS) -c $<
+
+m680x.cmx: m680x.ml m680x.cmi
+	ocamlopt -ccopt $(FLAGS) -c $<
+
+m680x.cmxa: m680x.cmx
+	ocamlopt -ccopt $(FLAGS) -a -o $@ $<
+
+m680x_const.mli: m680x_const.ml
+	ocamlc -ccopt $(FLAGS) -i $< > $@
+
+m680x_const.cmi: m680x_const.mli
+	ocamlc -ccopt $(FLAGS) -c $<
+
+m680x_const.cmx: m680x_const.ml m680x_const.cmi
+	ocamlopt -ccopt $(FLAGS) -c $<
+
+m680x_const.cmxa: m680x_const.cmx
 	ocamlopt -ccopt $(FLAGS) -a -o $@ $<
 
 mips.mli: mips.ml
@@ -255,12 +284,12 @@ xcore_const.cmxa: xcore_const.cmx
 	ocamlopt -ccopt $(FLAGS) -a -o $@ $<
 
 clean:
-	rm -f *.[oa] *.so *.cm[ixoa] *.cmxa *.mli test_basic test_detail test_x86 test_arm test_arm64 test_mips test_ppc test_sparc test_systemz test_xcore
+	rm -f *.[oa] *.so *.cm[ixoa] *.cmxa *.mli test_basic test_detail test_x86 test_arm test_arm64 test_mips test_ppc test_sparc test_systemz test_xcore test_m680x
 
 gen_const:
-	cd .. && python const_generator.py ocaml
+	cd .. && $(PYTHON2) const_generator.py ocaml
 
-TESTS = test_basic test_detail test_arm test_arm64 test_mips test_ppc
+TESTS = test_basic test_detail test_arm test_arm64 test_m680x test_mips test_ppc
 TESTS += test_sparc test_systemz test_x86 test_xcore
 check:
 	@for t in $(TESTS); do \

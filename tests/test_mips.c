@@ -1,23 +1,23 @@
 /* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013 */
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <platform.h>
-#include <capstone.h>
+#include <capstone/platform.h>
+#include <capstone/capstone.h>
 
 struct platform {
 	cs_arch arch;
 	cs_mode mode;
 	unsigned char *code;
 	size_t size;
-	char *comment;
+	const char *comment;
 };
 
 static csh handle;
 
-static void print_string_hex(char *comment, unsigned char *str, size_t len)
+static void print_string_hex(const char *comment, unsigned char *str, size_t len)
 {
 	unsigned char *c;
 
@@ -55,7 +55,7 @@ static void print_insn_detail(cs_insn *ins)
 				break;
 			case MIPS_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
-				if (op->mem.base != X86_REG_INVALID)
+				if (op->mem.base != MIPS_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.base: REG = %s\n",
 							i, cs_reg_name(handle, op->mem.base));
 				if (op->mem.disp != 0)
@@ -82,35 +82,50 @@ static void test()
 #define MIPS_CODE2 "\x56\x34\x21\x34\xc2\x17\x01\x00"
 #define MIPS_32R6M "\x00\x07\x00\x07\x00\x11\x93\x7c\x01\x8c\x8b\x7c\x00\xc7\x48\xd0"
 #define MIPS_32R6 "\xec\x80\x00\x19\x7c\x43\x22\xa0"
+#define MIPS_64SD "\x70\x00\xb2\xff"
 
 	struct platform platforms[] = {
 		{
 			CS_ARCH_MIPS,
-			(cs_mode)(CS_MODE_MIPS32 + CS_MODE_BIG_ENDIAN),
+			(cs_mode)(CS_MODE_MIPS32 | CS_MODE_BIG_ENDIAN),
 			(unsigned char *)MIPS_CODE,
 			sizeof(MIPS_CODE) - 1,
 			"MIPS-32 (Big-endian)"
 		},
 		{
 			CS_ARCH_MIPS,
-			(cs_mode)(CS_MODE_MIPS64 + CS_MODE_LITTLE_ENDIAN),
+			(cs_mode)(CS_MODE_MIPS64 | CS_MODE_LITTLE_ENDIAN),
 			(unsigned char *)MIPS_CODE2,
 			sizeof(MIPS_CODE2) - 1,
 			"MIPS-64-EL (Little-endian)"
 		},
 		{
 			CS_ARCH_MIPS,
-			(cs_mode)(CS_MODE_MIPS32R6 + CS_MODE_MICRO + CS_MODE_BIG_ENDIAN),
+			(cs_mode)(CS_MODE_MIPS32R6 | CS_MODE_MICRO | CS_MODE_BIG_ENDIAN),
 			(unsigned char*)MIPS_32R6M,
 			sizeof(MIPS_32R6M) - 1,
 			"MIPS-32R6 | Micro (Big-endian)"
 		},
 		{
 			CS_ARCH_MIPS,
-			(cs_mode)(CS_MODE_MIPS32R6 + CS_MODE_BIG_ENDIAN),
+			(cs_mode)(CS_MODE_MIPS32R6 | CS_MODE_BIG_ENDIAN),
 			(unsigned char*)MIPS_32R6,
 			sizeof(MIPS_32R6) - 1,
 			"MIPS-32R6 (Big-endian)"
+		},
+		{
+			CS_ARCH_MIPS,
+			(cs_mode)(CS_MODE_MIPS64 | CS_MODE_MIPS2 | CS_MODE_LITTLE_ENDIAN),
+			(unsigned char *)MIPS_64SD,
+			sizeof(MIPS_64SD) - 1,
+			"MIPS-64-EL + Mips II (Little-endian)"
+		},
+		{
+			CS_ARCH_MIPS,
+			(cs_mode)(CS_MODE_MIPS64 | CS_MODE_LITTLE_ENDIAN),
+			(unsigned char *)MIPS_64SD,
+			sizeof(MIPS_64SD) - 1,
+			"MIPS-64-EL (Little-endian)"
 		},
 	};
 
@@ -123,7 +138,7 @@ static void test()
 		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
 		if (err) {
 			printf("Failed on cs_open() with error returned: %u\n", err);
-			continue;
+			abort();
 		}
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
@@ -150,6 +165,7 @@ static void test()
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code:", platforms[i].code, platforms[i].size);
 			printf("ERROR: Failed to disasm given code!\n");
+			abort();
 		}
 
 		printf("\n");

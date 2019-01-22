@@ -1,15 +1,11 @@
 (* For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [arm64_const.ml] *)
 
-(* ARM64 shift type *)
-
 let _ARM64_SFT_INVALID = 0;;
 let _ARM64_SFT_LSL = 1;;
 let _ARM64_SFT_MSL = 2;;
 let _ARM64_SFT_LSR = 3;;
 let _ARM64_SFT_ASR = 4;;
 let _ARM64_SFT_ROR = 5;;
-
-(* ARM64 extender type *)
 
 let _ARM64_EXT_INVALID = 0;;
 let _ARM64_EXT_UXTB = 1;;
@@ -20,8 +16,6 @@ let _ARM64_EXT_SXTB = 5;;
 let _ARM64_EXT_SXTH = 6;;
 let _ARM64_EXT_SXTW = 7;;
 let _ARM64_EXT_SXTX = 8;;
-
-(* ARM64 condition code *)
 
 let _ARM64_CC_INVALID = 0;;
 let _ARM64_CC_EQ = 1;;
@@ -40,10 +34,6 @@ let _ARM64_CC_GT = 13;;
 let _ARM64_CC_LE = 14;;
 let _ARM64_CC_AL = 15;;
 let _ARM64_CC_NV = 16;;
-
-(* System registers *)
-
-(* System registers for MRS *)
 
 let _ARM64_SYSREG_INVALID = 0;;
 let _ARM64_SYSREG_MDCCSR_EL0 = 0x9808;;
@@ -138,8 +128,6 @@ let _ARM64_SYSREG_ICC_RPR_EL1 = 0xc65b;;
 let _ARM64_SYSREG_ICH_VTR_EL2 = 0xe659;;
 let _ARM64_SYSREG_ICH_EISR_EL2 = 0xe65b;;
 let _ARM64_SYSREG_ICH_ELSR_EL2 = 0xe65d;;
-
-(* System registers for MSR *)
 let _ARM64_SYSREG_DBGDTRTX_EL0 = 0x9828;;
 let _ARM64_SYSREG_OSLAR_EL1 = 0x8084;;
 let _ARM64_SYSREG_PMSWINC_EL0 = 0xdce4;;
@@ -152,14 +140,10 @@ let _ARM64_SYSREG_ICC_SGI1R_EL1 = 0xc65d;;
 let _ARM64_SYSREG_ICC_ASGI1R_EL1 = 0xc65e;;
 let _ARM64_SYSREG_ICC_SGI0R_EL1 = 0xc65f;;
 
-(* System PState Field (MSR instruction) *)
-
 let _ARM64_PSTATE_INVALID = 0;;
 let _ARM64_PSTATE_SPSEL = 0x05;;
 let _ARM64_PSTATE_DAIFSET = 0x1e;;
 let _ARM64_PSTATE_DAIFCLR = 0x1f;;
-
-(* Vector arrangement specifier (for FloatingPoint/Advanced SIMD insn) *)
 
 let _ARM64_VAS_INVALID = 0;;
 let _ARM64_VAS_8B = 1;;
@@ -172,15 +156,11 @@ let _ARM64_VAS_1D = 7;;
 let _ARM64_VAS_2D = 8;;
 let _ARM64_VAS_1Q = 9;;
 
-(* Vector element size specifier *)
-
 let _ARM64_VESS_INVALID = 0;;
 let _ARM64_VESS_B = 1;;
 let _ARM64_VESS_H = 2;;
 let _ARM64_VESS_S = 3;;
 let _ARM64_VESS_D = 4;;
-
-(* Memory barrier operands *)
 
 let _ARM64_BARRIER_INVALID = 0;;
 let _ARM64_BARRIER_OSHLD = 0x1;;
@@ -196,8 +176,6 @@ let _ARM64_BARRIER_LD = 0xd;;
 let _ARM64_BARRIER_ST = 0xe;;
 let _ARM64_BARRIER_SY = 0xf;;
 
-(* Operand type for instruction's operands *)
-
 let _ARM64_OP_INVALID = 0;;
 let _ARM64_OP_REG = 1;;
 let _ARM64_OP_IMM = 2;;
@@ -210,8 +188,6 @@ let _ARM64_OP_PSTATE = 67;;
 let _ARM64_OP_SYS = 68;;
 let _ARM64_OP_PREFETCH = 69;;
 let _ARM64_OP_BARRIER = 70;;
-
-(* TLBI operations *)
 
 let _ARM64_TLBI_INVALID = 0;;
 let _ARM64_TLBI_VMALLE1IS = 1;;
@@ -246,8 +222,6 @@ let _ARM64_TLBI_VMALLS12E1 = 29;;
 let _ARM64_TLBI_ALLE3 = 30;;
 let _ARM64_TLBI_VAE3 = 31;;
 let _ARM64_TLBI_VALE3 = 32;;
-
-(* AT operations *)
 let _ARM64_AT_S1E1R = 33;;
 let _ARM64_AT_S1E1W = 34;;
 let _ARM64_AT_S1E0R = 35;;
@@ -261,8 +235,6 @@ let _ARM64_AT_S12E0W = 42;;
 let _ARM64_AT_S1E3R = 43;;
 let _ARM64_AT_S1E3W = 44;;
 
-(* DC operations *)
-
 let _ARM64_DC_INVALID = 0;;
 let _ARM64_DC_ZVA = 1;;
 let _ARM64_DC_IVAC = 2;;
@@ -273,14 +245,10 @@ let _ARM64_DC_CVAU = 6;;
 let _ARM64_DC_CIVAC = 7;;
 let _ARM64_DC_CISW = 8;;
 
-(* IC operations *)
-
 let _ARM64_IC_INVALID = 0;;
 let _ARM64_IC_IALLUIS = 1;;
 let _ARM64_IC_IALLU = 2;;
 let _ARM64_IC_IVAU = 3;;
-
-(* Prefetch operations (PRFM) *)
 
 let _ARM64_PRFM_INVALID = 0;;
 let _ARM64_PRFM_PLDL1KEEP = 0x00+1;;
@@ -301,8 +269,6 @@ let _ARM64_PRFM_PSTL2KEEP = 0x12+1;;
 let _ARM64_PRFM_PSTL2STRM = 0x13+1;;
 let _ARM64_PRFM_PSTL3KEEP = 0x14+1;;
 let _ARM64_PRFM_PSTL3STRM = 0x15+1;;
-
-(* ARM64 registers *)
 
 let _ARM64_REG_INVALID = 0;;
 let _ARM64_REG_X29 = 1;;
@@ -565,14 +531,10 @@ let _ARM64_REG_V29 = 257;;
 let _ARM64_REG_V30 = 258;;
 let _ARM64_REG_V31 = 259;;
 let _ARM64_REG_ENDING = 260;;
-
-(* alias registers *)
 let _ARM64_REG_IP0 = _ARM64_REG_X16;;
 let _ARM64_REG_IP1 = _ARM64_REG_X17;;
 let _ARM64_REG_FP = _ARM64_REG_X29;;
 let _ARM64_REG_LR = _ARM64_REG_X30;;
-
-(* ARM64 instruction *)
 
 let _ARM64_INS_INVALID = 0;;
 let _ARM64_INS_ABS = 1;;
@@ -1026,16 +988,17 @@ let _ARM64_INS_IC = 448;;
 let _ARM64_INS_DC = 449;;
 let _ARM64_INS_AT = 450;;
 let _ARM64_INS_TLBI = 451;;
-let _ARM64_INS_ENDING = 452;;
-
-(* Group of ARM64 instructions *)
+let _ARM64_INS_NEGS = 452;;
+let _ARM64_INS_NGCS = 453;;
+let _ARM64_INS_ENDING = 454;;
 
 let _ARM64_GRP_INVALID = 0;;
-
-(* Generic groups *)
 let _ARM64_GRP_JUMP = 1;;
-
-(* Architecture-specific groups *)
+let _ARM64_GRP_CALL = 2;;
+let _ARM64_GRP_RET = 3;;
+let _ARM64_GRP_INT = 4;;
+let _ARM64_GRP_PRIVILEGE = 6;;
+let _ARM64_GRP_BRANCH_RELATIVE = 7;;
 let _ARM64_GRP_CRYPTO = 128;;
 let _ARM64_GRP_FPARMV8 = 129;;
 let _ARM64_GRP_NEON = 130;;

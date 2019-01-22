@@ -20,6 +20,14 @@ Documentation of Capstone disassembly framework.
 
 	http://capstone-engine.org/lang_java.html
 
+* Customize instruction mnemonics at run-time.
+
+	http://capstone-engine.org/mnemonic.html
+
+* Retrieve access information of instruction operands.
+
+	http://capstone-engine.org/op_access.html
+
 * Build compact engine with only selected architectures.
 
 	http://capstone-engine.org/compile.html

@@ -3,11 +3,7 @@ package capstone;
 
 public class Sparc_const {
 
-	// Enums corresponding to Sparc condition codes, both icc's and fcc's.
-
 	public static final int SPARC_CC_INVALID = 0;
-
-	// Integer condition codes
 	public static final int SPARC_CC_ICC_A = 8+256;
 	public static final int SPARC_CC_ICC_N = 0+256;
 	public static final int SPARC_CC_ICC_NE = 9+256;
@@ -24,8 +20,6 @@ public class Sparc_const {
 	public static final int SPARC_CC_ICC_NEG = 6+256;
 	public static final int SPARC_CC_ICC_VC = 15+256;
 	public static final int SPARC_CC_ICC_VS = 7+256;
-
-	// Floating condition codes
 	public static final int SPARC_CC_FCC_A = 8+16+256;
 	public static final int SPARC_CC_FCC_N = 0+16+256;
 	public static final int SPARC_CC_FCC_U = 7+16+256;
@@ -43,21 +37,15 @@ public class Sparc_const {
 	public static final int SPARC_CC_FCC_ULE = 14+16+256;
 	public static final int SPARC_CC_FCC_O = 15+16+256;
 
-	// Branch hint
-
 	public static final int SPARC_HINT_INVALID = 0;
 	public static final int SPARC_HINT_A = 1<<0;
 	public static final int SPARC_HINT_PT = 1<<1;
 	public static final int SPARC_HINT_PN = 1<<2;
 
-	// Operand type for instruction's operands
-
 	public static final int SPARC_OP_INVALID = 0;
 	public static final int SPARC_OP_REG = 1;
 	public static final int SPARC_OP_IMM = 2;
 	public static final int SPARC_OP_MEM = 3;
-
-	// SPARC registers
 
 	public static final int SPARC_REG_INVALID = 0;
 	public static final int SPARC_REG_F0 = 1;
@@ -150,8 +138,6 @@ public class Sparc_const {
 	public static final int SPARC_REG_ENDING = 88;
 	public static final int SPARC_REG_O6 = SPARC_REG_SP;
 	public static final int SPARC_REG_I6 = SPARC_REG_FP;
-
-	// SPARC instruction
 
 	public static final int SPARC_INS_INVALID = 0;
 	public static final int SPARC_INS_ADDCC = 1;
@@ -434,14 +420,8 @@ public class Sparc_const {
 	public static final int SPARC_INS_RETL = 278;
 	public static final int SPARC_INS_ENDING = 279;
 
-	// Group of SPARC instructions
-
 	public static final int SPARC_GRP_INVALID = 0;
-
-	// Generic groups
 	public static final int SPARC_GRP_JUMP = 1;
-
-	// Architecture-specific groups
 	public static final int SPARC_GRP_HARDQUAD = 128;
 	public static final int SPARC_GRP_V9 = 129;
 	public static final int SPARC_GRP_VIS = 130;

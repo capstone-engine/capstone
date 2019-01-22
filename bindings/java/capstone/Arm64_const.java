@@ -3,16 +3,12 @@ package capstone;
 
 public class Arm64_const {
 
-	// ARM64 shift type
-
 	public static final int ARM64_SFT_INVALID = 0;
 	public static final int ARM64_SFT_LSL = 1;
 	public static final int ARM64_SFT_MSL = 2;
 	public static final int ARM64_SFT_LSR = 3;
 	public static final int ARM64_SFT_ASR = 4;
 	public static final int ARM64_SFT_ROR = 5;
-
-	// ARM64 extender type
 
 	public static final int ARM64_EXT_INVALID = 0;
 	public static final int ARM64_EXT_UXTB = 1;
@@ -23,8 +19,6 @@ public class Arm64_const {
 	public static final int ARM64_EXT_SXTH = 6;
 	public static final int ARM64_EXT_SXTW = 7;
 	public static final int ARM64_EXT_SXTX = 8;
-
-	// ARM64 condition code
 
 	public static final int ARM64_CC_INVALID = 0;
 	public static final int ARM64_CC_EQ = 1;
@@ -43,10 +37,6 @@ public class Arm64_const {
 	public static final int ARM64_CC_LE = 14;
 	public static final int ARM64_CC_AL = 15;
 	public static final int ARM64_CC_NV = 16;
-
-	// System registers
-
-	// System registers for MRS
 
 	public static final int ARM64_SYSREG_INVALID = 0;
 	public static final int ARM64_SYSREG_MDCCSR_EL0 = 0x9808;
@@ -141,8 +131,6 @@ public class Arm64_const {
 	public static final int ARM64_SYSREG_ICH_VTR_EL2 = 0xe659;
 	public static final int ARM64_SYSREG_ICH_EISR_EL2 = 0xe65b;
 	public static final int ARM64_SYSREG_ICH_ELSR_EL2 = 0xe65d;
-
-	// System registers for MSR
 	public static final int ARM64_SYSREG_DBGDTRTX_EL0 = 0x9828;
 	public static final int ARM64_SYSREG_OSLAR_EL1 = 0x8084;
 	public static final int ARM64_SYSREG_PMSWINC_EL0 = 0xdce4;
@@ -155,14 +143,10 @@ public class Arm64_const {
 	public static final int ARM64_SYSREG_ICC_ASGI1R_EL1 = 0xc65e;
 	public static final int ARM64_SYSREG_ICC_SGI0R_EL1 = 0xc65f;
 
-	// System PState Field (MSR instruction)
-
 	public static final int ARM64_PSTATE_INVALID = 0;
 	public static final int ARM64_PSTATE_SPSEL = 0x05;
 	public static final int ARM64_PSTATE_DAIFSET = 0x1e;
 	public static final int ARM64_PSTATE_DAIFCLR = 0x1f;
-
-	// Vector arrangement specifier (for FloatingPoint/Advanced SIMD insn)
 
 	public static final int ARM64_VAS_INVALID = 0;
 	public static final int ARM64_VAS_8B = 1;
@@ -175,15 +159,11 @@ public class Arm64_const {
 	public static final int ARM64_VAS_2D = 8;
 	public static final int ARM64_VAS_1Q = 9;
 
-	// Vector element size specifier
-
 	public static final int ARM64_VESS_INVALID = 0;
 	public static final int ARM64_VESS_B = 1;
 	public static final int ARM64_VESS_H = 2;
 	public static final int ARM64_VESS_S = 3;
 	public static final int ARM64_VESS_D = 4;
-
-	// Memory barrier operands
 
 	public static final int ARM64_BARRIER_INVALID = 0;
 	public static final int ARM64_BARRIER_OSHLD = 0x1;
@@ -199,8 +179,6 @@ public class Arm64_const {
 	public static final int ARM64_BARRIER_ST = 0xe;
 	public static final int ARM64_BARRIER_SY = 0xf;
 
-	// Operand type for instruction's operands
-
 	public static final int ARM64_OP_INVALID = 0;
 	public static final int ARM64_OP_REG = 1;
 	public static final int ARM64_OP_IMM = 2;
@@ -213,8 +191,6 @@ public class Arm64_const {
 	public static final int ARM64_OP_SYS = 68;
 	public static final int ARM64_OP_PREFETCH = 69;
 	public static final int ARM64_OP_BARRIER = 70;
-
-	// TLBI operations
 
 	public static final int ARM64_TLBI_INVALID = 0;
 	public static final int ARM64_TLBI_VMALLE1IS = 1;
@@ -249,8 +225,6 @@ public class Arm64_const {
 	public static final int ARM64_TLBI_ALLE3 = 30;
 	public static final int ARM64_TLBI_VAE3 = 31;
 	public static final int ARM64_TLBI_VALE3 = 32;
-
-	// AT operations
 	public static final int ARM64_AT_S1E1R = 33;
 	public static final int ARM64_AT_S1E1W = 34;
 	public static final int ARM64_AT_S1E0R = 35;
@@ -264,8 +238,6 @@ public class Arm64_const {
 	public static final int ARM64_AT_S1E3R = 43;
 	public static final int ARM64_AT_S1E3W = 44;
 
-	// DC operations
-
 	public static final int ARM64_DC_INVALID = 0;
 	public static final int ARM64_DC_ZVA = 1;
 	public static final int ARM64_DC_IVAC = 2;
@@ -276,14 +248,10 @@ public class Arm64_const {
 	public static final int ARM64_DC_CIVAC = 7;
 	public static final int ARM64_DC_CISW = 8;
 
-	// IC operations
-
 	public static final int ARM64_IC_INVALID = 0;
 	public static final int ARM64_IC_IALLUIS = 1;
 	public static final int ARM64_IC_IALLU = 2;
 	public static final int ARM64_IC_IVAU = 3;
-
-	// Prefetch operations (PRFM)
 
 	public static final int ARM64_PRFM_INVALID = 0;
 	public static final int ARM64_PRFM_PLDL1KEEP = 0x00+1;
@@ -304,8 +272,6 @@ public class Arm64_const {
 	public static final int ARM64_PRFM_PSTL2STRM = 0x13+1;
 	public static final int ARM64_PRFM_PSTL3KEEP = 0x14+1;
 	public static final int ARM64_PRFM_PSTL3STRM = 0x15+1;
-
-	// ARM64 registers
 
 	public static final int ARM64_REG_INVALID = 0;
 	public static final int ARM64_REG_X29 = 1;
@@ -568,14 +534,10 @@ public class Arm64_const {
 	public static final int ARM64_REG_V30 = 258;
 	public static final int ARM64_REG_V31 = 259;
 	public static final int ARM64_REG_ENDING = 260;
-
-	// alias registers
 	public static final int ARM64_REG_IP0 = ARM64_REG_X16;
 	public static final int ARM64_REG_IP1 = ARM64_REG_X17;
 	public static final int ARM64_REG_FP = ARM64_REG_X29;
 	public static final int ARM64_REG_LR = ARM64_REG_X30;
-
-	// ARM64 instruction
 
 	public static final int ARM64_INS_INVALID = 0;
 	public static final int ARM64_INS_ABS = 1;
@@ -1029,16 +991,17 @@ public class Arm64_const {
 	public static final int ARM64_INS_DC = 449;
 	public static final int ARM64_INS_AT = 450;
 	public static final int ARM64_INS_TLBI = 451;
-	public static final int ARM64_INS_ENDING = 452;
-
-	// Group of ARM64 instructions
+	public static final int ARM64_INS_NEGS = 452;
+	public static final int ARM64_INS_NGCS = 453;
+	public static final int ARM64_INS_ENDING = 454;
 
 	public static final int ARM64_GRP_INVALID = 0;
-
-	// Generic groups
 	public static final int ARM64_GRP_JUMP = 1;
-
-	// Architecture-specific groups
+	public static final int ARM64_GRP_CALL = 2;
+	public static final int ARM64_GRP_RET = 3;
+	public static final int ARM64_GRP_INT = 4;
+	public static final int ARM64_GRP_PRIVILEGE = 6;
+	public static final int ARM64_GRP_BRANCH_RELATIVE = 7;
 	public static final int ARM64_GRP_CRYPTO = 128;
 	public static final int ARM64_GRP_FPARMV8 = 129;
 	public static final int ARM64_GRP_NEON = 130;

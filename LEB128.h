@@ -13,14 +13,12 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifndef CS_LLVM_SUPPORT_LEB128_H
 #define CS_LLVM_SUPPORT_LEB128_H
 
-#if !defined(_MSC_VER) || !defined(_KERNEL_MODE)
-#include <stdint.h>
-#endif
+#include "include/capstone/capstone.h"
 
 /// Utility function to decode a ULEB128 value.
 static inline uint64_t decodeULEB128(const uint8_t *p, unsigned *n)
@@ -29,7 +27,7 @@ static inline uint64_t decodeULEB128(const uint8_t *p, unsigned *n)
 	uint64_t Value = 0;
 	unsigned Shift = 0;
 	do {
-		Value += (*p & 0x7f) << Shift;
+		Value += (uint64_t)(*p & 0x7f) << Shift;
 		Shift += 7;
 	} while (*p++ >= 128);
 	if (n)

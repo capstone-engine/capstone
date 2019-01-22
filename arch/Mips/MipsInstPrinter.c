@@ -12,11 +12,11 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifdef CAPSTONE_HAS_MIPS
 
-#include <platform.h>
+#include <capstone/platform.h>
 #include <stdlib.h>
 #include <stdio.h>	// debug
 #include <string.h>
@@ -206,32 +206,12 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		int64_t imm = MCOperand_getImm(Op);
 		if (MI->csh->doing_mem) {
 			if (imm) {	// only print Imm offset if it is not 0
-				if (imm >= 0) {
-					if (imm > HEX_THRESHOLD)
-						SStream_concat(O, "0x%"PRIx64, imm);
-					else
-						SStream_concat(O, "%"PRIu64, imm);
-				} else {
-					if (imm < -HEX_THRESHOLD)
-						SStream_concat(O, "-0x%"PRIx64, -imm);
-					else
-						SStream_concat(O, "-%"PRIu64, -imm);
-				}
+				printInt64(O, imm);
 			}
 			if (MI->csh->detail)
 				MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].mem.disp = imm;
 		} else {
-			if (imm >= 0) {
-				if (imm > HEX_THRESHOLD)
-					SStream_concat(O, "0x%"PRIx64, imm);
-				else
-					SStream_concat(O, "%"PRIu64, imm);
-			} else {
-				if (imm < -HEX_THRESHOLD)
-					SStream_concat(O, "-0x%"PRIx64, -imm);
-				else
-					SStream_concat(O, "-%"PRIu64, -imm);
-			}
+			printInt64(O, imm);
 
 			if (MI->csh->detail) {
 				MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].type = MIPS_OP_IMM;
@@ -247,17 +227,8 @@ static void printUnsignedImm(MCInst *MI, int opNum, SStream *O)
 	MCOperand *MO = MCInst_getOperand(MI, opNum);
 	if (MCOperand_isImm(MO)) {
 		int64_t imm = MCOperand_getImm(MO);
-		if (imm >= 0) {
-			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%x", (unsigned short int)imm);
-			else
-				SStream_concat(O, "%u", (unsigned short int)imm);
-		} else {
-			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%x", (short int)-imm);
-			else
-				SStream_concat(O, "-%u", (short int)-imm);
-		}
+		printInt64(O, imm);
+
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].type = MIPS_OP_IMM;
 			MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].imm = (unsigned short int)imm;
@@ -290,6 +261,20 @@ static void printMemOperand(MCInst *MI, int opNum, SStream *O)
 	// Load/Store memory operands -- imm($reg)
 	// If PIC target the target is loaded as the
 	// pattern lw $25,%call16($28)
+
+	// opNum can be invalid if instruction had reglist as operand.
+	// MemOperand is always last operand of instruction (base + offset).
+	switch (MCInst_getOpcode(MI)) {
+		default:
+			break;
+		case Mips_SWM32_MM:
+		case Mips_LWM32_MM:
+		case Mips_SWM16_MM:
+		case Mips_LWM16_MM:
+			opNum = MCInst_getNumOperands(MI) - 2;
+			break;
+	}
+
 	set_mem_access(MI, true);
 	printOperand(MI, opNum + 1, O);
 	SStream_concat0(O, "(");
@@ -313,6 +298,11 @@ static void printFCCOperand(MCInst *MI, int opNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, opNum);
 	SStream_concat0(O, MipsFCCToString((Mips_CondCode)MCOperand_getImm(MO)));
+}
+
+static void printRegisterPair(MCInst *MI, int opNum, SStream *O)
+{
+	printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, opNum)));
 }
 
 static char *printAlias1(const char *Str, MCInst *MI, unsigned OpNo, SStream *OS)
@@ -341,17 +331,13 @@ static char *printAlias(MCInst *MI, SStream *OS)
 {
 	switch (MCInst_getOpcode(MI)) {
 		case Mips_BEQ:
+		case Mips_BEQ_MM:
 			// beq $zero, $zero, $L2 => b $L2
 			// beq $r0, $zero, $L2 => beqz $r0, $L2
 			if (isReg(MI, 0, Mips_ZERO) && isReg(MI, 1, Mips_ZERO))
 				return printAlias1("b", MI, 2, OS);
 			if (isReg(MI, 1, Mips_ZERO))
 				return printAlias2("beqz", MI, 0, 2, OS);
-			return NULL;
-		case Mips_BEQL:
-			// beql $r0, $zero, $L2 => beqzl $r0, $L2
-			if (isReg(MI, 0, Mips_ZERO) && isReg(MI, 1, Mips_ZERO))
-				return printAlias2("beqzl", MI, 0, 2, OS);
 			return NULL;
 		case Mips_BEQ64:
 			// beq $r0, $zero, $L2 => beqz $r0, $L2
@@ -362,11 +348,6 @@ static char *printAlias(MCInst *MI, SStream *OS)
 			// bne $r0, $zero, $L2 => bnez $r0, $L2
 			if (isReg(MI, 1, Mips_ZERO))
 				return printAlias2("bnez", MI, 0, 2, OS);
-			return NULL;
-		case Mips_BNEL:
-			// bnel $r0, $zero, $L2 => bnezl $r0, $L2
-			if (isReg(MI, 1, Mips_ZERO))
-				return printAlias2("bnezl", MI, 0, 2, OS);
 			return NULL;
 		case Mips_BNE64:
 			// bne $r0, $zero, $L2 => bnez $r0, $L2
@@ -415,6 +396,25 @@ static char *printAlias(MCInst *MI, SStream *OS)
 				return printAlias2("move", MI, 0, 1, OS);
 			return NULL;
 		default: return NULL;
+	}
+}
+
+static void printRegisterList(MCInst *MI, int opNum, SStream *O)
+{
+	int i, e, reg;
+
+	// - 2 because register List is always first operand of instruction and it is
+	// always followed by memory operand (base + offset).
+	for (i = opNum, e = MCInst_getNumOperands(MI) - 2; i != e; ++i) {
+		if (i != opNum)
+			SStream_concat0(O, ", ");
+		reg = MCOperand_getReg(MCInst_getOperand(MI, i));
+		printRegName(O, reg);
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].type = MIPS_OP_REG;
+			MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].reg = reg;
+			MI->flat_insn->detail->mips.op_count++;
+		}
 	}
 }
 

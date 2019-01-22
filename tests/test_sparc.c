@@ -3,20 +3,20 @@
 
 #include <stdio.h>
 
-#include <platform.h>
-#include <capstone.h>
+#include <capstone/platform.h>
+#include <capstone/capstone.h>
 
 struct platform {
 	cs_arch arch;
 	cs_mode mode;
 	unsigned char *code;
 	size_t size;
-	char *comment;
+	const char *comment;
 };
 
 static csh handle;
 
-static void print_string_hex(char *comment, unsigned char *str, size_t len)
+static void print_string_hex(const char *comment, unsigned char *str, size_t len)
 {
 	unsigned char *c;
 
@@ -50,7 +50,7 @@ static void print_insn_detail(cs_insn *ins)
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;
 			case SPARC_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->imm);
+				printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->imm);
 				break;
 			case SPARC_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
@@ -108,7 +108,7 @@ static void test()
 		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
 		if (err) {
 			printf("Failed on cs_open() with error returned: %u\n", err);
-			continue;
+			abort();
 		}
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
@@ -135,6 +135,7 @@ static void test()
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code:", platforms[i].code, platforms[i].size);
 			printf("ERROR: Failed to disasm given code!\n");
+			abort();
 		}
 
 		printf("\n");

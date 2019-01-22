@@ -32,7 +32,6 @@ let print_op handle i op =
 	| X86_OP_INVALID _ -> ();	(* this would never happens *)
 	| X86_OP_REG reg -> printf "\t\top[%d]: REG = %s\n" i (cs_reg_name handle reg);
 	| X86_OP_IMM imm -> printf "\t\top[%d]: IMM = 0x%x\n" i imm;
-	| X86_OP_FP fp -> printf "\t\top[%d]: FP = %f\n" i fp;
 	| X86_OP_MEM mem -> ( printf "\t\top[%d]: MEM\n" i;
 		if mem.base != 0 then
 			printf "\t\t\toperands[%u].mem.base: REG = %s\n" i (cs_reg_name handle  mem.base);

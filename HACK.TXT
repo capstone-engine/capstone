@@ -5,10 +5,15 @@ Capstone source is organized as followings.
 ├── arch            <- code handling disasm engine for each arch
 │   ├── AArch64     <- ARM64 (aka ARMv8) engine
 │   ├── ARM         <- ARM engine
+│   ├── EVM         <- Ethereum engine
+│   ├── M680X       <- M680X engine
+│   ├── M68K        <- M68K engine
 │   ├── Mips        <- Mips engine
+│   ├── MOS65XX     <- MOS65XX engine
 │   ├── PowerPC     <- PowerPC engine
 │   ├── Sparc       <- Sparc engine
 │   ├── SystemZ     <- SystemZ engine
+│   ├── TMS320C64x  <- TMS320C64x engine
 │   ├── X86         <- X86 engine
 │   └── XCore       <- XCore engine
 ├── bindings        <- all bindings are under this dir
