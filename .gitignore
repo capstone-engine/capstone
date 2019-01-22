@@ -68,6 +68,7 @@ tests/test_m68k
 tests/test_tms320c64x
 tests/test_m680x
 tests/test_evm
+tests/test_mos65xx
 
 # regress binaries
 suite/regress/invalid_read_in_print_operand
