@@ -3,7 +3,7 @@
 
 # version major & minor 
 PKG_MAJOR = 4
-PKG_MINOR = 0
+PKG_MINOR = 1
 
 # version bugfix level. Example: PKG_EXTRA = 1
 PKG_EXTRA = 1

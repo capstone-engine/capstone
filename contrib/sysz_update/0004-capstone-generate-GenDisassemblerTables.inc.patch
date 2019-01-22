@@ -1,0 +1,472 @@
+From 29da4c6929679b8ac4019767ab4ebcd83c9894b4 Mon Sep 17 00:00:00 2001
+From: mephi42 <mephi42@gmail.com>
+Date: Tue, 7 Aug 2018 18:20:17 +0200
+Subject: [PATCH 4/7] capstone: generate *GenDisassemblerTables.inc
+
+---
+ utils/TableGen/DisassemblerEmitter.cpp    |  12 +-
+ utils/TableGen/FixedLenDecoderEmitter.cpp | 248 ++++++++++++++++++++--
+ 2 files changed, 239 insertions(+), 21 deletions(-)
+
+diff --git a/utils/TableGen/DisassemblerEmitter.cpp b/utils/TableGen/DisassemblerEmitter.cpp
+index b99a0a973a2..2ac6d89645c 100644
+--- a/utils/TableGen/DisassemblerEmitter.cpp
++++ b/utils/TableGen/DisassemblerEmitter.cpp
+@@ -106,6 +106,11 @@ extern void EmitFixedLenDecoder(RecordKeeper &RK, raw_ostream &OS,
+ void EmitDisassembler(RecordKeeper &Records, raw_ostream &OS) {
+   CodeGenTarget Target(Records);
+   emitSourceFileHeader(" * " + Target.getName().str() + " Disassembler", OS);
++#ifdef CAPSTONE
++  OS << "/* Capstone Disassembly Engine */\n"
++        "/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */\n"
++        "\n";
++#endif
+ 
+   // X86 uses a custom disassembler.
+   if (Target.getName() == "X86") {
+@@ -150,7 +155,12 @@ void EmitDisassembler(RecordKeeper &Records, raw_ostream &OS) {
+   }
+ 
+   EmitFixedLenDecoder(Records, OS, Target.getName(),
+-                      "if (", " == MCDisassembler::Fail)",
++                      "if (",
++#ifdef CAPSTONE
++                      " == MCDisassembler_Fail)",
++#else
++                      " == MCDisassembler::Fail)",
++#endif
+                       "MCDisassembler::Success", "MCDisassembler::Fail", "");
+ }
+ 
+diff --git a/utils/TableGen/FixedLenDecoderEmitter.cpp b/utils/TableGen/FixedLenDecoderEmitter.cpp
+index fcecc764d44..36845d960d8 100644
+--- a/utils/TableGen/FixedLenDecoderEmitter.cpp
++++ b/utils/TableGen/FixedLenDecoderEmitter.cpp
+@@ -730,7 +730,13 @@ void FixedLenDecoderEmitter::emitTable(formatted_raw_ostream &OS,
+       ++I;
+       unsigned Start = *I++;
+       unsigned Len = *I++;
+-      OS.indent(Indentation) << "MCD::OPC_ExtractField, " << Start << ", "
++      OS.indent(Indentation)
++#ifdef CAPSTONE
++        << "MCD_OPC_ExtractField"
++#else
++        << "MCD::OPC_ExtractField"
++#endif
++        << ", " << Start << ", "
+         << Len << ",  // Inst{";
+       if (Len > 1)
+         OS << (Start + Len - 1) << "-";
+@@ -739,7 +745,13 @@ void FixedLenDecoderEmitter::emitTable(formatted_raw_ostream &OS,
+     }
+     case MCD::OPC_FilterValue: {
+       ++I;
+-      OS.indent(Indentation) << "MCD::OPC_FilterValue, ";
++      OS.indent(Indentation)
++#ifdef CAPSTONE
++        << "MCD_OPC_FilterValue"
++#else
++        << "MCD::OPC_FilterValue"
++#endif
++        << ", ";
+       // The filter value is ULEB128 encoded.
+       while (*I >= 128)
+         OS << (unsigned)*I++ << ", ";
+@@ -759,7 +771,13 @@ void FixedLenDecoderEmitter::emitTable(formatted_raw_ostream &OS,
+       ++I;
+       unsigned Start = *I++;
+       unsigned Len = *I++;
+-      OS.indent(Indentation) << "MCD::OPC_CheckField, " << Start << ", "
++      OS.indent(Indentation)
++#ifdef CAPSTONE
++        << "MCD_OPC_CheckField"
++#else
++        << "MCD::OPC_CheckField"
++#endif
++        << ", " << Start << ", "
+         << Len << ", ";// << Val << ", " << NumToSkip << ",\n";
+       // ULEB128 encoded field value.
+       for (; *I >= 128; ++I)
+@@ -777,7 +795,13 @@ void FixedLenDecoderEmitter::emitTable(formatted_raw_ostream &OS,
+     }
+     case MCD::OPC_CheckPredicate: {
+       ++I;
+-      OS.indent(Indentation) << "MCD::OPC_CheckPredicate, ";
++      OS.indent(Indentation)
++#ifdef CAPSTONE
++        << "MCD_OPC_CheckPredicate"
++#else
++        << "MCD::OPC_CheckPredicate"
++#endif
++        << ", ";
+       for (; *I >= 128; ++I)
+         OS << (unsigned)*I << ", ";
+       OS << (unsigned)*I++ << ", ";
+@@ -803,7 +827,13 @@ void FixedLenDecoderEmitter::emitTable(formatted_raw_ostream &OS,
+                && "ULEB128 value too large!");
+       // Decode the Opcode value.
+       unsigned Opc = decodeULEB128(Buffer);
+-      OS.indent(Indentation) << "MCD::OPC_" << (IsTry ? "Try" : "")
++      OS.indent(Indentation)
++#ifdef CAPSTONE
++        << "MCD_OPC_"
++#else
++        << "MCD::OPC_"
++#endif
++        << (IsTry ? "Try" : "")
+         << "Decode, ";
+       for (p = Buffer; *p >= 128; ++p)
+         OS << (unsigned)*p << ", ";
+@@ -837,7 +867,12 @@ void FixedLenDecoderEmitter::emitTable(formatted_raw_ostream &OS,
+     }
+     case MCD::OPC_SoftFail: {
+       ++I;
+-      OS.indent(Indentation) << "MCD::OPC_SoftFail";
++      OS.indent(Indentation)
++#ifdef CAPSTONE
++        << "MCD_OPC_SoftFail";
++#else
++        << "MCD::OPC_SoftFail";
++#endif
+       // Positive mask
+       uint64_t Value = 0;
+       unsigned Shift = 0;
+@@ -869,7 +904,13 @@ void FixedLenDecoderEmitter::emitTable(formatted_raw_ostream &OS,
+     }
+     case MCD::OPC_Fail: {
+       ++I;
+-      OS.indent(Indentation) << "MCD::OPC_Fail,\n";
++      OS.indent(Indentation)
++#ifdef CAPSTONE
++        << "MCD_OPC_Fail"
++#else
++        << "MCD::OPC_Fail"
++#endif
++        << ",\n";
+       break;
+     }
+     }
+@@ -884,23 +925,46 @@ void FixedLenDecoderEmitter::emitTable(formatted_raw_ostream &OS,
+ void FixedLenDecoderEmitter::
+ emitPredicateFunction(formatted_raw_ostream &OS, PredicateSet &Predicates,
+                       unsigned Indentation) const {
++#ifdef CAPSTONE
++  OS.indent(Indentation) << "static bool getbool(uint64_t b)\n";
++  OS.indent(Indentation) << "{\n";
++  OS.indent(Indentation) << "\treturn b != 0;\n";
++  OS.indent(Indentation) << "}\n\n";
++#endif
++
+   // The predicate function is just a big switch statement based on the
+   // input predicate index.
+   OS.indent(Indentation) << "static bool checkDecoderPredicate(unsigned Idx, "
++#ifdef CAPSTONE
++    << "uint64_t Bits)\n{\n";
++#else
+     << "const FeatureBitset& Bits) {\n";
++#endif
+   Indentation += 2;
+   if (!Predicates.empty()) {
+     OS.indent(Indentation) << "switch (Idx) {\n";
+-    OS.indent(Indentation) << "default: llvm_unreachable(\"Invalid index!\");\n";
++    OS.indent(Indentation) << "default: "
++#ifdef CAPSTONE
++      << "// "
++#endif
++      << "llvm_unreachable(\"Invalid index!\");\n";
+     unsigned Index = 0;
+     for (const auto &Predicate : Predicates) {
+       OS.indent(Indentation) << "case " << Index++ << ":\n";
+-      OS.indent(Indentation+2) << "return (" << Predicate << ");\n";
++      OS.indent(Indentation+2) << "return "
++#ifdef CAPSTONE
++        << "getbool"
++#endif
++        << "(" << Predicate << ");\n";
+     }
+     OS.indent(Indentation) << "}\n";
+   } else {
+     // No case statement to emit
+-    OS.indent(Indentation) << "llvm_unreachable(\"Invalid index!\");\n";
++    OS.indent(Indentation)
++#ifdef CAPSTONE
++      << "// "
++#endif
++      << "llvm_unreachable(\"Invalid index!\");\n";
+   }
+   Indentation -= 2;
+   OS.indent(Indentation) << "}\n\n";
+@@ -911,23 +975,39 @@ emitDecoderFunction(formatted_raw_ostream &OS, DecoderSet &Decoders,
+                     unsigned Indentation) const {
+   // The decoder function is just a big switch statement based on the
+   // input decoder index.
++#ifdef CAPSTONE
++#define EDF_EOL " \\\n"
++  OS.indent(Indentation) << "#define DecodeToMCInst(fname,fieldname, InsnType) \\\n";
++  OS.indent(Indentation) << "static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *MI, \\\n";
++  OS.indent(Indentation) << "                uint64_t Address, const void *Decoder) \\\n";
++  OS.indent(Indentation) << "{ \\\n";
++#else
++#define EDF_EOL "\n"
+   OS.indent(Indentation) << "template<typename InsnType>\n";
+   OS.indent(Indentation) << "static DecodeStatus decodeToMCInst(DecodeStatus S,"
+     << " unsigned Idx, InsnType insn, MCInst &MI,\n";
+   OS.indent(Indentation) << "                                   uint64_t "
+     << "Address, const void *Decoder, bool &DecodeComplete) {\n";
++#endif
+   Indentation += 2;
++#ifndef CAPSTONE
+   OS.indent(Indentation) << "DecodeComplete = true;\n";
+-  OS.indent(Indentation) << "InsnType tmp;\n";
+-  OS.indent(Indentation) << "switch (Idx) {\n";
+-  OS.indent(Indentation) << "default: llvm_unreachable(\"Invalid index!\");\n";
++#endif
++  OS.indent(Indentation) << "InsnType tmp;" EDF_EOL;
++  OS.indent(Indentation) << "switch (Idx) {" EDF_EOL;
++  OS.indent(Indentation) << "default:"
++#ifndef CAPSTONE
++    << " llvm_unreachable(\"Invalid index!\");\n";
++#else
++    << " \\\n";
++#endif
+   unsigned Index = 0;
+   for (const auto &Decoder : Decoders) {
+-    OS.indent(Indentation) << "case " << Index++ << ":\n";
++    OS.indent(Indentation) << "case " << Index++ << ":" EDF_EOL;
+     OS << Decoder;
+-    OS.indent(Indentation+2) << "return S;\n";
++    OS.indent(Indentation+2) << "return S;" EDF_EOL;
+   }
+-  OS.indent(Indentation) << "}\n";
++  OS.indent(Indentation) << "}" EDF_EOL;
+   Indentation -= 2;
+   OS.indent(Indentation) << "}\n\n";
+ }
+@@ -1054,16 +1134,21 @@ void FilterChooser::emitBinaryParser(raw_ostream &o, unsigned &Indentation,
+   const std::string &Decoder = OpInfo.Decoder;
+ 
+   if (OpInfo.numFields() != 1)
+-    o.indent(Indentation) << "tmp = 0;\n";
++    o.indent(Indentation) << "tmp = 0;" EDF_EOL;
+ 
+   for (const EncodingField &EF : OpInfo) {
+     o.indent(Indentation) << "tmp ";
+     if (OpInfo.numFields() != 1) o << '|';
+-    o << "= fieldFromInstruction"
++    o << "= "
++#ifdef CAPSTONE
++      << "fieldname"
++#else
++      << "fieldFromInstruction"
++#endif
+       << "(insn, " << EF.Base << ", " << EF.Width << ')';
+     if (OpInfo.numFields() != 1 || EF.Offset != 0)
+       o << " << " << EF.Offset;
+-    o << ";\n";
++    o << ";" EDF_EOL;
+   }
+ 
+   if (Decoder != "") {
+@@ -1071,8 +1156,12 @@ void FilterChooser::emitBinaryParser(raw_ostream &o, unsigned &Indentation,
+     o.indent(Indentation) << Emitter->GuardPrefix << Decoder
+       << "(MI, tmp, Address, Decoder)"
+       << Emitter->GuardPostfix
++#ifdef CAPSTONE
++      << " return MCDisassembler_Fail; \\\n";
++#else
+       << " { " << (OpHasCompleteDecoder ? "" : "DecodeComplete = false; ")
+       << "return MCDisassembler::Fail; }\n";
++#endif
+   } else {
+     OpHasCompleteDecoder = true;
+     o.indent(Indentation) << "MI.addOperand(MCOperand::createImm(tmp));\n";
+@@ -1091,7 +1180,13 @@ void FilterChooser::emitDecoder(raw_ostream &OS, unsigned Indentation,
+         << "(MI, insn, Address, Decoder)"
+         << Emitter->GuardPostfix
+         << " { " << (HasCompleteDecoder ? "" : "DecodeComplete = false; ")
+-        << "return MCDisassembler::Fail; }\n";
++        << "return "
++#ifdef CAPSTONE
++        << "MCDisassembler_Fail"
++#else
++        << "MCDisassembler::Fail"
++#endif
++        << "; }\n";
+       break;
+     }
+ 
+@@ -1129,10 +1224,19 @@ unsigned FilterChooser::getDecoderIndex(DecoderSet &Decoders,
+ static void emitSinglePredicateMatch(raw_ostream &o, StringRef str,
+                                      const std::string &PredicateNamespace) {
+   if (str[0] == '!')
++#ifdef CAPSTONE
++    o << "~(Bits & " << PredicateNamespace << "_"
++      << str.slice(1,str.size()) << ")";
++#else
+     o << "!Bits[" << PredicateNamespace << "::"
+       << str.slice(1,str.size()) << "]";
++#endif
+   else
++#ifdef CAPSTONE
++    o << "(Bits & " << PredicateNamespace << "_" << str << ")";
++#else
+     o << "Bits[" << PredicateNamespace << "::" << str << "]";
++#endif
+ }
+ 
+ bool FilterChooser::emitPredicateMatch(raw_ostream &o, unsigned &Indentation,
+@@ -2047,6 +2151,17 @@ static bool populateInstruction(CodeGenTarget &Target,
+ // fieldFromInstruction().
+ static void emitFieldFromInstruction(formatted_raw_ostream &OS) {
+   OS << "// Helper function for extracting fields from encoded instructions.\n"
++#ifdef CAPSTONE
++     << "#define FieldFromInstruction(fname, InsnType) \\\n"
++     << "static InsnType fname(InsnType insn, unsigned startBit, unsigned numBits) \\\n"
++     << "{ \\\n"
++     << "  InsnType fieldMask; \\\n"
++     << "  if (numBits == sizeof(InsnType)*8) \\\n"
++     << "    fieldMask = (InsnType)(-1LL); \\\n"
++     << "  else \\\n"
++     << "    fieldMask = (((InsnType)1 << numBits) - 1) << startBit; \\\n"
++     << "  return (insn & fieldMask) >> startBit; \\\n"
++#else
+      << "template<typename InsnType>\n"
+    << "static InsnType fieldFromInstruction(InsnType insn, unsigned startBit,\n"
+      << "                                     unsigned numBits) {\n"
+@@ -2058,12 +2173,92 @@ static void emitFieldFromInstruction(formatted_raw_ostream &OS) {
+      << "    else\n"
+      << "      fieldMask = (((InsnType)1 << numBits) - 1) << startBit;\n"
+      << "    return (insn & fieldMask) >> startBit;\n"
++#endif
+      << "}\n\n";
+ }
+ 
+ // emitDecodeInstruction - Emit the templated helper function
+ // decodeInstruction().
+ static void emitDecodeInstruction(formatted_raw_ostream &OS) {
++#ifdef CAPSTONE
++  OS << "#define DecodeInstruction(fname, fieldname, decoder, InsnType) \\\n"
++     << "static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \\\n"
++     << "           InsnType insn, uint64_t Address, const MCRegisterInfo *MRI, int feature) \\\n"
++     << "{ \\\n"
++     << "  uint64_t Bits = getFeatureBits(feature); \\\n"
++     << "  const uint8_t *Ptr = DecodeTable; \\\n"
++     << "  uint32_t CurFieldValue = 0, ExpectedValue; \\\n"
++     << "  DecodeStatus S = MCDisassembler_Success; \\\n"
++     << "  unsigned Start, Len, NumToSkip, PIdx, Opc, DecodeIdx; \\\n"
++     << "  InsnType Val, FieldValue, PositiveMask, NegativeMask; \\\n"
++     << "  bool Pred, Fail; \\\n"
++     << "  for (;;) { \\\n"
++     << "    switch (*Ptr) { \\\n"
++     << "    default: \\\n"
++     << "      return MCDisassembler_Fail; \\\n"
++     << "    case MCD_OPC_ExtractField: { \\\n"
++     << "      Start = *++Ptr; \\\n"
++     << "      Len = *++Ptr; \\\n"
++     << "      ++Ptr; \\\n"
++     << "      CurFieldValue = (uint32_t)fieldname(insn, Start, Len); \\\n"
++     << "      break; \\\n"
++     << "    } \\\n"
++     << "    case MCD_OPC_FilterValue: { \\\n"
++     << "      Val = (InsnType)decodeULEB128(++Ptr, &Len); \\\n"
++     << "      Ptr += Len; \\\n"
++     << "      NumToSkip = *Ptr++; \\\n"
++     << "      NumToSkip |= (*Ptr++) << 8; \\\n"
++     << "      if (Val != CurFieldValue) \\\n"
++     << "        Ptr += NumToSkip; \\\n"
++     << "      break; \\\n"
++     << "    } \\\n"
++     << "    case MCD_OPC_CheckField: { \\\n"
++     << "      Start = *++Ptr; \\\n"
++     << "      Len = *++Ptr; \\\n"
++     << "      FieldValue = fieldname(insn, Start, Len); \\\n"
++     << "      ExpectedValue = (uint32_t)decodeULEB128(++Ptr, &Len); \\\n"
++     << "      Ptr += Len; \\\n"
++     << "      NumToSkip = *Ptr++; \\\n"
++     << "      NumToSkip |= (*Ptr++) << 8; \\\n"
++     << "      if (ExpectedValue != FieldValue) \\\n"
++     << "        Ptr += NumToSkip; \\\n"
++     << "      break; \\\n"
++     << "    } \\\n"
++     << "    case MCD_OPC_CheckPredicate: { \\\n"
++     << "      PIdx = (uint32_t)decodeULEB128(++Ptr, &Len); \\\n"
++     << "      Ptr += Len; \\\n"
++     << "      NumToSkip = *Ptr++; \\\n"
++     << "      NumToSkip |= (*Ptr++) << 8; \\\n"
++     << "      Pred = checkDecoderPredicate(PIdx, Bits); \\\n"
++     << "      if (!Pred) \\\n"
++     << "        Ptr += NumToSkip; \\\n"
++     << "      (void)Pred; \\\n"
++     << "      break; \\\n"
++     << "    } \\\n"
++     << "    case MCD_OPC_Decode: { \\\n"
++     << "      Opc = (unsigned)decodeULEB128(++Ptr, &Len); \\\n"
++     << "      Ptr += Len; \\\n"
++     << "      DecodeIdx = (unsigned)decodeULEB128(Ptr, &Len); \\\n"
++     << "      Ptr += Len; \\\n"
++     << "      MCInst_setOpcode(MI, Opc); \\\n"
++     << "      return decoder(S, DecodeIdx, insn, MI, Address, MRI); \\\n"
++     << "    } \\\n"
++     << "    case MCD_OPC_SoftFail: { \\\n"
++     << "      PositiveMask = (InsnType)decodeULEB128(++Ptr, &Len); \\\n"
++     << "      Ptr += Len; \\\n"
++     << "      NegativeMask = (InsnType)decodeULEB128(Ptr, &Len); \\\n"
++     << "      Ptr += Len; \\\n"
++     << "      Fail = (insn & PositiveMask) || (~insn & NegativeMask); \\\n"
++     << "      if (Fail) \\\n"
++     << "        S = MCDisassembler_SoftFail; \\\n"
++     << "      break; \\\n"
++     << "    } \\\n"
++     << "    case MCD_OPC_Fail: { \\\n"
++     << "      return MCDisassembler_Fail; \\\n"
++     << "    } \\\n"
++     << "    } \\\n"
++     << "  } \\\n"
++#else
+   OS << "template<typename InsnType>\n"
+      << "static DecodeStatus decodeInstruction(const uint8_t DecodeTable[], "
+         "MCInst &MI,\n"
+@@ -2240,12 +2435,18 @@ static void emitDecodeInstruction(formatted_raw_ostream &OS) {
+      << "  }\n"
+      << "  llvm_unreachable(\"bogosity detected in disassembler state "
+         "machine!\");\n"
++#endif
+      << "}\n\n";
+ }
+ 
+ // Emits disassembler code for instruction decoding.
+ void FixedLenDecoderEmitter::run(raw_ostream &o) {
+   formatted_raw_ostream OS(o);
++#ifdef CAPSTONE
++  OS << "#include \"../../MCInst.h\"\n";
++  OS << "#include \"../../LEB128.h\"\n";
++  OS << "\n";
++#else
+   OS << "#include \"llvm/MC/MCInst.h\"\n";
+   OS << "#include \"llvm/Support/Debug.h\"\n";
+   OS << "#include \"llvm/Support/DataTypes.h\"\n";
+@@ -2254,6 +2455,7 @@ void FixedLenDecoderEmitter::run(raw_ostream &o) {
+   OS << "#include <assert.h>\n";
+   OS << '\n';
+   OS << "namespace llvm {\n\n";
++#endif
+ 
+   emitFieldFromInstruction(OS);
+ 
+@@ -2322,7 +2524,13 @@ void FixedLenDecoderEmitter::run(raw_ostream &o) {
+   // Emit the main entry point for the decoder, decodeInstruction().
+   emitDecodeInstruction(OS);
+ 
++#ifdef CAPSTONE
++  OS << "FieldFromInstruction(fieldFromInstruction, uint64_t)\n";
++  OS << "DecodeToMCInst(decodeToMCInst, fieldFromInstruction, uint64_t)\n";
++  OS << "DecodeInstruction(decodeInstruction, fieldFromInstruction, decodeToMCInst, uint64_t)\n";
++#else
+   OS << "\n} // End llvm namespace\n";
++#endif
+ }
+ 
+ namespace llvm {
+-- 
+2.19.1
+
