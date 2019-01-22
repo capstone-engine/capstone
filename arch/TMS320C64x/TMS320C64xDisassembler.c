@@ -8,6 +8,8 @@
 #include "../../cs_priv.h"
 #include "../../utils.h"
 
+#include "TMS320C64xDisassembler.h"
+
 #include "../../MCInst.h"
 #include "../../MCInstrDesc.h"
 #include "../../MCFixedLenDisassembler.h"
