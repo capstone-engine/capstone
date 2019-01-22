@@ -41,6 +41,7 @@
 #include "../../SStream.h"
 #include "../../MCRegisterInfo.h"
 
+#include "X86InstPrinter.h"
 #include "X86Mapping.h"
 
 #define GET_INSTRINFO_ENUM
