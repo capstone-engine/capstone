@@ -5,6 +5,7 @@
 #define CS_MIPSDISASSEMBLER_H
 
 #include "capstone/capstone.h"
+#include "../../MCInst.h"
 #include "../../MCRegisterInfo.h"
 
 void Mips_init(MCRegisterInfo *MRI);

@@ -11,7 +11,6 @@
 struct SStream;
 
 void M68K_init(MCRegisterInfo *MRI);
-
 void M68K_printInst(MCInst* MI, struct SStream* O, void* Info);
 const char* M68K_reg_name(csh handle, unsigned int reg);
 void M68K_get_insn_id(cs_struct* h, cs_insn* insn, unsigned int id);
@@ -20,4 +19,3 @@ const char* M68K_group_name(csh handle, unsigned int id);
 void M68K_post_printer(csh handle, cs_insn* flat_insn, char* insn_asm, MCInst* mci);
 
 #endif
-
