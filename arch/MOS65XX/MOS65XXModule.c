@@ -6,6 +6,7 @@
 #include "../../utils.h"
 #include "../../MCRegisterInfo.h"
 #include "MOS65XXDisassembler.h"
+#include "MOS65XXModule.h"
 
 cs_err MOS65XX_global_init(cs_struct *ud)
 {
