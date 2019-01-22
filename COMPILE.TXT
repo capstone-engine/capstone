@@ -17,12 +17,11 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 (0) Tailor Capstone to your need.
 
-  Out of 12 archtitectures supported by Capstone (Arm, Arm64, M68K, Mips, PPC,
-  Sparc, SystemZ, XCore, X86, M680X, TMS320C64x & EVM), if you just need several
+  Out of all archtitectures supported by Capstone, if you just need several
   selected archs, choose the ones you want to compile in by editing "config.mk"
   before going to next steps.
 
-  By default, all 12 architectures are compiled.
+  By default, all architectures are compiled.
 
   The other way of customize Capstone without having to edit config.mk is to
   pass the desired options on the commandline to ./make.sh. Currently,
