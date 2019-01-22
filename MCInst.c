@@ -90,12 +90,6 @@ void MCInst_addOperand2(MCInst *inst, MCOperand *Op)
 	inst->size++;
 }
 
-void MCOperand_Init(MCOperand *op)
-{
-	op->Kind = kInvalid;
-	op->FPImmVal = 0.0;
-}
-
 bool MCOperand_isValid(const MCOperand *op)
 {
 	return op->Kind != kInvalid;
