@@ -24,6 +24,8 @@
 #include "../../cs_priv.h"
 #include "../../utils.h"
 
+#include "AArch64Disassembler.h"
+
 #include "../../MCInst.h"
 #include "../../MCInstrDesc.h"
 #include "../../MCFixedLenDisassembler.h"
