@@ -43,6 +43,8 @@ struct MCOperand {
 	};
 };
 
+void MCOperand_Init(MCOperand *op);
+
 bool MCOperand_isValid(const MCOperand *op);
 
 bool MCOperand_isReg(const MCOperand *op);

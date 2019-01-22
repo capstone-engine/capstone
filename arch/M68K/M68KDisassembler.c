@@ -418,7 +418,7 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op* op, uint in
 }
 
 /* Make string of effective address mode */
-void get_ea_mode_op(m68k_info *info, cs_m68k_op* op, uint instruction, uint size)
+static void get_ea_mode_op(m68k_info *info, cs_m68k_op* op, uint instruction, uint size)
 {
 	// default to memory
 
