@@ -19,7 +19,7 @@ Option Explicit
 'Copyright: FireEye 2017
 
 'Public Type cs_detail
-'    regs_read(0 To 11) As      Byte ' list of implicit registers read by this insn UNSIGNED
+'    regs_read(0 To 15) As      Byte ' list of implicit registers read by this insn UNSIGNED
 '    regs_read_count As         Byte ' number of implicit registers read by this insn UNSIGNED
 '    regs_write(0 To 19) As     Byte ' list of implicit registers modified by this insn UNSIGNED
 '    regs_write_count As        Byte ' number of implicit registers modified by this insn UNSIGNED

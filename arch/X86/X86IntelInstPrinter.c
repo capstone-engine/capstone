@@ -41,6 +41,7 @@
 #include "../../SStream.h"
 #include "../../MCRegisterInfo.h"
 
+#include "X86InstPrinter.h"
 #include "X86Mapping.h"
 
 #define GET_INSTRINFO_ENUM
@@ -561,56 +562,56 @@ static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 	set_mem_access(MI, false);
 }
 
-void printSrcIdx8(MCInst *MI, unsigned OpNo, SStream *O)
+static void printSrcIdx8(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat0(O, "byte ptr ");
 	MI->x86opsize = 1;
 	printSrcIdx(MI, OpNo, O);
 }
 
-void printSrcIdx16(MCInst *MI, unsigned OpNo, SStream *O)
+static void printSrcIdx16(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat0(O, "word ptr ");
 	MI->x86opsize = 2;
 	printSrcIdx(MI, OpNo, O);
 }
 
-void printSrcIdx32(MCInst *MI, unsigned OpNo, SStream *O)
+static void printSrcIdx32(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat0(O, "dword ptr ");
 	MI->x86opsize = 4;
 	printSrcIdx(MI, OpNo, O);
 }
 
-void printSrcIdx64(MCInst *MI, unsigned OpNo, SStream *O)
+static void printSrcIdx64(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat0(O, "qword ptr ");
 	MI->x86opsize = 8;
 	printSrcIdx(MI, OpNo, O);
 }
 
-void printDstIdx8(MCInst *MI, unsigned OpNo, SStream *O)
+static void printDstIdx8(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat0(O, "byte ptr ");
 	MI->x86opsize = 1;
 	printDstIdx(MI, OpNo, O);
 }
 
-void printDstIdx16(MCInst *MI, unsigned OpNo, SStream *O)
+static void printDstIdx16(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat0(O, "word ptr ");
 	MI->x86opsize = 2;
 	printDstIdx(MI, OpNo, O);
 }
 
-void printDstIdx32(MCInst *MI, unsigned OpNo, SStream *O)
+static void printDstIdx32(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat0(O, "dword ptr ");
 	MI->x86opsize = 4;
 	printDstIdx(MI, OpNo, O);
 }
 
-void printDstIdx64(MCInst *MI, unsigned OpNo, SStream *O)
+static void printDstIdx64(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat0(O, "qword ptr ");
 	MI->x86opsize = 8;
