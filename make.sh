@@ -59,7 +59,7 @@ build_iOS() {
   fi
   export CC="$IOS_CC"
   export LIBARCHS="$IOS_ARCHS"
-  CFLAGS="$IOS_CFLAGS" LDFLAGS="$IOS_LDFLAGS" ${MAKE}
+  CFLAGS="$IOS_CFLAGS" LDFLAGS="$IOS_LDFLAGS" MACOS_UNIVERSAL=yes ${MAKE}
 }
 
 install() {
