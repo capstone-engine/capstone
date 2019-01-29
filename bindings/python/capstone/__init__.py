@@ -129,8 +129,8 @@ __all__ = [
 # Capstone C interface
 
 # API version
-CS_API_MAJOR = 4
-CS_API_MINOR = 1
+CS_API_MAJOR = 5
+CS_API_MINOR = 0
 
 # Package version
 CS_VERSION_MAJOR = CS_API_MAJOR
