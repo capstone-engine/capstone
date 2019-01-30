@@ -228,8 +228,8 @@ static void normalize_hex(char *s) {
     strcpy(s, scopy);
 }
 
-void LLVMFuzzerInit();
-int LLVMFuzzerReturnOneInput(const uint8_t *Data, size_t Size, char * AssemblyText);
+void diffFuzzerInit();
+int diffFuzzerReturnOneInput(const uint8_t *Data, size_t Size, char * AssemblyText);
 
 int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
     csh handle;
@@ -238,7 +238,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
     const uint8_t **Datap = &Data;
     size_t * Sizep = &Size;
     uint64_t address = 0x1000;
-    char LLVMAssemblyText[80];
+    char DiffAssemblyText[80];
     char CapstoneAssemblyText[80];
 
     if (Size < 1) {
@@ -254,14 +254,14 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
         if (outfile == NULL) {
             return 0;
         }
-        LLVMFuzzerInit();
+        diffFuzzerInit();
     }
 
     if (Data[0] >= sizeof(platforms)/sizeof(platforms[0])) {
         return 0;
     }
 
-    if (LLVMFuzzerReturnOneInput(Data, Size, LLVMAssemblyText) == 1) {
+    if (diffFuzzerReturnOneInput(Data, Size, DiffAssemblyText) < 0) {
         return 0;
     }
 
@@ -284,21 +284,18 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
             } else {
                 snprintf(CapstoneAssemblyText, 80, "\t%s\t%s", insn->mnemonic, insn->op_str);
             }
-            normalize_hex(CapstoneAssemblyText);
-            //allow llvm output to be shorter for shl edi != shl edi, 1
-            if (strncmp(CapstoneAssemblyText, LLVMAssemblyText, strlen(LLVMAssemblyText)) != 0) {
-                printf("capstone %s != llvm %s\n", CapstoneAssemblyText, LLVMAssemblyText);
+            //normalize_hex(CapstoneAssemblyText);
+            if (strcmp(CapstoneAssemblyText, DiffAssemblyText) != 0) {
+                printf("capstone %s != diff %s\n", CapstoneAssemblyText, DiffAssemblyText);
                 abort();
             } else {
                 //TODO remove
-                printf("capstone %s == llvm %s\n", CapstoneAssemblyText, LLVMAssemblyText);
+                printf("capstone %s == diff %s\n", CapstoneAssemblyText, DiffAssemblyText);
             }
-        } /* llvm accepts perfix only such as repne to be valid instructions
-           see https://bugs.llvm.org/show_bug.cgi?id=39915
-        else {
-            printf("capstone failed with llvm %s\n", LLVMAssemblyText);
+        } else {
+            printf("capstone failed with diff %s\n", DiffAssemblyText);
             abort();
-        } */
+        }
     cs_free(insn, 1);
     cs_close(&handle);
 
