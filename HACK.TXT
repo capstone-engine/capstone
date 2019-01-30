@@ -49,3 +49,45 @@ the bindings coming with the core to avoid potential incompatibility issue
 with older versions.
 See bindings/<language>/README for detail instructions on how to compile &
 install the bindings.
+
+
+Adding an architecture :
+
+Obviously, you first need to write all the logic and put it in a new directory arch/newarch
+Then, you have to modify other files.
+(You can look for one architecture such as EVM in these files to get what you need to do)
+
+Integrate :
+- cs.c
+- cstool/cstool.c
+- cstool/cstool_newarch.c : print the architecture specific details
+- include/capstone/capstone.h
+- include/capstone/newarch.h : create this file to export all specifics about the new architecture
+
+Compile :
+- CMakeLists.txt
+- Makefile
+- config.mk
+
+Tests :
+- tests/Makefile
+- tests/test_basic.c
+- tests/test_detail.c
+- tests/test_iter.c
+- tests/test_newarch.c
+- suite/fuzz/fuzz_disasm.c : add the architecture and its modes to the list of fuzzed platforms
+
+Bindings :
+- bindings/Makefile
+- bindings/const_generator.py : add the header file and the architecture
+- bindings/python/Makefile
+- bindings/python/capstone/__init__.py
+- bindings/python/capstone/newarch.py : define the python structures
+- bindings/python/capstone/newarch_const.py : generate this file
+- bindings/python/test_newarch.py : create a basic decoding test
+- bindings/python/test_all.py
+
+Docs :
+- README.md
+- HACK.txt
+- CREDITS.txt : add your name
