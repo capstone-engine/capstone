@@ -24,7 +24,6 @@ Get CMake for free from http://www.cmake.org.
   - CAPSTONE_M680X_SUPPORT: support M680X. Run cmake with -DCAPSTONE_M680X_SUPPORT=0 to remove M680X.
   - CAPSTONE_M68K_SUPPORT: support M68K. Run cmake with -DCAPSTONE_M68K_SUPPORT=0 to remove M68K.
   - CAPSTONE_MIPS_SUPPORT: support Mips. Run cmake with -DCAPSTONE_MIPS_SUPPORT=0 to remove Mips.
-  - CAPSTONE_MOS65XX_SUPPORT: support MOS65XX. Run cmake with -DCAPSTONE_MOS65XX_SUPPORT=0 to remove MOS65XX.
   - CAPSTONE_PPC_SUPPORT: support PPC. Run cmake with -DCAPSTONE_PPC_SUPPORT=0 to remove PPC.
   - CAPSTONE_SPARC_SUPPORT: support Sparc. Run cmake with -DCAPSTONE_SPARC_SUPPORT=0 to remove Sparc.
   - CAPSTONE_SYSZ_SUPPORT: support SystemZ. Run cmake with -DCAPSTONE_SYSZ_SUPPORT=0 to remove SystemZ.
