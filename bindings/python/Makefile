@@ -73,7 +73,7 @@ TESTS += test_ppc.py test_sparc.py test_systemz.py test_x86.py test_xcore.py tes
 TESTS += test_m680x.py test_skipdata.py test_mos65xx.py
 
 check:
-	python setup.py install
+	python setup.py install --user
 	@for t in $(TESTS); do \
 		echo Check $$t ... ; \
 		./$$t > /dev/null; \
