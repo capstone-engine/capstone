@@ -1,8 +1,9 @@
-#include <stdint.h>
 #include "sysdep.h"
 #include "bfd.h"
 #include "dis-asm.h"
 #include "disassemble.h"
+
+#include <stdint.h>
 
 void diffFuzzerInit() {
 //TODO ?
