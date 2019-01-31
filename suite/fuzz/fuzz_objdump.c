@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include "bfd.h"
 #include "dis-asm.h"
 #include "disassemble.h"
