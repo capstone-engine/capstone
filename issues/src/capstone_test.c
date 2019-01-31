@@ -17,8 +17,8 @@ single_dict modes[] = {
 	{"CS_MODE_32", CS_MODE_32},
 	{"CS_MODE_64", CS_MODE_64},
 	{"CS_MODE_MIPS32", CS_MODE_MIPS32},
-	{"CS_MODE_MIPS64", CS_MODE_MIPS64},
 	{"0", CS_MODE_ARM},
+	{"CS_MODE_MIPS64", CS_MODE_MIPS64},
 	{"CS_MODE_ARM", CS_MODE_ARM},
 	{"CS_MODE_THUMB", CS_MODE_THUMB},
 	{"CS_MODE_ARM+CS_MODE_V8", CS_MODE_ARM+CS_MODE_V8},
@@ -32,7 +32,11 @@ single_dict modes[] = {
 	{"CS_MODE_MIPS32+CS_MODE_MICRO+CS_MODE_BIG_ENDIAN", CS_MODE_MIPS32+CS_MODE_MICRO+CS_MODE_BIG_ENDIAN},
 	{"CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN+CS_MODE_MICRO", CS_MODE_MIPS32+CS_MODE_MICRO+CS_MODE_BIG_ENDIAN},
 	{"CS_MODE_BIG_ENDIAN+CS_MODE_V9", CS_MODE_BIG_ENDIAN + CS_MODE_V9},
-	{"CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN", CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN}, {"CS_MODE_MIPS32+CS_MODE_LITTLE_ENDIAN", CS_MODE_MIPS32+CS_MODE_LITTLE_ENDIAN}, {"CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN", CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN}, {"CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN", CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN}
+	{"CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN", CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN},
+	{"CS_MODE_MIPS32+CS_MODE_LITTLE_ENDIAN", CS_MODE_MIPS32+CS_MODE_LITTLE_ENDIAN},
+	{"CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN", CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN},
+	{"CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN", CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN},
+	{"CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN", CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN}
 };
 
 double_dict options[] = {
@@ -78,19 +82,15 @@ double_dict options[] = {
 	{"CS_MODE_M680X_HCS08", CS_OPT_MODE, CS_MODE_M680X_HCS08}
 };
 
-
-
-void test_single(csh handle, char *line)
+void test_single(csh *handle, char *line)
 {
 	char **list_part, **list_byte, **list_data;
 	int size_part, size_byte, size_data, size_insn;
 	int i, count;
 	unsigned char *code;
 	cs_insn *insn;
-	
-	list_part = split(line, "=", &size_part);
-	list_part[0][strlen(list_part[0])-1] = '\0';
-	list_part[1]++;
+
+	list_part = split(line, " = ", &size_part);
 	list_byte = split(list_part[0], ",", &size_byte);
 	code = (unsigned char *)malloc(size_byte * sizeof(char));
 	for (i=0; i<size_byte; ++i) {
@@ -99,7 +99,7 @@ void test_single(csh handle, char *line)
 	}
 
 	list_data = split(list_part[1], ";", &size_data);	
-	count = cs_disasm(handle, code, size_byte, 0x1000, 0, &insn);
+	count = cs_disasm(*handle, code, size_byte, 0x1000, 0, &insn);
 	// printf("====\nCount: %d\nSize_data: %d\n", count, size_data);
 	assert_int_equal(size_data, count);
 	for (i=0; i<count; ++i) {
@@ -127,31 +127,40 @@ int getValue(single_dict d[], unsigned int size, const char *str)
 	return -1;
 }
 
-int getIndex(double_dict d[], unsigned int size, const char *str)
+int getIndex(double_dict d[], unsigned int size, const char *s)
 {
 	int i;
 
-	for (i=0; i<size; ++i)
-		if (!strcmp(d[i].str, str))
+	for (i=0; i<size; ++i) {
+		if (!strcmp(s, d[i].str))
 			return i;
+	}
 	return -1;
 }
 
-void test_all(char *content)
+int setFunction(char (*function)(csh *, cs_insn*), int arch)
 {
-	char **list_lines, **list_params;
-	int size_lines, size_params;
-	csh handle;	
-	int arch, mode;
-	int tmp, i, index;
-
-
-	for (i=1; i<size_lines; ++i) {
-		// puts(list_lines[i]);
-		test_single(handle, list_lines[i]);
+	switch(arch) {
+		case CS_ARCH_ARM:
+			function = get_detail_arm;
+		case CS_ARCH_ARM64:
+			function = get_detail_arm64;
+		case CS_ARCH_MIPS:
+			function = get_detail_mips;
+		case CS_ARCH_PPC:
+			function = get_detail_ppc;
+		case CS_ARCH_SPARC:
+			function = get_detail_sparc;
+		case CS_ARCH_SYSZ:
+			function = get_detail_sysz;
+		case CS_ARCH_X86:
+			function = get_detail_x86;
+		case CS_ARCH_XCORE:
+			function = get_detail_xcore;
+		case CS_ARCH_M68K:
+			function = get_detail_m68k;
+		default:
+			return -1;
 	}
-
-	free(list_lines);
-	free(list_params);
-	cs_close(&handle);
+	return 0;
 }
