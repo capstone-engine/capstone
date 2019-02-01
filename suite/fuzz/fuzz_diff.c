@@ -234,6 +234,40 @@ static void normalize_comma_spaces(char *s) {
     }
 }
 
+static void normalize_memory_spaces(char *s) {
+    size_t i = 0;
+    size_t j = 0;
+    int state = 0;
+
+    for (i=0; i<80; i++) {
+        if (s[i] == 0) {
+            if (j < i) {
+                s[j] = 0;
+            }
+            return;
+        } else if (s[i] == ' ') {
+            if (state == 2) {
+                j--;
+                s[j-1]=s[j];
+                state = 0;
+                continue;
+            } else {
+                state=1;
+            }
+        } else if (s[i] == '+' || s[i] == '-') {
+            if (state == 1) {
+                state=2;
+            }
+        } else {
+            state=0;
+        }
+        if (j < i) {
+            s[j] = s[i];
+        }
+        j++;
+    }
+}
+
 static void normalize_hex(char *s) {
     size_t i = 0;
     size_t j = 0;
@@ -299,6 +333,8 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
     uint64_t address = 0x1000;
     char DiffAssemblyText[80];
     char CapstoneAssemblyText[80];
+    size_t realSize = Size;
+    const uint8_t *realData = Data;
 
     if (Size < 1) {
         // 1 byte for arch choice
@@ -343,15 +379,20 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
         } else {
             snprintf(CapstoneAssemblyText, 80, "%s %s", insn->mnemonic, insn->op_str);
         }
-        //normalize_hex(CapstoneAssemblyText);
         normalize_lesser_spaces(DiffAssemblyText);
         normalize_comma_spaces(CapstoneAssemblyText);
+        normalize_memory_spaces(CapstoneAssemblyText);
+        normalize_hex(DiffAssemblyText);
+        normalize_hex(CapstoneAssemblyText);
         size_t minlen = strlen(CapstoneAssemblyText);
         if (minlen > strlen(DiffAssemblyText)) {
             minlen = strlen(DiffAssemblyText);
         }
         if (strncmp(CapstoneAssemblyText, DiffAssemblyText, minlen) != 0) {
-            printf("capstone %s != diff %s\n", CapstoneAssemblyText, DiffAssemblyText);
+            for (size_t i = 0; i < realSize; i++) {
+                printf("\\x%02x", realData[i]);
+            }
+            printf(" | capstone %s | objdump %s\n", CapstoneAssemblyText, DiffAssemblyText);
             abort();
         } else {
             //TODO remove
