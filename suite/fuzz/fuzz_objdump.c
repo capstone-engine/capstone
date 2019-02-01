@@ -9,14 +9,25 @@ void diffFuzzerInit() {
 //TODO ?
 }
 
-static int objdump_sprintf (void *output, const char *format, ...)
+typedef struct
+{
+    char *buffer;
+    size_t pos;
+} SFILE;
+
+static int objdump_sprintf (SFILE *f, const char *format, ...)
 {
     size_t n;
     va_list args;
 
     va_start (args, format);
-    n = vsnprintf (output, 80, format, args);
+    if (f->pos >= 80){
+        printf("buffer nees more space\n");
+        return 0;
+    }
+    n = vsnprintf (f->buffer + f->pos, 80 - f->pos, format, args);
     va_end (args);
+    f->pos += n;
 
     return n;
 }
@@ -29,6 +40,7 @@ static void objdump_print_address (bfd_vma vma, struct disassemble_info *inf)
 int diffFuzzerReturnOneInput(const uint8_t *Data, size_t Size, char * AssemblyText) {
     int r = -2;
     struct disassemble_info disasm_info;
+    SFILE s;
 
     init_disassemble_info (&disasm_info, stdout, (fprintf_ftype) fprintf);
     disasm_info.fprintf_func = objdump_sprintf;
@@ -38,12 +50,15 @@ int diffFuzzerReturnOneInput(const uint8_t *Data, size_t Size, char * AssemblyTe
     disasm_info.buffer_vma = 0x1000;
     disasm_info.buffer_length = Size-1;
     disasm_info.insn_info_valid = 0;
-    disasm_info.stream = AssemblyText;
+    s.buffer = AssemblyText;
+    s.pos = 0;
+    disasm_info.stream = &s;
     disasm_info.bytes_per_line = 0;
 
     switch(Data[0]) {
         case 0:
             disasm_info.arch = bfd_arch_i386;
+            disasm_info.mach |= bfd_mach_i386_i386 | bfd_mach_i386_intel_syntax;
             disassemble_init_for_target(&disasm_info);
             r = print_insn_i386(0x1000, &disasm_info);
             break;

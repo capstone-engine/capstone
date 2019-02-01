@@ -175,6 +175,31 @@ struct platform platforms[] = {
     },
 };
 
+static void normalize_spaces(char *s) {
+    size_t i = 0;
+    size_t j = 0;
+    int state = 0;
+
+    for (i=0; i<80; i++) {
+        if (s[i] == 0) {
+            s[j] = 0;
+            return;
+        } else if (s[i] == ' ') {
+            if (state == 1) {
+                continue;
+            } else {
+                state=1;
+            }
+        } else {
+            state=0;
+        }
+        if (j < i) {
+            s[j] = s[i];
+        }
+        j++;
+    }
+}
+
 static void normalize_hex(char *s) {
     size_t i = 0;
     size_t j = 0;
@@ -280,11 +305,12 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
     assert(insn);
         if (cs_disasm_iter(handle, Datap, Sizep, &address, insn)) {
             if (insn->op_str[0] == 0) {
-                snprintf(CapstoneAssemblyText, 80, "\t%s", insn->mnemonic);
+                snprintf(CapstoneAssemblyText, 80, "%s", insn->mnemonic);
             } else {
-                snprintf(CapstoneAssemblyText, 80, "\t%s\t%s", insn->mnemonic, insn->op_str);
+                snprintf(CapstoneAssemblyText, 80, "%s %s", insn->mnemonic, insn->op_str);
             }
             //normalize_hex(CapstoneAssemblyText);
+            normalize_spaces(DiffAssemblyText);
             if (strcmp(CapstoneAssemblyText, DiffAssemblyText) != 0) {
                 printf("capstone %s != diff %s\n", CapstoneAssemblyText, DiffAssemblyText);
                 abort();
