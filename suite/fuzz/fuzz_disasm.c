@@ -183,6 +183,14 @@ struct platform platforms[] = {
         "MOS65XX"
     },
 #endif
+#ifdef CAPSTONE_HAS_WASM
+    {
+        //item 27
+        CS_ARCH_WASM,
+        (cs_mode)0,
+        "WASM"
+    },
+#endif
 };
 
 int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
