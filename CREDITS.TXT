@@ -77,5 +77,6 @@ Fotis Loukos: TMS320C64x architecture.
 Wolfgang Schwotzer: M680X architecture.
 Philippe Antoine: Integration with oss-fuzz and various fixes.
 Stephen Eckels (stevemk14ebr): x86 encoding features
+Tong Yu(Spike) & Kai Jern, Lau (xwings): WASM architecture.
 Sebastian Macke: MOS65XX architecture
 Ilya Leoshkevich: SystemZ architecture improvements.

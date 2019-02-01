@@ -56,7 +56,8 @@ static struct {
 	{ "hd6309", CS_ARCH_M680X, CS_MODE_M680X_6309 },
 	{ "hcs08", CS_ARCH_M680X, CS_MODE_M680X_HCS08 },
 	{ "evm", CS_ARCH_EVM, 0 },
-    { "mos65xx", CS_ARCH_MOS65XX, 0 },
+	{ "wasm", CS_ARCH_WASM, 0 },
+	{ "mos65xx", CS_ARCH_MOS65XX, 0 },
 	{ NULL }
 };
 
@@ -72,6 +73,7 @@ void print_insn_detail_m68k(csh handle, cs_insn *ins);
 void print_insn_detail_tms320c64x(csh handle, cs_insn *ins);
 void print_insn_detail_m680x(csh handle, cs_insn *ins);
 void print_insn_detail_evm(csh handle, cs_insn *ins);
+void print_insn_detail_wasm(csh handle, cs_insn *ins);
 void print_insn_detail_mos65xx(csh handle, cs_insn *ins);
 
 static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins);
@@ -214,6 +216,10 @@ static void usage(char *prog)
 		printf("        mox65xx     MOS65XX family\n");
 	}
 
+	if (cs_support(CS_ARCH_WASM)) {
+		printf("        wasm:      Web Assembly\n");
+	}
+
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
 	printf("        -u show immediates as unsigned\n");
@@ -259,6 +265,9 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 			break;
 		case CS_ARCH_EVM:
 			print_insn_detail_evm(handle, ins);
+			break;
+		case CS_ARCH_WASM:
+			print_insn_detail_wasm(handle, ins);
 			break;
 		case CS_ARCH_MOS65XX:
 			print_insn_detail_mos65xx(handle, ins);
@@ -357,6 +366,10 @@ int main(int argc, char **argv)
 
 				if (cs_support(CS_ARCH_EVM)) {
 					printf("evm=1 ");
+				}
+
+				if (cs_support(CS_ARCH_WASM)) {
+					printf("wasm=1 ");
 				}
 
 				if (cs_support(CS_ARCH_MOS65XX)) {

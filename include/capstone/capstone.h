@@ -84,6 +84,7 @@ typedef enum cs_arch {
 	CS_ARCH_TMS320C64X,	///< TMS320C64x architecture
 	CS_ARCH_M680X,		///< 680X architecture
 	CS_ARCH_EVM,		///< Ethereum architecture
+	CS_ARCH_WASM,		///< WebAssembly architecture
 	CS_ARCH_MOS65XX,	///< MOS65XX architecture (including MOS6502)
 	CS_ARCH_MAX,
 	CS_ARCH_ALL = 0xFFFF, // All architectures - for cs_support()
@@ -258,6 +259,7 @@ typedef struct cs_opt_skipdata {
 	/// X86:     1 bytes.
 	/// XCore:   2 bytes.
 	/// EVM:     1 bytes.
+	/// WASM:    1 bytes.
 	/// MOS65XX: 1 bytes.
 	cs_skipdata_cb_t callback; 	// default value is NULL
 
@@ -278,6 +280,7 @@ typedef struct cs_opt_skipdata {
 #include "tms320c64x.h"
 #include "m680x.h"
 #include "evm.h"
+#include "wasm.h"
 #include "mos65xx.h"
 
 /// NOTE: All information in cs_detail is only available when CS_OPT_DETAIL = CS_OPT_ON
@@ -309,6 +312,7 @@ typedef struct cs_detail {
 		cs_tms320c64x tms320c64x;  ///< TMS320C64x architecture
 		cs_m680x m680x; ///< M680X architecture
 		cs_evm evm;	    ///< Ethereum architecture
+		cs_wasm wasm;	///< Web Assembly architecture
 		cs_mos65xx mos65xx;	///< MOS65XX architecture (including MOS6502)
 	};
 } cs_detail;
