@@ -3,6 +3,7 @@
 
 #include <capstone/capstone.h>
 
+void print_insn_detail_evm(csh handle, cs_insn *ins);
 
 void print_insn_detail_evm(csh handle, cs_insn *ins)
 {

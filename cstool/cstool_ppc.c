@@ -5,6 +5,8 @@
 
 #include <capstone/capstone.h>
 
+void print_insn_detail_ppc(csh handle, cs_insn *ins);
+
 
 static const char* get_bc_name(int bc)
 {
