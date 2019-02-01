@@ -67,12 +67,22 @@ char *readfile(char *filename)
 	return result;
 }
 
-void addStr(char *src, char *dst)
+void addStr(char *src, const char *format, ...)
 {
-	const size_t len1 = strlen(src);
-    const size_t len2 = strlen(dst);
+	char *tmp;
+	const size_t len1, len2;
+	va_list args;
+
+	va_start(args, format);
+	tmp = (char *)malloc(sizeof(char) * 1000);
+	vsprintf(tmp, format, args);
+	va_end(args);
+	len1 = strlen(src);	
+    len2 = strlen(tmp);
+
     src = (char *)realloc(src, sizeof(char) * (len1 + len2 + 1));
 
-    memcpy(result + len1, dst, len2 + 1);
+    memcpy(result + len1, tmp, len2 + 1);
+	free(tmp);
     return result;
 }
