@@ -84,8 +84,8 @@ typedef enum cs_arch {
 	CS_ARCH_TMS320C64X,	///< TMS320C64x architecture
 	CS_ARCH_M680X,		///< 680X architecture
 	CS_ARCH_EVM,		///< Ethereum architecture
-	CS_ARCH_WASM,		///< WebAssembly architecture
 	CS_ARCH_MOS65XX,	///< MOS65XX architecture (including MOS6502)
+	CS_ARCH_WASM,		///< WebAssembly architecture
 	CS_ARCH_MAX,
 	CS_ARCH_ALL = 0xFFFF, // All architectures - for cs_support()
 } cs_arch;
