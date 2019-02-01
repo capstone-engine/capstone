@@ -1398,11 +1398,6 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 					count++;
 			break;
 		case CS_ARCH_EVM:
-#if 0
-			for (i = 0; i < insn->detail->evm.op_count; i++)
-				if (insn->detail->evm.operands[i].type == (evm_op_type)op_type)
-					count++;
-#endif
 			break;
 		case CS_ARCH_MOS65XX:
 			for (i = 0; i < insn->detail->m680x.op_count; i++)
@@ -1410,11 +1405,9 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 					count++;
 			break;
 		case CS_ARCH_WASM:
-#if 0
-			for (i = 0; i < insn->detail->evm.op_count; i++)
-				if (insn->detail->evm.operands[i].type == (evm_op_type)op_type)
+			for (i = 0; i < insn->detail->wasm.op_count; i++)
+				if (insn->detail->wasm.operands[i].type == (wasm_op_type)op_type)
 					count++;
-#endif
 			break;
 	}
 
