@@ -175,7 +175,7 @@ struct platform platforms[] = {
     },
 };
 
-static void normalize_spaces(char *s) {
+static void normalize_lesser_spaces(char *s) {
     size_t i = 0;
     size_t j = 0;
     int state = 0;
@@ -192,6 +192,38 @@ static void normalize_spaces(char *s) {
             } else {
                 state=1;
             }
+        } else {
+            state=0;
+        }
+        if (s[i] >= 'A' && s[i] <= 'Z') {
+            //to lesser
+            s[i] += 32;
+        }
+        if (j < i) {
+            s[j] = s[i];
+        }
+        j++;
+    }
+}
+
+static void normalize_comma_spaces(char *s) {
+    size_t i = 0;
+    size_t j = 0;
+    int state = 0;
+    
+    for (i=0; i<80; i++) {
+        if (s[i] == 0) {
+            if (j < i) {
+                s[j] = 0;
+            }
+            return;
+        } else if (s[i] == ',') {
+            state=1;
+        } else if (s[i] == ' ') {
+            if (state == 1) {
+                continue;
+            }
+            state=0;
         } else {
             state=0;
         }
@@ -312,7 +344,8 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
             snprintf(CapstoneAssemblyText, 80, "%s %s", insn->mnemonic, insn->op_str);
         }
         //normalize_hex(CapstoneAssemblyText);
-        normalize_spaces(DiffAssemblyText);
+        normalize_lesser_spaces(DiffAssemblyText);
+        normalize_comma_spaces(CapstoneAssemblyText);
         size_t minlen = strlen(CapstoneAssemblyText);
         if (minlen > strlen(DiffAssemblyText)) {
             minlen = strlen(DiffAssemblyText);
