@@ -3,7 +3,7 @@
 # By Nguyen Anh Quynh, 2019
 
 # Uncomment below line to compile in Diet mode
-# cmake -DCMAKE_BUILD_TYPE=Release -DCAPSTONE_BUILD_DIET=ON -DCAPSTONE_X86_ONLY=1 -G "NMake Makefiles" ..
+# cmake -DCMAKE_BUILD_TYPE=Release -DCAPSTONE_BUILD_DIET=ON -DCAPSTONE_X86_ONLY=1 ..
 
 cmake -DCMAKE_BUILD_TYPE=Release -DCAPSTONE_X86_ONLY=1 ..
 
