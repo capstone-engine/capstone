@@ -1,27 +1,27 @@
 !#1323
-!#CS_ARCH_ARM, CS_MODE_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
-0x70,0x47,0x00 = bx	lr | 1 | lr | READ | lr | pc | | thumb jump
+!#CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
+0x70,0x47,0x00 = bx lr | 1 | lr | READ | lr | pc | | thumb jump
 !#1317
-!#CS_ARCH_ARM, CS_MODE_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
+!#CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
 0xd0,0xe8,0x11,0xf0 = tbh [r0, r1, lsl #1] | 1 | MEM | r0 | r1 | 0x1 | READ | 2 1 | r0 r1 | thumb2 jump
 !#1308
-!#CS_ARCH_x86, CS_MODE_64, CS_OPT_DETAIL
+!#CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0x83,0x3d,0xa1,0x75,0x21,0x00,0x04 = cmp dword ptr [rip + 0x2175a1], 4 | 0x00 0x00 0x00 0x00 | 0x83 0x00 0x00 0x00 | 0x0 | 8 | 0x3d | 0x2175a1 | 0x0 | 1 | 0x4 | 2 | MEM | rip | 0x2175a1 | 4 | READ | 0x4 | 4 | rip | rflags | MOD_AF MOD_CF MOD_SF MOD_ZF MOD_PF MOD_OF
 !#1262
-!#CS_ARCH_x86, CS_MODE_64, CS_OPT_DETAIL
+!#CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0x0f,0x95,0x44,0x24,0x5e = setne byte ptr [rsp + 0x5e] | 0x00 0x00 0x00 0x00 | 0x0f 0x95 0x00 0x00 | 0x0 | 8 | 0x44 | 0x5e | 0x24 | rsp | 1 | 1 | MEM | rsp | 0x5e | 1 | WRITE | rflags rsp
 !#1262
-!#CS_ARCH_x86, CS_MODE_64, CS_OPT_DETAIL
+!#CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0x0f,0x94,0x44,0x24,0x1f = sete byte ptr [rsp + 0x1f] | 0x00 0x00 0x00 0x00 | 0x0f 0x94 0x00 0x00 | 0x0 | 8 | 0x44 | 0x1f | 0x24 | rsp | 1 | 1 | MEM | rsp | 0x1f | 1 | WRITE | rflags rsp
 !#1255
-!#CS_ARCH_x86, CS_MODE_64, CS_OPT_DETAIL
+!#CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0xdb,0x7c,0x24,0x40 = fstp xword ptr [rsp + 0x40] | 0x00 0x00 0x00 0x00 | 0xdb 0x00 0x00 0x00 | 0x0 | 8 | 0x7c | 0x40 | 0x24 | rsp | 1 | 1 | MEM | rsp | 0x40 | 10 | WRITE | rsp | fpsw | MOD_C1 UNDEF_C0 UNDEF_C2 UNDEF_C3 | fpu
 !#1255
-!#CS_ARCH_x86, CS_MODE_64, CS_OPT_DETAIL
+!#CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0xdd,0xd9 = fstp st(1) | 0x00 0x00 0x00 0x00 | 0xdd 0x00 0x00 0x00 | 0x0 | 8 | 0xd9 | 0x0 | 0x0 
  1 | st(1) | 10 | WRITE | fpsw st(1) | MOD_CF PRIOR_SF PRIOR_AF PRIOR_PF
 !#1255
-!#CS_ARCH_x86, CS_MODE_64, CS_OPT_DETAIL
+!#CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0xdf,0x7c,0x24,0x68 = fistp qword ptr [rsp + 0x68] | 0x00 0x00 0x00 0x00 | 0xdf 0x00 0x00 0x00 | 0x0 | 8 | 0x7c | 0x68 | 0x24 | rsp | 1 | 1 | MEM | rsp | 0x68 | 8 | WRITE | rsp | fpsw | RESET_C1 UNDEF_C0 UNDEF_C2 UNDEF_C3 | fpu
 !#1221
 !#CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN, None
@@ -42,7 +42,7 @@
 !#CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
 0x66,0xa3,0x94,0x90,0x04,0x08 =  mov word ptr [0x8049094], ax | 0x00 0x00 0x66 0x00 | 0xa3 0x00 0x00 0x00 | 0x0 | 4 | 0x0 | 0x8049094 | 0x0 | 2 | MEM | 0x8049094 | 2 | WRITE | ax | 2 | READ | ax
 !#938
-!#CS_ARCH_MIPS, CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN, None
+!#CS_ARCH_MIPS, CS_MODE_MIPS64 | CS_MODE_LITTLE_ENDIAN, None
 0x70,0x00,0xb2,0xff = sd $s2, 0x70($sp)
 !#915
 !#CS_ARCH_X86, CS_MODE_64, None
@@ -224,19 +224,19 @@
 !#CS_ARCH_X86, CS_MODE_64, None
 0x4d,0x8d,0x3d,0x02,0x00,0x00,0x00,0xeb,0xb0 = lea r15, [rip + 2];jmp 0xffffffffffffffb9
 !#134
-!#CS_ARCH_ARM, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+!#CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
 0xe7,0x92,0x11,0x80 = ldr r1, [r2, r0, lsl #3] | 2 | r1 | WRITE | MEM | r2 | r0 | READ | 2 3 | r2 r0 | r1 | arm
 !#133
-!#CS_ARCH_ARM, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+!#CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
 0xed,0xdf,0x2b,0x1b = vldr d18, [pc, #0x6c] | 2 | d18 | WRITE | MEM | pc | 0x6c | READ | pc | d18 | vfp2
 !#132
 !#CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
 0x49,0x19 = ldr r1, [pc, #0x64] | 2 | r1 | WRITE | MEM | pc | 0x64 | READ | pc | r1 | thumb thumb1only
 !#130
-!#CS_ARCH_ARM, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+!#CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
 0xe1,0xa0,0xf0,0x0e = mov pc, lr | 2 | pc | WRITE | lr | READ | lr | pc | arm
 !#85
-!#CS_ARCH_ARM, CS_MODE_64, None
+!#CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, None
 0xee,0x3f,0xbf,0x29 = stp w14, w15, [sp, #-8]!
 !#82
 !#CS_ARCH_X86, CS_MODE_64, None
@@ -248,5 +248,5 @@
 !#CS_ARCH_X86, CS_MODE_32, None
 0xff,0x8c,0xf9,0xff,0xff,0x9b,0xf9 = dec dword ptr [ecx + edi*8 - 0x6640001]
 !#29
-!#CS_ARCH_ARM, CS_MODE_64, None
+!#CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, None
 0x00,0x00,0x00,0x4c = st4 {v0.16b, v1.16b, v2.16b, v3.16b}, [x0]
