@@ -5,7 +5,6 @@
 
 #include <capstone/capstone.h>
 
-void print_string_hex(char *comment, unsigned char *str, size_t len);
 
 static const char* get_bc_name(int bc)
 {

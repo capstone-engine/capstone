@@ -3,7 +3,6 @@
 
 #include <capstone/capstone.h>
 
-void print_string_hex(char *comment, unsigned char *str, size_t len);
 
 void print_insn_detail_arm(csh handle, cs_insn *ins)
 {

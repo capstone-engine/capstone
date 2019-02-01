@@ -113,6 +113,10 @@ ifneq (,$(findstring evm,$(CAPSTONE_ARCHS)))
 CFLAGS += -DCAPSTONE_HAS_EVM
 SOURCES += test_evm.c
 endif
+ifneq (,$(findstring wasm,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_WASM
+SOURCES += test_wasm.c
+endif
 ifneq (,$(findstring evm,$(CAPSTONE_ARCHS)))
 CFLAGS += -DCAPSTONE_HAS_MOS65XX
 SOURCES += test_mos65xx.c
