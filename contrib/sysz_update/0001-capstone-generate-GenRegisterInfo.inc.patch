@@ -1,0 +1,338 @@
+From 5d631cb16e7ba5dd0380ff1ee9dda192b1cdad18 Mon Sep 17 00:00:00 2001
+From: mephi42 <mephi42@gmail.com>
+Date: Tue, 7 Aug 2018 17:02:40 +0200
+Subject: [PATCH 1/7] capstone: generate *GenRegisterInfo.inc
+
+---
+ utils/TableGen/RegisterInfoEmitter.cpp | 130 ++++++++++++++++++++++---
+ 1 file changed, 115 insertions(+), 15 deletions(-)
+
+diff --git a/utils/TableGen/RegisterInfoEmitter.cpp b/utils/TableGen/RegisterInfoEmitter.cpp
+index 49016cca799..6ebb7148b1b 100644
+--- a/utils/TableGen/RegisterInfoEmitter.cpp
++++ b/utils/TableGen/RegisterInfoEmitter.cpp
+@@ -99,6 +99,12 @@ private:
+ 
+ } // end anonymous namespace
+ 
++#ifdef CAPSTONE
++#define NAME_PREFIX Target.getName() << "_" <<
++#else
++#define NAME_PREFIX
++#endif
++
+ // runEnums - Print out enum values for all of the registers.
+ void RegisterInfoEmitter::runEnums(raw_ostream &OS,
+                                    CodeGenTarget &Target, CodeGenRegBank &Bank) {
+@@ -107,13 +113,22 @@ void RegisterInfoEmitter::runEnums(raw_ostream &OS,
+   // Register enums are stored as uint16_t in the tables. Make sure we'll fit.
+   assert(Registers.size() <= 0xffff && "Too many regs to fit in tables");
+ 
++#ifndef CAPSTONE
+   StringRef Namespace = Registers.front().TheDef->getValueAsString("Namespace");
++#endif
+ 
+   emitSourceFileHeader("Target Register Enum Values", OS);
+ 
++#ifdef CAPSTONE
++  OS << "/* Capstone Disassembly Engine */\n"
++        "/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */\n"
++        "\n";
++#endif
++
+   OS << "\n#ifdef GET_REGINFO_ENUM\n";
+   OS << "#undef GET_REGINFO_ENUM\n\n";
+ 
++#ifndef CAPSTONE
+   OS << "namespace llvm {\n\n";
+ 
+   OS << "class MCRegisterClass;\n"
+@@ -122,16 +137,20 @@ void RegisterInfoEmitter::runEnums(raw_ostream &OS,
+ 
+   if (!Namespace.empty())
+     OS << "namespace " << Namespace << " {\n";
+-  OS << "enum {\n  NoRegister,\n";
++#endif
++
++  OS << "enum {\n  " << NAME_PREFIX "NoRegister,\n";
+ 
+   for (const auto &Reg : Registers)
+-    OS << "  " << Reg.getName() << " = " << Reg.EnumValue << ",\n";
++    OS << "  " << NAME_PREFIX Reg.getName() << " = " << Reg.EnumValue << ",\n";
+   assert(Registers.size() == Registers.back().EnumValue &&
+          "Register enum value mismatch!");
+-  OS << "  NUM_TARGET_REGS \t// " << Registers.size()+1 << "\n";
++  OS << "  " << NAME_PREFIX "NUM_TARGET_REGS \t// " << Registers.size()+1 << "\n";
+   OS << "};\n";
++#ifndef CAPSTONE
+   if (!Namespace.empty())
+     OS << "} // end namespace " << Namespace << "\n";
++#endif
+ 
+   const auto &RegisterClasses = Bank.getRegClasses();
+   if (!RegisterClasses.empty()) {
+@@ -140,18 +159,29 @@ void RegisterInfoEmitter::runEnums(raw_ostream &OS,
+     assert(RegisterClasses.size() <= 0xffff &&
+            "Too many register classes to fit in tables");
+ 
+-    OS << "\n// Register classes\n\n";
++    OS << "\n// Register classes\n";
++#ifndef CAPSTONE
++    OS << "\n";
+     if (!Namespace.empty())
+       OS << "namespace " << Namespace << " {\n";
++#endif
+     OS << "enum {\n";
+     for (const auto &RC : RegisterClasses)
+-      OS << "  " << RC.getName() << "RegClassID"
++      OS << "  " << NAME_PREFIX RC.getName() << "RegClassID"
+          << " = " << RC.EnumValue << ",\n";
+-    OS << "\n  };\n";
++#ifdef CAPSTONE
++    OS
++#else
++    OS << "\n  "
++#endif
++       << "};\n";
++#ifndef CAPSTONE
+     if (!Namespace.empty())
+       OS << "} // end namespace " << Namespace << "\n\n";
++#endif
+   }
+ 
++#ifndef CAPSTONE
+   const std::vector<Record*> &RegAltNameIndices = Target.getRegAltNameIndices();
+   // If the only definition is the default NoRegAltName, we don't need to
+   // emit anything.
+@@ -182,8 +212,11 @@ void RegisterInfoEmitter::runEnums(raw_ostream &OS,
+     if (!Namespace.empty())
+       OS << "} // end namespace " << Namespace << "\n\n";
+   }
++#endif
+ 
++#ifndef CAPSTONE
+   OS << "} // end namespace llvm\n\n";
++#endif
+   OS << "#endif // GET_REGINFO_ENUM\n\n";
+ }
+ 
+@@ -830,7 +863,9 @@ RegisterInfoEmitter::runMCDesc(raw_ostream &OS, CodeGenTarget &Target,
+ 
+   const auto &Regs = RegBank.getRegisters();
+ 
++#ifndef CAPSTONE
+   auto &SubRegIndices = RegBank.getSubRegIndices();
++#endif
+   // The lists of sub-registers and super-registers go in the same array.  That
+   // allows us to share suffixes.
+   typedef std::vector<const CodeGenRegister*> RegVec;
+@@ -922,25 +957,40 @@ RegisterInfoEmitter::runMCDesc(raw_ostream &OS, CodeGenTarget &Target,
+   LaneMaskSeqs.layout();
+   SubRegIdxSeqs.layout();
+ 
++#ifndef CAPSTONE
+   OS << "namespace llvm {\n\n";
++#endif
+ 
+   const std::string &TargetName = Target.getName();
+ 
+   // Emit the shared table of differential lists.
+-  OS << "extern const MCPhysReg " << TargetName << "RegDiffLists[] = {\n";
++#ifdef CAPSTONE
++  OS << "static"
++#else
++  OS << "extern"
++#endif
++     << " const MCPhysReg " << TargetName << "RegDiffLists[] = {\n";
+   DiffSeqs.emit(OS, printDiff16);
+   OS << "};\n\n";
+ 
++#ifndef CAPSTONE
+   // Emit the shared table of regunit lane mask sequences.
+   OS << "extern const LaneBitmask " << TargetName << "LaneMaskLists[] = {\n";
+   LaneMaskSeqs.emit(OS, printMask, "LaneBitmask::getAll()");
+   OS << "};\n\n";
++#endif
+ 
+   // Emit the table of sub-register indexes.
+-  OS << "extern const uint16_t " << TargetName << "SubRegIdxLists[] = {\n";
++#ifdef CAPSTONE
++  OS << "static"
++#else
++  OS << "extern"
++#endif
++     << " const uint16_t " << TargetName << "SubRegIdxLists[] = {\n";
+   SubRegIdxSeqs.emit(OS, printSubRegIndex);
+   OS << "};\n\n";
+ 
++#ifndef CAPSTONE
+   // Emit the table of sub-register index sizes.
+   OS << "extern const MCRegisterInfo::SubRegCoveredBits "
+      << TargetName << "SubRegIdxRanges[] = {\n";
+@@ -950,14 +1000,22 @@ RegisterInfoEmitter::runMCDesc(raw_ostream &OS, CodeGenTarget &Target,
+        << Idx.getName() << "\n";
+   }
+   OS << "};\n\n";
++#endif
+ 
+   // Emit the string table.
+   RegStrings.layout();
++#ifndef CAPSTONE
+   OS << "extern const char " << TargetName << "RegStrings[] = {\n";
+   RegStrings.emit(OS, printChar);
+   OS << "};\n\n";
++#endif
+ 
+-  OS << "extern const MCRegisterDesc " << TargetName
++#ifdef CAPSTONE
++  OS << "static"
++#else
++  OS << "extern"
++#endif
++     << " const MCRegisterDesc " << TargetName
+      << "RegDesc[] = { // Descriptors\n";
+   OS << "  { " << RegStrings.get("") << ", 0, 0, 0, 0, 0 },\n";
+ 
+@@ -973,6 +1031,7 @@ RegisterInfoEmitter::runMCDesc(raw_ostream &OS, CodeGenTarget &Target,
+   }
+   OS << "};\n\n";      // End of register descriptors...
+ 
++#ifndef CAPSTONE
+   // Emit the table of register unit roots. Each regunit has one or two root
+   // registers.
+   OS << "extern const MCPhysReg " << TargetName << "RegUnitRoots[][2] = {\n";
+@@ -986,11 +1045,14 @@ RegisterInfoEmitter::runMCDesc(raw_ostream &OS, CodeGenTarget &Target,
+     OS << " },\n";
+   }
+   OS << "};\n\n";
++#endif
+ 
+   const auto &RegisterClasses = RegBank.getRegClasses();
+ 
+   // Loop over all of the register classes... emitting each one.
++#ifndef CAPSTONE
+   OS << "namespace {     // Register classes...\n";
++#endif
+ 
+   SequenceToOffsetTable<std::string> RegClassStrings;
+ 
+@@ -1005,15 +1067,28 @@ RegisterInfoEmitter::runMCDesc(raw_ostream &OS, CodeGenTarget &Target,
+ 
+     // Emit the register list now.
+     OS << "  // " << Name << " Register Class...\n"
+-       << "  const MCPhysReg " << Name
++       << "  "
++#ifdef CAPSTONE
++       << "static "
++#endif
++       << "const MCPhysReg " << Name
+        << "[] = {\n    ";
+     for (Record *Reg : Order) {
+-      OS << getQualifiedName(Reg) << ", ";
++#ifdef CAPSTONE
++      OS << NAME_PREFIX Reg->getName()
++#else
++      OS << getQualifiedName(Reg)
++#endif
++         << ", ";
+     }
+     OS << "\n  };\n\n";
+ 
+     OS << "  // " << Name << " Bit set.\n"
+-       << "  const uint8_t " << Name
++       << "  "
++#ifdef CAPSTONE
++       << "static "
++#endif
++       << "const uint8_t " << Name
+        << "Bits[] = {\n    ";
+     BitVectorEmitter BVE;
+     for (Record *Reg : Order) {
+@@ -1023,14 +1098,23 @@ RegisterInfoEmitter::runMCDesc(raw_ostream &OS, CodeGenTarget &Target,
+     OS << "\n  };\n\n";
+ 
+   }
++#ifndef CAPSTONE
+   OS << "} // end anonymous namespace\n\n";
++#endif
+ 
+   RegClassStrings.layout();
++#ifndef CAPSTONE
+   OS << "extern const char " << TargetName << "RegClassStrings[] = {\n";
+   RegClassStrings.emit(OS, printChar);
+   OS << "};\n\n";
++#endif
+ 
+-  OS << "extern const MCRegisterClass " << TargetName
++#ifdef CAPSTONE
++  OS << "static"
++#else
++  OS << "extern"
++#endif
++     << " const MCRegisterClass " << TargetName
+      << "MCRegisterClasses[] = {\n";
+ 
+   for (const auto &RC : RegisterClasses) {
+@@ -1041,7 +1125,12 @@ RegisterInfoEmitter::runMCDesc(raw_ostream &OS, CodeGenTarget &Target,
+     OS << "  { " << RC.getName() << ", " << RC.getName() << "Bits, "
+        << RegClassStrings.get(RC.getName()) << ", "
+        << RC.getOrder().size() << ", sizeof(" << RC.getName() << "Bits), "
+-       << RC.getQualifiedName() + "RegClassID" << ", "
++#ifdef CAPSTONE
++       << NAME_PREFIX RC.getName()
++#else
++       << RC.getQualifiedName()
++#endif
++       << "RegClassID" << ", "
+        << RegSize/8 << ", "
+        << RC.CopyCost << ", "
+        << ( RC.Allocatable ? "true" : "false" ) << " },\n";
+@@ -1049,6 +1138,7 @@ RegisterInfoEmitter::runMCDesc(raw_ostream &OS, CodeGenTarget &Target,
+ 
+   OS << "};\n\n";
+ 
++#ifndef CAPSTONE
+   EmitRegMappingTables(OS, Regs, false);
+ 
+   // Emit Reg encoding table
+@@ -1067,7 +1157,9 @@ RegisterInfoEmitter::runMCDesc(raw_ostream &OS, CodeGenTarget &Target,
+     OS << "  " << Value << ",\n";
+   }
+   OS << "};\n";       // End of HW encoding table
++#endif
+ 
++#ifndef CAPSTONE
+   // MCRegisterInfo initialization routine.
+   OS << "static inline void Init" << TargetName
+      << "MCRegisterInfo(MCRegisterInfo *RI, unsigned RA, "
+@@ -1088,7 +1180,12 @@ RegisterInfoEmitter::runMCDesc(raw_ostream &OS, CodeGenTarget &Target,
+   OS << "}\n\n";
+ 
+   OS << "} // end namespace llvm\n\n";
+-  OS << "#endif // GET_REGINFO_MC_DESC\n\n";
++#endif
++  OS << "#endif // GET_REGINFO_MC_DESC\n"
++#ifndef CAPSTONE
++     << "\n"
++#endif
++     ;
+ }
+ 
+ void
+@@ -1568,10 +1665,13 @@ RegisterInfoEmitter::runTargetDesc(raw_ostream &OS, CodeGenTarget &Target,
+ 
+ void RegisterInfoEmitter::run(raw_ostream &OS) {
+   CodeGenRegBank &RegBank = Target.getRegBank();
++
+   runEnums(OS, Target, RegBank);
+   runMCDesc(OS, Target, RegBank);
++#ifndef CAPSTONE
+   runTargetHeader(OS, Target, RegBank);
+   runTargetDesc(OS, Target, RegBank);
++#endif
+ 
+   if (RegisterInfoDebug)
+     debugDump(errs());
+-- 
+2.19.1
+

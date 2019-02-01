@@ -2,6 +2,6 @@
 :: Build Capstone libs (capstone.dll & capstone.lib) on Windows with CMake & Nmake
 :: By Nguyen Anh Quynh, 2017
 
-cmake -DCMAKE_BUILD_TYPE=Release -G "NMake Makefiles" ..
+cmake -DCMAKE_BUILD_TYPE=Release -DCAPSTONE_BUILD_STATIC_RUNTIME=ON -G "NMake Makefiles" ..
 nmake
 

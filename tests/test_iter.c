@@ -79,6 +79,10 @@ static void test()
 #ifdef CAPSTONE_HAS_M680X
 #define M680X_CODE "\x06\x10\x19\x1a\x55\x1e\x01\x23\xe9\x31\x06\x34\x55\xa6\x81\xa7\x89\x7f\xff\xa6\x9d\x10\x00\xa7\x91\xa6\x9f\x10\x00\x11\xac\x99\x10\x00\x39"
 #endif
+#ifdef CAPSTONE_HAS_MOS65XX
+#define MOS65XX_CODE "\x0d\x34\x12\x08\x09\xFF\x10\x80\x20\x00\x00\x98"
+#endif
+
 
 	struct platform platforms[] = {
 #ifdef CAPSTONE_HAS_X86
@@ -218,6 +222,15 @@ static void test()
 			(unsigned char*)M680X_CODE,
 			sizeof(M680X_CODE) - 1,
 			"M680X_6809"
+		},
+#endif
+#ifdef CAPSTONE_HAS_MOS65XX
+		{
+			CS_ARCH_MOS65XX,
+			(cs_mode)CS_MODE_LITTLE_ENDIAN,
+			(unsigned char*)MOS65XX_CODE,
+			sizeof(MOS65XX_CODE) - 1,
+			"MOS65XX"
 		},
 #endif
 	};
