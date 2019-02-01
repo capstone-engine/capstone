@@ -460,7 +460,6 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_WASM_SUPPORT)
         arch/WASM/WASMDisassembler.h
         arch/WASM/WASMInstPrinter.h
         arch/WASM/WASMMapping.h
-        arch/WASM/WASMMappingInsn.inc
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_wasm.c)
 endif ()
