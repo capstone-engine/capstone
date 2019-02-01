@@ -182,7 +182,9 @@ static void normalize_spaces(char *s) {
 
     for (i=0; i<80; i++) {
         if (s[i] == 0) {
-            s[j] = 0;
+            if (j < i) {
+                s[j-state] = 0;
+            }
             return;
         } else if (s[i] == ' ') {
             if (state == 1) {
@@ -303,25 +305,28 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
     Data++;
     Size--;
     assert(insn);
-        if (cs_disasm_iter(handle, Datap, Sizep, &address, insn)) {
-            if (insn->op_str[0] == 0) {
-                snprintf(CapstoneAssemblyText, 80, "%s", insn->mnemonic);
-            } else {
-                snprintf(CapstoneAssemblyText, 80, "%s %s", insn->mnemonic, insn->op_str);
-            }
-            //normalize_hex(CapstoneAssemblyText);
-            normalize_spaces(DiffAssemblyText);
-            if (strcmp(CapstoneAssemblyText, DiffAssemblyText) != 0) {
-                printf("capstone %s != diff %s\n", CapstoneAssemblyText, DiffAssemblyText);
-                abort();
-            } else {
-                //TODO remove
-                printf("capstone %s == diff %s\n", CapstoneAssemblyText, DiffAssemblyText);
-            }
+    if (cs_disasm_iter(handle, Datap, Sizep, &address, insn)) {
+        if (insn->op_str[0] == 0) {
+            snprintf(CapstoneAssemblyText, 80, "%s", insn->mnemonic);
         } else {
-            printf("capstone failed with diff %s\n", DiffAssemblyText);
-            abort();
+            snprintf(CapstoneAssemblyText, 80, "%s %s", insn->mnemonic, insn->op_str);
         }
+        //normalize_hex(CapstoneAssemblyText);
+        normalize_spaces(DiffAssemblyText);
+        size_t minlen = strlen(CapstoneAssemblyText);
+        if (minlen > strlen(DiffAssemblyText)) {
+            minlen = strlen(DiffAssemblyText);
+        }
+        if (strncmp(CapstoneAssemblyText, DiffAssemblyText, minlen) != 0) {
+            printf("capstone %s != diff %s\n", CapstoneAssemblyText, DiffAssemblyText);
+            abort();
+        } else {
+            //TODO remove
+            printf("capstone %s == diff %s\n", CapstoneAssemblyText, DiffAssemblyText);
+        }
+    } else {
+        printf("capstone failed with diff %s\n", DiffAssemblyText);
+    }
     cs_free(insn, 1);
     cs_close(&handle);
 

@@ -62,11 +62,11 @@ int diffFuzzerReturnOneInput(const uint8_t *Data, size_t Size, char * AssemblyTe
             disassemble_init_for_target(&disasm_info);
             r = print_insn_i386(0x1000, &disasm_info);
             break;
-        case 1:
+        /*case 1:
             disasm_info.arch = bfd_arch_ia64;
             disassemble_init_for_target(&disasm_info);
             r = print_insn_ia64(0x1000, &disasm_info);
-            break;
+            break;*/
         default:
             return -1;
     }
