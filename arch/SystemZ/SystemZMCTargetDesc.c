@@ -66,6 +66,53 @@ const unsigned SystemZMC_FP128Regs[16] = {
 	SystemZ_F12Q, SystemZ_F13Q, 0, 0
 };
 
+const unsigned SystemZMC_VR32Regs[32] = {
+  SystemZ_F0S, SystemZ_F1S, SystemZ_F2S, SystemZ_F3S,
+  SystemZ_F4S, SystemZ_F5S, SystemZ_F6S, SystemZ_F7S,
+  SystemZ_F8S, SystemZ_F9S, SystemZ_F10S, SystemZ_F11S,
+  SystemZ_F12S, SystemZ_F13S, SystemZ_F14S, SystemZ_F15S,
+  SystemZ_F16S, SystemZ_F17S, SystemZ_F18S, SystemZ_F19S,
+  SystemZ_F20S, SystemZ_F21S, SystemZ_F22S, SystemZ_F23S,
+  SystemZ_F24S, SystemZ_F25S, SystemZ_F26S, SystemZ_F27S,
+  SystemZ_F28S, SystemZ_F29S, SystemZ_F30S, SystemZ_F31S
+};
+
+const unsigned SystemZMC_VR64Regs[32] = {
+  SystemZ_F0D, SystemZ_F1D, SystemZ_F2D, SystemZ_F3D,
+  SystemZ_F4D, SystemZ_F5D, SystemZ_F6D, SystemZ_F7D,
+  SystemZ_F8D, SystemZ_F9D, SystemZ_F10D, SystemZ_F11D,
+  SystemZ_F12D, SystemZ_F13D, SystemZ_F14D, SystemZ_F15D,
+  SystemZ_F16D, SystemZ_F17D, SystemZ_F18D, SystemZ_F19D,
+  SystemZ_F20D, SystemZ_F21D, SystemZ_F22D, SystemZ_F23D,
+  SystemZ_F24D, SystemZ_F25D, SystemZ_F26D, SystemZ_F27D,
+  SystemZ_F28D, SystemZ_F29D, SystemZ_F30D, SystemZ_F31D
+};
+
+const unsigned SystemZMC_VR128Regs[32] = {
+  SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3,
+  SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7,
+  SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11,
+  SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15,
+  SystemZ_V16, SystemZ_V17, SystemZ_V18, SystemZ_V19,
+  SystemZ_V20, SystemZ_V21, SystemZ_V22, SystemZ_V23,
+  SystemZ_V24, SystemZ_V25, SystemZ_V26, SystemZ_V27,
+  SystemZ_V28, SystemZ_V29, SystemZ_V30, SystemZ_V31
+};
+
+const unsigned SystemZMC_AR32Regs[16] = {
+  SystemZ_A0, SystemZ_A1, SystemZ_A2, SystemZ_A3,
+  SystemZ_A4, SystemZ_A5, SystemZ_A6, SystemZ_A7,
+  SystemZ_A8, SystemZ_A9, SystemZ_A10, SystemZ_A11,
+  SystemZ_A12, SystemZ_A13, SystemZ_A14, SystemZ_A15
+};
+
+const unsigned SystemZMC_CR64Regs[16] = {
+  SystemZ_C0, SystemZ_C1, SystemZ_C2, SystemZ_C3,
+  SystemZ_C4, SystemZ_C5, SystemZ_C6, SystemZ_C7,
+  SystemZ_C8, SystemZ_C9, SystemZ_C10, SystemZ_C11,
+  SystemZ_C12, SystemZ_C13, SystemZ_C14, SystemZ_C15
+};
+
 unsigned SystemZMC_getFirstReg(unsigned Reg)
 {
 	static unsigned Map[SystemZ_NUM_TARGET_REGS];
@@ -82,6 +129,11 @@ unsigned SystemZMC_getFirstReg(unsigned Reg)
 			Map[SystemZMC_FP32Regs[I]] = I;
 			Map[SystemZMC_FP64Regs[I]] = I;
 			Map[SystemZMC_FP128Regs[I]] = I;
+			Map[SystemZMC_VR32Regs[I]] = I;
+			Map[SystemZMC_VR64Regs[I]] = I;
+			Map[SystemZMC_VR128Regs[I]] = I;
+			Map[SystemZMC_AR32Regs[I]] = I;
+			Map[SystemZMC_CR64Regs[I]] = I;
 		}
 	}
 

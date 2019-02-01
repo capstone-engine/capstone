@@ -378,7 +378,9 @@ void ARM_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 			case ARM_LDR_POST_IMM:
 			case ARM_LDR_POST_REG:
 			case ARM_STRB_POST_IMM:
+
 			case ARM_STR_POST_IMM:
+			case ARM_STR_POST_REG:
 
 				insn->detail->arm.writeback = true;
 				break;
