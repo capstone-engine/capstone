@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <capstone/capstone.h>
 
+void print_insn_detail_m68k(csh handle, cs_insn *ins);
 
 static const char* s_addressing_modes[] = {
 	"<invalid mode>",

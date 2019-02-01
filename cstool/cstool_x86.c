@@ -5,6 +5,8 @@
 
 #include <capstone/capstone.h>
 
+void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins);
+
 void print_string_hex(const char *comment, unsigned char *str, size_t len);
 
 static const char *get_eflag_name(uint64_t flag)
