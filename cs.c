@@ -129,13 +129,13 @@ static cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = {
 #else
 	NULL,
 #endif
-#ifdef CAPSTONE_HAS_WASM
-	WASM_global_init,
+#ifdef CAPSTONE_HAS_MOS65XX
+	MOS65XX_global_init,
 #else
 	NULL,
 #endif
-#ifdef CAPSTONE_HAS_MOS65XX
-	MOS65XX_global_init,
+#ifdef CAPSTONE_HAS_WASM
+	WASM_global_init,
 #else
 	NULL,
 #endif

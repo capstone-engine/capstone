@@ -119,7 +119,7 @@ static void test()
 			size_t j;
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
-			print_string_hex("Code:", platforms[i].code, platforms[i].size);
+			print_string_hex("Code: ", platforms[i].code, platforms[i].size);
 			printf("Disasm:\n");
 
 			for (j = 0; j < count; j++) {
@@ -133,7 +133,7 @@ static void test()
 		} else {
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
-			print_string_hex("Code:", platforms[i].code, platforms[i].size);
+			print_string_hex("Code: ", platforms[i].code, platforms[i].size);
 			printf("ERROR: Failed to disasm given code!\n");
 			abort();
 		}
