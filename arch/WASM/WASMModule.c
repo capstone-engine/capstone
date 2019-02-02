@@ -27,7 +27,7 @@ cs_err WASM_global_init(cs_struct *ud)
 
 cs_err WASM_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
-	return CS_ERR_OK;
+	return CS_ERR_OPTION;
 }
 
 #endif
