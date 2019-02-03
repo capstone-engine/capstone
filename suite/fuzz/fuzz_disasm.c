@@ -9,6 +9,8 @@
 
 #include <capstone/capstone.h>
 
+int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size);
+
 
 struct platform {
     cs_arch arch;
@@ -203,7 +205,6 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
         // 1 byte for arch choice
         return 0;
     } else if (Size > 0x1000) {
-
         //limit input to 4kb
         Size = 0x1000;
     }
@@ -231,7 +232,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
 
     if (count) {
         size_t j;
-        int n;
+        unsigned int n;
 
         for (j = 0; j < count; j++) {
             cs_insn *i = &(all_insn[j]);
@@ -262,6 +263,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
                 }
             }
         }
+
         fprintf(outfile, "0x%"PRIx64":\n", all_insn[j-1].address + all_insn[j-1].size);
         cs_free(all_insn, count);
     }
