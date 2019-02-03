@@ -34,7 +34,7 @@ versions, and Windows Driver Kit 8.1 Update 1 or newer versions are required.
   - CAPSTONE_HAS_ARM64: support ARM64. Delete this to remove ARM64 support.
   - CAPSTONE_HAS_M68K: support M68K. Delete this to remove M68K support.
   - CAPSTONE_HAS_MIPS: support Mips. Delete this to remove Mips support.
-  - CAPSTONE_HAS_PPC: support PPC. Delete this to remove PPC support.
+  - CAPSTONE_HAS_POWERPC: support PPC. Delete this to remove PPC support.
   - CAPSTONE_HAS_SPARC: support Sparc. Delete this to remove Sparc support.
   - CAPSTONE_HAS_SYSZ: support SystemZ. Delete this to remove SystemZ support.
   - CAPSTONE_HAS_X86: support X86. Delete this to remove X86 support.
