@@ -33,7 +33,7 @@ static void test()
 #ifdef CAPSTONE_HAS_X86
 #define X86_CODE16 "\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00"
 #define X86_CODE32 "\xba\xcd\xab\x00\x00\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00"
-//#define X86_CODE32 "\x0f\xa7\xc0"	// xstorerng
+//#define X86_CODE32 "\x0f\xa7\xc0"    // xstorerng
 #define X86_CODE64 "\x55\x48\x8b\x05\xb8\x13\x00\x00"
 #endif
 #ifdef CAPSTONE_HAS_ARM
@@ -52,10 +52,10 @@ static void test()
 #define MIPS_32R6 "\xec\x80\x00\x19\x7c\x43\x22\xa0"
 #endif
 #ifdef CAPSTONE_HAS_ARM64
-//#define ARM64_CODE "\x00\x40\x21\x4b"	// 	sub		w0, w0, w1, uxtw
-//#define ARM64_CODE "\x21\x7c\x02\x9b"	// mul	x1, x1, x2
-//#define ARM64_CODE "\x20\x74\x0b\xd5"	// dc	zva, x0
-//#define ARM64_CODE "\xe1\x0b\x40\xb9"	// ldr		w1, [sp, #0x8]
+//#define ARM64_CODE "\x00\x40\x21\x4b"    //     sub        w0, w0, w1, uxtw
+//#define ARM64_CODE "\x21\x7c\x02\x9b"    // mul    x1, x1, x2
+//#define ARM64_CODE "\x20\x74\x0b\xd5"    // dc    zva, x0
+//#define ARM64_CODE "\xe1\x0b\x40\xb9"    // ldr        w1, [sp, #0x8]
 #define ARM64_CODE "\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9"
 #endif
 #ifdef CAPSTONE_HAS_PPC
@@ -83,6 +83,9 @@ static void test()
 #endif
 #ifdef CAPSTONE_HAS_EVM
 #define EVM_CODE "\x60\x61"
+#endif
+#ifdef CAPSTONE_HAS_WASM
+#define WASM_CODE "\x20\x00\x20\x01\x41\x20\x10\xc9\x01\x45\x0b"
 #endif
 
 #ifdef CAPSTONE_HAS_MOS65XX
@@ -318,6 +321,15 @@ static void test()
 			sizeof(EVM_CODE) - 1,
 			"EVM",
 		},
+#endif
+#ifdef CAPSTONE_HAS_WASM
+		{
+			CS_ARCH_WASM,
+			0,
+			(unsigned char*)WASM_CODE,
+			sizeof(WASM_CODE) - 1,
+			"WASM",
+        },
 #endif
 #ifdef CAPSTONE_HAS_MOS65XX
 		{

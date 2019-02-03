@@ -8,7 +8,7 @@
  On default Capstone build, this code prints out the below output:
 
  $ capstone_get_setup
- x86=1 arm=1 arm64=1 mips=1 ppc=1 sparc=1 sysz=1 xcore=1 m68k=1 tms320c64x=1 m680x=1 evm=1
+ x86=1 arm=1 arm64=1 mips=1 ppc=1 sparc=1 sysz=1 xcore=1 m68k=1 tms320c64x=1 m680x=1 evm=1 wasm=1
 */
 
 #include <stdio.h>
@@ -62,6 +62,10 @@ int main()
 
 	if (cs_support(CS_ARCH_EVM)) {
 		printf("evm=1 ");
+	}
+
+	if (cs_support(CS_ARCH_WASM)) {
+		printf("wasm=1 ");
 	}
 
 	if (cs_support(CS_ARCH_MOS65XX)) {

@@ -5,7 +5,7 @@ import sys, re
 
 INCL_DIR = '../include/capstone/'
 
-include = [ 'arm.h', 'arm64.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h', 'tms320c64x.h', 'm680x.h', 'evm.h', 'mos65xx.h' ]
+include = [ 'arm.h', 'arm64.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h', 'tms320c64x.h', 'm680x.h', 'evm.h', 'mos65xx.h', 'wasm.h' ]
 
 template = {
     'java': {
@@ -26,6 +26,7 @@ template = {
             'tms320c64x.h': 'TMS320C64x',
             'm680x.h': 'M680x',
             'evm.h': 'Evm',
+            'wasm.h': 'Wasm',
             'comment_open': '\t//',
             'comment_close': '',
         },
@@ -47,6 +48,7 @@ template = {
             'tms320c64x.h': 'tms320c64x',
             'm680x.h': 'm680x',
             'evm.h': 'evm',
+            'wasm.h': 'wasm',
             'mos65xx.h': 'mos65xx',
             'comment_open': '#',
             'comment_close': '',
@@ -69,6 +71,7 @@ template = {
             'tms320c64x.h': 'tms320c64x',
             'm680x.h': 'm680x',
             'evm.h': 'evm',
+            'wasm.h': 'wasm',
             'comment_open': '(*',
             'comment_close': ' *)',
         },
