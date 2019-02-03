@@ -283,6 +283,7 @@ static uint32_t get_varuint32(const uint8_t *code, size_t code_len, size_t *leng
 			return 0;
 		}
 
+
 		if (i > 4 || (i == 4 && (code[i] & 0x7f) > 0x0f)) {
 			*leng = -1;
 			return 0;
