@@ -33,6 +33,7 @@ Get CMake for free from http://www.cmake.org.
   - CAPSTONE_X86_TMS320C64X: support TMS320C64X. Run cmake with -DCAPSTONE_TMS320C64X_SUPPORT=0 to remove TMS320C64X.
   - CAPSTONE_X86_M680X: support M680X. Run cmake with -DCAPSTONE_M680X_SUPPORT=0 to remove M680X.
   - CAPSTONE_X86_EVM: support EVM. Run cmake with -DCAPSTONE_EVM_SUPPORT=0 to remove EVM.
+  - CAPSTONE_X86_WASM: support Web Assembly. Run cmake with -DCAPSTONE_WASM_SUPPORT=0 to remove WASM.
 
   By default, all architectures are compiled in.
 
