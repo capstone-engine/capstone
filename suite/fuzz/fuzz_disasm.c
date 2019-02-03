@@ -13,12 +13,12 @@
 struct platform {
     cs_arch arch;
     cs_mode mode;
-    char *comment;
+    const char *comment;
 };
 
-FILE * outfile = NULL;
+static FILE *outfile = NULL;
 
-struct platform platforms[] = {
+static struct platform platforms[] = {
     {
         // item 0
         CS_ARCH_X86,
@@ -195,9 +195,11 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
         // 1 byte for arch choice
         return 0;
     } else if (Size > 0x1000) {
+
         //limit input to 4kb
         Size = 0x1000;
     }
+
     if (outfile == NULL) {
         // we compute the output
         outfile = fopen("/dev/null", "w");
@@ -213,6 +215,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
     if (err) {
         return 0;
     }
+
     cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
     uint64_t address = 0x1000;
