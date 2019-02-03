@@ -283,6 +283,12 @@ static uint32_t get_varuint32(const uint8_t *code, size_t code_len, size_t *leng
 			return 0;
 		}
 
+
+		if (i > 4 || (i == 4 && (code[i] & 0x7f) > 0x0f)) {
+			*leng = -1;
+			return 0;
+		}
+
 		data = data + ((code[i] & 0x7f) << (i * 7));
 		if (code[i] >> 7 == 0) {
 			break;
@@ -309,6 +315,12 @@ static uint64_t get_varuint64(const uint8_t *code, size_t code_len, size_t *leng
 			*leng = -1;
 			return 0;
 		}
+
+		if (i > 9 || (i == 9 && (code[i] & 0x7f) > 0x01)) {
+			*leng = -1;
+			return 0;
+		}
+
 		data = data + ((code[i] & 0x7f) << (i * 7));
 		if (code[i] >> 7 == 0) {
 			break;
