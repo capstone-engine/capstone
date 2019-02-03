@@ -83,6 +83,7 @@ int main(int argc, char** argv)
         fclose(fp);
     }
     closedir(d);
+    printf("Ok : whole directory finished\n");
     return r;
 }
 
