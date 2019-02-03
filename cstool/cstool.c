@@ -8,6 +8,8 @@
 
 #include <capstone/capstone.h>
 
+void print_string_hex(const char *comment, unsigned char *str, size_t len);
+
 static struct {
 	const char *name;
 	cs_arch arch;
