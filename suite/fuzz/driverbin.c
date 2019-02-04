@@ -38,7 +38,7 @@ int main(int argc, char** argv)
             continue;
         }
 
-        printf("Running file %s ", dir->d_name);
+        printf("Running %s\n", dir->d_name);
         fflush(stdout);
 
         fp = fopen(dir->d_name, "rb");
