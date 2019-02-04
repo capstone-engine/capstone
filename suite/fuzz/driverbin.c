@@ -36,6 +36,7 @@ int main(int argc, char** argv)
             continue;
         }
         printf("Running %s\n", dir->d_name);
+        fflush(stdout);
         fp = fopen(dir->d_name, "rb");
         if (fp == NULL) {
             r = 3;
