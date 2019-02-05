@@ -131,6 +131,54 @@ static const char *get_eflag_name(uint64_t flag)
 	}
 }
 
+static const char *get_fpu_flag_name(uint64_t flag)
+{
+	switch (flag) {
+		default:
+			return NULL;
+		case X86_FPU_FLAGS_MODIFY_C0:
+			return "MOD_C0";
+		case X86_FPU_FLAGS_MODIFY_C1:
+			return "MOD_C1";
+		case X86_FPU_FLAGS_MODIFY_C2:
+			return "MOD_C2";
+		case X86_FPU_FLAGS_MODIFY_C3:
+			return "MOD_C3";
+		case X86_FPU_FLAGS_RESET_C0:
+			return "RESET_C0";
+		case X86_FPU_FLAGS_RESET_C1:
+			return "RESET_C1";
+		case X86_FPU_FLAGS_RESET_C2:
+			return "RESET_C2";
+		case X86_FPU_FLAGS_RESET_C3:
+			return "RESET_C3";
+		case X86_FPU_FLAGS_SET_C0:
+			return "SET_C0";
+		case X86_FPU_FLAGS_SET_C1:
+			return "SET_C1";
+		case X86_FPU_FLAGS_SET_C2:
+			return "SET_C2";
+		case X86_FPU_FLAGS_SET_C3:
+			return "SET_C3";
+		case X86_FPU_FLAGS_UNDEFINED_C0:
+			return "UNDEF_C0";
+		case X86_FPU_FLAGS_UNDEFINED_C1:
+			return "UNDEF_C1";
+		case X86_FPU_FLAGS_UNDEFINED_C2:
+			return "UNDEF_C2";
+		case X86_FPU_FLAGS_UNDEFINED_C3:
+			return "UNDEF_C3";
+		case X86_FPU_FLAGS_TEST_C0:
+			return "TEST_C0";
+		case X86_FPU_FLAGS_TEST_C1:
+			return "TEST_C1";
+		case X86_FPU_FLAGS_TEST_C2:
+			return "TEST_C2";
+		case X86_FPU_FLAGS_TEST_C3:
+			return "TEST_C3";
+	}
+}
+
 static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 {
 	int count, i;
@@ -295,13 +343,27 @@ static void print_insn_detail(csh ud, cs_mode mode, cs_insn *ins)
 		}
 	}
 
-	if (x86->eflags) {
-		printf("\tEFLAGS:");
-		for(i = 0; i <= 45; i++)
-			if (x86->eflags & ((uint64_t)1 << i)) {
-				printf(" %s", get_eflag_name((uint64_t)1 << i));
+	if (x86->eflags || x86->fpu_flags) {
+		for(i = 0; i < ins->detail->groups_count; i++) {
+			if (ins->detail->groups[i] == X86_GRP_FPU) {
+				printf("\tFPU_FLAGS:");
+				for(i = 0; i <= 63; i++)
+					if (x86->fpu_flags & ((uint64_t)1 << i)) {
+						printf(" %s", get_fpu_flag_name((uint64_t)1 << i));
+					}
+				printf("\n");
+				break;
 			}
-		printf("\n");
+		}
+
+		if (i == ins->detail->groups_count) {
+			printf("\tEFLAGS:");
+			for(i = 0; i <= 63; i++)
+				if (x86->eflags & ((uint64_t)1 << i)) {
+					printf(" %s", get_eflag_name((uint64_t)1 << i));
+				}
+			printf("\n");
+		}
 	}
 
 	printf("\n");
@@ -396,7 +458,7 @@ static void test()
 			printf("Disasm:\n");
 
 			for (j = 0; j < count; j++) {
-				printf("0x%" PRIx64 ":\t%s\t%s\n\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
+				printf("0x%" PRIx64 ":\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
 				print_insn_detail(handle, platforms[i].mode, &insn[j]);
 			}
 			printf("0x%" PRIx64 ":\n", insn[j-1].address + insn[j-1].size);
