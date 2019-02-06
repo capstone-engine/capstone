@@ -82,6 +82,8 @@ double_dict options[] = {
 	{"CS_MODE_M680X_HCS08", CS_OPT_MODE, CS_MODE_M680X_HCS08}
 };
 
+char *(*function)(csh *, cs_mode, cs_insn*) = NULL;
+
 void test_single(csh *handle, char *line)
 {
 	char **list_part, **list_byte, **list_data;
@@ -138,29 +140,96 @@ int getIndex(double_dict d[], unsigned int size, const char *s)
 	return -1;
 }
 
-int setFunction(char (*function)(csh *, cs_insn*), int arch)
+int setFunction(int arch)
 {
 	switch(arch) {
 		case CS_ARCH_ARM:
 			function = get_detail_arm;
+			break;
 		case CS_ARCH_ARM64:
 			function = get_detail_arm64;
+			break;
 		case CS_ARCH_MIPS:
 			function = get_detail_mips;
+			break;
 		case CS_ARCH_PPC:
 			function = get_detail_ppc;
+			break;
 		case CS_ARCH_SPARC:
 			function = get_detail_sparc;
+			break;
 		case CS_ARCH_SYSZ:
 			function = get_detail_sysz;
+			break;
 		case CS_ARCH_X86:
 			function = get_detail_x86;
+			break;
 		case CS_ARCH_XCORE:
 			function = get_detail_xcore;
+			break;
 		case CS_ARCH_M68K:
 			function = get_detail_m68k;
+			break;
+		case CS_ARCH_M680X:
+			function = get_detail_m680x;
+			break;
+		case CS_ARCH_EVM:
+			function = get_detail_evm;
+			break;
+		case CS_ARCH_MOS65XX:
+			function = get_detail_mos65xx;
+			break;
+		case CS_ARCH_TMS320C64X:
+			function = get_detail_tms320c64x;
+			break;
 		default:
 			return -1;
 	}
 	return 0;
+}
+
+void test_single_issues(csh *handle, cs_mode mode, char *line, int detail)
+{
+	char **list_part, **list_byte;
+	int size_part, size_byte;
+	int i, count;
+	unsigned char *code;
+	cs_insn *insn;
+	char *cs_result, *tmp;
+	
+	cs_result = (char *)malloc(sizeof(char));
+	cs_result[0] = '\0';
+
+	list_part = split(line, " = ", &size_part);
+	list_byte = split(list_part[0], ",", &size_byte);
+	code = (unsigned char *)malloc(sizeof(char) * size_byte);
+	for (i=0; i<size_byte; ++i) {
+		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
+		// printf("Byte: 0x%.2x\n", (int)code[i]);
+	}
+
+	count = cs_disasm(*handle, code, size_byte, 0x1000, 0, &insn);
+	for (i=0; i < count; ++i) {
+		tmp = (char *)malloc(strlen(insn[i].mnemonic) + strlen(insn[i].op_str) + 100);
+		strcpy(tmp, insn[i].mnemonic);
+		tmp[strlen(insn[i].mnemonic)] = ' ';
+		strcpy(tmp + strlen(insn[i].mnemonic) + 1, insn[i].op_str);
+		addStr(cs_result, tmp);
+		if (i < count - 1)
+			addStr(&cs_result, ";");
+		free(tmp);
+	}
+	
+	if (detail == 1) {
+		tmp = (*function)(handle, mode, insn);
+		addStr(&cs_result, tmp);
+		free(tmp);
+	}
+
+	assert_string_equal(cs_result, list_part[1]);
+	cs_free(insn, count);
+	free(list_part);
+	free(list_byte);
+	free(*cs_result);
+	free(cs_result);
 }
