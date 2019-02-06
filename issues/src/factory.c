@@ -1,6 +1,6 @@
 #include "factory.h"
 
-char *get_detail_arm(csh *handle, cs_insn *ins)
+char *get_detail_armmmmmmmmmmm(csh *handle, cs_insn *ins)
 {
 	cs_arm *arm;
 	cs_arm_op *op;
@@ -25,7 +25,7 @@ char *get_detail_arm(csh *handle, cs_insn *ins)
 			default:
 				break;
 			case ARM_OP_REG:
-				addStr(result, " | %s", cs_reg_name(handle, op->reg));
+				addStr(result, " | %s", cs_reg_name(*handle, op->reg));
 				break;
 			case ARM_OP_IMM:
 				addStr(result, " | 0x%x", op->imm);
@@ -62,7 +62,7 @@ char *get_detail_arm(csh *handle, cs_insn *ins)
 				addStr(result, " | %s", op->setend == ARM_SETEND_BE? "be" : "le");
 				break;
 			case ARM_OP_SYSREG:
-				addStr(reuslt, " | %u", op->reg);
+				addStr(result, " | %u", op->reg);
 				break;	
 		}
 		if (op->neon_lane != -1)
@@ -86,7 +86,7 @@ char *get_detail_arm(csh *handle, cs_insn *ins)
 			if (op->shift.type < ARM_SFT_ASR_REG)
 				addStr(result, " | %u %u", op->shift.type, op->shift.value);
 			else
-				addStr(result, " | %u %s", op->shift.type, cs_reg_name(handle, op->shift.value));
+				addStr(result, " | %u %s", op->shift.type, cs_reg_name(*handle, op->shift.value));
 		}
 		
 		if (op->vector_index != -1)
@@ -94,7 +94,6 @@ char *get_detail_arm(csh *handle, cs_insn *ins)
 
 		if (op->subtracted)
 			addStr(result, " | True");
-
-		if (
 	}
+	return result;
 }

@@ -67,22 +67,27 @@ char *readfile(char *filename)
 	return result;
 }
 
-void addStr(char *src, const char *format, ...)
+void addStr(char **src, const char *format, ...)
 {
 	char *tmp;
-	const size_t len1, len2;
+	size_t len1, len2;
 	va_list args;
 
-	va_start(args, format);
+	puts ("HOHOHOHO");
 	tmp = (char *)malloc(sizeof(char) * 1000);
+	va_start(args, format);
 	vsprintf(tmp, format, args);
 	va_end(args);
-	len1 = strlen(src);	
+
+	printf("HAHAHAHAHA %s\n", tmp);
+	len1 = strlen(*src);	
     len2 = strlen(tmp);
+	
+	printf("Source: %p %s\n", *src, *src);
+    *src = (char *)realloc(*src, sizeof(char) * (len1 + len2 + 10));
+	printf("Source: %p %s\n", *src, *src);
 
-    src = (char *)realloc(src, sizeof(char) * (len1 + len2 + 1));
-
-    memcpy(result + len1, tmp, len2 + 1);
+    memcpy(*src + len1, tmp, len2 + 1);
+	printf("Source: %s\n", *src);
 	free(tmp);
-    return result;
 }

@@ -9,6 +9,7 @@
 #include <string.h>
 #include <capstone/capstone.h>
 #include "helper.h"
+#include "factory.h"
 
 #define cs_assert_err(expect, err)									\
 do {																\
@@ -48,10 +49,12 @@ typedef struct {
 extern single_dict arches[];
 extern single_dict modes[];
 extern double_dict options[];
+extern char *(*function)(csh *, cs_mode, cs_insn*);
 
 int getIndex(double_dict d[], unsigned size, const char *str);
 int getValue(single_dict d[], unsigned size, const char *str);
 void test_single(csh *handle, char *line);
-int setFunction(char (*function)(csh *, cs_insn *), int arch);
+void test_single_issues(csh *handle, cs_mode mode, char *line, int detail);
+int setFunction(int arch);
 
 #endif /* CAPSTONE_TEST_H */
