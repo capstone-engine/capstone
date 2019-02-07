@@ -192,7 +192,7 @@ void test_single_issues(csh *handle, cs_mode mode, char *line, int detail)
 {
 	char **list_part, **list_byte;
 	int size_part, size_byte;
-	int i, count;
+	int i, count, j;
 	unsigned char *code;
 	cs_insn *insn;
 	char *cs_result, *tmp;
@@ -200,7 +200,7 @@ void test_single_issues(csh *handle, cs_mode mode, char *line, int detail)
 	cs_result = (char *)malloc(sizeof(char));
 	cs_result[0] = '\0';
 
-	list_part = split(line, " = ", &size_part);
+	list_part = split(line, " == ", &size_part);
 	list_byte = split(list_part[0], ",", &size_byte);
 	code = (unsigned char *)malloc(sizeof(char) * size_byte);
 	for (i=0; i<size_byte; ++i) {
@@ -212,9 +212,10 @@ void test_single_issues(csh *handle, cs_mode mode, char *line, int detail)
 	for (i=0; i < count; ++i) {
 		tmp = (char *)malloc(strlen(insn[i].mnemonic) + strlen(insn[i].op_str) + 100);
 		strcpy(tmp, insn[i].mnemonic);
-		tmp[strlen(insn[i].mnemonic)] = ' ';
+		if (strlen(insn[i].op_str) > 0)
+			tmp[strlen(insn[i].mnemonic)] = ' ';
 		strcpy(tmp + strlen(insn[i].mnemonic) + 1, insn[i].op_str);
-		addStr(cs_result, tmp);
+		addStr(&cs_result, tmp);
 		if (i < count - 1)
 			addStr(&cs_result, ";");
 		free(tmp);
@@ -224,12 +225,18 @@ void test_single_issues(csh *handle, cs_mode mode, char *line, int detail)
 		tmp = (*function)(handle, mode, insn);
 		addStr(&cs_result, tmp);
 		free(tmp);
-	}
 
+		if (insn->detail->groups_count) {
+			addStr(&cs_result, " | Groups: ");
+			for (j = 0; j < insn->detail->groups_count; j++) {
+				addStr(&cs_result, "%s ", cs_group_name(*handle, insn->detail->groups[j]));
+			}
+		}
+	}
+	
 	assert_string_equal(cs_result, list_part[1]);
 	cs_free(insn, count);
 	free(list_part);
 	free(list_byte);
-	free(*cs_result);
 	free(cs_result);
 }

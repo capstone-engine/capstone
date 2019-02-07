@@ -73,21 +73,21 @@ void addStr(char **src, const char *format, ...)
 	size_t len1, len2;
 	va_list args;
 
-	puts ("HOHOHOHO");
+//	puts ("HOHOHOHO");
 	tmp = (char *)malloc(sizeof(char) * 1000);
 	va_start(args, format);
 	vsprintf(tmp, format, args);
 	va_end(args);
 
-	printf("HAHAHAHAHA %s\n", tmp);
+//	printf("HAHAHAHAHA %s\n", tmp);
 	len1 = strlen(*src);	
     len2 = strlen(tmp);
 	
-	printf("Source: %p %s\n", *src, *src);
+//	printf("Source: %p %s\n", *src, *src);
     *src = (char *)realloc(*src, sizeof(char) * (len1 + len2 + 10));
-	printf("Source: %p %s\n", *src, *src);
+//	printf("Source: %p %s\n", *src, *src);
 
     memcpy(*src + len1, tmp, len2 + 1);
-	printf("Source: %s\n", *src);
+//	printf("Source: %s\n", *src);
 	free(tmp);
 }
