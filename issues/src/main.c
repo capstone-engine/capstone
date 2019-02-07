@@ -119,12 +119,13 @@ static int setup_issue(void **state)
 static void test_issue(void **state)
 {
 	test_single_issues((csh *)*state, issue_mode, list_lines[counter], getDetail);
-	counter ++;
+//	counter ++;
 	return;
 }
 
 static int teardown_issue(void **state)
 {
+	counter ++;
 	cs_close(*state);
 	free(*state);
 	function = NULL;
@@ -153,14 +154,15 @@ int main(int argc, char *argv[])
 	if ( content[0] == '!' ) {
 		list_lines = split(content, "\n", &size_lines);	
 
-		tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * (size_lines - 1) / 3);
-		for (i=0; i<(size_lines - 1)/3; ++i) {
+		tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * (size_lines) / 3);
+		for (i=0; i<(size_lines)/3; ++i) {
 			char *tmp = (char *)malloc(sizeof(char) * 100);
 			sscanf(list_lines[i*3], "!#%d\n", &issue_num);			
 			sprintf(tmp, "Issue #%d", issue_num);
 			tests[i] = (struct CMUnitTest)cmocka_unit_test_setup_teardown(test_issue, setup_issue, teardown_issue);
 			tests[i].name = tmp;
 		}
+		_cmocka_run_group_tests("Testing issues", tests, size_lines/3, NULL, NULL);
 	}
 	else {
 		list_lines = split(content + 2, "\n", &size_lines);
@@ -172,9 +174,9 @@ int main(int argc, char *argv[])
 			tests[i] = (struct CMUnitTest)cmocka_unit_test_setup_teardown(test_MC, setup_MC, teardown_MC);
 			tests[i].name = tmp;
 		}
+		_cmocka_run_group_tests("Testing", tests, size_lines-1, NULL, NULL);
 	}
 
-	_cmocka_run_group_tests("Testing", tests, size_lines-1, NULL, NULL);
 	
 	printf("[+] Noted:\n[  ERROR   ] --- \"<capstone result>\" != \"<user result>\"\n");	
 	free_strs(list_lines, size_lines);
