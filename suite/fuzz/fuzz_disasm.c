@@ -177,17 +177,21 @@ static struct platform platforms[] = {
         (cs_mode)0,
         "EVM"
     },
-#ifdef CAPSTONE_HAS_MOS65XX
     {
         //item 26
         CS_ARCH_MOS65XX,
         (cs_mode)0,
         "MOS65XX"
     },
-#endif
-#ifdef CAPSTONE_HAS_WASM
     {
         //item 27
+        CS_ARCH_TMS320C64X,
+        CS_MODE_BIG_ENDIAN,
+        "tms320c64x"
+    },
+#if CS_NEXT_VERSION >= 5
+    {
+        //item 28
         CS_ARCH_WASM,
         (cs_mode)0,
         "WASM"
