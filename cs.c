@@ -1063,8 +1063,12 @@ void CAPSTONE_API cs_free(cs_insn *insn, size_t count)
 	size_t i;
 
 	// free all detail pointers
-	for (i = 0; i < count; i++)
+	for (i = 0; i < count; i++) {
+		if (insn[i].detail != NULL && insn[i].detail->arch == CS_ARCH_WASM) {
+			cs_mem_free(insn[i].detail->wasm.operands);
+		}
 		cs_mem_free(insn[i].detail);
+	}
 
 	// then free pointer to cs_insn array
 	cs_mem_free(insn);
@@ -1090,6 +1094,7 @@ cs_insn * CAPSTONE_API cs_malloc(csh ud)
 				handle->errnum = CS_ERR_MEM;
 				return NULL;
 			}
+			insn->detail->arch = handle->arch;
 		} else
 			insn->detail = NULL;
 	}
