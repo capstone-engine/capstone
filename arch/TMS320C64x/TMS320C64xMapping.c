@@ -1865,7 +1865,6 @@ static name_map insn_name_maps[] = {
 	{TMS320C64X_INS_NOT, "not"},
 	{TMS320C64X_INS_SWAP2, "swap2"},
 	{TMS320C64X_INS_ZERO, "zero"},
-	{TMS320C64X_INS_ENDING, "ending"},
 };
 
 #endif
