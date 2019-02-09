@@ -142,9 +142,6 @@ int main(int argc, char *argv[])
 
 	if (argc != 2) {
 		puts("Usage: ./issues <file_name.cs>");
-		char *haha = strdup("AHHA 0x123 hohoho 0xf hehehe 0xdeadbeaf");
-		replaceHex(&haha);
-		puts(haha);
 		return -1;
 	}
 	
