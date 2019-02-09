@@ -7,5 +7,7 @@ all:
 	rm -rf $(BUILD)
 	mkdir $(BUILD)
 	$(CC) -g $(SOURCE)/*.c -I$(INCLUDE) -o $(BUILD)/cstest $(LIBRARY)
+cstest:
+	$(BUILD)/cstest -d ../MC	
 clean:
 	rm -rf $(BUILD)

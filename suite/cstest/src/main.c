@@ -142,11 +142,6 @@ void test_file(const char *filename)
 	int issue_num;
 
 	printf("[+] TARGET: %s\n", filename);
-	if (strcmp("cs", get_filename_ext(filename))) {
-		printf("[-] Invalid file\n");
-		return;
-	}	
-
 	content = readfile(filename);
 	counter = 0;
 	failed_setup = 0;
@@ -195,6 +190,8 @@ void test_folder(const char *folder)
 	num_files = 0;
 	listdir(folder, &files, &num_files);
 	for (i=0; i<num_files; ++i) {
+		if (strcmp("cs", get_filename_ext(files[i])))
+			continue;
 		test_file(files[i]);
 	}
 }
