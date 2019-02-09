@@ -44,7 +44,17 @@ void free_strs(char **list_str, int size)
 	free(list_str);
 }
 
-char *readfile(char *filename)
+const char *get_filename_ext(const char *filename)
+{
+	const char *dot;
+
+	dot = strrchr(filename, '.');
+	if(!dot || dot == filename)
+		return "";
+	return dot + 1;
+}
+
+char *readfile(const char *filename)
 {
 	char *result;
 	FILE *fp;
@@ -118,3 +128,31 @@ void replaceHex(char **src)
 	*src = result;
 }
 
+void listdir(const char *name, char ***files, int *num_files)
+{
+	DIR *dir;
+	struct dirent *entry;
+	int cnt;
+
+	if (!(dir = opendir(name)))
+		return;
+
+	while ((entry = readdir(dir)) != NULL) {
+		if (entry->d_type == DT_DIR) {
+			char path[1024];
+			if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
+				continue;
+			snprintf(path, sizeof(path), "%s/%s", name, entry->d_name);
+//			printf("[%s]\n", entry->d_name);
+			listdir(path, files, num_files);
+		} else {
+			cnt = *num_files;
+			*files = (char **)realloc(*files, sizeof(char *) * (cnt + 1));
+			(*files)[cnt] = (char *)malloc(sizeof(char) * ( strlen(name) + 1 + strlen(entry->d_name) + 10));
+			sprintf((*files)[cnt], "%s/%s", name, entry->d_name);
+			cnt ++;
+			*num_files = cnt;
+		}
+	}
+	closedir(dir);
+}

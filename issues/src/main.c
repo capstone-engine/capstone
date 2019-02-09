@@ -1,5 +1,6 @@
 #include "helper.h"
 #include "capstone_test.h"
+#include <unistd.h>
 
 static int counter;
 static char **list_lines;
@@ -132,7 +133,7 @@ static int teardown_issue(void **state)
 	return 0;
 }
 
-int main(int argc, char *argv[])
+void test_file(const char *filename)
 {
 	int size, i;
 	char **list_str; 
@@ -140,15 +141,17 @@ int main(int argc, char *argv[])
 	struct CMUnitTest *tests;
 	int issue_num;
 
-	if (argc != 2) {
-		puts("Usage: ./issues <file_name.cs>");
-		return -1;
-	}
-	
-	content = readfile(argv[1]);
+	printf("[+] TARGET: %s\n", filename);
+	if (strcmp("cs", get_filename_ext(filename))) {
+		printf("[-] Invalid file\n");
+		return;
+	}	
+
+	content = readfile(filename);
 	counter = 0;
 	failed_setup = 0;
 	function = NULL;		
+
 
 
 	if ( content[0] == '!' ) {
@@ -177,8 +180,42 @@ int main(int argc, char *argv[])
 		_cmocka_run_group_tests("Testing", tests, size_lines-1, NULL, NULL);
 	}
 
-	
-	printf("[+] Noted:\n[  ERROR   ] --- \"<capstone result>\" != \"<user result>\"\n");	
+	printf("[+] DONE: %s\n", filename);
+	printf("[!] Noted:\n[  ERROR   ] --- \"<capstone result>\" != \"<user result>\"\n");	
+	printf("\n\n");
 	free_strs(list_lines, size_lines);
+}
+
+void test_folder(const char *folder)
+{
+	char **files;
+	int num_files, i;
+
+	files = NULL;
+	num_files = 0;
+	listdir(folder, &files, &num_files);
+	for (i=0; i<num_files; ++i) {
+		test_file(files[i]);
+	}
+}
+
+int main(int argc, char *argv[])
+{
+	int opt;	
+
+	while ((opt = getopt(argc, argv, "fd:")) != -1) {
+		switch (opt) {
+			case 'f':
+				test_file(optarg);
+				break;
+			case 'd':
+				test_folder(optarg);
+				break;
+			default:
+				puts("Usage: ./issues <file_name.cs>");
+				exit(-1);
+		}
+	}
+	
 	return 0;
 }
