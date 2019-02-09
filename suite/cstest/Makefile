@@ -6,6 +6,6 @@ LIBRARY= -lcmocka -lcapstone
 all:
 	rm -rf $(BUILD)
 	mkdir $(BUILD)
-	$(CC) -g $(SOURCE)/*.c -I$(INCLUDE) -o $(BUILD)/issues $(LIBRARY)
+	$(CC) -g $(SOURCE)/*.c -I$(INCLUDE) -o $(BUILD)/cstest $(LIBRARY)
 clean:
 	rm -rf $(BUILD)
