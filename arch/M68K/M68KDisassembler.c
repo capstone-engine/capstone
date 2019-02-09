@@ -301,12 +301,12 @@ static m68k_insn s_trap_lut[] = {
 static unsigned int peek_imm_8(const m68k_info *info)  { return (m68k_read_safe_16((info), (info)->pc)&0xff); }
 static unsigned int peek_imm_16(const m68k_info *info) { return m68k_read_safe_16((info), (info)->pc); }
 static unsigned int peek_imm_32(const m68k_info *info) { return m68k_read_safe_32((info), (info)->pc); }
-static unsigned int peek_imm_64(const m68k_info *info) { return (unsigned int)m68k_read_safe_64((info), (info)->pc); }
+static unsigned long long peek_imm_64(const m68k_info *info) { return m68k_read_safe_64((info), (info)->pc); }
 
 static unsigned int read_imm_8(m68k_info *info)  { const unsigned int value = peek_imm_8(info);  (info)->pc+=2; return value; }
 static unsigned int read_imm_16(m68k_info *info) { const unsigned int value = peek_imm_16(info); (info)->pc+=2; return value; }
 static unsigned int read_imm_32(m68k_info *info) { const unsigned int value = peek_imm_32(info); (info)->pc+=4; return value; }
-static unsigned int read_imm_64(m68k_info *info) { const unsigned int value = peek_imm_64(info); (info)->pc+=8; return value; }
+static unsigned long long read_imm_64(m68k_info *info) { const unsigned long long value = peek_imm_64(info); (info)->pc+=8; return value; }
 
 /* Fake a split interface */
 #define get_ea_mode_str_8(instruction) get_ea_mode_str(instruction, 0)

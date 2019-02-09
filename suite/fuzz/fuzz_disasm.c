@@ -9,16 +9,18 @@
 
 #include <capstone/capstone.h>
 
+int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size);
+
 
 struct platform {
     cs_arch arch;
     cs_mode mode;
-    char *comment;
+    const char *comment;
 };
 
-FILE * outfile = NULL;
+static FILE *outfile = NULL;
 
-struct platform platforms[] = {
+static struct platform platforms[] = {
     {
         // item 0
         CS_ARCH_X86,
@@ -198,6 +200,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
         //limit input to 4kb
         Size = 0x1000;
     }
+
     if (outfile == NULL) {
         // we compute the output
         outfile = fopen("/dev/null", "w");
@@ -213,6 +216,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
     if (err) {
         return 0;
     }
+
     cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
     uint64_t address = 0x1000;
@@ -220,7 +224,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
 
     if (count) {
         size_t j;
-        int n;
+        unsigned int n;
 
         for (j = 0; j < count; j++) {
             cs_insn *i = &(all_insn[j]);
@@ -251,6 +255,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
                 }
             }
         }
+
         fprintf(outfile, "0x%"PRIx64":\n", all_insn[j-1].address + all_insn[j-1].size);
         cs_free(all_insn, count);
     }
