@@ -73,21 +73,48 @@ void addStr(char **src, const char *format, ...)
 	size_t len1, len2;
 	va_list args;
 
-//	puts ("HOHOHOHO");
 	tmp = (char *)malloc(sizeof(char) * 1000);
 	va_start(args, format);
 	vsprintf(tmp, format, args);
 	va_end(args);
 
-//	printf("HAHAHAHAHA %s\n", tmp);
 	len1 = strlen(*src);	
     len2 = strlen(tmp);
 	
-//	printf("Source: %p %s\n", *src, *src);
     *src = (char *)realloc(*src, sizeof(char) * (len1 + len2 + 10));
-//	printf("Source: %p %s\n", *src, *src);
 
     memcpy(*src + len1, tmp, len2 + 1);
-//	printf("Source: %s\n", *src);
 	free(tmp);
 }
+
+void replaceHex(char **src)
+{
+	char *tmp, *result, *found;
+	int i;
+	unsigned long long int value;
+	
+	result = (char *)malloc(sizeof(char));
+	result[0] = '\0';
+	tmp = *src;
+	while ( (found = strstr(tmp, "0x")) != NULL ) {
+		*found = '\0';
+		found += 2;
+		value = 0;
+
+		while ( *found != '\0' && isxdigit(*found) ) {
+			if (*found >= 'a' && *found <='f')
+				value = value*0x10 + (*found - 'a' + 10);
+			else
+				value = value*0x10 + (*found - '0');
+//			printf("====> %d -- %llu\n", *found, value);
+			found++;
+		}
+		
+		addStr(&result, "%s%llu", tmp, value);
+		tmp = found;
+	}
+	addStr(&result, "%s", tmp);
+	free(*src);
+	*src = result;
+}
+

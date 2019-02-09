@@ -39,7 +39,7 @@
 0xa0,0x28,0x57,0x88,0x7c == mov al, byte ptr [0x7c885728]
 !#950
 !#CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
-0x66,0xa3,0x94,0x90,0x04,0x08 ==  mov word ptr [0x8049094], ax | Prefix:0x00 0x00 0x66 0x00  | Opcode:0xa3 0x00 0x00 0x00  | rex: 0x0 | addr_size: 4 | modrm: 0x0 | disp: 0x8049094 | sib: 0x0 | op_count: 2 | operands[0].type: MEM | operands[0].mem.disp: 0x8049094 | operands[0].size: 2 | operands[0].access: WRITE | operands[1].type: REG = ax | operands[1].size: 2 | operands[1].access: READ | Registers read: ax
+0x66,0xa3,0x94,0x90,0x04,0x08 == mov word ptr [0x8049094], ax | Prefix:0x00 0x00 0x66 0x00  | Opcode:0xa3 0x00 0x00 0x00  | rex: 0x0 | addr_size: 4 | modrm: 0x0 | disp: 0x8049094 | sib: 0x0 | op_count: 2 | operands[0].type: MEM | operands[0].mem.disp: 0x8049094 | operands[0].size: 2 | operands[0].access: WRITE | operands[1].type: REG = ax | operands[1].size: 2 | operands[1].access: READ | Registers read: ax
 !#938
 !#CS_ARCH_MIPS, CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN, None
 0x70,0x00,0xb2,0xff == sd $s2, 0x70($sp)
@@ -60,7 +60,7 @@
 0x01,0x81,0xa0,0xfc == stc2 p1, c8, [r0], #4 | op_count: 4 | operands[0].type: P-IMM = 1 | operands[1].type: C-IMM = 8 | operands[2].type: MEM | operands[2].mem.base: REG = r0 | operands[2].access: READ | operands[3].type: IMM = 0x4 | Write-back: True | Registers read: r0 | Registers modified: r0 | Groups: prev8 
 !#852
 !#CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
-0x64,0xa3,0x00,0x00,0x00,0x00 == mov	dword ptr fs:[0], eax | Prefix:0x00 0x64 0x00 0x00  | Opcode:0xa3 0x00 0x00 0x00  | rex: 0x0 | addr_size: 4 | modrm: 0x0 | disp: 0x0 | sib: 0x0 | op_count: 2 | operands[0].type: MEM | operands[0].mem.segment: REG = fs | operands[0].size: 4 | operands[0].access: WRITE | operands[1].type: REG = eax | operands[1].size: 4 | operands[1].access: READ | Registers read: fs eax
+0x64,0xa3,0x00,0x00,0x00,0x00 == mov dword ptr fs:[0], eax | Prefix:0x00 0x64 0x00 0x00  | Opcode:0xa3 0x00 0x00 0x00  | rex: 0x0 | addr_size: 4 | modrm: 0x0 | disp: 0x0 | sib: 0x0 | op_count: 2 | operands[0].type: MEM | operands[0].mem.segment: REG = fs | operands[0].size: 4 | operands[0].access: WRITE | operands[1].type: REG = eax | operands[1].size: 4 | operands[1].access: READ | Registers read: fs eax
 !#825
 !#CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
 0x0e,0xf0,0xa0,0xe1 == mov pc, lr | op_count: 2 | operands[0].type: REG = pc | operands[0].access: WRITE | operands[1].type: REG = lr | operands[1].access: READ | Registers read: lr | Registers modified: pc | Groups: arm 
@@ -78,7 +78,7 @@
 0x0f,0x35 == sysexit
 !#805
 !#CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT
-0x48,0x4c,0x0f,0xb5,0x80,0x16,0x76,0x8a,0xfe == movb	$0x80, %bpl
+0x48,0x4c,0x0f,0xb5,0x80,0x16,0x76,0x8a,0xfe == movb $0x80, %bpl
 !#804
 !#CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT
 0x66,0x48,0xf3,0xd1,0xc0 == rol $1, %ax
@@ -87,19 +87,19 @@
 0x8e,0x1e == movw 0(%rsi), %ds
 !#767
 !#CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
-0xb1,0xe8,0xfc,0x07 == ldm.w	r1!, {r2, r3, r4, r5, r6, r7, r8, sb, sl} | op_count: 10 | operands[0].type: REG = r1 | operands[0].access: READ | WRITE | operands[1].type: REG = r2 | operands[1].access: WRITE | operands[2].type: REG = r3 | operands[2].access: WRITE | operands[3].type: REG = r4 | operands[3].access: WRITE | operands[4].type: REG = r5 | operands[4].access: WRITE | operands[5].type: REG = r6 | operands[5].access: WRITE | operands[6].type: REG = r7 | operands[6].access: WRITE | operands[7].type: REG = r8 | operands[7].access: WRITE | operands[8].type: REG = sb | operands[8].access: WRITE | operands[9].type: REG = sl | operands[9].access: WRITE | Write-back: True | Registers read: r1 | Registers modified: r1 r2 r3 r4 r5 r6 r7 r8 sb sl | Groups: thumb2 
+0xb1,0xe8,0xfc,0x07 == ldm.w r1!, {r2, r3, r4, r5, r6, r7, r8, sb, sl} | op_count: 10 | operands[0].type: REG = r1 | operands[0].access: READ | WRITE | operands[1].type: REG = r2 | operands[1].access: WRITE | operands[2].type: REG = r3 | operands[2].access: WRITE | operands[3].type: REG = r4 | operands[3].access: WRITE | operands[4].type: REG = r5 | operands[4].access: WRITE | operands[5].type: REG = r6 | operands[5].access: WRITE | operands[6].type: REG = r7 | operands[6].access: WRITE | operands[7].type: REG = r8 | operands[7].access: WRITE | operands[8].type: REG = sb | operands[8].access: WRITE | operands[9].type: REG = sl | operands[9].access: WRITE | Write-back: True | Registers read: r1 | Registers modified: r1 r2 r3 r4 r5 r6 r7 r8 sb sl | Groups: thumb2 
 !#760
 !#CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
 0x02,0x80,0xbd,0xe8 == pop {r1, pc} | op_count: 2 | operands[0].type: REG = r1 | operands[0].access: WRITE | operands[1].type: REG = pc | operands[1].access: WRITE | Registers read: sp | Registers modified: sp r1 pc | Groups: arm 
 !#750
 !#CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
-0x0e,0x00,0x20,0xe9 == stmdb	r0!, {r1, r2, r3} | op_count: 4 | operands[0].type: REG = r0 | operands[0].access: READ | operands[1].type: REG = r1 | operands[2].type: REG = r2 | operands[3].type: REG = r3 | Write-back: True | Registers read: r0 | Groups: arm 
+0x0e,0x00,0x20,0xe9 == stmdb r0!, {r1, r2, r3} | op_count: 4 | operands[0].type: REG = r0 | operands[0].access: READ | operands[1].type: REG = r1 | operands[2].type: REG = r2 | operands[3].type: REG = r3 | Write-back: True | Registers read: r0 | Groups: arm 
 !#747
 !#CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
 0x0e,0x00,0xb0,0xe8 == ldm r0!, {r1, r2, r3} | op_count: 4 | operands[0].type: REG = r0 | operands[0].access: READ | WRITE | operands[1].type: REG = r1 | operands[1].access: WRITE | operands[2].type: REG = r2 | operands[2].access: WRITE | operands[3].type: REG = r3 | operands[3].access: WRITE | Write-back: True | Registers read: r0 | Registers modified: r0 r1 r2 r3 | Groups: arm 
 !#747
 !#CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
-0x0e,0xc8 ==  ldm r0!, {r1, r2, r3} | op_count: 4 | operands[0].type: REG = r0 | operands[0].access: READ | WRITE | operands[1].type: REG = r1 | operands[1].access: WRITE | operands[2].type: REG = r2 | operands[2].access: WRITE | operands[3].type: REG = r3 | operands[3].access: WRITE | Write-back: True | Registers read: r0 | Registers modified: r0 r1 r2 r3 | Groups: thumb thumb1only 
+0x0e,0xc8 == ldm r0!, {r1, r2, r3} | op_count: 4 | operands[0].type: REG = r0 | operands[0].access: READ | WRITE | operands[1].type: REG = r1 | operands[1].access: WRITE | operands[2].type: REG = r2 | operands[2].access: WRITE | operands[3].type: REG = r3 | operands[3].access: WRITE | Write-back: True | Registers read: r0 | Registers modified: r0 r1 r2 r3 | Groups: thumb thumb1only 
 !#746
 !#CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
 0x89,0x00,0x2d,0xe9 == push {r0, r3, r7} | op_count: 3 | operands[0].type: REG = r0 | operands[0].access: READ | operands[1].type: REG = r3 | operands[1].access: READ | operands[2].type: REG = r7 | operands[2].access: READ | Registers read: sp r0 r3 r7 | Registers modified: sp | Groups: arm 
@@ -126,7 +126,7 @@
 0xe5,0x8c == in eax, 0x8c
 !#545
 !#CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
-0x95 == xchg	eax, ebp | Prefix:0x00 0x00 0x00 0x00  | Opcode:0x95 0x00 0x00 0x00  | rex: 0x0 | addr_size: 4 | modrm: 0x0 | disp: 0x0 | sib: 0x0 | op_count: 2 | operands[0].type: REG = eax | operands[0].size: 4 | operands[0].access: READ | WRITE | operands[1].type: REG = ebp | operands[1].size: 4 | operands[1].access: READ | WRITE | Registers read: eax ebp | Registers modified: eax ebp | Groups: not64bitmode 
+0x95 == xchg eax, ebp | Prefix:0x00 0x00 0x00 0x00  | Opcode:0x95 0x00 0x00 0x00  | rex: 0x0 | addr_size: 4 | modrm: 0x0 | disp: 0x0 | sib: 0x0 | op_count: 2 | operands[0].type: REG = eax | operands[0].size: 4 | operands[0].access: READ | WRITE | operands[1].type: REG = ebp | operands[1].size: 4 | operands[1].access: READ | WRITE | Registers read: eax ebp | Registers modified: eax ebp | Groups: not64bitmode 
 !#544
 !#CS_ARCH_X86, CS_MODE_32, None
 0xdf,0x30 == fbstp tbyte ptr [eax]
@@ -156,7 +156,7 @@
 0x66,0xe8,0x35,0x64,0xe9,0x35,0x64,0x93,0x53,0x66,0xe8,0x35,0x64,0x66,0xe9,0x35,0x64 == call 0x6439;jmp 0x5393643e;call 0x6442;jmp 0x6446
 !#458
 !#CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
-0xA1,0x12,0x34,0x90,0x90 ==  mov eax, dword ptr [0x90903412] | Prefix:0x00 0x00 0x00 0x00  | Opcode:0xa1 0x00 0x00 0x00  | rex: 0x0 | addr_size: 4 | modrm: 0x0 | disp: 0x90903412 | sib: 0x0 | op_count: 2 | operands[0].type: REG = eax | operands[0].size: 4 | operands[0].access: WRITE | operands[1].type: MEM | operands[1].mem.disp: 0x90903412 | operands[1].size: 4 | operands[1].access: READ | Registers modified: eax
+0xA1,0x12,0x34,0x90,0x90 == mov eax, dword ptr [0x90903412] | Prefix:0x00 0x00 0x00 0x00  | Opcode:0xa1 0x00 0x00 0x00  | rex: 0x0 | addr_size: 4 | modrm: 0x0 | disp: 0x90903412 | sib: 0x0 | op_count: 2 | operands[0].type: REG = eax | operands[0].size: 4 | operands[0].access: WRITE | operands[1].type: MEM | operands[1].mem.disp: 0x90903412 | operands[1].size: 4 | operands[1].access: READ | Registers modified: eax
 !#454
 !#CS_ARCH_X86, CS_MODE_32, None
 0xf2,0x6c,0xf2,0x6d,0xf2,0x6e,0xf2,0x6f,0xf2,0xac,0xf2,0xad == repne insb byte ptr es:[edi], dx;repne insd dword ptr es:[edi], dx;repne outsb dx, byte ptr [esi];repne outsd dx, dword ptr [esi];repne lodsb al, byte ptr [esi];repne lodsd eax, dword ptr [esi]

@@ -84,6 +84,18 @@ double_dict options[] = {
 
 char *(*function)(csh *, cs_mode, cs_insn*) = NULL;
 
+int triple_compare(const char *src1, const char *src2, const char *des)
+{
+	if (strcmp(src1, des) && strcmp(src2, des)) {
+		fprintf(stderr,"[  ERROR   ] --- \"%s\" != \"%s\"", src1, des);
+		if (strcmp(src1, src2))
+			fprintf(stderr, " (\"%s\" != \"%s\")", src2, des);
+		fprintf(stderr, "\n");
+		return 0;
+	}
+	return 1;
+}
+
 void test_single(csh *handle, char *line)
 {
 	char **list_part, **list_byte, **list_data;
@@ -91,6 +103,7 @@ void test_single(csh *handle, char *line)
 	int i, count;
 	unsigned char *code;
 	cs_insn *insn;
+	char *tmp, *tmptmp;
 
 	list_part = split(line, " = ", &size_part);
 	list_byte = split(list_part[0], ",", &size_byte);
@@ -103,15 +116,26 @@ void test_single(csh *handle, char *line)
 	list_data = split(list_part[1], ";", &size_data);	
 	count = cs_disasm(*handle, code, size_byte, 0x1000, 0, &insn);
 	// printf("====\nCount: %d\nSize_data: %d\n", count, size_data);
-	assert_int_equal(size_data, count);
+//	assert_int_equal(size_data, count);
+	if (count == 0) {
+		fprintf(stderr, "[  ERROR   ] --- Failed to disassemble given code!\n");
+		_fail(__FILE__, __LINE__);
+	}
 	for (i=0; i<count; ++i) {
-		char *tmp = (char *)malloc(strlen(insn[i].mnemonic) + strlen(insn[i].op_str) + 100);
+		tmp = (char *)malloc(strlen(insn[i].mnemonic) + strlen(insn[i].op_str) + 100);
 		strcpy(tmp, insn[i].mnemonic);
-		tmp[strlen(insn[i].mnemonic)] = ' ';
-		strcpy(tmp + strlen(insn[i].mnemonic) + 1, insn[i].op_str);
+		if (strlen(insn[i].op_str) > 0) {
+			tmp[strlen(insn[i].mnemonic)] = ' ';
+			strcpy(tmp + strlen(insn[i].mnemonic) + 1, insn[i].op_str);
+		}
 		// printf("--------\nCapstone: %s\nUser: %s\n", tmp, list_data[i]);
-		assert_string_equal(tmp, list_data[i]);
+		tmptmp = strdup(tmp);
+		replaceHex(&tmp);
+//		assert_string_equal(tmp, list_data[i]);
+		if (!triple_compare(tmp, tmptmp, list_data[i]))
+			_fail(__FILE__, __LINE__);
 		free(tmp);
+		free(tmptmp);
 	}
 	cs_free(insn, count);
 	free(list_part);
@@ -190,8 +214,8 @@ int setFunction(int arch)
 
 void test_single_issues(csh *handle, cs_mode mode, char *line, int detail)
 {
-	char **list_part, **list_byte;
-	int size_part, size_byte;
+	char **list_part, **list_byte, **list_part_cs_result, **list_part_issue_result;
+	int size_part, size_byte, size_part_cs_result, size_part_issue_result;
 	int i, count, j;
 	unsigned char *code;
 	cs_insn *insn;
@@ -212,15 +236,16 @@ void test_single_issues(csh *handle, cs_mode mode, char *line, int detail)
 	for (i=0; i < count; ++i) {
 		tmp = (char *)malloc(strlen(insn[i].mnemonic) + strlen(insn[i].op_str) + 100);
 		strcpy(tmp, insn[i].mnemonic);
-		if (strlen(insn[i].op_str) > 0)
+		if (strlen(insn[i].op_str) > 0) {
 			tmp[strlen(insn[i].mnemonic)] = ' ';
-		strcpy(tmp + strlen(insn[i].mnemonic) + 1, insn[i].op_str);
+			strcpy(tmp + strlen(insn[i].mnemonic) + 1, insn[i].op_str);
+		}
 		addStr(&cs_result, tmp);
 		if (i < count - 1)
 			addStr(&cs_result, ";");
 		free(tmp);
 	}
-	
+
 	if (detail == 1) {
 		tmp = (*function)(handle, mode, insn);
 		addStr(&cs_result, tmp);
@@ -234,9 +259,20 @@ void test_single_issues(csh *handle, cs_mode mode, char *line, int detail)
 		}
 	}
 	
-	assert_string_equal(cs_result, list_part[1]);
+	list_part_cs_result = split(cs_result, " | ", &size_part_cs_result);
+	list_part_issue_result = split(list_part[1], " | ", &size_part_issue_result);
+
+	if (size_part_cs_result != size_part_issue_result) {
+		fprintf(stderr, "[  ERROR   ] --- Number of details doesn't match");
+		_fail(__FILE__, __LINE__);
+	}
+	for (i=0; i<size_part_cs_result; ++i)
+		assert_string_equal(list_part_cs_result[i], list_part_issue_result[i]);
+//	assert_string_equal(cs_result, list_part[1]);
 	cs_free(insn, count);
 	free(list_part);
 	free(list_byte);
 	free(cs_result);
+	free(list_part_cs_result);
+	free(list_part_issue_result);
 }
