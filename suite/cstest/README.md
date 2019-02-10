@@ -2,7 +2,7 @@
 This directory contains a tool for regression testing core of Capstone
 
 ## Build
-- Download [Cmocka](git://git.cryptomilk.org/projects/cmocka.git)
+- Download [Cmocka](https://git.cryptomilk.org/projects/cmocka.git)
 - Build Cmocka
 ```
 cd cmocka_dir
