@@ -205,21 +205,30 @@ void test_folder(const char *folder)
 
 int main(int argc, char *argv[])
 {
-	int opt;	
+	int opt, flag;
 
-	while ((opt = getopt(argc, argv, "f:d:")) != -1) {
+	flag = 0;
+	while ((opt = getopt(argc, argv, "f:d:")) > 0) {
 		switch (opt) {
 			case 'f':
 				test_file(optarg);
+				flag = 1;
 				break;
 			case 'd':
 				test_folder(optarg);
+				flag = 1;
 				break;
 			default:
 				puts("Usage: ./issues <file_name.cs>");
 				exit(-1);
 		}
 	}
+
+	if (flag == 0) {
+		puts("Usage: ./issues <file_name.cs>");
+		exit(-1);
+	}
+		
 	
 	return 0;
 }
