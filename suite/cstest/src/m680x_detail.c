@@ -1,7 +1,7 @@
 #include "factory.h"
 
 static const char *s_access[] = {
-	"UNCHANGED", "READ", "WRITE", "READ | WRITE",
+	"UNCHANGED", "READ", "WRITE", "READ ; WRITE",
 };
 
 void print_read_write_regs(char *result, csh *handle, cs_detail *detail)
@@ -49,7 +49,7 @@ char *get_detail_m680x(csh *handle, cs_mode mode, cs_insn *insn)
 	m680x = &detail->m680x;
 
 	if (m680x->op_count)
-		addStr(&result, " | op_count: %u", m680x->op_count);
+		addStr(&result, " ; op_count: %u", m680x->op_count);
 
 	for (i = 0; i < m680x->op_count; i++) {
 		cs_m680x_op *op = &(m680x->operands[i]);
@@ -67,47 +67,47 @@ char *get_detail_m680x(csh *handle, cs_mode mode, cs_insn *insn)
 					M680X_SECOND_OP_IN_MNEM))
 				comment = " (in mnemonic)";
 
-			addStr(&result, " | operands[%u].type: REGISTER = %s%s", i, cs_reg_name(*handle, op->reg), comment);
+			addStr(&result, " ; operands[%u].type: REGISTER = %s%s", i, cs_reg_name(*handle, op->reg), comment);
 			break;
 
 		case M680X_OP_CONSTANT:
-			addStr(&result, " | operands[%u].type: CONSTANT = %u", i, op->const_val);
+			addStr(&result, " ; operands[%u].type: CONSTANT = %u", i, op->const_val);
 			break;
 
 		case M680X_OP_IMMEDIATE:
-			addStr(&result, " | operands[%u].type: IMMEDIATE = #%d", i, op->imm);
+			addStr(&result, " ; operands[%u].type: IMMEDIATE = #%d", i, op->imm);
 			break;
 
 		case M680X_OP_DIRECT:
-			addStr(&result, " | operands[%u].type: DIRECT = 0x%02X", i, op->direct_addr);
+			addStr(&result, " ; operands[%u].type: DIRECT = 0x%02X", i, op->direct_addr);
 			break;
 
 		case M680X_OP_EXTENDED:
-			addStr(&result, " | operands[%u].type: EXTENDED %s = 0x%04X", i, op->ext.indirect ? "INDIRECT" : "", op->ext.address);
+			addStr(&result, " ; operands[%u].type: EXTENDED %s = 0x%04X", i, op->ext.indirect ? "INDIRECT" : "", op->ext.address);
 			break;
 
 		case M680X_OP_RELATIVE:
-			addStr(&result, " | operands[%u].type: RELATIVE = 0x%04X", i, op->rel.address);
+			addStr(&result, " ; operands[%u].type: RELATIVE = 0x%04X", i, op->rel.address);
 			break;
 
 		case M680X_OP_INDEXED:
-			addStr(&result, " | operands[%u].type: INDEXED%s", i, (op->idx.flags & M680X_IDX_INDIRECT) ? " INDIRECT" : "");
+			addStr(&result, " ; operands[%u].type: INDEXED%s", i, (op->idx.flags & M680X_IDX_INDIRECT) ? " INDIRECT" : "");
 
 			if (op->idx.base_reg != M680X_REG_INVALID)
-				addStr(&result, " | base register: %s", cs_reg_name(*handle, op->idx.base_reg));
+				addStr(&result, " ; base register: %s", cs_reg_name(*handle, op->idx.base_reg));
 
 			if (op->idx.offset_reg != M680X_REG_INVALID)
-				addStr(&result, " | offset register: %s", cs_reg_name(*handle, op->idx.offset_reg));
+				addStr(&result, " ; offset register: %s", cs_reg_name(*handle, op->idx.offset_reg));
 
 			if ((op->idx.offset_bits != 0) &&
 				(op->idx.offset_reg == M680X_REG_INVALID) &&
 				!op->idx.inc_dec) {
-				addStr(&result, " | offset: %d", op->idx.offset);
+				addStr(&result, " ; offset: %d", op->idx.offset);
 
 				if (op->idx.base_reg == M680X_REG_PC)
-					addStr(&result, " | offset address: 0x%X", op->idx.offset_addr);
+					addStr(&result, " ; offset address: 0x%X", op->idx.offset_addr);
 
-				addStr(&result, " | offset bits: %u", op->idx.offset_bits);
+				addStr(&result, " ; offset bits: %u", op->idx.offset_bits);
 			}
 
 			if (op->idx.inc_dec) {
@@ -116,17 +116,17 @@ char *get_detail_m680x(csh *handle, cs_mode mode, cs_insn *insn)
 				const char *inc_dec = (op->idx.inc_dec > 0) ?
 					"increment" : "decrement";
 
-				addStr(&result, " | %s %s: %d", post_pre, inc_dec, abs(op->idx.inc_dec));
+				addStr(&result, " ; %s %s: %d", post_pre, inc_dec, abs(op->idx.inc_dec));
 			}
 
 			break;
 		}
 
 		if (op->size != 0)
-			addStr(&result, " | size: %u", op->size);
+			addStr(&result, " ; size: %u", op->size);
 
 		if (op->access != CS_AC_INVALID)
-			addStr(&result, " | access: %s", s_access[op->access]);
+			addStr(&result, " ; access: %s", s_access[op->access]);
 	}
 
 	print_read_write_regs(result, handle, detail);

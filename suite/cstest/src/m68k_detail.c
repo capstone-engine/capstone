@@ -37,13 +37,13 @@ static void print_read_write_regs(char *result, cs_detail* detail, csh *handle)
 	for (i = 0; i < detail->regs_read_count; ++i) {
 		uint16_t reg_id = detail->regs_read[i];
 		const char* reg_name = cs_reg_name(*handle, reg_id);
-		addStr(&result, " | reading from reg: %s", reg_name);
+		addStr(&result, " ; reading from reg: %s", reg_name);
 	}
 
 	for (i = 0; i < detail->regs_write_count; ++i) {
 		uint16_t reg_id = detail->regs_write[i];
 		const char* reg_name = cs_reg_name(*handle, reg_id);
-		addStr(&result, " | writing to reg:   %s", reg_name);
+		addStr(&result, " ; writing to reg:   %s", reg_name);
 	}
 }
 
@@ -65,11 +65,11 @@ char *get_detail_m68k(csh *handle, cs_mode mode, cs_insn *ins)
 	detail = ins->detail;
 	m68k = &detail->m68k;
 	if (m68k->op_count)
-		addStr(&result, " | op_count: %u", m68k->op_count);
+		addStr(&result, " ; op_count: %u", m68k->op_count);
 
 	print_read_write_regs(result, detail, handle);
 
-	addStr(&result, " | groups_count: %u", detail->groups_count);
+	addStr(&result, " ; groups_count: %u", detail->groups_count);
 
 	for (i = 0; i < m68k->op_count; i++) {
 		cs_m68k_op* op = &(m68k->operands[i]);
@@ -78,33 +78,33 @@ char *get_detail_m68k(csh *handle, cs_mode mode, cs_insn *ins)
 			default:
 				break;
 			case M68K_OP_REG:
-				addStr(&result, " | operands[%u].type: REG = %s", i, cs_reg_name(*handle, op->reg));
+				addStr(&result, " ; operands[%u].type: REG = %s", i, cs_reg_name(*handle, op->reg));
 				break;
 			case M68K_OP_IMM:
-				addStr(&result, " | operands[%u].type: IMM = 0x%x", i, (int)op->imm);
+				addStr(&result, " ; operands[%u].type: IMM = 0x%x", i, (int)op->imm);
 				break;
 			case M68K_OP_MEM:
-				addStr(&result, " | operands[%u].type: MEM", i);
+				addStr(&result, " ; operands[%u].type: MEM", i);
 				if (op->mem.base_reg != M68K_REG_INVALID)
-					addStr(&result, " | operands[%u].mem.base: REG = %s", i, cs_reg_name(*handle, op->mem.base_reg));
+					addStr(&result, " ; operands[%u].mem.base: REG = %s", i, cs_reg_name(*handle, op->mem.base_reg));
 				if (op->mem.index_reg != M68K_REG_INVALID) {
-					addStr(&result, " | operands[%u].mem.index: REG = %s", i, cs_reg_name(*handle, op->mem.index_reg));
-					addStr(&result, " | operands[%u].mem.index: size = %c", i, op->mem.index_size ? 'l' : 'w');
+					addStr(&result, " ; operands[%u].mem.index: REG = %s", i, cs_reg_name(*handle, op->mem.index_reg));
+					addStr(&result, " ; operands[%u].mem.index: size = %c", i, op->mem.index_size ? 'l' : 'w');
 				}
 				if (op->mem.disp != 0)
-					addStr(&result, " | operands[%u].mem.disp: 0x%x", i, op->mem.disp);
+					addStr(&result, " ; operands[%u].mem.disp: 0x%x", i, op->mem.disp);
 				if (op->mem.scale != 0)
-					addStr(&result, " | operands[%u].mem.scale: %d", i, op->mem.scale);
+					addStr(&result, " ; operands[%u].mem.scale: %d", i, op->mem.scale);
 
-				addStr(&result, " | address mode: %s", s_addressing_modes[op->address_mode]);
+				addStr(&result, " ; address mode: %s", s_addressing_modes[op->address_mode]);
 				break;
 			case M68K_OP_FP_SINGLE:
-				addStr(&result, " | operands[%u].type: FP_SINGLE", i);
-				addStr(&result, " | operands[%u].simm: %f", i, op->simm);
+				addStr(&result, " ; operands[%u].type: FP_SINGLE", i);
+				addStr(&result, " ; operands[%u].simm: %f", i, op->simm);
 				break;
 			case M68K_OP_FP_DOUBLE:
-				addStr(&result, " | operands[%u].type: FP_DOUBLE", i);
-				addStr(&result, " | operands[%u].dimm: %lf", i, op->dimm);
+				addStr(&result, " ; operands[%u].type: FP_DOUBLE", i);
+				addStr(&result, " ; operands[%u].dimm: %lf", i, op->dimm);
 				break;
 		}
 	}

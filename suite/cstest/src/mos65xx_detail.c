@@ -50,11 +50,11 @@ char *get_detail_mos65xx(csh *handle, cs_mode mode, cs_insn *ins)
 		return result;
 
 	mos65xx = &(ins->detail->mos65xx);
-	addStr(&result, " | address mode: %s", get_am_name(mos65xx->am));
-	addStr(&result, " | modifies flags: %s", mos65xx->modifies_flags ? "true": "false");
+	addStr(&result, " ; address mode: %s", get_am_name(mos65xx->am));
+	addStr(&result, " ; modifies flags: %s", mos65xx->modifies_flags ? "true": "false");
 
 	if (mos65xx->op_count)
-		addStr(&result, " | op_count: %u", mos65xx->op_count);
+		addStr(&result, " ; op_count: %u", mos65xx->op_count);
 
 	for (i = 0; i < mos65xx->op_count; i++) {
 		cs_mos65xx_op *op = &(mos65xx->operands[i]);
@@ -62,13 +62,13 @@ char *get_detail_mos65xx(csh *handle, cs_mode mode, cs_insn *ins)
 			default:
 				break;
 			case MOS65XX_OP_REG:
-				addStr(&result, " | operands[%u].type: REG = %s", i, cs_reg_name(*handle, op->reg));
+				addStr(&result, " ; operands[%u].type: REG = %s", i, cs_reg_name(*handle, op->reg));
 				break;
 			case MOS65XX_OP_IMM:
-				addStr(&result, " | operands[%u].type: IMM = 0x%x", i, op->imm);
+				addStr(&result, " ; operands[%u].type: IMM = 0x%x", i, op->imm);
 				break;
 			case MOS65XX_OP_MEM:
-				addStr(&result, " | operands[%u].type: MEM = 0x%x", i, op->mem);
+				addStr(&result, " ; operands[%u].type: MEM = 0x%x", i, op->mem);
 				break;
 		}
 	}
