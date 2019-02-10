@@ -1872,8 +1872,6 @@ static name_map insn_name_maps[] = {
 const char *TMS320C64x_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	unsigned int i;
-
 	if (id >= TMS320C64X_INS_ENDING)
 		return NULL;
 
