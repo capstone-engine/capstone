@@ -4,9 +4,9 @@ void print_string_hex(char **result, const char *comment, unsigned char *str, si
 {
 	unsigned char *c;
 
-	addStr(result, "%s", comment);
+	add_str(result, "%s", comment);
 	for (c = str; c < str + len; c++) {
-		addStr(result, "0x%02x ", *c & 0xff);
+		add_str(result, "0x%02x ", *c & 0xff);
 	}
 
 }
@@ -200,59 +200,59 @@ char *get_detail_x86(csh *ud, cs_mode mode, cs_insn *ins)
 
 	print_string_hex(&result, " ; Prefix:", x86->prefix, 4);
 	print_string_hex(&result, " ; Opcode:", x86->opcode, 4);
-	addStr(&result, " ; rex: 0x%x", x86->rex);
-	addStr(&result, " ; addr_size: %u", x86->addr_size);
-	addStr(&result, " ; modrm: 0x%x", x86->modrm);
-	addStr(&result, " ; disp: 0x%" PRIx64 "", x86->disp);
+	add_str(&result, " ; rex: 0x%x", x86->rex);
+	add_str(&result, " ; addr_size: %u", x86->addr_size);
+	add_str(&result, " ; modrm: 0x%x", x86->modrm);
+	add_str(&result, " ; disp: 0x%" PRIx64 "", x86->disp);
 
 	// SIB is not available in 16-bit mode
 	if ((mode & CS_MODE_16) == 0) {
-		addStr(&result, " ; sib: 0x%x", x86->sib);
+		add_str(&result, " ; sib: 0x%x", x86->sib);
 		if (x86->sib_base != X86_REG_INVALID)
-			addStr(&result, " ; sib_base: %s", cs_reg_name(*ud, x86->sib_base));
+			add_str(&result, " ; sib_base: %s", cs_reg_name(*ud, x86->sib_base));
 		if (x86->sib_index != X86_REG_INVALID)
-			addStr(&result, " ; sib_index: %s", cs_reg_name(*ud, x86->sib_index));
+			add_str(&result, " ; sib_index: %s", cs_reg_name(*ud, x86->sib_index));
 		if (x86->sib_scale != 0)
-			addStr(&result, " ; sib_scale: %d", x86->sib_scale);
+			add_str(&result, " ; sib_scale: %d", x86->sib_scale);
 	}
 
 	// XOP code condition
 	if (x86->xop_cc != X86_XOP_CC_INVALID) {
-		addStr(&result, " ; xop_cc: %u", x86->xop_cc);
+		add_str(&result, " ; xop_cc: %u", x86->xop_cc);
 	}
 
 	// SSE code condition
 	if (x86->sse_cc != X86_SSE_CC_INVALID) {
-		addStr(&result, " ; sse_cc: %u", x86->sse_cc);
+		add_str(&result, " ; sse_cc: %u", x86->sse_cc);
 	}
 
 	// AVX code condition
 	if (x86->avx_cc != X86_AVX_CC_INVALID) {
-		addStr(&result, " ; avx_cc: %u", x86->avx_cc);
+		add_str(&result, " ; avx_cc: %u", x86->avx_cc);
 	}
 
 	// AVX Suppress All Exception
 	if (x86->avx_sae) {
-		addStr(&result, " ; avx_sae: %u", x86->avx_sae);
+		add_str(&result, " ; avx_sae: %u", x86->avx_sae);
 	}
 
 	// AVX Rounding Mode
 	if (x86->avx_rm != X86_AVX_RM_INVALID) {
-		addStr(&result, " ; avx_rm: %u", x86->avx_rm);
+		add_str(&result, " ; avx_rm: %u", x86->avx_rm);
 	}
 
 	// Print out all immediate operands
 	count = cs_op_count(*ud, ins, X86_OP_IMM);
 	if (count > 0) {
-		addStr(&result, " ; imm_count: %u", count);
+		add_str(&result, " ; imm_count: %u", count);
 		for (i = 1; i < count + 1; i++) {
 			int index = cs_op_index(*ud, ins, X86_OP_IMM, i);
-			addStr(&result, " ; imms[%u]: 0x%" PRIx64 "", i, x86->operands[index].imm);
+			add_str(&result, " ; imms[%u]: 0x%" PRIx64 "", i, x86->operands[index].imm);
 		}
 	}
 
 	if (x86->op_count)
-		addStr(&result, " ; op_count: %u", x86->op_count);
+		add_str(&result, " ; op_count: %u", x86->op_count);
 
 	// Print out all operands
 	for (i = 0; i < x86->op_count; i++) {
@@ -260,23 +260,23 @@ char *get_detail_x86(csh *ud, cs_mode mode, cs_insn *ins)
 
 		switch((int)op->type) {
 			case X86_OP_REG:
-				addStr(&result, " ; operands[%u].type: REG = %s", i, cs_reg_name(*ud, op->reg));
+				add_str(&result, " ; operands[%u].type: REG = %s", i, cs_reg_name(*ud, op->reg));
 				break;
 			case X86_OP_IMM:
-				addStr(&result, " ; operands[%u].type: IMM = 0x%" PRIx64 "", i, op->imm);
+				add_str(&result, " ; operands[%u].type: IMM = 0x%" PRIx64 "", i, op->imm);
 				break;
 			case X86_OP_MEM:
-				addStr(&result, " ; operands[%u].type: MEM", i);
+				add_str(&result, " ; operands[%u].type: MEM", i);
 				if (op->mem.segment != X86_REG_INVALID)
-					addStr(&result, " ; operands[%u].mem.segment: REG = %s", i, cs_reg_name(*ud, op->mem.segment));
+					add_str(&result, " ; operands[%u].mem.segment: REG = %s", i, cs_reg_name(*ud, op->mem.segment));
 				if (op->mem.base != X86_REG_INVALID)
-					addStr(&result, " ; operands[%u].mem.base: REG = %s", i, cs_reg_name(*ud, op->mem.base));
+					add_str(&result, " ; operands[%u].mem.base: REG = %s", i, cs_reg_name(*ud, op->mem.base));
 				if (op->mem.index != X86_REG_INVALID)
-					addStr(&result, " ; operands[%u].mem.index: REG = %s", i, cs_reg_name(*ud, op->mem.index));
+					add_str(&result, " ; operands[%u].mem.index: REG = %s", i, cs_reg_name(*ud, op->mem.index));
 				if (op->mem.scale != 1)
-					addStr(&result, " ; operands[%u].mem.scale: %u", i, op->mem.scale);
+					add_str(&result, " ; operands[%u].mem.scale: %u", i, op->mem.scale);
 				if (op->mem.disp != 0)
-					addStr(&result, " ; operands[%u].mem.disp: 0x%" PRIx64 "", i, op->mem.disp);
+					add_str(&result, " ; operands[%u].mem.disp: 0x%" PRIx64 "", i, op->mem.disp);
 				break;
 			default:
 				break;
@@ -284,25 +284,25 @@ char *get_detail_x86(csh *ud, cs_mode mode, cs_insn *ins)
 
 		// AVX broadcast type
 		if (op->avx_bcast != X86_AVX_BCAST_INVALID)
-			addStr(&result, " ; operands[%u].avx_bcast: %u", i, op->avx_bcast);
+			add_str(&result, " ; operands[%u].avx_bcast: %u", i, op->avx_bcast);
 
 		// AVX zero opmask {z}
 		if (op->avx_zero_opmask != false)
-			addStr(&result, " ; operands[%u].avx_zero_opmask: TRUE", i);
+			add_str(&result, " ; operands[%u].avx_zero_opmask: TRUE", i);
 
-		addStr(&result, " ; operands[%u].size: %u", i, op->size);
+		add_str(&result, " ; operands[%u].size: %u", i, op->size);
 
 		switch(op->access) {
 			default:
 				break;
 			case CS_AC_READ:
-				addStr(&result, " ; operands[%u].access: READ", i);
+				add_str(&result, " ; operands[%u].access: READ", i);
 				break;
 			case CS_AC_WRITE:
-				addStr(&result, " ; operands[%u].access: WRITE", i);
+				add_str(&result, " ; operands[%u].access: WRITE", i);
 				break;
 			case CS_AC_READ | CS_AC_WRITE:
-				addStr(&result, " ; operands[%u].access: READ | WRITE", i);
+				add_str(&result, " ; operands[%u].access: READ | WRITE", i);
 				break;
 		}
 	}
@@ -310,16 +310,16 @@ char *get_detail_x86(csh *ud, cs_mode mode, cs_insn *ins)
 	// Print out all registers accessed by this instruction (either implicit or explicit)
 	if (!cs_regs_access(*ud, ins, regs_read, &regs_read_count, regs_write, &regs_write_count)) {
 		if (regs_read_count) {
-			addStr(&result, " ; Registers read:");
+			add_str(&result, " ; Registers read:");
 			for(i = 0; i < regs_read_count; i++) {
-				addStr(&result, " %s", cs_reg_name(*ud, regs_read[i]));
+				add_str(&result, " %s", cs_reg_name(*ud, regs_read[i]));
 			}
 		}
 
 		if (regs_write_count) {
-			addStr(&result, " ; Registers modified:");
+			add_str(&result, " ; Registers modified:");
 			for(i = 0; i < regs_write_count; i++) {
-				addStr(&result, " %s", cs_reg_name(*ud, regs_write[i]));
+				add_str(&result, " %s", cs_reg_name(*ud, regs_write[i]));
 			}
 		}
 	}
@@ -327,20 +327,20 @@ char *get_detail_x86(csh *ud, cs_mode mode, cs_insn *ins)
 	if (x86->eflags || x86->fpu_flags) {
 		for(i = 0; i < ins->detail->groups_count; i++) {
 			if (ins->detail->groups[i] == X86_GRP_FPU) {
-				addStr(&result, " ; FPU_FLAGS:");
+				add_str(&result, " ; FPU_FLAGS:");
 				for(i = 0; i <= 63; i++)
 					if (x86->fpu_flags & ((uint64_t)1 << i)) {
-						addStr(&result, " %s", get_fpu_flag_name((uint64_t)1 << i));
+						add_str(&result, " %s", get_fpu_flag_name((uint64_t)1 << i));
 					}
 				break;
 			}
 		}
 
 		if (i == ins->detail->groups_count) {
-			addStr(&result, " ; EFLAGS:");
+			add_str(&result, " ; EFLAGS:");
 			for(i = 0; i <= 63; i++)
 				if (x86->eflags & ((uint64_t)1 << i)) {
-					addStr(&result, " %s", get_eflag_name((uint64_t)1 << i));
+					add_str(&result, " %s", get_eflag_name((uint64_t)1 << i));
 				}
 		}
 	}

@@ -51,7 +51,7 @@ static int setup_MC(void **state)
 
 static void test_MC(void **state)
 {
-	test_single((csh *)*state, list_lines[counter]);
+	test_single_MC((csh *)*state, list_lines[counter]);
 	return;
 }
 

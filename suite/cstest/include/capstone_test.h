@@ -53,8 +53,8 @@ extern char *(*function)(csh *, cs_mode, cs_insn*);
 
 int getIndex(double_dict d[], unsigned size, const char *str);
 int getValue(single_dict d[], unsigned size, const char *str);
-void test_single(csh *handle, char *line);
-void test_single_issues(csh *handle, cs_mode mode, char *line, int detail);
+void test_single_MC(csh *handle, char *line);
+void test_single_issue(csh *handle, cs_mode mode, char *line, int detail);
 int setFunction(int arch);
 
 #endif /* CAPSTONE_TEST_H */
