@@ -155,7 +155,7 @@ void test_file(const char *filename)
 		tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * (size_lines) / 3);
 		for (i=0; i<(size_lines)/3; ++i) {
 			char *tmp = (char *)malloc(sizeof(char) * 100);
-			sscanf(list_lines[i*3], "!#%d\n", &issue_num);			
+			sscanf(list_lines[i*3], "!# issue %d\n", &issue_num);			
 			sprintf(tmp, "Issue #%d", issue_num);
 			tests[i] = (struct CMUnitTest)cmocka_unit_test_setup_teardown(test_issue, setup_issue, teardown_issue);
 			tests[i].name = tmp;

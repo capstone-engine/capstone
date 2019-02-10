@@ -241,8 +241,10 @@ void test_single_issues(csh *handle, cs_mode mode, char *line, int detail)
 			strcpy(tmp + strlen(insn[i].mnemonic) + 1, insn[i].op_str);
 		}
 		addStr(&cs_result, tmp);
+		/*
 		if (i < count - 1)
 			addStr(&cs_result, ";");
+		*/
 		free(tmp);
 	}
 
