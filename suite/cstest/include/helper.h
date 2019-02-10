@@ -16,5 +16,6 @@ void addStr(char **src, const char *format, ...);
 void replaceHex(char **src);
 void listdir(const char *name, char ***files, int *num_files);
 const char *get_filename_ext(const char *filename);
+void trimwhitespace(char **str);
 
 #endif /* HELPER_H */

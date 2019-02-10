@@ -66,13 +66,14 @@ char *readfile(const char *filename)
 		exit(-1);
 	}
 	
-	fseek(fp, 0L, SEEK_END);
+	fseek(fp, 0, SEEK_END);
 	size = ftell(fp);
 	rewind(fp);
 
-	result = (char *)malloc(sizeof(char) * size);
+	result = (char *)calloc(1, sizeof(char) * size + 1);
 	fread(result, size, 1, fp);
-	
+	result[size] = '\0';
+
 	fclose(fp);
 	return result;
 }
@@ -155,4 +156,19 @@ void listdir(const char *name, char ***files, int *num_files)
 		}
 	}
 	closedir(dir);
+}
+
+void trimwhitespace(char **str)
+{
+	char *end;
+
+	while(isspace((unsigned char)**str)) (*str)++;
+	if(**str == 0) return;
+
+	end = *str + strlen(*str) - 1;
+	while(end > *str && isspace((unsigned char)*end)) end--;
+
+	end[1] = '\0';
+
+	return;
 }
