@@ -78,7 +78,7 @@ char *readfile(const char *filename)
 	return result;
 }
 
-void addStr(char **src, const char *format, ...)
+void add_str(char **src, const char *format, ...)
 {
 	char *tmp;
 	size_t len1, len2;
@@ -121,10 +121,10 @@ void replaceHex(char **src)
 			found++;
 		}
 		
-		addStr(&result, "%s%llu", tmp, value);
+		add_str(&result, "%s%llu", tmp, value);
 		tmp = found;
 	}
-	addStr(&result, "%s", tmp);
+	add_str(&result, "%s", tmp);
 	free(*src);
 	*src = result;
 }

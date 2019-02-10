@@ -96,7 +96,7 @@ int triple_compare(const char *src1, const char *src2, const char *des)
 	return 1;
 }
 
-void test_single(csh *handle, char *line)
+void test_single_MC(csh *handle, char *line)
 {
 	char **list_part, **list_byte, **list_data;
 	int size_part, size_byte, size_data, size_insn;
@@ -243,23 +243,23 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 			tmp[strlen(insn[i].mnemonic)] = ' ';
 			strcpy(tmp + strlen(insn[i].mnemonic) + 1, insn[i].op_str);
 		}
-		addStr(&cs_result, tmp);
+		add_str(&cs_result, tmp);
 		/*
 		if (i < count - 1)
-			addStr(&cs_result, ";");
+			add_str(&cs_result, ";");
 		*/
 		free(tmp);
 	}
 
 	if (detail == 1) {
 		tmp = (*function)(handle, mode, insn);
-		addStr(&cs_result, tmp);
+		add_str(&cs_result, tmp);
 		free(tmp);
 
 		if (insn->detail->groups_count) {
-			addStr(&cs_result, " ; Groups: ");
+			add_str(&cs_result, " ; Groups: ");
 			for (j = 0; j < insn->detail->groups_count; j++) {
-				addStr(&cs_result, "%s ", cs_group_name(*handle, insn->detail->groups[j]));
+				add_str(&cs_result, "%s ", cs_group_name(*handle, insn->detail->groups[j]));
 			}
 		}
 	}

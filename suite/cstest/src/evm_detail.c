@@ -15,13 +15,13 @@ char *get_detail_evm(csh *handle, cs_mode mode, cs_insn *ins)
 	evm = &(ins->detail->evm);
 
 	if (evm->pop)
-		addStr(&result, " ; Pop: %u", evm->pop);
+		add_str(&result, " ; Pop: %u", evm->pop);
 
 	if (evm->push)
-		addStr(&result, " ; Push: %u", evm->push);
+		add_str(&result, " ; Push: %u", evm->push);
 
 	if (evm->fee)
-		addStr(&result, " ; Gas fee: %u", evm->fee);
+		add_str(&result, " ; Gas fee: %u", evm->fee);
 
 	return result;
 }
