@@ -254,15 +254,15 @@ void test_single_issues(csh *handle, cs_mode mode, char *line, int detail)
 		free(tmp);
 
 		if (insn->detail->groups_count) {
-			addStr(&cs_result, " | Groups: ");
+			addStr(&cs_result, " ; Groups: ");
 			for (j = 0; j < insn->detail->groups_count; j++) {
 				addStr(&cs_result, "%s ", cs_group_name(*handle, insn->detail->groups[j]));
 			}
 		}
 	}
 	
-	list_part_cs_result = split(cs_result, " | ", &size_part_cs_result);
-	list_part_issue_result = split(list_part[1], " | ", &size_part_issue_result);
+	list_part_cs_result = split(cs_result, " ; ", &size_part_cs_result);
+	list_part_issue_result = split(list_part[1], " ; ", &size_part_issue_result);
 
 	if (size_part_cs_result != size_part_issue_result) {
 		fprintf(stderr, "[  ERROR   ] --- Number of details doesn't match");

@@ -147,8 +147,6 @@ void test_file(const char *filename)
 	failed_setup = 0;
 	function = NULL;		
 
-
-
 	if ( content[0] == '!' ) {
 		list_lines = split(content, "\n", &size_lines);	
 
@@ -200,7 +198,7 @@ int main(int argc, char *argv[])
 {
 	int opt;	
 
-	while ((opt = getopt(argc, argv, "fd:")) != -1) {
+	while ((opt = getopt(argc, argv, "f:d:")) != -1) {
 		switch (opt) {
 			case 'f':
 				test_file(optarg);

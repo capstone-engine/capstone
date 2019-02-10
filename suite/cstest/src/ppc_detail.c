@@ -44,7 +44,7 @@ char *get_detail_ppc(csh *handle, cs_mode mode, cs_insn *ins)
 
 	ppc = &(ins->detail->ppc);
 	if (ppc->op_count)
-		addStr(&result, " | op_count: %u", ppc->op_count);
+		addStr(&result, " ; op_count: %u", ppc->op_count);
 
 	for (i = 0; i < ppc->op_count; i++) {
 		cs_ppc_op *op = &(ppc->operands[i]);
@@ -52,36 +52,36 @@ char *get_detail_ppc(csh *handle, cs_mode mode, cs_insn *ins)
 			default:
 				break;
 			case PPC_OP_REG:
-				addStr(&result, " | operands[%u].type: REG = %s", i, cs_reg_name(*handle, op->reg));
+				addStr(&result, " ; operands[%u].type: REG = %s", i, cs_reg_name(*handle, op->reg));
 				break;
 			case PPC_OP_IMM:
-				addStr(&result, " | operands[%u].type: IMM = 0x%"PRIx64"", i, op->imm);
+				addStr(&result, " ; operands[%u].type: IMM = 0x%"PRIx64"", i, op->imm);
 				break;
 			case PPC_OP_MEM:
-				addStr(&result, " | operands[%u].type: MEM", i);
+				addStr(&result, " ; operands[%u].type: MEM", i);
 				if (op->mem.base != PPC_REG_INVALID)
-					addStr(&result, " | operands[%u].mem.base: REG = %s", i, cs_reg_name(*handle, op->mem.base));
+					addStr(&result, " ; operands[%u].mem.base: REG = %s", i, cs_reg_name(*handle, op->mem.base));
 				if (op->mem.disp != 0)
-					addStr(&result, " | operands[%u].mem.disp: 0x%x", i, op->mem.disp);
+					addStr(&result, " ; operands[%u].mem.disp: 0x%x", i, op->mem.disp);
 
 				break;
 			case PPC_OP_CRX:
-				addStr(&result, " | operands[%u].type: CRX", i);
-				addStr(&result, " | operands[%u].crx.scale: %d", i, op->crx.scale);
-				addStr(&result, " | operands[%u].crx.reg: %s", i, cs_reg_name(*handle, op->crx.reg));
-				addStr(&result, " | operands[%u].crx.cond: %s", i, get_bc_name(op->crx.cond));
+				addStr(&result, " ; operands[%u].type: CRX", i);
+				addStr(&result, " ; operands[%u].crx.scale: %d", i, op->crx.scale);
+				addStr(&result, " ; operands[%u].crx.reg: %s", i, cs_reg_name(*handle, op->crx.reg));
+				addStr(&result, " ; operands[%u].crx.cond: %s", i, get_bc_name(op->crx.cond));
 				break;
 		}
 	}
 
 	if (ppc->bc != 0)
-		addStr(&result, " | Branch code: %u", ppc->bc);
+		addStr(&result, " ; Branch code: %u", ppc->bc);
 
 	if (ppc->bh != 0)
-		addStr(&result, " | Branch hint: %u", ppc->bh);
+		addStr(&result, " ; Branch hint: %u", ppc->bh);
 
 	if (ppc->update_cr0)
-		addStr(&result, " | Update-CR0: True");
+		addStr(&result, " ; Update-CR0: True");
 
 	return result;
 }
