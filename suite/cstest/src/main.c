@@ -219,16 +219,15 @@ int main(int argc, char *argv[])
 				flag = 1;
 				break;
 			default:
-				puts("Usage: ./issues [-f <file_name.cs>] [-d <directory>]");
+				printf("Usage: %s [-f <file_name.cs>] [-d <directory>]\n", argv[0]);
 				exit(-1);
 		}
 	}
 
 	if (flag == 0) {
-		puts("Usage: ./issues [-f <file_name.cs>] [-d <directory>]");
+		printf("Usage: %s [-f <file_name.cs>] [-d <directory>]\n", argv[0]);
 		exit(-1);
 	}
-		
 	
 	return 0;
 }
