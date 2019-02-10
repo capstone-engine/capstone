@@ -33,7 +33,7 @@ static int setup_MC(void **state)
 	handle = (csh *)malloc(sizeof(csh));
 	
 	cs_open(arch, mode, handle);
-	for (i=2; i<size_params; ++i)
+	for (i=2; i < size_params; ++i)
 		if (strcmp(list_params[i], "None")) {
 			index = getIndex(options, NUMOPTION, list_params[i]);
 			if (index == -1) {
@@ -74,7 +74,10 @@ static int setup_issue(void **state)
 	getDetail = 0;
 	failed_setup = 0;
 
+	while (counter < size_lines && list_lines[counter][0] != '!') counter++; // get issue line
 	counter++;
+	while (counter < size_lines && list_lines[counter][0] != '!') counter++; // get arch/mode line
+
 	list_params = split(list_lines[counter] + 2, ", ", &size_params);
 //	print_strs(list_params, size_params);
 	arch = getValue(arches, NUMARCH, list_params[0]);
@@ -89,7 +92,7 @@ static int setup_issue(void **state)
 	handle = (csh *)malloc(sizeof(csh));
 	
 	cs_open(arch, mode, handle);
-	for (i=2; i<size_params; ++i)
+	for (i=2; i < size_params; ++i)
 		if (strcmp(list_params[i], "None")) {
 			index = getIndex(options, NUMOPTION, list_params[i]);
 			if (index == -1) {
@@ -111,7 +114,7 @@ static int setup_issue(void **state)
 	*state = (void *)handle;
 	issue_mode = mode;
 	
-	counter ++;
+	while (counter < size_lines && list_lines[counter][0] != '0') counter ++;
 	free_strs(list_params, size_params);
 	return 0;
 
@@ -119,14 +122,14 @@ static int setup_issue(void **state)
 
 static void test_issue(void **state)
 {
-	test_single_issues((csh *)*state, issue_mode, list_lines[counter], getDetail);
+	test_single_issue((csh *)*state, issue_mode, list_lines[counter], getDetail);
 //	counter ++;
 	return;
 }
 
 static int teardown_issue(void **state)
 {
-	counter ++;
+	while (counter < size_lines && list_lines[counter][0] != '!') counter++; // get next issue
 	cs_close(*state);
 	free(*state);
 	function = NULL;
@@ -139,7 +142,7 @@ void test_file(const char *filename)
 	char **list_str; 
 	char *content;
 	struct CMUnitTest *tests;
-	int issue_num;
+	int issue_num, number_of_tests;
 
 	printf("[+] TARGET: %s\n", filename);
 	content = readfile(filename);
@@ -147,24 +150,30 @@ void test_file(const char *filename)
 	failed_setup = 0;
 	function = NULL;		
 
-	if ( content[0] == '!' ) {
+	if (strstr(filename, "issue")) {
+		number_of_tests = 0;
 		list_lines = split(content, "\n", &size_lines);	
-
-		tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * (size_lines) / 3);
-		for (i=0; i<(size_lines)/3; ++i) {
-			char *tmp = (char *)malloc(sizeof(char) * 100);
-			sscanf(list_lines[i*3], "!# issue %d\n", &issue_num);			
-			sprintf(tmp, "Issue #%d", issue_num);
-			tests[i] = (struct CMUnitTest)cmocka_unit_test_setup_teardown(test_issue, setup_issue, teardown_issue);
-			tests[i].name = tmp;
+//		tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * size_lines / 3);
+		tests = NULL;
+		for (i=0; i < size_lines; ++i) {
+			if (strstr(list_lines[i], "!# issue")) {
+				char *tmp = (char *)malloc(sizeof(char) * 100);
+				sscanf(list_lines[i], "!# issue %d\n", &issue_num);			
+				sprintf(tmp, "Issue #%d", issue_num);
+				tests = (struct CMUnitTest *)realloc(tests, sizeof(struct CMUnitTest) * (number_of_tests + 1));
+				tests[number_of_tests] = (struct CMUnitTest)cmocka_unit_test_setup_teardown(test_issue, setup_issue, teardown_issue);
+				tests[number_of_tests].name = tmp;
+				number_of_tests ++;
+			}
 		}
-		_cmocka_run_group_tests("Testing issues", tests, size_lines/3, NULL, NULL);
+		_cmocka_run_group_tests("Testing issues", tests, number_of_tests, NULL, NULL);
 	}
 	else {
 		list_lines = split(content + 2, "\n", &size_lines);
-		
+		number_of_tests = size_lines - 1;
+	
 		tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * (size_lines - 1));
-		for (i=0; i<size_lines - 1; ++i) {
+		for (i=0; i < size_lines - 1; ++i) {
 			char *tmp = (char *)malloc(sizeof(char) * 100);
 			sprintf(tmp, "%d'th line", i+2);
 			tests[i] = (struct CMUnitTest)cmocka_unit_test_setup_teardown(test_MC, setup_MC, teardown_MC);

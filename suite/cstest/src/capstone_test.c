@@ -132,6 +132,9 @@ void test_single(csh *handle, char *line)
 		tmptmp = strdup(tmp);
 		replaceHex(&tmp);
 //		assert_string_equal(tmp, list_data[i]);
+		trimwhitespace(&tmp);
+		trimwhitespace(&tmptmp);
+		trimwhitespace(&list_data[i]);
 		if (!triple_compare(tmp, tmptmp, list_data[i]))
 			_fail(__FILE__, __LINE__);
 		free(tmp);
@@ -212,7 +215,7 @@ int setFunction(int arch)
 	return 0;
 }
 
-void test_single_issues(csh *handle, cs_mode mode, char *line, int detail)
+void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 {
 	char **list_part, **list_byte, **list_part_cs_result, **list_part_issue_result;
 	int size_part, size_byte, size_part_cs_result, size_part_issue_result;
@@ -268,8 +271,11 @@ void test_single_issues(csh *handle, cs_mode mode, char *line, int detail)
 		fprintf(stderr, "[  ERROR   ] --- Number of details doesn't match");
 		_fail(__FILE__, __LINE__);
 	}
-	for (i=0; i<size_part_cs_result; ++i)
+	for (i=0; i<size_part_cs_result; ++i) {
+		trimwhitespace(&list_part_cs_result[i]);
+		trimwhitespace(&list_part_issue_result[i]);
 		assert_string_equal(list_part_cs_result[i], list_part_issue_result[i]);
+	}
 //	assert_string_equal(cs_result, list_part[1]);
 	cs_free(insn, count);
 	free(list_part);
