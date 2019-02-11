@@ -39,3 +39,11 @@ cd suite/cstest
 cd suite/cstest
 make cstest
 ```
+
+## Using report tool
+- Usage `python report.py -t <cstest_path> [-f <file_name.cs>] [-d <directory>]`
+- Example: 
+```
+python report.py -t build/cstest -d ../MC/PowerPC/
+!python report.py -t build/cstest -f issues.cs
+```

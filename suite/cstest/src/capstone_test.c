@@ -114,7 +114,7 @@ void test_single_MC(csh *handle, char *line)
 	}
 
 	list_data = split(list_part[1], ";", &size_data);	
-	count = cs_disasm(*handle, code, size_byte, 0x1000, 0, &insn);
+	count = cs_disasm(*handle, code, size_byte, 0x0, 0, &insn);
 	// printf("====\nCount: %d\nSize_data: %d\n", count, size_data);
 //	assert_int_equal(size_data, count);
 	if (count == 0) {
@@ -223,19 +223,25 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 	unsigned char *code;
 	cs_insn *insn;
 	char *cs_result, *tmp;
+	char **offset_opcode;
+	int size_offset_opcode;
+	unsigned long offset;
 	
 	cs_result = (char *)malloc(sizeof(char));
 	cs_result[0] = '\0';
-
+	
 	list_part = split(line, " == ", &size_part);
-	list_byte = split(list_part[0], ",", &size_byte);
+	offset_opcode = split(list_part[0], ": ", &size_offset_opcode);
+	offset = (unsigned int)strtol(offset_opcode[0], NULL, 16);
+
+	list_byte = split(offset_opcode[1], ",", &size_byte);
 	code = (unsigned char *)malloc(sizeof(char) * size_byte);
 	for (i=0; i<size_byte; ++i) {
 		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
-		// printf("Byte: 0x%.2x\n", (int)code[i]);
+	//	printf("Byte: 0x%.2x\n", (int)code[i]);
 	}
 
-	count = cs_disasm(*handle, code, size_byte, 0x1000, 0, &insn);
+	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
 	for (i=0; i < count; ++i) {
 		tmp = (char *)malloc(strlen(insn[i].mnemonic) + strlen(insn[i].op_str) + 100);
 		strcpy(tmp, insn[i].mnemonic);
@@ -243,7 +249,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 			tmp[strlen(insn[i].mnemonic)] = ' ';
 			strcpy(tmp + strlen(insn[i].mnemonic) + 1, insn[i].op_str);
 		}
-		add_str(&cs_result, tmp);
+		add_str(&cs_result, "%s", tmp);
 		/*
 		if (i < count - 1)
 			add_str(&cs_result, ";");
@@ -253,7 +259,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 
 	if (detail == 1) {
 		tmp = (*function)(handle, mode, insn);
-		add_str(&cs_result, tmp);
+		add_str(&cs_result, "%s", tmp);
 		free(tmp);
 
 		if (insn->detail->groups_count) {
@@ -268,7 +274,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 	list_part_issue_result = split(list_part[1], " ; ", &size_part_issue_result);
 
 	if (size_part_cs_result != size_part_issue_result) {
-		fprintf(stderr, "[  ERROR   ] --- Number of details doesn't match");
+		fprintf(stderr, "[  ERROR   ] --- Number of details doesn't match\n");
 		_fail(__FILE__, __LINE__);
 	}
 	for (i=0; i<size_part_cs_result; ++i) {
