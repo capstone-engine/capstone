@@ -33,34 +33,34 @@ char *get_detail_tms320c64x(csh *handle, cs_mode mode, cs_insn *ins)
 				if (op->mem.base != TMS320C64X_REG_INVALID)
 					add_str(&result, " ; operands[%u].mem.base: REG = %s", i, cs_reg_name(*handle, op->mem.base));
 				add_str(&result, " ; operands[%u].mem.disptype: ", i);
-				if(op->mem.disptype == TMS320C64X_MEM_DISP_INVALID) {
+				if (op->mem.disptype == TMS320C64X_MEM_DISP_INVALID) {
 					add_str(&result, "Invalid");
 					add_str(&result, " ; operands[%u].mem.disp: %u", i, op->mem.disp);
 				}
-				if(op->mem.disptype == TMS320C64X_MEM_DISP_CONSTANT) {
+				if (op->mem.disptype == TMS320C64X_MEM_DISP_CONSTANT) {
 					add_str(&result, "Constant");
 					add_str(&result, " ; operands[%u].mem.disp: %u", i, op->mem.disp);
 				}
-				if(op->mem.disptype == TMS320C64X_MEM_DISP_REGISTER) {
+				if (op->mem.disptype == TMS320C64X_MEM_DISP_REGISTER) {
 					add_str(&result, "Register");
 					add_str(&result, " ; operands[%u].mem.disp: %s", i, cs_reg_name(*handle, op->mem.disp));
 				}
 				add_str(&result, " ; operands[%u].mem.unit: %u", i, op->mem.unit);
 				add_str(&result, " ; operands[%u].mem.direction: ", i);
-				if(op->mem.direction == TMS320C64X_MEM_DIR_INVALID)
+				if (op->mem.direction == TMS320C64X_MEM_DIR_INVALID)
 					add_str(&result, "Invalid");
-				if(op->mem.direction == TMS320C64X_MEM_DIR_FW)
+				if (op->mem.direction == TMS320C64X_MEM_DIR_FW)
 					add_str(&result, "Forward");
-				if(op->mem.direction == TMS320C64X_MEM_DIR_BW)
+				if (op->mem.direction == TMS320C64X_MEM_DIR_BW)
 					add_str(&result, "Backward");
 				add_str(&result, " ; operands[%u].mem.modify: ", i);
-				if(op->mem.modify == TMS320C64X_MEM_MOD_INVALID)
+				if (op->mem.modify == TMS320C64X_MEM_MOD_INVALID)
 					add_str(&result, "Invalid");
-				if(op->mem.modify == TMS320C64X_MEM_MOD_NO)
+				if (op->mem.modify == TMS320C64X_MEM_MOD_NO)
 					add_str(&result, "No");
-				if(op->mem.modify == TMS320C64X_MEM_MOD_PRE)
+				if (op->mem.modify == TMS320C64X_MEM_MOD_PRE)
 					add_str(&result, "Pre");
-				if(op->mem.modify == TMS320C64X_MEM_MOD_POST)
+				if (op->mem.modify == TMS320C64X_MEM_MOD_POST)
 					add_str(&result, "Post");
 				add_str(&result, " ; operands[%u].mem.scaled: %u", i, op->mem.scaled);
 
@@ -92,10 +92,10 @@ char *get_detail_tms320c64x(csh *handle, cs_mode mode, cs_insn *ins)
 			add_str(&result, "Unknown (Unit %u, Side %u)", tms320c64x->funit.unit, tms320c64x->funit.side);
 			break;
 	}
-	if(tms320c64x->funit.crosspath == 1)
+	if (tms320c64x->funit.crosspath == 1)
 		add_str(&result, " ; Crosspath: 1");
 
-	if(tms320c64x->condition.reg != TMS320C64X_REG_INVALID)
+	if (tms320c64x->condition.reg != TMS320C64X_REG_INVALID)
 		add_str(&result, " ; Condition: [%c%s]", (tms320c64x->condition.zero == 1) ? '!' : ' ', cs_reg_name(*handle, tms320c64x->condition.reg));
 	add_str(&result, " ; Parallel: %s", (tms320c64x->parallel == 1) ? "true" : "false");
 

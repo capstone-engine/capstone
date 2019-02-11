@@ -5,7 +5,7 @@ char **split(char *str, char *delim, int *size)
 	char **result;
 	char *token, *src;
 	int cnt;
-	
+
 	cnt = 0;
 	src = str;
 	result = NULL;
@@ -30,7 +30,7 @@ char **split(char *str, char *delim, int *size)
 void print_strs(char **list_str, int size)
 {
 	int i;
-	
+
 	printf("[+] Debug %d strings:\n", size);
 	for (i=0; i<size; ++i)
 		printf("String %d'th: %s\n", i+1, list_str[i]);
@@ -49,7 +49,7 @@ const char *get_filename_ext(const char *filename)
 	const char *dot;
 
 	dot = strrchr(filename, '.');
-	if(!dot || dot == filename)
+	if (!dot || dot == filename)
 		return "";
 	return dot + 1;
 }
@@ -65,7 +65,7 @@ char *readfile(const char *filename)
 		puts("No such file");
 		exit(-1);
 	}
-	
+
 	fseek(fp, 0, SEEK_END);
 	size = ftell(fp);
 	rewind(fp);
@@ -90,11 +90,11 @@ void add_str(char **src, const char *format, ...)
 	va_end(args);
 
 	len1 = strlen(*src);	
-    len2 = strlen(tmp);
-	
-    *src = (char *)realloc(*src, sizeof(char) * (len1 + len2 + 10));
+	len2 = strlen(tmp);
 
-    memcpy(*src + len1, tmp, len2 + 1);
+	*src = (char *)realloc(*src, sizeof(char) * (len1 + len2 + 10));
+
+	memcpy(*src + len1, tmp, len2 + 1);
 	free(tmp);
 }
 
@@ -103,7 +103,7 @@ void replaceHex(char **src)
 	char *tmp, *result, *found;
 	int i;
 	unsigned long long int value;
-	
+
 	result = (char *)malloc(sizeof(char));
 	result[0] = '\0';
 	tmp = *src;
@@ -117,10 +117,10 @@ void replaceHex(char **src)
 				value = value*0x10 + (*found - 'a' + 10);
 			else
 				value = value*0x10 + (*found - '0');
-//			printf("====> %d -- %llu\n", *found, value);
+			//			printf("====> %d -- %llu\n", *found, value);
 			found++;
 		}
-		
+
 		add_str(&result, "%s%llu", tmp, value);
 		tmp = found;
 	}
@@ -144,7 +144,7 @@ void listdir(const char *name, char ***files, int *num_files)
 			if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
 				continue;
 			snprintf(path, sizeof(path), "%s/%s", name, entry->d_name);
-//			printf("[%s]\n", entry->d_name);
+			//			printf("[%s]\n", entry->d_name);
 			listdir(path, files, num_files);
 		} else {
 			cnt = *num_files;
@@ -163,7 +163,7 @@ void trimwhitespace(char **str)
 	char *end;
 
 	while(isspace((unsigned char)**str)) (*str)++;
-	if(**str == 0) return;
+	if (**str == 0) return;
 
 	end = *str + strlen(*str) - 1;
 	while(end > *str && isspace((unsigned char)*end)) end--;

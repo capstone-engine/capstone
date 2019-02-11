@@ -107,21 +107,20 @@ void test_single_MC(csh *handle, char *line)
 	char **offset_opcode;
 	int size_offset_opcode;
 	unsigned long offset;
-	
+
 	list_part = split(line, " = ", &size_part);
 	offset_opcode = split(list_part[0], ": ", &size_offset_opcode);
 	if (size_offset_opcode > 1) {
 		offset = (unsigned int)strtol(offset_opcode[0], NULL, 16);
 		list_byte = split(offset_opcode[1], ",", &size_byte);
-	}
-	else {
+	} else {
 		offset = 0;
 		list_byte = split(offset_opcode[0], ",", &size_byte);
 	}
 	code = (unsigned char *)malloc(sizeof(char) * size_byte);
 	for (i=0; i<size_byte; ++i) {
 		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
-	//	printf("Byte: 0x%.2x\n", (int)code[i]);
+		//	printf("Byte: 0x%.2x\n", (int)code[i]);
 	}
 
 	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
@@ -134,7 +133,7 @@ void test_single_MC(csh *handle, char *line)
 	list_data = split(list_part[1], ";", &size_data);	
 	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
 	// printf("====\nCount: %d\nSize_data: %d\n", count, size_data);
-//	assert_int_equal(size_data, count);
+	//	assert_int_equal(size_data, count);
 	if (count == 0) {
 		fprintf(stderr, "[  ERROR   ] --- Failed to disassemble given code!\n");
 		_fail(__FILE__, __LINE__);
@@ -149,7 +148,7 @@ void test_single_MC(csh *handle, char *line)
 		// printf("--------\nCapstone: %s\nUser: %s\n", tmp, list_data[i]);
 		tmptmp = strdup(tmp);
 		replaceHex(&tmp);
-//		assert_string_equal(tmp, list_data[i]);
+		//		assert_string_equal(tmp, list_data[i]);
 		trimwhitespace(&tmp);
 		trimwhitespace(&tmptmp);
 		trimwhitespace(&list_data[i]);
@@ -244,24 +243,23 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 	char **offset_opcode;
 	int size_offset_opcode;
 	unsigned long offset;
-	
+
 	cs_result = (char *)malloc(sizeof(char));
 	cs_result[0] = '\0';
-	
+
 	list_part = split(line, " == ", &size_part);
 	offset_opcode = split(list_part[0], ": ", &size_offset_opcode);
 	if (size_offset_opcode > 1) {
 		offset = (unsigned int)strtol(offset_opcode[0], NULL, 16);
 		list_byte = split(offset_opcode[1], ",", &size_byte);
-	}
-	else {
+	} else {
 		offset = 0;
 		list_byte = split(offset_opcode[0], ",", &size_byte);
 	}
 	code = (unsigned char *)malloc(sizeof(char) * size_byte);
 	for (i=0; i<size_byte; ++i) {
 		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
-	//	printf("Byte: 0x%.2x\n", (int)code[i]);
+		//	printf("Byte: 0x%.2x\n", (int)code[i]);
 	}
 
 	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
@@ -274,9 +272,9 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 		}
 		add_str(&cs_result, "%s", tmp);
 		/*
-		if (i < count - 1)
-			add_str(&cs_result, ";");
-		*/
+		   if (i < count - 1)
+		   add_str(&cs_result, ";");
+		 */
 		free(tmp);
 	}
 
@@ -292,7 +290,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 			}
 		}
 	}
-	
+
 	list_part_cs_result = split(cs_result, " ; ", &size_part_cs_result);
 	list_part_issue_result = split(list_part[1], " ; ", &size_part_issue_result);
 
@@ -305,7 +303,8 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 		trimwhitespace(&list_part_issue_result[i]);
 		assert_string_equal(list_part_cs_result[i], list_part_issue_result[i]);
 	}
-//	assert_string_equal(cs_result, list_part[1]);
+
+	//	assert_string_equal(cs_result, list_part[1]);
 	cs_free(insn, count);
 	free(list_part);
 	free(list_byte);

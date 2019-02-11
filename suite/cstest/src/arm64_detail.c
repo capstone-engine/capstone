@@ -8,14 +8,13 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 	uint8_t regs_read_count, regs_write_count;
 	uint8_t access;
 	char *result;
-	
+
 	result = (char *)malloc(sizeof(char));
 	result[0] = '\0';
 
 	// detail can be NULL if SKIPDATA option is turned ON
 	if (ins->detail == NULL)
 		return result;
-
 
 	arm64 = &(ins->detail->arm64);
 	if (arm64->op_count)
@@ -72,7 +71,7 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 				add_str(&result, " ; operands[%u].type: BARRIER = 0x%x", i, op->barrier);
 				break;
 		}
-		
+
 		access = op->access;
 		switch(access) {
 			default:
@@ -87,9 +86,9 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 				add_str(&result, " ; operands[%u].access: READ | WRITE", i);
 				break;
 		}
-		
+
 		if (op->shift.type != ARM64_SFT_INVALID &&
-			op->shift.value)
+				op->shift.value)
 			add_str(&result, " ; Shift: type = %u, value = %u", op->shift.type, op->shift.value);
 
 		if (op->ext != ARM64_EXT_INVALID)
@@ -122,7 +121,7 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 				add_str(&result, " %s", cs_reg_name(*handle, regs_read[i]));
 			}
 		}
-		
+
 		if (regs_write_count) {
 			add_str(&result, " ; Registers modified:");
 			for(i = 0; i < regs_write_count; i++) {
@@ -130,6 +129,7 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 			}
 		}
 	}
+
 	return result;
 }
 

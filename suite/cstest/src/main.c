@@ -23,15 +23,15 @@ static int setup_MC(void **state)
 	list_params = split(list_lines[0], ", ", &size_params);
 	arch = getValue(arches, NUMARCH, list_params[0]);
 	mode = getValue(modes, NUMMODE, list_params[1]);
-	
+
 	if (arch == -1 || mode == -1) {
 		printf("[-] Arch and/or Mode are not supported!\n");
 		failed_setup = 1;
 		return -1;
 	}
-	
+
 	handle = (csh *)malloc(sizeof(csh));
-	
+
 	cs_open(arch, mode, handle);
 	for (i=2; i < size_params; ++i)
 		if (strcmp(list_params[i], "None")) {
@@ -79,18 +79,18 @@ static int setup_issue(void **state)
 	while (counter < size_lines && list_lines[counter][0] != '!') counter++; // get arch/mode line
 
 	list_params = split(list_lines[counter] + 2, ", ", &size_params);
-//	print_strs(list_params, size_params);
+	//	print_strs(list_params, size_params);
 	arch = getValue(arches, NUMARCH, list_params[0]);
 	mode = getValue(modes, NUMMODE, list_params[1]);
-	
+
 	if (arch == -1 || mode == -1) {
 		printf("[-] Arch and/or Mode are not supported!\n");
 		failed_setup = 1;
 		return -1;
 	}
-	
+
 	handle = (csh *)calloc(1, sizeof(csh));
-	
+
 	cs_open(arch, mode, handle);
 	for (i=2; i < size_params; ++i)
 		if (strcmp(list_params[i], "None")) {
@@ -113,7 +113,7 @@ static int setup_issue(void **state)
 		}
 	*state = (void *)handle;
 	issue_mode = mode;
-	
+
 	while (counter < size_lines && list_lines[counter][0] != '0') counter ++;
 	free_strs(list_params, size_params);
 	return 0;
@@ -123,7 +123,7 @@ static int setup_issue(void **state)
 static void test_issue(void **state)
 {
 	test_single_issue((csh *)*state, issue_mode, list_lines[counter], getDetail);
-//	counter ++;
+	//	counter ++;
 	return;
 }
 
@@ -153,7 +153,7 @@ void test_file(const char *filename)
 	if (strstr(filename, "issue")) {
 		number_of_tests = 0;
 		list_lines = split(content, "\n", &size_lines);	
-//		tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * size_lines / 3);
+		//		tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * size_lines / 3);
 		tests = NULL;
 		for (i=0; i < size_lines; ++i) {
 			if (strstr(list_lines[i], "!# issue")) {
@@ -167,11 +167,10 @@ void test_file(const char *filename)
 			}
 		}
 		_cmocka_run_group_tests("Testing issues", tests, number_of_tests, NULL, NULL);
-	}
-	else {
+	} else {
 		list_lines = split(content + 2, "\n", &size_lines);
 		number_of_tests = size_lines - 1;
-	
+
 		tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * (size_lines - 1));
 		for (i=0; i < size_lines - 1; ++i) {
 			char *tmp = (char *)malloc(sizeof(char) * 100);
@@ -228,6 +227,6 @@ int main(int argc, char *argv[])
 		printf("Usage: %s [-f <file_name.cs>] [-d <directory>]\n", argv[0]);
 		exit(-1);
 	}
-	
+
 	return 0;
 }
