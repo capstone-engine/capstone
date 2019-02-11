@@ -89,7 +89,7 @@ static int setup_issue(void **state)
 		return -1;
 	}
 	
-	handle = (csh *)malloc(sizeof(csh));
+	handle = (csh *)calloc(1, sizeof(csh));
 	
 	cs_open(arch, mode, handle);
 	for (i=2; i < size_params; ++i)
@@ -175,7 +175,7 @@ void test_file(const char *filename)
 		tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * (size_lines - 1));
 		for (i=0; i < size_lines - 1; ++i) {
 			char *tmp = (char *)malloc(sizeof(char) * 100);
-			sprintf(tmp, "%d'th line", i+2);
+			sprintf(tmp, "Line %d", i+2);
 			tests[i] = (struct CMUnitTest)cmocka_unit_test_setup_teardown(test_MC, setup_MC, teardown_MC);
 			tests[i].name = tmp;
 		}
