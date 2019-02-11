@@ -104,9 +104,27 @@ void test_single_MC(csh *handle, char *line)
 	unsigned char *code;
 	cs_insn *insn;
 	char *tmp, *tmptmp;
-
+	char **offset_opcode;
+	int size_offset_opcode;
+	unsigned long offset;
+	
 	list_part = split(line, " = ", &size_part);
-	list_byte = split(list_part[0], ",", &size_byte);
+	offset_opcode = split(list_part[0], ": ", &size_offset_opcode);
+	if (size_offset_opcode > 1) {
+		offset = (unsigned int)strtol(offset_opcode[0], NULL, 16);
+		list_byte = split(offset_opcode[1], ",", &size_byte);
+	}
+	else {
+		offset = 0;
+		list_byte = split(offset_opcode[0], ",", &size_byte);
+	}
+	code = (unsigned char *)malloc(sizeof(char) * size_byte);
+	for (i=0; i<size_byte; ++i) {
+		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
+	//	printf("Byte: 0x%.2x\n", (int)code[i]);
+	}
+
+	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
 	code = (unsigned char *)malloc(size_byte * sizeof(char));
 	for (i=0; i<size_byte; ++i) {
 		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
@@ -114,7 +132,7 @@ void test_single_MC(csh *handle, char *line)
 	}
 
 	list_data = split(list_part[1], ";", &size_data);	
-	count = cs_disasm(*handle, code, size_byte, 0x0, 0, &insn);
+	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
 	// printf("====\nCount: %d\nSize_data: %d\n", count, size_data);
 //	assert_int_equal(size_data, count);
 	if (count == 0) {
@@ -232,9 +250,14 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 	
 	list_part = split(line, " == ", &size_part);
 	offset_opcode = split(list_part[0], ": ", &size_offset_opcode);
-	offset = (unsigned int)strtol(offset_opcode[0], NULL, 16);
-
-	list_byte = split(offset_opcode[1], ",", &size_byte);
+	if (size_offset_opcode > 1) {
+		offset = (unsigned int)strtol(offset_opcode[0], NULL, 16);
+		list_byte = split(offset_opcode[1], ",", &size_byte);
+	}
+	else {
+		offset = 0;
+		list_byte = split(offset_opcode[0], ",", &size_byte);
+	}
 	code = (unsigned char *)malloc(sizeof(char) * size_byte);
 	for (i=0; i<size_byte; ++i) {
 		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
