@@ -21,8 +21,8 @@ static int setup_MC(void **state)
 		return -1;
 
 	list_params = split(list_lines[0], ", ", &size_params);
-	arch = getValue(arches, NUMARCH, list_params[0]);
-	mode = getValue(modes, NUMMODE, list_params[1]);
+	arch = get_value(arches, NUMARCH, list_params[0]);
+	mode = get_value(modes, NUMMODE, list_params[1]);
 
 	if (arch == -1 || mode == -1) {
 		printf("[-] Arch and/or Mode are not supported!\n");
@@ -35,7 +35,7 @@ static int setup_MC(void **state)
 	cs_open(arch, mode, handle);
 	for (i=2; i < size_params; ++i)
 		if (strcmp(list_params[i], "None")) {
-			index = getIndex(options, NUMOPTION, list_params[i]);
+			index = get_index(options, NUMOPTION, list_params[i]);
 			if (index == -1) {
 				printf("[-] Option is not supported!\n");
 				failed_setup = 1;
@@ -80,8 +80,8 @@ static int setup_issue(void **state)
 
 	list_params = split(list_lines[counter] + 2, ", ", &size_params);
 	//	print_strs(list_params, size_params);
-	arch = getValue(arches, NUMARCH, list_params[0]);
-	mode = getValue(modes, NUMMODE, list_params[1]);
+	arch = get_value(arches, NUMARCH, list_params[0]);
+	mode = get_value(modes, NUMMODE, list_params[1]);
 
 	if (arch == -1 || mode == -1) {
 		printf("[-] Arch and/or Mode are not supported!\n");
@@ -94,14 +94,14 @@ static int setup_issue(void **state)
 	cs_open(arch, mode, handle);
 	for (i=2; i < size_params; ++i)
 		if (strcmp(list_params[i], "None")) {
-			index = getIndex(options, NUMOPTION, list_params[i]);
+			index = get_index(options, NUMOPTION, list_params[i]);
 			if (index == -1) {
 				printf("[-] Option is not supported!\n");
 				failed_setup = 1;
 				return -1;
 			}
 			if (index == 0) {
-				result = setFunction(arch);
+				result = set_function(arch);
 				if (result == -1) {
 					printf("[-] Cannot get details\n");
 					failed_setup = 1;

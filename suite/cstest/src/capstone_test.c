@@ -147,11 +147,11 @@ void test_single_MC(csh *handle, char *line)
 		}
 		// printf("--------\nCapstone: %s\nUser: %s\n", tmp, list_data[i]);
 		tmptmp = strdup(tmp);
-		replaceHex(&tmp);
+		replace_hex(&tmp);
 		//		assert_string_equal(tmp, list_data[i]);
-		trimwhitespace(&tmp);
-		trimwhitespace(&tmptmp);
-		trimwhitespace(&list_data[i]);
+		trim_str(&tmp);
+		trim_str(&tmptmp);
+		trim_str(&list_data[i]);
 		if (!triple_compare(tmp, tmptmp, list_data[i]))
 			_fail(__FILE__, __LINE__);
 		free(tmp);
@@ -163,7 +163,7 @@ void test_single_MC(csh *handle, char *line)
 	free(list_data);
 }
 
-int getValue(single_dict d[], unsigned int size, const char *str)
+int get_value(single_dict d[], unsigned int size, const char *str)
 {
 	int i;
 
@@ -173,7 +173,7 @@ int getValue(single_dict d[], unsigned int size, const char *str)
 	return -1;
 }
 
-int getIndex(double_dict d[], unsigned int size, const char *s)
+int get_index(double_dict d[], unsigned int size, const char *s)
 {
 	int i;
 
@@ -184,7 +184,7 @@ int getIndex(double_dict d[], unsigned int size, const char *s)
 	return -1;
 }
 
-int setFunction(int arch)
+int set_function(int arch)
 {
 	switch(arch) {
 		case CS_ARCH_ARM:
@@ -299,8 +299,8 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 		_fail(__FILE__, __LINE__);
 	}
 	for (i=0; i<size_part_cs_result; ++i) {
-		trimwhitespace(&list_part_cs_result[i]);
-		trimwhitespace(&list_part_issue_result[i]);
+		trim_str(&list_part_cs_result[i]);
+		trim_str(&list_part_issue_result[i]);
 		assert_string_equal(list_part_cs_result[i], list_part_issue_result[i]);
 	}
 
