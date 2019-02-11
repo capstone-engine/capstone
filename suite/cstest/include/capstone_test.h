@@ -51,10 +51,10 @@ extern single_dict modes[];
 extern double_dict options[];
 extern char *(*function)(csh *, cs_mode, cs_insn*);
 
-int getIndex(double_dict d[], unsigned size, const char *str);
-int getValue(single_dict d[], unsigned size, const char *str);
+int get_index(double_dict d[], unsigned size, const char *str);
+int get_value(single_dict d[], unsigned size, const char *str);
 void test_single_MC(csh *handle, char *line);
 void test_single_issue(csh *handle, cs_mode mode, char *line, int detail);
-int setFunction(int arch);
+int set_function(int arch);
 
 #endif /* CAPSTONE_TEST_H */

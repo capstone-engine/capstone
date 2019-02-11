@@ -98,7 +98,7 @@ void add_str(char **src, const char *format, ...)
 	free(tmp);
 }
 
-void replaceHex(char **src)
+void replace_hex(char **src)
 {
 	char *tmp, *result, *found;
 	int i;
@@ -158,7 +158,7 @@ void listdir(const char *name, char ***files, int *num_files)
 	closedir(dir);
 }
 
-void trimwhitespace(char **str)
+void trim_str(char **str)
 {
 	char *end;
 
