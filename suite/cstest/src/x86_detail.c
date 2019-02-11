@@ -1,6 +1,6 @@
 #include "factory.h"
 
-void print_string_hex(char **result, const char *comment, unsigned char *str, size_t len)
+static void print_string_hex(char **result, const char *comment, unsigned char *str, size_t len)
 {
 	unsigned char *c;
 

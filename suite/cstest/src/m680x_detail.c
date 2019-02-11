@@ -4,7 +4,7 @@ static const char *s_access[] = {
 	"UNCHANGED", "READ", "WRITE", "READ ; WRITE",
 };
 
-void print_read_write_regs(char *result, csh *handle, cs_detail *detail)
+static void print_read_write_regs(char *result, csh *handle, cs_detail *detail)
 {
 	int i;
 
@@ -130,7 +130,6 @@ char *get_detail_m680x(csh *handle, cs_mode mode, cs_insn *insn)
 	}
 
 	print_read_write_regs(result, handle, detail);
+
 	return result;
 }
-
-

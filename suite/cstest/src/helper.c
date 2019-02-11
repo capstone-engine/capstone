@@ -9,6 +9,7 @@ char **split(char *str, char *delim, int *size)
 	cnt = 0;
 	src = str;
 	result = NULL;
+
 	while ((token = strstr(src, delim)) != NULL) {
 		result = (char **)realloc(result, sizeof(char *) * (cnt + 1));
 		result[cnt] = (char *)calloc(1, sizeof(char) * (int)(token - src + 10));
@@ -23,7 +24,9 @@ char **split(char *str, char *delim, int *size)
 		result[cnt] = strdup(src);
 		cnt ++;
 	}
+
 	*size = cnt;
+
 	return result;
 }
 
@@ -51,6 +54,7 @@ const char *get_filename_ext(const char *filename)
 	dot = strrchr(filename, '.');
 	if (!dot || dot == filename)
 		return "";
+
 	return dot + 1;
 }
 
@@ -75,6 +79,7 @@ char *readfile(const char *filename)
 	result[size] = '\0';
 
 	fclose(fp);
+
 	return result;
 }
 
@@ -107,6 +112,7 @@ void replace_hex(char **src)
 	result = (char *)malloc(sizeof(char));
 	result[0] = '\0';
 	tmp = *src;
+
 	while ( (found = strstr(tmp, "0x")) != NULL ) {
 		*found = '\0';
 		found += 2;
@@ -124,6 +130,7 @@ void replace_hex(char **src)
 		add_str(&result, "%s%llu", tmp, value);
 		tmp = found;
 	}
+
 	add_str(&result, "%s", tmp);
 	free(*src);
 	*src = result;
@@ -155,6 +162,7 @@ void listdir(const char *name, char ***files, int *num_files)
 			*num_files = cnt;
 		}
 	}
+
 	closedir(dir);
 }
 
