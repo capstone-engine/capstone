@@ -12,24 +12,24 @@
 #include "factory.h"
 
 #define cs_assert_err(expect, err)									\
-do {																\
-    cs_err __err = err;												\
-    if (__err != expect) {											\
-        fail_msg("%s",cs_strerror(__err));							\
-    }																\
-} while (0)
+	do {																\
+		cs_err __err = err;												\
+		if (__err != expect) {											\
+			fail_msg("%s",cs_strerror(__err));							\
+		}																\
+	} while (0)
 
 
 #define cs_assert_success(err) cs_assert_err(CS_ERR_OK, err)
 
 
 #define cs_assert_fail(err)											\
-do {																\
-    cs_err __err = err;												\
-    if (__err == CS_ERR_OK) {										\
-        fail_msg("%s",cs_strerror(__err));							\
-    }																\
-} while (0)
+	do {																\
+		cs_err __err = err;												\
+		if (__err == CS_ERR_OK) {										\
+			fail_msg("%s",cs_strerror(__err));							\
+		}																\
+	} while (0)
 
 #define NUMARCH 9
 #define NUMMODE 24

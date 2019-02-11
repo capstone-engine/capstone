@@ -8,7 +8,7 @@ char *get_detail_evm(csh *handle, cs_mode mode, cs_insn *ins)
 	result = (char *)malloc(sizeof(char));
 	result[0] = '\0';
 
-// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
+	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
 	if (ins->detail == NULL)
 		return result;
 
