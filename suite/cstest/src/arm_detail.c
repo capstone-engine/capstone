@@ -147,4 +147,3 @@ char *get_detail_arm(csh *handle, cs_mode mode, cs_insn *ins)
 
 	return result;
 }
-

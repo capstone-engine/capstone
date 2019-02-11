@@ -87,8 +87,7 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 				break;
 		}
 
-		if (op->shift.type != ARM64_SFT_INVALID &&
-				op->shift.value)
+		if (op->shift.type != ARM64_SFT_INVALID && op->shift.value)
 			add_str(&result, " ; Shift: type = %u, value = %u", op->shift.type, op->shift.value);
 
 		if (op->ext != ARM64_EXT_INVALID)
@@ -132,4 +131,3 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 
 	return result;
 }
-

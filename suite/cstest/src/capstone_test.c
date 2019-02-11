@@ -84,7 +84,7 @@ double_dict options[] = {
 
 char *(*function)(csh *, cs_mode, cs_insn*) = NULL;
 
-int triple_compare(const char *src1, const char *src2, const char *des)
+static int triple_compare(const char *src1, const char *src2, const char *des)
 {
 	if (strcmp(src1, des) && strcmp(src2, des)) {
 		fprintf(stderr,"[  ERROR   ] --- \"%s\" != \"%s\"", src1, des);
@@ -248,6 +248,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 	cs_result[0] = '\0';
 
 	list_part = split(line, " == ", &size_part);
+
 	offset_opcode = split(list_part[0], ": ", &size_offset_opcode);
 	if (size_offset_opcode > 1) {
 		offset = (unsigned int)strtol(offset_opcode[0], NULL, 16);
@@ -256,6 +257,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 		offset = 0;
 		list_byte = split(offset_opcode[0], ",", &size_byte);
 	}
+
 	code = (unsigned char *)malloc(sizeof(char) * size_byte);
 	for (i=0; i<size_byte; ++i) {
 		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
@@ -298,6 +300,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 		fprintf(stderr, "[  ERROR   ] --- Number of details doesn't match\n");
 		_fail(__FILE__, __LINE__);
 	}
+
 	for (i=0; i<size_part_cs_result; ++i) {
 		trim_str(&list_part_cs_result[i]);
 		trim_str(&list_part_issue_result[i]);

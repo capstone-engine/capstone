@@ -136,7 +136,7 @@ static int teardown_issue(void **state)
 	return 0;
 }
 
-void test_file(const char *filename)
+static void test_file(const char *filename)
 {
 	int size, i;
 	char **list_str; 
@@ -187,7 +187,7 @@ void test_file(const char *filename)
 	free_strs(list_lines, size_lines);
 }
 
-void test_folder(const char *folder)
+static void test_folder(const char *folder)
 {
 	char **files;
 	int num_files, i;
