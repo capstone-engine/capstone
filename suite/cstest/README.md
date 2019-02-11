@@ -69,5 +69,5 @@ make cstest
 
 ```
 ./report.py -t build/cstest -d ../MC/PowerPC/
-./python report.py -t build/cstest -f issues.cs
+./report.py -t build/cstest -f issues.cs
 ```
