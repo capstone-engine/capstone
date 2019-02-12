@@ -333,10 +333,14 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		// Print X86 immediates as signed values.
 		int64_t imm = MCOperand_getImm(Op);
 		if (imm < 0) {
-			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "$-0x%"PRIx64, -imm);
-			else
-				SStream_concat(O, "$-%"PRIu64, -imm);
+			if (MI->csh->imm_unsigned) {
+				SStream_concat(O, "$%"PRIx64, imm);
+			} else {
+				if (imm < -HEX_THRESHOLD)
+					SStream_concat(O, "$-0x%"PRIx64, -imm);
+				else
+					SStream_concat(O, "$-%"PRIu64, -imm);
+			}
 		} else {
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "$0x%"PRIx64, imm);
@@ -672,12 +676,16 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					else
 						SStream_concat(O, "$%"PRIu64, imm);
 				} else {
-					if (imm == 0x8000000000000000LL)  // imm == -imm
-						SStream_concat0(O, "$0x8000000000000000");
-					else if (imm < -HEX_THRESHOLD)
-						SStream_concat(O, "$-0x%"PRIx64, -imm);
-					else
-						SStream_concat(O, "$-%"PRIu64, -imm);
+					if (MI->csh->imm_unsigned) {
+						SStream_concat(O, "$%"PRIx64, imm);
+					} else {
+						if (imm == 0x8000000000000000LL)  // imm == -imm
+							SStream_concat0(O, "$0x8000000000000000");
+						else if (imm < -HEX_THRESHOLD)
+							SStream_concat(O, "$-0x%"PRIx64, -imm);
+						else
+							SStream_concat(O, "$-%"PRIu64, -imm);
+					}
 				}
 				break;
 
