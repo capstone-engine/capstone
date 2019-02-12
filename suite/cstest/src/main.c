@@ -52,13 +52,13 @@ static int setup_MC(void **state)
 	counter++;
 	while (counter < size_lines && list_lines[counter][0] != '0') counter++;
 	free_strs(list_params, size_params);
+
 	return 0;
 }
 
 static void test_MC(void **state)
 {
 	test_single_MC((csh *)*state, list_lines[counter]);
-	return;
 }
 
 static int teardown_MC(void **state)
@@ -98,7 +98,7 @@ static int setup_issue(void **state)
 	handle = (csh *)calloc(1, sizeof(csh));
 
 	cs_open(arch, mode, handle);
-	for (i=2; i < size_params; ++i)
+	for (i=2; i < size_params; ++i) {
 		if (strcmp(list_params[i], "None")) {
 			index = get_index(options, NUMOPTION, list_params[i]);
 			if (index == -1) {
@@ -117,11 +117,14 @@ static int setup_issue(void **state)
 			}
 			cs_option(*handle, options[index].first_value, options[index].second_value);
 		}
+	}
+
 	*state = (void *)handle;
 	issue_mode = mode;
 
 	while (counter < size_lines && list_lines[counter][0] != '0') counter ++;
 	free_strs(list_params, size_params);
+
 	return 0;
 }
 
@@ -171,14 +174,15 @@ static void test_file(const char *filename)
 				number_of_tests ++;
 			}
 		}
+
 		_cmocka_run_group_tests("Testing issues", tests, number_of_tests, NULL, NULL);
 	} else {
 		list_lines = split(content, "\n", &size_lines);
 		number_of_tests = 0;
 
 		tests = NULL;
-//		tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * (size_lines - 1));
-		for (i=0; i < size_lines - 1; ++i) { 
+		// tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * (size_lines - 1));
+		for (i=0; i < size_lines - 1; ++i) {
 			if (list_lines[i][0] == '#' || list_lines[i][0] == '0') {
 				char *tmp = (char *)malloc(sizeof(char) * 100);
 				sprintf(tmp, "Line %d", i+2);
