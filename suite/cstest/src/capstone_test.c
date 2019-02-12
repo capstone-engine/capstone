@@ -211,7 +211,6 @@ void test_single_MC(csh *handle, char *line)
 		free(code);
 //		free(list_data);
 		cs_free(insn, count);
-		_fail(__FILE__, __LINE__);
 	}
 
 	free(list_part);
