@@ -99,7 +99,7 @@
 0x0: 0x0e,0xf0,0xa0,0xe1 == mov pc, lr ; op_count: 2 ; operands[0].type: REG = pc ; operands[0].access: WRITE ; operands[1].type: REG = lr ; operands[1].access: READ ; Registers read: lr ; Registers modified: pc ; Groups: arm 
 
 !# issue 813
-!#CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN, None
+!#CS_ARCH_ARM, CS_MODE_THUMB | CS_MODE_BIG_ENDIAN, None
 0x0: 0xF6,0xC0,0x04,0x01 == movt r4, #0x801
 
 !# issue 809
@@ -399,7 +399,7 @@
 0x0: 0xed,0xdf,0x2b,0x1b == vldr d18, [pc, #0x6c] ; op_count: 2 ; operands[0].type: REG = d18 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = pc ; operands[1].mem.disp: 0x6c ; operands[1].access: READ ; Registers read: pc ; Registers modified: d18 ; Groups: vfp2 
 
 !# issue 132
-!#CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+!#CS_ARCH_ARM, CS_MODE_THUMB | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
 0x0: 0x49,0x19 == ldr r1, [pc, #0x64] ; op_count: 2 ; operands[0].type: REG = r1 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = pc ; operands[1].mem.disp: 0x64 ; operands[1].access: READ ; Registers read: pc ; Registers modified: r1 ; Groups: thumb thumb1only 
 
 !# issue 130
