@@ -15,14 +15,17 @@ static int setup_MC(void **state)
 	char **list_params;	
 	int size_params;
 	int arch, mode;
-	int i, index;
+	int i, index, tmp_counter;
 
 	if (failed_setup) {
 		fprintf(stderr, "[  ERROR   ] --- Invalid file to setup\n");
 		return -1;
 	}
 
-	list_params = split(list_lines[0], ", ", &size_params);
+	tmp_counter = 0;
+	while (tmp_counter < size_lines && list_lines[tmp_counter][0] != '#') tmp_counter++; // get issue line
+
+	list_params = split(list_lines[tmp_counter] + 2, ", ", &size_params);
 	arch = get_value(arches, NUMARCH, list_params[0]);
 	mode = get_value(modes, NUMMODE, list_params[1]);
 
@@ -46,7 +49,8 @@ static int setup_MC(void **state)
 			cs_option(*handle, options[index].first_value, options[index].second_value);
 		}
 	*state = (void *)handle;
-	counter ++;
+	counter++;
+	while (counter < size_lines && list_lines[counter][0] != '0') counter++;
 	free_strs(list_params, size_params);
 	return 0;
 }
@@ -169,15 +173,20 @@ static void test_file(const char *filename)
 		}
 		_cmocka_run_group_tests("Testing issues", tests, number_of_tests, NULL, NULL);
 	} else {
-		list_lines = split(content + 2, "\n", &size_lines);
-		number_of_tests = size_lines - 1;
+		list_lines = split(content, "\n", &size_lines);
+		number_of_tests = 0;
 
-		tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * (size_lines - 1));
-		for (i=0; i < size_lines - 1; ++i) {
-			char *tmp = (char *)malloc(sizeof(char) * 100);
-			sprintf(tmp, "Line %d", i+2);
-			tests[i] = (struct CMUnitTest)cmocka_unit_test_setup_teardown(test_MC, setup_MC, teardown_MC);
-			tests[i].name = tmp;
+		tests = NULL;
+//		tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * (size_lines - 1));
+		for (i=0; i < size_lines - 1; ++i) { 
+			if (list_lines[i][0] == '#' || list_lines[i][0] == '0') {
+				char *tmp = (char *)malloc(sizeof(char) * 100);
+				sprintf(tmp, "Line %d", i+2);
+				tests = (struct CMUnitTest *)realloc(tests, sizeof(struct CMUnitTest) * (number_of_tests + 1));
+				tests[number_of_tests] = (struct CMUnitTest)cmocka_unit_test_setup_teardown(test_MC, setup_MC, teardown_MC);
+				tests[number_of_tests].name = tmp;
+				number_of_tests ++;
+			}
 		}
 		_cmocka_run_group_tests("Testing", tests, size_lines-1, NULL, NULL);
 	}

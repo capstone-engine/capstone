@@ -33,18 +33,19 @@ def get_report_file(toolpath, filepath, getDetails):
 		elif 'LINE' in line:
 			continue
 		elif 'ERROR' in line and ' --- ' in line:
+			parts = line.split(' --- ')
 			try:
-				details.append((failed_tests[counter], line.split(' --- ')[1]))
+				details.append((parts[1], failed_tests[counter], parts[2]))
 			except IndexError:
-				details.append(('Unknown test', line.split(' --- ')[1]))
+				details.append(('', 'Unknown test', line.split(' --- ')[1]))
 			counter += 1
 		else:
 			continue
 	print '\n[-] There are/is {} failed test(s)'.format(len(details))
 	if len(details) > 0 and getDetails:
 		print '[-] Detailed report for {}:\n'.format(filepath)
-		for f, d in details:
-			print '\t[+] {}:\n\t\t{}\n'.format(f, d)
+		for c, f, d in details:
+			print '\t[+] {}: {}\n\t\t{}\n'.format(f, c, d)
 		print '\n'
 
 def get_report_folder(toolpath, folderpath, details):
