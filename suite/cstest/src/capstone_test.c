@@ -129,7 +129,7 @@ void test_single_MC(csh *handle, char *line)
 		// printf("Byte: 0x%.2x\n", (int)code[i]);
 	}
 
-//	list_data = split(list_part[1], ";", &size_data);
+	//	list_data = split(list_part[1], ";", &size_data);
 	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
 	if (count == 0) {
 		fprintf(stderr, "[  ERROR   ] --- %s --- Failed to disassemble given code!\n", list_part[0]);
@@ -137,7 +137,7 @@ void test_single_MC(csh *handle, char *line)
 		free(offset_opcode);
 		free(list_byte);
 		free(code);
-//		free(list_data);
+		//		free(list_data);
 		_fail(__FILE__, __LINE__);
 	}
 	if (count > 1) {
@@ -146,33 +146,33 @@ void test_single_MC(csh *handle, char *line)
 		free(offset_opcode);
 		free(list_byte);
 		free(code);
-//		free(list_data);
+		//		free(list_data);
 		_fail(__FILE__, __LINE__);
 	}
 
 	for (p=list_part[1]; *p; ++p) *p = tolower(*p);
 	trim_str(list_part[1]);
 
-//	tmp = (char *)malloc(strlen(insn[0].mnemonic) + strlen(insn[0].op_str) + 100);
+	//	tmp = (char *)malloc(strlen(insn[0].mnemonic) + strlen(insn[0].op_str) + 100);
 	strcpy(tmp, insn[0].mnemonic);
 	if (strlen(insn[0].op_str) > 0) {
 		tmp[strlen(insn[0].mnemonic)] = ' ';
 		strcpy(tmp + strlen(insn[0].mnemonic) + 1, insn[0].op_str);
 	}
 	trim_str(tmp);
-//	printf("--------\nCapstone: %s\nUser: %s\n", tmp, list_data[0]);
-//	cs_hex = strdup(tmp);
+	//	printf("--------\nCapstone: %s\nUser: %s\n", tmp, list_data[0]);
+	//	cs_hex = strdup(tmp);
 	strcpy(cs_hex, tmp);
 	replace_hex(tmp);
-//	mc_hex = strdup(list_data[0]);
-//	mc_dec = strdup(list_data[0]);
+	//	mc_hex = strdup(list_data[0]);
+	//	mc_dec = strdup(list_data[0]);
 	strcpy(mc_hex, list_part[1]);
 	strcpy(mc_dec, list_part[1]);
 	replace_hex(mc_dec);
 
 	if (cs_option(*handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_NOREGNAME) == CS_ERR_OK) {
 		count_noreg = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
-//		tmp_noreg = (char *)malloc(strlen(insn[0].mnemonic) + strlen(insn[0].op_str) + 100);
+		// tmp_noreg = (char *)malloc(strlen(insn[0].mnemonic) + strlen(insn[0].op_str) + 100);
 		strcpy(tmp_noreg, insn[0].mnemonic);
 		if (strlen(insn[0].op_str) > 0) {
 			tmp_noreg[strlen(insn[0].mnemonic)] = ' ';
@@ -180,23 +180,22 @@ void test_single_MC(csh *handle, char *line)
 		}
 
 		trim_str(tmp_noreg);
-//		cs_hex_noreg = strdup(tmp_noreg);
+		// cs_hex_noreg = strdup(tmp_noreg);
 		strcpy(cs_hex_noreg, tmp_noreg);
 		replace_hex(tmp_noreg);
-//		mc_hex_noreg = strdup(list_data[0]);
-//		mc_dec_noreg = strdup(list_data[0]);
+		// mc_dec_noreg = strdup(list_data[0]);
 		strcpy(mc_hex_noreg, list_part[1]);
 		strcpy(mc_dec_noreg, list_part[1]);
 		replace_hex(mc_dec_noreg);
 
 		if (strcmp(tmp, mc_hex) && strcmp(cs_hex, mc_hex) && strcmp(tmp, mc_dec) && strcmp(tmp, mc_hex)
-			&& strcmp(tmp_noreg, mc_hex_noreg) && strcmp(cs_hex_noreg, mc_hex_noreg) && strcmp(tmp_noreg, mc_dec_noreg) && strcmp(tmp_noreg, mc_hex_noreg)) {
+				&& strcmp(tmp_noreg, mc_hex_noreg) && strcmp(cs_hex_noreg, mc_hex_noreg) && strcmp(tmp_noreg, mc_dec_noreg) && strcmp(tmp_noreg, mc_hex_noreg)) {
 			fprintf(stderr, "[  ERROR   ] --- %s --- \"%s\" != \"%s\"\n", list_part[0], cs_hex, list_part[1]);
 			free(list_part);
 			free(offset_opcode);
 			free(list_byte);
 			free(code);
-//			free(list_data);
+			// free(list_data);
 			cs_free(insn, count);
 			_fail(__FILE__, __LINE__);
 		}
@@ -207,7 +206,7 @@ void test_single_MC(csh *handle, char *line)
 		free(offset_opcode);
 		free(list_byte);
 		free(code);
-//		free(list_data);
+		// free(list_data);
 		cs_free(insn, count);
 	}
 
@@ -215,7 +214,7 @@ void test_single_MC(csh *handle, char *line)
 	free(offset_opcode);
 	free(list_byte);
 	free(code);
-//	free(list_data);
+	// free(list_data);
 	cs_free(insn, count);
 }
 
@@ -317,7 +316,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 	code = (unsigned char *)malloc(sizeof(char) * size_byte);
 	for (i=0; i<size_byte; ++i) {
 		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
-		//	printf("Byte: 0x%.2x\n", (int)code[i]);
+		// printf("Byte: 0x%.2x\n", (int)code[i]);
 	}
 
 	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
@@ -356,7 +355,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 	for (i=0; i<size_part_cs_result; ++i) {
 		trim_str(list_part_cs_result[i]);
 		trim_str(list_part_issue_result[i]);
-//		assert_string_equal(list_part_cs_result[i], list_part_issue_result[i]);
+		// assert_string_equal(list_part_cs_result[i], list_part_issue_result[i]);
 		if (strcmp(list_part_cs_result[i], list_part_issue_result[i])) {
 			fprintf(stderr, "[  ERROR   ] --- %s --- \"%s\" != \"%s\"\n", list_part[0], list_part_cs_result[i], list_part_issue_result[i]);
 			cs_free(insn, count);
