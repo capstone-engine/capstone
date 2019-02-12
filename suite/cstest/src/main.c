@@ -17,15 +17,17 @@ static int setup_MC(void **state)
 	int arch, mode;
 	int i, index;
 
-	if (failed_setup)
+	if (failed_setup) {
+		fprintf(stderr, "[  ERROR   ] --- Invalid file to setup\n");
 		return -1;
+	}
 
 	list_params = split(list_lines[0], ", ", &size_params);
 	arch = get_value(arches, NUMARCH, list_params[0]);
 	mode = get_value(modes, NUMMODE, list_params[1]);
 
 	if (arch == -1 || mode == -1) {
-		printf("[-] Arch and/or Mode are not supported!\n");
+		fprintf(stderr, "[  ERROR   ] --- Arch and/or Mode are not supported!\n");
 		failed_setup = 1;
 		return -1;
 	}
@@ -37,7 +39,7 @@ static int setup_MC(void **state)
 		if (strcmp(list_params[i], "None")) {
 			index = get_index(options, NUMOPTION, list_params[i]);
 			if (index == -1) {
-				printf("[-] Option is not supported!\n");
+				fprintf(stderr, "[  ERROR   ] --- Option is not supported!\n");
 				failed_setup = 1;
 				return -1;
 			}
@@ -84,7 +86,7 @@ static int setup_issue(void **state)
 	mode = get_value(modes, NUMMODE, list_params[1]);
 
 	if (arch == -1 || mode == -1) {
-		printf("[-] Arch and/or Mode are not supported!\n");
+		fprintf(stderr, "[  ERROR   ] --- Arch and/or Mode are not supported!\n");
 		failed_setup = 1;
 		return -1;
 	}
@@ -96,18 +98,18 @@ static int setup_issue(void **state)
 		if (strcmp(list_params[i], "None")) {
 			index = get_index(options, NUMOPTION, list_params[i]);
 			if (index == -1) {
-				printf("[-] Option is not supported!\n");
+				fprintf(stderr, "[  ERROR   ] --- Option is not supported!\n");
 				failed_setup = 1;
 				return -1;
 			}
 			if (index == 0) {
 				result = set_function(arch);
 				if (result == -1) {
-					printf("[-] Cannot get details\n");
+					fprintf(stderr, "[  ERROR   ] --- Cannot get details\n");
 					failed_setup = 1;
 					return -1;
 				}
-				getDetail = 1;						
+				getDetail = 1;		
 			}
 			cs_option(*handle, options[index].first_value, options[index].second_value);
 		}

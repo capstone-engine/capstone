@@ -15,7 +15,9 @@ char *get_detail_sysz(csh *handle, cs_mode mode, cs_insn *ins);
 char *get_detail_x86(csh *handle, cs_mode mode, cs_insn *ins);
 char *get_detail_xcore(csh *handle, cs_mode mode, cs_insn *ins);
 char *get_detail_m68k(csh *handle, cs_mode mode, cs_insn *ins);
+#ifndef __APPLE__
 char *get_detail_mos65xx(csh *handle, cs_mode mode, cs_insn *ins);
+#endif
 char *get_detail_tms320c64x(csh *handle, cs_mode mode, cs_insn *ins);
 
 #endif /* FACTORY_H */
