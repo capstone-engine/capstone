@@ -137,7 +137,7 @@ void test_single_MC(csh *handle, char *line)
 		_fail(__FILE__, __LINE__);
 	}
 	if (count > 1) {
-		fprintf(stderr, "[  ERROR   ] --- Multiple instructions disassembling doesn't support!\n");
+		fprintf(stderr, "[  ERROR   ] --- Multiple instructions(%d) disassembling doesn't support!\n", count);
 		_fail(__FILE__, __LINE__);
 	}
 
@@ -163,7 +163,7 @@ void test_single_MC(csh *handle, char *line)
 		count_noreg = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
 		tmp_noreg = (char *)malloc(strlen(insn[0].mnemonic) + strlen(insn[0].op_str) + 100);
 		strcpy(tmp_noreg, insn[0].mnemonic);
-		if (strlen(insn[i].op_str) > 0) {
+		if (strlen(insn[0].op_str) > 0) {
 			tmp_noreg[strlen(insn[0].mnemonic)] = ' ';
 			strcpy(tmp_noreg + strlen(insn[0].mnemonic) + 1, insn[0].op_str);
 		}
