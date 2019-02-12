@@ -83,7 +83,6 @@ static int setup_issue(void **state)
 	while (counter < size_lines && list_lines[counter][0] != '!') counter++; // get issue line
 	counter++;
 	while (counter < size_lines && list_lines[counter][0] != '!') counter++; // get arch/mode line
-
 	list_params = split(list_lines[counter] + 2, ", ", &size_params);
 	//	print_strs(list_params, size_params);
 	arch = get_value(arches, NUMARCH, list_params[0]);
@@ -148,7 +147,7 @@ static void test_file(const char *filename)
 {
 	int size, i;
 	char **list_str; 
-	char *content;
+	char *content, *tmp;
 	struct CMUnitTest *tests;
 	int issue_num, number_of_tests;
 
@@ -165,7 +164,7 @@ static void test_file(const char *filename)
 		tests = NULL;
 		for (i=0; i < size_lines; ++i) {
 			if (strstr(list_lines[i], "!# issue")) {
-				char *tmp = (char *)malloc(sizeof(char) * 100);
+				tmp = (char *)malloc(sizeof(char) * 100);
 				sscanf(list_lines[i], "!# issue %d\n", &issue_num);			
 				sprintf(tmp, "Issue #%d", issue_num);
 				tests = (struct CMUnitTest *)realloc(tests, sizeof(struct CMUnitTest) * (number_of_tests + 1));
@@ -182,17 +181,17 @@ static void test_file(const char *filename)
 
 		tests = NULL;
 		// tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * (size_lines - 1));
-		for (i=0; i < size_lines - 1; ++i) {
-			if (list_lines[i][0] == '#' || list_lines[i][0] == '0') {
-				char *tmp = (char *)malloc(sizeof(char) * 100);
-				sprintf(tmp, "Line %d", i+2);
+		for (i=1; i < size_lines; ++i) {
+			if (list_lines[i][0] == '0') {
+				tmp = (char *)malloc(sizeof(char) * 100);
+				sprintf(tmp, "Line %d", i+1);
 				tests = (struct CMUnitTest *)realloc(tests, sizeof(struct CMUnitTest) * (number_of_tests + 1));
 				tests[number_of_tests] = (struct CMUnitTest)cmocka_unit_test_setup_teardown(test_MC, setup_MC, teardown_MC);
 				tests[number_of_tests].name = tmp;
 				number_of_tests ++;
 			}
 		}
-		_cmocka_run_group_tests("Testing", tests, size_lines-1, NULL, NULL);
+		_cmocka_run_group_tests("Testing MC", tests, number_of_tests, NULL, NULL);
 	}
 
 	printf("[+] DONE: %s\n", filename);
