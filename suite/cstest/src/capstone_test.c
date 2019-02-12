@@ -258,11 +258,9 @@ int set_function(int arch)
 		case CS_ARCH_EVM:
 			function = get_detail_evm;
 			break;
-// #ifndef __APPLE__
 		case CS_ARCH_MOS65XX:
 			function = get_detail_mos65xx;
 			break;
-// #endif
 		case CS_ARCH_TMS320C64X:
 			function = get_detail_tms320c64x;
 			break;
