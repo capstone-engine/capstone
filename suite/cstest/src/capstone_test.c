@@ -84,15 +84,18 @@ double_dict options[] = {
 
 char *(*function)(csh *, cs_mode, cs_insn*) = NULL;
 
-static int triple_compare(const char *src1, const char *src2, const char *des)
+static int quadruple_compare(const char *src1, const char *src2, const char *des1, const char *des2)
 {
-	if (strcmp(src1, des) && strcmp(src2, des)) {
-		fprintf(stderr,"[  ERROR   ] --- \"%s\" != \"%s\"", src1, des);
+	if (strcmp(src1, des2) && strcmp(src2, des2) && strcmp(src1, des1) && strcmp(src1, des2)) {
+		fprintf(stderr,"[  ERROR   ] --- \"%s\" != \"%s\"", src1, des2);
 		if (strcmp(src1, src2))
-			fprintf(stderr, " (\"%s\" != \"%s\")", src2, des);
+			fprintf(stderr, " (\"%s\" != \"%s\")", src2, des2);
+		else if (strcmp(des1, des2))
+			fprintf(stderr, " (\"%s\" != \"%s\")", src1, des1);
 		fprintf(stderr, "\n");
 		return 0;
 	}
+
 	return 1;
 }
 
@@ -100,10 +103,11 @@ void test_single_MC(csh *handle, char *line)
 {
 	char **list_part, **list_byte, **list_data;
 	int size_part, size_byte, size_data, size_insn;
-	int i, count;
+	int i, count, count_noreg;
 	unsigned char *code;
 	cs_insn *insn;
-	char *tmp, *tmptmp;
+	char *tmp, *cs_hex, *mc_hex, *mc_dec;
+	char *tmp_noreg, *cs_hex_noreg, *mc_hex_noreg, *mc_dec_noreg;
 	char **offset_opcode;
 	int size_offset_opcode;
 	unsigned long offset;
@@ -117,13 +121,7 @@ void test_single_MC(csh *handle, char *line)
 		offset = 0;
 		list_byte = split(offset_opcode[0], ",", &size_byte);
 	}
-	code = (unsigned char *)malloc(sizeof(char) * size_byte);
-	for (i=0; i<size_byte; ++i) {
-		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
-		//	printf("Byte: 0x%.2x\n", (int)code[i]);
-	}
 
-	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
 	code = (unsigned char *)malloc(size_byte * sizeof(char));
 	for (i=0; i<size_byte; ++i) {
 		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
@@ -138,25 +136,66 @@ void test_single_MC(csh *handle, char *line)
 		fprintf(stderr, "[  ERROR   ] --- Failed to disassemble given code!\n");
 		_fail(__FILE__, __LINE__);
 	}
-	for (i=0; i<count; ++i) {
-		tmp = (char *)malloc(strlen(insn[i].mnemonic) + strlen(insn[i].op_str) + 100);
-		strcpy(tmp, insn[i].mnemonic);
-		if (strlen(insn[i].op_str) > 0) {
-			tmp[strlen(insn[i].mnemonic)] = ' ';
-			strcpy(tmp + strlen(insn[i].mnemonic) + 1, insn[i].op_str);
-		}
-		// printf("--------\nCapstone: %s\nUser: %s\n", tmp, list_data[i]);
-		tmptmp = strdup(tmp);
-		replace_hex(&tmp);
-		//		assert_string_equal(tmp, list_data[i]);
-		trim_str(&tmp);
-		trim_str(&tmptmp);
-		trim_str(&list_data[i]);
-		if (!triple_compare(tmp, tmptmp, list_data[i]))
-			_fail(__FILE__, __LINE__);
-		free(tmp);
-		free(tmptmp);
+	if (count > 1) {
+		fprintf(stderr, "[  ERROR   ] --- Multiple instructions disassembling doesn't support!\n");
+		_fail(__FILE__, __LINE__);
 	}
+
+	trim_str(&list_data[0]);
+
+	tmp = (char *)malloc(strlen(insn[0].mnemonic) + strlen(insn[0].op_str) + 100);
+	strcpy(tmp, insn[0].mnemonic);
+	if (strlen(insn[0].op_str) > 0) {
+		tmp[strlen(insn[0].mnemonic)] = ' ';
+		strcpy(tmp + strlen(insn[0].mnemonic) + 1, insn[0].op_str);
+	}
+	trim_str(&tmp);
+//	printf("--------\nCapstone: %s\nUser: %s\n", tmp, list_data[0]);
+	cs_hex = strdup(tmp);
+	replace_hex(&tmp);
+	mc_hex = strdup(list_data[0]);
+	mc_dec = strdup(list_data[0]);
+	replace_hex(&mc_dec);
+	// assert_string_equal(tmp, list_data[i]);
+	
+
+	if ( cs_option(*handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_NOREGNAME) == CS_ERR_OK ) {
+		count_noreg = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
+		tmp_noreg = (char *)malloc(strlen(insn[0].mnemonic) + strlen(insn[0].op_str) + 100);
+		strcpy(tmp_noreg, insn[0].mnemonic);
+		if (strlen(insn[i].op_str) > 0) {
+			tmp_noreg[strlen(insn[0].mnemonic)] = ' ';
+			strcpy(tmp_noreg + strlen(insn[0].mnemonic) + 1, insn[0].op_str);
+		}
+		
+		trim_str(&tmp_noreg);
+		cs_hex_noreg = strdup(tmp_noreg);
+		replace_hex(&tmp_noreg);
+		mc_hex_noreg = strdup(list_data[0]);
+		mc_dec_noreg = strdup(list_data[0]);	
+		replace_hex(&mc_dec_noreg);	
+
+		if (strcmp(tmp, mc_hex) && strcmp(cs_hex, mc_hex) && strcmp(tmp, mc_dec) && strcmp(tmp, mc_hex) 
+			&& strcmp(tmp_noreg, mc_hex_noreg) && strcmp(cs_hex_noreg, mc_hex_noreg) && strcmp(tmp_noreg, mc_dec_noreg) && strcmp(tmp_noreg, mc_hex_noreg)) {
+			fprintf(stderr, "[  ERROR   ] --- \"%s\" != \"%s\"\n", tmp, list_data[0]);
+			_fail(__FILE__, __LINE__);
+		}
+		
+		free(tmp_noreg);
+		free(cs_hex_noreg);
+		free(mc_hex_noreg);
+		free(mc_dec_noreg);
+
+		cs_option(*handle, CS_OPT_SYNTAX, 0);
+	}
+	else if (!quadruple_compare(tmp, cs_hex, mc_dec, mc_hex))
+		_fail(__FILE__, __LINE__);
+	
+	free(tmp);
+	free(cs_hex);
+	free(mc_hex);
+	free(mc_dec);
+	
 	cs_free(insn, count);
 	free(list_part);
 	free(list_byte);
@@ -220,9 +259,11 @@ int set_function(int arch)
 		case CS_ARCH_EVM:
 			function = get_detail_evm;
 			break;
+#ifndef __APPLE__
 		case CS_ARCH_MOS65XX:
 			function = get_detail_mos65xx;
 			break;
+#endif
 		case CS_ARCH_TMS320C64X:
 			function = get_detail_tms320c64x;
 			break;

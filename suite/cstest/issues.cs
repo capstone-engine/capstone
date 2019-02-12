@@ -136,7 +136,7 @@
 
 !# issue 750
 !#CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
-0x0: 0x0e,0x00,0x20,0xe9 == stmdb r0!, {r1, r2, r3} ; op_count: 4 ; operands[0].type: REG = r0 ; operands[0].access: READ ; operands[1].type: REG = r1 ; operands[2].type: REG = r2 ; operands[3].type: REG = r3 ; Write-back: True ; Registers read: r0 ; Groups: arm 
+0x0: 0x0e,0x00,0x20,0xe9 == stmdb r0!, {r1, r2, r3} ; op_count: 4 ; operands[0].type: REG = r0 ; operands[0].access: READ | WRITE ; operands[1].type: REG = r1 ; operands[1].access: READ ; operands[2].type: REG = r2 ; operands[2].access: READ ; operands[3].type: REG = r3 ; operands[3].access: READ ; Write-back: True ; Registers read: r0 r1 r2 r3 ; Registers modified: r0 ; Groups: arm
 
 !# issue 747
 !#CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
@@ -148,7 +148,7 @@
 
 !# issue 746
 !#CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
-0x0: 0x89,0x00,0x2d,0xe9 == push {r0, r3, r7} ; op_count: 3 ; operands[0].type: REG = r0 ; operands[0].access: READ ; operands[1].type: REG = r3 ; operands[1].access: READ ; operands[2].type: REG = r7 ; operands[2].access: READ ; Registers read: sp r0 r3 r7 ; Registers modified: sp ; Groups: arm 
+0x0: 0x89,0x00,0x2d,0xe9 == push {r0, r3, r7} ; op_count: 3 ; operands[0].type: REG = r0 ; operands[0].access: READ | WRITE ; operands[1].type: REG = r3 ; operands[1].access: READ | WRITE ; operands[2].type: REG = r7 ; operands[2].access: READ | WRITE ; Registers read: sp r0 r3 r7 ; Registers modified: sp r0 r3 r7 ; Groups: arm 
 
 !# issue 744
 !#CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
