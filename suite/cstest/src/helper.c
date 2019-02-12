@@ -103,7 +103,7 @@ void add_str(char **src, const char *format, ...)
 	free(tmp);
 }
 
-void replace_hex(char src[])
+void replace_hex(char *src)
 {
 	char *tmp, *result, *found, *origin;
 	int i;
@@ -137,6 +137,7 @@ void replace_hex(char src[])
 		fprintf(stderr, "[  Error   ] --- Buffer Overflow in replace_hex()\n");
 		exit(-1);
 	}
+
 	strcpy(src, result);
 	free(result);
 	free(origin);
@@ -172,7 +173,7 @@ void listdir(const char *name, char ***files, int *num_files)
 	closedir(dir);
 }
 
-void trim_str(char str[])
+void trim_str(char *str)
 {
 	char tmp[MAXMEM];
 	int start, end, j, i;
@@ -185,6 +186,7 @@ void trim_str(char str[])
 
 	for (i=start; i<=end; ++i)
 		tmp[j++] = str[i];
+
 	tmp[j] = '\0';
 	strcpy(str, tmp);
 

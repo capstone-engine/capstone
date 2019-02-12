@@ -13,8 +13,8 @@ char **split(char *str, char *delim, int *size);
 void print_strs(char **list_str, int size);
 void free_strs(char **list_str, int size);
 void add_str(char **src, const char *format, ...);
-void trim_str(char src[]);
-void replace_hex(char src[]);
+void trim_str(char *src);
+void replace_hex(char *src);
 const char *get_filename_ext(const char *filename);
 
 char *readfile(const char *filename);
