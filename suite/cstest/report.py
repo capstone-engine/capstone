@@ -53,7 +53,7 @@ def get_report_folder(toolpath, folderpath, details):
 		for f in files:
 			if f.split('.')[-1] == 'cs':
 				print '[-] Target:', f,
-				get_report_file(toolpath, os.sep.join(x for x in path) + os.sep + f, details) 
+				get_report_file(toolpath, os.sep.join(x for x in path) + os.sep + f, details)
 
 if __name__ == '__main__':
 	Done = False
@@ -71,7 +71,7 @@ if __name__ == '__main__':
 			elif opt == '-t':
 				toolpath = arg
 			elif opt == '-D':
-				details = True	
+				details = True
 	except getopt.GetoptError:
 		Usage(sys.argv[0])
 

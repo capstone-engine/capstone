@@ -1,6 +1,6 @@
 #include "factory.h"
 
-#ifndef __APPLE__
+// #ifndef __APPLE__
 static const char *get_am_name(mos65xx_address_mode mode)
 {
 	switch(mode) {
@@ -75,4 +75,4 @@ char *get_detail_mos65xx(csh *handle, cs_mode mode, cs_insn *ins)
 	}
 	return result;
 }
-#endif
+// #endif
