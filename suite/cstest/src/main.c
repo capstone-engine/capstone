@@ -160,7 +160,7 @@ static void test_file(const char *filename)
 	if (strstr(filename, "issue")) {
 		number_of_tests = 0;
 		list_lines = split(content, "\n", &size_lines);	
-		//		tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * size_lines / 3);
+		// tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * size_lines / 3);
 		tests = NULL;
 		for (i=0; i < size_lines; ++i) {
 			if (strstr(list_lines[i], "!# issue")) {
@@ -181,7 +181,7 @@ static void test_file(const char *filename)
 
 		tests = NULL;
 		// tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * (size_lines - 1));
-		for (i=1; i < size_lines; ++i) {
+		for (i = 1; i < size_lines; ++i) {
 			if (list_lines[i][0] == '0') {
 				tmp = (char *)malloc(sizeof(char) * 100);
 				sprintf(tmp, "Line %d", i+1);
