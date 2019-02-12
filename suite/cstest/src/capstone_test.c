@@ -84,14 +84,14 @@ double_dict options[] = {
 
 char *(*function)(csh *, cs_mode, cs_insn*) = NULL;
 
-static int quadruple_compare(const char *src1, const char *src2, const char *des1, const char *des2)
+static int quadruple_compare(const char *src1, const char *src2, const char *des1, const char *des2, const char *opcode)
 {
 	if (strcmp(src1, des2) && strcmp(src2, des2) && strcmp(src1, des1) && strcmp(src1, des2)) {
-		fprintf(stderr,"[  ERROR   ] --- \"%s\" != \"%s\"", src1, des2);
+		fprintf(stderr,"[  ERROR   ] --- %s --- \"%s\" != \"%s\"", src2, des2, opcode);
 		if (strcmp(src1, src2))
-			fprintf(stderr, " (\"%s\" != \"%s\")", src2, des2);
+			fprintf(stderr, " (\"%s\" != \"%s\")", src1, des2);
 		else if (strcmp(des1, des2))
-			fprintf(stderr, " (\"%s\" != \"%s\")", src1, des1);
+			fprintf(stderr, " (\"%s\" != \"%s\")", src2, des1);
 		fprintf(stderr, "\n");
 		return 0;
 	}
@@ -133,11 +133,11 @@ void test_single_MC(csh *handle, char *line)
 	// printf("====\nCount: %d\nSize_data: %d\n", count, size_data);
 	//	assert_int_equal(size_data, count);
 	if (count == 0) {
-		fprintf(stderr, "[  ERROR   ] --- Failed to disassemble given code!\n");
+		fprintf(stderr, "[  ERROR   ] --- %s --- Failed to disassemble given code!\n", list_part[0]);
 		_fail(__FILE__, __LINE__);
 	}
 	if (count > 1) {
-		fprintf(stderr, "[  ERROR   ] --- Multiple instructions(%d) disassembling doesn't support!\n", count);
+		fprintf(stderr, "[  ERROR   ] --- %s --- Multiple instructions(%d) disassembling doesn't support!\n", list_part[0], count);
 		_fail(__FILE__, __LINE__);
 	}
 
@@ -159,7 +159,7 @@ void test_single_MC(csh *handle, char *line)
 	// assert_string_equal(tmp, list_data[i]);
 
 
-	if (cs_option(*handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_NOREGNAME) == CS_ERR_OK) {
+	if ( cs_option(*handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_NOREGNAME) == CS_ERR_OK ) {
 		count_noreg = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
 		tmp_noreg = (char *)malloc(strlen(insn[0].mnemonic) + strlen(insn[0].op_str) + 100);
 		strcpy(tmp_noreg, insn[0].mnemonic);
@@ -177,7 +177,7 @@ void test_single_MC(csh *handle, char *line)
 
 		if (strcmp(tmp, mc_hex) && strcmp(cs_hex, mc_hex) && strcmp(tmp, mc_dec) && strcmp(tmp, mc_hex)
 			&& strcmp(tmp_noreg, mc_hex_noreg) && strcmp(cs_hex_noreg, mc_hex_noreg) && strcmp(tmp_noreg, mc_dec_noreg) && strcmp(tmp_noreg, mc_hex_noreg)) {
-			fprintf(stderr, "[  ERROR   ] --- \"%s\" != \"%s\"\n", tmp, list_data[0]);
+			fprintf(stderr, "[  ERROR   ] --- %s --- \"%s\" != \"%s\"\n", list_part[0], cs_hex, list_data[0]);
 			_fail(__FILE__, __LINE__);
 		}
 
@@ -187,7 +187,8 @@ void test_single_MC(csh *handle, char *line)
 		free(mc_dec_noreg);
 
 		cs_option(*handle, CS_OPT_SYNTAX, 0);
-	} else if (!quadruple_compare(tmp, cs_hex, mc_dec, mc_hex))
+	}
+	else if (!quadruple_compare(tmp, cs_hex, mc_dec, mc_hex, list_part[0]))
 		_fail(__FILE__, __LINE__);
 
 	free(tmp);
@@ -335,7 +336,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 	list_part_issue_result = split(list_part[1], " ; ", &size_part_issue_result);
 
 	if (size_part_cs_result != size_part_issue_result) {
-		fprintf(stderr, "[  ERROR   ] --- Number of details doesn't match\n");
+		fprintf(stderr, "[  ERROR   ] --- %s --- Number of details doesn't match\n", list_part[0]);
 		_fail(__FILE__, __LINE__);
 	}
 
