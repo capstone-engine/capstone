@@ -34,6 +34,7 @@
 #define NUMARCH 9
 #define NUMMODE 24
 #define NUMOPTION 40
+#define MAXMEM 1024
 
 typedef struct {
 	const char *str;

@@ -103,7 +103,7 @@ void add_str(char **src, const char *format, ...)
 	free(tmp);
 }
 
-void replace_hex(char **src)
+void replace_hex(char src[])
 {
 	char *tmp, *result, *found;
 	int i;
@@ -111,7 +111,7 @@ void replace_hex(char **src)
 
 	result = (char *)malloc(sizeof(char));
 	result[0] = '\0';
-	tmp = *src;
+	tmp = strdup(src);
 
 	while ( (found = strstr(tmp, "0x")) != NULL ) {
 		*found = '\0';
@@ -132,8 +132,13 @@ void replace_hex(char **src)
 	}
 
 	add_str(&result, "%s", tmp);
-	free(*src);
-	*src = result;
+	if (strlen(result) >= MAXMEM) {
+		fprintf(stderr, "[  Error   ] --- Buffer Overflow in replace_hex()\n");
+		exit(-1);
+	}
+	strcpy(src, result);
+	free(result);
+	free(tmp);
 }
 
 void listdir(const char *name, char ***files, int *num_files)
@@ -166,17 +171,19 @@ void listdir(const char *name, char ***files, int *num_files)
 	closedir(dir);
 }
 
-void trim_str(char **str)
+void trim_str(char str[])
 {
-	char *end;
+	char tmp[MAXMEM];
+	int i, j;
 
-	while(isspace((unsigned char)**str)) (*str)++;
-	if (**str == 0) return;
-
-	end = *str + strlen(*str) - 1;
-	while(end > *str && isspace((unsigned char)*end)) end--;
-
-	end[1] = '\0';
+	for (i=0, j=0; i<strlen(str); i++,j++) {
+		if (str[i] != ' ')
+			tmp[j] = str[i];
+		else
+			j--;
+	}
+	tmp[j]=0;
+	strcpy(str, tmp);
 
 	return;
 }
