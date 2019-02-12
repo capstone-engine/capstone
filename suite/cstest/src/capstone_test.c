@@ -159,7 +159,7 @@ void test_single_MC(csh *handle, char *line)
 	// assert_string_equal(tmp, list_data[i]);
 
 
-	if ( cs_option(*handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_NOREGNAME) == CS_ERR_OK ) {
+	if (cs_option(*handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_NOREGNAME) == CS_ERR_OK) {
 		count_noreg = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
 		tmp_noreg = (char *)malloc(strlen(insn[0].mnemonic) + strlen(insn[0].op_str) + 100);
 		strcpy(tmp_noreg, insn[0].mnemonic);
@@ -187,8 +187,7 @@ void test_single_MC(csh *handle, char *line)
 		free(mc_dec_noreg);
 
 		cs_option(*handle, CS_OPT_SYNTAX, 0);
-	}
-	else if (!quadruple_compare(tmp, cs_hex, mc_dec, mc_hex, list_part[0]))
+	} else if (!quadruple_compare(tmp, cs_hex, mc_dec, mc_hex, list_part[0]))
 		_fail(__FILE__, __LINE__);
 
 	free(tmp);
