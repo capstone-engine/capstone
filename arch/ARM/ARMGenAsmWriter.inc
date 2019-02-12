@@ -6289,7 +6289,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 8:
     // FMSTAT
-    SStream_concat0(O, "\tAPSR_nzcv, fpscr"); 
+    SStream_concat0(O, "\tapsr_nzcv, fpscr"); 
 	ARM_addReg(MI, ARM_REG_APSR_NZCV);
 	ARM_addReg(MI, ARM_REG_FPSCR);
     return;
