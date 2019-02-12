@@ -8,6 +8,7 @@ static int failed_setup;
 static int size_lines;
 static cs_mode issue_mode;
 static int getDetail;
+static int mc_mode;
 
 static int setup_MC(void **state)
 {
@@ -58,7 +59,7 @@ static int setup_MC(void **state)
 
 static void test_MC(void **state)
 {
-	test_single_MC((csh *)*state, list_lines[counter]);
+	test_single_MC((csh *)*state, mc_mode, list_lines[counter]);
 }
 
 static int teardown_MC(void **state)
