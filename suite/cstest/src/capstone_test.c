@@ -157,7 +157,7 @@ void test_single_MC(csh *handle, char *line)
 	mc_dec = strdup(list_data[0]);
 	replace_hex(&mc_dec);
 	// assert_string_equal(tmp, list_data[i]);
-	
+
 
 	if ( cs_option(*handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_NOREGNAME) == CS_ERR_OK ) {
 		count_noreg = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
@@ -167,20 +167,20 @@ void test_single_MC(csh *handle, char *line)
 			tmp_noreg[strlen(insn[0].mnemonic)] = ' ';
 			strcpy(tmp_noreg + strlen(insn[0].mnemonic) + 1, insn[0].op_str);
 		}
-		
+
 		trim_str(&tmp_noreg);
 		cs_hex_noreg = strdup(tmp_noreg);
 		replace_hex(&tmp_noreg);
 		mc_hex_noreg = strdup(list_data[0]);
-		mc_dec_noreg = strdup(list_data[0]);	
-		replace_hex(&mc_dec_noreg);	
+		mc_dec_noreg = strdup(list_data[0]);
+		replace_hex(&mc_dec_noreg);
 
-		if (strcmp(tmp, mc_hex) && strcmp(cs_hex, mc_hex) && strcmp(tmp, mc_dec) && strcmp(tmp, mc_hex) 
+		if (strcmp(tmp, mc_hex) && strcmp(cs_hex, mc_hex) && strcmp(tmp, mc_dec) && strcmp(tmp, mc_hex)
 			&& strcmp(tmp_noreg, mc_hex_noreg) && strcmp(cs_hex_noreg, mc_hex_noreg) && strcmp(tmp_noreg, mc_dec_noreg) && strcmp(tmp_noreg, mc_hex_noreg)) {
 			fprintf(stderr, "[  ERROR   ] --- \"%s\" != \"%s\"\n", tmp, list_data[0]);
 			_fail(__FILE__, __LINE__);
 		}
-		
+
 		free(tmp_noreg);
 		free(cs_hex_noreg);
 		free(mc_hex_noreg);
@@ -190,12 +190,12 @@ void test_single_MC(csh *handle, char *line)
 	}
 	else if (!quadruple_compare(tmp, cs_hex, mc_dec, mc_hex))
 		_fail(__FILE__, __LINE__);
-	
+
 	free(tmp);
 	free(cs_hex);
 	free(mc_hex);
 	free(mc_dec);
-	
+
 	cs_free(insn, count);
 	free(list_part);
 	free(list_byte);
@@ -259,11 +259,11 @@ int set_function(int arch)
 		case CS_ARCH_EVM:
 			function = get_detail_evm;
 			break;
-#ifndef __APPLE__
+// #ifndef __APPLE__
 		case CS_ARCH_MOS65XX:
 			function = get_detail_mos65xx;
 			break;
-#endif
+// #endif
 		case CS_ARCH_TMS320C64X:
 			function = get_detail_tms320c64x;
 			break;

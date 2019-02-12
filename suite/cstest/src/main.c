@@ -109,7 +109,7 @@ static int setup_issue(void **state)
 					failed_setup = 1;
 					return -1;
 				}
-				getDetail = 1;		
+				getDetail = 1;
 			}
 			cs_option(*handle, options[index].first_value, options[index].second_value);
 		}
@@ -119,7 +119,6 @@ static int setup_issue(void **state)
 	while (counter < size_lines && list_lines[counter][0] != '0') counter ++;
 	free_strs(list_params, size_params);
 	return 0;
-
 }
 
 static void test_issue(void **state)
