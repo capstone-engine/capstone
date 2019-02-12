@@ -131,8 +131,6 @@ void test_single_MC(csh *handle, char *line)
 
 //	list_data = split(list_part[1], ";", &size_data);
 	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
-	// printf("====\nCount: %d\nSize_data: %d\n", count, size_data);
-	//	assert_int_equal(size_data, count);
 	if (count == 0) {
 		fprintf(stderr, "[  ERROR   ] --- %s --- Failed to disassemble given code!\n", list_part[0]);
 		free(list_part);
@@ -331,10 +329,6 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 			strcpy(tmp + strlen(insn[i].mnemonic) + 1, insn[i].op_str);
 		}
 		add_str(&cs_result, "%s", tmp);
-		/*
-		   if (i < count - 1)
-		   add_str(&cs_result, ";");
-		 */
 		free(tmp);
 	}
 
@@ -355,7 +349,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 	list_part_issue_result = split(list_part[1], " ; ", &size_part_issue_result);
 
 	if (size_part_cs_result != size_part_issue_result) {
-		fprintf(stderr, "[  ERROR   ] --- %s --- Number of details doesn't match\n", list_part[0]);
+		fprintf(stderr, "[  ERROR   ] --- %s --- Number of details( Capstone: %d --- Issue: %d ) doesn't match\n", list_part[0], size_part_cs_result, size_part_issue_result);
 		_fail(__FILE__, __LINE__);
 	}
 
@@ -376,7 +370,6 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 		}
 	}
 
-	//	assert_string_equal(cs_result, list_part[1]);
 	cs_free(insn, count);
 	free(list_part);
 	free(list_byte);

@@ -105,13 +105,14 @@ void add_str(char **src, const char *format, ...)
 
 void replace_hex(char src[])
 {
-	char *tmp, *result, *found;
+	char *tmp, *result, *found, *origin;
 	int i;
 	unsigned long long int value;
 
 	result = (char *)malloc(sizeof(char));
 	result[0] = '\0';
 	tmp = strdup(src);
+	origin = tmp;
 
 	while ( (found = strstr(tmp, "0x")) != NULL ) {
 		*found = '\0';
@@ -138,7 +139,7 @@ void replace_hex(char src[])
 	}
 	strcpy(src, result);
 	free(result);
-	free(tmp);
+	free(origin);
 }
 
 void listdir(const char *name, char ***files, int *num_files)
@@ -174,15 +175,17 @@ void listdir(const char *name, char ***files, int *num_files)
 void trim_str(char str[])
 {
 	char tmp[MAXMEM];
-	int i, j;
+	int start, end, j, i;
 
-	for (i=0, j=0; i<strlen(str); i++,j++) {
-		if (str[i] != ' ')
-			tmp[j] = str[i];
-		else
-			j--;
-	}
-	tmp[j]=0;
+	start = 0;
+	end = strlen(str) - 1;
+	j = 0;
+	while (start < strlen(str) && isspace(str[start])) start++;
+	while (end >= 0 && isspace(str[end])) end--;
+
+	for (i=start; i<=end; ++i)
+		tmp[j++] = str[i];
+	tmp[j] = '\0';
 	strcpy(str, tmp);
 
 	return;
