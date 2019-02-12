@@ -114,17 +114,17 @@ void replace_hex(char *src)
 	tmp = strdup(src);
 	origin = tmp;
 
-	while ( (found = strstr(tmp, "0x")) != NULL ) {
+	while ((found = strstr(tmp, "0x")) != NULL) {
 		*found = '\0';
 		found += 2;
 		value = 0;
 
-		while ( *found != '\0' && isxdigit(*found) ) {
+		while (*found != '\0' && isxdigit(*found)) {
 			if (*found >= 'a' && *found <='f')
 				value = value*0x10 + (*found - 'a' + 10);
 			else
 				value = value*0x10 + (*found - '0');
-			//			printf("====> %d -- %llu\n", *found, value);
+			//	printf("====> %d -- %llu\n", *found, value);
 			found++;
 		}
 
@@ -135,7 +135,65 @@ void replace_hex(char *src)
 	add_str(&result, "%s", tmp);
 	if (strlen(result) >= MAXMEM) {
 		fprintf(stderr, "[  Error   ] --- Buffer Overflow in replace_hex()\n");
-		exit(-1);
+		free(result);
+		free(origin);
+		_fail(__FILE__, __LINE__);
+	}
+
+	strcpy(src, result);
+	free(result);
+	free(origin);
+}
+
+void replace_negative(char *src, int mode)
+{
+	char *tmp, *result, *found, *origin;
+	int i, cnt;
+	char *value;
+	unsigned short int tmp_short;
+	unsigned int tmp_int;
+	unsigned long int tmp_long;
+
+	result = (char *)malloc(sizeof(char));
+	result[0] = '\0';
+	tmp = strdup(src);
+	origin = tmp;
+
+	while ((found = strstr(tmp, "-")) != NULL) {
+		*found = '\0';
+		found ++;
+		
+		value = strdup("-");
+		cnt = 2;
+
+		while (*found != '\0' && isdigit(*found)) {
+			value = (char *)realloc(value, cnt + 1);
+			value[cnt - 1] = *found;
+			value[cnt] = '\0';
+			cnt ++;
+			found++;
+		}
+
+		if (mode == X86_16) {
+			sscanf(value, "%hu", &tmp_short);
+			add_str(&result, "%s%hu", tmp, tmp_short);
+		} else if (mode == X86_32) {
+			sscanf(value, "%u", &tmp_int);
+			add_str(&result, "%s%u", tmp, tmp_int);
+		} else if (mode == X86_64) {
+			sscanf(value, "%lu", &tmp_long);
+			add_str(&result, "%s%lu", tmp, tmp_long);
+		}
+		tmp = found;
+		free(value);
+	}
+	
+	add_str(&result, "%s", tmp);
+	if (strlen(result) >= MAXMEM) {
+		fprintf(stderr, "[  Error   ] --- Buffer Overflow in replace_negative()\n");
+		free(result);
+		free(origin);
+		_fail(__FILE__, __LINE__);
 	}
 
 	strcpy(src, result);
