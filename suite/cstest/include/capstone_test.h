@@ -54,7 +54,7 @@ extern char *(*function)(csh *, cs_mode, cs_insn*);
 
 int get_index(double_dict d[], unsigned size, const char *str);
 int get_value(single_dict d[], unsigned size, const char *str);
-void test_single_MC(csh *handle, char *line);
+void test_single_MC(csh *handle, int mc_mode, char *line);
 void test_single_issue(csh *handle, cs_mode mode, char *line, int detail);
 int set_function(int arch);
 

@@ -87,7 +87,7 @@ char *(*function)(csh *, cs_mode, cs_insn*) = NULL;
 static int quadruple_compare(const char *src1, const char *src2, const char *des1, const char *des2, const char *opcode)
 {
 	if (strcmp(src1, des2) && strcmp(src2, des2) && strcmp(src1, des1) && strcmp(src1, des2)) {
-		fprintf(stderr,"[  ERROR   ] --- %s --- \"%s\" != \"%s\"", src2, des2, opcode);
+		fprintf(stderr,"[  ERROR   ] --- %s --- \"%s\" != \"%s\"", opcode, src2, des2);
 		if (strcmp(src1, src2))
 			fprintf(stderr, " (\"%s\" != \"%s\")", src1, des2);
 		else if (strcmp(des1, des2))
@@ -99,7 +99,7 @@ static int quadruple_compare(const char *src1, const char *src2, const char *des
 	return 1;
 }
 
-void test_single_MC(csh *handle, char *line)
+void test_single_MC(csh *handle, int mc_mode, char *line)
 {
 	char **list_part, **list_byte;//, **list_data;
 	int size_part, size_byte, size_data, size_insn;
@@ -128,6 +128,7 @@ void test_single_MC(csh *handle, char *line)
 		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
 		// printf("Byte: 0x%.2x\n", (int)code[i]);
 	}
+	cs_option(*handle, CS_OPT_UNSIGNED, CS_OPT_ON);
 
 	//	list_data = split(list_part[1], ";", &size_data);
 	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
@@ -152,6 +153,7 @@ void test_single_MC(csh *handle, char *line)
 
 	for (p=list_part[1]; *p; ++p) *p = tolower(*p);
 	trim_str(list_part[1]);
+	//	replace_negative(list_part[1], mc_mode);
 
 	//	tmp = (char *)malloc(strlen(insn[0].mnemonic) + strlen(insn[0].op_str) + 100);
 	strcpy(tmp, insn[0].mnemonic);
@@ -208,6 +210,7 @@ void test_single_MC(csh *handle, char *line)
 		free(code);
 		// free(list_data);
 		cs_free(insn, count);
+		_fail(__FILE__, __LINE__);
 	}
 
 	free(list_part);
