@@ -677,6 +677,9 @@ static char *getRegisterName(unsigned RegNo) {
     209, 231, 20, 50, 60, 
   };
 
+  if (RegNo >= sizeof(RegAsmOffset) / sizeof(uint16_t))
+    return "invalid";
+
   return AsmStrs+RegAsmOffset[RegNo-1];
 #else
   return NULL;
