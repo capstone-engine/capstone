@@ -197,6 +197,7 @@ static void printf32mem(MCInst *MI, unsigned OpNo, SStream *O)
 			}
 			break;
 	}
+
 	printMemReference(MI, OpNo, O);
 }
 
@@ -771,6 +772,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	MCOperand *SegReg = MCInst_getOperand(MI, Op + X86_AddrSegmentReg);
 	uint64_t ScaleVal;
 	int segreg;
+	int64_t DispVal = 1;
 
 	if (MI->csh->detail) {
 		uint8_t access[6];
@@ -799,7 +801,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	}
 
 	if (MCOperand_isImm(DispSpec)) {
-		int64_t DispVal = MCOperand_getImm(DispSpec);
+		DispVal = MCOperand_getImm(DispSpec);
 		if (MI->csh->detail)
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = DispVal;
 		if (DispVal) {
@@ -817,7 +819,6 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 				}
 			}
 		} else {
-            SStream_concat0(O, "0");
 		}
 	}
 
@@ -838,6 +839,9 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 			}
 		}
 		SStream_concat0(O, ")");
+	} else {
+		if (!DispVal)
+			SStream_concat0(O, "0");
 	}
 
 	if (MI->csh->detail)
