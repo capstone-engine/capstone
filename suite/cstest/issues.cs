@@ -124,7 +124,7 @@
 
 !# issue 789
 !#CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT
-0x0: 0x8e,0x1e == movw 0(%rsi), %ds
+0x0: 0x8e,0x1e == movw (%rsi), %ds
 
 !# issue 767
 !#CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
