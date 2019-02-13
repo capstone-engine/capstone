@@ -327,16 +327,13 @@ int main(int argc, char *argv[])
 				e_flag = 1;
 				break;
 			default:
-				printf("Usage: %s [-f <file_name.cs>] [-d <directory>]\n", argv[0]);
+				printf("Usage: %s [-e] [-f <file_name.cs>] [-d <directory>]\n", argv[0]);
 				exit(-1);
 		}
 	}
 
 	if (flag == 0) {
-		printf("Usage: %s [-f <file_name.cs>] [-d <directory>]\n", argv[0]);
-		char tmp[] = "ldursh x17, [x19, #0xff00]";
-		replace_hex(tmp);
-		puts(tmp);
+		printf("Usage: %s [-e] [-f <file_name.cs>] [-d <directory>]\n", argv[0]);
 		exit(-1);
 	}
 
