@@ -1,4 +1,4 @@
-# CS_ARCH_ARM, CS_MODE_THUMB, 
+# CS_ARCH_ARM, CS_MODE_THUMB, None
 0x12,0xea,0x01,0x00 = ands.w r0, r2, r1
 0x0a,0x40 = ands r2, r1
 0x0a,0x40 = ands r2, r1
