@@ -1,3 +1,7 @@
+!# issue 0
+!#CS_ARCH_X86, CS_MODE_64, None
+0x66,0x83,0xc0,0x80 == add	ax, 0xff80
+
 !# issue 1323
 !#CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
 0x0: 0x70,0x47,0x00 == bx lr ; op_count: 1 ; operands[0].type: REG = lr ; operands[0].access: READ ; Registers read: lr ; Registers modified: pc ; Groups: thumb jump 
