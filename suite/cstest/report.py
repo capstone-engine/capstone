@@ -49,18 +49,23 @@ def get_report_file(toolpath, filepath, getDetails, cmt_out):
 			if len(f) > 0 and cmt_out is True:
 				tmp_cmd = ['sed', '-E', '-i.bak', 's/({})(.*)/\/\/ \\1\\2/g'.format(c), filepath]
 				sed_proc = Popen(tmp_cmd, stdout=PIPE, stderr=PIPE)
-				sed_out, sed_err = sed_proc.communicate()
-				print sed_out
-				print sed_err	
+				sed_proc.communicate()
 		print '\n'
+		return 0
+	elif len(details) > 0:
+		return 0;
+	return 1
 
 def get_report_folder(toolpath, folderpath, details, cmt_out):
+	result = 1
 	for root, dirs, files in os.walk(folderpath):
 		path = root.split(os.sep)
 		for f in files:
 			if f.split('.')[-1] == 'cs':
 				print '[-] Target:', f,
-				get_report_file(toolpath, os.sep.join(x for x in path) + os.sep + f, details, cmt_out)
+				result *= get_report_file(toolpath, os.sep.join(x for x in path) + os.sep + f, details, cmt_out)
+	
+	sys.exit(result ^ 1)
 
 if __name__ == '__main__':
 	Done = False
@@ -68,7 +73,7 @@ if __name__ == '__main__':
 	toolpath = ''
 	cmt_out = False
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], "c:t:f:d:D")
+		opts, args = getopt.getopt(sys.argv[1:], "ct:f:d:D")
 		for opt, arg in opts:
 			if opt == '-f':
 				get_report_file(toolpath, arg, details, cmt_out)
@@ -80,7 +85,7 @@ if __name__ == '__main__':
 				toolpath = arg
 			elif opt == '-D':
 				details = True
-			elif opt == 'c':
+			elif opt == '-c':
 				cmt_out = True
 
 	except getopt.GetoptError:

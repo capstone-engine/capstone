@@ -117,7 +117,8 @@ double_dict options[] = {
 	{"CS_MODE_M680X_6809", CS_OPT_MODE, CS_MODE_M680X_6809},
 	{"CS_MODE_M680X_6811", CS_OPT_MODE, CS_MODE_M680X_6811},
 	{"CS_MODE_M680X_CPU12", CS_OPT_MODE, CS_MODE_M680X_CPU12},
-	{"CS_MODE_M680X_HCS08", CS_OPT_MODE, CS_MODE_M680X_HCS08}
+	{"CS_MODE_M680X_HCS08", CS_OPT_MODE, CS_MODE_M680X_HCS08},
+	{"CS_OPT_UNSIGNED", CS_OPT_ON, CS_OPT_UNSIGNED}
 };
 
 char *(*function)(csh *, cs_mode, cs_insn*) = NULL;
@@ -166,7 +167,6 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
 		//	printf("Byte: 0x%.2x\n", (int)code[i]);
 	}
-	cs_option(*handle, CS_OPT_UNSIGNED, CS_OPT_ON);
 
 	//	list_data = split(list_part[1], ";", &size_data);
 	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
