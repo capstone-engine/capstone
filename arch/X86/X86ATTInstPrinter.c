@@ -331,10 +331,29 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	if (MCOperand_isReg(Op)) {
 		printRegName(O, MCOperand_getReg(Op));
 	} else if (MCOperand_isImm(Op)) {
+		uint8_t encsize;
+		uint8_t opsize = X86_immediate_size(MCInst_getOpcode(MI), &encsize);
+
 		// Print X86 immediates as signed values.
 		int64_t imm = MCOperand_getImm(Op);
 		if (imm < 0) {
 			if (MI->csh->imm_unsigned) {
+				if (opsize) {
+					switch(opsize) {
+						default:
+							break;
+						case 1:
+							imm &= 0xff;
+							break;
+						case 2:
+							imm &= 0xffff;
+							break;
+						case 4:
+							imm &= 0xffffffff;
+							break;
+					}
+				}
+
 				SStream_concat(O, "$0x%"PRIx64, imm);
 			} else {
 				if (imm < -HEX_THRESHOLD)
@@ -678,6 +697,22 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 						SStream_concat(O, "$%"PRIu64, imm);
 				} else {
 					if (MI->csh->imm_unsigned) {
+						if (opsize) {
+							switch(opsize) {
+								default:
+									break;
+								case 1:
+									imm &= 0xff;
+									break;
+								case 2:
+									imm &= 0xffff;
+									break;
+								case 4:
+									imm &= 0xffffffff;
+									break;
+							}
+						}
+
 						SStream_concat(O, "$0x%"PRIx64, imm);
 					} else {
 						if (imm == 0x8000000000000000LL)  // imm == -imm
