@@ -12,7 +12,7 @@ def Usage(s):
 	print 'Usage: {} -t <cstest_path> [-f <file_name.cs>] [-d <directory>]'.format(s)
 	sys.exit(-1)
 
-def get_report_file(toolpath, filepath, getDetails):
+def get_report_file(toolpath, filepath, getDetails, cmt_out):
 	cmd = [toolpath, '-f', filepath]
 	process = Popen(cmd, stdout=PIPE, stderr=PIPE)
 	stdout, stderr = process.communicate()
@@ -46,33 +46,51 @@ def get_report_file(toolpath, filepath, getDetails):
 		print '[-] Detailed report for {}:\n'.format(filepath)
 		for c, f, d in details:
 			print '\t[+] {}: {}\n\t\t{}\n'.format(f, c, d)
+			if len(f) > 0 and cmt_out is True:
+				tmp_cmd = ['sed', '-E', '-i.bak', 's/({})(.*)/\/\/ \\1\\2/g'.format(c), filepath]
+				sed_proc = Popen(tmp_cmd, stdout=PIPE, stderr=PIPE)
+				sed_proc.communicate()
+				tmp_cmd2 = ['rm', '-f', filepath + '.bak']
+				rm_proc = Popen(tmp_cmd2, stdout=PIPE, stderr=PIPE)
+				rm_proc.communicate()
 		print '\n'
+		return 0
+	elif len(details) > 0:
+		return 0;
+	return 1
 
-def get_report_folder(toolpath, folderpath, details):
+def get_report_folder(toolpath, folderpath, details, cmt_out):
+	result = 1
 	for root, dirs, files in os.walk(folderpath):
 		path = root.split(os.sep)
 		for f in files:
 			if f.split('.')[-1] == 'cs':
 				print '[-] Target:', f,
-				get_report_file(toolpath, os.sep.join(x for x in path) + os.sep + f, details)
+				result *= get_report_file(toolpath, os.sep.join(x for x in path) + os.sep + f, details, cmt_out)
+	
+	sys.exit(result ^ 1)
 
 if __name__ == '__main__':
 	Done = False
 	details = False
 	toolpath = ''
+	cmt_out = False
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], "t:f:d:D")
+		opts, args = getopt.getopt(sys.argv[1:], "ct:f:d:D")
 		for opt, arg in opts:
 			if opt == '-f':
-				get_report_file(toolpath, arg, details)
+				get_report_file(toolpath, arg, details, cmt_out)
 				Done = True
 			elif opt == '-d':
-				get_report_folder(toolpath, arg, details)
+				get_report_folder(toolpath, arg, details, cmt_out)
 				Done = True
 			elif opt == '-t':
 				toolpath = arg
 			elif opt == '-D':
 				details = True
+			elif opt == '-c':
+				cmt_out = True
+
 	except getopt.GetoptError:
 		Usage(sys.argv[0])
 

@@ -33,6 +33,9 @@ make
 
 ## Usage
 
+- Usage: `cstest [-e] [-f <file_name.cs>] [-d <directory>]`
+	- `-e` : test all commented test
+
 - Test for all closed issues
 
 ```
@@ -63,8 +66,9 @@ make cstest
 
 ## Using report tool
 
-- Usage `python report.py -t <cstest_path> [-f <file_name.cs>] [-d <directory>]`
-
+- Usage `python report.py [-Dc] -t <cstest_path> [-f <file_name.cs>] [-d <directory>]`
+	- `-D` : print details
+	- `-c` : auto comment out failed test
 - Example: 
 
 ```
