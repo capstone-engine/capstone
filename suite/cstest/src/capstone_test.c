@@ -352,6 +352,12 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 
 	if (size_part_cs_result != size_part_issue_result) {
 		fprintf(stderr, "[  ERROR   ] --- %s --- Number of details( Capstone: %d --- Issue: %d ) doesn't match\n", list_part[0], size_part_cs_result, size_part_issue_result);
+		cs_free(insn, count);
+		free(list_part);
+		free(list_byte);
+		free(cs_result);
+		free(list_part_cs_result);
+		free(list_part_issue_result);
 		_fail(__FILE__, __LINE__);
 	}
 
