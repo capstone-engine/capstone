@@ -12,6 +12,7 @@ single_dict arches[] = {
 	{"CS_ARCH_M68K", CS_ARCH_M68K}
 };
 
+/*
 single_dict modes[] = {
 	{"CS_MODE_16", CS_MODE_16},
 	{"CS_MODE_32", CS_MODE_32},
@@ -37,6 +38,43 @@ single_dict modes[] = {
 	{"CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN", CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN},
 	{"CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN", CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN},
 	{"CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN", CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN}
+};
+*/
+
+single_dict modes[] = {
+	{"CS_MODE_LITTLE_ENDIAN", CS_MODE_LITTLE_ENDIAN},
+	{"CS_MODE_ARM", CS_MODE_ARM},
+	{"CS_MODE_16", CS_MODE_16},
+	{"CS_MODE_32", CS_MODE_32},
+	{"CS_MODE_64", CS_MODE_64},
+	{"CS_MODE_THUMB", CS_MODE_THUMB},
+	{"CS_MODE_MCLASS", CS_MODE_MCLASS},
+	{"CS_MODE_V8", CS_MODE_V8},
+	{"CS_MODE_MICRO", CS_MODE_MICRO},
+	{"CS_MODE_MIPS3", CS_MODE_MIPS3},
+	{"CS_MODE_MIPS32R6", CS_MODE_MIPS32R6},
+	{"CS_MODE_MIPS2", CS_MODE_MIPS2},
+	{"CS_MODE_V9", CS_MODE_V9},
+	{"CS_MODE_QPX", CS_MODE_QPX},
+	{"CS_MODE_M68K_000", CS_MODE_M68K_000},
+	{"CS_MODE_M68K_010", CS_MODE_M68K_010},
+	{"CS_MODE_M68K_020", CS_MODE_M68K_020},
+	{"CS_MODE_M68K_030", CS_MODE_M68K_030},
+	{"CS_MODE_M68K_040", CS_MODE_M68K_040},
+	{"CS_MODE_M68K_060", CS_MODE_M68K_060},
+	{"CS_MODE_BIG_ENDIAN", CS_MODE_BIG_ENDIAN},
+	{"CS_MODE_MIPS32", CS_MODE_MIPS32},
+	{"CS_MODE_MIPS64", CS_MODE_MIPS64},
+	{"CS_MODE_M680X_6301", CS_MODE_M680X_6301},
+	{"CS_MODE_M680X_6309", CS_MODE_M680X_6309},
+	{"CS_MODE_M680X_6800", CS_MODE_M680X_6800},
+	{"CS_MODE_M680X_6801", CS_MODE_M680X_6801},
+	{"CS_MODE_M680X_6805", CS_MODE_M680X_6805},
+	{"CS_MODE_M680X_6808", CS_MODE_M680X_6808},
+	{"CS_MODE_M680X_6809", CS_MODE_M680X_6809},
+	{"CS_MODE_M680X_6811", CS_MODE_M680X_6811},
+	{"CS_MODE_M680X_CPU12", CS_MODE_M680X_CPU12},
+	{"CS_MODE_M680X_HCS08", CS_MODE_M680X_HCS08},	
 };
 
 double_dict options[] = {
@@ -126,7 +164,7 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	code = (unsigned char *)malloc(size_byte * sizeof(char));
 	for (i=0; i<size_byte; ++i) {
 		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
-		// printf("Byte: 0x%.2x\n", (int)code[i]);
+		//	printf("Byte: 0x%.2x\n", (int)code[i]);
 	}
 	cs_option(*handle, CS_OPT_UNSIGNED, CS_OPT_ON);
 
@@ -153,7 +191,8 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 
 	for (p=list_part[1]; *p; ++p) *p = tolower(*p);
 	trim_str(list_part[1]);
-	//	replace_negative(list_part[1], mc_mode);
+	replace_negative(list_part[1], mc_mode);
+	puts(list_part[1]);
 
 	//	tmp = (char *)malloc(strlen(insn[0].mnemonic) + strlen(insn[0].op_str) + 100);
 	strcpy(tmp, insn[0].mnemonic);
@@ -166,6 +205,7 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	//	cs_hex = strdup(tmp);
 	strcpy(cs_hex, tmp);
 	replace_hex(tmp);
+	replace_negative(tmp, mc_mode);
 	//	mc_hex = strdup(list_data[0]);
 	//	mc_dec = strdup(list_data[0]);
 	strcpy(mc_hex, list_part[1]);
@@ -189,6 +229,7 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 		strcpy(mc_hex_noreg, list_part[1]);
 		strcpy(mc_dec_noreg, list_part[1]);
 		replace_hex(mc_dec_noreg);
+		replace_negative(mc_dec_noreg, mc_mode);
 
 		if (strcmp(tmp, mc_hex) && strcmp(cs_hex, mc_hex) && strcmp(tmp, mc_dec) && strcmp(tmp, mc_hex)
 				&& strcmp(tmp_noreg, mc_hex_noreg) && strcmp(cs_hex_noreg, mc_hex_noreg) && strcmp(tmp_noreg, mc_dec_noreg) && strcmp(tmp_noreg, mc_hex_noreg)) {
