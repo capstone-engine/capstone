@@ -373,12 +373,28 @@ static bool need_zero_prefix(uint64_t imm)
 		return true;
 }
 
-static void printImm(int syntax, SStream *O, int64_t imm, bool positive)
+static void printImm(MCInst *MI, SStream *O, int64_t imm, bool positive)
 {
 	if (positive) {
 		// always print this number in positive form
-		if (syntax == CS_OPT_SYNTAX_MASM) {
+		if (MI->csh->syntax == CS_OPT_SYNTAX_MASM) {
 			if (imm < 0) {
+				if (MI->op1_size) {
+					switch(MI->op1_size) {
+						default:
+							break;
+						case 1:
+							imm &= 0xff;
+							break;
+						case 2:
+							imm &= 0xffff;
+							break;
+						case 4:
+							imm &= 0xffffffff;
+							break;
+					}
+				}
+
 				if (imm == 0x8000000000000000LL)  // imm == -imm
 					SStream_concat0(O, "8000000000000000h");
 				else if (need_zero_prefix(imm))
@@ -396,6 +412,22 @@ static void printImm(int syntax, SStream *O, int64_t imm, bool positive)
 			}
 		} else {	// Intel syntax
 			if (imm < 0) {
+				if (MI->op1_size) {
+					switch(MI->op1_size) {
+						default:
+							break;
+						case 1:
+							imm &= 0xff;
+							break;
+						case 2:
+							imm &= 0xffff;
+							break;
+						case 4:
+							imm &= 0xffffffff;
+							break;
+					}
+				}
+
 				SStream_concat(O, "0x%"PRIx64, imm);
 			} else {
 				if (imm > HEX_THRESHOLD)
@@ -405,7 +437,7 @@ static void printImm(int syntax, SStream *O, int64_t imm, bool positive)
 			}
 		}
 	} else {
-		if (syntax == CS_OPT_SYNTAX_MASM) {
+		if (MI->csh->syntax == CS_OPT_SYNTAX_MASM) {
 			if (imm < 0) {
 				if (imm == 0x8000000000000000LL)  // imm == -imm
 					SStream_concat0(O, "8000000000000000h");
@@ -452,7 +484,7 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		printRegName(O, MCOperand_getReg(Op));
 	} else if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op);
-		printImm(MI->csh->syntax, O, imm, MI->csh->imm_unsigned);
+		printImm(MI, O, imm, MI->csh->imm_unsigned);
 	}
 }
 
@@ -661,9 +693,9 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = imm;
 
 		if (imm < 0)
-			printImm(MI->csh->syntax, O, arch_masks[MI->csh->mode] & imm, true);
+			printImm(MI, O, arch_masks[MI->csh->mode] & imm, true);
 		else
-			printImm(MI->csh->syntax, O, imm, true);
+			printImm(MI, O, imm, true);
 	}
 
 	SStream_concat0(O, "]");
@@ -680,7 +712,7 @@ static void printU8Imm(MCInst *MI, unsigned Op, SStream *O)
 {
 	uint8_t val = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0xff;
 
-	printImm(MI->csh->syntax, O, val, true);
+	printImm(MI, O, val, true);
 
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
@@ -825,7 +857,7 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 		if (MI->Opcode == X86_CALLpcrel16 || MI->Opcode == X86_JMP_2)
 			imm = imm & 0xffff;
 
-		printImm(MI->csh->syntax, O, imm, true);
+		printImm(MI, O, imm, true);
 
 		if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
@@ -897,12 +929,12 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		// printf(">>> id = %u\n", MI->flat_insn->id);
 		switch(MI->flat_insn->id) {
 			default:
-				printImm(MI->csh->syntax, O, imm, MI->csh->imm_unsigned);
+				printImm(MI, O, imm, MI->csh->imm_unsigned);
 				break;
 
 			case X86_INS_MOVABS:
 				// do not print number in negative form
-				printImm(MI->csh->syntax, O, imm, true);
+				printImm(MI, O, imm, true);
 				break;
 
 			case X86_INS_IN:
@@ -910,7 +942,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			case X86_INS_INT:
 				// do not print number in negative form
 				imm = imm & 0xff;
-				printImm(MI->csh->syntax, O, imm, true);
+				printImm(MI, O, imm, true);
 				break;
 
 			case X86_INS_LCALL:
@@ -920,7 +952,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					imm = imm & 0xffff;
 					opsize = 2;
 				}
-				printImm(MI->csh->syntax, O, imm, true);
+				printImm(MI, O, imm, true);
 				break;
 
 			case X86_INS_AND:
@@ -928,10 +960,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			case X86_INS_XOR:
 				// do not print number in negative form
 				if (imm >= 0 && imm <= HEX_THRESHOLD)
-					printImm(MI->csh->syntax, O, imm, true);
+					printImm(MI, O, imm, true);
 				else {
 					imm = arch_masks[opsize? opsize : MI->imm_size] & imm;
-					printImm(MI->csh->syntax, O, imm, true);
+					printImm(MI, O, imm, true);
 				}
 				break;
 
@@ -939,10 +971,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			case X86_INS_RETF:
 				// RET imm16
 				if (imm >= 0 && imm <= HEX_THRESHOLD)
-					printImm(MI->csh->syntax, O, imm, true);
+					printImm(MI, O, imm, true);
 				else {
 					imm = 0xffff & imm;
-					printImm(MI->csh->syntax, O, imm, true);
+					printImm(MI, O, imm, true);
 				}
 				break;
 		}
@@ -1042,17 +1074,17 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 			if (NeedPlus) {
 				if (DispVal < 0) {
 					SStream_concat0(O, " - ");
-					printImm(MI->csh->syntax, O, -DispVal, true);
+					printImm(MI, O, -DispVal, true);
 				} else {
 					SStream_concat0(O, " + ");
-					printImm(MI->csh->syntax, O, DispVal, true);
+					printImm(MI, O, DispVal, true);
 				}
 			} else {
 				// memory reference to an immediate address
 				if (DispVal < 0) {
-					printImm(MI->csh->syntax, O, arch_masks[MI->csh->mode] & DispVal, true);
+					printImm(MI, O, arch_masks[MI->csh->mode] & DispVal, true);
 				} else {
-					printImm(MI->csh->syntax, O, DispVal, true);
+					printImm(MI, O, DispVal, true);
 				}
 			}
 
