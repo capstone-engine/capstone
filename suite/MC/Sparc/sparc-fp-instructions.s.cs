@@ -1,4 +1,4 @@
-# CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN+CS_MODE_V9, None
+# CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN + CS_MODE_V9, None
 0x89,0xa0,0x18,0x80 = fitos %f0, %f4
 0x89,0xa0,0x19,0x00 = fitod %f0, %f4
 0x89,0xa0,0x19,0x80 = fitoq %f0, %f4
