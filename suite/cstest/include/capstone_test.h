@@ -32,7 +32,7 @@
 	} while (0)
 
 #define NUMARCH 9
-#define NUMMODE 24
+#define NUMMODE 33
 #define NUMOPTION 40
 #define MAXMEM 1024
 
