@@ -1,10 +1,10 @@
-!# issue 0
-!#CS_ARCH_X86, CS_MODE_64, None
-0x66,0x83,0xc0,0x80 == add ax, 0xff80
+//!# issue 0
+//!#CS_ARCH_X86, CS_MODE_64, CS_OPT_UNSIGNED
+//0x66,0x83,0xc0,0x80 == add ax, 0xff80
 
-!# issue 0
-!#CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT
-0x66,0x83,0xc0,0x80 == addw $0xff80, %ax
+//!# issue 0
+//!#CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT | CS_OPT_UNSIGNED
+//0x66,0x83,0xc0,0x80 == addw $0xff80, %ax
 
 !# issue 1323
 !#CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
