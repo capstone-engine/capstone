@@ -144,7 +144,7 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	int i, count, count_noreg;
 	unsigned char *code;
 	cs_insn *insn;
-	char tmp[MAXMEM], cs_hex[MAXMEM], mc_hex[MAXMEM], mc_dec[MAXMEM];
+	char tmp[MAXMEM], cs_hex[MAXMEM], mc_hex[MAXMEM], mc_dec[MAXMEM], tmp_mc[MAXMEM];
 	char tmp_noreg[MAXMEM], cs_hex_noreg[MAXMEM], mc_hex_noreg[MAXMEM], mc_dec_noreg[MAXMEM];
 	char **offset_opcode;
 	int size_offset_opcode;
@@ -172,27 +172,27 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
 	if (count == 0) {
 		fprintf(stderr, "[  ERROR   ] --- %s --- Failed to disassemble given code!\n", list_part[0]);
-		free(list_part);
-		free(offset_opcode);
-		free(list_byte);
+		free_strs(list_part, size_part);
+		free_strs(offset_opcode, size_offset_opcode);
+		free_strs(list_byte, size_byte);
 		free(code);
-		//		free(list_data);
+		//	free(list_data);
 		_fail(__FILE__, __LINE__);
 	}
 	if (count > 1) {
 		fprintf(stderr, "[  ERROR   ] --- %s --- Multiple instructions(%d) disassembling doesn't support!\n", list_part[0], count);
-		free(list_part);
-		free(offset_opcode);
-		free(list_byte);
+		free_strs(list_part, size_part);
+		free_strs(offset_opcode, size_offset_opcode);
+		free_strs(list_byte, size_byte);
 		free(code);
-		//		free(list_data);
+		//	free(list_data);
 		_fail(__FILE__, __LINE__);
 	}
 
 	for (p=list_part[1]; *p; ++p) *p = tolower(*p);
 	trim_str(list_part[1]);
-	replace_negative(list_part[1], mc_mode);
-	puts(list_part[1]);
+	strcpy(tmp_mc, list_part[1]);
+	replace_negative(tmp_mc, mc_mode);
 
 	//	tmp = (char *)malloc(strlen(insn[0].mnemonic) + strlen(insn[0].op_str) + 100);
 	strcpy(tmp, insn[0].mnemonic);
@@ -205,11 +205,11 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	//	cs_hex = strdup(tmp);
 	strcpy(cs_hex, tmp);
 	replace_hex(tmp);
-	replace_negative(tmp, mc_mode);
+	//	replace_negative(tmp, mc_mode);
 	//	mc_hex = strdup(list_data[0]);
 	//	mc_dec = strdup(list_data[0]);
-	strcpy(mc_hex, list_part[1]);
-	strcpy(mc_dec, list_part[1]);
+	strcpy(mc_hex, tmp_mc);
+	strcpy(mc_dec, tmp_mc);
 	replace_hex(mc_dec);
 
 	if (cs_option(*handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_NOREGNAME) == CS_ERR_OK) {
@@ -226,17 +226,17 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 		strcpy(cs_hex_noreg, tmp_noreg);
 		replace_hex(tmp_noreg);
 		// mc_dec_noreg = strdup(list_data[0]);
-		strcpy(mc_hex_noreg, list_part[1]);
-		strcpy(mc_dec_noreg, list_part[1]);
+		strcpy(mc_hex_noreg, tmp_mc);
+		strcpy(mc_dec_noreg, tmp_mc);
 		replace_hex(mc_dec_noreg);
-		replace_negative(mc_dec_noreg, mc_mode);
+		//	replace_negative(mc_dec_noreg, mc_mode);
 
 		if (strcmp(tmp, mc_hex) && strcmp(cs_hex, mc_hex) && strcmp(tmp, mc_dec) && strcmp(tmp, mc_hex)
 				&& strcmp(tmp_noreg, mc_hex_noreg) && strcmp(cs_hex_noreg, mc_hex_noreg) && strcmp(tmp_noreg, mc_dec_noreg) && strcmp(tmp_noreg, mc_hex_noreg)) {
 			fprintf(stderr, "[  ERROR   ] --- %s --- \"%s\" != \"%s\"\n", list_part[0], cs_hex, list_part[1]);
-			free(list_part);
-			free(offset_opcode);
-			free(list_byte);
+			free_strs(list_part, size_part);
+			free_strs(offset_opcode, size_offset_opcode);
+			free_strs(list_byte, size_byte);
 			free(code);
 			// free(list_data);
 			cs_free(insn, count);
@@ -245,18 +245,18 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 
 		cs_option(*handle, CS_OPT_SYNTAX, 0);
 	} else if (!quadruple_compare(tmp, cs_hex, mc_dec, mc_hex, list_part[0])) {
-		free(list_part);
-		free(offset_opcode);
-		free(list_byte);
+		free_strs(list_part, size_part);
+		free_strs(offset_opcode, size_offset_opcode);
+		free_strs(list_byte, size_byte);
 		free(code);
 		// free(list_data);
 		cs_free(insn, count);
 		_fail(__FILE__, __LINE__);
 	}
 
-	free(list_part);
-	free(offset_opcode);
-	free(list_byte);
+	free_strs(list_part, size_part);
+	free_strs(offset_opcode, size_offset_opcode);
+	free_strs(list_byte, size_byte);
 	free(code);
 	// free(list_data);
 	cs_free(insn, count);
@@ -394,11 +394,11 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 	if (size_part_cs_result != size_part_issue_result) {
 		fprintf(stderr, "[  ERROR   ] --- %s --- Number of details( Capstone: %d --- Issue: %d ) doesn't match\n", list_part[0], size_part_cs_result, size_part_issue_result);
 		cs_free(insn, count);
-		free(list_part);
-		free(list_byte);
+		free_strs(list_part, size_part);
+		free_strs(list_byte, size_byte);
 		free(cs_result);
-		free(list_part_cs_result);
-		free(list_part_issue_result);
+		free_strs(list_part_cs_result, size_part_cs_result);
+		free_strs(list_part_issue_result, size_part_issue_result);
 		_fail(__FILE__, __LINE__);
 	}
 
@@ -409,20 +409,20 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 		if (strcmp(list_part_cs_result[i], list_part_issue_result[i])) {
 			fprintf(stderr, "[  ERROR   ] --- %s --- \"%s\" != \"%s\"\n", list_part[0], list_part_cs_result[i], list_part_issue_result[i]);
 			cs_free(insn, count);
-			free(list_part);
-			free(list_byte);
+			free_strs(list_part, size_part);
+			free_strs(list_byte, size_byte);
 			free(cs_result);
-			free(list_part_cs_result);
-			free(list_part_issue_result);
+			free_strs(list_part_cs_result, size_part_cs_result);
+			free_strs(list_part_issue_result, size_part_issue_result);
 
 			_fail(__FILE__, __LINE__);
 		}
 	}
 
 	cs_free(insn, count);
-	free(list_part);
-	free(list_byte);
+	free_strs(list_part, size_part);
+	free_strs(list_byte, size_byte);
 	free(cs_result);
-	free(list_part_cs_result);
-	free(list_part_issue_result);
+	free_strs(list_part_cs_result, size_part_cs_result);
+	free_strs(list_part_issue_result, size_part_issue_result);
 }

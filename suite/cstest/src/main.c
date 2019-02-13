@@ -9,6 +9,7 @@ static int size_lines;
 static cs_mode issue_mode;
 static int getDetail;
 static int mc_mode;
+static char delim;
 
 static int setup_MC(void **state)
 {
@@ -28,7 +29,28 @@ static int setup_MC(void **state)
 
 	list_params = split(list_lines[tmp_counter] + 2, ", ", &size_params);
 	arch = get_value(arches, NUMARCH, list_params[0]);
-	mode = get_value(modes, NUMMODE, list_params[1]);
+	if (!strcmp(list_params[0], "CS_ARCH_ARM64")) mc_mode = 2;
+	else mc_mode = 1;
+	//	mode = get_value(modes, NUMMODE, list_params[1]);
+	mode = 0;
+	for (i=0; i<NUMMODE; ++i) {
+		if (strstr(list_params[1], modes[i].str)) {
+			mode += modes[i].value;
+			switch (modes[i].value) {
+				case CS_MODE_16:
+					mc_mode = 0;
+					break;
+				case CS_MODE_64:
+					mc_mode = 2;
+					break;
+				case CS_MODE_THUMB:
+					mc_mode = 0;
+					break;
+				default:
+					break;
+			}
+		}
+	}
 
 	if (arch == -1 || mode == -1) {
 		fprintf(stderr, "[  ERROR   ] --- Arch and/or Mode are not supported!\n");
@@ -51,9 +73,9 @@ static int setup_MC(void **state)
 		}
 	*state = (void *)handle;
 	counter++;
-	while (counter < size_lines && list_lines[counter][0] != '0') counter++;
+	while (counter < size_lines && list_lines[counter][0] != delim) counter++;
 	free_strs(list_params, size_params);
-
+	
 	return 0;
 }
 
@@ -64,7 +86,7 @@ static void test_MC(void **state)
 
 static int teardown_MC(void **state)
 {
-	cs_close(*state);	
+	cs_close(*state);
 	free(*state);
 	return 0;
 }
@@ -87,7 +109,29 @@ static int setup_issue(void **state)
 	list_params = split(list_lines[counter] + 2, ", ", &size_params);
 	//	print_strs(list_params, size_params);
 	arch = get_value(arches, NUMARCH, list_params[0]);
-	mode = get_value(modes, NUMMODE, list_params[1]);
+
+	if (!strcmp(list_params[0], "CS_ARCH_ARM64")) mc_mode = 2;
+	else mc_mode = 1;
+	//	mode = get_value(modes, NUMMODE, list_params[1]);
+	mode = 0;
+	for (i=0; i<NUMMODE; ++i) {
+		if (strstr(list_params[1], modes[i].str)) {
+			mode += modes[i].value;
+			switch (modes[i].value) {
+				case CS_MODE_16:
+					mc_mode = 0;
+					break;
+				case CS_MODE_64:
+					mc_mode = 2;
+					break;
+				case CS_MODE_THUMB:
+					mc_mode = 0;
+					break;
+				default:
+					break;
+			}
+		}
+	}
 
 	if (arch == -1 || mode == -1) {
 		fprintf(stderr, "[  ERROR   ] --- Arch and/or Mode are not supported!\n");
@@ -165,12 +209,13 @@ static void test_file(const char *filename)
 		tests = NULL;
 		for (i=0; i < size_lines; ++i) {
 			if (strstr(list_lines[i], "!# issue")) {
-				tmp = (char *)malloc(sizeof(char) * 100);
-				sscanf(list_lines[i], "!# issue %d\n", &issue_num);			
-				sprintf(tmp, "Issue #%d", issue_num);
+				//	tmp = (char *)malloc(sizeof(char) * 100);
+				//	sscanf(list_lines[i], "!# issue %d\n", &issue_num);			
+				//	sprintf(tmp, "Issue #%d", issue_num);
 				tests = (struct CMUnitTest *)realloc(tests, sizeof(struct CMUnitTest) * (number_of_tests + 1));
 				tests[number_of_tests] = (struct CMUnitTest)cmocka_unit_test_setup_teardown(test_issue, setup_issue, teardown_issue);
-				tests[number_of_tests].name = tmp;
+				//	tests[number_of_tests].name = tmp;
+				tests[number_of_tests].name, strdup(list_lines[i]);
 				number_of_tests ++;
 			}
 		}
@@ -183,7 +228,7 @@ static void test_file(const char *filename)
 		tests = NULL;
 		// tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * (size_lines - 1));
 		for (i = 1; i < size_lines; ++i) {
-			if (list_lines[i][0] == '0') {
+			if (list_lines[i][0] == delim) {
 				tmp = (char *)malloc(sizeof(char) * 100);
 				sprintf(tmp, "Line %d", i+1);
 				tests = (struct CMUnitTest *)realloc(tests, sizeof(struct CMUnitTest) * (number_of_tests + 1));
@@ -221,7 +266,9 @@ int main(int argc, char *argv[])
 	int opt, flag;
 
 	flag = 0;
-	while ((opt = getopt(argc, argv, "f:d:")) > 0) {
+	delim = '0';
+
+	while ((opt = getopt(argc, argv, "ef:d:")) > 0) {
 		switch (opt) {
 			case 'f':
 				test_file(optarg);
@@ -231,6 +278,10 @@ int main(int argc, char *argv[])
 				test_folder(optarg);
 				flag = 1;
 				break;
+			case 'e':
+				puts("HAHAHAHA");
+				delim = '/';
+				break;
 			default:
 				printf("Usage: %s [-f <file_name.cs>] [-d <directory>]\n", argv[0]);
 				exit(-1);
@@ -239,6 +290,9 @@ int main(int argc, char *argv[])
 
 	if (flag == 0) {
 		printf("Usage: %s [-f <file_name.cs>] [-d <directory>]\n", argv[0]);
+		char tmp[] = "ldursh x17, [x19, #0xff00]";
+		replace_hex(tmp);
+		puts(tmp);
 		exit(-1);
 	}
 
