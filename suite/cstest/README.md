@@ -64,14 +64,15 @@ cd suite/cstest
 make cstest
 ```
 
-## Using report tool
+## Report tool
 
-- Usage `python report.py [-Dc] -t <cstest_path> [-f <file_name.cs>] [-d <directory>]`
+- Usage `cstest_report.py [-Dc] -t <cstest_path> [-f <file_name.cs>] [-d <directory>]`
 	- `-D` : print details
 	- `-c` : auto comment out failed test
+
 - Example: 
 
 ```
-./report.py -t build/cstest -d ../MC/PowerPC/
-./report.py -t build/cstest -f issues.cs
+./cstest_report.py -t build/cstest -d ../MC/PowerPC/
+./cstest_report.py -t build/cstest -f issues.cs
 ```
