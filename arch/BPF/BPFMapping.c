@@ -34,6 +34,8 @@ static const name_map insn_name_maps[BPF_INS_ENDING] = {
 	{ BPF_INS_LDABSB, "ldabsb" },
 
 	{ BPF_INS_RET, "ret" },
+	{ BPF_INS_TAX, "tax" },
+	{ BPF_INS_TXA, "txa" },
 };
 #endif
 

@@ -89,13 +89,19 @@ static bool getInstruction(cs_struct *ud, MCInst *MI, bpf_internal *bpf,
 	}
 
 	opcode = bpf->op;
-	MI->address = address;
-	MI->OpcodePub = MI->Opcode = opcode;
 
-#define PUSH_GROUP(grp) do { \
+	MCInst_clear(MI);
+	MI->address = address;
+	MCInst_setOpcodePub(MI, opcode);
+
+#ifndef CAPSTONE_DIET
+ #define PUSH_GROUP(grp) do { \
 		detail->groups[detail->groups_count] = grp; \
 		detail->groups_count++; \
 	} while(0)
+#else
+ #define PUSH_GROUP
+#endif
 
 	switch (BPF_CLASS(bpf->op)) {
 		default:	// will never happen
@@ -149,6 +155,14 @@ static bool getInstruction(cs_struct *ud, MCInst *MI, bpf_internal *bpf,
 		// BPF_CLASS_MISC and BPF_CLASS_ALU64 have exactly same value
 		case BPF_CLASS_MISC:
 		/* case BPF_CLASS_ALU64: */
+			if (EBPF_MODE(ud)) {
+			}
+			else {
+				if (opcode & 0x80)
+					MCInst_setOpcode(MI, BPF_INS_TXA);
+				else
+					MCInst_setOpcode(MI, BPF_INS_TAX);
+			}
 			if (detail) {
 				if (EBPF_MODE(ud))
 					PUSH_GROUP(BPF_GRP_ALU); // ALU64 in eBPF
@@ -175,6 +189,9 @@ bool BPF_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		return false;
 	if (!getInstruction((cs_struct*)ud, instr, bpf, address))
 		return false;
+
+	cs_mem_free(bpf);
+
 	*size = 8;
 	return true;
 }

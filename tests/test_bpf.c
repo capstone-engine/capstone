@@ -64,6 +64,7 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 
 static void test()
 {
+#define CBPF_CODE "\x87\x00\x00\x00\x00\x00\x00\x00\x07\x00\x00\x00\x00\x00\x00\x00"
 #define EBPF_CODE "\x30\x00\x00\x00\x00\x00\x00\x00"
 	struct platform platforms[] = {
 		{
@@ -72,6 +73,13 @@ static void test()
 			(unsigned char *)EBPF_CODE,
 			sizeof(EBPF_CODE) - 1,
 			"eBPF Le"
+		},
+		{
+			CS_ARCH_BPF,
+			CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC,
+			(unsigned char *)CBPF_CODE,
+			sizeof(CBPF_CODE) - 1,
+			"cBPF Le"
 		},
 	};
 	uint64_t address = 0x0;
