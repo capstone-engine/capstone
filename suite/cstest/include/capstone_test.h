@@ -1,3 +1,7 @@
+/* Capstone testing regression */
+/* By Do Minh Tuan <tuanit96@gmail.com>, 02-2019 */
+
+
 #ifndef CAPSTONE_TEST_H
 #define CAPSTONE_TEST_H
 
