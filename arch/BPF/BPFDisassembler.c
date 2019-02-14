@@ -3,8 +3,12 @@
 
 #ifdef CAPSTONE_HAS_BPF
 
+#include <string.h>
+#include <stddef.h> // offsetof macro
+
 #include "../../cs_priv.h"
 
+#include "BPFConstants.h"
 #include "BPFDisassembler.h"
 
 static uint16_t read_u16(cs_struct *ud, const uint8_t *code)
@@ -71,32 +75,107 @@ static bpf_internal* fetch_ebpf(cs_struct *ud, const uint8_t *code,
 	return bpf;
 }
 
+#define EBPF_MODE(ud) ((ud)->mode & CS_MODE_BPF_EXTENDED)
+
 static bool getInstruction(cs_struct *ud, MCInst *MI, bpf_internal *bpf,
 		uint64_t address)
 {
+	cs_detail *detail;
+	uint8_t opcode;
+
+	detail = MI->flat_insn->detail;
+	// initialize detail
+	if (detail) {
+		memset(detail, 0, offsetof(cs_detail, bpf) + sizeof(cs_bpf));
+	}
+
+	opcode = bpf->op;
+	MI->address = address;
+	MI->OpcodePub = MI->Opcode = opcode;
+	switch (BPF_CLASS(bpf->op)) {
+		default:	// will never happen
+			break;
+		case BPF_CLASS_LD:
+			if (detail) {
+				detail->groups[detail->groups_count] = BPF_GRP_LOAD;
+				detail->groups_count++;
+			}
+			break;
+		case BPF_CLASS_LDX:
+			if (detail) {
+				detail->groups[detail->groups_count] = BPF_GRP_LOAD;
+				detail->groups_count++;
+			}
+			break;
+		case BPF_CLASS_ST:
+			if (detail) {
+				detail->groups[detail->groups_count] = BPF_GRP_STORE;
+				detail->groups_count++;
+			}
+			break;
+		case BPF_CLASS_STX:
+			if (detail) {
+				detail->groups[detail->groups_count] = BPF_GRP_STORE;
+				detail->groups_count++;
+			}
+			break;
+		case BPF_CLASS_ALU:
+			if (detail) {
+				detail->groups[detail->groups_count] = BPF_GRP_ALU;
+				detail->groups_count++;
+			}
+			break;
+		case BPF_CLASS_JMP:
+			if (detail) {
+				bpf_insn_group grp = BPF_GRP_JUMP;
+
+				if (EBPF_MODE(ud)) {
+					// TODO: use BPF_INSN_CALL / BPF_INSN_RETURN_R0 on MI to check
+					if (opcode == 0x85)
+						grp = BPF_GRP_CALL;
+					else if (opcode == 0x95)
+						grp = BPF_GRP_RETURN;
+				}
+				detail->groups[detail->groups_count] = grp;
+				detail->groups_count++;
+			}
+			break;
+		case BPF_CLASS_RET:
+			// this class in eBPF is reserved.
+			if (EBPF_MODE(ud))
+				return false;
+			if (detail) {
+				detail->groups[detail->groups_count] = BPF_GRP_RETURN;
+				detail->groups_count++;
+			}
+		// BPF_CLASS_MISC and BPF_CLASS_ALU64 have exactly same value
+		case BPF_CLASS_MISC:
+		/* case BPF_CLASS_ALU64: */
+			if (detail) {
+				bpf_insn_group grp;
+
+				if (EBPF_MODE(ud))
+					grp = BPF_GRP_ALU;
+				else
+					grp = BPF_GRP_MISC;
+				detail->groups[detail->groups_count] = grp;
+				detail->groups_count++;
+			}
+	}
 	return false;
 }
 
-bool CBPF_getInstruction(csh ud, const uint8_t *code, size_t code_len,
+bool BPF_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		MCInst *instr, uint16_t *size, uint64_t address, void *info)
 {
+	cs_struct *cs;
 	bpf_internal *bpf;
 
-	bpf = fetch_cbpf((cs_struct*)ud, code, code_len);
-	if (bpf == NULL)
-		return false;
-	if (!getInstruction((cs_struct*)ud, instr, bpf, address))
-		return false;
-	*size = 8;
-	return true;
-}
-
-bool EBPF_getInstruction(csh ud, const uint8_t *code, size_t code_len,
-		MCInst *instr, uint16_t *size, uint64_t address, void *info)
-{
-	bpf_internal *bpf;
-
-	bpf	= fetch_ebpf((cs_struct*)ud, code, code_len);
+	cs = (cs_struct*)ud;
+	if (cs->mode & CS_MODE_BPF_EXTENDED)
+		bpf = fetch_ebpf(cs, code, code_len);
+	else
+		bpf = fetch_cbpf(cs, code, code_len);
 	if (bpf == NULL)
 		return false;
 	if (!getInstruction((cs_struct*)ud, instr, bpf, address))

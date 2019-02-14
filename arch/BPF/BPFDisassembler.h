@@ -18,10 +18,7 @@ typedef struct bpf_internal {
 	uint16_t offset;
 } bpf_internal;
 
-bool CBPF_getInstruction(csh ud, const uint8_t *code, size_t code_len,
-		MCInst *instr, uint16_t *size, uint64_t address, void *info);
-
-bool EBPF_getInstruction(csh ud, const uint8_t *code, size_t code_len,
+bool BPF_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		MCInst *instr, uint16_t *size, uint64_t address, void *info);
 
 #endif
