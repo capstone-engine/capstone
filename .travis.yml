@@ -13,12 +13,12 @@ script:
         - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cp libcapstone.so.* bindings/python/libcapstone.so; fi
         - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cp libcapstone.*.dylib bindings/python/libcapstone.dylib; fi
         - if [[ "$NOPYTEST" != "true" ]]; then cd bindings/python && make check; cd ../..; fi
-        - cd suite/cstest
-        - cd cmocka && mkdir build && cd build
-        - cmake .. && make -j2 && sudo make install
-        - cd ../.. && make
-        - python cstest_report.py -t build/cstest -d ../MC
-        - python cstest_report.py -t build/cstest -f issues.cs
+        - if [[ "$NOPYTEST" != "true" ]]; cd suite/cstest
+        - if [[ "$NOPYTEST" != "true" ]]; cd cmocka && mkdir build && cd build
+        - if [[ "$NOPYTEST" != "true" ]]; cmake .. && make -j2 && sudo make install
+        - if [[ "$NOPYTEST" != "true" ]]; cd ../.. && make
+        - if [[ "$NOPYTEST" != "true" ]]; python cstest_report.py -t build/cstest -d ../MC
+        - if [[ "$NOPYTEST" != "true" ]]; python cstest_report.py -t build/cstest -f issues.cs
 compiler:
         - clang
         - gcc
