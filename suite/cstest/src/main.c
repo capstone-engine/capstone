@@ -49,7 +49,7 @@ static int setup_MC(void **state)
 					mc_mode = 2;
 					break;
 				case CS_MODE_THUMB:
-					mc_mode = 0;
+					mc_mode = 1;
 					break;
 				default:
 					break;
@@ -123,7 +123,7 @@ static int setup_issue(void **state)
 	if (e_flag == 0)
 		while (counter < size_lines && strncmp(list_lines[counter], "!# ", 3)) counter++; // get issue line
 	else
-		while (counter < size_lines && strncmp(list_lines[counter], "// !#", 5)) counter++;
+		while (counter < size_lines && strncmp(list_lines[counter], "// !# ", 6)) counter++;
 
 	counter++;
 
@@ -131,12 +131,12 @@ static int setup_issue(void **state)
 	if (e_flag == 0)
 		while (counter < size_lines && strncmp(list_lines[counter], "!#", 2)) counter++; // get arch line
 	else
-		while (counter < size_lines && strncmp(list_lines[counter], "// !#", 5)) counter++;
+		while (counter < size_lines && strncmp(list_lines[counter], "// !# ", 6)) counter++;
 
 	if (e_flag == 0)
 		list_params = split(list_lines[counter] + 3, ", ", &size_params);
 	else
-		list_params = split(list_lines[counter] + 5, ", ", &size_params);
+		list_params = split(list_lines[counter] + 6, ", ", &size_params);
 
 	//	print_strs(list_params, size_params);
 	arch = get_value(arches, NUMARCH, list_params[0]);
@@ -156,7 +156,7 @@ static int setup_issue(void **state)
 					mc_mode = 2;
 					break;
 				case CS_MODE_THUMB:
-					mc_mode = 0;
+					mc_mode = 1;
 					break;
 				default:
 					break;
@@ -225,7 +225,7 @@ static int teardown_issue(void **state)
 	if (e_flag == 0)
 		while (counter < size_lines && strncmp(list_lines[counter], "!# ", 3)) counter++;
 	else
-		while (counter < size_lines && strncmp(list_lines[counter], "// !#", 5)) counter++;
+		while (counter < size_lines && strncmp(list_lines[counter], "// !# ", 6)) counter++;
 	cs_close(*state);
 	free(*state);
 	function = NULL;
