@@ -289,7 +289,7 @@ static uint32_t get_varuint32(const uint8_t *code, size_t code_len, size_t *leng
 			return 0;
 		}
 
-		data = data + ((code[i] & 0x7f) << (i * 7));
+		data = data + (((uint32_t) code[i] & 0x7f) << (i * 7));
 		if (code[i] >> 7 == 0) {
 			break;
 		}
