@@ -16,7 +16,7 @@ script:
         - if [[ "$NOPYTEST" != "true" ]]; then cd bindings/python && make check; cd ../..; fi
         - if [[ "$NOPYTEST" != "true" ]]; then cd suite/cstest && ./build_cstest.sh; fi
         - if [[ "$NOPYTEST" != "true" ]]; then python cstest_report.py -D -t build/cstest -d ../MC; fi
-        - if [[ "$NOPYTEST" != "true" ]]; then python cstest_report.py -D -t build/cstest -f issues.cs; fi
+        - if [[ "$NOPYTEST" != "true" ]]; then python cstest_report.py -D -t build/cstest -f issues.cs; cat issues.cs | head -n 10; fi
 compiler:
         - clang
         - gcc
