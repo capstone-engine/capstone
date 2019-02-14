@@ -5,15 +5,19 @@ before_install:
 before_script:
         - wget https://github.com/groundx/capstonefuzz/raw/master/corpus/corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip
         - unzip -q corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip -d suite/fuzz
+        - git clone https://git.cryptomilk.org/projects/cmocka.git suite/cstest/cmocka
 script:
         - ./make.sh
         - make check
+        - sudo make install
         - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cp libcapstone.so.* bindings/python/libcapstone.so; fi
         - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cp libcapstone.*.dylib bindings/python/libcapstone.dylib; fi
         - if [[ "$NOPYTEST" != "true" ]]; then cd bindings/python && make check; fi
-		- cd suite/cstest
-		- make
-		- python cstest_report.py -t build/cstest -d ../MC
+        - cd ../../suite/cstest
+        - cd cmocka && mkdir build && cd build
+        - cmake .. && make -j2 && sudo make install
+        - cd ../.. && make
+        - python cstest_report.py -t build/cstest -d ../MC
 compiler:
         - clang
         - gcc
